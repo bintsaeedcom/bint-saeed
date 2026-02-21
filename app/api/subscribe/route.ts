@@ -33,22 +33,34 @@ export async function POST(request: NextRequest) {
     const mailerliteApiKey = process.env.MAILERLITE_API_KEY
     const mailerliteGroupId = process.env.MAILERLITE_GROUP_ID
 
+    console.log('Mailerlite config:', { 
+      hasApiKey: !!mailerliteApiKey, 
+      groupId: mailerliteGroupId 
+    })
+
     if (mailerliteApiKey && mailerliteGroupId) {
+      const mailerliteBody = {
+        email: email,
+        groups: [mailerliteGroupId],
+      }
+      console.log('Sending to Mailerlite:', JSON.stringify(mailerliteBody))
+      
       promises.push(
         fetch('https://connect.mailerlite.com/api/subscribers', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${mailerliteApiKey}`,
+            'Accept': 'application/json',
           },
-          body: JSON.stringify({
-            email: email,
-            groups: [mailerliteGroupId],
-          }),
+          body: JSON.stringify(mailerliteBody),
         }).then(async res => {
+          const text = await res.text()
+          console.log('Mailerlite response:', res.status, text)
           if (!res.ok) {
-            const text = await res.text()
             console.error('Mailerlite error:', res.status, text)
+          } else {
+            console.log('Mailerlite success!')
           }
         }).catch(e => console.error('Mailerlite fetch error:', e))
       )
