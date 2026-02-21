@@ -160,7 +160,7 @@ export default function ComingSoonPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mb-8 md:mb-12"
+          className="relative mb-6 md:mb-12 -mt-8 sm:-mt-4 md:mt-0"
         >
           {/* Logo glow effect */}
           <div className="absolute inset-0 scale-[2] blur-[80px] opacity-40">
@@ -173,7 +173,7 @@ export default function ComingSoonPage() {
             alt="Bint Saeed"
             width={800}
             height={240}
-            className="w-auto h-28 sm:h-36 md:h-48 lg:h-56 xl:h-64 relative z-10"
+            className="w-auto h-36 sm:h-40 md:h-48 lg:h-56 xl:h-64 relative z-10"
             priority
           />
           
