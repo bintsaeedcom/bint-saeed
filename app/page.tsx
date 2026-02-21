@@ -229,8 +229,8 @@ export default function ComingSoonPage() {
               <div className="w-16 h-16 rounded-full border border-brand-dustyBlue/30 flex items-center justify-center mx-auto mb-4">
                 <FiCheck className="w-8 h-8 text-brand-dustyBlue" />
               </div>
-              <p className="font-rozha text-white text-xl tracking-wide mb-2">Thank You</p>
-              <p className="font-roboto text-white/40 text-xs tracking-wider">
+              <p className="font-rozha text-brand-stone text-2xl tracking-wide mb-2">Thank You</p>
+              <p className="font-roboto text-brand-dustyBlue/60 text-xs tracking-wider">
                 We'll notify you when we launch
               </p>
             </motion.div>
