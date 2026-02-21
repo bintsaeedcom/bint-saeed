@@ -68,7 +68,7 @@ export default function AnimatedCursor() {
     <>
       {/* Main Cursor Dot */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
@@ -82,7 +82,8 @@ export default function AnimatedCursor() {
           transition={{ duration: 0.15 }}
           className="relative -translate-x-1/2 -translate-y-1/2"
         >
-          <div className={`w-2 h-2 rounded-full bg-white`} />
+          {/* Dot with outline for visibility on any background */}
+          <div className="w-3 h-3 rounded-full bg-brand-dustyBlue shadow-[0_0_0_1px_rgba(255,255,255,0.5),0_0_10px_rgba(146,170,193,0.5)]" />
         </motion.div>
       </motion.div>
 
@@ -97,14 +98,14 @@ export default function AnimatedCursor() {
         <motion.div
           animate={{
             scale: isClicking ? 0.9 : isHovering ? 1.5 : 1,
-            opacity: isVisible ? (isHovering ? 0.5 : 0.3) : 0,
+            opacity: isVisible ? (isHovering ? 0.8 : 0.5) : 0,
           }}
           transition={{ duration: 0.2 }}
           className="relative -translate-x-1/2 -translate-y-1/2"
         >
           <div 
-            className={`w-10 h-10 rounded-full border transition-colors duration-200 ${
-              isHovering ? 'border-brand-darkRed' : 'border-brand-darkRed/50'
+            className={`w-10 h-10 rounded-full border-2 transition-colors duration-200 ${
+              isHovering ? 'border-brand-dustyBlue' : 'border-brand-stone'
             }`}
           />
         </motion.div>
