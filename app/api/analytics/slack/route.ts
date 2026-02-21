@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// Slack Webhook URL - Add your webhook URL here
-const SLACK_WEBHOOK_URL = process.env.SLACK_ANALYTICS_WEBHOOK_URL
+// Slack Webhook URL - Use main webhook or analytics-specific one
+const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || process.env.SLACK_ANALYTICS_WEBHOOK_URL
 
 // Store active visitors in memory (in production, use Redis or similar)
 const activeVisitors = new Map<string, any>()
