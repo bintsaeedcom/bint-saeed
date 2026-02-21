@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FiInstagram, FiMail, FiArrowRight, FiCheck } from 'react-icons/fi'
+import { FiInstagram, FiArrowRight, FiCheck } from 'react-icons/fi'
 import { FaSnapchat } from 'react-icons/fa6'
 
 export default function ComingSoonPage() {
@@ -14,35 +14,10 @@ export default function ComingSoonPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [mounted, setMounted] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const smoothX = useSpring(mouseX, { stiffness: 30, damping: 30 })
-  const smoothY = useSpring(mouseY, { stiffness: 30, damping: 30 })
-  
-  // Parallax transforms for floating orbs
-  const orb2X = useTransform(smoothX, v => v * -0.3)
-  const orb2Y = useTransform(smoothY, v => v * -0.3)
-  const orb3X = useTransform(smoothX, v => v * 0.2)
-  const orb3Y = useTransform(smoothY, v => v * 0.2)
 
   useEffect(() => {
     setMounted(true)
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect()
-        const x = (e.clientX - rect.left - rect.width / 2) / rect.width
-        const y = (e.clientY - rect.top - rect.height / 2) / rect.height
-        mouseX.set(x * 20)
-        mouseY.set(y * 20)
-      }
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [mouseX, mouseY])
+  }, [])
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -135,42 +110,14 @@ export default function ComingSoonPage() {
   if (!mounted) return null
 
   return (
-    <div 
-      ref={containerRef}
-      className="h-[100dvh] bg-brand-darkRed relative overflow-hidden"
-    >
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-darkRed via-brand-darkRed to-[#2a0010]" />
+    <div className="h-[100dvh] bg-brand-darkRed relative overflow-hidden">
+      {/* Clean gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#2d0012] via-brand-darkRed to-[#2a0010]" />
 
-      {/* Floating Orbs with Parallax - more subtle */}
-      <motion.div
-        style={{ x: smoothX, y: smoothY }}
-        className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full bg-gradient-to-br from-brand-dustyBlue/10 to-transparent blur-3xl"
-      />
-      <motion.div
-        style={{ x: orb2X, y: orb2Y }}
-        className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full bg-gradient-to-tl from-brand-stone/10 to-transparent blur-3xl"
-      />
-      <motion.div
-        style={{ x: orb3X, y: orb3Y }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[500px] md:h-[500px] rounded-full bg-gradient-to-r from-brand-rose/5 via-transparent to-brand-clayRed/5 blur-3xl"
-      />
-
-      {/* Minimal Grid Lines */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
-        <div className="absolute top-0 bottom-0 left-1/4 w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/50 to-transparent" />
-        <div className="absolute top-0 bottom-0 right-1/4 w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/50 to-transparent" />
-        <div className="absolute left-0 right-0 top-1/3 h-px bg-gradient-to-r from-transparent via-brand-stone/50 to-transparent" />
-        <div className="absolute left-0 right-0 bottom-1/3 h-px bg-gradient-to-r from-transparent via-brand-stone/50 to-transparent" />
-      </div>
-
-      {/* Subtle Noise Texture */}
-      <div 
-        className="absolute inset-0 opacity-[0.02] pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-        }}
-      />
+      {/* Static ambient glow - no animation */}
+      <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full bg-brand-dustyBlue/[0.07] blur-[100px]" />
+      <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full bg-brand-stone/[0.06] blur-[100px]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-brand-rose/[0.03] blur-[120px]" />
 
       {/* Main Content - fits viewport without scroll */}
       <div className="relative h-full flex flex-col items-center justify-center px-6 py-8 md:py-12">
