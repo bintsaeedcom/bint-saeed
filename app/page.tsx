@@ -9,6 +9,7 @@ import { FaSnapchat } from 'react-icons/fa6'
 
 export default function ComingSoonPage() {
   const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -44,11 +45,61 @@ export default function ComingSoonPage() {
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [mouseX, mouseY])
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!email) {
+      return 'Please enter your email'
+    }
+    if (!emailRegex.test(email)) {
+      return 'Please enter a valid email address'
+    }
+    // Check for common typos
+    const domain = email.split('@')[1]?.toLowerCase()
+    const commonTypos: { [key: string]: string } = {
+      'gmial.com': 'gmail.com',
+      'gmal.com': 'gmail.com',
+      'gamil.com': 'gmail.com',
+      'gnail.com': 'gmail.com',
+      'gmail.co': 'gmail.com',
+      'hotmal.com': 'hotmail.com',
+      'hotmai.com': 'hotmail.com',
+      'hotmial.com': 'hotmail.com',
+      'outlok.com': 'outlook.com',
+      'outloo.com': 'outlook.com',
+      'yahooo.com': 'yahoo.com',
+      'yaho.com': 'yahoo.com',
+    }
+    if (domain && commonTypos[domain]) {
+      return `Did you mean ${email.split('@')[0]}@${commonTypos[domain]}?`
+    }
+    return ''
+  }
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setEmail(value)
+    if (emailError) {
+      setEmailError(validateEmail(value))
+    }
+  }
+
+  const handleEmailBlur = () => {
+    if (email) {
+      setEmailError(validateEmail(email))
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email) return
+    
+    const error = validateEmail(email)
+    if (error) {
+      setEmailError(error)
+      return
+    }
 
     setIsLoading(true)
+    setEmailError('')
     try {
       const response = await fetch('/api/subscribe', {
         method: 'POST',
@@ -172,13 +223,13 @@ export default function ComingSoonPage() {
           className="mb-12 relative"
         >
           {/* Logo Glow */}
-          <div className="absolute inset-0 blur-2xl opacity-60">
+          <div className="absolute inset-0 blur-3xl opacity-50">
             <Image
               src="/logo.png"
               alt=""
-              width={500}
-              height={150}
-              className="w-auto h-28 md:h-40 lg:h-48"
+              width={600}
+              height={180}
+              className="w-auto h-36 md:h-52 lg:h-64"
             />
           </div>
           {/* Main Logo */}
@@ -191,9 +242,9 @@ export default function ComingSoonPage() {
             <Image
               src="/logo.png"
               alt="Bint Saeed"
-              width={500}
-              height={150}
-              className="w-auto h-28 md:h-40 lg:h-48 relative z-10"
+              width={600}
+              height={180}
+              className="w-auto h-36 md:h-52 lg:h-64 relative z-10"
               priority
             />
           </motion.div>
@@ -319,17 +370,32 @@ export default function ComingSoonPage() {
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleEmailChange}
+                    onBlur={handleEmailBlur}
                     placeholder="Enter your email"
-                    className="w-full px-6 py-4 bg-white/5 border border-white/20 rounded-lg text-white placeholder:text-white/30 font-roboto text-sm tracking-wide focus:outline-none focus:border-brand-dustyBlue focus:bg-white/10 transition-all duration-300"
-                    required
+                    className={`w-full px-6 py-4 bg-white/5 border rounded-lg text-white placeholder:text-white/30 font-roboto text-sm tracking-wide focus:outline-none focus:bg-white/10 transition-all duration-300 ${
+                      emailError 
+                        ? 'border-red-400 focus:border-red-400' 
+                        : 'border-white/20 focus:border-brand-dustyBlue'
+                    }`}
                   />
                   <motion.div
-                    className="absolute inset-0 rounded-lg border border-brand-dustyBlue opacity-0 group-focus-within:opacity-100 pointer-events-none"
+                    className={`absolute inset-0 rounded-lg border opacity-0 group-focus-within:opacity-100 pointer-events-none ${
+                      emailError ? 'border-red-400' : 'border-brand-dustyBlue'
+                    }`}
                     animate={{ scale: [1, 1.02, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   />
                 </div>
+                {emailError && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-red-400 text-xs font-roboto tracking-wide px-2"
+                  >
+                    {emailError}
+                  </motion.p>
+                )}
                 <motion.button
                   type="submit"
                   disabled={isLoading}
