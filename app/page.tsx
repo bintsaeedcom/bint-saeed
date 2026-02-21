@@ -21,26 +21,13 @@ export default function ComingSoonPage() {
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!email) {
-      return 'Please enter your email'
-    }
-    if (!emailRegex.test(email)) {
-      return 'Please enter a valid email address'
-    }
+    if (!email) return 'Please enter your email'
+    if (!emailRegex.test(email)) return 'Please enter a valid email address'
     const domain = email.split('@')[1]?.toLowerCase()
     const commonTypos: { [key: string]: string } = {
-      'gmial.com': 'gmail.com',
-      'gmal.com': 'gmail.com',
-      'gamil.com': 'gmail.com',
-      'gnail.com': 'gmail.com',
-      'gmail.co': 'gmail.com',
-      'hotmal.com': 'hotmail.com',
-      'hotmai.com': 'hotmail.com',
-      'hotmial.com': 'hotmail.com',
-      'outlok.com': 'outlook.com',
-      'outloo.com': 'outlook.com',
-      'yahooo.com': 'yahoo.com',
-      'yaho.com': 'yahoo.com',
+      'gmial.com': 'gmail.com', 'gmal.com': 'gmail.com', 'gamil.com': 'gmail.com',
+      'gnail.com': 'gmail.com', 'gmail.co': 'gmail.com', 'hotmal.com': 'hotmail.com',
+      'hotmai.com': 'hotmail.com', 'outlok.com': 'outlook.com', 'yahooo.com': 'yahoo.com',
     }
     if (domain && commonTypos[domain]) {
       return `Did you mean ${email.split('@')[0]}@${commonTypos[domain]}?`
@@ -49,28 +36,15 @@ export default function ComingSoonPage() {
   }
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setEmail(value)
+    setEmail(e.target.value)
     setSubmitError('')
-    if (emailError) {
-      setEmailError(validateEmail(value))
-    }
-  }
-
-  const handleEmailBlur = () => {
-    if (email) {
-      setEmailError(validateEmail(email))
-    }
+    if (emailError) setEmailError(validateEmail(e.target.value))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
     const error = validateEmail(email)
-    if (error) {
-      setEmailError(error)
-      return
-    }
+    if (error) { setEmailError(error); return }
 
     setIsLoading(true)
     setEmailError('')
@@ -86,22 +60,12 @@ export default function ComingSoonPage() {
         body: JSON.stringify({ email, source: 'coming-soon' }),
         signal: controller.signal,
       })
-
       clearTimeout(timeoutId)
-
-      if (response.ok) {
-        setIsSubmitted(true)
-        setEmail('')
-      } else {
-        setSubmitError('Something went wrong. Please try again.')
-      }
+      if (response.ok) { setIsSubmitted(true); setEmail('') }
+      else setSubmitError('Something went wrong. Please try again.')
     } catch (error: any) {
       clearTimeout(timeoutId)
-      if (error.name === 'AbortError') {
-        setSubmitError('Request timed out. Please try again.')
-      } else {
-        setSubmitError('Something went wrong. Please try again.')
-      }
+      setSubmitError(error.name === 'AbortError' ? 'Request timed out.' : 'Something went wrong.')
     } finally {
       setIsLoading(false)
     }
@@ -110,142 +74,228 @@ export default function ComingSoonPage() {
   if (!mounted) return null
 
   return (
-    <div className="h-[100dvh] bg-brand-darkRed relative overflow-hidden">
-      {/* Clean gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#2d0012] via-brand-darkRed to-[#2a0010]" />
+    <div className="h-[100dvh] bg-[#1a0008] relative overflow-hidden">
+      {/* Layered gradient background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2a0012] via-[#1a0008] to-[#0d0004]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(146,170,193,0.08)_0%,_transparent_70%)]" />
+      </div>
 
-      {/* Static ambient glow - no animation */}
-      <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full bg-brand-dustyBlue/[0.07] blur-[100px]" />
-      <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full bg-brand-stone/[0.06] blur-[100px]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-brand-rose/[0.03] blur-[120px]" />
+      {/* Elegant geometric lines */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="transparent" />
+            <stop offset="50%" stopColor="rgba(146,170,193,0.15)" />
+            <stop offset="100%" stopColor="transparent" />
+          </linearGradient>
+          <linearGradient id="lineGradientV" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="transparent" />
+            <stop offset="50%" stopColor="rgba(212,189,172,0.1)" />
+            <stop offset="100%" stopColor="transparent" />
+          </linearGradient>
+        </defs>
+        {/* Horizontal accent lines */}
+        <motion.line 
+          x1="0" y1="25%" x2="100%" y2="25%" 
+          stroke="url(#lineGradient)" strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 2, delay: 0.5 }}
+        />
+        <motion.line 
+          x1="0" y1="75%" x2="100%" y2="75%" 
+          stroke="url(#lineGradient)" strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 2, delay: 0.7 }}
+        />
+        {/* Vertical accent lines */}
+        <motion.line 
+          x1="15%" y1="0" x2="15%" y2="100%" 
+          stroke="url(#lineGradientV)" strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 2, delay: 0.6 }}
+        />
+        <motion.line 
+          x1="85%" y1="0" x2="85%" y2="100%" 
+          stroke="url(#lineGradientV)" strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 2, delay: 0.8 }}
+        />
+      </svg>
 
-      {/* Main Content - fits viewport without scroll */}
-      <div className="relative h-full flex flex-col items-center justify-center px-6 py-8 md:py-12">
+      {/* Decorative corner frames */}
+      <motion.div 
+        className="absolute top-8 left-8 w-24 h-24 md:w-32 md:h-32"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1 }}
+      >
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-brand-dustyBlue/40 to-transparent" />
+        <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue/40 to-transparent" />
+      </motion.div>
+      <motion.div 
+        className="absolute top-8 right-8 w-24 h-24 md:w-32 md:h-32"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.1 }}
+      >
+        <div className="absolute top-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue/40 to-transparent" />
+        <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue/40 to-transparent" />
+      </motion.div>
+      <motion.div 
+        className="absolute bottom-8 left-8 w-24 h-24 md:w-32 md:h-32"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.2 }}
+      >
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-brand-dustyBlue/40 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-px h-full bg-gradient-to-t from-brand-dustyBlue/40 to-transparent" />
+      </motion.div>
+      <motion.div 
+        className="absolute bottom-8 right-8 w-24 h-24 md:w-32 md:h-32"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.3 }}
+      >
+        <div className="absolute bottom-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue/40 to-transparent" />
+        <div className="absolute bottom-0 right-0 w-px h-full bg-gradient-to-t from-brand-dustyBlue/40 to-transparent" />
+      </motion.div>
+
+      {/* Main Content */}
+      <div className="relative h-full flex flex-col items-center justify-center px-6">
         
-        {/* Logo - Premium and refined */}
+        {/* LARGE Logo with elegant reveal */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-6 md:mb-8 relative"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="relative mb-8 md:mb-12"
         >
-          {/* Subtle glow behind logo */}
-          <div className="absolute inset-0 blur-2xl opacity-30 scale-150">
-            <div className="w-full h-full bg-brand-dustyBlue/30 rounded-full" />
+          {/* Logo glow effect */}
+          <div className="absolute inset-0 scale-[2] blur-[80px] opacity-40">
+            <div className="w-full h-full bg-gradient-to-r from-brand-dustyBlue/50 via-brand-stone/30 to-brand-dustyBlue/50 rounded-full" />
           </div>
+          
+          {/* Main Logo - MUCH BIGGER */}
           <Image
             src="/logo.png"
             alt="Bint Saeed"
-            width={400}
-            height={120}
-            className="w-auto h-16 sm:h-20 md:h-28 lg:h-32 relative z-10"
+            width={800}
+            height={240}
+            className="w-auto h-28 sm:h-36 md:h-48 lg:h-56 xl:h-64 relative z-10"
             priority
+          />
+          
+          {/* Elegant line beneath logo */}
+          <motion.div 
+            className="absolute -bottom-4 left-1/2 -translate-x-1/2 h-px bg-gradient-to-r from-transparent via-brand-stone/50 to-transparent"
+            initial={{ width: 0 }}
+            animate={{ width: '80%' }}
+            transition={{ duration: 1.5, delay: 0.8 }}
           />
         </motion.div>
 
-        {/* Coming Soon - Clean typography */}
+        {/* Coming Soon with letter spacing reveal */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-center mb-4 md:mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="text-center mb-6 md:mb-8"
         >
-          <h1 className="font-rozha text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-brand-dustyBlue tracking-wide">
-            Coming Soon
-          </h1>
-          
-          {/* Elegant underline */}
-          <motion.div 
-            className="h-px mt-4 md:mt-6 mx-auto bg-gradient-to-r from-transparent via-brand-stone/60 to-transparent"
-            initial={{ width: 0 }}
-            animate={{ width: '120px' }}
-            transition={{ duration: 1, delay: 0.8 }}
-          />
+          <motion.h1 
+            className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-dustyBlue tracking-[0.2em] md:tracking-[0.3em]"
+            initial={{ letterSpacing: '0.5em', opacity: 0 }}
+            animate={{ letterSpacing: '0.2em', opacity: 1 }}
+            transition={{ duration: 1.5, delay: 0.6 }}
+          >
+            COMING SOON
+          </motion.h1>
         </motion.div>
 
         {/* Tagline */}
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="font-roboto text-white/70 text-xs sm:text-sm tracking-[0.15em] uppercase text-center mb-3 md:mb-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="font-roboto text-white/50 text-[10px] sm:text-xs tracking-[0.25em] uppercase text-center mb-8 md:mb-10"
         >
           An Elevated Lifestyle Inspired by Heritage
         </motion.p>
 
-        {/* Description - shorter on mobile */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="font-roboto text-white/40 text-xs sm:text-sm tracking-wide text-center max-w-sm mx-auto mb-6 md:mb-8 leading-relaxed hidden sm:block"
-        >
-          Heritage craftsmanship meets modern femininity. Designed for women who appreciate elegance.
-        </motion.p>
-
-        {/* Email Signup - Compact */}
+        {/* Email Signup - Refined glassmorphism */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="w-full max-w-sm mb-6 md:mb-8"
+          transition={{ duration: 0.8, delay: 1 }}
+          className="w-full max-w-md"
         >
           {isSubmitted ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center backdrop-blur-md bg-white/5 rounded-xl p-5 border border-white/10"
+              className="text-center py-8"
             >
-              <div className="w-12 h-12 rounded-full bg-brand-dustyBlue/20 flex items-center justify-center mx-auto mb-3">
-                <FiCheck className="w-6 h-6 text-brand-dustyBlue" />
+              <div className="w-16 h-16 rounded-full border border-brand-dustyBlue/30 flex items-center justify-center mx-auto mb-4">
+                <FiCheck className="w-8 h-8 text-brand-dustyBlue" />
               </div>
-              <p className="font-rozha text-white text-lg mb-1">Thank You</p>
-              <p className="font-roboto text-white/50 text-xs tracking-wide">
+              <p className="font-rozha text-white text-xl tracking-wide mb-2">Thank You</p>
+              <p className="font-roboto text-white/40 text-xs tracking-wider">
                 We'll notify you when we launch
               </p>
             </motion.div>
           ) : (
-            <div className="backdrop-blur-md bg-white/5 rounded-xl p-5 border border-white/10">
-              <p className="font-roboto text-brand-dustyBlue/80 text-[10px] uppercase tracking-[0.2em] text-center mb-4">
-                Be the first to know
-              </p>
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  onBlur={handleEmailBlur}
-                  placeholder="Enter your email"
-                  className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder:text-white/30 font-roboto text-sm tracking-wide focus:outline-none focus:bg-white/10 transition-all ${
-                    emailError 
-                      ? 'border-red-400/50' 
-                      : 'border-white/10 focus:border-brand-dustyBlue/50'
-                  }`}
-                />
-                {emailError && (
-                  <p className="text-red-400/80 text-xs font-roboto px-1">{emailError}</p>
-                )}
-                {submitError && (
-                  <p className="text-red-400/80 text-xs font-roboto px-1">{submitError}</p>
-                )}
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full px-6 py-3 bg-brand-dustyBlue text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] rounded-lg hover:bg-white transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
-                >
-                  {isLoading ? (
-                    <>
-                      <span className="w-4 h-4 border-2 border-brand-darkRed/30 border-t-brand-darkRed rounded-full animate-spin" />
-                      <span>Subscribing...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Notify Me</span>
-                      <FiArrowRight className="w-3.5 h-3.5" />
-                    </>
+            <div className="relative">
+              {/* Subtle border glow */}
+              <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/20 via-transparent to-brand-stone/10 opacity-50" />
+              
+              <div className="relative backdrop-blur-sm bg-white/[0.03] rounded-2xl p-6 md:p-8 border border-white/[0.05]">
+                <p className="font-roboto text-brand-dustyBlue/60 text-[10px] uppercase tracking-[0.3em] text-center mb-5">
+                  Be the first to know
+                </p>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="relative">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={handleEmailChange}
+                      onBlur={() => email && setEmailError(validateEmail(email))}
+                      placeholder="Enter your email"
+                      className={`w-full px-5 py-4 bg-white/[0.03] border rounded-xl text-white placeholder:text-white/20 font-roboto text-sm tracking-wide focus:outline-none transition-all duration-300 ${
+                        emailError 
+                          ? 'border-red-400/30' 
+                          : 'border-white/[0.08] focus:border-brand-dustyBlue/30 focus:bg-white/[0.05]'
+                      }`}
+                    />
+                  </div>
+                  {emailError && (
+                    <p className="text-red-400/70 text-xs font-roboto tracking-wide px-1">{emailError}</p>
                   )}
-                </button>
-              </form>
+                  {submitError && (
+                    <p className="text-red-400/70 text-xs font-roboto tracking-wide px-1">{submitError}</p>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full py-4 bg-brand-dustyBlue text-[#1a0008] font-roboto text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-white transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 group"
+                  >
+                    {isLoading ? (
+                      <>
+                        <span className="w-4 h-4 border-2 border-[#1a0008]/20 border-t-[#1a0008] rounded-full animate-spin" />
+                        <span>Subscribing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Notify Me</span>
+                        <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
             </div>
           )}
         </motion.div>
@@ -254,8 +304,8 @@ export default function ComingSoonPage() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
-          className="flex items-center gap-8"
+          transition={{ duration: 0.8, delay: 1.2 }}
+          className="flex items-center gap-10 mt-8 md:mt-10"
         >
           {[
             { href: 'https://www.instagram.com/bintsaeed_brand/', icon: FiInstagram, label: 'Instagram' },
@@ -266,7 +316,7 @@ export default function ComingSoonPage() {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/30 hover:text-brand-dustyBlue transition-colors duration-300"
+              className="text-white/20 hover:text-brand-dustyBlue transition-colors duration-500"
               aria-label={social.label}
             >
               <social.icon className="w-5 h-5" />
@@ -274,25 +324,20 @@ export default function ComingSoonPage() {
           ))}
         </motion.div>
 
-        {/* Location - positioned at bottom */}
+        {/* Location badge at bottom */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2"
+          transition={{ duration: 0.8, delay: 1.4 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3"
         >
-          <div className="w-1.5 h-1.5 rounded-full bg-brand-dustyBlue/60" />
-          <p className="font-roboto text-white/25 text-[10px] uppercase tracking-[0.3em]">
+          <div className="w-1 h-1 rounded-full bg-brand-dustyBlue/50" />
+          <p className="font-roboto text-white/20 text-[9px] uppercase tracking-[0.4em]">
             Abu Dhabi
           </p>
+          <div className="w-1 h-1 rounded-full bg-brand-dustyBlue/50" />
         </motion.div>
       </div>
-
-      {/* Minimal corner accents */}
-      <div className="absolute top-6 left-6 w-12 h-12 border-l border-t border-brand-dustyBlue/20" />
-      <div className="absolute top-6 right-6 w-12 h-12 border-r border-t border-brand-dustyBlue/20" />
-      <div className="absolute bottom-6 left-6 w-12 h-12 border-l border-b border-brand-dustyBlue/20" />
-      <div className="absolute bottom-6 right-6 w-12 h-12 border-r border-b border-brand-dustyBlue/20" />
     </div>
   )
 }
