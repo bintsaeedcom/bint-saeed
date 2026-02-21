@@ -19,6 +19,12 @@ export default function ComingSoonPage() {
   const mouseY = useMotionValue(0)
   const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 })
   const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 })
+  
+  // Parallax transforms for floating orbs
+  const orb2X = useTransform(smoothX, v => v * -0.5)
+  const orb2Y = useTransform(smoothY, v => v * -0.5)
+  const orb3X = useTransform(smoothX, v => v * 0.3)
+  const orb3Y = useTransform(smoothY, v => v * 0.3)
 
   useEffect(() => {
     setMounted(true)
@@ -90,11 +96,11 @@ export default function ComingSoonPage() {
         className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-brand-dustyBlue/20 to-transparent blur-3xl"
       />
       <motion.div
-        style={{ x: useTransform(smoothX, v => v * -0.5), y: useTransform(smoothY, v => v * -0.5) }}
+        style={{ x: orb2X, y: orb2Y }}
         className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-tl from-brand-stone/15 to-transparent blur-3xl"
       />
       <motion.div
-        style={{ x: useTransform(smoothX, v => v * 0.3), y: useTransform(smoothY, v => v * 0.3) }}
+        style={{ x: orb3X, y: orb3Y }}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-brand-rose/10 via-transparent to-brand-clayRed/10 blur-3xl"
       />
 
