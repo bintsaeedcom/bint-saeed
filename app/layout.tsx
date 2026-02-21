@@ -148,7 +148,7 @@ export const metadata: Metadata = {
     siteName: 'Bint Saeed',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://bintsaeed.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Bint Saeed - Luxury Abayas & Designer Fashion Dubai UAE',
@@ -161,7 +161,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Bint Saeed | Luxury Abayas Dubai UAE',
     description: 'Discover UAE\'s premier luxury abaya brand. Handcrafted designer abayas with heritage-inspired designs.',
-    images: ['/og-image.png'],
+    images: ['https://bintsaeed.com/og-image.png'],
     creator: '@bintsaeed',
     site: '@bintsaeed',
   },
