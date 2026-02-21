@@ -5,7 +5,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FiInstagram, FiMail, FiArrowRight } from 'react-icons/fi'
-import { FaSnapchat, FaWhatsapp } from 'react-icons/fa6'
+import { FaSnapchat } from 'react-icons/fa6'
 
 export default function ComingSoonPage() {
   const [email, setEmail] = useState('')
@@ -358,8 +358,7 @@ export default function ComingSoonPage() {
         >
           {[
             { href: 'https://www.instagram.com/bintsaeed_brand/', icon: FiInstagram, label: 'Instagram' },
-            { href: 'https://snapchat.com/bintsaeed', icon: FaSnapchat, label: 'Snapchat' },
-            { href: 'https://wa.me/971000000000', icon: FaWhatsapp, label: 'WhatsApp' },
+            { href: 'https://snapchat.com/t/W1nDzIXS', icon: FaSnapchat, label: 'Snapchat' },
           ].map((social, index) => (
             <motion.div
               key={social.label}
