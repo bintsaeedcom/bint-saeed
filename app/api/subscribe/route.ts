@@ -1,30 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// In production, store these in a database (e.g., Supabase, MongoDB, or even a simple JSON file)
-// For now, we'll use Stripe's coupon system which is the most reliable
+async function fetchWithTimeout(url: string, options: RequestInit, timeout = 5000) {
+  const controller = new AbortController()
+  const id = setTimeout(() => controller.abort(), timeout)
+  try {
+    const response = await fetch(url, { ...options, signal: controller.signal })
+    clearTimeout(id)
+    return response
+  } catch (error) {
+    clearTimeout(id)
+    throw error
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { firstName, lastName, email, name, discountCode, source } = body
     
+    if (!email) {
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 })
+    }
+    
     const subscriberName = name || `${firstName || ''} ${lastName || ''}`.trim()
 
-    // Get IP address from headers
     const forwardedFor = request.headers.get('x-forwarded-for')
     const ip = forwardedFor ? forwardedFor.split(',')[0].trim() : 'Unknown'
     
-    // Get location from IP
     let location = { city: 'Unknown', country: 'Unknown' }
     try {
-      const geoRes = await fetch(`https://ipapi.co/${ip}/json/`)
-      const geoData = await geoRes.json()
-      location = {
-        city: geoData.city || 'Unknown',
-        country: geoData.country_name || 'Unknown',
+      const geoRes = await fetchWithTimeout(`https://ipapi.co/${ip}/json/`, {}, 3000)
+      if (geoRes.ok) {
+        const geoData = await geoRes.json()
+        location = {
+          city: geoData.city || 'Unknown',
+          country: geoData.country_name || 'Unknown',
+        }
       }
-    } catch (e) {
-      console.log('Could not get location from IP')
+    } catch {
+      // Continue without location data
     }
 
     const timestamp = new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
@@ -89,34 +103,37 @@ export async function POST(request: NextRequest) {
         ],
       }
 
-      await fetch(slackWebhookUrl, {
+      await fetchWithTimeout(slackWebhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(slackMessage),
-      })
+      }, 5000).catch(() => {})
     }
 
-    // Send to Mailerlite with discount code as custom field
     const mailerliteApiKey = process.env.MAILERLITE_API_KEY
     const mailerliteGroupId = process.env.MAILERLITE_GROUP_ID
 
     if (mailerliteApiKey && mailerliteGroupId) {
-      await fetch('https://connect.mailerlite.com/api/subscribers', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${mailerliteApiKey}`,
-        },
-        body: JSON.stringify({
-          email,
-          fields: {
-            name: subscriberName,
-            discount_code: discountCode || '',
-            source: source || 'footer',
+      try {
+        await fetchWithTimeout('https://connect.mailerlite.com/api/subscribers', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${mailerliteApiKey}`,
           },
-          groups: [mailerliteGroupId],
-        }),
-      })
+          body: JSON.stringify({
+            email,
+            fields: {
+              name: subscriberName,
+              discount_code: discountCode || '',
+              source: source || 'footer',
+            },
+            groups: [mailerliteGroupId],
+          }),
+        }, 5000)
+      } catch {
+        // Continue even if Mailerlite fails
+      }
     }
 
     // If using Stripe coupons, you can create a promotion code here

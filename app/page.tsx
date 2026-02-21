@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FiInstagram, FiMail, FiArrowRight } from 'react-icons/fi'
+import { FiInstagram, FiMail, FiArrowRight, FiCheck } from 'react-icons/fi'
 import { FaSnapchat } from 'react-icons/fa6'
 
 export default function ComingSoonPage() {
@@ -12,20 +12,20 @@ export default function ComingSoonPage() {
   const [emailError, setEmailError] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [mounted, setMounted] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const containerRef = useRef<HTMLDivElement>(null)
 
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 })
-  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 })
+  const smoothX = useSpring(mouseX, { stiffness: 30, damping: 30 })
+  const smoothY = useSpring(mouseY, { stiffness: 30, damping: 30 })
   
   // Parallax transforms for floating orbs
-  const orb2X = useTransform(smoothX, v => v * -0.5)
-  const orb2Y = useTransform(smoothY, v => v * -0.5)
-  const orb3X = useTransform(smoothX, v => v * 0.3)
-  const orb3Y = useTransform(smoothY, v => v * 0.3)
+  const orb2X = useTransform(smoothX, v => v * -0.3)
+  const orb2Y = useTransform(smoothY, v => v * -0.3)
+  const orb3X = useTransform(smoothX, v => v * 0.2)
+  const orb3Y = useTransform(smoothY, v => v * 0.2)
 
   useEffect(() => {
     setMounted(true)
@@ -35,9 +35,8 @@ export default function ComingSoonPage() {
         const rect = containerRef.current.getBoundingClientRect()
         const x = (e.clientX - rect.left - rect.width / 2) / rect.width
         const y = (e.clientY - rect.top - rect.height / 2) / rect.height
-        mouseX.set(x * 30)
-        mouseY.set(y * 30)
-        setMousePosition({ x: e.clientX, y: e.clientY })
+        mouseX.set(x * 20)
+        mouseY.set(y * 20)
       }
     }
 
@@ -53,7 +52,6 @@ export default function ComingSoonPage() {
     if (!emailRegex.test(email)) {
       return 'Please enter a valid email address'
     }
-    // Check for common typos
     const domain = email.split('@')[1]?.toLowerCase()
     const commonTypos: { [key: string]: string } = {
       'gmial.com': 'gmail.com',
@@ -78,6 +76,7 @@ export default function ComingSoonPage() {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setEmail(value)
+    setSubmitError('')
     if (emailError) {
       setEmailError(validateEmail(value))
     }
@@ -100,19 +99,34 @@ export default function ComingSoonPage() {
 
     setIsLoading(true)
     setEmailError('')
+    setSubmitError('')
+    
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 10000)
+    
     try {
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, source: 'coming-soon' }),
+        signal: controller.signal,
       })
+
+      clearTimeout(timeoutId)
 
       if (response.ok) {
         setIsSubmitted(true)
         setEmail('')
+      } else {
+        setSubmitError('Something went wrong. Please try again.')
       }
-    } catch (error) {
-      console.error('Subscription error:', error)
+    } catch (error: any) {
+      clearTimeout(timeoutId)
+      if (error.name === 'AbortError') {
+        setSubmitError('Request timed out. Please try again.')
+      } else {
+        setSubmitError('Something went wrong. Please try again.')
+      }
     } finally {
       setIsLoading(false)
     }
@@ -123,444 +137,215 @@ export default function ComingSoonPage() {
   return (
     <div 
       ref={containerRef}
-      className="min-h-screen bg-brand-darkRed relative overflow-hidden"
+      className="h-[100dvh] bg-brand-darkRed relative overflow-hidden"
     >
-      {/* Animated Gradient Mesh Background */}
-      <div className="absolute inset-0">
-        <motion.div
-          animate={{
-            background: [
-              'radial-gradient(ellipse at 20% 20%, rgba(146,170,193,0.15) 0%, transparent 50%)',
-              'radial-gradient(ellipse at 80% 80%, rgba(146,170,193,0.15) 0%, transparent 50%)',
-              'radial-gradient(ellipse at 50% 50%, rgba(146,170,193,0.15) 0%, transparent 50%)',
-              'radial-gradient(ellipse at 20% 20%, rgba(146,170,193,0.15) 0%, transparent 50%)',
-            ],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-          className="absolute inset-0"
-        />
-      </div>
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-darkRed via-brand-darkRed to-[#2a0010]" />
 
-      {/* Floating Orbs with Parallax */}
+      {/* Floating Orbs with Parallax - more subtle */}
       <motion.div
         style={{ x: smoothX, y: smoothY }}
-        className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-brand-dustyBlue/20 to-transparent blur-3xl"
+        className="absolute top-1/4 left-1/4 w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full bg-gradient-to-br from-brand-dustyBlue/10 to-transparent blur-3xl"
       />
       <motion.div
         style={{ x: orb2X, y: orb2Y }}
-        className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-tl from-brand-stone/15 to-transparent blur-3xl"
+        className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full bg-gradient-to-tl from-brand-stone/10 to-transparent blur-3xl"
       />
       <motion.div
         style={{ x: orb3X, y: orb3Y }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-brand-rose/10 via-transparent to-brand-clayRed/10 blur-3xl"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[500px] md:h-[500px] rounded-full bg-gradient-to-r from-brand-rose/5 via-transparent to-brand-clayRed/5 blur-3xl"
       />
 
-      {/* Animated Grid Lines */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={`v-${i}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0.5, 0] }}
-            transition={{ duration: 3, delay: i * 0.2, repeat: Infinity, repeatDelay: 5 }}
-            className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-brand-dustyBlue to-transparent"
-            style={{ left: `${(i + 1) * 5}%` }}
-          />
-        ))}
-        {[...Array(10)].map((_, i) => (
-          <motion.div
-            key={`h-${i}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0.3, 0] }}
-            transition={{ duration: 4, delay: i * 0.3, repeat: Infinity, repeatDelay: 6 }}
-            className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-stone to-transparent"
-            style={{ top: `${(i + 1) * 10}%` }}
-          />
-        ))}
+      {/* Minimal Grid Lines */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
+        <div className="absolute top-0 bottom-0 left-1/4 w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/50 to-transparent" />
+        <div className="absolute top-0 bottom-0 right-1/4 w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/50 to-transparent" />
+        <div className="absolute left-0 right-0 top-1/3 h-px bg-gradient-to-r from-transparent via-brand-stone/50 to-transparent" />
+        <div className="absolute left-0 right-0 bottom-1/3 h-px bg-gradient-to-r from-transparent via-brand-stone/50 to-transparent" />
       </div>
 
-      {/* Floating Particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(30)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ 
-              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
-              y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
-              opacity: 0 
-            }}
-            animate={{ 
-              y: [null, Math.random() * -200 - 100],
-              opacity: [0, 0.6, 0],
-            }}
-            transition={{ 
-              duration: Math.random() * 5 + 5,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: 'linear'
-            }}
-            className="absolute w-1 h-1 bg-brand-dustyBlue rounded-full"
-          />
-        ))}
-      </div>
-
-      {/* Noise Texture Overlay */}
+      {/* Subtle Noise Texture */}
       <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
+        className="absolute inset-0 opacity-[0.02] pointer-events-none"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }}
       />
 
-      {/* Main Content */}
-      <div className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20">
+      {/* Main Content - fits viewport without scroll */}
+      <div className="relative h-full flex flex-col items-center justify-center px-6 py-8 md:py-12">
         
-        {/* Logo with Glow Effect */}
+        {/* Logo - Premium and refined */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
-          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-12 relative"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-6 md:mb-8 relative"
         >
-          {/* Logo Glow */}
-          <div className="absolute inset-0 blur-3xl opacity-50">
-            <Image
-              src="/logo.png"
-              alt=""
-              width={600}
-              height={180}
-              className="w-auto h-36 md:h-52 lg:h-64"
-            />
+          {/* Subtle glow behind logo */}
+          <div className="absolute inset-0 blur-2xl opacity-30 scale-150">
+            <div className="w-full h-full bg-brand-dustyBlue/30 rounded-full" />
           </div>
-          {/* Main Logo */}
-          <motion.div
-            animate={{ 
-              filter: ['brightness(1)', 'brightness(1.2)', 'brightness(1)'],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <Image
-              src="/logo.png"
-              alt="Bint Saeed"
-              width={600}
-              height={180}
-              className="w-auto h-36 md:h-52 lg:h-64 relative z-10"
-              priority
-            />
-          </motion.div>
+          <Image
+            src="/logo.png"
+            alt="Bint Saeed"
+            width={400}
+            height={120}
+            className="w-auto h-16 sm:h-20 md:h-28 lg:h-32 relative z-10"
+            priority
+          />
         </motion.div>
 
-        {/* Coming Soon Text with Reveal Animation */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="text-center mb-8 overflow-hidden"
-        >
-          <div className="relative">
-            {/* Glitch Layer */}
-            <motion.h1 
-              className="font-rozha text-6xl md:text-8xl lg:text-9xl text-brand-dustyBlue tracking-wider absolute inset-0 opacity-0"
-              animate={{ 
-                opacity: [0, 0.5, 0],
-                x: [0, -5, 5, 0],
-                clipPath: ['inset(0 0 100% 0)', 'inset(40% 0 30% 0)', 'inset(0 0 100% 0)']
-              }}
-              transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 5 }}
-            >
-              Coming Soon
-            </motion.h1>
-            
-            {/* Main Text */}
-            <motion.h1 
-              className="font-rozha text-6xl md:text-8xl lg:text-9xl text-brand-dustyBlue tracking-wider relative"
-              initial={{ y: 100 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <motion.span
-                className="inline-block"
-                animate={{ 
-                  textShadow: [
-                    '0 0 20px rgba(146,170,193,0)',
-                    '0 0 40px rgba(146,170,193,0.5)',
-                    '0 0 20px rgba(146,170,193,0)',
-                  ]
-                }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                Coming Soon
-              </motion.span>
-            </motion.h1>
-          </div>
-
-          {/* Animated Underline */}
-          <motion.div 
-            className="relative h-px mt-8 mx-auto overflow-hidden"
-            initial={{ width: 0 }}
-            animate={{ width: '200px' }}
-            transition={{ duration: 1.5, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-dustyBlue to-transparent"
-              animate={{ x: ['-100%', '100%'] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-            />
-            <div className="absolute inset-0 bg-brand-stone/50" />
-          </motion.div>
-        </motion.div>
-
-        {/* Tagline with Stagger */}
+        {/* Coming Soon - Clean typography */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="text-center mb-12"
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-center mb-4 md:mb-6"
         >
-          <p className="font-roboto text-white/80 text-lg md:text-xl tracking-[0.2em] uppercase">
-            An Elevated Lifestyle Inspired by Heritage
-          </p>
+          <h1 className="font-rozha text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-brand-dustyBlue tracking-wide">
+            Coming Soon
+          </h1>
+          
+          {/* Elegant underline */}
+          <motion.div 
+            className="h-px mt-4 md:mt-6 mx-auto bg-gradient-to-r from-transparent via-brand-stone/60 to-transparent"
+            initial={{ width: 0 }}
+            animate={{ width: '120px' }}
+            transition={{ duration: 1, delay: 0.8 }}
+          />
         </motion.div>
 
-        {/* Description */}
+        {/* Tagline */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.3 }}
-          className="font-roboto text-white/40 text-sm md:text-base tracking-wide text-center max-w-lg mx-auto mb-16 leading-relaxed"
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="font-roboto text-white/70 text-xs sm:text-sm tracking-[0.15em] uppercase text-center mb-3 md:mb-4"
         >
-          Bint Saeed brings heritage craftsmanship into modern femininity. 
-          Designed for women who appreciate elegance and cultural depth.
+          An Elevated Lifestyle Inspired by Heritage
         </motion.p>
 
-        {/* Email Signup with Glass Effect */}
+        {/* Description - shorter on mobile */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="font-roboto text-white/40 text-xs sm:text-sm tracking-wide text-center max-w-sm mx-auto mb-6 md:mb-8 leading-relaxed hidden sm:block"
+        >
+          Heritage craftsmanship meets modern femininity. Designed for women who appreciate elegance.
+        </motion.p>
+
+        {/* Email Signup - Compact */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.5 }}
-          className="w-full max-w-md mb-16"
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="w-full max-w-sm mb-6 md:mb-8"
         >
           {isSubmitted ? (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center backdrop-blur-xl bg-white/5 rounded-2xl p-8 border border-white/10"
+              className="text-center backdrop-blur-md bg-white/5 rounded-xl p-5 border border-white/10"
             >
-              <motion.div 
-                className="w-20 h-20 rounded-full bg-brand-dustyBlue/20 flex items-center justify-center mx-auto mb-6"
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <FiMail className="w-10 h-10 text-brand-dustyBlue" />
-              </motion.div>
-              <p className="font-rozha text-white text-2xl mb-2">
-                Thank You
-              </p>
-              <p className="font-roboto text-white/50 text-sm tracking-wide">
+              <div className="w-12 h-12 rounded-full bg-brand-dustyBlue/20 flex items-center justify-center mx-auto mb-3">
+                <FiCheck className="w-6 h-6 text-brand-dustyBlue" />
+              </div>
+              <p className="font-rozha text-white text-lg mb-1">Thank You</p>
+              <p className="font-roboto text-white/50 text-xs tracking-wide">
                 We'll notify you when we launch
               </p>
             </motion.div>
           ) : (
-            <div className="backdrop-blur-xl bg-white/5 rounded-2xl p-8 border border-white/10">
-              <p className="font-roboto text-brand-dustyBlue text-xs uppercase tracking-[0.3em] text-center mb-6">
+            <div className="backdrop-blur-md bg-white/5 rounded-xl p-5 border border-white/10">
+              <p className="font-roboto text-brand-dustyBlue/80 text-[10px] uppercase tracking-[0.2em] text-center mb-4">
                 Be the first to know
               </p>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="relative group">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={handleEmailChange}
-                    onBlur={handleEmailBlur}
-                    placeholder="Enter your email"
-                    className={`w-full px-6 py-4 bg-white/5 border rounded-lg text-white placeholder:text-white/30 font-roboto text-sm tracking-wide focus:outline-none focus:bg-white/10 transition-all duration-300 ${
-                      emailError 
-                        ? 'border-red-400 focus:border-red-400' 
-                        : 'border-white/20 focus:border-brand-dustyBlue'
-                    }`}
-                  />
-                  <motion.div
-                    className={`absolute inset-0 rounded-lg border opacity-0 group-focus-within:opacity-100 pointer-events-none ${
-                      emailError ? 'border-red-400' : 'border-brand-dustyBlue'
-                    }`}
-                    animate={{ scale: [1, 1.02, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                </div>
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  onBlur={handleEmailBlur}
+                  placeholder="Enter your email"
+                  className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder:text-white/30 font-roboto text-sm tracking-wide focus:outline-none focus:bg-white/10 transition-all ${
+                    emailError 
+                      ? 'border-red-400/50' 
+                      : 'border-white/10 focus:border-brand-dustyBlue/50'
+                  }`}
+                />
                 {emailError && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-red-400 text-xs font-roboto tracking-wide px-2"
-                  >
-                    {emailError}
-                  </motion.p>
+                  <p className="text-red-400/80 text-xs font-roboto px-1">{emailError}</p>
                 )}
-                <motion.button
+                {submitError && (
+                  <p className="text-red-400/80 text-xs font-roboto px-1">{submitError}</p>
+                )}
+                <button
                   type="submit"
                   disabled={isLoading}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full px-8 py-4 bg-brand-dustyBlue text-brand-darkRed font-roboto text-sm uppercase tracking-[0.2em] rounded-lg hover:bg-white transition-colors disabled:opacity-50 flex items-center justify-center gap-3 group relative overflow-hidden"
+                  className="w-full px-6 py-3 bg-brand-dustyBlue text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] rounded-lg hover:bg-white transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                    initial={{ x: '-100%' }}
-                    whileHover={{ x: '100%' }}
-                    transition={{ duration: 0.6 }}
-                  />
-                  <span className="relative">
-                    {isLoading ? 'Subscribing...' : 'Notify Me'}
-                  </span>
-                  {!isLoading && (
-                    <FiArrowRight className="w-4 h-4 relative group-hover:translate-x-1 transition-transform" />
+                  {isLoading ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-brand-darkRed/30 border-t-brand-darkRed rounded-full animate-spin" />
+                      <span>Subscribing...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Notify Me</span>
+                      <FiArrowRight className="w-3.5 h-3.5" />
+                    </>
                   )}
-                </motion.button>
+                </button>
               </form>
             </div>
           )}
         </motion.div>
 
-        {/* Social Links with Hover Effects */}
+        {/* Social Links */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.7 }}
-          className="flex items-center gap-10"
+          transition={{ duration: 0.8, delay: 0.9 }}
+          className="flex items-center gap-8"
         >
           {[
             { href: 'https://www.instagram.com/bintsaeed_brand/', icon: FiInstagram, label: 'Instagram' },
             { href: 'https://snapchat.com/t/W1nDzIXS', icon: FaSnapchat, label: 'Snapchat' },
-          ].map((social, index) => (
-            <motion.div
+          ].map((social) => (
+            <Link
               key={social.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.8 + index * 0.1 }}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/30 hover:text-brand-dustyBlue transition-colors duration-300"
+              aria-label={social.label}
             >
-              <Link
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative group"
-                aria-label={social.label}
-              >
-                <motion.div
-                  className="absolute inset-0 bg-brand-dustyBlue/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity"
-                  whileHover={{ scale: 1.5 }}
-                />
-                <motion.div
-                  whileHover={{ scale: 1.2, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="relative text-white/40 hover:text-brand-dustyBlue transition-colors duration-300"
-                >
-                  <social.icon className="w-7 h-7" />
-                </motion.div>
-              </Link>
-            </motion.div>
+              <social.icon className="w-5 h-5" />
+            </Link>
           ))}
         </motion.div>
 
-        {/* Location Badge */}
+        {/* Location - positioned at bottom */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 2 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          transition={{ duration: 0.8, delay: 1 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2"
         >
-          <motion.div
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            className="flex items-center gap-3"
-          >
-            <div className="w-2 h-2 rounded-full bg-brand-dustyBlue animate-pulse" />
-            <p className="font-roboto text-white/30 text-xs uppercase tracking-[0.4em]">
-              Abu Dhabi, UAE
-            </p>
-          </motion.div>
+          <div className="w-1.5 h-1.5 rounded-full bg-brand-dustyBlue/60" />
+          <p className="font-roboto text-white/25 text-[10px] uppercase tracking-[0.3em]">
+            Abu Dhabi
+          </p>
         </motion.div>
       </div>
 
-      {/* Animated Corner Frames */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="absolute top-8 left-8 w-20 h-20"
-      >
-        <motion.div 
-          className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-brand-dustyBlue to-transparent"
-          animate={{ scaleX: [0, 1] }}
-          transition={{ duration: 1, delay: 0.5 }}
-          style={{ transformOrigin: 'left' }}
-        />
-        <motion.div 
-          className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue to-transparent"
-          animate={{ scaleY: [0, 1] }}
-          transition={{ duration: 1, delay: 0.5 }}
-          style={{ transformOrigin: 'top' }}
-        />
-      </motion.div>
-      
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="absolute top-8 right-8 w-20 h-20"
-      >
-        <motion.div 
-          className="absolute top-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue to-transparent"
-          animate={{ scaleX: [0, 1] }}
-          transition={{ duration: 1, delay: 0.6 }}
-          style={{ transformOrigin: 'right' }}
-        />
-        <motion.div 
-          className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue to-transparent"
-          animate={{ scaleY: [0, 1] }}
-          transition={{ duration: 1, delay: 0.6 }}
-          style={{ transformOrigin: 'top' }}
-        />
-      </motion.div>
-      
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="absolute bottom-8 left-8 w-20 h-20"
-      >
-        <motion.div 
-          className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-brand-dustyBlue to-transparent"
-          animate={{ scaleX: [0, 1] }}
-          transition={{ duration: 1, delay: 0.7 }}
-          style={{ transformOrigin: 'left' }}
-        />
-        <motion.div 
-          className="absolute bottom-0 left-0 w-px h-full bg-gradient-to-t from-brand-dustyBlue to-transparent"
-          animate={{ scaleY: [0, 1] }}
-          transition={{ duration: 1, delay: 0.7 }}
-          style={{ transformOrigin: 'bottom' }}
-        />
-      </motion.div>
-      
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="absolute bottom-8 right-8 w-20 h-20"
-      >
-        <motion.div 
-          className="absolute bottom-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue to-transparent"
-          animate={{ scaleX: [0, 1] }}
-          transition={{ duration: 1, delay: 0.8 }}
-          style={{ transformOrigin: 'right' }}
-        />
-        <motion.div 
-          className="absolute bottom-0 right-0 w-px h-full bg-gradient-to-t from-brand-dustyBlue to-transparent"
-          animate={{ scaleY: [0, 1] }}
-          transition={{ duration: 1, delay: 0.8 }}
-          style={{ transformOrigin: 'bottom' }}
-        />
-      </motion.div>
+      {/* Minimal corner accents */}
+      <div className="absolute top-6 left-6 w-12 h-12 border-l border-t border-brand-dustyBlue/20" />
+      <div className="absolute top-6 right-6 w-12 h-12 border-r border-t border-brand-dustyBlue/20" />
+      <div className="absolute bottom-6 left-6 w-12 h-12 border-l border-b border-brand-dustyBlue/20" />
+      <div className="absolute bottom-6 right-6 w-12 h-12 border-r border-b border-brand-dustyBlue/20" />
     </div>
   )
 }

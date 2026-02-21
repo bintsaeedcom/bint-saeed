@@ -1,132 +1,121 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
-import { motion, useSpring, useMotionValue } from 'framer-motion'
+import { useEffect, useState, useRef } from 'react'
 
 export default function AnimatedCursor() {
   const [isHovering, setIsHovering] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
-  const [isVisible, setIsVisible] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
-
-  const cursorX = useMotionValue(-100)
-  const cursorY = useMotionValue(-100)
-
-  const springConfig = { damping: 25, stiffness: 300, mass: 0.5 }
-  const cursorXSpring = useSpring(cursorX, springConfig)
-  const cursorYSpring = useSpring(cursorY, springConfig)
-
-  const moveCursor = useCallback((e: MouseEvent) => {
-    cursorX.set(e.clientX)
-    cursorY.set(e.clientY)
-    if (!isVisible) setIsVisible(true)
-  }, [cursorX, cursorY, isVisible])
+  
+  const dotRef = useRef<HTMLDivElement>(null)
+  const ringRef = useRef<HTMLDivElement>(null)
+  const mousePos = useRef({ x: 0, y: 0 })
+  const dotPos = useRef({ x: 0, y: 0 })
+  const ringPos = useRef({ x: 0, y: 0 })
+  const animationRef = useRef<number>()
 
   useEffect(() => {
     setIsMounted(true)
     
-    // Set cursor visible immediately on first mouse move
-    const handleFirstMove = (e: MouseEvent) => {
-      cursorX.set(e.clientX)
-      cursorY.set(e.clientY)
-      setIsVisible(true)
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePos.current = { x: e.clientX, y: e.clientY }
     }
 
-    document.addEventListener('mousemove', moveCursor)
-    document.addEventListener('mousemove', handleFirstMove, { once: true })
-    
     const handleMouseDown = () => setIsClicking(true)
     const handleMouseUp = () => setIsClicking(false)
     
-    document.addEventListener('mousedown', handleMouseDown)
-    document.addEventListener('mouseup', handleMouseUp)
-
     const handleHoverStart = () => setIsHovering(true)
     const handleHoverEnd = () => setIsHovering(false)
 
     const addHoverListeners = () => {
-      const hoverElements = document.querySelectorAll('[data-cursor-hover], a, button, input, [role="button"]')
+      const hoverElements = document.querySelectorAll('a, button, input, textarea, [role="button"], [data-cursor-hover]')
       hoverElements.forEach((el) => {
         el.addEventListener('mouseenter', handleHoverStart)
         el.addEventListener('mouseleave', handleHoverEnd)
       })
     }
 
-    addHoverListeners()
+    const animate = () => {
+      // Smooth interpolation - dot follows faster, ring follows slower
+      const dotSpeed = 0.25
+      const ringSpeed = 0.12
+      
+      dotPos.current.x += (mousePos.current.x - dotPos.current.x) * dotSpeed
+      dotPos.current.y += (mousePos.current.y - dotPos.current.y) * dotSpeed
+      
+      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * ringSpeed
+      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * ringSpeed
+      
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate(${dotPos.current.x}px, ${dotPos.current.y}px) translate(-50%, -50%)`
+      }
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate(${ringPos.current.x}px, ${ringPos.current.y}px) translate(-50%, -50%)`
+      }
+      
+      animationRef.current = requestAnimationFrame(animate)
+    }
+
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mousedown', handleMouseDown)
+    document.addEventListener('mouseup', handleMouseUp)
     
+    addHoverListeners()
     const observer = new MutationObserver(addHoverListeners)
     observer.observe(document.body, { childList: true, subtree: true })
+    
+    animationRef.current = requestAnimationFrame(animate)
 
     return () => {
-      document.removeEventListener('mousemove', moveCursor)
+      document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mousedown', handleMouseDown)
       document.removeEventListener('mouseup', handleMouseUp)
       observer.disconnect()
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
     }
-  }, [moveCursor, cursorX, cursorY])
+  }, [])
 
-  // Don't render on mobile or before mount
   if (!isMounted) return null
-  if (typeof window !== 'undefined' && window.innerWidth < 768) {
-    return null
-  }
+  if (typeof window !== 'undefined' && window.innerWidth < 768) return null
 
   return (
     <>
-      {/* Main Cursor Dot */}
-      <motion.div
-        className="fixed top-0 left-0 pointer-events-none"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          zIndex: 999999,
-        }}
+      {/* Cursor Dot */}
+      <div
+        ref={dotRef}
+        className="fixed top-0 left-0 pointer-events-none will-change-transform"
+        style={{ zIndex: 999999 }}
       >
-        <motion.div
-          animate={{
-            scale: isClicking ? 0.7 : isHovering ? 0.5 : 1,
-            opacity: isVisible ? 1 : 0,
+        <div 
+          className="rounded-full transition-transform duration-100"
+          style={{
+            width: isClicking ? '10px' : isHovering ? '8px' : '12px',
+            height: isClicking ? '10px' : isHovering ? '8px' : '12px',
+            background: '#92aac1',
+            boxShadow: '0 0 0 2px rgba(255,255,255,0.6), 0 0 12px rgba(146,170,193,0.5)',
           }}
-          transition={{ duration: 0.1 }}
-          className="relative -translate-x-1/2 -translate-y-1/2"
-        >
-          {/* Dot with strong outline for visibility on any background */}
-          <div 
-            className="w-4 h-4 rounded-full"
-            style={{
-              background: '#92aac1',
-              boxShadow: '0 0 0 2px rgba(255,255,255,0.8), 0 0 0 4px rgba(59,0,20,0.3), 0 0 15px rgba(146,170,193,0.6)',
-            }}
-          />
-        </motion.div>
-      </motion.div>
+        />
+      </div>
 
       {/* Cursor Ring */}
-      <motion.div
-        className="fixed top-0 left-0 pointer-events-none"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          zIndex: 999998,
-        }}
+      <div
+        ref={ringRef}
+        className="fixed top-0 left-0 pointer-events-none will-change-transform"
+        style={{ zIndex: 999998 }}
       >
-        <motion.div
-          animate={{
-            scale: isClicking ? 0.85 : isHovering ? 1.5 : 1,
-            opacity: isVisible ? (isHovering ? 1 : 0.6) : 0,
+        <div 
+          className="rounded-full border transition-all duration-150"
+          style={{
+            width: isClicking ? '32px' : isHovering ? '48px' : '36px',
+            height: isClicking ? '32px' : isHovering ? '48px' : '36px',
+            borderWidth: '1.5px',
+            borderColor: isHovering ? 'rgba(146,170,193,0.8)' : 'rgba(212,189,172,0.5)',
+            opacity: isHovering ? 1 : 0.6,
           }}
-          transition={{ duration: 0.15 }}
-          className="relative -translate-x-1/2 -translate-y-1/2"
-        >
-          <div 
-            className="w-10 h-10 rounded-full border-2 transition-colors duration-200"
-            style={{
-              borderColor: isHovering ? '#92aac1' : '#d4bdac',
-              boxShadow: '0 0 10px rgba(146,170,193,0.3)',
-            }}
-          />
-        </motion.div>
-      </motion.div>
+        />
+      </div>
     </>
   )
 }
