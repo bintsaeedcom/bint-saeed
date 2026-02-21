@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
 import { FiInstagram, FiArrowRight, FiCheck } from 'react-icons/fi'
 import { FaSnapchat } from 'react-icons/fa6'
 
@@ -305,23 +304,26 @@ export default function ComingSoonPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.2 }}
-          className="flex items-center gap-10 mt-8 md:mt-10"
+          className="flex items-center gap-8 mt-8 md:mt-10 relative z-50"
         >
-          {[
-            { href: 'https://www.instagram.com/bintsaeed_brand/', icon: FiInstagram, label: 'Instagram' },
-            { href: 'https://snapchat.com/t/W1nDzIXS', icon: FaSnapchat, label: 'Snapchat' },
-          ].map((social) => (
-            <Link
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/20 hover:text-brand-dustyBlue transition-colors duration-500"
-              aria-label={social.label}
-            >
-              <social.icon className="w-5 h-5" />
-            </Link>
-          ))}
+          <a
+            href="https://www.instagram.com/bintsaeed_brand/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 text-white/40 hover:text-brand-dustyBlue transition-colors duration-300 cursor-pointer"
+            aria-label="Instagram"
+          >
+            <FiInstagram className="w-6 h-6" />
+          </a>
+          <a
+            href="https://snapchat.com/t/W1nDzIXS"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-3 text-white/40 hover:text-brand-dustyBlue transition-colors duration-300 cursor-pointer"
+            aria-label="Snapchat"
+          >
+            <FaSnapchat className="w-6 h-6" />
+          </a>
         </motion.div>
 
         {/* Location badge at bottom */}
