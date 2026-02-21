@@ -260,7 +260,7 @@ export default function ComingSoonPage() {
                       onChange={handleEmailChange}
                       onBlur={() => email && setEmailError(validateEmail(email))}
                       placeholder="Enter your email"
-                      className={`w-full px-5 py-4 bg-white/[0.03] border rounded-xl text-white placeholder:text-white/20 font-roboto text-sm tracking-wide focus:outline-none transition-all duration-300 ${
+                      className={`w-full px-5 py-4 bg-white/[0.03] border rounded-xl text-brand-stone placeholder:text-brand-stone/30 font-roboto text-sm tracking-wide focus:outline-none transition-all duration-300 ${
                         emailError 
                           ? 'border-red-400/30' 
                           : 'border-white/[0.08] focus:border-brand-dustyBlue/30 focus:bg-white/[0.05]'
@@ -276,7 +276,7 @@ export default function ComingSoonPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 bg-brand-dustyBlue text-[#1a0008] font-roboto text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-white transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 group"
+                    className="w-full py-4 bg-brand-dustyBlue text-[#1a0008] font-roboto text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-brand-stone transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 group"
                   >
                     {isLoading ? (
                       <>
