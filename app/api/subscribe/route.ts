@@ -10,6 +10,25 @@ export async function POST(request: NextRequest) {
     
     const subscriberName = name || `${firstName || ''} ${lastName || ''}`.trim()
 
+    // Get IP address from headers
+    const forwardedFor = request.headers.get('x-forwarded-for')
+    const ip = forwardedFor ? forwardedFor.split(',')[0].trim() : 'Unknown'
+    
+    // Get location from IP
+    let location = { city: 'Unknown', country: 'Unknown' }
+    try {
+      const geoRes = await fetch(`https://ipapi.co/${ip}/json/`)
+      const geoData = await geoRes.json()
+      location = {
+        city: geoData.city || 'Unknown',
+        country: geoData.country_name || 'Unknown',
+      }
+    } catch (e) {
+      console.log('Could not get location from IP')
+    }
+
+    const timestamp = new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
+
     // Send to Slack with discount code info
     const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL
     if (slackWebhookUrl) {
@@ -20,7 +39,7 @@ export async function POST(request: NextRequest) {
             type: 'header',
             text: {
               type: 'plain_text',
-              text: source === 'popup' ? '🎁 New Subscriber (10% Discount)' : '✨ New Newsletter Subscriber',
+              text: source === 'popup' || source === 'coming-soon' ? '🎁 New Subscriber (Coming Soon Page)' : '✨ New Newsletter Subscriber',
               emoji: true,
             },
           },
@@ -34,6 +53,14 @@ export async function POST(request: NextRequest) {
               {
                 type: 'mrkdwn',
                 text: `*Email:*\n${email}`,
+              },
+              {
+                type: 'mrkdwn',
+                text: `*Location:*\n🌍 ${location.city}, ${location.country}`,
+              },
+              {
+                type: 'mrkdwn',
+                text: `*IP Address:*\n🔒 ${ip}`,
               },
             ],
           },
@@ -55,7 +82,7 @@ export async function POST(request: NextRequest) {
             elements: [
               {
                 type: 'mrkdwn',
-                text: `Subscribed at ${new Date().toISOString()}`,
+                text: `Subscribed at ${timestamp} (Dubai time)`,
               },
             ],
           },

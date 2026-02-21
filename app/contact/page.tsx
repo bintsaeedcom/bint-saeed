@@ -24,10 +24,18 @@ export default function ContactPage() {
     setIsSubmitting(true)
     
     try {
-      // Simulate API call - replace with actual Slack/email integration
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      toast.success(isRTL ? 'تم إرسال رسالتك بنجاح!' : 'Message sent successfully!')
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      
+      if (response.ok) {
+        toast.success(isRTL ? 'تم إرسال رسالتك بنجاح!' : 'Message sent successfully!')
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
+      } else {
+        throw new Error('Failed to send')
+      }
     } catch {
       toast.error(isRTL ? 'حدث خطأ. حاولي مرة أخرى.' : 'Something went wrong. Please try again.')
     } finally {

@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
 function formatSlackMessage(type: string, data: any) {
   const timestamp = new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
   const location = data.location ? `${data.location.city}, ${data.location.country}` : 'Unknown'
+  const ip = data.location?.ip || 'Unknown'
   const device = data.device ? `${data.device.type} • ${data.device.browser} • ${data.device.os}` : 'Unknown'
   const timeOnSite = data.totalTimeOnSite ? formatTime(data.totalTimeOnSite) : '0s'
 
@@ -52,21 +53,21 @@ function formatSlackMessage(type: string, data: any) {
         blocks: [
           {
             type: 'header',
-            text: { type: 'plain_text', text: '🆕 New Visitor', emoji: true }
+            text: { type: 'plain_text', text: '🆕 New Visitor on bintsaeed.com', emoji: true }
           },
           {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Location:*\n🌍 ${location}` },
+              { type: 'mrkdwn', text: `*IP Address:*\n🔒 ${ip}` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${data.referrer || 'Direct'}` },
-              { type: 'mrkdwn', text: `*Time:*\n🕐 ${timestamp}` },
             ]
           },
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `Visitor ID: ${data.visitorId}` }
+              { type: 'mrkdwn', text: `🕐 ${timestamp} (Dubai) • First-time visitor • ID: ${data.visitorId?.slice(-8)}` }
             ]
           }
         ]
@@ -77,15 +78,21 @@ function formatSlackMessage(type: string, data: any) {
         blocks: [
           {
             type: 'header',
-            text: { type: 'plain_text', text: '🔄 Returning Visitor', emoji: true }
+            text: { type: 'plain_text', text: '🔄 Returning Visitor on bintsaeed.com', emoji: true }
           },
           {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Location:*\n🌍 ${location}` },
-              { type: 'mrkdwn', text: `*Visit #:*\n🔢 ${data.visitCount}` },
-              { type: 'mrkdwn', text: `*First Visit:*\n📅 ${new Date(data.firstVisit).toLocaleDateString()}` },
+              { type: 'mrkdwn', text: `*IP Address:*\n🔒 ${ip}` },
+              { type: 'mrkdwn', text: `*Visit #:*\n🔢 Visit ${data.visitCount}` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
+            ]
+          },
+          {
+            type: 'context',
+            elements: [
+              { type: 'mrkdwn', text: `🕐 ${timestamp} (Dubai) • First seen: ${new Date(data.firstVisit).toLocaleDateString()} • ID: ${data.visitorId?.slice(-8)}` }
             ]
           }
         ]
