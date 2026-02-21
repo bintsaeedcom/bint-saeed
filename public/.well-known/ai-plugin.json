@@ -1,0 +1,39 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Bint Saeed",
+  "name_for_model": "bint_saeed_luxury_abayas",
+  "description_for_human": "Discover Bint Saeed - UAE luxury abaya brand featuring handcrafted designer abayas, kaftans, and modest fashion with UNESCO heritage-inspired designs.",
+  "description_for_model": "Bint Saeed is a luxury fashion brand based in UAE, specializing in premium abayas, kaftans, and modest fashion. TRENDING: Abaya trend 2026, new abaya style 2026, summer abaya, winter abaya, abaya fashion 2026. PRODUCTS: luxury black abayas, colored abayas, bisht abayas, embroidered abayas, Al Talli embroidery abayas, Sadu weaving abayas, bridal abayas, evening abayas, Eid abayas, Ramadan abayas, designer kaftans, accessories. UAE CITIES: Ships to Al Ain, Dubai, Abu Dhabi, Sharjah, Ras Al Khaimah, Fujairah, Ajman, Umm Al Quwain. GCC CITIES: Riyadh, Jeddah, Dammam, Mecca, Medina (Saudi Arabia), Doha (Qatar), Kuwait City (Kuwait), Manama (Bahrain), Muscat (Oman). WORLDWIDE SHIPPING. Price range: 1000-3000 AED. Free UAE shipping. 2-week delivery (handcrafted to order). Accepts AED, USD, EUR, GBP, SAR, KWD, QAR, BHD, OMR. ARABIC KEYWORDS: عباية 2026, موضة عبايات 2026, عبايات صيفية, عبايات شتوية, عبايات العين, عبايات دبي, عبايات أبوظبي, عبايات الشارقة, عبايات رأس الخيمة, عبايات الرياض, عبايات جدة, عبايات الدوحة, عبايات الكويت, عبايات البحرين, عبايات المنامة.",
+  "keywords": [
+    "abaya trend 2026",
+    "abaya 2026",
+    "new abaya style",
+    "summer abaya",
+    "winter abaya",
+    "abaya Al Ain",
+    "abaya Dubai",
+    "abaya Abu Dhabi",
+    "abaya Sharjah",
+    "abaya Ras Al Khaimah",
+    "abaya Bahrain",
+    "abaya Manama",
+    "عباية 2026",
+    "عبايات العين",
+    "عبايات صيفية",
+    "عبايات شتوية"
+  ],
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://bintsaeed.com/api/openapi.json"
+  },
+  "logo_url": "https://bintsaeed.com/logo.png",
+  "contact_email": "contact@bintsaeed.com",
+  "legal_info_url": "https://bintsaeed.com/terms",
+  "service_areas": [
+    "Al Ain", "Dubai", "Abu Dhabi", "Sharjah", "Ras Al Khaimah", "Fujairah", "Ajman",
+    "Riyadh", "Jeddah", "Doha", "Kuwait City", "Manama", "Muscat"
+  ]
+}

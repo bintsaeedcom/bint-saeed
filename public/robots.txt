@@ -1,0 +1,43 @@
+# Bint Saeed - Luxury Abayas & Modest Fashion
+# https://bintsaeed.com
+
+User-agent: *
+Allow: /
+
+# Allow all AI crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Sitemaps
+Sitemap: https://bintsaeed.com/sitemap.xml
+
+# Disallow admin and API routes
+User-agent: *
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /checkout/
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
+
+# Host declaration
+Host: https://bintsaeed.com
