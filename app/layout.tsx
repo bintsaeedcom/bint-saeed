@@ -1,13 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import AnimatedCursor from '@/components/AnimatedCursor'
-import CookieConsent from '@/components/CookieConsent'
-import WhatsAppButton from '@/components/WhatsAppButton'
-import EmailPopup from '@/components/EmailPopup'
-import DeliveryBanner from '@/components/DeliveryBanner'
-import LocationConsent from '@/components/LocationConsent'
+import LayoutWrapper from '@/components/LayoutWrapper'
 import { Toaster } from 'react-hot-toast'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 import { CurrencyProvider } from '@/lib/currency/CurrencyContext'
@@ -572,15 +566,10 @@ export default function RootLayout({
           <CurrencyProvider>
             <AnalyticsProvider>
               <AnalyticsTracker />
-              <DeliveryBanner />
               <AnimatedCursor />
-              <Header />
-              <main>{children}</main>
-              <Footer />
-              <WhatsAppButton />
-              <LocationConsent />
-              <EmailPopup />
-              <CookieConsent />
+              <LayoutWrapper>
+                {children}
+              </LayoutWrapper>
               <Toaster 
                 position="bottom-right"
                 toastOptions={{
