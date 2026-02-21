@@ -231,10 +231,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       }
     })
 
-    // Send page view to Slack
-    if (visitor) {
-      sendSlackNotification('page_view', { ...visitor, currentPage: { path, title } })
-    }
+    // Page views are tracked locally only - no Slack spam
   }, [currentPath, pageStartTime, visitor])
 
   // Track cart events
@@ -254,10 +251,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       }
     })
 
-    // Send cart event to Slack
-    if (visitor) {
-      sendSlackNotification('cart_event', { ...visitor, cartEvent: event })
-    }
+    // Cart events are tracked locally only - no Slack spam
   }, [visitor])
 
   // Set contact info
