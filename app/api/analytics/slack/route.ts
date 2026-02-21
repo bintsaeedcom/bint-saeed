@@ -58,16 +58,23 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'section',
             fields: [
+              { type: 'mrkdwn', text: `*Date & Time:*\n🕐 ${timestamp}` },
               { type: 'mrkdwn', text: `*Location:*\n🌍 ${location}` },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 ${ip}` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
+            ]
+          },
+          {
+            type: 'section',
+            fields: [
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${data.referrer || 'Direct'}` },
+              { type: 'mrkdwn', text: `*Status:*\n✨ First-time visitor` },
             ]
           },
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `🕐 ${timestamp} (Dubai) • First-time visitor • ID: ${data.visitorId?.slice(-8)}` }
+              { type: 'mrkdwn', text: `Visitor ID: ${data.visitorId?.slice(-8)}` }
             ]
           }
         ]
@@ -83,16 +90,23 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'section',
             fields: [
+              { type: 'mrkdwn', text: `*Date & Time:*\n🕐 ${timestamp}` },
               { type: 'mrkdwn', text: `*Location:*\n🌍 ${location}` },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 ${ip}` },
-              { type: 'mrkdwn', text: `*Visit #:*\n🔢 Visit ${data.visitCount}` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
+            ]
+          },
+          {
+            type: 'section',
+            fields: [
+              { type: 'mrkdwn', text: `*Visit Count:*\n🔢 Visit #${data.visitCount}` },
+              { type: 'mrkdwn', text: `*First Visit:*\n📅 ${new Date(data.firstVisit).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}` },
             ]
           },
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `🕐 ${timestamp} (Dubai) • First seen: ${new Date(data.firstVisit).toLocaleDateString()} • ID: ${data.visitorId?.slice(-8)}` }
+              { type: 'mrkdwn', text: `Visitor ID: ${data.visitorId?.slice(-8)}` }
             ]
           }
         ]
