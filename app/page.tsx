@@ -40,31 +40,22 @@ export default function ComingSoonPage() {
     if (emailError) setEmailError(validateEmail(e.target.value))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const error = validateEmail(email)
     if (error) { setEmailError(error); return }
 
-    setIsLoading(true)
-    setEmailError('')
-    setSubmitError('')
+    // Show success immediately
+    setIsSubmitted(true)
     
-    try {
-      await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source: 'coming-soon' }),
-      })
-      // Always show success - the email was sent to the server
-      setIsSubmitted(true)
-      setEmail('')
-    } catch {
-      // Even on error, show success - email might have been captured
-      setIsSubmitted(true)
-      setEmail('')
-    } finally {
-      setIsLoading(false)
-    }
+    // Send to API in background (don't wait)
+    fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, source: 'coming-soon' }),
+    }).catch(() => {})
+    
+    setEmail('')
   }
 
   if (!mounted) return null
