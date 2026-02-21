@@ -318,7 +318,7 @@ export default function ComingSoonPage() {
           className="text-center mb-12"
         >
           <p className="font-roboto text-white/80 text-lg md:text-xl tracking-[0.2em] uppercase">
-            Luxury Abayas Crafted with Heritage
+            An Elevated Lifestyle Inspired by Heritage
           </p>
         </motion.div>
 
@@ -329,8 +329,8 @@ export default function ComingSoonPage() {
           transition={{ duration: 1, delay: 1.3 }}
           className="font-roboto text-white/40 text-sm md:text-base tracking-wide text-center max-w-lg mx-auto mb-16 leading-relaxed"
         >
-          Where traditional Emirati craftsmanship meets contemporary elegance. 
-          Each piece tells a story of heritage, designed for the modern woman.
+          Bint Saeed brings heritage craftsmanship into modern femininity. 
+          Designed for women who appreciate elegance and cultural depth.
         </motion.p>
 
         {/* Email Signup with Glass Effect */}
