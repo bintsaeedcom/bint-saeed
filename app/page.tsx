@@ -73,7 +73,7 @@ export default function ComingSoonPage() {
   if (!mounted) return null
 
   return (
-    <div className="h-[100dvh] bg-[#1a0008] relative overflow-hidden">
+    <div className="min-h-[100dvh] h-[100dvh] bg-[#1a0008] relative overflow-hidden">
       {/* Layered gradient background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-[#2a0012] via-[#1a0008] to-[#0d0004]" />

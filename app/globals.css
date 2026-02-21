@@ -74,9 +74,13 @@ body {
   letter-spacing: 0.02em;
   overflow-x: hidden;
   cursor: none;
-  background: #ffffff;
+  background: #1a0008;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  background: #1a0008;
 }
 
 @media (max-width: 768px) {
