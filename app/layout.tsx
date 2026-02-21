@@ -10,10 +10,10 @@ import AnalyticsTracker from '@/components/AnalyticsTracker'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Bint Saeed | Luxury Abayas & Designer Modest Fashion UAE',
+    default: 'Bint Saeed | Heritage-Inspired Modest Fashion & Lifestyle UAE',
     template: '%s | Bint Saeed',
   },
-  description: 'Bint Saeed - Luxury Abaya Brand in UAE. Designer abayas handcrafted with UNESCO heritage techniques. Premium quality, free GCC shipping. Shop luxury abayas online.',
+  description: 'Discover Bint Saeed\'s heritage-inspired abayas, dresses, skirts, tops, and semi-precious gemstone jewellery. Refined modest fashion shaped by Emirati craftsmanship.',
   keywords: [
     // Trending keywords 2026
     'abaya trend 2026',
@@ -142,16 +142,18 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Bint Saeed | Luxury Abayas & Designer Modest Fashion UAE',
-    description: 'UAE\'s premier luxury abaya brand. Handcrafted designer abayas & kaftans with UNESCO heritage-inspired designs. Free shipping UAE & GCC.',
+    title: 'Bint Saeed | Heritage-Inspired Modest Fashion & Lifestyle UAE',
+    description: 'Discover Bint Saeed\'s heritage-inspired abayas, dresses, skirts, tops, and semi-precious gemstone jewellery. Refined modest fashion shaped by Emirati craftsmanship.',
     url: 'https://bintsaeed.com',
     siteName: 'Bint Saeed',
     images: [
       {
         url: 'https://bintsaeed.com/og-image.png',
+        secureUrl: 'https://bintsaeed.com/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Bint Saeed - Luxury Abayas & Designer Fashion Dubai UAE',
+        type: 'image/png',
+        alt: 'Bint Saeed - Heritage-Inspired Modest Fashion UAE',
       },
     ],
     locale: 'en_AE',
@@ -159,8 +161,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bint Saeed | Luxury Abayas Dubai UAE',
-    description: 'Discover UAE\'s premier luxury abaya brand. Handcrafted designer abayas with heritage-inspired designs.',
+    title: 'Bint Saeed | Heritage-Inspired Modest Fashion UAE',
+    description: 'Discover Bint Saeed\'s heritage-inspired abayas, dresses, skirts, tops, and semi-precious gemstone jewellery. Refined modest fashion shaped by Emirati craftsmanship.',
     images: ['https://bintsaeed.com/og-image.png'],
     creator: '@bintsaeed',
     site: '@bintsaeed',
