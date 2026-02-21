@@ -210,7 +210,7 @@ export default function ComingSoonPage() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="font-roboto text-white/50 text-[10px] sm:text-xs tracking-[0.25em] uppercase text-center mb-8 md:mb-10"
         >
-          An Elevated Lifestyle Inspired by Heritage
+          A Refined Lifestyle Inspired by Heritage
         </motion.p>
 
         {/* Email Signup - Refined glassmorphism */}
