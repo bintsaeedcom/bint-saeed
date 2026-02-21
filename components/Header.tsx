@@ -114,7 +114,7 @@ export default function Header() {
               <FiMenu className="w-5 h-5" />
             </button>
 
-            {/* Center Logo - approximately 1cm height x 4cm width */}
+            {/* Center Logo - Large and Prominent */}
             <Link href="/" className="absolute left-1/2 -translate-x-1/2" data-cursor-hover>
               <motion.div
                 whileHover={{ scale: 1.02 }}
@@ -123,10 +123,10 @@ export default function Header() {
                 <Image
                   src="/logo.png"
                   alt="Bint Saeed"
-                  width={150}
-                  height={38}
+                  width={280}
+                  height={70}
                   className={`transition-all duration-500 ${
-                    isScrolled ? 'h-[32px] w-[128px]' : 'h-[38px] w-[150px]'
+                    isScrolled ? 'h-[50px] w-auto' : 'h-[65px] w-auto'
                   }`}
                   priority
                 />

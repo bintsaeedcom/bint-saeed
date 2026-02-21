@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { FiCheck, FiShoppingBag, FiArrowLeft } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 
-export default function CheckoutSuccessPage() {
+function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
   const clearCart = useCartStore((state) => state.clearCart)
@@ -92,5 +92,17 @@ export default function CheckoutSuccessPage() {
         </motion.div>
       </div>
     </div>
+  )
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen pt-32 pb-20 flex items-center justify-center">
+        <div className="animate-pulse text-brand-clayRed">Loading...</div>
+      </div>
+    }>
+      <CheckoutSuccessContent />
+    </Suspense>
   )
 }
