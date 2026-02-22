@@ -181,8 +181,8 @@ function EditorialIntro() {
           >
             <div className="relative aspect-[4/5] lg:-mr-16">
               <Image
-                src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1000&q=90"
-                alt="Editorial"
+                src="/image 1.png"
+                alt="Heritage meets modernity"
                 fill
                 className="object-cover"
               />
