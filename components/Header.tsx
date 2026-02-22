@@ -45,14 +45,14 @@ export default function Header() {
 
   return (
     <>
-      {/* Main Header - Below Banner */}
+      {/* Main Header - Below Banner - Brand Dark Red */}
       <header
         className={`fixed top-[40px] left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'py-2 shadow-lg bg-[#1a0008]/98 backdrop-blur-sm' : 'py-4 lg:py-5 bg-gradient-to-b from-[#1a0008] to-[#1a0008]/95'
+          isScrolled ? 'py-2 shadow-lg bg-brand-darkRed' : 'py-4 lg:py-5 bg-brand-darkRed'
         }`}
       >
         {/* Subtle dusty blue accent line at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
         <nav className="container mx-auto px-6 lg:px-16">
           {/* Top Row - Utilities (Desktop) */}
           <div className="hidden lg:flex items-center justify-between mb-4 pb-3 border-b border-white/10">
@@ -125,10 +125,10 @@ export default function Header() {
                 <Image
                   src="/logo.png"
                   alt="Bint Saeed"
-                  width={350}
-                  height={90}
+                  width={400}
+                  height={100}
                   className={`transition-all duration-500 ${
-                    isScrolled ? 'h-[55px] w-auto' : 'h-[75px] w-auto'
+                    isScrolled ? 'h-[60px] w-auto' : 'h-[85px] w-auto'
                   }`}
                   priority
                 />
