@@ -7,7 +7,6 @@ import WhatsAppButton from '@/components/WhatsAppButton'
 import LocationConsent from '@/components/LocationConsent'
 import EmailPopup from '@/components/EmailPopup'
 import CookieConsent from '@/components/CookieConsent'
-import DeliveryBanner from '@/components/DeliveryBanner'
 
 interface LayoutWrapperProps {
   children: React.ReactNode
@@ -30,9 +29,8 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
 
   return (
     <>
-      <DeliveryBanner />
       <Header />
-      <main className="pt-[40px]">{children}</main>
+      <main className="pt-[90px] lg:pt-[100px]">{children}</main>
       <Footer />
       <WhatsAppButton />
       <LocationConsent />

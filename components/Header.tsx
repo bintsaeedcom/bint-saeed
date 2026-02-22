@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -11,11 +11,36 @@ import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
 import MiniCart from './MiniCart'
 
+// Search suggestions and pages
+const searchableContent = [
+  { title: 'New Arrivals', href: '/shop', category: 'Collections' },
+  { title: 'Evening Wear', href: '/shop?category=evening', category: 'Collections' },
+  { title: 'Ready to Wear', href: '/shop?category=ready-to-wear', category: 'Collections' },
+  { title: 'Accessories', href: '/accessories', category: 'Collections' },
+  { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
+  { title: 'Bracelets', href: '/accessories?type=bracelets', category: 'Accessories' },
+  { title: 'Earrings', href: '/accessories?type=earrings', category: 'Accessories' },
+  { title: 'Our Story', href: '/about', category: 'About' },
+  { title: 'Heritage', href: '/heritage', category: 'About' },
+  { title: 'Al Talli', href: '/heritage/al-talli', category: 'Heritage' },
+  { title: 'Sadu Fabric', href: '/heritage/sadu-fabric', category: 'Heritage' },
+  { title: 'Size Guide', href: '/size-guide', category: 'Help' },
+  { title: 'Contact Us', href: '/contact', category: 'Help' },
+  { title: 'FAQ', href: '/faq', category: 'Help' },
+  { title: 'Shipping & Returns', href: '/terms', category: 'Help' },
+  { title: 'Abayas', href: '/shop?category=abayas', category: 'Products' },
+  { title: 'Black Abaya', href: '/shop?category=abayas&color=black', category: 'Products' },
+  { title: 'Luxury Abaya', href: '/shop?category=abayas&style=luxury', category: 'Products' },
+]
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [isMiniCartOpen, setIsMiniCartOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<typeof searchableContent>([])
+  const searchInputRef = useRef<HTMLInputElement>(null)
   const cartItems = useCartStore((state) => state.items)
   const { t, isRTL } = useLanguage()
 
@@ -43,81 +68,56 @@ export default function Header() {
     }
   }, [isMobileMenuOpen])
 
+  // Handle search
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+      const results = searchableContent.filter(item => 
+        item.title.toLowerCase().includes(query) ||
+        item.category.toLowerCase().includes(query)
+      )
+      setSearchResults(results.slice(0, 8))
+    } else {
+      setSearchResults([])
+    }
+  }, [searchQuery])
+
+  // Focus search input when opened
+  useEffect(() => {
+    if (isSearchOpen && searchInputRef.current) {
+      searchInputRef.current.focus()
+    }
+  }, [isSearchOpen])
+
+  const handleSearchClose = () => {
+    setIsSearchOpen(false)
+    setSearchQuery('')
+    setSearchResults([])
+  }
+
   return (
     <>
-      {/* Main Header - Below Banner - Brand Dark Red */}
+      {/* Main Header - Elegant Single Row Design */}
       <header
-        className={`fixed top-[40px] left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'py-2 shadow-lg bg-brand-darkRed' : 'py-4 lg:py-5 bg-brand-darkRed'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled 
+            ? 'py-3 shadow-lg bg-brand-darkRed' 
+            : 'py-4 lg:py-5 bg-brand-darkRed'
         }`}
       >
         {/* Subtle dusty blue accent line at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-        <nav className="container mx-auto px-6 lg:px-16">
-          {/* Top Row - Utilities (Desktop) */}
-          <div className="hidden lg:flex items-center justify-between mb-4 pb-3 border-b border-white/10 relative z-30">
-            <div className="flex items-center gap-6">
-              <CurrencySwitcher variant="light" />
-              <LanguageSwitcher variant="light" />
-            </div>
-            <div className={`flex items-center gap-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className="text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-2 py-2"
-                data-cursor-hover
-                aria-label={t.nav.search}
-              >
-                <FiSearch className="w-4 h-4" />
-                <span className="font-roboto text-[10px] uppercase tracking-[0.2em]">{t.nav.search}</span>
-              </button>
-              <Link
-                href="/account"
-                className="text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-2 py-2"
-                data-cursor-hover
-                aria-label={t.nav.account}
-              >
-                <FiUser className="w-4 h-4" />
-                <span className="font-roboto text-[10px] uppercase tracking-[0.2em]">{t.nav.account}</span>
-              </Link>
-              <button
-                className="text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-2 py-2"
-                data-cursor-hover
-                aria-label={t.nav.wishlist}
-              >
-                <FiHeart className="w-4 h-4" />
-                <span className="font-roboto text-[10px] uppercase tracking-[0.2em]">{t.nav.wishlist}</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Main Row */}
+        
+        <nav className="container mx-auto px-4 lg:px-12">
           <div className="flex items-center justify-between relative">
-            {/* Center Logo - Lowest z-index, pointer-events only on the image */}
-            <div className="absolute left-1/2 -translate-x-1/2 z-0 pointer-events-none">
-              <Link href="/preview" className="pointer-events-auto inline-block" data-cursor-hover>
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Image
-                    src="/logo.png"
-                    alt="Bint Saeed"
-                    width={400}
-                    height={100}
-                    className="h-[85px] w-auto"
-                    priority
-                  />
-                </motion.div>
-              </Link>
-            </div>
-
-            {/* Left Navigation - High z-index for clickability */}
-            <nav className="hidden lg:flex items-center gap-8 flex-1 relative z-50 pointer-events-auto">
-              {navItems.slice(0, 3).map((item) => (
+            
+            {/* Left: Navigation */}
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 relative z-50">
+              {navItems.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300 py-3 px-2 pointer-events-auto"
+                  className="font-roboto text-[11px] uppercase tracking-[0.15em] text-white/90 hover:text-brand-dustyBlue transition-colors duration-300 py-2 whitespace-nowrap"
                   data-cursor-hover
                 >
                   {item.label}
@@ -125,9 +125,9 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile: Menu Button */}
             <button
-              className="lg:hidden p-3 text-white relative z-50 pointer-events-auto"
+              className="lg:hidden p-2 text-white relative z-50"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               data-cursor-hover
               aria-label="Toggle menu"
@@ -135,103 +135,142 @@ export default function Header() {
               <FiMenu className="w-6 h-6" />
             </button>
 
-            {/* Right Navigation - High z-index for clickability */}
-            <nav className="hidden lg:flex items-center gap-8 flex-1 justify-end relative z-50 pointer-events-auto">
-              {navItems.slice(3).map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300 py-3 px-2 pointer-events-auto"
-                  data-cursor-hover
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+            {/* Center: Logo */}
+            <div className="absolute left-1/2 -translate-x-1/2 z-10">
+              <Link href="/preview" className="block" data-cursor-hover>
+                <Image
+                  src="/logo.png"
+                  alt="Bint Saeed"
+                  width={300}
+                  height={80}
+                  className={`transition-all duration-300 ${isScrolled ? 'h-[55px]' : 'h-[65px]'} w-auto`}
+                  priority
+                />
+              </Link>
+            </div>
 
-            {/* Right Actions - Mobile & Tablet */}
-            <div className={`flex lg:hidden items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            {/* Right: Utilities & Icons */}
+            <div className="hidden lg:flex items-center gap-5 xl:gap-6 flex-1 justify-end relative z-50">
+              {/* Language & Currency */}
+              <div className="flex items-center gap-4 pr-4 border-r border-white/20">
+                <CurrencySwitcher variant="light" />
+                <LanguageSwitcher variant="light" />
+              </div>
+              
+              {/* Icons */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="text-white/80 hover:text-white transition-colors duration-300"
+                className="text-white/70 hover:text-white transition-colors duration-300 p-1"
                 data-cursor-hover
+                aria-label={t.nav.search}
               >
-                <FiSearch className="w-5 h-5" />
+                <FiSearch className="w-[18px] h-[18px]" />
               </button>
+              
+              <Link
+                href="/account"
+                className="text-white/70 hover:text-white transition-colors duration-300 p-1"
+                data-cursor-hover
+                aria-label={t.nav.account}
+              >
+                <FiUser className="w-[18px] h-[18px]" />
+              </Link>
+              
+              <button
+                className="text-white/70 hover:text-white transition-colors duration-300 p-1"
+                data-cursor-hover
+                aria-label={t.nav.wishlist}
+              >
+                <FiHeart className="w-[18px] h-[18px]" />
+              </button>
+              
               <button
                 onClick={() => setIsMiniCartOpen(true)}
-                className="relative text-white/80 hover:text-white transition-colors duration-300"
+                className="relative text-white/70 hover:text-white transition-colors duration-300 p-1"
                 data-cursor-hover
+                aria-label={t.nav.cart}
               >
-                <FiShoppingBag className="w-5 h-5" />
+                <FiShoppingBag className="w-[18px] h-[18px]" />
                 {cartItems.length > 0 && (
-                  <span className={`absolute -top-2 ${isRTL ? '-left-2' : '-right-2'} w-4 h-4 bg-white text-brand-darkRed text-[9px] rounded-full flex items-center justify-center font-roboto font-bold`}>
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-dustyBlue text-white text-[9px] rounded-full flex items-center justify-center font-roboto font-bold">
                     {cartItems.length}
                   </span>
                 )}
               </button>
             </div>
 
-            {/* Cart - Desktop (far right) */}
-            <button
-              onClick={() => setIsMiniCartOpen(true)}
-              className="hidden lg:flex relative text-white/70 hover:text-white transition-colors duration-300 items-center gap-2 ml-10"
-              data-cursor-hover
-              aria-label={t.nav.cart}
-            >
-              <FiShoppingBag className="w-4 h-4" />
-              <span className="font-roboto text-[10px] uppercase tracking-[0.2em]">{t.nav.cart}</span>
-              {cartItems.length > 0 && (
-                <span className="w-5 h-5 bg-white text-brand-darkRed text-[10px] rounded-full flex items-center justify-center font-roboto font-bold">
-                  {cartItems.length}
-                </span>
-              )}
-            </button>
+            {/* Mobile: Right Icons */}
+            <div className="flex lg:hidden items-center gap-3">
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className="text-white/80 hover:text-white transition-colors duration-300 p-1"
+                data-cursor-hover
+              >
+                <FiSearch className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setIsMiniCartOpen(true)}
+                className="relative text-white/80 hover:text-white transition-colors duration-300 p-1"
+                data-cursor-hover
+              >
+                <FiShoppingBag className="w-5 h-5" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-dustyBlue text-white text-[9px] rounded-full flex items-center justify-center font-roboto font-bold">
+                    {cartItems.length}
+                  </span>
+                )}
+              </button>
+            </div>
           </div>
         </nav>
       </header>
 
-      {/* Search Overlay */}
+      {/* Search Overlay - Stays on page feel */}
       <AnimatePresence>
         {isSearchOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-white"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-0 top-0 z-[70] bg-white shadow-2xl"
           >
-            <div className="container mx-auto px-6 lg:px-12 h-full flex flex-col">
-              <div className="flex items-center justify-between py-5">
-                <span className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-clayRed">
-                  {t.search.title}
-                </span>
+            <div className="container mx-auto px-6 lg:px-12">
+              {/* Search Input Row */}
+              <div className="flex items-center gap-4 py-5 border-b border-brand-stone/30">
+                <FiSearch className="w-5 h-5 text-brand-darkRed/50" />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={t.search.placeholder || "Search for products, collections, pages..."}
+                  className={`flex-1 text-lg md:text-xl font-roboto text-brand-darkRed bg-transparent focus:outline-none placeholder:text-brand-stone/60 ${isRTL ? 'text-right' : ''}`}
+                  dir={isRTL ? 'rtl' : 'ltr'}
+                />
                 <button
-                  onClick={() => setIsSearchOpen(false)}
-                  className="text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
+                  onClick={handleSearchClose}
+                  className="p-2 text-brand-darkRed/60 hover:text-brand-darkRed transition-colors"
                   data-cursor-hover
                 >
-                  <FiX className="w-6 h-6" />
+                  <FiX className="w-5 h-5" />
                 </button>
               </div>
               
-              <div className="flex-1 flex items-center justify-center">
-                <div className="w-full max-w-2xl">
-                  <input
-                    type="text"
-                    placeholder={t.search.placeholder}
-                    className={`w-full text-3xl md:text-5xl font-rozha text-brand-darkRed bg-transparent border-b-2 border-brand-stone pb-4 focus:outline-none focus:border-brand-darkRed transition-colors placeholder:text-brand-stone ${isRTL ? 'text-right' : ''}`}
-                    autoFocus
-                    dir={isRTL ? 'rtl' : 'ltr'}
-                  />
-                  <div className="mt-12">
-                    <span className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-clayRed mb-4 block">
-                      {t.search.popularSearches}
+              {/* Search Results */}
+              <div className="py-4 max-h-[60vh] overflow-y-auto">
+                {searchQuery.trim() === '' ? (
+                  // Popular searches when empty
+                  <div>
+                    <span className="font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-clayRed mb-4 block">
+                      {t.search.popularSearches || 'Popular Searches'}
                     </span>
-                    <div className={`flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
-                      {[t.collections.eveningWear, t.nav.accessories, t.nav.newIn].map((term) => (
+                    <div className="flex flex-wrap gap-2">
+                      {['Abayas', 'Evening Wear', 'Accessories', 'New Arrivals', 'Heritage'].map((term) => (
                         <button
                           key={term}
-                          className="px-4 py-2 border border-brand-stone text-brand-darkRed font-roboto text-sm tracking-wide hover:bg-brand-dustyBlue transition-colors"
+                          onClick={() => setSearchQuery(term)}
+                          className="px-4 py-2 bg-brand-stone/20 text-brand-darkRed font-roboto text-sm tracking-wide hover:bg-brand-dustyBlue/20 transition-colors rounded-full"
                           data-cursor-hover
                         >
                           {term}
@@ -239,9 +278,48 @@ export default function Header() {
                       ))}
                     </div>
                   </div>
-                </div>
+                ) : searchResults.length > 0 ? (
+                  // Show results
+                  <div className="space-y-1">
+                    {searchResults.map((result, index) => (
+                      <Link
+                        key={index}
+                        href={result.href}
+                        onClick={handleSearchClose}
+                        className="flex items-center justify-between p-3 hover:bg-brand-stone/10 rounded-lg transition-colors group"
+                        data-cursor-hover
+                      >
+                        <div>
+                          <span className="font-roboto text-brand-darkRed group-hover:text-brand-dustyBlue transition-colors">
+                            {result.title}
+                          </span>
+                          <span className="ml-3 font-roboto text-xs text-brand-clayRed/60 uppercase tracking-wider">
+                            {result.category}
+                          </span>
+                        </div>
+                        <FiArrowRight className="w-4 h-4 text-brand-stone group-hover:text-brand-dustyBlue transition-colors" />
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  // No results
+                  <div className="text-center py-8">
+                    <p className="font-roboto text-brand-darkRed/60">
+                      No results found for "{searchQuery}"
+                    </p>
+                    <p className="font-roboto text-sm text-brand-stone mt-2">
+                      Try searching for collections, products, or pages
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
+            
+            {/* Click outside to close */}
+            <div 
+              className="fixed inset-0 -z-10" 
+              onClick={handleSearchClose}
+            />
           </motion.div>
         )}
       </AnimatePresence>
@@ -262,14 +340,14 @@ export default function Header() {
                   <Image
                     src="/logo.png"
                     alt="Bint Saeed"
-                    width={250}
-                    height={70}
-                    className="h-14 w-auto"
+                    width={200}
+                    height={55}
+                    className="h-12 w-auto"
                   />
                 </Link>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-white"
+                  className="text-white p-2"
                   data-cursor-hover
                 >
                   <FiX className="w-6 h-6" />
@@ -291,7 +369,7 @@ export default function Header() {
                       className="group flex items-center justify-between py-4 border-b border-white/10"
                       data-cursor-hover
                     >
-                      <span className="font-rozha text-3xl text-white">
+                      <span className="font-rozha text-2xl text-white">
                         {item.label}
                       </span>
                       <FiArrowRight className={`w-5 h-5 text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all ${isRTL ? 'rotate-180' : ''}`} />
@@ -303,7 +381,7 @@ export default function Header() {
               {/* Footer */}
               <div className="px-6 pb-8">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-5">
                     <Link
                       href="/cart"
                       onClick={() => setIsMobileMenuOpen(false)}
@@ -327,7 +405,10 @@ export default function Header() {
                       <FiHeart className="w-6 h-6" />
                     </button>
                   </div>
-                  <LanguageSwitcher variant="light" />
+                  <div className="flex items-center gap-3">
+                    <CurrencySwitcher variant="light" />
+                    <LanguageSwitcher variant="light" />
+                  </div>
                 </div>
               </div>
             </div>
