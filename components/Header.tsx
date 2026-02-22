@@ -45,12 +45,14 @@ export default function Header() {
 
   return (
     <>
-      {/* Main Header - Always Dark Red */}
+      {/* Main Header - Coming Soon Style */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 bg-brand-darkRed transition-all duration-500 ${
-          isScrolled ? 'py-3 shadow-lg' : 'py-5 lg:py-6'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled ? 'py-3 shadow-lg bg-[#1a0008]/95 backdrop-blur-sm' : 'py-5 lg:py-6 bg-gradient-to-b from-[#1a0008] to-[#1a0008]/90'
         }`}
       >
+        {/* Subtle dusty blue accent line at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/20 to-transparent" />
         <nav className="container mx-auto px-6 lg:px-16">
           {/* Top Row - Utilities (Desktop) */}
           <div className="hidden lg:flex items-center justify-between mb-4 pb-3 border-b border-white/10">
