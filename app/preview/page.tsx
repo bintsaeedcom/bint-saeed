@@ -339,8 +339,8 @@ function ColorBlockSection() {
           <motion.div style={{ y }} className="relative">
             <div className="relative aspect-[3/4] max-w-md mx-auto lg:mx-0">
               <Image
-                src="https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=800&q=90"
-                alt="Craftsmanship"
+                src="/image 2.JPG"
+                alt="Handcrafted luxury"
                 fill
                 className="object-cover"
               />

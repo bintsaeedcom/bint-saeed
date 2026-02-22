@@ -89,9 +89,9 @@ export default function Header() {
           </div>
 
           {/* Main Row */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between relative">
             {/* Left Navigation */}
-            <div className="hidden lg:flex items-center gap-10 flex-1">
+            <div className="hidden lg:flex items-center gap-10 flex-1 relative z-10">
               {navItems.slice(0, 3).map((item) => (
                 <Link
                   key={item.label}
@@ -115,7 +115,7 @@ export default function Header() {
             </button>
 
             {/* Center Logo - Large and Prominent */}
-            <Link href="/" className="absolute left-1/2 -translate-x-1/2" data-cursor-hover>
+            <Link href="/" className="absolute left-1/2 -translate-x-1/2 z-0" data-cursor-hover>
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
@@ -134,7 +134,7 @@ export default function Header() {
             </Link>
 
             {/* Right Navigation */}
-            <div className="hidden lg:flex items-center gap-10 flex-1 justify-end">
+            <div className="hidden lg:flex items-center gap-10 flex-1 justify-end relative z-10">
               {navItems.slice(3).map((item) => (
                 <Link
                   key={item.label}
