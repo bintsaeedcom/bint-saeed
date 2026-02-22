@@ -23,7 +23,7 @@ const searchableContent = [
   { title: 'Our Story', href: '/about', category: 'About' },
   { title: 'Heritage', href: '/heritage', category: 'About' },
   { title: 'Al Talli', href: '/heritage/al-talli', category: 'Heritage' },
-  { title: 'Sadu Fabric', href: '/heritage/sadu-fabric', category: 'Heritage' },
+  { title: 'Sadu Fabric', href: '/heritage/sadu', category: 'Heritage' },
   { title: 'Size Guide', href: '/size-guide', category: 'Help' },
   { title: 'Contact Us', href: '/contact', category: 'Help' },
   { title: 'FAQ', href: '/faq', category: 'Help' },
@@ -99,7 +99,7 @@ export default function Header() {
     <>
       {/* Main Header - Elegant Single Row Design */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${
           isScrolled 
             ? 'py-3 shadow-lg bg-brand-darkRed' 
             : 'py-4 lg:py-5 bg-brand-darkRed'
@@ -111,13 +111,13 @@ export default function Header() {
         <nav className="container mx-auto px-4 lg:px-12">
           <div className="flex items-center justify-between relative">
             
-            {/* Left: Navigation */}
-            <nav className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 relative z-50">
+            {/* Left: Navigation - xl breakpoint prevents overlap on medium screens */}
+            <nav className="hidden xl:flex items-center gap-6 2xl:gap-8 flex-1 min-w-0 relative z-[60] pointer-events-auto flex-shrink-0">
               {navItems.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="font-roboto text-[11px] uppercase tracking-[0.15em] text-white/90 hover:text-brand-dustyBlue transition-colors duration-300 py-2 whitespace-nowrap"
+                  className="font-roboto text-[11px] uppercase tracking-[0.15em] text-white/90 hover:text-brand-dustyBlue transition-colors duration-300 py-2 whitespace-nowrap flex-shrink-0 relative z-[60]"
                   data-cursor-hover
                 >
                   {item.label}
@@ -125,9 +125,9 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Mobile: Menu Button */}
+            {/* Mobile/Tablet: Menu Button - shown below xl (1280px) to prevent nav overlap */}
             <button
-              className="lg:hidden p-2 text-white relative z-50"
+              className="xl:hidden p-2 text-white relative z-50"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               data-cursor-hover
               aria-label="Toggle menu"
@@ -135,8 +135,8 @@ export default function Header() {
               <FiMenu className="w-6 h-6" />
             </button>
 
-            {/* Center: Logo */}
-            <div className="absolute left-1/2 -translate-x-1/2 z-10">
+            {/* Center: Logo - lower z-index so nav links (z-50) receive clicks when overlapping */}
+            <div className="absolute left-1/2 -translate-x-1/2 z-[40] shrink-0">
               <Link href="/preview" className="block" data-cursor-hover>
                 <Image
                   src="/logo.png"
@@ -150,7 +150,7 @@ export default function Header() {
             </div>
 
             {/* Right: Utilities & Icons */}
-            <div className="hidden lg:flex items-center gap-5 xl:gap-6 flex-1 justify-end relative z-50">
+            <div className="hidden xl:flex items-center gap-5 2xl:gap-6 flex-1 min-w-0 justify-end relative z-[60] pointer-events-auto flex-shrink-0">
               {/* Language & Currency */}
               <div className="flex items-center gap-4 pr-4 border-r border-white/20">
                 <CurrencySwitcher variant="light" />
@@ -199,8 +199,8 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Mobile: Right Icons */}
-            <div className="flex lg:hidden items-center gap-3">
+            {/* Mobile/Tablet: Right Icons */}
+            <div className="flex xl:hidden items-center gap-3">
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className="text-white/80 hover:text-white transition-colors duration-300 p-1"
@@ -228,14 +228,25 @@ export default function Header() {
       {/* Search Overlay - Stays on page feel */}
       <AnimatePresence>
         {isSearchOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-0 z-[70] bg-white shadow-2xl"
-          >
-            <div className="container mx-auto px-6 lg:px-12">
+          <>
+            {/* Backdrop - click to close, below search panel */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[69] bg-black/20"
+              onClick={handleSearchClose}
+              aria-hidden="true"
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-x-0 top-0 z-[70] bg-white shadow-2xl"
+            >
+            <div className="container mx-auto px-6 lg:px-12 relative z-10">
               {/* Search Input Row */}
               <div className="flex items-center gap-4 py-5 border-b border-brand-stone/30">
                 <FiSearch className="w-5 h-5 text-brand-darkRed/50" />
@@ -314,13 +325,8 @@ export default function Header() {
                 )}
               </div>
             </div>
-            
-            {/* Click outside to close */}
-            <div 
-              className="fixed inset-0 -z-10" 
-              onClick={handleSearchClose}
-            />
           </motion.div>
+          </>
         )}
       </AnimatePresence>
 
@@ -331,7 +337,7 @@ export default function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-brand-darkRed"
+            className="fixed inset-0 z-[80] bg-brand-darkRed"
           >
             <div className="h-full flex flex-col">
               {/* Header */}

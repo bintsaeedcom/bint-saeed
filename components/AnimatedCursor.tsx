@@ -102,15 +102,15 @@ export default function AnimatedCursor() {
 
   return (
     <>
-      {/* Cursor Dot - Main pointer - Always visible */}
+      {/* Cursor Dot - Main pointer - Always visible - pointer-events-none so clicks pass through */}
       <div
         ref={dotRef}
         className="fixed top-0 left-0 pointer-events-none"
         style={{ 
           zIndex: 2147483647,
           willChange: 'transform',
-          isolation: 'isolate',
         }}
+        aria-hidden="true"
       >
         <div 
           className="rounded-full transition-all duration-100 ease-out"
@@ -130,7 +130,6 @@ export default function AnimatedCursor() {
         style={{ 
           zIndex: 2147483646,
           willChange: 'transform',
-          isolation: 'isolate',
         }}
       >
         <div 
