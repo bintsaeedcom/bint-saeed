@@ -127,9 +127,7 @@ export default function Header() {
                   alt="Bint Saeed"
                   width={400}
                   height={100}
-                  className={`transition-all duration-500 ${
-                    isScrolled ? 'h-[60px] w-auto' : 'h-[85px] w-auto'
-                  }`}
+                  className="h-[85px] w-auto"
                   priority
                 />
               </motion.div>
