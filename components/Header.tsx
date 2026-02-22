@@ -96,7 +96,7 @@ export default function Header() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white/70 hover:text-white transition-colors duration-300"
+                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300"
                   data-cursor-hover
                 >
                   {item.label}
@@ -139,7 +139,7 @@ export default function Header() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white/70 hover:text-white transition-colors duration-300"
+                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300"
                   data-cursor-hover
                 >
                   {item.label}
