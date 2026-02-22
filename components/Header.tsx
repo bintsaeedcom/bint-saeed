@@ -92,23 +92,42 @@ export default function Header() {
 
           {/* Main Row */}
           <div className="flex items-center justify-between relative">
+            {/* Center Logo - Lowest z-index, pointer-events only on the image */}
+            <div className="absolute left-1/2 -translate-x-1/2 z-0 pointer-events-none">
+              <Link href="/preview" className="pointer-events-auto inline-block" data-cursor-hover>
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Image
+                    src="/logo.png"
+                    alt="Bint Saeed"
+                    width={400}
+                    height={100}
+                    className="h-[85px] w-auto"
+                    priority
+                  />
+                </motion.div>
+              </Link>
+            </div>
+
             {/* Left Navigation - High z-index for clickability */}
-            <div className="hidden lg:flex items-center gap-8 flex-1 relative z-20">
+            <nav className="hidden lg:flex items-center gap-8 flex-1 relative z-50 pointer-events-auto">
               {navItems.slice(0, 3).map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300 py-2 px-1"
+                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300 py-3 px-2 pointer-events-auto"
                   data-cursor-hover
                 >
                   {item.label}
                 </Link>
               ))}
-            </div>
+            </nav>
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden p-3 text-white relative z-20"
+              className="lg:hidden p-3 text-white relative z-50 pointer-events-auto"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               data-cursor-hover
               aria-label="Toggle menu"
@@ -116,36 +135,19 @@ export default function Header() {
               <FiMenu className="w-6 h-6" />
             </button>
 
-            {/* Center Logo - Behind navigation */}
-            <Link href="/preview" className="absolute left-1/2 -translate-x-1/2 z-10" data-cursor-hover>
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Image
-                  src="/logo.png"
-                  alt="Bint Saeed"
-                  width={400}
-                  height={100}
-                  className="h-[85px] w-auto"
-                  priority
-                />
-              </motion.div>
-            </Link>
-
             {/* Right Navigation - High z-index for clickability */}
-            <div className="hidden lg:flex items-center gap-8 flex-1 justify-end relative z-20">
+            <nav className="hidden lg:flex items-center gap-8 flex-1 justify-end relative z-50 pointer-events-auto">
               {navItems.slice(3).map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300 py-2 px-1"
+                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300 py-3 px-2 pointer-events-auto"
                   data-cursor-hover
                 >
                   {item.label}
                 </Link>
               ))}
-            </div>
+            </nav>
 
             {/* Right Actions - Mobile & Tablet */}
             <div className={`flex lg:hidden items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
