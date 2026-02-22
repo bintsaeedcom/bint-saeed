@@ -11,7 +11,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 const socialLinks = [
   { icon: FaInstagram, href: 'https://www.instagram.com/bintsaeed_brand/', label: 'Instagram' },
   { icon: FaTiktok, href: 'https://tiktok.com/@bintsaeed', label: 'TikTok' },
-  { icon: FaSnapchat, href: 'https://snapchat.com/add/bintsaeed', label: 'Snapchat' },
+  { icon: FaSnapchat, href: 'https://snapchat.com/t/W1nDzIXS', label: 'Snapchat' },
   { icon: FaXTwitter, href: 'https://x.com/bintsaeed', label: 'X' },
   { icon: FaPinterest, href: 'https://pinterest.com/bintsaeed', label: 'Pinterest' },
 ]
