@@ -12,8 +12,13 @@ interface VisitorData {
   location: {
     country: string
     city: string
+    region: string
     countryCode: string
     ip: string
+    latitude: number | null
+    longitude: number | null
+    timezone: string
+    accuracyLevel: 'ip' | 'gps' | 'unknown'
   } | null
   device: {
     type: 'mobile' | 'tablet' | 'desktop'
@@ -115,19 +120,114 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       visitCount++
       localStorage.setItem('bs_visit_count', visitCount.toString())
 
-      // Get location
+      // Get location - with caching and multiple providers for reliability
       let location = null
-      try {
-        const res = await fetch('https://ipapi.co/json/')
-        const data = await res.json()
-        location = {
-          country: data.country_name || 'Unknown',
-          city: data.city || 'Unknown',
-          countryCode: data.country_code || 'XX',
-          ip: data.ip || 'Unknown',
+      const cachedLocation = localStorage.getItem('bs_location')
+      const cachedLocationTime = localStorage.getItem('bs_location_time')
+      const locationCacheValid = cachedLocationTime && (Date.now() - parseInt(cachedLocationTime)) < 24 * 60 * 60 * 1000 // 24 hours
+      
+      if (cachedLocation && locationCacheValid) {
+        // Use cached location
+        location = JSON.parse(cachedLocation)
+      } else {
+        // Try multiple IP geolocation providers for reliability
+        try {
+          // Primary: ipapi.co
+          const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(5000) })
+          const data = await res.json()
+          if (data.city && data.country_name) {
+            location = {
+              country: data.country_name,
+              city: data.city,
+              region: data.region || '',
+              countryCode: data.country_code || 'XX',
+              ip: data.ip || 'Unknown',
+              latitude: data.latitude || null,
+              longitude: data.longitude || null,
+              timezone: data.timezone || '',
+              accuracyLevel: 'ip' as const,
+            }
+          }
+        } catch (e) {
+          console.log('Primary IP provider failed, trying backup...')
         }
-      } catch (e) {
-        console.log('Could not get location')
+
+        // Backup provider if primary fails
+        if (!location || location.city === 'Unknown') {
+          try {
+            const res2 = await fetch('https://ip-api.com/json/?fields=status,country,countryCode,regionName,city,lat,lon,timezone,query', { signal: AbortSignal.timeout(5000) })
+            const data2 = await res2.json()
+            if (data2.status === 'success') {
+              location = {
+                country: data2.country,
+                city: data2.city,
+                region: data2.regionName || '',
+                countryCode: data2.countryCode || 'XX',
+                ip: data2.query || 'Unknown',
+                latitude: data2.lat || null,
+                longitude: data2.lon || null,
+                timezone: data2.timezone || '',
+                accuracyLevel: 'ip' as const,
+              }
+            }
+          } catch (e) {
+            console.log('Backup IP provider also failed')
+          }
+        }
+
+        // Cache the location for reliability
+        if (location && location.city !== 'Unknown') {
+          localStorage.setItem('bs_location', JSON.stringify(location))
+          localStorage.setItem('bs_location_time', Date.now().toString())
+        }
+      }
+
+      // Try to get more accurate GPS location if user permits
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords
+            // Update location with GPS coordinates
+            const gpsLocation = {
+              ...location,
+              latitude,
+              longitude,
+              accuracyLevel: 'gps' as const,
+            }
+            localStorage.setItem('bs_location', JSON.stringify(gpsLocation))
+            localStorage.setItem('bs_location_time', Date.now().toString())
+            
+            // Update visitor state with GPS location
+            setVisitor(prev => prev ? { ...prev, location: gpsLocation } : prev)
+            
+            // Send updated location to Slack
+            sendSlackNotification('location_update', { 
+              visitorId, 
+              location: gpsLocation,
+              message: 'GPS location acquired'
+            })
+          },
+          () => {
+            // User denied or error - keep IP-based location
+            console.log('GPS location not available')
+          },
+          { enableHighAccuracy: true, timeout: 10000 }
+        )
+      }
+
+      // Fallback if everything fails
+      if (!location) {
+        location = {
+          country: 'Unknown',
+          city: 'Unknown',
+          region: '',
+          countryCode: 'XX',
+          ip: 'Unknown',
+          latitude: null,
+          longitude: null,
+          timezone: '',
+          accuracyLevel: 'unknown' as const,
+        }
       }
 
       // Get UTM params

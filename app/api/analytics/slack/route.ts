@@ -3,8 +3,44 @@ import { NextRequest, NextResponse } from 'next/server'
 // Slack Webhook URL - Use main webhook or analytics-specific one
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || process.env.SLACK_ANALYTICS_WEBHOOK_URL
 
+// VIP Visitors to flag with special notifications
+// Add visitor IDs or partial IPs here to track specific people
+const VIP_VISITORS: { name: string; visitorIds: string[]; ipPatterns: string[] }[] = [
+  {
+    name: 'Saeed',
+    visitorIds: ['mlxjxzly', 'mlwszt1l'], // Add known visitor IDs
+    ipPatterns: ['2001:8f8:153b', '2001:8f8:1621'], // Partial IP patterns to match
+  },
+]
+
 // Store active visitors in memory (in production, use Redis or similar)
 const activeVisitors = new Map<string, any>()
+
+// Check if visitor is VIP
+function checkVIP(visitorId: string, ip: string): { isVIP: boolean; name: string } {
+  for (const vip of VIP_VISITORS) {
+    // Check visitor ID
+    if (vip.visitorIds.some(id => visitorId?.includes(id) || visitorId?.endsWith(id))) {
+      return { isVIP: true, name: vip.name }
+    }
+    // Check IP patterns
+    if (vip.ipPatterns.some(pattern => ip?.includes(pattern))) {
+      return { isVIP: true, name: vip.name }
+    }
+  }
+  return { isVIP: false, name: '' }
+}
+
+// Generate Google Maps link
+function getMapLink(lat: number | null, lng: number | null, city?: string, country?: string): string {
+  if (lat && lng) {
+    return `https://www.google.com/maps?q=${lat},${lng}`
+  }
+  if (city && country) {
+    return `https://www.google.com/maps/search/${encodeURIComponent(city + ', ' + country)}`
+  }
+  return ''
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,10 +78,25 @@ export async function POST(request: NextRequest) {
 
 function formatSlackMessage(type: string, data: any) {
   const timestamp = new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
-  const location = data.location ? `${data.location.city}, ${data.location.country}` : 'Unknown'
+  const locationText = data.location ? `${data.location.city}, ${data.location.region ? data.location.region + ', ' : ''}${data.location.country}` : 'Unknown'
   const ip = data.location?.ip || 'Unknown'
   const device = data.device ? `${data.device.type} • ${data.device.browser} • ${data.device.os}` : 'Unknown'
   const timeOnSite = data.totalTimeOnSite ? formatTime(data.totalTimeOnSite) : '0s'
+  
+  // Check for VIP visitor
+  const vipCheck = checkVIP(data.visitorId || '', ip)
+  const vipFlag = vipCheck.isVIP ? `🚨 *VIP: ${vipCheck.name}* 🚨\n` : ''
+  const vipEmoji = vipCheck.isVIP ? '⭐' : ''
+  
+  // Generate map link
+  const mapLink = getMapLink(
+    data.location?.latitude, 
+    data.location?.longitude,
+    data.location?.city,
+    data.location?.country
+  )
+  const locationWithMap = mapLink ? `<${mapLink}|📍 ${locationText}>` : `🌍 ${locationText}`
+  const accuracyBadge = data.location?.accuracyLevel === 'gps' ? ' 🎯' : data.location?.accuracyLevel === 'ip' ? ' 📡' : ''
 
   switch (type) {
     case 'new_visitor':
@@ -53,14 +104,18 @@ function formatSlackMessage(type: string, data: any) {
         blocks: [
           {
             type: 'header',
-            text: { type: 'plain_text', text: '🆕 New Visitor on bintsaeed.com', emoji: true }
+            text: { type: 'plain_text', text: `${vipEmoji}🆕 New Visitor on bintsaeed.com${vipEmoji}`, emoji: true }
           },
+          ...(vipCheck.isVIP ? [{
+            type: 'section',
+            text: { type: 'mrkdwn', text: `🚨 *VIP ALERT: ${vipCheck.name} is on the site!* 🚨` }
+          }] : []),
           {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Date & Time:*\n🕐 ${timestamp}` },
-              { type: 'mrkdwn', text: `*Location:*\n🌍 ${location}` },
-              { type: 'mrkdwn', text: `*IP Address:*\n🔒 ${ip}` },
+              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
             ]
           },
@@ -74,7 +129,7 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `Visitor ID: ${data.visitorId?.slice(-8)}` }
+              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\`` }
             ]
           }
         ]
@@ -85,14 +140,18 @@ function formatSlackMessage(type: string, data: any) {
         blocks: [
           {
             type: 'header',
-            text: { type: 'plain_text', text: '🔄 Returning Visitor on bintsaeed.com', emoji: true }
+            text: { type: 'plain_text', text: `${vipEmoji}🔄 Returning Visitor on bintsaeed.com${vipEmoji}`, emoji: true }
           },
+          ...(vipCheck.isVIP ? [{
+            type: 'section',
+            text: { type: 'mrkdwn', text: `🚨 *VIP ALERT: ${vipCheck.name} is back!* 🚨` }
+          }] : []),
           {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Date & Time:*\n🕐 ${timestamp}` },
-              { type: 'mrkdwn', text: `*Location:*\n🌍 ${location}` },
-              { type: 'mrkdwn', text: `*IP Address:*\n🔒 ${ip}` },
+              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
             ]
           },
@@ -106,7 +165,23 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `Visitor ID: ${data.visitorId?.slice(-8)}` }
+              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\`` }
+            ]
+          }
+        ]
+      }
+    
+    case 'location_update':
+      return {
+        blocks: [
+          {
+            type: 'section',
+            text: { type: 'mrkdwn', text: `🎯 *GPS Location Update*\n${locationWithMap}\nAccuracy: GPS${vipCheck.isVIP ? `\n🚨 VIP: ${vipCheck.name}` : ''}` }
+          },
+          {
+            type: 'context',
+            elements: [
+              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\`` }
             ]
           }
         ]
