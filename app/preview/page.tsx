@@ -207,7 +207,7 @@ function EditorialIntro() {
               <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed leading-[1.05] mb-8">
                 {t.editorial.title1}
                 <br />
-                <span className="text-brand-dustyBlue">{t.editorial.title2}</span>
+                <span className="text-brand-clayRed">{t.editorial.title2}</span>
               </h2>
               <p className="font-roboto text-sm text-brand-darkRed/70 tracking-wide leading-[1.9] mb-10">
                 {t.editorial.description}
