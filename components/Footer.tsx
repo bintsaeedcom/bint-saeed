@@ -43,9 +43,9 @@ export default function Footer() {
   }
 
   return (
-    <footer className="text-white relative overflow-hidden">
-      {/* Newsletter & WhatsApp Section - Coming Soon Style */}
-      <div className="relative">
+    <footer className="relative overflow-hidden">
+      {/* Newsletter & WhatsApp Section - Coming Soon Style (Keep as is) */}
+      <div className="relative text-white">
         {/* Coming Soon gradient background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#2a0012] via-[#1a0008] to-[#1a0008]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(146,170,193,0.08)_0%,_transparent_70%)]" />
@@ -85,8 +85,8 @@ export default function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 1 }}
         >
-          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-brand-dustyBlue/40 to-transparent" />
-          <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue/40 to-transparent" />
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-brand-dustyBlue/50 to-transparent" />
+          <div className="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-brand-dustyBlue/50 to-transparent" />
         </motion.div>
         <motion.div 
           className="absolute top-8 right-8 w-20 h-20 md:w-28 md:h-28 pointer-events-none"
@@ -95,13 +95,13 @@ export default function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.1 }}
         >
-          <div className="absolute top-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue/40 to-transparent" />
-          <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue/40 to-transparent" />
+          <div className="absolute top-0 right-0 w-full h-[2px] bg-gradient-to-l from-brand-dustyBlue/50 to-transparent" />
+          <div className="absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-brand-dustyBlue/50 to-transparent" />
         </motion.div>
 
         <div className="relative container mx-auto px-6 lg:px-12 py-20 md:py-24">
           <div className={`grid lg:grid-cols-2 gap-12 lg:gap-20 ${isRTL ? 'text-right' : ''}`}>
-            {/* Newsletter - Glassmorphism Box */}
+            {/* Newsletter - Glassmorphism Box with thicker border */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -109,8 +109,8 @@ export default function Footer() {
               transition={{ duration: 0.6 }}
             >
               <div className="relative">
-                <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/20 via-transparent to-brand-stone/10 opacity-50" />
-                <div className="relative backdrop-blur-sm bg-white/[0.03] rounded-2xl p-8 md:p-10 border border-white/[0.05]">
+                <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-b from-brand-dustyBlue/30 via-brand-dustyBlue/10 to-brand-stone/20" />
+                <div className="relative backdrop-blur-sm bg-white/[0.03] rounded-2xl p-8 md:p-10 border border-brand-dustyBlue/20">
                   <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue/60 mb-4 block">
                     {isRTL ? 'انضم إلينا' : 'Join Us'}
                   </span>
@@ -125,7 +125,7 @@ export default function Footer() {
               </div>
             </motion.div>
 
-            {/* WhatsApp Community - Glassmorphism Box */}
+            {/* WhatsApp Community - Glassmorphism Box with thicker border */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -133,8 +133,8 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               <div className="relative">
-                <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/20 via-transparent to-brand-stone/10 opacity-50" />
-                <div className="relative backdrop-blur-sm bg-white/[0.03] rounded-2xl p-8 md:p-10 border border-white/[0.05]">
+                <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-b from-brand-dustyBlue/30 via-brand-dustyBlue/10 to-brand-stone/20" />
+                <div className="relative backdrop-blur-sm bg-white/[0.03] rounded-2xl p-8 md:p-10 border border-brand-dustyBlue/20">
                   <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue/60 mb-4 block">
                     {isRTL ? 'المجتمع' : 'Community'}
                   </span>
@@ -161,9 +161,13 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main Footer Links - Continue Coming Soon Style */}
-      <div className="relative bg-[#1a0008]">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_rgba(212,189,172,0.05)_0%,_transparent_60%)]" />
+      {/* Main Footer Links - Stone Background with elegant dark text */}
+      <div className="relative bg-brand-stone">
+        {/* Subtle texture overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,255,255,0.3)_0%,_transparent_50%)]" />
+        
+        {/* Dusty blue accent line at top */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent" />
         
         <div className="relative container mx-auto px-6 lg:px-12 py-16">
           <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 ${isRTL ? 'text-right' : ''}`}>
@@ -178,14 +182,14 @@ export default function Footer() {
                   className="h-10 w-auto mb-6"
                 />
               </Link>
-              <p className="font-roboto text-xs text-white/40 tracking-wide leading-relaxed max-w-xs">
+              <p className="font-roboto text-xs text-brand-darkRed/60 tracking-wide leading-relaxed max-w-xs">
                 {t.footer.brandDescription}
               </p>
             </div>
 
             {/* Shop */}
             <div>
-              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue mb-6">
+              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed mb-6">
                 {t.footer.shop}
               </h4>
               <ul className="space-y-3">
@@ -193,7 +197,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="font-roboto text-sm text-white/50 hover:text-brand-dustyBlue transition-colors tracking-wide"
+                      className="font-roboto text-sm text-brand-darkRed/70 hover:text-brand-dustyBlue transition-colors tracking-wide"
                       data-cursor-hover
                     >
                       {link.label}
@@ -205,7 +209,7 @@ export default function Footer() {
 
             {/* About */}
             <div>
-              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue mb-6">
+              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed mb-6">
                 {t.footer.about}
               </h4>
               <ul className="space-y-3">
@@ -213,7 +217,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="font-roboto text-sm text-white/50 hover:text-brand-dustyBlue transition-colors tracking-wide"
+                      className="font-roboto text-sm text-brand-darkRed/70 hover:text-brand-dustyBlue transition-colors tracking-wide"
                       data-cursor-hover
                     >
                       {link.label}
@@ -225,7 +229,7 @@ export default function Footer() {
 
             {/* Help */}
             <div>
-              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue mb-6">
+              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed mb-6">
                 {t.footer.help}
               </h4>
               <ul className="space-y-3">
@@ -233,7 +237,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="font-roboto text-sm text-white/50 hover:text-brand-dustyBlue transition-colors tracking-wide"
+                      className="font-roboto text-sm text-brand-darkRed/70 hover:text-brand-dustyBlue transition-colors tracking-wide"
                       data-cursor-hover
                     >
                       {link.label}
@@ -246,20 +250,23 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Worldwide Shipping Banner */}
-      <div className="relative bg-[#1a0008] border-t border-white/[0.05]">
-        <div className="container mx-auto px-6 lg:px-12 py-8">
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 ${isRTL ? 'text-right' : ''}`}>
+      {/* Worldwide Shipping Banner - Clay Red/Rose accent section */}
+      <div className="relative bg-brand-clayRed/90">
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-rose/20 via-transparent to-brand-rose/20" />
+        
+        <div className="relative container mx-auto px-6 lg:px-12 py-10">
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 ${isRTL ? 'text-right' : ''}`}>
             {/* Worldwide Shipping */}
             <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="w-12 h-12 backdrop-blur-sm bg-white/[0.03] border border-white/[0.08] rounded-xl flex items-center justify-center flex-shrink-0">
-                <FiGlobe className="w-5 h-5 text-brand-dustyBlue" />
+              <div className="w-14 h-14 bg-white/10 border border-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <FiGlobe className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h4 className="font-roboto text-sm font-medium text-white uppercase tracking-wider">
                   {isRTL ? 'شحن عالمي' : 'Worldwide Shipping'}
                 </h4>
-                <p className="font-roboto text-xs text-white/40 tracking-wide">
+                <p className="font-roboto text-xs text-white/60 tracking-wide">
                   {isRTL ? 'نشحن إلى جميع أنحاء العالم' : 'We deliver to every corner of the globe'}
                 </p>
               </div>
@@ -267,14 +274,14 @@ export default function Footer() {
 
             {/* Free GCC Shipping */}
             <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="w-12 h-12 backdrop-blur-sm bg-white/[0.03] border border-white/[0.08] rounded-xl flex items-center justify-center flex-shrink-0">
-                <FiTruck className="w-5 h-5 text-brand-dustyBlue" />
+              <div className="w-14 h-14 bg-white/10 border border-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <FiTruck className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h4 className="font-roboto text-sm font-medium text-white uppercase tracking-wider">
                   {isRTL ? 'شحن مجاني للخليج' : 'Free GCC Shipping'}
                 </h4>
-                <p className="font-roboto text-xs text-white/40 tracking-wide">
+                <p className="font-roboto text-xs text-white/60 tracking-wide">
                   {isRTL ? 'للطلبات فوق 500 درهم' : 'On orders over 500 AED'}
                 </p>
               </div>
@@ -282,14 +289,14 @@ export default function Footer() {
 
             {/* Handcrafted */}
             <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="w-12 h-12 backdrop-blur-sm bg-white/[0.03] border border-white/[0.08] rounded-xl flex items-center justify-center flex-shrink-0">
-                <FiClock className="w-5 h-5 text-brand-dustyBlue" />
+              <div className="w-14 h-14 bg-white/10 border border-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <FiClock className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h4 className="font-roboto text-sm font-medium text-white uppercase tracking-wider">
                   {isRTL ? 'صناعة يدوية' : 'Handcrafted'}
                 </h4>
-                <p className="font-roboto text-xs text-white/40 tracking-wide">
+                <p className="font-roboto text-xs text-white/60 tracking-wide">
                   {isRTL ? 'توصيل خلال أسبوعين' : 'Delivered within 2 weeks'}
                 </p>
               </div>
@@ -298,32 +305,15 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar with decorative corners */}
-      <div className="relative bg-[#0d0004]">
-        {/* Bottom decorative corners */}
-        <motion.div 
-          className="absolute bottom-4 left-8 w-16 h-16 pointer-events-none"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
-          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-brand-dustyBlue/30 to-transparent" />
-          <div className="absolute bottom-0 left-0 w-px h-full bg-gradient-to-t from-brand-dustyBlue/30 to-transparent" />
-        </motion.div>
-        <motion.div 
-          className="absolute bottom-4 right-8 w-16 h-16 pointer-events-none"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
-          <div className="absolute bottom-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue/30 to-transparent" />
-          <div className="absolute bottom-0 right-0 w-px h-full bg-gradient-to-t from-brand-dustyBlue/30 to-transparent" />
-        </motion.div>
-
+      {/* Bottom Bar - Dark Red with elegant accents */}
+      <div className="relative bg-brand-darkRed">
+        {/* Dusty blue accent line at top */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
+        
         <div className="container mx-auto px-6 lg:px-12 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             {/* Copyright - Left */}
-            <p className="font-roboto text-xs tracking-[0.1em] text-white/30 order-3 md:order-1">
+            <p className="font-roboto text-xs tracking-[0.1em] text-white/40 order-3 md:order-1">
               © {currentYear} Bint Saeed. {t.footer.allRightsReserved}
             </p>
 
@@ -331,21 +321,21 @@ export default function Footer() {
             <div className="flex flex-wrap justify-center gap-6 order-2">
               <Link
                 href="/privacy-policy"
-                className="font-roboto text-xs uppercase tracking-[0.15em] text-white/40 hover:text-brand-dustyBlue transition-colors"
+                className="font-roboto text-xs uppercase tracking-[0.15em] text-white/50 hover:text-brand-stone transition-colors"
                 data-cursor-hover
               >
                 {t.footer.privacy}
               </Link>
               <Link
                 href="/cookie-policy"
-                className="font-roboto text-xs uppercase tracking-[0.15em] text-white/40 hover:text-brand-dustyBlue transition-colors"
+                className="font-roboto text-xs uppercase tracking-[0.15em] text-white/50 hover:text-brand-stone transition-colors"
                 data-cursor-hover
               >
                 {t.footer.cookies}
               </Link>
               <Link
                 href="/terms"
-                className="font-roboto text-xs uppercase tracking-[0.15em] text-white/40 hover:text-brand-dustyBlue transition-colors"
+                className="font-roboto text-xs uppercase tracking-[0.15em] text-white/50 hover:text-brand-stone transition-colors"
                 data-cursor-hover
               >
                 {t.footer.terms}
@@ -360,7 +350,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 backdrop-blur-sm bg-white/[0.03] border border-white/[0.05] rounded-xl flex items-center justify-center text-white/40 hover:text-brand-dustyBlue hover:border-brand-dustyBlue/30 transition-all"
+                  className="w-10 h-10 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-white/50 hover:text-brand-stone hover:border-brand-stone/30 transition-all"
                   aria-label={social.label}
                   data-cursor-hover
                 >
@@ -372,8 +362,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom accent line */}
-      <div className="h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
+      {/* Bottom accent line - Rose gradient */}
+      <div className="h-1 bg-gradient-to-r from-brand-darkRed via-brand-rose to-brand-darkRed" />
     </footer>
   )
 }
