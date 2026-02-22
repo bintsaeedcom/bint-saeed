@@ -121,14 +121,15 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('bs_visit_count', visitCount.toString())
 
       // Get location - with caching and multiple providers for reliability
-      let location = null
+      type LocationType = VisitorData['location']
+      let location: LocationType = null
       const cachedLocation = localStorage.getItem('bs_location')
       const cachedLocationTime = localStorage.getItem('bs_location_time')
       const locationCacheValid = cachedLocationTime && (Date.now() - parseInt(cachedLocationTime)) < 24 * 60 * 60 * 1000 // 24 hours
       
       if (cachedLocation && locationCacheValid) {
         // Use cached location
-        location = JSON.parse(cachedLocation)
+        location = JSON.parse(cachedLocation) as LocationType
       } else {
         // Try multiple IP geolocation providers for reliability
         try {
@@ -188,11 +189,16 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
           async (position) => {
             const { latitude, longitude } = position.coords
             // Update location with GPS coordinates
-            const gpsLocation = {
-              ...location,
+            const gpsLocation: NonNullable<LocationType> = {
+              country: location?.country ?? 'Unknown',
+              city: location?.city ?? 'Unknown',
+              region: location?.region ?? '',
+              countryCode: location?.countryCode ?? 'XX',
+              ip: location?.ip ?? 'Unknown',
               latitude,
               longitude,
-              accuracyLevel: 'gps' as const,
+              timezone: location?.timezone ?? '',
+              accuracyLevel: 'gps',
             }
             localStorage.setItem('bs_location', JSON.stringify(gpsLocation))
             localStorage.setItem('bs_location_time', Date.now().toString())

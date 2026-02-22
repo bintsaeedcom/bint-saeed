@@ -201,9 +201,9 @@ export default function Footer() {
                   <Image
                     src="/logo.png"
                     alt="Bint Saeed"
-                    width={220}
-                    height={60}
-                    className="h-14 w-auto"
+                    width={160}
+                    height={40}
+                    className="h-[38px] w-[152px] object-contain"
                   />
                 </motion.div>
               </Link>

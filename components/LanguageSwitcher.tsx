@@ -14,9 +14,13 @@ export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherP
   const { language, setLanguage, t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
 
-  const languages: { code: Language; label: string; native: string }[] = [
-    { code: 'en', label: 'English', native: 'EN' },
-    { code: 'ar', label: 'العربية', native: 'عر' },
+  const languages: { code: Language; label: string; native: string; flag: string }[] = [
+    { code: 'en', label: 'English', native: 'EN', flag: '🇬🇧' },
+    { code: 'ar', label: 'العربية', native: 'عر', flag: '🇦🇪' },
+    { code: 'fr', label: 'Français', native: 'FR', flag: '🇫🇷' },
+    { code: 'it', label: 'Italiano', native: 'IT', flag: '🇮🇹' },
+    { code: 'es', label: 'Español', native: 'ES', flag: '🇪🇸' },
+    { code: 'ru', label: 'Русский', native: 'RU', flag: '🇷🇺' },
   ]
 
   const currentLang = languages.find(l => l.code === language)
@@ -62,7 +66,7 @@ export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherP
                     setLanguage(lang.code)
                     setIsOpen(false)
                   }}
-                  className={`w-full text-left px-4 py-3 font-roboto text-sm tracking-wide transition-colors ${
+                  className={`w-full text-left px-4 py-3 font-roboto text-sm tracking-wide transition-colors flex items-center gap-2 ${
                     language === lang.code
                       ? variant === 'light' 
                         ? 'bg-white/20 text-white' 
@@ -73,7 +77,8 @@ export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherP
                   }`}
                   data-cursor-hover
                 >
-                  {lang.label}
+                  <span>{lang.flag}</span>
+                  <span>{lang.label}</span>
                 </button>
               ))}
             </motion.div>
