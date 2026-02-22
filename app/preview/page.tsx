@@ -185,8 +185,8 @@ function EditorialIntro() {
 
   return (
     <section ref={ref} className="relative bg-white">
-      {/* Stone Color Block - Left side only */}
-      <div className="absolute top-0 left-0 w-full md:w-1/2 h-full bg-brand-stone" />
+      {/* Soft gradient block - Left side only */}
+      <div className="absolute top-0 left-0 w-full md:w-1/2 h-full bg-gradient-to-br from-brand-rose/20 via-brand-stone/40 to-white" />
       
       {/* Dusty Blue accent line */}
       <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-brand-dustyBlue via-brand-dustyBlue/50 to-transparent" />
@@ -487,8 +487,8 @@ function EditorialSplit() {
           <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-brand-dustyBlue via-brand-dustyBlue/50 to-transparent" />
         </motion.div>
 
-        {/* Right - Content with Stone Background */}
-        <div className="relative bg-brand-stone flex items-center">
+        {/* Right - Content with elegant gradient */}
+        <div className="relative bg-gradient-to-br from-white via-brand-rose/10 to-brand-stone/30 flex items-center">
           {/* Decorative dusty blue corner */}
           <motion.div 
             className="absolute top-8 right-8 w-20 h-20 md:w-24 md:h-24"
@@ -671,7 +671,9 @@ function QuoteSection() {
   const { t } = useLanguage()
 
   return (
-    <section ref={ref} className="relative py-32 md:py-48 bg-brand-stone overflow-hidden">
+    <section ref={ref} className="relative py-32 md:py-48 bg-white overflow-hidden">
+      {/* Subtle rose gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-rose/5 via-transparent to-brand-dustyBlue/5" />
       {/* Decorative Corners - Dusty Blue */}
       <motion.div 
         className="absolute top-12 left-12 w-16 h-16 md:w-24 md:h-24"
