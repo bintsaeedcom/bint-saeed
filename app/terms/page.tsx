@@ -130,10 +130,43 @@ export default function TermsPage() {
 
               <section>
                 <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  7. Intellectual Property
+                  7. Intellectual Property & Copyright
                 </h2>
+                <p className="mb-4">
+                  <strong>All content on this website is the exclusive property of Bint Saeed and is protected by copyright laws of the United Arab Emirates and international copyright treaties.</strong>
+                </p>
+                <p className="mb-4">
+                  This includes, but is not limited to:
+                </p>
+                <ul className={`list-disc space-y-2 mb-4 ${isRTL ? 'pr-6' : 'pl-6'}`}>
+                  <li>All product designs, patterns, and collections</li>
+                  <li>Photographs, images, and visual content</li>
+                  <li>The Bint Saeed logo, brand name, and trademarks</li>
+                  <li>Website design, layout, and user interface</li>
+                  <li>Text, descriptions, and written content</li>
+                  <li>Marketing materials and promotional content</li>
+                  <li>Software, code, and technical implementations</li>
+                </ul>
+                <p className="mb-4 font-medium text-brand-darkRed">
+                  Strictly Prohibited Without Written Permission:
+                </p>
+                <ul className={`list-disc space-y-2 mb-4 ${isRTL ? 'pr-6' : 'pl-6'}`}>
+                  <li>Copying, reproducing, or duplicating any content</li>
+                  <li>Downloading images for commercial or personal use</li>
+                  <li>Reusing, republishing, or redistributing any materials</li>
+                  <li>Creating derivative works based on our content</li>
+                  <li>Using our designs as inspiration for commercial products</li>
+                  <li>Scraping or harvesting content through automated means</li>
+                  <li>Using any content for AI training or machine learning purposes</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Written Permission Required:</strong> Any use of Bint Saeed content, including but not limited to reproduction, distribution, display, or transmission, requires prior written permission from Bint Saeed. Requests should be directed to{' '}
+                  <a href="mailto:legal@bintsaeed.com" className="text-brand-clayRed hover:text-brand-dustyBlue underline">
+                    legal@bintsaeed.com
+                  </a>.
+                </p>
                 <p>
-                  All content on this website, including but not limited to designs, logos, images, text, and software, is the property of Bint Saeed and is protected by UAE and international intellectual property laws. Unauthorized use, reproduction, or distribution is prohibited.
+                  <strong>Enforcement:</strong> Bint Saeed actively monitors and enforces its intellectual property rights. Violations may result in legal action, including claims for damages and injunctive relief under UAE Federal Law No. 7 of 2002 on Copyrights and Related Rights, as amended, and applicable international treaties.
                 </p>
               </section>
 
