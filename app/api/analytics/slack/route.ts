@@ -100,16 +100,58 @@ function formatSlackMessage(type: string, data: any) {
 
   switch (type) {
     case 'new_visitor':
+      // VIP gets a completely different, prominent message
+      if (vipCheck.isVIP) {
+        return {
+          blocks: [
+            {
+              type: 'header',
+              text: { type: 'plain_text', text: `🔴🔴🔴 ${vipCheck.name.toUpperCase()} IS ON THE SITE! 🔴🔴🔴`, emoji: true }
+            },
+            {
+              type: 'section',
+              text: { type: 'mrkdwn', text: `*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*\n⭐ *VIP VISITOR: ${vipCheck.name.toUpperCase()}* ⭐\n*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*` }
+            },
+            {
+              type: 'section',
+              fields: [
+                { type: 'mrkdwn', text: `*📅 Date & Time:*\n${timestamp}` },
+                { type: 'mrkdwn', text: `*📍 Location:*\n${locationWithMap}${accuracyBadge}` },
+              ]
+            },
+            {
+              type: 'section',
+              fields: [
+                { type: 'mrkdwn', text: `*🔒 IP Address:*\n\`${ip}\`` },
+                { type: 'mrkdwn', text: `*📱 Device:*\n${device}` },
+              ]
+            },
+            {
+              type: 'section',
+              fields: [
+                { type: 'mrkdwn', text: `*🔗 Referrer:*\n${data.referrer || 'Direct'}` },
+                { type: 'mrkdwn', text: `*✨ Status:*\nFirst-time visitor` },
+              ]
+            },
+            {
+              type: 'divider'
+            },
+            {
+              type: 'context',
+              elements: [
+                { type: 'mrkdwn', text: `🏷️ Visitor ID: \`${data.visitorId}\` | 👤 VIP: *${vipCheck.name}*` }
+              ]
+            }
+          ]
+        }
+      }
+      // Regular visitor
       return {
         blocks: [
           {
             type: 'header',
-            text: { type: 'plain_text', text: `${vipEmoji}🆕 New Visitor on bintsaeed.com${vipEmoji}`, emoji: true }
+            text: { type: 'plain_text', text: '🆕 New Visitor on bintsaeed.com', emoji: true }
           },
-          ...(vipCheck.isVIP ? [{
-            type: 'section',
-            text: { type: 'mrkdwn', text: `🚨 *VIP ALERT: ${vipCheck.name} is on the site!* 🚨` }
-          }] : []),
           {
             type: 'section',
             fields: [
@@ -136,16 +178,58 @@ function formatSlackMessage(type: string, data: any) {
       }
 
     case 'returning_visitor':
+      // VIP gets a completely different, prominent message
+      if (vipCheck.isVIP) {
+        return {
+          blocks: [
+            {
+              type: 'header',
+              text: { type: 'plain_text', text: `🔴🔴🔴 ${vipCheck.name.toUpperCase()} IS BACK! 🔴🔴🔴`, emoji: true }
+            },
+            {
+              type: 'section',
+              text: { type: 'mrkdwn', text: `*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*\n⭐ *VIP RETURNING: ${vipCheck.name.toUpperCase()}* ⭐\n*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*` }
+            },
+            {
+              type: 'section',
+              fields: [
+                { type: 'mrkdwn', text: `*📅 Date & Time:*\n${timestamp}` },
+                { type: 'mrkdwn', text: `*📍 Location:*\n${locationWithMap}${accuracyBadge}` },
+              ]
+            },
+            {
+              type: 'section',
+              fields: [
+                { type: 'mrkdwn', text: `*🔒 IP Address:*\n\`${ip}\`` },
+                { type: 'mrkdwn', text: `*📱 Device:*\n${device}` },
+              ]
+            },
+            {
+              type: 'section',
+              fields: [
+                { type: 'mrkdwn', text: `*🔢 Visit Count:*\nVisit #${data.visitCount}` },
+                { type: 'mrkdwn', text: `*📅 First Visit:*\n${new Date(data.firstVisit).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}` },
+              ]
+            },
+            {
+              type: 'divider'
+            },
+            {
+              type: 'context',
+              elements: [
+                { type: 'mrkdwn', text: `🏷️ Visitor ID: \`${data.visitorId}\` | 👤 VIP: *${vipCheck.name}*` }
+              ]
+            }
+          ]
+        }
+      }
+      // Regular visitor
       return {
         blocks: [
           {
             type: 'header',
-            text: { type: 'plain_text', text: `${vipEmoji}🔄 Returning Visitor on bintsaeed.com${vipEmoji}`, emoji: true }
+            text: { type: 'plain_text', text: '🔄 Returning Visitor on bintsaeed.com', emoji: true }
           },
-          ...(vipCheck.isVIP ? [{
-            type: 'section',
-            text: { type: 'mrkdwn', text: `🚨 *VIP ALERT: ${vipCheck.name} is back!* 🚨` }
-          }] : []),
           {
             type: 'section',
             fields: [
