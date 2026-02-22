@@ -161,35 +161,60 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main Footer Links - Stone Background with elegant dark text */}
-      <div className="relative bg-brand-stone">
-        {/* Subtle texture overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,255,255,0.3)_0%,_transparent_50%)]" />
+      {/* Main Footer Links - Coming Soon Dark Gradient Style */}
+      <div className="relative text-white">
+        {/* Coming Soon gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1a0008] via-[#1a0008] to-[#2a0012]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(146,170,193,0.06)_0%,_transparent_70%)]" />
+        
+        {/* Geometric Lines */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="footerLinksLineH" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="transparent" />
+              <stop offset="50%" stopColor="rgba(146,170,193,0.12)" />
+              <stop offset="100%" stopColor="transparent" />
+            </linearGradient>
+          </defs>
+          <motion.line 
+            x1="0" y1="50%" x2="100%" y2="50%" 
+            stroke="url(#footerLinksLineH)" strokeWidth="1"
+            initial={{ pathLength: 0, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 2 }}
+          />
+        </svg>
         
         {/* Dusty blue accent line at top */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent" />
         
         <div className="relative container mx-auto px-6 lg:px-12 py-16">
           <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 ${isRTL ? 'text-right' : ''}`}>
-            {/* Brand Column */}
+            {/* Brand Column with Logo */}
             <div className="col-span-2 md:col-span-1">
-              <Link href="/preview" data-cursor-hover>
-                <Image
-                  src="/logo.png"
-                  alt="Bint Saeed"
-                  width={180}
-                  height={50}
-                  className="h-10 w-auto mb-6"
-                />
+              <Link href="/preview" data-cursor-hover className="inline-block mb-6">
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Image
+                    src="/logo.png"
+                    alt="Bint Saeed"
+                    width={220}
+                    height={60}
+                    className="h-14 w-auto"
+                  />
+                </motion.div>
               </Link>
-              <p className="font-roboto text-xs text-brand-darkRed/60 tracking-wide leading-relaxed max-w-xs">
+              <p className="font-roboto text-xs text-white/50 tracking-wide leading-relaxed max-w-xs">
                 {t.footer.brandDescription}
               </p>
             </div>
 
             {/* Shop */}
             <div>
-              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed mb-6">
+              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue mb-6">
                 {t.footer.shop}
               </h4>
               <ul className="space-y-3">
@@ -197,7 +222,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="font-roboto text-sm text-brand-darkRed/70 hover:text-brand-dustyBlue transition-colors tracking-wide"
+                      className="font-roboto text-sm text-white/60 hover:text-brand-dustyBlue transition-colors tracking-wide"
                       data-cursor-hover
                     >
                       {link.label}
@@ -209,7 +234,7 @@ export default function Footer() {
 
             {/* About */}
             <div>
-              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed mb-6">
+              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue mb-6">
                 {t.footer.about}
               </h4>
               <ul className="space-y-3">
@@ -217,7 +242,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="font-roboto text-sm text-brand-darkRed/70 hover:text-brand-dustyBlue transition-colors tracking-wide"
+                      className="font-roboto text-sm text-white/60 hover:text-brand-dustyBlue transition-colors tracking-wide"
                       data-cursor-hover
                     >
                       {link.label}
@@ -229,7 +254,7 @@ export default function Footer() {
 
             {/* Help */}
             <div>
-              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed mb-6">
+              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue mb-6">
                 {t.footer.help}
               </h4>
               <ul className="space-y-3">
@@ -237,7 +262,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="font-roboto text-sm text-brand-darkRed/70 hover:text-brand-dustyBlue transition-colors tracking-wide"
+                      className="font-roboto text-sm text-white/60 hover:text-brand-dustyBlue transition-colors tracking-wide"
                       data-cursor-hover
                     >
                       {link.label}
