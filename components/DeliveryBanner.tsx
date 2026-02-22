@@ -25,7 +25,6 @@ export default function DeliveryBanner() {
     },
   ]
 
-  // Rotate messages
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % messages.length)
@@ -38,7 +37,7 @@ export default function DeliveryBanner() {
   const CurrentIcon = messages[currentIndex].icon
 
   return (
-    <div className="bg-brand-darkRed text-white py-2.5 relative z-[60]">
+    <div className="fixed top-0 left-0 right-0 z-[70] bg-brand-stone text-brand-darkRed py-2.5">
       <div className="container mx-auto px-6">
         <div className={`flex items-center justify-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <AnimatePresence mode="wait">
@@ -50,7 +49,7 @@ export default function DeliveryBanner() {
               transition={{ duration: 0.3 }}
               className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
             >
-              <CurrentIcon className="w-4 h-4 text-brand-stone" />
+              <CurrentIcon className="w-4 h-4 text-brand-dustyBlue" />
               <span className="font-roboto text-xs tracking-wide">
                 {messages[currentIndex].text}
               </span>
@@ -64,7 +63,7 @@ export default function DeliveryBanner() {
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`w-1.5 h-1.5 rounded-full transition-all ${
-                  currentIndex === index ? 'bg-white w-4' : 'bg-white/40'
+                  currentIndex === index ? 'bg-brand-darkRed w-4' : 'bg-brand-darkRed/40'
                 }`}
               />
             ))}
@@ -74,7 +73,7 @@ export default function DeliveryBanner() {
         {/* Close button */}
         <button
           onClick={() => setIsVisible(false)}
-          className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-4' : 'right-4'} text-white/60 hover:text-white transition-colors`}
+          className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-4' : 'right-4'} text-brand-darkRed/60 hover:text-brand-darkRed transition-colors`}
           data-cursor-hover
         >
           <FiX className="w-4 h-4" />

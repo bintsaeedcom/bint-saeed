@@ -169,13 +169,13 @@ export default function Footer() {
           <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 ${isRTL ? 'text-right' : ''}`}>
             {/* Brand Column */}
             <div className="col-span-2 md:col-span-1">
-              <Link href="/" data-cursor-hover>
+              <Link href="/preview" data-cursor-hover>
                 <Image
                   src="/logo.png"
                   alt="Bint Saeed"
-                  width={220}
-                  height={70}
-                  className="h-16 w-auto mb-6"
+                  width={180}
+                  height={50}
+                  className="h-10 w-auto mb-6"
                 />
               </Link>
               <p className="font-roboto text-xs text-white/40 tracking-wide leading-relaxed max-w-xs">

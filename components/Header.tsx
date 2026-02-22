@@ -45,10 +45,10 @@ export default function Header() {
 
   return (
     <>
-      {/* Main Header - Coming Soon Style */}
+      {/* Main Header - Below Banner */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'py-3 shadow-lg bg-[#1a0008]/95 backdrop-blur-sm' : 'py-5 lg:py-6 bg-gradient-to-b from-[#1a0008] to-[#1a0008]/90'
+        className={`fixed top-[40px] left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled ? 'py-2 shadow-lg bg-[#1a0008]/98 backdrop-blur-sm' : 'py-4 lg:py-5 bg-gradient-to-b from-[#1a0008] to-[#1a0008]/95'
         }`}
       >
         {/* Subtle dusty blue accent line at bottom */}
@@ -117,7 +117,7 @@ export default function Header() {
             </button>
 
             {/* Center Logo - Large and Prominent */}
-            <Link href="/" className="absolute left-1/2 -translate-x-1/2 z-0" data-cursor-hover>
+            <Link href="/preview" className="absolute left-1/2 -translate-x-1/2 z-0" data-cursor-hover>
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
@@ -125,10 +125,10 @@ export default function Header() {
                 <Image
                   src="/logo.png"
                   alt="Bint Saeed"
-                  width={280}
-                  height={70}
+                  width={350}
+                  height={90}
                   className={`transition-all duration-500 ${
-                    isScrolled ? 'h-[50px] w-auto' : 'h-[65px] w-auto'
+                    isScrolled ? 'h-[55px] w-auto' : 'h-[75px] w-auto'
                   }`}
                   priority
                 />

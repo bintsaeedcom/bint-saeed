@@ -32,7 +32,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
     <>
       <DeliveryBanner />
       <Header />
-      <main>{children}</main>
+      <main className="pt-[40px]">{children}</main>
       <Footer />
       <WhatsAppButton />
       <LocationConsent />
