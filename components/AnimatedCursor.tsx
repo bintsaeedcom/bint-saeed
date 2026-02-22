@@ -5,7 +5,7 @@ import { useEffect, useState, useRef, useCallback } from 'react'
 export default function AnimatedCursor() {
   const [isHovering, setIsHovering] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
-  const [isVisible, setIsVisible] = useState(true)
+  const [isTouchDevice, setIsTouchDevice] = useState(false)
   
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
@@ -17,8 +17,8 @@ export default function AnimatedCursor() {
 
   const animate = useCallback(() => {
     // Smooth interpolation - dot follows faster, ring follows slower
-    const dotSpeed = 0.2
-    const ringSpeed = 0.1
+    const dotSpeed = 0.15
+    const ringSpeed = 0.08
     
     dotPos.current.x += (mousePos.current.x - dotPos.current.x) * dotSpeed
     dotPos.current.y += (mousePos.current.y - dotPos.current.y) * dotSpeed
@@ -37,10 +37,11 @@ export default function AnimatedCursor() {
   }, [])
 
   useEffect(() => {
-    // Don't show custom cursor on touch devices
-    if (typeof window !== 'undefined' && ('ontouchstart' in window || window.innerWidth < 768)) {
-      setIsVisible(false)
-      return
+    // Check for touch device
+    if (typeof window !== 'undefined') {
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 768
+      setIsTouchDevice(isTouch)
+      if (isTouch) return
     }
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -54,8 +55,6 @@ export default function AnimatedCursor() {
       }
     }
 
-    const handleMouseEnter = () => setIsVisible(true)
-    const handleMouseLeave = () => setIsVisible(false)
     const handleMouseDown = () => setIsClicking(true)
     const handleMouseUp = () => setIsClicking(false)
     
@@ -63,7 +62,7 @@ export default function AnimatedCursor() {
     const handleHoverEnd = () => setIsHovering(false)
 
     const addHoverListeners = () => {
-      const hoverElements = document.querySelectorAll('a, button, input, textarea, select, [role="button"], [data-cursor-hover], label')
+      const hoverElements = document.querySelectorAll('a, button, input, textarea, select, [role="button"], [data-cursor-hover], label, .cursor-pointer')
       hoverElements.forEach((el) => {
         el.removeEventListener('mouseenter', handleHoverStart)
         el.removeEventListener('mouseleave', handleHoverEnd)
@@ -72,17 +71,15 @@ export default function AnimatedCursor() {
       })
     }
 
-    // Add all event listeners
-    document.addEventListener('mousemove', handleMouseMove, { passive: true })
-    document.addEventListener('mouseenter', handleMouseEnter)
-    document.addEventListener('mouseleave', handleMouseLeave)
-    document.addEventListener('mousedown', handleMouseDown)
-    document.addEventListener('mouseup', handleMouseUp)
+    // Add event listeners - cursor is ALWAYS visible, no enter/leave toggling
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    window.addEventListener('mousedown', handleMouseDown)
+    window.addEventListener('mouseup', handleMouseUp)
     
     // Initial setup and observer for dynamic elements
     addHoverListeners()
     const observer = new MutationObserver(() => {
-      setTimeout(addHoverListeners, 100)
+      setTimeout(addHoverListeners, 50)
     })
     observer.observe(document.body, { childList: true, subtree: true })
     
@@ -90,11 +87,9 @@ export default function AnimatedCursor() {
     animationRef.current = requestAnimationFrame(animate)
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseenter', handleMouseEnter)
-      document.removeEventListener('mouseleave', handleMouseLeave)
-      document.removeEventListener('mousedown', handleMouseDown)
-      document.removeEventListener('mouseup', handleMouseUp)
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mousedown', handleMouseDown)
+      window.removeEventListener('mouseup', handleMouseUp)
       observer.disconnect()
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
@@ -102,54 +97,60 @@ export default function AnimatedCursor() {
     }
   }, [animate])
 
-  // Don't render on touch devices or when not visible
-  if (!isVisible) return null
+  // Don't render on touch devices
+  if (isTouchDevice) return null
 
   return (
     <>
-      {/* Cursor Dot - Main pointer */}
+      {/* Cursor Dot - Main pointer - Always visible */}
       <div
         ref={dotRef}
         className="fixed top-0 left-0 pointer-events-none"
         style={{ 
           zIndex: 2147483647,
           willChange: 'transform',
+          isolation: 'isolate',
         }}
       >
         <div 
-          className="rounded-full transition-all duration-150 ease-out"
+          className="rounded-full transition-all duration-100 ease-out"
           style={{
-            width: isClicking ? '8px' : isHovering ? '6px' : '10px',
-            height: isClicking ? '8px' : isHovering ? '6px' : '10px',
+            width: isClicking ? '6px' : isHovering ? '8px' : '10px',
+            height: isClicking ? '6px' : isHovering ? '8px' : '10px',
             background: '#92aac1',
-            boxShadow: '0 0 0 2px rgba(255,255,255,0.8), 0 0 20px rgba(146,170,193,0.6)',
+            boxShadow: '0 0 0 2px rgba(255,255,255,0.9), 0 0 15px rgba(146,170,193,0.8), 0 0 30px rgba(146,170,193,0.4)',
           }}
         />
       </div>
 
-      {/* Cursor Ring - Follows with delay */}
+      {/* Cursor Ring - Follows with elegant delay */}
       <div
         ref={ringRef}
         className="fixed top-0 left-0 pointer-events-none"
         style={{ 
           zIndex: 2147483646,
           willChange: 'transform',
+          isolation: 'isolate',
         }}
       >
         <div 
-          className="rounded-full transition-all duration-200 ease-out"
+          className="rounded-full transition-all duration-150 ease-out"
           style={{
-            width: isClicking ? '28px' : isHovering ? '50px' : '36px',
-            height: isClicking ? '28px' : isHovering ? '50px' : '36px',
-            border: `2px solid ${isHovering ? 'rgba(146,170,193,0.9)' : 'rgba(212,189,172,0.6)'}`,
-            background: isHovering ? 'rgba(146,170,193,0.1)' : 'transparent',
+            width: isClicking ? '24px' : isHovering ? '50px' : '36px',
+            height: isClicking ? '24px' : isHovering ? '50px' : '36px',
+            border: `2px solid ${isHovering ? 'rgba(146,170,193,0.9)' : 'rgba(212,189,172,0.5)'}`,
+            background: isHovering ? 'rgba(146,170,193,0.15)' : 'transparent',
+            boxShadow: isHovering ? '0 0 20px rgba(146,170,193,0.3)' : 'none',
           }}
         />
       </div>
 
-      {/* Hide default cursor globally */}
+      {/* Hide default cursor globally - more specific selectors */}
       <style jsx global>{`
-        * {
+        html, body, * {
+          cursor: none !important;
+        }
+        a, button, input, select, textarea, label, [role="button"], [data-cursor-hover] {
           cursor: none !important;
         }
       `}</style>
