@@ -405,8 +405,8 @@ function ColorBlockSection() {
               {/* Dusty blue frame */}
               <div className="absolute -top-4 -right-4 w-full h-full border border-brand-dustyBlue/30" />
             </div>
-            {/* Floating Label - Glassmorphism */}
-            <div className="absolute -bottom-4 -right-4 md:right-auto md:-left-4 backdrop-blur-sm bg-white/[0.05] border border-white/[0.1] px-6 py-4 rounded-xl">
+            {/* Floating Label - Glassmorphism (darker for readability) */}
+            <div className="absolute -bottom-4 -right-4 md:right-auto md:-left-4 backdrop-blur-md bg-[#1a0008]/80 border border-brand-dustyBlue/30 px-6 py-4 rounded-xl">
               <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">
                 {isRTL ? 'صناعة يدوية' : 'Handcrafted'}
               </span>
