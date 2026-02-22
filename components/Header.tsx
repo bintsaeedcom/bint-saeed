@@ -55,7 +55,7 @@ export default function Header() {
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
         <nav className="container mx-auto px-6 lg:px-16">
           {/* Top Row - Utilities (Desktop) */}
-          <div className="hidden lg:flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+          <div className="hidden lg:flex items-center justify-between mb-4 pb-3 border-b border-white/10 relative z-30">
             <div className="flex items-center gap-6">
               <CurrencySwitcher variant="light" />
               <LanguageSwitcher variant="light" />
@@ -63,7 +63,7 @@ export default function Header() {
             <div className={`flex items-center gap-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-2"
+                className="text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-2 py-2"
                 data-cursor-hover
                 aria-label={t.nav.search}
               >
@@ -72,7 +72,7 @@ export default function Header() {
               </button>
               <Link
                 href="/account"
-                className="text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-2"
+                className="text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-2 py-2"
                 data-cursor-hover
                 aria-label={t.nav.account}
               >
@@ -80,7 +80,7 @@ export default function Header() {
                 <span className="font-roboto text-[10px] uppercase tracking-[0.2em]">{t.nav.account}</span>
               </Link>
               <button
-                className="text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-2"
+                className="text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-2 py-2"
                 data-cursor-hover
                 aria-label={t.nav.wishlist}
               >
@@ -92,13 +92,13 @@ export default function Header() {
 
           {/* Main Row */}
           <div className="flex items-center justify-between relative">
-            {/* Left Navigation */}
-            <div className="hidden lg:flex items-center gap-10 flex-1 relative z-10">
+            {/* Left Navigation - High z-index for clickability */}
+            <div className="hidden lg:flex items-center gap-8 flex-1 relative z-20">
               {navItems.slice(0, 3).map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300"
+                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300 py-2 px-1"
                   data-cursor-hover
                 >
                   {item.label}
@@ -108,16 +108,16 @@ export default function Header() {
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden p-2 text-white"
+              className="lg:hidden p-3 text-white relative z-20"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               data-cursor-hover
               aria-label="Toggle menu"
             >
-              <FiMenu className="w-5 h-5" />
+              <FiMenu className="w-6 h-6" />
             </button>
 
-            {/* Center Logo - Large and Prominent */}
-            <Link href="/preview" className="absolute left-1/2 -translate-x-1/2 z-0" data-cursor-hover>
+            {/* Center Logo - Behind navigation */}
+            <Link href="/preview" className="absolute left-1/2 -translate-x-1/2 z-10" data-cursor-hover>
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
@@ -135,13 +135,13 @@ export default function Header() {
               </motion.div>
             </Link>
 
-            {/* Right Navigation */}
-            <div className="hidden lg:flex items-center gap-10 flex-1 justify-end relative z-10">
+            {/* Right Navigation - High z-index for clickability */}
+            <div className="hidden lg:flex items-center gap-8 flex-1 justify-end relative z-20">
               {navItems.slice(3).map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300"
+                  className="font-roboto text-[11px] uppercase tracking-[0.2em] text-white hover:text-brand-dustyBlue transition-colors duration-300 py-2 px-1"
                   data-cursor-hover
                 >
                   {item.label}

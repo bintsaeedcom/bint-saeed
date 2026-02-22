@@ -1,26 +1,61 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
 export default function AnimatedCursor() {
   const [isHovering, setIsHovering] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
   
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
-  const mousePos = useRef({ x: 0, y: 0 })
-  const dotPos = useRef({ x: 0, y: 0 })
-  const ringPos = useRef({ x: 0, y: 0 })
+  const mousePos = useRef({ x: -100, y: -100 })
+  const dotPos = useRef({ x: -100, y: -100 })
+  const ringPos = useRef({ x: -100, y: -100 })
   const animationRef = useRef<number>()
+  const isInitialized = useRef(false)
+
+  const animate = useCallback(() => {
+    // Smooth interpolation - dot follows faster, ring follows slower
+    const dotSpeed = 0.2
+    const ringSpeed = 0.1
+    
+    dotPos.current.x += (mousePos.current.x - dotPos.current.x) * dotSpeed
+    dotPos.current.y += (mousePos.current.y - dotPos.current.y) * dotSpeed
+    
+    ringPos.current.x += (mousePos.current.x - ringPos.current.x) * ringSpeed
+    ringPos.current.y += (mousePos.current.y - ringPos.current.y) * ringSpeed
+    
+    if (dotRef.current) {
+      dotRef.current.style.transform = `translate3d(${dotPos.current.x}px, ${dotPos.current.y}px, 0) translate(-50%, -50%)`
+    }
+    if (ringRef.current) {
+      ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%)`
+    }
+    
+    animationRef.current = requestAnimationFrame(animate)
+  }, [])
 
   useEffect(() => {
-    setIsMounted(true)
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current = { x: e.clientX, y: e.clientY }
+    // Don't show custom cursor on touch devices
+    if (typeof window !== 'undefined' && ('ontouchstart' in window || window.innerWidth < 768)) {
+      setIsVisible(false)
+      return
     }
 
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePos.current = { x: e.clientX, y: e.clientY }
+      
+      // Initialize cursor position on first move
+      if (!isInitialized.current) {
+        dotPos.current = { x: e.clientX, y: e.clientY }
+        ringPos.current = { x: e.clientX, y: e.clientY }
+        isInitialized.current = true
+      }
+    }
+
+    const handleMouseEnter = () => setIsVisible(true)
+    const handleMouseLeave = () => setIsVisible(false)
     const handleMouseDown = () => setIsClicking(true)
     const handleMouseUp = () => setIsClicking(false)
     
@@ -28,46 +63,36 @@ export default function AnimatedCursor() {
     const handleHoverEnd = () => setIsHovering(false)
 
     const addHoverListeners = () => {
-      const hoverElements = document.querySelectorAll('a, button, input, textarea, [role="button"], [data-cursor-hover]')
+      const hoverElements = document.querySelectorAll('a, button, input, textarea, select, [role="button"], [data-cursor-hover], label')
       hoverElements.forEach((el) => {
+        el.removeEventListener('mouseenter', handleHoverStart)
+        el.removeEventListener('mouseleave', handleHoverEnd)
         el.addEventListener('mouseenter', handleHoverStart)
         el.addEventListener('mouseleave', handleHoverEnd)
       })
     }
 
-    const animate = () => {
-      // Smooth interpolation - dot follows faster, ring follows slower
-      const dotSpeed = 0.25
-      const ringSpeed = 0.12
-      
-      dotPos.current.x += (mousePos.current.x - dotPos.current.x) * dotSpeed
-      dotPos.current.y += (mousePos.current.y - dotPos.current.y) * dotSpeed
-      
-      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * ringSpeed
-      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * ringSpeed
-      
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${dotPos.current.x}px, ${dotPos.current.y}px) translate(-50%, -50%)`
-      }
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${ringPos.current.x}px, ${ringPos.current.y}px) translate(-50%, -50%)`
-      }
-      
-      animationRef.current = requestAnimationFrame(animate)
-    }
-
-    document.addEventListener('mousemove', handleMouseMove)
+    // Add all event listeners
+    document.addEventListener('mousemove', handleMouseMove, { passive: true })
+    document.addEventListener('mouseenter', handleMouseEnter)
+    document.addEventListener('mouseleave', handleMouseLeave)
     document.addEventListener('mousedown', handleMouseDown)
     document.addEventListener('mouseup', handleMouseUp)
     
+    // Initial setup and observer for dynamic elements
     addHoverListeners()
-    const observer = new MutationObserver(addHoverListeners)
+    const observer = new MutationObserver(() => {
+      setTimeout(addHoverListeners, 100)
+    })
     observer.observe(document.body, { childList: true, subtree: true })
     
+    // Start animation loop
     animationRef.current = requestAnimationFrame(animate)
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseenter', handleMouseEnter)
+      document.removeEventListener('mouseleave', handleMouseLeave)
       document.removeEventListener('mousedown', handleMouseDown)
       document.removeEventListener('mouseup', handleMouseUp)
       observer.disconnect()
@@ -75,47 +100,59 @@ export default function AnimatedCursor() {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [])
+  }, [animate])
 
-  if (!isMounted) return null
-  if (typeof window !== 'undefined' && window.innerWidth < 768) return null
+  // Don't render on touch devices or when not visible
+  if (!isVisible) return null
 
   return (
     <>
-      {/* Cursor Dot */}
+      {/* Cursor Dot - Main pointer */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 pointer-events-none will-change-transform"
-        style={{ zIndex: 999999 }}
+        className="fixed top-0 left-0 pointer-events-none"
+        style={{ 
+          zIndex: 2147483647,
+          willChange: 'transform',
+        }}
       >
         <div 
-          className="rounded-full transition-transform duration-100"
+          className="rounded-full transition-all duration-150 ease-out"
           style={{
-            width: isClicking ? '10px' : isHovering ? '8px' : '12px',
-            height: isClicking ? '10px' : isHovering ? '8px' : '12px',
+            width: isClicking ? '8px' : isHovering ? '6px' : '10px',
+            height: isClicking ? '8px' : isHovering ? '6px' : '10px',
             background: '#92aac1',
-            boxShadow: '0 0 0 2px rgba(255,255,255,0.6), 0 0 12px rgba(146,170,193,0.5)',
+            boxShadow: '0 0 0 2px rgba(255,255,255,0.8), 0 0 20px rgba(146,170,193,0.6)',
           }}
         />
       </div>
 
-      {/* Cursor Ring */}
+      {/* Cursor Ring - Follows with delay */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 pointer-events-none will-change-transform"
-        style={{ zIndex: 999998 }}
+        className="fixed top-0 left-0 pointer-events-none"
+        style={{ 
+          zIndex: 2147483646,
+          willChange: 'transform',
+        }}
       >
         <div 
-          className="rounded-full border transition-all duration-150"
+          className="rounded-full transition-all duration-200 ease-out"
           style={{
-            width: isClicking ? '32px' : isHovering ? '48px' : '36px',
-            height: isClicking ? '32px' : isHovering ? '48px' : '36px',
-            borderWidth: '1.5px',
-            borderColor: isHovering ? 'rgba(146,170,193,0.8)' : 'rgba(212,189,172,0.5)',
-            opacity: isHovering ? 1 : 0.6,
+            width: isClicking ? '28px' : isHovering ? '50px' : '36px',
+            height: isClicking ? '28px' : isHovering ? '50px' : '36px',
+            border: `2px solid ${isHovering ? 'rgba(146,170,193,0.9)' : 'rgba(212,189,172,0.6)'}`,
+            background: isHovering ? 'rgba(146,170,193,0.1)' : 'transparent',
           }}
         />
       </div>
+
+      {/* Hide default cursor globally */}
+      <style jsx global>{`
+        * {
+          cursor: none !important;
+        }
+      `}</style>
     </>
   )
 }
