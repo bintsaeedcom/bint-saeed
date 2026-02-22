@@ -74,13 +74,13 @@ body {
   letter-spacing: 0.02em;
   overflow-x: hidden;
   cursor: none;
-  background: #1a0008;
+  background: #3b0014;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 html {
-  background: #1a0008;
+  background: #3b0014;
 }
 
 @media (max-width: 768px) {
@@ -315,7 +315,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px rgba(26, 0, 8, 1) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px #3b0014 inset !important;
   -webkit-text-fill-color: #d4bdac !important;
   transition: background-color 5000s ease-in-out 0s;
   caret-color: #d4bdac;
@@ -326,7 +326,7 @@ input:-webkit-autofill:active {
 .dark-input:-webkit-autofill:hover,
 .dark-input:-webkit-autofill:focus,
 .dark-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px rgba(26, 0, 8, 1) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px #3b0014 inset !important;
   -webkit-text-fill-color: #d4bdac !important;
 }
 
