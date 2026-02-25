@@ -529,6 +529,7 @@ export const translations = {
       spanish: 'Español',
       russian: 'Русский',
       chinese: '中文',
+      german: 'Deutsch',
     },
   },
 
@@ -763,6 +764,7 @@ export const translations = {
       spanish: 'Español',
       russian: 'Русский',
       chinese: '中文',
+      german: 'Deutsch',
     },
   },
 
@@ -997,6 +999,7 @@ export const translations = {
       spanish: 'Español',
       russian: 'Русский',
       chinese: '中文',
+      german: 'Deutsch',
     },
   },
 
@@ -1231,6 +1234,7 @@ export const translations = {
       spanish: 'Español',
       russian: 'Русский',
       chinese: '中文',
+      german: 'Deutsch',
     },
   },
 
@@ -1465,6 +1469,7 @@ export const translations = {
       spanish: 'Español',
       russian: 'Русский',
       chinese: '中文',
+      german: 'Deutsch',
     },
   },
 
