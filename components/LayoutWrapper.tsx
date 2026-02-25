@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
-import LocationConsent from '@/components/LocationConsent'
+import LocaleConfirmPopup from '@/components/LocaleConfirmPopup'
 import EmailPopup from '@/components/EmailPopup'
 import CookieConsent from '@/components/CookieConsent'
 
@@ -15,7 +15,6 @@ interface LayoutWrapperProps {
 export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const pathname = usePathname()
   
-  // Coming soon mode - hide all navigation on homepage
   const isComingSoon = pathname === '/'
 
   if (isComingSoon) {
@@ -33,9 +32,9 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
       <main className="pt-[90px] lg:pt-[100px]">{children}</main>
       <Footer />
       <WhatsAppButton />
-      <LocationConsent />
-      <EmailPopup />
       <CookieConsent />
+      <LocaleConfirmPopup />
+      <EmailPopup />
     </>
   )
 }

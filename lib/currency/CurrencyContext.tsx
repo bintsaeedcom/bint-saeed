@@ -19,23 +19,14 @@ export const currencies: Currency[] = [
   { code: 'USD', symbol: '$', name: 'US Dollar', rate: 0.27 },
   { code: 'EUR', symbol: '€', name: 'Euro', rate: 0.25 },
   { code: 'GBP', symbol: '£', name: 'British Pound', rate: 0.21 },
+  { code: 'CHF', symbol: 'Fr.', name: 'Swiss Franc', rate: 0.24 },
 ]
 
 // Map countries to their default currencies
 const countryToCurrency: Record<string, string> = {
-  AE: 'AED', // UAE
-  SA: 'SAR', // Saudi Arabia
-  KW: 'KWD', // Kuwait
-  QA: 'QAR', // Qatar
-  BH: 'BHD', // Bahrain
-  OM: 'OMR', // Oman
-  US: 'USD', // United States
-  GB: 'GBP', // United Kingdom
-  DE: 'EUR', // Germany
-  FR: 'EUR', // France
-  IT: 'EUR', // Italy
-  ES: 'EUR', // Spain
-  NL: 'EUR', // Netherlands
+  AE: 'AED', SA: 'SAR', KW: 'KWD', QA: 'QAR', BH: 'BHD', OM: 'OMR',
+  US: 'USD', GB: 'GBP', CH: 'CHF', AT: 'EUR',
+  DE: 'EUR', FR: 'EUR', IT: 'EUR', ES: 'EUR', NL: 'EUR', BE: 'EUR', LU: 'EUR', MC: 'EUR',
 }
 
 interface CurrencyContextType {
@@ -100,12 +91,12 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
 
   const formatPrice = (priceInAED: number): string => {
     const converted = convertPrice(priceInAED)
-    
-    // Format based on currency
     if (currency.code === 'AED' || currency.code === 'SAR' || currency.code === 'QAR') {
       return `${converted.toLocaleString()} ${currency.symbol}`
     }
-    
+    if (currency.code === 'CHF') {
+      return `CHF ${converted.toLocaleString()}`
+    }
     return `${currency.symbol}${converted.toLocaleString()}`
   }
 

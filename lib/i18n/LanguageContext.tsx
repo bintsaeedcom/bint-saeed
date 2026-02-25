@@ -2,6 +2,9 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { translations, Language, Translations } from './translations'
+import { fetchGeoData } from '@/lib/geo/geoDetection'
+
+const VALID_LANGUAGES: Language[] = ['en', 'ar', 'fr', 'it', 'es', 'ru', 'zh', 'de']
 
 interface LanguageContextType {
   language: Language
@@ -19,16 +22,23 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setMounted(true)
     const savedLang = localStorage.getItem('language') as Language
-    const validLanguages: Language[] = ['en', 'ar', 'fr', 'it', 'es', 'ru']
-    if (savedLang && validLanguages.includes(savedLang)) {
+    if (savedLang && VALID_LANGUAGES.includes(savedLang)) {
       setLanguageState(savedLang)
+      return
     }
+    let cancelled = false
+    fetchGeoData().then((geo) => {
+      if (cancelled || !geo || !VALID_LANGUAGES.includes(geo.suggestedLanguage as Language)) return
+      setLanguageState(geo.suggestedLanguage as Language)
+      sessionStorage.setItem('bint-saeed-detected-lang', geo.suggestedLanguage)
+    })
+    return () => { cancelled = true }
   }, [])
 
   useEffect(() => {
     if (mounted) {
       localStorage.setItem('language', language)
-      document.documentElement.lang = language
+      document.documentElement.lang = language === 'zh' ? 'zh-CN' : language
       document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr'
     }
   }, [language, mounted])

@@ -17,6 +17,8 @@ export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherP
   const languages: { code: Language; label: string; native: string; flag: string }[] = [
     { code: 'en', label: 'English', native: 'EN', flag: '🇬🇧' },
     { code: 'ar', label: 'العربية', native: 'عر', flag: '🇦🇪' },
+    { code: 'zh', label: '中文', native: '中', flag: '🇨🇳' },
+    { code: 'de', label: 'Deutsch', native: 'DE', flag: '🇩🇪' },
     { code: 'fr', label: 'Français', native: 'FR', flag: '🇫🇷' },
     { code: 'it', label: 'Italiano', native: 'IT', flag: '🇮🇹' },
     { code: 'es', label: 'Español', native: 'ES', flag: '🇪🇸' },

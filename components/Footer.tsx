@@ -210,6 +210,9 @@ export default function Footer() {
               <p className="font-roboto text-xs text-white/50 tracking-wide leading-relaxed max-w-xs">
                 {t.footer.brandDescription}
               </p>
+              <p className="font-roboto text-xs text-white/40 tracking-wide mt-3">
+                Abu Dhabi, United Arab Emirates
+              </p>
             </div>
 
             {/* Shop */}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { FiX } from 'react-icons/fi'
@@ -8,6 +9,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import toast from 'react-hot-toast'
 
 export default function EmailPopup() {
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
@@ -16,16 +18,18 @@ export default function EmailPopup() {
   const { isRTL } = useLanguage()
 
   useEffect(() => {
-    // Check if user has already seen/dismissed the popup
+    if (!pathname?.startsWith('/shop')) return
+
     const hasSeenPopup = localStorage.getItem('bint-saeed-popup-seen')
     const hasSubscribed = localStorage.getItem('bint-saeed-subscribed')
-    
+
     if (!hasSeenPopup && !hasSubscribed) {
-      // Show popup after 5 seconds
-      const timer = setTimeout(() => setIsOpen(true), 5000)
+      const timer = setTimeout(() => {
+        if (localStorage.getItem('cookieConsent')) setIsOpen(true)
+      }, 45000)
       return () => clearTimeout(timer)
     }
-  }, [])
+  }, [pathname])
 
   const generateDiscountCode = () => {
     // Generate unique discount code: BINT + random alphanumeric

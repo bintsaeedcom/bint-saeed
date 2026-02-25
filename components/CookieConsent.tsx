@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { FiX, FiShield } from 'react-icons/fi'
+import Image from 'next/image'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 export default function CookieConsent() {
@@ -14,7 +14,6 @@ export default function CookieConsent() {
   useEffect(() => {
     const consent = localStorage.getItem('cookieConsent')
     if (!consent) {
-      // Small delay for better UX
       const timer = setTimeout(() => setShowConsent(true), 1500)
       return () => clearTimeout(timer)
     }
@@ -31,163 +30,141 @@ export default function CookieConsent() {
     }
   }
 
+  const closeConsent = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cookie-consent-closed'))
+    }
+  }
+
   const acceptAll = () => {
     localStorage.setItem('cookieConsent', 'all')
     localStorage.setItem('analyticsConsent', 'true')
     localStorage.setItem('marketingConsent', 'true')
     updateGoogleConsent(true)
     setShowConsent(false)
+    closeConsent()
   }
 
-  const acceptEssential = () => {
+  const rejectAll = () => {
     localStorage.setItem('cookieConsent', 'essential')
     localStorage.setItem('analyticsConsent', 'false')
     localStorage.setItem('marketingConsent', 'false')
     updateGoogleConsent(false)
     setShowConsent(false)
+    closeConsent()
   }
 
   return (
     <AnimatePresence>
       {showConsent && (
         <>
-          {/* Backdrop */}
+          {/* Subtle overlay */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/20 backdrop-blur-[2px] z-[100]"
             onClick={() => setShowDetails(false)}
-            data-cursor-hover
           />
           
-          {/* Cookie Banner */}
+          {/* Centered modal - Loro Piana style */}
           <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed bottom-0 left-0 right-0 z-[101] p-4 md:p-6"
-            data-cursor-hover
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="fixed inset-0 z-[101] flex items-center justify-center p-4 md:p-6"
           >
-            <div className="container mx-auto">
-              <div className="bg-brand-stone border-t-4 border-brand-darkRed shadow-2xl rounded-none md:rounded-t-2xl p-6 md:p-8 max-w-4xl mx-auto">
-                {/* Header */}
-                <div className={`flex items-start justify-between mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    <div className="w-12 h-12 bg-brand-darkRed/20 rounded-full flex items-center justify-center">
-                      <FiShield className="w-6 h-6 text-brand-darkRed" />
-                    </div>
-                    <div>
-                      <h4 className="font-rozha text-2xl text-brand-darkRed">
-                        {t.cookie.title || 'We Value Your Privacy'}
-                      </h4>
-                    </div>
-                  </div>
-                </div>
+            <div
+              className={`w-full max-w-lg bg-[#faf8f5] border border-brand-darkRed/60 rounded-lg shadow-sm overflow-hidden ${isRTL ? 'text-right' : 'text-center'}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Logo */}
+              <div className="pt-8 pb-4 flex justify-center">
+                <Image
+                  src="/logo.png"
+                  alt="Bint Saeed"
+                  width={120}
+                  height={36}
+                  className="h-8 w-auto object-contain"
+                />
+              </div>
 
-                {/* Content */}
-                <div className={`mb-8 ${isRTL ? 'text-right' : ''}`}>
-                  <p className="font-roboto text-sm md:text-base text-brand-darkRed/80 tracking-wide leading-relaxed">
-                    {t.cookie.message}
-                  </p>
-                  
-                  {/* Cookie Details Toggle */}
-                  <button
-                    onClick={() => setShowDetails(!showDetails)}
-                    className="font-roboto text-sm text-brand-darkRed underline mt-3 hover:text-brand-dustyBlue transition-colors"
-                    data-cursor-hover
-                  >
-                    {showDetails ? (t.cookie.hideDetails || 'Hide details') : (t.cookie.showDetails || 'Show details')}
-                  </button>
-                  
-                  {/* Cookie Details */}
-                  <AnimatePresence>
-                    {showDetails && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="mt-6 p-6 bg-white/60 rounded-lg">
-                          <div className="grid md:grid-cols-3 gap-6">
-                            {/* Essential */}
-                            <div>
-                              <div className={`flex items-center justify-between mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                                <span className="font-roboto font-medium text-sm text-brand-darkRed">
-                                  {t.cookie.essential || 'Essential'}
-                                </span>
-                                <span className="text-xs text-brand-clayRed bg-brand-stone/30 px-2 py-1 rounded">
-                                  {t.cookie.alwaysOn || 'Always on'}
-                                </span>
-                              </div>
-                              <p className="font-roboto text-xs text-brand-clayRed/70 leading-relaxed">
-                                {t.cookie.essentialDesc || 'Required for the website to function. Cannot be disabled.'}
-                              </p>
-                            </div>
-                            
-                            {/* Analytics */}
-                            <div>
-                              <div className={`flex items-center justify-between mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                                <span className="font-roboto font-medium text-sm text-brand-darkRed">
-                                  {t.cookie.analytics || 'Analytics'}
-                                </span>
-                                <span className="text-xs text-brand-clayRed bg-brand-dustyBlue/20 px-2 py-1 rounded">
-                                  {t.cookie.optional || 'Optional'}
-                                </span>
-                              </div>
-                              <p className="font-roboto text-xs text-brand-clayRed/70 leading-relaxed">
-                                {t.cookie.analyticsDesc || 'Help us understand how visitors interact with our website.'}
-                              </p>
-                            </div>
-                            
-                            {/* Marketing */}
-                            <div>
-                              <div className={`flex items-center justify-between mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                                <span className="font-roboto font-medium text-sm text-brand-darkRed">
-                                  {t.cookie.marketing || 'Marketing'}
-                                </span>
-                                <span className="text-xs text-brand-clayRed bg-brand-dustyBlue/20 px-2 py-1 rounded">
-                                  {t.cookie.optional || 'Optional'}
-                                </span>
-                              </div>
-                              <p className="font-roboto text-xs text-brand-clayRed/70 leading-relaxed">
-                                {t.cookie.marketingDesc || 'Used to show you relevant advertisements.'}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+              {/* Title */}
+              <h2 className="font-rozha text-xl text-brand-darkRed px-6 pb-2">
+                {t.cookie.title}
+              </h2>
 
-                {/* Actions */}
-                <div className={`flex flex-col sm:flex-row gap-3 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
-                  <button
-                    onClick={acceptEssential}
-                    className="flex-1 sm:flex-none px-8 py-4 border border-brand-darkRed text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-all duration-300"
-                    data-cursor-hover
+              {/* Body text */}
+              <div className="px-6 pb-4">
+                <p className="font-roboto text-sm text-[#4a4a4a] leading-[1.7]">
+                  {t.cookie.message}
+                </p>
+              </div>
+
+              {/* More Information link */}
+              <div className="pb-5">
+                <Link
+                  href="/cookie-policy"
+                  className="font-roboto text-sm text-brand-darkRed/90 underline hover:text-brand-darkRed transition-colors"
+                >
+                  {t.cookie.learnMore}
+                </Link>
+              </div>
+
+              {/* Cookie details (optional, when "Cookies settings" clicked) */}
+              <AnimatePresence>
+                {showDetails && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="overflow-hidden border-t border-[#e8e2db]"
                   >
-                    {t.cookie.essentialOnly}
-                  </button>
-                  <button
-                    onClick={acceptAll}
-                    className="flex-1 sm:flex-none px-8 py-4 bg-brand-darkRed text-white font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-all duration-300"
-                    data-cursor-hover
-                  >
-                    {t.cookie.acceptAll}
-                  </button>
-                  <Link
-                    href="/cookie-policy"
-                    className={`flex-1 sm:flex-none px-8 py-4 text-brand-clayRed font-roboto text-xs uppercase tracking-[0.15em] hover:text-brand-dustyBlue transition-colors text-center ${isRTL ? 'sm:mr-auto' : 'sm:ml-auto'}`}
-                    data-cursor-hover
-                  >
-                    {t.cookie.learnMore}
-                  </Link>
-                </div>
+                    <div className="px-6 py-4 space-y-3 text-left">
+                      <div>
+                        <span className="font-roboto text-xs font-medium text-[#3b0014]">{t.cookie.essential}</span>
+                        <span className="text-[10px] text-[#6b6b6b] ml-2">({t.cookie.alwaysOn})</span>
+                        <p className="font-roboto text-xs text-[#6b6b6b] mt-1">{t.cookie.essentialDesc}</p>
+                      </div>
+                      <div>
+                        <span className="font-roboto text-xs font-medium text-[#3b0014]">{t.cookie.analytics}</span>
+                        <span className="text-[10px] text-[#6b6b6b] ml-2">({t.cookie.optional})</span>
+                        <p className="font-roboto text-xs text-[#6b6b6b] mt-1">{t.cookie.analyticsDesc}</p>
+                      </div>
+                      <div>
+                        <span className="font-roboto text-xs font-medium text-[#3b0014]">{t.cookie.marketing}</span>
+                        <span className="text-[10px] text-[#6b6b6b] ml-2">({t.cookie.optional})</span>
+                        <p className="font-roboto text-xs text-[#6b6b6b] mt-1">{t.cookie.marketingDesc}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Three buttons - Loro Piana style */}
+              <div className={`flex flex-col sm:flex-row gap-2 p-6 pt-4 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+                <button
+                  onClick={() => setShowDetails(!showDetails)}
+                  className="flex-1 px-5 py-3 bg-brand-darkRed text-white font-roboto text-[11px] uppercase tracking-[0.12em] border border-brand-darkRed/80 rounded hover:opacity-90 transition-opacity"
+                  data-cursor-hover
+                >
+                  {t.cookie.cookiesSettings || t.cookie.showDetails}
+                </button>
+                <button
+                  onClick={rejectAll}
+                  className="flex-1 px-5 py-3 bg-brand-darkRed text-white font-roboto text-[11px] uppercase tracking-[0.12em] border border-brand-darkRed/80 rounded hover:opacity-90 transition-opacity"
+                  data-cursor-hover
+                >
+                  {t.cookie.essentialOnly}
+                </button>
+                <button
+                  onClick={acceptAll}
+                  className="flex-1 px-5 py-3 bg-brand-darkRed text-white font-roboto text-[11px] uppercase tracking-[0.12em] border border-brand-darkRed/80 rounded hover:opacity-90 transition-opacity"
+                  data-cursor-hover
+                >
+                  {t.cookie.acceptAll}
+                </button>
               </div>
             </div>
           </motion.div>
