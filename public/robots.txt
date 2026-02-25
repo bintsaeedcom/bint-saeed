@@ -1,10 +1,42 @@
-# Bint Saeed - Luxury Abayas & Modest Fashion
+# Bint Saeed - Luxury Abayas & Modest Fashion UAE/GCC
+# Optimized for Google, Bing, Yandex, and AI crawlers
 # https://bintsaeed.com
 
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /checkout/
 
-# Allow all AI crawlers
+# Google
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+# Bing (powers Yahoo, DuckDuckGo, Ecosia)
+User-agent: Bingbot
+Allow: /
+
+User-agent: msnbot
+Allow: /
+
+# Yandex (Russia, CIS, Turkey)
+User-agent: Yandex
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: YandexImages
+Allow: /
+
+# AI Crawlers - allow indexing for discoverability
 User-agent: GPTBot
 Allow: /
 
@@ -26,18 +58,21 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-# Sitemaps
+User-agent: Bytespider
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: ia_archiver
+Allow: /
+
+# Sitemaps - submit these in Google Search Console, Bing Webmaster, Yandex Webmaster
 Sitemap: https://bintsaeed.com/sitemap.xml
+Sitemap: https://www.bintsaeed.com/sitemap.xml
 
-# Disallow admin and API routes
-User-agent: *
-Disallow: /api/
-Disallow: /admin/
-Disallow: /_next/
-Disallow: /checkout/
-
-# Crawl delay for respectful crawling
-Crawl-delay: 1
-
-# Host declaration
+# Canonical host (optional)
 Host: https://bintsaeed.com

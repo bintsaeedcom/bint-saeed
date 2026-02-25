@@ -182,9 +182,8 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // Add your verification codes here
-    // google: 'your-google-verification-code',
-    // yandex: 'your-yandex-verification-code',
+    // Google: already verified via DNS TXT
+    // Bing: added in head below; Yandex: add when you have a Yandex ID
   },
   category: 'Fashion',
   icons: {
@@ -200,6 +199,7 @@ export const metadata: Metadata = {
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'format-detection': 'telephone=no',
+    'msapplication-TileColor': '#3b0014',
   },
 }
 
@@ -590,8 +590,13 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.cre
           }}
         />
         
-        {/* AI Crawler Hints */}
+        {/* Bing Webmaster verification */}
+        <meta name="msvalidate.01" content="7BA982E3BEF4E04896CC719115678C24" />
+        {/* AI Crawler Hints - improves discoverability by AI search (ChatGPT, Perplexity, Claude) */}
         <meta name="ai-content-declaration" content="This website showcases original luxury fashion designs by Bint Saeed, a UAE-based brand specializing in abayas and modest fashion." />
+        <meta name="coverage" content="Worldwide" />
+        <meta name="distribution" content="Global" />
+        <meta name="rating" content="General" />
       </head>
       <body className="min-h-screen">
         {/* Google Tag Manager (noscript) */}
