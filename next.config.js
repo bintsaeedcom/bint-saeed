@@ -3,6 +3,9 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com', 'via.placeholder.com'],
   },
+  async rewrites() {
+    return [{ source: '/sitemap.xml', destination: '/sitemap' }]
+  },
   async redirects() {
     return [
       { source: '/accessoiries', destination: '/accessories', permanent: true },
