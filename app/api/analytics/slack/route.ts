@@ -4,27 +4,42 @@ import { NextRequest, NextResponse } from 'next/server'
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || process.env.SLACK_ANALYTICS_WEBHOOK_URL
 
 // VIP Visitors to flag with special notifications
-// Add visitor IDs or partial IPs here to track specific people
 const VIP_VISITORS: { name: string; visitorIds: string[]; ipPatterns: string[] }[] = [
   {
     name: 'Saeed',
-    visitorIds: ['mlxjxzly', 'mlwszt1l'], // Add known visitor IDs
-    ipPatterns: ['2001:8f8:153b', '2001:8f8:1621'], // Partial IP patterns to match
+    visitorIds: ['mlxjxzly'], // Saeed's visitor ID only
+    ipPatterns: [],
   },
 ]
+
+// Exclude these from VIP - site owner, team, test devices (never trigger "Saeed is back")
+const EXCLUDE_FROM_VIP: { visitorIds: string[]; ipPatterns: string[] } = {
+  visitorIds: ['yyuaarsvulmmlwoi940'], // Your visitor ID from Slack
+  ipPatterns: [], // Add your IP prefix here if needed, e.g. '2001:8f8:1621:695d'
+}
 
 // Store active visitors in memory (in production, use Redis or similar)
 const activeVisitors = new Map<string, any>()
 
-// Check if visitor is VIP
+// Check if visitor is VIP (excluding site owner/team)
 function checkVIP(visitorId: string, ip: string): { isVIP: boolean; name: string } {
+  const vid = (visitorId || '').trim()
+  if (!vid) return { isVIP: false, name: '' }
+
+  // Never flag excluded visitors (exact or ends-with)
+  if (EXCLUDE_FROM_VIP.visitorIds.some(id => vid === id || vid.endsWith(id))) {
+    return { isVIP: false, name: '' }
+  }
+  if (EXCLUDE_FROM_VIP.ipPatterns.some(pattern => ip?.includes(pattern))) {
+    return { isVIP: false, name: '' }
+  }
+
   for (const vip of VIP_VISITORS) {
-    // Check visitor ID
-    if (vip.visitorIds.some(id => visitorId?.includes(id) || visitorId?.endsWith(id))) {
+    // Strict match: visitor ID must exactly equal mlxjxzly (no partial/includes)
+    if (vip.visitorIds.some(id => vid === id)) {
       return { isVIP: true, name: vip.name }
     }
-    // Check IP patterns
-    if (vip.ipPatterns.some(pattern => ip?.includes(pattern))) {
+    if (vip.ipPatterns.length > 0 && vip.ipPatterns.some(pattern => ip?.includes(pattern))) {
       return { isVIP: true, name: vip.name }
     }
   }

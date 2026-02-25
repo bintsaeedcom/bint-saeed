@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import './globals.css'
 import AnimatedCursor from '@/components/AnimatedCursor'
 import LayoutWrapper from '@/components/LayoutWrapper'
@@ -505,6 +506,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google Tag Manager - as high in head as possible */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PS953D4R');`,
+          }}
+        />
+        {/* End Google Tag Manager */}
         {/* Favicon - explicit links for better browser support */}
         <link rel="icon" href="/flavicon.png?v=2" type="image/png" />
         <link rel="apple-touch-icon" href="/flavicon.png?v=2" />
@@ -548,14 +557,35 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(hiddenSeoSchema) }}
         />
         
-        {/* Google Analytics placeholder */}
+        {/* Google tag (gtag.js) with Consent Mode */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-4C9F2RRTVJ"
+          strategy="afterInteractive"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              // gtag('config', 'GA_MEASUREMENT_ID');
+              gtag('consent', 'default', {
+                'analytics_storage': 'denied',
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied'
+              });
+              try {
+                var c = typeof localStorage !== 'undefined' && localStorage.getItem('cookieConsent');
+                if (c === 'all') {
+                  gtag('consent', 'update', {
+                    'analytics_storage': 'granted',
+                    'ad_storage': 'granted',
+                    'ad_user_data': 'granted',
+                    'ad_personalization': 'granted'
+                  });
+                }
+              } catch (e) {}
+              gtag('config', 'G-4C9F2RRTVJ');
             `,
           }}
         />
@@ -564,6 +594,16 @@ export default function RootLayout({
         <meta name="ai-content-declaration" content="This website showcases original luxury fashion designs by Bint Saeed, a UAE-based brand specializing in abayas and modest fashion." />
       </head>
       <body className="min-h-screen">
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-PS953D4R"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
         <LanguageProvider>
           <CurrencyProvider>
             <AnalyticsProvider>

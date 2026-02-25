@@ -1,10 +1,52 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+const MAILERLITE_API = 'https://connect.mailerlite.com/api/subscribers'
+
+async function addToMailerLite(
+  apiKey: string,
+  email: string,
+  options: { name?: string; lastName?: string; groupId?: string }
+): Promise<{ success: boolean; status: number; error: string }> {
+  const { name, lastName, groupId } = options
+
+  // Build fields - MailerLite expects 'name' and 'last_name'
+  const fields: Record<string, string> = {}
+  if (name?.trim()) fields.name = name.trim()
+  if (lastName?.trim()) fields.last_name = lastName.trim()
+
+  // Build body - groups optional (subscriber goes to main audience if omitted)
+  const body: Record<string, unknown> = {
+    email: email.trim().toLowerCase(),
+    status: 'active',
+    resubscribe: true, // Allow re-subscribing if previously unsubscribed
+  }
+  if (Object.keys(fields).length > 0) body.fields = fields
+  if (groupId?.trim()) body.groups = [groupId.trim()]
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${apiKey.trim()}`,
+    'Accept': 'application/json',
+  }
+
+  const res = await fetch(MAILERLITE_API, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(body),
+  })
+  const text = await res.text()
+
+  if (res.ok) {
+    return { success: true, status: res.status, error: '' }
+  }
+  return { success: false, status: res.status, error: text }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { email, source } = body
-    
+    const { email, firstName, lastName, name, source } = body
+
     if (!email) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 })
     }
@@ -16,84 +58,55 @@ export async function POST(request: NextRequest) {
     let mailerliteResult = { success: false, error: '', status: 0 }
     let slackResult = { success: false }
 
-    // Send to Mailerlite FIRST (priority)
-    const mailerliteApiKey = process.env.MAILERLITE_API_KEY
-    const mailerliteGroupId = process.env.MAILERLITE_GROUP_ID
+    const mailerliteApiKey = process.env.MAILERLITE_API_KEY?.trim()
+    const mailerliteGroupId = process.env.MAILERLITE_GROUP_ID?.trim() || undefined
 
-    console.log('=== MAILERLITE DEBUG ===')
-    console.log('API Key exists:', !!mailerliteApiKey)
-    console.log('API Key length:', mailerliteApiKey?.length || 0)
-    console.log('API Key starts with:', mailerliteApiKey?.substring(0, 10) || 'N/A')
-    console.log('Group ID:', mailerliteGroupId)
+    // Map name: SubscribeForm sends firstName/lastName, EmailPopup sends name
+    const subscriberName = firstName ?? name
+    const subscriberLastName = lastName
 
-    if (mailerliteApiKey && mailerliteGroupId) {
+    if (mailerliteApiKey) {
       try {
-        // Try without groups first (simpler request)
-        const mailerliteBody = {
-          email: email,
-          groups: [mailerliteGroupId],
-          status: 'active',
-        }
-        
-        console.log('Mailerlite request body:', JSON.stringify(mailerliteBody))
-        
-        const mailerliteRes = await fetch('https://connect.mailerlite.com/api/subscribers', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${mailerliteApiKey}`,
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify(mailerliteBody),
+        // Try with group first if configured
+        mailerliteResult = await addToMailerLite(mailerliteApiKey, email, {
+          name: subscriberName,
+          lastName: subscriberLastName,
+          groupId: mailerliteGroupId,
         })
-        
-        const responseText = await mailerliteRes.text()
-        console.log('Mailerlite response status:', mailerliteRes.status)
-        console.log('Mailerlite response body:', responseText)
-        
-        if (mailerliteRes.ok) {
-          mailerliteResult = { success: true, error: '', status: mailerliteRes.status }
-          console.log('✅ MAILERLITE SUCCESS!')
-        } else {
-          mailerliteResult = { success: false, error: responseText, status: mailerliteRes.status }
-          console.error('❌ MAILERLITE FAILED:', mailerliteRes.status, responseText)
-          
-          // If groups failed, try without groups
-          if (responseText.includes('groups')) {
-            console.log('Retrying without groups...')
-            const retryBody = { email: email, status: 'active' }
-            const retryRes = await fetch('https://connect.mailerlite.com/api/subscribers', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${mailerliteApiKey}`,
-                'Accept': 'application/json',
-              },
-              body: JSON.stringify(retryBody),
-            })
-            const retryText = await retryRes.text()
-            console.log('Retry response:', retryRes.status, retryText)
-            if (retryRes.ok) {
-              mailerliteResult = { success: true, error: '', status: retryRes.status }
-            }
+
+        // If failed and we used a group, retry without group (adds to main audience)
+        if (!mailerliteResult.success && mailerliteGroupId && mailerliteResult.error.toLowerCase().includes('group')) {
+          const retry = await addToMailerLite(mailerliteApiKey, email, {
+            name: subscriberName,
+            lastName: subscriberLastName,
+          })
+          if (retry.success) {
+            mailerliteResult = retry
           }
         }
-      } catch (e: any) {
-        console.error('Mailerlite fetch exception:', e.message)
-        mailerliteResult = { success: false, error: e.message, status: 0 }
+
+        if (mailerliteResult.success) {
+          console.log('✅ MAILERLITE: Subscriber added')
+        } else {
+          console.error('❌ MAILERLITE:', mailerliteResult.status, mailerliteResult.error)
+        }
+      } catch (e: unknown) {
+        const err = e instanceof Error ? e.message : String(e)
+        mailerliteResult = { success: false, error: err, status: 0 }
+        console.error('Mailerlite exception:', err)
       }
     } else {
-      console.log('❌ MAILERLITE NOT CONFIGURED')
-      console.log('Missing:', !mailerliteApiKey ? 'API_KEY' : '', !mailerliteGroupId ? 'GROUP_ID' : '')
+      console.log('❌ MAILERLITE: API key not configured')
     }
 
     // Send to Slack with Mailerlite status
     const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL
     if (slackWebhookUrl) {
       try {
+        const errMsg = (mailerliteResult.error || 'Not configured').slice(0, 150)
         const mailerliteStatus = mailerliteResult.success 
-          ? '✅ Added to Mailerlite' 
-          : `❌ Mailerlite failed: ${mailerliteResult.error || 'Not configured'}`
+          ? '✅ Added to MailerLite' 
+          : `❌ MailerLite: ${errMsg}`
         
         await fetch(slackWebhookUrl, {
           method: 'POST',
@@ -130,7 +143,7 @@ export async function POST(request: NextRequest) {
       success: true,
       mailerlite: mailerliteResult.success,
       debug: {
-        mailerliteConfigured: !!(mailerliteApiKey && mailerliteGroupId),
+        mailerliteConfigured: !!mailerliteApiKey,
         mailerliteStatus: mailerliteResult.status,
       }
     })

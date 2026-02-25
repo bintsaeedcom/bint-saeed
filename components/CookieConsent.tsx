@@ -20,10 +20,22 @@ export default function CookieConsent() {
     }
   }, [])
 
+  const updateGoogleConsent = (granted: boolean) => {
+    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+      (window as any).gtag('consent', 'update', {
+        analytics_storage: granted ? 'granted' : 'denied',
+        ad_storage: granted ? 'granted' : 'denied',
+        ad_user_data: granted ? 'granted' : 'denied',
+        ad_personalization: granted ? 'granted' : 'denied',
+      })
+    }
+  }
+
   const acceptAll = () => {
     localStorage.setItem('cookieConsent', 'all')
     localStorage.setItem('analyticsConsent', 'true')
     localStorage.setItem('marketingConsent', 'true')
+    updateGoogleConsent(true)
     setShowConsent(false)
   }
 
@@ -31,6 +43,7 @@ export default function CookieConsent() {
     localStorage.setItem('cookieConsent', 'essential')
     localStorage.setItem('analyticsConsent', 'false')
     localStorage.setItem('marketingConsent', 'false')
+    updateGoogleConsent(false)
     setShowConsent(false)
   }
 
