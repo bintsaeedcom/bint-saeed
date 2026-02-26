@@ -183,8 +183,9 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      // Try to get more accurate GPS location if user permits
-      if (navigator.geolocation) {
+      // Skip GPS location on coming soon page - avoid browser permission popup
+      const isComingSoon = typeof window !== 'undefined' && window.location.pathname === '/'
+      if (!isComingSoon && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords
@@ -262,11 +263,13 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
 
       setVisitor(visitorData)
 
-      // Send new visitor notification to Slack
-      if (isNewVisitor || visitCount === 1) {
-        await sendSlackNotification('new_visitor', visitorData)
-      } else {
-        await sendSlackNotification('returning_visitor', visitorData)
+      // Skip Slack notifications (including location) on coming soon page
+      if (!isComingSoon) {
+        if (isNewVisitor || visitCount === 1) {
+          await sendSlackNotification('new_visitor', visitorData)
+        } else {
+          await sendSlackNotification('returning_visitor', visitorData)
+        }
       }
     }
 

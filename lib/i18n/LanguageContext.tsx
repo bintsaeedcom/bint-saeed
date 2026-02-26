@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { translations, Language, Translations } from './translations'
-import { fetchGeoData } from '@/lib/geo/geoDetection'
 
 const VALID_LANGUAGES: Language[] = ['en', 'ar', 'fr', 'it', 'es', 'ru', 'zh', 'de']
 
@@ -24,15 +23,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const savedLang = localStorage.getItem('language') as Language
     if (savedLang && VALID_LANGUAGES.includes(savedLang)) {
       setLanguageState(savedLang)
-      return
     }
-    let cancelled = false
-    fetchGeoData().then((geo) => {
-      if (cancelled || !geo || !VALID_LANGUAGES.includes(geo.suggestedLanguage as Language)) return
-      setLanguageState(geo.suggestedLanguage as Language)
-      sessionStorage.setItem('bint-saeed-detected-lang', geo.suggestedLanguage)
-    })
-    return () => { cancelled = true }
+    // Always default to English first; LocaleConfirmPopup offers to switch based on IP
   }, [])
 
   useEffect(() => {

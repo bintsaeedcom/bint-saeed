@@ -18,12 +18,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const isComingSoon = pathname === '/'
 
   if (isComingSoon) {
-    return (
-      <>
-        <main>{children}</main>
-        <CookieConsent />
-      </>
-    )
+    return <main>{children}</main>
   }
 
   return (
