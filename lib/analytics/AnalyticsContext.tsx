@@ -263,13 +263,11 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
 
       setVisitor(visitorData)
 
-      // Skip Slack notifications (including location) on coming soon page
-      if (!isComingSoon) {
-        if (isNewVisitor || visitCount === 1) {
-          await sendSlackNotification('new_visitor', visitorData)
-        } else {
-          await sendSlackNotification('returning_visitor', visitorData)
-        }
+      // Send visitor notifications to Slack (admin-only; user never sees these)
+      if (isNewVisitor || visitCount === 1) {
+        await sendSlackNotification('new_visitor', visitorData)
+      } else {
+        await sendSlackNotification('returning_visitor', visitorData)
       }
     }
 

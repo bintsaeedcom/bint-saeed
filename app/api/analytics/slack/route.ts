@@ -293,7 +293,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             text: { 
               type: 'mrkdwn', 
-              text: `👁️ *Page View*: ${data.currentPage?.title || data.currentPage?.path}\n_${location} • ${timeOnSite} on site_` 
+              text: `👁️ *Page View*: ${data.currentPage?.title || data.currentPage?.path}\n_${locationText} • ${timeOnSite} on site_` 
             }
           }
         ]
@@ -313,7 +313,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Product:*\n${data.cartEvent?.productName}` },
-              { type: 'mrkdwn', text: `*Location:*\n${location}` },
+              { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
               { type: 'mrkdwn', text: `*Time on Site:*\n${timeOnSite}` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ]
@@ -334,7 +334,7 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Name:*\n${data.contactInfo?.name || 'Not provided'}` },
               { type: 'mrkdwn', text: `*Email:*\n${data.contactInfo?.email || 'Not provided'}` },
               { type: 'mrkdwn', text: `*Phone:*\n${data.contactInfo?.phone || 'Not provided'}` },
-              { type: 'mrkdwn', text: `*Location:*\n${location}` },
+              { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
             ]
           },
           {
@@ -360,7 +360,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Email:*\n${data.contactInfo?.email || 'Unknown'}` },
-              { type: 'mrkdwn', text: `*Location:*\n${location}` },
+              { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
               { type: 'mrkdwn', text: `*Cart Value:*\n${data.cartValue || 'Unknown'}` },
               { type: 'mrkdwn', text: `*Items:*\n${data.cartItems || 0}` },
             ]
@@ -392,7 +392,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Shipping:*\n🚚 ${data.shippingAddress || 'N/A'}` },
-              { type: 'mrkdwn', text: `*Location:*\n🌍 ${location}` },
+              { type: 'mrkdwn', text: `*Location:*\n🌍 ${locationText}` },
             ]
           }
         ]
