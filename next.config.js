@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ['swiper'],
   images: {
     domains: ['images.unsplash.com', 'via.placeholder.com'],
   },

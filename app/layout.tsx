@@ -713,6 +713,15 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.cre
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Fonts outside globals.css: if these fail (privacy/ad-block), site CSS still loads */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Roboto:wght@300;400;500;700&display=swap"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;700&display=swap"
+        />
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="preconnect" href="https://ipapi.co" />
         

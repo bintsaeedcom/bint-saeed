@@ -171,8 +171,8 @@ function MissionSection() {
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#2a0012] via-[#1a0008] to-[#0d0004]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_50%,_rgba(146,170,193,0.08)_0%,_transparent_60%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#eceae3_42%,#e3e0d6_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,rgba(255,255,255,0.55)_0%,transparent_45%)]" />
       <DecorativeCorners color="dustyBlue" />
       <div className="relative container mx-auto px-6 lg:px-16 py-32">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -188,7 +188,7 @@ function MissionSection() {
           <motion.div style={{ opacity }} className={`text-white order-1 lg:order-2 ${isRTL ? 'text-right' : ''}`}>
             <div className="relative max-w-xl">
               <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/15 via-transparent to-brand-stone/10 opacity-60" />
-              <div className="relative backdrop-blur-sm bg-white/[0.04] rounded-2xl p-8 md:p-10 border border-white/[0.06]">
+              <div className="relative backdrop-blur-md bg-[#1a0008]/85 rounded-2xl p-8 md:p-10 border border-white/[0.08]">
                 <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue/80 mb-6 block">{t.about.beginningSubtitle}</span>
                 <h2 className="font-rozha text-3xl md:text-4xl lg:text-5xl leading-[1.05] mb-8 text-white">
                   {t.about.beginningTitle1}
@@ -211,7 +211,12 @@ function MissionSection() {
         </div>
       </div>
       <div className="absolute top-1/2 right-8 -translate-y-1/2 hidden xl:block">
-        <span className="font-rozha text-8xl text-white/[0.04] select-none" style={{ writingMode: 'vertical-rl' }}>Bint Saeed</span>
+        <span
+          className="font-rozha text-8xl text-stone-500/20 select-none"
+          style={{ writingMode: 'vertical-rl' }}
+        >
+          Bint Saeed
+        </span>
       </div>
     </section>
   )

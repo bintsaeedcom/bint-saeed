@@ -1,4 +1,5 @@
 import { noIndexMetadata } from '@/lib/seo'
+import '../globals.css'
 
 export const metadata = noIndexMetadata
 

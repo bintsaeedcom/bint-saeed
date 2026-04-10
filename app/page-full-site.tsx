@@ -327,11 +327,9 @@ function ColorBlockSection() {
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Blocks */}
-      <div className="absolute inset-0 grid grid-cols-2">
-        <div className="bg-brand-clayRed" />
-        <div className="bg-brand-darkRed" />
-      </div>
+      {/* Neutral paper-beige field (replaces split clay / burgundy blocks) */}
+      <div className="absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#eceae3_42%,#e3e0d6_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,rgba(255,255,255,0.55)_0%,transparent_45%)]" />
 
       <div className="relative container mx-auto px-6 lg:px-16 py-32">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -356,28 +354,28 @@ function ColorBlockSection() {
           </motion.div>
 
           {/* Right - Content */}
-          <div className={`text-white ${isRTL ? 'text-right' : ''}`}>
+          <div className={`text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-stone mb-6 block">
+              <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue/70 mb-6 block">
                 {t.about.title}
               </span>
               <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl leading-[1.05] mb-8">
                 {t.about.daughters}
               </h2>
-              <p className="font-roboto text-base text-white/70 tracking-wide leading-[1.9] mb-8 max-w-lg">
+              <p className="font-roboto text-base text-brand-darkRed/70 tracking-wide leading-[1.9] mb-8 max-w-lg">
                 {t.about.daughtersText1}
               </p>
-              <p className="font-roboto text-base text-white/70 tracking-wide leading-[1.9] mb-12 max-w-lg">
+              <p className="font-roboto text-base text-brand-darkRed/70 tracking-wide leading-[1.9] mb-12 max-w-lg">
                 {t.about.daughtersText2}
               </p>
               <Link
                 href="/about"
-                className="inline-block px-10 py-4 border border-white/30 text-white font-roboto text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-brand-darkRed transition-all duration-500"
+                className="inline-block px-10 py-4 border border-brand-darkRed/25 text-brand-darkRed font-roboto text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white hover:border-brand-darkRed transition-all duration-500"
                 data-cursor-hover
               >
                 {t.about.readMore}
@@ -389,7 +387,10 @@ function ColorBlockSection() {
 
       {/* Vertical Text */}
       <div className="absolute top-1/2 right-8 -translate-y-1/2 hidden xl:block">
-        <span className="font-rozha text-8xl text-white/5 writing-mode-vertical transform rotate-180" style={{ writingMode: 'vertical-rl' }}>
+        <span
+          className="font-rozha text-8xl text-stone-500/20 writing-mode-vertical transform rotate-180"
+          style={{ writingMode: 'vertical-rl' }}
+        >
           Bint Saeed
         </span>
       </div>

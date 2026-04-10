@@ -33,6 +33,13 @@ const searchableContent = [
   { title: 'Luxury Abaya', href: '/shop?category=abayas&style=luxury', category: 'Products' },
 ]
 
+/** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
+const headerBarGradient =
+  'bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]'
+
+const mobileMenuGradient =
+  'bg-[radial-gradient(ellipse_130%_95%_at_50%_0%,#321922_0%,#2d141e_38%,#1a0f14_72%,#12080b_100%)]'
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -99,10 +106,8 @@ export default function Header() {
     <>
       {/* Main Header - Elegant Single Row Design */}
       <header
-        className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${
-          isScrolled 
-            ? 'py-3 shadow-lg bg-brand-darkRed' 
-            : 'py-4 lg:py-5 bg-brand-darkRed'
+        className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${headerBarGradient} ${
+          isScrolled ? 'py-3 shadow-lg shadow-black/40' : 'py-4 lg:py-5'
         }`}
       >
         {/* Subtle dusty blue accent line at bottom */}
@@ -337,7 +342,7 @@ export default function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[80] bg-brand-darkRed"
+            className={`fixed inset-0 z-[80] ${mobileMenuGradient}`}
           >
             <div className="h-full flex flex-col">
               {/* Header */}

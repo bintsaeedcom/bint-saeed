@@ -11,6 +11,8 @@ const config: Config = {
       colors: {
         brand: {
           darkRed: '#3b0014',
+          /** Solid wine tone (header uses multi-stop gradient in Header.tsx; use this for accents) */
+          darkMagenta: '#2d141e',
           wildRose: '#6620a2',
           dustyBlue: '#92aac1',
           clayRed: '#8e4233',
