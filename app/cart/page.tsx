@@ -1,55 +1,20 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowLeft, FiArrowRight, FiGlobe, FiTruck, FiInfo } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
-import { loadStripe } from '@stripe/stripe-js'
-import toast from 'react-hot-toast'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
 
 export default function CartPage() {
-  const { items, removeItem, updateQuantity, getTotal, clearCart } = useCartStore()
-  const [isCheckingOut, setIsCheckingOut] = useState(false)
+  const { items, removeItem, updateQuantity, getTotal } = useCartStore()
+  const lineKey = (item: (typeof items)[number]) =>
+    `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
-
-  const handleCheckout = async () => {
-    if (items.length === 0) {
-      toast.error('Your bag is empty')
-      return
-    }
-
-    setIsCheckingOut(true)
-
-    try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items }),
-      })
-
-      const { sessionId, error } = await response.json()
-
-      if (error) {
-        throw new Error(error)
-      }
-
-      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '')
-      
-      if (stripe) {
-        await stripe.redirectToCheckout({ sessionId })
-      }
-    } catch (error) {
-      console.error('Checkout error:', error)
-      toast.error('Unable to process checkout. Please try again.')
-    } finally {
-      setIsCheckingOut(false)
-    }
-  }
 
   if (items.length === 0) {
     return (
@@ -110,7 +75,7 @@ export default function CartPage() {
             <div className="space-y-8">
               {items.map((item, index) => (
                 <motion.div
-                  key={`${item.id}-${item.size}-${item.color}`}
+                  key={lineKey(item)}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
@@ -118,7 +83,7 @@ export default function CartPage() {
                 >
                   {/* Image */}
                   <Link href={`/shop/${item.id}`} className="flex-shrink-0" data-cursor-hover>
-                    <div className="relative w-28 md:w-36 aspect-[3/4] bg-[#f5f5f5]">
+                    <div className="relative aspect-[3/4] w-[5.6rem] bg-[#f5f5f5] md:w-[7.2rem]">
                       <Image
                         src={item.image}
                         alt={item.name}
@@ -139,7 +104,17 @@ export default function CartPage() {
                       <div className="font-roboto text-xs text-brand-clayRed/60 tracking-wide space-y-1">
                         <p>Size: {item.size}</p>
                         <p>Color: {item.color}</p>
-                        {item.customLength && <p>Length: {item.customLength}</p>}
+                        {(item.lengthCm || item.customLength) && (
+                          <p>Length: {item.lengthCm ? `${item.lengthCm} cm` : item.customLength}</p>
+                        )}
+                        {item.customisationMessage && (
+                          <p>
+                            Personalisation: {item.customisationMessage}
+                            {(item.customisationSurcharge ?? 0) > 0 && (
+                              <span className="text-brand-darkRed"> (+{formatPrice(item.customisationSurcharge ?? 0)} per piece)</span>
+                            )}
+                          </p>
+                        )}
                         {item.notes && <p>Notes: {item.notes}</p>}
                       </div>
                     </div>
@@ -147,14 +122,28 @@ export default function CartPage() {
                     {/* Price & Actions */}
                     <div className="flex items-end justify-between mt-4">
                       <p className="font-roboto text-base text-brand-darkRed tracking-wide">
-                        {formatPrice(item.price)}
+                        {formatPrice(lineUnitAed(item))}
+                        {item.quantity > 1 && (
+                          <span className="block font-roboto text-xs text-brand-clayRed/60">
+                            {formatPrice(lineTotalAed(item))} total
+                          </span>
+                        )}
                       </p>
 
                       <div className="flex items-center gap-4">
                         {/* Quantity */}
                         <div className="flex items-center border border-brand-stone/30">
                           <button
-                            onClick={() => updateQuantity(item.id, item.size, item.color, Math.max(1, item.quantity - 1))}
+                            onClick={() =>
+                              updateQuantity(
+                                item.id,
+                                item.size,
+                                item.color,
+                                Math.max(1, item.quantity - 1),
+                                item.lengthCm,
+                                item.customisationMessage
+                              )
+                            }
                             className="px-3 py-2 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
                             data-cursor-hover
                           >
@@ -162,7 +151,16 @@ export default function CartPage() {
                           </button>
                           <span className="w-8 text-center font-roboto text-sm">{item.quantity}</span>
                           <button
-                            onClick={() => updateQuantity(item.id, item.size, item.color, item.quantity + 1)}
+                            onClick={() =>
+                              updateQuantity(
+                                item.id,
+                                item.size,
+                                item.color,
+                                item.quantity + 1,
+                                item.lengthCm,
+                                item.customisationMessage
+                              )
+                            }
                             className="px-3 py-2 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
                             data-cursor-hover
                           >
@@ -172,7 +170,9 @@ export default function CartPage() {
 
                         {/* Remove */}
                         <button
-                          onClick={() => removeItem(item.id, item.size, item.color)}
+                          onClick={() =>
+                            removeItem(item.id, item.size, item.color, item.lengthCm, item.customisationMessage)
+                          }
                           className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors"
                           data-cursor-hover
                         >
@@ -210,6 +210,16 @@ export default function CartPage() {
                     </p>
                   </div>
                 </div>
+                {items.some((i) => i.customisationMessage) && (
+                  <div className={`flex items-start gap-2 p-3 bg-brand-stone/10 rounded-lg ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
+                    <FiInfo className="w-4 h-4 text-brand-darkRed flex-shrink-0 mt-0.5" />
+                    <p className="font-roboto text-xs text-brand-darkRed/90 tracking-wide">
+                      {isRTL
+                        ? 'القطع المخصصة غير قابلة للإرجاع أو الاستبدال.'
+                        : 'Customised pieces in your bag cannot be returned or exchanged.'}
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div className="border-t border-brand-stone/30 pt-6 mb-6">
@@ -226,21 +236,14 @@ export default function CartPage() {
                 </p>
               </div>
 
-              <button
-                onClick={handleCheckout}
-                disabled={isCheckingOut}
-                className={`w-full py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors disabled:opacity-50 flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+              <Link
+                href="/checkout"
+                className={`w-full py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
-                {isCheckingOut ? (
-                  isRTL ? 'جاري المعالجة...' : 'Processing...'
-                ) : (
-                  <>
-                    {isRTL ? 'الدفع الآن' : 'Proceed to Checkout'}
-                    <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
-                  </>
-                )}
-              </button>
+                {isRTL ? 'متابعة الدفع' : 'Proceed to Checkout'}
+                <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
+              </Link>
 
               {/* Worldwide Shipping Badge */}
               <div className={`flex items-center justify-center gap-2 mt-6 py-3 border-t border-b border-brand-stone/20 ${isRTL ? 'flex-row-reverse' : ''}`}>

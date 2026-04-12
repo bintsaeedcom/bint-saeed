@@ -3,37 +3,74 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
+import type { E164Number } from 'libphonenumber-js'
+import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
+import { validateOptionalPhone } from '@/lib/validateOptionalPhone'
+import PhoneWithCountry from '@/components/PhoneWithCountry'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 interface SubscribeFormProps {
   variant?: 'light' | 'dark'
 }
 
 export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps) {
+  const { isRTL } = useLanguage()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
   })
+  const [phone, setPhone] = useState<E164Number | undefined>()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [emailError, setEmailError] = useState('')
+  const [phoneError, setPhoneError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const check = validateSubscriberEmail(formData.email)
+    if (!check.valid) {
+      setEmailError(check.message)
+      toast.error(check.message)
+      return
+    }
+    const phoneCheck = validateOptionalPhone(phone)
+    if (!phoneCheck.ok) {
+      setPhoneError(phoneCheck.message)
+      toast.error(phoneCheck.message)
+      return
+    }
+    setEmailError('')
+    setPhoneError('')
     setIsSubmitting(true)
 
     try {
+      const payload: Record<string, string | undefined> = {
+        ...formData,
+        email: check.email,
+      }
+      if (phoneCheck.phone) payload.phone = phoneCheck.phone
+
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       })
+
+      const data = await response.json().catch(() => ({}))
 
       if (response.ok) {
         toast.success('Welcome to Bint Saeed!')
         setFormData({ firstName: '', lastName: '', email: '' })
+        setPhone(undefined)
       } else {
-        throw new Error('Failed to subscribe')
+        const msg = typeof data.error === 'string' ? data.error : 'Something went wrong. Please try again.'
+        toast.error(msg)
+        if (response.status === 400 && msg) {
+          if (msg.toLowerCase().includes('phone')) setPhoneError(msg)
+          else setEmailError(msg)
+        }
       }
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong. Please try again.')
     } finally {
       setIsSubmitting(false)
@@ -68,21 +105,74 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
           className={inputClass}
         />
       </div>
-      <div className="flex flex-col md:flex-row gap-4">
-        <input
-          type="email"
-          placeholder="Email Address"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          required
-          className={`flex-1 ${inputClass}`}
+      <div className={`space-y-1 ${isRTL ? 'text-right' : ''}`}>
+        <label
+          htmlFor="subscribe-phone"
+          className={`block text-xs uppercase tracking-[0.2em] font-roboto ${variant === 'dark' ? 'text-brand-dustyBlue/60' : 'text-white/60'}`}
+        >
+          {isRTL ? (
+            <>
+              الهاتف <span className="normal-case tracking-normal opacity-70">(اختياري)</span>
+            </>
+          ) : (
+            <>
+              Phone <span className="normal-case tracking-normal opacity-70">(optional)</span>
+            </>
+          )}
+        </label>
+        <PhoneWithCountry
+          id="subscribe-phone"
+          variant={variant}
+          value={phone}
+          onChange={(v) => {
+            setPhone(v)
+            if (phoneError) setPhoneError('')
+          }}
+          onBlur={() => {
+            if (!phone) return
+            const v = validateOptionalPhone(phone)
+            setPhoneError(v.ok ? '' : v.message)
+          }}
+          disabled={isSubmitting}
+          error={!!phoneError}
         />
+        {phoneError ? (
+          <p className={`text-xs font-roboto tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
+            {phoneError}
+          </p>
+        ) : null}
+      </div>
+      <div className="flex flex-col md:flex-row gap-4 md:items-start">
+        <div className="flex-1 w-full space-y-1">
+          <input
+            type="email"
+            placeholder="Email Address"
+            value={formData.email}
+            onChange={(e) => {
+              setFormData({ ...formData, email: e.target.value })
+              if (emailError) setEmailError('')
+            }}
+            onBlur={() => {
+              if (!formData.email.trim()) return
+              const check = validateSubscriberEmail(formData.email)
+              setEmailError(check.valid ? '' : check.message)
+            }}
+            required
+            aria-invalid={emailError ? true : undefined}
+            className={`w-full ${inputClass} ${emailError ? (variant === 'dark' ? 'border-red-400/50' : 'border-red-300') : ''}`}
+          />
+          {emailError ? (
+            <p className={`text-xs font-roboto tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
+              {emailError}
+            </p>
+          ) : null}
+        </div>
         <motion.button
           type="submit"
           disabled={isSubmitting}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className={buttonClass}
+          className={`${buttonClass} md:self-stretch md:shrink-0`}
           data-cursor-hover
         >
           {isSubmitting ? 'Subscribing...' : 'Subscribe'}

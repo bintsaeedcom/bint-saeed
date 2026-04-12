@@ -121,7 +121,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
             <div className="p-5 sm:p-6">
               {/* Product Info */}
               <div className={`flex gap-4 mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <div className="w-24 sm:w-28 aspect-[3/4] relative bg-[#f5f5f5] rounded-lg overflow-hidden flex-shrink-0">
+                <div className="relative aspect-[3/4] w-[4.8rem] flex-shrink-0 overflow-hidden rounded-lg bg-[#f5f5f5] sm:w-[5.6rem]">
                   <Image
                     src={product.images[0]}
                     alt={product.name}

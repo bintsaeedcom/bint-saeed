@@ -50,11 +50,14 @@ export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherP
       <AnimatePresence>
         {isOpen && (
           <>
-            <div 
-              className="fixed inset-0 z-40" 
+            <div
+              key="lang-switcher-backdrop"
+              className="fixed inset-0 z-40"
               onClick={() => setIsOpen(false)}
+              aria-hidden
             />
             <motion.div
+              key="lang-switcher-menu"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}

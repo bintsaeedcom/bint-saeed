@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/admin/apiAuth'
+import { rateLimitResponse } from '@/lib/security/rateLimit'
 
 // Slack Webhook URL - Use main webhook or analytics-specific one
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || process.env.SLACK_ANALYTICS_WEBHOOK_URL
@@ -58,6 +60,9 @@ function getMapLink(lat: number | null, lng: number | null, city?: string, count
 }
 
 export async function POST(request: NextRequest) {
+  const rl = await rateLimitResponse(request, 'analytics_slack', 120, 60)
+  if (rl) return rl
+
   try {
     const { type, data } = await request.json()
 
@@ -440,6 +445,10 @@ async function storeNotification(type: string, data: any) {
 
 // GET endpoint for admin dashboard
 export async function GET(request: NextRequest) {
+  if (!(await requireAdmin(request))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { searchParams } = new URL(request.url)
   const type = searchParams.get('type')
 

@@ -33,7 +33,7 @@ const testimonials = {
       location: 'Doha, Qatar',
       rating: 5,
       text: 'Exceeded all my expectations. The fit is perfect and the design is unique. Worth every dirham.',
-      product: 'Sadu Inspired Abaya',
+      product: 'Khous Inspired Abaya',
     },
   ],
   ar: [
@@ -63,7 +63,7 @@ const testimonials = {
       location: 'الدوحة، قطر',
       rating: 5,
       text: 'تجاوزت كل توقعاتي. المقاس مثالي والتصميم فريد. تستحق كل درهم.',
-      product: 'عباءة مستوحاة من السدو',
+      product: 'عباءة مستوحاة من الخوص',
     },
   ],
 }

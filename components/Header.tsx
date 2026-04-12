@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiSearch, FiUser, FiHeart, FiShoppingBag, FiMenu, FiX, FiArrowRight } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
+import { useWishlistStore } from '@/store/wishlistStore'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
@@ -14,7 +15,7 @@ import MiniCart from './MiniCart'
 // Search suggestions and pages
 const searchableContent = [
   { title: 'New Arrivals', href: '/shop', category: 'Collections' },
-  { title: 'Evening Wear', href: '/shop?category=evening', category: 'Collections' },
+  { title: 'Dresses', href: '/shop?category=dresses', category: 'Collections' },
   { title: 'Ready to Wear', href: '/shop?category=ready-to-wear', category: 'Collections' },
   { title: 'Accessories', href: '/accessories', category: 'Collections' },
   { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
@@ -23,12 +24,14 @@ const searchableContent = [
   { title: 'Our Story', href: '/about', category: 'About' },
   { title: 'Heritage', href: '/heritage', category: 'About' },
   { title: 'Al Talli', href: '/heritage/al-talli', category: 'Heritage' },
-  { title: 'Sadu Fabric', href: '/heritage/sadu', category: 'Heritage' },
+  { title: 'Khous Weaving', href: '/heritage/khous', category: 'Heritage' },
   { title: 'Size Guide', href: '/size-guide', category: 'Help' },
+  { title: 'Favorites', href: '/wishlist', category: 'Help' },
   { title: 'Contact Us', href: '/contact', category: 'Help' },
   { title: 'FAQ', href: '/faq', category: 'Help' },
   { title: 'Shipping & Returns', href: '/terms', category: 'Help' },
   { title: 'Abayas', href: '/shop?category=abayas', category: 'Products' },
+  { title: 'Caftans', href: '/shop?category=caftans', category: 'Products' },
   { title: 'Black Abaya', href: '/shop?category=abayas&color=black', category: 'Products' },
   { title: 'Luxury Abaya', href: '/shop?category=abayas&style=luxury', category: 'Products' },
 ]
@@ -49,6 +52,7 @@ export default function Header() {
   const [searchResults, setSearchResults] = useState<typeof searchableContent>([])
   const searchInputRef = useRef<HTMLInputElement>(null)
   const cartItems = useCartStore((state) => state.items)
+  const wishlistCount = useWishlistStore((state) => state.items.length)
   const { t, isRTL } = useLanguage()
 
   const navItems = [
@@ -181,13 +185,19 @@ export default function Header() {
                 <FiUser className="w-[18px] h-[18px]" />
               </Link>
               
-              <button
-                className="text-white/70 hover:text-white transition-colors duration-300 p-1"
+              <Link
+                href="/wishlist"
+                className="relative text-white/70 hover:text-white transition-colors duration-300 p-1"
                 data-cursor-hover
                 aria-label={t.nav.wishlist}
               >
                 <FiHeart className="w-[18px] h-[18px]" />
-              </button>
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 font-roboto text-[9px] font-bold text-white">
+                    {wishlistCount > 9 ? '9+' : wishlistCount}
+                  </span>
+                )}
+              </Link>
               
               <button
                 onClick={() => setIsMiniCartOpen(true)}
@@ -236,6 +246,7 @@ export default function Header() {
           <>
             {/* Backdrop - click to close, below search panel */}
             <motion.div
+              key="header-search-backdrop"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -245,6 +256,7 @@ export default function Header() {
               aria-hidden="true"
             />
             <motion.div
+              key="header-search-panel"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -282,7 +294,7 @@ export default function Header() {
                       {t.search.popularSearches || 'Popular Searches'}
                     </span>
                     <div className="flex flex-wrap gap-2">
-                      {['Abayas', 'Evening Wear', 'Accessories', 'New Arrivals', 'Heritage'].map((term) => (
+                      {['Abayas', 'Caftans', 'Dresses', 'Accessories', 'New Arrivals', 'Heritage'].map((term) => (
                         <button
                           key={term}
                           onClick={() => setSearchQuery(term)}
@@ -409,12 +421,20 @@ export default function Header() {
                     >
                       <FiUser className="w-6 h-6" />
                     </Link>
-                    <button
-                      className="text-white/70 hover:text-white transition-colors"
+                    <Link
+                      href="/wishlist"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="relative text-white/70 hover:text-white transition-colors"
                       data-cursor-hover
+                      aria-label={t.nav.wishlist}
                     >
                       <FiHeart className="w-6 h-6" />
-                    </button>
+                      {wishlistCount > 0 && (
+                        <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 text-[9px] font-bold text-white">
+                          {wishlistCount > 9 ? '9+' : wishlistCount}
+                        </span>
+                      )}
+                    </Link>
                   </div>
                   <div className="flex items-center gap-3">
                     <CurrencySwitcher variant="light" />

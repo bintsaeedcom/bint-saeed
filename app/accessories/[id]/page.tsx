@@ -12,6 +12,8 @@ import { FiChevronDown, FiPlus, FiMinus, FiArrowLeft, FiHeart, FiX, FiShare2 } f
 import toast from 'react-hot-toast'
 import { accessories, accessoryCategories } from '@/data/accessories'
 import { useCartStore } from '@/store/cartStore'
+import { useWishlistStore } from '@/store/wishlistStore'
+import OrderCutoffBanner from '@/components/OrderCutoffBanner'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import WristMeasurement from '@/components/WristMeasurement'
@@ -23,8 +25,13 @@ import 'swiper/css/thumbs'
 export default function AccessoryDetailPage() {
   const params = useParams()
   const router = useRouter()
-  const accessory = accessories.find((a) => a.id === params.id)
-  
+  const aid = typeof params.id === 'string' ? params.id : ''
+  const accessory = accessories.find((a) => a.id === aid)
+
+  const favorited = useWishlistStore((s) => s.items.some((i) => i.id === aid))
+  const addWishlist = useWishlistStore((s) => s.addItem)
+  const removeWishlist = useWishlistStore((s) => s.removeItem)
+
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
   const [selectedColor, setSelectedColor] = useState('')
   const [quantity, setQuantity] = useState(1)
@@ -33,8 +40,7 @@ export default function AccessoryDetailPage() {
   const [openDropdown, setOpenDropdown] = useState<string | null>('description')
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
-  const [isWishlisted, setIsWishlisted] = useState(false)
-  
+
   const addItem = useCartStore((state) => state.addItem)
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
@@ -84,6 +90,27 @@ export default function AccessoryDetailPage() {
     })
 
     toast.success(isRTL ? 'تمت الإضافة للسلة' : 'Added to bag')
+  }
+
+  const toggleWishlist = () => {
+    if (!accessory) return
+    const displayName = isRTL ? accessory.nameAr : accessory.name
+    const catInfo = accessoryCategories.find((c) => c.id === accessory.category)
+    const catLabel = isRTL ? catInfo?.nameAr : catInfo?.name
+    if (favorited) {
+      removeWishlist(accessory.id)
+      toast.success(isRTL ? 'أُزيلت من المفضلة' : 'Removed from favorites')
+      return
+    }
+    addWishlist({
+      id: accessory.id,
+      name: displayName,
+      price: accessory.price,
+      image: accessory.images[0] ?? '',
+      category: catLabel ?? 'Accessories',
+      href: `/accessories/${accessory.id}`,
+    })
+    toast.success(isRTL ? 'أُضيفت للمفضلة' : 'Saved to favorites')
   }
 
   const toggleDropdown = (key: string) => {
@@ -223,6 +250,24 @@ export default function AccessoryDetailPage() {
               {isRTL ? accessory.descriptionAr : accessory.description}
             </p>
 
+            <OrderCutoffBanner />
+
+            {/* Jewellery sizing note (not apparel chart) */}
+            <div className={`mb-8 border border-brand-stone/40 bg-brand-stone/5 px-4 py-4 ${isRTL ? 'text-right' : ''}`}>
+              <p className="font-roboto text-[11px] uppercase tracking-[0.2em] text-brand-darkRed">
+                {isRTL ? 'المقاسات' : 'Sizing'}
+              </p>
+              <p className="mt-2 font-roboto text-sm leading-relaxed text-brand-clayRed/80">
+                {isBracelet
+                  ? isRTL
+                    ? 'أساورنا بمقاس معصم مخصص — استخدمي أداة القياس أدناه. باقي الإكسسوارات غالبًا بمقاس موحّد.'
+                    : 'Bracelets use your wrist measurement — use the tool below. Other pieces are typically one-size unless noted.'
+                  : isRTL
+                    ? 'هذا الطراز متوفر بالألوان المعروضة. القطع غير القابلة للتوسيع تُعرض كمقاس واحد.'
+                    : 'Finishes shown are available for this design. Non-adjustable pieces are offered in one size as listed.'}
+              </p>
+            </div>
+
             {/* Color Selection */}
             <div className="mb-8">
               <div className={`flex items-center justify-between mb-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -235,18 +280,25 @@ export default function AccessoryDetailPage() {
                   </span>
                 )}
               </div>
-              <div className={`flex gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <p className={`mb-3 font-roboto text-xs leading-relaxed text-brand-clayRed/60 ${isRTL ? 'text-right' : ''}`}>
+                {isRTL
+                  ? 'الألوان المتاحة لهذه القطعة — اختاري اللون قبل الإضافة للسلة.'
+                  : 'Available finishes for this piece — select a colour before adding to bag.'}
+              </p>
+              <div className={`flex flex-wrap gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 {accessory.colors.map((color) => (
                   <button
                     key={color.name}
+                    type="button"
                     onClick={() => setSelectedColor(isRTL ? color.nameAr : color.name)}
-                    className={`w-10 h-10 rounded-full border-2 transition-all ${
+                    className={`h-11 w-11 rounded-full border-2 transition-all ${
                       selectedColor === (isRTL ? color.nameAr : color.name)
-                        ? 'border-brand-darkRed scale-110'
-                        : 'border-transparent hover:scale-105'
+                        ? 'border-brand-darkRed scale-110 ring-2 ring-brand-darkRed/20 ring-offset-2'
+                        : 'border-brand-stone/30 hover:scale-105 hover:border-brand-dustyBlue'
                     }`}
                     style={{ backgroundColor: color.hex }}
                     title={isRTL ? color.nameAr : color.name}
+                    aria-pressed={selectedColor === (isRTL ? color.nameAr : color.name)}
                     data-cursor-hover
                   />
                 ))}
@@ -306,15 +358,17 @@ export default function AccessoryDetailPage() {
 
               {/* Wishlist */}
               <button
-                onClick={() => setIsWishlisted(!isWishlisted)}
+                type="button"
+                onClick={toggleWishlist}
                 className={`px-4 border transition-colors ${
-                  isWishlisted 
-                    ? 'bg-brand-darkRed border-brand-darkRed text-white' 
+                  favorited
+                    ? 'bg-brand-darkRed border-brand-darkRed text-white'
                     : 'border-brand-stone/50 text-brand-darkRed hover:border-brand-dustyBlue'
                 }`}
+                aria-pressed={favorited}
                 data-cursor-hover
               >
-                <FiHeart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
+                <FiHeart className={`w-5 h-5 ${favorited ? 'fill-current' : ''}`} />
               </button>
             </div>
 

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { isAllowedCheckoutOrigin, resolvePublicSiteBaseUrl } from '@/lib/security/allowedCheckoutOrigin'
+import { rateLimitResponse } from '@/lib/security/rateLimit'
 
 function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
@@ -7,32 +9,79 @@ function getStripe() {
   })
 }
 
-export async function POST(request: NextRequest) {
-  try {
-    const { items, discountCode } = await request.json()
+const MAX_LINE_ITEMS = 80
+const MAX_DESC_LEN = 450
 
-    const lineItems = items.map((item: any) => ({
-      price_data: {
-        currency: 'aed',
-        product_data: {
-          name: item.name,
-          description: `Size: ${item.size}, Color: ${item.color}${
-            item.customLength ? `, Custom Length: ${item.customLength}` : ''
-          }${item.notes ? `, Notes: ${item.notes}` : ''}`,
-          images: [item.image],
+export async function POST(request: NextRequest) {
+  const tooMany = await rateLimitResponse(request, 'checkout', 45, 3600)
+  if (tooMany) return tooMany
+
+  if (!isAllowedCheckoutOrigin(request)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+
+  const baseUrl = resolvePublicSiteBaseUrl(request)
+  if (!baseUrl) {
+    return NextResponse.json({ error: 'Site URL is not configured.' }, { status: 503 })
+  }
+
+  try {
+    const body = await request.json()
+    const { items, discountCode, customerEmail } = body
+    const discountCodeStr = typeof discountCode === 'string' ? discountCode.trim().slice(0, 64) : ''
+
+    if (!Array.isArray(items) || items.length === 0 || items.length > MAX_LINE_ITEMS) {
+      return NextResponse.json({ error: 'Invalid cart.' }, { status: 400 })
+    }
+
+    const lineItems = items.map((item: Record<string, unknown>) => {
+      const surcharge = Number(item.customisationSurcharge) || 0
+      const unitAed = Number(item.price) + surcharge
+      const msg =
+        typeof item.customisationMessage === 'string' ? item.customisationMessage.trim().slice(0, 200) : ''
+      const hasCustom = msg.length > 0
+      const lengthPart =
+        item.lengthCm != null && String(item.lengthCm).length > 0
+          ? `, Length: ${String(item.lengthCm).slice(0, 24)} cm`
+          : item.customLength
+            ? `, Length: ${String(item.customLength).slice(0, 48)}`
+            : ''
+      const customPart = hasCustom
+        ? `, Personalisation: ${msg} (customised items are non-returnable)`
+        : ''
+      const descRaw = `Size: ${String(item.size ?? '').slice(0, 48)}, Color: ${String(item.color ?? '').slice(0, 48)}${lengthPart}${
+        item.notes ? `, Notes: ${String(item.notes).slice(0, 120)}` : ''
+      }${customPart}`
+      const description = descRaw.length > MAX_DESC_LEN ? `${descRaw.slice(0, MAX_DESC_LEN - 1)}…` : descRaw
+      const qty = Math.min(99, Math.max(1, Math.floor(Number(item.quantity)) || 1))
+      return {
+        price_data: {
+          currency: 'aed',
+          product_data: {
+            name: String(item.name ?? 'Item').slice(0, 120),
+            description,
+            images: [String(item.image ?? '').slice(0, 500)],
+          },
+          unit_amount: Math.max(0, Math.min(50_000_000, Math.round(unitAed * 100))),
         },
-        unit_amount: item.price * 100,
-      },
-      quantity: item.quantity,
-    }))
+        quantity: qty,
+      }
+    })
 
     // Build checkout session options
     const sessionOptions: Stripe.Checkout.SessionCreateParams = {
-      payment_method_types: ['card'],
+      // Card enables credit/debit + Apple Pay / Google Pay on supported devices (verify domain in Stripe Dashboard).
+      // Link adds Stripe Link where available for the currency.
+      payment_method_types: ['card', 'link'],
+      payment_method_options: {
+        card: {
+          request_three_d_secure: 'automatic',
+        },
+      },
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${request.headers.get('origin')}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${request.headers.get('origin')}/cart`,
+      success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/checkout`,
       shipping_address_collection: {
         allowed_countries: ['AE', 'SA', 'KW', 'BH', 'OM', 'QA', 'GB', 'US', 'FR', 'DE', 'IT'],
       },
@@ -99,6 +148,7 @@ export async function POST(request: NextRequest) {
         },
       ],
       metadata: {
+        customerEmail: typeof customerEmail === 'string' ? customerEmail.trim().slice(0, 320) : '',
         orderItems: JSON.stringify(
           items.map((item: any) => ({
             id: item.id,
@@ -106,11 +156,15 @@ export async function POST(request: NextRequest) {
             size: item.size,
             color: item.color,
             quantity: item.quantity,
+            price: item.price,
             customLength: item.customLength,
+            lengthCm: item.lengthCm,
             notes: item.notes,
+            customisationMessage: item.customisationMessage,
+            customisationSurcharge: item.customisationSurcharge,
           }))
         ),
-        discountCodeUsed: discountCode || '',
+        discountCodeUsed: discountCodeStr,
       },
       // Customer creation for order tracking
       customer_creation: 'always',
@@ -125,13 +179,20 @@ export async function POST(request: NextRequest) {
     }
 
     const stripe = getStripe()
-    
+
+    if (typeof customerEmail === 'string') {
+      const em = customerEmail.trim()
+      if (em && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
+        sessionOptions.customer_email = em
+      }
+    }
+
     // If a specific discount code is provided, try to apply it
-    if (discountCode) {
+    if (discountCodeStr) {
       try {
         // Find the promotion code
         const promotionCodes = await stripe.promotionCodes.list({
-          code: discountCode,
+          code: discountCodeStr,
           active: true,
           limit: 1,
         })
@@ -152,8 +213,11 @@ export async function POST(request: NextRequest) {
     const session = await stripe.checkout.sessions.create(sessionOptions)
 
     return NextResponse.json({ sessionId: session.id })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Stripe checkout error:', error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Checkout is temporarily unavailable. Please try again.' },
+      { status: 500 }
+    )
   }
 }

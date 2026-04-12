@@ -13,6 +13,15 @@ const faqData = {
     subtitle: 'Find answers to common questions',
     categories: [
       {
+        name: 'About Bint Saeed',
+        questions: [
+          {
+            q: 'I searched for abayas at Selfridges, Harrods, Harvey Nichols, Galeries Lafayette, Printemps, Ounass, or Rubaiyat—where can I buy Bint Saeed?',
+            a: 'Bint Saeed is an independent UAE heritage-led abaya brand. Shop the official collection at bintsaeed.com with delivery across the UAE and GCC (see checkout for destinations). We are not affiliated with department stores or marketplaces unless we announce an authorized stockist on our own channels—when in doubt, purchase only through this official site.',
+          },
+        ],
+      },
+      {
         name: 'Orders & Shipping',
         questions: [
           {
@@ -94,6 +103,15 @@ const faqData = {
     title: 'الأسئلة الشائعة',
     subtitle: 'اعثري على إجابات للأسئلة المتكررة',
     categories: [
+      {
+        name: 'عن بِنت سعيد',
+        questions: [
+          {
+            q: 'بحثتُ عن عبايات أو علامة بِنت سعيد في سيلفريدج أو هارودز أو هارفي نيكلز أو غاليري لافاييت أو برانستان أو أُناس أو الرباعيات—أين أشتري؟',
+            a: 'بِنت سعيد علامة عبايات إماراتية مستقلة مرتبطة بالتراث. تسوّقي المجموعة الرسمية عبر bintsaeed.com مع التوصيل إلى الإمارات ودول الخليج (انظري الخيارات عند الدفع). لسنا تابعين لمتاجر متعددة العلامات أو منصات بيع ما لم نعلن عن شريك معتمد على قنواتنا—عند الشك، اشتري فقط عبر هذا الموقع الرسمي.',
+          },
+        ],
+      },
       {
         name: 'الطلبات والشحن',
         questions: [

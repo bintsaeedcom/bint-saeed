@@ -112,8 +112,9 @@ export default function AnimatedCursor() {
         }}
         aria-hidden="true"
       >
-        <div 
-          className="rounded-full transition-all duration-100 ease-out"
+        {/* pointer-events-none required: children default to auto and would steal clicks above links */}
+        <div
+          className="pointer-events-none rounded-full transition-all duration-100 ease-out"
           style={{
             width: isClicking ? '6px' : isHovering ? '8px' : '10px',
             height: isClicking ? '6px' : isHovering ? '8px' : '10px',
@@ -132,8 +133,8 @@ export default function AnimatedCursor() {
           willChange: 'transform',
         }}
       >
-        <div 
-          className="rounded-full transition-all duration-150 ease-out"
+        <div
+          className="pointer-events-none rounded-full transition-all duration-150 ease-out"
           style={{
             width: isClicking ? '24px' : isHovering ? '50px' : '36px',
             height: isClicking ? '24px' : isHovering ? '50px' : '36px',

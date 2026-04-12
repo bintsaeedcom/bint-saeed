@@ -5,6 +5,12 @@ const baseUrl = 'https://bintsaeed.com'
 
 const allUrls = [
   { loc: baseUrl, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '1.0' },
+  {
+    loc: `${baseUrl}/llms.txt`,
+    lastmod: new Date().toISOString(),
+    changefreq: 'monthly',
+    priority: '0.6',
+  },
   { loc: `${baseUrl}/preview`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.95' },
   { loc: `${baseUrl}/shop`, lastmod: new Date().toISOString(), changefreq: 'daily', priority: '0.9' },
   { loc: `${baseUrl}/accessories`, lastmod: new Date().toISOString(), changefreq: 'daily', priority: '0.9' },
@@ -12,7 +18,6 @@ const allUrls = [
   { loc: `${baseUrl}/heritage`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
   { loc: `${baseUrl}/heritage/al-talli`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
   { loc: `${baseUrl}/heritage/khous`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
-  { loc: `${baseUrl}/heritage/sadu`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
   { loc: `${baseUrl}/contact`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.6' },
   { loc: `${baseUrl}/faq`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.5' },
   { loc: `${baseUrl}/size-guide`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.6' },
@@ -31,7 +36,8 @@ function escapeXml(str: string) {
 }
 
 export async function GET() {
-  const urls = isPrelaunch ? allUrls.slice(0, 1) : allUrls
+  // Prelaunch: keep homepage + machine-readable brand summary for AI discovery
+  const urls = isPrelaunch ? [allUrls[0], allUrls[1]] : allUrls
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls

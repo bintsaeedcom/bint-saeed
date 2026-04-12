@@ -151,8 +151,6 @@ export default function Home() {
       <CollectionStrip />
       <CreatedForYouSection />
       <AsymmetricShowcase />
-      <QuoteSection />
-      <FinalEditorial />
     </div>
   )
 }
@@ -168,13 +166,12 @@ function HeroSection() {
   })
 
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '40%'])
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2])
 
   return (
     <section ref={ref} className="relative h-[100svh] w-full">
-      {/* Background — overflow hidden here only so scaled image does not spill; hero text is not clipped */}
-      <motion.div style={{ scale }} className="absolute inset-0 overflow-hidden">
+      {/* Background — pointer-events-none so scaled layer never steals clicks from hero links */}
+      <motion.div style={{ scale }} className="pointer-events-none absolute inset-0 overflow-hidden">
         <Image
           src="/hero-bintsaeed.jpg"
           alt="Bint Saeed"
@@ -210,71 +207,71 @@ function HeroSection() {
       <div className="pointer-events-none absolute inset-4 sm:inset-6 md:inset-8 border border-white/[0.12]" aria-hidden />
       <DecorativeCorners color="dustyBlue" />
 
-      {/* Content — sit lower on large screens (editorial cover drop) */}
-      <motion.div
-        style={{ y, opacity }}
-        className="relative h-full flex items-center lg:items-end pb-16 lg:pb-24 pt-24 lg:pt-0"
-      >
-        <div className="container mx-auto px-6 lg:px-16 w-full">
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
+      {/* Content — parallax on copy only; CTA stays untransformed for reliable hit-testing */}
+      <div className="relative z-20 flex h-full items-center pb-16 pt-24 lg:items-end lg:pb-24 lg:pt-0">
+        <div className="container mx-auto w-full px-6 lg:px-16">
+          <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
             <div className={`min-w-0 lg:col-span-8 xl:col-span-7 ${isRTL ? 'lg:col-start-6' : ''}`}>
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className={`font-roboto text-[10px] sm:text-[11px] uppercase tracking-[0.45em] text-white/55 mb-5 flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}
-              >
-                <span className="h-px w-8 sm:w-12 bg-white/35 shrink-0" aria-hidden />
-                The House
-              </motion.p>
+              {/* initial={false}: avoid opacity:0 inline styles before hydration (looked "broken" / blank UI) */}
+              <motion.div style={{ y }} className="pointer-events-none">
+                <motion.p
+                  initial={false}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className={`mb-5 flex items-center gap-4 font-roboto text-[10px] uppercase tracking-[0.45em] !text-white/80 sm:text-[11px] ${isRTL ? 'flex-row-reverse' : ''}`}
+                >
+                  <span className="h-px w-8 shrink-0 bg-white/35 sm:w-12" aria-hidden />
+                  The House
+                </motion.p>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 80 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.4, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="font-rozha uppercase text-white leading-[1.12] mb-8 tracking-[0.06em] whitespace-nowrap text-[clamp(0.7rem,calc(0.35rem+2.15vw),2.65rem)] sm:text-[clamp(0.85rem,calc(0.4rem+2.35vw),2.75rem)] md:text-[clamp(0.95rem,calc(0.45rem+2.5vw),2.85rem)]"
-              >
-                Carrying Heritage{' '}
-                <span className="text-brand-dustyBlue italic tracking-[0.04em]">Forward</span>
-              </motion.h1>
+                <motion.h1
+                  initial={false}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  className="mb-8 max-w-[100vw] font-rozha uppercase leading-[1.12] tracking-[0.06em] !text-white text-[clamp(0.7rem,calc(0.35rem+2.15vw),2.65rem)] sm:text-[clamp(0.85rem,calc(0.4rem+2.35vw),2.75rem)] md:text-[clamp(0.95rem,calc(0.45rem+2.5vw),2.85rem)] md:whitespace-nowrap"
+                >
+                  Carrying Heritage{' '}
+                  <span className="text-brand-dustyBlue italic tracking-[0.04em]">Forward</span>
+                </motion.h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="font-roboto text-sm md:text-[15px] text-white/80 tracking-[0.02em] max-w-md leading-[1.75] mb-10 border-s border-white/25 ps-5 md:ps-6"
-              >
-                {heroTagline}
-              </motion.p>
+                <motion.p
+                  initial={false}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+                  className="mb-6 max-w-md border-s border-white/25 ps-5 font-roboto text-sm leading-[1.75] tracking-[0.02em] !text-white/90 md:mb-8 md:ps-6 md:text-[15px]"
+                >
+                  {heroTagline}
+                </motion.p>
+              </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, y: 40 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10"
+                transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="relative z-30 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10"
               >
-                <Link
+                <a
                   href="/shop"
-                  className="group inline-flex items-center gap-3 font-roboto text-[11px] uppercase tracking-[0.28em] text-white w-fit border-b border-white/40 pb-1 hover:border-brand-dustyBlue hover:text-brand-dustyBlue transition-colors duration-500"
+                  className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-roboto text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
                   data-cursor-hover
                 >
                   {t.hero.discoverCollection}
                   <FiArrowRight
-                    className={`w-4 h-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
+                    className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
                   />
-                </Link>
+                </a>
               </motion.div>
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Scroll — editorial caption style */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        transition={{ delay: 0.5, duration: 0.4 }}
+        className="pointer-events-none absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <span className="font-roboto text-[9px] uppercase tracking-[0.5em] text-white/40">Scroll</span>
         <motion.div
@@ -296,10 +293,10 @@ function EditorialIntro() {
   return (
     <section ref={ref} className="relative bg-white">
       {/* Soft gradient block - Left side only */}
-      <div className="absolute top-0 left-0 w-full md:w-1/2 h-full bg-gradient-to-br from-brand-rose/20 via-brand-stone/40 to-white" />
-      
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-full bg-gradient-to-br from-brand-rose/20 via-brand-stone/40 to-white md:w-1/2" />
+
       {/* Dusty Blue accent line */}
-      <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-brand-dustyBlue via-brand-dustyBlue/50 to-transparent" />
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-1 bg-gradient-to-b from-brand-dustyBlue via-brand-dustyBlue/50 to-transparent" />
       
       <div className="relative container mx-auto px-6 lg:px-16 py-32 md:py-48">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-0">
@@ -692,7 +689,7 @@ function CollectionStrip() {
   )
 }
 
-/** Section 6 — guided commissioning (beige field + glass card, matches ColorBlockSection language) */
+/** Section 6 — guided commissioning (beige field + glass card + framed editorial image, aligned with ColorBlockSection) */
 function CreatedForYouSection() {
   const { isRTL } = useLanguage()
 
@@ -747,21 +744,21 @@ function CreatedForYouSection() {
             </div>
           </div>
 
-          {/* Image placeholder — LTR right, RTL left */}
+          {/* Editorial image — same frame language as ColorBlockSection (dusty blue offset border) */}
           <div
-            className={`mx-auto w-full max-w-md lg:max-w-none ${isRTL ? 'lg:order-1' : 'lg:order-2'}`}
+            className={`flex justify-center ${isRTL ? 'lg:order-1' : 'lg:order-2'}`}
           >
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-dashed border-brand-dustyBlue/35 bg-gradient-to-br from-white/60 via-brand-stone/15 to-brand-dustyBlue/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
-                <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-darkRed/35">
-                  Image placeholder
-                </span>
-                <span className="font-rozha text-lg text-brand-darkRed/25 md:text-xl">
-                  Add photography
-                </span>
-                <span className="max-w-[12rem] font-roboto text-[11px] leading-relaxed text-brand-darkRed/30">
-                  Replace this block with your asset (e.g. in <code className="font-mono text-[10px]">public/</code>).
-                </span>
+            <div className="relative w-full max-w-xl lg:max-w-[36rem]">
+              <div className="relative aspect-[3/4] w-full">
+                <Image
+                  src="/collection-section/4.JPG"
+                  alt="Bint Saeed — crafted for you"
+                  fill
+                  sizes="(max-width: 1024px) 90vw, 36rem"
+                  className="object-cover object-center"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a0008]/25 via-transparent to-transparent" />
+                <div className="pointer-events-none absolute -top-4 -right-4 h-full w-full border border-brand-dustyBlue/30" />
               </div>
             </div>
           </div>
@@ -847,154 +844,6 @@ function AsymmetricShowcase() {
           ))}
         </div>
       </div>
-    </section>
-  )
-}
-
-function QuoteSection() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { margin: '-30%' })
-  const { t } = useLanguage()
-
-  return (
-    <section ref={ref} className="relative py-32 md:py-48 bg-white overflow-hidden">
-      {/* Subtle rose gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-rose/5 via-transparent to-brand-dustyBlue/5" />
-      {/* Decorative Corners - Dusty Blue */}
-      <motion.div 
-        className="absolute top-12 left-12 w-16 h-16 md:w-24 md:h-24"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-      >
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-brand-dustyBlue/40 to-transparent" />
-        <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue/40 to-transparent" />
-      </motion.div>
-      <motion.div 
-        className="absolute bottom-12 right-12 w-16 h-16 md:w-24 md:h-24"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-      >
-        <div className="absolute bottom-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue/40 to-transparent" />
-        <div className="absolute bottom-0 right-0 w-px h-full bg-gradient-to-t from-brand-dustyBlue/40 to-transparent" />
-      </motion.div>
-
-      {/* Large Background Text */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-[0.03]">
-        <span className="font-rozha text-[30vw] text-brand-darkRed whitespace-nowrap">
-          Elegance
-        </span>
-      </div>
-
-      <div className="relative container mx-auto px-6 lg:px-16">
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
-          className="max-w-4xl mx-auto text-center"
-        >
-          <div className="w-px h-16 bg-brand-dustyBlue/50 mx-auto mb-12" />
-          <blockquote className="font-rozha text-3xl md:text-4xl lg:text-5xl text-brand-darkRed leading-[1.3] mb-12">
-            "{t.brandStory.quote}"
-          </blockquote>
-          <p className="font-roboto text-sm text-brand-dustyBlue tracking-[0.2em] uppercase">
-            — Bint Saeed
-          </p>
-          <div className="w-px h-16 bg-brand-dustyBlue/50 mx-auto mt-12" />
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-function FinalEditorial() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { margin: '-10%' })
-  const { t, isRTL } = useLanguage()
-
-  return (
-    <section ref={ref} className="relative">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <Image
-          src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1920&q=90"
-          alt="Newsletter"
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-brand-darkRed/70" />
-      </div>
-      
-      {/* Dusty blue accent lines */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-
-      <div className="relative container mx-auto px-6 lg:px-16 py-32 md:py-48">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left - Shipping Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-white"
-          >
-            <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-6 block">
-              {isRTL ? 'الشحن العالمي' : 'Worldwide Delivery'}
-            </span>
-            <h2 className="font-rozha text-4xl md:text-5xl leading-[1.1] mb-8">
-              {isRTL ? 'نصل إليك' : 'We Deliver'}
-              <br />
-              <span className="text-brand-dustyBlue">{isRTL ? 'أينما كنت' : 'Everywhere'}</span>
-            </h2>
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              {['UAE', 'KSA', 'Qatar', 'Kuwait', 'Bahrain', 'Oman'].map((country) => (
-                <div key={country} className="text-center py-3 border border-brand-dustyBlue/30">
-                  <span className="font-roboto text-xs text-white/80 tracking-wide">{country}</span>
-                </div>
-              ))}
-            </div>
-            <p className="font-roboto text-sm text-white/60 tracking-wide">
-              {isRTL ? 'شحن مجاني للإمارات • توصيل خلال أسبوعين' : 'Free UAE shipping • 2 week delivery'}
-            </p>
-          </motion.div>
-
-          {/* Right - Newsletter */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className={`bg-white/10 backdrop-blur-sm p-10 md:p-12 border border-brand-dustyBlue/20 ${isRTL ? 'text-right' : ''}`}
-          >
-            <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-4 block">
-              {t.cta.subtitle}
-            </span>
-            <h3 className="font-rozha text-3xl md:text-4xl text-white mb-4">
-              {t.cta.title}
-            </h3>
-            <p className="font-roboto text-sm text-white/60 tracking-wide mb-8">
-              {t.cta.description}
-            </p>
-            <form className={`flex flex-col sm:flex-row gap-3 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
-              <input
-                type="email"
-                placeholder={t.cta.emailPlaceholder}
-                className={`flex-1 px-5 py-4 bg-white/10 border border-brand-dustyBlue/30 text-white font-roboto text-sm tracking-wide placeholder:text-white/40 focus:outline-none focus:border-brand-dustyBlue transition-colors ${isRTL ? 'text-right' : ''}`}
-                dir={isRTL ? 'rtl' : 'ltr'}
-              />
-              <button
-                type="submit"
-                className="px-8 py-4 bg-brand-dustyBlue text-white font-roboto text-xs uppercase tracking-[0.2em] hover:bg-brand-stone hover:text-brand-darkRed transition-colors"
-                data-cursor-hover
-              >
-                {t.cta.subscribe}
-              </button>
-            </form>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Bottom Accent Line */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-dustyBlue/50 via-brand-stone/50 to-brand-dustyBlue/50" />
     </section>
   )
 }

@@ -8,6 +8,7 @@ import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowRight } from 'rea
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
 
 interface MiniCartProps {
   isOpen: boolean
@@ -18,6 +19,8 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const { items, removeItem, updateQuantity, getTotal } = useCartStore()
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
+  const lineKey = (item: (typeof items)[number]) =>
+    `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
 
   // Close on escape key
   useEffect(() => {
@@ -40,20 +43,22 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
         <>
           {/* Backdrop */}
           <motion.div
+            key="mini-cart-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm"
           />
 
           {/* Drawer */}
           <motion.div
+            key="mini-cart-drawer"
             initial={{ x: isRTL ? '-100%' : '100%' }}
             animate={{ x: 0 }}
             exit={{ x: isRTL ? '-100%' : '100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
-            className={`fixed top-0 ${isRTL ? 'left-0' : 'right-0'} h-full w-full max-w-md bg-white z-[101] flex flex-col ${isRTL ? 'rtl' : 'ltr'}`}
+            className={`fixed top-0 ${isRTL ? 'left-0' : 'right-0'} z-[101] flex h-full w-full max-w-md flex-col bg-white ${isRTL ? 'rtl' : 'ltr'}`}
           >
             {/* Header */}
             <div className={`flex items-center justify-between p-4 sm:p-6 border-b border-brand-stone/20 ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -92,10 +97,10 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
               ) : (
                 <div className="divide-y divide-brand-stone/10">
                   {items.map((item) => (
-                    <div key={`${item.id}-${item.size}-${item.color}`} className={`p-4 flex gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <div key={lineKey(item)} className={`p-4 flex gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                       {/* Image */}
                       <Link href={`/shop/${item.id}`} onClick={onClose} className="flex-shrink-0" data-cursor-hover>
-                        <div className="relative w-20 h-24 sm:w-24 sm:h-32 bg-[#f5f5f5] rounded-lg overflow-hidden">
+                        <div className="relative h-[4.8rem] w-16 overflow-hidden rounded-lg bg-[#f5f5f5] sm:h-[6.4rem] sm:w-[4.8rem]">
                           <Image
                             src={item.image}
                             alt={item.name}
@@ -114,16 +119,36 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                         </Link>
                         <p className="font-roboto text-xs text-brand-clayRed/60 mt-0.5">
                           {item.size} • {item.color}
+                          {item.lengthCm ? ` • ${item.lengthCm} cm` : ''}
                         </p>
+                        {item.customisationMessage && (
+                          <p className="font-roboto text-[10px] text-brand-darkRed/80 mt-1 line-clamp-2">
+                            “{item.customisationMessage}”
+                          </p>
+                        )}
                         <p className="font-roboto text-sm text-brand-darkRed mt-2">
-                          {formatPrice(item.price)}
+                          {formatPrice(lineUnitAed(item))}
+                          {item.quantity > 1 && (
+                            <span className="block font-roboto text-[10px] text-brand-clayRed/60">
+                              {formatPrice(lineTotalAed(item))} {isRTL ? 'المجموع' : 'line total'}
+                            </span>
+                          )}
                         </p>
 
                         {/* Quantity & Remove */}
                         <div className={`flex items-center justify-between mt-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
                           <div className="flex items-center border border-brand-stone/30 rounded">
                             <button
-                              onClick={() => updateQuantity(item.id, item.size, item.color, Math.max(1, item.quantity - 1))}
+                              onClick={() =>
+                                updateQuantity(
+                                  item.id,
+                                  item.size,
+                                  item.color,
+                                  Math.max(1, item.quantity - 1),
+                                  item.lengthCm,
+                                  item.customisationMessage
+                                )
+                              }
                               className="p-2 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
                               data-cursor-hover
                             >
@@ -131,7 +156,16 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                             </button>
                             <span className="w-8 text-center font-roboto text-sm">{item.quantity}</span>
                             <button
-                              onClick={() => updateQuantity(item.id, item.size, item.color, item.quantity + 1)}
+                              onClick={() =>
+                                updateQuantity(
+                                  item.id,
+                                  item.size,
+                                  item.color,
+                                  item.quantity + 1,
+                                  item.lengthCm,
+                                  item.customisationMessage
+                                )
+                              }
                               className="p-2 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
                               data-cursor-hover
                             >
@@ -139,7 +173,9 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                             </button>
                           </div>
                           <button
-                            onClick={() => removeItem(item.id, item.size, item.color)}
+                            onClick={() =>
+                              removeItem(item.id, item.size, item.color, item.lengthCm, item.customisationMessage)
+                            }
                             className="p-2 text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors"
                             data-cursor-hover
                           >
@@ -172,7 +208,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                 {/* Buttons */}
                 <div className="space-y-3">
                   <Link
-                    href="/cart"
+                    href="/checkout"
                     onClick={onClose}
                     className={`w-full py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                     data-cursor-hover

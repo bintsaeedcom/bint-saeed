@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { FiInstagram, FiArrowRight, FiCheck } from 'react-icons/fi'
 import { FaSnapchat } from 'react-icons/fa6'
+import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 
 export default function ComingSoonPage() {
   const [email, setEmail] = useState('')
@@ -18,20 +19,10 @@ export default function ComingSoonPage() {
     setMounted(true)
   }, [])
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!email) return 'Please enter your email'
-    if (!emailRegex.test(email)) return 'Please enter a valid email address'
-    const domain = email.split('@')[1]?.toLowerCase()
-    const commonTypos: { [key: string]: string } = {
-      'gmial.com': 'gmail.com', 'gmal.com': 'gmail.com', 'gamil.com': 'gmail.com',
-      'gnail.com': 'gmail.com', 'gmail.co': 'gmail.com', 'hotmal.com': 'hotmail.com',
-      'hotmai.com': 'hotmail.com', 'outlok.com': 'outlook.com', 'yahooo.com': 'yahoo.com',
-    }
-    if (domain && commonTypos[domain]) {
-      return `Did you mean ${email.split('@')[0]}@${commonTypos[domain]}?`
-    }
-    return ''
+  const validateEmail = (value: string) => {
+    if (!value.trim()) return 'Please enter your email'
+    const r = validateSubscriberEmail(value)
+    return r.valid ? '' : r.message
   }
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -4,8 +4,9 @@ import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { FiArrowLeft, FiFilter, FiX, FiShoppingBag, FiHeart } from 'react-icons/fi'
+import { FiArrowLeft, FiFilter, FiX, FiShoppingBag } from 'react-icons/fi'
 import { accessories, accessoryCategories, Accessory } from '@/data/accessories'
+import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -258,6 +259,7 @@ function AccessoryCard({
 }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-10%' })
+  const catInfo = accessoryCategories.find((c) => c.id === accessory.category)
 
   return (
     <motion.div
@@ -280,21 +282,20 @@ function AccessoryCard({
               src={accessory.images[0]}
               alt={isRTL ? accessory.nameAr : accessory.name}
               fill
-              className="object-cover transition-all duration-700 group-hover:scale-105"
+              className="pointer-events-none object-cover transition-all duration-700 group-hover:scale-105"
             />
             
             {/* Quick Actions */}
-            <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity`}>
-              <button 
-                onClick={(e) => {
-                  e.preventDefault()
-                  // Add to wishlist
-                }}
-                className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-brand-dustyBlue hover:text-white transition-colors"
-                data-cursor-hover
-              >
-                <FiHeart className="w-4 h-4" />
-              </button>
+            <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} z-10 flex flex-col gap-2 opacity-0 transition-opacity group-hover:opacity-100`}>
+              <FavoriteHeartButton
+                id={accessory.id}
+                name={isRTL ? accessory.nameAr : accessory.name}
+                price={accessory.price}
+                image={accessory.images[0] ?? ''}
+                category={isRTL ? catInfo?.nameAr ?? 'إكسسوارات' : catInfo?.name ?? 'Accessories'}
+                href={`/accessories/${accessory.id}`}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-brand-darkRed shadow-lg transition-colors hover:bg-brand-dustyBlue hover:text-white"
+              />
             </div>
 
             {/* Quick Add Button */}

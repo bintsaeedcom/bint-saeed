@@ -1,8 +1,28 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
   transpilePackages: ['swiper'],
   images: {
     domains: ['images.unsplash.com', 'via.placeholder.com'],
+  },
+  async headers() {
+    const base = [
+      { key: 'X-Content-Type-Options', value: 'nosniff' },
+      { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+      { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+      {
+        key: 'Permissions-Policy',
+        value: 'camera=(), microphone=(), geolocation=(self)',
+      },
+      { key: 'X-DNS-Prefetch-Control', value: 'on' },
+    ]
+    if (process.env.NODE_ENV === 'production') {
+      base.push({
+        key: 'Strict-Transport-Security',
+        value: 'max-age=31536000; includeSubDomains',
+      })
+    }
+    return [{ source: '/:path*', headers: base }]
   },
   async rewrites() {
     return [{ source: '/sitemap.xml', destination: '/sitemap' }]
@@ -13,6 +33,7 @@ const nextConfig = {
       { source: '/accessoiries/:path*', destination: '/accessories/:path*', permanent: true },
       { source: '/collections', destination: '/shop', permanent: true },
       { source: '/collections/:path*', destination: '/shop/:path*', permanent: true },
+      { source: '/heritage/sadu', destination: '/heritage/khous', permanent: true },
       // Social links → always coming soon page (/)
       { source: '/facebook', destination: '/?utm_source=facebook&utm_medium=social&utm_campaign=bio', permanent: true },
       { source: '/instgram', destination: '/?utm_source=instagram&utm_medium=social&utm_campaign=bio', permanent: true },

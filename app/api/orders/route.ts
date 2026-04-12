@@ -1,100 +1,115 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/admin/apiAuth'
+import {
+  listOrders,
+  saveOrder,
+  updateOrderFulfillment,
+  getOrderById,
+} from '@/lib/orders/orderStore'
+import type { StoredOrder, OrderFulfillmentStatus } from '@/lib/orders/types'
 
-// This is a placeholder for order management
-// In production, connect to a database like MongoDB, PostgreSQL, or Supabase
+export const dynamic = 'force-dynamic'
 
-interface Order {
-  id: string
-  sessionId: string
-  items: any[]
-  customer: {
-    email: string
-    name: string
-    address: any
-  }
-  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
-  total: number
-  createdAt: string
-  updatedAt: string
-}
-
-// In-memory storage (replace with database in production)
-const orders: Order[] = []
+/** Legacy order API — admin session required (customer PII). Prefer Stripe webhook + /api/admin/orders. */
 
 export async function GET(request: NextRequest) {
-  // Admin authentication would go here
+  if (!(await requireAdmin(request))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { searchParams } = new URL(request.url)
-  const status = searchParams.get('status')
+  const status = searchParams.get('status') as OrderFulfillmentStatus | null
   const id = searchParams.get('id')
 
   if (id) {
-    const order = orders.find((o) => o.id === id)
+    const order = await getOrderById(id)
     if (!order) {
       return NextResponse.json({ error: 'Order not found' }, { status: 404 })
     }
     return NextResponse.json(order)
   }
 
-  let filteredOrders = orders
-  if (status) {
-    filteredOrders = orders.filter((o) => o.status === status)
-  }
+  const orders = await listOrders({
+    ...(status ? { status } : {}),
+    limit: 500,
+  })
 
   return NextResponse.json({
-    orders: filteredOrders,
-    total: filteredOrders.length,
+    orders,
+    total: orders.length,
   })
 }
 
 export async function POST(request: NextRequest) {
+  if (!(await requireAdmin(request))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const orderData = await request.json()
-    
-    const newOrder: Order = {
+    const now = new Date().toISOString()
+    const newOrder: StoredOrder = {
       id: `ORD-${Date.now()}`,
-      sessionId: orderData.sessionId,
-      items: orderData.items,
-      customer: orderData.customer,
-      status: 'pending',
-      total: orderData.total,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      stripeSessionId: orderData.sessionId || `manual-${Date.now()}`,
+      customerEmail: orderData.customer?.email || '',
+      customerName: orderData.customer?.name,
+      lines: Array.isArray(orderData.items)
+        ? orderData.items.map((it: { name?: string; quantity?: number; price?: number }) => ({
+            name: it.name || 'Item',
+            quantity: it.quantity ?? 1,
+            unitPrice: Number(it.price) || 0,
+            currency: 'AED',
+          }))
+        : [],
+      amountSubtotal: Number(orderData.total) || 0,
+      amountShipping: 0,
+      amountTotal: Number(orderData.total) || 0,
+      currency: 'AED',
+      fulfillmentStatus: 'paid',
+      createdAt: now,
+      updatedAt: now,
     }
 
-    orders.push(newOrder)
+    await saveOrder(newOrder)
 
-    // Notify via Slack
     const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL
     if (slackWebhookUrl) {
       await fetch(slackWebhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          text: `🛍️ New Order Received!\nOrder ID: ${newOrder.id}\nTotal: ${newOrder.total} AED\nItems: ${newOrder.items.length}`,
+          text: `🛍️ New Order (manual/API)\nOrder ID: ${newOrder.id}\nTotal: ${newOrder.amountTotal} AED\nLines: ${newOrder.lines.length}`,
         }),
       })
     }
 
     return NextResponse.json(newOrder)
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : 'Error'
+    return NextResponse.json({ error: msg }, { status: 500 })
   }
 }
 
 export async function PATCH(request: NextRequest) {
+  if (!(await requireAdmin(request))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
-    const { id, status } = await request.json()
-    
-    const orderIndex = orders.findIndex((o) => o.id === id)
-    if (orderIndex === -1) {
+    const { id, status, internalNotes } = await request.json()
+    if (!id) {
+      return NextResponse.json({ error: 'id required' }, { status: 400 })
+    }
+    const updated = await updateOrderFulfillment(id, {
+      ...(status ? { fulfillmentStatus: status as OrderFulfillmentStatus } : {}),
+      ...(internalNotes !== undefined ? { internalNotes } : {}),
+    })
+    if (!updated) {
       return NextResponse.json({ error: 'Order not found' }, { status: 404 })
     }
-
-    orders[orderIndex].status = status
-    orders[orderIndex].updatedAt = new Date().toISOString()
-
-    return NextResponse.json(orders[orderIndex])
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json(updated)
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : 'Error'
+    return NextResponse.json({ error: msg }, { status: 500 })
   }
 }

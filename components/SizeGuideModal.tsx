@@ -5,24 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { FiX, FiExternalLink, FiCheck } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { sizeGuideTable as sizeData } from '@/lib/sizeGuideData'
 
 interface SizeGuideModalProps {
   isOpen: boolean
   onClose: () => void
-}
-
-const sizeData = {
-  headers: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-  measurements: [
-    { label: { en: 'Length', ar: 'الطول' }, values: ['50-52', '54-56', '56-58', '58-60', '59-61', '60-62'] },
-    { label: { en: 'Bust', ar: 'الصدر' }, values: ['19-20', '20-22', '22-24', '24-25', '25-26', '26-28'] },
-    { label: { en: 'Waist', ar: 'الخصر' }, values: ['18-19', '19-21', '21-23', '23-24', '24-25', '25-27'] },
-    { label: { en: 'Bottom Width', ar: 'عرض الأسفل' }, values: ['40', '42', '52', '56', '60', '64'] },
-    { label: { en: 'Shoulder', ar: 'الكتف' }, values: ['13.5-14', '14-14.5', '15-16', '16-16.5', '16-17', '17-18'] },
-    { label: { en: 'Sleeve', ar: 'الكم' }, values: ['22', '23.5', '24', '24.5', '25', '25.5'] },
-    { label: { en: 'Sleeve Width', ar: 'عرض الكم' }, values: ['9', '9.5', '10', '10.5', '11', '12'] },
-    { label: { en: 'Arm Hole', ar: 'فتحة الذراع' }, values: ['8.5', '8.5', '9.5', '10', '11', '12.5'] },
-  ],
 }
 
 export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps) {
@@ -76,7 +63,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                   {isRTL ? 'اختاري مقاسك لتمييزه:' : 'Select your size to highlight:'}
                 </p>
                 <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
-                  {sizeData.headers.map((size) => (
+                  {[...sizeData.headers].map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(selectedSize === size ? null : size)}
@@ -102,7 +89,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                       <th className={`py-3 px-3 bg-brand-stone/10 font-roboto text-xs uppercase tracking-[0.1em] text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}>
                         {isRTL ? 'القياس' : 'Measurement'}
                       </th>
-                      {sizeData.headers.map((size) => (
+                      {[...sizeData.headers].map((size) => (
                         <th
                           key={size}
                           className={`py-3 px-3 font-roboto text-xs uppercase tracking-[0.1em] text-center transition-all ${

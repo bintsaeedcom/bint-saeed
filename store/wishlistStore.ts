@@ -7,6 +7,8 @@ export interface WishlistItem {
   price: number
   image: string
   category: string
+  /** Product URL — `/shop/...` or `/accessories/...`. Older saved items may omit this. */
+  href?: string
 }
 
 interface WishlistStore {

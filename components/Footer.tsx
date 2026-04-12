@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { FaInstagram, FaPinterest, FaTiktok, FaWhatsapp, FaSnapchat, FaXTwitter } from 'react-icons/fa6'
+import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter } from 'react-icons/fa6'
 import { FiArrowRight, FiGlobe, FiTruck, FiClock } from 'react-icons/fi'
 import SubscribeForm from './SubscribeForm'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -23,15 +23,12 @@ export default function Footer() {
   const footerLinks = {
     shop: [
       { label: t.footer.newArrivals, href: '/shop' },
-      { label: t.footer.bestsellers, href: '/shop' },
-      { label: t.footer.eveningWear, href: '/shop' },
-      { label: t.footer.readyToWear, href: '/shop' },
-      { label: t.footer.accessories, href: '/shop' },
+      { label: t.footer.collection, href: '/shop' },
+      { label: t.footer.accessories, href: '/accessories' },
     ],
     about: [
       { label: t.footer.ourStory, href: '/about' },
       { label: t.footer.craftsmanship, href: '/about' },
-      { label: t.footer.sustainability, href: '/about' },
       { label: t.footer.careers, href: '/about' },
     ],
     help: [
@@ -44,7 +41,7 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden">
-      {/* Newsletter & WhatsApp Section - Coming Soon Style (Keep as is) */}
+      {/* Newsletter — Coming Soon style */}
       <div className="relative text-white">
         {/* Coming Soon gradient background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#2a0012] via-[#1a0008] to-[#1a0008]" />
@@ -100,8 +97,7 @@ export default function Footer() {
         </motion.div>
 
         <div className="relative container mx-auto px-6 lg:px-12 py-20 md:py-24">
-          <div className={`grid lg:grid-cols-2 gap-12 lg:gap-20 ${isRTL ? 'text-right' : ''}`}>
-            {/* Newsletter - Glassmorphism Box with thicker border */}
+          <div className={`max-w-2xl mx-auto ${isRTL ? 'text-right' : ''}`}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -121,39 +117,6 @@ export default function Footer() {
                     {t.footer.subscribeDescription}
                   </p>
                   <SubscribeForm variant="dark" />
-                </div>
-              </div>
-            </motion.div>
-
-            {/* WhatsApp Community - Glassmorphism Box with thicker border */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <div className="relative">
-                <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-b from-brand-dustyBlue/30 via-brand-dustyBlue/10 to-brand-stone/20" />
-                <div className="relative backdrop-blur-sm bg-white/[0.03] rounded-2xl p-8 md:p-10 border border-brand-dustyBlue/20">
-                  <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue/60 mb-4 block">
-                    {isRTL ? 'المجتمع' : 'Community'}
-                  </span>
-                  <h3 className="font-rozha text-3xl md:text-4xl mb-4 text-white">
-                    {t.footer.joinCommunity}
-                  </h3>
-                  <p className="font-roboto text-sm tracking-wide text-white/50 mb-8 max-w-md">
-                    {t.footer.communityDescription}
-                  </p>
-                  <a
-                    href="https://chat.whatsapp.com/YOUR_COMMUNITY_LINK"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center gap-3 px-8 py-4 bg-[#25D366] text-white font-roboto text-xs uppercase tracking-[0.15em] rounded-xl hover:bg-[#128C7E] transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
-                    data-cursor-hover
-                  >
-                    <FaWhatsapp className="w-5 h-5" />
-                    {t.footer.joinWhatsApp}
-                  </a>
                 </div>
               </div>
             </motion.div>

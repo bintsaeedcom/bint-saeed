@@ -16,15 +16,20 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const pathname = usePathname()
   
   const isComingSoon = pathname === '/'
+  const isPreviewAccessPage =
+    pathname === '/preview/gate' ||
+    pathname === '/preview/blocked' ||
+    pathname?.startsWith('/preview/gate/') ||
+    pathname?.startsWith('/preview/blocked/')
 
-  if (isComingSoon) {
+  if (isComingSoon || isPreviewAccessPage) {
     return <main>{children}</main>
   }
 
   return (
     <>
       <Header />
-      <main className="pt-[90px] lg:pt-[100px]">{children}</main>
+      <main className="relative z-40 pt-[90px] lg:pt-[100px] pointer-events-auto">{children}</main>
       <Footer />
       <WhatsAppButton />
       <CookieConsent />

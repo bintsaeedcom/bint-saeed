@@ -1,0 +1,468 @@
+'use client'
+
+import { useMemo, useState, useEffect, useCallback } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
+import { products as staticProducts, categories } from '@/data/products'
+import type { Product } from '@/data/products'
+import { useCurrency } from '@/lib/currency/CurrencyContext'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import ProductWishlistHeart from '@/components/ProductWishlistHeart'
+
+const CATEGORY_QUERY_MAP: Record<string, string> = {
+  abayas: 'Abayas',
+  caftans: 'Caftans',
+  kaftans: 'Caftans',
+  dresses: 'Dresses',
+  sets: 'Sets',
+  accessories: 'Accessories',
+  'ready-to-wear': 'All',
+  evening: 'Dresses',
+  'evening-wear': 'Dresses',
+  coats: 'Dresses',
+}
+
+const SORT_OPTIONS = [
+  { id: 'newest', label: 'New arrivals' },
+  { id: 'price-asc', label: 'Price, low to high' },
+  { id: 'price-desc', label: 'Price, high to low' },
+  { id: 'name', label: 'Name, A–Z' },
+] as const
+
+type SortId = (typeof SORT_OPTIONS)[number]['id']
+
+const HOVER_PREVIEW_MS = 720
+
+export default function ShopClient() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [catalog, setCatalog] = useState<Product[]>(staticProducts)
+  const [activeCategory, setActiveCategory] = useState('All')
+  const [hoveredId, setHoveredId] = useState<string | null>(null)
+  const [hoverSlideIndex, setHoverSlideIndex] = useState(0)
+  const [filterOpen, setFilterOpen] = useState(false)
+  const [sortOpen, setSortOpen] = useState(false)
+  const [sortBy, setSortBy] = useState<SortId>('newest')
+  const { formatPrice } = useCurrency()
+  const { isRTL } = useLanguage()
+
+  useEffect(() => {
+    const q = searchParams.get('category')?.toLowerCase().replace(/_/g, '-')
+    if (!q) return
+    const mapped = CATEGORY_QUERY_MAP[q]
+    if (mapped && categories.includes(mapped as (typeof categories)[number])) {
+      setActiveCategory(mapped)
+    }
+  }, [searchParams])
+
+  useEffect(() => {
+    let cancelled = false
+    fetch('/api/catalog')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (cancelled || !data?.products?.length) return
+        setCatalog(data.products as Product[])
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const categoryCounts = useMemo(() => {
+    const m: Record<string, number> = {}
+    for (const p of catalog) {
+      m[p.category] = (m[p.category] ?? 0) + 1
+    }
+    return m
+  }, [catalog])
+
+  const categoryLabel = useCallback(
+    (cat: string) => {
+      if (cat === 'All') return isRTL ? 'الكل' : 'All'
+      const n = categoryCounts[cat]
+      return n != null ? `${cat} (${n})` : cat
+    },
+    [categoryCounts, isRTL]
+  )
+
+  const handleBack = useCallback(() => {
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      router.back()
+    } else {
+      router.push('/preview')
+    }
+  }, [router])
+
+  const filteredProducts = useMemo(() => {
+    if (activeCategory === 'All') return [...catalog]
+    return catalog.filter((p) => p.category === activeCategory)
+  }, [activeCategory, catalog])
+
+  const sortedProducts = useMemo(() => {
+    const list = [...filteredProducts]
+    switch (sortBy) {
+      case 'price-asc':
+        return list.sort((a, b) => a.price - b.price)
+      case 'price-desc':
+        return list.sort((a, b) => b.price - a.price)
+      case 'name':
+        return list.sort((a, b) => a.name.localeCompare(b.name))
+      default:
+        return list
+    }
+  }, [filteredProducts, sortBy])
+
+  useEffect(() => {
+    if (!hoveredId) {
+      setHoverSlideIndex(0)
+      return
+    }
+    const hovered = sortedProducts.find((p) => p.id === hoveredId)
+    const len = hovered?.images.length ?? 0
+    if (len <= 1) return
+
+    let cancelled = false
+    setHoverSlideIndex(0)
+
+    const prefersReduce =
+      typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduce) return
+
+    const id = window.setInterval(() => {
+      if (cancelled) return
+      setHoverSlideIndex((i) => (i + 1) % len)
+    }, HOVER_PREVIEW_MS)
+    return () => {
+      cancelled = true
+      window.clearInterval(id)
+    }
+  }, [hoveredId, sortedProducts])
+
+  const sortLabel = SORT_OPTIONS.find((o) => o.id === sortBy)?.label ?? 'New arrivals'
+
+  const clearCardHover = useCallback(() => {
+    setHoveredId(null)
+    setHoverSlideIndex(0)
+  }, [])
+
+  return (
+    <div className={`min-h-screen bg-stone-100 text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
+      <header className="border-b border-black/5 bg-stone-50">
+        <div className="mx-auto max-w-[1400px] px-6 pb-12 pt-10 md:px-10 md:pb-16 md:pt-14 lg:px-14">
+          <nav className="mb-10 flex flex-wrap items-center gap-x-2 font-roboto text-[10px] uppercase tracking-[0.28em] text-neutral-500">
+            <Link
+              href="/preview"
+              className="transition-colors hover:text-brand-dustyBlue"
+              data-cursor-hover
+            >
+              {isRTL ? 'الرئيسية' : 'The House'}
+            </Link>
+            <span aria-hidden className="text-neutral-400">
+              /
+            </span>
+            <span className="text-neutral-900">{isRTL ? 'المجموعة' : 'Ready-to-wear'}</span>
+          </nav>
+
+          <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
+            COLLECTION
+          </p>
+          <h1 className="font-rozha text-4xl font-normal leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl">
+            {isRTL ? 'الفصل ١' : 'Chapter 1'}
+          </h1>
+          <p className="mt-6 max-w-md font-roboto text-sm leading-relaxed tracking-wide text-neutral-600">
+            {isRTL
+              ? 'قطع محدودة، خامات مختارة، وتفاصيل من صنع يدّي. اكتشفي القطع التي تحمل هوية الدار.'
+              : 'Limited pieces, considered materials, and finishing you can feel. Discover silhouettes shaped for life across cities.'}
+          </p>
+        </div>
+      </header>
+
+      <div className="sticky top-[90px] z-30 border-b border-black/5 bg-stone-100/95 backdrop-blur-md lg:top-[100px]">
+        <div className="mx-auto flex max-w-[1400px] flex-col gap-4 px-6 py-4 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
+          <div className="flex w-full min-w-0 items-center justify-between gap-4 md:w-auto md:justify-start md:gap-8 lg:min-w-0 lg:flex-1">
+            <button
+              type="button"
+              onClick={handleBack}
+              className="flex shrink-0 items-center gap-2 border-b border-transparent pb-1 font-roboto text-[10px] uppercase tracking-[0.22em] text-neutral-600 transition-colors hover:text-brand-dustyBlue"
+              data-cursor-hover
+              aria-label={isRTL ? 'رجوع' : 'Back'}
+            >
+              {isRTL ? (
+                <FiArrowRight className="h-3.5 w-3.5" aria-hidden />
+              ) : (
+                <FiArrowLeft className="h-3.5 w-3.5" aria-hidden />
+              )}
+              {isRTL ? 'رجوع' : 'Back'}
+            </button>
+
+            <div className="hidden min-w-0 flex-wrap items-center gap-x-8 gap-y-2 md:flex">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setActiveCategory(cat)}
+                  className={`border-b border-transparent pb-1 font-roboto text-[10px] uppercase tracking-[0.22em] transition-colors ${
+                    activeCategory === cat
+                      ? 'border-brand-darkRed text-brand-darkRed'
+                      : 'text-neutral-500 hover:text-brand-dustyBlue'
+                  }`}
+                  data-cursor-hover
+                >
+                  {categoryLabel(cat)}
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setFilterOpen(true)}
+              className="flex shrink-0 items-center gap-2 font-roboto text-[10px] uppercase tracking-[0.22em] text-brand-darkRed md:hidden"
+              data-cursor-hover
+            >
+              <FiFilter className="h-3.5 w-3.5" aria-hidden />
+              {isRTL ? 'تصفية' : 'Refine'}
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between gap-6 md:justify-end">
+            <Link
+              href="/size-guide"
+              className="hidden items-center gap-2 font-roboto text-[10px] uppercase tracking-[0.2em] text-neutral-500 transition-colors hover:text-brand-dustyBlue sm:inline-flex"
+              data-cursor-hover
+            >
+              <FiMaximize2 className="h-3 w-3" aria-hidden />
+              {isRTL ? 'المقاسات' : 'Sizing'}
+            </Link>
+            <span className="font-roboto text-[10px] tabular-nums tracking-[0.18em] text-neutral-500">
+              {sortedProducts.length}{' '}
+              {sortedProducts.length === 1
+                ? isRTL
+                  ? 'قطعة'
+                  : 'piece'
+                : isRTL
+                  ? 'قطع'
+                  : 'pieces'}
+            </span>
+
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setSortOpen((o) => !o)}
+                className="flex items-center gap-2 font-roboto text-[10px] uppercase tracking-[0.22em] text-brand-darkRed"
+                data-cursor-hover
+                aria-expanded={sortOpen}
+              >
+                {sortLabel}
+                <FiChevronDown
+                  className={`h-3 w-3 transition-transform ${sortOpen ? 'rotate-180' : ''}`}
+                  aria-hidden
+                />
+              </button>
+              {sortOpen && (
+                <>
+                  <button
+                    type="button"
+                    className="fixed inset-0 z-40 cursor-default bg-transparent"
+                    aria-label="Close sort menu"
+                    onClick={() => setSortOpen(false)}
+                  />
+                  <div className="absolute right-0 top-full z-50 mt-2 min-w-[200px] border border-stone-200 bg-white py-2 shadow-lg shadow-stone-900/10">
+                    {SORT_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        onClick={() => {
+                          setSortBy(opt.id)
+                          setSortOpen(false)
+                        }}
+                        className={`block w-full px-4 py-2.5 text-left font-roboto text-xs tracking-wide transition-colors ${
+                          sortBy === opt.id
+                            ? 'bg-stone-100 text-brand-darkRed'
+                            : 'text-neutral-600 hover:bg-stone-50'
+                        }`}
+                        data-cursor-hover
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section className="mx-auto max-w-[1400px] px-6 py-14 md:px-10 md:py-20 lg:px-14">
+        <ul className="grid list-none grid-cols-1 gap-y-16 p-0 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-20 lg:grid-cols-3 lg:gap-x-10">
+          {sortedProducts.map((product) => (
+            <li key={product.id} className="relative">
+              <ProductWishlistHeart
+                product={product}
+                href={`/shop/${product.id}`}
+                className={`absolute top-0 z-[3] ${isRTL ? 'left-[8%]' : 'right-[8%]'}`}
+              />
+              <Link
+                href={`/shop/${product.id}`}
+                className="group relative z-[1] block no-underline"
+                data-cursor-hover
+                onMouseEnter={() => setHoveredId(product.id)}
+                onMouseLeave={clearCardHover}
+              >
+                <div className="relative mx-auto aspect-[3/4] w-[80%] overflow-hidden bg-stone-200">
+                  {/* Entire image stack: pointer-events-none so hits register on the <a> (nested auto children were stealing clicks). */}
+                  <div className="pointer-events-none absolute inset-0 transition-transform duration-1000 ease-out group-hover:scale-[1.03]">
+                    <AnimatePresence initial={false} mode="sync">
+                      <motion.div
+                        key={`${product.id}-${hoveredId === product.id ? hoverSlideIndex : 0}`}
+                        className="pointer-events-none absolute inset-0"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                      >
+                        <Image
+                          src={product.images[hoveredId === product.id ? hoverSlideIndex % product.images.length : 0] ?? product.images[0]}
+                          alt={hoveredId === product.id ? `${product.name} — preview` : product.name}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="pointer-events-none object-cover"
+                          priority={false}
+                        />
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                  {product.images.length > 1 ? (
+                    <div
+                      className="pointer-events-none absolute bottom-3 left-1/2 z-[1] flex -translate-x-1/2 gap-1 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      aria-hidden
+                    >
+                      {product.images.map((_, i) => (
+                        <span
+                          key={i}
+                          className={`h-1 w-1 rounded-full transition-colors ${
+                            hoveredId === product.id && i === hoverSlideIndex % product.images.length
+                              ? 'bg-white'
+                              : 'bg-white/40'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  ) : null}
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <span className="pointer-events-none absolute bottom-5 left-1/2 z-[1] -translate-x-1/2 font-roboto text-[9px] uppercase tracking-[0.35em] text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    {isRTL ? 'اكتشفي' : 'Discover'}
+                  </span>
+                </div>
+                <div className="mt-5 space-y-1.5">
+                  <p className="font-roboto text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
+                    {product.category}
+                  </p>
+                  <h2 className="font-rozha text-lg font-normal tracking-wide text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue md:text-xl">
+                    {product.name}
+                  </h2>
+                  <p className="font-roboto text-sm tabular-nums tracking-wide text-neutral-600">
+                    {formatPrice(product.price)}
+                  </p>
+                  <div className="flex gap-1.5 pt-2">
+                    {product.colors.slice(0, 5).map((c) => (
+                      <span
+                        key={c.name}
+                        title={c.name}
+                        className="h-2.5 w-2.5 rounded-full border border-black/10"
+                        style={{ backgroundColor: c.hex }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {sortedProducts.length === 0 && (
+          <p className="py-24 text-center font-roboto text-sm tracking-wide text-neutral-500">
+            {isRTL ? 'لا توجد قطع في هذا القسم حالياً.' : 'No pieces in this chapter yet.'}
+          </p>
+        )}
+      </section>
+
+      <motion.div
+        className={`fixed inset-0 z-[85] md:hidden ${filterOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+        initial={false}
+        animate={{ visibility: filterOpen ? 'visible' : 'hidden' }}
+      >
+        <motion.button
+          type="button"
+          aria-label="Close"
+          className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+          initial={false}
+          animate={{ opacity: filterOpen ? 1 : 0 }}
+          transition={{ duration: 0.25 }}
+          onClick={() => setFilterOpen(false)}
+        />
+        <motion.aside
+          role="dialog"
+          aria-modal="true"
+          className="absolute right-0 top-0 flex h-full w-[min(100%,20rem)] flex-col bg-stone-50 shadow-2xl"
+          initial={false}
+          animate={{ x: filterOpen ? 0 : '100%' }}
+          transition={{ type: 'tween', duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="flex items-center justify-between border-b border-stone-200 px-6 py-5">
+            <span className="font-rozha text-xl text-brand-darkRed">
+              {isRTL ? 'تصفية' : 'Refine'}
+            </span>
+            <button
+              type="button"
+              onClick={() => setFilterOpen(false)}
+              className="p-2 text-brand-darkRed"
+              data-cursor-hover
+            >
+              <FiX className="h-5 w-5" />
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto px-6 py-6">
+            <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.28em] text-neutral-500">
+              {isRTL ? 'الفئة' : 'Category'}
+            </p>
+            <ul className="list-none space-y-3 p-0">
+              {categories.map((cat) => (
+                <li key={cat}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveCategory(cat)
+                      setFilterOpen(false)
+                    }}
+                    className={`font-roboto text-sm tracking-wide ${
+                      activeCategory === cat
+                        ? 'text-brand-darkRed'
+                        : 'text-neutral-500 hover:text-brand-dustyBlue'
+                    }`}
+                    data-cursor-hover
+                  >
+                    {categoryLabel(cat)}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href="/size-guide"
+              onClick={() => setFilterOpen(false)}
+              className="mt-10 flex items-center gap-2 border-t border-stone-200 pt-8 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed"
+              data-cursor-hover
+            >
+              <FiMaximize2 className="h-3.5 w-3.5" />
+              {isRTL ? 'دليل المقاسات' : 'Size guide'}
+            </Link>
+          </div>
+        </motion.aside>
+      </motion.div>
+    </div>
+  )
+}

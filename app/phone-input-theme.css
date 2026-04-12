@@ -1,0 +1,89 @@
+/* Themed overrides for react-phone-number-input (loaded after library style.css) */
+
+.phone-field-dark,
+.phone-field-light {
+  --PhoneInput-color--focus: #92aac1;
+  --PhoneInputCountryFlag-height: 1.1rem;
+  --PhoneInputCountrySelectArrow-color: currentColor;
+  --PhoneInputCountrySelectArrow-opacity: 0.55;
+  --PhoneInputCountryFlag-borderColor: rgba(255, 255, 255, 0.12);
+}
+
+.phone-field-dark {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.phone-field-dark .PhoneInputInput {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #d4bdac;
+  font-family: var(--font-roboto), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  line-height: 1.25;
+}
+
+.phone-field-dark .PhoneInputInput::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.phone-field-dark .PhoneInputInput:focus {
+  outline: none;
+  border-color: rgba(146, 170, 193, 0.35);
+}
+
+.phone-field-dark .PhoneInput--error .PhoneInputInput,
+.phone-field-dark .PhoneInputInput[aria-invalid='true'] {
+  border-color: rgba(248, 113, 113, 0.55);
+}
+
+.phone-field-light {
+  color: rgba(59, 0, 20, 0.9);
+  --PhoneInputCountryFlag-borderColor: rgba(59, 0, 20, 0.15);
+}
+
+.phone-field-light .PhoneInputInput {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-family: var(--font-roboto), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+}
+
+.phone-field-light .PhoneInputInput::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.phone-field-light .PhoneInputInput:focus {
+  outline: none;
+  border-color: #c19086;
+}
+
+.phone-field-dark .PhoneInputCountry,
+.phone-field-light .PhoneInputCountry {
+  margin-right: 0.5rem;
+}
+
+[dir='rtl'] .phone-field-dark .PhoneInputCountry,
+[dir='rtl'] .phone-field-light .PhoneInputCountry {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+.phone-field--error.phone-field-dark .PhoneInputInput,
+.phone-field-dark .PhoneInput--error .PhoneInputInput {
+  border-color: rgba(248, 113, 113, 0.55);
+}
+
+.phone-field--error.phone-field-light .PhoneInputInput,
+.phone-field-light .PhoneInput--error .PhoneInputInput {
+  border-color: #dc2626;
+}

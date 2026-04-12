@@ -1,0 +1,119 @@
+'use client'
+
+import { Suspense } from 'react'
+import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
+import { motion } from 'framer-motion'
+import { FiCheck, FiAlertCircle, FiArrowRight } from 'react-icons/fi'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+
+function VerifyEmailContent() {
+  const searchParams = useSearchParams()
+  const { isRTL } = useLanguage()
+  const verified = searchParams.get('verified') === '1'
+  const already = searchParams.get('already') === '1'
+  const error = searchParams.get('error')
+
+  const errorCopy: Record<string, string> = {
+    missing_token: isRTL ? 'رابط غير صالح.' : 'Invalid confirmation link.',
+    invalid_or_expired: isRTL
+      ? 'انتهت صلاحية الرابط أو أنه غير صالح. سجّلي من جديد أو اطلبي رسالة جديدة من صفحة التسجيل.'
+      : 'This link has expired or is invalid. Register again to receive a new email.',
+    server: isRTL ? 'حدث خطأ في الخادم.' : 'Something went wrong on our side.',
+  }
+
+  return (
+    <div className="min-h-screen bg-[#faf9f7] flex items-center justify-center px-6 pt-24 pb-16">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md rounded-2xl border border-brand-stone/25 bg-white p-10 text-center shadow-sm"
+      >
+        {verified ? (
+          <>
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
+              <FiCheck className="h-8 w-8 text-emerald-600" />
+            </div>
+            <h1 className="font-rozha text-2xl text-brand-darkRed mb-3">
+              {isRTL ? 'تم تأكيد بريدك' : 'Email confirmed'}
+            </h1>
+            <p className="font-roboto text-sm text-brand-clayRed/75 leading-relaxed mb-8">
+              {isRTL
+                ? 'حسابك جاهز. يمكنك العودة للتسوق أو لصفحة الحساب.'
+                : 'Your account is verified. You can continue shopping or go to your account.'}
+            </p>
+            <div className="flex flex-col gap-3">
+              <Link
+                href="/shop"
+                className={`inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-roboto text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+                data-cursor-hover
+              >
+                {isRTL ? 'تسوقي الآن' : 'Shop the collection'}
+                <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+              </Link>
+              <Link
+                href="/account"
+                className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-clayRed hover:text-brand-dustyBlue"
+                data-cursor-hover
+              >
+                {isRTL ? 'الحساب' : 'Account'}
+              </Link>
+            </div>
+          </>
+        ) : already ? (
+          <>
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand-dustyBlue/15">
+              <FiCheck className="h-8 w-8 text-brand-dustyBlue" />
+            </div>
+            <h1 className="font-rozha text-2xl text-brand-darkRed mb-3">
+              {isRTL ? 'البريد مؤكد مسبقاً' : 'Already confirmed'}
+            </h1>
+            <p className="font-roboto text-sm text-brand-clayRed/75 mb-8">
+              {isRTL ? 'هذا البريد مفعّل بالفعل.' : 'This email is already verified.'}
+            </p>
+            <Link
+              href="/account"
+              className="inline-block font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed underline hover:text-brand-dustyBlue"
+              data-cursor-hover
+            >
+              {isRTL ? 'الحساب' : 'Account'}
+            </Link>
+          </>
+        ) : (
+          <>
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-50">
+              <FiAlertCircle className="h-8 w-8 text-red-600/90" />
+            </div>
+            <h1 className="font-rozha text-2xl text-brand-darkRed mb-3">
+              {isRTL ? 'تعذر التأكيد' : 'Could not confirm'}
+            </h1>
+            <p className="font-roboto text-sm text-brand-clayRed/75 leading-relaxed mb-8">
+              {error ? errorCopy[error] || errorCopy.server : errorCopy.missing_token}
+            </p>
+            <Link
+              href="/register"
+              className="inline-flex items-center justify-center bg-brand-darkRed px-8 py-3.5 font-roboto text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue"
+              data-cursor-hover
+            >
+              {isRTL ? 'إنشاء حساب' : 'Register again'}
+            </Link>
+          </>
+        )}
+      </motion.div>
+    </div>
+  )
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-[#faf9f7] pt-24 font-roboto text-brand-clayRed/60">
+          Loading…
+        </div>
+      }
+    >
+      <VerifyEmailContent />
+    </Suspense>
+  )
+}

@@ -75,16 +75,6 @@
     <priority>0.7</priority>
   </url>
   
-  <!-- Heritage - Sadu -->
-  <url>
-    <loc>https://bintsaeed.com/heritage/sadu</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bintsaeed.com/heritage/sadu"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://bintsaeed.com/ar/heritage/sadu"/>
-    <lastmod>2026-02-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
   <!-- Contact -->
   <url>
     <loc>https://bintsaeed.com/contact</loc>

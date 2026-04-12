@@ -129,7 +129,7 @@ export default function AdminDashboard() {
   const unreadCount = notifications.filter(n => !n.read).length
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20">
+    <div className="min-h-screen bg-stone-100 text-neutral-900">
       {/* Header */}
       <div className="bg-brand-darkRed text-white py-6">
         <div className="container mx-auto px-6">

@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { FiX } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import toast from 'react-hot-toast'
+import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 
 export default function EmailPopup() {
   const pathname = usePathname()
@@ -15,6 +16,7 @@ export default function EmailPopup() {
   const [showSuccess, setShowSuccess] = useState(false)
   const [discountCode, setDiscountCode] = useState('')
   const [formData, setFormData] = useState({ name: '', email: '' })
+  const [emailError, setEmailError] = useState('')
   const { isRTL } = useLanguage()
 
   useEffect(() => {
@@ -43,22 +45,30 @@ export default function EmailPopup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const check = validateSubscriberEmail(formData.email)
+    if (!check.valid) {
+      setEmailError(check.message)
+      toast.error(check.message)
+      return
+    }
+    setEmailError('')
     setIsSubmitting(true)
 
     try {
-      // Generate unique discount code
       const code = generateDiscountCode()
-      
-      // Send to your API (Mailerlite + Slack + store code)
+
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
+          email: check.email,
           discountCode: code,
-          source: 'popup'
+          source: 'popup',
         }),
       })
+
+      const data = await response.json().catch(() => ({}))
 
       if (response.ok) {
         setDiscountCode(code)
@@ -66,9 +76,15 @@ export default function EmailPopup() {
         localStorage.setItem('bint-saeed-subscribed', 'true')
         localStorage.setItem('bint-saeed-discount-code', code)
       } else {
-        throw new Error('Failed to subscribe')
+        const msg = typeof data.error === 'string' ? data.error : ''
+        if (msg) {
+          setEmailError(msg)
+          toast.error(isRTL ? 'يرجى التحقق من البريد الإلكتروني.' : msg)
+        } else {
+          toast.error(isRTL ? 'حدث خطأ. حاولي مرة أخرى.' : 'Something went wrong. Please try again.')
+        }
       }
-    } catch (error) {
+    } catch {
       toast.error(isRTL ? 'حدث خطأ. حاولي مرة أخرى.' : 'Something went wrong. Please try again.')
     } finally {
       setIsSubmitting(false)
@@ -91,6 +107,7 @@ export default function EmailPopup() {
         <>
           {/* Backdrop */}
           <motion.div
+            key="email-popup-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -101,6 +118,7 @@ export default function EmailPopup() {
 
           {/* Modal */}
           <motion.div
+            key="email-popup-modal"
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -157,15 +175,31 @@ export default function EmailPopup() {
                       className={`w-full px-4 py-3 bg-white border border-brand-darkRed/20 font-roboto text-sm tracking-wide focus:border-brand-darkRed focus:outline-none transition-colors ${isRTL ? 'text-right' : ''}`}
                       dir={isRTL ? 'rtl' : 'ltr'}
                     />
-                    <input
-                      type="email"
-                      required
-                      placeholder={isRTL ? 'البريد الإلكتروني' : 'Email'}
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className={`w-full px-4 py-3 bg-white border border-brand-darkRed/20 font-roboto text-sm tracking-wide focus:border-brand-darkRed focus:outline-none transition-colors ${isRTL ? 'text-right' : ''}`}
-                      dir={isRTL ? 'rtl' : 'ltr'}
-                    />
+                    <div className="space-y-1">
+                      <input
+                        type="email"
+                        required
+                        placeholder={isRTL ? 'البريد الإلكتروني' : 'Email'}
+                        value={formData.email}
+                        onChange={(e) => {
+                          setFormData({ ...formData, email: e.target.value })
+                          if (emailError) setEmailError('')
+                        }}
+                        onBlur={() => {
+                          if (!formData.email.trim()) return
+                          const v = validateSubscriberEmail(formData.email)
+                          setEmailError(v.valid ? '' : v.message)
+                        }}
+                        aria-invalid={emailError ? true : undefined}
+                        className={`w-full px-4 py-3 bg-white border font-roboto text-sm tracking-wide focus:border-brand-darkRed focus:outline-none transition-colors ${isRTL ? 'text-right' : ''} ${emailError ? 'border-red-500' : 'border-brand-darkRed/20'}`}
+                        dir={isRTL ? 'rtl' : 'ltr'}
+                      />
+                      {emailError ? (
+                        <p className={`font-roboto text-xs text-red-600 ${isRTL ? 'text-right' : ''}`}>
+                          {emailError}
+                        </p>
+                      ) : null}
+                    </div>
                     <button
                       type="submit"
                       disabled={isSubmitting}

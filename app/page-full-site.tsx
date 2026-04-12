@@ -19,8 +19,6 @@ export default function Home() {
       <EditorialSplit />
       <CollectionStrip />
       <AsymmetricShowcase />
-      <QuoteSection />
-      <FinalEditorial />
     </div>
   )
 }
@@ -39,8 +37,8 @@ function HeroSection() {
 
   return (
     <section ref={ref} className="relative h-[100svh] w-full overflow-hidden">
-      {/* Background */}
-      <motion.div style={{ scale }} className="absolute inset-0">
+      {/* Background — must not capture clicks above hero CTAs */}
+      <motion.div style={{ scale }} className="pointer-events-none absolute inset-0">
         <Image
           src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1920&q=90"
           alt="Bint Saeed"
@@ -52,66 +50,67 @@ function HeroSection() {
       </motion.div>
 
       {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-brand-stone/20 to-transparent" />
-      <div className="absolute bottom-0 right-0 w-1/2 h-1/3 bg-gradient-to-t from-brand-rose/30 to-transparent" />
+      <div className="pointer-events-none absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-brand-stone/20 to-transparent" />
+      <div className="pointer-events-none absolute bottom-0 right-0 w-1/2 h-1/3 bg-gradient-to-t from-brand-rose/30 to-transparent" />
 
-      {/* Content */}
-      <motion.div style={{ y, opacity }} className="relative h-full flex items-center">
+      {/* Content — parallax on copy only; primary CTA avoids scroll transform for hit-testing */}
+      <div className="relative z-10 flex h-full items-center">
         <div className="container mx-auto px-6 lg:px-16">
-          <div className="grid lg:grid-cols-12 gap-8 items-center">
-            {/* Left Column - Typography */}
+          <div className="grid items-center gap-8 lg:grid-cols-12">
             <div className={`lg:col-span-7 ${isRTL ? 'lg:col-start-6' : ''}`}>
-              <motion.div
-                initial={{ opacity: 0, x: -80 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <span className="inline-block px-4 py-2 bg-brand-stone/30 backdrop-blur-sm text-white font-roboto text-[10px] uppercase tracking-[0.4em] mb-8">
-                  {t.hero.subtitle}
-                </span>
-              </motion.div>
+              <motion.div style={{ y, opacity }} className="pointer-events-none">
+                <motion.div
+                  initial={{ opacity: 0, x: -80 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <span className="mb-8 inline-block bg-brand-stone/30 px-4 py-2 font-roboto text-[10px] uppercase tracking-[0.4em] text-white backdrop-blur-sm">
+                    {t.hero.subtitle}
+                  </span>
+                </motion.div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 80 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.4, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="font-rozha text-[12vw] md:text-[8vw] lg:text-[6vw] text-white leading-[0.85] mb-8"
-              >
-                {t.hero.title1}
-                <br />
-                <span className="text-brand-stone italic">{t.hero.title2}</span>
-              </motion.h1>
+                <motion.h1
+                  initial={{ opacity: 0, y: 80 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.4, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="mb-8 font-rozha text-[12vw] leading-[0.85] text-white md:text-[8vw] lg:text-[6vw]"
+                >
+                  {t.hero.title1}
+                  <br />
+                  <span className="text-brand-stone italic">{t.hero.title2}</span>
+                </motion.h1>
+              </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                className="flex items-center gap-8"
+                className="relative z-20 flex items-center gap-8"
               >
                 <Link
                   href="/shop"
-                  className="group relative overflow-hidden px-12 py-5 bg-white text-brand-darkRed font-roboto text-xs uppercase tracking-[0.25em]"
+                  className="group relative overflow-hidden bg-white px-12 py-5 font-roboto text-xs uppercase tracking-[0.25em] text-brand-darkRed"
                   data-cursor-hover
                 >
                   <span className="relative z-10">{t.hero.shopCollection}</span>
-                  <div className="absolute inset-0 bg-brand-dustyBlue translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                  <div className="absolute inset-0 translate-y-full bg-brand-dustyBlue transition-transform duration-500 group-hover:translate-y-0" />
                 </Link>
-                <div className="hidden md:block w-px h-12 bg-white/30" />
-                <p className="hidden md:block font-roboto text-xs text-white/60 tracking-wide max-w-[200px] leading-relaxed">
+                <div className="hidden h-12 w-px bg-white/30 md:block" />
+                <p className="hidden max-w-[200px] font-roboto text-xs leading-relaxed tracking-wide text-white/60 md:block">
                   {t.hero.description}
                 </p>
               </motion.div>
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+        className="pointer-events-none absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
@@ -122,7 +121,7 @@ function HeroSection() {
       </motion.div>
 
       {/* Side Accent */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-1 h-32 bg-brand-rose" />
+      <div className="pointer-events-none absolute top-1/2 right-0 -translate-y-1/2 w-1 h-32 bg-brand-rose" />
     </section>
   )
 }
@@ -584,129 +583,6 @@ function AsymmetricShowcase() {
           ))}
         </div>
       </div>
-    </section>
-  )
-}
-
-function QuoteSection() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { margin: '-30%' })
-  const { t } = useLanguage()
-
-  return (
-    <section ref={ref} className="relative py-32 md:py-48 bg-brand-stone overflow-hidden">
-      {/* Large Background Text */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-[0.03]">
-        <span className="font-rozha text-[30vw] text-brand-darkRed whitespace-nowrap">
-          Elegance
-        </span>
-      </div>
-
-      <div className="relative container mx-auto px-6 lg:px-16">
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1 }}
-          className="max-w-4xl mx-auto text-center"
-        >
-          <div className="w-px h-16 bg-brand-darkRed/30 mx-auto mb-12" />
-          <blockquote className="font-rozha text-3xl md:text-4xl lg:text-5xl text-brand-darkRed leading-[1.3] mb-12">
-            "{t.brandStory.quote}"
-          </blockquote>
-          <p className="font-roboto text-sm text-brand-darkRed/60 tracking-[0.2em] uppercase">
-            — Bint Saeed
-          </p>
-          <div className="w-px h-16 bg-brand-darkRed/30 mx-auto mt-12" />
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-function FinalEditorial() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { margin: '-10%' })
-  const { t, isRTL } = useLanguage()
-
-  return (
-    <section ref={ref} className="relative">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <Image
-          src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1920&q=90"
-          alt="Newsletter"
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-brand-darkRed/70" />
-      </div>
-
-      <div className="relative container mx-auto px-6 lg:px-16 py-32 md:py-48">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left - Shipping Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-white"
-          >
-            <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-stone mb-6 block">
-              {isRTL ? 'الشحن العالمي' : 'Worldwide Delivery'}
-            </span>
-            <h2 className="font-rozha text-4xl md:text-5xl leading-[1.1] mb-8">
-              {isRTL ? 'نصل إليك' : 'We Deliver'}
-              <br />
-              <span className="text-brand-rose">{isRTL ? 'أينما كنت' : 'Everywhere'}</span>
-            </h2>
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              {['UAE', 'KSA', 'Qatar', 'Kuwait', 'Bahrain', 'Oman'].map((country) => (
-                <div key={country} className="text-center py-3 border border-white/20">
-                  <span className="font-roboto text-xs text-white/80 tracking-wide">{country}</span>
-                </div>
-              ))}
-            </div>
-            <p className="font-roboto text-sm text-white/60 tracking-wide">
-              {isRTL ? 'شحن مجاني للإمارات • توصيل خلال أسبوعين' : 'Free UAE shipping • 2 week delivery'}
-            </p>
-          </motion.div>
-
-          {/* Right - Newsletter */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className={`bg-white/10 backdrop-blur-sm p-10 md:p-12 ${isRTL ? 'text-right' : ''}`}
-          >
-            <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-stone mb-4 block">
-              {t.cta.subtitle}
-            </span>
-            <h3 className="font-rozha text-3xl md:text-4xl text-white mb-4">
-              {t.cta.title}
-            </h3>
-            <p className="font-roboto text-sm text-white/60 tracking-wide mb-8">
-              {t.cta.description}
-            </p>
-            <form className={`flex flex-col sm:flex-row gap-3 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
-              <input
-                type="email"
-                placeholder={t.cta.emailPlaceholder}
-                className={`flex-1 px-5 py-4 bg-white/10 border border-white/20 text-white font-roboto text-sm tracking-wide placeholder:text-white/40 focus:outline-none focus:border-white/50 transition-colors ${isRTL ? 'text-right' : ''}`}
-                dir={isRTL ? 'rtl' : 'ltr'}
-              />
-              <button
-                type="submit"
-                className="px-8 py-4 bg-white text-brand-darkRed font-roboto text-xs uppercase tracking-[0.2em] hover:bg-brand-stone transition-colors"
-                data-cursor-hover
-              >
-                {t.cta.subscribe}
-              </button>
-            </form>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Bottom Accent Line */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-rose via-brand-dustyBlue to-brand-stone" />
     </section>
   )
 }

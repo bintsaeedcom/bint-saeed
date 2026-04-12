@@ -32,18 +32,6 @@ const heritageItems = [
     href: '/heritage/khous',
     tag: { en: 'Traditional Craft', ar: 'حرفة تقليدية' },
   },
-  {
-    id: 'sadu',
-    title: { en: 'Sadu Weaving', ar: 'السدو' },
-    subtitle: { en: 'Bedouin Legacy', ar: 'إرث البدو' },
-    description: {
-      en: 'The traditional Bedouin weaving art, recognized by UNESCO, featuring bold geometric patterns that tell stories of desert life. Woven into the very fabric of our collections.',
-      ar: 'فن النسيج البدوي التقليدي، المعترف به من اليونسكو، يتميز بأنماط هندسية جريئة تروي قصص الحياة الصحراوية.'
-    },
-    image: 'https://images.unsplash.com/photo-1596568959257-5e730de5c6a3?w=800&q=90',
-    href: '/heritage/sadu',
-    tag: { en: 'UNESCO Heritage', ar: 'تراث اليونسكو' },
-  },
 ]
 
 function DecorativeCorners({ color = 'dustyBlue' }: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
@@ -236,7 +224,7 @@ function BrandConnectionSection() {
               <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/20 via-transparent to-brand-stone/10 opacity-50" />
               <div className="relative backdrop-blur-sm bg-white/[0.04] rounded-2xl p-8 md:p-10 border border-white/[0.06] space-y-6">
                 <p className="font-roboto text-sm text-white/70 tracking-wide leading-[1.9]">
-                  {isRTL ? 'في بنت سعيد، لا نستلهم من التراث فحسب — بل نحييه. نتعاون مع حرفيات إماراتيات لدمج تقنيات التلي والسدو الأصيلة في تصاميمنا.' : 'At Bint Saeed, we don\'t just draw inspiration from heritage — we revive it. We collaborate with Emirati artisans to incorporate authentic Al Talli and Sadu techniques into every design.'}
+                  {isRTL ? 'في بنت سعيد، لا نستلهم من التراث فحسب — بل نحييه. نتعاون مع حرفيات إماراتيات لدمج تقنيات التلي ونسيج الخوص (سعف النخيل) الأصيلة في تصاميمنا.' : 'At Bint Saeed, we don\'t just draw inspiration from heritage — we revive it. We collaborate with Emirati artisans to incorporate authentic Al Talli embroidery and Khous palm-frond weaving into our designs.'}
                 </p>
                 <p className="font-roboto text-sm text-white/70 tracking-wide leading-[1.9]">
                   {isRTL ? 'كل عباءة تحمل جزءاً من تاريخ الإمارات، مصنوعة بأيدي ماهرة تحمل إرث الأجداد وتقدمه بروح عصرية.' : 'Each abaya carries a piece of Emirates history, crafted by skilled hands that carry the legacy of ancestors and present it with a contemporary spirit.'}
@@ -254,7 +242,7 @@ function BrandConnectionSection() {
               </div>
               <div className="space-y-4 pt-12">
                 <div className="relative aspect-square overflow-hidden rounded-xl">
-                  <Image src="https://images.unsplash.com/photo-1596568959257-5e730de5c6a3?w=600&q=90" alt="Sadu" fill className="object-cover" />
+                  <Image src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&q=90" alt="Al Talli embroidery" fill className="object-cover" />
                   <div className="absolute inset-0 border border-brand-dustyBlue/20 rounded-xl" />
                 </div>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-xl">

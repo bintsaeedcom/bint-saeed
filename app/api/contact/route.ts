@@ -1,30 +1,57 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { isSafePublicIpForLookup } from '@/lib/security/isSafePublicIp'
+import { rateLimitResponse } from '@/lib/security/rateLimit'
+import { sanitizeUserText } from '@/lib/security/sanitizeUserText'
+
+const MAX_NAME = 120
+const MAX_EMAIL = 254
+const MAX_PHONE = 40
+const MAX_SUBJECT = 200
+const MAX_MESSAGE = 8000
 
 export async function POST(request: NextRequest) {
+  const rl = await rateLimitResponse(request, 'contact', 12, 3600)
+  if (rl) return rl
+
   try {
     const body = await request.json()
-    const { name, email, phone, subject, message } = body
-    
-    // Get IP address from headers
+    const name = sanitizeUserText(body.name, MAX_NAME)
+    const email = sanitizeUserText(body.email, MAX_EMAIL)
+    const phone = sanitizeUserText(body.phone, MAX_PHONE)
+    const subject = sanitizeUserText(body.subject, MAX_SUBJECT)
+    const message = sanitizeUserText(body.message, MAX_MESSAGE)
+
+    if (!email || !email.includes('@')) {
+      return NextResponse.json({ error: 'Valid email is required.' }, { status: 400 })
+    }
+    if (!message) {
+      return NextResponse.json({ error: 'Message is required.' }, { status: 400 })
+    }
+
     const forwardedFor = request.headers.get('x-forwarded-for')
-    const ip = forwardedFor ? forwardedFor.split(',')[0].trim() : 'Unknown'
-    
-    // Get location from IP
+    const rawIp = forwardedFor ? forwardedFor.split(',')[0].trim() : 'Unknown'
+    const ip = sanitizeUserText(rawIp, 64)
+
     let location = { city: 'Unknown', country: 'Unknown' }
-    try {
-      const geoRes = await fetch(`https://ipapi.co/${ip}/json/`)
-      const geoData = await geoRes.json()
-      location = {
-        city: geoData.city || 'Unknown',
-        country: geoData.country_name || 'Unknown',
+    if (isSafePublicIpForLookup(ip)) {
+      try {
+        const geoRes = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/json/`, {
+          next: { revalidate: 0 },
+        })
+        const geoData = (await geoRes.json()) as { city?: string; country_name?: string; error?: boolean }
+        if (!geoData.error) {
+          location = {
+            city: sanitizeUserText(geoData.city, 80) || 'Unknown',
+            country: sanitizeUserText(geoData.country_name, 80) || 'Unknown',
+          }
+        }
+      } catch {
+        /* ignore geo failures */
       }
-    } catch (e) {
-      console.log('Could not get location from IP')
     }
 
     const timestamp = new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
 
-    // Send to Slack
     const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL
     if (slackWebhookUrl) {
       const slackMessage = {
@@ -40,7 +67,7 @@ export async function POST(request: NextRequest) {
           {
             type: 'section',
             fields: [
-              { type: 'mrkdwn', text: `*Name:*\n${name}` },
+              { type: 'mrkdwn', text: `*Name:*\n${name || '—'}` },
               { type: 'mrkdwn', text: `*Email:*\n${email}` },
               { type: 'mrkdwn', text: `*Phone:*\n${phone || 'Not provided'}` },
               { type: 'mrkdwn', text: `*Subject:*\n${subject || 'General Inquiry'}` },
@@ -72,8 +99,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ success: true })
-  } catch (error: any) {
-    console.error('Contact form error:', error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+  } catch {
+    return NextResponse.json({ error: 'Could not send message. Please try again.' }, { status: 500 })
   }
 }

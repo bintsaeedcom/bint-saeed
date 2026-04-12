@@ -1,18 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
+import { validateOptionalPhone } from '@/lib/validateOptionalPhone'
+import { rateLimitResponse } from '@/lib/security/rateLimit'
 
 const MAILERLITE_API = 'https://connect.mailerlite.com/api/subscribers'
 
 async function addToMailerLite(
   apiKey: string,
   email: string,
-  options: { name?: string; lastName?: string; groupId?: string }
+  options: { name?: string; lastName?: string; phone?: string; groupId?: string }
 ): Promise<{ success: boolean; status: number; error: string }> {
-  const { name, lastName, groupId } = options
+  const { name, lastName, phone, groupId } = options
 
-  // Build fields - MailerLite expects 'name' and 'last_name'
+  // Build fields - MailerLite expects 'name' and 'last_name'; 'phone' if configured in your audience
   const fields: Record<string, string> = {}
   if (name?.trim()) fields.name = name.trim()
   if (lastName?.trim()) fields.last_name = lastName.trim()
+  // Requires a matching subscriber field in MailerLite (often named "phone"); omit from dashboard if unused.
+  if (phone?.trim()) fields.phone = phone.trim()
 
   // Build body - groups optional (subscriber goes to main audience if omitted)
   const body: Record<string, unknown> = {
@@ -43,13 +48,28 @@ async function addToMailerLite(
 }
 
 export async function POST(request: NextRequest) {
+  const rl = await rateLimitResponse(request, 'subscribe', 25, 3600)
+  if (rl) return rl
+
   try {
     const body = await request.json()
-    const { email, firstName, lastName, name, source } = body
+    const { email, firstName, lastName, name, source, phone: phoneRaw } = body
 
-    if (!email) {
+    if (typeof email !== 'string') {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 })
     }
+
+    const emailCheck = validateSubscriberEmail(email)
+    if (!emailCheck.valid) {
+      return NextResponse.json({ error: emailCheck.message }, { status: 400 })
+    }
+    const normalizedEmail = emailCheck.email
+
+    const phoneCheck = validateOptionalPhone(phoneRaw)
+    if (!phoneCheck.ok) {
+      return NextResponse.json({ error: phoneCheck.message }, { status: 400 })
+    }
+    const normalizedPhone = phoneCheck.phone
 
     const forwardedFor = request.headers.get('x-forwarded-for')
     const ip = forwardedFor ? forwardedFor.split(',')[0].trim() : 'Unknown'
@@ -68,17 +88,19 @@ export async function POST(request: NextRequest) {
     if (mailerliteApiKey) {
       try {
         // Try with group first if configured
-        mailerliteResult = await addToMailerLite(mailerliteApiKey, email, {
+        mailerliteResult = await addToMailerLite(mailerliteApiKey, normalizedEmail, {
           name: subscriberName,
           lastName: subscriberLastName,
+          phone: normalizedPhone,
           groupId: mailerliteGroupId,
         })
 
         // If failed and we used a group, retry without group (adds to main audience)
         if (!mailerliteResult.success && mailerliteGroupId && mailerliteResult.error.toLowerCase().includes('group')) {
-          const retry = await addToMailerLite(mailerliteApiKey, email, {
+          const retry = await addToMailerLite(mailerliteApiKey, normalizedEmail, {
             name: subscriberName,
             lastName: subscriberLastName,
+            phone: normalizedPhone,
           })
           if (retry.success) {
             mailerliteResult = retry
@@ -107,7 +129,22 @@ export async function POST(request: NextRequest) {
         const mailerliteStatus = mailerliteResult.success 
           ? '✅ Added to MailerLite' 
           : `❌ MailerLite: ${errMsg}`
-        
+
+        const slackFields: { type: 'mrkdwn'; text: string }[] = [
+          { type: 'mrkdwn', text: `*Email:*\n${normalizedEmail}` },
+        ]
+        if (normalizedPhone) {
+          slackFields.push({ type: 'mrkdwn', text: `*Phone:*\n${normalizedPhone}` })
+        }
+        if (source) {
+          slackFields.push({ type: 'mrkdwn', text: `*Source:*\n${String(source)}` })
+        }
+        slackFields.push(
+          { type: 'mrkdwn', text: `*Time:*\n${timestamp}` },
+          { type: 'mrkdwn', text: `*IP:*\n${ip}` },
+          { type: 'mrkdwn', text: `*Mailerlite:*\n${mailerliteStatus}` },
+        )
+
         await fetch(slackWebhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -119,12 +156,7 @@ export async function POST(request: NextRequest) {
               },
               {
                 type: 'section',
-                fields: [
-                  { type: 'mrkdwn', text: `*Email:*\n${email}` },
-                  { type: 'mrkdwn', text: `*Time:*\n${timestamp}` },
-                  { type: 'mrkdwn', text: `*IP:*\n${ip}` },
-                  { type: 'mrkdwn', text: `*Mailerlite:*\n${mailerliteStatus}` },
-                ]
+                fields: slackFields
               }
             ]
           }),

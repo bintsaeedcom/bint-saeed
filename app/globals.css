@@ -46,18 +46,6 @@
   font-family: var(--font-arabic);
 }
 
-/* Ensure custom cursor is always visible */
-@media (pointer: fine) {
-  body,
-  a,
-  button,
-  [data-cursor-hover],
-  .fixed,
-  [class*="z-["] {
-    cursor: none !important;
-  }
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -72,7 +60,7 @@ body {
   font-family: var(--font-roboto);
   letter-spacing: 0.02em;
   overflow-x: hidden;
-  cursor: none;
+  cursor: auto;
   background: #3b0014;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -100,19 +88,7 @@ p, span, a, li, label, input, textarea, button {
   letter-spacing: 0.04em;
 }
 
-/* Smooth Page Transitions */
-main {
-  animation: fadeIn 0.5s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
+/* Avoid fading <main> from opacity:0 — stacks badly with Framer initial states and can look like a blank page */
 
 @layer utilities {
   .glass {
@@ -277,6 +253,21 @@ button:focus-visible {
   height: 44px !important;
   background: white !important;
   border-radius: 0 !important;
+  z-index: 20 !important;
+}
+
+.product-gallery-swiper .swiper-pagination {
+  z-index: 15 !important;
+  bottom: 12px !important;
+}
+
+.product-gallery-swiper .swiper-pagination-bullet {
+  background: var(--brand-dark-red) !important;
+  opacity: 0.35 !important;
+}
+
+.product-gallery-swiper .swiper-pagination-bullet-active {
+  opacity: 1 !important;
 }
 
 .swiper-button-next::after,
@@ -438,10 +429,14 @@ h1, h2, h3, h4, h5, h6, p {
   hyphens: auto;
 }
 
-/* Responsive images */
-img {
+/* Responsive images — discourage drag / image-save selection */
+img,
+picture img {
   max-width: 100%;
   height: auto;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Responsive tables */

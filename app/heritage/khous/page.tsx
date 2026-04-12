@@ -355,11 +355,11 @@ function CTASection() {
               {isRTL ? 'التلي' : 'Al Talli'}
             </Link>
             <Link
-              href="/heritage/sadu"
+              href="/heritage"
               className="px-6 py-3 border border-brand-darkRed text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
-              {isRTL ? 'السدو' : 'Sadu'}
+              {isRTL ? 'التراث' : 'Heritage'}
             </Link>
           </div>
         </div>

@@ -3,7 +3,29 @@ import { isPrelaunch } from '@/lib/seo'
 
 const baseUrl = 'https://bintsaeed.com'
 
-const prelaunchDisallow = [
+/** Sensitive paths — never crawl (all user agents). */
+const disallowPrivate = ['/api/', '/admin/', '/_next/', '/checkout/']
+
+/**
+ * Crawlers used by major AI / search training products.
+ * Listed first in robots.txt so they match their own rule block before `*`.
+ */
+const aiTrainingUserAgents = [
+  'GPTBot',
+  'ChatGPT-User',
+  'OAI-SearchBot',
+  'Google-Extended',
+  'GoogleOther',
+  'anthropic-ai',
+  'ClaudeBot',
+  'Claude-Web',
+  'PerplexityBot',
+  'Applebot-Extended',
+  'CCBot',
+  'Bytespider',
+]
+
+const prelaunchDisallowGeneric = [
   '/preview',
   '/shop',
   '/accessories',
@@ -15,31 +37,42 @@ const prelaunchDisallow = [
   '/privacy-policy',
   '/cookie-policy',
   '/terms',
-  '/api/',
-  '/admin/',
-  '/_next/',
-  '/checkout/',
+  ...disallowPrivate,
 ]
 
 export default function robots(): MetadataRoute.Robots {
   if (isPrelaunch) {
     return {
-      rules: {
-        userAgent: '*',
-        allow: '/',
-        disallow: prelaunchDisallow,
-      },
+      rules: [
+        {
+          userAgent: aiTrainingUserAgents,
+          allow: '/',
+          disallow: disallowPrivate,
+        },
+        {
+          userAgent: '*',
+          allow: '/',
+          disallow: prelaunchDisallowGeneric,
+        },
+      ],
       sitemap: `${baseUrl}/sitemap.xml`,
       host: baseUrl,
     }
   }
 
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/api/', '/admin/', '/_next/', '/checkout/'],
-    },
+    rules: [
+      {
+        userAgent: aiTrainingUserAgents,
+        allow: '/',
+        disallow: disallowPrivate,
+      },
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: disallowPrivate,
+      },
+    ],
     sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,
   }
