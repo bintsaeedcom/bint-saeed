@@ -300,15 +300,16 @@ export default function ShopClient() {
       <section className="mx-auto max-w-[1400px] px-6 py-14 md:px-10 md:py-20 lg:px-14">
         <ul className="grid list-none grid-cols-1 gap-y-16 p-0 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-20 lg:grid-cols-3 lg:gap-x-10">
           {sortedProducts.map((product) => (
-            <li key={product.id} className="relative">
+            <li key={product.id} className="relative z-10">
               <ProductWishlistHeart
                 product={product}
                 href={`/shop/${product.id}`}
-                className={`absolute top-0 z-[3] ${isRTL ? 'left-[8%]' : 'right-[8%]'}`}
+                className={`absolute top-0 z-20 ${isRTL ? 'left-[8%]' : 'right-[8%]'}`}
               />
               <LocaleLink
                 href={`/shop/${product.id}`}
-                className="group relative z-[1] block no-underline"
+                prefetch={false}
+                className="group relative z-10 block w-full no-underline"
                 data-cursor-hover
                 onMouseEnter={() => setHoveredId(product.id)}
                 onMouseLeave={clearCardHover}
@@ -391,28 +392,38 @@ export default function ShopClient() {
         )}
       </section>
 
-      <motion.div
-        className={`fixed inset-0 z-[85] md:hidden ${filterOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
-        initial={false}
-        animate={{ visibility: filterOpen ? 'visible' : 'hidden' }}
-      >
-        <motion.button
-          type="button"
-          aria-label="Close"
-          className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-          initial={false}
-          animate={{ opacity: filterOpen ? 1 : 0 }}
-          transition={{ duration: 0.25 }}
-          onClick={() => setFilterOpen(false)}
-        />
-        <motion.aside
-          role="dialog"
-          aria-modal="true"
-          className="absolute right-0 top-0 flex h-full w-[min(100%,20rem)] flex-col bg-stone-50 shadow-2xl"
-          initial={false}
-          animate={{ x: filterOpen ? 0 : '100%' }}
-          transition={{ type: 'tween', duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-        >
+      {/* Only mount the drawer when open so a hidden fixed layer never intercepts taps (mobile). */}
+      <AnimatePresence>
+        {filterOpen && (
+          <motion.div
+            key="shop-filter-overlay"
+            className="fixed inset-0 z-[85] md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.button
+              type="button"
+              aria-label="Close"
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setFilterOpen(false)}
+            />
+            <motion.aside
+              role="dialog"
+              aria-modal="true"
+              className={`absolute top-0 flex h-full w-[min(100%,20rem)] flex-col bg-stone-50 shadow-2xl ${
+                isRTL ? 'left-0' : 'right-0'
+              }`}
+              initial={{ x: isRTL ? '-100%' : '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: isRTL ? '-100%' : '100%' }}
+              transition={{ type: 'tween', duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            >
           <div className="flex items-center justify-between border-b border-stone-200 px-6 py-5">
             <span className="font-rozha text-xl text-brand-darkRed">
               {isRTL ? 'تصفية' : 'Refine'}
@@ -462,7 +473,9 @@ export default function ShopClient() {
             </LocaleLink>
           </div>
         </motion.aside>
-      </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

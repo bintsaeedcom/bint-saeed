@@ -179,13 +179,13 @@ export default function ProductPage() {
       </div>
 
       <div className="container mx-auto px-6 lg:px-12 py-12">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+        <div className="isolate grid min-w-0 grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
           {/* Image Gallery */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="w-full max-w-full space-y-4"
+            className="relative z-0 w-full min-w-0 max-w-full space-y-4 overflow-hidden"
           >
             {/* Main Image */}
             <div className="relative aspect-[3/4] overflow-hidden bg-[#f5f5f5]">
@@ -195,6 +195,8 @@ export default function ProductPage() {
                 slidesPerView={1}
                 navigation
                 pagination={{ clickable: true, dynamicBullets: true }}
+                preventClicks={false}
+                preventClicksPropagation={false}
                 onSwiper={(swiper) => {
                   mainSwiperRef.current = swiper
                 }}
@@ -244,6 +246,8 @@ export default function ProductPage() {
                 freeMode
                 watchSlidesProgress
                 slideToClickedSlide
+                preventClicks={false}
+                preventClicksPropagation={false}
                 className="product-gallery-thumbs !overflow-visible"
               >
                 {product.images.map((image, index) => (
@@ -274,7 +278,7 @@ export default function ProductPage() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className={`lg:sticky lg:top-32 lg:self-start ${isRTL ? 'text-right' : ''}`}
+            className={`relative z-[1] min-w-0 lg:sticky lg:top-32 lg:self-start ${isRTL ? 'text-right' : ''}`}
           >
             {/* Category */}
             <span className="font-roboto text-xs uppercase tracking-[0.3em] text-brand-dustyBlue mb-3 block">
@@ -304,8 +308,13 @@ export default function ProductPage() {
             </div>
 
             {/* Short Description */}
-            <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed mb-8">
+            <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed mb-4">
               {product.description}
+            </p>
+            <p className="mb-8 font-roboto text-xs uppercase tracking-[0.18em] text-brand-dustyBlue">
+              {isRTL
+                ? 'صُنع حسب الطلب — متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
+                : 'Made to order — available within this chapter (availability confirmed when you order).'}
             </p>
 
             <OrderCutoffBanner />

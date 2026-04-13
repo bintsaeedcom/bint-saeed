@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
+import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { FiX } from 'react-icons/fi'
@@ -20,7 +21,8 @@ export default function EmailPopup() {
   const { isRTL } = useLanguage()
 
   useEffect(() => {
-    if (!pathname?.startsWith('/shop')) return
+    const inner = pathname ? stripLocaleFromPathname(pathname).pathname : '/'
+    if (!inner.startsWith('/shop')) return
 
     const hasSeenPopup = localStorage.getItem('bint-saeed-popup-seen')
     const hasSubscribed = localStorage.getItem('bint-saeed-subscribed')
