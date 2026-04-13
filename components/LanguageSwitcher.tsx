@@ -1,10 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiGlobe, FiChevronDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { Language } from '@/lib/i18n/translations'
+import { stripLocaleFromPathname, localizedPath } from '@/lib/i18n/routing'
 
 interface LanguageSwitcherProps {
   variant?: 'light' | 'dark'
@@ -12,6 +14,8 @@ interface LanguageSwitcherProps {
 
 export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherProps) {
   const { language, setLanguage, t } = useLanguage()
+  const router = useRouter()
+  const pathname = usePathname() || '/'
   const [isOpen, setIsOpen] = useState(false)
 
   const languages: { code: Language; label: string; native: string; flag: string }[] = [
@@ -23,21 +27,32 @@ export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherP
     { code: 'it', label: 'Italiano', native: 'IT', flag: '🇮🇹' },
     { code: 'es', label: 'Español', native: 'ES', flag: '🇪🇸' },
     { code: 'ru', label: 'Русский', native: 'RU', flag: '🇷🇺' },
+    { code: 'nl', label: 'Nederlands', native: 'NL', flag: '🇳🇱' },
+    { code: 'pt', label: 'Português', native: 'PT', flag: '🇵🇹' },
   ]
 
-  const currentLang = languages.find(l => l.code === language)
+  const currentLang = languages.find((l) => l.code === language)
 
-  const textColor = variant === 'light' 
-    ? 'text-white hover:text-white/70' 
-    : 'text-brand-darkRed hover:text-brand-dustyBlue'
-  
-  const bgColor = variant === 'light'
-    ? 'bg-white/10 border-white/20'
-    : 'bg-white border-brand-stone/30'
+  const textColor =
+    variant === 'light'
+      ? 'text-white hover:text-white/70'
+      : 'text-brand-darkRed hover:text-brand-dustyBlue'
+
+  const bgColor =
+    variant === 'light' ? 'bg-white/10 border-white/20' : 'bg-white border-brand-stone/30'
+
+  const navigateToLanguage = (code: Language) => {
+    const { pathname: inner } = stripLocaleFromPathname(pathname)
+    const target = localizedPath(code === 'en' ? 'en' : code, inner)
+    router.push(target)
+    setLanguage(code)
+    setIsOpen(false)
+  }
 
   return (
     <div className="relative">
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.1em] transition-colors ${textColor}`}
         data-cursor-hover
@@ -62,19 +77,17 @@ export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherP
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className={`absolute top-full mt-2 right-0 ${bgColor} border shadow-lg z-50 min-w-[140px]`}
+              className={`absolute top-full right-0 z-50 mt-2 min-w-[160px] border shadow-lg ${bgColor}`}
             >
               {languages.map((lang) => (
                 <button
                   key={lang.code}
-                  onClick={() => {
-                    setLanguage(lang.code)
-                    setIsOpen(false)
-                  }}
-                  className={`w-full text-left px-4 py-3 font-roboto text-sm tracking-wide transition-colors flex items-center gap-2 ${
+                  type="button"
+                  onClick={() => navigateToLanguage(lang.code)}
+                  className={`flex w-full items-center gap-2 px-4 py-3 text-left font-roboto text-sm tracking-wide transition-colors ${
                     language === lang.code
-                      ? variant === 'light' 
-                        ? 'bg-white/20 text-white' 
+                      ? variant === 'light'
+                        ? 'bg-white/20 text-white'
                         : 'bg-brand-stone/20 text-brand-darkRed'
                       : variant === 'light'
                         ? 'text-white/80 hover:bg-white/10'

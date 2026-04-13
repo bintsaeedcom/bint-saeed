@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiArrowLeft, FiInfo, FiCheck } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -65,14 +65,14 @@ function HeroSection() {
           transition={{ duration: 0.5 }}
           className="mb-8"
         >
-          <Link
+          <LocaleLink
             href="/shop"
             className={`inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
             {isRTL ? 'العودة للتسوق' : 'Back to Shop'}
-          </Link>
+          </LocaleLink>
         </motion.div>
 
         <motion.div
@@ -362,13 +362,13 @@ function NeedHelpSection() {
             >
               {isRTL ? 'واتساب' : 'WhatsApp Us'}
             </a>
-            <Link
+            <LocaleLink
               href="/contact"
               className="px-8 py-4 bg-white text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors text-center"
               data-cursor-hover
             >
               {isRTL ? 'تواصلي معنا' : 'Contact Us'}
-            </Link>
+            </LocaleLink>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiArrowLeft, FiFilter, FiX, FiShoppingBag } from 'react-icons/fi'
 import { accessories, accessoryCategories, Accessory } from '@/data/accessories'
@@ -45,14 +45,14 @@ export default function AccessoriesPage() {
               transition={{ duration: 0.5 }}
               className="mb-8"
             >
-              <Link
+              <LocaleLink
                 href="/"
                 className={`inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.15em] text-white/70 hover:text-white transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
                 {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
-              </Link>
+              </LocaleLink>
             </motion.div>
 
             <motion.div
@@ -270,7 +270,7 @@ function AccessoryCard({
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
     >
-      <Link href={`/accessories/${accessory.id}`} data-cursor-hover>
+      <LocaleLink href={`/accessories/${accessory.id}`} data-cursor-hover>
         <div
           className="group relative"
           onMouseEnter={() => setHoveredProduct(accessory.id)}
@@ -359,7 +359,7 @@ function AccessoryCard({
             )}
           </div>
         </div>
-      </Link>
+      </LocaleLink>
     </motion.div>
   )
 }

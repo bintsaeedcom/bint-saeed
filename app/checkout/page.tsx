@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import {
@@ -20,11 +20,13 @@ import toast from 'react-hot-toast'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
 import { getTabbyCheckoutUrl, getTamaraCheckoutUrl } from '@/lib/payments'
 
 export default function CheckoutPage() {
   const router = useRouter()
+  const { localize } = useLocaleHref()
   const { items, getTotal } = useCartStore()
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
@@ -43,7 +45,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (items.length === 0) {
-      router.replace('/cart')
+      router.replace(localize('/cart'))
     }
   }, [items.length, router])
 
@@ -136,9 +138,9 @@ export default function CheckoutPage() {
       <div className="border-b border-brand-stone/20 bg-white">
         <div className="container mx-auto px-6 lg:px-12 py-8 pt-28">
           <div className={`flex flex-wrap items-center gap-2 font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/60 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <Link href="/cart" className="hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
+            <LocaleLink href="/cart" className="hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
               {isRTL ? 'السلة' : 'Bag'}
-            </Link>
+            </LocaleLink>
             <span className="text-brand-stone/40">/</span>
             <span className="text-brand-darkRed">{isRTL ? 'الدفع' : 'Checkout'}</span>
           </div>
@@ -153,14 +155,14 @@ export default function CheckoutPage() {
                   : 'Review your order, apply a discount if you have one, then complete payment securely with Stripe.'}
               </p>
             </div>
-            <Link
+            <LocaleLink
               href="/cart"
               className={`hidden shrink-0 items-center gap-2 font-roboto text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue sm:inline-flex ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
               {isRTL ? 'تعديل السلة' : 'Edit bag'}
-            </Link>
+            </LocaleLink>
           </div>
         </div>
       </div>
@@ -182,13 +184,13 @@ export default function CheckoutPage() {
               <ul className="divide-y divide-brand-stone/15">
                 {items.map((item) => (
                   <li key={lineKey(item)} className="flex gap-4 py-5 first:pt-0">
-                    <Link href={`/shop/${item.id}`} className="relative h-24 w-20 shrink-0 overflow-hidden bg-[#f0eeeb]" data-cursor-hover>
+                    <LocaleLink href={`/shop/${item.id}`} className="relative h-24 w-20 shrink-0 overflow-hidden bg-[#f0eeeb]" data-cursor-hover>
                       <Image src={item.image} alt="" fill className="object-cover" sizes="80px" />
-                    </Link>
+                    </LocaleLink>
                     <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
-                      <Link href={`/shop/${item.id}`} className="font-rozha text-lg text-brand-darkRed hover:text-brand-dustyBlue" data-cursor-hover>
+                      <LocaleLink href={`/shop/${item.id}`} className="font-rozha text-lg text-brand-darkRed hover:text-brand-dustyBlue" data-cursor-hover>
                         {item.name}
-                      </Link>
+                      </LocaleLink>
                       <p className="mt-1 font-roboto text-xs text-brand-clayRed/65 tracking-wide">
                         {item.size} · {item.color}
                         {item.lengthCm ? ` · ${item.lengthCm} cm` : ''}

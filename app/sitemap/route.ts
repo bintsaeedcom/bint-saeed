@@ -11,6 +11,12 @@ const allUrls = [
     changefreq: 'monthly',
     priority: '0.6',
   },
+  {
+    loc: `${baseUrl}/openapi.json`,
+    lastmod: new Date().toISOString(),
+    changefreq: 'monthly',
+    priority: '0.5',
+  },
   { loc: `${baseUrl}/preview`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.95' },
   { loc: `${baseUrl}/shop`, lastmod: new Date().toISOString(), changefreq: 'daily', priority: '0.9' },
   { loc: `${baseUrl}/accessories`, lastmod: new Date().toISOString(), changefreq: 'daily', priority: '0.9' },
@@ -37,7 +43,7 @@ function escapeXml(str: string) {
 
 export async function GET() {
   // Prelaunch: keep homepage + machine-readable brand summary for AI discovery
-  const urls = isPrelaunch ? [allUrls[0], allUrls[1]] : allUrls
+  const urls = isPrelaunch ? [allUrls[0], allUrls[1], allUrls[2]] : allUrls
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls

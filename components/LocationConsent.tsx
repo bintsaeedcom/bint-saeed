@@ -1,10 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMapPin, FiGlobe, FiX } from 'react-icons/fi'
+import { FiX } from 'react-icons/fi'
 import { useCurrency, currencies } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { dispatchRequestPreciseLocation } from '@/lib/geo/locationEvents'
+
+const TAILOR_KEY = 'bint-saeed-tailor-experience'
 
 interface DetectedLocation {
   country: string
@@ -13,155 +16,234 @@ interface DetectedLocation {
   city?: string
 }
 
+function hasTailorChoice(): boolean {
+  if (typeof window === 'undefined') return true
+  if (localStorage.getItem(TAILOR_KEY)) return true
+  // Legacy keys from the previous currency-only banner
+  if (localStorage.getItem('bint-saeed-location-consent')) return true
+  if (localStorage.getItem('bint-saeed-location-dismissed')) return true
+  return false
+}
+
+function persistTailorChoice(choice: 'accepted' | 'declined') {
+  localStorage.setItem(TAILOR_KEY, choice)
+  if (choice === 'accepted') {
+    localStorage.setItem('bint-saeed-location-consent', 'true')
+    localStorage.removeItem('bint-saeed-location-dismissed')
+  } else {
+    localStorage.setItem('bint-saeed-location-dismissed', 'true')
+    localStorage.removeItem('bint-saeed-location-consent')
+  }
+}
+
+const copy = {
+  en: {
+    eyebrow: 'Bint Saeed',
+    title: 'A personal touch',
+    body:
+      'For a seamless experience—prices in your local currency, the right language, and sizing guidance suited to your region—we invite you to tailor this visit. If you choose to continue, your browser may ask to share your location so we can refine these details. You may skip at any time.',
+    currencyHint: (name: string, code: string) =>
+      `We also suggest viewing prices in ${name} (${code}) for this region.`,
+    primary: 'Tailor my visit',
+    secondary: 'Continue without sharing',
+  },
+  ar: {
+    eyebrow: 'بنت سعيد',
+    title: 'لمسة شخصية',
+    body:
+      'لتجربة أنسَم—أسعار بعملتك المحلية، ولغة تناسبك، وإرشاد للمقاسات حسب منطقتك—ندعوك لضبط هذه الزيارة. إن وافقتِ، قد يطلب المتصفح مشاركة موقعك لتحسين هذه التفاصيل. يمكنك التخطي في أي وقت.',
+    currencyHint: (name: string, code: string) =>
+      `نقترح أيضًا عرض الأسعار بـ ${name} (${code}) لهذه المنطقة.`,
+    primary: 'ضبط زيارتي',
+    secondary: 'المتابعة دون مشاركة',
+  },
+} as const
+
 export default function LocationConsent() {
   const [isVisible, setIsVisible] = useState(false)
   const [detectedLocation, setDetectedLocation] = useState<DetectedLocation | null>(null)
   const { currency, setCurrency } = useCurrency()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const t = language === 'ar' ? copy.ar : copy.en
+
+  const openIfNeeded = useCallback(() => {
+    if (hasTailorChoice()) return
+    const tId = window.setTimeout(() => setIsVisible(true), 2800)
+    return () => window.clearTimeout(tId)
+  }, [])
 
   useEffect(() => {
-    const hasConsented = localStorage.getItem('bint-saeed-location-consent')
-    const hasDismissed = localStorage.getItem('bint-saeed-location-dismissed')
-    
-    if (hasConsented || hasDismissed) return
+    if (hasTailorChoice()) return
 
-    // Detect location
+    let cancelled = false
     const detectLocation = async () => {
       try {
         const response = await fetch('https://ipapi.co/json/')
         const data = await response.json()
-        
+
         const countryToCurrency: Record<string, string> = {
-          AE: 'AED', SA: 'SAR', KW: 'KWD', QA: 'QAR',
-          BH: 'BHD', OM: 'OMR', US: 'USD', GB: 'GBP',
-          DE: 'EUR', FR: 'EUR', IT: 'EUR', ES: 'EUR', NL: 'EUR',
+          AE: 'AED',
+          SA: 'SAR',
+          KW: 'KWD',
+          QA: 'QAR',
+          BH: 'BHD',
+          OM: 'OMR',
+          US: 'USD',
+          GB: 'GBP',
+          DE: 'EUR',
+          FR: 'EUR',
+          IT: 'EUR',
+          ES: 'EUR',
+          NL: 'EUR',
         }
 
         const suggestedCurrency = countryToCurrency[data.country_code] || 'USD'
-        
-        // Only show if detected currency differs from current
-        if (suggestedCurrency !== currency.code) {
-          setDetectedLocation({
-            country: data.country_name,
-            countryCode: data.country_code,
-            currency: suggestedCurrency,
-            city: data.city,
-          })
-          
-          // Show after a short delay
-          setTimeout(() => setIsVisible(true), 2000)
-        }
-      } catch (error) {
-        console.log('Location detection failed')
+        if (cancelled) return
+
+        setDetectedLocation({
+          country: data.country_name,
+          countryCode: data.country_code,
+          currency: suggestedCurrency,
+          city: data.city,
+        })
+      } catch {
+        if (!cancelled) setDetectedLocation(null)
       }
     }
 
-    detectLocation()
-  }, [currency.code])
+    void detectLocation()
+    const clearOpen = openIfNeeded()
+    return () => {
+      cancelled = true
+      clearOpen?.()
+    }
+  }, [openIfNeeded])
 
   const handleAccept = () => {
-    if (detectedLocation) {
+    if (detectedLocation && detectedLocation.currency !== currency.code) {
       setCurrency(detectedLocation.currency)
-      localStorage.setItem('bint-saeed-location-consent', 'true')
     }
+    persistTailorChoice('accepted')
+    dispatchRequestPreciseLocation()
     setIsVisible(false)
   }
 
   const handleDecline = () => {
-    localStorage.setItem('bint-saeed-location-dismissed', 'true')
+    persistTailorChoice('declined')
     setIsVisible(false)
   }
 
-  const suggestedCurrencyData = currencies.find(c => c.code === detectedLocation?.currency)
+  const suggestedCurrencyData = detectedLocation
+    ? currencies.find((c) => c.code === detectedLocation.currency)
+    : undefined
+  const showCurrencyLine =
+    !!detectedLocation && detectedLocation.currency !== currency.code && !!suggestedCurrencyData
 
   return (
     <AnimatePresence>
-      {isVisible && detectedLocation && (
-        <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 50, scale: 0.9 }}
-          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className={`fixed bottom-24 ${isRTL ? 'left-6' : 'right-6'} z-[90] max-w-sm`}
-        >
-          <div className="bg-white border border-brand-stone/20 shadow-2xl rounded-2xl overflow-hidden">
-            {/* Header */}
-            <div className="bg-brand-darkRed px-5 py-4 flex items-center justify-between">
-              <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-                  <FiMapPin className="w-5 h-5 text-white" />
-                </div>
-                <div className={isRTL ? 'text-right' : ''}>
-                  <p className="font-roboto text-xs text-white/60 uppercase tracking-wider">
-                    {isRTL ? 'تم اكتشاف موقعك' : 'Location Detected'}
-                  </p>
-                  <p className="font-rozha text-lg text-white">
-                    {detectedLocation.city ? `${detectedLocation.city}, ` : ''}{detectedLocation.country}
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={handleDecline}
-                className="text-white/60 hover:text-white transition-colors"
-                data-cursor-hover
-              >
-                <FiX className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Content */}
-            <div className="p-5">
-              <p className={`font-roboto text-sm text-brand-clayRed tracking-wide mb-4 ${isRTL ? 'text-right' : ''}`}>
-                {isRTL 
-                  ? `هل تريدين عرض الأسعار بعملة ${suggestedCurrencyData?.name}؟`
-                  : `Would you like to see prices in ${suggestedCurrencyData?.name}?`}
-              </p>
-
-              {/* Currency Preview */}
-              <div className="bg-brand-stone/10 rounded-lg p-4 mb-4">
-                <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className="font-roboto text-xs text-brand-clayRed/60 uppercase tracking-wider">
-                    {isRTL ? 'مثال' : 'Example'}
-                  </span>
-                  <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    <span className="font-roboto text-sm text-brand-clayRed/50 line-through">
-                      1,000 د.إ
-                    </span>
-                    <span className="font-roboto text-sm text-brand-darkRed font-medium">
-                      → {suggestedCurrencyData?.symbol}{Math.round(1000 * (suggestedCurrencyData?.rate || 1))}
-                    </span>
+      {isVisible && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[85] bg-[#1a0a0f]/[0.12] backdrop-blur-[2px] pointer-events-auto"
+            aria-hidden
+            onClick={handleDecline}
+          />
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="tailor-title"
+            aria-describedby="tailor-desc"
+            initial={{ opacity: 0, y: 28, filter: 'blur(6px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className={`fixed bottom-6 md:bottom-10 z-[90] max-w-[min(24rem,calc(100vw-2rem))] ${
+              isRTL ? 'left-4 md:left-10' : 'right-4 md:right-10'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              className={`relative overflow-hidden rounded-sm border border-brand-stone/25 bg-[#faf8f6] shadow-[0_28px_60px_-15px_rgba(59,0,20,0.22)] ${
+                isRTL ? 'text-right' : 'text-left'
+              }`}
+            >
+              <div
+                className={`absolute top-0 bottom-0 w-px bg-gradient-to-b from-brand-stone via-brand-rose/50 to-brand-stone ${
+                  isRTL ? 'right-0' : 'left-0'
+                }`}
+                aria-hidden
+              />
+              <div className={`px-7 pt-8 pb-7 ${isRTL ? 'pr-8 pl-6' : 'pl-8 pr-6'}`}>
+                <div className={`flex items-start justify-between gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className="space-y-3 min-w-0">
+                    <p className="font-roboto text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/65">
+                      {t.eyebrow}
+                    </p>
+                    <h2 id="tailor-title" className="font-rozha text-[1.65rem] leading-tight text-brand-darkRed">
+                      {t.title}
+                    </h2>
                   </div>
+                  <button
+                    type="button"
+                    onClick={handleDecline}
+                    className="shrink-0 p-1.5 text-brand-darkRed/35 hover:text-brand-darkRed transition-colors rounded-full hover:bg-brand-stone/20"
+                    aria-label={language === 'ar' ? 'إغلاق' : 'Close'}
+                    data-cursor-hover
+                  >
+                    <FiX className="w-5 h-5" strokeWidth={1.25} />
+                  </button>
+                </div>
+
+                <p
+                  id="tailor-desc"
+                  className="mt-5 font-roboto font-light text-[13px] leading-[1.65] text-neutral-600 tracking-wide"
+                >
+                  {t.body}
+                </p>
+
+                {showCurrencyLine && suggestedCurrencyData && (
+                  <p className="mt-4 font-roboto text-[12px] text-brand-clayRed/85 leading-relaxed border-t border-brand-stone/20 pt-4">
+                    {t.currencyHint(suggestedCurrencyData.name, suggestedCurrencyData.code)}
+                  </p>
+                )}
+
+                {detectedLocation?.city && (
+                  <p className="mt-3 font-roboto text-[11px] uppercase tracking-[0.2em] text-neutral-400">
+                    {detectedLocation.city}
+                    {detectedLocation.country ? ` · ${detectedLocation.country}` : ''}
+                  </p>
+                )}
+
+                <div className={`mt-8 flex flex-col sm:flex-row gap-3 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+                  <button
+                    type="button"
+                    onClick={handleDecline}
+                    className={`sm:flex-1 py-3.5 px-5 border border-brand-darkRed/15 text-brand-darkRed font-roboto text-[10px] uppercase tracking-[0.22em] hover:border-brand-darkRed/30 hover:bg-white/60 transition-colors ${
+                      isRTL ? 'order-2 sm:order-1' : ''
+                    }`}
+                    data-cursor-hover
+                  >
+                    {t.secondary}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleAccept}
+                    className={`sm:flex-1 py-3.5 px-5 bg-brand-darkRed text-white font-roboto text-[10px] uppercase tracking-[0.22em] hover:bg-brand-darkMagenta transition-colors shadow-sm ${
+                      isRTL ? 'order-1 sm:order-2' : ''
+                    }`}
+                    data-cursor-hover
+                  >
+                    {t.primary}
+                  </button>
                 </div>
               </div>
-
-              {/* Worldwide Shipping Note */}
-              <div className={`flex items-center gap-2 mb-5 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <FiGlobe className="w-4 h-4 text-brand-dustyBlue" />
-                <span className="font-roboto text-xs text-brand-clayRed/70">
-                  {isRTL ? 'نشحن إلى جميع أنحاء العالم' : 'We ship worldwide'}
-                </span>
-              </div>
-
-              {/* Actions */}
-              <div className={`flex gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <button
-                  onClick={handleDecline}
-                  className="flex-1 px-4 py-3 border border-brand-stone/30 text-brand-clayRed font-roboto text-xs uppercase tracking-[0.1em] hover:bg-brand-dustyBlue/10 transition-colors"
-                  data-cursor-hover
-                >
-                  {isRTL ? 'لا شكراً' : 'No Thanks'}
-                </button>
-                <button
-                  onClick={handleAccept}
-                  className="flex-1 px-4 py-3 bg-brand-darkRed text-white font-roboto text-xs uppercase tracking-[0.1em] hover:bg-brand-dustyBlue transition-colors"
-                  data-cursor-hover
-                >
-                  {isRTL ? `استخدمي ${detectedLocation.currency}` : `Use ${detectedLocation.currency}`}
-                </button>
-              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   )

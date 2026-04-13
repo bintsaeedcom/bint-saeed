@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiArrowRight, FiArrowDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -372,14 +372,14 @@ function MagazineGrid() {
               Where it Begins
             </h2>
           </div>
-          <Link
+          <LocaleLink
             href="/shop"
             className="hidden md:flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
             data-cursor-hover
           >
             {t.featured.viewAll}
             <FiArrowRight className="w-4 h-4" />
-          </Link>
+          </LocaleLink>
         </motion.div>
 
         {/* Magazine grid: centered, ~25% narrower, wide gutters */}
@@ -392,7 +392,7 @@ function MagazineGrid() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="col-span-12 md:col-span-7 row-span-2"
           >
-            <Link href="/shop" className="group block relative aspect-[4/5] overflow-hidden" data-cursor-hover>
+            <LocaleLink href="/shop" className="group block relative aspect-[4/5] overflow-hidden" data-cursor-hover>
               <Image
                 src="/collection-section/1.png"
                 alt="Designed to carry you, wherever you are — Bint Saeed collection"
@@ -415,7 +415,7 @@ function MagazineGrid() {
                   <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               </div>
-            </Link>
+            </LocaleLink>
           </motion.div>
 
           {/* Top Right - Dusty Blue Accent */}
@@ -425,7 +425,7 @@ function MagazineGrid() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="col-span-6 md:col-span-5"
           >
-            <Link href="/shop" className="group block relative aspect-square overflow-hidden bg-brand-dustyBlue" data-cursor-hover>
+            <LocaleLink href="/shop" className="group block relative aspect-square overflow-hidden bg-brand-dustyBlue" data-cursor-hover>
               <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                 <CollectionCrossfadeSlideshow
                   slides={SUMMER_ELEGANCE_SLIDES}
@@ -436,7 +436,7 @@ function MagazineGrid() {
                   }
                 />
               </div>
-            </Link>
+            </LocaleLink>
           </motion.div>
 
           {/* Bottom Right - Rose Accent */}
@@ -446,14 +446,14 @@ function MagazineGrid() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="col-span-6 md:col-span-5"
           >
-            <Link href="/shop" className="group block relative aspect-square overflow-hidden bg-brand-rose" data-cursor-hover>
+            <LocaleLink href="/shop" className="group block relative aspect-square overflow-hidden bg-brand-rose" data-cursor-hover>
               <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                 <CollectionCrossfadeSlideshow
                   slides={ESSENTIALS_SLIDES}
                   altForIndex={(i) => `Bint Saeed collection — ${i + 1}`}
                 />
               </div>
-            </Link>
+            </LocaleLink>
           </motion.div>
           </div>
         </div>
@@ -530,13 +530,13 @@ function ColorBlockSection() {
                       wherever life takes her.
                     </p>
                   </div>
-                  <Link
+                  <LocaleLink
                     href="/about"
                     className={`inline-flex items-center justify-center rounded-xl bg-brand-dustyBlue px-8 py-4 font-roboto text-xs tracking-[0.12em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone ${isRTL ? 'lg:self-end' : 'lg:self-start'}`}
                     data-cursor-hover
                   >
                     Discover the Story
-                  </Link>
+                  </LocaleLink>
                 </div>
               </div>
             </div>
@@ -638,14 +638,14 @@ function EditorialSplit() {
               how it becomes part of you.
             </p>
 
-            <Link
+            <LocaleLink
               href="/heritage"
               className={`group inline-flex items-center gap-3 px-8 py-4 bg-brand-dustyBlue text-white font-roboto text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               Explore the Codes
               <FiArrowRight className={`w-4 h-4 group-hover:translate-x-2 transition-transform duration-300 ${isRTL ? 'rotate-180' : ''}`} />
-            </Link>
+            </LocaleLink>
           </motion.div>
         </div>
       </div>
@@ -728,13 +728,13 @@ function CreatedForYouSection() {
                     experience.
                   </p>
                   <div className="flex w-full flex-col items-center gap-6 sm:gap-7 lg:items-stretch">
-                    <Link
+                    <LocaleLink
                       href="/contact"
                       className={`inline-flex items-center justify-center rounded-xl bg-brand-dustyBlue px-8 py-4 font-roboto text-xs uppercase tracking-[0.18em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone ${isRTL ? 'lg:self-end' : 'lg:self-start'}`}
                       data-cursor-hover
                     >
                       Request Your Piece
-                    </Link>
+                    </LocaleLink>
                     <p className="font-roboto text-[11px] uppercase tracking-[0.22em] text-brand-dustyBlue/85">
                       Available worldwide. Based in Abu Dhabi.
                     </p>
@@ -796,14 +796,14 @@ function AsymmetricShowcase() {
             <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed max-w-xl leading-[1.1]">
               {t.featured.title}
             </h2>
-            <Link
+            <LocaleLink
               href="/shop"
               className="inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed hover:text-brand-dustyBlue transition-colors pb-2 border-b border-brand-dustyBlue/30"
               data-cursor-hover
             >
               {t.featured.viewAll}
               <FiArrowRight className="w-4 h-4" />
-            </Link>
+            </LocaleLink>
           </div>
         </motion.div>
 
@@ -817,7 +817,7 @@ function AsymmetricShowcase() {
               transition={{ duration: 0.8, delay: index * 0.15 }}
               className={`${index === 0 ? 'md:col-span-5' : index === 1 ? 'md:col-span-4 md:mt-24' : 'md:col-span-3 md:mt-12'}`}
             >
-              <Link href="/shop" className="group block" data-cursor-hover>
+              <LocaleLink href="/shop" className="group block" data-cursor-hover>
                 <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-white">
                   <Image
                     src={product.image}
@@ -839,7 +839,7 @@ function AsymmetricShowcase() {
                 <p className="font-roboto text-sm text-brand-clayRed/60 tracking-wide">
                   {product.price}
                 </p>
-              </Link>
+              </LocaleLink>
             </motion.div>
           ))}
         </div>

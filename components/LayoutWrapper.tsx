@@ -7,15 +7,18 @@ import WhatsAppButton from '@/components/WhatsAppButton'
 import LocaleConfirmPopup from '@/components/LocaleConfirmPopup'
 import EmailPopup from '@/components/EmailPopup'
 import CookieConsent from '@/components/CookieConsent'
+import LocationConsent from '@/components/LocationConsent'
+import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 
 interface LayoutWrapperProps {
   children: React.ReactNode
 }
 
 export default function LayoutWrapper({ children }: LayoutWrapperProps) {
-  const pathname = usePathname()
-  
-  const isComingSoon = pathname === '/'
+  const pathname = usePathname() || '/'
+  const { pathname: inner } = stripLocaleFromPathname(pathname)
+
+  const isComingSoon = inner === '/'
   const isPreviewAccessPage =
     pathname === '/preview/gate' ||
     pathname === '/preview/blocked' ||
@@ -34,6 +37,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
       <WhatsAppButton />
       <CookieConsent />
       <LocaleConfirmPopup />
+      <LocationConsent />
       <EmailPopup />
     </>
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { FiExternalLink } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { sizeGuideTable } from '@/lib/sizeGuideData'
@@ -38,14 +38,14 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
               {isRTL ? 'تمييز مقاسي' : 'Highlight my size'}
             </button>
           ) : null}
-          <Link
+          <LocaleLink
             href="/size-guide"
             className={`inline-flex items-center gap-1 font-roboto text-[10px] uppercase tracking-[0.15em] text-brand-dustyBlue hover:text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             {isRTL ? 'الدليل الكامل' : 'Full guide'}
             <FiExternalLink className="h-3 w-3" aria-hidden />
-          </Link>
+          </LocaleLink>
         </div>
       </div>
       <div className="overflow-x-auto p-3 sm:p-4">

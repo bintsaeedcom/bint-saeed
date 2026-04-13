@@ -1,0 +1,46 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Bint Saeed — public discovery",
+    "version": "1.0.0",
+    "description": "Read-only endpoints for understanding the official Bint Saeed modest-fashion storefront. Purchases and authoritative product, price, and policy data: https://bintsaeed.com",
+    "contact": {
+      "name": "Bint Saeed",
+      "email": "contact@bintsaeed.com",
+      "url": "https://bintsaeed.com/contact"
+    }
+  },
+  "servers": [{ "url": "https://bintsaeed.com" }],
+  "paths": {
+    "/api/catalog": {
+      "get": {
+        "summary": "Public product catalog",
+        "description": "JSON list of visible shop products for the storefront.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "products": { "type": "array", "items": { "type": "object" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/llms.txt": {
+      "get": {
+        "summary": "Brand context for AI assistants",
+        "description": "Plain-text factual overview and citation guidance for models and crawlers that consume llms.txt.",
+        "responses": {
+          "200": { "description": "text/plain" }
+        }
+      }
+    }
+  }
+}

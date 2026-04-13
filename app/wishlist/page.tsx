@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FiHeart, FiTrash2 } from 'react-icons/fi'
@@ -39,13 +39,13 @@ export default function WishlistPage() {
             <p className="mt-2 font-roboto text-sm text-brand-clayRed/60">
               {isRTL ? 'تسوقي المجموعة وأضيفي ما يعجبك.' : 'Explore the collection and tap the heart on any product.'}
             </p>
-            <Link
+            <LocaleLink
               href="/shop"
               className="mt-8 inline-block bg-brand-darkRed px-8 py-3 font-roboto text-xs uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-dustyBlue"
               data-cursor-hover
             >
               {isRTL ? 'تسوقي' : 'Shop'}
-            </Link>
+            </LocaleLink>
           </div>
         ) : (
           <ul className="space-y-4 p-0">
@@ -62,18 +62,18 @@ export default function WishlistPage() {
                   <div
                     className={`flex gap-4 rounded-lg border border-brand-stone/30 bg-white p-4 ${isRTL ? 'flex-row-reverse' : ''}`}
                   >
-                    <Link href={href} className="relative h-28 w-20 flex-shrink-0 overflow-hidden bg-brand-stone/10 sm:h-32 sm:w-24" data-cursor-hover>
+                    <LocaleLink href={href} className="relative h-28 w-20 flex-shrink-0 overflow-hidden bg-brand-stone/10 sm:h-32 sm:w-24" data-cursor-hover>
                       <Image src={item.image} alt={item.name} fill className="pointer-events-none object-cover" sizes="96px" />
-                    </Link>
+                    </LocaleLink>
                     <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
                       <p className="font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
                         {item.category}
                       </p>
-                      <Link href={href} className="mt-1 block" data-cursor-hover>
+                      <LocaleLink href={href} className="mt-1 block" data-cursor-hover>
                         <h2 className="font-rozha text-lg text-brand-darkRed transition-colors hover:text-brand-dustyBlue sm:text-xl">
                           {item.name}
                         </h2>
-                      </Link>
+                      </LocaleLink>
                       <p className="mt-2 font-roboto text-sm tabular-nums text-brand-clayRed">{formatPrice(item.price)}</p>
                     </div>
                     <button

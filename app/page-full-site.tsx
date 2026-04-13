@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiArrowRight, FiArrowDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -87,14 +87,14 @@ function HeroSection() {
                 transition={{ duration: 1, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
                 className="relative z-20 flex items-center gap-8"
               >
-                <Link
+                <LocaleLink
                   href="/shop"
                   className="group relative overflow-hidden bg-white px-12 py-5 font-roboto text-xs uppercase tracking-[0.25em] text-brand-darkRed"
                   data-cursor-hover
                 >
                   <span className="relative z-10">{t.hero.shopCollection}</span>
                   <div className="absolute inset-0 translate-y-full bg-brand-dustyBlue transition-transform duration-500 group-hover:translate-y-0" />
-                </Link>
+                </LocaleLink>
                 <div className="hidden h-12 w-px bg-white/30 md:block" />
                 <p className="hidden max-w-[200px] font-roboto text-xs leading-relaxed tracking-wide text-white/60 md:block">
                   {t.hero.description}
@@ -157,7 +157,7 @@ function EditorialIntro() {
               <p className="font-roboto text-sm text-brand-darkRed/70 tracking-wide leading-[1.9] mb-10">
                 {t.editorial.description}
               </p>
-              <Link
+              <LocaleLink
                 href="/about"
                 className={`group inline-flex items-center gap-4 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
@@ -167,7 +167,7 @@ function EditorialIntro() {
                   <span className="absolute -bottom-1 left-0 w-0 h-px bg-brand-darkRed group-hover:w-full transition-all duration-500" />
                 </span>
                 <FiArrowRight className={`w-4 h-4 group-hover:translate-x-2 transition-transform duration-300 ${isRTL ? 'rotate-180' : ''}`} />
-              </Link>
+              </LocaleLink>
             </div>
           </motion.div>
 
@@ -218,14 +218,14 @@ function MagazineGrid() {
               {t.collections.title}
             </h2>
           </div>
-          <Link
+          <LocaleLink
             href="/shop"
             className="hidden md:flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
             data-cursor-hover
           >
             {t.featured.viewAll}
             <FiArrowRight className="w-4 h-4" />
-          </Link>
+          </LocaleLink>
         </motion.div>
 
         {/* Magazine Layout Grid */}
@@ -237,7 +237,7 @@ function MagazineGrid() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="col-span-12 md:col-span-7 row-span-2"
           >
-            <Link href="/shop" className="group block relative aspect-[4/5] overflow-hidden" data-cursor-hover>
+            <LocaleLink href="/shop" className="group block relative aspect-[4/5] overflow-hidden" data-cursor-hover>
               <Image
                 src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1200&q=90"
                 alt="Evening Collection"
@@ -257,7 +257,7 @@ function MagazineGrid() {
                   <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               </div>
-            </Link>
+            </LocaleLink>
           </motion.div>
 
           {/* Top Right - Dusty Blue Accent */}
@@ -267,7 +267,7 @@ function MagazineGrid() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="col-span-6 md:col-span-5"
           >
-            <Link href="/shop" className="group block relative aspect-square overflow-hidden bg-brand-dustyBlue" data-cursor-hover>
+            <LocaleLink href="/shop" className="group block relative aspect-square overflow-hidden bg-brand-dustyBlue" data-cursor-hover>
               <Image
                 src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800&q=90"
                 alt="Resort Collection"
@@ -282,7 +282,7 @@ function MagazineGrid() {
                   {isRTL ? 'أناقة الصيف' : 'Summer Elegance'}
                 </h3>
               </div>
-            </Link>
+            </LocaleLink>
           </motion.div>
 
           {/* Bottom Right - Rose Accent */}
@@ -292,7 +292,7 @@ function MagazineGrid() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="col-span-6 md:col-span-5"
           >
-            <Link href="/shop" className="group block relative aspect-square overflow-hidden bg-brand-rose" data-cursor-hover>
+            <LocaleLink href="/shop" className="group block relative aspect-square overflow-hidden bg-brand-rose" data-cursor-hover>
               <Image
                 src="https://images.unsplash.com/photo-1485968579169-62f586746117?w=800&q=90"
                 alt="Essentials"
@@ -307,7 +307,7 @@ function MagazineGrid() {
                   {isRTL ? 'الأساسيات' : 'The Essentials'}
                 </h3>
               </div>
-            </Link>
+            </LocaleLink>
           </motion.div>
         </div>
       </div>
@@ -372,13 +372,13 @@ function ColorBlockSection() {
               <p className="font-roboto text-base text-brand-darkRed/70 tracking-wide leading-[1.9] mb-12 max-w-lg">
                 {t.about.daughtersText2}
               </p>
-              <Link
+              <LocaleLink
                 href="/about"
                 className="inline-block px-10 py-4 border border-brand-darkRed/25 text-brand-darkRed font-roboto text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white hover:border-brand-darkRed transition-all duration-500"
                 data-cursor-hover
               >
                 {t.about.readMore}
-              </Link>
+              </LocaleLink>
             </motion.div>
           </div>
         </div>
@@ -460,14 +460,14 @@ function EditorialSplit() {
               ))}
             </div>
 
-            <Link
+            <LocaleLink
               href="/heritage"
               className={`group inline-flex items-center gap-3 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               {t.lifestyle.discoverStory}
               <FiArrowRight className={`w-4 h-4 group-hover:translate-x-2 transition-transform duration-300 ${isRTL ? 'rotate-180' : ''}`} />
-            </Link>
+            </LocaleLink>
           </motion.div>
         </div>
       </div>
@@ -535,14 +535,14 @@ function AsymmetricShowcase() {
             <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed max-w-xl leading-[1.1]">
               {t.featured.title}
             </h2>
-            <Link
+            <LocaleLink
               href="/shop"
               className="inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed hover:text-brand-dustyBlue transition-colors pb-2 border-b border-brand-darkRed/30"
               data-cursor-hover
             >
               {t.featured.viewAll}
               <FiArrowRight className="w-4 h-4" />
-            </Link>
+            </LocaleLink>
           </div>
         </motion.div>
 
@@ -556,7 +556,7 @@ function AsymmetricShowcase() {
               transition={{ duration: 0.8, delay: index * 0.15 }}
               className={`${index === 0 ? 'md:col-span-5' : index === 1 ? 'md:col-span-4 md:mt-24' : 'md:col-span-3 md:mt-12'}`}
             >
-              <Link href="/shop" className="group block" data-cursor-hover>
+              <LocaleLink href="/shop" className="group block" data-cursor-hover>
                 <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-[#f5f5f5]">
                   <Image
                     src={product.image}
@@ -578,7 +578,7 @@ function AsymmetricShowcase() {
                 <p className="font-roboto text-sm text-brand-clayRed/60 tracking-wide">
                   {product.price}
                 </p>
-              </Link>
+              </LocaleLink>
             </motion.div>
           ))}
         </div>

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
@@ -52,13 +52,13 @@ export default function AccessoryDetailPage() {
           <h1 className="font-rozha text-3xl text-brand-darkRed mb-4">
             {isRTL ? 'المنتج غير موجود' : 'Product Not Found'}
           </h1>
-          <Link
+          <LocaleLink
             href="/accessories"
             className="font-roboto text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue"
             data-cursor-hover
           >
             {isRTL ? 'العودة للإكسسوارات' : 'Return to Accessories'}
-          </Link>
+          </LocaleLink>
         </div>
       </div>
     )
@@ -123,21 +123,21 @@ export default function AccessoryDetailPage() {
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
         <div className="container mx-auto px-6 lg:px-12">
           <div className={`flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.1em] ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <Link href="/" className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
+            <LocaleLink href="/" className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
               {isRTL ? 'الرئيسية' : 'Home'}
-            </Link>
+            </LocaleLink>
             <span className="text-brand-clayRed/30">/</span>
-            <Link href="/accessories" className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
+            <LocaleLink href="/accessories" className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
               {isRTL ? 'الإكسسوارات' : 'Accessories'}
-            </Link>
+            </LocaleLink>
             <span className="text-brand-clayRed/30">/</span>
-            <Link 
+            <LocaleLink 
               href={`/accessories?category=${accessory.category}`} 
               className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" 
               data-cursor-hover
             >
               {isRTL ? categoryInfo?.nameAr : categoryInfo?.name}
-            </Link>
+            </LocaleLink>
             <span className="text-brand-clayRed/30">/</span>
             <span className="text-brand-darkRed">{isRTL ? accessory.nameAr : accessory.name}</span>
           </div>

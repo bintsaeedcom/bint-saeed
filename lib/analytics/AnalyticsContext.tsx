@@ -1,6 +1,12 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react'
+import {
+  REQUEST_PRECISE_LOCATION_EVENT,
+  ensureGpsHandledFromCache,
+  isGpsPromptAlreadyHandled,
+  markGpsPromptHandled,
+} from '@/lib/geo/locationEvents'
 
 interface VisitorData {
   visitorId: string
@@ -60,6 +66,9 @@ interface AnalyticsContextType {
 }
 
 const AnalyticsContext = createContext<AnalyticsContextType | undefined>(undefined)
+
+/** Avoid overlapping `getCurrentPosition` calls (e.g. double event / double-click). */
+let preciseGpsRequestInFlight = false
 
 function generateId() {
   return Math.random().toString(36).substring(2) + Date.now().toString(36)
@@ -183,44 +192,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      // Skip GPS location on coming soon page - avoid browser permission popup
-      const isComingSoon = typeof window !== 'undefined' && window.location.pathname === '/'
-      if (!isComingSoon && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords
-            // Update location with GPS coordinates
-            const gpsLocation: NonNullable<LocationType> = {
-              country: location?.country ?? 'Unknown',
-              city: location?.city ?? 'Unknown',
-              region: location?.region ?? '',
-              countryCode: location?.countryCode ?? 'XX',
-              ip: location?.ip ?? 'Unknown',
-              latitude,
-              longitude,
-              timezone: location?.timezone ?? '',
-              accuracyLevel: 'gps',
-            }
-            localStorage.setItem('bs_location', JSON.stringify(gpsLocation))
-            localStorage.setItem('bs_location_time', Date.now().toString())
-            
-            // Update visitor state with GPS location
-            setVisitor(prev => prev ? { ...prev, location: gpsLocation } : prev)
-            
-            // Send updated location to Slack
-            sendSlackNotification('location_update', { 
-              visitorId, 
-              location: gpsLocation,
-              message: 'GPS location acquired'
-            })
-          },
-          () => {
-            // User denied or error - keep IP-based location
-            console.log('GPS location not available')
-          },
-          { enableHighAccuracy: true, timeout: 10000 }
-        )
-      }
+      // Precise (GPS) location is never requested automatically — see LocationConsent soft prompt.
 
       // Fallback if everything fails
       if (!location) {
@@ -272,6 +244,61 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
     }
 
     initVisitor()
+  }, [])
+
+  // Optional GPS only after the user accepts the in-app tailor experience (avoids a cold system dialog).
+  useEffect(() => {
+    const runGps = () => {
+      if (typeof window === 'undefined' || !navigator.geolocation) return
+      ensureGpsHandledFromCache()
+      if (isGpsPromptAlreadyHandled()) return
+      if (preciseGpsRequestInFlight) return
+      preciseGpsRequestInFlight = true
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          preciseGpsRequestInFlight = false
+          const { latitude, longitude } = position.coords
+          type Loc = NonNullable<VisitorData['location']>
+          let base: Loc | null = null
+          try {
+            const raw = localStorage.getItem('bs_location')
+            if (raw) base = JSON.parse(raw) as Loc
+          } catch {
+            /* keep null */
+          }
+          const gpsLocation: Loc = {
+            country: base?.country ?? 'Unknown',
+            city: base?.city ?? 'Unknown',
+            region: base?.region ?? '',
+            countryCode: base?.countryCode ?? 'XX',
+            ip: base?.ip ?? 'Unknown',
+            latitude,
+            longitude,
+            timezone: base?.timezone ?? '',
+            accuracyLevel: 'gps',
+          }
+          localStorage.setItem('bs_location', JSON.stringify(gpsLocation))
+          localStorage.setItem('bs_location_time', Date.now().toString())
+          markGpsPromptHandled('granted')
+          setVisitor((prev) => (prev ? { ...prev, location: gpsLocation } : prev))
+          const visitorId = localStorage.getItem('bs_visitor_id')
+          void sendSlackNotification('location_update', {
+            visitorId,
+            location: gpsLocation,
+            message: 'GPS location acquired',
+          })
+        },
+        () => {
+          preciseGpsRequestInFlight = false
+          /* One denial / timeout — do not call geolocation again (repeated calls re-trigger Safari’s sheet). */
+          markGpsPromptHandled('denied')
+        },
+        { enableHighAccuracy: false, timeout: 12000, maximumAge: 600_000 },
+      )
+    }
+    window.addEventListener(REQUEST_PRECISE_LOCATION_EVENT, runGps)
+    return () => window.removeEventListener(REQUEST_PRECISE_LOCATION_EVENT, runGps)
   }, [])
 
   // Track time on site

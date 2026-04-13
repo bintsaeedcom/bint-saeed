@@ -1,11 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-
-const MotionLink = motion(Link)
 
 /** Default Bint Saeed WhatsApp (+971 50 229 9402). Override with NEXT_PUBLIC_WHATSAPP_NUMBER if needed. */
 const DEFAULT_WHATSAPP = '+971502299402'
@@ -59,19 +57,23 @@ export default function WhatsAppButton() {
   }
 
   return (
-    <MotionLink
-      href={href}
+    <motion.div
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 2, type: 'spring', stiffness: 200 }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       className={className}
-      data-cursor-hover
-      aria-label="Contact us (set NEXT_PUBLIC_WHATSAPP_NUMBER for WhatsApp)"
-      title="Contact — add WhatsApp number in .env.local to open chat"
     >
-      {inner}
-    </MotionLink>
+      <LocaleLink
+        href={href}
+        className="flex h-full w-full items-center justify-center"
+        data-cursor-hover
+        aria-label="Contact us (set NEXT_PUBLIC_WHATSAPP_NUMBER for WhatsApp)"
+        title="Contact — add WhatsApp number in .env.local to open chat"
+      >
+        {inner}
+      </LocaleLink>
+    </motion.div>
   )
 }

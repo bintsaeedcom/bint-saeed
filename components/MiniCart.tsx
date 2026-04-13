@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowRight } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
@@ -85,21 +85,21 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <p className="font-roboto text-sm text-brand-clayRed/60 mb-6">
                     {isRTL ? 'اكتشفي مجموعتنا' : 'Discover our collection'}
                   </p>
-                  <Link
+                  <LocaleLink
                     href="/shop"
                     onClick={onClose}
                     className="px-6 py-3 bg-brand-darkRed text-white font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
                     data-cursor-hover
                   >
                     {isRTL ? 'تسوقي الآن' : 'Shop Now'}
-                  </Link>
+                  </LocaleLink>
                 </div>
               ) : (
                 <div className="divide-y divide-brand-stone/10">
                   {items.map((item) => (
                     <div key={lineKey(item)} className={`p-4 flex gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                       {/* Image */}
-                      <Link href={`/shop/${item.id}`} onClick={onClose} className="flex-shrink-0" data-cursor-hover>
+                      <LocaleLink href={`/shop/${item.id}`} onClick={onClose} className="flex-shrink-0" data-cursor-hover>
                         <div className="relative h-[4.8rem] w-16 overflow-hidden rounded-lg bg-[#f5f5f5] sm:h-[6.4rem] sm:w-[4.8rem]">
                           <Image
                             src={item.image}
@@ -108,15 +108,15 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                             className="object-cover"
                           />
                         </div>
-                      </Link>
+                      </LocaleLink>
 
                       {/* Details */}
                       <div className={`flex-1 min-w-0 ${isRTL ? 'text-right' : ''}`}>
-                        <Link href={`/shop/${item.id}`} onClick={onClose} data-cursor-hover>
+                        <LocaleLink href={`/shop/${item.id}`} onClick={onClose} data-cursor-hover>
                           <h3 className="font-roboto text-sm font-medium text-brand-darkRed truncate hover:text-brand-dustyBlue transition-colors">
                             {item.name}
                           </h3>
-                        </Link>
+                        </LocaleLink>
                         <p className="font-roboto text-xs text-brand-clayRed/60 mt-0.5">
                           {item.size} • {item.color}
                           {item.lengthCm ? ` • ${item.lengthCm} cm` : ''}
@@ -207,7 +207,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
                 {/* Buttons */}
                 <div className="space-y-3">
-                  <Link
+                  <LocaleLink
                     href="/checkout"
                     onClick={onClose}
                     className={`w-full py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
@@ -215,7 +215,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   >
                     {isRTL ? 'إتمام الشراء' : 'Checkout'}
                     <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
-                  </Link>
+                  </LocaleLink>
                   <button
                     onClick={onClose}
                     className="w-full py-3 text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] hover:text-brand-dustyBlue transition-colors"

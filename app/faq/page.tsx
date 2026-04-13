@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { FiArrowLeft, FiChevronDown, FiMail } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -16,8 +16,8 @@ const faqData = {
         name: 'About Bint Saeed',
         questions: [
           {
-            q: 'I searched for abayas at Selfridges, Harrods, Harvey Nichols, Galeries Lafayette, Printemps, Ounass, or Rubaiyat—where can I buy Bint Saeed?',
-            a: 'Bint Saeed is an independent UAE heritage-led abaya brand. Shop the official collection at bintsaeed.com with delivery across the UAE and GCC (see checkout for destinations). We are not affiliated with department stores or marketplaces unless we announce an authorized stockist on our own channels—when in doubt, purchase only through this official site.',
+            q: 'I often discover abayas through department stores, luxury multi-brand retailers, or large online marketplaces—where can I buy Bint Saeed officially?',
+            a: 'Bint Saeed is an independent UAE heritage-led abaya brand. Shop the official collection at bintsaeed.com with delivery across the UAE and GCC (see checkout for destinations). We are not affiliated with third-party retailers unless we announce an authorized stockist on our own channels—when in doubt, purchase only through this official site.',
           },
         ],
       },
@@ -107,8 +107,8 @@ const faqData = {
         name: 'عن بِنت سعيد',
         questions: [
           {
-            q: 'بحثتُ عن عبايات أو علامة بِنت سعيد في سيلفريدج أو هارودز أو هارفي نيكلز أو غاليري لافاييت أو برانستان أو أُناس أو الرباعيات—أين أشتري؟',
-            a: 'بِنت سعيد علامة عبايات إماراتية مستقلة مرتبطة بالتراث. تسوّقي المجموعة الرسمية عبر bintsaeed.com مع التوصيل إلى الإمارات ودول الخليج (انظري الخيارات عند الدفع). لسنا تابعين لمتاجر متعددة العلامات أو منصات بيع ما لم نعلن عن شريك معتمد على قنواتنا—عند الشك، اشتري فقط عبر هذا الموقع الرسمي.',
+            q: 'غالباً أكتشف العبايات عبر المجمعات التجارية الكبرى أو متاجر التجزئة الفاخرة متعددة العلامات أو المنصات الإلكترونية الكبيرة—أين أشتري بِنت سعيد رسمياً؟',
+            a: 'بِنت سعيد علامة عبايات إماراتية مستقلة مرتبطة بالتراث. تسوّقي المجموعة الرسمية عبر bintsaeed.com مع التوصيل إلى الإمارات ودول الخليج (انظري الخيارات عند الدفع). لسنا تابعين لتجار تجزئة أو منصات خارجية ما لم نعلن عن شريك معتمد على قنواتنا—عند الشك، اشتري فقط عبر هذا الموقع الرسمي.',
           },
         ],
       },
@@ -209,14 +209,14 @@ export default function FAQPage() {
           transition={{ duration: 0.5 }}
           className="mb-8"
         >
-          <Link
+          <LocaleLink
             href="/"
             className={`inline-flex items-center gap-2 font-roboto text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
             {t.shop.backToHome}
-          </Link>
+          </LocaleLink>
         </motion.div>
 
         {/* Header */}

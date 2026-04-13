@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
@@ -81,13 +81,13 @@ export default function ProductPage() {
       <div className="min-h-screen pt-32 flex items-center justify-center bg-white">
         <div className="text-center">
           <h1 className="font-rozha text-3xl text-brand-darkRed mb-4">Product Not Found</h1>
-          <Link
+          <LocaleLink
             href="/shop"
             className="font-roboto text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue"
             data-cursor-hover
           >
             Return to Shop
-          </Link>
+          </LocaleLink>
         </div>
       </div>
     )
@@ -165,13 +165,13 @@ export default function ProductPage() {
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.1em]">
-            <Link href="/" className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
+            <LocaleLink href="/" className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
               Home
-            </Link>
+            </LocaleLink>
             <span className="text-brand-clayRed/30">/</span>
-            <Link href="/shop" className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
+            <LocaleLink href="/shop" className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
               Shop
-            </Link>
+            </LocaleLink>
             <span className="text-brand-clayRed/30">/</span>
             <span className="text-brand-darkRed">{product.name}</span>
           </div>

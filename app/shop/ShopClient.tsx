@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useEffect, useCallback } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
@@ -154,13 +154,13 @@ export default function ShopClient() {
       <header className="border-b border-black/5 bg-stone-50">
         <div className="mx-auto max-w-[1400px] px-6 pb-12 pt-10 md:px-10 md:pb-16 md:pt-14 lg:px-14">
           <nav className="mb-10 flex flex-wrap items-center gap-x-2 font-roboto text-[10px] uppercase tracking-[0.28em] text-neutral-500">
-            <Link
+            <LocaleLink
               href="/preview"
               className="transition-colors hover:text-brand-dustyBlue"
               data-cursor-hover
             >
               {isRTL ? 'الرئيسية' : 'The House'}
-            </Link>
+            </LocaleLink>
             <span aria-hidden className="text-neutral-400">
               /
             </span>
@@ -229,14 +229,14 @@ export default function ShopClient() {
           </div>
 
           <div className="flex items-center justify-between gap-6 md:justify-end">
-            <Link
+            <LocaleLink
               href="/size-guide"
               className="hidden items-center gap-2 font-roboto text-[10px] uppercase tracking-[0.2em] text-neutral-500 transition-colors hover:text-brand-dustyBlue sm:inline-flex"
               data-cursor-hover
             >
               <FiMaximize2 className="h-3 w-3" aria-hidden />
               {isRTL ? 'المقاسات' : 'Sizing'}
-            </Link>
+            </LocaleLink>
             <span className="font-roboto text-[10px] tabular-nums tracking-[0.18em] text-neutral-500">
               {sortedProducts.length}{' '}
               {sortedProducts.length === 1
@@ -306,7 +306,7 @@ export default function ShopClient() {
                 href={`/shop/${product.id}`}
                 className={`absolute top-0 z-[3] ${isRTL ? 'left-[8%]' : 'right-[8%]'}`}
               />
-              <Link
+              <LocaleLink
                 href={`/shop/${product.id}`}
                 className="group relative z-[1] block no-underline"
                 data-cursor-hover
@@ -379,7 +379,7 @@ export default function ShopClient() {
                     ))}
                   </div>
                 </div>
-              </Link>
+              </LocaleLink>
             </li>
           ))}
         </ul>
@@ -451,7 +451,7 @@ export default function ShopClient() {
                 </li>
               ))}
             </ul>
-            <Link
+            <LocaleLink
               href="/size-guide"
               onClick={() => setFilterOpen(false)}
               className="mt-10 flex items-center gap-2 border-t border-stone-200 pt-8 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed"
@@ -459,7 +459,7 @@ export default function ShopClient() {
             >
               <FiMaximize2 className="h-3.5 w-3.5" />
               {isRTL ? 'دليل المقاسات' : 'Size guide'}
-            </Link>
+            </LocaleLink>
           </div>
         </motion.aside>
       </motion.div>

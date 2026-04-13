@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -53,14 +53,14 @@ function HeroSection() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Link
+          <LocaleLink
             href="/heritage"
             className={`inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.15em] text-white/70 hover:text-white transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
             {isRTL ? 'العودة للتراث' : 'Back to Heritage'}
-          </Link>
+          </LocaleLink>
         </motion.div>
       </div>
 
@@ -303,14 +303,14 @@ function BintSaeedSection() {
                   : 'You\'ll find Al Talli details on the edges of our abayas, the sleeves of our kaftans, and the details of our dresses - a touch of heritage in every piece.'}
               </p>
             </div>
-            <Link
+            <LocaleLink
               href="/shop"
               className={`inline-flex items-center gap-3 px-8 py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors mt-8 ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               {isRTL ? 'تسوقي المجموعة' : 'Shop the Collection'}
               <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
-            </Link>
+            </LocaleLink>
           </motion.div>
         </div>
       </div>
@@ -334,20 +334,20 @@ function CTASection() {
             </p>
           </div>
           <div className={`flex gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <Link
+            <LocaleLink
               href="/heritage/khous"
               className="px-6 py-3 border border-brand-darkRed text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
               {isRTL ? 'الخوص' : 'Khous'}
-            </Link>
-            <Link
+            </LocaleLink>
+            <LocaleLink
               href="/heritage"
               className="px-6 py-3 border border-brand-darkRed text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
               {isRTL ? 'التراث' : 'Heritage'}
-            </Link>
+            </LocaleLink>
           </div>
         </div>
       </div>

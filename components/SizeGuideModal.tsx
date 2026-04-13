@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { FiX, FiExternalLink, FiCheck } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { sizeGuideTable as sizeData } from '@/lib/sizeGuideData'
@@ -141,7 +141,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
               </div>
 
               {/* Full Guide Link */}
-              <Link
+              <LocaleLink
                 href="/size-guide"
                 onClick={onClose}
                 className={`inline-flex items-center gap-2 px-6 py-3 bg-brand-darkRed text-white font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
@@ -149,7 +149,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
               >
                 {isRTL ? 'الدليل الكامل' : 'View Full Size Guide'}
                 <FiExternalLink className="w-4 h-4" />
-              </Link>
+              </LocaleLink>
             </div>
           </motion.div>
         </>

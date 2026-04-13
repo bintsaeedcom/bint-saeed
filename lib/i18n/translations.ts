@@ -21,7 +21,8 @@ export const translations = {
       subtitle: 'New Collection 2026',
       title1: 'Timeless',
       title2: 'Elegance',
-      description: 'Discover the artistry of modern luxury. Each piece crafted to embody the spirit of contemporary elegance.',
+      description:
+        'Bint Saeed is a luxury abaya house in Abu Dhabi devoted to the daughter in every woman—carrying heritage forward through refined design, jewellery, and curated lifestyle. Discover modern luxury shaped by Emirati craftsmanship.',
       shopCollection: 'Shop Collection',
       discoverCollection: 'Discover the Collection',
       watchFilm: 'Watch Film',
@@ -78,7 +79,8 @@ export const translations = {
     brandStory: {
       subtitle: 'Our Philosophy',
       quote: '"Fashion fades, only style remains the same."',
-      description: 'At Bint Saeed, we create pieces that transcend trends – timeless investments in elegance that become part of your story.',
+      description:
+        'We create for the daughter in every woman—investments in elegance rooted in UAE heritage, Al Talli, and Khous. Timeless pieces that become part of your story.',
       ourStory: 'Our Story',
     },
     
@@ -283,7 +285,8 @@ export const translations = {
       subtitle: 'مجموعة 2026 الجديدة',
       title1: 'أناقة',
       title2: 'خالدة',
-      description: 'اكتشفي فن الفخامة العصرية. كل قطعة مصممة لتجسد روح الأناقة المعاصرة.',
+      description:
+        'بنت سعيد دار عبايات فاخرة في أبوظبي تكرّس نفسها للبنت التي في كلّ امرأة، وتحمل التراث إلى الأمام عبر التصميم الراقي والمجوهرات وقطع أسلوب الحياة المنتقاة. اكتشفي فخامة عصرية صاغتها الحرفية الإماراتية.',
       shopCollection: 'تسوقي المجموعة',
       discoverCollection: 'اكتشفي المجموعة',
       watchFilm: 'شاهدي الفيلم',
@@ -340,7 +343,8 @@ export const translations = {
     brandStory: {
       subtitle: 'فلسفتنا',
       quote: '"الموضة تتلاشى، لكن الأناقة تبقى."',
-      description: 'في بنت سعيد، نصنع قطعاً تتجاوز الصيحات - استثمارات خالدة في الأناقة تصبح جزءاً من قصتك.',
+      description:
+        'نصنع للبنت التي في كلّ امرأة—استثمارات في الأناقة متجذرة في تراث الإمارات والتلي والخوص. قطع خالدة تصبح جزءاً من قصتك.',
       ourStory: 'قصتنا',
     },
     
@@ -543,7 +547,8 @@ export const translations = {
       subtitle: 'Nouvelle Collection 2026',
       title1: 'Élégance',
       title2: 'Intemporelle',
-      description: 'Découvrez l\'art du luxe moderne. Chaque pièce conçue pour incarner l\'esprit de l\'élégance contemporaine.',
+      description:
+        'Bint Saeed est une maison d’abayas de luxe à Abou Dabi, dédiée à la fille qui vit en chaque femme : elle porte le patrimoine vers l’avant par un design raffiné, la bijouterie et des pièces lifestyle sélectionnées. Découvrez un luxe moderne façonné par l’artisanat émirati.',
       shopCollection: 'Voir la Collection',
       discoverCollection: 'Découvrir la Collection',
       watchFilm: 'Voir le Film',
@@ -588,7 +593,8 @@ export const translations = {
     brandStory: {
       subtitle: 'Notre Philosophie',
       quote: '"La mode passe, le style reste."',
-      description: 'Chez Bint Saeed, nous créons des pièces qui transcendent les tendances.',
+      description:
+        'Nous créons pour la fille en chaque femme—des pièces d’élégance ancrées dans le patrimoine des Émirats, Al Talli et Khous, au-delà des tendances.',
       ourStory: 'Notre Histoire',
     },
     cta: {
@@ -773,7 +779,8 @@ export const translations = {
       subtitle: 'Nuova Collezione 2026',
       title1: 'Eleganza',
       title2: 'Senza Tempo',
-      description: 'Scopri l\'arte del lusso moderno. Ogni pezzo creato per incarnare lo spirito dell\'eleganza contemporanea.',
+      description:
+        'Bint Saeed è una casa di abaya di lusso ad Abu Dhabi, dedicata alla bambina in ogni donna: porta avanti l’eredità attraverso design raffinato, gioielli e oggetti lifestyle curati. Scopri il lusso moderno plasmato dall’artigianato emiratino.',
       shopCollection: 'Vedi Collezione',
       discoverCollection: 'Scopri la Collezione',
       watchFilm: 'Guarda il Film',
@@ -818,7 +825,8 @@ export const translations = {
     brandStory: {
       subtitle: 'La Nostra Filosofia',
       quote: '"La moda passa, lo stile resta."',
-      description: 'Da Bint Saeed creiamo pezzi che trascendono le tendenze.',
+      description:
+        'Creiamo per la bambina in ogni donna—investimenti in eleganza radicati nel patrimonio degli Emirati, Al Talli e Khous, oltre le tendenze.',
       ourStory: 'La Nostra Storia',
     },
     cta: {
@@ -1003,7 +1011,8 @@ export const translations = {
       subtitle: 'Nueva Colección 2026',
       title1: 'Elegancia',
       title2: 'Atemporal',
-      description: 'Descubre el arte del lujo moderno. Cada pieza diseñada para encarnar el espíritu de la elegancia contemporánea.',
+      description:
+        'Bint Saeed es una casa de abayas de lujo en Abu Dabi, dedicada a la hija en cada mujer, que lleva el patrimonio hacia adelante con diseño refinado, joyería y piezas lifestyle seleccionadas. Descubre un lujo moderno forjado por la artesanía emiratí.',
       shopCollection: 'Ver Colección',
       discoverCollection: 'Descubre la Colección',
       watchFilm: 'Ver Película',
@@ -1048,7 +1057,8 @@ export const translations = {
     brandStory: {
       subtitle: 'Nuestra Filosofía',
       quote: '"La moda pasa, el estilo permanece."',
-      description: 'En Bint Saeed creamos piezas que trascienden las tendencias.',
+      description:
+        'Creamos para la hija en cada mujer—inversiones en elegancia arraigadas en el patrimonio de los EAU, Al Talli y Khous, más allá de las tendencias.',
       ourStory: 'Nuestra Historia',
     },
     cta: {
@@ -1233,7 +1243,8 @@ export const translations = {
       subtitle: 'Новая Коллекция 2026',
       title1: 'Вечная',
       title2: 'Элегантность',
-      description: 'Откройте искусство современной роскоши. Каждое изделие создано, чтобы воплотить дух современной элегантности.',
+      description:
+        'Bint Saeed — дом роскошных абай в Абу-Даби, посвящённый дочери в каждой женщине; мы несём наследие вперёд через утончённый дизайн, украшения и курируемые lifestyle-вещи. Откройте современную роскошь с эмиратским мастерством.',
       shopCollection: 'Смотреть Коллекцию',
       discoverCollection: 'Откройте коллекцию',
       watchFilm: 'Смотреть Фильм',
@@ -1278,7 +1289,8 @@ export const translations = {
     brandStory: {
       subtitle: 'Наша Философия',
       quote: '"Мода уходит, стиль остается."',
-      description: 'В Bint Saeed мы создаем вещи, которые выходят за рамки трендов.',
+      description:
+        'Создаём для дочери в каждой женщине—вложения в элегантность с корнями в наследии ОАЭ, Al Talli и Khous, вне краткосрочных трендов.',
       ourStory: 'Наша История',
     },
     cta: {
@@ -1463,7 +1475,8 @@ export const translations = {
       subtitle: '2026 新款系列',
       title1: '永恒',
       title2: '优雅',
-      description: '探索现代奢华的魅力。每一件作品都精心制作，以体现当代优雅的精髓。',
+      description:
+        '宾特·赛义德是阿布扎比的奢华阿巴亚之家，关爱每位女性心中的女儿，以精致设计、珠宝与甄选生活方式单品传承并推进传统。感受由阿联酋工艺塑造的现代奢华。',
       shopCollection: '浏览系列',
       discoverCollection: '探索系列',
       watchFilm: '观看影片',
@@ -1508,7 +1521,8 @@ export const translations = {
     brandStory: {
       subtitle: '我们的理念',
       quote: '"时尚会褪色，风格永存。"',
-      description: '在 Bint Saeed，我们打造超越潮流的作品。',
+      description:
+        '我们为每位女性心中的女儿而创作——根植阿联酋传承、Al Talli 与 Khous 的优雅投资，超越短暂潮流。',
       ourStory: '品牌故事',
     },
     cta: {
@@ -1693,7 +1707,8 @@ export const translations = {
       subtitle: 'Neue Kollektion 2026',
       title1: 'Zeitlose',
       title2: 'Eleganz',
-      description: 'Entdecken Sie die Kunst modernen Luxus. Jedes Stück geschaffen, um den Geist zeitgenössischer Eleganz zu verkörpern.',
+      description:
+        'Bint Saeed ist ein Luxus-Abaya-Haus in Abu Dhabi, dem Mädchen in jeder Frau gewidmet – es trägt das Erbe durch raffiniertes Design, Schmuck und kuratierte Lifestyle-Stücke weiter. Entdecken Sie modernen Luxus, geformt von emiratischem Handwerk.',
       shopCollection: 'Kollektion ansehen',
       discoverCollection: 'Kollektion entdecken',
       watchFilm: 'Film ansehen',
@@ -1738,7 +1753,8 @@ export const translations = {
     brandStory: {
       subtitle: 'Unsere Philosophie',
       quote: '"Mode vergeht, Stil bleibt."',
-      description: 'Bei Bint Saeed schaffen wir Stücke, die Trends überdauern.',
+      description:
+        'Wir schaffen für das Mädchen in jeder Frau – Eleganz, verwurzelt im Erbe der VAE, Al Talli und Khous, jenseits kurzfristiger Trends.',
       ourStory: 'Unsere Geschichte',
     },
     cta: {
@@ -1904,17 +1920,159 @@ export const translations = {
   },
 }
 
-export type Language = 'en' | 'ar' | 'fr' | 'it' | 'es' | 'ru' | 'zh' | 'de'
+export type Language = 'en' | 'ar' | 'fr' | 'it' | 'es' | 'ru' | 'zh' | 'de' | 'nl' | 'pt'
 export type Translations = typeof translations.en
 
-// Multilingual SEO keywords for global reach
+// Multilingual SEO keyword packs (additive with root layout meta keywords). nl/pt = site copy in llms.txt; UI uses en–de only.
 export const seoKeywords = {
-  en: ['luxury abaya', 'modest fashion', 'designer abaya', 'arabic fashion', 'UAE fashion', 'heritage fashion', 'contemporary abaya', 'premium modest wear', 'handcrafted abaya', 'Dubai fashion'],
-  ar: ['عباية فاخرة', 'أزياء محتشمة', 'عباية مصممة', 'أزياء عربية', 'أزياء إماراتية', 'أزياء تراثية', 'عباية معاصرة', 'ملابس محتشمة راقية'],
-  fr: ['abaya luxe', 'mode modeste', 'abaya créateur', 'mode arabe', 'mode Émirats', 'mode patrimoine', 'vêtements modestes haut de gamme', 'abaya fait main'],
-  it: ['abaya di lusso', 'moda modesta', 'abaya designer', 'moda araba', 'moda Emirati', 'moda patrimonio', 'abbigliamento modesto premium', 'abaya artigianale'],
-  es: ['abaya de lujo', 'moda modesta', 'abaya de diseñador', 'moda árabe', 'moda emiratí', 'moda patrimonio', 'ropa modesta premium', 'abaya artesanal'],
-  ru: ['роскошная абая', 'скромная мода', 'дизайнерская абая', 'арабская мода', 'мода ОАЭ', 'наследие моды', 'премиальная скромная одежда', 'ручная работа абая'],
-  zh: ['奢华阿巴亚', '端庄时尚', '设计师阿巴亚', '阿拉伯时尚', '阿联酋时尚', '传承时尚', '当代阿巴亚', '高端端庄服饰', '手工阿巴亚', '迪拜时尚'],
-  de: ['Luxus-Abaya', 'bescheidene Mode', 'Designer-Abaya', 'arabische Mode', 'VAE Mode', 'Erbe Mode', 'zeitgenössische Abaya', 'Premium bescheidene Kleidung', 'handgefertigte Abaya', 'Dubai Mode'],
+  en: [
+    'luxury abaya',
+    'Abu Dhabi abaya',
+    'UAE fashion',
+    'designer abaya',
+    'modern abaya',
+    'heritage fashion',
+    'Emirati style',
+    'luxury modest wear',
+    'modest fashion',
+    'arabic fashion',
+    'contemporary abaya',
+    'handcrafted abaya',
+    'Dubai fashion',
+  ],
+  ar: [
+    'عباية فاخرة',
+    'عباية أبوظبي',
+    'أزياء الإمارات',
+    'عباية مصممة',
+    'عباية عصرية',
+    'أزياء تراثية',
+    'أسلوب إماراتي',
+    'ملابس محتشمة فاخرة',
+    'أزياء محتشمة',
+    'أزياء عربية',
+    'عباية معاصرة',
+    'عباية يدوية',
+    'عبايات دبي',
+  ],
+  fr: [
+    'abaya de luxe',
+    'abaya Abou Dabi',
+    'mode Émirats',
+    'abaya créateur',
+    'abaya moderne',
+    'mode patrimoine',
+    'style émirati',
+    'mode modeste de luxe',
+    'mode modeste',
+    'mode arabe',
+    'abaya contemporaine',
+    'abaya fait main',
+    'mode Dubaï',
+  ],
+  it: [
+    'abaya di lusso',
+    'abaya Abu Dhabi',
+    'moda Emirati',
+    'abaya designer',
+    'abaya moderna',
+    'moda patrimonio',
+    'stile emiratino',
+    'moda modesta premium',
+    'moda modesta',
+    'moda araba',
+    'abaya contemporanea',
+    'abaya artigianale',
+    'moda Dubai',
+  ],
+  es: [
+    'abaya de lujo',
+    'abaya Abu Dabi',
+    'moda emiratí',
+    'abaya de diseñador',
+    'abaya moderna',
+    'moda patrimonio',
+    'estilo emiratí',
+    'moda modesta de lujo',
+    'moda modesta',
+    'moda árabe',
+    'abaya contemporánea',
+    'abaya artesanal',
+    'moda Dubái',
+  ],
+  ru: [
+    'роскошная абая',
+    'абая Абу-Даби',
+    'мода ОАЭ',
+    'дизайнерская абая',
+    'современная абая',
+    'наследие моды',
+    'эмиратский стиль',
+    'люкс скромная мода',
+    'скромная мода',
+    'арабская мода',
+    'премиальная абая',
+    'ручная работа абая',
+    'мода Дубай',
+  ],
+  zh: [
+    '奢华阿巴亚',
+    '阿布扎比阿巴亚',
+    '阿联酋时尚',
+    '设计师阿巴亚',
+    '现代阿巴亚',
+    '传承时尚',
+    '阿联酋风格',
+    '高端端庄服饰',
+    '端庄时尚',
+    '阿拉伯时尚',
+    '阿联酋工艺阿巴亚',
+    '手工阿巴亚',
+    '迪拜时尚',
+  ],
+  de: [
+    'Luxus-Abaya',
+    'Abaya Abu Dhabi',
+    'VAE Mode',
+    'Designer-Abaya',
+    'moderne Abaya',
+    'Erbe Mode',
+    'emiratischer Stil',
+    'Luxus bescheidene Mode',
+    'bescheidene Mode',
+    'arabische Mode',
+    'zeitgenössische Abaya',
+    'handgefertigte Abaya',
+    'Dubai Mode',
+  ],
+  nl: [
+    'luxe abaya',
+    'abaya Abu Dhabi',
+    'VAE mode',
+    'designer abaya',
+    'moderne abaya',
+    'erfgoed mode',
+    'Emirati stijl',
+    'luxe bescheiden mode',
+    'bescheiden mode',
+    'Arabische mode',
+    'eigentijdse abaya',
+    'handgemaakte abaya',
+    'Dubai mode',
+  ],
+  pt: [
+    'abaya de luxo',
+    'abaya Abu Dhabi',
+    'moda EAU',
+    'abaya de designer',
+    'abaya moderna',
+    'moda património',
+    'estilo emirati',
+    'moda modesta de luxo',
+    'moda modesta',
+    'moda árabe',
+    'abaya contemporânea',
+    'abaya artesanal',
+    'moda Dubai',
+  ],
 }

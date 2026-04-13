@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense } from 'react'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { FiCheck, FiAlertCircle, FiArrowRight } from 'react-icons/fi'
@@ -43,21 +43,21 @@ function VerifyEmailContent() {
                 : 'Your account is verified. You can continue shopping or go to your account.'}
             </p>
             <div className="flex flex-col gap-3">
-              <Link
+              <LocaleLink
                 href="/shop"
                 className={`inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-roboto text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 {isRTL ? 'تسوقي الآن' : 'Shop the collection'}
                 <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-              </Link>
-              <Link
+              </LocaleLink>
+              <LocaleLink
                 href="/account"
                 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-clayRed hover:text-brand-dustyBlue"
                 data-cursor-hover
               >
                 {isRTL ? 'الحساب' : 'Account'}
-              </Link>
+              </LocaleLink>
             </div>
           </>
         ) : already ? (
@@ -71,13 +71,13 @@ function VerifyEmailContent() {
             <p className="font-roboto text-sm text-brand-clayRed/75 mb-8">
               {isRTL ? 'هذا البريد مفعّل بالفعل.' : 'This email is already verified.'}
             </p>
-            <Link
+            <LocaleLink
               href="/account"
               className="inline-block font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed underline hover:text-brand-dustyBlue"
               data-cursor-hover
             >
               {isRTL ? 'الحساب' : 'Account'}
-            </Link>
+            </LocaleLink>
           </>
         ) : (
           <>
@@ -90,13 +90,13 @@ function VerifyEmailContent() {
             <p className="font-roboto text-sm text-brand-clayRed/75 leading-relaxed mb-8">
               {error ? errorCopy[error] || errorCopy.server : errorCopy.missing_token}
             </p>
-            <Link
+            <LocaleLink
               href="/register"
               className="inline-flex items-center justify-center bg-brand-darkRed px-8 py-3.5 font-roboto text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue"
               data-cursor-hover
             >
               {isRTL ? 'إنشاء حساب' : 'Register again'}
-            </Link>
+            </LocaleLink>
           </>
         )}
       </motion.div>

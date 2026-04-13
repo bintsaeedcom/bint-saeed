@@ -3,7 +3,7 @@
 import { useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { FiCheck, FiShoppingBag, FiArrowLeft } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 
@@ -32,14 +32,14 @@ function CheckoutSuccessContent() {
           transition={{ duration: 0.5 }}
           className="absolute top-0 left-6 lg:left-12"
         >
-          <Link
+          <LocaleLink
             href="/"
             className="inline-flex items-center gap-2 font-roboto text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group"
             data-cursor-hover
           >
             <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Back to Home
-          </Link>
+          </LocaleLink>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -72,21 +72,21 @@ function CheckoutSuccessContent() {
             )}
 
             <div className="space-y-4">
-              <Link
+              <LocaleLink
                 href="/shop"
                 className="inline-flex items-center justify-center gap-2 w-full px-8 py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors"
                 data-cursor-hover
               >
                 <FiShoppingBag className="w-4 h-4" />
                 Continue Shopping
-              </Link>
-              <Link
+              </LocaleLink>
+              <LocaleLink
                 href="/"
                 className="inline-block w-full px-8 py-4 border border-brand-darkRed text-brand-darkRed font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
                 data-cursor-hover
               >
                 Back to Home
-              </Link>
+              </LocaleLink>
             </div>
           </div>
         </motion.div>

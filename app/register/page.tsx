@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { motion } from 'framer-motion'
 import { FiArrowLeft, FiLock, FiMail, FiUser } from 'react-icons/fi'
 import toast from 'react-hot-toast'
@@ -54,14 +54,14 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-[#faf9f7] pt-28 pb-20">
       <div className="container mx-auto max-w-lg px-6">
-        <Link
+        <LocaleLink
           href="/account"
           className={`mb-10 inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-clayRed hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
           data-cursor-hover
         >
           <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
           {isRTL ? 'الحساب' : 'Account'}
-        </Link>
+        </LocaleLink>
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}

@@ -1,9 +1,17 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { usePathname } from 'next/navigation'
 import { translations, Language, Translations } from './translations'
+import { stripLocaleFromPathname } from './routing'
+import type { AppLocale } from './routing'
 
-const VALID_LANGUAGES: Language[] = ['en', 'ar', 'fr', 'it', 'es', 'ru', 'zh', 'de']
+export const VALID_LANGUAGES: Language[] = ['en', 'ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt']
+
+function resolveTranslations(lang: Language): Translations {
+  if (lang === 'nl' || lang === 'pt') return translations.en
+  return translations[lang]
+}
 
 interface LanguageContextType {
   language: Language
@@ -14,26 +22,28 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('en')
-  const [mounted, setMounted] = useState(false)
+export function LanguageProvider({
+  children,
+  initialLocale = 'en',
+}: {
+  children: ReactNode
+  initialLocale?: AppLocale
+}) {
+  const pathname = usePathname() || '/'
+  const [language, setLanguageState] = useState<Language>(() =>
+    initialLocale === 'en' ? 'en' : (initialLocale as Language),
+  )
 
   useEffect(() => {
-    setMounted(true)
-    const savedLang = localStorage.getItem('language') as Language
-    if (savedLang && VALID_LANGUAGES.includes(savedLang)) {
-      setLanguageState(savedLang)
-    }
-    // Always default to English first; LocaleConfirmPopup offers to switch based on IP
-  }, [])
+    const { locale } = stripLocaleFromPathname(pathname)
+    setLanguageState(locale === 'en' ? 'en' : (locale as Language))
+  }, [pathname])
 
   useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('language', language)
-      document.documentElement.lang = language === 'zh' ? 'zh-CN' : language
-      document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr'
-    }
-  }, [language, mounted])
+    localStorage.setItem('language', language)
+    document.documentElement.lang = language === 'zh' ? 'zh-CN' : language
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr'
+  }, [language])
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang)
@@ -42,7 +52,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const value: LanguageContextType = {
     language,
     setLanguage,
-    t: translations[language],
+    t: resolveTranslations(language),
     isRTL: language === 'ar',
   }
 

@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiRefreshCw, FiHome, FiAlertTriangle } from 'react-icons/fi'
 
@@ -28,7 +28,7 @@ export default function Error({
         >
           {/* Logo */}
           <div className="mb-8">
-            <Link href="/" data-cursor-hover>
+            <LocaleLink href="/" data-cursor-hover>
               <Image
                 src="/logo.png"
                 alt="Bint Saeed"
@@ -36,7 +36,7 @@ export default function Error({
                 height={60}
                 className="h-12 sm:h-16 w-auto mx-auto"
               />
-            </Link>
+            </LocaleLink>
           </div>
 
           {/* Error Icon */}
@@ -71,14 +71,14 @@ export default function Error({
               <FiRefreshCw className="w-4 h-4" />
               Try Again
             </button>
-            <Link
+            <LocaleLink
               href="/"
               className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-brand-darkRed text-brand-darkRed font-roboto text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
               <FiHome className="w-4 h-4" />
               Go to Home
-            </Link>
+            </LocaleLink>
           </div>
 
           {/* Decorative line */}

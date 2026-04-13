@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter } from 'react-icons/fa6'
@@ -156,7 +156,7 @@ export default function Footer() {
           <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 ${isRTL ? 'text-right' : ''}`}>
             {/* Brand Column with Logo */}
             <div className="col-span-2 md:col-span-1">
-              <Link href="/preview" data-cursor-hover className="inline-block mb-6">
+              <LocaleLink href="/preview" data-cursor-hover className="inline-block mb-6">
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
@@ -169,7 +169,7 @@ export default function Footer() {
                     className="h-[38px] w-[152px] object-contain"
                   />
                 </motion.div>
-              </Link>
+              </LocaleLink>
               <p className="font-roboto text-xs text-white/50 tracking-wide leading-relaxed max-w-xs">
                 {t.footer.brandDescription}
               </p>
@@ -186,13 +186,13 @@ export default function Footer() {
               <ul className="space-y-3">
                 {footerLinks.shop.map((link) => (
                   <li key={link.label}>
-                    <Link
+                    <LocaleLink
                       href={link.href}
                       className="font-roboto text-sm text-white/60 hover:text-brand-dustyBlue transition-colors tracking-wide"
                       data-cursor-hover
                     >
                       {link.label}
-                    </Link>
+                    </LocaleLink>
                   </li>
                 ))}
               </ul>
@@ -206,13 +206,13 @@ export default function Footer() {
               <ul className="space-y-3">
                 {footerLinks.about.map((link) => (
                   <li key={link.label}>
-                    <Link
+                    <LocaleLink
                       href={link.href}
                       className="font-roboto text-sm text-white/60 hover:text-brand-dustyBlue transition-colors tracking-wide"
                       data-cursor-hover
                     >
                       {link.label}
-                    </Link>
+                    </LocaleLink>
                   </li>
                 ))}
               </ul>
@@ -226,13 +226,13 @@ export default function Footer() {
               <ul className="space-y-3">
                 {footerLinks.help.map((link) => (
                   <li key={link.label}>
-                    <Link
+                    <LocaleLink
                       href={link.href}
                       className="font-roboto text-sm text-white/60 hover:text-brand-dustyBlue transition-colors tracking-wide"
                       data-cursor-hover
                     >
                       {link.label}
-                    </Link>
+                    </LocaleLink>
                   </li>
                 ))}
               </ul>
@@ -310,27 +310,27 @@ export default function Footer() {
 
             {/* Legal Links - Center */}
             <div className="flex flex-wrap justify-center gap-6 order-2">
-              <Link
+              <LocaleLink
                 href="/privacy-policy"
                 className="font-roboto text-xs uppercase tracking-[0.15em] text-white/50 hover:text-brand-stone transition-colors"
                 data-cursor-hover
               >
                 {t.footer.privacy}
-              </Link>
-              <Link
+              </LocaleLink>
+              <LocaleLink
                 href="/cookie-policy"
                 className="font-roboto text-xs uppercase tracking-[0.15em] text-white/50 hover:text-brand-stone transition-colors"
                 data-cursor-hover
               >
                 {t.footer.cookies}
-              </Link>
-              <Link
+              </LocaleLink>
+              <LocaleLink
                 href="/terms"
                 className="font-roboto text-xs uppercase tracking-[0.15em] text-white/50 hover:text-brand-stone transition-colors"
                 data-cursor-hover
               >
                 {t.footer.terms}
-              </Link>
+              </LocaleLink>
             </div>
 
             {/* Social Icons - Right */}

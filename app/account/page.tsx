@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { motion } from 'framer-motion'
 import { FiArrowRight, FiLock, FiUserPlus } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -43,14 +43,14 @@ export default function AccountPage() {
                 ? 'بعد التسجيل نرسل رابطاً إلى بريدك لتأكيد العنوان قبل تفعيل الحساب.'
                 : 'After you register, we send a confirmation email with a button. Your account is only active once you verify.'}
             </p>
-            <Link
+            <LocaleLink
               href="/register"
               className={`mt-auto inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-roboto text-xs uppercase tracking-[0.18em] text-white hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               {isRTL ? 'ابدئي' : 'Get started'}
               <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-            </Link>
+            </LocaleLink>
           </motion.div>
 
           <motion.div

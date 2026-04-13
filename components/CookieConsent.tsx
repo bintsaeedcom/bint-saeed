@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -96,12 +96,12 @@ export default function CookieConsent() {
 
             {/* More Information link */}
             <div className="pb-5">
-              <Link
+              <LocaleLink
                 href="/cookie-policy"
                 className="font-roboto text-sm text-brand-darkRed/90 underline transition-colors hover:text-brand-darkRed"
               >
                 {t.cookie.learnMore}
-              </Link>
+              </LocaleLink>
             </div>
 
             {/* Cookie details (optional, when "Cookies settings" clicked) */}

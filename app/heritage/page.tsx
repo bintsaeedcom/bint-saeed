@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { FiArrowRight, FiArrowDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -164,7 +164,7 @@ function HeritageGrid() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, delay: index * 0.12 }}
             >
-              <Link href={item.href} className="group block" data-cursor-hover>
+              <LocaleLink href={item.href} className="group block" data-cursor-hover>
                 <div className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
                   <div className={`relative aspect-[4/3] overflow-hidden rounded-2xl ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                     <Image src={item.image} alt={isRTL ? item.title.ar : item.title.en} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -190,7 +190,7 @@ function HeritageGrid() {
                     </span>
                   </div>
                 </div>
-              </Link>
+              </LocaleLink>
             </motion.div>
           ))}
         </div>
@@ -282,14 +282,14 @@ function HeritageCTA() {
           <p className="font-roboto text-base text-brand-clayRed/80 tracking-wide mb-12 leading-relaxed">
             {isRTL ? 'قطع فريدة تجمع بين أصالة الماضي وأناقة الحاضر.' : 'Unique pieces that combine the authenticity of the past with the elegance of the present.'}
           </p>
-          <Link
+          <LocaleLink
             href="/shop"
             className={`inline-flex items-center gap-3 px-12 py-5 bg-brand-dustyBlue text-[#1a0008] font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white transition-all duration-500 rounded-xl ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             {isRTL ? 'تسوقي الآن' : 'Shop Now'}
             <FiArrowRight className={`w-5 h-5 ${isRTL ? 'rotate-180' : ''}`} />
-          </Link>
+          </LocaleLink>
         </motion.div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-dustyBlue/40 via-brand-stone/40 to-brand-dustyBlue/40" />

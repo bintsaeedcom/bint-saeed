@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowLeft, FiArrowRight, FiGlobe, FiTruck, FiInfo } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
@@ -32,14 +32,14 @@ export default function CartPage() {
             <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide mb-10">
               Discover our collection and find pieces that speak to you.
             </p>
-            <Link
+            <LocaleLink
               href="/shop"
               className="inline-flex items-center gap-2 px-10 py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors"
               data-cursor-hover
             >
               Continue Shopping
               <FiArrowRight className="w-4 h-4" />
-            </Link>
+            </LocaleLink>
           </motion.div>
         </div>
       </div>
@@ -52,14 +52,14 @@ export default function CartPage() {
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between">
-            <Link
+            <LocaleLink
               href="/shop"
               className="inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group"
               data-cursor-hover
             >
               <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               Continue Shopping
-            </Link>
+            </LocaleLink>
             <h1 className="font-rozha text-2xl md:text-3xl text-brand-darkRed">
               Shopping Bag ({items.length})
             </h1>
@@ -82,7 +82,7 @@ export default function CartPage() {
                   className="flex gap-6 pb-8 border-b border-brand-stone/20"
                 >
                   {/* Image */}
-                  <Link href={`/shop/${item.id}`} className="flex-shrink-0" data-cursor-hover>
+                  <LocaleLink href={`/shop/${item.id}`} className="flex-shrink-0" data-cursor-hover>
                     <div className="relative aspect-[3/4] w-[5.6rem] bg-[#f5f5f5] md:w-[7.2rem]">
                       <Image
                         src={item.image}
@@ -91,16 +91,16 @@ export default function CartPage() {
                         className="object-cover"
                       />
                     </div>
-                  </Link>
+                  </LocaleLink>
 
                   {/* Details */}
                   <div className="flex-1 flex flex-col">
                     <div className="flex-1">
-                      <Link href={`/shop/${item.id}`} data-cursor-hover>
+                      <LocaleLink href={`/shop/${item.id}`} data-cursor-hover>
                         <h3 className="font-rozha text-lg md:text-xl text-brand-darkRed mb-2 hover:text-brand-dustyBlue transition-colors">
                           {item.name}
                         </h3>
-                      </Link>
+                      </LocaleLink>
                       <div className="font-roboto text-xs text-brand-clayRed/60 tracking-wide space-y-1">
                         <p>Size: {item.size}</p>
                         <p>Color: {item.color}</p>
@@ -236,14 +236,14 @@ export default function CartPage() {
                 </p>
               </div>
 
-              <Link
+              <LocaleLink
                 href="/checkout"
                 className={`w-full py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 {isRTL ? 'متابعة الدفع' : 'Proceed to Checkout'}
                 <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
-              </Link>
+              </LocaleLink>
 
               {/* Worldwide Shipping Badge */}
               <div className={`flex items-center justify-center gap-2 mt-6 py-3 border-t border-b border-brand-stone/20 ${isRTL ? 'flex-row-reverse' : ''}`}>

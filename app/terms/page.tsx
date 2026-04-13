@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -23,14 +23,14 @@ export default function TermsPage() {
           transition={{ duration: 0.5 }}
           className="mb-8"
         >
-          <Link
+          <LocaleLink
             href="/"
             className={`inline-flex items-center gap-2 font-roboto text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
             {t.shop.backToHome}
-          </Link>
+          </LocaleLink>
         </motion.div>
 
         <motion.div

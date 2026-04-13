@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import { FiArrowRight, FiArrowDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -91,10 +91,10 @@ function AboutHero() {
                 {t.about.daughtersText1}
               </motion.p>
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }}>
-                <Link href="#statement" className="group inline-flex items-center gap-3 px-10 py-4 backdrop-blur-sm bg-white/[0.08] border border-brand-dustyBlue/30 text-white font-roboto text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-brand-dustyBlue hover:text-[#1a0008] transition-all duration-500" data-cursor-hover>
+                <LocaleLink href="#statement" className="group inline-flex items-center gap-3 px-10 py-4 backdrop-blur-sm bg-white/[0.08] border border-brand-dustyBlue/30 text-white font-roboto text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-brand-dustyBlue hover:text-[#1a0008] transition-all duration-500" data-cursor-hover>
                   <span>{t.about.readMore}</span>
                   <FiArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
-                </Link>
+                </LocaleLink>
               </motion.div>
             </div>
           </div>
@@ -201,10 +201,10 @@ function MissionSection() {
                 <p className="font-roboto text-sm text-white/65 tracking-wide leading-[1.85] mb-10">
                   Bint Saeed, founded in 2026, is a tribute to the growth and meaningful life of every daughter. Inspiring young women to carry themselves through life with extraordinary elegance and grace. Creating collections that reflect compelling stories. Heritage and diversity at the heart of every stitch.
                 </p>
-                <Link href="/heritage" className={`group inline-flex items-center gap-3 font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue hover:text-brand-stone transition-colors ${isRTL ? 'flex-row-reverse' : ''}`} data-cursor-hover>
+                <LocaleLink href="/heritage" className={`group inline-flex items-center gap-3 font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue hover:text-brand-stone transition-colors ${isRTL ? 'flex-row-reverse' : ''}`} data-cursor-hover>
                   {t.about.viewCollection}
                   <FiArrowRight className={`w-4 h-4 group-hover:translate-x-2 transition-transform ${isRTL ? 'rotate-180' : ''}`} />
-                </Link>
+                </LocaleLink>
               </div>
             </div>
           </motion.div>
@@ -397,14 +397,14 @@ function AboutCTA() {
       <div className="relative container mx-auto px-6 lg:px-16 py-32 md:py-48 text-center">
         <motion.div initial={{ opacity: 0, y: 40 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.9 }}>
           <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-white mb-8">{t.about.ctaTitle}</h2>
-          <Link
+          <LocaleLink
             href="/shop"
             className={`inline-flex items-center gap-3 px-12 py-5 bg-brand-dustyBlue text-[#1a0008] font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-stone hover:text-brand-darkRed transition-all duration-500 rounded-xl ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             {t.about.shopNow}
             <FiArrowRight className={`w-5 h-5 ${isRTL ? 'rotate-180' : ''}`} />
-          </Link>
+          </LocaleLink>
         </motion.div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-dustyBlue/40 via-brand-stone/40 to-brand-dustyBlue/40" />

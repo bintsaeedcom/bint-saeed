@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiSearch, FiUser, FiHeart, FiShoppingBag, FiMenu, FiX, FiArrowRight } from 'react-icons/fi'
@@ -123,14 +123,14 @@ export default function Header() {
             {/* Left: Navigation - xl breakpoint prevents overlap on medium screens */}
             <nav className="hidden xl:flex items-center gap-6 2xl:gap-8 flex-1 min-w-0 relative z-[60] pointer-events-auto flex-shrink-0">
               {navItems.map((item) => (
-                <Link
+                <LocaleLink
                   key={item.label}
                   href={item.href}
                   className="font-roboto text-[11px] uppercase tracking-[0.15em] text-white/90 hover:text-brand-dustyBlue transition-colors duration-300 py-2 whitespace-nowrap flex-shrink-0 relative z-[60]"
                   data-cursor-hover
                 >
                   {item.label}
-                </Link>
+                </LocaleLink>
               ))}
             </nav>
 
@@ -146,7 +146,7 @@ export default function Header() {
 
             {/* Center: Logo - lower z-index so nav links (z-50) receive clicks when overlapping */}
             <div className="absolute left-1/2 -translate-x-1/2 z-[40] shrink-0">
-              <Link href="/preview" className="block" data-cursor-hover>
+              <LocaleLink href="/preview" className="block" data-cursor-hover>
                 <Image
                   src="/logo.png"
                   alt="Bint Saeed"
@@ -155,7 +155,7 @@ export default function Header() {
                   className={`transition-all duration-300 ${isScrolled ? 'h-[55px]' : 'h-[65px]'} w-auto`}
                   priority
                 />
-              </Link>
+              </LocaleLink>
             </div>
 
             {/* Right: Utilities & Icons */}
@@ -176,16 +176,16 @@ export default function Header() {
                 <FiSearch className="w-[18px] h-[18px]" />
               </button>
               
-              <Link
+              <LocaleLink
                 href="/account"
                 className="text-white/70 hover:text-white transition-colors duration-300 p-1"
                 data-cursor-hover
                 aria-label={t.nav.account}
               >
                 <FiUser className="w-[18px] h-[18px]" />
-              </Link>
+              </LocaleLink>
               
-              <Link
+              <LocaleLink
                 href="/wishlist"
                 className="relative text-white/70 hover:text-white transition-colors duration-300 p-1"
                 data-cursor-hover
@@ -197,7 +197,7 @@ export default function Header() {
                     {wishlistCount > 9 ? '9+' : wishlistCount}
                   </span>
                 )}
-              </Link>
+              </LocaleLink>
               
               <button
                 onClick={() => setIsMiniCartOpen(true)}
@@ -310,7 +310,7 @@ export default function Header() {
                   // Show results
                   <div className="space-y-1">
                     {searchResults.map((result, index) => (
-                      <Link
+                      <LocaleLink
                         key={index}
                         href={result.href}
                         onClick={handleSearchClose}
@@ -326,7 +326,7 @@ export default function Header() {
                           </span>
                         </div>
                         <FiArrowRight className="w-4 h-4 text-brand-stone group-hover:text-brand-dustyBlue transition-colors" />
-                      </Link>
+                      </LocaleLink>
                     ))}
                   </div>
                 ) : (
@@ -359,7 +359,7 @@ export default function Header() {
             <div className="h-full flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between px-6 py-5">
-                <Link href="/preview" onClick={() => setIsMobileMenuOpen(false)}>
+                <LocaleLink href="/preview" onClick={() => setIsMobileMenuOpen(false)}>
                   <Image
                     src="/logo.png"
                     alt="Bint Saeed"
@@ -367,7 +367,7 @@ export default function Header() {
                     height={55}
                     className="h-12 w-auto"
                   />
-                </Link>
+                </LocaleLink>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-white p-2"
@@ -386,7 +386,7 @@ export default function Header() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Link
+                    <LocaleLink
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="group flex items-center justify-between py-4 border-b border-white/10"
@@ -396,7 +396,7 @@ export default function Header() {
                         {item.label}
                       </span>
                       <FiArrowRight className={`w-5 h-5 text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all ${isRTL ? 'rotate-180' : ''}`} />
-                    </Link>
+                    </LocaleLink>
                   </motion.div>
                 ))}
               </div>
@@ -405,23 +405,23 @@ export default function Header() {
               <div className="px-6 pb-8">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-5">
-                    <Link
+                    <LocaleLink
                       href="/cart"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="text-white/70 hover:text-white transition-colors"
                       data-cursor-hover
                     >
                       <FiShoppingBag className="w-6 h-6" />
-                    </Link>
-                    <Link
+                    </LocaleLink>
+                    <LocaleLink
                       href="/account"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="text-white/70 hover:text-white transition-colors"
                       data-cursor-hover
                     >
                       <FiUser className="w-6 h-6" />
-                    </Link>
-                    <Link
+                    </LocaleLink>
+                    <LocaleLink
                       href="/wishlist"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="relative text-white/70 hover:text-white transition-colors"
@@ -434,7 +434,7 @@ export default function Header() {
                           {wishlistCount > 9 ? '9+' : wishlistCount}
                         </span>
                       )}
-                    </Link>
+                    </LocaleLink>
                   </div>
                   <div className="flex items-center gap-3">
                     <CurrencySwitcher variant="light" />

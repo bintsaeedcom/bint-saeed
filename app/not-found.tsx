@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiHome, FiShoppingBag, FiMail, FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -19,7 +19,7 @@ export default function NotFound() {
         >
           {/* Logo */}
           <div className="mb-8">
-            <Link href="/" data-cursor-hover>
+            <LocaleLink href="/" data-cursor-hover>
               <Image
                 src="/logo.png"
                 alt="Bint Saeed"
@@ -27,7 +27,7 @@ export default function NotFound() {
                 height={60}
                 className="h-12 sm:h-16 w-auto mx-auto"
               />
-            </Link>
+            </LocaleLink>
           </div>
 
           {/* 404 Number with brand styling */}
@@ -51,22 +51,22 @@ export default function NotFound() {
           
           {/* Action Buttons */}
           <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
-            <Link
+            <LocaleLink
               href="/"
               className={`inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-brand-darkRed text-white font-roboto text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiHome className="w-4 h-4" />
               {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
-            </Link>
-            <Link
+            </LocaleLink>
+            <LocaleLink
               href="/shop"
               className={`inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-brand-darkRed text-brand-darkRed font-roboto text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiShoppingBag className="w-4 h-4" />
               {isRTL ? 'تسوقي الآن' : 'Shop Collection'}
-            </Link>
+            </LocaleLink>
           </div>
 
           {/* Decorative line */}
@@ -88,14 +88,14 @@ export default function NotFound() {
                 { href: '/heritage', label: isRTL ? 'التراث' : 'Heritage' },
                 { href: '/contact', label: isRTL ? 'تواصلي معنا' : 'Contact' },
               ].map((link) => (
-                <Link
+                <LocaleLink
                   key={link.href}
                   href={link.href}
                   className="font-roboto text-xs sm:text-sm text-brand-clayRed hover:text-brand-dustyBlue transition-colors underline-hover"
                   data-cursor-hover
                 >
                   {link.label}
-                </Link>
+                </LocaleLink>
               ))}
             </div>
           </div>
