@@ -48,6 +48,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [isMiniCartOpen, setIsMiniCartOpen] = useState(false)
+  const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<typeof searchableContent>([])
   const searchInputRef = useRef<HTMLInputElement>(null)
@@ -56,12 +57,123 @@ export default function Header() {
   const { t, isRTL } = useLanguage()
 
   const navItems = [
-    { label: t.nav.newIn, href: '/shop' },
     { label: t.nav.collections, href: '/shop' },
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
     { label: t.nav.heritage, href: '/heritage' },
     { label: t.nav.ourStory, href: '/about' },
   ]
+
+  const megaMenus: Record<
+    string,
+    {
+      columns: { title: string; links: { label: string; href: string }[] }[]
+      features: { title: string; href: string; image: string }[]
+    }
+  > = {
+    '/shop': {
+      columns: [
+        {
+          title: 'Discover',
+          links: [
+            { label: 'New In', href: '/shop' },
+            { label: 'Best Sellers', href: '/shop?sort=popular' },
+            { label: 'Shop All', href: '/shop' },
+            { label: 'Ready to Ship', href: '/shop?availability=ready' },
+          ],
+        },
+        {
+          title: 'Ready to Wear',
+          links: [
+            { label: 'Abayas', href: '/shop?category=abayas' },
+            { label: 'Sets', href: '/shop?category=sets' },
+            { label: 'Dresses', href: '/shop?category=dresses' },
+            { label: 'Caftans', href: '/shop?category=caftans' },
+          ],
+        },
+        {
+          title: 'Occasion',
+          links: [
+            { label: 'Wedding Guest', href: '/shop?occasion=wedding' },
+            { label: 'Bridal', href: '/shop?occasion=bridal' },
+            { label: 'Evening', href: '/shop?occasion=evening' },
+            { label: 'Resort', href: '/shop?occasion=resort' },
+          ],
+        },
+      ],
+      features: [
+        { title: 'New Arrivals', href: '/shop', image: '/collection-section/67.png' },
+        { title: 'Wedding Guest', href: '/shop?occasion=wedding', image: '/collection-section/68.png' },
+      ],
+    },
+    '/accessories': {
+      columns: [
+        {
+          title: 'Accessories',
+          links: [
+            { label: 'All Accessories', href: '/accessories' },
+            { label: 'Necklaces', href: '/accessories?type=necklaces' },
+            { label: 'Bracelets', href: '/accessories?type=bracelets' },
+            { label: 'Earrings', href: '/accessories?type=earrings' },
+          ],
+        },
+        {
+          title: 'By Styling',
+          links: [
+            { label: 'Everyday', href: '/accessories?style=everyday' },
+            { label: 'Statement', href: '/accessories?style=statement' },
+            { label: 'Layering', href: '/accessories?style=layering' },
+            { label: 'Gift Edit', href: '/accessories?style=gift' },
+          ],
+        },
+      ],
+      features: [
+        { title: 'Signature Details', href: '/accessories', image: '/collection-section/4.JPG' },
+        { title: 'Crafted Finish', href: '/accessories', image: '/image 2.JPG' },
+      ],
+    },
+    '/heritage': {
+      columns: [
+        {
+          title: 'Heritage',
+          links: [
+            { label: 'The Codes', href: '/heritage' },
+            { label: 'Al Talli', href: '/heritage/al-talli' },
+            { label: 'Khous', href: '/heritage/khous' },
+            { label: 'Craft Story', href: '/heritage' },
+          ],
+        },
+        {
+          title: 'Explore',
+          links: [
+            { label: 'Our Story', href: '/about' },
+            { label: 'Chapter Edit', href: '/shop' },
+            { label: 'Contact', href: '/contact' },
+          ],
+        },
+      ],
+      features: [
+        { title: 'Al Talli', href: '/heritage/al-talli', image: '/collection-section/2.PNG' },
+        { title: 'Khous', href: '/heritage/khous', image: '/collection-section/3.JPG' },
+      ],
+    },
+    '/about': {
+      columns: [
+        {
+          title: 'About',
+          links: [
+            { label: 'Our Story', href: '/about' },
+            { label: 'The House', href: '/about' },
+            { label: 'Craftsmanship', href: '/heritage' },
+            { label: 'Contact', href: '/contact' },
+          ],
+        },
+      ],
+      features: [
+        { title: 'The House', href: '/about', image: '/image 1.png' },
+        { title: 'Created for You', href: '/contact', image: '/collection-section/4.JPG' },
+      ],
+    },
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -117,7 +229,10 @@ export default function Header() {
         {/* Subtle dusty blue accent line at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
         
-        <nav className="container mx-auto px-4 lg:px-12">
+        <nav
+          className="container mx-auto px-4 lg:px-12"
+          onMouseLeave={() => setActiveMegaMenu(null)}
+        >
           <div className="flex items-center justify-between relative">
             
             {/* Left: Navigation - xl breakpoint prevents overlap on medium screens */}
@@ -126,7 +241,10 @@ export default function Header() {
                 <LocaleLink
                   key={item.label}
                   href={item.href}
-                  className="font-roboto text-[11px] uppercase tracking-[0.15em] text-white/90 hover:text-brand-dustyBlue transition-colors duration-300 py-2 whitespace-nowrap flex-shrink-0 relative z-[60]"
+                  onMouseEnter={() => setActiveMegaMenu(item.href)}
+                  className={`font-roboto text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 py-2 whitespace-nowrap flex-shrink-0 relative z-[60] ${
+                    activeMegaMenu === item.href ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
+                  }`}
                   data-cursor-hover
                 >
                   {item.label}
@@ -146,13 +264,13 @@ export default function Header() {
 
             {/* Center: Logo - lower z-index so nav links (z-50) receive clicks when overlapping */}
             <div className="absolute left-1/2 -translate-x-1/2 z-[40] shrink-0">
-              <LocaleLink href="/preview" className="block" data-cursor-hover>
+              <LocaleLink href="/home" className="block" data-cursor-hover>
                 <Image
                   src="/logo.png"
                   alt="Bint Saeed"
-                  width={300}
-                  height={80}
-                  className={`transition-all duration-300 ${isScrolled ? 'h-[55px]' : 'h-[65px]'} w-auto`}
+                  width={420}
+                  height={110}
+                  className={`transition-all duration-300 ${isScrolled ? 'h-[66px]' : 'h-[78px]'} w-auto`}
                   priority
                 />
               </LocaleLink>
@@ -237,6 +355,77 @@ export default function Header() {
               </button>
             </div>
           </div>
+
+          {/* Desktop Mega Menu */}
+          <AnimatePresence>
+            {activeMegaMenu && megaMenus[activeMegaMenu] && (
+              <motion.div
+                key={activeMegaMenu}
+                initial={{ opacity: 0, y: -12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="absolute left-0 right-0 top-full hidden xl:block"
+              >
+                <div className="border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)]">
+                  <div className="grid grid-cols-12 gap-10 px-6 py-8 lg:px-12">
+                    <div className="col-span-7 grid grid-cols-3 gap-8">
+                      {megaMenus[activeMegaMenu].columns.map((col) => (
+                        <div key={col.title}>
+                          <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/70">
+                            {col.title}
+                          </p>
+                          <div className="space-y-2.5">
+                            {col.links.map((link) => (
+                              <LocaleLink
+                                key={link.label}
+                                href={link.href}
+                                className="block font-roboto text-[13px] text-brand-darkRed/90 transition-colors hover:text-brand-dustyBlue"
+                                data-cursor-hover
+                                onClick={() => setActiveMegaMenu(null)}
+                              >
+                                {link.label}
+                              </LocaleLink>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="col-span-5 grid grid-cols-2 gap-4">
+                      {megaMenus[activeMegaMenu].features.map((feature) => (
+                        <LocaleLink
+                          key={feature.title}
+                          href={feature.href}
+                          className="group block"
+                          data-cursor-hover
+                          onClick={() => setActiveMegaMenu(null)}
+                        >
+                          <div className="relative aspect-[4/5] overflow-hidden bg-brand-stone/20">
+                            <Image
+                              src={feature.image}
+                              alt={feature.title}
+                              fill
+                              sizes="(max-width: 1536px) 20vw, 300px"
+                              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                            />
+                          </div>
+                          <div className="mt-2 flex items-center justify-between">
+                            <span className="font-roboto text-[12px] text-brand-darkRed">
+                              {feature.title}
+                            </span>
+                            <span className="font-roboto text-[11px] uppercase tracking-[0.1em] text-brand-darkRed/70 transition-colors group-hover:text-brand-dustyBlue">
+                              Shop Now
+                            </span>
+                          </div>
+                        </LocaleLink>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </nav>
       </header>
 
@@ -359,13 +548,13 @@ export default function Header() {
             <div className="h-full flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between px-6 py-5">
-                <LocaleLink href="/preview" onClick={() => setIsMobileMenuOpen(false)}>
+                <LocaleLink href="/home" onClick={() => setIsMobileMenuOpen(false)}>
                   <Image
                     src="/logo.png"
                     alt="Bint Saeed"
-                    width={200}
-                    height={55}
-                    className="h-12 w-auto"
+                    width={250}
+                    height={70}
+                    className="h-14 w-auto"
                   />
                 </LocaleLink>
                 <button

@@ -19,6 +19,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const { items, removeItem, updateQuantity, getTotal } = useCartStore()
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
+  const productHref = (item: (typeof items)[number]) => item.productUrl ?? `/shop/${item.id}`
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
 
@@ -99,7 +100,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   {items.map((item) => (
                     <div key={lineKey(item)} className={`p-4 flex gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                       {/* Image */}
-                      <LocaleLink href={`/shop/${item.id}`} onClick={onClose} className="flex-shrink-0" data-cursor-hover>
+                      <LocaleLink href={productHref(item)} onClick={onClose} className="flex-shrink-0" data-cursor-hover>
                         <div className="relative h-[4.8rem] w-16 overflow-hidden rounded-lg bg-[#f5f5f5] sm:h-[6.4rem] sm:w-[4.8rem]">
                           <Image
                             src={item.image}
@@ -112,7 +113,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
                       {/* Details */}
                       <div className={`flex-1 min-w-0 ${isRTL ? 'text-right' : ''}`}>
-                        <LocaleLink href={`/shop/${item.id}`} onClick={onClose} data-cursor-hover>
+                        <LocaleLink href={productHref(item)} onClick={onClose} data-cursor-hover>
                           <h3 className="font-roboto text-sm font-medium text-brand-darkRed truncate hover:text-brand-dustyBlue transition-colors">
                             {item.name}
                           </h3>

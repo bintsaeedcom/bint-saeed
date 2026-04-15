@@ -34,21 +34,21 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-4xl md:w-full bg-white z-[101] overflow-hidden max-h-[90vh] overflow-y-auto"
+            className="fixed inset-4 z-[101] max-h-[90vh] overflow-y-auto rounded-xl border border-brand-stone/25 bg-[#f9f6f2] shadow-2xl md:inset-auto md:left-1/2 md:top-1/2 md:w-full md:max-w-4xl md:-translate-x-1/2 md:-translate-y-1/2"
           >
             {/* Header */}
-            <div className={`sticky top-0 bg-brand-darkRed px-6 py-4 flex items-center justify-between z-10 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`sticky top-0 z-10 flex items-center justify-between border-b border-brand-stone/25 bg-[#f7f2ec] px-6 py-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <div>
-                <h2 className="font-rozha text-2xl text-white">
+                <h2 className="font-rozha text-2xl text-brand-darkRed">
                   {isRTL ? 'دليل المقاسات' : 'Size Guide'}
                 </h2>
-                <p className="font-roboto text-xs text-white/60 tracking-wide">
+                <p className="font-roboto text-xs tracking-[0.14em] text-brand-clayRed/65">
                   {isRTL ? 'قياسات العباءة - قصة A' : 'A-Cut Abaya Measurements'}
                 </p>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 text-white/70 hover:text-white transition-colors"
+                className="p-2 text-brand-clayRed/70 transition-colors hover:text-brand-darkRed"
                 data-cursor-hover
               >
                 <FiX className="w-6 h-6" />
@@ -56,7 +56,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
             </div>
 
             {/* Content */}
-            <div className="p-6">
+            <div className="p-6 md:p-7">
               {/* Size Selector */}
               <div className="mb-6">
                 <p className={`font-roboto text-xs text-brand-clayRed/70 tracking-wide mb-3 ${isRTL ? 'text-right' : ''}`}>
@@ -82,17 +82,17 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
               </div>
 
               {/* Size Table */}
-              <div className="overflow-x-auto mb-6">
+              <div className="mb-6 overflow-x-auto rounded-lg border border-brand-stone/20 bg-white/70">
                 <table className="w-full min-w-[600px]">
                   <thead>
                     <tr>
-                      <th className={`py-3 px-3 bg-brand-stone/10 font-roboto text-xs uppercase tracking-[0.1em] text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}>
+                      <th className={`bg-brand-stone/10 px-3 py-3.5 font-roboto text-xs uppercase tracking-[0.12em] text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}>
                         {isRTL ? 'القياس' : 'Measurement'}
                       </th>
                       {[...sizeData.headers].map((size) => (
                         <th
                           key={size}
-                          className={`py-3 px-3 font-roboto text-xs uppercase tracking-[0.1em] text-center transition-all ${
+                          className={`px-3 py-3.5 text-center font-roboto text-xs uppercase tracking-[0.12em] transition-all ${
                             selectedSize === size
                               ? 'bg-brand-darkRed text-white'
                               : 'bg-brand-stone/10 text-brand-darkRed'
@@ -105,9 +105,9 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                   </thead>
                   <tbody>
                     {sizeData.measurements.map((row, rowIndex) => (
-                      <tr
+                    <tr
                         key={row.label.en}
-                        className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-brand-stone/5'}
+                      className={rowIndex % 2 === 0 ? 'bg-white/70' : 'bg-brand-stone/5'}
                       >
                         <td className={`py-3 px-3 font-roboto text-sm text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
                           {isRTL ? row.label.ar : row.label.en}
@@ -144,7 +144,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
               <LocaleLink
                 href="/size-guide"
                 onClick={onClose}
-                className={`inline-flex items-center gap-2 px-6 py-3 bg-brand-darkRed text-white font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`inline-flex items-center gap-2 px-6 py-3 bg-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] text-white transition-colors hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 {isRTL ? 'الدليل الكامل' : 'View Full Size Guide'}

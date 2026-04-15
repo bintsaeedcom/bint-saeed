@@ -156,7 +156,7 @@ export default function Footer() {
           <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 ${isRTL ? 'text-right' : ''}`}>
             {/* Brand Column with Logo */}
             <div className="col-span-2 md:col-span-1">
-              <LocaleLink href="/preview" data-cursor-hover className="inline-block mb-6">
+              <LocaleLink href="/home" data-cursor-hover className="inline-block mb-6">
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
@@ -164,9 +164,9 @@ export default function Footer() {
                   <Image
                     src="/logo.png"
                     alt="Bint Saeed"
-                    width={160}
-                    height={40}
-                    className="h-[38px] w-[152px] object-contain"
+                    width={240}
+                    height={60}
+                    className="h-[54px] w-[216px] object-contain"
                   />
                 </motion.div>
               </LocaleLink>

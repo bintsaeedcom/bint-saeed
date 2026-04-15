@@ -15,15 +15,15 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
   const { headers, measurements } = sizeGuideTable
 
   return (
-    <div className="mb-8 border border-brand-stone/40 bg-white">
+    <div className="mb-10 overflow-hidden rounded-xl border border-brand-stone/30 bg-[#f9f6f2]">
       <div
-        className={`flex flex-wrap items-center justify-between gap-2 border-b border-brand-stone/30 bg-brand-stone/5 px-4 py-3 ${isRTL ? 'flex-row-reverse' : ''}`}
+        className={`flex flex-wrap items-center justify-between gap-2 border-b border-brand-stone/25 bg-white/70 px-5 py-4 ${isRTL ? 'flex-row-reverse' : ''}`}
       >
         <div className={isRTL ? 'text-right' : ''}>
-          <h2 className="font-rozha text-lg text-brand-darkRed">
+          <h2 className="font-rozha text-xl text-brand-darkRed">
             {isRTL ? 'جدول المقاسات' : 'Size chart'}
           </h2>
-          <p className="font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/60">
+          <p className="font-roboto text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/60">
             {isRTL ? 'كل الأنماط — قصة A' : 'All styles — A-cut (inches)'}
           </p>
         </div>
@@ -48,19 +48,19 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
           </LocaleLink>
         </div>
       </div>
-      <div className="overflow-x-auto p-3 sm:p-4">
+      <div className="overflow-x-auto px-4 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4">
         <table className="w-full min-w-[560px] text-sm">
           <thead>
             <tr>
               <th
-                className={`py-2 px-2 font-roboto text-[10px] uppercase tracking-[0.12em] text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}
+                className={`px-3 py-2.5 font-roboto text-[10px] uppercase tracking-[0.14em] text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}
               >
                 {isRTL ? 'القياس' : 'Measurement'}
               </th>
               {headers.map((size) => (
                 <th
                   key={size}
-                  className="px-2 py-2 text-center font-roboto text-[10px] uppercase tracking-[0.12em] text-brand-darkRed"
+                  className="px-3 py-2.5 text-center font-roboto text-[10px] uppercase tracking-[0.14em] text-brand-darkRed"
                 >
                   {size}
                 </th>
@@ -68,15 +68,15 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
             </tr>
           </thead>
           <tbody>
-            {measurements.map((row, rowIndex) => (
-              <tr key={row.label.en} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-brand-stone/5'}>
+            {measurements.map((row) => (
+              <tr key={row.label.en} className="border-t border-brand-stone/15 bg-white/60">
                 <td
-                  className={`py-2.5 px-2 font-roboto text-xs text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}
+                  className={`px-3 py-3 font-roboto text-xs text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}
                 >
                   {isRTL ? row.label.ar : row.label.en}
                 </td>
                 {row.values.map((value, colIndex) => (
-                  <td key={colIndex} className="px-2 py-2.5 text-center font-roboto text-xs text-brand-clayRed">
+                  <td key={colIndex} className="px-3 py-3 text-center font-roboto text-xs text-brand-clayRed">
                     {value}
                   </td>
                 ))}
@@ -85,7 +85,7 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
           </tbody>
         </table>
       </div>
-      <p className={`border-t border-brand-stone/20 px-4 py-3 font-roboto text-[11px] leading-relaxed text-brand-clayRed/70 ${isRTL ? 'text-right' : 'text-left'}`}>
+      <p className={`border-t border-brand-stone/20 bg-white/55 px-5 py-3.5 font-roboto text-[11px] leading-relaxed text-brand-clayRed/70 ${isRTL ? 'text-right' : 'text-left'}`}>
         {isRTL
           ? 'الألوان المعروضة أعلاه متوفرة لهذا الطراز. للطول المخصص، اذكريه في ملاحظات الطلب.'
           : 'Colour options above apply to this style. Add custom length in order notes if needed.'}

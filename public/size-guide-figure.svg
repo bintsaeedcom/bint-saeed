@@ -1,0 +1,56 @@
+<svg width="620" height="760" viewBox="0 0 620 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="620" height="760" fill="#F9F6F2"/>
+  <g stroke="#2D141E" stroke-opacity="0.45" stroke-width="2">
+    <ellipse cx="210" cy="90" rx="36" ry="44"/>
+    <path d="M173 138C173 170 168 206 170 238C172 272 180 304 180 340V406C180 464 182 528 190 620"/>
+    <path d="M247 138C247 170 252 206 250 238C248 272 240 304 240 340V406C240 464 238 528 230 620"/>
+    <path d="M180 216C198 206 222 206 240 216"/>
+    <path d="M166 332C190 346 230 346 254 332"/>
+    <path d="M189 620L176 736"/>
+    <path d="M231 620L244 736"/>
+    <path d="M148 210L136 420"/>
+    <path d="M272 210L284 420"/>
+    <path d="M136 420L154 430"/>
+    <path d="M284 420L266 430"/>
+  </g>
+
+  <g stroke="#1F1A17" stroke-opacity="0.55" stroke-width="1.5">
+    <line x1="86" y1="206" x2="334" y2="206"/>
+    <line x1="92" y1="300" x2="328" y2="300"/>
+    <line x1="98" y1="352" x2="322" y2="352"/>
+    <line x1="100" y1="430" x2="320" y2="430"/>
+    <line x1="118" y1="640" x2="302" y2="640"/>
+    <line x1="72" y1="208" x2="72" y2="642"/>
+    <line x1="348" y1="208" x2="348" y2="642"/>
+  </g>
+
+  <g fill="#12080B">
+    <circle cx="72" cy="430" r="11"/>
+    <circle cx="206" cy="300" r="11"/>
+    <circle cx="206" cy="352" r="11"/>
+    <circle cx="206" cy="430" r="11"/>
+    <circle cx="206" cy="520" r="11"/>
+    <circle cx="322" cy="610" r="11"/>
+    <circle cx="348" cy="350" r="11"/>
+  </g>
+
+  <g fill="#FFFFFF" font-family="Arial, sans-serif" font-size="11" font-weight="700" text-anchor="middle">
+    <text x="72" y="434">1</text>
+    <text x="206" y="304">2</text>
+    <text x="206" y="356">3</text>
+    <text x="206" y="434">4</text>
+    <text x="206" y="524">5</text>
+    <text x="322" y="614">6</text>
+    <text x="348" y="354">7</text>
+  </g>
+
+  <g stroke="#AFA39A" stroke-width="1">
+    <line x1="384" y1="208" x2="598" y2="208"/>
+    <line x1="384" y1="264" x2="598" y2="264"/>
+    <line x1="384" y1="320" x2="598" y2="320"/>
+    <line x1="384" y1="376" x2="598" y2="376"/>
+    <line x1="384" y1="432" x2="598" y2="432"/>
+    <line x1="384" y1="488" x2="598" y2="488"/>
+    <line x1="384" y1="544" x2="598" y2="544"/>
+  </g>
+</svg>

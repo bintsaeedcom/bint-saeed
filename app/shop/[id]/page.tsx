@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
@@ -33,7 +33,13 @@ import 'swiper/css/pagination'
 export default function ProductPage() {
   const params = useParams()
   const router = useRouter()
-  const productId = typeof params.id === 'string' ? params.id : ''
+  const rawId = params?.id
+  const productId =
+    typeof rawId === 'string'
+      ? decodeURIComponent(rawId)
+      : Array.isArray(rawId) && typeof rawId[0] === 'string'
+        ? decodeURIComponent(rawId[0])
+        : ''
   const [product, setProduct] = useState<Product | null>(() =>
     productId ? staticProducts.find((p) => p.id === productId) ?? null : null
   )
@@ -98,6 +104,27 @@ export default function ProductPage() {
   const personalisationSurcharge =
     customisationActive && customisationMessage.trim().length > 0 ? CUSTOMISATION_SURCHARGE_AED : 0
   const displayUnitAed = product.price + personalisationSurcharge
+  const relatedStyles = useMemo(
+    () =>
+      staticProducts
+        .filter((p) => p.id !== product.id && p.category === product.category)
+        .slice(0, 3),
+    [product.category, product.id],
+  )
+  const productDetails = [
+    product.description,
+    product.fabric,
+    'Hand-finished in-house at Bint Saeed atelier.',
+    needsLength
+      ? 'Custom length available after size selection.'
+      : 'Standard silhouette measurements are shown in the size section.',
+  ]
+  const fitAndSizeDetails = [
+    `Available sizes: ${sizeOptions.join(', ')}`,
+    needsLength ? `Length options: ${lengthCmSelectOptions()[0]}-${lengthCmSelectOptions().slice(-1)[0]} cm.` : null,
+    'Fits true to chapter sizing. Use the size chart to confirm your best fit.',
+    'If you are between sizes, choose the larger size for more ease.',
+  ].filter(Boolean) as string[]
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -121,6 +148,7 @@ export default function ProductPage() {
 
     addItem({
       id: product.id,
+      productUrl: `/shop/${product.id}`,
       name: product.name,
       price: product.price,
       image: product.images[0],
@@ -178,8 +206,8 @@ export default function ProductPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 lg:px-12 py-12">
-        <div className="isolate grid min-w-0 grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
+      <div className="mx-auto max-w-[1460px] px-6 py-12 lg:px-12 lg:py-16">
+        <div className="isolate grid min-w-0 grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-20">
           {/* Image Gallery */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -278,7 +306,7 @@ export default function ProductPage() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className={`relative z-[1] min-w-0 lg:sticky lg:top-32 lg:self-start ${isRTL ? 'text-right' : ''}`}
+            className={`relative z-[1] min-w-0 border border-brand-stone/25 bg-[#f9f6f2] p-6 lg:sticky lg:top-32 lg:self-start lg:p-8 ${isRTL ? 'text-right' : ''}`}
           >
             {/* Category */}
             <span className="font-roboto text-xs uppercase tracking-[0.3em] text-brand-dustyBlue mb-3 block">
@@ -316,11 +344,19 @@ export default function ProductPage() {
                 ? 'صُنع حسب الطلب — متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
                 : 'Made to order — available within this chapter (availability confirmed when you order).'}
             </p>
+            <div className={`mb-8 flex flex-wrap gap-2 border-b border-brand-stone/20 pb-6 ${isRTL ? 'justify-end' : ''}`}>
+              <span className="border border-brand-stone/40 px-3 py-1 font-roboto text-[10px] uppercase tracking-[0.16em] text-brand-darkRed">
+                {isRTL ? 'صنع أخلاقي' : 'Ethically made'}
+              </span>
+              <span className="border border-brand-stone/40 px-3 py-1 font-roboto text-[10px] uppercase tracking-[0.16em] text-brand-darkRed">
+                {isRTL ? 'شحن عالمي' : 'Worldwide shipping'}
+              </span>
+            </div>
 
             <OrderCutoffBanner />
 
             {/* Color Selection */}
-            <div className="mb-8">
+            <div className="mb-8 border-b border-brand-stone/20 pb-7">
               <div className={`mb-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed">
                   Color
@@ -358,7 +394,7 @@ export default function ProductPage() {
             </div>
 
             {/* Size Selection */}
-            <div className="mb-8">
+            <div className="mb-8 border-b border-brand-stone/20 pb-7">
               <div className={`mb-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed">
                   Size
@@ -430,7 +466,7 @@ export default function ProductPage() {
             )}
 
             {/* Personalisation */}
-            <div className="mb-8">
+            <div className="mb-8 border-b border-brand-stone/20 pb-7">
               <span className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed mb-3 block">
                 Personalisation
               </span>
@@ -493,7 +529,7 @@ export default function ProductPage() {
             </div>
 
             {/* Notes */}
-            <div className="mb-8">
+            <div className="mb-8 border-b border-brand-stone/20 pb-7">
               <label className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed mb-3 block">
                 Special Notes (Optional)
               </label>
@@ -563,7 +599,7 @@ export default function ProductPage() {
                   data-cursor-hover
                 >
                   <span className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed">
-                    Description
+                    Product Details
                   </span>
                   <FiChevronDown
                     className={`w-4 h-4 text-brand-darkRed transition-transform ${
@@ -580,9 +616,13 @@ export default function ProductPage() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5">
-                        {product.description}
-                      </p>
+                      <div className="space-y-2 pb-5">
+                        {productDetails.map((item) => (
+                          <p key={item} className={`font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                            • {item}
+                          </p>
+                        ))}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -596,7 +636,7 @@ export default function ProductPage() {
                   data-cursor-hover
                 >
                   <span className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed">
-                    Fabric & Materials
+                    Fit & Size Details
                   </span>
                   <FiChevronDown
                     className={`w-4 h-4 text-brand-darkRed transition-transform ${
@@ -613,9 +653,13 @@ export default function ProductPage() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5">
-                        {product.fabric}
-                      </p>
+                      <div className="space-y-2 pb-5">
+                        {fitAndSizeDetails.map((item) => (
+                          <p key={item} className={`font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                            • {item}
+                          </p>
+                        ))}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -690,6 +734,42 @@ export default function ProductPage() {
                 </AnimatePresence>
               </div>
             </div>
+
+            {relatedStyles.length > 0 && (
+              <section className="mt-12">
+                <h3 className="mb-5 font-roboto text-xs uppercase tracking-[0.22em] text-brand-darkRed">
+                  {isRTL ? 'أنماط مشابهة' : 'Related styles'}
+                </h3>
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  {relatedStyles.map((item) => (
+                    <LocaleLink
+                      key={item.id}
+                      href={`/shop/${item.id}`}
+                      className="group block"
+                      data-cursor-hover
+                    >
+                      <div className="relative aspect-[3/4] overflow-hidden bg-brand-stone/10">
+                        <Image
+                          src={item.images[0]}
+                          alt={item.name}
+                          fill
+                          sizes="(max-width: 768px) 50vw, 22vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        />
+                      </div>
+                      <div className="mt-3 flex items-center justify-between gap-3">
+                        <p className="font-roboto text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
+                          {item.name}
+                        </p>
+                        <p className="font-roboto text-xs tracking-wide text-brand-clayRed/80">
+                          {item.price.toLocaleString()} AED
+                        </p>
+                      </div>
+                    </LocaleLink>
+                  ))}
+                </div>
+              </section>
+            )}
           </motion.div>
         </div>
       </div>

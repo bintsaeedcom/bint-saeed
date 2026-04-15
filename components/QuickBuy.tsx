@@ -44,6 +44,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
     addItem({
       id: product.id,
+      productUrl: `/shop/${product.id}`,
       name: product.name,
       price: product.price,
       image: product.images[0],
@@ -71,6 +72,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
     addItem({
       id: product.id,
+      productUrl: `/shop/${product.id}`,
       name: product.name,
       price: product.price,
       image: product.images[0],

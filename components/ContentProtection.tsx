@@ -24,6 +24,16 @@ function isImageDragTarget(target: EventTarget | null): boolean {
  */
 export default function ContentProtection() {
   useEffect(() => {
+    // Keep local editing friction-free (screenshots, inspect, etc.).
+    if (process.env.NODE_ENV !== 'production') return
+    // Runtime escape hatch for production troubleshooting:
+    // localStorage.setItem('bs_content_protection', 'off')
+    try {
+      if (localStorage.getItem('bs_content_protection') === 'off') return
+    } catch {
+      /* ignore */
+    }
+
     const onContextMenu = (e: MouseEvent) => {
       if (isFormField(e.target)) return
       e.preventDefault()

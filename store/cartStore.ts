@@ -4,6 +4,8 @@ import { lineTotalAed } from '@/lib/shopProductOptions'
 
 export interface CartItem {
   id: string
+  /** Canonical PDP path for this line item (e.g. /shop/bs-001, /accessories/acc-002). */
+  productUrl?: string
   name: string
   price: number
   image: string

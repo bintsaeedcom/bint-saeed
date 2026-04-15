@@ -33,6 +33,7 @@ export default function FavoriteHeartButton({
     <button
       type="button"
       className={className}
+      data-wishlist-heart="true"
       aria-pressed={favorited}
       aria-label={favorited ? 'Remove from favorites' : 'Save to favorites'}
       data-cursor-hover

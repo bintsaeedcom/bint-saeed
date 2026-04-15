@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
@@ -24,8 +24,13 @@ import 'swiper/css/thumbs'
 
 export default function AccessoryDetailPage() {
   const params = useParams()
-  const router = useRouter()
-  const aid = typeof params.id === 'string' ? params.id : ''
+  const rawId = params?.id
+  const aid =
+    typeof rawId === 'string'
+      ? decodeURIComponent(rawId)
+      : Array.isArray(rawId) && typeof rawId[0] === 'string'
+        ? decodeURIComponent(rawId[0])
+        : ''
   const accessory = accessories.find((a) => a.id === aid)
 
   const favorited = useWishlistStore((s) => s.items.some((i) => i.id === aid))
@@ -79,6 +84,7 @@ export default function AccessoryDetailPage() {
 
     addItem({
       id: accessory.id,
+      productUrl: `/accessories/${accessory.id}`,
       name: isRTL ? accessory.nameAr : accessory.name,
       price: accessory.price,
       image: accessory.images[0],

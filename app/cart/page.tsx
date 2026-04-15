@@ -11,6 +11,7 @@ import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotal } = useCartStore()
+  const productHref = (item: (typeof items)[number]) => item.productUrl ?? `/shop/${item.id}`
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
   const { formatPrice } = useCurrency()
@@ -82,7 +83,7 @@ export default function CartPage() {
                   className="flex gap-6 pb-8 border-b border-brand-stone/20"
                 >
                   {/* Image */}
-                  <LocaleLink href={`/shop/${item.id}`} className="flex-shrink-0" data-cursor-hover>
+                  <LocaleLink href={productHref(item)} className="flex-shrink-0" data-cursor-hover>
                     <div className="relative aspect-[3/4] w-[5.6rem] bg-[#f5f5f5] md:w-[7.2rem]">
                       <Image
                         src={item.image}
@@ -96,7 +97,7 @@ export default function CartPage() {
                   {/* Details */}
                   <div className="flex-1 flex flex-col">
                     <div className="flex-1">
-                      <LocaleLink href={`/shop/${item.id}`} data-cursor-hover>
+                      <LocaleLink href={productHref(item)} data-cursor-hover>
                         <h3 className="font-rozha text-lg md:text-xl text-brand-darkRed mb-2 hover:text-brand-dustyBlue transition-colors">
                           {item.name}
                         </h3>

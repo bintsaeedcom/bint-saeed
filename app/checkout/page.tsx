@@ -33,6 +33,7 @@ export default function CheckoutPage() {
 
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
+  const productHref = (item: (typeof items)[number]) => item.productUrl ?? `/shop/${item.id}`
 
   const [email, setEmail] = useState('')
   const [discountInput, setDiscountInput] = useState('')
@@ -184,11 +185,11 @@ export default function CheckoutPage() {
               <ul className="divide-y divide-brand-stone/15">
                 {items.map((item) => (
                   <li key={lineKey(item)} className="flex gap-4 py-5 first:pt-0">
-                    <LocaleLink href={`/shop/${item.id}`} className="relative h-24 w-20 shrink-0 overflow-hidden bg-[#f0eeeb]" data-cursor-hover>
+                    <LocaleLink href={productHref(item)} className="relative h-24 w-20 shrink-0 overflow-hidden bg-[#f0eeeb]" data-cursor-hover>
                       <Image src={item.image} alt="" fill className="object-cover" sizes="80px" />
                     </LocaleLink>
                     <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
-                      <LocaleLink href={`/shop/${item.id}`} className="font-rozha text-lg text-brand-darkRed hover:text-brand-dustyBlue" data-cursor-hover>
+                      <LocaleLink href={productHref(item)} className="font-rozha text-lg text-brand-darkRed hover:text-brand-dustyBlue" data-cursor-hover>
                         {item.name}
                       </LocaleLink>
                       <p className="mt-1 font-roboto text-xs text-brand-clayRed/65 tracking-wide">

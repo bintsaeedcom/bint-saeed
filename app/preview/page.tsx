@@ -1,11 +1,22 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
-import { motion, useScroll, useTransform, useInView } from 'framer-motion'
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useInView,
+  useReducedMotion,
+  useMotionValue,
+  useSpring,
+  useMotionTemplate,
+} from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiArrowRight, FiArrowDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { products as staticProducts } from '@/data/products'
+import type { Product } from '@/data/products'
 
 // Reusable decorative corner component (from Coming Soon)
 function DecorativeCorners({ color = 'dustyBlue' }: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
@@ -58,6 +69,154 @@ function DecorativeCorners({ color = 'dustyBlue' }: { color?: 'dustyBlue' | 'dar
         <div className={`absolute bottom-0 right-0 w-px h-full bg-gradient-to-t ${colorClass} to-transparent`} />
       </motion.div>
     </>
+  )
+}
+
+function SectionStripes({
+  variant = 'default',
+}: {
+  variant?: 'default' | 'hero' | 'soft' | 'bold'
+}) {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const driftA = useTransform(scrollYProgress, [0, 1], [0, 10])
+  const driftB = useTransform(scrollYProgress, [0, 1], [0, -8])
+  const pulse = useTransform(scrollYProgress, [0, 0.5, 1], [0.78, 1, 0.8])
+
+  const styles =
+    variant === 'hero'
+      ? {
+          v1: 'left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent',
+          v2: 'right-[7%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/45 to-transparent',
+          h1: 'left-10 right-10 top-16 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent',
+          h2: 'left-10 right-10 bottom-14 h-px bg-gradient-to-r from-transparent via-white/22 to-transparent',
+        }
+      : variant === 'soft'
+      ? {
+          v1: 'left-[7%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/30 to-transparent',
+          v2: 'right-[8%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-clayRed/25 to-transparent',
+          h1: 'left-[8%] right-[8%] top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent',
+          h2: 'left-[8%] right-[8%] bottom-0 h-px bg-gradient-to-r from-transparent via-brand-clayRed/20 to-transparent',
+        }
+      : variant === 'bold'
+      ? {
+          v1: 'left-[5%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/55 to-transparent',
+          v2: 'right-[5%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/40 to-transparent',
+          h1: 'left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/45 to-transparent',
+          h2: 'left-6 right-6 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/35 to-transparent',
+        }
+      : {
+          v1: 'left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/36 to-transparent',
+          v2: 'right-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-stone/35 to-transparent',
+          h1: 'left-[7%] right-[7%] top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent',
+          h2: 'left-[7%] right-[7%] bottom-0 h-px bg-gradient-to-r from-transparent via-brand-stone/26 to-transparent',
+        }
+
+  return (
+    <div ref={ref} className="pointer-events-none absolute inset-0" aria-hidden>
+      <motion.div
+        style={reduceMotion ? undefined : { y: driftA, opacity: pulse }}
+        className={`absolute ${styles.v1}`}
+      />
+      <motion.div
+        style={reduceMotion ? undefined : { y: driftB, opacity: pulse }}
+        className={`absolute ${styles.v2}`}
+      />
+      <motion.div
+        style={reduceMotion ? undefined : { x: driftA, opacity: pulse }}
+        className={`absolute ${styles.h1}`}
+      />
+      <motion.div
+        style={reduceMotion ? undefined : { x: driftB, opacity: pulse }}
+        className={`absolute ${styles.h2}`}
+      />
+    </div>
+  )
+}
+
+function MagneticWrap({
+  children,
+  className = '',
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  const reduceMotion = useReducedMotion()
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const springX = useSpring(x, { stiffness: 240, damping: 18, mass: 0.35 })
+  const springY = useSpring(y, { stiffness: 240, damping: 18, mass: 0.35 })
+
+  function handleMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (reduceMotion) return
+    const r = e.currentTarget.getBoundingClientRect()
+    const relX = (e.clientX - r.left) / r.width - 0.5
+    const relY = (e.clientY - r.top) / r.height - 0.5
+    x.set(relX * 8)
+    y.set(relY * 7)
+  }
+
+  function reset() {
+    x.set(0)
+    y.set(0)
+  }
+
+  return (
+    <motion.div
+      style={reduceMotion ? undefined : { x: springX, y: springY }}
+      onMouseMove={handleMove}
+      onMouseLeave={reset}
+      onBlur={reset}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function ScrollMaskImage({
+  src,
+  alt,
+  sizes,
+  className = '',
+}: {
+  src: string
+  alt: string
+  sizes: string
+  className?: string
+}) {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start 95%', 'end 15%'],
+  })
+  const topInset = useTransform(scrollYProgress, [0, 0.2, 1], [20, 0, 0])
+  const bottomInset = useTransform(scrollYProgress, [0, 0.8, 1], [16, 0, 0])
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.08, 1])
+  const imageY = useTransform(scrollYProgress, [0, 1], [22, -10])
+  const veilOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.28, 0.05, 0])
+  const clipPath = useMotionTemplate`inset(${topInset}% 0% ${bottomInset}% 0%)`
+
+  return (
+    <div ref={ref} className={`relative h-full w-full overflow-hidden ${className}`}>
+      <motion.div
+        style={reduceMotion ? undefined : { clipPath }}
+        className="absolute inset-0"
+      >
+        <motion.div style={reduceMotion ? undefined : { y: imageY, scale: imageScale }} className="relative h-full w-full">
+          <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
+        </motion.div>
+      </motion.div>
+      <motion.div
+        style={reduceMotion ? undefined : { opacity: veilOpacity }}
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/18 via-transparent to-brand-darkRed/12 mix-blend-screen"
+      />
+    </div>
   )
 }
 
@@ -144,19 +303,152 @@ export default function Home() {
   return (
     <div className={`relative overflow-hidden ${isRTL ? 'rtl' : 'ltr'}`}>
       <HeroSection />
+      <QuickShopCarousel />
+      <CampaignPanoramaSection />
       <EditorialIntro />
       <MagazineGrid />
       <ColorBlockSection />
       <EditorialSplit />
       <CollectionStrip />
       <CreatedForYouSection />
-      <AsymmetricShowcase />
     </div>
+  )
+}
+
+function CampaignPanoramaSection() {
+  return (
+    <section className="relative w-full overflow-hidden bg-[#f6f2eb] py-0">
+      <SectionStripes variant="soft" />
+      <div className="relative w-full">
+        <div className="relative aspect-[16/6] min-h-[220px] w-full overflow-hidden bg-brand-stone/15 md:min-h-[280px] lg:min-h-[360px]">
+          <Image
+            src="/hero-bintsaeed.jpg"
+            alt="Bint Saeed campaign panorama"
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            priority={false}
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#12080b]/22 via-transparent to-[#12080b]/16" />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function QuickShopCarousel() {
+  const { isRTL } = useLanguage()
+  const [isPaused, setIsPaused] = useState(false)
+  const [catalog, setCatalog] = useState<Product[]>(staticProducts)
+
+  useEffect(() => {
+    let cancelled = false
+    fetch('/api/catalog')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (cancelled || !data?.products?.length) return
+        setCatalog(data.products as Product[])
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const quickProducts = catalog.slice(0, 8)
+
+  return (
+    <section className="relative bg-[#f7f4ef] py-14 md:py-18 lg:py-20">
+      <SectionStripes variant="soft" />
+      <div className="mx-auto mb-8 max-w-[1600px] px-6 lg:px-14">
+        <p className="text-center font-roboto text-[11px] uppercase tracking-[0.26em] text-brand-darkRed">
+          {isRTL ? 'وصل حديثا' : 'NEW ARRIVALS'}
+        </p>
+      </div>
+
+      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-10 bg-gradient-to-r from-[#f7f4ef] to-transparent md:w-16 lg:w-20" />
+      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-10 bg-gradient-to-l from-[#f7f4ef] to-transparent md:w-16 lg:w-20" />
+
+      <div
+        className="overflow-hidden"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onFocusCapture={() => setIsPaused(true)}
+        onBlurCapture={() => setIsPaused(false)}
+      >
+        <div
+          className={`quick-shop-track ${isRTL ? 'quick-shop-track-rtl' : ''}`}
+          style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
+        >
+          {[...quickProducts, ...quickProducts].map((product, idx) => (
+            <a
+              key={`${product.id}-${idx}`}
+              href={`/shop/${product.id}`}
+              className="group mx-1.5 flex h-[24.6rem] w-[13.1rem] shrink-0 flex-col border border-brand-stone/25 bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:-translate-y-0.5 focus-visible:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:outline-none md:mx-2 md:h-[30rem] md:w-[16rem] lg:h-[31.5rem] lg:w-[16.8rem]"
+              data-cursor-hover
+            >
+              <div className="relative h-[20.8rem] w-full overflow-hidden bg-[#f3f0ea] md:h-[25.7rem] lg:h-[27rem]">
+                <Image
+                  src={product.images[0]}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
+                  className="object-cover object-top transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-visible:opacity-0 group-hover:scale-[1.03]"
+                />
+                <Image
+                  src={product.images[1] || product.images[0]}
+                  alt={`${product.name} campaign`}
+                  fill
+                  sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
+                  className="object-cover object-center opacity-0 transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-visible:opacity-100 group-hover:scale-[1.03]"
+                />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#12080b]/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              </div>
+              <div className="flex min-h-[3.8rem] flex-1 items-center border-t border-brand-stone/20 px-2.5 md:min-h-[4rem] md:px-3">
+                <p className="truncate font-roboto text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88">
+                  {product.name}
+                </p>
+                <p className="ml-auto pl-2 font-roboto text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed whitespace-nowrap">
+                  DHS. {product.price.toLocaleString()}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <style jsx>{`
+        .quick-shop-track {
+          display: flex;
+          width: max-content;
+          padding: 0 0.4rem;
+          animation: quickShopMarquee 72s linear infinite;
+        }
+        .quick-shop-track-rtl {
+          animation-direction: reverse;
+        }
+        @keyframes quickShopMarquee {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-50%);
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .quick-shop-track {
+            animation: none;
+            transform: translateX(0);
+          }
+        }
+      `}</style>
+    </section>
   )
 }
 
 function HeroSection() {
   const ref = useRef(null)
+  const reduceMotion = useReducedMotion()
   const { t, isRTL } = useLanguage()
   // Preview-specific hero copy (English)
   const heroTagline = 'A house devoted to the daughter in every woman.'
@@ -167,9 +459,15 @@ function HeroSection() {
 
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '40%'])
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2])
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, 20])
+  const titleTracking = useTransform(scrollYProgress, [0, 1], ['0.06em', '0.11em'])
+  const titleBlur = useTransform(scrollYProgress, [0, 1], [0, 1.6])
+  const titleFilter = useMotionTemplate`blur(${titleBlur}px)`
+  const introX = useTransform(scrollYProgress, [0, 1], [0, 14])
 
   return (
     <section ref={ref} className="relative h-[100svh] w-full">
+      <SectionStripes variant="hero" />
       {/* Background — pointer-events-none so scaled layer never steals clicks from hero links */}
       <motion.div style={{ scale }} className="pointer-events-none absolute inset-0 overflow-hidden">
         <Image
@@ -228,6 +526,7 @@ function HeroSection() {
                   initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  style={reduceMotion ? undefined : { y: titleY, letterSpacing: titleTracking, filter: titleFilter }}
                   className="mb-8 max-w-[100vw] font-rozha uppercase leading-[1.12] tracking-[0.06em] !text-white text-[clamp(0.7rem,calc(0.35rem+2.15vw),2.65rem)] sm:text-[clamp(0.85rem,calc(0.4rem+2.35vw),2.75rem)] md:text-[clamp(0.95rem,calc(0.45rem+2.5vw),2.85rem)] md:whitespace-nowrap"
                 >
                   Carrying Heritage{' '}
@@ -238,6 +537,7 @@ function HeroSection() {
                   initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+                  style={reduceMotion ? undefined : { x: introX }}
                   className="mb-6 max-w-md border-s border-white/25 ps-5 font-roboto text-sm leading-[1.75] tracking-[0.02em] !text-white/90 md:mb-8 md:ps-6 md:text-[15px]"
                 >
                   {heroTagline}
@@ -250,16 +550,18 @@ function HeroSection() {
                 transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="relative z-30 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10"
               >
-                <a
-                  href="/shop"
-                  className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-roboto text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
-                  data-cursor-hover
-                >
-                  {t.hero.discoverCollection}
-                  <FiArrowRight
-                    className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
-                  />
-                </a>
+                <MagneticWrap className="w-fit">
+                  <a
+                    href="/shop"
+                    className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-roboto text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
+                    data-cursor-hover
+                  >
+                    {t.hero.discoverCollection}
+                    <FiArrowRight
+                      className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
+                    />
+                  </a>
+                </MagneticWrap>
               </motion.div>
             </div>
           </div>
@@ -287,34 +589,47 @@ function HeroSection() {
 
 function EditorialIntro() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { margin: '-20%' })
+  const isInView = useInView(ref, { margin: '-20%', once: true })
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const imageY = useTransform(scrollYProgress, [0, 1], [56, -42])
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.62, 1, 1, 0.72])
+  const imageScale = useTransform(scrollYProgress, [0, 1], [0.97, 1.03])
+  const panelY = useTransform(scrollYProgress, [0, 1], [14, -12])
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative bg-white">
-      {/* Soft gradient block - Left side only */}
-      <div className="pointer-events-none absolute top-0 left-0 h-full w-full bg-gradient-to-br from-brand-rose/20 via-brand-stone/40 to-white md:w-1/2" />
+    <section ref={ref} className="relative overflow-hidden bg-white py-24 md:py-32 lg:py-36">
+      <SectionStripes variant="default" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,1)_0%,rgba(248,244,238,0.9)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_110%_70%_at_18%_12%,rgba(146,170,193,0.2)_0%,transparent_58%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_65%_at_82%_84%,rgba(193,144,134,0.16)_0%,transparent_62%)]" />
+      <div className="pointer-events-none absolute inset-y-0 left-[7%] w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/45 to-transparent" />
+      <div className="pointer-events-none absolute left-[7%] top-0 h-px w-28 bg-gradient-to-r from-brand-dustyBlue/50 to-transparent" />
+      <div className="pointer-events-none absolute right-[8%] bottom-[16%] h-px w-24 bg-gradient-to-l from-brand-clayRed/40 to-transparent" />
 
-      {/* Dusty Blue accent line */}
-      <div className="pointer-events-none absolute top-0 left-0 h-full w-1 bg-gradient-to-b from-brand-dustyBlue via-brand-dustyBlue/50 to-transparent" />
-      
-      <div className="relative container mx-auto px-6 lg:px-16 py-32 md:py-48">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-0">
-          {/* Text Content */}
+      <div className="relative container mx-auto px-6 lg:px-16">
+        <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
           <motion.div
-            initial={{ opacity: 0, y: 60 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className={`lg:col-span-5 ${isRTL ? 'lg:col-start-8' : ''} relative z-10`}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            style={{ y: panelY }}
+            className={`lg:col-span-5 ${isRTL ? 'lg:col-start-8' : ''}`}
           >
-            <div className="lg:pr-12">
-              <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-6 block">
+            <div className="relative border border-brand-stone/25 bg-[#fbf9f6] p-7 shadow-[0_18px_45px_rgba(35,18,23,0.06)] md:p-10">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_8%_10%,rgba(146,170,193,0.1)_0%,transparent_55%)]" />
+              <div className="pointer-events-none absolute -left-px top-0 h-full w-[2px] bg-gradient-to-b from-brand-dustyBlue/10 via-brand-dustyBlue/65 to-brand-dustyBlue/10" />
+              <div className="pointer-events-none absolute right-0 top-0 h-px w-24 bg-gradient-to-l from-brand-dustyBlue/55 to-transparent" />
+              <span className="relative mb-6 block font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
                 Manifesto
               </span>
-              <h2 className="font-rozha text-3xl md:text-4xl text-brand-darkRed leading-[1.15] mb-8">
+              <h2 className="mb-8 font-rozha text-3xl leading-[1.15] text-brand-darkRed md:text-4xl">
                 {MANIFESTO_LEAD}
               </h2>
-              <div className="font-roboto text-sm text-brand-darkRed/75 tracking-wide leading-[1.9] space-y-6">
+              <div className="space-y-6 font-roboto text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
                 {MANIFESTO_PARAGRAPHS.map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}
@@ -322,25 +637,32 @@ function EditorialIntro() {
             </div>
           </motion.div>
 
-          {/* Image */}
           <motion.div
-            initial={{ opacity: 0, x: 80 }}
+            initial={{ opacity: 0, x: 60 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className={`lg:col-span-6 ${isRTL ? 'lg:col-start-1' : 'lg:col-start-7'}`}
+            transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ y: imageY, opacity: imageOpacity }}
+            className={`lg:col-span-7 ${isRTL ? 'lg:col-start-1' : ''}`}
           >
-            <div className="relative aspect-[4/5] lg:-mr-16">
-              <Image
+            <motion.div style={{ scale: imageScale }} className="relative ml-auto aspect-[4/5] w-full max-w-[39rem]">
+              <ScrollMaskImage
                 src="/image 1.png"
                 alt="Heritage meets modernity"
-                fill
-                className="object-cover"
+                sizes="(max-width: 1024px) 92vw, 39rem"
               />
-              {/* Dusty blue frame accent */}
-              <div className="absolute -bottom-4 -left-4 w-full h-full border-2 border-brand-dustyBlue/20 -z-10" />
-            </div>
+              <div className="pointer-events-none absolute -bottom-6 -left-6 h-full w-full border border-brand-dustyBlue/45" />
+              <div className="pointer-events-none absolute -right-4 -top-4 h-full w-full border border-white/45" />
+            </motion.div>
           </motion.div>
         </div>
+      </div>
+      <div className="pointer-events-none absolute top-1/2 right-5 hidden -translate-y-1/2 xl:block">
+        <span
+          className="font-rozha text-8xl leading-none rotate-180 bg-[linear-gradient(180deg,#12080b_0%,#2d141e_35%,#1c0f15_58%,#92aac1_100%)] bg-clip-text text-transparent opacity-[0.84]"
+          style={{ writingMode: 'vertical-rl' }}
+        >
+          BINT SAEED
+        </span>
       </div>
     </section>
   )
@@ -348,33 +670,38 @@ function EditorialIntro() {
 
 function MagazineGrid() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { margin: '-10%' })
+  const isInView = useInView(ref, { margin: '-10%', once: true })
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const leadY = useTransform(scrollYProgress, [0, 1], [28, -26])
+  const sideY = useTransform(scrollYProgress, [0, 1], [44, -14])
   const { t, isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative bg-white py-24 md:py-32 overflow-hidden">
-      {/* Subtle dusty blue accent at top */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-      
+    <section ref={ref} className="relative overflow-hidden bg-white py-20 md:py-28">
+      <SectionStripes variant="soft" />
+      <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
+
       <div className="container mx-auto px-6 lg:px-16">
-        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className={`flex items-end justify-between mb-20 md:mb-28 ${isRTL ? 'flex-row-reverse' : ''}`}
+          transition={{ duration: 0.75 }}
+          className={`mb-14 flex items-end justify-between md:mb-16 ${isRTL ? 'flex-row-reverse' : ''}`}
         >
           <div>
-            <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-3 block">
+            <span className="mb-3 block font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
               The first chapter
             </span>
-            <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed">
+            <h2 className="font-rozha text-4xl text-brand-darkRed md:text-5xl">
               Where it Begins
             </h2>
           </div>
           <LocaleLink
             href="/shop"
-            className="hidden md:flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
+            className="hidden items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed transition-colors hover:text-brand-dustyBlue md:flex"
             data-cursor-hover
           >
             {t.featured.viewAll}
@@ -382,79 +709,82 @@ function MagazineGrid() {
           </LocaleLink>
         </motion.div>
 
-        {/* Magazine grid: centered, ~25% narrower, wide gutters */}
-        <div className="mx-auto w-full max-w-[min(100%,52rem)] sm:max-w-[min(100%,54rem)] md:max-w-[min(100%,56rem)] lg:max-w-[58rem] xl:max-w-[60rem]">
-          <div className="grid grid-cols-12 gap-8 md:gap-12 lg:gap-16 xl:gap-20">
-          {/* Large Feature */}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6 lg:gap-7">
           <motion.div
-            initial={{ opacity: 0, y: 60 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="col-span-12 md:col-span-7 row-span-2"
+            transition={{ duration: 0.75, delay: 0.05 }}
+            style={{ y: leadY }}
+            className="md:col-span-7"
           >
-            <LocaleLink href="/shop" className="group block relative aspect-[4/5] overflow-hidden" data-cursor-hover>
-              <Image
-                src="/collection-section/1.png"
-                alt="Designed to carry you, wherever you are — Bint Saeed collection"
-                fill
-                sizes="(max-width: 768px) 100vw, 58vw"
-                className="object-cover object-top transition-transform duration-1000 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed/80 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-                <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue mb-3 block">
-                  Chapter I
-                </span>
-                <h3 className="font-rozha text-2xl md:text-3xl lg:text-4xl text-white mb-4 leading-snug max-w-xl">
-                  Designed to carry you,
-                  <br />
-                  wherever you are.
-                </h3>
-                <span className="inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-white/80 group-hover:text-brand-dustyBlue transition-colors">
-                  Discover the collection
-                  <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
+            <LocaleLink href="/shop" className="group block overflow-hidden bg-brand-stone/10 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1" data-cursor-hover>
+              <div className="relative aspect-[4/5]">
+                <Image
+                  src="/collection-section/1.png"
+                  alt="Designed to carry you, wherever you are — Bint Saeed collection"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 58vw"
+                  className="object-cover object-top transition-transform duration-1000 group-hover:scale-[1.03]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed/80 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
+                  <span className="mb-3 block font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">
+                    Chapter I
+                  </span>
+                  <h3 className="mb-4 max-w-xl font-rozha text-2xl leading-snug text-white md:text-3xl lg:text-4xl">
+                    Designed to carry you,
+                    <br />
+                    wherever you are.
+                  </h3>
+                  <span className="inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-white/80 transition-colors group-hover:text-brand-dustyBlue">
+                    Discover the collection
+                    <FiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </div>
               </div>
             </LocaleLink>
           </motion.div>
 
-          {/* Top Right - Dusty Blue Accent */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="col-span-6 md:col-span-5"
-          >
-            <LocaleLink href="/shop" className="group block relative aspect-square overflow-hidden bg-brand-dustyBlue" data-cursor-hover>
-              <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
-                <CollectionCrossfadeSlideshow
-                  slides={SUMMER_ELEGANCE_SLIDES}
-                  altForIndex={(i) =>
-                    i === 0
-                      ? 'Bint Saeed collection — detail'
-                      : 'Bint Saeed collection — craftsmanship'
-                  }
-                />
-              </div>
-            </LocaleLink>
-          </motion.div>
+          <div className="grid grid-cols-2 gap-5 md:col-span-5 md:grid-cols-1 md:gap-6 lg:gap-7">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.75, delay: 0.12 }}
+              style={{ y: sideY }}
+            >
+              <LocaleLink href="/shop" className="group block overflow-hidden bg-brand-dustyBlue transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1" data-cursor-hover>
+                <div className="relative aspect-square">
+                  <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
+                    <CollectionCrossfadeSlideshow
+                      slides={SUMMER_ELEGANCE_SLIDES}
+                      altForIndex={(i) =>
+                        i === 0
+                          ? 'Bint Saeed collection — detail'
+                          : 'Bint Saeed collection — craftsmanship'
+                      }
+                    />
+                  </div>
+                </div>
+              </LocaleLink>
+            </motion.div>
 
-          {/* Bottom Right - Rose Accent */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="col-span-6 md:col-span-5"
-          >
-            <LocaleLink href="/shop" className="group block relative aspect-square overflow-hidden bg-brand-rose" data-cursor-hover>
-              <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
-                <CollectionCrossfadeSlideshow
-                  slides={ESSENTIALS_SLIDES}
-                  altForIndex={(i) => `Bint Saeed collection — ${i + 1}`}
-                />
-              </div>
-            </LocaleLink>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.75, delay: 0.2 }}
+              style={{ y: sideY }}
+            >
+              <LocaleLink href="/shop" className="group block overflow-hidden bg-brand-rose transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1" data-cursor-hover>
+                <div className="relative aspect-square">
+                  <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
+                    <CollectionCrossfadeSlideshow
+                      slides={ESSENTIALS_SLIDES}
+                      altForIndex={(i) => `Bint Saeed collection — ${i + 1}`}
+                    />
+                  </div>
+                </div>
+              </LocaleLink>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -472,55 +802,50 @@ function ColorBlockSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Neutral paper-beige (no rose / burgundy in the field) */}
-      <div className="absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#eceae3_42%,#e3e0d6_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,rgba(255,255,255,0.55)_0%,transparent_45%)]" />
-      
-      {/* Decorative Corners */}
+    <section ref={ref} className="relative flex min-h-screen items-center overflow-hidden">
+      <SectionStripes variant="bold" />
+      <div className="absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#eeece4_38%,#e3dfd3_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_78%_at_16%_14%,rgba(146,170,193,0.18)_0%,transparent_52%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_85%_86%,rgba(193,144,134,0.12)_0%,transparent_60%)]" />
+
       <DecorativeCorners color="dustyBlue" />
 
-      <div className="relative container mx-auto px-6 lg:px-16 py-32">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left - Image with Parallax */}
+      <div className="relative container mx-auto px-6 py-28 lg:px-16 lg:py-36">
+        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <motion.div style={{ y }} className="relative">
-            <div className="relative aspect-[3/4] max-w-md mx-auto lg:mx-0">
-              <Image
+            <div className="relative mx-auto aspect-[3/4] w-full max-w-md lg:mx-0">
+              <ScrollMaskImage
                 src="/image 2.JPG"
                 alt="Handcrafted luxury"
-                fill
-                className="object-cover"
+                sizes="(max-width: 1024px) 92vw, 32rem"
               />
-              {/* Dusty blue frame */}
-              <div className="absolute -top-4 -right-4 w-full h-full border border-brand-dustyBlue/30" />
+              <div className="pointer-events-none absolute -top-5 -right-5 h-full w-full border border-brand-dustyBlue/40" />
+              <div className="pointer-events-none absolute -bottom-4 -left-4 h-full w-full border border-white/50" />
             </div>
-            {/* Floating Label - Glassmorphism (darker for readability) */}
-            <div className="absolute -bottom-4 -right-4 md:right-auto md:-left-4 backdrop-blur-md bg-[#1a0008]/80 border border-brand-dustyBlue/30 px-6 py-4 rounded-xl">
+            <div className="absolute -bottom-3 -right-3 border border-brand-dustyBlue/30 bg-[#fbf8f3]/95 px-5 py-3 backdrop-blur-sm md:right-auto md:-left-3">
               <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">
                 {isRTL ? 'صناعة يدوية' : 'Handcrafted'}
               </span>
             </div>
           </motion.div>
 
-          {/* Right - Content */}
-          <div
-            className={`flex justify-center text-white ${isRTL ? 'lg:justify-end' : 'lg:justify-start'}`}
-          >
+          <div className={`flex justify-center ${isRTL ? 'lg:justify-end' : 'lg:justify-start'}`}>
             <div className="relative w-full max-w-xl lg:max-w-[36.5rem]">
-              <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/25 via-transparent to-brand-dustyBlue/10 opacity-70" />
-              <div className="relative overflow-hidden rounded-2xl border border-white/20 bg-[#1a0008]/45 shadow-[0_12px_48px_rgba(26,0,8,0.18)] ring-1 ring-white/10 backdrop-blur-xl backdrop-saturate-150">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.14] via-transparent to-brand-dustyBlue/[0.12]" />
+              <div className="pointer-events-none absolute -inset-[1px] bg-gradient-to-b from-brand-dustyBlue/28 via-transparent to-brand-clayRed/18 opacity-85" />
+              <div className="relative overflow-hidden border border-brand-stone/30 bg-[#f7f2ec]/95 shadow-[0_22px_58px_rgba(28,14,18,0.11)] ring-1 ring-white/60">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_85%_70%_at_10%_8%,rgba(146,170,193,0.13)_0%,transparent_58%)]" />
+                <div className="pointer-events-none absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-brand-dustyBlue/12 via-brand-dustyBlue/65 to-brand-dustyBlue/12" />
                 <div
-                  className={`relative flex flex-col gap-8 px-10 py-12 text-center sm:px-12 md:py-14 ${isRTL ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'}`}
+                  className={`relative flex flex-col gap-8 px-9 py-10 text-center sm:px-12 md:py-14 ${isRTL ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'}`}
                 >
-                  <span className="font-roboto text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/80">
+                  <span className="font-roboto text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/85">
                     Bint Saeed
                   </span>
-                  <h2 className="font-rozha text-[clamp(1.5rem,2.8vw+0.6rem,2.625rem)] leading-[1.12] text-balance text-white tracking-[-0.02em] drop-shadow-[0_1px_24px_rgba(0,0,0,0.35)] lg:whitespace-nowrap">
+                  <h2 className="font-rozha text-[clamp(1.5rem,2.8vw+0.6rem,2.625rem)] leading-[1.12] tracking-[-0.02em] text-brand-darkRed lg:whitespace-nowrap">
                     Every woman is a daughter.
                   </h2>
                   <div
-                    className={`mx-auto max-w-md space-y-5 font-roboto text-sm leading-[1.9] tracking-wide text-white/75 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
+                    className={`mx-auto max-w-md space-y-5 font-roboto text-sm leading-[1.9] tracking-wide text-brand-darkRed/76 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
                   >
                     <p>She carries more than what is seen.</p>
                     <p>A story. A sense of self.</p>
@@ -530,13 +855,15 @@ function ColorBlockSection() {
                       wherever life takes her.
                     </p>
                   </div>
-                  <LocaleLink
-                    href="/about"
-                    className={`inline-flex items-center justify-center rounded-xl bg-brand-dustyBlue px-8 py-4 font-roboto text-xs tracking-[0.12em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone ${isRTL ? 'lg:self-end' : 'lg:self-start'}`}
-                    data-cursor-hover
-                  >
-                    Discover the Story
-                  </LocaleLink>
+                  <MagneticWrap className={isRTL ? 'lg:self-end' : 'lg:self-start'}>
+                    <LocaleLink
+                      href="/about"
+                      className="inline-flex items-center justify-center border border-brand-dustyBlue/70 bg-brand-dustyBlue px-8 py-4 font-roboto text-xs tracking-[0.12em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone"
+                      data-cursor-hover
+                    >
+                      Discover the Story
+                    </LocaleLink>
+                  </MagneticWrap>
                 </div>
               </div>
             </div>
@@ -544,10 +871,9 @@ function ColorBlockSection() {
         </div>
       </div>
 
-      {/* Vertical title — gradient matches header bar (wine + dusty blue) */}
-      <div className="pointer-events-none absolute top-1/2 right-6 -translate-y-1/2 hidden xl:block">
+      <div className="pointer-events-none absolute top-1/2 right-6 hidden -translate-y-1/2 xl:block">
         <span
-          className="font-rozha text-8xl leading-none writing-mode-vertical transform rotate-180 bg-[linear-gradient(180deg,#12080b_0%,#2d141e_38%,#1c0f15_62%,#92aac1_100%)] bg-clip-text text-transparent opacity-[0.85]"
+          className="font-rozha text-8xl leading-none writing-mode-vertical rotate-180 bg-[linear-gradient(180deg,#12080b_0%,#2d141e_35%,#1c0f15_58%,#92aac1_100%)] bg-clip-text text-transparent opacity-[0.86]"
           style={{ writingMode: 'vertical-rl' }}
         >
           Bint Saeed
@@ -567,7 +893,7 @@ const CODES_LIST_ITEMS = [
 
 function EditorialSplit() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { margin: '-20%' })
+  const isInView = useInView(ref, { margin: '-20%', once: true })
   const { isRTL } = useLanguage()
 
   return (
@@ -598,7 +924,8 @@ function EditorialSplit() {
         </motion.div>
 
         {/* Right - Content with elegant gradient */}
-        <div className="relative bg-gradient-to-br from-white via-brand-rose/10 to-brand-stone/30 flex items-center">
+        <div className="relative bg-gradient-to-br from-white via-brand-rose/10 to-brand-stone/30 flex items-center overflow-hidden">
+          <SectionStripes variant="soft" />
           {/* Decorative dusty blue corner */}
           <motion.div 
             className="absolute top-8 right-8 w-20 h-20 md:w-24 md:h-24"
@@ -638,14 +965,16 @@ function EditorialSplit() {
               how it becomes part of you.
             </p>
 
-            <LocaleLink
-              href="/heritage"
-              className={`group inline-flex items-center gap-3 px-8 py-4 bg-brand-dustyBlue text-white font-roboto text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
-              data-cursor-hover
-            >
-              Explore the Codes
-              <FiArrowRight className={`w-4 h-4 group-hover:translate-x-2 transition-transform duration-300 ${isRTL ? 'rotate-180' : ''}`} />
-            </LocaleLink>
+            <MagneticWrap className="w-fit">
+              <LocaleLink
+                href="/heritage"
+                className={`group inline-flex items-center gap-3 px-8 py-4 bg-brand-dustyBlue text-white font-roboto text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+                data-cursor-hover
+              >
+                Explore the Codes
+                <FiArrowRight className={`w-4 h-4 group-hover:translate-x-2 transition-transform duration-300 ${isRTL ? 'rotate-180' : ''}`} />
+              </LocaleLink>
+            </MagneticWrap>
           </motion.div>
         </div>
       </div>
@@ -658,6 +987,7 @@ function CollectionStrip() {
   
   return (
     <section className="bg-brand-darkRed py-6 overflow-hidden relative">
+      <SectionStripes variant="hero" />
       {/* Dusty blue accent lines */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
@@ -691,12 +1021,24 @@ function CollectionStrip() {
 
 /** Section 6 — guided commissioning (beige field + glass card + framed editorial image, aligned with ColorBlockSection) */
 function CreatedForYouSection() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { margin: '-12%', once: true })
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const cardY = useTransform(scrollYProgress, [0, 1], [40, -16])
+  const imageY = useTransform(scrollYProgress, [0, 1], [72, -28])
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.18, 0.85, 1], [0.54, 1, 1, 0.72])
+  const imageScale = useTransform(scrollYProgress, [0, 1], [0.95, 1.04])
   const { isRTL } = useLanguage()
 
   return (
-    <section className="relative overflow-hidden py-24 md:py-36 lg:py-40">
-      <div className="absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#eceae3_42%,#e3e0d6_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,rgba(255,255,255,0.55)_0%,transparent_45%)]" />
+    <section ref={ref} className="relative overflow-hidden py-24 md:py-36 lg:py-40">
+      <SectionStripes variant="bold" />
+      <div className="absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#ebe8df_40%,#e2ded2_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_12%_10%,rgba(146,170,193,0.16)_0%,transparent_48%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_86%_82%,rgba(193,144,134,0.10)_0%,transparent_60%)]" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/25 to-transparent" />
 
@@ -704,14 +1046,18 @@ function CreatedForYouSection() {
 
       <div className="relative container mx-auto px-6 lg:px-16">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
-          {/* Glass card — LTR left, RTL right (second in DOM for RTL grid) */}
-          <div
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            style={{ y: cardY }}
             className={`flex justify-center ${isRTL ? 'lg:order-2' : 'lg:order-1'}`}
           >
             <div className="relative w-full max-w-xl lg:max-w-[36rem]">
-              <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/25 via-transparent to-brand-dustyBlue/10 opacity-70" />
-              <div className="relative overflow-hidden rounded-2xl border border-white/20 bg-[#1a0008]/45 shadow-[0_12px_48px_rgba(26,0,8,0.18)] ring-1 ring-white/10 backdrop-blur-xl backdrop-saturate-150">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.14] via-transparent to-brand-dustyBlue/[0.12]" />
+              <div className="pointer-events-none absolute -inset-[1px] bg-gradient-to-b from-brand-dustyBlue/40 via-transparent to-brand-dustyBlue/22" />
+              <div className="relative overflow-hidden border border-white/22 bg-[#1a0008]/52 shadow-[0_24px_66px_rgba(26,0,8,0.24)] ring-1 ring-white/10 backdrop-blur-xl backdrop-saturate-150">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.14] via-transparent to-brand-dustyBlue/[0.14]" />
+                <div className="pointer-events-none absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-brand-dustyBlue/25 via-brand-dustyBlue/85 to-brand-dustyBlue/20" />
                 <div
                   className={`relative flex flex-col gap-8 px-10 py-12 text-center sm:px-12 md:py-14 ${isRTL ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'}`}
                 >
@@ -728,13 +1074,15 @@ function CreatedForYouSection() {
                     experience.
                   </p>
                   <div className="flex w-full flex-col items-center gap-6 sm:gap-7 lg:items-stretch">
-                    <LocaleLink
-                      href="/contact"
-                      className={`inline-flex items-center justify-center rounded-xl bg-brand-dustyBlue px-8 py-4 font-roboto text-xs uppercase tracking-[0.18em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone ${isRTL ? 'lg:self-end' : 'lg:self-start'}`}
-                      data-cursor-hover
-                    >
-                      Request Your Piece
-                    </LocaleLink>
+                    <MagneticWrap className={isRTL ? 'lg:self-end' : 'lg:self-start'}>
+                      <LocaleLink
+                        href="/contact"
+                        className="inline-flex items-center justify-center border border-brand-dustyBlue/70 bg-brand-dustyBlue px-8 py-4 font-roboto text-xs uppercase tracking-[0.18em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone"
+                        data-cursor-hover
+                      >
+                        Request Your Piece
+                      </LocaleLink>
+                    </MagneticWrap>
                     <p className="font-roboto text-[11px] uppercase tracking-[0.22em] text-brand-dustyBlue/85">
                       Available worldwide. Based in Abu Dhabi.
                     </p>
@@ -742,26 +1090,28 @@ function CreatedForYouSection() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Editorial image — same frame language as ColorBlockSection (dusty blue offset border) */}
-          <div
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            style={{ y: imageY, opacity: imageOpacity }}
             className={`flex justify-center ${isRTL ? 'lg:order-1' : 'lg:order-2'}`}
           >
             <div className="relative w-full max-w-xl lg:max-w-[36rem]">
-              <div className="relative aspect-[3/4] w-full">
-                <Image
+              <motion.div style={{ scale: imageScale }} className="relative aspect-[3/4] w-full">
+                <ScrollMaskImage
                   src="/collection-section/4.JPG"
                   alt="Bint Saeed — crafted for you"
-                  fill
                   sizes="(max-width: 1024px) 90vw, 36rem"
-                  className="object-cover object-center"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a0008]/25 via-transparent to-transparent" />
-                <div className="pointer-events-none absolute -top-4 -right-4 h-full w-full border border-brand-dustyBlue/30" />
-              </div>
+                <div className="pointer-events-none absolute -top-4 -right-4 h-full w-full border border-brand-dustyBlue/42" />
+                <div className="pointer-events-none absolute -bottom-4 -left-4 h-full w-full border border-white/45" />
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -770,7 +1120,7 @@ function CreatedForYouSection() {
 
 function AsymmetricShowcase() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { margin: '-10%' })
+  const isInView = useInView(ref, { margin: '-10%', once: true })
   const { t, isRTL } = useLanguage()
 
   const products = [
@@ -817,7 +1167,7 @@ function AsymmetricShowcase() {
               transition={{ duration: 0.8, delay: index * 0.15 }}
               className={`${index === 0 ? 'md:col-span-5' : index === 1 ? 'md:col-span-4 md:mt-24' : 'md:col-span-3 md:mt-12'}`}
             >
-              <LocaleLink href="/shop" className="group block" data-cursor-hover>
+              <LocaleLink href="/shop" className="group block transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1" data-cursor-hover>
                 <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-white">
                   <Image
                     src={product.image}

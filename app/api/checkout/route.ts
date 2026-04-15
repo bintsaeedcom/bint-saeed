@@ -152,6 +152,7 @@ export async function POST(request: NextRequest) {
         orderItems: JSON.stringify(
           items.map((item: any) => ({
             id: item.id,
+            productUrl: item.productUrl,
             name: item.name,
             size: item.size,
             color: item.color,

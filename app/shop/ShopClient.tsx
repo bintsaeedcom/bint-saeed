@@ -34,15 +34,11 @@ const SORT_OPTIONS = [
 
 type SortId = (typeof SORT_OPTIONS)[number]['id']
 
-const HOVER_PREVIEW_MS = 720
-
 export default function ShopClient() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [catalog, setCatalog] = useState<Product[]>(staticProducts)
   const [activeCategory, setActiveCategory] = useState('All')
-  const [hoveredId, setHoveredId] = useState<string | null>(null)
-  const [hoverSlideIndex, setHoverSlideIndex] = useState(0)
   const [filterOpen, setFilterOpen] = useState(false)
   const [sortOpen, setSortOpen] = useState(false)
   const [sortBy, setSortBy] = useState<SortId>('newest')
@@ -116,38 +112,7 @@ export default function ShopClient() {
     }
   }, [filteredProducts, sortBy])
 
-  useEffect(() => {
-    if (!hoveredId) {
-      setHoverSlideIndex(0)
-      return
-    }
-    const hovered = sortedProducts.find((p) => p.id === hoveredId)
-    const len = hovered?.images.length ?? 0
-    if (len <= 1) return
-
-    let cancelled = false
-    setHoverSlideIndex(0)
-
-    const prefersReduce =
-      typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduce) return
-
-    const id = window.setInterval(() => {
-      if (cancelled) return
-      setHoverSlideIndex((i) => (i + 1) % len)
-    }, HOVER_PREVIEW_MS)
-    return () => {
-      cancelled = true
-      window.clearInterval(id)
-    }
-  }, [hoveredId, sortedProducts])
-
   const sortLabel = SORT_OPTIONS.find((o) => o.id === sortBy)?.label ?? 'New arrivals'
-
-  const clearCardHover = useCallback(() => {
-    setHoveredId(null)
-    setHoverSlideIndex(0)
-  }, [])
 
   return (
     <div className={`min-h-screen bg-stone-100 text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -298,89 +263,63 @@ export default function ShopClient() {
       </div>
 
       <section className="mx-auto max-w-[1400px] px-6 py-14 md:px-10 md:py-20 lg:px-14">
-        <ul className="grid list-none grid-cols-1 gap-y-16 p-0 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-20 lg:grid-cols-3 lg:gap-x-10">
+        <ul className="grid list-none grid-cols-1 gap-y-14 p-0 sm:grid-cols-2 sm:gap-x-7 sm:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-18">
           {sortedProducts.map((product) => (
-            <li key={product.id} className="relative z-10">
+            <li
+              key={product.id}
+              className="group relative z-10"
+            >
               <ProductWishlistHeart
                 product={product}
                 href={`/shop/${product.id}`}
                 className={`absolute top-0 z-20 ${isRTL ? 'left-[8%]' : 'right-[8%]'}`}
               />
-              <LocaleLink
+              <a
                 href={`/shop/${product.id}`}
-                prefetch={false}
-                className="group relative z-10 block w-full no-underline"
+                className="relative z-10 block w-full no-underline"
+                aria-label={`${isRTL ? 'فتح' : 'Open'} ${product.name}`}
                 data-cursor-hover
-                onMouseEnter={() => setHoveredId(product.id)}
-                onMouseLeave={clearCardHover}
               >
-                <div className="relative mx-auto aspect-[3/4] w-[80%] overflow-hidden bg-stone-200">
-                  {/* Entire image stack: pointer-events-none so hits register on the <a> (nested auto children were stealing clicks). */}
-                  <div className="pointer-events-none absolute inset-0 transition-transform duration-1000 ease-out group-hover:scale-[1.03]">
-                    <AnimatePresence initial={false} mode="sync">
-                      <motion.div
-                        key={`${product.id}-${hoveredId === product.id ? hoverSlideIndex : 0}`}
-                        className="pointer-events-none absolute inset-0"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                      >
-                        <Image
-                          src={product.images[hoveredId === product.id ? hoverSlideIndex % product.images.length : 0] ?? product.images[0]}
-                          alt={hoveredId === product.id ? `${product.name} — preview` : product.name}
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="pointer-events-none object-cover"
-                          priority={false}
-                        />
-                      </motion.div>
-                    </AnimatePresence>
+                <article className="mx-auto w-[82%]">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-stone-200">
+                    <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
+                      <Image
+                        src={product.images[0]}
+                        alt={product.name}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover"
+                        priority={false}
+                      />
+                    </div>
+                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <span className="absolute bottom-5 left-1/2 z-[1] -translate-x-1/2 font-roboto text-[9px] uppercase tracking-[0.35em] text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      {isRTL ? 'اكتشفي' : 'Discover'}
+                    </span>
                   </div>
-                  {product.images.length > 1 ? (
-                    <div
-                      className="pointer-events-none absolute bottom-3 left-1/2 z-[1] flex -translate-x-1/2 gap-1 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                      aria-hidden
-                    >
-                      {product.images.map((_, i) => (
+                  <div className="mt-5 space-y-2 border-t border-black/5 pt-4">
+                    <p className="font-roboto text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
+                      {product.category}
+                    </p>
+                    <h2 className="font-rozha text-[1.35rem] font-normal leading-tight tracking-wide text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue">
+                      {product.name}
+                    </h2>
+                    <p className="font-roboto text-sm tabular-nums tracking-wide text-neutral-600">
+                      {formatPrice(product.price)}
+                    </p>
+                    <div className="flex gap-1.5 pt-1">
+                      {product.colors.slice(0, 5).map((c) => (
                         <span
-                          key={i}
-                          className={`h-1 w-1 rounded-full transition-colors ${
-                            hoveredId === product.id && i === hoverSlideIndex % product.images.length
-                              ? 'bg-white'
-                              : 'bg-white/40'
-                          }`}
+                          key={c.name}
+                          title={c.name}
+                          className="h-2.5 w-2.5 rounded-full border border-black/10"
+                          style={{ backgroundColor: c.hex }}
                         />
                       ))}
                     </div>
-                  ) : null}
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  <span className="pointer-events-none absolute bottom-5 left-1/2 z-[1] -translate-x-1/2 font-roboto text-[9px] uppercase tracking-[0.35em] text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    {isRTL ? 'اكتشفي' : 'Discover'}
-                  </span>
-                </div>
-                <div className="mt-5 space-y-1.5">
-                  <p className="font-roboto text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
-                    {product.category}
-                  </p>
-                  <h2 className="font-rozha text-lg font-normal tracking-wide text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue md:text-xl">
-                    {product.name}
-                  </h2>
-                  <p className="font-roboto text-sm tabular-nums tracking-wide text-neutral-600">
-                    {formatPrice(product.price)}
-                  </p>
-                  <div className="flex gap-1.5 pt-2">
-                    {product.colors.slice(0, 5).map((c) => (
-                      <span
-                        key={c.name}
-                        title={c.name}
-                        className="h-2.5 w-2.5 rounded-full border border-black/10"
-                        style={{ backgroundColor: c.hex }}
-                      />
-                    ))}
                   </div>
-                </div>
-              </LocaleLink>
+                </article>
+              </a>
             </li>
           ))}
         </ul>

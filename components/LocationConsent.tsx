@@ -148,9 +148,8 @@ export default function LocationConsent() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[85] bg-[#1a0a0f]/[0.12] backdrop-blur-[2px] pointer-events-auto"
+            className="pointer-events-none fixed inset-0 z-[85] bg-[#1a0a0f]/[0.12] backdrop-blur-[2px]"
             aria-hidden
-            onClick={handleDecline}
           />
           <motion.div
             role="dialog"
