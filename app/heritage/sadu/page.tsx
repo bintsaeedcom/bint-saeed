@@ -248,7 +248,7 @@ function UNESCOSection() {
               {isRTL ? 'صون عاجل' : 'Urgent Safeguarding'}
             </span>
             <span className="px-6 py-3 bg-white/10 backdrop-blur-sm font-roboto text-xs uppercase tracking-[0.15em]">
-              {isRTL ? 'الإمارات • السعودية • الكويت' : 'UAE • KSA • Kuwait'}
+              {isRTL ? 'الإمارات • السعودية • الكويت' : 'UAE\u00A0• KSA\u00A0• Kuwait'}
             </span>
           </div>
         </motion.div>

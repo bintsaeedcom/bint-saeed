@@ -1,4 +1,5 @@
 import { products as staticProducts, type Product } from '@/data/products'
+import { resolveProductIdentifier } from '@/lib/products/links'
 import type { ProductOverride } from './overridesStore'
 import { getAllOverrides } from './overridesStore'
 
@@ -25,4 +26,9 @@ export async function getMergedProducts(): Promise<Product[]> {
 export async function getMergedProductById(id: string): Promise<Product | null> {
   const list = await getMergedProducts()
   return list.find((p) => p.id === id) ?? null
+}
+
+export async function getMergedProductByIdentifier(identifier: string): Promise<Product | null> {
+  const list = await getMergedProducts()
+  return resolveProductIdentifier(list, identifier)
 }

@@ -10,14 +10,16 @@ interface Currency {
 }
 
 export const currencies: Currency[] = [
-  { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham', rate: 1 },
-  { code: 'SAR', symbol: 'ر.س', name: 'Saudi Riyal', rate: 1.02 },
-  { code: 'KWD', symbol: 'د.ك', name: 'Kuwaiti Dinar', rate: 0.083 },
-  { code: 'QAR', symbol: 'ر.ق', name: 'Qatari Riyal', rate: 0.99 },
-  { code: 'BHD', symbol: 'د.ب', name: 'Bahraini Dinar', rate: 0.10 },
-  { code: 'OMR', symbol: 'ر.ع', name: 'Omani Rial', rate: 0.10 },
-  { code: 'USD', symbol: '$', name: 'US Dollar', rate: 0.27 },
-  { code: 'EUR', symbol: '€', name: 'Euro', rate: 0.25 },
+  { code: 'AED', symbol: 'AED', name: 'UAE Dirham', rate: 1 },
+  { code: 'EUR', symbol: 'EUR', name: 'Euro', rate: 0.25 },
+  { code: 'USD', symbol: 'USD', name: 'US Dollar', rate: 0.27 },
+  { code: 'SAR', symbol: 'SAR', name: 'Saudi Riyal', rate: 1.02 },
+  { code: 'QAR', symbol: 'QAR', name: 'Qatari Riyal', rate: 0.99 },
+  { code: 'OMR', symbol: 'OMR', name: 'Omani Rial', rate: 0.10 },
+  { code: 'BHD', symbol: 'BHD', name: 'Bahraini Dinar', rate: 0.10 },
+  { code: 'KWD', symbol: 'KWD', name: 'Kuwaiti Dinar', rate: 0.083 },
+  { code: 'RUB', symbol: 'RUB', name: 'Russian Ruble', rate: 24.9 },
+  { code: 'CNY', symbol: 'CNY', name: 'Chinese Yuan', rate: 1.95 },
   { code: 'GBP', symbol: '£', name: 'British Pound', rate: 0.21 },
   { code: 'CHF', symbol: 'Fr.', name: 'Swiss Franc', rate: 0.24 },
 ]
@@ -25,6 +27,7 @@ export const currencies: Currency[] = [
 // Map countries to their default currencies
 const countryToCurrency: Record<string, string> = {
   AE: 'AED', SA: 'SAR', KW: 'KWD', QA: 'QAR', BH: 'BHD', OM: 'OMR',
+  RU: 'RUB', CN: 'CNY',
   US: 'USD', GB: 'GBP', CH: 'CHF', AT: 'EUR',
   DE: 'EUR', FR: 'EUR', IT: 'EUR', ES: 'EUR', NL: 'EUR', BE: 'EUR', LU: 'EUR', MC: 'EUR',
 }
@@ -91,13 +94,7 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
 
   const formatPrice = (priceInAED: number): string => {
     const converted = convertPrice(priceInAED)
-    if (currency.code === 'AED' || currency.code === 'SAR' || currency.code === 'QAR') {
-      return `${converted.toLocaleString()} ${currency.symbol}`
-    }
-    if (currency.code === 'CHF') {
-      return `CHF ${converted.toLocaleString()}`
-    }
-    return `${currency.symbol}${converted.toLocaleString()}`
+    return `${converted.toLocaleString()} ${currency.code}`
   }
 
   return (

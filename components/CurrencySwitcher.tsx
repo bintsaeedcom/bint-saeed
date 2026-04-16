@@ -8,9 +8,15 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 interface CurrencySwitcherProps {
   variant?: 'light' | 'dark'
+  showSymbol?: boolean
+  align?: 'start' | 'end'
 }
 
-export default function CurrencySwitcher({ variant = 'dark' }: CurrencySwitcherProps) {
+export default function CurrencySwitcher({
+  variant = 'dark',
+  showSymbol = true,
+  align = 'end',
+}: CurrencySwitcherProps) {
   const { currency, setCurrency, currencies } = useCurrency()
   const { isRTL } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
@@ -31,23 +37,42 @@ export default function CurrencySwitcher({ variant = 'dark' }: CurrencySwitcherP
     ? 'text-white/80 hover:text-white' 
     : 'text-brand-clayRed hover:text-brand-dustyBlue'
 
-  const dropdownBg = variant === 'light'
-    ? 'bg-brand-darkRed/95 backdrop-blur-md border-white/10'
-    : 'bg-white border-brand-stone/20 shadow-xl'
+  const dropdownSurfaceClass =
+    'bg-[linear-gradient(90deg,rgba(18,8,11,0.82)_0%,rgba(28,15,21,0.8)_22%,rgba(45,20,30,0.78)_50%,rgba(28,15,21,0.8)_78%,rgba(18,8,11,0.82)_100%)] border border-white/18 backdrop-blur-xl shadow-[0_18px_40px_rgba(10,4,8,0.38)]'
 
-  const itemHover = variant === 'light'
-    ? 'hover:bg-white/10'
-    : 'hover:bg-brand-dustyBlue/10'
+  const itemHover = 'hover:bg-white/10'
+  const menuAlignClass =
+    align === 'start'
+      ? isRTL
+        ? 'right-0'
+        : 'left-0'
+      : isRTL
+        ? 'left-0'
+        : 'right-0'
+  const currencyFlags: Record<string, string> = {
+    AED: '🇦🇪',
+    USD: '🇺🇸',
+    EUR: '🇪🇺',
+    GBP: '🇬🇧',
+    CHF: '🇨🇭',
+    SAR: '🇸🇦',
+    KWD: '🇰🇼',
+    QAR: '🇶🇦',
+    BHD: '🇧🇭',
+    OMR: '🇴🇲',
+  }
 
   return (
     <div ref={dropdownRef} className="relative">
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-1 font-roboto text-xs uppercase tracking-[0.1em] transition-colors ${textColor} ${isRTL ? 'flex-row-reverse' : ''}`}
+        className={`flex items-center gap-1 font-montserrat text-xs uppercase tracking-[0.1em] transition-colors ${textColor} ${isRTL ? 'flex-row-reverse' : ''}`}
         data-cursor-hover
       >
+        <span aria-hidden>{currencyFlags[currency.code] ?? '💱'}</span>
         <span>{currency.code}</span>
-        <span className="text-[10px]">{currency.symbol}</span>
+        {showSymbol && <span className="text-[10px]">{currency.symbol}</span>}
         <FiChevronDown className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
@@ -58,11 +83,12 @@ export default function CurrencySwitcher({ variant = 'dark' }: CurrencySwitcherP
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className={`absolute top-full mt-2 ${isRTL ? 'left-0' : 'right-0'} min-w-[180px] py-2 border rounded-lg z-50 ${dropdownBg}`}
+            className={`absolute top-full mt-2 ${menuAlignClass} z-50 max-h-72 min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
           >
             {currencies.map((c) => (
               <button
                 key={c.code}
+                type="button"
                 onClick={() => {
                   setCurrency(c.code)
                   setIsOpen(false)
@@ -71,15 +97,16 @@ export default function CurrencySwitcher({ variant = 'dark' }: CurrencySwitcherP
                 data-cursor-hover
               >
                 <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className={`font-roboto text-xs font-medium ${variant === 'light' ? 'text-white' : 'text-brand-darkRed'}`}>
+                  <span aria-hidden>{currencyFlags[c.code] ?? '💱'}</span>
+                  <span className="font-montserrat text-xs font-medium text-white">
                     {c.code}
                   </span>
-                  <span className={`font-roboto text-xs ${variant === 'light' ? 'text-white/60' : 'text-brand-clayRed/60'}`}>
+                  <span className="font-montserrat text-xs text-white/60">
                     {c.symbol}
                   </span>
                 </div>
                 {currency.code === c.code && (
-                  <FiCheck className={`w-4 h-4 ${variant === 'light' ? 'text-white' : 'text-brand-darkRed'}`} />
+                  <FiCheck className="w-4 h-4 text-white" />
                 )}
               </button>
             ))}

@@ -10,8 +10,8 @@ export default function NotFound() {
   const { isRTL } = useLanguage()
 
   return (
-    <div className={`min-h-screen bg-white flex items-center justify-center px-4 sm:px-6 safe-area-inset ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="text-center max-w-xl w-full">
+    <div className={`min-h-screen bg-[linear-gradient(165deg,#f7f5f0_0%,#eeece4_38%,#e3dfd3_100%)] flex items-center justify-center px-4 sm:px-6 safe-area-inset ${isRTL ? 'rtl' : 'ltr'}`}>
+      <div className="text-center max-w-xl w-full border border-brand-stone/25 bg-white/85 p-8 sm:p-10 shadow-[0_22px_55px_rgba(28,14,18,0.12)] backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -31,6 +31,7 @@ export default function NotFound() {
           </div>
 
           {/* 404 Number with brand styling */}
+          <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
           <div className="relative mb-4">
             <h1 className="font-rozha text-[100px] sm:text-[150px] md:text-[180px] text-brand-stone/20 leading-none select-none">
               404

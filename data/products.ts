@@ -12,7 +12,7 @@ export interface Product {
 }
 
 /** Shop filter order (excluding All). Counts in the UI match `products` per category. */
-export const categories = ['All', 'Abayas', 'Caftans', 'Dresses', 'Sets', 'Accessories'] as const
+export const categories = ['All', 'Abayas', 'Kaftans', 'Dresses', 'Sets', 'Accessories'] as const
 
 export type ShopCategory = (typeof categories)[number]
 
@@ -135,7 +135,7 @@ export const products: Product[] = [
   {
     id: 'bs-001',
     name: 'Abaya 1 — Desert Rose Abaya',
-    price: 1000,
+    price: 2475,
     description:
       'A masterpiece of elegance, this flowing abaya captures the essence of desert twilight. The intricate embroidery along the sleeves and hem creates a symphony of sophistication.',
     fabric: 'Premium Japanese Crepe, Silk lining, Hand-embroidered details',
@@ -219,35 +219,51 @@ export const products: Product[] = [
   },
   {
     id: 'bs-002',
-    name: 'Moonlight Caftan',
-    price: 1000,
-    description:
-      'Ethereal and timeless, this caftan embodies luxury in its purest form. Perfect for special occasions when you want to make an unforgettable impression.',
+    name: 'V-Neck Caftan',
+    price: 2475,
+    description: `There are pieces you don't overthink.
+You put them on and you already know.
+
+The Bint Saeed Flow Kaftan is made from crepe chiffon, chosen for how it moves with you. Light, fluid, and effortless on the body, it creates a natural flow with every step without feeling heavy or fixed.
+
+Finished with the Bint Saeed signature gold emblem, a subtle detail that marks the piece without interrupting its movement.
+
+Designed for the way women live today, moving between cities, occasions, and moments without changing who they are.`,
     fabric: 'Italian Silk, Crystal embellishments, Pearl buttons',
     measurements: 'Oversized fit. One size fits most. Length: 145cm.',
-    images: fiveApparelGalleryImages(6),
+    images: [
+      '/Webshop%20pictures/Caftans/IMG_2385.HEIC',
+      '/Webshop%20pictures/Caftans/IMG_2394.HEIC',
+      '/Webshop%20pictures/Caftans/IMG_2471.HEIC',
+      '/Webshop%20pictures/Caftans/IMG_2519.HEIC',
+      '/Webshop%20pictures/Caftans/IMG_2578.HEIC',
+      '/Webshop%20pictures/Caftans/IMG_2522.MOV',
+    ],
     colors: [
-      { name: 'Pearl White', hex: '#f5f5f0' },
-      { name: 'Champagne', hex: '#f7e7ce' },
-      { name: 'Rose Gold', hex: '#c19086' },
+      { name: 'Black', hex: '#1a1a1a' },
+      { name: 'Navy Blue', hex: '#1f3a5f' },
+      { name: 'Burgundy', hex: '#5c1a2a' },
+      { name: 'Light Pink', hex: '#f4c2c2' },
     ],
     sizes: ['One Size'],
-    category: 'Caftans',
+    category: 'Kaftans',
   },
   {
     id: 'cf-002',
-    name: 'Majlis Silk Caftan',
-    price: 950,
-    description: 'Shorter caftan silhouette with bracelet sleeves and a jewel neckline.',
+    name: 'Boatneck Caftan',
+    price: 2475,
+    description: 'Shorter kaftan silhouette with bracelet sleeves and a jewel neckline.',
     fabric: 'Sand-washed silk, bound inner seams',
     measurements: 'Length: 125cm. Relaxed fit.',
     images: fiveApparelGalleryImages(7),
     colors: [
-      { name: 'Sage', hex: '#9caf88' },
-      { name: 'Dust', hex: '#a89f96' },
+      { name: 'Black', hex: '#1a1a1a' },
+      { name: 'Navy Blue', hex: '#1f3a5f' },
+      { name: 'Burgundy', hex: '#5c1a2a' },
+      { name: 'Light Pink', hex: '#f4c2c2' },
     ],
     sizes: ['One Size', 'M', 'L'],
-    category: 'Caftans',
+    category: 'Kaftans',
   },
   {
     id: 'bs-003',
@@ -381,7 +397,7 @@ export const products: Product[] = [
     id: 'acc-001',
     name: 'Heritage Gold Necklace',
     price: 420,
-    description: 'Fine-link necklace with a brushed pendant — pairs with abayas and caftans.',
+    description: 'Fine-link necklace with a brushed pendant — pairs with abayas and kaftans.',
     fabric: '18k gold-plated sterling, hypoallergenic clasp',
     measurements: 'Length: 45cm adjustable to 50cm.',
     images: fiveAccessoryGalleryImages(0),

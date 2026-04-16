@@ -2,13 +2,30 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 
+function getStripeSecretKey(): string | null {
+  const key = process.env.STRIPE_SECRET_KEY?.trim()
+  if (!key || !key.startsWith('sk_')) return null
+  return key
+}
+
 function getStripe() {
-  return new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
+  const key = getStripeSecretKey()
+  if (!key) {
+    throw new Error('Stripe secret key is not configured')
+  }
+  return new Stripe(key, {
     apiVersion: '2025-02-24.acacia',
   })
 }
 
 export async function POST(request: NextRequest) {
+  if (!getStripeSecretKey()) {
+    return NextResponse.json(
+      { valid: false, message: 'Checkout is not configured yet.' },
+      { status: 503 }
+    )
+  }
+
   const rl = await rateLimitResponse(request, 'validate_discount', 40, 60)
   if (rl) return rl
 

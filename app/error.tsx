@@ -19,8 +19,8 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-6 safe-area-inset">
-      <div className="text-center max-w-xl w-full">
+    <div className="min-h-screen bg-[linear-gradient(165deg,#f7f5f0_0%,#eeece4_38%,#e3dfd3_100%)] flex items-center justify-center px-4 sm:px-6 safe-area-inset">
+      <div className="text-center max-w-xl w-full border border-brand-stone/25 bg-white/85 p-8 sm:p-10 shadow-[0_22px_55px_rgba(28,14,18,0.12)] backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -45,6 +45,7 @@ export default function Error({
           </div>
 
           {/* Title */}
+          <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
           <h1 className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-darkRed mb-4">
             Something Went Wrong
           </h1>
@@ -103,7 +104,7 @@ export default function Error({
               </a>
               <span className="hidden sm:block text-brand-stone">•</span>
               <a 
-                href="https://wa.me/971XXXXXXXXX"
+                href="https://wa.me/971502299402"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-roboto text-brand-darkRed hover:text-brand-dustyBlue transition-colors"

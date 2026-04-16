@@ -6,7 +6,7 @@ import {
   FiUsers, FiUserPlus, FiUserCheck, FiShoppingCart, 
   FiEye, FiMapPin, FiClock, FiMail, FiPhone,
   FiRefreshCw, FiBell, FiX, FiGlobe, FiSmartphone,
-  FiMonitor, FiTablet, FiDollarSign
+  FiMonitor, FiTablet, FiDollarSign, FiAlertTriangle, FiCheckCircle
 } from 'react-icons/fi'
 
 interface Visitor {
@@ -54,6 +54,26 @@ interface Notification {
   read: boolean
 }
 
+interface CheckoutHealth {
+  ok: boolean
+  checkedAt: string
+  mode: 'live' | 'test' | 'mixed' | 'unknown'
+  env: string
+  checkout: {
+    publishableConfigured: boolean
+    secretConfigured: boolean
+    webhookConfigured: boolean
+    siteUrlConfigured: boolean
+    allowedOrigins: string[]
+  }
+  stripe: {
+    apiReachable: boolean
+    accountId: string | null
+    error: string | null
+  }
+  warnings: string[]
+}
+
 export default function AdminDashboard() {
   const [activeVisitors, setActiveVisitors] = useState<Visitor[]>([])
   const [notifications, setNotifications] = useState<Notification[]>([])
@@ -66,6 +86,7 @@ export default function AdminDashboard() {
   const [selectedVisitor, setSelectedVisitor] = useState<Visitor | null>(null)
   const [showNotifications, setShowNotifications] = useState(false)
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const [checkoutHealth, setCheckoutHealth] = useState<CheckoutHealth | null>(null)
 
   // Fetch data
   const fetchData = async () => {
@@ -85,6 +106,15 @@ export default function AdminDashboard() {
       const statsRes = await fetch('/api/analytics/slack')
       const statsData = await statsRes.json()
       setStats(statsData)
+
+      // Fetch Stripe checkout readiness health
+      const checkoutRes = await fetch('/api/admin/checkout-health')
+      const checkoutData = await checkoutRes.json()
+      if (checkoutRes.ok) {
+        setCheckoutHealth(checkoutData as CheckoutHealth)
+      } else {
+        setCheckoutHealth(null)
+      }
     } catch (e) {
       console.error('Failed to fetch data')
     }
@@ -194,6 +224,83 @@ export default function AdminDashboard() {
             value={stats.returningVisitors}
             color="bg-amber-500"
           />
+        </div>
+
+        {/* Checkout diagnostics */}
+        <div className="mb-8 rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+          <div className="mb-4 flex items-start justify-between gap-4">
+            <div>
+              <h2 className="font-rozha text-2xl text-brand-darkRed">Stripe Checkout Diagnostics</h2>
+              <p className="font-roboto text-xs uppercase tracking-[0.16em] text-gray-500">
+                Launch readiness panel
+              </p>
+            </div>
+            {checkoutHealth ? (
+              <span
+                className={`inline-flex items-center gap-2 rounded-full px-3 py-1 font-roboto text-xs uppercase tracking-[0.12em] ${
+                  checkoutHealth.ok
+                    ? 'bg-emerald-100 text-emerald-700'
+                    : 'bg-amber-100 text-amber-700'
+                }`}
+              >
+                {checkoutHealth.ok ? <FiCheckCircle className="h-4 w-4" /> : <FiAlertTriangle className="h-4 w-4" />}
+                {checkoutHealth.ok ? 'Ready' : 'Needs Setup'}
+              </span>
+            ) : (
+              <span className="font-roboto text-xs uppercase tracking-[0.12em] text-gray-500">Unavailable</span>
+            )}
+          </div>
+
+          {checkoutHealth ? (
+            <>
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+                <HealthPill label="Publishable key" ok={checkoutHealth.checkout.publishableConfigured} />
+                <HealthPill label="Secret key" ok={checkoutHealth.checkout.secretConfigured} />
+                <HealthPill label="Webhook secret" ok={checkoutHealth.checkout.webhookConfigured} />
+                <HealthPill label="Site URL" ok={checkoutHealth.checkout.siteUrlConfigured || checkoutHealth.env !== 'production'} />
+                <HealthPill label="Stripe API" ok={checkoutHealth.stripe.apiReachable || checkoutHealth.env !== 'production'} />
+                <HealthPill label="Mode match" ok={checkoutHealth.mode !== 'mixed' && checkoutHealth.mode !== 'unknown'} />
+              </div>
+
+              <div className="mt-4 grid gap-3 lg:grid-cols-2">
+                <div className="rounded-lg border border-gray-100 bg-stone-50 p-4">
+                  <p className="font-roboto text-[11px] uppercase tracking-[0.15em] text-gray-500">Environment</p>
+                  <p className="mt-1 font-roboto text-sm text-gray-900">
+                    {checkoutHealth.env} · Stripe mode: {checkoutHealth.mode}
+                  </p>
+                  <p className="mt-1 font-roboto text-xs text-gray-500">
+                    Account: {checkoutHealth.stripe.accountId ?? 'Not available'}
+                  </p>
+                  <p className="mt-1 font-roboto text-xs text-gray-500">
+                    Checked: {new Date(checkoutHealth.checkedAt).toLocaleString()}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-gray-100 bg-stone-50 p-4">
+                  <p className="font-roboto text-[11px] uppercase tracking-[0.15em] text-gray-500">Allowed origins</p>
+                  <p className="mt-1 font-roboto text-xs text-gray-700 break-all">
+                    {checkoutHealth.checkout.allowedOrigins.join(', ')}
+                  </p>
+                </div>
+              </div>
+
+              {checkoutHealth.warnings.length > 0 && (
+                <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4">
+                  <p className="font-roboto text-[11px] uppercase tracking-[0.15em] text-amber-700">Warnings</p>
+                  <ul className="mt-2 space-y-1">
+                    {checkoutHealth.warnings.map((warning) => (
+                      <li key={warning} className="font-roboto text-xs text-amber-800">
+                        • {warning}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
+          ) : (
+            <p className="font-roboto text-sm text-gray-500">
+              Could not load checkout diagnostics. Make sure you are authenticated as admin.
+            </p>
+          )}
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -510,6 +617,19 @@ function StatCard({
       </div>
       <p className="font-rozha text-3xl text-gray-900">{value}</p>
       <p className="font-roboto text-xs uppercase tracking-wider text-gray-500">{label}</p>
+    </div>
+  )
+}
+
+function HealthPill({ label, ok }: { label: string; ok: boolean }) {
+  return (
+    <div
+      className={`rounded-lg border px-3 py-2 ${
+        ok ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : 'border-amber-200 bg-amber-50 text-amber-700'
+      }`}
+    >
+      <p className="font-roboto text-[10px] uppercase tracking-[0.12em]">{label}</p>
+      <p className="mt-1 font-roboto text-xs">{ok ? 'Configured' : 'Missing'}</p>
     </div>
   )
 }

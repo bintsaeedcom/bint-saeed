@@ -65,7 +65,7 @@ export default function ContactPage() {
     {
       icon: FiMapPin,
       label: isRTL ? 'الموقع' : 'Location',
-      value: isRTL ? 'دبي، الإمارات العربية المتحدة' : 'Dubai, United Arab Emirates',
+      value: isRTL ? 'دبي، الإمارات العربية المتحدة' : 'Dubai,\u00A0United\u00A0Arab\u00A0Emirates',
       href: null,
     },
     {

@@ -314,7 +314,7 @@ export default function ComingSoonPage() {
         >
           <div className="w-1 h-1 rounded-full bg-brand-dustyBlue/50" />
           <p className="font-roboto text-white/20 text-[9px] uppercase tracking-[0.4em]">
-            Abu Dhabi
+            Abu&nbsp;Dhabi
           </p>
           <div className="w-1 h-1 rounded-full bg-brand-dustyBlue/50" />
         </motion.div>

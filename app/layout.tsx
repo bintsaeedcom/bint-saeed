@@ -613,7 +613,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.cre
         {/* Fonts outside globals.css: if these fail (privacy/ad-block), site CSS still loads */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Roboto:wght@300;400;500;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Rozha+One&display=swap"
         />
         <link
           rel="stylesheet"
@@ -725,10 +725,26 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.cre
                 position="bottom-right"
                 toastOptions={{
                   style: {
-                    background: '#3b0014',
-                    color: '#fff',
-                    fontFamily: 'var(--font-roboto)',
-                    letterSpacing: '0.05em',
+                    background:
+                      'linear-gradient(135deg, rgba(59,0,20,0.96) 0%, rgba(45,20,30,0.94) 100%)',
+                    color: '#f8f4f1',
+                    fontFamily: 'var(--font-montserrat)',
+                    letterSpacing: '0.03em',
+                    border: '1px solid rgba(212,189,172,0.28)',
+                    borderRadius: '12px',
+                    boxShadow: '0 18px 36px rgba(12, 2, 8, 0.35)',
+                    padding: '12px 14px',
+                    minWidth: '250px',
+                  },
+                  success: {
+                    style: {
+                      borderColor: 'rgba(146,170,193,0.45)',
+                    },
+                  },
+                  error: {
+                    style: {
+                      borderColor: 'rgba(193,144,134,0.5)',
+                    },
                   },
                 }}
               />

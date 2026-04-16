@@ -60,7 +60,7 @@ export default function TermsPage() {
                   1. Agreement to Terms
                 </h2>
                 <p>
-                  By accessing and using the Bint Saeed website and services, you agree to be bound by these Terms and Conditions. These terms are governed by the laws of the United Arab Emirates.
+                  By accessing and using the Bint Saeed website and services, you agree to be bound by these Terms and Conditions. These terms are governed by the laws of the United\u00A0Arab\u00A0Emirates.
                 </p>
               </section>
 
@@ -108,12 +108,12 @@ export default function TermsPage() {
                   5. Returns and Refunds
                 </h2>
                 <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
-                  <li>Standard items may be returned within 14 days of delivery</li>
-                  <li>Items must be unworn, unwashed, and in original condition with tags attached</li>
-                  <li>Custom-made items and altered pieces are final sale</li>
-                  <li>Refunds will be processed within 14 business days of receiving returned items</li>
-                  <li>Original shipping costs are non-refundable</li>
-                  <li>Return shipping costs are the responsibility of the customer unless the item is defective</li>
+                  <li>All sales are final. We do not offer refunds, some exclusions apply.</li>
+                  <li>Exchanges are accepted within 14 days for unworn, undamaged items with tags attached.</li>
+                  <li>Discounted items cannot be returned or exchanged.</li>
+                  <li>Custom-made items and altered pieces are final sale.</li>
+                  <li>Items that do not meet exchange conditions may be rejected and returned to sender.</li>
+                  <li>To request an exchange, contact contact@bintsaeed.com with your order number.</li>
                 </ul>
               </section>
 
@@ -133,7 +133,7 @@ export default function TermsPage() {
                   7. Intellectual Property & Copyright
                 </h2>
                 <p className="mb-4">
-                  <strong>All content on this website is the exclusive property of Bint Saeed and is protected by copyright laws of the United Arab Emirates and international copyright treaties.</strong>
+                  <strong>All content on this website is the exclusive property of Bint Saeed and is protected by copyright laws of the United\u00A0Arab\u00A0Emirates and international copyright treaties.</strong>
                 </p>
                 <p className="mb-4">
                   This includes, but is not limited to:
@@ -205,7 +205,7 @@ export default function TermsPage() {
                   11. Governing Law and Disputes
                 </h2>
                 <p>
-                  These terms are governed by the laws of the United Arab Emirates. Any disputes shall be resolved through the competent courts of Dubai, UAE, unless otherwise required by applicable UAE consumer protection laws.
+                  These terms are governed by the laws of the United\u00A0Arab\u00A0Emirates. Any disputes shall be resolved through the competent courts of Dubai,\u00A0UAE, unless otherwise required by applicable UAE consumer protection laws.
                 </p>
               </section>
 

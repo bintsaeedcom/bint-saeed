@@ -7,7 +7,9 @@ import { FiX, FiShoppingBag, FiCheck, FiArrowRight } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getProductHref } from '@/lib/products/links'
 import toast from 'react-hot-toast'
+import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 
 interface QuickBuyProps {
   isOpen: boolean
@@ -44,7 +46,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
     addItem({
       id: product.id,
-      productUrl: `/shop/${product.id}`,
+      productUrl: getProductHref(product),
       name: product.name,
       price: product.price,
       image: product.images[0],
@@ -54,7 +56,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
     })
 
     setIsAdded(true)
-    toast.success(isRTL ? 'تمت الإضافة للسلة' : 'Added to bag')
+    showAddedToBagToast(isRTL)
     
     setTimeout(() => {
       setIsAdded(false)
@@ -72,7 +74,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
     addItem({
       id: product.id,
-      productUrl: `/shop/${product.id}`,
+      productUrl: getProductHref(product),
       name: product.name,
       price: product.price,
       image: product.images[0],

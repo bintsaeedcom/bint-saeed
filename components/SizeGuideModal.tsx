@@ -30,12 +30,13 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
           />
 
           {/* Modal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-4 z-[101] max-h-[90vh] overflow-y-auto rounded-xl border border-brand-stone/25 bg-[#f9f6f2] shadow-2xl md:inset-auto md:left-1/2 md:top-1/2 md:w-full md:max-w-4xl md:-translate-x-1/2 md:-translate-y-1/2"
-          >
+          <div className="fixed inset-0 z-[101] flex items-center justify-center p-4 md:p-6">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="w-full max-w-4xl max-h-[88vh] overflow-hidden rounded-xl border border-brand-stone/25 bg-[#f9f6f2] shadow-2xl"
+            >
             {/* Header */}
             <div className={`sticky top-0 z-10 flex items-center justify-between border-b border-brand-stone/25 bg-[#f7f2ec] px-6 py-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <div>
@@ -56,7 +57,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
             </div>
 
             {/* Content */}
-            <div className="p-6 md:p-7">
+            <div className="max-h-[calc(88vh-96px)] overflow-y-auto p-6 md:p-7">
               {/* Size Selector */}
               <div className="mb-6">
                 <p className={`font-roboto text-xs text-brand-clayRed/70 tracking-wide mb-3 ${isRTL ? 'text-right' : ''}`}>
@@ -151,7 +152,8 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                 <FiExternalLink className="w-4 h-4" />
               </LocaleLink>
             </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>

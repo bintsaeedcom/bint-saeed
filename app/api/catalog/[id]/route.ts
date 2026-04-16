@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getMergedProductById } from '@/lib/products/mergeCatalog'
+import { getMergedProductByIdentifier } from '@/lib/products/mergeCatalog'
 
 export const dynamic = 'force-dynamic'
 
@@ -8,7 +8,7 @@ export async function GET(_request: Request, { params }: { params: { id: string 
   if (!id) {
     return NextResponse.json({ error: 'Missing id' }, { status: 400 })
   }
-  const product = await getMergedProductById(id)
+  const product = await getMergedProductByIdentifier(id)
   if (!product) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
   }

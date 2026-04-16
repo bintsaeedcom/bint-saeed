@@ -11,10 +11,10 @@ export function lengthCmSelectOptions(): string[] {
 }
 
 export const CUSTOMISATION_SURCHARGE_AED = 40
-export const CUSTOMISATION_MAX_CHARS = 25
+export const CUSTOMISATION_MAX_CHARS = 35
 
 export function categoryNeedsLengthCmDropdown(category: string): boolean {
-  return category === 'Abayas' || category === 'Caftans' || category === 'Dresses'
+  return category === 'Abayas' || category === 'Kaftans' || category === 'Dresses'
 }
 
 export function getPdpSizeOptions(category: string, productSizes: readonly string[]): string[] {

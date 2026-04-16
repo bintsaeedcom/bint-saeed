@@ -23,6 +23,7 @@ const config: Config = {
       fontFamily: {
         'rozha': ['var(--font-rozha)', 'serif'],
         'roboto': ['var(--font-roboto)', 'sans-serif'],
+        'montserrat': ['var(--font-montserrat)', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.8s ease-out forwards',

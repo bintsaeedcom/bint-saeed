@@ -9,7 +9,7 @@ const testimonials = {
   en: [
     {
       name: 'Fatima A.',
-      location: 'Dubai, UAE',
+      location: 'Dubai,\u00A0UAE',
       rating: 5,
       text: 'The most beautiful abaya I have ever owned. The attention to detail and quality of fabric is exceptional. Truly a luxury piece.',
       product: 'Midnight Elegance Abaya',
@@ -23,14 +23,14 @@ const testimonials = {
     },
     {
       name: 'Noura M.',
-      location: 'Kuwait City, Kuwait',
+      location: 'Kuwait\u00A0City,\u00A0Kuwait',
       rating: 5,
       text: 'Finally found a brand that combines heritage with contemporary design. The craftsmanship is impeccable.',
       product: 'Al Talli Collection',
     },
     {
       name: 'Aisha H.',
-      location: 'Doha, Qatar',
+      location: 'Doha,\u00A0Qatar',
       rating: 5,
       text: 'Exceeded all my expectations. The fit is perfect and the design is unique. Worth every dirham.',
       product: 'Khous Inspired Abaya',

@@ -47,15 +47,15 @@ const faqData = {
         questions: [
           {
             q: 'What is your return policy?',
-            a: 'We accept returns within 14 days of delivery. Items must be unworn, unwashed, with original tags attached. Custom-made pieces are final sale.'
+            a: 'All sales are final and we do not offer refunds (some exclusions apply). Exchanges are accepted within 14 days for unworn, undamaged items with tags attached. Discounted and custom-made pieces are final sale.'
           },
           {
             q: 'How do I initiate a return?',
             a: 'Contact us at contact@bintsaeed.com with your order number. We will provide you with return instructions and a prepaid shipping label for UAE orders.'
           },
           {
-            q: 'When will I receive my refund?',
-            a: 'Refunds are processed within 14 business days of receiving your return. The amount will be credited to your original payment method.'
+            q: 'Do you offer refunds?',
+            a: 'No. We do not offer refunds. If your item is eligible, we can process an exchange within 14 days under our exchange conditions.'
           },
         ]
       },
@@ -138,15 +138,15 @@ const faqData = {
         questions: [
           {
             q: 'ما هي سياسة الإرجاع؟',
-            a: 'نقبل الإرجاع خلال 14 يوماً من التوصيل. يجب أن تكون القطع غير ملبوسة وغير مغسولة مع البطاقات الأصلية. القطع المفصلة لا ترد.'
+            a: 'جميع المبيعات نهائية ولا نوفر استرداداً نقدياً (مع وجود بعض الاستثناءات). يُقبل الاستبدال خلال 14 يوماً للقطع غير المستخدمة وغير المتضررة مع البطاقات. القطع المخفّضة والمفصّلة نهائية.'
           },
           {
             q: 'كيف أبدأ عملية الإرجاع؟',
             a: 'تواصلي معنا على contact@bintsaeed.com مع رقم طلبك. سنوفر لك تعليمات الإرجاع وبطاقة شحن مدفوعة مسبقاً للطلبات داخل الإمارات.'
           },
           {
-            q: 'متى سأستلم المبلغ المسترد؟',
-            a: 'تتم معالجة المبالغ المستردة خلال 14 يوم عمل من استلام الإرجاع. سيتم إرجاع المبلغ لطريقة الدفع الأصلية.'
+            q: 'هل تقدمون استرداداً نقدياً؟',
+            a: 'لا، لا نوفر استرداداً نقدياً. إذا كانت القطعة مؤهلة، يمكننا تنفيذ استبدال خلال 14 يوماً وفق شروط الاستبدال.'
           },
         ]
       },

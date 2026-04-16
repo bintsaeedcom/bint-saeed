@@ -3,8 +3,18 @@ import Stripe from 'stripe'
 import { isAllowedCheckoutOrigin, resolvePublicSiteBaseUrl } from '@/lib/security/allowedCheckoutOrigin'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 
+function getStripeSecretKey(): string | null {
+  const key = process.env.STRIPE_SECRET_KEY?.trim()
+  if (!key || !key.startsWith('sk_')) return null
+  return key
+}
+
 function getStripe() {
-  return new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
+  const key = getStripeSecretKey()
+  if (!key) {
+    throw new Error('Stripe secret key is not configured')
+  }
+  return new Stripe(key, {
     apiVersion: '2025-02-24.acacia',
   })
 }
@@ -13,6 +23,13 @@ const MAX_LINE_ITEMS = 80
 const MAX_DESC_LEN = 450
 
 export async function POST(request: NextRequest) {
+  if (!getStripeSecretKey()) {
+    return NextResponse.json(
+      { error: 'Stripe is not configured on this environment.' },
+      { status: 503 }
+    )
+  }
+
   const tooMany = await rateLimitResponse(request, 'checkout', 45, 3600)
   if (tooMany) return tooMany
 

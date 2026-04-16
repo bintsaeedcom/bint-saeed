@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState, useEffect, useCallback } from 'react'
+import { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
@@ -11,11 +11,12 @@ import type { Product } from '@/data/products'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import ProductWishlistHeart from '@/components/ProductWishlistHeart'
+import { getProductHref } from '@/lib/products/links'
 
 const CATEGORY_QUERY_MAP: Record<string, string> = {
   abayas: 'Abayas',
-  caftans: 'Caftans',
-  kaftans: 'Caftans',
+  kaftans: 'Kaftans',
+  caftans: 'Kaftans',
   dresses: 'Dresses',
   sets: 'Sets',
   accessories: 'Accessories',
@@ -42,6 +43,7 @@ export default function ShopClient() {
   const [filterOpen, setFilterOpen] = useState(false)
   const [sortOpen, setSortOpen] = useState(false)
   const [sortBy, setSortBy] = useState<SortId>('newest')
+  const sortMenuRef = useRef<HTMLDivElement | null>(null)
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
 
@@ -67,6 +69,24 @@ export default function ShopClient() {
       cancelled = true
     }
   }, [])
+
+  useEffect(() => {
+    if (!sortOpen) return
+
+    const handleOutside = (event: MouseEvent | TouchEvent) => {
+      const target = event.target
+      if (!(target instanceof Node)) return
+      if (sortMenuRef.current?.contains(target)) return
+      setSortOpen(false)
+    }
+
+    document.addEventListener('mousedown', handleOutside)
+    document.addEventListener('touchstart', handleOutside, { passive: true })
+    return () => {
+      document.removeEventListener('mousedown', handleOutside)
+      document.removeEventListener('touchstart', handleOutside)
+    }
+  }, [sortOpen])
 
   const categoryCounts = useMemo(() => {
     const m: Record<string, number> = {}
@@ -136,7 +156,7 @@ export default function ShopClient() {
             COLLECTION
           </p>
           <h1 className="font-rozha text-4xl font-normal leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl">
-            {isRTL ? 'الفصل ١' : 'Chapter 1'}
+            {isRTL ? 'الفصل ٢٦' : 'Chapter 26'}
           </h1>
           <p className="mt-6 max-w-md font-roboto text-sm leading-relaxed tracking-wide text-neutral-600">
             {isRTL
@@ -213,7 +233,7 @@ export default function ShopClient() {
                   : 'pieces'}
             </span>
 
-            <div className="relative">
+            <div className="relative" ref={sortMenuRef}>
               <button
                 type="button"
                 onClick={() => setSortOpen((o) => !o)}
@@ -228,34 +248,26 @@ export default function ShopClient() {
                 />
               </button>
               {sortOpen && (
-                <>
-                  <button
-                    type="button"
-                    className="fixed inset-0 z-40 cursor-default bg-transparent"
-                    aria-label="Close sort menu"
-                    onClick={() => setSortOpen(false)}
-                  />
-                  <div className="absolute right-0 top-full z-50 mt-2 min-w-[200px] border border-stone-200 bg-white py-2 shadow-lg shadow-stone-900/10">
-                    {SORT_OPTIONS.map((opt) => (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        onClick={() => {
-                          setSortBy(opt.id)
-                          setSortOpen(false)
-                        }}
-                        className={`block w-full px-4 py-2.5 text-left font-roboto text-xs tracking-wide transition-colors ${
-                          sortBy === opt.id
-                            ? 'bg-stone-100 text-brand-darkRed'
-                            : 'text-neutral-600 hover:bg-stone-50'
-                        }`}
-                        data-cursor-hover
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                </>
+                <div className="absolute right-0 top-full z-50 mt-2 min-w-[200px] border border-stone-200 bg-white py-2 shadow-lg shadow-stone-900/10">
+                  {SORT_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => {
+                        setSortBy(opt.id)
+                        setSortOpen(false)
+                      }}
+                      className={`block w-full px-4 py-2.5 text-left font-roboto text-xs tracking-wide transition-colors ${
+                        sortBy === opt.id
+                          ? 'bg-stone-100 text-brand-darkRed'
+                          : 'text-neutral-600 hover:bg-stone-50'
+                      }`}
+                      data-cursor-hover
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
               )}
             </div>
           </div>
@@ -271,55 +283,62 @@ export default function ShopClient() {
             >
               <ProductWishlistHeart
                 product={product}
-                href={`/shop/${product.id}`}
+                href={getProductHref(product)}
                 className={`absolute top-0 z-20 ${isRTL ? 'left-[8%]' : 'right-[8%]'}`}
               />
-              <a
-                href={`/shop/${product.id}`}
-                className="relative z-10 block w-full no-underline"
-                aria-label={`${isRTL ? 'فتح' : 'Open'} ${product.name}`}
-                data-cursor-hover
-              >
-                <article className="mx-auto w-[82%]">
-                  <div className="relative aspect-[3/4] overflow-hidden bg-stone-200">
-                    <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
-                      <Image
-                        src={product.images[0]}
-                        alt={product.name}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover"
-                        priority={false}
-                      />
-                    </div>
-                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                    <span className="absolute bottom-5 left-1/2 z-[1] -translate-x-1/2 font-roboto text-[9px] uppercase tracking-[0.35em] text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                      {isRTL ? 'اكتشفي' : 'Discover'}
-                    </span>
+              <article className="relative z-0 mx-auto block w-[82%]">
+                <a
+                  href={getProductHref(product)}
+                  className="relative z-20 block aspect-[3/4] overflow-hidden bg-stone-200"
+                  aria-label={`${isRTL ? 'فتح' : 'Open'} ${product.name}`}
+                  data-cursor-hover
+                >
+                  <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover"
+                      priority={false}
+                    />
                   </div>
-                  <div className="mt-5 space-y-2 border-t border-black/5 pt-4">
-                    <p className="font-roboto text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
-                      {product.category}
-                    </p>
-                    <h2 className="font-rozha text-[1.35rem] font-normal leading-tight tracking-wide text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue">
+                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <span className="absolute bottom-5 left-1/2 z-[1] -translate-x-1/2 font-roboto text-[9px] uppercase tracking-[0.35em] text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    {isRTL ? 'اكتشفي' : 'Discover'}
+                  </span>
+                </a>
+                <div className="mt-5 space-y-2 border-t border-black/5 pt-4">
+                  <p className="font-roboto text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
+                    {product.category}
+                  </p>
+                  <a href={getProductHref(product)} className="inline-block relative z-20" data-cursor-hover>
+                    <h2 className="font-rozha text-[1.35rem] font-normal leading-tight tracking-wide text-brand-darkRed transition-colors hover:text-brand-dustyBlue">
                       {product.name}
                     </h2>
-                    <p className="font-roboto text-sm tabular-nums tracking-wide text-neutral-600">
-                      {formatPrice(product.price)}
-                    </p>
-                    <div className="flex gap-1.5 pt-1">
-                      {product.colors.slice(0, 5).map((c) => (
-                        <span
-                          key={c.name}
-                          title={c.name}
-                          className="h-2.5 w-2.5 rounded-full border border-black/10"
-                          style={{ backgroundColor: c.hex }}
-                        />
-                      ))}
-                    </div>
+                  </a>
+                  <p className="font-roboto text-sm tabular-nums tracking-wide text-neutral-600">
+                    {formatPrice(product.price)}
+                  </p>
+                  <div className="flex gap-1.5 pt-1">
+                    {product.colors.slice(0, 5).map((c) => (
+                      <span
+                        key={c.name}
+                        title={c.name}
+                        className="h-2.5 w-2.5 rounded-full border border-black/10"
+                        style={{ backgroundColor: c.hex }}
+                      />
+                    ))}
                   </div>
-                </article>
-              </a>
+                  <a
+                    href={getProductHref(product)}
+                    className="relative z-20 inline-flex items-center border-b border-brand-darkRed/40 pt-2 font-roboto text-[11px] uppercase tracking-[0.18em] text-brand-darkRed hover:text-brand-dustyBlue hover:border-brand-dustyBlue"
+                    data-cursor-hover
+                  >
+                    {isRTL ? 'عرض المنتج' : 'View product'}
+                  </a>
+                </div>
+              </article>
             </li>
           ))}
         </ul>

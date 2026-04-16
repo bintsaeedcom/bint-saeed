@@ -247,7 +247,7 @@ function UNESCOSection() {
               {isRTL ? 'مُدرج 2022' : 'Inscribed 2022'}
             </span>
             <span className="px-6 py-3 bg-white/10 backdrop-blur-sm font-roboto text-xs uppercase tracking-[0.15em]">
-              {isRTL ? 'الإمارات العربية المتحدة' : 'United Arab Emirates'}
+              {isRTL ? 'الإمارات العربية المتحدة' : 'United\u00A0Arab\u00A0Emirates'}
             </span>
           </div>
         </motion.div>

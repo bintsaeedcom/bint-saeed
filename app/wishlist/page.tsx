@@ -7,6 +7,7 @@ import { FiHeart, FiTrash2 } from 'react-icons/fi'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getProductHref } from '@/lib/products/links'
 
 export default function WishlistPage() {
   const { items, removeItem } = useWishlistStore()
@@ -50,7 +51,7 @@ export default function WishlistPage() {
         ) : (
           <ul className="space-y-4 p-0">
             {items.map((item, index) => {
-              const href = item.href ?? `/shop/${item.id}`
+              const href = item.href ?? getProductHref({ id: item.id, name: item.name })
               return (
                 <motion.li
                   key={item.id}

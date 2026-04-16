@@ -23,6 +23,8 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
 import { getTabbyCheckoutUrl, getTamaraCheckoutUrl } from '@/lib/payments'
+import { products as staticProducts } from '@/data/products'
+import { getProductHref } from '@/lib/products/links'
 
 export default function CheckoutPage() {
   const router = useRouter()
@@ -30,10 +32,13 @@ export default function CheckoutPage() {
   const { items, getTotal } = useCartStore()
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
+  const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.trim() ?? ''
+  const stripeEnvReady = stripePublishableKey.startsWith('pk_')
 
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
-  const productHref = (item: (typeof items)[number]) => item.productUrl ?? `/shop/${item.id}`
+  const productHref = (item: (typeof items)[number]) =>
+    item.productUrl ?? getProductHref(staticProducts.find((product) => product.id === item.id) ?? { id: item.id, name: item.name })
 
   const [email, setEmail] = useState('')
   const [discountInput, setDiscountInput] = useState('')
@@ -89,6 +94,14 @@ export default function CheckoutPage() {
 
   const startStripeCheckout = async () => {
     if (items.length === 0) return
+    if (!stripeEnvReady) {
+      toast.error(
+        isRTL
+          ? 'الدفع غير مُهيأ بعد في هذه البيئة.'
+          : 'Stripe checkout is not configured for this environment yet.'
+      )
+      return
+    }
     if (email.trim()) {
       const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
       if (!ok) {
@@ -110,11 +123,17 @@ export default function CheckoutPage() {
       })
 
       const { sessionId, error } = await response.json()
+      if (!response.ok) {
+        throw new Error(error || 'Checkout is unavailable')
+      }
       if (error) throw new Error(error)
 
-      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '')
+      const stripe = await loadStripe(stripePublishableKey)
       if (stripe && sessionId) {
-        await stripe.redirectToCheckout({ sessionId })
+        const { error: redirectError } = await stripe.redirectToCheckout({ sessionId })
+        if (redirectError) {
+          throw new Error(redirectError.message)
+        }
       } else {
         throw new Error('Stripe not available')
       }
@@ -308,7 +327,7 @@ export default function CheckoutPage() {
               <button
                 type="button"
                 onClick={() => void startStripeCheckout()}
-                disabled={payBusy}
+                disabled={payBusy || !stripeEnvReady}
                 className={`flex w-full min-h-[52px] items-center justify-center gap-3 bg-brand-darkRed py-4 font-roboto text-sm uppercase tracking-[0.22em] text-white transition-colors hover:bg-brand-dustyBlue disabled:opacity-50 ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
@@ -325,6 +344,13 @@ export default function CheckoutPage() {
               <p className="mt-4 text-center font-roboto text-[10px] uppercase tracking-[0.15em] text-brand-clayRed/45">
                 {isRTL ? 'تشفير SSL · تتم المعالجة بواسطة Stripe' : 'SSL encrypted · Powered by Stripe'}
               </p>
+              {!stripeEnvReady ? (
+                <p className="mt-2 text-center font-roboto text-[10px] uppercase tracking-[0.15em] text-amber-700/80">
+                  {isRTL
+                    ? 'أضيفي NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY و STRIPE_SECRET_KEY لتفعيل الدفع.'
+                    : 'Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY and STRIPE_SECRET_KEY to enable checkout.'}
+                </p>
+              ) : null}
 
               {/* BNPL */}
               <div className="mt-10 border-t border-brand-stone/20 pt-8">
@@ -413,7 +439,7 @@ export default function CheckoutPage() {
                 <button
                   type="button"
                   onClick={() => void startStripeCheckout()}
-                  disabled={payBusy}
+                  disabled={payBusy || !stripeEnvReady}
                   className={`mt-8 flex w-full min-h-[48px] items-center justify-center gap-2 bg-brand-dustyBlue py-3.5 font-roboto text-xs uppercase tracking-[0.22em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >

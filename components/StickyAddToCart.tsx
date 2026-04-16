@@ -6,7 +6,9 @@ import { FiShoppingBag, FiCheck } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getProductHref } from '@/lib/products/links'
 import toast from 'react-hot-toast'
+import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 
 interface StickyAddToCartProps {
   product: {
@@ -62,7 +64,7 @@ export default function StickyAddToCart({
 
     addItem({
       id: product.id,
-      productUrl: `/shop/${product.id}`,
+      productUrl: getProductHref(product),
       name: product.name,
       price: product.price,
       image: product.image,
@@ -74,7 +76,7 @@ export default function StickyAddToCart({
     })
 
     setIsAdded(true)
-    toast.success(isRTL ? 'تمت الإضافة للسلة' : 'Added to bag')
+    showAddedToBagToast(isRTL)
     
     setTimeout(() => setIsAdded(false), 2000)
   }

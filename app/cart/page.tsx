@@ -8,10 +8,13 @@ import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
+import { products as staticProducts } from '@/data/products'
+import { getProductHref } from '@/lib/products/links'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotal } = useCartStore()
-  const productHref = (item: (typeof items)[number]) => item.productUrl ?? `/shop/${item.id}`
+  const productHref = (item: (typeof items)[number]) =>
+    item.productUrl ?? getProductHref(staticProducts.find((product) => product.id === item.id) ?? { id: item.id, name: item.name })
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
   const { formatPrice } = useCurrency()

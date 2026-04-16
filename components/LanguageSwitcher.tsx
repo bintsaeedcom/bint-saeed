@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiGlobe, FiChevronDown } from 'react-icons/fi'
@@ -10,13 +10,15 @@ import { stripLocaleFromPathname, localizedPath } from '@/lib/i18n/routing'
 
 interface LanguageSwitcherProps {
   variant?: 'light' | 'dark'
+  align?: 'start' | 'end'
 }
 
-export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherProps) {
-  const { language, setLanguage, t } = useLanguage()
+export default function LanguageSwitcher({ variant = 'dark', align = 'end' }: LanguageSwitcherProps) {
+  const { language, setLanguage, t, isRTL } = useLanguage()
   const router = useRouter()
   const pathname = usePathname() || '/'
   const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   const languages: { code: Language; label: string; native: string; flag: string }[] = [
     { code: 'en', label: 'English', native: 'EN', flag: '🇬🇧' },
@@ -38,8 +40,29 @@ export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherP
       ? 'text-white hover:text-white/70'
       : 'text-brand-darkRed hover:text-brand-dustyBlue'
 
-  const bgColor =
-    variant === 'light' ? 'bg-white/10 border-white/20' : 'bg-white border-brand-stone/30'
+  const dropdownSurfaceClass =
+    'bg-[linear-gradient(90deg,rgba(18,8,11,0.82)_0%,rgba(28,15,21,0.8)_22%,rgba(45,20,30,0.78)_50%,rgba(28,15,21,0.8)_78%,rgba(18,8,11,0.82)_100%)] border border-white/18 backdrop-blur-xl shadow-[0_18px_40px_rgba(10,4,8,0.38)]'
+
+  const itemHover =
+    'text-white/85 hover:bg-white/10'
+  const menuAlignClass =
+    align === 'start'
+      ? isRTL
+        ? 'right-0'
+        : 'left-0'
+      : isRTL
+        ? 'left-0'
+        : 'right-0'
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   const navigateToLanguage = (code: Language) => {
     const { pathname: inner } = stripLocaleFromPathname(pathname)
@@ -50,7 +73,7 @@ export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherP
   }
 
   return (
-    <div className="relative">
+    <div ref={dropdownRef} className="relative">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -65,33 +88,23 @@ export default function LanguageSwitcher({ variant = 'dark' }: LanguageSwitcherP
       <AnimatePresence>
         {isOpen && (
           <>
-            <div
-              key="lang-switcher-backdrop"
-              className="fixed inset-0 z-40"
-              onClick={() => setIsOpen(false)}
-              aria-hidden
-            />
             <motion.div
               key="lang-switcher-menu"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className={`absolute top-full right-0 z-50 mt-2 min-w-[160px] border shadow-lg ${bgColor}`}
+              className={`absolute top-full ${menuAlignClass} z-50 mt-2 max-h-72 min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
             >
               {languages.map((lang) => (
                 <button
                   key={lang.code}
                   type="button"
                   onClick={() => navigateToLanguage(lang.code)}
-                  className={`flex w-full items-center gap-2 px-4 py-3 text-left font-roboto text-sm tracking-wide transition-colors ${
+                  className={`flex w-full items-center gap-2 px-4 py-2.5 text-left font-montserrat text-sm tracking-wide transition-colors ${
                     language === lang.code
-                      ? variant === 'light'
-                        ? 'bg-white/20 text-white'
-                        : 'bg-brand-stone/20 text-brand-darkRed'
-                      : variant === 'light'
-                        ? 'text-white/80 hover:bg-white/10'
-                        : 'text-brand-clayRed hover:bg-brand-dustyBlue/10'
+                      ? 'bg-white/18 text-white'
+                      : itemHover
                   }`}
                   data-cursor-hover
                 >

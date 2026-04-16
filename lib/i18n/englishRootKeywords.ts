@@ -297,7 +297,7 @@ export const ENGLISH_ROOT_KEYWORDS =
     'abaya artisanale EAU',
     'abaya européenne',
     'abaya saoudienne',
-    'caftan de luxe EAU',
+    'kaftan de luxe EAU',
     'abaya prêt-à-porter',
     'abaya sur mesure',
     // Italian
@@ -329,7 +329,7 @@ export const ENGLISH_ROOT_KEYWORDS =
     'abaya fatta a mano',
     'abaya europea',
     'abaya saudita',
-    'caftan di lusso',
+    'kaftan di lusso',
     'abaya pronto moda',
     // Spanish
     'abaya negra',
@@ -517,7 +517,7 @@ export const ENGLISH_ROOT_KEYWORDS =
     'abaya feita à mão',
     'abaya europeia',
     'abaya saudita',
-    'caftan de luxo',
+    'kaftan de luxo',
     'abaya pronto a vestir',
     'abaya por medida',
     // Arabic - Heritage & Style

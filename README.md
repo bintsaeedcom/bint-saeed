@@ -107,7 +107,11 @@ npm start
 ### Stripe
 1. Create account at [stripe.com](https://stripe.com)
 2. Get API keys from Dashboard
-3. Add to `.env.local`
+3. Add the following to `.env.local`:
+   - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+   - `STRIPE_SECRET_KEY`
+   - `STRIPE_WEBHOOK_SECRET`
+4. Create webhook endpoint: `/api/webhooks/stripe` and enable `checkout.session.completed`
 
 ### Slack
 1. Create Slack app at [api.slack.com](https://api.slack.com)

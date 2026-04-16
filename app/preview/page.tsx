@@ -16,6 +16,7 @@ import Image from 'next/image'
 import { FiArrowRight, FiArrowDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { products as staticProducts } from '@/data/products'
+import { getProductHref } from '@/lib/products/links'
 import type { Product } from '@/data/products'
 
 // Reusable decorative corner component (from Coming Soon)
@@ -291,7 +292,7 @@ function CollectionCrossfadeSlideshow({ slides, altForIndex }: CollectionCrossfa
 
 const MANIFESTO_PARAGRAPHS = [
   'A house shaped by origin, carried across the world.',
-  'It belongs to a way of living that moves between places with ease. From Abu Dhabi to Paris, from London to Riyadh, the same presence remains. A sense of self that does not shift with setting, and a way of dressing that follows it naturally.',
+  'It belongs to a way of living that moves between places with ease. From Abu\u00A0Dhabi to Paris, from London to Riyadh, the same presence remains. A sense of self that does not shift with setting, and a way of dressing that follows it naturally.',
   'Each creation exists within that continuity. Not defined by location, but recognised by its consistency. A clear visual language that holds its place wherever it is worn.',
   'Origin, expressed in form, in attitude, in the way you are recognised.',
   'Bint Saeed exists at that intersection. Between heritage and a contemporary life lived locally and across borders. Between where you come from and where you are going. Between what you\'ve inherited and how you present yourself today.',
@@ -381,9 +382,9 @@ function QuickShopCarousel() {
           style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
         >
           {[...quickProducts, ...quickProducts].map((product, idx) => (
-            <a
+            <LocaleLink
               key={`${product.id}-${idx}`}
-              href={`/shop/${product.id}`}
+              href={getProductHref(product)}
               className="group mx-1.5 flex h-[24.6rem] w-[13.1rem] shrink-0 flex-col border border-brand-stone/25 bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:-translate-y-0.5 focus-visible:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:outline-none md:mx-2 md:h-[30rem] md:w-[16rem] lg:h-[31.5rem] lg:w-[16.8rem]"
               data-cursor-hover
             >
@@ -412,7 +413,7 @@ function QuickShopCarousel() {
                   DHS. {product.price.toLocaleString()}
                 </p>
               </div>
-            </a>
+            </LocaleLink>
           ))}
         </div>
       </div>
@@ -1084,7 +1085,7 @@ function CreatedForYouSection() {
                       </LocaleLink>
                     </MagneticWrap>
                     <p className="font-roboto text-[11px] uppercase tracking-[0.22em] text-brand-dustyBlue/85">
-                      Available worldwide. Based in Abu Dhabi.
+                      Available worldwide. Based in Abu\u00A0Dhabi.
                     </p>
                   </div>
                 </div>

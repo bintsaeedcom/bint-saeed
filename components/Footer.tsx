@@ -1,11 +1,12 @@
 'use client'
 
 import LocaleLink from '@/components/LocaleLink'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter } from 'react-icons/fa6'
-import { FiArrowRight, FiGlobe, FiTruck, FiClock } from 'react-icons/fi'
+import { FiArrowRight, FiGlobe, FiTruck, FiClock, FiHeart } from 'react-icons/fi'
 import SubscribeForm from './SubscribeForm'
+import LanguageSwitcher from './LanguageSwitcher'
+import CurrencySwitcher from './CurrencySwitcher'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 const socialLinks = [
@@ -96,7 +97,7 @@ export default function Footer() {
           <div className="absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-brand-dustyBlue/50 to-transparent" />
         </motion.div>
 
-        <div className="relative container mx-auto px-6 lg:px-12 py-20 md:py-24">
+        <div className="relative container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-16 md:py-20 2xl:py-24">
           <div className={`max-w-2xl mx-auto ${isRTL ? 'text-right' : ''}`}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -106,14 +107,14 @@ export default function Footer() {
             >
               <div className="relative">
                 <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-b from-brand-dustyBlue/30 via-brand-dustyBlue/10 to-brand-stone/20" />
-                <div className="relative backdrop-blur-sm bg-white/[0.03] rounded-2xl p-8 md:p-10 border border-brand-dustyBlue/20">
-                  <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue/60 mb-4 block">
+                <div className="relative rounded-2xl border border-brand-dustyBlue/20 bg-white/[0.03] p-6 backdrop-blur-sm md:p-8 2xl:p-10">
+                  <span className="mb-4 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue/60">
                     {isRTL ? 'انضم إلينا' : 'Join Us'}
                   </span>
-                  <h3 className="font-rozha text-3xl md:text-4xl mb-4 text-white">
+                  <h3 className="mb-4 font-montserrat text-[1.35rem] font-medium uppercase tracking-[0.12em] text-white md:text-[1.5rem] 2xl:text-[1.65rem]">
                     {t.footer.stayConnected}
                   </h3>
-                  <p className="font-roboto text-sm tracking-wide text-white/50 mb-8 max-w-md">
+                  <p className="mb-6 max-w-md font-montserrat text-[12px] tracking-[0.03em] text-white/50 2xl:mb-8">
                     {t.footer.subscribeDescription}
                   </p>
                   <SubscribeForm variant="dark" />
@@ -151,36 +152,55 @@ export default function Footer() {
         
         {/* Dusty blue accent line at top */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden translate-x-[150%] md:flex items-start justify-end">
+          <span
+            className="origin-top-right rotate-90 whitespace-nowrap font-rozha text-[56px] leading-none tracking-[0.02em] text-transparent opacity-90 lg:text-[68px]"
+            style={{
+              backgroundImage: 'linear-gradient(to right, #8e4233 0%, #92aac1 100%)',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+            }}
+            aria-hidden
+          >
+            Bint Saeed
+          </span>
+        </div>
         
-        <div className="relative container mx-auto px-6 lg:px-12 py-16">
-          <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 ${isRTL ? 'text-right' : ''}`}>
+        <div className="relative container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-12 md:py-14 2xl:py-16">
+          <div className={`grid grid-cols-1 gap-8 sm:grid-cols-2 lg:gap-10 xl:grid-cols-4 xl:gap-12 ${isRTL ? 'text-right' : ''}`}>
             {/* Brand Column with Logo */}
-            <div className="col-span-2 md:col-span-1">
-              <LocaleLink href="/home" data-cursor-hover className="inline-block mb-6">
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Image
-                    src="/logo.png"
-                    alt="Bint Saeed"
-                    width={240}
-                    height={60}
-                    className="h-[54px] w-[216px] object-contain"
-                  />
-                </motion.div>
-              </LocaleLink>
-              <p className="font-roboto text-xs text-white/50 tracking-wide leading-relaxed max-w-xs">
+            <div className="sm:col-span-2 xl:col-span-1">
+              <p className="max-w-xs font-montserrat text-[12px] leading-relaxed tracking-[0.03em] text-white/50">
                 {t.footer.brandDescription}
               </p>
-              <p className="font-roboto text-xs text-white/40 tracking-wide mt-3">
-                Abu Dhabi, United Arab Emirates
+              <p className="mt-3 font-montserrat text-[12px] tracking-[0.03em] text-white/40">
+                Abu&nbsp;Dhabi,&nbsp;United&nbsp;Arab&nbsp;Emirates
               </p>
+
+              <div className={`mt-6 space-y-4 ${isRTL ? 'items-end' : 'items-start'} flex flex-col`}>
+                <div className={`${isRTL ? 'text-right' : 'text-left'}`}>
+                  <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/45">
+                    {isRTL ? 'اللغة' : 'Language'}
+                  </p>
+                  <div className="inline-flex border-b border-white/50 pb-1">
+                    <LanguageSwitcher variant="light" align="start" />
+                  </div>
+                </div>
+
+                <div className={`${isRTL ? 'text-right' : 'text-left'}`}>
+                  <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/45">
+                    {isRTL ? 'الدولة/المنطقة' : 'Country/Region'}
+                  </p>
+                  <div className="inline-flex border-b border-white/50 pb-1">
+                    <CurrencySwitcher variant="light" showSymbol={false} align="start" />
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Shop */}
-            <div>
-              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue mb-6">
+            <div className="self-start">
+              <h4 className="mb-5 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
                 {t.footer.shop}
               </h4>
               <ul className="space-y-3">
@@ -188,7 +208,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <LocaleLink
                       href={link.href}
-                      className="font-roboto text-sm text-white/60 hover:text-brand-dustyBlue transition-colors tracking-wide"
+                      className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
                       data-cursor-hover
                     >
                       {link.label}
@@ -199,8 +219,8 @@ export default function Footer() {
             </div>
 
             {/* About */}
-            <div>
-              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue mb-6">
+            <div className="self-start">
+              <h4 className="mb-5 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
                 {t.footer.about}
               </h4>
               <ul className="space-y-3">
@@ -208,7 +228,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <LocaleLink
                       href={link.href}
-                      className="font-roboto text-sm text-white/60 hover:text-brand-dustyBlue transition-colors tracking-wide"
+                      className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
                       data-cursor-hover
                     >
                       {link.label}
@@ -219,8 +239,8 @@ export default function Footer() {
             </div>
 
             {/* Help */}
-            <div>
-              <h4 className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue mb-6">
+            <div className="self-start">
+              <h4 className="mb-5 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
                 {t.footer.help}
               </h4>
               <ul className="space-y-3">
@@ -228,7 +248,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <LocaleLink
                       href={link.href}
-                      className="font-roboto text-sm text-white/60 hover:text-brand-dustyBlue transition-colors tracking-wide"
+                      className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
                       data-cursor-hover
                     >
                       {link.label}
@@ -246,49 +266,64 @@ export default function Footer() {
         {/* Subtle gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-brand-rose/20 via-transparent to-brand-rose/20" />
         
-        <div className="relative container mx-auto px-6 lg:px-12 py-10">
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 ${isRTL ? 'text-right' : ''}`}>
+        <div className="relative container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-8 md:py-9 2xl:py-10">
+          <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4 xl:gap-8 ${isRTL ? 'text-right' : ''}`}>
             {/* Worldwide Shipping */}
             <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="w-14 h-14 bg-white/10 border border-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                <FiGlobe className="w-6 h-6 text-white" />
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
+                <FiGlobe className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
               </div>
               <div>
-                <h4 className="font-roboto text-sm font-medium text-white uppercase tracking-wider">
+                <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
                   {isRTL ? 'شحن عالمي' : 'Worldwide Shipping'}
                 </h4>
-                <p className="font-roboto text-xs text-white/60 tracking-wide">
+                <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
                   {isRTL ? 'نشحن إلى جميع أنحاء العالم' : 'We deliver to every corner of the globe'}
                 </p>
               </div>
             </div>
 
-            {/* Free GCC Shipping */}
+            {/* Free UAE Shipping */}
             <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="w-14 h-14 bg-white/10 border border-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                <FiTruck className="w-6 h-6 text-white" />
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
+                <FiTruck className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
               </div>
               <div>
-                <h4 className="font-roboto text-sm font-medium text-white uppercase tracking-wider">
-                  {isRTL ? 'شحن مجاني للخليج' : 'Free GCC Shipping'}
+                <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
+                  {isRTL ? 'شحن مجاني داخل الإمارات' : 'Free UAE Shipping'}
                 </h4>
-                <p className="font-roboto text-xs text-white/60 tracking-wide">
+                <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
                   {isRTL ? 'للطلبات فوق 500 درهم' : 'On orders over 500 AED'}
                 </p>
               </div>
             </div>
 
-            {/* Handcrafted */}
+            {/* Carefully Considered */}
             <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="w-14 h-14 bg-white/10 border border-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                <FiClock className="w-6 h-6 text-white" />
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
+                <FiClock className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
               </div>
               <div>
-                <h4 className="font-roboto text-sm font-medium text-white uppercase tracking-wider">
-                  {isRTL ? 'صناعة يدوية' : 'Handcrafted'}
+                <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
+                  {isRTL ? 'بعناية مدروسة' : 'Carefully Considered'}
                 </h4>
-                <p className="font-roboto text-xs text-white/60 tracking-wide">
+                <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
                   {isRTL ? 'توصيل خلال أسبوعين' : 'Delivered within 2 weeks'}
+                </p>
+              </div>
+            </div>
+
+            {/* Giving Forward */}
+            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
+                <FiHeart className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
+              </div>
+              <div>
+                <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
+                  {isRTL ? 'نعطي للأمام' : 'Giving Forward'}
+                </h4>
+                <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
+                  {isRTL ? 'نخصص جزءاً من كل طلب للعطاء' : 'A portion of each order supports giving'}
                 </p>
               </div>
             </div>
@@ -301,32 +336,32 @@ export default function Footer() {
         {/* Dusty blue accent line at top */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
         
-        <div className="container mx-auto px-6 lg:px-12 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-6 md:py-7 2xl:py-8">
+          <div className="flex flex-col items-center justify-between gap-5 lg:flex-row">
             {/* Copyright - Left */}
-            <p className="font-roboto text-xs tracking-[0.1em] text-white/40 order-3 md:order-1">
+            <p className="order-3 font-montserrat text-[11px] tracking-[0.08em] text-white/40 lg:order-1">
               © {currentYear} Bint Saeed. {t.footer.allRightsReserved}
             </p>
 
             {/* Legal Links - Center */}
-            <div className="flex flex-wrap justify-center gap-6 order-2">
+            <div className="order-2 flex flex-wrap justify-center gap-4 md:gap-6">
               <LocaleLink
                 href="/privacy-policy"
-                className="font-roboto text-xs uppercase tracking-[0.15em] text-white/50 hover:text-brand-stone transition-colors"
+                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
                 data-cursor-hover
               >
                 {t.footer.privacy}
               </LocaleLink>
               <LocaleLink
                 href="/cookie-policy"
-                className="font-roboto text-xs uppercase tracking-[0.15em] text-white/50 hover:text-brand-stone transition-colors"
+                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
                 data-cursor-hover
               >
                 {t.footer.cookies}
               </LocaleLink>
               <LocaleLink
                 href="/terms"
-                className="font-roboto text-xs uppercase tracking-[0.15em] text-white/50 hover:text-brand-stone transition-colors"
+                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
                 data-cursor-hover
               >
                 {t.footer.terms}
@@ -334,14 +369,14 @@ export default function Footer() {
             </div>
 
             {/* Social Icons - Right */}
-            <div className="flex items-center gap-3 order-1 md:order-3">
+            <div className="order-1 flex items-center gap-2.5 md:gap-3 lg:order-3">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-white/50 hover:text-brand-stone hover:border-brand-stone/30 transition-all"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/50 transition-all hover:border-brand-stone/30 hover:text-brand-stone md:h-10 md:w-10"
                   aria-label={social.label}
                   data-cursor-hover
                 >

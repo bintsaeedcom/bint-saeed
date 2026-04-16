@@ -1,14 +1,21 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowRight } from 'react-icons/fi'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { FreeMode } from 'swiper/modules'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
+import { products as staticProducts } from '@/data/products'
+import { getProductHref } from '@/lib/products/links'
+
+import 'swiper/css'
+import 'swiper/css/free-mode'
 
 interface MiniCartProps {
   isOpen: boolean
@@ -19,9 +26,28 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const { items, removeItem, updateQuantity, getTotal } = useCartStore()
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
-  const productHref = (item: (typeof items)[number]) => item.productUrl ?? `/shop/${item.id}`
+  const summarize = (value: string, max = 46) =>
+    value.length > max ? `${value.slice(0, max).trimEnd()}…` : value
+  const productHref = (item: (typeof items)[number]) =>
+    item.productUrl ?? getProductHref(staticProducts.find((product) => product.id === item.id) ?? { id: item.id, name: item.name })
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
+
+  const youMayAlsoLike = useMemo(() => {
+    if (items.length === 0) return []
+    const cartIds = new Set(items.map((i) => i.id))
+    const categoriesInCart = new Set<string>()
+    for (const line of items) {
+      const p = staticProducts.find((pr) => pr.id === line.id)
+      if (p) categoriesInCart.add(p.category)
+    }
+    const primary = categoriesInCart.size ? [...categoriesInCart][0] : null
+    const pool = staticProducts.filter((p) => !cartIds.has(p.id))
+    const same = primary ? pool.filter((p) => p.category === primary) : []
+    const rest = primary ? pool.filter((p) => p.category !== primary) : pool
+    const ordered = [...same, ...rest]
+    return ordered.slice(0, 16)
+  }, [items])
 
   // Close on escape key
   useEffect(() => {
@@ -124,7 +150,12 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                         </p>
                         {item.customisationMessage && (
                           <p className="font-roboto text-[10px] text-brand-darkRed/80 mt-1 line-clamp-2">
-                            “{item.customisationMessage}”
+                            {isRTL ? 'التخصيص:' : 'Personalisation:'} “{summarize(item.customisationMessage)}”
+                          </p>
+                        )}
+                        {item.notes && (
+                          <p className="font-roboto text-[10px] text-brand-clayRed/80 mt-1 line-clamp-2">
+                            {isRTL ? 'ملاحظة:' : 'Note:'} {summarize(item.notes)}
                           </p>
                         )}
                         <p className="font-roboto text-sm text-brand-darkRed mt-2">
@@ -186,6 +217,48 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                       </div>
                     </div>
                   ))}
+                </div>
+              )}
+
+              {items.length > 0 && youMayAlsoLike.length > 0 && (
+                <div className={`border-t border-brand-stone/15 py-4 ${isRTL ? 'text-right' : ''}`}>
+                  <p className="px-4 font-roboto text-[10px] uppercase tracking-[0.18em] text-brand-clayRed/70">
+                    {isRTL ? 'قد يعجبك أيضاً' : 'You may also like'}
+                  </p>
+                  <Swiper
+                    modules={[FreeMode]}
+                    freeMode={{ enabled: true, momentum: true, momentumRatio: 0.85 }}
+                    slidesPerView="auto"
+                    spaceBetween={12}
+                    dir={isRTL ? 'rtl' : 'ltr'}
+                    className="mt-3 !px-4"
+                    wrapperClass="!items-stretch"
+                  >
+                    {youMayAlsoLike.map((p) => (
+                      <SwiperSlide key={p.id} className="!w-[7.25rem] sm:!w-[7.75rem]">
+                        <LocaleLink
+                          href={getProductHref(p)}
+                          onClick={onClose}
+                          className="group block"
+                          data-cursor-hover
+                        >
+                          <div className="relative aspect-[3/4] overflow-hidden rounded-md bg-[#f5f5f5]">
+                            <Image
+                              src={p.images[0]}
+                              alt={p.name}
+                              fill
+                              sizes="124px"
+                              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                            />
+                          </div>
+                          <p className="mt-1.5 line-clamp-2 font-roboto text-[10px] leading-snug text-brand-darkRed group-hover:text-brand-dustyBlue">
+                            {p.name}
+                          </p>
+                          <p className="mt-0.5 font-roboto text-[10px] text-brand-clayRed/80">{formatPrice(p.price)}</p>
+                        </LocaleLink>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
                 </div>
               )}
             </div>

@@ -16,6 +16,7 @@ import { useWishlistStore } from '@/store/wishlistStore'
 import OrderCutoffBanner from '@/components/OrderCutoffBanner'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import WristMeasurement from '@/components/WristMeasurement'
 
 import 'swiper/css'
@@ -95,7 +96,7 @@ export default function AccessoryDetailPage() {
       notes,
     })
 
-    toast.success(isRTL ? 'تمت الإضافة للسلة' : 'Added to bag')
+    showAddedToBagToast(isRTL)
   }
 
   const toggleWishlist = () => {
@@ -505,10 +506,54 @@ export default function AccessoryDetailPage() {
                       className="overflow-hidden"
                     >
                       <div className="font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5 space-y-2">
-                        <p>{isRTL ? '• شحن مجاني للطلبات فوق 500 درهم' : '• Free shipping on orders over 500 AED'}</p>
-                        <p>{isRTL ? '• التوصيل السريع: 1-2 أيام عمل (الإمارات)' : '• Express delivery: 1-2 business days (UAE)'}</p>
-                        <p>{isRTL ? '• التوصيل العادي: 3-5 أيام عمل (الخليج)' : '• Standard delivery: 3-5 business days (GCC)'}</p>
-                        <p>{isRTL ? '• الإرجاع مقبول خلال 14 يوم' : '• Returns accepted within 14 days'}</p>
+                        <p>{isRTL ? '• الشحن المجاني متاح داخل الإمارات فقط.' : '• Free shipping is available within the UAE only.'}</p>
+                        <p>
+                          {isRTL
+                            ? '• القطع الجاهزة للشحن تُرسل خلال 1-3 أيام عمل للطلبات المقدمة قبل الساعة 3:00 مساءً بتوقيت الإمارات.'
+                            : '• In-stock styles dispatch within 1-3 business days for orders placed before 3:00 PM UAE time.'}
+                        </p>
+                        <p>
+                          {isRTL
+                            ? '• القطع المسبقة الطلب تُشحن في التاريخ الموضح على صفحة المنتج.'
+                            : '• Pre-order styles dispatch on the date shown on the product page.'}
+                        </p>
+                        <p>
+                          {isRTL
+                            ? '• الطلبات المختلطة (جاهز + مسبق الطلب) تُشحن معاً في تاريخ المسبق الطلب المعلن.'
+                            : '• Mixed orders (in-stock + pre-order) dispatch together on the stated pre-order date.'}
+                        </p>
+                        <p>
+                          {isRTL
+                            ? '• جميع المبيعات نهائية. لا نوفر استرداداً نقدياً، مع وجود بعض الاستثناءات.'
+                            : '• All sales are final. We do not offer refunds, some exclusions apply.'}
+                        </p>
+                        <p>
+                          {isRTL
+                            ? '• يُقبل استبدال القطع الجاهزة فقط خلال 14 يوماً إذا كانت غير مستخدمة وغير متضررة مع البطاقات.'
+                            : '• Exchanges for in-stock items are accepted within 14 days for unworn, undamaged pieces with tags attached.'}
+                        </p>
+                        <p>
+                          {isRTL
+                            ? '• لا يمكن إرجاع أو استبدال القطع المخفّضة.'
+                            : '• Discounted items cannot be returned or exchanged.'}
+                        </p>
+                        <p>
+                          {isRTL
+                            ? '• القطع المسبقة الطلب لا يمكن إرجاعها أو استبدالها.'
+                            : '• Pre-order items cannot be returned or exchanged.'}
+                        </p>
+                        <p>
+                          {isRTL
+                            ? '• القطع المخصصة لا يمكن إرجاعها أو استبدالها.'
+                            : '• Personalised items cannot be returned or exchanged.'}
+                        </p>
+                        <p>
+                          {isRTL ? '• للمزيد من المعلومات، راجعي ' : '• For more information, please review our '}
+                          <LocaleLink href="/terms" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
+                            {isRTL ? 'سياسة الاسترجاع والاستبدال' : 'Refunds and Exchanges policy'}
+                          </LocaleLink>
+                          .
+                        </p>
                       </div>
                     </motion.div>
                   )}

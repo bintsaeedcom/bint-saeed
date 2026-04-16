@@ -6,7 +6,8 @@
 
 :root {
   --font-rozha: 'Rozha One', serif;
-  --font-roboto: 'Roboto', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+  --font-roboto: var(--font-montserrat);
   --font-arabic: 'Noto Kufi Arabic', sans-serif;
   
   --brand-dark-red: #3b0014;
@@ -20,6 +21,7 @@
 /* RTL Support */
 [dir="rtl"] {
   --font-roboto: 'Noto Kufi Arabic', sans-serif;
+  --font-montserrat: 'Noto Kufi Arabic', sans-serif;
 }
 
 [dir="rtl"] body {
@@ -58,7 +60,7 @@ html {
 
 body {
   font-family: var(--font-roboto);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   overflow-x: hidden;
   cursor: auto;
   background: #3b0014;
@@ -78,14 +80,14 @@ html {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-rozha);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   color: var(--brand-dark-red);
   font-weight: 400;
 }
 
 p, span, a, li, label, input, textarea, button {
   font-family: var(--font-roboto);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 
 /* Avoid fading <main> from opacity:0 — stacks badly with Framer initial states and can look like a blank page */
@@ -422,11 +424,21 @@ html, body {
   }
 }
 
-/* Prevent text overflow */
-h1, h2, h3, h4, h5, h6, p {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
+/* Keep UI copy readable without awkward split words. */
+h1, h2, h3, h4, h5, h6, p, a, span, button, label, li {
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: manual;
+}
+
+/* Use for city names / proper nouns that must stay together. */
+.keep-together {
+  white-space: nowrap;
+}
+
+/* Slightly scale up dense PDP control copy for readability. */
+.pdp-info [class*="text-[11px]"] {
+  font-size: 12px !important;
 }
 
 /* Responsive images — discourage drag / image-save selection */

@@ -11,6 +11,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
 import MiniCart from './MiniCart'
+import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
 
 // Search suggestions and pages
 const searchableContent = [
@@ -31,7 +32,7 @@ const searchableContent = [
   { title: 'FAQ', href: '/faq', category: 'Help' },
   { title: 'Shipping & Returns', href: '/terms', category: 'Help' },
   { title: 'Abayas', href: '/shop?category=abayas', category: 'Products' },
-  { title: 'Caftans', href: '/shop?category=caftans', category: 'Products' },
+  { title: 'Kaftans', href: '/shop?category=kaftans', category: 'Products' },
   { title: 'Black Abaya', href: '/shop?category=abayas&color=black', category: 'Products' },
   { title: 'Luxury Abaya', href: '/shop?category=abayas&style=luxury', category: 'Products' },
 ]
@@ -87,22 +88,13 @@ export default function Header() {
             { label: 'Abayas', href: '/shop?category=abayas' },
             { label: 'Sets', href: '/shop?category=sets' },
             { label: 'Dresses', href: '/shop?category=dresses' },
-            { label: 'Caftans', href: '/shop?category=caftans' },
-          ],
-        },
-        {
-          title: 'Occasion',
-          links: [
-            { label: 'Wedding Guest', href: '/shop?occasion=wedding' },
-            { label: 'Bridal', href: '/shop?occasion=bridal' },
-            { label: 'Evening', href: '/shop?occasion=evening' },
-            { label: 'Resort', href: '/shop?occasion=resort' },
+            { label: 'Kaftans', href: '/shop?category=kaftans' },
           ],
         },
       ],
       features: [
         { title: 'New Arrivals', href: '/shop', image: '/collection-section/67.png' },
-        { title: 'Wedding Guest', href: '/shop?occasion=wedding', image: '/collection-section/68.png' },
+        { title: 'Chapter Edit', href: '/shop', image: '/collection-section/68.png' },
       ],
     },
     '/accessories': {
@@ -191,6 +183,12 @@ export default function Header() {
     }
   }, [isMobileMenuOpen])
 
+  useEffect(() => {
+    const openMiniCart = () => setIsMiniCartOpen(true)
+    window.addEventListener(OPEN_MINI_CART_EVENT, openMiniCart as EventListener)
+    return () => window.removeEventListener(OPEN_MINI_CART_EVENT, openMiniCart as EventListener)
+  }, [])
+
   // Handle search
   useEffect(() => {
     if (searchQuery.trim()) {
@@ -223,20 +221,20 @@ export default function Header() {
       {/* Main Header - Elegant Single Row Design */}
       <header
         className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${headerBarGradient} ${
-          isScrolled ? 'py-3 shadow-lg shadow-black/40' : 'py-4 lg:py-5'
+          isScrolled ? 'py-2.5 lg:py-3 shadow-lg shadow-black/40' : 'py-3 lg:py-4 2xl:py-5'
         }`}
       >
         {/* Subtle dusty blue accent line at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
         
         <nav
-          className="container mx-auto px-4 lg:px-12"
+          className="container mx-auto px-2 sm:px-3 lg:px-4 2xl:px-8"
           onMouseLeave={() => setActiveMegaMenu(null)}
         >
           <div className="flex items-center justify-between relative">
             
-            {/* Left: Navigation - xl breakpoint prevents overlap on medium screens */}
-            <nav className="hidden xl:flex items-center gap-6 2xl:gap-8 flex-1 min-w-0 relative z-[60] pointer-events-auto flex-shrink-0">
+            {/* Left: Navigation - only show full desktop nav on very wide screens */}
+            <nav className="hidden 2xl:flex items-center gap-6 flex-1 min-w-0 relative z-[60] pointer-events-auto flex-shrink-0">
               {navItems.map((item) => (
                 <LocaleLink
                   key={item.label}
@@ -252,9 +250,9 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Mobile/Tablet: Menu Button - shown below xl (1280px) to prevent nav overlap */}
+            {/* Compact layout: menu button shown below 2xl to prevent overlap */}
             <button
-              className="xl:hidden p-2 text-white relative z-50"
+              className="2xl:hidden p-2 text-white relative z-50"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               data-cursor-hover
               aria-label="Toggle menu"
@@ -262,7 +260,7 @@ export default function Header() {
               <FiMenu className="w-6 h-6" />
             </button>
 
-            {/* Center: Logo - lower z-index so nav links (z-50) receive clicks when overlapping */}
+            {/* Center: Logo */}
             <div className="absolute left-1/2 -translate-x-1/2 z-[40] shrink-0">
               <LocaleLink href="/home" className="block" data-cursor-hover>
                 <Image
@@ -270,17 +268,21 @@ export default function Header() {
                   alt="Bint Saeed"
                   width={420}
                   height={110}
-                  className={`transition-all duration-300 ${isScrolled ? 'h-[66px]' : 'h-[78px]'} w-auto`}
+                  className={`w-auto transition-all duration-300 ${
+                    isScrolled
+                      ? 'h-[48px] sm:h-[54px] 2xl:h-[66px]'
+                      : 'h-[54px] sm:h-[60px] 2xl:h-[78px]'
+                  }`}
                   priority
                 />
               </LocaleLink>
             </div>
 
-            {/* Right: Utilities & Icons */}
-            <div className="hidden xl:flex items-center gap-5 2xl:gap-6 flex-1 min-w-0 justify-end relative z-[60] pointer-events-auto flex-shrink-0">
+            {/* Right: Full utilities for very wide screens */}
+            <div className="hidden 2xl:flex items-center gap-5 flex-1 min-w-0 justify-end relative z-[60] pointer-events-auto flex-shrink-0">
               {/* Language & Currency */}
               <div className="flex items-center gap-4 pr-4 border-r border-white/20">
-                <CurrencySwitcher variant="light" />
+                <CurrencySwitcher variant="light" showSymbol={false} />
                 <LanguageSwitcher variant="light" />
               </div>
               
@@ -347,6 +349,51 @@ export default function Header() {
                 data-cursor-hover
               >
                 <FiShoppingBag className="w-5 h-5" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-dustyBlue text-white text-[9px] rounded-full flex items-center justify-center font-roboto font-bold">
+                    {cartItems.length}
+                  </span>
+                )}
+              </button>
+            </div>
+
+            {/* Compact desktop/tablet utilities */}
+            <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 2xl:hidden relative z-[60]">
+              <div className="hidden md:flex items-center gap-2 pr-2 border-r border-white/15">
+                <CurrencySwitcher variant="light" showSymbol={false} />
+                <LanguageSwitcher variant="light" />
+              </div>
+
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className="text-white/75 hover:text-white transition-colors duration-300 p-1.5"
+                data-cursor-hover
+                aria-label={t.nav.search}
+              >
+                <FiSearch className="w-[17px] h-[17px]" />
+              </button>
+
+              <LocaleLink
+                href="/wishlist"
+                className="relative text-white/75 hover:text-white transition-colors duration-300 p-1.5"
+                data-cursor-hover
+                aria-label={t.nav.wishlist}
+              >
+                <FiHeart className="w-[17px] h-[17px]" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 font-roboto text-[9px] font-bold text-white">
+                    {wishlistCount > 9 ? '9+' : wishlistCount}
+                  </span>
+                )}
+              </LocaleLink>
+
+              <button
+                onClick={() => setIsMiniCartOpen(true)}
+                className="relative text-white/75 hover:text-white transition-colors duration-300 p-1.5"
+                data-cursor-hover
+                aria-label={t.nav.cart}
+              >
+                <FiShoppingBag className="w-[17px] h-[17px]" />
                 {cartItems.length > 0 && (
                   <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-dustyBlue text-white text-[9px] rounded-full flex items-center justify-center font-roboto font-bold">
                     {cartItems.length}
@@ -483,7 +530,7 @@ export default function Header() {
                       {t.search.popularSearches || 'Popular Searches'}
                     </span>
                     <div className="flex flex-wrap gap-2">
-                      {['Abayas', 'Caftans', 'Dresses', 'Accessories', 'New Arrivals', 'Heritage'].map((term) => (
+                      {['Abayas', 'Kaftans', 'Dresses', 'Accessories', 'New Arrivals', 'Heritage'].map((term) => (
                         <button
                           key={term}
                           onClick={() => setSearchQuery(term)}
@@ -626,7 +673,7 @@ export default function Header() {
                     </LocaleLink>
                   </div>
                   <div className="flex items-center gap-3">
-                    <CurrencySwitcher variant="light" />
+                    <CurrencySwitcher variant="light" showSymbol={false} />
                     <LanguageSwitcher variant="light" />
                   </div>
                 </div>
