@@ -13,7 +13,7 @@ import {
 } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
-import { FiArrowRight, FiArrowDown } from 'react-icons/fi'
+import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
@@ -552,7 +552,7 @@ function HeroSection() {
                 className="relative z-30 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10"
               >
                 <MagneticWrap className="w-fit">
-                  <a
+                  <LocaleLink
                     href="/shop"
                     className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-roboto text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
                     data-cursor-hover
@@ -561,7 +561,7 @@ function HeroSection() {
                     <FiArrowRight
                       className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
                     />
-                  </a>
+                  </LocaleLink>
                 </MagneticWrap>
               </motion.div>
             </div>
@@ -1113,86 +1113,6 @@ function CreatedForYouSection() {
               </motion.div>
             </div>
           </motion.div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function AsymmetricShowcase() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { margin: '-10%', once: true })
-  const { t, isRTL } = useLanguage()
-
-  const products = [
-    { name: 'Silk Evening Abaya', price: '2,400 AED', image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&q=90' },
-    { name: 'Embroidered Bisht', price: '1,800 AED', image: 'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=600&q=90' },
-    { name: 'Resort Kaftan', price: '1,200 AED', image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=600&q=90' },
-  ]
-
-  return (
-    <section ref={ref} className="bg-[#faf9f7] py-24 md:py-40">
-      <div className="container mx-auto px-6 lg:px-16">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className={`mb-20 ${isRTL ? 'text-right' : ''}`}
-        >
-          <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-3 block">
-            {t.featured.subtitle}
-          </span>
-          <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-6 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
-            <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed max-w-xl leading-[1.1]">
-              {t.featured.title}
-            </h2>
-            <LocaleLink
-              href="/shop"
-              className="inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed hover:text-brand-dustyBlue transition-colors pb-2 border-b border-brand-dustyBlue/30"
-              data-cursor-hover
-            >
-              {t.featured.viewAll}
-              <FiArrowRight className="w-4 h-4" />
-            </LocaleLink>
-          </div>
-        </motion.div>
-
-        {/* Asymmetric Product Grid */}
-        <div className="grid md:grid-cols-12 gap-6 md:gap-8">
-          {products.map((product, index) => (
-            <motion.div
-              key={product.name}
-              initial={{ opacity: 0, y: 60 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.15 }}
-              className={`${index === 0 ? 'md:col-span-5' : index === 1 ? 'md:col-span-4 md:mt-24' : 'md:col-span-3 md:mt-12'}`}
-            >
-              <LocaleLink href="/shop" className="group block transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1" data-cursor-hover>
-                <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-white">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover transition-all duration-700 group-hover:scale-105"
-                  />
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-brand-darkRed/0 group-hover:bg-brand-darkRed/20 transition-colors duration-500" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                    <span className="inline-block px-6 py-3 bg-brand-dustyBlue text-white font-roboto text-xs uppercase tracking-[0.15em]">
-                      {t.featured.quickAdd}
-                    </span>
-                  </div>
-                </div>
-                <h3 className="font-roboto text-sm text-brand-darkRed mb-2 tracking-wide group-hover:text-brand-dustyBlue transition-colors">
-                  {product.name}
-                </h3>
-                <p className="font-roboto text-sm text-brand-clayRed/60 tracking-wide">
-                  {product.price}
-                </p>
-              </LocaleLink>
-            </motion.div>
-          ))}
         </div>
       </div>
     </section>
