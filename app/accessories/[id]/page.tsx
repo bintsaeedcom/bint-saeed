@@ -128,26 +128,45 @@ export default function AccessoryDetailPage() {
     <div className={`min-h-screen bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
       {/* Breadcrumb */}
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className={`flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.1em] ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <LocaleLink href="/" className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
-              {isRTL ? 'الرئيسية' : 'Home'}
-            </LocaleLink>
-            <span className="text-brand-clayRed/30">/</span>
-            <LocaleLink href="/accessories" className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
-              {isRTL ? 'الإكسسوارات' : 'Accessories'}
-            </LocaleLink>
-            <span className="text-brand-clayRed/30">/</span>
-            <LocaleLink 
-              href={`/accessories?category=${accessory.category}`} 
-              className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors" 
-              data-cursor-hover
+        <div className="container mx-auto min-w-0 px-6 lg:px-12">
+          <nav
+            aria-label="Breadcrumb"
+            className={`flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 font-roboto text-[10px] uppercase tracking-[0.12em] sm:text-xs ${isRTL ? 'flex-row-reverse' : ''}`}
+          >
+            <div
+              className={`flex shrink-0 flex-wrap items-center gap-2 leading-none text-brand-clayRed/50 ${isRTL ? 'flex-row-reverse' : ''}`}
             >
-              {isRTL ? categoryInfo?.nameAr : categoryInfo?.name}
-            </LocaleLink>
-            <span className="text-brand-clayRed/30">/</span>
-            <span className="text-brand-darkRed">{isRTL ? accessory.nameAr : accessory.name}</span>
-          </div>
+              <LocaleLink href="/" className="hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
+                {isRTL ? 'الرئيسية' : 'Home'}
+              </LocaleLink>
+              <span className="select-none text-[11px] font-light text-brand-clayRed/30 sm:text-xs" aria-hidden>
+                /
+              </span>
+              <LocaleLink href="/accessories" className="hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
+                {isRTL ? 'الإكسسوارات' : 'Accessories'}
+              </LocaleLink>
+              <span className="select-none text-[11px] font-light text-brand-clayRed/30 sm:text-xs" aria-hidden>
+                /
+              </span>
+              <LocaleLink
+                href={`/accessories?category=${accessory.category}`}
+                className="max-w-[10rem] truncate hover:text-brand-dustyBlue transition-colors sm:max-w-none sm:overflow-visible sm:whitespace-normal"
+                title={isRTL ? categoryInfo?.nameAr : categoryInfo?.name}
+                data-cursor-hover
+              >
+                {isRTL ? categoryInfo?.nameAr : categoryInfo?.name}
+              </LocaleLink>
+              <span className="select-none text-[11px] font-light text-brand-clayRed/30 sm:text-xs" aria-hidden>
+                /
+              </span>
+            </div>
+            <span
+              className="min-w-0 flex-1 truncate leading-snug text-brand-darkRed sm:flex-none sm:leading-normal sm:whitespace-normal sm:overflow-visible sm:text-clip"
+              title={isRTL ? accessory.nameAr : accessory.name}
+            >
+              {isRTL ? accessory.nameAr : accessory.name}
+            </span>
+          </nav>
         </div>
       </div>
 

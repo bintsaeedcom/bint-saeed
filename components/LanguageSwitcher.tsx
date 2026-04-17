@@ -94,7 +94,7 @@ export default function LanguageSwitcher({ variant = 'dark', align = 'end' }: La
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className={`absolute top-full ${menuAlignClass} z-50 mt-2 max-h-72 min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
+              className={`absolute top-full z-[65] ${menuAlignClass} mt-2 max-h-72 min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
             >
               {languages.map((lang) => (
                 <button

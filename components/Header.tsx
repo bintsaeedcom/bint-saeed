@@ -227,11 +227,10 @@ export default function Header() {
         {/* Subtle dusty blue accent line at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
         
-        <nav
-          className="container mx-auto px-2 sm:px-3 lg:px-4 2xl:px-8"
-          onMouseLeave={() => setActiveMegaMenu(null)}
-        >
-          <div className="flex items-center justify-between relative">
+        <nav className="container mx-auto px-2 sm:px-3 lg:px-4 2xl:px-8">
+          {/* One hover zone for top bar + mega menu — avoids mouseleave firing in the pixel gap above the panel */}
+          <div className="relative" onMouseLeave={() => setActiveMegaMenu(null)}>
+          <div className="relative flex items-center justify-between isolate">
             
             {/* Left: Navigation - only show full desktop nav on very wide screens */}
             <nav className="hidden 2xl:flex items-center gap-6 flex-1 min-w-0 relative z-[60] pointer-events-auto flex-shrink-0">
@@ -252,7 +251,8 @@ export default function Header() {
 
             {/* Compact layout: menu button shown below 2xl to prevent overlap */}
             <button
-              className="2xl:hidden p-2 text-white relative z-50"
+              type="button"
+              className="relative z-[55] p-2 text-white 2xl:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               data-cursor-hover
               aria-label="Toggle menu"
@@ -260,15 +260,15 @@ export default function Header() {
               <FiMenu className="w-6 h-6" />
             </button>
 
-            {/* Center: Logo */}
-            <div className="absolute left-1/2 -translate-x-1/2 z-[40] shrink-0">
-              <LocaleLink href="/home" className="block" data-cursor-hover>
+            {/* Center: Logo — wrapper ignores stray taps so menu / utilities stay clickable on narrow widths */}
+            <div className="pointer-events-none absolute left-1/2 top-1/2 z-[40] w-max max-2xl:max-w-[min(220px,72vw)] -translate-x-1/2 -translate-y-1/2 shrink-0">
+              <LocaleLink href="/home" className="pointer-events-auto block" data-cursor-hover>
                 <Image
                   src="/logo.png"
                   alt="Bint Saeed"
                   width={420}
                   height={110}
-                  className={`w-auto transition-all duration-300 ${
+                  className={`pointer-events-none w-auto transition-all duration-300 ${
                     isScrolled
                       ? 'h-[48px] sm:h-[54px] 2xl:h-[66px]'
                       : 'h-[54px] sm:h-[60px] 2xl:h-[78px]'
@@ -288,6 +288,7 @@ export default function Header() {
               
               {/* Icons */}
               <button
+                type="button"
                 onClick={() => setIsSearchOpen(true)}
                 className="text-white/70 hover:text-white transition-colors duration-300 p-1"
                 data-cursor-hover
@@ -320,6 +321,7 @@ export default function Header() {
               </LocaleLink>
               
               <button
+                type="button"
                 onClick={() => setIsMiniCartOpen(true)}
                 className="relative text-white/70 hover:text-white transition-colors duration-300 p-1"
                 data-cursor-hover
@@ -334,37 +336,16 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Mobile/Tablet: Right Icons */}
-            <div className="flex xl:hidden items-center gap-3">
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className="text-white/80 hover:text-white transition-colors duration-300 p-1"
-                data-cursor-hover
-              >
-                <FiSearch className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setIsMiniCartOpen(true)}
-                className="relative text-white/80 hover:text-white transition-colors duration-300 p-1"
-                data-cursor-hover
-              >
-                <FiShoppingBag className="w-5 h-5" />
-                {cartItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-dustyBlue text-white text-[9px] rounded-full flex items-center justify-center font-roboto font-bold">
-                    {cartItems.length}
-                  </span>
-                )}
-              </button>
-            </div>
-
-            {/* Compact desktop/tablet utilities */}
-            <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 2xl:hidden relative z-[60]">
+            {/* Below 2xl: single utility row (search, wishlist, cart, + lang/currency from md).
+                Avoid a separate <xl block — it duplicated search + cart on phones. */}
+            <div className="relative z-[55] flex shrink-0 items-center justify-end gap-1.5 sm:gap-2 lg:gap-3 2xl:hidden">
               <div className="hidden md:flex items-center gap-2 pr-2 border-r border-white/15">
                 <CurrencySwitcher variant="light" showSymbol={false} />
                 <LanguageSwitcher variant="light" />
               </div>
 
               <button
+                type="button"
                 onClick={() => setIsSearchOpen(true)}
                 className="text-white/75 hover:text-white transition-colors duration-300 p-1.5"
                 data-cursor-hover
@@ -388,6 +369,7 @@ export default function Header() {
               </LocaleLink>
 
               <button
+                type="button"
                 onClick={() => setIsMiniCartOpen(true)}
                 className="relative text-white/75 hover:text-white transition-colors duration-300 p-1.5"
                 data-cursor-hover
@@ -412,7 +394,7 @@ export default function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="absolute left-0 right-0 top-full hidden xl:block"
+                className="pointer-events-auto absolute left-0 right-0 top-full z-[62] hidden -mt-1.5 pt-1.5 xl:block"
               >
                 <div className="border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)]">
                   <div className="grid grid-cols-12 gap-10 px-6 py-8 lg:px-12">
@@ -473,6 +455,7 @@ export default function Header() {
               </motion.div>
             )}
           </AnimatePresence>
+          </div>
         </nav>
       </header>
 
@@ -513,6 +496,7 @@ export default function Header() {
                   dir={isRTL ? 'rtl' : 'ltr'}
                 />
                 <button
+                  type="button"
                   onClick={handleSearchClose}
                   className="p-2 text-brand-darkRed/60 hover:text-brand-darkRed transition-colors"
                   data-cursor-hover
@@ -533,6 +517,7 @@ export default function Header() {
                       {['Abayas', 'Kaftans', 'Dresses', 'Accessories', 'New Arrivals', 'Heritage'].map((term) => (
                         <button
                           key={term}
+                          type="button"
                           onClick={() => setSearchQuery(term)}
                           className="px-4 py-2 bg-brand-stone/20 text-brand-darkRed font-roboto text-sm tracking-wide hover:bg-brand-dustyBlue/20 transition-colors rounded-full"
                           data-cursor-hover
@@ -605,6 +590,7 @@ export default function Header() {
                   />
                 </LocaleLink>
                 <button
+                  type="button"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-white p-2"
                   data-cursor-hover

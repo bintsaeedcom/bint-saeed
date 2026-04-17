@@ -132,9 +132,10 @@ const organizationSchema = {
   }],
   sameAs: [
     'https://www.instagram.com/bintsaeed_brand/',
-    'https://tiktok.com/@bintsaeed',
+    'https://www.tiktok.com/@bintsaeed_brand',
     'https://www.snapchat.com/add/bintsaeed',
-    'https://x.com/bintsaeed',
+    'https://x.com/bintsaeed_brand',
+    'https://www.pinterest.com/bintsaeed_brand/',
   ],
   brand: {
     '@type': 'Brand',

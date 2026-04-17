@@ -11,10 +11,10 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 const socialLinks = [
   { icon: FaInstagram, href: 'https://www.instagram.com/bintsaeed_brand/', label: 'Instagram' },
-  { icon: FaTiktok, href: 'https://tiktok.com/@bintsaeed', label: 'TikTok' },
-  { icon: FaSnapchat, href: 'https://snapchat.com/t/W1nDzIXS', label: 'Snapchat' },
-  { icon: FaXTwitter, href: 'https://x.com/bintsaeed', label: 'X' },
-  { icon: FaPinterest, href: 'https://pinterest.com/bintsaeed', label: 'Pinterest' },
+  { icon: FaTiktok, href: 'https://www.tiktok.com/@bintsaeed_brand', label: 'TikTok' },
+  { icon: FaSnapchat, href: 'https://www.snapchat.com/add/bintsaeed', label: 'Snapchat' },
+  { icon: FaXTwitter, href: 'https://x.com/bintsaeed_brand', label: 'X' },
+  { icon: FaPinterest, href: 'https://www.pinterest.com/bintsaeed_brand/', label: 'Pinterest' },
 ]
 
 export default function Footer() {

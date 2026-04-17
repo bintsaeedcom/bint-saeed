@@ -15,6 +15,8 @@ import {
   FiTag,
   FiTruck,
 } from 'react-icons/fi'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination } from 'swiper/modules'
 import { loadStripe } from '@stripe/stripe-js'
 import toast from 'react-hot-toast'
 import { useCartStore } from '@/store/cartStore'
@@ -25,6 +27,8 @@ import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
 import { getTabbyCheckoutUrl, getTamaraCheckoutUrl } from '@/lib/payments'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
+import 'swiper/css'
+import 'swiper/css/pagination'
 
 export default function CheckoutPage() {
   const router = useRouter()
@@ -62,6 +66,17 @@ export default function CheckoutPage() {
   }, [discountInput, appliedCode])
 
   const subtotal = getTotal()
+  const pairedStyles = useMemo(() => {
+    const cartIds = new Set(items.map((item) => item.id))
+    const cartCategories = new Set(
+      items
+        .map((item) => staticProducts.find((product) => product.id === item.id)?.category)
+        .filter(Boolean)
+    )
+    return staticProducts
+      .filter((product) => !cartIds.has(product.id) && cartCategories.has(product.category))
+      .slice(0, 8)
+  }, [items])
 
   const applyDiscount = async () => {
     const raw = discountInput.trim()
@@ -228,6 +243,63 @@ export default function CheckoutPage() {
                 ))}
               </ul>
             </motion.section>
+
+            {pairedStyles.length > 0 && (
+              <motion.section
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.03 }}
+                className="rounded-2xl border border-brand-stone/20 bg-white p-6 shadow-sm md:p-8"
+              >
+                <div className={`mb-5 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <h2 className="font-rozha text-xl text-brand-darkRed">
+                    {isRTL ? 'تنسق جيداً مع طلبك' : 'Pairs Well With Your Bag'}
+                  </h2>
+                  <LocaleLink
+                    href="/shop"
+                    className="font-roboto text-[10px] uppercase tracking-[0.18em] text-brand-clayRed/65 hover:text-brand-dustyBlue"
+                    data-cursor-hover
+                  >
+                    {isRTL ? 'تسوقي المزيد' : 'Shop more'}
+                  </LocaleLink>
+                </div>
+                <Swiper
+                  modules={[Pagination]}
+                  spaceBetween={16}
+                  pagination={{ clickable: true }}
+                  breakpoints={{
+                    0: { slidesPerView: 1.25 },
+                    640: { slidesPerView: 2.2 },
+                    1024: { slidesPerView: 2.6 },
+                  }}
+                  className="checkout-paired-carousel !pb-9"
+                >
+                  {pairedStyles.map((product) => (
+                    <SwiperSlide key={product.id}>
+                      <LocaleLink href={getProductHref(product)} className="group block" data-cursor-hover>
+                        <div className="relative aspect-[3/4] overflow-hidden border border-brand-stone/15 bg-[#f5f3ef]">
+                          <Image
+                            src={product.images[0] ?? ''}
+                            alt={product.name}
+                            fill
+                            sizes="(max-width: 640px) 75vw, 30vw"
+                            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                          />
+                        </div>
+                        <div className={`mt-3 ${isRTL ? 'text-right' : ''}`}>
+                          <p className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
+                            {product.name}
+                          </p>
+                          <p className="mt-1 font-roboto text-xs tracking-wide text-brand-clayRed/80">
+                            {formatPrice(product.price)}
+                          </p>
+                        </div>
+                      </LocaleLink>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </motion.section>
+            )}
 
             {/* Contact */}
             <motion.section

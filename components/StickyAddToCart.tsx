@@ -81,11 +81,6 @@ export default function StickyAddToCart({
     setTimeout(() => setIsAdded(false), 2000)
   }
 
-  // Only show on mobile/tablet
-  if (typeof window !== 'undefined' && window.innerWidth > 1024) {
-    return null
-  }
-
   return (
     <AnimatePresence>
       {isVisible && (
@@ -94,7 +89,7 @@ export default function StickyAddToCart({
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className={`fixed bottom-0 left-0 right-0 bg-white border-t border-brand-stone/20 shadow-2xl z-50 safe-area-inset lg:hidden ${isRTL ? 'rtl' : 'ltr'}`}
+          className={`fixed bottom-0 left-0 right-0 z-[96] border-t border-brand-stone/20 bg-white shadow-2xl safe-area-inset lg:hidden ${isRTL ? 'rtl' : 'ltr'}`}
         >
           <div className="container mx-auto px-4 py-3">
             <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -112,6 +107,7 @@ export default function StickyAddToCart({
 
               {/* Add to Cart Button */}
               <button
+                type="button"
                 onClick={handleAddToCart}
                 disabled={isAdded}
                 className={`flex-1 py-3.5 font-roboto text-xs uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-2 ${

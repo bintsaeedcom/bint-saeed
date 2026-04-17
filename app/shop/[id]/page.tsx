@@ -8,10 +8,11 @@ import LocaleLink from '@/components/LocaleLink'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
-import { FiChevronDown, FiPlus, FiMinus, FiArrowLeft, FiHeart, FiX, FiMaximize2, FiGlobe, FiAward } from 'react-icons/fi'
+import { FiChevronDown, FiPlus, FiMinus, FiHeart, FiX, FiMaximize2, FiGlobe, FiAward } from 'react-icons/fi'
 import SizeGuideModal from '@/components/SizeGuideModal'
 import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
+import { getProductPdpContent } from '@/data/productPdpContent'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -19,7 +20,6 @@ import { getTabbyCheckoutUrl } from '@/lib/payments'
 import { getProductHref, resolveProductIdentifier } from '@/lib/products/links'
 import {
   getPdpSizeOptions,
-  categoryNeedsLengthCmDropdown,
   CUSTOMISATION_SURCHARGE_AED,
   CUSTOMISATION_MAX_CHARS,
 } from '@/lib/shopProductOptions'
@@ -94,6 +94,30 @@ export default function ProductPage() {
   const addItem = useCartStore((state) => state.addItem)
   const { isRTL } = useLanguage()
 
+  const relatedStyles = useMemo(
+    () =>
+      product
+        ? staticProducts
+            .filter((p) => p.id !== product.id && p.category === product.category)
+            .slice(0, 3)
+        : [],
+    [product],
+  )
+  const { productDetails, fitAndSizeDetails } = useMemo(
+    () => (product ? getProductPdpContent(product) : { productDetails: [], fitAndSizeDetails: [] }),
+    [product]
+  )
+  const estimatedShipDate = useMemo(() => {
+    const d = new Date()
+    d.setDate(d.getDate() + 14)
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: '2-digit',
+    }).format(d)
+  }, [])
+  const tabbyUrl = useMemo(() => getTabbyCheckoutUrl(), [])
+
   if (!product) {
     return (
       <div className="min-h-screen pt-32 flex items-center justify-center bg-white">
@@ -111,76 +135,11 @@ export default function ProductPage() {
     )
   }
 
-  const needsLength = categoryNeedsLengthCmDropdown(product.category)
   const sizeOptions = getPdpSizeOptions(product.category, product.sizes)
   const personalisationSurcharge =
     customisationActive && customisationMessage.trim().length > 0 ? CUSTOMISATION_SURCHARGE_AED : 0
   const displayUnitAed = product.price + personalisationSurcharge
-  const relatedStyles = useMemo(
-    () =>
-      staticProducts
-        .filter((p) => p.id !== product.id && p.category === product.category)
-        .slice(0, 3),
-    [product.category, product.id],
-  )
-  const productDetails =
-    product.id === 'bs-002'
-      ? [
-          'Deep Maroon crepe chiffon kaftan with fluid, draped silhouette.',
-          'V-neckline for a clean and elongated shape.',
-          'Lightweight outer layer designed to move and flow with the body.',
-          'Attached scarf detail draped from the left shoulder.',
-          'Open-cut sleeves allowing subtle visibility of the arms.',
-          'Can be adjusted using hidden internal ties to create a defined, cape-like shape.',
-          'Internal ties can also be wrapped toward the back to softly define the waist.',
-          'Layered construction with an attached inner dress for coverage.',
-          'Length: 136 cm / 53.5 inches.',
-          'Colour: Deep Maroon.',
-          'Composition — Outer: Crepe Chiffon (100% Polyester).',
-          'Composition — Inner: 100% Polyester.',
-          'Care: Professional dry clean.',
-          'Detail: Signature Bint Saeed gold emblem.',
-          'Origin: Made in Abu\u00A0Dhabi, United\u00A0Arab\u00A0Emirates.',
-        ]
-      : [
-          product.description,
-          product.fabric,
-          'Hand-finished in-house at Bint Saeed atelier.',
-          needsLength
-            ? 'Custom length available after size selection.'
-            : 'Standard silhouette measurements are shown in the size section.',
-        ]
-  const fitAndSizeDetails =
-    product.id === 'bs-002'
-      ? [
-          'Model height: 155 cm / 61 inches.',
-          'Model wears size XS.',
-          'Designed for a fluid, relaxed fit.',
-          'Adjustable silhouette through internal tie construction.',
-        ]
-      : product.category === 'Kaftans'
-      ? [
-          'This kaftan fits true to size.',
-          'Designed for a slim fit, we recommend sizing up if you are in between sizes.',
-          'Wear with seamless undergarments.',
-          'Our model is 171.5 cm and is wearing a Small.',
-        ]
-      : ([
-          `Available sizes: ${sizeOptions.join(', ')}`,
-          'Fits true to chapter sizing. Use the size chart to confirm your best fit.',
-          'If you are between sizes, choose the larger size for more ease.',
-        ].filter(Boolean) as string[])
   const sizeAndMeasurementDetails = [product.measurements, ...fitAndSizeDetails]
-  const estimatedShipDate = useMemo(() => {
-    const d = new Date()
-    d.setDate(d.getDate() + 14)
-    return new Intl.DateTimeFormat('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: '2-digit',
-    }).format(d)
-  }, [])
-  const tabbyUrl = useMemo(() => getTabbyCheckoutUrl(), [])
   const isVideoFile = (src: string) => /\.(mp4|mov|webm|ogg)$/i.test(src)
   const isHeicFile = (src: string) => /\.(heic|heif)$/i.test(src)
 
@@ -243,18 +202,40 @@ export default function ProductPage() {
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
-        <div className="mx-auto max-w-[1280px] px-6 lg:px-10">
-          <div className="flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.1em]">
-            <LocaleLink href="/" className="text-brand-darkRed/60 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
-              Home
-            </LocaleLink>
-            <span className="text-brand-darkRed/35">/</span>
-            <LocaleLink href="/shop" className="text-brand-darkRed/60 hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
-              Shop
-            </LocaleLink>
-            <span className="text-brand-darkRed/35">/</span>
-            <span className="text-brand-darkRed">{product.name}</span>
-          </div>
+        <div className="mx-auto min-w-0 max-w-[1280px] px-6 lg:px-10">
+          <nav
+            aria-label="Breadcrumb"
+            className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 font-montserrat text-[10px] uppercase tracking-[0.12em] sm:text-xs"
+          >
+            <div className="flex shrink-0 items-center gap-2 leading-none text-brand-darkRed/60">
+              <LocaleLink
+                href="/"
+                className="hover:text-brand-dustyBlue transition-colors"
+                data-cursor-hover
+              >
+                Home
+              </LocaleLink>
+              <span className="select-none text-[11px] font-light text-brand-darkRed/30 sm:text-xs" aria-hidden>
+                /
+              </span>
+              <LocaleLink
+                href="/shop"
+                className="hover:text-brand-dustyBlue transition-colors"
+                data-cursor-hover
+              >
+                Shop
+              </LocaleLink>
+              <span className="select-none text-[11px] font-light text-brand-darkRed/30 sm:text-xs" aria-hidden>
+                /
+              </span>
+            </div>
+            <span
+              className="min-w-0 flex-1 truncate leading-snug text-brand-darkRed sm:flex-none sm:leading-normal sm:whitespace-normal sm:overflow-visible sm:text-clip"
+              title={product.name}
+            >
+              {product.name}
+            </span>
+          </nav>
         </div>
       </div>
 
@@ -280,6 +261,7 @@ export default function ProductPage() {
                   slideToClickedSlide
                   preventClicks={false}
                   preventClicksPropagation={false}
+                  touchStartPreventDefault={false}
                   className="product-gallery-thumbs !h-[44rem] !overflow-visible"
                 >
                   {product.images.map((image, index) => (
@@ -332,6 +314,7 @@ export default function ProductPage() {
                     pagination={{ clickable: true, dynamicBullets: true }}
                     preventClicks={false}
                     preventClicksPropagation={false}
+                    touchStartPreventDefault={false}
                     onSwiper={(swiper) => {
                       mainSwiperRef.current = swiper
                     }}
@@ -406,6 +389,7 @@ export default function ProductPage() {
                     slideToClickedSlide
                     preventClicks={false}
                     preventClicksPropagation={false}
+                    touchStartPreventDefault={false}
                     className="product-gallery-thumbs !overflow-visible"
                   >
                     {product.images.map((image, index) => (
@@ -680,6 +664,7 @@ export default function ProductPage() {
               {/* Quantity */}
               <div className="flex items-center border border-brand-stone/50">
                 <button
+                  type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="px-3 py-2.5 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
                   data-cursor-hover
@@ -688,6 +673,7 @@ export default function ProductPage() {
                 </button>
                 <span className="w-10 text-center font-montserrat text-[11px]">{quantity}</span>
                 <button
+                  type="button"
                   onClick={() => setQuantity(quantity + 1)}
                   className="px-3 py-2.5 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
                   data-cursor-hover
@@ -698,6 +684,7 @@ export default function ProductPage() {
 
               {/* Add to Cart */}
               <button
+                type="button"
                 onClick={handleAddToCart}
                 className="flex-1 px-6 py-3 bg-brand-darkRed text-white font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] hover:bg-brand-dustyBlue transition-colors"
                 data-cursor-hover

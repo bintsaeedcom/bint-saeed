@@ -212,8 +212,8 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       title: twTitle,
       description: twDesc,
       images: ['https://bintsaeed.com/hero-bintsaeed.jpg', 'https://bintsaeed.com/og-image.png'],
-      creator: '@bintsaeed',
-      site: '@bintsaeed',
+      creator: '@bintsaeed_brand',
+      site: '@bintsaeed_brand',
     },
     robots: {
       index: true,
