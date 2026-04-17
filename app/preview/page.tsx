@@ -452,7 +452,8 @@ function HeroSection() {
   const reduceMotion = useReducedMotion()
   const { t, isRTL } = useLanguage()
   // Preview-specific hero copy (English)
-  const heroTagline = 'A house devoted to the daughter in every woman.'
+  const heroHeadline = 'A house devoted to the daughter in every woman.'
+  const heroSubline = 'Carrying Heritage Forward.'
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -513,16 +514,6 @@ function HeroSection() {
             <div className={`min-w-0 lg:col-span-8 xl:col-span-7 ${isRTL ? 'lg:col-start-6' : ''}`}>
               {/* initial={false}: avoid opacity:0 inline styles before hydration (looked "broken" / blank UI) */}
               <motion.div style={{ y }} className="pointer-events-none">
-                <motion.p
-                  initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className={`mb-5 flex items-center gap-4 font-roboto text-[10px] uppercase tracking-[0.45em] !text-white/80 sm:text-[11px] ${isRTL ? 'flex-row-reverse' : ''}`}
-                >
-                  <span className="h-px w-8 shrink-0 bg-white/35 sm:w-12" aria-hidden />
-                  The House
-                </motion.p>
-
                 <motion.h1
                   initial={false}
                   animate={{ opacity: 1, y: 0 }}
@@ -530,8 +521,7 @@ function HeroSection() {
                   style={reduceMotion ? undefined : { y: titleY, letterSpacing: titleTracking, filter: titleFilter }}
                   className="mb-8 max-w-[100vw] font-rozha uppercase leading-[1.12] tracking-[0.06em] !text-white text-[clamp(0.7rem,calc(0.35rem+2.15vw),2.65rem)] sm:text-[clamp(0.85rem,calc(0.4rem+2.35vw),2.75rem)] md:text-[clamp(0.95rem,calc(0.45rem+2.5vw),2.85rem)] md:whitespace-nowrap"
                 >
-                  Carrying Heritage{' '}
-                  <span className="text-brand-dustyBlue italic tracking-[0.04em]">Forward</span>
+                  {heroHeadline}
                 </motion.h1>
 
                 <motion.p
@@ -541,7 +531,7 @@ function HeroSection() {
                   style={reduceMotion ? undefined : { x: introX }}
                   className="mb-6 max-w-md border-s border-white/25 ps-5 font-roboto text-sm leading-[1.75] tracking-[0.02em] !text-white/90 md:mb-8 md:ps-6 md:text-[15px]"
                 >
-                  {heroTagline}
+                  {heroSubline}
                 </motion.p>
               </motion.div>
 

@@ -29,8 +29,8 @@ export default function Footer() {
     ],
     about: [
       { label: t.footer.ourStory, href: '/about' },
-      { label: t.footer.craftsmanship, href: '/about' },
-      { label: t.footer.careers, href: '/about' },
+      { label: t.footer.craftsmanship, href: '/craftsmanship' },
+      { label: t.footer.careers, href: '/careers' },
     ],
     help: [
       { label: t.footer.contactUs, href: '/contact' },
@@ -278,7 +278,7 @@ export default function Footer() {
                   {isRTL ? 'شحن عالمي' : 'Worldwide Shipping'}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'نشحن إلى جميع أنحاء العالم' : 'We deliver to every corner of the globe'}
+                  {isRTL ? 'توصيل عالمي' : 'Delivered globally'}
                 </p>
               </div>
             </div>
@@ -293,7 +293,7 @@ export default function Footer() {
                   {isRTL ? 'شحن مجاني داخل الإمارات' : 'Free UAE Shipping'}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'للطلبات فوق 500 درهم' : 'On orders over 500 AED'}
+                  {isRTL ? 'للطلبات فوق 2000 درهم' : 'On orders above 2000 AED'}
                 </p>
               </div>
             </div>
@@ -305,10 +305,10 @@ export default function Footer() {
               </div>
               <div>
                 <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {isRTL ? 'بعناية مدروسة' : 'Carefully Considered'}
+                  {isRTL ? 'يُصنع عند الطلب' : 'Crafted to Order'}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'توصيل خلال أسبوعين' : 'Delivered within 2 weeks'}
+                  {isRTL ? 'يُنتج فقط عند الطلب' : 'Produced only upon request'}
                 </p>
               </div>
             </div>
@@ -323,7 +323,7 @@ export default function Footer() {
                   {isRTL ? 'نعطي للأمام' : 'Giving Forward'}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'نخصص جزءاً من كل طلب للعطاء' : 'A portion of each order supports giving'}
+                  {isRTL ? 'يتم تخصيص 20 درهم من كل قطعة للأعمال الخيرية' : '20 AED from each piece is dedicated to charity'}
                 </p>
               </div>
             </div>

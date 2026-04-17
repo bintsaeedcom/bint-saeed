@@ -22,8 +22,12 @@ const searchableContent = [
   { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
   { title: 'Bracelets', href: '/accessories?type=bracelets', category: 'Accessories' },
   { title: 'Earrings', href: '/accessories?type=earrings', category: 'Accessories' },
+  { title: 'About Us', href: '/about', category: 'About' },
   { title: 'Our Story', href: '/about', category: 'About' },
-  { title: 'Heritage', href: '/heritage', category: 'About' },
+  { title: 'The Codes', href: '/heritage', category: 'About' },
+  { title: 'Craftsmanship', href: '/craftsmanship', category: 'About' },
+  { title: 'Product Care', href: '/product-care', category: 'About' },
+  { title: 'Giving Forward', href: '/giving-forward', category: 'About' },
   { title: 'Al Talli', href: '/heritage/al-talli', category: 'Heritage' },
   { title: 'Khous Weaving', href: '/heritage/khous', category: 'Heritage' },
   { title: 'Size Guide', href: '/size-guide', category: 'Help' },
@@ -60,8 +64,8 @@ export default function Header() {
   const navItems = [
     { label: t.nav.collections, href: '/shop' },
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
-    { label: t.nav.heritage, href: '/heritage' },
-    { label: t.nav.ourStory, href: '/about' },
+    { label: 'The Codes', href: '/heritage' },
+    { label: 'About Us', href: '/about' },
   ]
 
   const megaMenus: Record<
@@ -151,18 +155,19 @@ export default function Header() {
     '/about': {
       columns: [
         {
-          title: 'About',
+          title: 'About Us',
           links: [
             { label: 'Our Story', href: '/about' },
-            { label: 'The House', href: '/about' },
-            { label: 'Craftsmanship', href: '/heritage' },
-            { label: 'Contact', href: '/contact' },
+            { label: 'The Codes', href: '/heritage' },
+            { label: 'Craftsmanship', href: '/craftsmanship' },
+            { label: 'Product Care', href: '/product-care' },
+            { label: 'Giving Forward', href: '/giving-forward' },
           ],
         },
       ],
       features: [
-        { title: 'The House', href: '/about', image: '/image 1.png' },
-        { title: 'Created for You', href: '/contact', image: '/collection-section/4.JPG' },
+        { title: 'Our Story', href: '/about', image: '/image 1.png' },
+        { title: 'Giving Forward', href: '/giving-forward', image: '/collection-section/4.JPG' },
       ],
     },
   }
@@ -232,8 +237,8 @@ export default function Header() {
           <div className="relative" onMouseLeave={() => setActiveMegaMenu(null)}>
           <div className="relative flex items-center justify-between isolate">
             
-            {/* Left: Navigation - only show full desktop nav on very wide screens */}
-            <nav className="hidden 2xl:flex items-center gap-6 flex-1 min-w-0 relative z-[60] pointer-events-auto flex-shrink-0">
+            {/* Left: Navigation - show full nav only on desktop widths */}
+            <nav className="hidden xl:flex items-center gap-6 flex-1 min-w-0 relative z-[60] pointer-events-auto flex-shrink-0">
               {navItems.map((item) => (
                 <LocaleLink
                   key={item.label}
@@ -250,19 +255,35 @@ export default function Header() {
             </nav>
 
             {/* Compact layout: menu button shown below 2xl to prevent overlap */}
-            <button
-              type="button"
-              className="relative z-[55] p-2 text-white 2xl:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              data-cursor-hover
-              aria-label="Toggle menu"
-            >
-              <FiMenu className="w-6 h-6" />
-            </button>
+            <div className="relative z-[55] flex w-10 shrink-0 justify-start">
+              <button
+                type="button"
+                className="p-2 text-white"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                data-cursor-hover
+                aria-label="Toggle menu"
+              >
+                <FiMenu className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Center logo in normal flow up to 2xl to avoid overlap with utility icons */}
+            <div className="flex flex-1 justify-center px-2">
+              <LocaleLink href="/home" className="block" data-cursor-hover>
+                <Image
+                  src="/logo.png"
+                  alt="Bint Saeed"
+                  width={220}
+                  height={58}
+                  className="h-[28px] w-auto"
+                  priority
+                />
+              </LocaleLink>
+            </div>
 
             {/* Center: Logo — wrapper ignores stray taps so menu / utilities stay clickable on narrow widths */}
-            <div className="pointer-events-none absolute left-1/2 top-1/2 z-[40] w-max max-2xl:max-w-[min(220px,72vw)] -translate-x-1/2 -translate-y-1/2 shrink-0">
-              <LocaleLink href="/home" className="pointer-events-auto block" data-cursor-hover>
+            <div className="hidden pointer-events-auto absolute left-1/2 top-1/2 z-[66] w-max max-2xl:max-w-[min(220px,72vw)] -translate-x-1/2 -translate-y-1/2 shrink-0 2xl:block">
+              <LocaleLink href="/home" className="block" data-cursor-hover>
                 <Image
                   src="/logo.png"
                   alt="Bint Saeed"
@@ -279,7 +300,7 @@ export default function Header() {
             </div>
 
             {/* Right: Full utilities for very wide screens */}
-            <div className="hidden 2xl:flex items-center gap-5 flex-1 min-w-0 justify-end relative z-[60] pointer-events-auto flex-shrink-0">
+            <div className="hidden xl:flex items-center gap-5 flex-1 min-w-0 justify-end relative z-[60] pointer-events-auto flex-shrink-0">
               {/* Language & Currency */}
               <div className="flex items-center gap-4 pr-4 border-r border-white/20">
                 <CurrencySwitcher variant="light" showSymbol={false} />
@@ -297,14 +318,17 @@ export default function Header() {
                 <FiSearch className="w-[18px] h-[18px]" />
               </button>
               
-              <LocaleLink
-                href="/account"
+              <button
+                type="button"
+                onClick={() => {
+                  window.location.assign('/account')
+                }}
                 className="text-white/70 hover:text-white transition-colors duration-300 p-1"
                 data-cursor-hover
                 aria-label={t.nav.account}
               >
                 <FiUser className="w-[18px] h-[18px]" />
-              </LocaleLink>
+              </button>
               
               <LocaleLink
                 href="/wishlist"
@@ -336,9 +360,8 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Below 2xl: single utility row (search, wishlist, cart, + lang/currency from md).
-                Avoid a separate <xl block — it duplicated search + cart on phones. */}
-            <div className="relative z-[55] flex shrink-0 items-center justify-end gap-1.5 sm:gap-2 lg:gap-3 2xl:hidden">
+            {/* Below xl: compact utility row (search, wishlist, cart, + lang/currency from md). */}
+            <div className="relative z-[55] flex w-10 shrink-0 items-center justify-end gap-1.5 sm:w-auto sm:gap-2 lg:gap-3 xl:hidden">
               <div className="hidden md:flex items-center gap-2 pr-2 border-r border-white/15">
                 <CurrencySwitcher variant="light" showSymbol={false} />
                 <LanguageSwitcher variant="light" />
@@ -356,7 +379,7 @@ export default function Header() {
 
               <LocaleLink
                 href="/wishlist"
-                className="relative text-white/75 hover:text-white transition-colors duration-300 p-1.5"
+                className="relative hidden text-white/75 hover:text-white transition-colors duration-300 p-1.5 sm:inline-flex"
                 data-cursor-hover
                 aria-label={t.nav.wishlist}
               >
@@ -371,7 +394,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsMiniCartOpen(true)}
-                className="relative text-white/75 hover:text-white transition-colors duration-300 p-1.5"
+                className="relative hidden text-white/75 hover:text-white transition-colors duration-300 p-1.5 sm:inline-flex"
                 data-cursor-hover
                 aria-label={t.nav.cart}
               >
