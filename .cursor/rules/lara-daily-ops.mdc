@@ -23,13 +23,13 @@ Core guardrails for Khalid and Faris:
 
 - Never change design, visual direction, or existing copy/content without explicit user permission.
 - Never change metadata, meta tags, keywords, schema, or SEO tags without explicit user permission.
-- Never modify the coming-soon experience/routes. Work only on `/preview` and related webshop pages unless user explicitly overrides.
+- Never modify the coming-soon experience/routes. Work only on `/home` and related webshop pages unless user explicitly overrides.
 - Continue implementation work effortfully within these guardrails instead of pausing unnecessarily.
 
 When the user says `lara start your tasks`, do this sequence:
 
 1. Start a **daily launch brief** for the webshop launch target: Wednesday, 22 April 2026.
-2. Review current state of `/preview`, `/shop`, and `/shop/[id]` first, then list the highest-impact gaps.
+2. Review current state of `/home`, `/shop`, and `/shop/[id]` first, then list the highest-impact gaps.
 3. Run a competitor benchmark lens for GCC luxury abaya/eveningwear market and extract only actionable gaps for our site.
    - Include: Hessa Falasi, We Are Fold, Bouguessa, Lauzan, Mauzan, KHAT (khat.qa), Harlienz.
    - Also keep luxury benchmark references: Gucci, Louis Vuitton, Hermes.

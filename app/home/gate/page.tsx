@@ -16,7 +16,7 @@ declare global {
   }
 }
 
-export default function PreviewGatePage() {
+export default function HomeGatePage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const returnTo = parsePreviewReturnToParam(searchParams.get('returnTo'))
@@ -58,15 +58,15 @@ export default function PreviewGatePage() {
       }
 
       if (data.code === 'VPN') {
-        router.replace('/preview/blocked?reason=vpn')
+        router.replace('/home/blocked?reason=vpn')
         return
       }
       if (data.code === 'BOT') {
-        router.replace('/preview/blocked?reason=bot')
+        router.replace('/home/blocked?reason=bot')
         return
       }
       if (data.code === 'CONFIG') {
-        router.replace('/preview/blocked?reason=config')
+        router.replace('/home/blocked?reason=config')
         return
       }
 
@@ -84,7 +84,7 @@ export default function PreviewGatePage() {
       const priv = await detectPrivateBrowsingMode()
       if (cancelled) return
       if (priv) {
-        router.replace('/preview/blocked?reason=private')
+        router.replace('/home/blocked?reason=private')
         return
       }
       setEnvOk(true)

@@ -35,25 +35,22 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   // Avoid hydration mismatch: when pathname is temporarily unavailable on client,
   // don't assume "/" and collapse the layout to the coming-soon shell.
   const isComingSoon = pathname != null && inner === '/'
-  const isPreviewAccessPage =
-    safePathname === '/preview/gate' ||
-    safePathname === '/preview/blocked' ||
-    safePathname.startsWith('/preview/gate/') ||
-    safePathname.startsWith('/preview/blocked/')
-  const isPreviewPage =
-    safePathname === '/preview' ||
-    safePathname.startsWith('/preview/') ||
-    safePathname === '/home' ||
-    safePathname.startsWith('/home/')
+  const isHomeAccessShell =
+    inner === '/home/gate' ||
+    inner.startsWith('/home/gate/') ||
+    inner === '/home/blocked' ||
+    inner.startsWith('/home/blocked/')
+  const isHomeEditorial =
+    inner === '/home' || (inner.startsWith('/home/') && !isHomeAccessShell)
 
-  if (isComingSoon || isPreviewAccessPage) {
+  if (isComingSoon || isHomeAccessShell) {
     return <main>{children}</main>
   }
 
   return (
     <>
       <Header />
-      <main className={`relative z-40 pointer-events-auto ${isPreviewPage ? 'pt-0' : 'pt-[90px] lg:pt-[100px]'}`}>
+      <main className={`relative z-40 pointer-events-auto ${isHomeEditorial ? 'pt-0' : 'pt-[90px] lg:pt-[100px]'}`}>
         <GlobalStripeOverlay />
         <div className="relative z-[2]">{children}</div>
       </main>

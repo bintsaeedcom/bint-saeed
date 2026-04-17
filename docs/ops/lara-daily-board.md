@@ -16,7 +16,7 @@ Use this board at the start of each day with the trigger:
   - [ ] No copy/text edits without explicit approval
   - [ ] No metadata/tags/keywords/schema edits without explicit approval
 - Critical flows to verify:
-  - `/preview`
+  - `/home`
   - `/shop`
   - `/shop/[id]`
   - cart/checkout path

@@ -7,10 +7,32 @@ import {
   sanitizePreviewReturnPath,
 } from '@/lib/previewAccessCookie'
 import { verifyAdminSessionCookie, ADMIN_COOKIE } from '@/lib/admin/sessionCookie'
-import { isLocalePrefix } from '@/lib/i18n/routing'
+import { isLocalePrefix, stripLocaleFromPathname } from '@/lib/i18n/routing'
 
-const GATE_PATH = '/preview/gate'
-const BLOCKED_PATH = '/preview/blocked'
+const GATE_SUFFIX = '/home/gate'
+
+function localePrefixFromPathname(pathname: string): string {
+  const m = pathname.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt)(\/.*)?$/)
+  if (m && isLocalePrefix(m[1])) {
+    return `/${m[1]}`
+  }
+  return ''
+}
+
+function isHomeGatedArea(pathname: string): boolean {
+  const { pathname: inner } = stripLocaleFromPathname(pathname)
+  return inner === '/home' || inner.startsWith('/home/')
+}
+
+function isHomeGateExempt(pathname: string): boolean {
+  const { pathname: inner } = stripLocaleFromPathname(pathname)
+  return (
+    inner === '/home/gate' ||
+    inner.startsWith('/home/gate/') ||
+    inner === '/home/blocked' ||
+    inner.startsWith('/home/blocked/')
+  )
+}
 
 function withAdminPrivacyHeaders(res: NextResponse): NextResponse {
   res.headers.set('X-Robots-Tag', 'noindex, nofollow')
@@ -62,13 +84,8 @@ export async function middleware(request: NextRequest) {
     return withAdminPrivacyHeaders(base)
   }
 
-  if (pathname.startsWith('/preview')) {
-    if (
-      pathname === GATE_PATH ||
-      pathname.startsWith(`${GATE_PATH}/`) ||
-      pathname === BLOCKED_PATH ||
-      pathname.startsWith(`${BLOCKED_PATH}/`)
-    ) {
+  if (isHomeGatedArea(pathname)) {
+    if (isHomeGateExempt(pathname)) {
       return withLocaleHeaders(request, 'en', pathname)
     }
 
@@ -88,7 +105,8 @@ export async function middleware(request: NextRequest) {
 
     const returnTo = sanitizePreviewReturnPath(pathname, search)
     const url = request.nextUrl.clone()
-    url.pathname = GATE_PATH
+    const prefix = localePrefixFromPathname(pathname)
+    url.pathname = `${prefix}${GATE_SUFFIX}`
     url.searchParams.set('returnTo', returnTo)
     return NextResponse.redirect(url)
   }

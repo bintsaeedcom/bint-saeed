@@ -29,6 +29,8 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      { source: '/preview', destination: '/home', permanent: true },
+      { source: '/preview/:path*', destination: '/home/:path*', permanent: true },
       { source: '/accessoiries', destination: '/accessories', permanent: true },
       { source: '/accessoiries/:path*', destination: '/accessories/:path*', permanent: true },
       { source: '/collections', destination: '/shop', permanent: true },

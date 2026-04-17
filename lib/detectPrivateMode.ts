@@ -1,6 +1,6 @@
 /**
  * Heuristic private / incognito detection (not 100% reliable across browsers).
- * Used only for /preview gate UX per product request.
+ * Used only for /home gate UX per product request.
  */
 export async function detectPrivateBrowsingMode(): Promise<boolean> {
   if (typeof window === 'undefined') return false

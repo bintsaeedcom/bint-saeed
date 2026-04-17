@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
       httpOnly: true,
       secure,
       sameSite: 'lax',
-      path: '/preview',
+      path: '/home',
       maxAge: 60 * 60 * 48,
     })
     return res

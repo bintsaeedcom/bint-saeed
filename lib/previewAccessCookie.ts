@@ -1,4 +1,23 @@
+import { stripLocaleFromPathname } from '@/lib/i18n/routing'
+
 export const COOKIE_NAME = 'bs_preview_access'
+
+function innerHomePath(pathname: string): string {
+  return stripLocaleFromPathname(pathname).pathname
+}
+
+function isAllowedHomeReturnInner(inner: string): boolean {
+  if (inner !== '/home' && !inner.startsWith('/home/')) return false
+  if (
+    inner === '/home/gate' ||
+    inner.startsWith('/home/gate/') ||
+    inner === '/home/blocked' ||
+    inner.startsWith('/home/blocked/')
+  ) {
+    return false
+  }
+  return true
+}
 
 export function getPreviewSecretBytes(): Uint8Array | null {
   const s = process.env.PREVIEW_GATE_SECRET
@@ -40,26 +59,25 @@ export async function verifyPreviewAccessCookie(token: string, secret: Uint8Arra
   return timingSafeEqualHex(sigHex.toLowerCase(), expectedHex.toLowerCase())
 }
 
-/** Only allow internal return paths under /preview (open-redirect safe). */
+/** Only allow internal return paths under /home (open-redirect safe). */
 export function sanitizePreviewReturnPath(pathname: string, search: string): string {
-  if (!pathname.startsWith('/preview')) return '/preview'
-  if (pathname.startsWith('/preview/gate') || pathname.startsWith('/preview/blocked')) {
-    return '/preview'
-  }
+  const inner = innerHomePath(pathname)
+  if (!isAllowedHomeReturnInner(inner)) return '/home'
   return `${pathname}${search || ''}`
 }
 
 /** Parse `returnTo` query param from the gate URL. */
 export function parsePreviewReturnToParam(raw: string | null): string {
-  if (!raw) return '/preview'
+  if (!raw) return '/home'
   let decoded: string
   try {
     decoded = decodeURIComponent(raw)
   } catch {
-    return '/preview'
+    return '/home'
   }
-  if (!decoded.startsWith('/preview')) return '/preview'
-  const pathOnly = decoded.split('?')[0] || '/preview'
+  const pathOnly = decoded.split('?')[0] || '/home'
+  const inner = innerHomePath(pathOnly)
+  if (!isAllowedHomeReturnInner(inner)) return '/home'
   const qs = decoded.includes('?') ? '?' + decoded.split('?').slice(1).join('?') : ''
   return sanitizePreviewReturnPath(pathOnly, qs)
 }

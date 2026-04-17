@@ -27,7 +27,7 @@ const COPY: Record<string, { title: string; body: string }> = {
   },
 }
 
-export default function PreviewBlockedPage() {
+export default function HomeBlockedPage() {
   const searchParams = useSearchParams()
   const reason = searchParams.get('reason') || 'default'
   const { title, body } = COPY[reason] ?? COPY.default
@@ -43,7 +43,7 @@ export default function PreviewBlockedPage() {
         </LocaleLink>
         {reason !== 'private' && reason !== 'config' ? (
           <LocaleLink
-            href="/preview/gate?returnTo=%2Fpreview"
+            href="/home/gate?returnTo=%2Fhome"
             className="rounded-xl bg-brand-dustyBlue/20 px-8 py-3 font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue transition-colors hover:bg-brand-dustyBlue/30"
           >
             Try verification again

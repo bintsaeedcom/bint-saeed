@@ -26,7 +26,8 @@ const aiTrainingUserAgents = [
 ]
 
 const prelaunchDisallowGeneric = [
-  '/preview',
+  '/home/gate',
+  '/home/blocked',
   '/shop',
   '/accessories',
   '/about',
