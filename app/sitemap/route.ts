@@ -3,6 +3,13 @@ import { isPrelaunch } from '@/lib/seo'
 
 const baseUrl = 'https://bintsaeed.com'
 
+const homePageUrl = {
+  loc: `${baseUrl}/home`,
+  lastmod: new Date().toISOString(),
+  changefreq: 'weekly' as const,
+  priority: '0.95',
+}
+
 const allUrls = [
   { loc: baseUrl, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '1.0' },
   {
@@ -17,7 +24,7 @@ const allUrls = [
     changefreq: 'monthly',
     priority: '0.5',
   },
-  { loc: `${baseUrl}/preview`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.95' },
+  homePageUrl,
   { loc: `${baseUrl}/shop`, lastmod: new Date().toISOString(), changefreq: 'daily', priority: '0.9' },
   { loc: `${baseUrl}/accessories`, lastmod: new Date().toISOString(), changefreq: 'daily', priority: '0.9' },
   { loc: `${baseUrl}/about`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
@@ -42,8 +49,8 @@ function escapeXml(str: string) {
 }
 
 export async function GET() {
-  // Prelaunch: keep homepage + machine-readable brand summary for AI discovery
-  const urls = isPrelaunch ? [allUrls[0], allUrls[1], allUrls[2]] : allUrls
+  // Prelaunch: homepage, machine-readable summaries, and /home for early indexing (public editorial shell).
+  const urls = isPrelaunch ? [allUrls[0], allUrls[1], allUrls[2], homePageUrl] : allUrls
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls

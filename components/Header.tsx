@@ -255,7 +255,7 @@ export default function Header() {
             </nav>
 
             {/* Compact layout: menu button shown below 2xl to prevent overlap */}
-            <div className="relative z-[55] flex w-10 shrink-0 justify-start">
+            <div className="relative z-[55] flex w-10 shrink-0 justify-start xl:hidden">
               <button
                 type="button"
                 className="p-2 text-white"
@@ -268,7 +268,7 @@ export default function Header() {
             </div>
 
             {/* Center logo in normal flow up to 2xl to avoid overlap with utility icons */}
-            <div className="flex flex-1 justify-center px-2">
+            <div className="flex flex-1 justify-center px-2 2xl:hidden">
               <LocaleLink href="/home" className="block" data-cursor-hover>
                 <Image
                   src="/logo.png"

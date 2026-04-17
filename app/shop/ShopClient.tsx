@@ -109,7 +109,7 @@ export default function ShopClient() {
     if (typeof window !== 'undefined' && window.history.length > 1) {
       router.back()
     } else {
-      router.push('/preview')
+      router.push('/home')
     }
   }, [router])
 
@@ -140,7 +140,7 @@ export default function ShopClient() {
         <div className="mx-auto max-w-[1400px] px-6 pb-12 pt-10 md:px-10 md:pb-16 md:pt-14 lg:px-14">
           <nav className="mb-10 flex flex-wrap items-center gap-x-2 font-roboto text-[10px] uppercase tracking-[0.28em] text-neutral-500">
             <LocaleLink
-              href="/preview"
+              href="/home"
               className="transition-colors hover:text-brand-dustyBlue"
               data-cursor-hover
             >

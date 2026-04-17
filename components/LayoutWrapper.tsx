@@ -41,7 +41,10 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
     safePathname.startsWith('/preview/gate/') ||
     safePathname.startsWith('/preview/blocked/')
   const isPreviewPage =
-    safePathname === '/preview' || safePathname.startsWith('/preview/')
+    safePathname === '/preview' ||
+    safePathname.startsWith('/preview/') ||
+    safePathname === '/home' ||
+    safePathname.startsWith('/home/')
 
   if (isComingSoon || isPreviewAccessPage) {
     return <main>{children}</main>
