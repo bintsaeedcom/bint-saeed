@@ -8,6 +8,7 @@ import {
 } from '@/lib/previewAccessCookie'
 import { verifyAdminSessionCookie, ADMIN_COOKIE } from '@/lib/admin/sessionCookie'
 import { isLocalePrefix, stripLocaleFromPathname } from '@/lib/i18n/routing'
+import { COMING_SOON_ONLY, isPathAllowedDuringComingSoonOnly } from '@/lib/comingSoon'
 
 const GATE_SUFFIX = '/home/gate'
 
@@ -61,6 +62,13 @@ export async function middleware(request: NextRequest) {
     /\.(ico|png|jpg|jpeg|gif|webp|svg|txt|xml|json|woff2?|map)$/i.test(pathname)
   ) {
     return NextResponse.next()
+  }
+
+  if (COMING_SOON_ONLY && !isPathAllowedDuringComingSoonOnly(pathname)) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/'
+    url.search = request.nextUrl.search
+    return NextResponse.redirect(url, 307)
   }
 
   if (pathname.startsWith('/api/admin')) {
