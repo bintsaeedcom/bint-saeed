@@ -461,7 +461,7 @@ function EditorialSplit() {
             </div>
 
             <LocaleLink
-              href="/heritage"
+              href="/about"
               className={`group inline-flex items-center gap-3 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >

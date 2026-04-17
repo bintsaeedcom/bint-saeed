@@ -785,8 +785,8 @@ export default function ProductPage() {
                       className="overflow-hidden"
                     >
                       <div className="space-y-2 pb-5">
-                        {productDetails.map((item) => (
-                          <p key={item} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                        {productDetails.map((item, idx) => (
+                          <p key={`pd-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
                             • {item}
                           </p>
                         ))}
@@ -822,8 +822,8 @@ export default function ProductPage() {
                       className="overflow-hidden"
                     >
                       <div className="space-y-2 pb-5">
-                        {sizeAndMeasurementDetails.map((item) => (
-                          <p key={item} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                        {sizeAndMeasurementDetails.map((item, idx) => (
+                          <p key={`sz-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
                             • {item}
                           </p>
                         ))}

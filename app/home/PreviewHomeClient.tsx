@@ -958,7 +958,7 @@ function EditorialSplit() {
 
             <MagneticWrap className="w-fit">
               <LocaleLink
-                href="/heritage"
+                href="/the-codes"
                 className={`group inline-flex items-center gap-3 px-8 py-4 bg-brand-dustyBlue text-white font-roboto text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >

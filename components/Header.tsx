@@ -12,6 +12,10 @@ import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
 import MiniCart from './MiniCart'
 import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
+import {
+  ACCESSORY_IMAGE_NECKLACE,
+  ACCESSORY_IMAGE_PHONE_CHARM,
+} from '@/data/accessories'
 
 // Search suggestions and pages
 const searchableContent = [
@@ -22,14 +26,19 @@ const searchableContent = [
   { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
   { title: 'Bracelets', href: '/accessories?type=bracelets', category: 'Accessories' },
   { title: 'Earrings', href: '/accessories?type=earrings', category: 'Accessories' },
+  {
+    title: 'Abaya Charms',
+    href: '/accessories?type=abaya-charms',
+    category: 'Accessories',
+  },
   { title: 'About Us', href: '/about', category: 'About' },
   { title: 'Our Story', href: '/about', category: 'About' },
-  { title: 'The Codes', href: '/heritage', category: 'About' },
+  { title: 'The Codes', href: '/the-codes', category: 'About' },
   { title: 'Craftsmanship', href: '/craftsmanship', category: 'About' },
   { title: 'Product Care', href: '/product-care', category: 'About' },
   { title: 'Giving Forward', href: '/giving-forward', category: 'About' },
-  { title: 'Al Talli', href: '/heritage/al-talli', category: 'Heritage' },
-  { title: 'Khous Weaving', href: '/heritage/khous', category: 'Heritage' },
+  { title: 'Al Talli', href: '/the-codes#al-talli', category: 'Heritage' },
+  { title: 'Khous Weaving', href: '/the-codes#khous', category: 'Heritage' },
   { title: 'Size Guide', href: '/size-guide', category: 'Help' },
   { title: 'Favorites', href: '/wishlist', category: 'Help' },
   { title: 'Contact Us', href: '/contact', category: 'Help' },
@@ -65,7 +74,7 @@ export default function Header() {
   const navItems = [
     { label: t.nav.collections, href: '/shop' },
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
-    { label: 'The Codes', href: '/heritage' },
+    { label: 'The Codes', href: '/the-codes' },
     { label: 'About Us', href: '/about' },
   ]
 
@@ -112,33 +121,39 @@ export default function Header() {
             { label: 'Necklaces', href: '/accessories?type=necklaces' },
             { label: 'Bracelets', href: '/accessories?type=bracelets' },
             { label: 'Earrings', href: '/accessories?type=earrings' },
-          ],
-        },
-        {
-          title: 'By Styling',
-          links: [
-            { label: 'Everyday', href: '/accessories?style=everyday' },
-            { label: 'Statement', href: '/accessories?style=statement' },
-            { label: 'Layering', href: '/accessories?style=layering' },
-            { label: 'Gift Edit', href: '/accessories?style=gift' },
+            { label: 'Bag Charms', href: '/accessories?type=bag-charms' },
+            { label: 'Phone Charms', href: '/accessories?type=phone-charms' },
+            {
+              label: 'Abaya Charms',
+              href: '/accessories?type=abaya-charms',
+            },
           ],
         },
       ],
       features: [
-        { title: 'Signature Details', href: '/accessories', image: '/collection-section/4.JPG' },
-        { title: 'Crafted Finish', href: '/accessories', image: '/image 2.JPG' },
+        {
+          title: 'Necklaces',
+          href: '/accessories?type=necklaces',
+          image: ACCESSORY_IMAGE_NECKLACE,
+        },
+        {
+          title: 'Phone Charms',
+          href: '/accessories?type=phone-charms',
+          image: ACCESSORY_IMAGE_PHONE_CHARM,
+        },
       ],
     },
-    '/heritage': {
+    '/the-codes': {
       columns: [
         {
-          title: 'Heritage',
+          title: 'The Codes',
           links: [
-            { label: 'The Codes', href: '/heritage' },
-            { label: 'Al Talli', href: '/heritage/al-talli' },
-            { label: 'Khous', href: '/heritage/khous' },
-            { label: 'Craftsmanship', href: '/craftsmanship' },
-            { label: 'Craft Story', href: '/heritage' },
+            { label: 'The Codes', href: '/the-codes#the-codes' },
+            { label: 'Al Talli', href: '/the-codes#al-talli' },
+            { label: 'Khous', href: '/the-codes#khous' },
+            { label: 'Carnelian flower', href: '/the-codes#carnelian-flower' },
+            { label: 'Knotted lines of lineage', href: '/the-codes#knotted-lines-of-lineage' },
+            { label: 'The monogram', href: '/the-codes#the-monogram' },
           ],
         },
         {
@@ -146,13 +161,14 @@ export default function Header() {
           links: [
             { label: 'Our Story', href: '/about' },
             { label: 'Chapter Edit', href: '/shop' },
-            { label: 'Contact', href: '/contact' },
           ],
         },
       ],
       features: [
-        { title: 'Al Talli', href: '/heritage/al-talli', image: '/collection-section/2.PNG' },
-        { title: 'Khous', href: '/heritage/khous', image: '/collection-section/3.JPG' },
+        { title: 'Al Talli', href: '/the-codes#al-talli', image: '/collection-section/2.PNG' },
+        { title: 'Khous', href: '/the-codes#khous', image: '/collection-section/3.JPG' },
+        { title: 'Carnelian flower', href: '/the-codes#carnelian-flower', image: '/collection-section/4.JPG' },
+        { title: 'The monogram', href: '/the-codes#the-monogram', image: '/collection-section/68.png' },
       ],
     },
     '/about': {
@@ -161,10 +177,11 @@ export default function Header() {
           title: 'About Us',
           links: [
             { label: 'Our Story', href: '/about' },
-            { label: 'The Codes', href: '/heritage' },
+            { label: 'The Codes', href: '/the-codes' },
             { label: 'Craftsmanship', href: '/craftsmanship' },
             { label: 'Product Care', href: '/product-care' },
             { label: 'Giving Forward', href: '/giving-forward' },
+            { label: 'Contact', href: '/contact' },
           ],
         },
       ],
@@ -270,32 +287,32 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Center logo in normal flow up to 2xl to avoid overlap with utility icons */}
-            <div className="flex flex-1 justify-center px-2 2xl:hidden">
-              <LocaleLink href="/home" className="block" data-cursor-hover>
+            {/* Center logo in normal flow below 2xl — as large as row allows without crowding controls */}
+            <div className="flex min-w-0 flex-1 justify-center px-1 sm:px-2 2xl:hidden">
+              <LocaleLink href="/home" className="block max-w-[min(520px,calc(100vw-10.5rem))] sm:max-w-[min(560px,calc(100vw-13rem))] xl:max-w-[min(600px,calc(100vw-28rem))]" data-cursor-hover>
                 <Image
                   src="/logo.png"
                   alt="Bint Saeed"
-                  width={220}
-                  height={58}
-                  className="h-[28px] w-auto"
+                  width={640}
+                  height={168}
+                  className="h-[clamp(2.25rem,7vw,3.75rem)] w-auto max-h-[60px] sm:max-h-[68px] md:h-[clamp(2.5rem,6.5vw,4rem)] md:max-h-[76px] xl:max-h-[84px]"
                   priority
                 />
               </LocaleLink>
             </div>
 
-            {/* Center: Logo — wrapper ignores stray taps so menu / utilities stay clickable on narrow widths */}
-            <div className="hidden pointer-events-auto absolute left-1/2 top-1/2 z-[66] w-max max-2xl:max-w-[min(220px,72vw)] -translate-x-1/2 -translate-y-1/2 shrink-0 2xl:block">
+            {/* Center: Logo — wide screens; scaled up to the practical max for the bar height */}
+            <div className="pointer-events-auto absolute left-1/2 top-1/2 z-[66] hidden w-max max-w-[min(720px,calc(100vw-32rem))] -translate-x-1/2 -translate-y-1/2 shrink-0 2xl:block">
               <LocaleLink href="/home" className="block" data-cursor-hover>
                 <Image
                   src="/logo.png"
                   alt="Bint Saeed"
-                  width={420}
-                  height={110}
-                  className={`pointer-events-none w-auto transition-all duration-300 ${
+                  width={720}
+                  height={188}
+                  className={`pointer-events-none w-auto max-w-[min(720px,calc(100vw-32rem))] transition-all duration-300 ${
                     isScrolled
-                      ? 'h-[48px] sm:h-[54px] 2xl:h-[66px]'
-                      : 'h-[54px] sm:h-[60px] 2xl:h-[78px]'
+                      ? 'h-[clamp(3rem,4.2vw,4.5rem)] max-h-[72px]'
+                      : 'h-[clamp(3.35rem,5vw,5.75rem)] max-h-[92px]'
                   }`}
                   priority
                 />
@@ -470,7 +487,7 @@ export default function Header() {
                               {feature.title}
                             </span>
                             <span className="font-roboto text-[11px] uppercase tracking-[0.1em] text-brand-darkRed/70 transition-colors group-hover:text-brand-dustyBlue">
-                              Shop Now
+                              {activeMegaMenu === '/the-codes' ? 'Explore' : 'Shop Now'}
                             </span>
                           </div>
                         </LocaleLink>
@@ -606,13 +623,13 @@ export default function Header() {
             <div className="h-full flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between px-6 py-5">
-                <LocaleLink href="/home" onClick={() => setIsMobileMenuOpen(false)}>
+                <LocaleLink href="/home" onClick={() => setIsMobileMenuOpen(false)} className="block max-w-[min(420px,78vw)]">
                   <Image
                     src="/logo.png"
                     alt="Bint Saeed"
-                    width={250}
-                    height={70}
-                    className="h-14 w-auto"
+                    width={520}
+                    height={136}
+                    className="h-[clamp(3.25rem,12vw,5.5rem)] w-auto max-h-[88px]"
                   />
                 </LocaleLink>
                 <button

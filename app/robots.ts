@@ -31,6 +31,7 @@ const prelaunchDisallowGeneric = [
   '/shop',
   '/accessories',
   '/about',
+  '/the-codes',
   '/heritage',
   '/contact',
   '/faq',

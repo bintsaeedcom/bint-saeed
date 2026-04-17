@@ -1,27 +1,44 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiArrowLeft, FiFilter, FiX, FiShoppingBag } from 'react-icons/fi'
-import { accessories, accessoryCategories, Accessory } from '@/data/accessories'
+import {
+  accessories,
+  accessoryCategories,
+  Accessory,
+  ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
+} from '@/data/accessories'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 export default function AccessoriesPage() {
+  const searchParams = useSearchParams()
   const [activeCategory, setActiveCategory] = useState('all')
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
 
+  useEffect(() => {
+    const raw = searchParams.get('type') ?? searchParams.get('category')
+    if (!raw) return
+    const id = raw.toLowerCase().replace(/_/g, '-')
+    if (accessoryCategories.some((c) => c.id === id && id !== 'all')) {
+      setActiveCategory(id)
+    }
+  }, [searchParams])
+
   const filteredAccessories = activeCategory === 'all'
     ? accessories
     : accessories.filter((a) => a.category === activeCategory)
 
   const activeTab = accessoryCategories.find(c => c.id === activeCategory)
+  const isAbayaCharmsLayout = activeCategory === 'abaya-charms'
 
   return (
     <div className={`min-h-screen bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -69,8 +86,8 @@ export default function AccessoriesPage() {
               </h1>
               <p className="font-roboto text-base text-white/70 tracking-wide max-w-lg">
                 {isRTL 
-                  ? 'اكتشفي مجموعتنا الراقية من القلادات والأقراط والأساور وتعليقات الحقائب والهواتف.'
-                  : 'Discover our curated collection of necklaces, earrings, bracelets, bag charms, and phone charms.'}
+                  ? 'اكتشفي مجموعتنا الراقية من القلادات والأقراط والأساور وتعليقات الحقائب والهواتف وتعليقات العباءة.'
+                  : 'Discover our curated collection of necklaces, earrings, bracelets, bag charms, phone charms, and abaya charms.'}
               </p>
             </motion.div>
           </div>
@@ -137,47 +154,67 @@ export default function AccessoriesPage() {
                 </p>
               </div>
             </motion.div>
-            
-            {/* Bracelet sizing note */}
-            {activeTab.id === 'bracelets' && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className={`mt-4 p-4 bg-brand-darkRed/5 border-l-4 border-brand-darkRed ${isRTL ? 'border-l-0 border-r-4' : ''}`}
-              >
-                <p className="font-roboto text-sm text-brand-darkRed">
-                  {isRTL 
-                    ? '✨ جميع الأساور مصنوعة بمقاسات مخصصة. سيُطلب منك قياس معصمك عند الإضافة للسلة.'
-                    : '✨ All bracelets are custom-sized. You\'ll be asked to measure your wrist when adding to cart.'}
-                </p>
-              </motion.div>
-            )}
           </div>
         </section>
       )}
 
-      {/* Products Grid */}
+      {/* Products Grid — Abaya Charms: 1 hero image + 2×5 grid */}
       <section className="py-12 md:py-20">
         <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            layout
-            className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredAccessories.map((accessory, index) => (
-                <AccessoryCard 
-                  key={accessory.id} 
-                  accessory={accessory} 
-                  index={index}
-                  hoveredProduct={hoveredProduct}
-                  setHoveredProduct={setHoveredProduct}
-                  formatPrice={formatPrice}
-                  isRTL={isRTL}
-                />
-              ))}
-            </AnimatePresence>
-          </motion.div>
+          {isAbayaCharmsLayout ? (
+            <div
+              className={`flex flex-col gap-10 lg:gap-14 lg:items-start ${isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
+            >
+              <div className="relative w-full lg:w-[44%] lg:max-w-[520px] shrink-0 lg:sticky lg:top-28">
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-brand-stone/15 md:aspect-[4/5] lg:min-h-[min(920px,78vh)] lg:aspect-auto">
+                  <Image
+                    src={ACCESSORY_IMAGE_ABAYA_CHARMS_HERO}
+                    alt={isRTL ? 'تعليقات العباءة' : 'Abaya charms'}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 44vw"
+                    priority
+                  />
+                </div>
+              </div>
+              <div className="min-w-0 flex-1">
+                <motion.div layout className="grid grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+                  <AnimatePresence mode="popLayout">
+                    {filteredAccessories.map((accessory, index) => (
+                      <AccessoryCard
+                        key={accessory.id}
+                        accessory={accessory}
+                        index={index}
+                        hoveredProduct={hoveredProduct}
+                        setHoveredProduct={setHoveredProduct}
+                        formatPrice={formatPrice}
+                        isRTL={isRTL}
+                      />
+                    ))}
+                  </AnimatePresence>
+                </motion.div>
+              </div>
+            </div>
+          ) : (
+            <motion.div
+              layout
+              className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8"
+            >
+              <AnimatePresence mode="popLayout">
+                {filteredAccessories.map((accessory, index) => (
+                  <AccessoryCard
+                    key={accessory.id}
+                    accessory={accessory}
+                    index={index}
+                    hoveredProduct={hoveredProduct}
+                    setHoveredProduct={setHoveredProduct}
+                    formatPrice={formatPrice}
+                    isRTL={isRTL}
+                  />
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -322,6 +359,11 @@ function AccessoryCard({
               {accessory.isBestseller && (
                 <span className="px-3 py-1 bg-brand-clayRed text-white font-roboto text-[10px] uppercase tracking-[0.15em]">
                   {isRTL ? 'الأكثر مبيعاً' : 'Bestseller'}
+                </span>
+              )}
+              {accessory.isLimitedEdition && (
+                <span className="px-3 py-1 border border-brand-darkRed/90 bg-white/95 text-brand-darkRed font-roboto text-[10px] uppercase tracking-[0.15em]">
+                  {isRTL ? 'إصدار محدود' : 'Limited Edition'}
                 </span>
               )}
             </div>

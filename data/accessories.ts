@@ -1,8 +1,21 @@
+/** Hero shots from `public/Webshop pictures/accessoiries/` — used on PDPs and header mega menu. */
+export const ACCESSORY_IMAGE_NECKLACE = '/Webshop%20pictures/accessoiries/necklace.PNG'
+export const ACCESSORY_IMAGE_PHONE_CHARM = '/Webshop%20pictures/accessoiries/phone%20charm.png'
+/** Category hero for Abaya Charms listing (`abaya charms.JPG`). */
+export const ACCESSORY_IMAGE_ABAYA_CHARMS_HERO =
+  '/Webshop%20pictures/accessoiries/abaya%20charms.JPG'
+
 export interface Accessory {
   id: string
   name: string
   nameAr: string
-  category: 'necklaces' | 'earrings' | 'bracelets' | 'bag-charms' | 'phone-charms'
+  category:
+    | 'necklaces'
+    | 'earrings'
+    | 'bracelets'
+    | 'bag-charms'
+    | 'phone-charms'
+    | 'abaya-charms'
   price: number
   description: string
   descriptionAr: string
@@ -13,6 +26,8 @@ export interface Accessory {
   inStock: boolean
   isNew?: boolean
   isBestseller?: boolean
+  /** Shown on grid + PDP badge (e.g. Amethyst Hearts, Jade Hearts). */
+  isLimitedEdition?: boolean
 }
 
 export const accessoryCategories = [
@@ -43,8 +58,8 @@ export const accessoryCategories = [
     name: 'Bracelets', 
     nameAr: 'أساور',
     icon: '○',
-    description: 'Handcrafted bracelets with custom sizing',
-    descriptionAr: 'أساور مصنوعة يدوياً بمقاسات مخصصة',
+    description: 'Handcrafted bracelets in one universal size',
+    descriptionAr: 'أساور مصنوعة يدوياً بمقاس موحّد',
   },
   { 
     id: 'bag-charms', 
@@ -62,27 +77,94 @@ export const accessoryCategories = [
     description: 'Stylish phone accessories',
     descriptionAr: 'إكسسوارات هاتف أنيقة',
   },
+  {
+    id: 'abaya-charms',
+    name: 'Abaya Charms',
+    nameAr: 'تعليقات العباءة',
+    icon: '✺',
+    description: 'Stone charms designed for abaya draping and edges',
+    descriptionAr: 'تعليقات بالأحجار الطبيعية للعباءة والحافة',
+  },
 ]
 
 export const accessories: Accessory[] = [
-  // Necklaces
+  // Necklaces — Signature gemstone strand series
   {
-    id: 'necklace-pearl-strand',
-    name: 'Pearl Strand Necklace',
-    nameAr: 'قلادة خيط اللؤلؤ',
+    id: 'signature-malachite-necklace',
+    name: 'Signature Malachite Necklace',
+    nameAr: 'قلادة التوقيع بالملاكيت',
     category: 'necklaces',
-    price: 450,
-    description: 'Elegant freshwater pearl necklace with gold-plated clasp. Perfect for formal occasions.',
-    descriptionAr: 'قلادة لؤلؤ المياه العذبة الأنيقة مع مشبك مطلي بالذهب. مثالية للمناسبات الرسمية.',
+    price: 1650,
+    description:
+      'Hand-strung malachite beads with signature clasp and extension chain. Deep Malachite Green tones.',
+    descriptionAr:
+      'خرز ملاكيت مطرّز يدوياً مع إغلاق توقيع وسلسلة تمديد. درجات خضراء عميقة.',
     images: [
-      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=90',
+      ACCESSORY_IMAGE_NECKLACE,
       'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=90',
     ],
-    materials: '18K Gold-plated, Freshwater Pearls',
-    materialsAr: 'مطلي بالذهب 18 قيراط، لؤلؤ المياه العذبة',
-    colors: [
-      { name: 'Gold/White', nameAr: 'ذهبي/أبيض', hex: '#FFD700' },
+    materials: 'Natural malachite beads, 18K gold-plated clasp',
+    materialsAr: 'خرز ملاكيت طبيعي، مشبك مطلي بالذهب 18 قيراط',
+    colors: [{ name: 'Malachite Green', nameAr: 'أخضر ملاكيت', hex: '#1f7a5e' }],
+    inStock: true,
+    isNew: true,
+  },
+  {
+    id: 'signature-tiger-eye-necklace',
+    name: 'Signature Tiger Eye Necklace',
+    nameAr: 'قلادة التوقيع بعين النمر',
+    category: 'necklaces',
+    price: 1480,
+    description:
+      'Warm brown tiger eye beads with subtle chatoyancy, finished with our signature closure.',
+    descriptionAr:
+      'خرز عين النمر بني دافئ بلمعان خفيف، مع إغلاق التوقيع.',
+    images: [
+      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=90',
     ],
+    materials: 'Natural tiger eye beads, 18K gold-plated clasp',
+    materialsAr: 'خرز عين النمر طبيعي، مشبك مطلي بالذهب 18 قيراط',
+    colors: [{ name: 'Tiger Eye Brown', nameAr: 'بني عين النمر', hex: '#8B5A2B' }],
+    inStock: true,
+    isNew: true,
+  },
+  {
+    id: 'signature-onyx-necklace',
+    name: 'Signature Onyx Necklace',
+    nameAr: 'قلادة التوقيع بالأونكس',
+    category: 'necklaces',
+    price: 1590,
+    description:
+      'Polished black onyx beads with warm brown undertones and a refined signature clasp.',
+    descriptionAr:
+      'خرز أونكس أسود مصقول بتحت لون بني دافئ وإغلاق التوقيع الراقي.',
+    images: [
+      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=90',
+    ],
+    materials: 'Natural black onyx beads, 18K gold-plated clasp',
+    materialsAr: 'خرز أونكس أسود طبيعي، مشبك مطلي بالذهب 18 قيراط',
+    colors: [
+      { name: 'Black Onyx', nameAr: 'أونكس أسود', hex: '#1a1a1a' },
+      { name: 'Warm Brown', nameAr: 'بني دافئ', hex: '#5c4033' },
+    ],
+    inStock: true,
+  },
+  {
+    id: 'signature-rose-quartz-necklace',
+    name: 'Signature Rose Quartz Necklace',
+    nameAr: 'قلادة التوقيع بالكوارتز الوردي',
+    category: 'necklaces',
+    price: 1740,
+    description:
+      'Soft pink rose quartz beads hand-knotted for a luminous, romantic line with our signature hardware.',
+    descriptionAr:
+      'خرز كوارتز وردي ناعم مربوط يدوياً لخط مضيء رومانسي مع قطع التوقيع.',
+    images: [
+      'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=90',
+    ],
+    materials: 'Natural rose quartz beads, 18K gold-plated clasp',
+    materialsAr: 'خرز كوارتز وردي طبيعي، مشبك مطلي بالذهب 18 قيراط',
+    colors: [{ name: 'Rose Quartz Pink', nameAr: 'وردي كوارتز', hex: '#f4b8c5' }],
     inStock: true,
     isNew: true,
   },
@@ -305,6 +387,25 @@ export const accessories: Accessory[] = [
     ],
     inStock: true,
   },
+  {
+    id: 'bag-charm-bint',
+    name: 'Bag Charm',
+    nameAr: 'تعليقة حقيبة',
+    category: 'bag-charms',
+    price: 175,
+    description: 'Clip-on bag charm for handbags and evening clutches.',
+    descriptionAr: 'تعليقة حقيبة بحلقة تعليق للحقائب ومساء الخروج.',
+    images: [
+      'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&q=90',
+    ],
+    materials: 'Gold-plated hardware, enamel',
+    materialsAr: 'معدن مطلي بالذهب، إينامل',
+    colors: [
+      { name: 'Gold', nameAr: 'ذهبي', hex: '#FFD700' },
+      { name: 'Rose Gold', nameAr: 'ذهبي وردي', hex: '#B76E79' },
+    ],
+    inStock: true,
+  },
 
   // Phone Charms
   {
@@ -366,5 +467,202 @@ export const accessories: Accessory[] = [
       { name: 'Blush', nameAr: 'وردي فاتح', hex: '#DE5D83' },
     ],
     inStock: true,
+  },
+  {
+    id: 'phone-charm-bint',
+    name: 'Phone Charm',
+    nameAr: 'تعليقة هاتف',
+    category: 'phone-charms',
+    price: 145,
+    description: 'Phone charm with universal attachment for cases and straps.',
+    descriptionAr: 'تعليقة هاتف مع تثبيت متوافق مع الأغطية والأحزمة.',
+    images: [ACCESSORY_IMAGE_PHONE_CHARM],
+    materials: 'Nylon cord, gold-plated hardware',
+    materialsAr: 'حبل نايلون، معدن مطلي بالذهب',
+    colors: [
+      { name: 'Gold', nameAr: 'ذهبي', hex: '#FFD700' },
+      { name: 'Black', nameAr: 'أسود', hex: '#1a1a1a' },
+    ],
+    inStock: true,
+  },
+
+  // Abaya charms — natural stone line (10 products; stone-specific PDPs)
+  {
+    id: 'abaya-charm-onyx-natural-stone',
+    name: 'Onyx Natural Stone',
+    nameAr: 'أونكس حجر طبيعي',
+    category: 'abaya-charms',
+    price: 400,
+    description:
+      'Natural black onyx abaya charm with secure clip attachment for draping along the edge or sleeve.',
+    descriptionAr:
+      'تعليقة عباءة من أونكس أسود طبيعي مع مشبك آمن للتعليق على الحافة أو الكم.',
+    images: [ACCESSORY_IMAGE_PHONE_CHARM],
+    materials: 'Natural onyx, 18K gold-plated findings',
+    materialsAr: 'أونكس طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Black Onyx', nameAr: 'أونكس أسود', hex: '#1a1a1a' }],
+    inStock: true,
+  },
+  {
+    id: 'abaya-charm-tiger-eye-natural-stone',
+    name: 'Tiger Eye Natural Stone',
+    nameAr: 'عين النمر حجر طبيعي',
+    category: 'abaya-charms',
+    price: 430,
+    description:
+      'Warm tiger eye beads with subtle chatoyancy; designed for movement when styled on the abaya.',
+    descriptionAr:
+      'خرز عين النمر الدافئ بلمعان خفيف؛ مصمم للحركة عند تنسيقه مع العباءة.',
+    images: [
+      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=90',
+    ],
+    materials: 'Natural tiger eye, 18K gold-plated findings',
+    materialsAr: 'عين النمر طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Tiger Eye Brown', nameAr: 'بني عين النمر', hex: '#8B5A2B' }],
+    inStock: true,
+  },
+  {
+    id: 'abaya-charm-orange-jade-natural-stone',
+    name: 'Orange Colored Jade Natural Stone',
+    nameAr: 'اليشم البرتقالي حجر طبيعي',
+    category: 'abaya-charms',
+    price: 465,
+    description:
+      'Orange-toned jade beads for a vivid accent along the abaya silhouette.',
+    descriptionAr:
+      'خرز يشم بلون برتقالي نقي كلون مميز على خط العباءة.',
+    images: [
+      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=90',
+    ],
+    materials: 'Natural jade, 18K gold-plated findings',
+    materialsAr: 'يشم طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Orange Jade', nameAr: 'يشم برتقالي', hex: '#ea580c' }],
+    inStock: true,
+  },
+  {
+    id: 'abaya-charm-fuchsia-jade-natural-stone',
+    name: 'Fuchsia Colored Jade Natural Stone',
+    nameAr: 'اليشم الفوشي حجر طبيعي',
+    category: 'abaya-charms',
+    price: 500,
+    description:
+      'Fuchsia jade strand for a bold jewel-toned highlight on neutral abayas.',
+    descriptionAr:
+      'سلسلة يشم فوشي لتألق قوي على العباءات المحايدة.',
+    images: [
+      'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=90',
+    ],
+    materials: 'Natural jade, 18K gold-plated findings',
+    materialsAr: 'يشم طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Fuchsia Jade', nameAr: 'يشم فوشي', hex: '#c026d3' }],
+    inStock: true,
+  },
+  {
+    id: 'abaya-charm-blue-aventurine-natural-stone',
+    name: 'Blue Aventurine Natural Stone',
+    nameAr: 'أفنتورين أزرق حجر طبيعي',
+    category: 'abaya-charms',
+    price: 530,
+    description:
+      'Blue aventurine beads with gentle sparkle — a cool contrast on deep or black fabric.',
+    descriptionAr:
+      'خرز أفنتورين أزرق بلمعان خفيف — تباين بارد على الأقمشة الداكنة.',
+    images: [
+      'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=90',
+    ],
+    materials: 'Natural blue aventurine, 18K gold-plated findings',
+    materialsAr: 'أفنتورين أزرق طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Blue Aventurine', nameAr: 'أفنتورين أزرق', hex: '#2563eb' }],
+    inStock: true,
+  },
+  {
+    id: 'abaya-charm-rose-quartz-natural-stone',
+    name: 'Rose Quartz Natural Stone',
+    nameAr: 'كوارتز وردي حجر طبيعي',
+    category: 'abaya-charms',
+    price: 565,
+    description:
+      'Soft rose quartz with a luminous, romantic line along the abaya edge.',
+    descriptionAr:
+      'كوارتز وردي ناعم بلمعة رومانسية على حافة العباءة.',
+    images: [
+      'https://images.unsplash.com/photo-1630019852942-f89202989a59?w=800&q=90',
+    ],
+    materials: 'Natural rose quartz, 18K gold-plated findings',
+    materialsAr: 'كوارتز وردي طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Rose Quartz', nameAr: 'كوارتز وردي', hex: '#f4b8c5' }],
+    inStock: true,
+  },
+  {
+    id: 'abaya-charm-malachite-natural-stone',
+    name: 'Malachite Natural Stone',
+    nameAr: 'ملاكيت حجر طبيعي',
+    category: 'abaya-charms',
+    price: 600,
+    description:
+      'Deep malachite green with natural banding — a striking signature accent.',
+    descriptionAr:
+      'ملاكيت أخضر عميق بخطوط طبيعية — لمسة توقيع مميزة.',
+    images: [ACCESSORY_IMAGE_NECKLACE],
+    materials: 'Natural malachite, 18K gold-plated findings',
+    materialsAr: 'ملاكيت طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Malachite Green', nameAr: 'أخضر ملاكيت', hex: '#1f7a5e' }],
+    inStock: true,
+  },
+  {
+    id: 'abaya-charm-lapis-lazuli-natural-stone',
+    name: 'Lapis Azulli Natural Stone',
+    nameAr: 'لازورد حجر طبيعي',
+    category: 'abaya-charms',
+    price: 645,
+    description:
+      'Rich lapis lazuli with golden pyrite flecks; an elevated jewel tone for evening abayas.',
+    descriptionAr:
+      'لازورد غني ببقع البيريت الذهبية؛ لون فاخر لمساء العباءة.',
+    images: [
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=90',
+    ],
+    materials: 'Natural lapis lazuli, 18K gold-plated findings',
+    materialsAr: 'لازورد طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Lapis Lazuli', nameAr: 'لازورد', hex: '#1e40af' }],
+    inStock: true,
+  },
+  {
+    id: 'abaya-charm-amethyst-hearts-natural-stone',
+    name: 'Amethyst Hearts Natural Stone',
+    nameAr: 'قلوب جمشت حجر طبيعي',
+    category: 'abaya-charms',
+    price: 720,
+    description:
+      'Heart-cut amethyst beads — limited edition release with clip attachment.',
+    descriptionAr:
+      'خرز جمشت على شكل قلب — إصدار محدود مع مشبك تثبيت.',
+    images: [
+      'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=800&q=90',
+    ],
+    materials: 'Natural amethyst, 18K gold-plated findings',
+    materialsAr: 'جمشت طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Amethyst', nameAr: 'جمشت', hex: '#9333ea' }],
+    inStock: true,
+    isLimitedEdition: true,
+  },
+  {
+    id: 'abaya-charm-jade-hearts-natural-stone',
+    name: 'Jade Hearts Natural Stone',
+    nameAr: 'قلوب اليشم حجر طبيعي',
+    category: 'abaya-charms',
+    price: 750,
+    description:
+      'Heart-shaped jade beads — limited edition; serene green movement on the abaya line.',
+    descriptionAr:
+      'خرز يشم على شكل قلب — إصدار محدود؛ حركة خضراء هادئة على خط العباءة.',
+    images: [
+      'https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800&q=90',
+    ],
+    materials: 'Natural jade, 18K gold-plated findings',
+    materialsAr: 'يشم طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Jade Green', nameAr: 'يشم أخضر', hex: '#059669' }],
+    inStock: true,
+    isLimitedEdition: true,
   },
 ]

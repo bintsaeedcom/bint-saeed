@@ -86,7 +86,7 @@ export default function NotFound() {
               {[
                 { href: '/about', label: isRTL ? 'من نحن' : 'About Us' },
                 { href: '/accessories', label: isRTL ? 'الإكسسوارات' : 'Accessories' },
-                { href: '/heritage', label: isRTL ? 'التراث' : 'Heritage' },
+                { href: '/the-codes', label: isRTL ? 'الرموز' : 'The Codes' },
                 { href: '/contact', label: isRTL ? 'تواصلي معنا' : 'Contact' },
               ].map((link) => (
                 <LocaleLink

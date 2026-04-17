@@ -19,7 +19,7 @@ export default function CraftsmanshipPage() {
 
         <div className="mt-10 flex flex-wrap gap-4">
           <LocaleLink
-            href="/heritage"
+            href="/the-codes"
             className="inline-flex items-center gap-2 border border-brand-dustyBlue/65 bg-brand-dustyBlue px-7 py-3 font-roboto text-xs uppercase tracking-[0.16em] text-[#1a0008] transition-colors hover:bg-brand-stone"
             data-cursor-hover
           >

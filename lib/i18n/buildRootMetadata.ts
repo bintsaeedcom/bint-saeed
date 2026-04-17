@@ -64,6 +64,7 @@ function innerTitleKey(locale: AppLocale, pathname: string): string | null {
   if (path.startsWith('/shop')) return t.shop.title
   if (path.startsWith('/about')) return t.about.title
   if (path.startsWith('/contact')) return t.footer.contactUs
+  if (path.startsWith('/the-codes')) return 'The Codes'
   if (path.startsWith('/heritage')) return t.nav.heritage
   if (path.startsWith('/accessories')) return t.nav.accessories
   if (path.startsWith('/cart')) return t.nav.cart

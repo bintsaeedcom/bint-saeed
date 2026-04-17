@@ -1,14 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { useParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Thumbs } from 'swiper/modules'
+import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
-import { FiChevronDown, FiPlus, FiMinus, FiArrowLeft, FiHeart, FiX, FiShare2 } from 'react-icons/fi'
+import { FiChevronDown, FiPlus, FiMinus, FiHeart, FiX, FiShare2 } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { accessories, accessoryCategories } from '@/data/accessories'
 import { useCartStore } from '@/store/cartStore'
@@ -17,11 +17,12 @@ import OrderCutoffBanner from '@/components/OrderCutoffBanner'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
-import WristMeasurement from '@/components/WristMeasurement'
+import { getTabbyCheckoutUrl } from '@/lib/payments'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
+import 'swiper/css/pagination'
 
 export default function AccessoryDetailPage() {
   const params = useParams()
@@ -39,10 +40,9 @@ export default function AccessoryDetailPage() {
   const removeWishlist = useWishlistStore((s) => s.removeItem)
 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
+  const mainSwiperRef = useRef<SwiperType | null>(null)
   const [selectedColor, setSelectedColor] = useState('')
   const [quantity, setQuantity] = useState(1)
-  const [wristSize, setWristSize] = useState('')
-  const [notes, setNotes] = useState('')
   const [openDropdown, setOpenDropdown] = useState<string | null>('description')
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
@@ -50,6 +50,21 @@ export default function AccessoryDetailPage() {
   const addItem = useCartStore((state) => state.addItem)
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
+  const tabbyUrl = useMemo(() => getTabbyCheckoutUrl(), [])
+
+  useEffect(() => {
+    const a = accessories.find((x) => x.id === aid)
+    if (!a) {
+      setSelectedColor('')
+      return
+    }
+    if (a.colors.length === 1) {
+      const c = a.colors[0]!
+      setSelectedColor(isRTL ? c.nameAr : c.name)
+    } else {
+      setSelectedColor('')
+    }
+  }, [aid, isRTL])
 
   if (!accessory) {
     return (
@@ -70,16 +85,11 @@ export default function AccessoryDetailPage() {
     )
   }
 
-  const isBracelet = accessory.category === 'bracelets'
   const categoryInfo = accessoryCategories.find(c => c.id === accessory.category)
 
   const handleAddToCart = () => {
-    if (!selectedColor) {
-      toast.error(isRTL ? 'الرجاء اختيار لون' : 'Please select a color')
-      return
-    }
-    if (isBracelet && !wristSize) {
-      toast.error(isRTL ? 'الرجاء إدخال مقاس المعصم' : 'Please enter your wrist size')
+    if (!selectedColor && accessory.colors.length > 1) {
+      toast.error(isRTL ? 'الرجاء اختيار اللون' : 'Please select a colour')
       return
     }
 
@@ -89,11 +99,15 @@ export default function AccessoryDetailPage() {
       name: isRTL ? accessory.nameAr : accessory.name,
       price: accessory.price,
       image: accessory.images[0],
-      size: isBracelet ? `Wrist: ${wristSize}cm` : 'One Size',
-      color: selectedColor,
+      size: 'One Size',
+      color:
+        selectedColor ||
+        (accessory.colors[0]
+          ? isRTL
+            ? accessory.colors[0].nameAr
+            : accessory.colors[0].name
+          : ''),
       quantity,
-      customLength: isBracelet ? wristSize : '',
-      notes,
     })
 
     showAddedToBagToast(isRTL)
@@ -149,7 +163,7 @@ export default function AccessoryDetailPage() {
                 /
               </span>
               <LocaleLink
-                href={`/accessories?category=${accessory.category}`}
+                href={`/accessories?type=${accessory.category}`}
                 className="max-w-[10rem] truncate hover:text-brand-dustyBlue transition-colors sm:max-w-none sm:overflow-visible sm:whitespace-normal"
                 title={isRTL ? categoryInfo?.nameAr : categoryInfo?.name}
                 data-cursor-hover
@@ -170,201 +184,255 @@ export default function AccessoryDetailPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 lg:px-12 py-12">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-          {/* Image Gallery */}
+      <div className="mx-auto max-w-[1280px] px-6 py-10 lg:px-10 lg:py-12">
+        <div className="isolate grid min-w-0 grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+          {/* Image Gallery — Royal V-Neck / shop PDP structure */}
           <motion.div
             initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-4"
+            className="relative z-0 w-full min-w-0 overflow-hidden lg:max-w-[42rem]"
           >
-            {/* Main Image */}
-            <div className="relative aspect-square bg-[#f5f5f5] overflow-hidden">
-              <Swiper
-                modules={[Navigation, Thumbs]}
-                thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
-                navigation
-                className="h-full"
-              >
-                {accessory.images.map((image, index) => (
-                  <SwiperSlide key={index}>
-                    <div 
-                      className="relative h-full cursor-zoom-in"
-                      onClick={() => {
-                        setLightboxIndex(index)
-                        setIsLightboxOpen(true)
-                      }}
-                    >
-                      <Image
-                        src={image}
-                        alt={`${accessory.name} - Image ${index + 1}`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+            <div
+              className={`grid gap-3 lg:items-start ${
+                accessory.images.length > 1 ? 'lg:grid-cols-[4.75rem_minmax(0,1fr)]' : ''
+              }`}
+            >
+              {accessory.images.length > 1 && (
+                <div className="hidden lg:block">
+                  <Swiper
+                    modules={[FreeMode, Thumbs]}
+                    direction="vertical"
+                    onSwiper={setThumbsSwiper}
+                    spaceBetween={10}
+                    slidesPerView={5}
+                    freeMode
+                    watchSlidesProgress
+                    slideToClickedSlide
+                    preventClicks={false}
+                    preventClicksPropagation={false}
+                    touchStartPreventDefault={false}
+                    className="product-gallery-thumbs !h-[44rem] !overflow-visible"
+                  >
+                    {accessory.images.map((image, index) => (
+                      <SwiperSlide key={index} className="!h-auto">
+                        <button
+                          type="button"
+                          className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
+                          onClick={() => mainSwiperRef.current?.slideTo(index)}
+                          aria-label={`Show image ${index + 1}`}
+                          data-cursor-hover
+                        >
+                          <Image
+                            src={image}
+                            alt=""
+                            fill
+                            sizes="76px"
+                            className="object-cover transition-opacity group-hover:opacity-80"
+                          />
+                        </button>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              )}
 
-              {/* Tags */}
-              <div className={`absolute top-4 ${isRTL ? 'right-4' : 'left-4'} flex flex-col gap-2 z-10`}>
-                {accessory.isNew && (
-                  <span className="px-3 py-1 bg-brand-darkRed text-white font-roboto text-[10px] uppercase tracking-[0.15em]">
-                    {isRTL ? 'جديد' : 'New'}
-                  </span>
-                )}
-                {accessory.isBestseller && (
-                  <span className="px-3 py-1 bg-brand-clayRed text-white font-roboto text-[10px] uppercase tracking-[0.15em]">
-                    {isRTL ? 'الأكثر مبيعاً' : 'Bestseller'}
-                  </span>
-                )}
+              <div className="space-y-3">
+                <div className="relative aspect-[3/4] overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
+                  <Swiper
+                    modules={[Navigation, Thumbs, Pagination]}
+                    spaceBetween={0}
+                    slidesPerView={1}
+                    navigation
+                    pagination={{ clickable: true, dynamicBullets: true }}
+                    preventClicks={false}
+                    preventClicksPropagation={false}
+                    touchStartPreventDefault={false}
+                    onSwiper={(swiper) => {
+                      mainSwiperRef.current = swiper
+                    }}
+                    thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
+                    className="h-full product-gallery-swiper"
+                  >
+                    {accessory.images.map((image, index) => (
+                      <SwiperSlide key={index}>
+                        <div
+                          className="relative h-full w-full cursor-zoom-in"
+                          onClick={() => {
+                            setLightboxIndex(index)
+                            setIsLightboxOpen(true)
+                          }}
+                          role="presentation"
+                        >
+                          <Image
+                            src={image}
+                            alt={`${accessory.name} — ${index === 0 ? 'hero' : `detail ${index + 1}`}`}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 40vw"
+                            className="object-cover"
+                            priority={index === 0}
+                          />
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+
+                  <div className={`pointer-events-none absolute top-4 z-10 flex flex-col gap-2 ${isRTL ? 'right-4' : 'left-4'}`}>
+                    {accessory.isNew && (
+                      <span className="pointer-events-none px-3 py-1 bg-brand-darkRed font-montserrat text-[10px] uppercase tracking-[0.15em] text-white">
+                        {isRTL ? 'جديد' : 'New'}
+                      </span>
+                    )}
+                    {accessory.isBestseller && (
+                      <span className="pointer-events-none px-3 py-1 bg-brand-clayRed font-montserrat text-[10px] uppercase tracking-[0.15em] text-white">
+                        {isRTL ? 'الأكثر مبيعاً' : 'Bestseller'}
+                      </span>
+                    )}
+                    {accessory.isLimitedEdition && (
+                      <span className="pointer-events-none border border-white/90 bg-brand-darkRed/85 px-3 py-1 font-montserrat text-[10px] uppercase tracking-[0.15em] text-white">
+                        {isRTL ? 'إصدار محدود' : 'Limited Edition'}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
-
-            {/* Thumbnails */}
-            {accessory.images.length > 1 && (
-              <div className="hidden md:block">
-                <Swiper
-                  onSwiper={setThumbsSwiper}
-                  spaceBetween={12}
-                  slidesPerView={4}
-                  watchSlidesProgress
-                  className="!overflow-visible"
-                >
-                  {accessory.images.map((image, index) => (
-                    <SwiperSlide key={index}>
-                      <div className="relative aspect-square bg-[#f5f5f5] cursor-pointer overflow-hidden group">
-                        <Image
-                          src={image}
-                          alt={`Thumbnail ${index + 1}`}
-                          fill
-                          className="object-cover transition-opacity group-hover:opacity-80"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            )}
           </motion.div>
 
-          {/* Product Info */}
+          {/* Product Info — shop buy box (no notes / personalisation / wrist), one size */}
           <motion.div
             initial={{ opacity: 0, x: isRTL ? -30 : 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className={`lg:sticky lg:top-32 lg:self-start ${isRTL ? 'text-right' : ''}`}
+            className={`pdp-info relative z-[1] min-w-0 bg-white p-4 lg:sticky lg:top-28 lg:self-start lg:p-5 ${isRTL ? 'text-right' : ''}`}
           >
-            {/* Category */}
-            <span className="font-roboto text-xs uppercase tracking-[0.3em] text-brand-dustyBlue mb-3 block">
+            <span className="mb-1.5 block font-montserrat text-[11px] uppercase tracking-[0.24em] text-brand-dustyBlue">
               {isRTL ? categoryInfo?.nameAr : categoryInfo?.name}
             </span>
 
-            {/* Title */}
-            <h1 data-document-h1="true" className="font-rozha text-3xl md:text-4xl lg:text-5xl text-brand-darkRed mb-4">
+            <h1
+              data-document-h1="true"
+              className="mb-2.5 font-rozha text-[1.75rem] leading-[1.15] text-brand-darkRed md:text-[1.95rem] lg:text-[2.05rem]"
+            >
               {isRTL ? accessory.nameAr : accessory.name}
             </h1>
 
-            {/* Price */}
-            <p className="font-roboto text-xl text-brand-darkRed tracking-wide mb-8">
-              {formatPrice(accessory.price)}
-            </p>
+            <div className="mb-4 space-y-1">
+              <p className="font-montserrat text-lg tracking-wide text-brand-darkRed">
+                {formatPrice(accessory.price * quantity)}
+                {quantity > 1 && (
+                  <span className="ml-2 font-montserrat text-[11px] font-normal text-brand-darkRed/65">
+                    ({quantity} × {formatPrice(accessory.price)})
+                  </span>
+                )}
+              </p>
+            </div>
 
-            {/* Short Description */}
-            <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed mb-8">
+            <p className={`mb-5 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/75 ${isRTL ? 'text-right' : ''}`}>
               {isRTL ? accessory.descriptionAr : accessory.description}
             </p>
 
             <OrderCutoffBanner />
 
-            {/* Jewellery sizing note (not apparel chart) */}
-            <div className={`mb-8 border border-brand-stone/40 bg-brand-stone/5 px-4 py-4 ${isRTL ? 'text-right' : ''}`}>
-              <p className="font-roboto text-[11px] uppercase tracking-[0.2em] text-brand-darkRed">
-                {isRTL ? 'المقاسات' : 'Sizing'}
-              </p>
-              <p className="mt-2 font-roboto text-sm leading-relaxed text-brand-clayRed/80">
-                {isBracelet
-                  ? isRTL
-                    ? 'أساورنا بمقاس معصم مخصص — استخدمي أداة القياس أدناه. باقي الإكسسوارات غالبًا بمقاس موحّد.'
-                    : 'Bracelets use your wrist measurement — use the tool below. Other pieces are typically one-size unless noted.'
-                  : isRTL
-                    ? 'هذا الطراز متوفر بالألوان المعروضة. القطع غير القابلة للتوسيع تُعرض كمقاس واحد.'
-                    : 'Finishes shown are available for this design. Non-adjustable pieces are offered in one size as listed.'}
-              </p>
-            </div>
-
-            {/* Color Selection */}
-            <div className="mb-8">
-              <div className={`flex items-center justify-between mb-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <span className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed">
+            {/* Colour — shop spacing */}
+            <div className="mb-5 border-b border-brand-stone/20 pb-5">
+              <div className={`mb-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {isRTL ? 'اللون' : 'Color'}
                 </span>
                 {selectedColor && (
-                  <span className="font-roboto text-xs text-brand-clayRed/60 tracking-wide">
+                  <span className="font-montserrat text-[11px] tracking-wide text-brand-darkRed/65">
                     {selectedColor}
                   </span>
                 )}
               </div>
-              <p className={`mb-3 font-roboto text-xs leading-relaxed text-brand-clayRed/60 ${isRTL ? 'text-right' : ''}`}>
+              <p className={`mb-2.5 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
                 {isRTL
-                  ? 'الألوان المتاحة لهذه القطعة — اختاري اللون قبل الإضافة للسلة.'
-                  : 'Available finishes for this piece — select a colour before adding to bag.'}
+                  ? 'الألوان المتاحة لهذه القطعة — اختاري لونًا قبل الإضافة للسلة.'
+                  : 'Available colourways for this piece — select a colour before adding to bag.'}
               </p>
-              <div className={`flex flex-wrap gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`flex flex-wrap gap-2.5 ${isRTL ? 'justify-end' : ''}`}>
                 {accessory.colors.map((color) => (
                   <button
                     key={color.name}
                     type="button"
                     onClick={() => setSelectedColor(isRTL ? color.nameAr : color.name)}
-                    className={`h-11 w-11 rounded-full border-2 transition-all ${
+                    className={`h-9 w-9 rounded-full border-2 transition-all ${
                       selectedColor === (isRTL ? color.nameAr : color.name)
-                        ? 'border-brand-darkRed scale-110 ring-2 ring-brand-darkRed/20 ring-offset-2'
+                        ? 'border-brand-darkRed ring-2 ring-brand-darkRed/20 ring-offset-2 scale-110'
                         : 'border-brand-stone/30 hover:scale-105 hover:border-brand-dustyBlue'
                     }`}
                     style={{ backgroundColor: color.hex }}
                     title={isRTL ? color.nameAr : color.name}
                     aria-pressed={selectedColor === (isRTL ? color.nameAr : color.name)}
+                    aria-label={`Colour ${isRTL ? color.nameAr : color.name}`}
                     data-cursor-hover
                   />
                 ))}
               </div>
             </div>
 
-            {/* Wrist Measurement (for bracelets only) */}
-            {isBracelet && (
-              <div className="mb-8">
-                <WristMeasurement value={wristSize} onChange={setWristSize} />
+            {/* Size — one size only (jewellery & all charms) */}
+            <div className="mb-5 border-b border-brand-stone/20 pb-5">
+              <div className={`mb-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  {isRTL ? 'المقاس' : 'Size'}
+                </span>
               </div>
-            )}
+              <p className={`mb-2.5 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
+                {isRTL
+                  ? 'جميع المجوهرات وتعليقات الحقائب والهاتف وتعليقات العباءة بمقاس واحد موحّد.'
+                  : 'All jewellery, bag charms, phone charms, and abaya charms are offered in one universal size.'}
+              </p>
+              <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+                <span className="min-w-[52px] border border-brand-darkRed bg-brand-darkRed px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] text-white">
+                  {isRTL ? 'مقاس واحد' : 'One Size'}
+                </span>
+              </div>
+            </div>
 
-            {/* Notes */}
-            <div className="mb-8">
-              <label className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed mb-3 block">
-                {isRTL ? 'ملاحظات خاصة (اختياري)' : 'Special Notes (Optional)'}
-              </label>
-              <textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                placeholder={isRTL ? 'أي طلبات خاصة...' : 'Any special requests...'}
-                rows={2}
-                className={`w-full px-4 py-3 border border-brand-stone/50 font-roboto text-sm tracking-wide focus:border-brand-darkRed transition-colors resize-none ${isRTL ? 'text-right' : ''}`}
-              />
+            {/* Tabby */}
+            <div className={`mb-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <span className="rounded-sm border border-brand-stone/30 px-1.5 py-0.5 font-montserrat text-[11px] font-semibold lowercase tracking-normal text-brand-darkRed">
+                  tabby
+                </span>
+                <p className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed/80">
+                  {isRTL ? 'الدفع بالتقسيط مع تابي' : 'Pay in installments with Tabby'}
+                </p>
+              </div>
+              {tabbyUrl ? (
+                <a
+                  href={tabbyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed underline hover:text-brand-dustyBlue"
+                  data-cursor-hover
+                >
+                  {isRTL ? 'اعرفي أكثر' : 'Learn more'}
+                </a>
+              ) : (
+                <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-darkRed/55">
+                  {isRTL ? 'إعداد تابي قيد التفعيل' : 'Tabby setup in progress'}
+                </span>
+              )}
             </div>
 
             {/* Quantity & Add to Cart */}
-            <div className={`flex gap-4 mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`mb-5 flex gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
               {/* Quantity */}
               <div className="flex items-center border border-brand-stone/50">
                 <button
+                  type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="px-4 py-3 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
                   data-cursor-hover
                 >
                   <FiMinus className="w-4 h-4" />
                 </button>
-                <span className="w-12 text-center font-roboto text-sm">{quantity}</span>
+                <span className="w-12 text-center font-montserrat text-[11px]">{quantity}</span>
                 <button
+                  type="button"
                   onClick={() => setQuantity(quantity + 1)}
                   className="px-4 py-3 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
                   data-cursor-hover
@@ -375,8 +443,9 @@ export default function AccessoryDetailPage() {
 
               {/* Add to Cart */}
               <button
+                type="button"
                 onClick={handleAddToCart}
-                className="flex-1 py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
+                className="flex-1 bg-brand-darkRed py-4 font-montserrat text-[11px] uppercase tracking-[0.15em] text-white hover:bg-brand-dustyBlue transition-colors"
                 data-cursor-hover
               >
                 {isRTL ? 'أضيفي للسلة' : 'Add to Bag'}

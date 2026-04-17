@@ -28,6 +28,7 @@ const allUrls = [
   { loc: `${baseUrl}/shop`, lastmod: new Date().toISOString(), changefreq: 'daily', priority: '0.9' },
   { loc: `${baseUrl}/accessories`, lastmod: new Date().toISOString(), changefreq: 'daily', priority: '0.9' },
   { loc: `${baseUrl}/about`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
+  { loc: `${baseUrl}/the-codes`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.85' },
   { loc: `${baseUrl}/heritage`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
   { loc: `${baseUrl}/heritage/al-talli`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
   { loc: `${baseUrl}/heritage/khous`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },

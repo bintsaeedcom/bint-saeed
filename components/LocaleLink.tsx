@@ -9,9 +9,13 @@ function localizeHref(pathname: string | null, target: string): string {
   if (!target.startsWith('/') || target.startsWith('//')) return target
   if (/^(https?:|mailto:|tel:)/i.test(target)) return target
   const { locale } = stripLocaleFromPathname(pathname || '/')
-  const [path, query] = target.split('?')
-  const withPrefix = localizedPath(locale, path)
-  return query != null && query.length > 0 ? `${withPrefix}?${query}` : withPrefix
+  const [pathAndMaybeHash, query] = target.split('?')
+  const hashIdx = pathAndMaybeHash.indexOf('#')
+  const pathOnly = hashIdx >= 0 ? pathAndMaybeHash.slice(0, hashIdx) : pathAndMaybeHash
+  const hash = hashIdx >= 0 ? pathAndMaybeHash.slice(hashIdx) : ''
+  const withPrefix = localizedPath(locale, pathOnly)
+  const q = query != null && query.length > 0 ? `?${query}` : ''
+  return `${withPrefix}${hash}${q}`
 }
 
 type Props = ComponentProps<typeof Link>

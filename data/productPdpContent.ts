@@ -6,6 +6,7 @@ export type ProductPdpContent = {
   fitAndSizeDetails: string[]
 }
 
+/** Royal V-Neck Kaftan — finalized reference PDP (same structure all other products now mirror with placeholders). */
 const V_NECK_CAFTAN_CONTENT: ProductPdpContent = {
   productDetails: [
     'Deep Maroon crepe chiffon kaftan with fluid, draped silhouette.',
@@ -32,9 +33,96 @@ const V_NECK_CAFTAN_CONTENT: ProductPdpContent = {
   ],
 }
 
+function colorList(product: Product): string {
+  return product.colors.map((c) => c.name).join(', ')
+}
+
+/** Split first fabric clause vs rest for composition placeholders (you will refine later). */
+function fabricOuterInner(product: Product): { outer: string; innerHint: string } {
+  const raw = product.fabric.trim()
+  const parts = raw.split(',').map((s) => s.trim()).filter(Boolean)
+  if (parts.length <= 1) {
+    return { outer: raw || '[Composition — outer / main — replace]', innerHint: '[Composition — lining / inner — replace]' }
+  }
+  return {
+    outer: `${parts[0]} (extend with full fibre breakdown when confirmed).`,
+    innerHint: parts.slice(1).join(', ') + ' — refine lining / secondary composition as needed.',
+  }
+}
+
+/** Ready-to-wear & sets: same topic order as Royal V-Neck Kaftan PDP (15 + 4 bullets). */
+function apparelPlaceholderContent(product: Product): ProductPdpContent {
+  const { outer, innerHint } = fabricOuterInner(product)
+  const colors = colorList(product)
+  const sizeOptions = getPdpSizeOptions(product.category, product.sizes)
+  const needsLength = categoryNeedsLengthCmDropdown(product.category)
+
+  const descSeed = product.description.replace(/\s+/g, ' ').trim().slice(0, 200)
+  return {
+    productDetails: [
+      `[Overview — replace] ${descSeed || product.name}`,
+      `[Neckline / upper body — replace] Describe neckline, collar, or upper opening.`,
+      `[Outer layer — replace] Hand-feel, weight, and how the outer behaves in motion.`,
+      `[Signature detail — replace] Scarf, trim, embroidery zone, or defining feature.`,
+      `[Sleeves — replace] Sleeve shape, length, and openings.`,
+      `[Adjustment / styling 1 — replace] Ties, belts, closure, or styling option.`,
+      `[Adjustment / styling 2 — replace] Secondary adjustment or alternative drape.`,
+      `[Construction / layering — replace] Inner dress, lining strategy, or structure.`,
+      `[Length — edit in catalog “Measurements” too] ${product.measurements}`,
+      `[Colours offered — replace] Available: ${colors}.`,
+      `[Composition — outer / main — replace] ${outer}`,
+      `[Composition — lining / inner — replace] ${innerHint}`,
+      `[Care — replace] Professional dry clean unless the atelier specifies otherwise.`,
+      `[House detail — replace] Signature emblem, hardware, or finishing note.`,
+      'Origin: Made in Abu Dhabi, United Arab Emirates.',
+    ],
+    fitAndSizeDetails: [
+      `[Model reference — replace] Add model height and unit when campaign imagery is ready.`,
+      `[Model wears — replace] Tie to sizes offered: ${sizeOptions.join(', ')}.`,
+      `[Fit intent — replace] Describe intended ease (fluid, tailored, oversized, etc.).`,
+      needsLength
+        ? `[Lengths — replace] Chapter sizing and optional custom length note after checkout.`
+        : `[Between sizes — replace] Guidance for choosing between sizes.`,
+    ],
+  }
+}
+
+/** Accessories on /shop/[id]: same accordion structure and bullet count as apparel PDPs. */
+function accessoryPlaceholderContent(product: Product): ProductPdpContent {
+  const colors = colorList(product)
+  const { outer, innerHint } = fabricOuterInner(product)
+
+  return {
+    productDetails: [
+      `[Overview — replace] ${product.description}`,
+      `[Scale & presence — replace] How the piece sits on the body or in the hand.`,
+      `[Finish & surface — replace] Polish, texture, brushing, or stone treatment.`,
+      `[Wear context — replace] Day / evening / layering recommendation.`,
+      `[Comfort & weight — replace] Wearability and balance.`,
+      `[Closure / fastening — replace] Clasp, hook, magnet, or slip-on behaviour.`,
+      `[Adjustability — replace] Extension chain, sizing, or fixed dimension.`,
+      `[Pairing — replace] Styling note with abayas, kaftans, or evening pieces.`,
+      `[Dimensions — also in catalog “Measurements”] ${product.measurements}`,
+      `[Colours / tones offered — replace] ${colors}.`,
+      `[Composition — primary — replace] ${outer}`,
+      `[Composition — secondary / findings — replace] ${innerHint}`,
+      `[Care — replace] Storage, polishing, and professional service when needed.`,
+      `[House detail — replace] Marking, hallmark, or packaging note.`,
+      'Origin: Made in Abu Dhabi, United Arab Emirates.',
+    ],
+    fitAndSizeDetails: [
+      `[Display / try-on — replace] How to judge scale when ordering remotely.`,
+      `[Size / scale — replace] One size or sizing notes: ${product.sizes.join(', ')}.`,
+      `[Fit / wear — replace] Intended contact points (lobe, wrist, etc.).`,
+      `[Care when wearing — replace] Perfume, stacking, or removal notes.`,
+    ],
+  }
+}
+
 /**
  * PDP copy source of truth.
- * Add per-product copy blocks here as you finalize each item.
+ * — bs-002 keeps finalized reference copy.
+ * — All other products use the same topic layout as that page; replace bracketed lines when ready.
  */
 export const productPdpContentById: Partial<Record<string, ProductPdpContent>> = {
   'bs-002': V_NECK_CAFTAN_CONTENT,
@@ -44,29 +132,9 @@ export function getProductPdpContent(product: Product): ProductPdpContent {
   const configured = productPdpContentById[product.id]
   if (configured) return configured
 
-  const sizeOptions = getPdpSizeOptions(product.category, product.sizes)
-  const needsLength = categoryNeedsLengthCmDropdown(product.category)
-
-  return {
-    productDetails: [
-      product.description,
-      product.fabric,
-      'Hand-finished in small atelier batches for quality and consistency.',
-      needsLength
-        ? 'Custom length can be requested after size selection; final confirmation is shared before production.'
-        : 'Standard silhouette measurements are listed in the size section for quick fit reference.',
-    ],
-    fitAndSizeDetails:
-      product.category === 'Kaftans'
-        ? [
-            `Available sizes: ${sizeOptions.join(', ')}`,
-            'Designed for an easy, fluid fit through the body and sleeve.',
-            'If you are between sizes, choose the larger size for additional ease.',
-          ]
-        : ([
-            `Available sizes: ${sizeOptions.join(', ')}`,
-            'Fits true to our chapter sizing; use the size chart to confirm your best fit.',
-            'If you are between sizes, choose the larger size for a more relaxed drape.',
-          ].filter(Boolean) as string[]),
+  if (product.category === 'Accessories') {
+    return accessoryPlaceholderContent(product)
   }
+
+  return apparelPlaceholderContent(product)
 }
