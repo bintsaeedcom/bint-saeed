@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { FiInstagram, FiArrowRight, FiCheck } from 'react-icons/fi'
 import { FaSnapchat } from 'react-icons/fa6'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
-import LocaleLink from '@/components/LocaleLink'
 
 export default function ComingSoonPage() {
   const [email, setEmail] = useState('')
@@ -319,10 +318,6 @@ export default function ComingSoonPage() {
           </p>
           <div className="w-1 h-1 rounded-full bg-brand-dustyBlue/50" />
         </motion.div>
-
-        <LocaleLink href="/home" className="sr-only">
-          Bint Saeed — public home
-        </LocaleLink>
       </div>
     </div>
   )
