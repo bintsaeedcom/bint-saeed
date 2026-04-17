@@ -3,7 +3,7 @@ export const translations = {
     // Navigation
     nav: {
       newIn: 'New In',
-      collections: 'Collections',
+      collections: 'Collection',
       readyToWear: 'Ready to Wear',
       accessories: 'Accessories',
       ourStory: 'Our Story',
@@ -267,7 +267,7 @@ export const translations = {
     // Navigation
     nav: {
       newIn: 'جديد',
-      collections: 'المجموعات',
+      collections: 'المجموعة',
       readyToWear: 'ملابس جاهزة',
       accessories: 'إكسسوارات',
       ourStory: 'قصتنا',
@@ -531,7 +531,7 @@ export const translations = {
   fr: {
     nav: {
       newIn: 'Nouveautés',
-      collections: 'Collections',
+      collections: 'Collection',
       readyToWear: 'Prêt-à-porter',
       accessories: 'Accessoires',
       ourStory: 'Notre Histoire',
@@ -763,7 +763,7 @@ export const translations = {
   it: {
     nav: {
       newIn: 'Novità',
-      collections: 'Collezioni',
+      collections: 'Collezione',
       readyToWear: 'Prêt-à-porter',
       accessories: 'Accessori',
       ourStory: 'La Nostra Storia',
@@ -995,7 +995,7 @@ export const translations = {
   es: {
     nav: {
       newIn: 'Novedades',
-      collections: 'Colecciones',
+      collections: 'Colección',
       readyToWear: 'Prêt-à-porter',
       accessories: 'Accesorios',
       ourStory: 'Nuestra Historia',
@@ -1227,7 +1227,7 @@ export const translations = {
   ru: {
     nav: {
       newIn: 'Новинки',
-      collections: 'Коллекции',
+      collections: 'Коллекция',
       readyToWear: 'Прет-а-порте',
       accessories: 'Аксессуары',
       ourStory: 'Наша История',
@@ -1691,7 +1691,7 @@ export const translations = {
   de: {
     nav: {
       newIn: 'Neu',
-      collections: 'Kollektionen',
+      collections: 'Kollektion',
       readyToWear: 'Bereit-zu-tragen',
       accessories: 'Accessoires',
       ourStory: 'Unsere Geschichte',

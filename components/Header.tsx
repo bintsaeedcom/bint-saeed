@@ -15,10 +15,10 @@ import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
 
 // Search suggestions and pages
 const searchableContent = [
-  { title: 'New Arrivals', href: '/shop', category: 'Collections' },
-  { title: 'Dresses', href: '/shop?category=dresses', category: 'Collections' },
-  { title: 'Ready to Wear', href: '/shop?category=ready-to-wear', category: 'Collections' },
-  { title: 'Accessories', href: '/accessories', category: 'Collections' },
+  { title: 'New Arrivals', href: '/shop', category: 'Collection' },
+  { title: 'Dresses', href: '/shop?category=dresses', category: 'Collection' },
+  { title: 'Ready to Wear', href: '/shop?category=ready-to-wear', category: 'Collection' },
+  { title: 'Accessories', href: '/accessories', category: 'Collection' },
   { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
   { title: 'Bracelets', href: '/accessories?type=bracelets', category: 'Accessories' },
   { title: 'Earrings', href: '/accessories?type=earrings', category: 'Accessories' },
@@ -36,6 +36,7 @@ const searchableContent = [
   { title: 'FAQ', href: '/faq', category: 'Help' },
   { title: 'Shipping & Returns', href: '/terms', category: 'Help' },
   { title: 'Abayas', href: '/shop?category=abayas', category: 'Products' },
+  { title: 'Jacket', href: '/shop?category=jacket', category: 'Products' },
   { title: 'Kaftans', href: '/shop?category=kaftans', category: 'Products' },
   { title: 'Black Abaya', href: '/shop?category=abayas&color=black', category: 'Products' },
   { title: 'Luxury Abaya', href: '/shop?category=abayas&style=luxury', category: 'Products' },
@@ -90,6 +91,7 @@ export default function Header() {
           title: 'Ready to Wear',
           links: [
             { label: 'Abayas', href: '/shop?category=abayas' },
+            { label: 'Jacket', href: '/shop?category=jacket' },
             { label: 'Sets', href: '/shop?category=sets' },
             { label: 'Dresses', href: '/shop?category=dresses' },
             { label: 'Kaftans', href: '/shop?category=kaftans' },
@@ -135,6 +137,7 @@ export default function Header() {
             { label: 'The Codes', href: '/heritage' },
             { label: 'Al Talli', href: '/heritage/al-talli' },
             { label: 'Khous', href: '/heritage/khous' },
+            { label: 'Craftsmanship', href: '/craftsmanship' },
             { label: 'Craft Story', href: '/heritage' },
           ],
         },
@@ -514,7 +517,7 @@ export default function Header() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={t.search.placeholder || "Search for products, collections, pages..."}
+                  placeholder={t.search.placeholder || 'Search for products, collection, pages…'}
                   className={`flex-1 text-lg md:text-xl font-roboto text-brand-darkRed bg-transparent focus:outline-none placeholder:text-brand-stone/60 ${isRTL ? 'text-right' : ''}`}
                   dir={isRTL ? 'rtl' : 'ltr'}
                 />
@@ -580,7 +583,7 @@ export default function Header() {
                       No results found for "{searchQuery}"
                     </p>
                     <p className="font-roboto text-sm text-brand-stone mt-2">
-                      Try searching for collections, products, or pages
+                      Try searching for the collection, products, or pages
                     </p>
                   </div>
                 )}

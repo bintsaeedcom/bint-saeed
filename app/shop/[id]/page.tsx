@@ -17,7 +17,7 @@ import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getTabbyCheckoutUrl } from '@/lib/payments'
-import { getProductHref, resolveProductIdentifier } from '@/lib/products/links'
+import { getProductHref, getProductSlug, resolveProductIdentifier } from '@/lib/products/links'
 import {
   getPdpSizeOptions,
   CUSTOMISATION_SURCHARGE_AED,
@@ -70,7 +70,9 @@ export default function ProductPage() {
 
   useEffect(() => {
     if (!product || !routeIdentifier) return
-    if (routeIdentifier.trim().toLowerCase() !== product.id.toLowerCase()) return
+    const canonical = getProductSlug(product).toLowerCase()
+    const normalized = routeIdentifier.trim().toLowerCase()
+    if (normalized === canonical) return
     router.replace(getProductHref(product))
   }, [product, routeIdentifier, router])
 

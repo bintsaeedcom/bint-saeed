@@ -1,5 +1,7 @@
 export interface Product {
   id: string
+  /** Canonical URL segment for `/shop/[slug]` (unique, lowercase kebab-case). */
+  slug: string
   name: string
   price: number
   description: string
@@ -12,7 +14,7 @@ export interface Product {
 }
 
 /** Shop filter order (excluding All). Counts in the UI match `products` per category. */
-export const categories = ['All', 'Abayas', 'Kaftans', 'Dresses', 'Sets', 'Accessories'] as const
+export const categories = ['All', 'Abayas', 'Kaftans', 'Dresses', 'Jacket', 'Sets', 'Accessories'] as const
 
 export type ShopCategory = (typeof categories)[number]
 
@@ -134,7 +136,8 @@ export function fiveAccessoryGalleryImages(seed: number): string[] {
 export const products: Product[] = [
   {
     id: 'bs-001',
-    name: 'Abaya 1 — Desert Rose Abaya',
+    slug: 'khous-jacket-abaya',
+    name: 'Khous Jacket Abaya',
     price: 2475,
     description:
       'A masterpiece of elegance, this flowing abaya captures the essence of desert twilight. The intricate embroidery along the sleeves and hem creates a symphony of sophistication.',
@@ -147,7 +150,8 @@ export const products: Product[] = [
   },
   {
     id: 'ab-002',
-    name: 'Abaya 2 — Noor Linen Abaya',
+    slug: 'royal-talli-abaya',
+    name: 'Royal Talli Abaya',
     price: 980,
     description: 'Lightweight linen with a clean silhouette and concealed placket — made for warm days and evening strolls.',
     fabric: 'European linen blend, cotton lining',
@@ -162,7 +166,8 @@ export const products: Product[] = [
   },
   {
     id: 'ab-003',
-    name: 'Abaya 3 — Alba Silk Abaya',
+    slug: 'khous-classic-abaya',
+    name: 'Khous Classic Abaya',
     price: 1200,
     description: 'Fluid silk crepe with subtle side slits and hand-finished hems.',
     fabric: 'Silk crepe, silk habotai lining',
@@ -177,7 +182,8 @@ export const products: Product[] = [
   },
   {
     id: 'ab-004',
-    name: 'Abaya 4 — Rimal Embroidered Abaya',
+    slug: 'khous-signature-abaya',
+    name: 'Khous Signature Abaya',
     price: 1100,
     description: 'Tone-on-tone embroidery inspired by wind patterns on desert dunes.',
     fabric: 'Japanese crepe, tonal embroidery thread',
@@ -189,7 +195,8 @@ export const products: Product[] = [
   },
   {
     id: 'ab-005',
-    name: 'Abaya 5 — Zahra Open Abaya',
+    slug: 'natural-stone-signature-abaya',
+    name: 'Natural Stone Signature Abaya',
     price: 1050,
     description: 'An open-front layer with wide sleeves — ideal over dresses or sets.',
     fabric: 'Wool-silk blend, matte satin binding',
@@ -203,23 +210,9 @@ export const products: Product[] = [
     category: 'Abayas',
   },
   {
-    id: 'ab-006',
-    name: 'Abaya 6 — Layla Pleated Abaya',
-    price: 1150,
-    description: 'Vertical pleats from the shoulder for a lengthening, architectural line.',
-    fabric: 'Italian triacetate, anti-static lining',
-    measurements: 'Length: 141cm (size M).',
-    images: fiveApparelGalleryImages(5),
-    colors: [
-      { name: 'Moss', hex: '#5c6b54' },
-      { name: 'Ink', hex: '#1e1e24' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    category: 'Abayas',
-  },
-  {
     id: 'bs-002',
-    name: 'V-Neck Caftan',
+    slug: 'royal-v-neck-kaftan',
+    name: 'Royal V-Neck Kaftan',
     price: 2475,
     description: `There are pieces you don't overthink.
 You put them on and you already know.
@@ -250,7 +243,8 @@ Designed for the way women live today, moving between cities, occasions, and mom
   },
   {
     id: 'cf-002',
-    name: 'Boatneck Caftan',
+    slug: 'royal-boatneck-kaftan',
+    name: 'Royal Boatneck Kaftan',
     price: 2475,
     description: 'Shorter kaftan silhouette with bracelet sleeves and a jewel neckline.',
     fabric: 'Sand-washed silk, bound inner seams',
@@ -267,7 +261,8 @@ Designed for the way women live today, moving between cities, occasions, and mom
   },
   {
     id: 'bs-003',
-    name: 'Oasis Evening Gown',
+    slug: 'khous-signature-midi-dress',
+    name: 'Khous Signature Midi Dress',
     price: 1000,
     description:
       'Inspired by the serene beauty of hidden desert oases, this evening gown features cascading layers that move like water in moonlight.',
@@ -283,25 +278,25 @@ Designed for the way women live today, moving between cities, occasions, and mom
     category: 'Dresses',
   },
   {
-    id: 'bs-004',
-    name: 'Sultan Structured Dress',
-    price: 1000,
-    description:
-      'A statement silhouette with architectural shoulders and a clean skirt — refined structure for evening and city events.',
-    fabric: 'Virgin Wool blend, Silk lining, Mother-of-pearl buttons',
-    measurements: 'Structured fit. Length: 118cm (size M). Shoulder width: 42cm.',
-    images: fiveApparelGalleryImages(9),
+    id: 'dr-009',
+    slug: 'long-fitted-signature-dress',
+    name: 'Long Fitted Signature Dress',
+    price: 980,
+    description: 'Slim column in stretch crepe with a high back vent for ease of movement.',
+    fabric: 'Stretch crepe, power mesh lining',
+    measurements: 'Floor length 148cm (size M).',
+    images: fiveApparelGalleryImages(13),
     colors: [
-      { name: 'Royal Purple', hex: '#6620a2' },
-      { name: 'Classic Black', hex: '#1a1a1a' },
-      { name: 'Clay Red', hex: '#8e4233' },
+      { name: 'Plum', hex: '#4a2c3a' },
+      { name: 'Steel', hex: '#6b7280' },
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Dresses',
   },
   {
     id: 'bs-006',
-    name: 'Dune Draped Dress',
+    slug: 'inner-flow-dress',
+    name: 'Inner Flow Dress',
     price: 1000,
     description:
       'Fluid and feminine, this draped dress moves with grace and intention. The asymmetric hem creates a dynamic silhouette.',
@@ -317,53 +312,45 @@ Designed for the way women live today, moving between cities, occasions, and mom
     category: 'Dresses',
   },
   {
-    id: 'dr-007',
-    name: 'Crescent Slip Dress',
-    price: 890,
-    description: 'Bias-cut slip in matte satin with adjustable straps.',
-    fabric: 'Viscose satin, silk lining',
-    measurements: 'Midi length 115cm (size M).',
-    images: fiveApparelGalleryImages(11),
+    id: 'bs-004',
+    slug: 'talli-signature-dress',
+    name: 'Talli Signature Dress',
+    price: 1000,
+    description:
+      'A statement silhouette with architectural shoulders and a clean skirt — refined structure for evening and city events.',
+    fabric: 'Virgin Wool blend, Silk lining, Mother-of-pearl buttons',
+    measurements: 'Structured fit. Length: 118cm (size M). Shoulder width: 42cm.',
+    images: fiveApparelGalleryImages(9),
     colors: [
-      { name: 'Champagne', hex: '#e8dcc8' },
-      { name: 'Noir', hex: '#1a1a1a' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    category: 'Dresses',
-  },
-  {
-    id: 'dr-008',
-    name: 'Sahara Shirt Dress',
-    price: 920,
-    description: 'Belted shirt dress with concealed pockets and a sharp collar.',
-    fabric: 'Cotton poplin, horn buttons',
-    measurements: 'Length: 112cm (size M).',
-    images: fiveApparelGalleryImages(12),
-    colors: [
-      { name: 'Bone', hex: '#e5e0d8' },
-      { name: 'Olive', hex: '#5c6648' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    category: 'Dresses',
-  },
-  {
-    id: 'dr-009',
-    name: 'Mirage Column Dress',
-    price: 980,
-    description: 'Slim column in stretch crepe with a high back vent for ease of movement.',
-    fabric: 'Stretch crepe, power mesh lining',
-    measurements: 'Floor length 148cm (size M).',
-    images: fiveApparelGalleryImages(13),
-    colors: [
-      { name: 'Plum', hex: '#4a2c3a' },
-      { name: 'Steel', hex: '#6b7280' },
+      { name: 'Royal Purple', hex: '#6620a2' },
+      { name: 'Classic Black', hex: '#1a1a1a' },
+      { name: 'Clay Red', hex: '#8e4233' },
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Dresses',
   },
   {
+    id: 'jk-001',
+    slug: 'khous-signature-classic-jacket',
+    name: 'Khous Signature Classic Set',
+    price: 1000,
+    description:
+      'Modern elegance meets traditional craftsmanship. This versatile set can be worn together or as separate statement pieces.',
+    fabric: 'Organic Cotton blend, Linen accents, Natural dyes',
+    measurements: 'Top length: 70cm, Skirt length: 95cm (size M). Relaxed fit.',
+    images: fiveApparelGalleryImages(15),
+    colors: [
+      { name: 'Natural Stone', hex: '#d4bdac' },
+      { name: 'Terracotta', hex: '#c67c4e' },
+      { name: 'Ocean Blue', hex: '#4a7c8a' },
+    ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    category: 'Jacket',
+  },
+  {
     id: 'bs-005',
-    name: 'Mirage Two-Piece Set',
+    slug: 'khous-signature-classic-set',
+    name: 'Khous Signature Classic Set',
     price: 1000,
     description:
       'Modern elegance meets traditional craftsmanship. This versatile set can be worn together or as separate statement pieces.',
@@ -379,22 +366,8 @@ Designed for the way women live today, moving between cities, occasions, and mom
     category: 'Sets',
   },
   {
-    id: 'st-002',
-    name: 'Atlas Knit Set',
-    price: 870,
-    description: 'Ribbed knit top and matching wide-leg trouser for travel and home.',
-    fabric: 'Merino blend, elastane',
-    measurements: 'Top 58cm, inseam 78cm (size M).',
-    images: fiveApparelGalleryImages(15),
-    colors: [
-      { name: 'Oat', hex: '#d8cfc4' },
-      { name: 'Charcoal', hex: '#2d2d2d' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    category: 'Sets',
-  },
-  {
     id: 'acc-001',
+    slug: 'heritage-gold-necklace',
     name: 'Heritage Gold Necklace',
     price: 420,
     description: 'Fine-link necklace with a brushed pendant — pairs with abayas and kaftans.',
@@ -407,6 +380,7 @@ Designed for the way women live today, moving between cities, occasions, and mom
   },
   {
     id: 'acc-002',
+    slug: 'pearl-drop-earrings',
     name: 'Pearl Drop Earrings',
     price: 280,
     description: 'Freshwater pearls on slim hooks for understated evening light.',
@@ -422,6 +396,7 @@ Designed for the way women live today, moving between cities, occasions, and mom
   },
   {
     id: 'acc-003',
+    slug: 'suede-evening-clutch',
     name: 'Suede Evening Clutch',
     price: 360,
     description: 'Structured clutch in Italian suede with a magnetic frame.',

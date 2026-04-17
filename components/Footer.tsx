@@ -23,7 +23,6 @@ export default function Footer() {
 
   const footerLinks = {
     shop: [
-      { label: t.product.home, href: '/home' },
       { label: t.footer.newArrivals, href: '/shop' },
       { label: t.footer.collection, href: '/shop' },
       { label: t.footer.accessories, href: '/accessories' },

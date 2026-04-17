@@ -8,15 +8,17 @@ export function slugifyProductName(name: string): string {
     .replace(/^-+|-+$/g, '')
 }
 
-export function getProductSlug(product: Pick<Product, 'name'>): string {
+export function getProductSlug(product: { name: string; slug?: string }): string {
+  const s = product.slug?.trim()
+  if (s) return s.toLowerCase()
   return slugifyProductName(product.name)
 }
 
-export function getProductHref(product: Pick<Product, 'id' | 'name'>): string {
+export function getProductHref(product: { id: string; name: string; slug?: string }): string {
   return `/shop/${getProductSlug(product)}`
 }
 
-export function resolveProductIdentifier<T extends Pick<Product, 'id' | 'name'>>(
+export function resolveProductIdentifier<T extends Pick<Product, 'id' | 'name' | 'slug'>>(
   products: T[],
   identifier: string
 ): T | null {
