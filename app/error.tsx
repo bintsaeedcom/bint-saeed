@@ -46,7 +46,7 @@ export default function Error({
 
           {/* Title */}
           <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
-          <h1 className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-darkRed mb-4">
+          <h1 data-document-h1="true" className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-darkRed mb-4">
             Something Went Wrong
           </h1>
           

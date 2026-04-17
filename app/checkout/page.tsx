@@ -181,7 +181,7 @@ export default function CheckoutPage() {
           </div>
           <div className={`mt-6 flex items-start justify-between gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <div>
-              <h1 className="font-rozha text-3xl md:text-4xl text-brand-darkRed">
+              <h1 data-document-h1="true" className="font-rozha text-3xl md:text-4xl text-brand-darkRed">
                 {isRTL ? 'إتمام الطلب' : 'Checkout'}
               </h1>
               <p className="mt-2 max-w-xl font-roboto text-sm text-brand-clayRed/70 tracking-wide">

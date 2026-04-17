@@ -11,7 +11,7 @@ export default function CareersPage() {
         <span className="mb-6 block font-roboto text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
           Bint Saeed
         </span>
-        <h1 className="font-rozha text-4xl leading-[1.08] text-brand-darkRed md:text-5xl">Careers</h1>
+        <h1 data-document-h1="true" className="font-rozha text-4xl leading-[1.08] text-brand-darkRed md:text-5xl">Careers</h1>
         <p className="mt-5 max-w-2xl font-roboto text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
           We are building with care across design, operations, and client experience. If you are interested in future
           opportunities, please reach out to our team and include your role focus and portfolio.

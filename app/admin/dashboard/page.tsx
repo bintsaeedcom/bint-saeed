@@ -165,7 +165,7 @@ export default function AdminDashboard() {
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="font-rozha text-3xl">Analytics Dashboard</h1>
+              <h1 data-document-h1="true" className="font-rozha text-3xl">Analytics Dashboard</h1>
               <p className="font-roboto text-sm text-white/70 tracking-wide">
                 Real-time visitor tracking & notifications
               </p>

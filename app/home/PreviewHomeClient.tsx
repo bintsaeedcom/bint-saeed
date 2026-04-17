@@ -514,7 +514,7 @@ function HeroSection() {
             <div className={`min-w-0 lg:col-span-8 xl:col-span-7 ${isRTL ? 'lg:col-start-6' : ''}`}>
               {/* initial={false}: avoid opacity:0 inline styles before hydration (looked "broken" / blank UI) */}
               <motion.div style={{ y }} className="pointer-events-none">
-                <motion.h1
+                <motion.h1 data-document-h1="true"
                   initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}

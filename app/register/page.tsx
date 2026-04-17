@@ -71,7 +71,7 @@ export default function RegisterPage() {
           <p className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-3">
             Bint Saeed
           </p>
-          <h1 className="font-rozha text-3xl text-brand-darkRed mb-2">
+          <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed mb-2">
             {isRTL ? 'إنشاء حساب' : 'Create an account'}
           </h1>
           <p className="font-roboto text-sm text-brand-clayRed/70 mb-8 leading-relaxed">

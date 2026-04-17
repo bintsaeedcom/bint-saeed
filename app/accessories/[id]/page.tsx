@@ -55,7 +55,7 @@ export default function AccessoryDetailPage() {
     return (
       <div className="min-h-screen pt-32 flex items-center justify-center bg-white">
         <div className={`text-center ${isRTL ? 'rtl' : ''}`}>
-          <h1 className="font-rozha text-3xl text-brand-darkRed mb-4">
+          <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed mb-4">
             {isRTL ? 'المنتج غير موجود' : 'Product Not Found'}
           </h1>
           <LocaleLink
@@ -262,7 +262,7 @@ export default function AccessoryDetailPage() {
             </span>
 
             {/* Title */}
-            <h1 className="font-rozha text-3xl md:text-4xl lg:text-5xl text-brand-darkRed mb-4">
+            <h1 data-document-h1="true" className="font-rozha text-3xl md:text-4xl lg:text-5xl text-brand-darkRed mb-4">
               {isRTL ? accessory.nameAr : accessory.name}
             </h1>
 

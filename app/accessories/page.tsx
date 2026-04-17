@@ -64,7 +64,7 @@ export default function AccessoriesPage() {
               <span className="font-roboto text-xs uppercase tracking-[0.4em] text-white/60 mb-4 block">
                 {isRTL ? 'مجموعة الإكسسوارات' : 'Accessories Collection'}
               </span>
-              <h1 className="font-rozha text-5xl md:text-7xl lg:text-8xl text-white mb-4">
+              <h1 data-document-h1="true" className="font-rozha text-5xl md:text-7xl lg:text-8xl text-white mb-4">
                 {isRTL ? 'الإكسسوارات' : 'Accessories'}
               </h1>
               <p className="font-roboto text-base text-white/70 tracking-wide max-w-lg">

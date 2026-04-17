@@ -33,7 +33,7 @@ export default function GlobalError({
             </div>
 
             <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
-            <h1 className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-darkRed mb-4">
+            <h1 data-document-h1="true" className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-darkRed mb-4">
               We Hit an Unexpected Issue
             </h1>
             <p className="font-roboto text-sm sm:text-base text-brand-clayRed/70 tracking-wide mb-8 max-w-md mx-auto px-4">

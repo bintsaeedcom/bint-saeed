@@ -78,7 +78,7 @@ function HeroSection() {
             <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm font-roboto text-xs uppercase tracking-[0.3em] text-white/80 mb-8">
               {isRTL ? 'تراث اليونسكو' : 'UNESCO Heritage'}
             </span>
-            <h1 className="font-rozha text-5xl md:text-7xl lg:text-8xl mb-6">
+            <h1 data-document-h1="true" className="font-rozha text-5xl md:text-7xl lg:text-8xl mb-6">
               {isRTL ? 'التلي' : 'Al Talli'}
             </h1>
             <p className="font-roboto text-lg md:text-xl text-white/70 tracking-wide">

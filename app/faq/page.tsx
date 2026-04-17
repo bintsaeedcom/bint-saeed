@@ -226,7 +226,7 @@ export default function FAQPage() {
           transition={{ duration: 0.8 }}
           className={`text-center mb-16 ${isRTL ? 'text-right' : ''}`}
         >
-          <h1 className="font-rozha text-5xl md:text-6xl text-brand-darkRed mb-4">
+          <h1 data-document-h1="true" className="font-rozha text-5xl md:text-6xl text-brand-darkRed mb-4">
             {data.title}
           </h1>
           <p className="font-roboto text-brand-clayRed tracking-wide">

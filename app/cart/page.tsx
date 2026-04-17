@@ -30,7 +30,7 @@ export default function CartPage() {
             className="text-center max-w-md mx-auto py-20"
           >
             <FiShoppingBag className="w-16 h-16 text-brand-stone mx-auto mb-8" />
-            <h1 className="font-rozha text-3xl md:text-4xl text-brand-darkRed mb-4">
+            <h1 data-document-h1="true" className="font-rozha text-3xl md:text-4xl text-brand-darkRed mb-4">
               Your Bag is Empty
             </h1>
             <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide mb-10">
@@ -64,7 +64,7 @@ export default function CartPage() {
               <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               Continue Shopping
             </LocaleLink>
-            <h1 className="font-rozha text-2xl md:text-3xl text-brand-darkRed">
+            <h1 data-document-h1="true" className="font-rozha text-2xl md:text-3xl text-brand-darkRed">
               Shopping Bag ({items.length})
             </h1>
             <div className="w-32" />

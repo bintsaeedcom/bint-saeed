@@ -90,7 +90,7 @@ export default function AdminOrdersPage() {
     <div className="p-6 text-neutral-900 lg:p-10">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="font-rozha text-3xl text-white">Orders</h1>
+          <h1 data-document-h1="true" className="font-rozha text-3xl text-white">Orders</h1>
           <p className="mt-1 font-roboto text-sm text-white/50">
             Fulfilment pipeline · Stripe Checkout completes create orders via webhook
             {storage ? ` · Storage: ${storage}` : ''}

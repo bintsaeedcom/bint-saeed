@@ -21,7 +21,7 @@ export default function WishlistPage() {
           <p className="font-roboto text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
             Bint Saeed
           </p>
-          <h1 className="mt-2 font-rozha text-3xl text-brand-darkRed md:text-4xl">
+          <h1 data-document-h1="true" className="mt-2 font-rozha text-3xl text-brand-darkRed md:text-4xl">
             {isRTL ? 'المفضلة' : 'Favorites'}
           </h1>
           <p className="mt-3 max-w-lg font-roboto text-sm leading-relaxed text-brand-clayRed/70">

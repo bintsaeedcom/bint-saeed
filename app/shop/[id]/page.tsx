@@ -122,7 +122,7 @@ export default function ProductPage() {
     return (
       <div className="min-h-screen pt-32 flex items-center justify-center bg-white">
         <div className="text-center">
-          <h1 className="font-rozha text-3xl text-brand-darkRed mb-4">Product Not Found</h1>
+          <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed mb-4">Product Not Found</h1>
           <LocaleLink
             href="/shop"
             className="font-montserrat text-sm uppercase tracking-[0.15em] text-brand-darkRed hover:text-brand-dustyBlue"
@@ -460,7 +460,7 @@ export default function ProductPage() {
             </span>
 
             {/* Title */}
-            <h1 className="mb-2.5 font-rozha text-[1.75rem] md:text-[1.95rem] lg:text-[2.05rem] text-brand-darkRed leading-[1.15]">
+            <h1 data-document-h1="true" className="mb-2.5 font-rozha text-[1.75rem] md:text-[1.95rem] lg:text-[2.05rem] text-brand-darkRed leading-[1.15]">
               {product.name}
             </h1>
 

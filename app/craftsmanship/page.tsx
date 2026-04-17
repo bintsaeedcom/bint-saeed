@@ -11,7 +11,7 @@ export default function CraftsmanshipPage() {
         <span className="mb-6 block font-roboto text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
           Bint Saeed
         </span>
-        <h1 className="font-rozha text-4xl leading-[1.08] text-brand-darkRed md:text-5xl">Craftsmanship</h1>
+        <h1 data-document-h1="true" className="font-rozha text-4xl leading-[1.08] text-brand-darkRed md:text-5xl">Craftsmanship</h1>
         <p className="mt-5 max-w-2xl font-roboto text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
           Craft details, construction standards, and finishing information are integrated across our heritage and
           collection pages. Explore the full house approach to materials, form, and finish.

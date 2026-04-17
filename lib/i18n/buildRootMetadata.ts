@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import { ENGLISH_ROOT_KEYWORDS } from './englishRootKeywords'
-import { translations, seoKeywords, type Language } from './translations'
+import { translations, type Language } from './translations'
 import type { AppLocale } from './routing'
 import { localizedPath } from './routing'
+import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 
 const BASE = new URL('https://bintsaeed.com')
 
@@ -54,9 +54,7 @@ function clip(s: string, max = 168): string {
 }
 
 function keywordsFor(locale: AppLocale): string[] {
-  if (locale === 'en') return [...ENGLISH_ROOT_KEYWORDS]
-  const pack = seoKeywords[locale as keyof typeof seoKeywords]
-  return pack ? [...pack] : [...ENGLISH_ROOT_KEYWORDS]
+  return mergedMetaKeywordsForLocale(locale)
 }
 
 function innerTitleKey(locale: AppLocale, pathname: string): string | null {

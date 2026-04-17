@@ -155,7 +155,7 @@ export default function ShopClient() {
           <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
             COLLECTION
           </p>
-          <h1 className="font-rozha text-4xl font-normal leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl">
+          <h1 data-document-h1="true" className="font-rozha text-4xl font-normal leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl">
             {isRTL ? 'الفصل ٢٦' : 'Chapter 26'}
           </h1>
           <p className="mt-6 max-w-md font-roboto text-sm leading-relaxed tracking-wide text-neutral-600">

@@ -45,7 +45,7 @@ const measureItems = [
 ] as const
 
 export default function SizeGuidePage() {
-  const { isRTL } = useLanguage()
+  const { t, isRTL } = useLanguage()
   const [selected, setSelected] = useState<(typeof SIZE_HEADERS)[number] | null>(null)
 
   return (
@@ -64,6 +64,13 @@ export default function SizeGuidePage() {
             <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
             {isRTL ? 'العودة للتسوق' : 'Back to Shop'}
           </LocaleLink>
+
+          <h1
+            data-document-h1="true"
+            className="mx-auto mb-6 max-w-5xl text-center font-rozha text-4xl leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl"
+          >
+            {t.footer.sizeGuide}
+          </h1>
 
           <p className="mx-auto max-w-5xl text-center font-roboto text-[11px] uppercase tracking-[0.12em] text-brand-darkRed/80 md:text-[13px]">
             This size chart provides general sizing information, which can vary depending on style. For more specific sizing information, please contact our concierge team.

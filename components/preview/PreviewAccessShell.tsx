@@ -63,7 +63,7 @@ export default function PreviewAccessShell({
           <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/80">
             Bint Saeed · Preview
           </p>
-          <h1 className="font-rozha text-3xl text-brand-dustyBlue tracking-wide sm:text-4xl">{title}</h1>
+          <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-dustyBlue tracking-wide sm:text-4xl">{title}</h1>
           {subtitle ? (
             <p className="mx-auto mt-5 max-w-md font-roboto text-sm leading-relaxed text-white/55">{subtitle}</p>
           ) : null}

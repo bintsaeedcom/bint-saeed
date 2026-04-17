@@ -33,7 +33,7 @@ export default function NotFound() {
           {/* 404 Number with brand styling */}
           <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
           <div className="relative mb-4">
-            <h1 className="font-rozha text-[100px] sm:text-[150px] md:text-[180px] text-brand-stone/20 leading-none select-none">
+            <h1 data-document-h1="true" className="font-rozha text-[100px] sm:text-[150px] md:text-[180px] text-brand-stone/20 leading-none select-none">
               404
             </h1>
             <div className="absolute inset-0 flex items-center justify-center">

@@ -38,7 +38,7 @@ function AdminLoginForm() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#1a0a10] px-6">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#12080b] p-8 shadow-2xl">
-        <h1 className="font-rozha text-2xl text-brand-stone">Owner login</h1>
+        <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-stone">Owner login</h1>
         <p className="mt-2 font-roboto text-sm text-white/50">
           Product and order dashboards — set <code className="text-brand-dustyBlue/90">ADMIN_DASHBOARD_PASSWORD</code> in
           your environment.

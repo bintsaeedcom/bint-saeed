@@ -69,7 +69,7 @@ function HeroSection() {
                   </span>
                 </motion.div>
 
-                <motion.h1
+                <motion.h1 data-document-h1="true"
                   initial={{ opacity: 0, y: 80 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.4, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}

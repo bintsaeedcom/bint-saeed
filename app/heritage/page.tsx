@@ -93,7 +93,7 @@ function HeritageHero() {
             <span className="inline-block px-5 py-2.5 backdrop-blur-md bg-white/[0.06] border border-brand-dustyBlue/20 rounded-full text-brand-dustyBlue font-roboto text-[10px] uppercase tracking-[0.4em] mb-8">
               {isRTL ? 'تراثنا' : 'Our Heritage'}
             </span>
-            <h1 className="font-rozha text-[12vw] md:text-[8vw] lg:text-[6.5vw] text-white leading-[0.9] mb-8">
+            <h1 data-document-h1="true" className="font-rozha text-[12vw] md:text-[8vw] lg:text-[6.5vw] text-white leading-[0.9] mb-8">
               {isRTL ? 'إرث الإمارات' : 'UAE Heritage'}
               <br />
               <span className="text-brand-dustyBlue italic">{isRTL ? 'في كل غرزة' : 'In Every Stitch'}</span>

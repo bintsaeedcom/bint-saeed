@@ -184,7 +184,7 @@ export default function ComingSoonPage() {
           transition={{ duration: 1, delay: 0.4 }}
           className="text-center mb-6 md:mb-8"
         >
-          <motion.h1 
+          <motion.h1 data-document-h1="true" 
             className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-dustyBlue tracking-[0.2em] md:tracking-[0.3em]"
             initial={{ letterSpacing: '0.5em', opacity: 0 }}
             animate={{ letterSpacing: '0.2em', opacity: 1 }}

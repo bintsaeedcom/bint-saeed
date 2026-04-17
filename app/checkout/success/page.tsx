@@ -57,7 +57,7 @@ function CheckoutSuccessContent() {
               <FiCheck className="w-10 h-10 text-green-600" />
             </motion.div>
 
-            <h1 className="font-rozha text-4xl text-brand-darkRed mb-4">
+            <h1 data-document-h1="true" className="font-rozha text-4xl text-brand-darkRed mb-4">
               Thank You!
             </h1>
             <p className="font-roboto text-brand-clayRed tracking-wide mb-8 leading-relaxed">

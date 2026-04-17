@@ -34,7 +34,7 @@ function VerifyEmailContent() {
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
               <FiCheck className="h-8 w-8 text-emerald-600" />
             </div>
-            <h1 className="font-rozha text-2xl text-brand-darkRed mb-3">
+            <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed mb-3">
               {isRTL ? 'تم تأكيد بريدك' : 'Email confirmed'}
             </h1>
             <p className="font-roboto text-sm text-brand-clayRed/75 leading-relaxed mb-8">
@@ -65,7 +65,7 @@ function VerifyEmailContent() {
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand-dustyBlue/15">
               <FiCheck className="h-8 w-8 text-brand-dustyBlue" />
             </div>
-            <h1 className="font-rozha text-2xl text-brand-darkRed mb-3">
+            <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed mb-3">
               {isRTL ? 'البريد مؤكد مسبقاً' : 'Already confirmed'}
             </h1>
             <p className="font-roboto text-sm text-brand-clayRed/75 mb-8">
@@ -84,7 +84,7 @@ function VerifyEmailContent() {
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-50">
               <FiAlertCircle className="h-8 w-8 text-red-600/90" />
             </div>
-            <h1 className="font-rozha text-2xl text-brand-darkRed mb-3">
+            <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed mb-3">
               {isRTL ? 'تعذر التأكيد' : 'Could not confirm'}
             </h1>
             <p className="font-roboto text-sm text-brand-clayRed/75 leading-relaxed mb-8">

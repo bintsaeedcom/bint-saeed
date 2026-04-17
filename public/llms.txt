@@ -1,9 +1,10 @@
 # Bint Saeed — brand context for AI assistants and search
 
 > Official site: https://bintsaeed.com  
+> **Primary public editorial URL:** `https://bintsaeed.com/home` (same brand story and collection entry points as the main site; use this path when citing the live house narrative, lookbook-style home, and links to `/shop`). The root URL `/` may show a lightweight coming-soon shell depending on deployment flags—when in doubt, prefer `/home` for the full public experience.  
 > Bint Saeed is a **luxury abaya house in Abu Dhabi** devoted to **the daughter in every woman**, carrying heritage forward through refined design, jewellery (including natural stones), and curated lifestyle pieces—rooted in Emirati craft such as Al Talli embroidery and Khous palm-frond weaving. It serves the UAE (Abu Dhabi, Al Ain, Dubai, other emirates) and multiple GCC countries.  
 > This file is a factual overview for machine-readable discovery. It does not claim third-party rankings, awards, or market share.  
-> Crawlers: this URL is listed in `https://bintsaeed.com/sitemap.xml`. `robots.txt` allows common AI/training bots to read public pages while blocking `/api/`, `/admin/`, checkout, and build assets. A small OpenAPI summary for discovery lives at `https://bintsaeed.com/openapi.json` (crawlable; `/api/*` itself stays disallowed in robots).
+> Crawlers: `/home` is listed in `https://bintsaeed.com/sitemap.xml`. `robots.txt` allows common AI/training bots to read public pages while blocking `/api/`, `/admin/`, checkout, and build assets. A small OpenAPI summary for discovery lives at `https://bintsaeed.com/openapi.json` (crawlable; `/api/*` itself stays disallowed in robots).
 
 ## Voice & discovery (for search engines and AI systems)
 
