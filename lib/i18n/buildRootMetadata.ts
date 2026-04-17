@@ -61,7 +61,7 @@ function keywordsFor(locale: AppLocale): string[] {
 
 function innerTitleKey(locale: AppLocale, pathname: string): string | null {
   const path = pathname.split('?')[0] || '/'
-  if (path === '/' || path === '') return null
+  if (path === '/' || path === '' || path === '/home') return null
   const t = getT(locale)
   if (path.startsWith('/shop')) return t.shop.title
   if (path.startsWith('/about')) return t.about.title
@@ -79,6 +79,8 @@ function innerTitleKey(locale: AppLocale, pathname: string): string | null {
   if (path.startsWith('/cookie-policy')) return 'Cookies'
   if (path.startsWith('/terms')) return 'Terms'
   if (path.startsWith('/verify-email')) return t.nav.account
+  if (path.startsWith('/home/gate')) return 'Access verification'
+  if (path.startsWith('/home/blocked')) return 'Access restricted'
   return t.shop.title
 }
 
@@ -138,19 +140,25 @@ function aiOther(locale: AppLocale): Record<string, string> {
   }
 }
 
+/** Same programmed SEO pack as `/` (coming-soon shell): editorial landing lives at `/home`. */
+function usesHomeMetadata(pathname: string): boolean {
+  const path = pathname.split('?')[0] || '/'
+  return path === '/' || path === '' || path === '/home'
+}
+
 export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata {
   const desc = clip(homeDescription(locale))
   const inner = innerTitleKey(locale, pathname)
-  const isHome = pathname === '/' || pathname === ''
+  const isHomeShell = usesHomeMetadata(pathname)
 
-  const title: Metadata['title'] = isHome
+  const title: Metadata['title'] = isHomeShell
     ? { default: homeDefaultTitle(locale), template: '%s | Bint Saeed' }
     : { absolute: `${inner ?? 'Bint Saeed'} | Bint Saeed` }
 
-  const ogTitle = isHome ? HOME_OG_TITLE[locale] : `${inner ?? 'Bint Saeed'} | Bint Saeed`
+  const ogTitle = isHomeShell ? HOME_OG_TITLE[locale] : `${inner ?? 'Bint Saeed'} | Bint Saeed`
   const twTitle = ogTitle
   const twDesc = clip(
-    isHome
+    isHomeShell
       ? locale === 'en'
         ? 'A house devoted to the daughter in every woman—heritage forward through refined abayas, jewellery, and lifestyle. Abu Dhabi, UAE.'
         : desc
