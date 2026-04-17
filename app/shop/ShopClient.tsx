@@ -301,7 +301,7 @@ export default function ShopClient() {
                       alt={product.name}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover"
+                      className="pointer-events-none object-cover"
                       priority={false}
                     />
                   </div>

@@ -13,6 +13,7 @@ import CurrencySwitcher from './CurrencySwitcher'
 import MiniCart from './MiniCart'
 import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
 import {
+  ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
   ACCESSORY_IMAGE_NECKLACE,
   ACCESSORY_IMAGE_PHONE_CHARM,
 } from '@/data/accessories'
@@ -23,14 +24,16 @@ const searchableContent = [
   { title: 'Dresses', href: '/shop?category=dresses', category: 'Collection' },
   { title: 'Ready to Wear', href: '/shop?category=ready-to-wear', category: 'Collection' },
   { title: 'Accessories', href: '/accessories', category: 'Collection' },
-  { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
-  { title: 'Bracelets', href: '/accessories?type=bracelets', category: 'Accessories' },
-  { title: 'Earrings', href: '/accessories?type=earrings', category: 'Accessories' },
   {
     title: 'Abaya Charms',
     href: '/accessories?type=abaya-charms',
     category: 'Accessories',
   },
+  { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
+  { title: 'Earrings', href: '/accessories?type=earrings', category: 'Accessories' },
+  { title: 'Bracelets', href: '/accessories?type=bracelets', category: 'Accessories' },
+  { title: 'Bag Charms', href: '/accessories?type=bag-charms', category: 'Accessories' },
+  { title: 'Phone Charms', href: '/accessories?type=phone-charms', category: 'Accessories' },
   { title: 'About Us', href: '/about', category: 'About' },
   { title: 'Our Story', href: '/about', category: 'About' },
   { title: 'The Codes', href: '/the-codes', category: 'About' },
@@ -118,28 +121,28 @@ export default function Header() {
           title: 'Accessories',
           links: [
             { label: 'All Accessories', href: '/accessories' },
-            { label: 'Necklaces', href: '/accessories?type=necklaces' },
-            { label: 'Bracelets', href: '/accessories?type=bracelets' },
-            { label: 'Earrings', href: '/accessories?type=earrings' },
-            { label: 'Bag Charms', href: '/accessories?type=bag-charms' },
-            { label: 'Phone Charms', href: '/accessories?type=phone-charms' },
             {
               label: 'Abaya Charms',
               href: '/accessories?type=abaya-charms',
             },
+            { label: 'Necklaces', href: '/accessories?type=necklaces' },
+            { label: 'Earrings', href: '/accessories?type=earrings' },
+            { label: 'Bracelets', href: '/accessories?type=bracelets' },
+            { label: 'Bag Charms', href: '/accessories?type=bag-charms' },
+            { label: 'Phone Charms', href: '/accessories?type=phone-charms' },
           ],
         },
       ],
       features: [
         {
+          title: 'Abaya Charms',
+          href: '/accessories?type=abaya-charms',
+          image: ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
+        },
+        {
           title: 'Necklaces',
           href: '/accessories?type=necklaces',
           image: ACCESSORY_IMAGE_NECKLACE,
-        },
-        {
-          title: 'Phone Charms',
-          href: '/accessories?type=phone-charms',
-          image: ACCESSORY_IMAGE_PHONE_CHARM,
         },
       ],
     },
@@ -258,7 +261,7 @@ export default function Header() {
           <div className="relative flex items-center justify-between isolate">
             
             {/* Left: Navigation — z above centered logo so labels stay clickable */}
-            <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center gap-6 xl:flex">
+            <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center gap-6 lg:flex">
               {navItems.map((item) => (
                 <LocaleLink
                   key={item.label}
@@ -274,8 +277,8 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Compact layout: menu button shown below 2xl to prevent overlap */}
-            <div className="relative z-[55] flex w-10 shrink-0 justify-start xl:hidden">
+            {/* Compact layout: menu button only while horizontal nav is collapsed */}
+            <div className="relative z-[55] flex w-10 shrink-0 justify-start lg:hidden">
               <button
                 type="button"
                 className="p-2 text-white"
@@ -319,8 +322,8 @@ export default function Header() {
               </LocaleLink>
             </div>
 
-            {/* Right: Full utilities for very wide screens */}
-            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-5 xl:flex">
+            {/* Right: Full utilities when horizontal nav is visible */}
+            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-5 lg:flex">
               {/* Language & Currency */}
               <div className="flex items-center gap-4 pr-4 border-r border-white/20">
                 <CurrencySwitcher variant="light" showSymbol={false} />
@@ -380,8 +383,8 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Below xl: compact utility row (search, wishlist, cart, + lang/currency from md). */}
-            <div className="relative z-[55] flex w-10 shrink-0 items-center justify-end gap-1.5 sm:w-auto sm:gap-2 lg:gap-3 xl:hidden">
+            {/* Compact utility row when hamburger layout is active */}
+            <div className="relative z-[55] flex w-10 shrink-0 items-center justify-end gap-1.5 sm:w-auto sm:gap-2 lg:gap-3 lg:hidden">
               <div className="hidden md:flex items-center gap-2 pr-2 border-r border-white/15">
                 <CurrencySwitcher variant="light" showSymbol={false} />
                 <LanguageSwitcher variant="light" />
@@ -437,7 +440,7 @@ export default function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="pointer-events-auto absolute left-0 right-0 top-full z-[63] hidden -mt-1.5 pt-1.5 xl:block"
+                className="pointer-events-auto absolute left-0 right-0 top-full z-[63] hidden -mt-1.5 pt-1.5 lg:block"
               >
                 <div className="border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)]">
                   <div className="grid grid-cols-12 gap-10 px-6 py-8 lg:px-12">

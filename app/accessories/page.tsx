@@ -11,6 +11,7 @@ import {
   accessoryCategories,
   Accessory,
   ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
+  ACCESSORY_IMAGE_NECKLACE,
 } from '@/data/accessories'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
@@ -46,7 +47,7 @@ export default function AccessoriesPage() {
       {/* Hero Banner */}
       <section className="relative h-[50vh] md:h-[60vh] bg-brand-darkRed overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&q=90"
+          src={ACCESSORY_IMAGE_NECKLACE}
           alt="Accessories Collection"
           fill
           className="object-cover opacity-40"
@@ -86,9 +87,9 @@ export default function AccessoriesPage() {
                 {isRTL ? 'الإكسسوارات' : 'Accessories'}
               </h1>
               <p className="font-roboto text-base text-white/70 tracking-wide max-w-lg">
-                {isRTL 
-                  ? 'اكتشفي مجموعتنا الراقية من القلادات والأقراط والأساور وتعليقات الحقائب والهواتف وتعليقات العباءة.'
-                  : 'Discover our curated collection of necklaces, earrings, bracelets, bag charms, phone charms, and abaya charms.'}
+                {isRTL
+                  ? 'اكتشفي مجموعتنا الراقية من تعليقات العباءة والقلادات والأقراط والأساور وتعليقات الحقائب والهواتف.'
+                  : 'Discover our curated collection of abaya charms, necklaces, earrings, bracelets, bag charms, and phone charms.'}
               </p>
             </motion.div>
           </div>

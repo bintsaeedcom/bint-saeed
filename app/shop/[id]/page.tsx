@@ -224,7 +224,7 @@ export default function ProductPage() {
           >
             <div className="flex shrink-0 items-center gap-2 leading-none text-brand-darkRed/60">
               <LocaleLink
-                href="/"
+                href="/home"
                 className="hover:text-brand-dustyBlue transition-colors"
                 data-cursor-hover
               >

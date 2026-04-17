@@ -245,15 +245,14 @@ type CollectionCrossfadeProps = {
 /** Stacked crossfade via CSS opacity (avoids Framer on image stack — fewer runtime issues). */
 function CollectionCrossfadeSlideshow({ slides, altForIndex }: CollectionCrossfadeProps) {
   const [index, setIndex] = useState(0)
-  const [paused, setPaused] = useState(false)
 
   useEffect(() => {
-    if (paused || slides.length < 2) return
+    if (slides.length < 2) return
     const id = window.setInterval(() => {
       setIndex((i) => (i + 1) % slides.length)
     }, SLIDE_INTERVAL_MS)
     return () => window.clearInterval(id)
-  }, [paused, slides.length])
+  }, [slides.length])
 
   if (slides.length === 0) {
     return (
@@ -262,11 +261,7 @@ function CollectionCrossfadeSlideshow({ slides, altForIndex }: CollectionCrossfa
   }
 
   return (
-    <div
-      className="relative h-full w-full min-h-[12rem] overflow-hidden bg-[#0a0608]"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <div className="relative h-full w-full min-h-[12rem] overflow-hidden bg-[#0a0608] pointer-events-none">
       {slides.map((src, i) => (
         <div
           key={src}
@@ -739,7 +734,7 @@ function MagazineGrid() {
                   alt="Designed to carry you, wherever you are — Bint Saeed collection"
                   fill
                   sizes="(max-width: 768px) 100vw, 58vw"
-                  className="object-cover object-top transition-transform duration-1000 group-hover:scale-[1.03]"
+                  className="pointer-events-none object-cover object-top transition-transform duration-1000 group-hover:scale-[1.03]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed/80 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
