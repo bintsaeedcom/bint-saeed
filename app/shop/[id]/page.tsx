@@ -136,6 +136,19 @@ export default function ProductPage() {
   }
 
   const sizeOptions = getPdpSizeOptions(product.category, product.sizes)
+  useEffect(() => {
+    if (!sizeOptions.length) return
+    setSelectedSize((current) => (current && sizeOptions.includes(current) ? current : sizeOptions[0] ?? ''))
+  }, [sizeOptions, product.id])
+
+  useEffect(() => {
+    const availableColors = product.colors.map((color) => color.name)
+    if (!availableColors.length) return
+    setSelectedColor((current) =>
+      current && availableColors.includes(current) ? current : (availableColors[0] ?? '')
+    )
+  }, [product.colors, product.id])
+
   const personalisationSurcharge =
     customisationActive && customisationMessage.trim().length > 0 ? CUSTOMISATION_SURCHARGE_AED : 0
   const displayUnitAed = product.price + personalisationSurcharge

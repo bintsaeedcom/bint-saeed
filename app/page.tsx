@@ -295,7 +295,7 @@ export default function ComingSoonPage() {
             <FiInstagram className="w-6 h-6" />
           </a>
           <a
-            href="https://www.snapchat.com/add/bintsaeed"
+            href="https://www.snapchat.com/add/bintsaeed_brand"
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 text-white/40 hover:text-brand-dustyBlue transition-colors duration-300 cursor-pointer"
