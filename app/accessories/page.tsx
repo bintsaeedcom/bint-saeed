@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
@@ -15,6 +15,7 @@ import {
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { stripLocaleFromPathname, localizedPath } from '@/lib/i18n/routing'
 
 export default function AccessoriesPage() {
   const searchParams = useSearchParams()
@@ -297,6 +298,15 @@ function AccessoryCard({
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-10%' })
   const catInfo = accessoryCategories.find((c) => c.id === accessory.category)
+  const pathname = usePathname()
+  const router = useRouter()
+
+  const navigateToAccessoryPdp = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const { locale } = stripLocaleFromPathname(pathname || '/')
+    router.push(localizedPath(locale, `/accessories/${accessory.id}`))
+  }
 
   return (
     <motion.div
@@ -322,8 +332,8 @@ function AccessoryCard({
               className="pointer-events-none object-cover transition-all duration-700 group-hover:scale-105"
             />
             
-            {/* Quick Actions */}
-            <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} z-10 flex flex-col gap-2 opacity-0 transition-opacity group-hover:opacity-100`}>
+            {/* Quick Actions — above stretch link / quick bar */}
+            <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} z-[20] flex flex-col gap-2 opacity-0 transition-opacity group-hover:opacity-100`}>
               <FavoriteHeartButton
                 id={accessory.id}
                 name={isRTL ? accessory.nameAr : accessory.name}
@@ -335,17 +345,15 @@ function AccessoryCard({
               />
             </div>
 
-            {/* Quick Add Button */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+            {/* Opens product PDP (same slug as card link) */}
+            <div className="absolute bottom-0 left-0 right-0 z-[15] translate-y-full p-4 transition-transform duration-500 group-hover:translate-y-0">
               <button 
-                onClick={(e) => {
-                  e.preventDefault()
-                  // Quick add logic
-                }}
-                className={`w-full py-3 bg-brand-darkRed text-white font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+                type="button"
+                onClick={navigateToAccessoryPdp}
+                className={`flex w-full cursor-pointer items-center justify-center gap-2 bg-brand-darkRed py-3 font-roboto text-xs uppercase tracking-[0.15em] text-white hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               >
-                <FiShoppingBag className="w-4 h-4" />
-                {isRTL ? 'أضيفي للسلة' : 'Quick Add'}
+                <FiShoppingBag className="w-4 h-4 shrink-0" aria-hidden />
+                {isRTL ? 'عرض المنتج' : 'View product'}
               </button>
             </div>
 

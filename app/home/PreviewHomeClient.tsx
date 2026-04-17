@@ -371,7 +371,7 @@ function QuickShopCarousel() {
       <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-10 bg-gradient-to-l from-[#f7f4ef] to-transparent md:w-16 lg:w-20" />
 
       <div
-        className="overflow-hidden"
+        className="relative z-[3] overflow-hidden"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         onFocusCapture={() => setIsPaused(true)}
@@ -385,33 +385,56 @@ function QuickShopCarousel() {
             <LocaleLink
               key={`${product.id}-${idx}`}
               href={getProductHref(product)}
-              className="group mx-1.5 flex h-[24.6rem] w-[13.1rem] shrink-0 flex-col border border-brand-stone/25 bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:-translate-y-0.5 focus-visible:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:outline-none md:mx-2 md:h-[30rem] md:w-[16rem] lg:h-[31.5rem] lg:w-[16.8rem]"
+              className="group relative z-[2] mx-1.5 flex h-[25.35rem] w-[13.1rem] shrink-0 cursor-pointer flex-col border border-brand-stone/25 bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:-translate-y-0.5 focus-visible:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:outline-none md:mx-2 md:h-[30.85rem] md:w-[16rem] lg:h-[32.35rem] lg:w-[16.8rem]"
               data-cursor-hover
             >
-              <div className="relative h-[20.8rem] w-full overflow-hidden bg-[#f3f0ea] md:h-[25.7rem] lg:h-[27rem]">
+              {/* Images must not capture hits — stacked fill layers steal taps from the link otherwise */}
+              <div className="relative h-[20.95rem] w-full shrink-0 overflow-hidden bg-[#f3f0ea] md:h-[25.85rem] lg:h-[27.15rem]">
                 <Image
                   src={product.images[0]}
-                  alt={product.name}
+                  alt=""
                   fill
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
-                  className="object-cover object-top transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-visible:opacity-0 group-hover:scale-[1.03]"
+                  className="pointer-events-none object-cover object-top transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-visible:opacity-0 group-hover:scale-[1.03]"
+                  aria-hidden
                 />
                 <Image
                   src={product.images[1] || product.images[0]}
-                  alt={`${product.name} campaign`}
+                  alt=""
                   fill
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
-                  className="object-cover object-center opacity-0 transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-visible:opacity-100 group-hover:scale-[1.03]"
+                  className="pointer-events-none object-cover object-center opacity-0 transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-visible:opacity-100 group-hover:scale-[1.03]"
+                  aria-hidden
                 />
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#12080b]/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </div>
-              <div className="flex min-h-[3.8rem] flex-1 items-center border-t border-brand-stone/20 px-2.5 md:min-h-[4rem] md:px-3">
-                <p className="truncate font-roboto text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88">
-                  {product.name}
-                </p>
-                <p className="ml-auto pl-2 font-roboto text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed whitespace-nowrap">
-                  DHS. {product.price.toLocaleString()}
-                </p>
+              <div className="flex min-h-[4.25rem] flex-1 flex-col justify-center gap-1.5 border-t border-brand-stone/20 px-2.5 py-2 md:min-h-[4.5rem] md:gap-2 md:px-3 md:py-2.5">
+                <div className={`flex min-h-0 items-start gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <p className="min-w-0 flex-1 truncate font-roboto text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
+                    {product.name}
+                  </p>
+                  <p className="shrink-0 font-roboto text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed whitespace-nowrap leading-snug">
+                    DHS. {product.price.toLocaleString()}
+                  </p>
+                </div>
+                <div
+                  className={`flex flex-wrap items-center gap-1 ${isRTL ? 'justify-end' : ''}`}
+                  aria-label={isRTL ? 'ألوان متوفرة' : 'Available colours'}
+                >
+                  {product.colors.slice(0, 6).map((c) => (
+                    <span
+                      key={c.name}
+                      title={c.name}
+                      className="h-2 w-2 shrink-0 rounded-full border border-black/12 md:h-[9px] md:w-[9px]"
+                      style={{ backgroundColor: c.hex }}
+                    />
+                  ))}
+                  {product.colors.length > 6 ? (
+                    <span className="font-roboto text-[9px] tabular-nums tracking-wide text-brand-darkRed/45">
+                      +{product.colors.length - 6}
+                    </span>
+                  ) : null}
+                </div>
               </div>
             </LocaleLink>
           ))}
@@ -424,6 +447,7 @@ function QuickShopCarousel() {
           width: max-content;
           padding: 0 0.4rem;
           animation: quickShopMarquee 72s linear infinite;
+          touch-action: manipulation;
         }
         .quick-shop-track-rtl {
           animation-direction: reverse;

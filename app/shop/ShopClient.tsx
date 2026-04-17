@@ -289,7 +289,7 @@ export default function ShopClient() {
                 className={`absolute top-0 z-20 ${isRTL ? 'left-[8%]' : 'right-[8%]'}`}
               />
               <article className="relative z-0 mx-auto block w-[82%]">
-                <a
+                <LocaleLink
                   href={getProductHref(product)}
                   className="relative z-20 block aspect-[3/4] overflow-hidden bg-stone-200"
                   aria-label={`${isRTL ? 'فتح' : 'Open'} ${product.name}`}
@@ -309,16 +309,16 @@ export default function ShopClient() {
                   <span className="absolute bottom-5 left-1/2 z-[1] -translate-x-1/2 font-roboto text-[9px] uppercase tracking-[0.35em] text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                     {isRTL ? 'اكتشفي' : 'Discover'}
                   </span>
-                </a>
+                </LocaleLink>
                 <div className="mt-5 space-y-2 border-t border-black/5 pt-4">
                   <p className="font-roboto text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
                     {product.category}
                   </p>
-                  <a href={getProductHref(product)} className="inline-block relative z-20" data-cursor-hover>
+                  <LocaleLink href={getProductHref(product)} className="relative z-20 inline-block" data-cursor-hover>
                     <h2 className="font-rozha text-[1.35rem] font-normal leading-tight tracking-wide text-brand-darkRed transition-colors hover:text-brand-dustyBlue">
                       {product.name}
                     </h2>
-                  </a>
+                  </LocaleLink>
                   <p className="font-roboto text-sm tabular-nums tracking-wide text-neutral-600">
                     {formatPrice(product.price)}
                   </p>
@@ -332,13 +332,13 @@ export default function ShopClient() {
                       />
                     ))}
                   </div>
-                  <a
+                  <LocaleLink
                     href={getProductHref(product)}
-                    className="relative z-20 inline-flex items-center border-b border-brand-darkRed/40 pt-2 font-roboto text-[11px] uppercase tracking-[0.18em] text-brand-darkRed hover:text-brand-dustyBlue hover:border-brand-dustyBlue"
+                    className="relative z-20 inline-flex items-center border-b border-brand-darkRed/40 pt-2 font-roboto text-[11px] uppercase tracking-[0.18em] text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
                     data-cursor-hover
                   >
                     {isRTL ? 'عرض المنتج' : 'View product'}
-                  </a>
+                  </LocaleLink>
                 </div>
               </article>
             </li>

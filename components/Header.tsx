@@ -257,14 +257,14 @@ export default function Header() {
           <div className="relative" onMouseLeave={() => setActiveMegaMenu(null)}>
           <div className="relative flex items-center justify-between isolate">
             
-            {/* Left: Navigation - show full nav only on desktop widths */}
-            <nav className="hidden xl:flex items-center gap-6 flex-1 min-w-0 relative z-[60] pointer-events-auto flex-shrink-0">
+            {/* Left: Navigation — z above centered logo so labels stay clickable */}
+            <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center gap-6 xl:flex">
               {navItems.map((item) => (
                 <LocaleLink
                   key={item.label}
                   href={item.href}
                   onMouseEnter={() => setActiveMegaMenu(item.href)}
-                  className={`font-roboto text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 py-2 whitespace-nowrap flex-shrink-0 relative z-[60] ${
+                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-2 font-roboto text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 ${
                     activeMegaMenu === item.href ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
                   }`}
                   data-cursor-hover
@@ -301,8 +301,8 @@ export default function Header() {
               </LocaleLink>
             </div>
 
-            {/* Center: Logo — wide screens; scaled up to the practical max for the bar height */}
-            <div className="pointer-events-auto absolute left-1/2 top-1/2 z-[66] hidden w-max max-w-[min(720px,calc(100vw-32rem))] -translate-x-1/2 -translate-y-1/2 shrink-0 2xl:block">
+            {/* Center: Logo — keep z below nav (61) so Collections / Accessories links stay tappable */}
+            <div className="pointer-events-auto absolute left-1/2 top-1/2 z-[58] hidden w-max max-w-[min(720px,calc(100vw-32rem))] -translate-x-1/2 -translate-y-1/2 shrink-0 2xl:block">
               <LocaleLink href="/home" className="block" data-cursor-hover>
                 <Image
                   src="/logo.png"
@@ -320,7 +320,7 @@ export default function Header() {
             </div>
 
             {/* Right: Full utilities for very wide screens */}
-            <div className="hidden xl:flex items-center gap-5 flex-1 min-w-0 justify-end relative z-[60] pointer-events-auto flex-shrink-0">
+            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-5 xl:flex">
               {/* Language & Currency */}
               <div className="flex items-center gap-4 pr-4 border-r border-white/20">
                 <CurrencySwitcher variant="light" showSymbol={false} />
@@ -437,7 +437,7 @@ export default function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="pointer-events-auto absolute left-0 right-0 top-full z-[62] hidden -mt-1.5 pt-1.5 xl:block"
+                className="pointer-events-auto absolute left-0 right-0 top-full z-[63] hidden -mt-1.5 pt-1.5 xl:block"
               >
                 <div className="border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)]">
                   <div className="grid grid-cols-12 gap-10 px-6 py-8 lg:px-12">
@@ -476,10 +476,11 @@ export default function Header() {
                           <div className="relative aspect-[4/5] overflow-hidden bg-brand-stone/20">
                             <Image
                               src={feature.image}
-                              alt={feature.title}
+                              alt=""
                               fill
                               sizes="(max-width: 1536px) 20vw, 300px"
-                              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                              className="pointer-events-none object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                              aria-hidden
                             />
                           </div>
                           <div className="mt-2 flex items-center justify-between">
@@ -642,28 +643,73 @@ export default function Header() {
                 </button>
               </div>
 
-              {/* Navigation */}
-              <div className="flex-1 flex flex-col justify-center px-6">
-                {navItems.map((item, index) => (
-                  <motion.div
-                    key={item.label}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <LocaleLink
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="group flex items-center justify-between py-4 border-b border-white/10"
-                      data-cursor-hover
+              {/* Navigation + same destinations as desktop mega menu */}
+              <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-4">
+                {navItems.map((item, index) => {
+                  const mega = megaMenus[item.href]
+                  return (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.08 }}
+                      className="border-b border-white/10 py-3 last:border-b-0"
                     >
-                      <span className="font-rozha text-2xl text-white">
-                        {item.label}
-                      </span>
-                      <FiArrowRight className={`w-5 h-5 text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all ${isRTL ? 'rotate-180' : ''}`} />
-                    </LocaleLink>
-                  </motion.div>
-                ))}
+                      <LocaleLink
+                        href={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="group flex items-center justify-between py-3"
+                        data-cursor-hover
+                      >
+                        <span className="font-rozha text-2xl text-white">{item.label}</span>
+                        <FiArrowRight
+                          className={`h-5 w-5 text-white/50 transition-all group-hover:translate-x-1 group-hover:text-white ${isRTL ? 'rotate-180' : ''}`}
+                        />
+                      </LocaleLink>
+                      {mega ? (
+                        <div
+                          className={`space-y-5 pb-3 pt-1 ${isRTL ? 'text-right' : 'text-left'}`}
+                        >
+                          {mega.columns.map((col) => (
+                            <div key={col.title}>
+                              <p className="mb-2 font-roboto text-[10px] uppercase tracking-[0.22em] text-white/45">
+                                {col.title}
+                              </p>
+                              <div className="space-y-1">
+                                {col.links.map((link) => (
+                                  <LocaleLink
+                                    key={`${col.title}-${link.label}`}
+                                    href={link.href}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="block py-2 font-roboto text-[13px] text-white/85 transition-colors hover:text-brand-dustyBlue"
+                                    data-cursor-hover
+                                  >
+                                    {link.label}
+                                  </LocaleLink>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                          {mega.features.length > 0 ? (
+                            <div className="grid grid-cols-2 gap-2 pt-1">
+                              {mega.features.map((feature) => (
+                                <LocaleLink
+                                  key={feature.title}
+                                  href={feature.href}
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  className="rounded border border-white/15 px-2 py-2.5 text-center font-roboto text-[11px] leading-tight text-white/90 transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                                  data-cursor-hover
+                                >
+                                  {feature.title}
+                                </LocaleLink>
+                              ))}
+                            </div>
+                          ) : null}
+                        </div>
+                      ) : null}
+                    </motion.div>
+                  )
+                })}
               </div>
 
               {/* Footer */}
