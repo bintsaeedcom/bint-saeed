@@ -7,7 +7,7 @@ const homePageUrl = {
   loc: `${baseUrl}/home`,
   lastmod: new Date().toISOString(),
   changefreq: 'weekly' as const,
-  priority: '0.95',
+  priority: '1.0',
 }
 
 const allUrls = [

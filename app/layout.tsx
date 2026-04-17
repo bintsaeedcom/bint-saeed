@@ -419,11 +419,12 @@ const faqSchema = {
   ],
 }
 
-// WebPage JSON-LD (visible in page HTML; helps search engines understand the homepage entity)
+// WebPage JSON-LD — canonical public "home" entity is /home (brand-first title; URL signals for entity search).
 const webPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
-  '@id': 'https://bintsaeed.com/#seo',
+  '@id': 'https://bintsaeed.com/home#seo',
+  url: 'https://bintsaeed.com/home',
   name: 'Bint Saeed | Luxury Abaya House Abu Dhabi',
   description:
     'Bint Saeed (bintsaeed.com): luxury abaya house in Abu Dhabi devoted to the daughter in every woman—heritage-led abayas and modest ready-to-wear with Al Talli embroidery and Khous palm-frond weaving; lace, silk, chiffon, formal and office styles. Serves the UAE, GCC, and Middle East modest-fashion shoppers; worldwide where offered.',
@@ -556,8 +557,8 @@ const breadcrumbSchema = {
   itemListElement: [{
     '@type': 'ListItem',
     position: 1,
-    name: 'Home',
-    item: 'https://bintsaeed.com',
+    name: 'Bint Saeed',
+    item: 'https://bintsaeed.com/home',
   }],
 }
 

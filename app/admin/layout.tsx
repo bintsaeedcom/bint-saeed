@@ -38,7 +38,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="flex min-h-screen">
         <aside className="hidden w-56 shrink-0 flex-col border-r border-white/10 bg-[#12080b] md:flex">
           <div className="border-b border-white/10 p-6">
-            <p className="font-rozha text-xl text-brand-stone">Bint Saeed</p>
+            <Link href="/home" className="block rounded-md focus:outline-none focus-visible:ring-1 focus-visible:ring-white/25">
+              <p className="font-rozha text-xl text-brand-stone">Bint Saeed</p>
+            </Link>
             <p className="mt-1 font-roboto text-[10px] uppercase tracking-[0.2em] text-white/40">Owner</p>
           </div>
           <nav className="flex flex-1 flex-col gap-1 p-4">
