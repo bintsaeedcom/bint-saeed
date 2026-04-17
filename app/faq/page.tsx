@@ -6,198 +6,28 @@ import LocaleLink from '@/components/LocaleLink'
 import { FiArrowLeft, FiChevronDown, FiMail } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import type { AppLocale } from '@/lib/i18n/routing'
+import { FAQ_BY_LOCALE } from '@/lib/faq/faqByLocale'
 
-const faqData = {
-  en: {
-    title: 'Frequently Asked Questions',
-    subtitle: 'Find answers to common questions',
-    categories: [
-      {
-        name: 'About Bint Saeed',
-        questions: [
-          {
-            q: 'I often discover abayas through department stores, luxury multi-brand retailers, or large online marketplaces—where can I buy Bint Saeed officially?',
-            a: 'Bint Saeed is an independent UAE heritage-led abaya brand. Shop the official collection at bintsaeed.com with delivery across the UAE and GCC (see checkout for destinations). We are not affiliated with third-party retailers unless we announce an authorized stockist on our own channels—when in doubt, purchase only through this official site.',
-          },
-        ],
-      },
-      {
-        name: 'Orders & Shipping',
-        questions: [
-          {
-            q: 'How long does delivery take?',
-            a: 'UAE: 1-2 business days (Express) or 2-3 business days (Standard). GCC: 3-5 business days. International: 7-14 business days.'
-          },
-          {
-            q: 'Do you offer free shipping?',
-            a: 'Yes! We offer complimentary shipping on all orders over 500 AED within the UAE and GCC region.'
-          },
-          {
-            q: 'Can I track my order?',
-            a: 'Absolutely. Once your order ships, you will receive a tracking number via email and SMS to monitor your delivery.'
-          },
-          {
-            q: 'Do you ship internationally?',
-            a: 'Yes, we ship worldwide. International orders may be subject to customs duties and taxes, which are the responsibility of the customer.'
-          },
-        ]
-      },
-      {
-        name: 'Returns & Exchanges',
-        questions: [
-          {
-            q: 'What is your return policy?',
-            a: 'All sales are final and we do not offer refunds (some exclusions apply). Exchanges are accepted within 14 days for unworn, undamaged items with tags attached. Discounted and custom-made pieces are final sale.'
-          },
-          {
-            q: 'How do I initiate a return?',
-            a: 'Contact us at contact@bintsaeed.com with your order number. We will provide you with return instructions and a prepaid shipping label for UAE orders.'
-          },
-          {
-            q: 'Do you offer refunds?',
-            a: 'No. We do not offer refunds. If your item is eligible, we can process an exchange within 14 days under our exchange conditions.'
-          },
-        ]
-      },
-      {
-        name: 'Sizing & Fit',
-        questions: [
-          {
-            q: 'How do I find my size?',
-            a: 'Please refer to our Size Guide for detailed measurements. If you are between sizes, we recommend sizing up for a more comfortable fit.'
-          },
-          {
-            q: 'Do you offer custom sizing?',
-            a: 'Yes! We offer made-to-measure service. Simply add your custom length and any special notes when ordering, or contact us for personalized assistance.'
-          },
-          {
-            q: 'Can I alter my purchase?',
-            a: 'We offer alteration services for an additional fee. Please contact us within 7 days of receiving your order to arrange alterations.'
-          },
-        ]
-      },
-      {
-        name: 'Payment & Security',
-        questions: [
-          {
-            q: 'What payment methods do you accept?',
-            a: 'We accept all major credit cards (Visa, Mastercard, American Express), Apple Pay, and bank transfers for UAE customers.'
-          },
-          {
-            q: 'Is my payment information secure?',
-            a: 'Yes, all transactions are processed through Stripe, a PCI-DSS compliant payment processor. We never store your card details.'
-          },
-          {
-            q: 'Do you offer payment plans?',
-            a: 'Currently, we accept full payment at checkout. We are working on introducing payment plan options soon.'
-          },
-        ]
-      },
-    ],
-    contact: {
-      title: 'Still have questions?',
-      description: 'Our customer care team is here to help',
-    }
-  },
-  ar: {
-    title: 'الأسئلة الشائعة',
-    subtitle: 'اعثري على إجابات للأسئلة المتكررة',
-    categories: [
-      {
-        name: 'عن بِنت سعيد',
-        questions: [
-          {
-            q: 'غالباً أكتشف العبايات عبر المجمعات التجارية الكبرى أو متاجر التجزئة الفاخرة متعددة العلامات أو المنصات الإلكترونية الكبيرة—أين أشتري بِنت سعيد رسمياً؟',
-            a: 'بِنت سعيد علامة عبايات إماراتية مستقلة مرتبطة بالتراث. تسوّقي المجموعة الرسمية عبر bintsaeed.com مع التوصيل إلى الإمارات ودول الخليج (انظري الخيارات عند الدفع). لسنا تابعين لتجار تجزئة أو منصات خارجية ما لم نعلن عن شريك معتمد على قنواتنا—عند الشك، اشتري فقط عبر هذا الموقع الرسمي.',
-          },
-        ],
-      },
-      {
-        name: 'الطلبات والشحن',
-        questions: [
-          {
-            q: 'كم يستغرق التوصيل؟',
-            a: 'الإمارات: 1-2 يوم عمل (سريع) أو 2-3 أيام عمل (عادي). الخليج: 3-5 أيام عمل. دولياً: 7-14 يوم عمل.'
-          },
-          {
-            q: 'هل تقدمون شحن مجاني؟',
-            a: 'نعم! نقدم شحن مجاني لجميع الطلبات فوق 500 درهم داخل الإمارات ودول الخليج.'
-          },
-          {
-            q: 'هل يمكنني تتبع طلبي؟',
-            a: 'بالتأكيد. بمجرد شحن طلبك، ستتلقين رقم تتبع عبر البريد الإلكتروني والرسائل النصية.'
-          },
-          {
-            q: 'هل تشحنون دولياً؟',
-            a: 'نعم، نشحن لجميع أنحاء العالم. قد تخضع الطلبات الدولية لرسوم جمركية وضرائب.'
-          },
-        ]
-      },
-      {
-        name: 'الإرجاع والاستبدال',
-        questions: [
-          {
-            q: 'ما هي سياسة الإرجاع؟',
-            a: 'جميع المبيعات نهائية ولا نوفر استرداداً نقدياً (مع وجود بعض الاستثناءات). يُقبل الاستبدال خلال 14 يوماً للقطع غير المستخدمة وغير المتضررة مع البطاقات. القطع المخفّضة والمفصّلة نهائية.'
-          },
-          {
-            q: 'كيف أبدأ عملية الإرجاع؟',
-            a: 'تواصلي معنا على contact@bintsaeed.com مع رقم طلبك. سنوفر لك تعليمات الإرجاع وبطاقة شحن مدفوعة مسبقاً للطلبات داخل الإمارات.'
-          },
-          {
-            q: 'هل تقدمون استرداداً نقدياً؟',
-            a: 'لا، لا نوفر استرداداً نقدياً. إذا كانت القطعة مؤهلة، يمكننا تنفيذ استبدال خلال 14 يوماً وفق شروط الاستبدال.'
-          },
-        ]
-      },
-      {
-        name: 'المقاسات والقياس',
-        questions: [
-          {
-            q: 'كيف أجد مقاسي؟',
-            a: 'يرجى الرجوع إلى دليل المقاسات للحصول على قياسات تفصيلية. إذا كنتِ بين مقاسين، ننصح باختيار المقاس الأكبر.'
-          },
-          {
-            q: 'هل تقدمون مقاسات مخصصة؟',
-            a: 'نعم! نقدم خدمة التفصيل حسب الطلب. أضيفي طولك المخصص وأي ملاحظات خاصة عند الطلب.'
-          },
-          {
-            q: 'هل يمكن تعديل مشترياتي؟',
-            a: 'نقدم خدمات التعديل مقابل رسوم إضافية. تواصلي معنا خلال 7 أيام من استلام طلبك.'
-          },
-        ]
-      },
-      {
-        name: 'الدفع والأمان',
-        questions: [
-          {
-            q: 'ما طرق الدفع المقبولة؟',
-            a: 'نقبل جميع البطاقات الائتمانية الرئيسية (فيزا، ماستركارد، أمريكان إكسبريس)، أبل باي، والتحويلات البنكية.'
-          },
-          {
-            q: 'هل معلومات الدفع آمنة؟',
-            a: 'نعم، جميع المعاملات تتم عبر Stripe، معالج دفع متوافق مع معايير PCI-DSS. لا نخزن بيانات بطاقتك أبداً.'
-          },
-          {
-            q: 'هل تقدمون خطط دفع؟',
-            a: 'حالياً، نقبل الدفع الكامل عند الطلب. نعمل على تقديم خيارات الدفع بالتقسيط قريباً.'
-          },
-        ]
-      },
-    ],
-    contact: {
-      title: 'لا زلتِ لديك أسئلة؟',
-      description: 'فريق خدمة العملاء هنا للمساعدة',
-    }
-  }
+const FAQ_EMAIL_CTA: Record<AppLocale, string> = {
+  en: 'Email Us',
+  ar: 'راسلينا',
+  fr: 'Écrivez-nous',
+  it: 'Scrivici',
+  es: 'Escríbenos',
+  ru: 'Написать',
+  zh: '发送邮件',
+  de: 'E-Mail senden',
+  nl: 'E-mail ons',
+  pt: 'Enviar e-mail',
 }
 
 export default function FAQPage() {
   const { language, t, isRTL } = useLanguage()
   const [openCategory, setOpenCategory] = useState<number | null>(0)
   const [openQuestion, setOpenQuestion] = useState<string | null>(null)
-  
-  const data = faqData[language as 'en' | 'ar'] || faqData.en
+
+  const data = FAQ_BY_LOCALE[language as AppLocale] ?? FAQ_BY_LOCALE.en
 
   return (
     <div className={`min-h-screen pt-32 pb-20 bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -325,7 +155,7 @@ export default function FAQPage() {
               data-cursor-hover
             >
               <FiMail className="w-4 h-4" />
-              {isRTL ? 'راسلينا' : 'Email Us'}
+              {FAQ_EMAIL_CTA[language as AppLocale] ?? FAQ_EMAIL_CTA.en}
             </a>
             <a
               href="https://wa.me/971XXXXXXXXX"

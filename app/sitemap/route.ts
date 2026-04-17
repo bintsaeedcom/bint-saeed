@@ -1,44 +1,5 @@
 import { NextResponse } from 'next/server'
-import { isPrelaunch } from '@/lib/seo'
-
-const baseUrl = 'https://bintsaeed.com'
-
-const homePageUrl = {
-  loc: `${baseUrl}/home`,
-  lastmod: new Date().toISOString(),
-  changefreq: 'weekly' as const,
-  priority: '1.0',
-}
-
-const allUrls = [
-  { loc: baseUrl, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '1.0' },
-  {
-    loc: `${baseUrl}/llms.txt`,
-    lastmod: new Date().toISOString(),
-    changefreq: 'monthly',
-    priority: '0.6',
-  },
-  {
-    loc: `${baseUrl}/openapi.json`,
-    lastmod: new Date().toISOString(),
-    changefreq: 'monthly',
-    priority: '0.5',
-  },
-  homePageUrl,
-  { loc: `${baseUrl}/shop`, lastmod: new Date().toISOString(), changefreq: 'daily', priority: '0.9' },
-  { loc: `${baseUrl}/accessories`, lastmod: new Date().toISOString(), changefreq: 'daily', priority: '0.9' },
-  { loc: `${baseUrl}/about`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-  { loc: `${baseUrl}/the-codes`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.85' },
-  { loc: `${baseUrl}/heritage`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-  { loc: `${baseUrl}/heritage/al-talli`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
-  { loc: `${baseUrl}/heritage/khous`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
-  { loc: `${baseUrl}/contact`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.6' },
-  { loc: `${baseUrl}/faq`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.5' },
-  { loc: `${baseUrl}/size-guide`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.6' },
-  { loc: `${baseUrl}/privacy-policy`, lastmod: new Date().toISOString(), changefreq: 'yearly', priority: '0.3' },
-  { loc: `${baseUrl}/cookie-policy`, lastmod: new Date().toISOString(), changefreq: 'yearly', priority: '0.3' },
-  { loc: `${baseUrl}/terms`, lastmod: new Date().toISOString(), changefreq: 'yearly', priority: '0.3' },
-]
+import { getSitemapUrlEntries } from '@/lib/sitemapUrlList'
 
 function escapeXml(str: string) {
   return str
@@ -50,8 +11,7 @@ function escapeXml(str: string) {
 }
 
 export async function GET() {
-  // Prelaunch: homepage, machine-readable summaries, and /home for early indexing (public editorial shell).
-  const urls = isPrelaunch ? [allUrls[0], allUrls[1], allUrls[2], homePageUrl] : allUrls
+  const urls = getSitemapUrlEntries()
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls
@@ -61,7 +21,7 @@ ${urls
     <lastmod>${u.lastmod}</lastmod>
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
-  </url>`
+  </url>`,
   )
   .join('\n')}
 </urlset>`

@@ -1,6 +1,13 @@
 import type { Metadata } from 'next'
 import { products as staticProducts } from '@/data/products'
 import { getProductSlug, resolveProductIdentifier } from '@/lib/products/links'
+import { getServerLocale } from '@/lib/i18n/serverLocale'
+import {
+  buildProductMetaDescription,
+  productCanonicalUrl,
+  productHreflangLanguages,
+  productNotFoundMetadata,
+} from '@/lib/seo/productPageMeta'
 
 const SITE_URL = 'https://bintsaeed.com'
 
@@ -10,28 +17,29 @@ type ProductLayoutProps = {
 }
 
 export async function generateMetadata({ params }: ProductLayoutProps): Promise<Metadata> {
-  const { id } = await params
+  const [{ id }, locale] = await Promise.all([params, getServerLocale()])
   const product = resolveProductIdentifier(staticProducts, decodeURIComponent(id))
 
   if (!product) {
-    return {
-      title: 'Product Not Found | Bint Saeed',
-      description: 'The requested product could not be found in our current collection.',
-      robots: { index: false, follow: false },
-    }
+    return productNotFoundMetadata(locale)
   }
 
   const slug = getProductSlug(product)
-  const canonicalPath = `/shop/${slug}`
-  const canonicalUrl = `${SITE_URL}${canonicalPath}`
-  const description = `${product.description} ${product.fabric}`.slice(0, 200)
+  const canonicalUrl = productCanonicalUrl(locale, slug)
+  const description = buildProductMetaDescription(locale, {
+    name: product.name,
+    description: product.description,
+    fabric: product.fabric,
+  })
   const image = product.images[0] ?? '/og-image.png'
+  const imageUrl = image.startsWith('http') ? image : `${SITE_URL}${image}`
 
   return {
     title: `${product.name} | Bint Saeed`,
     description,
     alternates: {
-      canonical: canonicalPath,
+      canonical: canonicalUrl,
+      languages: productHreflangLanguages(slug),
     },
     openGraph: {
       title: `${product.name} | Bint Saeed`,
@@ -41,7 +49,7 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
       siteName: 'Bint Saeed',
       images: [
         {
-          url: image.startsWith('http') ? image : `${SITE_URL}${image}`,
+          url: imageUrl,
           alt: product.name,
         },
       ],
@@ -50,7 +58,7 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
       card: 'summary_large_image',
       title: `${product.name} | Bint Saeed`,
       description,
-      images: [image.startsWith('http') ? image : `${SITE_URL}${image}`],
+      images: [imageUrl],
       creator: '@bintsaeed_brand',
       site: '@bintsaeed_brand',
     },

@@ -1,10 +1,24 @@
 import type { Metadata } from 'next'
-import { translations, type Language } from './translations'
 import type { AppLocale } from './routing'
 import { localizedPath } from './routing'
 import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
+import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
+import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 
 const BASE = new URL('https://bintsaeed.com')
+
+const OG_HERO_IMAGE_ALT: Record<AppLocale, string> = {
+  en: 'Bint Saeed — luxury abaya house, Abu Dhabi',
+  ar: 'بِنت سعيد — دار عبايات فاخرة، أبوظبي',
+  fr: 'Bint Saeed — maison d’abayas de luxe, Abu Dhabi',
+  it: 'Bint Saeed — casa di abaya di lusso, Abu Dhabi',
+  es: 'Bint Saeed — casa de abayas de lujo, Abu Dhabi',
+  ru: 'Bint Saeed — дом роскошных абай, Абу‑Даби',
+  zh: 'Bint Saeed 奢华阿巴亚品牌，阿布扎比',
+  de: 'Bint Saeed — Luxus‑Abaya‑Haus, Abu Dhabi',
+  nl: 'Bint Saeed — luxe abayahuis, Abu Dhabi',
+  pt: 'Bint Saeed — casa de abayas de luxo, Abu Dhabi',
+}
 
 const OG_LOCALE: Record<AppLocale, string> = {
   en: 'en_AE',
@@ -19,90 +33,14 @@ const OG_LOCALE: Record<AppLocale, string> = {
   pt: 'pt_PT',
 }
 
-const HOME_OG_TITLE: Record<AppLocale, string> = {
-  en: 'Bint Saeed | Luxury Abaya House',
-  ar: 'بنت سعيد | دار عبايات فاخرة',
-  fr: 'Bint Saeed | Maison d’abayas de luxe',
-  it: 'Bint Saeed | Casa di abaya di lusso',
-  es: 'Bint Saeed | Casa de abayas de lujo',
-  ru: 'Bint Saeed | Дом роскошных абай',
-  zh: 'Bint Saeed | 奢华阿巴亚之家',
-  de: 'Bint Saeed | Luxus-Abaya-Haus',
-  nl: 'Bint Saeed | Luxe abayahuis',
-  pt: 'Bint Saeed | Casa de abayas de luxo',
-}
-
-const NL_HOME_DESC =
-  'Bint Saeed is een luxe abayahuis in Abu Dhabi, toegewijd aan het meisje in elke vrouw—erfenis vooruit door verfijnd ontwerp, sieraden en lifestyle. Al Talli-embroidery en Khous-vlechtwerk.'
-const PT_HOME_DESC =
-  'A Bint Saeed é uma casa de abayas de luxo em Abu Dhabi, dedicada à filha em cada mulher—património em frente com design refinado, joias e lifestyle. Bordado Al Talli e trançado Khous.'
-
-function getT(locale: AppLocale): typeof translations.en {
-  if (locale === 'nl' || locale === 'pt') return translations.en
-  return translations[locale as Exclude<Language, 'nl' | 'pt'>]
-}
-
-function homeDescription(locale: AppLocale): string {
-  if (locale === 'nl') return NL_HOME_DESC
-  if (locale === 'pt') return PT_HOME_DESC
-  return getT(locale).hero.description
-}
-
-function clip(s: string, max = 168): string {
-  if (s.length <= max) return s
-  return `${s.slice(0, max - 1).trimEnd()}…`
-}
-
 function keywordsFor(locale: AppLocale): string[] {
   return mergedMetaKeywordsForLocale(locale)
-}
-
-function innerTitleKey(locale: AppLocale, pathname: string): string | null {
-  const path = pathname.split('?')[0] || '/'
-  if (path === '/' || path === '' || path === '/home') return null
-  const t = getT(locale)
-  if (path.startsWith('/shop')) return t.shop.title
-  if (path.startsWith('/about')) return t.about.title
-  if (path.startsWith('/contact')) return t.footer.contactUs
-  if (path.startsWith('/the-codes')) return 'The Codes'
-  if (path.startsWith('/heritage')) return t.nav.heritage
-  if (path.startsWith('/accessories')) return t.nav.accessories
-  if (path.startsWith('/cart')) return t.nav.cart
-  if (path.startsWith('/checkout')) return t.nav.cart
-  if (path.startsWith('/wishlist')) return t.nav.wishlist
-  if (path.startsWith('/account')) return t.nav.account
-  if (path.startsWith('/register')) return t.nav.account
-  if (path.startsWith('/faq')) return t.footer.faq
-  if (path.startsWith('/size-guide')) return t.search.title
-  if (path.startsWith('/privacy-policy')) return 'Privacy'
-  if (path.startsWith('/cookie-policy')) return 'Cookies'
-  if (path.startsWith('/terms')) return 'Terms'
-  if (path.startsWith('/verify-email')) return t.nav.account
-  if (path.startsWith('/home/gate')) return 'Access verification'
-  if (path.startsWith('/home/blocked')) return 'Access restricted'
-  return t.shop.title
-}
-
-function homeDefaultTitle(locale: AppLocale): string {
-  const map: Record<AppLocale, string> = {
-    en: 'Bint Saeed | Luxury Abaya House in Abu Dhabi',
-    ar: 'بنت سعيد | دار عبايات فاخرة في أبوظبي',
-    fr: 'Bint Saeed | Maison d’abayas de luxe à Abou Dabi',
-    it: 'Bint Saeed | Casa di abaya di lusso ad Abu Dhabi',
-    es: 'Bint Saeed | Casa de abayas de lujo en Abu Dabi',
-    ru: 'Bint Saeed | Дом роскошных абай в Абу-Даби',
-    zh: 'Bint Saeed | 阿布扎比奢华阿巴亚之家',
-    de: 'Bint Saeed | Luxus-Abaya-Haus in Abu Dhabi',
-    nl: 'Bint Saeed | Luxe abayahuis in Abu Dhabi',
-    pt: 'Bint Saeed | Casa de abayas de luxo em Abu Dhabi',
-  }
-  return map[locale]
 }
 
 function aiOther(locale: AppLocale): Record<string, string> {
   const base = {
     'ai:brand': 'Bint Saeed',
-    'ai:category': 'Luxury Fashion, Abaya, Jewellery, Lifestyle',
+    'ai:category': 'Luxury abaya house; abayas, jewellery, lifestyle',
     'ai:location': 'Abu Dhabi, United Arab Emirates',
     'ai:materials': 'Natural stones, Khous weaving, Al Talli craftsmanship',
     'ai:offering': 'Abayas, jewellery, and curated lifestyle objects',
@@ -146,24 +84,17 @@ function usesHomeMetadata(pathname: string): boolean {
 }
 
 export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata {
-  const desc = clip(homeDescription(locale))
-  const inner = innerTitleKey(locale, pathname)
+  const meta = getResolvedRoutePageMeta(locale, pathname)
+  const desc = meta.description
   const isHomeShell = usesHomeMetadata(pathname)
 
   const title: Metadata['title'] = isHomeShell
-    ? { default: homeDefaultTitle(locale), template: '%s | Bint Saeed' }
-    : { absolute: `${inner ?? 'Bint Saeed'} | Bint Saeed` }
+    ? { default: meta.title, template: '%s | Bint Saeed' }
+    : { absolute: meta.title }
 
-  const ogTitle = isHomeShell ? HOME_OG_TITLE[locale] : `${inner ?? 'Bint Saeed'} | Bint Saeed`
+  const ogTitle = meta.ogTitle
   const twTitle = ogTitle
-  const twDesc = clip(
-    isHomeShell
-      ? locale === 'en'
-        ? 'A house devoted to the daughter in every woman—heritage forward through refined abayas, jewellery, and lifestyle. Abu Dhabi, UAE.'
-        : desc
-      : desc,
-    200,
-  )
+  const twDesc = clipMetaDescription(desc, 200)
 
   const canonicalUrl = new URL(localizedPath(locale, pathname), BASE).toString()
 
@@ -187,7 +118,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
     },
     openGraph: {
       title: ogTitle,
-      description: clip(desc, 200),
+      description: clipMetaDescription(desc, 200),
       url: canonicalUrl,
       siteName: 'Bint Saeed',
       locale: OG_LOCALE[locale],
@@ -199,10 +130,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
           width: 1920,
           height: 1080,
           type: 'image/jpeg',
-          alt:
-            locale === 'ar'
-              ? 'بنت سعيد — دار عبايات فاخرة، أبوظبي'
-              : 'Bint Saeed — luxury abaya house, Abu Dhabi',
+          alt: OG_HERO_IMAGE_ALT[locale],
         },
         {
           url: 'https://bintsaeed.com/og-image.png',

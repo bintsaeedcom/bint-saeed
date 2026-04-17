@@ -1,3 +1,5 @@
+import { HOME_META_DESCRIPTION_EN } from '@/lib/seo/publicMeta'
+
 export const translations = {
   en: {
     // Navigation
@@ -21,8 +23,7 @@ export const translations = {
       subtitle: 'New Collection 2026',
       title1: 'Timeless',
       title2: 'Elegance',
-      description:
-        'Bint Saeed is a luxury abaya house in Abu Dhabi devoted to the daughter in every woman—carrying heritage forward through refined design, jewellery, and curated lifestyle. Discover modern luxury shaped by Emirati craftsmanship.',
+      description: HOME_META_DESCRIPTION_EN,
       shopCollection: 'Shop Collection',
       discoverCollection: 'Discover the Collection',
       watchFilm: 'Watch Film',
