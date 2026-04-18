@@ -31,11 +31,11 @@ const CRAFT_VIDEO_BANDS = [
 const MOSAIC_IMAGES = [
   [
     {
-      src: '/craftsmanship/bint-saeed-cad-abaya-pattern.webp',
+      src: '/craftsmanship/bint-saeed-cad-abaya-pattern.png',
       alt: 'CAD abaya pattern on screen at Bint Saeed—technical lines for proportion and construction resolved before cutting; luxury development between Italy and Abu Dhabi',
     },
     {
-      src: '/craftsmanship/bint-saeed-pattern-drawing.webp',
+      src: '/craftsmanship/bint-saeed-pattern-drawing.png',
       alt: 'Abaya pattern drawing during development—proportion, balance, and construction studied before sampling and production | Bint Saeed luxury abaya house',
     },
     {
@@ -45,21 +45,21 @@ const MOSAIC_IMAGES = [
   ],
   [
     {
-      src: '/craftsmanship/bint-saeed-fabric-cutting.webp',
+      src: '/craftsmanship/bint-saeed-fabric-cutting.png',
       alt: 'Precision fabric cutting in the Bint Saeed atelier—controlled cutting for bespoke luxury abayas produced in Abu Dhabi, UAE',
     },
     {
-      src: '/craftsmanship/bint-saeed-thread-spools.webp',
+      src: '/craftsmanship/bint-saeed-thread-spools.png',
       alt: 'Premium tailoring threads for luxury abaya construction—materials chosen for durability, consistency, and refined finish | Bint Saeed',
     },
   ],
   [
     {
-      src: '/craftsmanship/bint-saeed-khous-braid.webp',
+      src: '/craftsmanship/bint-saeed-khous-braid.png',
       alt: 'Khous braid integrated into garment structure—Emirati palm-frond weaving referenced in contemporary luxury abaya design | Bint Saeed Abu Dhabi',
     },
     {
-      src: '/craftsmanship/bint-saeed-label-stitching.webp',
+      src: '/craftsmanship/bint-saeed-label-stitching.png',
       alt: 'Fine label stitching and hand finishing on a bespoke abaya—quality-controlled construction at the Bint Saeed atelier in Abu Dhabi',
     },
   ],
