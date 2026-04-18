@@ -1,4 +1,5 @@
 import type { Product } from '@/data/products'
+import { getProductSlug } from '@/lib/products/links'
 import { getPdpSizeOptions, categoryNeedsLengthCmDropdown } from '@/lib/shopProductOptions'
 
 export type ProductPdpContent = {
@@ -39,7 +40,7 @@ function colorList(product: Product): string {
 
 /** Split first fabric clause vs rest for composition placeholders (you will refine later). */
 function fabricOuterInner(product: Product): { outer: string; innerHint: string } {
-  const raw = product.fabric.trim()
+  const raw = (product.fabric ?? '').trim()
   const parts = raw.split(',').map((s) => s.trim()).filter(Boolean)
   if (parts.length <= 1) {
     return { outer: raw || '[Composition — outer / main — replace]', innerHint: '[Composition — lining / inner — replace]' }
@@ -112,7 +113,7 @@ function accessoryPlaceholderContent(product: Product): ProductPdpContent {
     ],
     fitAndSizeDetails: [
       `[Display / try-on — replace] How to judge scale when ordering remotely.`,
-      `[Size / scale — replace] One size or sizing notes: ${product.sizes.join(', ')}.`,
+      `[Size / scale — replace] One size or sizing notes: ${(product.sizes ?? []).join(', ')}.`,
       `[Fit / wear — replace] Intended contact points (lobe, wrist, etc.).`,
       `[Care when wearing — replace] Perfume, stacking, or removal notes.`,
     ],
@@ -121,16 +122,25 @@ function accessoryPlaceholderContent(product: Product): ProductPdpContent {
 
 /**
  * PDP copy source of truth.
- * — bs-002 keeps finalized reference copy.
+ * — bs-002 / royal-v-neck-kaftan slug keeps finalized reference copy.
  * — All other products use the same topic layout as that page; replace bracketed lines when ready.
  */
 export const productPdpContentById: Partial<Record<string, ProductPdpContent>> = {
   'bs-002': V_NECK_CAFTAN_CONTENT,
 }
 
+/** Slug fallback when id differs (merged catalog, deep links, or API shape). */
+export const productPdpContentBySlug: Partial<Record<string, ProductPdpContent>> = {
+  'royal-v-neck-kaftan': V_NECK_CAFTAN_CONTENT,
+}
+
 export function getProductPdpContent(product: Product): ProductPdpContent {
-  const configured = productPdpContentById[product.id]
-  if (configured) return configured
+  const byId = productPdpContentById[product.id]
+  if (byId) return byId
+
+  const slug = getProductSlug(product).toLowerCase()
+  const bySlug = productPdpContentBySlug[slug]
+  if (bySlug) return bySlug
 
   if (product.category === 'Accessories') {
     return accessoryPlaceholderContent(product)

@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback, useRef, ReactNode } from 'react'
 import {
   REQUEST_PRECISE_LOCATION_EVENT,
   ensureGpsHandledFromCache,
@@ -104,8 +104,9 @@ function getDeviceInfo() {
 export function AnalyticsProvider({ children }: { children: ReactNode }) {
   const [visitor, setVisitor] = useState<VisitorData | null>(null)
   const [isLive, setIsLive] = useState(true)
-  const [pageStartTime, setPageStartTime] = useState(Date.now())
-  const [currentPath, setCurrentPath] = useState('')
+  /** Refs avoid trackPageView ↔ visitor feedback loops (stable callback identity). */
+  const pageStartTimeRef = useRef(Date.now())
+  const currentPathRef = useRef('')
 
   // Initialize visitor on mount
   useEffect(() => {
@@ -328,45 +329,42 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
     return () => document.removeEventListener('visibilitychange', handleVisibility)
   }, [])
 
-  // Track page view
+  // Track page view — empty deps: logic uses refs + functional updates only (no visitor in deps).
   const trackPageView = useCallback((path: string, title: string) => {
     const now = Date.now()
-    
-    // Calculate time on previous page
-    if (currentPath && visitor) {
-      const timeOnPage = Math.round((now - pageStartTime) / 1000)
-      
-      setVisitor(prev => {
-        if (!prev) return prev
-        const updatedPageViews = prev.pageViews.map((pv, i) => {
-          if (i === prev.pageViews.length - 1) {
+    const prevPath = currentPathRef.current
+
+    setVisitor((prev) => {
+      if (!prev) return prev
+
+      let pageViews = prev.pageViews
+
+      if (prevPath && pageViews.length > 0) {
+        const timeOnPage = Math.round((now - pageStartTimeRef.current) / 1000)
+        pageViews = pageViews.map((pv, i) => {
+          if (i === pageViews.length - 1) {
             return { ...pv, timeOnPage }
           }
           return pv
         })
-        return { ...prev, pageViews: updatedPageViews }
-      })
-    }
+      }
 
-    setPageStartTime(now)
-    setCurrentPath(path)
-
-    setVisitor(prev => {
-      if (!prev) return prev
       const newPageView = {
         path,
         title,
         timestamp: new Date().toISOString(),
         timeOnPage: 0,
       }
+
       return {
         ...prev,
-        pageViews: [...prev.pageViews, newPageView],
+        pageViews: [...pageViews, newPageView],
       }
     })
 
-    // Page views are tracked locally only - no Slack spam
-  }, [currentPath, pageStartTime, visitor])
+    pageStartTimeRef.current = now
+    currentPathRef.current = path
+  }, [])
 
   // Track cart events
   const trackCartEvent = useCallback((action: 'add' | 'remove' | 'checkout', productId: string, productName: string) => {
@@ -386,7 +384,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
     })
 
     // Cart events are tracked locally only - no Slack spam
-  }, [visitor])
+  }, [])
 
   // Set contact info
   const setContactInfo = useCallback((info: { email?: string; phone?: string; name?: string }) => {

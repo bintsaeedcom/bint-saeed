@@ -11,7 +11,6 @@ import {
   accessoryCategories,
   Accessory,
   ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
-  ACCESSORY_IMAGE_NECKLACE,
 } from '@/data/accessories'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
@@ -47,11 +46,12 @@ export default function AccessoriesPage() {
       {/* Hero Banner */}
       <section className="relative h-[50vh] md:h-[60vh] bg-brand-darkRed overflow-hidden">
         <Image
-          src={ACCESSORY_IMAGE_NECKLACE}
+          src="/Webshop pictures/accessoiries/banner.png"
           alt="Accessories Collection"
           fill
           className="object-cover opacity-40"
           priority
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/50 to-transparent" />
         

@@ -70,7 +70,7 @@ export default function CookieConsent() {
           className="fixed bottom-0 left-0 right-0 z-[100] flex justify-center px-4 pb-6 pt-2 md:px-6 md:pb-8"
         >
           <div
-            style={{ pointerEvents: 'auto' }}
+            style={{ pointerEvents: 'none' }}
             className={`w-full max-w-lg overflow-hidden rounded-lg border border-brand-darkRed/60 bg-[#faf8f5] shadow-xl shadow-black/20 backdrop-blur-sm ${isRTL ? 'text-right' : 'text-center'}`}
           >
             {/* Logo */}
@@ -98,7 +98,7 @@ export default function CookieConsent() {
             <div className="pb-5">
               <LocaleLink
                 href="/cookie-policy"
-                className="font-roboto text-sm text-brand-darkRed/90 underline transition-colors hover:text-brand-darkRed"
+                className="pointer-events-auto font-roboto text-sm text-brand-darkRed/90 underline transition-colors hover:text-brand-darkRed"
               >
                 {t.cookie.learnMore}
               </LocaleLink>
@@ -111,7 +111,7 @@ export default function CookieConsent() {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="overflow-hidden border-t border-[#e8e2db]"
+                  className="pointer-events-auto overflow-hidden border-t border-[#e8e2db]"
                 >
                   <div className="space-y-3 px-6 py-4 text-left">
                     <div>
@@ -137,22 +137,25 @@ export default function CookieConsent() {
             {/* Three buttons - Loro Piana style */}
             <div className={`flex flex-col gap-2 p-6 pt-4 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
               <button
+                type="button"
                 onClick={() => setShowDetails(!showDetails)}
-                className="flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-roboto text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
+                className="pointer-events-auto flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-roboto text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
                 data-cursor-hover
               >
                 {t.cookie.cookiesSettings || t.cookie.showDetails}
               </button>
               <button
+                type="button"
                 onClick={rejectAll}
-                className="flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-roboto text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
+                className="pointer-events-auto flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-roboto text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
                 data-cursor-hover
               >
                 {t.cookie.essentialOnly}
               </button>
               <button
+                type="button"
                 onClick={acceptAll}
-                className="flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-roboto text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
+                className="pointer-events-auto flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-roboto text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
                 data-cursor-hover
               >
                 {t.cookie.acceptAll}

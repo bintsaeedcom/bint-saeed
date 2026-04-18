@@ -77,7 +77,6 @@ export default function Header() {
   const navItems = [
     { label: t.nav.collections, href: '/shop' },
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
-    { label: 'The Codes', href: '/the-codes' },
     { label: 'About Us', href: '/about' },
   ]
 
@@ -94,9 +93,7 @@ export default function Header() {
           title: 'Discover',
           links: [
             { label: 'New In', href: '/shop' },
-            { label: 'Best Sellers', href: '/shop?sort=popular' },
             { label: 'Shop All', href: '/shop' },
-            { label: 'Ready to Ship', href: '/shop?availability=ready' },
           ],
         },
         {
@@ -110,10 +107,7 @@ export default function Header() {
           ],
         },
       ],
-      features: [
-        { title: 'New Arrivals', href: '/shop', image: '/collection-section/67.png' },
-        { title: 'Chapter Edit', href: '/shop', image: '/collection-section/68.png' },
-      ],
+      features: [{ title: 'Enter Collection', href: '/shop', image: '/collection-section/67.png' }],
     },
     '/accessories': {
       columns: [
@@ -144,34 +138,6 @@ export default function Header() {
           href: '/accessories?type=necklaces',
           image: ACCESSORY_IMAGE_NECKLACE,
         },
-      ],
-    },
-    '/the-codes': {
-      columns: [
-        {
-          title: 'The Codes',
-          links: [
-            { label: 'The Codes', href: '/the-codes#the-codes' },
-            { label: 'Al Talli', href: '/the-codes#al-talli' },
-            { label: 'Khous', href: '/the-codes#khous' },
-            { label: 'Carnelian flower', href: '/the-codes#carnelian-flower' },
-            { label: 'Knotted lines of lineage', href: '/the-codes#knotted-lines-of-lineage' },
-            { label: 'The monogram', href: '/the-codes#the-monogram' },
-          ],
-        },
-        {
-          title: 'Explore',
-          links: [
-            { label: 'Our Story', href: '/about' },
-            { label: 'Chapter Edit', href: '/shop' },
-          ],
-        },
-      ],
-      features: [
-        { title: 'Al Talli', href: '/the-codes#al-talli', image: '/collection-section/2.PNG' },
-        { title: 'Khous', href: '/the-codes#khous', image: '/collection-section/3.JPG' },
-        { title: 'Carnelian flower', href: '/the-codes#carnelian-flower', image: '/collection-section/4.JPG' },
-        { title: 'The monogram', href: '/the-codes#the-monogram', image: '/collection-section/68.png' },
       ],
     },
     '/about': {
@@ -491,7 +457,7 @@ export default function Header() {
                               {feature.title}
                             </span>
                             <span className="font-roboto text-[11px] uppercase tracking-[0.1em] text-brand-darkRed/70 transition-colors group-hover:text-brand-dustyBlue">
-                              {activeMegaMenu === '/the-codes' ? 'Explore' : 'Shop Now'}
+                              Shop Now
                             </span>
                           </div>
                         </LocaleLink>

@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
+import AppBreadcrumb from '@/components/AppBreadcrumb'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
@@ -218,39 +219,13 @@ export default function ProductPage() {
       {/* Breadcrumb */}
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
         <div className="mx-auto min-w-0 max-w-[1280px] px-6 lg:px-10">
-          <nav
-            aria-label="Breadcrumb"
-            className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 font-montserrat text-[10px] uppercase tracking-[0.12em] sm:text-xs"
-          >
-            <div className="flex shrink-0 items-center gap-2 leading-none text-brand-darkRed/60">
-              <LocaleLink
-                href="/home"
-                className="hover:text-brand-dustyBlue transition-colors"
-                data-cursor-hover
-              >
-                Home
-              </LocaleLink>
-              <span className="select-none text-[11px] font-light text-brand-darkRed/30 sm:text-xs" aria-hidden>
-                /
-              </span>
-              <LocaleLink
-                href="/shop"
-                className="hover:text-brand-dustyBlue transition-colors"
-                data-cursor-hover
-              >
-                Shop
-              </LocaleLink>
-              <span className="select-none text-[11px] font-light text-brand-darkRed/30 sm:text-xs" aria-hidden>
-                /
-              </span>
-            </div>
-            <span
-              className="min-w-0 flex-1 truncate leading-snug text-brand-darkRed sm:flex-none sm:leading-normal sm:whitespace-normal sm:overflow-visible sm:text-clip"
-              title={product.name}
-            >
-              {product.name}
-            </span>
-          </nav>
+          <AppBreadcrumb
+            segments={[
+              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+              { label: isRTL ? 'المتجر' : 'Shop', href: '/shop' },
+              { label: product.name },
+            ]}
+          />
         </div>
       </div>
 
@@ -775,25 +750,15 @@ export default function ProductPage() {
                     }`}
                   />
                 </button>
-                <AnimatePresence>
-                  {openDropdown === 'description' && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="space-y-2 pb-5">
-                        {productDetails.map((item, idx) => (
-                          <p key={`pd-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
-                            • {item}
-                          </p>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {openDropdown === 'description' && (
+                  <div className="space-y-2 pb-5">
+                    {productDetails.map((item, idx) => (
+                      <p key={`pd-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                        • {item}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Size & Measurements */}
@@ -812,25 +777,15 @@ export default function ProductPage() {
                     }`}
                   />
                 </button>
-                <AnimatePresence>
-                  {openDropdown === 'size' && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="space-y-2 pb-5">
-                        {sizeAndMeasurementDetails.map((item, idx) => (
-                          <p key={`sz-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
-                            • {item}
-                          </p>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {openDropdown === 'size' && (
+                  <div className="space-y-2 pb-5">
+                    {sizeAndMeasurementDetails.map((item, idx) => (
+                      <p key={`sz-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                        • {item}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Shipping & Returns */}
@@ -849,36 +804,26 @@ export default function ProductPage() {
                     }`}
                   />
                 </button>
-                <AnimatePresence>
-                  {openDropdown === 'shipping' && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed pb-5 space-y-2">
-                        <p>• Free shipping is available within the UAE only.</p>
-                        <p>• In-stock styles dispatch within 1-3 business days for orders placed before 3:00 PM UAE time.</p>
-                        <p>• Pre-order styles dispatch on the date shown on the product page.</p>
-                        <p>• Mixed orders (in-stock + pre-order) dispatch together on the stated pre-order date.</p>
-                        <p>• All sales are final. We do not offer refunds, some exclusions apply.</p>
-                        <p>• Exchanges for in-stock items are accepted within 14 days for unworn, undamaged pieces with tags attached.</p>
-                        <p>• Discounted items cannot be returned or exchanged.</p>
-                        <p>• Pre-order items cannot be returned or exchanged.</p>
-                        <p>• Personalised items cannot be returned or exchanged.</p>
-                        <p>
-                          • For more information, please review our{' '}
-                          <LocaleLink href="/terms" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
-                            Refunds and Exchanges policy
-                          </LocaleLink>
-                          .
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {openDropdown === 'shipping' && (
+                  <div className="space-y-2 pb-5 font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed">
+                    <p>• Free shipping is available within the UAE only.</p>
+                    <p>• In-stock styles dispatch within 1-3 business days for orders placed before 3:00 PM UAE time.</p>
+                    <p>• Pre-order styles dispatch on the date shown on the product page.</p>
+                    <p>• Mixed orders (in-stock + pre-order) dispatch together on the stated pre-order date.</p>
+                    <p>• All sales are final. We do not offer refunds, some exclusions apply.</p>
+                    <p>• Exchanges for in-stock items are accepted within 14 days for unworn, undamaged pieces with tags attached.</p>
+                    <p>• Discounted items cannot be returned or exchanged.</p>
+                    <p>• Pre-order items cannot be returned or exchanged.</p>
+                    <p>• Personalised items cannot be returned or exchanged.</p>
+                    <p>
+                      • For more information, please review our{' '}
+                      <LocaleLink href="/terms" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
+                        Refunds and Exchanges policy
+                      </LocaleLink>
+                      .
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 

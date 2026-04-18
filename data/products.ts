@@ -170,22 +170,6 @@ export const products: Product[] = [
     category: 'Abayas',
   },
   {
-    id: 'ab-003',
-    slug: 'khous-classic-abaya',
-    name: 'Khous Classic Abaya',
-    price: 1200,
-    description: 'Classic Khous-line abaya in silk crepe with side slits and hand-finished hems.',
-    fabric: 'Silk crepe, silk habotai lining',
-    measurements: 'Length: 142cm (size M).',
-    images: fiveApparelGalleryImages(2),
-    colors: [
-      { name: 'Ivory', hex: '#f4f0e8' },
-      { name: 'Espresso', hex: '#3c2f2f' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    category: 'Abayas',
-  },
-  {
     id: 'ab-004',
     slug: 'khous-structured-blazer-abaya',
     name: 'Khous Structured Blazer Abaya',
@@ -240,14 +224,8 @@ export const products: Product[] = [
       'Crepe-chiffon V-neck kaftan with fluid drape, inner dress, scarf detail, and signature gold emblem.',
     fabric: 'Italian Silk, Crystal embellishments, Pearl buttons',
     measurements: 'Oversized fit. One size fits most. Length: 145cm.',
-    images: [
-      '/Webshop%20pictures/Caftans/IMG_2385.HEIC',
-      '/Webshop%20pictures/Caftans/IMG_2394.HEIC',
-      '/Webshop%20pictures/Caftans/IMG_2471.HEIC',
-      '/Webshop%20pictures/Caftans/IMG_2519.HEIC',
-      '/Webshop%20pictures/Caftans/IMG_2578.HEIC',
-      '/Webshop%20pictures/Caftans/IMG_2522.MOV',
-    ],
+    /* HEIC/MOV files in /public do not load in Chromium/Firefox; use web JPGs via shared gallery helper. */
+    images: fiveApparelGalleryImages(2),
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },

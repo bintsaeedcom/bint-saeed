@@ -207,7 +207,7 @@ function ScrollMaskImage({
     <div ref={ref} className={`relative h-full w-full overflow-hidden ${className}`}>
       <motion.div
         style={reduceMotion ? undefined : { clipPath }}
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0"
       >
         <motion.div style={reduceMotion ? undefined : { y: imageY, scale: imageScale }} className="relative h-full w-full">
           <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
@@ -501,15 +501,15 @@ function HeroSection() {
         />
         {/* Editorial: soft left read-path + gentle vignette (magazine spread legibility) */}
         <div
-          className="absolute inset-0 bg-gradient-to-r from-[#14020d]/85 via-[#1a0008]/45 to-transparent md:from-[#14020d]/80 md:via-[#1a0008]/35"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#14020d]/85 via-[#1a0008]/45 to-transparent md:from-[#14020d]/80 md:via-[#1a0008]/35"
           aria-hidden
         />
         <div
-          className="absolute inset-0 bg-gradient-to-t from-[#0d0004]/75 via-transparent to-[#1a0008]/25"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d0004]/75 via-transparent to-[#1a0008]/25"
           aria-hidden
         />
         <div
-          className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_70%_40%,transparent_0%,rgba(13,0,4,0.35)_100%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_70%_40%,transparent_0%,rgba(13,0,4,0.35)_100%)]"
           aria-hidden
         />
         {/* Paper / print grain */}
@@ -736,7 +736,7 @@ function MagazineGrid() {
                   sizes="(max-width: 768px) 100vw, 58vw"
                   className="pointer-events-none object-cover object-top transition-transform duration-1000 group-hover:scale-[1.03]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed/80 via-transparent to-transparent" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-darkRed/80 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
                   <span className="mb-3 block font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">
                     Chapter I
@@ -764,7 +764,7 @@ function MagazineGrid() {
             >
               <LocaleLink href="/shop" className="group block overflow-hidden bg-brand-dustyBlue transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1" data-cursor-hover>
                 <div className="relative aspect-square">
-                  <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
+                  <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                     <CollectionCrossfadeSlideshow
                       slides={SUMMER_ELEGANCE_SLIDES}
                       altForIndex={(i) =>
@@ -786,7 +786,7 @@ function MagazineGrid() {
             >
               <LocaleLink href="/shop" className="group block overflow-hidden bg-brand-rose transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1" data-cursor-hover>
                 <div className="relative aspect-square">
-                  <div className="absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
+                  <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                     <CollectionCrossfadeSlideshow
                       slides={ESSENTIALS_SLIDES}
                       altForIndex={(i) => `Bint Saeed collection — ${i + 1}`}
@@ -814,9 +814,9 @@ function ColorBlockSection() {
   return (
     <section ref={ref} className="relative flex min-h-screen items-center overflow-hidden">
       <SectionStripes variant="bold" />
-      <div className="absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#eeece4_38%,#e3dfd3_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_78%_at_16%_14%,rgba(146,170,193,0.18)_0%,transparent_52%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_85%_86%,rgba(193,144,134,0.12)_0%,transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#eeece4_38%,#e3dfd3_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_78%_at_16%_14%,rgba(146,170,193,0.18)_0%,transparent_52%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_85%_86%,rgba(193,144,134,0.12)_0%,transparent_60%)]" />
 
       <DecorativeCorners color="dustyBlue" />
 
@@ -917,7 +917,7 @@ function EditorialSplit() {
           className="relative flex min-h-[60vh] items-center justify-center overflow-hidden lg:min-h-screen"
         >
           <div
-            className="absolute inset-0 bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]"
             aria-hidden
           />
           <div className="relative z-[1] flex w-full items-center justify-center px-10 py-16">
@@ -930,7 +930,7 @@ function EditorialSplit() {
               priority={false}
             />
           </div>
-          <div className="absolute top-0 left-0 z-[2] h-full w-1 bg-gradient-to-b from-brand-dustyBlue via-brand-dustyBlue/50 to-transparent" />
+          <div className="pointer-events-none absolute top-0 left-0 z-[2] h-full w-1 bg-gradient-to-b from-brand-dustyBlue via-brand-dustyBlue/50 to-transparent" />
         </motion.div>
 
         {/* Right - Content with elegant gradient */}
@@ -943,8 +943,8 @@ function EditorialSplit() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            <div className="absolute top-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue/40 to-transparent" />
-            <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue/40 to-transparent" />
+            <div className="pointer-events-none absolute top-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue/40 to-transparent" />
+            <div className="pointer-events-none absolute top-0 right-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue/40 to-transparent" />
           </motion.div>
           
           <motion.div
@@ -999,8 +999,8 @@ function CollectionStrip() {
     <section className="bg-brand-darkRed py-6 overflow-hidden relative">
       <SectionStripes variant="hero" />
       {/* Dusty blue accent lines */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
+      <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
       
       <motion.div
         animate={{ x: ['0%', '-50%'] }}
@@ -1046,11 +1046,11 @@ function CreatedForYouSection() {
   return (
     <section ref={ref} className="relative overflow-hidden py-24 md:py-36 lg:py-40">
       <SectionStripes variant="bold" />
-      <div className="absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#ebe8df_40%,#e2ded2_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_12%_10%,rgba(146,170,193,0.16)_0%,transparent_48%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_86%_82%,rgba(193,144,134,0.10)_0%,transparent_60%)]" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/25 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#ebe8df_40%,#e2ded2_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_12%_10%,rgba(146,170,193,0.16)_0%,transparent_48%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_86%_82%,rgba(193,144,134,0.10)_0%,transparent_60%)]" />
+      <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/25 to-transparent" />
 
       <DecorativeCorners color="dustyBlue" />
 

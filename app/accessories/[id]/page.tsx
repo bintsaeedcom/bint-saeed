@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
+import AppBreadcrumb from '@/components/AppBreadcrumb'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
@@ -143,44 +144,17 @@ export default function AccessoryDetailPage() {
       {/* Breadcrumb */}
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
         <div className="container mx-auto min-w-0 px-6 lg:px-12">
-          <nav
-            aria-label="Breadcrumb"
-            className={`flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 font-roboto text-[10px] uppercase tracking-[0.12em] sm:text-xs ${isRTL ? 'flex-row-reverse' : ''}`}
-          >
-            <div
-              className={`flex shrink-0 flex-wrap items-center gap-2 leading-none text-brand-clayRed/50 ${isRTL ? 'flex-row-reverse' : ''}`}
-            >
-              <LocaleLink href="/" className="hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
-                {isRTL ? 'الرئيسية' : 'Home'}
-              </LocaleLink>
-              <span className="select-none text-[11px] font-light text-brand-clayRed/30 sm:text-xs" aria-hidden>
-                /
-              </span>
-              <LocaleLink href="/accessories" className="hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
-                {isRTL ? 'الإكسسوارات' : 'Accessories'}
-              </LocaleLink>
-              <span className="select-none text-[11px] font-light text-brand-clayRed/30 sm:text-xs" aria-hidden>
-                /
-              </span>
-              <LocaleLink
-                href={`/accessories?type=${accessory.category}`}
-                className="max-w-[10rem] truncate hover:text-brand-dustyBlue transition-colors sm:max-w-none sm:overflow-visible sm:whitespace-normal"
-                title={isRTL ? categoryInfo?.nameAr : categoryInfo?.name}
-                data-cursor-hover
-              >
-                {isRTL ? categoryInfo?.nameAr : categoryInfo?.name}
-              </LocaleLink>
-              <span className="select-none text-[11px] font-light text-brand-clayRed/30 sm:text-xs" aria-hidden>
-                /
-              </span>
-            </div>
-            <span
-              className="min-w-0 flex-1 truncate leading-snug text-brand-darkRed sm:flex-none sm:leading-normal sm:whitespace-normal sm:overflow-visible sm:text-clip"
-              title={isRTL ? accessory.nameAr : accessory.name}
-            >
-              {isRTL ? accessory.nameAr : accessory.name}
-            </span>
-          </nav>
+          <AppBreadcrumb
+            segments={[
+              { label: isRTL ? 'الرئيسية' : 'Home', href: '/' },
+              { label: isRTL ? 'الإكسسوارات' : 'Accessories', href: '/accessories' },
+              {
+                label: (isRTL ? categoryInfo?.nameAr : categoryInfo?.name) ?? '',
+                href: `/accessories?type=${accessory.category}`,
+              },
+              { label: isRTL ? accessory.nameAr : accessory.name },
+            ].filter((s) => s.label.length > 0)}
+          />
         </div>
       </div>
 

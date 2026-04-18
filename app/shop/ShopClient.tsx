@@ -3,6 +3,7 @@
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
+import AppBreadcrumb from '@/components/AppBreadcrumb'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
@@ -140,25 +141,20 @@ export default function ShopClient() {
     <div className={`min-h-screen bg-stone-100 text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
       <header className="border-b border-black/5 bg-stone-50">
         <div className="mx-auto max-w-[1400px] px-6 pb-12 pt-10 md:px-10 md:pb-16 md:pt-14 lg:px-14">
-          <nav className="mb-10 flex flex-wrap items-center gap-x-2 font-roboto text-[10px] uppercase tracking-[0.28em] text-neutral-500">
-            <LocaleLink
-              href="/about"
-              className="transition-colors hover:text-brand-dustyBlue"
-              data-cursor-hover
-            >
-              {isRTL ? 'الرئيسية' : 'The House'}
-            </LocaleLink>
-            <span aria-hidden className="text-neutral-400">
-              /
-            </span>
-            <span className="text-neutral-900">{isRTL ? 'المجموعة' : 'Ready-to-wear'}</span>
-          </nav>
+          <AppBreadcrumb
+            variant="muted"
+            className="mb-10"
+            segments={[
+              { label: isRTL ? 'التشكيلة' : 'COLLECTION', href: '/about' },
+              { label: isRTL ? 'المجموعة' : 'Ready-to-wear' },
+            ]}
+          />
 
           <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
             COLLECTION
           </p>
           <h1 data-document-h1="true" className="font-rozha text-4xl font-normal leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl">
-            {isRTL ? 'الفصل ٢٦' : 'Chapter 26'}
+            {isRTL ? 'الفصل ١' : 'Chapter 1'}
           </h1>
           <p className="mt-6 max-w-md font-roboto text-sm leading-relaxed tracking-wide text-neutral-600">
             {isRTL
@@ -277,7 +273,7 @@ export default function ShopClient() {
       </div>
 
       <section className="mx-auto max-w-[1400px] px-6 py-14 md:px-10 md:py-20 lg:px-14">
-        <ul className="grid list-none grid-cols-1 gap-y-14 p-0 sm:grid-cols-2 sm:gap-x-7 sm:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-18">
+        <ul className="grid list-none grid-cols-2 gap-x-4 gap-y-12 p-0 sm:gap-x-7 sm:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-18">
           {sortedProducts.map((product) => (
             <li
               key={product.id}
@@ -288,7 +284,7 @@ export default function ShopClient() {
                 href={getProductHref(product)}
                 className={`absolute top-0 z-20 ${isRTL ? 'left-[8%]' : 'right-[8%]'}`}
               />
-              <article className="relative z-0 mx-auto block w-[82%]">
+              <article className="relative z-0 mx-auto block w-full lg:w-[82%]">
                 <LocaleLink
                   href={getProductHref(product)}
                   className="relative z-20 block aspect-[3/4] overflow-hidden bg-stone-200"
@@ -300,7 +296,7 @@ export default function ShopClient() {
                       src={product.images[0]}
                       alt={product.name}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 1024px) 50vw, 33vw"
                       className="pointer-events-none object-cover"
                       priority={false}
                     />
