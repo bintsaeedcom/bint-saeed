@@ -165,14 +165,16 @@ function ScreenVideo({
   src,
   ariaLabel,
   introHandoff,
+  className = '',
 }: {
   src: string
   ariaLabel: string
   /** Hero only: dark + dusty-blue end fade so it does not blend into the cream intro strip below */
   introHandoff?: boolean
+  className?: string
 }) {
   return (
-    <section className="bs-full-bleed overflow-hidden bg-[#060304]">
+    <section className={`bs-full-bleed relative overflow-hidden bg-[#060304] ${className}`}>
       <div className="pointer-events-none absolute inset-0 z-[4] opacity-90">
         <DecorativeCorners tone="dustyBlue" />
       </div>
@@ -308,6 +310,46 @@ function ProsePhase({ children, className = '' }: { children: React.ReactNode; c
   )
 }
 
+const STICKY_BELOW_HEADER = 'top-[92px] lg:top-[100px]'
+
+/**
+ * Narrative “deck”: tall scroll runway + sticky panel that the next section slides over.
+ * Scroll progress fades the panel so it feels like it disappears under the following layer.
+ */
+function StickyScrollDeck({
+  zIndex,
+  overlap,
+  minDeckHeight = 'min-h-[118vh]',
+  children,
+}: {
+  zIndex: number
+  overlap: boolean
+  minDeckHeight?: string
+  children: React.ReactNode
+}) {
+  const deckRef = useRef<HTMLDivElement>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: deckRef,
+    offset: ['start start', 'end end'],
+  })
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.48, 0.72, 1], [1, 1, 0.42, 0])
+
+  return (
+    <div
+      ref={deckRef}
+      className={`relative ${minDeckHeight} ${overlap ? '-mt-24 md:-mt-32 lg:-mt-36' : ''}`}
+      style={{ zIndex }}
+    >
+      <div className={`sticky ${STICKY_BELOW_HEADER}`} style={{ zIndex }}>
+        <motion.div className="relative" style={reduceMotion ? undefined : { opacity: contentOpacity }}>
+          {children}
+        </motion.div>
+      </div>
+    </div>
+  )
+}
+
 /** Full-bleed atmospheric band behind phase — “overflow” beyond text column */
 function PhaseAtmosphere({
   variant,
@@ -342,7 +384,7 @@ export default function CraftsmanshipClient() {
   const { isRTL } = useLanguage()
 
   return (
-    <div className="relative min-h-screen w-full min-w-0 overflow-x-clip bg-[#faf9f7]">
+    <div className="relative isolate min-h-screen w-full min-w-0 bg-[#faf9f7]">
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_12%_10%,rgba(146,170,193,0.12)_0%,transparent_48%)]"
         aria-hidden
@@ -354,11 +396,13 @@ export default function CraftsmanshipClient() {
 
       {/* First band sits directly under fixed header — page padding lives in LayoutWrapper only */}
       <ScreenVideo
+        className="z-[2]"
         src={CRAFT_VIDEO_BANDS[0].src}
         ariaLabel={CRAFT_VIDEO_BANDS[0].ariaLabel}
         introHandoff
       />
 
+      <StickyScrollDeck zIndex={10} overlap={false} minDeckHeight="min-h-[105vh]">
       {/* Intro — wide editorial header aligned with home luxury rhythm */}
       <section className="relative border-b border-brand-stone/15 bg-[linear-gradient(180deg,#faf9f7_0%,#f5f1ea_100%)] px-6 pb-16 pt-16 md:pb-24 md:pt-24 lg:px-16">
         <SectionStripesSoft />
@@ -387,8 +431,10 @@ export default function CraftsmanshipClient() {
           </div>
         </div>
       </section>
+      </StickyScrollDeck>
 
       {/* Phase I — overflowing band + split columns (approved copy unchanged) */}
+      <StickyScrollDeck zIndex={20} overlap>
       <PhaseAtmosphere variant="ivory">
         <article
           className="relative px-6 py-20 md:py-28 lg:px-16 lg:py-36"
@@ -433,12 +479,20 @@ export default function CraftsmanshipClient() {
       </PhaseAtmosphere>
 
       <ParallaxMosaic items={[...MOSAIC_IMAGES[0]]} layout="three" />
+      </StickyScrollDeck>
 
-      <PhaseDivider />
+      <div className="relative z-[22] bg-[#faf9f7]">
+        <PhaseDivider />
+      </div>
 
-      <ScreenVideo src={CRAFT_VIDEO_BANDS[1].src} ariaLabel={CRAFT_VIDEO_BANDS[1].ariaLabel} />
+      <ScreenVideo
+        className="z-[25]"
+        src={CRAFT_VIDEO_BANDS[1].src}
+        ariaLabel={CRAFT_VIDEO_BANDS[1].ariaLabel}
+      />
 
       {/* Phase II */}
+      <StickyScrollDeck zIndex={30} overlap>
       <PhaseAtmosphere variant="stone">
         <article
           className="relative px-6 py-20 md:py-28 lg:px-16 lg:py-36"
@@ -495,12 +549,20 @@ export default function CraftsmanshipClient() {
       </PhaseAtmosphere>
 
       <ParallaxMosaic items={[...MOSAIC_IMAGES[1]]} layout="two" />
+      </StickyScrollDeck>
 
-      <PhaseDivider />
+      <div className="relative z-[32] bg-[#faf9f7]">
+        <PhaseDivider />
+      </div>
 
-      <ScreenVideo src={CRAFT_VIDEO_BANDS[2].src} ariaLabel={CRAFT_VIDEO_BANDS[2].ariaLabel} />
+      <ScreenVideo
+        className="z-[35]"
+        src={CRAFT_VIDEO_BANDS[2].src}
+        ariaLabel={CRAFT_VIDEO_BANDS[2].ariaLabel}
+      />
 
       {/* Phase III */}
+      <StickyScrollDeck zIndex={40} overlap>
       <PhaseAtmosphere variant="noir">
         <article
           className="relative px-6 py-20 pb-28 md:py-28 md:pb-36 lg:px-16 lg:py-36"
@@ -550,15 +612,21 @@ export default function CraftsmanshipClient() {
       </PhaseAtmosphere>
 
       <ParallaxMosaic items={[...MOSAIC_IMAGES[2]]} layout="twoWide" />
+      </StickyScrollDeck>
 
-      <section className="relative overflow-hidden border-t border-brand-stone/25 bg-[linear-gradient(185deg,#2a0012_0%,#1a0008_55%,#120006_100%)] px-6 py-24 md:py-32">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(146,170,193,0.15)_0%,transparent_55%)]" aria-hidden />
+      <section className="relative z-[45] overflow-hidden border-t border-brand-stone/35 bg-[linear-gradient(168deg,#faf9f7_0%,#ebe4d8_42%,#ddd5c9_100%)] px-6 py-24 md:py-32">
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_0%,rgba(146,170,193,0.14)_0%,transparent_58%)]"
+          aria-hidden
+        />
         <DecorativeCorners tone="dustyBlue" />
         <div className="relative mx-auto flex max-w-lg flex-col items-center text-center">
-          <p className="mb-10 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] tracking-[0.02em] text-white/95">Explore the collection</p>
+          <p className="mb-10 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] tracking-[0.02em] text-brand-darkRed">
+            Explore the collection
+          </p>
           <LocaleLink
             href="/shop"
-            className="inline-flex items-center gap-3 rounded-sm border border-white/25 bg-white/10 px-10 py-4 font-roboto text-xs uppercase tracking-[0.22em] text-white backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:bg-brand-dustyBlue hover:text-[#1a0008]"
+            className="inline-flex items-center gap-3 rounded-sm border border-brand-darkRed/40 bg-brand-darkRed/[0.06] px-10 py-4 font-roboto text-xs uppercase tracking-[0.22em] text-brand-darkRed shadow-[0_18px_48px_-28px_rgba(42,0,18,0.22)] transition-colors hover:border-brand-dustyBlue hover:bg-brand-dustyBlue hover:text-[#faf9f7]"
             data-cursor-hover
           >
             View Collection

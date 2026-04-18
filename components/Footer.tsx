@@ -3,8 +3,7 @@
 import LocaleLink from '@/components/LocaleLink'
 import { motion } from 'framer-motion'
 import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter } from 'react-icons/fa6'
-import { FiArrowRight, FiGlobe, FiTruck, FiClock, FiHeart } from 'react-icons/fi'
-import SubscribeForm from './SubscribeForm'
+import { FiGlobe, FiTruck, FiClock, FiHeart } from 'react-icons/fi'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -42,89 +41,6 @@ export default function Footer() {
 
   return (
     <footer className="relative w-full min-w-0 max-w-none overflow-hidden">
-      {/* Newsletter — Coming Soon style */}
-      <div className="relative text-white">
-        {/* Coming Soon gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2a0012] via-[#1a0008] to-[#1a0008]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(146,170,193,0.08)_0%,_transparent_70%)]" />
-        
-        {/* Geometric Lines */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="footerLineH" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="transparent" />
-              <stop offset="50%" stopColor="rgba(146,170,193,0.15)" />
-              <stop offset="100%" stopColor="transparent" />
-            </linearGradient>
-          </defs>
-          <motion.line 
-            x1="0" y1="30%" x2="100%" y2="30%" 
-            stroke="url(#footerLineH)" strokeWidth="1"
-            initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 2 }}
-          />
-          <motion.line 
-            x1="0" y1="70%" x2="100%" y2="70%" 
-            stroke="url(#footerLineH)" strokeWidth="1"
-            initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 2, delay: 0.3 }}
-          />
-        </svg>
-
-        {/* Decorative Corners */}
-        <motion.div 
-          className="absolute top-8 left-8 w-20 h-20 md:w-28 md:h-28 pointer-events-none"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-        >
-          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-brand-dustyBlue/50 to-transparent" />
-          <div className="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-brand-dustyBlue/50 to-transparent" />
-        </motion.div>
-        <motion.div 
-          className="absolute top-8 right-8 w-20 h-20 md:w-28 md:h-28 pointer-events-none"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.1 }}
-        >
-          <div className="absolute top-0 right-0 w-full h-[2px] bg-gradient-to-l from-brand-dustyBlue/50 to-transparent" />
-          <div className="absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-brand-dustyBlue/50 to-transparent" />
-        </motion.div>
-
-        <div className="relative container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-16 md:py-20 2xl:py-24">
-          <div className={`max-w-2xl mx-auto ${isRTL ? 'text-right' : ''}`}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="relative">
-                <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-b from-brand-dustyBlue/30 via-brand-dustyBlue/10 to-brand-stone/20" />
-                <div className="relative rounded-2xl border border-brand-dustyBlue/20 bg-white/[0.03] p-6 backdrop-blur-sm md:p-8 2xl:p-10">
-                  <span className="mb-4 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue/60">
-                    {isRTL ? 'انضم إلينا' : 'Join Us'}
-                  </span>
-                  <h3 className="mb-4 font-montserrat text-[1.35rem] font-medium uppercase tracking-[0.12em] text-white md:text-[1.5rem] 2xl:text-[1.65rem]">
-                    {t.footer.stayConnected}
-                  </h3>
-                  <p className="mb-6 max-w-md font-montserrat text-[12px] tracking-[0.03em] text-white/50 2xl:mb-8">
-                    {t.footer.subscribeDescription}
-                  </p>
-                  <SubscribeForm variant="dark" />
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Footer Links - Coming Soon Dark Gradient Style */}
       <div className="relative text-white">
         {/* Coming Soon gradient background */}
