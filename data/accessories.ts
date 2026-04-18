@@ -8,6 +8,8 @@ export const ACCESSORY_IMAGE_NECKLACE = `${A}/necklaces/malachite-necklace.PNG`
 export const ACCESSORY_IMAGE_NECKLACE_MALACHITE = `${A}/necklaces/malachite-necklace.PNG`
 export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ = `${A}/necklaces/rose-quartz-necklace.PNG`
 export const ACCESSORY_IMAGE_PHONE_CHARM = `${A}/phone%20charm/phone%20charm.png`
+/** Second angle / alternate shot for phone charm PDP column */
+export const ACCESSORY_IMAGE_PHONE_CHARM_ALT = `${A}/phone%20charm/AF5B4736-A8F0-41F6-94CB-530FF12AD809.PNG`
 /** Category hero when no per-stone abaya shot exists. */
 export const ACCESSORY_IMAGE_ABAYA_CHARMS_HERO = `${A}/abaya%20charms.JPG`
 
@@ -40,6 +42,8 @@ export interface Accessory {
   materials: string
   materialsAr: string
   colors: { name: string; nameAr: string; hex: string }[]
+  /** Optional — when set, PDP shows a third column (desktop) with two stacked angle shots */
+  detailAngles?: readonly [string, string]
   inStock: boolean
   isNew?: boolean
   isBestseller?: boolean
@@ -388,6 +392,7 @@ export const accessories: Accessory[] = [
     description: 'Elegant pearl phone strap with universal attachment.',
     descriptionAr: 'حزام هاتف لؤلؤي أنيق مع مشبك عالمي.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
+    detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
     materials: 'Freshwater Pearls, Nylon Cord',
     materialsAr: 'لؤلؤ المياه العذبة، حبل نايلون',
     colors: [
@@ -405,6 +410,7 @@ export const accessories: Accessory[] = [
     description: 'Colorful beaded phone chain for a playful touch.',
     descriptionAr: 'سلسلة هاتف ملونة بالخرز للمسة مرحة.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
+    detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
     materials: 'Glass Beads, Nylon Cord',
     materialsAr: 'خرز زجاجي، حبل نايلون',
     colors: [
@@ -422,6 +428,7 @@ export const accessories: Accessory[] = [
     description: 'Cute mini tassel charm for your phone case.',
     descriptionAr: 'تعليقة شرابة صغيرة لطيفة لغلاف هاتفك.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
+    detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
     materials: 'Silk, Gold-plated Hardware',
     materialsAr: 'حرير، معدن مطلي بالذهب',
     colors: [
@@ -439,6 +446,7 @@ export const accessories: Accessory[] = [
     description: 'Phone charm with universal attachment for cases and straps.',
     descriptionAr: 'تعليقة هاتف مع تثبيت متوافق مع الأغطية والأحزمة.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
+    detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
     materials: 'Nylon cord, gold-plated hardware',
     materialsAr: 'حبل نايلون، معدن مطلي بالذهب',
     colors: [

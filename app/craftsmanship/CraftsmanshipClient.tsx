@@ -1,10 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import AppBreadcrumb from '@/components/AppBreadcrumb'
 import LocaleLink from '@/components/LocaleLink'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { FiArrowRight } from 'react-icons/fi'
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 
 /** Full-bleed bands (top → middle → bottom). */
 const CRAFT_VIDEO_BANDS = [
@@ -88,18 +87,6 @@ function DecorativeCorners({ tone = 'dustyBlue' }: { tone?: 'dustyBlue' | 'darkR
   )
 }
 
-/** Soft vertical guides — static only (scroll-linked motion caused SSR/client mismatches). */
-function SectionStripesSoft() {
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      <div className="absolute left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/28 to-transparent" />
-      <div className="absolute right-[7%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-clayRed/22 to-transparent" />
-      <div className="absolute left-[7%] right-[7%] top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/24 to-transparent" />
-      <div className="absolute bottom-0 left-[7%] right-[7%] h-px bg-gradient-to-r from-transparent via-brand-stone/26 to-transparent" />
-    </div>
-  )
-}
-
 /**
  * Mosaic tile — native img avoids Next/Image sizing edge cases inside nested sticky/aspect layouts.
  */
@@ -129,16 +116,17 @@ function MosaicTileImage({
   )
 }
 
-/** Opening band: single film + breadcrumb, brand line, and page title on one overlay */
+/** Opening band — matches `/accessories` hero: dark-red wash over media, title + description bottom-aligned */
 function CraftsmanshipHero({ className = '' }: { className?: string }) {
-  const { t } = useLanguage()
+  const { t, isRTL } = useLanguage()
   const v = CRAFT_VIDEO_BANDS[0]
-  const homeCrumb = t.product?.home ?? 'Home'
-  const titleCrumb = t.footer?.craftsmanship ?? 'Craftsmanship'
+  const title = t.footer?.craftsmanship ?? 'Craftsmanship'
+  const eyebrow = t.about?.craftSubtitle ?? 'The Process'
+  const description = t.about?.craftsmanshipDesc ?? ''
 
   return (
     <section
-      className={`bs-full-bleed relative isolate min-h-[min(72vh,100vw)] overflow-hidden bg-[#060304] md:min-h-[min(78vh,56.25vw)] ${className}`}
+      className={`relative h-[50vh] md:h-[60vh] overflow-hidden bg-brand-darkRed ${className}`}
     >
       <video
         src={v.src}
@@ -148,56 +136,52 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
         loop
         playsInline
         preload="metadata"
-        className="absolute inset-0 z-0 block h-full min-h-[52vh] w-full object-cover"
+        className="absolute inset-0 z-0 h-full w-full object-cover opacity-40"
       />
-      <div className="pointer-events-none absolute inset-0 z-[4] opacity-90">
-        <DecorativeCorners tone="dustyBlue" />
-      </div>
-      {/* Elegant film overlay: soft vignette + dusty blue lift + readable wash */}
-      <div
-        className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(ellipse_95%_90%_at_50%_38%,transparent_18%,rgba(18,12,18,0.42)_72%,rgba(8,4,10,0.72)_100%)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(165deg,rgba(10,8,14,0.62)_0%,transparent_42%,transparent_58%,rgba(146,170,193,0.08)_82%,rgba(250,249,247,0.06)_100%)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-[min(36vh,280px)] bg-gradient-to-t from-[#060304] via-[#0d090c]/94 to-transparent"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-32 bg-gradient-to-t from-[rgba(146,170,193,0.14)] via-[rgba(146,170,193,0.04)] to-transparent"
-        aria-hidden
-      />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-brand-darkRed via-brand-darkRed/50 to-transparent" />
 
-      <div className="relative z-10 flex min-h-[min(72vh,100vw)] flex-col md:min-h-[min(78vh,56.25vw)]">
-        <div className="flex flex-1 flex-col px-6 pb-20 pt-10 md:pb-24 md:pt-14 lg:px-16">
-          <SectionStripesSoft />
-          <div className="relative mx-auto flex w-full max-w-[90rem] flex-1 flex-col justify-center">
-            <AppBreadcrumb
-              variant="muted"
-              className="mb-6 flex-nowrap !overflow-x-visible !text-white/80 [&_a]:!text-white/75 [&_a:hover]:!text-white [&_span]:!text-white/55 [&_span:last-child]:!text-white/95"
-              segments={[
-                { label: homeCrumb, href: '/home' },
-                { label: titleCrumb },
-              ]}
-            />
-            <div className="max-w-4xl">
-              <span className="mb-5 inline-block font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue/95">
-                Bint Saeed
-              </span>
-              <motion.h1
-                data-document-h1="true"
-                initial={false}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-                className="font-rozha text-[clamp(2.25rem,5vw,3.75rem)] leading-[1.06] tracking-[0.02em] text-white drop-shadow-[0_2px_28px_rgba(0,0,0,0.45)]"
-              >
-                {titleCrumb}
-              </motion.h1>
-            </div>
-          </div>
+      {/* Mirrors `/accessories` hero: same flex shell, container padding, typography & tracking */}
+      <div className="relative z-10 flex h-full flex-col justify-end pb-16 md:pb-20">
+        <div className="container mx-auto px-6 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-8"
+          >
+            <LocaleLink
+              href="/home"
+              className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-white/70 hover:text-white transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
+              data-cursor-hover
+            >
+              <FiArrowLeft
+                className={`w-4 h-4 transition-transform group-hover:-translate-x-1 ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`}
+              />
+              {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
+            </LocaleLink>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className={isRTL ? 'text-right' : ''}
+          >
+            <span className="mb-4 block font-montserrat text-xs uppercase tracking-[0.4em] text-white/60">
+              {eyebrow}
+            </span>
+            <h1
+              data-document-h1="true"
+              className="font-rozha text-5xl md:text-7xl lg:text-8xl text-white mb-4"
+            >
+              {title}
+            </h1>
+            {description ? (
+              <p className="font-montserrat text-base text-white/70 tracking-wide max-w-lg">
+                {description}
+              </p>
+            ) : null}
+          </motion.div>
         </div>
       </div>
     </section>

@@ -107,7 +107,10 @@ export default function Header() {
           ],
         },
       ],
-      features: [{ title: 'Enter Collection', href: '/shop', image: '/collection-section/67.png' }],
+      features: [
+        { title: 'Abayas', href: '/shop?category=abayas', image: '/collection-section/67.png' },
+        { title: 'Dresses', href: '/shop?category=dresses', image: '/collection-section/68.png' },
+      ],
     },
     '/accessories': {
       columns: [
@@ -156,7 +159,7 @@ export default function Header() {
       ],
       features: [
         { title: 'Our Story', href: '/about', image: '/image 1.png' },
-        { title: 'Giving Forward', href: '/giving-forward', image: '/collection-section/4.JPG' },
+        { title: 'The Codes', href: '/the-codes', image: '/collection-section/67.png' },
       ],
     },
   }

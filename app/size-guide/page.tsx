@@ -178,7 +178,7 @@ export default function SizeGuidePage() {
             </div>
             <div className={`flex flex-col gap-3 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
               <a
-                href="https://wa.me/971XXXXXXXXX?text=Hi%20Bint%20Saeed!%20I%20need%20help%20with%20sizing."
+                href="https://wa.me/971502299402?text=Hi%20Bint%20Saeed!%20I%20need%20help%20with%20sizing."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center border border-brand-darkRed bg-brand-darkRed px-7 py-3 font-montserrat text-xs uppercase tracking-[0.14em] text-white transition-colors hover:bg-brand-clayRed"

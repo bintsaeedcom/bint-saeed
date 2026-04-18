@@ -9,12 +9,11 @@ import AppBreadcrumb from '@/components/AppBreadcrumb'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
-import { FiChevronDown, FiPlus, FiMinus, FiHeart, FiX, FiShare2 } from 'react-icons/fi'
+import { FiChevronDown, FiPlus, FiMinus, FiHeart, FiX, FiGlobe, FiAward } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { accessories, accessoryCategories } from '@/data/accessories'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
-import OrderCutoffBanner from '@/components/OrderCutoffBanner'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
@@ -139,14 +138,24 @@ export default function AccessoryDetailPage() {
     setOpenDropdown(openDropdown === key ? null : key)
   }
 
+  const detailAngles = accessory.detailAngles
+  const hasAngleColumn = !!detailAngles && detailAngles.length === 2
+  const isVideoFile = (src: string) => /\.(mp4|mov|webm|ogg)$/i.test(src)
+  const isHeicFile = (src: string) => /\.(heic|heif)$/i.test(src)
+  const galleryGridClass = hasAngleColumn
+    ? 'lg:grid-cols-[4.75rem_minmax(0,1fr)_minmax(8.75rem,11.25rem)]'
+    : 'lg:grid-cols-[4.75rem_minmax(0,1fr)]'
+
+  const displayName = isRTL ? accessory.nameAr : accessory.name
+
   return (
-    <div className={`min-h-screen bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
-      {/* Breadcrumb */}
+    <div className="min-h-screen bg-white">
+      {/* Breadcrumb — same shell as `/shop/[id]` */}
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
-        <div className="container mx-auto min-w-0 px-6 lg:px-12">
+        <div className="mx-auto min-w-0 max-w-[1280px] px-6 lg:px-10">
           <AppBreadcrumb
             segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/' },
+              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
               { label: isRTL ? 'الإكسسوارات' : 'Accessories', href: '/accessories' },
               {
                 label: (isRTL ? categoryInfo?.nameAr : categoryInfo?.name) ?? '',
@@ -160,43 +169,54 @@ export default function AccessoryDetailPage() {
 
       <div className="mx-auto max-w-[1280px] px-6 py-10 lg:px-10 lg:py-12">
         <div className="isolate grid min-w-0 grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-          {/* Image Gallery — Royal V-Neck / shop PDP structure */}
+          {/* Image Gallery — mirrors `/shop/[id]` (Royal V-Neck Kaftan); optional third column = detail angles */}
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative z-0 w-full min-w-0 overflow-hidden lg:max-w-[42rem]"
+            className={`relative z-0 w-full min-w-0 overflow-hidden ${hasAngleColumn ? '' : 'lg:max-w-[42rem]'}`}
           >
-            <div
-              className={`grid gap-3 lg:items-start ${
-                accessory.images.length > 1 ? 'lg:grid-cols-[4.75rem_minmax(0,1fr)]' : ''
-              }`}
-            >
-              {accessory.images.length > 1 && (
-                <div className="hidden lg:block">
-                  <Swiper
-                    modules={[FreeMode, Thumbs]}
-                    direction="vertical"
-                    onSwiper={setThumbsSwiper}
-                    spaceBetween={10}
-                    slidesPerView={5}
-                    freeMode
-                    watchSlidesProgress
-                    slideToClickedSlide
-                    preventClicks={false}
-                    preventClicksPropagation={false}
-                    touchStartPreventDefault={false}
-                    className="product-gallery-thumbs !h-[44rem] !overflow-visible"
-                  >
-                    {accessory.images.map((image, index) => (
-                      <SwiperSlide key={index} className="!h-auto">
-                        <button
-                          type="button"
-                          className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
-                          onClick={() => mainSwiperRef.current?.slideTo(index)}
-                          aria-label={`Show image ${index + 1}`}
-                          data-cursor-hover
-                        >
+            <div className={`grid gap-3 lg:items-start ${galleryGridClass}`}>
+              <div className="hidden lg:block">
+                <Swiper
+                  modules={[FreeMode, Thumbs]}
+                  direction="vertical"
+                  onSwiper={setThumbsSwiper}
+                  spaceBetween={10}
+                  slidesPerView={5}
+                  freeMode
+                  watchSlidesProgress
+                  slideToClickedSlide
+                  preventClicks={false}
+                  preventClicksPropagation={false}
+                  touchStartPreventDefault={false}
+                  className="product-gallery-thumbs !h-[44rem] !overflow-visible"
+                >
+                  {accessory.images.map((image, index) => (
+                    <SwiperSlide key={index} className="!h-auto">
+                      <button
+                        type="button"
+                        className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
+                        onClick={() => mainSwiperRef.current?.slideTo(index)}
+                        aria-label={`Show image ${index + 1}`}
+                        data-cursor-hover
+                      >
+                        {isVideoFile(image) ? (
+                          <video
+                            src={image}
+                            muted
+                            playsInline
+                            preload="metadata"
+                            className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                          />
+                        ) : isHeicFile(image) ? (
+                          <img
+                            src={image}
+                            alt=""
+                            className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                            loading="lazy"
+                          />
+                        ) : (
                           <Image
                             src={image}
                             alt=""
@@ -204,12 +224,12 @@ export default function AccessoryDetailPage() {
                             sizes="76px"
                             className="object-cover transition-opacity group-hover:opacity-80"
                           />
-                        </button>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                </div>
-              )}
+                        )}
+                      </button>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
 
               <div className="space-y-3">
                 <div className="relative aspect-[3/4] overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
@@ -231,51 +251,148 @@ export default function AccessoryDetailPage() {
                     {accessory.images.map((image, index) => (
                       <SwiperSlide key={index}>
                         <div
-                          className="relative h-full w-full cursor-zoom-in"
+                          className={`relative h-full w-full ${isVideoFile(image) ? 'cursor-default' : 'cursor-zoom-in'}`}
                           onClick={() => {
+                            if (isVideoFile(image)) return
                             setLightboxIndex(index)
                             setIsLightboxOpen(true)
                           }}
-                          role="presentation"
+                          onKeyDown={(e) => {
+                            if (isVideoFile(image)) return
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault()
+                              setLightboxIndex(index)
+                              setIsLightboxOpen(true)
+                            }
+                          }}
+                          role="button"
+                          tabIndex={isVideoFile(image) ? -1 : 0}
+                          aria-label={
+                            isVideoFile(image)
+                              ? `${displayName} — video ${index + 1}`
+                              : `${displayName} — open image ${index + 1} in lightbox`
+                          }
                         >
-                          <Image
-                            src={image}
-                            alt={`${accessory.name} — ${index === 0 ? 'hero' : `detail ${index + 1}`}`}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 40vw"
-                            className="object-cover"
-                            priority={index === 0}
-                          />
+                          {isVideoFile(image) ? (
+                            <video
+                              src={image}
+                              controls
+                              playsInline
+                              preload="metadata"
+                              className="h-full w-full object-cover"
+                            />
+                          ) : isHeicFile(image) ? (
+                            <img
+                              src={image}
+                              alt={`${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
+                              className="h-full w-full object-cover"
+                              loading={index === 0 ? 'eager' : 'lazy'}
+                            />
+                          ) : (
+                            <Image
+                              src={image}
+                              alt={`${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 40vw"
+                              className="object-cover"
+                              priority={index === 0}
+                            />
+                          )}
                         </div>
                       </SwiperSlide>
                     ))}
                   </Swiper>
+                </div>
 
-                  <div className={`pointer-events-none absolute top-4 z-10 flex flex-col gap-2 ${isRTL ? 'right-4' : 'left-4'}`}>
-                    {accessory.isNew && (
-                      <span className="pointer-events-none px-3 py-1 bg-brand-darkRed font-montserrat text-[10px] uppercase tracking-[0.15em] text-white">
-                        {isRTL ? 'جديد' : 'New'}
-                      </span>
-                    )}
-                    {accessory.isBestseller && (
-                      <span className="pointer-events-none px-3 py-1 bg-brand-clayRed font-montserrat text-[10px] uppercase tracking-[0.15em] text-white">
-                        {isRTL ? 'الأكثر مبيعاً' : 'Bestseller'}
-                      </span>
-                    )}
-                    {accessory.isLimitedEdition && (
-                      <span className="pointer-events-none border border-white/90 bg-brand-darkRed/85 px-3 py-1 font-montserrat text-[10px] uppercase tracking-[0.15em] text-white">
-                        {isRTL ? 'إصدار محدود' : 'Limited Edition'}
-                      </span>
-                    )}
-                  </div>
+                {/* Thumbnails — tablet (same pattern as shop PDP) */}
+                <div className="hidden md:block lg:hidden">
+                  <Swiper
+                    modules={[FreeMode, Thumbs]}
+                    onSwiper={setThumbsSwiper}
+                    spaceBetween={10}
+                    slidesPerView={4}
+                    freeMode
+                    watchSlidesProgress
+                    slideToClickedSlide
+                    preventClicks={false}
+                    preventClicksPropagation={false}
+                    touchStartPreventDefault={false}
+                    className="product-gallery-thumbs !overflow-visible"
+                  >
+                    {accessory.images.map((image, index) => (
+                      <SwiperSlide key={index} className="!h-auto">
+                        <button
+                          type="button"
+                          className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
+                          onClick={() => mainSwiperRef.current?.slideTo(index)}
+                          aria-label={`Show image ${index + 1}`}
+                          data-cursor-hover
+                        >
+                          {isVideoFile(image) ? (
+                            <video
+                              src={image}
+                              muted
+                              playsInline
+                              preload="metadata"
+                              className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                            />
+                          ) : isHeicFile(image) ? (
+                            <img
+                              src={image}
+                              alt=""
+                              className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <Image
+                              src={image}
+                              alt=""
+                              fill
+                              sizes="120px"
+                              className="object-cover transition-opacity group-hover:opacity-80"
+                            />
+                          )}
+                        </button>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
                 </div>
               </div>
+
+              {/* Detail angles — desktop only; stacked 3:4 portraits */}
+              {hasAngleColumn && detailAngles ? (
+                <div className="hidden min-w-0 flex-col gap-3 lg:flex">
+                  {detailAngles.map((src, ai) => (
+                    <div
+                      key={`${src}-${ai}`}
+                      className="relative aspect-[3/4] w-full overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]"
+                    >
+                      {isHeicFile(src) ? (
+                        <img
+                          src={src}
+                          alt={`${displayName} — ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <Image
+                          src={src}
+                          alt={`${displayName} — ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
+                          fill
+                          sizes="(max-width: 1024px) 0px, 11rem"
+                          className="object-cover"
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </motion.div>
 
-          {/* Product Info — shop buy box (no notes / personalisation / wrist), one size */}
+          {/* Product Info — same buy column structure as `/shop/[id]` (no personalisation / notes) */}
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? -30 : 30 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className={`pdp-info relative z-[1] min-w-0 bg-white p-4 lg:sticky lg:top-28 lg:self-start lg:p-5 ${isRTL ? 'text-right' : ''}`}
@@ -288,7 +405,7 @@ export default function AccessoryDetailPage() {
               data-document-h1="true"
               className="mb-2.5 font-rozha text-[1.75rem] leading-[1.15] text-brand-darkRed md:text-[1.95rem] lg:text-[2.05rem]"
             >
-              {isRTL ? accessory.nameAr : accessory.name}
+              {displayName}
             </h1>
 
             <div className="mb-4 space-y-1">
@@ -301,12 +418,6 @@ export default function AccessoryDetailPage() {
                 )}
               </p>
             </div>
-
-            <p className={`mb-5 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/75 ${isRTL ? 'text-right' : ''}`}>
-              {isRTL ? accessory.descriptionAr : accessory.description}
-            </p>
-
-            <OrderCutoffBanner />
 
             {/* Colour — shop spacing */}
             <div className="mb-5 border-b border-brand-stone/20 pb-5">
@@ -393,233 +504,220 @@ export default function AccessoryDetailPage() {
             </div>
 
             {/* Quantity & Add to Cart */}
-            <div className={`mb-5 flex gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              {/* Quantity */}
+            <div className="mb-5 flex gap-3">
               <div className="flex items-center border border-brand-stone/50">
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-4 py-3 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
+                  className="px-3 py-2.5 text-brand-darkRed transition-colors hover:bg-brand-dustyBlue/10"
                   data-cursor-hover
                 >
-                  <FiMinus className="w-4 h-4" />
+                  <FiMinus className="h-4 w-4" />
                 </button>
-                <span className="w-12 text-center font-montserrat text-[11px]">{quantity}</span>
+                <span className="w-10 text-center font-montserrat text-[11px]">{quantity}</span>
                 <button
                   type="button"
                   onClick={() => setQuantity(quantity + 1)}
-                  className="px-4 py-3 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
+                  className="px-3 py-2.5 text-brand-darkRed transition-colors hover:bg-brand-dustyBlue/10"
                   data-cursor-hover
                 >
-                  <FiPlus className="w-4 h-4" />
+                  <FiPlus className="h-4 w-4" />
                 </button>
               </div>
 
-              {/* Add to Cart */}
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="flex-1 bg-brand-darkRed py-4 font-montserrat text-[11px] uppercase tracking-[0.15em] text-white hover:bg-brand-dustyBlue transition-colors"
+                className="flex-1 bg-brand-darkRed px-6 py-3 font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-brand-dustyBlue"
                 data-cursor-hover
               >
                 {isRTL ? 'أضيفي للسلة' : 'Add to Bag'}
               </button>
 
-              {/* Wishlist */}
               <button
                 type="button"
                 onClick={toggleWishlist}
-                className={`px-4 border transition-colors ${
+                className={`border px-3 transition-colors ${
                   favorited
-                    ? 'bg-brand-darkRed border-brand-darkRed text-white'
+                    ? 'border-brand-darkRed bg-brand-darkRed text-white'
                     : 'border-brand-stone/50 text-brand-darkRed hover:border-brand-dustyBlue'
                 }`}
                 aria-pressed={favorited}
+                aria-label={favorited ? (isRTL ? 'إزالة من المفضلة' : 'Remove from favorites') : isRTL ? 'أضيفي للمفضلة' : 'Save to favorites'}
                 data-cursor-hover
               >
-                <FiHeart className={`w-5 h-5 ${favorited ? 'fill-current' : ''}`} />
+                <FiHeart className={`h-5 w-5 ${favorited ? 'fill-current' : ''}`} />
               </button>
             </div>
 
-            {/* Share */}
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href)
-                toast.success(isRTL ? 'تم نسخ الرابط' : 'Link copied!')
-              }}
-              className={`flex items-center gap-2 font-montserrat text-xs text-brand-clayRed/60 hover:text-brand-dustyBlue transition-colors mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}
-              data-cursor-hover
-            >
-              <FiShare2 className="w-4 h-4" />
-              {isRTL ? 'مشاركة' : 'Share'}
-            </button>
+            <div className={`mb-5 grid grid-cols-3 gap-3 border-y border-brand-stone/20 py-4 ${isRTL ? 'text-right' : ''}`}>
+              <div className="flex flex-col items-center gap-1 text-center">
+                <FiAward className="h-3.5 w-3.5 text-brand-darkRed/75" />
+                <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
+                  {isRTL ? 'صنع أخلاقي' : 'Ethically made'}
+                </span>
+              </div>
+              <div className="flex flex-col items-center gap-1 text-center">
+                <FiHeart className="h-3.5 w-3.5 text-brand-darkRed/75" />
+                <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
+                  {isRTL ? 'نعطي للأمام' : 'We Give Forward'}
+                </span>
+              </div>
+              <div className="flex flex-col items-center gap-1 text-center">
+                <FiGlobe className="h-3.5 w-3.5 text-brand-darkRed/75" />
+                <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
+                  {isRTL ? 'شحن عالمي' : 'Worldwide shipping'}
+                </span>
+              </div>
+            </div>
 
-            {/* Dropdowns */}
-            <div className="border-t border-brand-stone/20">
-              {/* Description */}
-              <div className="border-b border-brand-stone/20">
+            <p className="mb-2.5 whitespace-pre-line font-montserrat text-[11px] leading-[1.65] tracking-wide text-brand-darkRed/75">
+              {isRTL ? accessory.descriptionAr : accessory.description}
+            </p>
+            <p className="mb-4 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-dustyBlue">
+              {isRTL
+                ? 'صُنع حسب الطلب — متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
+                : 'Made to order — available within this chapter (availability confirmed when you order).'}
+            </p>
+
+            {/* Accordions — same pattern as `/shop/[id]` */}
+            <div className="border-t border-brand-stone/30">
+              <div className="border-b border-brand-stone/30">
                 <button
+                  type="button"
                   onClick={() => toggleDropdown('description')}
-                  className={`w-full py-4 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className="flex w-full items-center justify-between py-4"
                   data-cursor-hover
                 >
-                  <span className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed">
-                    {isRTL ? 'الوصف' : 'Description'}
+                  <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                    {isRTL ? 'تفاصيل المنتج' : 'Product Details'}
                   </span>
-                  <FiChevronDown className={`w-4 h-4 text-brand-darkRed transition-transform ${openDropdown === 'description' ? 'rotate-180' : ''}`} />
+                  <FiChevronDown
+                    className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'description' ? 'rotate-180' : ''}`}
+                  />
                 </button>
-                <AnimatePresence>
-                  {openDropdown === 'description' && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5">
-                        {isRTL ? accessory.descriptionAr : accessory.description}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {openDropdown === 'description' && (
+                  <div className="space-y-2 pb-5">
+                    <p className={`font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/75 ${isRTL ? 'text-right' : ''}`}>
+                      • {isRTL ? accessory.descriptionAr : accessory.description}
+                    </p>
+                  </div>
+                )}
               </div>
 
-              {/* Materials */}
-              <div className="border-b border-brand-stone/20">
+              <div className="border-b border-brand-stone/30">
                 <button
+                  type="button"
                   onClick={() => toggleDropdown('materials')}
-                  className={`w-full py-4 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className="flex w-full items-center justify-between py-4"
                   data-cursor-hover
                 >
-                  <span className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed">
+                  <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                     {isRTL ? 'المواد' : 'Materials'}
                   </span>
-                  <FiChevronDown className={`w-4 h-4 text-brand-darkRed transition-transform ${openDropdown === 'materials' ? 'rotate-180' : ''}`} />
+                  <FiChevronDown
+                    className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'materials' ? 'rotate-180' : ''}`}
+                  />
                 </button>
-                <AnimatePresence>
-                  {openDropdown === 'materials' && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5">
-                        {isRTL ? accessory.materialsAr : accessory.materials}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {openDropdown === 'materials' && (
+                  <div className="space-y-2 pb-5">
+                    <p className={`font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/75 ${isRTL ? 'text-right' : ''}`}>
+                      • {isRTL ? accessory.materialsAr : accessory.materials}
+                    </p>
+                  </div>
+                )}
               </div>
 
-              {/* Care */}
-              <div className="border-b border-brand-stone/20">
+              <div className="border-b border-brand-stone/30">
                 <button
+                  type="button"
                   onClick={() => toggleDropdown('care')}
-                  className={`w-full py-4 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className="flex w-full items-center justify-between py-4"
                   data-cursor-hover
                 >
-                  <span className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed">
+                  <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                     {isRTL ? 'العناية' : 'Care'}
                   </span>
-                  <FiChevronDown className={`w-4 h-4 text-brand-darkRed transition-transform ${openDropdown === 'care' ? 'rotate-180' : ''}`} />
+                  <FiChevronDown
+                    className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'care' ? 'rotate-180' : ''}`}
+                  />
                 </button>
-                <AnimatePresence>
-                  {openDropdown === 'care' && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5 space-y-2">
-                        <p>{isRTL ? '• تجنبي ملامسة العطور والمواد الكيميائية' : '• Avoid contact with perfumes and chemicals'}</p>
-                        <p>{isRTL ? '• احفظيها في مكان جاف' : '• Store in a dry place'}</p>
-                        <p>{isRTL ? '• امسحيها بقطعة قماش ناعمة' : '• Wipe with a soft cloth'}</p>
-                        <p>{isRTL ? '• أزيليها قبل السباحة أو الاستحمام' : '• Remove before swimming or bathing'}</p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {openDropdown === 'care' && (
+                  <div className="space-y-2 pb-5 font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/75">
+                    <p className={isRTL ? 'text-right' : ''}>{isRTL ? '• تجنبي ملامسة العطور والمواد الكيميائية' : '• Avoid contact with perfumes and chemicals'}</p>
+                    <p className={isRTL ? 'text-right' : ''}>{isRTL ? '• احفظيها في مكان جاف' : '• Store in a dry place'}</p>
+                    <p className={isRTL ? 'text-right' : ''}>{isRTL ? '• امسحيها بقطعة قماش ناعمة' : '• Wipe with a soft cloth'}</p>
+                    <p className={isRTL ? 'text-right' : ''}>{isRTL ? '• أزيليها قبل السباحة أو الاستحمام' : '• Remove before swimming or bathing'}</p>
+                  </div>
+                )}
               </div>
 
-              {/* Shipping */}
-              <div className="border-b border-brand-stone/20">
+              <div>
                 <button
+                  type="button"
                   onClick={() => toggleDropdown('shipping')}
-                  className={`w-full py-4 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className="flex w-full items-center justify-between py-4"
                   data-cursor-hover
                 >
-                  <span className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed">
-                    {isRTL ? 'الشحن' : 'Shipping'}
+                  <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                    {isRTL ? 'الشحن والإرجاع' : 'Shipping & Returns'}
                   </span>
-                  <FiChevronDown className={`w-4 h-4 text-brand-darkRed transition-transform ${openDropdown === 'shipping' ? 'rotate-180' : ''}`} />
+                  <FiChevronDown
+                    className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'shipping' ? 'rotate-180' : ''}`}
+                  />
                 </button>
-                <AnimatePresence>
-                  {openDropdown === 'shipping' && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5 space-y-2">
-                        <p>{isRTL ? '• الشحن المجاني متاح داخل الإمارات فقط.' : '• Free shipping is available within the UAE only.'}</p>
-                        <p>
-                          {isRTL
-                            ? '• القطع الجاهزة للشحن تُرسل خلال 1-3 أيام عمل للطلبات المقدمة قبل الساعة 3:00 مساءً بتوقيت الإمارات.'
-                            : '• In-stock styles dispatch within 1-3 business days for orders placed before 3:00 PM UAE time.'}
-                        </p>
-                        <p>
-                          {isRTL
-                            ? '• القطع المسبقة الطلب تُشحن في التاريخ الموضح على صفحة المنتج.'
-                            : '• Pre-order styles dispatch on the date shown on the product page.'}
-                        </p>
-                        <p>
-                          {isRTL
-                            ? '• الطلبات المختلطة (جاهز + مسبق الطلب) تُشحن معاً في تاريخ المسبق الطلب المعلن.'
-                            : '• Mixed orders (in-stock + pre-order) dispatch together on the stated pre-order date.'}
-                        </p>
-                        <p>
-                          {isRTL
-                            ? '• جميع المبيعات نهائية. لا نوفر استرداداً نقدياً، مع وجود بعض الاستثناءات.'
-                            : '• All sales are final. We do not offer refunds, some exclusions apply.'}
-                        </p>
-                        <p>
-                          {isRTL
-                            ? '• يُقبل استبدال القطع الجاهزة فقط خلال 14 يوماً إذا كانت غير مستخدمة وغير متضررة مع البطاقات.'
-                            : '• Exchanges for in-stock items are accepted within 14 days for unworn, undamaged pieces with tags attached.'}
-                        </p>
-                        <p>
-                          {isRTL
-                            ? '• لا يمكن إرجاع أو استبدال القطع المخفّضة.'
-                            : '• Discounted items cannot be returned or exchanged.'}
-                        </p>
-                        <p>
-                          {isRTL
-                            ? '• القطع المسبقة الطلب لا يمكن إرجاعها أو استبدالها.'
-                            : '• Pre-order items cannot be returned or exchanged.'}
-                        </p>
-                        <p>
-                          {isRTL
-                            ? '• القطع المخصصة لا يمكن إرجاعها أو استبدالها.'
-                            : '• Personalised items cannot be returned or exchanged.'}
-                        </p>
-                        <p>
-                          {isRTL ? '• للمزيد من المعلومات، راجعي ' : '• For more information, please review our '}
-                          <LocaleLink href="/terms" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
-                            {isRTL ? 'سياسة الاسترجاع والاستبدال' : 'Refunds and Exchanges policy'}
-                          </LocaleLink>
-                          .
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {openDropdown === 'shipping' && (
+                  <div className="space-y-2 pb-5 font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/75">
+                    <p>{isRTL ? '• الشحن المجاني متاح داخل الإمارات فقط.' : '• Free shipping is available within the UAE only.'}</p>
+                    <p>
+                      {isRTL
+                        ? '• القطع الجاهزة للشحن تُرسل خلال 1-3 أيام عمل للطلبات المقدمة قبل الساعة 3:00 مساءً بتوقيت الإمارات.'
+                        : '• In-stock styles dispatch within 1-3 business days for orders placed before 3:00 PM UAE time.'}
+                    </p>
+                    <p>
+                      {isRTL
+                        ? '• القطع المسبقة الطلب تُشحن في التاريخ الموضح على صفحة المنتج.'
+                        : '• Pre-order styles dispatch on the date shown on the product page.'}
+                    </p>
+                    <p>
+                      {isRTL
+                        ? '• الطلبات المختلطة (جاهز + مسبق الطلب) تُشحن معاً في تاريخ المسبق الطلب المعلن.'
+                        : '• Mixed orders (in-stock + pre-order) dispatch together on the stated pre-order date.'}
+                    </p>
+                    <p>
+                      {isRTL
+                        ? '• جميع المبيعات نهائية. لا نوفر استرداداً نقدياً، مع وجود بعض الاستثناءات.'
+                        : '• All sales are final. We do not offer refunds, some exclusions apply.'}
+                    </p>
+                    <p>
+                      {isRTL
+                        ? '• يُقبل استبدال القطع الجاهزة فقط خلال 14 يوماً إذا كانت غير مستخدمة وغير متضررة مع البطاقات.'
+                        : '• Exchanges for in-stock items are accepted within 14 days for unworn, undamaged pieces with tags attached.'}
+                    </p>
+                    <p>
+                      {isRTL
+                        ? '• لا يمكن إرجاع أو استبدال القطع المخفّضة.'
+                        : '• Discounted items cannot be returned or exchanged.'}
+                    </p>
+                    <p>
+                      {isRTL
+                        ? '• القطع المسبقة الطلب لا يمكن إرجاعها أو استبدالها.'
+                        : '• Pre-order items cannot be returned or exchanged.'}
+                    </p>
+                    <p>
+                      {isRTL
+                        ? '• القطع المخصصة لا يمكن إرجاعها أو استبدالها.'
+                        : '• Personalised items cannot be returned or exchanged.'}
+                    </p>
+                    <p>
+                      {isRTL ? '• للمزيد من المعلومات، راجعي ' : '• For more information, please review our '}
+                      <LocaleLink href="/terms" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
+                        {isRTL ? 'سياسة الاسترجاع والاستبدال' : 'Refunds and Exchanges policy'}
+                      </LocaleLink>
+                      .
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
@@ -637,19 +735,15 @@ export default function AccessoryDetailPage() {
             onClick={() => setIsLightboxOpen(false)}
           >
             <button
-              className={`absolute top-6 ${isRTL ? 'left-6' : 'right-6'} text-white z-10`}
+              type="button"
+              className="absolute right-6 top-6 z-10 text-white"
               onClick={() => setIsLightboxOpen(false)}
               data-cursor-hover
             >
-              <FiX className="w-8 h-8" />
+              <FiX className="h-8 w-8" />
             </button>
-            <div className="relative w-full h-full max-w-5xl max-h-[90vh] m-4">
-              <Image
-                src={accessory.images[lightboxIndex]}
-                alt={accessory.name}
-                fill
-                className="object-contain"
-              />
+            <div className="relative m-4 h-full max-h-[72vh] w-full max-w-[51.2rem]">
+              <Image src={accessory.images[lightboxIndex]} alt={displayName} fill className="object-contain" />
             </div>
           </motion.div>
         )}

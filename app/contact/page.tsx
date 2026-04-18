@@ -4,9 +4,16 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import { FiArrowLeft, FiMail, FiPhone, FiMapPin, FiClock, FiSend } from 'react-icons/fi'
-import { FaWhatsapp, FaInstagram } from 'react-icons/fa6'
+import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import toast from 'react-hot-toast'
+
+/** Display + deep links */
+const CONTACT_PHONE_DISPLAY = '+971 50 2299402'
+const CONTACT_PHONE_WA_ME = '971502299402'
+const CONTACT_PHONE_TEL = '+971502299402'
+const CONTACT_LOCATION_EN = 'Abu Dhabi,\u00A0United\u00A0Arab\u00A0Emirates'
+const CONTACT_LOCATION_AR = 'أبو ظبي، الإمارات العربية المتحدة'
 
 export default function ContactPage() {
   const { t, isRTL } = useLanguage()
@@ -53,19 +60,19 @@ export default function ContactPage() {
     {
       icon: FaWhatsapp,
       label: 'WhatsApp',
-      value: '+971 XX XXX XXXX',
-      href: 'https://wa.me/971XXXXXXXXX',
+      value: CONTACT_PHONE_DISPLAY,
+      href: `https://wa.me/${CONTACT_PHONE_WA_ME}`,
     },
     {
       icon: FiPhone,
       label: isRTL ? 'الهاتف' : 'Phone',
-      value: '+971 XX XXX XXXX',
-      href: 'tel:+971XXXXXXXXX',
+      value: CONTACT_PHONE_DISPLAY,
+      href: `tel:${CONTACT_PHONE_TEL}`,
     },
     {
       icon: FiMapPin,
       label: isRTL ? 'الموقع' : 'Location',
-      value: isRTL ? 'دبي، الإمارات العربية المتحدة' : 'Dubai,\u00A0United\u00A0Arab\u00A0Emirates',
+      value: isRTL ? CONTACT_LOCATION_AR : CONTACT_LOCATION_EN,
       href: null,
     },
     {
@@ -254,38 +261,6 @@ export default function ContactPage() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* Social Links */}
-            <div className={`p-6 bg-brand-darkRed rounded-lg text-white ${isRTL ? 'text-right' : ''}`}>
-              <h3 className="font-rozha text-xl mb-4">
-                {isRTL ? 'تابعينا' : 'Follow Us'}
-              </h3>
-              <p className="font-montserrat text-sm text-white/70 mb-6">
-                {isRTL 
-                  ? 'انضمي لمجتمعنا للحصول على أحدث التصاميم والعروض الحصرية.'
-                  : 'Join our community for the latest designs and exclusive offers.'}
-              </p>
-              <div className="flex gap-4">
-                <a
-                  href="https://www.instagram.com/bintsaeed_brand/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                  data-cursor-hover
-                >
-                  <FaInstagram className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://wa.me/971XXXXXXXXX"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                  data-cursor-hover
-                >
-                  <FaWhatsapp className="w-5 h-5" />
-                </a>
-              </div>
             </div>
           </motion.div>
         </div>

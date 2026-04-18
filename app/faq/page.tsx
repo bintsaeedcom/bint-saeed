@@ -158,7 +158,7 @@ export default function FAQPage() {
               {FAQ_EMAIL_CTA[language as AppLocale] ?? FAQ_EMAIL_CTA.en}
             </a>
             <a
-              href="https://wa.me/971XXXXXXXXX"
+              href="https://wa.me/971502299402"
               target="_blank"
               rel="noopener noreferrer"
               className={`inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] text-white font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-[#128C7E] transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
