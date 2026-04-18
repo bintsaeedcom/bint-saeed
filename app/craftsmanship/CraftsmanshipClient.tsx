@@ -8,37 +8,70 @@ import LocaleLink from '@/components/LocaleLink'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { FiArrowRight } from 'react-icons/fi'
 
-/** Public folder paths (encoded for spaces in filenames). */
-const VIDEOS = {
-  top: '/craftsmanship/craftsmanship%20video.mp4',
-  middle: '/craftsmanship/video%201.mp4',
-  bottom: '/craftsmanship/crafstamanship%20video%202.mp4',
-} as const
+/** Full-bleed bands (top → middle → bottom). WebM for broad browser support; filenames match `public/craftsmanship/`. */
+const CRAFT_VIDEO_BANDS = [
+  {
+    src: '/craftsmanship/bint-saeed-craftsmanship-process.webm',
+    ariaLabel:
+      'Video: Bint Saeed luxury abaya craftsmanship—Italian pattern development, prototyping in Abu Dhabi, and controlled atelier production in the UAE',
+  },
+  {
+    src: '/craftsmanship/bint-saeed-fabric-cutting-atelier.webm',
+    ariaLabel:
+      'Video: precision fabric cutting and atelier work for bespoke luxury abayas at Bint Saeed in Abu Dhabi, United Arab Emirates',
+  },
+  {
+    src: '/craftsmanship/bint-saeed-stitching-process.webm',
+    ariaLabel:
+      'Video: hand stitching and garment finishing by experienced craftspeople—tailored construction for Bint Saeed luxury abayas in Abu Dhabi',
+  },
+] as const
 
+/** Phase I–III image mosaics: SEO-focused alt text (brand + process + location where relevant). */
 const MOSAIC_IMAGES = [
   [
-    { src: '/craftsmanship/craft.png', alt: 'Development and pattern work at Bint Saeed' },
-    { src: '/craftsmanship/61.png', alt: 'Craft and materials' },
-    { src: '/craftsmanship/62.png', alt: 'Construction detail' },
+    {
+      src: '/craftsmanship/bint-saeed-cad-abaya-pattern.webp',
+      alt: 'CAD abaya pattern on screen at Bint Saeed—technical lines for proportion and construction resolved before cutting; luxury development between Italy and Abu Dhabi',
+    },
+    {
+      src: '/craftsmanship/bint-saeed-pattern-drawing.webp',
+      alt: 'Abaya pattern drawing during development—proportion, balance, and construction studied before sampling and production | Bint Saeed luxury abaya house',
+    },
+    {
+      src: '/craftsmanship/bint-saeed-textile-selection-process.png',
+      alt: 'Luxury textile and fabric selection for bespoke abayas—evaluating drape, weight, and performance during development | Bint Saeed Abu Dhabi',
+    },
   ],
   [
-    { src: '/craftsmanship/63.png', alt: 'Production in Abu Dhabi' },
-    { src: '/craftsmanship/64.png', alt: 'Finishing and precision' },
+    {
+      src: '/craftsmanship/bint-saeed-fabric-cutting.webp',
+      alt: 'Precision fabric cutting in the Bint Saeed atelier—controlled cutting for bespoke luxury abayas produced in Abu Dhabi, UAE',
+    },
+    {
+      src: '/craftsmanship/bint-saeed-thread-spools.webp',
+      alt: 'Premium tailoring threads for luxury abaya construction—materials chosen for durability, consistency, and refined finish | Bint Saeed',
+    },
   ],
   [
-    { src: '/craftsmanship/66.png', alt: 'Creative direction and house standards' },
-    { src: '/craftsmanship/craft2.png', alt: 'Contemporary house craft' },
+    {
+      src: '/craftsmanship/bint-saeed-khous-braid.webp',
+      alt: 'Khous braid integrated into garment structure—Emirati palm-frond weaving referenced in contemporary luxury abaya design | Bint Saeed Abu Dhabi',
+    },
+    {
+      src: '/craftsmanship/bint-saeed-label-stitching.webp',
+      alt: 'Fine label stitching and hand finishing on a bespoke abaya—quality-controlled construction at the Bint Saeed atelier in Abu Dhabi',
+    },
   ],
 ] as const
 
-function ScreenVideo({ src }: { src: string }) {
+function ScreenVideo({ src, ariaLabel }: { src: string; ariaLabel: string }) {
   return (
-    <section
-      className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 overflow-hidden bg-[#080506]"
-      aria-label="Craftsmanship film"
-    >
+    <section className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 overflow-hidden bg-[#080506]">
       <video
         src={src}
+        aria-label={ariaLabel}
+        title={ariaLabel}
         autoPlay
         muted
         loop
@@ -197,7 +230,7 @@ export default function CraftsmanshipClient() {
 
       {/* Top — full-width video */}
       <div className="pt-24 md:pt-28">
-        <ScreenVideo src={VIDEOS.top} />
+        <ScreenVideo src={CRAFT_VIDEO_BANDS[0].src} ariaLabel={CRAFT_VIDEO_BANDS[0].ariaLabel} />
       </div>
 
       <div className="relative mx-auto max-w-[42rem] px-6 pb-12 pt-14 md:pt-20 lg:px-8">
@@ -254,7 +287,7 @@ export default function CraftsmanshipClient() {
       <PhaseDivider />
 
       {/* Middle — full-width video */}
-      <ScreenVideo src={VIDEOS.middle} />
+      <ScreenVideo src={CRAFT_VIDEO_BANDS[1].src} ariaLabel={CRAFT_VIDEO_BANDS[1].ariaLabel} />
 
       <article className="relative mx-auto max-w-[42rem] px-6 py-14 lg:px-8 md:py-20">
         <motion.section
@@ -297,7 +330,7 @@ export default function CraftsmanshipClient() {
       <PhaseDivider />
 
       {/* Bottom — full-width video */}
-      <ScreenVideo src={VIDEOS.bottom} />
+      <ScreenVideo src={CRAFT_VIDEO_BANDS[2].src} ariaLabel={CRAFT_VIDEO_BANDS[2].ariaLabel} />
 
       <article className="relative mx-auto max-w-[42rem] px-6 py-14 pb-28 lg:px-8 md:py-20 md:pb-36">
         <motion.section
