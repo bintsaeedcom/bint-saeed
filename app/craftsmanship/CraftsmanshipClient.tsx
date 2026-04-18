@@ -2,13 +2,7 @@
 
 import { useRef } from 'react'
 import Image from 'next/image'
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-  useMotionTemplate,
-} from 'framer-motion'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import AppBreadcrumb from '@/components/AppBreadcrumb'
 import LocaleLink from '@/components/LocaleLink'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -122,7 +116,9 @@ function SectionStripesSoft() {
   )
 }
 
-/** Scroll-reveal mask + drift — rich tonal grading (warm lift, vignette, subtle grain) */
+/**
+ * Mosaic imagery — clear photo first, light luxury polish (scroll-mask removed so tiles always read).
+ */
 function ElevatedScrollImage({
   src,
   alt,
@@ -134,59 +130,28 @@ function ElevatedScrollImage({
   sizes: string
   className?: string
 }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const reduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start 92%', 'end 12%'],
-  })
-  const topInset = useTransform(scrollYProgress, [0, 0.25, 1], [18, 0, 0])
-  const bottomInset = useTransform(scrollYProgress, [0, 0.75, 1], [14, 0, 0])
-  const imageY = useTransform(scrollYProgress, [0, 1], [18, -12])
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.06, 1])
-  const veilOpacity = useTransform(scrollYProgress, [0, 0.35, 1], [0.26, 0.05, 0])
-  const clipPath = useMotionTemplate`inset(${topInset}% 0% ${bottomInset}% 0%)`
-
   return (
-    <div ref={ref} className={`relative h-full w-full overflow-hidden ${className}`}>
-      <motion.div
-        style={reduceMotion ? undefined : { clipPath }}
-        className="pointer-events-none absolute inset-0"
-      >
-        <motion.div
-          style={reduceMotion ? undefined : { y: imageY, scale: imageScale }}
-          className="relative h-full w-full"
-        >
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            sizes={sizes}
-            className="object-cover brightness-[1.03] contrast-[1.05] saturate-[1.07]"
-          />
-        </motion.div>
-      </motion.div>
-      {/* Warm highlight — editorial lift */}
+    <div className={`relative h-full w-full overflow-hidden ${className}`}>
+      <div className="relative h-full w-full">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          className="object-cover brightness-[1.04] contrast-[1.04] saturate-[1.06]"
+          priority={false}
+        />
+      </div>
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_85%_65%_at_18%_12%,rgba(255,248,238,0.22)_0%,transparent_52%)] mix-blend-soft-light"
-        aria-hidden
-      />
-      {/* Depth vignette */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_90%_at_50%_58%,transparent_35%,rgba(26,0,8,0.42)_88%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_75%_at_50%_45%,transparent_40%,rgba(26,0,8,0.18)_100%)]"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a0008]/45 via-transparent to-transparent"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a0008]/25 via-transparent to-transparent"
         aria-hidden
       />
-      <motion.div
-        style={reduceMotion ? undefined : { opacity: veilOpacity }}
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/18 via-white/5 to-brand-darkRed/14 mix-blend-screen"
-      />
-      {/* Fine grain — print texture */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay"
+        className="pointer-events-none absolute inset-0 opacity-[0.035] mix-blend-overlay"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
         }}
@@ -196,7 +161,16 @@ function ElevatedScrollImage({
   )
 }
 
-function ScreenVideo({ src, ariaLabel }: { src: string; ariaLabel: string }) {
+function ScreenVideo({
+  src,
+  ariaLabel,
+  introHandoff,
+}: {
+  src: string
+  ariaLabel: string
+  /** Hero only: dark + dusty-blue end fade so it does not blend into the cream intro strip below */
+  introHandoff?: boolean
+}) {
   return (
     <section className="bs-full-bleed overflow-hidden bg-[#060304]">
       <div className="pointer-events-none absolute inset-0 z-[4] opacity-90">
@@ -212,14 +186,33 @@ function ScreenVideo({ src, ariaLabel }: { src: string; ariaLabel: string }) {
         preload="metadata"
         className="relative z-[1] block h-[min(72vh,100vw)] w-full object-cover md:h-[min(78vh,56.25vw)]"
       />
-      <div
-        className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(to_top,rgba(250,249,247,0.14)_0%,transparent_38%,rgba(8,4,6,0.35)_100%)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-24 bg-gradient-to-t from-[#faf9f7] via-[#faf9f7]/40 to-transparent"
-        aria-hidden
-      />
+      {introHandoff ? (
+        <>
+          <div
+            className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(to_top,rgba(146,170,193,0.11)_0%,transparent_40%,rgba(10,6,9,0.42)_100%)]"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-[min(32vh,260px)] bg-gradient-to-t from-[#0a0608] via-[#140c10]/95 to-transparent"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-24 bg-gradient-to-t from-[#1a121a]/90 via-brand-dustyBlue/[0.12] to-transparent"
+            aria-hidden
+          />
+        </>
+      ) : (
+        <>
+          <div
+            className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(to_top,rgba(250,249,247,0.1)_0%,transparent_38%,rgba(8,4,6,0.35)_100%)]"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-24 bg-gradient-to-t from-[#ebe6df] via-[#ebe6df]/45 to-transparent"
+            aria-hidden
+          />
+        </>
+      )}
     </section>
   )
 }
@@ -304,19 +297,11 @@ function ParallaxMosaic({
   )
 }
 
-function ProsePhase({
-  children,
-  className = '',
-  narrowCap = false,
-}: {
-  children: React.ReactNode
-  className?: string
-  narrowCap?: boolean
-}) {
+function ProsePhase({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   const { isRTL } = useLanguage()
   return (
     <div
-      className={`font-roboto text-[15px] leading-[1.92] tracking-[0.02em] text-brand-darkRed/[0.92] md:text-[17px] md:leading-[2] ${narrowCap ? 'first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:font-rozha first-letter:text-[3.25rem] first-letter:leading-none first-letter:text-brand-darkRed md:first-letter:text-[3.75rem]' : ''} ${isRTL ? 'text-right' : ''} ${className}`}
+      className={`font-roboto text-[15px] leading-[1.92] tracking-[0.02em] text-brand-darkRed/[0.92] md:text-[17px] md:leading-[2] ${isRTL ? 'text-right' : ''} ${className}`}
     >
       {children}
     </div>
@@ -368,7 +353,11 @@ export default function CraftsmanshipClient() {
       />
 
       {/* First band sits directly under fixed header — page padding lives in LayoutWrapper only */}
-      <ScreenVideo src={CRAFT_VIDEO_BANDS[0].src} ariaLabel={CRAFT_VIDEO_BANDS[0].ariaLabel} />
+      <ScreenVideo
+        src={CRAFT_VIDEO_BANDS[0].src}
+        ariaLabel={CRAFT_VIDEO_BANDS[0].ariaLabel}
+        introHandoff
+      />
 
       {/* Intro — wide editorial header aligned with home luxury rhythm */}
       <section className="relative border-b border-brand-stone/15 bg-[linear-gradient(180deg,#faf9f7_0%,#f5f1ea_100%)] px-6 pb-16 pt-16 md:pb-24 md:pt-24 lg:px-16">
@@ -407,8 +396,8 @@ export default function CraftsmanshipClient() {
         >
           <DecorativeCorners tone="dustyBlue" />
           <div className="relative mx-auto max-w-[90rem]">
-            <div className="grid gap-14 lg:grid-cols-12 lg:gap-16 xl:gap-24">
-              <header className="lg:col-span-4 xl:col-span-3">
+            <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16 xl:gap-24">
+              <header className="lg:col-span-4 xl:col-span-3 lg:pt-0">
                 <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">Phase I</p>
                 <h2
                   id="phase-i"
@@ -419,8 +408,8 @@ export default function CraftsmanshipClient() {
                 <div className="mt-10 hidden h-px w-16 bg-gradient-to-r from-brand-dustyBlue/60 to-transparent lg:block" aria-hidden />
               </header>
               <div className="lg:col-span-8 xl:col-span-9">
-                <div className="grid gap-10 md:gap-x-16 md:gap-y-12 lg:grid-cols-2">
-                  <ProsePhase narrowCap>
+                <div className="grid items-start gap-10 md:grid-cols-2 md:gap-x-16 md:gap-y-10 lg:gap-y-12">
+                  <ProsePhase>
                     <p className="mb-0">
                       At Bint Saeed, each piece begins with a defined process of development. As a house based in Abu Dhabi,
                       the work moves between locations with a clear structure. Patterns are created in Italy, where
@@ -429,7 +418,7 @@ export default function CraftsmanshipClient() {
                     </p>
                   </ProsePhase>
                   <ProsePhase>
-                    <p className="mb-0 md:pt-8 lg:pt-12">
+                    <p className="mb-0">
                       The process then continues in Abu Dhabi, where prototypes are produced to test construction and
                       proportion. Once these are approved, a sample is made to confirm the final form, material behaviour,
                       and fit. Only after these stages are completed and reviewed does a piece move into production. This
@@ -457,7 +446,7 @@ export default function CraftsmanshipClient() {
         >
           <DecorativeCorners tone="darkRed" />
           <div className="relative mx-auto max-w-[90rem]">
-            <div className="grid gap-14 lg:grid-cols-12 lg:gap-16 xl:gap-24">
+            <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16 xl:gap-24">
               <header className="lg:col-span-4 xl:col-span-3">
                 <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-clayRed/90">Phase II</p>
                 <h2
@@ -468,9 +457,9 @@ export default function CraftsmanshipClient() {
                 </h2>
                 <div className="mt-10 hidden h-px w-16 bg-gradient-to-r from-brand-darkRed/45 to-transparent lg:block" aria-hidden />
               </header>
-              <div className="space-y-12 lg:col-span-8 xl:col-span-9">
-                <div className="grid gap-12 md:grid-cols-2 md:gap-x-14 md:gap-y-14">
-                  <ProsePhase narrowCap>
+              <div className="lg:col-span-8 xl:col-span-9">
+                <div className="grid items-start gap-12 md:grid-cols-2 md:gap-x-14 md:gap-y-12">
+                  <ProsePhase>
                     <p className="mb-0">
                       Production takes place in Abu Dhabi, United Arab Emirates, under the direction of craftsmen with over
                       25 years of experience. Their role is to ensure that each piece is constructed with consistency,
@@ -478,7 +467,7 @@ export default function CraftsmanshipClient() {
                     </p>
                   </ProsePhase>
                   <ProsePhase>
-                    <p className="mb-0 md:pt-6">
+                    <p className="mb-0">
                       Materials are sourced across Europe and Asia. Components such as buttons are selected from European
                       suppliers, while natural stones are sourced, cut, and polished in Asia. Each element is chosen for its
                       performance, ensuring it contributes to the structure, durability, and overall balance of the garment.
@@ -492,7 +481,7 @@ export default function CraftsmanshipClient() {
                     </p>
                   </ProsePhase>
                   <ProsePhase>
-                    <p className="mb-0 md:pt-4">
+                    <p className="mb-0">
                       In line with this approach, pieces are produced primarily on an order basis, with each garment made
                       specifically for the client. This allows production to remain focused and avoids excess inventory,
                       maintaining a more considered and responsible way of working.
@@ -519,7 +508,7 @@ export default function CraftsmanshipClient() {
         >
           <DecorativeCorners tone="dustyBlue" />
           <div className="relative mx-auto max-w-[90rem]">
-            <div className="grid gap-14 lg:grid-cols-12 lg:gap-16 xl:gap-24">
+            <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16 xl:gap-24">
               <header className="lg:col-span-4 xl:col-span-3">
                 <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">Phase III</p>
                 <h2
@@ -530,15 +519,15 @@ export default function CraftsmanshipClient() {
                 </h2>
                 <div className="mt-10 hidden h-px w-16 bg-gradient-to-r from-brand-dustyBlue/55 to-transparent lg:block" aria-hidden />
               </header>
-              <div className="space-y-14 lg:col-span-8 xl:col-span-9">
-                <ProsePhase narrowCap className="max-w-3xl">
+              <div className="flex flex-col gap-12 lg:col-span-8 xl:col-span-9 lg:gap-14">
+                <ProsePhase className="max-w-3xl">
                   <p className="mb-0">
                     Each design is developed and carried through to completion under a single direction. The Creative Director
                     oversees the process from initial concept to final execution, ensuring that proportion, construction, and
                     detail remain aligned throughout.
                   </p>
                 </ProsePhase>
-                <div className="grid gap-12 md:grid-cols-2 md:gap-x-14">
+                <div className="grid items-start gap-12 md:grid-cols-2 md:gap-x-14">
                   <ProsePhase>
                     <p className="mb-0">
                       Elements such as Al Talli and Khous are integrated into the structure of the garment rather than applied
@@ -547,7 +536,7 @@ export default function CraftsmanshipClient() {
                     </p>
                   </ProsePhase>
                   <ProsePhase>
-                    <p className="mb-0 md:pt-6">
+                    <p className="mb-0">
                       The result is a piece that reflects a clear standard of development, controlled production, and considered
                       design. Each abaya is made to hold its form, perform in use, and maintain its quality over time. Bint Saeed
                       operates as a contemporary house, shaped in Abu Dhabi and developed through an international process.
