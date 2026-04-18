@@ -162,7 +162,7 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-white pt-32 flex items-center justify-center font-roboto text-brand-clayRed">
+      <div className="min-h-screen bg-white pt-32 flex items-center justify-center font-montserrat text-brand-clayRed">
         {isRTL ? 'جاري التوجيه…' : 'Redirecting…'}
       </div>
     )
@@ -172,7 +172,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-[#faf9f7]">
       <div className="border-b border-brand-stone/20 bg-white">
         <div className="container mx-auto px-6 lg:px-12 py-8 pt-28">
-          <div className={`flex flex-wrap items-center gap-2 font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/60 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <div className={`flex flex-wrap items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/60 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <LocaleLink href="/cart" className="hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
               {isRTL ? 'السلة' : 'Bag'}
             </LocaleLink>
@@ -184,7 +184,7 @@ export default function CheckoutPage() {
               <h1 data-document-h1="true" className="font-rozha text-3xl md:text-4xl text-brand-darkRed">
                 {isRTL ? 'إتمام الطلب' : 'Checkout'}
               </h1>
-              <p className="mt-2 max-w-xl font-roboto text-sm text-brand-clayRed/70 tracking-wide">
+              <p className="mt-2 max-w-xl font-montserrat text-sm text-brand-clayRed/70 tracking-wide">
                 {isRTL
                   ? 'راجعي طلبك، أدخلي رمز الخصم إن وُجد، ثم أكملي الدفع بأمان عبر سترايب.'
                   : 'Review your order, apply a discount if you have one, then complete payment securely with Stripe.'}
@@ -192,7 +192,7 @@ export default function CheckoutPage() {
             </div>
             <LocaleLink
               href="/cart"
-              className={`hidden shrink-0 items-center gap-2 font-roboto text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue sm:inline-flex ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`hidden shrink-0 items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue sm:inline-flex ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
@@ -226,12 +226,12 @@ export default function CheckoutPage() {
                       <LocaleLink href={productHref(item)} className="font-rozha text-lg text-brand-darkRed hover:text-brand-dustyBlue" data-cursor-hover>
                         {item.name}
                       </LocaleLink>
-                      <p className="mt-1 font-roboto text-xs text-brand-clayRed/65 tracking-wide">
+                      <p className="mt-1 font-montserrat text-xs text-brand-clayRed/65 tracking-wide">
                         {item.size} · {item.color}
                         {item.lengthCm ? ` · ${item.lengthCm} cm` : ''}
                         {item.customisationMessage ? ` · "${item.customisationMessage.slice(0, 20)}${item.customisationMessage.length > 20 ? '…' : ''}"` : ''}
                       </p>
-                      <p className="mt-2 font-roboto text-sm text-brand-darkRed">
+                      <p className="mt-2 font-montserrat text-sm text-brand-darkRed">
                         {formatPrice(lineUnitAed(item))}
                         <span className="text-brand-clayRed/50"> × {item.quantity}</span>
                         {item.quantity > 1 && (
@@ -257,7 +257,7 @@ export default function CheckoutPage() {
                   </h2>
                   <LocaleLink
                     href="/shop"
-                    className="font-roboto text-[10px] uppercase tracking-[0.18em] text-brand-clayRed/65 hover:text-brand-dustyBlue"
+                    className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-clayRed/65 hover:text-brand-dustyBlue"
                     data-cursor-hover
                   >
                     {isRTL ? 'تسوقي المزيد' : 'Shop more'}
@@ -290,7 +290,7 @@ export default function CheckoutPage() {
                           <p className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
                             {product.name}
                           </p>
-                          <p className="mt-1 font-roboto text-xs tracking-wide text-brand-clayRed/80">
+                          <p className="mt-1 font-montserrat text-xs tracking-wide text-brand-clayRed/80">
                             {formatPrice(product.price)}
                           </p>
                         </div>
@@ -312,7 +312,7 @@ export default function CheckoutPage() {
                 <FiMail className="h-5 w-5 text-brand-dustyBlue" />
                 {isRTL ? 'البريد الإلكتروني' : 'Email'}
               </h2>
-              <p className="mb-4 font-roboto text-xs text-brand-clayRed/60 tracking-wide">
+              <p className="mb-4 font-montserrat text-xs text-brand-clayRed/60 tracking-wide">
                 {isRTL
                   ? 'اختياري — يُستخدم لتسريع صفحة الدفع وتأكيد الطلب.'
                   : 'Optional — pre-fills Stripe checkout and helps us send your confirmation.'}
@@ -322,7 +322,7 @@ export default function CheckoutPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={isRTL ? 'you@example.com' : 'you@example.com'}
-                className="w-full border border-brand-stone/40 bg-[#faf9f7] px-4 py-3 font-roboto text-sm tracking-wide focus:border-brand-darkRed focus:outline-none"
+                className="w-full border border-brand-stone/40 bg-[#faf9f7] px-4 py-3 font-montserrat text-sm tracking-wide focus:border-brand-darkRed focus:outline-none"
               />
             </motion.section>
 
@@ -337,7 +337,7 @@ export default function CheckoutPage() {
                 <FiTag className="h-5 w-5 text-brand-dustyBlue" />
                 {isRTL ? 'رمز الخصم' : 'Discount code'}
               </h2>
-              <p className="mb-4 font-roboto text-xs text-brand-clayRed/60 tracking-wide">
+              <p className="mb-4 font-montserrat text-xs text-brand-clayRed/60 tracking-wide">
                 {isRTL
                   ? 'أدخلي الرمز ثم اضغطي تطبيق. يجب إنشاء رموز الترويج في لوحة سترايب.'
                   : 'Enter your code and tap Apply. Promotion codes are created in your Stripe Dashboard.'}
@@ -348,20 +348,20 @@ export default function CheckoutPage() {
                   value={discountInput}
                   onChange={(e) => setDiscountInput(e.target.value)}
                   placeholder={isRTL ? 'الرمز' : 'PROMO CODE'}
-                  className="min-h-[44px] flex-1 border border-brand-stone/40 bg-[#faf9f7] px-4 py-3 font-roboto text-sm uppercase tracking-wider focus:border-brand-darkRed focus:outline-none"
+                  className="min-h-[44px] flex-1 border border-brand-stone/40 bg-[#faf9f7] px-4 py-3 font-montserrat text-sm uppercase tracking-wider focus:border-brand-darkRed focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => void applyDiscount()}
                   disabled={discountBusy}
-                  className="min-h-[44px] shrink-0 border border-brand-darkRed bg-brand-darkRed px-6 py-3 font-roboto text-xs uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-dustyBlue disabled:opacity-50"
+                  className="min-h-[44px] shrink-0 border border-brand-darkRed bg-brand-darkRed px-6 py-3 font-montserrat text-xs uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-dustyBlue disabled:opacity-50"
                   data-cursor-hover
                 >
                   {discountBusy ? (isRTL ? '…' : '…') : isRTL ? 'تطبيق' : 'Apply'}
                 </button>
               </div>
               {appliedCode ? (
-                <p className={`mt-3 flex items-center gap-2 font-roboto text-xs text-emerald-700 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <p className={`mt-3 flex items-center gap-2 font-montserrat text-xs text-emerald-700 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <FiCheck className="h-4 w-4 shrink-0" />
                   {isRTL ? `تم تطبيق «${appliedCode}» على الدفع` : `“${appliedCode}” will apply at payment`}
                 </p>
@@ -379,7 +379,7 @@ export default function CheckoutPage() {
                 <FiLock className="h-5 w-5 text-brand-dustyBlue" />
                 {isRTL ? 'الدفع' : 'Payment'}
               </h2>
-              <p className="mb-6 font-roboto text-sm text-brand-clayRed/70 leading-relaxed">
+              <p className="mb-6 font-montserrat text-sm text-brand-clayRed/70 leading-relaxed">
                 {isRTL
                   ? 'الدفع يتم عبر سترايب (Stripe) — بطاقات الائتمان و Apple Pay و Google Pay حيثما تُدعم. فعّلي Apple Pay من لوحة سترايب بعد التحقق من النطاق.'
                   : 'Payments are processed by Stripe — credit and debit cards, Apple Pay, and Google Pay where supported. Enable Apple Pay in the Stripe Dashboard after domain verification.'}
@@ -389,7 +389,7 @@ export default function CheckoutPage() {
                 {['Visa', 'Mastercard', 'Amex', 'Apple Pay', 'Google Pay'].map((label) => (
                   <span
                     key={label}
-                    className="rounded-full border border-brand-stone/30 bg-[#faf9f7] px-3 py-1.5 font-roboto text-[10px] uppercase tracking-[0.12em] text-brand-darkRed/80"
+                    className="rounded-full border border-brand-stone/30 bg-[#faf9f7] px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-darkRed/80"
                   >
                     {label}
                   </span>
@@ -400,7 +400,7 @@ export default function CheckoutPage() {
                 type="button"
                 onClick={() => void startStripeCheckout()}
                 disabled={payBusy || !stripeEnvReady}
-                className={`flex w-full min-h-[52px] items-center justify-center gap-3 bg-brand-darkRed py-4 font-roboto text-sm uppercase tracking-[0.22em] text-white transition-colors hover:bg-brand-dustyBlue disabled:opacity-50 ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`flex w-full min-h-[52px] items-center justify-center gap-3 bg-brand-darkRed py-4 font-montserrat text-sm uppercase tracking-[0.22em] text-white transition-colors hover:bg-brand-dustyBlue disabled:opacity-50 ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 {payBusy ? (
@@ -413,11 +413,11 @@ export default function CheckoutPage() {
                   </>
                 )}
               </button>
-              <p className="mt-4 text-center font-roboto text-[10px] uppercase tracking-[0.15em] text-brand-clayRed/45">
+              <p className="mt-4 text-center font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-clayRed/45">
                 {isRTL ? 'تشفير SSL · تتم المعالجة بواسطة Stripe' : 'SSL encrypted · Powered by Stripe'}
               </p>
               {!stripeEnvReady ? (
-                <p className="mt-2 text-center font-roboto text-[10px] uppercase tracking-[0.15em] text-amber-700/80">
+                <p className="mt-2 text-center font-montserrat text-[10px] uppercase tracking-[0.15em] text-amber-700/80">
                   {isRTL
                     ? 'أضيفي NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY و STRIPE_SECRET_KEY لتفعيل الدفع.'
                     : 'Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY and STRIPE_SECRET_KEY to enable checkout.'}
@@ -426,10 +426,10 @@ export default function CheckoutPage() {
 
               {/* BNPL */}
               <div className="mt-10 border-t border-brand-stone/20 pt-8">
-                <h3 className="font-roboto text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue mb-4">
+                <h3 className="font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue mb-4">
                   {isRTL ? 'ادفع لاحقاً' : 'Buy now, pay later'}
                 </h3>
-                <p className="mb-4 font-roboto text-xs text-brand-clayRed/65 leading-relaxed">
+                <p className="mb-4 font-montserrat text-xs text-brand-clayRed/65 leading-relaxed">
                   {isRTL
                     ? 'تابي وتمارا: بعد ربط حساب التاجر، أضيفي الروابط أو واجهة البرمجة أدناه. حتى ذلك الحين يمكن للعملاء الدفع بالبطاقة عبر سترايب.'
                     : 'Tabby and Tamara: after merchant onboarding, wire their checkout URLs or APIs using the env vars in .env.example. Until then, customers can pay by card through Stripe.'}
@@ -440,13 +440,13 @@ export default function CheckoutPage() {
                       href={tabbyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex min-h-[44px] items-center justify-center border border-brand-stone/40 px-6 py-3 font-roboto text-xs uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                      className="inline-flex min-h-[44px] items-center justify-center border border-brand-stone/40 px-6 py-3 font-montserrat text-xs uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
                       data-cursor-hover
                     >
                       Tabby
                     </a>
                   ) : (
-                    <span className="inline-flex min-h-[44px] items-center justify-center border border-dashed border-brand-stone/35 px-6 py-3 font-roboto text-xs uppercase tracking-[0.15em] text-brand-clayRed/45">
+                    <span className="inline-flex min-h-[44px] items-center justify-center border border-dashed border-brand-stone/35 px-6 py-3 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed/45">
                       Tabby — set NEXT_PUBLIC_TABBY_CHECKOUT_URL
                     </span>
                   )}
@@ -455,13 +455,13 @@ export default function CheckoutPage() {
                       href={tamaraUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex min-h-[44px] items-center justify-center border border-brand-stone/40 px-6 py-3 font-roboto text-xs uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                      className="inline-flex min-h-[44px] items-center justify-center border border-brand-stone/40 px-6 py-3 font-montserrat text-xs uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
                       data-cursor-hover
                     >
                       Tamara
                     </a>
                   ) : (
-                    <span className="inline-flex min-h-[44px] items-center justify-center border border-dashed border-brand-stone/35 px-6 py-3 font-roboto text-xs uppercase tracking-[0.15em] text-brand-clayRed/45">
+                    <span className="inline-flex min-h-[44px] items-center justify-center border border-dashed border-brand-stone/35 px-6 py-3 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed/45">
                       Tamara — set NEXT_PUBLIC_TAMARA_CHECKOUT_URL
                     </span>
                   )}
@@ -482,18 +482,18 @@ export default function CheckoutPage() {
                 <h2 className="font-rozha text-2xl text-brand-dustyBlue/95 mb-6">
                   {isRTL ? 'الملخص' : 'Summary'}
                 </h2>
-                <div className={`flex justify-between font-roboto text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex justify-between font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <span>{isRTL ? 'المجموع الفرعي' : 'Subtotal'}</span>
                   <span className="text-white">{formatPrice(subtotal)}</span>
                 </div>
                 {appliedCode ? (
-                  <p className="mt-3 font-roboto text-xs text-emerald-300/90">
+                  <p className="mt-3 font-montserrat text-xs text-emerald-300/90">
                     {isRTL ? `خصم: ${appliedCode}` : `Discount code: ${appliedCode}`}
                   </p>
                 ) : null}
                 <div className={`mt-6 flex items-start gap-3 border-t border-white/10 pt-6 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
                   <FiTruck className="h-4 w-4 shrink-0 text-brand-dustyBlue/80 mt-0.5" />
-                  <p className="font-roboto text-xs leading-relaxed text-white/55">
+                  <p className="font-montserrat text-xs leading-relaxed text-white/55">
                     {isRTL
                       ? 'خيارات الشحن (قياسي أو سريع) تظهر في صفحة سترايب قبل إتمام الدفع.'
                       : 'Shipping options (standard or express) appear on the Stripe page before you pay.'}
@@ -504,7 +504,7 @@ export default function CheckoutPage() {
                     <span className="text-white/80">{isRTL ? 'الإجمالي التقريبي' : 'Estimated total'}</span>
                     <span>{formatPrice(subtotal)}</span>
                   </div>
-                  <p className="mt-2 font-roboto text-[10px] uppercase tracking-[0.2em] text-white/35">
+                  <p className="mt-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/35">
                     {isRTL ? '+ الشحن والضرائب في سترايب' : '+ Shipping & tax in Stripe'}
                   </p>
                 </div>
@@ -512,7 +512,7 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={() => void startStripeCheckout()}
                   disabled={payBusy || !stripeEnvReady}
-                  className={`mt-8 flex w-full min-h-[48px] items-center justify-center gap-2 bg-brand-dustyBlue py-3.5 font-roboto text-xs uppercase tracking-[0.22em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`mt-8 flex w-full min-h-[48px] items-center justify-center gap-2 bg-brand-dustyBlue py-3.5 font-montserrat text-xs uppercase tracking-[0.22em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
                   {payBusy ? (isRTL ? '…' : '…') : isRTL ? 'دفع' : 'Pay now'}

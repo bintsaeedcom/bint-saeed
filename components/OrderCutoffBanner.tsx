@@ -35,19 +35,19 @@ export default function OrderCutoffBanner() {
       role="status"
       aria-live="polite"
     >
-      <p className="font-roboto text-[11px] uppercase tracking-[0.2em] text-brand-darkRed">
+      <p className="font-montserrat text-[11px] uppercase tracking-[0.2em] text-brand-darkRed">
         {isRTL ? 'التوصيل' : 'Delivery'}
       </p>
-      <p className="mt-2 font-roboto text-sm leading-relaxed tracking-wide text-brand-clayRed/80">
+      <p className="mt-2 font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/80">
         {isRTL
           ? 'اطلبي قبل منتصف الليل (بتوقيت جهازك) لمعالجة الطلب في الدفعة التالية. الاستلام خلال ١–٢ أسبوعًا حسب الوجهة.'
           : 'Order before midnight (your local time) to join the next atelier batch. Receive your piece within 1–2 weeks depending on destination.'}
       </p>
       <div className="mt-4 flex flex-wrap items-baseline gap-3 border-t border-brand-stone/20 pt-3">
-        <span className="font-roboto text-[10px] uppercase tracking-[0.18em] text-brand-clayRed/60">
+        <span className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-clayRed/60">
           {isRTL ? 'الوقت حتى منتصف الليل' : 'Time until midnight'}
         </span>
-        <span className="font-roboto text-xl tabular-nums tracking-wider text-brand-darkRed" aria-label="Countdown">
+        <span className="font-montserrat text-xl tabular-nums tracking-wider text-brand-darkRed" aria-label="Countdown">
           {formatHms(remaining)}
         </span>
       </div>

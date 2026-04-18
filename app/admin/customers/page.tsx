@@ -62,7 +62,7 @@ export default function AdminCustomersPage() {
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 data-document-h1="true" className="font-rozha text-3xl text-white">Customers</h1>
-          <p className="mt-1 font-roboto text-sm text-white/50">
+          <p className="mt-1 font-montserrat text-sm text-white/50">
             One record per email, linked to order numbers · Updated when orders are saved
             {storage ? ` · Storage: ${storage}` : ''}
           </p>
@@ -84,14 +84,14 @@ export default function AdminCustomersPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search email or name…"
-            className="w-full max-w-md rounded-xl border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 font-roboto text-sm text-white placeholder-white/35 focus:border-brand-dustyBlue/40 focus:outline-none"
+            className="w-full max-w-md rounded-xl border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 font-montserrat text-sm text-white placeholder-white/35 focus:border-brand-dustyBlue/40 focus:outline-none"
           />
         </div>
       </div>
 
       <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.04]">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[720px] text-left font-roboto text-sm">
+          <table className="w-full min-w-[720px] text-left font-montserrat text-sm">
             <thead>
               <tr className="border-b border-white/10 text-[10px] uppercase tracking-[0.2em] text-white/45">
                 <th className="px-4 py-3">Email</th>
@@ -171,22 +171,22 @@ export default function AdminCustomersPage() {
                 </button>
               </div>
               {detailLoading ? (
-                <p className="py-12 text-center font-roboto text-sm text-white/50">Loading…</p>
+                <p className="py-12 text-center font-montserrat text-sm text-white/50">Loading…</p>
               ) : detail ? (
                 <>
                   <div className="mb-4 flex items-start justify-between gap-4">
                     <div className="min-w-0">
                       <h2 className="break-all font-rozha text-xl text-brand-stone">{detail.customer.email}</h2>
                       {detail.customer.displayName ? (
-                        <p className="mt-1 font-roboto text-sm text-white/70">{detail.customer.displayName}</p>
+                        <p className="mt-1 font-montserrat text-sm text-white/70">{detail.customer.displayName}</p>
                       ) : null}
                       {detail.customer.phone ? (
-                        <p className="mt-0.5 font-roboto text-sm text-white/60">{detail.customer.phone}</p>
+                        <p className="mt-0.5 font-montserrat text-sm text-white/60">{detail.customer.phone}</p>
                       ) : null}
                     </div>
                   </div>
 
-                  <div className="mb-6 grid grid-cols-2 gap-3 font-roboto text-sm">
+                  <div className="mb-6 grid grid-cols-2 gap-3 font-montserrat text-sm">
                     <div className="rounded-lg border border-white/10 bg-white/[0.04] p-3">
                       <p className="text-[10px] uppercase tracking-wider text-white/40">Orders</p>
                       <p className="mt-1 tabular-nums text-lg text-white">{detail.customer.orderCount}</p>
@@ -218,7 +218,7 @@ export default function AdminCustomersPage() {
                         detail.orders.map((o) => (
                           <li
                             key={o.id}
-                            className="flex flex-wrap items-baseline justify-between gap-2 border-b border-white/5 pb-2 font-roboto text-sm"
+                            className="flex flex-wrap items-baseline justify-between gap-2 border-b border-white/5 pb-2 font-montserrat text-sm"
                           >
                             <div className="min-w-0">
                               <Link

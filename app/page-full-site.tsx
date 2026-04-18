@@ -64,7 +64,7 @@ function HeroSection() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <span className="mb-8 inline-block bg-brand-stone/30 px-4 py-2 font-roboto text-[10px] uppercase tracking-[0.4em] text-white backdrop-blur-sm">
+                  <span className="mb-8 inline-block bg-brand-stone/30 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.4em] text-white backdrop-blur-sm">
                     {t.hero.subtitle}
                   </span>
                 </motion.div>
@@ -89,14 +89,14 @@ function HeroSection() {
               >
                 <LocaleLink
                   href="/shop"
-                  className="group relative overflow-hidden bg-white px-12 py-5 font-roboto text-xs uppercase tracking-[0.25em] text-brand-darkRed"
+                  className="group relative overflow-hidden bg-white px-12 py-5 font-montserrat text-xs uppercase tracking-[0.25em] text-brand-darkRed"
                   data-cursor-hover
                 >
                   <span className="relative z-10">{t.hero.shopCollection}</span>
                   <div className="absolute inset-0 translate-y-full bg-brand-dustyBlue transition-transform duration-500 group-hover:translate-y-0" />
                 </LocaleLink>
                 <div className="hidden h-12 w-px bg-white/30 md:block" />
-                <p className="hidden max-w-[200px] font-roboto text-xs leading-relaxed tracking-wide text-white/60 md:block">
+                <p className="hidden max-w-[200px] font-montserrat text-xs leading-relaxed tracking-wide text-white/60 md:block">
                   {t.hero.description}
                 </p>
               </motion.div>
@@ -146,7 +146,7 @@ function EditorialIntro() {
             className={`lg:col-span-5 ${isRTL ? 'lg:col-start-8' : ''} relative z-10`}
           >
             <div className="lg:pr-12">
-              <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-darkRed/60 mb-6 block">
+              <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-darkRed/60 mb-6 block">
                 {t.editorial.subtitle}
               </span>
               <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed leading-[1.05] mb-8">
@@ -154,12 +154,12 @@ function EditorialIntro() {
                 <br />
                 <span className="text-brand-clayRed">{t.editorial.title2}</span>
               </h2>
-              <p className="font-roboto text-sm text-brand-darkRed/70 tracking-wide leading-[1.9] mb-10">
+              <p className="font-montserrat text-sm text-brand-darkRed/70 tracking-wide leading-[1.9] mb-10">
                 {t.editorial.description}
               </p>
               <LocaleLink
                 href="/about"
-                className={`group inline-flex items-center gap-4 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`group inline-flex items-center gap-4 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 <span className="relative">
@@ -211,7 +211,7 @@ function MagazineGrid() {
           className={`flex items-end justify-between mb-16 ${isRTL ? 'flex-row-reverse' : ''}`}
         >
           <div>
-            <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-clayRed mb-3 block">
+            <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-clayRed mb-3 block">
               {t.collections.subtitle}
             </span>
             <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed">
@@ -220,7 +220,7 @@ function MagazineGrid() {
           </div>
           <LocaleLink
             href="/shop"
-            className="hidden md:flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
+            className="hidden md:flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
             data-cursor-hover
           >
             {t.featured.viewAll}
@@ -246,13 +246,13 @@ function MagazineGrid() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed/80 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-                <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-stone mb-3 block">
+                <span className="font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-stone mb-3 block">
                   {t.collections.eveningWear}
                 </span>
                 <h3 className="font-rozha text-3xl md:text-4xl text-white mb-4">
                   {isRTL ? 'مجموعة المساء' : 'Evening Collection'}
                 </h3>
-                <span className="inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">
+                <span className="inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">
                   {t.collections.viewCollection}
                   <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
@@ -275,7 +275,7 @@ function MagazineGrid() {
                 className="object-cover mix-blend-multiply opacity-80 transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-white/70 mb-2">
+                <span className="font-montserrat text-[10px] uppercase tracking-[0.3em] text-white/70 mb-2">
                   {t.collections.resortCollection}
                 </span>
                 <h3 className="font-rozha text-2xl md:text-3xl text-white">
@@ -300,7 +300,7 @@ function MagazineGrid() {
                 className="object-cover mix-blend-multiply opacity-80 transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-white/70 mb-2">
+                <span className="font-montserrat text-[10px] uppercase tracking-[0.3em] text-white/70 mb-2">
                   {t.collections.essentials}
                 </span>
                 <h3 className="font-rozha text-2xl md:text-3xl text-white">
@@ -346,7 +346,7 @@ function ColorBlockSection() {
             </div>
             {/* Floating Label */}
             <div className="absolute -bottom-6 -right-6 md:right-auto md:-left-6 bg-brand-stone px-6 py-4">
-              <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-darkRed">
+              <span className="font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-darkRed">
                 {isRTL ? 'صناعة يدوية' : 'Handcrafted'}
               </span>
             </div>
@@ -360,21 +360,21 @@ function ColorBlockSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue/70 mb-6 block">
+              <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue/70 mb-6 block">
                 {t.about.title}
               </span>
               <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl leading-[1.05] mb-8">
                 {t.about.daughters}
               </h2>
-              <p className="font-roboto text-base text-brand-darkRed/70 tracking-wide leading-[1.9] mb-8 max-w-lg">
+              <p className="font-montserrat text-base text-brand-darkRed/70 tracking-wide leading-[1.9] mb-8 max-w-lg">
                 {t.about.daughtersText1}
               </p>
-              <p className="font-roboto text-base text-brand-darkRed/70 tracking-wide leading-[1.9] mb-12 max-w-lg">
+              <p className="font-montserrat text-base text-brand-darkRed/70 tracking-wide leading-[1.9] mb-12 max-w-lg">
                 {t.about.daughtersText2}
               </p>
               <LocaleLink
                 href="/about"
-                className="inline-block px-10 py-4 border border-brand-darkRed/25 text-brand-darkRed font-roboto text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white hover:border-brand-darkRed transition-all duration-500"
+                className="inline-block px-10 py-4 border border-brand-darkRed/25 text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white hover:border-brand-darkRed transition-all duration-500"
                 data-cursor-hover
               >
                 {t.about.readMore}
@@ -432,7 +432,7 @@ function EditorialSplit() {
             transition={{ duration: 1, delay: 0.2 }}
             className={`p-12 lg:p-20 ${isRTL ? 'text-right' : ''}`}
           >
-            <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
+            <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
               {t.lifestyle.subtitle}
             </span>
             <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed leading-[1.1] mb-8">
@@ -442,7 +442,7 @@ function EditorialSplit() {
               <br />
               {t.lifestyle.title3}
             </h2>
-            <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-[1.9] mb-10 max-w-md">
+            <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide leading-[1.9] mb-10 max-w-md">
               {t.lifestyle.description}
             </p>
             
@@ -455,14 +455,14 @@ function EditorialSplit() {
               ].map((item, i) => (
                 <div key={i} className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <div className="w-8 h-px bg-brand-dustyBlue" />
-                  <span className="font-roboto text-sm text-brand-darkRed/80 tracking-wide">{item}</span>
+                  <span className="font-montserrat text-sm text-brand-darkRed/80 tracking-wide">{item}</span>
                 </div>
               ))}
             </div>
 
             <LocaleLink
               href="/about"
-              className={`group inline-flex items-center gap-3 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`group inline-flex items-center gap-3 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               {t.lifestyle.discoverStory}
@@ -528,7 +528,7 @@ function AsymmetricShowcase() {
           transition={{ duration: 0.8 }}
           className={`mb-20 ${isRTL ? 'text-right' : ''}`}
         >
-          <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-clayRed mb-3 block">
+          <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-clayRed mb-3 block">
             {t.featured.subtitle}
           </span>
           <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-6 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
@@ -537,7 +537,7 @@ function AsymmetricShowcase() {
             </h2>
             <LocaleLink
               href="/shop"
-              className="inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed hover:text-brand-dustyBlue transition-colors pb-2 border-b border-brand-darkRed/30"
+              className="inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed hover:text-brand-dustyBlue transition-colors pb-2 border-b border-brand-darkRed/30"
               data-cursor-hover
             >
               {t.featured.viewAll}
@@ -567,15 +567,15 @@ function AsymmetricShowcase() {
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-brand-darkRed/0 group-hover:bg-brand-darkRed/20 transition-colors duration-500" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                    <span className="inline-block px-6 py-3 bg-white text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em]">
+                    <span className="inline-block px-6 py-3 bg-white text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em]">
                       {t.featured.quickAdd}
                     </span>
                   </div>
                 </div>
-                <h3 className="font-roboto text-sm text-brand-darkRed mb-2 tracking-wide group-hover:text-brand-dustyBlue transition-colors">
+                <h3 className="font-montserrat text-sm text-brand-darkRed mb-2 tracking-wide group-hover:text-brand-dustyBlue transition-colors">
                   {product.name}
                 </h3>
-                <p className="font-roboto text-sm text-brand-clayRed/60 tracking-wide">
+                <p className="font-montserrat text-sm text-brand-clayRed/60 tracking-wide">
                   {product.price}
                 </p>
               </LocaleLink>

@@ -78,12 +78,12 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
   }
 
   const inputClass = variant === 'dark'
-    ? 'w-full px-5 py-4 bg-white/[0.03] border border-white/[0.08] rounded-xl text-brand-stone placeholder-white/30 font-roboto text-sm tracking-wide focus:outline-none focus:border-brand-dustyBlue/30 transition-colors'
-    : 'w-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder-white/50 font-roboto text-sm tracking-[0.1em] focus:outline-none focus:border-brand-rose transition-colors'
+    ? 'w-full px-5 py-4 bg-white/[0.03] border border-white/[0.08] rounded-xl text-brand-stone placeholder-white/30 font-montserrat text-sm tracking-wide focus:outline-none focus:border-brand-dustyBlue/30 transition-colors'
+    : 'w-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder-white/50 font-montserrat text-sm tracking-[0.1em] focus:outline-none focus:border-brand-rose transition-colors'
 
   const buttonClass = variant === 'dark'
-    ? 'px-8 py-4 bg-brand-dustyBlue text-[#1a0008] font-roboto text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-brand-stone transition-colors disabled:opacity-50'
-    : 'px-8 py-3 bg-brand-rose text-brand-darkRed font-roboto text-sm uppercase tracking-[0.2em] hover:bg-white transition-colors disabled:opacity-50'
+    ? 'px-8 py-4 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-brand-stone transition-colors disabled:opacity-50'
+    : 'px-8 py-3 bg-brand-rose text-brand-darkRed font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-white transition-colors disabled:opacity-50'
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -108,7 +108,7 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
       <div className={`space-y-1 ${isRTL ? 'text-right' : ''}`}>
         <label
           htmlFor="subscribe-phone"
-          className={`block text-xs uppercase tracking-[0.2em] font-roboto ${variant === 'dark' ? 'text-brand-dustyBlue/60' : 'text-white/60'}`}
+          className={`block text-xs uppercase tracking-[0.2em] font-montserrat ${variant === 'dark' ? 'text-brand-dustyBlue/60' : 'text-white/60'}`}
         >
           {isRTL ? (
             <>
@@ -137,7 +137,7 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
           error={!!phoneError}
         />
         {phoneError ? (
-          <p className={`text-xs font-roboto tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
+          <p className={`text-xs font-montserrat tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
             {phoneError}
           </p>
         ) : null}
@@ -162,7 +162,7 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
             className={`w-full ${inputClass} ${emailError ? (variant === 'dark' ? 'border-red-400/50' : 'border-red-300') : ''}`}
           />
           {emailError ? (
-            <p className={`text-xs font-roboto tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
+            <p className={`text-xs font-montserrat tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
               {emailError}
             </p>
           ) : null}

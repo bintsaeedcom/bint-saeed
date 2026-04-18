@@ -166,7 +166,7 @@ export default function AdminDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h1 data-document-h1="true" className="font-rozha text-3xl">Analytics Dashboard</h1>
-              <p className="font-roboto text-sm text-white/70 tracking-wide">
+              <p className="font-montserrat text-sm text-white/70 tracking-wide">
                 Real-time visitor tracking & notifications
               </p>
             </div>
@@ -231,13 +231,13 @@ export default function AdminDashboard() {
           <div className="mb-4 flex items-start justify-between gap-4">
             <div>
               <h2 className="font-rozha text-2xl text-brand-darkRed">Stripe Checkout Diagnostics</h2>
-              <p className="font-roboto text-xs uppercase tracking-[0.16em] text-gray-500">
+              <p className="font-montserrat text-xs uppercase tracking-[0.16em] text-gray-500">
                 Launch readiness panel
               </p>
             </div>
             {checkoutHealth ? (
               <span
-                className={`inline-flex items-center gap-2 rounded-full px-3 py-1 font-roboto text-xs uppercase tracking-[0.12em] ${
+                className={`inline-flex items-center gap-2 rounded-full px-3 py-1 font-montserrat text-xs uppercase tracking-[0.12em] ${
                   checkoutHealth.ok
                     ? 'bg-emerald-100 text-emerald-700'
                     : 'bg-amber-100 text-amber-700'
@@ -247,7 +247,7 @@ export default function AdminDashboard() {
                 {checkoutHealth.ok ? 'Ready' : 'Needs Setup'}
               </span>
             ) : (
-              <span className="font-roboto text-xs uppercase tracking-[0.12em] text-gray-500">Unavailable</span>
+              <span className="font-montserrat text-xs uppercase tracking-[0.12em] text-gray-500">Unavailable</span>
             )}
           </div>
 
@@ -264,20 +264,20 @@ export default function AdminDashboard() {
 
               <div className="mt-4 grid gap-3 lg:grid-cols-2">
                 <div className="rounded-lg border border-gray-100 bg-stone-50 p-4">
-                  <p className="font-roboto text-[11px] uppercase tracking-[0.15em] text-gray-500">Environment</p>
-                  <p className="mt-1 font-roboto text-sm text-gray-900">
+                  <p className="font-montserrat text-[11px] uppercase tracking-[0.15em] text-gray-500">Environment</p>
+                  <p className="mt-1 font-montserrat text-sm text-gray-900">
                     {checkoutHealth.env} · Stripe mode: {checkoutHealth.mode}
                   </p>
-                  <p className="mt-1 font-roboto text-xs text-gray-500">
+                  <p className="mt-1 font-montserrat text-xs text-gray-500">
                     Account: {checkoutHealth.stripe.accountId ?? 'Not available'}
                   </p>
-                  <p className="mt-1 font-roboto text-xs text-gray-500">
+                  <p className="mt-1 font-montserrat text-xs text-gray-500">
                     Checked: {new Date(checkoutHealth.checkedAt).toLocaleString()}
                   </p>
                 </div>
                 <div className="rounded-lg border border-gray-100 bg-stone-50 p-4">
-                  <p className="font-roboto text-[11px] uppercase tracking-[0.15em] text-gray-500">Allowed origins</p>
-                  <p className="mt-1 font-roboto text-xs text-gray-700 break-all">
+                  <p className="font-montserrat text-[11px] uppercase tracking-[0.15em] text-gray-500">Allowed origins</p>
+                  <p className="mt-1 font-montserrat text-xs text-gray-700 break-all">
                     {checkoutHealth.checkout.allowedOrigins.join(', ')}
                   </p>
                 </div>
@@ -285,10 +285,10 @@ export default function AdminDashboard() {
 
               {checkoutHealth.warnings.length > 0 && (
                 <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4">
-                  <p className="font-roboto text-[11px] uppercase tracking-[0.15em] text-amber-700">Warnings</p>
+                  <p className="font-montserrat text-[11px] uppercase tracking-[0.15em] text-amber-700">Warnings</p>
                   <ul className="mt-2 space-y-1">
                     {checkoutHealth.warnings.map((warning) => (
-                      <li key={warning} className="font-roboto text-xs text-amber-800">
+                      <li key={warning} className="font-montserrat text-xs text-amber-800">
                         • {warning}
                       </li>
                     ))}
@@ -297,7 +297,7 @@ export default function AdminDashboard() {
               )}
             </>
           ) : (
-            <p className="font-roboto text-sm text-gray-500">
+            <p className="font-montserrat text-sm text-gray-500">
               Could not load checkout diagnostics. Make sure you are authenticated as admin.
             </p>
           )}
@@ -317,7 +317,7 @@ export default function AdminDashboard() {
               {activeVisitors.length === 0 ? (
                 <div className="p-12 text-center">
                   <FiUsers className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-500 font-roboto">No active visitors right now</p>
+                  <p className="text-gray-500 font-montserrat">No active visitors right now</p>
                 </div>
               ) : (
                 <div className="divide-y divide-gray-100 max-h-[600px] overflow-y-auto">
@@ -338,16 +338,16 @@ export default function AdminDashboard() {
                           </div>
                           <div>
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="font-roboto text-sm font-medium text-gray-900">
+                              <span className="font-montserrat text-sm font-medium text-gray-900">
                                 {visitor.location ? `${visitor.location.city}, ${visitor.location.country}` : 'Unknown Location'}
                               </span>
-                              <span className={`px-2 py-0.5 rounded text-xs font-roboto ${
+                              <span className={`px-2 py-0.5 rounded text-xs font-montserrat ${
                                 visitor.isNewVisitor ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
                               }`}>
                                 {visitor.isNewVisitor ? 'New' : `Visit #${visitor.visitCount}`}
                               </span>
                             </div>
-                            <div className="flex items-center gap-3 text-xs text-gray-500 font-roboto">
+                            <div className="flex items-center gap-3 text-xs text-gray-500 font-montserrat">
                               <span className="flex items-center gap-1">
                                 {getDeviceIcon(visitor.device.type)}
                                 {visitor.device.browser}
@@ -399,10 +399,10 @@ export default function AdminDashboard() {
                     <div className="flex items-start gap-3">
                       <span className="text-xl">{getNotificationIcon(notif.type)}</span>
                       <div className="flex-1 min-w-0">
-                        <p className="font-roboto text-sm text-gray-900 truncate">
+                        <p className="font-montserrat text-sm text-gray-900 truncate">
                           {notif.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                         </p>
-                        <p className="font-roboto text-xs text-gray-500">
+                        <p className="font-montserrat text-xs text-gray-500">
                           {notif.data?.location?.city || 'Unknown'} • {new Date(notif.timestamp).toLocaleTimeString()}
                         </p>
                       </div>
@@ -435,7 +435,7 @@ export default function AdminDashboard() {
               <div className="p-6 border-b border-gray-100 flex items-center justify-between">
                 <div>
                   <h2 className="font-rozha text-2xl text-brand-darkRed">Visitor Details</h2>
-                  <p className="font-roboto text-xs text-gray-500">ID: {selectedVisitor.visitorId}</p>
+                  <p className="font-montserrat text-xs text-gray-500">ID: {selectedVisitor.visitorId}</p>
                 </div>
                 <button onClick={() => setSelectedVisitor(null)} className="p-2 hover:bg-gray-100 rounded-full">
                   <FiX className="w-5 h-5" />
@@ -448,18 +448,18 @@ export default function AdminDashboard() {
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <FiMapPin className="w-4 h-4 text-brand-darkRed" />
-                      <span className="font-roboto text-xs uppercase tracking-wider text-gray-500">Location</span>
+                      <span className="font-montserrat text-xs uppercase tracking-wider text-gray-500">Location</span>
                     </div>
-                    <p className="font-roboto text-lg text-gray-900">
+                    <p className="font-montserrat text-lg text-gray-900">
                       {selectedVisitor.location?.city}, {selectedVisitor.location?.country}
                     </p>
                   </div>
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       {getDeviceIcon(selectedVisitor.device.type)}
-                      <span className="font-roboto text-xs uppercase tracking-wider text-gray-500">Device</span>
+                      <span className="font-montserrat text-xs uppercase tracking-wider text-gray-500">Device</span>
                     </div>
-                    <p className="font-roboto text-lg text-gray-900">
+                    <p className="font-montserrat text-lg text-gray-900">
                       {selectedVisitor.device.type} • {selectedVisitor.device.browser} • {selectedVisitor.device.os}
                     </p>
                   </div>
@@ -468,24 +468,24 @@ export default function AdminDashboard() {
                 {/* Contact Info */}
                 {selectedVisitor.contactInfo && (
                   <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                    <h3 className="font-roboto text-xs uppercase tracking-wider text-green-700 mb-3">Contact Info Captured</h3>
+                    <h3 className="font-montserrat text-xs uppercase tracking-wider text-green-700 mb-3">Contact Info Captured</h3>
                     <div className="grid md:grid-cols-3 gap-4">
                       {selectedVisitor.contactInfo.name && (
                         <div>
                           <span className="text-xs text-green-600">Name</span>
-                          <p className="font-roboto text-gray-900">{selectedVisitor.contactInfo.name}</p>
+                          <p className="font-montserrat text-gray-900">{selectedVisitor.contactInfo.name}</p>
                         </div>
                       )}
                       {selectedVisitor.contactInfo.email && (
                         <div>
                           <span className="text-xs text-green-600">Email</span>
-                          <p className="font-roboto text-gray-900">{selectedVisitor.contactInfo.email}</p>
+                          <p className="font-montserrat text-gray-900">{selectedVisitor.contactInfo.email}</p>
                         </div>
                       )}
                       {selectedVisitor.contactInfo.phone && (
                         <div>
                           <span className="text-xs text-green-600">Phone</span>
-                          <p className="font-roboto text-gray-900">{selectedVisitor.contactInfo.phone}</p>
+                          <p className="font-montserrat text-gray-900">{selectedVisitor.contactInfo.phone}</p>
                         </div>
                       )}
                     </div>
@@ -496,25 +496,25 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-4 gap-4">
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <p className="font-rozha text-2xl text-brand-darkRed">{selectedVisitor.visitCount}</p>
-                    <p className="font-roboto text-xs text-gray-500">Total Visits</p>
+                    <p className="font-montserrat text-xs text-gray-500">Total Visits</p>
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <p className="font-rozha text-2xl text-brand-darkRed">{formatTime(selectedVisitor.totalTimeOnSite)}</p>
-                    <p className="font-roboto text-xs text-gray-500">Time on Site</p>
+                    <p className="font-montserrat text-xs text-gray-500">Time on Site</p>
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <p className="font-rozha text-2xl text-brand-darkRed">{selectedVisitor.pageViews.length}</p>
-                    <p className="font-roboto text-xs text-gray-500">Pages Viewed</p>
+                    <p className="font-montserrat text-xs text-gray-500">Pages Viewed</p>
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <p className="font-rozha text-2xl text-brand-darkRed">{selectedVisitor.cartEvents.filter(e => e.action === 'add').length}</p>
-                    <p className="font-roboto text-xs text-gray-500">Cart Adds</p>
+                    <p className="font-montserrat text-xs text-gray-500">Cart Adds</p>
                   </div>
                 </div>
 
                 {/* Page Views */}
                 <div>
-                  <h3 className="font-roboto text-xs uppercase tracking-wider text-gray-500 mb-3">Page Journey</h3>
+                  <h3 className="font-montserrat text-xs uppercase tracking-wider text-gray-500 mb-3">Page Journey</h3>
                   <div className="space-y-2">
                     {selectedVisitor.pageViews.map((pv, i) => (
                       <div key={i} className="flex items-center gap-3 p-2 bg-gray-50 rounded">
@@ -522,8 +522,8 @@ export default function AdminDashboard() {
                           {i + 1}
                         </span>
                         <div className="flex-1">
-                          <p className="font-roboto text-sm text-gray-900">{pv.title || pv.path}</p>
-                          <p className="font-roboto text-xs text-gray-500">{pv.timeOnPage}s on page</p>
+                          <p className="font-montserrat text-sm text-gray-900">{pv.title || pv.path}</p>
+                          <p className="font-montserrat text-xs text-gray-500">{pv.timeOnPage}s on page</p>
                         </div>
                       </div>
                     ))}
@@ -533,14 +533,14 @@ export default function AdminDashboard() {
                 {/* Cart Events */}
                 {selectedVisitor.cartEvents.length > 0 && (
                   <div>
-                    <h3 className="font-roboto text-xs uppercase tracking-wider text-gray-500 mb-3">Cart Activity</h3>
+                    <h3 className="font-montserrat text-xs uppercase tracking-wider text-gray-500 mb-3">Cart Activity</h3>
                     <div className="space-y-2">
                       {selectedVisitor.cartEvents.map((event, i) => (
                         <div key={i} className="flex items-center gap-3 p-2 bg-amber-50 rounded">
                           <span className="text-lg">{event.action === 'add' ? '🛒' : '❌'}</span>
                           <div>
-                            <p className="font-roboto text-sm text-gray-900">{event.productName}</p>
-                            <p className="font-roboto text-xs text-gray-500">
+                            <p className="font-montserrat text-sm text-gray-900">{event.productName}</p>
+                            <p className="font-montserrat text-xs text-gray-500">
                               {event.action === 'add' ? 'Added to cart' : 'Removed'} • {new Date(event.timestamp).toLocaleTimeString()}
                             </p>
                           </div>
@@ -576,13 +576,13 @@ export default function AdminDashboard() {
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">{getNotificationIcon(notif.type)}</span>
                     <div>
-                      <p className="font-roboto text-sm font-medium text-gray-900">
+                      <p className="font-montserrat text-sm font-medium text-gray-900">
                         {notif.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                       </p>
-                      <p className="font-roboto text-xs text-gray-500 mt-1">
+                      <p className="font-montserrat text-xs text-gray-500 mt-1">
                         {notif.data?.location?.city || 'Unknown'}, {notif.data?.location?.country || ''}
                       </p>
-                      <p className="font-roboto text-xs text-gray-400 mt-1">
+                      <p className="font-montserrat text-xs text-gray-400 mt-1">
                         {new Date(notif.timestamp).toLocaleString()}
                       </p>
                     </div>
@@ -616,7 +616,7 @@ function StatCard({
         {icon}
       </div>
       <p className="font-rozha text-3xl text-gray-900">{value}</p>
-      <p className="font-roboto text-xs uppercase tracking-wider text-gray-500">{label}</p>
+      <p className="font-montserrat text-xs uppercase tracking-wider text-gray-500">{label}</p>
     </div>
   )
 }
@@ -628,8 +628,8 @@ function HealthPill({ label, ok }: { label: string; ok: boolean }) {
         ok ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : 'border-amber-200 bg-amber-50 text-amber-700'
       }`}
     >
-      <p className="font-roboto text-[10px] uppercase tracking-[0.12em]">{label}</p>
-      <p className="mt-1 font-roboto text-xs">{ok ? 'Configured' : 'Missing'}</p>
+      <p className="font-montserrat text-[10px] uppercase tracking-[0.12em]">{label}</p>
+      <p className="mt-1 font-montserrat text-xs">{ok ? 'Configured' : 'Missing'}</p>
     </div>
   )
 }

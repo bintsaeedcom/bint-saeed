@@ -43,7 +43,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                 <h2 className="font-rozha text-2xl text-brand-darkRed">
                   {isRTL ? 'دليل المقاسات' : 'Size Guide'}
                 </h2>
-                <p className="font-roboto text-xs tracking-[0.14em] text-brand-clayRed/65">
+                <p className="font-montserrat text-xs tracking-[0.14em] text-brand-clayRed/65">
                   {isRTL ? 'قياسات العباءة - قصة A' : 'A-Cut Abaya Measurements'}
                 </p>
               </div>
@@ -60,7 +60,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
             <div className="max-h-[calc(88vh-96px)] overflow-y-auto p-6 md:p-7">
               {/* Size Selector */}
               <div className="mb-6">
-                <p className={`font-roboto text-xs text-brand-clayRed/70 tracking-wide mb-3 ${isRTL ? 'text-right' : ''}`}>
+                <p className={`font-montserrat text-xs text-brand-clayRed/70 tracking-wide mb-3 ${isRTL ? 'text-right' : ''}`}>
                   {isRTL ? 'اختاري مقاسك لتمييزه:' : 'Select your size to highlight:'}
                 </p>
                 <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
@@ -68,7 +68,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                     <button
                       key={size}
                       onClick={() => setSelectedSize(selectedSize === size ? null : size)}
-                      className={`px-4 py-2 font-roboto text-xs uppercase tracking-wider transition-all ${
+                      className={`px-4 py-2 font-montserrat text-xs uppercase tracking-wider transition-all ${
                         selectedSize === size
                           ? 'bg-brand-darkRed text-white'
                           : 'bg-brand-stone/10 text-brand-darkRed hover:bg-brand-dustyBlue/20'
@@ -87,13 +87,13 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                 <table className="w-full min-w-[600px]">
                   <thead>
                     <tr>
-                      <th className={`bg-brand-stone/10 px-3 py-3.5 font-roboto text-xs uppercase tracking-[0.12em] text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}>
+                      <th className={`bg-brand-stone/10 px-3 py-3.5 font-montserrat text-xs uppercase tracking-[0.12em] text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}>
                         {isRTL ? 'القياس' : 'Measurement'}
                       </th>
                       {[...sizeData.headers].map((size) => (
                         <th
                           key={size}
-                          className={`px-3 py-3.5 text-center font-roboto text-xs uppercase tracking-[0.12em] transition-all ${
+                          className={`px-3 py-3.5 text-center font-montserrat text-xs uppercase tracking-[0.12em] transition-all ${
                             selectedSize === size
                               ? 'bg-brand-darkRed text-white'
                               : 'bg-brand-stone/10 text-brand-darkRed'
@@ -110,13 +110,13 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                         key={row.label.en}
                       className={rowIndex % 2 === 0 ? 'bg-white/70' : 'bg-brand-stone/5'}
                       >
-                        <td className={`py-3 px-3 font-roboto text-sm text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
+                        <td className={`py-3 px-3 font-montserrat text-sm text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
                           {isRTL ? row.label.ar : row.label.en}
                         </td>
                         {row.values.map((value, colIndex) => (
                           <td
                             key={colIndex}
-                            className={`py-3 px-3 text-center font-roboto text-sm transition-all ${
+                            className={`py-3 px-3 text-center font-montserrat text-sm transition-all ${
                               selectedSize === sizeData.headers[colIndex]
                                 ? 'bg-brand-darkRed/10 text-brand-darkRed font-medium'
                                 : 'text-brand-clayRed'
@@ -133,10 +133,10 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
 
               {/* Notes */}
               <div className={`space-y-3 mb-6 ${isRTL ? 'text-right' : ''}`}>
-                <p className="font-roboto text-xs text-brand-clayRed/70 tracking-wide">
+                <p className="font-montserrat text-xs text-brand-clayRed/70 tracking-wide">
                   {isRTL ? '• جميع القياسات بالبوصة' : '• All measurements are in inches'}
                 </p>
-                <p className="font-roboto text-xs text-brand-clayRed/70 tracking-wide">
+                <p className="font-montserrat text-xs text-brand-clayRed/70 tracking-wide">
                   {isRTL ? '• الطول حسب الطلب - أضيفي طولك المفضل في ملاحظات الطلب' : '• Length per request - Add your preferred length in order notes'}
                 </p>
               </div>
@@ -145,7 +145,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
               <LocaleLink
                 href="/size-guide"
                 onClick={onClose}
-                className={`inline-flex items-center gap-2 px-6 py-3 bg-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] text-white transition-colors hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`inline-flex items-center gap-2 px-6 py-3 bg-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] text-white transition-colors hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 {isRTL ? 'الدليل الكامل' : 'View Full Size Guide'}

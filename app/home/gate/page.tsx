@@ -120,7 +120,7 @@ export default function HomeGatePage() {
         subtitle="This private preview is protected. We verify your browser and network before continuing. Please use a standard window (not private browsing), disable VPN or proxy for this site, and complete the quick check below."
       >
         {envOk === null ? (
-          <p className="font-roboto text-xs uppercase tracking-[0.25em] text-white/35">Checking environment…</p>
+          <p className="font-montserrat text-xs uppercase tracking-[0.25em] text-white/35">Checking environment…</p>
         ) : null}
 
         {envOk === true && showLoading && !error ? (
@@ -129,7 +129,7 @@ export default function HomeGatePage() {
               className="inline-block h-8 w-8 animate-spin rounded-full border-2 border-brand-dustyBlue/30 border-t-brand-dustyBlue"
               aria-hidden
             />
-            <p className="font-roboto text-xs uppercase tracking-[0.2em] text-white/40">
+            <p className="font-montserrat text-xs uppercase tracking-[0.2em] text-white/40">
               {!scriptReady ? 'Loading verification…' : 'Verifying…'}
             </p>
           </div>
@@ -137,12 +137,12 @@ export default function HomeGatePage() {
 
         {error ? (
           <div className="space-y-6">
-            <p className="font-roboto text-sm text-white/60">{error}</p>
+            <p className="font-montserrat text-sm text-white/60">{error}</p>
             <button
               type="button"
               onClick={() => void runVerify()}
               disabled={verifying || !scriptReady}
-              className="rounded-xl bg-brand-dustyBlue px-8 py-3 font-roboto text-xs uppercase tracking-[0.2em] text-[#1a0008] transition-colors hover:bg-brand-stone disabled:opacity-50"
+              className="rounded-xl bg-brand-dustyBlue px-8 py-3 font-montserrat text-xs uppercase tracking-[0.2em] text-[#1a0008] transition-colors hover:bg-brand-stone disabled:opacity-50"
             >
               Try again
             </button>
@@ -150,12 +150,12 @@ export default function HomeGatePage() {
         ) : null}
 
         {envOk === true && !siteKey ? (
-          <p className="font-roboto text-sm text-white/50">
+          <p className="font-montserrat text-sm text-white/50">
             Preview protection is not fully configured (reCAPTCHA keys missing).
           </p>
         ) : null}
 
-        <p className="mt-12 font-roboto text-[10px] leading-relaxed text-white/25">
+        <p className="mt-12 font-montserrat text-[10px] leading-relaxed text-white/25">
           Protected by Google reCAPTCHA — subject to the Google Privacy Policy and Terms of Use.
         </p>
       </PreviewAccessShell>

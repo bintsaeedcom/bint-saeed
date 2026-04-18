@@ -76,7 +76,7 @@ export default function AccessoryDetailPage() {
           </h1>
           <LocaleLink
             href="/accessories"
-            className="font-roboto text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue"
+            className="font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue"
             data-cursor-hover
           >
             {isRTL ? 'العودة للإكسسوارات' : 'Return to Accessories'}
@@ -447,7 +447,7 @@ export default function AccessoryDetailPage() {
                 navigator.clipboard.writeText(window.location.href)
                 toast.success(isRTL ? 'تم نسخ الرابط' : 'Link copied!')
               }}
-              className={`flex items-center gap-2 font-roboto text-xs text-brand-clayRed/60 hover:text-brand-dustyBlue transition-colors mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`flex items-center gap-2 font-montserrat text-xs text-brand-clayRed/60 hover:text-brand-dustyBlue transition-colors mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiShare2 className="w-4 h-4" />
@@ -463,7 +463,7 @@ export default function AccessoryDetailPage() {
                   className={`w-full py-4 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
-                  <span className="font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed">
+                  <span className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed">
                     {isRTL ? 'الوصف' : 'Description'}
                   </span>
                   <FiChevronDown className={`w-4 h-4 text-brand-darkRed transition-transform ${openDropdown === 'description' ? 'rotate-180' : ''}`} />
@@ -477,7 +477,7 @@ export default function AccessoryDetailPage() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5">
+                      <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5">
                         {isRTL ? accessory.descriptionAr : accessory.description}
                       </p>
                     </motion.div>
@@ -492,7 +492,7 @@ export default function AccessoryDetailPage() {
                   className={`w-full py-4 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
-                  <span className="font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed">
+                  <span className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed">
                     {isRTL ? 'المواد' : 'Materials'}
                   </span>
                   <FiChevronDown className={`w-4 h-4 text-brand-darkRed transition-transform ${openDropdown === 'materials' ? 'rotate-180' : ''}`} />
@@ -506,7 +506,7 @@ export default function AccessoryDetailPage() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5">
+                      <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5">
                         {isRTL ? accessory.materialsAr : accessory.materials}
                       </p>
                     </motion.div>
@@ -521,7 +521,7 @@ export default function AccessoryDetailPage() {
                   className={`w-full py-4 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
-                  <span className="font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed">
+                  <span className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed">
                     {isRTL ? 'العناية' : 'Care'}
                   </span>
                   <FiChevronDown className={`w-4 h-4 text-brand-darkRed transition-transform ${openDropdown === 'care' ? 'rotate-180' : ''}`} />
@@ -535,7 +535,7 @@ export default function AccessoryDetailPage() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5 space-y-2">
+                      <div className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5 space-y-2">
                         <p>{isRTL ? '• تجنبي ملامسة العطور والمواد الكيميائية' : '• Avoid contact with perfumes and chemicals'}</p>
                         <p>{isRTL ? '• احفظيها في مكان جاف' : '• Store in a dry place'}</p>
                         <p>{isRTL ? '• امسحيها بقطعة قماش ناعمة' : '• Wipe with a soft cloth'}</p>
@@ -553,7 +553,7 @@ export default function AccessoryDetailPage() {
                   className={`w-full py-4 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
-                  <span className="font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed">
+                  <span className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed">
                     {isRTL ? 'الشحن' : 'Shipping'}
                   </span>
                   <FiChevronDown className={`w-4 h-4 text-brand-darkRed transition-transform ${openDropdown === 'shipping' ? 'rotate-180' : ''}`} />
@@ -567,7 +567,7 @@ export default function AccessoryDetailPage() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="font-roboto text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5 space-y-2">
+                      <div className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide leading-relaxed pb-5 space-y-2">
                         <p>{isRTL ? '• الشحن المجاني متاح داخل الإمارات فقط.' : '• Free shipping is available within the UAE only.'}</p>
                         <p>
                           {isRTL

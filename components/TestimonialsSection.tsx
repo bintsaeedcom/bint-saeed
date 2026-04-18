@@ -104,7 +104,7 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="font-roboto text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-4 block">
+          <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-4 block">
             {isRTL ? 'آراء عملائنا' : 'Client Love'}
           </span>
           <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed">
@@ -138,7 +138,7 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Quote */}
-              <blockquote className="font-roboto text-xl md:text-2xl text-brand-darkRed tracking-wide leading-relaxed mb-8 max-w-3xl mx-auto">
+              <blockquote className="font-montserrat text-xl md:text-2xl text-brand-darkRed tracking-wide leading-relaxed mb-8 max-w-3xl mx-auto">
                 "{data[currentIndex].text}"
               </blockquote>
 
@@ -147,10 +147,10 @@ export default function TestimonialsSection() {
                 <p className="font-rozha text-lg text-brand-darkRed">
                   {data[currentIndex].name}
                 </p>
-                <p className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-clayRed/60">
+                <p className="font-montserrat text-xs uppercase tracking-[0.2em] text-brand-clayRed/60">
                   {data[currentIndex].location}
                 </p>
-                <p className="font-roboto text-xs text-brand-clayRed/40 mt-2">
+                <p className="font-montserrat text-xs text-brand-clayRed/40 mt-2">
                   {data[currentIndex].product}
                 </p>
               </div>

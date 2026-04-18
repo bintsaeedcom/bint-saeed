@@ -19,14 +19,14 @@ function confirmationEmailHtml(confirmUrl: string, name?: string): string {
             </td>
           </tr>
           <tr>
-            <td style="padding:8px 36px 32px;font-size:15px;line-height:1.65;color:#5c4a4a;font-family:Roboto,Helvetica,Arial,sans-serif;">
+            <td style="padding:8px 36px 32px;font-size:15px;line-height:1.65;color:#5c4a4a;font-family:'Montserrat',Helvetica,Arial,sans-serif;">
               <p style="margin:0 0 16px;">${greeting}</p>
               <p style="margin:0 0 24px;">Thanks for creating an account. Please confirm your email address to finish setting up your account.</p>
               <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto;">
                 <tr>
                   <td style="border-radius:2px;background:#3b0014;">
                     <a href="${confirmUrl}" target="_blank" rel="noopener"
-                      style="display:inline-block;padding:16px 36px;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#ffffff;text-decoration:none;font-family:Roboto,Helvetica,Arial,sans-serif;">
+                      style="display:inline-block;padding:16px 36px;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#ffffff;text-decoration:none;font-family:'Montserrat',Helvetica,Arial,sans-serif;">
                       Confirm email
                     </a>
                   </td>
@@ -39,7 +39,7 @@ function confirmationEmailHtml(confirmUrl: string, name?: string): string {
             </td>
           </tr>
           <tr>
-            <td style="padding:20px 36px;border-top:1px solid #f0ebe6;font-size:11px;color:#b0a5a0;text-align:center;font-family:Roboto,Helvetica,Arial,sans-serif;">
+            <td style="padding:20px 36px;border-top:1px solid #f0ebe6;font-size:11px;color:#b0a5a0;text-align:center;font-family:'Montserrat',Helvetica,Arial,sans-serif;">
               This link expires in 48 hours. If you didn’t sign up, you can ignore this email.
             </td>
           </tr>

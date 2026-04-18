@@ -60,12 +60,12 @@ export default function PreviewAccessShell({
           transition={{ duration: 0.55, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
           className="w-full"
         >
-          <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/80">
+          <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/80">
             Bint Saeed · Preview
           </p>
           <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-dustyBlue tracking-wide sm:text-4xl">{title}</h1>
           {subtitle ? (
-            <p className="mx-auto mt-5 max-w-md font-roboto text-sm leading-relaxed text-white/55">{subtitle}</p>
+            <p className="mx-auto mt-5 max-w-md font-montserrat text-sm leading-relaxed text-white/55">{subtitle}</p>
           ) : null}
           <div className="mt-10">{children}</div>
         </motion.div>

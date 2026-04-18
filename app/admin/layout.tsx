@@ -23,7 +23,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
       <Link
         href={href}
-        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-roboto tracking-wide transition-colors ${
+        className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-montserrat tracking-wide transition-colors ${
           active ? 'bg-white/15 text-white' : 'text-white/70 hover:bg-white/10 hover:text-white'
         }`}
       >
@@ -41,7 +41,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link href="/" className="block rounded-md focus:outline-none focus-visible:ring-1 focus-visible:ring-white/25">
               <p className="font-rozha text-xl text-brand-stone">Bint Saeed</p>
             </Link>
-            <p className="mt-1 font-roboto text-[10px] uppercase tracking-[0.2em] text-white/40">Owner</p>
+            <p className="mt-1 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/40">Owner</p>
           </div>
           <nav className="flex flex-1 flex-col gap-1 p-4">
             {link('/admin/orders', 'Orders', <FiShoppingBag className="h-4 w-4" />)}
@@ -53,7 +53,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <button
               type="button"
               onClick={logout}
-              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-roboto text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-montserrat text-white/60 transition-colors hover:bg-white/10 hover:text-white"
             >
               <FiLogOut className="h-4 w-4" />
               Log out
@@ -65,32 +65,32 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <header className="border-b border-white/10 bg-[#12080b]/80 backdrop-blur md:hidden">
             <div className="flex items-center justify-between px-4 py-3">
               <p className="font-rozha text-lg">Admin</p>
-              <button type="button" onClick={logout} className="font-roboto text-xs uppercase tracking-wider text-white/60">
+              <button type="button" onClick={logout} className="font-montserrat text-xs uppercase tracking-wider text-white/60">
                 Log out
               </button>
             </div>
             <nav className="flex gap-1 overflow-x-auto px-2 pb-2">
               <Link
                 href="/admin/orders"
-                className="shrink-0 rounded-lg px-3 py-1.5 font-roboto text-xs text-white/70 hover:bg-white/10"
+                className="shrink-0 rounded-lg px-3 py-1.5 font-montserrat text-xs text-white/70 hover:bg-white/10"
               >
                 Orders
               </Link>
               <Link
                 href="/admin/customers"
-                className="shrink-0 rounded-lg px-3 py-1.5 font-roboto text-xs text-white/70 hover:bg-white/10"
+                className="shrink-0 rounded-lg px-3 py-1.5 font-montserrat text-xs text-white/70 hover:bg-white/10"
               >
                 Customers
               </Link>
               <Link
                 href="/admin/products"
-                className="shrink-0 rounded-lg px-3 py-1.5 font-roboto text-xs text-white/70 hover:bg-white/10"
+                className="shrink-0 rounded-lg px-3 py-1.5 font-montserrat text-xs text-white/70 hover:bg-white/10"
               >
                 Catalog
               </Link>
               <Link
                 href="/admin/dashboard"
-                className="shrink-0 rounded-lg px-3 py-1.5 font-roboto text-xs text-white/70 hover:bg-white/10"
+                className="shrink-0 rounded-lg px-3 py-1.5 font-montserrat text-xs text-white/70 hover:bg-white/10"
               >
                 Analytics
               </Link>

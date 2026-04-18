@@ -55,7 +55,7 @@ function HeroSection() {
         >
           <LocaleLink
             href="/heritage"
-            className={`inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.15em] text-white/70 hover:text-white transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-white/70 hover:text-white transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
@@ -75,13 +75,13 @@ function HeroSection() {
             transition={{ duration: 1, ease: [0.25, 0.1, 0, 1] }}
             className="text-white max-w-4xl mx-auto"
           >
-            <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm font-roboto text-xs uppercase tracking-[0.3em] text-white/80 mb-8">
+            <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm font-montserrat text-xs uppercase tracking-[0.3em] text-white/80 mb-8">
               {isRTL ? 'حرفة تقليدية' : 'Traditional Craft'}
             </span>
             <h1 data-document-h1="true" className="font-rozha text-5xl md:text-7xl lg:text-8xl mb-6">
               {isRTL ? 'الخوص' : 'Khous Weaving'}
             </h1>
-            <p className="font-roboto text-lg md:text-xl text-white/70 tracking-wide">
+            <p className="font-montserrat text-lg md:text-xl text-white/70 tracking-wide">
               {isRTL ? 'فن نسج سعف النخيل' : 'The Art of Palm Frond Weaving'}
             </p>
           </motion.div>
@@ -106,13 +106,13 @@ function StorySection() {
             transition={{ duration: 0.8 }}
             className={isRTL ? 'text-right' : ''}
           >
-            <span className="font-roboto text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
+            <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
               {isRTL ? 'شجرة الحياة' : 'Tree of Life'}
             </span>
             <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed mb-8">
               {isRTL ? 'هدية النخلة' : 'Gift of the Palm'}
             </h2>
-            <div className="space-y-6 font-roboto text-base text-brand-clayRed/80 tracking-wide leading-relaxed">
+            <div className="space-y-6 font-montserrat text-base text-brand-clayRed/80 tracking-wide leading-relaxed">
               <p>
                 {isRTL 
                   ? 'النخلة في الثقافة الإماراتية ليست مجرد شجرة - إنها شجرة الحياة. لقرون، اعتمد أهل الإمارات على النخلة في كل شيء: من التمر للغذاء، إلى الجذع للبناء، وسعف النخيل للحرف اليدوية.'
@@ -182,7 +182,7 @@ function ProcessSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="font-roboto text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
+          <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
             {isRTL ? 'العملية' : 'The Process'}
           </span>
           <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed">
@@ -206,7 +206,7 @@ function ProcessSection() {
               <h3 className="font-rozha text-2xl text-brand-darkRed mb-4">
                 {isRTL ? step.title.ar : step.title.en}
               </h3>
-              <p className="font-roboto text-sm text-brand-clayRed/80 tracking-wide leading-relaxed">
+              <p className="font-montserrat text-sm text-brand-clayRed/80 tracking-wide leading-relaxed">
                 {isRTL ? step.description.ar : step.description.en}
               </p>
             </motion.div>
@@ -237,7 +237,7 @@ function ProductsSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="font-roboto text-xs uppercase tracking-[0.4em] text-brand-stone mb-6 block">
+          <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-stone mb-6 block">
             {isRTL ? 'المنتجات' : 'Products'}
           </span>
           <h2 className="font-rozha text-4xl md:text-5xl">
@@ -258,7 +258,7 @@ function ProductsSection() {
               <h3 className="font-rozha text-xl mb-2">
                 {isRTL ? product.name.ar : product.name.en}
               </h3>
-              <p className="font-roboto text-xs text-white/60 tracking-wide">
+              <p className="font-montserrat text-xs text-white/60 tracking-wide">
                 {isRTL ? product.use.ar : product.use.en}
               </p>
             </motion.div>
@@ -298,13 +298,13 @@ function BintSaeedSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className={`order-1 lg:order-2 ${isRTL ? 'text-right' : ''}`}
           >
-            <span className="font-roboto text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
+            <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
               {isRTL ? 'بنت سعيد × الخوص' : 'Bint Saeed × Khous'}
             </span>
             <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed mb-8">
               {isRTL ? 'أنماط النخيل في تصاميمنا' : 'Palm Patterns in Our Designs'}
             </h2>
-            <div className="space-y-6 font-roboto text-base text-brand-clayRed/80 tracking-wide leading-relaxed">
+            <div className="space-y-6 font-montserrat text-base text-brand-clayRed/80 tracking-wide leading-relaxed">
               <p>
                 {isRTL 
                   ? 'نستلهم من أنماط الخوص الهندسية في تطريزاتنا وتفاصيل تصاميمنا. النسيج المتشابك الذي يميز الخوص يظهر في بطانات عباءاتنا وإكسسواراتنا.'
@@ -318,7 +318,7 @@ function BintSaeedSection() {
             </div>
             <LocaleLink
               href="/shop"
-              className={`inline-flex items-center gap-3 px-8 py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors mt-8 ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`inline-flex items-center gap-3 px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors mt-8 ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               {isRTL ? 'تسوقي المجموعة' : 'Shop the Collection'}
@@ -342,21 +342,21 @@ function CTASection() {
             <h3 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-2">
               {isRTL ? 'اكتشفي المزيد من تراثنا' : 'Explore More of Our Heritage'}
             </h3>
-            <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide">
+            <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide">
               {isRTL ? 'تعرفي على حرف إماراتية تقليدية أخرى' : 'Learn about other traditional Emirati crafts'}
             </p>
           </div>
           <div className={`flex gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <LocaleLink
               href="/heritage/al-talli"
-              className="px-6 py-3 border border-brand-darkRed text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
+              className="px-6 py-3 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
               {isRTL ? 'التلي' : 'Al Talli'}
             </LocaleLink>
             <LocaleLink
               href="/heritage"
-              className="px-6 py-3 border border-brand-darkRed text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
+              className="px-6 py-3 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
               {isRTL ? 'التراث' : 'Heritage'}

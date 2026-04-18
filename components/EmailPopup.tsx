@@ -161,7 +161,7 @@ export default function EmailPopup() {
                   <h2 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-3">
                     {isRTL ? 'احصلي على خصم 10%' : 'Get 10% Off'}
                   </h2>
-                  <p className="font-roboto text-sm text-brand-darkRed/70 tracking-wide mb-6">
+                  <p className="font-montserrat text-sm text-brand-darkRed/70 tracking-wide mb-6">
                     {isRTL 
                       ? 'اشتركي في نشرتنا واحصلي على خصم حصري على طلبك الأول، بالإضافة إلى أحدث التصاميم والعروض.'
                       : 'Subscribe to our newsletter and receive an exclusive discount on your first order, plus the latest designs and offers.'}
@@ -174,7 +174,7 @@ export default function EmailPopup() {
                       placeholder={isRTL ? 'الاسم الأول' : 'First name'}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className={`w-full px-4 py-3 bg-white border border-brand-darkRed/20 font-roboto text-sm tracking-wide focus:border-brand-darkRed focus:outline-none transition-colors ${isRTL ? 'text-right' : ''}`}
+                      className={`w-full px-4 py-3 bg-white border border-brand-darkRed/20 font-montserrat text-sm tracking-wide focus:border-brand-darkRed focus:outline-none transition-colors ${isRTL ? 'text-right' : ''}`}
                       dir={isRTL ? 'rtl' : 'ltr'}
                     />
                     <div className="space-y-1">
@@ -193,11 +193,11 @@ export default function EmailPopup() {
                           setEmailError(v.valid ? '' : v.message)
                         }}
                         aria-invalid={emailError ? true : undefined}
-                        className={`w-full px-4 py-3 bg-white border font-roboto text-sm tracking-wide focus:border-brand-darkRed focus:outline-none transition-colors ${isRTL ? 'text-right' : ''} ${emailError ? 'border-red-500' : 'border-brand-darkRed/20'}`}
+                        className={`w-full px-4 py-3 bg-white border font-montserrat text-sm tracking-wide focus:border-brand-darkRed focus:outline-none transition-colors ${isRTL ? 'text-right' : ''} ${emailError ? 'border-red-500' : 'border-brand-darkRed/20'}`}
                         dir={isRTL ? 'rtl' : 'ltr'}
                       />
                       {emailError ? (
-                        <p className={`font-roboto text-xs text-red-600 ${isRTL ? 'text-right' : ''}`}>
+                        <p className={`font-montserrat text-xs text-red-600 ${isRTL ? 'text-right' : ''}`}>
                           {emailError}
                         </p>
                       ) : null}
@@ -205,7 +205,7 @@ export default function EmailPopup() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors disabled:opacity-50"
+                      className="w-full py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors disabled:opacity-50"
                       data-cursor-hover
                     >
                       {isSubmitting 
@@ -214,7 +214,7 @@ export default function EmailPopup() {
                     </button>
                   </form>
 
-                  <p className="font-roboto text-xs text-brand-darkRed/50 mt-4">
+                  <p className="font-montserrat text-xs text-brand-darkRed/50 mt-4">
                     {isRTL 
                       ? 'بالاشتراك، توافقين على سياسة الخصوصية وتلقي رسائل تسويقية.'
                       : 'By subscribing, you agree to our Privacy Policy and receiving marketing emails.'}
@@ -229,7 +229,7 @@ export default function EmailPopup() {
                   <h2 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-3">
                     {isRTL ? 'مرحباً بك!' : 'Welcome!'}
                   </h2>
-                  <p className="font-roboto text-sm text-brand-darkRed/70 tracking-wide mb-6">
+                  <p className="font-montserrat text-sm text-brand-darkRed/70 tracking-wide mb-6">
                     {isRTL 
                       ? 'هذا كود الخصم الخاص بك:'
                       : 'Here\'s your exclusive discount code:'}
@@ -240,12 +240,12 @@ export default function EmailPopup() {
                     className="bg-white border-2 border-dashed border-brand-darkRed px-6 py-4 mb-4 cursor-pointer hover:bg-brand-dustyBlue/20 transition-colors"
                     data-cursor-hover
                   >
-                    <span className="font-roboto font-bold text-2xl text-brand-darkRed tracking-[0.2em]">
+                    <span className="font-montserrat font-bold text-2xl text-brand-darkRed tracking-[0.2em]">
                       {discountCode}
                     </span>
                   </div>
                   
-                  <p className="font-roboto text-xs text-brand-darkRed/60 mb-6">
+                  <p className="font-montserrat text-xs text-brand-darkRed/60 mb-6">
                     {isRTL 
                       ? 'اضغطي لنسخ الكود • صالح لمدة 30 يوم'
                       : 'Click to copy • Valid for 30 days'}
@@ -253,7 +253,7 @@ export default function EmailPopup() {
 
                   <button
                     onClick={handleClose}
-                    className="px-8 py-3 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
+                    className="px-8 py-3 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
                     data-cursor-hover
                   >
                     {isRTL ? 'ابدئي التسوق' : 'Start Shopping'}

@@ -46,7 +46,7 @@ A premium luxury fashion webshop built with Next.js, featuring elegant design, s
 ## Fonts
 
 - **Rozha One** - Headers and brand name
-- **Roboto** - Body text with wide letter-spacing
+- **Montserrat** - Body text with wide letter-spacing
 
 ## Getting Started
 

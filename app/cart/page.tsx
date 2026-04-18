@@ -33,12 +33,12 @@ export default function CartPage() {
             <h1 data-document-h1="true" className="font-rozha text-3xl md:text-4xl text-brand-darkRed mb-4">
               Your Bag is Empty
             </h1>
-            <p className="font-roboto text-sm text-brand-clayRed/70 tracking-wide mb-10">
+            <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide mb-10">
               Discover our collection and find pieces that speak to you.
             </p>
             <LocaleLink
               href="/shop"
-              className="inline-flex items-center gap-2 px-10 py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors"
+              className="inline-flex items-center gap-2 px-10 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors"
               data-cursor-hover
             >
               Continue Shopping
@@ -58,7 +58,7 @@ export default function CartPage() {
           <div className="flex items-center justify-between">
             <LocaleLink
               href="/shop"
-              className="inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group"
+              className="inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group"
               data-cursor-hover
             >
               <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -105,7 +105,7 @@ export default function CartPage() {
                           {item.name}
                         </h3>
                       </LocaleLink>
-                      <div className="font-roboto text-xs text-brand-clayRed/60 tracking-wide space-y-1">
+                      <div className="font-montserrat text-xs text-brand-clayRed/60 tracking-wide space-y-1">
                         <p>Size: {item.size}</p>
                         <p>Color: {item.color}</p>
                         {(item.lengthCm || item.customLength) && (
@@ -125,10 +125,10 @@ export default function CartPage() {
 
                     {/* Price & Actions */}
                     <div className="flex items-end justify-between mt-4">
-                      <p className="font-roboto text-base text-brand-darkRed tracking-wide">
+                      <p className="font-montserrat text-base text-brand-darkRed tracking-wide">
                         {formatPrice(lineUnitAed(item))}
                         {item.quantity > 1 && (
-                          <span className="block font-roboto text-xs text-brand-clayRed/60">
+                          <span className="block font-montserrat text-xs text-brand-clayRed/60">
                             {formatPrice(lineTotalAed(item))} total
                           </span>
                         )}
@@ -153,7 +153,7 @@ export default function CartPage() {
                           >
                             <FiMinus className="w-3 h-3" />
                           </button>
-                          <span className="w-8 text-center font-roboto text-sm">{item.quantity}</span>
+                          <span className="w-8 text-center font-montserrat text-sm">{item.quantity}</span>
                           <button
                             onClick={() =>
                               updateQuantity(
@@ -198,7 +198,7 @@ export default function CartPage() {
               </h2>
 
               <div className="space-y-4 mb-6">
-                <div className={`flex justify-between font-roboto text-sm tracking-wide ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex justify-between font-montserrat text-sm tracking-wide ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <span className="text-brand-clayRed/70">{isRTL ? 'المجموع الفرعي' : 'Subtotal'}</span>
                   <span className="text-brand-darkRed">{formatPrice(getTotal())}</span>
                 </div>
@@ -207,7 +207,7 @@ export default function CartPage() {
                 <div className={`flex items-start gap-2 p-3 bg-brand-dustyBlue/10 rounded-lg ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
                   <FiInfo className="w-4 h-4 text-brand-dustyBlue flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-roboto text-xs text-brand-clayRed tracking-wide">
+                    <p className="font-montserrat text-xs text-brand-clayRed tracking-wide">
                       {isRTL 
                         ? 'يتم احتساب الشحن عند الدفع بناءً على موقعك'
                         : 'Shipping calculated at checkout based on your location'}
@@ -217,7 +217,7 @@ export default function CartPage() {
                 {items.some((i) => i.customisationMessage) && (
                   <div className={`flex items-start gap-2 p-3 bg-brand-stone/10 rounded-lg ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
                     <FiInfo className="w-4 h-4 text-brand-darkRed flex-shrink-0 mt-0.5" />
-                    <p className="font-roboto text-xs text-brand-darkRed/90 tracking-wide">
+                    <p className="font-montserrat text-xs text-brand-darkRed/90 tracking-wide">
                       {isRTL
                         ? 'القطع المخصصة غير قابلة للإرجاع أو الاستبدال.'
                         : 'Customised pieces in your bag cannot be returned or exchanged.'}
@@ -227,7 +227,7 @@ export default function CartPage() {
               </div>
 
               <div className="border-t border-brand-stone/30 pt-6 mb-6">
-                <div className={`flex justify-between font-roboto text-base tracking-wide ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex justify-between font-montserrat text-base tracking-wide ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <span className="text-brand-darkRed uppercase tracking-[0.1em]">
                     {isRTL ? 'المجموع' : 'Subtotal'}
                   </span>
@@ -235,14 +235,14 @@ export default function CartPage() {
                     {formatPrice(getTotal())}
                   </span>
                 </div>
-                <p className={`font-roboto text-[10px] text-brand-clayRed/50 tracking-wide mt-1 ${isRTL ? 'text-right' : ''}`}>
+                <p className={`font-montserrat text-[10px] text-brand-clayRed/50 tracking-wide mt-1 ${isRTL ? 'text-right' : ''}`}>
                   {isRTL ? '+ الشحن (يُحسب عند الدفع)' : '+ Shipping (calculated at checkout)'}
                 </p>
               </div>
 
               <LocaleLink
                 href="/checkout"
-                className={`w-full py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`w-full py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 {isRTL ? 'متابعة الدفع' : 'Proceed to Checkout'}
@@ -252,7 +252,7 @@ export default function CartPage() {
               {/* Worldwide Shipping Badge */}
               <div className={`flex items-center justify-center gap-2 mt-6 py-3 border-t border-b border-brand-stone/20 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <FiGlobe className="w-4 h-4 text-brand-darkRed" />
-                <span className="font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed">
+                <span className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed">
                   {isRTL ? 'نشحن لجميع أنحاء العالم' : 'We Ship Worldwide'}
                 </span>
               </div>
@@ -262,7 +262,7 @@ export default function CartPage() {
                 <div className={`flex items-start gap-3 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
                   <FiTruck className="w-4 h-4 text-brand-clayRed/50 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-roboto text-xs text-brand-clayRed/70 tracking-wide">
+                    <p className="font-montserrat text-xs text-brand-clayRed/70 tracking-wide">
                       {isRTL ? 'شحن مجاني للإمارات والخليج للطلبات فوق 500 درهم' : 'Free UAE & GCC shipping on orders over 500 AED'}
                     </p>
                   </div>
@@ -270,7 +270,7 @@ export default function CartPage() {
                 <div className={`flex items-start gap-3 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
                   <FiGlobe className="w-4 h-4 text-brand-clayRed/50 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-roboto text-xs text-brand-clayRed/70 tracking-wide">
+                    <p className="font-montserrat text-xs text-brand-clayRed/70 tracking-wide">
                       {isRTL ? 'الشحن الدولي متاح - يُحسب عند الدفع' : 'International shipping available - rates at checkout'}
                     </p>
                   </div>
@@ -279,17 +279,17 @@ export default function CartPage() {
 
               {/* Delivery Time */}
               <div className={`mt-4 p-3 bg-brand-stone/10 rounded-lg ${isRTL ? 'text-right' : ''}`}>
-                <p className="font-roboto text-[10px] uppercase tracking-[0.15em] text-brand-clayRed/50 mb-1">
+                <p className="font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-clayRed/50 mb-1">
                   {isRTL ? 'مدة التوصيل' : 'Delivery Time'}
                 </p>
-                <p className="font-roboto text-xs text-brand-darkRed tracking-wide">
+                <p className="font-montserrat text-xs text-brand-darkRed tracking-wide">
                   {isRTL ? 'الطلبات تُصنع يدوياً وتُسلم خلال أسبوعين' : 'Orders are handcrafted and delivered within 2 weeks'}
                 </p>
               </div>
 
               {/* Secure Payment */}
               <div className="flex justify-center gap-4 mt-6 pt-4 border-t border-brand-stone/30">
-                <span className="font-roboto text-[10px] uppercase tracking-[0.1em] text-brand-clayRed/50">
+                <span className="font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-clayRed/50">
                   {isRTL ? 'دفع آمن' : 'Secure Payment'}
                 </span>
               </div>

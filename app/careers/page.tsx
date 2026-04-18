@@ -8,11 +8,11 @@ export default function CareersPage() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_86%_82%,rgba(193,144,134,0.1)_0%,transparent_60%)]" />
 
       <section className="relative container mx-auto px-6 pb-20 lg:px-16 lg:pb-28">
-        <span className="mb-6 block font-roboto text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
+        <span className="mb-6 block font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
           Bint Saeed
         </span>
         <h1 data-document-h1="true" className="font-rozha text-4xl leading-[1.08] text-brand-darkRed md:text-5xl">Careers</h1>
-        <p className="mt-5 max-w-2xl font-roboto text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
+        <p className="mt-5 max-w-2xl font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
           We are building with care across design, operations, and client experience. If you are interested in future
           opportunities, please reach out to our team and include your role focus and portfolio.
         </p>
@@ -20,7 +20,7 @@ export default function CareersPage() {
         <div className="mt-10 flex flex-wrap gap-4">
           <LocaleLink
             href="/contact"
-            className="inline-flex items-center gap-2 border border-brand-dustyBlue/65 bg-brand-dustyBlue px-7 py-3 font-roboto text-xs uppercase tracking-[0.16em] text-[#1a0008] transition-colors hover:bg-brand-stone"
+            className="inline-flex items-center gap-2 border border-brand-dustyBlue/65 bg-brand-dustyBlue px-7 py-3 font-montserrat text-xs uppercase tracking-[0.16em] text-[#1a0008] transition-colors hover:bg-brand-stone"
             data-cursor-hover
           >
             Contact Team
@@ -28,7 +28,7 @@ export default function CareersPage() {
           </LocaleLink>
           <LocaleLink
             href="/about"
-            className="inline-flex items-center gap-2 border border-brand-darkRed/35 bg-white/80 px-7 py-3 font-roboto text-xs uppercase tracking-[0.16em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+            className="inline-flex items-center gap-2 border border-brand-darkRed/35 bg-white/80 px-7 py-3 font-montserrat text-xs uppercase tracking-[0.16em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
             data-cursor-hover
           >
             About The House

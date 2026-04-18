@@ -88,7 +88,7 @@ export default function ContactPage() {
         >
           <LocaleLink
             href="/"
-            className={`inline-flex items-center gap-2 font-roboto text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
@@ -106,7 +106,7 @@ export default function ContactPage() {
           <h1 data-document-h1="true" className="font-rozha text-5xl md:text-6xl text-brand-darkRed mb-4">
             {isRTL ? 'تواصلي معنا' : 'Contact Us'}
           </h1>
-          <p className="font-roboto text-brand-clayRed tracking-wide max-w-xl mx-auto">
+          <p className="font-montserrat text-brand-clayRed tracking-wide max-w-xl mx-auto">
             {isRTL 
               ? 'نحن هنا لمساعدتك. تواصلي معنا وسنرد عليك في أقرب وقت.'
               : 'We\'re here to help. Reach out to us and we\'ll respond as soon as possible.'}
@@ -123,7 +123,7 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <label className={`block font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-2 ${isRTL ? 'text-right' : ''}`}>
+                  <label className={`block font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-2 ${isRTL ? 'text-right' : ''}`}>
                     {isRTL ? 'الاسم' : 'Name'} *
                   </label>
                   <input
@@ -131,12 +131,12 @@ export default function ContactPage() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className={`w-full px-4 py-4 border border-brand-stone/50 font-roboto text-sm tracking-wide focus:border-brand-darkRed transition-colors ${isRTL ? 'text-right' : ''}`}
+                    className={`w-full px-4 py-4 border border-brand-stone/50 font-montserrat text-sm tracking-wide focus:border-brand-darkRed transition-colors ${isRTL ? 'text-right' : ''}`}
                     dir={isRTL ? 'rtl' : 'ltr'}
                   />
                 </div>
                 <div>
-                  <label className={`block font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-2 ${isRTL ? 'text-right' : ''}`}>
+                  <label className={`block font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-2 ${isRTL ? 'text-right' : ''}`}>
                     {isRTL ? 'البريد الإلكتروني' : 'Email'} *
                   </label>
                   <input
@@ -144,7 +144,7 @@ export default function ContactPage() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className={`w-full px-4 py-4 border border-brand-stone/50 font-roboto text-sm tracking-wide focus:border-brand-darkRed transition-colors ${isRTL ? 'text-right' : ''}`}
+                    className={`w-full px-4 py-4 border border-brand-stone/50 font-montserrat text-sm tracking-wide focus:border-brand-darkRed transition-colors ${isRTL ? 'text-right' : ''}`}
                     dir={isRTL ? 'rtl' : 'ltr'}
                   />
                 </div>
@@ -152,26 +152,26 @@ export default function ContactPage() {
 
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <label className={`block font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-2 ${isRTL ? 'text-right' : ''}`}>
+                  <label className={`block font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-2 ${isRTL ? 'text-right' : ''}`}>
                     {isRTL ? 'رقم الهاتف' : 'Phone'}
                   </label>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className={`w-full px-4 py-4 border border-brand-stone/50 font-roboto text-sm tracking-wide focus:border-brand-darkRed transition-colors ${isRTL ? 'text-right' : ''}`}
+                    className={`w-full px-4 py-4 border border-brand-stone/50 font-montserrat text-sm tracking-wide focus:border-brand-darkRed transition-colors ${isRTL ? 'text-right' : ''}`}
                     dir="ltr"
                   />
                 </div>
                 <div>
-                  <label className={`block font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-2 ${isRTL ? 'text-right' : ''}`}>
+                  <label className={`block font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-2 ${isRTL ? 'text-right' : ''}`}>
                     {isRTL ? 'الموضوع' : 'Subject'} *
                   </label>
                   <select
                     required
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className={`w-full px-4 py-4 border border-brand-stone/50 font-roboto text-sm tracking-wide focus:border-brand-darkRed transition-colors bg-white ${isRTL ? 'text-right' : ''}`}
+                    className={`w-full px-4 py-4 border border-brand-stone/50 font-montserrat text-sm tracking-wide focus:border-brand-darkRed transition-colors bg-white ${isRTL ? 'text-right' : ''}`}
                     dir={isRTL ? 'rtl' : 'ltr'}
                   >
                     <option value="">{isRTL ? 'اختاري موضوعاً' : 'Select a subject'}</option>
@@ -185,7 +185,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label className={`block font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-2 ${isRTL ? 'text-right' : ''}`}>
+                <label className={`block font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-2 ${isRTL ? 'text-right' : ''}`}>
                   {isRTL ? 'رسالتك' : 'Message'} *
                 </label>
                 <textarea
@@ -193,7 +193,7 @@ export default function ContactPage() {
                   rows={6}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className={`w-full px-4 py-4 border border-brand-stone/50 font-roboto text-sm tracking-wide focus:border-brand-darkRed transition-colors resize-none ${isRTL ? 'text-right' : ''}`}
+                  className={`w-full px-4 py-4 border border-brand-stone/50 font-montserrat text-sm tracking-wide focus:border-brand-darkRed transition-colors resize-none ${isRTL ? 'text-right' : ''}`}
                   dir={isRTL ? 'rtl' : 'ltr'}
                   placeholder={isRTL ? 'كيف يمكننا مساعدتك؟' : 'How can we help you?'}
                 />
@@ -202,7 +202,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full px-8 py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`w-full px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 {isSubmitting ? (
@@ -235,7 +235,7 @@ export default function ContactPage() {
                     <item.icon className="w-5 h-5 text-brand-darkRed" />
                   </div>
                   <div>
-                    <p className="font-roboto text-xs uppercase tracking-[0.15em] text-brand-clayRed mb-1">
+                    <p className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed mb-1">
                       {item.label}
                     </p>
                     {item.href ? (
@@ -243,13 +243,13 @@ export default function ContactPage() {
                         href={item.href}
                         target={item.href.startsWith('http') ? '_blank' : undefined}
                         rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="font-roboto text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
+                        className="font-montserrat text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
                         data-cursor-hover
                       >
                         {item.value}
                       </a>
                     ) : (
-                      <p className="font-roboto text-brand-darkRed">{item.value}</p>
+                      <p className="font-montserrat text-brand-darkRed">{item.value}</p>
                     )}
                   </div>
                 </div>
@@ -261,7 +261,7 @@ export default function ContactPage() {
               <h3 className="font-rozha text-xl mb-4">
                 {isRTL ? 'تابعينا' : 'Follow Us'}
               </h3>
-              <p className="font-roboto text-sm text-white/70 mb-6">
+              <p className="font-montserrat text-sm text-white/70 mb-6">
                 {isRTL 
                   ? 'انضمي لمجتمعنا للحصول على أحدث التصاميم والعروض الحصرية.'
                   : 'Join our community for the latest designs and exclusive offers.'}

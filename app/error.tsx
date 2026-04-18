@@ -45,19 +45,19 @@ export default function Error({
           </div>
 
           {/* Title */}
-          <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
+          <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
           <h1 data-document-h1="true" className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-darkRed mb-4">
             Something Went Wrong
           </h1>
           
           {/* Description */}
-          <p className="font-roboto text-sm sm:text-base text-brand-clayRed/70 tracking-wide mb-8 max-w-md mx-auto px-4">
+          <p className="font-montserrat text-sm sm:text-base text-brand-clayRed/70 tracking-wide mb-8 max-w-md mx-auto px-4">
             We apologize for the inconvenience. Please try again, or contact us if the problem persists.
           </p>
 
           {/* Error digest for support */}
           {error.digest && (
-            <p className="font-roboto text-xs text-brand-stone mb-6 px-4">
+            <p className="font-montserrat text-xs text-brand-stone mb-6 px-4">
               Error ID: {error.digest}
             </p>
           )}
@@ -66,7 +66,7 @@ export default function Error({
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <button
               onClick={() => reset()}
-              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-brand-darkRed text-white font-roboto text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-brand-darkRed text-white font-montserrat text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
               data-cursor-hover
             >
               <FiRefreshCw className="w-4 h-4" />
@@ -74,7 +74,7 @@ export default function Error({
             </button>
             <LocaleLink
               href="/"
-              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-brand-darkRed text-brand-darkRed font-roboto text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
               <FiHome className="w-4 h-4" />
@@ -91,13 +91,13 @@ export default function Error({
 
           {/* Contact Support */}
           <div className="pt-6 border-t border-brand-stone/20">
-            <p className="font-roboto text-xs text-brand-clayRed/50 tracking-wide mb-2">
+            <p className="font-montserrat text-xs text-brand-clayRed/50 tracking-wide mb-2">
               Need assistance?
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
               <a 
                 href="mailto:contact@bintsaeed.com"
-                className="font-roboto text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
+                className="font-montserrat text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
                 data-cursor-hover
               >
                 contact@bintsaeed.com
@@ -107,7 +107,7 @@ export default function Error({
                 href="https://wa.me/971502299402"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-roboto text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
+                className="font-montserrat text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
                 data-cursor-hover
               >
                 WhatsApp Support

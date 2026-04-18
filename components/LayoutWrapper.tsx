@@ -43,6 +43,13 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const isHomeEditorial =
     inner === '/home' || (inner.startsWith('/home/') && !isHomeAccessShell)
 
+  /** Full-bleed hero under fixed header — no top gap on main */
+  const isFlushHeroLayout =
+    isHomeEditorial ||
+    inner === '/craftsmanship' ||
+    inner.startsWith('/craftsmanship/') ||
+    inner === '/accessories'
+
   if (isComingSoon || isHomeAccessShell) {
     return <main>{children}</main>
   }
@@ -51,7 +58,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
     <>
       <Header />
       <main
-        className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isHomeEditorial ? 'pt-0' : 'pt-[90px] lg:pt-[100px]'}`}
+        className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : 'pt-[90px] lg:pt-[100px]'}`}
       >
         <GlobalStripeOverlay />
         <div className="relative z-[2] w-full min-w-0 max-w-none">{children}</div>

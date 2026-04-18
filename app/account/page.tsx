@@ -16,11 +16,11 @@ export default function AccountPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <p className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-3">Bint Saeed</p>
+          <p className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-3">Bint Saeed</p>
           <h1 data-document-h1="true" className="font-rozha text-4xl text-brand-darkRed mb-4">
             {isRTL ? 'حسابي' : 'Account'}
           </h1>
-          <p className="font-roboto text-sm text-brand-clayRed/70 max-w-md mx-auto leading-relaxed">
+          <p className="font-montserrat text-sm text-brand-clayRed/70 max-w-md mx-auto leading-relaxed">
             {isRTL
               ? 'سجّلي للحصول على تجربة شخصية وتتبع الطلبات لاحقاً.'
               : 'Create an account for a personal experience. Sign-in with password will be added next to this flow.'}
@@ -38,14 +38,14 @@ export default function AccountPage() {
             <h2 className="font-rozha text-xl text-brand-darkRed mb-2 text-center sm:text-start sm:rtl:text-end">
               {isRTL ? 'تسجيل جديد' : 'Create account'}
             </h2>
-            <p className="font-roboto text-xs text-brand-clayRed/65 leading-relaxed mb-6 flex-1 text-center sm:text-start sm:rtl:text-end">
+            <p className="font-montserrat text-xs text-brand-clayRed/65 leading-relaxed mb-6 flex-1 text-center sm:text-start sm:rtl:text-end">
               {isRTL
                 ? 'بعد التسجيل نرسل رابطاً إلى بريدك لتأكيد العنوان قبل تفعيل الحساب.'
                 : 'After you register, we send a confirmation email with a button. Your account is only active once you verify.'}
             </p>
             <LocaleLink
               href="/register"
-              className={`mt-auto inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-roboto text-xs uppercase tracking-[0.18em] text-white hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`mt-auto inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-montserrat text-xs uppercase tracking-[0.18em] text-white hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               {isRTL ? 'ابدئي' : 'Get started'}
@@ -63,18 +63,18 @@ export default function AccountPage() {
             <h2 className="font-rozha text-xl text-brand-darkRed/80 mb-2 text-center sm:text-start sm:rtl:text-end">
               {isRTL ? 'تسجيل الدخول' : 'Sign in'}
             </h2>
-            <p className="font-roboto text-xs text-brand-clayRed/55 leading-relaxed mb-6 flex-1 text-center sm:text-start sm:rtl:text-end">
+            <p className="font-montserrat text-xs text-brand-clayRed/55 leading-relaxed mb-6 flex-1 text-center sm:text-start sm:rtl:text-end">
               {isRTL
                 ? 'تسجيل الدخول بكلمة المرور يُضاف مع الجلسات لاحقاً.'
                 : 'Password sign-in and sessions can be wired next (e.g. NextAuth) using the verified accounts this flow creates.'}
             </p>
-            <span className="mt-auto block text-center py-3 font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/40">
+            <span className="mt-auto block text-center py-3 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/40">
               {isRTL ? 'قريباً' : 'Coming next'}
             </span>
           </motion.div>
         </div>
 
-        <p className="mt-12 text-center font-roboto text-[10px] text-brand-clayRed/45 tracking-wide max-w-lg mx-auto">
+        <p className="mt-12 text-center font-montserrat text-[10px] text-brand-clayRed/45 tracking-wide max-w-lg mx-auto">
           {isRTL
             ? 'للإنتاج: فعّلي Resend و Redis (Upstash) — راجعي .env.example'
             : 'For production: configure Resend + Upstash Redis — see .env.example'}

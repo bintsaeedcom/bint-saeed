@@ -77,7 +77,7 @@ export default function LanguageSwitcher({ variant = 'dark', align = 'end' }: La
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.1em] transition-colors ${textColor}`}
+        className={`flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.1em] transition-colors ${textColor}`}
         data-cursor-hover
       >
         <FiGlobe className="w-4 h-4" />

@@ -90,7 +90,7 @@ function HeritageHero() {
       <motion.div style={{ y, opacity }} className="relative h-full flex items-center justify-center text-center">
         <div className="container mx-auto px-6 lg:px-16">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }} className="max-w-4xl mx-auto">
-            <span className="inline-block px-5 py-2.5 backdrop-blur-md bg-white/[0.06] border border-brand-dustyBlue/20 rounded-full text-brand-dustyBlue font-roboto text-[10px] uppercase tracking-[0.4em] mb-8">
+            <span className="inline-block px-5 py-2.5 backdrop-blur-md bg-white/[0.06] border border-brand-dustyBlue/20 rounded-full text-brand-dustyBlue font-montserrat text-[10px] uppercase tracking-[0.4em] mb-8">
               {isRTL ? 'تراثنا' : 'Our Heritage'}
             </span>
             <h1 data-document-h1="true" className="font-rozha text-[12vw] md:text-[8vw] lg:text-[6.5vw] text-white leading-[0.9] mb-8">
@@ -98,7 +98,7 @@ function HeritageHero() {
               <br />
               <span className="text-brand-dustyBlue italic">{isRTL ? 'في كل غرزة' : 'In Every Stitch'}</span>
             </h1>
-            <p className="font-roboto text-base md:text-xl text-white/75 tracking-wide max-w-2xl mx-auto leading-relaxed">
+            <p className="font-montserrat text-base md:text-xl text-white/75 tracking-wide max-w-2xl mx-auto leading-relaxed">
               {isRTL ? 'نحتفل بالحرف التقليدية الإماراتية ونحييها في تصاميمنا المعاصرة، ربطاً بين الماضي والحاضر.' : 'Celebrating the traditional crafts of the Emirates and reviving them in our contemporary designs. Where the past meets the present.'}
             </p>
           </motion.div>
@@ -130,12 +130,12 @@ function HeritageIntro() {
       </motion.div>
       <div className="relative container mx-auto px-6 lg:px-16">
         <motion.div style={{ y: floatY, opacity: floatOpacity }} className={`max-w-4xl mx-auto ${isRTL ? 'text-right' : 'text-center'}`}>
-          <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-6 block">{isRTL ? 'حرف عريقة' : 'Ancient Crafts'}</span>
+          <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-6 block">{isRTL ? 'حرف عريقة' : 'Ancient Crafts'}</span>
           <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed mb-10 leading-[1.1]">
             {isRTL ? 'فن توارثته الأجيال' : 'Art Passed Through Generations'}
           </h2>
           <div className="backdrop-blur-sm bg-white/50 border border-brand-dustyBlue/15 rounded-2xl p-8 md:p-12 inline-block">
-            <p className="font-roboto text-base md:text-lg text-brand-darkRed/80 tracking-wide leading-[1.9]">
+            <p className="font-montserrat text-base md:text-lg text-brand-darkRed/80 tracking-wide leading-[1.9]">
               {isRTL
                 ? 'في بنت سعيد، نؤمن بأن الأناقة الحقيقية تنبع من الجذور. تصاميمنا مستوحاة من التراث الإماراتي العريق، حيث ندمج الحرف التقليدية مع الرؤية المعاصرة لنخلق قطعاً تحمل قصصاً من الماضي وتتألق في الحاضر.'
                 : 'At Bint Saeed, we believe true elegance stems from roots. Our designs are inspired by the rich Emirati heritage — we blend traditional crafts with contemporary vision to create pieces that carry stories from the past and shine in the present.'}
@@ -170,21 +170,21 @@ function HeritageGrid() {
                     <Image src={item.image} alt={isRTL ? item.title.ar : item.title.en} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className={`absolute top-6 ${isRTL ? 'right-6' : 'left-6'}`}>
-                      <span className="px-5 py-2.5 backdrop-blur-md bg-white/20 border border-white/30 rounded-xl text-white font-roboto text-[10px] uppercase tracking-[0.2em]">
+                      <span className="px-5 py-2.5 backdrop-blur-md bg-white/20 border border-white/30 rounded-xl text-white font-montserrat text-[10px] uppercase tracking-[0.2em]">
                         {isRTL ? item.tag.ar : item.tag.en}
                       </span>
                     </div>
                     <div className={`absolute -bottom-3 ${index % 2 === 1 ? 'right-0 lg:right-auto lg:left-0' : 'left-0'} w-2/3 h-full border-2 border-brand-dustyBlue/20 rounded-2xl -z-10`} />
                   </div>
                   <div className={`${index % 2 === 1 ? 'lg:order-1' : ''} ${isRTL ? 'text-right' : ''}`}>
-                    <span className="font-roboto text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue mb-4 block">{isRTL ? item.subtitle.ar : item.subtitle.en}</span>
+                    <span className="font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue mb-4 block">{isRTL ? item.subtitle.ar : item.subtitle.en}</span>
                     <h3 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed mb-8 group-hover:text-brand-dustyBlue transition-colors duration-300">
                       {isRTL ? item.title.ar : item.title.en}
                     </h3>
-                    <p className="font-roboto text-base text-brand-clayRed/80 tracking-wide leading-[1.85] mb-10 max-w-lg">
+                    <p className="font-montserrat text-base text-brand-clayRed/80 tracking-wide leading-[1.85] mb-10 max-w-lg">
                       {isRTL ? item.description.ar : item.description.en}
                     </p>
-                    <span className={`inline-flex items-center gap-3 font-roboto text-sm uppercase tracking-[0.15em] text-brand-darkRed group-hover:text-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <span className={`inline-flex items-center gap-3 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-darkRed group-hover:text-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}>
                       {isRTL ? 'اكتشفي المزيد' : 'Discover More'}
                       <FiArrowRight className={`w-5 h-5 group-hover:translate-x-2 transition-transform duration-300 ${isRTL ? 'rotate-180 group-hover:-translate-x-2' : ''}`} />
                     </span>
@@ -214,7 +214,7 @@ function BrandConnectionSection() {
       <div className="relative container mx-auto px-6 lg:px-16 py-32">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div style={{ opacity }} className={`text-white ${isRTL ? 'text-right lg:order-2' : ''}`}>
-            <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-6 block">{isRTL ? 'فلسفتنا' : 'Our Philosophy'}</span>
+            <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-6 block">{isRTL ? 'فلسفتنا' : 'Our Philosophy'}</span>
             <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl mb-10 leading-[1.05]">
               {isRTL ? 'التراث في كل غرزة' : 'Heritage in'}
               <br />
@@ -223,10 +223,10 @@ function BrandConnectionSection() {
             <div className="relative max-w-xl">
               <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/20 via-transparent to-brand-stone/10 opacity-50" />
               <div className="relative backdrop-blur-sm bg-white/[0.04] rounded-2xl p-8 md:p-10 border border-white/[0.06] space-y-6">
-                <p className="font-roboto text-sm text-white/70 tracking-wide leading-[1.9]">
+                <p className="font-montserrat text-sm text-white/70 tracking-wide leading-[1.9]">
                   {isRTL ? 'في بنت سعيد، لا نستلهم من التراث فحسب — بل نحييه. نتعاون مع حرفيات إماراتيات لدمج تقنيات التلي ونسيج الخوص (سعف النخيل) الأصيلة في تصاميمنا.' : 'At Bint Saeed, we don\'t just draw inspiration from heritage — we revive it. We collaborate with Emirati artisans to incorporate authentic Al Talli embroidery and Khous palm-frond weaving into our designs.'}
                 </p>
-                <p className="font-roboto text-sm text-white/70 tracking-wide leading-[1.9]">
+                <p className="font-montserrat text-sm text-white/70 tracking-wide leading-[1.9]">
                   {isRTL ? 'كل عباءة تحمل جزءاً من تاريخ الإمارات، مصنوعة بأيدي ماهرة تحمل إرث الأجداد وتقدمه بروح عصرية.' : 'Each abaya carries a piece of Emirates history, crafted by skilled hands that carry the legacy of ancestors and present it with a contemporary spirit.'}
                 </p>
               </div>
@@ -252,7 +252,7 @@ function BrandConnectionSection() {
               </div>
             </div>
             <div className="absolute -bottom-4 -right-4 md:right-auto md:-left-4 backdrop-blur-md bg-[#1a0008]/80 border border-brand-dustyBlue/25 px-6 py-4 rounded-xl">
-              <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">{isRTL ? 'حرف تقليدية' : 'Traditional Crafts'}</span>
+              <span className="font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">{isRTL ? 'حرف تقليدية' : 'Traditional Crafts'}</span>
             </div>
           </motion.div>
         </div>
@@ -275,16 +275,16 @@ function HeritageCTA() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
       <div className="relative container mx-auto px-6 lg:px-16 text-center">
         <motion.div initial={{ opacity: 0, y: 50 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.9 }} className="max-w-2xl mx-auto">
-          <span className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-6 block">{isRTL ? 'المجموعة' : 'The Collection'}</span>
+          <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-6 block">{isRTL ? 'المجموعة' : 'The Collection'}</span>
           <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed mb-8 leading-[1.1]">
             {isRTL ? 'اكتشفي مجموعتنا المستوحاة من التراث' : 'Discover Our Heritage-Inspired Collection'}
           </h2>
-          <p className="font-roboto text-base text-brand-clayRed/80 tracking-wide mb-12 leading-relaxed">
+          <p className="font-montserrat text-base text-brand-clayRed/80 tracking-wide mb-12 leading-relaxed">
             {isRTL ? 'قطع فريدة تجمع بين أصالة الماضي وأناقة الحاضر.' : 'Unique pieces that combine the authenticity of the past with the elegance of the present.'}
           </p>
           <LocaleLink
             href="/shop"
-            className={`inline-flex items-center gap-3 px-12 py-5 bg-brand-dustyBlue text-[#1a0008] font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white transition-all duration-500 rounded-xl ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex items-center gap-3 px-12 py-5 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white transition-all duration-500 rounded-xl ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             {isRTL ? 'تسوقي الآن' : 'Shop Now'}

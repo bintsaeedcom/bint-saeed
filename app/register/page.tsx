@@ -56,7 +56,7 @@ export default function RegisterPage() {
       <div className="container mx-auto max-w-lg px-6">
         <LocaleLink
           href="/account"
-          className={`mb-10 inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-clayRed hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+          className={`mb-10 inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-clayRed hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
           data-cursor-hover
         >
           <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
@@ -68,13 +68,13 @@ export default function RegisterPage() {
           animate={{ opacity: 1, y: 0 }}
           className="rounded-2xl border border-brand-stone/25 bg-white p-8 shadow-sm md:p-10"
         >
-          <p className="font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-3">
+          <p className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-3">
             Bint Saeed
           </p>
           <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed mb-2">
             {isRTL ? 'إنشاء حساب' : 'Create an account'}
           </h1>
-          <p className="font-roboto text-sm text-brand-clayRed/70 mb-8 leading-relaxed">
+          <p className="font-montserrat text-sm text-brand-clayRed/70 mb-8 leading-relaxed">
             {isRTL
               ? 'سنرسل لك رسالة لتأكيد بريدك الإلكتروني قبل تفعيل الحساب.'
               : 'We’ll email you a confirmation link — your account is activated only after you verify your email.'}
@@ -82,7 +82,7 @@ export default function RegisterPage() {
 
           <form onSubmit={onSubmit} className="space-y-5">
             <div>
-              <label className="mb-2 block font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
+              <label className="mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
                 {isRTL ? 'الاسم (اختياري)' : 'Name (optional)'}
               </label>
               <div className="relative">
@@ -92,13 +92,13 @@ export default function RegisterPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   autoComplete="name"
-                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-roboto text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
+                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
                   placeholder={isRTL ? 'الاسم' : 'Your name'}
                 />
               </div>
             </div>
             <div>
-              <label className="mb-2 block font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
+              <label className="mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
                 {isRTL ? 'البريد الإلكتروني' : 'Email'}
               </label>
               <div className="relative">
@@ -109,13 +109,13 @@ export default function RegisterPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
-                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-roboto text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
+                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
                   placeholder="you@example.com"
                 />
               </div>
             </div>
             <div>
-              <label className="mb-2 block font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
+              <label className="mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
                 {isRTL ? 'كلمة المرور' : 'Password'}
               </label>
               <div className="relative">
@@ -127,16 +127,16 @@ export default function RegisterPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="new-password"
-                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-roboto text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
+                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
                   placeholder="••••••••"
                 />
               </div>
-              <p className="mt-1 font-roboto text-[10px] text-brand-clayRed/50">
+              <p className="mt-1 font-montserrat text-[10px] text-brand-clayRed/50">
                 {isRTL ? '٨ أحرف على الأقل' : 'At least 8 characters'}
               </p>
             </div>
             <div>
-              <label className="mb-2 block font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
+              <label className="mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
                 {isRTL ? 'تأكيد كلمة المرور' : 'Confirm password'}
               </label>
               <div className="relative">
@@ -147,7 +147,7 @@ export default function RegisterPage() {
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}
                   autoComplete="new-password"
-                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-roboto text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
+                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
                   placeholder="••••••••"
                 />
               </div>
@@ -156,7 +156,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={busy}
-              className="w-full bg-brand-darkRed py-4 font-roboto text-xs uppercase tracking-[0.22em] text-white transition-colors hover:bg-brand-dustyBlue disabled:opacity-50"
+              className="w-full bg-brand-darkRed py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-white transition-colors hover:bg-brand-dustyBlue disabled:opacity-50"
               data-cursor-hover
             >
               {busy ? (isRTL ? 'جاري الإرسال…' : 'Sending…') : isRTL ? 'إنشاء الحساب' : 'Create account'}
@@ -165,10 +165,10 @@ export default function RegisterPage() {
 
           {devLink ? (
             <div className="mt-6 rounded-lg border border-dashed border-brand-dustyBlue/40 bg-brand-dustyBlue/5 p-4">
-              <p className="font-roboto text-[10px] uppercase tracking-[0.15em] text-brand-darkRed mb-2">
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-darkRed mb-2">
                 Dev only — no RESEND_API_KEY
               </p>
-              <a href={devLink} className="break-all font-roboto text-xs text-brand-dustyBlue underline">
+              <a href={devLink} className="break-all font-montserrat text-xs text-brand-dustyBlue underline">
                 {devLink}
               </a>
             </div>

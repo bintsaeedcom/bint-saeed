@@ -1,9 +1,26 @@
-/** Hero shots from `public/Webshop pictures/accessoiries/` — used on PDPs and header mega menu. */
-export const ACCESSORY_IMAGE_NECKLACE = '/Webshop%20pictures/accessoiries/necklace.PNG'
-export const ACCESSORY_IMAGE_PHONE_CHARM = '/Webshop%20pictures/accessoiries/phone%20charm.png'
-/** Category hero + grid shots for Abaya Charms (`abaya charms.JPG`). */
-export const ACCESSORY_IMAGE_ABAYA_CHARMS_HERO =
-  '/Webshop%20pictures/accessoiries/abaya%20charms.JPG'
+/**
+ * Product shots from `public/Webshop pictures/accessoiries/`
+ * (URL-encoded spaces; subfolders: `necklaces/`, `abaya charms/`, `earrings/`, `bag charm/`, `phone charm/`.)
+ */
+const A = '/Webshop%20pictures/accessoiries'
+
+export const ACCESSORY_IMAGE_NECKLACE = `${A}/necklaces/malachite-necklace.PNG`
+export const ACCESSORY_IMAGE_NECKLACE_MALACHITE = `${A}/necklaces/malachite-necklace.PNG`
+export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ = `${A}/necklaces/rose-quartz-necklace.PNG`
+export const ACCESSORY_IMAGE_PHONE_CHARM = `${A}/phone%20charm/phone%20charm.png`
+/** Category hero when no per-stone abaya shot exists. */
+export const ACCESSORY_IMAGE_ABAYA_CHARMS_HERO = `${A}/abaya%20charms.JPG`
+
+const ABAYA = `${A}/abaya%20charms`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_ONYX = `${ABAYA}/bint-saeed-onyx-abaya-charm.PNG`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_TIGER_EYE = `${ABAYA}/bint-saeed-tigereye-abaya-charm.PNG`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE = `${ABAYA}/bint-saeed-orange-colored-jade-abaya-charm.PNG`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_AVENTURINE = `${ABAYA}/bint-saeed-aventurine-abaya-charm.PNG`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_AMETHYST = `${ABAYA}/bint-saeed-amathys-abaya-charm.PNG`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE = `${ABAYA}/bint-saeed-green-jade-abaya-charm.PNG`
+
+export const ACCESSORY_IMAGE_EARRINGS_HERO = `${A}/earrings/5AEC9940-AD10-4C6A-9410-4DCB5BCB5ACD.PNG`
+export const ACCESSORY_IMAGE_BAG_CHARM = `${A}/bag%20charm/9D8CE389-54D5-4235-B71B-A9BB92AC97EA.PNG`
 
 export interface Accessory {
   id: string
@@ -88,18 +105,18 @@ export const accessoryCategories = [
 ]
 
 export const accessories: Accessory[] = [
-  // Necklaces — Signature gemstone strand series
+  // Necklaces — Al Quaa line (variants: stone or style)
   {
     id: 'signature-malachite-necklace',
-    name: 'Signature Malachite Necklace',
-    nameAr: 'قلادة التوقيع بالملاكيت',
+    name: 'Al Quaa Necklace — Malachite',
+    nameAr: 'قلادة القوع — الملاكيت',
     category: 'necklaces',
     price: 1650,
     description:
       'Hand-strung malachite beads with signature clasp and extension chain. Deep Malachite Green tones.',
     descriptionAr:
       'خرز ملاكيت مطرّز يدوياً مع إغلاق توقيع وسلسلة تمديد. درجات خضراء عميقة.',
-    images: [ACCESSORY_IMAGE_NECKLACE],
+    images: [ACCESSORY_IMAGE_NECKLACE_MALACHITE],
     materials: 'Natural malachite beads, 18K gold-plated clasp',
     materialsAr: 'خرز ملاكيت طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Malachite Green', nameAr: 'أخضر ملاكيت', hex: '#1f7a5e' }],
@@ -108,15 +125,15 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-tiger-eye-necklace',
-    name: 'Signature Tiger Eye Necklace',
-    nameAr: 'قلادة التوقيع بعين النمر',
+    name: 'Al Quaa Necklace — Tiger Eye',
+    nameAr: 'قلادة القوع — عين النمر',
     category: 'necklaces',
     price: 1480,
     description:
       'Warm brown tiger eye beads with subtle chatoyancy, finished with our signature closure.',
     descriptionAr:
       'خرز عين النمر بني دافئ بلمعان خفيف، مع إغلاق التوقيع.',
-    images: [ACCESSORY_IMAGE_NECKLACE],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_TIGER_EYE],
     materials: 'Natural tiger eye beads, 18K gold-plated clasp',
     materialsAr: 'خرز عين النمر طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Tiger Eye Brown', nameAr: 'بني عين النمر', hex: '#8B5A2B' }],
@@ -125,15 +142,15 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-onyx-necklace',
-    name: 'Signature Onyx Necklace',
-    nameAr: 'قلادة التوقيع بالأونكس',
+    name: 'Al Quaa Necklace — Onyx',
+    nameAr: 'قلادة القوع — الأونكس',
     category: 'necklaces',
     price: 1590,
     description:
       'Polished black onyx beads with warm brown undertones and a refined signature clasp.',
     descriptionAr:
       'خرز أونكس أسود مصقول بتحت لون بني دافئ وإغلاق التوقيع الراقي.',
-    images: [ACCESSORY_IMAGE_NECKLACE],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_ONYX],
     materials: 'Natural black onyx beads, 18K gold-plated clasp',
     materialsAr: 'خرز أونكس أسود طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [
@@ -143,15 +160,15 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-rose-quartz-necklace',
-    name: 'Signature Rose Quartz Necklace',
-    nameAr: 'قلادة التوقيع بالكوارتز الوردي',
+    name: 'Al Quaa Necklace — Rose Quartz',
+    nameAr: 'قلادة القوع — الكوارتز الوردي',
     category: 'necklaces',
     price: 1740,
     description:
       'Soft pink rose quartz beads hand-knotted for a luminous, romantic line with our signature hardware.',
     descriptionAr:
       'خرز كوارتز وردي ناعم مربوط يدوياً لخط مضيء رومانسي مع قطع التوقيع.',
-    images: [ACCESSORY_IMAGE_NECKLACE],
+    images: [ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ],
     materials: 'Natural rose quartz beads, 18K gold-plated clasp',
     materialsAr: 'خرز كوارتز وردي طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Rose Quartz Pink', nameAr: 'وردي كوارتز', hex: '#f4b8c5' }],
@@ -160,8 +177,8 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'necklace-layered-gold',
-    name: 'Layered Gold Chain',
-    nameAr: 'سلسلة ذهبية متعددة الطبقات',
+    name: 'Al Quaa Necklace — Layered Gold',
+    nameAr: 'قلادة القوع — ذهبي متعدد الطبقات',
     category: 'necklaces',
     price: 380,
     description: 'Multi-layered gold chain necklace with delicate pendants.',
@@ -177,8 +194,8 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'necklace-statement-pendant',
-    name: 'Heritage Statement Pendant',
-    nameAr: 'تعليقة تراثية مميزة',
+    name: 'Al Quaa Necklace — Heritage Pendant',
+    nameAr: 'قلادة القوع — التعليقة التراثية',
     category: 'necklaces',
     price: 520,
     description: 'Bold pendant necklace featuring traditional Emirati patterns.',
@@ -200,7 +217,7 @@ export const accessories: Accessory[] = [
     price: 280,
     description: 'Classic pearl drop earrings with gold-plated hooks.',
     descriptionAr: 'أقراط لؤلؤ متدلية كلاسيكية مع خطافات مطلية بالذهب.',
-    images: [ACCESSORY_IMAGE_NECKLACE],
+    images: [ACCESSORY_IMAGE_EARRINGS_HERO],
     materials: '18K Gold-plated, Freshwater Pearls',
     materialsAr: 'مطلي بالذهب 18 قيراط، لؤلؤ المياه العذبة',
     colors: [
@@ -216,7 +233,7 @@ export const accessories: Accessory[] = [
     price: 195,
     description: 'Modern geometric stud earrings inspired by Islamic art.',
     descriptionAr: 'أقراط هندسية عصرية مستوحاة من الفن الإسلامي.',
-    images: [ACCESSORY_IMAGE_NECKLACE],
+    images: [ACCESSORY_IMAGE_EARRINGS_HERO],
     materials: 'Sterling Silver',
     materialsAr: 'فضة استرلينية',
     colors: [
@@ -233,7 +250,7 @@ export const accessories: Accessory[] = [
     price: 320,
     description: 'Medium-sized hoops with hammered texture finish.',
     descriptionAr: 'أقراط حلقية متوسطة الحجم بتشطيب محكم.',
-    images: [ACCESSORY_IMAGE_NECKLACE],
+    images: [ACCESSORY_IMAGE_EARRINGS_HERO],
     materials: '18K Gold-plated Brass',
     materialsAr: 'نحاس مطلي بالذهب 18 قيراط',
     colors: [
@@ -302,7 +319,7 @@ export const accessories: Accessory[] = [
     price: 175,
     description: 'Luxurious silk tassel bag charm with gold-plated hardware.',
     descriptionAr: 'تعليقة حقيبة شرابة حريرية فاخرة مع معدن مطلي بالذهب.',
-    images: [ACCESSORY_IMAGE_PHONE_CHARM],
+    images: [ACCESSORY_IMAGE_BAG_CHARM],
     materials: 'Silk, 18K Gold-plated Hardware',
     materialsAr: 'حرير، معدن مطلي بالذهب 18 قيراط',
     colors: [
@@ -321,7 +338,7 @@ export const accessories: Accessory[] = [
     price: 220,
     description: 'Elegant pearl cluster charm to elevate any handbag.',
     descriptionAr: 'تعليقة عنقود لؤلؤ أنيقة لرفع مستوى أي حقيبة يد.',
-    images: [ACCESSORY_IMAGE_PHONE_CHARM],
+    images: [ACCESSORY_IMAGE_BAG_CHARM],
     materials: 'Freshwater Pearls, 18K Gold-plated',
     materialsAr: 'لؤلؤ المياه العذبة، مطلي بالذهب 18 قيراط',
     colors: [
@@ -337,7 +354,7 @@ export const accessories: Accessory[] = [
     price: 195,
     description: 'Personalized letter charm. Available in all letters A-Z.',
     descriptionAr: 'تعليقة حرف شخصية. متوفرة بجميع الحروف A-Z.',
-    images: [ACCESSORY_IMAGE_PHONE_CHARM],
+    images: [ACCESSORY_IMAGE_BAG_CHARM],
     materials: '18K Gold Vermeil',
     materialsAr: 'طلاء ذهب 18 قيراط',
     colors: [
@@ -352,7 +369,7 @@ export const accessories: Accessory[] = [
     price: 175,
     description: 'Clip-on bag charm for handbags and evening clutches.',
     descriptionAr: 'تعليقة حقيبة بحلقة تعليق للحقائب ومساء الخروج.',
-    images: [ACCESSORY_IMAGE_PHONE_CHARM],
+    images: [ACCESSORY_IMAGE_BAG_CHARM],
     materials: 'Gold-plated hardware, enamel',
     materialsAr: 'معدن مطلي بالذهب، إينامل',
     colors: [
@@ -441,7 +458,7 @@ export const accessories: Accessory[] = [
       'Natural black onyx abaya charm with secure clip attachment for draping along the edge or sleeve.',
     descriptionAr:
       'تعليقة عباءة من أونكس أسود طبيعي مع مشبك آمن للتعليق على الحافة أو الكم.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARMS_HERO],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_ONYX],
     materials: 'Natural onyx, 18K gold-plated findings',
     materialsAr: 'أونكس طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Black Onyx', nameAr: 'أونكس أسود', hex: '#1a1a1a' }],
@@ -457,7 +474,7 @@ export const accessories: Accessory[] = [
       'Warm tiger eye beads with subtle chatoyancy; designed for movement when styled on the abaya.',
     descriptionAr:
       'خرز عين النمر الدافئ بلمعان خفيف؛ مصمم للحركة عند تنسيقه مع العباءة.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARMS_HERO],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_TIGER_EYE],
     materials: 'Natural tiger eye, 18K gold-plated findings',
     materialsAr: 'عين النمر طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Tiger Eye Brown', nameAr: 'بني عين النمر', hex: '#8B5A2B' }],
@@ -473,7 +490,7 @@ export const accessories: Accessory[] = [
       'Orange-toned jade beads for a vivid accent along the abaya silhouette.',
     descriptionAr:
       'خرز يشم بلون برتقالي نقي كلون مميز على خط العباءة.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARMS_HERO],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE],
     materials: 'Natural jade, 18K gold-plated findings',
     materialsAr: 'يشم طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Orange Jade', nameAr: 'يشم برتقالي', hex: '#ea580c' }],
@@ -505,7 +522,7 @@ export const accessories: Accessory[] = [
       'Blue aventurine beads with gentle sparkle — a cool contrast on deep or black fabric.',
     descriptionAr:
       'خرز أفنتورين أزرق بلمعان خفيف — تباين بارد على الأقمشة الداكنة.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARMS_HERO],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_AVENTURINE],
     materials: 'Natural blue aventurine, 18K gold-plated findings',
     materialsAr: 'أفنتورين أزرق طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Blue Aventurine', nameAr: 'أفنتورين أزرق', hex: '#2563eb' }],
@@ -521,7 +538,7 @@ export const accessories: Accessory[] = [
       'Soft rose quartz with a luminous, romantic line along the abaya edge.',
     descriptionAr:
       'كوارتز وردي ناعم بلمعة رومانسية على حافة العباءة.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARMS_HERO],
+    images: [ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ],
     materials: 'Natural rose quartz, 18K gold-plated findings',
     materialsAr: 'كوارتز وردي طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Rose Quartz', nameAr: 'كوارتز وردي', hex: '#f4b8c5' }],
@@ -537,7 +554,7 @@ export const accessories: Accessory[] = [
       'Deep malachite green with natural banding — a striking signature accent.',
     descriptionAr:
       'ملاكيت أخضر عميق بخطوط طبيعية — لمسة توقيع مميزة.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARMS_HERO],
+    images: [ACCESSORY_IMAGE_NECKLACE_MALACHITE],
     materials: 'Natural malachite, 18K gold-plated findings',
     materialsAr: 'ملاكيت طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Malachite Green', nameAr: 'أخضر ملاكيت', hex: '#1f7a5e' }],
@@ -569,7 +586,7 @@ export const accessories: Accessory[] = [
       'Heart-cut amethyst beads — limited edition release with clip attachment.',
     descriptionAr:
       'خرز جمشت على شكل قلب — إصدار محدود مع مشبك تثبيت.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARMS_HERO],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_AMETHYST],
     materials: 'Natural amethyst, 18K gold-plated findings',
     materialsAr: 'جمشت طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Amethyst', nameAr: 'جمشت', hex: '#9333ea' }],
@@ -586,7 +603,7 @@ export const accessories: Accessory[] = [
       'Heart-shaped jade beads — limited edition; serene green movement on the abaya line.',
     descriptionAr:
       'خرز يشم على شكل قلب — إصدار محدود؛ حركة خضراء هادئة على خط العباءة.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARMS_HERO],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE],
     materials: 'Natural jade, 18K gold-plated findings',
     materialsAr: 'يشم طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Jade Green', nameAr: 'يشم أخضر', hex: '#059669' }],

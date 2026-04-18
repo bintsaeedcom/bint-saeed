@@ -27,7 +27,7 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
 
   const tone =
     variant === 'muted'
-      ? 'font-roboto leading-none tracking-[0.28em] text-neutral-500'
+      ? 'font-montserrat leading-none tracking-[0.28em] text-neutral-500'
       : 'font-montserrat text-brand-darkRed/70'
 
   const linkClass =
@@ -62,7 +62,7 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
               <span
                 className={
                   isLast
-                    ? `min-w-0 flex-1 truncate font-normal ${
+                    ? `shrink-0 whitespace-nowrap font-normal ${
                         variant === 'muted' ? 'text-neutral-900' : 'text-brand-darkRed'
                       }`
                     : `shrink-0 whitespace-nowrap font-normal ${

@@ -78,7 +78,7 @@ export default function AdminProductsPage() {
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 data-document-h1="true" className="font-rozha text-3xl text-white">Catalog</h1>
-          <p className="mt-1 max-w-xl font-roboto text-sm text-white/50">
+          <p className="mt-1 max-w-xl font-montserrat text-sm text-white/50">
             Base data lives in <code className="text-brand-dustyBlue/80">data/products.ts</code>. Overrides here adjust
             display name, price, and visibility without redeploying.
           </p>
@@ -143,7 +143,7 @@ export default function AdminProductsPage() {
                       />
                     </div>
                   </div>
-                  <label className="flex cursor-pointer items-center gap-2 font-roboto text-sm text-white/80">
+                  <label className="flex cursor-pointer items-center gap-2 font-montserrat text-sm text-white/80">
                     <input
                       type="checkbox"
                       checked={ed.published}

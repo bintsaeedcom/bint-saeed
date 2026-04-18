@@ -233,7 +233,7 @@ export default function Header() {
                   key={item.label}
                   href={item.href}
                   onMouseEnter={() => setActiveMegaMenu(item.href)}
-                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-2 font-roboto text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 ${
+                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-2 font-montserrat text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 ${
                     activeMegaMenu === item.href ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
                   }`}
                   data-cursor-hover
@@ -327,7 +327,7 @@ export default function Header() {
               >
                 <FiHeart className="w-[18px] h-[18px]" />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 font-roboto text-[9px] font-bold text-white">
+                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 font-montserrat text-[9px] font-bold text-white">
                     {wishlistCount > 9 ? '9+' : wishlistCount}
                   </span>
                 )}
@@ -342,7 +342,7 @@ export default function Header() {
               >
                 <FiShoppingBag className="w-[18px] h-[18px]" />
                 {cartItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-dustyBlue text-white text-[9px] rounded-full flex items-center justify-center font-roboto font-bold">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-dustyBlue text-white text-[9px] rounded-full flex items-center justify-center font-montserrat font-bold">
                     {cartItems.length}
                   </span>
                 )}
@@ -374,7 +374,7 @@ export default function Header() {
               >
                 <FiHeart className="w-[17px] h-[17px]" />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 font-roboto text-[9px] font-bold text-white">
+                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 font-montserrat text-[9px] font-bold text-white">
                     {wishlistCount > 9 ? '9+' : wishlistCount}
                   </span>
                 )}
@@ -389,7 +389,7 @@ export default function Header() {
               >
                 <FiShoppingBag className="w-[17px] h-[17px]" />
                 {cartItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-dustyBlue text-white text-[9px] rounded-full flex items-center justify-center font-roboto font-bold">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-dustyBlue text-white text-[9px] rounded-full flex items-center justify-center font-montserrat font-bold">
                     {cartItems.length}
                   </span>
                 )}
@@ -413,7 +413,7 @@ export default function Header() {
                     <div className="col-span-7 grid grid-cols-3 gap-8">
                       {megaMenus[activeMegaMenu].columns.map((col) => (
                         <div key={col.title}>
-                          <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/70">
+                          <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/70">
                             {col.title}
                           </p>
                           <div className="space-y-2.5">
@@ -421,7 +421,7 @@ export default function Header() {
                               <LocaleLink
                                 key={link.label}
                                 href={link.href}
-                                className="block font-roboto text-[13px] text-brand-darkRed/90 transition-colors hover:text-brand-dustyBlue"
+                                className="block font-montserrat text-[13px] text-brand-darkRed/90 transition-colors hover:text-brand-dustyBlue"
                                 data-cursor-hover
                                 onClick={() => setActiveMegaMenu(null)}
                               >
@@ -453,10 +453,10 @@ export default function Header() {
                             />
                           </div>
                           <div className="mt-2 flex items-center justify-between">
-                            <span className="font-roboto text-[12px] text-brand-darkRed">
+                            <span className="font-montserrat text-[12px] text-brand-darkRed">
                               {feature.title}
                             </span>
-                            <span className="font-roboto text-[11px] uppercase tracking-[0.1em] text-brand-darkRed/70 transition-colors group-hover:text-brand-dustyBlue">
+                            <span className="font-montserrat text-[11px] uppercase tracking-[0.1em] text-brand-darkRed/70 transition-colors group-hover:text-brand-dustyBlue">
                               Shop Now
                             </span>
                           </div>
@@ -505,7 +505,7 @@ export default function Header() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t.search.placeholder || 'Search for products, collection, pages…'}
-                  className={`flex-1 text-lg md:text-xl font-roboto text-brand-darkRed bg-transparent focus:outline-none placeholder:text-brand-stone/60 ${isRTL ? 'text-right' : ''}`}
+                  className={`flex-1 text-lg md:text-xl font-montserrat text-brand-darkRed bg-transparent focus:outline-none placeholder:text-brand-stone/60 ${isRTL ? 'text-right' : ''}`}
                   dir={isRTL ? 'rtl' : 'ltr'}
                 />
                 <button
@@ -523,7 +523,7 @@ export default function Header() {
                 {searchQuery.trim() === '' ? (
                   // Popular searches when empty
                   <div>
-                    <span className="font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-clayRed mb-4 block">
+                    <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed mb-4 block">
                       {t.search.popularSearches || 'Popular Searches'}
                     </span>
                     <div className="flex flex-wrap gap-2">
@@ -532,7 +532,7 @@ export default function Header() {
                           key={term}
                           type="button"
                           onClick={() => setSearchQuery(term)}
-                          className="px-4 py-2 bg-brand-stone/20 text-brand-darkRed font-roboto text-sm tracking-wide hover:bg-brand-dustyBlue/20 transition-colors rounded-full"
+                          className="px-4 py-2 bg-brand-stone/20 text-brand-darkRed font-montserrat text-sm tracking-wide hover:bg-brand-dustyBlue/20 transition-colors rounded-full"
                           data-cursor-hover
                         >
                           {term}
@@ -552,10 +552,10 @@ export default function Header() {
                         data-cursor-hover
                       >
                         <div>
-                          <span className="font-roboto text-brand-darkRed group-hover:text-brand-dustyBlue transition-colors">
+                          <span className="font-montserrat text-brand-darkRed group-hover:text-brand-dustyBlue transition-colors">
                             {result.title}
                           </span>
-                          <span className="ml-3 font-roboto text-xs text-brand-clayRed/60 uppercase tracking-wider">
+                          <span className="ml-3 font-montserrat text-xs text-brand-clayRed/60 uppercase tracking-wider">
                             {result.category}
                           </span>
                         </div>
@@ -566,10 +566,10 @@ export default function Header() {
                 ) : (
                   // No results
                   <div className="text-center py-8">
-                    <p className="font-roboto text-brand-darkRed/60">
+                    <p className="font-montserrat text-brand-darkRed/60">
                       No results found for "{searchQuery}"
                     </p>
-                    <p className="font-roboto text-sm text-brand-stone mt-2">
+                    <p className="font-montserrat text-sm text-brand-stone mt-2">
                       Try searching for the collection, products, or pages
                     </p>
                   </div>
@@ -641,7 +641,7 @@ export default function Header() {
                         >
                           {mega.columns.map((col) => (
                             <div key={col.title}>
-                              <p className="mb-2 font-roboto text-[10px] uppercase tracking-[0.22em] text-white/45">
+                              <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/45">
                                 {col.title}
                               </p>
                               <div className="space-y-1">
@@ -650,7 +650,7 @@ export default function Header() {
                                     key={`${col.title}-${link.label}`}
                                     href={link.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="block py-2 font-roboto text-[13px] text-white/85 transition-colors hover:text-brand-dustyBlue"
+                                    className="block py-2 font-montserrat text-[13px] text-white/85 transition-colors hover:text-brand-dustyBlue"
                                     data-cursor-hover
                                   >
                                     {link.label}
@@ -666,7 +666,7 @@ export default function Header() {
                                   key={feature.title}
                                   href={feature.href}
                                   onClick={() => setIsMobileMenuOpen(false)}
-                                  className="rounded border border-white/15 px-2 py-2.5 text-center font-roboto text-[11px] leading-tight text-white/90 transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                                  className="rounded border border-white/15 px-2 py-2.5 text-center font-montserrat text-[11px] leading-tight text-white/90 transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
                                   data-cursor-hover
                                 >
                                   {feature.title}

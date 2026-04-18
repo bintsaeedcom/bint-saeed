@@ -109,13 +109,13 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <p className="font-rozha text-xl text-brand-darkRed mb-2">
                     {isRTL ? 'السلة فارغة' : 'Your bag is empty'}
                   </p>
-                  <p className="font-roboto text-sm text-brand-clayRed/60 mb-6">
+                  <p className="font-montserrat text-sm text-brand-clayRed/60 mb-6">
                     {isRTL ? 'اكتشفي مجموعتنا' : 'Discover our collection'}
                   </p>
                   <LocaleLink
                     href="/shop"
                     onClick={onClose}
-                    className="px-6 py-3 bg-brand-darkRed text-white font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
+                    className="px-6 py-3 bg-brand-darkRed text-white font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
                     data-cursor-hover
                   >
                     {isRTL ? 'تسوقي الآن' : 'Shop Now'}
@@ -140,28 +140,28 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                       {/* Details */}
                       <div className={`flex-1 min-w-0 ${isRTL ? 'text-right' : ''}`}>
                         <LocaleLink href={productHref(item)} onClick={onClose} data-cursor-hover>
-                          <h3 className="font-roboto text-sm font-medium text-brand-darkRed truncate hover:text-brand-dustyBlue transition-colors">
+                          <h3 className="font-montserrat text-sm font-medium text-brand-darkRed truncate hover:text-brand-dustyBlue transition-colors">
                             {item.name}
                           </h3>
                         </LocaleLink>
-                        <p className="font-roboto text-xs text-brand-clayRed/60 mt-0.5">
+                        <p className="font-montserrat text-xs text-brand-clayRed/60 mt-0.5">
                           {item.size} • {item.color}
                           {item.lengthCm ? ` • ${item.lengthCm} cm` : ''}
                         </p>
                         {item.customisationMessage && (
-                          <p className="font-roboto text-[10px] text-brand-darkRed/80 mt-1 line-clamp-2">
+                          <p className="font-montserrat text-[10px] text-brand-darkRed/80 mt-1 line-clamp-2">
                             {isRTL ? 'التخصيص:' : 'Personalisation:'} “{summarize(item.customisationMessage)}”
                           </p>
                         )}
                         {item.notes && (
-                          <p className="font-roboto text-[10px] text-brand-clayRed/80 mt-1 line-clamp-2">
+                          <p className="font-montserrat text-[10px] text-brand-clayRed/80 mt-1 line-clamp-2">
                             {isRTL ? 'ملاحظة:' : 'Note:'} {summarize(item.notes)}
                           </p>
                         )}
-                        <p className="font-roboto text-sm text-brand-darkRed mt-2">
+                        <p className="font-montserrat text-sm text-brand-darkRed mt-2">
                           {formatPrice(lineUnitAed(item))}
                           {item.quantity > 1 && (
-                            <span className="block font-roboto text-[10px] text-brand-clayRed/60">
+                            <span className="block font-montserrat text-[10px] text-brand-clayRed/60">
                               {formatPrice(lineTotalAed(item))} {isRTL ? 'المجموع' : 'line total'}
                             </span>
                           )}
@@ -186,7 +186,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                             >
                               <FiMinus className="w-3 h-3" />
                             </button>
-                            <span className="w-8 text-center font-roboto text-sm">{item.quantity}</span>
+                            <span className="w-8 text-center font-montserrat text-sm">{item.quantity}</span>
                             <button
                               onClick={() =>
                                 updateQuantity(
@@ -222,7 +222,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
               {items.length > 0 && youMayAlsoLike.length > 0 && (
                 <div className={`border-t border-brand-stone/15 py-4 ${isRTL ? 'text-right' : ''}`}>
-                  <p className="px-4 font-roboto text-[10px] uppercase tracking-[0.18em] text-brand-clayRed/70">
+                  <p className="px-4 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-clayRed/70">
                     {isRTL ? 'قد يعجبك أيضاً' : 'You may also like'}
                   </p>
                   <Swiper
@@ -251,10 +251,10 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                               className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                             />
                           </div>
-                          <p className="mt-1.5 line-clamp-2 font-roboto text-[10px] leading-snug text-brand-darkRed group-hover:text-brand-dustyBlue">
+                          <p className="mt-1.5 line-clamp-2 font-montserrat text-[10px] leading-snug text-brand-darkRed group-hover:text-brand-dustyBlue">
                             {p.name}
                           </p>
-                          <p className="mt-0.5 font-roboto text-[10px] text-brand-clayRed/80">{formatPrice(p.price)}</p>
+                          <p className="mt-0.5 font-montserrat text-[10px] text-brand-clayRed/80">{formatPrice(p.price)}</p>
                         </LocaleLink>
                       </SwiperSlide>
                     ))}
@@ -268,14 +268,14 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
               <div className="border-t border-brand-stone/20 p-4 sm:p-6 space-y-4 bg-[#f8f7f5]">
                 {/* Subtotal */}
                 <div className={`flex justify-between items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className="font-roboto text-sm text-brand-clayRed/70 uppercase tracking-wider">
+                  <span className="font-montserrat text-sm text-brand-clayRed/70 uppercase tracking-wider">
                     {isRTL ? 'المجموع الفرعي' : 'Subtotal'}
                   </span>
-                  <span className="font-roboto text-lg font-medium text-brand-darkRed">
+                  <span className="font-montserrat text-lg font-medium text-brand-darkRed">
                     {formatPrice(getTotal())}
                   </span>
                 </div>
-                <p className={`font-roboto text-[10px] text-brand-clayRed/50 ${isRTL ? 'text-right' : ''}`}>
+                <p className={`font-montserrat text-[10px] text-brand-clayRed/50 ${isRTL ? 'text-right' : ''}`}>
                   {isRTL ? 'يُحسب الشحن عند الدفع' : 'Shipping calculated at checkout'}
                 </p>
 
@@ -284,7 +284,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <LocaleLink
                     href="/checkout"
                     onClick={onClose}
-                    className={`w-full py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+                    className={`w-full py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                     data-cursor-hover
                   >
                     {isRTL ? 'إتمام الشراء' : 'Checkout'}
@@ -292,7 +292,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   </LocaleLink>
                   <button
                     onClick={onClose}
-                    className="w-full py-3 text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] hover:text-brand-dustyBlue transition-colors"
+                    className="w-full py-3 text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:text-brand-dustyBlue transition-colors"
                     data-cursor-hover
                   >
                     {isRTL ? 'متابعة التسوق' : 'Continue Shopping'}
@@ -301,11 +301,11 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
                 {/* Trust Badges */}
                 <div className={`flex items-center justify-center gap-3 pt-3 border-t border-brand-stone/20 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className="font-roboto text-[9px] text-brand-clayRed/40 tracking-wide">
+                  <span className="font-montserrat text-[9px] text-brand-clayRed/40 tracking-wide">
                     {isRTL ? '🔒 دفع آمن' : '🔒 Secure checkout'}
                   </span>
                   <span className="text-brand-stone/30">•</span>
-                  <span className="font-roboto text-[9px] text-brand-clayRed/40 tracking-wide">
+                  <span className="font-montserrat text-[9px] text-brand-clayRed/40 tracking-wide">
                     {isRTL ? '🚚 شحن مجاني +500 AED' : '🚚 Free shipping 500+ AED'}
                   </span>
                 </div>

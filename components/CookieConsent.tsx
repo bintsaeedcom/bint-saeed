@@ -91,14 +91,14 @@ export default function CookieConsent() {
 
             {/* Body text */}
             <div className="px-6 pb-4">
-              <p className="font-roboto text-sm leading-[1.7] text-[#4a4a4a]">{t.cookie.message}</p>
+              <p className="font-montserrat text-sm leading-[1.7] text-[#4a4a4a]">{t.cookie.message}</p>
             </div>
 
             {/* More Information link */}
             <div className="pb-5">
               <LocaleLink
                 href="/cookie-policy"
-                className="pointer-events-auto font-roboto text-sm text-brand-darkRed/90 underline transition-colors hover:text-brand-darkRed"
+                className="pointer-events-auto font-montserrat text-sm text-brand-darkRed/90 underline transition-colors hover:text-brand-darkRed"
               >
                 {t.cookie.learnMore}
               </LocaleLink>
@@ -115,19 +115,19 @@ export default function CookieConsent() {
                 >
                   <div className="space-y-3 px-6 py-4 text-left">
                     <div>
-                      <span className="font-roboto text-xs font-medium text-[#3b0014]">{t.cookie.essential}</span>
+                      <span className="font-montserrat text-xs font-medium text-[#3b0014]">{t.cookie.essential}</span>
                       <span className="ml-2 text-[10px] text-[#6b6b6b]">({t.cookie.alwaysOn})</span>
-                      <p className="mt-1 font-roboto text-xs text-[#6b6b6b]">{t.cookie.essentialDesc}</p>
+                      <p className="mt-1 font-montserrat text-xs text-[#6b6b6b]">{t.cookie.essentialDesc}</p>
                     </div>
                     <div>
-                      <span className="font-roboto text-xs font-medium text-[#3b0014]">{t.cookie.analytics}</span>
+                      <span className="font-montserrat text-xs font-medium text-[#3b0014]">{t.cookie.analytics}</span>
                       <span className="ml-2 text-[10px] text-[#6b6b6b]">({t.cookie.optional})</span>
-                      <p className="mt-1 font-roboto text-xs text-[#6b6b6b]">{t.cookie.analyticsDesc}</p>
+                      <p className="mt-1 font-montserrat text-xs text-[#6b6b6b]">{t.cookie.analyticsDesc}</p>
                     </div>
                     <div>
-                      <span className="font-roboto text-xs font-medium text-[#3b0014]">{t.cookie.marketing}</span>
+                      <span className="font-montserrat text-xs font-medium text-[#3b0014]">{t.cookie.marketing}</span>
                       <span className="ml-2 text-[10px] text-[#6b6b6b]">({t.cookie.optional})</span>
-                      <p className="mt-1 font-roboto text-xs text-[#6b6b6b]">{t.cookie.marketingDesc}</p>
+                      <p className="mt-1 font-montserrat text-xs text-[#6b6b6b]">{t.cookie.marketingDesc}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -139,7 +139,7 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={() => setShowDetails(!showDetails)}
-                className="pointer-events-auto flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-roboto text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
+                className="pointer-events-auto flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-montserrat text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
                 data-cursor-hover
               >
                 {t.cookie.cookiesSettings || t.cookie.showDetails}
@@ -147,7 +147,7 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={rejectAll}
-                className="pointer-events-auto flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-roboto text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
+                className="pointer-events-auto flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-montserrat text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
                 data-cursor-hover
               >
                 {t.cookie.essentialOnly}
@@ -155,7 +155,7 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={acceptAll}
-                className="pointer-events-auto flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-roboto text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
+                className="pointer-events-auto flex-1 rounded border border-brand-darkRed/80 bg-brand-darkRed px-5 py-3 font-montserrat text-[11px] uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
                 data-cursor-hover
               >
                 {t.cookie.acceptAll}

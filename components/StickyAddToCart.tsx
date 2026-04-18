@@ -95,10 +95,10 @@ export default function StickyAddToCart({
             <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
               {/* Price */}
               <div className={`flex-1 ${isRTL ? 'text-right' : ''}`}>
-                <p className="font-roboto text-lg font-medium text-brand-darkRed">
+                <p className="font-montserrat text-lg font-medium text-brand-darkRed">
                   {formatPrice(product.price)}
                 </p>
-                <p className="font-roboto text-[10px] text-brand-clayRed/50 uppercase tracking-wider">
+                <p className="font-montserrat text-[10px] text-brand-clayRed/50 uppercase tracking-wider">
                   {selectedSize && selectedColor 
                     ? `${selectedSize} • ${selectedColor}` 
                     : isRTL ? 'اختاري المقاس واللون' : 'Select size & color'}
@@ -110,7 +110,7 @@ export default function StickyAddToCart({
                 type="button"
                 onClick={handleAddToCart}
                 disabled={isAdded}
-                className={`flex-1 py-3.5 font-roboto text-xs uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-2 ${
+                className={`flex-1 py-3.5 font-montserrat text-xs uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-2 ${
                   isAdded
                     ? 'bg-green-600 text-white'
                     : 'bg-brand-darkRed text-white active:bg-brand-clayRed'

@@ -21,9 +21,18 @@ const config: Config = {
         }
       },
       fontFamily: {
-        'rozha': ['var(--font-rozha)', 'serif'],
-        'roboto': ['var(--font-roboto)', 'sans-serif'],
-        'montserrat': ['var(--font-montserrat)', 'sans-serif'],
+        /** Default sans for `font-sans` — Montserrat site-wide (LTR); RTL overrides via CSS variable */
+        sans: [
+          'var(--font-montserrat)',
+          'ui-sans-serif',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'sans-serif',
+        ],
+        rozha: ['var(--font-rozha)', 'serif'],
+        montserrat: ['var(--font-montserrat)', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.8s ease-out forwards',

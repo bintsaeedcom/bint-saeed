@@ -7,7 +7,6 @@
 :root {
   --font-rozha: 'Rozha One', serif;
   --font-montserrat: 'Montserrat', sans-serif;
-  --font-roboto: var(--font-montserrat);
   --font-arabic: 'Noto Kufi Arabic', sans-serif;
   
   --brand-dark-red: #3b0014;
@@ -20,7 +19,6 @@
 
 /* RTL Support */
 [dir="rtl"] {
-  --font-roboto: 'Noto Kufi Arabic', sans-serif;
   --font-montserrat: 'Noto Kufi Arabic', sans-serif;
 }
 
@@ -60,12 +58,13 @@ html {
   max-width: 100%;
   overflow-x: clip;
   background: #3b0014;
+  font-family: var(--font-montserrat);
 }
 
 body {
   width: 100%;
   max-width: 100%;
-  font-family: var(--font-roboto);
+  font-family: var(--font-montserrat);
   letter-spacing: 0.03em;
   overflow-x: clip;
   cursor: auto;
@@ -100,7 +99,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p, span, a, li, label, input, textarea, button {
-  font-family: var(--font-roboto);
+  font-family: var(--font-montserrat);
   letter-spacing: 0.05em;
 }
 

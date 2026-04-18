@@ -18,13 +18,13 @@ export default function WishlistPage() {
     <div className={`min-h-screen bg-stone-50 pt-28 pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="container mx-auto max-w-3xl px-6 lg:px-12">
         <div className={`mb-10 ${isRTL ? 'text-right' : ''}`}>
-          <p className="font-roboto text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
+          <p className="font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
             Bint Saeed
           </p>
           <h1 data-document-h1="true" className="mt-2 font-rozha text-3xl text-brand-darkRed md:text-4xl">
             {isRTL ? 'المفضلة' : 'Favorites'}
           </h1>
-          <p className="mt-3 max-w-lg font-roboto text-sm leading-relaxed text-brand-clayRed/70">
+          <p className="mt-3 max-w-lg font-montserrat text-sm leading-relaxed text-brand-clayRed/70">
             {isRTL
               ? 'تُحفظ القطع على هذا المتصفح. عند تفعيل تسجيل الدخول لاحقًا، يمكن ربط المفضلة بحسابك.'
               : 'Pieces you heart are saved in this browser. When account sign-in is available, favorites can sync to your profile.'}
@@ -37,12 +37,12 @@ export default function WishlistPage() {
             <p className="font-rozha text-xl text-brand-darkRed">
               {isRTL ? 'لا توجد قطع محفوظة بعد' : 'No saved pieces yet'}
             </p>
-            <p className="mt-2 font-roboto text-sm text-brand-clayRed/60">
+            <p className="mt-2 font-montserrat text-sm text-brand-clayRed/60">
               {isRTL ? 'تسوقي المجموعة وأضيفي ما يعجبك.' : 'Explore the collection and tap the heart on any product.'}
             </p>
             <LocaleLink
               href="/shop"
-              className="mt-8 inline-block bg-brand-darkRed px-8 py-3 font-roboto text-xs uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-dustyBlue"
+              className="mt-8 inline-block bg-brand-darkRed px-8 py-3 font-montserrat text-xs uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-dustyBlue"
               data-cursor-hover
             >
               {isRTL ? 'تسوقي' : 'Shop'}
@@ -67,7 +67,7 @@ export default function WishlistPage() {
                       <Image src={item.image} alt={item.name} fill className="pointer-events-none object-cover" sizes="96px" />
                     </LocaleLink>
                     <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
-                      <p className="font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
+                      <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
                         {item.category}
                       </p>
                       <LocaleLink href={href} className="mt-1 block" data-cursor-hover>
@@ -75,7 +75,7 @@ export default function WishlistPage() {
                           {item.name}
                         </h2>
                       </LocaleLink>
-                      <p className="mt-2 font-roboto text-sm tabular-nums text-brand-clayRed">{formatPrice(item.price)}</p>
+                      <p className="mt-2 font-montserrat text-sm tabular-nums text-brand-clayRed">{formatPrice(item.price)}</p>
                     </div>
                     <button
                       type="button"

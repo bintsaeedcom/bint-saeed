@@ -135,14 +135,14 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                 </div>
                 <div className={`flex-1 ${isRTL ? 'text-right' : ''}`}>
                   {product.category && (
-                    <span className="font-roboto text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue block mb-1">
+                    <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue block mb-1">
                       {product.category}
                     </span>
                   )}
                   <h3 className="font-rozha text-xl sm:text-2xl text-brand-darkRed mb-2">
                     {isRTL && product.nameAr ? product.nameAr : product.name}
                   </h3>
-                  <p className="font-roboto text-lg text-brand-darkRed">
+                  <p className="font-montserrat text-lg text-brand-darkRed">
                     {formatPrice(product.price)}
                   </p>
                 </div>
@@ -150,7 +150,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
               {/* Size Selection */}
               <div className="mb-5">
-                <label className={`font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-3 block ${isRTL ? 'text-right' : ''}`}>
+                <label className={`font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-3 block ${isRTL ? 'text-right' : ''}`}>
                   {isRTL ? 'المقاس' : 'Size'}
                   {selectedSize && <span className="text-brand-clayRed/60 ml-2">({selectedSize})</span>}
                 </label>
@@ -159,7 +159,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
-                      className={`min-w-[48px] px-3 py-2.5 font-roboto text-xs uppercase tracking-[0.1em] border transition-all ${
+                      className={`min-w-[48px] px-3 py-2.5 font-montserrat text-xs uppercase tracking-[0.1em] border transition-all ${
                         selectedSize === size
                           ? 'bg-brand-darkRed text-white border-brand-darkRed'
                           : 'bg-white text-brand-darkRed border-brand-stone/50 hover:border-brand-dustyBlue'
@@ -174,7 +174,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
               {/* Color Selection */}
               <div className="mb-6">
-                <label className={`font-roboto text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-3 block ${isRTL ? 'text-right' : ''}`}>
+                <label className={`font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-3 block ${isRTL ? 'text-right' : ''}`}>
                   {isRTL ? 'اللون' : 'Color'}
                   {selectedColor && <span className="text-brand-clayRed/60 ml-2">({selectedColor})</span>}
                 </label>
@@ -202,7 +202,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                 <button
                   onClick={handleAddToCart}
                   disabled={isAdded}
-                  className={`w-full py-4 font-roboto text-sm uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-2 ${
+                  className={`w-full py-4 font-montserrat text-sm uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-2 ${
                     isAdded
                       ? 'bg-green-600 text-white'
                       : 'bg-brand-darkRed text-white hover:bg-brand-dustyBlue'
@@ -225,7 +225,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                 {/* Buy Now - Skip to checkout */}
                 <button
                   onClick={handleBuyNow}
-                  className={`w-full py-4 border border-brand-darkRed text-brand-darkRed font-roboto text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-all flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`w-full py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-all flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
                   {isRTL ? 'اشتري الآن' : 'Buy Now'}
@@ -235,11 +235,11 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
               {/* Trust badges */}
               <div className="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-brand-stone/20">
-                <span className="font-roboto text-[10px] text-brand-clayRed/50 tracking-wide">
+                <span className="font-montserrat text-[10px] text-brand-clayRed/50 tracking-wide">
                   {isRTL ? '✓ شحن مجاني +500 درهم' : '✓ Free shipping 500+ AED'}
                 </span>
                 <span className="text-brand-stone/30">|</span>
-                <span className="font-roboto text-[10px] text-brand-clayRed/50 tracking-wide">
+                <span className="font-montserrat text-[10px] text-brand-clayRed/50 tracking-wide">
                   {isRTL ? '✓ إرجاع خلال 14 يوم' : '✓ 14-day returns'}
                 </span>
               </div>

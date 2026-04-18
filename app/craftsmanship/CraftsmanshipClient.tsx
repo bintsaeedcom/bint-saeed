@@ -1,8 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
-import Image from 'next/image'
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import AppBreadcrumb from '@/components/AppBreadcrumb'
 import LocaleLink from '@/components/LocaleLink'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -90,26 +88,12 @@ function DecorativeCorners({ tone = 'dustyBlue' }: { tone?: 'dustyBlue' | 'darkR
   )
 }
 
-/** Soft vertical guides — aligned with PreviewHome `SectionStripes` soft variant */
+/** Soft vertical guides — static only (scroll-linked motion caused SSR/client mismatches). */
 function SectionStripesSoft() {
-  const ref = useRef<HTMLDivElement>(null)
-  const reduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-  const drift = useTransform(scrollYProgress, [0, 1], [0, 12])
-
   return (
-    <div ref={ref} className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      <motion.div
-        style={reduceMotion ? undefined : { y: drift }}
-        className="absolute left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/28 to-transparent"
-      />
-      <motion.div
-        style={reduceMotion ? undefined : { y: drift }}
-        className="absolute right-[7%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-clayRed/22 to-transparent"
-      />
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+      <div className="absolute left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/28 to-transparent" />
+      <div className="absolute right-[7%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-clayRed/22 to-transparent" />
       <div className="absolute left-[7%] right-[7%] top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/24 to-transparent" />
       <div className="absolute bottom-0 left-[7%] right-[7%] h-px bg-gradient-to-r from-transparent via-brand-stone/26 to-transparent" />
     </div>
@@ -117,47 +101,106 @@ function SectionStripesSoft() {
 }
 
 /**
- * Mosaic imagery — clear photo first, light luxury polish (scroll-mask removed so tiles always read).
+ * Mosaic tile — native img avoids Next/Image sizing edge cases inside nested sticky/aspect layouts.
  */
-function ElevatedScrollImage({
+function MosaicTileImage({
   src,
   alt,
-  sizes,
   className = '',
 }: {
   src: string
   alt: string
-  sizes: string
   className?: string
 }) {
   return (
-    <div className={`relative h-full w-full overflow-hidden ${className}`}>
-      <div className="relative h-full w-full">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes}
-          className="object-cover brightness-[1.04] contrast-[1.04] saturate-[1.06]"
-          priority={false}
-        />
-      </div>
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_75%_at_50%_45%,transparent_40%,rgba(26,0,8,0.18)_100%)]"
-        aria-hidden
+    <div className={`relative h-full min-h-[200px] w-full overflow-hidden ${className}`}>
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 z-[1] h-full w-full object-cover brightness-[1.03] contrast-[1.02]"
       />
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a0008]/25 via-transparent to-transparent"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.035] mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-        }}
+        className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(180deg,transparent_55%,rgba(26,0,8,0.06)_100%)]"
         aria-hidden
       />
     </div>
+  )
+}
+
+/** Opening band: single film + breadcrumb, brand line, and page title on one overlay */
+function CraftsmanshipHero({ className = '' }: { className?: string }) {
+  const { t } = useLanguage()
+  const v = CRAFT_VIDEO_BANDS[0]
+  const homeCrumb = t.product?.home ?? 'Home'
+  const titleCrumb = t.footer?.craftsmanship ?? 'Craftsmanship'
+
+  return (
+    <section
+      className={`bs-full-bleed relative isolate min-h-[min(72vh,100vw)] overflow-hidden bg-[#060304] md:min-h-[min(78vh,56.25vw)] ${className}`}
+    >
+      <video
+        src={v.src}
+        aria-label={v.ariaLabel}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        className="absolute inset-0 z-0 block h-full min-h-[52vh] w-full object-cover"
+      />
+      <div className="pointer-events-none absolute inset-0 z-[4] opacity-90">
+        <DecorativeCorners tone="dustyBlue" />
+      </div>
+      {/* Elegant film overlay: soft vignette + dusty blue lift + readable wash */}
+      <div
+        className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(ellipse_95%_90%_at_50%_38%,transparent_18%,rgba(18,12,18,0.42)_72%,rgba(8,4,10,0.72)_100%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(165deg,rgba(10,8,14,0.62)_0%,transparent_42%,transparent_58%,rgba(146,170,193,0.08)_82%,rgba(250,249,247,0.06)_100%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-[min(36vh,280px)] bg-gradient-to-t from-[#060304] via-[#0d090c]/94 to-transparent"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-32 bg-gradient-to-t from-[rgba(146,170,193,0.14)] via-[rgba(146,170,193,0.04)] to-transparent"
+        aria-hidden
+      />
+
+      <div className="relative z-10 flex min-h-[min(72vh,100vw)] flex-col md:min-h-[min(78vh,56.25vw)]">
+        <div className="flex flex-1 flex-col px-6 pb-20 pt-10 md:pb-24 md:pt-14 lg:px-16">
+          <SectionStripesSoft />
+          <div className="relative mx-auto flex w-full max-w-[90rem] flex-1 flex-col justify-center">
+            <AppBreadcrumb
+              variant="muted"
+              className="mb-6 flex-nowrap !overflow-x-visible !text-white/80 [&_a]:!text-white/75 [&_a:hover]:!text-white [&_span]:!text-white/55 [&_span:last-child]:!text-white/95"
+              segments={[
+                { label: homeCrumb, href: '/home' },
+                { label: titleCrumb },
+              ]}
+            />
+            <div className="max-w-4xl">
+              <span className="mb-5 inline-block font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue/95">
+                Bint Saeed
+              </span>
+              <motion.h1
+                data-document-h1="true"
+                initial={false}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                className="font-rozha text-[clamp(2.25rem,5vw,3.75rem)] leading-[1.06] tracking-[0.02em] text-white drop-shadow-[0_2px_28px_rgba(0,0,0,0.45)]"
+              >
+                {titleCrumb}
+              </motion.h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -230,18 +273,14 @@ function PhaseDivider() {
   )
 }
 
-/** Multi-layer frame — champagne rim, soft halo, deep shadow (luxury editorial) */
-function ImageJewelFrame({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+/** Portrait editorial frame — sharp corners, tall ratio, editorial shadow */
+function PortraitFrame({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`group relative ${className}`}>
-      <div
-        className="pointer-events-none absolute -inset-[10px] rounded-[2.35rem] bg-[radial-gradient(ellipse_at_40%_25%,rgba(201,169,98,0.16)_0%,transparent_58%)] opacity-75 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
-        aria-hidden
-      />
-      <div className="relative rounded-[2rem] bg-[linear-gradient(148deg,#fffefb_0%,#efe6dc_42%,#d9cfc4_100%)] p-[3px] shadow-[0_42px_92px_-34px_rgba(42,0,18,0.48),0_18px_44px_-22px_rgba(26,0,8,0.32),inset_0_1px_0_rgba(255,255,255,0.92)] ring-1 ring-[#c9a962]/20 transition-[box-shadow] duration-500 group-hover:shadow-[0_52px_110px_-38px_rgba(42,0,18,0.52),0_22px_50px_-24px_rgba(26,0,8,0.36),inset_0_1px_0_rgba(255,255,255,0.95)]">
-        <div className="relative overflow-hidden rounded-[1.82rem] bg-[#060304] shadow-[inset_0_2px_28px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.2)] ring-1 ring-black/30">
-          {children}
-        </div>
+    <div
+      className={`group relative shadow-[0_36px_80px_-36px_rgba(26,0,8,0.45),0_12px_36px_-16px_rgba(26,0,8,0.28)] ring-1 ring-black/18 transition-[box-shadow] duration-500 hover:shadow-[0_44px_96px_-38px_rgba(26,0,8,0.5)] ${className}`}
+    >
+      <div className="relative h-full min-h-0 w-full overflow-hidden bg-[#ebe4d8]">
+        {children}
       </div>
     </div>
   )
@@ -254,24 +293,24 @@ function ParallaxMosaic({
   items: readonly { src: string; alt: string }[]
   layout: 'three' | 'two' | 'twoWide'
 }) {
-  /** Same aspect ratio and alignment for every tile — no rotation or stagger */
-  const frame = (src: string, alt: string, sizes: string) => (
-    <ImageJewelFrame className="relative aspect-[4/5] w-full">
-      <ElevatedScrollImage src={src} alt={alt} sizes={sizes} className="absolute inset-0 h-full min-h-[100%]" />
-    </ImageJewelFrame>
+  /** Tall portrait tiles — sharp frame, 3:4 ratio scales with grid width */
+  const frame = (src: string, alt: string) => (
+    <PortraitFrame className="relative aspect-[3/4] w-full">
+      <MosaicTileImage src={src} alt={alt} className="absolute inset-0 h-full w-full min-h-0" />
+    </PortraitFrame>
   )
 
-  /** True viewport width with comfortable inner padding for the grid */
-  const bleed = 'bs-full-bleed px-4 sm:px-6 lg:px-10'
+  /** Bleed inward slightly less on large screens so portraits read larger */
+  const bleed = 'bs-full-bleed px-3 sm:px-5 lg:px-8'
 
   if (layout === 'three') {
     return (
-      <div className="relative my-8 md:my-12">
+      <div className="relative my-10 md:my-14">
         <div className={bleed}>
-          <div className="mx-auto grid max-w-[88rem] grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3 md:gap-8 md:items-start">
+          <div className="mx-auto grid max-w-[100rem] grid-cols-1 gap-7 sm:gap-9 md:grid-cols-3 md:gap-8 md:items-start">
             {items.map((item) => (
               <div key={item.src} className="relative w-full">
-                {frame(item.src, item.alt, '(max-width:768px)100vw,33vw')}
+                {frame(item.src, item.alt)}
               </div>
             ))}
           </div>
@@ -280,17 +319,17 @@ function ParallaxMosaic({
     )
   }
 
-  const maxInner = layout === 'twoWide' ? 'max-w-6xl' : 'max-w-5xl'
+  const maxInner = layout === 'twoWide' ? 'max-w-7xl' : 'max-w-6xl'
 
   return (
-    <div className="relative my-8 md:my-12">
+    <div className="relative my-10 md:my-14">
       <div className={bleed}>
         <div
-          className={`mx-auto grid ${maxInner} grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 md:gap-10 md:items-stretch`}
+          className={`mx-auto grid ${maxInner} grid-cols-1 gap-7 sm:gap-9 md:grid-cols-2 md:gap-12 md:items-stretch`}
         >
           {items.map((item) => (
             <div key={item.src} className="relative flex w-full">
-              {frame(item.src, item.alt, '(max-width:768px)100vw,44vw')}
+              {frame(item.src, item.alt)}
             </div>
           ))}
         </div>
@@ -303,49 +342,9 @@ function ProsePhase({ children, className = '' }: { children: React.ReactNode; c
   const { isRTL } = useLanguage()
   return (
     <div
-      className={`font-roboto text-[15px] leading-[1.92] tracking-[0.02em] text-brand-darkRed/[0.92] md:text-[17px] md:leading-[2] ${isRTL ? 'text-right' : ''} ${className}`}
+      className={`font-montserrat text-[15px] leading-[1.92] tracking-[0.02em] text-brand-darkRed/[0.92] md:text-[17px] md:leading-[2] ${isRTL ? 'text-right' : ''} ${className}`}
     >
       {children}
-    </div>
-  )
-}
-
-const STICKY_BELOW_HEADER = 'top-[92px] lg:top-[100px]'
-
-/**
- * Narrative “deck”: tall scroll runway + sticky panel that the next section slides over.
- * Scroll progress fades the panel so it feels like it disappears under the following layer.
- */
-function StickyScrollDeck({
-  zIndex,
-  overlap,
-  minDeckHeight = 'min-h-[118vh]',
-  children,
-}: {
-  zIndex: number
-  overlap: boolean
-  minDeckHeight?: string
-  children: React.ReactNode
-}) {
-  const deckRef = useRef<HTMLDivElement>(null)
-  const reduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: deckRef,
-    offset: ['start start', 'end end'],
-  })
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.48, 0.72, 1], [1, 1, 0.42, 0])
-
-  return (
-    <div
-      ref={deckRef}
-      className={`relative ${minDeckHeight} ${overlap ? '-mt-24 md:-mt-32 lg:-mt-36' : ''}`}
-      style={{ zIndex }}
-    >
-      <div className={`sticky ${STICKY_BELOW_HEADER}`} style={{ zIndex }}>
-        <motion.div className="relative" style={reduceMotion ? undefined : { opacity: contentOpacity }}>
-          {children}
-        </motion.div>
-      </div>
     </div>
   )
 }
@@ -381,8 +380,6 @@ function PhaseAtmosphere({
 }
 
 export default function CraftsmanshipClient() {
-  const { isRTL } = useLanguage()
-
   return (
     <div className="relative isolate min-h-screen w-full min-w-0 bg-[#faf9f7]">
       <div
@@ -394,62 +391,25 @@ export default function CraftsmanshipClient() {
         aria-hidden
       />
 
-      {/* First band sits directly under fixed header — page padding lives in LayoutWrapper only */}
-      <ScreenVideo
-        className="z-[2]"
-        src={CRAFT_VIDEO_BANDS[0].src}
-        ariaLabel={CRAFT_VIDEO_BANDS[0].ariaLabel}
-        introHandoff
-      />
-
-      <StickyScrollDeck zIndex={10} overlap={false} minDeckHeight="min-h-[105vh]">
-      {/* Intro — wide editorial header aligned with home luxury rhythm */}
-      <section className="relative border-b border-brand-stone/15 bg-[linear-gradient(180deg,#faf9f7_0%,#f5f1ea_100%)] px-6 pb-16 pt-16 md:pb-24 md:pt-24 lg:px-16">
-        <SectionStripesSoft />
-        <div className="relative mx-auto max-w-[90rem]">
-          <AppBreadcrumb
-            variant="muted"
-            className="mb-10"
-            segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-              { label: isRTL ? 'الحرفية' : 'Craftsmanship' },
-            ]}
-          />
-          <div className="max-w-4xl">
-            <span className="mb-5 inline-block font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
-              Bint Saeed
-            </span>
-            <motion.h1
-              data-document-h1="true"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-              className="font-rozha text-[clamp(2.25rem,5vw,3.75rem)] leading-[1.06] tracking-[0.02em] text-brand-darkRed"
-            >
-              Craftsmanship
-            </motion.h1>
-          </div>
-        </div>
-      </section>
-      </StickyScrollDeck>
+      {/* Film 1 of 3: hero — HOME / CRAFTSMANSHIP, brand, title on same overlay */}
+      <CraftsmanshipHero className="relative z-[2]" />
 
       {/* Phase I — overflowing band + split columns (approved copy unchanged) */}
-      <StickyScrollDeck zIndex={20} overlap>
       <PhaseAtmosphere variant="ivory">
         <article
-          className="relative px-6 py-20 md:py-28 lg:px-16 lg:py-36"
+          className="relative px-6 pb-20 pt-12 md:pb-28 md:pt-16 lg:px-16 lg:pb-36 lg:pt-20"
           aria-labelledby="phase-i"
         >
           <DecorativeCorners tone="dustyBlue" />
           <div className="relative mx-auto max-w-[90rem]">
             <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16 xl:gap-24">
               <header className="lg:col-span-4 xl:col-span-3 lg:pt-0">
-                <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">Phase I</p>
+                <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">Phase I</p>
                 <h2
                   id="phase-i"
                   className="font-rozha text-[clamp(1.65rem,3vw,2.35rem)] leading-tight tracking-[0.04em] text-brand-darkRed"
                 >
-                  Phase I — Development
+                  Development
                 </h2>
                 <div className="mt-10 hidden h-px w-16 bg-gradient-to-r from-brand-dustyBlue/60 to-transparent lg:block" aria-hidden />
               </header>
@@ -479,20 +439,19 @@ export default function CraftsmanshipClient() {
       </PhaseAtmosphere>
 
       <ParallaxMosaic items={[...MOSAIC_IMAGES[0]]} layout="three" />
-      </StickyScrollDeck>
 
       <div className="relative z-[22] bg-[#faf9f7]">
         <PhaseDivider />
       </div>
 
+      {/* Film 2 of 3 — mid-page atelier */}
       <ScreenVideo
-        className="z-[25]"
+        className="relative z-[25]"
         src={CRAFT_VIDEO_BANDS[1].src}
         ariaLabel={CRAFT_VIDEO_BANDS[1].ariaLabel}
       />
 
       {/* Phase II */}
-      <StickyScrollDeck zIndex={30} overlap>
       <PhaseAtmosphere variant="stone">
         <article
           className="relative px-6 py-20 md:py-28 lg:px-16 lg:py-36"
@@ -502,12 +461,12 @@ export default function CraftsmanshipClient() {
           <div className="relative mx-auto max-w-[90rem]">
             <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16 xl:gap-24">
               <header className="lg:col-span-4 xl:col-span-3">
-                <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-clayRed/90">Phase II</p>
+                <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-clayRed/90">Phase II</p>
                 <h2
                   id="phase-ii"
                   className="font-rozha text-[clamp(1.65rem,3vw,2.35rem)] leading-tight tracking-[0.04em] text-brand-darkRed"
                 >
-                  Phase II — Making
+                  Making
                 </h2>
                 <div className="mt-10 hidden h-px w-16 bg-gradient-to-r from-brand-darkRed/45 to-transparent lg:block" aria-hidden />
               </header>
@@ -549,20 +508,19 @@ export default function CraftsmanshipClient() {
       </PhaseAtmosphere>
 
       <ParallaxMosaic items={[...MOSAIC_IMAGES[1]]} layout="two" />
-      </StickyScrollDeck>
 
       <div className="relative z-[32] bg-[#faf9f7]">
         <PhaseDivider />
       </div>
 
+      {/* Film 3 of 3 */}
       <ScreenVideo
-        className="z-[35]"
+        className="relative z-[35]"
         src={CRAFT_VIDEO_BANDS[2].src}
         ariaLabel={CRAFT_VIDEO_BANDS[2].ariaLabel}
       />
 
       {/* Phase III */}
-      <StickyScrollDeck zIndex={40} overlap>
       <PhaseAtmosphere variant="noir">
         <article
           className="relative px-6 py-20 pb-28 md:py-28 md:pb-36 lg:px-16 lg:py-36"
@@ -572,12 +530,12 @@ export default function CraftsmanshipClient() {
           <div className="relative mx-auto max-w-[90rem]">
             <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16 xl:gap-24">
               <header className="lg:col-span-4 xl:col-span-3">
-                <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">Phase III</p>
+                <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">Phase III</p>
                 <h2
                   id="phase-iii"
                   className="font-rozha text-[clamp(1.65rem,3vw,2.35rem)] leading-tight tracking-[0.04em] text-brand-darkRed"
                 >
-                  Phase III — Direction
+                  Direction
                 </h2>
                 <div className="mt-10 hidden h-px w-16 bg-gradient-to-r from-brand-dustyBlue/55 to-transparent lg:block" aria-hidden />
               </header>
@@ -612,7 +570,6 @@ export default function CraftsmanshipClient() {
       </PhaseAtmosphere>
 
       <ParallaxMosaic items={[...MOSAIC_IMAGES[2]]} layout="twoWide" />
-      </StickyScrollDeck>
 
       <section className="relative z-[45] overflow-hidden border-t border-brand-stone/35 bg-[linear-gradient(168deg,#faf9f7_0%,#ebe4d8_42%,#ddd5c9_100%)] px-6 py-24 md:py-32">
         <div
@@ -626,7 +583,7 @@ export default function CraftsmanshipClient() {
           </p>
           <LocaleLink
             href="/shop"
-            className="inline-flex items-center gap-3 rounded-sm border border-brand-darkRed/40 bg-brand-darkRed/[0.06] px-10 py-4 font-roboto text-xs uppercase tracking-[0.22em] text-brand-darkRed shadow-[0_18px_48px_-28px_rgba(42,0,18,0.22)] transition-colors hover:border-brand-dustyBlue hover:bg-brand-dustyBlue hover:text-[#faf9f7]"
+            className="inline-flex items-center gap-3 rounded-sm border border-brand-darkRed/40 bg-brand-darkRed/[0.06] px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-brand-darkRed shadow-[0_18px_48px_-28px_rgba(42,0,18,0.22)] transition-colors hover:border-brand-dustyBlue hover:bg-brand-dustyBlue hover:text-[#faf9f7]"
             data-cursor-hover
           >
             View Collection

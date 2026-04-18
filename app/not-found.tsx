@@ -31,7 +31,7 @@ export default function NotFound() {
           </div>
 
           {/* 404 Number with brand styling */}
-          <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
+          <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
           <div className="relative mb-4">
             <h1 data-document-h1="true" className="font-rozha text-[100px] sm:text-[150px] md:text-[180px] text-brand-stone/20 leading-none select-none">
               404
@@ -44,7 +44,7 @@ export default function NotFound() {
           </div>
           
           {/* Description */}
-          <p className={`font-roboto text-sm sm:text-base text-brand-clayRed/70 tracking-wide mb-8 sm:mb-10 max-w-md mx-auto px-4 ${isRTL ? 'text-right' : ''}`}>
+          <p className={`font-montserrat text-sm sm:text-base text-brand-clayRed/70 tracking-wide mb-8 sm:mb-10 max-w-md mx-auto px-4 ${isRTL ? 'text-right' : ''}`}>
             {isRTL 
               ? 'الصفحة التي تبحثين عنها غير موجودة أو تم نقلها. دعينا نساعدك في العثور على ما تبحثين عنه.'
               : 'The page you\'re looking for doesn\'t exist or has been moved. Let us help you find what you\'re looking for.'}
@@ -54,7 +54,7 @@ export default function NotFound() {
           <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
             <LocaleLink
               href="/"
-              className={`inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-brand-darkRed text-white font-roboto text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-brand-darkRed text-white font-montserrat text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiHome className="w-4 h-4" />
@@ -62,7 +62,7 @@ export default function NotFound() {
             </LocaleLink>
             <LocaleLink
               href="/shop"
-              className={`inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-brand-darkRed text-brand-darkRed font-roboto text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiShoppingBag className="w-4 h-4" />
@@ -79,7 +79,7 @@ export default function NotFound() {
 
           {/* Popular Links */}
           <div className={`${isRTL ? 'text-right' : ''}`}>
-            <p className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-clayRed/50 mb-4">
+            <p className="font-montserrat text-xs uppercase tracking-[0.2em] text-brand-clayRed/50 mb-4">
               {isRTL ? 'روابط مفيدة' : 'Popular Pages'}
             </p>
             <div className={`flex flex-wrap justify-center gap-4 sm:gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -92,7 +92,7 @@ export default function NotFound() {
                 <LocaleLink
                   key={link.href}
                   href={link.href}
-                  className="font-roboto text-xs sm:text-sm text-brand-clayRed hover:text-brand-dustyBlue transition-colors underline-hover"
+                  className="font-montserrat text-xs sm:text-sm text-brand-clayRed hover:text-brand-dustyBlue transition-colors underline-hover"
                   data-cursor-hover
                 >
                   {link.label}
@@ -103,12 +103,12 @@ export default function NotFound() {
 
           {/* Contact */}
           <div className={`mt-8 sm:mt-10 pt-6 border-t border-brand-stone/20 ${isRTL ? 'text-right' : ''}`}>
-            <p className="font-roboto text-xs text-brand-clayRed/50 tracking-wide">
+            <p className="font-montserrat text-xs text-brand-clayRed/50 tracking-wide">
               {isRTL ? 'تحتاجين مساعدة؟' : 'Need help?'}
             </p>
             <a 
               href="mailto:contact@bintsaeed.com"
-              className={`inline-flex items-center gap-2 mt-2 font-roboto text-sm text-brand-darkRed hover:text-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`inline-flex items-center gap-2 mt-2 font-montserrat text-sm text-brand-darkRed hover:text-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiMail className="w-4 h-4" />

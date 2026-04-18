@@ -23,7 +23,7 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
           <h2 className="font-rozha text-xl text-brand-darkRed">
             {isRTL ? 'جدول المقاسات' : 'Size chart'}
           </h2>
-          <p className="font-roboto text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/60">
+          <p className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/60">
             {isRTL ? 'كل الأنماط — قصة A' : 'All styles — A-cut (inches)'}
           </p>
         </div>
@@ -32,7 +32,7 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
             <button
               type="button"
               onClick={onOpenInteractive}
-              className="font-roboto text-[10px] uppercase tracking-[0.15em] text-brand-darkRed underline-offset-4 hover:text-brand-dustyBlue hover:underline"
+              className="font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-darkRed underline-offset-4 hover:text-brand-dustyBlue hover:underline"
               data-cursor-hover
             >
               {isRTL ? 'تمييز مقاسي' : 'Highlight my size'}
@@ -40,7 +40,7 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
           ) : null}
           <LocaleLink
             href="/size-guide"
-            className={`inline-flex items-center gap-1 font-roboto text-[10px] uppercase tracking-[0.15em] text-brand-dustyBlue hover:text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex items-center gap-1 font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-dustyBlue hover:text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             {isRTL ? 'الدليل الكامل' : 'Full guide'}
@@ -53,14 +53,14 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
           <thead>
             <tr>
               <th
-                className={`px-3 py-2.5 font-roboto text-[10px] uppercase tracking-[0.14em] text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}
+                className={`px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}
               >
                 {isRTL ? 'القياس' : 'Measurement'}
               </th>
               {headers.map((size) => (
                 <th
                   key={size}
-                  className="px-3 py-2.5 text-center font-roboto text-[10px] uppercase tracking-[0.14em] text-brand-darkRed"
+                  className="px-3 py-2.5 text-center font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed"
                 >
                   {size}
                 </th>
@@ -71,12 +71,12 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
             {measurements.map((row) => (
               <tr key={row.label.en} className="border-t border-brand-stone/15 bg-white/60">
                 <td
-                  className={`px-3 py-3 font-roboto text-xs text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}
+                  className={`px-3 py-3 font-montserrat text-xs text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}
                 >
                   {isRTL ? row.label.ar : row.label.en}
                 </td>
                 {row.values.map((value, colIndex) => (
-                  <td key={colIndex} className="px-3 py-3 text-center font-roboto text-xs text-brand-clayRed">
+                  <td key={colIndex} className="px-3 py-3 text-center font-montserrat text-xs text-brand-clayRed">
                     {value}
                   </td>
                 ))}
@@ -85,7 +85,7 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
           </tbody>
         </table>
       </div>
-      <p className={`border-t border-brand-stone/20 bg-white/55 px-5 py-3.5 font-roboto text-[11px] leading-relaxed text-brand-clayRed/70 ${isRTL ? 'text-right' : 'text-left'}`}>
+      <p className={`border-t border-brand-stone/20 bg-white/55 px-5 py-3.5 font-montserrat text-[11px] leading-relaxed text-brand-clayRed/70 ${isRTL ? 'text-right' : 'text-left'}`}>
         {isRTL
           ? 'الألوان المعروضة أعلاه متوفرة لهذا الطراز. للطول المخصص، اذكريه في ملاحظات الطلب.'
           : 'Colour options above apply to this style. Add custom length in order notes if needed.'}

@@ -64,7 +64,7 @@ export default function LocaleConfirmPopup() {
         >
           <p
             id="locale-confirm-title"
-            className="mb-6 text-center font-roboto text-sm tracking-wide text-brand-darkRed/80"
+            className="mb-6 text-center font-montserrat text-sm tracking-wide text-brand-darkRed/80"
           >
             Continue in {label} or switch to English?
           </p>
@@ -72,7 +72,7 @@ export default function LocaleConfirmPopup() {
             <button
               type="button"
               onClick={handleStay}
-              className="flex-1 rounded-lg bg-brand-darkRed px-6 py-3.5 font-roboto text-xs uppercase tracking-[0.12em] text-white transition-colors hover:bg-brand-dustyBlue"
+              className="flex-1 rounded-lg bg-brand-darkRed px-6 py-3.5 font-montserrat text-xs uppercase tracking-[0.12em] text-white transition-colors hover:bg-brand-dustyBlue"
               data-cursor-hover
             >
               Stay in {label}
@@ -80,7 +80,7 @@ export default function LocaleConfirmPopup() {
             <button
               type="button"
               onClick={handleSwitchToEnglish}
-              className="flex-1 rounded-lg border border-brand-stone/40 px-6 py-3.5 font-roboto text-xs uppercase tracking-[0.12em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+              className="flex-1 rounded-lg border border-brand-stone/40 px-6 py-3.5 font-montserrat text-xs uppercase tracking-[0.12em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
               data-cursor-hover
             >
               Continue in English

@@ -50,7 +50,7 @@ export default function DeliveryBanner() {
               className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
             >
               <CurrentIcon className="w-4 h-4 text-brand-dustyBlue" />
-              <span className="font-roboto text-xs tracking-wide">
+              <span className="font-montserrat text-xs tracking-wide">
                 {messages[currentIndex].text}
               </span>
             </motion.div>

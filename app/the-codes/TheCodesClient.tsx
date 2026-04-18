@@ -121,7 +121,7 @@ export default function TheCodesClient() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
-          className="mb-5 block font-roboto text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/80"
+          className="mb-5 block font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/80"
         >
           Bint Saeed
         </motion.span>
@@ -138,7 +138,7 @@ export default function TheCodesClient() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.12 }}
-          className="mx-auto mt-6 max-w-2xl font-roboto text-sm leading-[1.9] tracking-wide text-brand-darkRed/72"
+          className="mx-auto mt-6 max-w-2xl font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/72"
         >
           A single scroll through the house symbols — each section is framed for long-form copy and a hero visual.
         </motion.p>
@@ -148,7 +148,7 @@ export default function TheCodesClient() {
           transition={{ delay: 0.35, duration: 0.5 }}
           className="mt-10 flex flex-col items-center gap-2 text-brand-darkRed/45"
         >
-          <span className="font-roboto text-[10px] uppercase tracking-[0.28em]">Scroll</span>
+          <span className="font-montserrat text-[10px] uppercase tracking-[0.28em]">Scroll</span>
           <FiArrowDown className="h-4 w-4 animate-bounce" aria-hidden />
         </motion.div>
       </header>
@@ -176,7 +176,7 @@ export default function TheCodesClient() {
                   transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                   className={`${textOrder} max-w-xl ${isRTL ? 'lg:mr-auto lg:ml-0' : 'lg:ml-auto lg:mr-0'}`}
                 >
-                  <p className="mb-3 font-roboto text-[10px] uppercase tracking-[0.32em] text-brand-clayRed/75">{section.eyebrow}</p>
+                  <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-clayRed/75">{section.eyebrow}</p>
                   <h2
                     id={`${section.id}-heading`}
                     className="font-rozha text-3xl text-brand-darkRed sm:text-4xl md:text-[2.65rem] md:leading-[1.08]"
@@ -185,7 +185,7 @@ export default function TheCodesClient() {
                   </h2>
                   <div className="mt-6 space-y-4 border-s border-brand-dustyBlue/25 ps-5 md:mt-8 md:ps-6">
                     {section.paragraphs.map((p, i) => (
-                      <p key={i} className="font-roboto text-sm leading-[1.92] tracking-wide text-brand-darkRed/78">
+                      <p key={i} className="font-montserrat text-sm leading-[1.92] tracking-wide text-brand-darkRed/78">
                         {p}
                       </p>
                     ))}
@@ -250,20 +250,20 @@ export default function TheCodesClient() {
 
       <footer className="relative container mx-auto max-w-3xl px-6 pb-24 pt-16 text-center lg:px-12">
         <div className="mx-auto h-px w-24 bg-gradient-to-r from-transparent via-brand-clayRed/40 to-transparent" />
-        <p className="mt-8 font-roboto text-[11px] uppercase tracking-[0.26em] text-brand-darkRed/50">
+        <p className="mt-8 font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed/50">
           Continue the story
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-4">
           <LocaleLink
             href="/shop"
-            className="inline-flex border border-brand-darkRed/25 bg-white/70 px-8 py-3 font-roboto text-[11px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+            className="inline-flex border border-brand-darkRed/25 bg-white/70 px-8 py-3 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
             data-cursor-hover
           >
             View collection
           </LocaleLink>
           <LocaleLink
             href="/heritage"
-            className="inline-flex border border-brand-dustyBlue/40 bg-brand-dustyBlue/15 px-8 py-3 font-roboto text-[11px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:bg-brand-dustyBlue/25"
+            className="inline-flex border border-brand-dustyBlue/40 bg-brand-dustyBlue/15 px-8 py-3 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:bg-brand-dustyBlue/25"
             data-cursor-hover
           >
             Heritage hub

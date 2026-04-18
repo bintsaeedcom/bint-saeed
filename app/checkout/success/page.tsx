@@ -34,7 +34,7 @@ function CheckoutSuccessContent() {
         >
           <LocaleLink
             href="/"
-            className="inline-flex items-center gap-2 font-roboto text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group"
+            className="inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group"
             data-cursor-hover
           >
             <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -60,13 +60,13 @@ function CheckoutSuccessContent() {
             <h1 data-document-h1="true" className="font-rozha text-4xl text-brand-darkRed mb-4">
               Thank You!
             </h1>
-            <p className="font-roboto text-brand-clayRed tracking-wide mb-8 leading-relaxed">
+            <p className="font-montserrat text-brand-clayRed tracking-wide mb-8 leading-relaxed">
               Your order has been confirmed. We've sent a confirmation email with your order details. 
               Our team is preparing your beautiful pieces with care.
             </p>
 
             {sessionId && (
-              <p className="font-roboto text-xs text-brand-stone tracking-wide mb-8">
+              <p className="font-montserrat text-xs text-brand-stone tracking-wide mb-8">
                 Order Reference: {sessionId.slice(-8).toUpperCase()}
               </p>
             )}
@@ -74,7 +74,7 @@ function CheckoutSuccessContent() {
             <div className="space-y-4">
               <LocaleLink
                 href="/shop"
-                className="inline-flex items-center justify-center gap-2 w-full px-8 py-4 bg-brand-darkRed text-white font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors"
+                className="inline-flex items-center justify-center gap-2 w-full px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors"
                 data-cursor-hover
               >
                 <FiShoppingBag className="w-4 h-4" />
@@ -82,7 +82,7 @@ function CheckoutSuccessContent() {
               </LocaleLink>
               <LocaleLink
                 href="/"
-                className="inline-block w-full px-8 py-4 border border-brand-darkRed text-brand-darkRed font-roboto text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
+                className="inline-block w-full px-8 py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
                 data-cursor-hover
               >
                 Back to Home

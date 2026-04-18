@@ -37,7 +37,7 @@ function VerifyEmailContent() {
             <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed mb-3">
               {isRTL ? 'تم تأكيد بريدك' : 'Email confirmed'}
             </h1>
-            <p className="font-roboto text-sm text-brand-clayRed/75 leading-relaxed mb-8">
+            <p className="font-montserrat text-sm text-brand-clayRed/75 leading-relaxed mb-8">
               {isRTL
                 ? 'حسابك جاهز. يمكنك العودة للتسوق أو لصفحة الحساب.'
                 : 'Your account is verified. You can continue shopping or go to your account.'}
@@ -45,7 +45,7 @@ function VerifyEmailContent() {
             <div className="flex flex-col gap-3">
               <LocaleLink
                 href="/shop"
-                className={`inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-roboto text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-montserrat text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 {isRTL ? 'تسوقي الآن' : 'Shop the collection'}
@@ -53,7 +53,7 @@ function VerifyEmailContent() {
               </LocaleLink>
               <LocaleLink
                 href="/account"
-                className="font-roboto text-xs uppercase tracking-[0.2em] text-brand-clayRed hover:text-brand-dustyBlue"
+                className="font-montserrat text-xs uppercase tracking-[0.2em] text-brand-clayRed hover:text-brand-dustyBlue"
                 data-cursor-hover
               >
                 {isRTL ? 'الحساب' : 'Account'}
@@ -68,12 +68,12 @@ function VerifyEmailContent() {
             <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed mb-3">
               {isRTL ? 'البريد مؤكد مسبقاً' : 'Already confirmed'}
             </h1>
-            <p className="font-roboto text-sm text-brand-clayRed/75 mb-8">
+            <p className="font-montserrat text-sm text-brand-clayRed/75 mb-8">
               {isRTL ? 'هذا البريد مفعّل بالفعل.' : 'This email is already verified.'}
             </p>
             <LocaleLink
               href="/account"
-              className="inline-block font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed underline hover:text-brand-dustyBlue"
+              className="inline-block font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed underline hover:text-brand-dustyBlue"
               data-cursor-hover
             >
               {isRTL ? 'الحساب' : 'Account'}
@@ -87,12 +87,12 @@ function VerifyEmailContent() {
             <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed mb-3">
               {isRTL ? 'تعذر التأكيد' : 'Could not confirm'}
             </h1>
-            <p className="font-roboto text-sm text-brand-clayRed/75 leading-relaxed mb-8">
+            <p className="font-montserrat text-sm text-brand-clayRed/75 leading-relaxed mb-8">
               {error ? errorCopy[error] || errorCopy.server : errorCopy.missing_token}
             </p>
             <LocaleLink
               href="/register"
-              className="inline-flex items-center justify-center bg-brand-darkRed px-8 py-3.5 font-roboto text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue"
+              className="inline-flex items-center justify-center bg-brand-darkRed px-8 py-3.5 font-montserrat text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue"
               data-cursor-hover
             >
               {isRTL ? 'إنشاء حساب' : 'Register again'}
@@ -108,7 +108,7 @@ export default function VerifyEmailPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-[#faf9f7] pt-24 font-roboto text-brand-clayRed/60">
+        <div className="min-h-screen flex items-center justify-center bg-[#faf9f7] pt-24 font-montserrat text-brand-clayRed/60">
           Loading…
         </div>
       }

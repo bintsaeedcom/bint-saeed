@@ -25,7 +25,7 @@ export default function CookiePolicyPage() {
         >
           <LocaleLink
             href="/"
-            className={`inline-flex items-center gap-2 font-roboto text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
@@ -42,7 +42,7 @@ export default function CookiePolicyPage() {
           <h1 data-document-h1="true" className="font-rozha text-5xl md:text-6xl text-brand-darkRed mb-4">
             Cookie Policy
           </h1>
-          <p className="font-roboto text-brand-clayRed tracking-wide">
+          <p className="font-montserrat text-brand-clayRed tracking-wide">
             Last updated: January 2026
           </p>
         </motion.div>
@@ -54,7 +54,7 @@ export default function CookiePolicyPage() {
           className="bg-white border border-brand-stone/20 shadow-lg rounded-2xl p-8 md:p-12"
         >
           <div className="prose prose-lg max-w-none">
-            <div className={`space-y-8 font-roboto text-brand-clayRed tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+            <div className={`space-y-8 font-montserrat text-brand-clayRed tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
               <section>
                 <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
                   1. What Are Cookies
@@ -69,7 +69,7 @@ export default function CookiePolicyPage() {
                   2. Types of Cookies We Use
                 </h2>
                 
-                <h3 className="font-roboto font-bold text-brand-darkRed mt-4 mb-2">Essential Cookies</h3>
+                <h3 className="font-montserrat font-bold text-brand-darkRed mt-4 mb-2">Essential Cookies</h3>
                 <p>
                   These cookies are necessary for the website to function properly. They enable core functionality such as security, network management, and accessibility. You cannot opt out of these cookies.
                 </p>
@@ -80,7 +80,7 @@ export default function CookiePolicyPage() {
                   <li>Cookie consent preferences</li>
                 </ul>
 
-                <h3 className="font-roboto font-bold text-brand-darkRed mt-4 mb-2">Analytics Cookies</h3>
+                <h3 className="font-montserrat font-bold text-brand-darkRed mt-4 mb-2">Analytics Cookies</h3>
                 <p>
                   These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously. We use Google Analytics to analyze website traffic.
                 </p>
@@ -91,7 +91,7 @@ export default function CookiePolicyPage() {
                   <li>Device and browser information</li>
                 </ul>
 
-                <h3 className="font-roboto font-bold text-brand-darkRed mt-4 mb-2">Marketing Cookies</h3>
+                <h3 className="font-montserrat font-bold text-brand-darkRed mt-4 mb-2">Marketing Cookies</h3>
                 <p>
                   These cookies are used to track visitors across websites to display relevant advertisements. They may be set by our advertising partners.
                 </p>

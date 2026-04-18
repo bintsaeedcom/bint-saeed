@@ -37,14 +37,14 @@ export default function HomeBlockedPage() {
       <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
         <LocaleLink
           href="/"
-          className="rounded-xl border border-white/15 px-8 py-3 font-roboto text-xs uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-brand-dustyBlue/50 hover:text-brand-dustyBlue"
+          className="rounded-xl border border-white/15 px-8 py-3 font-montserrat text-xs uppercase tracking-[0.2em] text-white/80 transition-colors hover:border-brand-dustyBlue/50 hover:text-brand-dustyBlue"
         >
           Back to site
         </LocaleLink>
         {reason !== 'private' && reason !== 'config' ? (
           <LocaleLink
             href="/home/gate?returnTo=%2Fhome"
-            className="rounded-xl bg-brand-dustyBlue/20 px-8 py-3 font-roboto text-xs uppercase tracking-[0.2em] text-brand-dustyBlue transition-colors hover:bg-brand-dustyBlue/30"
+            className="rounded-xl bg-brand-dustyBlue/20 px-8 py-3 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-dustyBlue transition-colors hover:bg-brand-dustyBlue/30"
           >
             Try verification again
           </LocaleLink>

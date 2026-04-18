@@ -150,13 +150,13 @@ export default function ShopClient() {
             ]}
           />
 
-          <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
+          <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
             COLLECTION
           </p>
           <h1 data-document-h1="true" className="font-rozha text-4xl font-normal leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl">
             {isRTL ? 'الفصل ١' : 'Chapter 1'}
           </h1>
-          <p className="mt-6 max-w-md font-roboto text-sm leading-relaxed tracking-wide text-neutral-600">
+          <p className="mt-6 max-w-md font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600">
             {isRTL
               ? 'قطع محدودة، خامات مختارة، وتفاصيل من صنع يدّي. اكتشفي القطع التي تحمل هوية الدار.'
               : 'Limited pieces, considered materials, and finishing you can feel. Discover silhouettes shaped for life across cities.'}
@@ -170,7 +170,7 @@ export default function ShopClient() {
             <button
               type="button"
               onClick={handleBack}
-              className="flex shrink-0 items-center gap-2 border-b border-transparent pb-1 font-roboto text-[10px] uppercase tracking-[0.22em] text-neutral-600 transition-colors hover:text-brand-dustyBlue"
+              className="flex shrink-0 items-center gap-2 border-b border-transparent pb-1 font-montserrat text-[10px] uppercase tracking-[0.22em] text-neutral-600 transition-colors hover:text-brand-dustyBlue"
               data-cursor-hover
               aria-label={isRTL ? 'رجوع' : 'Back'}
             >
@@ -188,7 +188,7 @@ export default function ShopClient() {
                   key={cat}
                   type="button"
                   onClick={() => setActiveCategory(cat)}
-                  className={`border-b border-transparent pb-1 font-roboto text-[10px] uppercase tracking-[0.22em] transition-colors ${
+                  className={`border-b border-transparent pb-1 font-montserrat text-[10px] uppercase tracking-[0.22em] transition-colors ${
                     activeCategory === cat
                       ? 'border-brand-darkRed text-brand-darkRed'
                       : 'text-neutral-500 hover:text-brand-dustyBlue'
@@ -203,7 +203,7 @@ export default function ShopClient() {
             <button
               type="button"
               onClick={() => setFilterOpen(true)}
-              className="flex shrink-0 items-center gap-2 font-roboto text-[10px] uppercase tracking-[0.22em] text-brand-darkRed md:hidden"
+              className="flex shrink-0 items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-darkRed md:hidden"
               data-cursor-hover
             >
               <FiFilter className="h-3.5 w-3.5" aria-hidden />
@@ -214,13 +214,13 @@ export default function ShopClient() {
           <div className="flex items-center justify-between gap-6 md:justify-end">
             <LocaleLink
               href="/size-guide"
-              className="hidden items-center gap-2 font-roboto text-[10px] uppercase tracking-[0.2em] text-neutral-500 transition-colors hover:text-brand-dustyBlue sm:inline-flex"
+              className="hidden items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-neutral-500 transition-colors hover:text-brand-dustyBlue sm:inline-flex"
               data-cursor-hover
             >
               <FiMaximize2 className="h-3 w-3" aria-hidden />
               {isRTL ? 'المقاسات' : 'Sizing'}
             </LocaleLink>
-            <span className="font-roboto text-[10px] tabular-nums tracking-[0.18em] text-neutral-500">
+            <span className="font-montserrat text-[10px] tabular-nums tracking-[0.18em] text-neutral-500">
               {sortedProducts.length}{' '}
               {sortedProducts.length === 1
                 ? isRTL
@@ -235,7 +235,7 @@ export default function ShopClient() {
               <button
                 type="button"
                 onClick={() => setSortOpen((o) => !o)}
-                className="flex items-center gap-2 font-roboto text-[10px] uppercase tracking-[0.22em] text-brand-darkRed"
+                className="flex items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-darkRed"
                 data-cursor-hover
                 aria-expanded={sortOpen}
               >
@@ -255,7 +255,7 @@ export default function ShopClient() {
                         setSortBy(opt.id)
                         setSortOpen(false)
                       }}
-                      className={`block w-full px-4 py-2.5 text-left font-roboto text-xs tracking-wide transition-colors ${
+                      className={`block w-full px-4 py-2.5 text-left font-montserrat text-xs tracking-wide transition-colors ${
                         sortBy === opt.id
                           ? 'bg-stone-100 text-brand-darkRed'
                           : 'text-neutral-600 hover:bg-stone-50'
@@ -302,12 +302,12 @@ export default function ShopClient() {
                     />
                   </div>
                   <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  <span className="absolute bottom-5 left-1/2 z-[1] -translate-x-1/2 font-roboto text-[9px] uppercase tracking-[0.35em] text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                  <span className="absolute bottom-5 left-1/2 z-[1] -translate-x-1/2 font-montserrat text-[9px] uppercase tracking-[0.35em] text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                     {isRTL ? 'اكتشفي' : 'Discover'}
                   </span>
                 </LocaleLink>
                 <div className="mt-5 space-y-2 border-t border-black/5 pt-4">
-                  <p className="font-roboto text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
+                  <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
                     {product.category}
                   </p>
                   <LocaleLink href={getProductHref(product)} className="relative z-20 inline-block" data-cursor-hover>
@@ -315,7 +315,7 @@ export default function ShopClient() {
                       {product.name}
                     </h2>
                   </LocaleLink>
-                  <p className="font-roboto text-sm tabular-nums tracking-wide text-neutral-600">
+                  <p className="font-montserrat text-sm tabular-nums tracking-wide text-neutral-600">
                     {formatPrice(product.price)}
                   </p>
                   <div className="flex gap-1.5 pt-1">
@@ -330,7 +330,7 @@ export default function ShopClient() {
                   </div>
                   <LocaleLink
                     href={getProductHref(product)}
-                    className="relative z-20 inline-flex items-center border-b border-brand-darkRed/40 pt-2 font-roboto text-[11px] uppercase tracking-[0.18em] text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                    className="relative z-20 inline-flex items-center border-b border-brand-darkRed/40 pt-2 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
                     data-cursor-hover
                   >
                     {isRTL ? 'عرض المنتج' : 'View product'}
@@ -342,7 +342,7 @@ export default function ShopClient() {
         </ul>
 
         {sortedProducts.length === 0 && (
-          <p className="py-24 text-center font-roboto text-sm tracking-wide text-neutral-500">
+          <p className="py-24 text-center font-montserrat text-sm tracking-wide text-neutral-500">
             {isRTL ? 'لا توجد قطع في هذا القسم حالياً.' : 'No pieces in this chapter yet.'}
           </p>
         )}
@@ -394,7 +394,7 @@ export default function ShopClient() {
             </button>
           </div>
           <div className="flex-1 overflow-y-auto px-6 py-6">
-            <p className="mb-4 font-roboto text-[10px] uppercase tracking-[0.28em] text-neutral-500">
+            <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-neutral-500">
               {isRTL ? 'الفئة' : 'Category'}
             </p>
             <ul className="list-none space-y-3 p-0">
@@ -406,7 +406,7 @@ export default function ShopClient() {
                       setActiveCategory(cat)
                       setFilterOpen(false)
                     }}
-                    className={`font-roboto text-sm tracking-wide ${
+                    className={`font-montserrat text-sm tracking-wide ${
                       activeCategory === cat
                         ? 'text-brand-darkRed'
                         : 'text-neutral-500 hover:text-brand-dustyBlue'
@@ -421,7 +421,7 @@ export default function ShopClient() {
             <LocaleLink
               href="/size-guide"
               onClick={() => setFilterOpen(false)}
-              className="mt-10 flex items-center gap-2 border-t border-stone-200 pt-8 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed"
+              className="mt-10 flex items-center gap-2 border-t border-stone-200 pt-8 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed"
               data-cursor-hover
             >
               <FiMaximize2 className="h-3.5 w-3.5" />

@@ -199,7 +199,7 @@ export default function ComingSoonPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="font-roboto text-white/50 text-[10px] sm:text-xs tracking-[0.25em] uppercase text-center mb-8 md:mb-10"
+          className="font-montserrat text-white/50 text-[10px] sm:text-xs tracking-[0.25em] uppercase text-center mb-8 md:mb-10"
         >
           A Refined Lifestyle Inspired by Heritage
         </motion.p>
@@ -221,7 +221,7 @@ export default function ComingSoonPage() {
                 <FiCheck className="w-8 h-8 text-brand-dustyBlue" />
               </div>
               <p className="font-rozha text-brand-stone text-2xl tracking-wide mb-2">Thank You</p>
-              <p className="font-roboto text-brand-dustyBlue/60 text-xs tracking-wider">
+              <p className="font-montserrat text-brand-dustyBlue/60 text-xs tracking-wider">
                 We'll notify you when we launch
               </p>
             </motion.div>
@@ -231,7 +231,7 @@ export default function ComingSoonPage() {
               <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/20 via-transparent to-brand-stone/10 opacity-50" />
               
               <div className="relative backdrop-blur-sm bg-white/[0.03] rounded-2xl p-6 md:p-8 border border-white/[0.05]">
-                <p className="font-roboto text-brand-dustyBlue/60 text-[10px] uppercase tracking-[0.3em] text-center mb-5">
+                <p className="font-montserrat text-brand-dustyBlue/60 text-[10px] uppercase tracking-[0.3em] text-center mb-5">
                   Be the first to know
                 </p>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -242,7 +242,7 @@ export default function ComingSoonPage() {
                       onChange={handleEmailChange}
                       onBlur={() => email && setEmailError(validateEmail(email))}
                       placeholder="Enter your email"
-                      className={`w-full px-5 py-4 bg-white/[0.03] border rounded-xl text-brand-stone placeholder:text-brand-stone/30 font-roboto text-sm tracking-wide focus:outline-none transition-all duration-300 ${
+                      className={`w-full px-5 py-4 bg-white/[0.03] border rounded-xl text-brand-stone placeholder:text-brand-stone/30 font-montserrat text-sm tracking-wide focus:outline-none transition-all duration-300 ${
                         emailError 
                           ? 'border-red-400/30' 
                           : 'border-white/[0.08] focus:border-brand-dustyBlue/30 focus:bg-white/[0.05]'
@@ -250,15 +250,15 @@ export default function ComingSoonPage() {
                     />
                   </div>
                   {emailError && (
-                    <p className="text-red-400/70 text-xs font-roboto tracking-wide px-1">{emailError}</p>
+                    <p className="text-red-400/70 text-xs font-montserrat tracking-wide px-1">{emailError}</p>
                   )}
                   {submitError && (
-                    <p className="text-red-400/70 text-xs font-roboto tracking-wide px-1">{submitError}</p>
+                    <p className="text-red-400/70 text-xs font-montserrat tracking-wide px-1">{submitError}</p>
                   )}
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 bg-brand-dustyBlue text-[#1a0008] font-roboto text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-brand-stone transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 group"
+                    className="w-full py-4 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-brand-stone transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 group"
                   >
                     {isLoading ? (
                       <>
@@ -313,7 +313,7 @@ export default function ComingSoonPage() {
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3"
         >
           <div className="w-1 h-1 rounded-full bg-brand-dustyBlue/50" />
-          <p className="font-roboto text-white/20 text-[9px] uppercase tracking-[0.4em]">
+          <p className="font-montserrat text-white/20 text-[9px] uppercase tracking-[0.4em]">
             Abu&nbsp;Dhabi
           </p>
           <div className="w-1 h-1 rounded-full bg-brand-dustyBlue/50" />

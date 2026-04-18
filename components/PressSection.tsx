@@ -23,7 +23,7 @@ export default function PressSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center font-roboto text-xs uppercase tracking-[0.4em] text-brand-clayRed/50 mb-10"
+          className="text-center font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed/50 mb-10"
         >
           {isRTL ? 'كما ظهر في' : 'As Featured In'}
         </motion.p>

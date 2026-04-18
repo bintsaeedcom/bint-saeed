@@ -179,7 +179,7 @@ export default function LocationConsent() {
               <div className={`px-7 pt-8 pb-7 ${isRTL ? 'pr-8 pl-6' : 'pl-8 pr-6'}`}>
                 <div className={`flex items-start justify-between gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <div className="space-y-3 min-w-0">
-                    <p className="font-roboto text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/65">
+                    <p className="font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/65">
                       {t.eyebrow}
                     </p>
                     <h2 id="tailor-title" className="font-rozha text-[1.65rem] leading-tight text-brand-darkRed">
@@ -199,19 +199,19 @@ export default function LocationConsent() {
 
                 <p
                   id="tailor-desc"
-                  className="mt-5 font-roboto font-light text-[13px] leading-[1.65] text-neutral-600 tracking-wide"
+                  className="mt-5 font-montserrat font-light text-[13px] leading-[1.65] text-neutral-600 tracking-wide"
                 >
                   {t.body}
                 </p>
 
                 {showCurrencyLine && suggestedCurrencyData && (
-                  <p className="mt-4 font-roboto text-[12px] text-brand-clayRed/85 leading-relaxed border-t border-brand-stone/20 pt-4">
+                  <p className="mt-4 font-montserrat text-[12px] text-brand-clayRed/85 leading-relaxed border-t border-brand-stone/20 pt-4">
                     {t.currencyHint(suggestedCurrencyData.name, suggestedCurrencyData.code)}
                   </p>
                 )}
 
                 {detectedLocation?.city && (
-                  <p className="mt-3 font-roboto text-[11px] uppercase tracking-[0.2em] text-neutral-400">
+                  <p className="mt-3 font-montserrat text-[11px] uppercase tracking-[0.2em] text-neutral-400">
                     {detectedLocation.city}
                     {detectedLocation.country ? ` · ${detectedLocation.country}` : ''}
                   </p>
@@ -221,7 +221,7 @@ export default function LocationConsent() {
                   <button
                     type="button"
                     onClick={handleDecline}
-                    className={`sm:flex-1 py-3.5 px-5 border border-brand-darkRed/15 text-brand-darkRed font-roboto text-[10px] uppercase tracking-[0.22em] hover:border-brand-darkRed/30 hover:bg-white/60 transition-colors ${
+                    className={`sm:flex-1 py-3.5 px-5 border border-brand-darkRed/15 text-brand-darkRed font-montserrat text-[10px] uppercase tracking-[0.22em] hover:border-brand-darkRed/30 hover:bg-white/60 transition-colors ${
                       isRTL ? 'order-2 sm:order-1' : ''
                     }`}
                     data-cursor-hover
@@ -231,7 +231,7 @@ export default function LocationConsent() {
                   <button
                     type="button"
                     onClick={handleAccept}
-                    className={`sm:flex-1 py-3.5 px-5 bg-brand-darkRed text-white font-roboto text-[10px] uppercase tracking-[0.22em] hover:bg-brand-darkMagenta transition-colors shadow-sm ${
+                    className={`sm:flex-1 py-3.5 px-5 bg-brand-darkRed text-white font-montserrat text-[10px] uppercase tracking-[0.22em] hover:bg-brand-darkMagenta transition-colors shadow-sm ${
                       isRTL ? 'order-1 sm:order-2' : ''
                     }`}
                     data-cursor-hover

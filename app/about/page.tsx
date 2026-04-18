@@ -144,7 +144,7 @@ function AboutHero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="mb-8 inline-block rounded-full border border-brand-dustyBlue/20 bg-white/[0.06] px-5 py-2.5 font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue backdrop-blur-md">
+                <span className="mb-8 inline-block rounded-full border border-brand-dustyBlue/20 bg-white/[0.06] px-5 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue backdrop-blur-md">
                   {t.about.subtitle}
                 </span>
               </motion.div>
@@ -161,14 +161,14 @@ function AboutHero() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.75 }}
-                className="mb-10 max-w-xl font-roboto text-sm leading-relaxed tracking-wide text-white/75 md:text-base"
+                className="mb-10 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-white/75 md:text-base"
               >
                 Abu Dhabi · Emirati design codes · Contemporary global presence
               </motion.p>
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
                 <LocaleLink
                   href="#about-narrative"
-                  className="group inline-flex items-center gap-3 rounded-xl border border-brand-dustyBlue/30 bg-white/[0.08] px-10 py-4 font-roboto text-xs uppercase tracking-[0.2em] text-white backdrop-blur-sm transition-all duration-500 hover:bg-brand-dustyBlue hover:text-[#1a0008]"
+                  className="group inline-flex items-center gap-3 rounded-xl border border-brand-dustyBlue/30 bg-white/[0.08] px-10 py-4 font-montserrat text-xs uppercase tracking-[0.2em] text-white backdrop-blur-sm transition-all duration-500 hover:bg-brand-dustyBlue hover:text-[#1a0008]"
                   data-cursor-hover
                 >
                   <span>{t.about.readMore}</span>
@@ -205,7 +205,7 @@ function AboutNarrative() {
     >
       <div className="absolute left-0 top-0 hidden h-full w-px bg-gradient-to-b from-brand-dustyBlue/35 via-brand-dustyBlue/15 to-transparent lg:block lg:left-[8%]" />
       <div className="relative mx-auto max-w-[42rem] px-6 py-20 md:py-28 lg:px-8 lg:py-36">
-        <p className="mb-16 font-roboto text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue md:mb-20">
+        <p className="mb-16 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue md:mb-20">
           About the house
         </p>
         {ABOUT_SECTIONS.map((section, index) => (
@@ -221,11 +221,11 @@ function AboutNarrative() {
             >
               <h2
                 id={`about-section-${section.key}`}
-                className="mb-6 font-roboto text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/85"
+                className="mb-6 font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/85"
               >
                 Section {index + 1} — {section.label}
               </h2>
-              <div className="space-y-5 font-roboto text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
+              <div className="space-y-5 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
                 {section.paragraphs.map((p, i) => (
                   <p key={`${section.key}-${i}`}>{p}</p>
                 ))}
@@ -259,7 +259,7 @@ function AboutCTA() {
           <h2 className="mb-8 font-rozha text-4xl text-white md:text-5xl lg:text-6xl">{t.about.ctaTitle}</h2>
           <LocaleLink
             href="/shop"
-            className={`inline-flex items-center gap-3 rounded-xl bg-brand-dustyBlue px-12 py-5 font-roboto text-sm uppercase tracking-[0.2em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone hover:text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex items-center gap-3 rounded-xl bg-brand-dustyBlue px-12 py-5 font-montserrat text-sm uppercase tracking-[0.2em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone hover:text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             {t.about.shopNow}

@@ -58,7 +58,7 @@ export default function SizeGuidePage() {
         <div className="container relative mx-auto px-6 lg:px-12">
           <LocaleLink
             href="/shop"
-            className={`mb-8 inline-flex items-center gap-2 font-roboto text-[11px] uppercase tracking-[0.16em] text-brand-clayRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`mb-8 inline-flex items-center gap-2 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-clayRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
@@ -72,7 +72,7 @@ export default function SizeGuidePage() {
             {t.footer.sizeGuide}
           </h1>
 
-          <p className="mx-auto max-w-5xl text-center font-roboto text-[11px] uppercase tracking-[0.12em] text-brand-darkRed/80 md:text-[13px]">
+          <p className="mx-auto max-w-5xl text-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-darkRed/80 md:text-[13px]">
             This size chart provides general sizing information, which can vary depending on style. For more specific sizing information, please contact our concierge team.
           </p>
         </div>
@@ -101,7 +101,7 @@ export default function SizeGuidePage() {
               />
             </div>
 
-            <h3 className="mt-8 mb-3 font-roboto text-[28px] uppercase tracking-[0.08em] text-brand-darkRed">
+            <h3 className="mt-8 mb-3 font-montserrat text-[28px] uppercase tracking-[0.08em] text-brand-darkRed">
               International Conversions
             </h3>
             <div className="relative overflow-x-auto border border-brand-stone/28 bg-white/78">
@@ -109,11 +109,11 @@ export default function SizeGuidePage() {
               <table className="min-w-[690px] w-full">
                 <thead>
                   <tr className="bg-brand-stone/25">
-                    <th className="px-3 py-3 text-left font-roboto text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
+                    <th className="px-3 py-3 text-left font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
                       Size
                     </th>
                     {SIZE_HEADERS.slice(0, 6).map((size) => (
-                      <th key={size} className="px-2 py-3 text-center font-roboto text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
+                      <th key={size} className="px-2 py-3 text-center font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
                         {size}
                       </th>
                     ))}
@@ -122,9 +122,9 @@ export default function SizeGuidePage() {
                 <tbody>
                   {intlRows.map((row, idx) => (
                     <tr key={row.label} className={idx % 2 === 0 ? 'bg-white/80' : 'bg-brand-stone/10'}>
-                      <td className="px-3 py-3 font-roboto text-[12px] uppercase tracking-[0.08em] text-brand-darkRed">{row.label}</td>
+                      <td className="px-3 py-3 font-montserrat text-[12px] uppercase tracking-[0.08em] text-brand-darkRed">{row.label}</td>
                       {row.values.map((value) => (
-                        <td key={`${row.label}-${value}`} className="px-2 py-3 text-center font-roboto text-[12px] text-brand-darkRed/85">
+                        <td key={`${row.label}-${value}`} className="px-2 py-3 text-center font-montserrat text-[12px] text-brand-darkRed/85">
                           {value}
                         </td>
                       ))}
@@ -137,7 +137,7 @@ export default function SizeGuidePage() {
 
           <aside className="lg:col-span-5">
             <div className="sticky top-28 border border-brand-stone/25 bg-white/75 p-5 md:p-6">
-              <h2 className="mb-4 font-roboto text-xl uppercase tracking-[0.14em] text-brand-darkRed">How To Measure</h2>
+              <h2 className="mb-4 font-montserrat text-xl uppercase tracking-[0.14em] text-brand-darkRed">How To Measure</h2>
               <div className="mb-6 border border-brand-stone/20 bg-[#f9f6f2] p-3">
                 <Image
                   src="/size-guide-figure.svg"
@@ -150,12 +150,12 @@ export default function SizeGuidePage() {
               <div className="space-y-3">
                 {measureItems.map((item) => (
                   <div key={item.id} className="flex gap-3 border-t border-brand-stone/25 pt-3 first:border-t-0 first:pt-0">
-                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-darkRed text-[10px] font-roboto text-white">
+                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-darkRed text-[10px] font-montserrat text-white">
                       {item.id}
                     </span>
                     <div>
-                      <p className="font-roboto text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">{item.title}</p>
-                      <p className="font-roboto text-[12px] leading-relaxed text-brand-clayRed/80">{item.copy}</p>
+                      <p className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">{item.title}</p>
+                      <p className="font-montserrat text-[12px] leading-relaxed text-brand-clayRed/80">{item.copy}</p>
                     </div>
                   </div>
                 ))}
@@ -170,7 +170,7 @@ export default function SizeGuidePage() {
           <div className={`flex flex-col gap-6 md:flex-row md:items-center md:justify-between ${isRTL ? 'md:flex-row-reverse' : ''}`}>
             <div className={isRTL ? 'text-right' : ''}>
               <h3 className="font-rozha text-3xl text-brand-darkRed">{isRTL ? 'تحتاجين مساعدة بالمقاس؟' : 'Need Sizing Help?'}</h3>
-              <p className="mt-2 max-w-2xl font-roboto text-sm text-brand-clayRed/80">
+              <p className="mt-2 max-w-2xl font-montserrat text-sm text-brand-clayRed/80">
                 {isRTL
                   ? 'فريقنا يساعدك لاختيار المقاس المثالي قبل الطلب.'
                   : 'Our concierge can advise your best size before checkout.'}
@@ -181,14 +181,14 @@ export default function SizeGuidePage() {
                 href="https://wa.me/971XXXXXXXXX?text=Hi%20Bint%20Saeed!%20I%20need%20help%20with%20sizing."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center border border-brand-darkRed bg-brand-darkRed px-7 py-3 font-roboto text-xs uppercase tracking-[0.14em] text-white transition-colors hover:bg-brand-clayRed"
+                className="inline-flex items-center justify-center border border-brand-darkRed bg-brand-darkRed px-7 py-3 font-montserrat text-xs uppercase tracking-[0.14em] text-white transition-colors hover:bg-brand-clayRed"
                 data-cursor-hover
               >
                 {isRTL ? 'واتساب' : 'WhatsApp'}
               </a>
               <LocaleLink
                 href="/contact"
-                className="inline-flex items-center justify-center border border-brand-stone/40 bg-transparent px-7 py-3 font-roboto text-xs uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                className="inline-flex items-center justify-center border border-brand-stone/40 bg-transparent px-7 py-3 font-montserrat text-xs uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
                 data-cursor-hover
               >
                 {isRTL ? 'تواصلي معنا' : 'Contact Us'}
@@ -217,7 +217,7 @@ function MeasurementTable({
       <table className="min-w-[760px] w-full">
         <thead>
           <tr className="bg-brand-stone/25">
-            <th className="px-3 py-3 text-left font-roboto text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
+            <th className="px-3 py-3 text-left font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
               {title}
             </th>
             {SIZE_HEADERS.map((size) => {
@@ -226,7 +226,7 @@ function MeasurementTable({
                 <th
                   key={size}
                   onClick={() => setSelected(active ? null : size)}
-                  className={`cursor-pointer px-2 py-3 text-center font-roboto text-[11px] uppercase tracking-[0.14em] transition-colors ${
+                  className={`cursor-pointer px-2 py-3 text-center font-montserrat text-[11px] uppercase tracking-[0.14em] transition-colors ${
                     active ? 'bg-brand-darkRed text-white' : 'text-brand-darkRed hover:bg-brand-dustyBlue/20'
                   }`}
                   data-cursor-hover
@@ -240,9 +240,9 @@ function MeasurementTable({
             })}
           </tr>
           <tr className="bg-white/80">
-            <th className="px-3 py-2 text-left font-roboto text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">UK Size</th>
+            <th className="px-3 py-2 text-left font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">UK Size</th>
             {UK_SIZE.map((value, idx) => (
-              <th key={`${title}-uk-${value}`} className={`px-2 py-2 text-center font-roboto text-[11px] ${selected === SIZE_HEADERS[idx] ? 'text-brand-darkRed font-medium' : 'text-brand-clayRed/85'}`}>
+              <th key={`${title}-uk-${value}`} className={`px-2 py-2 text-center font-montserrat text-[11px] ${selected === SIZE_HEADERS[idx] ? 'text-brand-darkRed font-medium' : 'text-brand-clayRed/85'}`}>
                 {value}
               </th>
             ))}
@@ -251,11 +251,11 @@ function MeasurementTable({
         <tbody>
           {rows.map((row, rowIdx) => (
             <tr key={`${title}-${row.label}`} className={rowIdx % 2 === 0 ? 'bg-white/80' : 'bg-brand-stone/10'}>
-              <td className="px-3 py-3 font-roboto text-[12px] uppercase tracking-[0.08em] text-brand-darkRed">{row.label}</td>
+              <td className="px-3 py-3 font-montserrat text-[12px] uppercase tracking-[0.08em] text-brand-darkRed">{row.label}</td>
               {row.values.map((value, idx) => (
                 <td
                   key={`${title}-${row.label}-${idx}`}
-                  className={`px-2 py-3 text-center font-roboto text-[12px] ${
+                  className={`px-2 py-3 text-center font-montserrat text-[12px] ${
                     selected === SIZE_HEADERS[idx] ? 'bg-brand-darkRed/8 text-brand-darkRed font-medium' : 'text-brand-darkRed/85'
                   }`}
                 >

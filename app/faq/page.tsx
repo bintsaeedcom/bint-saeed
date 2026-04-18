@@ -41,7 +41,7 @@ export default function FAQPage() {
         >
           <LocaleLink
             href="/"
-            className={`inline-flex items-center gap-2 font-roboto text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
@@ -59,7 +59,7 @@ export default function FAQPage() {
           <h1 data-document-h1="true" className="font-rozha text-5xl md:text-6xl text-brand-darkRed mb-4">
             {data.title}
           </h1>
-          <p className="font-roboto text-brand-clayRed tracking-wide">
+          <p className="font-montserrat text-brand-clayRed tracking-wide">
             {data.subtitle}
           </p>
         </motion.div>
@@ -104,7 +104,7 @@ export default function FAQPage() {
                             className={`w-full flex items-start justify-between gap-4 text-left ${isRTL ? 'flex-row-reverse text-right' : ''}`}
                             data-cursor-hover
                           >
-                            <span className="font-roboto font-medium text-brand-darkRed">
+                            <span className="font-montserrat font-medium text-brand-darkRed">
                               {item.q}
                             </span>
                             <FiChevronDown className={`w-4 h-4 text-brand-clayRed flex-shrink-0 mt-1 transition-transform ${openQuestion === `${catIndex}-${qIndex}` ? 'rotate-180' : ''}`} />
@@ -118,7 +118,7 @@ export default function FAQPage() {
                                 transition={{ duration: 0.2 }}
                                 className="overflow-hidden"
                               >
-                                <p className={`font-roboto text-sm text-brand-clayRed/80 tracking-wide leading-relaxed mt-3 ${isRTL ? 'text-right' : ''}`}>
+                                <p className={`font-montserrat text-sm text-brand-clayRed/80 tracking-wide leading-relaxed mt-3 ${isRTL ? 'text-right' : ''}`}>
                                   {item.a}
                                 </p>
                               </motion.div>
@@ -145,13 +145,13 @@ export default function FAQPage() {
           <h2 className="font-rozha text-2xl text-white mb-2">
             {data.contact.title}
           </h2>
-          <p className="font-roboto text-sm text-white/70 tracking-wide mb-6">
+          <p className="font-montserrat text-sm text-white/70 tracking-wide mb-6">
             {data.contact.description}
           </p>
           <div className={`flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
             <a
               href="mailto:contact@bintsaeed.com"
-              className={`inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-darkRed font-roboto text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiMail className="w-4 h-4" />
@@ -161,7 +161,7 @@ export default function FAQPage() {
               href="https://wa.me/971XXXXXXXXX"
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] text-white font-roboto text-xs uppercase tracking-[0.15em] hover:bg-[#128C7E] transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] text-white font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-[#128C7E] transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FaWhatsapp className="w-4 h-4" />

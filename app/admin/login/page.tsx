@@ -39,7 +39,7 @@ function AdminLoginForm() {
     <div className="flex min-h-screen items-center justify-center bg-[#1a0a10] px-6">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#12080b] p-8 shadow-2xl">
         <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-stone">Owner login</h1>
-        <p className="mt-2 font-roboto text-sm text-white/50">
+        <p className="mt-2 font-montserrat text-sm text-white/50">
           Product and order dashboards — set <code className="text-brand-dustyBlue/90">ADMIN_DASHBOARD_PASSWORD</code> in
           your environment.
         </p>
@@ -54,16 +54,16 @@ function AdminLoginForm() {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 font-roboto text-sm text-white placeholder-white/30 focus:border-brand-dustyBlue/50 focus:outline-none"
+              className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 font-montserrat text-sm text-white placeholder-white/30 focus:border-brand-dustyBlue/50 focus:outline-none"
               placeholder="Password"
               required
             />
           </div>
-          {error ? <p className="font-roboto text-sm text-red-300">{error}</p> : null}
+          {error ? <p className="font-montserrat text-sm text-red-300">{error}</p> : null}
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-brand-dustyBlue py-3 font-roboto text-xs uppercase tracking-[0.2em] text-[#1a0008] transition-colors hover:bg-brand-stone disabled:opacity-50"
+            className="w-full rounded-xl bg-brand-dustyBlue py-3 font-montserrat text-xs uppercase tracking-[0.2em] text-[#1a0008] transition-colors hover:bg-brand-stone disabled:opacity-50"
           >
             {loading ? 'Signing in…' : 'Sign in'}
           </button>

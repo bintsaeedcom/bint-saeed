@@ -178,7 +178,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.cre
         <meta name="distribution" content="Global" />
         <meta name="rating" content="General" />
       </head>
-      <body className="min-h-screen">
+      <body className="min-h-screen font-sans antialiased">
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

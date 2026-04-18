@@ -91,7 +91,7 @@ export default function AdminOrdersPage() {
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 data-document-h1="true" className="font-rozha text-3xl text-white">Orders</h1>
-          <p className="mt-1 font-roboto text-sm text-white/50">
+          <p className="mt-1 font-montserrat text-sm text-white/50">
             Fulfilment pipeline · Stripe Checkout completes create orders via webhook
             {storage ? ` · Storage: ${storage}` : ''}
           </p>
@@ -115,13 +115,13 @@ export default function AdminOrdersPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search email, order id, session…"
-            className="w-full rounded-xl border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 font-roboto text-sm text-white placeholder-white/35 focus:border-brand-dustyBlue/40 focus:outline-none"
+            className="w-full rounded-xl border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 font-montserrat text-sm text-white placeholder-white/35 focus:border-brand-dustyBlue/40 focus:outline-none"
           />
         </div>
         <select
           value={filter}
           onChange={(e) => setFilter((e.target.value || '') as OrderFulfillmentStatus | '')}
-          className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 font-roboto text-sm text-white focus:outline-none"
+          className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 font-montserrat text-sm text-white focus:outline-none"
         >
           <option value="">All statuses</option>
           {STATUS_OPTIONS.map((s) => (
@@ -134,7 +134,7 @@ export default function AdminOrdersPage() {
 
       <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.04]">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[720px] text-left font-roboto text-sm">
+          <table className="w-full min-w-[720px] text-left font-montserrat text-sm">
             <thead>
               <tr className="border-b border-white/10 text-[10px] uppercase tracking-[0.2em] text-white/45">
                 <th className="px-4 py-3">Order</th>
@@ -185,7 +185,7 @@ export default function AdminOrdersPage() {
         </div>
       </div>
 
-      <p className="mt-6 font-roboto text-xs leading-relaxed text-white/40">
+      <p className="mt-6 font-montserrat text-xs leading-relaxed text-white/40">
         Add <code className="text-brand-dustyBlue/80">STRIPE_WEBHOOK_SECRET</code> and point Stripe to{' '}
         <code className="text-brand-dustyBlue/80">/api/webhooks/stripe</code> (event: checkout.session.completed). Use
         Upstash Redis for persistent orders across deploys.
@@ -226,7 +226,7 @@ export default function AdminOrdersPage() {
                 Open in Stripe <FiExternalLink className="h-3 w-3" />
               </a>
 
-              <div className="space-y-4 font-roboto text-sm">
+              <div className="space-y-4 font-montserrat text-sm">
                 <div>
                   <p className="text-[10px] uppercase tracking-wider text-white/40">Customer</p>
                   <p className="text-white/90">{selected.customerEmail}</p>

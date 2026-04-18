@@ -357,7 +357,7 @@ function QuickShopCarousel() {
     <section className="relative bg-[#f7f4ef] py-14 md:py-18 lg:py-20">
       <SectionStripes variant="soft" />
       <div className="mx-auto mb-8 max-w-[1600px] px-6 lg:px-14">
-        <p className="text-center font-roboto text-[11px] uppercase tracking-[0.26em] text-brand-darkRed">
+        <p className="text-center font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed">
           {isRTL ? 'وصل حديثا' : 'NEW ARRIVALS'}
         </p>
       </div>
@@ -405,10 +405,10 @@ function QuickShopCarousel() {
               </div>
               <div className="flex min-h-[4.25rem] flex-1 flex-col justify-center gap-1.5 border-t border-brand-stone/20 px-2.5 py-2 md:min-h-[4.5rem] md:gap-2 md:px-3 md:py-2.5">
                 <div className={`flex min-h-0 items-start gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <p className="min-w-0 flex-1 truncate font-roboto text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
+                  <p className="min-w-0 flex-1 truncate font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
                     {product.name}
                   </p>
-                  <p className="shrink-0 font-roboto text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed whitespace-nowrap leading-snug">
+                  <p className="shrink-0 font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed whitespace-nowrap leading-snug">
                     DHS. {product.price.toLocaleString()}
                   </p>
                 </div>
@@ -425,7 +425,7 @@ function QuickShopCarousel() {
                     />
                   ))}
                   {product.colors.length > 6 ? (
-                    <span className="font-roboto text-[9px] tabular-nums tracking-wide text-brand-darkRed/45">
+                    <span className="font-montserrat text-[9px] tabular-nums tracking-wide text-brand-darkRed/45">
                       +{product.colors.length - 6}
                     </span>
                   ) : null}
@@ -548,7 +548,7 @@ function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                   style={reduceMotion ? undefined : { x: introX }}
-                  className="mb-6 max-w-md border-s border-white/25 ps-5 font-roboto text-sm leading-[1.75] tracking-[0.02em] !text-white/90 md:mb-8 md:ps-6 md:text-[15px]"
+                  className="mb-6 max-w-md border-s border-white/25 ps-5 font-montserrat text-sm leading-[1.75] tracking-[0.02em] !text-white/90 md:mb-8 md:ps-6 md:text-[15px]"
                 >
                   {heroSubline}
                 </motion.p>
@@ -563,7 +563,7 @@ function HeroSection() {
                 <MagneticWrap className="w-fit">
                   <LocaleLink
                     href="/shop"
-                    className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-roboto text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
+                    className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
                     data-cursor-hover
                   >
                     {t.hero.discoverCollection}
@@ -585,7 +585,7 @@ function HeroSection() {
         transition={{ delay: 0.5, duration: 0.4 }}
         className="pointer-events-none absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="font-roboto text-[9px] uppercase tracking-[0.5em] text-white/40">Scroll</span>
+        <span className="font-montserrat text-[9px] uppercase tracking-[0.5em] text-white/40">Scroll</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
@@ -633,13 +633,13 @@ function EditorialIntro() {
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_8%_10%,rgba(146,170,193,0.1)_0%,transparent_55%)]" />
               <div className="pointer-events-none absolute -left-px top-0 h-full w-[2px] bg-gradient-to-b from-brand-dustyBlue/10 via-brand-dustyBlue/65 to-brand-dustyBlue/10" />
               <div className="pointer-events-none absolute right-0 top-0 h-px w-24 bg-gradient-to-l from-brand-dustyBlue/55 to-transparent" />
-              <span className="relative mb-6 block font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
+              <span className="relative mb-6 block font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
                 Manifesto
               </span>
               <h2 className="mb-8 font-rozha text-3xl leading-[1.15] text-brand-darkRed md:text-4xl">
                 {MANIFESTO_LEAD}
               </h2>
-              <div className="space-y-6 font-roboto text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
+              <div className="space-y-6 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
                 {MANIFESTO_PARAGRAPHS.map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}
@@ -702,7 +702,7 @@ function MagazineGrid() {
           className={`mb-14 flex items-end justify-between md:mb-16 ${isRTL ? 'flex-row-reverse' : ''}`}
         >
           <div>
-            <span className="mb-3 block font-roboto text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
+            <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
               The first chapter
             </span>
             <h2 className="font-rozha text-4xl text-brand-darkRed md:text-5xl">
@@ -711,7 +711,7 @@ function MagazineGrid() {
           </div>
           <LocaleLink
             href="/shop"
-            className="hidden items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-brand-darkRed transition-colors hover:text-brand-dustyBlue md:flex"
+            className="hidden items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed transition-colors hover:text-brand-dustyBlue md:flex"
             data-cursor-hover
           >
             {t.featured.viewAll}
@@ -738,7 +738,7 @@ function MagazineGrid() {
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-darkRed/80 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-                  <span className="mb-3 block font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">
+                  <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">
                     Chapter I
                   </span>
                   <h3 className="mb-4 max-w-xl font-rozha text-2xl leading-snug text-white md:text-3xl lg:text-4xl">
@@ -746,7 +746,7 @@ function MagazineGrid() {
                     <br />
                     wherever you are.
                   </h3>
-                  <span className="inline-flex items-center gap-2 font-roboto text-xs uppercase tracking-[0.2em] text-white/80 transition-colors group-hover:text-brand-dustyBlue">
+                  <span className="inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-white/80 transition-colors group-hover:text-brand-dustyBlue">
                     Discover the collection
                     <FiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </span>
@@ -833,7 +833,7 @@ function ColorBlockSection() {
               <div className="pointer-events-none absolute -bottom-4 -left-4 h-full w-full border border-white/50" />
             </div>
             <div className="absolute -bottom-3 -right-3 border border-brand-dustyBlue/30 bg-[#fbf8f3]/95 px-5 py-3 backdrop-blur-sm md:right-auto md:-left-3">
-              <span className="font-roboto text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">
+              <span className="font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">
                 {isRTL ? 'صناعة يدوية' : 'Handcrafted'}
               </span>
             </div>
@@ -848,14 +848,14 @@ function ColorBlockSection() {
                 <div
                   className={`relative flex flex-col gap-8 px-9 py-10 text-center sm:px-12 md:py-14 ${isRTL ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'}`}
                 >
-                  <span className="font-roboto text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/85">
+                  <span className="font-montserrat text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/85">
                     Bint Saeed
                   </span>
                   <h2 className="font-rozha text-[clamp(1.5rem,2.8vw+0.6rem,2.625rem)] leading-[1.12] tracking-[-0.02em] text-brand-darkRed lg:whitespace-nowrap">
                     Every woman is a daughter.
                   </h2>
                   <div
-                    className={`mx-auto max-w-md space-y-5 font-roboto text-sm leading-[1.9] tracking-wide text-brand-darkRed/76 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
+                    className={`mx-auto max-w-md space-y-5 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/76 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
                   >
                     <p>She carries more than what is seen.</p>
                     <p>A story. A sense of self.</p>
@@ -868,7 +868,7 @@ function ColorBlockSection() {
                   <MagneticWrap className={isRTL ? 'lg:self-end' : 'lg:self-start'}>
                     <LocaleLink
                       href="/about"
-                      className="inline-flex items-center justify-center border border-brand-dustyBlue/70 bg-brand-dustyBlue px-8 py-4 font-roboto text-xs tracking-[0.12em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone"
+                      className="inline-flex items-center justify-center border border-brand-dustyBlue/70 bg-brand-dustyBlue px-8 py-4 font-montserrat text-xs tracking-[0.12em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone"
                       data-cursor-hover
                     >
                       Discover the Story
@@ -962,12 +962,12 @@ function EditorialSplit() {
               {CODES_LIST_ITEMS.map((item, i) => (
                 <div key={i} className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <div className="h-px w-10 shrink-0 bg-brand-dustyBlue md:w-12" aria-hidden />
-                  <span className="font-roboto text-sm text-brand-darkRed/80 tracking-wide">{item}</span>
+                  <span className="font-montserrat text-sm text-brand-darkRed/80 tracking-wide">{item}</span>
                 </div>
               ))}
             </div>
 
-            <p className="font-roboto text-sm text-brand-darkRed/70 tracking-wide leading-[1.9] mb-10 max-w-md">
+            <p className="font-montserrat text-sm text-brand-darkRed/70 tracking-wide leading-[1.9] mb-10 max-w-md">
               Each element shapes how a piece is made,
               <br />
               how it moves,
@@ -978,7 +978,7 @@ function EditorialSplit() {
             <MagneticWrap className="w-fit">
               <LocaleLink
                 href="/the-codes"
-                className={`group inline-flex items-center gap-3 px-8 py-4 bg-brand-dustyBlue text-white font-roboto text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`group inline-flex items-center gap-3 px-8 py-4 bg-brand-dustyBlue text-white font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 Explore the Codes
@@ -1071,14 +1071,14 @@ function CreatedForYouSection() {
                 <div
                   className={`relative flex flex-col gap-8 px-10 py-12 text-center sm:px-12 md:py-14 ${isRTL ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'}`}
                 >
-                  <span className="font-roboto text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/80">
+                  <span className="font-montserrat text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/80">
                     Bint Saeed
                   </span>
                   <h2 className="font-rozha text-3xl text-balance text-white tracking-[-0.02em] drop-shadow-[0_1px_24px_rgba(0,0,0,0.35)] sm:text-4xl md:text-[2.35rem] md:leading-[1.12]">
                     Created for you
                   </h2>
                   <p
-                    className={`mx-auto max-w-md font-roboto text-sm leading-[1.9] tracking-wide text-white/75 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
+                    className={`mx-auto max-w-md font-montserrat text-sm leading-[1.9] tracking-wide text-white/75 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
                   >
                     Each piece is created with care, produced in limited quantities, and available through a guided
                     experience.
@@ -1087,13 +1087,13 @@ function CreatedForYouSection() {
                     <MagneticWrap className={isRTL ? 'lg:self-end' : 'lg:self-start'}>
                       <LocaleLink
                         href="/contact"
-                        className="inline-flex items-center justify-center border border-brand-dustyBlue/70 bg-brand-dustyBlue px-8 py-4 font-roboto text-xs uppercase tracking-[0.18em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone"
+                        className="inline-flex items-center justify-center border border-brand-dustyBlue/70 bg-brand-dustyBlue px-8 py-4 font-montserrat text-xs uppercase tracking-[0.18em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone"
                         data-cursor-hover
                       >
                         Request Your Piece
                       </LocaleLink>
                     </MagneticWrap>
-                    <p className="font-roboto text-[11px] uppercase tracking-[0.22em] text-brand-dustyBlue/85">
+                    <p className="font-montserrat text-[11px] uppercase tracking-[0.22em] text-brand-dustyBlue/85">
                       Available worldwide. Based in Abu\u00A0Dhabi.
                     </p>
                   </div>
