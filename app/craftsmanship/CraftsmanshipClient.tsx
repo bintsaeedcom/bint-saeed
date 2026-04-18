@@ -198,14 +198,13 @@ function ElevatedScrollImage({
 
 function ScreenVideo({ src, ariaLabel }: { src: string; ariaLabel: string }) {
   return (
-    <section className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 overflow-hidden bg-[#060304]">
+    <section className="bs-full-bleed overflow-hidden bg-[#060304]">
       <div className="pointer-events-none absolute inset-0 z-[4] opacity-90">
         <DecorativeCorners tone="dustyBlue" />
       </div>
       <video
         src={src}
         aria-label={ariaLabel}
-        title={ariaLabel}
         autoPlay
         muted
         loop
@@ -267,8 +266,8 @@ function ParallaxMosaic({
     </ImageJewelFrame>
   )
 
-  const bleed =
-    'relative left-1/2 w-[calc(100vw-1.5rem)] max-w-[min(100vw,88rem)] -translate-x-1/2 px-3 md:w-[calc(100vw-3rem)] lg:px-6'
+  /** True viewport width with comfortable inner padding for the grid */
+  const bleed = 'bs-full-bleed px-4 sm:px-6 lg:px-10'
 
   if (layout === 'three') {
     return (
@@ -342,11 +341,11 @@ function PhaseAtmosphere({
   return (
     <div className="relative">
       <div
-        className={`pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen max-w-[100vw] -translate-x-1/2 ${bg}`}
+        className={`pointer-events-none absolute inset-y-0 left-[calc(50%-50vw)] z-0 w-screen max-w-[100vw] ${bg}`}
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen max-w-[100vw] -translate-x-1/2 bg-[radial-gradient(ellipse_90%_60%_at_70%_20%,rgba(146,170,193,0.14)_0%,transparent_55%)]"
+        className="pointer-events-none absolute inset-y-0 left-[calc(50%-50vw)] z-0 w-screen max-w-[100vw] bg-[radial-gradient(ellipse_90%_60%_at_70%_20%,rgba(146,170,193,0.14)_0%,transparent_55%)]"
         aria-hidden
       />
       <div className="relative z-10">{children}</div>
@@ -358,7 +357,7 @@ export default function CraftsmanshipClient() {
   const { isRTL } = useLanguage()
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[#faf9f7]">
+    <div className="relative min-h-screen w-full min-w-0 overflow-x-clip bg-[#faf9f7]">
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_12%_10%,rgba(146,170,193,0.12)_0%,transparent_48%)]"
         aria-hidden
@@ -368,9 +367,8 @@ export default function CraftsmanshipClient() {
         aria-hidden
       />
 
-      <div className="pt-24 md:pt-28">
-        <ScreenVideo src={CRAFT_VIDEO_BANDS[0].src} ariaLabel={CRAFT_VIDEO_BANDS[0].ariaLabel} />
-      </div>
+      {/* First band sits directly under fixed header — page padding lives in LayoutWrapper only */}
+      <ScreenVideo src={CRAFT_VIDEO_BANDS[0].src} ariaLabel={CRAFT_VIDEO_BANDS[0].ariaLabel} />
 
       {/* Intro — wide editorial header aligned with home luxury rhythm */}
       <section className="relative border-b border-brand-stone/15 bg-[linear-gradient(180deg,#faf9f7_0%,#f5f1ea_100%)] px-6 pb-16 pt-16 md:pb-24 md:pt-24 lg:px-16">
@@ -579,6 +577,6 @@ export default function CraftsmanshipClient() {
           </LocaleLink>
         </div>
       </section>
-    </main>
+    </div>
   )
 }

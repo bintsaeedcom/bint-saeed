@@ -50,9 +50,11 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   return (
     <>
       <Header />
-      <main className={`relative z-40 pointer-events-auto ${isHomeEditorial ? 'pt-0' : 'pt-[90px] lg:pt-[100px]'}`}>
+      <main
+        className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isHomeEditorial ? 'pt-0' : 'pt-[90px] lg:pt-[100px]'}`}
+      >
         <GlobalStripeOverlay />
-        <div className="relative z-[2]">{children}</div>
+        <div className="relative z-[2] w-full min-w-0 max-w-none">{children}</div>
       </main>
       <Footer />
       <WhatsAppButton />

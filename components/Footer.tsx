@@ -41,7 +41,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative overflow-hidden">
+    <footer className="relative w-full min-w-0 max-w-none overflow-hidden">
       {/* Newsletter — Coming Soon style */}
       <div className="relative text-white">
         {/* Coming Soon gradient background */}

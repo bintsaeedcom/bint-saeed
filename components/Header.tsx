@@ -214,7 +214,7 @@ export default function Header() {
     <>
       {/* Main Header - Elegant Single Row Design */}
       <header
-        className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${headerBarGradient} ${
+        className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none transition-all duration-500 ${headerBarGradient} ${
           isScrolled ? 'py-2.5 lg:py-3 shadow-lg shadow-black/40' : 'py-3 lg:py-4 2xl:py-5'
         }`}
       >
