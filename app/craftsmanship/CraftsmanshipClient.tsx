@@ -18,7 +18,7 @@ const CRAFT_VIDEO_BANDS = [
   {
     src: '/craftsmanship/bint-saeed-fabric-cutting-atelier.webm',
     ariaLabel:
-      'Video: precision fabric cutting and atelier work for bespoke luxury abayas at Bint Saeed in Abu Dhabi, United Arab Emirates',
+      'Video: Bint Saeed—precision fabric cutting and atelier work for bespoke luxury abayas in Abu Dhabi, United Arab Emirates',
   },
   {
     src: '/craftsmanship/bint-saeed-stitching-process.webm',
@@ -32,35 +32,35 @@ const MOSAIC_IMAGES = [
   [
     {
       src: '/craftsmanship/bint-saeed-cad-abaya-pattern.png',
-      alt: 'CAD abaya pattern on screen at Bint Saeed—technical lines for proportion and construction resolved before cutting; luxury development between Italy and Abu Dhabi',
+      alt: 'Bint Saeed CAD abaya pattern on screen—technical lines for proportion and construction resolved before cutting; luxury development between Italy and Abu Dhabi',
     },
     {
       src: '/craftsmanship/bint-saeed-pattern-drawing.png',
-      alt: 'Abaya pattern drawing during development—proportion, balance, and construction studied before sampling and production | Bint Saeed luxury abaya house',
+      alt: 'Bint Saeed—abaya pattern drawing during development; proportion, balance, and construction studied before sampling and production',
     },
     {
       src: '/craftsmanship/bint-saeed-textile-selection-process.png',
-      alt: 'Luxury textile and fabric selection for bespoke abayas—evaluating drape, weight, and performance during development | Bint Saeed Abu Dhabi',
+      alt: 'Bint Saeed luxury textile and fabric selection for bespoke abayas—evaluating drape, weight, and performance during development in Abu Dhabi',
     },
   ],
   [
     {
       src: '/craftsmanship/bint-saeed-fabric-cutting.png',
-      alt: 'Precision fabric cutting in the Bint Saeed atelier—controlled cutting for bespoke luxury abayas produced in Abu Dhabi, UAE',
+      alt: 'Bint Saeed—precision fabric cutting in the Abu Dhabi atelier; controlled cutting for bespoke luxury abayas produced in the UAE',
     },
     {
       src: '/craftsmanship/bint-saeed-thread-spools.png',
-      alt: 'Premium tailoring threads for luxury abaya construction—materials chosen for durability, consistency, and refined finish | Bint Saeed',
+      alt: 'Bint Saeed—premium tailoring threads for luxury abaya construction; materials chosen for durability, consistency, and refined finish',
     },
   ],
   [
     {
       src: '/craftsmanship/bint-saeed-khous-braid.png',
-      alt: 'Khous braid integrated into garment structure—Emirati palm-frond weaving referenced in contemporary luxury abaya design | Bint Saeed Abu Dhabi',
+      alt: 'Bint Saeed—Khous braid integrated into garment structure; Emirati palm-frond weaving referenced in contemporary luxury abaya design, Abu Dhabi',
     },
     {
       src: '/craftsmanship/bint-saeed-label-stitching.png',
-      alt: 'Fine label stitching and hand finishing on a bespoke abaya—quality-controlled construction at the Bint Saeed atelier in Abu Dhabi',
+      alt: 'Bint Saeed woven label detail and hand finishing on a bespoke abaya—quality-controlled construction at the Bint Saeed atelier in Abu Dhabi',
     },
   ],
 ] as const
@@ -267,16 +267,16 @@ export default function CraftsmanshipClient() {
           </h2>
           <Prose>
             <p>
-              At Bint Saeed, each piece begins with a defined process of development. As a house based in Abu Dhabi, the
-              work moves between locations with a clear structure. Patterns are created in Italy, where proportion, balance,
-              and construction are resolved before any material is cut. This stage determines how each abaya will fall, move,
-              and maintain its shape over time.
+              At Bint Saeed, each piece begins with a defined process of development. As a house based in Abu Dhabi, the work
+              moves between locations with a clear structure. Patterns are created in Italy, where proportion, balance, and
+              construction are resolved before any material is cut. This stage determines how each abaya will fall, move, and
+              maintain its shape over time.
             </p>
             <p>
-              The process then continues in Abu Dhabi, where prototypes are produced to test construction and proportion.
-              Once these are approved, a sample is made to confirm the final form, material behaviour, and fit. Only after
-              these stages are completed and reviewed does a piece move into production. This sequence ensures that every
-              garment is technically resolved before it is made in its final form.
+              The process then continues in Abu Dhabi, where prototypes are produced to test construction and proportion. Once
+              these are approved, a sample is made to confirm the final form, material behaviour, and fit. Only after these
+              stages are completed and reviewed does a piece move into production. This sequence ensures that every garment is
+              technically resolved before it is made in its final form.
             </p>
           </Prose>
         </motion.section>
@@ -308,13 +308,12 @@ export default function CraftsmanshipClient() {
             </p>
             <p>
               Materials are sourced across Europe and Asia. Components such as buttons are selected from European suppliers,
-              while natural stones are sourced, cut, and polished in Asia. Each element is chosen for its performance,
-              ensuring it contributes to the structure, durability, and overall balance of the garment.
+              while natural stones are sourced, cut, and polished in Asia. Each element is chosen for its performance, ensuring
+              it contributes to the structure, durability, and overall balance of the garment.
             </p>
             <p>
               Production is kept controlled in volume, allowing each piece to receive the necessary time and attention. This
-              approach ensures that construction, finishing, and overall quality remain consistent from one piece to the
-              next.
+              approach ensures that construction, finishing, and overall quality remain consistent from one piece to the next.
             </p>
             <p>
               In line with this approach, pieces are produced primarily on an order basis, with each garment made specifically
@@ -355,9 +354,9 @@ export default function CraftsmanshipClient() {
               ensuring consistency in both appearance and performance.
             </p>
             <p>
-              The result is a piece that reflects a clear standard of development, controlled production, and considered
-              design. Each abaya is made to hold its form, perform in use, and maintain its quality over time. Bint Saeed
-              operates as a contemporary house, shaped in Abu Dhabi and developed through an international process.
+              The result is a piece that reflects a clear standard of development, controlled production, and considered design.
+              Each abaya is made to hold its form, perform in use, and maintain its quality over time. Bint Saeed operates as a
+              contemporary house, shaped in Abu Dhabi and developed through an international process.
             </p>
           </Prose>
         </motion.section>
