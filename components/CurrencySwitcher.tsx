@@ -10,12 +10,15 @@ interface CurrencySwitcherProps {
   variant?: 'light' | 'dark'
   showSymbol?: boolean
   align?: 'start' | 'end'
+  /** Use `above` when the trigger sits at the bottom of the viewport (e.g. mobile menu footer). */
+  dropdownPlacement?: 'below' | 'above'
 }
 
 export default function CurrencySwitcher({
   variant = 'dark',
   showSymbol = true,
   align = 'end',
+  dropdownPlacement = 'below',
 }: CurrencySwitcherProps) {
   const { currency, setCurrency, currencies } = useCurrency()
   const { isRTL } = useLanguage()
@@ -49,6 +52,13 @@ export default function CurrencySwitcher({
       : isRTL
         ? 'left-0'
         : 'right-0'
+  const openAbove = dropdownPlacement === 'above'
+  const placementClass = openAbove
+    ? 'bottom-full mb-2 max-h-[min(18rem,42dvh)]'
+    : 'top-full mt-2 max-h-72'
+  const animFrom = openAbove ? { opacity: 0, y: 10 } : { opacity: 0, y: -10 }
+  const animTo = openAbove ? { opacity: 0, y: 10 } : { opacity: 0, y: -10 }
+
   const currencyFlags: Record<string, string> = {
     AED: '🇦🇪',
     USD: '🇺🇸',
@@ -79,11 +89,11 @@ export default function CurrencySwitcher({
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={animFrom}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={animTo}
             transition={{ duration: 0.2 }}
-            className={`absolute top-full z-[65] mt-2 ${menuAlignClass} max-h-72 min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
+            className={`absolute z-[90] ${placementClass} ${menuAlignClass} min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
           >
             {currencies.map((c) => (
               <button

@@ -11,9 +11,15 @@ import { stripLocaleFromPathname, localizedPath } from '@/lib/i18n/routing'
 interface LanguageSwitcherProps {
   variant?: 'light' | 'dark'
   align?: 'start' | 'end'
+  /** Use `above` when the trigger sits at the bottom of the viewport (e.g. mobile menu footer). */
+  dropdownPlacement?: 'below' | 'above'
 }
 
-export default function LanguageSwitcher({ variant = 'dark', align = 'end' }: LanguageSwitcherProps) {
+export default function LanguageSwitcher({
+  variant = 'dark',
+  align = 'end',
+  dropdownPlacement = 'below',
+}: LanguageSwitcherProps) {
   const { language, setLanguage, t, isRTL } = useLanguage()
   const router = useRouter()
   const pathname = usePathname() || '/'
@@ -64,6 +70,13 @@ export default function LanguageSwitcher({ variant = 'dark', align = 'end' }: La
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  const openAbove = dropdownPlacement === 'above'
+  const placementClass = openAbove
+    ? 'bottom-full mb-2 max-h-[min(18rem,42dvh)]'
+    : 'top-full mt-2 max-h-72'
+  const animFrom = openAbove ? { opacity: 0, y: 10 } : { opacity: 0, y: -10 }
+  const animTo = openAbove ? { opacity: 0, y: 10 } : { opacity: 0, y: -10 }
+
   const navigateToLanguage = (code: Language) => {
     const { pathname: inner } = stripLocaleFromPathname(pathname)
     const target = localizedPath(code === 'en' ? 'en' : code, inner)
@@ -90,11 +103,11 @@ export default function LanguageSwitcher({ variant = 'dark', align = 'end' }: La
           <>
             <motion.div
               key="lang-switcher-menu"
-              initial={{ opacity: 0, y: -10 }}
+              initial={animFrom}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={animTo}
               transition={{ duration: 0.2 }}
-              className={`absolute top-full z-[65] ${menuAlignClass} mt-2 max-h-72 min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
+              className={`absolute z-[90] ${placementClass} ${menuAlignClass} min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
             >
               {languages.map((lang) => (
                 <button

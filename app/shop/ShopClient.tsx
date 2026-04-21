@@ -13,6 +13,7 @@ import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import ProductWishlistHeart from '@/components/ProductWishlistHeart'
 import { getProductHref } from '@/lib/products/links'
+import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 
 const CATEGORY_QUERY_MAP: Record<string, string> = {
   abayas: 'Abayas',
@@ -28,6 +29,16 @@ const CATEGORY_QUERY_MAP: Record<string, string> = {
   evening: 'Dresses',
   'evening-wear': 'Dresses',
   coats: 'Dresses',
+}
+
+/** URL ?category= value for each shop filter (matches CATEGORY_QUERY_MAP keys). */
+const CATEGORY_QUERY_VALUE: Record<(typeof categories)[number], string | null> = {
+  All: null,
+  Abayas: 'abayas',
+  Kaftans: 'kaftans',
+  Dresses: 'dresses',
+  Sets: 'sets',
+  Belts: 'accessories',
 }
 
 const SORT_OPTIONS = [
@@ -50,6 +61,18 @@ export default function ShopClient() {
   const sortMenuRef = useRef<HTMLDivElement | null>(null)
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
+  const { localize } = useLocaleHref()
+
+  const applyCategory = useCallback(
+    (cat: (typeof categories)[number]) => {
+      setActiveCategory(cat)
+      const param = CATEGORY_QUERY_VALUE[cat]
+      const path = localize('/shop')
+      const url = param ? `${path}?category=${param}` : path
+      router.replace(url, { scroll: false })
+    },
+    [localize, router],
+  )
 
   useEffect(() => {
     const q = searchParams.get('category')?.toLowerCase().replace(/_/g, '-')
@@ -141,25 +164,19 @@ export default function ShopClient() {
   return (
     <div className={`min-h-screen bg-stone-100 text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
       <header className="border-b border-black/5 bg-stone-50">
-        <div className="mx-auto max-w-[1400px] px-6 pb-12 pt-10 md:px-10 md:pb-16 md:pt-14 lg:px-14">
-          <div className="mb-10 flex items-center gap-2 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.28em] text-neutral-500 sm:gap-3 sm:text-xs">
-            <LocaleLink
-              href="/about"
-              className="shrink-0 whitespace-nowrap text-neutral-500 transition-colors hover:text-brand-dustyBlue"
-              data-cursor-hover
-            >
-              {isRTL ? 'التشكيلة' : 'COLLECTION'}
-            </LocaleLink>
-            <span className="shrink-0 select-none text-neutral-400" aria-hidden>
-              /
-            </span>
-            <span className="shrink-0 whitespace-nowrap font-normal text-neutral-900">
-              {isRTL ? 'المجموعة' : 'READY-TO-WEAR'}
-            </span>
-          </div>
+        <div className="mx-auto max-w-[1400px] px-6 pb-8 pt-8 md:px-10 md:pb-16 md:pt-14 lg:px-14">
+          <AppBreadcrumb
+            variant="muted"
+            rtl={isRTL}
+            segments={[
+              { label: isRTL ? 'التشكيلة' : 'COLLECTION', href: '/about' },
+              { label: isRTL ? 'المجموعة' : 'READY-TO-WEAR' },
+            ]}
+            className="mb-6 md:mb-10"
+          />
 
           <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
-            COLLECTION
+            {isRTL ? 'التشكيلة' : 'COLLECTION'}
           </p>
           <h1 data-document-h1="true" className="font-rozha text-4xl font-normal leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl">
             {isRTL ? 'الفصل ١' : 'CHAPTER I'}
@@ -173,7 +190,7 @@ export default function ShopClient() {
       </header>
 
       <div className="sticky top-[90px] z-30 border-b border-black/5 bg-stone-100/95 backdrop-blur-md lg:top-[100px]">
-        <div className="mx-auto flex max-w-[1400px] flex-col gap-4 px-6 py-4 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
+        <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-6 py-3 md:gap-4 md:py-4 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
           <div className="flex w-full min-w-0 items-center justify-between gap-4 md:w-auto md:justify-start md:gap-8 lg:min-w-0 lg:flex-1">
             <button
               type="button"
@@ -195,7 +212,7 @@ export default function ShopClient() {
                 <button
                   key={cat}
                   type="button"
-                  onClick={() => setActiveCategory(cat)}
+                  onClick={() => applyCategory(cat)}
                   className={`border-b border-transparent pb-1 font-montserrat text-[10px] uppercase tracking-[0.22em] transition-colors ${
                     activeCategory === cat
                       ? 'border-brand-darkRed text-brand-darkRed'
@@ -213,10 +230,44 @@ export default function ShopClient() {
               onClick={() => setFilterOpen(true)}
               className="flex shrink-0 items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-darkRed md:hidden"
               data-cursor-hover
+              aria-expanded={filterOpen}
+              aria-haspopup="dialog"
             >
               <FiFilter className="h-3.5 w-3.5" aria-hidden />
               {isRTL ? 'تصفية' : 'Refine'}
             </button>
+          </div>
+
+          {/* Mobile: always-visible category overview (desktop unchanged above) */}
+          <div className="md:hidden">
+            <div
+              className={`flex snap-x snap-mandatory gap-2 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+                isRTL ? 'flex-row-reverse' : ''
+              }`}
+              role="tablist"
+              aria-label={isRTL ? 'فئات المنتجات' : 'Product categories'}
+            >
+              {categories.map((cat) => {
+                const active = activeCategory === cat
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => applyCategory(cat)}
+                    className={`snap-start shrink-0 rounded-full border px-3.5 py-2 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors ${
+                      active
+                        ? 'border-brand-darkRed bg-brand-darkRed/5 text-brand-darkRed'
+                        : 'border-black/10 bg-white/80 text-neutral-600 hover:border-brand-dustyBlue/40 hover:text-brand-dustyBlue'
+                    }`}
+                    data-cursor-hover
+                  >
+                    {categoryLabel(cat)}
+                  </button>
+                )
+              })}
+            </div>
           </div>
 
           <div className="flex items-center justify-between gap-6 md:justify-end">
@@ -254,7 +305,7 @@ export default function ShopClient() {
                 />
               </button>
               {sortOpen && (
-                <div className="absolute right-0 top-full z-50 mt-2 min-w-[200px] border border-stone-200 bg-white py-2 shadow-lg shadow-stone-900/10">
+                <div className="absolute right-0 top-full z-50 mt-2 max-h-[min(280px,70dvh)] min-w-[200px] overflow-y-auto overscroll-contain border border-stone-200 bg-white py-2 shadow-lg shadow-stone-900/10">
                   {SORT_OPTIONS.map((opt) => (
                     <button
                       key={opt.id}
@@ -280,12 +331,12 @@ export default function ShopClient() {
         </div>
       </div>
 
-      <section className="mx-auto max-w-[1400px] px-6 py-14 md:px-10 md:py-20 lg:px-14">
-        <ul className="grid list-none grid-cols-2 gap-x-4 gap-y-12 p-0 sm:gap-x-7 sm:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-18">
+      <section className="mx-auto max-w-[1400px] px-6 py-10 md:px-10 md:py-20 lg:px-14">
+        <ul className="grid list-none grid-cols-2 gap-x-3 gap-y-10 p-0 sm:gap-x-7 sm:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-18">
           {sortedProducts.map((product) => (
             <li
               key={product.id}
-              className="group relative z-10"
+              className="group relative z-10 min-w-0"
             >
               <ProductWishlistHeart
                 product={product}
@@ -318,8 +369,8 @@ export default function ShopClient() {
                   <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
                     {product.category}
                   </p>
-                  <LocaleLink href={getProductHref(product)} className="relative z-20 inline-block" data-cursor-hover>
-                    <h2 className="font-rozha text-[1.35rem] font-normal leading-tight tracking-wide text-brand-darkRed transition-colors hover:text-brand-dustyBlue">
+                  <LocaleLink href={getProductHref(product)} className="relative z-20 inline-block max-w-full" data-cursor-hover>
+                    <h2 className="font-rozha text-[clamp(0.95rem,2.8vw,1.35rem)] font-normal leading-snug tracking-wide text-brand-darkRed transition-colors hover:text-brand-dustyBlue sm:leading-tight">
                       {product.name}
                     </h2>
                   </LocaleLink>
@@ -411,7 +462,7 @@ export default function ShopClient() {
                   <button
                     type="button"
                     onClick={() => {
-                      setActiveCategory(cat)
+                      applyCategory(cat)
                       setFilterOpen(false)
                     }}
                     className={`font-montserrat text-sm tracking-wide ${

@@ -14,26 +14,28 @@ type Props = {
   /** Collection header style (shop index) — neutral type */
   variant?: 'default' | 'muted'
   className?: string
+  /** Mirror segment order for RTL layouts */
+  rtl?: boolean
 }
 
 /**
- * Single-row breadcrumb: HOME / SHOP / … — last segment truncates on small widths.
+ * Single-row breadcrumb: HOME / SHOP / … — scrolls horizontally on tiny widths (no awkward wraps).
  * Use the same component across PDP and collection headers for alignment.
  */
-export default function AppBreadcrumb({ segments, variant = 'default', className = '' }: Props) {
+export default function AppBreadcrumb({ segments, variant = 'default', className = '', rtl = false }: Props) {
   if (!segments.length) return null
 
   const lastIdx = segments.length - 1
 
   const tone =
     variant === 'muted'
-      ? 'font-montserrat leading-none tracking-[0.28em] text-neutral-500'
-      : 'font-montserrat text-brand-darkRed/70'
+      ? 'font-montserrat leading-none text-neutral-500 tracking-[0.1em] sm:tracking-[0.22em] md:tracking-[0.28em]'
+      : 'font-montserrat leading-none text-brand-darkRed/70'
 
   const linkClass =
     variant === 'muted'
-      ? 'shrink-0 whitespace-nowrap text-neutral-500 transition-colors hover:text-brand-dustyBlue'
-      : 'shrink-0 whitespace-nowrap text-brand-darkRed/70 transition-colors hover:text-brand-dustyBlue'
+      ? 'shrink-0 whitespace-nowrap leading-none text-neutral-500 transition-colors hover:text-brand-dustyBlue'
+      : 'shrink-0 whitespace-nowrap leading-none text-brand-darkRed/70 transition-colors hover:text-brand-dustyBlue'
 
   const sepClass =
     variant === 'muted' ? 'text-neutral-400' : 'text-brand-darkRed/30'
@@ -41,7 +43,8 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
   return (
     <nav
       aria-label="Breadcrumb"
-      className={`flex w-full min-w-0 max-w-full flex-nowrap items-center gap-x-2 overflow-x-auto text-[10px] uppercase tracking-[0.12em] [scrollbar-width:none] sm:gap-x-3 sm:text-xs [&::-webkit-scrollbar]:hidden ${tone} ${className}`}
+      dir={rtl ? 'rtl' : 'ltr'}
+      className={`flex w-full min-w-0 max-w-full flex-nowrap items-center gap-x-1.5 overflow-x-auto text-[9px] uppercase tracking-[0.1em] [scrollbar-width:none] sm:gap-x-2.5 sm:text-[10px] sm:tracking-[0.12em] md:text-xs [&::-webkit-scrollbar]:hidden ${rtl ? 'flex-row-reverse justify-end' : ''} ${tone} ${className}`}
     >
       {segments.map((seg, i) => {
         const isLast = i === lastIdx
@@ -50,7 +53,10 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
         return (
           <Fragment key={`${seg.label}-${i}`}>
             {i > 0 && (
-              <span className={`shrink-0 select-none text-[11px] font-light sm:text-xs ${sepClass}`} aria-hidden>
+              <span
+                className={`shrink-0 select-none leading-none text-[9px] font-light sm:text-[10px] md:text-xs ${sepClass}`}
+                aria-hidden
+              >
                 /
               </span>
             )}
@@ -62,10 +68,10 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
               <span
                 className={
                   isLast
-                    ? `shrink-0 whitespace-nowrap font-normal ${
+                    ? `shrink-0 whitespace-nowrap font-normal leading-none ${
                         variant === 'muted' ? 'text-neutral-900' : 'text-brand-darkRed'
                       }`
-                    : `shrink-0 whitespace-nowrap font-normal ${
+                    : `shrink-0 whitespace-nowrap font-normal leading-none ${
                         variant === 'muted' ? 'text-neutral-900' : 'text-brand-darkRed'
                       }`
                 }

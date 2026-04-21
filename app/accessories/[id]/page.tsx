@@ -52,6 +52,12 @@ export default function AccessoryDetailPage() {
   const { isRTL } = useLanguage()
   const tabbyUrl = useMemo(() => getTabbyCheckoutUrl(), [])
 
+  const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
+  const mainGalleryModules = useMemo(
+    () => (thumbConnected ? [Navigation, Thumbs, Pagination] : [Navigation, Pagination]),
+    [thumbConnected],
+  )
+
   useEffect(() => {
     const a = accessories.find((x) => x.id === aid)
     if (!a) {
@@ -154,6 +160,7 @@ export default function AccessoryDetailPage() {
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
         <div className="mx-auto min-w-0 max-w-[1280px] px-6 lg:px-10">
           <AppBreadcrumb
+            rtl={isRTL}
             segments={[
               { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
               { label: isRTL ? 'الإكسسوارات' : 'Accessories', href: '/accessories' },
@@ -168,13 +175,13 @@ export default function AccessoryDetailPage() {
       </div>
 
       <div className="mx-auto max-w-[1280px] px-6 py-10 lg:px-10 lg:py-12">
-        <div className="isolate grid min-w-0 grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+        <div className="isolate grid min-h-0 min-w-0 grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Image Gallery — mirrors `/shop/[id]` (Royal V-Neck Kaftan); optional third column = detail angles */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className={`relative z-0 w-full min-w-0 overflow-hidden ${hasAngleColumn ? '' : 'lg:max-w-[42rem]'}`}
+            className={`relative z-0 w-full min-h-0 min-w-0 overflow-x-clip ${hasAngleColumn ? '' : 'lg:max-w-[42rem]'}`}
           >
             <div className={`grid gap-3 lg:items-start ${galleryGridClass}`}>
               <div className="hidden lg:block">
@@ -232,9 +239,9 @@ export default function AccessoryDetailPage() {
               </div>
 
               <div className="space-y-3">
-                <div className="relative aspect-[9/16] overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
+                <div className="relative aspect-[9/16] w-full min-h-0 overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
                   <Swiper
-                    modules={[Navigation, Thumbs, Pagination]}
+                    modules={mainGalleryModules}
                     spaceBetween={0}
                     slidesPerView={1}
                     navigation
@@ -245,8 +252,8 @@ export default function AccessoryDetailPage() {
                     onSwiper={(swiper) => {
                       mainSwiperRef.current = swiper
                     }}
-                    thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
-                    className="h-full product-gallery-swiper"
+                    {...(thumbConnected ? { thumbs: { swiper: thumbsSwiper } } : {})}
+                    className="h-full w-full min-h-0 product-gallery-swiper"
                   >
                     {accessory.images.map((image, index) => (
                       <SwiperSlide key={index}>
@@ -395,7 +402,7 @@ export default function AccessoryDetailPage() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className={`pdp-info relative z-[1] min-w-0 bg-white p-4 lg:sticky lg:top-28 lg:self-start lg:p-5 ${isRTL ? 'text-right' : ''}`}
+            className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white p-4 lg:sticky lg:top-28 lg:self-start lg:p-5 ${isRTL ? 'text-right' : ''}`}
           >
             <span className="mb-1.5 block font-montserrat text-[11px] uppercase tracking-[0.24em] text-brand-dustyBlue">
               {isRTL ? categoryInfo?.nameAr : categoryInfo?.name}

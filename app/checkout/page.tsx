@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
+import AppBreadcrumb from '@/components/AppBreadcrumb'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import {
@@ -178,13 +179,15 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-[#faf9f7]">
       <div className="border-b border-brand-stone/20 bg-white">
         <div className="container mx-auto px-6 lg:px-12 py-8 pt-28">
-          <div className={`flex flex-wrap items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/60 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <LocaleLink href="/cart" className="hover:text-brand-dustyBlue transition-colors" data-cursor-hover>
-              {isRTL ? 'السلة' : 'Bag'}
-            </LocaleLink>
-            <span className="text-brand-stone/40">/</span>
-            <span className="text-brand-darkRed">{isRTL ? 'الدفع' : 'Checkout'}</span>
-          </div>
+          <AppBreadcrumb
+            rtl={isRTL}
+            variant="muted"
+            segments={[
+              { label: isRTL ? 'السلة' : 'Bag', href: '/cart' },
+              { label: isRTL ? 'الدفع' : 'Checkout' },
+            ]}
+            className="text-brand-clayRed/70 [&_a]:text-brand-clayRed/70 [&_span:last-child]:text-brand-darkRed"
+          />
           <div className={`mt-6 flex items-start justify-between gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <div>
               <h1 data-document-h1="true" className="font-rozha text-3xl md:text-4xl text-brand-darkRed">

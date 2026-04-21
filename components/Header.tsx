@@ -82,7 +82,7 @@ export default function Header() {
   const navItems = [
     { label: t.nav.collections, href: '/shop' },
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
-    { label: 'About Us', href: '/about' },
+    { label: t.about.title, href: '/about' },
   ]
 
   const megaMenus: Record<
@@ -677,12 +677,14 @@ export default function Header() {
                       <LocaleLink
                         href={item.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="group flex items-center justify-between py-3"
+                        className="group flex min-w-0 items-center justify-between gap-3 py-3"
                         data-cursor-hover
                       >
-                        <span className="font-rozha text-2xl text-white">{item.label}</span>
+                        <span className="min-w-0 flex-1 font-rozha text-2xl uppercase tracking-[0.06em] text-white max-[380px]:text-[clamp(1.125rem,5.5vw,1.5rem)]">
+                          {item.label}
+                        </span>
                         <FiArrowRight
-                          className={`h-5 w-5 text-white/50 transition-all group-hover:translate-x-1 group-hover:text-white ${isRTL ? 'rotate-180' : ''}`}
+                          className={`h-5 w-5 shrink-0 text-white/50 transition-all group-hover:translate-x-1 group-hover:text-white ${isRTL ? 'rotate-180' : ''}`}
                         />
                       </LocaleLink>
                       {mega ? (
@@ -716,10 +718,12 @@ export default function Header() {
                                   key={feature.title}
                                   href={feature.href}
                                   onClick={() => setIsMobileMenuOpen(false)}
-                                  className="rounded border border-white/15 px-2 py-2.5 text-center font-montserrat text-[11px] leading-tight text-white/90 transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                                  className="flex min-h-[3.5rem] items-center justify-center rounded border border-white/15 px-3 py-2.5 text-center font-montserrat text-[11px] leading-snug text-white/90 transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
                                   data-cursor-hover
                                 >
-                                  {feature.title}
+                                  <span className="line-clamp-3 w-full max-w-[12.5rem] text-center text-pretty [text-wrap:balance]">
+                                    {feature.title}
+                                  </span>
                                 </LocaleLink>
                               ))}
                             </div>
@@ -731,8 +735,8 @@ export default function Header() {
                 })}
               </div>
 
-              {/* Footer */}
-              <div className="px-6 pb-8">
+              {/* Footer — safe-area inset so currency/language sit above home indicator / browser chrome */}
+              <div className="border-t border-white/10 px-6 pb-[max(1.75rem,env(safe-area-inset-bottom,0px))] pt-5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-5">
                     <LocaleLink
@@ -767,8 +771,8 @@ export default function Header() {
                     </LocaleLink>
                   </div>
                   <div className="flex items-center gap-3">
-                    <CurrencySwitcher variant="light" showSymbol={false} />
-                    <LanguageSwitcher variant="light" />
+                    <CurrencySwitcher variant="light" showSymbol={false} dropdownPlacement="above" />
+                    <LanguageSwitcher variant="light" dropdownPlacement="above" />
                   </div>
                 </div>
               </div>
