@@ -125,12 +125,12 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
             <div className="p-5 sm:p-6">
               {/* Product Info */}
               <div className={`flex gap-4 mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <div className="relative aspect-[3/4] w-[4.8rem] flex-shrink-0 overflow-hidden rounded-lg bg-[#f5f5f5] sm:w-[5.6rem]">
+                <div className="relative aspect-[9/16] w-[4.8rem] flex-shrink-0 overflow-hidden rounded-lg bg-[#f5f5f5] sm:w-[5.6rem]">
                   <Image
                     src={product.images[0]}
                     alt={product.name}
                     fill
-                    className="object-cover"
+                    className="img-zoom object-cover object-top"
                   />
                 </div>
                 <div className={`flex-1 ${isRTL ? 'text-right' : ''}`}>
@@ -139,7 +139,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                       {product.category}
                     </span>
                   )}
-                  <h3 className="font-rozha text-xl sm:text-2xl text-brand-darkRed mb-2">
+                  <h3 data-product-name="true" className="font-rozha text-xl sm:text-2xl text-brand-darkRed mb-2">
                     {isRTL && product.nameAr ? product.nameAr : product.name}
                   </h3>
                   <p className="font-montserrat text-lg text-brand-darkRed">

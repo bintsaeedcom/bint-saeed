@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const { items, discountCode, customerEmail } = body
+    const { items, discountCode, customerEmail, packagingType } = body
     const discountCodeStr = typeof discountCode === 'string' ? discountCode.trim().slice(0, 64) : ''
 
     if (!Array.isArray(items) || items.length === 0 || items.length > MAX_LINE_ITEMS) {
@@ -84,6 +84,21 @@ export async function POST(request: NextRequest) {
         quantity: qty,
       }
     })
+
+    const packaging = packagingType === 'signature' ? 'signature' : 'sustainable'
+    if (packaging === 'signature') {
+      lineItems.push({
+        price_data: {
+          currency: 'aed',
+          product_data: {
+            name: 'Signature Packaging',
+            description: 'Premium signature shipment box',
+          },
+          unit_amount: 3000,
+        },
+        quantity: 1,
+      })
+    }
 
     // Build checkout session options
     const sessionOptions: Stripe.Checkout.SessionCreateParams = {
@@ -183,6 +198,7 @@ export async function POST(request: NextRequest) {
           }))
         ),
         discountCodeUsed: discountCodeStr,
+        packagingType: packaging,
       },
       // Customer creation for order tracking
       customer_creation: 'always',

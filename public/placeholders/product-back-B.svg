@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1600" viewBox="0 0 900 1600">
+  <rect width="900" height="1600" fill="#f1eeea"/>
+  <rect x="40" y="40" width="820" height="1520" fill="none" stroke="#3b0014" stroke-opacity="0.25" stroke-width="2"/>
+  <text x="50%" y="47%" text-anchor="middle" fill="#3b0014" fill-opacity="0.55" font-family="Montserrat, Arial, sans-serif" font-size="54" letter-spacing="10">BACK VIEW</text>
+  <text x="50%" y="54%" text-anchor="middle" fill="#3b0014" fill-opacity="0.55" font-family="Montserrat, Arial, sans-serif" font-size="84" font-weight="600" letter-spacing="12">-B</text>
+</svg>

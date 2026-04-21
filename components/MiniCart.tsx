@@ -132,7 +132,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                             src={item.image}
                             alt={item.name}
                             fill
-                            className="object-cover"
+                            className="img-zoom object-cover object-top"
                           />
                         </div>
                       </LocaleLink>
@@ -140,7 +140,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                       {/* Details */}
                       <div className={`flex-1 min-w-0 ${isRTL ? 'text-right' : ''}`}>
                         <LocaleLink href={productHref(item)} onClick={onClose} data-cursor-hover>
-                          <h3 className="font-montserrat text-sm font-medium text-brand-darkRed truncate hover:text-brand-dustyBlue transition-colors">
+                          <h3 data-product-name="true" className="font-montserrat text-sm font-medium text-brand-darkRed truncate hover:text-brand-dustyBlue transition-colors">
                             {item.name}
                           </h3>
                         </LocaleLink>
@@ -242,13 +242,13 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                           className="group block"
                           data-cursor-hover
                         >
-                          <div className="relative aspect-[3/4] overflow-hidden rounded-md bg-[#f5f5f5]">
+                          <div className="relative aspect-[9/16] overflow-hidden rounded-md bg-[#f5f5f5]">
                             <Image
                               src={p.images[0]}
                               alt={p.name}
                               fill
                               sizes="124px"
-                              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                              className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
                             />
                           </div>
                           <p className="mt-1.5 line-clamp-2 font-montserrat text-[10px] leading-snug text-brand-darkRed group-hover:text-brand-dustyBlue">

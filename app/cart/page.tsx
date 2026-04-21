@@ -87,12 +87,12 @@ export default function CartPage() {
                 >
                   {/* Image */}
                   <LocaleLink href={productHref(item)} className="flex-shrink-0" data-cursor-hover>
-                    <div className="relative aspect-[3/4] w-[5.6rem] bg-[#f5f5f5] md:w-[7.2rem]">
+                    <div className="relative aspect-[9/16] w-[5.6rem] bg-[#f5f5f5] md:w-[7.2rem]">
                       <Image
                         src={item.image}
                         alt={item.name}
                         fill
-                        className="object-cover"
+                        className="img-zoom object-cover object-top"
                       />
                     </div>
                   </LocaleLink>
@@ -101,7 +101,7 @@ export default function CartPage() {
                   <div className="flex-1 flex flex-col">
                     <div className="flex-1">
                       <LocaleLink href={productHref(item)} data-cursor-hover>
-                        <h3 className="font-rozha text-lg md:text-xl text-brand-darkRed mb-2 hover:text-brand-dustyBlue transition-colors">
+                        <h3 data-product-name="true" className="font-rozha text-lg md:text-xl text-brand-darkRed mb-2 hover:text-brand-dustyBlue transition-colors">
                           {item.name}
                         </h3>
                       </LocaleLink>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -12,6 +13,7 @@ import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
 import MiniCart from './MiniCart'
 import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
+import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 import {
   ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
   ACCESSORY_IMAGE_NECKLACE,
@@ -62,6 +64,7 @@ const mobileMenuGradient =
   'bg-[radial-gradient(ellipse_130%_95%_at_50%_0%,#321922_0%,#2d141e_38%,#1a0f14_72%,#12080b_100%)]'
 
 export default function Header() {
+  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -73,6 +76,8 @@ export default function Header() {
   const cartItems = useCartStore((state) => state.items)
   const wishlistCount = useWishlistStore((state) => state.items.length)
   const { t, isRTL } = useLanguage()
+  const innerPath = stripLocaleFromPathname(pathname ?? '/').pathname
+  const disableHomeLogoNavigation = innerPath === '/comingsoon'
 
   const navItems = [
     { label: t.nav.collections, href: '/shop' },
@@ -261,34 +266,64 @@ export default function Header() {
 
             {/* Center logo in normal flow below 2xl — as large as row allows without crowding controls */}
             <div className="flex min-w-0 flex-1 justify-center px-1 sm:px-2 2xl:hidden">
-              <LocaleLink href="/home" className="block max-w-[min(520px,calc(100vw-10.5rem))] sm:max-w-[min(560px,calc(100vw-13rem))] xl:max-w-[min(600px,calc(100vw-28rem))]" data-cursor-hover>
-                <Image
-                  src="/logo.png"
-                  alt="Bint Saeed"
-                  width={640}
-                  height={168}
-                  className="h-[clamp(2.25rem,7vw,3.75rem)] w-auto max-h-[60px] sm:max-h-[68px] md:h-[clamp(2.5rem,6.5vw,4rem)] md:max-h-[76px] xl:max-h-[84px]"
-                  priority
-                />
-              </LocaleLink>
+              {disableHomeLogoNavigation ? (
+                <div className="block max-w-[min(520px,calc(100vw-10.5rem))] sm:max-w-[min(560px,calc(100vw-13rem))] xl:max-w-[min(600px,calc(100vw-28rem))]">
+                  <Image
+                    src="/logo.png"
+                    alt="Bint Saeed"
+                    width={640}
+                    height={168}
+                    className="h-[clamp(2.25rem,7vw,3.75rem)] w-auto max-h-[60px] sm:max-h-[68px] md:h-[clamp(2.5rem,6.5vw,4rem)] md:max-h-[76px] xl:max-h-[84px]"
+                    priority
+                  />
+                </div>
+              ) : (
+                <LocaleLink href="/home" className="block max-w-[min(520px,calc(100vw-10.5rem))] sm:max-w-[min(560px,calc(100vw-13rem))] xl:max-w-[min(600px,calc(100vw-28rem))]" data-cursor-hover>
+                  <Image
+                    src="/logo.png"
+                    alt="Bint Saeed"
+                    width={640}
+                    height={168}
+                    className="h-[clamp(2.25rem,7vw,3.75rem)] w-auto max-h-[60px] sm:max-h-[68px] md:h-[clamp(2.5rem,6.5vw,4rem)] md:max-h-[76px] xl:max-h-[84px]"
+                    priority
+                  />
+                </LocaleLink>
+              )}
             </div>
 
             {/* Center: Logo — keep z below nav (61) so Collections / Accessories links stay tappable */}
             <div className="pointer-events-auto absolute left-1/2 top-1/2 z-[58] hidden w-max max-w-[min(720px,calc(100vw-32rem))] -translate-x-1/2 -translate-y-1/2 shrink-0 2xl:block">
-              <LocaleLink href="/home" className="block" data-cursor-hover>
-                <Image
-                  src="/logo.png"
-                  alt="Bint Saeed"
-                  width={720}
-                  height={188}
-                  className={`pointer-events-none w-auto max-w-[min(720px,calc(100vw-32rem))] transition-all duration-300 ${
-                    isScrolled
-                      ? 'h-[clamp(3rem,4.2vw,4.5rem)] max-h-[72px]'
-                      : 'h-[clamp(3.35rem,5vw,5.75rem)] max-h-[92px]'
-                  }`}
-                  priority
-                />
-              </LocaleLink>
+              {disableHomeLogoNavigation ? (
+                <div className="block">
+                  <Image
+                    src="/logo.png"
+                    alt="Bint Saeed"
+                    width={720}
+                    height={188}
+                    className={`pointer-events-none w-auto max-w-[min(720px,calc(100vw-32rem))] transition-all duration-300 ${
+                      isScrolled
+                        ? 'h-[clamp(3rem,4.2vw,4.5rem)] max-h-[72px]'
+                        : 'h-[clamp(3.35rem,5vw,5.75rem)] max-h-[92px]'
+                    }`}
+                    priority
+                  />
+                </div>
+              ) : (
+                <LocaleLink href="/home" className="block" data-cursor-hover>
+                  <Image
+                    src="/logo.png"
+                    alt="Bint Saeed"
+                    width={720}
+                    height={188}
+                    className={`pointer-events-none w-auto max-w-[min(720px,calc(100vw-32rem))] transition-all duration-300 ${
+                      isScrolled
+                        ? 'h-[clamp(3rem,4.2vw,4.5rem)] max-h-[72px]'
+                        : 'h-[clamp(3.35rem,5vw,5.75rem)] max-h-[92px]'
+                    }`}
+                    priority
+                  />
+                </LocaleLink>
+              )}
             </div>
 
             {/* Right: Full utilities when horizontal nav is visible */}
@@ -596,15 +631,27 @@ export default function Header() {
             <div className="h-full flex flex-col">
               {/* Header */}
               <div className="flex items-center justify-between px-6 py-5">
-                <LocaleLink href="/home" onClick={() => setIsMobileMenuOpen(false)} className="block max-w-[min(420px,78vw)]">
-                  <Image
-                    src="/logo.png"
-                    alt="Bint Saeed"
-                    width={520}
-                    height={136}
-                    className="h-[clamp(3.25rem,12vw,5.5rem)] w-auto max-h-[88px]"
-                  />
-                </LocaleLink>
+                {disableHomeLogoNavigation ? (
+                  <div className="block max-w-[min(420px,78vw)]">
+                    <Image
+                      src="/logo.png"
+                      alt="Bint Saeed"
+                      width={520}
+                      height={136}
+                      className="h-[clamp(3.25rem,12vw,5.5rem)] w-auto max-h-[88px]"
+                    />
+                  </div>
+                ) : (
+                  <LocaleLink href="/home" onClick={() => setIsMobileMenuOpen(false)} className="block max-w-[min(420px,78vw)]">
+                    <Image
+                      src="/logo.png"
+                      alt="Bint Saeed"
+                      width={520}
+                      height={136}
+                      className="h-[clamp(3.25rem,12vw,5.5rem)] w-auto max-h-[88px]"
+                    />
+                  </LocaleLink>
+                )}
                 <button
                   type="button"
                   onClick={() => setIsMobileMenuOpen(false)}

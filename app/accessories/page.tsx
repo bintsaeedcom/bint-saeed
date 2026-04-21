@@ -319,12 +319,12 @@ export default function AccessoriesPage() {
               className={`flex flex-col gap-10 lg:gap-14 lg:items-start ${isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
             >
               <div className="relative w-full lg:w-[44%] lg:max-w-[520px] shrink-0 lg:sticky lg:top-28">
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-brand-stone/15 md:aspect-[4/5] lg:min-h-[min(920px,78vh)] lg:aspect-auto">
+                <div className="relative aspect-[9/16] w-full overflow-hidden bg-brand-stone/15 md:aspect-[9/16] lg:min-h-[min(920px,78vh)] lg:aspect-auto">
                   <Image
                     src={ACCESSORY_IMAGE_ABAYA_CHARMS_HERO}
                     alt={isRTL ? 'تعليقات العباءة' : 'Abaya charms'}
                     fill
-                    className="object-cover"
+                    className="img-zoom object-cover object-top"
                     sizes="(max-width: 1024px) 100vw, 44vw"
                     priority
                   />
@@ -531,12 +531,12 @@ function AccessoryCard({
           onMouseLeave={() => setHoveredProduct(null)}
         >
           {/* Image Container */}
-          <div className="relative aspect-square overflow-hidden bg-[#f5f5f5] mb-4">
+          <div className="relative aspect-[9/16] overflow-hidden bg-[#f5f5f5] mb-4">
             <Image
               src={accessory.images[0]}
               alt={isRTL ? accessory.nameAr : accessory.name}
               fill
-              className="pointer-events-none object-cover transition-all duration-700 group-hover:scale-105"
+              className="pointer-events-none img-zoom object-cover object-top transition-all duration-700 group-hover:scale-105"
             />
             
             {/* Quick Actions — above stretch link / quick bar */}

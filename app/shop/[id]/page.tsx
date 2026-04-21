@@ -32,6 +32,10 @@ import 'swiper/css/thumbs'
 import 'swiper/css/pagination'
 
 const SPECIAL_NOTES_MAX_CHARS = 150
+const MANUAL_PAIRINGS: Record<string, string[]> = {
+  'khous-jacket-abaya': ['khous-signature-midi-dress'],
+  'khous-signature-midi-dress': ['khous-jacket-abaya'],
+}
 
 export default function ProductPage() {
   const params = useParams()
@@ -100,9 +104,15 @@ export default function ProductPage() {
   const relatedStyles = useMemo(
     () =>
       product
-        ? staticProducts
-            .filter((p) => p.id !== product.id && p.category === product.category)
-            .slice(0, 3)
+        ? (() => {
+            const manualPairSlugs = MANUAL_PAIRINGS[product.slug]
+            if (manualPairSlugs) {
+              return staticProducts.filter((p) => manualPairSlugs.includes(p.slug))
+            }
+            return staticProducts
+              .filter((p) => p.id !== product.id && p.category === product.category)
+              .slice(0, 3)
+          })()
         : [],
     [product],
   )
@@ -152,6 +162,17 @@ export default function ProductPage() {
     )
   }, [product.colors, product.id])
 
+  const activeImages = useMemo(() => {
+    const variantImages = product.colorImages?.[selectedColor]
+    if (variantImages && variantImages.length > 0) return variantImages
+    return product.images
+  }, [product.colorImages, product.images, selectedColor])
+
+  useEffect(() => {
+    if (!activeImages.length) return
+    setLightboxIndex((current) => Math.min(current, activeImages.length - 1))
+  }, [activeImages])
+
   const personalisationSurcharge =
     customisationActive && customisationMessage.trim().length > 0 ? CUSTOMISATION_SURCHARGE_AED : 0
   const displayUnitAed = product.price + personalisationSurcharge
@@ -180,7 +201,7 @@ export default function ProductPage() {
       productUrl: getProductHref(product),
       name: product.name,
       price: product.price,
-      image: product.images[0],
+      image: activeImages[0] ?? product.images[0],
       size: selectedSize,
       color: selectedColor,
       quantity,
@@ -203,7 +224,7 @@ export default function ProductPage() {
       id: product.id,
       name: product.name,
       price: product.price,
-      image: product.images[0] ?? '',
+      image: activeImages[0] ?? product.images[0] ?? '',
       category: product.category,
       href: getProductHref(product),
     })
@@ -254,11 +275,11 @@ export default function ProductPage() {
                   touchStartPreventDefault={false}
                   className="product-gallery-thumbs !h-[44rem] !overflow-visible"
                 >
-                  {product.images.map((image, index) => (
+                  {activeImages.map((image, index) => (
                     <SwiperSlide key={index} className="!h-auto">
                       <button
                         type="button"
-                        className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
+                        className="group relative block aspect-[9/16] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                         onClick={() => mainSwiperRef.current?.slideTo(index)}
                         aria-label={`Show image ${index + 1}`}
                         data-cursor-hover
@@ -269,13 +290,13 @@ export default function ProductPage() {
                             muted
                             playsInline
                             preload="metadata"
-                            className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                            className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                           />
                         ) : isHeicFile(image) ? (
                           <img
                             src={image}
                             alt=""
-                            className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                            className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             loading="lazy"
                           />
                         ) : (
@@ -284,7 +305,7 @@ export default function ProductPage() {
                             alt=""
                             fill
                             sizes="76px"
-                            className="object-cover transition-opacity group-hover:opacity-80"
+                            className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                           />
                         )}
                       </button>
@@ -295,7 +316,7 @@ export default function ProductPage() {
 
               {/* Main Image */}
               <div className="space-y-3">
-                <div className="relative aspect-[3/4] overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
+                <div className="relative aspect-[9/16] overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
                   <Swiper
                     modules={[Navigation, Thumbs, Pagination]}
                     spaceBetween={0}
@@ -311,7 +332,7 @@ export default function ProductPage() {
                     thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
                     className="h-full product-gallery-swiper"
                   >
-                    {product.images.map((image, index) => (
+                    {activeImages.map((image, index) => (
                       <SwiperSlide key={index}>
                         <div
                           className={`relative h-full w-full ${isVideoFile(image) ? 'cursor-default' : 'cursor-zoom-in'}`}
@@ -342,13 +363,13 @@ export default function ProductPage() {
                               controls
                               playsInline
                               preload="metadata"
-                              className="h-full w-full object-cover"
+                              className="h-full w-full img-zoom object-cover object-top"
                             />
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
                               alt={`${product.name} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
-                              className="h-full w-full object-cover"
+                              className="h-full w-full img-zoom object-cover object-top"
                               loading={index === 0 ? 'eager' : 'lazy'}
                             />
                           ) : (
@@ -357,7 +378,7 @@ export default function ProductPage() {
                               alt={`${product.name} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
                               fill
                               sizes="(max-width: 768px) 100vw, 40vw"
-                              className="object-cover"
+                              className="img-zoom object-cover object-top"
                               priority={index === 0}
                             />
                           )}
@@ -382,11 +403,11 @@ export default function ProductPage() {
                     touchStartPreventDefault={false}
                     className="product-gallery-thumbs !overflow-visible"
                   >
-                    {product.images.map((image, index) => (
+                    {activeImages.map((image, index) => (
                       <SwiperSlide key={index} className="!h-auto">
                         <button
                           type="button"
-                          className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
+                          className="group relative block aspect-[9/16] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                           onClick={() => mainSwiperRef.current?.slideTo(index)}
                           aria-label={`Show image ${index + 1}`}
                           data-cursor-hover
@@ -397,13 +418,13 @@ export default function ProductPage() {
                               muted
                               playsInline
                               preload="metadata"
-                              className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                              className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             />
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
                               alt=""
-                              className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                              className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                               loading="lazy"
                             />
                           ) : (
@@ -412,7 +433,7 @@ export default function ProductPage() {
                               alt=""
                               fill
                               sizes="120px"
-                              className="object-cover transition-opacity group-hover:opacity-80"
+                              className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             />
                           )}
                         </button>
@@ -840,13 +861,13 @@ export default function ProductPage() {
                       className="group relative z-20 block pointer-events-auto"
                       data-cursor-hover
                     >
-                      <div className="relative z-20 aspect-[3/4] overflow-hidden bg-brand-stone/10">
+                      <div className="relative z-20 aspect-[9/16] overflow-hidden bg-brand-stone/10">
                         <Image
                           src={item.images[0]}
                           alt={item.name}
                           fill
                           sizes="(max-width: 768px) 50vw, 22vw"
-                          className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                          className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                       </div>
                       <div className="mt-3 flex items-center justify-between gap-3">
@@ -885,7 +906,7 @@ export default function ProductPage() {
             </button>
             <div className="relative m-4 h-full w-full max-h-[72vh] max-w-[51.2rem]">
               <Image
-                src={product.images[lightboxIndex]}
+                src={activeImages[lightboxIndex] ?? product.images[0]}
                 alt={product.name}
                 fill
                 className="object-contain"

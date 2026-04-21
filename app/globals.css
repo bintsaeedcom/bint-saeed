@@ -98,6 +98,24 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
 
+/* Keep document page titles visually consistent across routes. */
+[data-document-h1="true"] {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Keep secondary headings visually aligned across pages. */
+h2, h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Reusable hook for product-name typography in non-heading elements. */
+[data-product-name="true"] {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 p, span, a, li, label, input, textarea, button {
   font-family: var(--font-montserrat);
   letter-spacing: 0.05em;
@@ -260,15 +278,26 @@ button:focus-visible {
   width: 100%;
 }
 
-/* Swiper Customization */
-.swiper-button-next,
-.swiper-button-prev {
-  color: var(--brand-dark-red) !important;
-  width: 44px !important;
-  height: 44px !important;
-  background: white !important;
-  border-radius: 0 !important;
+/* Product gallery arrows — subtle, elegant, still visible */
+.product-gallery-swiper .swiper-button-next,
+.product-gallery-swiper .swiper-button-prev {
+  color: rgba(59, 0, 20, 0.72) !important;
+  width: 38px !important;
+  height: 38px !important;
+  background: rgba(255, 255, 255, 0.84) !important;
+  border: 1px solid rgba(59, 0, 20, 0.12) !important;
+  border-radius: 999px !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   z-index: 20 !important;
+  transition: all 0.25s ease;
+}
+
+.product-gallery-swiper .swiper-button-next:hover,
+.product-gallery-swiper .swiper-button-prev:hover {
+  color: rgba(59, 0, 20, 0.92) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(59, 0, 20, 0.24) !important;
 }
 
 .product-gallery-swiper .swiper-pagination {
@@ -285,10 +314,10 @@ button:focus-visible {
   opacity: 1 !important;
 }
 
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 16px !important;
-  font-weight: bold;
+.product-gallery-swiper .swiper-button-next::after,
+.product-gallery-swiper .swiper-button-prev::after {
+  font-size: 13px !important;
+  font-weight: 500;
 }
 
 .swiper-pagination-bullet {
@@ -647,15 +676,15 @@ input, textarea, select {
 
 /* Swiper responsive */
 @media (max-width: 640px) {
-  .swiper-button-next,
-  .swiper-button-prev {
-    width: 36px !important;
-    height: 36px !important;
+  .product-gallery-swiper .swiper-button-next,
+  .product-gallery-swiper .swiper-button-prev {
+    width: 32px !important;
+    height: 32px !important;
   }
   
-  .swiper-button-next::after,
-  .swiper-button-prev::after {
-    font-size: 12px !important;
+  .product-gallery-swiper .swiper-button-next::after,
+  .product-gallery-swiper .swiper-button-prev::after {
+    font-size: 11px !important;
   }
 }
 

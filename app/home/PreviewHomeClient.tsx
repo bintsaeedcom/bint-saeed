@@ -312,13 +312,15 @@ export default function Home() {
 }
 
 function CampaignPanoramaSection() {
+  const { isRTL } = useLanguage()
+
   return (
     <section className="relative w-full overflow-hidden bg-[#f6f2eb] py-0">
       <SectionStripes variant="soft" />
       <div className="relative w-full">
         <div className="relative aspect-[16/6] min-h-[220px] w-full overflow-hidden bg-brand-stone/15 md:min-h-[280px] lg:min-h-[360px]">
           <Image
-            src="/hero-bintsaeed.jpg"
+            src="/gazelles.jpg"
             alt="Bint Saeed campaign panorama"
             fill
             sizes="100vw"
@@ -326,6 +328,20 @@ function CampaignPanoramaSection() {
             priority={false}
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#12080b]/22 via-transparent to-[#12080b]/16" />
+          <div className={`absolute bottom-6 z-[2] ${isRTL ? 'left-6 md:left-10 lg:left-14' : 'right-6 md:right-10 lg:right-14'}`}>
+            <MagneticWrap>
+              <LocaleLink
+                href="/shop"
+                className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
+                data-cursor-hover
+              >
+                Shop Now
+                <FiArrowRight
+                  className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
+                />
+              </LocaleLink>
+            </MagneticWrap>
+          </div>
         </div>
       </div>
     </section>
@@ -492,7 +508,7 @@ function HeroSection() {
       {/* Background — pointer-events-none so scaled layer never steals clicks from hero links */}
       <motion.div style={{ scale }} className="pointer-events-none absolute inset-0 overflow-hidden">
         <Image
-          src="/hero-bintsaeed.jpg"
+          src="/Hero image.jpg"
           alt="Bint Saeed"
           fill
           className="object-cover object-[center_28%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97]"
@@ -896,7 +912,7 @@ function ColorBlockSection() {
 const CODES_LIST_ITEMS = [
   'Al Talli.',
   'Khous.',
-  'Carnelian.',
+  'Al Quaa Rosette.',
   'Knotted lines of lineage.',
   'The monogram.',
 ] as const
@@ -1064,21 +1080,22 @@ function CreatedForYouSection() {
             className={`flex justify-center ${isRTL ? 'lg:order-2' : 'lg:order-1'}`}
           >
             <div className="relative w-full max-w-xl lg:max-w-[36rem]">
-              <div className="pointer-events-none absolute -inset-[1px] bg-gradient-to-b from-brand-dustyBlue/40 via-transparent to-brand-dustyBlue/22" />
-              <div className="relative overflow-hidden border border-white/22 bg-[#1a0008]/52 shadow-[0_24px_66px_rgba(26,0,8,0.24)] ring-1 ring-white/10 backdrop-blur-xl backdrop-saturate-150">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.14] via-transparent to-brand-dustyBlue/[0.14]" />
-                <div className="pointer-events-none absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-brand-dustyBlue/25 via-brand-dustyBlue/85 to-brand-dustyBlue/20" />
+              <div className="pointer-events-none absolute -left-3 -top-3 h-[44%] w-[46%] border border-brand-dustyBlue/25" />
+              <div className="pointer-events-none absolute -bottom-3 -right-3 h-[36%] w-[44%] border border-brand-stone/35" />
+              <div className="relative overflow-hidden border border-[#d8d1c6] bg-[#f8f5ef]/96 shadow-[0_20px_56px_rgba(18,8,11,0.14)] ring-1 ring-white/70">
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.7)_0%,rgba(243,238,228,0.86)_48%,rgba(233,226,213,0.82)_100%)]" />
+                <div className="pointer-events-none absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-brand-dustyBlue/28 via-brand-dustyBlue/65 to-brand-dustyBlue/22" />
                 <div
                   className={`relative flex flex-col gap-8 px-10 py-12 text-center sm:px-12 md:py-14 ${isRTL ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'}`}
                 >
-                  <span className="font-montserrat text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/80">
+                  <span className="font-montserrat text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/75">
                     Bint Saeed
                   </span>
-                  <h2 className="font-rozha text-3xl text-balance text-white tracking-[-0.02em] drop-shadow-[0_1px_24px_rgba(0,0,0,0.35)] sm:text-4xl md:text-[2.35rem] md:leading-[1.12]">
+                  <h2 className="font-rozha text-3xl text-balance text-brand-darkRed tracking-[-0.02em] sm:text-4xl md:text-[2.35rem] md:leading-[1.12]">
                     Created for you
                   </h2>
                   <p
-                    className={`mx-auto max-w-md font-montserrat text-sm leading-[1.9] tracking-wide text-white/75 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
+                    className={`mx-auto max-w-md font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/80 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
                   >
                     Each piece is created with care, produced in limited quantities, and available through a guided
                     experience.
@@ -1087,13 +1104,13 @@ function CreatedForYouSection() {
                     <MagneticWrap className={isRTL ? 'lg:self-end' : 'lg:self-start'}>
                       <LocaleLink
                         href="/contact"
-                        className="inline-flex items-center justify-center border border-brand-dustyBlue/70 bg-brand-dustyBlue px-8 py-4 font-montserrat text-xs uppercase tracking-[0.18em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone"
+                        className="inline-flex items-center justify-center border border-brand-dustyBlue/60 bg-brand-dustyBlue px-8 py-4 font-montserrat text-xs uppercase tracking-[0.18em] text-[#1a0008] shadow-[0_10px_24px_rgba(146,170,193,0.38)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-brand-stone"
                         data-cursor-hover
                       >
                         Request Your Piece
                       </LocaleLink>
                     </MagneticWrap>
-                    <p className="font-montserrat text-[11px] uppercase tracking-[0.22em] text-brand-dustyBlue/85">
+                    <p className="font-montserrat text-[11px] uppercase tracking-[0.22em] text-brand-dustyBlue/75">
                       Available worldwide. Based in Abu\u00A0Dhabi.
                     </p>
                   </div>
@@ -1110,6 +1127,7 @@ function CreatedForYouSection() {
             className={`flex justify-center ${isRTL ? 'lg:order-1' : 'lg:order-2'}`}
           >
             <div className="relative w-full max-w-xl lg:max-w-[36rem]">
+              <div className="pointer-events-none absolute inset-x-8 -bottom-6 h-16 bg-[#b9b0a2]/28 blur-2xl" />
               <motion.div style={{ scale: imageScale }} className="relative aspect-[3/4] w-full">
                 <ScrollMaskImage
                   src="/collection-section/4.JPG"
@@ -1117,8 +1135,9 @@ function CreatedForYouSection() {
                   sizes="(max-width: 1024px) 90vw, 36rem"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a0008]/25 via-transparent to-transparent" />
+                <div className="pointer-events-none absolute inset-3 border border-white/38" />
                 <div className="pointer-events-none absolute -top-4 -right-4 h-full w-full border border-brand-dustyBlue/42" />
-                <div className="pointer-events-none absolute -bottom-4 -left-4 h-full w-full border border-white/45" />
+                <div className="pointer-events-none absolute -bottom-4 -left-4 h-full w-full border border-white/55" />
               </motion.div>
             </div>
           </motion.div>

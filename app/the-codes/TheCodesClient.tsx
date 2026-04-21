@@ -1,12 +1,130 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
-import { FiArrowDown } from 'react-icons/fi'
+import { FiArrowDown, FiArrowLeft } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+
+/** Matches `/home` editorial framing — dusty blue corner brackets */
+function DecorativeCorners({ color = 'dustyBlue' }: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
+  const colorClass =
+    color === 'dustyBlue'
+      ? 'from-brand-dustyBlue/40'
+      : color === 'darkRed'
+        ? 'from-brand-darkRed/30'
+        : 'from-brand-stone/40'
+
+  return (
+    <>
+      <motion.div
+        className="pointer-events-none absolute left-6 top-6 h-14 w-14 md:left-10 md:top-10 md:h-20 md:w-20"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+      >
+        <div className={`absolute left-0 top-0 h-full w-px bg-gradient-to-b ${colorClass} to-transparent`} />
+        <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r ${colorClass} to-transparent`} />
+      </motion.div>
+      <motion.div
+        className="pointer-events-none absolute right-6 top-6 h-14 w-14 md:right-10 md:top-10 md:h-20 md:w-20"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.1 }}
+      >
+        <div className={`absolute right-0 top-0 h-full w-px bg-gradient-to-b ${colorClass} to-transparent`} />
+        <div className={`absolute right-0 top-0 h-px w-full bg-gradient-to-l ${colorClass} to-transparent`} />
+      </motion.div>
+      <motion.div
+        className="pointer-events-none absolute bottom-6 left-6 h-14 w-14 md:bottom-10 md:left-10 md:h-20 md:w-20"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.2 }}
+      >
+        <div className={`absolute bottom-0 left-0 h-full w-px bg-gradient-to-t ${colorClass} to-transparent`} />
+        <div className={`absolute bottom-0 left-0 h-px w-full bg-gradient-to-r ${colorClass} to-transparent`} />
+      </motion.div>
+      <motion.div
+        className="pointer-events-none absolute bottom-6 right-6 h-14 w-14 md:bottom-10 md:right-10 md:h-20 md:w-20"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.3 }}
+      >
+        <div className={`absolute bottom-0 right-0 h-full w-px bg-gradient-to-t ${colorClass} to-transparent`} />
+        <div className={`absolute bottom-0 right-0 h-px w-full bg-gradient-to-l ${colorClass} to-transparent`} />
+      </motion.div>
+    </>
+  )
+}
+
+/** Vertical system lines + horizontal rules — same variants as `/home` */
+function SectionStripes({ variant = 'default' }: { variant?: 'default' | 'hero' | 'soft' | 'bold' }) {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const driftA = useTransform(scrollYProgress, [0, 1], [0, 10])
+  const driftB = useTransform(scrollYProgress, [0, 1], [0, -8])
+  const pulse = useTransform(scrollYProgress, [0, 0.5, 1], [0.78, 1, 0.8])
+
+  const styles =
+    variant === 'hero'
+      ? {
+          v1: 'left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent',
+          v2: 'right-[7%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/45 to-transparent',
+          h1: 'left-10 right-10 top-16 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent',
+          h2: 'left-10 right-10 bottom-14 h-px bg-gradient-to-r from-transparent via-white/22 to-transparent',
+        }
+      : variant === 'soft'
+        ? {
+            v1: 'left-[7%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/30 to-transparent',
+            v2: 'right-[8%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-clayRed/25 to-transparent',
+            h1: 'left-[8%] right-[8%] top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent',
+            h2: 'left-[8%] right-[8%] bottom-0 h-px bg-gradient-to-r from-transparent via-brand-clayRed/20 to-transparent',
+          }
+        : variant === 'bold'
+          ? {
+              v1: 'left-[5%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/55 to-transparent',
+              v2: 'right-[5%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/40 to-transparent',
+              h1: 'left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/45 to-transparent',
+              h2: 'left-6 right-6 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/35 to-transparent',
+            }
+          : {
+              v1: 'left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/36 to-transparent',
+              v2: 'right-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-stone/35 to-transparent',
+              h1: 'left-[7%] right-[7%] top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent',
+              h2: 'left-[7%] right-[7%] bottom-0 h-px bg-gradient-to-r from-transparent via-brand-stone/26 to-transparent',
+            }
+
+  return (
+    <div ref={ref} className="pointer-events-none absolute inset-0" aria-hidden>
+      <motion.div
+        style={reduceMotion ? undefined : { y: driftA, opacity: pulse }}
+        className={`absolute ${styles.v1}`}
+      />
+      <motion.div
+        style={reduceMotion ? undefined : { y: driftB, opacity: pulse }}
+        className={`absolute ${styles.v2}`}
+      />
+      <motion.div
+        style={reduceMotion ? undefined : { x: driftA, opacity: pulse }}
+        className={`absolute ${styles.h1}`}
+      />
+      <motion.div
+        style={reduceMotion ? undefined : { x: driftB, opacity: pulse }}
+        className={`absolute ${styles.h2}`}
+      />
+    </div>
+  )
+}
 
 type CodeSection = {
   id: string
@@ -18,17 +136,22 @@ type CodeSection = {
   imageAlt: string
 }
 
+/** Public folder `The Codes Page/` — encode spaces for Next/Image `src`. */
+function codesPageImage(fileName: string) {
+  const dir = 'The Codes Page'
+  return `/${encodeURIComponent(dir)}/${encodeURIComponent(fileName)}`
+}
+
 const SECTIONS: CodeSection[] = [
   {
-    id: 'the-codes',
-    eyebrow: 'House language',
-    title: 'The Codes',
+    id: 'the-monogram',
+    eyebrow: 'Mark of the house',
+    title: 'The monogram',
     paragraphs: [
-      'This page gathers the visual and symbolic language of Bint Saeed — the motifs, materials, and gestures that repeat across the collection. Each block below is reserved for your final editorial copy and imagery.',
-      'Use the anchors in the navigation menu to jump directly to the code you are shaping for launch.',
+      'Reserved for the monogram — construction, scale rules, metal and thread applications, and where it should appear subtly versus emphatically.',
     ],
-    imageSrc: '/collection-section/67.png',
-    imageAlt: 'The Codes — editorial placeholder',
+    imageSrc: codesPageImage('monogram.jpg'),
+    imageAlt: 'The monogram — house code',
   },
   {
     id: 'al-talli',
@@ -37,8 +160,8 @@ const SECTIONS: CodeSection[] = [
     paragraphs: [
       'Reserved for the story of Talli in the house — technique, symbolism, and how it appears in the line. Pair this text with your chosen campaign or macro still.',
     ],
-    imageSrc: '/collection-section/2.PNG',
-    imageAlt: 'Al Talli — image placeholder',
+    imageSrc: codesPageImage('Talli.jpg'),
+    imageAlt: 'Al Talli — house code',
   },
   {
     id: 'khous',
@@ -47,18 +170,18 @@ const SECTIONS: CodeSection[] = [
     paragraphs: [
       'Reserved for Khous — palm frond craft, structure, and the way it informs silhouettes and details. Drop in process photography or object studies when available.',
     ],
-    imageSrc: '/collection-section/3.JPG',
-    imageAlt: 'Khous — image placeholder',
+    imageSrc: codesPageImage('khous.jpg'),
+    imageAlt: 'Khous — house code',
   },
   {
-    id: 'carnelian-flower',
+    id: 'al-quaa-rosette',
     eyebrow: 'Motif',
-    title: 'Carnelian flower',
+    title: 'Al Quaa Rosette',
     paragraphs: [
-      'Reserved for the Carnelian flower code — meaning, recurrence in the collection, and how it should be read at a glance on product and packaging.',
+      'Reserved for the Al Quaa Rosette code — meaning, recurrence in the collection, and how it should be read at a glance on product and packaging.',
     ],
-    imageSrc: '/collection-section/4.JPG',
-    imageAlt: 'Carnelian flower — image placeholder',
+    imageSrc: codesPageImage('Al Quaa Rosette.jpg'),
+    imageAlt: 'Al Quaa Rosette — house code',
   },
   {
     id: 'knotted-lines-of-lineage',
@@ -67,20 +190,57 @@ const SECTIONS: CodeSection[] = [
     paragraphs: [
       'Reserved for lineage as a drawn and embroidered language — knots, lines, and continuity between generations. Rich imagery works well full-bleed here.',
     ],
-    imageSrc: '/image 1.png',
-    imageAlt: 'Knotted lines of lineage — image placeholder',
-  },
-  {
-    id: 'the-monogram',
-    eyebrow: 'Mark of the house',
-    title: 'The monogram',
-    paragraphs: [
-      'Reserved for the monogram — construction, scale rules, metal and thread applications, and where it should appear subtly versus emphatically.',
-    ],
-    imageSrc: '/collection-section/68.png',
-    imageAlt: 'The monogram — image placeholder',
+    imageSrc: codesPageImage('Knotted Lines Of Lineage.jpg'),
+    imageAlt: 'Knotted lines of lineage — house code',
   },
 ]
+
+/** Portrait block: subtle vertical parallax + slight scale so edges stay covered */
+function ParallaxFramedImage({
+  invert,
+  imageSrc,
+  imageAlt,
+  priority,
+  outerClassName,
+  clipFrameClassName,
+}: {
+  invert: boolean
+  imageSrc: string
+  imageAlt: string
+  priority: boolean
+  outerClassName: string
+  clipFrameClassName: string
+}) {
+  const clipRef = useRef<HTMLDivElement>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: clipRef,
+    offset: ['start end', 'end start'],
+  })
+  const y = useTransform(scrollYProgress, [0, 1], invert ? [36, -44] : [-28, 40])
+  const scale = useTransform(scrollYProgress, [0, 1], [1.06, 1.12])
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-10%' }}
+      transition={{ duration: 0.6, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+      className={outerClassName}
+    >
+      <div ref={clipRef} className={`relative aspect-[4/5] w-full max-w-xl overflow-hidden shadow-[0_22px_56px_rgba(20,8,11,0.12)] ring-1 ring-brand-dustyBlue/25 lg:aspect-[3/4] ${clipFrameClassName}`}>
+        <motion.div
+          style={reduceMotion ? undefined : { y, scale }}
+          className="absolute inset-0 will-change-transform"
+        >
+          <Image src={imageSrc} alt={imageAlt} fill className="object-cover" sizes="(min-width: 1024px) 42vw, 92vw" priority={priority} />
+        </motion.div>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a0f14]/25 via-transparent to-[#f6f3ef]/10" />
+        <div className="pointer-events-none absolute inset-3 border border-white/35" />
+      </div>
+    </motion.div>
+  )
+}
 
 function scrollToHash(hash: string) {
   if (!hash || hash === '#') return
@@ -111,79 +271,122 @@ export default function TheCodesClient() {
 
   return (
     <main
-      className={`relative overflow-x-hidden bg-[linear-gradient(180deg,#f6f3ef_0%,#efeae3_38%,#e8e2d8_100%)] pt-28 pb-8 md:pt-32 md:pb-16 ${isRTL ? 'rtl' : 'ltr'}`}
+      className={`relative min-h-screen overflow-x-hidden bg-[linear-gradient(180deg,#f6f3ef_0%,#efeae3_38%,#e8e2d8_100%)] pb-8 md:pb-16 ${isRTL ? 'rtl' : 'ltr'}`}
     >
+      <SectionStripes variant="soft" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_10%_-10%,rgba(146,170,193,0.22)_0%,transparent_55%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_92%_30%,rgba(193,144,134,0.12)_0%,transparent_50%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
 
-      <header className="relative container mx-auto max-w-4xl px-6 pb-16 text-center md:pb-20 lg:px-12">
-        <motion.span
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
-          className="mb-5 block font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/80"
-        >
-          Bint Saeed
-        </motion.span>
-        <motion.h1
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          data-document-h1="true"
-          className="font-rozha text-[2.35rem] leading-[1.05] text-brand-darkRed sm:text-5xl md:text-6xl"
-        >
-          The Codes
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.12 }}
-          className="mx-auto mt-6 max-w-2xl font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/72"
-        >
-          A single scroll through the house symbols — each section is framed for long-form copy and a hero visual.
-        </motion.p>
+      <header className="relative h-[50vh] overflow-hidden bg-brand-darkRed md:h-[60vh]">
+        <SectionStripes variant="hero" />
+        <Image
+          src={codesPageImage('2.PNG')}
+          alt="The Codes — hero"
+          fill
+          className="object-cover opacity-40"
+          priority
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/50 to-transparent" />
+        <DecorativeCorners color="dustyBlue" />
+        <div className="relative z-10 flex h-full flex-col justify-end pb-16 md:pb-20">
+          <div className="container mx-auto px-6 lg:px-12">
+            <motion.div
+              initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-8"
+            >
+              <LocaleLink
+                href="/home"
+                className={`group inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-white/70 transition-colors hover:text-white ${isRTL ? 'flex-row-reverse' : ''}`}
+                data-cursor-hover
+              >
+                <FiArrowLeft
+                  className={`h-4 w-4 transition-transform group-hover:-translate-x-1 ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`}
+                />
+                {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
+              </LocaleLink>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className={isRTL ? 'text-right' : ''}
+            >
+              <span className="mb-4 block font-montserrat text-xs uppercase tracking-[0.4em] text-white/60">
+                House Language
+              </span>
+              <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-white md:text-7xl lg:text-8xl">
+                The Codes
+              </h1>
+              <p className="max-w-lg font-montserrat text-base tracking-wide text-white/70">
+                A single scroll through the house symbols, framed with clarity and balance.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </header>
+
+      <div className="relative container mx-auto max-w-4xl px-6 pb-10 pt-8 text-center md:pb-14 lg:px-12">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.35, duration: 0.5 }}
-          className="mt-10 flex flex-col items-center gap-2 text-brand-darkRed/45"
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="relative mt-2 flex flex-col items-center gap-2 text-brand-darkRed/45"
         >
-          <span className="font-montserrat text-[10px] uppercase tracking-[0.28em]">Scroll</span>
-          <FiArrowDown className="h-4 w-4 animate-bounce" aria-hidden />
+          <span className="inline-flex items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.28em]">
+            <span className="h-px w-8 bg-brand-dustyBlue/50" aria-hidden />
+            Scroll
+            <span className="h-px w-8 bg-brand-dustyBlue/50" aria-hidden />
+          </span>
+          <FiArrowDown className="h-4 w-4 animate-bounce text-brand-dustyBlue/60" aria-hidden />
         </motion.div>
-      </header>
+      </div>
 
       <div className="relative space-y-6 md:space-y-10 lg:space-y-14">
         {SECTIONS.map((section, index) => {
           const isEven = index % 2 === 0
           const textOrder = isEven ? 'lg:order-1' : 'lg:order-2'
           const imageOrder = isEven ? 'lg:order-2' : 'lg:order-1'
+          const stripeVariant = index % 2 === 0 ? 'soft' : 'default'
 
           return (
             <section
               key={section.id}
               id={section.id}
-              className="relative scroll-mt-28 md:scroll-mt-32"
+              className="relative scroll-mt-28 overflow-hidden md:scroll-mt-32"
               aria-labelledby={`${section.id}-heading`}
             >
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-darkRed/12 to-transparent" />
+              <SectionStripes variant={stripeVariant} />
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/22 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-darkRed/10 to-transparent" />
 
-              <div className="container relative mx-auto grid max-w-6xl gap-10 px-6 py-14 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-12 lg:py-20">
+              <div className="container relative z-[1] mx-auto grid max-w-6xl gap-10 px-6 py-14 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-12 lg:py-20">
+                {index === 0 || index === SECTIONS.length - 1 ? <DecorativeCorners color="dustyBlue" /> : null}
                 <motion.div
                   initial={{ opacity: 0, y: 28 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-12%' }}
                   transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  className={`${textOrder} max-w-xl ${isRTL ? 'lg:mr-auto lg:ml-0' : 'lg:ml-auto lg:mr-0'}`}
+                  className={`${textOrder} max-w-xl ${isRTL ? 'lg:mr-auto lg:ml-0 lg:text-right' : 'lg:ml-auto lg:mr-0'}`}
                 >
-                  <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-clayRed/75">{section.eyebrow}</p>
+                  <div className={`mb-3 flex items-center gap-3 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
+                    <span className="h-1.5 w-1.5 shrink-0 bg-brand-dustyBlue/80 shadow-[0_0_0_3px_rgba(146,170,193,0.2)]" aria-hidden />
+                    <span className="h-px w-10 shrink-0 bg-brand-dustyBlue/45 md:w-12" aria-hidden />
+                    <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-clayRed/75">
+                      {section.eyebrow}
+                    </p>
+                  </div>
                   <h2
                     id={`${section.id}-heading`}
                     className="font-rozha text-3xl text-brand-darkRed sm:text-4xl md:text-[2.65rem] md:leading-[1.08]"
                   >
                     {section.title}
                   </h2>
-                  <div className="mt-6 space-y-4 border-s border-brand-dustyBlue/25 ps-5 md:mt-8 md:ps-6">
+                  <div className="mt-6 space-y-4 border-s border-brand-dustyBlue/40 ps-5 md:mt-8 md:ps-6">
                     {section.paragraphs.map((p, i) => (
                       <p key={i} className="font-montserrat text-sm leading-[1.92] tracking-wide text-brand-darkRed/78">
                         {p}
@@ -192,63 +395,30 @@ export default function TheCodesClient() {
                   </div>
                 </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 32 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-10%' }}
-                  transition={{ duration: 0.6, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-                  className={`${imageOrder} relative`}
-                >
-                  <div
-                    className={`relative aspect-[4/5] w-[calc(100%+2.5rem)] max-w-none overflow-hidden shadow-[0_28px_80px_rgba(20,8,11,0.14)] sm:w-[calc(100%+3.5rem)] md:w-[calc(100%+5rem)] lg:aspect-[3/4] ${
-                      isEven
-                        ? isRTL
-                          ? 'origin-right rounded-sm lg:translate-x-4'
-                          : 'origin-left rounded-sm lg:-translate-x-4'
-                        : isRTL
-                          ? 'origin-left rounded-sm lg:-translate-x-4'
-                          : 'origin-right rounded-sm lg:translate-x-4'
-                    } ring-1 ring-brand-darkRed/[0.06]`}
-                  >
-                    <Image
-                      src={section.imageSrc}
-                      alt={section.imageAlt}
-                      fill
-                      className="object-cover"
-                      sizes="(min-width: 1024px) 42vw, 92vw"
-                      priority={index < 2}
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a0f14]/25 via-transparent to-[#f6f3ef]/10" />
-                  </div>
-                </motion.div>
+                <ParallaxFramedImage
+                  invert={isEven}
+                  imageSrc={section.imageSrc}
+                  imageAlt={section.imageAlt}
+                  priority={index < 2}
+                  outerClassName={`${imageOrder} relative z-[1]`}
+                  clipFrameClassName={
+                    isEven
+                      ? isRTL
+                        ? 'origin-right rounded-sm lg:ms-auto'
+                        : 'origin-left rounded-sm'
+                      : isRTL
+                        ? 'origin-left rounded-sm'
+                        : 'origin-right rounded-sm lg:ms-auto'
+                  }
+                />
               </div>
-
-              {/* Full-bleed overflow band — rich second visual plane */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, margin: '-5%' }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                className="relative -mx-4 mt-2 sm:-mx-8 md:-mx-12 lg:-mx-[max(2rem,calc((100vw-72rem)/2+1.5rem))] lg:mt-4"
-              >
-                <div className="relative aspect-[21/9] min-h-[180px] w-full overflow-hidden bg-brand-stone/25 md:min-h-[220px] lg:min-h-[260px]">
-                  <Image
-                    src={index % 3 === 0 ? '/collection-section/68.png' : index % 3 === 1 ? '/image 2.JPG' : '/collection-section/67.png'}
-                    alt=""
-                    fill
-                    className="object-cover opacity-95"
-                    sizes="100vw"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(26,15,20,0.5)_0%,transparent_38%,transparent_62%,rgba(26,15,20,0.45)_100%)]" />
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#1a0f14]/35 to-transparent" />
-                </div>
-              </motion.div>
             </section>
           )
         })}
       </div>
 
       <footer className="relative container mx-auto max-w-3xl px-6 pb-24 pt-16 text-center lg:px-12">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/25 to-transparent" />
         <div className="mx-auto h-px w-24 bg-gradient-to-r from-transparent via-brand-clayRed/40 to-transparent" />
         <p className="mt-8 font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed/50">
           Continue the story
@@ -260,13 +430,6 @@ export default function TheCodesClient() {
             data-cursor-hover
           >
             View collection
-          </LocaleLink>
-          <LocaleLink
-            href="/heritage"
-            className="inline-flex border border-brand-dustyBlue/40 bg-brand-dustyBlue/15 px-8 py-3 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:bg-brand-dustyBlue/25"
-            data-cursor-hover
-          >
-            Heritage hub
           </LocaleLink>
         </div>
       </footer>

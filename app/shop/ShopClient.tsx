@@ -19,10 +19,11 @@ const CATEGORY_QUERY_MAP: Record<string, string> = {
   kaftans: 'Kaftans',
   caftans: 'Kaftans',
   dresses: 'Dresses',
-  jacket: 'Jacket',
-  jackets: 'Jacket',
+  jacket: 'Sets',
+  jackets: 'Sets',
   sets: 'Sets',
-  accessories: 'Accessories',
+  accessories: 'Belts',
+  belts: 'Belts',
   'ready-to-wear': 'All',
   evening: 'Dresses',
   'evening-wear': 'Dresses',
@@ -141,25 +142,32 @@ export default function ShopClient() {
     <div className={`min-h-screen bg-stone-100 text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
       <header className="border-b border-black/5 bg-stone-50">
         <div className="mx-auto max-w-[1400px] px-6 pb-12 pt-10 md:px-10 md:pb-16 md:pt-14 lg:px-14">
-          <AppBreadcrumb
-            variant="muted"
-            className="mb-10"
-            segments={[
-              { label: isRTL ? 'التشكيلة' : 'COLLECTION', href: '/about' },
-              { label: isRTL ? 'المجموعة' : 'Ready-to-wear' },
-            ]}
-          />
+          <div className="mb-10 flex items-center gap-2 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.28em] text-neutral-500 sm:gap-3 sm:text-xs">
+            <LocaleLink
+              href="/about"
+              className="shrink-0 whitespace-nowrap text-neutral-500 transition-colors hover:text-brand-dustyBlue"
+              data-cursor-hover
+            >
+              {isRTL ? 'التشكيلة' : 'COLLECTION'}
+            </LocaleLink>
+            <span className="shrink-0 select-none text-neutral-400" aria-hidden>
+              /
+            </span>
+            <span className="shrink-0 whitespace-nowrap font-normal text-neutral-900">
+              {isRTL ? 'المجموعة' : 'READY-TO-WEAR'}
+            </span>
+          </div>
 
           <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
             COLLECTION
           </p>
           <h1 data-document-h1="true" className="font-rozha text-4xl font-normal leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl">
-            {isRTL ? 'الفصل ١' : 'Chapter 1'}
+            {isRTL ? 'الفصل ١' : 'CHAPTER I'}
           </h1>
           <p className="mt-6 max-w-md font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600">
             {isRTL
               ? 'قطع محدودة، خامات مختارة، وتفاصيل من صنع يدّي. اكتشفي القطع التي تحمل هوية الدار.'
-              : 'Limited pieces, considered materials, and finishing you can feel. Discover silhouettes shaped for life across cities.'}
+              : 'Wherever life is lived, from Abu Dhabi to London, from Riyadh to Paris, from Doha to Marbella, you do not need to change how you present yourself. Each piece carries your elegance and your way of being, with consistency, wherever you are.'}
           </p>
         </div>
       </header>
@@ -287,7 +295,7 @@ export default function ShopClient() {
               <article className="relative z-0 mx-auto block w-full lg:w-[82%]">
                 <LocaleLink
                   href={getProductHref(product)}
-                  className="relative z-20 block aspect-[3/4] overflow-hidden bg-stone-200"
+                  className="relative z-20 block aspect-[9/16] overflow-hidden bg-stone-200"
                   aria-label={`${isRTL ? 'فتح' : 'Open'} ${product.name}`}
                   data-cursor-hover
                 >
@@ -297,7 +305,7 @@ export default function ShopClient() {
                       alt={product.name}
                       fill
                       sizes="(max-width: 1024px) 50vw, 33vw"
-                      className="pointer-events-none object-cover"
+                      className="pointer-events-none img-zoom object-cover object-top"
                       priority={false}
                     />
                   </div>

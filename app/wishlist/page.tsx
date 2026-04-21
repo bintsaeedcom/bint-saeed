@@ -71,7 +71,7 @@ export default function WishlistPage() {
                         {item.category}
                       </p>
                       <LocaleLink href={href} className="mt-1 block" data-cursor-hover>
-                        <h2 className="font-rozha text-lg text-brand-darkRed transition-colors hover:text-brand-dustyBlue sm:text-xl">
+                        <h2 data-product-name="true" className="font-rozha text-lg text-brand-darkRed transition-colors hover:text-brand-dustyBlue sm:text-xl">
                           {item.name}
                         </h2>
                       </LocaleLink>

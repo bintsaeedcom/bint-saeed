@@ -30,6 +30,8 @@ import { getProductHref } from '@/lib/products/links'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
+type PackagingType = 'sustainable' | 'signature'
+
 export default function CheckoutPage() {
   const router = useRouter()
   const { localize } = useLocaleHref()
@@ -49,6 +51,7 @@ export default function CheckoutPage() {
   const [appliedCode, setAppliedCode] = useState<string | null>(null)
   const [discountBusy, setDiscountBusy] = useState(false)
   const [payBusy, setPayBusy] = useState(false)
+  const [packagingType, setPackagingType] = useState<PackagingType>('sustainable')
 
   const tabbyUrl = useMemo(() => getTabbyCheckoutUrl(), [])
   const tamaraUrl = useMemo(() => getTamaraCheckoutUrl(), [])
@@ -66,6 +69,8 @@ export default function CheckoutPage() {
   }, [discountInput, appliedCode])
 
   const subtotal = getTotal()
+  const signaturePackagingFeeAed = packagingType === 'signature' ? 30 : 0
+  const estimatedTotal = subtotal + signaturePackagingFeeAed
   const pairedStyles = useMemo(() => {
     const cartIds = new Set(items.map((item) => item.id))
     const cartCategories = new Set(
@@ -134,6 +139,7 @@ export default function CheckoutPage() {
           items,
           discountCode: appliedCode || undefined,
           customerEmail: email.trim() || undefined,
+          packagingType,
         }),
       })
 
@@ -220,10 +226,15 @@ export default function CheckoutPage() {
                 {items.map((item) => (
                   <li key={lineKey(item)} className="flex gap-4 py-5 first:pt-0">
                     <LocaleLink href={productHref(item)} className="relative h-24 w-20 shrink-0 overflow-hidden bg-[#f0eeeb]" data-cursor-hover>
-                      <Image src={item.image} alt="" fill className="object-cover" sizes="80px" />
+                      <Image src={item.image} alt="" fill className="img-zoom object-cover object-top" sizes="80px" />
                     </LocaleLink>
                     <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
-                      <LocaleLink href={productHref(item)} className="font-rozha text-lg text-brand-darkRed hover:text-brand-dustyBlue" data-cursor-hover>
+                      <LocaleLink
+                        href={productHref(item)}
+                        className="font-rozha text-lg text-brand-darkRed hover:text-brand-dustyBlue"
+                        data-product-name="true"
+                        data-cursor-hover
+                      >
                         {item.name}
                       </LocaleLink>
                       <p className="mt-1 font-montserrat text-xs text-brand-clayRed/65 tracking-wide">
@@ -277,13 +288,13 @@ export default function CheckoutPage() {
                   {pairedStyles.map((product) => (
                     <SwiperSlide key={product.id}>
                       <LocaleLink href={getProductHref(product)} className="group block" data-cursor-hover>
-                        <div className="relative aspect-[3/4] overflow-hidden border border-brand-stone/15 bg-[#f5f3ef]">
+                        <div className="relative aspect-[9/16] overflow-hidden border border-brand-stone/15 bg-[#f5f3ef]">
                           <Image
                             src={product.images[0] ?? ''}
                             alt={product.name}
                             fill
                             sizes="(max-width: 640px) 75vw, 30vw"
-                            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                            className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                           />
                         </div>
                         <div className={`mt-3 ${isRTL ? 'text-right' : ''}`}>
@@ -369,6 +380,80 @@ export default function CheckoutPage() {
             </motion.section>
 
             {/* Payment methods */}
+            <motion.section
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.14 }}
+              className="rounded-2xl border border-brand-stone/20 bg-white p-6 shadow-sm md:p-8"
+            >
+              <h2 className="font-rozha text-xl text-brand-darkRed mb-2">
+                {isRTL ? 'التغليف' : 'Packaging'}
+              </h2>
+              <p className="mb-5 font-montserrat text-xs text-brand-clayRed/60 tracking-wide">
+                {isRTL
+                  ? 'اختاري بين تغليف التوقيع (30 درهم) أو تغليف مستدام مجاني.'
+                  : 'Choose between signature packaging (+30 AED) or a complimentary sustainable option.'}
+              </p>
+
+              <div className={`grid gap-4 md:grid-cols-2 ${isRTL ? 'text-right' : ''}`}>
+                <button
+                  type="button"
+                  onClick={() => setPackagingType('signature')}
+                  className={`group overflow-hidden rounded-xl border text-left transition ${
+                    packagingType === 'signature'
+                      ? 'border-brand-darkRed bg-brand-darkRed/[0.03]'
+                      : 'border-brand-stone/30 bg-[#faf9f7] hover:border-brand-dustyBlue'
+                  }`}
+                  data-cursor-hover
+                >
+                  <div className="relative aspect-[9/16] w-full overflow-hidden bg-[#efebe7]">
+                    <Image
+                      src="/shipment/shipment%20box.svg"
+                      alt="Signature packaging shipment box"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <p className="font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed">
+                      {isRTL ? 'تغليف التوقيع' : 'Signature Packaging'}
+                    </p>
+                    <p className="mt-1 font-montserrat text-sm text-brand-clayRed/80">
+                      +30 AED
+                    </p>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setPackagingType('sustainable')}
+                  className={`group overflow-hidden rounded-xl border text-left transition ${
+                    packagingType === 'sustainable'
+                      ? 'border-brand-darkRed bg-brand-darkRed/[0.03]'
+                      : 'border-brand-stone/30 bg-[#faf9f7] hover:border-brand-dustyBlue'
+                  }`}
+                  data-cursor-hover
+                >
+                  <div className="relative aspect-[9/16] w-full overflow-hidden bg-[#efebe7]">
+                    <Image
+                      src="https://images.unsplash.com/photo-1583251633146-d0c6c36f0b0f?w=1200&q=80&auto=format&fit=crop"
+                      alt="Sustainable packaging option"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <p className="font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed">
+                      {isRTL ? 'تغليف مستدام' : 'Sustainable Packaging'}
+                    </p>
+                    <p className="mt-1 font-montserrat text-sm text-brand-clayRed/80">
+                      {isRTL ? 'مجاناً' : 'Free'}
+                    </p>
+                  </div>
+                </button>
+              </div>
+            </motion.section>
+
             <motion.section
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -486,6 +571,12 @@ export default function CheckoutPage() {
                   <span>{isRTL ? 'المجموع الفرعي' : 'Subtotal'}</span>
                   <span className="text-white">{formatPrice(subtotal)}</span>
                 </div>
+                <div className={`mt-3 flex justify-between font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <span>{isRTL ? 'التغليف' : 'Packaging'}</span>
+                  <span className="text-white">
+                    {signaturePackagingFeeAed > 0 ? `+ ${formatPrice(signaturePackagingFeeAed)}` : isRTL ? 'مجاناً' : 'Free'}
+                  </span>
+                </div>
                 {appliedCode ? (
                   <p className="mt-3 font-montserrat text-xs text-emerald-300/90">
                     {isRTL ? `خصم: ${appliedCode}` : `Discount code: ${appliedCode}`}
@@ -502,7 +593,7 @@ export default function CheckoutPage() {
                 <div className="mt-8 border-t border-white/10 pt-6">
                   <div className={`flex justify-between font-rozha text-xl ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <span className="text-white/80">{isRTL ? 'الإجمالي التقريبي' : 'Estimated total'}</span>
-                    <span>{formatPrice(subtotal)}</span>
+                    <span>{formatPrice(estimatedTotal)}</span>
                   </div>
                   <p className="mt-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/35">
                     {isRTL ? '+ الشحن والضرائب في سترايب' : '+ Shipping & tax in Stripe'}

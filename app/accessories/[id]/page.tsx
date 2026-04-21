@@ -196,7 +196,7 @@ export default function AccessoryDetailPage() {
                     <SwiperSlide key={index} className="!h-auto">
                       <button
                         type="button"
-                        className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
+                        className="group relative block aspect-[9/16] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                         onClick={() => mainSwiperRef.current?.slideTo(index)}
                         aria-label={`Show image ${index + 1}`}
                         data-cursor-hover
@@ -207,13 +207,13 @@ export default function AccessoryDetailPage() {
                             muted
                             playsInline
                             preload="metadata"
-                            className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                            className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                           />
                         ) : isHeicFile(image) ? (
                           <img
                             src={image}
                             alt=""
-                            className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                            className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             loading="lazy"
                           />
                         ) : (
@@ -222,7 +222,7 @@ export default function AccessoryDetailPage() {
                             alt=""
                             fill
                             sizes="76px"
-                            className="object-cover transition-opacity group-hover:opacity-80"
+                            className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                           />
                         )}
                       </button>
@@ -232,7 +232,7 @@ export default function AccessoryDetailPage() {
               </div>
 
               <div className="space-y-3">
-                <div className="relative aspect-[3/4] overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
+                <div className="relative aspect-[9/16] overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
                   <Swiper
                     modules={[Navigation, Thumbs, Pagination]}
                     spaceBetween={0}
@@ -279,13 +279,13 @@ export default function AccessoryDetailPage() {
                               controls
                               playsInline
                               preload="metadata"
-                              className="h-full w-full object-cover"
+                              className="h-full w-full img-zoom object-cover object-top"
                             />
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
                               alt={`${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
-                              className="h-full w-full object-cover"
+                              className="h-full w-full img-zoom object-cover object-top"
                               loading={index === 0 ? 'eager' : 'lazy'}
                             />
                           ) : (
@@ -294,7 +294,7 @@ export default function AccessoryDetailPage() {
                               alt={`${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
                               fill
                               sizes="(max-width: 768px) 100vw, 40vw"
-                              className="object-cover"
+                              className="img-zoom object-cover object-top"
                               priority={index === 0}
                             />
                           )}
@@ -323,7 +323,7 @@ export default function AccessoryDetailPage() {
                       <SwiperSlide key={index} className="!h-auto">
                         <button
                           type="button"
-                          className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
+                          className="group relative block aspect-[9/16] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                           onClick={() => mainSwiperRef.current?.slideTo(index)}
                           aria-label={`Show image ${index + 1}`}
                           data-cursor-hover
@@ -334,13 +334,13 @@ export default function AccessoryDetailPage() {
                               muted
                               playsInline
                               preload="metadata"
-                              className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                              className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             />
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
                               alt=""
-                              className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
+                              className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                               loading="lazy"
                             />
                           ) : (
@@ -349,7 +349,7 @@ export default function AccessoryDetailPage() {
                               alt=""
                               fill
                               sizes="120px"
-                              className="object-cover transition-opacity group-hover:opacity-80"
+                              className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             />
                           )}
                         </button>
@@ -365,13 +365,13 @@ export default function AccessoryDetailPage() {
                   {detailAngles.map((src, ai) => (
                     <div
                       key={`${src}-${ai}`}
-                      className="relative aspect-[3/4] w-full overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]"
+                      className="relative aspect-[9/16] w-full overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]"
                     >
                       {isHeicFile(src) ? (
                         <img
                           src={src}
                           alt={`${displayName} — ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
-                          className="h-full w-full object-cover"
+                          className="h-full w-full img-zoom object-cover object-top"
                           loading="lazy"
                         />
                       ) : (
@@ -380,7 +380,7 @@ export default function AccessoryDetailPage() {
                           alt={`${displayName} — ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
                           fill
                           sizes="(max-width: 1024px) 0px, 11rem"
-                          className="object-cover"
+                          className="img-zoom object-cover object-top"
                         />
                       )}
                     </div>

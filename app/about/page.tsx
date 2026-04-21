@@ -144,7 +144,7 @@ function AboutHero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="mb-8 inline-block rounded-full border border-brand-dustyBlue/20 bg-white/[0.06] px-5 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue backdrop-blur-md">
+                <span className="mb-8 inline-block border-b border-white/35 pb-2 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue/90">
                   {t.about.subtitle}
                 </span>
               </motion.div>
@@ -168,11 +168,13 @@ function AboutHero() {
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
                 <LocaleLink
                   href="#about-narrative"
-                  className="group inline-flex items-center gap-3 rounded-xl border border-brand-dustyBlue/30 bg-white/[0.08] px-10 py-4 font-montserrat text-xs uppercase tracking-[0.2em] text-white backdrop-blur-sm transition-all duration-500 hover:bg-brand-dustyBlue hover:text-[#1a0008]"
+                  className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
                   data-cursor-hover
                 >
                   <span>{t.about.readMore}</span>
-                  <FiArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-1" />
+                  <FiArrowRight
+                    className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
+                  />
                 </LocaleLink>
               </motion.div>
             </div>
