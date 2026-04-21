@@ -93,6 +93,7 @@ export async function POST(request: NextRequest) {
           product_data: {
             name: 'Signature Packaging',
             description: 'Premium signature shipment box',
+            images: [],
           },
           unit_amount: 3000,
         },
