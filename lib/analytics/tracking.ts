@@ -66,16 +66,16 @@ function initClarity() {
   if (typeof window === 'undefined' || state.clarityReady) return
   const projectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID?.trim()
   if (!projectId) return
-  ;(function init(c: Window, l: Document, a: string, r: string, i: string, t?: HTMLScriptElement, y?: HTMLScriptElement) {
+  ;(function init(c: Window, l: Document, a: string, r: string, i: string, t?: HTMLScriptElement) {
     if ((c as any)[a]) return
     ;(c as any)[a] = function (...args: unknown[]) { ((c as any)[a].q = (c as any)[a].q || []).push(args) }
     t = l.createElement(r) as HTMLScriptElement
     t.async = true
     t.id = 'bs-clarity-script'
     t.src = `https://www.clarity.ms/tag/${i}`
-    y = l.getElementsByTagName(r)[0] as HTMLScriptElement | undefined
-    if (y?.parentNode) {
-      y.parentNode.insertBefore(t, y)
+    const firstScript = l.getElementsByTagName(r)[0] as HTMLScriptElement | undefined
+    if (firstScript?.parentNode) {
+      firstScript.parentNode.insertBefore(t, firstScript)
     } else {
       l.head.appendChild(t)
     }
