@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
@@ -149,7 +149,7 @@ const SECTIONS: CodeSection[] = [
     eyebrow: 'Mark of the house',
     title: 'The monogram',
     paragraphs: [
-      'Reserved for the monogram — construction, scale rules, metal and thread applications, and where it should appear subtly versus emphatically.',
+      'The Bint Saeed monogram is more than a mark, it is a structure of identity. Its interwoven form reflects continuity, where lines return into themselves rather than break. It appears with intention across pieces, sometimes subtle, sometimes present, always part of the whole.',
     ],
     imageSrc: codesPageImage('monogram.jpg'),
     imageAlt: 'The monogram — house code',
@@ -159,7 +159,7 @@ const SECTIONS: CodeSection[] = [
     eyebrow: 'Heritage thread',
     title: 'Al Talli',
     paragraphs: [
-      'Reserved for the story of Talli in the house — technique, symbolism, and how it appears in the line. Pair this text with your chosen campaign or macro still.',
+      'Al Talli is a traditional Emirati craft, woven with fine metallic threads and recognised as part of the cultural heritage of the United Arab Emirates. It reflects precision, patience, and a deep-rooted tradition of adornment. Within Bint Saeed, it is translated into forms that move naturally across borders.',
     ],
     imageSrc: codesPageImage('Talli.jpg'),
     imageAlt: 'Al Talli — house code',
@@ -169,27 +169,27 @@ const SECTIONS: CodeSection[] = [
     eyebrow: 'Weave & structure',
     title: 'Khous',
     paragraphs: [
-      'Reserved for Khous — palm frond craft, structure, and the way it informs silhouettes and details. Drop in process photography or object studies when available.',
+      'Khous weaving is rooted in the use of palm fronds, shaped through structure and repetition, and recognised as part of the traditional crafts of the region. It reflects a way of making that is both functional and refined. Its logic is carried into the lines and construction of each piece.',
     ],
     imageSrc: codesPageImage('khous.jpg'),
     imageAlt: 'Khous — house code',
   },
   {
-    id: 'al-quaa-rosette',
+    id: 'al-ain-rosette',
     eyebrow: 'Motif',
-    title: 'Al Quaa Rosette',
+    title: 'Al Ain Rosette',
     paragraphs: [
-      'Reserved for the Al Quaa Rosette code — meaning, recurrence in the collection, and how it should be read at a glance on product and packaging.',
+      'The Al Ain Rosette appears as a carved carnelian stone within the house. Its warm tone reflects the desert landscape of Al Ain in the United Arab Emirates, while its form recalls the rounded shapes of the desert hyacinth and the yellow bloom of Tribulus omanense. For now, it appears in jewellery and small objects as a distinct point of recognition.',
     ],
     imageSrc: codesPageImage('Al Quaa Rosette.jpg'),
-    imageAlt: 'Al Quaa Rosette — house code',
+    imageAlt: 'Al Ain Rosette — house code',
   },
   {
     id: 'knotted-lines-of-lineage',
     eyebrow: 'Line & continuity',
     title: 'Knotted lines of lineage',
     paragraphs: [
-      'Reserved for lineage as a drawn and embroidered language — knots, lines, and continuity between generations. Rich imagery works well full-bleed here.',
+      'Knotted lines appear within the house as a recurring element, formed as buttons and charms across garments. Each knot reflects connection across time, linking what is inherited with what is lived. Placed close to the wearer, they serve as a subtle reminder of a story that continues.',
     ],
     imageSrc: codesPageImage('Knotted Lines Of Lineage.jpg'),
     imageAlt: 'Knotted lines of lineage — house code',
@@ -254,6 +254,20 @@ function scrollToHash(hash: string) {
 export default function TheCodesClient() {
   const { isRTL } = useLanguage()
   const pathname = usePathname()
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
+
+  const expandedTextBySection: Record<string, string> = {
+    'the-monogram':
+      'The monogram is built on the idea of connection and return. Its form draws from interlocking lines, reflecting continuity between past and present. It is applied across garments, jewellery, and objects with precision, either as a quiet detail or as a defining element. As a visual signature, it anchors each piece within the language of the house while remaining adaptable across contexts.',
+    'al-talli':
+      'Al Talli is a heritage craft practiced across the United Arab Emirates, traditionally handwoven using cotton and metallic threads. It forms part of the broader textile traditions of the region, closely tied to techniques recognised on UNESCO’s Representative List of the Intangible Cultural Heritage of Humanity. Historically used to embellish garments, it carries both technical mastery and cultural meaning. Within Bint Saeed, this craft is reinterpreted through placement, structure, and material, allowing it to exist within a contemporary wardrobe while maintaining its origin.',
+    khous:
+      'Khous is a traditional craft of the United Arab Emirates, using dried palm fronds to create woven forms. It belongs to a wider body of heritage practices connected to palm cultivation and craft traditions across the region, which are recognised within UNESCO-listed cultural expressions. Historically used in everyday objects, its strength lies in its structure, built through interlacing patterns that create durability and form. At Bint Saeed, this logic is translated into garment construction and detailing, where lines, folds, and layering reflect the same principles in a modern context.',
+    'al-ain-rosette':
+      'The Al Ain Rosette is developed as a house motif, carved in carnelian stone. Its colour is chosen for its natural warmth, reflecting the desert tones of Al Ain in the United Arab Emirates. Its form draws from desert flora, recalling both the desert hyacinth and the soft five-petalled bloom of Tribulus omanense, the national flower of the UAE. At present, it appears in jewellery, phone charms, and small objects, where it introduces a recognisable element that can extend across the house over time.',
+    'knotted-lines-of-lineage':
+      'Knotted lines of lineage are developed as a defining element within the house. Each line is shaped in relation to another, forming knots that reflect connection across time, experience, and generation. What is inherited and what is lived become intertwined, creating a continuous thread rather than separate moments.\n\nWithin Bint Saeed, these knots take form as buttons on abayas and as charms across garments. The charms, often composed of natural stones, are placed with care, frequently along the shoulder, where they bring balance to the silhouette while remaining close to the wearer.\n\nTheir placement is considered. Each knot serves as a reminder of the story you carry, shaped by where you come from and what you move through. A story that is interconnected, personal, and ongoing, one you recognise, stand within, and carry forward with pride.',
+  }
 
   useEffect(() => {
     const run = () => scrollToHash(window.location.hash)
@@ -394,6 +408,26 @@ export default function TheCodesClient() {
                         {p}
                       </p>
                     ))}
+                    {expandedTextBySection[section.id] && expandedSections[section.id] ? (
+                      <p className="font-montserrat text-sm leading-[1.92] tracking-wide text-brand-darkRed/78">
+                        {expandedTextBySection[section.id]}
+                      </p>
+                    ) : null}
+                    {expandedTextBySection[section.id] ? (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedSections((prev) => ({
+                            ...prev,
+                            [section.id]: !prev[section.id],
+                          }))
+                        }
+                        className="inline-flex border border-brand-darkRed/25 bg-white/70 px-5 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                        data-cursor-hover
+                      >
+                        Read More
+                      </button>
+                    ) : null}
                   </div>
                 </motion.div>
 

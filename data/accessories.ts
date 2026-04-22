@@ -109,10 +109,10 @@ export const accessoryCategories = [
 ]
 
 export const accessories: Accessory[] = [
-  // Necklaces — Al Quaa line (variants: stone or style)
+  // Necklaces — Al Ain line (variants: stone or style)
   {
     id: 'signature-malachite-necklace',
-    name: 'Al Quaa Necklace — Malachite',
+    name: 'Al Ain Necklace — Malachite',
     nameAr: 'قلادة القوع — الملاكيت',
     category: 'necklaces',
     price: 1650,
@@ -129,7 +129,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-tiger-eye-necklace',
-    name: 'Al Quaa Necklace — Tiger Eye',
+    name: 'Al Ain Necklace — Tiger Eye',
     nameAr: 'قلادة القوع — عين النمر',
     category: 'necklaces',
     price: 1480,
@@ -146,7 +146,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-onyx-necklace',
-    name: 'Al Quaa Necklace — Onyx',
+    name: 'Al Ain Necklace — Onyx',
     nameAr: 'قلادة القوع — الأونكس',
     category: 'necklaces',
     price: 1590,
@@ -164,7 +164,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-rose-quartz-necklace',
-    name: 'Al Quaa Necklace — Rose Quartz',
+    name: 'Al Ain Necklace — Rose Quartz',
     nameAr: 'قلادة القوع — الكوارتز الوردي',
     category: 'necklaces',
     price: 1740,
@@ -181,7 +181,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'necklace-layered-gold',
-    name: 'Al Quaa Necklace — Layered Gold',
+    name: 'Al Ain Necklace — Layered Gold',
     nameAr: 'قلادة القوع — ذهبي متعدد الطبقات',
     category: 'necklaces',
     price: 380,
@@ -198,7 +198,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'necklace-statement-pendant',
-    name: 'Al Quaa Necklace — Heritage Pendant',
+    name: 'Al Ain Necklace — Heritage Pendant',
     nameAr: 'قلادة القوع — التعليقة التراثية',
     category: 'necklaces',
     price: 520,

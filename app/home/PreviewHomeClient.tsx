@@ -912,7 +912,7 @@ function ColorBlockSection() {
 const CODES_LIST_ITEMS = [
   'Al Talli.',
   'Khous.',
-  'Al Quaa Rosette.',
+  'Al Ain Rosette.',
   'Knotted lines of lineage.',
   'The monogram.',
 ] as const
@@ -1045,7 +1045,7 @@ function CollectionStrip() {
   )
 }
 
-/** Section 6 — guided commissioning (beige field + glass card + framed editorial image, aligned with ColorBlockSection) */
+/** Section 6 — personalisation bridge (homepage -> personalisation -> shop -> checkout) */
 function CreatedForYouSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: '-12%', once: true })
@@ -1092,26 +1092,31 @@ function CreatedForYouSection() {
                     Bint Saeed
                   </span>
                   <h2 className="font-rozha text-3xl text-balance text-brand-darkRed tracking-[-0.02em] sm:text-4xl md:text-[2.35rem] md:leading-[1.12]">
-                    Created for you
+                    CARRIED CLOSE
                   </h2>
-                  <p
-                    className={`mx-auto max-w-md font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/80 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
+                  <div
+                    className={`mx-auto max-w-md space-y-5 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/80 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
                   >
-                    Each piece is created with care, produced in limited quantities, and available through a guided
-                    experience.
-                  </p>
+                    <p>Some things are not meant to be seen, but kept close.</p>
+                    <p>
+                      Each Bint Saeed piece includes a discreet space within it, where a name, a date, or a private
+                      message can be placed. Covered inside a small pocket, it becomes something you carry with you,
+                      known only to you or to the person it was created for.
+                    </p>
+                    <p>A gesture that turns what you wear into something personal.</p>
+                  </div>
                   <div className="flex w-full flex-col items-center gap-6 sm:gap-7 lg:items-stretch">
                     <MagneticWrap className={isRTL ? 'lg:self-end' : 'lg:self-start'}>
                       <LocaleLink
-                        href="/contact"
+                        href="/personalisation"
                         className="inline-flex items-center justify-center border border-brand-dustyBlue/60 bg-brand-dustyBlue px-8 py-4 font-montserrat text-xs uppercase tracking-[0.18em] text-[#1a0008] shadow-[0_10px_24px_rgba(146,170,193,0.38)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-brand-stone"
                         data-cursor-hover
                       >
-                        Request Your Piece
+                        DISCOVER PERSONALISATION
                       </LocaleLink>
                     </MagneticWrap>
                     <p className="font-montserrat text-[11px] uppercase tracking-[0.22em] text-brand-dustyBlue/75">
-                      Available worldwide. Based in Abu\u00A0Dhabi.
+                      Add your message when selecting your piece.
                     </p>
                   </div>
                 </div>
@@ -1130,8 +1135,8 @@ function CreatedForYouSection() {
               <div className="pointer-events-none absolute inset-x-8 -bottom-6 h-16 bg-[#b9b0a2]/28 blur-2xl" />
               <motion.div style={{ scale: imageScale }} className="relative aspect-[3/4] w-full">
                 <ScrollMaskImage
-                  src="/collection-section/4.JPG"
-                  alt="Bint Saeed — crafted for you"
+                  src="/Personalisation%20Page/secret%20pocket.JPG"
+                  alt="Personalisation detail placeholder — hidden pocket"
                   sizes="(max-width: 1024px) 90vw, 36rem"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a0008]/25 via-transparent to-transparent" />

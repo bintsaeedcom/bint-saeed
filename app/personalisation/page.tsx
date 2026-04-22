@@ -109,6 +109,12 @@ export default function PersonalisationPage() {
           <p className="mt-4 font-montserrat text-sm tracking-wide text-brand-darkRed/70">
             Select your piece and personalise it during checkout.
           </p>
+          <ol className="mx-auto mt-7 max-w-3xl space-y-1 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-clayRed/80 md:text-xs">
+            <li>1. Read about personalisation</li>
+            <li>2. Go to the collection</li>
+            <li>3. Select an item</li>
+            <li>4. Add the personal message during checkout</li>
+          </ol>
         </section>
 
         <p className="mt-20 text-center font-rozha text-3xl text-brand-darkRed md:text-4xl">
