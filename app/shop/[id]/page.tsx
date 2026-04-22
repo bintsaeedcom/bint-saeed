@@ -11,6 +11,7 @@ import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
 import { FiChevronDown, FiPlus, FiMinus, FiHeart, FiX, FiMaximize2, FiGlobe, FiAward } from 'react-icons/fi'
 import SizeGuideModal from '@/components/SizeGuideModal'
+import { trackEvent } from '@/lib/analytics/tracking'
 import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
 import { getProductPdpContent } from '@/data/productPdpContent'
@@ -180,6 +181,16 @@ export default function ProductPage() {
     setLightboxIndex((current) => Math.min(current, activeImages.length - 1))
   }, [activeImages])
 
+  useEffect(() => {
+    trackEvent('view_item', {
+      item_id: product.id,
+      item_name: product.name,
+      item_category: product.category,
+      currency: 'AED',
+      value: product.price,
+    })
+  }, [product.id])
+
   const personalisationSurcharge =
     customisationActive && customisationMessage.trim().length > 0 ? CUSTOMISATION_SURCHARGE_AED : 0
   const displayUnitAed = product.price + personalisationSurcharge
@@ -217,6 +228,13 @@ export default function ProductPage() {
       notes,
     })
 
+    trackEvent('add_to_cart', {
+      item_id: product.id,
+      item_name: product.name,
+      item_category: product.category,
+      item_variant: `${selectedSize}-${selectedColor}`,
+      quantity,
+    })
     showAddedToBagToast(isRTL)
   }
 
@@ -239,6 +257,8 @@ export default function ProductPage() {
   }
 
   const toggleDropdown = (key: string) => {
+    if (key === 'size') trackEvent('open_size_guide', { page: 'product', item_id: product.id })
+    if (key === 'description') trackEvent('open_personalisation_info', { page: 'product', item_id: product.id })
     setOpenDropdown(openDropdown === key ? null : key)
   }
 
@@ -288,7 +308,14 @@ export default function ProductPage() {
                       <button
                         type="button"
                         className="group relative block aspect-[9/16] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
-                        onClick={() => mainSwiperRef.current?.slideTo(index)}
+                        onClick={() => {
+                          mainSwiperRef.current?.slideTo(index)
+                          trackEvent('gallery_interaction', {
+                            interaction_type: 'thumbnail_click',
+                            item_id: product.id,
+                            image_index: index,
+                          })
+                        }}
                         aria-label={`Show image ${index + 1}`}
                         data-cursor-hover
                       >
@@ -337,6 +364,13 @@ export default function ProductPage() {
                     onSwiper={(swiper) => {
                       mainSwiperRef.current = swiper
                     }}
+                    onSlideChange={(swiper) =>
+                      trackEvent('gallery_interaction', {
+                        interaction_type: 'slide_change',
+                        item_id: product.id,
+                        image_index: swiper.activeIndex,
+                      })
+                    }
                     {...(thumbConnected ? { thumbs: { swiper: thumbsSwiper } } : {})}
                     className="h-full w-full min-h-0 product-gallery-swiper"
                   >
@@ -532,7 +566,10 @@ export default function ProductPage() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => setIsSizeGuideOpen(true)}
+                  onClick={() => {
+                    setIsSizeGuideOpen(true)
+                    trackEvent('open_size_guide', { page: 'product', item_id: product.id })
+                  }}
                   className="flex items-center gap-1.5 font-montserrat text-[11px] font-semibold text-brand-darkRed hover:text-brand-dustyBlue tracking-wide underline transition-colors"
                   data-cursor-hover
                 >
@@ -727,6 +764,15 @@ export default function ProductPage() {
                 <FiHeart className={`w-5 h-5 ${favorited ? 'fill-current' : ''}`} />
               </button>
             </div>
+            <p className={`mb-5 font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/70 ${isRTL ? 'text-right' : ''}`}>
+              {isRTL
+                ? 'مصنوع عند الطلب. يبدأ التصنيع بعد الشراء. الإرجاع محدود. '
+                : 'Made to order. Created after purchase. Returns are limited. '}
+              <LocaleLink href="/shipment-return-policy" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
+                {isRTL ? 'اطلعي على سياسة الشحن والإرجاع' : 'See Shipment & Return Policy'}
+              </LocaleLink>
+              .
+            </p>
 
             <div className={`mb-5 grid grid-cols-3 gap-3 border-y border-brand-stone/20 py-4 ${isRTL ? 'text-right' : ''}`}>
               <div className="flex flex-col items-center gap-1 text-center">

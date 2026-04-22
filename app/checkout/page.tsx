@@ -28,6 +28,7 @@ import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
 import { getTabbyCheckoutUrl, getTamaraCheckoutUrl } from '@/lib/payments'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
+import { trackEvent } from '@/lib/analytics/tracking'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
@@ -53,6 +54,7 @@ export default function CheckoutPage() {
   const [discountBusy, setDiscountBusy] = useState(false)
   const [payBusy, setPayBusy] = useState(false)
   const [packagingType, setPackagingType] = useState<PackagingType>('sustainable')
+  const [legalAcknowledged, setLegalAcknowledged] = useState(false)
 
   const tabbyUrl = useMemo(() => getTabbyCheckoutUrl(), [])
   const tamaraUrl = useMemo(() => getTamaraCheckoutUrl(), [])
@@ -62,6 +64,15 @@ export default function CheckoutPage() {
       router.replace(localize('/cart'))
     }
   }, [items.length, router])
+
+  useEffect(() => {
+    if (items.length === 0) return
+    trackEvent('begin_checkout', {
+      currency: 'AED',
+      value: Number(getTotal().toFixed(2)),
+      item_count: items.length,
+    })
+  }, [getTotal, items.length])
 
   useEffect(() => {
     if (appliedCode && discountInput.trim().toUpperCase() !== appliedCode.toUpperCase()) {
@@ -115,6 +126,10 @@ export default function CheckoutPage() {
 
   const startStripeCheckout = async () => {
     if (items.length === 0) return
+    if (!legalAcknowledged) {
+      toast.error(isRTL ? 'يرجى تأكيد الشروط وسياسة الشحن والإرجاع' : 'Please confirm Terms and Shipment & Return Policy')
+      return
+    }
     if (!stripeEnvReady) {
       toast.error(
         isRTL
@@ -132,6 +147,8 @@ export default function CheckoutPage() {
     }
 
     setPayBusy(true)
+    trackEvent('add_shipping_info', { checkout_provider: 'stripe', currency: 'AED' })
+    trackEvent('add_payment_info', { checkout_provider: 'stripe', currency: 'AED' })
     try {
       const response = await fetch('/api/checkout', {
         method: 'POST',
@@ -487,7 +504,7 @@ export default function CheckoutPage() {
               <button
                 type="button"
                 onClick={() => void startStripeCheckout()}
-                disabled={payBusy || !stripeEnvReady}
+                disabled={payBusy || !stripeEnvReady || !legalAcknowledged}
                 className={`flex w-full min-h-[52px] items-center justify-center gap-3 bg-brand-darkRed py-4 font-montserrat text-sm uppercase tracking-[0.22em] text-white transition-colors hover:bg-brand-dustyBlue disabled:opacity-50 ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
@@ -605,13 +622,32 @@ export default function CheckoutPage() {
                 <button
                   type="button"
                   onClick={() => void startStripeCheckout()}
-                  disabled={payBusy || !stripeEnvReady}
+                  disabled={payBusy || !stripeEnvReady || !legalAcknowledged}
                   className={`mt-8 flex w-full min-h-[48px] items-center justify-center gap-2 bg-brand-dustyBlue py-3.5 font-montserrat text-xs uppercase tracking-[0.22em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
                   {payBusy ? (isRTL ? '…' : '…') : isRTL ? 'دفع' : 'Pay now'}
                   <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
                 </button>
+                <label className={`mt-4 flex items-start gap-2.5 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
+                  <input
+                    type="checkbox"
+                    checked={legalAcknowledged}
+                    onChange={(e) => setLegalAcknowledged(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 border border-white/40 bg-transparent accent-brand-dustyBlue"
+                  />
+                  <span className="font-montserrat text-[11px] leading-relaxed tracking-wide text-white/70">
+                    {isRTL ? 'أؤكد أن طلبي مصنوع عند الطلب وقد قرأت ووافقت على ' : 'I confirm my order is made to order and I have read and accept the '}
+                    <LocaleLink href="/shipment-return-policy" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
+                      {isRTL ? 'سياسة الشحن والإرجاع' : 'Shipment & Return Policy'}
+                    </LocaleLink>{' '}
+                    {isRTL ? 'و' : 'and'}{' '}
+                    <LocaleLink href="/terms" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
+                      {isRTL ? 'الشروط والأحكام' : 'Terms & Conditions'}
+                    </LocaleLink>
+                    .
+                  </span>
+                </label>
               </motion.div>
             </div>
           </div>

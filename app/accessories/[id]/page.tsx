@@ -18,6 +18,7 @@ import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { getTabbyCheckoutUrl } from '@/lib/payments'
+import { trackEvent } from '@/lib/analytics/tracking'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -116,6 +117,13 @@ export default function AccessoryDetailPage() {
       quantity,
     })
 
+    trackEvent('add_to_cart', {
+      item_id: accessory.id,
+      item_name: isRTL ? accessory.nameAr : accessory.name,
+      item_category: accessory.category,
+      item_variant: selectedColor || 'default',
+      quantity,
+    })
     showAddedToBagToast(isRTL)
   }
 
@@ -153,6 +161,16 @@ export default function AccessoryDetailPage() {
     : 'lg:grid-cols-[4.75rem_minmax(0,1fr)]'
 
   const displayName = isRTL ? accessory.nameAr : accessory.name
+
+  useEffect(() => {
+    trackEvent('view_item', {
+      item_id: accessory.id,
+      item_name: displayName,
+      item_category: accessory.category,
+      currency: 'AED',
+      value: accessory.price,
+    })
+  }, [accessory.category, accessory.id, accessory.price, displayName])
 
   return (
     <div className="min-h-screen bg-white">
@@ -204,7 +222,14 @@ export default function AccessoryDetailPage() {
                       <button
                         type="button"
                         className="group relative block aspect-[9/16] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
-                        onClick={() => mainSwiperRef.current?.slideTo(index)}
+                        onClick={() => {
+                          mainSwiperRef.current?.slideTo(index)
+                          trackEvent('gallery_interaction', {
+                            interaction_type: 'thumbnail_click',
+                            item_id: accessory.id,
+                            image_index: index,
+                          })
+                        }}
                         aria-label={`Show image ${index + 1}`}
                         data-cursor-hover
                       >
@@ -252,6 +277,13 @@ export default function AccessoryDetailPage() {
                     onSwiper={(swiper) => {
                       mainSwiperRef.current = swiper
                     }}
+                    onSlideChange={(swiper) =>
+                      trackEvent('gallery_interaction', {
+                        interaction_type: 'slide_change',
+                        item_id: accessory.id,
+                        image_index: swiper.activeIndex,
+                      })
+                    }
                     {...(thumbConnected ? { thumbs: { swiper: thumbsSwiper } } : {})}
                     className="h-full w-full min-h-0 product-gallery-swiper"
                   >
@@ -331,7 +363,14 @@ export default function AccessoryDetailPage() {
                         <button
                           type="button"
                           className="group relative block aspect-[9/16] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
-                          onClick={() => mainSwiperRef.current?.slideTo(index)}
+                          onClick={() => {
+                            mainSwiperRef.current?.slideTo(index)
+                            trackEvent('gallery_interaction', {
+                              interaction_type: 'thumbnail_click',
+                              item_id: accessory.id,
+                              image_index: index,
+                            })
+                          }}
                           aria-label={`Show image ${index + 1}`}
                           data-cursor-hover
                         >
@@ -556,6 +595,15 @@ export default function AccessoryDetailPage() {
                 <FiHeart className={`h-5 w-5 ${favorited ? 'fill-current' : ''}`} />
               </button>
             </div>
+            <p className={`mb-5 font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/70 ${isRTL ? 'text-right' : ''}`}>
+              {isRTL
+                ? 'مصنوع عند الطلب. يبدأ التصنيع بعد الشراء. الإرجاع محدود. '
+                : 'Made to order. Created after purchase. Returns are limited. '}
+              <LocaleLink href="/shipment-return-policy" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
+                {isRTL ? 'اطلعي على سياسة الشحن والإرجاع' : 'See Shipment & Return Policy'}
+              </LocaleLink>
+              .
+            </p>
 
             <div className={`mb-5 grid grid-cols-3 gap-3 border-y border-brand-stone/20 py-4 ${isRTL ? 'text-right' : ''}`}>
               <div className="flex flex-col items-center gap-1 text-center">

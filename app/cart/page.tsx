@@ -10,6 +10,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
+import { trackEvent } from '@/lib/analytics/tracking'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getTotal } = useCartStore()
@@ -40,6 +41,8 @@ export default function CartPage() {
               href="/shop"
               className="inline-flex items-center gap-2 px-10 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors"
               data-cursor-hover
+              data-analytics-event="click_cta_home_to_collection"
+              data-analytics-section="cart-empty-state"
             >
               Continue Shopping
               <FiArrowRight className="w-4 h-4" />
@@ -60,6 +63,8 @@ export default function CartPage() {
               href="/shop"
               className="inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group"
               data-cursor-hover
+              data-analytics-event="click_cta_home_to_collection"
+              data-analytics-section="cart-header"
             >
               <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               Continue Shopping
@@ -139,14 +144,23 @@ export default function CartPage() {
                         <div className="flex items-center border border-brand-stone/30">
                           <button
                             onClick={() =>
-                              updateQuantity(
-                                item.id,
-                                item.size,
-                                item.color,
-                                Math.max(1, item.quantity - 1),
-                                item.lengthCm,
-                                item.customisationMessage
-                              )
+                              {
+                                const nextQuantity = Math.max(1, item.quantity - 1)
+                                updateQuantity(
+                                  item.id,
+                                  item.size,
+                                  item.color,
+                                  nextQuantity,
+                                  item.lengthCm,
+                                  item.customisationMessage
+                                )
+                                trackEvent('update_cart_quantity', {
+                                  item_id: item.id,
+                                  item_name: item.name,
+                                  quantity: nextQuantity,
+                                  direction: 'decrease',
+                                })
+                              }
                             }
                             className="px-3 py-2 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
                             data-cursor-hover
@@ -156,14 +170,23 @@ export default function CartPage() {
                           <span className="w-8 text-center font-montserrat text-sm">{item.quantity}</span>
                           <button
                             onClick={() =>
-                              updateQuantity(
-                                item.id,
-                                item.size,
-                                item.color,
-                                item.quantity + 1,
-                                item.lengthCm,
-                                item.customisationMessage
-                              )
+                              {
+                                const nextQuantity = item.quantity + 1
+                                updateQuantity(
+                                  item.id,
+                                  item.size,
+                                  item.color,
+                                  nextQuantity,
+                                  item.lengthCm,
+                                  item.customisationMessage
+                                )
+                                trackEvent('update_cart_quantity', {
+                                  item_id: item.id,
+                                  item_name: item.name,
+                                  quantity: nextQuantity,
+                                  direction: 'increase',
+                                })
+                              }
                             }
                             className="px-3 py-2 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
                             data-cursor-hover
@@ -175,7 +198,14 @@ export default function CartPage() {
                         {/* Remove */}
                         <button
                           onClick={() =>
-                            removeItem(item.id, item.size, item.color, item.lengthCm, item.customisationMessage)
+                            {
+                              removeItem(item.id, item.size, item.color, item.lengthCm, item.customisationMessage)
+                              trackEvent('remove_from_cart', {
+                                item_id: item.id,
+                                item_name: item.name,
+                                item_category: 'cart',
+                              })
+                            }
                           }
                           className="text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors"
                           data-cursor-hover
@@ -244,6 +274,14 @@ export default function CartPage() {
                 href="/checkout"
                 className={`w-full py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
+                onClick={() =>
+                  trackEvent('begin_checkout', {
+                    currency: 'AED',
+                    value: Number(getTotal().toFixed(2)),
+                    item_count: items.length,
+                    source: 'cart_page',
+                  })
+                }
               >
                 {isRTL ? 'متابعة الدفع' : 'Proceed to Checkout'}
                 <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />

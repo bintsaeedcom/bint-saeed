@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import { FiCheck, FiShoppingBag, FiArrowLeft } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
+import { trackEvent } from '@/lib/analytics/tracking'
 
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
@@ -14,6 +15,7 @@ function CheckoutSuccessContent() {
 
   useEffect(() => {
     if (sessionId) {
+      trackEvent('purchase', { session_id: sessionId })
       clearCart()
     }
   }, [sessionId, clearCart])
