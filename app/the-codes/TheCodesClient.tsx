@@ -295,7 +295,6 @@ export default function TheCodesClient() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
 
       <header className="relative h-[50vh] overflow-hidden bg-brand-darkRed md:h-[60vh]">
-        <SectionStripes variant="hero" />
         <Image
           src={codesPageImage('2.PNG')}
           alt="The Codes — hero"

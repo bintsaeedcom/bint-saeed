@@ -191,7 +191,7 @@ export default function ShopClient() {
         </div>
       </header>
 
-      <div className="sticky top-[90px] z-30 border-b border-black/5 bg-stone-100/95 backdrop-blur-md lg:top-[100px]">
+      <div className="sticky top-[64px] z-30 border-b border-black/5 bg-stone-100 md:top-[68px] lg:top-[72px]">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-6 py-3 md:gap-4 md:py-4 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
           <div className="flex w-full min-w-0 items-center justify-between gap-4 md:w-auto md:justify-start md:gap-8 lg:min-w-0 lg:flex-1">
             <button
@@ -335,7 +335,7 @@ export default function ShopClient() {
       </div>
 
       <section className="mx-auto max-w-[1400px] px-6 py-10 md:px-10 md:py-20 lg:px-14">
-        <ul className="grid list-none grid-cols-2 gap-x-3 gap-y-10 p-0 sm:gap-x-7 sm:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-18">
+        <ul className="grid list-none grid-cols-3 gap-x-2 gap-y-8 p-0 sm:gap-x-7 sm:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-18">
           {sortedProducts.map((product) => (
             <li
               key={product.id}

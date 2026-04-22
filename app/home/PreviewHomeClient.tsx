@@ -708,7 +708,7 @@ function MagazineGrid() {
   const { t, isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-white py-20 md:py-28">
+    <section ref={ref} className="relative overflow-hidden bg-white py-14 md:py-18">
       <SectionStripes variant="soft" />
       <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
 
@@ -717,7 +717,7 @@ function MagazineGrid() {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.75 }}
-          className={`mb-14 flex items-end justify-between md:mb-16 ${isRTL ? 'flex-row-reverse' : ''}`}
+          className={`mb-8 flex items-end justify-between md:mb-10 ${isRTL ? 'flex-row-reverse' : ''}`}
         >
           <div>
             <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
@@ -754,7 +754,7 @@ function MagazineGrid() {
               data-analytics-event="click_cta_home_to_collection"
               data-analytics-section="home-where-it-begins-featured-card"
             >
-              <div className="relative aspect-[4/5]">
+              <div className="relative aspect-[4/5] md:aspect-[4/3]">
                 <Image
                   src="/collection-section/1.png"
                   alt="Designed to carry you, wherever you are — Bint Saeed collection"
@@ -795,7 +795,7 @@ function MagazineGrid() {
                 data-analytics-event="click_cta_home_to_collection"
                 data-analytics-section="home-where-it-begins-secondary-card-a"
               >
-                <div className="relative aspect-square">
+                <div className="relative aspect-square md:aspect-[16/10]">
                   <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                     <CollectionCrossfadeSlideshow
                       slides={SUMMER_ELEGANCE_SLIDES}
@@ -823,7 +823,7 @@ function MagazineGrid() {
                 data-analytics-event="click_cta_home_to_collection"
                 data-analytics-section="home-where-it-begins-secondary-card-b"
               >
-                <div className="relative aspect-square">
+                <div className="relative aspect-square md:aspect-[16/10]">
                   <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                     <CollectionCrossfadeSlideshow
                       slides={ESSENTIALS_SLIDES}
