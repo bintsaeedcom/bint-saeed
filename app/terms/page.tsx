@@ -5,18 +5,33 @@ import LocaleLink from '@/components/LocaleLink'
 import { FiArrowLeft } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
+const SECTION_LIST = [
+  '1. Scope and Acceptance',
+  '2. Eligibility and Account Responsibility',
+  '3. Products, Availability, and Pricing',
+  '4. Orders, Payment, and Verification',
+  '5. Shipping, Delivery, and Risk Transfer',
+  '6. Returns, Repairs and Order Finality',
+  '7. Personalisation and Custom Work',
+  '8. Intellectual Property',
+  '9. Permitted and Prohibited Use',
+  '10. Charitable Contribution Statement',
+  '11. Disclaimers and Limitation of Liability',
+  '12. Indemnity',
+  '13. Governing Law and Jurisdiction',
+  '14. Changes, Severability, and Contact',
+]
+
 export default function TermsPage() {
   const { t, isRTL } = useLanguage()
-  
+
   return (
-    <div className={`min-h-screen pt-32 pb-20 relative ${isRTL ? 'rtl' : 'ltr'}`}>
-      {/* Subtle background effects */}
-      <div className="absolute top-20 right-0 w-96 h-96 bg-brand-stone/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-brand-dustyBlue/5 rounded-full blur-3xl" />
-      <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-brand-rose/5 rounded-full blur-3xl" />
-      
-      <div className="container mx-auto px-6 lg:px-12 max-w-4xl relative">
-        {/* Back Button */}
+    <div className={`relative min-h-screen pb-20 pt-32 ${isRTL ? 'rtl' : 'ltr'}`}>
+      <div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-brand-stone/10 blur-3xl" />
+      <div className="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-brand-dustyBlue/5 blur-3xl" />
+      <div className="absolute right-1/4 top-1/2 h-64 w-64 rounded-full bg-brand-stone/8 blur-3xl" />
+
+      <div className="relative mx-auto max-w-4xl px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -25,10 +40,12 @@ export default function TermsPage() {
         >
           <LocaleLink
             href="/"
-            className={`inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`group inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
-            <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
+            <FiArrowLeft
+              className={`h-4 w-4 transition-transform group-hover:-translate-x-1 ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`}
+            />
             {t.shop.backToHome}
           </LocaleLink>
         </motion.div>
@@ -37,13 +54,18 @@ export default function TermsPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="mb-12 text-center"
         >
-          <h1 data-document-h1="true" className="font-rozha text-5xl md:text-6xl text-brand-darkRed mb-4">
+          <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue">
+            Legal
+          </span>
+          <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-brand-darkRed md:text-6xl">
             Terms & Conditions
           </h1>
-          <p className="font-montserrat text-brand-clayRed tracking-wide">
-            Last updated: January 2026
+          <p className="font-montserrat tracking-wide text-brand-clayRed">Last updated: January 2026</p>
+          <p className="mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/80">
+            These Terms govern access to and use of the Bint Saeed website, products, and related services. They are
+            drafted for clarity, commercial certainty, and compliance with applicable UAE legal requirements.
           </p>
         </motion.div>
 
@@ -51,193 +73,219 @@ export default function TermsPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white border border-brand-stone/20 shadow-lg rounded-2xl p-8 md:p-12"
+          className="rounded-2xl border border-brand-stone/20 bg-white p-8 shadow-lg md:p-12"
         >
-          <div className="prose prose-lg max-w-none">
-            <div className={`space-y-8 font-montserrat text-brand-clayRed tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  1. Agreement to Terms
-                </h2>
-                <p>
-                  By accessing and using the Bint Saeed website and services, you agree to be bound by these Terms and Conditions. These terms are governed by the laws of the United\u00A0Arab\u00A0Emirates.
-                </p>
-              </section>
+          <div className={`space-y-9 font-montserrat text-[13px] tracking-wide text-brand-clayRed leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+            <section className="rounded-xl border border-brand-stone/25 bg-[#faf8f5] p-5 md:p-6">
+              <h2 className="mb-2 font-rozha text-xl text-brand-darkRed">Summary Notice</h2>
+              <p className="text-sm text-brand-clayRed/85">
+                By using this website or placing an order, you agree to these Terms. If you do not agree, please do
+                not use the site.
+              </p>
+            </section>
 
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  2. Products and Pricing
-                </h2>
-                <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
-                  <li>All prices are displayed in UAE Dirhams (AED) and include applicable VAT</li>
-                  <li>We reserve the right to modify prices without prior notice</li>
-                  <li>Product images are for illustration purposes; actual products may vary slightly</li>
-                  <li>Custom orders are non-refundable once production has begun</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  3. Orders and Payment
-                </h2>
-                <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
-                  <li>Orders are subject to availability and confirmation</li>
-                  <li>Payment is processed securely through Stripe</li>
-                  <li>We accept major credit cards and other payment methods as displayed at checkout</li>
-                  <li>You must provide accurate billing and shipping information</li>
-                  <li>We reserve the right to cancel orders in case of suspected fraud</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  4. Shipping and Delivery
-                </h2>
-                <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
-                  <li>Free shipping on orders over 500 AED within UAE</li>
-                  <li>Express delivery: 1-2 business days (UAE)</li>
-                  <li>Standard delivery: 3-5 business days (GCC)</li>
-                  <li>International shipping: 7-14 business days</li>
-                  <li>Delivery times are estimates and not guaranteed</li>
-                  <li>International orders may be subject to customs duties and taxes</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  5. Returns and Refunds
-                </h2>
-                <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
-                  <li>All sales are final. We do not offer refunds, some exclusions apply.</li>
-                  <li>Exchanges are accepted within 14 days for unworn, undamaged items with tags attached.</li>
-                  <li>Discounted items cannot be returned or exchanged.</li>
-                  <li>Custom-made items and altered pieces are final sale.</li>
-                  <li>Items that do not meet exchange conditions may be rejected and returned to sender.</li>
-                  <li>To request an exchange, contact contact@bintsaeed.com with your order number.</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  6. Size and Fit
-                </h2>
-                <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
-                  <li>Please refer to our size guide before placing an order</li>
-                  <li>Custom measurements may be provided for made-to-order items</li>
-                  <li>We are not responsible for incorrect sizing if measurements are provided by the customer</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  7. Intellectual Property & Copyright
-                </h2>
-                <p className="mb-4">
-                  <strong>All content on this website is the exclusive property of Bint Saeed and is protected by copyright laws of the United\u00A0Arab\u00A0Emirates and international copyright treaties.</strong>
+            <div className="grid gap-2 rounded-xl border border-brand-stone/20 p-5 md:grid-cols-2 md:gap-3 md:p-6">
+              {SECTION_LIST.map((item) => (
+                <p key={item} className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed/80">
+                  {item}
                 </p>
-                <p className="mb-4">
-                  This includes, but is not limited to:
-                </p>
-                <ul className={`list-disc space-y-2 mb-4 ${isRTL ? 'pr-6' : 'pl-6'}`}>
-                  <li>All product designs, patterns, and collections</li>
-                  <li>Photographs, images, and visual content</li>
-                  <li>The Bint Saeed logo, brand name, and trademarks</li>
-                  <li>Website design, layout, and user interface</li>
-                  <li>Text, descriptions, and written content</li>
-                  <li>Marketing materials and promotional content</li>
-                  <li>Software, code, and technical implementations</li>
-                </ul>
-                <p className="mb-4 font-medium text-brand-darkRed">
-                  Strictly Prohibited Without Written Permission:
-                </p>
-                <ul className={`list-disc space-y-2 mb-4 ${isRTL ? 'pr-6' : 'pl-6'}`}>
-                  <li>Copying, reproducing, or duplicating any content</li>
-                  <li>Downloading images for commercial or personal use</li>
-                  <li>Reusing, republishing, or redistributing any materials</li>
-                  <li>Creating derivative works based on our content</li>
-                  <li>Using our designs as inspiration for commercial products</li>
-                  <li>Scraping or harvesting content through automated means</li>
-                  <li>Using any content for AI training or machine learning purposes</li>
-                </ul>
-                <p className="mb-4">
-                  <strong>Written Permission Required:</strong> Any use of Bint Saeed content, including but not limited to reproduction, distribution, display, or transmission, requires prior written permission from Bint Saeed. Requests should be directed to{' '}
-                  <a href="mailto:legal@bintsaeed.com" className="text-brand-clayRed hover:text-brand-dustyBlue underline">
-                    legal@bintsaeed.com
-                  </a>.
-                </p>
-                <p>
-                  <strong>Enforcement:</strong> Bint Saeed actively monitors and enforces its intellectual property rights. Violations may result in legal action, including claims for damages and injunctive relief under UAE Federal Law No. 7 of 2002 on Copyrights and Related Rights, as amended, and applicable international treaties.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  8. User Responsibilities
-                </h2>
-                <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
-                  <li>You must be at least 18 years old to make purchases</li>
-                  <li>You are responsible for maintaining the confidentiality of your account</li>
-                  <li>You agree not to misuse our website or services</li>
-                  <li>You must provide accurate information when placing orders</li>
-                </ul>
-              </section>
-
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  9. Charitable Contributions
-                </h2>
-                <p>
-                  Bint Saeed donates 10% of every order to orphanage support programmes facilitated by the Emirates Red Crescent Authority and the Zakat Fund. This contribution is included in the product price and does not affect your order total.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  10. Limitation of Liability
-                </h2>
-                <p>
-                  To the maximum extent permitted by UAE law, Bint Saeed shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our website or products.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  11. Governing Law and Disputes
-                </h2>
-                <p>
-                  These terms are governed by the laws of the United\u00A0Arab\u00A0Emirates. Any disputes shall be resolved through the competent courts of Dubai,\u00A0UAE, unless otherwise required by applicable UAE consumer protection laws.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  12. Changes to Terms
-                </h2>
-                <p>
-                  We reserve the right to modify these Terms and Conditions at any time. Changes will be effective immediately upon posting on the website. Your continued use of our services constitutes acceptance of the updated terms.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                  13. Contact Information
-                </h2>
-                <p>
-                  For questions about these Terms and Conditions, please contact us:
-                </p>
-                <p className="mt-4">
-                  <strong>Bint Saeed</strong><br />
-                  Legal Inquiries:{' '}
-                  <a href="mailto:legal@bintsaeed.com" className="text-brand-clayRed hover:text-brand-dustyBlue underline">
-                    legal@bintsaeed.com
-                  </a><br />
-                  General Inquiries:{' '}
-                  <a href="mailto:contact@bintsaeed.com" className="text-brand-clayRed hover:text-brand-dustyBlue underline">
-                    contact@bintsaeed.com
-                  </a>
-                </p>
-              </section>
+              ))}
             </div>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">1. Scope and Acceptance</h2>
+              <p>
+                These Terms and Conditions apply to all visitors, users, and customers who access or use the Bint
+                Saeed website, content, products, and related services. By accessing this website, creating an
+                account, or placing an order, you confirm that you have read, understood, and agreed to these Terms.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">2. Eligibility and Account Responsibility</h2>
+              <p>
+                You must have legal capacity to enter into binding agreements under applicable law. If you create an
+                account, you are responsible for maintaining the confidentiality of your login credentials and for all
+                activity carried out under your account.
+              </p>
+              <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
+                <li>You agree to provide accurate, complete, and current information for orders and communications.</li>
+                <li>You are responsible for ensuring your shipping, billing, and contact details remain accurate.</li>
+                <li>We may suspend or restrict access where misuse, fraud, or security risk is reasonably suspected.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">3. Products, Availability, and Pricing</h2>
+              <p>
+                We aim to present product details, availability, and pricing accurately. However, occasional errors may
+                occur. Product display images are illustrative and may vary slightly due to lighting, screen
+                calibration, and handcrafted production characteristics.
+              </p>
+              <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
+                <li>All prices are displayed in AED unless otherwise stated.</li>
+                <li>Applicable VAT is handled in accordance with UAE tax requirements.</li>
+                <li>We may update product assortment and pricing at any time before order confirmation.</li>
+                <li>Custom and personalised pieces are subject to specific lead times and final-sale conditions.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">4. Orders, Payment, and Verification</h2>
+              <p>
+                Submission of an order request does not constitute final acceptance by Bint Saeed. An order is
+                accepted when we issue an order confirmation and payment authorization is successfully completed.
+              </p>
+              <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
+                <li>Payments are processed through secure payment providers, including Stripe.</li>
+                <li>We reserve the right to decline, cancel, or limit orders for lawful reasons.</li>
+                <li>Fraud prevention, identity checks, and payment verification may be required.</li>
+                <li>Where a payment error or pricing error occurs, we may cancel and refund the affected order.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">5. Shipping, Delivery, and Risk Transfer</h2>
+              <p>
+                Delivery windows are estimates and are not guaranteed. Delays may occur due to logistics, customs,
+                public holidays, weather, or events outside our reasonable control.
+              </p>
+              <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
+                <li>Shipping terms, costs, and estimated timelines are shown at checkout or applicable policy pages.</li>
+                <li>International orders may be subject to customs duties, import taxes, and local clearance fees.</li>
+                <li>Risk of loss transfers upon delivery to the shipping address or accepted recipient.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">6. Returns, Repairs and Order Finality</h2>
+              <p>
+                Return and repair handling is governed by our Shipment & Return Policy. All clients should review the
+                full policy before ordering.
+              </p>
+              <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
+                <li>Items are made to order and cancellations/returns are limited once production has started.</li>
+                <li>Defect or material non-conformity claims must be submitted with evidence within the stated window.</li>
+                <li>Remedies may include repair or replacement first, and refund where required by applicable law.</li>
+              </ul>
+              <p className="mt-3">
+                Full policy:{' '}
+                <LocaleLink href="/shipment-return-policy" className="text-brand-clayRed underline hover:text-brand-dustyBlue" data-cursor-hover>
+                  Shipment & Return Policy
+                </LocaleLink>
+                .
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">7. Personalisation and Custom Work</h2>
+              <p>
+                By submitting any personalisation text, you confirm you have the right to use that content and that it
+                does not infringe third-party rights or violate applicable laws. We may reject personalisation requests
+                that are unlawful, offensive, or non-compliant with policy.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">8. Intellectual Property</h2>
+              <p className="mb-4">
+                All website content, creative assets, designs, photography, trademarks, text, and technical materials
+                are owned by or licensed to Bint Saeed and are protected by applicable intellectual property laws.
+              </p>
+              <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
+                <li>No copying, reproduction, scraping, republication, or commercial reuse without written consent.</li>
+                <li>No use of brand elements, product images, or proprietary material in derivative work without approval.</li>
+                <li>
+                  Permission requests can be sent to{' '}
+                  <a href="mailto:legal@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                    legal@bintsaeed.com
+                  </a>
+                  .
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">9. Permitted and Prohibited Use</h2>
+              <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
+                <li>You may use this website only for lawful, personal, and legitimate commercial browsing/purchase activity.</li>
+                <li>Any unlawful access, attempted interference, bot abuse, or fraudulent behavior is prohibited.</li>
+                <li>We reserve the right to block access and take legal action where misuse is identified.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">10. Charitable Contribution Statement</h2>
+              <p>
+                Where charitable contribution statements are communicated on-site or in product communications, such
+                statements describe our intended social-impact allocation model and do not alter your purchase price
+                unless expressly stated.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">11. Disclaimers and Limitation of Liability</h2>
+              <p>
+                To the fullest extent permitted by applicable law, the website and services are provided on an "as is"
+                and "as available" basis without warranties of uninterrupted operation.
+              </p>
+              <p>
+                Bint Saeed shall not be liable for indirect, incidental, special, consequential, or punitive damages
+                arising from use of the website, delay in delivery, third-party service interruption, or other events
+                beyond reasonable control. Liability is limited to the amount paid for the relevant order, except where
+                non-excludable liability applies by law.
+              </p>
+              <p className="mt-3">
+                To the fullest extent permitted by law, Bint Saeed is not liable for injury, illness, allergic reaction,
+                accidental harm, death, property damage, loss of earnings, emotional distress, or any other loss
+                resulting from misuse, improper handling, unauthorised alteration, or use of products contrary to care
+                and safety guidance.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">12. Indemnity</h2>
+              <p>
+                You agree to indemnify and hold harmless Bint Saeed from claims, liabilities, losses, and costs arising
+                from your breach of these Terms, misuse of the website, or violation of applicable law.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">13. Governing Law and Jurisdiction</h2>
+              <p>
+                These Terms are governed by the laws of the United Arab Emirates. Subject to mandatory consumer
+                protection rights under applicable law, disputes shall fall under the competent courts of the UAE.
+              </p>
+              <p className="mt-3 text-[13px] text-brand-clayRed/80">
+                For regulatory clarity, this website is operated by a company registered in Abu Dhabi, United Arab
+                Emirates, holding commercial license number CN-6384424 issued by the Abu Dhabi Registration Authority
+                (ADRA).
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">14. Changes, Severability, and Contact</h2>
+              <p>
+                We may revise these Terms from time to time. Updated versions are effective from publication on this
+                page. If any provision is held unenforceable, remaining provisions remain in full force.
+              </p>
+              <p className="mt-4">
+                <strong>Bint Saeed</strong><br />
+                Legal Inquiries:{' '}
+                <a href="mailto:legal@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                  legal@bintsaeed.com
+                </a><br />
+                General Inquiries:{' '}
+                <a href="mailto:contact@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                  contact@bintsaeed.com
+                </a>
+              </p>
+              <p className="mt-4 text-xs text-brand-clayRed/70">
+                Legal drafting note: these terms should be reviewed by qualified counsel before high-risk market
+                expansion or jurisdiction-specific dispute handling.
+              </p>
+            </section>
           </div>
         </motion.div>
       </div>
