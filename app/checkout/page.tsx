@@ -186,15 +186,15 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-white pt-32 flex items-center justify-center font-montserrat text-brand-clayRed">
+      <div className="flex min-h-screen items-center justify-center bg-brand-pageCanvas pt-4 font-montserrat text-brand-clayRed sm:pt-6 md:pt-8">
         {isRTL ? 'جاري التوجيه…' : 'Redirecting…'}
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#faf9f7]">
-      <div className="border-b border-brand-stone/20 bg-white">
+    <div className="min-h-screen bg-brand-pageCanvas">
+      <div className="border-b border-brand-stone/20 bg-brand-pageCanvas">
         <div className="container mx-auto px-6 lg:px-12 py-8 pt-28">
           <AppBreadcrumb
             rtl={isRTL}
@@ -353,7 +353,7 @@ export default function CheckoutPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={isRTL ? 'you@example.com' : 'you@example.com'}
-                className="w-full border border-brand-stone/40 bg-[#faf9f7] px-4 py-3 font-montserrat text-sm tracking-wide focus:border-brand-darkRed focus:outline-none"
+                className="w-full border border-brand-stone/40 bg-brand-pageCanvas px-4 py-3 font-montserrat text-sm tracking-wide focus:border-brand-darkRed focus:outline-none"
               />
             </motion.section>
 
@@ -379,7 +379,7 @@ export default function CheckoutPage() {
                   value={discountInput}
                   onChange={(e) => setDiscountInput(e.target.value)}
                   placeholder={isRTL ? 'الرمز' : 'PROMO CODE'}
-                  className="min-h-[44px] flex-1 border border-brand-stone/40 bg-[#faf9f7] px-4 py-3 font-montserrat text-sm uppercase tracking-wider focus:border-brand-darkRed focus:outline-none"
+                  className="min-h-[44px] flex-1 border border-brand-stone/40 bg-brand-pageCanvas px-4 py-3 font-montserrat text-sm uppercase tracking-wider focus:border-brand-darkRed focus:outline-none"
                 />
                 <button
                   type="button"
@@ -422,7 +422,7 @@ export default function CheckoutPage() {
                   className={`group overflow-hidden rounded-xl border text-left transition ${
                     packagingType === 'signature'
                       ? 'border-brand-darkRed bg-brand-darkRed/[0.03]'
-                      : 'border-brand-stone/30 bg-[#faf9f7] hover:border-brand-dustyBlue'
+                      : 'border-brand-stone/30 bg-brand-pageCanvas hover:border-brand-dustyBlue'
                   }`}
                   data-cursor-hover
                 >
@@ -450,7 +450,7 @@ export default function CheckoutPage() {
                   className={`group overflow-hidden rounded-xl border text-left transition ${
                     packagingType === 'sustainable'
                       ? 'border-brand-darkRed bg-brand-darkRed/[0.03]'
-                      : 'border-brand-stone/30 bg-[#faf9f7] hover:border-brand-dustyBlue'
+                      : 'border-brand-stone/30 bg-brand-pageCanvas hover:border-brand-dustyBlue'
                   }`}
                   data-cursor-hover
                 >
@@ -494,7 +494,7 @@ export default function CheckoutPage() {
                 {['Visa', 'Mastercard', 'Amex', 'Apple Pay', 'Google Pay'].map((label) => (
                   <span
                     key={label}
-                    className="rounded-full border border-brand-stone/30 bg-[#faf9f7] px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-darkRed/80"
+                    className="rounded-full border border-brand-stone/30 bg-brand-pageCanvas px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-darkRed/80"
                   >
                     {label}
                   </span>

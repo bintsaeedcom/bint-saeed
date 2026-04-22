@@ -52,7 +52,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#faf9f7] pt-28 pb-20">
+    <div className="min-h-screen bg-brand-pageCanvas pt-28 pb-20">
       <div className="container mx-auto max-w-lg px-6">
         <LocaleLink
           href="/account"
@@ -92,7 +92,7 @@ export default function RegisterPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   autoComplete="name"
-                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
+                  className="w-full border border-brand-stone/40 bg-brand-pageCanvas py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
                   placeholder={isRTL ? 'الاسم' : 'Your name'}
                 />
               </div>
@@ -109,7 +109,7 @@ export default function RegisterPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
-                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
+                  className="w-full border border-brand-stone/40 bg-brand-pageCanvas py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
                   placeholder="you@example.com"
                 />
               </div>
@@ -127,7 +127,7 @@ export default function RegisterPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="new-password"
-                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
+                  className="w-full border border-brand-stone/40 bg-brand-pageCanvas py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
                   placeholder="••••••••"
                 />
               </div>
@@ -147,7 +147,7 @@ export default function RegisterPage() {
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}
                   autoComplete="new-password"
-                  className="w-full border border-brand-stone/40 bg-[#faf9f7] py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
+                  className="w-full border border-brand-stone/40 bg-brand-pageCanvas py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
                   placeholder="••••••••"
                 />
               </div>

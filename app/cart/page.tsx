@@ -23,7 +23,7 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-white pt-32 pb-20">
+      <div className="min-h-screen bg-brand-pageCanvas pb-20 pt-4 sm:pt-6 md:pt-8">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -54,7 +54,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-brand-pageCanvas">
       {/* Header */}
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
         <div className="container mx-auto px-6 lg:px-12">

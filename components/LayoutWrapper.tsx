@@ -11,22 +11,6 @@ interface LayoutWrapperProps {
   children: React.ReactNode
 }
 
-function GlobalStripeOverlay() {
-  return (
-    <div className="pointer-events-none absolute inset-0 z-[1]" aria-hidden>
-      {/* Vertical system lines */}
-      <div className="absolute left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/18 to-transparent" />
-      <div className="absolute left-1/2 top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-stone/16 to-transparent" />
-      <div className="absolute right-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-clayRed/16 to-transparent" />
-
-      {/* Horizontal system lines */}
-      <div className="absolute left-[5%] right-[5%] top-20 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/14 to-transparent" />
-      <div className="absolute left-[5%] right-[5%] top-1/2 h-px bg-gradient-to-r from-transparent via-brand-stone/14 to-transparent" />
-      <div className="absolute left-[5%] right-[5%] bottom-16 h-px bg-gradient-to-r from-transparent via-brand-clayRed/12 to-transparent" />
-    </div>
-  )
-}
-
 export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const pathname = usePathname()
   const safePathname = pathname ?? ''
@@ -58,10 +42,11 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
     <>
       <Header />
       <main
-        className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : 'pt-[90px] lg:pt-[100px]'}`}
+        className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : 'pt-[168px] sm:pt-[176px] md:pt-[188px] lg:pt-[200px] xl:pt-[208px]'}`}
       >
-        <GlobalStripeOverlay />
-        <div className="relative z-[2] w-full min-w-0 max-w-none">{children}</div>
+        <div className="relative z-[2] w-full min-w-0 max-w-none bg-brand-pageCanvas">
+          {children}
+        </div>
       </main>
       <Footer />
       <WhatsAppButton />

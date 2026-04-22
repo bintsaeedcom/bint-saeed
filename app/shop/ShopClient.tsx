@@ -164,7 +164,7 @@ export default function ShopClient() {
   const sortLabel = SORT_OPTIONS.find((o) => o.id === sortBy)?.label ?? 'New arrivals'
 
   return (
-    <div className={`min-h-screen bg-stone-100 text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen bg-brand-pageCanvas text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
       <header className="border-b border-black/5 bg-stone-50">
         <div className="mx-auto max-w-[1400px] px-6 pb-8 pt-8 md:px-10 md:pb-16 md:pt-14 lg:px-14">
           <AppBreadcrumb
@@ -191,7 +191,7 @@ export default function ShopClient() {
         </div>
       </header>
 
-      <div className="sticky top-[64px] z-30 border-b border-black/5 bg-stone-100 md:top-[68px] lg:top-[72px]">
+      <div className="sticky top-[168px] z-30 border-b border-black/5 bg-brand-pageCanvas sm:top-[176px] md:top-[188px] lg:top-[200px] xl:top-[208px]">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-6 py-3 md:gap-4 md:py-4 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
           <div className="flex w-full min-w-0 items-center justify-between gap-4 md:w-auto md:justify-start md:gap-8 lg:min-w-0 lg:flex-1">
             <button

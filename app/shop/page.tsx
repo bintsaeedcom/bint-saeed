@@ -4,7 +4,7 @@ import ShopClient from './ShopClient'
 function ShopLoading() {
   return (
     <div
-      className="min-h-screen bg-stone-100"
+      className="min-h-screen bg-brand-pageCanvas"
       aria-busy="true"
       aria-label="Loading collection"
     />

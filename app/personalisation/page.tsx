@@ -7,10 +7,7 @@ export default function PersonalisationPage() {
   const personalisedLabelImage = '/Personalisation%20Page/label.JPG'
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(165deg,#f7f5f0_0%,#eceae3_42%,#e3e0d6_100%)] pt-32">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_12%_10%,rgba(146,170,193,0.16)_0%,transparent_48%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_86%_82%,rgba(193,144,134,0.1)_0%,transparent_60%)]" />
-
+    <div className="relative min-h-screen overflow-x-clip bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8">
       <section className="relative container mx-auto px-6 pb-24 lg:px-16 lg:pb-32">
         <span className="mb-6 block font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
           Bint Saeed
@@ -40,9 +37,9 @@ export default function PersonalisationPage() {
               moment, a bond, or something you never want to forget.
             </p>
           </div>
-          <div className="rounded-2xl border border-brand-stone/40 bg-white/70 p-5 md:p-6">
+          <div className="rounded-sm border border-brand-stone/30 bg-white p-5 md:p-6">
             <div
-              className="relative aspect-[4/5] overflow-hidden rounded-xl"
+              className="relative aspect-[4/5] overflow-hidden rounded-sm"
               data-analytics-event="click_personalisation_hidden_pocket_image"
               data-analytics-section="personalisation-story-image"
             >
@@ -64,9 +61,9 @@ export default function PersonalisationPage() {
         </section>
 
         <section className="mt-16 grid gap-10 lg:grid-cols-2 lg:items-start">
-          <div className="rounded-2xl border border-brand-stone/40 bg-white/70 p-5 md:p-6 lg:order-1">
+          <div className="rounded-sm border border-brand-stone/30 bg-white p-5 md:p-6 lg:order-1">
             <div
-              className="relative aspect-[4/5] overflow-hidden rounded-xl"
+              className="relative aspect-[4/5] overflow-hidden rounded-sm"
               data-analytics-event="click_personalisation_label_examples"
               data-analytics-section="personalisation-meaning-image"
             >
@@ -93,7 +90,7 @@ export default function PersonalisationPage() {
           </div>
         </section>
 
-        <section className="mt-18 rounded-2xl border border-brand-dustyBlue/25 bg-white/75 p-8 md:p-10">
+        <section className="mt-18 rounded-sm border border-brand-stone/30 bg-white p-8 md:p-10">
           <h2 className="font-rozha text-3xl text-brand-darkRed md:text-4xl">How to personalise your piece</h2>
           <ol className="mt-6 space-y-2 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/85 md:text-base">
             <li>1. Explore the collection</li>
@@ -109,7 +106,7 @@ export default function PersonalisationPage() {
         <section className="mt-16 text-center">
           <LocaleLink
             href="/shop?from=personalisation"
-            className="inline-flex items-center justify-center rounded-full border border-brand-darkRed/35 bg-white/70 px-10 py-3 font-montserrat text-xs uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-sm border border-brand-darkRed/40 bg-white px-10 py-3 font-montserrat text-xs uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
             data-cursor-hover
             data-analytics-event="click_collection_from_personalisation"
             data-analytics-section="personalisation-cta"
@@ -131,6 +128,6 @@ export default function PersonalisationPage() {
           A piece you wear. A message you carry.
         </p>
       </section>
-    </main>
+    </div>
   )
 }

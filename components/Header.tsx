@@ -231,25 +231,78 @@ export default function Header() {
       {/* Main Header - Elegant Single Row Design */}
       <header
         className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none transition-all duration-500 ${headerBarGradient} ${
-          isScrolled ? 'py-2.5 lg:py-3 shadow-lg shadow-black/40' : 'py-3 lg:py-4 2xl:py-5'
+          isScrolled ? 'shadow-lg shadow-black/40' : ''
         }`}
       >
-        {/* Subtle dusty blue accent line at bottom */}
+        {/* Bottom accent — same as before, full header width */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-        
+
         <nav className="container mx-auto px-2 sm:px-3 lg:px-4 2xl:px-8">
-          {/* One hover zone for top bar + mega menu — avoids mouseleave firing in the pixel gap above the panel */}
+          {/* One hover zone for both rows + mega menu */}
           <div className="relative" onMouseLeave={() => setActiveMegaMenu(null)}>
-          <div className="relative flex items-center justify-between isolate">
-            
-            {/* Left: Navigation — z above centered logo so labels stay clickable */}
-            <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center gap-6 lg:flex">
+            {/* Row 1 — brand above nav */}
+            <div
+              className={`flex justify-center transition-[padding] duration-500 ${
+                isScrolled ? 'py-1.5 md:py-2' : 'py-2.5 md:py-3.5 lg:py-4'
+              }`}
+            >
+              {disableHomeLogoNavigation ? (
+                <div className="block max-w-[min(92vw,720px)]">
+                  <Image
+                    src="/logo.png"
+                    alt="Bint Saeed"
+                    width={800}
+                    height={210}
+                    className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
+                      isScrolled
+                        ? 'h-[clamp(2.25rem,6vw,3.25rem)] max-h-[56px] sm:max-h-[60px] md:max-h-[64px]'
+                        : 'h-[clamp(2.85rem,9vw,4.5rem)] max-h-[76px] sm:max-h-[88px] md:h-[clamp(3.15rem,8vw,5rem)] md:max-h-[96px] lg:max-h-[108px] xl:max-h-[118px]'
+                    }`}
+                    priority
+                  />
+                </div>
+              ) : (
+                <LocaleLink
+                  href="/home"
+                  className="block max-w-[min(92vw,720px)]"
+                  data-cursor-hover
+                >
+                  <Image
+                    src="/logo.png"
+                    alt="Bint Saeed"
+                    width={800}
+                    height={210}
+                    className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
+                      isScrolled
+                        ? 'h-[clamp(2.25rem,6vw,3.25rem)] max-h-[56px] sm:max-h-[60px] md:max-h-[64px]'
+                        : 'h-[clamp(2.85rem,9vw,4.5rem)] max-h-[76px] sm:max-h-[88px] md:h-[clamp(3.15rem,8vw,5rem)] md:max-h-[96px] lg:max-h-[108px] xl:max-h-[118px]'
+                    }`}
+                    priority
+                  />
+                </LocaleLink>
+              )}
+            </div>
+
+            {/* Divider between brand and topics */}
+            <div
+              className="mx-auto h-px max-w-[min(100%,56rem)] bg-gradient-to-r from-transparent via-white/22 to-transparent"
+              aria-hidden
+            />
+
+            {/* Row 2 — topics + utilities (mirror on RTL) */}
+            <div
+              className={`relative flex items-center justify-between gap-2 isolate transition-[padding] duration-500 ${
+                isRTL ? 'flex-row-reverse' : ''
+              } ${isScrolled ? 'py-1.5 md:py-2' : 'py-2 md:py-2.5 lg:py-3'}`}
+            >
+            {/* Left: Navigation — desktop */}
+            <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center gap-7 lg:flex">
               {navItems.map((item) => (
                 <LocaleLink
                   key={item.label}
                   href={item.href}
                   onMouseEnter={() => setActiveMegaMenu(item.href)}
-                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-2 font-montserrat text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 ${
+                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 ${
                     activeMegaMenu === item.href ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
                   }`}
                   data-cursor-hover
@@ -261,7 +314,7 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Compact layout: menu button only while horizontal nav is collapsed */}
+            {/* Mobile: menu (row 2 only — brand is row 1) */}
             <div className="relative z-[55] flex w-10 shrink-0 justify-start lg:hidden">
               <button
                 type="button"
@@ -274,67 +327,8 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Center logo in normal flow below 2xl — as large as row allows without crowding controls */}
-            <div className="flex min-w-0 flex-1 justify-center px-1 sm:px-2 2xl:hidden">
-              {disableHomeLogoNavigation ? (
-                <div className="block max-w-[min(520px,calc(100vw-10.5rem))] sm:max-w-[min(560px,calc(100vw-13rem))] xl:max-w-[min(600px,calc(100vw-28rem))]">
-                  <Image
-                    src="/logo.png"
-                    alt="Bint Saeed"
-                    width={640}
-                    height={168}
-                    className="h-[clamp(2.25rem,7vw,3.75rem)] w-auto max-h-[60px] sm:max-h-[68px] md:h-[clamp(2.5rem,6.5vw,4rem)] md:max-h-[76px] xl:max-h-[84px]"
-                    priority
-                  />
-                </div>
-              ) : (
-                <LocaleLink href="/home" className="block max-w-[min(520px,calc(100vw-10.5rem))] sm:max-w-[min(560px,calc(100vw-13rem))] xl:max-w-[min(600px,calc(100vw-28rem))]" data-cursor-hover>
-                  <Image
-                    src="/logo.png"
-                    alt="Bint Saeed"
-                    width={640}
-                    height={168}
-                    className="h-[clamp(2.25rem,7vw,3.75rem)] w-auto max-h-[60px] sm:max-h-[68px] md:h-[clamp(2.5rem,6.5vw,4rem)] md:max-h-[76px] xl:max-h-[84px]"
-                    priority
-                  />
-                </LocaleLink>
-              )}
-            </div>
-
-            {/* Center: Logo — keep z below nav (61) so Collections / Accessories links stay tappable */}
-            <div className="pointer-events-auto absolute left-1/2 top-1/2 z-[58] hidden w-max max-w-[min(720px,calc(100vw-32rem))] -translate-x-1/2 -translate-y-1/2 shrink-0 2xl:block">
-              {disableHomeLogoNavigation ? (
-                <div className="block">
-                  <Image
-                    src="/logo.png"
-                    alt="Bint Saeed"
-                    width={720}
-                    height={188}
-                    className={`pointer-events-none w-auto max-w-[min(720px,calc(100vw-32rem))] transition-all duration-300 ${
-                      isScrolled
-                        ? 'h-[clamp(3rem,4.2vw,4.5rem)] max-h-[72px]'
-                        : 'h-[clamp(3.35rem,5vw,5.75rem)] max-h-[92px]'
-                    }`}
-                    priority
-                  />
-                </div>
-              ) : (
-                <LocaleLink href="/home" className="block" data-cursor-hover>
-                  <Image
-                    src="/logo.png"
-                    alt="Bint Saeed"
-                    width={720}
-                    height={188}
-                    className={`pointer-events-none w-auto max-w-[min(720px,calc(100vw-32rem))] transition-all duration-300 ${
-                      isScrolled
-                        ? 'h-[clamp(3rem,4.2vw,4.5rem)] max-h-[72px]'
-                        : 'h-[clamp(3.35rem,5vw,5.75rem)] max-h-[92px]'
-                    }`}
-                    priority
-                  />
-                </LocaleLink>
-              )}
-            </div>
+            {/* Spacer on mobile so row 2 layout matches (brand already centered above) */}
+            <div className="min-w-0 flex-1 lg:hidden" aria-hidden />
 
             {/* Right: Full utilities when horizontal nav is visible */}
             <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-5 lg:flex">
@@ -648,8 +642,8 @@ export default function Header() {
                       alt="Bint Saeed"
                       width={520}
                       height={136}
-                      className="h-[clamp(3.25rem,12vw,5.5rem)] w-auto max-h-[88px]"
-                    />
+                    className="h-[clamp(3.25rem,12vw,5.5rem)] w-auto max-h-[100px]"
+                  />
                   </div>
                 ) : (
                   <LocaleLink href="/home" onClick={() => setIsMobileMenuOpen(false)} className="block max-w-[min(420px,78vw)]">
@@ -658,7 +652,7 @@ export default function Header() {
                       alt="Bint Saeed"
                       width={520}
                       height={136}
-                      className="h-[clamp(3.25rem,12vw,5.5rem)] w-auto max-h-[88px]"
+                      className="h-[clamp(3.25rem,12vw,5.5rem)] w-auto max-h-[100px]"
                     />
                   </LocaleLink>
                 )}

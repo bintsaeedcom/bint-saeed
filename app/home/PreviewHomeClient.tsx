@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import {
   motion,
   useScroll,
@@ -9,7 +9,6 @@ import {
   useReducedMotion,
   useMotionValue,
   useSpring,
-  useMotionTemplate,
 } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
@@ -19,124 +18,13 @@ import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import type { Product } from '@/data/products'
 
-// Reusable decorative corner component (from Coming Soon)
-function DecorativeCorners({ color = 'dustyBlue' }: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
-  const colorClass = color === 'dustyBlue' 
-    ? 'from-brand-dustyBlue/40' 
-    : color === 'darkRed' 
-    ? 'from-brand-darkRed/30' 
-    : 'from-brand-stone/40'
-  
-  return (
-    <>
-      <motion.div 
-        className="absolute top-8 left-8 w-16 h-16 md:w-24 md:h-24 pointer-events-none"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-      >
-        <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r ${colorClass} to-transparent`} />
-        <div className={`absolute top-0 left-0 w-px h-full bg-gradient-to-b ${colorClass} to-transparent`} />
-      </motion.div>
-      <motion.div 
-        className="absolute top-8 right-8 w-16 h-16 md:w-24 md:h-24 pointer-events-none"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.1 }}
-      >
-        <div className={`absolute top-0 right-0 w-full h-px bg-gradient-to-l ${colorClass} to-transparent`} />
-        <div className={`absolute top-0 right-0 w-px h-full bg-gradient-to-b ${colorClass} to-transparent`} />
-      </motion.div>
-      <motion.div 
-        className="absolute bottom-8 left-8 w-16 h-16 md:w-24 md:h-24 pointer-events-none"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.2 }}
-      >
-        <div className={`absolute bottom-0 left-0 w-full h-px bg-gradient-to-r ${colorClass} to-transparent`} />
-        <div className={`absolute bottom-0 left-0 w-px h-full bg-gradient-to-t ${colorClass} to-transparent`} />
-      </motion.div>
-      <motion.div 
-        className="absolute bottom-8 right-8 w-16 h-16 md:w-24 md:h-24 pointer-events-none"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.3 }}
-      >
-        <div className={`absolute bottom-0 right-0 w-full h-px bg-gradient-to-l ${colorClass} to-transparent`} />
-        <div className={`absolute bottom-0 right-0 w-px h-full bg-gradient-to-t ${colorClass} to-transparent`} />
-      </motion.div>
-    </>
-  )
+/** Corner brackets / full-bleed grid stripes removed — typography uses border-s + border-b on copy only (see hero). */
+function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
+  return null
 }
 
-function SectionStripes({
-  variant = 'default',
-}: {
-  variant?: 'default' | 'hero' | 'soft' | 'bold'
-}) {
-  const ref = useRef<HTMLDivElement | null>(null)
-  const reduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-  const driftA = useTransform(scrollYProgress, [0, 1], [0, 10])
-  const driftB = useTransform(scrollYProgress, [0, 1], [0, -8])
-  const pulse = useTransform(scrollYProgress, [0, 0.5, 1], [0.78, 1, 0.8])
-
-  const styles =
-    variant === 'hero'
-      ? {
-          v1: 'left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent',
-          v2: 'right-[7%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/45 to-transparent',
-          h1: 'left-10 right-10 top-16 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent',
-          h2: 'left-10 right-10 bottom-14 h-px bg-gradient-to-r from-transparent via-white/22 to-transparent',
-        }
-      : variant === 'soft'
-      ? {
-          v1: 'left-[7%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/30 to-transparent',
-          v2: 'right-[8%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-clayRed/25 to-transparent',
-          h1: 'left-[8%] right-[8%] top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent',
-          h2: 'left-[8%] right-[8%] bottom-0 h-px bg-gradient-to-r from-transparent via-brand-clayRed/20 to-transparent',
-        }
-      : variant === 'bold'
-      ? {
-          v1: 'left-[5%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/55 to-transparent',
-          v2: 'right-[5%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/40 to-transparent',
-          h1: 'left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/45 to-transparent',
-          h2: 'left-6 right-6 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/35 to-transparent',
-        }
-      : {
-          v1: 'left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/36 to-transparent',
-          v2: 'right-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-stone/35 to-transparent',
-          h1: 'left-[7%] right-[7%] top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent',
-          h2: 'left-[7%] right-[7%] bottom-0 h-px bg-gradient-to-r from-transparent via-brand-stone/26 to-transparent',
-        }
-
-  return (
-    <div ref={ref} className="pointer-events-none absolute inset-0" aria-hidden>
-      <motion.div
-        style={reduceMotion ? undefined : { y: driftA, opacity: pulse }}
-        className={`absolute ${styles.v1}`}
-      />
-      <motion.div
-        style={reduceMotion ? undefined : { y: driftB, opacity: pulse }}
-        className={`absolute ${styles.v2}`}
-      />
-      <motion.div
-        style={reduceMotion ? undefined : { x: driftA, opacity: pulse }}
-        className={`absolute ${styles.h1}`}
-      />
-      <motion.div
-        style={reduceMotion ? undefined : { x: driftB, opacity: pulse }}
-        className={`absolute ${styles.h2}`}
-      />
-    </div>
-  )
+function SectionStripes(_props?: { variant?: 'default' | 'hero' | 'soft' | 'bold' }) {
+  return null
 }
 
 function MagneticWrap({
@@ -196,22 +84,19 @@ function ScrollMaskImage({
     target: ref,
     offset: ['start 95%', 'end 15%'],
   })
-  const topInset = useTransform(scrollYProgress, [0, 0.2, 1], [20, 0, 0])
-  const bottomInset = useTransform(scrollYProgress, [0, 0.8, 1], [16, 0, 0])
   const imageScale = useTransform(scrollYProgress, [0, 1], [1.08, 1])
   const imageY = useTransform(scrollYProgress, [0, 1], [22, -10])
   const veilOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.28, 0.05, 0])
-  const clipPath = useMotionTemplate`inset(${topInset}% 0% ${bottomInset}% 0%)`
 
   return (
     <div ref={ref} className={`relative h-full w-full overflow-hidden ${className}`}>
       <motion.div
-        style={reduceMotion ? undefined : { clipPath }}
-        className="pointer-events-none absolute inset-0"
+        style={reduceMotion ? undefined : { y: imageY, scale: imageScale }}
+        className="pointer-events-none absolute inset-0 will-change-transform"
       >
-        <motion.div style={reduceMotion ? undefined : { y: imageY, scale: imageScale }} className="relative h-full w-full">
+        <div className="relative h-full w-full">
           <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
-        </motion.div>
+        </div>
       </motion.div>
       <motion.div
         style={reduceMotion ? undefined : { opacity: veilOpacity }}
@@ -297,7 +182,7 @@ export default function Home() {
   const { isRTL } = useLanguage()
   
   return (
-    <div className={`relative overflow-hidden ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`relative min-h-0 overflow-x-clip ${isRTL ? 'rtl' : 'ltr'}`}>
       <HeroSection />
       <EditorialIntro />
       <MagazineGrid />
@@ -345,10 +230,19 @@ function CampaignPanoramaSection() {
   )
 }
 
+const QUICK_SHOP_LOOP_MS = 72_000
+
 function QuickShopCarousel() {
   const { isRTL } = useLanguage()
+  const reduceMotion = useReducedMotion()
   const [isPaused, setIsPaused] = useState(false)
   const [catalog, setCatalog] = useState<Product[]>(staticProducts)
+  const [segmentPx, setSegmentPx] = useState(0)
+  /** 0–100 phase through one loop (matches former marquee: half of duplicated track) */
+  const [phasePct, setPhasePct] = useState(0)
+  const [scrubbing, setScrubbing] = useState(false)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const loopStartRef = useRef(0)
 
   useEffect(() => {
     let cancelled = false
@@ -366,8 +260,45 @@ function QuickShopCarousel() {
 
   const quickProducts = catalog.slice(0, 8)
 
+  useLayoutEffect(() => {
+    const el = trackRef.current
+    if (!el || quickProducts.length === 0) return
+    const measure = () => {
+      const w = el.scrollWidth
+      if (w > 0) setSegmentPx(w / 2)
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [quickProducts])
+
+  useEffect(() => {
+    if (reduceMotion || segmentPx <= 0 || scrubbing || isPaused) return
+    loopStartRef.current = performance.now() - (phasePct / 100) * QUICK_SHOP_LOOP_MS
+    let id = 0
+    const tick = (now: number) => {
+      const t = (now - loopStartRef.current) % QUICK_SHOP_LOOP_MS
+      setPhasePct((t / QUICK_SHOP_LOOP_MS) * 100)
+      id = requestAnimationFrame(tick)
+    }
+    id = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(id)
+    // phasePct read only for loop sync when deps change — not listed to avoid restarting every frame
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reduceMotion, segmentPx, scrubbing, isPaused])
+
+  const translatePx =
+    segmentPx > 0
+      ? isRTL
+        ? -(1 - phasePct / 100) * segmentPx
+        : -(phasePct / 100) * segmentPx
+      : 0
+
+  const sliderLabel = isRTL ? 'تحريك المعرض' : 'Scroll the curated selection'
+
   return (
-    <section className="relative bg-[#f7f4ef] pb-14 pt-20 md:pb-18 md:pt-24 lg:pb-20 lg:pt-28">
+    <section className="relative bg-brand-pageCanvas pb-14 pt-20 md:pb-18 md:pt-24 lg:pb-20 lg:pt-28">
       <SectionStripes variant="soft" />
       <div className="mx-auto mb-8 max-w-[1600px] px-6 lg:px-14">
         <p className="text-center font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed">
@@ -375,8 +306,8 @@ function QuickShopCarousel() {
         </p>
       </div>
 
-      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-10 bg-gradient-to-r from-[#f7f4ef] to-transparent md:w-16 lg:w-20" />
-      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-10 bg-gradient-to-l from-[#f7f4ef] to-transparent md:w-16 lg:w-20" />
+      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-10 bg-gradient-to-r from-brand-pageCanvas to-transparent md:w-16 lg:w-20" />
+      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-10 bg-gradient-to-l from-brand-pageCanvas to-transparent md:w-16 lg:w-20" />
 
       <div
         className="relative z-[3] overflow-hidden"
@@ -386,8 +317,12 @@ function QuickShopCarousel() {
         onBlurCapture={() => setIsPaused(false)}
       >
         <div
-          className={`quick-shop-track ${isRTL ? 'quick-shop-track-rtl' : ''}`}
-          style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
+          ref={trackRef}
+          className="quick-shop-track"
+          style={{
+            transform: `translate3d(${translatePx}px,0,0)`,
+            willChange: segmentPx > 0 ? 'transform' : undefined,
+          }}
         >
           {[...quickProducts, ...quickProducts].map((product, idx) => (
             <LocaleLink
@@ -449,30 +384,53 @@ function QuickShopCarousel() {
         </div>
       </div>
 
+      {quickProducts.length > 0 ? (
+        <div className="pointer-events-auto relative z-[4] mx-auto mt-8 max-w-xl px-8 md:px-10">
+          <label
+            htmlFor="quick-shop-carousel-scrub"
+            className="mb-2 block text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed/55"
+          >
+            {sliderLabel}
+          </label>
+          <input
+            id="quick-shop-carousel-scrub"
+            type="range"
+            min={0}
+            max={100}
+            step={0.25}
+            value={phasePct}
+            disabled={segmentPx <= 0}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(phasePct)}
+            dir={isRTL ? 'rtl' : 'ltr'}
+            className="h-3 w-full cursor-pointer appearance-none rounded-full bg-brand-stone/25 accent-brand-darkRed disabled:cursor-not-allowed disabled:opacity-40 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-brand-darkRed/30 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-sm [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-brand-darkRed/30 [&::-moz-range-thumb]:bg-white"
+            onChange={(e) => setPhasePct(Number(e.target.value))}
+            onPointerDown={() => setScrubbing(true)}
+            onPointerUp={(e) => {
+              const v = Number((e.target as HTMLInputElement).value)
+              setPhasePct(v)
+              setScrubbing(false)
+              loopStartRef.current = performance.now() - (v / 100) * QUICK_SHOP_LOOP_MS
+            }}
+            onPointerCancel={() => setScrubbing(false)}
+            onFocus={() => setScrubbing(true)}
+            onBlur={(e) => {
+              const v = Number((e.target as HTMLInputElement).value)
+              setPhasePct(v)
+              setScrubbing(false)
+              loopStartRef.current = performance.now() - (v / 100) * QUICK_SHOP_LOOP_MS
+            }}
+          />
+        </div>
+      ) : null}
+
       <style jsx>{`
         .quick-shop-track {
           display: flex;
           width: max-content;
           padding: 0 0.4rem;
-          animation: quickShopMarquee 72s linear infinite;
           touch-action: manipulation;
-        }
-        .quick-shop-track-rtl {
-          animation-direction: reverse;
-        }
-        @keyframes quickShopMarquee {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .quick-shop-track {
-            animation: none;
-            transform: translateX(0);
-          }
         }
       `}</style>
     </section>
@@ -495,15 +453,16 @@ function HeroSection() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2])
   const titleY = useTransform(scrollYProgress, [0, 1], [0, 20])
   const titleTracking = useTransform(scrollYProgress, [0, 1], ['0.06em', '0.11em'])
-  const titleBlur = useTransform(scrollYProgress, [0, 1], [0, 1.6])
-  const titleFilter = useMotionTemplate`blur(${titleBlur}px)`
   const introX = useTransform(scrollYProgress, [0, 1], [0, 14])
 
   return (
     <section ref={ref} className="relative h-[100svh] w-full">
       <SectionStripes variant="hero" />
       {/* Background — pointer-events-none so scaled layer never steals clicks from hero links */}
-      <motion.div style={{ scale }} className="pointer-events-none absolute inset-0 overflow-hidden">
+      <motion.div
+        style={{ scale }}
+        className="pointer-events-none absolute inset-0 overflow-hidden will-change-transform"
+      >
         <Image
           src="/hero-image.JPG"
           alt="Bint Saeed"
@@ -535,10 +494,6 @@ function HeroSection() {
         />
       </motion.div>
 
-      {/* Thin editorial frame — lighter touch than corner brackets */}
-      <div className="pointer-events-none absolute inset-4 sm:inset-6 md:inset-8 border border-brand-ivory/[0.14]" aria-hidden />
-      <DecorativeCorners color="dustyBlue" />
-
       {/* Content — parallax on copy only; CTA stays untransformed for reliable hit-testing */}
       <div className="relative z-20 flex h-full items-center pb-16 pt-24 lg:items-end lg:pb-24 lg:pt-0">
         <div className="container mx-auto w-full px-6 lg:px-16">
@@ -550,7 +505,7 @@ function HeroSection() {
                   initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  style={reduceMotion ? undefined : { y: titleY, letterSpacing: titleTracking, filter: titleFilter }}
+                  style={reduceMotion ? undefined : { y: titleY, letterSpacing: titleTracking }}
                   className="mb-8 max-w-[100vw] font-rozha uppercase leading-[1.12] tracking-[0.06em] !text-brand-ivory text-[clamp(0.7rem,calc(0.35rem+2.15vw),2.65rem)] sm:text-[clamp(0.85rem,calc(0.4rem+2.35vw),2.75rem)] md:text-[clamp(0.95rem,calc(0.45rem+2.5vw),2.85rem)] md:whitespace-nowrap"
                 >
                   {heroHeadline}
@@ -627,13 +582,9 @@ function EditorialIntro() {
 
   return (
     <section ref={ref} className="relative overflow-hidden bg-white py-24 md:py-32 lg:py-36">
-      <SectionStripes variant="default" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,1)_0%,rgba(248,244,238,0.9)_100%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_110%_70%_at_18%_12%,rgba(146,170,193,0.2)_0%,transparent_58%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_65%_at_82%_84%,rgba(193,144,134,0.16)_0%,transparent_62%)]" />
-      <div className="pointer-events-none absolute inset-y-0 left-[7%] w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/45 to-transparent" />
-      <div className="pointer-events-none absolute left-[7%] top-0 h-px w-28 bg-gradient-to-r from-brand-dustyBlue/50 to-transparent" />
-      <div className="pointer-events-none absolute right-[8%] bottom-[16%] h-px w-24 bg-gradient-to-l from-brand-clayRed/40 to-transparent" />
 
       <div className="relative container mx-auto px-6 lg:px-16">
         <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
@@ -644,20 +595,22 @@ function EditorialIntro() {
             style={{ y: panelY }}
             className={`lg:col-span-5 ${isRTL ? 'lg:col-start-8' : ''}`}
           >
-            <div className="relative border border-brand-stone/25 bg-[#fbf9f6] p-7 shadow-[0_18px_45px_rgba(35,18,23,0.06)] md:p-10">
+            <div className="relative border border-brand-stone/20 bg-[#fbf9f6] p-7 shadow-[0_18px_45px_rgba(35,18,23,0.06)] md:p-10">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_8%_10%,rgba(146,170,193,0.1)_0%,transparent_55%)]" />
-              <div className="pointer-events-none absolute -left-px top-0 h-full w-[2px] bg-gradient-to-b from-brand-dustyBlue/10 via-brand-dustyBlue/65 to-brand-dustyBlue/10" />
-              <div className="pointer-events-none absolute right-0 top-0 h-px w-24 bg-gradient-to-l from-brand-dustyBlue/55 to-transparent" />
-              <span className="relative mb-6 block font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
-                Manifesto
-              </span>
-              <h2 className="mb-8 font-rozha text-3xl leading-[1.15] text-brand-darkRed md:text-4xl">
-                {MANIFESTO_LEAD}
-              </h2>
-              <div className="space-y-6 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
-                {MANIFESTO_PARAGRAPHS.map((paragraph, i) => (
-                  <p key={i}>{paragraph}</p>
-                ))}
+              <div
+                className={`relative ${isRTL ? 'border-e border-brand-dustyBlue/35 pe-5 md:pe-6' : 'border-s border-brand-dustyBlue/35 ps-5 md:ps-6'}`}
+              >
+                <span className="relative mb-6 block font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
+                  Manifesto
+                </span>
+                <h2 className="mb-8 font-rozha text-3xl leading-[1.15] text-brand-darkRed md:text-4xl">
+                  {MANIFESTO_LEAD}
+                </h2>
+                <div className="space-y-6 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
+                  {MANIFESTO_PARAGRAPHS.map((paragraph, i) => (
+                    <p key={i}>{paragraph}</p>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -675,19 +628,9 @@ function EditorialIntro() {
                 alt="Heritage meets modernity"
                 sizes="(max-width: 1024px) 92vw, 39rem"
               />
-              <div className="pointer-events-none absolute -bottom-6 -left-6 h-full w-full border border-brand-dustyBlue/45" />
-              <div className="pointer-events-none absolute -right-4 -top-4 h-full w-full border border-white/45" />
             </motion.div>
           </motion.div>
         </div>
-      </div>
-      <div className="pointer-events-none absolute top-1/2 right-5 hidden -translate-y-1/2 xl:block">
-        <span
-          className="font-rozha text-8xl leading-none rotate-180 bg-[linear-gradient(180deg,#1F0508_0%,#3B0A12_38%,#2a1216_58%,#92aac1_100%)] bg-clip-text text-transparent opacity-[0.84]"
-          style={{ writingMode: 'vertical-rl' }}
-        >
-          BINT SAEED
-        </span>
       </div>
     </section>
   )
@@ -706,9 +649,6 @@ function MagazineGrid() {
 
   return (
     <section ref={ref} className="relative overflow-hidden bg-white py-14 md:py-18">
-      <SectionStripes variant="soft" />
-      <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-
       <div className="container mx-auto px-6 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -874,45 +814,34 @@ function EditorialSplit() {
               priority={false}
             />
           </div>
-          <div className="pointer-events-none absolute top-0 left-0 z-[2] h-full w-1 bg-gradient-to-b from-brand-dustyBlue via-brand-dustyBlue/50 to-transparent" />
         </motion.div>
 
         {/* Right - Content with elegant gradient */}
-        <div className="relative bg-gradient-to-br from-white via-brand-rose/10 to-brand-stone/30 flex items-center overflow-hidden">
-          <SectionStripes variant="soft" />
-          {/* Decorative dusty blue corner */}
-          <motion.div 
-            className="absolute top-8 right-8 w-20 h-20 md:w-24 md:h-24"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <div className="pointer-events-none absolute top-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue/40 to-transparent" />
-            <div className="pointer-events-none absolute top-0 right-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue/40 to-transparent" />
-          </motion.div>
-          
+        <div className="relative flex items-center overflow-hidden bg-gradient-to-br from-white via-brand-rose/10 to-brand-stone/30">
           <motion.div
             initial={{ opacity: 0, x: 60 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, delay: 0.2 }}
             className={`p-12 lg:p-20 ${isRTL ? 'text-right' : ''}`}
           >
-            <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-darkRed/55">
-              HOUSE LANGUAGE
-            </span>
-            <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed leading-[1.1] mb-10 md:mb-12">
-              The Codes
-            </h2>
-
-            {/* Feature list — same dusty blue rules as previous lifestyle items */}
-            <div className="mb-12 space-y-5 md:mb-14">
-              {CODES_LIST_ITEMS.map((item, i) => (
-                <div key={i} className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <div className="h-px w-10 shrink-0 bg-brand-dustyBlue/65 md:w-12" aria-hidden />
-                  <span className="font-montserrat text-sm text-brand-darkRed/80 tracking-wide">{item}</span>
-                </div>
-              ))}
+            <div
+              className={`mb-8 md:mb-10 ${isRTL ? 'border-e border-brand-dustyBlue/35 pe-5 md:pe-6' : 'border-s border-brand-dustyBlue/35 ps-5 md:ps-6'}`}
+            >
+              <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-darkRed/55">
+                HOUSE LANGUAGE
+              </span>
+              <h2 className="font-rozha text-4xl leading-[1.1] text-brand-darkRed md:text-5xl">
+                The Codes
+              </h2>
             </div>
+
+            <ul className={`mb-12 space-y-3 md:mb-14 ${isRTL ? 'list-inside text-right' : ''}`}>
+              {CODES_LIST_ITEMS.map((item) => (
+                <li key={item} className="font-montserrat text-sm tracking-wide text-brand-darkRed/80">
+                  {item}
+                </li>
+              ))}
+            </ul>
 
             <p className="mb-12 max-w-md font-montserrat text-sm tracking-wide text-brand-darkRed/72 md:mb-14">
               Recognised without introduction.
@@ -921,7 +850,7 @@ function EditorialSplit() {
             <MagneticWrap className="w-fit">
               <LocaleLink
                 href="/the-codes"
-                className={`group inline-flex items-center gap-3 px-8 py-4 bg-brand-dustyBlue text-[#1F0508] font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-brand-ivory transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`group inline-flex min-h-[44px] items-center gap-3 py-2 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed transition-colors duration-300 border-b border-brand-darkRed/35 hover:border-brand-dustyBlue hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
                 data-analytics-event="click_view_collection_codes_page"
                 data-analytics-section="home-codes-section"
@@ -942,11 +871,6 @@ function CollectionStrip() {
   
   return (
     <section className="relative overflow-hidden py-6 bs-burgundy-surface">
-      <SectionStripes variant="hero" />
-      {/* Dusty blue accent lines */}
-      <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-      
       <motion.div
         animate={{ x: ['0%', '-50%'] }}
         transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
@@ -990,15 +914,9 @@ function CreatedForYouSection() {
 
   return (
     <section ref={ref} className="relative overflow-hidden py-24 md:py-36 lg:py-40">
-      <SectionStripes variant="bold" />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#ebe8df_40%,#e2ded2_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-brand-pageCanvas" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_12%_10%,rgba(146,170,193,0.16)_0%,transparent_48%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_86%_82%,rgba(193,144,134,0.10)_0%,transparent_60%)]" />
-      <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/25 to-transparent" />
-
-      <DecorativeCorners color="dustyBlue" />
-
       <div className="relative container mx-auto px-6 lg:px-16">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
           <motion.div
@@ -1009,23 +927,22 @@ function CreatedForYouSection() {
             className={`flex justify-center ${isRTL ? 'lg:order-2' : 'lg:order-1'}`}
           >
             <div className="relative w-full max-w-xl lg:max-w-[36rem]">
-              <div className="pointer-events-none absolute -left-3 -top-3 h-[44%] w-[46%] border border-brand-dustyBlue/25" />
-              <div className="pointer-events-none absolute -bottom-3 -right-3 h-[36%] w-[44%] border border-brand-stone/35" />
-              <div className="relative overflow-hidden border border-[#d8d1c6] bg-[#f8f5ef]/96 shadow-[0_20px_56px_rgba(18,8,11,0.14)] ring-1 ring-white/70">
+              <div className="relative overflow-hidden border border-[#d8d1c6] bg-[#f8f5ef]/96 shadow-[0_20px_56px_rgba(18,8,11,0.14)]">
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.7)_0%,rgba(243,238,228,0.86)_48%,rgba(233,226,213,0.82)_100%)]" />
-                <div className="pointer-events-none absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-brand-dustyBlue/28 via-brand-dustyBlue/65 to-brand-dustyBlue/22" />
                 <div
-                  className={`relative flex flex-col gap-8 px-10 py-12 text-center sm:px-12 md:py-14 ${isRTL ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'}`}
+                  className={`relative flex flex-col gap-8 px-10 py-12 sm:px-12 md:py-14 ${isRTL ? 'items-end text-right' : 'items-start text-left'}`}
                 >
-                  <span className="font-montserrat text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/75">
-                    Bint Saeed
-                  </span>
-                  <h2 className="font-rozha text-3xl text-balance text-brand-darkRed tracking-[-0.02em] sm:text-4xl md:text-[2.35rem] md:leading-[1.12]">
-                    CARRIED CLOSE
-                  </h2>
                   <div
-                    className={`mx-auto max-w-md space-y-5 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/80 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
+                    className={`${isRTL ? 'border-e border-brand-dustyBlue/35 pe-5 md:pe-6' : 'border-s border-brand-dustyBlue/35 ps-5 md:ps-6'}`}
                   >
+                    <span className="font-montserrat text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/75">
+                      Bint Saeed
+                    </span>
+                    <h2 className="mt-3 font-rozha text-3xl text-balance text-brand-darkRed tracking-[-0.02em] sm:text-4xl md:mt-4 md:text-[2.35rem] md:leading-[1.12]">
+                      CARRIED CLOSE
+                    </h2>
+                  </div>
+                  <div className="max-w-md space-y-5 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/80 lg:max-w-lg">
                     <p>Some things are not meant to be seen, but kept close.</p>
                     <p>
                       Each Bint Saeed piece includes a discreet space within it, where a name, a date, or a private
@@ -1034,16 +951,21 @@ function CreatedForYouSection() {
                     </p>
                     <p>A gesture that turns what you wear into something personal.</p>
                   </div>
-                  <div className="flex w-full flex-col items-center gap-6 sm:gap-7 lg:items-stretch">
-                    <MagneticWrap className={isRTL ? 'lg:self-end' : 'lg:self-start'}>
+                  <div
+                    className={`flex w-full flex-col gap-6 sm:gap-7 ${isRTL ? 'items-end lg:items-stretch' : 'items-start lg:items-stretch'}`}
+                  >
+                    <MagneticWrap className={isRTL ? 'self-end' : 'self-start'}>
                       <LocaleLink
                         href="/personalisation"
-                        className="inline-flex items-center justify-center border border-brand-dustyBlue/60 bg-brand-dustyBlue px-8 py-4 font-montserrat text-xs uppercase tracking-[0.18em] text-[#1F0508] shadow-[0_10px_24px_rgba(146,170,193,0.38)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-brand-stone"
+                        className={`group inline-flex min-h-[44px] items-center gap-3 border-b border-brand-darkRed/35 py-2 font-montserrat text-xs uppercase tracking-[0.18em] text-brand-darkRed transition-colors duration-300 hover:border-brand-dustyBlue hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
                         data-cursor-hover
                         data-analytics-event="click_personalisation_teaser"
                         data-analytics-section="home-personalisation-teaser"
                       >
                         DISCOVER PERSONALISATION
+                        <FiArrowRight
+                          className={`h-4 w-4 transition-transform duration-300 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
+                        />
                       </LocaleLink>
                     </MagneticWrap>
                     <p className="font-montserrat text-[11px] uppercase tracking-[0.22em] text-brand-dustyBlue/75">
@@ -1071,9 +993,6 @@ function CreatedForYouSection() {
                   sizes="(max-width: 1024px) 90vw, 36rem"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1F0508]/28 via-transparent to-transparent" />
-                <div className="pointer-events-none absolute inset-3 border border-white/38" />
-                <div className="pointer-events-none absolute -top-4 -right-4 h-full w-full border border-brand-dustyBlue/42" />
-                <div className="pointer-events-none absolute -bottom-4 -left-4 h-full w-full border border-white/55" />
               </motion.div>
             </div>
           </motion.div>

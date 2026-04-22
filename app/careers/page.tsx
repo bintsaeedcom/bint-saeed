@@ -3,10 +3,7 @@ import { FiArrowRight } from 'react-icons/fi'
 
 export default function CareersPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(165deg,#f7f5f0_0%,#eceae3_42%,#e3e0d6_100%)] pt-32">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_12%_10%,rgba(146,170,193,0.16)_0%,transparent_48%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_86%_82%,rgba(193,144,134,0.1)_0%,transparent_60%)]" />
-
+    <div className="relative min-h-screen overflow-x-clip bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8">
       <section className="relative container mx-auto px-6 pb-20 lg:px-16 lg:pb-28">
         <span className="mb-6 block font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
           Bint Saeed
@@ -35,6 +32,6 @@ export default function CareersPage() {
           </LocaleLink>
         </div>
       </section>
-    </main>
+    </div>
   )
 }

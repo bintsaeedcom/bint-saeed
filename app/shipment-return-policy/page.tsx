@@ -21,11 +21,7 @@ export default function ShipmentReturnPolicyPage() {
   const { t, isRTL } = useLanguage()
 
   return (
-    <div className={`relative min-h-screen pb-20 pt-32 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-brand-stone/10 blur-3xl" />
-      <div className="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-brand-dustyBlue/5 blur-3xl" />
-      <div className="absolute right-1/4 top-1/2 h-64 w-64 rounded-full bg-brand-stone/8 blur-3xl" />
-
+    <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="relative mx-auto max-w-4xl px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
@@ -35,7 +31,7 @@ export default function ShipmentReturnPolicyPage() {
         >
           <LocaleLink
             href="/"
-            className={`group inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`group inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-neutral-600 transition-colors hover:text-neutral-900 ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft
@@ -51,14 +47,14 @@ export default function ShipmentReturnPolicyPage() {
           transition={{ duration: 0.8 }}
           className="mb-12 text-center"
         >
-          <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue">
+          <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-neutral-500">
             Legal
           </span>
-          <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-brand-darkRed md:text-6xl">
+          <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-neutral-900 md:text-6xl">
             Shipment & Return Policy
           </h1>
-          <p className="font-montserrat tracking-wide text-brand-clayRed">Last updated: January 2026</p>
-          <p className="mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/80">
+          <p className="font-montserrat tracking-wide text-neutral-700">Last updated: May 2026</p>
+          <p className="mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600">
             This policy sets out shipping timelines, return eligibility, and remedy pathways for made-to-order and
             in-stock items purchased through Bint Saeed.
           </p>
@@ -68,27 +64,27 @@ export default function ShipmentReturnPolicyPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="rounded-2xl border border-brand-stone/20 bg-white p-8 shadow-lg md:p-12"
+          className="rounded-sm border border-neutral-200 bg-white p-8 shadow-sm md:p-12"
         >
-          <div className={`space-y-9 font-montserrat text-[13px] tracking-wide text-brand-clayRed leading-relaxed ${isRTL ? 'text-right' : ''}`}>
-            <section className="rounded-xl border border-brand-stone/25 bg-[#faf8f5] p-5 md:p-6">
-              <h2 className="mb-2 font-rozha text-xl text-brand-darkRed">Summary Notice</h2>
-              <p className="text-sm text-brand-clayRed/85">
+          <div className={`space-y-9 font-montserrat text-[13px] leading-relaxed tracking-wide text-neutral-800 ${isRTL ? 'text-right' : ''}`}>
+            <section className="rounded-sm border border-neutral-200 bg-neutral-50 p-5 md:p-6">
+              <h2 className="mb-2 font-rozha text-xl text-neutral-900">Summary Notice</h2>
+              <p className="text-sm text-neutral-600">
                 Bint Saeed pieces are primarily made to order, so cancellation and return rights are limited after
                 production begins, subject to mandatory legal remedies for defective or materially non-conforming goods.
               </p>
             </section>
 
-            <div className="grid gap-2 rounded-xl border border-brand-stone/20 p-5 md:grid-cols-2 md:gap-3 md:p-6">
+            <div className="grid gap-2 rounded-sm border border-neutral-200 p-5 md:grid-cols-2 md:gap-3 md:p-6">
               {SECTION_LIST.map((item) => (
-                <p key={item} className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed/80">
+                <p key={item} className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-600">
                   {item}
                 </p>
               ))}
             </div>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">1. Opening Statement</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">1. Opening Statement</h2>
               <p>
                 Each Bint Saeed piece is created on demand, following the specific request and selection of the client.
                 Production begins only after an order is confirmed.
@@ -96,7 +92,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">2. General Policy</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">2. General Policy</h2>
               <p>Due to the made-to-order nature of Bint Saeed items:</p>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li>We do not accept returns on made-to-order or personalised pieces.</li>
@@ -110,7 +106,7 @@ export default function ShipmentReturnPolicyPage() {
               </p>
               <p className="mt-3">
                 For eligible in-stock items only, return requests must be reported to{' '}
-                <a href="mailto:return@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                <a href="mailto:return@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
                   return@bintsaeed.com
                 </a>{' '}
                 within 14 days after purchase. Shipping fees are not covered.
@@ -118,7 +114,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
                 3. Exceptions (UAE Consumer Protection Alignment)
               </h2>
               <p>In accordance with applicable laws in the United Arab Emirates, exceptions may apply where:</p>
@@ -142,7 +138,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">4. Non-Eligible Cases</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">4. Non-Eligible Cases</h2>
               <p>The following are not valid grounds for return or refund:</p>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li>Change of mind.</li>
@@ -154,7 +150,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">5. EU Clients – Right of Withdrawal</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">5. EU Clients – Right of Withdrawal</h2>
               <p>
                 For clients based in the European Union, general consumer regulations may provide a 14-day right of
                 withdrawal for online purchases.
@@ -171,7 +167,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">6. EU Exception (Defective Items Only)</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">6. EU Exception (Defective Items Only)</h2>
               <p>In the event of a manufacturing defect:</p>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li>Clients must notify us within 48 hours of delivery.</li>
@@ -181,7 +177,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">7. Final Acknowledgment</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">7. Final Acknowledgment</h2>
               <p>
                 By placing an order with Bint Saeed, the client confirms understanding and acceptance of the made-to-order
                 nature of products and the limitations regarding returns and refunds.
@@ -189,7 +185,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">8. Shipping Timelines and Force Majeure</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">8. Shipping Timelines and Force Majeure</h2>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li>Made-to-order pieces are usually shipped within 2 weeks after order placement.</li>
                 <li>In-stock items (including selected jewellery) are usually shipped within 1-3 business days.</li>
@@ -202,15 +198,15 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">9. Contact</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">9. Contact</h2>
               <p>
                 For shipment, return, and defect claims, contact{' '}
-                <a href="mailto:return@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                <a href="mailto:return@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
                   return@bintsaeed.com
                 </a>
                 . Please include your order details and clear photos where applicable. Our team will follow up with next steps.
               </p>
-              <p className="mt-4 text-xs text-brand-clayRed/70">
+              <p className="mt-4 text-xs text-neutral-500">
                 Legal drafting note: this policy is provided for operational transparency and should be reviewed by
                 qualified counsel for jurisdiction-specific enforcement scenarios.
               </p>

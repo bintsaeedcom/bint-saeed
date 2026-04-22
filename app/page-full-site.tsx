@@ -326,7 +326,7 @@ function ColorBlockSection() {
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
       {/* Neutral paper-beige field (replaces split clay / burgundy blocks) */}
-      <div className="absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#eceae3_42%,#e3e0d6_100%)]" />
+      <div className="absolute inset-0 bg-brand-pageCanvas" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,rgba(255,255,255,0.55)_0%,transparent_45%)]" />
 
       <div className="relative container mx-auto px-6 lg:px-16 py-32">
@@ -373,7 +373,7 @@ function ColorBlockSection() {
               </p>
               <LocaleLink
                 href="/about"
-                className="inline-block px-10 py-4 border border-brand-darkRed/25 text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white hover:border-brand-darkRed transition-all duration-500"
+                className="inline-flex min-h-[52px] items-center justify-center px-10 py-4 border border-brand-darkRed/25 text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white hover:border-brand-darkRed transition-all duration-500"
                 data-cursor-hover
               >
                 {t.about.readMore}

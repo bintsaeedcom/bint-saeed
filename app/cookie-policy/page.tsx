@@ -32,11 +32,7 @@ export default function CookiePolicyPage() {
   const activeTrackers = getEnabledTrackersFromEnv()
 
   return (
-    <div className={`relative min-h-screen pb-20 pt-32 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-brand-stone/10 blur-3xl" />
-      <div className="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-brand-dustyBlue/5 blur-3xl" />
-      <div className="absolute right-1/4 top-1/2 h-64 w-64 rounded-full bg-brand-stone/8 blur-3xl" />
-
+    <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="relative mx-auto max-w-4xl px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
@@ -46,7 +42,7 @@ export default function CookiePolicyPage() {
         >
           <LocaleLink
             href="/"
-            className={`group inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`group inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-neutral-600 transition-colors hover:text-neutral-900 ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft
@@ -62,14 +58,14 @@ export default function CookiePolicyPage() {
           transition={{ duration: 0.8 }}
           className="mb-12 text-center"
         >
-          <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue">
+          <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-neutral-500">
             Legal
           </span>
-          <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-brand-darkRed md:text-6xl">
+          <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-neutral-900 md:text-6xl">
             Cookie Policy
           </h1>
-          <p className="font-montserrat tracking-wide text-brand-clayRed">Last updated: January 2026</p>
-          <p className="mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/80">
+          <p className="font-montserrat tracking-wide text-neutral-700">Last updated: May 2026</p>
+          <p className="mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600">
             This policy explains how Bint Saeed uses cookies and similar technologies. We request consent before
             setting non-essential cookies and provide controls to manage preferences.
           </p>
@@ -79,27 +75,27 @@ export default function CookiePolicyPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="rounded-2xl border border-brand-stone/20 bg-white p-8 shadow-lg md:p-12"
+          className="rounded-sm border border-neutral-200 bg-white p-8 shadow-sm md:p-12"
         >
-          <div className={`space-y-9 font-montserrat text-[13px] tracking-wide text-brand-clayRed leading-relaxed ${isRTL ? 'text-right' : ''}`}>
-            <section className="rounded-xl border border-brand-stone/25 bg-[#faf8f5] p-5 md:p-6">
-              <h2 className="mb-2 font-rozha text-xl text-brand-darkRed">About This Cookie Policy</h2>
-              <p className="text-sm text-brand-clayRed/85">
+          <div className={`space-y-9 font-montserrat text-[13px] leading-relaxed tracking-wide text-neutral-800 ${isRTL ? 'text-right' : ''}`}>
+            <section className="rounded-sm border border-neutral-200 bg-neutral-50 p-5 md:p-6">
+              <h2 className="mb-2 font-rozha text-xl text-neutral-900">About This Cookie Policy</h2>
+              <p className="text-sm text-neutral-600">
                 Our cookie controls are designed to align with UAE legal requirements and GDPR/ePrivacy consent
                 expectations for relevant users, including users located in the EU.
               </p>
             </section>
 
-            <div className="grid gap-2 rounded-xl border border-brand-stone/20 p-5 md:grid-cols-2 md:gap-3 md:p-6">
+            <div className="grid gap-2 rounded-sm border border-neutral-200 p-5 md:grid-cols-2 md:gap-3 md:p-6">
               {SECTION_LIST.map((item) => (
-                <p key={item} className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed/80">
+                <p key={item} className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-600">
                   {item}
                 </p>
               ))}
             </div>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">1. What Are Cookies</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">1. What Are Cookies</h2>
               <p>
                 Cookies are small text files placed on your device when you visit a website. They support secure
                 functionality, remember preferences, and may help us understand aggregated usage patterns.
@@ -107,28 +103,28 @@ export default function CookiePolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">2. Essential Cookies (Always Active)</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">2. Essential Cookies (Always Active)</h2>
               <p className="mb-4">
                 These cookies are necessary for core website operation, security, checkout, and consent management.
                 They are set regardless of optional analytics consent.
               </p>
-              <div className="overflow-x-auto rounded-xl border border-brand-stone/30">
+              <div className="overflow-x-auto rounded-sm border border-neutral-200">
                 <table className="w-full min-w-[640px] border-collapse">
                   <thead>
-                    <tr className="bg-[#faf8f5] text-left">
-                      <th className="border-b border-brand-stone/25 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">Cookie / Key</th>
-                      <th className="border-b border-brand-stone/25 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">Purpose</th>
-                      <th className="border-b border-brand-stone/25 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">Provider</th>
-                      <th className="border-b border-brand-stone/25 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">Retention</th>
+                    <tr className="bg-neutral-50 text-left">
+                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">Cookie / Key</th>
+                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">Purpose</th>
+                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">Provider</th>
+                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">Retention</th>
                     </tr>
                   </thead>
                   <tbody>
                     {ESSENTIAL_COOKIES.map((cookie) => (
                       <tr key={cookie.name} className="align-top">
-                        <td className="border-b border-brand-stone/20 px-4 py-3 font-mono text-[12px] text-brand-darkRed">{cookie.name}</td>
-                        <td className="border-b border-brand-stone/20 px-4 py-3 text-sm text-brand-clayRed/90">{cookie.purpose}</td>
-                        <td className="border-b border-brand-stone/20 px-4 py-3 text-sm text-brand-clayRed/90">{cookie.provider}</td>
-                        <td className="border-b border-brand-stone/20 px-4 py-3 text-sm text-brand-clayRed/90">{cookie.duration}</td>
+                        <td className="border-b border-neutral-200 px-4 py-3 font-mono text-[12px] text-neutral-900">{cookie.name}</td>
+                        <td className="border-b border-neutral-200 px-4 py-3 text-sm text-neutral-700">{cookie.purpose}</td>
+                        <td className="border-b border-neutral-200 px-4 py-3 text-sm text-neutral-700">{cookie.provider}</td>
+                        <td className="border-b border-neutral-200 px-4 py-3 text-sm text-neutral-700">{cookie.duration}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -137,7 +133,7 @@ export default function CookiePolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">3. Analytics and Behavioral Cookies (Optional)</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">3. Analytics and Behavioral Cookies (Optional)</h2>
               <p>
                 Optional analytics and behavioral cookies are loaded only after consent through our cookie controls.
                 Without consent, these tools do not run in tracking mode.
@@ -145,11 +141,11 @@ export default function CookiePolicyPage() {
               {activeTrackers.length > 0 ? (
                 <div className="mt-4 space-y-4">
                   {activeTrackers.map((tracker) => (
-                    <div key={tracker.key} className="rounded-xl border border-brand-stone/25 p-4">
-                      <p className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
+                    <div key={tracker.key} className="rounded-sm border border-neutral-200 p-4">
+                      <p className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">
                         {tracker.title}
                       </p>
-                      <p className="mt-1 text-sm text-brand-clayRed/85">{tracker.description}</p>
+                      <p className="mt-1 text-sm text-neutral-600">{tracker.description}</p>
                       <ul className={`mt-3 list-disc space-y-1.5 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                         {tracker.cookies.map((cookie) => (
                           <li key={`${tracker.key}-${cookie.name}`}>
@@ -161,14 +157,14 @@ export default function CookiePolicyPage() {
                   ))}
                 </div>
               ) : (
-                <p className="mt-3 text-sm text-brand-clayRed/85">
+                <p className="mt-3 text-sm text-neutral-600">
                   No optional analytics trackers are currently enabled in this environment.
                 </p>
               )}
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">4. Third-Party Services and Cookies</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">4. Third-Party Services and Cookies</h2>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li><strong>Stripe:</strong> payment processing and fraud-prevention cookies for checkout security.</li>
                 <li><strong>Analytics providers:</strong> activated only when configured and consent is granted.</li>
@@ -177,7 +173,7 @@ export default function CookiePolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">5. Cookie Consent and Preference Management</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">5. Cookie Consent and Preference Management</h2>
               <p>
                 On first visit, you can accept all cookies or essential only. Your preferences are stored and can be
                 changed later. If you decline optional categories, non-essential trackers are not loaded in tracking
@@ -186,7 +182,7 @@ export default function CookiePolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">6. Withdrawing or Changing Consent</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">6. Withdrawing or Changing Consent</h2>
               <p>
                 You can change preferences by reopening cookie controls or by clearing site cookies/local storage and
                 revisiting the website. You can also use browser controls to block cookies.
@@ -200,7 +196,7 @@ export default function CookiePolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">7. Cookie Retention</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">7. Cookie Retention</h2>
               <p>
                 Cookie retention differs by purpose and provider. Session cookies are removed when sessions end, while
                 persistent cookies may remain up to their defined expiry period.
@@ -208,7 +204,7 @@ export default function CookiePolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">8. Policy Updates</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">8. Policy Updates</h2>
               <p>
                 We may update this Cookie Policy to reflect legal, technical, or operational changes. Material updates
                 will be reflected by a revised “Last updated” date and, where required, renewed consent prompts.
@@ -216,20 +212,20 @@ export default function CookiePolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">9. Contact</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">9. Contact</h2>
               <p>If you have questions about this Cookie Policy or cookie controls, contact:</p>
               <p className="mt-4">
                 <strong>Bint Saeed</strong><br />
                 Legal Inquiries:{' '}
-                <a href="mailto:legal@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                <a href="mailto:legal@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
                   legal@bintsaeed.com
                 </a><br />
                 General Inquiries:{' '}
-                <a href="mailto:contact@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                <a href="mailto:contact@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
                   contact@bintsaeed.com
                 </a>
               </p>
-              <p className="mt-4 text-xs text-brand-clayRed/70">
+              <p className="mt-4 text-xs text-neutral-500">
                 Legal drafting note: this cookie policy should be reviewed by qualified counsel where local
                 ePrivacy/cookie-law requirements apply beyond baseline UAE/GDPR alignment.
               </p>

@@ -35,28 +35,8 @@ const heritageItems = [
   },
 ]
 
-function DecorativeCorners({ color = 'dustyBlue' }: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
-  const c = color === 'dustyBlue' ? 'from-brand-dustyBlue/40' : color === 'darkRed' ? 'from-brand-darkRed/30' : 'from-brand-stone/40'
-  return (
-    <>
-      <motion.div className="absolute top-8 left-8 w-16 h-16 md:w-24 md:h-24 pointer-events-none" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1 }}>
-        <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r ${c} to-transparent`} />
-        <div className={`absolute top-0 left-0 w-px h-full bg-gradient-to-b ${c} to-transparent`} />
-      </motion.div>
-      <motion.div className="absolute top-8 right-8 w-16 h-16 md:w-24 md:h-24 pointer-events-none" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.1 }}>
-        <div className={`absolute top-0 right-0 w-full h-px bg-gradient-to-l ${c} to-transparent`} />
-        <div className={`absolute top-0 right-0 w-px h-full bg-gradient-to-b ${c} to-transparent`} />
-      </motion.div>
-      <motion.div className="absolute bottom-8 left-8 w-16 h-16 md:w-24 md:h-24 pointer-events-none" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.2 }}>
-        <div className={`absolute bottom-0 left-0 w-full h-px bg-gradient-to-r ${c} to-transparent`} />
-        <div className={`absolute bottom-0 left-0 w-px h-full bg-gradient-to-t ${c} to-transparent`} />
-      </motion.div>
-      <motion.div className="absolute bottom-8 right-8 w-16 h-16 md:w-24 md:h-24 pointer-events-none" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.3 }}>
-        <div className={`absolute bottom-0 right-0 w-full h-px bg-gradient-to-l ${c} to-transparent`} />
-        <div className={`absolute bottom-0 right-0 w-px h-full bg-gradient-to-t ${c} to-transparent`} />
-      </motion.div>
-    </>
-  )
+function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
+  return null
 }
 
 export default function HeritagePage() {
@@ -155,7 +135,7 @@ function HeritageGrid() {
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative py-20 md:py-32 bg-[#faf9f7]">
+    <section ref={ref} className="relative py-20 md:py-32 bg-brand-pageCanvas">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/25 to-transparent" />
       <div className="container mx-auto px-6 lg:px-16">
         <div className="space-y-28 md:space-y-36">
@@ -176,7 +156,6 @@ function HeritageGrid() {
                         {isRTL ? item.tag.ar : item.tag.en}
                       </span>
                     </div>
-                    <div className={`absolute -bottom-3 ${index % 2 === 1 ? 'right-0 lg:right-auto lg:left-0' : 'left-0'} w-2/3 h-full border-2 border-brand-dustyBlue/20 rounded-2xl -z-10`} />
                   </div>
                   <div className={`${index % 2 === 1 ? 'lg:order-1' : ''} ${isRTL ? 'text-right' : ''}`}>
                     <span className="font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue mb-4 block">{isRTL ? item.subtitle.ar : item.subtitle.en}</span>
@@ -239,17 +218,14 @@ function BrandConnectionSection() {
               <div className="space-y-4">
                 <div className="relative aspect-[3/4] overflow-hidden rounded-xl">
                   <Image src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&q=90" alt="Heritage" fill className="object-cover" />
-                  <div className="absolute inset-0 border border-brand-dustyBlue/20 rounded-xl" />
                 </div>
               </div>
               <div className="space-y-4 pt-12">
                 <div className="relative aspect-square overflow-hidden rounded-xl">
                   <Image src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&q=90" alt="Al Talli embroidery" fill className="object-cover" />
-                  <div className="absolute inset-0 border border-brand-dustyBlue/20 rounded-xl" />
                 </div>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
                   <Image src="https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&q=90" alt="Khous" fill className="object-cover" />
-                  <div className="absolute inset-0 border border-brand-dustyBlue/20 rounded-xl" />
                 </div>
               </div>
             </div>
@@ -286,7 +262,7 @@ function HeritageCTA() {
           </p>
           <LocaleLink
             href="/shop?from=heritage"
-            className={`inline-flex items-center gap-3 px-12 py-5 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white transition-all duration-500 rounded-xl ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex min-h-[52px] items-center justify-center gap-3 px-12 py-5 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white transition-all duration-500 rounded-xl ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             {isRTL ? 'تسوقي الآن' : 'Shop Now'}

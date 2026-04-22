@@ -26,11 +26,7 @@ export default function TermsPage() {
   const { t, isRTL } = useLanguage()
 
   return (
-    <div className={`relative min-h-screen pb-20 pt-32 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-brand-stone/10 blur-3xl" />
-      <div className="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-brand-dustyBlue/5 blur-3xl" />
-      <div className="absolute right-1/4 top-1/2 h-64 w-64 rounded-full bg-brand-stone/8 blur-3xl" />
-
+    <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="relative mx-auto max-w-4xl px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
@@ -40,7 +36,7 @@ export default function TermsPage() {
         >
           <LocaleLink
             href="/"
-            className={`group inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`group inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-neutral-600 transition-colors hover:text-neutral-900 ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft
@@ -56,14 +52,14 @@ export default function TermsPage() {
           transition={{ duration: 0.8 }}
           className="mb-12 text-center"
         >
-          <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue">
+          <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-neutral-500">
             Legal
           </span>
-          <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-brand-darkRed md:text-6xl">
+          <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-neutral-900 md:text-6xl">
             Terms & Conditions
           </h1>
-          <p className="font-montserrat tracking-wide text-brand-clayRed">Last updated: January 2026</p>
-          <p className="mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/80">
+          <p className="font-montserrat tracking-wide text-neutral-700">Last updated: May 2026</p>
+          <p className="mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600">
             These Terms govern access to and use of the Bint Saeed website, products, and related services. They are
             drafted for clarity, commercial certainty, and compliance with applicable UAE legal requirements.
           </p>
@@ -73,27 +69,27 @@ export default function TermsPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="rounded-2xl border border-brand-stone/20 bg-white p-8 shadow-lg md:p-12"
+          className="rounded-sm border border-neutral-200 bg-white p-8 shadow-sm md:p-12"
         >
-          <div className={`space-y-9 font-montserrat text-[13px] tracking-wide text-brand-clayRed leading-relaxed ${isRTL ? 'text-right' : ''}`}>
-            <section className="rounded-xl border border-brand-stone/25 bg-[#faf8f5] p-5 md:p-6">
-              <h2 className="mb-2 font-rozha text-xl text-brand-darkRed">Summary Notice</h2>
-              <p className="text-sm text-brand-clayRed/85">
+          <div className={`space-y-9 font-montserrat text-[13px] leading-relaxed tracking-wide text-neutral-800 ${isRTL ? 'text-right' : ''}`}>
+            <section className="rounded-sm border border-neutral-200 bg-neutral-50 p-5 md:p-6">
+              <h2 className="mb-2 font-rozha text-xl text-neutral-900">Summary Notice</h2>
+              <p className="text-sm text-neutral-600">
                 By using this website or placing an order, you agree to these Terms. If you do not agree, please do
                 not use the site.
               </p>
             </section>
 
-            <div className="grid gap-2 rounded-xl border border-brand-stone/20 p-5 md:grid-cols-2 md:gap-3 md:p-6">
+            <div className="grid gap-2 rounded-sm border border-neutral-200 p-5 md:grid-cols-2 md:gap-3 md:p-6">
               {SECTION_LIST.map((item) => (
-                <p key={item} className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed/80">
+                <p key={item} className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-600">
                   {item}
                 </p>
               ))}
             </div>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">1. Scope and Acceptance</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">1. Scope and Acceptance</h2>
               <p>
                 These Terms and Conditions apply to all visitors, users, and customers who access or use the Bint
                 Saeed website, content, products, and related services. By accessing this website, creating an
@@ -102,7 +98,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">2. Eligibility and Account Responsibility</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">2. Eligibility and Account Responsibility</h2>
               <p>
                 You must have legal capacity to enter into binding agreements under applicable law. If you create an
                 account, you are responsible for maintaining the confidentiality of your login credentials and for all
@@ -116,7 +112,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">3. Products, Availability, and Pricing</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">3. Products, Availability, and Pricing</h2>
               <p>
                 We aim to present product details, availability, and pricing accurately. However, occasional errors may
                 occur. Product display images are illustrative and may vary slightly due to lighting, screen
@@ -131,7 +127,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">4. Orders, Payment, and Verification</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">4. Orders, Payment, and Verification</h2>
               <p>
                 Submission of an order request does not constitute final acceptance by Bint Saeed. An order is
                 accepted when we issue an order confirmation and payment authorization is successfully completed.
@@ -145,7 +141,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">5. Shipping, Delivery, and Risk Transfer</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">5. Shipping, Delivery, and Risk Transfer</h2>
               <p>
                 Delivery windows are estimates and are not guaranteed. Delays may occur due to logistics, customs,
                 public holidays, weather, or events outside our reasonable control.
@@ -158,7 +154,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">6. Returns, Repairs and Order Finality</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">6. Returns, Repairs and Order Finality</h2>
               <p>
                 Return and repair handling is governed by our Shipment & Return Policy. All clients should review the
                 full policy before ordering.
@@ -170,7 +166,7 @@ export default function TermsPage() {
               </ul>
               <p className="mt-3">
                 Full policy:{' '}
-                <LocaleLink href="/shipment-return-policy" className="text-brand-clayRed underline hover:text-brand-dustyBlue" data-cursor-hover>
+                <LocaleLink href="/shipment-return-policy" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950" data-cursor-hover>
                   Shipment & Return Policy
                 </LocaleLink>
                 .
@@ -178,7 +174,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">7. Personalisation and Custom Work</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">7. Personalisation and Custom Work</h2>
               <p>
                 By submitting any personalisation text, you confirm you have the right to use that content and that it
                 does not infringe third-party rights or violate applicable laws. We may reject personalisation requests
@@ -187,7 +183,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">8. Intellectual Property</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">8. Intellectual Property</h2>
               <p className="mb-4">
                 All website content, creative assets, designs, photography, trademarks, text, and technical materials
                 are owned by or licensed to Bint Saeed and are protected by applicable intellectual property laws.
@@ -197,7 +193,7 @@ export default function TermsPage() {
                 <li>No use of brand elements, product images, or proprietary material in derivative work without approval.</li>
                 <li>
                   Permission requests can be sent to{' '}
-                  <a href="mailto:legal@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                  <a href="mailto:legal@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
                     legal@bintsaeed.com
                   </a>
                   .
@@ -206,7 +202,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">9. Permitted and Prohibited Use</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">9. Permitted and Prohibited Use</h2>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li>You may use this website only for lawful, personal, and legitimate commercial browsing/purchase activity.</li>
                 <li>Any unlawful access, attempted interference, bot abuse, or fraudulent behavior is prohibited.</li>
@@ -215,7 +211,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">10. Charitable Contribution Statement</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">10. Charitable Contribution Statement</h2>
               <p>
                 Where charitable contribution statements are communicated on-site or in product communications, such
                 statements describe our intended social-impact allocation model and do not alter your purchase price
@@ -224,7 +220,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">11. Disclaimers and Limitation of Liability</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">11. Disclaimers and Limitation of Liability</h2>
               <p>
                 To the fullest extent permitted by applicable law, the website and services are provided on an "as is"
                 and "as available" basis without warranties of uninterrupted operation.
@@ -244,7 +240,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">12. Indemnity</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">12. Indemnity</h2>
               <p>
                 You agree to indemnify and hold harmless Bint Saeed from claims, liabilities, losses, and costs arising
                 from your breach of these Terms, misuse of the website, or violation of applicable law.
@@ -252,12 +248,12 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">13. Governing Law and Jurisdiction</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">13. Governing Law and Jurisdiction</h2>
               <p>
                 These Terms are governed by the laws of the United Arab Emirates. Subject to mandatory consumer
                 protection rights under applicable law, disputes shall fall under the competent courts of the UAE.
               </p>
-              <p className="mt-3 text-[13px] text-brand-clayRed/80">
+              <p className="mt-3 text-[13px] text-neutral-600">
                 For regulatory clarity, this website is operated by a company registered in Abu Dhabi, United Arab
                 Emirates, holding commercial license number CN-6384424 issued by the Abu Dhabi Registration Authority
                 (ADRA).
@@ -265,7 +261,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">14. Changes, Severability, and Contact</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">14. Changes, Severability, and Contact</h2>
               <p>
                 We may revise these Terms from time to time. Updated versions are effective from publication on this
                 page. If any provision is held unenforceable, remaining provisions remain in full force.
@@ -273,15 +269,15 @@ export default function TermsPage() {
               <p className="mt-4">
                 <strong>Bint Saeed</strong><br />
                 Legal Inquiries:{' '}
-                <a href="mailto:legal@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                <a href="mailto:legal@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
                   legal@bintsaeed.com
                 </a><br />
                 General Inquiries:{' '}
-                <a href="mailto:contact@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                <a href="mailto:contact@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
                   contact@bintsaeed.com
                 </a>
               </p>
-              <p className="mt-4 text-xs text-brand-clayRed/70">
+              <p className="mt-4 text-xs text-neutral-500">
                 Legal drafting note: these terms should be reviewed by qualified counsel before high-risk market
                 expansion or jurisdiction-specific dispute handling.
               </p>

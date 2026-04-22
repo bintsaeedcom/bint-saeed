@@ -9,7 +9,7 @@ export default function AccountPage() {
   const { isRTL } = useLanguage()
 
   return (
-    <div className="min-h-screen bg-[#faf9f7] pt-28 pb-24">
+    <div className="min-h-screen bg-brand-pageCanvas pt-28 pb-24">
       <div className="container mx-auto max-w-2xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 12 }}

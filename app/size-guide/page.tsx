@@ -49,12 +49,9 @@ export default function SizeGuidePage() {
   const [selected, setSelected] = useState<(typeof SIZE_HEADERS)[number] | null>(null)
 
   return (
-    <div className={`relative min-h-screen overflow-hidden bg-[#f7f4ef] ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="pointer-events-none absolute inset-y-0 left-[4%] w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/30 to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-[4%] w-px bg-gradient-to-b from-transparent via-brand-clayRed/25 to-transparent" />
-      <section className="relative border-b border-brand-stone/25 pt-32 pb-14 md:pb-16">
+    <div className={`relative min-h-screen overflow-hidden bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
+      <section className="relative border-b border-brand-stone/25 pb-14 pt-8 md:pt-12 md:pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_70%_at_20%_8%,rgba(146,170,193,0.12)_0%,transparent_56%)]" />
-        <div className="absolute inset-y-0 left-[6%] w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/40 to-transparent" />
         <div className="container relative mx-auto px-6 lg:px-12">
           <LocaleLink
             href="/shop"
@@ -82,7 +79,6 @@ export default function SizeGuidePage() {
         <div className="container mx-auto grid gap-10 px-6 lg:grid-cols-12 lg:gap-12 lg:px-12">
           <div className="lg:col-span-7">
             <div className="relative border border-brand-stone/25 bg-white/72 p-4 md:p-5">
-              <div className="pointer-events-none absolute inset-0 border border-white/55" />
               <MeasurementTable
                 title="Body Measurements - Inch"
                 selected={selected}
@@ -92,7 +88,6 @@ export default function SizeGuidePage() {
             </div>
 
             <div className="relative mt-6 border border-brand-stone/25 bg-white/72 p-4 md:p-5">
-              <div className="pointer-events-none absolute inset-0 border border-white/55" />
               <MeasurementTable
                 title="Body Measurements - CM"
                 selected={selected}
@@ -105,7 +100,6 @@ export default function SizeGuidePage() {
               International Conversions
             </h3>
             <div className="relative overflow-x-auto border border-brand-stone/28 bg-white/78">
-              <div className="pointer-events-none absolute inset-0 border border-white/55" />
               <table className="min-w-[690px] w-full">
                 <thead>
                   <tr className="bg-brand-stone/25">

@@ -10,122 +10,13 @@ import { FiArrowDown, FiArrowLeft } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { trackEvent } from '@/lib/analytics/tracking'
 
-/** Matches `/home` editorial framing — dusty blue corner brackets */
-function DecorativeCorners({ color = 'dustyBlue' }: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
-  const colorClass =
-    color === 'dustyBlue'
-      ? 'from-brand-dustyBlue/40'
-      : color === 'darkRed'
-        ? 'from-brand-darkRed/30'
-        : 'from-brand-stone/40'
-
-  return (
-    <>
-      <motion.div
-        className="pointer-events-none absolute left-6 top-6 h-14 w-14 md:left-10 md:top-10 md:h-20 md:w-20"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-      >
-        <div className={`absolute left-0 top-0 h-full w-px bg-gradient-to-b ${colorClass} to-transparent`} />
-        <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r ${colorClass} to-transparent`} />
-      </motion.div>
-      <motion.div
-        className="pointer-events-none absolute right-6 top-6 h-14 w-14 md:right-10 md:top-10 md:h-20 md:w-20"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.1 }}
-      >
-        <div className={`absolute right-0 top-0 h-full w-px bg-gradient-to-b ${colorClass} to-transparent`} />
-        <div className={`absolute right-0 top-0 h-px w-full bg-gradient-to-l ${colorClass} to-transparent`} />
-      </motion.div>
-      <motion.div
-        className="pointer-events-none absolute bottom-6 left-6 h-14 w-14 md:bottom-10 md:left-10 md:h-20 md:w-20"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.2 }}
-      >
-        <div className={`absolute bottom-0 left-0 h-full w-px bg-gradient-to-t ${colorClass} to-transparent`} />
-        <div className={`absolute bottom-0 left-0 h-px w-full bg-gradient-to-r ${colorClass} to-transparent`} />
-      </motion.div>
-      <motion.div
-        className="pointer-events-none absolute bottom-6 right-6 h-14 w-14 md:bottom-10 md:right-10 md:h-20 md:w-20"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.3 }}
-      >
-        <div className={`absolute bottom-0 right-0 h-full w-px bg-gradient-to-t ${colorClass} to-transparent`} />
-        <div className={`absolute bottom-0 right-0 h-px w-full bg-gradient-to-l ${colorClass} to-transparent`} />
-      </motion.div>
-    </>
-  )
+/** Editorial grid / corner brackets disabled site-wide — use border-s + border-b on copy only. */
+function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
+  return null
 }
 
-/** Vertical system lines + horizontal rules — same variants as `/home` */
-function SectionStripes({ variant = 'default' }: { variant?: 'default' | 'hero' | 'soft' | 'bold' }) {
-  const ref = useRef<HTMLDivElement | null>(null)
-  const reduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-  const driftA = useTransform(scrollYProgress, [0, 1], [0, 10])
-  const driftB = useTransform(scrollYProgress, [0, 1], [0, -8])
-  const pulse = useTransform(scrollYProgress, [0, 0.5, 1], [0.78, 1, 0.8])
-
-  const styles =
-    variant === 'hero'
-      ? {
-          v1: 'left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent',
-          v2: 'right-[7%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/45 to-transparent',
-          h1: 'left-10 right-10 top-16 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent',
-          h2: 'left-10 right-10 bottom-14 h-px bg-gradient-to-r from-transparent via-white/22 to-transparent',
-        }
-      : variant === 'soft'
-        ? {
-            v1: 'left-[7%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/30 to-transparent',
-            v2: 'right-[8%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-clayRed/25 to-transparent',
-            h1: 'left-[8%] right-[8%] top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent',
-            h2: 'left-[8%] right-[8%] bottom-0 h-px bg-gradient-to-r from-transparent via-brand-clayRed/20 to-transparent',
-          }
-        : variant === 'bold'
-          ? {
-              v1: 'left-[5%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/55 to-transparent',
-              v2: 'right-[5%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/40 to-transparent',
-              h1: 'left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/45 to-transparent',
-              h2: 'left-6 right-6 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/35 to-transparent',
-            }
-          : {
-              v1: 'left-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-dustyBlue/36 to-transparent',
-              v2: 'right-[6%] top-0 h-full w-px bg-gradient-to-b from-transparent via-brand-stone/35 to-transparent',
-              h1: 'left-[7%] right-[7%] top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent',
-              h2: 'left-[7%] right-[7%] bottom-0 h-px bg-gradient-to-r from-transparent via-brand-stone/26 to-transparent',
-            }
-
-  return (
-    <div ref={ref} className="pointer-events-none absolute inset-0" aria-hidden>
-      <motion.div
-        style={reduceMotion ? undefined : { y: driftA, opacity: pulse }}
-        className={`absolute ${styles.v1}`}
-      />
-      <motion.div
-        style={reduceMotion ? undefined : { y: driftB, opacity: pulse }}
-        className={`absolute ${styles.v2}`}
-      />
-      <motion.div
-        style={reduceMotion ? undefined : { x: driftA, opacity: pulse }}
-        className={`absolute ${styles.h1}`}
-      />
-      <motion.div
-        style={reduceMotion ? undefined : { x: driftB, opacity: pulse }}
-        className={`absolute ${styles.h2}`}
-      />
-    </div>
-  )
+function SectionStripes(_props?: { variant?: 'default' | 'hero' | 'soft' | 'bold' }) {
+  return null
 }
 
 type CodeSection = {
@@ -230,15 +121,13 @@ function ParallaxFramedImage({
       transition={{ duration: 0.6, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
       className={outerClassName}
     >
-      <div ref={clipRef} className={`relative aspect-[4/5] w-full max-w-xl overflow-hidden shadow-[0_22px_56px_rgba(20,8,11,0.12)] ring-1 ring-brand-dustyBlue/25 lg:aspect-[3/4] ${clipFrameClassName}`}>
+      <div ref={clipRef} className={`relative aspect-[4/5] w-full max-w-xl overflow-hidden shadow-[0_22px_56px_rgba(20,8,11,0.12)] lg:aspect-[3/4] ${clipFrameClassName}`}>
         <motion.div
           style={reduceMotion ? undefined : { y, scale }}
           className="absolute inset-0 will-change-transform"
         >
           <Image src={imageSrc} alt={imageAlt} fill className="object-cover" sizes="(min-width: 1024px) 42vw, 92vw" priority={priority} />
         </motion.div>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a0f14]/25 via-transparent to-[#f6f3ef]/10" />
-        <div className="pointer-events-none absolute inset-3 border border-white/35" />
       </div>
     </motion.div>
   )
@@ -287,14 +176,9 @@ export default function TheCodesClient() {
 
   return (
     <main
-      className={`relative min-h-screen overflow-x-hidden bg-[linear-gradient(180deg,#f6f3ef_0%,#efeae3_38%,#e8e2d8_100%)] pb-8 md:pb-16 ${isRTL ? 'rtl' : 'ltr'}`}
+      className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-8 md:pb-16 ${isRTL ? 'rtl' : 'ltr'}`}
     >
-      <SectionStripes variant="soft" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_10%_-10%,rgba(146,170,193,0.22)_0%,transparent_55%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_92%_30%,rgba(193,144,134,0.12)_0%,transparent_50%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-
-      <header className="relative h-[50vh] overflow-hidden bs-burgundy-surface md:h-[60vh]">
+      <header className="relative h-[50vh] overflow-hidden bg-brand-darkRed md:h-[60vh]">
         <Image
           src={codesPageImage('2.PNG')}
           alt="The Codes — hero"
@@ -303,8 +187,7 @@ export default function TheCodesClient() {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1F0508] via-[#3B0A12]/55 to-transparent" />
-        <DecorativeCorners color="dustyBlue" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/50 to-transparent" />
         <div className="relative z-10 flex h-full flex-col justify-end pb-16 md:pb-20">
           <div className="container mx-auto px-6 lg:px-12">
             <motion.div
@@ -315,7 +198,7 @@ export default function TheCodesClient() {
             >
               <LocaleLink
                 href="/home"
-                className={`group inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-ivory/75 transition-colors hover:text-brand-ivory ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`group inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-white/70 transition-colors hover:text-white ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 <FiArrowLeft
@@ -331,13 +214,13 @@ export default function TheCodesClient() {
               transition={{ duration: 0.8 }}
               className={isRTL ? 'text-right' : ''}
             >
-              <span className="mb-4 block font-montserrat text-xs uppercase tracking-[0.4em] text-brand-ivory/65">
+              <span className="mb-4 block font-montserrat text-xs uppercase tracking-[0.4em] text-white/60">
                 House Language
               </span>
-              <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-brand-ivory md:text-7xl lg:text-8xl">
+              <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-white md:text-7xl lg:text-8xl">
                 The Codes
               </h1>
-              <p className="max-w-lg font-montserrat text-base tracking-wide text-brand-ivory/78">
+              <p className="max-w-lg font-montserrat text-base tracking-wide text-white/70">
                 The elements that carry the legacy of the house.
                 <br />
                 Rooted in origin. Defined with precision.
@@ -355,11 +238,7 @@ export default function TheCodesClient() {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="relative mt-2 flex flex-col items-center gap-2 text-brand-darkRed/45"
         >
-          <span className="inline-flex items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.28em]">
-            <span className="h-px w-8 bg-brand-dustyBlue/50" aria-hidden />
-            Scroll
-            <span className="h-px w-8 bg-brand-dustyBlue/50" aria-hidden />
-          </span>
+          <span className="font-montserrat text-[10px] uppercase tracking-[0.28em]">Scroll</span>
           <FiArrowDown className="h-4 w-4 animate-bounce text-brand-dustyBlue/60" aria-hidden />
         </motion.div>
       </div>
@@ -369,8 +248,6 @@ export default function TheCodesClient() {
           const isEven = index % 2 === 0
           const textOrder = isEven ? 'lg:order-1' : 'lg:order-2'
           const imageOrder = isEven ? 'lg:order-2' : 'lg:order-1'
-          const stripeVariant = index % 2 === 0 ? 'soft' : 'default'
-
           return (
             <section
               key={section.id}
@@ -378,12 +255,7 @@ export default function TheCodesClient() {
               className="relative scroll-mt-28 overflow-hidden md:scroll-mt-32"
               aria-labelledby={`${section.id}-heading`}
             >
-              <SectionStripes variant={stripeVariant} />
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/22 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-darkRed/10 to-transparent" />
-
               <div className="container relative z-[1] mx-auto grid max-w-6xl gap-10 px-6 py-14 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-12 lg:py-20">
-                {index === 0 || index === SECTIONS.length - 1 ? <DecorativeCorners color="dustyBlue" /> : null}
                 <motion.div
                   initial={{ opacity: 0, y: 28 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -391,56 +263,56 @@ export default function TheCodesClient() {
                   transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                   className={`${textOrder} max-w-xl ${isRTL ? 'lg:mr-auto lg:ml-0 lg:text-right' : 'lg:ml-auto lg:mr-0'}`}
                 >
-                  <div className={`mb-3 flex items-center gap-3 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
-                    <span className="h-1.5 w-1.5 shrink-0 bg-brand-dustyBlue/80 shadow-[0_0_0_3px_rgba(146,170,193,0.2)]" aria-hidden />
-                    <span className="h-px w-10 shrink-0 bg-brand-dustyBlue/45 md:w-12" aria-hidden />
+                  <div
+                    className={`space-y-4 md:space-y-5 ${isRTL ? 'border-e border-brand-dustyBlue/40 pe-5 md:pe-6' : 'border-s border-brand-dustyBlue/40 ps-5 md:ps-6'}`}
+                  >
                     <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-clayRed/75">
                       {section.eyebrow}
                     </p>
-                  </div>
-                  <h2
-                    id={`${section.id}-heading`}
-                    className="font-rozha text-3xl text-brand-darkRed sm:text-4xl md:text-[2.65rem] md:leading-[1.08]"
-                  >
-                    {section.title}
-                  </h2>
-                  <div className="mt-6 space-y-4 border-s border-brand-dustyBlue/40 ps-5 md:mt-8 md:ps-6">
-                    {section.paragraphs.map((p, i) => (
-                      <p key={i} className="font-montserrat text-sm leading-[1.92] tracking-wide text-brand-darkRed/78">
-                        {p}
-                      </p>
-                    ))}
-                    {expandedTextBySection[section.id] && expandedSections[section.id] ? (
-                      <p className="font-montserrat text-sm leading-[1.92] tracking-wide text-brand-darkRed/78">
-                        {expandedTextBySection[section.id]}
-                      </p>
-                    ) : null}
-                    {expandedTextBySection[section.id] ? (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const eventMap: Record<string, string> = {
-                            'the-monogram': 'click_read_more_monogram',
-                            'al-talli': 'click_read_more_talli',
-                            khous: 'click_read_more_khous',
-                            'al-ain-rosette': 'click_read_more_al_ain_rosette',
-                            'knotted-lines-of-lineage': 'click_read_more_knotted_lineage',
-                          }
-                          const isOpening = !expandedSections[section.id]
-                          if (isOpening && eventMap[section.id]) {
-                            trackEvent(eventMap[section.id], { section_id: section.id })
-                          }
-                          setExpandedSections((prev) => ({
-                            ...prev,
-                            [section.id]: !prev[section.id],
-                          }))
-                        }}
-                        className="inline-flex border border-brand-darkRed/25 bg-white/70 px-5 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
-                        data-cursor-hover
-                      >
-                        Read More
-                      </button>
-                    ) : null}
+                    <h2
+                      id={`${section.id}-heading`}
+                      className="font-rozha text-3xl text-brand-darkRed sm:text-4xl md:text-[2.65rem] md:leading-[1.08]"
+                    >
+                      {section.title}
+                    </h2>
+                    <div className="space-y-4 pt-1 md:space-y-5 md:pt-2">
+                      {section.paragraphs.map((p, i) => (
+                        <p key={i} className="font-montserrat text-sm leading-[1.92] tracking-wide text-brand-darkRed/78">
+                          {p}
+                        </p>
+                      ))}
+                      {expandedTextBySection[section.id] && expandedSections[section.id] ? (
+                        <p className="font-montserrat text-sm leading-[1.92] tracking-wide text-brand-darkRed/78">
+                          {expandedTextBySection[section.id]}
+                        </p>
+                      ) : null}
+                      {expandedTextBySection[section.id] ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const eventMap: Record<string, string> = {
+                              'the-monogram': 'click_read_more_monogram',
+                              'al-talli': 'click_read_more_talli',
+                              khous: 'click_read_more_khous',
+                              'al-ain-rosette': 'click_read_more_al_ain_rosette',
+                              'knotted-lines-of-lineage': 'click_read_more_knotted_lineage',
+                            }
+                            const isOpening = !expandedSections[section.id]
+                            if (isOpening && eventMap[section.id]) {
+                              trackEvent(eventMap[section.id], { section_id: section.id })
+                            }
+                            setExpandedSections((prev) => ({
+                              ...prev,
+                              [section.id]: !prev[section.id],
+                            }))
+                          }}
+                          className="inline-flex min-h-[44px] items-center justify-center border-b border-brand-darkRed/35 bg-transparent px-1 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                          data-cursor-hover
+                        >
+                          Read More
+                        </button>
+                      ) : null}
+                    </div>
                   </div>
                 </motion.div>
 
@@ -467,15 +339,13 @@ export default function TheCodesClient() {
       </div>
 
       <footer className="relative container mx-auto max-w-3xl px-6 pb-24 pt-16 text-center lg:px-12">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/25 to-transparent" />
-        <div className="mx-auto h-px w-24 bg-gradient-to-r from-transparent via-brand-clayRed/40 to-transparent" />
-        <p className="mt-8 font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed/50">
+        <p className="font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed/50">
           Continue the story
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-4">
           <LocaleLink
             href="/shop?from=the-codes"
-            className="inline-flex border border-brand-darkRed/25 bg-white/70 px-8 py-3 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+            className="inline-flex min-h-[44px] items-center justify-center border-b border-brand-darkRed/35 px-2 py-2 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
             data-cursor-hover
             data-analytics-event="click_view_collection_codes_page"
             data-analytics-section="the-codes-footer-cta"

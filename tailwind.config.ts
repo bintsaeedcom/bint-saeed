@@ -23,6 +23,8 @@ const config: Config = {
           clayRed: '#8e4233',
           stone: '#d4bdac',
           rose: '#c19086',
+          /** Warm near-white keyed to header wine — matches `globals.css` `--bs-page-canvas` */
+          pageCanvas: 'var(--bs-page-canvas)',
         }
       },
       fontFamily: {

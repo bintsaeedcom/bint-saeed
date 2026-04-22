@@ -7,6 +7,10 @@ import { FiInstagram, FiArrowRight, FiCheck } from 'react-icons/fi'
 import { FaSnapchat } from 'react-icons/fa6'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 
+/** Same horizontal wine field as `components/Header.tsx` — keeps coming-soon on-brand */
+const headerBarGradient =
+  'bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]'
+
 export default function ComingSoonPage() {
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState('')
@@ -52,96 +56,13 @@ export default function ComingSoonPage() {
   if (!mounted) return null
 
   return (
-    <div className="relative min-h-[100dvh] h-[100dvh] overflow-hidden bs-burgundy-surface">
-      {/* Atmospheric depth — matches global canvas */}
-      <div className="absolute inset-0">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_35%,rgba(90,26,34,0.22)_0%,transparent_55%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(146,170,193,0.08)_0%,_transparent_70%)]" />
+    <div className={`relative min-h-[100dvh] h-[100dvh] overflow-hidden ${headerBarGradient}`}>
+      {/* Depth — same family as header; no extra warm burgundy wash */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_115%_88%_at_50%_-8%,rgba(45,20,30,0.35)_0%,transparent_52%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(146,170,193,0.07)_0%,transparent_68%)]" />
+        <div className="absolute inset-0 shadow-[inset_0_0_96px_rgba(0,0,0,0.36)]" />
       </div>
-
-      {/* Elegant geometric lines */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="transparent" />
-            <stop offset="50%" stopColor="rgba(146,170,193,0.15)" />
-            <stop offset="100%" stopColor="transparent" />
-          </linearGradient>
-          <linearGradient id="lineGradientV" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="transparent" />
-            <stop offset="50%" stopColor="rgba(212,189,172,0.1)" />
-            <stop offset="100%" stopColor="transparent" />
-          </linearGradient>
-        </defs>
-        {/* Horizontal accent lines */}
-        <motion.line 
-          x1="0" y1="25%" x2="100%" y2="25%" 
-          stroke="url(#lineGradient)" strokeWidth="1"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 2, delay: 0.5 }}
-        />
-        <motion.line 
-          x1="0" y1="75%" x2="100%" y2="75%" 
-          stroke="url(#lineGradient)" strokeWidth="1"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 2, delay: 0.7 }}
-        />
-        {/* Vertical accent lines */}
-        <motion.line 
-          x1="15%" y1="0" x2="15%" y2="100%" 
-          stroke="url(#lineGradientV)" strokeWidth="1"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 2, delay: 0.6 }}
-        />
-        <motion.line 
-          x1="85%" y1="0" x2="85%" y2="100%" 
-          stroke="url(#lineGradientV)" strokeWidth="1"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 2, delay: 0.8 }}
-        />
-      </svg>
-
-      {/* Decorative corner frames */}
-      <motion.div 
-        className="absolute top-8 left-8 w-24 h-24 md:w-32 md:h-32"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
-      >
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-brand-dustyBlue/40 to-transparent" />
-        <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue/40 to-transparent" />
-      </motion.div>
-      <motion.div 
-        className="absolute top-8 right-8 w-24 h-24 md:w-32 md:h-32"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.1 }}
-      >
-        <div className="absolute top-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue/40 to-transparent" />
-        <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-brand-dustyBlue/40 to-transparent" />
-      </motion.div>
-      <motion.div 
-        className="absolute bottom-8 left-8 w-24 h-24 md:w-32 md:h-32"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
-      >
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-brand-dustyBlue/40 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-px h-full bg-gradient-to-t from-brand-dustyBlue/40 to-transparent" />
-      </motion.div>
-      <motion.div 
-        className="absolute bottom-8 right-8 w-24 h-24 md:w-32 md:h-32"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.3 }}
-      >
-        <div className="absolute bottom-0 right-0 w-full h-px bg-gradient-to-l from-brand-dustyBlue/40 to-transparent" />
-        <div className="absolute bottom-0 right-0 w-px h-full bg-gradient-to-t from-brand-dustyBlue/40 to-transparent" />
-      </motion.div>
 
       {/* Main Content */}
       <div className="relative h-full flex flex-col items-center justify-center px-6">
@@ -168,13 +89,6 @@ export default function ComingSoonPage() {
             priority
           />
           
-          {/* Elegant line beneath logo */}
-          <motion.div 
-            className="absolute -bottom-4 left-1/2 -translate-x-1/2 h-px bg-gradient-to-r from-transparent via-brand-stone/50 to-transparent"
-            initial={{ width: 0 }}
-            animate={{ width: '80%' }}
-            transition={{ duration: 1.5, delay: 0.8 }}
-          />
         </motion.div>
 
         {/* Coming Soon with letter spacing reveal */}

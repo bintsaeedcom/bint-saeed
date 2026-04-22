@@ -141,7 +141,7 @@ export default function ProductPage() {
 
   if (!product) {
     return (
-      <div className="min-h-screen pt-32 flex items-center justify-center bg-white">
+      <div className="flex min-h-screen items-center justify-center bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8">
         <div className="text-center">
           <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed mb-4">Product Not Found</h1>
           <LocaleLink
@@ -263,7 +263,7 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-brand-pageCanvas">
       {/* Breadcrumb */}
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
         <div className="mx-auto min-w-0 max-w-[1280px] px-6 lg:px-10">

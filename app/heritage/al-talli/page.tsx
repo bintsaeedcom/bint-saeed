@@ -12,7 +12,7 @@ export default function AlTalliPage() {
   const { isRTL } = useLanguage()
   
   return (
-    <div className={`min-h-screen bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
       <HeroSection />
       <AboutTopicNav />
       <StorySection />
@@ -307,7 +307,7 @@ function BintSaeedSection() {
             </div>
             <LocaleLink
               href="/shop?from=heritage-al-talli"
-              className={`inline-flex items-center gap-3 px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors mt-8 ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`mt-8 inline-flex min-h-[52px] items-center justify-center gap-3 px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               {isRTL ? 'تسوقي المجموعة' : 'Shop the Collection'}
@@ -338,14 +338,14 @@ function CTASection() {
           <div className={`flex gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <LocaleLink
               href="/heritage/khous"
-              className="px-6 py-3 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
+              className="inline-flex min-h-[48px] items-center justify-center px-6 py-3 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
               {isRTL ? 'الخوص' : 'Khous'}
             </LocaleLink>
             <LocaleLink
               href="/heritage"
-              className="px-6 py-3 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
+              className="inline-flex min-h-[48px] items-center justify-center px-6 py-3 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
               {isRTL ? 'التراث' : 'Heritage'}

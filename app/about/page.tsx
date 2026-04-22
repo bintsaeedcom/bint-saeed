@@ -8,63 +8,14 @@ import AboutTopicNav from '@/components/AboutTopicNav'
 import { FiArrowDown, FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
-function DecorativeCorners({ color = 'dustyBlue' }: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
-  const c =
-    color === 'dustyBlue'
-      ? 'from-brand-dustyBlue/40'
-      : color === 'darkRed'
-        ? 'from-brand-darkRed/30'
-        : 'from-brand-stone/40'
-  return (
-    <>
-      <motion.div
-        className="pointer-events-none absolute left-8 top-8 h-16 w-16 md:h-24 md:w-24"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-      >
-        <div className={`absolute left-0 top-0 h-full w-px bg-gradient-to-b ${c} to-transparent`} />
-        <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r ${c} to-transparent`} />
-      </motion.div>
-      <motion.div
-        className="pointer-events-none absolute right-8 top-8 h-16 w-16 md:h-24 md:w-24"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.1 }}
-      >
-        <div className={`absolute right-0 top-0 h-full w-px bg-gradient-to-b ${c} to-transparent`} />
-        <div className={`absolute right-0 top-0 h-px w-full bg-gradient-to-l ${c} to-transparent`} />
-      </motion.div>
-      <motion.div
-        className="pointer-events-none absolute bottom-8 left-8 h-16 w-16 md:h-24 md:w-24"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.2 }}
-      >
-        <div className={`absolute bottom-0 left-0 h-full w-px bg-gradient-to-t ${c} to-transparent`} />
-        <div className={`absolute bottom-0 left-0 h-px w-full bg-gradient-to-r ${c} to-transparent`} />
-      </motion.div>
-      <motion.div
-        className="pointer-events-none absolute bottom-8 right-8 h-16 w-16 md:h-24 md:w-24"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.3 }}
-      >
-        <div className={`absolute bottom-0 right-0 h-full w-px bg-gradient-to-t ${c} to-transparent`} />
-        <div className={`absolute bottom-0 right-0 h-px w-full bg-gradient-to-l ${c} to-transparent`} />
-      </motion.div>
-    </>
-  )
+function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
+  return null
 }
 
 export default function AboutPage() {
   const { isRTL } = useLanguage()
   return (
-    <div className={`relative overflow-hidden bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`relative overflow-hidden bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
       <AboutHero />
       <AboutTopicNav />
       <AboutNarrative />
@@ -156,9 +107,8 @@ function AboutNarrative() {
     <article
       id="about-narrative"
       ref={ref}
-      className="relative border-t border-brand-stone/20 bg-[#faf9f7]"
+      className="relative border-t border-brand-stone/20 bg-brand-pageCanvas"
     >
-      <div className="absolute left-0 top-0 hidden h-full w-px bg-gradient-to-b from-brand-dustyBlue/35 via-brand-dustyBlue/15 to-transparent lg:block lg:left-[8%]" />
       <div className="relative mx-auto max-w-[62rem] px-6 py-20 md:py-28 lg:px-8 lg:py-36">
         <p className="mb-16 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue md:mb-20">
           About the house

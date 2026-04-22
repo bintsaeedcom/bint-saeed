@@ -75,7 +75,7 @@ export default function AccessoryDetailPage() {
 
   if (!accessory) {
     return (
-      <div className="min-h-screen pt-32 flex items-center justify-center bg-white">
+      <div className="flex min-h-screen items-center justify-center bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8">
         <div className={`text-center ${isRTL ? 'rtl' : ''}`}>
           <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed mb-4">
             {isRTL ? 'المنتج غير موجود' : 'Product Not Found'}
@@ -173,7 +173,7 @@ export default function AccessoryDetailPage() {
   }, [accessory.category, accessory.id, accessory.price, displayName])
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-brand-pageCanvas">
       {/* Breadcrumb — same shell as `/shop/[id]` */}
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
         <div className="mx-auto min-w-0 max-w-[1280px] px-6 lg:px-10">

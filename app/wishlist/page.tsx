@@ -15,7 +15,7 @@ export default function WishlistPage() {
   const { isRTL } = useLanguage()
 
   return (
-    <div className={`min-h-screen bg-stone-50 pt-28 pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen bg-brand-pageCanvas pt-28 pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="container mx-auto max-w-3xl px-6 lg:px-12">
         <div className={`mb-10 ${isRTL ? 'text-right' : ''}`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">

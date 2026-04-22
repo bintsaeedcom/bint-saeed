@@ -27,11 +27,7 @@ export default function PrivacyPolicyPage() {
   const activeTrackers = getEnabledTrackersFromEnv()
 
   return (
-    <div className={`relative min-h-screen pb-20 pt-32 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-brand-stone/10 blur-3xl" />
-      <div className="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-brand-dustyBlue/5 blur-3xl" />
-      <div className="absolute right-1/4 top-1/2 h-64 w-64 rounded-full bg-brand-stone/8 blur-3xl" />
-
+    <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="relative mx-auto max-w-4xl px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
@@ -41,7 +37,7 @@ export default function PrivacyPolicyPage() {
         >
           <LocaleLink
             href="/"
-            className={`group inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`group inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-neutral-600 transition-colors hover:text-neutral-900 ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             <FiArrowLeft
@@ -57,14 +53,14 @@ export default function PrivacyPolicyPage() {
           transition={{ duration: 0.8 }}
           className="mb-12 text-center"
         >
-          <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue">
+          <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-neutral-500">
             Legal
           </span>
-          <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-brand-darkRed md:text-6xl">
+          <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-neutral-900 md:text-6xl">
             Privacy Policy
           </h1>
-          <p className="font-montserrat tracking-wide text-brand-clayRed">Last updated: January 2026</p>
-          <p className="mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/80">
+          <p className="font-montserrat tracking-wide text-neutral-700">Last updated: May 2026</p>
+          <p className="mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600">
             This Privacy Policy explains how Bint Saeed collects, uses, safeguards, and discloses personal data in
             connection with this website and related services.
           </p>
@@ -74,27 +70,27 @@ export default function PrivacyPolicyPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="rounded-2xl border border-brand-stone/20 bg-white p-8 shadow-lg md:p-12"
+          className="rounded-sm border border-neutral-200 bg-white p-8 shadow-sm md:p-12"
         >
-          <div className={`space-y-9 font-montserrat text-[13px] tracking-wide text-brand-clayRed leading-relaxed ${isRTL ? 'text-right' : ''}`}>
-            <section className="rounded-xl border border-brand-stone/25 bg-[#faf8f5] p-5 md:p-6">
-              <h2 className="mb-2 font-rozha text-xl text-brand-darkRed">Privacy Notice</h2>
-              <p className="text-sm text-brand-clayRed/85">
+          <div className={`space-y-9 font-montserrat text-[13px] leading-relaxed tracking-wide text-neutral-800 ${isRTL ? 'text-right' : ''}`}>
+            <section className="rounded-sm border border-neutral-200 bg-neutral-50 p-5 md:p-6">
+              <h2 className="mb-2 font-rozha text-xl text-neutral-900">Privacy Notice</h2>
+              <p className="text-sm text-neutral-600">
                 We operate within the applicable legal and regulatory framework of the United Arab Emirates while
                 maintaining GDPR-compliant consent handling for relevant users, including users in the European Union.
               </p>
             </section>
 
-            <div className="grid gap-2 rounded-xl border border-brand-stone/20 p-5 md:grid-cols-2 md:gap-3 md:p-6">
+            <div className="grid gap-2 rounded-sm border border-neutral-200 p-5 md:grid-cols-2 md:gap-3 md:p-6">
               {SECTION_LIST.map((item) => (
-                <p key={item} className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed/80">
+                <p key={item} className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-600">
                   {item}
                 </p>
               ))}
             </div>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">1. Privacy Notice and Legal Framework</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">1. Privacy Notice and Legal Framework</h2>
               <p>
                 This policy applies to personal data processed by Bint Saeed through this website, associated customer
                 journeys, and operational communications. It is designed to align with UAE Federal Decree-Law No. 45 of
@@ -103,15 +99,15 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">2. Information We Collect</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">2. Information We Collect</h2>
               <p>We collect information you provide directly and limited technical data collected automatically.</p>
-              <h3 className="mb-2 mt-4 font-montserrat text-sm font-semibold text-brand-darkRed">Personal and order data</h3>
+              <h3 className="mb-2 mt-4 font-montserrat text-sm font-semibold text-neutral-900">Personal and order data</h3>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li>Name, email, phone number, shipping and billing details.</li>
                 <li>Order details, product preferences, and support communications.</li>
                 <li>Personalisation inputs where provided for order fulfilment.</li>
               </ul>
-              <h3 className="mb-2 mt-4 font-montserrat text-sm font-semibold text-brand-darkRed">Technical and usage data</h3>
+              <h3 className="mb-2 mt-4 font-montserrat text-sm font-semibold text-neutral-900">Technical and usage data</h3>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li>IP-derived location signals, browser, device type, and session-level navigation behavior.</li>
                 <li>Cookie and consent preferences used for compliance and website functionality.</li>
@@ -119,7 +115,7 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">3. How We Use Personal Data</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">3. How We Use Personal Data</h2>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li>Process, fulfil, and support customer orders and product enquiries.</li>
                 <li>Provide customer care, transactional communications, and service notices.</li>
@@ -130,7 +126,7 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">4. Legal Basis for Processing</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">4. Legal Basis for Processing</h2>
               <p>Where relevant under GDPR, processing may rely on:</p>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li>Consent, including optional cookie/analytics consent.</li>
@@ -138,13 +134,13 @@ export default function PrivacyPolicyPage() {
                 <li>Legal obligations, including accounting and compliance records.</li>
                 <li>Legitimate interests, including fraud prevention and site security.</li>
               </ul>
-              <p className="mt-3 text-sm text-brand-clayRed/80">
+              <p className="mt-3 text-sm text-neutral-600">
                 Where processing is based on consent, you may withdraw consent at any time.
               </p>
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">5. Sharing and Disclosure</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">5. Sharing and Disclosure</h2>
               <p>We do not sell personal data. We may share data only where necessary, including with:</p>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li>Payment providers, logistics partners, and essential service vendors.</li>
@@ -154,7 +150,7 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">6. Third-Party Services and Processors</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">6. Third-Party Services and Processors</h2>
               <p>
                 We use selected third-party providers to run commerce, communications, infrastructure, and analytics
                 functions. Depending on configuration, this may include payment processing, hosting/CDN, operational
@@ -175,7 +171,7 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">7. Security and Organisational Controls</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">7. Security and Organisational Controls</h2>
               <p>
                 We implement technical and organisational safeguards appropriate to the nature of data we process,
                 including access controls, secure transport, and operational controls for data handling.
@@ -183,7 +179,7 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">8. Your Privacy Rights</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">8. Your Privacy Rights</h2>
               <p>
                 Subject to applicable law, you may request access, correction, deletion, restriction, portability, or
                 objection to certain processing.
@@ -196,7 +192,7 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">9. Cookies and Tracking</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">9. Cookies and Tracking</h2>
               <p>
                 We use essential cookies for website operation and optional cookies for analytics/behavior insights only
                 after consent. For full details, please review our Cookie Policy.
@@ -204,7 +200,7 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">10. Data Retention</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">10. Data Retention</h2>
               <p>
                 We retain personal data only as long as necessary for fulfilment, compliance, security, and record
                 keeping. Certain commerce records may be retained in line with UAE legal/business requirements.
@@ -212,7 +208,7 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">11. International Transfers</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">11. International Transfers</h2>
               <p>
                 Where personal data is processed across jurisdictions, we apply appropriate safeguards and contractual
                 controls consistent with applicable UAE and GDPR transfer expectations.
@@ -220,7 +216,7 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">12. Complaints and Supervisory Authorities</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">12. Complaints and Supervisory Authorities</h2>
               <p>
                 You may lodge a complaint with a competent supervisory authority in your jurisdiction, including UAE
                 authorities where applicable.
@@ -228,7 +224,7 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-brand-darkRed">13. Contact and Policy Updates</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">13. Contact and Policy Updates</h2>
               <p>
                 We may revise this Privacy Policy periodically. Updated versions become effective when published on this
                 page.
@@ -236,15 +232,15 @@ export default function PrivacyPolicyPage() {
               <p className="mt-4">
                 <strong>Bint Saeed</strong><br />
                 Privacy and Legal Inquiries:{' '}
-                <a href="mailto:legal@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                <a href="mailto:legal@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
                   legal@bintsaeed.com
                 </a><br />
                 General Inquiries:{' '}
-                <a href="mailto:contact@bintsaeed.com" className="text-brand-clayRed underline hover:text-brand-dustyBlue">
+                <a href="mailto:contact@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
                   contact@bintsaeed.com
                 </a>
               </p>
-              <p className="mt-4 text-xs text-brand-clayRed/70">
+              <p className="mt-4 text-xs text-neutral-500">
                 Legal drafting note: this policy should be reviewed by qualified counsel before formal legal reliance in
                 new jurisdictions or campaign-specific processing.
               </p>

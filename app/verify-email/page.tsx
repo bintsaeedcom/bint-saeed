@@ -23,7 +23,7 @@ function VerifyEmailContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#faf9f7] flex items-center justify-center px-6 pt-24 pb-16">
+    <div className="min-h-screen bg-brand-pageCanvas flex items-center justify-center px-6 pt-24 pb-16">
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -108,7 +108,7 @@ export default function VerifyEmailPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-[#faf9f7] pt-24 font-montserrat text-brand-clayRed/60">
+        <div className="min-h-screen flex items-center justify-center bg-brand-pageCanvas pt-24 font-montserrat text-brand-clayRed/60">
           Loading…
         </div>
       }

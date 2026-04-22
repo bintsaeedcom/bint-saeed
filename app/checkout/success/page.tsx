@@ -21,7 +21,7 @@ function CheckoutSuccessContent() {
   }, [sessionId, clearCart])
 
   return (
-    <div className="min-h-screen pt-32 pb-20 flex items-center justify-center relative">
+    <div className="relative flex min-h-screen items-center justify-center pb-20 pt-4 sm:pt-6 md:pt-8">
       {/* Subtle background effects */}
       <div className="absolute top-20 right-0 w-96 h-96 bg-brand-stone/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-brand-dustyBlue/5 rounded-full blur-3xl" />
@@ -76,7 +76,7 @@ function CheckoutSuccessContent() {
             <div className="space-y-4">
               <LocaleLink
                 href="/shop"
-                className="inline-flex items-center justify-center gap-2 w-full px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors"
+                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors"
                 data-cursor-hover
               >
                 <FiShoppingBag className="w-4 h-4" />
@@ -84,7 +84,7 @@ function CheckoutSuccessContent() {
               </LocaleLink>
               <LocaleLink
                 href="/"
-                className="inline-block w-full px-8 py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
+                className="inline-flex min-h-[52px] w-full items-center justify-center px-8 py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
                 data-cursor-hover
               >
                 Back to Home
@@ -100,7 +100,7 @@ function CheckoutSuccessContent() {
 export default function CheckoutSuccessPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen pt-32 pb-20 flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center pb-20 pt-4 sm:pt-6 md:pt-8">
         <div className="animate-pulse text-brand-clayRed">Loading...</div>
       </div>
     }>

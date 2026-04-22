@@ -1,7 +1,6 @@
 'use client'
 
 import LocaleLink from '@/components/LocaleLink'
-import { motion } from 'framer-motion'
 import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter } from 'react-icons/fa6'
 import { FiGlobe, FiTruck, FiClock, FiHeart } from 'react-icons/fi'
 import LanguageSwitcher from './LanguageSwitcher'
@@ -44,30 +43,8 @@ export default function Footer() {
       {/* Main Footer Links - Coming Soon Dark Gradient Style */}
       <div className="relative text-white">
         {/* Coming Soon gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1F0508] via-[#3B0A12] to-[#1F0508]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#12080b] via-[#1c0f15] to-[#2d141e]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(146,170,193,0.06)_0%,_transparent_70%)]" />
-        
-        {/* Geometric Lines */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="footerLinksLineH" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="transparent" />
-              <stop offset="50%" stopColor="rgba(146,170,193,0.12)" />
-              <stop offset="100%" stopColor="transparent" />
-            </linearGradient>
-          </defs>
-          <motion.line 
-            x1="0" y1="50%" x2="100%" y2="50%" 
-            stroke="url(#footerLinksLineH)" strokeWidth="1"
-            initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 2 }}
-          />
-        </svg>
-        
-        {/* Dusty blue accent line at top */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 hidden translate-x-[150%] md:flex items-start justify-end">
           <span
             className="origin-top-right rotate-90 whitespace-nowrap font-rozha text-[56px] leading-none tracking-[0.02em] text-transparent opacity-90 lg:text-[68px]"
@@ -252,7 +229,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar - Dark Red with elegant accents */}
-      <div className="relative bg-brand-darkRed">
+      <div className="relative bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]">
         {/* Dusty blue accent line at top */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
         

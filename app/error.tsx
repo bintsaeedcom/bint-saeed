@@ -19,7 +19,7 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(165deg,#f7f5f0_0%,#eeece4_38%,#e3dfd3_100%)] flex items-center justify-center px-4 sm:px-6 safe-area-inset">
+    <div className="min-h-screen bg-brand-pageCanvas flex items-center justify-center px-4 sm:px-6 safe-area-inset">
       <div className="text-center max-w-xl w-full border border-brand-stone/25 bg-white/85 p-8 sm:p-10 shadow-[0_22px_55px_rgba(28,14,18,0.12)] backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

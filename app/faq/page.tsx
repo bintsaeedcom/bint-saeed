@@ -30,7 +30,7 @@ export default function FAQPage() {
   const data = FAQ_BY_LOCALE[language as AppLocale] ?? FAQ_BY_LOCALE.en
 
   return (
-    <div className={`min-h-screen pt-32 pb-20 bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen bg-brand-pageCanvas pb-20 pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="container mx-auto px-6 lg:px-12 max-w-4xl">
         {/* Back Button */}
         <motion.div

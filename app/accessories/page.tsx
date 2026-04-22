@@ -143,7 +143,7 @@ export default function AccessoriesPage() {
   const isAbayaCharmsLayout = activeCategory === 'abaya-charms'
 
   return (
-    <div className={`min-h-screen bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
       {/* Hero Banner */}
       <section className="relative h-[50vh] md:h-[60vh] overflow-hidden bs-burgundy-surface">
         <Image
@@ -156,7 +156,7 @@ export default function AccessoriesPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1F0508] via-[#3B0A12]/55 to-transparent" />
         
-        <div className="relative h-full flex flex-col justify-end pb-16 md:pb-20">
+        <div className="relative h-full flex flex-col justify-end pb-16 md:pb-20 text-white [&_h1]:text-white [&_a]:text-white/90 [&_a:hover]:text-white [&_span]:text-white/80 [&_p]:text-white/85 [&_svg]:text-current">
           <div className="container mx-auto px-6 lg:px-12">
             {/* Back Button */}
             <motion.div
@@ -167,7 +167,7 @@ export default function AccessoriesPage() {
             >
               <LocaleLink
                 href="/"
-                className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-ivory/75 hover:text-brand-ivory transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
@@ -181,13 +181,13 @@ export default function AccessoriesPage() {
               transition={{ duration: 0.8 }}
               className={isRTL ? 'text-right' : ''}
             >
-              <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-ivory/65 mb-4 block">
+              <span className="font-montserrat text-xs uppercase tracking-[0.4em] mb-4 block">
                 {isRTL ? 'مجموعة الإكسسوارات' : 'Accessories Collection'}
               </span>
-              <h1 data-document-h1="true" className="font-rozha text-5xl md:text-7xl lg:text-8xl text-brand-ivory mb-4">
+              <h1 data-document-h1="true" className="font-rozha text-5xl md:text-7xl lg:text-8xl mb-4">
                 {isRTL ? 'الإكسسوارات' : 'Accessories'}
               </h1>
-              <p className="font-montserrat text-base text-brand-ivory/78 tracking-wide max-w-lg">
+              <p className="font-montserrat text-base tracking-wide max-w-lg">
                 {isRTL
                   ? 'اكتشفي مجموعتنا الراقية من تعليقات العباءة والقلادات والأقراط والأساور وتعليقات الحقائب والهواتف.'
                   : 'Discover our curated collection of abaya charms, necklaces, earrings, bracelets, bag charms, and phone charms.'}
@@ -198,7 +198,7 @@ export default function AccessoriesPage() {
       </section>
 
       {/* Category Tabs */}
-      <section className="sticky top-[60px] md:top-[72px] z-40 bg-white border-b border-brand-stone/30">
+      <section className="sticky top-[168px] z-40 border-b border-brand-stone/30 bg-brand-pageCanvas sm:top-[176px] md:top-[188px] lg:top-[200px] xl:top-[208px]">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between py-4">
             {/* Categories - Desktop */}

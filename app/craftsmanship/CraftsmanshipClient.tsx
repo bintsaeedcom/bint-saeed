@@ -62,30 +62,8 @@ const MOSAIC_IMAGES = [
   ],
 ] as const
 
-/** Matches `/home` editorial framing — decorative corners */
-function DecorativeCorners({ tone = 'dustyBlue' }: { tone?: 'dustyBlue' | 'darkRed' }) {
-  const c =
-    tone === 'dustyBlue' ? 'from-brand-dustyBlue/45' : 'from-brand-darkRed/35'
-  return (
-    <>
-      <div className="pointer-events-none absolute left-6 top-6 h-14 w-14 md:left-10 md:top-10 md:h-20 md:w-20">
-        <div className={`absolute left-0 top-0 h-full w-px bg-gradient-to-b ${c} to-transparent`} />
-        <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r ${c} to-transparent`} />
-      </div>
-      <div className="pointer-events-none absolute right-6 top-6 h-14 w-14 md:right-10 md:top-10 md:h-20 md:w-20">
-        <div className={`absolute right-0 top-0 h-full w-px bg-gradient-to-b ${c} to-transparent`} />
-        <div className={`absolute right-0 top-0 h-px w-full bg-gradient-to-l ${c} to-transparent`} />
-      </div>
-      <div className="pointer-events-none absolute bottom-6 left-6 h-14 w-14 md:bottom-10 md:left-10 md:h-20 md:w-20">
-        <div className={`absolute bottom-0 left-0 h-full w-px bg-gradient-to-t ${c} to-transparent`} />
-        <div className={`absolute bottom-0 left-0 h-px w-full bg-gradient-to-r ${c} to-transparent`} />
-      </div>
-      <div className="pointer-events-none absolute bottom-6 right-6 h-14 w-14 md:bottom-10 md:right-10 md:h-20 md:w-20">
-        <div className={`absolute bottom-0 right-0 h-full w-px bg-gradient-to-t ${c} to-transparent`} />
-        <div className={`absolute bottom-0 right-0 h-px w-full bg-gradient-to-l ${c} to-transparent`} />
-      </div>
-    </>
-  )
+function DecorativeCorners(_props?: { tone?: 'dustyBlue' | 'darkRed' }) {
+  return null
 }
 
 /**
@@ -262,7 +240,7 @@ function PhaseDivider() {
 function PortraitFrame({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
     <div
-      className={`group relative shadow-[0_36px_80px_-36px_rgba(26,0,8,0.45),0_12px_36px_-16px_rgba(26,0,8,0.28)] ring-1 ring-black/18 transition-[box-shadow] duration-500 hover:shadow-[0_44px_96px_-38px_rgba(26,0,8,0.5)] ${className}`}
+      className={`group relative shadow-[0_36px_80px_-36px_rgba(26,0,8,0.45),0_12px_36px_-16px_rgba(26,0,8,0.28)] transition-[box-shadow] duration-500 hover:shadow-[0_44px_96px_-38px_rgba(26,0,8,0.5)] ${className}`}
     >
       <div className="relative h-full min-h-0 w-full overflow-hidden bg-[#ebe4d8]">
         {children}
@@ -366,7 +344,7 @@ function PhaseAtmosphere({
 
 export default function CraftsmanshipClient() {
   return (
-    <div className="relative isolate min-h-screen w-full min-w-0 bg-[#faf9f7]">
+    <div className="relative isolate min-h-screen w-full min-w-0 bg-brand-pageCanvas">
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_12%_10%,rgba(146,170,193,0.12)_0%,transparent_48%)]"
         aria-hidden
@@ -426,7 +404,7 @@ export default function CraftsmanshipClient() {
 
       <ParallaxMosaic items={[...MOSAIC_IMAGES[0]]} layout="three" />
 
-      <div className="relative z-[22] bg-[#faf9f7]">
+      <div className="relative z-[22] bg-brand-pageCanvas">
         <PhaseDivider />
       </div>
 
@@ -495,7 +473,7 @@ export default function CraftsmanshipClient() {
 
       <ParallaxMosaic items={[...MOSAIC_IMAGES[1]]} layout="two" />
 
-      <div className="relative z-[32] bg-[#faf9f7]">
+      <div className="relative z-[32] bg-brand-pageCanvas">
         <PhaseDivider />
       </div>
 
@@ -557,7 +535,7 @@ export default function CraftsmanshipClient() {
 
       <ParallaxMosaic items={[...MOSAIC_IMAGES[2]]} layout="twoWide" />
 
-      <section className="relative z-[45] overflow-hidden border-t border-brand-stone/35 bg-[linear-gradient(168deg,#faf9f7_0%,#ebe4d8_42%,#ddd5c9_100%)] px-6 py-24 md:py-32">
+      <section className="relative z-[45] overflow-hidden border-t border-brand-stone/35 bg-brand-pageCanvas px-6 py-24 md:py-32">
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_0%,rgba(146,170,193,0.14)_0%,transparent_58%)]"
           aria-hidden
@@ -569,7 +547,7 @@ export default function CraftsmanshipClient() {
           </p>
           <LocaleLink
             href="/shop?from=craftsmanship"
-            className="inline-flex items-center gap-3 rounded-sm border border-brand-darkRed/40 bg-brand-darkRed/[0.06] px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-brand-darkRed shadow-[0_18px_48px_-28px_rgba(42,0,18,0.22)] transition-colors hover:border-brand-dustyBlue hover:bg-brand-dustyBlue hover:text-[#faf9f7]"
+            className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-sm border border-brand-darkRed/40 bg-brand-darkRed/[0.06] px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-brand-darkRed shadow-[0_18px_48px_-28px_rgba(42,0,18,0.22)] transition-colors hover:border-brand-dustyBlue hover:bg-brand-dustyBlue hover:text-brand-pageCanvas"
             data-cursor-hover
           >
             View Collection

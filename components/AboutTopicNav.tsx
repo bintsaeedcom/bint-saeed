@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
+import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 
 const ABOUT_TOPIC_LINKS = [
   { href: '/about', label: 'Our Story' },
@@ -14,26 +15,27 @@ const ABOUT_TOPIC_LINKS = [
 
 export default function AboutTopicNav() {
   const pathname = usePathname() || ''
+  const { pathname: inner } = stripLocaleFromPathname(pathname)
 
   return (
     <nav
       aria-label="About topics"
-      className="sticky top-[84px] z-30 border-y border-brand-stone/35 bg-[#faf9f7]/90 backdrop-blur"
+      className="sticky top-[168px] z-40 border-b border-brand-stone/30 bg-brand-pageCanvas sm:top-[176px] md:top-[188px] lg:top-[200px] xl:top-[208px]"
     >
-      <div className="mx-auto flex max-w-[1200px] items-center gap-2 overflow-x-auto px-6 py-3 lg:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="mx-auto flex max-w-[1200px] items-center gap-1 overflow-x-auto px-6 py-4 lg:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {ABOUT_TOPIC_LINKS.map((item) => {
           const isActive =
-            pathname === item.href ||
-            (item.href !== '/about' && pathname.startsWith(`${item.href}/`))
+            inner === item.href ||
+            (item.href !== '/about' && inner.startsWith(`${item.href}/`))
 
           return (
             <LocaleLink
               key={item.href}
               href={item.href}
-              className={`shrink-0 rounded-full border px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.16em] transition-colors ${
+              className={`shrink-0 px-4 py-2 font-montserrat text-xs uppercase tracking-[0.1em] transition-all duration-300 whitespace-nowrap ${
                 isActive
-                  ? 'border-brand-darkRed bg-transparent text-brand-darkRed'
-                  : 'border-black/10 bg-transparent text-neutral-500 hover:border-brand-dustyBlue/45 hover:text-brand-dustyBlue'
+                  ? 'bg-brand-darkRed text-brand-ivory'
+                  : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
               }`}
               data-cursor-hover
             >
