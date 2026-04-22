@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
+import AboutTopicNav from '@/components/AboutTopicNav'
 import { FiArrowRight, FiArrowDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -63,6 +64,7 @@ export default function HeritagePage() {
   return (
     <div className={`relative overflow-hidden bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
       <HeritageHero />
+      <AboutTopicNav />
       <HeritageIntro />
       <HeritageGrid />
       <BrandConnectionSection />
@@ -283,7 +285,7 @@ function HeritageCTA() {
             {isRTL ? 'قطع فريدة تجمع بين أصالة الماضي وأناقة الحاضر.' : 'Unique pieces that combine the authenticity of the past with the elegance of the present.'}
           </p>
           <LocaleLink
-            href="/shop"
+            href="/shop?from=heritage"
             className={`inline-flex items-center gap-3 px-12 py-5 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white transition-all duration-500 rounded-xl ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >

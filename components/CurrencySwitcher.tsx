@@ -41,7 +41,7 @@ export default function CurrencySwitcher({
     : 'text-brand-clayRed hover:text-brand-dustyBlue'
 
   const dropdownSurfaceClass =
-    'bg-[linear-gradient(90deg,rgba(18,8,11,0.82)_0%,rgba(28,15,21,0.8)_22%,rgba(45,20,30,0.78)_50%,rgba(28,15,21,0.8)_78%,rgba(18,8,11,0.82)_100%)] border border-white/18 backdrop-blur-xl shadow-[0_18px_40px_rgba(10,4,8,0.38)]'
+    'bg-[linear-gradient(120deg,rgba(20,9,13,0.92)_0%,rgba(35,17,24,0.9)_34%,rgba(60,24,37,0.88)_58%,rgba(28,14,20,0.9)_100%)] border border-white/20 backdrop-blur-xl shadow-[0_18px_42px_rgba(10,4,8,0.42)]'
 
   const itemHover = 'hover:bg-white/10'
   const menuAlignClass =
@@ -93,33 +93,37 @@ export default function CurrencySwitcher({
             animate={{ opacity: 1, y: 0 }}
             exit={animTo}
             transition={{ duration: 0.2 }}
-            className={`absolute z-[90] ${placementClass} ${menuAlignClass} min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
+            className={`absolute z-[90] ${placementClass} ${menuAlignClass} min-w-[230px] overflow-hidden rounded-xl p-1.5 ${dropdownSurfaceClass}`}
           >
-            {currencies.map((c) => (
-              <button
-                key={c.code}
-                type="button"
-                onClick={() => {
-                  setCurrency(c.code)
-                  setIsOpen(false)
-                }}
-                className={`w-full flex items-center justify-between px-4 py-2.5 transition-colors ${itemHover} ${isRTL ? 'flex-row-reverse' : ''}`}
-                data-cursor-hover
-              >
-                <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span aria-hidden>{currencyFlags[c.code] ?? '💱'}</span>
-                  <span className="font-montserrat text-xs font-medium text-white">
-                    {c.code}
-                  </span>
-                  <span className="font-montserrat text-xs text-white/60">
-                    {c.symbol}
-                  </span>
-                </div>
-                {currency.code === c.code && (
-                  <FiCheck className="w-4 h-4 text-white" />
-                )}
-              </button>
-            ))}
+            <div className="max-h-[min(18rem,42dvh)] overflow-y-auto overscroll-contain pr-0.5">
+              {currencies.map((c) => (
+                <button
+                  key={c.code}
+                  type="button"
+                  onClick={() => {
+                    setCurrency(c.code)
+                    setIsOpen(false)
+                  }}
+                  className={`w-full flex items-center justify-between rounded-lg px-3.5 py-2.5 transition-colors ${itemHover} ${isRTL ? 'flex-row-reverse' : ''} ${
+                    currency.code === c.code ? 'bg-white/14 ring-1 ring-white/16' : ''
+                  }`}
+                  data-cursor-hover
+                >
+                  <div className={`flex items-center gap-2.5 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <span aria-hidden>{currencyFlags[c.code] ?? '💱'}</span>
+                    <span className="font-montserrat text-xs font-semibold tracking-[0.08em] text-white">
+                      {c.code}
+                    </span>
+                    <span className="font-montserrat text-xs text-white/65">
+                      {c.symbol}
+                    </span>
+                  </div>
+                  {currency.code === c.code && (
+                    <FiCheck className="w-4 h-4 text-white/95" />
+                  )}
+                </button>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

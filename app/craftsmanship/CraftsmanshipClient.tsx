@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
+import AboutTopicNav from '@/components/AboutTopicNav'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 
@@ -377,6 +378,7 @@ export default function CraftsmanshipClient() {
 
       {/* Film 1 of 3: hero — HOME / CRAFTSMANSHIP, brand, title on same overlay */}
       <CraftsmanshipHero className="relative z-[2]" />
+      <AboutTopicNav />
 
       {/* Phase I — overflowing band + split columns (approved copy unchanged) */}
       <PhaseAtmosphere variant="ivory">
@@ -566,7 +568,7 @@ export default function CraftsmanshipClient() {
             Explore the collection
           </p>
           <LocaleLink
-            href="/shop"
+            href="/shop?from=craftsmanship"
             className="inline-flex items-center gap-3 rounded-sm border border-brand-darkRed/40 bg-brand-darkRed/[0.06] px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-brand-darkRed shadow-[0_18px_48px_-28px_rgba(42,0,18,0.22)] transition-colors hover:border-brand-dustyBlue hover:bg-brand-dustyBlue hover:text-[#faf9f7]"
             data-cursor-hover
           >

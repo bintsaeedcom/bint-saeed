@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
+import AboutTopicNav from '@/components/AboutTopicNav'
 import { FiArrowDown, FiArrowLeft } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -329,6 +330,7 @@ export default function TheCodesClient() {
           </div>
         </div>
       </header>
+      <AboutTopicNav />
 
       <div className="relative container mx-auto max-w-4xl px-6 pb-10 pt-8 text-center md:pb-14 lg:px-12">
         <motion.div
@@ -425,7 +427,7 @@ export default function TheCodesClient() {
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-4">
           <LocaleLink
-            href="/shop"
+            href="/shop?from=the-codes"
             className="inline-flex border border-brand-darkRed/25 bg-white/70 px-8 py-3 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
             data-cursor-hover
           >

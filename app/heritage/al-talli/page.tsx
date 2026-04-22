@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
+import AboutTopicNav from '@/components/AboutTopicNav'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -13,6 +14,7 @@ export default function AlTalliPage() {
   return (
     <div className={`min-h-screen bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
       <HeroSection />
+      <AboutTopicNav />
       <StorySection />
       <TechniqueSection />
       <UNESCOSection />
@@ -304,7 +306,7 @@ function BintSaeedSection() {
               </p>
             </div>
             <LocaleLink
-              href="/shop"
+              href="/shop?from=heritage-al-talli"
               className={`inline-flex items-center gap-3 px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors mt-8 ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >

@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
+import AboutTopicNav from '@/components/AboutTopicNav'
 import { FiArrowDown, FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -60,59 +61,12 @@ function DecorativeCorners({ color = 'dustyBlue' }: { color?: 'dustyBlue' | 'dar
   )
 }
 
-const ABOUT_SECTIONS = [
-  {
-    key: 'identity',
-    label: 'Identity',
-    paragraphs: [
-      'Bint Saeed is a luxury abaya house based in Abu Dhabi, United Arab Emirates.',
-      'The house focuses on abaya design shaped by Emirati cultural codes, while also creating jewellery and lifestyle pieces that complement a contemporary, global way of living.',
-    ],
-  },
-  {
-    key: 'perspective',
-    label: 'Perspective',
-    paragraphs: [
-      'At its core, Bint Saeed is built on the idea that identity does not change with location.',
-      'The designs are created for women who move between cities, cultures, and moments, while remaining connected to where they come from.',
-    ],
-  },
-  {
-    key: 'design-codes',
-    label: 'Design Codes',
-    paragraphs: [
-      'The abayas are informed by Emirati design codes, including Al Talli craftsmanship and the structural logic of Khous weaving.',
-      'These elements are translated into contemporary forms, creating pieces that carry cultural depth without being confined to tradition.',
-    ],
-  },
-  {
-    key: 'jewellery',
-    label: 'Jewellery and Objects',
-    paragraphs: [
-      'Alongside the abayas, Bint Saeed creates jewellery and curated objects.',
-      'These pieces are not bound to a single cultural reference, but are designed to complement the wardrobe and lifestyle of the modern woman.',
-    ],
-  },
-  {
-    key: 'closing',
-    label: 'Closing',
-    paragraphs: ['Bint Saeed stands as a house rooted in Abu Dhabi, created for a global presence.'],
-  },
-] as const
-
-function SectionRule() {
-  return (
-    <div className="my-14 flex justify-center md:my-16" aria-hidden>
-      <div className="h-px w-full max-w-[12rem] bg-gradient-to-r from-transparent via-brand-dustyBlue/45 to-transparent" />
-    </div>
-  )
-}
-
 export default function AboutPage() {
   const { isRTL } = useLanguage()
   return (
     <div className={`relative overflow-hidden bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
       <AboutHero />
+      <AboutTopicNav />
       <AboutNarrative />
       <AboutCTA />
     </div>
@@ -197,7 +151,6 @@ function AboutHero() {
 
 function AboutNarrative() {
   const ref = useRef(null)
-  const { isRTL } = useLanguage()
 
   return (
     <article
@@ -210,31 +163,62 @@ function AboutNarrative() {
         <p className="mb-16 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue md:mb-20">
           About the house
         </p>
-        {ABOUT_SECTIONS.map((section, index) => (
-          <div key={section.key}>
-            {index > 0 ? <SectionRule /> : null}
-            <motion.section
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-12%' }}
-              transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-              className={isRTL ? 'text-right' : ''}
-              aria-labelledby={`about-section-${section.key}`}
-            >
-              <h2
-                id={`about-section-${section.key}`}
-                className="mb-6 font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/85"
-              >
-                Section {index + 1} — {section.label}
-              </h2>
-              <div className="space-y-5 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
-                {section.paragraphs.map((p, i) => (
-                  <p key={`${section.key}-${i}`}>{p}</p>
-                ))}
-              </div>
-            </motion.section>
-          </div>
-        ))}
+        <motion.section
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-12%' }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-10 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]"
+        >
+          <p>
+            <strong>Bint Saeed is a house shaped by origin.</strong>
+          </p>
+
+          <p>
+            In Arabic, <em>Bint</em> means daughter of. It is not a reference to where you are, but to where you
+            come from. It carries lineage, memory, and belonging. It holds the story that exists before you, and
+            continues through you.{' '}
+            <strong>
+              Because no matter where life leads, a woman remains connected to her origin. It does not disappear when
+              she moves. It does not change when she grows.
+            </strong>{' '}
+            It moves with her, forming the way she stands, the way she chooses, the way she is seen.
+          </p>
+
+          <p>
+            Rooted in Abu Dhabi, the house emerges from a place that has always moved forward without losing itself. A
+            place where ambition and identity exist side by side, where growth is built on origin rather than
+            replacing it.{' '}
+            <strong>
+              Today, a woman moves between cities, cultures, and expectations. She builds a life across places, steps
+              into different roles, and expands what is possible for herself. Yet through all of this, she remains a
+              daughter.
+            </strong>{' '}
+            Not defined by limitation, but by depth. By where she comes from, and what she carries forward. Bint Saeed
+            exists for her. <strong>For the woman who moves through the world without leaving herself behind,</strong>{' '}
+            and who understands that identity is not something to adjust depending on place, but something that is
+            carried out with confidence and certainty.
+          </p>
+
+          <p>
+            Each piece is created with this in mind.{' '}
+            <strong>
+              Shaped by Emirati design codes, including Al Talli craftsmanship and the structural logic of Khous
+              weaving,
+            </strong>{' '}
+            the work carries forward knowledge that has existed for generations. These elements are translated into
+            contemporary forms that move across borders, allowing what was once confined to a single setting to be worn
+            with ease in a global life. Alongside the abayas, the house creates jewellery and objects that extend this
+            idea further, pieces that move with you and adapt to the life you are building.
+          </p>
+
+          <p>
+            <strong>
+              Bint Saeed stands as a house devoted to the daughter in every woman, a reminder that no matter where you
+              go, you do not begin again, you continue.
+            </strong>
+          </p>
+        </motion.section>
       </div>
     </article>
   )
@@ -260,7 +244,7 @@ function AboutCTA() {
         >
           <h2 className="mb-8 font-rozha text-4xl text-white md:text-5xl lg:text-6xl">{t.about.ctaTitle}</h2>
           <LocaleLink
-            href="/shop"
+            href="/shop?from=about-story"
             className={`inline-flex items-center gap-3 rounded-xl bg-brand-dustyBlue px-12 py-5 font-montserrat text-sm uppercase tracking-[0.2em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone hover:text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
