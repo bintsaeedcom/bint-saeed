@@ -508,7 +508,7 @@ function HeroSection() {
       {/* Background — pointer-events-none so scaled layer never steals clicks from hero links */}
       <motion.div style={{ scale }} className="pointer-events-none absolute inset-0 overflow-hidden">
         <Image
-          src="/Hero image.jpg"
+          src="/hero-image.JPG"
           alt="Bint Saeed"
           fill
           className="object-cover object-[center_28%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97]"
