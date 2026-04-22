@@ -17,7 +17,6 @@ export default function Home() {
       <MagazineGrid />
       <ColorBlockSection />
       <EditorialSplit />
-      <CollectionStrip />
       <AsymmetricShowcase />
     </div>
   )
