@@ -5,10 +5,11 @@ import LocaleLink from '@/components/LocaleLink'
 
 const ABOUT_TOPIC_LINKS = [
   { href: '/about', label: 'Our Story' },
-  { href: '/heritage', label: 'Heritage' },
-  { href: '/craftsmanship', label: 'Craftsmanship' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/craftsmanship', label: 'Craftsmanship' },
+  { href: '/personalisation', label: 'Personalisation' },
   { href: '/giving-forward', label: 'Giving Forward' },
+  { href: '/contact', label: 'Contact' },
 ] as const
 
 export default function AboutTopicNav() {
@@ -31,8 +32,8 @@ export default function AboutTopicNav() {
               href={item.href}
               className={`shrink-0 rounded-full border px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.16em] transition-colors ${
                 isActive
-                  ? 'border-brand-darkRed bg-brand-darkRed/5 text-brand-darkRed'
-                  : 'border-black/10 bg-white/70 text-neutral-600 hover:border-brand-dustyBlue/45 hover:text-brand-dustyBlue'
+                  ? 'border-brand-darkRed bg-transparent text-brand-darkRed'
+                  : 'border-black/10 bg-transparent text-neutral-500 hover:border-brand-dustyBlue/45 hover:text-brand-dustyBlue'
               }`}
               data-cursor-hover
             >

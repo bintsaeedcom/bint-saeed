@@ -43,7 +43,7 @@ export function classifyRouteMetaKey(pathname: string): RouteMetaKey {
   if (p.startsWith('/verify-email')) return 'verify_email'
   if (p.startsWith('/the-codes')) return 'the_codes'
   if (p.startsWith('/craftsmanship')) return 'craftsmanship'
-  if (p.startsWith('/product-care')) return 'product_care'
+  if (p.startsWith('/product-care') || p.startsWith('/personalisation')) return 'product_care'
   if (p.startsWith('/giving-forward')) return 'giving_forward'
   if (p.startsWith('/careers')) return 'careers'
   if (

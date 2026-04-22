@@ -82,7 +82,7 @@ function AboutHero() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15])
 
   return (
-    <section ref={ref} className="relative h-[min(100svh,920px)] w-full overflow-hidden">
+    <section ref={ref} className="relative h-[50vh] w-full overflow-hidden md:h-[60vh]">
       <motion.div style={{ scale }} className="absolute inset-0">
         <Image src="/hero-bintsaeed.jpg" alt="Bint Saeed" fill className="object-cover object-[center_28%]" priority />
         <div className="absolute inset-0 bg-gradient-to-b from-[#2a0012]/70 via-[#1a0008]/50 to-[#0d0004]/80" />
