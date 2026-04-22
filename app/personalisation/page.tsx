@@ -41,7 +41,11 @@ export default function PersonalisationPage() {
             </p>
           </div>
           <div className="rounded-2xl border border-brand-stone/40 bg-white/70 p-5 md:p-6">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-xl">
+            <div
+              className="relative aspect-[4/5] overflow-hidden rounded-xl"
+              data-analytics-event="click_personalisation_hidden_pocket_image"
+              data-analytics-section="personalisation-story-image"
+            >
               <Image
                 src={hiddenPocketImage}
                 alt="Hidden pocket detail"
@@ -61,7 +65,11 @@ export default function PersonalisationPage() {
 
         <section className="mt-16 grid gap-10 lg:grid-cols-2 lg:items-start">
           <div className="rounded-2xl border border-brand-stone/40 bg-white/70 p-5 md:p-6 lg:order-1">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-xl">
+            <div
+              className="relative aspect-[4/5] overflow-hidden rounded-xl"
+              data-analytics-event="click_personalisation_label_examples"
+              data-analytics-section="personalisation-meaning-image"
+            >
               <Image
                 src={personalisedLabelImage}
                 alt="Personalised labels"
@@ -103,6 +111,8 @@ export default function PersonalisationPage() {
             href="/shop?from=personalisation"
             className="inline-flex items-center justify-center rounded-full border border-brand-darkRed/35 bg-white/70 px-10 py-3 font-montserrat text-xs uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
             data-cursor-hover
+            data-analytics-event="click_collection_from_personalisation"
+            data-analytics-section="personalisation-cta"
           >
             Explore the Collection
           </LocaleLink>

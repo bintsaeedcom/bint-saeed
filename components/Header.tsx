@@ -84,6 +84,14 @@ export default function Header() {
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
     { label: t.about.title, href: '/about' },
   ]
+  const getMainNavAnalyticsEvent = (href: string) =>
+    href === '/shop'
+      ? 'click_nav_collection'
+      : href === '/accessories'
+        ? 'click_nav_accessories'
+        : href === '/about'
+          ? 'click_nav_about'
+          : undefined
 
   const megaMenus: Record<
     string,
@@ -245,6 +253,8 @@ export default function Header() {
                     activeMegaMenu === item.href ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
                   }`}
                   data-cursor-hover
+                  data-analytics-event={getMainNavAnalyticsEvent(item.href)}
+                  data-analytics-section="header-main-nav"
                 >
                   {item.label}
                 </LocaleLink>
@@ -679,6 +689,8 @@ export default function Header() {
                         onClick={() => setIsMobileMenuOpen(false)}
                         className="group flex min-w-0 items-center justify-between gap-3 py-3"
                         data-cursor-hover
+                        data-analytics-event={getMainNavAnalyticsEvent(item.href)}
+                        data-analytics-section="header-mobile-nav"
                       >
                         <span className="min-w-0 flex-1 font-rozha text-2xl uppercase tracking-[0.06em] text-white max-[380px]:text-[clamp(1.125rem,5.5vw,1.5rem)]">
                           {item.label}

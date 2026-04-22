@@ -581,6 +581,8 @@ function HeroSection() {
                     href="/shop"
                     className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
                     data-cursor-hover
+                    data-analytics-event="click_cta_home_to_collection"
+                    data-analytics-section="home-hero"
                   >
                     {t.hero.discoverCollection}
                     <FiArrowRight
@@ -729,6 +731,8 @@ function MagazineGrid() {
             href="/shop"
             className="hidden items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed transition-colors hover:text-brand-dustyBlue md:flex"
             data-cursor-hover
+            data-analytics-event="click_cta_home_to_collection"
+            data-analytics-section="home-where-it-begins-header"
           >
             {t.featured.viewAll}
             <FiArrowRight className="w-4 h-4" />
@@ -743,7 +747,13 @@ function MagazineGrid() {
             style={{ y: leadY }}
             className="md:col-span-7"
           >
-            <LocaleLink href="/shop" className="group block overflow-hidden bg-brand-stone/10 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1" data-cursor-hover>
+            <LocaleLink
+              href="/shop"
+              className="group block overflow-hidden bg-brand-stone/10 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1"
+              data-cursor-hover
+              data-analytics-event="click_cta_home_to_collection"
+              data-analytics-section="home-where-it-begins-featured-card"
+            >
               <div className="relative aspect-[4/5]">
                 <Image
                   src="/collection-section/1.png"
@@ -778,7 +788,13 @@ function MagazineGrid() {
               transition={{ duration: 0.75, delay: 0.12 }}
               style={{ y: sideY }}
             >
-              <LocaleLink href="/shop" className="group block overflow-hidden bg-brand-dustyBlue transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1" data-cursor-hover>
+              <LocaleLink
+                href="/shop"
+                className="group block overflow-hidden bg-brand-dustyBlue transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1"
+                data-cursor-hover
+                data-analytics-event="click_cta_home_to_collection"
+                data-analytics-section="home-where-it-begins-secondary-card-a"
+              >
                 <div className="relative aspect-square">
                   <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                     <CollectionCrossfadeSlideshow
@@ -800,7 +816,13 @@ function MagazineGrid() {
               transition={{ duration: 0.75, delay: 0.2 }}
               style={{ y: sideY }}
             >
-              <LocaleLink href="/shop" className="group block overflow-hidden bg-brand-rose transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1" data-cursor-hover>
+              <LocaleLink
+                href="/shop"
+                className="group block overflow-hidden bg-brand-rose transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1"
+                data-cursor-hover
+                data-analytics-event="click_cta_home_to_collection"
+                data-analytics-section="home-where-it-begins-secondary-card-b"
+              >
                 <div className="relative aspect-square">
                   <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                     <CollectionCrossfadeSlideshow
@@ -886,6 +908,8 @@ function ColorBlockSection() {
                       href="/about"
                       className="inline-flex items-center justify-center border border-brand-dustyBlue/70 bg-brand-dustyBlue px-8 py-4 font-montserrat text-xs tracking-[0.12em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone"
                       data-cursor-hover
+                      data-analytics-event="click_nav_about"
+                      data-analytics-section="home-about-section"
                     >
                       Discover the Story
                     </LocaleLink>
@@ -996,6 +1020,8 @@ function EditorialSplit() {
                 href="/the-codes"
                 className={`group inline-flex items-center gap-3 px-8 py-4 bg-brand-dustyBlue text-white font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
+                data-analytics-event="click_view_collection_codes_page"
+                data-analytics-section="home-codes-section"
               >
                 Explore the Codes
                 <FiArrowRight className={`w-4 h-4 group-hover:translate-x-2 transition-transform duration-300 ${isRTL ? 'rotate-180' : ''}`} />
@@ -1111,6 +1137,8 @@ function CreatedForYouSection() {
                         href="/personalisation"
                         className="inline-flex items-center justify-center border border-brand-dustyBlue/60 bg-brand-dustyBlue px-8 py-4 font-montserrat text-xs uppercase tracking-[0.18em] text-[#1a0008] shadow-[0_10px_24px_rgba(146,170,193,0.38)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-brand-stone"
                         data-cursor-hover
+                        data-analytics-event="click_personalisation_teaser"
+                        data-analytics-section="home-personalisation-teaser"
                       >
                         DISCOVER PERSONALISATION
                       </LocaleLink>

@@ -14,6 +14,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import ProductWishlistHeart from '@/components/ProductWishlistHeart'
 import { getProductHref } from '@/lib/products/links'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
+import { trackEvent } from '@/lib/analytics/tracking'
 
 const CATEGORY_QUERY_MAP: Record<string, string> = {
   abayas: 'Abayas',
@@ -66,6 +67,7 @@ export default function ShopClient() {
   const applyCategory = useCallback(
     (cat: (typeof categories)[number]) => {
       setActiveCategory(cat)
+      trackEvent('filter_usage', { filter_type: 'category', filter_value: cat, page: 'collection' })
       const param = CATEGORY_QUERY_VALUE[cat]
       const path = localize('/shop')
       const url = param ? `${path}?category=${param}` : path
@@ -313,6 +315,7 @@ export default function ShopClient() {
                       onClick={() => {
                         setSortBy(opt.id)
                         setSortOpen(false)
+                        trackEvent('sort_usage', { sort_by: opt.id, page: 'collection' })
                       }}
                       className={`block w-full px-4 py-2.5 text-left font-montserrat text-xs tracking-wide transition-colors ${
                         sortBy === opt.id
@@ -349,6 +352,7 @@ export default function ShopClient() {
                   className="relative z-20 block aspect-[9/16] overflow-hidden bg-stone-200"
                   aria-label={`${isRTL ? 'فتح' : 'Open'} ${product.name}`}
                   data-cursor-hover
+                  onClick={() => trackEvent('select_item', { item_id: product.id, item_name: product.name, item_category: product.category })}
                 >
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
                     <Image

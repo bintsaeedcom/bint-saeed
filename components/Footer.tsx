@@ -33,7 +33,7 @@ export default function Footer() {
     ],
     help: [
       { label: t.footer.contactUs, href: '/contact' },
-      { label: t.footer.shippingReturns, href: '/terms' },
+      { label: t.footer.shippingReturns, href: '/shipment-return-policy' },
       { label: t.footer.sizeGuide, href: '/size-guide' },
       { label: t.footer.faq, href: '/faq' },
     ],
@@ -126,6 +126,8 @@ export default function Footer() {
                       href={link.href}
                       className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
                       data-cursor-hover
+                      data-analytics-event={link.href === '/shop' ? 'click_footer_collection' : undefined}
+                      data-analytics-section="footer-shop-links"
                     >
                       {link.label}
                     </LocaleLink>
@@ -146,6 +148,8 @@ export default function Footer() {
                       href={link.href}
                       className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
                       data-cursor-hover
+                      data-analytics-event={link.href === '/contact' ? 'click_footer_contact' : undefined}
+                      data-analytics-section="footer-help-links"
                     >
                       {link.label}
                     </LocaleLink>
@@ -281,6 +285,13 @@ export default function Footer() {
                 data-cursor-hover
               >
                 {t.footer.terms}
+              </LocaleLink>
+              <LocaleLink
+                href="/shipment-return-policy"
+                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
+                data-cursor-hover
+              >
+                Shipment & Return Policy
               </LocaleLink>
             </div>
 

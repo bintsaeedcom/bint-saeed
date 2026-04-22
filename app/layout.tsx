@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import './globals.css'
 import 'react-phone-number-input/style.css'
 import './phone-input-theme.css'
@@ -8,8 +7,7 @@ import ContentProtection from '@/components/ContentProtection'
 import { Toaster } from 'react-hot-toast'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 import { CurrencyProvider } from '@/lib/currency/CurrencyContext'
-import { AnalyticsProvider } from '@/lib/analytics/AnalyticsContext'
-import AnalyticsTracker from '@/components/AnalyticsTracker'
+import AnalyticsBootstrap from '@/components/AnalyticsBootstrap'
 
 import { buildRootMetadata } from '@/lib/i18n/buildRootMetadata'
 import { getServerLocale, getServerPathname } from '@/lib/i18n/serverLocale'
@@ -59,14 +57,6 @@ export default async function RootLayout({
   return (
     <html lang={langAttr} dir={dir}>
       <head>
-        {/* Google Tag Manager - as high in head as possible */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PS953D4R');`,
-          }}
-        />
-        {/* End Google Tag Manager */}
         {/* Favicon - explicit links for better browser support */}
         <link rel="icon" href="/flavicon.png?v=2" type="image/png" />
         <link rel="apple-touch-icon" href="/flavicon.png?v=2" />
@@ -139,39 +129,6 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.cre
           dangerouslySetInnerHTML={{ __html: supplementalLdJson }}
         />
 
-        {/* Google tag (gtag.js) with Consent Mode */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-4C9F2RRTVJ"
-          strategy="afterInteractive"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('consent', 'default', {
-                'analytics_storage': 'denied',
-                'ad_storage': 'denied',
-                'ad_user_data': 'denied',
-                'ad_personalization': 'denied'
-              });
-              try {
-                var c = typeof localStorage !== 'undefined' && localStorage.getItem('cookieConsent');
-                if (c === 'all') {
-                  gtag('consent', 'update', {
-                    'analytics_storage': 'granted',
-                    'ad_storage': 'granted',
-                    'ad_user_data': 'granted',
-                    'ad_personalization': 'granted'
-                  });
-                }
-              } catch (e) {}
-              gtag('config', 'G-4C9F2RRTVJ');
-            `,
-          }}
-        />
-        
         {/* Bing Webmaster verification */}
         <meta name="msvalidate.01" content="7BA982E3BEF4E04896CC719115678C24" />
         <meta name="coverage" content="Worldwide" />
@@ -179,25 +136,14 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.cre
         <meta name="rating" content="General" />
       </head>
       <body className="min-h-screen font-sans antialiased">
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-PS953D4R"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
-        {/* End Google Tag Manager (noscript) */}
         <LanguageProvider initialLocale={locale}>
           <CurrencyProvider>
-            <AnalyticsProvider>
-              <ContentProtection />
-              <AnalyticsTracker />
-              <LayoutWrapper>
-                {children}
-              </LayoutWrapper>
-              <Toaster 
+            <ContentProtection />
+            <AnalyticsBootstrap />
+            <LayoutWrapper>
+              {children}
+            </LayoutWrapper>
+            <Toaster 
                 position="bottom-right"
                 toastOptions={{
                   style: {
@@ -224,7 +170,6 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.cre
                   },
                 }}
               />
-            </AnalyticsProvider>
           </CurrencyProvider>
         </LanguageProvider>
       </body>

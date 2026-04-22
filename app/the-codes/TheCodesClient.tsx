@@ -8,6 +8,7 @@ import LocaleLink from '@/components/LocaleLink'
 import AboutTopicNav from '@/components/AboutTopicNav'
 import { FiArrowDown, FiArrowLeft } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { trackEvent } from '@/lib/analytics/tracking'
 
 /** Matches `/home` editorial framing — dusty blue corner brackets */
 function DecorativeCorners({ color = 'dustyBlue' }: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
@@ -338,7 +339,9 @@ export default function TheCodesClient() {
                 The Codes
               </h1>
               <p className="max-w-lg font-montserrat text-base tracking-wide text-white/70">
-                A single scroll through the house symbols, framed with clarity and balance.
+                The elements that carry the legacy of the house.
+                <br />
+                Rooted in origin. Defined with precision.
               </p>
             </motion.div>
           </div>
@@ -416,12 +419,23 @@ export default function TheCodesClient() {
                     {expandedTextBySection[section.id] ? (
                       <button
                         type="button"
-                        onClick={() =>
+                        onClick={() => {
+                          const eventMap: Record<string, string> = {
+                            'the-monogram': 'click_read_more_monogram',
+                            'al-talli': 'click_read_more_talli',
+                            khous: 'click_read_more_khous',
+                            'al-ain-rosette': 'click_read_more_al_ain_rosette',
+                            'knotted-lines-of-lineage': 'click_read_more_knotted_lineage',
+                          }
+                          const isOpening = !expandedSections[section.id]
+                          if (isOpening && eventMap[section.id]) {
+                            trackEvent(eventMap[section.id], { section_id: section.id })
+                          }
                           setExpandedSections((prev) => ({
                             ...prev,
                             [section.id]: !prev[section.id],
                           }))
-                        }
+                        }}
                         className="inline-flex border border-brand-darkRed/25 bg-white/70 px-5 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
                         data-cursor-hover
                       >
@@ -464,6 +478,8 @@ export default function TheCodesClient() {
             href="/shop?from=the-codes"
             className="inline-flex border border-brand-darkRed/25 bg-white/70 px-8 py-3 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
             data-cursor-hover
+            data-analytics-event="click_view_collection_codes_page"
+            data-analytics-section="the-codes-footer-cta"
           >
             View collection
           </LocaleLink>

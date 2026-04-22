@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { setConsentState } from '@/lib/analytics/consent'
 
 export default function CookieConsent() {
   const [showConsent, setShowConsent] = useState(false)
@@ -19,17 +20,6 @@ export default function CookieConsent() {
     }
   }, [])
 
-  const updateGoogleConsent = (granted: boolean) => {
-    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
-      (window as any).gtag('consent', 'update', {
-        analytics_storage: granted ? 'granted' : 'denied',
-        ad_storage: granted ? 'granted' : 'denied',
-        ad_user_data: granted ? 'granted' : 'denied',
-        ad_personalization: granted ? 'granted' : 'denied',
-      })
-    }
-  }
-
   const closeConsent = () => {
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('cookie-consent-closed'))
@@ -37,19 +27,13 @@ export default function CookieConsent() {
   }
 
   const acceptAll = () => {
-    localStorage.setItem('cookieConsent', 'all')
-    localStorage.setItem('analyticsConsent', 'true')
-    localStorage.setItem('marketingConsent', 'true')
-    updateGoogleConsent(true)
+    setConsentState({ analytics: true, marketing: true })
     setShowConsent(false)
     closeConsent()
   }
 
   const rejectAll = () => {
-    localStorage.setItem('cookieConsent', 'essential')
-    localStorage.setItem('analyticsConsent', 'false')
-    localStorage.setItem('marketingConsent', 'false')
-    updateGoogleConsent(false)
+    setConsentState({ analytics: false, marketing: false })
     setShowConsent(false)
     closeConsent()
   }

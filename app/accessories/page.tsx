@@ -23,6 +23,7 @@ import {
   PRICE_RANGE_OPTIONS,
   STONE_OPTIONS,
 } from '@/lib/accessories/filterAccessories'
+import { trackEvent } from '@/lib/analytics/tracking'
 
 function parsePriceParam(v: string | null): PriceRangeId {
   if (!v) return 'all'
@@ -78,6 +79,7 @@ export default function AccessoriesPage() {
   const setCategoryAndUrl = useCallback(
     (id: string) => {
       setActiveCategory(id)
+      trackEvent('filter_usage', { filter_type: 'accessories_category', filter_value: id, page: 'accessories' })
       replaceAccessoryQuery({ category: id })
     },
     [replaceAccessoryQuery]
@@ -86,6 +88,7 @@ export default function AccessoriesPage() {
   const setPriceAndUrl = useCallback(
     (id: PriceRangeId) => {
       setPriceRange(id)
+      trackEvent('filter_usage', { filter_type: 'accessories_price', filter_value: id, page: 'accessories' })
       replaceAccessoryQuery({ price: id })
     },
     [replaceAccessoryQuery]
@@ -97,6 +100,12 @@ export default function AccessoriesPage() {
         ? selectedStones.filter((s) => s !== stoneId)
         : [...selectedStones, stoneId]
       setSelectedStones(next)
+      trackEvent('filter_usage', {
+        filter_type: 'accessories_stone',
+        filter_value: stoneId,
+        filter_state: next.includes(stoneId) ? 'enabled' : 'disabled',
+        page: 'accessories',
+      })
       replaceAccessoryQuery({ stones: next })
     },
     [selectedStones, replaceAccessoryQuery]
@@ -524,7 +533,17 @@ function AccessoryCard({
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
     >
-      <LocaleLink href={`/accessories/${accessory.id}`} data-cursor-hover>
+      <LocaleLink
+        href={`/accessories/${accessory.id}`}
+        data-cursor-hover
+        onClick={() =>
+          trackEvent('select_item', {
+            item_id: accessory.id,
+            item_name: isRTL ? accessory.nameAr : accessory.name,
+            item_category: accessory.category,
+          })
+        }
+      >
         <div
           className="group relative"
           onMouseEnter={() => setHoveredProduct(accessory.id)}
@@ -554,9 +573,16 @@ function AccessoryCard({
 
             {/* Opens product PDP (same slug as card link) */}
             <div className="absolute bottom-0 left-0 right-0 z-[15] translate-y-full p-4 transition-transform duration-500 group-hover:translate-y-0">
-              <button 
+              <button
                 type="button"
-                onClick={navigateToAccessoryPdp}
+                onClick={(e) => {
+                  trackEvent('select_item', {
+                    item_id: accessory.id,
+                    item_name: isRTL ? accessory.nameAr : accessory.name,
+                    item_category: accessory.category,
+                  })
+                  navigateToAccessoryPdp(e)
+                }}
                 className={`flex w-full cursor-pointer items-center justify-center gap-2 bg-brand-darkRed py-3 font-montserrat text-xs uppercase tracking-[0.15em] text-white hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               >
                 <FiShoppingBag className="w-4 h-4 shrink-0" aria-hidden />
