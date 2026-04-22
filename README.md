@@ -125,8 +125,17 @@ npm start
 
 ### Google Analytics
 1. Create GA4 property
-2. Add measurement ID to `.env.local`
-3. Uncomment GA config in layout.tsx
+2. Add `NEXT_PUBLIC_GA4_MEASUREMENT_ID` to `.env.local`
+
+### Privacy-Aware Analytics Stack
+- Optional trackers supported: GA4, Microsoft Clarity, PostHog.
+- All trackers are consent-gated and env-driven.
+- Setup guide: `docs/ops/analytics-setup.md`
+- Supported env vars:
+  - `NEXT_PUBLIC_GA4_MEASUREMENT_ID`
+  - `NEXT_PUBLIC_CLARITY_PROJECT_ID`
+  - `NEXT_PUBLIC_POSTHOG_KEY`
+  - `NEXT_PUBLIC_POSTHOG_HOST`
 
 ## Contact
 
