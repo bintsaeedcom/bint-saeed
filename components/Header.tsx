@@ -56,12 +56,12 @@ const searchableContent = [
   { title: 'Luxury Abaya', href: '/shop?category=abayas&style=luxury', category: 'Products' },
 ]
 
-/** Layered burgundy bar — aligned with global maison canvas */
+/** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
 const headerBarGradient =
-  'bg-[linear-gradient(90deg,#1F0508_0%,#2a1014_22%,#5A1A22_50%,#2a1014_78%,#1F0508_100%)]'
+  'bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]'
 
 const mobileMenuGradient =
-  'bg-[radial-gradient(ellipse_130%_95%_at_50%_0%,#3d1218_0%,#3B0A12_38%,#241016_72%,#1F0508_100%)]'
+  'bg-[radial-gradient(ellipse_130%_95%_at_50%_0%,#321922_0%,#2d141e_38%,#1a0f14_72%,#12080b_100%)]'
 
 export default function Header() {
   const pathname = usePathname()
