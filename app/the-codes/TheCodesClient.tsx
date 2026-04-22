@@ -188,12 +188,12 @@ const SECTIONS: CodeSection[] = [
   {
     id: 'knotted-lines-of-lineage',
     eyebrow: 'Line & continuity',
-    title: 'Knotted lines of lineage',
+    title: 'Knotted Lines',
     paragraphs: [
       'Knotted lines appear within the house as a recurring element, formed as buttons and charms across garments. Each knot reflects connection across time, linking what is inherited with what is lived. Placed close to the wearer, they serve as a subtle reminder of a story that continues.',
     ],
     imageSrc: codesPageImage('Knotted Lines Of Lineage.jpg'),
-    imageAlt: 'Knotted lines of lineage — house code',
+    imageAlt: 'Knotted Lines — house code',
   },
 ]
 
@@ -267,7 +267,7 @@ export default function TheCodesClient() {
     'al-ain-rosette':
       'The Al Ain Rosette is developed as a house motif, carved in carnelian stone. Its colour is chosen for its natural warmth, reflecting the desert tones of Al Ain in the United Arab Emirates. Its form draws from desert flora, recalling both the desert hyacinth and the soft five-petalled bloom of Tribulus omanense, the national flower of the UAE. At present, it appears in jewellery, phone charms, and small objects, where it introduces a recognisable element that can extend across the house over time.',
     'knotted-lines-of-lineage':
-      'Knotted lines of lineage are developed as a defining element within the house. Each line is shaped in relation to another, forming knots that reflect connection across time, experience, and generation. What is inherited and what is lived become intertwined, creating a continuous thread rather than separate moments.\n\nWithin Bint Saeed, these knots take form as buttons on abayas and as charms across garments. The charms, often composed of natural stones, are placed with care, frequently along the shoulder, where they bring balance to the silhouette while remaining close to the wearer.\n\nTheir placement is considered. Each knot serves as a reminder of the story you carry, shaped by where you come from and what you move through. A story that is interconnected, personal, and ongoing, one you recognise, stand within, and carry forward with pride.',
+      'Knotted Lines are developed as a defining element within the house. Each line is shaped in relation to another, forming knots that reflect connection across time, experience, and generation. What is inherited and what is lived become intertwined, creating a continuous thread rather than separate moments.\n\nWithin Bint Saeed, these knots take form as buttons on abayas and as charms across garments. The charms, often composed of natural stones, are placed with care, frequently along the shoulder, where they bring balance to the silhouette while remaining close to the wearer.\n\nTheir placement is considered. Each knot serves as a reminder of the story you carry, shaped by where you come from and what you move through. A story that is interconnected, personal, and ongoing, one you recognise, stand within, and carry forward with pride.',
   }
 
   useEffect(() => {

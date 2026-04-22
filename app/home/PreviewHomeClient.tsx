@@ -299,13 +299,10 @@ export default function Home() {
   return (
     <div className={`relative overflow-hidden ${isRTL ? 'rtl' : 'ltr'}`}>
       <HeroSection />
-      <QuickShopCarousel />
-      <CampaignPanoramaSection />
       <EditorialIntro />
       <MagazineGrid />
-      <ColorBlockSection />
+      <QuickShopCarousel />
       <EditorialSplit />
-      <CollectionStrip />
       <CreatedForYouSection />
     </div>
   )
@@ -370,11 +367,11 @@ function QuickShopCarousel() {
   const quickProducts = catalog.slice(0, 8)
 
   return (
-    <section className="relative bg-[#f7f4ef] py-14 md:py-18 lg:py-20">
+    <section className="relative bg-[#f7f4ef] pb-14 pt-20 md:pb-18 md:pt-24 lg:pb-20 lg:pt-28">
       <SectionStripes variant="soft" />
       <div className="mx-auto mb-8 max-w-[1600px] px-6 lg:px-14">
         <p className="text-center font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed">
-          {isRTL ? 'وصل حديثا' : 'NEW ARRIVALS'}
+          {isRTL ? 'اختيار منسق' : 'CURATED SELECTION'}
         </p>
       </div>
 
@@ -487,7 +484,7 @@ function HeroSection() {
   const reduceMotion = useReducedMotion()
   const { t, isRTL } = useLanguage()
   // Preview-specific hero copy (English)
-  const heroHeadline = 'A house devoted to the daughter in every woman.'
+  const heroHeadline = 'FOR THE DAUGHTER IN EVERY WOMAN'
   const heroSubline = 'Carrying Heritage Forward.'
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -840,105 +837,12 @@ function MagazineGrid() {
   )
 }
 
-function ColorBlockSection() {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100])
-  const { isRTL } = useLanguage()
-
-  return (
-    <section ref={ref} className="relative flex min-h-screen items-center overflow-hidden">
-      <SectionStripes variant="bold" />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(165deg,#f7f5f0_0%,#eeece4_38%,#e3dfd3_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_78%_at_16%_14%,rgba(146,170,193,0.18)_0%,transparent_52%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_85%_86%,rgba(193,144,134,0.12)_0%,transparent_60%)]" />
-
-      <DecorativeCorners color="dustyBlue" />
-
-      <div className="relative container mx-auto px-6 py-28 lg:px-16 lg:py-36">
-        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          <motion.div style={{ y }} className="relative">
-            <div className="relative mx-auto aspect-[3/4] w-full max-w-md lg:mx-0">
-              <ScrollMaskImage
-                src="/image 2.JPG"
-                alt="Handcrafted luxury"
-                sizes="(max-width: 1024px) 92vw, 32rem"
-              />
-              <div className="pointer-events-none absolute -top-5 -right-5 h-full w-full border border-brand-dustyBlue/40" />
-              <div className="pointer-events-none absolute -bottom-4 -left-4 h-full w-full border border-white/50" />
-            </div>
-            <div className="absolute -bottom-3 -right-3 border border-brand-dustyBlue/30 bg-[#fbf8f3]/95 px-5 py-3 backdrop-blur-sm md:right-auto md:-left-3">
-              <span className="font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">
-                {isRTL ? 'صناعة يدوية' : 'Handcrafted'}
-              </span>
-            </div>
-          </motion.div>
-
-          <div className={`flex justify-center ${isRTL ? 'lg:justify-end' : 'lg:justify-start'}`}>
-            <div className="relative w-full max-w-xl lg:max-w-[36.5rem]">
-              <div className="pointer-events-none absolute -inset-[1px] bg-gradient-to-b from-brand-dustyBlue/28 via-transparent to-brand-clayRed/18 opacity-85" />
-              <div className="relative overflow-hidden border border-brand-stone/30 bg-[#f7f2ec]/95 shadow-[0_22px_58px_rgba(28,14,18,0.11)] ring-1 ring-white/60">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_85%_70%_at_10%_8%,rgba(146,170,193,0.13)_0%,transparent_58%)]" />
-                <div className="pointer-events-none absolute left-0 top-0 h-full w-[2px] bg-gradient-to-b from-brand-dustyBlue/12 via-brand-dustyBlue/65 to-brand-dustyBlue/12" />
-                <div
-                  className={`relative flex flex-col gap-8 px-9 py-10 text-center sm:px-12 md:py-14 ${isRTL ? 'lg:items-end lg:text-right' : 'lg:items-start lg:text-left'}`}
-                >
-                  <span className="font-montserrat text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/85">
-                    Bint Saeed
-                  </span>
-                  <h2 className="font-rozha text-[clamp(1.5rem,2.8vw+0.6rem,2.625rem)] leading-[1.12] tracking-[-0.02em] text-brand-darkRed lg:whitespace-nowrap">
-                    Every woman is a daughter.
-                  </h2>
-                  <div
-                    className={`mx-auto max-w-md space-y-5 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/76 lg:max-w-lg ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}
-                  >
-                    <p>She carries more than what is seen.</p>
-                    <p>A story. A sense of self.</p>
-                    <p>
-                      A connection that remains,
-                      <br />
-                      wherever life takes her.
-                    </p>
-                  </div>
-                  <MagneticWrap className={isRTL ? 'lg:self-end' : 'lg:self-start'}>
-                    <LocaleLink
-                      href="/about"
-                      className="inline-flex items-center justify-center border border-brand-dustyBlue/70 bg-brand-dustyBlue px-8 py-4 font-montserrat text-xs tracking-[0.12em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone"
-                      data-cursor-hover
-                      data-analytics-event="click_nav_about"
-                      data-analytics-section="home-about-section"
-                    >
-                      Discover the Story
-                    </LocaleLink>
-                  </MagneticWrap>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="pointer-events-none absolute top-1/2 right-6 hidden -translate-y-1/2 xl:block">
-        <span
-          className="font-rozha text-8xl leading-none writing-mode-vertical rotate-180 bg-[linear-gradient(180deg,#12080b_0%,#2d141e_35%,#1c0f15_58%,#92aac1_100%)] bg-clip-text text-transparent opacity-[0.86]"
-          style={{ writingMode: 'vertical-rl' }}
-        >
-          Bint Saeed
-        </span>
-      </div>
-    </section>
-  )
-}
-
 const CODES_LIST_ITEMS = [
-  'Al Talli.',
-  'Khous.',
-  'Al Ain Rosette.',
-  'Knotted lines of lineage.',
-  'The monogram.',
+  'Al Talli',
+  'Khous',
+  'Al Ain Rosette',
+  'Knotted Lines',
+  'The Monogram',
 ] as const
 
 function EditorialSplit() {
@@ -993,26 +897,25 @@ function EditorialSplit() {
             transition={{ duration: 1, delay: 0.2 }}
             className={`p-12 lg:p-20 ${isRTL ? 'text-right' : ''}`}
           >
-            <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed leading-[1.1] mb-8">
+            <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-darkRed/55">
+              HOUSE LANGUAGE
+            </span>
+            <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed leading-[1.1] mb-10 md:mb-12">
               The Codes
             </h2>
 
             {/* Feature list — same dusty blue rules as previous lifestyle items */}
-            <div className="space-y-4 mb-10">
+            <div className="mb-12 space-y-5 md:mb-14">
               {CODES_LIST_ITEMS.map((item, i) => (
                 <div key={i} className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <div className="h-px w-10 shrink-0 bg-brand-dustyBlue md:w-12" aria-hidden />
+                  <div className="h-px w-10 shrink-0 bg-brand-dustyBlue/65 md:w-12" aria-hidden />
                   <span className="font-montserrat text-sm text-brand-darkRed/80 tracking-wide">{item}</span>
                 </div>
               ))}
             </div>
 
-            <p className="font-montserrat text-sm text-brand-darkRed/70 tracking-wide leading-[1.9] mb-10 max-w-md">
-              Each element shapes how a piece is made,
-              <br />
-              how it moves,
-              <br />
-              how it becomes part of you.
+            <p className="mb-12 max-w-md font-montserrat text-sm tracking-wide text-brand-darkRed/72 md:mb-14">
+              Recognised without introduction.
             </p>
 
             <MagneticWrap className="w-fit">
@@ -1023,7 +926,7 @@ function EditorialSplit() {
                 data-analytics-event="click_view_collection_codes_page"
                 data-analytics-section="home-codes-section"
               >
-                Explore the Codes
+                Discover the Codes
                 <FiArrowRight className={`w-4 h-4 group-hover:translate-x-2 transition-transform duration-300 ${isRTL ? 'rotate-180' : ''}`} />
               </LocaleLink>
             </MagneticWrap>
