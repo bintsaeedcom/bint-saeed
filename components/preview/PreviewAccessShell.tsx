@@ -13,8 +13,8 @@ export default function PreviewAccessShell({
   children: React.ReactNode
 }) {
   return (
-    <div className="relative min-h-[100dvh] overflow-hidden bg-[#1a0008] text-brand-stone">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#2a0012] via-[#1a0008] to-[#0d0004]" />
+    <div className="relative min-h-[100dvh] overflow-hidden bs-burgundy-surface text-brand-stone">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_30%,rgba(90,26,34,0.2)_0%,transparent_55%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(146,170,193,0.1)_0%,_transparent_65%)]" />
 
       <div className="pointer-events-none absolute top-10 left-10 h-20 w-20 md:h-28 md:w-28">

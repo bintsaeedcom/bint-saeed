@@ -148,8 +148,8 @@ export default async function RootLayout({
                 toastOptions={{
                   style: {
                     background:
-                      'linear-gradient(135deg, rgba(59,0,20,0.96) 0%, rgba(45,20,30,0.94) 100%)',
-                    color: '#f8f4f1',
+                      'linear-gradient(135deg, rgba(59,10,18,0.96) 0%, rgba(31,5,8,0.94) 100%)',
+                    color: '#F5EDE8',
                     fontFamily: 'var(--font-montserrat)',
                     letterSpacing: '0.03em',
                     border: '1px solid rgba(212,189,172,0.28)',

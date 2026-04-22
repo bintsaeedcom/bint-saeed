@@ -324,12 +324,12 @@ function CampaignPanoramaSection() {
             className="object-cover object-center"
             priority={false}
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#12080b]/22 via-transparent to-[#12080b]/16" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#1F0508]/22 via-transparent to-[#1F0508]/16" />
           <div className={`absolute bottom-6 z-[2] ${isRTL ? 'left-6 md:left-10 lg:left-14' : 'right-6 md:right-10 lg:right-14'}`}>
             <MagneticWrap>
               <LocaleLink
                 href="/shop"
-                className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
+                className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-brand-ivory w-fit border-b border-brand-ivory/45 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
                 data-cursor-hover
               >
                 Shop Now
@@ -414,7 +414,7 @@ function QuickShopCarousel() {
                   className="pointer-events-none object-cover object-center opacity-0 transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-visible:opacity-100 group-hover:scale-[1.03]"
                   aria-hidden
                 />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#12080b]/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#1F0508]/22 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </div>
               <div className="flex min-h-[4.25rem] flex-1 flex-col justify-center gap-1.5 border-t border-brand-stone/20 px-2.5 py-2 md:min-h-[4.5rem] md:gap-2 md:px-3 md:py-2.5">
                 <div className={`flex min-h-0 items-start gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -514,15 +514,15 @@ function HeroSection() {
         />
         {/* Editorial: soft left read-path + gentle vignette (magazine spread legibility) */}
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#14020d]/85 via-[#1a0008]/45 to-transparent md:from-[#14020d]/80 md:via-[#1a0008]/35"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#1F0508]/88 via-[#3B0A12]/48 to-transparent md:from-[#1F0508]/82 md:via-[#3B0A12]/38"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d0004]/75 via-transparent to-[#1a0008]/25"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1F0508]/78 via-transparent to-[#3B0A12]/28"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_70%_40%,transparent_0%,rgba(13,0,4,0.35)_100%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_70%_40%,transparent_0%,rgba(31,5,8,0.38)_100%)]"
           aria-hidden
         />
         {/* Paper / print grain */}
@@ -536,7 +536,7 @@ function HeroSection() {
       </motion.div>
 
       {/* Thin editorial frame — lighter touch than corner brackets */}
-      <div className="pointer-events-none absolute inset-4 sm:inset-6 md:inset-8 border border-white/[0.12]" aria-hidden />
+      <div className="pointer-events-none absolute inset-4 sm:inset-6 md:inset-8 border border-brand-ivory/[0.14]" aria-hidden />
       <DecorativeCorners color="dustyBlue" />
 
       {/* Content — parallax on copy only; CTA stays untransformed for reliable hit-testing */}
@@ -551,7 +551,7 @@ function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   style={reduceMotion ? undefined : { y: titleY, letterSpacing: titleTracking, filter: titleFilter }}
-                  className="mb-8 max-w-[100vw] font-rozha uppercase leading-[1.12] tracking-[0.06em] !text-white text-[clamp(0.7rem,calc(0.35rem+2.15vw),2.65rem)] sm:text-[clamp(0.85rem,calc(0.4rem+2.35vw),2.75rem)] md:text-[clamp(0.95rem,calc(0.45rem+2.5vw),2.85rem)] md:whitespace-nowrap"
+                  className="mb-8 max-w-[100vw] font-rozha uppercase leading-[1.12] tracking-[0.06em] !text-brand-ivory text-[clamp(0.7rem,calc(0.35rem+2.15vw),2.65rem)] sm:text-[clamp(0.85rem,calc(0.4rem+2.35vw),2.75rem)] md:text-[clamp(0.95rem,calc(0.45rem+2.5vw),2.85rem)] md:whitespace-nowrap"
                 >
                   {heroHeadline}
                 </motion.h1>
@@ -561,7 +561,7 @@ function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                   style={reduceMotion ? undefined : { x: introX }}
-                  className="mb-6 max-w-md border-s border-white/25 ps-5 font-montserrat text-sm leading-[1.75] tracking-[0.02em] !text-white/90 md:mb-8 md:ps-6 md:text-[15px]"
+                  className="mb-6 max-w-md border-s border-brand-ivory/22 ps-5 font-montserrat text-sm leading-[1.75] tracking-[0.02em] !text-brand-ivory/92 md:mb-8 md:ps-6 md:text-[15px]"
                 >
                   {heroSubline}
                 </motion.p>
@@ -576,7 +576,7 @@ function HeroSection() {
                 <MagneticWrap className="w-fit">
                   <LocaleLink
                     href="/shop"
-                    className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
+                    className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-brand-ivory w-fit border-b border-brand-ivory/45 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
                     data-cursor-hover
                     data-analytics-event="click_cta_home_to_collection"
                     data-analytics-section="home-hero"
@@ -600,11 +600,11 @@ function HeroSection() {
         transition={{ delay: 0.5, duration: 0.4 }}
         className="pointer-events-none absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="font-montserrat text-[9px] uppercase tracking-[0.5em] text-white/40">Scroll</span>
+        <span className="font-montserrat text-[9px] uppercase tracking-[0.5em] text-brand-ivory/45">Scroll</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-          className="h-8 w-px bg-gradient-to-b from-white/50 to-transparent"
+          className="h-8 w-px bg-gradient-to-b from-brand-ivory/50 to-transparent"
           aria-hidden
         />
       </motion.div>
@@ -683,7 +683,7 @@ function EditorialIntro() {
       </div>
       <div className="pointer-events-none absolute top-1/2 right-5 hidden -translate-y-1/2 xl:block">
         <span
-          className="font-rozha text-8xl leading-none rotate-180 bg-[linear-gradient(180deg,#12080b_0%,#2d141e_35%,#1c0f15_58%,#92aac1_100%)] bg-clip-text text-transparent opacity-[0.84]"
+          className="font-rozha text-8xl leading-none rotate-180 bg-[linear-gradient(180deg,#1F0508_0%,#3B0A12_38%,#2a1216_58%,#92aac1_100%)] bg-clip-text text-transparent opacity-[0.84]"
           style={{ writingMode: 'vertical-rl' }}
         >
           BINT SAEED
@@ -751,7 +751,7 @@ function MagazineGrid() {
               data-analytics-event="click_cta_home_to_collection"
               data-analytics-section="home-where-it-begins-featured-card"
             >
-              <div className="relative aspect-[4/5] md:aspect-[4/3]">
+              <div className="relative aspect-[4/5] md:aspect-[10/9]">
                 <Image
                   src="/collection-section/1.png"
                   alt="Designed to carry you, wherever you are — Bint Saeed collection"
@@ -764,12 +764,12 @@ function MagazineGrid() {
                   <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">
                     Chapter I
                   </span>
-                  <h3 className="mb-4 max-w-xl font-rozha text-2xl leading-snug text-white md:text-3xl lg:text-4xl">
+                  <h3 className="mb-4 max-w-xl font-rozha text-2xl leading-snug text-brand-ivory md:text-3xl lg:text-4xl">
                     Designed to carry you,
                     <br />
                     wherever you are.
                   </h3>
-                  <span className="inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-white/80 transition-colors group-hover:text-brand-dustyBlue">
+                  <span className="inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-ivory/88 transition-colors group-hover:text-brand-dustyBlue">
                     Discover the collection
                     <FiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </span>
@@ -861,7 +861,7 @@ function EditorialSplit() {
           className="relative flex min-h-[60vh] items-center justify-center overflow-hidden lg:min-h-screen"
         >
           <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1F0508_0%,#2a1014_22%,#5A1A22_50%,#2a1014_78%,#1F0508_100%)]"
             aria-hidden
           />
           <div className="relative z-[1] flex w-full items-center justify-center px-10 py-16">
@@ -921,7 +921,7 @@ function EditorialSplit() {
             <MagneticWrap className="w-fit">
               <LocaleLink
                 href="/the-codes"
-                className={`group inline-flex items-center gap-3 px-8 py-4 bg-brand-dustyBlue text-white font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`group inline-flex items-center gap-3 px-8 py-4 bg-brand-dustyBlue text-[#1F0508] font-montserrat text-xs uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-brand-ivory transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
                 data-analytics-event="click_view_collection_codes_page"
                 data-analytics-section="home-codes-section"
@@ -941,7 +941,7 @@ function CollectionStrip() {
   const { t } = useLanguage()
   
   return (
-    <section className="bg-brand-darkRed py-6 overflow-hidden relative">
+    <section className="relative overflow-hidden py-6 bs-burgundy-surface">
       <SectionStripes variant="hero" />
       {/* Dusty blue accent lines */}
       <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
@@ -961,7 +961,7 @@ function CollectionStrip() {
               t.marquee.handcraftedLuxury,
             ].map((item, index) => (
               <span key={index} className="flex items-center">
-                <span className="font-rozha text-2xl md:text-3xl text-white/90 mx-12">
+                <span className="font-rozha text-2xl md:text-3xl text-brand-ivory/90 mx-12">
                   {item}
                 </span>
                 <span className="w-2 h-2 bg-brand-dustyBlue rounded-full" />
@@ -1038,7 +1038,7 @@ function CreatedForYouSection() {
                     <MagneticWrap className={isRTL ? 'lg:self-end' : 'lg:self-start'}>
                       <LocaleLink
                         href="/personalisation"
-                        className="inline-flex items-center justify-center border border-brand-dustyBlue/60 bg-brand-dustyBlue px-8 py-4 font-montserrat text-xs uppercase tracking-[0.18em] text-[#1a0008] shadow-[0_10px_24px_rgba(146,170,193,0.38)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-brand-stone"
+                        className="inline-flex items-center justify-center border border-brand-dustyBlue/60 bg-brand-dustyBlue px-8 py-4 font-montserrat text-xs uppercase tracking-[0.18em] text-[#1F0508] shadow-[0_10px_24px_rgba(146,170,193,0.38)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-brand-stone"
                         data-cursor-hover
                         data-analytics-event="click_personalisation_teaser"
                         data-analytics-section="home-personalisation-teaser"
@@ -1070,7 +1070,7 @@ function CreatedForYouSection() {
                   alt="Personalisation detail placeholder — hidden pocket"
                   sizes="(max-width: 1024px) 90vw, 36rem"
                 />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a0008]/25 via-transparent to-transparent" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1F0508]/28 via-transparent to-transparent" />
                 <div className="pointer-events-none absolute inset-3 border border-white/38" />
                 <div className="pointer-events-none absolute -top-4 -right-4 h-full w-full border border-brand-dustyBlue/42" />
                 <div className="pointer-events-none absolute -bottom-4 -left-4 h-full w-full border border-white/55" />

@@ -85,7 +85,7 @@ function AboutHero() {
     <section ref={ref} className="relative h-[50vh] w-full overflow-hidden md:h-[60vh]">
       <motion.div style={{ scale }} className="absolute inset-0">
         <Image src="/hero-bintsaeed.jpg" alt="Bint Saeed" fill className="object-cover object-[center_28%]" priority />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2a0012]/70 via-[#1a0008]/50 to-[#0d0004]/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#3B0A12]/72 via-[#1F0508]/52 to-[#1F0508]/82" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,_rgba(146,170,193,0.12)_0%,_transparent_55%)]" />
       </motion.div>
       <DecorativeCorners color="dustyBlue" />

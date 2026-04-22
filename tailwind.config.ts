@@ -10,9 +10,14 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          darkRed: '#3b0014',
-          /** Solid wine tone (header uses multi-stop gradient in Header.tsx; use this for accents) */
-          darkMagenta: '#2d141e',
+          /** Deep burgundy — primary maison field + UI anchor */
+          darkRed: '#3B0A12',
+          /** Near-black burgundy — edges / depth */
+          darkMagenta: '#1F0508',
+          /** Warm burgundy accent — highlights, radial centers */
+          burgundyWarm: '#5A1A22',
+          /** Type on dark burgundy — softer than pure white */
+          ivory: '#F5EDE8',
           wildRose: '#6620a2',
           dustyBlue: '#92aac1',
           clayRed: '#8e4233',

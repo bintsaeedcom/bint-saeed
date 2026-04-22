@@ -582,7 +582,7 @@ export default function CheckoutPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08 }}
-                className={`rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3b0014] to-[#2a0a12] p-8 text-white shadow-xl ${isRTL ? 'text-right' : ''}`}
+                className={`rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-8 text-brand-ivory shadow-xl ${isRTL ? 'text-right' : ''}`}
               >
                 <h2 className="font-rozha text-2xl text-brand-dustyBlue/95 mb-6">
                   {isRTL ? 'الملخص' : 'Summary'}

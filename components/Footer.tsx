@@ -44,7 +44,7 @@ export default function Footer() {
       {/* Main Footer Links - Coming Soon Dark Gradient Style */}
       <div className="relative text-white">
         {/* Coming Soon gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1a0008] via-[#1a0008] to-[#2a0012]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1F0508] via-[#3B0A12] to-[#1F0508]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(146,170,193,0.06)_0%,_transparent_70%)]" />
         
         {/* Geometric Lines */}

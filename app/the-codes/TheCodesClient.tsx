@@ -294,7 +294,7 @@ export default function TheCodesClient() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_92%_30%,rgba(193,144,134,0.12)_0%,transparent_50%)]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
 
-      <header className="relative h-[50vh] overflow-hidden bg-brand-darkRed md:h-[60vh]">
+      <header className="relative h-[50vh] overflow-hidden bs-burgundy-surface md:h-[60vh]">
         <Image
           src={codesPageImage('2.PNG')}
           alt="The Codes — hero"
@@ -303,7 +303,7 @@ export default function TheCodesClient() {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1F0508] via-[#3B0A12]/55 to-transparent" />
         <DecorativeCorners color="dustyBlue" />
         <div className="relative z-10 flex h-full flex-col justify-end pb-16 md:pb-20">
           <div className="container mx-auto px-6 lg:px-12">
@@ -315,7 +315,7 @@ export default function TheCodesClient() {
             >
               <LocaleLink
                 href="/home"
-                className={`group inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-white/70 transition-colors hover:text-white ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`group inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-ivory/75 transition-colors hover:text-brand-ivory ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 <FiArrowLeft
@@ -331,13 +331,13 @@ export default function TheCodesClient() {
               transition={{ duration: 0.8 }}
               className={isRTL ? 'text-right' : ''}
             >
-              <span className="mb-4 block font-montserrat text-xs uppercase tracking-[0.4em] text-white/60">
+              <span className="mb-4 block font-montserrat text-xs uppercase tracking-[0.4em] text-brand-ivory/65">
                 House Language
               </span>
-              <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-white md:text-7xl lg:text-8xl">
+              <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-brand-ivory md:text-7xl lg:text-8xl">
                 The Codes
               </h1>
-              <p className="max-w-lg font-montserrat text-base tracking-wide text-white/70">
+              <p className="max-w-lg font-montserrat text-base tracking-wide text-brand-ivory/78">
                 The elements that carry the legacy of the house.
                 <br />
                 Rooted in origin. Defined with precision.

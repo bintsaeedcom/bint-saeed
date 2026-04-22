@@ -52,10 +52,10 @@ export default function ComingSoonPage() {
   if (!mounted) return null
 
   return (
-    <div className="min-h-[100dvh] h-[100dvh] bg-[#1a0008] relative overflow-hidden">
-      {/* Layered gradient background */}
+    <div className="relative min-h-[100dvh] h-[100dvh] overflow-hidden bs-burgundy-surface">
+      {/* Atmospheric depth — matches global canvas */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2a0012] via-[#1a0008] to-[#0d0004]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_35%,rgba(90,26,34,0.22)_0%,transparent_55%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(146,170,193,0.08)_0%,_transparent_70%)]" />
       </div>
 

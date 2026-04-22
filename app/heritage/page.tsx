@@ -85,7 +85,7 @@ function HeritageHero() {
     <section ref={ref} className="relative h-[100svh] w-full overflow-hidden">
       <motion.div style={{ scale }} className="absolute inset-0">
         <Image src="https://images.unsplash.com/photo-1548013146-72479768bada?w=1920&q=90" alt="UAE Heritage" fill className="object-cover" priority />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2a0012]/70 via-[#1a0008]/50 to-[#0d0004]/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#3B0A12]/72 via-[#1F0508]/52 to-[#1F0508]/82" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,_rgba(146,170,193,0.14)_0%,_transparent_55%)]" />
       </motion.div>
       <DecorativeCorners color="dustyBlue" />
@@ -210,7 +210,7 @@ function BrandConnectionSection() {
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#2a0012] via-[#1a0008] to-[#0d0004]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#3B0A12] via-[#1F0508] to-[#1F0508]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_40%,_rgba(146,170,193,0.09)_0%,_transparent_60%)]" />
       <DecorativeCorners color="dustyBlue" />
       <div className="relative container mx-auto px-6 lg:px-16 py-32">
@@ -253,7 +253,7 @@ function BrandConnectionSection() {
                 </div>
               </div>
             </div>
-            <div className="absolute -bottom-4 -right-4 md:right-auto md:-left-4 backdrop-blur-md bg-[#1a0008]/80 border border-brand-dustyBlue/25 px-6 py-4 rounded-xl">
+            <div className="absolute -bottom-4 -right-4 md:right-auto md:-left-4 backdrop-blur-md bg-[#1F0508]/82 border border-brand-dustyBlue/25 px-6 py-4 rounded-xl">
               <span className="font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">{isRTL ? 'حرف تقليدية' : 'Traditional Crafts'}</span>
             </div>
           </motion.div>

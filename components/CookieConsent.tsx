@@ -99,17 +99,17 @@ export default function CookieConsent() {
                 >
                   <div className="space-y-3 px-6 py-4 text-left">
                     <div>
-                      <span className="font-montserrat text-xs font-medium text-[#3b0014]">{t.cookie.essential}</span>
+                      <span className="font-montserrat text-xs font-medium text-brand-darkRed">{t.cookie.essential}</span>
                       <span className="ml-2 text-[10px] text-[#6b6b6b]">({t.cookie.alwaysOn})</span>
                       <p className="mt-1 font-montserrat text-xs text-[#6b6b6b]">{t.cookie.essentialDesc}</p>
                     </div>
                     <div>
-                      <span className="font-montserrat text-xs font-medium text-[#3b0014]">{t.cookie.analytics}</span>
+                      <span className="font-montserrat text-xs font-medium text-brand-darkRed">{t.cookie.analytics}</span>
                       <span className="ml-2 text-[10px] text-[#6b6b6b]">({t.cookie.optional})</span>
                       <p className="mt-1 font-montserrat text-xs text-[#6b6b6b]">{t.cookie.analyticsDesc}</p>
                     </div>
                     <div>
-                      <span className="font-montserrat text-xs font-medium text-[#3b0014]">{t.cookie.marketing}</span>
+                      <span className="font-montserrat text-xs font-medium text-brand-darkRed">{t.cookie.marketing}</span>
                       <span className="ml-2 text-[10px] text-[#6b6b6b]">({t.cookie.optional})</span>
                       <p className="mt-1 font-montserrat text-xs text-[#6b6b6b]">{t.cookie.marketingDesc}</p>
                     </div>

@@ -145,7 +145,7 @@ export default function AccessoriesPage() {
   return (
     <div className={`min-h-screen bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
       {/* Hero Banner */}
-      <section className="relative h-[50vh] md:h-[60vh] bg-brand-darkRed overflow-hidden">
+      <section className="relative h-[50vh] md:h-[60vh] overflow-hidden bs-burgundy-surface">
         <Image
           src="/Webshop pictures/accessoiries/banner.png"
           alt="Accessories Collection"
@@ -154,7 +154,7 @@ export default function AccessoriesPage() {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1F0508] via-[#3B0A12]/55 to-transparent" />
         
         <div className="relative h-full flex flex-col justify-end pb-16 md:pb-20">
           <div className="container mx-auto px-6 lg:px-12">
@@ -167,7 +167,7 @@ export default function AccessoriesPage() {
             >
               <LocaleLink
                 href="/"
-                className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-white/70 hover:text-white transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-ivory/75 hover:text-brand-ivory transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
@@ -181,13 +181,13 @@ export default function AccessoriesPage() {
               transition={{ duration: 0.8 }}
               className={isRTL ? 'text-right' : ''}
             >
-              <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-white/60 mb-4 block">
+              <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-ivory/65 mb-4 block">
                 {isRTL ? 'مجموعة الإكسسوارات' : 'Accessories Collection'}
               </span>
-              <h1 data-document-h1="true" className="font-rozha text-5xl md:text-7xl lg:text-8xl text-white mb-4">
+              <h1 data-document-h1="true" className="font-rozha text-5xl md:text-7xl lg:text-8xl text-brand-ivory mb-4">
                 {isRTL ? 'الإكسسوارات' : 'Accessories'}
               </h1>
-              <p className="font-montserrat text-base text-white/70 tracking-wide max-w-lg">
+              <p className="font-montserrat text-base text-brand-ivory/78 tracking-wide max-w-lg">
                 {isRTL
                   ? 'اكتشفي مجموعتنا الراقية من تعليقات العباءة والقلادات والأقراط والأساور وتعليقات الحقائب والهواتف.'
                   : 'Discover our curated collection of abaya charms, necklaces, earrings, bracelets, bag charms, and phone charms.'}
@@ -210,7 +210,7 @@ export default function AccessoriesPage() {
                   onClick={() => setCategoryAndUrl(category.id)}
                   className={`flex items-center gap-2 px-4 py-2 font-montserrat text-xs uppercase tracking-[0.1em] transition-all duration-300 whitespace-nowrap ${
                     activeCategory === category.id
-                      ? 'bg-brand-darkRed text-white'
+                      ? 'bg-brand-darkRed text-brand-ivory'
                       : 'text-brand-clayRed/70 hover:text-brand-dustyBlue hover:bg-brand-dustyBlue/10'
                   } ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
@@ -272,7 +272,7 @@ export default function AccessoriesPage() {
                       onClick={() => toggleStoneAndUrl(st.id)}
                       className={`rounded-sm border px-2.5 py-1.5 font-montserrat text-[11px] uppercase tracking-[0.08em] transition-colors ${
                         on
-                          ? 'border-brand-darkRed bg-brand-darkRed text-white'
+                          ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
                           : 'border-brand-stone/40 text-brand-clayRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
                       }`}
                       data-cursor-hover
@@ -442,7 +442,7 @@ export default function AccessoriesPage() {
                             onClick={() => toggleStoneAndUrl(st.id)}
                             className={`rounded-sm border px-2 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.06em] ${
                               on
-                                ? 'border-brand-darkRed bg-brand-darkRed text-white'
+                                ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
                                 : 'border-brand-stone/40 text-brand-clayRed'
                             }`}
                           >
@@ -477,7 +477,7 @@ export default function AccessoriesPage() {
                       }}
                       className={`w-full flex items-center gap-3 px-4 py-3 font-montserrat text-sm tracking-wide transition-colors ${isRTL ? 'flex-row-reverse text-right' : ''} ${
                         activeCategory === category.id
-                          ? 'bg-brand-darkRed text-white'
+                          ? 'bg-brand-darkRed text-brand-ivory'
                           : 'text-brand-clayRed hover:bg-brand-dustyBlue/10'
                       }`}
                       data-cursor-hover
@@ -593,7 +593,7 @@ function AccessoryCard({
             {/* Tags */}
             <div className={`absolute top-4 ${isRTL ? 'right-4' : 'left-4'} flex flex-col gap-2`}>
               {accessory.isNew && (
-                <span className="px-3 py-1 bg-brand-darkRed text-white font-montserrat text-[10px] uppercase tracking-[0.15em]">
+                <span className="px-3 py-1 bg-brand-darkRed text-brand-ivory font-montserrat text-[10px] uppercase tracking-[0.15em]">
                   {isRTL ? 'جديد' : 'New'}
                 </span>
               )}

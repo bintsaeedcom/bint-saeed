@@ -174,7 +174,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       'apple-mobile-web-app-capable': 'yes',
       'apple-mobile-web-app-status-bar-style': 'black-translucent',
       'format-detection': 'telephone=no',
-      'msapplication-TileColor': '#3b0014',
+      'msapplication-TileColor': '#3B0A12',
       ...aiOther(locale),
     },
   }
