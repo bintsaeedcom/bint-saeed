@@ -159,66 +159,108 @@ function AboutNarrative() {
       className="relative border-t border-brand-stone/20 bg-[#faf9f7]"
     >
       <div className="absolute left-0 top-0 hidden h-full w-px bg-gradient-to-b from-brand-dustyBlue/35 via-brand-dustyBlue/15 to-transparent lg:block lg:left-[8%]" />
-      <div className="relative mx-auto max-w-[42rem] px-6 py-20 md:py-28 lg:px-8 lg:py-36">
+      <div className="relative mx-auto max-w-[62rem] px-6 py-20 md:py-28 lg:px-8 lg:py-36">
         <p className="mb-16 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue md:mb-20">
           About the house
         </p>
-        <motion.section
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-12%' }}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-10 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]"
-        >
-          <p>
-            <strong>Bint Saeed is a house shaped by origin.</strong>
-          </p>
+        <div className="space-y-8 md:space-y-10">
+          <motion.section
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-12%' }}
+            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+            className="rounded-2xl border border-brand-dustyBlue/20 bg-white/70 p-7 md:p-10"
+          >
+            <div className="space-y-7 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
+              <p>A house shaped by origin, carried across the world.</p>
 
-          <p>
-            In Arabic, <em>Bint</em> means daughter of. It is not a reference to where you are, but to where you
-            come from. It carries lineage, memory, and belonging. It holds the story that exists before you, and
-            continues through you.{' '}
-            <strong>
-              Because no matter where life leads, a woman remains connected to her origin. It does not disappear when
-              she moves. It does not change when she grows.
-            </strong>{' '}
-            It moves with her, forming the way she stands, the way she chooses, the way she is seen.
-          </p>
+              <p>
+                In Arabic, <em>Bint</em> means daughter of. It is not a reference to where you are, but to where you
+                come from. It carries lineage, memory, and belonging. It holds the story that exists before you, and
+                continues through you.{' '}
+                <strong>
+                  Because no matter where life leads, a woman remains connected to her origin. It does not disappear
+                  when she moves. It does not change when she grows.
+                </strong>
+              </p>
 
-          <p>
-            Rooted in Abu Dhabi, the house emerges from a place that has always moved forward without losing itself. A
-            place where ambition and identity exist side by side, where growth is built on origin rather than
-            replacing it.{' '}
-            <strong>
-              Today, a woman moves between cities, cultures, and expectations. She builds a life across places, steps
-              into different roles, and expands what is possible for herself. Yet through all of this, she remains a
-              daughter.
-            </strong>{' '}
-            Not defined by limitation, but by depth. By where she comes from, and what she carries forward. Bint Saeed
-            exists for her. <strong>For the woman who moves through the world without leaving herself behind,</strong>{' '}
-            and who understands that identity is not something to adjust depending on place, but something that is
-            carried out with confidence and certainty.
-          </p>
+              <p>
+                <strong>
+                  Rooted in Abu Dhabi, Bint Saeed emerges from a place that has always moved forward while preserving
+                  its cultural identity.
+                </strong>{' '}
+                A place where ambition and identity exist side by side, where growth is built on origin rather than
+                replacing it. From here, the house extends into a way of living that moves between places with ease.
+              </p>
 
-          <p>
-            Each piece is created with this in mind.{' '}
-            <strong>
-              Shaped by Emirati design codes, including Al Talli craftsmanship and the structural logic of Khous
-              weaving,
-            </strong>{' '}
-            the work carries forward knowledge that has existed for generations. These elements are translated into
-            contemporary forms that move across borders, allowing what was once confined to a single setting to be worn
-            with ease in a global life. Alongside the abayas, the house creates jewellery and objects that extend this
-            idea further, pieces that move with you and adapt to the life you are building.
-          </p>
+              <p>
+                From Abu Dhabi to Paris, from London to Riyadh, the same sense of self remains. A way of being that
+                does not shift with setting, and a way of dressing that follows it naturally.
+              </p>
+            </div>
+          </motion.section>
 
-          <p>
-            <strong>
-              Bint Saeed stands as a house devoted to the daughter in every woman, a reminder that no matter where you
-              go, you do not begin again, you continue.
-            </strong>
-          </p>
-        </motion.section>
+          <motion.section
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-12%' }}
+            transition={{ duration: 0.75, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+            className="rounded-2xl border border-brand-stone/35 bg-[#f6f2ec] p-7 md:p-10"
+          >
+            <div className="space-y-7 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
+              <p>
+                <strong>Each creation carries that sense of continuity.</strong> Not defined by location, but
+                recognised by its consistency. A clear visual language that holds its place wherever it is worn.
+                Origin, expressed in form, in attitude, in the way you are recognised.
+              </p>
+
+              <p>
+                <strong>Today, a woman moves between cities, cultures, and expectations.</strong> She builds a life
+                across places, steps into different roles, and expands what is possible for herself.{' '}
+                <strong>Yet through all of this, she remains a daughter.</strong> Not defined by limitation, but by
+                depth. By where she comes from, and what she carries forward.
+              </p>
+
+              <p>
+                <strong>Bint Saeed exists at that intersection.</strong> Between heritage and a contemporary life lived
+                locally and across borders. Between where you come from and where you are going.{' '}
+                <strong>Between the values you have inherited and how you present yourself today.</strong>
+              </p>
+            </div>
+          </motion.section>
+
+          <motion.section
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-12%' }}
+            transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="rounded-2xl border border-brand-darkRed/20 bg-white/80 p-7 md:p-10"
+          >
+            <div className="space-y-7 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
+              <p>
+                The house draws from Emirati design codes, including Al Talli craftsmanship and the structural logic of
+                Khous weaving.{' '}
+                <strong>
+                  Every piece reflects the elegance of the Gulf, expressed through a way of dressing that moves
+                  effortlessly across borders.
+                </strong>
+              </p>
+
+              <p>
+                <strong>For women who move through the world without leaving themselves behind,</strong> and who
+                understand that identity is not something to adjust depending on place, but something carried out with
+                confidence and certainty.
+              </p>
+
+              <p>
+                <strong>
+                  Bint Saeed stands as a house devoted to the daughter in every woman. A reminder that no matter where
+                  you go, you do not begin again, you continue.
+                </strong>
+              </p>
+            </div>
+          </motion.section>
+        </div>
       </div>
     </article>
   )
