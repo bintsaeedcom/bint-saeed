@@ -34,6 +34,14 @@ import 'swiper/css/pagination'
 
 type PackagingType = 'sustainable' | 'signature'
 
+function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
+  if (typeof window === 'undefined') return 'desktop'
+  const ua = navigator.userAgent || ''
+  if (/iPad|Tablet/i.test(ua)) return 'tablet'
+  if (/Mobi|Android|iPhone/i.test(ua)) return 'mobile'
+  return 'desktop'
+}
+
 export default function CheckoutPage() {
   const router = useRouter()
   const { localize } = useLocaleHref()
@@ -158,6 +166,11 @@ export default function CheckoutPage() {
           discountCode: appliedCode || undefined,
           customerEmail: email.trim() || undefined,
           packagingType,
+          clientContext: {
+            localTime: new Date().toString(),
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
+            deviceType: detectDeviceType(),
+          },
         }),
       })
 

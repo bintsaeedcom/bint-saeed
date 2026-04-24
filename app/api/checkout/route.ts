@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { isAllowedCheckoutOrigin, resolvePublicSiteBaseUrl } from '@/lib/security/allowedCheckoutOrigin'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
+import { notifyHealthAlert } from '@/lib/ops/notifications'
 
 function getStripeSecretKey(): string | null {
   const key = process.env.STRIPE_SECRET_KEY?.trim()
@@ -21,6 +22,13 @@ function getStripe() {
 
 const MAX_LINE_ITEMS = 80
 const MAX_DESC_LEN = 450
+
+function extractClientIp(request: NextRequest): string {
+  const forwardedFor = request.headers.get('x-forwarded-for') || ''
+  const realIp = request.headers.get('x-real-ip') || ''
+  const candidate = forwardedFor.split(',')[0]?.trim() || realIp.trim() || ''
+  return candidate.slice(0, 64)
+}
 
 export async function POST(request: NextRequest) {
   if (!getStripeSecretKey()) {
@@ -44,8 +52,15 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const { items, discountCode, customerEmail, packagingType } = body
+    const { items, discountCode, customerEmail, packagingType, clientContext } = body
     const discountCodeStr = typeof discountCode === 'string' ? discountCode.trim().slice(0, 64) : ''
+    const clientTimezone =
+      typeof clientContext?.timezone === 'string' ? clientContext.timezone.trim().slice(0, 64) : ''
+    const clientLocalTime =
+      typeof clientContext?.localTime === 'string' ? clientContext.localTime.trim().slice(0, 120) : ''
+    const clientDeviceType =
+      typeof clientContext?.deviceType === 'string' ? clientContext.deviceType.trim().slice(0, 24) : ''
+    const clientIp = extractClientIp(request)
 
     if (!Array.isArray(items) || items.length === 0 || items.length > MAX_LINE_ITEMS) {
       return NextResponse.json({ error: 'Invalid cart.' }, { status: 400 })
@@ -200,6 +215,10 @@ export async function POST(request: NextRequest) {
         ),
         discountCodeUsed: discountCodeStr,
         packagingType: packaging,
+        clientIp,
+        clientTimezone,
+        clientLocalTime,
+        clientDeviceType,
       },
       // Customer creation for order tracking
       customer_creation: 'always',
@@ -250,6 +269,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ sessionId: session.id })
   } catch (error: unknown) {
     console.error('Stripe checkout error:', error)
+    await notifyHealthAlert({
+      source: 'api/checkout',
+      message: error instanceof Error ? error.message : 'Unknown checkout error',
+    })
     return NextResponse.json(
       { error: 'Checkout is temporarily unavailable. Please try again.' },
       { status: 500 }

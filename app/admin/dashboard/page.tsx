@@ -1,13 +1,16 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   FiUsers, FiUserPlus, FiUserCheck, FiShoppingCart, 
   FiEye, FiMapPin, FiClock, FiMail, FiPhone,
   FiRefreshCw, FiBell, FiX, FiGlobe, FiSmartphone,
-  FiMonitor, FiTablet, FiDollarSign, FiAlertTriangle, FiCheckCircle
+  FiMonitor, FiTablet, FiDollarSign, FiAlertTriangle, FiCheckCircle, FiActivity, FiExternalLink, FiPackage, FiTrendingUp, FiTruck, FiRotateCcw
 } from 'react-icons/fi'
+import type { StoredOrder } from '@/lib/orders/types'
+import type { CustomerRecord } from '@/lib/customers/types'
 
 interface Visitor {
   visitorId: string
@@ -74,7 +77,22 @@ interface CheckoutHealth {
   warnings: string[]
 }
 
+interface ProductAdminRow {
+  id: string
+  name: string
+  price: number
+  category: string
+  image: string
+  override: {
+    price?: number
+    name?: string
+    published?: boolean
+  }
+}
+
 export default function AdminDashboard() {
+  const gaMeasurementId = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID?.trim() ?? ''
+  const gaConfigured = gaMeasurementId.startsWith('G-')
   const [activeVisitors, setActiveVisitors] = useState<Visitor[]>([])
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [stats, setStats] = useState({
@@ -87,6 +105,10 @@ export default function AdminDashboard() {
   const [showNotifications, setShowNotifications] = useState(false)
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [checkoutHealth, setCheckoutHealth] = useState<CheckoutHealth | null>(null)
+  const [orders, setOrders] = useState<StoredOrder[]>([])
+  const [customers, setCustomers] = useState<CustomerRecord[]>([])
+  const [products, setProducts] = useState<ProductAdminRow[]>([])
+  const [commerceReady, setCommerceReady] = useState(false)
 
   // Fetch data
   const fetchData = async () => {
@@ -115,8 +137,26 @@ export default function AdminDashboard() {
       } else {
         setCheckoutHealth(null)
       }
+
+      // Fetch commerce data for command-center widgets
+      const [ordersRes, customersRes, productsRes] = await Promise.all([
+        fetch('/api/admin/orders'),
+        fetch('/api/admin/customers?limit=500'),
+        fetch('/api/admin/products/overrides'),
+      ])
+      const [ordersData, customersData, productsData] = await Promise.all([
+        ordersRes.json(),
+        customersRes.json(),
+        productsRes.json(),
+      ])
+
+      if (ordersRes.ok) setOrders(ordersData.orders || [])
+      if (customersRes.ok) setCustomers(customersData.customers || [])
+      if (productsRes.ok) setProducts(productsData.products || [])
+      setCommerceReady(ordersRes.ok && customersRes.ok && productsRes.ok)
     } catch (e) {
       console.error('Failed to fetch data')
+      setCommerceReady(false)
     }
     setIsRefreshing(false)
   }
@@ -157,6 +197,17 @@ export default function AdminDashboard() {
   }
 
   const unreadCount = notifications.filter(n => !n.read).length
+  const orderStatusCounts = orders.reduce<Record<string, number>>((acc, order) => {
+    acc[order.fulfillmentStatus] = (acc[order.fulfillmentStatus] || 0) + 1
+    return acc
+  }, {})
+  const totalRevenue = orders.reduce((sum, order) => sum + (order.amountTotal || 0), 0)
+  const recentRevenue = orders
+    .filter((order) => Date.now() - new Date(order.createdAt).getTime() <= 7 * 24 * 3600 * 1000)
+    .reduce((sum, order) => sum + (order.amountTotal || 0), 0)
+  const publishedProducts = products.filter((p) => p.override.published !== false).length
+  const draftProducts = Math.max(0, products.length - publishedProducts)
+  const avgOrderValue = orders.length > 0 ? totalRevenue / orders.length : 0
 
   return (
     <div className="min-h-screen bg-stone-100 text-neutral-900">
@@ -224,6 +275,93 @@ export default function AdminDashboard() {
             value={stats.returningVisitors}
             color="bg-amber-500"
           />
+        </div>
+
+        {/* Commerce command center */}
+        <div className="mb-8 rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+          <div className="mb-4 flex items-start justify-between gap-4">
+            <div>
+              <h2 className="font-rozha text-2xl text-brand-darkRed">Commerce Command Center</h2>
+              <p className="font-montserrat text-xs uppercase tracking-[0.16em] text-gray-500">
+                Orders, revenue, customers, and catalog controls
+              </p>
+            </div>
+            <span
+              className={`inline-flex items-center gap-2 rounded-full px-3 py-1 font-montserrat text-xs uppercase tracking-[0.12em] ${
+                commerceReady ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+              }`}
+            >
+              {commerceReady ? <FiCheckCircle className="h-4 w-4" /> : <FiAlertTriangle className="h-4 w-4" />}
+              {commerceReady ? 'Connected' : 'Partial data'}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+            <HealthPill label="Orders API" ok={orders.length > 0 || commerceReady} />
+            <HealthPill label="Customers API" ok={customers.length > 0 || commerceReady} />
+            <HealthPill label="Catalog API" ok={products.length > 0 || commerceReady} />
+            <HealthPill label="Webhook orders" ok={(orderStatusCounts.paid || 0) + (orderStatusCounts.processing || 0) > 0} />
+            <HealthPill label="Fulfillment flow" ok={Object.keys(orderStatusCounts).length > 0} />
+            <HealthPill label="Admin links" ok />
+          </div>
+
+          <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <KpiTile
+              icon={<FiDollarSign className="h-4 w-4" />}
+              label="Revenue (all time)"
+              value={`AED ${totalRevenue.toFixed(2)}`}
+              tone="text-emerald-700"
+            />
+            <KpiTile
+              icon={<FiTrendingUp className="h-4 w-4" />}
+              label="Revenue (7 days)"
+              value={`AED ${recentRevenue.toFixed(2)}`}
+              tone="text-blue-700"
+            />
+            <KpiTile
+              icon={<FiShoppingCart className="h-4 w-4" />}
+              label="Average order value"
+              value={`AED ${avgOrderValue.toFixed(2)}`}
+              tone="text-violet-700"
+            />
+            <KpiTile
+              icon={<FiUsers className="h-4 w-4" />}
+              label="Customer records"
+              value={String(customers.length)}
+              tone="text-amber-700"
+            />
+          </div>
+
+          <div className="mt-4 grid gap-3 lg:grid-cols-2">
+            <div className="rounded-lg border border-gray-100 bg-stone-50 p-4">
+              <p className="font-montserrat text-[11px] uppercase tracking-[0.15em] text-gray-500">Fulfillment pipeline</p>
+              <div className="mt-3 grid grid-cols-2 gap-2 text-xs font-montserrat text-gray-700 sm:grid-cols-3">
+                <PipelineCount label="Paid" value={orderStatusCounts.paid || 0} />
+                <PipelineCount label="Processing" value={orderStatusCounts.processing || 0} />
+                <PipelineCount label="Ready to ship" value={orderStatusCounts.ready_to_ship || 0} />
+                <PipelineCount label="Shipped" value={orderStatusCounts.shipped || 0} />
+                <PipelineCount label="Delivered" value={orderStatusCounts.delivered || 0} />
+                <PipelineCount label="Refunded" value={orderStatusCounts.refunded || 0} />
+              </div>
+            </div>
+            <div className="rounded-lg border border-gray-100 bg-stone-50 p-4">
+              <p className="font-montserrat text-[11px] uppercase tracking-[0.15em] text-gray-500">Catalog status</p>
+              <div className="mt-3 grid grid-cols-2 gap-2 text-xs font-montserrat text-gray-700">
+                <PipelineCount label="Published" value={publishedProducts} />
+                <PipelineCount label="Draft / hidden" value={draftProducts} />
+              </div>
+              <p className="mt-3 font-montserrat text-[11px] text-gray-500">
+                Use Catalog to update product names, pricing, and visibility without redeploy.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <QuickLink href="/admin/orders" icon={<FiTruck className="h-3.5 w-3.5" />} label="Open Orders Hub" />
+            <QuickLink href="/admin/customers" icon={<FiUsers className="h-3.5 w-3.5" />} label="Open Customer CRM" />
+            <QuickLink href="/admin/products" icon={<FiPackage className="h-3.5 w-3.5" />} label="Open Catalog Manager" />
+            <QuickLink href="/admin/dashboard" icon={<FiRotateCcw className="h-3.5 w-3.5" />} label="Refresh command center" />
+          </div>
         </div>
 
         {/* Checkout diagnostics */}
@@ -301,6 +439,57 @@ export default function AdminDashboard() {
               Could not load checkout diagnostics. Make sure you are authenticated as admin.
             </p>
           )}
+        </div>
+
+        {/* Google Analytics diagnostics */}
+        <div className="mb-8 rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+          <div className="mb-4 flex items-start justify-between gap-4">
+            <div>
+              <h2 className="font-rozha text-2xl text-brand-darkRed">Google Analytics</h2>
+              <p className="font-montserrat text-xs uppercase tracking-[0.16em] text-gray-500">
+                GA4 tracking status
+              </p>
+            </div>
+            <span
+              className={`inline-flex items-center gap-2 rounded-full px-3 py-1 font-montserrat text-xs uppercase tracking-[0.12em] ${
+                gaConfigured ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+              }`}
+            >
+              {gaConfigured ? <FiCheckCircle className="h-4 w-4" /> : <FiAlertTriangle className="h-4 w-4" />}
+              {gaConfigured ? 'Configured' : 'Missing'}
+            </span>
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+            <HealthPill label="GA4 ID" ok={gaConfigured} />
+            <HealthPill label="Tracker bootstrap" ok={gaConfigured} />
+            <HealthPill label="Pageview events" ok={gaConfigured} />
+            <HealthPill label="Event tracking" ok={gaConfigured} />
+          </div>
+
+          <div className="mt-4 grid gap-3 lg:grid-cols-2">
+            <div className="rounded-lg border border-gray-100 bg-stone-50 p-4">
+              <p className="font-montserrat text-[11px] uppercase tracking-[0.15em] text-gray-500">Measurement ID</p>
+              <p className="mt-1 font-montserrat text-sm text-gray-900 break-all">
+                {gaConfigured ? gaMeasurementId : 'Set NEXT_PUBLIC_GA4_MEASUREMENT_ID in your environment'}
+              </p>
+            </div>
+            <div className="rounded-lg border border-gray-100 bg-stone-50 p-4">
+              <p className="font-montserrat text-[11px] uppercase tracking-[0.15em] text-gray-500">Quick actions</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                <a
+                  href="https://analytics.google.com/analytics/web/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-1.5 font-montserrat text-xs text-gray-700 hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                >
+                  <FiActivity className="h-3.5 w-3.5" />
+                  Open GA4
+                  <FiExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -631,5 +820,56 @@ function HealthPill({ label, ok }: { label: string; ok: boolean }) {
       <p className="font-montserrat text-[10px] uppercase tracking-[0.12em]">{label}</p>
       <p className="mt-1 font-montserrat text-xs">{ok ? 'Configured' : 'Missing'}</p>
     </div>
+  )
+}
+
+function KpiTile({
+  icon,
+  label,
+  value,
+  tone,
+}: {
+  icon: React.ReactNode
+  label: string
+  value: string
+  tone: string
+}) {
+  return (
+    <div className="rounded-lg border border-gray-100 bg-stone-50 p-4">
+      <div className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.12em] ${tone}`}>
+        {icon}
+        {label}
+      </div>
+      <p className="mt-2 font-rozha text-2xl text-brand-darkRed">{value}</p>
+    </div>
+  )
+}
+
+function PipelineCount({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="rounded-md border border-gray-200 bg-white px-3 py-2">
+      <p className="uppercase tracking-[0.12em] text-[10px] text-gray-500">{label}</p>
+      <p className="mt-1 text-sm text-gray-900">{value}</p>
+    </div>
+  )
+}
+
+function QuickLink({
+  href,
+  icon,
+  label,
+}: {
+  href: string
+  icon: React.ReactNode
+  label: string
+}) {
+  return (
+    <Link
+      href={href}
+      className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 font-montserrat text-xs uppercase tracking-[0.12em] text-gray-700 transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+    >
+      {icon}
+      {label}
+    </Link>
   )
 }

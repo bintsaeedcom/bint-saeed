@@ -3,6 +3,7 @@ import Stripe from 'stripe'
 import { saveOrder, findOrderIdBySession, listOrders, updateOrderFulfillment, getOrderById } from '@/lib/orders/orderStore'
 import { markStripeEventProcessed, wasStripeEventProcessed } from '@/lib/payments/webhookEventStore'
 import type { OrderLine, StoredOrder } from '@/lib/orders/types'
+import { createTrelloCardForOrder, notifyHealthAlert } from '@/lib/ops/notifications'
 
 export const runtime = 'nodejs'
 
@@ -111,6 +112,94 @@ function buildOrderFromSession(session: Stripe.Checkout.Session): StoredOrder {
   }
 }
 
+async function notifyOrderChannel(session: Stripe.Checkout.Session) {
+  const webhookUrl = process.env.SLACK_ORDERS_WEBHOOK_URL?.trim()
+  if (!webhookUrl) return
+
+  const uaeTime = new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
+  const localTime = session.metadata?.clientLocalTime || 'Unknown'
+  const deviceType = session.metadata?.clientDeviceType || 'Unknown'
+  const ip = session.metadata?.clientIp || 'Unknown'
+  const timezone = session.metadata?.clientTimezone || 'Unknown'
+  const shipping = session.shipping_details?.address
+  const location = [shipping?.city, shipping?.state, shipping?.country].filter(Boolean).join(', ') || 'Unknown'
+  const customerName = session.customer_details?.name || 'Unknown'
+  const customerEmail = session.customer_details?.email || session.customer_email || session.metadata?.customerEmail || 'Unknown'
+  const customerPhone = session.customer_details?.phone || 'Unknown'
+  const amountPaid = `${(session.currency || 'aed').toUpperCase()} ${((session.amount_total ?? 0) / 100).toFixed(2)}`
+
+  type MetaItem = {
+    name?: string
+    size?: string
+    quantity?: number
+    customisationMessage?: string
+    customLength?: string
+    lengthCm?: number
+  }
+  let metaItems: MetaItem[] = []
+  try {
+    if (session.metadata?.orderItems) {
+      metaItems = JSON.parse(session.metadata.orderItems) as MetaItem[]
+    }
+  } catch {
+    metaItems = []
+  }
+
+  const lines = metaItems.length
+    ? metaItems.map((item) => {
+        const personalisation = item.customisationMessage?.trim()
+        const lengthValue = item.lengthCm ? `${item.lengthCm} cm` : item.customLength || ''
+        const details = [
+          item.size ? `size: ${item.size}` : '',
+          lengthValue ? `length: ${lengthValue}` : '',
+          personalisation ? `personalisation: "${personalisation}"` : '',
+        ]
+          .filter(Boolean)
+          .join(' | ')
+        return `• ${item.name || 'Item'} x${item.quantity ?? 1}${details ? ` (${details})` : ''}`
+      })
+    : ['• No line-level metadata found']
+
+  const payload = {
+    blocks: [
+      {
+        type: 'header',
+        text: { type: 'plain_text', text: '🧵 New Paid Client Order', emoji: true },
+      },
+      {
+        type: 'section',
+        fields: [
+          { type: 'mrkdwn', text: `*Amount paid:*\n${amountPaid}` },
+          { type: 'mrkdwn', text: `*Order session:*\n\`${session.id}\`` },
+          { type: 'mrkdwn', text: `*Customer name:*\n${customerName}` },
+          { type: 'mrkdwn', text: `*Email / Phone:*\n${customerEmail}\n${customerPhone}` },
+          { type: 'mrkdwn', text: `*IP / Device:*\n\`${ip}\`\n${deviceType}` },
+          { type: 'mrkdwn', text: `*Location:*\n${location}` },
+          { type: 'mrkdwn', text: `*UAE time:*\n${uaeTime}` },
+          { type: 'mrkdwn', text: `*Local time (${timezone}):*\n${localTime}` },
+        ],
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Items / size / personalisation:*\n${lines.join('\n')}`,
+        },
+      },
+    ],
+  }
+
+  try {
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+  } catch (error) {
+    console.error('Order Slack notification failed:', error)
+  }
+}
+
 async function findOrderIdByPaymentIntent(paymentIntentId?: string | null): Promise<string | null> {
   if (!paymentIntentId) return null
   const orders = await listOrders({ limit: 400 })
@@ -172,6 +261,8 @@ export async function POST(request: NextRequest) {
 
         const order = buildOrderFromSession(full)
         await saveOrder(order)
+        await notifyOrderChannel(full)
+        await createTrelloCardForOrder(order)
         break
       }
       case 'checkout.session.async_payment_succeeded': {
@@ -258,6 +349,11 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     console.error('Stripe webhook handler error:', error)
+    await notifyHealthAlert({
+      source: 'api/webhooks/stripe',
+      message: error instanceof Error ? error.message : 'Unknown Stripe webhook handler error',
+      context: { eventType: event.type, eventId: event.id },
+    })
     return NextResponse.json({ error: 'Webhook handler failed' }, { status: 500 })
   }
 

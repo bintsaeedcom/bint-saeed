@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/admin/apiAuth'
 import { getOrderById, updateOrderFulfillment } from '@/lib/orders/orderStore'
 import type { OrderFulfillmentStatus } from '@/lib/orders/types'
+import { notifyFulfillmentStatusChange, notifyHealthAlert } from '@/lib/ops/notifications'
 
 export const dynamic = 'force-dynamic'
 
@@ -45,15 +46,34 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     return NextResponse.json({ error: 'Invalid status' }, { status: 400 })
   }
 
-  const updated = await updateOrderFulfillment(params.id, {
-    ...(body.fulfillmentStatus
-      ? { fulfillmentStatus: body.fulfillmentStatus as OrderFulfillmentStatus }
-      : {}),
-    ...(body.internalNotes !== undefined ? { internalNotes: body.internalNotes } : {}),
-  })
+  try {
+    const before = await getOrderById(params.id)
+    const updated = await updateOrderFulfillment(params.id, {
+      ...(body.fulfillmentStatus
+        ? { fulfillmentStatus: body.fulfillmentStatus as OrderFulfillmentStatus }
+        : {}),
+      ...(body.internalNotes !== undefined ? { internalNotes: body.internalNotes } : {}),
+    })
 
-  if (!updated) {
-    return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    if (!updated) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    }
+
+    if (before && body.fulfillmentStatus && before.fulfillmentStatus !== updated.fulfillmentStatus) {
+      await notifyFulfillmentStatusChange({
+        order: updated,
+        previousStatus: before.fulfillmentStatus,
+        nextStatus: updated.fulfillmentStatus,
+      })
+    }
+
+    return NextResponse.json({ order: updated })
+  } catch (error) {
+    await notifyHealthAlert({
+      source: 'api/admin/orders/[id] PATCH',
+      message: error instanceof Error ? error.message : 'Unknown order status update error',
+      context: { orderId: params.id },
+    })
+    return NextResponse.json({ error: 'Failed to update order' }, { status: 500 })
   }
-  return NextResponse.json({ order: updated })
 }

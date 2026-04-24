@@ -4,6 +4,7 @@ import { rateLimitResponse } from '@/lib/security/rateLimit'
 
 // Slack Webhook URL - Use main webhook or analytics-specific one
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || process.env.SLACK_ANALYTICS_WEBHOOK_URL
+const SLACK_RECOVERY_WEBHOOK_URL = process.env.SLACK_RECOVERY_WEBHOOK_URL?.trim()
 
 // VIP Visitors to flag with special notifications
 const VIP_VISITORS: { name: string; visitorIds: string[]; ipPatterns: string[] }[] = [
@@ -77,9 +78,11 @@ export async function POST(request: NextRequest) {
     // Format Slack message based on notification type
     let message = formatSlackMessage(type, data)
 
+    const webhookUrl = resolveSlackWebhookForType(type)
+
     // Send to Slack if webhook is configured
-    if (SLACK_WEBHOOK_URL) {
-      await fetch(SLACK_WEBHOOK_URL, {
+    if (webhookUrl) {
+      await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(message),
@@ -94,6 +97,22 @@ export async function POST(request: NextRequest) {
     console.error('Slack notification error:', error)
     return NextResponse.json({ error: 'Failed to send notification' }, { status: 500 })
   }
+}
+
+function resolveSlackWebhookForType(type: string): string | undefined {
+  // Route abandoned-cart / recovery alerts to a dedicated channel when configured.
+  const recoveryTypes = new Set([
+    'cart_event',
+    'checkout_started',
+    'abandoned_cart',
+    'checkout_abandoned',
+    'cart_recovery_started',
+    'cart_recovered',
+  ])
+  if (recoveryTypes.has(type) && SLACK_RECOVERY_WEBHOOK_URL) {
+    return SLACK_RECOVERY_WEBHOOK_URL
+  }
+  return SLACK_WEBHOOK_URL || undefined
 }
 
 function formatSlackMessage(type: string, data: any) {
