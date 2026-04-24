@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { saveOrder, findOrderIdBySession } from '@/lib/orders/orderStore'
+import { saveOrder, findOrderIdBySession, listOrders, updateOrderFulfillment, getOrderById } from '@/lib/orders/orderStore'
+import { markStripeEventProcessed, wasStripeEventProcessed } from '@/lib/payments/webhookEventStore'
 import type { OrderLine, StoredOrder } from '@/lib/orders/types'
 
 export const runtime = 'nodejs'
@@ -110,6 +111,25 @@ function buildOrderFromSession(session: Stripe.Checkout.Session): StoredOrder {
   }
 }
 
+async function findOrderIdByPaymentIntent(paymentIntentId?: string | null): Promise<string | null> {
+  if (!paymentIntentId) return null
+  const orders = await listOrders({ limit: 400 })
+  const match = orders.find((order) => order.paymentIntentId === paymentIntentId)
+  return match?.id ?? null
+}
+
+async function markOrderWithStripeNote(orderId: string, note: string, status?: StoredOrder['fulfillmentStatus']) {
+  const current = await getOrderById(orderId)
+  if (!current) return
+  const timestamp = new Date().toISOString()
+  const nextLine = `[${timestamp}] ${note}`
+  const internalNotes = current.internalNotes ? `${current.internalNotes}\n${nextLine}` : nextLine
+  await updateOrderFulfillment(orderId, {
+    fulfillmentStatus: status,
+    internalNotes,
+  })
+}
+
 export async function POST(request: NextRequest) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET
   const key = process.env.STRIPE_SECRET_KEY
@@ -130,21 +150,118 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
   }
 
-  if (event.type === 'checkout.session.completed') {
-    const session = event.data.object as Stripe.Checkout.Session
-    const dup = await findOrderIdBySession(session.id)
-    if (dup) {
-      return NextResponse.json({ received: true, duplicate: true })
-    }
-
-    const stripe = getStripe()
-    const full = await stripe.checkout.sessions.retrieve(session.id, {
-      expand: ['line_items'],
-    })
-
-    const order = buildOrderFromSession(full)
-    await saveOrder(order)
+  const alreadyProcessed = await wasStripeEventProcessed(event.id)
+  if (alreadyProcessed) {
+    return NextResponse.json({ received: true, duplicateEvent: true })
   }
+
+  try {
+    switch (event.type) {
+      // Checkout lifecycle
+      case 'checkout.session.completed': {
+        const session = event.data.object as Stripe.Checkout.Session
+        const dup = await findOrderIdBySession(session.id)
+        if (dup) {
+          return NextResponse.json({ received: true, duplicate: true })
+        }
+
+        const stripe = getStripe()
+        const full = await stripe.checkout.sessions.retrieve(session.id, {
+          expand: ['line_items'],
+        })
+
+        const order = buildOrderFromSession(full)
+        await saveOrder(order)
+        break
+      }
+      case 'checkout.session.async_payment_succeeded': {
+        const session = event.data.object as Stripe.Checkout.Session
+        const orderId = await findOrderIdBySession(session.id)
+        if (orderId) {
+          await markOrderWithStripeNote(orderId, `Checkout async payment succeeded (${session.id}).`, 'paid')
+        }
+        break
+      }
+      case 'checkout.session.async_payment_failed':
+      case 'checkout.session.expired': {
+        const session = event.data.object as Stripe.Checkout.Session
+        const orderId = await findOrderIdBySession(session.id)
+        if (orderId) {
+          await markOrderWithStripeNote(orderId, `Checkout session event: ${event.type} (${session.id}).`)
+        }
+        break
+      }
+
+      // Payment lifecycle
+      case 'payment_intent.succeeded': {
+        const intent = event.data.object as Stripe.PaymentIntent
+        const orderId = await findOrderIdByPaymentIntent(intent.id)
+        if (orderId) {
+          await markOrderWithStripeNote(orderId, `Payment succeeded (${intent.id}).`, 'paid')
+        }
+        break
+      }
+      case 'payment_intent.payment_failed':
+      case 'payment_intent.canceled':
+      case 'payment_intent.partially_funded': {
+        const intent = event.data.object as Stripe.PaymentIntent
+        const orderId = await findOrderIdByPaymentIntent(intent.id)
+        if (orderId) {
+          await markOrderWithStripeNote(orderId, `Payment intent event: ${event.type} (${intent.id}).`)
+        }
+        break
+      }
+
+      // Refund lifecycle
+      case 'charge.refunded': {
+        const charge = event.data.object as Stripe.Charge
+        const paymentIntentId = typeof charge.payment_intent === 'string' ? charge.payment_intent : null
+        const orderId = await findOrderIdByPaymentIntent(paymentIntentId)
+        if (orderId) {
+          await markOrderWithStripeNote(orderId, `Charge refunded (${charge.id}).`, 'refunded')
+        }
+        break
+      }
+      case 'refund.created':
+      case 'refund.updated':
+      case 'refund.failed': {
+        const refund = event.data.object as Stripe.Refund
+        const paymentIntentId =
+          typeof refund.payment_intent === 'string'
+            ? refund.payment_intent
+            : refund.payment_intent?.id ?? null
+        const orderId = await findOrderIdByPaymentIntent(paymentIntentId)
+        if (orderId) {
+          const statusNote = refund.status ? ` status=${refund.status}` : ''
+          await markOrderWithStripeNote(orderId, `Refund event: ${event.type} (${refund.id}).${statusNote}`)
+        }
+        break
+      }
+
+      // Dispute lifecycle
+      case 'charge.dispute.created':
+      case 'charge.dispute.updated':
+      case 'charge.dispute.closed': {
+        const dispute = event.data.object as Stripe.Dispute
+        const paymentIntentId = typeof dispute.payment_intent === 'string' ? dispute.payment_intent : null
+        const orderId = await findOrderIdByPaymentIntent(paymentIntentId)
+        if (orderId) {
+          const disputeStatus = dispute.status ? ` status=${dispute.status}` : ''
+          await markOrderWithStripeNote(orderId, `Dispute event: ${event.type} (${dispute.id}).${disputeStatus}`)
+        }
+        break
+      }
+
+      default:
+        // Explicitly acknowledge and ignore unhandled Stripe events.
+        break
+    }
+  } catch (error) {
+    console.error('Stripe webhook handler error:', error)
+    return NextResponse.json({ error: 'Webhook handler failed' }, { status: 500 })
+  }
+
+  await markStripeEventProcessed(event.id)
 
   return NextResponse.json({ received: true })
 }
