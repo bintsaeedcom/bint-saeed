@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 
   if (!isAdminSecretConfigured()) {
     return NextResponse.json(
-      { error: 'Set ADMIN_DASHBOARD_SECRET (min 16 chars) and ADMIN_DASHBOARD_PASSWORD in .env' },
+      { error: 'Set ADMIN_DASHBOARD_SECRET (min 8 chars) and ADMIN_DASHBOARD_PASSWORD in .env' },
       { status: 503 }
     )
   }

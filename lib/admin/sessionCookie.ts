@@ -1,8 +1,9 @@
 export const ADMIN_COOKIE = 'bs_admin'
+const MIN_ADMIN_SECRET_LENGTH = 8
 
 function getSecretBytes(): Uint8Array | null {
   const s = process.env.ADMIN_DASHBOARD_SECRET
-  if (!s || s.length < 16) return null
+  if (!s || s.length < MIN_ADMIN_SECRET_LENGTH) return null
   return new TextEncoder().encode(s)
 }
 
@@ -45,5 +46,7 @@ export async function verifyAdminSessionCookie(token: string | undefined): Promi
 }
 
 export function isAdminSecretConfigured(): boolean {
-  return Boolean(process.env.ADMIN_DASHBOARD_SECRET && process.env.ADMIN_DASHBOARD_SECRET.length >= 16)
+  return Boolean(
+    process.env.ADMIN_DASHBOARD_SECRET && process.env.ADMIN_DASHBOARD_SECRET.length >= MIN_ADMIN_SECRET_LENGTH
+  )
 }
