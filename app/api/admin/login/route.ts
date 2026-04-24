@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { ADMIN_COOKIE, isAdminSecretConfigured } from '@/lib/admin/sessionCookie'
+import { ADMIN_COOKIE } from '@/lib/admin/sessionCookie'
 import { createAdminSessionCookieValue } from '@/lib/admin/sessionCookie.server'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { timingSafeStringEqual } from '@/lib/security/timingSafeStringEqual'
@@ -9,13 +9,6 @@ export const runtime = 'nodejs'
 export async function POST(request: NextRequest) {
   const rl = await rateLimitResponse(request, 'admin_login', 25, 900)
   if (rl) return rl
-
-  if (!isAdminSecretConfigured()) {
-    return NextResponse.json(
-      { error: 'Set ADMIN_DASHBOARD_SECRET (min 8 chars) and ADMIN_DASHBOARD_PASSWORD in .env' },
-      { status: 503 }
-    )
-  }
 
   const pwd = process.env.ADMIN_DASHBOARD_PASSWORD
   if (!pwd) {
