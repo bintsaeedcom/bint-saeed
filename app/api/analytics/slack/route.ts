@@ -5,6 +5,7 @@ import { rateLimitResponse } from '@/lib/security/rateLimit'
 // Slack Webhook URL - Use main webhook or analytics-specific one
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || process.env.SLACK_ANALYTICS_WEBHOOK_URL
 const SLACK_RECOVERY_WEBHOOK_URL = process.env.SLACK_RECOVERY_WEBHOOK_URL?.trim()
+const SLACK_ABANDONED_CART_WEBHOOK_URL = process.env.SLACK_ABANDONED_CART_WEBHOOK_URL?.trim()
 
 // VIP Visitors to flag with special notifications
 const VIP_VISITORS: { name: string; visitorIds: string[]; ipPatterns: string[] }[] = [
@@ -104,11 +105,16 @@ function resolveSlackWebhookForType(type: string): string | undefined {
   const recoveryTypes = new Set([
     'cart_event',
     'checkout_started',
+  ])
+  const abandonedTypes = new Set([
     'abandoned_cart',
     'checkout_abandoned',
     'cart_recovery_started',
     'cart_recovered',
   ])
+  if (abandonedTypes.has(type) && SLACK_ABANDONED_CART_WEBHOOK_URL) {
+    return SLACK_ABANDONED_CART_WEBHOOK_URL
+  }
   if (recoveryTypes.has(type) && SLACK_RECOVERY_WEBHOOK_URL) {
     return SLACK_RECOVERY_WEBHOOK_URL
   }

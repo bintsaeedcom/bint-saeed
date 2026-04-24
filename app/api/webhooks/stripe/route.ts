@@ -131,6 +131,7 @@ async function notifyOrderChannel(session: Stripe.Checkout.Session) {
   type MetaItem = {
     name?: string
     size?: string
+    color?: string
     quantity?: number
     customisationMessage?: string
     customLength?: string
@@ -151,6 +152,7 @@ async function notifyOrderChannel(session: Stripe.Checkout.Session) {
         const lengthValue = item.lengthCm ? `${item.lengthCm} cm` : item.customLength || ''
         const details = [
           item.size ? `size: ${item.size}` : '',
+          item.color ? `variant/colour: ${item.color}` : '',
           lengthValue ? `length: ${lengthValue}` : '',
           personalisation ? `personalisation: "${personalisation}"` : '',
         ]
@@ -262,7 +264,14 @@ export async function POST(request: NextRequest) {
         const order = buildOrderFromSession(full)
         await saveOrder(order)
         await notifyOrderChannel(full)
-        await createTrelloCardForOrder(order)
+        await createTrelloCardForOrder(order, {
+          sessionId: full.id,
+          clientIp: full.metadata?.clientIp || undefined,
+          clientDeviceType: full.metadata?.clientDeviceType || undefined,
+          clientLocalTime: full.metadata?.clientLocalTime || undefined,
+          clientTimezone: full.metadata?.clientTimezone || undefined,
+          uaeTimestamp: new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' }),
+        })
         break
       }
       case 'checkout.session.async_payment_succeeded': {
