@@ -13,6 +13,7 @@ type Props = {
  */
 export default function ExperimentalWebGLBackground({ className = '', intensity = 1 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const mouseRef = useRef({ x: 0.5, y: 0.5 })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -34,6 +35,7 @@ export default function ExperimentalWebGLBackground({ className = '', intensity 
       precision highp float;
       varying vec2 v_uv;
       uniform vec2 u_resolution;
+      uniform vec2 u_mouse;
       uniform float u_time;
       uniform float u_intensity;
 
@@ -65,18 +67,28 @@ export default function ExperimentalWebGLBackground({ className = '', intensity 
         float n2 = noise(centered * 9.5 - vec2(t * 0.55, t * 0.35));
         float field = mix(n1, n2, 0.42) * 0.75 + swirl * 0.25;
 
+        vec2 m = u_mouse - 0.5;
+        m.x *= u_resolution.x / max(u_resolution.y, 1.0);
+        float mouseHalo = smoothstep(0.7, 0.0, length(centered - m));
+
         vec3 deepWine = vec3(0.070, 0.031, 0.047);     // ~ #12080b
         vec3 burgundy = vec3(0.176, 0.078, 0.118);     // ~ #2d141e
         vec3 dustyBlue = vec3(0.573, 0.667, 0.757);    // ~ #92aac1
+        vec3 rose = vec3(0.756, 0.565, 0.525);         // ~ #c19086
 
         vec3 base = mix(deepWine, burgundy, smoothstep(0.15, 0.85, field));
         float halo = smoothstep(0.55, 0.0, length(centered + vec2(sin(t) * 0.08, cos(t * 1.2) * 0.06)));
         vec3 color = base + dustyBlue * halo * 0.24 * u_intensity;
+        color += dustyBlue * mouseHalo * 0.26 * u_intensity;
+        color += rose * mouseHalo * 0.09 * u_intensity;
+
+        float scan = sin((uv.y + t * 0.22) * 220.0) * 0.0035;
+        color += vec3(scan);
 
         float vignette = smoothstep(0.88, 0.25, length(centered));
         color *= vignette;
 
-        gl_FragColor = vec4(color, 0.52 * u_intensity);
+        gl_FragColor = vec4(color, 0.66 * u_intensity);
       }
     `
 
@@ -117,6 +129,7 @@ export default function ExperimentalWebGLBackground({ className = '', intensity 
     const positionLoc = gl.getAttribLocation(program, 'a_position')
     const timeLoc = gl.getUniformLocation(program, 'u_time')
     const resolutionLoc = gl.getUniformLocation(program, 'u_resolution')
+    const mouseLoc = gl.getUniformLocation(program, 'u_mouse')
     const intensityLoc = gl.getUniformLocation(program, 'u_intensity')
 
     let rafId = 0
@@ -145,6 +158,7 @@ export default function ExperimentalWebGLBackground({ className = '', intensity 
       gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0)
       gl.uniform1f(timeLoc, elapsed)
       gl.uniform2f(resolutionLoc, canvas.width, canvas.height)
+      gl.uniform2f(mouseLoc, mouseRef.current.x, mouseRef.current.y)
       gl.uniform1f(intensityLoc, intensity)
       gl.drawArrays(gl.TRIANGLES, 0, 6)
 
@@ -161,13 +175,21 @@ export default function ExperimentalWebGLBackground({ className = '', intensity 
     }
 
     const onResize = () => resize()
+    const onPointerMove = (event: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      if (rect.width <= 0 || rect.height <= 0) return
+      mouseRef.current.x = (event.clientX - rect.left) / rect.width
+      mouseRef.current.y = 1 - (event.clientY - rect.top) / rect.height
+    }
     window.addEventListener('resize', onResize)
+    window.addEventListener('pointermove', onPointerMove, { passive: true })
     document.addEventListener('visibilitychange', onVisibility)
     rafId = requestAnimationFrame(render)
 
     return () => {
       cancelAnimationFrame(rafId)
       window.removeEventListener('resize', onResize)
+      window.removeEventListener('pointermove', onPointerMove)
       document.removeEventListener('visibilitychange', onVisibility)
       gl.deleteProgram(program)
       gl.deleteShader(vertexShader)

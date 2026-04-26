@@ -42,49 +42,80 @@ function HorizontalRunway() {
   const ref = useRef<HTMLDivElement | null>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
   const x = useTransform(scrollYProgress, [0, 1], ['0%', '-62%'])
+  const railScale = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   return (
     <section ref={ref} className="relative h-[220vh] bg-[#12080b]">
       <div className="sticky top-0 h-screen overflow-hidden">
-        <ExperimentalWebGLBackground intensity={0.85} className="opacity-70" />
+        <ExperimentalWebGLBackground intensity={1} className="opacity-80 mix-blend-screen" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_20%_12%,rgba(146,170,193,0.13),transparent_52%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_130%_90%_at_90%_80%,rgba(193,144,134,0.16),transparent_58%)]" />
 
-        <div className="relative mx-auto flex h-full w-full max-w-[1600px] flex-col justify-center px-6 lg:px-16">
-          <div className="mb-6 flex items-center justify-between">
-            <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue/85">
-              Horizontal Scroll Sequence
-            </p>
-            <span className="rounded-full border border-white/20 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/75">
-              Scroll to explore
-            </span>
-          </div>
-
-          <motion.div style={{ x }} className="flex w-[260%] gap-4 md:gap-6">
-            {RUNWAY_PANELS.map((panel) => (
-              <article
-                key={panel.title}
-                className="group relative h-[68vh] min-h-[28rem] w-[76vw] overflow-hidden rounded-[1.8rem] border border-white/15 bg-black/20 md:w-[52vw] lg:w-[42vw]"
-              >
-                <Image
-                  src={panel.image}
-                  alt={panel.subtitle}
-                  fill
-                  sizes="(max-width: 1024px) 80vw, 42vw"
-                  className="object-cover object-center transition-transform duration-1000 group-hover:scale-[1.04]"
+        <div className="relative mx-auto grid h-full w-full max-w-[1640px] grid-cols-1 items-center gap-8 px-6 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-8 lg:px-16">
+          <aside className="hidden lg:block">
+            <div className="space-y-7">
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue/90">
+                Horizontal Scroll Sequence
+              </p>
+              <div className="relative h-36 w-[2px] bg-white/20">
+                <motion.div
+                  style={{ scaleY: railScale }}
+                  className="absolute inset-0 origin-top bg-gradient-to-b from-brand-dustyBlue via-brand-stone to-brand-clayRed"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1f0508]/80 via-[#1f0508]/20 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
-                  <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue/90">
-                    {panel.title}
-                  </p>
-                  <h3 className="max-w-md font-rozha text-2xl leading-tight text-brand-ivory md:text-3xl">
-                    {panel.subtitle}
-                  </h3>
-                </div>
-              </article>
-            ))}
-          </motion.div>
+              </div>
+              <div className="space-y-2">
+                <span className="inline-flex rounded-full border border-white/25 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/85">
+                  Vertical scroll
+                </span>
+                <span className="inline-flex rounded-full border border-white/25 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/85">
+                  Horizontal scroll
+                </span>
+                <span className="inline-flex rounded-full border border-white/25 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/85">
+                  Scrolling
+                </span>
+              </div>
+            </div>
+          </aside>
+
+          <div className="min-w-0">
+            <div className="mb-5 flex items-center justify-between lg:hidden">
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue/85">
+                Horizontal Scroll Sequence
+              </p>
+              <span className="rounded-full border border-white/20 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/75">
+                Scroll to explore
+              </span>
+            </div>
+
+            <motion.div style={{ x }} className="flex w-[260%] gap-4 md:gap-6">
+              {RUNWAY_PANELS.map((panel, idx) => (
+                <article
+                  key={panel.title}
+                  className="group relative h-[68vh] min-h-[28rem] w-[76vw] overflow-hidden rounded-[1.8rem] border border-white/15 bg-black/20 md:w-[52vw] lg:w-[42vw]"
+                >
+                  <Image
+                    src={panel.image}
+                    alt={panel.subtitle}
+                    fill
+                    sizes="(max-width: 1024px) 80vw, 42vw"
+                    className="object-cover object-center transition-transform duration-1000 group-hover:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1f0508]/80 via-[#1f0508]/20 to-transparent" />
+                  <div className="absolute right-5 top-5 rounded-full border border-white/20 bg-black/30 px-3 py-1 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/80">
+                    0{idx + 1}
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
+                    <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue/90">
+                      {panel.title}
+                    </p>
+                    <h3 className="max-w-md font-rozha text-2xl leading-tight text-brand-ivory md:text-3xl">
+                      {panel.subtitle}
+                    </h3>
+                  </div>
+                </article>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -97,7 +128,7 @@ export default function HomeExperimentalPage() {
   return (
     <div className={`min-h-screen overflow-x-clip bg-[#f7f3ec] ${isRTL ? 'rtl' : 'ltr'}`}>
       <section className="relative min-h-[100svh] overflow-hidden bg-[linear-gradient(120deg,#12080b_0%,#2d141e_45%,#12080b_100%)]">
-        <ExperimentalWebGLBackground intensity={1} className="opacity-80" />
+        <ExperimentalWebGLBackground intensity={1.15} className="opacity-90 mix-blend-screen" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_50%_-10%,rgba(146,170,193,0.22),transparent_55%)]" />
         <div className="relative mx-auto flex min-h-[100svh] max-w-[1600px] flex-col justify-center px-6 py-20 lg:px-16">
           <div className="mb-10 flex flex-wrap items-center gap-3">
