@@ -1,12 +1,14 @@
 'use client'
 
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import LocaleLink from '@/components/LocaleLink'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import ExperimentalWebGLBackground from '@/components/ExperimentalWebGLBackground'
+import { products as staticProducts } from '@/data/products'
+import { getProductHref } from '@/lib/products/links'
 
 const MANIFESTO_PARAGRAPHS = [
   'A house shaped by origin, carried across the world.',
@@ -45,16 +47,16 @@ function HorizontalRunway() {
   const railScale = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   return (
-    <section ref={ref} className="relative h-[220vh] bg-[#12080b]">
+    <section ref={ref} className="relative h-[220vh] bg-[#f6f2eb]">
       <div className="sticky top-0 h-screen overflow-hidden">
-        <ExperimentalWebGLBackground intensity={1} className="opacity-80 mix-blend-screen" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_20%_12%,rgba(146,170,193,0.13),transparent_52%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_130%_90%_at_90%_80%,rgba(193,144,134,0.16),transparent_58%)]" />
+        <ExperimentalWebGLBackground intensity={0.58} className="opacity-35" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_20%_12%,rgba(146,170,193,0.1),transparent_52%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_130%_90%_at_90%_80%,rgba(193,144,134,0.1),transparent_58%)]" />
 
         <div className="relative mx-auto grid h-full w-full max-w-[1640px] grid-cols-1 items-center gap-8 px-6 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-8 lg:px-16">
           <aside className="hidden lg:block">
             <div className="space-y-7">
-              <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue/90">
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue">
                 Horizontal Scroll Sequence
               </p>
               <div className="relative h-36 w-[2px] bg-white/20">
@@ -64,13 +66,13 @@ function HorizontalRunway() {
                 />
               </div>
               <div className="space-y-2">
-                <span className="inline-flex rounded-full border border-white/25 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/85">
+                <span className="inline-flex rounded-full border border-brand-darkRed/20 bg-white/70 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/85">
                   Vertical scroll
                 </span>
-                <span className="inline-flex rounded-full border border-white/25 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/85">
+                <span className="inline-flex rounded-full border border-brand-darkRed/20 bg-white/70 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/85">
                   Horizontal scroll
                 </span>
-                <span className="inline-flex rounded-full border border-white/25 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/85">
+                <span className="inline-flex rounded-full border border-brand-darkRed/20 bg-white/70 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/85">
                   Scrolling
                 </span>
               </div>
@@ -79,10 +81,10 @@ function HorizontalRunway() {
 
           <div className="min-w-0">
             <div className="mb-5 flex items-center justify-between lg:hidden">
-              <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue/85">
+                <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue">
                 Horizontal Scroll Sequence
               </p>
-              <span className="rounded-full border border-white/20 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/75">
+                <span className="rounded-full border border-brand-darkRed/25 bg-white/70 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed/75">
                 Scroll to explore
               </span>
             </div>
@@ -91,7 +93,7 @@ function HorizontalRunway() {
               {RUNWAY_PANELS.map((panel, idx) => (
                 <article
                   key={panel.title}
-                  className="group relative h-[68vh] min-h-[28rem] w-[76vw] overflow-hidden rounded-[1.8rem] border border-white/15 bg-black/20 md:w-[52vw] lg:w-[42vw]"
+                  className="group relative h-[68vh] min-h-[28rem] w-[76vw] overflow-hidden rounded-[1.8rem] border border-brand-darkRed/10 bg-white/35 md:w-[52vw] lg:w-[42vw]"
                 >
                   <Image
                     src={panel.image}
@@ -101,7 +103,7 @@ function HorizontalRunway() {
                     className="object-cover object-center transition-transform duration-1000 group-hover:scale-[1.04]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1f0508]/80 via-[#1f0508]/20 to-transparent" />
-                  <div className="absolute right-5 top-5 rounded-full border border-white/20 bg-black/30 px-3 py-1 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/80">
+                  <div className="absolute right-5 top-5 rounded-full border border-white/30 bg-black/40 px-3 py-1 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/85">
                     0{idx + 1}
                   </div>
                   <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
@@ -124,12 +126,13 @@ function HorizontalRunway() {
 
 export default function HomeExperimentalPage() {
   const { isRTL } = useLanguage()
+  const quickProducts = useMemo(() => staticProducts.slice(0, 8), [])
 
   return (
     <div className={`min-h-screen overflow-x-clip bg-[#f7f3ec] ${isRTL ? 'rtl' : 'ltr'}`}>
-      <section className="relative min-h-[100svh] overflow-hidden bg-[linear-gradient(120deg,#12080b_0%,#2d141e_45%,#12080b_100%)]">
-        <ExperimentalWebGLBackground intensity={1.15} className="opacity-90 mix-blend-screen" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_50%_-10%,rgba(146,170,193,0.22),transparent_55%)]" />
+      <section className="relative min-h-[100svh] overflow-hidden bg-[linear-gradient(120deg,#1f0508_0%,#3b0a12_45%,#1f0508_100%)]">
+        <ExperimentalWebGLBackground intensity={0.9} className="opacity-55" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_50%_-10%,rgba(146,170,193,0.15),transparent_55%)]" />
         <div className="relative mx-auto flex min-h-[100svh] max-w-[1600px] flex-col justify-center px-6 py-20 lg:px-16">
           <div className="mb-10 flex flex-wrap items-center gap-3">
             <span className="rounded-full border border-white/25 px-5 py-2 font-montserrat text-xs uppercase tracking-[0.16em] text-white/85">
@@ -180,6 +183,52 @@ export default function HomeExperimentalPage() {
       </section>
 
       <HorizontalRunway />
+
+      <section className="relative bg-white py-20 md:py-24">
+        <div className="mx-auto max-w-[1500px] px-6 lg:px-16">
+          <div className="mb-7 flex items-end justify-between">
+            <div>
+              <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-dustyBlue">
+                Curated Selection
+              </p>
+              <h2 className="font-rozha text-3xl text-brand-darkRed md:text-4xl">Shop the Collection</h2>
+            </div>
+            <LocaleLink
+              href="/shop"
+              className="hidden border-b border-brand-darkRed/30 pb-1 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue md:inline-flex md:items-center md:gap-2"
+              data-cursor-hover
+            >
+              View All
+              <FiArrowRight className="h-4 w-4" />
+            </LocaleLink>
+          </div>
+          <div className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:gap-5">
+            {quickProducts.map((product) => (
+              <LocaleLink
+                key={product.id}
+                href={getProductHref(product)}
+                className="group block w-[74vw] shrink-0 overflow-hidden rounded-[1.2rem] border border-brand-stone/35 bg-brand-pageCanvas sm:w-[46vw] md:w-[29vw] lg:w-[23vw]"
+                data-cursor-hover
+              >
+                <div className="relative aspect-[4/5]">
+                  <Image
+                    src={product.images[0]}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 768px) 75vw, (max-width: 1200px) 35vw, 25vw"
+                    className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div className="border-t border-brand-stone/30 px-4 py-4">
+                  <p className="mb-1 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-dustyBlue">{product.category}</p>
+                  <h3 className="font-rozha text-xl leading-tight text-brand-darkRed">{product.name}</h3>
+                  <p className="mt-2 font-montserrat text-sm tracking-wide text-brand-darkRed/72">AED {product.price.toLocaleString()}</p>
+                </div>
+              </LocaleLink>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="relative overflow-hidden bg-[#f7f3ec] py-24 md:py-32">
         <div className="mx-auto grid max-w-[1400px] gap-10 px-6 lg:grid-cols-12 lg:gap-14 lg:px-16">
