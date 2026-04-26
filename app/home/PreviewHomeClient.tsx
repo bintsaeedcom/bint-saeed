@@ -676,7 +676,8 @@ function MagazineGrid() {
           </LocaleLink>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6 lg:gap-7">
+        <div className="rounded-2xl bg-white p-2 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-3 md:p-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-4 lg:gap-5">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -686,12 +687,12 @@ function MagazineGrid() {
           >
             <LocaleLink
               href="/shop"
-              className="group block overflow-hidden bg-brand-stone/10 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1"
+              className="group block h-full overflow-hidden bg-brand-stone/10 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1"
               data-cursor-hover
               data-analytics-event="click_cta_home_to_collection"
               data-analytics-section="home-where-it-begins-featured-card"
             >
-              <div className="relative aspect-[4/5] md:aspect-[10/9]">
+              <div className="relative aspect-[4/5] md:aspect-[4/5]">
                 <Image
                   src="/collection-section/1.png"
                   alt="Designed to carry you, wherever you are — Bint Saeed collection"
@@ -699,26 +700,25 @@ function MagazineGrid() {
                   sizes="(max-width: 768px) 100vw, 58vw"
                   className="pointer-events-none object-cover object-top transition-transform duration-1000 group-hover:scale-[1.03]"
                 />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-darkRed/80 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-                  <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-darkRed/72 via-brand-darkRed/14 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-6 text-center sm:p-8 md:p-9">
+                  <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue/95">
                     Chapter I
                   </span>
-                  <h3 className="mb-4 max-w-xl font-rozha text-2xl leading-snug text-brand-ivory md:text-3xl lg:text-4xl">
+                  <h3 className="mx-auto mb-4 max-w-xl font-rozha text-2xl leading-snug text-brand-ivory md:text-3xl lg:text-4xl">
                     Designed to carry you,
                     <br />
                     wherever you are.
                   </h3>
-                  <span className="inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-ivory/88 transition-colors group-hover:text-brand-dustyBlue">
+                  <span className="inline-flex min-h-[40px] items-center justify-center border border-brand-ivory/20 bg-black/78 px-5 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-ivory/92 transition-colors group-hover:border-brand-dustyBlue/40 group-hover:text-brand-dustyBlue">
                     Discover the collection
-                    <FiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </div>
               </div>
             </LocaleLink>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-5 md:col-span-5 md:grid-cols-1 md:gap-6 lg:gap-7">
+          <div className="grid grid-cols-2 gap-4 md:col-span-5 md:grid-cols-1 md:gap-4 lg:gap-5">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -732,7 +732,7 @@ function MagazineGrid() {
                 data-analytics-event="click_cta_home_to_collection"
                 data-analytics-section="home-where-it-begins-secondary-card-a"
               >
-                <div className="relative aspect-square md:aspect-[16/10]">
+                <div className="relative aspect-square md:aspect-[16/11]">
                   <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                     <CollectionCrossfadeSlideshow
                       slides={SUMMER_ELEGANCE_SLIDES}
@@ -760,7 +760,7 @@ function MagazineGrid() {
                 data-analytics-event="click_cta_home_to_collection"
                 data-analytics-section="home-where-it-begins-secondary-card-b"
               >
-                <div className="relative aspect-square md:aspect-[16/10]">
+                <div className="relative aspect-square md:aspect-[16/11]">
                   <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                     <CollectionCrossfadeSlideshow
                       slides={ESSENTIALS_SLIDES}
@@ -771,6 +771,7 @@ function MagazineGrid() {
               </LocaleLink>
             </motion.div>
           </div>
+        </div>
         </div>
       </div>
     </section>
