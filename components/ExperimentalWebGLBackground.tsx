@@ -72,15 +72,23 @@ export default function ExperimentalWebGLBackground({ className = '', intensity 
         float mouseHalo = smoothstep(0.7, 0.0, length(centered - m));
 
         vec3 deepWine = vec3(0.070, 0.031, 0.047);     // ~ #12080b
-        vec3 burgundy = vec3(0.176, 0.078, 0.118);     // ~ #2d141e
+        vec3 burgundy = vec3(0.192, 0.058, 0.086);     // ~ #310f16
+        vec3 crimson = vec3(0.498, 0.101, 0.149);      // ~ #7f1a26
+        vec3 maroonGlow = vec3(0.415, 0.149, 0.169);   // ~ #6a262b
         vec3 dustyBlue = vec3(0.573, 0.667, 0.757);    // ~ #92aac1
-        vec3 rose = vec3(0.756, 0.565, 0.525);         // ~ #c19086
+        vec3 clay = vec3(0.756, 0.565, 0.525);         // ~ #c19086
+        vec3 plum = vec3(0.321, 0.164, 0.274);         // ~ #522946
+        vec3 softWhite = vec3(0.96, 0.94, 0.92);       // warm white lift
 
-        vec3 base = mix(deepWine, burgundy, smoothstep(0.15, 0.85, field));
+        vec3 base = mix(deepWine, burgundy, smoothstep(0.14, 0.86, field));
         float halo = smoothstep(0.55, 0.0, length(centered + vec2(sin(t) * 0.08, cos(t * 1.2) * 0.06)));
-        vec3 color = base + dustyBlue * halo * 0.24 * u_intensity;
-        color += dustyBlue * mouseHalo * 0.26 * u_intensity;
-        color += rose * mouseHalo * 0.09 * u_intensity;
+        vec3 color = base + crimson * halo * 0.24 * u_intensity;
+        color += crimson * mouseHalo * 0.22 * u_intensity;
+        color += maroonGlow * mouseHalo * 0.12 * u_intensity;
+        color += dustyBlue * halo * 0.06 * u_intensity;
+        color += clay * mouseHalo * 0.05 * u_intensity;
+        color += plum * halo * 0.07 * u_intensity;
+        color = mix(color, softWhite, (0.06 + mouseHalo * 0.05) * u_intensity);
 
         float scan = sin((uv.y + t * 0.22) * 220.0) * 0.0035;
         color += vec3(scan);
@@ -88,7 +96,7 @@ export default function ExperimentalWebGLBackground({ className = '', intensity 
         float vignette = smoothstep(0.88, 0.25, length(centered));
         color *= vignette;
 
-        gl_FragColor = vec4(color, 0.66 * u_intensity);
+        gl_FragColor = vec4(color, 0.56 * u_intensity);
       }
     `
 

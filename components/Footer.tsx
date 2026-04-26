@@ -5,6 +5,7 @@ import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter } from 'reac
 import { FiGlobe, FiTruck, FiClock, FiHeart } from 'react-icons/fi'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
+import SubscribeForm from './SubscribeForm'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 const socialLinks = [
@@ -60,6 +61,25 @@ export default function Footer() {
         </div>
         
         <div className="relative container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-12 md:py-14 2xl:py-16">
+          <div className="mb-10 rounded-2xl border border-white/15 bg-[linear-gradient(160deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-5 shadow-[0_22px_48px_rgba(5,1,5,0.35)] backdrop-blur-md md:p-7">
+            <div className="mb-5 max-w-2xl">
+              <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.34em] text-brand-dustyBlue/85">
+                {isRTL ? 'القائمة البريدية' : 'Email List'}
+              </p>
+              <h3 className="font-rozha text-2xl text-brand-stone md:text-3xl">
+                {isRTL ? 'اشتركي للحصول على الإصدارات الجديدة أولاً' : 'Be first to know about new drops'}
+              </h3>
+              <p className="mt-2 font-montserrat text-sm tracking-wide text-white/55">
+                {isRTL
+                  ? 'اشتركي لتصلكم الإصدارات الجديدة، الدعوات الخاصة، وتحديثات العلامة.'
+                  : 'Subscribe for new collection launches, private invites, and brand updates.'}
+              </p>
+            </div>
+            <div className="rounded-xl border border-white/10 bg-black/20 p-4 md:p-5">
+              <SubscribeForm variant="dark" />
+            </div>
+          </div>
+
           <div className={`grid grid-cols-1 gap-8 sm:grid-cols-2 lg:gap-10 xl:grid-cols-4 xl:gap-12 ${isRTL ? 'text-right' : ''}`}>
             {/* Brand Column with Logo */}
             <div className="sm:col-span-2 xl:col-span-1">
@@ -101,7 +121,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <LocaleLink
                       href={link.href}
-                      className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
+                    className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
                       data-cursor-hover
                       data-analytics-event={link.href === '/shop' ? 'click_footer_collection' : undefined}
                       data-analytics-section="footer-shop-links"
@@ -123,7 +143,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <LocaleLink
                       href={link.href}
-                      className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
+                    className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
                       data-cursor-hover
                       data-analytics-event={link.href === '/contact' ? 'click_footer_contact' : undefined}
                       data-analytics-section="footer-help-links"
@@ -145,7 +165,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <LocaleLink
                       href={link.href}
-                      className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
+                    className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
                       data-cursor-hover
                     >
                       {link.label}
@@ -280,7 +300,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/50 transition-all hover:border-brand-stone/30 hover:text-brand-stone md:h-10 md:w-10"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/5 text-white/50 transition-all hover:-translate-y-0.5 hover:border-brand-stone/40 hover:bg-white/10 hover:text-brand-stone md:h-10 md:w-10"
                   aria-label={social.label}
                   data-cursor-hover
                 >

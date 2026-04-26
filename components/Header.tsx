@@ -230,8 +230,8 @@ export default function Header() {
     <>
       {/* Main Header - Elegant Single Row Design */}
       <header
-        className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none transition-all duration-500 ${headerBarGradient} ${
-          isScrolled ? 'shadow-lg shadow-black/40' : ''
+        className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none border-b border-white/10 transition-all duration-500 ${headerBarGradient} ${
+          isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)] backdrop-blur-md' : 'backdrop-blur-[2px]'
         }`}
       >
         {/* Bottom accent — same as before, full header width */}
@@ -302,7 +302,7 @@ export default function Header() {
                   key={item.label}
                   href={item.href}
                   onMouseEnter={() => setActiveMegaMenu(item.href)}
-                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 ${
+                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                     activeMegaMenu === item.href ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
                   }`}
                   data-cursor-hover
@@ -332,6 +332,16 @@ export default function Header() {
 
             {/* Right: Full utilities when horizontal nav is visible */}
             <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-5 lg:flex">
+              <LocaleLink
+                href="/shop"
+                className="inline-flex min-h-[40px] items-center rounded-full border border-brand-dustyBlue/50 bg-brand-dustyBlue/12 px-5 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue transition-colors hover:bg-brand-dustyBlue/22 hover:text-white"
+                data-cursor-hover
+                data-analytics-event="click_cta_home_to_collection"
+                data-analytics-section="header-shop-pill"
+              >
+                Shop Now
+              </LocaleLink>
+
               {/* Language & Currency */}
               <div className="flex items-center gap-4 pr-4 border-r border-white/20">
                 <CurrencySwitcher variant="light" showSymbol={false} />
@@ -342,7 +352,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="text-white/70 hover:text-white transition-colors duration-300 p-1"
+                className="rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
                 data-cursor-hover
                 aria-label={t.nav.search}
               >
@@ -354,7 +364,7 @@ export default function Header() {
                 onClick={() => {
                   window.location.assign('/account')
                 }}
-                className="text-white/70 hover:text-white transition-colors duration-300 p-1"
+                className="rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
                 data-cursor-hover
                 aria-label={t.nav.account}
               >
@@ -363,7 +373,7 @@ export default function Header() {
               
               <LocaleLink
                 href="/wishlist"
-                className="relative text-white/70 hover:text-white transition-colors duration-300 p-1"
+                className="relative rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
                 data-cursor-hover
                 aria-label={t.nav.wishlist}
               >
@@ -378,7 +388,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsMiniCartOpen(true)}
-                className="relative text-white/70 hover:text-white transition-colors duration-300 p-1"
+                className="relative rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
                 data-cursor-hover
                 aria-label={t.nav.cart}
               >
