@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers, FiExternalLink } from 'react-icons/fi'
+import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers } from 'react-icons/fi'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -48,15 +48,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {link('/admin/customers', 'Customers', <FiUsers className="h-4 w-4" />)}
             {link('/admin/products', 'Catalog', <FiPackage className="h-4 w-4" />)}
             {link('/admin/dashboard', 'Analytics', <FiBarChart2 className="h-4 w-4" />)}
-            <Link
-              href="/home-experimental"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 flex items-center gap-2 rounded-lg border border-brand-dustyBlue/35 bg-brand-dustyBlue/10 px-3 py-2 text-sm font-montserrat tracking-wide text-brand-dustyBlue transition-colors hover:bg-brand-dustyBlue/20 hover:text-white"
-            >
-              <FiExternalLink className="h-4 w-4" />
-              Experimental Home
-            </Link>
           </nav>
           <div className="border-t border-white/10 p-4">
             <button
@@ -102,14 +93,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 className="shrink-0 rounded-lg px-3 py-1.5 font-montserrat text-xs text-white/70 hover:bg-white/10"
               >
                 Analytics
-              </Link>
-              <Link
-                href="/home-experimental"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="shrink-0 rounded-lg border border-brand-dustyBlue/35 bg-brand-dustyBlue/10 px-3 py-1.5 font-montserrat text-xs text-brand-dustyBlue hover:bg-brand-dustyBlue/20 hover:text-white"
-              >
-                Experimental Home
               </Link>
             </nav>
           </header>
