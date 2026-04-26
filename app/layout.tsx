@@ -7,6 +7,7 @@ import ContentProtection from '@/components/ContentProtection'
 import { Toaster } from 'react-hot-toast'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 import { CurrencyProvider } from '@/lib/currency/CurrencyContext'
+import { AnalyticsProvider } from '@/lib/analytics/AnalyticsContext'
 import AnalyticsBootstrap from '@/components/AnalyticsBootstrap'
 
 import { buildRootMetadata } from '@/lib/i18n/buildRootMetadata'
@@ -137,13 +138,14 @@ export default async function RootLayout({
       </head>
       <body className="min-h-screen font-sans antialiased">
         <LanguageProvider initialLocale={locale}>
-          <CurrencyProvider>
-            <ContentProtection />
-            <AnalyticsBootstrap />
-            <LayoutWrapper>
-              {children}
-            </LayoutWrapper>
-            <Toaster 
+          <AnalyticsProvider>
+            <CurrencyProvider>
+              <ContentProtection />
+              <AnalyticsBootstrap />
+              <LayoutWrapper>
+                {children}
+              </LayoutWrapper>
+              <Toaster 
                 position="bottom-right"
                 toastOptions={{
                   style: {
@@ -170,7 +172,8 @@ export default async function RootLayout({
                   },
                 }}
               />
-          </CurrencyProvider>
+            </CurrencyProvider>
+          </AnalyticsProvider>
         </LanguageProvider>
       </body>
     </html>

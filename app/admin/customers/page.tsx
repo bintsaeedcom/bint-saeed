@@ -7,6 +7,16 @@ import { FiSearch, FiRefreshCw, FiX } from 'react-icons/fi'
 import type { CustomerRecord } from '@/lib/customers/types'
 import type { StoredOrder } from '@/lib/orders/types'
 
+function formatLocation(address?: Record<string, unknown>): string {
+  if (!address) return '—'
+  const city = typeof address.city === 'string' ? address.city.trim() : ''
+  const country = typeof address.country === 'string' ? address.country.trim() : ''
+  if (city && country) return `${city}, ${country}`
+  if (city) return city
+  if (country) return country
+  return '—'
+}
+
 export default function AdminCustomersPage() {
   const [customers, setCustomers] = useState<CustomerRecord[]>([])
   const [storage, setStorage] = useState<string>('')
@@ -83,7 +93,7 @@ export default function AdminCustomersPage() {
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search email or name…"
+            placeholder="Search email, name, phone, city or country…"
             className="w-full max-w-md rounded-xl border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 font-montserrat text-sm text-white placeholder-white/35 focus:border-brand-dustyBlue/40 focus:outline-none"
           />
         </div>
@@ -91,11 +101,13 @@ export default function AdminCustomersPage() {
 
       <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.04]">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[720px] text-left font-montserrat text-sm">
+          <table className="w-full min-w-[980px] text-left font-montserrat text-sm">
             <thead>
               <tr className="border-b border-white/10 text-[10px] uppercase tracking-[0.2em] text-white/45">
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3">Phone</th>
+                <th className="px-4 py-3">Country/City</th>
                 <th className="px-4 py-3">Orders</th>
                 <th className="px-4 py-3">Lifetime</th>
                 <th className="px-4 py-3">Last order</th>
@@ -104,13 +116,13 @@ export default function AdminCustomersPage() {
             <tbody>
               {loading && customers.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-16 text-center text-white/45">
+                  <td colSpan={7} className="px-4 py-16 text-center text-white/45">
                     Loading…
                   </td>
                 </tr>
               ) : customers.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-16 text-center text-white/45">
+                  <td colSpan={7} className="px-4 py-16 text-center text-white/45">
                     No customer records yet. They appear after the first order with a customer email is stored.
                   </td>
                 </tr>
@@ -123,6 +135,10 @@ export default function AdminCustomersPage() {
                   >
                     <td className="max-w-[220px] truncate px-4 py-3 text-white/90">{c.email}</td>
                     <td className="max-w-[160px] truncate px-4 py-3 text-white/70">{c.displayName || '—'}</td>
+                    <td className="max-w-[160px] truncate px-4 py-3 text-white/70">{c.phone || '—'}</td>
+                    <td className="max-w-[220px] truncate px-4 py-3 text-white/70">
+                      {formatLocation(c.lastShippingAddress)}
+                    </td>
                     <td className="px-4 py-3 tabular-nums text-white/85">{c.orderCount}</td>
                     <td className="px-4 py-3 tabular-nums text-white/85">
                       {c.currency} {c.lifetimeValue.toFixed(2)}

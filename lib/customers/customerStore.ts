@@ -104,6 +104,30 @@ export async function getCustomerByEmail(email: string): Promise<CustomerRecord 
   return getCustomerByEmailRaw(normalizeCustomerEmail(email))
 }
 
+function searchableCustomerText(c: CustomerRecord): string {
+  const shipping = c.lastShippingAddress
+  const city =
+    shipping && typeof shipping.city === 'string'
+      ? shipping.city
+      : shipping && typeof shipping['city'] === 'string'
+        ? (shipping['city'] as string)
+        : ''
+  const country =
+    shipping && typeof shipping.country === 'string'
+      ? shipping.country
+      : shipping && typeof shipping['country'] === 'string'
+        ? (shipping['country'] as string)
+        : ''
+  const countryCode =
+    shipping && typeof shipping.countryCode === 'string'
+      ? shipping.countryCode
+      : shipping && typeof shipping['countryCode'] === 'string'
+        ? (shipping['countryCode'] as string)
+        : ''
+
+  return [c.email, c.displayName ?? '', c.phone ?? '', city, country, countryCode].join(' ').toLowerCase()
+}
+
 export async function listCustomers(options?: { limit?: number; q?: string }): Promise<CustomerRecord[]> {
   const limit = options?.limit ?? 500
   const q = options?.q?.trim().toLowerCase() ?? ''
@@ -121,7 +145,7 @@ export async function listCustomers(options?: { limit?: number; q?: string }): P
       } catch {
         continue
       }
-      if (q && !c.email.includes(q) && !(c.displayName?.toLowerCase().includes(q) ?? false)) continue
+      if (q && !searchableCustomerText(c).includes(q)) continue
       out.push(c)
       if (out.length >= limit) break
     }
@@ -131,7 +155,7 @@ export async function listCustomers(options?: { limit?: number; q?: string }): P
   const all = Array.from(memoryCustomers.values())
   all.sort((a, b) => (b.lastOrderAt ?? '').localeCompare(a.lastOrderAt ?? ''))
   for (const c of all) {
-    if (q && !c.email.includes(q) && !(c.displayName?.toLowerCase().includes(q) ?? false)) continue
+    if (q && !searchableCustomerText(c).includes(q)) continue
     out.push(c)
     if (out.length >= limit) break
   }
