@@ -82,12 +82,12 @@ export default function ExperimentalWebGLBackground({ className = '', intensity 
 
         vec3 base = mix(deepWine, burgundy, smoothstep(0.14, 0.86, field));
         float halo = smoothstep(0.55, 0.0, length(centered + vec2(sin(t) * 0.08, cos(t * 1.2) * 0.06)));
-        vec3 color = base + crimson * halo * 0.24 * u_intensity;
-        color += crimson * mouseHalo * 0.22 * u_intensity;
-        color += maroonGlow * mouseHalo * 0.12 * u_intensity;
-        color += dustyBlue * halo * 0.06 * u_intensity;
-        color += clay * mouseHalo * 0.05 * u_intensity;
-        color += plum * halo * 0.07 * u_intensity;
+        vec3 color = base + crimson * halo * 0.31 * u_intensity;
+        color += crimson * mouseHalo * 0.26 * u_intensity;
+        color += maroonGlow * mouseHalo * 0.16 * u_intensity;
+        color += dustyBlue * halo * 0.09 * u_intensity;
+        color += clay * mouseHalo * 0.07 * u_intensity;
+        color += plum * halo * 0.1 * u_intensity;
         color = mix(color, softWhite, (0.06 + mouseHalo * 0.05) * u_intensity);
 
         float scan = sin((uv.y + t * 0.22) * 220.0) * 0.0035;
@@ -96,7 +96,7 @@ export default function ExperimentalWebGLBackground({ className = '', intensity 
         float vignette = smoothstep(0.88, 0.25, length(centered));
         color *= vignette;
 
-        gl_FragColor = vec4(color, 0.56 * u_intensity);
+        gl_FragColor = vec4(color, 0.72 * u_intensity);
       }
     `
 

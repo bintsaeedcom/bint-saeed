@@ -64,17 +64,26 @@ const HOME_TOPICS = [
 function SectionDissolve({
   from = '#ffffff',
   to = '#ffffff',
+  label,
 }: {
   from?: string
   to?: string
+  label?: string
 }) {
   return (
-    <div className="pointer-events-none relative z-[4] -mt-10 h-20 md:-mt-12 md:h-24">
+    <div className="pointer-events-none relative z-[4] -mt-10 h-24 md:-mt-12 md:h-28">
       <div
         className="absolute inset-0"
         style={{ background: `linear-gradient(to bottom, ${from} 0%, ${to} 100%)` }}
       />
-      <div className="absolute inset-0 opacity-35 blur-[22px] bg-[radial-gradient(ellipse_85%_65%_at_50%_5%,rgba(82,41,70,0.12),transparent_72%)]" />
+      <div className="absolute inset-0 opacity-50 blur-[22px] bg-[radial-gradient(ellipse_85%_65%_at_50%_5%,rgba(127,26,38,0.26),transparent_72%)]" />
+      <div className="absolute inset-x-10 top-3 h-px bg-gradient-to-r from-transparent via-[#7f1a26]/80 to-transparent md:inset-x-20" />
+      <div className="absolute inset-x-16 bottom-4 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/70 to-transparent md:inset-x-28" />
+      {label ? (
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#7f1a26]/35 bg-white/85 px-4 py-1 font-montserrat text-[9px] uppercase tracking-[0.22em] text-[#7f1a26] md:text-[10px]">
+          {label}
+        </div>
+      ) : null}
     </div>
   )
 }
@@ -88,7 +97,7 @@ function HorizontalRunway() {
   return (
     <section ref={ref} className="relative h-[220vh] bg-white">
       <div className="sticky top-0 h-screen overflow-hidden">
-        <ExperimentalWebGLBackground intensity={0.5} className="opacity-30" />
+        <ExperimentalWebGLBackground intensity={0.95} className="opacity-55 mix-blend-multiply" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_20%_12%,rgba(146,170,193,0.1),transparent_52%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_130%_90%_at_90%_80%,rgba(193,144,134,0.12),transparent_58%)]" />
 
@@ -105,13 +114,13 @@ function HorizontalRunway() {
                 />
               </div>
               <div className="space-y-2">
-                <span className="inline-flex rounded-full border border-brand-darkRed/20 bg-white/70 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/85">
+                <span className="inline-flex rounded-full border border-[#7f1a26]/30 bg-white/75 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-[#7f1a26]">
                   Vertical scroll
                 </span>
-                <span className="inline-flex rounded-full border border-brand-darkRed/20 bg-white/70 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/85">
+                <span className="inline-flex rounded-full border border-[#7f1a26]/30 bg-white/75 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-[#7f1a26]">
                   Horizontal scroll
                 </span>
-                <span className="inline-flex rounded-full border border-brand-darkRed/20 bg-white/70 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/85">
+                <span className="inline-flex rounded-full border border-[#7f1a26]/30 bg-white/75 px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-[#7f1a26]">
                   Scrolling
                 </span>
               </div>
@@ -180,7 +189,7 @@ export default function HomeExperimentalPage() {
             className="object-cover object-[center_28%]"
           />
         </div>
-        <ExperimentalWebGLBackground intensity={0.66} className="opacity-34" />
+        <ExperimentalWebGLBackground intensity={1.1} className="opacity-58 mix-blend-screen" />
         <div className="absolute inset-0 bg-[linear-gradient(102deg,rgba(31,5,8,0.9)_0%,rgba(31,5,8,0.68)_44%,rgba(31,5,8,0.28)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_50%_-10%,rgba(82,41,70,0.15),transparent_55%)]" />
         <div className="relative mx-auto flex min-h-[100svh] max-w-[1600px] flex-col justify-center px-6 py-20 lg:px-16">
@@ -236,6 +245,10 @@ export default function HomeExperimentalPage() {
               Discover Personalisation
             </LocaleLink>
           </motion.div>
+          <div className="mt-8 inline-flex w-fit items-center gap-2 rounded-full border border-[#7f1a26]/35 bg-white/12 px-4 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/85 backdrop-blur-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#7f1a26]" />
+            Crimson / Maroon signature active
+          </div>
         </div>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-36 bg-gradient-to-b from-transparent to-white" />
       </section>
@@ -259,11 +272,11 @@ export default function HomeExperimentalPage() {
         </div>
       </section>
 
-      <SectionDissolve from="#ffffff" to="#ffffff" />
+      <SectionDissolve from="#ffffff" to="#ffffff" label="Cinematic Transition" />
 
       <HorizontalRunway />
 
-      <SectionDissolve from="#ffffff" to="#ffffff" />
+      <SectionDissolve from="#ffffff" to="#ffffff" label="Collection Cut" />
 
       <section className="relative bg-white py-20 md:py-24">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_85%_at_82%_16%,rgba(193,144,134,0.08),transparent_56%)]" />
@@ -312,7 +325,7 @@ export default function HomeExperimentalPage() {
         </div>
       </section>
 
-      <SectionDissolve from="#ffffff" to="#ffffff" />
+      <SectionDissolve from="#ffffff" to="#ffffff" label="Brand Story" />
 
       <section className="relative overflow-hidden bg-white py-16 md:py-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_110%_80%_at_14%_12%,rgba(146,170,193,0.09),transparent_58%)]" />
@@ -375,7 +388,7 @@ export default function HomeExperimentalPage() {
         </div>
       </section>
 
-      <SectionDissolve from="#ffffff" to="#12080b" />
+      <SectionDissolve from="#ffffff" to="#12080b" label="Final Act" />
 
       <section className="bg-[#12080b] py-20">
         <div className="mx-auto max-w-[1200px] px-6 text-center lg:px-16">
