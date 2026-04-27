@@ -423,10 +423,10 @@ function CharmHeroFeatureSection() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
             <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
-              Charm Feature
+              ABAYA CHARMS
             </p>
             <h2 data-reveal className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
-              Natural Stone Charms
+              NATURAL STONE CHARMS
             </h2>
             <p data-reveal className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[#8a7a70]">
               Designed for abayas, bags, and phone styling. Build your signature stack with curated stones and limited edition drops.
@@ -503,7 +503,7 @@ function CharmHeroFeatureSectionMirror() {
         </LocaleLink>
 
         <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
-          <div className="absolute inset-0 opacity-28">
+          <div className="absolute inset-0 opacity-18">
             <Image
               src="/background1.JPG"
               alt="Bint Saeed charm collection"
@@ -512,8 +512,8 @@ function CharmHeroFeatureSectionMirror() {
               className="object-cover object-center"
             />
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(114,32,48,0.44)_0%,rgba(114,32,48,0.18)_45%,rgba(114,32,48,0.28)_100%)]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(114,32,48,0.62)_0%,rgba(114,32,48,0.38)_45%,rgba(114,32,48,0.52)_100%)]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/98 via-[#1a0210]/94 to-[#1a0210]/90" />
           <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
               Carried Close
@@ -937,7 +937,7 @@ function HeroSection() {
       </motion.div>
 
       {/* Content — parallax on copy only; CTA stays untransformed for reliable hit-testing */}
-      <div className="relative z-20 flex h-full items-center pb-10 pt-20 lg:items-end lg:pb-16 lg:pt-0">
+      <div className="relative z-20 flex h-full items-end pb-14 pt-24 md:items-center md:pb-10 md:pt-20 lg:items-end lg:pb-16 lg:pt-0">
         <div className="section-inner w-full">
           <div className="pointer-events-none absolute inset-y-0 left-0 w-[min(70vw,760px)] bg-gradient-to-r from-[#1a0210]/58 via-[#1a0210]/24 to-transparent" />
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
@@ -1133,9 +1133,9 @@ function MagazineGrid() {
         >
           <div data-reveal>
             <span className="mb-3 block font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
-              Collection Edit
+              CHAPTER I
             </span>
-            <h2 className="font-rozha text-4xl text-[var(--color-ink)] md:text-5xl">The Collection</h2>
+            <h2 className="font-rozha text-4xl uppercase text-[var(--color-ink)] md:text-5xl">THE COLLECTION</h2>
           </div>
           <LocaleLink
             href="/shop"
@@ -1200,7 +1200,7 @@ function EditorialSplit() {
               <p className="mb-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
                 House Codes
               </p>
-              <h2 className="font-rozha text-3xl text-[#2a1e18] md:text-4xl">The House Codes</h2>
+              <h2 className="font-rozha text-3xl uppercase text-[#2a1e18] md:text-4xl">THE HOUSE CODES</h2>
             </div>
             <LocaleLink
               href="/the-codes"
@@ -1213,7 +1213,33 @@ function EditorialSplit() {
             </LocaleLink>
           </div>
 
-          <div className="grid grid-cols-2 border-t border-[#e8ddd4] max-[640px]:grid-cols-1 md:grid-cols-3 lg:grid-cols-5">
+          <div className="md:hidden">
+            <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto border-t border-[#e8ddd4] pb-2 pt-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              {storyCodes.map((code) => (
+                <LocaleLink
+                  key={code.title}
+                  href="/the-codes"
+                  className="group w-[78vw] min-w-[78vw] shrink-0 snap-start p-3 text-left transition-colors hover:bg-[#f5f0ea]"
+                  data-cursor-hover
+                >
+                  <div className="relative mb-3 aspect-[3/4] w-full overflow-hidden rounded-lg border border-[#e8ddd4] bg-[#f7f3ee]">
+                    <Image
+                      src={code.image}
+                      alt={code.title}
+                      fill
+                      sizes="78vw"
+                      className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <h3 className="mt-2 border-b border-[#e8ddd4] pb-3 font-montserrat text-[14px] font-medium tracking-[0.01em] text-[#2a1e18]">
+                    {code.title}
+                  </h3>
+                </LocaleLink>
+              ))}
+            </div>
+          </div>
+
+          <div className="hidden border-t border-[#e8ddd4] md:grid md:grid-cols-3 lg:grid-cols-5">
             {storyCodes.map((code, index) => (
               <LocaleLink
                 key={code.title}
@@ -1230,7 +1256,7 @@ function EditorialSplit() {
                     src={code.image}
                     alt={code.title}
                     fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                    sizes="(max-width: 1024px) 50vw, 20vw"
                     className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </div>

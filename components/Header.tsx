@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiSearch, FiUser, FiHeart, FiShoppingBag, FiMenu, FiX, FiArrowRight } from 'react-icons/fi'
+import { FiSearch, FiUser, FiHeart, FiShoppingBag, FiMenu, FiX, FiArrowRight, FiChevronDown } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -69,6 +69,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [isMiniCartOpen, setIsMiniCartOpen] = useState(false)
+  const [expandedMobileSection, setExpandedMobileSection] = useState<string | null>(null)
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<typeof searchableContent>([])
@@ -196,6 +197,7 @@ export default function Header() {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
+      setExpandedMobileSection(null)
     }
   }, [isMobileMenuOpen])
 
@@ -248,10 +250,22 @@ export default function Header() {
           <div className="relative" onMouseLeave={() => setActiveMegaMenu(null)}>
             {/* Row 1 — brand above nav */}
             <div
-              className={`flex justify-center transition-[padding] duration-500 ${
+              className={`relative flex items-center justify-center transition-[padding] duration-500 ${
                 isScrolled ? 'py-1 md:py-1.5' : 'py-1.5 md:py-2.5 lg:py-3'
               }`}
             >
+              <div className="absolute left-0.5 top-1/2 z-[62] -translate-y-1/2 lg:hidden">
+                <button
+                  type="button"
+                  className="p-2 text-white"
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  data-cursor-hover
+                  aria-label="Toggle menu"
+                >
+                  <FiMenu className="h-5 w-5" />
+                </button>
+              </div>
+
               {disableHomeLogoNavigation ? (
                 <div className="block max-w-[min(92vw,720px)]">
                   <Image
@@ -288,7 +302,33 @@ export default function Header() {
                 </LocaleLink>
               )}
 
-              <div className="absolute right-0.5 top-0.5 z-[62] flex items-center sm:right-1 sm:top-1">
+              <div className="absolute right-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center gap-0.5 lg:hidden">
+                <button
+                  type="button"
+                  onClick={() => setIsSearchOpen(true)}
+                  className="p-1.5 text-brand-dustyBlue transition-colors duration-300 hover:text-brand-dustyBlue"
+                  data-cursor-hover
+                  aria-label={t.nav.search}
+                >
+                  <FiSearch className="h-[17px] w-[17px]" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsMiniCartOpen(true)}
+                  className="relative p-1.5 text-white/75 transition-colors duration-300 hover:text-white"
+                  data-cursor-hover
+                  aria-label={t.nav.cart}
+                >
+                  <FiShoppingBag className="h-[17px] w-[17px]" />
+                  {cartItems.length > 0 && (
+                    <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 font-montserrat text-[9px] font-bold text-white">
+                      {cartItems.length}
+                    </span>
+                  )}
+                </button>
+              </div>
+
+              <div className="absolute right-0.5 top-0.5 z-[62] hidden items-center sm:right-1 sm:top-1 lg:flex">
                 <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-2.5 py-1">
                   <CurrencySwitcher variant="light" showSymbol={false} />
                   <span className="h-4 w-px bg-white/15" aria-hidden />
@@ -299,13 +339,13 @@ export default function Header() {
 
             {/* Divider between brand and topics */}
             <div
-              className="mx-auto h-px max-w-[min(100%,56rem)] bg-gradient-to-r from-transparent via-white/22 to-transparent"
+              className="mx-auto hidden h-px max-w-[min(100%,56rem)] bg-gradient-to-r from-transparent via-white/22 to-transparent lg:block"
               aria-hidden
             />
 
             {/* Row 2 — topics + utilities (mirror on RTL) */}
             <div
-              className={`relative flex items-center justify-between gap-2 isolate transition-[padding] duration-500 ${
+              className={`relative hidden items-center justify-between gap-2 isolate transition-[padding] duration-500 lg:flex ${
                 isRTL ? 'flex-row-reverse' : ''
               } ${isScrolled ? 'py-1 md:py-1.5' : 'py-1.5 md:py-2 lg:py-2.5'}`}
             >
@@ -688,6 +728,7 @@ export default function Header() {
               <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-4">
                 {navItems.map((item, index) => {
                   const mega = megaMenus[item.href]
+                  const isExpanded = expandedMobileSection === item.href
                   return (
                     <motion.div
                       key={item.label}
@@ -696,25 +737,57 @@ export default function Header() {
                       transition={{ delay: index * 0.08 }}
                       className="border-b border-white/10 py-3 last:border-b-0"
                     >
-                      <LocaleLink
-                        href={item.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="group flex min-w-0 items-center justify-between gap-3 py-3"
-                        data-cursor-hover
-                        data-analytics-event={getMainNavAnalyticsEvent(item.href)}
-                        data-analytics-section="header-mobile-nav"
-                      >
-                        <span className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white max-[380px]:text-[12px]">
-                          {item.label}
-                        </span>
-                        <FiArrowRight
-                          className={`h-5 w-5 shrink-0 text-white/50 transition-all group-hover:translate-x-1 group-hover:text-white ${isRTL ? 'rotate-180' : ''}`}
-                        />
-                      </LocaleLink>
+                      {mega ? (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setExpandedMobileSection((prev) => (prev === item.href ? null : item.href))
+                          }
+                          className="flex w-full min-w-0 items-center justify-between gap-3 py-3 text-left"
+                        >
+                          <span className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white max-[380px]:text-[12px]">
+                            {item.label}
+                          </span>
+                          <FiChevronDown
+                            className={`h-5 w-5 shrink-0 text-white/65 transition-transform duration-200 ${
+                              isExpanded ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </button>
+                      ) : (
+                        <LocaleLink
+                          href={item.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="group flex min-w-0 items-center justify-between gap-3 py-3"
+                          data-cursor-hover
+                          data-analytics-event={getMainNavAnalyticsEvent(item.href)}
+                          data-analytics-section="header-mobile-nav"
+                        >
+                          <span className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white max-[380px]:text-[12px]">
+                            {item.label}
+                          </span>
+                          <FiArrowRight
+                            className={`h-5 w-5 shrink-0 text-white/50 transition-all group-hover:translate-x-1 group-hover:text-white ${isRTL ? 'rotate-180' : ''}`}
+                          />
+                        </LocaleLink>
+                      )}
                       {mega ? (
                         <div
-                          className={`space-y-5 pb-3 pt-1 ${isRTL ? 'text-right' : 'text-left'}`}
+                          className={`overflow-hidden transition-all duration-250 ${
+                            isExpanded ? 'max-h-[42rem] pb-3 pt-1 opacity-100' : 'max-h-0 py-0 opacity-0'
+                          } ${isRTL ? 'text-right' : 'text-left'}`}
                         >
+                          <LocaleLink
+                            href={item.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="inline-flex items-center gap-2 py-2 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue transition-colors hover:text-white"
+                            data-cursor-hover
+                            data-analytics-event={getMainNavAnalyticsEvent(item.href)}
+                            data-analytics-section="header-mobile-nav"
+                          >
+                            View {item.label}
+                            <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+                          </LocaleLink>
                           {mega.columns.map((col) => (
                             <div key={col.title}>
                               <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/45">
@@ -793,10 +866,6 @@ export default function Header() {
                         </span>
                       )}
                     </LocaleLink>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CurrencySwitcher variant="light" showSymbol={false} dropdownPlacement="above" />
-                    <LanguageSwitcher variant="light" dropdownPlacement="above" />
                   </div>
                 </div>
               </div>

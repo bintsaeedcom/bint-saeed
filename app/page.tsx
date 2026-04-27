@@ -81,7 +81,7 @@ export default function ComingSoonPage() {
           
           {/* Main Logo - MUCH BIGGER */}
           <Image
-            src="/logo.png"
+            src="/gold logo.png"
             alt="Bint Saeed"
             width={800}
             height={240}
@@ -99,7 +99,7 @@ export default function ComingSoonPage() {
           className="text-center mb-6 md:mb-8"
         >
           <motion.h1 data-document-h1="true" 
-            className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-dustyBlue tracking-[0.2em] md:tracking-[0.3em]"
+            className="font-rozha text-3xl sm:text-4xl md:text-5xl tracking-[0.2em] md:tracking-[0.3em] text-[#a8bfd4] drop-shadow-[0_2px_14px_rgba(146,170,193,0.34)]"
             initial={{ letterSpacing: '0.5em', opacity: 0 }}
             animate={{ letterSpacing: '0.2em', opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.6 }}
@@ -113,7 +113,7 @@ export default function ComingSoonPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="font-montserrat text-white/50 text-[10px] sm:text-xs tracking-[0.25em] uppercase text-center mb-8 md:mb-10"
+          className="font-montserrat text-white/78 text-[10px] sm:text-xs tracking-[0.25em] uppercase text-center mb-8 md:mb-10"
         >
           A Refined Lifestyle Inspired by Heritage
         </motion.p>
@@ -144,8 +144,8 @@ export default function ComingSoonPage() {
               {/* Subtle border glow */}
               <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/20 via-transparent to-brand-stone/10 opacity-50" />
               
-              <div className="relative backdrop-blur-sm bg-white/[0.03] rounded-2xl p-6 md:p-8 border border-white/[0.05]">
-                <p className="font-montserrat text-brand-dustyBlue/60 text-[10px] uppercase tracking-[0.3em] text-center mb-5">
+              <div className="relative backdrop-blur-sm bg-white/[0.04] rounded-2xl p-6 md:p-8 border border-white/[0.1]">
+                <p className="font-montserrat text-brand-dustyBlue/85 text-[10px] uppercase tracking-[0.3em] text-center mb-5">
                   Be the first to know
                 </p>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -156,10 +156,10 @@ export default function ComingSoonPage() {
                       onChange={handleEmailChange}
                       onBlur={() => email && setEmailError(validateEmail(email))}
                       placeholder="Enter your email"
-                      className={`w-full px-5 py-4 bg-white/[0.03] border rounded-xl text-brand-stone placeholder:text-brand-stone/30 font-montserrat text-sm tracking-wide focus:outline-none transition-all duration-300 ${
+                      className={`w-full px-5 py-4 bg-white/[0.05] border rounded-xl text-brand-stone placeholder:text-brand-stone/55 font-montserrat text-sm tracking-wide focus:outline-none transition-all duration-300 ${
                         emailError 
                           ? 'border-red-400/30' 
-                          : 'border-white/[0.08] focus:border-brand-dustyBlue/30 focus:bg-white/[0.05]'
+                          : 'border-white/[0.16] focus:border-brand-dustyBlue/45 focus:bg-white/[0.08]'
                       }`}
                     />
                   </div>
