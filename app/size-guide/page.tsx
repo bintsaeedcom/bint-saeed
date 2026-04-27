@@ -96,9 +96,9 @@ export default function SizeGuidePage() {
               />
             </div>
 
-            <h3 className="mt-8 mb-3 font-montserrat text-[28px] uppercase tracking-[0.08em] text-brand-darkRed">
+            <h2 className="mt-8 mb-3 font-montserrat text-[28px] uppercase tracking-[0.08em] text-brand-darkRed">
               International Conversions
-            </h3>
+            </h2>
             <div className="relative overflow-x-auto border border-brand-stone/28 bg-white/78">
               <table className="min-w-[690px] w-full">
                 <thead>

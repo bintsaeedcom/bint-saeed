@@ -308,7 +308,7 @@ export default function AccessoriesPage() {
             >
               <span className="text-4xl">{activeTab.icon}</span>
               <div>
-                <h2 className="font-rozha text-2xl text-brand-darkRed">
+                  <h2 className="font-montserrat text-2xl text-brand-darkRed">
                   {isRTL ? activeTab.nameAr : activeTab.name}
                 </h2>
                 <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide">
@@ -400,9 +400,9 @@ export default function AccessoriesPage() {
             >
               <div className="p-6">
                 <div className={`flex items-center justify-between mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <h3 className="font-rozha text-2xl text-brand-darkRed">
+                  <p className="font-montserrat text-2xl text-brand-darkRed">
                     {isRTL ? 'التصنيفات' : 'Categories'}
-                  </h3>
+                  </p>
                   <button
                     onClick={() => setIsFilterOpen(false)}
                     className="text-brand-darkRed"

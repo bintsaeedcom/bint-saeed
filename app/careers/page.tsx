@@ -9,10 +9,10 @@ export default function CareersPage() {
           Bint Saeed
         </span>
         <h1 data-document-h1="true" className="font-rozha text-4xl leading-[1.08] text-brand-darkRed md:text-5xl">Careers</h1>
-        <p className="mt-5 max-w-2xl font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
+        <h2 className="mt-5 max-w-2xl font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
           We are building with care across design, operations, and client experience. If you are interested in future
           opportunities, please reach out to our team and include your role focus and portfolio.
-        </p>
+        </h2>
 
         <div className="mt-10 flex flex-wrap gap-4">
           <LocaleLink

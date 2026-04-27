@@ -110,9 +110,9 @@ function AboutNarrative() {
       className="relative border-t border-brand-stone/20 bg-brand-pageCanvas"
     >
       <div className="relative mx-auto max-w-[62rem] px-6 py-20 md:py-28 lg:px-8 lg:py-36">
-        <p className="mb-16 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue md:mb-20">
+        <h2 className="mb-16 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue md:mb-20">
           About the house
-        </p>
+        </h2>
         <div className="space-y-8 md:space-y-10">
           <motion.section
             initial={{ opacity: 0, y: 28 }}
@@ -122,7 +122,7 @@ function AboutNarrative() {
             className="rounded-2xl border border-brand-dustyBlue/20 bg-white/70 p-7 md:p-10"
           >
             <div className="space-y-7 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
-              <p>A house shaped by origin, carried across the world.</p>
+              <h3>A house shaped by origin, carried across the world.</h3>
 
               <p>
                 In Arabic, <em>Bint</em> means daughter of. It is not a reference to where you are, but to where you
@@ -158,11 +158,11 @@ function AboutNarrative() {
             className="rounded-2xl border border-brand-stone/35 bg-[#f6f2ec] p-7 md:p-10"
           >
             <div className="space-y-7 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
-              <p>
+              <h3>
                 <strong>Each creation carries that sense of continuity.</strong> Not defined by location, but
                 recognised by its consistency. A clear visual language that holds its place wherever it is worn.
                 Origin, expressed in form, in attitude, in the way you are recognised.
-              </p>
+              </h3>
 
               <p>
                 <strong>Today, a woman moves between cities, cultures, and expectations.</strong> She builds a life
@@ -187,14 +187,14 @@ function AboutNarrative() {
             className="rounded-2xl border border-brand-darkRed/20 bg-white/80 p-7 md:p-10"
           >
             <div className="space-y-7 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
-              <p>
+              <h3>
                 The house draws from Emirati design codes, including Al Talli craftsmanship and the structural logic of
                 Khous weaving.{' '}
                 <strong>
                   Every piece reflects the elegance of the Gulf, expressed through a way of dressing that moves
                   effortlessly across borders.
                 </strong>
-              </p>
+              </h3>
 
               <p>
                 <strong>For women who move through the world without leaving themselves behind,</strong> and who

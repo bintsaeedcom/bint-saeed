@@ -665,9 +665,9 @@ export default function AccessoryDetailPage() {
                   className="flex w-full items-center justify-between py-4"
                   data-cursor-hover
                 >
-                  <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h2 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                     {isRTL ? 'تفاصيل المنتج' : 'Product Details'}
-                  </span>
+                  </h2>
                   <FiChevronDown
                     className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'description' ? 'rotate-180' : ''}`}
                   />
@@ -688,9 +688,9 @@ export default function AccessoryDetailPage() {
                   className="flex w-full items-center justify-between py-4"
                   data-cursor-hover
                 >
-                  <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                     {isRTL ? 'المواد' : 'Materials'}
-                  </span>
+                  </h3>
                   <FiChevronDown
                     className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'materials' ? 'rotate-180' : ''}`}
                   />
@@ -711,9 +711,9 @@ export default function AccessoryDetailPage() {
                   className="flex w-full items-center justify-between py-4"
                   data-cursor-hover
                 >
-                  <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                     {isRTL ? 'العناية' : 'Care'}
-                  </span>
+                  </h3>
                   <FiChevronDown
                     className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'care' ? 'rotate-180' : ''}`}
                   />
@@ -735,9 +735,9 @@ export default function AccessoryDetailPage() {
                   className="flex w-full items-center justify-between py-4"
                   data-cursor-hover
                 >
-                  <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                     {isRTL ? 'الشحن والإرجاع' : 'Shipping & Returns'}
-                  </span>
+                  </h3>
                   <FiChevronDown
                     className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'shipping' ? 'rotate-180' : ''}`}
                   />

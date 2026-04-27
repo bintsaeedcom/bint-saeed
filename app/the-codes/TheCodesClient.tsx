@@ -266,9 +266,9 @@ export default function TheCodesClient() {
                   <div
                     className={`space-y-4 md:space-y-5 ${isRTL ? 'border-e border-brand-dustyBlue/40 pe-5 md:pe-6' : 'border-s border-brand-dustyBlue/40 ps-5 md:ps-6'}`}
                   >
-                    <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-clayRed/75">
+                    <h3 className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-clayRed/75">
                       {section.eyebrow}
-                    </p>
+                    </h3>
                     <h2
                       id={`${section.id}-heading`}
                       className="font-rozha text-3xl text-brand-darkRed sm:text-4xl md:text-[2.65rem] md:leading-[1.08]"

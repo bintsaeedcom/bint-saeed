@@ -177,9 +177,9 @@ export default function ShopClient() {
             className="mb-6 md:mb-10"
           />
 
-          <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
+          <h2 className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
             {isRTL ? 'التشكيلة' : 'COLLECTION'}
-          </p>
+          </h2>
           <h1 data-document-h1="true" className="font-rozha text-4xl font-normal leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl">
             {isRTL ? 'الفصل ١' : 'CHAPTER I'}
           </h1>
@@ -374,9 +374,9 @@ export default function ShopClient() {
                     {product.category}
                   </p>
                   <LocaleLink href={getProductHref(product)} className="relative z-20 inline-block max-w-full" data-cursor-hover>
-                    <h2 className="font-rozha text-[clamp(0.95rem,2.8vw,1.35rem)] font-normal leading-snug tracking-wide text-brand-darkRed transition-colors hover:text-brand-dustyBlue sm:leading-tight">
+                    <h3 className="font-rozha text-[clamp(0.95rem,2.8vw,1.35rem)] font-normal leading-snug tracking-wide text-brand-darkRed transition-colors hover:text-brand-dustyBlue sm:leading-tight">
                       {product.name}
-                    </h2>
+                    </h3>
                   </LocaleLink>
                   <p className="font-montserrat text-sm tabular-nums tracking-wide text-neutral-600">
                     {formatPrice(product.price)}

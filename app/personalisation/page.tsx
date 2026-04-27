@@ -52,9 +52,9 @@ export default function PersonalisationPage() {
                 priority
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#1a0f14]/55 to-transparent p-4">
-                <p className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/90">
+                <h3 className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/90">
                   Hidden pocket detail
-                </p>
+                </h3>
               </div>
             </div>
           </div>
@@ -75,9 +75,9 @@ export default function PersonalisationPage() {
                 className="object-cover"
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#1a0f14]/55 to-transparent p-4">
-                <p className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/90">
+                <h3 className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/90">
                   Personalised labels
-                </p>
+                </h3>
               </div>
             </div>
           </div>
@@ -124,9 +124,9 @@ export default function PersonalisationPage() {
           </ol>
         </section>
 
-        <p className="mt-20 text-center font-rozha text-3xl text-brand-darkRed md:text-4xl">
+        <h2 className="mt-20 text-center font-rozha text-3xl text-brand-darkRed md:text-4xl">
           A piece you wear. A message you carry.
-        </p>
+        </h2>
       </section>
     </div>
   )

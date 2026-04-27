@@ -80,9 +80,9 @@ export default function FAQPage() {
                 className={`w-full flex items-center justify-between p-6 bg-brand-stone/5 hover:bg-brand-dustyBlue/10 transition-colors ${isRTL ? 'flex-row-reverse text-right' : ''}`}
                 data-cursor-hover
               >
-                <span className="font-rozha text-xl text-brand-darkRed">
+                <h2 className="font-montserrat text-xl text-brand-darkRed">
                   {category.name}
-                </span>
+                </h2>
                 <FiChevronDown className={`w-5 h-5 text-brand-clayRed transition-transform ${openCategory === catIndex ? 'rotate-180' : ''}`} />
               </button>
 
@@ -104,9 +104,9 @@ export default function FAQPage() {
                             className={`w-full flex items-start justify-between gap-4 text-left ${isRTL ? 'flex-row-reverse text-right' : ''}`}
                             data-cursor-hover
                           >
-                            <span className="font-montserrat font-medium text-brand-darkRed">
+                            <h3 className="font-montserrat font-medium text-brand-darkRed">
                               {item.q}
-                            </span>
+                            </h3>
                             <FiChevronDown className={`w-4 h-4 text-brand-clayRed flex-shrink-0 mt-1 transition-transform ${openQuestion === `${catIndex}-${qIndex}` ? 'rotate-180' : ''}`} />
                           </button>
                           <AnimatePresence>

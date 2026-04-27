@@ -556,9 +556,9 @@ function QuickShopCarousel() {
     <section className="relative bg-brand-pageCanvas pb-14 pt-20 md:pb-18 md:pt-24 lg:pb-20 lg:pt-28">
       <SectionStripes variant="soft" />
       <div className="mx-auto mb-8 max-w-[1600px] px-6 lg:px-14">
-        <p className="text-center font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed">
+        <h2 className="text-center font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed">
           {isRTL ? 'اختيار منسق' : 'CURATED SELECTION'}
-        </p>
+        </h2>
       </div>
 
       <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-10 bg-gradient-to-r from-brand-pageCanvas to-transparent md:w-16 lg:w-20" />
@@ -608,9 +608,9 @@ function QuickShopCarousel() {
               </div>
               <div className="flex min-h-[4.25rem] flex-1 flex-col justify-center gap-1.5 border-t border-brand-stone/20 px-2.5 py-2 md:min-h-[4.5rem] md:gap-2 md:px-3 md:py-2.5">
                 <div className={`flex min-h-0 items-start gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <p className="min-w-0 flex-1 truncate font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
+                  <h3 className="min-w-0 flex-1 truncate font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
                     {product.name}
-                  </p>
+                  </h3>
                   <p className="shrink-0 font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed whitespace-nowrap leading-snug">
                     DHS. {product.price.toLocaleString()}
                   </p>
@@ -1061,7 +1061,7 @@ function EditorialSplit() {
                 className="rounded-xl border border-brand-stone/30 bg-white/85 p-4 text-center transition-colors hover:border-brand-dustyBlue/45 hover:bg-white"
                 data-cursor-hover
               >
-                <p className="font-montserrat text-[13px] font-medium tracking-[0.01em] text-brand-darkRed">{item.title}</p>
+                <h3 className="font-montserrat text-[13px] font-medium tracking-[0.01em] text-brand-darkRed">{item.title}</h3>
                 <p className="mt-1 font-montserrat text-xs tracking-[0.01em] text-brand-darkRed/65">{item.subtitle}</p>
               </LocaleLink>
             ))}

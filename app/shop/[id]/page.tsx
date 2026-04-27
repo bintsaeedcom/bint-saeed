@@ -632,9 +632,9 @@ export default function ProductPage() {
 
             {/* Personalisation */}
             <div className="mb-5 border-b border-brand-stone/20 pb-5">
-              <span className="mb-2.5 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
+              <h2 className="mb-2.5 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
                 Personalisation
-              </span>
+              </h2>
               <p className={`mb-2.5 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
                 {isRTL
                   ? `إضافة نص تفصيلي مقابل ${CUSTOMISATION_SURCHARGE_AED} درهم لكل قطعة.`
@@ -837,9 +837,9 @@ export default function ProductPage() {
                   className="w-full flex items-center justify-between py-4"
                   data-cursor-hover
                 >
-                  <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h2 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                     Product Details
-                  </span>
+                  </h2>
                   <FiChevronDown
                     className={`w-4 h-4 text-brand-darkRed transition-transform ${
                       openDropdown === 'description' ? 'rotate-180' : ''
@@ -864,9 +864,9 @@ export default function ProductPage() {
                   className="w-full flex items-center justify-between py-4"
                   data-cursor-hover
                 >
-                  <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                     Size & Measurements
-                  </span>
+                  </h3>
                   <FiChevronDown
                     className={`w-4 h-4 text-brand-darkRed transition-transform ${
                       openDropdown === 'size' ? 'rotate-180' : ''
@@ -891,9 +891,9 @@ export default function ProductPage() {
                   className="w-full flex items-center justify-between py-4"
                   data-cursor-hover
                 >
-                  <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                     Shipping & Returns
-                  </span>
+                  </h3>
                   <FiChevronDown
                     className={`w-4 h-4 text-brand-darkRed transition-transform ${
                       openDropdown === 'shipping' ? 'rotate-180' : ''

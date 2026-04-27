@@ -113,11 +113,11 @@ export default function ContactPage() {
           <h1 data-document-h1="true" className="font-rozha text-5xl md:text-6xl text-brand-darkRed mb-4">
             {isRTL ? 'تواصلي معنا' : 'Contact Us'}
           </h1>
-          <p className="font-montserrat text-brand-clayRed tracking-wide max-w-xl mx-auto">
+          <h2 className="font-montserrat text-brand-clayRed tracking-wide max-w-xl mx-auto">
             {isRTL 
               ? 'نحن هنا لمساعدتك. تواصلي معنا وسنرد عليك في أقرب وقت.'
               : 'We\'re here to help. Reach out to us and we\'ll respond as soon as possible.'}
-          </p>
+          </h2>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16">
@@ -242,9 +242,9 @@ export default function ContactPage() {
                     <item.icon className="w-5 h-5 text-brand-darkRed" />
                   </div>
                   <div>
-                    <p className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed mb-1">
+                    <h3 className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed mb-1">
                       {item.label}
-                    </p>
+                    </h3>
                     {item.href ? (
                       <a
                         href={item.href}
