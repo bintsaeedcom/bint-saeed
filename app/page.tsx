@@ -99,7 +99,7 @@ export default function ComingSoonPage() {
           className="text-center mb-6 md:mb-8"
         >
           <motion.h1 data-document-h1="true" 
-            className="font-rozha text-3xl sm:text-4xl md:text-5xl tracking-[0.2em] md:tracking-[0.3em] text-[#AFC8DE] drop-shadow-[0_2px_16px_rgba(175,200,222,0.5)]"
+            className="font-rozha text-3xl sm:text-4xl md:text-5xl tracking-[0.2em] md:tracking-[0.3em] text-[#E8D8C8] drop-shadow-[0_2px_16px_rgba(232,216,200,0.38)]"
             initial={{ letterSpacing: '0.5em', opacity: 0 }}
             animate={{ letterSpacing: '0.2em', opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.6 }}
