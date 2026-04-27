@@ -408,7 +408,7 @@ function CharmHeroFeatureSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="section-full bs-full-bleed relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen max-w-none overflow-hidden bg-transparent py-0">
+    <section data-story-section className="section-full bs-full-bleed relative w-screen max-w-none overflow-hidden bg-transparent py-0">
       <div className="grid min-h-[68vh] w-full max-w-none items-stretch lg:grid-cols-2">
           <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
             <div className="absolute inset-0 opacity-25">
@@ -482,7 +482,7 @@ function CharmHeroFeatureSectionMirror() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="section-full bs-full-bleed relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen max-w-none overflow-hidden bg-transparent py-0">
+    <section data-story-section className="section-full bs-full-bleed relative w-screen max-w-none overflow-hidden bg-transparent py-0">
       <div className="grid min-h-[68vh] w-full max-w-none items-stretch lg:grid-cols-2">
         <LocaleLink
           data-reveal
@@ -544,7 +544,7 @@ function CampaignPanoramaSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section className="section-full bs-full-bleed relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen max-w-none overflow-hidden bg-[#f6f2eb] py-0">
+    <section className="section-full bs-full-bleed relative w-screen max-w-none overflow-hidden bg-[#f6f2eb] py-0">
       <SectionStripes variant="soft" />
       <div className="relative w-full">
         <div className="relative aspect-[16/6] min-h-[220px] w-full overflow-hidden bg-brand-stone/15 md:min-h-[280px] lg:min-h-[360px]">
