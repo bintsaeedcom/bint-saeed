@@ -516,34 +516,22 @@ function CharmHeroFeatureSectionMirror() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
           <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
-              Charm Feature
+              Carried Close
             </p>
             <h2 data-reveal className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
-              Natural Stone Charms
+              PERSONALISATION
             </h2>
             <p data-reveal className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[#8a7a70]">
-              Designed for abayas, bags, and phone styling. Build your signature stack with curated stones and limited edition drops.
+              Every piece includes a hidden pocket, personalised with a name, date, or private message. Perfect for Eid, weddings, and milestones.
             </p>
-
-            <div data-reveal className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
-              {CHARM_SWATCHES.map((stone) => (
-                <span
-                  key={`mirror-${stone.name}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-muted)]/25 bg-[var(--color-light)] px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink)]"
-                >
-                  <span className="h-2.5 w-2.5 rounded-full border border-[var(--color-ink)]/12" style={{ backgroundColor: stone.hex }} />
-                  {stone.name}
-                </span>
-              ))}
-            </div>
 
             <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
               <LocaleLink
-                href="/accessories?category=abaya-charms"
+                href="/shop"
                 className="inline-flex min-h-[44px] items-center rounded-xl bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
                 data-cursor-hover
               >
-                Shop Charms
+                SHOP
               </LocaleLink>
             </div>
           </div>
