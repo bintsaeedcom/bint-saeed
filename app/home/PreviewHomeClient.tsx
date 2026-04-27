@@ -261,11 +261,11 @@ export default function Home() {
       <HeroSection />
       <ThreePillarsBar />
       <CharmHeroFeatureSection />
+      <EditorialIntro />
       <MagazineGrid />
       <QuickShopCarousel />
       <CreatedForYouSection />
       <EditorialSplit />
-      <EditorialIntro />
     </div>
   )
 }
@@ -332,7 +332,7 @@ function CharmHeroFeatureSection() {
           <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
             <div className="absolute inset-0 opacity-25">
               <Image
-                src="/collection-section/4.JPG?v=20260427"
+                src="/background1.JPG"
                 alt="Bint Saeed charm collection"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -783,7 +783,6 @@ function HeroSection() {
   // Preview-specific hero copy (English)
   const heroHeadline = 'FOR THE DAUGHTER IN EVERY WOMAN'
   const heroSubline = 'Carrying Heritage Forward.'
-  const [typedHeadline, setTypedHeadline] = useState(reduceMotion ? heroHeadline : '')
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -793,23 +792,6 @@ function HeroSection() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.06])
   const titleY = useTransform(scrollYProgress, [0, 1], [0, 20])
   const introX = useTransform(scrollYProgress, [0, 1], [0, 14])
-
-  useEffect(() => {
-    if (reduceMotion) {
-      setTypedHeadline(heroHeadline)
-      return
-    }
-
-    setTypedHeadline('')
-    let i = 0
-    const timer = window.setInterval(() => {
-      i += 1
-      setTypedHeadline(heroHeadline.slice(0, i))
-      if (i >= heroHeadline.length) window.clearInterval(timer)
-    }, 40)
-
-    return () => window.clearInterval(timer)
-  }, [heroHeadline, reduceMotion])
 
   return (
     <section ref={ref} data-story-section className="section-full relative h-[100svh] w-full">
@@ -858,16 +840,13 @@ function HeroSection() {
               {/* initial={false}: avoid opacity:0 inline styles before hydration (looked "broken" / blank UI) */}
               <motion.div style={{ y }} className="pointer-events-none">
                 <motion.h1 data-reveal data-document-h1="true" data-hero-h1="true"
-                  initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  initial={reduceMotion ? false : { opacity: 0, y: 22, filter: 'blur(6px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
                   style={reduceMotion ? undefined : { y: titleY }}
                   className="mb-8 max-w-[85vw] font-rozha text-[clamp(32px,5vw,64px)] font-normal leading-[1.15] tracking-[-0.01em] !text-[#e8d8c8] md:max-w-[100vw] md:whitespace-nowrap"
                 >
-                  {typedHeadline}
-                  {!reduceMotion && typedHeadline.length < heroHeadline.length ? (
-                    <span className="inline-block w-[0.08em] animate-pulse text-brand-ivory/90">|</span>
-                  ) : null}
+                  {heroHeadline}
                 </motion.h1>
 
                 <motion.p
@@ -1029,9 +1008,9 @@ function MagazineGrid() {
       ScrollTrigger.create({
         trigger: ref.current,
         start: 'top top+=64',
-        end: '+=280%',
+        end: '+=420%',
         pin: pinRef.current,
-        scrub: 1.15,
+        scrub: 1.35,
         onUpdate: (self) => {
           const next = Math.min(collectionCards.length - 1, Math.floor(self.progress * collectionCards.length))
           setActiveIndex(next)
@@ -1069,8 +1048,17 @@ function MagazineGrid() {
           </LocaleLink>
         </motion.div>
 
-        <div data-collection-image-mask className="relative min-h-[74vh] rounded-2xl bg-[var(--color-light)] p-4 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-5 md:min-h-[78vh]">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_10%,rgba(114,32,48,0.08)_0%,transparent_68%)]" />
+        <div data-collection-image-mask className="relative min-h-[82vh] rounded-2xl bg-[var(--color-light)] p-4 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-6 md:min-h-[86vh]">
+          <div className="absolute inset-0">
+            <Image
+              src="/background3.jpg"
+              alt="Collection backdrop"
+              fill
+              sizes="100vw"
+              className="object-cover object-center opacity-[0.34]"
+            />
+          </div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_10%,rgba(114,32,48,0.12)_0%,rgba(250,248,245,0.38)_68%)]" />
           <div className="relative flex h-full items-center justify-center">
             {collectionCards.map((card, index) => {
               const offset = index - activeIndex
@@ -1079,11 +1067,11 @@ function MagazineGrid() {
                 <LocaleLink
                   key={card.label}
                   href={card.href}
-                  className={`group absolute left-1/2 top-1/2 block w-[min(76vw,390px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-[color:var(--color-muted)]/18 bg-[var(--color-ground)] shadow-[0_18px_36px_rgba(20,8,11,0.16)] transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]`}
+                  className={`group absolute left-1/2 top-1/2 block w-[min(84vw,560px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-[color:var(--color-muted)]/18 bg-[var(--color-ground)] shadow-[0_28px_64px_rgba(20,8,11,0.2)] transition-[transform,opacity] duration-900 ease-[cubic-bezier(0.22,1,0.36,1)]`}
                   style={{
                     zIndex: 50 - absOffset,
-                    opacity: absOffset > 2 ? 0 : absOffset === 2 ? 0.26 : absOffset === 1 ? 0.62 : 1,
-                    transform: `translate(-50%, -50%) translateX(${offset * 38}px) translateY(${absOffset * 10}px) scale(${1 - absOffset * 0.06})`,
+                    opacity: absOffset > 2 ? 0 : absOffset === 2 ? 0.2 : absOffset === 1 ? 0.56 : 1,
+                    transform: `translate(-50%, -50%) translateX(${offset * 108}px) translateY(${absOffset * 18}px) scale(${1 - absOffset * 0.08})`,
                   }}
                   data-cursor-hover
                   data-analytics-event="click_cta_home_to_collection"
@@ -1094,7 +1082,7 @@ function MagazineGrid() {
                       src={card.src}
                       alt={`Bint Saeed ${card.label}`}
                       fill
-                      sizes="(max-width: 768px) 76vw, 390px"
+                      sizes="(max-width: 768px) 84vw, 560px"
                       className="pointer-events-none object-cover object-center transition-transform duration-1000 group-hover:scale-[1.03]"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-sovereign)]/62 via-[var(--color-sovereign)]/10 to-transparent" />
@@ -1122,11 +1110,11 @@ function EditorialSplit() {
   const isInView = useInView(ref, { margin: '-12%', once: true })
   const { isRTL } = useLanguage()
   const storyCodes = [
-    { title: 'Al Talli', subtitle: 'Gold threadwork', image: homeCodesImage('Talli.jpg') },
-    { title: 'Khous', subtitle: 'Palm craftsmanship', image: homeCodesImage('khous.jpg') },
-    { title: 'Al Ain Rosette', subtitle: 'Regional motif', image: homeCodesImage('Al Quaa Rosette.jpg') },
     { title: 'The Monogram', subtitle: 'Signature mark', image: homeCodesImage('monogram.jpg') },
+    { title: 'Khous', subtitle: 'Palm craftsmanship', image: homeCodesImage('khous.jpg') },
     { title: 'Knotted Lines', subtitle: 'Line & continuity', image: homeCodesImage('Knotted Lines Of Lineage.jpg') },
+    { title: 'Al Ain Rosette', subtitle: 'Regional motif', image: homeCodesImage('Al Quaa Rosette.jpg') },
+    { title: 'Al Talli', subtitle: 'Gold threadwork', image: homeCodesImage('talli.jpg.jpg') },
   ] as const
 
   return (

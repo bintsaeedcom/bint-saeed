@@ -53,7 +53,7 @@ const SECTIONS: CodeSection[] = [
     paragraphs: [
       'Al Talli is a traditional Emirati craft, woven with fine metallic threads and recognised as part of the cultural heritage of the United Arab Emirates. It reflects precision, patience, and a deep-rooted tradition of adornment. Within Bint Saeed, it is translated into forms that move naturally across borders.',
     ],
-    imageSrc: codesPageImage('Talli.jpg'),
+    imageSrc: codesPageImage('talli.jpg.jpg'),
     imageAlt: 'Al Talli — house code',
   },
   {
