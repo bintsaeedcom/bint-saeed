@@ -408,7 +408,7 @@ function CharmHeroFeatureSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="section-full bs-full-bleed relative w-screen max-w-none overflow-hidden bg-transparent py-0">
+    <section data-story-section className="relative w-full overflow-hidden bg-transparent py-0">
       <div className="grid min-h-[68vh] w-full max-w-none items-stretch lg:grid-cols-2">
           <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
             <div className="absolute inset-0 opacity-25">
@@ -482,7 +482,7 @@ function CharmHeroFeatureSectionMirror() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="section-full bs-full-bleed relative w-screen max-w-none overflow-hidden bg-transparent py-0">
+    <section data-story-section className="relative w-full overflow-hidden bg-transparent py-0">
       <div className="grid min-h-[68vh] w-full max-w-none items-stretch lg:grid-cols-2">
         <LocaleLink
           data-reveal
@@ -544,7 +544,7 @@ function CampaignPanoramaSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section className="section-full bs-full-bleed relative w-screen max-w-none overflow-hidden bg-[#f6f2eb] py-0">
+    <section className="relative w-full overflow-hidden bg-[#f6f2eb] py-0">
       <SectionStripes variant="soft" />
       <div className="relative w-full">
         <div className="relative aspect-[16/6] min-h-[220px] w-full overflow-hidden bg-brand-stone/15 md:min-h-[280px] lg:min-h-[360px]">
@@ -806,11 +806,11 @@ function QuickShopCarousel() {
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#1F0508]/22 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </div>
               <div className="flex min-h-[4.25rem] flex-1 flex-col justify-center gap-1.5 border-t border-brand-stone/20 px-2.5 py-2 md:min-h-[4.5rem] md:gap-2 md:px-3 md:py-2.5">
-                <div className={`flex min-h-0 items-start gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <h3 className="min-w-0 flex-1 truncate font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
+                <div className={`flex min-h-0 flex-col gap-1 ${isRTL ? 'items-end text-right' : 'items-start text-left'}`}>
+                  <h3 className="min-w-0 max-w-full truncate font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
                     {product.name}
                   </h3>
-                  <p className="shrink-0 whitespace-nowrap font-montserrat text-[10.5px] uppercase leading-snug tracking-[0.06em] text-[#722030]">
+                  <p className="font-montserrat text-[10.5px] uppercase leading-snug tracking-[0.06em] text-[#722030]">
                     DHS. {product.price.toLocaleString()}
                   </p>
                 </div>
