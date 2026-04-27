@@ -281,6 +281,14 @@ export default function Header() {
                   />
                 </LocaleLink>
               )}
+
+              <div className="absolute inset-y-0 right-0 hidden items-center xl:flex">
+                <div className="flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.03] px-3 py-1.5">
+                  <CurrencySwitcher variant="light" showSymbol={false} />
+                  <span className="h-4 w-px bg-white/15" aria-hidden />
+                  <LanguageSwitcher variant="light" />
+                </div>
+              </div>
             </div>
 
             {/* Divider between brand and topics */}
@@ -295,14 +303,28 @@ export default function Header() {
                 isRTL ? 'flex-row-reverse' : ''
               } ${isScrolled ? 'py-1.5 md:py-2' : 'py-2 md:py-2.5 lg:py-3'}`}
             >
-            {/* Left: Navigation — desktop */}
-            <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center gap-7 lg:flex">
+            {/* Left: desktop search */}
+            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-start lg:flex">
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(true)}
+                className="inline-flex items-center gap-2 py-1.5 font-montserrat text-[11px] uppercase tracking-[0.15em] text-white/82 transition-colors duration-300 hover:text-brand-dustyBlue"
+                data-cursor-hover
+                aria-label={t.nav.search}
+              >
+                <FiSearch className="h-4 w-4" />
+                <span className="hidden xl:inline">{t.nav.search}</span>
+              </button>
+            </div>
+
+            {/* Center: Navigation — desktop */}
+            <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-center gap-4 lg:flex xl:gap-7">
               {navItems.map((item) => (
                 <LocaleLink
                   key={item.label}
                   href={item.href}
                   onMouseEnter={() => setActiveMegaMenu(item.href)}
-                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 xl:text-[11px] xl:tracking-[0.15em] ${
                     activeMegaMenu === item.href ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
                   }`}
                   data-cursor-hover
@@ -312,6 +334,18 @@ export default function Header() {
                   {item.label}
                 </LocaleLink>
               ))}
+              <LocaleLink
+                href="/shop"
+                onMouseEnter={() => setActiveMegaMenu('/shop')}
+                className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 xl:text-[11px] xl:tracking-[0.15em] ${
+                  activeMegaMenu === '/shop' ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
+                }`}
+                data-cursor-hover
+                data-analytics-event="click_cta_home_to_collection"
+                data-analytics-section="header-main-nav"
+              >
+                Shop Now
+              </LocaleLink>
             </nav>
 
             {/* Mobile: menu (row 2 only — brand is row 1) */}
@@ -330,35 +364,12 @@ export default function Header() {
             {/* Spacer on mobile so row 2 layout matches (brand already centered above) */}
             <div className="min-w-0 flex-1 lg:hidden" aria-hidden />
 
-            {/* Right: Full utilities when horizontal nav is visible */}
-            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-5 lg:flex">
-              <LocaleLink
-                href="/shop"
-                className="inline-flex min-h-[40px] items-center rounded-full border border-brand-dustyBlue/50 bg-brand-dustyBlue/12 px-5 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue transition-colors hover:bg-brand-dustyBlue/22 hover:text-white"
-                data-cursor-hover
-                data-analytics-event="click_cta_home_to_collection"
-                data-analytics-section="header-shop-pill"
-              >
-                Shop Now
-              </LocaleLink>
-
-              {/* Language & Currency */}
-              <div className="flex items-center gap-4 pr-4 border-r border-white/20">
+            {/* Right: account, wishlist, cart */}
+            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-3 lg:flex xl:gap-5">
+              <div className="mr-2 flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-2 py-1 xl:hidden">
                 <CurrencySwitcher variant="light" showSymbol={false} />
                 <LanguageSwitcher variant="light" />
               </div>
-              
-              {/* Icons */}
-              <button
-                type="button"
-                onClick={() => setIsSearchOpen(true)}
-                className="rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
-                data-cursor-hover
-                aria-label={t.nav.search}
-              >
-                <FiSearch className="w-[18px] h-[18px]" />
-              </button>
-              
               <button
                 type="button"
                 onClick={() => {

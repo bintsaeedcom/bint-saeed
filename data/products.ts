@@ -153,18 +153,20 @@ type OrderedViews = {
 const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
   'khous-jacket-abaya': {
     front: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket-F.JPG',
-    side: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- S.JPG',
+    side: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya- S.jpg',
     detail: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- D.JPG',
     extra: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- E.jpg',
   },
   'royal-talli-abaya': {
-    front: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya-F.jpg',
+    front: '/Webshop pictures/Abayas/Covent Garden Abaya- F.jpg',
     side: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya-S.JPG',
     back: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya-B.JPG',
     detail: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya- D.JPG',
+    extra: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya- E.jpg',
   },
   'khous-structured-blazer-abaya': {
-    front: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya-F.jpg',
+    front: '/Webshop pictures/Abayas/Kensington Abaya- F.jpg',
+    side: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya - S.jpg',
   },
   'natural-stone-signature-abaya': {
     front: '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- F.JPG',
@@ -188,9 +190,10 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     video: '/Webshop pictures/Caftans/Mayfair Kaftan/Mayfair Kaftan- V.MOV',
   },
   'royal-boatneck-kaftan': {
-    front: '/Webshop pictures/Caftans/Nothing Hill Kaftan/Nothing Hill Kaftan-F.jpg',
-    side: '/Webshop pictures/Caftans/Nothing Hill Kaftan/Nothing Hill Kaftan- S.JPG',
-    back: '/Webshop pictures/Caftans/Nothing Hill Kaftan/Nothing Hill Kaftan- B.JPG',
+    front: '/Webshop pictures/Caftans/Nothing Hill Kaftan - F.jpg',
+    side: '/Webshop pictures/Caftans/Nothing Hill Kaftan - S.jpg',
+    back: '/Webshop pictures/Caftans/Nothing Hill Kaftan - B.jpg',
+    extra: '/Webshop pictures/Caftans/Nothing Hill Kaftan- E.jpg',
   },
   'khous-signature-midi-dress': {
     front: '/Webshop pictures/Dresses/Covent Garden Dress/Covent Garden Dress-F.jpg',
@@ -201,25 +204,29 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     side: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- S.jpg',
   },
   'talli-signature-dress': {
-    front: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- F.HEIC',
-    side: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress-S.JPG',
-    back: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress-B.JPG',
+    front: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress -F.jpg',
+    side: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- S.jpg',
+    back: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- B.jpg',
+    extra: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- E.jpg',
   },
   'khous-signature-classic-jacket': {
-    front: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set-F.JPG',
+    front: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- F.jpg',
     side: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- S.JPG',
     back: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set-B.JPG',
+    extra: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- E.jpg',
   },
   'khous-signature-classic-set': {
-    front: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set-F.JPG',
+    front: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- F.jpg',
     side: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- S.JPG',
     back: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set-B.JPG',
+    extra: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- E.jpg',
   },
   'talli-signature-set': {
     front: '/Webshop pictures/Sets/Soho Set/Soho Set- F.JPG',
-    side: '/Webshop pictures/Sets/Soho Set/Soho Set- S.JPG',
+    side: '/Webshop pictures/Sets/Soho Set/Soho Set - S.jpg',
     back: '/Webshop pictures/Sets/Soho Set/Soho Set- B.JPG',
     detail: '/Webshop pictures/Sets/Soho Set/Soho Set- D.JPG',
+    extra: '/Webshop pictures/Sets/Soho Set/Soho Set- E.jpg',
   },
   'hyde-park-set': {
     front: '/Webshop%20pictures/Sets/Hyde%20Park%20Set/Hyde%20Park%20Set-%20F.JPG',

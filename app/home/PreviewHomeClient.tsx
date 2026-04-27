@@ -117,7 +117,7 @@ const SUMMER_ELEGANCE_SLIDES = [
 const ESSENTIALS_SLIDES = [
   '/collection-section/2.PNG',
   '/collection-section/3.JPG',
-  '/collection-section/4.JPG',
+  '/collection-section/4.JPG?v=20260427',
 ] as const
 
 const SLIDE_INTERVAL_MS = 6500
@@ -184,9 +184,9 @@ export default function Home() {
   return (
     <div className={`relative min-h-0 overflow-x-clip ${isRTL ? 'rtl' : 'ltr'}`}>
       <HeroSection />
+      <QuickShopCarousel />
       <EditorialIntro />
       <MagazineGrid />
-      <QuickShopCarousel />
       <EditorialSplit />
       <CreatedForYouSection />
     </div>
@@ -648,7 +648,7 @@ function MagazineGrid() {
   const { t, isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-white py-14 md:py-18">
+    <section ref={ref} className="relative overflow-hidden bg-white py-10 md:py-12">
       <div className="container mx-auto px-6 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -677,13 +677,13 @@ function MagazineGrid() {
         </motion.div>
 
         <div className="rounded-2xl bg-white p-2 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-3 md:p-4">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-4 lg:gap-5">
+          <div className="grid grid-cols-1 gap-4 md:h-[min(66svh,43rem)] md:grid-cols-12 md:items-stretch md:gap-4 lg:gap-5">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.75, delay: 0.05 }}
             style={{ y: leadY }}
-            className="md:col-span-7"
+            className="md:col-span-7 md:h-full"
           >
             <LocaleLink
               href="/shop"
@@ -692,7 +692,7 @@ function MagazineGrid() {
               data-analytics-event="click_cta_home_to_collection"
               data-analytics-section="home-where-it-begins-featured-card"
             >
-              <div className="relative aspect-[4/5] md:aspect-[4/5]">
+              <div className="relative aspect-[4/5] h-full md:aspect-auto">
                 <Image
                   src="/collection-section/1.png"
                   alt="Designed to carry you, wherever you are — Bint Saeed collection"
@@ -718,7 +718,7 @@ function MagazineGrid() {
             </LocaleLink>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-4 md:col-span-5 md:grid-cols-1 md:gap-4 lg:gap-5">
+          <div className="grid grid-cols-2 gap-4 md:col-span-5 md:h-full md:grid-cols-1 md:grid-rows-2 md:gap-4 lg:gap-5">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -732,7 +732,7 @@ function MagazineGrid() {
                 data-analytics-event="click_cta_home_to_collection"
                 data-analytics-section="home-where-it-begins-secondary-card-a"
               >
-                <div className="relative aspect-square md:aspect-[16/11]">
+                <div className="relative aspect-[3/4] md:h-full md:aspect-auto">
                   <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                     <CollectionCrossfadeSlideshow
                       slides={SUMMER_ELEGANCE_SLIDES}
@@ -760,7 +760,7 @@ function MagazineGrid() {
                 data-analytics-event="click_cta_home_to_collection"
                 data-analytics-section="home-where-it-begins-secondary-card-b"
               >
-                <div className="relative aspect-square md:aspect-[16/11]">
+                <div className="relative aspect-[3/4] md:h-full md:aspect-auto">
                   <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
                     <CollectionCrossfadeSlideshow
                       slides={ESSENTIALS_SLIDES}
