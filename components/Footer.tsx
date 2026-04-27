@@ -1,22 +1,11 @@
 'use client'
 
 import LocaleLink from '@/components/LocaleLink'
-import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter } from 'react-icons/fa6'
-import { FiGlobe, FiTruck, FiClock, FiHeart, FiX } from 'react-icons/fi'
-import LanguageSwitcher from './LanguageSwitcher'
-import CurrencySwitcher from './CurrencySwitcher'
+import { FiX } from 'react-icons/fi'
 import SubscribeForm from './SubscribeForm'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useEffect, useState } from 'react'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
-
-const socialLinks = [
-  { icon: FaInstagram, href: 'https://www.instagram.com/bintsaeed_brand/', label: 'Instagram' },
-  { icon: FaTiktok, href: 'https://www.tiktok.com/@bintsaeed_brand', label: 'TikTok' },
-  { icon: FaSnapchat, href: 'https://www.snapchat.com/add/bintsaeed_brand', label: 'Snapchat' },
-  { icon: FaXTwitter, href: 'https://x.com/bintsaeed_brand', label: 'X' },
-  { icon: FaPinterest, href: 'https://www.pinterest.com/bintsaeed_brand/', label: 'Pinterest' },
-]
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -64,304 +53,134 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative w-full min-w-0 max-w-none overflow-hidden">
-      {/* Main Footer Links - Coming Soon Dark Gradient Style */}
-      <div className="relative text-white">
-        {/* Coming Soon gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#12080b] via-[#1c0f15] to-[#2d141e]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(146,170,193,0.06)_0%,_transparent_70%)]" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden translate-x-[150%] md:flex items-start justify-end">
-          <span
-            className="origin-top-right rotate-90 whitespace-nowrap font-rozha text-[56px] leading-none tracking-[0.02em] text-transparent opacity-90 lg:text-[68px]"
-            style={{
-              backgroundImage: 'linear-gradient(to right, #722030 0%, #6a8090 100%)',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-            }}
-            aria-hidden
-          >
-            Bint Saeed
-          </span>
-        </div>
-        
-        <div className="relative container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-12 md:py-14 2xl:py-16">
-          <div className="mb-10 rounded-2xl border border-white/15 bg-[linear-gradient(160deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-5 shadow-[0_22px_48px_rgba(5,1,5,0.35)] backdrop-blur-md md:p-7">
-            <div className="mb-5 max-w-2xl">
-              <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.34em] text-brand-dustyBlue/85">
-                {isRTL ? 'القائمة البريدية' : 'Email List'}
-              </p>
-              <h3 className="font-rozha text-2xl text-brand-stone md:text-3xl">
-                {isRTL ? 'اشتركي للحصول على الإصدارات الجديدة أولاً' : 'Be first to know about new drops'}
-              </h3>
-              <p className="mt-2 font-montserrat text-sm tracking-wide text-white/55">
-                {isRTL
-                  ? 'اشتركي لتصلكم الإصدارات الجديدة، الدعوات الخاصة، وتحديثات العلامة.'
-                  : 'Subscribe for new collection launches, private invites, and brand updates.'}
-              </p>
-            </div>
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4 md:p-5">
-              <div className="flex flex-col gap-3 md:flex-row md:items-center">
-                <div className="flex-1 space-y-1">
-                  <input
-                    type="email"
-                    value={quickEmail}
-                    onChange={(e) => {
-                      setQuickEmail(e.target.value)
-                      if (quickEmailError) setQuickEmailError('')
-                    }}
-                    placeholder={isRTL ? 'البريد الإلكتروني' : 'Email Address'}
-                    className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-5 py-3.5 font-montserrat text-sm tracking-wide text-brand-stone placeholder-white/35 focus:outline-none focus:border-brand-dustyBlue/35"
-                  />
-                  {quickEmailError ? (
-                    <p className="text-xs font-montserrat tracking-wide text-red-300">{quickEmailError}</p>
-                  ) : null}
-                </div>
-                <button
-                  type="button"
-                  onClick={openSubscribeModal}
-                  className="inline-flex min-h-[46px] items-center justify-center rounded-xl bg-brand-dustyBlue px-7 font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#1a0008] transition-colors hover:bg-brand-stone"
-                  data-cursor-hover
-                >
-                  {isRTL ? 'اشتراك' : 'Subscribe'}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className={`grid grid-cols-1 gap-8 sm:grid-cols-2 lg:gap-10 xl:grid-cols-4 xl:gap-12 ${isRTL ? 'text-right' : ''}`}>
-            {/* Brand Column with Logo */}
-            <div className="sm:col-span-2 xl:col-span-1">
-              <p className="max-w-xs font-montserrat text-[12px] leading-relaxed tracking-[0.03em] text-white/50">
-                {t.footer.brandDescription}
-              </p>
-              <p className="mt-3 font-montserrat text-[12px] tracking-[0.03em] text-white/40">
-                Abu&nbsp;Dhabi,&nbsp;United&nbsp;Arab&nbsp;Emirates
-              </p>
-
-              <div className={`mt-6 space-y-4 ${isRTL ? 'items-end' : 'items-start'} flex flex-col`}>
-                <div className={`${isRTL ? 'text-right' : 'text-left'}`}>
-                  <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/45">
-                    {isRTL ? 'اللغة' : 'Language'}
-                  </p>
-                  <div className="inline-flex border-b border-white/50 pb-1">
-                    <LanguageSwitcher variant="light" align="start" />
-                  </div>
-                </div>
-
-                <div className={`${isRTL ? 'text-right' : 'text-left'}`}>
-                  <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/45">
-                    {isRTL ? 'الدولة/المنطقة' : 'Country/Region'}
-                  </p>
-                  <div className="inline-flex border-b border-white/50 pb-1">
-                    <CurrencySwitcher variant="light" showSymbol={false} align="start" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Shop */}
-            <div className="self-start">
-              <h4 className="mb-5 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
-                {t.footer.shop}
-              </h4>
-              <ul className="space-y-3">
-                {footerLinks.shop.map((link) => (
-                  <li key={link.label}>
-                    <LocaleLink
-                      href={link.href}
-                    className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
-                      data-cursor-hover
-                      data-analytics-event={link.href === '/shop' ? 'click_footer_collection' : undefined}
-                      data-analytics-section="footer-shop-links"
-                    >
-                      {link.label}
-                    </LocaleLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* About */}
-            <div className="self-start">
-              <h4 className="mb-5 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
-                {t.footer.about}
-              </h4>
-              <ul className="space-y-3">
-                {footerLinks.about.map((link) => (
-                  <li key={link.label}>
-                    <LocaleLink
-                      href={link.href}
-                    className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
-                      data-cursor-hover
-                      data-analytics-event={link.href === '/contact' ? 'click_footer_contact' : undefined}
-                      data-analytics-section="footer-help-links"
-                    >
-                      {link.label}
-                    </LocaleLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Help */}
-            <div className="self-start">
-              <h4 className="mb-5 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
-                {t.footer.help}
-              </h4>
-              <ul className="space-y-3">
-                {footerLinks.help.map((link) => (
-                  <li key={link.label}>
-                    <LocaleLink
-                      href={link.href}
-                    className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
-                      data-cursor-hover
-                    >
-                      {link.label}
-                    </LocaleLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Worldwide Shipping Banner - Clay Red/Rose accent section */}
-      <div className="relative bg-brand-clayRed/90">
-        {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-rose/20 via-transparent to-brand-rose/20" />
-        
-        <div className="relative container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-8 md:py-9 2xl:py-10">
-          <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4 xl:gap-8 ${isRTL ? 'text-right' : ''}`}>
-            {/* Worldwide Shipping */}
-            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
-                <FiGlobe className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
-              </div>
-              <div>
-                <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {isRTL ? 'شحن عالمي' : 'Worldwide Shipping'}
-                </h4>
-                <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'توصيل عالمي' : 'Delivered globally'}
-                </p>
-              </div>
-            </div>
-
-            {/* Free UAE Shipping */}
-            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
-                <FiTruck className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
-              </div>
-              <div>
-                <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {isRTL ? 'شحن مجاني داخل الإمارات' : 'Free UAE Shipping'}
-                </h4>
-                <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'للطلبات فوق 2000 درهم' : 'On orders above 2000 AED'}
-                </p>
-              </div>
-            </div>
-
-            {/* Carefully Considered */}
-            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
-                <FiClock className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
-              </div>
-              <div>
-                <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {isRTL ? 'يُصنع عند الطلب' : 'Crafted to Order'}
-                </h4>
-                <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'يُنتج فقط عند الطلب' : 'Produced only upon request'}
-                </p>
-              </div>
-            </div>
-
-            {/* Giving Forward */}
-            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
-                <FiHeart className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
-              </div>
-              <div>
-                <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {isRTL ? 'نعطي للأمام' : 'Giving Forward'}
-                </h4>
-                <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'يتم تخصيص 20 درهم من كل قطعة للأعمال الخيرية' : '20 AED from each piece is dedicated to charity'}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Bar - Dark Red with elegant accents */}
-      <div className="relative bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]">
-        {/* Dusty blue accent line at top */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-        
-        <div className="container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-6 md:py-7 2xl:py-8">
-          <div className="flex flex-col items-center justify-between gap-5 lg:flex-row">
-            {/* Copyright - Left */}
-            <p className="order-3 font-montserrat text-[11px] tracking-[0.08em] text-white/40 lg:order-1">
-              © {currentYear} Bint Saeed. {t.footer.allRightsReserved}
+    <footer className="section-full w-full overflow-hidden">
+      <section className="section-full bg-[#6a8090] px-10 py-[60px] text-center max-md:px-4">
+        <div className="section-inner">
+          <div className="mx-auto max-w-2xl">
+            <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.34em] text-[#0e1e30]/70">
+              {isRTL ? 'القائمة البريدية' : 'Email List'}
             </p>
-
-            {/* Legal Links - Center */}
-            <div className="order-2 flex flex-wrap justify-center gap-4 md:gap-6">
-              <LocaleLink
-                href="/privacy-policy"
-                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
-                data-cursor-hover
-              >
-                {t.footer.privacy}
-              </LocaleLink>
-              <LocaleLink
-                href="/cookie-policy"
-                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
-                data-cursor-hover
-              >
-                {t.footer.cookies}
-              </LocaleLink>
-              <LocaleLink
-                href="/terms"
-                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
-                data-cursor-hover
-              >
-                {t.footer.terms}
-              </LocaleLink>
-              <LocaleLink
-                href="/shipment-return-policy"
-                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
-                data-cursor-hover
-              >
-                Shipment & Return Policy
-              </LocaleLink>
+            <h3 className="font-rozha text-2xl text-[#e8d8c8] md:text-3xl">
+              {isRTL ? 'اشتركي للحصول على الإصدارات الجديدة أولاً' : 'Be first to know about new drops'}
+            </h3>
+            <p className="mt-2 font-montserrat text-sm tracking-wide text-[#dce6f0]/85">
+              {isRTL
+                ? 'اشتركي لتصلكم الإصدارات الجديدة، الدعوات الخاصة، وتحديثات العلامة.'
+                : 'Subscribe for new collection launches, private invites, and brand updates.'}
+            </p>
+          </div>
+          <div className="mx-auto mt-6 flex max-w-[520px] flex-col items-center gap-3 md:flex-row">
+            <div className="w-full">
+              <input
+                type="email"
+                value={quickEmail}
+                onChange={(e) => {
+                  setQuickEmail(e.target.value)
+                  if (quickEmailError) setQuickEmailError('')
+                }}
+                placeholder={isRTL ? 'البريد الإلكتروني' : 'Email Address'}
+                className="h-11 w-full rounded-[3px] border border-[#5a7080] bg-[#dce6f0] px-4 font-montserrat text-[13px] tracking-wide text-[#0e1e30] placeholder-[#0e1e30]/50 focus:outline-none"
+              />
+              {quickEmailError ? (
+                <p className="mt-1 text-left text-xs font-montserrat tracking-wide text-[#1a0210]">{quickEmailError}</p>
+              ) : null}
             </div>
+            <button
+              type="button"
+              onClick={openSubscribeModal}
+              className="h-11 shrink-0 rounded-[3px] bg-[#1a0210] px-6 font-montserrat text-[12px] uppercase tracking-[0.08em] text-[#e8d8c8]"
+              data-cursor-hover
+            >
+              {isRTL ? 'اشتراك' : 'Subscribe'}
+            </button>
+          </div>
+        </div>
+      </section>
 
-            {/* Social Icons - Right */}
-            <div className="order-1 flex items-center gap-2.5 md:gap-3 lg:order-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/5 text-white/50 transition-all hover:-translate-y-0.5 hover:border-brand-stone/40 hover:bg-white/10 hover:text-brand-stone md:h-10 md:w-10"
-                  aria-label={social.label}
-                  data-cursor-hover
-                >
-                  <social.icon className="w-4 h-4" />
-                </a>
+      <div className="section-full bg-[#1a0210] px-10 pb-0 pt-[60px] max-md:px-4 max-md:pt-10">
+        <div className={`section-inner grid grid-cols-4 gap-8 max-md:grid-cols-1 ${isRTL ? 'text-right' : ''}`}>
+          <div>
+            <p className="mb-3 font-rozha text-[16px] text-[#e8d8c8]">Bint Saeed</p>
+            <p className="font-montserrat text-[12px] leading-[1.8] text-[#4a2030]">{t.footer.brandDescription}</p>
+            <p className="mt-2 font-montserrat text-[12px] leading-[1.8] text-[#4a2030]">Abu Dhabi, United Arab Emirates</p>
+            <p className="mt-3 font-montserrat text-[11px] text-[#3a1828]">
+              {isRTL ? 'يتم تخصيص 20 درهم من كل قطعة للأعمال الخيرية' : '20 AED from each piece is dedicated to charity'}
+            </p>
+          </div>
+
+          <div>
+            <h4 className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.15em] text-[#4a2030]">{t.footer.shop}</h4>
+            <ul>
+              {footerLinks.shop.map((link) => (
+                <li key={link.label}>
+                  <LocaleLink
+                    href={link.href}
+                    className="font-montserrat text-[13px] leading-[2] text-[#5a3040] transition-colors duration-200 hover:text-[#e8d8c8]"
+                    data-cursor-hover
+                    data-analytics-event={link.href === '/shop' ? 'click_footer_collection' : undefined}
+                    data-analytics-section="footer-shop-links"
+                  >
+                    {link.label}
+                  </LocaleLink>
+                </li>
               ))}
-            </div>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.15em] text-[#4a2030]">{t.footer.about}</h4>
+            <ul>
+              {footerLinks.about.map((link) => (
+                <li key={link.label}>
+                  <LocaleLink
+                    href={link.href}
+                    className="font-montserrat text-[13px] leading-[2] text-[#5a3040] transition-colors duration-200 hover:text-[#e8d8c8]"
+                    data-cursor-hover
+                  >
+                    {link.label}
+                  </LocaleLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.15em] text-[#4a2030]">{t.footer.help}</h4>
+            <ul>
+              {footerLinks.help.map((link) => (
+                <li key={link.label}>
+                  <LocaleLink
+                    href={link.href}
+                    className="font-montserrat text-[13px] leading-[2] text-[#5a3040] transition-colors duration-200 hover:text-[#e8d8c8]"
+                    data-cursor-hover
+                  >
+                    {link.label}
+                  </LocaleLink>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
 
-      {/* Bottom accent line - Rose gradient */}
-      <div className="h-1 bg-gradient-to-r from-brand-darkRed via-brand-rose to-brand-darkRed" />
+      <div className="section-full bg-[#722030] px-10 py-4 max-md:px-4">
+        <div className={`section-inner flex items-center justify-between gap-3 max-md:flex-col ${isRTL ? 'max-md:text-right' : ''}`}>
+          <p className="font-montserrat text-[11px] text-[#e8d8c8]">© {currentYear} Bint Saeed. {t.footer.allRightsReserved}</p>
+          <div className="flex items-center gap-3 font-montserrat text-[11px] text-[rgba(232,216,200,0.6)]">
+            <LocaleLink href="/privacy-policy" className="transition-colors hover:text-[#e8d8c8]" data-cursor-hover>
+              {t.footer.privacy}
+            </LocaleLink>
+            <span>·</span>
+            <LocaleLink href="/terms" className="transition-colors hover:text-[#e8d8c8]" data-cursor-hover>
+              {t.footer.terms}
+            </LocaleLink>
+            <span>·</span>
+            <LocaleLink href="/cookie-policy" className="transition-colors hover:text-[#e8d8c8]" data-cursor-hover>
+              {t.footer.cookies}
+            </LocaleLink>
+          </div>
+        </div>
+      </div>
 
       {isSubscribeOpen ? (
         <div className="fixed inset-0 z-[120]">

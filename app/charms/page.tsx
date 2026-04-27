@@ -44,7 +44,7 @@ export default function CharmsPage() {
           <div className="grid grid-cols-2 gap-4 md:gap-8 lg:grid-cols-3 xl:grid-cols-4">
             {charmProducts.map((product) => (
               <LocaleLink key={product.id} href={`/accessories/${product.id}`} data-cursor-hover>
-                <div className="group relative">
+                <div className="group relative border-b-2 border-transparent pb-2 transition-colors duration-200 hover:border-[#722030]">
                   <div className="relative mb-4 aspect-[9/16] overflow-hidden bg-[#f5f5f5]">
                     <Image
                       src={product.images[0]}
@@ -57,7 +57,7 @@ export default function CharmsPage() {
                     <h3 className="font-montserrat text-sm tracking-wide text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue">
                       {isRTL ? product.nameAr : product.name}
                     </h3>
-                    <p className="mt-1 font-montserrat text-sm tracking-wide text-brand-clayRed/70">
+                    <p className="mt-1 font-montserrat text-sm tracking-wide text-[#722030]">
                       {product.price.toLocaleString()} AED
                     </p>
                   </div>

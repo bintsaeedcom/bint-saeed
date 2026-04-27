@@ -191,7 +191,7 @@ export default function ShopClient() {
         </div>
       </header>
 
-      <div className="sticky top-[168px] z-30 border-b border-black/5 bg-brand-pageCanvas sm:top-[176px] md:top-[188px] lg:top-[200px] xl:top-[208px]">
+      <div className="sticky top-16 z-30 border-b border-black/5 bg-brand-pageCanvas">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-6 py-3 md:gap-4 md:py-4 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
           <div className="flex w-full min-w-0 items-center justify-between gap-4 md:w-auto md:justify-start md:gap-8 lg:min-w-0 lg:flex-1">
             <button
@@ -346,7 +346,7 @@ export default function ShopClient() {
                 href={getProductHref(product)}
                 className={`absolute top-0 z-20 ${isRTL ? 'left-[8%]' : 'right-[8%]'}`}
               />
-              <article className="relative z-0 mx-auto block w-full lg:w-[82%]">
+              <article className="relative z-0 mx-auto block w-full border-b-2 border-transparent pb-2 transition-colors duration-200 group-hover:border-[#722030] lg:w-[82%]">
                 <LocaleLink
                   href={getProductHref(product)}
                   className="relative z-20 block aspect-[9/16] overflow-hidden bg-stone-200"
@@ -378,7 +378,7 @@ export default function ShopClient() {
                       {product.name}
                     </h3>
                   </LocaleLink>
-                  <p className="font-montserrat text-sm tabular-nums tracking-wide text-neutral-600">
+                  <p className="font-montserrat text-sm tabular-nums tracking-wide text-[#722030]">
                     {formatPrice(product.price)}
                   </p>
                   <div className="flex gap-1.5 pt-1">

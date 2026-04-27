@@ -42,7 +42,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
     <>
       <Header />
       <main
-        className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : 'pt-[168px] sm:pt-[176px] md:pt-[188px] lg:pt-[200px] xl:pt-[208px]'}`}
+        className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : 'pt-16'}`}
       >
         <div className="relative z-[2] w-full min-w-0 max-w-none bg-brand-pageCanvas">
           {children}

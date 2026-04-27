@@ -69,7 +69,6 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [isMiniCartOpen, setIsMiniCartOpen] = useState(false)
-  const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<typeof searchableContent>([])
   const searchInputRef = useRef<HTMLInputElement>(null)
@@ -81,7 +80,7 @@ export default function Header() {
 
   const navItems = [
     { label: t.nav.collections, href: '/shop' },
-    { label: 'Charms', href: '/accessories?type=abaya-charms' },
+    { label: 'Charms', href: '/charms' },
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
     { label: 'Personalisation', href: '/personalisation' },
     { label: t.about.title, href: '/about' },
@@ -89,7 +88,7 @@ export default function Header() {
   const getMainNavAnalyticsEvent = (href: string) =>
     href === '/shop'
       ? 'click_nav_collection'
-      : href === '/accessories?type=abaya-charms'
+      : href === '/charms'
         ? 'click_nav_charms'
       : href === '/accessories'
         ? 'click_nav_accessories'
@@ -98,6 +97,7 @@ export default function Header() {
         : href === '/about'
           ? 'click_nav_about'
           : undefined
+  const isNavItemActive = (href: string) => innerPath === href || innerPath.startsWith(`${href}/`)
 
   const megaMenus: Record<
     string,
@@ -234,104 +234,42 @@ export default function Header() {
 
   return (
     <>
-      {/* Main Header - Elegant Single Row Design */}
+      {/* Main Header - Single row desktop */}
       <header
-        className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none border-b border-white/10 transition-all duration-500 ${headerBarGradient} ${
-          isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)] backdrop-blur-md' : 'backdrop-blur-[2px]'
+        className={`fixed inset-x-0 top-0 z-[60] w-full border-b-[1.5px] border-[#722030] bg-[#1a0210] transition-all duration-300 ${
+          isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)]' : ''
         }`}
       >
-        {/* Bottom accent — same as before, full header width */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
-
-        <nav className="container mx-auto px-2 sm:px-3 lg:px-4 2xl:px-8">
-          {/* One hover zone for both rows + mega menu */}
-          <div className="relative" onMouseLeave={() => setActiveMegaMenu(null)}>
-            {/* Row 1 — brand above nav */}
-            <div
-              className={`flex justify-center transition-[padding] duration-500 ${
-                isScrolled ? 'py-1.5 md:py-2' : 'py-2.5 md:py-3.5 lg:py-4'
-              }`}
-            >
-              {disableHomeLogoNavigation ? (
-                <div className="block max-w-[min(92vw,720px)]">
-                  <Image
-                    src="/logo.png"
-                    alt="Bint Saeed"
-                    width={800}
-                    height={210}
-                    className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
-                      isScrolled
-                        ? 'h-[clamp(2.25rem,6vw,3.25rem)] max-h-[56px] sm:max-h-[60px] md:max-h-[64px]'
-                        : 'h-[clamp(2.85rem,9vw,4.5rem)] max-h-[76px] sm:max-h-[88px] md:h-[clamp(3.15rem,8vw,5rem)] md:max-h-[96px] lg:max-h-[108px] xl:max-h-[118px]'
-                    }`}
-                    priority
-                  />
-                </div>
-              ) : (
-                <LocaleLink
-                  href="/home"
-                  className="block max-w-[min(92vw,720px)]"
-                  data-cursor-hover
-                >
-                  <Image
-                    src="/logo.png"
-                    alt="Bint Saeed"
-                    width={800}
-                    height={210}
-                    className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
-                      isScrolled
-                        ? 'h-[clamp(2.25rem,6vw,3.25rem)] max-h-[56px] sm:max-h-[60px] md:max-h-[64px]'
-                        : 'h-[clamp(2.85rem,9vw,4.5rem)] max-h-[76px] sm:max-h-[88px] md:h-[clamp(3.15rem,8vw,5rem)] md:max-h-[96px] lg:max-h-[108px] xl:max-h-[118px]'
-                    }`}
-                    priority
-                  />
-                </LocaleLink>
-              )}
-
-              <div className="absolute inset-y-0 right-0 hidden items-center xl:flex">
-                <div className="flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.03] px-3 py-1.5">
-                  <CurrencySwitcher variant="light" showSymbol={false} />
-                  <span className="h-4 w-px bg-white/15" aria-hidden />
-                  <LanguageSwitcher variant="light" />
-                </div>
-              </div>
+        <div className="mx-auto hidden h-16 w-full max-w-[1280px] items-center px-4 lg:flex">
+          <div className="flex min-w-0 flex-1 items-center gap-3">
+            <div className="text-[11px] uppercase tracking-[0.12em] text-[#6a5060]">
+              <CurrencySwitcher variant="light" showSymbol={false} />
             </div>
-
-            {/* Divider between brand and topics */}
-            <div
-              className="mx-auto h-px max-w-[min(100%,56rem)] bg-gradient-to-r from-transparent via-white/22 to-transparent"
-              aria-hidden
-            />
-
-            {/* Row 2 — topics + utilities (mirror on RTL) */}
-            <div
-              className={`relative flex items-center justify-between gap-2 isolate transition-[padding] duration-500 ${
-                isRTL ? 'flex-row-reverse' : ''
-              } ${isScrolled ? 'py-1.5 md:py-2' : 'py-2 md:py-2.5 lg:py-3'}`}
-            >
-            {/* Left: desktop search */}
-            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-start lg:flex">
-              <button
-                type="button"
-                onClick={() => setIsSearchOpen(true)}
-                className="inline-flex items-center gap-2 py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white/82 transition-colors duration-300 hover:text-brand-dustyBlue"
-                data-cursor-hover
-                aria-label={t.nav.search}
-              >
-                <FiSearch className="h-4 w-4" />
-                <span className="hidden xl:inline">{t.nav.search}</span>
-              </button>
+            <div className="text-[11px] uppercase tracking-[0.12em] text-[#6a5060]">
+              <LanguageSwitcher variant="light" />
             </div>
+          </div>
 
-            {/* Center: Navigation — desktop */}
-            <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-center gap-4 lg:flex xl:gap-7">
+          <div className="absolute left-1/2 -translate-x-1/2">
+            {disableHomeLogoNavigation ? (
+              <span className="font-rozha text-[20px] text-[#e8d8c8]">Bint Saeed</span>
+            ) : (
+              <LocaleLink href="/home" className="font-rozha text-[20px] text-[#e8d8c8]" data-cursor-hover>
+                Bint Saeed
+              </LocaleLink>
+            )}
+          </div>
+
+          <div className="flex min-w-0 flex-1 items-center justify-end gap-5">
+            <nav className="flex items-center gap-4 xl:gap-5">
               {navItems.map((item) => (
                 <LocaleLink
                   key={item.label}
                   href={item.href}
-                  onMouseEnter={() => setActiveMegaMenu(item.href)}
-                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                    activeMegaMenu === item.href ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
+                  className={`border-b-[1.5px] pb-0.5 font-montserrat text-[11px] uppercase tracking-[0.12em] transition-colors duration-200 ${
+                    isNavItemActive(item.href)
+                      ? 'border-[#722030] text-[#e8d8c8]'
+                      : 'border-transparent text-[#9a7880] hover:text-[#e8d8c8]'
                   }`}
                   data-cursor-hover
                   data-analytics-event={getMainNavAnalyticsEvent(item.href)}
@@ -342,10 +280,7 @@ export default function Header() {
               ))}
               <LocaleLink
                 href="/shop"
-                onMouseEnter={() => setActiveMegaMenu('/shop')}
-                className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                  activeMegaMenu === '/shop' ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
-                }`}
+                className="rounded-[3px] bg-[#722030] px-4 py-[5px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors duration-200 hover:bg-[#8a2d43]"
                 data-cursor-hover
                 data-analytics-event="click_cta_home_to_collection"
                 data-analytics-section="header-main-nav"
@@ -354,43 +289,19 @@ export default function Header() {
               </LocaleLink>
             </nav>
 
-            {/* Mobile: menu (row 2 only — brand is row 1) */}
-            <div className="relative z-[55] flex w-10 shrink-0 justify-start lg:hidden">
+            <div className="flex items-center gap-3">
               <button
                 type="button"
-                className="p-2 text-white"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                onClick={() => setIsSearchOpen(true)}
+                className="p-1.5 text-[#6a5060] transition-colors duration-200 hover:text-[#e8d8c8]"
                 data-cursor-hover
-                aria-label="Toggle menu"
+                aria-label={t.nav.search}
               >
-                <FiMenu className="w-6 h-6" />
+                <FiSearch className="h-4 w-4" />
               </button>
-            </div>
-
-            {/* Spacer on mobile so row 2 layout matches (brand already centered above) */}
-            <div className="min-w-0 flex-1 lg:hidden" aria-hidden />
-
-            {/* Right: account, wishlist, cart */}
-            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-3 lg:flex xl:gap-5">
-              <div className="mr-2 flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-2 py-1 xl:hidden">
-                <CurrencySwitcher variant="light" showSymbol={false} />
-                <LanguageSwitcher variant="light" />
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  window.location.assign('/account')
-                }}
-                className="rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
-                data-cursor-hover
-                aria-label={t.nav.account}
-              >
-                <FiUser className="w-[18px] h-[18px]" />
-              </button>
-              
               <LocaleLink
                 href="/wishlist"
-                className="relative rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
+                className="relative p-1.5 text-[#6a5060] transition-colors duration-200 hover:text-[#e8d8c8]"
                 data-cursor-hover
                 aria-label={t.nav.wishlist}
               >
@@ -405,7 +316,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsMiniCartOpen(true)}
-                className="relative rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
+                className="relative p-1.5 text-[#6a5060] transition-colors duration-200 hover:text-[#e8d8c8]"
                 data-cursor-hover
                 aria-label={t.nav.cart}
               >
@@ -417,10 +328,28 @@ export default function Header() {
                 )}
               </button>
             </div>
+          </div>
+        </div>
 
-            {/* Compact utility row when hamburger layout is active */}
-            <div className="relative z-[55] flex w-10 shrink-0 items-center justify-end gap-1.5 sm:w-auto sm:gap-2 lg:gap-3 lg:hidden">
-              <div className="hidden md:flex items-center gap-2 pr-2 border-r border-white/15">
+        <div className="flex h-16 items-center justify-between px-4 lg:hidden">
+          <button
+            type="button"
+            className="p-2 text-[#6a5060]"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            data-cursor-hover
+            aria-label="Toggle menu"
+          >
+            <FiMenu className="w-6 h-6" />
+          </button>
+          {disableHomeLogoNavigation ? (
+            <span className="font-rozha text-[20px] text-[#e8d8c8]">Bint Saeed</span>
+          ) : (
+            <LocaleLink href="/home" className="font-rozha text-[20px] text-[#e8d8c8]" data-cursor-hover>
+              Bint Saeed
+            </LocaleLink>
+          )}
+          <div className="relative z-[55] flex items-center justify-end gap-1.5 sm:gap-2">
+              <div className="hidden md:flex items-center gap-2 pr-2">
                 <CurrencySwitcher variant="light" showSymbol={false} />
                 <LanguageSwitcher variant="light" />
               </div>
@@ -428,7 +357,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="text-white/75 hover:text-white transition-colors duration-300 p-1.5"
+                className="p-1.5 text-[#6a5060] transition-colors duration-200 hover:text-[#e8d8c8]"
                 data-cursor-hover
                 aria-label={t.nav.search}
               >
@@ -437,7 +366,7 @@ export default function Header() {
 
               <LocaleLink
                 href="/wishlist"
-                className="relative hidden text-white/75 hover:text-white transition-colors duration-300 p-1.5 sm:inline-flex"
+                className="relative hidden p-1.5 text-[#6a5060] transition-colors duration-200 hover:text-[#e8d8c8] sm:inline-flex"
                 data-cursor-hover
                 aria-label={t.nav.wishlist}
               >
@@ -452,7 +381,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsMiniCartOpen(true)}
-                className="relative hidden text-white/75 hover:text-white transition-colors duration-300 p-1.5 sm:inline-flex"
+                className="relative hidden p-1.5 text-[#6a5060] transition-colors duration-200 hover:text-[#e8d8c8] sm:inline-flex"
                 data-cursor-hover
                 aria-label={t.nav.cart}
               >
@@ -464,81 +393,7 @@ export default function Header() {
                 )}
               </button>
             </div>
-          </div>
-
-          {/* Desktop Mega Menu */}
-          <AnimatePresence>
-            {activeMegaMenu && megaMenus[activeMegaMenu] && (
-              <motion.div
-                key={activeMegaMenu}
-                initial={{ opacity: 0, y: -12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="pointer-events-auto absolute left-0 right-0 top-full z-[63] hidden -mt-1.5 pt-1.5 lg:block"
-              >
-                <div className="border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)]">
-                  <div className="grid grid-cols-12 gap-10 px-6 py-8 lg:px-12">
-                    <div className="col-span-7 grid grid-cols-3 gap-8">
-                      {megaMenus[activeMegaMenu].columns.map((col) => (
-                        <div key={col.title}>
-                          <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/70">
-                            {col.title}
-                          </p>
-                          <div className="space-y-2.5">
-                            {col.links.map((link) => (
-                              <LocaleLink
-                                key={link.label}
-                                href={link.href}
-                                className="block font-montserrat text-[13px] text-brand-darkRed/90 transition-colors hover:text-brand-dustyBlue"
-                                data-cursor-hover
-                                onClick={() => setActiveMegaMenu(null)}
-                              >
-                                {link.label}
-                              </LocaleLink>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="col-span-5 grid grid-cols-2 gap-4">
-                      {megaMenus[activeMegaMenu].features.map((feature) => (
-                        <LocaleLink
-                          key={feature.title}
-                          href={feature.href}
-                          className="group block"
-                          data-cursor-hover
-                          onClick={() => setActiveMegaMenu(null)}
-                        >
-                          <div className="relative aspect-[4/5] overflow-hidden bg-brand-stone/20">
-                            <Image
-                              src={feature.image}
-                              alt={`${feature.title} — featured collection | Bint Saeed`}
-                              fill
-                              sizes="(max-width: 1536px) 20vw, 300px"
-                              className="pointer-events-none object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                              aria-hidden
-                            />
-                          </div>
-                          <div className="mt-2 flex items-center justify-between">
-                            <span className="font-montserrat text-[12px] text-brand-darkRed">
-                              {feature.title}
-                            </span>
-                            <span className="font-montserrat text-[11px] uppercase tracking-[0.1em] text-brand-darkRed/70 transition-colors group-hover:text-brand-dustyBlue">
-                              Shop Now
-                            </span>
-                          </div>
-                        </LocaleLink>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          </div>
-        </nav>
+        </div>
       </header>
 
       {/* Search Overlay - Stays on page feel */}

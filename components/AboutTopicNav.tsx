@@ -20,7 +20,7 @@ export default function AboutTopicNav() {
   return (
     <nav
       aria-label="About topics"
-      className="sticky top-[168px] z-40 border-b border-brand-stone/30 bg-brand-pageCanvas sm:top-[176px] md:top-[188px] lg:top-[200px] xl:top-[208px]"
+      className="sticky top-16 z-40 border-b border-brand-stone/30 bg-brand-pageCanvas"
     >
       <div className="mx-auto flex max-w-[1200px] items-center gap-1 overflow-x-auto px-6 py-4 lg:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {ABOUT_TOPIC_LINKS.map((item) => {

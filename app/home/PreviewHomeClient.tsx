@@ -184,12 +184,10 @@ export default function Home() {
       <HeroSection />
       <ThreePillarsBar />
       <CharmHeroFeatureSection />
-      <QuickShopCarousel />
-      <CategoryNavigationStrip />
-      <EditorialIntro />
       <MagazineGrid />
       <CreatedForYouSection />
       <EditorialSplit />
+      <EditorialIntro />
     </div>
   )
 }
@@ -213,18 +211,22 @@ function ThreePillarsBar() {
   const { isRTL } = useLanguage()
 
   return (
-    <section className="relative bg-[var(--color-ground)] py-5 md:py-6">
-      <div className="container mx-auto px-6 lg:px-16">
+    <section className="section-full relative bg-[#e8ddd4] py-5 md:py-6">
+      <div className="section-inner">
         <div className={`grid gap-3 md:grid-cols-3 ${isRTL ? 'text-right' : ''}`}>
-          {HOME_PILLARS.map((pillar) => (
+          {HOME_PILLARS.map((pillar, idx) => (
             <div
               key={pillar.title}
-              className="rounded-xl border border-[color:var(--color-muted)]/20 bg-[var(--color-light)] px-4 py-4 md:px-5"
+              className={`rounded-xl border px-4 py-4 md:px-5 ${
+                idx === 1
+                  ? 'border-[#722030] bg-[#722030] text-[#e8d8c8]'
+                  : 'border-[color:var(--color-muted)]/20 bg-[#e8ddd4]'
+              }`}
             >
-              <p className="font-montserrat text-[11px] uppercase tracking-[0.2em] text-[var(--color-signature)]">
+              <p className={`font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] ${idx === 1 ? 'text-[#e8d8c8]' : 'text-[#722030]'}`}>
                 {pillar.title}
               </p>
-              <p className="mt-2 font-montserrat text-[12px] leading-relaxed tracking-[0.02em] text-[var(--color-ink)]/82">
+              <p className={`mt-2 font-montserrat text-[12px] leading-relaxed tracking-[0.02em] ${idx === 1 ? 'text-[#e8d8c8]' : 'text-[var(--color-ink)]/82'}`}>
                 {pillar.copy}
               </p>
             </div>
@@ -246,17 +248,17 @@ function CharmHeroFeatureSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section className="relative overflow-hidden bg-[var(--color-light)] py-10 md:py-12">
-      <div className="container mx-auto px-6 lg:px-16">
+    <section className="section-full relative overflow-hidden border-b-2 border-[#722030] bg-[#0f0d09] py-10 md:py-12">
+      <div className="section-inner">
         <div className="grid items-stretch gap-5 lg:grid-cols-12">
-          <div className={`rounded-2xl border border-[color:var(--color-muted)]/20 bg-[var(--color-ground)] p-6 md:p-8 lg:col-span-5 ${isRTL ? 'text-right' : ''}`}>
-            <p className="font-montserrat text-[10px] uppercase tracking-[0.3em] text-[var(--color-balance)]">
+          <div className={`rounded-2xl border border-[color:var(--color-muted)]/20 bg-[#1a0210] p-6 md:p-8 lg:col-span-5 ${isRTL ? 'text-right' : ''}`}>
+            <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
               Charm Feature
             </p>
-            <h2 className="mt-3 font-rozha text-3xl leading-tight text-[var(--color-ink)] md:text-4xl">
+            <h2 className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
               Natural Stone Charms
             </h2>
-            <p className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[var(--color-ink)]/82">
+            <p className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[#8a7a70]">
               Designed for abayas, bags, and phone styling. Build your signature stack with curated stones and limited edition drops.
             </p>
 
@@ -365,35 +367,30 @@ const CATEGORY_STRIP = [
     label: 'Abayas',
     href: '/shop?category=abayas',
     image: '/collection-section/1.png',
-    tag: 'Core',
   },
   {
     key: 'Kaftans',
     label: 'Kaftans',
     href: '/shop?category=kaftans',
     image: '/collection-section/67.png',
-    tag: 'Core',
   },
   {
     key: 'Sets',
     label: 'Sets',
     href: '/shop?category=sets',
     image: '/collection-section/68.png',
-    tag: 'Core',
   },
   {
     key: 'Accessories',
     label: 'Accessories',
     href: '/accessories',
     image: '/collection-section/4.JPG?v=20260427',
-    tag: 'Grow',
   },
   {
     key: 'Personalisation',
     label: 'Personalisation',
     href: '/personalisation',
     image: '/Personalisation Page/secret pocket.JPG',
-    tag: 'Hero',
   },
 ] as const
 
@@ -467,17 +464,6 @@ function CategoryNavigationStrip() {
               >
                 <p className="font-montserrat text-[11px] uppercase tracking-[0.08em] text-brand-darkRed">{item.label}</p>
                 <p className="mt-1 font-montserrat text-[12px] tracking-[0.01em] text-brand-darkRed/80">{meta.priceLabel}</p>
-                <span
-                  className={`mt-1 inline-flex rounded-full px-2 py-0.5 font-montserrat text-[10px] uppercase tracking-[0.08em] ${
-                    item.tag === 'Grow'
-                      ? 'bg-green-100 text-green-700'
-                      : item.tag === 'Hero'
-                        ? 'bg-brand-stone/25 text-brand-darkRed'
-                        : 'bg-brand-dustyBlue/14 text-brand-dustyBlue'
-                  }`}
-                >
-                  {item.tag}
-                </span>
               </LocaleLink>
             )
           })}
@@ -583,7 +569,7 @@ function QuickShopCarousel() {
             <LocaleLink
               key={`${product.id}-${idx}`}
               href={getProductHref(product)}
-              className="group relative z-[2] mx-1.5 flex h-[25.35rem] w-[13.1rem] shrink-0 cursor-pointer flex-col border border-brand-stone/25 bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:-translate-y-0.5 focus-visible:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:outline-none md:mx-2 md:h-[30.85rem] md:w-[16rem] lg:h-[32.35rem] lg:w-[16.8rem]"
+              className="group relative z-[2] mx-1.5 flex h-[25.35rem] w-[13.1rem] shrink-0 cursor-pointer flex-col border border-brand-stone/25 border-b-2 border-b-transparent bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-b-[#722030] hover:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:-translate-y-0.5 focus-visible:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:outline-none md:mx-2 md:h-[30.85rem] md:w-[16rem] lg:h-[32.35rem] lg:w-[16.8rem]"
               data-cursor-hover
             >
               {/* Images must not capture hits — stacked fill layers steal taps from the link otherwise */}
@@ -611,7 +597,7 @@ function QuickShopCarousel() {
                   <h3 className="min-w-0 flex-1 truncate font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
                     {product.name}
                   </h3>
-                  <p className="shrink-0 font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed whitespace-nowrap leading-snug">
+                  <p className="shrink-0 whitespace-nowrap font-montserrat text-[10.5px] uppercase leading-snug tracking-[0.06em] text-[#722030]">
                     DHS. {product.price.toLocaleString()}
                   </p>
                 </div>
@@ -708,7 +694,6 @@ function HeroSection() {
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.06])
   const titleY = useTransform(scrollYProgress, [0, 1], [0, 20])
-  const titleTracking = useTransform(scrollYProgress, [0, 1], ['0.06em', '0.11em'])
   const introX = useTransform(scrollYProgress, [0, 1], [0, 14])
 
   useEffect(() => {
@@ -729,7 +714,7 @@ function HeroSection() {
   }, [heroHeadline, reduceMotion])
 
   return (
-    <section ref={ref} className="relative h-[100svh] w-full">
+    <section ref={ref} className="section-full relative h-[100svh] w-full">
       <SectionStripes variant="hero" />
       {/* Background — pointer-events-none so scaled layer never steals clicks from hero links */}
       <motion.div
@@ -750,7 +735,7 @@ function HeroSection() {
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1F0508]/78 via-transparent to-[#3B0A12]/28"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(26,2,16,0.75)_0%,rgba(26,2,16,0.2)_45%,transparent_100%)]"
           aria-hidden
         />
         <div
@@ -769,7 +754,7 @@ function HeroSection() {
 
       {/* Content — parallax on copy only; CTA stays untransformed for reliable hit-testing */}
       <div className="relative z-20 flex h-full items-center pb-16 pt-24 lg:items-end lg:pb-24 lg:pt-0">
-        <div className="container mx-auto w-full px-6 lg:px-16">
+        <div className="section-inner w-full">
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
             <div className={`min-w-0 lg:col-span-8 xl:col-span-7 ${isRTL ? 'lg:col-start-6' : ''}`}>
               {/* initial={false}: avoid opacity:0 inline styles before hydration (looked "broken" / blank UI) */}
@@ -778,8 +763,8 @@ function HeroSection() {
                   initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  style={reduceMotion ? undefined : { y: titleY, letterSpacing: titleTracking }}
-                  className="mb-8 max-w-[85vw] font-rozha uppercase !text-brand-ivory md:max-w-[100vw] md:whitespace-nowrap"
+                  style={reduceMotion ? undefined : { y: titleY }}
+                  className="mb-8 max-w-[85vw] font-rozha text-[clamp(32px,5vw,64px)] font-normal leading-[1.15] tracking-[-0.01em] !text-[#e8d8c8] md:max-w-[100vw] md:whitespace-nowrap"
                 >
                   {typedHeadline}
                   {!reduceMotion && typedHeadline.length < heroHeadline.length ? (
@@ -792,7 +777,7 @@ function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                   style={reduceMotion ? undefined : { x: introX }}
-                  className="mb-6 max-w-md border-s border-brand-ivory/22 ps-5 font-montserrat text-sm leading-[1.75] tracking-[0.02em] !text-brand-ivory/92 md:mb-8 md:ps-6 md:text-[15px]"
+                  className="mb-6 max-w-md border-l-[2px] border-[#722030] pl-[14px] font-montserrat text-[15px] leading-[1.7] tracking-[0.02em] !text-[#8a7070] md:mb-8"
                 >
                   {heroSubline}
                 </motion.p>
@@ -804,32 +789,26 @@ function HeroSection() {
                 transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="relative z-30 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10"
               >
-                <MagneticWrap className="w-fit">
+                <MagneticWrap className="w-full sm:w-fit">
                   <LocaleLink
                     href="/shop"
-                    className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-brand-ivory w-fit border-b border-brand-ivory/45 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
+                    className="inline-block w-full rounded-[4px] bg-[#722030] px-8 py-[13px] text-center font-montserrat text-[12px] font-medium uppercase tracking-[0.1em] !text-[#e8d8c8] no-underline transition-colors duration-200 hover:bg-[#8a2d43] sm:w-auto"
                     data-cursor-hover
                     data-analytics-event="click_cta_home_to_collection"
                     data-analytics-section="home-hero"
                   >
                     {t.hero.discoverCollection}
-                    <FiArrowRight
-                      className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
-                    />
                   </LocaleLink>
                 </MagneticWrap>
-                <MagneticWrap className="w-fit">
+                <MagneticWrap className="w-full sm:w-fit">
                   <LocaleLink
                     href="/about"
-                    className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-brand-ivory/88 w-fit border-b border-brand-ivory/30 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
+                    className="inline-block w-full rounded-[4px] bg-transparent px-8 py-[13px] text-center font-montserrat text-[12px] font-medium uppercase tracking-[0.1em] !text-[#c8b8a8] no-underline transition-colors duration-200 hover:!text-[#e8d8c8] sm:w-auto"
                     data-cursor-hover
                     data-analytics-event="click_nav_about"
                     data-analytics-section="home-hero"
                   >
                     Brand Story
-                    <FiArrowRight
-                      className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
-                    />
                   </LocaleLink>
                 </MagneticWrap>
               </motion.div>
@@ -868,11 +847,11 @@ function EditorialIntro() {
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-[var(--color-light)] py-14 md:py-18 lg:py-20">
+    <section ref={ref} className="section-full relative overflow-hidden bg-transparent py-14 md:py-18 lg:py-20">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(250,248,245,1)_0%,rgba(232,221,212,0.38)_100%)]" />
 
-      <div className="relative container mx-auto px-6 lg:px-16">
-        <div className="grid items-stretch gap-4 lg:grid-cols-2 lg:gap-5">
+      <div className="section-inner relative">
+        <div className="grid items-stretch gap-0 lg:grid-cols-2 lg:gap-0">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -880,13 +859,13 @@ function EditorialIntro() {
             style={{ y: panelY }}
             className={isRTL ? 'lg:order-2' : ''}
           >
-            <div className="relative h-full min-h-[18rem] overflow-hidden rounded-2xl border border-[color:var(--color-muted)]/18 bg-[linear-gradient(132deg,var(--color-sovereign)_0%,#2a0d1b_46%,var(--color-signature)_100%)] p-7 shadow-[0_18px_45px_rgba(35,18,23,0.12)] md:min-h-[21rem] md:p-10">
+            <div className="relative h-full min-h-[18rem] overflow-hidden border border-[#2a1e18]/10 border-l-[3px] border-l-[#722030] bg-[#1a0210] p-[48px] shadow-none md:min-h-[21rem]">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.16)_0%,transparent_62%)]" />
               <div className="relative flex h-full flex-col items-center justify-center text-center">
-                <span className="mb-4 block font-montserrat text-[11px] uppercase tracking-[0.28em] text-[var(--color-on-dark)]/78">
+                <span className="mb-4 block font-montserrat text-[11px] uppercase tracking-[0.28em] text-[#c8b8a8]/78">
                   From Abu Dhabi to the world
                 </span>
-                <p className="max-w-[26rem] font-rozha text-3xl leading-[1.2] text-[var(--color-on-dark)] md:text-4xl">
+                <p className="max-w-[26rem] font-rozha text-[clamp(20px,2.5vw,32px)] italic leading-[1.2] tracking-[-0.01em] text-[#e8d8c8]">
                   &ldquo;{MANIFESTO_QUOTE}&rdquo;
                 </p>
               </div>
@@ -900,12 +879,12 @@ function EditorialIntro() {
             style={{ y: panelY }}
             className={isRTL ? 'lg:order-1' : ''}
           >
-            <div className="relative h-full rounded-2xl border border-[color:var(--color-muted)]/24 bg-[var(--color-ground)] p-7 shadow-[0_12px_30px_rgba(30,14,20,0.08)] md:p-10">
+            <div className="relative h-full border border-[#2a1e18]/10 bg-[#e8ddd4] p-[48px] shadow-none">
               <div className="space-y-6">
-                <h2 className="font-rozha text-3xl leading-[1.15] text-[var(--color-ink)] md:text-4xl">
+                <h2 className="font-rozha text-[clamp(18px,2vw,26px)] leading-[1.2] text-[#2a1e18]">
                   {MANIFESTO_LEAD}
                 </h2>
-                <div className="space-y-4 font-montserrat text-[clamp(0.98rem,1.2vw,1.1rem)] leading-[1.65] tracking-[0.01em] text-[var(--color-ink)]/85">
+                <div className="space-y-4 font-montserrat text-[14px] leading-[1.6] tracking-[0.01em] text-[#8a7a70]">
                   {MANIFESTO_SNIPPET.map((paragraph, i) => (
                     <p key={i}>{paragraph}</p>
                   ))}
@@ -913,7 +892,7 @@ function EditorialIntro() {
                 <MagneticWrap className="w-fit">
                   <LocaleLink
                     href="/about"
-                    className="inline-flex min-h-[42px] items-center rounded-xl border border-[color:var(--color-signature)]/30 bg-[var(--color-light)] px-5 font-montserrat text-xs uppercase tracking-[0.12em] text-[var(--color-signature)] transition-colors hover:border-[var(--color-balance)] hover:text-[var(--color-balance)]"
+                    className="inline-flex min-h-[42px] items-center rounded-[3px] border border-[#b0a090] bg-transparent px-5 font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#8a7a70] transition-colors hover:border-[#8a7a70] hover:text-[#2a1e18]"
                     data-cursor-hover
                   >
                     Read our story
@@ -940,8 +919,8 @@ function MagazineGrid() {
   const { t, isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-[var(--color-light)] py-10 md:py-12">
-      <div className="container mx-auto px-6 lg:px-16">
+    <section ref={ref} className="section-full relative overflow-hidden bg-[#faf8f5] py-10 md:py-12">
+      <div className="section-inner">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -949,7 +928,7 @@ function MagazineGrid() {
           className={`mb-8 flex items-end justify-between md:mb-10 ${isRTL ? 'flex-row-reverse' : ''}`}
         >
           <div>
-            <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.4em] text-[var(--color-balance)]">
+            <span className="mb-3 block font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
               Collection Edit
             </span>
             <h2 className="font-rozha text-4xl text-[var(--color-ink)] md:text-5xl">The Collection</h2>
@@ -1027,24 +1006,24 @@ function EditorialSplit() {
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="bg-white py-14 md:py-16">
-      <div className="container mx-auto px-6 lg:px-16">
+    <section ref={ref} className="section-full bg-[#faf8f5] py-14 md:py-16">
+      <div className="section-inner">
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.65 }}
-          className="rounded-2xl border border-brand-stone/30 bg-[#f5f3ee] p-5 md:p-6"
+          className="bg-transparent p-0"
         >
           <div className={`mb-5 flex items-end justify-between ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
             <div>
-              <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-darkRed/60">
+              <p className="mb-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
                 House Codes
               </p>
-              <h2 className="font-rozha text-3xl text-brand-darkRed md:text-4xl">The House Codes</h2>
+              <h2 className="font-rozha text-3xl text-[#2a1e18] md:text-4xl">The House Codes</h2>
             </div>
             <LocaleLink
               href="/the-codes"
-              className="hidden md:inline-flex min-h-[40px] items-center rounded-xl border border-brand-darkRed/20 bg-white px-4 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+              className="hidden md:inline-flex min-h-[40px] items-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-[#722030] transition-colors hover:text-[#2a1e18]"
               data-cursor-hover
               data-analytics-event="click_view_collection_codes_page"
               data-analytics-section="home-codes-section"
@@ -1053,16 +1032,18 @@ function EditorialSplit() {
             </LocaleLink>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-            {CODES_LIST_ITEMS.map((item) => (
+          <div className="grid grid-cols-2 border-t border-[#e8ddd4] max-[480px]:grid-cols-1 md:grid-cols-4">
+            {CODES_LIST_ITEMS.map((item, index) => (
               <LocaleLink
                 key={item.title}
                 href="/the-codes"
-                className="rounded-xl border border-brand-stone/30 bg-white/85 p-4 text-center transition-colors hover:border-brand-dustyBlue/45 hover:bg-white"
+                className={`p-4 text-left transition-colors hover:bg-[#f5f0ea] ${index !== CODES_LIST_ITEMS.length - 1 ? 'md:border-r md:border-[#e8ddd4]' : ''}`}
                 data-cursor-hover
               >
-                <h3 className="font-montserrat text-[13px] font-medium tracking-[0.01em] text-brand-darkRed">{item.title}</h3>
-                <p className="mt-1 font-montserrat text-xs tracking-[0.01em] text-brand-darkRed/65">{item.subtitle}</p>
+                <div className="mb-3 aspect-[4/3] w-full rounded-lg border border-[#e8ddd4] bg-[#f7f3ee]" aria-hidden />
+                <p className="font-rozha text-[32px] leading-none text-[rgba(114,32,48,0.3)]">{['I', 'II', 'III', 'IV'][index]}</p>
+                <h3 className="mt-2 font-montserrat text-[14px] font-medium tracking-[0.01em] text-[#2a1e18]">{item.title}</h3>
+                <p className="mt-2 border-b border-[#e8ddd4] pb-3 font-montserrat text-[12px] leading-[1.6] tracking-[0.01em] text-[#8a7a70]">{item.subtitle}</p>
               </LocaleLink>
             ))}
           </div>
@@ -1120,25 +1101,25 @@ function CreatedForYouSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-[var(--color-light)] py-14 md:py-16">
-      <div className="relative container mx-auto px-6 lg:px-16">
+    <section ref={ref} className="section-full relative overflow-hidden bg-[#722030] py-14 md:py-16">
+      <div className="section-inner relative">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className={`overflow-hidden rounded-2xl border border-[color:var(--color-muted)]/25 bg-[var(--color-ground)] px-6 py-8 shadow-[0_16px_42px_rgba(46,25,14,0.12)] md:px-10 md:py-10 ${isRTL ? 'text-right' : 'text-center'}`}
+          className={`overflow-hidden rounded-2xl border border-[rgba(232,216,200,0.25)] bg-[#722030] px-6 py-8 shadow-[0_16px_42px_rgba(46,25,14,0.12)] md:px-10 md:py-10 ${isRTL ? 'text-right' : 'text-center'}`}
         >
-          <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.34em] text-[var(--color-balance)]">Carried Close</p>
-          <h2 className="mx-auto max-w-3xl font-rozha text-4xl leading-tight text-[var(--color-ink)] md:text-5xl">
+          <p className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">Carried Close</p>
+          <h2 className="mx-auto max-w-3xl font-rozha text-4xl leading-tight text-[#e8d8c8] md:text-5xl">
             Give the gift of Bint Saeed
           </h2>
-          <p className={`mx-auto mt-4 max-w-4xl font-montserrat text-lg leading-[1.6] tracking-[0.01em] text-[var(--color-ink)]/80 ${isRTL ? 'text-right' : 'text-center'}`}>
+          <p className={`mx-auto mt-4 max-w-4xl font-montserrat text-lg leading-[1.6] tracking-[0.01em] text-[rgba(232,216,200,0.7)] ${isRTL ? 'text-right' : 'text-center'}`}>
             Every piece includes a hidden pocket, personalised with a name, date, or private message. Perfect for Eid, weddings, and milestones.
           </p>
           <div className={`mt-7 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : 'justify-center'}`}>
             <LocaleLink
               href="/personalisation"
-              className="inline-flex min-h-[46px] items-center rounded-xl bg-[var(--color-signature)] px-6 font-montserrat text-[12px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
+              className="inline-flex min-h-[46px] items-center rounded-xl bg-[#e8d8c8] px-6 font-montserrat text-[12px] uppercase tracking-[0.16em] text-[#722030] transition-colors hover:bg-[#f2e5d8]"
               data-cursor-hover
               data-analytics-event="click_personalisation_teaser"
               data-analytics-section="home-personalisation-teaser"
@@ -1147,7 +1128,7 @@ function CreatedForYouSection() {
             </LocaleLink>
             <LocaleLink
               href="/personalisation"
-              className="inline-flex min-h-[46px] items-center rounded-xl border border-[var(--color-balance)] bg-[var(--color-balance)]/10 px-6 font-montserrat text-[12px] uppercase tracking-[0.16em] text-[var(--color-balance)] transition-colors hover:bg-[var(--color-balance)]/18"
+              className="inline-flex min-h-[46px] items-center rounded-xl border border-[rgba(232,216,200,0.4)] bg-transparent px-6 font-montserrat text-[12px] uppercase tracking-[0.16em] text-[rgba(232,216,200,0.7)] transition-colors hover:bg-[rgba(232,216,200,0.08)]"
               data-cursor-hover
             >
               How it works

@@ -134,6 +134,23 @@ body {
   margin-right: calc(50% - 50vw);
 }
 
+.section-full {
+  width: 100%;
+  max-width: 100vw;
+}
+
+.section-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+@media (max-width: 768px) {
+  .section-inner {
+    padding: 0 16px;
+  }
+}
+
 @media (max-width: 768px) {
   body {
     cursor: auto;
@@ -266,6 +283,17 @@ footer li {
   font-weight: 400;
   letter-spacing: 0.04em;
   text-align: left;
+}
+
+/* Brand accent pass: ensure primary hero/banner CTAs use #722030 across pages. */
+section[class*='h-[50vh]'] a[class*='bg-brand-darkRed'],
+section[class*='h-[50vh]'] button[class*='bg-brand-darkRed'],
+section[class*='h-[60vh]'] a[class*='bg-brand-darkRed'],
+section[class*='h-[60vh]'] button[class*='bg-brand-darkRed'],
+section[class*='h-[80vh]'] a[class*='bg-brand-darkRed'],
+section[class*='h-[80vh]'] button[class*='bg-brand-darkRed'] {
+  background-color: #722030 !important;
+  border-color: #722030 !important;
 }
 
 [data-pull-quote='true'] {

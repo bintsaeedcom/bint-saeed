@@ -198,7 +198,7 @@ export default function AccessoriesPage() {
       </section>
 
       {/* Category Tabs */}
-      <section className="sticky top-[168px] z-40 border-b border-brand-stone/30 bg-brand-pageCanvas sm:top-[176px] md:top-[188px] lg:top-[200px] xl:top-[208px]">
+      <section className="sticky top-16 z-40 border-b border-brand-stone/30 bg-brand-pageCanvas">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between py-4">
             {/* Categories - Desktop */}
@@ -545,7 +545,7 @@ function AccessoryCard({
         }
       >
         <div
-          className="group relative"
+          className="group relative border-b-2 border-transparent pb-2 transition-colors duration-200 hover:border-[#722030]"
           onMouseEnter={() => setHoveredProduct(accessory.id)}
           onMouseLeave={() => setHoveredProduct(null)}
         >
@@ -620,7 +620,7 @@ function AccessoryCard({
             <h3 className="font-montserrat text-sm text-brand-darkRed mb-1 tracking-wide group-hover:text-brand-dustyBlue transition-colors">
               {isRTL ? accessory.nameAr : accessory.name}
             </h3>
-            <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide">
+            <p className="font-montserrat text-sm tracking-wide text-[#722030]">
               {formatPrice(accessory.price)}
             </p>
           </div>
