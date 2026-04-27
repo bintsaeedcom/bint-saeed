@@ -36,12 +36,14 @@ A premium luxury fashion webshop built with Next.js, featuring elegant design, s
 
 ## Brand Colors
 
-- Dark Red: `#3b0014`
-- Wild Rose: `#6620a2`
-- Dusty Blue: `#92aac1`
-- Clay Red: `#8e4233`
-- Stone: `#d4bdac`
-- Rose: `#c19086`
+- Sovereign: `#1a0210`
+- Signature: `#722030`
+- Balance: `#6a8090`
+- Ground: `#e8ddd4`
+- Light: `#faf8f5`
+- Body Text: `#2a1e18`
+- Muted Text: `#8a7a70`
+- Text on Dark: `#e8d8c8`
 
 ## Fonts
 

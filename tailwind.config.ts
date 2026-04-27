@@ -9,22 +9,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        white: '#faf8f5',
+        black: '#1a0210',
+        'bs-plum': '#1a0210',
+        'bs-maroon': '#722030',
+        'bs-slate': '#6a8090',
+        'bs-clay': '#e8ddd4',
+        'bs-bone': '#faf8f5',
+        'bs-ink': '#2a1e18',
+        'bs-muted': '#8a7a70',
+        'bs-text-on-dark': '#e8d8c8',
         brand: {
-          /** Deep burgundy — primary maison field + UI anchor */
-          darkRed: '#3B0A12',
-          /** Near-black burgundy — edges / depth */
-          darkMagenta: '#1F0508',
-          /** Warm burgundy accent — highlights, radial centers */
-          burgundyWarm: '#5A1A22',
-          /** Type on dark burgundy — softer than pure white */
-          ivory: '#F5EDE8',
-          wildRose: '#6620a2',
-          dustyBlue: '#92aac1',
-          clayRed: '#8e4233',
-          stone: '#d4bdac',
-          rose: '#c19086',
-          /** Warm near-white keyed to header wine — matches `globals.css` `--bs-page-canvas` */
-          pageCanvas: 'var(--bs-page-canvas)',
+          darkRed: '#1a0210',
+          darkMagenta: '#1a0210',
+          burgundyWarm: '#722030',
+          ivory: '#e8d8c8',
+          wildRose: '#722030',
+          dustyBlue: '#6a8090',
+          clayRed: '#722030',
+          stone: '#e8ddd4',
+          rose: '#e8ddd4',
+          pageCanvas: 'var(--color-light)',
+          text: '#2a1e18',
+          muted: '#8a7a70',
+          onDark: '#e8d8c8',
         }
       },
       fontFamily: {

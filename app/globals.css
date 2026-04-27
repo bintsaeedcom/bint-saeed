@@ -9,26 +9,30 @@
   --font-montserrat: 'Montserrat', sans-serif;
   --font-arabic: 'Noto Kufi Arabic', sans-serif;
 
-  /** Maison canvas — layered burgundy (depth, not flat UI red) */
-  --bs-burgundy-primary: #3b0a12;
-  --bs-burgundy-deep: #1f0508;
-  --bs-burgundy-warm: #5a1a22;
-  /** Soft ivory for type on dark burgundy fields */
-  --bs-ivory: #f5ede8;
+  --color-sovereign: #1a0210;
+  --color-signature: #722030;
+  --color-balance: #6a8090;
+  --color-ground: #e8ddd4;
+  --color-light: #faf8f5;
+  --color-ink: #2a1e18;
+  --color-muted: #8a7a70;
+  --color-on-dark: #e8d8c8;
 
-  --brand-dark-red: #3b0a12;
-  --brand-wild-rose: #6620a2;
-  --brand-dusty-blue: #92aac1;
-  --brand-clay-red: #8e4233;
-  --brand-stone: #d4bdac;
-  --brand-rose: #c19086;
-
-  /** Same family as Header bar — document + dark bands (fewer competing burgundy hues) */
-  --bs-header-edge: #12080b;
-  --bs-header-bridge: #1c0f15;
-  --bs-header-wine: #2d141e;
-  /** Light page field — warm neutral, not pure white */
-  --bs-page-canvas: #f3f1ef;
+  /* Backward-compatible aliases used across existing components */
+  --bs-burgundy-primary: var(--color-sovereign);
+  --bs-burgundy-deep: var(--color-sovereign);
+  --bs-burgundy-warm: var(--color-signature);
+  --bs-ivory: var(--color-on-dark);
+  --brand-dark-red: var(--color-sovereign);
+  --brand-wild-rose: var(--color-signature);
+  --brand-dusty-blue: var(--color-balance);
+  --brand-clay-red: var(--color-signature);
+  --brand-stone: var(--color-ground);
+  --brand-rose: var(--color-ground);
+  --bs-header-edge: var(--color-sovereign);
+  --bs-header-bridge: var(--color-sovereign);
+  --bs-header-wine: var(--color-signature);
+  --bs-page-canvas: var(--color-light);
 }
 
 /* RTL Support */
@@ -86,9 +90,9 @@ html {
       var(--bs-header-edge) 0%,
       var(--bs-header-bridge) 44%,
       var(--bs-header-wine) 58%,
-      #161014 100%
+      #1a0210 100%
     );
-  box-shadow: inset 0 0 96px rgba(0, 0, 0, 0.36);
+  box-shadow: inset 0 0 96px rgba(26, 2, 16, 0.36);
 }
 
 body {
@@ -98,7 +102,8 @@ body {
   letter-spacing: 0.03em;
   overflow-x: clip;
   cursor: auto;
-  background: transparent;
+  background: var(--color-light);
+  color: var(--color-ink);
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -125,7 +130,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-rozha);
   letter-spacing: 0.03em;
-  color: var(--brand-dark-red);
+  color: var(--color-ink);
   font-weight: 400;
 }
 
@@ -156,10 +161,10 @@ p, span, a, li, label, input, textarea, button {
 
 @layer utilities {
   .glass {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(250, 248, 245, 0.1);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(250, 248, 245, 0.2);
   }
   
   .glass-dark {
@@ -176,17 +181,17 @@ p, span, a, li, label, input, textarea, button {
   .bs-burgundy-surface {
     background-color: var(--bs-burgundy-deep);
     background-image:
-      radial-gradient(ellipse 125% 95% at 50% 48%, rgba(0, 0, 0, 0.38) 0%, transparent 60%),
+      radial-gradient(ellipse 125% 95% at 50% 48%, rgba(26, 2, 16, 0.38) 0%, transparent 60%),
       radial-gradient(circle at 50% 40%, var(--bs-burgundy-warm) 0%, var(--bs-burgundy-primary) 40%, var(--bs-burgundy-deep) 100%),
       linear-gradient(to bottom, var(--bs-burgundy-primary) 0%, var(--bs-burgundy-deep) 100%);
-    box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.38);
+    box-shadow: inset 0 0 120px rgba(26, 2, 16, 0.38);
   }
   
   .glass-card {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(250, 248, 245, 0.6);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(250, 248, 245, 0.8);
     box-shadow: 0 8px 32px rgba(59, 10, 18, 0.08);
   }
   
@@ -208,18 +213,18 @@ p, span, a, li, label, input, textarea, button {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--brand-dark-red);
+  background: var(--color-signature);
   border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-clay-red);
+  background: var(--color-signature);
 }
 
 /* Selection */
 ::selection {
-  background: var(--brand-dark-red);
-  color: white;
+  background: var(--color-signature);
+  color: var(--color-on-dark);
 }
 
 /* Focus States */
@@ -232,7 +237,7 @@ button:focus {
 input:focus-visible,
 textarea:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--brand-dark-red);
+  outline: 2px solid var(--color-signature);
   outline-offset: 2px;
 }
 
@@ -328,7 +333,7 @@ button:focus-visible {
   color: rgba(59, 0, 20, 0.72) !important;
   width: 38px !important;
   height: 38px !important;
-  background: rgba(255, 255, 255, 0.84) !important;
+  background: rgba(250, 248, 245, 0.84) !important;
   border: 1px solid rgba(59, 0, 20, 0.12) !important;
   border-radius: 999px !important;
   backdrop-filter: blur(2px);
@@ -340,7 +345,7 @@ button:focus-visible {
 .product-gallery-swiper .swiper-button-next:hover,
 .product-gallery-swiper .swiper-button-prev:hover {
   color: rgba(59, 0, 20, 0.92) !important;
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(250, 248, 245, 0.95) !important;
   border-color: rgba(59, 0, 20, 0.24) !important;
 }
 
@@ -410,7 +415,7 @@ input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="tel"]:focus,
 textarea:focus {
-  border-color: var(--brand-dark-red);
+  border-color: var(--color-ink);
 }
 
 /* Override browser autofill styling */
@@ -419,9 +424,9 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 1000px var(--bs-burgundy-primary) inset !important;
-  -webkit-text-fill-color: #d4bdac !important;
+  -webkit-text-fill-color: var(--color-on-dark) !important;
   transition: background-color 5000s ease-in-out 0s;
-  caret-color: #d4bdac;
+  caret-color: var(--color-on-dark);
 }
 
 /* For dark themed inputs */
@@ -430,12 +435,12 @@ input:-webkit-autofill:active {
 .dark-input:-webkit-autofill:focus,
 .dark-input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 1000px var(--bs-burgundy-primary) inset !important;
-  -webkit-text-fill-color: #d4bdac !important;
+  -webkit-text-fill-color: var(--color-on-dark) !important;
 }
 
 /* Placeholder */
 ::placeholder {
-  color: var(--brand-stone);
+  color: var(--color-muted);
   opacity: 1;
 }
 
@@ -800,8 +805,8 @@ input, textarea, select {
   
   body {
     font-size: 12pt;
-    color: black;
-    background: white;
+    color: var(--color-ink);
+    background: var(--color-light);
   }
 }
 

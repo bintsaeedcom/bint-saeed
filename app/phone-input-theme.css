@@ -2,15 +2,15 @@
 
 .phone-field-dark,
 .phone-field-light {
-  --PhoneInput-color--focus: #92aac1;
+  --PhoneInput-color--focus: #6a8090;
   --PhoneInputCountryFlag-height: 1.1rem;
   --PhoneInputCountrySelectArrow-color: currentColor;
   --PhoneInputCountrySelectArrow-opacity: 0.55;
-  --PhoneInputCountryFlag-borderColor: rgba(255, 255, 255, 0.12);
+  --PhoneInputCountryFlag-borderColor: rgba(232, 216, 200, 0.12);
 }
 
 .phone-field-dark {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(232, 216, 200, 0.85);
 }
 
 .phone-field-dark .PhoneInputInput {
@@ -18,9 +18,9 @@
   min-height: 3.25rem;
   padding: 1rem 1.25rem;
   border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #d4bdac;
+  background: rgba(232, 216, 200, 0.03);
+  border: 1px solid rgba(232, 216, 200, 0.08);
+  color: #e8d8c8;
   font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   font-size: 0.875rem;
   letter-spacing: 0.05em;
@@ -28,12 +28,12 @@
 }
 
 .phone-field-dark .PhoneInputInput::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(232, 216, 200, 0.3);
 }
 
 .phone-field-dark .PhoneInputInput:focus {
   outline: none;
-  border-color: rgba(146, 170, 193, 0.35);
+  border-color: rgba(106, 128, 144, 0.35);
 }
 
 .phone-field-dark .PhoneInput--error .PhoneInputInput,
@@ -42,29 +42,29 @@
 }
 
 .phone-field-light {
-  color: rgba(59, 0, 20, 0.9);
-  --PhoneInputCountryFlag-borderColor: rgba(59, 0, 20, 0.15);
+  color: rgba(42, 30, 24, 0.9);
+  --PhoneInputCountryFlag-borderColor: rgba(42, 30, 24, 0.15);
 }
 
 .phone-field-light .PhoneInputInput {
   width: 100%;
   min-height: 3rem;
   padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background: rgba(250, 248, 245, 0.1);
+  border: 1px solid rgba(232, 221, 212, 0.45);
+  color: #2a1e18;
   font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   font-size: 0.875rem;
   letter-spacing: 0.1em;
 }
 
 .phone-field-light .PhoneInputInput::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(138, 122, 112, 0.7);
 }
 
 .phone-field-light .PhoneInputInput:focus {
   outline: none;
-  border-color: #c19086;
+  border-color: #e8ddd4;
 }
 
 .phone-field-dark .PhoneInputCountry,

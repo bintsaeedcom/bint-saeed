@@ -11,11 +11,11 @@ function confirmationEmailHtml(confirmUrl: string, name?: string): string {
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#faf9f7;padding:32px 16px;">
     <tr>
       <td align="center">
-        <table role="presentation" width="100%" style="max-width:520px;background:#ffffff;border:1px solid #e8e4df;">
+        <table role="presentation" width="100%" style="max-width:520px;background:#faf8f5;border:1px solid #e8e4df;">
           <tr>
             <td style="padding:40px 36px 24px;text-align:center;">
-              <p style="margin:0;font-size:11px;letter-spacing:0.35em;text-transform:uppercase;color:#92aac1;">Bint Saeed</p>
-              <h1 style="margin:16px 0 0;font-size:26px;font-weight:400;color:#3b0014;">Confirm your email</h1>
+              <p style="margin:0;font-size:11px;letter-spacing:0.35em;text-transform:uppercase;color:#6a8090;">Bint Saeed</p>
+              <h1 style="margin:16px 0 0;font-size:26px;font-weight:400;color:#1a0210;">Confirm your email</h1>
             </td>
           </tr>
           <tr>
@@ -24,9 +24,9 @@ function confirmationEmailHtml(confirmUrl: string, name?: string): string {
               <p style="margin:0 0 24px;">Thanks for creating an account. Please confirm your email address to finish setting up your account.</p>
               <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto;">
                 <tr>
-                  <td style="border-radius:2px;background:#3b0014;">
+                  <td style="border-radius:2px;background:#1a0210;">
                     <a href="${confirmUrl}" target="_blank" rel="noopener"
-                      style="display:inline-block;padding:16px 36px;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#ffffff;text-decoration:none;font-family:'Montserrat',Helvetica,Arial,sans-serif;">
+                      style="display:inline-block;padding:16px 36px;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#faf8f5;text-decoration:none;font-family:'Montserrat',Helvetica,Arial,sans-serif;">
                       Confirm email
                     </a>
                   </td>
@@ -34,7 +34,7 @@ function confirmationEmailHtml(confirmUrl: string, name?: string): string {
               </table>
               <p style="margin:28px 0 0;font-size:12px;line-height:1.6;color:#8a7a7a;">
                 If the button doesn’t work, copy and paste this link into your browser:<br/>
-                <span style="word-break:break-all;color:#92aac1;">${escapeHtml(confirmUrl)}</span>
+                <span style="word-break:break-all;color:#6a8090;">${escapeHtml(confirmUrl)}</span>
               </p>
             </td>
           </tr>

@@ -21,8 +21,8 @@ export type ShopCategory = (typeof categories)[number]
 
 const abayaPalette = [
   { name: 'Midnight Black', hex: '#1a1a1a' },
-  { name: 'Desert Sand', hex: '#d4bdac' },
-  { name: 'Deep Burgundy', hex: '#3b0014' },
+  { name: 'Desert Sand', hex: '#e8ddd4' },
+  { name: 'Deep Burgundy', hex: '#1a0210' },
 ] as const
 
 const Q = 'w=1200&q=85'

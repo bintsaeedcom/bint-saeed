@@ -118,7 +118,7 @@ export default function AnimatedCursor() {
           style={{
             width: isClicking ? '6px' : isHovering ? '8px' : '10px',
             height: isClicking ? '6px' : isHovering ? '8px' : '10px',
-            background: '#92aac1',
+            background: '#6a8090',
             boxShadow: '0 0 0 2px rgba(255,255,255,0.9), 0 0 15px rgba(146,170,193,0.8), 0 0 30px rgba(146,170,193,0.4)',
           }}
         />

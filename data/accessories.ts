@@ -327,10 +327,10 @@ export const accessories: Accessory[] = [
     materials: 'Silk, 18K Gold-plated Hardware',
     materialsAr: 'حرير، معدن مطلي بالذهب 18 قيراط',
     colors: [
-      { name: 'Black', nameAr: 'أسود', hex: '#000000' },
-      { name: 'Burgundy', nameAr: 'عنابي', hex: '#3b0014' },
+      { name: 'Black', nameAr: 'أسود', hex: '#1a0210' },
+      { name: 'Burgundy', nameAr: 'عنابي', hex: '#722030' },
       { name: 'Cream', nameAr: 'كريمي', hex: '#FFFDD0' },
-      { name: 'Navy', nameAr: 'كحلي', hex: '#000080' }],
+      { name: 'Navy', nameAr: 'كحلي', hex: '#1f3a5f' }],
     inStock: true,
     isBestseller: true,
   },
@@ -396,7 +396,7 @@ export const accessories: Accessory[] = [
     materials: 'Freshwater Pearls, Nylon Cord',
     materialsAr: 'لؤلؤ المياه العذبة، حبل نايلون',
     colors: [
-      { name: 'White', nameAr: 'أبيض', hex: '#FFFFFF' },
+      { name: 'White', nameAr: 'أبيض', hex: '#FAF8F5' },
       { name: 'Pink', nameAr: 'وردي', hex: '#FFC0CB' }],
     inStock: true,
     isBestseller: true,
@@ -415,7 +415,7 @@ export const accessories: Accessory[] = [
     materialsAr: 'خرز زجاجي، حبل نايلون',
     colors: [
       { name: 'Multi', nameAr: 'متعدد', hex: '#FF69B4' },
-      { name: 'Neutral', nameAr: 'محايد', hex: '#D4BDAC' }],
+      { name: 'Neutral', nameAr: 'محايد', hex: '#E8DDD4' }],
     inStock: true,
     isNew: true,
   },
@@ -432,8 +432,8 @@ export const accessories: Accessory[] = [
     materials: 'Silk, Gold-plated Hardware',
     materialsAr: 'حرير، معدن مطلي بالذهب',
     colors: [
-      { name: 'Black', nameAr: 'أسود', hex: '#000000' },
-      { name: 'Burgundy', nameAr: 'عنابي', hex: '#3b0014' },
+      { name: 'Black', nameAr: 'أسود', hex: '#1a0210' },
+      { name: 'Burgundy', nameAr: 'عنابي', hex: '#722030' },
       { name: 'Blush', nameAr: 'وردي فاتح', hex: '#DE5D83' }],
     inStock: true,
   },

@@ -170,12 +170,10 @@ function CollectionCrossfadeSlideshow({ slides, altForIndex }: CollectionCrossfa
   )
 }
 
-const MANIFESTO_PARAGRAPHS = [
-  'A house shaped by origin, carried across the world.',
-  'It belongs to a way of living that moves between places with ease. From Abu\u00A0Dhabi to Paris, from London to Riyadh, the same presence remains. A sense of self that does not shift with setting, and a way of dressing that follows it naturally.',
-  'Each creation exists within that continuity. Not defined by location, but recognised by its consistency. A clear visual language that holds its place wherever it is worn.',
-  'Origin, expressed in form, in attitude, in the way you are recognised.',
-  'Bint Saeed exists at that intersection. Between heritage and a contemporary life lived locally and across borders. Between where you come from and where you are going. Between what you\'ve inherited and how you present yourself today.',
+const MANIFESTO_QUOTE = 'A sense of self that does not shift with setting.'
+const MANIFESTO_SNIPPET = [
+  'A house shaped by origin.',
+  'Bint Saeed exists at the intersection of heritage and a contemporary life, carried across borders and recognised by its consistency.',
 ]
 
 export default function Home() {
@@ -184,12 +182,141 @@ export default function Home() {
   return (
     <div className={`relative min-h-0 overflow-x-clip ${isRTL ? 'rtl' : 'ltr'}`}>
       <HeroSection />
+      <ThreePillarsBar />
+      <CharmHeroFeatureSection />
       <QuickShopCarousel />
+      <CategoryNavigationStrip />
       <EditorialIntro />
       <MagazineGrid />
-      <EditorialSplit />
       <CreatedForYouSection />
+      <EditorialSplit />
     </div>
+  )
+}
+
+const HOME_PILLARS = [
+  {
+    title: 'Crafted in Abu Dhabi',
+    copy: 'Each piece is finished in small runs, with a focus on cut, drape, and longevity.',
+  },
+  {
+    title: 'Natural Stone Signatures',
+    copy: 'Charms and details are selected for story, symbolism, and timeless wearability.',
+  },
+  {
+    title: 'Personalisation Included',
+    copy: 'A hidden pocket note can be added for gifting, milestones, and private meaning.',
+  },
+] as const
+
+function ThreePillarsBar() {
+  const { isRTL } = useLanguage()
+
+  return (
+    <section className="relative bg-[var(--color-ground)] py-5 md:py-6">
+      <div className="container mx-auto px-6 lg:px-16">
+        <div className={`grid gap-3 md:grid-cols-3 ${isRTL ? 'text-right' : ''}`}>
+          {HOME_PILLARS.map((pillar) => (
+            <div
+              key={pillar.title}
+              className="rounded-xl border border-[color:var(--color-muted)]/20 bg-[var(--color-light)] px-4 py-4 md:px-5"
+            >
+              <p className="font-montserrat text-[11px] uppercase tracking-[0.2em] text-[var(--color-signature)]">
+                {pillar.title}
+              </p>
+              <p className="mt-2 font-montserrat text-[12px] leading-relaxed tracking-[0.02em] text-[var(--color-ink)]/82">
+                {pillar.copy}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const CHARM_SWATCHES = [
+  { name: 'Onyx', hex: '#1a0210' },
+  { name: 'Tiger Eye', hex: '#8b5a2b' },
+  { name: 'Rose Quartz', hex: '#f4b8c5' },
+  { name: 'Malachite', hex: '#1f7a5e' },
+] as const
+
+function CharmHeroFeatureSection() {
+  const { isRTL } = useLanguage()
+
+  return (
+    <section className="relative overflow-hidden bg-[var(--color-light)] py-10 md:py-12">
+      <div className="container mx-auto px-6 lg:px-16">
+        <div className="grid items-stretch gap-5 lg:grid-cols-12">
+          <div className={`rounded-2xl border border-[color:var(--color-muted)]/20 bg-[var(--color-ground)] p-6 md:p-8 lg:col-span-5 ${isRTL ? 'text-right' : ''}`}>
+            <p className="font-montserrat text-[10px] uppercase tracking-[0.3em] text-[var(--color-balance)]">
+              Charm Feature
+            </p>
+            <h2 className="mt-3 font-rozha text-3xl leading-tight text-[var(--color-ink)] md:text-4xl">
+              Natural Stone Charms
+            </h2>
+            <p className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[var(--color-ink)]/82">
+              Designed for abayas, bags, and phone styling. Build your signature stack with curated stones and limited edition drops.
+            </p>
+
+            <div className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+              {CHARM_SWATCHES.map((stone) => (
+                <span
+                  key={stone.name}
+                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-muted)]/25 bg-[var(--color-light)] px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink)]"
+                >
+                  <span className="h-2.5 w-2.5 rounded-full border border-[var(--color-ink)]/12" style={{ backgroundColor: stone.hex }} />
+                  {stone.name}
+                </span>
+              ))}
+            </div>
+
+            <div className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
+              <LocaleLink
+                href="/accessories?category=abaya-charms"
+                className="inline-flex min-h-[44px] items-center rounded-xl bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
+                data-cursor-hover
+              >
+                Shop Charms
+              </LocaleLink>
+              <LocaleLink
+                href="/personalisation"
+                className="inline-flex min-h-[44px] items-center rounded-xl border border-[var(--color-balance)] bg-[var(--color-balance)]/10 px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-balance)] transition-colors hover:bg-[var(--color-balance)]/18"
+                data-cursor-hover
+              >
+                Personalise
+              </LocaleLink>
+            </div>
+          </div>
+
+          <LocaleLink
+            href="/accessories?category=abaya-charms"
+            className="group relative overflow-hidden rounded-2xl border border-[color:var(--color-muted)]/20 bg-[var(--color-sovereign)] lg:col-span-7"
+            data-cursor-hover
+          >
+            <div className="relative h-[17rem] md:h-[21rem]">
+              <Image
+                src="/Webshop%20pictures/accessoiries/abaya%20charms.JPG"
+                alt="Bint Saeed charm collection"
+                fill
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-sovereign)]/72 via-[var(--color-signature)]/28 to-transparent" />
+              <div className={`absolute bottom-5 ${isRTL ? 'left-5 text-right' : 'right-5 text-left'}`}>
+                <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[var(--color-on-dark)]/80">
+                  Limited Capsules
+                </p>
+                <p className="mt-1 font-rozha text-2xl text-[var(--color-on-dark)] md:text-3xl">
+                  Stone-led signatures
+                </p>
+              </div>
+            </div>
+          </LocaleLink>
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -231,6 +358,134 @@ function CampaignPanoramaSection() {
 }
 
 const QUICK_SHOP_LOOP_MS = 72_000
+
+const CATEGORY_STRIP = [
+  {
+    key: 'Abayas',
+    label: 'Abayas',
+    href: '/shop?category=abayas',
+    image: '/collection-section/1.png',
+    tag: 'Core',
+  },
+  {
+    key: 'Kaftans',
+    label: 'Kaftans',
+    href: '/shop?category=kaftans',
+    image: '/collection-section/67.png',
+    tag: 'Core',
+  },
+  {
+    key: 'Sets',
+    label: 'Sets',
+    href: '/shop?category=sets',
+    image: '/collection-section/68.png',
+    tag: 'Core',
+  },
+  {
+    key: 'Accessories',
+    label: 'Accessories',
+    href: '/accessories',
+    image: '/collection-section/4.JPG?v=20260427',
+    tag: 'Grow',
+  },
+  {
+    key: 'Personalisation',
+    label: 'Personalisation',
+    href: '/personalisation',
+    image: '/Personalisation Page/secret pocket.JPG',
+    tag: 'Hero',
+  },
+] as const
+
+function CategoryNavigationStrip() {
+  const { isRTL } = useLanguage()
+  const [active, setActive] = useState(0)
+
+  const pricesByCategory = staticProducts.reduce<Record<string, number[]>>((acc, product) => {
+    const key = product.category
+    if (!acc[key]) acc[key] = []
+    acc[key].push(product.price)
+    return acc
+  }, {})
+
+  const categoryMeta: Record<string, { priceLabel: string; subline?: string }> = {
+    Abayas: {
+      priceLabel: `DHS ${Math.min(...(pricesByCategory.Abayas ?? [0])).toLocaleString()}-${Math.max(...(pricesByCategory.Abayas ?? [0])).toLocaleString()}`,
+    },
+    Kaftans: {
+      priceLabel: `DHS ${Math.min(...(pricesByCategory.Kaftans ?? [0])).toLocaleString()}+`,
+    },
+    Sets: {
+      priceLabel: `DHS ${Math.min(...(pricesByCategory.Sets ?? [0])).toLocaleString()}+`,
+    },
+    Accessories: {
+      priceLabel: 'New in',
+    },
+    Personalisation: {
+      priceLabel: 'Hidden pocket gift',
+    },
+  }
+
+  const activeItem = CATEGORY_STRIP[active]!
+
+  return (
+    <section className="relative bg-white pb-10 md:pb-12">
+      <div className="container mx-auto px-6 lg:px-16">
+        <div className="mb-4 overflow-hidden rounded-2xl border border-brand-stone/30 bg-[#f4f1ec]">
+          <div className="relative h-[12.5rem] w-full sm:h-[15rem] md:h-[17rem]">
+            <Image
+              src={activeItem.image}
+              alt={`${activeItem.label} preview`}
+              fill
+              sizes="(max-width: 1024px) 100vw, 1200px"
+              className="object-cover object-center transition-all duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1f0508]/60 via-[#1f0508]/10 to-transparent" />
+            <div className={`absolute bottom-4 ${isRTL ? 'left-4 text-right' : 'right-4 text-left'}`}>
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-dustyBlue/95">Category Focus</p>
+              <p className="mt-1 font-rozha text-2xl text-brand-ivory">{activeItem.label}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
+          {CATEGORY_STRIP.map((item, idx) => {
+            const meta = categoryMeta[item.key] ?? { priceLabel: '' }
+            const selected = idx === active
+            return (
+              <LocaleLink
+                key={item.key}
+                href={item.href}
+                onMouseEnter={() => setActive(idx)}
+                onFocus={() => setActive(idx)}
+                className={`group rounded-xl border p-4 transition-all duration-300 ${
+                  selected
+                    ? 'border-brand-dustyBlue/45 bg-white shadow-[0_10px_24px_rgba(20,8,11,0.1)]'
+                    : 'border-brand-stone/30 bg-[#f6f3ef] hover:border-brand-dustyBlue/35 hover:bg-white'
+                }`}
+                data-cursor-hover
+              >
+                <p className="font-montserrat text-[11px] uppercase tracking-[0.08em] text-brand-darkRed">{item.label}</p>
+                <p className="mt-1 font-montserrat text-[12px] tracking-[0.01em] text-brand-darkRed/80">{meta.priceLabel}</p>
+                <span
+                  className={`mt-1 inline-flex rounded-full px-2 py-0.5 font-montserrat text-[10px] uppercase tracking-[0.08em] ${
+                    item.tag === 'Grow'
+                      ? 'bg-green-100 text-green-700'
+                      : item.tag === 'Hero'
+                        ? 'bg-brand-stone/25 text-brand-darkRed'
+                        : 'bg-brand-dustyBlue/14 text-brand-dustyBlue'
+                  }`}
+                >
+                  {item.tag}
+                </span>
+              </LocaleLink>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
 
 function QuickShopCarousel() {
   const { isRTL } = useLanguage()
@@ -444,16 +699,34 @@ function HeroSection() {
   // Preview-specific hero copy (English)
   const heroHeadline = 'FOR THE DAUGHTER IN EVERY WOMAN'
   const heroSubline = 'Carrying Heritage Forward.'
+  const [typedHeadline, setTypedHeadline] = useState(reduceMotion ? heroHeadline : '')
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
   })
 
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '40%'])
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2])
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.06])
   const titleY = useTransform(scrollYProgress, [0, 1], [0, 20])
   const titleTracking = useTransform(scrollYProgress, [0, 1], ['0.06em', '0.11em'])
   const introX = useTransform(scrollYProgress, [0, 1], [0, 14])
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setTypedHeadline(heroHeadline)
+      return
+    }
+
+    setTypedHeadline('')
+    let i = 0
+    const timer = window.setInterval(() => {
+      i += 1
+      setTypedHeadline(heroHeadline.slice(0, i))
+      if (i >= heroHeadline.length) window.clearInterval(timer)
+    }, 40)
+
+    return () => window.clearInterval(timer)
+  }, [heroHeadline, reduceMotion])
 
   return (
     <section ref={ref} className="relative h-[100svh] w-full">
@@ -508,7 +781,10 @@ function HeroSection() {
                   style={reduceMotion ? undefined : { y: titleY, letterSpacing: titleTracking }}
                   className="mb-8 max-w-[100vw] font-rozha uppercase leading-[1.12] tracking-[0.06em] !text-brand-ivory text-[clamp(0.7rem,calc(0.35rem+2.15vw),2.65rem)] sm:text-[clamp(0.85rem,calc(0.4rem+2.35vw),2.75rem)] md:text-[clamp(0.95rem,calc(0.45rem+2.5vw),2.85rem)] md:whitespace-nowrap"
                 >
-                  {heroHeadline}
+                  {typedHeadline}
+                  {!reduceMotion && typedHeadline.length < heroHeadline.length ? (
+                    <span className="inline-block w-[0.08em] animate-pulse text-brand-ivory/90">|</span>
+                  ) : null}
                 </motion.h1>
 
                 <motion.p
@@ -537,6 +813,20 @@ function HeroSection() {
                     data-analytics-section="home-hero"
                   >
                     {t.hero.discoverCollection}
+                    <FiArrowRight
+                      className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
+                    />
+                  </LocaleLink>
+                </MagneticWrap>
+                <MagneticWrap className="w-fit">
+                  <LocaleLink
+                    href="/about"
+                    className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-brand-ivory/88 w-fit border-b border-brand-ivory/30 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
+                    data-cursor-hover
+                    data-analytics-event="click_nav_about"
+                    data-analytics-section="home-hero"
+                  >
+                    Brand Story
                     <FiArrowRight
                       className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
                     />
@@ -574,61 +864,63 @@ function EditorialIntro() {
     target: ref,
     offset: ['start end', 'end start'],
   })
-  const imageY = useTransform(scrollYProgress, [0, 1], [56, -42])
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.62, 1, 1, 0.72])
-  const imageScale = useTransform(scrollYProgress, [0, 1], [0.97, 1.03])
-  const panelY = useTransform(scrollYProgress, [0, 1], [14, -12])
+  const panelY = useTransform(scrollYProgress, [0, 1], [12, -10])
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-white py-24 md:py-32 lg:py-36">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,1)_0%,rgba(248,244,238,0.9)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_110%_70%_at_18%_12%,rgba(146,170,193,0.2)_0%,transparent_58%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_65%_at_82%_84%,rgba(193,144,134,0.16)_0%,transparent_62%)]" />
+    <section ref={ref} className="relative overflow-hidden bg-[var(--color-light)] py-14 md:py-18 lg:py-20">
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(250,248,245,1)_0%,rgba(232,221,212,0.38)_100%)]" />
 
       <div className="relative container mx-auto px-6 lg:px-16">
-        <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="grid items-stretch gap-4 lg:grid-cols-2 lg:gap-5">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             style={{ y: panelY }}
-            className={`lg:col-span-5 ${isRTL ? 'lg:col-start-8' : ''}`}
+            className={isRTL ? 'lg:order-2' : ''}
           >
-            <div className="relative border border-brand-stone/20 bg-[#fbf9f6] p-7 shadow-[0_18px_45px_rgba(35,18,23,0.06)] md:p-10">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_8%_10%,rgba(146,170,193,0.1)_0%,transparent_55%)]" />
-              <div
-                className={`relative ${isRTL ? 'border-e border-brand-dustyBlue/35 pe-5 md:pe-6' : 'border-s border-brand-dustyBlue/35 ps-5 md:ps-6'}`}
-              >
-                <span className="relative mb-6 block font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
-                  Manifesto
+            <div className="relative h-full min-h-[18rem] overflow-hidden rounded-2xl border border-[color:var(--color-muted)]/18 bg-[linear-gradient(132deg,var(--color-sovereign)_0%,#2a0d1b_46%,var(--color-signature)_100%)] p-7 shadow-[0_18px_45px_rgba(35,18,23,0.12)] md:min-h-[21rem] md:p-10">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.16)_0%,transparent_62%)]" />
+              <div className="relative flex h-full flex-col items-center justify-center text-center">
+                <span className="mb-4 block font-montserrat text-[11px] uppercase tracking-[0.28em] text-[var(--color-on-dark)]/78">
+                  From Abu Dhabi to the world
                 </span>
-                <h2 className="mb-8 font-rozha text-3xl leading-[1.15] text-brand-darkRed md:text-4xl">
-                  {MANIFESTO_LEAD}
-                </h2>
-                <div className="space-y-6 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
-                  {MANIFESTO_PARAGRAPHS.map((paragraph, i) => (
-                    <p key={i}>{paragraph}</p>
-                  ))}
-                </div>
+                <p className="max-w-[26rem] font-rozha text-3xl leading-[1.2] text-[var(--color-on-dark)] md:text-4xl">
+                  &ldquo;{MANIFESTO_QUOTE}&rdquo;
+                </p>
               </div>
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ y: imageY, opacity: imageOpacity }}
-            className={`lg:col-span-7 ${isRTL ? 'lg:col-start-1' : ''}`}
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.65, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+            style={{ y: panelY }}
+            className={isRTL ? 'lg:order-1' : ''}
           >
-            <motion.div style={{ scale: imageScale }} className="relative ml-auto aspect-[4/5] w-full max-w-[39rem]">
-              <ScrollMaskImage
-                src="/image 1.png"
-                alt="Heritage meets modernity"
-                sizes="(max-width: 1024px) 92vw, 39rem"
-              />
-            </motion.div>
+            <div className="relative h-full rounded-2xl border border-[color:var(--color-muted)]/24 bg-[var(--color-ground)] p-7 shadow-[0_12px_30px_rgba(30,14,20,0.08)] md:p-10">
+              <div className="space-y-6">
+                <h2 className="font-rozha text-3xl leading-[1.15] text-[var(--color-ink)] md:text-4xl">
+                  {MANIFESTO_LEAD}
+                </h2>
+                <div className="space-y-4 font-montserrat text-[clamp(0.98rem,1.2vw,1.1rem)] leading-[1.65] tracking-[0.01em] text-[var(--color-ink)]/85">
+                  {MANIFESTO_SNIPPET.map((paragraph, i) => (
+                    <p key={i}>{paragraph}</p>
+                  ))}
+                </div>
+                <MagneticWrap className="w-fit">
+                  <LocaleLink
+                    href="/about"
+                    className="inline-flex min-h-[42px] items-center rounded-xl border border-[color:var(--color-signature)]/30 bg-[var(--color-light)] px-5 font-montserrat text-xs uppercase tracking-[0.12em] text-[var(--color-signature)] transition-colors hover:border-[var(--color-balance)] hover:text-[var(--color-balance)]"
+                    data-cursor-hover
+                  >
+                    Read our story
+                  </LocaleLink>
+                </MagneticWrap>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -648,7 +940,7 @@ function MagazineGrid() {
   const { t, isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-white py-10 md:py-12">
+    <section ref={ref} className="relative overflow-hidden bg-[var(--color-light)] py-10 md:py-12">
       <div className="container mx-auto px-6 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -657,121 +949,65 @@ function MagazineGrid() {
           className={`mb-8 flex items-end justify-between md:mb-10 ${isRTL ? 'flex-row-reverse' : ''}`}
         >
           <div>
-            <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
-              The first chapter
+            <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.4em] text-[var(--color-balance)]">
+              Collection Edit
             </span>
-            <h2 className="font-rozha text-4xl text-brand-darkRed md:text-5xl">
-              Where it Begins
-            </h2>
+            <h2 className="font-rozha text-4xl text-[var(--color-ink)] md:text-5xl">The Collection</h2>
           </div>
           <LocaleLink
             href="/shop"
-            className="hidden items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed transition-colors hover:text-brand-dustyBlue md:flex"
+            className="hidden items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-[var(--color-signature)] transition-colors hover:text-[var(--color-balance)] md:flex"
             data-cursor-hover
             data-analytics-event="click_cta_home_to_collection"
-            data-analytics-section="home-where-it-begins-header"
+            data-analytics-section="home-collection-header"
           >
             {t.featured.viewAll}
             <FiArrowRight className="w-4 h-4" />
           </LocaleLink>
         </motion.div>
 
-        <div className="rounded-2xl bg-white p-2 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-3 md:p-4">
-          <div className="grid grid-cols-1 gap-4 md:h-[min(66svh,43rem)] md:grid-cols-12 md:items-stretch md:gap-4 lg:gap-5">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.75, delay: 0.05 }}
-            style={{ y: leadY }}
-            className="md:col-span-7 md:h-full"
-          >
-            <LocaleLink
-              href="/shop"
-              className="group block h-full overflow-hidden bg-brand-stone/10 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1"
-              data-cursor-hover
-              data-analytics-event="click_cta_home_to_collection"
-              data-analytics-section="home-where-it-begins-featured-card"
-            >
-              <div className="relative aspect-[4/5] h-full md:aspect-auto">
-                <Image
-                  src="/collection-section/1.png"
-                  alt="Designed to carry you, wherever you are — Bint Saeed collection"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 58vw"
-                  className="pointer-events-none object-cover object-top transition-transform duration-1000 group-hover:scale-[1.03]"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-darkRed/72 via-brand-darkRed/14 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-6 text-center sm:p-8 md:p-9">
-                  <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.3em] text-brand-dustyBlue/95">
-                    Chapter I
-                  </span>
-                  <h3 className="mx-auto mb-4 max-w-xl font-rozha text-2xl leading-snug text-brand-ivory md:text-3xl lg:text-4xl">
-                    Designed to carry you,
-                    <br />
-                    wherever you are.
-                  </h3>
-                  <span className="inline-flex min-h-[40px] items-center justify-center border border-brand-ivory/20 bg-black/78 px-5 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-ivory/92 transition-colors group-hover:border-brand-dustyBlue/40 group-hover:text-brand-dustyBlue">
-                    Discover the collection
-                  </span>
-                </div>
-              </div>
-            </LocaleLink>
-          </motion.div>
-
-          <div className="grid grid-cols-2 gap-4 md:col-span-5 md:h-full md:grid-cols-1 md:grid-rows-2 md:gap-4 lg:gap-5">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.75, delay: 0.12 }}
-              style={{ y: sideY }}
-            >
-              <LocaleLink
-                href="/shop"
-                className="group block overflow-hidden bg-brand-dustyBlue transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1"
-                data-cursor-hover
-                data-analytics-event="click_cta_home_to_collection"
-                data-analytics-section="home-where-it-begins-secondary-card-a"
+        <div className="rounded-2xl bg-[var(--color-light)] p-2 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-3 md:p-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-4 lg:gap-5">
+            {[
+              { src: '/collection-section/1.png', label: 'Abayas', section: 'home-collection-card-abayas' },
+              { src: '/collection-section/67.png', label: 'Kaftans', section: 'home-collection-card-kaftans' },
+              { src: '/collection-section/68.png', label: 'Sets', section: 'home-collection-card-sets' },
+              { src: '/collection-section/4.JPG?v=20260427', label: 'Accessories', section: 'home-collection-card-accessories' },
+            ].map((card, index) => (
+              <motion.div
+                key={card.label}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.65, delay: 0.05 + index * 0.06 }}
+                style={index % 2 === 0 ? { y: leadY } : { y: sideY }}
               >
-                <div className="relative aspect-[3/4] md:h-full md:aspect-auto">
-                  <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
-                    <CollectionCrossfadeSlideshow
-                      slides={SUMMER_ELEGANCE_SLIDES}
-                      altForIndex={(i) =>
-                        i === 0
-                          ? 'Bint Saeed collection — detail'
-                          : 'Bint Saeed collection — craftsmanship'
-                      }
+                <LocaleLink
+                  href={card.label === 'Accessories' ? '/accessories' : '/shop'}
+                  className="group block overflow-hidden rounded-xl border border-[color:var(--color-muted)]/18 bg-[var(--color-ground)] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1"
+                  data-cursor-hover
+                  data-analytics-event="click_cta_home_to_collection"
+                  data-analytics-section={card.section}
+                >
+                  <div className="relative aspect-[4/5]">
+                    <Image
+                      src={card.src}
+                      alt={`Bint Saeed ${card.label}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="pointer-events-none object-cover object-center transition-transform duration-1000 group-hover:scale-[1.03]"
                     />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-sovereign)]/62 via-[var(--color-sovereign)]/8 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
+                      <span className="font-montserrat text-[10px] uppercase tracking-[0.26em] text-[var(--color-on-dark)]/80">
+                        {index + 1 < 10 ? `0${index + 1}` : index + 1}
+                      </span>
+                      <h3 className="mt-2 font-rozha text-2xl text-[var(--color-on-dark)] md:text-3xl">{card.label}</h3>
+                    </div>
                   </div>
-                </div>
-              </LocaleLink>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.75, delay: 0.2 }}
-              style={{ y: sideY }}
-            >
-              <LocaleLink
-                href="/shop"
-                className="group block overflow-hidden bg-brand-rose transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1"
-                data-cursor-hover
-                data-analytics-event="click_cta_home_to_collection"
-                data-analytics-section="home-where-it-begins-secondary-card-b"
-              >
-                <div className="relative aspect-[3/4] md:h-full md:aspect-auto">
-                  <div className="pointer-events-none absolute inset-0 transition-transform duration-[1100ms] ease-[cubic-bezier(0.33,0,0.2,1)] group-hover:scale-[1.03]">
-                    <CollectionCrossfadeSlideshow
-                      slides={ESSENTIALS_SLIDES}
-                      altForIndex={(i) => `Bint Saeed collection — ${i + 1}`}
-                    />
-                  </div>
-                </div>
-              </LocaleLink>
-            </motion.div>
+                </LocaleLink>
+              </motion.div>
+            ))}
           </div>
-        </div>
         </div>
       </div>
     </section>
@@ -779,11 +1015,10 @@ function MagazineGrid() {
 }
 
 const CODES_LIST_ITEMS = [
-  'Al Talli',
-  'Khous',
-  'Al Ain Rosette',
-  'Knotted Lines',
-  'The Monogram',
+  { title: 'Al Talli', subtitle: 'Gold threadwork' },
+  { title: 'Khous', subtitle: 'Palm craftsmanship' },
+  { title: 'Al Ain Rosette', subtitle: 'Regional motif' },
+  { title: 'The Monogram', subtitle: 'Signature mark' },
 ] as const
 
 function EditorialSplit() {
@@ -792,76 +1027,55 @@ function EditorialSplit() {
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="bg-white">
-      <div className="grid lg:grid-cols-2 min-h-screen">
-        {/* Left — header palette gradient + centered monogram (matches components/Header.tsx bar) */}
+    <section ref={ref} className="bg-white py-14 md:py-16">
+      <div className="container mx-auto px-6 lg:px-16">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1 }}
-          className="relative flex min-h-[60vh] items-center justify-center overflow-hidden lg:min-h-screen"
+          initial={{ opacity: 0, y: 22 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.65 }}
+          className="rounded-2xl border border-brand-stone/30 bg-[#f5f3ee] p-5 md:p-6"
         >
-          <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1F0508_0%,#2a1014_22%,#5A1A22_50%,#2a1014_78%,#1F0508_100%)]"
-            aria-hidden
-          />
-          <div className="relative z-[1] flex w-full items-center justify-center px-10 py-16">
-            <Image
-              src="/gold%20logo.png"
-              alt="Bint Saeed monogram"
-              width={400}
-              height={400}
-              className="h-auto w-[min(72vw,13rem)] object-contain sm:w-[min(64vw,15rem)] md:w-64 lg:w-72"
-              priority={false}
-            />
-          </div>
-        </motion.div>
-
-        {/* Right - Content with elegant gradient */}
-        <div className="relative flex items-center overflow-hidden bg-gradient-to-br from-white via-brand-rose/10 to-brand-stone/30">
-          <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 1, delay: 0.2 }}
-            className={`p-12 lg:p-20 ${isRTL ? 'text-right' : ''}`}
-          >
-            <div
-              className={`mb-8 md:mb-10 ${isRTL ? 'border-e border-brand-dustyBlue/35 pe-5 md:pe-6' : 'border-s border-brand-dustyBlue/35 ps-5 md:ps-6'}`}
-            >
-              <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-darkRed/55">
-                HOUSE LANGUAGE
-              </span>
-              <h2 className="font-rozha text-4xl leading-[1.1] text-brand-darkRed md:text-5xl">
-                The Codes
-              </h2>
+          <div className={`mb-5 flex items-end justify-between ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
+            <div>
+              <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-darkRed/60">
+                House Codes
+              </p>
+              <h2 className="font-rozha text-3xl text-brand-darkRed md:text-4xl">The House Codes</h2>
             </div>
+            <LocaleLink
+              href="/the-codes"
+              className="hidden md:inline-flex min-h-[40px] items-center rounded-xl border border-brand-darkRed/20 bg-white px-4 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+              data-cursor-hover
+              data-analytics-event="click_view_collection_codes_page"
+              data-analytics-section="home-codes-section"
+            >
+              Discover the Codes
+            </LocaleLink>
+          </div>
 
-            <ul className={`mb-12 space-y-3 md:mb-14 ${isRTL ? 'list-inside text-right' : ''}`}>
-              {CODES_LIST_ITEMS.map((item) => (
-                <li key={item} className="font-montserrat text-sm tracking-wide text-brand-darkRed/80">
-                  {item}
-                </li>
-              ))}
-            </ul>
-
-            <p className="mb-12 max-w-md font-montserrat text-sm tracking-wide text-brand-darkRed/72 md:mb-14">
-              Recognised without introduction.
-            </p>
-
-            <MagneticWrap className="w-fit">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            {CODES_LIST_ITEMS.map((item) => (
               <LocaleLink
+                key={item.title}
                 href="/the-codes"
-                className={`group inline-flex min-h-[44px] items-center gap-3 py-2 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed transition-colors duration-300 border-b border-brand-darkRed/35 hover:border-brand-dustyBlue hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+                className="rounded-xl border border-brand-stone/30 bg-white/85 p-4 text-center transition-colors hover:border-brand-dustyBlue/45 hover:bg-white"
                 data-cursor-hover
-                data-analytics-event="click_view_collection_codes_page"
-                data-analytics-section="home-codes-section"
               >
-                Discover the Codes
-                <FiArrowRight className={`w-4 h-4 group-hover:translate-x-2 transition-transform duration-300 ${isRTL ? 'rotate-180' : ''}`} />
+                <p className="font-montserrat text-[13px] font-medium tracking-[0.01em] text-brand-darkRed">{item.title}</p>
+                <p className="mt-1 font-montserrat text-xs tracking-[0.01em] text-brand-darkRed/65">{item.subtitle}</p>
               </LocaleLink>
-            </MagneticWrap>
-          </motion.div>
-        </div>
+            ))}
+          </div>
+          <LocaleLink
+            href="/the-codes"
+            className="mt-4 inline-flex md:hidden min-h-[40px] items-center rounded-xl border border-brand-darkRed/20 bg-white px-4 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+            data-cursor-hover
+            data-analytics-event="click_view_collection_codes_page"
+            data-analytics-section="home-codes-section"
+          >
+            Discover the Codes
+          </LocaleLink>
+        </motion.div>
       </div>
     </section>
   )
@@ -899,105 +1113,47 @@ function CollectionStrip() {
   )
 }
 
-/** Section 6 — personalisation bridge (homepage -> personalisation -> shop -> checkout) */
+/** Section 8 — personalisation conversion hook */
 function CreatedForYouSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: '-12%', once: true })
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-  const cardY = useTransform(scrollYProgress, [0, 1], [40, -16])
-  const imageY = useTransform(scrollYProgress, [0, 1], [72, -28])
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.18, 0.85, 1], [0.54, 1, 1, 0.72])
-  const imageScale = useTransform(scrollYProgress, [0, 1], [0.95, 1.04])
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="relative overflow-hidden py-24 md:py-36 lg:py-40">
-      <div className="pointer-events-none absolute inset-0 bg-brand-pageCanvas" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_12%_10%,rgba(146,170,193,0.16)_0%,transparent_48%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_86%_82%,rgba(193,144,134,0.10)_0%,transparent_60%)]" />
+    <section ref={ref} className="relative overflow-hidden bg-[var(--color-light)] py-14 md:py-16">
       <div className="relative container mx-auto px-6 lg:px-16">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            style={{ y: cardY }}
-            className={`flex justify-center ${isRTL ? 'lg:order-2' : 'lg:order-1'}`}
-          >
-            <div className="relative w-full max-w-xl lg:max-w-[36rem]">
-              <div className="relative overflow-hidden border border-[#d8d1c6] bg-[#f8f5ef]/96 shadow-[0_20px_56px_rgba(18,8,11,0.14)]">
-                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.7)_0%,rgba(243,238,228,0.86)_48%,rgba(233,226,213,0.82)_100%)]" />
-                <div
-                  className={`relative flex flex-col gap-8 px-10 py-12 sm:px-12 md:py-14 ${isRTL ? 'items-end text-right' : 'items-start text-left'}`}
-                >
-                  <div
-                    className={`${isRTL ? 'border-e border-brand-dustyBlue/35 pe-5 md:pe-6' : 'border-s border-brand-dustyBlue/35 ps-5 md:ps-6'}`}
-                  >
-                    <span className="font-montserrat text-[10px] uppercase tracking-[0.45em] text-brand-dustyBlue/75">
-                      Bint Saeed
-                    </span>
-                    <h2 className="mt-3 font-rozha text-3xl text-balance text-brand-darkRed tracking-[-0.02em] sm:text-4xl md:mt-4 md:text-[2.35rem] md:leading-[1.12]">
-                      CARRIED CLOSE
-                    </h2>
-                  </div>
-                  <div className="max-w-md space-y-5 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/80 lg:max-w-lg">
-                    <p>Some things are not meant to be seen, but kept close.</p>
-                    <p>
-                      Each Bint Saeed piece includes a discreet space within it, where a name, a date, or a private
-                      message can be placed. Covered inside a small pocket, it becomes something you carry with you,
-                      known only to you or to the person it was created for.
-                    </p>
-                    <p>A gesture that turns what you wear into something personal.</p>
-                  </div>
-                  <div
-                    className={`flex w-full flex-col gap-6 sm:gap-7 ${isRTL ? 'items-end lg:items-stretch' : 'items-start lg:items-stretch'}`}
-                  >
-                    <MagneticWrap className={isRTL ? 'self-end' : 'self-start'}>
-                      <LocaleLink
-                        href="/personalisation"
-                        className={`group inline-flex min-h-[44px] items-center gap-3 border-b border-brand-darkRed/35 py-2 font-montserrat text-xs uppercase tracking-[0.18em] text-brand-darkRed transition-colors duration-300 hover:border-brand-dustyBlue hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
-                        data-cursor-hover
-                        data-analytics-event="click_personalisation_teaser"
-                        data-analytics-section="home-personalisation-teaser"
-                      >
-                        DISCOVER PERSONALISATION
-                        <FiArrowRight
-                          className={`h-4 w-4 transition-transform duration-300 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
-                        />
-                      </LocaleLink>
-                    </MagneticWrap>
-                    <p className="font-montserrat text-[11px] uppercase tracking-[0.22em] text-brand-dustyBlue/75">
-                      Add your message when selecting your piece.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            style={{ y: imageY, opacity: imageOpacity }}
-            className={`flex justify-center ${isRTL ? 'lg:order-1' : 'lg:order-2'}`}
-          >
-            <div className="relative w-full max-w-xl lg:max-w-[36rem]">
-              <div className="pointer-events-none absolute inset-x-8 -bottom-6 h-16 bg-[#b9b0a2]/28 blur-2xl" />
-              <motion.div style={{ scale: imageScale }} className="relative aspect-[3/4] w-full">
-                <ScrollMaskImage
-                  src="/Personalisation%20Page/secret%20pocket.JPG"
-                  alt="Personalisation detail placeholder — hidden pocket"
-                  sizes="(max-width: 1024px) 90vw, 36rem"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1F0508]/28 via-transparent to-transparent" />
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className={`overflow-hidden rounded-2xl border border-[color:var(--color-muted)]/25 bg-[var(--color-ground)] px-6 py-8 shadow-[0_16px_42px_rgba(46,25,14,0.12)] md:px-10 md:py-10 ${isRTL ? 'text-right' : 'text-center'}`}
+        >
+          <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.34em] text-[var(--color-balance)]">Carried Close</p>
+          <h2 className="mx-auto max-w-3xl font-rozha text-4xl leading-tight text-[var(--color-ink)] md:text-5xl">
+            Give the gift of Bint Saeed
+          </h2>
+          <p className={`mx-auto mt-4 max-w-4xl font-montserrat text-lg leading-[1.6] tracking-[0.01em] text-[var(--color-ink)]/80 ${isRTL ? 'text-right' : 'text-center'}`}>
+            Every piece includes a hidden pocket, personalised with a name, date, or private message. Perfect for Eid, weddings, and milestones.
+          </p>
+          <div className={`mt-7 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : 'justify-center'}`}>
+            <LocaleLink
+              href="/personalisation"
+              className="inline-flex min-h-[46px] items-center rounded-xl bg-[var(--color-signature)] px-6 font-montserrat text-[12px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
+              data-cursor-hover
+              data-analytics-event="click_personalisation_teaser"
+              data-analytics-section="home-personalisation-teaser"
+            >
+              Personalise a piece
+            </LocaleLink>
+            <LocaleLink
+              href="/personalisation"
+              className="inline-flex min-h-[46px] items-center rounded-xl border border-[var(--color-balance)] bg-[var(--color-balance)]/10 px-6 font-montserrat text-[12px] uppercase tracking-[0.16em] text-[var(--color-balance)] transition-colors hover:bg-[var(--color-balance)]/18"
+              data-cursor-hover
+            >
+              How it works
+            </LocaleLink>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

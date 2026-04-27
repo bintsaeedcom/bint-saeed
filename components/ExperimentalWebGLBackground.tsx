@@ -75,8 +75,8 @@ export default function ExperimentalWebGLBackground({ className = '', intensity 
         vec3 burgundy = vec3(0.192, 0.058, 0.086);     // ~ #310f16
         vec3 crimson = vec3(0.498, 0.101, 0.149);      // ~ #7f1a26
         vec3 maroonGlow = vec3(0.415, 0.149, 0.169);   // ~ #6a262b
-        vec3 dustyBlue = vec3(0.573, 0.667, 0.757);    // ~ #92aac1
-        vec3 clay = vec3(0.756, 0.565, 0.525);         // ~ #c19086
+        vec3 dustyBlue = vec3(0.573, 0.667, 0.757);    // ~ #6a8090
+        vec3 clay = vec3(0.756, 0.565, 0.525);         // ~ #e8ddd4
         vec3 plum = vec3(0.321, 0.164, 0.274);         // ~ #522946
         vec3 softWhite = vec3(0.96, 0.94, 0.92);       // warm white lift
 

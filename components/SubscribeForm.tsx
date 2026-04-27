@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
 import type { E164Number } from 'libphonenumber-js'
@@ -11,19 +11,30 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 interface SubscribeFormProps {
   variant?: 'light' | 'dark'
+  initialEmail?: string
 }
 
-export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps) {
+export default function SubscribeForm({ variant = 'light', initialEmail = '' }: SubscribeFormProps) {
   const { isRTL } = useLanguage()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    email: '',
+    email: initialEmail,
   })
   const [phone, setPhone] = useState<E164Number | undefined>()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [emailError, setEmailError] = useState('')
   const [phoneError, setPhoneError] = useState('')
+
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, email: initialEmail }))
+    if (!initialEmail) {
+      setEmailError('')
+      return
+    }
+    const check = validateSubscriberEmail(initialEmail)
+    setEmailError(check.valid ? '' : check.message)
+  }, [initialEmail])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

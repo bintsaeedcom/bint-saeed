@@ -81,14 +81,20 @@ export default function Header() {
 
   const navItems = [
     { label: t.nav.collections, href: '/shop' },
+    { label: 'Charms', href: '/accessories?type=abaya-charms' },
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
+    { label: 'Personalisation', href: '/personalisation' },
     { label: t.about.title, href: '/about' },
   ]
   const getMainNavAnalyticsEvent = (href: string) =>
     href === '/shop'
       ? 'click_nav_collection'
+      : href === '/accessories?type=abaya-charms'
+        ? 'click_nav_charms'
       : href === '/accessories'
         ? 'click_nav_accessories'
+        : href === '/personalisation'
+          ? 'click_nav_personalisation'
         : href === '/about'
           ? 'click_nav_about'
           : undefined
