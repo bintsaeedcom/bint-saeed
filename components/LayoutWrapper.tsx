@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import CookieConsent from '@/components/CookieConsent'
+import SmoothScrollProvider from '@/components/SmoothScrollProvider'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 
 interface LayoutWrapperProps {
@@ -40,17 +41,19 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
 
   return (
     <>
-      <Header />
-      <main
-        className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : 'pt-16'}`}
-      >
-        <div className="relative z-[2] w-full min-w-0 max-w-none bg-brand-pageCanvas">
-          {children}
-        </div>
-      </main>
-      <Footer />
-      <WhatsAppButton />
-      <CookieConsent />
+      <SmoothScrollProvider>
+        <Header />
+        <main
+          className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : 'pt-16'}`}
+        >
+          <div className="relative z-[2] w-full min-w-0 max-w-none bg-brand-pageCanvas">
+            {children}
+          </div>
+        </main>
+        <Footer />
+        <WhatsAppButton />
+        <CookieConsent />
+      </SmoothScrollProvider>
     </>
   )
 }

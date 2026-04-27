@@ -10,6 +10,8 @@ import {
   useMotionValue,
   useSpring,
 } from 'framer-motion'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiArrowRight } from 'react-icons/fi'
@@ -178,6 +180,77 @@ const MANIFESTO_SNIPPET = [
 
 export default function Home() {
   const { isRTL } = useLanguage()
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) return
+
+    const ctx = gsap.context(() => {
+      const sections = gsap.utils.toArray<HTMLElement>('[data-story-section]')
+      sections.forEach((section) => {
+        const revealTargets = section.querySelectorAll<HTMLElement>('[data-reveal]')
+        if (!revealTargets.length) return
+        gsap.fromTo(
+          revealTargets,
+          { autoAlpha: 0, y: 40 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 1.1,
+            ease: 'power2.out',
+            stagger: 0.12,
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 82%',
+              once: true,
+            },
+          },
+        )
+      })
+
+      const collectionMask = document.querySelector<HTMLElement>('[data-collection-image-mask]')
+      if (collectionMask) {
+        gsap.fromTo(
+          collectionMask,
+          { clipPath: 'inset(0 0 100% 0 round 16px)' },
+          {
+            clipPath: 'inset(0 0 0% 0 round 16px)',
+            duration: 1.3,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: collectionMask,
+              start: 'top 80%',
+            },
+          },
+        )
+      }
+
+      const curtainSection = document.querySelector<HTMLElement>('[data-curtain-reveal]')
+      if (curtainSection) {
+        const panel = curtainSection.querySelector<HTMLElement>('.rounded-2xl')
+        if (panel) {
+          gsap.fromTo(
+            panel,
+            { clipPath: 'inset(100% 0 0 0 round 16px)', y: 30, autoAlpha: 0.4 },
+            {
+              clipPath: 'inset(0% 0 0 0 round 16px)',
+              y: 0,
+              autoAlpha: 1,
+              duration: 1.2,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: curtainSection,
+                start: 'top 78%',
+              },
+            },
+          )
+        }
+      }
+    })
+
+    return () => ctx.revert()
+  }, [])
   
   return (
     <div className={`relative min-h-0 overflow-x-clip ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -185,6 +258,7 @@ export default function Home() {
       <ThreePillarsBar />
       <CharmHeroFeatureSection />
       <MagazineGrid />
+      <QuickShopCarousel />
       <CreatedForYouSection />
       <EditorialSplit />
       <EditorialIntro />
@@ -211,12 +285,13 @@ function ThreePillarsBar() {
   const { isRTL } = useLanguage()
 
   return (
-    <section className="section-full relative bg-[#e8ddd4] py-5 md:py-6">
+    <section data-story-section className="section-full relative bg-[#e8ddd4] py-5 md:py-6">
       <div className="section-inner">
         <div className={`grid gap-3 md:grid-cols-3 ${isRTL ? 'text-right' : ''}`}>
           {HOME_PILLARS.map((pillar, idx) => (
             <div
               key={pillar.title}
+              data-reveal
               className={`rounded-xl border px-4 py-4 md:px-5 ${
                 idx === 1
                   ? 'border-[#722030] bg-[#722030] text-[#e8d8c8]'
@@ -248,7 +323,7 @@ function CharmHeroFeatureSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section className="section-full relative overflow-hidden border-b-2 border-[#722030] bg-[#0f0d09] py-0">
+    <section data-story-section className="section-full relative overflow-hidden border-b-2 border-[#722030] bg-[#0f0d09] py-0">
       <div className="grid min-h-[68vh] items-stretch lg:grid-cols-2">
           <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
             <div className="absolute inset-0 opacity-25">
@@ -262,17 +337,17 @@ function CharmHeroFeatureSection() {
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
             <div className="relative z-10 max-w-[640px]">
-            <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
+            <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
               Charm Feature
             </p>
-            <h2 className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
+            <h2 data-reveal className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
               Natural Stone Charms
             </h2>
-            <p className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[#8a7a70]">
+            <p data-reveal className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[#8a7a70]">
               Designed for abayas, bags, and phone styling. Build your signature stack with curated stones and limited edition drops.
             </p>
 
-            <div className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+            <div data-reveal className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
               {CHARM_SWATCHES.map((stone) => (
                 <span
                   key={stone.name}
@@ -284,7 +359,7 @@ function CharmHeroFeatureSection() {
               ))}
             </div>
 
-            <div className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
+            <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
               <LocaleLink
                 href="/accessories?category=abaya-charms"
                 className="inline-flex min-h-[44px] items-center rounded-xl bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
@@ -304,6 +379,7 @@ function CharmHeroFeatureSection() {
           </div>
 
           <LocaleLink
+            data-reveal
             href="/accessories?category=abaya-charms"
             className="group relative overflow-hidden bg-[var(--color-sovereign)]"
             data-cursor-hover
@@ -493,7 +569,13 @@ function QuickShopCarousel() {
   const [phasePct, setPhasePct] = useState(0)
   const [scrubbing, setScrubbing] = useState(false)
   const trackRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
   const loopStartRef = useRef(0)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  })
+  const driftX = useTransform(scrollYProgress, [0, 1], [0, -120])
 
   useEffect(() => {
     let cancelled = false
@@ -549,11 +631,11 @@ function QuickShopCarousel() {
   const sliderLabel = isRTL ? 'تحريك المعرض' : 'Scroll the curated selection'
 
   return (
-    <section className="relative bg-brand-pageCanvas pb-14 pt-20 md:pb-18 md:pt-24 lg:pb-20 lg:pt-28">
+    <section ref={sectionRef} data-story-section className="relative bg-brand-pageCanvas pb-14 pt-20 md:pb-18 md:pt-24 lg:pb-20 lg:pt-28">
       <SectionStripes variant="soft" />
       <div className="mx-auto mb-8 max-w-[1600px] px-6 lg:px-14">
-        <h2 className="text-center font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed">
-          {isRTL ? 'اختيار منسق' : 'CURATED SELECTION'}
+        <h2 data-reveal className="text-center font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed">
+          {isRTL ? 'تنسيقات مختارة' : 'CURATED STYLES'}
         </h2>
       </div>
 
@@ -567,14 +649,15 @@ function QuickShopCarousel() {
         onFocusCapture={() => setIsPaused(true)}
         onBlurCapture={() => setIsPaused(false)}
       >
-        <div
-          ref={trackRef}
-          className="quick-shop-track"
-          style={{
-            transform: `translate3d(${translatePx}px,0,0)`,
-            willChange: segmentPx > 0 ? 'transform' : undefined,
-          }}
-        >
+        <motion.div style={{ x: reduceMotion ? 0 : driftX }}>
+          <div
+            ref={trackRef}
+            className="quick-shop-track"
+            style={{
+              transform: `translate3d(${translatePx}px,0,0)`,
+              willChange: segmentPx > 0 ? 'transform' : undefined,
+            }}
+          >
           {[...quickProducts, ...quickProducts].map((product, idx) => (
             <LocaleLink
               key={`${product.id}-${idx}`}
@@ -632,7 +715,8 @@ function QuickShopCarousel() {
               </div>
             </LocaleLink>
           ))}
-        </div>
+          </div>
+        </motion.div>
       </div>
 
       {quickProducts.length > 0 ? (
@@ -724,7 +808,7 @@ function HeroSection() {
   }, [heroHeadline, reduceMotion])
 
   return (
-    <section ref={ref} className="section-full relative h-[100svh] w-full">
+    <section ref={ref} data-story-section className="section-full relative h-[100svh] w-full">
       <SectionStripes variant="hero" />
       {/* Background — pointer-events-none so scaled layer never steals clicks from hero links */}
       <motion.div
@@ -769,7 +853,7 @@ function HeroSection() {
             <div className={`min-w-0 lg:col-span-8 xl:col-span-7 ${isRTL ? 'lg:col-start-6' : ''}`}>
               {/* initial={false}: avoid opacity:0 inline styles before hydration (looked "broken" / blank UI) */}
               <motion.div style={{ y }} className="pointer-events-none">
-                <motion.h1 data-document-h1="true" data-hero-h1="true"
+                <motion.h1 data-reveal data-document-h1="true" data-hero-h1="true"
                   initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -783,6 +867,7 @@ function HeroSection() {
                 </motion.h1>
 
                 <motion.p
+                  data-reveal
                   initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
@@ -794,6 +879,7 @@ function HeroSection() {
               </motion.div>
 
               <motion.div
+                data-reveal
                 initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
@@ -857,7 +943,7 @@ function EditorialIntro() {
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="section-full relative overflow-hidden bg-transparent py-14 md:py-18 lg:py-20">
+    <section ref={ref} data-story-section className="section-full relative overflow-hidden bg-transparent py-14 md:py-18 lg:py-20">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(250,248,245,1)_0%,rgba(232,221,212,0.38)_100%)]" />
 
       <div className="relative w-full">
@@ -929,7 +1015,7 @@ function MagazineGrid() {
   const { t, isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="section-full relative overflow-hidden bg-[#faf8f5] py-10 md:py-12">
+    <section ref={ref} data-story-section data-collection-chapter className="section-full relative min-h-[92vh] overflow-hidden bg-[#faf8f5] py-10 md:py-12">
       <div className="section-inner">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -937,7 +1023,7 @@ function MagazineGrid() {
           transition={{ duration: 0.75 }}
           className={`mb-8 flex items-end justify-between md:mb-10 ${isRTL ? 'flex-row-reverse' : ''}`}
         >
-          <div>
+          <div data-reveal>
             <span className="mb-3 block font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
               Collection Edit
             </span>
@@ -955,7 +1041,7 @@ function MagazineGrid() {
           </LocaleLink>
         </motion.div>
 
-        <div className="rounded-2xl bg-[var(--color-light)] p-2 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-3 md:p-4">
+        <div data-collection-image-mask className="rounded-2xl bg-[var(--color-light)] p-2 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-3 md:p-4">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-4 lg:gap-5">
             {[
               { src: '/collection-section/1.png', label: 'Abayas', section: 'home-collection-card-abayas' },
@@ -1008,38 +1094,67 @@ function homeCodesImage(fileName: string) {
   return `/${encodeURIComponent(dir)}/${encodeURIComponent(fileName)}`
 }
 
-const CODES_LIST_ITEMS = [
-  { title: 'Al Talli', subtitle: 'Gold threadwork', image: homeCodesImage('Talli.jpg') },
-  { title: 'Khous', subtitle: 'Palm craftsmanship', image: homeCodesImage('khous.jpg') },
-  { title: 'Al Ain Rosette', subtitle: 'Regional motif', image: homeCodesImage('Al Quaa Rosette.jpg') },
-  { title: 'The Monogram', subtitle: 'Signature mark', image: homeCodesImage('monogram.jpg') },
-  { title: 'Knotted Lines', subtitle: 'Line & continuity', image: homeCodesImage('Knotted Lines Of Lineage.jpg') },
-] as const
-
 function EditorialSplit() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { margin: '-20%', once: true })
+  const ref = useRef<HTMLDivElement | null>(null)
+  const pinRef = useRef<HTMLDivElement | null>(null)
   const { isRTL } = useLanguage()
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const storyCodes = [
+    { title: 'Al Talli', subtitle: 'Gold threadwork', image: homeCodesImage('Talli.jpg') },
+    { title: 'Khous', subtitle: 'Palm craftsmanship', image: homeCodesImage('khous.jpg') },
+    { title: 'Knotted Lines', subtitle: 'Line & continuity', image: homeCodesImage('Knotted Lines Of Lineage.jpg') },
+    { title: 'Natural Stones', subtitle: 'Stone-led signatures', image: '/Webshop%20pictures/accessoiries/abaya%20charms.JPG' },
+  ] as const
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce || !ref.current || !pinRef.current) return
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: ref.current,
+        start: 'top top+=64',
+        end: '+=320%',
+        pin: pinRef.current,
+        scrub: 1,
+        onUpdate: (self) => {
+          const next = Math.min(storyCodes.length - 1, Math.floor(self.progress * storyCodes.length))
+          setActiveIndex(next)
+        },
+      })
+    }, ref)
+
+    return () => ctx.revert()
+  }, [storyCodes.length])
 
   return (
-    <section ref={ref} className="section-full bg-[#faf8f5] py-14 md:py-16">
-      <div className="w-full px-4 md:px-8 lg:px-10">
-        <motion.div
-          initial={{ opacity: 0, y: 22 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.65 }}
-          className="bg-transparent p-0"
-        >
-          <div className={`mb-5 flex items-end justify-between ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
-            <div>
-              <p className="mb-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
-                House Codes
-              </p>
-              <h2 className="font-rozha text-3xl text-[#2a1e18] md:text-4xl">The House Codes</h2>
+    <section ref={ref} data-story-section className="section-full bg-[#faf8f5] py-14 md:py-16">
+      <div ref={pinRef} className="w-full px-4 md:px-8 lg:px-10">
+        <div className="grid min-h-[78vh] items-center gap-8 lg:grid-cols-2">
+          <div className={isRTL ? 'text-right' : ''}>
+            <p data-reveal className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
+              House Codes
+            </p>
+            <h2 data-reveal className="font-rozha text-3xl text-[#2a1e18] md:text-5xl">The House Codes</h2>
+            <p data-reveal className="mt-4 font-montserrat text-sm leading-[1.8] tracking-[0.02em] text-[#8a7a70]">
+              {storyCodes[activeIndex].subtitle}
+            </p>
+            <div className={`mt-8 flex gap-2 ${isRTL ? 'justify-end' : ''}`}>
+              {storyCodes.map((code, index) => (
+                <button
+                  key={code.title}
+                  type="button"
+                  onClick={() => setActiveIndex(index)}
+                  className={`h-1.5 w-10 rounded-full transition-colors ${index === activeIndex ? 'bg-[#722030]' : 'bg-[#d8ccc2]'}`}
+                  aria-label={code.title}
+                />
+              ))}
             </div>
             <LocaleLink
               href="/the-codes"
-              className="hidden md:inline-flex min-h-[40px] items-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-[#722030] transition-colors hover:text-[#2a1e18]"
+              className="mt-8 inline-flex min-h-[40px] items-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-[#722030] transition-colors hover:text-[#2a1e18]"
               data-cursor-hover
               data-analytics-event="click_view_collection_codes_page"
               data-analytics-section="home-codes-section"
@@ -1048,41 +1163,27 @@ function EditorialSplit() {
             </LocaleLink>
           </div>
 
-          <div className="grid grid-cols-2 border-t border-[#e8ddd4] max-[560px]:grid-cols-1 md:grid-cols-3 lg:grid-cols-5">
-            {CODES_LIST_ITEMS.map((item, index) => (
-              <LocaleLink
-                key={item.title}
-                href="/the-codes"
-                className={`group p-4 text-left transition-colors hover:bg-[#f5f0ea] ${
-                  index !== CODES_LIST_ITEMS.length - 1 ? 'border-b border-[#e8ddd4] lg:border-b-0 lg:border-r lg:border-[#e8ddd4]' : 'border-b border-[#e8ddd4] lg:border-b-0'
-                }`}
-                data-cursor-hover
+          <div className="relative min-h-[62vh] overflow-hidden rounded-xl border border-[#e8ddd4]/85 bg-[#efe7df]">
+            {storyCodes.map((code, index) => (
+              <div
+                key={code.title}
+                className={`absolute inset-0 transition-opacity duration-700 ${index === activeIndex ? 'opacity-100' : 'opacity-0'}`}
               >
-                <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden rounded-lg border border-[#e8ddd4] bg-[#f7f3ee]">
+                <div className="relative h-full w-full">
                   <Image
-                    src={item.image}
-                    alt={item.title}
+                    src={code.image}
+                    alt={code.title}
                     fill
-                    sizes="(max-width: 560px) 100vw, (max-width: 1024px) 50vw, 20vw"
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+                    sizes="(max-width: 1024px) 100vw, 48vw"
+                    className="object-cover object-center"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a0210]/40 via-transparent to-transparent" />
+                  <p className="absolute bottom-6 left-6 font-rozha text-3xl text-[#e8d8c8] md:text-4xl">{code.title}</p>
                 </div>
-                <p className="font-rozha text-[32px] leading-none text-[rgba(114,32,48,0.3)]">{['I', 'II', 'III', 'IV', 'V'][index]}</p>
-                <h3 className="mt-2 font-montserrat text-[14px] font-medium tracking-[0.01em] text-[#2a1e18]">{item.title}</h3>
-                <p className="mt-2 border-b border-[#e8ddd4] pb-3 font-montserrat text-[12px] leading-[1.6] tracking-[0.01em] text-[#8a7a70]">{item.subtitle}</p>
-              </LocaleLink>
+              </div>
             ))}
           </div>
-          <LocaleLink
-            href="/the-codes"
-            className="mt-4 inline-flex md:hidden min-h-[40px] items-center rounded-xl border border-brand-darkRed/20 bg-white px-4 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
-            data-cursor-hover
-            data-analytics-event="click_view_collection_codes_page"
-            data-analytics-section="home-codes-section"
-          >
-            Discover the Codes
-          </LocaleLink>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
@@ -1127,7 +1228,7 @@ function CreatedForYouSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} className="section-full relative overflow-hidden bg-[#722030] py-14 md:py-16">
+    <section ref={ref} data-story-section data-curtain-reveal className="section-full relative overflow-hidden bg-[#722030] py-14 md:py-16">
       <div className="section-inner relative">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
