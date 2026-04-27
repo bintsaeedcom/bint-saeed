@@ -346,6 +346,7 @@ export default function Home() {
       <CharmHeroFeatureSectionMirror />
       <EditorialIntro />
       <EditorialSplit />
+      <CampaignPanoramaSection />
     </div>
   )
 }
