@@ -255,14 +255,14 @@ export default function Header() {
               {disableHomeLogoNavigation ? (
                 <div className="block max-w-[min(92vw,720px)]">
                   <Image
-                    src="/logo.png"
+                    src="/logo-bintsaeed.svg"
                     alt="Bint Saeed"
                     width={800}
                     height={210}
                     className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
                       isScrolled
-                        ? 'h-[clamp(2.5rem,6.2vw,3.4rem)] max-h-[64px] sm:max-h-[68px] md:max-h-[72px]'
-                        : 'h-[clamp(3rem,9.2vw,4.7rem)] max-h-[82px] sm:max-h-[94px] md:h-[clamp(3.25rem,8.3vw,5.2rem)] md:max-h-[102px] lg:max-h-[114px] xl:max-h-[124px]'
+                        ? 'h-[clamp(2.9rem,6.9vw,3.95rem)] max-h-[74px] sm:max-h-[78px] md:max-h-[82px]'
+                        : 'h-[clamp(3.5rem,10.2vw,5.4rem)] max-h-[96px] sm:max-h-[108px] md:h-[clamp(3.75rem,9.1vw,5.9rem)] md:max-h-[116px] lg:max-h-[128px] xl:max-h-[140px]'
                     }`}
                     priority
                   />
@@ -274,21 +274,21 @@ export default function Header() {
                   data-cursor-hover
                 >
                   <Image
-                    src="/logo.png"
+                    src="/logo-bintsaeed.svg"
                     alt="Bint Saeed"
                     width={800}
                     height={210}
                     className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
                       isScrolled
-                        ? 'h-[clamp(2.5rem,6.2vw,3.4rem)] max-h-[64px] sm:max-h-[68px] md:max-h-[72px]'
-                        : 'h-[clamp(3rem,9.2vw,4.7rem)] max-h-[82px] sm:max-h-[94px] md:h-[clamp(3.25rem,8.3vw,5.2rem)] md:max-h-[102px] lg:max-h-[114px] xl:max-h-[124px]'
+                        ? 'h-[clamp(2.9rem,6.9vw,3.95rem)] max-h-[74px] sm:max-h-[78px] md:max-h-[82px]'
+                        : 'h-[clamp(3.5rem,10.2vw,5.4rem)] max-h-[96px] sm:max-h-[108px] md:h-[clamp(3.75rem,9.1vw,5.9rem)] md:max-h-[116px] lg:max-h-[128px] xl:max-h-[140px]'
                     }`}
                     priority
                   />
                 </LocaleLink>
               )}
 
-              <div className="absolute right-2 top-2 z-[62] flex items-center sm:right-3 sm:top-3">
+              <div className="absolute right-0.5 top-0.5 z-[62] flex items-center sm:right-1 sm:top-1">
                 <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-2.5 py-1">
                   <CurrencySwitcher variant="light" showSymbol={false} />
                   <span className="h-4 w-px bg-white/15" aria-hidden />
@@ -656,21 +656,21 @@ export default function Header() {
                 {disableHomeLogoNavigation ? (
                   <div className="block max-w-[min(420px,78vw)]">
                     <Image
-                      src="/logo.png"
+                      src="/logo-bintsaeed.svg"
                       alt="Bint Saeed"
                       width={520}
                       height={136}
-                    className="h-[clamp(3.25rem,12vw,5.5rem)] w-auto max-h-[100px]"
+                    className="h-[clamp(3.5rem,12.5vw,6rem)] w-auto max-h-[112px]"
                   />
                   </div>
                 ) : (
                   <LocaleLink href="/home" onClick={() => setIsMobileMenuOpen(false)} className="block max-w-[min(420px,78vw)]">
                     <Image
-                      src="/logo.png"
+                      src="/logo-bintsaeed.svg"
                       alt="Bint Saeed"
                       width={520}
                       height={136}
-                      className="h-[clamp(3.25rem,12vw,5.5rem)] w-auto max-h-[100px]"
+                      className="h-[clamp(3.5rem,12.5vw,6rem)] w-auto max-h-[112px]"
                     />
                   </LocaleLink>
                 )}
