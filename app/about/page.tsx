@@ -1,11 +1,11 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AboutTopicNav from '@/components/AboutTopicNav'
-import { FiArrowDown, FiArrowRight } from 'react-icons/fi'
+import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
@@ -25,77 +25,51 @@ export default function AboutPage() {
 }
 
 function AboutHero() {
-  const ref = useRef(null)
   const { t, isRTL } = useLanguage()
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '45%'])
-  const opacity = useTransform(scrollYProgress, [0, 0.55], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15])
 
   return (
-    <section ref={ref} className="relative h-[50vh] w-full overflow-hidden md:h-[60vh]">
-      <motion.div style={{ scale }} className="absolute inset-0">
-        <Image src="/hero-bintsaeed.jpg" alt="Bint Saeed" fill className="object-cover object-[center_28%]" priority />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#3B0A12]/72 via-[#1F0508]/52 to-[#1F0508]/82" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,_rgba(146,170,193,0.12)_0%,_transparent_55%)]" />
-      </motion.div>
-      <DecorativeCorners color="dustyBlue" />
-      <motion.div style={{ y, opacity }} className="relative flex h-full items-center">
-        <div className="container mx-auto px-6 lg:px-16">
-          <div className={`grid items-center gap-8 lg:grid-cols-12 ${isRTL ? '' : ''}`}>
-            <div className={`lg:col-span-9 ${isRTL ? 'lg:col-start-4' : ''}`}>
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <span className="mb-8 inline-block border-b border-white/35 pb-2 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue/90">
-                  {t.about.subtitle}
-                </span>
-              </motion.div>
-              <motion.h1
-                data-document-h1="true"
-                initial={{ opacity: 0, y: 60 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="mb-6 font-rozha text-[clamp(2rem,6vw,4rem)] leading-[1.05] tracking-[0.08em] text-white md:tracking-[0.12em]"
-              >
-                About Bint Saeed
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.75 }}
-                className="mb-10 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-white/75 md:text-base"
-              >
-                Abu Dhabi · Emirati design codes · Contemporary global presence
-              </motion.p>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
-                <LocaleLink
-                  href="#about-narrative"
-                  className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-white w-fit border-b border-white/50 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
-                  data-cursor-hover
-                >
-                  <span>{t.about.readMore}</span>
-                  <FiArrowRight
-                    className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
-                  />
-                </LocaleLink>
-              </motion.div>
-            </div>
-          </div>
+    <section className="relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas py-16 md:py-20">
+      <div className="container mx-auto px-6 lg:px-16">
+        <div className={isRTL ? 'text-right' : ''}>
+          <motion.span
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-4 block font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#722030]"
+          >
+            {t.about.subtitle}
+          </motion.span>
+          <motion.h1
+            data-document-h1="true"
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-4 font-rozha text-[clamp(2rem,6vw,4rem)] leading-[1.05] tracking-[0.02em] text-brand-darkRed"
+          >
+            About Bint Saeed
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-8 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/85 md:text-base"
+          >
+            Abu Dhabi · Emirati design codes · Contemporary global presence
+          </motion.p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}>
+            <LocaleLink
+              href="#about-narrative"
+              className="group inline-flex min-h-[44px] min-w-[44px] w-fit cursor-pointer items-center gap-3 border-b border-brand-stone/45 py-2 font-montserrat text-[11px] uppercase tracking-[0.18em] !text-brand-clayRed/85 transition-colors duration-300 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
+              data-cursor-hover
+            >
+              <span>{t.about.readMore}</span>
+              <FiArrowRight
+                className={`h-4 w-4 transition-transform duration-300 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
+              />
+            </LocaleLink>
+          </motion.div>
         </div>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4 }}
-        className="absolute bottom-12 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3"
-      >
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}>
-          <FiArrowDown className="h-5 w-5 text-brand-dustyBlue/60" />
-        </motion.div>
-      </motion.div>
+      </div>
     </section>
   )
 }

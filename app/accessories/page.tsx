@@ -145,18 +145,18 @@ export default function AccessoriesPage() {
   return (
     <div className={`min-h-screen bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
       {/* Hero Banner */}
-      <section className="relative h-[50vh] md:h-[60vh] overflow-hidden bs-burgundy-surface">
+      <section className="relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas py-16 md:py-20">
         <Image
           src="/Webshop pictures/accessoiries/banner.png"
           alt="Accessories Collection"
           fill
-          className="object-cover opacity-40"
+          className="pointer-events-none object-cover opacity-0"
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1F0508] via-[#3B0A12]/55 to-transparent" />
+        <div className="hidden absolute inset-0 bg-gradient-to-t from-[#1F0508] via-[#3B0A12]/55 to-transparent" />
         
-        <div className="relative h-full flex flex-col justify-end pb-16 md:pb-20 text-white [&_h1]:text-white [&_a]:text-white/90 [&_a:hover]:text-white [&_span]:text-white/80 [&_p]:text-white/85 [&_svg]:text-current">
+        <div className="relative flex flex-col justify-end text-brand-darkRed">
           <div className="container mx-auto px-6 lg:px-12">
             {/* Back Button */}
             <motion.div
@@ -167,7 +167,7 @@ export default function AccessoriesPage() {
             >
               <LocaleLink
                 href="/"
-                className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed/75 transition-colors hover:text-brand-darkRed group ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
@@ -181,13 +181,13 @@ export default function AccessoriesPage() {
               transition={{ duration: 0.8 }}
               className={isRTL ? 'text-right' : ''}
             >
-              <span className="font-montserrat text-xs uppercase tracking-[0.4em] mb-4 block">
+              <span className="mb-4 block font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#722030]">
                 {isRTL ? 'مجموعة الإكسسوارات' : 'Accessories Collection'}
               </span>
-              <h1 data-document-h1="true" className="font-rozha text-5xl md:text-7xl lg:text-8xl mb-4">
+              <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-brand-darkRed md:text-7xl lg:text-8xl">
                 {isRTL ? 'الإكسسوارات' : 'Accessories'}
               </h1>
-              <p className="font-montserrat text-base tracking-wide max-w-lg">
+              <p className="max-w-lg font-montserrat text-base tracking-wide text-brand-clayRed/85">
                 {isRTL
                   ? 'اكتشفي مجموعتنا الراقية من تعليقات العباءة والقلادات والأقراط والأساور وتعليقات الحقائب والهواتف.'
                   : 'Discover our curated collection of abaya charms, necklaces, earrings, bracelets, bag charms, and phone charms.'}

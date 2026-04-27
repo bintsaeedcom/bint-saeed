@@ -261,8 +261,8 @@ export default function Header() {
                     height={210}
                     className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
                       isScrolled
-                        ? 'h-[clamp(2.9rem,6.9vw,3.95rem)] max-h-[74px] sm:max-h-[78px] md:max-h-[82px]'
-                        : 'h-[clamp(3.5rem,10.2vw,5.4rem)] max-h-[96px] sm:max-h-[108px] md:h-[clamp(3.75rem,9.1vw,5.9rem)] md:max-h-[116px] lg:max-h-[128px] xl:max-h-[140px]'
+                        ? 'h-[clamp(3.2rem,7.4vw,4.35rem)] max-h-[82px] sm:max-h-[86px] md:max-h-[90px]'
+                        : 'h-[clamp(3.9rem,10.9vw,6.1rem)] max-h-[108px] sm:max-h-[120px] md:h-[clamp(4.15rem,9.7vw,6.6rem)] md:max-h-[132px] lg:max-h-[146px] xl:max-h-[158px]'
                     }`}
                     priority
                   />
@@ -280,8 +280,8 @@ export default function Header() {
                     height={210}
                     className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
                       isScrolled
-                        ? 'h-[clamp(2.9rem,6.9vw,3.95rem)] max-h-[74px] sm:max-h-[78px] md:max-h-[82px]'
-                        : 'h-[clamp(3.5rem,10.2vw,5.4rem)] max-h-[96px] sm:max-h-[108px] md:h-[clamp(3.75rem,9.1vw,5.9rem)] md:max-h-[116px] lg:max-h-[128px] xl:max-h-[140px]'
+                        ? 'h-[clamp(3.2rem,7.4vw,4.35rem)] max-h-[82px] sm:max-h-[86px] md:max-h-[90px]'
+                        : 'h-[clamp(3.9rem,10.9vw,6.1rem)] max-h-[108px] sm:max-h-[120px] md:h-[clamp(4.15rem,9.7vw,6.6rem)] md:max-h-[132px] lg:max-h-[146px] xl:max-h-[158px]'
                     }`}
                     priority
                   />
@@ -314,7 +314,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="inline-flex items-center gap-2 py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white/82 transition-colors duration-300 hover:text-brand-dustyBlue"
+                className="inline-flex items-center gap-2 rounded-full border border-brand-dustyBlue/45 bg-brand-dustyBlue/10 px-3 py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-brand-dustyBlue transition-colors duration-300 hover:border-brand-dustyBlue hover:bg-brand-dustyBlue/16 hover:text-brand-dustyBlue"
                 data-cursor-hover
                 aria-label={t.nav.search}
               >
@@ -419,7 +419,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="text-white/75 hover:text-white transition-colors duration-300 p-1.5"
+                className="rounded-full border border-brand-dustyBlue/45 bg-brand-dustyBlue/10 p-1.5 text-brand-dustyBlue transition-colors duration-300 hover:border-brand-dustyBlue hover:bg-brand-dustyBlue/16 hover:text-brand-dustyBlue"
                 data-cursor-hover
                 aria-label={t.nav.search}
               >
@@ -557,15 +557,15 @@ export default function Header() {
             >
             <div className="container mx-auto px-6 lg:px-12 relative z-10">
               {/* Search Input Row */}
-              <div className="flex items-center gap-4 py-5 border-b border-brand-stone/30">
-                <FiSearch className="w-5 h-5 text-brand-darkRed/50" />
+              <div className="flex items-center gap-4 border-b border-brand-stone/35 py-5">
+                <FiSearch className="h-5 w-5 text-brand-darkRed/70" />
                 <input
                   ref={searchInputRef}
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t.search.placeholder || 'Search for products, collection, pages…'}
-                  className={`flex-1 text-lg md:text-xl font-montserrat text-brand-darkRed bg-transparent focus:outline-none placeholder:text-brand-stone/60 ${isRTL ? 'text-right' : ''}`}
+                  className={`flex-1 rounded-sm border border-brand-stone/35 bg-white px-3 py-2 text-lg font-montserrat text-brand-darkRed focus:border-brand-dustyBlue focus:outline-none placeholder:text-brand-stone/75 md:text-xl ${isRTL ? 'text-right' : ''}`}
                   dir={isRTL ? 'rtl' : 'ltr'}
                 />
                 <button
@@ -660,7 +660,7 @@ export default function Header() {
                       alt="Bint Saeed"
                       width={520}
                       height={136}
-                    className="h-[clamp(3.5rem,12.5vw,6rem)] w-auto max-h-[112px]"
+                    className="h-[clamp(3.8rem,13.2vw,6.6rem)] w-auto max-h-[124px]"
                   />
                   </div>
                 ) : (
@@ -670,7 +670,7 @@ export default function Header() {
                       alt="Bint Saeed"
                       width={520}
                       height={136}
-                      className="h-[clamp(3.5rem,12.5vw,6rem)] w-auto max-h-[112px]"
+                      className="h-[clamp(3.8rem,13.2vw,6.6rem)] w-auto max-h-[124px]"
                     />
                   </LocaleLink>
                 )}

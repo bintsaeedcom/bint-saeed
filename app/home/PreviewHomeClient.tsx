@@ -119,7 +119,7 @@ const SUMMER_ELEGANCE_SLIDES = [
 const ESSENTIALS_SLIDES = [
   '/collection-section/2.PNG',
   '/collection-section/3.JPG',
-  '/collection-section/4.JPG?v=20260427',
+  '/collection-section/5.jpg',
 ] as const
 
 const SLIDE_INTERVAL_MS = 6500
@@ -174,7 +174,7 @@ function CollectionCrossfadeSlideshow({ slides, altForIndex }: CollectionCrossfa
 
 const MANIFESTO_QUOTE = 'A sense of self that does not shift with setting.'
 const MANIFESTO_SNIPPET = [
-  'A house shaped by origin.',
+  'Wherever life is lived, from Abu Dhabi to London, from Riyadh to Paris, from Doha to Marbella, you do not need to change how you present yourself. Each piece carries your elegance, your way of being, with consistency, wherever you are.',
   'Bint Saeed exists at the intersection of heritage and a contemporary life, carried across borders and recognised by its consistency.',
 ]
 const HOUSE_MOTION_EASE = 'power2.out'
@@ -259,11 +259,11 @@ export default function Home() {
   return (
     <div className={`relative min-h-0 overflow-x-clip ${isRTL ? 'rtl' : 'ltr'}`}>
       <HeroSection />
-      <ThreePillarsBar />
-      <CharmHeroFeatureSection />
-      <EditorialIntro />
-      <MagazineGrid />
       <QuickShopCarousel />
+      <ThreePillarsBar />
+      <EditorialIntro />
+      <CharmHeroFeatureSection />
+      <MagazineGrid />
       <CreatedForYouSection />
       <EditorialSplit />
     </div>
@@ -390,21 +390,13 @@ function CharmHeroFeatureSection() {
           >
             <div className="relative h-full min-h-[68vh]">
               <Image
-                src="/collection-section/4.JPG?v=20260427"
+                src="/collection-section/5.jpg"
                 alt="Bint Saeed charm collection"
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-sovereign)]/72 via-[var(--color-signature)]/28 to-transparent" />
-              <div className={`absolute bottom-5 ${isRTL ? 'left-5 text-right' : 'right-5 text-left'}`}>
-                <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[var(--color-on-dark)]/80">
-                  Limited Capsules
-                </p>
-                <p className="mt-1 font-rozha text-2xl text-[var(--color-on-dark)] md:text-3xl">
-                  Stone-led signatures
-                </p>
-              </div>
             </div>
           </LocaleLink>
       </div>
@@ -474,7 +466,7 @@ const CATEGORY_STRIP = [
     key: 'Accessories',
     label: 'Accessories',
     href: '/accessories',
-    image: '/collection-section/4.JPG?v=20260427',
+    image: '/collection-section/5.jpg',
   },
   {
     key: 'Personalisation',
@@ -809,27 +801,6 @@ function HeroSection() {
           sizes="100vw"
           priority
         />
-        {/* Editorial: soft left read-path + gentle vignette (magazine spread legibility) */}
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#1F0508]/88 via-[#3B0A12]/48 to-transparent md:from-[#1F0508]/82 md:via-[#3B0A12]/38"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(26,2,16,0.75)_0%,rgba(26,2,16,0.2)_45%,transparent_100%)]"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_70%_40%,transparent_0%,rgba(31,5,8,0.38)_100%)]"
-          aria-hidden
-        />
-        {/* Paper / print grain */}
-        <div
-          className="absolute inset-0 opacity-[0.07] mix-blend-overlay pointer-events-none"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          }}
-          aria-hidden
-        />
       </motion.div>
 
       {/* Content — parallax on copy only; CTA stays untransformed for reliable hit-testing */}
@@ -936,11 +907,11 @@ function EditorialIntro() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             style={{ y: panelY }}
-            className={isRTL ? 'lg:order-2' : ''}
+            className={isRTL ? 'lg:order-1' : 'lg:order-2'}
           >
             <div className="relative h-full min-h-[18rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#722030] bg-[#1a0210] p-[48px] shadow-none md:min-h-[21rem] lg:border-r lg:border-[#2a1e18]/10">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.16)_0%,transparent_62%)]" />
-              <div className="relative flex h-full flex-col items-center justify-center text-center">
+              <div className={`relative flex h-full flex-col justify-center ${isRTL ? 'items-start text-left' : 'items-end text-right'}`}>
                 <span className="mb-4 block font-montserrat text-[11px] uppercase tracking-[0.28em] text-[#c8b8a8]/78">
                   From Abu Dhabi to the world
                 </span>
@@ -956,10 +927,11 @@ function EditorialIntro() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
             style={{ y: panelY }}
-            className={isRTL ? 'lg:order-1' : ''}
+            className={isRTL ? 'lg:order-2' : 'lg:order-1'}
           >
             <div className="relative h-full border-y border-[#2a1e18]/10 bg-[#e8ddd4] p-[48px] shadow-none lg:border-r lg:border-[#2a1e18]/10">
               <div className="space-y-6">
+                <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">MANIFESTO</p>
                 <h2 className="font-rozha text-[clamp(18px,2vw,26px)] leading-[1.2] text-[#2a1e18]">
                   {MANIFESTO_LEAD}
                 </h2>
@@ -997,7 +969,7 @@ function MagazineGrid() {
     { src: '/collection-section/1.png', label: 'Abayas', href: '/shop', section: 'home-collection-card-abayas' },
     { src: '/collection-section/67.png', label: 'Kaftans', href: '/shop', section: 'home-collection-card-kaftans' },
     { src: '/collection-section/68.png', label: 'Sets', href: '/shop', section: 'home-collection-card-sets' },
-    { src: '/collection-section/4.JPG?v=20260427', label: 'Accessories', href: '/accessories', section: 'home-collection-card-accessories' },
+    { src: '/collection-section/5.jpg', label: 'Accessories', href: '/accessories', section: 'home-collection-card-accessories' },
   ] as const
 
   useEffect(() => {
@@ -1164,8 +1136,9 @@ function EditorialSplit() {
                     className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
-                <h3 className="mt-2 font-montserrat text-[14px] font-medium tracking-[0.01em] text-[#2a1e18]">{code.title}</h3>
-                <p className="mt-2 border-b border-[#e8ddd4] pb-3 font-montserrat text-[12px] leading-[1.6] tracking-[0.01em] text-[#8a7a70]">{code.subtitle}</p>
+                <h3 className="mt-2 border-b border-[#e8ddd4] pb-3 font-montserrat text-[14px] font-medium tracking-[0.01em] text-[#2a1e18]">
+                  {code.title}
+                </h3>
               </LocaleLink>
             ))}
           </div>

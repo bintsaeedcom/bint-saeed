@@ -105,7 +105,7 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
 
   return (
     <section
-      className={`relative h-[50vh] md:h-[60vh] overflow-hidden bg-brand-darkRed ${className}`}
+      className={`relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas py-16 md:py-20 ${className}`}
     >
       <video
         src={v.src}
@@ -115,12 +115,12 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
         loop
         playsInline
         preload="metadata"
-        className="absolute inset-0 z-0 h-full w-full object-cover opacity-40"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover opacity-0"
       />
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-brand-darkRed via-brand-darkRed/50 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-transparent" />
 
       {/* Mirrors `/accessories` hero: same flex shell, container padding, typography & tracking */}
-      <div className="relative z-10 flex h-full flex-col justify-end pb-16 md:pb-20">
+      <div className="relative z-10 flex flex-col justify-end">
         <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
@@ -130,7 +130,7 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
           >
             <LocaleLink
               href="/home"
-              className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-white/70 hover:text-white transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed/75 hover:text-brand-darkRed transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiArrowLeft
@@ -146,17 +146,17 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
             transition={{ duration: 0.8 }}
             className={isRTL ? 'text-right' : ''}
           >
-            <span className="mb-4 block font-montserrat text-xs uppercase tracking-[0.4em] text-white/60">
+            <span className="mb-4 block font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#722030]">
               {eyebrow}
             </span>
             <h1
               data-document-h1="true"
-              className="font-rozha text-5xl md:text-7xl lg:text-8xl text-white mb-4"
+              className="mb-4 font-rozha text-5xl text-brand-darkRed md:text-7xl lg:text-8xl"
             >
               {title}
             </h1>
             {description ? (
-              <p className="font-montserrat text-base text-white/70 tracking-wide max-w-lg">
+              <p className="max-w-lg font-montserrat text-base tracking-wide text-brand-clayRed/85">
                 {description}
               </p>
             ) : null}
