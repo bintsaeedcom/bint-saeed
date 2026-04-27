@@ -314,7 +314,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="inline-flex items-center gap-2 rounded-full border border-brand-dustyBlue/45 bg-brand-dustyBlue/10 px-3 py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-brand-dustyBlue transition-colors duration-300 hover:border-brand-dustyBlue hover:bg-brand-dustyBlue/16 hover:text-brand-dustyBlue"
+                className="inline-flex items-center gap-2 border-b border-brand-dustyBlue/55 px-0 py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-brand-dustyBlue transition-colors duration-300 hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
                 data-cursor-hover
                 aria-label={t.nav.search}
               >
@@ -419,7 +419,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="rounded-full border border-brand-dustyBlue/45 bg-brand-dustyBlue/10 p-1.5 text-brand-dustyBlue transition-colors duration-300 hover:border-brand-dustyBlue hover:bg-brand-dustyBlue/16 hover:text-brand-dustyBlue"
+                className="p-1.5 text-brand-dustyBlue transition-colors duration-300 hover:text-brand-dustyBlue"
                 data-cursor-hover
                 aria-label={t.nav.search}
               >

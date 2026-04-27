@@ -69,6 +69,39 @@ function MagneticWrap({
   )
 }
 
+function SafeCarouselImage({
+  src,
+  alt,
+  className,
+  sizes,
+}: {
+  src: string
+  alt: string
+  className: string
+  sizes: string
+}) {
+  const fallbackSrc = '/collection-section/1.png'
+  const [resolvedSrc, setResolvedSrc] = useState(src || fallbackSrc)
+
+  useEffect(() => {
+    setResolvedSrc(src || fallbackSrc)
+  }, [src])
+
+  return (
+    <Image
+      src={resolvedSrc}
+      alt={alt}
+      fill
+      sizes={sizes}
+      className={className}
+      aria-hidden
+      onError={() => {
+        if (resolvedSrc !== fallbackSrc) setResolvedSrc(fallbackSrc)
+      }}
+    />
+  )
+}
+
 function ScrollMaskImage({
   src,
   alt,
@@ -260,9 +293,9 @@ export default function Home() {
     <div className={`relative min-h-0 overflow-x-clip ${isRTL ? 'rtl' : 'ltr'}`}>
       <HeroSection />
       <QuickShopCarousel />
+      <CharmHeroFeatureSection />
       <ThreePillarsBar />
       <EditorialIntro />
-      <CharmHeroFeatureSection />
       <MagazineGrid />
       <CreatedForYouSection />
       <EditorialSplit />
@@ -302,7 +335,7 @@ function ThreePillarsBar() {
                   : 'border-[color:var(--color-muted)]/20 bg-[#e8ddd4]'
               }`}
             >
-              <p className={`font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] ${idx === 1 ? 'text-[#e8d8c8]' : 'text-[#722030]'}`}>
+              <p className={`font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] ${idx === 1 ? 'text-[#e8d8c8]' : 'text-brand-dustyBlue'}`}>
                 {pillar.title}
               </p>
               <p className={`mt-2 font-montserrat text-[12px] leading-relaxed tracking-[0.02em] ${idx === 1 ? 'text-[#e8d8c8]' : 'text-[var(--color-ink)]/82'}`}>
@@ -341,7 +374,7 @@ function CharmHeroFeatureSection() {
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
             <div className="relative z-10 max-w-[640px]">
-            <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
+            <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
               Charm Feature
             </p>
             <h2 data-reveal className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
@@ -371,13 +404,6 @@ function CharmHeroFeatureSection() {
               >
                 Shop Charms
               </LocaleLink>
-              <LocaleLink
-                href="/personalisation"
-                className="inline-flex min-h-[44px] items-center rounded-xl border border-[var(--color-balance)] bg-[var(--color-balance)]/10 px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-balance)] transition-colors hover:bg-[var(--color-balance)]/18"
-                data-cursor-hover
-              >
-                Personalise
-              </LocaleLink>
             </div>
             </div>
           </div>
@@ -399,6 +425,71 @@ function CharmHeroFeatureSection() {
               <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-sovereign)]/72 via-[var(--color-signature)]/28 to-transparent" />
             </div>
           </LocaleLink>
+      </div>
+      <div className="grid min-h-[68vh] items-stretch border-t border-[#722030]/40 lg:grid-cols-2">
+        <LocaleLink
+          data-reveal
+          href="/accessories?category=abaya-charms"
+          className="group relative overflow-hidden bg-[var(--color-sovereign)]"
+          data-cursor-hover
+        >
+          <div className="relative h-full min-h-[68vh]">
+            <Image
+              src="/collection-section/5.jpg"
+              alt="Bint Saeed charm collection"
+              fill
+              sizes="(max-width: 1024px) 100vw, 58vw"
+              className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-sovereign)]/72 via-[var(--color-signature)]/28 to-transparent" />
+          </div>
+        </LocaleLink>
+
+        <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
+          <div className="absolute inset-0 opacity-28">
+            <Image
+              src="/background1.JPG"
+              alt="Bint Saeed charm collection"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-center"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
+          <div className="relative z-10 max-w-[640px]">
+            <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
+              Charm Feature
+            </p>
+            <h2 data-reveal className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
+              Natural Stone Charms
+            </h2>
+            <p data-reveal className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[#8a7a70]">
+              Designed for abayas, bags, and phone styling. Build your signature stack with curated stones and limited edition drops.
+            </p>
+
+            <div data-reveal className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+              {CHARM_SWATCHES.map((stone) => (
+                <span
+                  key={`mirror-${stone.name}`}
+                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-muted)]/25 bg-[var(--color-light)] px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink)]"
+                >
+                  <span className="h-2.5 w-2.5 rounded-full border border-[var(--color-ink)]/12" style={{ backgroundColor: stone.hex }} />
+                  {stone.name}
+                </span>
+              ))}
+            </div>
+
+            <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
+              <LocaleLink
+                href="/accessories?category=abaya-charms"
+                className="inline-flex min-h-[44px] items-center rounded-xl bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
+                data-cursor-hover
+              >
+                Shop Charms
+              </LocaleLink>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )
@@ -630,7 +721,7 @@ function QuickShopCarousel() {
     <section ref={sectionRef} data-story-section className="relative bg-brand-pageCanvas pb-14 pt-20 md:pb-18 md:pt-24 lg:pb-20 lg:pt-28">
       <SectionStripes variant="soft" />
       <div className="mx-auto mb-8 max-w-[1600px] px-6 lg:px-14">
-        <h2 data-reveal className="text-center font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed">
+        <h2 data-reveal className="text-center font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-dustyBlue">
           {isRTL ? 'تنسيقات مختارة' : 'CURATED STYLES'}
         </h2>
       </div>
@@ -663,21 +754,17 @@ function QuickShopCarousel() {
             >
               {/* Images must not capture hits — stacked fill layers steal taps from the link otherwise */}
               <div className="relative h-[20.95rem] w-full shrink-0 overflow-hidden bg-[#f3f0ea] md:h-[25.85rem] lg:h-[27.15rem]">
-                <Image
+                <SafeCarouselImage
                   src={product.images[0]}
                   alt={`${product.name} — product image | Bint Saeed`}
-                  fill
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
                   className="pointer-events-none object-cover object-top transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-visible:opacity-0 group-hover:scale-[1.03]"
-                  aria-hidden
                 />
-                <Image
+                <SafeCarouselImage
                   src={product.images[1] || product.images[0]}
                   alt={`${product.name} — alternate view | Bint Saeed`}
-                  fill
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
                   className="pointer-events-none object-cover object-center opacity-0 transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-visible:opacity-100 group-hover:scale-[1.03]"
-                  aria-hidden
                 />
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#1F0508]/22 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </div>
@@ -786,7 +873,7 @@ function HeroSection() {
   const introX = useTransform(scrollYProgress, [0, 1], [0, 14])
 
   return (
-    <section ref={ref} data-story-section className="section-full relative h-[100svh] w-full">
+    <section ref={ref} data-story-section className="section-full relative h-[calc(100svh-64px)] min-h-[70svh] w-full">
       <SectionStripes variant="hero" />
       {/* Background — pointer-events-none so scaled layer never steals clicks from hero links */}
       <motion.div
@@ -797,14 +884,14 @@ function HeroSection() {
           src="/hero-image.JPG"
           alt="Bint Saeed"
           fill
-          className="object-cover object-[center_28%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97]"
+          className="object-cover object-[center_18%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97]"
           sizes="100vw"
           priority
         />
       </motion.div>
 
       {/* Content — parallax on copy only; CTA stays untransformed for reliable hit-testing */}
-      <div className="relative z-20 flex h-full items-center pb-16 pt-24 lg:items-end lg:pb-24 lg:pt-0">
+      <div className="relative z-20 flex h-full items-center pb-10 pt-20 lg:items-end lg:pb-16 lg:pt-0">
         <div className="section-inner w-full">
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
             <div className={`min-w-0 lg:col-span-8 xl:col-span-7 ${isRTL ? 'lg:col-start-6' : ''}`}>
@@ -912,7 +999,7 @@ function EditorialIntro() {
             <div className="relative h-full min-h-[18rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#722030] bg-[#1a0210] p-[48px] shadow-none md:min-h-[21rem] lg:border-r lg:border-[#2a1e18]/10">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.16)_0%,transparent_62%)]" />
               <div className={`relative flex h-full flex-col justify-center ${isRTL ? 'items-start text-left' : 'items-end text-right'}`}>
-                <span className="mb-4 block font-montserrat text-[11px] uppercase tracking-[0.28em] text-[#c8b8a8]/78">
+                <span className="mb-4 block font-montserrat text-[11px] uppercase tracking-[0.28em] text-brand-dustyBlue">
                   From Abu Dhabi to the world
                 </span>
                 <p className="max-w-[26rem] font-rozha text-[clamp(20px,2.5vw,32px)] italic leading-[1.2] tracking-[-0.01em] text-[#e8d8c8]">
@@ -931,7 +1018,7 @@ function EditorialIntro() {
           >
             <div className="relative h-full border-y border-[#2a1e18]/10 bg-[#e8ddd4] p-[48px] shadow-none lg:border-r lg:border-[#2a1e18]/10">
               <div className="space-y-6">
-                <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">MANIFESTO</p>
+                <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">MANIFESTO</p>
                 <h2 className="font-rozha text-[clamp(18px,2vw,26px)] leading-[1.2] text-[#2a1e18]">
                   {MANIFESTO_LEAD}
                 </h2>
@@ -1003,7 +1090,7 @@ function MagazineGrid() {
           className={`mb-8 flex items-end justify-between md:mb-10 ${isRTL ? 'flex-row-reverse' : ''}`}
         >
           <div data-reveal>
-            <span className="mb-3 block font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
+            <span className="mb-3 block font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
               Collection Edit
             </span>
             <h2 className="font-rozha text-4xl text-[var(--color-ink)] md:text-5xl">The Collection</h2>
@@ -1020,30 +1107,37 @@ function MagazineGrid() {
           </LocaleLink>
         </motion.div>
 
-        <div data-collection-image-mask className="relative min-h-[82vh] rounded-2xl bg-[var(--color-light)] p-4 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-6 md:min-h-[86vh]">
+        <div data-collection-image-mask className="relative min-h-[76vh] rounded-2xl bg-[var(--color-light)] p-4 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-6 md:min-h-[80vh]">
           <div className="absolute inset-0">
             <Image
               src="/background3.jpg"
               alt="Collection backdrop"
               fill
               sizes="100vw"
-              className="object-cover object-center opacity-[0.34]"
+              className="object-cover object-center opacity-[0.18]"
             />
           </div>
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_10%,rgba(114,32,48,0.12)_0%,rgba(250,248,245,0.38)_68%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_10%,rgba(114,32,48,0.08)_0%,rgba(250,248,245,0.74)_68%)]" />
+          <div className="absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-[#faf8f5]/90 to-transparent md:w-40" />
+          <div className="absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-[#faf8f5]/90 to-transparent md:w-40" />
           <div className="relative flex h-full items-center justify-center">
             {collectionCards.map((card, index) => {
               const offset = index - activeIndex
               const absOffset = Math.abs(offset)
+              const isActive = index === activeIndex
               return (
                 <LocaleLink
                   key={card.label}
                   href={card.href}
-                  className={`group absolute left-1/2 top-1/2 block w-[min(84vw,560px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-[color:var(--color-muted)]/18 bg-[var(--color-ground)] shadow-[0_28px_64px_rgba(20,8,11,0.2)] transition-[transform,opacity] duration-900 ease-[cubic-bezier(0.22,1,0.36,1)]`}
+                  className={`group absolute left-1/2 top-1/2 block w-[min(84vw,620px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border bg-[var(--color-ground)] transition-[transform,opacity,box-shadow,border-color] duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    isActive
+                      ? 'border-[#722030]/40 shadow-[0_36px_74px_rgba(20,8,11,0.28)]'
+                      : 'border-[color:var(--color-muted)]/15 shadow-[0_20px_44px_rgba(20,8,11,0.16)]'
+                  }`}
                   style={{
                     zIndex: 50 - absOffset,
-                    opacity: absOffset > 2 ? 0 : absOffset === 2 ? 0.2 : absOffset === 1 ? 0.56 : 1,
-                    transform: `translate(-50%, -50%) translateX(${offset * 108}px) translateY(${absOffset * 18}px) scale(${1 - absOffset * 0.08})`,
+                    opacity: absOffset > 2 ? 0 : absOffset === 2 ? 0.1 : absOffset === 1 ? 0.42 : 1,
+                    transform: `translate(-50%, -50%) translateX(${offset * 126}px) translateY(${absOffset * 20}px) scale(${1 - absOffset * 0.09})`,
                   }}
                   data-cursor-hover
                   data-analytics-event="click_cta_home_to_collection"
@@ -1065,6 +1159,16 @@ function MagazineGrid() {
                 </LocaleLink>
               )
             })}
+          </div>
+          <div className="pointer-events-none absolute bottom-5 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-2">
+            {collectionCards.map((card, index) => (
+              <span
+                key={card.label}
+                className={`h-1.5 rounded-full transition-all duration-500 ${
+                  index === activeIndex ? 'w-8 bg-[#722030]' : 'w-2 bg-[#cdbfaf]'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -1099,14 +1203,14 @@ function EditorialSplit() {
         >
           <div className={`mb-5 flex items-end justify-between ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
             <div>
-              <p className="mb-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
+              <p className="mb-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
                 House Codes
               </p>
               <h2 className="font-rozha text-3xl text-[#2a1e18] md:text-4xl">The House Codes</h2>
             </div>
             <LocaleLink
               href="/the-codes"
-              className="inline-flex min-h-[40px] items-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-[#722030] transition-colors hover:text-[#2a1e18]"
+              className="inline-flex min-h-[40px] items-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue transition-colors hover:text-[#2a1e18]"
               data-cursor-hover
               data-analytics-event="click_view_collection_codes_page"
               data-analytics-section="home-codes-section"
@@ -1195,7 +1299,7 @@ function CreatedForYouSection() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className={`overflow-hidden rounded-2xl border border-[rgba(232,216,200,0.25)] bg-[#722030] px-6 py-8 shadow-[0_16px_42px_rgba(46,25,14,0.12)] md:px-10 md:py-10 ${isRTL ? 'text-right' : 'text-center'}`}
         >
-          <p className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">Carried Close</p>
+          <p className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">Carried Close</p>
           <h2 className="mx-auto max-w-3xl font-rozha text-4xl leading-tight text-[#e8d8c8] md:text-5xl">
             Give the gift of Bint Saeed
           </h2>
@@ -1204,7 +1308,7 @@ function CreatedForYouSection() {
           </p>
           <div className={`mt-7 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : 'justify-center'}`}>
             <LocaleLink
-              href="/personalisation"
+              href="/shop"
               className="inline-flex min-h-[46px] items-center rounded-xl bg-[#e8d8c8] px-6 font-montserrat text-[12px] uppercase tracking-[0.16em] text-[#722030] transition-colors hover:bg-[#f2e5d8]"
               data-cursor-hover
               data-analytics-event="click_personalisation_teaser"
