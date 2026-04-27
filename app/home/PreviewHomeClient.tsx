@@ -177,6 +177,10 @@ const MANIFESTO_SNIPPET = [
   'A house shaped by origin.',
   'Bint Saeed exists at the intersection of heritage and a contemporary life, carried across borders and recognised by its consistency.',
 ]
+const HOUSE_MOTION_EASE = 'power2.out'
+const HOUSE_REVEAL_DURATION = 1.25
+const HOUSE_MASK_DURATION = 1.45
+const HOUSE_CURTAIN_DURATION = 1.35
 
 export default function Home() {
   const { isRTL } = useLanguage()
@@ -193,16 +197,16 @@ export default function Home() {
         if (!revealTargets.length) return
         gsap.fromTo(
           revealTargets,
-          { autoAlpha: 0, y: 40 },
+          { autoAlpha: 0, y: 34 },
           {
             autoAlpha: 1,
             y: 0,
-            duration: 1.1,
-            ease: 'power2.out',
-            stagger: 0.12,
+            duration: HOUSE_REVEAL_DURATION,
+            ease: HOUSE_MOTION_EASE,
+            stagger: 0.16,
             scrollTrigger: {
               trigger: section,
-              start: 'top 82%',
+              start: 'top 84%',
               once: true,
             },
           },
@@ -216,8 +220,8 @@ export default function Home() {
           { clipPath: 'inset(0 0 100% 0 round 16px)' },
           {
             clipPath: 'inset(0 0 0% 0 round 16px)',
-            duration: 1.3,
-            ease: 'power2.out',
+            duration: HOUSE_MASK_DURATION,
+            ease: HOUSE_MOTION_EASE,
             scrollTrigger: {
               trigger: collectionMask,
               start: 'top 80%',
@@ -237,8 +241,8 @@ export default function Home() {
               clipPath: 'inset(0% 0 0 0 round 16px)',
               y: 0,
               autoAlpha: 1,
-              duration: 1.2,
-              ease: 'power2.out',
+              duration: HOUSE_CURTAIN_DURATION,
+              ease: HOUSE_MOTION_EASE,
               scrollTrigger: {
                 trigger: curtainSection,
                 start: 'top 78%',
@@ -1015,7 +1019,7 @@ function MagazineGrid() {
   const { t, isRTL } = useLanguage()
 
   return (
-    <section ref={ref} data-story-section data-collection-chapter className="section-full relative min-h-[92vh] overflow-hidden bg-[#faf8f5] py-10 md:py-12">
+    <section ref={ref} data-story-section data-collection-chapter className="section-full relative min-h-[96vh] overflow-hidden bg-[#faf8f5] py-10 md:py-12">
       <div className="section-inner">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -1116,9 +1120,9 @@ function EditorialSplit() {
       ScrollTrigger.create({
         trigger: ref.current,
         start: 'top top+=64',
-        end: '+=320%',
+        end: '+=360%',
         pin: pinRef.current,
-        scrub: 1,
+        scrub: 1.25,
         onUpdate: (self) => {
           const next = Math.min(storyCodes.length - 1, Math.floor(self.progress * storyCodes.length))
           setActiveIndex(next)
