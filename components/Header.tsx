@@ -314,7 +314,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="inline-flex items-center gap-2 py-1.5 font-montserrat text-[11px] uppercase tracking-[0.15em] text-white/82 transition-colors duration-300 hover:text-brand-dustyBlue"
+                className="inline-flex items-center gap-2 py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white/82 transition-colors duration-300 hover:text-brand-dustyBlue"
                 data-cursor-hover
                 aria-label={t.nav.search}
               >
@@ -330,7 +330,7 @@ export default function Header() {
                   key={item.label}
                   href={item.href}
                   onMouseEnter={() => setActiveMegaMenu(item.href)}
-                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 xl:text-[11px] xl:tracking-[0.15em] ${
+                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                     activeMegaMenu === item.href ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
                   }`}
                   data-cursor-hover
@@ -343,7 +343,7 @@ export default function Header() {
               <LocaleLink
                 href="/shop"
                 onMouseEnter={() => setActiveMegaMenu('/shop')}
-                className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 xl:text-[11px] xl:tracking-[0.15em] ${
+                className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                   activeMegaMenu === '/shop' ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
                 }`}
                 data-cursor-hover
@@ -514,7 +514,7 @@ export default function Header() {
                           <div className="relative aspect-[4/5] overflow-hidden bg-brand-stone/20">
                             <Image
                               src={feature.image}
-                              alt=""
+                              alt={`${feature.title} — featured collection | Bint Saeed`}
                               fill
                               sizes="(max-width: 1536px) 20vw, 300px"
                               className="pointer-events-none object-cover transition-transform duration-700 group-hover:scale-[1.03]"
@@ -713,7 +713,7 @@ export default function Header() {
                         data-analytics-event={getMainNavAnalyticsEvent(item.href)}
                         data-analytics-section="header-mobile-nav"
                       >
-                        <span className="min-w-0 flex-1 font-rozha text-2xl uppercase tracking-[0.06em] text-white max-[380px]:text-[clamp(1.125rem,5.5vw,1.5rem)]">
+                        <span className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white max-[380px]:text-[12px]">
                           {item.label}
                         </span>
                         <FiArrowRight

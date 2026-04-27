@@ -536,6 +536,50 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     pt:
       'Artesanato — padrões de atelier da Bint Saeed em Abu Dhabi para abayas de luxo com técnicas tradicionais e acabamentos finos.',
   },
+  personalisation: {
+    en:
+      'Every Bint Saeed piece includes a hidden pocket for a personal message. A name, a date, a private word — carried close, known only to you.',
+    ar:
+      'كل قطعة من Bint Saeed تتضمن جيباً مخفياً لرسالة شخصية: اسم، تاريخ، أو كلمة خاصة تُحمل بقربك.',
+    fr:
+      'Chaque pièce Bint Saeed inclut une poche cachée pour un message personnel: un nom, une date, un mot privé.',
+    it:
+      'Ogni capo Bint Saeed include una tasca nascosta per un messaggio personale: un nome, una data, una parola privata.',
+    es:
+      'Cada pieza Bint Saeed incluye un bolsillo oculto para un mensaje personal: un nombre, una fecha o una palabra privada.',
+    ru:
+      'Каждое изделие Bint Saeed включает скрытый карман для личного послания: имя, дата или важное слово.',
+    zh:
+      '每件 Bint Saeed 单品都包含隐藏口袋，可放入姓名、日期或私密文字。',
+    de:
+      'Jedes Bint Saeed Stück enthält eine versteckte Tasche für eine persönliche Botschaft: Name, Datum oder privates Wort.',
+    nl:
+      'Elk Bint Saeed stuk heeft een verborgen zakje voor een persoonlijke boodschap: naam, datum of privéwoord.',
+    pt:
+      'Cada peça Bint Saeed inclui um bolso escondido para mensagem pessoal: nome, data ou palavra privada.',
+  },
+  charms: {
+    en:
+      'The first abaya charm system. Swap your natural stone charm to match your mood, your bag, your story. Onyx, jade, amethyst, aventurine and more.',
+    ar:
+      'أول نظام لتعليقات العباءة القابلة للتبديل بالأحجار الطبيعية: أونيكس، يشم، جمشت، أفينتورين وأكثر.',
+    fr:
+      'Le premier système de charms pour abaya: changez votre pierre naturelle selon votre style — onyx, jade, améthyste, aventurine et plus.',
+    it:
+      'Il primo sistema di charm per abaya: cambia la pietra naturale in base al tuo stile — onice, giada, ametista, avventurina e altro.',
+    es:
+      'El primer sistema de charms para abaya: cambia tu piedra natural según tu estilo — ónix, jade, amatista, aventurina y más.',
+    ru:
+      'Первая система подвесок для абайи: меняйте натуральные камни под настроение — оникс, нефрит, аметист, авантюрин и другие.',
+    zh:
+      '首个阿巴亚可替换吊饰系统：根据心情与造型切换天然石材，如玛瑙、玉石、紫水晶、东陵石等。',
+    de:
+      'Das erste Abaya-Charmsystem: Natursteine je nach Stimmung wechseln — Onyx, Jade, Amethyst, Aventurin und mehr.',
+    nl:
+      'Het eerste abaya-charm systeem: wissel natuursteen naar stijl en stemming — onyx, jade, amethist, aventurijn en meer.',
+    pt:
+      'O primeiro sistema de charms para abaya: troque pedras naturais conforme o seu estilo — ónix, jade, ametista, aventurina e mais.',
+  },
   product_care: {
     en:
       'Product care — guidance for Bint Saeed luxury abayas and fabrics from Abu Dhabi: storage, cleaning and longevity tips for UAE climates.',

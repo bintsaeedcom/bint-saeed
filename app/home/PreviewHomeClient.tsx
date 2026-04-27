@@ -590,7 +590,7 @@ function QuickShopCarousel() {
               <div className="relative h-[20.95rem] w-full shrink-0 overflow-hidden bg-[#f3f0ea] md:h-[25.85rem] lg:h-[27.15rem]">
                 <Image
                   src={product.images[0]}
-                  alt=""
+                  alt={`${product.name} — product image | Bint Saeed`}
                   fill
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
                   className="pointer-events-none object-cover object-top transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-visible:opacity-0 group-hover:scale-[1.03]"
@@ -598,7 +598,7 @@ function QuickShopCarousel() {
                 />
                 <Image
                   src={product.images[1] || product.images[0]}
-                  alt=""
+                  alt={`${product.name} — alternate view | Bint Saeed`}
                   fill
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
                   className="pointer-events-none object-cover object-center opacity-0 transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-visible:opacity-100 group-hover:scale-[1.03]"
@@ -774,12 +774,12 @@ function HeroSection() {
             <div className={`min-w-0 lg:col-span-8 xl:col-span-7 ${isRTL ? 'lg:col-start-6' : ''}`}>
               {/* initial={false}: avoid opacity:0 inline styles before hydration (looked "broken" / blank UI) */}
               <motion.div style={{ y }} className="pointer-events-none">
-                <motion.h1 data-document-h1="true"
+                <motion.h1 data-document-h1="true" data-hero-h1="true"
                   initial={false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   style={reduceMotion ? undefined : { y: titleY, letterSpacing: titleTracking }}
-                  className="mb-8 max-w-[100vw] font-rozha uppercase leading-[1.12] tracking-[0.06em] !text-brand-ivory text-[clamp(0.7rem,calc(0.35rem+2.15vw),2.65rem)] sm:text-[clamp(0.85rem,calc(0.4rem+2.35vw),2.75rem)] md:text-[clamp(0.95rem,calc(0.45rem+2.5vw),2.85rem)] md:whitespace-nowrap"
+                  className="mb-8 max-w-[85vw] font-rozha uppercase !text-brand-ivory md:max-w-[100vw] md:whitespace-nowrap"
                 >
                   {typedHeadline}
                   {!reduceMotion && typedHeadline.length < heroHeadline.length ? (

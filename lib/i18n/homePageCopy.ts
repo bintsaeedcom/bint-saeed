@@ -68,7 +68,7 @@ export function getHomeDefaultTitle(locale: AppLocale): string {
 }
 
 const HOME_OG_TITLE: Record<AppLocale, string> = {
-  en: HOME_META_TITLE_EN,
+  en: 'Bint Saeed | Luxury Abaya House',
   ar: 'Bint Saeed | دار عبايات فاخرة — أبوظبي',
   fr: 'Bint Saeed | Abayas de luxe — Abu Dhabi',
   it: 'Bint Saeed | Abaya di lusso — Abu Dhabi',

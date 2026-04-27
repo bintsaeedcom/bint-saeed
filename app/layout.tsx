@@ -38,6 +38,7 @@ export default async function RootLayout({
   const [locale, pathname] = await Promise.all([getServerLocale(), getServerPathname()])
   const path = (pathname.split('?')[0] || '/').replace(/\/$/, '') || '/'
   const isFaqPath = path === '/faq' || path.startsWith('/faq/')
+  const isHomePath = path === '/' || path === '/home'
 
   const organizationSchema = buildOrganizationJsonLd(locale)
   const brandSchemaLd = buildBrandJsonLd(locale)
@@ -74,7 +75,7 @@ export default async function RootLayout({
         {/* Fonts outside globals.css: if these fail (privacy/ad-block), site CSS still loads */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Rozha+One&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Montserrat:wght@300;400;500;600&display=swap"
         />
         <link
           rel="stylesheet"
@@ -129,6 +130,45 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: supplementalLdJson }}
         />
+        {isHomePath ? (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'ClothingStore',
+                name: 'Bint Saeed',
+                description:
+                  'Luxury abaya house from Abu Dhabi. Crafted to order abayas with natural stone charms and hidden personalisation.',
+                url: 'https://www.bintsaeed.com',
+                logo: 'https://www.bintsaeed.com/logo.png',
+                address: {
+                  '@type': 'PostalAddress',
+                  addressLocality: 'Abu Dhabi',
+                  addressCountry: 'AE',
+                },
+                sameAs: ['https://www.instagram.com/bintsaeed'],
+                priceRange: 'AED 2000 - AED 3500',
+                currenciesAccepted: 'AED',
+                paymentAccepted: 'Credit Card, Apple Pay',
+                openingHoursSpecification: {
+                  '@type': 'OpeningHoursSpecification',
+                  dayOfWeek: [
+                    'Monday',
+                    'Tuesday',
+                    'Wednesday',
+                    'Thursday',
+                    'Friday',
+                    'Saturday',
+                    'Sunday',
+                  ],
+                  opens: '00:00',
+                  closes: '23:59',
+                },
+              }),
+            }}
+          />
+        ) : null}
 
         {/* Bing Webmaster verification */}
         <meta name="msvalidate.01" content="7BA982E3BEF4E04896CC719115678C24" />

@@ -5,7 +5,7 @@ import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 
-const BASE = new URL('https://bintsaeed.com')
+const BASE = new URL('https://www.bintsaeed.com')
 
 const OG_HERO_IMAGE_ALT: Record<AppLocale, string> = {
   en: 'Bint Saeed — luxury abaya house, Abu Dhabi',
@@ -93,6 +93,10 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
     : { absolute: meta.title }
 
   const ogTitle = meta.ogTitle
+  const ogDescription =
+    locale === 'en' && usesHomeMetadata(pathname)
+      ? 'Crafted to order abayas with natural stone charms. Made in Abu Dhabi, worn worldwide.'
+      : clipMetaDescription(desc, 200)
   const twTitle = ogTitle
   const twDesc = clipMetaDescription(desc, 200)
 
@@ -118,23 +122,23 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
     },
     openGraph: {
       title: ogTitle,
-      description: clipMetaDescription(desc, 200),
+      description: ogDescription,
       url: canonicalUrl,
       siteName: 'Bint Saeed',
       locale: OG_LOCALE[locale],
       type: 'website',
       images: [
         {
-          url: 'https://bintsaeed.com/hero-bintsaeed.jpg',
-          secureUrl: 'https://bintsaeed.com/hero-bintsaeed.jpg',
+          url: 'https://www.bintsaeed.com/hero-bintsaeed.jpg',
+          secureUrl: 'https://www.bintsaeed.com/hero-bintsaeed.jpg',
           width: 1920,
           height: 1080,
           type: 'image/jpeg',
           alt: OG_HERO_IMAGE_ALT[locale],
         },
         {
-          url: 'https://bintsaeed.com/og-image.png',
-          secureUrl: 'https://bintsaeed.com/og-image.png',
+          url: 'https://www.bintsaeed.com/hero-bintsaeed.jpg',
+          secureUrl: 'https://www.bintsaeed.com/hero-bintsaeed.jpg',
           width: 1200,
           height: 630,
           type: 'image/png',
@@ -146,7 +150,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       card: 'summary_large_image',
       title: twTitle,
       description: twDesc,
-      images: ['https://bintsaeed.com/hero-bintsaeed.jpg', 'https://bintsaeed.com/og-image.png'],
+      images: ['https://www.bintsaeed.com/hero-bintsaeed.jpg'],
       creator: '@bintsaeed_brand',
       site: '@bintsaeed_brand',
     },
@@ -174,7 +178,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       'apple-mobile-web-app-capable': 'yes',
       'apple-mobile-web-app-status-bar-style': 'black-translucent',
       'format-detection': 'telephone=no',
-      'msapplication-TileColor': '#3B0A12',
+      'msapplication-TileColor': '#1a0210',
       ...aiOther(locale),
     },
   }

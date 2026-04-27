@@ -197,6 +197,26 @@ export default function ProductPage() {
   const sizeAndMeasurementDetails = [product.measurements, ...fitAndSizeDetails]
   const isVideoFile = (src: string) => /\.(mp4|mov|webm|ogg)$/i.test(src)
   const isHeicFile = (src: string) => /\.(heic|heif)$/i.test(src)
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    brand: {
+      '@type': 'Brand',
+      name: 'Bint Saeed',
+    },
+    description: product.description,
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'AED',
+      price: String(product.price),
+      availability: 'https://schema.org/InStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'Bint Saeed',
+      },
+    },
+  }
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -264,6 +284,7 @@ export default function ProductPage() {
 
   return (
     <div className="min-h-screen bg-brand-pageCanvas">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       {/* Breadcrumb */}
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
         <div className="mx-auto min-w-0 max-w-[1280px] px-6 lg:px-10">
@@ -330,14 +351,14 @@ export default function ProductPage() {
                         ) : isHeicFile(image) ? (
                           <img
                             src={image}
-                            alt=""
+                            alt={`${product.name} — thumbnail ${index + 1} | Bint Saeed`}
                             className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             loading="lazy"
                           />
                         ) : (
                           <Image
                             src={image}
-                            alt=""
+                            alt={`${product.name} — thumbnail ${index + 1} | Bint Saeed`}
                             fill
                             sizes="76px"
                             className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
@@ -465,14 +486,14 @@ export default function ProductPage() {
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
-                              alt=""
+                              alt={`${product.name} — thumbnail ${index + 1} | Bint Saeed`}
                               className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                               loading="lazy"
                             />
                           ) : (
                             <Image
                               src={image}
-                              alt=""
+                              alt={`${product.name} — thumbnail ${index + 1} | Bint Saeed`}
                               fill
                               sizes="120px"
                               className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"

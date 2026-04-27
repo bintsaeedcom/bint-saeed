@@ -259,7 +259,13 @@ export default function CheckoutPage() {
                 {items.map((item) => (
                   <li key={lineKey(item)} className="flex gap-4 py-5 first:pt-0">
                     <LocaleLink href={productHref(item)} className="relative h-24 w-20 shrink-0 overflow-hidden bg-[#f0eeeb]" data-cursor-hover>
-                      <Image src={item.image} alt="" fill className="img-zoom object-cover object-top" sizes="80px" />
+                      <Image
+                        src={item.image}
+                        alt={`${item.name} — cart item image | Bint Saeed`}
+                        fill
+                        className="img-zoom object-cover object-top"
+                        sizes="80px"
+                      />
                     </LocaleLink>
                     <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
                       <LocaleLink

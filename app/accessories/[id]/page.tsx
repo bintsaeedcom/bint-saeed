@@ -161,6 +161,26 @@ export default function AccessoryDetailPage() {
     : 'lg:grid-cols-[4.75rem_minmax(0,1fr)]'
 
   const displayName = isRTL ? accessory.nameAr : accessory.name
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: displayName,
+    brand: {
+      '@type': 'Brand',
+      name: 'Bint Saeed',
+    },
+    description: isRTL ? accessory.descriptionAr : accessory.description,
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'AED',
+      price: String(accessory.price),
+      availability: 'https://schema.org/InStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'Bint Saeed',
+      },
+    },
+  }
 
   useEffect(() => {
     trackEvent('view_item', {
@@ -174,6 +194,7 @@ export default function AccessoryDetailPage() {
 
   return (
     <div className="min-h-screen bg-brand-pageCanvas">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       {/* Breadcrumb — same shell as `/shop/[id]` */}
       <div className="pt-28 pb-6 border-b border-brand-stone/20">
         <div className="mx-auto min-w-0 max-w-[1280px] px-6 lg:px-10">
@@ -244,14 +265,14 @@ export default function AccessoryDetailPage() {
                         ) : isHeicFile(image) ? (
                           <img
                             src={image}
-                            alt=""
+                            alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
                             className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             loading="lazy"
                           />
                         ) : (
                           <Image
                             src={image}
-                            alt=""
+                            alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
                             fill
                             sizes="76px"
                             className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
@@ -385,14 +406,14 @@ export default function AccessoryDetailPage() {
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
-                              alt=""
+                              alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
                               className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                               loading="lazy"
                             />
                           ) : (
                             <Image
                               src={image}
-                              alt=""
+                              alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
                               fill
                               sizes="120px"
                               className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"

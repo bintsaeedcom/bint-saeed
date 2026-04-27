@@ -112,7 +112,13 @@ export default function AdminProductsPage() {
               >
                 <div className="relative h-28 w-20 shrink-0 overflow-hidden rounded-lg bg-stone-800 sm:h-32 sm:w-24">
                   {r.image ? (
-                    <Image src={r.image} alt="" fill className="object-cover" sizes="96px" />
+                    <Image
+                      src={r.image}
+                      alt={`${r.name} — product thumbnail | Bint Saeed`}
+                      fill
+                      className="object-cover"
+                      sizes="96px"
+                    />
                   ) : null}
                 </div>
                 <div className="min-w-0 flex-1 space-y-3">

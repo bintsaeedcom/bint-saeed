@@ -29,6 +29,7 @@ export function classifyRouteMetaKey(pathname: string): RouteMetaKey {
   if (p.startsWith('/heritage/sadu')) return 'heritage_sadu'
   if (p.startsWith('/heritage')) return 'heritage'
   if (p.startsWith('/accessories/')) return 'accessories_product'
+  if (p.startsWith('/charms')) return 'charms'
   if (p.startsWith('/accessories')) return 'accessories'
   if (p.startsWith('/checkout/success')) return 'checkout_success'
   if (p.startsWith('/checkout')) return 'checkout'
@@ -43,7 +44,8 @@ export function classifyRouteMetaKey(pathname: string): RouteMetaKey {
   if (p.startsWith('/verify-email')) return 'verify_email'
   if (p.startsWith('/the-codes')) return 'the_codes'
   if (p.startsWith('/craftsmanship')) return 'craftsmanship'
-  if (p.startsWith('/product-care') || p.startsWith('/personalisation')) return 'product_care'
+  if (p.startsWith('/personalisation')) return 'personalisation'
+  if (p.startsWith('/product-care')) return 'product_care'
   if (p.startsWith('/giving-forward')) return 'giving_forward'
   if (p.startsWith('/careers')) return 'careers'
   if (
@@ -338,6 +340,30 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Handwerk | Bint Saeed',
     nl: 'Vakmanschap | Bint Saeed',
     pt: 'Artesanato | Bint Saeed',
+  },
+  personalisation: {
+    en: 'Personalise Your Abaya — Hidden Pocket | Bint Saeed',
+    ar: 'التخصيص — الجيب المخفي | Bint Saeed',
+    fr: 'Personnalisation — poche cachée | Bint Saeed',
+    it: 'Personalizzazione — tasca nascosta | Bint Saeed',
+    es: 'Personalización — bolsillo oculto | Bint Saeed',
+    ru: 'Персонализация — скрытый карман | Bint Saeed',
+    zh: '个性化定制 — 隐藏口袋 | Bint Saeed',
+    de: 'Personalisierung — versteckte Tasche | Bint Saeed',
+    nl: 'Personalisatie — verborgen zakje | Bint Saeed',
+    pt: 'Personalização — bolso escondido | Bint Saeed',
+  },
+  charms: {
+    en: 'Abaya Charms — Natural Stone Customisation | Bint Saeed',
+    ar: 'تعليقات العباءة — تخصيص بالأحجار الطبيعية | Bint Saeed',
+    fr: 'Breloques d’abaya — pierres naturelles | Bint Saeed',
+    it: 'Charm per abaya — pietre naturali | Bint Saeed',
+    es: 'Charms para abaya — piedras naturales | Bint Saeed',
+    ru: 'Подвески для абайи — натуральные камни | Bint Saeed',
+    zh: '阿巴亚吊饰 — 天然宝石定制 | Bint Saeed',
+    de: 'Abaya-Charms — Naturstein-Anpassung | Bint Saeed',
+    nl: 'Abaya-charms — natuursteen personalisatie | Bint Saeed',
+    pt: 'Charms de abaya — pedras naturais | Bint Saeed',
   },
   product_care: {
     en: 'Product care | Bint Saeed',
