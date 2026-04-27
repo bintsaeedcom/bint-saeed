@@ -18,7 +18,7 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
       wheelMultiplier: 0.9,
       touchMultiplier: 0.8,
       smoothWheel: true,
-      syncTouch: true,
+      syncTouch: false,
       autoRaf: false,
       easing: (t) => 1 - Math.pow(1 - t, 3),
     })
@@ -27,7 +27,8 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
     lenis.on('scroll', onScroll)
 
     const raf = (time: number) => {
-      lenis.raf(time)
+      // GSAP ticker time is in seconds; Lenis expects milliseconds.
+      lenis.raf(time * 1000)
     }
 
     gsap.ticker.add(raf)

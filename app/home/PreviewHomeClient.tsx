@@ -1163,22 +1163,24 @@ function EditorialSplit() {
             </LocaleLink>
           </div>
 
-          <div className="relative min-h-[62vh] overflow-hidden rounded-xl border border-[#e8ddd4]/85 bg-[#efe7df]">
+          <div className="relative min-h-[62vh] rounded-xl border border-[#e8ddd4]/85 bg-[#efe7df] p-4 md:p-6">
             {storyCodes.map((code, index) => (
               <div
                 key={code.title}
                 className={`absolute inset-0 transition-opacity duration-700 ${index === activeIndex ? 'opacity-100' : 'opacity-0'}`}
               >
-                <div className="relative h-full w-full">
+                <div className="flex h-full w-full items-center justify-center">
+                  <div className="relative aspect-[3/4] w-[min(86%,420px)] overflow-hidden rounded-xl">
                   <Image
                     src={code.image}
                     alt={code.title}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 48vw"
+                    sizes="(max-width: 1024px) 90vw, 420px"
                     className="object-cover object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1a0210]/40 via-transparent to-transparent" />
                   <p className="absolute bottom-6 left-6 font-rozha text-3xl text-[#e8d8c8] md:text-4xl">{code.title}</p>
+                </div>
                 </div>
               </div>
             ))}

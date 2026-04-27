@@ -70,6 +70,8 @@ export default function CurrencySwitcher({
     QAR: '🇶🇦',
     BHD: '🇧🇭',
     OMR: '🇴🇲',
+    RUB: '🇷🇺',
+    CNY: '🇨🇳',
   }
 
   return (

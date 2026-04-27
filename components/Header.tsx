@@ -261,8 +261,8 @@ export default function Header() {
                     height={210}
                     className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
                       isScrolled
-                        ? 'h-[clamp(2.25rem,6vw,3.25rem)] max-h-[56px] sm:max-h-[60px] md:max-h-[64px]'
-                        : 'h-[clamp(2.85rem,9vw,4.5rem)] max-h-[76px] sm:max-h-[88px] md:h-[clamp(3.15rem,8vw,5rem)] md:max-h-[96px] lg:max-h-[108px] xl:max-h-[118px]'
+                        ? 'h-[clamp(2.5rem,6.2vw,3.4rem)] max-h-[64px] sm:max-h-[68px] md:max-h-[72px]'
+                        : 'h-[clamp(3rem,9.2vw,4.7rem)] max-h-[82px] sm:max-h-[94px] md:h-[clamp(3.25rem,8.3vw,5.2rem)] md:max-h-[102px] lg:max-h-[114px] xl:max-h-[124px]'
                     }`}
                     priority
                   />
@@ -280,16 +280,16 @@ export default function Header() {
                     height={210}
                     className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
                       isScrolled
-                        ? 'h-[clamp(2.25rem,6vw,3.25rem)] max-h-[56px] sm:max-h-[60px] md:max-h-[64px]'
-                        : 'h-[clamp(2.85rem,9vw,4.5rem)] max-h-[76px] sm:max-h-[88px] md:h-[clamp(3.15rem,8vw,5rem)] md:max-h-[96px] lg:max-h-[108px] xl:max-h-[118px]'
+                        ? 'h-[clamp(2.5rem,6.2vw,3.4rem)] max-h-[64px] sm:max-h-[68px] md:max-h-[72px]'
+                        : 'h-[clamp(3rem,9.2vw,4.7rem)] max-h-[82px] sm:max-h-[94px] md:h-[clamp(3.25rem,8.3vw,5.2rem)] md:max-h-[102px] lg:max-h-[114px] xl:max-h-[124px]'
                     }`}
                     priority
                   />
                 </LocaleLink>
               )}
 
-              <div className="absolute inset-y-0 right-0 hidden items-center xl:flex">
-                <div className="flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.03] px-3 py-1.5">
+              <div className="absolute right-2 top-2 z-[62] flex items-center sm:right-3 sm:top-3">
+                <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-2.5 py-1">
                   <CurrencySwitcher variant="light" showSymbol={false} />
                   <span className="h-4 w-px bg-white/15" aria-hidden />
                   <LanguageSwitcher variant="light" />
@@ -325,6 +325,18 @@ export default function Header() {
 
             {/* Center: Navigation — desktop */}
             <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-center gap-4 lg:flex xl:gap-7">
+              <LocaleLink
+                href="/shop"
+                onMouseEnter={() => setActiveMegaMenu('/shop')}
+                className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                  activeMegaMenu === '/shop' ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
+                }`}
+                data-cursor-hover
+                data-analytics-event="click_cta_home_to_collection"
+                data-analytics-section="header-main-nav"
+              >
+                Shop Now
+              </LocaleLink>
               {navItems.map((item) => (
                 <LocaleLink
                   key={item.label}
@@ -340,18 +352,6 @@ export default function Header() {
                   {item.label}
                 </LocaleLink>
               ))}
-              <LocaleLink
-                href="/shop"
-                onMouseEnter={() => setActiveMegaMenu('/shop')}
-                className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                  activeMegaMenu === '/shop' ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
-                }`}
-                data-cursor-hover
-                data-analytics-event="click_cta_home_to_collection"
-                data-analytics-section="header-main-nav"
-              >
-                Shop Now
-              </LocaleLink>
             </nav>
 
             {/* Mobile: menu (row 2 only — brand is row 1) */}
@@ -372,10 +372,6 @@ export default function Header() {
 
             {/* Right: account, wishlist, cart */}
             <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-3 lg:flex xl:gap-5">
-              <div className="mr-2 flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-2 py-1 xl:hidden">
-                <CurrencySwitcher variant="light" showSymbol={false} />
-                <LanguageSwitcher variant="light" />
-              </div>
               <button
                 type="button"
                 onClick={() => {
@@ -420,11 +416,6 @@ export default function Header() {
 
             {/* Compact utility row when hamburger layout is active */}
             <div className="relative z-[55] flex w-10 shrink-0 items-center justify-end gap-1.5 sm:w-auto sm:gap-2 lg:gap-3 lg:hidden">
-              <div className="hidden md:flex items-center gap-2 pr-2 border-r border-white/15">
-                <CurrencySwitcher variant="light" showSymbol={false} />
-                <LanguageSwitcher variant="light" />
-              </div>
-
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
