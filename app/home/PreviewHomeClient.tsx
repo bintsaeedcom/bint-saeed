@@ -408,8 +408,8 @@ function CharmHeroFeatureSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="section-full bs-full-bleed relative overflow-hidden bg-transparent py-0">
-      <div className="grid min-h-[68vh] w-full items-stretch lg:grid-cols-2">
+    <section data-story-section className="section-full bs-full-bleed relative mx-0 overflow-hidden bg-transparent py-0">
+      <div className="grid min-h-[68vh] w-screen max-w-none items-stretch lg:grid-cols-2">
           <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
             <div className="absolute inset-0 opacity-25">
               <Image
@@ -482,8 +482,8 @@ function CharmHeroFeatureSectionMirror() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="section-full bs-full-bleed relative overflow-hidden bg-transparent py-0">
-      <div className="grid min-h-[68vh] w-full items-stretch lg:grid-cols-2">
+    <section data-story-section className="section-full bs-full-bleed relative mx-0 overflow-hidden bg-transparent py-0">
+      <div className="grid min-h-[68vh] w-screen max-w-none items-stretch lg:grid-cols-2">
         <LocaleLink
           data-reveal
           href="/accessories?category=abaya-charms"
@@ -498,13 +498,11 @@ function CharmHeroFeatureSectionMirror() {
               sizes="(max-width: 1024px) 100vw, 58vw"
               className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(114,32,48,0.48)_0%,rgba(114,32,48,0.24)_45%,rgba(114,32,48,0.32)_100%)]" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/90 via-[#1a0210]/74 to-transparent" />
           </div>
         </LocaleLink>
 
         <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
-          <div className="absolute inset-0 opacity-18">
+          <div className="absolute inset-0 opacity-25">
             <Image
               src="/background1.JPG"
               alt="Bint Saeed charm collection"
@@ -513,8 +511,8 @@ function CharmHeroFeatureSectionMirror() {
               className="object-cover object-center"
             />
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(114,32,48,0.62)_0%,rgba(114,32,48,0.38)_45%,rgba(114,32,48,0.52)_100%)]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/98 via-[#1a0210]/94 to-[#1a0210]/90" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(114,32,48,0.44)_0%,rgba(114,32,48,0.18)_45%,rgba(114,32,48,0.28)_100%)]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
           <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
               Carried Close

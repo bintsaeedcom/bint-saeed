@@ -305,15 +305,6 @@ export default function Header() {
               <div className="absolute right-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center gap-0.5 lg:hidden">
                 <button
                   type="button"
-                  onClick={() => setIsSearchOpen(true)}
-                  className="p-1.5 text-brand-dustyBlue transition-colors duration-300 hover:text-brand-dustyBlue"
-                  data-cursor-hover
-                  aria-label={t.nav.search}
-                >
-                  <FiSearch className="h-[17px] w-[17px]" />
-                </button>
-                <button
-                  type="button"
                   onClick={() => setIsMiniCartOpen(true)}
                   className="relative p-1.5 text-white/75 transition-colors duration-300 hover:text-white"
                   data-cursor-hover
@@ -836,6 +827,18 @@ export default function Header() {
               <div className="border-t border-white/10 px-6 pb-[max(1.75rem,env(safe-area-inset-bottom,0px))] pt-5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-5">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false)
+                        setIsSearchOpen(true)
+                      }}
+                      className="text-white/70 hover:text-white transition-colors"
+                      data-cursor-hover
+                      aria-label={t.nav.search}
+                    >
+                      <FiSearch className="w-6 h-6" />
+                    </button>
                     <LocaleLink
                       href="/cart"
                       onClick={() => setIsMobileMenuOpen(false)}
