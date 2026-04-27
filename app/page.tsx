@@ -79,13 +79,13 @@ export default function ComingSoonPage() {
             <div className="w-full h-full bg-gradient-to-r from-brand-dustyBlue/50 via-brand-stone/30 to-brand-dustyBlue/50 rounded-full" />
           </div>
           
-          {/* Main Logo - MUCH BIGGER */}
+          {/* Main Logo */}
           <Image
             src="/gold logo.png"
             alt="Bint Saeed"
             width={800}
             height={240}
-            className="w-auto h-36 sm:h-40 md:h-48 lg:h-56 xl:h-64 relative z-10"
+            className="relative z-10 h-24 w-auto sm:h-28 md:h-32 lg:h-36 xl:h-40"
             priority
           />
           
@@ -99,7 +99,7 @@ export default function ComingSoonPage() {
           className="text-center mb-6 md:mb-8"
         >
           <motion.h1 data-document-h1="true" 
-            className="font-rozha text-3xl sm:text-4xl md:text-5xl tracking-[0.2em] md:tracking-[0.3em] text-[#a8bfd4] drop-shadow-[0_2px_14px_rgba(146,170,193,0.34)]"
+            className="font-rozha text-3xl sm:text-4xl md:text-5xl tracking-[0.2em] md:tracking-[0.3em] text-[#AFC8DE] drop-shadow-[0_2px_16px_rgba(175,200,222,0.5)]"
             initial={{ letterSpacing: '0.5em', opacity: 0 }}
             animate={{ letterSpacing: '0.2em', opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.6 }}
