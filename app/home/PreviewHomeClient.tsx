@@ -546,7 +546,7 @@ function CampaignPanoramaSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#f6f2eb] py-0">
+    <section className="section-full bs-full-bleed relative w-full overflow-hidden bg-[#f6f2eb] py-0">
       <SectionStripes variant="soft" />
       <div className="relative w-full">
         <div className="relative aspect-[16/6] min-h-[220px] w-full overflow-hidden bg-brand-stone/15 md:min-h-[280px] lg:min-h-[360px]">
@@ -762,8 +762,6 @@ function QuickShopCarousel() {
         : -(phasePct / 100) * segmentPx
       : 0
 
-  const sliderLabel = isRTL ? 'تحريك المعرض' : 'Scroll the curated selection'
-
   return (
     <section ref={sectionRef} data-story-section className="relative bg-brand-pageCanvas pb-14 pt-20 md:pb-18 md:pt-24 lg:pb-20 lg:pt-28">
       <SectionStripes variant="soft" />
@@ -851,12 +849,6 @@ function QuickShopCarousel() {
 
       {quickProducts.length > 0 ? (
         <div className="pointer-events-auto relative z-[4] mx-auto mt-8 max-w-xl px-8 md:px-10">
-          <label
-            htmlFor="quick-shop-carousel-scrub"
-            className="mb-2 block text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed/55"
-          >
-            {sliderLabel}
-          </label>
           <input
             id="quick-shop-carousel-scrub"
             type="range"
@@ -1196,16 +1188,16 @@ function EditorialSplit() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className={`mb-5 flex items-end justify-between ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
+          <div className={`mb-5 flex flex-col items-start gap-2 md:flex-row md:items-end md:justify-between ${isRTL ? 'md:flex-row-reverse md:text-right' : ''}`}>
             <div>
               <p className="mb-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
                 House Codes
               </p>
-              <h2 className="font-rozha text-3xl uppercase text-[#2a1e18] md:text-4xl">THE HOUSE CODES</h2>
+              <h2 className="font-rozha text-[32px] uppercase leading-none whitespace-nowrap text-[#2a1e18] md:text-4xl">THE HOUSE CODES</h2>
             </div>
             <LocaleLink
               href="/the-codes"
-              className="inline-flex min-h-[40px] items-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue transition-colors hover:text-[#2a1e18]"
+              className="inline-flex min-h-[32px] items-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue transition-colors hover:text-[#2a1e18] md:min-h-[40px]"
               data-cursor-hover
               data-analytics-event="click_view_collection_codes_page"
               data-analytics-section="home-codes-section"
@@ -1214,13 +1206,17 @@ function EditorialSplit() {
             </LocaleLink>
           </div>
 
-          <div className="md:hidden">
-            <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto border-t border-[#e8ddd4] pb-2 pt-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-              {storyCodes.map((code) => (
+          <div className="overflow-hidden border-t border-[#e8ddd4] md:hidden">
+            <motion.div
+              className="flex w-max gap-3 py-2"
+              animate={{ x: ['0%', '-50%'] }}
+              transition={{ duration: 26, repeat: Infinity, ease: 'linear' }}
+            >
+              {[...storyCodes, ...storyCodes].map((code, index) => (
                 <LocaleLink
-                  key={code.title}
+                  key={`${code.title}-${index}`}
                   href="/the-codes"
-                  className="group w-[78vw] min-w-[78vw] shrink-0 snap-start p-3 text-left transition-colors hover:bg-[#f5f0ea]"
+                  className="group w-[76vw] min-w-[76vw] shrink-0 p-3 text-left transition-colors"
                   data-cursor-hover
                 >
                   <div className="relative mb-3 aspect-[3/4] w-full overflow-hidden rounded-lg border border-[#e8ddd4] bg-[#f7f3ee]">
@@ -1228,7 +1224,7 @@ function EditorialSplit() {
                       src={code.image}
                       alt={code.title}
                       fill
-                      sizes="78vw"
+                      sizes="76vw"
                       className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
                     />
                   </div>
@@ -1237,7 +1233,7 @@ function EditorialSplit() {
                   </h3>
                 </LocaleLink>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           <div className="hidden border-t border-[#e8ddd4] md:grid md:grid-cols-3 lg:grid-cols-5">
