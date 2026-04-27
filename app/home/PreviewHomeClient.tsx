@@ -407,8 +407,8 @@ function CharmHeroFeatureSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="section-full relative overflow-hidden border-b-2 border-[#722030] bg-[#0f0d09] py-0">
-      <div className="grid min-h-[68vh] items-stretch lg:grid-cols-2">
+    <section data-story-section className="section-full bs-full-bleed relative overflow-hidden bg-transparent py-0">
+      <div className="grid min-h-[68vh] w-full items-stretch lg:grid-cols-2">
           <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
             <div className="absolute inset-0 opacity-25">
               <Image
@@ -423,34 +423,22 @@ function CharmHeroFeatureSection() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
             <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
-              Charm Feature
+              Carried Close
             </p>
             <h2 data-reveal className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
-              Natural Stone Charms
+              PERSONALISATION
             </h2>
             <p data-reveal className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[#8a7a70]">
-              Designed for abayas, bags, and phone styling. Build your signature stack with curated stones and limited edition drops.
+              Every piece includes a hidden pocket, personalised with a name, date, or private message. Perfect for Eid, weddings, and milestones.
             </p>
-
-            <div data-reveal className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
-              {CHARM_SWATCHES.map((stone) => (
-                <span
-                  key={stone.name}
-                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-muted)]/25 bg-[var(--color-light)] px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink)]"
-                >
-                  <span className="h-2.5 w-2.5 rounded-full border border-[var(--color-ink)]/12" style={{ backgroundColor: stone.hex }} />
-                  {stone.name}
-                </span>
-              ))}
-            </div>
 
             <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
               <LocaleLink
-                href="/accessories?category=abaya-charms"
+                href="/shop"
                 className="inline-flex min-h-[44px] items-center rounded-xl bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
                 data-cursor-hover
               >
-                Shop Charms
+                SHOP
               </LocaleLink>
             </div>
             </div>
@@ -470,6 +458,7 @@ function CharmHeroFeatureSection() {
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 className="object-cover object-center scale-[1.08] transition-transform duration-700 group-hover:scale-[1.12]"
               />
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(114,32,48,0.48)_0%,rgba(114,32,48,0.24)_45%,rgba(114,32,48,0.32)_100%)]" />
               <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
             </div>
           </LocaleLink>
@@ -482,8 +471,8 @@ function CharmHeroFeatureSectionMirror() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="section-full relative overflow-hidden border-b-2 border-[#722030] bg-[#0f0d09] py-0">
-      <div className="grid min-h-[68vh] items-stretch border-t border-[#722030]/40 lg:grid-cols-2">
+    <section data-story-section className="section-full bs-full-bleed relative overflow-hidden bg-transparent py-0">
+      <div className="grid min-h-[68vh] w-full items-stretch lg:grid-cols-2">
         <LocaleLink
           data-reveal
           href="/accessories?category=abaya-charms"
@@ -498,7 +487,8 @@ function CharmHeroFeatureSectionMirror() {
               sizes="(max-width: 1024px) 100vw, 58vw"
               className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-sovereign)]/72 via-[var(--color-signature)]/28 to-transparent" />
+            <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(114,32,48,0.48)_0%,rgba(114,32,48,0.24)_45%,rgba(114,32,48,0.32)_100%)]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/90 via-[#1a0210]/74 to-transparent" />
           </div>
         </LocaleLink>
 
@@ -516,34 +506,22 @@ function CharmHeroFeatureSectionMirror() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
           <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
-              Charm Feature
+              Carried Close
             </p>
             <h2 data-reveal className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
-              Natural Stone Charms
+              PERSONALISATION
             </h2>
             <p data-reveal className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[#8a7a70]">
-              Designed for abayas, bags, and phone styling. Build your signature stack with curated stones and limited edition drops.
+              Every piece includes a hidden pocket, personalised with a name, date, or private message. Perfect for Eid, weddings, and milestones.
             </p>
-
-            <div data-reveal className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
-              {CHARM_SWATCHES.map((stone) => (
-                <span
-                  key={`mirror-${stone.name}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-muted)]/25 bg-[var(--color-light)] px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink)]"
-                >
-                  <span className="h-2.5 w-2.5 rounded-full border border-[var(--color-ink)]/12" style={{ backgroundColor: stone.hex }} />
-                  {stone.name}
-                </span>
-              ))}
-            </div>
 
             <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
               <LocaleLink
-                href="/accessories?category=abaya-charms"
+                href="/shop"
                 className="inline-flex min-h-[44px] items-center rounded-xl bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
                 data-cursor-hover
               >
-                Shop Charms
+                SHOP
               </LocaleLink>
             </div>
           </div>
@@ -972,7 +950,7 @@ function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                   style={reduceMotion ? undefined : { x: introX }}
-                  className="mb-6 max-w-md border-l-[2px] border-brand-dustyBlue pl-[14px] font-montserrat text-[15px] leading-[1.7] tracking-[0.02em] !text-[#e8d8c8] md:mb-8"
+                  className="mb-6 max-w-md border-l-[2px] border-[#722030] pl-[14px] font-montserrat text-[15px] leading-[1.7] tracking-[0.02em] !text-[#e8d8c8] md:mb-8"
                 >
                   {heroSubline}
                 </motion.p>
@@ -1013,21 +991,6 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll — editorial caption style */}
-      <motion.div
-        initial={false}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.4 }}
-        className="pointer-events-none absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="font-montserrat text-[9px] uppercase tracking-[0.5em] text-brand-ivory/45">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-          className="h-8 w-px bg-gradient-to-b from-brand-ivory/50 to-transparent"
-          aria-hidden
-        />
-      </motion.div>
     </section>
   )
 }
@@ -1046,7 +1009,7 @@ function EditorialIntro() {
     <section ref={ref} data-story-section className="section-full relative overflow-hidden bg-transparent py-16 md:py-20 lg:py-24">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(250,248,245,1)_0%,rgba(232,221,212,0.38)_100%)]" />
 
-      <div className="relative w-full">
+      <div className="relative mx-auto w-full max-w-[1120px] px-4 md:px-6">
         <div className="grid w-full items-stretch gap-0 lg:grid-cols-2 lg:gap-0">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -1055,7 +1018,7 @@ function EditorialIntro() {
             style={{ y: panelY }}
             className={isRTL ? 'lg:order-1' : 'lg:order-2'}
           >
-            <div className="relative h-full min-h-[21rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#722030] bg-[#1a0210] p-[52px] shadow-[0_22px_56px_rgba(23,9,14,0.22)] md:min-h-[24rem] md:p-[62px] lg:border-r lg:border-[#2a1e18]/10">
+            <div className="relative h-full min-h-[26rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#722030] bg-[#1a0210] p-[52px] shadow-[0_22px_56px_rgba(23,9,14,0.22)] md:min-h-[30rem] md:p-[62px] lg:min-h-[34rem] lg:border-r lg:border-[#2a1e18]/10">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.16)_0%,transparent_62%)]" />
               <div className={`relative flex h-full flex-col justify-center ${isRTL ? 'items-start text-left' : 'items-end text-right'}`}>
                 <span className="mb-5 block font-montserrat text-[11px] uppercase tracking-[0.3em] text-brand-dustyBlue">
@@ -1075,7 +1038,7 @@ function EditorialIntro() {
             style={{ y: panelY }}
             className={isRTL ? 'lg:order-2' : 'lg:order-1'}
           >
-            <div className="relative h-full border-y border-[#2a1e18]/10 bg-[#e8ddd4] p-[52px] shadow-[0_22px_56px_rgba(23,9,14,0.08)] md:p-[62px] lg:border-r lg:border-[#2a1e18]/10">
+            <div className="relative h-full min-h-[26rem] border-y border-[#2a1e18]/10 bg-[#e8ddd4] p-[52px] shadow-[0_22px_56px_rgba(23,9,14,0.08)] md:min-h-[30rem] md:p-[62px] lg:min-h-[34rem] lg:border-r lg:border-[#2a1e18]/10">
               <div className="space-y-7">
                 <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">MANIFESTO</p>
                 <h2 className="font-rozha text-[clamp(24px,2.4vw,34px)] leading-[1.18] text-[#2a1e18]">

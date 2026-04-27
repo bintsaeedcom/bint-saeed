@@ -249,7 +249,7 @@ export default function Header() {
             {/* Row 1 — brand above nav */}
             <div
               className={`flex justify-center transition-[padding] duration-500 ${
-                isScrolled ? 'py-1.5 md:py-2' : 'py-2.5 md:py-3.5 lg:py-4'
+                isScrolled ? 'py-1 md:py-1.5' : 'py-1.5 md:py-2.5 lg:py-3'
               }`}
             >
               {disableHomeLogoNavigation ? (
@@ -261,8 +261,8 @@ export default function Header() {
                     height={210}
                     className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
                       isScrolled
-                        ? 'h-[clamp(3.2rem,7.4vw,4.35rem)] max-h-[82px] sm:max-h-[86px] md:max-h-[90px]'
-                        : 'h-[clamp(3.9rem,10.9vw,6.1rem)] max-h-[108px] sm:max-h-[120px] md:h-[clamp(4.15rem,9.7vw,6.6rem)] md:max-h-[132px] lg:max-h-[146px] xl:max-h-[158px]'
+                        ? 'h-[clamp(2.7rem,6.3vw,3.6rem)] max-h-[68px] sm:max-h-[72px] md:max-h-[76px]'
+                        : 'h-[clamp(3.15rem,8.9vw,5.05rem)] max-h-[90px] sm:max-h-[102px] md:h-[clamp(3.4rem,8.1vw,5.4rem)] md:max-h-[110px] lg:max-h-[120px] xl:max-h-[130px]'
                     }`}
                     priority
                   />
@@ -280,8 +280,8 @@ export default function Header() {
                     height={210}
                     className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
                       isScrolled
-                        ? 'h-[clamp(3.2rem,7.4vw,4.35rem)] max-h-[82px] sm:max-h-[86px] md:max-h-[90px]'
-                        : 'h-[clamp(3.9rem,10.9vw,6.1rem)] max-h-[108px] sm:max-h-[120px] md:h-[clamp(4.15rem,9.7vw,6.6rem)] md:max-h-[132px] lg:max-h-[146px] xl:max-h-[158px]'
+                        ? 'h-[clamp(2.7rem,6.3vw,3.6rem)] max-h-[68px] sm:max-h-[72px] md:max-h-[76px]'
+                        : 'h-[clamp(3.15rem,8.9vw,5.05rem)] max-h-[90px] sm:max-h-[102px] md:h-[clamp(3.4rem,8.1vw,5.4rem)] md:max-h-[110px] lg:max-h-[120px] xl:max-h-[130px]'
                     }`}
                     priority
                   />
@@ -307,7 +307,7 @@ export default function Header() {
             <div
               className={`relative flex items-center justify-between gap-2 isolate transition-[padding] duration-500 ${
                 isRTL ? 'flex-row-reverse' : ''
-              } ${isScrolled ? 'py-1.5 md:py-2' : 'py-2 md:py-2.5 lg:py-3'}`}
+              } ${isScrolled ? 'py-1 md:py-1.5' : 'py-1.5 md:py-2 lg:py-2.5'}`}
             >
             {/* Left: desktop search */}
             <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-start lg:flex">
@@ -660,7 +660,7 @@ export default function Header() {
                       alt="Bint Saeed"
                       width={520}
                       height={136}
-                    className="h-[clamp(3.8rem,13.2vw,6.6rem)] w-auto max-h-[124px]"
+                    className="h-[clamp(3.2rem,11.2vw,5.5rem)] w-auto max-h-[104px]"
                   />
                   </div>
                 ) : (
@@ -670,7 +670,7 @@ export default function Header() {
                       alt="Bint Saeed"
                       width={520}
                       height={136}
-                      className="h-[clamp(3.8rem,13.2vw,6.6rem)] w-auto max-h-[124px]"
+                      className="h-[clamp(3.2rem,11.2vw,5.5rem)] w-auto max-h-[104px]"
                     />
                   </LocaleLink>
                 )}
