@@ -226,10 +226,10 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Worldwide Shipping Banner - Clay Red/Rose accent section */}
-      <div className="relative bg-brand-clayRed/90">
-        {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-rose/20 via-transparent to-brand-rose/20" />
+      {/* Worldwide Shipping Banner - Brand red section */}
+      <div className="relative bg-[#722030]">
+        {/* Subtle deep-red tonal overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/28 via-transparent to-[#1a0210]/28" />
         
         <div className="relative container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-8 md:py-9 2xl:py-10">
           <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4 xl:gap-8 ${isRTL ? 'text-right' : ''}`}>

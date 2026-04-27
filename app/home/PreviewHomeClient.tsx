@@ -141,6 +141,54 @@ function ScrollMaskImage({
   )
 }
 
+function CollectionCardVisual({
+  images,
+  label,
+}: {
+  images: readonly string[]
+  label: string
+}) {
+  const [isHovered, setIsHovered] = useState(false)
+  const [imageIndex, setImageIndex] = useState(0)
+
+  useEffect(() => {
+    if (!isHovered || images.length <= 1) {
+      setImageIndex(0)
+      return
+    }
+
+    setImageIndex(1)
+    if (images.length <= 2) return
+
+    const id = window.setInterval(() => {
+      setImageIndex((prev) => (prev >= images.length - 1 ? 1 : prev + 1))
+    }, 2000)
+
+    return () => window.clearInterval(id)
+  }, [isHovered, images])
+
+  return (
+    <div
+      className="relative aspect-[3/4]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <Image
+        key={`${label}-${imageIndex}`}
+        src={images[imageIndex]}
+        alt={`Bint Saeed ${label}`}
+        fill
+        sizes="(max-width: 768px) 50vw, 25vw"
+        className="pointer-events-none object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-sovereign)]/58 via-[var(--color-sovereign)]/8 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+        <h3 className="font-rozha text-xl text-[var(--color-on-dark)] md:text-2xl">{label}</h3>
+      </div>
+    </div>
+  )
+}
+
 /** Preview manifesto (EditorialIntro) — English editorial copy */
 const MANIFESTO_LEAD = 'Bint Saeed'
 /** Magazine grid — collection assets in public/collection-section/ (no spaces in path) */
@@ -371,6 +419,7 @@ function CharmHeroFeatureSection() {
                 className="object-cover object-center"
               />
             </div>
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(114,32,48,0.44)_0%,rgba(114,32,48,0.18)_45%,rgba(114,32,48,0.28)_100%)]" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
             <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
@@ -463,6 +512,7 @@ function CharmHeroFeatureSectionMirror() {
               className="object-cover object-center"
             />
           </div>
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(114,32,48,0.44)_0%,rgba(114,32,48,0.18)_45%,rgba(114,32,48,0.28)_100%)]" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
           <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
@@ -993,7 +1043,7 @@ function EditorialIntro() {
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} data-story-section className="section-full relative overflow-hidden bg-transparent py-14 md:py-18 lg:py-20">
+    <section ref={ref} data-story-section className="section-full relative overflow-hidden bg-transparent py-16 md:py-20 lg:py-24">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(250,248,245,1)_0%,rgba(232,221,212,0.38)_100%)]" />
 
       <div className="relative w-full">
@@ -1005,13 +1055,13 @@ function EditorialIntro() {
             style={{ y: panelY }}
             className={isRTL ? 'lg:order-1' : 'lg:order-2'}
           >
-            <div className="relative h-full min-h-[18rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#722030] bg-[#1a0210] p-[48px] shadow-none md:min-h-[21rem] lg:border-r lg:border-[#2a1e18]/10">
+            <div className="relative h-full min-h-[21rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#722030] bg-[#1a0210] p-[52px] shadow-[0_22px_56px_rgba(23,9,14,0.22)] md:min-h-[24rem] md:p-[62px] lg:border-r lg:border-[#2a1e18]/10">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.16)_0%,transparent_62%)]" />
               <div className={`relative flex h-full flex-col justify-center ${isRTL ? 'items-start text-left' : 'items-end text-right'}`}>
-                <span className="mb-4 block font-montserrat text-[11px] uppercase tracking-[0.28em] text-brand-dustyBlue">
+                <span className="mb-5 block font-montserrat text-[11px] uppercase tracking-[0.3em] text-brand-dustyBlue">
                   From Abu Dhabi to the world
                 </span>
-                <p className="max-w-[26rem] font-rozha text-[clamp(20px,2.5vw,32px)] italic leading-[1.2] tracking-[-0.01em] text-[#e8d8c8]">
+                <p className="max-w-[30rem] font-rozha text-[clamp(24px,2.9vw,38px)] italic leading-[1.18] tracking-[-0.01em] text-[#e8d8c8]">
                   &ldquo;{MANIFESTO_QUOTE}&rdquo;
                 </p>
               </div>
@@ -1025,13 +1075,13 @@ function EditorialIntro() {
             style={{ y: panelY }}
             className={isRTL ? 'lg:order-2' : 'lg:order-1'}
           >
-            <div className="relative h-full border-y border-[#2a1e18]/10 bg-[#e8ddd4] p-[48px] shadow-none lg:border-r lg:border-[#2a1e18]/10">
-              <div className="space-y-6">
+            <div className="relative h-full border-y border-[#2a1e18]/10 bg-[#e8ddd4] p-[52px] shadow-[0_22px_56px_rgba(23,9,14,0.08)] md:p-[62px] lg:border-r lg:border-[#2a1e18]/10">
+              <div className="space-y-7">
                 <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">MANIFESTO</p>
-                <h2 className="font-rozha text-[clamp(18px,2vw,26px)] leading-[1.2] text-[#2a1e18]">
+                <h2 className="font-rozha text-[clamp(24px,2.4vw,34px)] leading-[1.18] text-[#2a1e18]">
                   {MANIFESTO_LEAD}
                 </h2>
-                <div className="space-y-4 font-montserrat text-[14px] leading-[1.6] tracking-[0.01em] text-[#8a7a70]">
+                <div className="space-y-5 font-montserrat text-[16px] leading-[1.68] tracking-[0.01em] text-[#8a7a70]">
                   {MANIFESTO_SNIPPET.map((paragraph, i) => (
                     <p key={i}>{paragraph}</p>
                   ))}
@@ -1039,7 +1089,7 @@ function EditorialIntro() {
                 <MagneticWrap className="w-fit">
                   <LocaleLink
                     href="/about"
-                    className="inline-flex min-h-[42px] items-center rounded-[3px] border border-[#b0a090] bg-transparent px-5 font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#8a7a70] transition-colors hover:border-[#8a7a70] hover:text-[#2a1e18]"
+                    className="inline-flex min-h-[46px] items-center rounded-[3px] border border-[#b0a090] bg-transparent px-6 font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#8a7a70] transition-colors hover:border-[#8a7a70] hover:text-[#2a1e18]"
                     data-cursor-hover
                   >
                     Read our story
@@ -1059,10 +1109,44 @@ function MagazineGrid() {
   const isInView = useInView(ref, { margin: '-10%', once: true })
   const { t, isRTL } = useLanguage()
   const collectionCards = [
-    { src: '/collection-section/1.png', label: 'Abayas', href: '/shop', section: 'home-collection-card-abayas' },
-    { src: '/collection-section/67.png', label: 'Kaftans', href: '/shop', section: 'home-collection-card-kaftans' },
-    { src: '/collection-section/68.png', label: 'Sets', href: '/shop', section: 'home-collection-card-sets' },
-    { src: '/collection-section/5.jpg', label: 'Accessories', href: '/accessories', section: 'home-collection-card-accessories' },
+    {
+      images: [
+        '/Webshop%20pictures/Abayas/Covent%20Garden%20Abaya%20/Covent%20Garden%20Abaya-S.JPG',
+        '/Webshop%20pictures/Abayas/Park%20Lane%20Abaya/Park%20Lane%20Abaya-%20B.JPG',
+        '/collection-section/2.PNG',
+      ],
+      label: 'Abayas',
+      href: '/shop',
+      section: 'home-collection-card-abayas',
+    },
+    {
+      images: [
+        '/Webshop%20pictures/Caftans/Mayfair%20Kaftan/Mayfair%20Kaftan-%20S.JPG',
+        '/Webshop%20pictures/Caftans/Mayfair%20Kaftan/Mayfair%20Kaftan-%20F.JPG',
+        '/collection-section/8.png',
+      ],
+      label: 'Kaftans',
+      href: '/shop',
+      section: 'home-collection-card-kaftans',
+    },
+    {
+      images: [
+        '/Webshop%20pictures/Sets/Covent%20Garden%20Set/Covent%20Garden%20Set-%20S.JPG',
+        '/Webshop%20pictures/Sets/Soho%20Set/Soho%20Set-%20B.JPG',
+      ],
+      label: 'Sets',
+      href: '/shop',
+      section: 'home-collection-card-sets',
+    },
+    {
+      images: [
+        '/Webshop%20pictures/accessoiries/necklaces/malachite-necklace.PNG',
+        '/Webshop%20pictures/accessoiries/phone%20charm/phone%20charm.png',
+      ],
+      label: 'Accessories',
+      href: '/accessories',
+      section: 'home-collection-card-accessories',
+    },
   ] as const
 
   return (
@@ -1092,30 +1176,18 @@ function MagazineGrid() {
           </LocaleLink>
         </motion.div>
 
-        <div data-collection-image-mask className="rounded-2xl border border-[color:var(--color-muted)]/16 bg-[var(--color-light)] p-3 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-4">
+        <div data-collection-image-mask className="bg-[var(--color-light)] p-3 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-4">
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
             {collectionCards.map((card) => (
               <LocaleLink
                 key={card.label}
                 href={card.href}
-                className="group block overflow-hidden rounded-xl border border-[color:var(--color-muted)]/18 bg-[var(--color-ground)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5"
+                className="group block overflow-hidden bg-[var(--color-ground)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5"
                 data-cursor-hover
                 data-analytics-event="click_cta_home_to_collection"
                 data-analytics-section={card.section}
               >
-                <div className="relative aspect-[3/4]">
-                  <Image
-                    src={card.src}
-                    alt={`Bint Saeed ${card.label}`}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    className="pointer-events-none object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-sovereign)]/58 via-[var(--color-sovereign)]/8 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
-                    <h3 className="font-rozha text-xl text-[var(--color-on-dark)] md:text-2xl">{card.label}</h3>
-                  </div>
-                </div>
+                <CollectionCardVisual images={card.images} label={card.label} />
               </LocaleLink>
             ))}
           </div>
