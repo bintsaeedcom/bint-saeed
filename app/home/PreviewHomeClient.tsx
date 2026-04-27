@@ -408,8 +408,8 @@ function CharmHeroFeatureSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="section-full bs-full-bleed relative mx-0 overflow-hidden bg-transparent py-0">
-      <div className="grid min-h-[68vh] w-screen max-w-none items-stretch lg:grid-cols-2">
+    <section data-story-section className="section-full bs-full-bleed relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen max-w-none overflow-hidden bg-transparent py-0">
+      <div className="grid min-h-[68vh] w-full max-w-none items-stretch lg:grid-cols-2">
           <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
             <div className="absolute inset-0 opacity-25">
               <Image
@@ -482,8 +482,8 @@ function CharmHeroFeatureSectionMirror() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="section-full bs-full-bleed relative mx-0 overflow-hidden bg-transparent py-0">
-      <div className="grid min-h-[68vh] w-screen max-w-none items-stretch lg:grid-cols-2">
+    <section data-story-section className="section-full bs-full-bleed relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen max-w-none overflow-hidden bg-transparent py-0">
+      <div className="grid min-h-[68vh] w-full max-w-none items-stretch lg:grid-cols-2">
         <LocaleLink
           data-reveal
           href="/accessories?category=abaya-charms"
@@ -544,7 +544,7 @@ function CampaignPanoramaSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section className="section-full bs-full-bleed relative w-full overflow-hidden bg-[#f6f2eb] py-0">
+    <section className="section-full bs-full-bleed relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen max-w-none overflow-hidden bg-[#f6f2eb] py-0">
       <SectionStripes variant="soft" />
       <div className="relative w-full">
         <div className="relative aspect-[16/6] min-h-[220px] w-full overflow-hidden bg-brand-stone/15 md:min-h-[280px] lg:min-h-[360px]">
@@ -763,12 +763,6 @@ function QuickShopCarousel() {
   return (
     <section ref={sectionRef} data-story-section className="relative bg-brand-pageCanvas pb-14 pt-20 md:pb-18 md:pt-24 lg:pb-20 lg:pt-28">
       <SectionStripes variant="soft" />
-      <div className="mx-auto mb-8 max-w-[1600px] px-6 lg:px-14">
-        <h2 data-reveal className="text-center font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-dustyBlue">
-          {isRTL ? 'تنسيقات مختارة' : 'CURATED STYLES'}
-        </h2>
-      </div>
-
       <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-10 bg-gradient-to-r from-brand-pageCanvas to-transparent md:w-16 lg:w-20" />
       <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-10 bg-gradient-to-l from-brand-pageCanvas to-transparent md:w-16 lg:w-20" />
 
@@ -1208,7 +1202,7 @@ function EditorialSplit() {
             <motion.div
               className="flex w-max gap-3 py-2"
               animate={{ x: ['0%', '-50%'] }}
-              transition={{ duration: 26, repeat: Infinity, ease: 'linear' }}
+              transition={{ duration: 42, repeat: Infinity, ease: 'linear' }}
             >
               {[...storyCodes, ...storyCodes].map((code, index) => (
                 <LocaleLink
