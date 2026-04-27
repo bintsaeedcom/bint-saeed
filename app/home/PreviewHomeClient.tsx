@@ -292,12 +292,11 @@ export default function Home() {
   return (
     <div className={`relative min-h-0 overflow-x-clip ${isRTL ? 'rtl' : 'ltr'}`}>
       <HeroSection />
-      <QuickShopCarousel />
-      <CharmHeroFeatureSection />
-      <ThreePillarsBar />
-      <EditorialIntro />
       <MagazineGrid />
-      <CreatedForYouSection />
+      <CharmHeroFeatureSection />
+      <QuickShopCarousel />
+      <CharmHeroFeatureSectionMirror />
+      <EditorialIntro />
       <EditorialSplit />
     </div>
   )
@@ -420,12 +419,21 @@ function CharmHeroFeatureSection() {
                 alt="Bint Saeed charm collection"
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
-                className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
+                className="object-cover object-center scale-[1.08] transition-transform duration-700 group-hover:scale-[1.12]"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-sovereign)]/72 via-[var(--color-signature)]/28 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
             </div>
           </LocaleLink>
       </div>
+    </section>
+  )
+}
+
+function CharmHeroFeatureSectionMirror() {
+  const { isRTL } = useLanguage()
+
+  return (
+    <section data-story-section className="section-full relative overflow-hidden border-b-2 border-[#722030] bg-[#0f0d09] py-0">
       <div className="grid min-h-[68vh] items-stretch border-t border-[#722030]/40 lg:grid-cols-2">
         <LocaleLink
           data-reveal
@@ -435,7 +443,7 @@ function CharmHeroFeatureSection() {
         >
           <div className="relative h-full min-h-[68vh]">
             <Image
-              src="/collection-section/5.jpg"
+              src="/88.jpg"
               alt="Bint Saeed charm collection"
               fill
               sizes="(max-width: 1024px) 100vw, 58vw"
@@ -884,7 +892,7 @@ function HeroSection() {
           src="/hero-image.JPG"
           alt="Bint Saeed"
           fill
-          className="object-cover object-[center_18%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97]"
+          className="object-cover object-[center_30%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97]"
           sizes="100vw"
           priority
         />
@@ -893,6 +901,7 @@ function HeroSection() {
       {/* Content — parallax on copy only; CTA stays untransformed for reliable hit-testing */}
       <div className="relative z-20 flex h-full items-center pb-10 pt-20 lg:items-end lg:pb-16 lg:pt-0">
         <div className="section-inner w-full">
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-[min(70vw,760px)] bg-gradient-to-r from-[#1a0210]/58 via-[#1a0210]/24 to-transparent" />
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
             <div className={`min-w-0 lg:col-span-8 xl:col-span-7 ${isRTL ? 'lg:col-start-6' : ''}`}>
               {/* initial={false}: avoid opacity:0 inline styles before hydration (looked "broken" / blank UI) */}
@@ -913,7 +922,7 @@ function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                   style={reduceMotion ? undefined : { x: introX }}
-                  className="mb-6 max-w-md border-l-[2px] border-[#722030] pl-[14px] font-montserrat text-[15px] leading-[1.7] tracking-[0.02em] !text-[#c8b8a8] md:mb-8"
+                  className="mb-6 max-w-md border-l-[2px] border-brand-dustyBlue pl-[14px] font-montserrat text-[15px] leading-[1.7] tracking-[0.02em] !text-[#e8d8c8] md:mb-8"
                 >
                   {heroSubline}
                 </motion.p>
@@ -1047,10 +1056,7 @@ function EditorialIntro() {
 
 function MagazineGrid() {
   const ref = useRef<HTMLDivElement | null>(null)
-  const pinRef = useRef<HTMLDivElement | null>(null)
   const isInView = useInView(ref, { margin: '-10%', once: true })
-  const [activeIndex, setActiveIndex] = useState(0)
-  const reduceMotion = useReducedMotion()
   const { t, isRTL } = useLanguage()
   const collectionCards = [
     { src: '/collection-section/1.png', label: 'Abayas', href: '/shop', section: 'home-collection-card-abayas' },
@@ -1059,30 +1065,9 @@ function MagazineGrid() {
     { src: '/collection-section/5.jpg', label: 'Accessories', href: '/accessories', section: 'home-collection-card-accessories' },
   ] as const
 
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger)
-    if (reduceMotion || !ref.current || !pinRef.current) return
-
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: ref.current,
-        start: 'top top+=64',
-        end: '+=420%',
-        pin: pinRef.current,
-        scrub: 1.35,
-        onUpdate: (self) => {
-          const next = Math.min(collectionCards.length - 1, Math.floor(self.progress * collectionCards.length))
-          setActiveIndex(next)
-        },
-      })
-    }, ref)
-
-    return () => ctx.revert()
-  }, [collectionCards.length, reduceMotion])
-
   return (
-    <section ref={ref} data-story-section data-collection-chapter className="section-full relative min-h-[96vh] overflow-hidden bg-[#faf8f5] py-10 md:py-12">
-      <div ref={pinRef} className="section-inner">
+    <section ref={ref} data-story-section data-collection-chapter className="section-full relative overflow-hidden bg-[#faf8f5] py-10 md:py-12">
+      <div className="section-inner">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -1107,67 +1092,31 @@ function MagazineGrid() {
           </LocaleLink>
         </motion.div>
 
-        <div data-collection-image-mask className="relative min-h-[76vh] rounded-2xl bg-[var(--color-light)] p-4 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-6 md:min-h-[80vh]">
-          <div className="absolute inset-0">
-            <Image
-              src="/background3.jpg"
-              alt="Collection backdrop"
-              fill
-              sizes="100vw"
-              className="object-cover object-center opacity-[0.18]"
-            />
-          </div>
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_10%,rgba(114,32,48,0.08)_0%,rgba(250,248,245,0.74)_68%)]" />
-          <div className="absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-[#faf8f5]/90 to-transparent md:w-40" />
-          <div className="absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-[#faf8f5]/90 to-transparent md:w-40" />
-          <div className="relative flex h-full items-center justify-center">
-            {collectionCards.map((card, index) => {
-              const offset = index - activeIndex
-              const absOffset = Math.abs(offset)
-              const isActive = index === activeIndex
-              return (
-                <LocaleLink
-                  key={card.label}
-                  href={card.href}
-                  className={`group absolute left-1/2 top-1/2 block w-[min(84vw,620px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border bg-[var(--color-ground)] transition-[transform,opacity,box-shadow,border-color] duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    isActive
-                      ? 'border-[#722030]/40 shadow-[0_36px_74px_rgba(20,8,11,0.28)]'
-                      : 'border-[color:var(--color-muted)]/15 shadow-[0_20px_44px_rgba(20,8,11,0.16)]'
-                  }`}
-                  style={{
-                    zIndex: 50 - absOffset,
-                    opacity: absOffset > 2 ? 0 : absOffset === 2 ? 0.1 : absOffset === 1 ? 0.42 : 1,
-                    transform: `translate(-50%, -50%) translateX(${offset * 126}px) translateY(${absOffset * 20}px) scale(${1 - absOffset * 0.09})`,
-                  }}
-                  data-cursor-hover
-                  data-analytics-event="click_cta_home_to_collection"
-                  data-analytics-section={card.section}
-                >
-                  <div className="relative aspect-[3/4]">
-                    <Image
-                      src={card.src}
-                      alt={`Bint Saeed ${card.label}`}
-                      fill
-                      sizes="(max-width: 768px) 84vw, 560px"
-                      className="pointer-events-none object-cover object-center transition-transform duration-1000 group-hover:scale-[1.03]"
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-sovereign)]/62 via-[var(--color-sovereign)]/10 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-                      <h3 className="mt-2 font-rozha text-2xl text-[var(--color-on-dark)] md:text-3xl">{card.label}</h3>
-                    </div>
-                  </div>
-                </LocaleLink>
-              )
-            })}
-          </div>
-          <div className="pointer-events-none absolute bottom-5 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-2">
-            {collectionCards.map((card, index) => (
-              <span
+        <div data-collection-image-mask className="rounded-2xl border border-[color:var(--color-muted)]/16 bg-[var(--color-light)] p-3 shadow-[0_22px_54px_rgba(24,10,16,0.08)] sm:p-4">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+            {collectionCards.map((card) => (
+              <LocaleLink
                 key={card.label}
-                className={`h-1.5 rounded-full transition-all duration-500 ${
-                  index === activeIndex ? 'w-8 bg-[#722030]' : 'w-2 bg-[#cdbfaf]'
-                }`}
-              />
+                href={card.href}
+                className="group block overflow-hidden rounded-xl border border-[color:var(--color-muted)]/18 bg-[var(--color-ground)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5"
+                data-cursor-hover
+                data-analytics-event="click_cta_home_to_collection"
+                data-analytics-section={card.section}
+              >
+                <div className="relative aspect-[3/4]">
+                  <Image
+                    src={card.src}
+                    alt={`Bint Saeed ${card.label}`}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="pointer-events-none object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-sovereign)]/58 via-[var(--color-sovereign)]/8 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                    <h3 className="font-rozha text-xl text-[var(--color-on-dark)] md:text-2xl">{card.label}</h3>
+                  </div>
+                </div>
+              </LocaleLink>
             ))}
           </div>
         </div>
@@ -1301,7 +1250,7 @@ function CreatedForYouSection() {
         >
           <p className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">Carried Close</p>
           <h2 className="mx-auto max-w-3xl font-rozha text-4xl leading-tight text-[#e8d8c8] md:text-5xl">
-            Give the gift of Bint Saeed
+            PERSONALISATION
           </h2>
           <p className={`mx-auto mt-4 max-w-4xl font-montserrat text-lg leading-[1.6] tracking-[0.01em] text-[rgba(232,216,200,0.7)] ${isRTL ? 'text-right' : 'text-center'}`}>
             Every piece includes a hidden pocket, personalised with a name, date, or private message. Perfect for Eid, weddings, and milestones.
@@ -1314,14 +1263,7 @@ function CreatedForYouSection() {
               data-analytics-event="click_personalisation_teaser"
               data-analytics-section="home-personalisation-teaser"
             >
-              Personalise a piece
-            </LocaleLink>
-            <LocaleLink
-              href="/personalisation"
-              className="inline-flex min-h-[46px] items-center rounded-xl border border-[rgba(232,216,200,0.4)] bg-transparent px-6 font-montserrat text-[12px] uppercase tracking-[0.16em] text-[rgba(232,216,200,0.7)] transition-colors hover:bg-[rgba(232,216,200,0.08)]"
-              data-cursor-hover
-            >
-              How it works
+              SHOP
             </LocaleLink>
           </div>
         </motion.div>
