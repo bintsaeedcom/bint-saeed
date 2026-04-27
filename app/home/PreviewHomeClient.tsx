@@ -248,10 +248,20 @@ function CharmHeroFeatureSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section className="section-full relative overflow-hidden border-b-2 border-[#722030] bg-[#0f0d09] py-10 md:py-12">
-      <div className="section-inner">
-        <div className="grid items-stretch gap-5 lg:grid-cols-12">
-          <div className={`rounded-2xl border border-[color:var(--color-muted)]/20 bg-[#1a0210] p-6 md:p-8 lg:col-span-5 ${isRTL ? 'text-right' : ''}`}>
+    <section className="section-full relative overflow-hidden border-b-2 border-[#722030] bg-[#0f0d09] py-0">
+      <div className="grid min-h-[68vh] items-stretch lg:grid-cols-2">
+          <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
+            <div className="absolute inset-0 opacity-25">
+              <Image
+                src="/Webshop%20pictures/accessoiries/abaya%20charms.JPG"
+                alt="Bint Saeed charm collection"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover object-center"
+              />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
+            <div className="relative z-10 max-w-[640px]">
             <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#722030]">
               Charm Feature
             </p>
@@ -290,14 +300,15 @@ function CharmHeroFeatureSection() {
                 Personalise
               </LocaleLink>
             </div>
+            </div>
           </div>
 
           <LocaleLink
             href="/accessories?category=abaya-charms"
-            className="group relative overflow-hidden rounded-2xl border border-[color:var(--color-muted)]/20 bg-[var(--color-sovereign)] lg:col-span-7"
+            className="group relative overflow-hidden bg-[var(--color-sovereign)]"
             data-cursor-hover
           >
-            <div className="relative h-[17rem] md:h-[21rem]">
+            <div className="relative h-full min-h-[68vh]">
               <Image
                 src="/Webshop%20pictures/accessoiries/abaya%20charms.JPG"
                 alt="Bint Saeed charm collection"
@@ -316,7 +327,6 @@ function CharmHeroFeatureSection() {
               </div>
             </div>
           </LocaleLink>
-        </div>
       </div>
     </section>
   )
@@ -777,7 +787,7 @@ function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                   style={reduceMotion ? undefined : { x: introX }}
-                  className="mb-6 max-w-md border-l-[2px] border-[#722030] pl-[14px] font-montserrat text-[15px] leading-[1.7] tracking-[0.02em] !text-[#8a7070] md:mb-8"
+                  className="mb-6 max-w-md border-l-[2px] border-[#722030] pl-[14px] font-montserrat text-[15px] leading-[1.7] tracking-[0.02em] !text-[#c8b8a8] md:mb-8"
                 >
                   {heroSubline}
                 </motion.p>
@@ -850,8 +860,8 @@ function EditorialIntro() {
     <section ref={ref} className="section-full relative overflow-hidden bg-transparent py-14 md:py-18 lg:py-20">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(250,248,245,1)_0%,rgba(232,221,212,0.38)_100%)]" />
 
-      <div className="section-inner relative">
-        <div className="grid items-stretch gap-0 lg:grid-cols-2 lg:gap-0">
+      <div className="relative w-full">
+        <div className="grid w-full items-stretch gap-0 lg:grid-cols-2 lg:gap-0">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -859,7 +869,7 @@ function EditorialIntro() {
             style={{ y: panelY }}
             className={isRTL ? 'lg:order-2' : ''}
           >
-            <div className="relative h-full min-h-[18rem] overflow-hidden border border-[#2a1e18]/10 border-l-[3px] border-l-[#722030] bg-[#1a0210] p-[48px] shadow-none md:min-h-[21rem]">
+            <div className="relative h-full min-h-[18rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#722030] bg-[#1a0210] p-[48px] shadow-none md:min-h-[21rem] lg:border-r lg:border-[#2a1e18]/10">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.16)_0%,transparent_62%)]" />
               <div className="relative flex h-full flex-col items-center justify-center text-center">
                 <span className="mb-4 block font-montserrat text-[11px] uppercase tracking-[0.28em] text-[#c8b8a8]/78">
@@ -879,7 +889,7 @@ function EditorialIntro() {
             style={{ y: panelY }}
             className={isRTL ? 'lg:order-1' : ''}
           >
-            <div className="relative h-full border border-[#2a1e18]/10 bg-[#e8ddd4] p-[48px] shadow-none">
+            <div className="relative h-full border-y border-[#2a1e18]/10 bg-[#e8ddd4] p-[48px] shadow-none lg:border-r lg:border-[#2a1e18]/10">
               <div className="space-y-6">
                 <h2 className="font-rozha text-[clamp(18px,2vw,26px)] leading-[1.2] text-[#2a1e18]">
                   {MANIFESTO_LEAD}
@@ -993,11 +1003,17 @@ function MagazineGrid() {
   )
 }
 
+function homeCodesImage(fileName: string) {
+  const dir = 'The Codes Page'
+  return `/${encodeURIComponent(dir)}/${encodeURIComponent(fileName)}`
+}
+
 const CODES_LIST_ITEMS = [
-  { title: 'Al Talli', subtitle: 'Gold threadwork' },
-  { title: 'Khous', subtitle: 'Palm craftsmanship' },
-  { title: 'Al Ain Rosette', subtitle: 'Regional motif' },
-  { title: 'The Monogram', subtitle: 'Signature mark' },
+  { title: 'Al Talli', subtitle: 'Gold threadwork', image: homeCodesImage('Talli.jpg') },
+  { title: 'Khous', subtitle: 'Palm craftsmanship', image: homeCodesImage('khous.jpg') },
+  { title: 'Al Ain Rosette', subtitle: 'Regional motif', image: homeCodesImage('Al Quaa Rosette.jpg') },
+  { title: 'The Monogram', subtitle: 'Signature mark', image: homeCodesImage('monogram.jpg') },
+  { title: 'Knotted Lines', subtitle: 'Line & continuity', image: homeCodesImage('Knotted Lines Of Lineage.jpg') },
 ] as const
 
 function EditorialSplit() {
@@ -1007,7 +1023,7 @@ function EditorialSplit() {
 
   return (
     <section ref={ref} className="section-full bg-[#faf8f5] py-14 md:py-16">
-      <div className="section-inner">
+      <div className="w-full px-4 md:px-8 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -1032,16 +1048,26 @@ function EditorialSplit() {
             </LocaleLink>
           </div>
 
-          <div className="grid grid-cols-2 border-t border-[#e8ddd4] max-[480px]:grid-cols-1 md:grid-cols-4">
+          <div className="grid grid-cols-2 border-t border-[#e8ddd4] max-[560px]:grid-cols-1 md:grid-cols-3 lg:grid-cols-5">
             {CODES_LIST_ITEMS.map((item, index) => (
               <LocaleLink
                 key={item.title}
                 href="/the-codes"
-                className={`p-4 text-left transition-colors hover:bg-[#f5f0ea] ${index !== CODES_LIST_ITEMS.length - 1 ? 'md:border-r md:border-[#e8ddd4]' : ''}`}
+                className={`group p-4 text-left transition-colors hover:bg-[#f5f0ea] ${
+                  index !== CODES_LIST_ITEMS.length - 1 ? 'border-b border-[#e8ddd4] lg:border-b-0 lg:border-r lg:border-[#e8ddd4]' : 'border-b border-[#e8ddd4] lg:border-b-0'
+                }`}
                 data-cursor-hover
               >
-                <div className="mb-3 aspect-[4/3] w-full rounded-lg border border-[#e8ddd4] bg-[#f7f3ee]" aria-hidden />
-                <p className="font-rozha text-[32px] leading-none text-[rgba(114,32,48,0.3)]">{['I', 'II', 'III', 'IV'][index]}</p>
+                <div className="relative mb-3 aspect-[4/3] w-full overflow-hidden rounded-lg border border-[#e8ddd4] bg-[#f7f3ee]">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 560px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                    className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <p className="font-rozha text-[32px] leading-none text-[rgba(114,32,48,0.3)]">{['I', 'II', 'III', 'IV', 'V'][index]}</p>
                 <h3 className="mt-2 font-montserrat text-[14px] font-medium tracking-[0.01em] text-[#2a1e18]">{item.title}</h3>
                 <p className="mt-2 border-b border-[#e8ddd4] pb-3 font-montserrat text-[12px] leading-[1.6] tracking-[0.01em] text-[#8a7a70]">{item.subtitle}</p>
               </LocaleLink>
