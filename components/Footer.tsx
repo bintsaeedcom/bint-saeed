@@ -24,6 +24,7 @@ export default function Footer() {
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false)
   const [quickEmail, setQuickEmail] = useState('')
   const [quickEmailError, setQuickEmailError] = useState('')
+  const [mobileOpenSection, setMobileOpenSection] = useState<'shop' | 'about' | 'help' | null>('shop')
 
   useEffect(() => {
     if (!isSubscribeOpen) return
@@ -161,10 +162,19 @@ export default function Footer() {
 
             {/* Shop */}
             <div className="self-start">
-              <h4 className="mb-5 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
-                {t.footer.shop}
-              </h4>
-              <ul className="space-y-3">
+              <button
+                type="button"
+                onClick={() => setMobileOpenSection((prev) => (prev === 'shop' ? null : 'shop'))}
+                className="mb-3 flex w-full items-center justify-between md:pointer-events-none"
+              >
+                <h4 className="font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
+                  {t.footer.shop}
+                </h4>
+                <span className="font-montserrat text-[11px] text-white/55 md:hidden">
+                  {mobileOpenSection === 'shop' ? '−' : '+'}
+                </span>
+              </button>
+              <ul className={`space-y-3 ${mobileOpenSection === 'shop' ? 'block' : 'hidden'} md:block`}>
                 {footerLinks.shop.map((link) => (
                   <li key={link.label}>
                     <LocaleLink
@@ -183,10 +193,19 @@ export default function Footer() {
 
             {/* About */}
             <div className="self-start">
-              <h4 className="mb-5 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
-                {t.footer.about}
-              </h4>
-              <ul className="space-y-3">
+              <button
+                type="button"
+                onClick={() => setMobileOpenSection((prev) => (prev === 'about' ? null : 'about'))}
+                className="mb-3 flex w-full items-center justify-between md:pointer-events-none"
+              >
+                <h4 className="font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
+                  {t.footer.about}
+                </h4>
+                <span className="font-montserrat text-[11px] text-white/55 md:hidden">
+                  {mobileOpenSection === 'about' ? '−' : '+'}
+                </span>
+              </button>
+              <ul className={`space-y-3 ${mobileOpenSection === 'about' ? 'block' : 'hidden'} md:block`}>
                 {footerLinks.about.map((link) => (
                   <li key={link.label}>
                     <LocaleLink
@@ -205,10 +224,19 @@ export default function Footer() {
 
             {/* Help */}
             <div className="self-start">
-              <h4 className="mb-5 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
-                {t.footer.help}
-              </h4>
-              <ul className="space-y-3">
+              <button
+                type="button"
+                onClick={() => setMobileOpenSection((prev) => (prev === 'help' ? null : 'help'))}
+                className="mb-3 flex w-full items-center justify-between md:pointer-events-none"
+              >
+                <h4 className="font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
+                  {t.footer.help}
+                </h4>
+                <span className="font-montserrat text-[11px] text-white/55 md:hidden">
+                  {mobileOpenSection === 'help' ? '−' : '+'}
+                </span>
+              </button>
+              <ul className={`space-y-3 ${mobileOpenSection === 'help' ? 'block' : 'hidden'} md:block`}>
                 {footerLinks.help.map((link) => (
                   <li key={link.label}>
                     <LocaleLink
