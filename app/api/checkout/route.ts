@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const { items, discountCode, customerEmail, packagingType, clientContext } = body
+    const { items, discountCode, customerEmail, packagingType, checkoutNotes, clientContext } = body
     const discountCodeStr = typeof discountCode === 'string' ? discountCode.trim().slice(0, 64) : ''
     const clientTimezone =
       typeof clientContext?.timezone === 'string' ? clientContext.timezone.trim().slice(0, 64) : ''
@@ -60,6 +60,8 @@ export async function POST(request: NextRequest) {
       typeof clientContext?.localTime === 'string' ? clientContext.localTime.trim().slice(0, 120) : ''
     const clientDeviceType =
       typeof clientContext?.deviceType === 'string' ? clientContext.deviceType.trim().slice(0, 24) : ''
+    const checkoutNotesText =
+      typeof checkoutNotes === 'string' ? checkoutNotes.trim().slice(0, 300) : ''
     const clientIp = extractClientIp(request)
 
     if (!Array.isArray(items) || items.length === 0 || items.length > MAX_LINE_ITEMS) {
@@ -219,6 +221,7 @@ export async function POST(request: NextRequest) {
         clientTimezone,
         clientLocalTime,
         clientDeviceType,
+        checkoutNotes: checkoutNotesText,
       },
       // Customer creation for order tracking
       customer_creation: 'always',

@@ -17,13 +17,18 @@ import { useWishlistStore } from '@/store/wishlistStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
-import { getTabbyCheckoutUrl } from '@/lib/payments'
 import { trackEvent } from '@/lib/analytics/tracking'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
 import 'swiper/css/pagination'
+
+const PDP_BUTTON_RADIUS = 'rounded-[4px]'
+const PDP_OUTLINED_PLUM = 'bg-white text-brand-darkRed border-brand-darkRed'
+const PDP_FILLED_PLUM = 'bg-brand-darkRed text-white border-brand-darkRed'
+const PDP_PRIMARY_CTA =
+  `inline-flex min-h-[46px] items-center justify-center ${PDP_BUTTON_RADIUS} bg-brand-darkRed text-white font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-brand-dustyBlue`
 
 export default function AccessoryDetailPage() {
   const params = useParams()
@@ -44,15 +49,13 @@ export default function AccessoryDetailPage() {
   const mainSwiperRef = useRef<SwiperType | null>(null)
   const [selectedColor, setSelectedColor] = useState('')
   const [quantity, setQuantity] = useState(1)
-  const [openDropdown, setOpenDropdown] = useState<string | null>('description')
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
 
   const addItem = useCartStore((state) => state.addItem)
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
-  const tabbyUrl = useMemo(() => getTabbyCheckoutUrl(), [])
-
   const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
   const mainGalleryModules = useMemo(
     () => (thumbConnected ? [Navigation, Thumbs, Pagination] : [Navigation, Pagination]),
@@ -196,8 +199,8 @@ export default function AccessoryDetailPage() {
     <div className="min-h-screen bg-brand-pageCanvas">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       {/* Breadcrumb — same shell as `/shop/[id]` */}
-      <div className="pt-28 pb-6 border-b border-brand-stone/20">
-        <div className="mx-auto min-w-0 max-w-[1280px] px-6 lg:px-10">
+      <div className="border-b border-brand-stone/20 pt-32">
+        <div className={`mx-auto flex min-w-0 w-[90vw] max-w-[1400px] items-center justify-between gap-4 px-4 py-2 sm:px-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <AppBreadcrumb
             rtl={isRTL}
             segments={[
@@ -210,10 +213,17 @@ export default function AccessoryDetailPage() {
               { label: isRTL ? accessory.nameAr : accessory.name },
             ].filter((s) => s.label.length > 0)}
           />
+          <LocaleLink
+            href="/accessories"
+            className="hidden shrink-0 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.16em] text-brand-darkRed/70 transition-colors hover:text-brand-dustyBlue md:inline-flex"
+            data-cursor-hover
+          >
+            {isRTL ? 'العودة إلى الإكسسوارات' : 'Back to Accessories'}
+          </LocaleLink>
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1280px] px-6 py-10 lg:px-10 lg:py-12">
+      <div className="mx-auto w-[90vw] max-w-[1400px] px-4 py-8 sm:px-8 sm:py-10 lg:py-12">
         <div className="isolate grid min-h-0 min-w-0 grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Image Gallery — mirrors `/shop/[id]` (Royal V-Neck Kaftan); optional third column = detail angles */}
           <motion.div
@@ -236,13 +246,13 @@ export default function AccessoryDetailPage() {
                   preventClicks={false}
                   preventClicksPropagation={false}
                   touchStartPreventDefault={false}
-                  className="product-gallery-thumbs !h-[44rem] !overflow-visible"
+                  className="product-gallery-thumbs !overflow-visible"
                 >
                   {accessory.images.map((image, index) => (
                     <SwiperSlide key={index} className="!h-auto">
                       <button
                         type="button"
-                        className="group relative block aspect-[9/16] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
+                        className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                         onClick={() => {
                           mainSwiperRef.current?.slideTo(index)
                           trackEvent('gallery_interaction', {
@@ -260,13 +270,13 @@ export default function AccessoryDetailPage() {
                             muted
                             playsInline
                             preload="metadata"
-                            className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
+                            className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
                           />
                         ) : isHeicFile(image) ? (
                           <img
                             src={image}
                             alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
-                            className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
+                            className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
                             loading="lazy"
                           />
                         ) : (
@@ -275,7 +285,7 @@ export default function AccessoryDetailPage() {
                             alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
                             fill
                             sizes="76px"
-                            className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
+                            className="img-zoom object-cover transition-opacity group-hover:opacity-80"
                           />
                         )}
                       </button>
@@ -285,7 +295,7 @@ export default function AccessoryDetailPage() {
               </div>
 
               <div className="space-y-3">
-                <div className="relative aspect-[9/16] w-full min-h-0 overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
+                <div className="relative aspect-[3/4] w-full min-h-0 overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
                   <Swiper
                     modules={mainGalleryModules}
                     spaceBetween={0}
@@ -339,13 +349,13 @@ export default function AccessoryDetailPage() {
                               controls
                               playsInline
                               preload="metadata"
-                              className="h-full w-full img-zoom object-cover object-top"
+                              className="h-full w-full img-zoom object-cover"
                             />
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
                               alt={`${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
-                              className="h-full w-full img-zoom object-cover object-top"
+                              className="h-full w-full img-zoom object-cover"
                               loading={index === 0 ? 'eager' : 'lazy'}
                             />
                           ) : (
@@ -354,7 +364,7 @@ export default function AccessoryDetailPage() {
                               alt={`${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
                               fill
                               sizes="(max-width: 768px) 100vw, 40vw"
-                              className="img-zoom object-cover object-top"
+                              className="img-zoom object-cover"
                               priority={index === 0}
                             />
                           )}
@@ -383,7 +393,7 @@ export default function AccessoryDetailPage() {
                       <SwiperSlide key={index} className="!h-auto">
                         <button
                           type="button"
-                          className="group relative block aspect-[9/16] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
+                          className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                           onClick={() => {
                             mainSwiperRef.current?.slideTo(index)
                             trackEvent('gallery_interaction', {
@@ -401,13 +411,13 @@ export default function AccessoryDetailPage() {
                               muted
                               playsInline
                               preload="metadata"
-                              className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
+                              className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
                             />
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
                               alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
-                              className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
+                              className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
                               loading="lazy"
                             />
                           ) : (
@@ -416,7 +426,7 @@ export default function AccessoryDetailPage() {
                               alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
                               fill
                               sizes="120px"
-                              className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
+                              className="img-zoom object-cover transition-opacity group-hover:opacity-80"
                             />
                           )}
                         </button>
@@ -432,13 +442,13 @@ export default function AccessoryDetailPage() {
                   {detailAngles.map((src, ai) => (
                     <div
                       key={`${src}-${ai}`}
-                      className="relative aspect-[9/16] w-full overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]"
+                      className="relative aspect-[3/4] w-full overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]"
                     >
                       {isHeicFile(src) ? (
                         <img
                           src={src}
                           alt={`${displayName} — ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
-                          className="h-full w-full img-zoom object-cover object-top"
+                          className="h-full w-full img-zoom object-cover"
                           loading="lazy"
                         />
                       ) : (
@@ -447,7 +457,7 @@ export default function AccessoryDetailPage() {
                           alt={`${displayName} — ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
                           fill
                           sizes="(max-width: 1024px) 0px, 11rem"
-                          className="img-zoom object-cover object-top"
+                          className="img-zoom object-cover"
                         />
                       )}
                     </div>
@@ -462,20 +472,16 @@ export default function AccessoryDetailPage() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white p-4 lg:sticky lg:top-28 lg:self-start lg:p-5 ${isRTL ? 'text-right' : ''}`}
+            className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white px-3.5 pb-3.5 pt-0 lg:sticky lg:top-28 lg:self-start lg:px-4 lg:pb-4 lg:pt-0 ${isRTL ? 'text-right' : ''}`}
           >
-            <span className="mb-1.5 block font-montserrat text-[11px] uppercase tracking-[0.24em] text-brand-dustyBlue">
-              {isRTL ? categoryInfo?.nameAr : categoryInfo?.name}
-            </span>
-
             <h1
               data-document-h1="true"
-              className="mb-2.5 font-rozha text-[1.75rem] leading-[1.15] text-brand-darkRed md:text-[1.95rem] lg:text-[2.05rem]"
+              className="mb-1 font-rozha text-[1.75rem] leading-[1.15] text-black md:text-[1.95rem] lg:text-[2.05rem]"
             >
               {displayName}
             </h1>
 
-            <div className="mb-4 space-y-1">
+            <div className="mb-3 space-y-0.5">
               <p className="font-montserrat text-lg tracking-wide text-brand-darkRed">
                 {formatPrice(accessory.price * quantity)}
                 {quantity > 1 && (
@@ -487,8 +493,8 @@ export default function AccessoryDetailPage() {
             </div>
 
             {/* Colour — shop spacing */}
-            <div className="mb-5 border-b border-brand-stone/20 pb-5">
-              <div className={`mb-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className="mb-3 border-b border-brand-stone/20 pb-3">
+              <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {isRTL ? 'اللون' : 'Color'}
                 </span>
@@ -498,11 +504,6 @@ export default function AccessoryDetailPage() {
                   </span>
                 )}
               </div>
-              <p className={`mb-2.5 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
-                {isRTL
-                  ? 'الألوان المتاحة لهذه القطعة — اختاري لونًا قبل الإضافة للسلة.'
-                  : 'Available colourways for this piece — select a colour before adding to bag.'}
-              </p>
               <div className={`flex flex-wrap gap-2.5 ${isRTL ? 'justify-end' : ''}`}>
                 {accessory.colors.map((color) => (
                   <button
@@ -525,54 +526,22 @@ export default function AccessoryDetailPage() {
             </div>
 
             {/* Size — one size only (jewellery & all charms) */}
-            <div className="mb-5 border-b border-brand-stone/20 pb-5">
-              <div className={`mb-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className="mb-3 border-b border-brand-stone/20 pb-3">
+              <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {isRTL ? 'المقاس' : 'Size'}
                 </span>
               </div>
-              <p className={`mb-2.5 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
-                {isRTL
-                  ? 'جميع المجوهرات وتعليقات الحقائب والهاتف وتعليقات العباءة بمقاس واحد موحّد.'
-                  : 'All jewellery, bag charms, phone charms, and abaya charms are offered in one universal size.'}
-              </p>
               <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
-                <span className="min-w-[52px] border border-brand-darkRed bg-brand-darkRed px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] text-white">
+                <span className={`min-w-[52px] border px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] ${PDP_BUTTON_RADIUS} ${PDP_FILLED_PLUM}`}>
                   {isRTL ? 'مقاس واحد' : 'One Size'}
                 </span>
               </div>
             </div>
 
-            {/* Tabby */}
-            <div className={`mb-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <span className="rounded-sm border border-brand-stone/30 px-1.5 py-0.5 font-montserrat text-[11px] font-semibold lowercase tracking-normal text-brand-darkRed">
-                  tabby
-                </span>
-                <p className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed/80">
-                  {isRTL ? 'الدفع بالتقسيط مع تابي' : 'Pay in installments with Tabby'}
-                </p>
-              </div>
-              {tabbyUrl ? (
-                <a
-                  href={tabbyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed underline hover:text-brand-dustyBlue"
-                  data-cursor-hover
-                >
-                  {isRTL ? 'اعرفي أكثر' : 'Learn more'}
-                </a>
-              ) : (
-                <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-darkRed/55">
-                  {isRTL ? 'إعداد تابي قيد التفعيل' : 'Tabby setup in progress'}
-                </span>
-              )}
-            </div>
-
             {/* Quantity & Add to Cart */}
-            <div className="mb-5 flex gap-3">
-              <div className="flex items-center border border-brand-stone/50">
+            <div className="mb-1 flex flex-col gap-2 sm:flex-row sm:gap-3">
+              <div className={`flex w-full items-center justify-center border border-brand-stone/50 sm:w-auto sm:justify-start ${PDP_BUTTON_RADIUS}`}>
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -595,7 +564,7 @@ export default function AccessoryDetailPage() {
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="flex-1 bg-brand-darkRed px-6 py-3 font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-brand-dustyBlue"
+                  className={`w-full px-6 py-3 sm:flex-1 ${PDP_PRIMARY_CTA}`}
                 data-cursor-hover
               >
                 {isRTL ? 'أضيفي للسلة' : 'Add to Bag'}
@@ -608,7 +577,7 @@ export default function AccessoryDetailPage() {
                   favorited
                     ? 'border-brand-darkRed bg-brand-darkRed text-white'
                     : 'border-brand-stone/50 text-brand-darkRed hover:border-brand-dustyBlue'
-                }`}
+                } ${PDP_BUTTON_RADIUS} flex w-full items-center justify-center py-3 sm:w-auto sm:py-0`}
                 aria-pressed={favorited}
                 aria-label={favorited ? (isRTL ? 'إزالة من المفضلة' : 'Remove from favorites') : isRTL ? 'أضيفي للمفضلة' : 'Save to favorites'}
                 data-cursor-hover
@@ -616,17 +585,8 @@ export default function AccessoryDetailPage() {
                 <FiHeart className={`h-5 w-5 ${favorited ? 'fill-current' : ''}`} />
               </button>
             </div>
-            <p className={`mb-5 font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/70 ${isRTL ? 'text-right' : ''}`}>
-              {isRTL
-                ? 'مصنوع عند الطلب. يبدأ التصنيع بعد الشراء. الإرجاع محدود. '
-                : 'Made to order. Created after purchase. Returns are limited. '}
-              <LocaleLink href="/shipment-return-policy" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
-                {isRTL ? 'اطلعي على سياسة الشحن والإرجاع' : 'See Shipment & Return Policy'}
-              </LocaleLink>
-              .
-            </p>
 
-            <div className={`mb-5 grid grid-cols-3 gap-3 border-y border-brand-stone/20 py-4 ${isRTL ? 'text-right' : ''}`}>
+            <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 ${isRTL ? 'text-right' : ''}`}>
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiAward className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
@@ -647,10 +607,10 @@ export default function AccessoryDetailPage() {
               </div>
             </div>
 
-            <p className="mb-2.5 whitespace-pre-line font-montserrat text-[11px] leading-[1.65] tracking-wide text-brand-darkRed/75">
+            <p className="mb-1 whitespace-pre-line font-montserrat text-[11px] leading-[1.6] tracking-wide text-brand-darkRed/75">
               {isRTL ? accessory.descriptionAr : accessory.description}
             </p>
-            <p className="mb-4 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-dustyBlue">
+            <p className="mb-2 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-dustyBlue">
               {isRTL
                 ? 'صُنع حسب الطلب — متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
                 : 'Made to order — available within this chapter (availability confirmed when you order).'}
@@ -662,7 +622,7 @@ export default function AccessoryDetailPage() {
                 <button
                   type="button"
                   onClick={() => toggleDropdown('description')}
-                  className="flex w-full items-center justify-between py-4"
+                  className="flex w-full items-center justify-between py-3"
                   data-cursor-hover
                 >
                   <h2 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
@@ -685,7 +645,7 @@ export default function AccessoryDetailPage() {
                 <button
                   type="button"
                   onClick={() => toggleDropdown('materials')}
-                  className="flex w-full items-center justify-between py-4"
+                  className="flex w-full items-center justify-between py-3"
                   data-cursor-hover
                 >
                   <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
@@ -708,7 +668,7 @@ export default function AccessoryDetailPage() {
                 <button
                   type="button"
                   onClick={() => toggleDropdown('care')}
-                  className="flex w-full items-center justify-between py-4"
+                  className="flex w-full items-center justify-between py-3"
                   data-cursor-hover
                 >
                   <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
@@ -732,7 +692,7 @@ export default function AccessoryDetailPage() {
                 <button
                   type="button"
                   onClick={() => toggleDropdown('shipping')}
-                  className="flex w-full items-center justify-between py-4"
+                  className="flex w-full items-center justify-between py-3"
                   data-cursor-hover
                 >
                   <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">

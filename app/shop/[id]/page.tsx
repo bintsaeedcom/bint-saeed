@@ -18,7 +18,6 @@ import { getProductPdpContent } from '@/data/productPdpContent'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { getTabbyCheckoutUrl } from '@/lib/payments'
 import { getProductHref, getProductSlug, resolveProductIdentifier } from '@/lib/products/links'
 import {
   getPdpSizeOptions,
@@ -32,7 +31,13 @@ import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
 import 'swiper/css/pagination'
 
-const SPECIAL_NOTES_MAX_CHARS = 150
+const PDP_BUTTON_RADIUS = 'rounded-[4px]'
+const PDP_CONTROL_BUTTON_BASE =
+  `min-w-[94px] px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] border transition-all ${PDP_BUTTON_RADIUS}`
+const PDP_OUTLINED_PLUM = 'bg-white text-brand-darkRed border-brand-darkRed'
+const PDP_FILLED_PLUM = 'bg-brand-darkRed text-white border-brand-darkRed'
+const PDP_PRIMARY_CTA =
+  `inline-flex min-h-[46px] items-center justify-center ${PDP_BUTTON_RADIUS} bg-brand-darkRed text-white font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-brand-dustyBlue`
 const MANUAL_PAIRINGS: Record<string, string[]> = {
   'khous-jacket-abaya': ['khous-signature-midi-dress'],
   'khous-signature-midi-dress': ['khous-jacket-abaya'],
@@ -93,8 +98,7 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1)
   const [customisationActive, setCustomisationActive] = useState(false)
   const [customisationMessage, setCustomisationMessage] = useState('')
-  const [notes, setNotes] = useState('')
-  const [openDropdown, setOpenDropdown] = useState<string | null>('description')
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false)
@@ -126,12 +130,10 @@ export default function ProductPage() {
     d.setDate(d.getDate() + 14)
     return new Intl.DateTimeFormat('en-GB', {
       day: '2-digit',
-      month: '2-digit',
-      year: '2-digit',
+      month: 'short',
+      year: 'numeric',
     }).format(d)
   }, [])
-  const tabbyUrl = useMemo(() => getTabbyCheckoutUrl(), [])
-
   /** Thumbs strip is hidden on small screens; connecting Thumbs module with swiper=null breaks layout on iOS. */
   const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
   const mainGalleryModules = useMemo(
@@ -245,7 +247,6 @@ export default function ProductPage() {
       quantity,
       customisationMessage: trimmedCustom || undefined,
       customisationSurcharge: trimmedCustom ? CUSTOMISATION_SURCHARGE_AED : undefined,
-      notes,
     })
 
     trackEvent('add_to_cart', {
@@ -286,8 +287,8 @@ export default function ProductPage() {
     <div className="min-h-screen bg-brand-pageCanvas">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       {/* Breadcrumb */}
-      <div className="pt-28 pb-6 border-b border-brand-stone/20">
-        <div className="mx-auto min-w-0 max-w-[1280px] px-6 lg:px-10">
+      <div className="border-b border-brand-stone/20 pt-32">
+        <div className={`mx-auto flex min-w-0 w-[90vw] max-w-[1400px] items-center justify-between gap-4 px-4 py-2 sm:px-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <AppBreadcrumb
             rtl={isRTL}
             segments={[
@@ -296,10 +297,17 @@ export default function ProductPage() {
               { label: product.name },
             ]}
           />
+          <LocaleLink
+            href="/shop"
+            className="hidden shrink-0 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.16em] text-brand-darkRed/70 transition-colors hover:text-brand-dustyBlue md:inline-flex"
+            data-cursor-hover
+          >
+            {isRTL ? 'العودة إلى المتجر' : 'Back to Shop'}
+          </LocaleLink>
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1280px] px-6 py-10 lg:px-10 lg:py-12">
+      <div className="mx-auto w-[90vw] max-w-[1400px] px-4 py-8 sm:px-8 sm:py-10 lg:py-12">
         <div className="isolate grid min-h-0 min-w-0 grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Image Gallery */}
           <motion.div
@@ -322,13 +330,13 @@ export default function ProductPage() {
                   preventClicks={false}
                   preventClicksPropagation={false}
                   touchStartPreventDefault={false}
-                  className="product-gallery-thumbs !h-[44rem] !overflow-visible"
+                  className="product-gallery-thumbs !overflow-visible"
                 >
                   {activeImages.map((image, index) => (
                     <SwiperSlide key={index} className="!h-auto">
                       <button
                         type="button"
-                        className="group relative block aspect-[9/16] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
+                        className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                         onClick={() => {
                           mainSwiperRef.current?.slideTo(index)
                           trackEvent('gallery_interaction', {
@@ -372,7 +380,7 @@ export default function ProductPage() {
 
               {/* Main Image */}
               <div className="space-y-3">
-                <div className="relative aspect-[9/16] w-full min-h-0 overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
+                <div className="relative aspect-[3/4] w-full min-h-0 overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
                   <Swiper
                     modules={mainGalleryModules}
                     spaceBetween={0}
@@ -426,13 +434,13 @@ export default function ProductPage() {
                               controls
                               playsInline
                               preload="metadata"
-                              className="h-full w-full img-zoom object-cover object-top"
+                              className="h-full w-full img-zoom object-cover"
                             />
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
                               alt={`${product.name} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
-                              className="h-full w-full img-zoom object-cover object-top"
+                              className="h-full w-full img-zoom object-cover"
                               loading={index === 0 ? 'eager' : 'lazy'}
                             />
                           ) : (
@@ -441,7 +449,7 @@ export default function ProductPage() {
                               alt={`${product.name} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
                               fill
                               sizes="(max-width: 768px) 100vw, 40vw"
-                              className="img-zoom object-cover object-top"
+                              className="img-zoom object-cover"
                               priority={index === 0}
                             />
                           )}
@@ -470,7 +478,7 @@ export default function ProductPage() {
                       <SwiperSlide key={index} className="!h-auto">
                         <button
                           type="button"
-                          className="group relative block aspect-[9/16] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
+                          className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                           onClick={() => mainSwiperRef.current?.slideTo(index)}
                           aria-label={`Show image ${index + 1}`}
                           data-cursor-hover
@@ -513,20 +521,15 @@ export default function ProductPage() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white p-4 lg:sticky lg:top-28 lg:self-start lg:p-5 ${isRTL ? 'text-right' : ''}`}
+            className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white px-3.5 pb-3.5 pt-0 lg:sticky lg:top-28 lg:self-start lg:px-4 lg:pb-4 lg:pt-0 ${isRTL ? 'text-right' : ''}`}
           >
-            {/* Category */}
-            <span className="mb-1.5 block font-montserrat text-[11px] uppercase tracking-[0.24em] text-brand-dustyBlue">
-              {product.category}
-            </span>
-
             {/* Title */}
-            <h1 data-document-h1="true" className="mb-2.5 font-rozha text-[1.75rem] md:text-[1.95rem] lg:text-[2.05rem] text-brand-darkRed leading-[1.15]">
+            <h1 data-document-h1="true" className="mb-1 font-rozha text-[1.75rem] md:text-[1.95rem] lg:text-[2.05rem] text-black leading-[1.15]">
               {product.name}
             </h1>
 
             {/* Price */}
-            <div className="mb-4 space-y-1">
+            <div className="mb-3 space-y-0.5">
               <p className="font-montserrat text-lg text-brand-darkRed tracking-wide">
                 {(displayUnitAed * quantity).toLocaleString()} AED
                 {quantity > 1 && (
@@ -542,8 +545,8 @@ export default function ProductPage() {
               )}
             </div>
             {/* Color Selection */}
-            <div className="mb-5 border-b border-brand-stone/20 pb-5">
-              <div className={`mb-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className="mb-1.5 border-b border-brand-stone/20 pb-3">
+              <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   Color
                 </span>
@@ -553,18 +556,13 @@ export default function ProductPage() {
                   </span>
                 )}
               </div>
-              <p className={`mb-2.5 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
-                {isRTL
-                  ? 'الألوان المتاحة لهذا الطراز — اختاري لونًا قبل الإضافة للسلة.'
-                  : 'Available colourways for this piece — tap a swatch to select before adding to bag.'}
-              </p>
               <div className={`flex flex-wrap gap-2.5 ${isRTL ? 'justify-end' : ''}`}>
                 {product.colors.map((color) => (
                   <button
                     key={color.name}
                     type="button"
                     onClick={() => setSelectedColor(color.name)}
-                    className={`h-9 w-9 rounded-full border-2 transition-all ${
+                    className={`h-9 w-9 rounded-full border-2 transition-all duration-200 ${
                       selectedColor === color.name
                         ? 'border-brand-darkRed scale-110 ring-2 ring-brand-darkRed/20 ring-offset-2'
                         : 'border-brand-stone/30 hover:scale-105 hover:border-brand-dustyBlue'
@@ -580,8 +578,8 @@ export default function ProductPage() {
             </div>
 
             {/* Size Selection */}
-            <div className="mb-5 border-b border-brand-stone/20 pb-5">
-              <div className={`mb-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className="mb-3 border-b border-brand-stone/20 pb-3">
+              <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   Size
                 </span>
@@ -598,21 +596,16 @@ export default function ProductPage() {
                   Size Guide
                 </button>
               </div>
-              <p className={`mb-2.5 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
-                {isRTL
-                  ? 'جدول المقاسات أدناه موحّد لقصة A لكل الأنماط — اختاري المقاس ثم راجعي الجدول.'
-                  : 'Same A-cut chart applies across all styles below — choose your size, then confirm against the table.'}
-              </p>
               <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
                 {sizeOptions.map((size) => (
                   <button
                     key={size}
                     type="button"
                     onClick={() => setSelectedSize(size)}
-                    className={`min-w-[52px] px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] border transition-all ${
+                    className={`min-w-[52px] px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] border transition-all ${PDP_BUTTON_RADIUS} ${
                       selectedSize === size
-                        ? 'bg-brand-darkRed text-white border-brand-darkRed'
-                        : 'bg-white text-brand-darkRed border-brand-stone/50 hover:border-brand-dustyBlue'
+                        ? PDP_FILLED_PLUM
+                        : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
                     }`}
                     data-cursor-hover
                   >
@@ -620,37 +613,32 @@ export default function ProductPage() {
                   </button>
                 ))}
               </div>
-              <div className="mt-3 border border-brand-stone/25 bg-white px-3.5 py-2.5">
-                <p className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-darkRed">
-                  Please note: this is a pre-order size.
-                </p>
-                <p className="mt-1 font-montserrat text-[11px] tracking-wide text-brand-darkRed/75">
-                  Estimated shipment date: {estimatedShipDate}
-                </p>
-              </div>
+              <p className="mt-2 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
+                Made to order · ships {estimatedShipDate}
+              </p>
             </div>
 
             {/* Personalisation */}
-            <div className="mb-5 border-b border-brand-stone/20 pb-5">
-              <h2 className="mb-2.5 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
+            <div className="mb-3 border-b border-brand-stone/20 pb-3">
+              <h2 className="mb-2 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
                 Personalisation
               </h2>
-              <p className={`mb-2.5 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
+              <p className={`mb-2 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
                 {isRTL
                   ? `إضافة نص تفصيلي مقابل ${CUSTOMISATION_SURCHARGE_AED} درهم لكل قطعة.`
-                  : `Add custom text or embroidery for ${CUSTOMISATION_SURCHARGE_AED} AED per piece.`}
+                  : 'Add a name, special date or message to the inner label.'}
               </p>
-              <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+              <div className={`flex flex-col gap-2 sm:flex-row sm:flex-wrap ${isRTL ? 'sm:justify-end' : ''}`}>
                 <button
                   type="button"
                   onClick={() => {
                     setCustomisationActive(false)
                     setCustomisationMessage('')
                   }}
-                    className={`min-w-[94px] px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] border transition-all ${
+                    className={`w-full sm:w-auto ${PDP_CONTROL_BUTTON_BASE} ${
                     !customisationActive
-                      ? 'bg-brand-darkRed text-white border-brand-darkRed'
-                      : 'bg-white text-brand-darkRed border-brand-stone/50 hover:border-brand-dustyBlue'
+                      ? PDP_FILLED_PLUM
+                      : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
                   }`}
                   aria-pressed={!customisationActive}
                   data-cursor-hover
@@ -660,10 +648,10 @@ export default function ProductPage() {
                 <button
                   type="button"
                   onClick={() => setCustomisationActive(true)}
-                    className={`min-w-[94px] px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] border transition-all ${
+                    className={`w-full sm:w-auto ${PDP_CONTROL_BUTTON_BASE} ${
                     customisationActive
-                      ? 'bg-brand-darkRed text-white border-brand-darkRed'
-                      : 'bg-white text-brand-darkRed border-brand-stone/50 hover:border-brand-dustyBlue'
+                      ? PDP_FILLED_PLUM
+                      : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
                   }`}
                   aria-pressed={customisationActive}
                   data-cursor-hover
@@ -672,14 +660,14 @@ export default function ProductPage() {
                 </button>
               </div>
               {customisationActive && (
-                <div className="mt-4 space-y-2">
+                <div className="mt-3 space-y-2">
                   <input
                     type="text"
                     value={customisationMessage}
                     onChange={(e) => setCustomisationMessage(e.target.value.slice(0, CUSTOMISATION_MAX_CHARS))}
                     maxLength={CUSTOMISATION_MAX_CHARS}
                     placeholder={isRTL ? 'النص (٣٥ حرفاً كحد أقصى)' : 'Your message (max 35 characters)'}
-                    className="w-full px-3 py-2.5 border border-brand-stone/50 font-montserrat text-[11px] tracking-wide focus:border-brand-darkRed transition-colors"
+                    className={`w-full border border-brand-stone/50 px-3 py-2.5 font-montserrat text-[11px] tracking-wide transition-colors focus:border-brand-darkRed ${PDP_BUTTON_RADIUS}`}
                   />
                   <p className={`font-montserrat text-[11px] text-brand-darkRed/55 ${isRTL ? 'text-right' : ''}`}>
                     {customisationMessage.length}/{CUSTOMISATION_MAX_CHARS}
@@ -693,53 +681,10 @@ export default function ProductPage() {
               )}
             </div>
 
-            {/* Notes */}
-            <div className="mb-5 border-b border-brand-stone/20 pb-5">
-              <label className="mb-2.5 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
-                Special Notes (Optional)
-              </label>
-              <textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value.slice(0, SPECIAL_NOTES_MAX_CHARS))}
-                placeholder="Any special requests or alterations..."
-                rows={3}
-                maxLength={SPECIAL_NOTES_MAX_CHARS}
-                className="w-full px-3 py-2.5 border border-brand-stone/50 font-montserrat text-[11px] tracking-wide focus:border-brand-darkRed transition-colors resize-none"
-              />
-              <p className={`mt-2 font-montserrat text-[11px] text-brand-darkRed/55 ${isRTL ? 'text-right' : ''}`}>
-                {notes.length}/{SPECIAL_NOTES_MAX_CHARS}
-              </p>
-            </div>
-
             {/* Quantity & Add to Cart */}
-            <div className={`mb-3 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <span className="rounded-sm border border-brand-stone/30 px-1.5 py-0.5 font-montserrat text-[11px] font-semibold lowercase tracking-normal text-brand-darkRed">
-                  tabby
-                </span>
-                <p className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed/80">
-                {isRTL ? 'الدفع بالتقسيط مع تابي' : 'Pay in installments with Tabby'}
-                </p>
-              </div>
-              {tabbyUrl ? (
-                <a
-                  href={tabbyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed underline hover:text-brand-dustyBlue"
-                  data-cursor-hover
-                >
-                  {isRTL ? 'اعرفي أكثر' : 'Learn more'}
-                </a>
-              ) : (
-                <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-darkRed/55">
-                  {isRTL ? 'إعداد تابي قيد التفعيل' : 'Tabby setup in progress'}
-                </span>
-              )}
-            </div>
-            <div className="mb-5 flex gap-3">
+            <div className="mb-1 flex flex-col gap-2 sm:flex-row sm:gap-3">
               {/* Quantity */}
-              <div className="flex items-center border border-brand-stone/50">
+              <div className={`flex w-full items-center justify-center border border-brand-stone/50 sm:w-auto sm:justify-start ${PDP_BUTTON_RADIUS}`}>
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -763,7 +708,7 @@ export default function ProductPage() {
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="flex-1 px-6 py-3 bg-brand-darkRed text-white font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] hover:bg-brand-dustyBlue transition-colors"
+                className={`w-full px-6 py-3 sm:flex-1 ${PDP_PRIMARY_CTA}`}
                 data-cursor-hover
               >
                 Add to Bag
@@ -777,7 +722,7 @@ export default function ProductPage() {
                   favorited
                     ? 'border-brand-darkRed bg-brand-darkRed text-white'
                     : 'border-brand-stone/50 text-brand-darkRed hover:border-brand-dustyBlue'
-                }`}
+                } ${PDP_BUTTON_RADIUS} flex w-full items-center justify-center py-3 sm:w-auto sm:py-0`}
                 aria-pressed={favorited}
                 aria-label={favorited ? 'Remove from favorites' : 'Save to favorites'}
                 data-cursor-hover
@@ -785,17 +730,7 @@ export default function ProductPage() {
                 <FiHeart className={`w-5 h-5 ${favorited ? 'fill-current' : ''}`} />
               </button>
             </div>
-            <p className={`mb-5 font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/70 ${isRTL ? 'text-right' : ''}`}>
-              {isRTL
-                ? 'مصنوع عند الطلب. يبدأ التصنيع بعد الشراء. الإرجاع محدود. '
-                : 'Made to order. Created after purchase. Returns are limited. '}
-              <LocaleLink href="/shipment-return-policy" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
-                {isRTL ? 'اطلعي على سياسة الشحن والإرجاع' : 'See Shipment & Return Policy'}
-              </LocaleLink>
-              .
-            </p>
-
-            <div className={`mb-5 grid grid-cols-3 gap-3 border-y border-brand-stone/20 py-4 ${isRTL ? 'text-right' : ''}`}>
+            <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 ${isRTL ? 'text-right' : ''}`}>
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiAward className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
@@ -817,11 +752,11 @@ export default function ProductPage() {
             </div>
 
             {/* Short Description */}
-            <p className="mb-2.5 whitespace-pre-line font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-[1.65]">
+            <p className="mb-1 whitespace-pre-line font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-[1.6]">
               {product.description}
             </p>
             {product.id !== 'bs-002' && (
-              <p className="mb-4 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-dustyBlue">
+              <p className="mb-2 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-dustyBlue">
                 {isRTL
                   ? 'صُنع حسب الطلب — متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
                   : 'Made to order — available within this chapter (availability confirmed when you order).'}
@@ -834,7 +769,7 @@ export default function ProductPage() {
               <div className="border-b border-brand-stone/30">
                 <button
                   onClick={() => toggleDropdown('description')}
-                  className="w-full flex items-center justify-between py-4"
+                  className="w-full flex items-center justify-between py-3"
                   data-cursor-hover
                 >
                   <h2 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
@@ -861,7 +796,7 @@ export default function ProductPage() {
               <div className="border-b border-brand-stone/30">
                 <button
                   onClick={() => toggleDropdown('size')}
-                  className="w-full flex items-center justify-between py-4"
+                  className="w-full flex items-center justify-between py-3"
                   data-cursor-hover
                 >
                   <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
@@ -888,7 +823,7 @@ export default function ProductPage() {
               <div>
                 <button
                   onClick={() => toggleDropdown('shipping')}
-                  className="w-full flex items-center justify-between py-4"
+                  className="w-full flex items-center justify-between py-3"
                   data-cursor-hover
                 >
                   <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
@@ -924,7 +859,7 @@ export default function ProductPage() {
             </div>
 
             {relatedStyles.length > 0 && (
-              <section className="relative z-20 mt-12">
+              <section className="relative z-20 mt-8">
                 <h3 className="mb-5 font-montserrat text-xs uppercase tracking-[0.22em] text-brand-darkRed">
                   {isRTL ? 'يناسبها أيضاً' : 'Pairs well with'}
                 </h3>

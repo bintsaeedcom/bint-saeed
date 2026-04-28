@@ -33,6 +33,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 
 type PackagingType = 'sustainable' | 'signature'
+const CHECKOUT_NOTES_MAX_CHARS = 150
 
 function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   if (typeof window === 'undefined') return 'desktop'
@@ -62,6 +63,7 @@ export default function CheckoutPage() {
   const [discountBusy, setDiscountBusy] = useState(false)
   const [payBusy, setPayBusy] = useState(false)
   const [packagingType, setPackagingType] = useState<PackagingType>('sustainable')
+  const [checkoutNotes, setCheckoutNotes] = useState('')
   const [legalAcknowledged, setLegalAcknowledged] = useState(false)
 
   const tabbyUrl = useMemo(() => getTabbyCheckoutUrl(), [])
@@ -166,6 +168,7 @@ export default function CheckoutPage() {
           discountCode: appliedCode || undefined,
           customerEmail: email.trim() || undefined,
           packagingType,
+          checkoutNotes: checkoutNotes.trim() || undefined,
           clientContext: {
             localTime: new Date().toString(),
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
@@ -416,6 +419,28 @@ export default function CheckoutPage() {
                   {isRTL ? `تم تطبيق «${appliedCode}» على الدفع` : `“${appliedCode}” will apply at payment`}
                 </p>
               ) : null}
+            </motion.section>
+
+            <motion.section
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.12 }}
+              className="rounded-2xl border border-brand-stone/20 bg-white p-6 shadow-sm md:p-8"
+            >
+              <label className="mb-2.5 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
+                {isRTL ? 'ملاحظات خاصة (اختياري)' : 'Special Notes (Optional)'}
+              </label>
+              <textarea
+                value={checkoutNotes}
+                onChange={(e) => setCheckoutNotes(e.target.value.slice(0, CHECKOUT_NOTES_MAX_CHARS))}
+                placeholder={isRTL ? 'أي طلبات أو تعديلات خاصة...' : 'Any special requests or alterations...'}
+                rows={4}
+                maxLength={CHECKOUT_NOTES_MAX_CHARS}
+                className="w-full resize-none border border-brand-stone/40 bg-brand-pageCanvas px-4 py-3 font-montserrat text-sm tracking-wide transition-colors focus:border-brand-darkRed focus:outline-none"
+              />
+              <p className={`mt-2 font-montserrat text-[11px] text-brand-clayRed/60 ${isRTL ? 'text-right' : ''}`}>
+                {checkoutNotes.length}/{CHECKOUT_NOTES_MAX_CHARS}
+              </p>
             </motion.section>
 
             {/* Payment methods */}
