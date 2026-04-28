@@ -21,22 +21,25 @@ export default function NotFound() {
           <div className="mb-8">
             <LocaleLink href="/" data-cursor-hover>
               <Image
-                src="/logo.png"
+                src="/gold logo.png"
                 alt="Bint Saeed"
-                width={180}
-                height={60}
-                className="h-12 sm:h-16 w-auto mx-auto"
+                width={96}
+                height={96}
+                className="mx-auto h-14 w-auto sm:h-16 [filter:none]"
               />
             </LocaleLink>
           </div>
 
           {/* 404 Number with brand styling */}
           <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
-          <div className="relative mb-4">
-            <h1 data-document-h1="true" className="font-rozha text-[100px] sm:text-[150px] md:text-[180px] text-brand-stone/20 leading-none select-none">
+          <div className="relative mb-5">
+            <h1 data-document-h1="true" className="font-rozha text-[84px] leading-none text-brand-stone/15 select-none sm:text-[150px] md:text-[180px]">
               404
             </h1>
-            <div className="absolute inset-0 flex items-center justify-center">
+            <span className="block font-rozha text-4xl leading-none text-brand-darkRed sm:hidden">
+              {isRTL ? 'الصفحة غير موجودة' : 'Page Not Found'}
+            </span>
+            <div className="absolute inset-0 hidden items-center justify-center sm:flex">
               <span className="font-rozha text-4xl sm:text-5xl text-brand-darkRed">
                 {isRTL ? 'الصفحة غير موجودة' : 'Page Not Found'}
               </span>

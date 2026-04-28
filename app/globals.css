@@ -21,7 +21,7 @@
   --text-nav: 12px;
 
   --color-sovereign: #1a0210;
-  --color-signature: #722030;
+  --color-signature: #6f1524;
   --color-balance: #6a8090;
   --color-ground: #e8ddd4;
   --color-light: #faf8f5;
@@ -228,6 +228,7 @@ p {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--color-ink);
 }
 
@@ -285,15 +286,15 @@ footer li {
   text-align: left;
 }
 
-/* Brand accent pass: ensure primary hero/banner CTAs use #722030 across pages. */
+/* Brand accent pass: ensure primary hero/banner CTAs use #6f1524 across pages. */
 section[class*='h-[50vh]'] a[class*='bg-brand-darkRed'],
 section[class*='h-[50vh]'] button[class*='bg-brand-darkRed'],
 section[class*='h-[60vh]'] a[class*='bg-brand-darkRed'],
 section[class*='h-[60vh]'] button[class*='bg-brand-darkRed'],
 section[class*='h-[80vh]'] a[class*='bg-brand-darkRed'],
 section[class*='h-[80vh]'] button[class*='bg-brand-darkRed'] {
-  background-color: #722030 !important;
-  border-color: #722030 !important;
+  background-color: #6f1524 !important;
+  border-color: #6f1524 !important;
 }
 
 [data-pull-quote='true'] {

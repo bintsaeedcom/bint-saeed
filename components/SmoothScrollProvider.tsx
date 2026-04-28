@@ -14,13 +14,14 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
     gsap.registerPlugin(ScrollTrigger)
 
     const lenis = new Lenis({
-      duration: 1.45,
-      wheelMultiplier: 0.82,
-      touchMultiplier: 0.8,
+      // Slightly denser, cinematic glide with calmer acceleration.
+      duration: 1.62,
+      wheelMultiplier: 0.78,
+      touchMultiplier: 0.72,
       smoothWheel: true,
       syncTouch: false,
       autoRaf: false,
-      easing: (t) => 1 - Math.pow(1 - t, 3),
+      easing: (t) => 1 - Math.pow(1 - t, 4),
     })
 
     const onScroll = () => ScrollTrigger.update()

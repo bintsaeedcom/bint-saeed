@@ -105,7 +105,7 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
 
   return (
     <section
-      className={`relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas py-16 md:py-20 ${className}`}
+      className={`relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas pb-12 pt-24 md:pb-16 md:pt-28 ${className}`}
     >
       <video
         src={v.src}
@@ -146,17 +146,17 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
             transition={{ duration: 0.8 }}
             className={isRTL ? 'text-right' : ''}
           >
-            <span className="mb-4 block font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#722030]">
+            <span className="mb-4 block font-montserrat text-[10px] font-medium uppercase tracking-[0.28em] text-[#6f1524] sm:tracking-[0.34em]">
               {eyebrow}
             </span>
             <h1
               data-document-h1="true"
-              className="mb-4 font-rozha text-5xl text-brand-darkRed md:text-7xl lg:text-8xl"
+              className="font-rozha text-[clamp(2.75rem,8vw,5.75rem)] uppercase leading-[0.98] tracking-[0.01em] text-brand-darkRed"
             >
               {title}
             </h1>
             {description ? (
-              <p className="max-w-lg font-montserrat text-base tracking-wide text-brand-clayRed/85">
+              <p className="mt-6 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/85 md:text-base">
                 {description}
               </p>
             ) : null}
@@ -547,7 +547,7 @@ export default function CraftsmanshipClient() {
           </p>
           <LocaleLink
             href="/shop?from=craftsmanship"
-            className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-sm border border-brand-darkRed/40 bg-brand-darkRed/[0.06] px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-brand-darkRed shadow-[0_18px_48px_-28px_rgba(42,0,18,0.22)] transition-colors hover:border-brand-dustyBlue hover:bg-brand-dustyBlue hover:text-brand-pageCanvas"
+            className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-[4px] border border-brand-darkRed/40 bg-brand-darkRed/[0.06] px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-brand-darkRed shadow-[0_18px_48px_-28px_rgba(42,0,18,0.22)] transition-colors hover:border-brand-dustyBlue hover:bg-brand-dustyBlue hover:text-brand-pageCanvas"
             data-cursor-hover
           >
             View Collection

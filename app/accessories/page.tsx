@@ -144,19 +144,9 @@ export default function AccessoriesPage() {
   return (
     <div className={`min-h-screen bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
       {/* Hero Banner */}
-      <section className="relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas py-16 md:py-20">
-        <Image
-          src="/Webshop pictures/accessoiries/banner.png"
-          alt="Accessories Collection"
-          fill
-          className="pointer-events-none object-cover opacity-0"
-          priority
-          sizes="100vw"
-        />
-        <div className="hidden absolute inset-0 bg-gradient-to-t from-[#1F0508] via-[#3B0A12]/55 to-transparent" />
-        
-        <div className="relative flex flex-col justify-end text-brand-darkRed">
-          <div className="container mx-auto px-6 lg:px-12">
+      <section className="relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas pb-12 pt-24 md:pb-16 md:pt-28">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className={`relative flex flex-col justify-end text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
             {/* Back Button */}
             <motion.div
               initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
@@ -165,7 +155,7 @@ export default function AccessoriesPage() {
               className="mb-8"
             >
               <LocaleLink
-                href="/"
+                href="/home"
                 className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed/75 transition-colors hover:text-brand-darkRed group ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
@@ -180,13 +170,13 @@ export default function AccessoriesPage() {
               transition={{ duration: 0.8 }}
               className={isRTL ? 'text-right' : ''}
             >
-              <span className="mb-4 block font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#6f1524]">
+              <span className="mb-4 block font-montserrat text-[10px] font-medium uppercase tracking-[0.28em] text-[#6f1524] sm:tracking-[0.34em]">
                 {isRTL ? 'مجموعة الإكسسوارات' : 'Accessories Collection'}
               </span>
-              <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-brand-darkRed md:text-7xl lg:text-8xl">
-                {isRTL ? 'الإكسسوارات' : 'Accessories'}
+              <h1 data-document-h1="true" className="font-rozha text-[clamp(2.75rem,8vw,5.75rem)] uppercase leading-[0.98] tracking-[0.01em] text-brand-darkRed">
+                {isRTL ? 'الإكسسوارات' : 'ACCESSORIES'}
               </h1>
-              <p className="max-w-lg font-montserrat text-base tracking-wide text-brand-clayRed/85">
+              <p className="mt-6 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/85 md:text-base">
                 {isRTL
                   ? 'اكتشفي مجموعتنا الراقية من تعليقات العباءة والقلادات والأقراط والأساور وتعليقات الحقائب والهواتف.'
                   : 'Discover our curated collection of abaya charms, necklaces, earrings, bracelets, bag charms, and phone charms.'}
@@ -197,7 +187,7 @@ export default function AccessoriesPage() {
       </section>
 
       {/* Category Tabs */}
-      <section className="sticky top-16 z-40 border-b border-brand-stone/30 bg-brand-pageCanvas">
+      <section className="sticky top-[50px] z-40 border-b border-brand-stone/30 bg-brand-pageCanvas md:top-16">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between py-4">
             {/* Categories - Desktop */}
@@ -298,16 +288,16 @@ export default function AccessoriesPage() {
 
       {/* Category Description */}
       {activeTab && activeTab.id !== 'all' && (
-        <section className="py-8 bg-brand-stone/5">
+        <section className="bg-brand-stone/5 py-8">
           <div className="container mx-auto px-6 lg:px-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
+              className={`flex items-start gap-4 border-y border-brand-stone/25 py-6 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
             >
               <span className="text-4xl">{activeTab.icon}</span>
               <div>
-                  <h2 className="font-montserrat text-2xl text-brand-darkRed">
+                  <h2 className="font-rozha text-[clamp(2rem,5vw,3.5rem)] leading-[1.05] text-brand-darkRed">
                   {isRTL ? activeTab.nameAr : activeTab.name}
                 </h2>
                 <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide">
@@ -326,20 +316,20 @@ export default function AccessoriesPage() {
             <div
               className={`flex flex-col gap-10 lg:gap-14 lg:items-start ${isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
             >
-              <div className="relative w-full lg:w-[44%] lg:max-w-[520px] shrink-0 lg:sticky lg:top-28">
-                <div className="relative aspect-[9/16] w-full overflow-hidden bg-brand-stone/15 md:aspect-[9/16] lg:min-h-[min(920px,78vh)] lg:aspect-auto">
+              <div className="relative w-full shrink-0 lg:w-[44%] lg:max-w-[520px]">
+                <div className="relative aspect-[4/5] w-full overflow-hidden bg-brand-stone/15">
                   <Image
                     src={ACCESSORY_IMAGE_ABAYA_CHARMS_HERO}
                     alt={isRTL ? 'تعليقات العباءة' : 'Abaya charms'}
                     fill
-                    className="img-zoom object-cover object-top"
+                    className="img-zoom object-contain"
                     sizes="(max-width: 1024px) 100vw, 44vw"
                     priority
                   />
                 </div>
               </div>
               <div className="min-w-0 flex-1">
-                <motion.div layout className="grid grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+                <motion.div layout className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:gap-6 lg:gap-8">
                   <AnimatePresence mode="popLayout">
                     {filteredAccessories.map((accessory, index) => (
                       <AccessoryCard
@@ -359,7 +349,7 @@ export default function AccessoriesPage() {
           ) : (
             <motion.div
               layout
-              className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8"
+              className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:gap-8 lg:grid-cols-3 xl:grid-cols-4"
             >
               <AnimatePresence mode="popLayout">
                 {filteredAccessories.map((accessory, index) => (
@@ -395,7 +385,7 @@ export default function AccessoriesPage() {
               animate={{ x: 0 }}
               exit={{ x: isRTL ? '-100%' : '100%' }}
               transition={{ type: 'tween', duration: 0.3 }}
-              className={`fixed ${isRTL ? 'left-0' : 'right-0'} top-0 bottom-0 w-80 bg-white z-50 overflow-y-auto`}
+              className={`fixed ${isRTL ? 'left-0' : 'right-0'} top-0 bottom-0 z-50 w-[min(100vw,20rem)] overflow-y-auto bg-white`}
             >
               <div className="p-6">
                 <div className={`flex items-center justify-between mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -548,7 +538,7 @@ function AccessoryCard({
           onMouseLeave={() => setHoveredProduct(null)}
         >
           {/* Image Container */}
-          <div className="relative aspect-[9/16] overflow-hidden bg-[#f5f5f5] mb-4">
+          <div className="relative mb-4 aspect-[3/4] overflow-hidden bg-[#f5f5f5]">
             <Image
               src={accessory.images[0]}
               alt={isRTL ? accessory.nameAr : accessory.name}
@@ -577,11 +567,6 @@ function AccessoryCard({
 
             {/* Tags */}
             <div className={`absolute top-4 ${isRTL ? 'right-4' : 'left-4'} flex flex-col gap-2`}>
-              {accessory.isNew && (
-                <span className="px-3 py-1 bg-brand-darkRed text-brand-ivory font-montserrat text-[10px] uppercase tracking-[0.15em]">
-                  {isRTL ? 'جديد' : 'New'}
-                </span>
-              )}
               {accessory.isBestseller && (
                 <span className="px-3 py-1 bg-brand-clayRed text-white font-montserrat text-[10px] uppercase tracking-[0.15em]">
                   {isRTL ? 'الأكثر مبيعاً' : 'Bestseller'}
@@ -602,7 +587,7 @@ function AccessoryCard({
                 ? accessoryCategories.find(c => c.id === accessory.category)?.nameAr 
                 : accessoryCategories.find(c => c.id === accessory.category)?.name}
             </span>
-            <h3 className="font-montserrat text-sm text-brand-darkRed mb-1 tracking-wide group-hover:text-brand-dustyBlue transition-colors">
+            <h3 data-product-name="true" className="font-montserrat text-sm text-brand-darkRed mb-1 tracking-wide group-hover:text-brand-dustyBlue transition-colors">
               {isRTL ? accessory.nameAr : accessory.name}
             </h3>
             <p className="font-montserrat text-sm tracking-wide text-[#6f1524]">

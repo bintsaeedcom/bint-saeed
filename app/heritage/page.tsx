@@ -262,7 +262,7 @@ function HeritageCTA() {
           </p>
           <LocaleLink
             href="/shop?from=heritage"
-            className={`inline-flex min-h-[52px] items-center justify-center gap-3 px-12 py-5 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white transition-all duration-500 rounded-xl ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex min-h-[52px] items-center justify-center gap-3 px-12 py-5 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white transition-all duration-500 rounded-[4px] ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             {isRTL ? 'تسوقي الآن' : 'Shop Now'}

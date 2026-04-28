@@ -450,6 +450,7 @@ export default function AccessoryDetailPage() {
           >
             <h1
               data-document-h1="true"
+              data-product-name="true"
               className="mb-1 font-rozha text-[1.75rem] leading-[1.15] text-black md:text-[1.95rem] lg:text-[2.05rem]"
             >
               {displayName}

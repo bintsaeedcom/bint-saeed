@@ -275,7 +275,7 @@ function ColorsSection() {
     },
     { 
       name: { en: 'Red', ar: 'أحمر' }, 
-      hex: '#722030', 
+      hex: '#6f1524', 
       meaning: { en: 'Natural dye from pomegranate, signifies celebration', ar: 'صبغة طبيعية من الرمان، ترمز للاحتفال' } 
     },
     { 

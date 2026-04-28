@@ -501,7 +501,7 @@ export default function ProductPage() {
             className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white px-3.5 pb-3.5 pt-0 lg:sticky lg:top-28 lg:self-start lg:px-4 lg:pb-4 lg:pt-0 ${isRTL ? 'text-right' : ''}`}
           >
             {/* Title */}
-            <h1 data-document-h1="true" className="mb-1 font-rozha text-[1.75rem] md:text-[1.95rem] lg:text-[2.05rem] text-black leading-[1.15]">
+            <h1 data-document-h1="true" data-product-name="true" className="mb-1 font-rozha text-[1.75rem] md:text-[1.95rem] lg:text-[2.05rem] text-black leading-[1.15]">
               {product.name}
             </h1>
 
@@ -843,7 +843,7 @@ export default function ProductPage() {
                         />
                       </div>
                       <div className="mt-3 flex items-center justify-between gap-3">
-                        <p className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
+                        <p data-product-name="true" className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
                           {item.name}
                         </p>
                         <p className="font-montserrat text-xs tracking-wide text-brand-darkRed/80">

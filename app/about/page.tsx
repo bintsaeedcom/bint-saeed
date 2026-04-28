@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AboutTopicNav from '@/components/AboutTopicNav'
-import { FiArrowRight } from 'react-icons/fi'
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
@@ -28,14 +28,22 @@ function AboutHero() {
   const { t, isRTL } = useLanguage()
 
   return (
-    <section className="relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas py-16 md:py-20">
+    <section className="relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas pb-12 pt-24 md:pb-16 md:pt-28">
       <div className="container mx-auto px-6 lg:px-16">
         <div className={isRTL ? 'text-right' : ''}>
+          <LocaleLink
+            href="/home"
+            className={`mb-8 inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed/75 transition-colors hover:text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+            data-cursor-hover
+          >
+            <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} aria-hidden />
+            {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
+          </LocaleLink>
           <motion.span
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-4 block font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#722030]"
+            className="mb-4 block font-montserrat text-[10px] font-medium uppercase tracking-[0.28em] text-[#6f1524] sm:tracking-[0.34em]"
           >
             {t.about.subtitle}
           </motion.span>
@@ -44,19 +52,19 @@ function AboutHero() {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-4 font-rozha text-[clamp(2rem,6vw,4rem)] leading-[1.05] tracking-[0.02em] text-brand-darkRed"
+            className="font-rozha text-[clamp(2.75rem,8vw,5.75rem)] uppercase leading-[0.98] tracking-[0.01em] text-brand-darkRed"
           >
-            About Bint Saeed
+            ABOUT BINT SAEED
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-8 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/85 md:text-base"
+            className="mt-6 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/85 md:text-base"
           >
             Abu Dhabi · Emirati design codes · Contemporary global presence
           </motion.p>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}>
+          <motion.div className="mt-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}>
             <LocaleLink
               href="#about-narrative"
               className="group inline-flex min-h-[44px] min-w-[44px] w-fit cursor-pointer items-center gap-3 border-b border-brand-stone/45 py-2 font-montserrat text-[11px] uppercase tracking-[0.18em] !text-brand-clayRed/85 transition-colors duration-300 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
@@ -83,8 +91,8 @@ function AboutNarrative() {
       ref={ref}
       className="relative border-t border-brand-stone/20 bg-brand-pageCanvas"
     >
-      <div className="relative mx-auto max-w-[62rem] px-6 py-20 md:py-28 lg:px-8 lg:py-36">
-        <h2 className="mb-16 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue md:mb-20">
+      <div className="relative mx-auto max-w-[74rem] px-6 py-20 md:py-28 lg:px-8 lg:py-36">
+        <h2 className="mb-16 font-rozha text-[clamp(2rem,5vw,3.5rem)] leading-[1.05] text-brand-darkRed md:mb-20">
           About the house
         </h2>
         <div className="space-y-8 md:space-y-10">
@@ -93,10 +101,10 @@ function AboutNarrative() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-12%' }}
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-2xl border border-brand-dustyBlue/20 bg-white/70 p-7 md:p-10"
+            className="border-y border-brand-dustyBlue/20 bg-white/70 p-7 md:p-10"
           >
             <div className="space-y-7 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
-              <h3>A house shaped by origin, carried across the world.</h3>
+              <h3 className="font-rozha text-[clamp(1.55rem,3vw,2.25rem)] leading-[1.12] text-brand-darkRed">A house shaped by origin, carried across the world.</h3>
 
               <p>
                 In Arabic, <em>Bint</em> means daughter of. It is not a reference to where you are, but to where you
@@ -129,10 +137,10 @@ function AboutNarrative() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-12%' }}
             transition={{ duration: 0.75, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-2xl border border-brand-stone/35 bg-[#f6f2ec] p-7 md:p-10"
+            className="border-y border-brand-stone/35 bg-[#f6f2ec] p-7 md:ml-auto md:w-[88%] md:p-10"
           >
             <div className="space-y-7 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
-              <h3>
+              <h3 className="font-rozha text-[clamp(1.55rem,3vw,2.25rem)] leading-[1.12] text-brand-darkRed">
                 <strong>Each creation carries that sense of continuity.</strong> Not defined by location, but
                 recognised by its consistency. A clear visual language that holds its place wherever it is worn.
                 Origin, expressed in form, in attitude, in the way you are recognised.
@@ -158,10 +166,10 @@ function AboutNarrative() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-12%' }}
             transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-2xl border border-brand-darkRed/20 bg-white/80 p-7 md:p-10"
+            className="border-y border-brand-darkRed/20 bg-white/80 p-7 md:w-[92%] md:p-10"
           >
             <div className="space-y-7 font-montserrat text-base leading-[1.85] tracking-wide text-brand-darkRed/88 md:text-[17px] md:leading-[1.9]">
-              <h3>
+              <h3 className="font-rozha text-[clamp(1.55rem,3vw,2.25rem)] leading-[1.12] text-brand-darkRed">
                 The house draws from Emirati design codes, including Al Talli craftsmanship and the structural logic of
                 Khous weaving.{' '}
                 <strong>
@@ -201,17 +209,17 @@ function AboutCTA() {
         <div className="absolute inset-0 bg-brand-darkRed/75" />
       </div>
       <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent" />
-      <div className="relative container mx-auto px-6 py-32 text-center md:py-48 lg:px-16">
+      <div className="relative container mx-auto px-6 py-28 text-center md:py-48 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
         >
-          <h2 className="mb-8 font-rozha text-4xl text-white md:text-5xl lg:text-6xl">{t.about.ctaTitle}</h2>
+          <h2 className="mb-8 font-rozha text-[clamp(2rem,5vw,3.5rem)] leading-[1.05] text-white">{t.about.ctaTitle}</h2>
           <LocaleLink
             href="/shop?from=about-story"
-            className={`inline-flex items-center gap-3 rounded-xl bg-brand-dustyBlue px-12 py-5 font-montserrat text-sm uppercase tracking-[0.2em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone hover:text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex w-full items-center justify-center gap-3 rounded-[4px] bg-brand-dustyBlue px-6 py-4 font-montserrat text-xs uppercase tracking-[0.14em] text-[#1a0008] transition-all duration-500 hover:bg-brand-stone hover:text-brand-darkRed sm:w-auto sm:px-12 sm:py-5 sm:text-sm sm:tracking-[0.2em] ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             {t.about.shopNow}

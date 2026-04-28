@@ -37,7 +37,7 @@ A premium luxury fashion webshop built with Next.js, featuring elegant design, s
 ## Brand Colors
 
 - Sovereign: `#1a0210`
-- Signature: `#722030`
+- Signature: `#6f1524`
 - Balance: `#6a8090`
 - Ground: `#e8ddd4`
 - Light: `#faf8f5`

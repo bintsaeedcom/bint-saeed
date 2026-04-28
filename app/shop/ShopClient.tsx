@@ -161,42 +161,51 @@ export default function ShopClient() {
   }, [filteredProducts, sortBy])
 
   const sortLabel = SORT_OPTIONS.find((o) => o.id === sortBy)?.label ?? 'New arrivals'
-
   return (
     <div className={`min-h-screen bg-brand-pageCanvas text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <header className="border-b border-black/5 bg-stone-50">
-        <div className="mx-auto max-w-[1400px] px-6 pb-8 pt-8 md:px-10 md:pb-16 md:pt-14 lg:px-14">
-          <AppBreadcrumb
-            variant="muted"
-            rtl={isRTL}
-            segments={[
-              { label: isRTL ? 'التشكيلة' : 'COLLECTION', href: '/about' },
-              { label: isRTL ? 'المجموعة' : 'READY-TO-WEAR' },
-            ]}
-            className="mb-6 md:mb-10"
-          />
+      <header className="section-full overflow-hidden border-b border-black/5 bg-stone-50">
+        <div className="mx-auto max-w-[1400px] px-6 pb-10 pt-24 md:px-10 md:pb-14 md:pt-28 lg:px-14">
+          <div className={isRTL ? 'text-right' : ''}>
+            <LocaleLink
+              href="/home"
+              className={`mb-7 inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed/75 transition-colors hover:text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+              data-cursor-hover
+            >
+              {isRTL ? <FiArrowRight className="h-4 w-4" aria-hidden /> : <FiArrowLeft className="h-4 w-4" aria-hidden />}
+              {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
+            </LocaleLink>
+            <AppBreadcrumb
+              variant="muted"
+              rtl={isRTL}
+              segments={[
+                { label: isRTL ? 'التشكيلة' : 'COLLECTION', href: '/about' },
+                { label: isRTL ? 'المجموعة' : 'READY-TO-WEAR' },
+              ]}
+              className="mb-6 md:mb-10"
+            />
 
-          <h2 className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
-            {isRTL ? 'التشكيلة' : 'COLLECTION'}
-          </h2>
-          <h1 data-document-h1="true" className="font-rozha text-4xl font-normal leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl">
-            {isRTL ? 'الفصل ١' : 'CHAPTER I'}
-          </h1>
-          <p className="mt-6 max-w-md font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600">
-            {isRTL
-              ? 'قطع محدودة، خامات مختارة، وتفاصيل من صنع يدّي. اكتشفي القطع التي تحمل هوية الدار.'
-              : 'Wherever life is lived, from Abu Dhabi to London, from Riyadh to Paris, from Doha to Marbella, you do not need to change how you present yourself. Each piece carries your elegance and your way of being, with consistency, wherever you are.'}
-          </p>
+            <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue sm:tracking-[0.34em]">
+              {isRTL ? 'التشكيلة' : 'COLLECTION'}
+            </p>
+            <h1 data-document-h1="true" className="font-rozha text-[clamp(2.75rem,8vw,5.75rem)] font-normal leading-[0.98] tracking-[0.01em] text-brand-darkRed">
+              {isRTL ? 'الفصل ١' : 'CHAPTER I'}
+            </h1>
+            <p className="mt-6 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600 md:text-base">
+              {isRTL
+                ? 'قطع محدودة، خامات مختارة، وتفاصيل من صنع يدّي. اكتشفي القطع التي تحمل هوية الدار.'
+                : 'Wherever life is lived, from Abu Dhabi to London, from Riyadh to Paris, from Doha to Marbella, you do not need to change how you present yourself. Each piece carries your elegance and your way of being, with consistency, wherever you are.'}
+            </p>
+          </div>
         </div>
       </header>
 
-      <div className="sticky top-16 z-30 border-b border-black/5 bg-brand-pageCanvas">
-        <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-6 py-3 md:gap-4 md:py-4 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
-          <div className="flex w-full min-w-0 items-center justify-between gap-4 md:w-auto md:justify-start md:gap-8 lg:min-w-0 lg:flex-1">
+      <div className="sticky top-[50px] z-30 border-b border-brand-stone/30 bg-brand-pageCanvas md:top-16">
+        <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-6 py-4 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
+          <div className="flex w-full min-w-0 items-center justify-between gap-3 md:w-auto md:justify-start lg:min-w-0 lg:flex-1">
             <button
               type="button"
               onClick={handleBack}
-              className="flex shrink-0 items-center gap-2 border-b border-transparent pb-1 font-montserrat text-[10px] uppercase tracking-[0.22em] text-neutral-600 transition-colors hover:text-brand-dustyBlue"
+              className="flex shrink-0 items-center gap-2 px-2 py-2 font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-clayRed/70 transition-colors hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue"
               data-cursor-hover
               aria-label={isRTL ? 'رجوع' : 'Back'}
             >
@@ -208,16 +217,16 @@ export default function ShopClient() {
               {isRTL ? 'رجوع' : 'Back'}
             </button>
 
-            <div className="hidden min-w-0 flex-wrap items-center gap-x-8 gap-y-2 md:flex">
+            <div className={`hidden min-w-0 items-center gap-1 overflow-x-auto [scrollbar-width:none] md:flex [&::-webkit-scrollbar]:hidden ${isRTL ? 'flex-row-reverse' : ''}`}>
               {categories.map((cat) => (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => applyCategory(cat)}
-                  className={`border-b border-transparent pb-1 font-montserrat text-[10px] uppercase tracking-[0.22em] transition-colors ${
+                  className={`shrink-0 whitespace-nowrap px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.1em] transition-all duration-300 ${
                     activeCategory === cat
-                      ? 'border-brand-darkRed text-brand-darkRed'
-                      : 'text-neutral-500 hover:text-brand-dustyBlue'
+                      ? 'bg-brand-darkRed text-brand-ivory'
+                      : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
                   }`}
                   data-cursor-hover
                 >
@@ -242,7 +251,7 @@ export default function ShopClient() {
           {/* Mobile: always-visible category overview (desktop unchanged above) */}
           <div className="md:hidden">
             <div
-              className={`flex snap-x snap-mandatory gap-2 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+              className={`flex snap-x snap-mandatory gap-1 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
                 isRTL ? 'flex-row-reverse' : ''
               }`}
               role="tablist"
@@ -257,10 +266,10 @@ export default function ShopClient() {
                     role="tab"
                     aria-selected={active}
                     onClick={() => applyCategory(cat)}
-                    className={`snap-start shrink-0 rounded-full border px-3.5 py-2 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors ${
+                    className={`snap-start shrink-0 whitespace-nowrap px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.1em] transition-all duration-300 ${
                       active
-                        ? 'border-brand-darkRed bg-brand-darkRed/5 text-brand-darkRed'
-                        : 'border-black/10 bg-white/80 text-neutral-600 hover:border-brand-dustyBlue/40 hover:text-brand-dustyBlue'
+                        ? 'bg-brand-darkRed text-brand-ivory'
+                        : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
                     }`}
                     data-cursor-hover
                   >
@@ -271,16 +280,16 @@ export default function ShopClient() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between gap-6 md:justify-end">
+          <div className="flex items-center justify-between gap-4 md:justify-end lg:gap-6">
             <LocaleLink
               href="/size-guide"
-              className="hidden items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-neutral-500 transition-colors hover:text-brand-dustyBlue sm:inline-flex"
+              className="hidden items-center gap-2 whitespace-nowrap px-2 py-2 font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-clayRed/70 transition-colors hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue sm:inline-flex"
               data-cursor-hover
             >
               <FiMaximize2 className="h-3 w-3" aria-hidden />
               {isRTL ? 'المقاسات' : 'Sizing'}
             </LocaleLink>
-            <span className="font-montserrat text-[10px] tabular-nums tracking-[0.18em] text-neutral-500">
+            <span className="whitespace-nowrap font-montserrat text-[10px] tabular-nums tracking-[0.1em] text-brand-clayRed/60">
               {sortedProducts.length}{' '}
               {sortedProducts.length === 1
                 ? isRTL
@@ -295,7 +304,7 @@ export default function ShopClient() {
               <button
                 type="button"
                 onClick={() => setSortOpen((o) => !o)}
-                className="flex items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-darkRed"
+                className="flex items-center gap-2 whitespace-nowrap px-2 py-2 font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-darkRed transition-colors hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue"
                 data-cursor-hover
                 aria-expanded={sortOpen}
               >
@@ -306,7 +315,7 @@ export default function ShopClient() {
                 />
               </button>
               {sortOpen && (
-                <div className="absolute right-0 top-full z-50 mt-2 max-h-[min(280px,70dvh)] min-w-[200px] overflow-y-auto overscroll-contain border border-stone-200 bg-white py-2 shadow-lg shadow-stone-900/10">
+                <div className="absolute right-0 top-full z-50 mt-2 max-h-[min(280px,70dvh)] min-w-[200px] max-w-[calc(100vw-2rem)] overflow-y-auto overscroll-contain border border-stone-200 bg-white py-2 shadow-lg shadow-stone-900/10">
                   {SORT_OPTIONS.map((opt) => (
                     <button
                       key={opt.id}
@@ -333,8 +342,8 @@ export default function ShopClient() {
         </div>
       </div>
 
-      <section className="mx-auto max-w-[1400px] px-6 py-10 md:px-10 md:py-20 lg:px-14">
-        <ul className="grid list-none grid-cols-3 gap-x-2 gap-y-8 p-0 sm:gap-x-7 sm:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-18">
+      <section className="mx-auto max-w-[1400px] px-5 py-10 md:px-10 md:py-20 lg:px-14">
+        <ul className="grid list-none grid-cols-2 gap-x-3 gap-y-10 p-0 sm:gap-x-7 sm:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-18">
           {sortedProducts.map((product) => (
             <li
               key={product.id}
@@ -368,7 +377,7 @@ export default function ShopClient() {
                     {product.category}
                   </p>
                   <LocaleLink href={getProductHref(product)} className="relative z-20 inline-block max-w-full" data-cursor-hover>
-                    <h3 className="font-rozha text-[clamp(0.95rem,2.8vw,1.35rem)] font-normal leading-snug tracking-wide text-brand-darkRed transition-colors hover:text-brand-dustyBlue sm:leading-tight">
+                    <h3 data-product-name="true" className="font-rozha text-[clamp(0.95rem,2.8vw,1.35rem)] font-normal leading-snug tracking-wide text-brand-darkRed transition-colors hover:text-brand-dustyBlue sm:leading-tight">
                       {product.name}
                     </h3>
                   </LocaleLink>

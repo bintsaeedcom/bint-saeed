@@ -30,11 +30,11 @@ export default function GlobalError({
             <div className="mb-8">
               <LocaleLink href="/" data-cursor-hover>
                 <Image
-                  src="/logo.png"
+                  src="/gold logo.png"
                   alt="Bint Saeed"
-                  width={180}
-                  height={60}
-                  className="h-12 sm:h-16 w-auto mx-auto"
+                  width={96}
+                  height={96}
+                  className="mx-auto h-14 w-auto sm:h-16 [filter:none]"
                 />
               </LocaleLink>
             </div>

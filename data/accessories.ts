@@ -328,7 +328,7 @@ export const accessories: Accessory[] = [
     materialsAr: 'حرير، معدن مطلي بالذهب 18 قيراط',
     colors: [
       { name: 'Black', nameAr: 'أسود', hex: '#1a0210' },
-      { name: 'Burgundy', nameAr: 'عنابي', hex: '#722030' },
+      { name: 'Burgundy', nameAr: 'عنابي', hex: '#6f1524' },
       { name: 'Cream', nameAr: 'كريمي', hex: '#FFFDD0' },
       { name: 'Navy', nameAr: 'كحلي', hex: '#1f3a5f' }],
     inStock: true,
@@ -433,7 +433,7 @@ export const accessories: Accessory[] = [
     materialsAr: 'حرير، معدن مطلي بالذهب',
     colors: [
       { name: 'Black', nameAr: 'أسود', hex: '#1a0210' },
-      { name: 'Burgundy', nameAr: 'عنابي', hex: '#722030' },
+      { name: 'Burgundy', nameAr: 'عنابي', hex: '#6f1524' },
       { name: 'Blush', nameAr: 'وردي فاتح', hex: '#DE5D83' }],
     inStock: true,
   },

@@ -75,7 +75,7 @@ export default function Footer() {
           <span
             className="origin-top-right rotate-90 whitespace-nowrap font-rozha text-[56px] leading-none tracking-[0.02em] text-transparent opacity-90 lg:text-[68px]"
             style={{
-              backgroundImage: 'linear-gradient(to right, #722030 0%, #6a8090 100%)',
+              backgroundImage: 'linear-gradient(to right, #6f1524 0%, #6a8090 100%)',
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text',
             }}
@@ -120,7 +120,7 @@ export default function Footer() {
                 <button
                   type="button"
                   onClick={openSubscribeModal}
-                  className="inline-flex min-h-[46px] items-center justify-center rounded-xl bg-brand-dustyBlue px-7 font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#1a0008] transition-colors hover:bg-brand-stone"
+                  className="inline-flex min-h-[46px] items-center justify-center rounded-[4px] bg-brand-dustyBlue px-7 font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#1a0008] transition-colors hover:bg-brand-stone"
                   data-cursor-hover
                 >
                   {isRTL ? 'اشتراك' : 'Subscribe'}
@@ -129,9 +129,9 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className={`grid grid-cols-1 gap-8 sm:grid-cols-2 lg:gap-10 xl:grid-cols-4 xl:gap-12 ${isRTL ? 'text-right' : ''}`}>
+          <div className={`grid grid-cols-1 gap-5 xl:grid-cols-4 xl:gap-12 ${isRTL ? 'text-right' : ''}`}>
             {/* Brand Column with Logo */}
-            <div className="sm:col-span-2 xl:col-span-1">
+            <div className="xl:col-span-1">
               <p className="max-w-xs font-montserrat text-[12px] leading-relaxed tracking-[0.03em] text-white/50">
                 {t.footer.brandDescription}
               </p>
@@ -165,16 +165,16 @@ export default function Footer() {
               <button
                 type="button"
                 onClick={() => setMobileOpenSection((prev) => (prev === 'shop' ? null : 'shop'))}
-                className="mb-3 flex w-full items-center justify-between md:pointer-events-none"
+                className="mb-3 flex w-full items-center justify-between xl:pointer-events-none"
               >
                 <h4 className="font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
                   {t.footer.shop}
                 </h4>
-                <span className="font-montserrat text-[11px] text-white/55 md:hidden">
+                <span className="font-montserrat text-[11px] text-white/55 xl:hidden">
                   {mobileOpenSection === 'shop' ? '−' : '+'}
                 </span>
               </button>
-              <ul className={`space-y-3 ${mobileOpenSection === 'shop' ? 'block' : 'hidden'} md:block`}>
+              <ul className={`space-y-3 ${mobileOpenSection === 'shop' ? 'block' : 'hidden'} xl:block`}>
                 {footerLinks.shop.map((link) => (
                   <li key={link.label}>
                     <LocaleLink
@@ -196,16 +196,16 @@ export default function Footer() {
               <button
                 type="button"
                 onClick={() => setMobileOpenSection((prev) => (prev === 'about' ? null : 'about'))}
-                className="mb-3 flex w-full items-center justify-between md:pointer-events-none"
+                className="mb-3 flex w-full items-center justify-between xl:pointer-events-none"
               >
                 <h4 className="font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
                   {t.footer.about}
                 </h4>
-                <span className="font-montserrat text-[11px] text-white/55 md:hidden">
+                <span className="font-montserrat text-[11px] text-white/55 xl:hidden">
                   {mobileOpenSection === 'about' ? '−' : '+'}
                 </span>
               </button>
-              <ul className={`space-y-3 ${mobileOpenSection === 'about' ? 'block' : 'hidden'} md:block`}>
+              <ul className={`space-y-3 ${mobileOpenSection === 'about' ? 'block' : 'hidden'} xl:block`}>
                 {footerLinks.about.map((link) => (
                   <li key={link.label}>
                     <LocaleLink
@@ -227,16 +227,16 @@ export default function Footer() {
               <button
                 type="button"
                 onClick={() => setMobileOpenSection((prev) => (prev === 'help' ? null : 'help'))}
-                className="mb-3 flex w-full items-center justify-between md:pointer-events-none"
+                className="mb-3 flex w-full items-center justify-between xl:pointer-events-none"
               >
                 <h4 className="font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
                   {t.footer.help}
                 </h4>
-                <span className="font-montserrat text-[11px] text-white/55 md:hidden">
+                <span className="font-montserrat text-[11px] text-white/55 xl:hidden">
                   {mobileOpenSection === 'help' ? '−' : '+'}
                 </span>
               </button>
-              <ul className={`space-y-3 ${mobileOpenSection === 'help' ? 'block' : 'hidden'} md:block`}>
+              <ul className={`space-y-3 ${mobileOpenSection === 'help' ? 'block' : 'hidden'} xl:block`}>
                 {footerLinks.help.map((link) => (
                   <li key={link.label}>
                     <LocaleLink
@@ -255,9 +255,9 @@ export default function Footer() {
       </div>
 
       {/* Worldwide Shipping Banner - Brand red section */}
-      <div className="relative bg-[#722030]">
+      <div className="relative bg-[#6f1524]">
         {/* Subtle deep-red tonal overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/28 via-transparent to-[#1a0210]/28" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#12070a]/40 via-transparent to-[#12070a]/40" />
         
         <div className="relative container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-8 md:py-9 2xl:py-10">
           <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4 xl:gap-8 ${isRTL ? 'text-right' : ''}`}>

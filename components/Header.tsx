@@ -27,7 +27,7 @@ const searchableContent = [
   { title: 'Accessories', href: '/accessories', category: 'Collection' },
   {
     title: 'Abaya Charms',
-    href: '/accessories?type=abaya-charms',
+    href: '/charms',
     category: 'Accessories',
   },
   { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
@@ -81,7 +81,7 @@ export default function Header() {
 
   const navItems = [
     { label: t.nav.collections, href: '/shop' },
-    { label: 'Charms', href: '/accessories?type=abaya-charms' },
+    { label: 'Charms', href: '/charms' },
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
     { label: 'Personalisation', href: '/personalisation' },
     { label: t.about.title, href: '/about' },
@@ -89,7 +89,7 @@ export default function Header() {
   const getMainNavAnalyticsEvent = (href: string) =>
     href === '/shop'
       ? 'click_nav_collection'
-      : href === '/accessories?type=abaya-charms'
+      : href === '/charms'
         ? 'click_nav_charms'
       : href === '/accessories'
         ? 'click_nav_accessories'
@@ -137,7 +137,7 @@ export default function Header() {
             { label: 'All Accessories', href: '/accessories' },
             {
               label: 'Abaya Charms',
-              href: '/accessories?type=abaya-charms',
+              href: '/charms',
             },
             { label: 'Necklaces', href: '/accessories?type=necklaces' },
             { label: 'Earrings', href: '/accessories?type=earrings' },
@@ -150,7 +150,7 @@ export default function Header() {
       features: [
         {
           title: 'Abaya Charms',
-          href: '/accessories?type=abaya-charms',
+          href: '/charms',
           image: ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
         },
         {
@@ -239,7 +239,7 @@ export default function Header() {
       <header
         className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isTransparentHomeHeader
-            ? 'border-transparent bg-transparent backdrop-blur-0'
+            ? 'border-white/10 bg-[linear-gradient(90deg,rgba(18,8,11,0.72)_0%,rgba(28,15,21,0.66)_22%,rgba(45,20,30,0.58)_50%,rgba(28,15,21,0.66)_78%,rgba(18,8,11,0.72)_100%)] shadow-[0_18px_46px_rgba(8,2,8,0.24)] backdrop-blur-md'
             : `border-white/10 ${headerBarGradient} ${isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)] backdrop-blur-md' : 'backdrop-blur-[2px]'}`
         }`}
       >
@@ -256,10 +256,10 @@ export default function Header() {
             {/* Row 1 — brand above nav */}
             <div
               className={`relative flex items-center justify-center transition-[padding] duration-500 ${
-                isScrolled ? 'py-1 md:py-1.5' : 'py-1.5 md:py-2.5 lg:py-3'
+                isScrolled ? 'py-0.5 md:py-0.5' : 'py-0.5 md:py-1 lg:py-1.5'
               }`}
             >
-              <div className="absolute left-0.5 top-1/2 z-[62] -translate-y-1/2 lg:hidden">
+              <div className="absolute left-0.5 top-1/2 z-[62] -translate-y-1/2 xl:hidden">
                 <button
                   type="button"
                   className="p-2 text-white"
@@ -278,11 +278,11 @@ export default function Header() {
                     alt="Bint Saeed"
                     width={800}
                     height={210}
-                    className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
+                    className={`w-auto max-w-[min(68vw,720px)] transition-all duration-300 sm:max-w-[min(76vw,720px)] lg:max-w-[min(92vw,720px)] [filter:none] [text-shadow:none] ${
                       isScrolled
-                        ? 'h-[clamp(2.7rem,6.3vw,3.6rem)] max-h-[68px] sm:max-h-[72px] md:max-h-[76px]'
-                        : 'h-[clamp(3.15rem,8.9vw,5.05rem)] max-h-[90px] sm:max-h-[102px] md:h-[clamp(3.4rem,8.1vw,5.4rem)] md:max-h-[110px] lg:max-h-[120px] xl:max-h-[130px]'
-                    }`}
+                        ? 'h-[clamp(2.05rem,4.7vw,2.55rem)] max-h-[48px] sm:max-h-[52px] md:max-h-[56px]'
+                        : 'h-[clamp(2.2rem,6vw,3rem)] max-h-[58px] sm:max-h-[64px] md:h-[clamp(2.35rem,5.6vw,3.2rem)] md:max-h-[68px] lg:max-h-[74px] xl:max-h-[80px]'
+                    } scale-[1.18]`}
                     priority
                   />
                 </div>
@@ -297,17 +297,17 @@ export default function Header() {
                     alt="Bint Saeed"
                     width={800}
                     height={210}
-                    className={`w-auto max-w-[min(92vw,720px)] transition-all duration-300 ${
+                    className={`w-auto max-w-[min(68vw,720px)] transition-all duration-300 sm:max-w-[min(76vw,720px)] lg:max-w-[min(92vw,720px)] [filter:none] [text-shadow:none] ${
                       isScrolled
-                        ? 'h-[clamp(2.7rem,6.3vw,3.6rem)] max-h-[68px] sm:max-h-[72px] md:max-h-[76px]'
-                        : 'h-[clamp(3.15rem,8.9vw,5.05rem)] max-h-[90px] sm:max-h-[102px] md:h-[clamp(3.4rem,8.1vw,5.4rem)] md:max-h-[110px] lg:max-h-[120px] xl:max-h-[130px]'
-                    }`}
+                        ? 'h-[clamp(2.05rem,4.7vw,2.55rem)] max-h-[48px] sm:max-h-[52px] md:max-h-[56px]'
+                        : 'h-[clamp(2.2rem,6vw,3rem)] max-h-[58px] sm:max-h-[64px] md:h-[clamp(2.35rem,5.6vw,3.2rem)] md:max-h-[68px] lg:max-h-[74px] xl:max-h-[80px]'
+                    } scale-[1.18]`}
                     priority
                   />
                 </LocaleLink>
               )}
 
-              <div className="absolute right-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center gap-0.5 lg:hidden">
+              <div className="absolute right-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center gap-0.5 xl:hidden">
                 <button
                   type="button"
                   onClick={() => setIsMiniCartOpen(true)}
@@ -324,7 +324,7 @@ export default function Header() {
                 </button>
               </div>
 
-              <div className="absolute right-0.5 top-0.5 z-[62] hidden items-center sm:right-1 sm:top-1 lg:flex">
+              <div className="absolute right-0.5 top-0.5 z-[62] hidden items-center sm:right-1 sm:top-1 xl:flex">
                 <div className={`flex items-center gap-2 rounded-full border px-2.5 py-1 ${
                   isTransparentHomeHeader ? 'border-white/25 bg-white/[0.02]' : 'border-white/15 bg-white/[0.03]'
                 }`}>
@@ -336,19 +336,16 @@ export default function Header() {
             </div>
 
             {/* Divider between brand and topics */}
-            <div
-              className="mx-auto hidden h-px max-w-[min(100%,56rem)] bg-gradient-to-r from-transparent via-white/22 to-transparent lg:block"
-              aria-hidden
-            />
+            <div className="mx-auto hidden h-px max-w-[min(100%,56rem)] bg-gradient-to-r from-transparent via-white/16 to-transparent xl:block" aria-hidden />
 
             {/* Row 2 — topics + utilities (mirror on RTL) */}
             <div
-              className={`relative hidden items-center justify-between gap-2 isolate transition-[padding] duration-500 lg:flex ${
+              className={`relative hidden items-center justify-between gap-2 isolate transition-[padding] duration-500 xl:flex ${
                 isRTL ? 'flex-row-reverse' : ''
-              } ${isScrolled ? 'py-1 md:py-1.5' : 'py-1.5 md:py-2 lg:py-2.5'}`}
+              } ${isScrolled ? 'py-0.5 md:py-0.5' : 'py-0.5 md:py-1 xl:py-1.5'}`}
             >
             {/* Left: desktop search */}
-            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-start lg:flex">
+            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-start xl:flex">
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
@@ -366,7 +363,7 @@ export default function Header() {
             </div>
 
             {/* Center: Navigation — desktop */}
-            <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-center gap-4 lg:flex xl:gap-7">
+            <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-center gap-4 xl:flex xl:gap-7">
               <LocaleLink
                 href="/shop"
                 onMouseEnter={() => setActiveMegaMenu('/shop')}
@@ -405,7 +402,7 @@ export default function Header() {
             </nav>
 
             {/* Mobile: menu (row 2 only — brand is row 1) */}
-            <div className="relative z-[55] flex w-10 shrink-0 justify-start lg:hidden">
+            <div className="relative z-[55] flex w-10 shrink-0 justify-start xl:hidden">
               <button
                 type="button"
                 className="p-2 text-white"
@@ -418,10 +415,10 @@ export default function Header() {
             </div>
 
             {/* Spacer on mobile so row 2 layout matches (brand already centered above) */}
-            <div className="min-w-0 flex-1 lg:hidden" aria-hidden />
+            <div className="min-w-0 flex-1 xl:hidden" aria-hidden />
 
             {/* Right: account and cart */}
-            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-3 lg:flex xl:gap-5">
+            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-3 xl:flex xl:gap-5">
               <button
                 type="button"
                 onClick={() => {
@@ -451,7 +448,7 @@ export default function Header() {
             </div>
 
             {/* Compact utility row when hamburger layout is active */}
-            <div className="relative z-[55] flex w-10 shrink-0 items-center justify-end gap-1.5 sm:w-auto sm:gap-2 lg:gap-3 lg:hidden">
+            <div className="relative z-[55] flex w-10 shrink-0 items-center justify-end gap-1.5 sm:w-auto sm:gap-2 xl:hidden">
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
@@ -488,14 +485,14 @@ export default function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="pointer-events-auto absolute left-0 right-0 top-full z-[63] hidden -mt-1.5 pt-1.5 lg:block"
+                className="pointer-events-auto absolute left-0 right-0 top-full z-[63] hidden -mt-1.5 pt-1.5 xl:block"
               >
                 <div className="border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)]">
-                  <div className="grid grid-cols-12 gap-10 px-6 py-8 lg:px-12">
-                    <div className="col-span-7 grid grid-cols-3 gap-8">
+                  <div className="grid grid-cols-12 gap-6 px-6 py-8 lg:gap-10 lg:px-12">
+                    <div className="col-span-5 grid grid-cols-1 gap-8 xl:col-span-6">
                       {megaMenus[activeMegaMenu].columns.map((col) => (
-                        <div key={col.title}>
-                          <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/70">
+                        <div key={col.title} className="min-w-0">
+                          <p className="mb-3 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/70">
                             {col.title}
                           </p>
                           <div className="space-y-2.5">
@@ -503,7 +500,7 @@ export default function Header() {
                               <LocaleLink
                                 key={link.label}
                                 href={link.href}
-                                className="block font-montserrat text-[13px] text-brand-darkRed/90 transition-colors hover:text-brand-dustyBlue"
+                                className="block max-w-full whitespace-nowrap break-keep font-montserrat text-[13px] text-brand-darkRed/90 transition-colors [hyphens:none] hover:text-brand-dustyBlue"
                                 data-cursor-hover
                                 onClick={() => setActiveMegaMenu(null)}
                               >
@@ -515,7 +512,7 @@ export default function Header() {
                       ))}
                     </div>
 
-                    <div className="col-span-5 grid grid-cols-2 gap-4">
+                    <div className="col-span-7 grid grid-cols-2 gap-4 xl:col-span-6 xl:gap-5">
                       {megaMenus[activeMegaMenu].features.map((feature) => (
                         <LocaleLink
                           key={feature.title}
@@ -534,11 +531,11 @@ export default function Header() {
                               aria-hidden
                             />
                           </div>
-                          <div className="mt-2 flex items-center justify-between">
-                            <span className="font-montserrat text-[12px] text-brand-darkRed">
+                          <div className="mt-2 flex min-w-0 flex-col items-start gap-1.5 xl:flex-row xl:items-center xl:justify-between xl:gap-3">
+                            <span className="max-w-full break-words font-montserrat text-[12px] leading-snug text-brand-darkRed [hyphens:none]">
                               {feature.title}
                             </span>
-                            <span className="font-montserrat text-[11px] uppercase tracking-[0.1em] text-brand-darkRed/70 transition-colors group-hover:text-brand-dustyBlue">
+                            <span className="whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-darkRed/70 transition-colors group-hover:text-brand-dustyBlue xl:text-[11px]">
                               Shop Now
                             </span>
                           </div>
@@ -790,23 +787,6 @@ export default function Header() {
                               </div>
                             </div>
                           ))}
-                          {mega.features.length > 0 ? (
-                            <div className="grid grid-cols-2 gap-2 pt-1">
-                              {mega.features.map((feature) => (
-                                <LocaleLink
-                                  key={feature.title}
-                                  href={feature.href}
-                                  onClick={() => setIsMobileMenuOpen(false)}
-                                  className="flex min-h-[3.5rem] items-center justify-center rounded border border-white/15 px-3 py-2.5 text-center font-montserrat text-[11px] leading-snug text-white/90 transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
-                                  data-cursor-hover
-                                >
-                                  <span className="line-clamp-3 w-full max-w-[12.5rem] text-center text-pretty [text-wrap:balance]">
-                                    {feature.title}
-                                  </span>
-                                </LocaleLink>
-                              ))}
-                            </div>
-                          ) : null}
                         </div>
                       ) : null}
                     </motion.div>

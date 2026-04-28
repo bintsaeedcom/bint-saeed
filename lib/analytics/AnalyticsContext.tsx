@@ -25,6 +25,10 @@ interface VisitorData {
     longitude: number | null
     timezone: string
     accuracyLevel: 'ip' | 'gps' | 'unknown'
+    accuracyMeters?: number | null
+    address?: string
+    postalCode?: string
+    locationCapturedAt?: string
   } | null
   device: {
     type: 'mobile' | 'tablet' | 'desktop'
@@ -55,6 +59,17 @@ interface VisitorData {
     productName: string
     timestamp: string
   }[]
+}
+
+interface BrowserContext {
+  title: string
+  url: string
+  path: string
+  hostname: string
+  referrer: string
+  language: string
+  screen: string
+  userAgent: string
 }
 
 interface AnalyticsContextType {
@@ -101,12 +116,66 @@ function getDeviceInfo() {
   return { type, browser, os }
 }
 
+function getBrowserContext(): BrowserContext | null {
+  if (typeof window === 'undefined') return null
+  return {
+    title: document.title || '',
+    url: window.location.href,
+    path: window.location.pathname + window.location.search,
+    hostname: window.location.hostname,
+    referrer: document.referrer || 'Direct',
+    language: navigator.language || '',
+    screen: `${window.screen?.width || 0}x${window.screen?.height || 0}`,
+    userAgent: navigator.userAgent,
+  }
+}
+
+async function reverseGeocodeLocation(latitude: number, longitude: number): Promise<Partial<NonNullable<VisitorData['location']>>> {
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${encodeURIComponent(latitude)}&lon=${encodeURIComponent(longitude)}&zoom=18&addressdetails=1`,
+      { signal: AbortSignal.timeout(7000) },
+    )
+    const data = await res.json()
+    const address = data?.address || {}
+    return {
+      address: data?.display_name || '',
+      city: address.city || address.town || address.village || address.municipality || address.suburb || '',
+      region: address.state || address.region || address.county || '',
+      country: address.country || '',
+      countryCode: address.country_code ? String(address.country_code).toUpperCase() : undefined,
+      postalCode: address.postcode || '',
+    }
+  } catch {
+    try {
+      const res = await fetch(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${encodeURIComponent(latitude)}&longitude=${encodeURIComponent(longitude)}&localityLanguage=en`,
+        { signal: AbortSignal.timeout(7000) },
+      )
+      const data = await res.json()
+      const addressParts = [data.locality, data.principalSubdivision, data.postcode, data.countryName].filter(Boolean)
+      return {
+        address: addressParts.join(', '),
+        city: data.city || data.locality || '',
+        region: data.principalSubdivision || '',
+        country: data.countryName || '',
+        countryCode: data.countryCode || undefined,
+        postalCode: data.postcode || '',
+      }
+    } catch {
+      return {}
+    }
+  }
+}
+
 export function AnalyticsProvider({ children }: { children: ReactNode }) {
   const [visitor, setVisitor] = useState<VisitorData | null>(null)
   const [isLive, setIsLive] = useState(true)
   /** Refs avoid trackPageView ↔ visitor feedback loops (stable callback identity). */
   const pageStartTimeRef = useRef(Date.now())
   const currentPathRef = useRef('')
+  const visitorRef = useRef<VisitorData | null>(null)
+  const lastSessionSummarySentAtRef = useRef(0)
 
   // Initialize visitor on mount
   useEffect(() => {
@@ -157,6 +226,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
               longitude: data.longitude || null,
               timezone: data.timezone || '',
               accuracyLevel: 'ip' as const,
+              postalCode: data.postal || '',
             }
           }
         } catch (e) {
@@ -179,6 +249,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
                 longitude: data2.lon || null,
                 timezone: data2.timezone || '',
                 accuracyLevel: 'ip' as const,
+              postalCode: data2.zip || '',
               }
             }
           } catch (e) {
@@ -257,9 +328,9 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       preciseGpsRequestInFlight = true
 
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           preciseGpsRequestInFlight = false
-          const { latitude, longitude } = position.coords
+          const { latitude, longitude, accuracy } = position.coords
           type Loc = NonNullable<VisitorData['location']>
           let base: Loc | null = null
           try {
@@ -268,16 +339,21 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
           } catch {
             /* keep null */
           }
+          const geocoded = await reverseGeocodeLocation(latitude, longitude)
           const gpsLocation: Loc = {
-            country: base?.country ?? 'Unknown',
-            city: base?.city ?? 'Unknown',
-            region: base?.region ?? '',
-            countryCode: base?.countryCode ?? 'XX',
+            country: geocoded.country || base?.country || 'Unknown',
+            city: geocoded.city || base?.city || 'Unknown',
+            region: geocoded.region || base?.region || '',
+            countryCode: geocoded.countryCode || base?.countryCode || 'XX',
             ip: base?.ip ?? 'Unknown',
             latitude,
             longitude,
             timezone: base?.timezone ?? '',
             accuracyLevel: 'gps',
+            accuracyMeters: Number.isFinite(accuracy) ? accuracy : null,
+            address: geocoded.address || base?.address || '',
+            postalCode: geocoded.postalCode || base?.postalCode || '',
+            locationCapturedAt: new Date().toISOString(),
           }
           localStorage.setItem('bs_location', JSON.stringify(gpsLocation))
           localStorage.setItem('bs_location_time', Date.now().toString())
@@ -287,6 +363,8 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
           void sendSlackNotification('location_update', {
             visitorId,
             location: gpsLocation,
+            device: getDeviceInfo(),
+            browser: getBrowserContext(),
             message: 'GPS location acquired',
           })
         },
@@ -319,15 +397,57 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
     return () => clearInterval(interval)
   }, [visitor])
 
+  useEffect(() => {
+    visitorRef.current = visitor
+  }, [visitor])
+
+  const sendSessionSummary = useCallback((reason: 'hidden' | 'pagehide') => {
+    const current = visitorRef.current
+    if (!current) return
+    const now = Date.now()
+    if (current.totalTimeOnSite < 5) return
+    if (now - lastSessionSummarySentAtRef.current < 30_000) return
+    lastSessionSummarySentAtRef.current = now
+
+    const latestPageView = current.pageViews[current.pageViews.length - 1]
+    sendSlackNotificationBeacon('session_summary', {
+      ...current,
+      browser: getBrowserContext(),
+      currentPage: latestPageView
+        ? {
+            path: latestPageView.path,
+            title: latestPageView.title,
+          }
+        : undefined,
+      sessionEndReason: reason,
+    })
+  }, [])
+
   // Handle visibility change (tab switch)
   useEffect(() => {
     const handleVisibility = () => {
       setIsLive(!document.hidden)
+      if (document.hidden) {
+        sendSessionSummary('hidden')
+      }
     }
 
     document.addEventListener('visibilitychange', handleVisibility)
     return () => document.removeEventListener('visibilitychange', handleVisibility)
-  }, [])
+  }, [sendSessionSummary])
+
+  useEffect(() => {
+    const handlePageHide = () => {
+      sendSessionSummary('pagehide')
+    }
+
+    window.addEventListener('pagehide', handlePageHide)
+    window.addEventListener('beforeunload', handlePageHide)
+    return () => {
+      window.removeEventListener('pagehide', handlePageHide)
+      window.removeEventListener('beforeunload', handlePageHide)
+    }
+  }, [sendSessionSummary])
 
   // Track page view — empty deps: logic uses refs + functional updates only (no visitor in deps).
   const trackPageView = useCallback((path: string, title: string) => {
@@ -427,5 +547,24 @@ async function sendSlackNotification(type: string, data: any) {
     })
   } catch (e) {
     console.log('Failed to send Slack notification')
+  }
+}
+
+function sendSlackNotificationBeacon(type: string, data: any) {
+  try {
+    const body = JSON.stringify({ type, data })
+    if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
+      const blob = new Blob([body], { type: 'application/json' })
+      navigator.sendBeacon('/api/analytics/slack', blob)
+      return
+    }
+    void fetch('/api/analytics/slack', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      keepalive: true,
+    })
+  } catch {
+    console.log('Failed to send Slack session summary')
   }
 }

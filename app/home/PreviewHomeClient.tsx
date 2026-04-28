@@ -258,10 +258,11 @@ const MANIFESTO_SNIPPET = [
   'Wherever life is lived, from Abu Dhabi to London, from Riyadh to Paris, from Doha to Marbella, you do not need to change how you present yourself. Each piece carries your elegance, your way of being, with consistency, wherever you are.',
   'Bint Saeed exists at the intersection of heritage and a contemporary life, carried across borders and recognised by its consistency.',
 ]
-const HOUSE_MOTION_EASE = 'power2.out'
-const HOUSE_REVEAL_DURATION = 1.25
-const HOUSE_MASK_DURATION = 1.45
-const HOUSE_CURTAIN_DURATION = 1.35
+const HOUSE_MOTION_EASE = 'power3.out'
+const HOUSE_REVEAL_DURATION = 0.9
+const HOUSE_MASK_DURATION = 1.15
+const HOUSE_CURTAIN_DURATION = 1.1
+const OVERLAP_PANEL_CLASS = 'relative z-10 -mt-4 md:-mt-6 lg:-mt-8'
 
 export default function Home() {
   const { isRTL } = useLanguage()
@@ -278,16 +279,16 @@ export default function Home() {
         if (!revealTargets.length) return
         gsap.fromTo(
           revealTargets,
-          { autoAlpha: 0, y: 34 },
+          { autoAlpha: 0, y: 24 },
           {
             autoAlpha: 1,
             y: 0,
             duration: HOUSE_REVEAL_DURATION,
             ease: HOUSE_MOTION_EASE,
-            stagger: 0.16,
+            stagger: 0.11,
             scrollTrigger: {
               trigger: section,
-              start: 'top 84%',
+              start: 'top 88%',
               once: true,
             },
           },
@@ -379,7 +380,7 @@ function ThreePillarsBar() {
               data-reveal
               className={`rounded-xl border px-4 py-4 md:px-5 ${
                 idx === 1
-                  ? 'border-[#722030] bg-[#722030] text-[#e8d8c8]'
+                  ? 'border-[#6f1524] bg-[#6f1524] text-[#e8d8c8]'
                   : 'border-[color:var(--color-muted)]/20 bg-[#e8ddd4]'
               }`}
             >
@@ -408,7 +409,7 @@ function CharmHeroFeatureSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="relative w-full overflow-hidden bg-transparent py-0">
+    <section data-story-section className={`${OVERLAP_PANEL_CLASS} w-full overflow-hidden bg-transparent px-0 py-0`}>
       <div className="grid min-h-[68vh] w-full max-w-none items-stretch lg:grid-cols-2">
           <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
             <div className="absolute inset-0 opacity-25">
@@ -448,7 +449,7 @@ function CharmHeroFeatureSection() {
             <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
               <LocaleLink
                 href="/accessories?category=abaya-charms"
-                className="inline-flex min-h-[44px] items-center rounded-xl bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
+                className="inline-flex min-h-[44px] items-center rounded-[4px] bg-[#6f1524] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[#821b2d]"
                 data-cursor-hover
               >
                 Shop Charms
@@ -482,7 +483,7 @@ function CharmHeroFeatureSectionMirror() {
   const { isRTL } = useLanguage()
 
   return (
-    <section data-story-section className="relative w-full overflow-hidden bg-transparent py-0">
+    <section data-story-section className={`${OVERLAP_PANEL_CLASS} w-full overflow-hidden bg-transparent px-0 py-0`}>
       <div className="grid min-h-[68vh] w-full max-w-none items-stretch lg:grid-cols-2">
         <LocaleLink
           data-reveal
@@ -527,7 +528,7 @@ function CharmHeroFeatureSectionMirror() {
             <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
               <LocaleLink
                 href="/shop"
-                className="inline-flex min-h-[44px] items-center rounded-xl bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
+                className="inline-flex min-h-[44px] items-center rounded-[4px] bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
                 data-cursor-hover
               >
                 SHOP
@@ -544,7 +545,7 @@ function CampaignPanoramaSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#f6f2eb] py-0">
+    <section className={`${OVERLAP_PANEL_CLASS} w-full overflow-hidden bg-[#f6f2eb] px-0 py-0`}>
       <SectionStripes variant="soft" />
       <div className="relative w-full">
         <div className="relative aspect-[16/6] min-h-[220px] w-full overflow-hidden bg-brand-stone/15 md:min-h-[280px] lg:min-h-[360px]">
@@ -557,14 +558,14 @@ function CampaignPanoramaSection() {
             priority={false}
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#1F0508]/22 via-transparent to-[#1F0508]/16" />
-          <div className={`absolute bottom-6 z-[2] ${isRTL ? 'left-6 md:left-10 lg:left-14' : 'right-6 md:right-10 lg:right-14'}`}>
+          <div className={`absolute top-1/2 z-[2] -translate-y-1/2 ${isRTL ? 'right-6 md:right-10 lg:right-14' : 'left-6 md:left-10 lg:left-14'}`}>
             <MagneticWrap>
               <LocaleLink
                 href="/shop"
-                className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 py-2 font-montserrat text-[11px] uppercase tracking-[0.28em] !text-brand-ivory w-fit border-b border-brand-ivory/45 transition-colors duration-500 hover:border-brand-dustyBlue hover:!text-brand-dustyBlue"
+                className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 rounded-[4px] bg-[#6f1524] px-5 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.2em] !text-[#e8d8c8] shadow-[0_10px_24px_rgba(0,0,0,0.3)] transition-all duration-400 hover:bg-[#821b2d] hover:shadow-[0_14px_30px_rgba(0,0,0,0.36)]"
                 data-cursor-hover
               >
-                Shop Now
+                Return to Shop
                 <FiArrowRight
                   className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
                 />
@@ -761,7 +762,11 @@ function QuickShopCarousel() {
       : 0
 
   return (
-    <section ref={sectionRef} data-story-section className="relative bg-brand-pageCanvas pb-14 pt-20 md:pb-18 md:pt-24 lg:pb-20 lg:pt-28">
+    <section
+      ref={sectionRef}
+      data-story-section
+      className={`${OVERLAP_PANEL_CLASS} bg-brand-pageCanvas pb-14 pt-20 md:pb-18 md:pt-24 lg:pb-20 lg:pt-28`}
+    >
       <SectionStripes variant="soft" />
       <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-10 bg-gradient-to-r from-brand-pageCanvas to-transparent md:w-16 lg:w-20" />
       <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-10 bg-gradient-to-l from-brand-pageCanvas to-transparent md:w-16 lg:w-20" />
@@ -786,7 +791,7 @@ function QuickShopCarousel() {
             <LocaleLink
               key={`${product.id}-${idx}`}
               href={getProductHref(product)}
-              className="group relative z-[2] mx-1.5 flex h-[25.35rem] w-[13.1rem] shrink-0 cursor-pointer flex-col border border-brand-stone/25 border-b-2 border-b-transparent bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-b-[#722030] hover:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:-translate-y-0.5 focus-visible:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:outline-none md:mx-2 md:h-[30.85rem] md:w-[16rem] lg:h-[32.35rem] lg:w-[16.8rem]"
+              className="group relative z-[2] mx-1.5 flex h-[25.35rem] w-[13.1rem] shrink-0 cursor-pointer flex-col border border-brand-stone/25 border-b-2 border-b-transparent bg-white transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-b-[#6f1524] hover:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:-translate-y-0.5 focus-visible:shadow-[0_14px_36px_rgba(25,10,16,0.08)] focus-visible:outline-none md:mx-2 md:h-[30.85rem] md:w-[16rem] lg:h-[32.35rem] lg:w-[16.8rem]"
               data-cursor-hover
             >
               {/* Images must not capture hits — stacked fill layers steal taps from the link otherwise */}
@@ -810,7 +815,7 @@ function QuickShopCarousel() {
                   <h3 className="min-w-0 max-w-full truncate font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
                     {product.name}
                   </h3>
-                  <p className="font-montserrat text-[10.5px] uppercase leading-snug tracking-[0.06em] text-[#722030]">
+                  <p className="font-montserrat text-[10.5px] uppercase leading-snug tracking-[0.06em] text-[#6f1524]">
                     DHS. {product.price.toLocaleString()}
                   </p>
                 </div>
@@ -945,7 +950,7 @@ function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                   style={reduceMotion ? undefined : { x: introX }}
-                  className="mb-6 max-w-md border-l-[2px] border-[#722030] pl-[14px] font-montserrat text-[15px] leading-[1.7] tracking-[0.02em] !text-[#e8d8c8] md:mb-8"
+                  className="mb-6 max-w-md border-l-[2px] border-[#6f1524] pl-[14px] font-montserrat text-[15px] leading-[1.7] tracking-[0.02em] !text-[#e8d8c8] md:mb-8"
                 >
                   {heroSubline}
                 </motion.p>
@@ -961,7 +966,7 @@ function HeroSection() {
                 <MagneticWrap className="w-full sm:w-fit">
                   <LocaleLink
                     href="/shop"
-                    className="inline-block w-full rounded-[4px] bg-[#722030] px-8 py-[13px] text-center font-montserrat text-[12px] font-medium uppercase tracking-[0.1em] !text-[#e8d8c8] no-underline transition-colors duration-200 hover:bg-[#8a2d43] sm:w-auto"
+                    className="inline-block w-full rounded-[4px] bg-[#6f1524] px-8 py-[13px] text-center font-montserrat text-[12px] font-medium uppercase tracking-[0.1em] !text-[#e8d8c8] no-underline transition-colors duration-200 hover:bg-[#821b2d] sm:w-auto"
                     data-cursor-hover
                     data-analytics-event="click_cta_home_to_collection"
                     data-analytics-section="home-hero"
@@ -972,7 +977,7 @@ function HeroSection() {
                 <MagneticWrap className="w-full sm:w-fit">
                   <LocaleLink
                     href="/about"
-                    className="inline-block w-full rounded-[4px] bg-transparent px-8 py-[13px] text-center font-montserrat text-[12px] font-medium uppercase tracking-[0.1em] !text-[#c8b8a8] no-underline transition-colors duration-200 hover:!text-[#e8d8c8] sm:w-auto"
+                    className="inline-flex min-h-[46px] w-full items-center justify-center rounded-[4px] border border-[#e8d8c8]/45 bg-[#1a0810]/35 px-8 text-center font-montserrat text-[12px] font-medium uppercase tracking-[0.1em] !text-[#f2e5d8] no-underline shadow-[0_14px_34px_rgba(0,0,0,0.22)] backdrop-blur-md transition-colors duration-200 hover:border-[#f2e5d8]/70 hover:bg-[#1a0810]/50 hover:!text-[#fff4e6] sm:w-auto"
                     data-cursor-hover
                     data-analytics-event="click_nav_about"
                     data-analytics-section="home-hero"
@@ -1001,7 +1006,11 @@ function EditorialIntro() {
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} data-story-section className="section-full relative overflow-hidden bg-transparent py-16 md:py-20 lg:py-24">
+    <section
+      ref={ref}
+      data-story-section
+      className={`section-full ${OVERLAP_PANEL_CLASS} overflow-hidden bg-transparent py-16 md:py-20 lg:py-24`}
+    >
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(250,248,245,1)_0%,rgba(232,221,212,0.38)_100%)]" />
 
       <div className="relative mx-auto w-full max-w-[1120px] px-4 md:px-6">
@@ -1013,7 +1022,7 @@ function EditorialIntro() {
             style={{ y: panelY }}
             className={isRTL ? 'lg:order-1' : 'lg:order-2'}
           >
-            <div className="relative h-full min-h-[26rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#722030] bg-[#1a0210] p-[52px] shadow-[0_22px_56px_rgba(23,9,14,0.22)] md:min-h-[30rem] md:p-[62px] lg:min-h-[34rem] lg:border-r lg:border-[#2a1e18]/10">
+            <div className="relative h-full min-h-[26rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#6f1524] bg-[#1a0210] p-[52px] shadow-[0_22px_56px_rgba(23,9,14,0.22)] md:min-h-[30rem] md:p-[62px] lg:min-h-[34rem] lg:border-r lg:border-[#2a1e18]/10">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.16)_0%,transparent_62%)]" />
               <div className={`relative flex h-full flex-col justify-center ${isRTL ? 'items-start text-left' : 'items-end text-right'}`}>
                 <span className="mb-5 block font-montserrat text-[11px] uppercase tracking-[0.3em] text-brand-dustyBlue">
@@ -1047,7 +1056,7 @@ function EditorialIntro() {
                 <MagneticWrap className="w-fit">
                   <LocaleLink
                     href="/about"
-                    className="inline-flex min-h-[46px] items-center rounded-[3px] border border-[#b0a090] bg-transparent px-6 font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#8a7a70] transition-colors hover:border-[#8a7a70] hover:text-[#2a1e18]"
+              className="inline-flex min-h-[46px] items-center rounded-[4px] border border-[#6f1524] bg-[#6f1524] px-6 font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:border-[#821b2d] hover:bg-[#821b2d] hover:text-[#f2e5d8]"
                     data-cursor-hover
                   >
                     Read our story
@@ -1069,9 +1078,9 @@ function MagazineGrid() {
   const collectionCards = [
     {
       images: [
-        '/Webshop%20pictures/Abayas/Covent%20Garden%20Abaya%20/Covent%20Garden%20Abaya-S.JPG',
+        '/Webshop%20pictures/Abayas/Covent%20Garden%20Abaya%20/Covent%20Garden%20Abaya-%20F.jpg',
         '/Webshop%20pictures/Abayas/Park%20Lane%20Abaya/Park%20Lane%20Abaya-%20B.JPG',
-        '/collection-section/2.PNG',
+        '/Webshop%20pictures/Abayas/Covent%20Garden%20Abaya%20/Covent%20Garden%20Abaya-%20B.JPG',
       ],
       label: 'Abayas',
       href: '/shop',
@@ -1079,8 +1088,9 @@ function MagazineGrid() {
     },
     {
       images: [
-        '/Webshop%20pictures/Caftans/Mayfair%20Kaftan/Mayfair%20Kaftan-%20S.JPG',
         '/Webshop%20pictures/Caftans/Mayfair%20Kaftan/Mayfair%20Kaftan-%20F.JPG',
+        '/Webshop%20pictures/Caftans/Mayfair%20Kaftan/Mayfair%20Kaftan-%20S.JPG',
+        '/Webshop%20pictures/Caftans/Mayfair%20Kaftan/Mayfair%20Kaftan-%20D.JPG',
         '/collection-section/8.png',
       ],
       label: 'Kaftans',
@@ -1108,7 +1118,12 @@ function MagazineGrid() {
   ] as const
 
   return (
-    <section ref={ref} data-story-section data-collection-chapter className="section-full relative overflow-hidden bg-[#faf8f5] py-10 md:py-12">
+    <section
+      ref={ref}
+      data-story-section
+      data-collection-chapter
+      className="section-full overflow-hidden bg-[#faf8f5] pb-16 pt-10 md:pb-20 md:pt-12"
+    >
       <div className="section-inner">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -1173,7 +1188,7 @@ function EditorialSplit() {
   ] as const
 
   return (
-    <section ref={ref} data-story-section className="section-full bg-[#faf8f5] py-14 md:py-16">
+    <section ref={ref} data-story-section className={`section-full ${OVERLAP_PANEL_CLASS} bg-[#faf8f5] py-14 md:py-16`}>
       <div className="w-full px-4 md:px-8 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -1300,13 +1315,13 @@ function CreatedForYouSection() {
   const { isRTL } = useLanguage()
 
   return (
-    <section ref={ref} data-story-section data-curtain-reveal className="section-full relative overflow-hidden bg-[#722030] py-14 md:py-16">
+    <section ref={ref} data-story-section data-curtain-reveal className="section-full relative overflow-hidden bg-[#6f1524] py-14 md:py-16">
       <div className="section-inner relative">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className={`overflow-hidden rounded-2xl border border-[rgba(232,216,200,0.25)] bg-[#722030] px-6 py-8 shadow-[0_16px_42px_rgba(46,25,14,0.12)] md:px-10 md:py-10 ${isRTL ? 'text-right' : 'text-center'}`}
+          className={`overflow-hidden rounded-2xl border border-[rgba(232,216,200,0.25)] bg-[#6f1524] px-6 py-8 shadow-[0_16px_42px_rgba(46,25,14,0.12)] md:px-10 md:py-10 ${isRTL ? 'text-right' : 'text-center'}`}
         >
           <p className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">Carried Close</p>
           <h2 className="mx-auto max-w-3xl font-rozha text-4xl leading-tight text-[#e8d8c8] md:text-5xl">
@@ -1318,7 +1333,7 @@ function CreatedForYouSection() {
           <div className={`mt-7 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : 'justify-center'}`}>
             <LocaleLink
               href="/shop"
-              className="inline-flex min-h-[46px] items-center rounded-xl bg-[#e8d8c8] px-6 font-montserrat text-[12px] uppercase tracking-[0.16em] text-[#722030] transition-colors hover:bg-[#f2e5d8]"
+              className="inline-flex min-h-[46px] items-center rounded-[4px] bg-[#e8d8c8] px-6 font-montserrat text-[12px] uppercase tracking-[0.16em] text-[#6f1524] transition-colors hover:bg-[#f2e5d8]"
               data-cursor-hover
               data-analytics-event="click_personalisation_teaser"
               data-analytics-section="home-personalisation-teaser"

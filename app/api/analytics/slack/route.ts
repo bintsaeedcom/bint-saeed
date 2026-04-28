@@ -61,6 +61,67 @@ function getMapLink(lat: number | null, lng: number | null, city?: string, count
   return ''
 }
 
+function formatLocationText(location: any): string {
+  if (!location) return 'Unknown'
+  return [location.city, location.region, location.country].filter(Boolean).join(', ') || 'Unknown'
+}
+
+function formatAddress(location: any): string {
+  if (!location) return 'Not available'
+  if (location.address) return location.address
+  const fallback = [location.city, location.region, location.postalCode, location.country].filter(Boolean).join(', ')
+  return fallback || 'Not available'
+}
+
+function formatAccuracy(location: any): string {
+  if (!location) return 'Unknown'
+  if (location.accuracyLevel === 'gps') {
+    const meters = typeof location.accuracyMeters === 'number' ? ` ±${Math.round(location.accuracyMeters)}m` : ''
+    return `Browser GPS${meters}`
+  }
+  if (location.accuracyLevel === 'ip') return 'IP-derived approximate location'
+  return 'Unknown'
+}
+
+function formatCoordinates(location: any): string {
+  if (typeof location?.latitude === 'number' && typeof location?.longitude === 'number') {
+    return `${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}`
+  }
+  return 'Not available'
+}
+
+function formatBrowserContext(browser: any): string {
+  if (!browser) return 'Not available'
+  return [
+    browser.url ? `*URL:* ${browser.url}` : '',
+    browser.referrer ? `*Referrer:* ${browser.referrer}` : '',
+    browser.hostname ? `*Hostname:* ${browser.hostname}` : '',
+    browser.screen ? `*Screen:* ${browser.screen}` : '',
+    browser.language ? `*Language:* ${browser.language}` : '',
+  ].filter(Boolean).join('\n') || 'Not available'
+}
+
+function formatPreviousWebsite(data: any): string {
+  const referrer = data.referrer || data.browser?.referrer || 'Direct'
+  if (!referrer || referrer === 'Direct') return 'Direct'
+  try {
+    const url = new URL(referrer)
+    return `<${referrer}|${url.hostname}>`
+  } catch {
+    return referrer
+  }
+}
+
+function formatUtm(data: any): string {
+  const utm = data.utmParams || {}
+  const parts = [
+    utm.source ? `source=${utm.source}` : '',
+    utm.medium ? `medium=${utm.medium}` : '',
+    utm.campaign ? `campaign=${utm.campaign}` : '',
+  ].filter(Boolean)
+  return parts.length > 0 ? parts.join(' • ') : 'None'
+}
+
 export async function POST(request: NextRequest) {
   const rl = await rateLimitResponse(request, 'analytics_slack', 120, 60)
   if (rl) return rl
@@ -123,7 +184,7 @@ function resolveSlackWebhookForType(type: string): string | undefined {
 
 function formatSlackMessage(type: string, data: any) {
   const timestamp = new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
-  const locationText = data.location ? `${data.location.city}, ${data.location.region ? data.location.region + ', ' : ''}${data.location.country}` : 'Unknown'
+  const locationText = formatLocationText(data.location)
   const ip = data.location?.ip || 'Unknown'
   const device = data.device ? `${data.device.type} • ${data.device.browser} • ${data.device.os}` : 'Unknown'
   const timeOnSite = data.totalTimeOnSite ? formatTime(data.totalTimeOnSite) : '0s'
@@ -142,6 +203,11 @@ function formatSlackMessage(type: string, data: any) {
   )
   const locationWithMap = mapLink ? `<${mapLink}|📍 ${locationText}>` : `🌍 ${locationText}`
   const accuracyBadge = data.location?.accuracyLevel === 'gps' ? ' 🎯' : data.location?.accuracyLevel === 'ip' ? ' 📡' : ''
+  const addressText = formatAddress(data.location)
+  const accuracyText = formatAccuracy(data.location)
+  const coordinatesText = formatCoordinates(data.location)
+  const previousWebsite = formatPreviousWebsite(data)
+  const utmText = formatUtm(data)
 
   switch (type) {
     case 'new_visitor':
@@ -169,6 +235,8 @@ function formatSlackMessage(type: string, data: any) {
               fields: [
                 { type: 'mrkdwn', text: `*🔒 IP Address:*\n\`${ip}\`` },
                 { type: 'mrkdwn', text: `*📱 Device:*\n${device}` },
+                { type: 'mrkdwn', text: `*📬 Address:*\n${addressText}` },
+                { type: 'mrkdwn', text: `*🎯 Accuracy:*\n${accuracyText}` },
               ]
             },
             {
@@ -176,6 +244,8 @@ function formatSlackMessage(type: string, data: any) {
               fields: [
                 { type: 'mrkdwn', text: `*🔗 Referrer:*\n${data.referrer || 'Direct'}` },
                 { type: 'mrkdwn', text: `*✨ Status:*\nFirst-time visitor` },
+                { type: 'mrkdwn', text: `*🌐 Previous Website:*\n${previousWebsite}` },
+                { type: 'mrkdwn', text: `*🏷️ UTM:*\n${utmText}` },
               ]
             },
             {
@@ -204,6 +274,8 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
+              { type: 'mrkdwn', text: `*Address:*\n📬 ${addressText}` },
+              { type: 'mrkdwn', text: `*Accuracy:*\n🎯 ${accuracyText}` },
             ]
           },
           {
@@ -211,6 +283,8 @@ function formatSlackMessage(type: string, data: any) {
             fields: [
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${data.referrer || 'Direct'}` },
               { type: 'mrkdwn', text: `*Status:*\n✨ First-time visitor` },
+              { type: 'mrkdwn', text: `*Previous Website:*\n🌐 ${previousWebsite}` },
+              { type: 'mrkdwn', text: `*UTM:*\n🏷️ ${utmText}` },
             ]
           },
           {
@@ -247,6 +321,8 @@ function formatSlackMessage(type: string, data: any) {
               fields: [
                 { type: 'mrkdwn', text: `*🔒 IP Address:*\n\`${ip}\`` },
                 { type: 'mrkdwn', text: `*📱 Device:*\n${device}` },
+                { type: 'mrkdwn', text: `*📬 Address:*\n${addressText}` },
+                { type: 'mrkdwn', text: `*🎯 Accuracy:*\n${accuracyText}` },
               ]
             },
             {
@@ -254,6 +330,8 @@ function formatSlackMessage(type: string, data: any) {
               fields: [
                 { type: 'mrkdwn', text: `*🔢 Visit Count:*\nVisit #${data.visitCount}` },
                 { type: 'mrkdwn', text: `*📅 First Visit:*\n${new Date(data.firstVisit).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}` },
+              { type: 'mrkdwn', text: `*🌐 Previous Website:*\n${previousWebsite}` },
+              { type: 'mrkdwn', text: `*⏱️ Time on Site:*\n${timeOnSite}` },
               ]
             },
             {
@@ -282,6 +360,8 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
+              { type: 'mrkdwn', text: `*Address:*\n📬 ${addressText}` },
+              { type: 'mrkdwn', text: `*Accuracy:*\n🎯 ${accuracyText}` },
             ]
           },
           {
@@ -289,6 +369,8 @@ function formatSlackMessage(type: string, data: any) {
             fields: [
               { type: 'mrkdwn', text: `*Visit Count:*\n🔢 Visit #${data.visitCount}` },
               { type: 'mrkdwn', text: `*First Visit:*\n📅 ${new Date(data.firstVisit).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}` },
+              { type: 'mrkdwn', text: `*Previous Website:*\n🌐 ${previousWebsite}` },
+              { type: 'mrkdwn', text: `*Time on Site:*\n⏱️ ${timeOnSite}` },
             ]
           },
           {
@@ -304,13 +386,60 @@ function formatSlackMessage(type: string, data: any) {
       return {
         blocks: [
           {
+            type: 'header',
+            text: { type: 'plain_text', text: '📍 Visitor shared browser location', emoji: true }
+          },
+          {
             type: 'section',
-            text: { type: 'mrkdwn', text: `🎯 *GPS Location Update*\n${locationWithMap}\nAccuracy: GPS${vipCheck.isVIP ? `\n🚨 VIP: ${vipCheck.name}` : ''}` }
+            fields: [
+              { type: 'mrkdwn', text: `*Page Information:*\n${data.browser?.title ? `*Title:* ${data.browser.title}\n` : ''}${formatBrowserContext(data.browser)}` },
+              { type: 'mrkdwn', text: `*Device & Browser:*\n${device}${data.browser?.userAgent ? `\n*User agent:* ${data.browser.userAgent}` : ''}` },
+              { type: 'mrkdwn', text: `*Previous Website:*\n${previousWebsite}` },
+              { type: 'mrkdwn', text: `*Time on Site:*\n${timeOnSite}` },
+            ]
+          },
+          {
+            type: 'section',
+            fields: [
+              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}` },
+              { type: 'mrkdwn', text: `*Address:*\n${addressText}` },
+              { type: 'mrkdwn', text: `*Accuracy:*\n${accuracyText}` },
+              { type: 'mrkdwn', text: `*Coordinates:*\n${coordinatesText}` },
+              { type: 'mrkdwn', text: `*IP Address:*\n\`${ip}\`` },
+              { type: 'mrkdwn', text: `*Timezone:*\n${data.location?.timezone || 'Unknown'}` },
+            ]
           },
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\`` }
+              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\`${data.location?.locationCapturedAt ? ` | Captured: ${data.location.locationCapturedAt}` : ''}${vipCheck.isVIP ? ` | 🚨 VIP: ${vipCheck.name}` : ''}` }
+            ]
+          }
+        ]
+      }
+
+    case 'session_summary':
+      return {
+        blocks: [
+          {
+            type: 'header',
+            text: { type: 'plain_text', text: '⏱️ Visitor Session Summary', emoji: true }
+          },
+          {
+            type: 'section',
+            fields: [
+              { type: 'mrkdwn', text: `*Time on Site:*\n${timeOnSite}` },
+              { type: 'mrkdwn', text: `*Previous Website:*\n${previousWebsite}` },
+              { type: 'mrkdwn', text: `*Pages Viewed:*\n${data.pageViews?.length || 0}` },
+              { type: 'mrkdwn', text: `*Last Page:*\n${data.currentPage?.title || data.currentPage?.path || data.browser?.path || 'Unknown'}` },
+              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `*Device:*\n${device}` },
+            ]
+          },
+          {
+            type: 'context',
+            elements: [
+              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\` | Session ID: \`${data.sessionId || 'Unknown'}\` | UTM: ${utmText}` }
             ]
           }
         ]
