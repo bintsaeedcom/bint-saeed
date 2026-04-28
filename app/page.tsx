@@ -91,23 +91,6 @@ export default function ComingSoonPage() {
           
         </motion.div>
 
-        {/* Coming Soon with letter spacing reveal */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="text-center mb-6 md:mb-8"
-        >
-          <motion.h1 data-document-h1="true" 
-            className="font-rozha text-3xl sm:text-4xl md:text-5xl tracking-[0.2em] md:tracking-[0.3em] text-[#E8D8C8] drop-shadow-[0_2px_16px_rgba(232,216,200,0.38)]"
-            initial={{ letterSpacing: '0.5em', opacity: 0 }}
-            animate={{ letterSpacing: '0.2em', opacity: 1 }}
-            transition={{ duration: 1.5, delay: 0.6 }}
-          >
-            COMING SOON
-          </motion.h1>
-        </motion.div>
-
         {/* Tagline */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
@@ -134,7 +117,7 @@ export default function ComingSoonPage() {
               <div className="w-16 h-16 rounded-full border border-brand-dustyBlue/30 flex items-center justify-center mx-auto mb-4">
                 <FiCheck className="w-8 h-8 text-brand-dustyBlue" />
               </div>
-              <p className="font-rozha text-brand-stone text-2xl tracking-wide mb-2">Thank You</p>
+              <p className="font-rozha text-white text-2xl tracking-wide mb-2">Thank You</p>
               <p className="font-montserrat text-brand-dustyBlue/60 text-xs tracking-wider">
                 We'll notify you when we launch
               </p>
@@ -156,10 +139,10 @@ export default function ComingSoonPage() {
                       onChange={handleEmailChange}
                       onBlur={() => email && setEmailError(validateEmail(email))}
                       placeholder="Enter your email"
-                      className={`w-full px-5 py-4 bg-white/[0.05] border rounded-xl text-brand-stone placeholder:text-brand-stone/55 font-montserrat text-sm tracking-wide focus:outline-none transition-all duration-300 ${
+                      className={`w-full rounded-xl border bg-white/[0.07] px-5 py-4 font-montserrat text-sm tracking-wide text-white/90 placeholder:text-white/55 focus:outline-none transition-all duration-300 ${
                         emailError 
                           ? 'border-red-400/30' 
-                          : 'border-white/[0.16] focus:border-brand-dustyBlue/45 focus:bg-white/[0.08]'
+                          : 'border-white/[0.22] focus:border-brand-dustyBlue/60 focus:bg-white/[0.12]'
                       }`}
                     />
                   </div>
@@ -172,7 +155,7 @@ export default function ComingSoonPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-brand-stone transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 group"
+                    className="group flex w-full items-center justify-center gap-3 rounded-[4px] bg-brand-dustyBlue py-4 font-montserrat text-xs uppercase tracking-[0.2em] text-[#12060e] transition-all duration-300 hover:bg-[#a8bfd1] disabled:opacity-50"
                   >
                     {isLoading ? (
                       <>
