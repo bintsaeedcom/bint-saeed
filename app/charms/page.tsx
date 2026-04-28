@@ -364,7 +364,7 @@ export default function CharmsPage() {
         </div>
       </section>
 
-      <section className="relative z-10 rounded-t-[16px] bg-[#e8ddd4] py-20 shadow-[0_-8px_40px_rgba(0,0,0,0.25)] md:sticky md:top-0 md:will-change-transform">
+      <section className="relative z-10 -mt-6 rounded-t-[16px] bg-[#e8ddd4] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-center`}>
           <div>
             <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE CONCEPT</p>
@@ -430,7 +430,7 @@ export default function CharmsPage() {
         </div>
       </section>
 
-      <section ref={stepsRef} className="relative z-20 rounded-t-[16px] bg-[#1a0210] py-20 shadow-[0_-8px_40px_rgba(0,0,0,0.25)] md:sticky md:top-0 md:will-change-transform">
+      <section ref={stepsRef} className="relative z-20 -mt-6 rounded-t-[16px] bg-[#1a0210] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">HOW IT WORKS</p>
           <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#e8ddd4]">Three steps.</h2>
@@ -452,7 +452,7 @@ export default function CharmsPage() {
         </div>
       </section>
 
-      <section id="stone-showcase" className="relative z-30 rounded-t-[16px] bg-[#faf8f5] py-20 shadow-[0_-8px_40px_rgba(0,0,0,0.25)] md:sticky md:top-0 md:will-change-transform">
+      <section id="stone-showcase" className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE COLLECTION</p>
           <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#1a0210]">Choose by colour and character.</h2>
@@ -527,7 +527,7 @@ export default function CharmsPage() {
         </div>
       </section>
 
-      <section className="charms-fabric-light relative z-40 overflow-hidden rounded-t-[16px] bg-[#7A1C28] py-20 shadow-[0_-8px_40px_rgba(0,0,0,0.25)] md:sticky md:top-0 md:will-change-transform">
+      <section className="charms-fabric-light relative z-40 -mt-6 overflow-hidden rounded-t-[16px] bg-[#7A1C28] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
           <div className="relative min-h-[52vh] overflow-hidden rounded-[4px] md:min-h-[620px]">
             <Image src={maryleboneImage} alt={CHARM_IMAGE_ALT} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
@@ -535,7 +535,7 @@ export default function CharmsPage() {
           <div className="flex items-center">
             <div className="max-w-xl">
               <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">THE ANCHOR PIECE</p>
-              <h2 className="mt-5 font-rozha text-[clamp(2rem,3vw,2.5rem)] leading-tight text-[#e8ddd4]">The only abaya built to carry a charm.</h2>
+              <h2 className="mt-5 font-rozha text-[clamp(2rem,3vw,2.5rem)] leading-tight text-[#e8ddd4]">The Marylebone Abaya.</h2>
               <p className="mt-5 max-w-xl font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
                 The charm drapes from a specially constructed cuff — a detail found only on the Marylebone. Made to order in Abu Dhabi, from AED 2,675.
               </p>
@@ -551,7 +551,7 @@ export default function CharmsPage() {
         </div>
       </section>
 
-      <section ref={quoteRef} className="charms-fabric-dark relative z-50 flex min-h-[80vh] items-center overflow-hidden rounded-t-[16px] bg-[#0f0d09] py-20 text-center shadow-[0_-8px_40px_rgba(0,0,0,0.25)] md:sticky md:top-0 md:will-change-transform">
+      <section ref={quoteRef} className="closing-section relative z-50 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
           <div className="mx-auto max-w-[640px]">
             <p
@@ -591,14 +591,14 @@ export default function CharmsPage() {
         }
 
         .charms-fabric-light,
-        .charms-fabric-dark {
+        .closing-section {
           position: relative;
         }
 
         .charms-fabric-light::before,
-        .charms-fabric-dark::before,
+        .closing-section::before,
         .charms-fabric-light::after,
-        .charms-fabric-dark::after {
+        .closing-section::after {
           content: '';
           position: absolute;
           inset: 0;
@@ -614,24 +614,35 @@ export default function CharmsPage() {
 
         .charms-fabric-light::after {
           z-index: 1;
-          background: rgba(90, 10, 20, 0.72);
+          background: rgba(26, 2, 16, 0.75);
         }
 
-        .charms-fabric-dark::before {
-          z-index: 0;
+        .closing-section {
+          min-height: auto;
+          height: auto;
+          padding: 120px 40px 100px;
           background-image: url('/charms/charm-fabric-dark.webp');
-          background-position: center top;
           background-size: cover;
+          background-position: center;
         }
 
-        .charms-fabric-dark::after {
+        .closing-section::before {
+          z-index: 0;
+          background: rgba(15, 8, 10, 0.82);
+        }
+
+        .closing-section::after {
           z-index: 1;
-          background: rgba(15, 8, 10, 0.88);
+          background: transparent;
         }
 
         @media (max-width: 767px) {
           .charms-marquee {
             animation-duration: 120s;
+          }
+
+          .closing-section {
+            padding: 80px 24px 80px;
           }
         }
       `}</style>
