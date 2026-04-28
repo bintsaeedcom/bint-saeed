@@ -316,28 +316,6 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     pt:
       'Obrigado — pedido Bint Saeed confirmado. Peças de luxo de Abu Dhabi; seguimento por e‑mail.',
   },
-  wishlist: {
-    en:
-      'Wishlist — save Bint Saeed favourites from Abu Dhabi’s luxury abaya collections. Sign in to sync jewellery and lifestyle picks across devices.',
-    ar:
-      'قائمة الأمنيات — احفظي مقتنياتك المفضّلة من مجموعات بِنت سعيد في أبوظبي. سجّلي الدخول لمزامنة مجوهرات ومقتنيات أسلوب الحياة بين الأجهزة.',
-    fr:
-      'Liste de souhaits — enregistrez vos pièces Bint Saeed préférées (Abu Dhabi). Connectez‑vous pour synchroniser bijoux et lifestyle.',
-    it:
-      'Wishlist — salva i preferiti Bint Saeed da Abu Dhabi; accedi per sincronizzare gioielli e lifestyle.',
-    es:
-      'Lista de deseos — guarda favoritos Bint Saeed de Abu Dhabi; inicia sesión para sincronizar joyas y lifestyle.',
-    ru:
-      'Избранное — сохраняйте понравившиеся абайи Bint Saeed (Абу‑Даби); войдите, чтобы синхронизировать подборки.',
-    zh:
-      '心愿单：收藏阿布扎比 Bint Saeed 奢华阿巴亚与配饰；登录可在设备间同步珠宝与生活方式单品。',
-    de:
-      'Wunschliste — speichern Sie Bint Saeed‑Favoriten aus Abu Dhabi; Login synchronisiert Schmuck‑ und Lifestyle‑Auswahl.',
-    nl:
-      'Verlanglijst — bewaar favorieten van Bint Saeed Abu Dhabi; log in om sieraden/lifestyle te synchroniseren.',
-    pt:
-      'Lista de desejos — guarde favoritos Bint Saeed de Abu Dhabi; inicie sessão para sincronizar joias e lifestyle.',
-  },
   account: {
     en:
       'Your Bint Saeed account — manage orders, addresses and preferences for Abu Dhabi luxury abayas and accessories with secure sign‑in.',

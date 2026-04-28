@@ -11,7 +11,6 @@ import { products as staticProducts, categories } from '@/data/products'
 import type { Product } from '@/data/products'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import ProductWishlistHeart from '@/components/ProductWishlistHeart'
 import { getProductHref } from '@/lib/products/links'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 import { trackEvent } from '@/lib/analytics/tracking'
@@ -341,12 +340,7 @@ export default function ShopClient() {
               key={product.id}
               className="group relative z-10 min-w-0"
             >
-              <ProductWishlistHeart
-                product={product}
-                href={getProductHref(product)}
-                className={`absolute top-0 z-20 ${isRTL ? 'left-[8%]' : 'right-[8%]'}`}
-              />
-              <article className="relative z-0 mx-auto block w-full border-b-2 border-transparent pb-2 transition-colors duration-200 group-hover:border-[#722030] lg:w-[82%]">
+              <article className="relative z-0 mx-auto block w-full border-b-2 border-transparent pb-2 transition-colors duration-200 group-hover:border-[#6f1524] lg:w-[82%]">
                 <LocaleLink
                   href={getProductHref(product)}
                   className="relative z-20 block aspect-[9/16] overflow-hidden bg-stone-200"
@@ -378,7 +372,7 @@ export default function ShopClient() {
                       {product.name}
                     </h3>
                   </LocaleLink>
-                  <p className="font-montserrat text-sm tabular-nums tracking-wide text-[#722030]">
+                  <p className="font-montserrat text-sm tabular-nums tracking-wide text-[#6f1524]">
                     {formatPrice(product.price)}
                   </p>
                   <div className="flex gap-1.5 pt-1">

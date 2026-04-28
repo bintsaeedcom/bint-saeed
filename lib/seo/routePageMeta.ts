@@ -34,7 +34,6 @@ export function classifyRouteMetaKey(pathname: string): RouteMetaKey {
   if (p.startsWith('/checkout/success')) return 'checkout_success'
   if (p.startsWith('/checkout')) return 'checkout'
   if (p.startsWith('/cart')) return 'cart'
-  if (p.startsWith('/wishlist')) return 'wishlist'
   if (p.startsWith('/account')) return 'account'
   if (p.startsWith('/register')) return 'register'
   if (p.startsWith('/privacy-policy')) return 'privacy'
@@ -220,18 +219,6 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Bestellung bestätigt | Bint Saeed',
     nl: 'Bestelling bevestigd | Bint Saeed',
     pt: 'Pedido confirmado | Bint Saeed',
-  },
-  wishlist: {
-    en: 'Wishlist | Bint Saeed',
-    ar: 'قائمة الأمنيات | Bint Saeed',
-    fr: 'Liste de souhaits | Bint Saeed',
-    it: 'Wishlist | Bint Saeed',
-    es: 'Lista de deseos | Bint Saeed',
-    ru: 'Избранное | Bint Saeed',
-    zh: '心愿单 | Bint Saeed',
-    de: 'Wunschliste | Bint Saeed',
-    nl: 'Verlanglijst | Bint Saeed',
-    pt: 'Lista de desejos | Bint Saeed',
   },
   account: {
     en: 'Account | Bint Saeed',

@@ -15,7 +15,6 @@ export const translations = {
       cart: 'Cart',
       search: 'Search',
       account: 'Account',
-      wishlist: 'Wishlist',
     },
     
     // Hero
@@ -278,7 +277,6 @@ export const translations = {
       cart: 'السلة',
       search: 'بحث',
       account: 'الحساب',
-      wishlist: 'المفضلة',
     },
     
     // Hero
@@ -542,7 +540,6 @@ export const translations = {
       cart: 'Panier',
       search: 'Rechercher',
       account: 'Compte',
-      wishlist: 'Favoris',
     },
     hero: {
       subtitle: 'Nouvelle Collection 2026',
@@ -774,7 +771,6 @@ export const translations = {
       cart: 'Carrello',
       search: 'Cerca',
       account: 'Account',
-      wishlist: 'Preferiti',
     },
     hero: {
       subtitle: 'Nuova Collezione 2026',
@@ -1006,7 +1002,6 @@ export const translations = {
       cart: 'Carrito',
       search: 'Buscar',
       account: 'Cuenta',
-      wishlist: 'Favoritos',
     },
     hero: {
       subtitle: 'Nueva Colección 2026',
@@ -1238,7 +1233,6 @@ export const translations = {
       cart: 'Корзина',
       search: 'Поиск',
       account: 'Аккаунт',
-      wishlist: 'Избранное',
     },
     hero: {
       subtitle: 'Новая Коллекция 2026',
@@ -1470,7 +1464,6 @@ export const translations = {
       cart: '购物车',
       search: '搜索',
       account: '账户',
-      wishlist: '收藏',
     },
     hero: {
       subtitle: '2026 新款系列',
@@ -1702,7 +1695,6 @@ export const translations = {
       cart: 'Warenkorb',
       search: 'Suchen',
       account: 'Konto',
-      wishlist: 'Wunschliste',
     },
     hero: {
       subtitle: 'Neue Kollektion 2026',

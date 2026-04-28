@@ -13,7 +13,6 @@ import { FiChevronDown, FiPlus, FiMinus, FiHeart, FiX, FiGlobe, FiAward } from '
 import toast from 'react-hot-toast'
 import { accessories, accessoryCategories } from '@/data/accessories'
 import { useCartStore } from '@/store/cartStore'
-import { useWishlistStore } from '@/store/wishlistStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
@@ -40,10 +39,6 @@ export default function AccessoryDetailPage() {
         ? decodeURIComponent(rawId[0])
         : ''
   const accessory = accessories.find((a) => a.id === aid)
-
-  const favorited = useWishlistStore((s) => s.items.some((i) => i.id === aid))
-  const addWishlist = useWishlistStore((s) => s.addItem)
-  const removeWishlist = useWishlistStore((s) => s.removeItem)
 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
   const mainSwiperRef = useRef<SwiperType | null>(null)
@@ -128,27 +123,6 @@ export default function AccessoryDetailPage() {
       quantity,
     })
     showAddedToBagToast(isRTL)
-  }
-
-  const toggleWishlist = () => {
-    if (!accessory) return
-    const displayName = isRTL ? accessory.nameAr : accessory.name
-    const catInfo = accessoryCategories.find((c) => c.id === accessory.category)
-    const catLabel = isRTL ? catInfo?.nameAr : catInfo?.name
-    if (favorited) {
-      removeWishlist(accessory.id)
-      toast.success(isRTL ? 'أُزيلت من المفضلة' : 'Removed from favorites')
-      return
-    }
-    addWishlist({
-      id: accessory.id,
-      name: displayName,
-      price: accessory.price,
-      image: accessory.images[0] ?? '',
-      category: catLabel ?? 'Accessories',
-      href: `/accessories/${accessory.id}`,
-    })
-    toast.success(isRTL ? 'أُضيفت للمفضلة' : 'Saved to favorites')
   }
 
   const toggleDropdown = (key: string) => {
@@ -570,20 +544,6 @@ export default function AccessoryDetailPage() {
                 {isRTL ? 'أضيفي للسلة' : 'Add to Bag'}
               </button>
 
-              <button
-                type="button"
-                onClick={toggleWishlist}
-                className={`border px-3 transition-colors ${
-                  favorited
-                    ? 'border-brand-darkRed bg-brand-darkRed text-white'
-                    : 'border-brand-stone/50 text-brand-darkRed hover:border-brand-dustyBlue'
-                } ${PDP_BUTTON_RADIUS} flex w-full items-center justify-center py-3 sm:w-auto sm:py-0`}
-                aria-pressed={favorited}
-                aria-label={favorited ? (isRTL ? 'إزالة من المفضلة' : 'Remove from favorites') : isRTL ? 'أضيفي للمفضلة' : 'Save to favorites'}
-                data-cursor-hover
-              >
-                <FiHeart className={`h-5 w-5 ${favorited ? 'fill-current' : ''}`} />
-              </button>
             </div>
 
             <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 ${isRTL ? 'text-right' : ''}`}>

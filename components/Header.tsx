@@ -5,9 +5,8 @@ import { usePathname } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiSearch, FiUser, FiHeart, FiShoppingBag, FiMenu, FiX, FiArrowRight, FiChevronDown } from 'react-icons/fi'
+import { FiSearch, FiUser, FiShoppingBag, FiMenu, FiX, FiArrowRight, FiChevronDown } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
-import { useWishlistStore } from '@/store/wishlistStore'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
@@ -45,7 +44,6 @@ const searchableContent = [
   { title: 'Al Talli', href: '/the-codes#al-talli', category: 'Heritage' },
   { title: 'Khous Weaving', href: '/the-codes#khous', category: 'Heritage' },
   { title: 'Size Guide', href: '/size-guide', category: 'Help' },
-  { title: 'Favorites', href: '/wishlist', category: 'Help' },
   { title: 'Contact Us', href: '/contact', category: 'Help' },
   { title: 'FAQ', href: '/faq', category: 'Help' },
   { title: 'Shipping & Returns', href: '/terms', category: 'Help' },
@@ -75,10 +73,11 @@ export default function Header() {
   const [searchResults, setSearchResults] = useState<typeof searchableContent>([])
   const searchInputRef = useRef<HTMLInputElement>(null)
   const cartItems = useCartStore((state) => state.items)
-  const wishlistCount = useWishlistStore((state) => state.items.length)
   const { t, isRTL } = useLanguage()
   const innerPath = stripLocaleFromPathname(pathname ?? '/').pathname
   const disableHomeLogoNavigation = innerPath === '/comingsoon'
+  const isHomePage = innerPath === '/home'
+  const isTransparentHomeHeader = isHomePage && !isScrolled
 
   const navItems = [
     { label: t.nav.collections, href: '/shop' },
@@ -112,7 +111,6 @@ export default function Header() {
         {
           title: 'Discover',
           links: [
-            { label: 'New In', href: '/shop' },
             { label: 'Shop All', href: '/shop' },
           ],
         },
@@ -120,7 +118,6 @@ export default function Header() {
           title: 'Ready to Wear',
           links: [
             { label: 'Abayas', href: '/shop?category=abayas' },
-            { label: 'Jacket', href: '/shop?category=jacket' },
             { label: 'Sets', href: '/shop?category=sets' },
             { label: 'Dresses', href: '/shop?category=dresses' },
             { label: 'Kaftans', href: '/shop?category=kaftans' },
@@ -186,11 +183,13 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      const threshold = isHomePage ? 32 : 50
+      setIsScrolled(window.scrollY > threshold)
     }
+    handleScroll()
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [isHomePage])
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -238,12 +237,18 @@ export default function Header() {
     <>
       {/* Main Header - Elegant Single Row Design */}
       <header
-        className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none border-b border-white/10 transition-all duration-500 ${headerBarGradient} ${
-          isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)] backdrop-blur-md' : 'backdrop-blur-[2px]'
+        className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          isTransparentHomeHeader
+            ? 'border-transparent bg-transparent backdrop-blur-0'
+            : `border-white/10 ${headerBarGradient} ${isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)] backdrop-blur-md' : 'backdrop-blur-[2px]'}`
         }`}
       >
         {/* Bottom accent — same as before, full header width */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent" />
+        <div
+          className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent ${
+            isTransparentHomeHeader ? 'opacity-0' : 'opacity-100'
+          }`}
+        />
 
         <nav className="container mx-auto px-2 sm:px-3 lg:px-4 2xl:px-8">
           {/* One hover zone for both rows + mega menu */}
@@ -320,7 +325,9 @@ export default function Header() {
               </div>
 
               <div className="absolute right-0.5 top-0.5 z-[62] hidden items-center sm:right-1 sm:top-1 lg:flex">
-                <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-2.5 py-1">
+                <div className={`flex items-center gap-2 rounded-full border px-2.5 py-1 ${
+                  isTransparentHomeHeader ? 'border-white/25 bg-white/[0.02]' : 'border-white/15 bg-white/[0.03]'
+                }`}>
                   <CurrencySwitcher variant="light" showSymbol={false} />
                   <span className="h-4 w-px bg-white/15" aria-hidden />
                   <LanguageSwitcher variant="light" />
@@ -345,7 +352,11 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="inline-flex items-center gap-2 border-b border-brand-dustyBlue/55 px-0 py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-brand-dustyBlue transition-colors duration-300 hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                className={`inline-flex items-center gap-2 border-b px-0 py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.14em] transition-colors duration-300 ${
+                  isTransparentHomeHeader
+                    ? 'border-white/45 text-white/90 hover:border-white hover:text-white'
+                    : 'border-brand-dustyBlue/55 text-brand-dustyBlue hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
+                }`}
                 data-cursor-hover
                 aria-label={t.nav.search}
               >
@@ -360,7 +371,11 @@ export default function Header() {
                 href="/shop"
                 onMouseEnter={() => setActiveMegaMenu('/shop')}
                 className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                  activeMegaMenu === '/shop' ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
+                  activeMegaMenu === '/shop'
+                    ? 'text-brand-dustyBlue'
+                    : isTransparentHomeHeader
+                      ? 'text-white hover:text-brand-dustyBlue'
+                      : 'text-white/90 hover:text-brand-dustyBlue'
                 }`}
                 data-cursor-hover
                 data-analytics-event="click_cta_home_to_collection"
@@ -374,7 +389,11 @@ export default function Header() {
                   href={item.href}
                   onMouseEnter={() => setActiveMegaMenu(item.href)}
                   className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                    activeMegaMenu === item.href ? 'text-brand-dustyBlue' : 'text-white/90 hover:text-brand-dustyBlue'
+                    activeMegaMenu === item.href
+                      ? 'text-brand-dustyBlue'
+                      : isTransparentHomeHeader
+                        ? 'text-white hover:text-brand-dustyBlue'
+                        : 'text-white/90 hover:text-brand-dustyBlue'
                   }`}
                   data-cursor-hover
                   data-analytics-event={getMainNavAnalyticsEvent(item.href)}
@@ -401,7 +420,7 @@ export default function Header() {
             {/* Spacer on mobile so row 2 layout matches (brand already centered above) */}
             <div className="min-w-0 flex-1 lg:hidden" aria-hidden />
 
-            {/* Right: account, wishlist, cart */}
+            {/* Right: account and cart */}
             <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-3 lg:flex xl:gap-5">
               <button
                 type="button"
@@ -414,20 +433,6 @@ export default function Header() {
               >
                 <FiUser className="w-[18px] h-[18px]" />
               </button>
-              
-              <LocaleLink
-                href="/wishlist"
-                className="relative rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
-                data-cursor-hover
-                aria-label={t.nav.wishlist}
-              >
-                <FiHeart className="w-[18px] h-[18px]" />
-                {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 font-montserrat text-[9px] font-bold text-white">
-                    {wishlistCount > 9 ? '9+' : wishlistCount}
-                  </span>
-                )}
-              </LocaleLink>
               
               <button
                 type="button"
@@ -456,20 +461,6 @@ export default function Header() {
               >
                 <FiSearch className="w-[17px] h-[17px]" />
               </button>
-
-              <LocaleLink
-                href="/wishlist"
-                className="relative hidden text-white/75 hover:text-white transition-colors duration-300 p-1.5 sm:inline-flex"
-                data-cursor-hover
-                aria-label={t.nav.wishlist}
-              >
-                <FiHeart className="w-[17px] h-[17px]" />
-                {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 font-montserrat text-[9px] font-bold text-white">
-                    {wishlistCount > 9 ? '9+' : wishlistCount}
-                  </span>
-                )}
-              </LocaleLink>
 
               <button
                 type="button"
@@ -854,20 +845,6 @@ export default function Header() {
                       data-cursor-hover
                     >
                       <FiUser className="w-6 h-6" />
-                    </LocaleLink>
-                    <LocaleLink
-                      href="/wishlist"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="relative text-white/70 hover:text-white transition-colors"
-                      data-cursor-hover
-                      aria-label={t.nav.wishlist}
-                    >
-                      <FiHeart className="w-6 h-6" />
-                      {wishlistCount > 0 && (
-                        <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 text-[9px] font-bold text-white">
-                          {wishlistCount > 9 ? '9+' : wishlistCount}
-                        </span>
-                      )}
                     </LocaleLink>
                   </div>
                 </div>

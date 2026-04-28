@@ -12,7 +12,6 @@ import {
   Accessory,
   ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
 } from '@/data/accessories'
-import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { stripLocaleFromPathname, localizedPath } from '@/lib/i18n/routing'
@@ -181,7 +180,7 @@ export default function AccessoriesPage() {
               transition={{ duration: 0.8 }}
               className={isRTL ? 'text-right' : ''}
             >
-              <span className="mb-4 block font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#722030]">
+              <span className="mb-4 block font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#6f1524]">
                 {isRTL ? 'مجموعة الإكسسوارات' : 'Accessories Collection'}
               </span>
               <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-brand-darkRed md:text-7xl lg:text-8xl">
@@ -513,7 +512,6 @@ function AccessoryCard({
 }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-10%' })
-  const catInfo = accessoryCategories.find((c) => c.id === accessory.category)
   const pathname = usePathname()
   const router = useRouter()
 
@@ -545,7 +543,7 @@ function AccessoryCard({
         }
       >
         <div
-          className="group relative border-b-2 border-transparent pb-2 transition-colors duration-200 hover:border-[#722030]"
+          className="group relative border-b-2 border-transparent pb-2 transition-colors duration-200 hover:border-[#6f1524]"
           onMouseEnter={() => setHoveredProduct(accessory.id)}
           onMouseLeave={() => setHoveredProduct(null)}
         >
@@ -558,19 +556,6 @@ function AccessoryCard({
               className="pointer-events-none img-zoom object-cover object-top transition-all duration-700 group-hover:scale-105"
             />
             
-            {/* Quick Actions — above stretch link / quick bar */}
-            <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} z-[20] flex flex-col gap-2 opacity-0 transition-opacity group-hover:opacity-100`}>
-              <FavoriteHeartButton
-                id={accessory.id}
-                name={isRTL ? accessory.nameAr : accessory.name}
-                price={accessory.price}
-                image={accessory.images[0] ?? ''}
-                category={isRTL ? catInfo?.nameAr ?? 'إكسسوارات' : catInfo?.name ?? 'Accessories'}
-                href={`/accessories/${accessory.id}`}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-brand-darkRed shadow-lg transition-colors hover:bg-brand-dustyBlue hover:text-white"
-              />
-            </div>
-
             {/* Opens product PDP (same slug as card link) */}
             <div className="absolute bottom-0 left-0 right-0 z-[15] translate-y-full p-4 transition-transform duration-500 group-hover:translate-y-0">
               <button
@@ -620,7 +605,7 @@ function AccessoryCard({
             <h3 className="font-montserrat text-sm text-brand-darkRed mb-1 tracking-wide group-hover:text-brand-dustyBlue transition-colors">
               {isRTL ? accessory.nameAr : accessory.name}
             </h3>
-            <p className="font-montserrat text-sm tracking-wide text-[#722030]">
+            <p className="font-montserrat text-sm tracking-wide text-[#6f1524]">
               {formatPrice(accessory.price)}
             </p>
           </div>

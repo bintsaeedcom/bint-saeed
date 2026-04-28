@@ -15,7 +15,6 @@ export type RouteMetaKey =
   | 'cart'
   | 'checkout'
   | 'checkout_success'
-  | 'wishlist'
   | 'account'
   | 'register'
   | 'privacy'

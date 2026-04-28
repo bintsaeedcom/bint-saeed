@@ -16,7 +16,6 @@ import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
 import { getProductPdpContent } from '@/data/productPdpContent'
 import { useCartStore } from '@/store/cartStore'
-import { useWishlistStore } from '@/store/wishlistStore'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getProductHref, getProductSlug, resolveProductIdentifier } from '@/lib/products/links'
 import {
@@ -86,10 +85,6 @@ export default function ProductPage() {
     if (normalized === canonical) return
     router.replace(getProductHref(product))
   }, [product, routeIdentifier, router])
-
-  const favorited = useWishlistStore((s) => s.items.some((i) => i.id === productId))
-  const addWishlist = useWishlistStore((s) => s.addItem)
-  const removeWishlist = useWishlistStore((s) => s.removeItem)
 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
   const mainSwiperRef = useRef<SwiperType | null>(null)
@@ -257,24 +252,6 @@ export default function ProductPage() {
       quantity,
     })
     showAddedToBagToast(isRTL)
-  }
-
-  const toggleWishlist = () => {
-    if (!product) return
-    if (favorited) {
-      removeWishlist(product.id)
-      toast.success('Removed from favorites')
-      return
-    }
-    addWishlist({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: activeImages[0] ?? product.images[0] ?? '',
-      category: product.category,
-      href: getProductHref(product),
-    })
-    toast.success('Saved to favorites')
   }
 
   const toggleDropdown = (key: string) => {
@@ -714,21 +691,6 @@ export default function ProductPage() {
                 Add to Bag
               </button>
 
-              {/* Wishlist — persisted; view under /wishlist */}
-              <button
-                type="button"
-                onClick={toggleWishlist}
-                className={`px-3 border transition-colors ${
-                  favorited
-                    ? 'border-brand-darkRed bg-brand-darkRed text-white'
-                    : 'border-brand-stone/50 text-brand-darkRed hover:border-brand-dustyBlue'
-                } ${PDP_BUTTON_RADIUS} flex w-full items-center justify-center py-3 sm:w-auto sm:py-0`}
-                aria-pressed={favorited}
-                aria-label={favorited ? 'Remove from favorites' : 'Save to favorites'}
-                data-cursor-hover
-              >
-                <FiHeart className={`w-5 h-5 ${favorited ? 'fill-current' : ''}`} />
-              </button>
             </div>
             <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 ${isRTL ? 'text-right' : ''}`}>
               <div className="flex flex-col items-center gap-1 text-center">
