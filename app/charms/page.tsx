@@ -126,7 +126,7 @@ export default function CharmsPage() {
       return
     }
 
-    const gl = canvas.getContext('webgl', { alpha: true, antialias: true })
+    const gl = canvas.getContext('webgl', { alpha: true, antialias: false })
     if (!gl) {
       heroWebglInitializedRef.current = false
       return
@@ -154,7 +154,7 @@ export default function CharmsPage() {
     gl.shaderSource(
       fragmentShader,
       `
-        precision highp float;
+        precision mediump float;
         uniform sampler2D u_image;
         uniform float u_time;
         uniform vec2 u_resolution;
@@ -167,14 +167,13 @@ export default function CharmsPage() {
           uv.x = (uv.x - 0.5) / cover + 0.5;
           vec2 fromMouse = uv - u_mouse;
           float mouseDistance = max(length(fromMouse), 0.001);
-          float repulsion = smoothstep(0.14, 0.0, mouseDistance) * 0.0016;
+          float repulsion = smoothstep(0.18, 0.0, mouseDistance) * 0.004;
           uv += normalize(fromMouse) * repulsion;
-          uv.x += sin((uv.y + u_time * 0.004) * 8.0) * 0.00035;
-          uv.y += sin((uv.x + u_time * 0.0035) * 7.0) * 0.00045;
+          uv.x += sin((uv.y + u_time * 0.006) * 10.0) * 0.0012;
+          uv.y += sin((uv.x + u_time * 0.005) * 8.0) * 0.0016;
           vec4 color = texture2D(u_image, uv);
-          float grain = sin((uv.x + u_time * 0.01) * 80.0) * sin((uv.y - u_time * 0.008) * 62.0);
-          color.rgb *= vec3(0.92, 0.86, 0.88);
-          color.rgb += grain * 0.0012;
+          float grain = sin((uv.x + u_time * 0.012) * 90.0) * sin((uv.y - u_time * 0.009) * 70.0);
+          color.rgb *= vec3(0.78, 0.64, 0.68) + grain * 0.004;
           gl_FragColor = color;
         }
       `,
@@ -552,7 +551,7 @@ export default function CharmsPage() {
         </div>
       </section>
 
-      <section ref={quoteRef} className="charms-fabric-dark relative z-50 flex min-h-[80vh] items-center overflow-hidden rounded-t-[16px] bg-[#0f0d09] py-20 text-center shadow-[0_-8px_40px_rgba(0,0,0,0.25)] md:-mt-4 md:sticky md:top-0 md:will-change-transform">
+      <section ref={quoteRef} className="charms-fabric-dark relative z-50 flex min-h-[80vh] items-center overflow-hidden rounded-t-[16px] bg-[#0f0d09] py-20 text-center shadow-[0_-8px_40px_rgba(0,0,0,0.25)] md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
           <div className="mx-auto max-w-[640px]">
             <p
