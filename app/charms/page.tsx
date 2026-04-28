@@ -14,16 +14,16 @@ const CHARM_IMAGE_ALT = 'Bint Saeed natural stone abaya charms — Abu Dhabi'
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 
 const STONE_VISUAL_NOTES: Record<string, string> = {
-  'Onyx Natural Stone': 'Black onyx abaya charm. Deep black with a glossy, graphic surface. The stone the Marylebone arrives wearing, set in gold.',
-  'Tiger Eye Natural Stone': 'Tiger eye abaya charm. Warm brown with a golden moving lustre. Catches light differently at every angle.',
-  'Orange Colored Jade Natural Stone': 'Orange jade abaya charm. A vivid coral-orange jade with a polished, opaque finish.',
-  'Fuchsia Colored Jade Natural Stone': 'Fuchsia jade abaya charm. Deep jewel-toned jade in a saturated rose. Rare in this intensity of colour.',
-  'Blue Aventurine Natural Stone': 'Blue aventurine abaya charm. A cool steel blue with a fine internal shimmer. Refined and understated.',
-  'Rose Quartz Natural Stone': 'Rose quartz abaya charm. Pale blush pink with a soft, semi-translucent quality.',
-  'Malachite Natural Stone': 'Malachite abaya charm. Deep forest green with natural banded markings. No two pieces identical.',
-  'Lapis Azulli Natural Stone': 'Lapis lazuli abaya charm. Intense midnight blue with natural gold flecking. Found in the mountains of Afghanistan.',
-  'Amethyst Hearts Natural Stone': 'Amethyst abaya charm. Clear violet with a faceted crystalline surface that refracts light.',
-  'Jade Hearts Natural Stone': 'Jade hearts abaya charm. A deep cool green jade, hand-shaped into heart forms. Limited edition.',
+  Onyx: 'Deep black with a high-gloss surface. A classic stone, found across Brazil and India. The one every Marylebone Abaya arrives wearing.',
+  'Tiger Eye': 'Warm golden-brown with a natural moving sheen that shifts with the light. Found in South Africa. No two pieces catch it the same way.',
+  'Orange Jade': 'A vivid coral jade with a smooth, opaque finish. One of the more striking colour expressions of natural jade.',
+  'Fuchsia Jade': 'Natural jade in a deep saturated rose. An unusual colour — not commonly found at this intensity.',
+  'Blue Aventurine': 'A cool dusty blue with a subtle internal shimmer. Sourced from India and Chile. Understated from a distance, detailed up close.',
+  'Rose Quartz': 'Pale blush, semi-translucent. The light passes through it rather than reflecting off. Found across Brazil and Madagascar.',
+  Malachite: 'Deep green with natural banded markings — no two pieces share the same pattern. Found in Central Africa.',
+  'Lapis Lazuli': 'A deep blue flecked with natural gold, sourced from Afghanistan. Used in jewellery and art for thousands of years.',
+  'Amethyst Hearts': 'Violet quartz shaped into hearts and polished to a faceted surface. Found across Brazil and Zambia.',
+  'Jade Hearts': 'Cool green jade, hand-shaped into heart forms. Each one slightly different. Each one made once.',
 }
 
 const CONCEPT_STONE_SWATCHES = [
@@ -43,24 +43,21 @@ const STEP_COPY = [
   {
     numeral: 'I',
     title: 'SELECT THE STONE',
-    body: 'Choose a natural stone charm by colour, surface, and visual character.',
+    body: 'Choose a natural stone charm by colour, surface, and character.',
   },
   {
     numeral: 'II',
-    title: 'CLIP TO THE CUFF',
-    body: 'The Marylebone cuff is designed to hold it. No tools. No jeweller. Seconds.',
+    title: 'WEAR IT YOUR WAY',
+    body: 'The Marylebone Abaya is designed to hold it. Nothing more is needed.',
   },
   {
     numeral: 'III',
     title: 'CHANGE WHEN YOU CHOOSE',
-    body: 'Rotate stones across occasions while keeping the silhouette consistent.',
+    body: 'Rotate stones across occasions. The abaya stays the same.',
   },
 ] as const
 
-const QUOTE_LINES = [
-  'The right stone on the right day is not an accessory.',
-  'It is a decision.',
-] as const
+const CLOSING_QUOTE = "The details you choose say everything you don't."
 
 const COLLECTION_JSON_LD = {
   '@context': 'https://schema.org',
@@ -436,7 +433,7 @@ export default function CharmsPage() {
       <section ref={stepsRef} className="relative z-20 rounded-t-[16px] bg-[#1a0210] py-20 shadow-[0_-8px_40px_rgba(0,0,0,0.25)] md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">HOW IT WORKS</p>
-          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#e8ddd4]">Three quiet steps.</h2>
+          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#e8ddd4]">Three steps.</h2>
           <div className="mt-12 grid gap-px bg-[rgba(232,216,200,0.1)] md:grid-cols-3">
             {STEP_COPY.map((step, index) => (
               <article
@@ -460,7 +457,7 @@ export default function CharmsPage() {
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE COLLECTION</p>
           <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#1a0210]">Choose by colour and character.</h2>
           <p className="mt-5 max-w-2xl font-montserrat text-[15px] leading-[1.85] tracking-wide text-[#1a0210]/70">
-            Each charm is a natural stone, no two identical. Selected for colour depth, surface quality, and the way it moves against black fabric.
+            Each stone is natural. No two are identical.
           </p>
         </div>
 
@@ -538,15 +535,9 @@ export default function CharmsPage() {
           <div className="flex items-center">
             <div className="max-w-xl">
               <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">THE ANCHOR PIECE</p>
-              <span className="mt-6 inline-block rounded-full bg-[#1a0210]/40 px-4 py-1.5 font-montserrat text-xs text-[#e8ddd4]">
-                From AED {marylebone?.price.toLocaleString() || '2,675'}
-              </span>
               <h2 className="mt-5 font-rozha text-[clamp(2rem,3vw,2.5rem)] leading-tight text-[#e8ddd4]">The only abaya built to carry a charm.</h2>
               <p className="mt-5 max-w-xl font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
-                The charm drapes from a specially constructed cuff — a detail found only on the Marylebone. If you are building your stone collection, this is where it begins.
-              </p>
-              <p className="mt-4 max-w-xl font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
-                The Marylebone Abaya is available in multiple colours from AED 2,675, crafted to order in Abu Dhabi.
+                The charm drapes from a specially constructed cuff — a detail found only on the Marylebone. Made to order in Abu Dhabi, from AED 2,675.
               </p>
               <LocaleLink
                 href={maryleboneHref}
@@ -562,24 +553,17 @@ export default function CharmsPage() {
 
       <section ref={quoteRef} className="charms-fabric-dark relative z-50 flex min-h-[80vh] items-center overflow-hidden rounded-t-[16px] bg-[#0f0d09] py-20 text-center shadow-[0_-8px_40px_rgba(0,0,0,0.25)] md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
-          <div className="mx-auto max-w-[640px] space-y-4">
-            {QUOTE_LINES.map((line, index) => (
-              <p
-                key={line}
-                className={`font-rozha text-[clamp(22px,3.5vw,44px)] italic leading-[1.3] tracking-[-0.01em] text-[#e8ddd4] transition-opacity duration-700 ${
-                  quoteVisible ? 'opacity-100' : 'opacity-0'
-                }`}
-                style={{ transitionDelay: `${index * 220}ms` }}
-              >
-                {line}
-              </p>
-            ))}
+          <div className="mx-auto max-w-[640px]">
+            <p
+              className={`text-center font-rozha text-[clamp(22px,3.5vw,44px)] italic leading-[1.3] tracking-[-0.01em] text-[#e8d8c8] transition-opacity duration-700 ${
+                quoteVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              {CLOSING_QUOTE}
+            </p>
           </div>
-          <div className="mx-auto my-6 h-px w-[60px] bg-[#2a0a14]" />
+          <div className="mx-auto my-6 h-px w-[60px] bg-[#e8ddd4]" />
           <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-[#7A1C28]/70">BINT SAEED · ABU DHABI</p>
-          <p className="mx-auto mb-6 mt-5 max-w-xl text-center font-montserrat text-[12px] font-normal leading-relaxed text-[rgba(232,216,200,0.5)]">
-            Bint Saeed natural stone abaya charms are available online and ship worldwide. Free shipping within the UAE on orders above AED 2,000.
-          </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <LocaleLink href="#stone-showcase" className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]" data-cursor-hover>
               SHOP ALL CHARMS
@@ -630,7 +614,7 @@ export default function CharmsPage() {
 
         .charms-fabric-light::after {
           z-index: 1;
-          background: rgba(90, 10, 20, 0.82);
+          background: rgba(90, 10, 20, 0.72);
         }
 
         .charms-fabric-dark::before {
