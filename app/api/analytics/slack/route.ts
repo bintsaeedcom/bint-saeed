@@ -2,10 +2,24 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/admin/apiAuth'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 
-// Slack Webhook URL - Use main webhook or analytics-specific one
-const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || process.env.SLACK_ANALYTICS_WEBHOOK_URL
-const SLACK_RECOVERY_WEBHOOK_URL = process.env.SLACK_RECOVERY_WEBHOOK_URL?.trim()
-const SLACK_ABANDONED_CART_WEBHOOK_URL = process.env.SLACK_ABANDONED_CART_WEBHOOK_URL?.trim()
+function normalizedWebhook(...values: Array<string | undefined>): string | undefined {
+  for (const value of values) {
+    const trimmed = value?.trim()
+    if (trimmed) return trimmed
+  }
+  return undefined
+}
+
+// Slack Webhook URL - Use main webhook or analytics-specific one (with legacy fallbacks)
+const SLACK_WEBHOOK_URL = normalizedWebhook(
+  process.env.SLACK_WEBHOOK_URL,
+  process.env.SLACK_ANALYTICS_WEBHOOK_URL,
+  process.env.SLACK_WEBHOOK,
+  process.env.SLACK_ANALYTICS_WEBHOOK,
+  process.env.SLACK_ORDERS_WEBHOOK_URL,
+)
+const SLACK_RECOVERY_WEBHOOK_URL = normalizedWebhook(process.env.SLACK_RECOVERY_WEBHOOK_URL)
+const SLACK_ABANDONED_CART_WEBHOOK_URL = normalizedWebhook(process.env.SLACK_ABANDONED_CART_WEBHOOK_URL)
 
 // VIP Visitors to flag with special notifications
 const VIP_VISITORS: { name: string; visitorIds: string[]; ipPatterns: string[] }[] = [
@@ -142,13 +156,20 @@ export async function POST(request: NextRequest) {
 
     const webhookUrl = resolveSlackWebhookForType(type)
 
-    // Send to Slack if webhook is configured
-    if (webhookUrl) {
-      await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(message),
-      })
+    if (!webhookUrl) {
+      console.error('Slack analytics webhook is not configured for type:', type)
+      return NextResponse.json({ error: 'Slack webhook not configured' }, { status: 503 })
+    }
+
+    const slackResponse = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(message),
+    })
+    if (!slackResponse.ok) {
+      const details = await slackResponse.text()
+      console.error('Slack webhook delivery failed:', slackResponse.status, details)
+      return NextResponse.json({ error: 'Slack delivery failed' }, { status: 502 })
     }
 
     // Also store notification for the admin dashboard
