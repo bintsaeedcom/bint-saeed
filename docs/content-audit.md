@@ -297,7 +297,7 @@ H3s:
 - Blue Aventurine Natural Stone
 - Rose Quartz Natural Stone
 - Malachite Natural Stone
-- Lapis Azulli Natural Stone
+- Lapis Lazuli Natural Stone
 - Amethyst Hearts Natural Stone
 - Jade Hearts Natural Stone
 
@@ -383,7 +383,7 @@ Product Names and Prices:
 - Blue Aventurine Natural Stone — AED 530
 - Rose quartz abaya charm. Pale blush pink with a soft, semi-translucent quality. — AED 565
 - Malachite abaya charm. Deep forest green with natural banded markings. No two pieces identical. — AED 600
-- Lapis Azulli Natural Stone — AED 645
+- Lapis Lazuli Natural Stone — AED 645
 - Amethyst abaya charm. Clear violet with a faceted crystalline surface that refracts light. — AED 720
 - Jade hearts abaya charm. A deep cool green jade, hand-shaped into heart forms. Limited edition. — AED 750
 - Jade hearts abaya charm. A deep cool green jade, hand-shaped into heart forms. Limited edition. — From AED 2,675
@@ -474,7 +474,7 @@ H3s:
 - Blue Aventurine Natural Stone
 - Rose Quartz Natural Stone
 - Malachite Natural Stone
-- Lapis Azulli Natural Stone
+- Lapis Lazuli Natural Stone
 - Amethyst Hearts Natural Stone
 - Jade Hearts Natural Stone
 
@@ -559,7 +559,7 @@ Product Names and Prices:
 - Blue Aventurine Natural Stone — 530 AED
 - Rose Quartz Natural Stone — 565 AED
 - Malachite Natural Stone — 600 AED
-- Lapis Azulli Natural Stone — 645 AED
+- Lapis Lazuli Natural Stone — 645 AED
 - Amethyst Hearts Natural Stone — 720 AED
 - Jade Hearts Natural Stone — 750 AED
 

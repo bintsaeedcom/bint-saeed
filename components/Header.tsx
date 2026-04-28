@@ -717,22 +717,32 @@ export default function Header() {
                       className="border-b border-white/10 py-3 last:border-b-0"
                     >
                       {mega ? (
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setExpandedMobileSection((prev) => (prev === item.href ? null : item.href))
-                          }
-                          className="flex w-full min-w-0 items-center justify-between gap-3 py-3 text-left"
-                        >
-                          <span className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white max-[380px]:text-[12px]">
+                        <div className="flex w-full min-w-0 items-center justify-between gap-3 py-3">
+                          <LocaleLink
+                            href={item.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white max-[380px]:text-[12px]"
+                            data-cursor-hover
+                            data-analytics-event={getMainNavAnalyticsEvent(item.href)}
+                            data-analytics-section="header-mobile-nav"
+                          >
                             {item.label}
-                          </span>
-                          <FiChevronDown
-                            className={`h-5 w-5 shrink-0 text-white/65 transition-transform duration-200 ${
-                              isExpanded ? 'rotate-180' : ''
-                            }`}
-                          />
-                        </button>
+                          </LocaleLink>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setExpandedMobileSection((prev) => (prev === item.href ? null : item.href))
+                            }
+                            className="shrink-0 p-1 text-white/65"
+                            aria-label={`Toggle ${item.label} submenu`}
+                          >
+                            <FiChevronDown
+                              className={`h-5 w-5 transition-transform duration-200 ${
+                                isExpanded ? 'rotate-180' : ''
+                              }`}
+                            />
+                          </button>
+                        </div>
                       ) : (
                         <LocaleLink
                           href={item.href}

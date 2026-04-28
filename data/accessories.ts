@@ -458,7 +458,7 @@ export const accessories: Accessory[] = [
   // Abaya charms — natural stone line (10 products; stone-specific PDPs)
   {
     id: 'abaya-charm-onyx-natural-stone',
-    name: 'Onyx Natural Stone',
+    name: 'Onyx',
     nameAr: 'أونكس حجر طبيعي',
     category: 'abaya-charms',
     price: 400,
@@ -474,7 +474,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'abaya-charm-tiger-eye-natural-stone',
-    name: 'Tiger Eye Natural Stone',
+    name: 'Tiger Eye',
     nameAr: 'عين النمر حجر طبيعي',
     category: 'abaya-charms',
     price: 430,
@@ -490,7 +490,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'abaya-charm-orange-jade-natural-stone',
-    name: 'Orange Colored Jade Natural Stone',
+    name: 'Orange Jade',
     nameAr: 'اليشم البرتقالي حجر طبيعي',
     category: 'abaya-charms',
     price: 465,
@@ -506,7 +506,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'abaya-charm-fuchsia-jade-natural-stone',
-    name: 'Fuchsia Colored Jade Natural Stone',
+    name: 'Fuchsia Jade',
     nameAr: 'اليشم الفوشي حجر طبيعي',
     category: 'abaya-charms',
     price: 500,
@@ -522,7 +522,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'abaya-charm-blue-aventurine-natural-stone',
-    name: 'Blue Aventurine Natural Stone',
+    name: 'Blue Aventurine',
     nameAr: 'أفنتورين أزرق حجر طبيعي',
     category: 'abaya-charms',
     price: 530,
@@ -538,7 +538,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'abaya-charm-rose-quartz-natural-stone',
-    name: 'Rose Quartz Natural Stone',
+    name: 'Rose Quartz',
     nameAr: 'كوارتز وردي حجر طبيعي',
     category: 'abaya-charms',
     price: 565,
@@ -554,7 +554,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'abaya-charm-malachite-natural-stone',
-    name: 'Malachite Natural Stone',
+    name: 'Malachite',
     nameAr: 'ملاكيت حجر طبيعي',
     category: 'abaya-charms',
     price: 600,
@@ -570,7 +570,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'abaya-charm-lapis-lazuli-natural-stone',
-    name: 'Lapis Azulli Natural Stone',
+    name: 'Lapis Lazuli',
     nameAr: 'لازورد حجر طبيعي',
     category: 'abaya-charms',
     price: 645,
@@ -586,7 +586,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'abaya-charm-amethyst-hearts-natural-stone',
-    name: 'Amethyst Hearts Natural Stone',
+    name: 'Amethyst Hearts',
     nameAr: 'قلوب جمشت حجر طبيعي',
     category: 'abaya-charms',
     price: 720,
@@ -603,7 +603,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'abaya-charm-jade-hearts-natural-stone',
-    name: 'Jade Hearts Natural Stone',
+    name: 'Jade Hearts',
     nameAr: 'قلوب اليشم حجر طبيعي',
     category: 'abaya-charms',
     price: 750,
