@@ -174,8 +174,8 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
   },
   'khous-signature-abaya': {
     front: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- F.JPG',
-    side: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- S.JPG',
-    back: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- B.JPG',
+    side: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya - S.PNG',
+    back: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya - B.PNG',
   },
   'parklane-abaya': {
     front: '/Webshop pictures/Abayas/Park Lane Abaya/Park Lane Abaya- F.JPG',
