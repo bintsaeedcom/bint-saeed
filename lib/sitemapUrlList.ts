@@ -56,7 +56,7 @@ const allUrls: SitemapUrlEntry[] = [
 /** URLs included in `/sitemap` / `/sitemap.xml` for the current index mode. */
 export function getSitemapUrlEntries(): SitemapUrlEntry[] {
   if (isPrelaunch) {
-    return [allUrls[0], allUrls[1], allUrls[2], allUrls[3], homePageUrl]
+    return [allUrls[0], allUrls[1]]
   }
   return allUrls
 }
