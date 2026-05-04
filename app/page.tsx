@@ -11,7 +11,7 @@ const headerBarGradient =
   'bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]'
 
 /** `public/coming soon images/1a.jpg` … `24a.jpg` (URL-encoded because of the space in the folder name) */
-const COMING_SOON_IMAGES_V = '3'
+const COMING_SOON_IMAGES_V = '4'
 const COMING_SOON_IMAGES = Array.from(
   { length: 24 },
   (_, i) => `/coming%20soon%20images/${i + 1}a.jpg?v=${COMING_SOON_IMAGES_V}`,
