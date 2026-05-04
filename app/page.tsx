@@ -230,17 +230,26 @@ export default function ComingSoonPage() {
                 variants={aboutRevealItem}
                 className="font-montserrat mt-6 text-left text-[15px] font-normal leading-[1.65] text-white/85 sm:mt-8 sm:text-[0.95rem]"
               >
-                Rooted in Abu Dhabi, Bint Saeed emerges from a place that has always moved forward while preserving
-                its cultural identity. A place where ambition and identity exist side by side, where growth is built on
-                origin rather than replacing it. From here, the house extends into a way of living that moves between
-                places with ease.
+                The woman of today does not live as the woman of ten years ago. She moves between responsibilities,
+                countries, meetings, family life, travel, and occasion with a pace that asks more of her than ever
+                before. Yet whatever she becomes in the world, she remains a daughter first, carrying with her the
+                values, recognitions, and standards she was shaped by.
+              </motion.p>
+              <motion.p
+                variants={aboutRevealItem}
+                className="font-montserrat mt-5 text-left text-[15px] font-normal leading-[1.65] text-white/85 sm:mt-6 sm:text-[0.95rem]"
+              >
+                Bint Saeed fills the gap where consistent elegance is often lost as women transition between settings,
+                environments, and borders. The Bint Saeed wardrobe allows its clientele to present themselves with
+                confidence and certainty, without the need to adapt to every passing trend.
               </motion.p>
               <motion.p
                 variants={aboutRevealItem}
                 className="font-montserrat mt-5 text-left text-[15px] font-normal leading-[1.65] text-white/80 sm:mt-6 sm:text-[0.95rem]"
               >
-                From Abu Dhabi to Paris, from London to Riyadh, the same sense of self remains. A way of being that
-                does not shift with setting, and a way of dressing that follows it naturally.
+                Rooted in Abu Dhabi, Bint Saeed builds its design language through enduring codes like the woven memory
+                of Khous, the delicacy of Talli, the warmth of natural gemstones, and signature details carried into
+                modern silhouettes made for a life in motion.
               </motion.p>
             </motion.div>
           </div>
