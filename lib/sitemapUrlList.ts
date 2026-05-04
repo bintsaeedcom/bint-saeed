@@ -19,6 +19,7 @@ const homePageUrl: SitemapUrlEntry = {
 
 const allUrls: SitemapUrlEntry[] = [
   { loc: SITEMAP_BASE_URL, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '1.0' },
+  { loc: `${SITEMAP_BASE_URL}/coming-soon`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
   {
     loc: `${SITEMAP_BASE_URL}/llms.txt`,
     lastmod: new Date().toISOString(),
@@ -55,7 +56,7 @@ const allUrls: SitemapUrlEntry[] = [
 /** URLs included in `/sitemap` / `/sitemap.xml` for the current index mode. */
 export function getSitemapUrlEntries(): SitemapUrlEntry[] {
   if (isPrelaunch) {
-    return [allUrls[0], allUrls[1], allUrls[2], homePageUrl]
+    return [allUrls[0], allUrls[1], allUrls[2], allUrls[3], homePageUrl]
   }
   return allUrls
 }

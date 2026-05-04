@@ -20,6 +20,7 @@ function normalizeInnerPath(inner: string): string {
 
 function isInnerPathAllowlistedDuringComingSoon(normalizedInner: string): boolean {
   if (normalizedInner === '/') return true
+  if (normalizedInner === '/coming-soon') return true
 
   if (normalizedInner === '/home') return true
   if (normalizedInner === '/home/gate' || normalizedInner.startsWith('/home/gate/')) return true
