@@ -10,9 +10,9 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 function VerifyEmailContent() {
   const searchParams = useSearchParams()
   const { isRTL } = useLanguage()
-  const verified = searchParams.get('verified') === '1'
-  const already = searchParams.get('already') === '1'
-  const error = searchParams.get('error')
+  const verified = searchParams?.get('verified') === '1'
+  const already = searchParams?.get('already') === '1'
+  const error = searchParams?.get('error')
 
   const errorCopy: Record<string, string> = {
     missing_token: isRTL ? 'رابط غير صالح.' : 'Invalid confirmation link.',

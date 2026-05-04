@@ -76,6 +76,7 @@ export default function ShopClient() {
   )
 
   useEffect(() => {
+    if (!searchParams) return
     const q = searchParams.get('category')?.toLowerCase().replace(/_/g, '-')
     if (!q) return
     const mapped = CATEGORY_QUERY_MAP[q]

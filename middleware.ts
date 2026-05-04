@@ -55,6 +55,7 @@ function withLocaleHeaders(
 export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl
 
+  try {
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
@@ -132,6 +133,10 @@ export async function middleware(request: NextRequest) {
   }
 
   return withLocaleHeaders(request, 'en', pathname)
+  } catch (err) {
+    console.error('[middleware]', pathname, err)
+    return withLocaleHeaders(request, 'en', pathname)
+  }
 }
 
 export const config = {

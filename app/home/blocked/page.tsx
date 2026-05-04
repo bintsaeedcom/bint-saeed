@@ -29,7 +29,7 @@ const COPY: Record<string, { title: string; body: string }> = {
 
 export default function HomeBlockedPage() {
   const searchParams = useSearchParams()
-  const reason = searchParams.get('reason') || 'default'
+  const reason = searchParams?.get('reason') || 'default'
   const { title, body } = COPY[reason] ?? COPY.default
 
   return (

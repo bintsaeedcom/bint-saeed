@@ -689,11 +689,15 @@ html, body {
   }
 }
 
-/* Keep UI copy readable without awkward split words. */
+/*
+ * Prefer wrapping at spaces (whole words on the next line). Avoid random hyphenation
+ * on mobile; only break inside a token when a word is longer than the line.
+ */
 h1, h2, h3, h4, h5, h6, p, a, span, button, label, li {
   overflow-wrap: break-word;
-  word-break: break-word;
-  hyphens: auto;
+  word-break: normal;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
 
 /* Use for city names / proper nouns that must stay together. */
@@ -941,6 +945,50 @@ input, textarea, select {
 .min-h-screen-mobile {
   min-height: 100vh;
   min-height: 100dvh;
+}
+
+/* Coming soon: horizontal film strip (duplicate row + 50% loop) */
+@keyframes coming-soon-marquee-x {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.coming-soon-marquee-track-x {
+  animation: coming-soon-marquee-x var(--coming-soon-marquee-duration, 120s) linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Reverse = strip moves toward the right (classic “left-to-right” drift on screen) */
+.coming-soon-marquee-track-x--ltr {
+  animation-direction: reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coming-soon-marquee-track-x {
+    animation: none !important;
+  }
+}
+
+/* Soft fades at left/right edge of horizontal carousel */
+.coming-soon-carousel-fade-x {
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    var(--coming-soon-fade, #1a0a10) 0%,
+    transparent 10%,
+    transparent 90%,
+    var(--coming-soon-fade, #1a0a10) 100%
+  );
+}
+
+/* Coming soon carousel: deter drag/save hooks (full blocking uses pointer overlay in page.tsx) */
+.coming-soon-carousel-frame img {
+  -webkit-user-drag: none;
 }
 
 /* Sticky elements fix for iOS */

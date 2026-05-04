@@ -19,7 +19,7 @@ declare global {
 export default function HomeGatePage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const returnTo = parsePreviewReturnToParam(searchParams.get('returnTo'))
+  const returnTo = parsePreviewReturnToParam(searchParams?.get('returnTo') ?? null)
 
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''
 

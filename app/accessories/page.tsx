@@ -49,6 +49,7 @@ export default function AccessoriesPage() {
   const { isRTL } = useLanguage()
 
   useEffect(() => {
+    if (!searchParams) return
     const raw = searchParams.get('type') ?? searchParams.get('category')
     if (raw) {
       const id = raw.toLowerCase().replace(/_/g, '-')

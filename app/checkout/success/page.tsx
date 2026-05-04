@@ -10,7 +10,7 @@ import { trackEvent } from '@/lib/analytics/tracking'
 
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
-  const sessionId = searchParams.get('session_id')
+  const sessionId = searchParams?.get('session_id')
   const clearCart = useCartStore((state) => state.clearCart)
 
   useEffect(() => {

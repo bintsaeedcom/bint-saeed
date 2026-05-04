@@ -9,7 +9,7 @@ function AdminLoginForm() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const next = searchParams.get('next') || '/admin/orders'
+  const next = searchParams?.get('next') || '/admin/orders'
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()

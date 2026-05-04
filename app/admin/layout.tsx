@@ -7,8 +7,9 @@ import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers } from 'react-
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
+  const path = pathname ?? ''
 
-  if (pathname === '/admin/login') {
+  if (path === '/admin/login') {
     return <>{children}</>
   }
 
@@ -19,7 +20,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   const link = (href: string, label: string, icon: React.ReactNode) => {
-    const active = pathname === href || pathname.startsWith(`${href}/`)
+    const active = path === href || path.startsWith(`${href}/`)
     return (
       <Link
         href={href}

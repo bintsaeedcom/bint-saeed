@@ -9,11 +9,9 @@ export default function AnalyticsTracker() {
   const { trackPageView } = useAnalytics()
 
   useEffect(() => {
-    // Get page title
-    const title = document.title || pathname
-
-    // Track page view
-    trackPageView(pathname, title)
+    const path = pathname ?? '/'
+    const title = document.title || path
+    trackPageView(path, title)
   }, [pathname, trackPageView])
 
   return null

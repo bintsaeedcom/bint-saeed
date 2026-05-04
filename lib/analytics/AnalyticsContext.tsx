@@ -224,9 +224,20 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       const locationCacheValid = cachedLocationTime && (Date.now() - parseInt(cachedLocationTime)) < 24 * 60 * 60 * 1000 // 24 hours
       
       if (cachedLocation && locationCacheValid) {
-        // Use cached location
-        location = JSON.parse(cachedLocation) as LocationType
-      } else {
+        try {
+          location = JSON.parse(cachedLocation) as LocationType
+        } catch {
+          try {
+            localStorage.removeItem('bs_location')
+            localStorage.removeItem('bs_location_time')
+          } catch {
+            /* ignore */
+          }
+          location = null
+        }
+      }
+
+      if (!location) {
         // Try multiple IP geolocation providers for reliability
         try {
           // Primary: ipapi.co
@@ -333,7 +344,41 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       }
     }
 
-    initVisitor()
+    void initVisitor().catch((e) => {
+      console.error('Analytics visitor init failed', e)
+      try {
+        const vid = typeof localStorage !== 'undefined' ? localStorage.getItem('bs_visitor_id') : null
+        const visitorId = vid || generateId()
+        setVisitor({
+          visitorId,
+          sessionId: generateId(),
+          isNewVisitor: !vid,
+          visitCount: 1,
+          firstVisit: new Date().toISOString(),
+          currentVisit: new Date().toISOString(),
+          location: {
+            country: 'Unknown',
+            city: 'Unknown',
+            region: '',
+            countryCode: 'XX',
+            ip: 'Unknown',
+            latitude: null,
+            longitude: null,
+            timezone: '',
+            accuracyLevel: 'unknown' as const,
+          },
+          device: getDeviceInfo(),
+          pageViews: [],
+          totalTimeOnSite: 0,
+          referrer: typeof document !== 'undefined' ? document.referrer || 'Direct' : 'Direct',
+          utmParams: {},
+          cartEvents: [],
+          visitTimestamps: [],
+        })
+      } catch {
+        /* ignore — avoid secondary crashes */
+      }
+    })
   }, [])
 
   // Optional GPS only after the user accepts the in-app tailor experience (avoids a cold system dialog).
