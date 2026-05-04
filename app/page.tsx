@@ -143,7 +143,7 @@ export default function ComingSoonPage() {
             alt="Bint Saeed"
             width={480}
             height={144}
-            className="relative z-10 h-10 w-auto sm:h-12 md:h-14"
+            className="relative z-10 h-11 w-auto sm:h-14 md:h-16"
             priority
           />
         </motion.div>
