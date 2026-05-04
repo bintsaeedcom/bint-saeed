@@ -433,12 +433,30 @@ const AREA_SERVED_WORLDWIDE: Record<AppLocale, string> = {
 
 function offerCatalog(locale: AppLocale) {
   const titles = CATALOG_OFFER_TITLES[locale]
+  const shopUrl = `${BASE}${localizedPath(locale, '/shop')}`
+  // Each catalog line remains Product; Google requires Product to include at least one of
+  // offers / review / aggregateRating — we attach the same published AED range as the main shop offer.
+  const collectionOffer = {
+    '@type': 'AggregateOffer',
+    url: shopUrl,
+    priceCurrency: 'AED',
+    lowPrice: '800',
+    highPrice: '5000',
+    availability: 'https://schema.org/InStock',
+  }
   return {
     '@type': 'OfferCatalog',
     name: CATALOG_NAME[locale],
     itemListElement: titles.map((name) => ({
       '@type': 'Offer',
-      itemOffered: { '@type': 'Product', name },
+      url: shopUrl,
+      itemOffered: {
+        '@type': 'Product',
+        name,
+        image: [`${BASE}/og-image.png`],
+        brand: { '@type': 'Brand', name: 'Bint Saeed' },
+        offers: collectionOffer,
+      },
     })),
   }
 }
@@ -669,6 +687,7 @@ const PRODUCT_CATEGORY: Record<AppLocale, string> = {
 
 export function buildProductJsonLd(locale: AppLocale) {
   const kw = mergedMetaKeywordsForLocale(locale).join(', ')
+  const shopUrl = `${BASE}${localizedPath(locale, '/shop')}`
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -676,6 +695,8 @@ export function buildProductJsonLd(locale: AppLocale) {
     name: PRODUCT_SCHEMA_NAME[locale],
     inLanguage: schemaInLanguageForLocale(locale),
     description: PRODUCT_DESCRIPTION[locale],
+    image: [`${BASE}/og-image.png`],
+    url: shopUrl,
     brand: {
       '@type': 'Brand',
       name: 'Bint Saeed',
@@ -687,9 +708,8 @@ export function buildProductJsonLd(locale: AppLocale) {
       priceCurrency: 'AED',
       lowPrice: '800',
       highPrice: '5000',
-      offerCount: '50',
+      offerCount: 50,
       availability: 'https://schema.org/InStock',
-      areaServed: ['UAE', 'Al Ain', 'Dubai', 'Abu Dhabi', 'Sharjah', 'Ras Al Khaimah', 'Saudi Arabia', 'Qatar', 'Kuwait', 'Bahrain', 'Oman'],
     },
   }
 }

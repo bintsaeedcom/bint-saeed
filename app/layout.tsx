@@ -39,6 +39,9 @@ export default async function RootLayout({
   const path = (pathname.split('?')[0] || '/').replace(/\/$/, '') || '/'
   const isFaqPath = path === '/faq' || path.startsWith('/faq/')
   const isHomePath = path === '/' || path === '/home'
+  const hideCommerceProductSchema =
+    process.env.NEXT_PUBLIC_COMING_SOON_ONLY === 'true' &&
+    (path === '/' || path === '/coming-soon')
 
   const organizationSchema = buildOrganizationJsonLd(locale)
   const brandSchemaLd = buildBrandJsonLd(locale)
@@ -108,10 +111,12 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
-        />
+        {!hideCommerceProductSchema ? (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+          />
+        ) : null}
         {faqSchema ? (
           <script
             type="application/ld+json"
@@ -122,10 +127,12 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
-        />
+        {!hideCommerceProductSchema ? (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+          />
+        ) : null}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: supplementalLdJson }}
