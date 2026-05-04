@@ -158,7 +158,7 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     extra: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- E.jpg',
   },
   'royal-talli-abaya': {
-    front: '/Webshop pictures/Abayas/Covent Garden Abaya- F.jpg',
+    front: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya - F.png',
     side: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya-S.JPG',
     back: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya-B.JPG',
     detail: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya- D.JPG',

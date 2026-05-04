@@ -59,6 +59,8 @@ interface VisitorData {
     productName: string
     timestamp: string
   }[]
+  /** ISO timestamps for each site open (session start), newest last; capped in storage */
+  visitTimestamps: string[]
 }
 
 interface BrowserContext {
@@ -199,6 +201,21 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       visitCount++
       localStorage.setItem('bs_visit_count', visitCount.toString())
 
+      const nowIso = new Date().toISOString()
+      let visitTimestamps: string[] = []
+      try {
+        const rawTs = localStorage.getItem('bs_visit_timestamps')
+        if (rawTs) {
+          const parsed = JSON.parse(rawTs)
+          if (Array.isArray(parsed)) visitTimestamps = parsed.filter((x) => typeof x === 'string')
+        }
+      } catch {
+        visitTimestamps = []
+      }
+      visitTimestamps.push(nowIso)
+      if (visitTimestamps.length > 200) visitTimestamps = visitTimestamps.slice(-200)
+      localStorage.setItem('bs_visit_timestamps', JSON.stringify(visitTimestamps))
+
       // Get location - with caching and multiple providers for reliability
       type LocationType = VisitorData['location']
       let location: LocationType = null
@@ -303,6 +320,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
         referrer: document.referrer || 'Direct',
         utmParams,
         cartEvents: [],
+        visitTimestamps,
       }
 
       setVisitor(visitorData)

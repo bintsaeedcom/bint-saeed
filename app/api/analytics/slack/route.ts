@@ -136,6 +136,62 @@ function formatUtm(data: any): string {
   return parts.length > 0 ? parts.join(' • ') : 'None'
 }
 
+const SLACK_VISIT_HISTORY_TZ = 'Asia/Dubai'
+
+/** Numbered list of each site open (Dubai time), for Slack Block Kit (keep under ~3000 chars) */
+function formatVisitHistoryMarkdown(data: {
+  visitTimestamps?: string[]
+  visitCount?: number
+  visitorId?: string
+}): string {
+  const timestamps = Array.isArray(data.visitTimestamps) ? data.visitTimestamps : []
+  const visitCount = typeof data.visitCount === 'number' ? data.visitCount : 0
+  const vid = data.visitorId ? `\`${data.visitorId}\`` : 'this visitor'
+
+  const formatLine = (iso: string, index: number) => {
+    const d = new Date(iso)
+    if (Number.isNaN(d.getTime())) return `${index + 1}. (invalid date)`
+    const s = d.toLocaleString('en-GB', {
+      timeZone: SLACK_VISIT_HISTORY_TZ,
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    })
+    return `${index + 1}. ${s} (Dubai)`
+  }
+
+  if (timestamps.length === 0) {
+    return (
+      `*📜 Session opens (this browser, Dubai time)*\n` +
+      `_No timestamps stored yet — each new deploy logs opens from then on. Visit counter: ${visitCount || '—'}. For older times for ${vid}, search this Slack channel for past visitor alerts with that ID._`
+    )
+  }
+
+  const numbered = timestamps.map(formatLine)
+  let body = numbered.join('\n')
+  if (body.length > 2600) {
+    const kept: string[] = []
+    let len = 0
+    for (let i = numbered.length - 1; i >= 0; i--) {
+      const line = numbered[i]
+      if (len + line.length + 1 > 2400) break
+      kept.unshift(line)
+      len += line.length + 1
+    }
+    body = `_${timestamps.length} opens logged — showing last ${kept.length}:_\n` + kept.join('\n')
+  }
+
+  let text = `*📜 Session opens (this browser, Dubai time)*\n${body}`
+  if (visitCount > timestamps.length) {
+    text += `\n\n_${visitCount} lifetime visits on the counter; this list has ${timestamps.length} timestamp(s) (opens before logging started, or old rows trimmed). For missing dates, search Slack for Visitor ID ${vid}._`
+  }
+  return text
+}
+
 export async function POST(request: NextRequest) {
   const rl = await rateLimitResponse(request, 'analytics_slack', 120, 60)
   if (rl) return rl
@@ -270,6 +326,10 @@ function formatSlackMessage(type: string, data: any) {
               ]
             },
             {
+              type: 'section',
+              text: { type: 'mrkdwn', text: formatVisitHistoryMarkdown(data) },
+            },
+            {
               type: 'divider'
             },
             {
@@ -307,6 +367,10 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Previous Website:*\n🌐 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*UTM:*\n🏷️ ${utmText}` },
             ]
+          },
+          {
+            type: 'section',
+            text: { type: 'mrkdwn', text: formatVisitHistoryMarkdown(data) },
           },
           {
             type: 'context',
@@ -356,6 +420,10 @@ function formatSlackMessage(type: string, data: any) {
               ]
             },
             {
+              type: 'section',
+              text: { type: 'mrkdwn', text: formatVisitHistoryMarkdown(data) },
+            },
+            {
               type: 'divider'
             },
             {
@@ -393,6 +461,10 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Previous Website:*\n🌐 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Time on Site:*\n⏱️ ${timeOnSite}` },
             ]
+          },
+          {
+            type: 'section',
+            text: { type: 'mrkdwn', text: formatVisitHistoryMarkdown(data) },
           },
           {
             type: 'context',
