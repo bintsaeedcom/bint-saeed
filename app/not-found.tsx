@@ -8,9 +8,17 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 export default function NotFound() {
   const { isRTL } = useLanguage()
+  const isComingSoonOnly = process.env.NEXT_PUBLIC_COMING_SOON_ONLY === 'true'
 
   return (
-    <div className={`min-h-screen bg-brand-pageCanvas flex items-center justify-center px-4 sm:px-6 safe-area-inset ${isRTL ? 'rtl' : 'ltr'}`}>
+    <>
+      <style jsx global>{`
+        header,
+        footer {
+          display: none !important;
+        }
+      `}</style>
+      <div className={`min-h-screen bg-brand-pageCanvas flex items-center justify-center px-4 sm:px-6 safe-area-inset ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="text-center max-w-xl w-full border border-brand-stone/25 bg-white/85 p-8 sm:p-10 shadow-[0_22px_55px_rgba(28,14,18,0.12)] backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -63,14 +71,16 @@ export default function NotFound() {
               <FiHome className="w-4 h-4" />
               {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
             </LocaleLink>
-            <LocaleLink
-              href="/shop"
-              className={`inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
-              data-cursor-hover
-            >
-              <FiShoppingBag className="w-4 h-4" />
-              {isRTL ? 'تسوقي الآن' : 'Shop Collection'}
-            </LocaleLink>
+            {!isComingSoonOnly ? (
+              <LocaleLink
+                href="/shop"
+                className={`inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+                data-cursor-hover
+              >
+                <FiShoppingBag className="w-4 h-4" />
+                {isRTL ? 'تسوقي الآن' : 'Shop Collection'}
+              </LocaleLink>
+            ) : null}
           </div>
 
           {/* Decorative line */}
@@ -80,29 +90,30 @@ export default function NotFound() {
             <div className="w-16 sm:w-24 h-px bg-brand-stone/30" />
           </div>
 
-          {/* Popular Links */}
-          <div className={`${isRTL ? 'text-right' : ''}`}>
-            <p className="font-montserrat text-xs uppercase tracking-[0.2em] text-brand-clayRed/50 mb-4">
-              {isRTL ? 'روابط مفيدة' : 'Popular Pages'}
-            </p>
-            <div className={`flex flex-wrap justify-center gap-4 sm:gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              {[
-                { href: '/about', label: isRTL ? 'من نحن' : 'About Us' },
-                { href: '/accessories', label: isRTL ? 'الإكسسوارات' : 'Accessories' },
-                { href: '/the-codes', label: isRTL ? 'الرموز' : 'The Codes' },
-                { href: '/contact', label: isRTL ? 'تواصلي معنا' : 'Contact' },
-              ].map((link) => (
-                <LocaleLink
-                  key={link.href}
-                  href={link.href}
-                  className="font-montserrat text-xs sm:text-sm text-brand-clayRed hover:text-brand-dustyBlue transition-colors underline-hover"
-                  data-cursor-hover
-                >
-                  {link.label}
-                </LocaleLink>
-              ))}
+          {!isComingSoonOnly ? (
+            <div className={`${isRTL ? 'text-right' : ''}`}>
+              <p className="font-montserrat text-xs uppercase tracking-[0.2em] text-brand-clayRed/50 mb-4">
+                {isRTL ? 'روابط مفيدة' : 'Popular Pages'}
+              </p>
+              <div className={`flex flex-wrap justify-center gap-4 sm:gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                {[
+                  { href: '/about', label: isRTL ? 'من نحن' : 'About Us' },
+                  { href: '/accessories', label: isRTL ? 'الإكسسوارات' : 'Accessories' },
+                  { href: '/the-codes', label: isRTL ? 'الرموز' : 'The Codes' },
+                  { href: '/contact', label: isRTL ? 'تواصلي معنا' : 'Contact' },
+                ].map((link) => (
+                  <LocaleLink
+                    key={link.href}
+                    href={link.href}
+                    className="font-montserrat text-xs sm:text-sm text-brand-clayRed hover:text-brand-dustyBlue transition-colors underline-hover"
+                    data-cursor-hover
+                  >
+                    {link.label}
+                  </LocaleLink>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
 
           {/* Contact */}
           <div className={`mt-8 sm:mt-10 pt-6 border-t border-brand-stone/20 ${isRTL ? 'text-right' : ''}`}>
@@ -120,6 +131,7 @@ export default function NotFound() {
           </div>
         </motion.div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }
