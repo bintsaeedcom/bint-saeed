@@ -917,7 +917,7 @@ function HeroSection() {
         className="pointer-events-none absolute inset-0 overflow-hidden will-change-transform"
       >
         <Image
-          src="/hero-image.JPG"
+          src="/test%20a.PNG"
           alt="Bint Saeed"
           fill
           className="object-cover object-[center_30%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97]"
