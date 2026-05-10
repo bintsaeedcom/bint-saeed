@@ -12,12 +12,12 @@ import LanguageSwitcher from '@/components/LanguageSwitcher'
 const headerBarGradient =
   'bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]'
 
-/** `public/coming-soon-images/1a.jpg` … `24a.jpg` */
-const COMING_SOON_IMAGES_V = '4'
-const COMING_SOON_IMAGES = Array.from(
-  { length: 24 },
-  (_, i) => `/coming-soon-images/${i + 1}a.jpg?v=${COMING_SOON_IMAGES_V}`,
-)
+/** `public/coming-soon-images/1a.jpg` … `24a.jpg` (some indices omitted from the strip) */
+const COMING_SOON_IMAGES_V = '5'
+const COMING_SOON_CAROUSEL_EXCLUDE = new Set([3, 8, 12, 16, 17, 22])
+const COMING_SOON_IMAGES = Array.from({ length: 24 }, (_, i) => i + 1)
+  .filter((n) => !COMING_SOON_CAROUSEL_EXCLUDE.has(n))
+  .map((n) => `/coming-soon-images/${n}a.jpg?v=${COMING_SOON_IMAGES_V}`)
 
 /** One full loop duration (seconds). Very slow drift; tune here. */
 const MARQUEE_DURATION_SEC = 140
