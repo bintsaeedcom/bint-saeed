@@ -250,6 +250,30 @@ export const translations = {
       popularSearches: 'Popular Searches',
     },
 
+    // Coming soon (root `/`, `/coming-soon`, localized `/xx`)
+    comingSoon: {
+      tagline: 'Soon more will be revealed',
+      aboutTitle: 'ABOUT',
+      aboutSubtitle: 'A house shaped by origin, carried across the world.',
+      aboutP1:
+        'The woman of today does not live as the woman of decades ago. She moves between responsibilities, countries, meetings, family life, travel, and occasion with a pace that asks more of her than ever before. Yet whatever she becomes in the world, she remains a daughter first, carrying with her the values, recognitions, and standards she was shaped by.',
+      aboutP2:
+        'Bint Saeed fills the gap where consistent elegance is often lost as women transition between settings, environments, and borders. The Bint Saeed wardrobe allows its clientele to present themselves with confidence and certainty, without the need to adapt to every passing trend.',
+      aboutP3:
+        'Rooted in Abu Dhabi, Bint Saeed builds its design language through enduring codes like the woven memory of Khous, the delicacy of Talli, the warmth of natural gemstones, and signature details carried into modern silhouettes made for a life in motion.',
+      gazellesAlt: 'Gazelles',
+      thankYou: 'Thank You',
+      notifyWhenLaunch: "We'll notify you when we launch",
+      formHeading: 'Be the first to know when we launch our site',
+      emailPlaceholder: 'Enter your email',
+      emailEmpty: 'Please enter your email',
+      emailInvalid: 'Please enter a valid email address',
+      subscribing: 'Subscribing...',
+      notifyMe: 'Notify Me',
+      location: 'Abu Dhabi',
+      instagramLabel: 'Instagram',
+    },
+
     // Language
     language: {
       english: 'English',
@@ -513,6 +537,29 @@ export const translations = {
       popularSearches: 'البحث الشائع',
     },
 
+    comingSoon: {
+      tagline: 'سيُكشف المزيد قريباً',
+      aboutTitle: 'من نحن',
+      aboutSubtitle: 'بيتٌ صاغته الأصول، وحُمِلَ عبر العالم.',
+      aboutP1:
+        'امرأة اليوم لا تعيش كما تعيشها امرأةُ العقود الماضية. تتحرّك بين المسؤوليات والبلدان والاجتماعات والحياة العائلية والسفر والمناسبات، بإيقاع يطلب منها أكثر من أي وقت مضى. ومهما بلغت في العالم، تظلّ ابنةً أولاً، تحمل معها القيم والتقديرات والمعايير التي تربّت عليها.',
+      aboutP2:
+        'تملأ بنت سعيد الفجوة حيث يضيع ثبات الأناقة غالباً حين تنتقل المرأة بين المشاهد والبيئات والحدود. خزانتها تمنح من يعتمدنها الثقة واليقين، دون أن يضطررن إلى مواكبة كل موضة عابرة.',
+      aboutP3:
+        'من أبوظبي، تبني بنت سعيد لغتها التصميمية برموز تدوم، كذاكرة الخوص المنسوجة ورقة الطلي ودفء الأحجار الكريمة الطبيعية، وتفاصيل مميّزة تصاغ في قصّات عصرية لحياة لا تتوقف.',
+      gazellesAlt: 'غزلان',
+      thankYou: 'شكراً لكِ',
+      notifyWhenLaunch: 'سنُعلمكِ عند إطلاق الموقع',
+      formHeading: 'كنّ أول من يعلم عند إطلاق موقعنا',
+      emailPlaceholder: 'أدخلي بريدك الإلكتروني',
+      emailEmpty: 'الرجاء إدخال البريد الإلكتروني',
+      emailInvalid: 'الرجاء إدخال بريد إلكتروني صالح',
+      subscribing: 'جاري الاشتراك...',
+      notifyMe: 'أعلمني',
+      location: 'أبوظبي',
+      instagramLabel: 'إنستغرام',
+    },
+
     // Language
     language: {
       english: 'English',
@@ -745,6 +792,28 @@ export const translations = {
       placeholder: 'Que recherchez-vous?',
       popularSearches: 'Recherches Populaires',
     },
+    comingSoon: {
+      tagline: 'Bientôt, davantage sera révélé',
+      aboutTitle: 'À PROPOS',
+      aboutSubtitle: 'Une maison forgée par ses origines, portée à travers le monde.',
+      aboutP1:
+        'La femme d’aujourd’hui ne vit pas comme la femme des décennies passées. Elle enchaîne responsabilités, pays, rendez-vous, vie familiale, voyages et occasions à un rythme qui exige d’elle plus que jamais. Pourtant, quelle que soit sa place dans le monde, elle demeure avant tout une fille, portant les valeurs, les repères et les standards qui l’ont façonnée.',
+      aboutP2:
+        'Bint Saeed comble l’écart où l’élégance constante se perd souvent lorsque les femmes passent d’un cadre à l’autre, d’un environnement à l’autre, d’une frontière à l’autre. La garde-robe Bint Saeed permet à ses clientes de se présenter avec assurance et certitude, sans devoir suivre chaque mode éphémère.',
+      aboutP3:
+        'Ancrée à Abu Dhabi, Bint Saeed construit son langage de création à travers des codes durables : la mémoire tissée du Khous, la finesse du Talli, la chaleur des pierres fines naturelles, et des signatures détaillées portées vers des silhouettes modernes pensées pour une vie en mouvement.',
+      gazellesAlt: 'Gazelles',
+      thankYou: 'Merci',
+      notifyWhenLaunch: 'Nous vous préviendrons du lancement du site',
+      formHeading: 'Soyez les premières informées du lancement de notre site',
+      emailPlaceholder: 'Votre adresse e-mail',
+      emailEmpty: 'Veuillez saisir votre adresse e-mail',
+      emailInvalid: 'Veuillez saisir une adresse e-mail valide',
+      subscribing: 'Inscription…',
+      notifyMe: 'Me prévenir',
+      location: 'Abou Dhabi',
+      instagramLabel: 'Instagram',
+    },
     language: {
       english: 'English',
       arabic: 'العربية',
@@ -975,6 +1044,28 @@ export const translations = {
       title: 'Cerca',
       placeholder: 'Cosa stai cercando?',
       popularSearches: 'Ricerche Popolari',
+    },
+    comingSoon: {
+      tagline: 'Presto sarà svelato molto altro',
+      aboutTitle: 'CHI SIAMO',
+      aboutSubtitle: 'Una casa plasmata dalle origini, portata nel mondo.',
+      aboutP1:
+        'La donna di oggi non vive come la donna dei decenni passati. Si muove tra responsabilità, paesi, appuntamenti, vita familiare, viaggi e occasioni con un ritmo che le chiede più che mai. Eppure, qualunque sia il suo ruolo nel mondo, resta innanzitutto una figlia, portando con sé i valori, i riferimenti e gli standard che l’hanno formata.',
+      aboutP2:
+        'Bint Saeed colma il vuoto dove l’eleganza costante spesso si perde quando le donne passano da un contesto all’altro, da un ambiente all’altro, da un confine all’altro. Il guardaroba Bint Saeed permette alle sue clienti di presentarsi con sicurezza e determinazione, senza doversi adattare a ogni tendenza passeggera.',
+      aboutP3:
+        'Con radici ad Abu Dhabi, Bint Saeed costruisce il proprio linguaggio creativo attraverso codici duraturi come la memoria tessuta del Khous, la delicatezza del Talli, il calore delle pietre naturali e dettagli distintivi tradotti in silhouette moderne pensate per una vita in movimento.',
+      gazellesAlt: 'Gazzelle',
+      thankYou: 'Grazie',
+      notifyWhenLaunch: 'Ti avviseremo al lancio del sito',
+      formHeading: 'Scopri per prima il lancio del nostro sito',
+      emailPlaceholder: 'Inserisci la tua email',
+      emailEmpty: 'Inserisci la tua email',
+      emailInvalid: 'Inserisci un indirizzo email valido',
+      subscribing: 'Iscrizione in corso…',
+      notifyMe: 'Avvisami',
+      location: 'Abu Dhabi',
+      instagramLabel: 'Instagram',
     },
     language: {
       english: 'English',
@@ -1207,6 +1298,28 @@ export const translations = {
       placeholder: '¿Qué estás buscando?',
       popularSearches: 'Búsquedas Populares',
     },
+    comingSoon: {
+      tagline: 'Pronto se revelará mucho más',
+      aboutTitle: 'QUIÉNES SOMOS',
+      aboutSubtitle: 'Una casa moldeada por el origen, llevada por el mundo.',
+      aboutP1:
+        'La mujer de hoy no vive como la mujer de décadas atrás. Transita entre responsabilidades, países, reuniones, vida familiar, viajes y ocasiones con un ritmo que le exige más que nunca. Y sin embargo, sea cual sea su lugar en el mundo, sigue siendo primero una hija, llevando consigo los valores, reconocimientos y estándares que la formaron.',
+      aboutP2:
+        'Bint Saeed colma el espacio donde a menudo se pierde la elegancia constante cuando las mujeres pasan de un entorno a otro, de un ambiente a otro, de una frontera a otra. El guardarropa de Bint Saeed permite a sus clientas presentarse con confianza y seguridad, sin tener que adaptarse a cada tendencia pasajera.',
+      aboutP3:
+        'Arraigada en Abu Dabi, Bint Saeed construye su lenguaje de diseño con códigos perdurables como el recuerdo tejido del Khous, la delicadeza del Talli, la calidez de las piedras naturales y detalles distintivos que se traducen en siluetas modernas pensadas para una vida en movimiento.',
+      gazellesAlt: 'Gacelas',
+      thankYou: 'Gracias',
+      notifyWhenLaunch: 'Te avisaremos cuando lancemos el sitio',
+      formHeading: 'Sé de las primeras en conocer el lanzamiento de nuestro sitio',
+      emailPlaceholder: 'Introduce tu correo electrónico',
+      emailEmpty: 'Por favor, introduce tu correo electrónico',
+      emailInvalid: 'Por favor, introduce un correo electrónico válido',
+      subscribing: 'Suscribiendo…',
+      notifyMe: 'Avísame',
+      location: 'Abu Dabi',
+      instagramLabel: 'Instagram',
+    },
     language: {
       english: 'English',
       arabic: 'العربية',
@@ -1437,6 +1550,28 @@ export const translations = {
       title: 'Поиск',
       placeholder: 'Что вы ищете?',
       popularSearches: 'Популярные Запросы',
+    },
+    comingSoon: {
+      tagline: 'Скоро будет открыто больше',
+      aboutTitle: 'О НАС',
+      aboutSubtitle: 'Дом, созданный корнями и пронесённый сквозь мир.',
+      aboutP1:
+        'Женщина сегодняшнего дня живёт не так, как женщина прошлых десятилетий. Она перемещается между обязанностями, странами, встречами, семьёй, путешествиями и событиями в ритме, который требует от неё больше, чем когда-либо. И всё же кем бы она ни стала в мире, прежде всего она остаётся дочерью, неся с собой ценности, ориентиры и стандарты, которые её сформировали.',
+      aboutP2:
+        'Bint Saeed заполняет разрыв, где часто теряется неизменная элегантность, когда женщины переходят из одной среды в другую, из одной среды обитания в другую, через границы. Гардероб Bint Saeed позволяет клиенткам быть уверенными и собранными без необходимости подстраиваться под каждый мимолётный тренд.',
+      aboutP3:
+        'Укоренившись в Абу-Даби, Bint Saeed выстраивает свой дизайн-язык через устойчивые коды: тканую память Khous, утончённость Talli, тепло природных камней и фирменные детали в современных силуэтах для жизни в движении.',
+      gazellesAlt: 'Газели',
+      thankYou: 'Спасибо',
+      notifyWhenLaunch: 'Мы сообщим вам о запуске сайта',
+      formHeading: 'Узнайте первыми о запуске нашего сайта',
+      emailPlaceholder: 'Введите ваш email',
+      emailEmpty: 'Пожалуйста, введите email',
+      emailInvalid: 'Пожалуйста, введите корректный адрес email',
+      subscribing: 'Подписка…',
+      notifyMe: 'Сообщить мне',
+      location: 'Абу-Даби',
+      instagramLabel: 'Instagram',
     },
     language: {
       english: 'English',
@@ -1669,6 +1804,28 @@ export const translations = {
       placeholder: '您在找什么？',
       popularSearches: '热门搜索',
     },
+    comingSoon: {
+      tagline: '不久将揭晓更多精彩内容',
+      aboutTitle: '关于我们',
+      aboutSubtitle: '源自根基的房子，被带向世界。',
+      aboutP1:
+        '今天的女性不再像几十年前的女性那样生活。她在责任、国家、会议、家庭生活、旅行与场合之间穿梭，节奏对她的要求前所未有。然而无论她在世界中成为谁，她首先是女儿，携带着塑造她的价值观、认同与标准。',
+      aboutP2:
+        'Bint Saeed 填补女性在场景、环境与国界之间转换时常会失去的那份一贯优雅的空白。Bint Saeed 的衣橱让穿着者自信而笃定地呈现自己，无需迎合每一阵转瞬即逝的潮流。',
+      aboutP3:
+        '根植于阿布扎比，Bint Saeed 以持久的符号构筑设计语言：Khous 编织的记忆、Talli 的细腻、天然宝石的温度，以及融入动感生活的现代廓形中的标志性细节。',
+      gazellesAlt: '羚羊',
+      thankYou: '感谢',
+      notifyWhenLaunch: '网站上线时我们会通知您',
+      formHeading: '第一时间获知我们的网站上线',
+      emailPlaceholder: '请输入电子邮箱',
+      emailEmpty: '请输入电子邮箱',
+      emailInvalid: '请输入有效的电子邮箱地址',
+      subscribing: '订阅中…',
+      notifyMe: '通知我',
+      location: '阿布扎比',
+      instagramLabel: 'Instagram',
+    },
     language: {
       english: 'English',
       arabic: 'العربية',
@@ -1899,6 +2056,28 @@ export const translations = {
       title: 'Suchen',
       placeholder: 'Wonach suchen Sie?',
       popularSearches: 'Beliebte Suchen',
+    },
+    comingSoon: {
+      tagline: 'Bald wird mehr enthüllt',
+      aboutTitle: 'ÜBER UNS',
+      aboutSubtitle: 'Ein Haus geprägt vom Ursprung, getragen in die Welt.',
+      aboutP1:
+        'Die Frau von heute lebt nicht wie die Frau vergangener Jahrzehnte. Sie bewegt sich zwischen Verantwortung, Ländern, Terminen, Familienleben, Reisen und Anlässen in einem Tempo, das mehr von ihr verlangt als je zuvor. Und doch bleibt sie, was immer sie in der Welt wird, zuerst eine Tochter und trägt die Werte, die Anerkennung und die Maßstäbe mit sich, die sie geprägt haben.',
+      aboutP2:
+        'Bint Saeed schließt die Lücke, wo beständige Eleganz oft verloren geht, wenn Frauen zwischen Kontexten, Umgebungen und Grenzen wechseln. Die Garderobe von Bint Saeed erlaubt es Kundinnen, sich mit Ruhe und Klarheit zu zeigen – ohne sich jeder flüchtigen Mode anpassen zu müssen.',
+      aboutP3:
+        'Verwurzelt in Abu Dhabi formt Bint Saeed ihre Designsprache durch dauerhafte Codes wie das gewebte Gedächtnis von Khous, die Feinheit von Talli, die Wärme natürlicher Edelsteine und charakteristische Details in modernen Silhouetten für ein Leben in Bewegung.',
+      gazellesAlt: 'Gazellen',
+      thankYou: 'Danke',
+      notifyWhenLaunch: 'Wir benachrichtigen Sie beim Launch der Website',
+      formHeading: 'Erfahren Sie als Erste vom Launch unserer Website',
+      emailPlaceholder: 'Ihre E-Mail-Adresse',
+      emailEmpty: 'Bitte geben Sie Ihre E-Mail-Adresse ein',
+      emailInvalid: 'Bitte geben Sie eine gültige E-Mail-Adresse ein',
+      subscribing: 'Wird angemeldet…',
+      notifyMe: 'Benachrichtigen',
+      location: 'Abu Dhabi',
+      instagramLabel: 'Instagram',
     },
     language: {
       english: 'English',

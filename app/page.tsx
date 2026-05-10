@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, type CSSProperties } from 'react'
+import { useState, useCallback, type CSSProperties } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { FiInstagram, FiArrowRight, FiCheck } from 'react-icons/fi'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 /** Same horizontal wine field as `components/Header.tsx` — keeps coming-soon on-brand */
 const headerBarGradient =
@@ -78,17 +79,21 @@ function HorizontalMarqueeStrip({ images }: { images: string[] }) {
 }
 
 export default function ComingSoonPage() {
+  const { t, isRTL } = useLanguage()
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState('')
 
-  const validateEmail = (value: string) => {
-    if (!value.trim()) return 'Please enter your email'
-    const r = validateSubscriberEmail(value)
-    return r.valid ? '' : r.message
-  }
+  const validateEmail = useCallback(
+    (value: string) => {
+      if (!value.trim()) return t.comingSoon.emailEmpty
+      const r = validateSubscriberEmail(value)
+      return r.valid ? '' : t.comingSoon.emailInvalid
+    },
+    [t],
+  )
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
@@ -154,7 +159,7 @@ export default function ComingSoonPage() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="font-montserrat mx-auto mb-8 mt-5 max-w-[18rem] px-1 text-center text-[10px] uppercase leading-snug tracking-[0.2em] text-white/75 sm:mb-10 sm:mt-7 md:mb-10 md:mt-8 sm:max-w-none sm:text-[11px] sm:tracking-[0.24em]"
         >
-          Soon more will be revealed
+          {t.comingSoon.tagline}
         </motion.p>
 
         {/* One horizontal carousel — full-bleed on md+ via negative margins (avoids w-screen + translate clip bugs) */}
@@ -211,9 +216,9 @@ export default function ComingSoonPage() {
               <motion.h2
                 variants={aboutRevealItem}
                 id="coming-soon-about-heading"
-                className="font-rozha text-left text-[clamp(1.45rem,4.6vw,2rem)] leading-tight tracking-[0.12em] text-white"
+                className={`${isRTL ? '' : 'font-rozha'} text-start text-[clamp(1.45rem,4.6vw,2rem)] leading-tight tracking-[0.12em] text-white`}
               >
-                ABOUT
+                {t.comingSoon.aboutTitle}
               </motion.h2>
               <motion.div
                 variants={aboutRevealItem}
@@ -222,34 +227,27 @@ export default function ComingSoonPage() {
               />
               <motion.h3
                 variants={aboutRevealItem}
-                className="font-rozha mt-6 text-left text-[clamp(1rem,3.4vw,1.25rem)] font-normal leading-snug tracking-wide text-white/95 sm:mt-8"
+                className={`${isRTL ? '' : 'font-rozha'} mt-6 text-start text-[clamp(1rem,3.4vw,1.25rem)] font-normal leading-snug tracking-wide text-white/95 sm:mt-8`}
               >
-                A house shaped by origin, carried across the world.
+                {t.comingSoon.aboutSubtitle}
               </motion.h3>
               <motion.p
                 variants={aboutRevealItem}
-                className="font-montserrat mt-6 text-left text-[15px] font-normal leading-[1.65] text-white/85 sm:mt-8 sm:text-[0.95rem]"
+                className="font-montserrat mt-6 text-start text-[15px] font-normal leading-[1.65] text-white/85 sm:mt-8 sm:text-[0.95rem]"
               >
-                The woman of today does not live as the woman of decades ago. She moves between responsibilities,
-                countries, meetings, family life, travel, and occasion with a pace that asks more of her than ever
-                before. Yet whatever she becomes in the world, she remains a daughter first, carrying with her the
-                values, recognitions, and standards she was shaped by.
+                {t.comingSoon.aboutP1}
               </motion.p>
               <motion.p
                 variants={aboutRevealItem}
-                className="font-montserrat mt-5 text-left text-[15px] font-normal leading-[1.65] text-white/85 sm:mt-6 sm:text-[0.95rem]"
+                className="font-montserrat mt-5 text-start text-[15px] font-normal leading-[1.65] text-white/85 sm:mt-6 sm:text-[0.95rem]"
               >
-                Bint Saeed fills the gap where consistent elegance is often lost as women transition between settings,
-                environments, and borders. The Bint Saeed wardrobe allows its clientele to present themselves with
-                confidence and certainty, without the need to adapt to every passing trend.
+                {t.comingSoon.aboutP2}
               </motion.p>
               <motion.p
                 variants={aboutRevealItem}
-                className="font-montserrat mt-5 text-left text-[15px] font-normal leading-[1.65] text-white/80 sm:mt-6 sm:text-[0.95rem]"
+                className="font-montserrat mt-5 text-start text-[15px] font-normal leading-[1.65] text-white/80 sm:mt-6 sm:text-[0.95rem]"
               >
-                Rooted in Abu Dhabi, Bint Saeed builds its design language through enduring codes like the woven memory
-                of Khous, the delicacy of Talli, the warmth of natural gemstones, and signature details carried into
-                modern silhouettes made for a life in motion.
+                {t.comingSoon.aboutP3}
               </motion.p>
             </motion.div>
           </div>
@@ -261,7 +259,7 @@ export default function ComingSoonPage() {
         >
           <Image
             src="/gazelles.jpg"
-            alt="Gazelles"
+            alt={t.comingSoon.gazellesAlt}
             fill
             className="object-cover object-center"
             sizes="100vw"
@@ -284,17 +282,21 @@ export default function ComingSoonPage() {
               <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-brand-dustyBlue/30">
                 <FiCheck className="h-7 w-7 text-brand-dustyBlue" />
               </div>
-              <p className="font-rozha mb-2 text-2xl tracking-wide text-white">Thank You</p>
+              <p className={`mb-2 text-2xl tracking-wide text-white ${isRTL ? '' : 'font-rozha'}`}>
+                {t.comingSoon.thankYou}
+              </p>
               <p className="font-montserrat text-xs tracking-wider text-brand-dustyBlue/60">
-                We&apos;ll notify you when we launch
+                {t.comingSoon.notifyWhenLaunch}
               </p>
             </motion.div>
           ) : (
             <div className="relative mx-auto w-full max-w-[48rem]">
               <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/20 via-transparent to-brand-stone/10 opacity-50" />
               <div className="relative rounded-2xl border border-white/[0.1] bg-white/[0.04] p-4 backdrop-blur-sm sm:p-6 md:p-7">
-                <p className="font-montserrat mb-3 text-center text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue/85 sm:mb-4 sm:text-[11px] sm:tracking-[0.24em] md:whitespace-nowrap">
-                  Be the first to know when we launch our site
+                <p
+                  className={`font-montserrat mb-3 text-center text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue/85 sm:mb-4 sm:text-[11px] sm:tracking-[0.24em] ${!isRTL ? 'md:whitespace-nowrap' : ''}`}
+                >
+                  {t.comingSoon.formHeading}
                 </p>
                 <form onSubmit={handleSubmit} className="space-y-3">
                   <div className="relative">
@@ -303,7 +305,7 @@ export default function ComingSoonPage() {
                       value={email}
                       onChange={handleEmailChange}
                       onBlur={() => email && setEmailError(validateEmail(email))}
-                      placeholder="Enter your email"
+                      placeholder={t.comingSoon.emailPlaceholder}
                       autoComplete="email"
                       inputMode="email"
                       enterKeyHint="done"
@@ -328,11 +330,11 @@ export default function ComingSoonPage() {
                     {isLoading ? (
                       <>
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#1a0008]/20 border-t-[#1a0008]" />
-                        <span>Subscribing...</span>
+                        <span>{t.comingSoon.subscribing}</span>
                       </>
                     ) : (
                       <>
-                        <span>Notify Me</span>
+                        <span>{t.comingSoon.notifyMe}</span>
                         <FiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </>
                     )}
@@ -354,7 +356,7 @@ export default function ComingSoonPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-[44px] min-w-[44px] touch-manipulation items-center justify-center rounded-full p-2 text-white/45 transition-colors duration-300 active:text-brand-dustyBlue/90 hover:text-brand-dustyBlue"
-            aria-label="Instagram"
+            aria-label={t.comingSoon.instagramLabel}
           >
             <FiInstagram className="h-6 w-6" />
           </a>
@@ -368,7 +370,7 @@ export default function ComingSoonPage() {
         >
           <div className="h-1 w-1 rounded-full bg-brand-dustyBlue/50" />
           <p className="font-montserrat max-w-[90vw] text-center text-[10px] uppercase tracking-[0.35em] text-white/25 sm:tracking-[0.4em]">
-            Abu&nbsp;Dhabi
+            {t.comingSoon.location}
           </p>
           <div className="h-1 w-1 rounded-full bg-brand-dustyBlue/50" />
         </motion.div>
