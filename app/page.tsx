@@ -49,7 +49,8 @@ function HorizontalMarqueeStrip({ images }: { images: string[] }) {
   const looped = [...images, ...images]
   return (
     <div
-      className="relative w-full min-w-0 overflow-hidden"
+      dir="ltr"
+      className="coming-soon-marquee-root relative w-full min-w-0 overflow-hidden"
       style={
         {
           ['--coming-soon-marquee-duration' as string]: `${MARQUEE_DURATION_SEC}s`,

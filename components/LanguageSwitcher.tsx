@@ -26,8 +26,6 @@ const ALL_LANGUAGES: LangRow[] = [
   { code: 'it', label: 'Italiano', native: 'IT', flag: '🇮🇹' },
   { code: 'es', label: 'Español', native: 'ES', flag: '🇪🇸' },
   { code: 'ru', label: 'Русский', native: 'RU', flag: '🇷🇺' },
-  { code: 'nl', label: 'Nederlands', native: 'NL', flag: '🇳🇱' },
-  { code: 'pt', label: 'Português', native: 'PT', flag: '🇵🇹' },
 ]
 
 export default function LanguageSwitcher({
@@ -41,7 +39,9 @@ export default function LanguageSwitcher({
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  const currentLang = ALL_LANGUAGES.find((l) => l.code === language)
+  /** nl/pt use EN copy in i18n — hidden from menu; show EN badge if URL is still /nl or /pt */
+  const currentLang =
+    ALL_LANGUAGES.find((l) => l.code === language) ?? ALL_LANGUAGES.find((l) => l.code === 'en')
 
   const textColor =
     variant === 'light'

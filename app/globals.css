@@ -945,6 +945,11 @@ input, textarea, select {
   min-height: 100dvh;
 }
 
+/* Coming-soon strip: keep LTR so flex + translate marquee matches keyframes (Arabic page is rtl). */
+.coming-soon-marquee-root {
+  direction: ltr;
+}
+
 /* Coming soon: horizontal film strip (duplicate row + 50% loop) */
 @keyframes coming-soon-marquee-x {
   from {
