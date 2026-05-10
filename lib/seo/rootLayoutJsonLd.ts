@@ -4,7 +4,8 @@ import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { getHomeDefaultTitle, getHomeMetaDescription } from '@/lib/i18n/homePageCopy'
 import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 
-const BASE = 'https://bintsaeed.com'
+/** Canonical site origin (must match live host / Search Console property). */
+const BASE = 'https://www.bintsaeed.com'
 
 function absoluteUrl(locale: AppLocale, path: string): string {
   return new URL(localizedPath(locale, path), BASE).toString()
@@ -148,7 +149,7 @@ const AREA_SERVED_MINIMAL = [
   {
     '@type': 'City',
     name: 'Al Ain',
-    '@id': 'https://bintsaeed.com/#area-alain',
+    '@id': `${BASE}/#area-alain`,
     containedInPlace: { '@type': 'Country', name: 'United Arab Emirates' },
   },
   {
@@ -467,12 +468,12 @@ export function buildBrandJsonLd(locale: AppLocale) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Brand',
-    '@id': 'https://bintsaeed.com/#brand',
+    '@id': `${BASE}/#brand`,
     name: 'Bint Saeed',
     inLanguage: lang,
     description: desc,
     url: BASE,
-    logo: 'https://bintsaeed.com/logo.png',
+    logo: `${BASE}/og-image.png`,
     foundingLocation: {
       '@type': 'Place',
       name: FOUNDING_PLACE_NAME[locale],
@@ -488,13 +489,13 @@ export function buildWebsiteJsonLd(locale: AppLocale) {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    '@id': 'https://bintsaeed.com/#website',
+    '@id': `${BASE}/#website`,
     url: BASE,
     name: 'Bint Saeed',
     inLanguage: lang,
     description: desc,
     publisher: {
-      '@id': 'https://bintsaeed.com/#organization',
+      '@id': `${BASE}/#organization`,
     },
     potentialAction: [
       {
@@ -621,15 +622,18 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
   ],
 }
 
-export function buildLocalBusinessJsonLd(locale: AppLocale) {
+export function buildLocalBusinessJsonLd(
+  locale: AppLocale,
+  options?: { omitOfferCatalog?: boolean },
+) {
   const kw = mergedMetaKeywordsForLocale(locale).join(', ')
   const lang = schemaInLanguageForLocale(locale)
   const desc = getHomeMetaDescription(locale)
 
-  return {
+  const base = {
     '@context': 'https://schema.org',
     '@type': 'ClothingStore',
-    '@id': 'https://bintsaeed.com/#business',
+    '@id': `${BASE}/#business`,
     name: 'Bint Saeed',
     inLanguage: lang,
     alternateName: LOCAL_BUSINESS_ALTERNATE[locale],
@@ -653,9 +657,17 @@ export function buildLocalBusinessJsonLd(locale: AppLocale) {
     priceRange: '$$$$',
     currenciesAccepted: 'AED, USD, EUR, GBP, CHF, SAR, KWD, QAR, BHD, OMR',
     paymentAccepted: 'Cash, Credit Card, Debit Card',
-    hasOfferCatalog: offerCatalog(locale),
     areaServed: [...AREA_SERVED_MINIMAL],
     keywords: kw,
+  }
+
+  if (options?.omitOfferCatalog) {
+    return base
+  }
+
+  return {
+    ...base,
+    hasOfferCatalog: offerCatalog(locale),
   }
 }
 
@@ -691,7 +703,7 @@ export function buildProductJsonLd(locale: AppLocale) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    '@id': 'https://bintsaeed.com/#product',
+    '@id': `${BASE}/#product`,
     name: PRODUCT_SCHEMA_NAME[locale],
     inLanguage: schemaInLanguageForLocale(locale),
     description: PRODUCT_DESCRIPTION[locale],
@@ -714,8 +726,11 @@ export function buildProductJsonLd(locale: AppLocale) {
   }
 }
 
-export function buildWebPageJsonLd(locale: AppLocale) {
-  const url = absoluteUrl(locale, '/home')
+/** `innerPath` = pathname without locale prefix (e.g. `/coming-soon`, `/shop`). */
+export function buildWebPageJsonLd(locale: AppLocale, innerPath: string) {
+  const clean = (innerPath.split('?')[0] || '/').replace(/\/+$/, '') || '/'
+  const pathForUrl = clean === '' ? '/' : clean
+  const url = absoluteUrl(locale, pathForUrl)
   const kw = mergedMetaKeywordsForLocale(locale).join(', ')
   return {
     '@context': 'https://schema.org',
@@ -726,7 +741,7 @@ export function buildWebPageJsonLd(locale: AppLocale) {
     name: getHomeDefaultTitle(locale),
     description: getHomeMetaDescription(locale),
     mainEntity: {
-      '@id': 'https://bintsaeed.com/#organization',
+      '@id': `${BASE}/#organization`,
     },
     primaryImageOfPage: {
       '@type': 'ImageObject',

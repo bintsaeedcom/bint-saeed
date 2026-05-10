@@ -44,7 +44,7 @@ export default function PreviewAccessShell({
           <div className="relative mx-auto w-48 sm:w-56">
             <div className="absolute inset-0 scale-150 blur-3xl opacity-30 bg-brand-dustyBlue/40 rounded-full" />
             <Image
-              src="/logo.png"
+              src="/logo-bintsaeed.svg"
               alt="Bint Saeed"
               width={400}
               height={120}

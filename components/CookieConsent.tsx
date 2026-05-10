@@ -60,7 +60,7 @@ export default function CookieConsent() {
             {/* Logo */}
             <div className="flex justify-center pb-4 pt-8">
               <Image
-                src="/logo.png"
+                src="/logo-bintsaeed.svg"
                 alt="Bint Saeed"
                 width={120}
                 height={36}

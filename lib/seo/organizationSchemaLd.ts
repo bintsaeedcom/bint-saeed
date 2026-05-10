@@ -49,7 +49,7 @@ export function buildOrganizationJsonLd(locale: AppLocale) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    '@id': 'https://bintsaeed.com/#organization',
+    '@id': 'https://www.bintsaeed.com/#organization',
     name: 'Bint Saeed',
     alternateName: [
       'Bint Saeed Brand',
@@ -59,13 +59,13 @@ export function buildOrganizationJsonLd(locale: AppLocale) {
       'Bint Saeed Designer Abayas Abu Dhabi',
       'Bint Saeed Designer Abayas Dubai',
     ],
-    url: 'https://bintsaeed.com',
+    url: 'https://www.bintsaeed.com',
     email: 'info@bintsaeed.com',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://bintsaeed.com/logo.png',
-      width: 350,
-      height: 100,
+      url: 'https://www.bintsaeed.com/og-image.png',
+      width: 1200,
+      height: 630,
     },
     description,
     inLanguage: schemaInLanguageForLocale(locale),

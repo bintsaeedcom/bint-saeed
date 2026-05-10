@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Montserrat, Noto_Kufi_Arabic, Rozha_One } from 'next/font/google'
 import './globals.css'
 import 'react-phone-number-input/style.css'
 import './phone-input-theme.css'
@@ -24,6 +25,28 @@ import {
 } from '@/lib/seo/rootLayoutJsonLd'
 import { buildFaqPageJsonLd } from '@/lib/seo/faqPageJsonLd'
 import { buildSupplementalJsonLdGraphScriptJson } from '@/lib/seo/seo'
+import { stripLocaleFromPathname } from '@/lib/i18n/routing'
+
+const fontMontserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-montserrat',
+  display: 'swap',
+})
+
+const fontRozha = Rozha_One({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-rozha',
+  display: 'swap',
+})
+
+const fontNotoKufi = Noto_Kufi_Arabic({
+  subsets: ['arabic'],
+  weight: ['300', '400', '500', '700'],
+  variable: '--font-arabic',
+  display: 'swap',
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   const [locale, pathname] = await Promise.all([getServerLocale(), getServerPathname()])
@@ -36,21 +59,25 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const [locale, pathname] = await Promise.all([getServerLocale(), getServerPathname()])
-  const path = (pathname.split('?')[0] || '/').replace(/\/$/, '') || '/'
-  const isFaqPath = path === '/faq' || path.startsWith('/faq/')
-  const isHomePath = path === '/' || path === '/home'
+  const { pathname: innerPath } = stripLocaleFromPathname(pathname ?? '/')
+  const schemaPath = (innerPath.split('?')[0] || '/').replace(/\/+$/, '') || '/'
+  const isFaqPath = schemaPath === '/faq' || schemaPath.startsWith('/faq/')
+  const isHomePath = schemaPath === '/' || schemaPath === '/home'
+  /** Omit shop-like Product / ItemList / offer catalog on coming-soon and prelaunch root (stable Rich Results). */
   const hideCommerceProductSchema =
-    process.env.NEXT_PUBLIC_COMING_SOON_ONLY === 'true' &&
-    (path === '/' || path === '/coming-soon')
+    schemaPath === '/coming-soon' ||
+    (process.env.NEXT_PUBLIC_COMING_SOON_ONLY === 'true' && schemaPath === '/')
 
   const organizationSchema = buildOrganizationJsonLd(locale)
   const brandSchemaLd = buildBrandJsonLd(locale)
   const websiteSchema = buildWebsiteJsonLd(locale)
-  const localBusinessSchema = buildLocalBusinessJsonLd(locale)
+  const localBusinessSchema = buildLocalBusinessJsonLd(locale, {
+    omitOfferCatalog: hideCommerceProductSchema,
+  })
   const breadcrumbSchema = buildBreadcrumbJsonLd(locale)
   const productSchema = buildProductJsonLd(locale)
   const faqSchema = isFaqPath ? buildFaqPageJsonLd(locale) : null
-  const webPageSchema = buildWebPageJsonLd(locale)
+  const webPageSchema = buildWebPageJsonLd(locale, schemaPath)
   const itemListSchema = buildItemListJsonLd(locale)
 
   /** GCC / press / royal supplemental blocks merged + deduped (single @graph); FAQ route skips static supplement to avoid duplicate FAQPage. */
@@ -60,7 +87,11 @@ export default async function RootLayout({
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
 
   return (
-    <html lang={langAttr} dir={dir}>
+    <html
+      lang={langAttr}
+      dir={dir}
+      className={`${fontMontserrat.variable} ${fontRozha.variable} ${fontNotoKufi.variable}`}
+    >
       <head>
         {/* Favicon - explicit links for better browser support */}
         <link rel="icon" href="/flavicon.png?v=2" type="image/png" />
@@ -72,20 +103,8 @@ export default async function RootLayout({
           title="Bint Saeed — machine-readable summary for AI assistants"
         />
 
-        {/* Preconnect for performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Fonts outside globals.css: if these fail (privacy/ad-block), site CSS still loads */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Montserrat:wght@300;400;500;600&display=swap"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;700&display=swap"
-        />
+        {/* Fonts: self-hosted via next/font/google (above) — avoids GSC / crawler gstatic failures */}
         <link rel="preconnect" href="https://images.unsplash.com" />
-        <link rel="preconnect" href="https://ipapi.co" />
         
         {/* DNS Prefetch */}
         <link rel="dns-prefetch" href="https://js.stripe.com" />
@@ -148,7 +167,7 @@ export default async function RootLayout({
                 description:
                   'Luxury abaya house from Abu Dhabi. Crafted to order abayas with natural stone charms and hidden personalisation.',
                 url: 'https://www.bintsaeed.com',
-                logo: 'https://www.bintsaeed.com/logo.png',
+                logo: 'https://www.bintsaeed.com/og-image.png',
                 address: {
                   '@type': 'PostalAddress',
                   addressLocality: 'Abu Dhabi',

@@ -3,6 +3,8 @@
  * Used by LanguageContext, CurrencyContext, and LocaleConfirmPopup.
  */
 
+import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
+
 export interface GeoData {
   countryCode: string
   countryName: string
@@ -40,6 +42,9 @@ const SUPPORTED_LANGUAGES = ['en', 'ar', 'zh', 'ru', 'it', 'de', 'fr', 'es']
 const LANGUAGES_FOR_CONFIRM_POPUP = ['ar', 'zh', 'ru', 'it', 'de', 'fr', 'es'] // Show "Stay in X or English?" for these
 
 export async function fetchGeoData(): Promise<GeoData | null> {
+  if (typeof navigator !== 'undefined' && isLikelySearchBotUserAgent(navigator.userAgent)) {
+    return null
+  }
   try {
     const res = await fetch('https://ipapi.co/json/')
     const data = await res.json()

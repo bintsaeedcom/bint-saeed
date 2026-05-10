@@ -10,11 +10,11 @@ import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 const headerBarGradient =
   'bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]'
 
-/** `public/coming soon images/1a.jpg` … `24a.jpg` (URL-encoded because of the space in the folder name) */
+/** `public/coming-soon-images/1a.jpg` … `24a.jpg` */
 const COMING_SOON_IMAGES_V = '4'
 const COMING_SOON_IMAGES = Array.from(
   { length: 24 },
-  (_, i) => `/coming%20soon%20images/${i + 1}a.jpg?v=${COMING_SOON_IMAGES_V}`,
+  (_, i) => `/coming-soon-images/${i + 1}a.jpg?v=${COMING_SOON_IMAGES_V}`,
 )
 
 /** One full loop duration (seconds). Very slow drift; tune here. */

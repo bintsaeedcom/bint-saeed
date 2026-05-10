@@ -7,6 +7,7 @@ import {
   isGpsPromptAlreadyHandled,
   markGpsPromptHandled,
 } from '@/lib/geo/locationEvents'
+import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
 
 interface VisitorData {
   visitorId: string
@@ -216,6 +217,9 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       if (visitTimestamps.length > 200) visitTimestamps = visitTimestamps.slice(-200)
       localStorage.setItem('bs_visit_timestamps', JSON.stringify(visitTimestamps))
 
+      const skipGeoFetch =
+        typeof navigator !== 'undefined' && isLikelySearchBotUserAgent(navigator.userAgent)
+
       // Get location - with caching and multiple providers for reliability
       type LocationType = VisitorData['location']
       let location: LocationType = null
@@ -237,7 +241,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      if (!location) {
+      if (!location && !skipGeoFetch) {
         // Try multiple IP geolocation providers for reliability
         try {
           // Primary: ipapi.co

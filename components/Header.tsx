@@ -72,6 +72,26 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<typeof searchableContent>([])
   const searchInputRef = useRef<HTMLInputElement>(null)
+  const megaMenuLeaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const clearMegaMenuLeaveTimer = () => {
+    if (megaMenuLeaveTimerRef.current != null) {
+      clearTimeout(megaMenuLeaveTimerRef.current)
+      megaMenuLeaveTimerRef.current = null
+    }
+  }
+
+  const handleMegaMenuZoneEnter = () => {
+    clearMegaMenuLeaveTimer()
+  }
+
+  const handleMegaMenuZoneLeave = () => {
+    clearMegaMenuLeaveTimer()
+    megaMenuLeaveTimerRef.current = setTimeout(() => {
+      setActiveMegaMenu(null)
+      megaMenuLeaveTimerRef.current = null
+    }, 140)
+  }
   const cartItems = useCartStore((state) => state.items)
   const { t, isRTL } = useLanguage()
   const innerPath = stripLocaleFromPathname(pathname ?? '/').pathname
@@ -175,11 +195,15 @@ export default function Header() {
         },
       ],
       features: [
-        { title: 'Our Story', href: '/about', image: '/image 1.png' },
+        { title: 'Our Story', href: '/about', image: '/og-image.png' },
         { title: 'The Codes', href: '/the-codes', image: '/collection-section/67.png' },
       ],
     },
   }
+
+  useEffect(() => {
+    return () => clearMegaMenuLeaveTimer()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -252,7 +276,7 @@ export default function Header() {
 
         <nav className="container mx-auto px-2 sm:px-3 lg:px-4 2xl:px-8">
           {/* One hover zone for both rows + mega menu */}
-          <div className="relative" onMouseLeave={() => setActiveMegaMenu(null)}>
+          <div className="relative" onMouseEnter={handleMegaMenuZoneEnter} onMouseLeave={handleMegaMenuZoneLeave}>
             {/* Row 1 — brand above nav */}
             <div
               className={`relative flex items-center justify-center transition-[padding] duration-500 ${

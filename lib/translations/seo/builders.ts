@@ -26,7 +26,7 @@ export function buildGccClothingStoresJsonLd(siteUrl: string, bundle: SeoSupplem
       description: store.description,
       url: siteUrl,
       image: `${siteUrl}/og-image.png`,
-      logo: `${siteUrl}/logo.png`,
+      logo: `${siteUrl}/og-image.png`,
       address: {
         '@type': 'PostalAddress',
         addressLocality: geo.addressLocality,
@@ -57,7 +57,7 @@ export function buildGccGovernmentBrandJsonLd(siteUrl: string, bundle: SeoSupple
     slogan: b.slogan,
     description: b.description,
     url: siteUrl,
-    logo: `${siteUrl}/logo.png`,
+    logo: `${siteUrl}/og-image.png`,
   }
 }
 
@@ -71,7 +71,7 @@ export function buildPressBrandJsonLd(siteUrl: string, bundle: SeoSupplementalBu
     alternateName: b.alternateNames,
     description: b.description,
     url: siteUrl,
-    logo: `${siteUrl}/logo.png`,
+    logo: `${siteUrl}/og-image.png`,
     slogan: b.slogan,
     contactPoint: {
       '@type': 'ContactPoint',

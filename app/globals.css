@@ -1,15 +1,13 @@
-/* Fonts load via <link> in app/layout.tsx so blocked Google requests never skip Tailwind. */
+/* Fonts: CSS variables from next/font/google on <html> in app/layout.tsx */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-display: 'Rozha One', serif;
-  --font-body: 'Montserrat', sans-serif;
-  --font-rozha: var(--font-display);
-  --font-montserrat: var(--font-body);
-  --font-arabic: 'Noto Kufi Arabic', sans-serif;
+  /* Primary stacks reference next/font variables applied on <html> (see app/layout.tsx). */
+  --font-display: var(--font-rozha), serif;
+  --font-body: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   --text-hero: clamp(36px, 6vw, 72px);
   --text-h1: clamp(28px, 4vw, 52px);
   --text-h2: clamp(20px, 2.5vw, 32px);
@@ -48,7 +46,7 @@
 
 /* RTL Support */
 [dir="rtl"] {
-  --font-montserrat: 'Noto Kufi Arabic', sans-serif;
+  --font-montserrat: var(--font-arabic), 'Noto Kufi Arabic', sans-serif;
 }
 
 [dir="rtl"] body {

@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
 
 interface Currency {
   code: string
@@ -49,6 +50,10 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
   // Auto-detect currency based on location
   useEffect(() => {
     const detectCurrency = async () => {
+      if (typeof navigator !== 'undefined' && isLikelySearchBotUserAgent(navigator.userAgent)) {
+        setIsInitialized(true)
+        return
+      }
       // First check localStorage for saved preference
       const savedCurrency = localStorage.getItem('bint-saeed-currency')
       if (savedCurrency) {

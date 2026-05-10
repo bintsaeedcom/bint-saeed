@@ -6,6 +6,7 @@ import { FiX } from 'react-icons/fi'
 import { useCurrency, currencies } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { dispatchRequestPreciseLocation } from '@/lib/geo/locationEvents'
+import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
 
 const TAILOR_KEY = 'bint-saeed-tailor-experience'
 
@@ -73,6 +74,7 @@ export default function LocationConsent() {
   }, [])
 
   useEffect(() => {
+    if (typeof navigator !== 'undefined' && isLikelySearchBotUserAgent(navigator.userAgent)) return
     if (hasTailorChoice()) return
 
     let cancelled = false
