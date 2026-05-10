@@ -80,7 +80,7 @@ export default function LanguageSwitcher({
   const navigateToLanguage = (code: Language) => {
     const { pathname: inner } = stripLocaleFromPathname(pathname)
     const target = localizedPath(code === 'en' ? 'en' : code, inner)
-    router.push(target)
+    router.push(target, { scroll: false })
     setLanguage(code)
     setIsOpen(false)
   }
@@ -107,7 +107,7 @@ export default function LanguageSwitcher({
               animate={{ opacity: 1, y: 0 }}
               exit={animTo}
               transition={{ duration: 0.2 }}
-              className={`absolute z-[90] ${placementClass} ${menuAlignClass} min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
+              className={`absolute z-[110] ${placementClass} ${menuAlignClass} min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
             >
               {languages.map((lang) => (
                 <button

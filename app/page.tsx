@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { FiInstagram, FiArrowRight, FiCheck } from 'react-icons/fi'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 /** Same horizontal wine field as `components/Header.tsx` — keeps coming-soon on-brand */
 const headerBarGradient =
@@ -121,6 +122,20 @@ export default function ComingSoonPage() {
   }
 
   return (
+    <>
+      {/* Language: outside overflow scroll root so dropdown matches `/home` (same pill + panel; not clipped) */}
+      <div
+        className={`pointer-events-none fixed top-[max(0.5rem,env(safe-area-inset-top))] z-[100] ${
+          isRTL
+            ? 'left-[max(0.5rem,env(safe-area-inset-left))]'
+            : 'right-[max(0.5rem,env(safe-area-inset-right))]'
+        }`}
+      >
+        <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-white/25 bg-white/[0.02] px-2.5 py-1">
+          <LanguageSwitcher variant="light" />
+        </div>
+      </div>
+
     <div
       className={`relative min-h-[100dvh] min-h-screen overflow-x-hidden overflow-y-auto ${headerBarGradient}`}
     >
@@ -376,5 +391,6 @@ export default function ComingSoonPage() {
         </motion.div>
       </div>
     </div>
+    </>
   )
 }

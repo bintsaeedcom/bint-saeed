@@ -12,8 +12,9 @@ export function isLocalePrefix(s: string): s is LocalePrefix {
 }
 
 export function stripLocaleFromPathname(pathname: string): { locale: AppLocale; pathname: string } {
-  const m = pathname.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt)(\/.*)?$/)
-  if (!m) return { locale: 'en', pathname: pathname || '/' }
+  const pathOnly = (pathname.split(/[?#]/)[0] || '/').replace(/\/+$/, '') || '/'
+  const m = pathOnly.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt)(\/.*)?$/)
+  if (!m) return { locale: 'en', pathname: pathOnly === '' ? '/' : pathOnly }
   const rest = m[2] && m[2].length > 0 ? m[2] : '/'
   return { locale: m[1] as LocalePrefix, pathname: rest }
 }
