@@ -61,7 +61,7 @@ function HorizontalMarqueeStrip({ images }: { images: string[] }) {
         className="coming-soon-carousel-fade-x pointer-events-none absolute inset-0 z-10"
         aria-hidden
       />
-      <div className="coming-soon-marquee-track-x coming-soon-marquee-track-x--ltr flex w-max flex-nowrap items-center gap-3 py-0.5 sm:gap-4 md:gap-5 lg:gap-6">
+      <div className="coming-soon-marquee-track-x coming-soon-marquee-track-x--ltr flex flex-row w-max flex-nowrap items-center gap-3 py-0.5 sm:gap-4 md:gap-5 lg:gap-6">
         {looped.map((src, i) => (
           <div key={`${src}-${i}`} className={horizontalFrameClass}>
             <Image
@@ -180,8 +180,10 @@ export default function ComingSoonPage() {
 
         {/* One horizontal carousel — full-bleed on md+ via negative margins (avoids w-screen + translate clip bugs) */}
         <div className="relative -mx-1 mb-8 w-[calc(100%+0.5rem)] max-w-none shrink-0 select-none sm:mx-0 sm:mb-10 sm:w-full md:mb-10 md:-mx-10 md:w-[calc(100%+5rem)] lg:-mx-16 lg:w-[calc(100%+8rem)] xl:-mx-24 xl:w-[calc(100%+12rem)]">
+          {/* dir=ltr on wrapper so RTL page layout cannot flip flex/overflow for the strip */}
+          <div dir="ltr" className="relative min-w-0 w-full">
           <div
-            className="flex min-h-[min(38vw,11.5rem)] items-center sm:min-h-[13.5rem] md:min-h-[16rem] lg:min-h-[18rem]"
+            className="flex min-h-[min(38vw,11.5rem)] flex-row items-center sm:min-h-[13.5rem] md:min-h-[16rem] lg:min-h-[18rem]"
             aria-hidden
           >
             <HorizontalMarqueeStrip images={COMING_SOON_IMAGES} />
@@ -201,6 +203,7 @@ export default function ComingSoonPage() {
             }}
             aria-hidden
           />
+          </div>
         </div>
 
         {/* ABOUT — fabric field + staggered scroll reveal */}
