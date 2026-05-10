@@ -15,6 +15,21 @@ interface LanguageSwitcherProps {
   dropdownPlacement?: 'below' | 'above'
 }
 
+type LangRow = { code: Language; label: string; native: string; flag: string }
+
+const ALL_LANGUAGES: LangRow[] = [
+  { code: 'en', label: 'English', native: 'EN', flag: '🇬🇧' },
+  { code: 'ar', label: 'العربية', native: 'عر', flag: '🇦🇪' },
+  { code: 'zh', label: '中文', native: '中', flag: '🇨🇳' },
+  { code: 'de', label: 'Deutsch', native: 'DE', flag: '🇩🇪' },
+  { code: 'fr', label: 'Français', native: 'FR', flag: '🇫🇷' },
+  { code: 'it', label: 'Italiano', native: 'IT', flag: '🇮🇹' },
+  { code: 'es', label: 'Español', native: 'ES', flag: '🇪🇸' },
+  { code: 'ru', label: 'Русский', native: 'RU', flag: '🇷🇺' },
+  { code: 'nl', label: 'Nederlands', native: 'NL', flag: '🇳🇱' },
+  { code: 'pt', label: 'Português', native: 'PT', flag: '🇵🇹' },
+]
+
 export default function LanguageSwitcher({
   variant = 'dark',
   align = 'end',
@@ -26,20 +41,7 @@ export default function LanguageSwitcher({
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  const languages: { code: Language; label: string; native: string; flag: string }[] = [
-    { code: 'en', label: 'English', native: 'EN', flag: '🇬🇧' },
-    { code: 'ar', label: 'العربية', native: 'عر', flag: '🇦🇪' },
-    { code: 'zh', label: '中文', native: '中', flag: '🇨🇳' },
-    { code: 'de', label: 'Deutsch', native: 'DE', flag: '🇩🇪' },
-    { code: 'fr', label: 'Français', native: 'FR', flag: '🇫🇷' },
-    { code: 'it', label: 'Italiano', native: 'IT', flag: '🇮🇹' },
-    { code: 'es', label: 'Español', native: 'ES', flag: '🇪🇸' },
-    { code: 'ru', label: 'Русский', native: 'RU', flag: '🇷🇺' },
-    { code: 'nl', label: 'Nederlands', native: 'NL', flag: '🇳🇱' },
-    { code: 'pt', label: 'Português', native: 'PT', flag: '🇵🇹' },
-  ]
-
-  const currentLang = languages.find((l) => l.code === language)
+  const currentLang = ALL_LANGUAGES.find((l) => l.code === language)
 
   const textColor =
     variant === 'light'
@@ -70,10 +72,14 @@ export default function LanguageSwitcher({
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  /** Outer panel + inner scroll region: viewport-aware so lists stay visible and scroll on small screens. */
+  const menuPanelMax = 'max-h-[min(18rem,52dvh)]'
+  const menuScrollMax = 'max-h-[min(17rem,48dvh)]'
+
   const openAbove = dropdownPlacement === 'above'
   const placementClass = openAbove
-    ? 'bottom-full mb-2 max-h-[min(18rem,42dvh)]'
-    : 'top-full mt-2 max-h-72'
+    ? `bottom-full mb-2 ${menuPanelMax}`
+    : `top-full mt-2 ${menuPanelMax}`
   const animFrom = openAbove ? { opacity: 0, y: 10 } : { opacity: 0, y: -10 }
   const animTo = openAbove ? { opacity: 0, y: 10 } : { opacity: 0, y: -10 }
 
@@ -107,24 +113,26 @@ export default function LanguageSwitcher({
               animate={{ opacity: 1, y: 0 }}
               exit={animTo}
               transition={{ duration: 0.2 }}
-              className={`absolute z-[110] ${placementClass} ${menuAlignClass} min-w-[220px] overflow-y-auto overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
+              className={`absolute z-[110] ${placementClass} ${menuAlignClass} min-w-[220px] max-w-[calc(100vw-2rem)] overflow-hidden overscroll-contain rounded-lg py-2 ${dropdownSurfaceClass}`}
             >
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  type="button"
-                  onClick={() => navigateToLanguage(lang.code)}
-                  className={`flex w-full items-center gap-2 px-4 py-2.5 text-left font-montserrat text-sm tracking-wide transition-colors ${
-                    language === lang.code
-                      ? 'bg-white/18 text-white'
-                      : itemHover
-                  }`}
-                  data-cursor-hover
-                >
-                  <span>{lang.flag}</span>
-                  <span>{lang.label}</span>
-                </button>
-              ))}
+              <div
+                className={`min-h-0 overflow-y-auto overscroll-y-contain px-0 py-1 [-webkit-overflow-scrolling:touch] touch-pan-y ${menuScrollMax}`}
+              >
+                {ALL_LANGUAGES.map((lang) => (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    onClick={() => navigateToLanguage(lang.code)}
+                    className={`flex w-full items-center gap-2 px-4 py-2.5 text-left font-montserrat text-sm tracking-wide transition-colors ${
+                      language === lang.code ? 'bg-white/18 text-white' : itemHover
+                    }`}
+                    data-cursor-hover
+                  >
+                    <span>{lang.flag}</span>
+                    <span className="truncate">{lang.label}</span>
+                  </button>
+                ))}
+              </div>
             </motion.div>
           </>
         )}
