@@ -230,7 +230,7 @@ export default function ComingSoonPage() {
                 variants={aboutRevealItem}
                 className="font-montserrat mt-6 text-left text-[15px] font-normal leading-[1.65] text-white/85 sm:mt-8 sm:text-[0.95rem]"
               >
-                The woman of today does not live as the woman of ten years ago. She moves between responsibilities,
+                The woman of today does not live as the woman of decades ago. She moves between responsibilities,
                 countries, meetings, family life, travel, and occasion with a pace that asks more of her than ever
                 before. Yet whatever she becomes in the world, she remains a daughter first, carrying with her the
                 values, recognitions, and standards she was shaped by.
