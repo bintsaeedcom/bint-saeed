@@ -27,6 +27,9 @@ import { buildFaqPageJsonLd } from '@/lib/seo/faqPageJsonLd'
 import { buildSupplementalJsonLdGraphScriptJson } from '@/lib/seo/seo'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 
+/** Locale + pathname come from middleware headers — avoid serving one cached HTML canonical for all URLs. */
+export const dynamic = 'force-dynamic'
+
 const fontMontserrat = Montserrat({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600'],

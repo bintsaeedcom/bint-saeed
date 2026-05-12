@@ -5,7 +5,25 @@ import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 
-const BASE = new URL('https://www.bintsaeed.com')
+function metadataBaseUrl(): URL {
+  return new URL((process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, ''))
+}
+
+/**
+ * Inner path only (no `/ar`, `/fr`, … prefix). Matches middleware `x-bs-pathname` and prevents
+ * `localizedPath(locale, '/ar')` → `/ar/ar` if a proxy ever forwards a prefixed path.
+ */
+export function innerPathForMetadata(pathname: string): string {
+  const pathOnly = (pathname || '/').split('?')[0] || '/'
+  const { pathname: inner } = stripLocaleFromPathname(pathOnly)
+  return inner.replace(/\/+$/, '') || '/'
+}
+
+/** Absolute canonical URL for the current locale + pathname from headers (used by root metadata). */
+export function absoluteCanonicalForLocaleRoute(locale: AppLocale, pathnameFromHeaders: string): string {
+  const inner = innerPathForMetadata(pathnameFromHeaders)
+  return new URL(localizedPath(locale, inner), metadataBaseUrl()).toString()
+}
 
 const OG_HERO_IMAGE_ALT: Record<AppLocale, string> = {
   en: 'Bint Saeed — luxury abaya house, Abu Dhabi',
@@ -91,9 +109,10 @@ function usesHomeMetadata(pathname: string): boolean {
 }
 
 export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata {
-  const meta = getResolvedRoutePageMeta(locale, pathname)
+  const innerPath = innerPathForMetadata(pathname)
+  const meta = getResolvedRoutePageMeta(locale, innerPath)
   const desc = meta.description
-  const isHomeShell = usesHomeMetadata(pathname)
+  const isHomeShell = usesHomeMetadata(innerPath)
 
   const title: Metadata['title'] = isHomeShell
     ? { default: meta.title, template: '%s | Bint Saeed' }
@@ -101,24 +120,27 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
 
   const ogTitle = meta.ogTitle
   const ogDescription =
-    locale === 'en' && usesHomeMetadata(pathname)
+    locale === 'en' && usesHomeMetadata(innerPath)
       ? 'Crafted to order abayas with natural stone charms. Made in Abu Dhabi, worn worldwide.'
       : clipMetaDescription(desc, 200)
   const twTitle = ogTitle
   const twDesc = clipMetaDescription(desc, 200)
 
-  const canonicalUrl = new URL(localizedPath(locale, pathname), BASE).toString()
+  const base = metadataBaseUrl()
+  const canonicalUrl = new URL(localizedPath(locale, innerPath), base).toString()
 
   const languages: Record<string, string> = {
-    'x-default': new URL(pathname === '/' ? '/' : pathname, BASE).toString(),
-    en: new URL(pathname === '/' ? '/' : pathname, BASE).toString(),
+    'x-default': new URL(innerPath === '/' ? '/' : innerPath, base).toString(),
+    en: new URL(innerPath === '/' ? '/' : innerPath, base).toString(),
   }
   for (const L of ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt'] as const) {
-    languages[L] = new URL(localizedPath(L, pathname), BASE).toString()
+    languages[L] = new URL(localizedPath(L, innerPath), base).toString()
   }
 
+  const ogImageOrigin = base.origin
+
   return {
-    metadataBase: BASE,
+    metadataBase: base,
     title,
     description: desc,
     authors: [{ name: 'Bint Saeed' }],
@@ -136,16 +158,16 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       type: 'website',
       images: [
         {
-          url: 'https://www.bintsaeed.com/hero-bintsaeed.jpg',
-          secureUrl: 'https://www.bintsaeed.com/hero-bintsaeed.jpg',
+          url: `${ogImageOrigin}/hero-bintsaeed.jpg`,
+          secureUrl: `${ogImageOrigin}/hero-bintsaeed.jpg`,
           width: 1920,
           height: 1080,
           type: 'image/jpeg',
           alt: OG_HERO_IMAGE_ALT[locale],
         },
         {
-          url: 'https://www.bintsaeed.com/hero-bintsaeed.jpg',
-          secureUrl: 'https://www.bintsaeed.com/hero-bintsaeed.jpg',
+          url: `${ogImageOrigin}/hero-bintsaeed.jpg`,
+          secureUrl: `${ogImageOrigin}/hero-bintsaeed.jpg`,
           width: 1200,
           height: 630,
           type: 'image/png',
@@ -157,7 +179,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       card: 'summary_large_image',
       title: twTitle,
       description: twDesc,
-      images: ['https://www.bintsaeed.com/hero-bintsaeed.jpg'],
+      images: [`${ogImageOrigin}/hero-bintsaeed.jpg`],
       creator: '@bintsaeed_brand',
       site: '@bintsaeed_brand',
     },
