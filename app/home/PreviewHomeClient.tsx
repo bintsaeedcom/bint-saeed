@@ -917,10 +917,10 @@ function HeroSection() {
         className="pointer-events-none absolute inset-0 overflow-hidden will-change-transform"
       >
         <Image
-          src="/test%20a.PNG"
-          alt="Bint Saeed"
+          src="/IMG_2821.JPG"
+          alt="Bint Saeed luxury abayas, editorial photograph"
           fill
-          className="object-cover object-[center_30%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97]"
+          className="object-cover object-[center_28%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97]"
           sizes="100vw"
           priority
         />
