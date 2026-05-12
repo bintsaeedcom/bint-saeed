@@ -139,6 +139,9 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
 
   const ogImageOrigin = base.origin
 
+  /** Social preview (OG / WhatsApp / X). Web-sized JPEG so crawlers do not time out on large originals. */
+  const ogShareImagePath = '/og-share.jpg'
+
   return {
     metadataBase: base,
     title,
@@ -158,20 +161,12 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       type: 'website',
       images: [
         {
-          url: `${ogImageOrigin}/hero-bintsaeed.jpg`,
-          secureUrl: `${ogImageOrigin}/hero-bintsaeed.jpg`,
-          width: 1920,
-          height: 1080,
+          url: `${ogImageOrigin}${ogShareImagePath}`,
+          secureUrl: `${ogImageOrigin}${ogShareImagePath}`,
+          width: 1200,
+          height: 675,
           type: 'image/jpeg',
           alt: OG_HERO_IMAGE_ALT[locale],
-        },
-        {
-          url: `${ogImageOrigin}/hero-bintsaeed.jpg`,
-          secureUrl: `${ogImageOrigin}/hero-bintsaeed.jpg`,
-          width: 1200,
-          height: 630,
-          type: 'image/png',
-          alt: 'Bint Saeed',
         },
       ],
     },
@@ -179,7 +174,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       card: 'summary_large_image',
       title: twTitle,
       description: twDesc,
-      images: [`${ogImageOrigin}/hero-bintsaeed.jpg`],
+      images: [`${ogImageOrigin}${ogShareImagePath}`],
       creator: '@bintsaeed_brand',
       site: '@bintsaeed_brand',
     },
