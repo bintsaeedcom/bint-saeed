@@ -909,7 +909,11 @@ function HeroSection() {
   const introX = useTransform(scrollYProgress, [0, 1], [0, 14])
 
   return (
-    <section ref={ref} data-story-section className="section-full relative h-[calc(100svh-64px)] min-h-[70svh] w-full">
+    <section
+      ref={ref}
+      data-story-section
+      className="section-full relative h-svh min-h-svh w-full overflow-hidden bg-[#1a0210]"
+    >
       <SectionStripes variant="hero" />
       {/* Background — pointer-events-none so scaled layer never steals clicks from hero links */}
       <motion.div
