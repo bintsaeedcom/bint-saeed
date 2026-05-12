@@ -466,7 +466,7 @@ function CharmHeroFeatureSection() {
           >
             <div className="relative h-full min-h-[68vh]">
               <Image
-                src="/collection-section/5.jpg"
+                src="/collection-section/45.jpg"
                 alt="Bint Saeed charm collection"
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
@@ -1189,6 +1189,7 @@ function EditorialSplit() {
     { title: 'Knotted Lines', subtitle: 'Line & continuity', image: homeCodesImage('Knotted Lines Of Lineage.jpg') },
     { title: 'Al Ain Rosette', subtitle: 'Regional motif', image: homeCodesImage('Al Quaa Rosette.jpg') },
     { title: 'Al Talli', subtitle: 'Gold threadwork', image: homeCodesImage('talli.jpg.jpg') },
+    { title: 'The Strands', subtitle: 'Beaded lines', image: homeCodesImage('The Strands.png') },
   ] as const
 
   return (
@@ -1247,7 +1248,7 @@ function EditorialSplit() {
             </motion.div>
           </div>
 
-          <div className="hidden border-t border-[#e8ddd4] md:grid md:grid-cols-3 lg:grid-cols-5">
+          <div className="hidden border-t border-[#e8ddd4] md:grid md:grid-cols-3 lg:grid-cols-6">
             {storyCodes.map((code, index) => (
               <LocaleLink
                 key={code.title}
@@ -1264,7 +1265,7 @@ function EditorialSplit() {
                     src={code.image}
                     alt={code.title}
                     fill
-                    sizes="(max-width: 1024px) 50vw, 20vw"
+                    sizes="(max-width: 1024px) 33vw, 17vw"
                     className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
