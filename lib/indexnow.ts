@@ -7,7 +7,7 @@
 
 import { getSitemapAbsoluteUrls } from '@/lib/sitemapUrlList'
 
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bintsaeed.com').replace(/\/$/, '')
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 const indexNowKey = process.env.INDEXNOW_KEY ?? ''
 
 export const INDEXNOW_ENDPOINTS = {

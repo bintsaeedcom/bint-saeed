@@ -30,6 +30,13 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Apex → canonical host (SEO + IndexNow host alignment). Preserves path + query string.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'bintsaeed.com' }],
+        destination: 'https://www.bintsaeed.com/:path*',
+        permanent: true,
+      },
       { source: '/preview', destination: '/home', permanent: true },
       { source: '/preview/:path*', destination: '/home/:path*', permanent: true },
       { source: '/accessoiries', destination: '/accessories', permanent: true },

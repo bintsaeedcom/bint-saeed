@@ -1,7 +1,7 @@
 import { isPrelaunch } from '@/lib/seo'
 
 /** Canonical origin for sitemap `<loc>` values (align with `NEXT_PUBLIC_SITE_URL` in production). */
-export const SITEMAP_BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bintsaeed.com').replace(/\/$/, '')
+export const SITEMAP_BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
 export type SitemapUrlEntry = {
   loc: string

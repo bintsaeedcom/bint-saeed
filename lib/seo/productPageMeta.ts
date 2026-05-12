@@ -3,7 +3,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { localizedPath } from '@/lib/i18n/routing'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 
-const SITE = new URL('https://bintsaeed.com')
+const SITE = new URL('https://www.bintsaeed.com')
 
 /** Intro line per locale — brand, Abu Dhabi, category signal (natural phrasing). */
 const PRODUCT_INTRO: Record<AppLocale, string> = {

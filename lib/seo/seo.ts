@@ -2,7 +2,7 @@
  * Compose supplemental JSON-LD: GCC ClothingStores + Brand/MediaObject + merged FAQ blocks.
  * Localized copy lives in `lib/translations/seo/{locale}.ts`; keyword arrays remain in `gcc-seo`, `*-seo` helpers.
  *
- * Core layout (`rootLayoutJsonLd` + `organizationSchemaLd`) uses fixed @ids on `https://bintsaeed.com/...`.
+ * Core layout (`rootLayoutJsonLd` + `organizationSchemaLd`) uses fixed @ids on `https://www.bintsaeed.com/...`.
  * Supplemental nodes use `NEXT_PUBLIC_SITE_URL` for @id; keep env aligned with production to avoid near-duplicate entities.
  */
 
@@ -16,17 +16,17 @@ import {
 } from '@/lib/translations/seo/builders'
 import { getSeoSupplementalBundle } from '@/lib/translations/seo'
 
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bintsaeed.com').replace(/\/$/, '')
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
 /** @ids emitted by `buildOrganizationJsonLd` + `rootLayoutJsonLd` (canonical site, not env-dependent). */
 export const CORE_ROOT_LAYOUT_JSONLD_IDS: ReadonlySet<string> = new Set([
-  'https://bintsaeed.com/#organization',
-  'https://bintsaeed.com/#brand',
-  'https://bintsaeed.com/#website',
-  'https://bintsaeed.com/#business',
-  'https://bintsaeed.com/#product',
-  'https://bintsaeed.com/#area-alain',
-  'https://bintsaeed.com/#collection',
+  'https://www.bintsaeed.com/#organization',
+  'https://www.bintsaeed.com/#brand',
+  'https://www.bintsaeed.com/#website',
+  'https://www.bintsaeed.com/#business',
+  'https://www.bintsaeed.com/#product',
+  'https://www.bintsaeed.com/#area-alain',
+  'https://www.bintsaeed.com/#collection',
 ])
 
 function isFaqPageNode(n: Record<string, unknown>): boolean {

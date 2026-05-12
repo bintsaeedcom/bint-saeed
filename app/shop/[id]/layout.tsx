@@ -9,7 +9,7 @@ import {
   productNotFoundMetadata,
 } from '@/lib/seo/productPageMeta'
 
-const SITE_URL = 'https://bintsaeed.com'
+const SITE_URL = 'https://www.bintsaeed.com'
 
 type ProductLayoutProps = {
   children: React.ReactNode
