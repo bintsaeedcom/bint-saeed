@@ -147,7 +147,8 @@ export async function submitToSearchEngine(
 
     const statusCode = response.status
 
-    if (statusCode === 200) {
+    // IndexNow endpoints (Bing, Yandex, …) return 200 OK or 202 Accepted on success; treat any 2xx as ok.
+    if (response.ok) {
       return {
         success: true,
         statusCode,
