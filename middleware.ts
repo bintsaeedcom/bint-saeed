@@ -12,6 +12,30 @@ import { COMING_SOON_ONLY, isPathAllowedDuringComingSoonOnly } from '@/lib/comin
 
 const GATE_SUFFIX = '/home/gate'
 
+/**
+ * WhatsApp, Facebook, iMessage, Slack, etc. fetch shared URLs without preview cookies.
+ * Without a bypass they hit `/home` → redirect to `/home/gate` and scrape a noindex gate
+ * page, so link previews show no image. Allow known link-preview crawlers to read `/home`.
+ */
+function isLinkPreviewBot(userAgent: string | null): boolean {
+  if (!userAgent) return false
+  const ua = userAgent.toLowerCase()
+  return (
+    ua.includes('facebookexternalhit') ||
+    ua.includes('facebot') ||
+    ua.includes('whatsapp') ||
+    ua.includes('slackbot') ||
+    ua.includes('linkedinbot') ||
+    ua.includes('twitterbot') ||
+    ua.includes('pinterest') ||
+    ua.includes('telegrambot') ||
+    ua.includes('discordbot') ||
+    ua.includes('vkshare') ||
+    ua.includes('skypeuripreview') ||
+    ua.includes('applebot')
+  )
+}
+
 function localePrefixFromPathname(pathname: string): string {
   const m = pathname.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt)(\/.*)?$/)
   if (m && isLocalePrefix(m[1])) {
@@ -95,6 +119,10 @@ export async function middleware(request: NextRequest) {
 
   if (isHomeGatedArea(pathname)) {
     if (isHomeGateExempt(pathname)) {
+      return withLocaleHeaders(request, 'en', pathname)
+    }
+
+    if (isLinkPreviewBot(request.headers.get('user-agent'))) {
       return withLocaleHeaders(request, 'en', pathname)
     }
 
