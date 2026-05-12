@@ -62,7 +62,8 @@ export default async function RootLayout({
   const { pathname: innerPath } = stripLocaleFromPathname(pathname ?? '/')
   const schemaPath = (innerPath.split('?')[0] || '/').replace(/\/+$/, '') || '/'
   const isFaqPath = schemaPath === '/faq' || schemaPath.startsWith('/faq/')
-  const isHomePath = schemaPath === '/' || schemaPath === '/home'
+  /** Extra homepage-only ClothingStore snippet: editorial landing at `/home` (not duplicated on `/` coming-soon). */
+  const isEditorialHomePath = schemaPath === '/home'
   /** Omit shop-like Product / ItemList / offer catalog on coming-soon and prelaunch root (stable Rich Results). */
   const hideCommerceProductSchema =
     schemaPath === '/coming-soon' ||
@@ -156,7 +157,7 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: supplementalLdJson }}
         />
-        {isHomePath ? (
+        {isEditorialHomePath ? (
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{

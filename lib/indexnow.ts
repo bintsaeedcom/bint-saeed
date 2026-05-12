@@ -48,10 +48,13 @@ export function validateIndexNowKey(key: string): boolean {
   return /^[a-zA-Z0-9-]+$/.test(key)
 }
 
+/**
+ * IndexNow requires `host` in the JSON body to match the hostname of URLs in `urlList`
+ * (e.g. `www.example.com` if URLs use https://www.example.com/...). Do not strip `www`.
+ */
 export function extractHost(url: string): string {
   try {
-    const urlObj = new URL(url)
-    return urlObj.hostname.replace(/^www\./, '')
+    return new URL(url).hostname
   } catch {
     return ''
   }

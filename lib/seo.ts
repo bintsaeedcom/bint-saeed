@@ -6,9 +6,9 @@ export const INDEX_MODE = process.env.NEXT_PUBLIC_INDEX_MODE || 'prelaunch'
 export const isPrelaunch = INDEX_MODE === 'prelaunch'
 
 /**
- * During prelaunch, HTML uses noindex so traditional search snippets stay limited.
- * `app/robots.ts` still allows major AI crawlers (GPTBot, ClaudeBot, etc.) to fetch public URLs
- * per their User-agent block. For maximum discovery in Google + AI, set INDEX_MODE=live.
+ * During prelaunch, **nested segment layouts** (shop, about, etc.) attach noindex via this helper.
+ * Root `/`, `/coming-soon`, and routes without this layout stay indexable from `buildRootMetadata`.
+ * `app/robots.ts` still allows major crawlers. Set INDEX_MODE=live for full sitemap + relax segment noindex.
  */
 export const noIndexMetadata: Metadata = isPrelaunch
   ? { robots: { index: false, follow: false } }

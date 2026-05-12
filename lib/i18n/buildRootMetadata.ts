@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import type { AppLocale } from './routing'
-import { localizedPath } from './routing'
+import { localizedPath, stripLocaleFromPathname } from './routing'
 import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
@@ -77,9 +77,16 @@ function aiOther(locale: AppLocale): Record<string, string> {
   }
 }
 
+/** Inner path without locale prefix, normalized (matches middleware `x-bs-pathname`). */
+function normalizedInnerPath(pathname: string): string {
+  const pathOnly = pathname.split('?')[0] || '/'
+  const { pathname: inner } = stripLocaleFromPathname(pathOnly)
+  return inner.replace(/\/+$/, '') || '/'
+}
+
 /** Same programmed SEO pack as `/` (coming-soon shell): editorial landing lives at `/home`. */
 function usesHomeMetadata(pathname: string): boolean {
-  const path = pathname.split('?')[0] || '/'
+  const path = normalizedInnerPath(pathname)
   return path === '/' || path === '' || path === '/home'
 }
 
@@ -154,6 +161,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       creator: '@bintsaeed_brand',
       site: '@bintsaeed_brand',
     },
+    /* `/` and `/coming-soon`: index,follow (nested segment layouts may add noindex for /shop etc. during prelaunch). */
     robots: {
       index: true,
       follow: true,

@@ -3,6 +3,7 @@ import { localizedPath } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { getHomeDefaultTitle, getHomeMetaDescription } from '@/lib/i18n/homePageCopy'
 import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
+import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 
 /** Canonical site origin (must match live host / Search Console property). */
 const BASE = 'https://www.bintsaeed.com'
@@ -731,6 +732,7 @@ export function buildWebPageJsonLd(locale: AppLocale, innerPath: string) {
   const clean = (innerPath.split('?')[0] || '/').replace(/\/+$/, '') || '/'
   const pathForUrl = clean === '' ? '/' : clean
   const url = absoluteUrl(locale, pathForUrl)
+  const pageMeta = getResolvedRoutePageMeta(locale, pathForUrl === '' ? '/' : pathForUrl)
   const kw = mergedMetaKeywordsForLocale(locale).join(', ')
   return {
     '@context': 'https://schema.org',
@@ -738,8 +740,8 @@ export function buildWebPageJsonLd(locale: AppLocale, innerPath: string) {
     '@id': `${url}#seo`,
     url,
     inLanguage: schemaInLanguageForLocale(locale),
-    name: getHomeDefaultTitle(locale),
-    description: getHomeMetaDescription(locale),
+    name: pageMeta.title,
+    description: pageMeta.description,
     mainEntity: {
       '@id': `${BASE}/#organization`,
     },
