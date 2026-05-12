@@ -367,7 +367,7 @@ export default function CheckoutPage() {
               </h2>
               <p className="mb-4 font-montserrat text-xs text-brand-clayRed/60 tracking-wide">
                 {isRTL
-                  ? 'اختياري — يُستخدم لتسريع صفحة الدفع وتأكيد الطلب.'
+                  ? 'اختياري، يُستخدم لتسريع صفحة الدفع وتأكيد الطلب.'
                   : 'Optional — pre-fills Stripe checkout and helps us send your confirmation.'}
               </p>
               <input
@@ -530,7 +530,7 @@ export default function CheckoutPage() {
               </h2>
               <p className="mb-6 font-montserrat text-sm text-brand-clayRed/70 leading-relaxed">
                 {isRTL
-                  ? 'الدفع يتم عبر سترايب (Stripe) — بطاقات الائتمان و Apple Pay و Google Pay حيثما تُدعم. فعّلي Apple Pay من لوحة سترايب بعد التحقق من النطاق.'
+                  ? 'الدفع يتم عبر سترايب (Stripe)، وبطاقات الائتمان و Apple Pay و Google Pay حيثما تُدعم. فعّلي Apple Pay من لوحة سترايب بعد التحقق من النطاق.'
                   : 'Payments are processed by Stripe — credit and debit cards, Apple Pay, and Google Pay where supported. Enable Apple Pay in the Stripe Dashboard after domain verification.'}
               </p>
 

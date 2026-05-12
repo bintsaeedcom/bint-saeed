@@ -113,7 +113,7 @@ export const accessories: Accessory[] = [
   {
     id: 'signature-malachite-necklace',
     name: 'Al Ain Necklace — Malachite',
-    nameAr: 'قلادة القوع — الملاكيت',
+    nameAr: 'قلادة القوع: الملاكيت',
     category: 'necklaces',
     price: 1650,
     description:
@@ -130,7 +130,7 @@ export const accessories: Accessory[] = [
   {
     id: 'signature-tiger-eye-necklace',
     name: 'Al Ain Necklace — Tiger Eye',
-    nameAr: 'قلادة القوع — عين النمر',
+    nameAr: 'قلادة القوع: عين النمر',
     category: 'necklaces',
     price: 1480,
     description:
@@ -147,7 +147,7 @@ export const accessories: Accessory[] = [
   {
     id: 'signature-onyx-necklace',
     name: 'Al Ain Necklace — Onyx',
-    nameAr: 'قلادة القوع — الأونكس',
+    nameAr: 'قلادة القوع: الأونكس',
     category: 'necklaces',
     price: 1590,
     description:
@@ -165,7 +165,7 @@ export const accessories: Accessory[] = [
   {
     id: 'signature-rose-quartz-necklace',
     name: 'Al Ain Necklace — Rose Quartz',
-    nameAr: 'قلادة القوع — الكوارتز الوردي',
+    nameAr: 'قلادة القوع: الكوارتز الوردي',
     category: 'necklaces',
     price: 1740,
     description:
@@ -182,7 +182,7 @@ export const accessories: Accessory[] = [
   {
     id: 'necklace-layered-gold',
     name: 'Al Ain Necklace — Layered Gold',
-    nameAr: 'قلادة القوع — ذهبي متعدد الطبقات',
+    nameAr: 'قلادة القوع: ذهبي متعدد الطبقات',
     category: 'necklaces',
     price: 380,
     description: 'Multi-layered gold chain necklace with delicate pendants.',
@@ -199,7 +199,7 @@ export const accessories: Accessory[] = [
   {
     id: 'necklace-statement-pendant',
     name: 'Al Ain Necklace — Heritage Pendant',
-    nameAr: 'قلادة القوع — التعليقة التراثية',
+    nameAr: 'قلادة القوع: التعليقة التراثية',
     category: 'necklaces',
     price: 520,
     description: 'Bold pendant necklace featuring traditional Emirati patterns.',
@@ -529,7 +529,7 @@ export const accessories: Accessory[] = [
     description:
       'Blue aventurine beads with gentle sparkle — a cool contrast on deep or black fabric.',
     descriptionAr:
-      'خرز أفنتورين أزرق بلمعان خفيف — تباين بارد على الأقمشة الداكنة.',
+      'خرز أفنتورين أزرق بلمعان خفيف، تباين بارد على الأقمشة الداكنة.',
     images: [ACCESSORY_IMAGE_ABAYA_CHARM_AVENTURINE],
     materials: 'Natural blue aventurine, 18K gold-plated findings',
     materialsAr: 'أفنتورين أزرق طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
@@ -561,7 +561,7 @@ export const accessories: Accessory[] = [
     description:
       'Deep malachite green with natural banding — a striking signature accent.',
     descriptionAr:
-      'ملاكيت أخضر عميق بخطوط طبيعية — لمسة توقيع مميزة.',
+      'ملاكيت أخضر عميق بخطوط طبيعية، لمسة توقيع مميزة.',
     images: [ACCESSORY_IMAGE_NECKLACE_MALACHITE],
     materials: 'Natural malachite, 18K gold-plated findings',
     materialsAr: 'ملاكيت طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
@@ -593,7 +593,7 @@ export const accessories: Accessory[] = [
     description:
       'Heart-cut amethyst beads — limited edition release with clip attachment.',
     descriptionAr:
-      'خرز جمشت على شكل قلب — إصدار محدود مع مشبك تثبيت.',
+      'خرز جمشت على شكل قلب، إصدار محدود مع مشبك تثبيت.',
     images: [ACCESSORY_IMAGE_ABAYA_CHARM_AMETHYST],
     materials: 'Natural amethyst, 18K gold-plated findings',
     materialsAr: 'جمشت طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
@@ -610,7 +610,7 @@ export const accessories: Accessory[] = [
     description:
       'Heart-shaped jade beads — limited edition; serene green movement on the abaya line.',
     descriptionAr:
-      'خرز يشم على شكل قلب — إصدار محدود؛ حركة خضراء هادئة على خط العباءة.',
+      'خرز يشم على شكل قلب، إصدار محدود؛ حركة خضراء هادئة على خط العباءة.',
     images: [ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE],
     materials: 'Natural jade, 18K gold-plated findings',
     materialsAr: 'يشم طبيعي، تثبيتات مطلية بالذهب 18 قيراط',

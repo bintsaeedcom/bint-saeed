@@ -56,7 +56,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Product detail — Bint Saeed luxury abayas from Abu Dhabi. Materials, fit and craft notes; shop official pieces with UAE & GCC delivery options.',
     ar:
-      'تفاصيل المنتج — بِنت سعيد، دار عبايات فاخرة في أبوظبي: المواد والقصّة والحرفية؛ تسوّقي عبر الموقع الرسمي مع خيارات التوصيل في الإمارات والخليج.',
+      'تفاصيل المنتج، بِنت سعيد، دار عبايات فاخرة في أبوظبي: المواد والقصّة والحرفية؛ تسوّقي عبر الموقع الرسمي مع خيارات التوصيل في الإمارات والخليج.',
     fr:
       'Fiche produit Bint Saeed — abayas de luxe depuis Abu Dhabi : matières, coupe et artisanat ; achat officiel avec livraison EAU & Golfe.',
     it:
@@ -78,7 +78,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'About Bint Saeed — luxury abaya house founded in Abu Dhabi. Heritage-led design, Al Talli and Khous craft, jewellery and lifestyle for women worldwide.',
     ar:
-      'عن بِنت سعيد — دار عبايات فاخرة تأسست في أبوظبي، تركّز على رموز التصميم الإماراتية وحرفية التلي والخوص، ومجوهرات وقطع أسلوب حياة للمرأة المعاصرة.',
+      'عن بِنت سعيد، دار عبايات فاخرة تأسست في أبوظبي، تركّز على رموز التصميم الإماراتية وحرفية التلي والخوص، ومجوهرات وقطع أسلوب حياة للمرأة المعاصرة.',
     fr:
       'À propos de Bint Saeed — maison d’abayas de luxe à Abu Dhabi : design ancré dans le patrimoine émirati, savoir‑faire Al Talli & Khous, bijoux et lifestyle.',
     it:
@@ -100,7 +100,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Contact Bint Saeed in Abu Dhabi — customer care for orders, sizing and delivery across the UAE, GCC and international destinations where available.',
     ar:
-      'تواصلي مع بِنت سعيد في أبوظبي — خدمة عملاء للطلبات والمقاسات والتوصيل داخل الإمارات ودول الخليج والوجهات الدولية عند توفرها.',
+      'تواصلي مع بِنت سعيد في أبوظبي، خدمة عملاء للطلبات والمقاسات والتوصيل داخل الإمارات ودول الخليج والوجهات الدولية عند توفرها.',
     fr:
       'Contacter Bint Saeed à Abu Dhabi : service client pour commandes, tailles et livraison aux Émirats, GCC et destinations internationales disponibles.',
     it:
@@ -122,7 +122,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Heritage at Bint Saeed — Abu Dhabi luxury abaya house rooted in Emirati craft. Explore stories behind Al Talli, Khous weaving and regional design codes.',
     ar:
-      'التراث في بِنت سعيد — دار عبايات فاخرة في أبوظبي تنطلق من الحرف الإماراتية. اطّلعي على قصص التلي ونسيج الخوص ورموز التصميم المحلية.',
+      'التراث في بِنت سعيد، دار عبايات فاخرة في أبوظبي تنطلق من الحرف الإماراتية. اطّلعي على قصص التلي ونسيج الخوص ورموز التصميم المحلية.',
     fr:
       'Patrimoine chez Bint Saeed — maison d’abayas à Abu Dhabi ancrée dans le savoir‑faire émirati : Al Talli, Khous et codes de design régionaux.',
     it:
@@ -144,7 +144,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Al Talli embroidery — heritage craft referenced by Bint Saeed, luxury abaya house in Abu Dhabi. UNESCO‑recognised Emirati technique at the heart of design.',
     ar:
-      'تطريز التلي — حرفة تراثية يستند إليها تصميم بِنت سعيد في أبوظبي؛ تقنية إماراتية معترف بها من اليونسكو وتشكّل جزءاً من الهوية البصرية للدار.',
+      'تطريز التلي، حرفة تراثية يستند إليها تصميم بِنت سعيد في أبوظبي؛ تقنية إماراتية معترف بها من اليونسكو وتشكّل جزءاً من الهوية البصرية للدار.',
     fr:
       'Broderie Al Talli — savoir‑faire UNESCO au cœur des créations Bint Saeed à Abu Dhabi : maisons d’abayas de luxe inspirées du patrimoine émirati.',
     it:
@@ -166,7 +166,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Khous palm‑frond weaving — structural heritage referenced by Bint Saeed in Abu Dhabi. Discover how craft logic shapes contemporary luxury abayas.',
     ar:
-      'نسيج الخوص — تراث بنيوي يستوحى منه تصميم بِنت سعيد في أبوظبي؛ منطق الحرفية الإماراتية يضفي حضوراً معاصراً على العباءات الفاخرة.',
+      'نسيج الخوص، تراث بنيوي يستوحى منه تصميم بِنت سعيد في أبوظبي؛ منطق الحرفية الإماراتية يضفي حضوراً معاصراً على العباءات الفاخرة.',
     fr:
       'Tissage Khous en palmier — référence structurelle pour Bint Saeed à Abu Dhabi : logique artisanale au service d’abayas de luxe contemporaines.',
     it:
@@ -188,7 +188,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Sadu weaving heritage — contextual craft narrative explored by Bint Saeed, Abu Dhabi luxury abaya house connecting textile tradition with modern silhouettes.',
     ar:
-      'إرث نسيج السدو — حكاية حرفية يعرضها سياقُ بِنت سعيد في أبوظبي؛ ربطٌ بين تقاليد النسيج المحلي والقصّات المعاصرة للعباءات الفاخرة.',
+      'إرث نسيج السدو، حكاية حرفية يعرضها سياقُ بِنت سعيد في أبوظبي؛ ربطٌ بين تقاليد النسيج المحلي والقصّات المعاصرة للعباءات الفاخرة.',
     fr:
       'Tissage Sadu — lecture patrimoniale proposée par Bint Saeed à Abu Dhabi, entre tradition textile régionale et silhouettes luxury actuelles.',
     it:
@@ -210,7 +210,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Accessories by Bint Saeed — curated jewellery and lifestyle pieces from Abu Dhabi to complement luxury abayas; shop official edits with UAE & GCC shipping.',
     ar:
-      'إكسسوارات من بِنت سعيد — مجوهرات وقطع أسلوب حياة مختارة في أبوظبي لتكميل العباءات الفاخرة؛ تسوّقي عبر الموقع الرسمي مع توصيل في الإمارات والخليج.',
+      'إكسسوارات من بِنت سعيد، مجوهرات وقطع أسلوب حياة مختارة في أبوظبي لتكميل العباءات الفاخرة؛ تسوّقي عبر الموقع الرسمي مع توصيل في الإمارات والخليج.',
     fr:
       'Accessoires Bint Saeed — bijoux et pièces lifestyle sélectionnées à Abu Dhabi pour accompagner vos abayas ; livraison EAU & Golfe.',
     it:
@@ -232,7 +232,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Accessory detail — Bint Saeed jewellery or lifestyle piece from Abu Dhabi designed to pair with luxury abayas; official purchase with transparent shipping.',
     ar:
-      'تفاصيل الإكسسوار — قطعة مجوهرات أو أسلوب حياة من بِنت سعيد في أبوظبي لتنسيقها مع العباءات الفاخرة؛ شراء رسمي وخيارات شحن واضحة.',
+      'تفاصيل الإكسسوار، قطعة مجوهرات أو أسلوب حياة من بِنت سعيد في أبوظبي لتنسيقها مع العباءات الفاخرة؛ شراء رسمي وخيارات شحن واضحة.',
     fr:
       'Détail accessoire — pièce Bint Saeed à Abu Dhabi (bijou ou lifestyle) pensée avec les abayas de luxe ; achat officiel et livraison claire.',
     it:
@@ -254,7 +254,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Your bag at Bint Saeed — review luxury abayas and accessories before checkout. Official Abu Dhabi brand with UAE & GCC delivery options.',
     ar:
-      'سلة التسوق في بِنت سعيد — راجعي العباءات الفاخرة والإكسسوارات قبل الدفع. علامة أبوظبي الرسمية مع خيارات توصيل في الإمارات والخليج.',
+      'سلة التسوق في بِنت سعيد، راجعي العباءات الفاخرة والإكسسوارات قبل الدفع. علامة أبوظبي الرسمية مع خيارات توصيل في الإمارات والخليج.',
     fr:
       'Panier Bint Saeed — vérifiez vos abayas et accessoires avant paiement : maison d’Abu Dhabi avec livraison EAU & Golfe.',
     it:
@@ -276,7 +276,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Secure checkout for Bint Saeed orders — luxury abayas and accessories from Abu Dhabi. Complete your purchase with trusted payment and shipping details.',
     ar:
-      'إتمام الشراء الآمن لطلبات بِنت سعيد — عباءات فاخرة وإكسسوارات من أبوظبي. أكملي الدفع عبر قنوات موثوقة مع تفاصيل الشحن المناسبة.',
+      'إتمام الشراء الآمن لطلبات بِنت سعيد، عباءات فاخرة وإكسسوارات من أبوظبي. أكملي الدفع عبر قنوات موثوقة مع تفاصيل الشحن المناسبة.',
     fr:
       'Paiement sécurisé Bint Saeed — finalisez abayas et accessoires de luxe depuis Abu Dhabi via un checkout fiable.',
     it:
@@ -298,7 +298,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Thank you — your Bint Saeed order is confirmed. Luxury abayas and lifestyle pieces from Abu Dhabi; tracking and care details arrive by email.',
     ar:
-      'شكراً لكِ — تم تأكيد طلبك لدى بِنت سعيد. قطع فاخرة من أبوظبي؛ ستصلك تفاصيل التتبع والعناية عبر البريد الإلكتروني.',
+      'شكراً لكِ، تم تأكيد طلبك لدى بِنت سعيد. قطع فاخرة من أبوظبي؛ ستصلك تفاصيل التتبع والعناية عبر البريد الإلكتروني.',
     fr:
       'Merci — commande Bint Saeed confirmée. Abayas et pièces lifestyle depuis Abu Dhabi ; suivi envoyé par e‑mail.',
     it:
@@ -320,7 +320,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Your Bint Saeed account — manage orders, addresses and preferences for Abu Dhabi luxury abayas and accessories with secure sign‑in.',
     ar:
-      'حسابك في بِنت سعيد — إدارة الطلبات والعناوين والتفضيلات لعباءات أبوظبي الفاخرة والإكسسوارات مع تسجيل دخول آمن.',
+      'حسابك في بِنت سعيد، إدارة الطلبات والعناوين والتفضيلات لعباءات أبوظبي الفاخرة والإكسسوارات مع تسجيل دخول آمن.',
     fr:
       'Compte Bint Saeed — suivez commandes et préférences pour vos abayas et accessoires de luxe depuis Abu Dhabi en toute sécurité.',
     it:
@@ -342,7 +342,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Create your Bint Saeed profile — faster checkout for Abu Dhabi luxury abayas, jewellery and lifestyle orders with email updates you control.',
     ar:
-      'أنشئي ملفاً في بِنت سعيد — إتمام شراء أسرع لعباءات أبوظبي الفاخرة والمجوهرات مع تحديثات بريدية يمكنك ضبطها.',
+      'أنشئي ملفاً في بِنت سعيد، إتمام شراء أسرع لعباءات أبوظبي الفاخرة والمجوهرات مع تحديثات بريدية يمكنك ضبطها.',
     fr:
       'Créez votre profil Bint Saeed — checkout plus rapide pour abayas, bijoux et lifestyle d’Abu Dhabi avec emails maîtrisés.',
     it:
@@ -364,7 +364,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Privacy policy — how Bint Saeed collects and protects data for Abu Dhabi luxury abaya shoppers across the UAE, GCC and international orders.',
     ar:
-      'سياسة الخصوصية — كيف تجمع بِنت سعيد البيانات وتحميها لمتسوّقي العباءات الفاخرة في أبوظبي والإمارات والخليج والطلبات الدولية.',
+      'سياسة الخصوصية، كيف تجمع بِنت سعيد البيانات وتحميها لمتسوّقي العباءات الفاخرة في أبوظبي والإمارات والخليج والطلبات الدولية.',
     fr:
       'Politique de confidentialité — données clients chez Bint Saeed (Abu Dhabi) pour achats en ligne EAU, Golfe et international.',
     it:
@@ -386,7 +386,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Terms of use — shopping Bint Saeed luxury abayas from Abu Dhabi online: shipping, exchanges and responsibilities for UAE, GCC and export orders.',
     ar:
-      'شروط الاستخدام — التسوّق عبر الإنترنت من بِنت سعيد في أبوظبي: الشحن والاستبدال والمسؤوليات للطلبات في الإمارات والخليج والخارج.',
+      'شروط الاستخدام، التسوّق عبر الإنترنت من بِنت سعيد في أبوظبي: الشحن والاستبدال والمسؤوليات للطلبات في الإمارات والخليج والخارج.',
     fr:
       'Conditions générales — achats en ligne Bint Saeed (Abu Dhabi) : livraison, échanges et obligations pour commandes EAU/GCC.',
     it:
@@ -408,7 +408,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Cookie policy — how Bint Saeed uses cookies and similar tech to keep the Abu Dhabi luxury shopping experience fast, secure and personalised.',
     ar:
-      'سياسة ملفات تعريف الارتباط — كيف تستخدم بِنت سعيد ملفات الكوكيز والتقنيات المشابهة لتشغيل تجربة تسوّق فاخرة آمنة وسريعة.',
+      'سياسة ملفات تعريف الارتباط، كيف تستخدم بِنت سعيد ملفات الكوكيز والتقنيات المشابهة لتشغيل تجربة تسوّق فاخرة آمنة وسريعة.',
     fr:
       'Politique cookies — usage des traceurs par Bint Saeed pour sécuriser et fluidifier votre shopping luxe depuis Abu Dhabi.',
     it:
@@ -430,7 +430,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Size guide — measure for Bint Saeed luxury abayas from Abu Dhabi. Fit tips for UAE online shoppers ordering dresses, separates and layered looks.',
     ar:
-      'دليل المقاسات — قياسات مقترحة لعباءات بِنت سعيد الفاخرة من أبوظبي؛ إرشادات المناسبة للتسوّق الإلكتروني في الإمارات للفساتين والطبقات.',
+      'دليل المقاسات، قياسات مقترحة لعباءات بِنت سعيد الفاخرة من أبوظبي؛ إرشادات المناسبة للتسوّق الإلكتروني في الإمارات للفساتين والطبقات.',
     fr:
       'Guide des tailles — prendre ses mesures pour les abayas Bint Saeed (Abu Dhabi) ; conseils pour achats online aux Émirats.',
     it:
@@ -452,7 +452,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Verify your email — secure your Bint Saeed account for Abu Dhabi luxury orders, restocks and tailored client updates you choose to receive.',
     ar:
-      'تأكيد البريد الإلكتروني — لتأمين حسابك في بِنت سعيد لطلبات أبوظبي الفاخرة والتنبيهات التي تختارين استلامها.',
+      'تأكيد البريد الإلكتروني، لتأمين حسابك في بِنت سعيد لطلبات أبوظبي الفاخرة والتنبيهات التي تختارين استلامها.',
     fr:
       'Vérification e-mail — sécurisez votre compte Bint Saeed pour commandes luxury depuis Abu Dhabi et alertes choisies.',
     it:
@@ -474,7 +474,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'The Codes — design principles behind Bint Saeed luxury abayas in Abu Dhabi: heritage references, silhouette discipline and contemporary modest dressing.',
     ar:
-      'الرموز — مبادئ التصميم في بِنت سعيد، دار عبايات فاخرة في أبوظبي: الإحالة إلى التراث، وضبط القصّة، واللباس المحتشم المعاصر.',
+      'الرموز، مبادئ التصميم في بِنت سعيد، دار عبايات فاخرة في أبوظبي: الإحالة إلى التراث، وضبط القصّة، واللباس المحتشم المعاصر.',
     fr:
       'The Codes — principes de création des abayas Bint Saeed à Abu Dhabi : référence au patrimoine, coupe précise et modestie contemporaine.',
     it:
@@ -496,7 +496,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Craftsmanship — how Bint Saeed atelier standards in Abu Dhabi elevate luxury abayas through heritage techniques and meticulous finishing.',
     ar:
-      'الحرفية — معايير ورشة بِنت سعيد في أبوظبي لرفع جودة العباءات الفاخرة عبر تقنيات تراثية وتشطيبات دقيقة.',
+      'الحرفية، معايير ورشة بِنت سعيد في أبوظبي لرفع جودة العباءات الفاخرة عبر تقنيات تراثية وتشطيبات دقيقة.',
     fr:
       'Artisanat — standards d’atelier Bint Saeed à Abu Dhabi pour sublimer les abayas de luxe via savoir‑faire et finitions précises.',
     it:
@@ -562,7 +562,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Product care — guidance for Bint Saeed luxury abayas and fabrics from Abu Dhabi: storage, cleaning and longevity tips for UAE climates.',
     ar:
-      'العناية بالمنتج — إرشادات لعباءات بِنت سعيد الفاخرة وأقمشتها من أبوظبي: التخزين والتنظيف وإطالة العمر في ظروف مناخ الإمارات.',
+      'العناية بالمنتج، إرشادات لعباءات بِنت سعيد الفاخرة وأقمشتها من أبوظبي: التخزين والتنظيف وإطالة العمر في ظروف مناخ الإمارات.',
     fr:
       'Entretien — conseils pour abayas et matières Bint Saeed (Abu Dhabi) : stockage, nettoyage et durabilité sous climat émirati.',
     it:
@@ -584,7 +584,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Giving Forward — community initiatives aligned with Bint Saeed values in Abu Dhabi: heritage stewardship and purposeful luxury beyond product.',
     ar:
-      'المبادرة الإنسانية — مبادرات مجتمعية تتوافق مع قيم بِنت سعيد في أبوظبي؛ الحفاظ على التراث وفخامة ذات غرض يتجاوز المنتج.',
+      'المبادرة الإنسانية، مبادرات مجتمعية تتوافق مع قيم بِنت سعيد في أبوظبي؛ الحفاظ على التراث وفخامة ذات غرض يتجاوز المنتج.',
     fr:
       'Giving Forward — initiatives portées par Bint Saeed à Abu Dhabi autour du patrimoine et d’un luxe engagé.',
     it:
@@ -606,7 +606,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Careers — discover roles at Bint Saeed, Abu Dhabi luxury abaya house. Craft, client experience and operations opportunities where heritage meets innovation.',
     ar:
-      'الوظائف — استكشفي فرص العمل في بِنت سعيد، دار عبايات فاخرة في أبوظبي؛ حرفية وتجربة عميل وعمليات تجمع بين التراث والابتكار.',
+      'الوظائف، استكشفي فرص العمل في بِنت سعيد، دار عبايات فاخرة في أبوظبي؛ حرفية وتجربة عميل وعمليات تجمع بين التراث والابتكار.',
     fr:
       'Carrières — opportunités chez Bint Saeed à Abu Dhabi : atelier, expérience client et opérations entre patrimoine et innovation.',
     it:
@@ -628,7 +628,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Preview access — verify entry to explore Bint Saeed editorial experiences from Abu Dhabi before public launch when invited.',
     ar:
-      'الدخول للمعاينة — تأكيد الوصول لتجارب بِنت سعيد التحريرية من أبوظبي قبل الإطلاق العام عند الدعوة.',
+      'الدخول للمعاينة، تأكيد الوصول لتجارب بِنت سعيد التحريرية من أبوظبي قبل الإطلاق العام عند الدعوة.',
     fr:
       'Accès preview — vérifiez votre entrée aux expériences éditoriales Bint Saeed (Abu Dhabi) avant ouverture publique.',
     it:
@@ -650,7 +650,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Access restricted — this Bint Saeed preview area requires authorization. Shop public collections on bintsaeed.com from Abu Dhabi worldwide.',
     ar:
-      'الدخول مقيد — منطقة المعاينة تتطلّب ترخيصاً. يمكن تصفّح المجموعات المتاحة للجمهور عبر bintsaeed.com من أبوظبي إلى العالم.',
+      'الدخول مقيد، منطقة المعاينة تتطلّب ترخيصاً. يمكن تصفّح المجموعات المتاحة للجمهور عبر bintsaeed.com من أبوظبي إلى العالم.',
     fr:
       'Accès restreint — cette zone preview Bint Saeed est protégée. Retrouvez les collections publiques sur bintsaeed.com.',
     it:
@@ -672,7 +672,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Official Bint Saeed social link — connect with our Abu Dhabi luxury abaya house on approved channels for launches, craft stories and client care.',
     ar:
-      'رابط رسمي لحسابات بِنت سعيد على وسائل التواصل — تابعي دار العبايات الفاخرة في أبوظبي للإطلاقات وقصص الحرفية وخدمة العملاء.',
+      'رابط رسمي لحسابات بِنت سعيد على وسائل التواصل، تابعي دار العبايات الفاخرة في أبوظبي للإطلاقات وقصص الحرفية وخدمة العملاء.',
     fr:
       'Lien social officiel Bint Saeed — suivez la maison d’abayas d’Abu Dhabi pour lancements, savoir‑faire et service client.',
     it:
@@ -694,7 +694,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     en:
       'Bint Saeed — luxury abaya house in Abu Dhabi, UAE. Abayas, jewellery and lifestyle pieces shaped by Emirati design codes; shipping across the UAE & GCC.',
     ar:
-      'بِنت سعيد — دار عبايات فاخرة في أبوظبي، الإمارات العربية المتحدة؛ عباءات ومجوهرات وقطع أسلوب حياة برموز تصميم إماراتية، مع توصيل في الإمارات ودول الخليج.',
+      'بِنت سعيد، دار عبايات فاخرة في أبوظبي، الإمارات العربية المتحدة؛ عباءات ومجوهرات وقطع أسلوب حياة برموز تصميم إماراتية، مع توصيل في الإمارات ودول الخليج.',
     fr:
       'Bint Saeed — maison d’abayas de luxe à Abu Dhabi (EAU). Abayas, bijoux et lifestyle inspirés du design émirati ; livraison EAU & Golfe.',
     it:

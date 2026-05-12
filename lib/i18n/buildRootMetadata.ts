@@ -27,7 +27,7 @@ export function absoluteCanonicalForLocaleRoute(locale: AppLocale, pathnameFromH
 
 const OG_HERO_IMAGE_ALT: Record<AppLocale, string> = {
   en: 'Bint Saeed — luxury abaya house, Abu Dhabi',
-  ar: 'بِنت سعيد — دار عبايات فاخرة، أبوظبي',
+  ar: 'بِنت سعيد، دار عبايات فاخرة، أبوظبي',
   fr: 'Bint Saeed — maison d’abayas de luxe, Abu Dhabi',
   it: 'Bint Saeed — casa di abaya di lusso, Abu Dhabi',
   es: 'Bint Saeed — casa de abayas de lujo, Abu Dhabi',

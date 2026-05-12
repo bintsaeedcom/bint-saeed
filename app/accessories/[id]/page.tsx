@@ -421,14 +421,14 @@ export default function AccessoryDetailPage() {
                       {isHeicFile(src) ? (
                         <img
                           src={src}
-                          alt={`${displayName} — ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
+                          alt={`${displayName}, ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
                           className="h-full w-full img-zoom object-cover"
                           loading="lazy"
                         />
                       ) : (
                         <Image
                           src={src}
-                          alt={`${displayName} — ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
+                          alt={`${displayName}, ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
                           fill
                           sizes="(max-width: 1024px) 0px, 11rem"
                           className="img-zoom object-cover"
@@ -573,7 +573,7 @@ export default function AccessoryDetailPage() {
             </p>
             <p className="mb-2 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-dustyBlue">
               {isRTL
-                ? 'صُنع حسب الطلب — متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
+                ? 'صُنع حسب الطلب، متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
                 : 'Made to order — available within this chapter (availability confirmed when you order).'}
             </p>
 

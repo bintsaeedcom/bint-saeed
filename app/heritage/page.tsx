@@ -205,7 +205,7 @@ function BrandConnectionSection() {
               <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-brand-dustyBlue/20 via-transparent to-brand-stone/10 opacity-50" />
               <div className="relative backdrop-blur-sm bg-white/[0.04] rounded-2xl p-8 md:p-10 border border-white/[0.06] space-y-6">
                 <p className="font-montserrat text-sm text-white/70 tracking-wide leading-[1.9]">
-                  {isRTL ? 'في بنت سعيد، لا نستلهم من التراث فحسب — بل نحييه. نتعاون مع حرفيات إماراتيات لدمج تقنيات التلي ونسيج الخوص (سعف النخيل) الأصيلة في تصاميمنا.' : 'At Bint Saeed, we don\'t just draw inspiration from heritage — we revive it. We collaborate with Emirati artisans to incorporate authentic Al Talli embroidery and Khous palm-frond weaving into our designs.'}
+                  {isRTL ? 'في بنت سعيد، لا نستلهم من التراث فحسب، بل نحييه. نتعاون مع حرفيات إماراتيات لدمج تقنيات التلي ونسيج الخوص (سعف النخيل) الأصيلة في تصاميمنا.' : 'At Bint Saeed, we don\'t just draw inspiration from heritage — we revive it. We collaborate with Emirati artisans to incorporate authentic Al Talli embroidery and Khous palm-frond weaving into our designs.'}
                 </p>
                 <p className="font-montserrat text-sm text-white/70 tracking-wide leading-[1.9]">
                   {isRTL ? 'كل عباءة تحمل جزءاً من تاريخ الإمارات، مصنوعة بأيدي ماهرة تحمل إرث الأجداد وتقدمه بروح عصرية.' : 'Each abaya carries a piece of Emirates history, crafted by skilled hands that carry the legacy of ancestors and present it with a contemporary spirit.'}

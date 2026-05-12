@@ -76,7 +76,7 @@ export default function AccountPage() {
 
         <p className="mt-12 text-center font-montserrat text-[10px] text-brand-clayRed/45 tracking-wide max-w-lg mx-auto">
           {isRTL
-            ? 'للإنتاج: فعّلي Resend و Redis (Upstash) — راجعي .env.example'
+            ? 'للإنتاج: فعّلي Resend و Redis (Upstash)، راجعي .env.example'
             : 'For production: configure Resend + Upstash Redis — see .env.example'}
         </p>
       </div>

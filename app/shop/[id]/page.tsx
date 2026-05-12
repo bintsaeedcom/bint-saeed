@@ -720,7 +720,7 @@ export default function ProductPage() {
             {product.id !== 'bs-002' && (
               <p className="mb-2 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-dustyBlue">
                 {isRTL
-                  ? 'صُنع حسب الطلب — متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
+                  ? 'صُنع حسب الطلب، متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
                   : 'Made to order — available within this chapter (availability confirmed when you order).'}
               </p>
             )}

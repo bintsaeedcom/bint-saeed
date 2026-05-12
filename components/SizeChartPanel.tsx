@@ -24,7 +24,7 @@ export default function SizeChartPanel({ onOpenInteractive }: SizeChartPanelProp
             {isRTL ? 'جدول المقاسات' : 'Size chart'}
           </h2>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/60">
-            {isRTL ? 'كل الأنماط — قصة A' : 'All styles — A-cut (inches)'}
+            {isRTL ? 'كل الأنماط، قصة A' : 'All styles — A-cut (inches)'}
           </p>
         </div>
         <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>

@@ -16,7 +16,7 @@ const PRODUCT_DESCRIPTION: Record<AppLocale, string> = {
   en:
     'Heritage-inspired abayas and modest ready-to-wear by Bint Saeed (UAE), often referencing Al Talli embroidery and Khous palm-frond weaving. Materials and silhouettes vary by collection—see individual products for details.',
   ar:
-    'عبايات مستوحاة من التراث وملابس محتشمة جاهزة من بِنت سعيد (الإمارات)، تشير غالباً إلى تطريز التلي ونسج الخوص. تختلف المواد والقصّات حسب المجموعة—اطّلعي على كل منتج للتفاصيل.',
+    'عبايات مستوحاة من التراث وملابس محتشمة جاهزة من بِنت سعيد (الإمارات)، تشير غالباً إلى تطريز التلي ونسج الخوص. تختلف المواد والقصّات حسب المجموعة، واطّلعي على كل منتج للتفاصيل.',
   fr:
     'Abayas et prêt-à-porter modeste inspirés du patrimoine par Bint Saeed (Émirats), souvent en référence à la broderie Al Talli et au tissage Khous. Matières et silhouettes selon les collections—voir chaque produit.',
   it:

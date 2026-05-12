@@ -330,7 +330,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
   },
   personalisation: {
     en: 'Personalise Your Abaya — Hidden Pocket | Bint Saeed',
-    ar: 'التخصيص — الجيب المخفي | Bint Saeed',
+    ar: 'التخصيص: الجيب المخفي | Bint Saeed',
     fr: 'Personnalisation — poche cachée | Bint Saeed',
     it: 'Personalizzazione — tasca nascosta | Bint Saeed',
     es: 'Personalización — bolsillo oculto | Bint Saeed',
@@ -342,7 +342,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
   },
   charms: {
     en: 'Abaya Charms — Natural Stone Customisation | Bint Saeed',
-    ar: 'تعليقات العباءة — تخصيص بالأحجار الطبيعية | Bint Saeed',
+    ar: 'تعليقات العباءة: تخصيص بالأحجار الطبيعية | Bint Saeed',
     fr: 'Breloques d’abaya — pierres naturelles | Bint Saeed',
     it: 'Charm per abaya — pietre naturali | Bint Saeed',
     es: 'Charms para abaya — piedras naturales | Bint Saeed',
