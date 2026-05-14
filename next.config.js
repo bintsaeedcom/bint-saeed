@@ -23,7 +23,16 @@ const nextConfig = {
         value: 'max-age=31536000; includeSubDomains',
       })
     }
-    return [{ source: '/:path*', headers: base }]
+    /** Link previews (WhatsApp, etc.) re-fetch images; public cache helps rescrapes succeed quickly. */
+    const shareImageCache = [
+      { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' },
+    ]
+    return [
+      { source: '/og-share.jpg', headers: [...base, ...shareImageCache] },
+      { source: '/opengraph-image.jpg', headers: [...base, ...shareImageCache] },
+      { source: '/twitter-image.jpg', headers: [...base, ...shareImageCache] },
+      { source: '/:path*', headers: base },
+    ]
   },
   async rewrites() {
     return [{ source: '/sitemap.xml', destination: '/sitemap' }]

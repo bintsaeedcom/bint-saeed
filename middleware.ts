@@ -32,7 +32,11 @@ function isLinkPreviewBot(userAgent: string | null): boolean {
     ua.includes('discordbot') ||
     ua.includes('vkshare') ||
     ua.includes('skypeuripreview') ||
-    ua.includes('applebot')
+    ua.includes('applebot') ||
+    ua.includes('embedly') ||
+    ua.includes('iframely') ||
+    ua.includes('snapchat') ||
+    ua.includes('outbrain')
   )
 }
 
