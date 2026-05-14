@@ -9,7 +9,8 @@ import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 const HERO_CAMPAIGN_IMAGE = '/charms/charm-particles.webp'
-const CONCEPT_FLATLAY_IMAGE = '/charms/charm-flatlay.webp'
+/** Same six-strand hero as House Codes — `public/The Codes Page/`. */
+const CONCEPT_FLATLAY_IMAGE = `/${encodeURIComponent('The Codes Page')}/${encodeURIComponent('CB6F563A-F64C-4C58-9237-E44F9972DA83.PNG')}`
 const CHARM_IMAGE_ALT = 'Bint Saeed natural stone abaya charms — Abu Dhabi'
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 
