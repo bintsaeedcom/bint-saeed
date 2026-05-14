@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import { accessories } from '@/data/accessories'
@@ -96,7 +96,7 @@ export default function CharmsPage() {
   const [heroOffset, setHeroOffset] = useState(0)
   const [stepsVisible, setStepsVisible] = useState(false)
   const [quoteVisible, setQuoteVisible] = useState(false)
-  const [carouselProgress, setCarouselProgress] = useState(0)
+  const [carouselScroll, setCarouselScroll] = useState({ thumbWidthPct: 100, thumbLeftPct: 0 })
 
   useEffect(() => {
     let frame = 0
@@ -269,12 +269,22 @@ export default function CharmsPage() {
     return () => observer.disconnect()
   }, [])
 
-  const updateCarouselProgress = () => {
+  const updateCarouselProgress = useCallback(() => {
     const el = carouselRef.current
     if (!el) return
-    const max = el.scrollWidth - el.clientWidth
-    setCarouselProgress(max > 0 ? Math.min(1, Math.max(0, el.scrollLeft / max)) : 0)
-  }
+    const { scrollLeft, scrollWidth, clientWidth } = el
+    const max = scrollWidth - clientWidth
+    if (max <= 0) {
+      setCarouselScroll({ thumbWidthPct: 100, thumbLeftPct: 0 })
+      return
+    }
+    const thumbWidthPct = Math.max(14, Math.min(100, (clientWidth / scrollWidth) * 100))
+    const thumbLeftPct = (scrollLeft / max) * (100 - thumbWidthPct)
+    setCarouselScroll({
+      thumbWidthPct,
+      thumbLeftPct: Math.min(100 - thumbWidthPct, Math.max(0, thumbLeftPct)),
+    })
+  }, [])
 
   const startDrag = (clientX: number) => {
     const el = carouselRef.current
@@ -293,6 +303,22 @@ export default function CharmsPage() {
   const endDrag = () => {
     dragStateRef.current.active = false
   }
+
+  useEffect(() => {
+    const el = carouselRef.current
+    if (!el) return
+    const ro = new ResizeObserver(() => {
+      updateCarouselProgress()
+    })
+    ro.observe(el)
+    const onResize = () => updateCarouselProgress()
+    window.addEventListener('resize', onResize)
+    requestAnimationFrame(() => updateCarouselProgress())
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', onResize)
+    }
+  }, [charmProducts.length, updateCarouselProgress])
 
   return (
     <main className={`min-h-screen overflow-x-clip bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -463,6 +489,7 @@ export default function CharmsPage() {
 
         <div
           ref={carouselRef}
+          dir="ltr"
           onScroll={updateCarouselProgress}
           onMouseDown={(event) => startDrag(event.clientX)}
           onMouseMove={(event) => moveDrag(event.clientX)}
@@ -471,7 +498,7 @@ export default function CharmsPage() {
           onTouchStart={(event) => startDrag(event.touches[0]?.clientX || 0)}
           onTouchMove={(event) => moveDrag(event.touches[0]?.clientX || 0)}
           onTouchEnd={endDrag}
-          className="mx-auto mt-12 flex max-w-[1280px] cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-6 active:cursor-grabbing md:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="mx-auto mt-12 flex max-w-[1280px] cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 active:cursor-grabbing md:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {charmProducts.map((product) => {
             const color = product.colors[0]
@@ -520,9 +547,22 @@ export default function CharmsPage() {
             )
           })}
         </div>
-        <div className={`${INNER_CONTAINER_CLASS} mt-2`}>
-          <div className="h-px bg-[#e8ddd4]">
-            <div className="h-px bg-[#7A1C28] transition-[width] duration-150" style={{ width: `${Math.max(8, carouselProgress * 100)}%` }} />
+        <div className={`${INNER_CONTAINER_CLASS} mt-5`}>
+          <p className="mb-3 text-center font-montserrat text-[10px] font-medium uppercase tracking-[0.22em] text-[#8a7a70]">
+            Scroll sideways to see every stone
+          </p>
+          <div
+            className="relative h-2.5 w-full overflow-hidden rounded-full bg-[#e8ddd4]"
+            role="presentation"
+            aria-hidden
+          >
+            <div
+              className="absolute top-0 h-2.5 rounded-full bg-[#7A1C28] shadow-sm transition-[left,width] duration-150 ease-out"
+              style={{
+                width: `${carouselScroll.thumbWidthPct}%`,
+                left: `${carouselScroll.thumbLeftPct}%`,
+              }}
+            />
           </div>
         </div>
       </section>
