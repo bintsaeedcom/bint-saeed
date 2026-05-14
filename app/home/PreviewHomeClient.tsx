@@ -1189,7 +1189,11 @@ function EditorialSplit() {
     { title: 'Knotted Lines', subtitle: 'Line & continuity', image: homeCodesImage('Knotted Lines Of Lineage.jpg') },
     { title: 'Al Ain Rosette', subtitle: 'Regional motif', image: homeCodesImage('Al Quaa Rosette.jpg') },
     { title: 'Al Talli', subtitle: 'Gold threadwork', image: homeCodesImage('talli.jpg.jpg') },
-    { title: 'The Strands', subtitle: 'Beaded lines', image: homeCodesImage('The Strands.png') },
+    {
+      title: 'The Strands',
+      subtitle: 'Beaded lines',
+      image: homeCodesImage('CB6F563A-F64C-4C58-9237-E44F9972DA83.PNG'),
+    },
   ] as const
 
   return (
