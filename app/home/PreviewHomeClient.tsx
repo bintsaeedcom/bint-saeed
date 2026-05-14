@@ -1026,13 +1026,34 @@ function EditorialIntro() {
             style={{ y: panelY }}
             className={isRTL ? 'lg:order-1' : 'lg:order-2'}
           >
-            <div className="relative h-full min-h-[26rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#6f1524] bg-[#1a0210] p-[52px] shadow-[0_22px_56px_rgba(23,9,14,0.22)] md:min-h-[30rem] md:p-[62px] lg:min-h-[34rem] lg:border-r lg:border-[#2a1e18]/10">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.16)_0%,transparent_62%)]" />
-              <div className={`relative flex h-full flex-col justify-center ${isRTL ? 'items-start text-left' : 'items-end text-right'}`}>
-                <span className="mb-5 block font-montserrat text-[11px] uppercase tracking-[0.3em] text-brand-dustyBlue">
+            <div className="relative h-full min-h-[26rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#6f1524] bg-[#120910] shadow-[0_22px_56px_rgba(23,9,14,0.22)] md:min-h-[30rem] lg:min-h-[34rem] lg:border-r lg:border-[#2a1e18]/10">
+              <div className="absolute inset-0">
+                <Image
+                  src="/8E4D92A7-497D-44A4-B3DF-C1B775F5CD3A.PNG"
+                  alt="Bint Saeed — from Abu Dhabi to the world"
+                  fill
+                  className="object-cover object-[center_22%]"
+                  sizes="(max-width: 1024px) 100vw, 560px"
+                />
+                <div
+                  className="absolute inset-0 bg-gradient-to-b from-[#120910]/88 via-[#120910]/48 to-[#120910]/92]"
+                  aria-hidden
+                />
+                <div
+                  className="absolute inset-0 bg-[radial-gradient(ellipse_95%_72%_at_50%_38%,rgba(18,9,16,0.12)_0%,#120910_68%)]"
+                  aria-hidden
+                />
+              </div>
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.14)_0%,transparent_62%)]" />
+              <div
+                className={`relative z-10 flex h-full min-h-[26rem] flex-col justify-center p-[52px] md:min-h-[30rem] md:p-[62px] lg:min-h-[34rem] ${
+                  isRTL ? 'items-start text-left' : 'items-end text-right'
+                }`}
+              >
+                <span className="mb-5 block font-montserrat text-[11px] uppercase tracking-[0.3em] text-[#9a8a96]">
                   From Abu Dhabi to the world
                 </span>
-                <p className="max-w-[30rem] font-rozha text-[clamp(24px,2.9vw,38px)] italic leading-[1.18] tracking-[-0.01em] text-[#e8d8c8]">
+                <p className="max-w-[30rem] font-rozha text-[clamp(24px,2.9vw,38px)] italic leading-[1.18] tracking-[-0.01em] text-[#f5e1da]">
                   &ldquo;{MANIFESTO_QUOTE}&rdquo;
                 </p>
               </div>
