@@ -58,8 +58,6 @@ const STEP_COPY = [
   },
 ] as const
 
-const CLOSING_QUOTE = "The details you choose say everything you don't."
-
 const COLLECTION_JSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
@@ -592,24 +590,56 @@ export default function StrandsPage() {
         </div>
       </section>
 
-      <section ref={quoteRef} className="closing-section relative z-50 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
-        <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
-          <div className="mx-auto max-w-[640px]">
-            <p
-              className={`text-center font-rozha text-[clamp(22px,3.5vw,44px)] italic leading-[1.3] tracking-[-0.01em] text-[#e8d8c8] transition-opacity duration-700 ${
-                quoteVisible ? 'opacity-100' : 'opacity-0'
-              }`}
+      <section
+        ref={quoteRef}
+        className="relative z-50 -mt-6 flex min-h-[min(92vw,560px)] items-center justify-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:min-h-[520px] md:sticky md:top-0 md:will-change-transform"
+      >
+        <div className="absolute inset-0">
+          <Image
+            src="/8E4D92A7-497D-44A4-B3DF-C1B775F5CD3A.PNG"
+            alt="Bint Saeed — from Abu Dhabi to the world"
+            fill
+            className="object-cover object-[center_22%]"
+            sizes="100vw"
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-[#120910]/88 via-[#120910]/55 to-[#120910]/90"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 bg-[radial-gradient(ellipse_85%_70%_at_50%_45%,rgba(18,9,16,0.2)_0%,#120910_72%)]"
+            aria-hidden
+          />
+        </div>
+
+        <div className={`relative z-10 w-full ${INNER_CONTAINER_CLASS} py-20 md:py-28`}>
+          <p className="font-montserrat text-[10px] font-medium uppercase tracking-[0.28em] text-[#9a8a96]">
+            From Abu Dhabi to the world
+          </p>
+          <p
+            className={`mx-auto mt-6 max-w-[560px] font-rozha text-[clamp(24px,4.2vw,40px)] italic leading-[1.25] tracking-[-0.01em] text-[#f5e1da] transition-opacity duration-700 ${
+              quoteVisible ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            “A sense of self that does not shift with setting.”
+          </p>
+          <div className="mx-auto my-6 h-px w-[60px] bg-[#e8ddd4]/55" />
+          <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-[#c4b4bc]">
+            BINT SAEED · ABU DHABI
+          </p>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:justify-center">
+            <LocaleLink
+              href="#stone-showcase"
+              className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
+              data-cursor-hover
             >
-              {CLOSING_QUOTE}
-            </p>
-          </div>
-          <div className="mx-auto my-6 h-px w-[60px] bg-[#e8ddd4]" />
-          <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-[#7A1C28]/70">BINT SAEED · ABU DHABI</p>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <LocaleLink href="#stone-showcase" className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]" data-cursor-hover>
               SHOP ALL STRANDS
             </LocaleLink>
-            <LocaleLink href="/personalisation" className="inline-flex items-center justify-center rounded-[4px] border border-[#e8ddd4]/35 bg-transparent px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:border-[#e8ddd4]/70" data-cursor-hover>
+            <LocaleLink
+              href="/personalisation"
+              className="inline-flex items-center justify-center rounded-[4px] border border-[#e8ddd4]/35 bg-[#120910]/25 px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#f5e1da] backdrop-blur-sm transition-colors hover:border-[#e8ddd4]/55 hover:bg-[#120910]/40"
+              data-cursor-hover
+            >
               PERSONALISE YOUR ABAYA
             </LocaleLink>
           </div>
@@ -631,15 +661,12 @@ export default function StrandsPage() {
           will-change: transform;
         }
 
-        .strands-fabric-light,
-        .closing-section {
+        .strands-fabric-light {
           position: relative;
         }
 
         .strands-fabric-light::before,
-        .closing-section::before,
-        .strands-fabric-light::after,
-        .closing-section::after {
+        .strands-fabric-light::after {
           content: '';
           position: absolute;
           inset: 0;
@@ -658,32 +685,9 @@ export default function StrandsPage() {
           background: rgba(26, 2, 16, 0.75);
         }
 
-        .closing-section {
-          min-height: auto;
-          height: auto;
-          padding: 120px 40px 100px;
-          background-image: url('/charms/charm-fabric-dark.webp');
-          background-size: cover;
-          background-position: center;
-        }
-
-        .closing-section::before {
-          z-index: 0;
-          background: rgba(15, 8, 10, 0.82);
-        }
-
-        .closing-section::after {
-          z-index: 1;
-          background: transparent;
-        }
-
         @media (max-width: 767px) {
           .strands-marquee {
             animation-duration: 120s;
-          }
-
-          .closing-section {
-            padding: 80px 24px 80px;
           }
         }
       `}</style>
