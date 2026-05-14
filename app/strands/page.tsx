@@ -8,7 +8,8 @@ import { products } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
-const HERO_CAMPAIGN_IMAGE = '/charms/charm-particles.webp'
+/** Strands hero background — `public/collection-section/` (file is `.jpg`; use `/collection-section/45.png` if you add a PNG). */
+const HERO_CAMPAIGN_IMAGE = '/collection-section/45.jpg'
 /** Same six-strand hero as House Codes — `public/The Codes Page/`. */
 const CONCEPT_FLATLAY_IMAGE = `/${encodeURIComponent('The Codes Page')}/${encodeURIComponent('CB6F563A-F64C-4C58-9237-E44F9972DA83.PNG')}`
 const STRAND_IMAGE_ALT = 'Bint Saeed natural stone abaya strands — Abu Dhabi'
@@ -174,7 +175,7 @@ export default function StrandsPage() {
           uv.y += sin((uv.x + u_time * 0.005) * 8.0) * 0.0016;
           vec4 color = texture2D(u_image, uv);
           float grain = sin((uv.x + u_time * 0.012) * 90.0) * sin((uv.y - u_time * 0.009) * 70.0);
-          color.rgb *= vec3(0.78, 0.64, 0.68) + grain * 0.004;
+          color.rgb *= vec3(0.9, 0.86, 0.88) + grain * 0.0025;
           gl_FragColor = color;
         }
       `,
