@@ -1046,7 +1046,7 @@ function EditorialIntro() {
               </div>
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.14)_0%,transparent_62%)]" />
               <div
-                className={`relative z-10 flex h-full min-h-[26rem] flex-col justify-center p-[52px] md:min-h-[30rem] md:p-[62px] lg:min-h-[34rem] ${
+                className={`relative z-10 flex h-full min-h-[26rem] flex-col justify-end p-[52px] md:min-h-[30rem] md:p-[62px] lg:min-h-[34rem] ${
                   isRTL ? 'items-start text-left' : 'items-end text-right'
                 }`}
               >
