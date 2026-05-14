@@ -29,7 +29,9 @@ export function classifyRouteMetaKey(pathname: string): RouteMetaKey {
   if (p.startsWith('/heritage/sadu')) return 'heritage_sadu'
   if (p.startsWith('/heritage')) return 'heritage'
   if (p.startsWith('/accessories/')) return 'accessories_product'
-  if (p.startsWith('/charms')) return 'charms'
+  if (p.startsWith('/strands')) return 'strands'
+  /** Legacy URL (301 → `/strands`); keep meta bucket if anything still requests `/charms`. */
+  if (p.startsWith('/charms')) return 'strands'
   if (p.startsWith('/accessories')) return 'accessories'
   if (p.startsWith('/checkout/success')) return 'checkout_success'
   if (p.startsWith('/checkout')) return 'checkout'
@@ -340,17 +342,17 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     nl: 'Personalisatie — verborgen zakje | Bint Saeed',
     pt: 'Personalização — bolso escondido | Bint Saeed',
   },
-  charms: {
-    en: 'Abaya Charms — Natural Stone Customisation | Bint Saeed',
-    ar: 'تعليقات العباءة: تخصيص بالأحجار الطبيعية | Bint Saeed',
-    fr: 'Breloques d’abaya — pierres naturelles | Bint Saeed',
-    it: 'Charm per abaya — pietre naturali | Bint Saeed',
-    es: 'Charms para abaya — piedras naturales | Bint Saeed',
-    ru: 'Подвески для абайи — натуральные камни | Bint Saeed',
-    zh: '阿巴亚吊饰 — 天然宝石定制 | Bint Saeed',
-    de: 'Abaya-Charms — Naturstein-Anpassung | Bint Saeed',
-    nl: 'Abaya-charms — natuursteen personalisatie | Bint Saeed',
-    pt: 'Charms de abaya — pedras naturais | Bint Saeed',
+  strands: {
+    en: 'Abaya Strands — Natural Stone Customisation | Bint Saeed',
+    ar: 'سلاسل العباءة — تخصيص بالأحجار الطبيعية | Bint Saeed',
+    fr: 'Brins d’abaya — pierres naturelles | Bint Saeed',
+    it: 'Strand di pietra per abaya | Bint Saeed',
+    es: 'Strands para abaya — piedras naturales | Bint Saeed',
+    ru: 'Нити из камня для абайи | Bint Saeed',
+    zh: '阿巴亚石串 — 天然宝石定制 | Bint Saeed',
+    de: 'Abaya-Strands — Naturstein-Anpassung | Bint Saeed',
+    nl: 'Abaya-strands — natuursteen personalisatie | Bint Saeed',
+    pt: 'Strands de abaya — pedras naturais | Bint Saeed',
   },
   product_care: {
     en: 'Product care | Bint Saeed',

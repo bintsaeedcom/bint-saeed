@@ -121,7 +121,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
   const ogTitle = meta.ogTitle
   const ogDescription =
     locale === 'en' && usesHomeMetadata(innerPath)
-      ? 'Crafted to order abayas with natural stone charms. Made in Abu Dhabi, worn worldwide.'
+      ? 'Crafted to order abayas with natural stone strands. Made in Abu Dhabi, worn worldwide.'
       : clipMetaDescription(desc, 200)
   const twTitle = ogTitle
   const twDesc = clipMetaDescription(desc, 200)

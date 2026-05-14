@@ -35,7 +35,7 @@ const allUrls: SitemapUrlEntry[] = [
   homePageUrl,
   { loc: `${SITEMAP_BASE_URL}/shop`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
   { loc: `${SITEMAP_BASE_URL}/accessories`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
-  { loc: `${SITEMAP_BASE_URL}/charms`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
+  { loc: `${SITEMAP_BASE_URL}/strands`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
   { loc: `${SITEMAP_BASE_URL}/personalisation`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
   { loc: `${SITEMAP_BASE_URL}/about`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
   { loc: `${SITEMAP_BASE_URL}/the-codes`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },

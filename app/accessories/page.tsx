@@ -140,7 +140,7 @@ export default function AccessoriesPage() {
   const hasExtraFilters = priceRange !== 'all' || selectedStones.length > 0
 
   const activeTab = accessoryCategories.find(c => c.id === activeCategory)
-  const isAbayaCharmsLayout = activeCategory === 'abaya-charms'
+  const isAbayaStrandsLayout = activeCategory === 'abaya-charms'
 
   return (
     <div className={`min-h-screen bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -180,7 +180,7 @@ export default function AccessoriesPage() {
               <p className="mt-6 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/85 md:text-base">
                 {isRTL
                   ? 'اكتشفي مجموعتنا الراقية من تعليقات العباءة والقلادات والأقراط والأساور وتعليقات الحقائب والهواتف.'
-                  : 'Discover our curated collection of abaya charms, necklaces, earrings, bracelets, bag charms, and phone charms.'}
+                  : 'Discover our curated collection of abaya strands, necklaces, earrings, bracelets, bag strands, and phone strands.'}
               </p>
             </motion.div>
           </div>
@@ -310,10 +310,10 @@ export default function AccessoriesPage() {
         </section>
       )}
 
-      {/* Products Grid — Abaya Charms: 1 hero image + 2×5 grid */}
+      {/* Products Grid — Abaya Strands: 1 hero image + 2×5 grid */}
       <section className="py-12 md:py-20">
         <div className="container mx-auto px-6 lg:px-12">
-          {isAbayaCharmsLayout ? (
+          {isAbayaStrandsLayout ? (
             <div
               className={`flex flex-col gap-10 lg:gap-14 lg:items-start ${isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
             >
@@ -321,7 +321,7 @@ export default function AccessoriesPage() {
                 <div className="relative aspect-[4/5] w-full overflow-hidden bg-brand-stone/15">
                   <Image
                     src={ACCESSORY_IMAGE_ABAYA_CHARMS_HERO}
-                    alt={isRTL ? 'تعليقات العباءة' : 'Abaya charms'}
+                    alt={isRTL ? 'سلاسل العباءة' : 'Abaya strands'}
                     fill
                     className="img-zoom object-contain"
                     sizes="(max-width: 1024px) 100vw, 44vw"

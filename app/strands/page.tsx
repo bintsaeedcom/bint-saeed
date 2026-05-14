@@ -11,7 +11,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 const HERO_CAMPAIGN_IMAGE = '/charms/charm-particles.webp'
 /** Same six-strand hero as House Codes — `public/The Codes Page/`. */
 const CONCEPT_FLATLAY_IMAGE = `/${encodeURIComponent('The Codes Page')}/${encodeURIComponent('CB6F563A-F64C-4C58-9237-E44F9972DA83.PNG')}`
-const CHARM_IMAGE_ALT = 'Bint Saeed natural stone abaya charms — Abu Dhabi'
+const STRAND_IMAGE_ALT = 'Bint Saeed natural stone abaya strands — Abu Dhabi'
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 
 const STONE_VISUAL_NOTES: Record<string, string> = {
@@ -44,7 +44,7 @@ const STEP_COPY = [
   {
     numeral: 'I',
     title: 'SELECT THE STONE',
-    body: 'Choose a natural stone charm by colour, surface, and character.',
+    body: 'Choose a natural stone strand by colour, surface, and character.',
   },
   {
     numeral: 'II',
@@ -63,10 +63,10 @@ const CLOSING_QUOTE = "The details you choose say everything you don't."
 const COLLECTION_JSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
-  name: 'Natural Stone Abaya Charms',
+  name: 'Natural Stone Abaya Strands',
   description:
-    'Interchangeable natural stone abaya charms handcrafted in Abu Dhabi. Designed for the Bint Saeed Marylebone Abaya. Available in onyx, jade, amethyst, aventurine, rose quartz, malachite, lapis lazuli and more.',
-  url: 'https://www.bintsaeed.com/charms',
+    'Interchangeable natural stone abaya strands handcrafted in Abu Dhabi. Designed for the Bint Saeed Marylebone Abaya. Available in onyx, jade, amethyst, aventurine, rose quartz, malachite, lapis lazuli and more.',
+  url: 'https://www.bintsaeed.com/strands',
   brand: {
     '@type': 'Brand',
     name: 'Bint Saeed',
@@ -81,9 +81,9 @@ const COLLECTION_JSON_LD = {
   },
 }
 
-export default function CharmsPage() {
+export default function StrandsPage() {
   const { isRTL } = useLanguage()
-  const charmProducts = useMemo(() => accessories.filter((item) => item.category === 'abaya-charms'), [])
+  const strandProducts = useMemo(() => accessories.filter((item) => item.category === 'abaya-charms'), [])
   const marylebone = useMemo(() => products.find((product) => product.slug === 'natural-stone-signature-abaya'), [])
   const maryleboneHref = marylebone ? getProductHref(marylebone) : '/shop/natural-stone-signature-abaya'
   const maryleboneImage = marylebone?.images[0] || '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- F.JPG'
@@ -319,7 +319,7 @@ export default function CharmsPage() {
       ro.disconnect()
       window.removeEventListener('resize', onResize)
     }
-  }, [charmProducts.length, updateCarouselProgress])
+  }, [strandProducts.length, updateCarouselProgress])
 
   return (
     <main className={`min-h-screen overflow-x-clip bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -335,7 +335,7 @@ export default function CharmsPage() {
         >
           <Image
             src={HERO_CAMPAIGN_IMAGE}
-            alt={CHARM_IMAGE_ALT}
+            alt={STRAND_IMAGE_ALT}
             fill
             priority={true}
             sizes="100vw"
@@ -347,7 +347,7 @@ export default function CharmsPage() {
 
         <div className="absolute bottom-10 left-6 right-6 z-10 max-w-[600px] text-left md:bottom-[60px] md:left-[60px] md:right-auto">
             <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090] sm:tracking-[0.34em]">
-              THE ABAYA CHARM · BINT SAEED
+              THE ABAYA STRAND · BINT SAEED
             </p>
             <h1
               data-document-h1="true"
@@ -357,7 +357,7 @@ export default function CharmsPage() {
               Your abaya has never been finished. Until now.
             </h1>
             <p className="mt-3 max-w-[480px] font-montserrat text-[14px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.75)]">
-              The first abaya house to offer interchangeable natural stone charms. Worn on the cuff. Changed by choice.
+              The first abaya house to offer interchangeable natural stone strands. Worn on the cuff. Changed by choice.
             </p>
             <p className="mt-3 max-w-[480px] font-montserrat text-[14px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.75)]">
               Natural stone. Handcrafted in Abu Dhabi. Made for the Marylebone Abaya.
@@ -368,7 +368,7 @@ export default function CharmsPage() {
                 className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
                 data-cursor-hover
               >
-                SHOP CHARMS
+                SHOP STRANDS
               </LocaleLink>
               <LocaleLink
                 href={maryleboneHref}
@@ -381,10 +381,10 @@ export default function CharmsPage() {
         </div>
 
         <div className="absolute inset-x-0 bottom-0 z-20 overflow-hidden border-t border-[#2a0a14] bg-[#1a0210]/80 py-4">
-          <div className="charms-marquee flex w-max font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#6a8090]/65">
+          <div className="strands-marquee flex w-max font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#6a8090]/65">
             {Array.from({ length: 8 }).map((_, index) => (
               <span key={index} className="px-4">
-                NATURAL STONE · BINT SAEED · ABAYA CHARMS · ABU DHABI · CRAFTED TO ORDER ·
+                NATURAL STONE · BINT SAEED · ABAYA STRANDS · ABU DHABI · CRAFTED TO ORDER ·
               </span>
             ))}
           </div>
@@ -397,10 +397,10 @@ export default function CharmsPage() {
             <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE CONCEPT</p>
             <h2 className="mt-4 font-rozha text-[clamp(2.5rem,5vw,4.75rem)] leading-[1] text-[#1a0210]">One Abaya. Many Accents.</h2>
             <p className="mt-6 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72">
-              The Bint Saeed abaya charm is a natural stone detail worn on the cuff of the Marylebone Abaya. Handcrafted in Abu Dhabi. Made to be changed.
+              The Bint Saeed abaya strand is a natural stone detail worn on the cuff of the Marylebone Abaya. Handcrafted in Abu Dhabi. Made to be changed.
             </p>
             <p className="mt-4 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72">
-              Every Marylebone Abaya arrives with a standard onyx charm. Choose a different stone for a different day. Match it to your bag, your outfit, your occasion. The abaya stays the same. You decide what it says.
+              Every Marylebone Abaya arrives with a standard onyx strand. Choose a different stone for a different day. Match it to your bag, your outfit, your occasion. The abaya stays the same. You decide what it says.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:flex-nowrap md:justify-between md:gap-4">
@@ -446,7 +446,7 @@ export default function CharmsPage() {
             <div className="overflow-hidden rounded-[4px] bg-[#e8ddd4]">
               <Image
                 src={CONCEPT_FLATLAY_IMAGE}
-                alt={CHARM_IMAGE_ALT}
+                alt={STRAND_IMAGE_ALT}
                 width={480}
                 height={600}
                 sizes="(max-width: 768px) 90vw, 42vw"
@@ -501,7 +501,7 @@ export default function CharmsPage() {
           onTouchEnd={endDrag}
           className="mx-auto mt-12 flex max-w-[1280px] cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 active:cursor-grabbing md:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          {charmProducts.map((product) => {
+          {strandProducts.map((product) => {
             const color = product.colors[0]
             return (
               <article
@@ -512,7 +512,7 @@ export default function CharmsPage() {
                   {product.images[0] ? (
                     <Image
                       src={product.images[0]}
-                      alt={CHARM_IMAGE_ALT}
+                      alt={STRAND_IMAGE_ALT}
                       fill
                       sizes="(max-width: 768px) 280px, 360px"
                       className="object-cover object-top"
@@ -541,7 +541,7 @@ export default function CharmsPage() {
                     className="mt-auto flex w-full items-center justify-center rounded-[3px] bg-[#7A1C28] p-3 font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
                     data-cursor-hover
                   >
-                    VIEW CHARM
+                    VIEW STRAND
                   </LocaleLink>
                 </div>
               </article>
@@ -568,17 +568,17 @@ export default function CharmsPage() {
         </div>
       </section>
 
-      <section className="charms-fabric-light relative z-40 -mt-6 overflow-hidden rounded-t-[16px] bg-[#7A1C28] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
+      <section className="strands-fabric-light relative z-40 -mt-6 overflow-hidden rounded-t-[16px] bg-[#7A1C28] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
           <div className="relative min-h-[52vh] overflow-hidden rounded-[4px] md:min-h-[620px]">
-            <Image src={maryleboneImage} alt={CHARM_IMAGE_ALT} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
+            <Image src={maryleboneImage} alt={STRAND_IMAGE_ALT} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
           </div>
           <div className="flex items-center">
             <div className="max-w-xl">
               <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">THE ANCHOR PIECE</p>
               <h2 className="mt-5 font-rozha text-[clamp(2rem,3vw,2.5rem)] leading-tight text-[#e8ddd4]">The Marylebone Abaya.</h2>
               <p className="mt-5 max-w-xl font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
-                The charm drapes from a specially constructed cuff — a detail found only on the Marylebone. Made to order in Abu Dhabi, from AED 2,675.
+                The strand drapes from a specially constructed cuff — a detail found only on the Marylebone. Made to order in Abu Dhabi, from AED 2,675.
               </p>
               <LocaleLink
                 href={maryleboneHref}
@@ -607,7 +607,7 @@ export default function CharmsPage() {
           <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-[#7A1C28]/70">BINT SAEED · ABU DHABI</p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <LocaleLink href="#stone-showcase" className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]" data-cursor-hover>
-              SHOP ALL CHARMS
+              SHOP ALL STRANDS
             </LocaleLink>
             <LocaleLink href="/personalisation" className="inline-flex items-center justify-center rounded-[4px] border border-[#e8ddd4]/35 bg-transparent px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:border-[#e8ddd4]/70" data-cursor-hover>
               PERSONALISE YOUR ABAYA
@@ -617,7 +617,7 @@ export default function CharmsPage() {
       </section>
 
       <style jsx global>{`
-        @keyframes charmsMarquee {
+        @keyframes strandsMarquee {
           from {
             transform: translateX(0);
           }
@@ -626,19 +626,19 @@ export default function CharmsPage() {
           }
         }
 
-        .charms-marquee {
-          animation: charmsMarquee 95s linear infinite;
+        .strands-marquee {
+          animation: strandsMarquee 95s linear infinite;
           will-change: transform;
         }
 
-        .charms-fabric-light,
+        .strands-fabric-light,
         .closing-section {
           position: relative;
         }
 
-        .charms-fabric-light::before,
+        .strands-fabric-light::before,
         .closing-section::before,
-        .charms-fabric-light::after,
+        .strands-fabric-light::after,
         .closing-section::after {
           content: '';
           position: absolute;
@@ -646,14 +646,14 @@ export default function CharmsPage() {
           pointer-events: none;
         }
 
-        .charms-fabric-light::before {
+        .strands-fabric-light::before {
           z-index: 0;
           background-image: url('/charms/charm-fabric-light.webp');
           background-position: center;
           background-size: cover;
         }
 
-        .charms-fabric-light::after {
+        .strands-fabric-light::after {
           z-index: 1;
           background: rgba(26, 2, 16, 0.75);
         }
@@ -678,7 +678,7 @@ export default function CharmsPage() {
         }
 
         @media (max-width: 767px) {
-          .charms-marquee {
+          .strands-marquee {
             animation-duration: 120s;
           }
 

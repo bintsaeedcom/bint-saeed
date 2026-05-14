@@ -8,7 +8,7 @@ export const ACCESSORY_IMAGE_NECKLACE = `${A}/necklaces/malachite-necklace.PNG`
 export const ACCESSORY_IMAGE_NECKLACE_MALACHITE = `${A}/necklaces/malachite-necklace.PNG`
 export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ = `${A}/necklaces/rose-quartz-necklace.PNG`
 export const ACCESSORY_IMAGE_PHONE_CHARM = `${A}/phone%20charm/phone%20charm.png`
-/** Second angle / alternate shot for phone charm PDP column */
+/** Second angle / alternate shot for phone strand PDP column */
 export const ACCESSORY_IMAGE_PHONE_CHARM_ALT = `${A}/phone%20charm/AF5B4736-A8F0-41F6-94CB-530FF12AD809.PNG`
 /** Category hero when no per-stone abaya shot exists. */
 export const ACCESSORY_IMAGE_ABAYA_CHARMS_HERO = `${A}/abaya%20charms.JPG`
@@ -60,11 +60,11 @@ export const accessoryCategories = [
   },
   {
     id: 'abaya-charms',
-    name: 'Abaya Charms',
-    nameAr: 'تعليقات العباءة',
+    name: 'Abaya Strands',
+    nameAr: 'سلاسل العباءة',
     icon: '✺',
-    description: 'Stone charms designed for abaya draping and edges',
-    descriptionAr: 'تعليقات بالأحجار الطبيعية للعباءة والحافة',
+    description: 'Stone strands designed for abaya draping and edges',
+    descriptionAr: 'سلاسل بالأحجار الطبيعية للعباءة والحافة',
   },
   {
     id: 'necklaces',
@@ -92,15 +92,15 @@ export const accessoryCategories = [
   },
   {
     id: 'bag-charms',
-    name: 'Bag Charms',
+    name: 'Bag Strands',
     nameAr: 'تعليقات الحقائب',
     icon: '❖',
-    description: 'Luxurious charms for your favorite bags',
+    description: 'Luxurious strands for your favorite bags',
     descriptionAr: 'تعليقات فاخرة لحقائبك المفضلة',
   },
   {
     id: 'phone-charms',
-    name: 'Phone Charms',
+    name: 'Phone Strands',
     nameAr: 'تعليقات الهاتف',
     icon: '✧',
     description: 'Stylish phone accessories',
@@ -314,14 +314,14 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
 
-  // Bag Charms
+  // Bag Strands
   {
     id: 'bag-charm-tassel',
-    name: 'Silk Tassel Charm',
+    name: 'Silk Tassel Strand',
     nameAr: 'تعليقة شرابة حريرية',
     category: 'bag-charms',
     price: 175,
-    description: 'Luxurious silk tassel bag charm with gold-plated hardware.',
+    description: 'Luxurious silk tassel bag strand with gold-plated hardware.',
     descriptionAr: 'تعليقة حقيبة شرابة حريرية فاخرة مع معدن مطلي بالذهب.',
     images: [ACCESSORY_IMAGE_BAG_CHARM],
     materials: 'Silk, 18K Gold-plated Hardware',
@@ -336,11 +336,11 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'bag-charm-pearl-cluster',
-    name: 'Pearl Cluster Charm',
+    name: 'Pearl Cluster Strand',
     nameAr: 'تعليقة عنقود اللؤلؤ',
     category: 'bag-charms',
     price: 220,
-    description: 'Elegant pearl cluster charm to elevate any handbag.',
+    description: 'Elegant pearl cluster strand to elevate any handbag.',
     descriptionAr: 'تعليقة عنقود لؤلؤ أنيقة لرفع مستوى أي حقيبة يد.',
     images: [ACCESSORY_IMAGE_BAG_CHARM],
     materials: 'Freshwater Pearls, 18K Gold-plated',
@@ -352,11 +352,11 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'bag-charm-letter',
-    name: 'Monogram Letter Charm',
+    name: 'Monogram Letter Strand',
     nameAr: 'تعليقة حرف مونوغرام',
     category: 'bag-charms',
     price: 195,
-    description: 'Personalized letter charm. Available in all letters A-Z.',
+    description: 'Personalized letter strand. Available in all letters A-Z.',
     descriptionAr: 'تعليقة حرف شخصية. متوفرة بجميع الحروف A-Z.',
     images: [ACCESSORY_IMAGE_BAG_CHARM],
     materials: '18K Gold Vermeil',
@@ -367,11 +367,11 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'bag-charm-bint',
-    name: 'Bag Charm',
+    name: 'Bag Strand',
     nameAr: 'تعليقة حقيبة',
     category: 'bag-charms',
     price: 175,
-    description: 'Clip-on bag charm for handbags and evening clutches.',
+    description: 'Clip-on bag strand for handbags and evening clutches.',
     descriptionAr: 'تعليقة حقيبة بحلقة تعليق للحقائب ومساء الخروج.',
     images: [ACCESSORY_IMAGE_BAG_CHARM],
     materials: 'Gold-plated hardware, enamel',
@@ -382,7 +382,7 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
 
-  // Phone Charms
+  // Phone Strands
   {
     id: 'phone-charm-pearl-strap',
     name: 'Pearl Phone Strap',
@@ -421,11 +421,11 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'phone-charm-tassel',
-    name: 'Mini Tassel Phone Charm',
+    name: 'Mini Tassel Phone Strand',
     nameAr: 'تعليقة هاتف شرابة صغيرة',
     category: 'phone-charms',
     price: 95,
-    description: 'Cute mini tassel charm for your phone case.',
+    description: 'Cute mini tassel strand for your phone case.',
     descriptionAr: 'تعليقة شرابة صغيرة لطيفة لغلاف هاتفك.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
     detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
@@ -439,11 +439,11 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'phone-charm-bint',
-    name: 'Phone Charm',
+    name: 'Phone Strand',
     nameAr: 'تعليقة هاتف',
     category: 'phone-charms',
     price: 145,
-    description: 'Phone charm with universal attachment for cases and straps.',
+    description: 'Phone strand with universal attachment for cases and straps.',
     descriptionAr: 'تعليقة هاتف مع تثبيت متوافق مع الأغطية والأحزمة.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
     detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
@@ -455,7 +455,7 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
 
-  // Abaya charms — natural stone line (10 products; stone-specific PDPs)
+  // Abaya strands — natural stone line (10 products; stone-specific PDPs)
   {
     id: 'abaya-charm-onyx-natural-stone',
     name: 'Onyx',
@@ -463,7 +463,7 @@ export const accessories: Accessory[] = [
     category: 'abaya-charms',
     price: 400,
     description:
-      'Natural black onyx abaya charm with secure clip attachment for draping along the edge or sleeve.',
+      'Natural black onyx abaya strand with secure clip attachment for draping along the edge or sleeve.',
     descriptionAr:
       'تعليقة عباءة من أونكس أسود طبيعي مع مشبك آمن للتعليق على الحافة أو الكم.',
     images: [ACCESSORY_IMAGE_ABAYA_CHARM_ONYX],

@@ -46,6 +46,8 @@ const nextConfig = {
         destination: 'https://www.bintsaeed.com/:path*',
         permanent: true,
       },
+      { source: '/charms', destination: '/strands', permanent: true },
+      { source: '/charms/:path*', destination: '/strands/:path*', permanent: true },
       { source: '/preview', destination: '/home', permanent: true },
       { source: '/preview/:path*', destination: '/home/:path*', permanent: true },
       { source: '/accessoiries', destination: '/accessories', permanent: true },

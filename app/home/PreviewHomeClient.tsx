@@ -359,7 +359,7 @@ const HOME_PILLARS = [
   },
   {
     title: 'Natural Stone Signatures',
-    copy: 'Charms and details are selected for story, symbolism, and timeless wearability.',
+    copy: 'Strands and details are selected for story, symbolism, and timeless wearability.',
   },
   {
     title: 'Personalisation Included',
@@ -398,7 +398,7 @@ function ThreePillarsBar() {
   )
 }
 
-const CHARM_SWATCHES = [
+const STRAND_SWATCHES = [
   { name: 'Onyx', hex: '#1a0210' },
   { name: 'Tiger Eye', hex: '#8b5a2b' },
   { name: 'Rose Quartz', hex: '#f4b8c5' },
@@ -415,7 +415,7 @@ function CharmHeroFeatureSection() {
             <div className="absolute inset-0 opacity-25">
               <Image
                 src="/background1.JPG"
-                alt="Bint Saeed charm collection"
+                alt="Bint Saeed strand collection"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover object-center"
@@ -425,17 +425,17 @@ function CharmHeroFeatureSection() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
             <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
-              ABAYA CHARMS
+              ABAYA STRANDS
             </p>
             <h2 data-reveal className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
-              NATURAL STONE CHARMS
+              NATURAL STONE STRANDS
             </h2>
             <p data-reveal className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[#8a7a70]">
               Designed for abayas, bags, and phone styling. Build your signature stack with curated stones and limited edition drops.
             </p>
 
             <div data-reveal className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
-              {CHARM_SWATCHES.map((stone) => (
+              {STRAND_SWATCHES.map((stone) => (
                 <span
                   key={stone.name}
                   className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-muted)]/25 bg-[var(--color-light)] px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink)]"
@@ -448,11 +448,11 @@ function CharmHeroFeatureSection() {
 
             <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
               <LocaleLink
-                href="/accessories?category=abaya-charms"
+                href="/strands"
                 className="inline-flex min-h-[44px] items-center rounded-[4px] bg-[#6f1524] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[#821b2d]"
                 data-cursor-hover
               >
-                Shop Charms
+                Shop Strands
               </LocaleLink>
             </div>
             </div>
@@ -460,14 +460,14 @@ function CharmHeroFeatureSection() {
 
           <LocaleLink
             data-reveal
-            href="/accessories?category=abaya-charms"
+            href="/strands"
             className="group relative overflow-hidden bg-[var(--color-sovereign)]"
             data-cursor-hover
           >
             <div className="relative h-full min-h-[68vh]">
               <Image
                 src="/collection-section/45.jpg"
-                alt="Bint Saeed charm collection"
+                alt="Bint Saeed strand collection"
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 className="object-cover object-center scale-[1.08] transition-transform duration-700 group-hover:scale-[1.12]"
@@ -487,14 +487,14 @@ function CharmHeroFeatureSectionMirror() {
       <div className="grid min-h-[68vh] w-full max-w-none items-stretch lg:grid-cols-2">
         <LocaleLink
           data-reveal
-          href="/accessories?category=abaya-charms"
+          href="/strands"
           className="group relative overflow-hidden bg-[var(--color-sovereign)]"
           data-cursor-hover
         >
           <div className="relative h-full min-h-[68vh]">
             <Image
               src="/88.jpg"
-              alt="Bint Saeed charm collection"
+              alt="Bint Saeed strand collection"
               fill
               sizes="(max-width: 1024px) 100vw, 58vw"
               className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
@@ -506,7 +506,7 @@ function CharmHeroFeatureSectionMirror() {
           <div className="absolute inset-0 opacity-25">
             <Image
               src="/background1.JPG"
-              alt="Bint Saeed charm collection"
+              alt="Bint Saeed strand collection"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover object-center"

@@ -26,15 +26,15 @@ const searchableContent = [
   { title: 'Ready to Wear', href: '/shop?category=ready-to-wear', category: 'Collection' },
   { title: 'Accessories', href: '/accessories', category: 'Collection' },
   {
-    title: 'Abaya Charms',
-    href: '/charms',
+    title: 'Abaya Strands',
+    href: '/strands',
     category: 'Accessories',
   },
   { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
   { title: 'Earrings', href: '/accessories?type=earrings', category: 'Accessories' },
   { title: 'Bracelets', href: '/accessories?type=bracelets', category: 'Accessories' },
-  { title: 'Bag Charms', href: '/accessories?type=bag-charms', category: 'Accessories' },
-  { title: 'Phone Charms', href: '/accessories?type=phone-charms', category: 'Accessories' },
+  { title: 'Bag Strands', href: '/accessories?type=bag-charms', category: 'Accessories' },
+  { title: 'Phone Strands', href: '/accessories?type=phone-charms', category: 'Accessories' },
   { title: 'About Us', href: '/about', category: 'About' },
   { title: 'Our Story', href: '/about', category: 'About' },
   { title: 'The Codes', href: '/the-codes', category: 'About' },
@@ -101,7 +101,7 @@ export default function Header() {
 
   const navItems = [
     { label: t.nav.collections, href: '/shop' },
-    { label: 'Charms', href: '/charms' },
+    { label: 'Strands', href: '/strands' },
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
     { label: 'Personalisation', href: '/personalisation' },
     { label: t.about.title, href: '/about' },
@@ -109,8 +109,8 @@ export default function Header() {
   const getMainNavAnalyticsEvent = (href: string) =>
     href === '/shop'
       ? 'click_nav_collection'
-      : href === '/charms'
-        ? 'click_nav_charms'
+      : href === '/strands' || href === '/charms'
+        ? 'click_nav_strands'
       : href === '/accessories'
         ? 'click_nav_accessories'
         : href === '/personalisation'
@@ -156,21 +156,21 @@ export default function Header() {
           links: [
             { label: 'All Accessories', href: '/accessories' },
             {
-              label: 'Abaya Charms',
-              href: '/charms',
+              label: 'Abaya Strands',
+              href: '/strands',
             },
             { label: 'Necklaces', href: '/accessories?type=necklaces' },
             { label: 'Earrings', href: '/accessories?type=earrings' },
             { label: 'Bracelets', href: '/accessories?type=bracelets' },
-            { label: 'Bag Charms', href: '/accessories?type=bag-charms' },
-            { label: 'Phone Charms', href: '/accessories?type=phone-charms' },
+            { label: 'Bag Strands', href: '/accessories?type=bag-charms' },
+            { label: 'Phone Strands', href: '/accessories?type=phone-charms' },
           ],
         },
       ],
       features: [
         {
-          title: 'Abaya Charms',
-          href: '/charms',
+          title: 'Abaya Strands',
+          href: '/strands',
           image: ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
         },
         {

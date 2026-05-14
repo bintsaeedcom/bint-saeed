@@ -500,7 +500,7 @@ export default function AccessoryDetailPage() {
               </div>
             </div>
 
-            {/* Size — one size only (jewellery & all charms) */}
+            {/* Size — one size only (jewellery & all strands) */}
             <div className="mb-3 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">

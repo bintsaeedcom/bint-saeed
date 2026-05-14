@@ -34,6 +34,8 @@ function isInnerPathAllowlistedDuringComingSoon(normalizedInner: string): boolea
 
   if (normalizedInner === '/craftsmanship') return true
 
+  if (normalizedInner === '/strands') return true
+
   if (normalizedInner === '/accessories' || normalizedInner.startsWith('/accessories/')) return true
 
   return false

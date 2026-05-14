@@ -536,27 +536,27 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     pt:
       'Cada peça Bint Saeed inclui um bolso escondido para mensagem pessoal: nome, data ou palavra privada.',
   },
-  charms: {
+  strands: {
     en:
-      'The first abaya charm system. Swap your natural stone charm to match your mood, your bag, your story. Onyx, jade, amethyst, aventurine and more.',
+      'The first interchangeable abaya strand system. Swap your natural stone to match your mood, your bag, your story. Onyx, jade, amethyst, aventurine and more.',
     ar:
-      'أول نظام لتعليقات العباءة القابلة للتبديل بالأحجار الطبيعية: أونيكس، يشم، جمشت، أفينتورين وأكثر.',
+      'أول نظام لسلاسل العباءة بالأحجار الطبيعية القابلة للتبديل: أونيكس، يشم، جمشت، أفينتورين وأكثر.',
     fr:
-      'Le premier système de charms pour abaya: changez votre pierre naturelle selon votre style — onyx, jade, améthyste, aventurine et plus.',
+      'Le premier système de brins pour abaya : changez votre pierre naturelle selon votre style — onyx, jade, améthyste, aventurine et plus.',
     it:
-      'Il primo sistema di charm per abaya: cambia la pietra naturale in base al tuo stile — onice, giada, ametista, avventurina e altro.',
+      'Il primo sistema di strand per abaya: cambia la pietra naturale in base al tuo stile — onice, giada, ametista, avventurina e altro.',
     es:
-      'El primer sistema de charms para abaya: cambia tu piedra natural según tu estilo — ónix, jade, amatista, aventurina y más.',
+      'El primer sistema de strands para abaya: cambia tu piedra natural según tu estilo — ónix, jade, amatista, aventurina y más.',
     ru:
-      'Первая система подвесок для абайи: меняйте натуральные камни под настроение — оникс, нефрит, аметист, авантюрин и другие.',
+      'Первая система каменных нитей для абайи: меняйте натуральные камни под настроение — оникс, нефрит, аметист, авантюрин и другие.',
     zh:
-      '首个阿巴亚可替换吊饰系统：根据心情与造型切换天然石材，如玛瑙、玉石、紫水晶、东陵石等。',
+      '首个阿巴亚可替换石串系统：根据心情与造型切换天然石材，如玛瑙、玉石、紫水晶、东陵石等。',
     de:
-      'Das erste Abaya-Charmsystem: Natursteine je nach Stimmung wechseln — Onyx, Jade, Amethyst, Aventurin und mehr.',
+      'Das erste Abaya-Strand-System: Natursteine je nach Stimmung wechseln — Onyx, Jade, Amethyst, Aventurin und mehr.',
     nl:
-      'Het eerste abaya-charm systeem: wissel natuursteen naar stijl en stemming — onyx, jade, amethist, aventurijn en meer.',
+      'Het eerste abaya-strand systeem: wissel natuursteen naar stijl en stemming — onyx, jade, amethist, aventurijn en meer.',
     pt:
-      'O primeiro sistema de charms para abaya: troque pedras naturais conforme o seu estilo — ónix, jade, ametista, aventurina e mais.',
+      'O primeiro sistema de strands para abaya: troque pedras naturais conforme o seu estilo — ónix, jade, ametista, aventurina e mais.',
   },
   product_care: {
     en:
