@@ -399,7 +399,11 @@ export default function StrandsPage() {
         <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-center`}>
           <div>
             <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE CONCEPT</p>
-            <h2 className="mt-4 font-rozha text-[clamp(2.5rem,5vw,4.75rem)] leading-[1] text-[#1a0210]">One Abaya. Many Accents.</h2>
+            <h2 className="mt-4 font-rozha text-[clamp(2.5rem,5vw,4.75rem)] leading-[1] text-[#1a0210]">
+              One Abaya.
+              <br />
+              Many Accents.
+            </h2>
             <p className="mt-6 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72">
               The Bint Saeed abaya strand is a natural stone detail worn on the cuff of the Marylebone Abaya. Handcrafted in Abu Dhabi. Made to be changed.
             </p>
