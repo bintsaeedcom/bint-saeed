@@ -334,15 +334,18 @@ export default function StrandsPage() {
           style={{ transform: `translateY(${heroOffset}px)` }}
           aria-hidden
         >
-          <Image
-            src={HERO_CAMPAIGN_IMAGE}
-            alt={STRAND_IMAGE_ALT}
-            fill
-            priority={true}
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-          <canvas ref={heroCanvasRef} className="pointer-events-none absolute inset-0 z-0 hidden h-full w-full md:block" aria-hidden />
+          {/* Source asset is stored inverted; flip so hero reads correctly on all breakpoints */}
+          <div className="absolute inset-0 -scale-y-100">
+            <Image
+              src={HERO_CAMPAIGN_IMAGE}
+              alt={STRAND_IMAGE_ALT}
+              fill
+              priority={true}
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+            <canvas ref={heroCanvasRef} className="pointer-events-none absolute inset-0 z-0 hidden h-full w-full md:block" aria-hidden />
+          </div>
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,2,16,0.92)_0%,rgba(26,2,16,0.62)_46%,rgba(26,2,16,0.22)_100%)]" />
         </div>
 
