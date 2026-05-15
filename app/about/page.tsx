@@ -147,7 +147,7 @@ export default function AboutPage() {
 
       <section
         id="about-origin"
-        className="relative z-10 -mt-6 rounded-t-[16px] bg-[#e8ddd4] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform"
+        className="relative z-10 -mt-6 rounded-t-[16px] bg-[#e8ddd4] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]"
       >
         <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-start`}>
           <div>
@@ -194,7 +194,7 @@ export default function AboutPage() {
 
       <section
         ref={womanRef}
-        className="relative z-20 -mt-6 rounded-t-[16px] bg-[#1a0210] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform"
+        className="relative z-20 -mt-6 rounded-t-[16px] bg-[#1a0210] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]"
       >
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">THE WOMAN</p>
@@ -233,7 +233,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <section className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
+      <section className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE CODES</p>
           <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#1a0210]">
@@ -269,7 +269,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="about-fabric-light relative z-40 -mt-6 overflow-hidden rounded-t-[16px] bg-[#7A1C28] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
+      <section className="about-fabric-light relative z-40 -mt-6 overflow-hidden rounded-t-[16px] bg-[#7A1C28] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
         <div className={`${INNER_CONTAINER_CLASS} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
           <div className="relative min-h-[52vh] overflow-hidden rounded-[4px] md:min-h-[620px]">
             <Image src={HERO_IMAGE} alt={ABOUT_IMAGE_ALT} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
