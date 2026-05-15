@@ -8,9 +8,11 @@ const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 const PERSONALISATION_PAGE = encodeURIComponent('Personalisation Page')
 const HERO_IMAGE = `/${PERSONALISATION_PAGE}/${encodeURIComponent('secret pocket.JPG')}`
 const SECRET_POCKET_IMAGE = HERO_IMAGE
-const LABEL_IMAGE = `/${PERSONALISATION_PAGE}/${encodeURIComponent('label.JPG')}`
 const HIDDEN_POCKET_ALT = 'Bint Saeed hidden pocket personalisation detail — Abu Dhabi'
 const LABEL_ALT = 'Bint Saeed personalised label — Abu Dhabi'
+const LABEL_IMAGES = ['label1.PNG', 'label2.PNG', 'label3.PNG', 'label4.PNG'].map(
+  (file) => `/${PERSONALISATION_PAGE}/${encodeURIComponent(file)}`,
+)
 
 /** TODO: replace src with pocket location video once filmed */
 const POCKET_VIDEO_SRC = ''
@@ -179,10 +181,16 @@ export default function PersonalisationPage() {
             or something you never want to forget. Because the message is hidden, it remains intimate. Not created for
             display, but for closeness.
           </p>
-          <div className="mx-auto mt-10 grid max-w-[640px] grid-cols-2 gap-3">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <div key={index} className="relative aspect-square overflow-hidden rounded-[4px]">
-                <Image src={LABEL_IMAGE} alt={LABEL_ALT} fill sizes="(max-width: 768px) 45vw, 320px" className="object-cover" />
+          <div className="mx-auto mt-12 grid max-w-[880px] grid-cols-2 gap-4 md:gap-6">
+            {LABEL_IMAGES.map((src, index) => (
+              <div key={src} className="relative aspect-[3/4] overflow-hidden rounded-[4px]">
+                <Image
+                  src={src}
+                  alt={`${LABEL_ALT} — example ${index + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 44vw, 400px"
+                  className="object-cover object-center"
+                />
               </div>
             ))}
           </div>
