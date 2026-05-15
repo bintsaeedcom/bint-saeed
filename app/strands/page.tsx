@@ -487,7 +487,10 @@ export default function StrandsPage() {
         </div>
       </section>
 
-      <section id="stone-showcase" className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
+      <section
+        id="stone-showcase"
+        className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-28 pb-32 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:min-h-[100vh] md:py-36 md:pb-44 md:will-change-transform"
+      >
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE COLLECTION</p>
           <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#1a0210]">Choose by colour and character.</h2>
@@ -556,7 +559,7 @@ export default function StrandsPage() {
             )
           })}
         </div>
-        <div className={`${INNER_CONTAINER_CLASS} mt-5`}>
+        <div className={`${INNER_CONTAINER_CLASS} mt-5 pb-8 md:pb-12`}>
           <p className="mb-3 text-center font-montserrat text-[10px] font-medium uppercase tracking-[0.22em] text-[#8a7a70]">
             Scroll sideways to see every stone
           </p>
