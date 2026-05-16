@@ -464,14 +464,16 @@ function CharmHeroFeatureSection() {
             className="group relative overflow-hidden bg-[var(--color-sovereign)]"
             data-cursor-hover
           >
-            <div className="relative h-full min-h-[68vh]">
-              <Image
-                src="/collection-section/45.jpg"
-                alt="Bint Saeed strand collection"
-                fill
-                sizes="(max-width: 1024px) 100vw, 58vw"
-                className="object-cover object-center scale-[1.08] transition-transform duration-700 group-hover:scale-[1.12]"
-              />
+            <div className="relative h-full min-h-[68vh] overflow-hidden">
+              <div className="absolute -inset-[14%]">
+                <Image
+                  src="/collection-section/45.jpg"
+                  alt="Bint Saeed strand collection"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                  className="object-cover object-[50%_42%] transition-transform duration-700 group-hover:scale-[1.02]"
+                />
+              </div>
             </div>
           </LocaleLink>
       </div>

@@ -1,19 +1,34 @@
-import { products as staticProducts, type Product } from '@/data/products'
+import {
+  COLLECTION_APPAREL_PRICE_AED,
+  products as staticProducts,
+  type Product,
+} from '@/data/products'
 import { resolveProductIdentifier } from '@/lib/products/links'
 import type { ProductOverride } from './overridesStore'
 import { getAllOverrides } from './overridesStore'
+
+const COLLECTION_APPAREL_CATEGORIES = new Set(['Abayas', 'Kaftans', 'Dresses', 'Sets'])
+
+/** Collection apparel always uses the uniform shop price (admin overrides cannot change it). */
+function applyCollectionApparelPrice(product: Product): Product {
+  if (!COLLECTION_APPAREL_CATEGORIES.has(product.category)) return product
+  return { ...product, price: COLLECTION_APPAREL_PRICE_AED }
+}
 
 export function mergeProducts(overrides: Record<string, ProductOverride>): Product[] {
   return staticProducts
     .map((p) => {
       const o = overrides[p.id]
       if (o?.published === false) return null
-      if (!o || Object.keys(o).length === 0) return p
-      return {
-        ...p,
-        ...(o.name != null && o.name.trim() !== '' ? { name: o.name.trim() } : {}),
-        ...(typeof o.price === 'number' && o.price >= 0 ? { price: o.price } : {}),
-      }
+      const merged =
+        !o || Object.keys(o).length === 0
+          ? p
+          : {
+              ...p,
+              ...(o.name != null && o.name.trim() !== '' ? { name: o.name.trim() } : {}),
+              ...(typeof o.price === 'number' && o.price >= 0 ? { price: o.price } : {}),
+            }
+      return applyCollectionApparelPrice(merged)
     })
     .filter((p): p is Product => p != null)
 }

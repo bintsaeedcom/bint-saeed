@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import LocaleLink from '@/components/LocaleLink'
 import { accessories } from '@/data/accessories'
 import { products } from '@/data/products'
@@ -99,6 +100,7 @@ export default function StrandsPage() {
   const [stepsVisible, setStepsVisible] = useState(false)
   const [quoteVisible, setQuoteVisible] = useState(false)
   const [carouselScroll, setCarouselScroll] = useState({ thumbWidthPct: 100, thumbLeftPct: 0 })
+  const [carouselEdges, setCarouselEdges] = useState({ atStart: true, atEnd: false })
 
   useEffect(() => {
     let frame = 0
@@ -278,6 +280,7 @@ export default function StrandsPage() {
     const max = scrollWidth - clientWidth
     if (max <= 0) {
       setCarouselScroll({ thumbWidthPct: 100, thumbLeftPct: 0 })
+      setCarouselEdges({ atStart: true, atEnd: true })
       return
     }
     const thumbWidthPct = Math.max(14, Math.min(100, (clientWidth / scrollWidth) * 100))
@@ -286,7 +289,15 @@ export default function StrandsPage() {
       thumbWidthPct,
       thumbLeftPct: Math.min(100 - thumbWidthPct, Math.max(0, thumbLeftPct)),
     })
+    setCarouselEdges({ atStart: scrollLeft <= 8, atEnd: scrollLeft >= max - 8 })
   }, [])
+
+  const scrollCarousel = (direction: 'prev' | 'next') => {
+    const el = carouselRef.current
+    if (!el) return
+    const step = Math.max(el.clientWidth * 0.82, 280)
+    el.scrollBy({ left: direction === 'next' ? step : -step, behavior: 'smooth' })
+  }
 
   const startDrag = (clientX: number) => {
     const el = carouselRef.current
@@ -334,8 +345,7 @@ export default function StrandsPage() {
           style={{ transform: `translateY(${heroOffset}px)` }}
           aria-hidden
         >
-          {/* Source asset is stored inverted; flip so hero reads correctly on all breakpoints */}
-          <div className="absolute inset-0 -scale-y-100">
+          <div className="absolute inset-0">
             <Image
               src={HERO_CAMPAIGN_IMAGE}
               alt={STRAND_IMAGE_ALT}
@@ -489,7 +499,7 @@ export default function StrandsPage() {
 
       <section
         id="stone-showcase"
-        className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-28 pb-32 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:min-h-[100vh] md:py-36 md:pb-44 md:will-change-transform"
+        className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-28 pb-48 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:min-h-[100vh] md:py-36 md:pb-56 md:will-change-transform"
       >
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE COLLECTION</p>
@@ -499,19 +509,48 @@ export default function StrandsPage() {
           </p>
         </div>
 
-        <div
-          ref={carouselRef}
-          dir="ltr"
-          onScroll={updateCarouselProgress}
-          onMouseDown={(event) => startDrag(event.clientX)}
-          onMouseMove={(event) => moveDrag(event.clientX)}
-          onMouseUp={endDrag}
-          onMouseLeave={endDrag}
-          onTouchStart={(event) => startDrag(event.touches[0]?.clientX || 0)}
-          onTouchMove={(event) => moveDrag(event.touches[0]?.clientX || 0)}
-          onTouchEnd={endDrag}
-          className="mx-auto mt-12 flex max-w-[1280px] cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 active:cursor-grabbing md:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
+        <div className="relative mx-auto mt-12 max-w-[1280px]">
+          <div
+            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#faf8f5] via-[#faf8f5]/80 to-transparent md:w-16"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#faf8f5] via-[#faf8f5]/80 to-transparent md:w-16"
+            aria-hidden
+          />
+          <button
+            type="button"
+            onClick={() => scrollCarousel('prev')}
+            disabled={carouselEdges.atStart}
+            aria-label="Previous stones"
+            className="absolute left-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5]/95 text-[#7A1C28] shadow-[0_4px_20px_rgba(26,2,16,0.12)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30 md:flex"
+            data-cursor-hover
+          >
+            <FiChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollCarousel('next')}
+            disabled={carouselEdges.atEnd}
+            aria-label="Next stones"
+            className="absolute right-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5]/95 text-[#7A1C28] shadow-[0_4px_20px_rgba(26,2,16,0.12)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30 md:flex"
+            data-cursor-hover
+          >
+            <FiChevronRight className="h-5 w-5" />
+          </button>
+          <div
+            ref={carouselRef}
+            dir="ltr"
+            onScroll={updateCarouselProgress}
+            onMouseDown={(event) => startDrag(event.clientX)}
+            onMouseMove={(event) => moveDrag(event.clientX)}
+            onMouseUp={endDrag}
+            onMouseLeave={endDrag}
+            onTouchStart={(event) => startDrag(event.touches[0]?.clientX || 0)}
+            onTouchMove={(event) => moveDrag(event.touches[0]?.clientX || 0)}
+            onTouchEnd={endDrag}
+            className="flex cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 active:cursor-grabbing md:px-14 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
           {strandProducts.map((product) => {
             const color = product.colors[0]
             return (
@@ -558,23 +597,51 @@ export default function StrandsPage() {
               </article>
             )
           })}
+          </div>
         </div>
-        <div className={`${INNER_CONTAINER_CLASS} mt-5 pb-8 md:pb-12`}>
-          <p className="mb-3 text-center font-montserrat text-[10px] font-medium uppercase tracking-[0.22em] text-[#8a7a70]">
-            Scroll sideways to see every stone
-          </p>
-          <div
-            className="relative h-2.5 w-full overflow-hidden rounded-full bg-[#e8ddd4]"
-            role="presentation"
-            aria-hidden
-          >
-            <div
-              className="absolute top-0 h-2.5 rounded-full bg-[#7A1C28] shadow-sm transition-[left,width] duration-150 ease-out"
-              style={{
-                width: `${carouselScroll.thumbWidthPct}%`,
-                left: `${carouselScroll.thumbLeftPct}%`,
-              }}
-            />
+        <div className={`${INNER_CONTAINER_CLASS} mt-8 pb-20 md:pb-28`}>
+          <div className="flex items-center justify-center gap-4 md:gap-6">
+            <button
+              type="button"
+              onClick={() => scrollCarousel('prev')}
+              disabled={carouselEdges.atStart}
+              aria-label="Previous stones"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5] text-[#7A1C28] shadow-[0_4px_16px_rgba(26,2,16,0.08)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30 md:hidden"
+              data-cursor-hover
+            >
+              <FiChevronLeft className="h-5 w-5" />
+            </button>
+            <div className="min-w-0 flex-1">
+              <p className="mb-4 text-center font-montserrat text-[10px] font-medium uppercase tracking-[0.22em] text-[#8a7a70]">
+                Swipe or use arrows to explore every stone
+              </p>
+              <div
+                className="relative h-3 w-full overflow-hidden rounded-full bg-[#e8ddd4] ring-1 ring-[#7A1C28]/10"
+                role="scrollbar"
+                aria-valuenow={Math.round(carouselScroll.thumbLeftPct)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Stone carousel position"
+              >
+                <div
+                  className="absolute top-0 h-3 rounded-full bg-[#7A1C28] shadow-sm transition-[left,width] duration-150 ease-out"
+                  style={{
+                    width: `${carouselScroll.thumbWidthPct}%`,
+                    left: `${carouselScroll.thumbLeftPct}%`,
+                  }}
+                />
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => scrollCarousel('next')}
+              disabled={carouselEdges.atEnd}
+              aria-label="Next stones"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5] text-[#7A1C28] shadow-[0_4px_16px_rgba(26,2,16,0.08)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30 md:hidden"
+              data-cursor-hover
+            >
+              <FiChevronRight className="h-5 w-5" />
+            </button>
           </div>
         </div>
       </section>
@@ -589,7 +656,8 @@ export default function StrandsPage() {
               <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">THE ANCHOR PIECE</p>
               <h2 className="mt-5 font-rozha text-[clamp(2rem,3vw,2.5rem)] leading-tight text-[#e8ddd4]">The Marylebone Abaya.</h2>
               <p className="mt-5 max-w-xl font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
-                The strand drapes from a specially constructed cuff — a detail found only on the Marylebone. Made to order in Abu Dhabi, from AED 2,675.
+                The strand drapes from a specially constructed cuff — a detail found only on the Marylebone. Made to order in Abu Dhabi, from AED{' '}
+                {marylebone ? marylebone.price.toLocaleString() : '500'}.
               </p>
               <LocaleLink
                 href={maryleboneHref}
