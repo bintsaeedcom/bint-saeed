@@ -54,6 +54,16 @@ const nextConfig = {
       { source: '/accessoiries/:path*', destination: '/accessories/:path*', permanent: true },
       { source: '/collections', destination: '/shop', permanent: true },
       { source: '/collections/:path*', destination: '/shop/:path*', permanent: true },
+      {
+        source: '/shop/khous-signature-abaya',
+        destination: '/shop/belgravia-abaya',
+        permanent: true,
+      },
+      {
+        source: '/shop/khous-structured-blazer-abaya',
+        destination: '/shop/kensington-abaya',
+        permanent: true,
+      },
       { source: '/heritage/sadu', destination: '/heritage/khous', permanent: true },
       // Social links → always coming soon page (/)
       { source: '/facebook', destination: '/?utm_source=facebook&utm_medium=social&utm_campaign=bio', permanent: true },

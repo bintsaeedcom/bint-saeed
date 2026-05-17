@@ -168,20 +168,22 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     detail: '/Webshop pictures/Abayas/Covent Garden Abaya /18693D9E-E3EA-48E5-BA90-80AAFEEA0DF7.PNG',
     extra: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya- E.PNG',
   },
-  'khous-structured-blazer-abaya': {
-    front: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya- F.PNG',
-    side: '/Webshop pictures/Abayas/Kensington Abaya/Kensingston Abaya- S.PNG',
-    back: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya- B.PNG',
+  'kensington-abaya': {
+    front: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya- F.png',
+    side: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya- S.png',
+    back: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya- B.png',
   },
   'natural-stone-signature-abaya': {
     front: '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- F.PNG',
     side: '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- S.PNG',
     back: '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- B.PNG',
   },
-  'khous-signature-abaya': {
-    front: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- F.JPG',
-    side: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya - S.PNG',
-    back: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya - B.PNG',
+  'belgravia-abaya': {
+    front: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- F.png',
+    side: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- S.png',
+    back: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- B.png',
+    detail: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- E.jpg',
+    video: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- V.jpg',
   },
   'parklane-abaya': {
     front: '/Webshop pictures/Abayas/Park Lane Abaya/Parklane Abaya- F.JPG',
@@ -300,13 +302,13 @@ export const products: Product[] = [
   },
   {
     id: 'ab-004',
-    slug: 'khous-structured-blazer-abaya',
+    slug: 'kensington-abaya',
     name: 'Kensington Abaya',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Structured blazer abaya with tonal embroidery and a tailored shoulder.',
     fabric: 'Japanese crepe, tonal embroidery thread',
     measurements: 'Length: 140cm (size M).',
-    images: orderedProductGallery('khous-structured-blazer-abaya'),
+    images: orderedProductGallery('kensington-abaya'),
     colors: [{ name: 'Black', hex: '#1a1a1a' }],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     category: 'Abayas',
@@ -330,13 +332,13 @@ export const products: Product[] = [
   },
   {
     id: 'ab-006',
-    slug: 'khous-signature-abaya',
+    slug: 'belgravia-abaya',
     name: 'Belgravia Abaya',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Signature Khous abaya with tonal embroidery and a deliberate, refined drape.',
     fabric: 'Japanese crepe, tonal embroidery thread',
     measurements: 'Length: 140cm (size M). Available in custom lengths upon request.',
-    images: orderedProductGallery('khous-signature-abaya'),
+    images: orderedProductGallery('belgravia-abaya'),
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
