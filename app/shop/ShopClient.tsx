@@ -360,10 +360,15 @@ export default function ShopClient() {
                 >
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
                     <Image
-                      src={product.images[0]}
+                      src={
+                        product.images[0].startsWith('/Webshop pictures/')
+                          ? encodeURI(product.images[0])
+                          : product.images[0]
+                      }
                       alt={product.name}
                       fill
                       sizes="(max-width: 1024px) 50vw, 33vw"
+                      unoptimized={product.images[0].startsWith('/Webshop pictures/')}
                       className="pointer-events-none img-zoom object-cover object-top"
                       priority={false}
                     />

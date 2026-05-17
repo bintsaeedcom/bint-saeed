@@ -194,6 +194,9 @@ export default function ProductPage() {
   const sizeAndMeasurementDetails = [product.measurements, ...fitAndSizeDetails]
   const isVideoFile = (src: string) => /\.(mp4|mov|webm|ogg)$/i.test(src)
   const isHeicFile = (src: string) => /\.(heic|heif)$/i.test(src)
+  /** Large local PNGs/JPGs under public/Webshop — bypass next/image optimizer (avoids 400 on ~7MB assets). */
+  const isWebshopPicture = (src: string) => src.startsWith('/Webshop pictures/')
+  const productImageSrc = (src: string) => (isWebshopPicture(src) ? encodeURI(src) : src)
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -342,10 +345,11 @@ export default function ProductPage() {
                           />
                         ) : (
                           <Image
-                            src={image}
+                            src={productImageSrc(image)}
                             alt={`${product.name} — thumbnail ${index + 1} | Bint Saeed`}
                             fill
                             sizes="76px"
+                            unoptimized={isWebshopPicture(image)}
                             className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                           />
                         )}
@@ -422,10 +426,11 @@ export default function ProductPage() {
                             />
                           ) : (
                             <Image
-                              src={image}
+                              src={productImageSrc(image)}
                               alt={`${product.name} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
                               fill
                               sizes="(max-width: 768px) 100vw, 40vw"
+                              unoptimized={isWebshopPicture(image)}
                               className="img-zoom object-cover"
                               priority={index === 0}
                             />
@@ -477,10 +482,11 @@ export default function ProductPage() {
                             />
                           ) : (
                             <Image
-                              src={image}
+                              src={productImageSrc(image)}
                               alt={`${product.name} — thumbnail ${index + 1} | Bint Saeed`}
                               fill
                               sizes="120px"
+                              unoptimized={isWebshopPicture(image)}
                               className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             />
                           )}
@@ -835,10 +841,11 @@ export default function ProductPage() {
                     >
                       <div className="relative z-20 aspect-[9/16] overflow-hidden bg-brand-stone/10">
                         <Image
-                          src={item.images[0]}
+                          src={productImageSrc(item.images[0])}
                           alt={item.name}
                           fill
                           sizes="(max-width: 768px) 50vw, 22vw"
+                          unoptimized={isWebshopPicture(item.images[0])}
                           className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                       </div>
@@ -878,9 +885,10 @@ export default function ProductPage() {
             </button>
             <div className="relative m-4 h-full w-full max-h-[72vh] max-w-[51.2rem]">
               <Image
-                src={activeImages[lightboxIndex] ?? product.images[0]}
+                src={productImageSrc(activeImages[lightboxIndex] ?? product.images[0])}
                 alt={product.name}
                 fill
+                unoptimized={isWebshopPicture(activeImages[lightboxIndex] ?? product.images[0])}
                 className="object-contain"
               />
             </div>

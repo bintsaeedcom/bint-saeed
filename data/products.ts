@@ -179,11 +179,11 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     back: '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- B.PNG',
   },
   'belgravia-abaya': {
-    front: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- F.png',
-    side: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- S.png',
-    back: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- B.png',
-    detail: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- E.jpg',
-    video: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya- V.jpg',
+    front: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-F.png',
+    side: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-S.png',
+    back: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-B.png',
+    detail: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-E.jpg',
+    video: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-V.jpg',
   },
   'parklane-abaya': {
     front: '/Webshop pictures/Abayas/Park Lane Abaya/Parklane Abaya- F.JPG',
@@ -252,14 +252,9 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
 
 function orderedProductGallery(slug: string): string[] {
   const views = ORDERED_APPAREL_VIEWS[slug] ?? {}
-  return [
-    views.front ?? FRONT_PLACEHOLDER,
-    views.side ?? SIDE_PLACEHOLDER,
-    views.back ?? BACK_PLACEHOLDER,
-    views.detail ?? DETAIL_PLACEHOLDER,
-    views.extra ?? EXTRA_PLACEHOLDER,
-    views.video ?? VIDEO_PLACEHOLDER,
-  ]
+  return [views.front, views.side, views.back, views.detail, views.extra, views.video].filter(
+    (src): src is string => typeof src === 'string' && src.length > 0,
+  )
 }
 
 export const products: Product[] = [
