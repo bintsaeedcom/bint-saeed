@@ -200,6 +200,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       shortcut: '/flavicon.png',
     },
     other: {
+      'p:domain_verify': '7f00ff9ac3718eb1ce00735a6958cc0e',
       'apple-mobile-web-app-capable': 'yes',
       'apple-mobile-web-app-status-bar-style': 'black-translucent',
       'format-detection': 'telephone=no',
