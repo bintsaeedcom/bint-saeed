@@ -13,6 +13,11 @@ export function lengthCmSelectOptions(): string[] {
 export const CUSTOMISATION_SURCHARGE_AED = 40
 export const CUSTOMISATION_MAX_CHARS = 35
 
+/** Hidden-pocket personalisation (+40 AED) is offered on abaya PDPs only. */
+export function productOffersPersonalisation(category: string): boolean {
+  return category === 'Abayas'
+}
+
 export function categoryNeedsLengthCmDropdown(category: string): boolean {
   return category === 'Abayas' || category === 'Kaftans' || category === 'Dresses'
 }

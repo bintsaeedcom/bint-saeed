@@ -86,8 +86,8 @@ const COLLECTION_JSON_LD = {
 export default function StrandsPage() {
   const { isRTL } = useLanguage()
   const strandProducts = useMemo(() => accessories.filter((item) => item.category === 'abaya-charms'), [])
-  const marylebone = useMemo(() => products.find((product) => product.slug === 'natural-stone-signature-abaya'), [])
-  const maryleboneHref = marylebone ? getProductHref(marylebone) : '/shop/natural-stone-signature-abaya'
+  const marylebone = useMemo(() => products.find((product) => product.slug === 'marylebone-abaya'), [])
+  const maryleboneHref = marylebone ? getProductHref(marylebone) : '/shop/marylebone-abaya'
   const maryleboneImage = marylebone?.images[0] || '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- F.JPG'
   const heroCanvasRef = useRef<HTMLCanvasElement | null>(null)
   const heroWebglInitializedRef = useRef(false)

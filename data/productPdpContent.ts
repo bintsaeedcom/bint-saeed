@@ -122,7 +122,7 @@ function accessoryPlaceholderContent(product: Product): ProductPdpContent {
 
 /**
  * PDP copy source of truth.
- * — bs-002 / royal-v-neck-kaftan slug keeps finalized reference copy.
+ * — bs-002 / mayfair-kaftan slug keeps finalized reference copy.
  * — All other products use the same topic layout as that page; replace bracketed lines when ready.
  */
 export const productPdpContentById: Partial<Record<string, ProductPdpContent>> = {
@@ -131,7 +131,7 @@ export const productPdpContentById: Partial<Record<string, ProductPdpContent>> =
 
 /** Slug fallback when id differs (merged catalog, deep links, or API shape). */
 export const productPdpContentBySlug: Partial<Record<string, ProductPdpContent>> = {
-  'royal-v-neck-kaftan': V_NECK_CAFTAN_CONTENT,
+  'mayfair-kaftan': V_NECK_CAFTAN_CONTENT,
 }
 
 export function getProductPdpContent(product: Product): ProductPdpContent {

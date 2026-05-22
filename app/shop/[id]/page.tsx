@@ -22,6 +22,7 @@ import {
   getPdpSizeOptions,
   CUSTOMISATION_SURCHARGE_AED,
   CUSTOMISATION_MAX_CHARS,
+  productOffersPersonalisation,
 } from '@/lib/shopProductOptions'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 
@@ -38,8 +39,8 @@ const PDP_FILLED_PLUM = 'bg-brand-darkRed text-white border-brand-darkRed'
 const PDP_PRIMARY_CTA =
   `inline-flex min-h-[46px] items-center justify-center ${PDP_BUTTON_RADIUS} bg-brand-darkRed text-white font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-brand-dustyBlue`
 const MANUAL_PAIRINGS: Record<string, string[]> = {
-  'khous-jacket-abaya': ['knightsbridge-dress'],
-  'knightsbridge-dress': ['khous-jacket-abaya'],
+  'knightsbridge-abaya-jacket': ['knightsbridge-dress'],
+  'knightsbridge-dress': ['knightsbridge-abaya-jacket'],
 }
 
 export default function ProductPage() {
@@ -154,6 +155,8 @@ export default function ProductPage() {
   }
 
   const sizeOptions = getPdpSizeOptions(product.category, product.sizes)
+  const showPersonalisation = productOffersPersonalisation(product.category)
+
   useEffect(() => {
     if (!sizeOptions.length) return
     setSelectedSize((current) => (current && sizeOptions.includes(current) ? current : sizeOptions[0] ?? ''))
@@ -166,6 +169,13 @@ export default function ProductPage() {
       current && availableColors.includes(current) ? current : (availableColors[0] ?? '')
     )
   }, [product.colors, product.id])
+
+  useEffect(() => {
+    if (!showPersonalisation) {
+      setCustomisationActive(false)
+      setCustomisationMessage('')
+    }
+  }, [product.id, showPersonalisation])
 
   const activeImages = useMemo(() => {
     const variantImages = product.colorImages?.[selectedColor]
@@ -189,7 +199,9 @@ export default function ProductPage() {
   }, [product.id])
 
   const personalisationSurcharge =
-    customisationActive && customisationMessage.trim().length > 0 ? CUSTOMISATION_SURCHARGE_AED : 0
+    showPersonalisation && customisationActive && customisationMessage.trim().length > 0
+      ? CUSTOMISATION_SURCHARGE_AED
+      : 0
   const displayUnitAed = product.price + personalisationSurcharge
   const sizeAndMeasurementDetails = [product.measurements, ...fitAndSizeDetails]
   const isVideoFile = (src: string) => /\.(mp4|mov|webm|ogg)$/i.test(src)
@@ -227,12 +239,13 @@ export default function ProductPage() {
       toast.error('Please select a color')
       return
     }
-    if (customisationActive && !customisationMessage.trim()) {
+    if (showPersonalisation && customisationActive && !customisationMessage.trim()) {
       toast.error('Please enter your personalisation text, or turn personalisation off')
       return
     }
 
-    const trimmedCustom = customisationActive ? customisationMessage.trim() : ''
+    const trimmedCustom =
+      showPersonalisation && customisationActive ? customisationMessage.trim() : ''
 
     addItem({
       id: product.id,
@@ -601,68 +614,69 @@ export default function ProductPage() {
               </p>
             </div>
 
-            {/* Personalisation */}
-            <div className="mb-3 border-b border-brand-stone/20 pb-3">
-              <h2 className="mb-2 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
-                Personalisation
-              </h2>
-              <p className={`mb-2 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
-                {isRTL
-                  ? `إضافة نص تفصيلي مقابل ${CUSTOMISATION_SURCHARGE_AED} درهم لكل قطعة.`
-                  : 'Add a name, special date or message to the inner label.'}
-              </p>
-              <div className={`flex flex-col gap-2 sm:flex-row sm:flex-wrap ${isRTL ? 'sm:justify-end' : ''}`}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setCustomisationActive(false)
-                    setCustomisationMessage('')
-                  }}
+            {showPersonalisation && (
+              <div className="mb-3 border-b border-brand-stone/20 pb-3">
+                <h2 className="mb-2 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
+                  Personalisation
+                </h2>
+                <p className={`mb-2 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
+                  {isRTL
+                    ? `إضافة نص تفصيلي مقابل ${CUSTOMISATION_SURCHARGE_AED} درهم لكل قطعة.`
+                    : 'Add a name, special date or message to the inner label.'}
+                </p>
+                <div className={`flex flex-col gap-2 sm:flex-row sm:flex-wrap ${isRTL ? 'sm:justify-end' : ''}`}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCustomisationActive(false)
+                      setCustomisationMessage('')
+                    }}
                     className={`w-full sm:w-auto ${PDP_CONTROL_BUTTON_BASE} ${
-                    !customisationActive
-                      ? PDP_FILLED_PLUM
-                      : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
-                  }`}
-                  aria-pressed={!customisationActive}
-                  data-cursor-hover
-                >
-                  {isRTL ? 'بدون تخصيص' : 'No personalisation'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCustomisationActive(true)}
+                      !customisationActive
+                        ? PDP_FILLED_PLUM
+                        : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
+                    }`}
+                    aria-pressed={!customisationActive}
+                    data-cursor-hover
+                  >
+                    {isRTL ? 'بدون تخصيص' : 'No personalisation'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCustomisationActive(true)}
                     className={`w-full sm:w-auto ${PDP_CONTROL_BUTTON_BASE} ${
-                    customisationActive
-                      ? PDP_FILLED_PLUM
-                      : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
-                  }`}
-                  aria-pressed={customisationActive}
-                  data-cursor-hover
-                >
-                  {isRTL ? `تخصيص (+${CUSTOMISATION_SURCHARGE_AED})` : `Personalise (+${CUSTOMISATION_SURCHARGE_AED} AED)`}
-                </button>
-              </div>
-              {customisationActive && (
-                <div className="mt-3 space-y-2">
-                  <input
-                    type="text"
-                    value={customisationMessage}
-                    onChange={(e) => setCustomisationMessage(e.target.value.slice(0, CUSTOMISATION_MAX_CHARS))}
-                    maxLength={CUSTOMISATION_MAX_CHARS}
-                    placeholder={isRTL ? 'النص (٣٥ حرفاً كحد أقصى)' : 'Your message (max 35 characters)'}
-                    className={`w-full border border-brand-stone/50 px-3 py-2.5 font-montserrat text-[11px] tracking-wide transition-colors focus:border-brand-darkRed ${PDP_BUTTON_RADIUS}`}
-                  />
-                  <p className={`font-montserrat text-[11px] text-brand-darkRed/55 ${isRTL ? 'text-right' : ''}`}>
-                    {customisationMessage.length}/{CUSTOMISATION_MAX_CHARS}
-                  </p>
-                  <p className={`font-montserrat text-[11px] text-brand-darkRed/80 leading-relaxed border border-brand-stone/20 bg-white p-2.5 ${isRTL ? 'text-right' : ''}`}>
-                    {isRTL
-                      ? 'القطع المخصصة تُنفَّذ حسب طلبك ولا يمكن إرجاعها أو استبدالها.'
-                      : 'Customised pieces are made to your request and cannot be returned or exchanged.'}
-                  </p>
+                      customisationActive
+                        ? PDP_FILLED_PLUM
+                        : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
+                    }`}
+                    aria-pressed={customisationActive}
+                    data-cursor-hover
+                  >
+                    {isRTL ? `تخصيص (+${CUSTOMISATION_SURCHARGE_AED})` : `Personalise (+${CUSTOMISATION_SURCHARGE_AED} AED)`}
+                  </button>
                 </div>
-              )}
-            </div>
+                {customisationActive && (
+                  <div className="mt-3 space-y-2">
+                    <input
+                      type="text"
+                      value={customisationMessage}
+                      onChange={(e) => setCustomisationMessage(e.target.value.slice(0, CUSTOMISATION_MAX_CHARS))}
+                      maxLength={CUSTOMISATION_MAX_CHARS}
+                      placeholder={isRTL ? 'النص (٣٥ حرفاً كحد أقصى)' : 'Your message (max 35 characters)'}
+                      className={`w-full border border-brand-stone/50 px-3 py-2.5 font-montserrat text-[11px] tracking-wide transition-colors focus:border-brand-darkRed ${PDP_BUTTON_RADIUS}`}
+                    />
+                    <p className={`font-montserrat text-[11px] text-brand-darkRed/55 ${isRTL ? 'text-right' : ''}`}>
+                      {customisationMessage.length}/{CUSTOMISATION_MAX_CHARS}
+                    </p>
+                    <p className={`font-montserrat text-[11px] text-brand-darkRed/80 leading-relaxed border border-brand-stone/20 bg-white p-2.5 ${isRTL ? 'text-right' : ''}`}>
+                      {isRTL
+                        ? 'القطع المخصصة تُنفَّذ حسب طلبك ولا يمكن إرجاعها أو استبدالها.'
+                        : 'Customised pieces are made to your request and cannot be returned or exchanged.'}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Quantity & Add to Cart */}
             <div className="mb-1 flex flex-col gap-2 sm:flex-row sm:gap-3">

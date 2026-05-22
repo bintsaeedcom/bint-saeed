@@ -1,3 +1,5 @@
+import { slugifyProductName } from '@/lib/products/links'
+
 export interface Product {
   id: string
   /** Canonical URL segment for `/shop/[slug]` (unique, lowercase kebab-case). */
@@ -154,14 +156,14 @@ type OrderedViews = {
 }
 
 const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
-  'khous-jacket-abaya': {
+  'knightsbridge-abaya-jacket': {
     front: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- F.png',
     side: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- S.png',
     back: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- B.png',
     detail: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- D.JPG',
     extra: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket - E.png',
   },
-  'royal-talli-abaya': {
+  'covent-garden-abaya': {
     front: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden- F.png',
     side: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden- S.png',
     back: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden- B.png',
@@ -171,7 +173,7 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     side: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya- S.png',
     back: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya- B.png',
   },
-  'natural-stone-signature-abaya': {
+  'marylebone-abaya': {
     front: '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- F.PNG',
     side: '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- S.PNG',
     back: '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- B.PNG',
@@ -183,25 +185,21 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     detail: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-E.jpg',
     video: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-V.jpg',
   },
-  'parklane-abaya': {
+  'park-lane-abaya': {
     front: '/Webshop pictures/Abayas/Park Lane Abaya/Parklane Abaya- F.JPG',
     side: '/Webshop pictures/Abayas/Park Lane Abaya/Park Lane Abaya- S.JPG',
     back: '/Webshop pictures/Abayas/Park Lane Abaya/Park Lane Abaya- B.JPG',
     detail: '/Webshop pictures/Abayas/Park Lane Abaya/Park Lane Abaya - D.PNG',
   },
-  'royal-v-neck-kaftan': {
+  'mayfair-kaftan': {
     front: '/Webshop pictures/Caftans/Mayfair Kaftan/Mayfair Kaftan- F.PNG',
     back: '/Webshop pictures/Caftans/Mayfair Kaftan/Mayfair Kaftan- B.PNG',
   },
-  'royal-boatneck-kaftan': {
+  'nothing-hill-kaftan': {
     front: '/Webshop pictures/Caftans/Nothing Hill Kaftan/Nothing Hill Kaftan- F.PNG',
     side: '/Webshop pictures/Caftans/Nothing Hill Kaftan/Nothing Hill Kaftan- S.PNG',
     back: '/Webshop pictures/Caftans/Nothing Hill Kaftan/Nothing Hill Kaftan- B.PNG',
     extra: '/Webshop pictures/Caftans/Nothing Hill Kaftan/Nothing Hill Kaftan- E.jpg',
-  },
-  'khous-signature-midi-dress': {
-    front: '/Webshop pictures/Dresses/Covent Garden Dress/Covent Garden Dress-F.jpg',
-    side: '/Webshop pictures/Dresses/Covent Garden Dress/Covent Garden Dress-S.JPG',
   },
   'knightsbridge-dress': {
     front: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- F.png',
@@ -211,23 +209,18 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     extra: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- E.PNG',
     video: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- V.png',
   },
-  'talli-signature-dress': {
+  'hampstead-dress': {
     front: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress -F.jpg',
     side: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- S.jpg',
     back: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- B.jpg',
     extra: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- E.jpg',
   },
-  'khous-signature-classic-jacket': {
+  'covent-garden-signature-set': {
     front: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- F.png',
     side: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- S.png',
     back: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- B.png',
   },
-  'khous-signature-classic-set': {
-    front: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- F.png',
-    side: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- S.png',
-    back: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- B.png',
-  },
-  'talli-signature-set': {
+  'soho-set': {
     side: '/Webshop pictures/Sets/Soho Set/Soho Set - S.jpg',
     back: '/Webshop pictures/Sets/Soho Set/Soho Set- B.jpg',
     detail: '/Webshop pictures/Sets/Soho Set/Soho Set- D.jpg',
@@ -238,10 +231,10 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     side: '/Webshop%20pictures/Sets/Hyde%20Park%20Set/Hyde%20Park%20Set-%20S.JPG',
     back: '/Webshop%20pictures/Sets/Hyde%20Park%20Set/Hyde%20Park%20Set-%20B.JPG',
   },
-  'signature-belt-one': {
+  'signature-belt-i': {
     front: '/Webshop%20pictures/Belt.jpg',
   },
-  'signature-belt-two': {
+  'signature-belt-ii': {
     front: '/Webshop%20pictures/Belt.jpg',
   },
 }
@@ -255,7 +248,7 @@ function orderedProductGallery(slug: string): string[] {
 }
 
 /** Hidden from `/shop` grid until webshop photography is wired in ORDERED_APPAREL_VIEWS. */
-export const SHOP_GRID_HIDDEN_SLUGS = new Set(['signature-long-dress', 'inner-flow-dress'])
+export const SHOP_GRID_HIDDEN_SLUGS = new Set(['signature-long-dress', 'chelsea-dress'])
 
 export function isVisibleOnShopGrid(product: Pick<Product, 'slug' | 'images'>): boolean {
   if (SHOP_GRID_HIDDEN_SLUGS.has(product.slug)) return false
@@ -265,16 +258,16 @@ export function isVisibleOnShopGrid(product: Pick<Product, 'slug' | 'images'>): 
 export const products: Product[] = [
   {
     id: 'bs-001',
-    slug: 'khous-jacket-abaya',
+    slug: 'knightsbridge-abaya-jacket',
     name: 'Knightsbridge Abaya Jacket',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Khous jacket-style abaya with refined drape and embroidery-led detailing.',
     fabric: 'Premium Japanese Crepe, Silk lining, Hand-embroidered details',
     measurements: 'Model wears size M. Length: 140cm (size M). Available in custom lengths upon request.',
-    images: orderedProductGallery('khous-jacket-abaya'),
+    images: orderedProductGallery('knightsbridge-abaya-jacket'),
     colorImages: {
-      'Dark Brown': orderedProductGallery('khous-jacket-abaya'),
-      'Navy Grey': orderedProductGallery('khous-jacket-abaya'),
+      'Dark Brown': orderedProductGallery('knightsbridge-abaya-jacket'),
+      'Navy Grey': orderedProductGallery('knightsbridge-abaya-jacket'),
     },
     colors: [
       { name: 'Dark Brown', hex: '#3D2817' },
@@ -285,13 +278,13 @@ export const products: Product[] = [
   },
   {
     id: 'ab-002',
-    slug: 'royal-talli-abaya',
+    slug: 'covent-garden-abaya',
     name: 'Covent Garden Abaya',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Light linen abaya with Talli-led presence and a clean, concealed placket.',
     fabric: 'European linen blend, cotton lining',
     measurements: 'Length: 138cm (size M). Relaxed fit through the body.',
-    images: orderedProductGallery('royal-talli-abaya'),
+    images: orderedProductGallery('covent-garden-abaya'),
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Magenta', hex: '#9B1F5C' },
@@ -315,13 +308,13 @@ export const products: Product[] = [
   },
   {
     id: 'ab-005',
-    slug: 'natural-stone-signature-abaya',
+    slug: 'marylebone-abaya',
     name: 'Marylebone Abaya',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Open-front signature abaya with wide sleeves to layer over dresses or sets.',
     fabric: 'Wool-silk blend, matte satin binding',
     measurements: 'Length: 135cm (size M).',
-    images: orderedProductGallery('natural-stone-signature-abaya'),
+    images: orderedProductGallery('marylebone-abaya'),
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Magenta', hex: '#9B1F5C' },
@@ -348,13 +341,13 @@ export const products: Product[] = [
   },
   {
     id: 'ab-007',
-    slug: 'parklane-abaya',
-    name: 'PArk Lane Abaya',
+    slug: 'park-lane-abaya',
+    name: 'Park Lane Abaya',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Refined everyday abaya with a clean line and fluid drape designed for city movement.',
     fabric: 'Fabric composition — to be finalized with production.',
     measurements: 'Length: 138cm (size M). Available in custom lengths upon request.',
-    images: orderedProductGallery('parklane-abaya'),
+    images: orderedProductGallery('park-lane-abaya'),
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
@@ -378,14 +371,14 @@ export const products: Product[] = [
   },
   {
     id: 'bs-002',
-    slug: 'royal-v-neck-kaftan',
+    slug: 'mayfair-kaftan',
     name: 'Mayfair Kaftan',
     price: COLLECTION_APPAREL_PRICE_AED,
     description:
       'Crepe-chiffon V-neck kaftan with fluid drape, inner dress, scarf detail, and signature gold emblem.',
     fabric: 'Italian Silk, Crystal embellishments, Pearl buttons',
     measurements: 'Oversized fit. One size fits most. Length: 145cm.',
-    images: orderedProductGallery('royal-v-neck-kaftan'),
+    images: orderedProductGallery('mayfair-kaftan'),
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
@@ -397,13 +390,13 @@ export const products: Product[] = [
   },
   {
     id: 'cf-002',
-    slug: 'royal-boatneck-kaftan',
+    slug: 'nothing-hill-kaftan',
     name: 'Nothing Hill Kaftan',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Shorter kaftan silhouette with bracelet sleeves and a jewel neckline.',
     fabric: 'Sand-washed silk, bound inner seams',
     measurements: 'Length: 125cm. Relaxed fit.',
-    images: orderedProductGallery('royal-boatneck-kaftan'),
+    images: orderedProductGallery('nothing-hill-kaftan'),
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
@@ -452,13 +445,13 @@ export const products: Product[] = [
   },
   {
     id: 'bs-006',
-    slug: 'inner-flow-dress',
+    slug: 'chelsea-dress',
     name: 'Chelsea Dress',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Draped jersey dress with asymmetric hem for fluid movement.',
     fabric: 'Modal Jersey, Stretch lining, Invisible zipper',
     measurements: 'Length varies from 120cm to 140cm due to draping. True to size.',
-    images: orderedProductGallery('inner-flow-dress'),
+    images: orderedProductGallery('chelsea-dress'),
     colors: [
       { name: 'Wine', hex: '#722f37' },
       { name: 'Forest', hex: '#228b22' },
@@ -469,13 +462,13 @@ export const products: Product[] = [
   },
   {
     id: 'bs-004',
-    slug: 'talli-signature-dress',
+    slug: 'hampstead-dress',
     name: 'Hampstead Dress',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Talli-inspired dress with structured shoulders and a clean skirt for evening or city.',
     fabric: 'Virgin Wool blend, Silk lining, Mother-of-pearl buttons',
     measurements: 'Structured fit. Length: 118cm (size M). Shoulder width: 42cm.',
-    images: orderedProductGallery('talli-signature-dress'),
+    images: orderedProductGallery('hampstead-dress'),
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
@@ -485,31 +478,14 @@ export const products: Product[] = [
     category: 'Dresses',
   },
   {
-    id: 'jk-001',
-    slug: 'khous-signature-classic-jacket',
-    name: 'Covent Garden Signature Set',
-    price: COLLECTION_APPAREL_PRICE_AED,
-    description: 'Khous signature classic set — jacket piece designed to pair with the matching skirt.',
-    fabric: 'Organic Cotton blend, Linen accents, Natural dyes',
-    measurements: 'Top length: 70cm, Skirt length: 95cm (size M). Relaxed fit.',
-    images: orderedProductGallery('khous-signature-classic-jacket'),
-    colors: [
-      { name: 'Black', hex: '#1a1a1a' },
-      { name: 'Magenta', hex: '#9B1F5C' },
-      { name: 'Navy Blue', hex: '#1f3a5f' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    category: 'Sets',
-  },
-  {
     id: 'bs-005',
-    slug: 'khous-signature-classic-set',
+    slug: 'covent-garden-signature-set',
     name: 'Covent Garden Signature Set',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Khous signature classic two-piece set — top and skirt for full looks or separated styling.',
     fabric: 'Organic Cotton blend, Linen accents, Natural dyes',
     measurements: 'Top length: 70cm, Skirt length: 95cm (size M). Relaxed fit.',
-    images: orderedProductGallery('khous-signature-classic-set'),
+    images: orderedProductGallery('covent-garden-signature-set'),
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Magenta', hex: '#9B1F5C' },
@@ -520,13 +496,13 @@ export const products: Product[] = [
   },
   {
     id: 'st-003',
-    slug: 'talli-signature-set',
+    slug: 'soho-set',
     name: 'Soho Set',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Talli-inspired coordinate set — top and skirt pairing for polished day-to-evening looks.',
     fabric: 'Fabric composition — to be finalized with production.',
     measurements: 'Chapter fit; top and skirt lengths confirmed against size chart.',
-    images: orderedProductGallery('talli-signature-set'),
+    images: orderedProductGallery('soho-set'),
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
@@ -537,28 +513,54 @@ export const products: Product[] = [
   },
   {
     id: 'belt-001',
-    slug: 'signature-belt-one',
+    slug: 'signature-belt-i',
     name: 'Signature Belt I',
     price: 395,
     description: 'Placeholder belt style pending final imagery and specifications.',
     fabric: 'Material details — to be confirmed.',
     measurements: 'One size (adjustable).',
-    images: orderedProductGallery('signature-belt-one'),
+    images: orderedProductGallery('signature-belt-i'),
     colors: [{ name: 'Black', hex: '#1a1a1a' }],
     sizes: ['One Size'],
     category: 'Belts',
   },
   {
     id: 'belt-002',
-    slug: 'signature-belt-two',
+    slug: 'signature-belt-ii',
     name: 'Signature Belt II',
     price: 395,
     description: 'Placeholder belt style pending final imagery and specifications.',
     fabric: 'Material details — to be confirmed.',
     measurements: 'One size (adjustable).',
-    images: orderedProductGallery('signature-belt-two'),
+    images: orderedProductGallery('signature-belt-ii'),
     colors: [{ name: 'Black', hex: '#1a1a1a' }],
     sizes: ['One Size'],
     category: 'Belts',
   },
 ]
+
+/** Catalog slug ↔ display name (slug = kebab-case of name). */
+export function getProductCatalogSlugs(): Array<{
+  id: string
+  name: string
+  slug: string
+  category: string
+  url: string
+}> {
+  return products.map((p) => ({
+    id: p.id,
+    name: p.name,
+    slug: p.slug,
+    category: p.category,
+    url: `/shop/${p.slug}`,
+  }))
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  for (const p of products) {
+    const expected = slugifyProductName(p.name)
+    if (p.slug !== expected) {
+      console.warn(`[products] slug mismatch for "${p.name}": got "${p.slug}", expected "${expected}"`)
+    }
+  }
+}

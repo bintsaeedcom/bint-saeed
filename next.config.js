@@ -1,3 +1,23 @@
+/** Old `/shop/[slug]` → current catalog slug (301). Keep in sync with `lib/products/legacyShopSlugRedirects.ts`. */
+const LEGACY_SHOP_SLUG_REDIRECTS = [
+  ['khous-jacket-abaya', 'knightsbridge-abaya-jacket'],
+  ['royal-talli-abaya', 'covent-garden-abaya'],
+  ['natural-stone-signature-abaya', 'marylebone-abaya'],
+  ['parklane-abaya', 'park-lane-abaya'],
+  ['royal-v-neck-kaftan', 'mayfair-kaftan'],
+  ['royal-boatneck-kaftan', 'nothing-hill-kaftan'],
+  ['khous-signature-midi-dress', 'knightsbridge-dress'],
+  ['inner-flow-dress', 'chelsea-dress'],
+  ['talli-signature-dress', 'hampstead-dress'],
+  ['khous-signature-classic-set', 'covent-garden-signature-set'],
+  ['khous-signature-classic-jacket', 'covent-garden-signature-set'],
+  ['talli-signature-set', 'soho-set'],
+  ['signature-belt-one', 'signature-belt-i'],
+  ['signature-belt-two', 'signature-belt-ii'],
+  ['khous-signature-abaya', 'belgravia-abaya'],
+  ['khous-structured-blazer-abaya', 'kensington-abaya'],
+]
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
@@ -54,21 +74,11 @@ const nextConfig = {
       { source: '/accessoiries/:path*', destination: '/accessories/:path*', permanent: true },
       { source: '/collections', destination: '/shop', permanent: true },
       { source: '/collections/:path*', destination: '/shop/:path*', permanent: true },
-      {
-        source: '/shop/khous-signature-abaya',
-        destination: '/shop/belgravia-abaya',
+      ...LEGACY_SHOP_SLUG_REDIRECTS.map(([from, to]) => ({
+        source: `/shop/${from}`,
+        destination: `/shop/${to}`,
         permanent: true,
-      },
-      {
-        source: '/shop/khous-structured-blazer-abaya',
-        destination: '/shop/kensington-abaya',
-        permanent: true,
-      },
-      {
-        source: '/shop/khous-signature-midi-dress',
-        destination: '/shop/knightsbridge-dress',
-        permanent: true,
-      },
+      })),
       { source: '/heritage/sadu', destination: '/heritage/khous', permanent: true },
       // Social links → always coming soon page (/)
       { source: '/facebook', destination: '/?utm_source=facebook&utm_medium=social&utm_campaign=bio', permanent: true },
