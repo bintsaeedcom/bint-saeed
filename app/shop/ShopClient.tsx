@@ -7,7 +7,8 @@ import AppBreadcrumb from '@/components/AppBreadcrumb'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
-import { products as staticProducts, categories } from '@/data/products'
+import { products as staticProducts, categories, isVisibleOnShopGrid } from '@/data/products'
+import { isWebshopPicturePath, productImageSrc, productPrimaryImage } from '@/lib/products/shopImage'
 import type { Product } from '@/data/products'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -53,7 +54,7 @@ type SortId = (typeof SORT_OPTIONS)[number]['id']
 export default function ShopClient() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [catalog, setCatalog] = useState<Product[]>(staticProducts)
+  const [catalog, setCatalog] = useState<Product[]>(() => staticProducts.filter(isVisibleOnShopGrid))
   const [activeCategory, setActiveCategory] = useState('All')
   const [filterOpen, setFilterOpen] = useState(false)
   const [sortOpen, setSortOpen] = useState(false)
@@ -91,7 +92,7 @@ export default function ShopClient() {
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (cancelled || !data?.products?.length) return
-        setCatalog(data.products as Product[])
+        setCatalog((data.products as Product[]).filter(isVisibleOnShopGrid))
       })
       .catch(() => {})
     return () => {
@@ -360,15 +361,11 @@ export default function ShopClient() {
                 >
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
                     <Image
-                      src={
-                        product.images[0].startsWith('/Webshop pictures/')
-                          ? encodeURI(product.images[0])
-                          : product.images[0]
-                      }
+                      src={productImageSrc(productPrimaryImage(product))}
                       alt={product.name}
                       fill
                       sizes="(max-width: 1024px) 50vw, 33vw"
-                      unoptimized={product.images[0].startsWith('/Webshop pictures/')}
+                      unoptimized={isWebshopPicturePath(productPrimaryImage(product))}
                       className="pointer-events-none img-zoom object-cover object-top"
                       priority={false}
                     />

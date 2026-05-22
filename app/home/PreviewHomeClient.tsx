@@ -141,6 +141,14 @@ function ScrollMaskImage({
   )
 }
 
+function isWebshopPicture(src: string) {
+  return src.startsWith('/Webshop pictures/')
+}
+
+function collectionImageSrc(src: string) {
+  return isWebshopPicture(src) ? encodeURI(src) : src
+}
+
 function CollectionCardVisual({
   images,
   label,
@@ -175,10 +183,11 @@ function CollectionCardVisual({
     >
       <Image
         key={`${label}-${imageIndex}`}
-        src={images[imageIndex]}
+        src={collectionImageSrc(images[imageIndex])}
         alt={`Bint Saeed ${label}`}
         fill
         sizes="(max-width: 768px) 50vw, 25vw"
+        unoptimized={isWebshopPicture(images[imageIndex])}
         className="pointer-events-none object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-sovereign)]/58 via-[var(--color-sovereign)]/8 to-transparent" />
@@ -1105,9 +1114,9 @@ function MagazineGrid() {
   const collectionCards = [
     {
       images: [
-        '/Webshop%20pictures/Abayas/Covent%20Garden%20Abaya%20/Covent%20Garden%20Abaya-%20F.jpg',
-        '/Webshop%20pictures/Abayas/Park%20Lane%20Abaya/Park%20Lane%20Abaya-%20B.JPG',
-        '/Webshop%20pictures/Abayas/Covent%20Garden%20Abaya%20/Covent%20Garden%20Abaya-%20B.JPG',
+        '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-V.jpg',
+        '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-F.png',
+        '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-S.png',
       ],
       label: 'Abayas',
       href: '/shop',

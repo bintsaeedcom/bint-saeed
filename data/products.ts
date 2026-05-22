@@ -155,18 +155,16 @@ type OrderedViews = {
 
 const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
   'khous-jacket-abaya': {
-    front: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- F.PNG',
-    side: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- S.PNG',
-    back: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- B .PNG',
+    front: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- F.png',
+    side: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- S.png',
+    back: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- B.png',
     detail: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- D.JPG',
-    extra: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- E.jpg',
+    extra: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket - E.png',
   },
   'royal-talli-abaya': {
-    front: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya- F.png',
-    side: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya- S.PNG',
-    back: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya- B.PNG',
-    detail: '/Webshop pictures/Abayas/Covent Garden Abaya /18693D9E-E3EA-48E5-BA90-80AAFEEA0DF7.PNG',
-    extra: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden Abaya- E.PNG',
+    front: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden- F.png',
+    side: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden- S.png',
+    back: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden- B.png',
   },
   'kensington-abaya': {
     front: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya- F.png',
@@ -206,11 +204,12 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     side: '/Webshop pictures/Dresses/Covent Garden Dress/Covent Garden Dress-S.JPG',
   },
   'knightsbridge-dress': {
-    front: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- F.PNG',
-    side: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- S.PNG',
-    back: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- B.PNG',
+    front: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- F.png',
+    side: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- S.png',
+    back: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- B.png',
     detail: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- D.PNG',
     extra: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- E.PNG',
+    video: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- V.png',
   },
   'talli-signature-dress': {
     front: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress -F.jpg',
@@ -219,22 +218,19 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     extra: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- E.jpg',
   },
   'khous-signature-classic-jacket': {
-    front: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- F.jpg',
-    side: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- S.JPG',
-    back: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set-B.JPG',
-    extra: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- E.jpg',
+    front: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- F.png',
+    side: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- S.png',
+    back: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- B.png',
   },
   'khous-signature-classic-set': {
-    front: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- F.jpg',
-    side: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- S.JPG',
-    back: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set-B.JPG',
-    extra: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- E.jpg',
+    front: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- F.png',
+    side: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- S.png',
+    back: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- B.png',
   },
   'talli-signature-set': {
-    front: '/Webshop pictures/Sets/Soho Set/Soho Set- F.JPG',
     side: '/Webshop pictures/Sets/Soho Set/Soho Set - S.jpg',
-    back: '/Webshop pictures/Sets/Soho Set/Soho Set- B.JPG',
-    detail: '/Webshop pictures/Sets/Soho Set/Soho Set- D.JPG',
+    back: '/Webshop pictures/Sets/Soho Set/Soho Set- B.jpg',
+    detail: '/Webshop pictures/Sets/Soho Set/Soho Set- D.jpg',
     extra: '/Webshop pictures/Sets/Soho Set/Soho Set- E.jpg',
   },
   'hyde-park-set': {
@@ -252,9 +248,18 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
 
 function orderedProductGallery(slug: string): string[] {
   const views = ORDERED_APPAREL_VIEWS[slug] ?? {}
-  return [views.front, views.side, views.back, views.detail, views.extra, views.video].filter(
+  const list = [views.front, views.side, views.back, views.detail, views.extra, views.video].filter(
     (src): src is string => typeof src === 'string' && src.length > 0,
   )
+  return list.length > 0 ? list : [FRONT_PLACEHOLDER]
+}
+
+/** Hidden from `/shop` grid until webshop photography is wired in ORDERED_APPAREL_VIEWS. */
+export const SHOP_GRID_HIDDEN_SLUGS = new Set(['signature-long-dress', 'inner-flow-dress'])
+
+export function isVisibleOnShopGrid(product: Pick<Product, 'slug' | 'images'>): boolean {
+  if (SHOP_GRID_HIDDEN_SLUGS.has(product.slug)) return false
+  return product.images.length > 0
 }
 
 export const products: Product[] = [
@@ -410,7 +415,7 @@ export const products: Product[] = [
   },
   {
     id: 'bs-003',
-    slug: 'khous-signature-midi-dress',
+    slug: 'knightsbridge-dress',
     name: 'Knightsbridge Dress',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Midi-length Khous signature dress with layered skirt and evening-ready presence.',

@@ -38,8 +38,8 @@ const PDP_FILLED_PLUM = 'bg-brand-darkRed text-white border-brand-darkRed'
 const PDP_PRIMARY_CTA =
   `inline-flex min-h-[46px] items-center justify-center ${PDP_BUTTON_RADIUS} bg-brand-darkRed text-white font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-brand-dustyBlue`
 const MANUAL_PAIRINGS: Record<string, string[]> = {
-  'khous-jacket-abaya': ['khous-signature-midi-dress'],
-  'khous-signature-midi-dress': ['khous-jacket-abaya'],
+  'khous-jacket-abaya': ['knightsbridge-dress'],
+  'knightsbridge-dress': ['khous-jacket-abaya'],
 }
 
 export default function ProductPage() {

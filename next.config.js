@@ -64,6 +64,11 @@ const nextConfig = {
         destination: '/shop/kensington-abaya',
         permanent: true,
       },
+      {
+        source: '/shop/khous-signature-midi-dress',
+        destination: '/shop/knightsbridge-dress',
+        permanent: true,
+      },
       { source: '/heritage/sadu', destination: '/heritage/khous', permanent: true },
       // Social links → always coming soon page (/)
       { source: '/facebook', destination: '/?utm_source=facebook&utm_medium=social&utm_campaign=bio', permanent: true },
