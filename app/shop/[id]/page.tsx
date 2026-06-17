@@ -15,6 +15,9 @@ import { trackEvent } from '@/lib/analytics/tracking'
 import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
 import { getProductPdpContent } from '@/data/productPdpContent'
+import { getProductImageAlt } from '@/lib/products/imageAlt'
+import { getProductColorOptions } from '@/lib/products/productColorAvailability'
+import { buildShopProductJsonLd } from '@/lib/products/productJsonLd'
 import { useCartStore } from '@/store/cartStore'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getProductHref, getProductSlug, resolveProductIdentifier } from '@/lib/products/links'
@@ -156,6 +159,7 @@ export default function ProductPage() {
 
   const sizeOptions = getPdpSizeOptions(product.category, product.sizes)
   const showPersonalisation = productOffersPersonalisation(product.category)
+  const colorOptions = useMemo(() => getProductColorOptions(product), [product])
 
   useEffect(() => {
     if (!sizeOptions.length) return
@@ -163,12 +167,12 @@ export default function ProductPage() {
   }, [sizeOptions, product.id])
 
   useEffect(() => {
-    const availableColors = product.colors.map((color) => color.name)
+    const availableColors = colorOptions.map((color) => color.name)
     if (!availableColors.length) return
     setSelectedColor((current) =>
       current && availableColors.includes(current) ? current : (availableColors[0] ?? '')
     )
-  }, [product.colors, product.id])
+  }, [colorOptions, product.id])
 
   useEffect(() => {
     if (!showPersonalisation) {
@@ -182,11 +186,18 @@ export default function ProductPage() {
     if (variantImages && variantImages.length > 0) return variantImages
     return product.images
   }, [product.colorImages, product.images, selectedColor])
+  const activeImageAlt = (image: string, index: number) =>
+    getProductImageAlt(product, image, { color: selectedColor, index })
 
   useEffect(() => {
     if (!activeImages.length) return
     setLightboxIndex((current) => Math.min(current, activeImages.length - 1))
   }, [activeImages])
+
+  useEffect(() => {
+    mainSwiperRef.current?.slideTo(0, 0)
+    setLightboxIndex(0)
+  }, [selectedColor])
 
   useEffect(() => {
     trackEvent('view_item', {
@@ -209,26 +220,16 @@ export default function ProductPage() {
   /** Large local PNGs/JPGs under public/Webshop — bypass next/image optimizer (avoids 400 on ~7MB assets). */
   const isWebshopPicture = (src: string) => src.startsWith('/Webshop pictures/')
   const productImageSrc = (src: string) => (isWebshopPicture(src) ? encodeURI(src) : src)
-  const productJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    brand: {
-      '@type': 'Brand',
-      name: 'Bint Saeed',
-    },
-    description: product.description,
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'AED',
-      price: String(product.price),
-      availability: 'https://schema.org/InStock',
-      seller: {
-        '@type': 'Organization',
-        name: 'Bint Saeed',
-      },
-    },
-  }
+  const productJsonLd = useMemo(
+    () =>
+      buildShopProductJsonLd({
+        product,
+        activeImages,
+        selectedColor,
+        productPagePath: getProductHref(product),
+      }),
+    [product, activeImages, selectedColor],
+  )
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -352,14 +353,14 @@ export default function ProductPage() {
                         ) : isHeicFile(image) ? (
                           <img
                             src={image}
-                            alt={`${product.name} — thumbnail ${index + 1} | Bint Saeed`}
+                            alt={activeImageAlt(image, index)}
                             className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             loading="lazy"
                           />
                         ) : (
                           <Image
                             src={productImageSrc(image)}
-                            alt={`${product.name} — thumbnail ${index + 1} | Bint Saeed`}
+                            alt={activeImageAlt(image, index)}
                             fill
                             sizes="76px"
                             unoptimized={isWebshopPicture(image)}
@@ -433,14 +434,14 @@ export default function ProductPage() {
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
-                              alt={`${product.name} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
+                              alt={activeImageAlt(image, index)}
                               className="h-full w-full img-zoom object-cover"
                               loading={index === 0 ? 'eager' : 'lazy'}
                             />
                           ) : (
                             <Image
                               src={productImageSrc(image)}
-                              alt={`${product.name} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
+                              alt={activeImageAlt(image, index)}
                               fill
                               sizes="(max-width: 768px) 100vw, 40vw"
                               unoptimized={isWebshopPicture(image)}
@@ -489,14 +490,14 @@ export default function ProductPage() {
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
-                              alt={`${product.name} — thumbnail ${index + 1} | Bint Saeed`}
+                              alt={activeImageAlt(image, index)}
                               className="h-full w-full img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                               loading="lazy"
                             />
                           ) : (
                             <Image
                               src={productImageSrc(image)}
-                              alt={`${product.name} — thumbnail ${index + 1} | Bint Saeed`}
+                              alt={activeImageAlt(image, index)}
                               fill
                               sizes="120px"
                               unoptimized={isWebshopPicture(image)}
@@ -553,7 +554,7 @@ export default function ProductPage() {
                 )}
               </div>
               <div className={`flex flex-wrap gap-2.5 ${isRTL ? 'justify-end' : ''}`}>
-                {product.colors.map((color) => (
+                {colorOptions.map((color) => (
                   <button
                     key={color.name}
                     type="button"
@@ -856,7 +857,7 @@ export default function ProductPage() {
                       <div className="relative z-20 aspect-[9/16] overflow-hidden bg-brand-stone/10">
                         <Image
                           src={productImageSrc(item.images[0])}
-                          alt={item.name}
+                          alt={getProductImageAlt(item, item.images[0], { color: item.colors[0]?.name, index: 0 })}
                           fill
                           sizes="(max-width: 768px) 50vw, 22vw"
                           unoptimized={isWebshopPicture(item.images[0])}
@@ -900,7 +901,7 @@ export default function ProductPage() {
             <div className="relative m-4 h-full w-full max-h-[72vh] max-w-[51.2rem]">
               <Image
                 src={productImageSrc(activeImages[lightboxIndex] ?? product.images[0])}
-                alt={product.name}
+                alt={activeImageAlt(activeImages[lightboxIndex] ?? product.images[0], lightboxIndex)}
                 fill
                 unoptimized={isWebshopPicture(activeImages[lightboxIndex] ?? product.images[0])}
                 className="object-contain"

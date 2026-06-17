@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { products as staticProducts, categories, isVisibleOnShopGrid } from '@/data/products'
 import { isWebshopPicturePath, productImageSrc, productPrimaryImage } from '@/lib/products/shopImage'
+import { getProductImageAlt } from '@/lib/products/imageAlt'
 import type { Product } from '@/data/products'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -362,7 +363,10 @@ export default function ShopClient() {
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
                     <Image
                       src={productImageSrc(productPrimaryImage(product))}
-                      alt={product.name}
+                      alt={getProductImageAlt(product, productPrimaryImage(product), {
+                        color: product.colors[0]?.name,
+                        index: 0,
+                      })}
                       fill
                       sizes="(max-width: 1024px) 50vw, 33vw"
                       unoptimized={isWebshopPicturePath(productPrimaryImage(product))}

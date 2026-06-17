@@ -18,6 +18,7 @@ import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
+import { getProductImageAlt } from '@/lib/products/imageAlt'
 import type { Product } from '@/data/products'
 
 /** Corner brackets / full-bleed grid stripes removed — typography uses border-s + border-b on copy only (see hero). */
@@ -809,13 +810,16 @@ function QuickShopCarousel() {
               <div className="relative h-[20.95rem] w-full shrink-0 overflow-hidden bg-[#f3f0ea] md:h-[25.85rem] lg:h-[27.15rem]">
                 <SafeCarouselImage
                   src={product.images[0]}
-                  alt={`${product.name} — product image | Bint Saeed`}
+                  alt={getProductImageAlt(product, product.images[0], { color: product.colors[0]?.name, index: 0 })}
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
                   className="pointer-events-none object-cover object-top transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-visible:opacity-0 group-hover:scale-[1.03]"
                 />
                 <SafeCarouselImage
                   src={product.images[1] || product.images[0]}
-                  alt={`${product.name} — alternate view | Bint Saeed`}
+                  alt={getProductImageAlt(product, product.images[1] || product.images[0], {
+                    color: product.colors[0]?.name,
+                    index: 1,
+                  })}
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
                   className="pointer-events-none object-cover object-center opacity-0 transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-visible:opacity-100 group-hover:scale-[1.03]"
                 />
@@ -1114,9 +1118,9 @@ function MagazineGrid() {
   const collectionCards = [
     {
       images: [
-        '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-V.jpg',
-        '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-F.png',
-        '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-S.png',
+        '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-extra.webp',
+        '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-front.webp',
+        '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-side.webp',
       ],
       label: 'Abayas',
       href: '/shop',
@@ -1124,9 +1128,9 @@ function MagazineGrid() {
     },
     {
       images: [
-        '/Webshop%20pictures/Caftans/Mayfair%20Kaftan/Mayfair%20Kaftan-%20F.JPG',
-        '/Webshop%20pictures/Caftans/Mayfair%20Kaftan/Mayfair%20Kaftan-%20S.JPG',
-        '/Webshop%20pictures/Caftans/Mayfair%20Kaftan/Mayfair%20Kaftan-%20D.JPG',
+        '/Webshop pictures/Kaftans/Mayfair Kaftan/bint-saeed-mayfair-kaftan-marroon-front.webp',
+        '/Webshop pictures/Kaftans/Mayfair Kaftan/bint-saeed-mayfair-kaftan-marroon-side.webp',
+        '/Webshop pictures/Kaftans/Nothing Hill Kaftan/bint-saeed-nothing-hill-kaftan-peach-pink-front.webp',
         '/collection-section/8.png',
       ],
       label: 'Kaftans',

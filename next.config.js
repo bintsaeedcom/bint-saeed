@@ -16,6 +16,7 @@ const LEGACY_SHOP_SLUG_REDIRECTS = [
   ['signature-belt-two', 'signature-belt-ii'],
   ['khous-signature-abaya', 'belgravia-abaya'],
   ['khous-structured-blazer-abaya', 'kensington-abaya'],
+  ['signature-long-dress', 'covent-garden-long-dress'],
 ]
 
 /** @type {import('next').NextConfig} */

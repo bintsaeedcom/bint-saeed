@@ -16,4 +16,5 @@ export const LEGACY_SHOP_SLUG_REDIRECTS: ReadonlyArray<readonly [string, string]
   ['signature-belt-two', 'signature-belt-ii'],
   ['khous-signature-abaya', 'belgravia-abaya'],
   ['khous-structured-blazer-abaya', 'kensington-abaya'],
+  ['signature-long-dress', 'covent-garden-long-dress'],
 ]

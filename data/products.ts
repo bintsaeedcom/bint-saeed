@@ -157,57 +157,63 @@ type OrderedViews = {
 
 const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
   'knightsbridge-abaya-jacket': {
-    front: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- F.png',
-    side: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- S.png',
-    back: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- B.png',
-    detail: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket- D.JPG',
-    extra: '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/Knightsbridge Abaya Jacket - E.png',
+    front:
+      '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/bint-saeed-knightsbridge-abaya-jacket-dark-brown-front.webp',
+    side:
+      '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/bint-saeed-knightsbridge-abaya-jacket-dark-brown-side.webp',
+    back:
+      '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket/bint-saeed-knightsbridge-abaya-jacket-dark-brown-back.webp',
   },
   'covent-garden-abaya': {
-    front: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden- F.png',
-    side: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden- S.png',
-    back: '/Webshop pictures/Abayas/Covent Garden Abaya /Covent Garden- B.png',
+    front: '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-front.webp',
+    side: '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-side.webp',
+    back: '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-back.webp',
   },
   'kensington-abaya': {
-    front: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya- F.png',
-    side: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya- S.png',
-    back: '/Webshop pictures/Abayas/Kensington Abaya/Kensington Abaya- B.png',
+    front: '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-front.webp',
+    side: '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-side.webp',
+    back: '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-back.webp',
   },
   'marylebone-abaya': {
-    front: '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- F.PNG',
-    side: '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- S.PNG',
-    back: '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- B.PNG',
+    front: '/Webshop pictures/Abayas/Marylebone Abaya/bint-saeed-marylebone-abaya-black-front.webp',
+    side: '/Webshop pictures/Abayas/Marylebone Abaya/bint-saeed-marylebone-abaya-black-side.webp',
+    back: '/Webshop pictures/Abayas/Marylebone Abaya/bint-saeed-marylebone-abaya-black-back.webp',
   },
   'belgravia-abaya': {
-    front: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-F.png',
-    side: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-S.png',
-    back: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-B.png',
-    detail: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-E.jpg',
-    video: '/Webshop pictures/Abayas/Belgravia Abaya/Belgravia Abaya-V.jpg',
+    front: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-front.webp',
+    side: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-side.webp',
+    back: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-back.webp',
+    detail: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-detail.webp',
+    extra: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-extra.webp',
   },
   'park-lane-abaya': {
-    front: '/Webshop pictures/Abayas/Park Lane Abaya/Parklane Abaya- F.JPG',
-    side: '/Webshop pictures/Abayas/Park Lane Abaya/Park Lane Abaya- S.JPG',
-    back: '/Webshop pictures/Abayas/Park Lane Abaya/Park Lane Abaya- B.JPG',
-    detail: '/Webshop pictures/Abayas/Park Lane Abaya/Park Lane Abaya - D.PNG',
+    front: '/Webshop pictures/Abayas/Park Lane Abaya/bint-saeed-parklane-abaya-black-front.webp',
+    side: '/Webshop pictures/Abayas/Park Lane Abaya/bint-saeed-parklane-abaya-black-side.webp',
+    back: '/Webshop pictures/Abayas/Park Lane Abaya/bint-saeed-parklane-abaya-black-back.webp',
+    extra: '/Webshop pictures/Abayas/Park Lane Abaya/bint-saeed-parklane-abaya-black-extra.webp',
   },
   'mayfair-kaftan': {
-    front: '/Webshop pictures/Caftans/Mayfair Kaftan/Mayfair Kaftan- F.PNG',
-    back: '/Webshop pictures/Caftans/Mayfair Kaftan/Mayfair Kaftan- B.PNG',
+    front: '/Webshop pictures/Kaftans/Mayfair Kaftan/bint-saeed-mayfair-kaftan-marroon-front.webp',
+    side: '/Webshop pictures/Kaftans/Mayfair Kaftan/bint-saeed-mayfair-kaftan-marroon-side.webp',
+    back: '/Webshop pictures/Kaftans/Mayfair Kaftan/bint-saeed-mayfair-kaftan-marroon-back.webp',
   },
   'nothing-hill-kaftan': {
-    front: '/Webshop pictures/Caftans/Nothing Hill Kaftan/Nothing Hill Kaftan- F.PNG',
-    side: '/Webshop pictures/Caftans/Nothing Hill Kaftan/Nothing Hill Kaftan- S.PNG',
-    back: '/Webshop pictures/Caftans/Nothing Hill Kaftan/Nothing Hill Kaftan- B.PNG',
-    extra: '/Webshop pictures/Caftans/Nothing Hill Kaftan/Nothing Hill Kaftan- E.jpg',
+    front:
+      '/Webshop pictures/Kaftans/Nothing Hill Kaftan/bint-saeed-nothing-hill-kaftan-peach-pink-front.webp',
+    side:
+      '/Webshop pictures/Kaftans/Nothing Hill Kaftan/bint-saeed-nothing-hill-kaftan-peach-pink-side.webp',
+    back:
+      '/Webshop pictures/Kaftans/Nothing Hill Kaftan/bint-saeed-nothing-hill-kaftan-peach-pink-back.webp',
   },
   'knightsbridge-dress': {
-    front: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- F.png',
-    side: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- S.png',
-    back: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- B.png',
-    detail: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- D.PNG',
-    extra: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- E.PNG',
-    video: '/Webshop pictures/Dresses/Knightsbridge Dress/Knightsbridge Dress- V.png',
+    front:
+      '/Webshop pictures/Dresses/Knightsbridge Dress/bint-saeed-knightsbridge-dress-dark-brown-front.webp',
+    side:
+      '/Webshop pictures/Dresses/Knightsbridge Dress/bint-saeed-knightsbridge-dress-dark-brown-side.webp',
+    back:
+      '/Webshop pictures/Dresses/Knightsbridge Dress/bint-saeed-knightsbridge-dress-dark-brown-back.webp',
+    detail:
+      '/Webshop pictures/Dresses/Knightsbridge Dress/bint-saeed-knightsbridge-dress-dark-brown-close-up.webp',
   },
   'hampstead-dress': {
     front: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress -F.jpg',
@@ -215,21 +221,30 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     back: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- B.jpg',
     extra: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- E.jpg',
   },
+  'covent-garden-long-dress': {
+    front:
+      '/Webshop pictures/Dresses/Covent Garden Dress/bint-saeed-covent-garden-long-dress-burgundy-front.webp',
+    side:
+      '/Webshop pictures/Dresses/Covent Garden Dress/bint-saeed-covent-garden-long-dress-burgundy-side.webp',
+    back:
+      '/Webshop pictures/Dresses/Covent Garden Dress/bint-saeed-covent-garden-long-dress-burgundy-back.webp',
+  },
   'covent-garden-signature-set': {
-    front: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- F.png',
-    side: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- S.png',
-    back: '/Webshop pictures/Sets/Covent Garden Set/Covent Garden Set- B.png',
+    front: '/Webshop pictures/Sets/Covent Garden Set/bint-saeed-covent-garden-set-burgundy-front.webp',
+    side: '/Webshop pictures/Sets/Covent Garden Set/bint-saeed-covent-garden-set-burgundy-side.webp',
+    back: '/Webshop pictures/Sets/Covent Garden Set/bint-saeed-covent-garden-set-burgundy-back.webp',
   },
   'soho-set': {
-    side: '/Webshop pictures/Sets/Soho Set/Soho Set - S.jpg',
-    back: '/Webshop pictures/Sets/Soho Set/Soho Set- B.jpg',
-    detail: '/Webshop pictures/Sets/Soho Set/Soho Set- D.jpg',
-    extra: '/Webshop pictures/Sets/Soho Set/Soho Set- E.jpg',
+    front: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-front.webp',
+    side: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-side.webp',
+    back: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-back.webp',
+    detail: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-detail.webp',
+    extra: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-extra.webp',
   },
   'hyde-park-set': {
-    front: '/Webshop%20pictures/Sets/Hyde%20Park%20Set/Hyde%20Park%20Set-%20F.JPG',
-    side: '/Webshop%20pictures/Sets/Hyde%20Park%20Set/Hyde%20Park%20Set-%20S.JPG',
-    back: '/Webshop%20pictures/Sets/Hyde%20Park%20Set/Hyde%20Park%20Set-%20B.JPG',
+    front: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-front.webp',
+    side: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-side.webp',
+    back: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-back.webp',
   },
   'signature-belt-i': {
     front: '/Webshop%20pictures/Belt.jpg',
@@ -247,8 +262,96 @@ function orderedProductGallery(slug: string): string[] {
   return list.length > 0 ? list : [FRONT_PLACEHOLDER]
 }
 
+const KNIGHTSBRIDGE_ABAYA_JACKET_DIR = '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket'
+
+function knightsbridgeAbayaJacketGallery(color: 'dark-brown' | 'navy-grey'): string[] {
+  return [
+    `${KNIGHTSBRIDGE_ABAYA_JACKET_DIR}/bint-saeed-knightsbridge-abaya-jacket-${color}-front.webp`,
+    `${KNIGHTSBRIDGE_ABAYA_JACKET_DIR}/bint-saeed-knightsbridge-abaya-jacket-${color}-side.webp`,
+    `${KNIGHTSBRIDGE_ABAYA_JACKET_DIR}/bint-saeed-knightsbridge-abaya-jacket-${color}-back.webp`,
+  ]
+}
+
+const KNIGHTSBRIDGE_DRESS_DIR = '/Webshop pictures/Dresses/Knightsbridge Dress'
+
+function knightsbridgeDressGallery(color: 'dark-brown' | 'navy-grey'): string[] {
+  const base = `${KNIGHTSBRIDGE_DRESS_DIR}/bint-saeed-knightsbridge-dress-${color}`
+  const images = [
+    `${base}-front.webp`,
+    `${base}-side.webp`,
+    `${base}-back.webp`,
+  ]
+  if (color === 'dark-brown') {
+    images.push(`${base}-close-up.webp`)
+  }
+  if (color === 'navy-grey') {
+    images.push(`${base}-extra.webp`)
+  }
+  return images
+}
+
+const MARYLEBONE_ABAYA_DIR = '/Webshop pictures/Abayas/Marylebone Abaya'
+
+function maryleboneAbayaGallery(color: 'black' | 'navy-blue'): string[] {
+  const base = `${MARYLEBONE_ABAYA_DIR}/bint-saeed-marylebone-abaya-${color}`
+  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+}
+
+const PARK_LANE_ABAYA_DIR = '/Webshop pictures/Abayas/Park Lane Abaya'
+
+function parkLaneAbayaGallery(color: 'black' | 'dark-marroon' | 'navy-blue'): string[] {
+  const base = `${PARK_LANE_ABAYA_DIR}/bint-saeed-parklane-abaya-${color}`
+  const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  if (color === 'black') {
+    images.push(`${base}-extra.webp`)
+  }
+  return images
+}
+
+const COVENT_GARDEN_LONG_DRESS_DIR = '/Webshop pictures/Dresses/Covent Garden Dress'
+
+function coventGardenLongDressGallery(color: 'burgundy' | 'navy-grey'): string[] {
+  const base = `${COVENT_GARDEN_LONG_DRESS_DIR}/bint-saeed-covent-garden-long-dress-${color}`
+  if (color === 'burgundy') {
+    return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  }
+  return [`${base}-front.webp`]
+}
+
+const MAYFAIR_KAFTAN_DIR = '/Webshop pictures/Kaftans/Mayfair Kaftan'
+
+function mayfairKaftanGallery(): string[] {
+  const base = `${MAYFAIR_KAFTAN_DIR}/bint-saeed-mayfair-kaftan-marroon`
+  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+}
+
+const NOTHING_HILL_KAFTAN_DIR = '/Webshop pictures/Kaftans/Nothing Hill Kaftan'
+
+function nothingHillKaftanGallery(): string[] {
+  const base = `${NOTHING_HILL_KAFTAN_DIR}/bint-saeed-nothing-hill-kaftan-peach-pink`
+  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+}
+
+const SOHO_SET_DIR = '/Webshop pictures/Sets/Soho Set'
+
+function sohoSetGallery(color: 'black' | 'navy-blue'): string[] {
+  const base = `${SOHO_SET_DIR}/bint-saeed-soho-set-${color}`
+  const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  if (color === 'black') {
+    images.push(`${base}-detail.webp`, `${base}-extra.webp`)
+  }
+  return images
+}
+
+const HYDE_PARK_SET_DIR = '/Webshop pictures/Sets/Hyde Park Set'
+
+function hydeParkSetGallery(): string[] {
+  const base = `${HYDE_PARK_SET_DIR}/bint-saeed-hyde-park-set-black`
+  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+}
+
 /** Hidden from `/shop` grid until webshop photography is wired in ORDERED_APPAREL_VIEWS. */
-export const SHOP_GRID_HIDDEN_SLUGS = new Set(['signature-long-dress', 'chelsea-dress'])
+export const SHOP_GRID_HIDDEN_SLUGS = new Set(['chelsea-dress'])
 
 export function isVisibleOnShopGrid(product: Pick<Product, 'slug' | 'images'>): boolean {
   if (SHOP_GRID_HIDDEN_SLUGS.has(product.slug)) return false
@@ -264,10 +367,10 @@ export const products: Product[] = [
     description: 'Khous jacket-style abaya with refined drape and embroidery-led detailing.',
     fabric: 'Premium Japanese Crepe, Silk lining, Hand-embroidered details',
     measurements: 'Model wears size M. Length: 140cm (size M). Available in custom lengths upon request.',
-    images: orderedProductGallery('knightsbridge-abaya-jacket'),
+    images: knightsbridgeAbayaJacketGallery('dark-brown'),
     colorImages: {
-      'Dark Brown': orderedProductGallery('knightsbridge-abaya-jacket'),
-      'Navy Grey': orderedProductGallery('knightsbridge-abaya-jacket'),
+      'Dark Brown': knightsbridgeAbayaJacketGallery('dark-brown'),
+      'Navy Grey': knightsbridgeAbayaJacketGallery('navy-grey'),
     },
     colors: [
       { name: 'Dark Brown', hex: '#3D2817' },
@@ -285,11 +388,7 @@ export const products: Product[] = [
     fabric: 'European linen blend, cotton lining',
     measurements: 'Length: 138cm (size M). Relaxed fit through the body.',
     images: orderedProductGallery('covent-garden-abaya'),
-    colors: [
-      { name: 'Black', hex: '#1a1a1a' },
-      { name: 'Magenta', hex: '#9B1F5C' },
-      { name: 'Navy Blue', hex: '#1f3a5f' },
-    ],
+    colors: [{ name: 'Burgundy', hex: '#6f1524' }],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     category: 'Abayas',
   },
@@ -314,10 +413,13 @@ export const products: Product[] = [
     description: 'Open-front signature abaya with wide sleeves to layer over dresses or sets.',
     fabric: 'Wool-silk blend, matte satin binding',
     measurements: 'Length: 135cm (size M).',
-    images: orderedProductGallery('marylebone-abaya'),
+    images: maryleboneAbayaGallery('black'),
+    colorImages: {
+      'Black': maryleboneAbayaGallery('black'),
+      'Navy Blue': maryleboneAbayaGallery('navy-blue'),
+    },
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
-      { name: 'Magenta', hex: '#9B1F5C' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
@@ -332,10 +434,7 @@ export const products: Product[] = [
     fabric: 'Japanese crepe, tonal embroidery thread',
     measurements: 'Length: 140cm (size M). Available in custom lengths upon request.',
     images: orderedProductGallery('belgravia-abaya'),
-    colors: [
-      { name: 'Black', hex: '#1a1a1a' },
-      { name: 'Navy Blue', hex: '#1f3a5f' },
-    ],
+    colors: [{ name: 'Black', hex: '#1a1a1a' }],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Abayas',
   },
@@ -347,11 +446,16 @@ export const products: Product[] = [
     description: 'Refined everyday abaya with a clean line and fluid drape designed for city movement.',
     fabric: 'Fabric composition — to be finalized with production.',
     measurements: 'Length: 138cm (size M). Available in custom lengths upon request.',
-    images: orderedProductGallery('park-lane-abaya'),
+    images: parkLaneAbayaGallery('black'),
+    colorImages: {
+      'Black': parkLaneAbayaGallery('black'),
+      'Dark Maroon': parkLaneAbayaGallery('dark-marroon'),
+      'Navy Blue': parkLaneAbayaGallery('navy-blue'),
+    },
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
+      { name: 'Dark Maroon', hex: '#5c1a2a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
-      { name: 'Burgundy', hex: '#5c1a2a' },
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Abayas',
@@ -364,7 +468,7 @@ export const products: Product[] = [
     description: 'Placeholder style pending full product details and imagery.',
     fabric: 'Fabric composition — to be finalized with production.',
     measurements: 'Measurements — to be confirmed.',
-    images: orderedProductGallery('hyde-park-set'),
+    images: hydeParkSetGallery(),
     colors: [{ name: 'Black', hex: '#1a1a1a' }],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Sets',
@@ -378,13 +482,8 @@ export const products: Product[] = [
       'Crepe-chiffon V-neck kaftan with fluid drape, inner dress, scarf detail, and signature gold emblem.',
     fabric: 'Italian Silk, Crystal embellishments, Pearl buttons',
     measurements: 'Oversized fit. One size fits most. Length: 145cm.',
-    images: orderedProductGallery('mayfair-kaftan'),
-    colors: [
-      { name: 'Black', hex: '#1a1a1a' },
-      { name: 'Navy Blue', hex: '#1f3a5f' },
-      { name: 'Burgundy', hex: '#5c1a2a' },
-      { name: 'Light Pink', hex: '#f4c2c2' },
-    ],
+    images: mayfairKaftanGallery(),
+    colors: [{ name: 'Dark Maroon', hex: '#5c1a2a' }],
     sizes: ['One Size'],
     category: 'Kaftans',
   },
@@ -396,13 +495,8 @@ export const products: Product[] = [
     description: 'Shorter kaftan silhouette with bracelet sleeves and a jewel neckline.',
     fabric: 'Sand-washed silk, bound inner seams',
     measurements: 'Length: 125cm. Relaxed fit.',
-    images: orderedProductGallery('nothing-hill-kaftan'),
-    colors: [
-      { name: 'Black', hex: '#1a1a1a' },
-      { name: 'Navy Blue', hex: '#1f3a5f' },
-      { name: 'Burgundy', hex: '#5c1a2a' },
-      { name: 'Light Pink', hex: '#f4c2c2' },
-    ],
+    images: nothingHillKaftanGallery(),
+    colors: [{ name: 'Peach Pink', hex: '#f4c2c2' }],
     sizes: ['One Size', 'M', 'L'],
     category: 'Kaftans',
   },
@@ -414,10 +508,10 @@ export const products: Product[] = [
     description: 'Midi-length Khous signature dress with layered skirt and evening-ready presence.',
     fabric: 'French Tulle, Swarovski crystals, Duchess satin lining',
     measurements: 'Fitted bodice, flowing skirt. Length: 160cm (size M). Train: 30cm.',
-    images: orderedProductGallery('knightsbridge-dress'),
+    images: knightsbridgeDressGallery('dark-brown'),
     colorImages: {
-      'Dark Brown': orderedProductGallery('knightsbridge-dress'),
-      'Navy Grey': orderedProductGallery('knightsbridge-dress'),
+      'Dark Brown': knightsbridgeDressGallery('dark-brown'),
+      'Navy Grey': knightsbridgeDressGallery('navy-grey'),
     },
     colors: [
       { name: 'Dark Brown', hex: '#3D2817' },
@@ -428,18 +522,14 @@ export const products: Product[] = [
   },
   {
     id: 'dr-009',
-    slug: 'signature-long-dress',
-    name: 'Signature Long Dress',
+    slug: 'covent-garden-long-dress',
+    name: 'Covent Garden Long Dress',
     price: COLLECTION_APPAREL_PRICE_AED,
     description: 'Slim column in stretch crepe with a high back vent for ease of movement.',
     fabric: 'Stretch crepe, power mesh lining',
     measurements: 'Floor length 148cm (size M).',
-    images: orderedProductGallery('signature-long-dress'),
-    colors: [
-      { name: 'Black', hex: '#1a1a1a' },
-      { name: 'Navy Blue', hex: '#1f3a5f' },
-      { name: 'Magenta', hex: '#9B1F5C' },
-    ],
+    images: coventGardenLongDressGallery('burgundy'),
+    colors: [{ name: 'Burgundy', hex: '#6f1524' }],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Dresses',
   },
@@ -486,11 +576,7 @@ export const products: Product[] = [
     fabric: 'Organic Cotton blend, Linen accents, Natural dyes',
     measurements: 'Top length: 70cm, Skirt length: 95cm (size M). Relaxed fit.',
     images: orderedProductGallery('covent-garden-signature-set'),
-    colors: [
-      { name: 'Black', hex: '#1a1a1a' },
-      { name: 'Magenta', hex: '#9B1F5C' },
-      { name: 'Navy Blue', hex: '#1f3a5f' },
-    ],
+    colors: [{ name: 'Burgundy', hex: '#6f1524' }],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     category: 'Sets',
   },
@@ -502,11 +588,14 @@ export const products: Product[] = [
     description: 'Talli-inspired coordinate set — top and skirt pairing for polished day-to-evening looks.',
     fabric: 'Fabric composition — to be finalized with production.',
     measurements: 'Chapter fit; top and skirt lengths confirmed against size chart.',
-    images: orderedProductGallery('soho-set'),
+    images: sohoSetGallery('black'),
+    colorImages: {
+      'Black': sohoSetGallery('black'),
+      'Navy Blue': sohoSetGallery('navy-blue'),
+    },
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
-      { name: 'Magenta', hex: '#9B1F5C' },
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     category: 'Sets',

@@ -88,7 +88,7 @@ export default function StrandsPage() {
   const strandProducts = useMemo(() => accessories.filter((item) => item.category === 'abaya-charms'), [])
   const marylebone = useMemo(() => products.find((product) => product.slug === 'marylebone-abaya'), [])
   const maryleboneHref = marylebone ? getProductHref(marylebone) : '/shop/marylebone-abaya'
-  const maryleboneImage = marylebone?.images[0] || '/Webshop pictures/Abayas/Marylebone Abaya/Marylebone Abaya- F.JPG'
+  const maryleboneImage = marylebone?.images[0] || '/Webshop pictures/Abayas/Marylebone Abaya/bint-saeed-marylebone-abaya-black-front.webp'
   const heroCanvasRef = useRef<HTMLCanvasElement | null>(null)
   const heroWebglInitializedRef = useRef(false)
   const heroMouseRef = useRef({ x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 })
