@@ -8,6 +8,7 @@ import { useWishlistStore } from '@/store/wishlistStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getProductHref } from '@/lib/products/links'
+import { withBrandAlt } from '@/lib/products/imageAlt'
 
 export default function WishlistPage() {
   const { items, removeItem } = useWishlistStore()
@@ -64,7 +65,7 @@ export default function WishlistPage() {
                     className={`flex gap-4 rounded-lg border border-brand-stone/30 bg-white p-4 ${isRTL ? 'flex-row-reverse' : ''}`}
                   >
                     <LocaleLink href={href} className="relative h-28 w-20 flex-shrink-0 overflow-hidden bg-brand-stone/10 sm:h-32 sm:w-24" data-cursor-hover>
-                      <Image src={item.image} alt={item.name} fill className="pointer-events-none object-cover" sizes="96px" />
+                      <Image src={item.image} alt={withBrandAlt(item.name)} fill className="pointer-events-none object-cover" sizes="96px" />
                     </LocaleLink>
                     <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
                       <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">

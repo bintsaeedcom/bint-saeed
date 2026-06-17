@@ -7,18 +7,19 @@ import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowLeft, FiArrowRight, Fi
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
+import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
+import { getCartLineImageAlt } from '@/lib/products/imageAlt'
 
 export default function CartPage() {
-  const { items, removeItem, updateQuantity, getTotal } = useCartStore()
+  const { items, removeItem, updateQuantity } = useCartStore()
   const productHref = (item: (typeof items)[number]) =>
     item.productUrl ?? getProductHref(staticProducts.find((product) => product.id === item.id) ?? { id: item.id, name: item.name })
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
-  const { formatPrice } = useCurrency()
+  const { formatPrice, formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL } = useLanguage()
 
   if (items.length === 0) {
@@ -95,7 +96,10 @@ export default function CartPage() {
                     <div className="relative aspect-[9/16] w-[5.6rem] bg-[#f5f5f5] md:w-[7.2rem]">
                       <Image
                         src={item.image}
-                        alt={item.name}
+                        alt={getCartLineImageAlt(
+                          item,
+                          staticProducts.find((product) => product.id === item.id),
+                        )}
                         fill
                         className="img-zoom object-cover object-top"
                       />
@@ -113,16 +117,16 @@ export default function CartPage() {
                       <div className="font-montserrat text-xs text-brand-clayRed/60 tracking-wide space-y-1">
                         <p>Size: {item.size}</p>
                         <p>Color: {item.color}</p>
+                        {item.sku && (
+                          <p className="font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-clayRed/60">
+                            SKU {item.sku}
+                          </p>
+                        )}
                         {(item.lengthCm || item.customLength) && (
                           <p>Length: {item.lengthCm ? `${item.lengthCm} cm` : item.customLength}</p>
                         )}
                         {item.customisationMessage && (
-                          <p>
-                            Personalisation: {item.customisationMessage}
-                            {(item.customisationSurcharge ?? 0) > 0 && (
-                              <span className="text-brand-darkRed"> (+{formatPrice(item.customisationSurcharge ?? 0)} per piece)</span>
-                            )}
-                          </p>
+                          <p>Personalisation: {item.customisationMessage}</p>
                         )}
                         {item.notes && <p>Notes: {item.notes}</p>}
                       </div>
@@ -131,10 +135,10 @@ export default function CartPage() {
                     {/* Price & Actions */}
                     <div className="flex items-end justify-between mt-4">
                       <p className="font-montserrat text-base text-brand-darkRed tracking-wide">
-                        {formatPrice(lineUnitAed(item))}
+                        {formatAmount(lineUnitForCurrency(item, currency.code))}
                         {item.quantity > 1 && (
                           <span className="block font-montserrat text-xs text-brand-clayRed/60">
-                            {formatPrice(lineTotalAed(item))} total
+                            {formatAmount(lineTotalForCurrency(item, currency.code))} total
                           </span>
                         )}
                       </p>
@@ -230,7 +234,7 @@ export default function CartPage() {
               <div className="space-y-4 mb-6">
                 <div className={`flex justify-between font-montserrat text-sm tracking-wide ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <span className="text-brand-clayRed/70">{isRTL ? 'المجموع الفرعي' : 'Subtotal'}</span>
-                  <span className="text-brand-darkRed">{formatPrice(getTotal())}</span>
+                  <span className="text-brand-darkRed">{formatCartSubtotal(items)}</span>
                 </div>
                 
                 {/* Shipping Notice */}
@@ -262,7 +266,7 @@ export default function CartPage() {
                     {isRTL ? 'المجموع' : 'Subtotal'}
                   </span>
                   <span className="text-brand-darkRed font-medium">
-                    {formatPrice(getTotal())}
+                    {formatCartSubtotal(items)}
                   </span>
                 </div>
                 <p className={`font-montserrat text-[10px] text-brand-clayRed/50 tracking-wide mt-1 ${isRTL ? 'text-right' : ''}`}>
@@ -276,8 +280,8 @@ export default function CartPage() {
                 data-cursor-hover
                 onClick={() =>
                   trackEvent('begin_checkout', {
-                    currency: 'AED',
-                    value: Number(getTotal().toFixed(2)),
+                    currency: currency.code,
+                    value: Number(cartSubtotal(items).toFixed(2)),
                     item_count: items.length,
                     source: 'cart_page',
                   })

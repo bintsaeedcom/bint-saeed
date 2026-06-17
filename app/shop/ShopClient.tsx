@@ -25,8 +25,6 @@ const CATEGORY_QUERY_MAP: Record<string, string> = {
   jacket: 'Sets',
   jackets: 'Sets',
   sets: 'Sets',
-  accessories: 'Belts',
-  belts: 'Belts',
   'ready-to-wear': 'All',
   evening: 'Dresses',
   'evening-wear': 'Dresses',
@@ -40,7 +38,6 @@ const CATEGORY_QUERY_VALUE: Record<(typeof categories)[number], string | null> =
   Kaftans: 'kaftans',
   Dresses: 'dresses',
   Sets: 'sets',
-  Belts: 'accessories',
 }
 
 const SORT_OPTIONS = [
@@ -389,7 +386,7 @@ export default function ShopClient() {
                     </h3>
                   </LocaleLink>
                   <p className="font-montserrat text-sm tabular-nums tracking-wide text-[#6f1524]">
-                    {formatPrice(product.price)}
+                    {formatPrice(product.price, product.id)}
                   </p>
                   <div className="flex gap-1.5 pt-1">
                     {product.colors.slice(0, 5).map((c) => (

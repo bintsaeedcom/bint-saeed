@@ -8,6 +8,7 @@ import {
   productHreflangLanguages,
   productNotFoundMetadata,
 } from '@/lib/seo/productPageMeta'
+import { getProductImageAlt } from '@/lib/products/imageAlt'
 
 const SITE_URL = 'https://www.bintsaeed.com'
 
@@ -30,9 +31,14 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
     name: product.name,
     description: product.description,
     fabric: product.fabric,
+    slug,
   })
   const image = product.images[0] ?? '/og-image.png'
   const imageUrl = image.startsWith('http') ? image : `${SITE_URL}${image}`
+  const imageAlt = getProductImageAlt(product, image, {
+    color: product.colors[0]?.name,
+    index: 0,
+  })
 
   return {
     title: `${product.name} | Bint Saeed`,
@@ -50,7 +56,7 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
       images: [
         {
           url: imageUrl,
-          alt: product.name,
+          alt: imageAlt,
         },
       ],
     },

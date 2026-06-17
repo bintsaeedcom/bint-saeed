@@ -3,6 +3,16 @@ import Stripe from 'stripe'
 import { isAllowedCheckoutOrigin, resolvePublicSiteBaseUrl } from '@/lib/security/allowedCheckoutOrigin'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { notifyHealthAlert } from '@/lib/ops/notifications'
+import {
+  cartSubtotalInCurrency,
+  getExpressShippingFee,
+  getSignaturePackagingFee,
+  lineUnitInCurrency,
+  normalizeCurrencyCode,
+  toStripeMinorUnits,
+} from '@/lib/pricing'
+import { products as staticProducts } from '@/data/products'
+import { resolveSkuByProductId } from '@/lib/products/sku'
 
 function getStripeSecretKey(): string | null {
   const key = process.env.STRIPE_SECRET_KEY?.trim()
@@ -52,7 +62,20 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const { items, discountCode, customerEmail, packagingType, checkoutNotes, clientContext } = body
+    const {
+      items,
+      discountCode,
+      customerEmail,
+      packagingType,
+      checkoutNotes,
+      clientContext,
+      currency: currencyRaw,
+    } = body
+    const checkoutCurrency = normalizeCurrencyCode(
+      typeof currencyRaw === 'string' ? currencyRaw : 'AED',
+    )
+    const stripeCurrency = checkoutCurrency.toLowerCase()
+
     const discountCodeStr = typeof discountCode === 'string' ? discountCode.trim().slice(0, 64) : ''
     const clientTimezone =
       typeof clientContext?.timezone === 'string' ? clientContext.timezone.trim().slice(0, 64) : ''
@@ -69,11 +92,24 @@ export async function POST(request: NextRequest) {
     }
 
     const lineItems = items.map((item: Record<string, unknown>) => {
-      const surcharge = Number(item.customisationSurcharge) || 0
-      const unitAed = Number(item.price) + surcharge
       const msg =
         typeof item.customisationMessage === 'string' ? item.customisationMessage.trim().slice(0, 200) : ''
       const hasCustom = msg.length > 0
+      const productId = String(item.id ?? '')
+      const color = String(item.color ?? '')
+      const sku =
+        (typeof item.sku === 'string' && item.sku.trim()) ||
+        resolveSkuByProductId(productId, staticProducts, color) ||
+        undefined
+      const unitAmount = lineUnitInCurrency(
+        {
+          id: String(item.id ?? ''),
+          price: Number(item.price) || 0,
+          customisationMessage: msg || undefined,
+          customisationSurcharge: Number(item.customisationSurcharge) || undefined,
+        },
+        checkoutCurrency,
+      )
       const lengthPart =
         item.lengthCm != null && String(item.lengthCm).length > 0
           ? `, Length: ${String(item.lengthCm).slice(0, 24)} cm`
@@ -83,20 +119,22 @@ export async function POST(request: NextRequest) {
       const customPart = hasCustom
         ? `, Personalisation: ${msg} (customised items are non-returnable)`
         : ''
+      const skuPart = sku ? `, SKU: ${sku}` : ''
       const descRaw = `Size: ${String(item.size ?? '').slice(0, 48)}, Color: ${String(item.color ?? '').slice(0, 48)}${lengthPart}${
         item.notes ? `, Notes: ${String(item.notes).slice(0, 120)}` : ''
-      }${customPart}`
+      }${customPart}${skuPart}`
       const description = descRaw.length > MAX_DESC_LEN ? `${descRaw.slice(0, MAX_DESC_LEN - 1)}…` : descRaw
       const qty = Math.min(99, Math.max(1, Math.floor(Number(item.quantity)) || 1))
       return {
         price_data: {
-          currency: 'aed',
+          currency: stripeCurrency,
           product_data: {
             name: String(item.name ?? 'Item').slice(0, 120),
             description,
             images: [String(item.image ?? '').slice(0, 500)],
+            ...(sku ? { metadata: { sku: sku.slice(0, 50) } } : {}),
           },
-          unit_amount: Math.max(0, Math.min(50_000_000, Math.round(unitAed * 100))),
+          unit_amount: toStripeMinorUnits(unitAmount, checkoutCurrency),
         },
         quantity: qty,
       }
@@ -104,24 +142,24 @@ export async function POST(request: NextRequest) {
 
     const packaging = packagingType === 'signature' ? 'signature' : 'sustainable'
     if (packaging === 'signature') {
+      const packagingFee = getSignaturePackagingFee(checkoutCurrency)
       lineItems.push({
         price_data: {
-          currency: 'aed',
+          currency: stripeCurrency,
           product_data: {
             name: 'Signature Packaging',
             description: 'Premium signature shipment box',
             images: [],
           },
-          unit_amount: 3000,
+          unit_amount: toStripeMinorUnits(packagingFee, checkoutCurrency),
         },
         quantity: 1,
       })
     }
 
-    // Build checkout session options
+    const expressShippingAmount = getExpressShippingFee(checkoutCurrency)
+
     const sessionOptions: Stripe.Checkout.SessionCreateParams = {
-      // Card enables credit/debit + Apple Pay / Google Pay on supported devices (verify domain in Stripe Dashboard).
-      // Link adds Stripe Link where available for the currency.
       payment_method_types: ['card', 'link'],
       payment_method_options: {
         card: {
@@ -136,9 +174,7 @@ export async function POST(request: NextRequest) {
         allowed_countries: ['AE', 'SA', 'KW', 'BH', 'OM', 'QA', 'GB', 'US', 'FR', 'DE', 'IT'],
       },
       billing_address_collection: 'required',
-      // Allow customer to enter discount code at checkout
       allow_promotion_codes: true,
-      // Custom fields for delivery notes
       custom_fields: [
         {
           key: 'delivery_notes',
@@ -150,18 +186,16 @@ export async function POST(request: NextRequest) {
           optional: true,
         },
       ],
-      // Add phone number collection
       phone_number_collection: {
         enabled: true,
       },
-      // Shipping options
       shipping_options: [
         {
           shipping_rate_data: {
             type: 'fixed_amount',
             fixed_amount: {
               amount: 0,
-              currency: 'aed',
+              currency: stripeCurrency,
             },
             display_name: 'Standard Shipping (2 weeks)',
             delivery_estimate: {
@@ -180,8 +214,8 @@ export async function POST(request: NextRequest) {
           shipping_rate_data: {
             type: 'fixed_amount',
             fixed_amount: {
-              amount: 5000, // 50 AED
-              currency: 'aed',
+              amount: toStripeMinorUnits(expressShippingAmount, checkoutCurrency),
+              currency: stripeCurrency,
             },
             display_name: 'Express Shipping (1 week)',
             delivery_estimate: {
@@ -199,20 +233,22 @@ export async function POST(request: NextRequest) {
       ],
       metadata: {
         customerEmail: typeof customerEmail === 'string' ? customerEmail.trim().slice(0, 320) : '',
+        checkoutCurrency,
         orderItems: JSON.stringify(
-          items.map((item: any) => ({
+          items.map((item: Record<string, unknown>) => ({
             id: item.id,
             productUrl: item.productUrl,
             name: item.name,
             size: item.size,
             color: item.color,
             quantity: item.quantity,
-            price: item.price,
+            priceAed: item.price,
             customLength: item.customLength,
             lengthCm: item.lengthCm,
             notes: item.notes,
             customisationMessage: item.customisationMessage,
             customisationSurcharge: item.customisationSurcharge,
+            sku: typeof item.sku === 'string' ? item.sku : resolveSkuByProductId(String(item.id ?? ''), staticProducts, String(item.color ?? '')),
           }))
         ),
         discountCodeUsed: discountCodeStr,
@@ -222,10 +258,9 @@ export async function POST(request: NextRequest) {
         clientLocalTime,
         clientDeviceType,
         checkoutNotes: checkoutNotesText,
+        cartSubtotal: String(cartSubtotalInCurrency(items as never[], checkoutCurrency)),
       },
-      // Customer creation for order tracking
       customer_creation: 'always',
-      // Invoice for UAE tax compliance
       invoice_creation: {
         enabled: true,
         invoice_data: {
@@ -244,10 +279,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // If a specific discount code is provided, try to apply it
     if (discountCodeStr) {
       try {
-        // Find the promotion code
         const promotionCodes = await stripe.promotionCodes.list({
           code: discountCodeStr,
           active: true,
@@ -258,11 +291,9 @@ export async function POST(request: NextRequest) {
           sessionOptions.discounts = [{
             promotion_code: promotionCodes.data[0].id,
           }]
-          // Remove allow_promotion_codes if we're applying a specific code
           delete sessionOptions.allow_promotion_codes
         }
-      } catch (e) {
-        // If promotion code lookup fails, still allow manual entry
+      } catch {
         console.log('Discount code lookup failed, allowing manual entry')
       }
     }

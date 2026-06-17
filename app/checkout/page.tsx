@@ -24,11 +24,13 @@ import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
-import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
+import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
+import { getSignaturePackagingFee } from '@/lib/pricing'
 import { getTabbyCheckoutUrl, getTamaraCheckoutUrl } from '@/lib/payments'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
+import { getCartLineImageAlt, getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
@@ -46,8 +48,8 @@ function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
 export default function CheckoutPage() {
   const router = useRouter()
   const { localize } = useLocaleHref()
-  const { items, getTotal } = useCartStore()
-  const { formatPrice } = useCurrency()
+  const { items } = useCartStore()
+  const { formatPrice, formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL } = useLanguage()
   const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.trim() ?? ''
   const stripeEnvReady = stripePublishableKey.startsWith('pk_')
@@ -78,11 +80,11 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (items.length === 0) return
     trackEvent('begin_checkout', {
-      currency: 'AED',
-      value: Number(getTotal().toFixed(2)),
+      currency: currency.code,
+      value: Number(cartSubtotal(items).toFixed(2)),
       item_count: items.length,
     })
-  }, [getTotal, items.length])
+  }, [cartSubtotal, currency.code, items])
 
   useEffect(() => {
     if (appliedCode && discountInput.trim().toUpperCase() !== appliedCode.toUpperCase()) {
@@ -90,9 +92,9 @@ export default function CheckoutPage() {
     }
   }, [discountInput, appliedCode])
 
-  const subtotal = getTotal()
-  const signaturePackagingFeeAed = packagingType === 'signature' ? 30 : 0
-  const estimatedTotal = subtotal + signaturePackagingFeeAed
+  const subtotal = cartSubtotal(items)
+  const signaturePackagingFee = packagingType === 'signature' ? getSignaturePackagingFee(currency.code) : 0
+  const estimatedTotal = subtotal + signaturePackagingFee
   const pairedStyles = useMemo(() => {
     const cartIds = new Set(items.map((item) => item.id))
     const cartCategories = new Set(
@@ -157,14 +159,15 @@ export default function CheckoutPage() {
     }
 
     setPayBusy(true)
-    trackEvent('add_shipping_info', { checkout_provider: 'stripe', currency: 'AED' })
-    trackEvent('add_payment_info', { checkout_provider: 'stripe', currency: 'AED' })
+    trackEvent('add_shipping_info', { checkout_provider: 'stripe', currency: currency.code })
+    trackEvent('add_payment_info', { checkout_provider: 'stripe', currency: currency.code })
     try {
       const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items,
+          currency: currency.code,
           discountCode: appliedCode || undefined,
           customerEmail: email.trim() || undefined,
           packagingType,
@@ -264,7 +267,10 @@ export default function CheckoutPage() {
                     <LocaleLink href={productHref(item)} className="relative h-24 w-20 shrink-0 overflow-hidden bg-[#f0eeeb]" data-cursor-hover>
                       <Image
                         src={item.image}
-                        alt={`${item.name} — cart item image | Bint Saeed`}
+                        alt={getCartLineImageAlt(
+                          item,
+                          staticProducts.find((product) => product.id === item.id),
+                        )}
                         fill
                         className="img-zoom object-cover object-top"
                         sizes="80px"
@@ -285,10 +291,10 @@ export default function CheckoutPage() {
                         {item.customisationMessage ? ` · "${item.customisationMessage.slice(0, 20)}${item.customisationMessage.length > 20 ? '…' : ''}"` : ''}
                       </p>
                       <p className="mt-2 font-montserrat text-sm text-brand-darkRed">
-                        {formatPrice(lineUnitAed(item))}
+                        {formatAmount(lineUnitForCurrency(item, currency.code))}
                         <span className="text-brand-clayRed/50"> × {item.quantity}</span>
                         {item.quantity > 1 && (
-                          <span className="block text-xs text-brand-clayRed/55">{formatPrice(lineTotalAed(item))} total</span>
+                          <span className="block text-xs text-brand-clayRed/55">{formatAmount(lineTotalForCurrency(item, currency.code))} total</span>
                         )}
                       </p>
                     </div>
@@ -333,7 +339,10 @@ export default function CheckoutPage() {
                         <div className="relative aspect-[9/16] overflow-hidden border border-brand-stone/15 bg-[#f5f3ef]">
                           <Image
                             src={product.images[0] ?? ''}
-                            alt={product.name}
+                            alt={getProductImageAlt(product, product.images[0] ?? '', {
+                              color: product.colors[0]?.name,
+                              index: 0,
+                            })}
                             fill
                             sizes="(max-width: 640px) 75vw, 30vw"
                             className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
@@ -344,7 +353,7 @@ export default function CheckoutPage() {
                             {product.name}
                           </p>
                           <p className="mt-1 font-montserrat text-xs tracking-wide text-brand-clayRed/80">
-                            {formatPrice(product.price)}
+                            {formatPrice(product.price, product.id)}
                           </p>
                         </div>
                       </LocaleLink>
@@ -473,7 +482,7 @@ export default function CheckoutPage() {
                   <div className="relative aspect-[9/16] w-full overflow-hidden bg-[#efebe7]">
                     <Image
                       src="/shipment/shipment%20box.svg"
-                      alt="Signature packaging shipment box"
+                      alt={withBrandAlt('Signature packaging shipment box')}
                       fill
                       className="object-cover"
                     />
@@ -501,7 +510,7 @@ export default function CheckoutPage() {
                   <div className="relative aspect-[9/16] w-full overflow-hidden bg-[#efebe7]">
                     <Image
                       src="https://images.unsplash.com/photo-1583251633146-d0c6c36f0b0f?w=1200&q=80&auto=format&fit=crop"
-                      alt="Sustainable packaging option"
+                      alt={withBrandAlt('Sustainable packaging option')}
                       fill
                       className="object-cover"
                     />
@@ -633,12 +642,12 @@ export default function CheckoutPage() {
                 </h2>
                 <div className={`flex justify-between font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <span>{isRTL ? 'المجموع الفرعي' : 'Subtotal'}</span>
-                  <span className="text-white">{formatPrice(subtotal)}</span>
+                  <span className="text-white">{formatCartSubtotal(items)}</span>
                 </div>
                 <div className={`mt-3 flex justify-between font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <span>{isRTL ? 'التغليف' : 'Packaging'}</span>
                   <span className="text-white">
-                    {signaturePackagingFeeAed > 0 ? `+ ${formatPrice(signaturePackagingFeeAed)}` : isRTL ? 'مجاناً' : 'Free'}
+                    {signaturePackagingFee > 0 ? `+ ${formatAmount(signaturePackagingFee)}` : isRTL ? 'مجاناً' : 'Free'}
                   </span>
                 </div>
                 {appliedCode ? (
@@ -657,7 +666,7 @@ export default function CheckoutPage() {
                 <div className="mt-8 border-t border-white/10 pt-6">
                   <div className={`flex justify-between font-rozha text-xl ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <span className="text-white/80">{isRTL ? 'الإجمالي التقريبي' : 'Estimated total'}</span>
-                    <span>{formatPrice(estimatedTotal)}</span>
+                    <span>{formatAmount(estimatedTotal)}</span>
                   </div>
                   <p className="mt-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/35">
                     {isRTL ? '+ الشحن والضرائب في سترايب' : '+ Shipping & tax in Stripe'}

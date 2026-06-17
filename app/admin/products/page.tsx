@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { FiRefreshCw, FiSave, FiRotateCcw } from 'react-icons/fi'
+import { withBrandAlt } from '@/lib/products/imageAlt'
 
 type Row = {
   id: string
@@ -114,7 +115,7 @@ export default function AdminProductsPage() {
                   {r.image ? (
                     <Image
                       src={r.image}
-                      alt={`${r.name} — product thumbnail | Bint Saeed`}
+                      alt={withBrandAlt(`${r.name} — product thumbnail`)}
                       fill
                       className="object-cover"
                       sizes="96px"

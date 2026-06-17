@@ -17,9 +17,11 @@ export interface CartItem {
   notes?: string
   /** Garment length from PDP dropdown, e.g. "55" (cm). */
   lengthCm?: string
-  /** Embroidery / personalisation text — triggers surcharge when non-empty. */
+  /** Ops SKU e.g. BS-AB-001-DBR (abayas). */
+  sku?: string
+  /** Embroidery / personalisation text (complimentary on abayas). */
   customisationMessage?: string
-  /** Added to `price` per unit when customisation is applied (e.g. 40 AED). */
+  /** @deprecated No longer charged — kept for persisted carts. */
   customisationSurcharge?: number
 }
 

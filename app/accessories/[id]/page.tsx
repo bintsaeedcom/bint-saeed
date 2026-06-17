@@ -17,6 +17,7 @@ import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { trackEvent } from '@/lib/analytics/tracking'
+import { withBrandAlt } from '@/lib/products/imageAlt'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -249,14 +250,14 @@ export default function AccessoryDetailPage() {
                         ) : isHeicFile(image) ? (
                           <img
                             src={image}
-                            alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
+                            alt={withBrandAlt(`${displayName} — thumbnail ${index + 1}`)}
                             className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
                             loading="lazy"
                           />
                         ) : (
                           <Image
                             src={image}
-                            alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
+                            alt={withBrandAlt(`${displayName} — thumbnail ${index + 1}`)}
                             fill
                             sizes="76px"
                             className="img-zoom object-cover transition-opacity group-hover:opacity-80"
@@ -328,14 +329,18 @@ export default function AccessoryDetailPage() {
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
-                              alt={`${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
+                              alt={withBrandAlt(
+                                `${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`,
+                              )}
                               className="h-full w-full img-zoom object-cover"
                               loading={index === 0 ? 'eager' : 'lazy'}
                             />
                           ) : (
                             <Image
                               src={image}
-                              alt={`${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`}
+                              alt={withBrandAlt(
+                                `${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`,
+                              )}
                               fill
                               sizes="(max-width: 768px) 100vw, 40vw"
                               className="img-zoom object-cover"
@@ -390,14 +395,14 @@ export default function AccessoryDetailPage() {
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
-                              alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
+                              alt={withBrandAlt(`${displayName} — thumbnail ${index + 1}`)}
                               className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
                               loading="lazy"
                             />
                           ) : (
                             <Image
                               src={image}
-                              alt={`${displayName} — thumbnail ${index + 1} | Bint Saeed`}
+                              alt={withBrandAlt(`${displayName} — thumbnail ${index + 1}`)}
                               fill
                               sizes="120px"
                               className="img-zoom object-cover transition-opacity group-hover:opacity-80"
@@ -421,14 +426,14 @@ export default function AccessoryDetailPage() {
                       {isHeicFile(src) ? (
                         <img
                           src={src}
-                          alt={`${displayName}, ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
+                          alt={withBrandAlt(`${displayName}, ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`)}
                           className="h-full w-full img-zoom object-cover"
                           loading="lazy"
                         />
                       ) : (
                         <Image
                           src={src}
-                          alt={`${displayName}, ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`}
+                          alt={withBrandAlt(`${displayName}, ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`)}
                           fill
                           sizes="(max-width: 1024px) 0px, 11rem"
                           className="img-zoom object-cover"
@@ -740,7 +745,7 @@ export default function AccessoryDetailPage() {
               <FiX className="h-8 w-8" />
             </button>
             <div className="relative m-4 h-full max-h-[72vh] w-full max-w-[51.2rem]">
-              <Image src={accessory.images[lightboxIndex]} alt={displayName} fill className="object-contain" />
+              <Image src={accessory.images[lightboxIndex]} alt={withBrandAlt(displayName)} fill className="object-contain" />
             </div>
           </motion.div>
         )}

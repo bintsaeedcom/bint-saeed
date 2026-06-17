@@ -23,6 +23,7 @@ import {
   STONE_OPTIONS,
 } from '@/lib/accessories/filterAccessories'
 import { trackEvent } from '@/lib/analytics/tracking'
+import { withBrandAlt } from '@/lib/products/imageAlt'
 
 function parsePriceParam(v: string | null): PriceRangeId {
   if (!v) return 'all'
@@ -321,7 +322,7 @@ export default function AccessoriesPage() {
                 <div className="relative aspect-[4/5] w-full overflow-hidden bg-brand-stone/15">
                   <Image
                     src={ACCESSORY_IMAGE_ABAYA_CHARMS_HERO}
-                    alt={isRTL ? 'سلاسل العباءة' : 'Abaya strands'}
+                    alt={withBrandAlt(isRTL ? 'سلاسل العباءة' : 'Abaya strands')}
                     fill
                     className="img-zoom object-contain"
                     sizes="(max-width: 1024px) 100vw, 44vw"
@@ -542,7 +543,7 @@ function AccessoryCard({
           <div className="relative mb-4 aspect-[3/4] overflow-hidden bg-[#f5f5f5]">
             <Image
               src={accessory.images[0]}
-              alt={isRTL ? accessory.nameAr : accessory.name}
+              alt={withBrandAlt(isRTL ? accessory.nameAr : accessory.name)}
               fill
               className="pointer-events-none img-zoom object-cover object-top transition-all duration-700 group-hover:scale-105"
             />

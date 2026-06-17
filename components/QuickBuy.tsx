@@ -10,6 +10,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getProductHref } from '@/lib/products/links'
 import toast from 'react-hot-toast'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
+import { getProductImageAlt } from '@/lib/products/imageAlt'
 
 interface QuickBuyProps {
   isOpen: boolean
@@ -18,6 +19,7 @@ interface QuickBuyProps {
     id: string
     name: string
     nameAr?: string
+    slug?: string
     price: number
     images: string[]
     sizes: string[]
@@ -128,7 +130,16 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                 <div className="relative aspect-[9/16] w-[4.8rem] flex-shrink-0 overflow-hidden rounded-lg bg-[#f5f5f5] sm:w-[5.6rem]">
                   <Image
                     src={product.images[0]}
-                    alt={product.name}
+                    alt={getProductImageAlt(
+                      {
+                        name: product.name,
+                        category: product.category ?? 'Abayas',
+                        colors: product.colors,
+                        slug: product.slug ?? '',
+                      },
+                      product.images[0],
+                      { color: selectedColor || product.colors[0]?.name, index: 0 },
+                    )}
                     fill
                     className="img-zoom object-cover object-top"
                   />

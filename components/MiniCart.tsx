@@ -10,9 +10,10 @@ import { FreeMode } from 'swiper/modules'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { lineUnitAed, lineTotalAed } from '@/lib/shopProductOptions'
+import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
+import { getCartLineImageAlt, getProductImageAlt } from '@/lib/products/imageAlt'
 
 import 'swiper/css'
 import 'swiper/css/free-mode'
@@ -23,8 +24,8 @@ interface MiniCartProps {
 }
 
 export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
-  const { items, removeItem, updateQuantity, getTotal } = useCartStore()
-  const { formatPrice } = useCurrency()
+  const { items, removeItem, updateQuantity } = useCartStore()
+  const { formatPrice, formatAmount, currency, formatCartSubtotal } = useCurrency()
   const { isRTL } = useLanguage()
   const summarize = (value: string, max = 46) =>
     value.length > max ? `${value.slice(0, max).trimEnd()}…` : value
@@ -130,7 +131,10 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                         <div className="relative h-[4.8rem] w-16 overflow-hidden rounded-lg bg-[#f5f5f5] sm:h-[6.4rem] sm:w-[4.8rem]">
                           <Image
                             src={item.image}
-                            alt={item.name}
+                            alt={getCartLineImageAlt(
+                              item,
+                              staticProducts.find((product) => product.id === item.id),
+                            )}
                             fill
                             className="img-zoom object-cover object-top"
                           />
@@ -159,10 +163,10 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                           </p>
                         )}
                         <p className="font-montserrat text-sm text-brand-darkRed mt-2">
-                          {formatPrice(lineUnitAed(item))}
+                          {formatAmount(lineUnitForCurrency(item, currency.code))}
                           {item.quantity > 1 && (
                             <span className="block font-montserrat text-[10px] text-brand-clayRed/60">
-                              {formatPrice(lineTotalAed(item))} {isRTL ? 'المجموع' : 'line total'}
+                              {formatAmount(lineTotalForCurrency(item, currency.code))} {isRTL ? 'المجموع' : 'line total'}
                             </span>
                           )}
                         </p>
@@ -245,7 +249,10 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                           <div className="relative aspect-[9/16] overflow-hidden rounded-md bg-[#f5f5f5]">
                             <Image
                               src={p.images[0]}
-                              alt={p.name}
+                              alt={getProductImageAlt(p, p.images[0] ?? '', {
+                                color: p.colors[0]?.name,
+                                index: 0,
+                              })}
                               fill
                               sizes="124px"
                               className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
@@ -272,7 +279,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                     {isRTL ? 'المجموع الفرعي' : 'Subtotal'}
                   </span>
                   <span className="font-montserrat text-lg font-medium text-brand-darkRed">
-                    {formatPrice(getTotal())}
+                    {formatCartSubtotal(items)}
                   </span>
                 </div>
                 <p className={`font-montserrat text-[10px] text-brand-clayRed/50 ${isRTL ? 'text-right' : ''}`}>

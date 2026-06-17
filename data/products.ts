@@ -17,12 +17,9 @@ export interface Product {
 }
 
 /** Shop filter order (excluding All). Counts in the UI match `products` per category. */
-export const categories = ['All', 'Abayas', 'Kaftans', 'Dresses', 'Sets', 'Belts'] as const
+export const categories = ['All', 'Abayas', 'Kaftans', 'Dresses', 'Sets'] as const
 
 export type ShopCategory = (typeof categories)[number]
-
-/** Uniform shop price for collection apparel (Abayas, Kaftans, Dresses, Sets). Belts excluded. */
-export const COLLECTION_APPAREL_PRICE_AED = 500
 
 const abayaPalette = [
   { name: 'Midnight Black', hex: '#1a1a1a' },
@@ -246,12 +243,6 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     side: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-side.webp',
     back: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-back.webp',
   },
-  'signature-belt-i': {
-    front: '/Webshop%20pictures/Belt.jpg',
-  },
-  'signature-belt-ii': {
-    front: '/Webshop%20pictures/Belt.jpg',
-  },
 }
 
 function orderedProductGallery(slug: string): string[] {
@@ -350,11 +341,8 @@ function hydeParkSetGallery(): string[] {
   return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
 }
 
-/** Hidden from `/shop` grid until webshop photography is wired in ORDERED_APPAREL_VIEWS. */
-export const SHOP_GRID_HIDDEN_SLUGS = new Set(['chelsea-dress'])
-
+/** Hidden from `/shop` grid when no gallery images are wired. */
 export function isVisibleOnShopGrid(product: Pick<Product, 'slug' | 'images'>): boolean {
-  if (SHOP_GRID_HIDDEN_SLUGS.has(product.slug)) return false
   return product.images.length > 0
 }
 
@@ -363,8 +351,9 @@ export const products: Product[] = [
     id: 'bs-001',
     slug: 'knightsbridge-abaya-jacket',
     name: 'Knightsbridge Abaya Jacket',
-    price: COLLECTION_APPAREL_PRICE_AED,
-    description: 'Khous jacket-style abaya with refined drape and embroidery-led detailing.',
+    price: 3299,
+    description:
+      'Jacket-style abaya with refined drape and trim inspired by traditional Khous weaving — Emirati heritage craftsmanship from Abu Dhabi.',
     fabric: 'Premium Japanese Crepe, Silk lining, Hand-embroidered details',
     measurements: 'Model wears size M. Length: 140cm (size M). Available in custom lengths upon request.',
     images: knightsbridgeAbayaJacketGallery('dark-brown'),
@@ -383,8 +372,9 @@ export const products: Product[] = [
     id: 'ab-002',
     slug: 'covent-garden-abaya',
     name: 'Covent Garden Abaya',
-    price: COLLECTION_APPAREL_PRICE_AED,
-    description: 'Light linen abaya with Talli-led presence and a clean, concealed placket.',
+    price: 2799,
+    description:
+      'Light linen abaya with traditional Al Talli trim, a clean concealed placket, and Emirati heritage detailing.',
     fabric: 'European linen blend, cotton lining',
     measurements: 'Length: 138cm (size M). Relaxed fit through the body.',
     images: orderedProductGallery('covent-garden-abaya'),
@@ -396,8 +386,9 @@ export const products: Product[] = [
     id: 'ab-004',
     slug: 'kensington-abaya',
     name: 'Kensington Abaya',
-    price: COLLECTION_APPAREL_PRICE_AED,
-    description: 'Structured blazer abaya with tonal embroidery and a tailored shoulder.',
+    price: 2899,
+    description:
+      'Structured blazer abaya with a tailored shoulder and trim inspired by traditional Khous weaving and Emirati heritage.',
     fabric: 'Japanese crepe, tonal embroidery thread',
     measurements: 'Length: 140cm (size M).',
     images: orderedProductGallery('kensington-abaya'),
@@ -409,7 +400,7 @@ export const products: Product[] = [
     id: 'ab-005',
     slug: 'marylebone-abaya',
     name: 'Marylebone Abaya',
-    price: COLLECTION_APPAREL_PRICE_AED,
+    price: 2499,
     description: 'Open-front signature abaya with wide sleeves to layer over dresses or sets.',
     fabric: 'Wool-silk blend, matte satin binding',
     measurements: 'Length: 135cm (size M).',
@@ -429,8 +420,9 @@ export const products: Product[] = [
     id: 'ab-006',
     slug: 'belgravia-abaya',
     name: 'Belgravia Abaya',
-    price: COLLECTION_APPAREL_PRICE_AED,
-    description: 'Signature Khous abaya with tonal embroidery and a deliberate, refined drape.',
+    price: 3199,
+    description:
+      'Signature abaya with tonal embroidery and trim inspired by traditional Khous weaving — a refined expression of Emirati heritage.',
     fabric: 'Japanese crepe, tonal embroidery thread',
     measurements: 'Length: 140cm (size M). Available in custom lengths upon request.',
     images: orderedProductGallery('belgravia-abaya'),
@@ -442,7 +434,7 @@ export const products: Product[] = [
     id: 'ab-007',
     slug: 'park-lane-abaya',
     name: 'Park Lane Abaya',
-    price: COLLECTION_APPAREL_PRICE_AED,
+    price: 2199,
     description: 'Refined everyday abaya with a clean line and fluid drape designed for city movement.',
     fabric: 'Fabric composition — to be finalized with production.',
     measurements: 'Length: 138cm (size M). Available in custom lengths upon request.',
@@ -464,7 +456,7 @@ export const products: Product[] = [
     id: 'ab-008',
     slug: 'hyde-park-set',
     name: 'Hyde Park Set',
-    price: COLLECTION_APPAREL_PRICE_AED,
+    price: 1399,
     description: 'Placeholder style pending full product details and imagery.',
     fabric: 'Fabric composition — to be finalized with production.',
     measurements: 'Measurements — to be confirmed.',
@@ -477,7 +469,7 @@ export const products: Product[] = [
     id: 'bs-002',
     slug: 'mayfair-kaftan',
     name: 'Mayfair Kaftan',
-    price: COLLECTION_APPAREL_PRICE_AED,
+    price: 975,
     description:
       'Crepe-chiffon V-neck kaftan with fluid drape, inner dress, scarf detail, and signature gold emblem.',
     fabric: 'Italian Silk, Crystal embellishments, Pearl buttons',
@@ -491,7 +483,7 @@ export const products: Product[] = [
     id: 'cf-002',
     slug: 'nothing-hill-kaftan',
     name: 'Nothing Hill Kaftan',
-    price: COLLECTION_APPAREL_PRICE_AED,
+    price: 975,
     description: 'Shorter kaftan silhouette with bracelet sleeves and a jewel neckline.',
     fabric: 'Sand-washed silk, bound inner seams',
     measurements: 'Length: 125cm. Relaxed fit.',
@@ -504,8 +496,9 @@ export const products: Product[] = [
     id: 'bs-003',
     slug: 'knightsbridge-dress',
     name: 'Knightsbridge Dress',
-    price: COLLECTION_APPAREL_PRICE_AED,
-    description: 'Midi-length Khous signature dress with layered skirt and evening-ready presence.',
+    price: 2199,
+    description:
+      'Midi-length dress with layered skirt and trim inspired by traditional Khous weaving — evening-ready Emirati heritage design.',
     fabric: 'French Tulle, Swarovski crystals, Duchess satin lining',
     measurements: 'Fitted bodice, flowing skirt. Length: 160cm (size M). Train: 30cm.',
     images: knightsbridgeDressGallery('dark-brown'),
@@ -524,7 +517,7 @@ export const products: Product[] = [
     id: 'dr-009',
     slug: 'covent-garden-long-dress',
     name: 'Covent Garden Long Dress',
-    price: COLLECTION_APPAREL_PRICE_AED,
+    price: 1699,
     description: 'Slim column in stretch crepe with a high back vent for ease of movement.',
     fabric: 'Stretch crepe, power mesh lining',
     measurements: 'Floor length 148cm (size M).',
@@ -534,28 +527,12 @@ export const products: Product[] = [
     category: 'Dresses',
   },
   {
-    id: 'bs-006',
-    slug: 'chelsea-dress',
-    name: 'Chelsea Dress',
-    price: COLLECTION_APPAREL_PRICE_AED,
-    description: 'Draped jersey dress with asymmetric hem for fluid movement.',
-    fabric: 'Modal Jersey, Stretch lining, Invisible zipper',
-    measurements: 'Length varies from 120cm to 140cm due to draping. True to size.',
-    images: orderedProductGallery('chelsea-dress'),
-    colors: [
-      { name: 'Wine', hex: '#722f37' },
-      { name: 'Forest', hex: '#228b22' },
-      { name: 'Midnight', hex: '#191970' },
-    ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    category: 'Dresses',
-  },
-  {
     id: 'bs-004',
     slug: 'hampstead-dress',
     name: 'Hampstead Dress',
-    price: COLLECTION_APPAREL_PRICE_AED,
-    description: 'Talli-inspired dress with structured shoulders and a clean skirt for evening or city.',
+    price: 1799,
+    description:
+      'Dress with structured shoulders and traditional Al Talli trim — evening or city wear rooted in Emirati heritage.',
     fabric: 'Virgin Wool blend, Silk lining, Mother-of-pearl buttons',
     measurements: 'Structured fit. Length: 118cm (size M). Shoulder width: 42cm.',
     images: orderedProductGallery('hampstead-dress'),
@@ -571,7 +548,7 @@ export const products: Product[] = [
     id: 'bs-005',
     slug: 'covent-garden-signature-set',
     name: 'Covent Garden Signature Set',
-    price: COLLECTION_APPAREL_PRICE_AED,
+    price: 3199,
     description: 'Khous signature classic two-piece set — top and skirt for full looks or separated styling.',
     fabric: 'Organic Cotton blend, Linen accents, Natural dyes',
     measurements: 'Top length: 70cm, Skirt length: 95cm (size M). Relaxed fit.',
@@ -584,8 +561,9 @@ export const products: Product[] = [
     id: 'st-003',
     slug: 'soho-set',
     name: 'Soho Set',
-    price: COLLECTION_APPAREL_PRICE_AED,
-    description: 'Talli-inspired coordinate set — top and skirt pairing for polished day-to-evening looks.',
+    price: 1499,
+    description:
+      'Coordinate top and skirt set with traditional Al Talli trim — polished day-to-evening looks celebrating Emirati heritage.',
     fabric: 'Fabric composition — to be finalized with production.',
     measurements: 'Chapter fit; top and skirt lengths confirmed against size chart.',
     images: sohoSetGallery('black'),
@@ -599,32 +577,6 @@ export const products: Product[] = [
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     category: 'Sets',
-  },
-  {
-    id: 'belt-001',
-    slug: 'signature-belt-i',
-    name: 'Signature Belt I',
-    price: 395,
-    description: 'Placeholder belt style pending final imagery and specifications.',
-    fabric: 'Material details — to be confirmed.',
-    measurements: 'One size (adjustable).',
-    images: orderedProductGallery('signature-belt-i'),
-    colors: [{ name: 'Black', hex: '#1a1a1a' }],
-    sizes: ['One Size'],
-    category: 'Belts',
-  },
-  {
-    id: 'belt-002',
-    slug: 'signature-belt-ii',
-    name: 'Signature Belt II',
-    price: 395,
-    description: 'Placeholder belt style pending final imagery and specifications.',
-    fabric: 'Material details — to be confirmed.',
-    measurements: 'One size (adjustable).',
-    images: orderedProductGallery('signature-belt-ii'),
-    colors: [{ name: 'Black', hex: '#1a1a1a' }],
-    sizes: ['One Size'],
-    category: 'Belts',
   },
 ]
 

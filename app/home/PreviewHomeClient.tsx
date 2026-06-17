@@ -18,7 +18,7 @@ import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
-import { getProductImageAlt } from '@/lib/products/imageAlt'
+import { getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
 import type { Product } from '@/data/products'
 
 /** Corner brackets / full-bleed grid stripes removed — typography uses border-s + border-b on copy only (see hero). */
@@ -91,7 +91,7 @@ function SafeCarouselImage({
   return (
     <Image
       src={resolvedSrc}
-      alt={alt}
+      alt={withBrandAlt(alt)}
       fill
       sizes={sizes}
       className={className}
@@ -131,7 +131,7 @@ function ScrollMaskImage({
         className="pointer-events-none absolute inset-0 will-change-transform"
       >
         <div className="relative h-full w-full">
-          <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
+          <Image src={src} alt={withBrandAlt(alt)} fill sizes={sizes} className="object-cover" />
         </div>
       </motion.div>
       <motion.div
@@ -185,7 +185,7 @@ function CollectionCardVisual({
       <Image
         key={`${label}-${imageIndex}`}
         src={collectionImageSrc(images[imageIndex])}
-        alt={`Bint Saeed ${label}`}
+        alt={withBrandAlt(`Bint Saeed ${label}`)}
         fill
         sizes="(max-width: 768px) 50vw, 25vw"
         unoptimized={isWebshopPicture(images[imageIndex])}
@@ -251,7 +251,7 @@ function CollectionCrossfadeSlideshow({ slides, altForIndex }: CollectionCrossfa
         >
           <Image
             src={src}
-            alt={altForIndex(i)}
+            alt={withBrandAlt(altForIndex(i))}
             fill
             sizes="(max-width: 768px) 50vw, 42vw"
             className="object-cover object-center"
@@ -425,7 +425,7 @@ function CharmHeroFeatureSection() {
             <div className="absolute inset-0 opacity-25">
               <Image
                 src="/background1.JPG"
-                alt="Bint Saeed strand collection"
+                alt={withBrandAlt('Bint Saeed strand collection')}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover object-center"
@@ -478,7 +478,7 @@ function CharmHeroFeatureSection() {
               <div className="absolute -inset-[14%]">
                 <Image
                   src="/collection-section/45.jpg"
-                  alt="Bint Saeed strand collection"
+                  alt={withBrandAlt('Bint Saeed strand collection')}
                   fill
                   sizes="(max-width: 1024px) 100vw, 58vw"
                   className="object-cover object-[50%_42%] transition-transform duration-700 group-hover:scale-[1.02]"
@@ -506,7 +506,7 @@ function CharmHeroFeatureSectionMirror() {
           <div className="relative h-full min-h-[68vh]">
             <Image
               src="/88.jpg"
-              alt="Bint Saeed strand collection"
+              alt={withBrandAlt('Bint Saeed strand collection')}
               fill
               sizes="(max-width: 1024px) 100vw, 58vw"
               className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
@@ -518,7 +518,7 @@ function CharmHeroFeatureSectionMirror() {
           <div className="absolute inset-0 opacity-25">
             <Image
               src="/background1.JPG"
-              alt="Bint Saeed strand collection"
+              alt={withBrandAlt('Bint Saeed strand collection')}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover object-center"
@@ -563,7 +563,7 @@ function CampaignPanoramaSection() {
         <div className="relative aspect-[16/6] min-h-[220px] w-full overflow-hidden bg-brand-stone/15 md:min-h-[280px] lg:min-h-[360px]">
           <Image
             src="/gazelles.jpg"
-            alt="Bint Saeed campaign panorama"
+            alt={withBrandAlt('Bint Saeed campaign panorama')}
             fill
             sizes="100vw"
             className="object-cover object-center"
@@ -663,7 +663,7 @@ function CategoryNavigationStrip() {
           <div className="relative h-[12.5rem] w-full sm:h-[15rem] md:h-[17rem]">
             <Image
               src={activeItem.image}
-              alt={`${activeItem.label} preview`}
+              alt={withBrandAlt(`${activeItem.label} preview`)}
               fill
               sizes="(max-width: 1024px) 100vw, 1200px"
               className="object-cover object-center transition-all duration-500"
@@ -937,7 +937,7 @@ function HeroSection() {
       >
         <Image
           src="/IMG_2821.JPG"
-          alt="Bint Saeed luxury abayas, editorial photograph"
+          alt={withBrandAlt('Bint Saeed luxury abayas, editorial photograph')}
           fill
           className="object-cover object-[center_28%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97]"
           sizes="100vw"
@@ -1045,7 +1045,7 @@ function EditorialIntro() {
               <div className="absolute inset-0">
                 <Image
                   src="/8E4D92A7-497D-44A4-B3DF-C1B775F5CD3A.PNG"
-                  alt="Bint Saeed — from Abu Dhabi to the world"
+                  alt={withBrandAlt('Bint Saeed — from Abu Dhabi to the world')}
                   fill
                   className="object-cover object-[center_22%]"
                   sizes="(max-width: 1024px) 100vw, 560px"
@@ -1274,7 +1274,7 @@ function EditorialSplit() {
                   <div className="relative mb-3 aspect-[3/4] w-full overflow-hidden rounded-lg border border-[#e8ddd4] bg-[#f7f3ee]">
                     <Image
                       src={code.image}
-                      alt={code.title}
+                      alt={withBrandAlt(code.title)}
                       fill
                       sizes="76vw"
                       className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
@@ -1303,7 +1303,7 @@ function EditorialSplit() {
                 <div className="relative mb-3 aspect-[3/4] w-full overflow-hidden rounded-lg border border-[#e8ddd4] bg-[#f7f3ee]">
                   <Image
                     src={code.image}
-                    alt={code.title}
+                    alt={withBrandAlt(code.title)}
                     fill
                     sizes="(max-width: 1024px) 33vw, 17vw"
                     className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"

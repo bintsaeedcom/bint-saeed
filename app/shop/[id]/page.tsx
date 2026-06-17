@@ -19,15 +19,16 @@ import { getProductImageAlt } from '@/lib/products/imageAlt'
 import { getProductColorOptions } from '@/lib/products/productColorAvailability'
 import { buildShopProductJsonLd } from '@/lib/products/productJsonLd'
 import { useCartStore } from '@/store/cartStore'
+import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getProductHref, getProductSlug, resolveProductIdentifier } from '@/lib/products/links'
 import {
   getPdpSizeOptions,
-  CUSTOMISATION_SURCHARGE_AED,
   CUSTOMISATION_MAX_CHARS,
   productOffersPersonalisation,
 } from '@/lib/shopProductOptions'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
+import { resolveProductSku } from '@/lib/products/sku'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -104,6 +105,7 @@ export default function ProductPage() {
   
   const addItem = useCartStore((state) => state.addItem)
   const { isRTL } = useLanguage()
+  const { formatPrice, formatAmount, convertPrice, currency } = useCurrency()
 
   const relatedStyles = useMemo(
     () =>
@@ -204,16 +206,12 @@ export default function ProductPage() {
       item_id: product.id,
       item_name: product.name,
       item_category: product.category,
-      currency: 'AED',
-      value: product.price,
+      currency: currency.code,
+      value: convertPrice(product.price, product.id),
     })
   }, [product.id])
 
-  const personalisationSurcharge =
-    showPersonalisation && customisationActive && customisationMessage.trim().length > 0
-      ? CUSTOMISATION_SURCHARGE_AED
-      : 0
-  const displayUnitAed = product.price + personalisationSurcharge
+  const displayUnitPrice = convertPrice(product?.price ?? 0, product?.id)
   const sizeAndMeasurementDetails = [product.measurements, ...fitAndSizeDetails]
   const isVideoFile = (src: string) => /\.(mp4|mov|webm|ogg)$/i.test(src)
   const isHeicFile = (src: string) => /\.(heic|heif)$/i.test(src)
@@ -258,7 +256,7 @@ export default function ProductPage() {
       color: selectedColor,
       quantity,
       customisationMessage: trimmedCustom || undefined,
-      customisationSurcharge: trimmedCustom ? CUSTOMISATION_SURCHARGE_AED : undefined,
+      sku: resolveProductSku(product, selectedColor),
     })
 
     trackEvent('add_to_cart', {
@@ -528,18 +526,13 @@ export default function ProductPage() {
             {/* Price */}
             <div className="mb-3 space-y-0.5">
               <p className="font-montserrat text-lg text-brand-darkRed tracking-wide">
-                {(displayUnitAed * quantity).toLocaleString()} AED
+                {formatAmount(displayUnitPrice * quantity)}
                 {quantity > 1 && (
                   <span className="ml-2 font-montserrat text-[11px] font-normal text-brand-darkRed/65">
-                    ({quantity} × {displayUnitAed.toLocaleString()} AED)
+                    ({quantity} × {formatAmount(displayUnitPrice)})
                   </span>
                 )}
               </p>
-              {personalisationSurcharge > 0 && (
-                <p className="font-montserrat text-[11px] text-brand-darkRed/65 tracking-wide">
-                  Includes {CUSTOMISATION_SURCHARGE_AED.toLocaleString()} AED personalisation per piece
-                </p>
-              )}
             </div>
             {/* Color Selection */}
             <div className="mb-1.5 border-b border-brand-stone/20 pb-3">
@@ -622,8 +615,8 @@ export default function ProductPage() {
                 </h2>
                 <p className={`mb-2 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
                   {isRTL
-                    ? `إضافة نص تفصيلي مقابل ${CUSTOMISATION_SURCHARGE_AED} درهم لكل قطعة.`
-                    : 'Add a name, special date or message to the inner label.'}
+                    ? 'أضيفي اسماً أو تاريخاً أو رسالة على البطاقة الداخلية — مجاناً.'
+                    : 'Add a name, special date or message to the inner label — complimentary.'}
                 </p>
                 <div className={`flex flex-col gap-2 sm:flex-row sm:flex-wrap ${isRTL ? 'sm:justify-end' : ''}`}>
                   <button
@@ -653,7 +646,7 @@ export default function ProductPage() {
                     aria-pressed={customisationActive}
                     data-cursor-hover
                   >
-                    {isRTL ? `تخصيص (+${CUSTOMISATION_SURCHARGE_AED})` : `Personalise (+${CUSTOMISATION_SURCHARGE_AED} AED)`}
+                    {isRTL ? 'تخصيص' : 'Personalise'}
                   </button>
                 </div>
                 {customisationActive && (
@@ -869,7 +862,7 @@ export default function ProductPage() {
                           {item.name}
                         </p>
                         <p className="font-montserrat text-xs tracking-wide text-brand-darkRed/80">
-                          {item.price.toLocaleString()} AED
+                          {formatPrice(item.price, item.id)}
                         </p>
                       </div>
                     </LocaleLink>

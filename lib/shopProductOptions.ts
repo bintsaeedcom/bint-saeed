@@ -4,16 +4,18 @@ export const STANDARD_APPAREL_SIZES = ['XS', 'S', 'M', 'L', 'XL'] as const
 export const LENGTH_CM_MIN = 52
 export const LENGTH_CM_MAX = 65
 
+import { lineTotalInCurrency, lineUnitInCurrency } from '@/lib/pricing'
+import type { SupportedCurrency } from '@/lib/pricing/types'
+
 export function lengthCmSelectOptions(): string[] {
   const out: string[] = []
   for (let n = LENGTH_CM_MIN; n <= LENGTH_CM_MAX; n += 1) out.push(String(n))
   return out
 }
 
-export const CUSTOMISATION_SURCHARGE_AED = 40
 export const CUSTOMISATION_MAX_CHARS = 35
 
-/** Hidden-pocket personalisation (+40 AED) is offered on abaya PDPs only. */
+/** Hidden-pocket personalisation is complimentary on abaya PDPs only. */
 export function productOffersPersonalisation(category: string): boolean {
   return category === 'Abayas'
 }
@@ -40,4 +42,18 @@ export function lineTotalAed(item: {
   quantity: number
 }): number {
   return lineUnitAed(item) * item.quantity
+}
+
+export function lineUnitForCurrency(
+  item: Parameters<typeof lineUnitInCurrency>[0],
+  currency: SupportedCurrency,
+): number {
+  return lineUnitInCurrency(item, currency)
+}
+
+export function lineTotalForCurrency(
+  item: Parameters<typeof lineTotalInCurrency>[0],
+  currency: SupportedCurrency,
+): number {
+  return lineTotalInCurrency(item, currency)
 }

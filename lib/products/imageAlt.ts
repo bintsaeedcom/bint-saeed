@@ -1,4 +1,15 @@
 import type { Product } from '@/data/products'
+import { getProductSlug } from '@/lib/products/links'
+import {
+  BRAND_GEO_PHRASE,
+  getHeritageAltPhrase,
+  getHeritageCraft,
+} from '@/lib/products/heritageSeo'
+
+export { BRAND_GEO_PHRASE }
+
+/** @deprecated Use BRAND_GEO_PHRASE */
+export const BRAND_ALT_PHRASE = BRAND_GEO_PHRASE
 
 const FALLBACK_ANGLES = ['front', 'side', 'back', 'three-quarter'] as const
 const VIEW_SUFFIXES = ['three-quarter', 'close-up', 'front', 'back', 'side', 'detail', 'extra'] as const
@@ -30,12 +41,11 @@ function titleCaseToken(token: string): string {
 }
 
 function productTypeFromCategory(category: string): string {
-  if (category === 'Abayas') return 'Abaya'
-  if (category === 'Kaftans') return 'Kaftan'
-  if (category === 'Dresses') return 'Dress'
-  if (category === 'Sets') return 'Set'
-  if (category === 'Belts') return 'Belt'
-  return 'Product'
+  if (category === 'Abayas') return 'abaya'
+  if (category === 'Kaftans') return 'kaftan'
+  if (category === 'Dresses') return 'dress'
+  if (category === 'Sets') return 'set'
+  return 'piece'
 }
 
 function inferAngleFromSrc(src: string, index = 0): string {
@@ -73,10 +83,19 @@ function inferColorFromSrc(src: string): string | null {
   return null
 }
 
+/** Ensures every alt string ends with the brand + geo phrase exactly once. */
+export function withBrandAlt(alt: string): string {
+  const trimmed = alt.trim()
+  if (!trimmed) return BRAND_GEO_PHRASE
+  if (trimmed.toLowerCase().includes(BRAND_GEO_PHRASE.toLowerCase())) return trimmed
+  const base = trimmed.replace(/\.+$/, '')
+  return `${base}. ${BRAND_GEO_PHRASE}.`
+}
+
 export function getProductImageAlt(
-  product: Pick<Product, 'name' | 'category' | 'colors'>,
+  product: Pick<Product, 'name' | 'category' | 'colors' | 'slug'>,
   imageSrc: string,
-  opts?: { color?: string; index?: number }
+  opts?: { color?: string; index?: number },
 ): string {
   const color =
     opts?.color?.trim() ||
@@ -85,11 +104,22 @@ export function getProductImageAlt(
     'Black'
   const type = productTypeFromCategory(product.category)
   const angle = inferAngleFromSrc(imageSrc, opts?.index ?? 0)
-  const nameIncludesType = product.name.toLowerCase().includes(type.toLowerCase())
+  const slug = getProductSlug(product)
+  const craft = getHeritageCraft(slug)
 
-  if (nameIncludesType) {
-    return `${product.name} in ${color}, ${angle} view.`
+  const subject = `${product.name} luxury ${type} in ${color}, ${angle} view`
+  const heritage = craft ? `, ${getHeritageAltPhrase(craft, angle)}` : ''
+
+  return withBrandAlt(`${subject}${heritage}`)
+}
+
+/** Cart / checkout thumbnails — full product alt when catalog match exists. */
+export function getCartLineImageAlt(
+  item: { id: string; name: string; image: string; color: string },
+  catalogProduct: Pick<Product, 'name' | 'category' | 'colors' | 'slug'> | null | undefined,
+): string {
+  if (catalogProduct) {
+    return getProductImageAlt(catalogProduct, item.image, { color: item.color, index: 0 })
   }
-
-  return `${product.name} ${color} ${type}, ${angle} view.`
+  return withBrandAlt(`${item.name} in ${item.color}`)
 }

@@ -2,28 +2,32 @@ import type { Metadata } from 'next'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { localizedPath } from '@/lib/i18n/routing'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
+import { getHeritageMetaSnippet } from '@/lib/products/heritageSeo'
 
 const SITE = new URL('https://www.bintsaeed.com')
 
-/** Intro line per locale — brand, Abu Dhabi, category signal (natural phrasing). */
+/** Intro line per locale — brand, Abu Dhabi, UAE, Emirati brand signal. */
 const PRODUCT_INTRO: Record<AppLocale, string> = {
-  en: 'Bint Saeed luxury abayas from Abu Dhabi, UAE.',
-  ar: 'عبايات فاخرة من بِنت سعيد في أبوظبي، الإمارات العربية المتحدة.',
-  fr: 'Abayas de luxe Bint Saeed depuis Abu Dhabi (EAU).',
-  it: 'Abaya di lusso Bint Saeed da Abu Dhabi (EAU).',
-  es: 'Abayas de lujo Bint Saeed desde Abu Dhabi (EAU).',
-  ru: 'Роскошные абайи Bint Saeed из Абу‑Даби (ОАЭ).',
-  zh: '阿联酋阿布扎比 Bint Saeed 奢华阿巴亚。',
-  de: 'Luxus‑Abayas von Bint Saeed aus Abu Dhabi (VAE).',
-  nl: 'Luxe abaya’s van Bint Saeed uit Abu Dhabi (VAE).',
-  pt: 'Abayas de luxo Bint Saeed de Abu Dhabi (EAU).',
+  en: 'Bint Saeed — Emirati luxury fashion brand from Abu Dhabi, UAE.',
+  ar: 'بِنت سعيد — علامة أزياء فاخرة إماراتية من أبوظبي، الإمارات العربية المتحدة.',
+  fr: 'Bint Saeed — marque de mode de luxe émiratie depuis Abu Dhabi (EAU).',
+  it: 'Bint Saeed — brand di moda di lusso emiratino da Abu Dhabi (EAU).',
+  es: 'Bint Saeed — marca de moda de lujo emiratí desde Abu Dhabi (EAU).',
+  ru: 'Bint Saeed — эмиратский люксовый бренд из Абу‑Даби (ОАЭ).',
+  zh: 'Bint Saeed — 阿联酋阿布扎比奢华时尚品牌。',
+  de: 'Bint Saeed — emiratische Luxusmodemarke aus Abu Dhabi (VAE).',
+  nl: 'Bint Saeed — Emiratisch luxemerken uit Abu Dhabi (VAE).',
+  pt: 'Bint Saeed — marca de moda de luxo emirati de Abu Dhabi (EAU).',
 }
 
 export function buildProductMetaDescription(
   locale: AppLocale,
-  body: { name: string; description: string; fabric: string },
+  body: { name: string; description: string; fabric: string; slug?: string },
 ): string {
-  const merged = `${PRODUCT_INTRO[locale]} ${body.name}. ${body.description} ${body.fabric}`
+  const heritage = body.slug ? getHeritageMetaSnippet(locale, body.slug) : ''
+  const merged = [PRODUCT_INTRO[locale], body.name, body.description, heritage, body.fabric]
+    .filter(Boolean)
+    .join(' ')
   return clipMetaDescription(merged.replace(/\s+/g, ' ').trim(), 200)
 }
 
