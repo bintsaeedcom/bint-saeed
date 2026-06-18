@@ -45,10 +45,24 @@ const nextConfig = {
     const shareImageCache = [
       { key: 'Cache-Control', value: 'public, max-age=604800, stale-while-revalidate=86400' },
     ]
+    /** Keep brand marks out of Google Images; product/campaign share art stays indexable. */
+    const noImageIndex = [{ key: 'X-Robots-Tag', value: 'noindex' }]
+    const brandAssetNoIndex = [
+      '/og-image.png',
+      '/gold logo.png',
+      '/logo-bintsaeed.svg',
+      '/flavicon.png',
+      '/opengraph-image.jpg',
+      '/twitter-image.jpg',
+      '/opengraph-image',
+      '/twitter-image',
+    ].map((source) => ({
+      source,
+      headers: [...base, ...noImageIndex],
+    }))
     return [
       { source: '/og-share.jpg', headers: [...base, ...shareImageCache] },
-      { source: '/opengraph-image.jpg', headers: [...base, ...shareImageCache] },
-      { source: '/twitter-image.jpg', headers: [...base, ...shareImageCache] },
+      ...brandAssetNoIndex,
       { source: '/:path*', headers: base },
     ]
   },
