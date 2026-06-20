@@ -16,7 +16,7 @@ import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
 import { getProductPdpContent } from '@/data/productPdpContent'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
-import { getProductColorOptions } from '@/lib/products/productColorAvailability'
+import { getProductColorOptions, getProductImagesForColor } from '@/lib/products/productColorAvailability'
 import { buildShopProductJsonLd } from '@/lib/products/productJsonLd'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
@@ -104,7 +104,7 @@ export default function ProductPage() {
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false)
   
   const addItem = useCartStore((state) => state.addItem)
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
   const { formatPrice, formatAmount, convertPrice, currency } = useCurrency()
 
   const relatedStyles = useMemo(
@@ -171,10 +171,29 @@ export default function ProductPage() {
   useEffect(() => {
     const availableColors = colorOptions.map((color) => color.name)
     if (!availableColors.length) return
+
+    const fromUrl =
+      typeof window !== 'undefined'
+        ? new URLSearchParams(window.location.search).get('color')
+        : null
+    if (fromUrl && availableColors.includes(fromUrl)) {
+      setSelectedColor(fromUrl)
+      return
+    }
+
     setSelectedColor((current) =>
-      current && availableColors.includes(current) ? current : (availableColors[0] ?? '')
+      current && availableColors.includes(current) ? current : (availableColors[0] ?? ''),
     )
   }, [colorOptions, product.id])
+
+  const handleColorSelect = (colorName: string) => {
+    setSelectedColor(colorName)
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href)
+      url.searchParams.set('color', colorName)
+      window.history.replaceState({}, '', url.toString())
+    }
+  }
 
   useEffect(() => {
     if (!showPersonalisation) {
@@ -183,11 +202,10 @@ export default function ProductPage() {
     }
   }, [product.id, showPersonalisation])
 
-  const activeImages = useMemo(() => {
-    const variantImages = product.colorImages?.[selectedColor]
-    if (variantImages && variantImages.length > 0) return variantImages
-    return product.images
-  }, [product.colorImages, product.images, selectedColor])
+  const activeImages = useMemo(
+    () => getProductImagesForColor(product, selectedColor),
+    [product, selectedColor],
+  )
   const activeImageAlt = (image: string, index: number) =>
     getProductImageAlt(product, image, { color: selectedColor, index })
 
@@ -199,6 +217,7 @@ export default function ProductPage() {
   useEffect(() => {
     mainSwiperRef.current?.slideTo(0, 0)
     setLightboxIndex(0)
+    setThumbsSwiper(null)
   }, [selectedColor])
 
   useEffect(() => {
@@ -225,8 +244,9 @@ export default function ProductPage() {
         activeImages,
         selectedColor,
         productPagePath: getProductHref(product),
+        locale: language,
       }),
-    [product, activeImages, selectedColor],
+    [product, activeImages, selectedColor, language],
   )
 
   const handleAddToCart = () => {
@@ -311,6 +331,7 @@ export default function ProductPage() {
             <div className="grid gap-3 lg:grid-cols-[4.75rem_minmax(0,1fr)] lg:items-start">
               <div className="hidden lg:block">
                 <Swiper
+                  key={`thumbs-vertical-${selectedColor}`}
                   modules={[FreeMode, Thumbs]}
                   direction="vertical"
                   onSwiper={setThumbsSwiper}
@@ -325,7 +346,7 @@ export default function ProductPage() {
                   className="product-gallery-thumbs !overflow-visible"
                 >
                   {activeImages.map((image, index) => (
-                    <SwiperSlide key={index} className="!h-auto">
+                    <SwiperSlide key={image} className="!h-auto">
                       <button
                         type="button"
                         className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
@@ -375,6 +396,7 @@ export default function ProductPage() {
               <div className="space-y-3">
                 <div className="relative aspect-[3/4] w-full min-h-0 overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
                   <Swiper
+                    key={`main-${selectedColor}`}
                     modules={mainGalleryModules}
                     spaceBetween={0}
                     slidesPerView={1}
@@ -397,7 +419,7 @@ export default function ProductPage() {
                     className="h-full w-full min-h-0 product-gallery-swiper"
                   >
                     {activeImages.map((image, index) => (
-                      <SwiperSlide key={index}>
+                      <SwiperSlide key={image}>
                         <div
                           className={`relative h-full w-full ${isVideoFile(image) ? 'cursor-default' : 'cursor-zoom-in'}`}
                           onClick={() => {
@@ -456,6 +478,7 @@ export default function ProductPage() {
                 {/* Thumbnails — tap to jump main gallery */}
                 <div className="hidden md:block lg:hidden">
                   <Swiper
+                    key={`thumbs-horizontal-${selectedColor}`}
                     modules={[FreeMode, Thumbs]}
                     onSwiper={setThumbsSwiper}
                     spaceBetween={10}
@@ -469,7 +492,7 @@ export default function ProductPage() {
                     className="product-gallery-thumbs !overflow-visible"
                   >
                     {activeImages.map((image, index) => (
-                      <SwiperSlide key={index} className="!h-auto">
+                      <SwiperSlide key={image} className="!h-auto">
                         <button
                           type="button"
                           className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
@@ -535,6 +558,7 @@ export default function ProductPage() {
               </p>
             </div>
             {/* Color Selection */}
+            {colorOptions.length > 1 && (
             <div className="mb-1.5 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
@@ -551,7 +575,7 @@ export default function ProductPage() {
                   <button
                     key={color.name}
                     type="button"
-                    onClick={() => setSelectedColor(color.name)}
+                    onClick={() => handleColorSelect(color.name)}
                     className={`h-9 w-9 rounded-full border-2 transition-all duration-200 ${
                       selectedColor === color.name
                         ? 'border-brand-darkRed scale-110 ring-2 ring-brand-darkRed/20 ring-offset-2'
@@ -566,6 +590,7 @@ export default function ProductPage() {
                 ))}
               </div>
             </div>
+            )}
 
             {/* Size Selection */}
             <div className="mb-3 border-b border-brand-stone/20 pb-3">

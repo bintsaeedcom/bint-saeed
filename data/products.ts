@@ -170,6 +170,8 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     front: '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-front.webp',
     side: '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-side.webp',
     back: '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-back.webp',
+    detail:
+      '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-close-up.webp',
   },
   'marylebone-abaya': {
     front: '/Webshop pictures/Abayas/Marylebone Abaya/bint-saeed-marylebone-abaya-black-front.webp',
@@ -336,11 +338,13 @@ const SOHO_SET_DIR = '/Webshop pictures/Sets/Soho Set'
 
 function sohoSetGallery(color: 'black' | 'navy-blue'): string[] {
   const base = `${SOHO_SET_DIR}/bint-saeed-soho-set-${color}`
-  const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
-  if (color === 'black') {
-    images.push(`${base}-detail.webp`, `${base}-extra.webp`)
-  }
-  return images
+  return [
+    `${base}-front.webp`,
+    `${base}-side.webp`,
+    `${base}-back.webp`,
+    `${base}-detail.webp`,
+    `${base}-extra.webp`,
+  ]
 }
 
 const HYDE_PARK_SET_DIR = '/Webshop pictures/Sets/Hyde Park Set'

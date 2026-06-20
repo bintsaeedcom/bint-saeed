@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { FiX, FiShoppingBag, FiCheck, FiArrowRight } from 'react-icons/fi'
@@ -11,6 +11,11 @@ import { getProductHref } from '@/lib/products/links'
 import toast from 'react-hot-toast'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
+import {
+  getProductColorOptions,
+  getProductImagesForColor,
+} from '@/lib/products/productColorAvailability'
+import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 
 interface QuickBuyProps {
   isOpen: boolean
@@ -22,6 +27,7 @@ interface QuickBuyProps {
     slug?: string
     price: number
     images: string[]
+    colorImages?: Record<string, string[]>
     sizes: string[]
     colors: { name: string; nameAr?: string; hex: string }[]
     category?: string
@@ -35,6 +41,31 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
   const addItem = useCartStore((state) => state.addItem)
   const { formatPrice } = useCurrency()
   const { isRTL } = useLanguage()
+
+  const colorOptions = useMemo(
+    () => getProductColorOptions(product),
+    [product],
+  )
+
+  useEffect(() => {
+    if (!isOpen) return
+    const available = colorOptions.map((color) => color.name)
+    setSelectedColor(available[0] ?? '')
+    setSelectedSize('')
+  }, [isOpen, product.id, colorOptions])
+
+  const activeImages = useMemo(
+    () => getProductImagesForColor(product, selectedColor),
+    [product, selectedColor],
+  )
+  const previewImage = activeImages[0] ?? product.images[0]
+
+  const catalogProduct = {
+    name: product.name,
+    category: product.category ?? 'Abayas',
+    colors: product.colors,
+    slug: product.slug ?? '',
+  }
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -51,7 +82,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
       productUrl: getProductHref(product),
       name: product.name,
       price: product.price,
-      image: product.images[0],
+      image: previewImage,
       size: selectedSize,
       color: selectedColor,
       quantity: 1,
@@ -79,7 +110,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
       productUrl: getProductHref(product),
       name: product.name,
       price: product.price,
-      image: product.images[0],
+      image: previewImage,
       size: selectedSize,
       color: selectedColor,
       quantity: 1,
@@ -129,19 +160,16 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               <div className={`flex gap-4 mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <div className="relative aspect-[9/16] w-[4.8rem] flex-shrink-0 overflow-hidden rounded-lg bg-[#f5f5f5] sm:w-[5.6rem]">
                   <Image
-                    src={product.images[0]}
+                    key={previewImage}
+                    src={productImageSrc(previewImage)}
                     alt={getProductImageAlt(
-                      {
-                        name: product.name,
-                        category: product.category ?? 'Abayas',
-                        colors: product.colors,
-                        slug: product.slug ?? '',
-                      },
-                      product.images[0],
+                      catalogProduct,
+                      previewImage,
                       { color: selectedColor || product.colors[0]?.name, index: 0 },
                     )}
                     fill
                     className="img-zoom object-cover object-top"
+                    unoptimized={isWebshopPicturePath(previewImage)}
                   />
                 </div>
                 <div className={`flex-1 ${isRTL ? 'text-right' : ''}`}>
@@ -184,13 +212,14 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               </div>
 
               {/* Color Selection */}
+              {colorOptions.length > 1 && (
               <div className="mb-6">
                 <label className={`font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-3 block ${isRTL ? 'text-right' : ''}`}>
                   {isRTL ? 'اللون' : 'Color'}
                   {selectedColor && <span className="text-brand-clayRed/60 ml-2">({selectedColor})</span>}
                 </label>
                 <div className={`flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
-                  {product.colors.map((color) => (
+                  {colorOptions.map((color) => (
                     <button
                       key={color.name}
                       onClick={() => setSelectedColor(color.name)}
@@ -200,12 +229,13 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                           : 'border-transparent hover:scale-105'
                       }`}
                       style={{ backgroundColor: color.hex }}
-                      title={isRTL && color.nameAr ? color.nameAr : color.name}
+                      title={color.name}
                       data-cursor-hover
                     />
                   ))}
                 </div>
               </div>
+              )}
 
               {/* Action Buttons */}
               <div className="space-y-3">

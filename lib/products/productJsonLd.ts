@@ -1,6 +1,8 @@
 import type { Product } from '@/data/products'
 import { getProductSlug } from '@/lib/products/links'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
+import type { AppLocale } from '@/lib/i18n/routing'
+import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import {
   buildHeritageRichDescription,
   getHeritageSchemaKeywords,
@@ -88,10 +90,12 @@ export function buildShopProductJsonLd(input: {
   activeImages: string[]
   selectedColor?: string
   productPagePath: string
+  locale?: AppLocale
 }) {
-  const { product, activeImages, selectedColor, productPagePath } = input
+  const { product, activeImages, selectedColor, productPagePath, locale = 'en' } = input
   const slug = getProductSlug(product)
   const pageUrl = `${SITE_URL}${productPagePath}`
+  const lang = schemaInLanguageForLocale(locale)
   const brand = { '@type': 'Brand' as const, name: 'Bint Saeed' }
   const offer = buildOffer(product, pageUrl)
   const shared = schemaSharedFields(product, slug)
@@ -102,6 +106,7 @@ export function buildShopProductJsonLd(input: {
       '@type': 'ProductGroup',
       '@id': `${pageUrl}#product`,
       name: product.name,
+      inLanguage: lang,
       brand,
       productGroupID: product.id,
       variesBy: 'https://schema.org/color',
@@ -116,6 +121,7 @@ export function buildShopProductJsonLd(input: {
           '@type': 'Product',
           '@id': `${pageUrl}#variant-${colorSlug}`,
           name: `${product.name} — ${color.name}`,
+          inLanguage: lang,
           color: color.name,
           sku,
           brand,
@@ -136,6 +142,7 @@ export function buildShopProductJsonLd(input: {
     '@type': 'Product',
     '@id': `${pageUrl}#product`,
     name: product.name,
+    inLanguage: lang,
     sku,
     brand,
     category: product.category,

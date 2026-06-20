@@ -9,12 +9,13 @@ import { products } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import { CODES_IMAGE_FILES, codesPageImagePath } from '@/lib/the-codes/codesPageContent'
 
 /** Strands hero background — `public/collection-section/` (file is `.jpg`; use `/collection-section/45.png` if you add a PNG). */
 const HERO_CAMPAIGN_IMAGE = '/collection-section/45.jpg'
-/** Same six-strand hero as House Codes — `public/The Codes Page/`. */
-const CONCEPT_FLATLAY_IMAGE = `/${encodeURIComponent('The Codes Page')}/${encodeURIComponent('CB6F563A-F64C-4C58-9237-E44F9972DA83.PNG')}`
-const STRAND_IMAGE_ALT = withBrandAlt('Natural stone abaya strands')
+/** Same six-strand flatlay as House Codes — `public/The Codes Page/`. */
+const CONCEPT_FLATLAY_IMAGE = codesPageImagePath(CODES_IMAGE_FILES.naturalStoneBeads)
+const STRAND_IMAGE_ALT = withBrandAlt('Natural stone abaya strands — Emirati heritage house code')
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 
 const STONE_VISUAL_NOTES: Record<string, string> = {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
@@ -9,6 +9,13 @@ import AboutTopicNav from '@/components/AboutTopicNav'
 import { FiArrowDown, FiArrowLeft } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { trackEvent } from '@/lib/analytics/tracking'
+import { buildTheCodesJsonLd } from '@/lib/seo/theCodesJsonLd'
+import {
+  CODES_HERO,
+  codesPageImagePath,
+  THE_CODES_SECTIONS,
+  type CodesSectionContent,
+} from '@/lib/the-codes/codesPageContent'
 
 /** Editorial grid / corner brackets disabled site-wide — use border-s + border-b on copy only. */
 function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
@@ -19,74 +26,14 @@ function SectionStripes(_props?: { variant?: 'default' | 'hero' | 'soft' | 'bold
   return null
 }
 
-type CodeSection = {
-  id: string
-  eyebrow: string
-  title: string
-  /** Placeholder blocks — replace with final house copy when ready. */
-  paragraphs: string[]
-  imageSrc: string
-  imageAlt: string
-}
+type CodeSection = CodesSectionContent
+
+const SECTIONS: CodeSection[] = THE_CODES_SECTIONS
 
 /** Public folder `The Codes Page/` — encode spaces for Next/Image `src`. */
 function codesPageImage(fileName: string) {
-  const dir = 'The Codes Page'
-  return `/${encodeURIComponent(dir)}/${encodeURIComponent(fileName)}`
+  return codesPageImagePath(fileName)
 }
-
-const SECTIONS: CodeSection[] = [
-  {
-    id: 'the-monogram',
-    eyebrow: 'Mark of the house',
-    title: 'The monogram',
-    paragraphs: [
-      'The Bint Saeed monogram is more than a mark, it is a structure of identity. Its interwoven form reflects continuity, where lines return into themselves rather than break. It appears with intention across pieces, sometimes subtle, sometimes present, always part of the whole.',
-    ],
-    imageSrc: codesPageImage('monogram.jpg'),
-    imageAlt: 'The monogram — house code',
-  },
-  {
-    id: 'al-talli',
-    eyebrow: 'Heritage thread',
-    title: 'Al Talli',
-    paragraphs: [
-      'Al Talli is a traditional Emirati craft, woven with fine metallic threads and recognised as part of the cultural heritage of the United Arab Emirates. It reflects precision, patience, and a deep-rooted tradition of adornment. Within Bint Saeed, it is translated into forms that move naturally across borders.',
-    ],
-    imageSrc: codesPageImage('talli.jpg.jpg'),
-    imageAlt: 'Al Talli — house code',
-  },
-  {
-    id: 'khous',
-    eyebrow: 'Weave & structure',
-    title: 'Khous',
-    paragraphs: [
-      'Khous weaving is rooted in the use of palm fronds, shaped through structure and repetition, and recognised as part of the traditional crafts of the region. It reflects a way of making that is both functional and refined. Its logic is carried into the lines and construction of each piece.',
-    ],
-    imageSrc: codesPageImage('khous.jpg'),
-    imageAlt: 'Khous — house code',
-  },
-  {
-    id: 'al-ain-rosette',
-    eyebrow: 'Motif',
-    title: 'Al Ain Rosette',
-    paragraphs: [
-      'The Al Ain Rosette appears as a carved carnelian stone within the house. Its warm tone reflects the desert landscape of Al Ain in the United Arab Emirates, while its form recalls the rounded shapes of the desert hyacinth and the yellow bloom of Tribulus omanense. For now, it appears in jewellery and small objects as a distinct point of recognition.',
-    ],
-    imageSrc: codesPageImage('Al Quaa Rosette.jpg'),
-    imageAlt: 'Al Ain Rosette — house code',
-  },
-  {
-    id: 'knotted-lines-of-lineage',
-    eyebrow: 'Line & continuity',
-    title: 'Knotted Lines',
-    paragraphs: [
-      'Knotted lines appear within the house as a recurring element, formed as buttons and strands across garments. Each knot reflects connection across time, linking what is inherited with what is lived. Placed close to the wearer, they serve as a subtle reminder of a story that continues.',
-    ],
-    imageSrc: codesPageImage('Knotted Lines Of Lineage.jpg'),
-    imageAlt: 'Knotted Lines — house code',
-  },
-]
 
 /** Portrait block: subtle vertical parallax + slight scale so edges stay covered */
 function ParallaxFramedImage({
@@ -142,9 +89,10 @@ function scrollToHash(hash: string) {
 }
 
 export default function TheCodesClient() {
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
   const pathname = usePathname()
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
+  const codesJsonLd = useMemo(() => buildTheCodesJsonLd(language), [language])
 
   const expandedTextBySection: Record<string, string> = {
     'the-monogram':
@@ -178,10 +126,11 @@ export default function TheCodesClient() {
     <main
       className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-8 md:pb-16 ${isRTL ? 'rtl' : 'ltr'}`}
     >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(codesJsonLd) }} />
       <header className="relative h-[50vh] overflow-hidden bg-brand-darkRed md:h-[60vh]">
         <Image
-          src={codesPageImage('2.PNG')}
-          alt="The Codes — hero"
+          src={codesPageImage(CODES_HERO.file)}
+          alt={CODES_HERO.alt}
           fill
           className="object-cover opacity-40"
           priority
@@ -318,7 +267,7 @@ export default function TheCodesClient() {
 
                 <ParallaxFramedImage
                   invert={isEven}
-                  imageSrc={section.imageSrc}
+                  imageSrc={codesPageImage(section.imageFile)}
                   imageAlt={section.imageAlt}
                   priority={index < 2}
                   outerClassName={`${imageOrder} relative z-[1]`}

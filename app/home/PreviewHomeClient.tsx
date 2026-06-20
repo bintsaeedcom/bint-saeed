@@ -19,6 +19,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
+import { CODES_IMAGE_FILES, codesPageImagePath } from '@/lib/the-codes/codesPageContent'
 import type { Product } from '@/data/products'
 
 /** Corner brackets / full-bleed grid stripes removed — typography uses border-s + border-b on copy only (see hero). */
@@ -1211,8 +1212,7 @@ function MagazineGrid() {
 }
 
 function homeCodesImage(fileName: string) {
-  const dir = 'The Codes Page'
-  return `/${encodeURIComponent(dir)}/${encodeURIComponent(fileName)}`
+  return codesPageImagePath(fileName)
 }
 
 function EditorialSplit() {
@@ -1220,15 +1220,41 @@ function EditorialSplit() {
   const isInView = useInView(ref, { margin: '-12%', once: true })
   const { isRTL } = useLanguage()
   const storyCodes = [
-    { title: 'The Monogram', subtitle: 'Signature mark', image: homeCodesImage('monogram.jpg') },
-    { title: 'Khous', subtitle: 'Palm craftsmanship', image: homeCodesImage('khous.jpg') },
-    { title: 'Knotted Lines', subtitle: 'Line & continuity', image: homeCodesImage('Knotted Lines Of Lineage.jpg') },
-    { title: 'Al Ain Rosette', subtitle: 'Regional motif', image: homeCodesImage('Al Quaa Rosette.jpg') },
-    { title: 'Al Talli', subtitle: 'Gold threadwork', image: homeCodesImage('talli.jpg.jpg') },
+    {
+      title: 'The Monogram',
+      subtitle: 'Signature mark',
+      image: homeCodesImage(CODES_IMAGE_FILES.monogram),
+      alt: withBrandAlt('Bint Saeed luxury house monogram — house code'),
+    },
+    {
+      title: 'Khous',
+      subtitle: 'Palm craftsmanship',
+      image: homeCodesImage(CODES_IMAGE_FILES.khous),
+      alt: withBrandAlt('Khous palm-frond weaving Emirati heritage — house code'),
+    },
+    {
+      title: 'Knotted Lines',
+      subtitle: 'Line & continuity',
+      image: homeCodesImage(CODES_IMAGE_FILES.knottedLines),
+      alt: withBrandAlt('Knotted Lines of Lineage gold motif — house code'),
+    },
+    {
+      title: 'Al Ain Rosette',
+      subtitle: 'Regional motif',
+      image: homeCodesImage(CODES_IMAGE_FILES.alAinRosette),
+      alt: withBrandAlt('Al Ain Rosette carnelian stone motif — house code'),
+    },
+    {
+      title: 'Al Talli',
+      subtitle: 'Gold threadwork',
+      image: homeCodesImage(CODES_IMAGE_FILES.alTalli),
+      alt: withBrandAlt('Traditional Al Talli Emirati heritage embroidery — house code'),
+    },
     {
       title: 'The Strands',
       subtitle: 'Beaded lines',
-      image: homeCodesImage('CB6F563A-F64C-4C58-9237-E44F9972DA83.PNG'),
+      image: homeCodesImage(CODES_IMAGE_FILES.naturalStoneBeads),
+      alt: withBrandAlt('Natural stone abaya strands — Emirati heritage house code'),
     },
   ] as const
 
@@ -1274,7 +1300,7 @@ function EditorialSplit() {
                   <div className="relative mb-3 aspect-[3/4] w-full overflow-hidden rounded-lg border border-[#e8ddd4] bg-[#f7f3ee]">
                     <Image
                       src={code.image}
-                      alt={withBrandAlt(code.title)}
+                      alt={code.alt}
                       fill
                       sizes="76vw"
                       className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
@@ -1303,7 +1329,7 @@ function EditorialSplit() {
                 <div className="relative mb-3 aspect-[3/4] w-full overflow-hidden rounded-lg border border-[#e8ddd4] bg-[#f7f3ee]">
                   <Image
                     src={code.image}
-                    alt={withBrandAlt(code.title)}
+                    alt={code.alt}
                     fill
                     sizes="(max-width: 1024px) 33vw, 17vw"
                     className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"

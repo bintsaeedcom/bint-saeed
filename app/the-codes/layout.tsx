@@ -1,7 +1,11 @@
 import type { Metadata } from 'next'
+import {
+  absoluteCodesPageImageUrl,
+  CODES_HERO,
+  CODES_IMAGE_FILES,
+} from '@/lib/the-codes/codesPageContent'
 
-const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
-const KHOUS_HERITAGE_IMAGE = `${SITE}/${encodeURIComponent('The Codes Page')}/${encodeURIComponent('khous.jpg')}`
+const KHOUS_HERITAGE_IMAGE = absoluteCodesPageImageUrl(CODES_IMAGE_FILES.khous)
 
 export const metadata: Metadata = {
   title: 'The Codes | Bint Saeed',
@@ -14,7 +18,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: KHOUS_HERITAGE_IMAGE,
-        alt: 'Khous weaving heritage code — Bint Saeed Abu Dhabi, UAE',
+        alt: CODES_HERO.alt,
       },
     ],
   },
