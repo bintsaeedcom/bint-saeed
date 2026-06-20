@@ -38,7 +38,7 @@ export const faqNl: FaqBundle = {
         },
         {
           q: 'Gratis verzending?',
-          a: 'Ja bij bestellingen boven 500 AED in VAE/GCC wanneer vermeld.',
+          a: 'Ja bij bestellingen boven 1000 AED in de VAE.',
         },
         {
           q: 'Tracking?',

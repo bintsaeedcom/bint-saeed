@@ -38,7 +38,7 @@ export const faqDe: FaqBundle = {
         },
         {
           q: 'Kostenloser Versand?',
-          a: 'Ja bei Bestellungen über 500 AED innerhalb VAE/GCC, wenn ausgewiesen.',
+          a: 'Ja bei Bestellungen über 1000 AED in den VAE.',
         },
         {
           q: 'Sendungsverfolgung?',

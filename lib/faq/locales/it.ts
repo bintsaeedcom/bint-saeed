@@ -38,7 +38,7 @@ export const faqIt: FaqBundle = {
         },
         {
           q: 'Spedizione gratuita?',
-          a: 'Sì per ordini sopra 500 AED in UAE/GCC quando indicato.',
+          a: 'Sì per ordini sopra 1000 AED negli Emirati Arabi Uniti.',
         },
         {
           q: 'Tracking?',

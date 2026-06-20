@@ -313,7 +313,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   </span>
                   <span className="text-brand-stone/30">•</span>
                   <span className="font-montserrat text-[9px] text-brand-clayRed/40 tracking-wide">
-                    {isRTL ? '🚚 شحن مجاني +500 AED' : '🚚 Free shipping 500+ AED'}
+                    {isRTL ? '🚚 شحن مجاني داخل الإمارات +1000 درهم' : '🚚 Free UAE shipping 1000+ AED'}
                   </span>
                 </div>
               </div>

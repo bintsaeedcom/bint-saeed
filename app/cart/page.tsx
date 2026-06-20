@@ -305,7 +305,7 @@ export default function CartPage() {
                   <FiTruck className="w-4 h-4 text-brand-clayRed/50 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-montserrat text-xs text-brand-clayRed/70 tracking-wide">
-                      {isRTL ? 'شحن مجاني للإمارات والخليج للطلبات فوق 500 درهم' : 'Free UAE & GCC shipping on orders over 500 AED'}
+                      {isRTL ? 'شحن مجاني داخل الإمارات للطلبات فوق 1000 درهم' : 'Free UAE shipping on orders over 1000 AED'}
                     </p>
                   </div>
                 </div>

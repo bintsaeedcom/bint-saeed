@@ -38,7 +38,7 @@ export const faqFr: FaqBundle = {
         },
         {
           q: 'Livraison offerte ?',
-          a: 'Oui pour les commandes supérieures à 500 AED aux Émirats et dans la zone Golfe lorsque indiqué.',
+          a: 'Oui pour les commandes supérieures à 1000 AED aux Émirats arabes unis.',
         },
         {
           q: 'Suivi de commande ?',

@@ -187,6 +187,8 @@ export default function ShipmentReturnPolicyPage() {
             <section>
               <h2 className="mb-4 font-rozha text-2xl text-neutral-900">8. Shipping Timelines and Force Majeure</h2>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
+                <li>Complimentary shipping within the United Arab Emirates applies to orders with a merchandise subtotal of AED 1,000 or more.</li>
+                <li>Shipping fees for orders below this threshold, and for international destinations, are calculated at checkout.</li>
                 <li>Made-to-order pieces are usually shipped within 2 weeks after order placement.</li>
                 <li>In-stock items (including selected jewellery) are usually shipped within 1-3 business days.</li>
               </ul>

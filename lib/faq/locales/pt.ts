@@ -38,7 +38,7 @@ export const faqPt: FaqBundle = {
         },
         {
           q: 'Envio gratuito?',
-          a: 'Sim para encomendas acima de 500 AED na EAU/Golfo quando indicado.',
+          a: 'Sim para encomendas acima de 1000 AED nos EAU.',
         },
         {
           q: 'Tracking?',

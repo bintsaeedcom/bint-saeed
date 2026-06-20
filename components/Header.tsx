@@ -33,7 +33,6 @@ const searchableContent = [
   { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
   { title: 'Earrings', href: '/accessories?type=earrings', category: 'Accessories' },
   { title: 'Bracelets', href: '/accessories?type=bracelets', category: 'Accessories' },
-  { title: 'Bag Strands', href: '/accessories?type=bag-charms', category: 'Accessories' },
   { title: 'Phone Strands', href: '/accessories?type=phone-charms', category: 'Accessories' },
   { title: 'About Us', href: '/about', category: 'About' },
   { title: 'Our Story', href: '/about', category: 'About' },

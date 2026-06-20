@@ -147,6 +147,8 @@ export default function TermsPage() {
                 public holidays, weather, or events outside our reasonable control.
               </p>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
+                <li>Complimentary shipping within the United Arab Emirates applies to orders with a merchandise subtotal of AED 1,000 or more.</li>
+                <li>Shipping fees for orders below this threshold, and for international destinations, are calculated at checkout.</li>
                 <li>Shipping terms, costs, and estimated timelines are shown at checkout or applicable policy pages.</li>
                 <li>International orders may be subject to customs duties, import taxes, and local clearance fees.</li>
                 <li>Risk of loss transfers upon delivery to the shipping address or accepted recipient.</li>

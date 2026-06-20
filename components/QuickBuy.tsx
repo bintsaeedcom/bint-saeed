@@ -247,7 +247,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               {/* Trust badges */}
               <div className="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-brand-stone/20">
                 <span className="font-montserrat text-[10px] text-brand-clayRed/50 tracking-wide">
-                  {isRTL ? '✓ شحن مجاني +500 درهم' : '✓ Free shipping 500+ AED'}
+                  {isRTL ? '✓ شحن مجاني داخل الإمارات +1000 درهم' : '✓ Free UAE shipping 1000+ AED'}
                 </span>
                 <span className="text-brand-stone/30">|</span>
                 <span className="font-montserrat text-[10px] text-brand-clayRed/50 tracking-wide">

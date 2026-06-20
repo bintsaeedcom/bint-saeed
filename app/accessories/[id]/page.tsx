@@ -670,7 +670,7 @@ export default function AccessoryDetailPage() {
                 </button>
                 {openDropdown === 'shipping' && (
                   <div className="space-y-2 pb-5 font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/75">
-                    <p>{isRTL ? '• الشحن المجاني متاح داخل الإمارات فقط.' : '• Free shipping is available within the UAE only.'}</p>
+                    <p>{isRTL ? '• الشحن المجاني متاح داخل الإمارات للطلبات فوق 1000 درهم.' : '• Free shipping within the UAE on orders over 1000 AED.'}</p>
                     <p>
                       {isRTL
                         ? '• القطع الجاهزة للشحن تُرسل خلال 1-3 أيام عمل للطلبات المقدمة قبل الساعة 3:00 مساءً بتوقيت الإمارات.'

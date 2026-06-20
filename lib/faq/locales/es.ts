@@ -38,7 +38,7 @@ export const faqEs: FaqBundle = {
         },
         {
           q: '¿Envío gratis?',
-          a: 'Sí en pedidos superiores a 500 AED en EAU/Golfo cuando se indique.',
+          a: 'Sí en pedidos superiores a 1000 AED en los Emiratos Árabes Unidos.',
         },
         {
           q: '¿Seguimiento?',

@@ -813,7 +813,7 @@ export default function ProductPage() {
                 </button>
                 {openDropdown === 'shipping' && (
                   <div className="space-y-2 pb-5 font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed">
-                    <p>• Free shipping is available within the UAE only.</p>
+                    <p>{isRTL ? '• الشحن المجاني متاح داخل الإمارات للطلبات فوق 1000 درهم.' : '• Free shipping within the UAE on orders over 1000 AED.'}</p>
                     <p>• In-stock styles dispatch within 1-3 business days for orders placed before 3:00 PM UAE time.</p>
                     <p>• Pre-order styles dispatch on the date shown on the product page.</p>
                     <p>• Mixed orders (in-stock + pre-order) dispatch together on the stated pre-order date.</p>

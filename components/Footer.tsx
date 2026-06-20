@@ -286,7 +286,7 @@ export default function Footer() {
                   {isRTL ? 'شحن مجاني داخل الإمارات' : 'Free UAE Shipping'}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'للطلبات فوق 2000 درهم' : 'On orders above 2000 AED'}
+                  {isRTL ? 'للطلبات فوق 1000 درهم' : 'On orders above 1000 AED'}
                 </p>
               </div>
             </div>

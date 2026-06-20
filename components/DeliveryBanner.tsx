@@ -13,7 +13,7 @@ export default function DeliveryBanner() {
   const messages = [
     {
       icon: FiTruck,
-      text: isRTL ? 'شحن مجاني للإمارات والخليج • توصيل خلال أسبوعين' : 'Free UAE & GCC Shipping • Delivery in 2 Weeks',
+      text: isRTL ? 'شحن مجاني داخل الإمارات للطلبات فوق 1000 درهم • توصيل خلال أسبوعين' : 'Free UAE Shipping on Orders Over 1000 AED • Delivery in 2 Weeks',
     },
     {
       icon: FiGift,

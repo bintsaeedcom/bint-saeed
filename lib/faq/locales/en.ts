@@ -38,7 +38,7 @@ export const faqEn: FaqBundle = {
         },
         {
           q: 'Do you offer free shipping?',
-          a: 'Yes. Complimentary shipping applies to orders over 500 AED within the UAE and GCC region.',
+          a: 'Yes. Complimentary shipping applies to orders over 1000 AED within the UAE.',
         },
         {
           q: 'Can I track my order?',
