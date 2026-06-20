@@ -213,10 +213,12 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
       '/Webshop pictures/Dresses/Knightsbridge Dress/bint-saeed-knightsbridge-dress-dark-brown-close-up.webp',
   },
   'hampstead-dress': {
-    front: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress -F.jpg',
-    side: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- S.jpg',
-    back: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- B.jpg',
-    extra: '/Webshop pictures/Dresses/Hampstead Dress/Hampstead Dress- E.jpg',
+    front:
+      '/Webshop pictures/Dresses/Hampstead Dress/bint-saeed-hampstead-dress-black-front.webp',
+    side:
+      '/Webshop pictures/Dresses/Hampstead Dress/bint-saeed-hampstead-dress-black-side.webp',
+    back:
+      '/Webshop pictures/Dresses/Hampstead Dress/bint-saeed-hampstead-dress-black-back.webp',
   },
   'covent-garden-long-dress': {
     front:
@@ -320,6 +322,13 @@ const NOTHING_HILL_KAFTAN_DIR = '/Webshop pictures/Kaftans/Nothing Hill Kaftan'
 
 function nothingHillKaftanGallery(): string[] {
   const base = `${NOTHING_HILL_KAFTAN_DIR}/bint-saeed-nothing-hill-kaftan-peach-pink`
+  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+}
+
+const HAMPSTEAD_DRESS_DIR = '/Webshop pictures/Dresses/Hampstead Dress'
+
+function hampsteadDressGallery(color: 'black' | 'navy-blue' | 'magenta'): string[] {
+  const base = `${HAMPSTEAD_DRESS_DIR}/bint-saeed-hampstead-dress-${color}`
   return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
 }
 
@@ -535,7 +544,10 @@ export const products: Product[] = [
       'Dress with structured shoulders and traditional Al Talli trim — evening or city wear rooted in Emirati heritage.',
     fabric: 'Virgin Wool blend, Silk lining, Mother-of-pearl buttons',
     measurements: 'Structured fit. Length: 118cm (size M). Shoulder width: 42cm.',
-    images: orderedProductGallery('hampstead-dress'),
+    images: hampsteadDressGallery('black'),
+    colorImages: {
+      Black: hampsteadDressGallery('black'),
+    },
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },

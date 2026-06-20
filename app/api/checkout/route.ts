@@ -110,6 +110,13 @@ export async function POST(request: NextRequest) {
         },
         checkoutCurrency,
       )
+      const rawImage = String(item.image ?? '').trim().slice(0, 500)
+      const productImage =
+        rawImage.length > 0
+          ? rawImage.startsWith('http')
+            ? rawImage
+            : `${baseUrl}${rawImage.startsWith('/') ? '' : '/'}${rawImage}`
+          : undefined
       const lengthPart =
         item.lengthCm != null && String(item.lengthCm).length > 0
           ? `, Length: ${String(item.lengthCm).slice(0, 24)} cm`
@@ -131,7 +138,7 @@ export async function POST(request: NextRequest) {
           product_data: {
             name: String(item.name ?? 'Item').slice(0, 120),
             description,
-            images: [String(item.image ?? '').slice(0, 500)],
+            ...(productImage ? { images: [productImage] } : {}),
             ...(sku ? { metadata: { sku: sku.slice(0, 50) } } : {}),
           },
           unit_amount: toStripeMinorUnits(unitAmount, checkoutCurrency),

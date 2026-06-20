@@ -14,7 +14,18 @@ export const BRAND_ALT_PHRASE = BRAND_GEO_PHRASE
 const FALLBACK_ANGLES = ['front', 'side', 'back', 'three-quarter'] as const
 const VIEW_SUFFIXES = ['three-quarter', 'close-up', 'front', 'back', 'side', 'detail', 'extra'] as const
 
-const KNOWN_COLOR_SLUGS = ['dark-marroon', 'marroon', 'peach-pink', 'navy-grey', 'navy-blue', 'dark-brown', 'light-pink', 'burgundy', 'black'] as const
+const KNOWN_COLOR_SLUGS = [
+  'dark-marroon',
+  'marroon',
+  'peach-pink',
+  'navy-grey',
+  'navy-blue',
+  'dark-brown',
+  'light-pink',
+  'burgundy',
+  'magenta',
+  'black',
+] as const
 
 const COLOR_SLUG_LABELS: Record<string, string> = {
   'navy-grey': 'Navy Grey',
@@ -25,6 +36,7 @@ const COLOR_SLUG_LABELS: Record<string, string> = {
   'peach-pink': 'Peach Pink',
   'light-pink': 'Light Pink',
   burgundy: 'Burgundy',
+  magenta: 'Magenta',
   black: 'Black',
 }
 
