@@ -15,7 +15,7 @@ const KHOUS_WEAVING_SLUGS = new Set([
 
 const AL_TALLI_SLUGS = new Set(['covent-garden-abaya', 'hampstead-dress', 'soho-set'])
 
-const DETAIL_ANGLES = new Set(['detail', 'extra', 'close-up'])
+const DETAIL_ANGLES = new Set(['detail', 'extra', 'close-up', 'cuff close-up'])
 
 export function normalizeProductSlug(slug: string): string {
   return slug.trim().toLowerCase()
@@ -34,8 +34,8 @@ export function getHeritageAltPhrase(craft: HeritageCraft, angle: string): strin
 
   if (craft === 'khous') {
     return isDetail
-      ? 'detail of trim inspired by traditional Khous weaving, Emirati heritage and Abu Dhabi culture'
-      : 'trim inspired by traditional Khous weaving, Emirati heritage and Abu Dhabi culture'
+      ? 'handwoven trim detail inspired by the Emirati tradition of Khous weaving, made in Abu Dhabi'
+      : 'handwoven trim inspired by the Emirati tradition of Khous weaving, made in Abu Dhabi'
   }
 
   return isDetail
@@ -45,7 +45,7 @@ export function getHeritageAltPhrase(craft: HeritageCraft, angle: string): strin
 
 const HERITAGE_META_EN: Record<HeritageCraft, string> = {
   khous:
-    'Emirati heritage Khous weaving-inspired trim. Abu Dhabi luxury fashion by an Emirati brand celebrating UAE culture.',
+    'Handwoven trim inspired by the Emirati tradition of Khous weaving. Made in Abu Dhabi — luxury fashion by an Emirati brand celebrating UAE culture.',
   'al-talli':
     'Traditional Al Talli trim and Emirati heritage craftsmanship. Abu Dhabi luxury fashion by an Emirati brand.',
 }
@@ -74,8 +74,8 @@ export function getHeritageSchemaKeywords(slug: string): string | undefined {
   if (craft === 'khous') {
     return [
       'Emirati heritage',
-      'Khous weaving',
-      'Khous',
+      'Handwoven trim',
+      'Made in Abu Dhabi',
       'Emirati culture',
       'Abu Dhabi culture',
       'Emirati brand',
@@ -118,7 +118,12 @@ export function getHeritageSchemaProperties(slug: string): Array<Record<string, 
       {
         '@type': 'PropertyValue',
         name: 'Heritage craft',
-        value: 'Trim inspired by traditional Khous weaving',
+        value: 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Made in',
+        value: 'Abu Dhabi, United Arab Emirates',
       },
       {
         '@type': 'PropertyValue',

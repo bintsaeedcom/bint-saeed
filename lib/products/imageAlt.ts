@@ -12,7 +12,7 @@ export { BRAND_GEO_PHRASE }
 export const BRAND_ALT_PHRASE = BRAND_GEO_PHRASE
 
 const FALLBACK_ANGLES = ['front', 'side', 'back', 'three-quarter'] as const
-const VIEW_SUFFIXES = ['three-quarter', 'close-up', 'front', 'back', 'side', 'detail', 'extra'] as const
+const VIEW_SUFFIXES = ['three-quarter', 'cuff-close-up', 'close-up', 'lifestyle-2', 'lifestyle-1', 'lifestyle', 'front', 'back', 'side', 'detail', 'extra'] as const
 
 const KNOWN_COLOR_SLUGS = [
   'dark-marroon',
@@ -63,6 +63,9 @@ function productTypeFromCategory(category: string): string {
 function inferAngleFromSrc(src: string, index = 0): string {
   const p = src.toLowerCase()
   if (p.includes('three-quarter') || p.includes('threequarter') || p.includes('3q')) return 'three-quarter'
+  if (p.includes('lifestyle-2')) return 'lifestyle 2'
+  if (p.includes('lifestyle-1') || p.includes('lifestyle')) return 'lifestyle'
+  if (p.includes('cuff-close-up')) return 'cuff close-up'
   if (p.includes('close-up') || p.includes('closeup')) return 'close-up'
   if (p.includes('front') || /[-_\s]f\./.test(p)) return 'front'
   if (p.includes('back') || /[-_\s]b\./.test(p)) return 'back'

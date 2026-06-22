@@ -171,7 +171,7 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     side: '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-side.webp',
     back: '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-back.webp',
     detail:
-      '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-close-up.webp',
+      '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-cuff-close-up.webp',
   },
   'marylebone-abaya': {
     front: '/Webshop pictures/Abayas/Marylebone Abaya/bint-saeed-marylebone-abaya-black-front.webp',
@@ -182,8 +182,8 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     front: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-front.webp',
     side: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-side.webp',
     back: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-back.webp',
-    detail: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-detail.webp',
-    extra: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-extra.webp',
+    detail: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-lifestyle-1.webp',
+    extra: '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-lifestyle-2.webp',
   },
   'park-lane-abaya': {
     front: '/Webshop pictures/Abayas/Park Lane Abaya/bint-saeed-parklane-abaya-black-front.webp',
@@ -239,8 +239,8 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     front: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-front.webp',
     side: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-side.webp',
     back: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-back.webp',
-    detail: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-detail.webp',
-    extra: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-extra.webp',
+    detail: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-lifestyle-1.webp',
+    extra: '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-black-lifestyle-2.webp',
   },
   'hyde-park-set': {
     front: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-front.webp',
@@ -260,11 +260,12 @@ function orderedProductGallery(slug: string): string[] {
 const KNIGHTSBRIDGE_ABAYA_JACKET_DIR = '/Webshop pictures/Abayas/Knightsbridge Abaya Jacket'
 
 function knightsbridgeAbayaJacketGallery(color: 'dark-brown' | 'navy-grey'): string[] {
-  return [
-    `${KNIGHTSBRIDGE_ABAYA_JACKET_DIR}/bint-saeed-knightsbridge-abaya-jacket-${color}-front.webp`,
-    `${KNIGHTSBRIDGE_ABAYA_JACKET_DIR}/bint-saeed-knightsbridge-abaya-jacket-${color}-side.webp`,
-    `${KNIGHTSBRIDGE_ABAYA_JACKET_DIR}/bint-saeed-knightsbridge-abaya-jacket-${color}-back.webp`,
-  ]
+  const base = `${KNIGHTSBRIDGE_ABAYA_JACKET_DIR}/bint-saeed-knightsbridge-abaya-jacket-${color}`
+  const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  if (color === 'navy-grey') {
+    images.push(`${base}-lifestyle-1.webp`)
+  }
+  return images
 }
 
 const KNIGHTSBRIDGE_DRESS_DIR = '/Webshop pictures/Dresses/Knightsbridge Dress'
@@ -280,7 +281,7 @@ function knightsbridgeDressGallery(color: 'dark-brown' | 'navy-grey'): string[] 
     images.push(`${base}-close-up.webp`)
   }
   if (color === 'navy-grey') {
-    images.push(`${base}-extra.webp`)
+    images.push(`${base}-lifestyle-1.webp`)
   }
   return images
 }
@@ -354,7 +355,7 @@ function belgraviaAbayaGallery(color: 'black' | 'navy-blue'): string[] {
   const base = `${BELGRAVIA_ABAYA_DIR}/bint-saeed-belgravia-abaya-${color}`
   const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
   if (color === 'black') {
-    images.push(`${base}-detail.webp`, `${base}-extra.webp`)
+    images.push(`${base}-lifestyle-1.webp`, `${base}-lifestyle-2.webp`)
   }
   return images
 }
@@ -367,8 +368,8 @@ function sohoSetGallery(color: 'black' | 'navy-blue'): string[] {
     `${base}-front.webp`,
     `${base}-side.webp`,
     `${base}-back.webp`,
-    `${base}-detail.webp`,
-    `${base}-extra.webp`,
+    `${base}-lifestyle-1.webp`,
+    `${base}-lifestyle-2.webp`,
   ]
 }
 

@@ -1119,7 +1119,7 @@ function MagazineGrid() {
   const collectionCards = [
     {
       images: [
-        '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-extra.webp',
+        '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-lifestyle-2.webp',
         '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-front.webp',
         '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-side.webp',
       ],
