@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
-import { FiArrowLeft } from 'react-icons/fi'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getEnabledTrackersFromEnv } from '@/lib/analytics/trackerCatalog'
 
@@ -35,16 +35,15 @@ export default function PrivacyPolicyPage() {
           transition={{ duration: 0.5 }}
           className="mb-8"
         >
-          <LocaleLink
-            href="/"
-            className={`group inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-neutral-600 transition-colors hover:text-neutral-900 ${isRTL ? 'flex-row-reverse' : ''}`}
-            data-cursor-hover
-          >
-            <FiArrowLeft
-              className={`h-4 w-4 transition-transform group-hover:-translate-x-1 ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`}
-            />
-            {t.shop.backToHome}
-          </LocaleLink>
+          <AppPageWayfinding
+            rtl={isRTL}
+            variant="muted"
+            segments={[
+              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+              { label: isRTL ? 'سياسة الخصوصية' : 'Privacy Policy' },
+            ]}
+            backLink={{ href: '/', label: t.shop.backToHome }}
+          />
         </motion.div>
 
         <motion.div

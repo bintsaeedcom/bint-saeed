@@ -6,7 +6,8 @@ import Image from 'next/image'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import AboutTopicNav from '@/components/AboutTopicNav'
-import { FiArrowDown, FiArrowLeft } from 'react-icons/fi'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { FiArrowDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { buildTheCodesJsonLd } from '@/lib/seo/theCodesJsonLd'
@@ -143,18 +144,20 @@ export default function TheCodesClient() {
               initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-8"
+              className="mb-6"
             >
-              <LocaleLink
-                href="/home"
-                className={`group inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-white/70 transition-colors hover:text-white ${isRTL ? 'flex-row-reverse' : ''}`}
-                data-cursor-hover
-              >
-                <FiArrowLeft
-                  className={`h-4 w-4 transition-transform group-hover:-translate-x-1 ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`}
-                />
-                {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
-              </LocaleLink>
+              <AppPageWayfinding
+                rtl={isRTL}
+                variant="light"
+                segments={[
+                  { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+                  { label: isRTL ? 'الرموز' : 'The Codes' },
+                ]}
+                backLink={{
+                  href: '/home',
+                  label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+                }}
+              />
             </motion.div>
 
             <motion.div

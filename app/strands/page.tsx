@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import LocaleLink from '@/components/LocaleLink'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { accessories } from '@/data/accessories'
 import { products } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
@@ -359,6 +360,21 @@ export default function StrandsPage() {
             <canvas ref={heroCanvasRef} className="pointer-events-none absolute inset-0 z-0 hidden h-full w-full md:block" aria-hidden />
           </div>
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,2,16,0.92)_0%,rgba(26,2,16,0.62)_46%,rgba(26,2,16,0.22)_100%)]" />
+        </div>
+
+        <div className={`absolute top-28 z-20 px-6 md:left-[60px] ${isRTL ? 'right-6 md:right-[60px] left-auto' : 'left-6'}`}>
+          <AppPageWayfinding
+            rtl={isRTL}
+            variant="light"
+            segments={[
+              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+              { label: isRTL ? 'الخيوط' : 'Strands' },
+            ]}
+            backLink={{
+              href: '/home',
+              label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+            }}
+          />
         </div>
 
         <div className="absolute bottom-10 left-6 right-6 z-10 max-w-[600px] text-left md:bottom-[60px] md:left-[60px] md:right-auto">

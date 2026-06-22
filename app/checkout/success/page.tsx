@@ -4,12 +4,15 @@ import { useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
-import { FiCheck, FiShoppingBag, FiArrowLeft } from 'react-icons/fi'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { FiCheck, FiShoppingBag } from 'react-icons/fi'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useCartStore } from '@/store/cartStore'
 import { trackEvent } from '@/lib/analytics/tracking'
 
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
+  const { isRTL } = useLanguage()
   const sessionId = searchParams?.get('session_id')
   const clearCart = useCartStore((state) => state.clearCart)
 
@@ -21,33 +24,28 @@ function CheckoutSuccessContent() {
   }, [sessionId, clearCart])
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center pb-20 pt-4 sm:pt-6 md:pt-8">
-      {/* Subtle background effects */}
-      <div className="absolute top-20 right-0 w-96 h-96 bg-brand-stone/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-brand-dustyBlue/5 rounded-full blur-3xl" />
-      
-      <div className="container mx-auto px-6 lg:px-12 relative">
-        {/* Back to Home */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="absolute top-0 left-6 lg:left-12"
-        >
-          <LocaleLink
-            href="/"
-            className="inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group"
-            data-cursor-hover
-          >
-            <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Home
-          </LocaleLink>
-        </motion.div>
+    <div className="relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-20 pt-24 sm:pt-28">
+      <div className="absolute top-20 right-0 h-96 w-96 rounded-full bg-brand-stone/10 blur-3xl" />
+      <div className="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-brand-dustyBlue/5 blur-3xl" />
+
+      <div className="container relative mx-auto min-w-0 px-6 lg:px-12">
+        <AppPageWayfinding
+          rtl={isRTL}
+          className="mb-10"
+          segments={[
+            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+            { label: isRTL ? 'تأكيد الطلب' : 'Order Confirmed' },
+          ]}
+          backLink={{
+            href: '/home',
+            label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+          }}
+        />
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="max-w-lg mx-auto text-center"
+          className="mx-auto max-w-lg text-center"
         >
           <div className="glass-card rounded-2xl p-12">
             <motion.div

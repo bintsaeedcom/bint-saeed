@@ -5,7 +5,8 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AboutTopicNav from '@/components/AboutTopicNav'
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 export default function AlTalliPage() {
@@ -48,21 +49,25 @@ function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/60 to-transparent" />
       </motion.div>
 
-      {/* Back Button */}
-      <div className={`absolute top-32 ${isRTL ? 'right-6 lg:right-12' : 'left-6 lg:left-12'} z-20`}>
+      <div className={`absolute top-28 ${isRTL ? 'right-6 lg:right-12' : 'left-6 lg:left-12'} z-20`}>
         <motion.div
           initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <LocaleLink
-            href="/heritage"
-            className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-white/70 hover:text-white transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
-            data-cursor-hover
-          >
-            <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
-            {isRTL ? 'العودة للتراث' : 'Back to Heritage'}
-          </LocaleLink>
+          <AppPageWayfinding
+            rtl={isRTL}
+            variant="light"
+            segments={[
+              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+              { label: isRTL ? 'التراث' : 'Heritage', href: '/heritage' },
+              { label: isRTL ? 'التلي' : 'Al Talli' },
+            ]}
+            backLink={{
+              href: '/heritage',
+              label: isRTL ? 'العودة للتراث' : 'Back to Heritage',
+            }}
+          />
         </motion.div>
       </div>
 

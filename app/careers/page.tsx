@@ -1,10 +1,19 @@
 import LocaleLink from '@/components/LocaleLink'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiArrowRight } from 'react-icons/fi'
 
 export default function CareersPage() {
   return (
     <div className="relative min-h-screen overflow-x-clip bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8">
-      <section className="relative container mx-auto px-6 pb-20 lg:px-16 lg:pb-28">
+      <section className="relative container mx-auto px-6 pb-20 pt-24 lg:px-16 lg:pb-28 lg:pt-28">
+        <AppPageWayfinding
+          className="mb-8"
+          segments={[
+            { label: 'Home', href: '/home' },
+            { label: 'Careers' },
+          ]}
+          backLink={{ href: '/home', label: 'Back to Home' }}
+        />
         <span className="mb-6 block font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
           Bint Saeed
         </span>

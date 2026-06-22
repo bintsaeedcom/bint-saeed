@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
-import { FiArrowLeft, FiCheck } from 'react-icons/fi'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { FiCheck } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 const SIZE_HEADERS = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL'] as const
@@ -53,14 +54,19 @@ export default function SizeGuidePage() {
       <section className="relative border-b border-brand-stone/25 pb-14 pt-8 md:pt-12 md:pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_70%_at_20%_8%,rgba(146,170,193,0.12)_0%,transparent_56%)]" />
         <div className="container relative mx-auto px-6 lg:px-12">
-          <LocaleLink
-            href="/shop"
-            className={`mb-8 inline-flex items-center gap-2 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-clayRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
-            data-cursor-hover
-          >
-            <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-            {isRTL ? 'العودة للتسوق' : 'Back to Shop'}
-          </LocaleLink>
+          <AppPageWayfinding
+            rtl={isRTL}
+            className="mb-8"
+            segments={[
+              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+              { label: isRTL ? 'المتجر' : 'Shop', href: '/shop' },
+              { label: t.footer.sizeGuide },
+            ]}
+            backLink={{
+              href: '/shop',
+              label: isRTL ? 'العودة للتسوق' : 'Back to Shop',
+            }}
+          />
 
           <h1
             data-document-h1="true"

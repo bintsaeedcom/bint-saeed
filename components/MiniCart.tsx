@@ -14,6 +14,7 @@ import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOpti
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { getCartLineImageAlt, getProductImageAlt } from '@/lib/products/imageAlt'
+import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 
 import 'swiper/css'
 import 'swiper/css/free-mode'
@@ -130,13 +131,15 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                       <LocaleLink href={productHref(item)} onClick={onClose} className="flex-shrink-0" data-cursor-hover>
                         <div className="relative h-[4.8rem] w-16 overflow-hidden rounded-lg bg-[#f5f5f5] sm:h-[6.4rem] sm:w-[4.8rem]">
                           <Image
-                            src={item.image}
+                            src={productImageSrc(item.image)}
                             alt={getCartLineImageAlt(
                               item,
                               staticProducts.find((product) => product.id === item.id),
                             )}
                             fill
+                            unoptimized={isWebshopPicturePath(item.image)}
                             className="img-zoom object-cover object-top"
+                            sizes="80px"
                           />
                         </div>
                       </LocaleLink>

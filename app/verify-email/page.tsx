@@ -2,6 +2,7 @@
 
 import { Suspense } from 'react'
 import LocaleLink from '@/components/LocaleLink'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { FiCheck, FiAlertCircle, FiArrowRight } from 'react-icons/fi'
@@ -23,11 +24,24 @@ function VerifyEmailContent() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-pageCanvas flex items-center justify-center px-6 pt-24 pb-16">
+    <div className="min-h-screen bg-brand-pageCanvas px-6 pt-24 pb-16">
+      <div className="mx-auto w-full max-w-md">
+        <AppPageWayfinding
+          rtl={isRTL}
+          className="mb-8"
+          segments={[
+            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+            { label: isRTL ? 'تأكيد البريد' : 'Email Verification' },
+          ]}
+          backLink={{
+            href: '/account',
+            label: isRTL ? 'العودة للحساب' : 'Back to Account',
+          }}
+        />
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md rounded-2xl border border-brand-stone/25 bg-white p-10 text-center shadow-sm"
+        className="w-full rounded-2xl border border-brand-stone/25 bg-white p-10 text-center shadow-sm"
       >
         {verified ? (
           <>
@@ -100,6 +114,7 @@ function VerifyEmailContent() {
           </>
         )}
       </motion.div>
+      </div>
     </div>
   )
 }

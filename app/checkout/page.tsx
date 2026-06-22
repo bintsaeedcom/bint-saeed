@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
-import AppBreadcrumb from '@/components/AppBreadcrumb'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { FiArrowLeft, FiArrowRight, FiLock } from 'react-icons/fi'
+import { FiArrowRight, FiLock } from 'react-icons/fi'
 import { loadStripe } from '@stripe/stripe-js'
 import toast from 'react-hot-toast'
 import { useCartStore } from '@/store/cartStore'
@@ -139,46 +139,32 @@ export default function CheckoutPage() {
     <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
       <div className="border-b border-brand-stone/20 bg-brand-pageCanvas">
         <div className="container mx-auto min-w-0 px-4 py-6 pt-24 sm:px-6 sm:py-8 sm:pt-28 lg:px-12">
-          <AppBreadcrumb
+          <AppPageWayfinding
             rtl={isRTL}
             variant="muted"
+            breadcrumbClassName="text-brand-clayRed/70 [&_a]:text-brand-clayRed/70 [&_span]:text-brand-darkRed"
             segments={[
               { label: isRTL ? 'السلة' : 'Bag', href: '/cart' },
               { label: isRTL ? 'دفع آمن' : 'Secure Payment' },
             ]}
-            className="text-brand-clayRed/70 [&_a]:text-brand-clayRed/70 [&_span:last-child]:text-brand-darkRed"
+            backLink={{
+              href: '/cart',
+              label: isRTL ? 'تعديل السلة' : 'Edit bag',
+            }}
           />
-          <div className={`mt-5 flex items-start justify-between gap-4 sm:mt-6 sm:gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <div className="min-w-0">
-              <h1
-                data-document-h1="true"
-                className="font-rozha text-[1.75rem] leading-tight text-brand-darkRed sm:text-3xl md:text-4xl"
-              >
-                {isRTL ? 'راجعي طلبك' : 'Review Your Order'}
-              </h1>
-              <p className="mt-2 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/70">
-                {isRTL
-                  ? 'راجعي اختيارك قبل المتابعة إلى الدفع الآمن.'
-                  : 'Review your selection before proceeding to secure payment.'}
-              </p>
-            </div>
-            <LocaleLink
-              href="/cart"
-              className={`hidden shrink-0 items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue md:inline-flex ${isRTL ? 'flex-row-reverse' : ''}`}
-              data-cursor-hover
+          <div className={`mt-5 sm:mt-6 ${isRTL ? 'text-right' : ''}`}>
+            <h1
+              data-document-h1="true"
+              className="font-rozha text-[1.75rem] leading-tight text-brand-darkRed sm:text-3xl md:text-4xl"
             >
-              <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-              {isRTL ? 'تعديل السلة' : 'Edit bag'}
-            </LocaleLink>
+              {isRTL ? 'راجعي طلبك' : 'Review Your Order'}
+            </h1>
+            <p className="mt-2 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/70">
+              {isRTL
+                ? 'راجعي اختيارك قبل المتابعة إلى الدفع الآمن.'
+                : 'Review your selection before proceeding to secure payment.'}
+            </p>
           </div>
-          <LocaleLink
-            href="/cart"
-            className={`mt-4 inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue md:hidden ${isRTL ? 'flex-row-reverse' : ''}`}
-            data-cursor-hover
-          >
-            <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-            {isRTL ? 'تعديل السلة' : 'Edit bag'}
-          </LocaleLink>
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 'use client'
 
 import LocaleLink from '@/components/LocaleLink'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FiHeart, FiTrash2 } from 'react-icons/fi'
@@ -18,6 +19,18 @@ export default function WishlistPage() {
   return (
     <div className={`min-h-screen bg-brand-pageCanvas pt-28 pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="container mx-auto max-w-3xl px-6 lg:px-12">
+        <AppPageWayfinding
+          rtl={isRTL}
+          className="mb-10"
+          segments={[
+            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+            { label: isRTL ? 'المفضلة' : 'Favorites' },
+          ]}
+          backLink={{
+            href: '/shop',
+            label: isRTL ? 'العودة للتسوق' : 'Back to Shop',
+          }}
+        />
         <div className={`mb-10 ${isRTL ? 'text-right' : ''}`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
             Bint Saeed

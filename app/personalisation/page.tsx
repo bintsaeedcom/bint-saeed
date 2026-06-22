@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 const PERSONALISATION_PAGE = encodeURIComponent('Personalisation Page')
@@ -94,6 +95,17 @@ export default function PersonalisationPage() {
             className="object-cover object-center"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,2,16,0.92)_0%,rgba(26,2,16,0.62)_46%,rgba(26,2,16,0.22)_100%)]" />
+        </div>
+
+        <div className="absolute top-28 left-6 right-6 z-20 md:left-[60px] md:right-auto">
+          <AppPageWayfinding
+            variant="light"
+            segments={[
+              { label: 'Home', href: '/home' },
+              { label: 'Personalisation' },
+            ]}
+            backLink={{ href: '/home', label: 'Back to Home' }}
+          />
         </div>
 
         <div className="absolute bottom-10 left-6 right-6 z-10 max-w-[600px] pb-14 text-left md:bottom-[60px] md:left-[60px] md:right-auto md:pb-16">

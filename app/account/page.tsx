@@ -1,6 +1,7 @@
 'use client'
 
 import LocaleLink from '@/components/LocaleLink'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { motion } from 'framer-motion'
 import { FiArrowRight, FiLock, FiUserPlus } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -11,6 +12,18 @@ export default function AccountPage() {
   return (
     <div className="min-h-screen bg-brand-pageCanvas pt-28 pb-24">
       <div className="container mx-auto max-w-2xl px-6">
+        <AppPageWayfinding
+          rtl={isRTL}
+          className="mb-10"
+          segments={[
+            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+            { label: isRTL ? 'حسابي' : 'Account' },
+          ]}
+          backLink={{
+            href: '/home',
+            label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+          }}
+        />
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}

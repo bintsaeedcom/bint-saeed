@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
-import { FiArrowLeft, FiMail, FiPhone, FiMapPin, FiClock, FiSend } from 'react-icons/fi'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { FiMail, FiPhone, FiMapPin, FiClock, FiSend } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import toast from 'react-hot-toast'
@@ -104,14 +105,14 @@ export default function ContactPage() {
           transition={{ duration: 0.5 }}
           className="mb-8"
         >
-          <LocaleLink
-            href="/"
-            className={`inline-flex items-center gap-2 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
-            data-cursor-hover
-          >
-            <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
-            {t.shop.backToHome}
-          </LocaleLink>
+          <AppPageWayfinding
+            rtl={isRTL}
+            segments={[
+              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+              { label: isRTL ? 'تواصل معنا' : 'Contact' },
+            ]}
+            backLink={{ href: '/', label: t.shop.backToHome }}
+          />
         </motion.div>
 
         {/* Header */}

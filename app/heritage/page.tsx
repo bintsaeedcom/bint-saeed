@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AboutTopicNav from '@/components/AboutTopicNav'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiArrowRight, FiArrowDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -69,6 +70,20 @@ function HeritageHero() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,_rgba(146,170,193,0.14)_0%,_transparent_55%)]" />
       </motion.div>
       <DecorativeCorners color="dustyBlue" />
+      <div className={`absolute top-28 z-20 ${isRTL ? 'right-6 lg:right-16' : 'left-6 lg:left-16'}`}>
+        <AppPageWayfinding
+          rtl={isRTL}
+          variant="light"
+          segments={[
+            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+            { label: isRTL ? 'التراث' : 'Heritage' },
+          ]}
+          backLink={{
+            href: '/home',
+            label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+          }}
+        />
+      </div>
       <motion.div style={{ y, opacity }} className="relative h-full flex items-center justify-center text-center">
         <div className="container mx-auto px-6 lg:px-16">
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }} className="max-w-4xl mx-auto">

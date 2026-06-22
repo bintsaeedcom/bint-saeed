@@ -9,8 +9,7 @@ import {
   productNotFoundMetadata,
 } from '@/lib/seo/productPageMeta'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
-
-const SITE_URL = 'https://www.bintsaeed.com'
+import { absoluteCatalogImageUrl } from '@/lib/products/productJsonLd'
 
 type ProductLayoutProps = {
   children: React.ReactNode
@@ -34,7 +33,7 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
     slug,
   })
   const image = product.images[0] ?? '/og-image.png'
-  const imageUrl = image.startsWith('http') ? image : `${SITE_URL}${image}`
+  const imageUrl = image.startsWith('http') ? image : absoluteCatalogImageUrl(image)
   const imageAlt = getProductImageAlt(product, image, {
     color: product.colors[0]?.name,
     index: 0,

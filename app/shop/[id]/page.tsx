@@ -3,9 +3,8 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
-import AppBreadcrumb from '@/components/AppBreadcrumb'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
@@ -46,6 +45,7 @@ import {
   PDP_RELATED_TITLE,
 } from '@/lib/pdp/pdpTypography'
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
+import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -291,9 +291,6 @@ export default function ProductPage() {
         : []
   const isVideoFile = (src: string) => /\.(mp4|mov|webm|ogg)$/i.test(src)
   const isHeicFile = (src: string) => /\.(heic|heif)$/i.test(src)
-  /** Large local PNGs/JPGs under public/Webshop — bypass next/image optimizer (avoids 400 on ~7MB assets). */
-  const isWebshopPicture = (src: string) => src.startsWith('/Webshop pictures/')
-  const productImageSrc = (src: string) => (isWebshopPicture(src) ? encodeURI(src) : src)
   const productJsonLd = useMemo(
     () =>
       buildShopProductJsonLd({
@@ -353,31 +350,24 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-pageCanvas">
+    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
-      {/* Breadcrumb */}
-      <div className="border-b border-brand-stone/20 pt-32">
-        <div className={`mx-auto flex min-w-0 w-[90vw] max-w-[1400px] items-center justify-between gap-4 px-4 py-2 sm:px-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
-          <AppBreadcrumb
-            rtl={isRTL}
-            segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-              { label: isRTL ? 'المتجر' : 'Shop', href: '/shop' },
-              { label: product.name },
-            ]}
-          />
-          <LocaleLink
-            href="/shop"
-            className="hidden shrink-0 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.16em] text-brand-darkRed/70 transition-colors hover:text-brand-dustyBlue md:inline-flex"
-            data-cursor-hover
-          >
-            {isRTL ? 'العودة إلى المتجر' : 'Back to Shop'}
-          </LocaleLink>
-        </div>
-      </div>
+      <AppPageWayfinding
+        layout="bar"
+        rtl={isRTL}
+        segments={[
+          { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+          { label: isRTL ? 'المتجر' : 'Shop', href: '/shop' },
+          { label: product.name },
+        ]}
+        backLink={{
+          href: '/shop',
+          label: isRTL ? 'العودة إلى المتجر' : 'Back to Shop',
+        }}
+      />
 
-      <div className="mx-auto w-[90vw] max-w-[1400px] px-4 py-8 sm:px-8 sm:py-10 lg:py-12">
-        <div className="isolate grid min-h-0 min-w-0 grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-8 sm:py-8 lg:py-12">
+        <div className="isolate grid min-h-0 min-w-0 grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Image Gallery */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -434,12 +424,9 @@ export default function ProductPage() {
                             loading="lazy"
                           />
                         ) : (
-                          <Image
-                            src={productImageSrc(image)}
+                          <PdpGalleryImage
+                            src={image}
                             alt={activeImageAlt(image, index)}
-                            fill
-                            sizes="76px"
-                            unoptimized={isWebshopPicture(image)}
                             className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                           />
                         )}
@@ -451,7 +438,7 @@ export default function ProductPage() {
 
               {/* Main Image */}
               <div className="space-y-3">
-                <div className="relative aspect-[3/4] w-full min-h-0 overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
+                <div className="relative aspect-[3/4] w-full min-h-0 overflow-hidden border border-brand-stone/20 bg-[#f5f5f5] [&_.product-gallery-swiper]:absolute [&_.product-gallery-swiper]:inset-0 [&_.product-gallery-swiper]:h-full [&_.product-gallery-swiper]:w-full">
                   <Swiper
                     key={`main-${selectedColor}`}
                     modules={mainGalleryModules}
@@ -459,6 +446,9 @@ export default function ProductPage() {
                     slidesPerView={1}
                     navigation
                     pagination={{ clickable: true, dynamicBullets: true }}
+                    observer
+                    observeParents
+                    resizeObserver
                     preventClicks={false}
                     preventClicksPropagation={false}
                     touchStartPreventDefault={false}
@@ -516,14 +506,11 @@ export default function ProductPage() {
                               loading={index === 0 ? 'eager' : 'lazy'}
                             />
                           ) : (
-                            <Image
-                              src={productImageSrc(image)}
+                            <PdpGalleryImage
+                              src={image}
                               alt={activeImageAlt(image, index)}
-                              fill
-                              sizes="(max-width: 768px) 100vw, 40vw"
-                              unoptimized={isWebshopPicture(image)}
-                              className="img-zoom object-cover"
                               priority={index === 0}
+                              className="img-zoom object-cover object-top"
                             />
                           )}
                         </div>
@@ -573,12 +560,9 @@ export default function ProductPage() {
                               loading="lazy"
                             />
                           ) : (
-                            <Image
-                              src={productImageSrc(image)}
+                            <PdpGalleryImage
+                              src={image}
                               alt={activeImageAlt(image, index)}
-                              fill
-                              sizes="120px"
-                              unoptimized={isWebshopPicture(image)}
                               className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             />
                           )}
@@ -1037,12 +1021,9 @@ export default function ProductPage() {
                       data-cursor-hover
                     >
                       <div className="relative z-20 aspect-[9/16] overflow-hidden bg-brand-stone/10">
-                        <Image
-                          src={productImageSrc(item.images[0])}
+                        <PdpGalleryImage
+                          src={item.images[0]}
                           alt={getProductImageAlt(item, item.images[0], { color: item.colors[0]?.name, index: 0 })}
-                          fill
-                          sizes="(max-width: 768px) 50vw, 22vw"
-                          unoptimized={isWebshopPicture(item.images[0])}
                           className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                       </div>
@@ -1081,12 +1062,11 @@ export default function ProductPage() {
               <FiX className="w-8 h-8" />
             </button>
             <div className="relative m-4 h-full w-full max-h-[72vh] max-w-[51.2rem]">
-              <Image
-                src={productImageSrc(activeImages[lightboxIndex] ?? product.images[0])}
+              <PdpGalleryImage
+                src={activeImages[lightboxIndex] ?? product.images[0]}
                 alt={activeImageAlt(activeImages[lightboxIndex] ?? product.images[0], lightboxIndex)}
-                fill
-                unoptimized={isWebshopPicture(activeImages[lightboxIndex] ?? product.images[0])}
-                className="object-contain"
+                priority
+                className="object-contain object-center"
               />
             </div>
           </motion.div>

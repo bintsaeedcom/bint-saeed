@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import AboutTopicNav from '@/components/AboutTopicNav'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { FiArrowRight } from 'react-icons/fi'
 
 /** Full-bleed bands (top → middle → bottom). */
 const CRAFT_VIDEO_BANDS = [
@@ -128,16 +129,17 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <LocaleLink
-              href="/home"
-              className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed/75 hover:text-brand-darkRed transition-colors group ${isRTL ? 'flex-row-reverse' : ''}`}
-              data-cursor-hover
-            >
-              <FiArrowLeft
-                className={`w-4 h-4 transition-transform group-hover:-translate-x-1 ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`}
-              />
-              {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
-            </LocaleLink>
+            <AppPageWayfinding
+              rtl={isRTL}
+              segments={[
+                { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+                { label: isRTL ? 'الحرفية' : 'Craftsmanship' },
+              ]}
+              backLink={{
+                href: '/home',
+                label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+              }}
+            />
           </motion.div>
 
           <motion.div

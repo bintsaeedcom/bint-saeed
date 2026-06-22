@@ -11,7 +11,9 @@ import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOpti
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { getCartLineImageAlt } from '@/lib/products/imageAlt'
+import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity } = useCartStore()
@@ -25,8 +27,22 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-brand-pageCanvas pb-20 pt-4 sm:pt-6 md:pt-8">
+      <div className="min-h-screen bg-brand-pageCanvas pb-20 pt-24 sm:pt-28">
         <div className="container mx-auto px-6 lg:px-12">
+          <AppPageWayfinding
+            rtl={isRTL}
+            variant="muted"
+            className="mb-10"
+            breadcrumbClassName="text-brand-clayRed/70 [&_a]:text-brand-clayRed/70 [&_span]:text-brand-darkRed"
+            segments={[
+              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+              { label: isRTL ? 'السلة' : 'Bag' },
+            ]}
+            backLink={{
+              href: '/shop',
+              label: isRTL ? 'متابعة التسوق' : 'Continue Shopping',
+            }}
+          />
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -56,31 +72,32 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-pageCanvas">
+    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
       {/* Header */}
-      <div className="pt-28 pb-6 border-b border-brand-stone/20">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between">
-            <LocaleLink
-              href="/shop"
-              className="inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue transition-colors group"
-              data-cursor-hover
-              data-analytics-event="click_cta_home_to_collection"
-              data-analytics-section="cart-header"
-            >
-              <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              Continue Shopping
-            </LocaleLink>
-            <h1 data-document-h1="true" className="font-rozha text-2xl md:text-3xl text-brand-darkRed">
-              Shopping Bag ({items.length})
-            </h1>
-            <div className="w-32" />
-          </div>
+      <div className="border-b border-brand-stone/20 pb-4 pt-24 sm:pb-6 sm:pt-28">
+        <div className="container mx-auto min-w-0 px-4 sm:px-6 lg:px-12">
+          <AppPageWayfinding
+            rtl={isRTL}
+            variant="muted"
+            className="mb-4"
+            breadcrumbClassName="text-brand-clayRed/70 [&_a]:text-brand-clayRed/70 [&_span]:text-brand-darkRed"
+            segments={[
+              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+              { label: isRTL ? 'السلة' : 'Bag' },
+            ]}
+            backLink={{
+              href: '/shop',
+              label: isRTL ? 'متابعة التسوق' : 'Continue Shopping',
+            }}
+          />
+          <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed md:text-3xl">
+            Shopping Bag ({items.length})
+          </h1>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 lg:px-12 py-12">
-        <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
+      <div className="container mx-auto min-w-0 px-4 py-8 sm:px-6 sm:py-12 lg:px-12">
+        <div className="grid min-w-0 gap-8 lg:grid-cols-3 lg:gap-16">
           {/* Cart Items */}
           <div className="lg:col-span-2">
             <div className="space-y-8">
@@ -96,13 +113,15 @@ export default function CartPage() {
                   <LocaleLink href={productHref(item)} className="flex-shrink-0" data-cursor-hover>
                     <div className="relative aspect-[9/16] w-[5.6rem] bg-[#f5f5f5] md:w-[7.2rem]">
                       <Image
-                        src={item.image}
+                        src={productImageSrc(item.image)}
                         alt={getCartLineImageAlt(
                           item,
                           staticProducts.find((product) => product.id === item.id),
                         )}
                         fill
+                        unoptimized={isWebshopPicturePath(item.image)}
                         className="img-zoom object-cover object-top"
+                        sizes="(max-width: 768px) 90px, 115px"
                       />
                     </div>
                   </LocaleLink>

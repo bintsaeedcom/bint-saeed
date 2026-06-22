@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
-import AppBreadcrumb from '@/components/AppBreadcrumb'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
@@ -162,26 +162,22 @@ export default function ShopClient() {
 
   const sortLabel = SORT_OPTIONS.find((o) => o.id === sortBy)?.label ?? 'New arrivals'
   return (
-    <div className={`min-h-screen bg-brand-pageCanvas text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen overflow-x-hidden bg-brand-pageCanvas text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
       <header className="section-full overflow-hidden border-b border-black/5 bg-stone-50">
         <div className="mx-auto max-w-[1400px] px-6 pb-10 pt-24 md:px-10 md:pb-14 md:pt-28 lg:px-14">
           <div className={isRTL ? 'text-right' : ''}>
-            <LocaleLink
-              href="/home"
-              className={`mb-7 inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed/75 transition-colors hover:text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
-              data-cursor-hover
-            >
-              {isRTL ? <FiArrowRight className="h-4 w-4" aria-hidden /> : <FiArrowLeft className="h-4 w-4" aria-hidden />}
-              {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
-            </LocaleLink>
-            <AppBreadcrumb
-              variant="muted"
+            <AppPageWayfinding
               rtl={isRTL}
-              segments={[
-                { label: isRTL ? 'التشكيلة' : 'COLLECTION', href: '/about' },
-                { label: isRTL ? 'المجموعة' : 'READY-TO-WEAR' },
-              ]}
+              variant="muted"
               className="mb-6 md:mb-10"
+              segments={[
+                { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+                { label: isRTL ? 'المتجر' : 'Shop' },
+              ]}
+              backLink={{
+                href: '/home',
+                label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+              }}
             />
 
             <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue sm:tracking-[0.34em]">

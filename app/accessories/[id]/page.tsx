@@ -3,9 +3,8 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { useParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
-import AppBreadcrumb from '@/components/AppBreadcrumb'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
@@ -28,6 +27,7 @@ import {
   PDP_MTO_NOTE,
 } from '@/lib/pdp/pdpTypography'
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
+import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -181,35 +181,28 @@ export default function AccessoryDetailPage() {
   }, [accessory.category, accessory.id, accessory.price, displayName])
 
   return (
-    <div className="min-h-screen bg-brand-pageCanvas">
+    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
-      {/* Breadcrumb — same shell as `/shop/[id]` */}
-      <div className="border-b border-brand-stone/20 pt-32">
-        <div className={`mx-auto flex min-w-0 w-[90vw] max-w-[1400px] items-center justify-between gap-4 px-4 py-2 sm:px-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
-          <AppBreadcrumb
-            rtl={isRTL}
-            segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-              { label: isRTL ? 'الإكسسوارات' : 'Accessories', href: '/accessories' },
-              {
-                label: (isRTL ? categoryInfo?.nameAr : categoryInfo?.name) ?? '',
-                href: `/accessories?type=${accessory.category}`,
-              },
-              { label: isRTL ? accessory.nameAr : accessory.name },
-            ].filter((s) => s.label.length > 0)}
-          />
-          <LocaleLink
-            href="/accessories"
-            className="hidden shrink-0 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.16em] text-brand-darkRed/70 transition-colors hover:text-brand-dustyBlue md:inline-flex"
-            data-cursor-hover
-          >
-            {isRTL ? 'العودة إلى الإكسسوارات' : 'Back to Accessories'}
-          </LocaleLink>
-        </div>
-      </div>
+      <AppPageWayfinding
+        layout="bar"
+        rtl={isRTL}
+        segments={[
+          { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+          { label: isRTL ? 'الإكسسوارات' : 'Accessories', href: '/accessories' },
+          {
+            label: (isRTL ? categoryInfo?.nameAr : categoryInfo?.name) ?? '',
+            href: `/accessories?type=${accessory.category}`,
+          },
+          { label: isRTL ? accessory.nameAr : accessory.name },
+        ].filter((s) => s.label.length > 0)}
+        backLink={{
+          href: '/accessories',
+          label: isRTL ? 'العودة إلى الإكسسوارات' : 'Back to Accessories',
+        }}
+      />
 
-      <div className="mx-auto w-[90vw] max-w-[1400px] px-4 py-8 sm:px-8 sm:py-10 lg:py-12">
-        <div className="isolate grid min-h-0 min-w-0 grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-8 sm:py-8 lg:py-12">
+        <div className="isolate grid min-h-0 min-w-0 grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Image Gallery — mirrors `/shop/[id]` (Royal V-Neck Kaftan); optional third column = detail angles */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -265,11 +258,9 @@ export default function AccessoryDetailPage() {
                             loading="lazy"
                           />
                         ) : (
-                          <Image
+                          <PdpGalleryImage
                             src={image}
                             alt={withBrandAlt(`${displayName} — thumbnail ${index + 1}`)}
-                            fill
-                            sizes="76px"
                             className="img-zoom object-cover transition-opacity group-hover:opacity-80"
                           />
                         )}
@@ -280,13 +271,16 @@ export default function AccessoryDetailPage() {
               </div>
 
               <div className="space-y-3">
-                <div className="relative aspect-[3/4] w-full min-h-0 overflow-hidden border border-brand-stone/20 bg-[#f5f5f5]">
+                <div className="relative aspect-[3/4] w-full min-h-0 overflow-hidden border border-brand-stone/20 bg-[#f5f5f5] [&_.product-gallery-swiper]:absolute [&_.product-gallery-swiper]:inset-0 [&_.product-gallery-swiper]:h-full [&_.product-gallery-swiper]:w-full">
                   <Swiper
                     modules={mainGalleryModules}
                     spaceBetween={0}
                     slidesPerView={1}
                     navigation
                     pagination={{ clickable: true, dynamicBullets: true }}
+                    observer
+                    observeParents
+                    resizeObserver
                     preventClicks={false}
                     preventClicksPropagation={false}
                     touchStartPreventDefault={false}
@@ -346,15 +340,13 @@ export default function AccessoryDetailPage() {
                               loading={index === 0 ? 'eager' : 'lazy'}
                             />
                           ) : (
-                            <Image
+                            <PdpGalleryImage
                               src={image}
                               alt={withBrandAlt(
                                 `${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`,
                               )}
-                              fill
-                              sizes="(max-width: 768px) 100vw, 40vw"
-                              className="img-zoom object-cover"
                               priority={index === 0}
+                              className="img-zoom object-cover object-top"
                             />
                           )}
                         </div>
@@ -410,11 +402,9 @@ export default function AccessoryDetailPage() {
                               loading="lazy"
                             />
                           ) : (
-                            <Image
+                            <PdpGalleryImage
                               src={image}
                               alt={withBrandAlt(`${displayName} — thumbnail ${index + 1}`)}
-                              fill
-                              sizes="120px"
                               className="img-zoom object-cover transition-opacity group-hover:opacity-80"
                             />
                           )}
@@ -441,11 +431,9 @@ export default function AccessoryDetailPage() {
                           loading="lazy"
                         />
                       ) : (
-                        <Image
+                        <PdpGalleryImage
                           src={src}
                           alt={withBrandAlt(`${displayName}, ${isRTL ? `زاوية ${ai + 1}` : `angle ${ai + 1}`}`)}
-                          fill
-                          sizes="(max-width: 1024px) 0px, 11rem"
                           className="img-zoom object-cover"
                         />
                       )}
@@ -722,7 +710,12 @@ export default function AccessoryDetailPage() {
               <FiX className="h-8 w-8" />
             </button>
             <div className="relative m-4 h-full max-h-[72vh] w-full max-w-[51.2rem]">
-              <Image src={accessory.images[lightboxIndex]} alt={withBrandAlt(displayName)} fill className="object-contain" />
+              <PdpGalleryImage
+                src={accessory.images[lightboxIndex]}
+                alt={withBrandAlt(displayName)}
+                priority
+                className="object-contain object-center"
+              />
             </div>
           </motion.div>
         )}

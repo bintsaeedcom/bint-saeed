@@ -4,8 +4,9 @@ import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import Image from 'next/image'
-import { FiArrowLeft, FiFilter, FiX, FiShoppingBag } from 'react-icons/fi'
+import { FiFilter, FiX, FiShoppingBag } from 'react-icons/fi'
 import {
   accessories,
   accessoryCategories,
@@ -156,14 +157,17 @@ export default function AccessoriesPage() {
               transition={{ duration: 0.5 }}
               className="mb-8"
             >
-              <LocaleLink
-                href="/home"
-                className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed/75 transition-colors hover:text-brand-darkRed group ${isRTL ? 'flex-row-reverse' : ''}`}
-                data-cursor-hover
-              >
-                <FiArrowLeft className={`w-4 h-4 group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
-                {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
-              </LocaleLink>
+              <AppPageWayfinding
+                rtl={isRTL}
+                segments={[
+                  { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+                  { label: isRTL ? 'الإكسسوارات' : 'Accessories' },
+                ]}
+                backLink={{
+                  href: '/home',
+                  label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+                }}
+              />
             </motion.div>
 
             <motion.div

@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import LocaleLink from '@/components/LocaleLink'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { motion } from 'framer-motion'
-import { FiArrowLeft, FiLock, FiMail, FiUser } from 'react-icons/fi'
+import { FiLock, FiMail, FiUser } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
@@ -54,14 +55,19 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-brand-pageCanvas pt-28 pb-20">
       <div className="container mx-auto max-w-lg px-6">
-        <LocaleLink
-          href="/account"
-          className={`mb-10 inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-clayRed hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
-          data-cursor-hover
-        >
-          <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-          {isRTL ? 'الحساب' : 'Account'}
-        </LocaleLink>
+        <AppPageWayfinding
+          rtl={isRTL}
+          className="mb-10"
+          segments={[
+            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+            { label: isRTL ? 'الحساب' : 'Account', href: '/account' },
+            { label: isRTL ? 'إنشاء حساب' : 'Create Account' },
+          ]}
+          backLink={{
+            href: '/account',
+            label: isRTL ? 'العودة للحساب' : 'Back to Account',
+          }}
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
