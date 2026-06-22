@@ -102,11 +102,16 @@ export default function CheckoutPage() {
         }),
       })
 
-      const { sessionId, error } = await response.json()
+      const { sessionId, url, error } = await response.json()
       if (!response.ok) {
         throw new Error(error || 'Checkout is unavailable')
       }
       if (error) throw new Error(error)
+
+      if (typeof url === 'string' && url.startsWith('https://')) {
+        window.location.assign(url)
+        return
+      }
 
       const stripe = await loadStripe(stripePublishableKey)
       if (stripe && sessionId) {

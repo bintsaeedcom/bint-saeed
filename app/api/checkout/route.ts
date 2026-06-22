@@ -11,6 +11,7 @@ import {
 } from '@/lib/pricing'
 import { products as staticProducts } from '@/data/products'
 import { resolveSkuByProductId } from '@/lib/products/sku'
+import { absoluteProductImageUrl } from '@/lib/products/shopImage'
 
 function getStripeSecretKey(): string | null {
   const key = process.env.STRIPE_SECRET_KEY?.trim()
@@ -255,7 +256,7 @@ export async function POST(request: NextRequest) {
 
     const session = await stripe.checkout.sessions.create(sessionOptions)
 
-    return NextResponse.json({ sessionId: session.id })
+    return NextResponse.json({ sessionId: session.id, url: session.url })
   } catch (error: unknown) {
     console.error('Stripe checkout error:', error)
     await notifyHealthAlert({
