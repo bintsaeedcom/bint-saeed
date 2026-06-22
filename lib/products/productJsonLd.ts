@@ -9,6 +9,7 @@ import {
   getHeritageSchemaProperties,
 } from '@/lib/products/heritageSeo'
 import { resolveProductSku } from '@/lib/products/sku'
+import { getProductColorOptions } from '@/lib/products/productColorAvailability'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
@@ -21,17 +22,23 @@ function buildImageObjects(
   product: Product,
   images: string[],
   color?: string,
-): Array<Record<string, string>> {
+  lang?: string,
+): Array<Record<string, string | boolean>> {
   return images.map((src, index) => {
     const caption = getProductImageAlt(product, src, { color, index })
     const url = absoluteCatalogImageUrl(src)
+    const isWebp = src.toLowerCase().endsWith('.webp')
     return {
       '@type': 'ImageObject',
+      '@id': `${url}#image`,
       url,
       contentUrl: url,
       name: caption,
       caption,
       description: caption,
+      ...(isWebp ? { encodingFormat: 'image/webp' } : {}),
+      ...(lang ? { inLanguage: lang } : {}),
+      representativeOfPage: index === 0,
     }
   })
 }
@@ -99,6 +106,7 @@ export function buildShopProductJsonLd(input: {
   const brand = { '@type': 'Brand' as const, name: 'Bint Saeed' }
   const offer = buildOffer(product, pageUrl)
   const shared = schemaSharedFields(product, slug)
+  const variantColors = getProductColorOptions(product)
 
   if (product.colorImages && Object.keys(product.colorImages).length > 0) {
     return {
@@ -111,9 +119,9 @@ export function buildShopProductJsonLd(input: {
       productGroupID: product.id,
       variesBy: 'https://schema.org/color',
       category: product.category,
-      image: buildImageObjects(product, activeImages, selectedColor),
+      image: buildImageObjects(product, activeImages, selectedColor, lang),
       ...shared,
-      hasVariant: product.colors.map((color) => {
+      hasVariant: variantColors.map((color) => {
         const variantImages = product.colorImages?.[color.name] ?? product.images
         const colorSlug = color.name.toLowerCase().replace(/\s+/g, '-')
         const sku = resolveProductSku(product, color.name) ?? `${product.id}-${colorSlug}`
@@ -126,7 +134,7 @@ export function buildShopProductJsonLd(input: {
           sku,
           brand,
           category: product.category,
-          image: buildImageObjects(product, variantImages, color.name),
+          image: buildImageObjects(product, variantImages, color.name, lang),
           offers: offer,
           ...shared,
         }
@@ -147,7 +155,7 @@ export function buildShopProductJsonLd(input: {
     brand,
     category: product.category,
     color: selectedColor || product.colors[0]?.name,
-    image: buildImageObjects(product, activeImages, selectedColor),
+    image: buildImageObjects(product, activeImages, selectedColor, lang),
     offers: offer,
     ...shared,
   }

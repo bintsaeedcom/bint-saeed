@@ -303,6 +303,20 @@ function parkLaneAbayaGallery(color: 'black' | 'dark-marroon' | 'navy-blue'): st
   return images
 }
 
+const COVENT_GARDEN_SET_DIR = '/Webshop pictures/Sets/Covent Garden Set'
+
+function coventGardenSignatureSetGallery(color: 'burgundy' | 'black' | 'navy-blue'): string[] {
+  const base = `${COVENT_GARDEN_SET_DIR}/bint-saeed-covent-garden-set-${color}`
+  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+}
+
+const COVENT_GARDEN_ABAYA_DIR = '/Webshop pictures/Abayas/Covent Garden Abaya '
+
+function coventGardenAbayaGallery(color: 'burgundy' | 'black' | 'navy-blue'): string[] {
+  const base = `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-${color}`
+  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+}
+
 const COVENT_GARDEN_LONG_DRESS_DIR = '/Webshop pictures/Dresses/Covent Garden Dress'
 
 function coventGardenLongDressGallery(color: 'burgundy' | 'navy-grey'): string[] {
@@ -329,9 +343,20 @@ function nothingHillKaftanGallery(): string[] {
 
 const HAMPSTEAD_DRESS_DIR = '/Webshop pictures/Dresses/Hampstead Dress'
 
-function hampsteadDressGallery(color: 'black' | 'navy-blue' | 'magenta'): string[] {
+function hampsteadDressGallery(color: 'black' | 'burgundy' | 'navy-blue'): string[] {
   const base = `${HAMPSTEAD_DRESS_DIR}/bint-saeed-hampstead-dress-${color}`
   return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+}
+
+const BELGRAVIA_ABAYA_DIR = '/Webshop pictures/Abayas/Belgravia Abaya'
+
+function belgraviaAbayaGallery(color: 'black' | 'navy-blue'): string[] {
+  const base = `${BELGRAVIA_ABAYA_DIR}/bint-saeed-belgravia-abaya-${color}`
+  const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  if (color === 'black') {
+    images.push(`${base}-detail.webp`, `${base}-extra.webp`)
+  }
+  return images
 }
 
 const SOHO_SET_DIR = '/Webshop pictures/Sets/Soho Set'
@@ -390,8 +415,17 @@ export const products: Product[] = [
       'Light linen abaya with traditional Al Talli trim, a clean concealed placket, and Emirati heritage detailing.',
     fabric: 'European linen blend, cotton lining',
     measurements: 'Length: 138cm (size M). Relaxed fit through the body.',
-    images: orderedProductGallery('covent-garden-abaya'),
-    colors: [{ name: 'Burgundy', hex: '#6f1524' }],
+    images: coventGardenAbayaGallery('burgundy'),
+    colorImages: {
+      Burgundy: coventGardenAbayaGallery('burgundy'),
+      Black: coventGardenAbayaGallery('black'),
+      'Navy Blue': coventGardenAbayaGallery('navy-blue'),
+    },
+    colors: [
+      { name: 'Burgundy', hex: '#6f1524' },
+      { name: 'Black', hex: '#1a1a1a' },
+      { name: 'Navy Blue', hex: '#1f3a5f' },
+    ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     category: 'Abayas',
   },
@@ -438,8 +472,15 @@ export const products: Product[] = [
       'Signature abaya with tonal embroidery and trim inspired by traditional Khous weaving — a refined expression of Emirati heritage.',
     fabric: 'Japanese crepe, tonal embroidery thread',
     measurements: 'Length: 140cm (size M). Available in custom lengths upon request.',
-    images: orderedProductGallery('belgravia-abaya'),
-    colors: [{ name: 'Black', hex: '#1a1a1a' }],
+    images: belgraviaAbayaGallery('black'),
+    colorImages: {
+      Black: belgraviaAbayaGallery('black'),
+      'Navy Blue': belgraviaAbayaGallery('navy-blue'),
+    },
+    colors: [
+      { name: 'Black', hex: '#1a1a1a' },
+      { name: 'Navy Blue', hex: '#1f3a5f' },
+    ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Abayas',
   },
@@ -551,11 +592,13 @@ export const products: Product[] = [
     images: hampsteadDressGallery('black'),
     colorImages: {
       Black: hampsteadDressGallery('black'),
+      Burgundy: hampsteadDressGallery('burgundy'),
+      'Navy Blue': hampsteadDressGallery('navy-blue'),
     },
     colors: [
       { name: 'Black', hex: '#1a1a1a' },
+      { name: 'Burgundy', hex: '#6f1524' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
-      { name: 'Magenta', hex: '#9B1F5C' },
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Dresses',
@@ -568,8 +611,17 @@ export const products: Product[] = [
     description: 'Khous signature classic two-piece set — top and skirt for full looks or separated styling.',
     fabric: 'Organic Cotton blend, Linen accents, Natural dyes',
     measurements: 'Top length: 70cm, Skirt length: 95cm (size M). Relaxed fit.',
-    images: orderedProductGallery('covent-garden-signature-set'),
-    colors: [{ name: 'Burgundy', hex: '#6f1524' }],
+    images: coventGardenSignatureSetGallery('burgundy'),
+    colorImages: {
+      Burgundy: coventGardenSignatureSetGallery('burgundy'),
+      Black: coventGardenSignatureSetGallery('black'),
+      'Navy Blue': coventGardenSignatureSetGallery('navy-blue'),
+    },
+    colors: [
+      { name: 'Burgundy', hex: '#6f1524' },
+      { name: 'Black', hex: '#1a1a1a' },
+      { name: 'Navy Blue', hex: '#1f3a5f' },
+    ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     category: 'Sets',
   },

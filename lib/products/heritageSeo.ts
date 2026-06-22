@@ -10,6 +10,7 @@ const KHOUS_WEAVING_SLUGS = new Set([
   'knightsbridge-dress',
   'belgravia-abaya',
   'kensington-abaya',
+  'covent-garden-signature-set',
 ])
 
 const AL_TALLI_SLUGS = new Set(['covent-garden-abaya', 'hampstead-dress', 'soho-set'])
@@ -80,6 +81,7 @@ export function getHeritageSchemaKeywords(slug: string): string | undefined {
       'Emirati brand',
       'Bint Saeed',
       'luxury abaya',
+      'luxury set',
       'UAE fashion',
     ].join(', ')
   }
