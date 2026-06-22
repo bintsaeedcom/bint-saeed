@@ -6,7 +6,7 @@ import LocaleLink from '@/components/LocaleLink'
 import AppBreadcrumb from '@/components/AppBreadcrumb'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { FiArrowLeft, FiArrowRight, FiLock, FiShoppingBag } from 'react-icons/fi'
+import { FiArrowLeft, FiArrowRight, FiLock } from 'react-icons/fi'
 import { loadStripe } from '@stripe/stripe-js'
 import toast from 'react-hot-toast'
 import { useCartStore } from '@/store/cartStore'
@@ -61,9 +61,6 @@ export default function CheckoutPage() {
       item_count: items.length,
     })
   }, [cartSubtotal, currency.code, items])
-
-  const subtotal = cartSubtotal(items)
-  const estimatedTotal = subtotal
 
   const startStripeCheckout = async () => {
     if (items.length === 0) return
@@ -139,24 +136,27 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-pageCanvas">
+    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
       <div className="border-b border-brand-stone/20 bg-brand-pageCanvas">
-        <div className="container mx-auto px-6 py-8 pt-28 lg:px-12">
+        <div className="container mx-auto min-w-0 px-4 py-6 pt-24 sm:px-6 sm:py-8 sm:pt-28 lg:px-12">
           <AppBreadcrumb
             rtl={isRTL}
             variant="muted"
             segments={[
               { label: isRTL ? 'السلة' : 'Bag', href: '/cart' },
-              { label: isRTL ? 'مراجعة الطلب' : 'Review Your Order' },
+              { label: isRTL ? 'دفع آمن' : 'Secure Payment' },
             ]}
             className="text-brand-clayRed/70 [&_a]:text-brand-clayRed/70 [&_span:last-child]:text-brand-darkRed"
           />
-          <div className={`mt-6 flex items-start justify-between gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <div>
-              <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed md:text-4xl">
+          <div className={`mt-5 flex items-start justify-between gap-4 sm:mt-6 sm:gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className="min-w-0">
+              <h1
+                data-document-h1="true"
+                className="font-rozha text-[1.75rem] leading-tight text-brand-darkRed sm:text-3xl md:text-4xl"
+              >
                 {isRTL ? 'راجعي طلبك' : 'Review Your Order'}
               </h1>
-              <p className="mt-2 max-w-xl font-montserrat text-sm tracking-wide text-brand-clayRed/70">
+              <p className="mt-2 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/70">
                 {isRTL
                   ? 'راجعي اختيارك قبل المتابعة إلى الدفع الآمن.'
                   : 'Review your selection before proceeding to secure payment.'}
@@ -164,34 +164,38 @@ export default function CheckoutPage() {
             </div>
             <LocaleLink
               href="/cart"
-              className={`hidden shrink-0 items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue sm:inline-flex ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`hidden shrink-0 items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue md:inline-flex ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
               {isRTL ? 'تعديل السلة' : 'Edit bag'}
             </LocaleLink>
           </div>
+          <LocaleLink
+            href="/cart"
+            className={`mt-4 inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue md:hidden ${isRTL ? 'flex-row-reverse' : ''}`}
+            data-cursor-hover
+          >
+            <FiArrowLeft className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+            {isRTL ? 'تعديل السلة' : 'Edit bag'}
+          </LocaleLink>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-12 lg:px-12 lg:py-16">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-          <div className="space-y-8 lg:col-span-7">
+      <div className="container mx-auto min-w-0 px-4 py-8 sm:px-6 sm:py-10 lg:px-12 lg:py-16">
+        <div className="grid min-w-0 gap-8 lg:grid-cols-12 lg:gap-12">
+          <div className="min-w-0 lg:col-span-7">
             <motion.section
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              className="rounded-2xl border border-brand-stone/20 bg-white p-6 shadow-sm md:p-8"
+              className="rounded-2xl border border-brand-stone/20 bg-white p-5 shadow-sm sm:p-6 md:p-8"
             >
-              <h2 className="mb-6 flex items-center gap-2 font-rozha text-xl text-brand-darkRed">
-                <FiShoppingBag className="h-5 w-5 text-brand-dustyBlue" />
-                {isRTL ? 'طلبك' : 'Your order'}
-              </h2>
               <ul className="divide-y divide-brand-stone/15">
                 {items.map((item) => (
-                  <li key={lineKey(item)} className="flex gap-4 py-5 first:pt-0">
+                  <li key={lineKey(item)} className="flex gap-3 py-5 first:pt-0 sm:gap-4">
                     <LocaleLink
                       href={productHref(item)}
-                      className="relative h-24 w-20 shrink-0 overflow-hidden bg-[#f0eeeb]"
+                      className="relative h-20 w-16 shrink-0 overflow-hidden bg-[#f0eeeb] sm:h-24 sm:w-20"
                       data-cursor-hover
                     >
                       <Image
@@ -202,19 +206,19 @@ export default function CheckoutPage() {
                         )}
                         fill
                         className="img-zoom object-cover object-top"
-                        sizes="80px"
+                        sizes="(max-width: 640px) 64px, 80px"
                       />
                     </LocaleLink>
                     <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
                       <LocaleLink
                         href={productHref(item)}
-                        className="font-rozha text-lg text-brand-darkRed hover:text-brand-dustyBlue"
+                        className="block break-words font-rozha text-base text-brand-darkRed hover:text-brand-dustyBlue sm:text-lg"
                         data-product-name="true"
                         data-cursor-hover
                       >
                         {item.name}
                       </LocaleLink>
-                      <p className="mt-1 font-montserrat text-xs tracking-wide text-brand-clayRed/65">
+                      <p className="mt-1 break-words font-montserrat text-xs tracking-wide text-brand-clayRed/65">
                         {item.size} · {item.color}
                         {item.lengthCm ? ` · ${item.lengthCm} cm` : ''}
                         {item.customisationMessage
@@ -237,37 +241,29 @@ export default function CheckoutPage() {
             </motion.section>
           </div>
 
-          <div className="lg:col-span-5">
+          <div className="min-w-0 lg:col-span-5">
             <div className="lg:sticky lg:top-28">
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08 }}
-                className={`rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-8 text-brand-ivory shadow-xl ${isRTL ? 'text-right' : ''}`}
+                className={`rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-6 text-brand-ivory shadow-xl sm:p-8 ${isRTL ? 'text-right' : ''}`}
               >
-                <h2 className="mb-6 font-rozha text-2xl text-brand-dustyBlue/95">
+                <h2 className="mb-5 font-rozha text-xl text-brand-dustyBlue/95 sm:mb-6 sm:text-2xl">
                   {isRTL ? 'ملخص الطلب' : 'Order Summary'}
                 </h2>
                 <div
-                  className={`flex justify-between font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
                   <span>{isRTL ? 'المجموع الفرعي' : 'Subtotal'}</span>
-                  <span className="text-white">{formatCartSubtotal(items)}</span>
+                  <span className="shrink-0 text-white">{formatCartSubtotal(items)}</span>
                 </div>
-                <div className="mt-8 border-t border-white/10 pt-6">
-                  <div
-                    className={`flex justify-between font-rozha text-xl ${isRTL ? 'flex-row-reverse' : ''}`}
-                  >
-                    <span className="text-white/80">{isRTL ? 'الإجمالي التقريبي' : 'Estimated Total'}</span>
-                    <span>{formatAmount(estimatedTotal)}</span>
-                  </div>
-                  <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
-                    {isRTL ? 'الضرائب مشمولة.' : 'Taxes included.'}
-                  </p>
-                </div>
+                <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
+                  {isRTL ? 'الضرائب مشمولة.' : 'Taxes included.'}
+                </p>
 
                 <label
-                  className={`mt-8 flex items-start gap-2.5 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
+                  className={`mt-6 flex items-start gap-2.5 sm:mt-8 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
                 >
                   <input
                     type="checkbox"
@@ -300,7 +296,7 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={() => void startStripeCheckout()}
                   disabled={payBusy || !stripeEnvReady || !legalAcknowledged}
-                  className={`mt-6 flex w-full min-h-[52px] items-center justify-center gap-3 bg-brand-dustyBlue py-4 font-montserrat text-sm uppercase tracking-[0.18em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`mt-5 flex w-full min-h-[52px] items-center justify-center gap-2 bg-brand-dustyBlue px-3 py-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 sm:mt-6 sm:gap-3 sm:text-sm sm:tracking-[0.18em] ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
                   {payBusy ? (
