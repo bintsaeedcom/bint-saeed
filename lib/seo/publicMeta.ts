@@ -2,8 +2,9 @@
  * Approved global home metadata (English).
  * Keep in sync: `homePageCopy.ts`, `buildRootMetadata`, locale JSON-LD builders, and `translations.en.hero.description`.
  */
-export const HOME_META_TITLE_EN = 'Bint Saeed | Luxury Abaya House — Abu Dhabi'
+import { HOME_META_DESCRIPTION, HOME_META_TITLE } from '@/lib/brand/brandPositioning'
 
-/** Homepage meta (English): brand, location (Abu Dhabi), offering — clear, not poetic. */
-export const HOME_META_DESCRIPTION_EN =
-  'Bint Saeed is a luxury abaya house from Abu Dhabi. Crafted to order abayas with natural stone strands and hidden personalisation. Carrying heritage forward.'
+export const HOME_META_TITLE_EN = HOME_META_TITLE.en
+
+/** Homepage meta (English): contemporary house positioning for Google SERP. */
+export const HOME_META_DESCRIPTION_EN = HOME_META_DESCRIPTION.en

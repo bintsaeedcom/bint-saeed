@@ -4,6 +4,8 @@ import { localizedPath, stripLocaleFromPathname } from './routing'
 import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
+import { BRAND_NAME, CITY_NAME } from '@/lib/i18n/brandProperNouns'
+import { BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
 
 function metadataBaseUrl(): URL {
   return new URL((process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, ''))
@@ -26,16 +28,16 @@ export function absoluteCanonicalForLocaleRoute(locale: AppLocale, pathnameFromH
 }
 
 const OG_HERO_IMAGE_ALT: Record<AppLocale, string> = {
-  en: 'Bint Saeed — luxury abaya house, Abu Dhabi',
-  ar: 'بِنت سعيد، دار عبايات فاخرة، أبوظبي',
-  fr: 'Bint Saeed — maison d’abayas de luxe, Abu Dhabi',
-  it: 'Bint Saeed — casa di abaya di lusso, Abu Dhabi',
-  es: 'Bint Saeed — casa de abayas de lujo, Abu Dhabi',
-  ru: 'Bint Saeed — дом роскошных абай, Абу‑Даби',
-  zh: 'Bint Saeed 奢华阿巴亚品牌，阿布扎比',
-  de: 'Bint Saeed — Luxus‑Abaya‑Haus, Abu Dhabi',
-  nl: 'Bint Saeed — luxe abayahuis, Abu Dhabi',
-  pt: 'Bint Saeed — casa de abayas de luxo, Abu Dhabi',
+  en: `${BRAND_NAME} — contemporary house, ${CITY_NAME}`,
+  ar: `${BRAND_NAME} — دار معاصرة، ${CITY_NAME}`,
+  fr: `${BRAND_NAME} — maison contemporaine, ${CITY_NAME}`,
+  it: `${BRAND_NAME} — casa contemporanea, ${CITY_NAME}`,
+  es: `${BRAND_NAME} — casa contemporánea, ${CITY_NAME}`,
+  ru: `${BRAND_NAME} — современный дом, ${CITY_NAME}`,
+  zh: `${BRAND_NAME} — contemporary house, ${CITY_NAME}`,
+  de: `${BRAND_NAME} — zeitgenössisches Haus, ${CITY_NAME}`,
+  nl: `${BRAND_NAME} — eigentijds huis, ${CITY_NAME}`,
+  pt: `${BRAND_NAME} — casa contemporânea, ${CITY_NAME}`,
 }
 
 const OG_LOCALE: Record<AppLocale, string> = {
@@ -57,42 +59,16 @@ function keywordsFor(locale: AppLocale): string[] {
 
 function aiOther(locale: AppLocale): Record<string, string> {
   const base = {
-    'ai:brand': 'Bint Saeed',
-    'ai:category': 'Luxury abaya house; abayas, jewellery, lifestyle',
-    'ai:location': 'Abu Dhabi, United Arab Emirates',
+    'ai:brand': BRAND_NAME,
+    'ai:category': 'Contemporary fashion house; abayas, kaftans, dresses, jewellery, lifestyle',
+    'ai:location': `${CITY_NAME}, United Arab Emirates`,
     'ai:materials': 'Natural stones, Khous weaving, Al Talli craftsmanship',
-    'ai:offering': 'Abayas, jewellery, and curated lifestyle objects',
+    'ai:offering': 'Abayas, kaftans, dresses, jewellery, and curated lifestyle objects',
+    'ai:identity': BRAND_TAGLINE[locale],
+    'ai:positioning': 'Contemporary house carrying heritage forward into modern life',
+    'ai:audience': 'Contemporary women seeking refined, heritage-informed luxury fashion',
   }
-  if (locale === 'ar') {
-    return {
-      ...base,
-      'ai:identity': 'بيت يكرّس نفسه للبنت في كلّ امرأة',
-      'ai:positioning': 'دار عبايات فاخرة تحمل التراث إلى الحياة العصرية',
-      'ai:audience': 'نساء في الإمارات وحول العالم يبحثن عن أزياء راقية مرتبطة بالتراث',
-    }
-  }
-  if (locale === 'nl') {
-    return {
-      ...base,
-      'ai:identity': 'Een huis toegewijd aan het meisje in elke vrouw',
-      'ai:positioning': 'Luxe abayahuis dat erfgoed naar het moderne leven draagt',
-      'ai:audience': 'Vrouwen in de VAE en wereldwijd die verfijnde, erfgoedgedreven mode zoeken',
-    }
-  }
-  if (locale === 'pt') {
-    return {
-      ...base,
-      'ai:identity': 'Uma casa dedicada à filha em cada mulher',
-      'ai:positioning': 'Casa de abayas de luxo que leva o património para a vida moderna',
-      'ai:audience': 'Mulheres nos EAU e no mundo que procuram moda refinada e ligada ao património',
-    }
-  }
-  return {
-    ...base,
-    'ai:identity': 'A house devoted to the daughter in every woman',
-    'ai:positioning': 'Luxury abaya house carrying heritage forward into modern life',
-    'ai:audience': 'Women in the UAE and globally seeking refined, heritage-driven fashion',
-  }
+  return base
 }
 
 /** Inner path without locale prefix, normalized (matches middleware `x-bs-pathname`). */

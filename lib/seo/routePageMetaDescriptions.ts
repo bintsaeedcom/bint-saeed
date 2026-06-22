@@ -18,7 +18,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     it:
       'FAQ su Bint Saeed, casa di abaya di lusso ad Abu Dhabi: spedizioni, taglie, resi, acquisto su bintsaeed.com e consegna nel GCC.',
     es:
-      'Preguntas sobre Bint Saeed, casa de abayas de lujo en Abu Dabi: envíos, tallas, cambios, compra oficial en bintsaeed.com y entrega en el GCC.',
+      'Preguntas sobre Bint Saeed, casa de abayas de lujo en Abu Dhabi: envíos, tallas, cambios, compra oficial en bintsaeed.com y entrega en el GCC.',
     ru:
       'Ответы по Bint Saeed — дому роскошных абай в Абу-Даби: доставка по ОАЭ и региону, размеры, обмен, покупка на bintsaeed.com.',
     zh:
@@ -700,7 +700,7 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     it:
       'Bint Saeed — casa di abaya di lusso ad Abu Dhabi (EAU). Abaya, gioielli e lifestyle con codici di design emiratini; consegna UAE/GCC.',
     es:
-      'Bint Saeed — casa de abayas de lujo en Abu Dabi (EAU). Abayas, joyas y lifestyle con códigos de diseño emiratíes; envíos EAU/Golfo.',
+      'Bint Saeed — casa de abayas de lujo en Abu Dhabi (EAU). Abayas, joyas y lifestyle con códigos de diseño emiratíes; envíos EAU/Golfo.',
     ru:
       'Bint Saeed — дом роскошных абай в Абу‑Даби (ОАЭ): абайи, украшения и lifestyle в духе эмиратских кодов; доставка по ОАЭ и GCC.',
     zh:

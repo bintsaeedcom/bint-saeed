@@ -1,4 +1,4 @@
-import { HOME_META_DESCRIPTION_EN } from '@/lib/seo/publicMeta'
+import { HOME_META_DESCRIPTION, BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
 
 export const translations = {
   en: {
@@ -22,7 +22,7 @@ export const translations = {
       subtitle: 'New Collection 2026',
       title1: 'Timeless',
       title2: 'Elegance',
-      description: HOME_META_DESCRIPTION_EN,
+      description: HOME_META_DESCRIPTION.en,
       shopCollection: 'Shop Collection',
       discoverCollection: 'Discover the Collection',
       watchFilm: 'Watch Film',
@@ -80,7 +80,7 @@ export const translations = {
       subtitle: 'Our Philosophy',
       quote: '"Fashion fades, only style remains the same."',
       description:
-        'We create for the daughter in every woman—investments in elegance rooted in UAE heritage, Al Talli, and Khous. Timeless pieces that become part of your story.',
+        'Refined elegance rooted in UAE heritage—Al Talli, Khous, and timeless construction. Pieces that carry craft and intention forward.',
       ourStory: 'Our Story',
     },
     
@@ -174,7 +174,7 @@ export const translations = {
       cookies: 'Cookies',
       terms: 'Terms',
       allRightsReserved: 'All rights reserved.',
-      brandDescription: 'Carrying Heritage Forward. Devoted to the daughter in every woman.',
+      brandDescription: BRAND_TAGLINE.en,
     },
     
     // About Page
@@ -308,8 +308,7 @@ export const translations = {
       subtitle: 'مجموعة 2026 الجديدة',
       title1: 'أناقة',
       title2: 'خالدة',
-      description:
-        'بنت سعيد دار عبايات فاخرة في أبوظبي تكرّس نفسها للبنت التي في كلّ امرأة، وتحمل التراث إلى الأمام عبر التصميم الراقي والمجوهرات وقطع أسلوب الحياة المنتقاة. اكتشفي فخامة عصرية صاغتها الحرفية الإماراتية.',
+      description: HOME_META_DESCRIPTION.ar,
       shopCollection: 'تسوقي المجموعة',
       discoverCollection: 'اكتشفي المجموعة',
       watchFilm: 'شاهدي الفيلم',
@@ -367,7 +366,7 @@ export const translations = {
       subtitle: 'فلسفتنا',
       quote: '"الموضة تتلاشى، لكن الأناقة تبقى."',
       description:
-        'نصنع للبنت التي في كلّ امرأة، استثمارات في الأناقة متجذرة في تراث الإمارات والتلي والخوص. قطع خالدة تصبح جزءاً من قصتك.',
+        'أناقة راقية متجذرة في تراث الإمارات — التلي والخوص وبناء خالد. قطع تحمل الحرفة والنية إلى الأمام.',
       ourStory: 'قصتنا',
     },
     
@@ -556,7 +555,7 @@ export const translations = {
       emailInvalid: 'الرجاء إدخال بريد إلكتروني صالح',
       subscribing: 'جاري الاشتراك',
       notifyMe: 'أعلمني',
-      location: 'أبوظبي',
+      location: 'Abu Dhabi',
       instagramLabel: 'إنستغرام',
     },
 
@@ -592,8 +591,7 @@ export const translations = {
       subtitle: 'Nouvelle Collection 2026',
       title1: 'Élégance',
       title2: 'Intemporelle',
-      description:
-        'Bint Saeed est une maison d’abayas de luxe à Abou Dabi, dédiée à la fille qui vit en chaque femme : elle porte le patrimoine vers l’avant par un design raffiné, la bijouterie et des pièces lifestyle sélectionnées. Découvrez un luxe moderne façonné par l’artisanat émirati.',
+      description: HOME_META_DESCRIPTION.fr,
       shopCollection: 'Voir la Collection',
       discoverCollection: 'Découvrir la Collection',
       watchFilm: 'Voir le Film',
@@ -639,7 +637,7 @@ export const translations = {
       subtitle: 'Notre Philosophie',
       quote: '"La mode passe, le style reste."',
       description:
-        'Nous créons pour la fille en chaque femme—des pièces d’élégance ancrées dans le patrimoine des Émirats, Al Talli et Khous, au-delà des tendances.',
+        'Élégance raffinée ancrée dans le patrimoine des Émirats — Al Talli, Khous et une construction intemporelle. Des pièces qui portent le savoir-faire et l’intention.',
       ourStory: 'Notre Histoire',
     },
     cta: {
@@ -845,8 +843,7 @@ export const translations = {
       subtitle: 'Nuova Collezione 2026',
       title1: 'Eleganza',
       title2: 'Senza Tempo',
-      description:
-        'Bint Saeed è una casa di abaya di lusso ad Abu Dhabi, dedicata alla bambina in ogni donna: porta avanti l’eredità attraverso design raffinato, gioielli e oggetti lifestyle curati. Scopri il lusso moderno plasmato dall’artigianato emiratino.',
+      description: HOME_META_DESCRIPTION.it,
       shopCollection: 'Vedi Collezione',
       discoverCollection: 'Scopri la Collezione',
       watchFilm: 'Guarda il Film',
@@ -892,7 +889,7 @@ export const translations = {
       subtitle: 'La Nostra Filosofia',
       quote: '"La moda passa, lo stile resta."',
       description:
-        'Creiamo per la bambina in ogni donna—investimenti in eleganza radicati nel patrimonio degli Emirati, Al Talli e Khous, oltre le tendenze.',
+        'Eleganza raffinata radicata nel patrimonio degli Emirati — Al Talli, Khous e costruzione senza tempo. Pezzi che portano avanti artigianato e intenzione.',
       ourStory: 'La Nostra Storia',
     },
     cta: {
@@ -1098,8 +1095,7 @@ export const translations = {
       subtitle: 'Nueva Colección 2026',
       title1: 'Elegancia',
       title2: 'Atemporal',
-      description:
-        'Bint Saeed es una casa de abayas de lujo en Abu Dabi, dedicada a la hija en cada mujer, que lleva el patrimonio hacia adelante con diseño refinado, joyería y piezas lifestyle seleccionadas. Descubre un lujo moderno forjado por la artesanía emiratí.',
+      description: HOME_META_DESCRIPTION.es,
       shopCollection: 'Ver Colección',
       discoverCollection: 'Descubre la Colección',
       watchFilm: 'Ver Película',
@@ -1145,7 +1141,7 @@ export const translations = {
       subtitle: 'Nuestra Filosofía',
       quote: '"La moda pasa, el estilo permanece."',
       description:
-        'Creamos para la hija en cada mujer—inversiones en elegancia arraigadas en el patrimonio de los EAU, Al Talli y Khous, más allá de las tendencias.',
+        'Elegancia refinada arraigada en el patrimonio de los EAU — Al Talli, Khous y construcción atemporal. Piezas que llevan adelante oficio e intención.',
       ourStory: 'Nuestra Historia',
     },
     cta: {
@@ -1307,7 +1303,7 @@ export const translations = {
       aboutP2:
         'Bint Saeed colma el espacio donde a menudo se pierde la elegancia constante cuando las mujeres pasan de un entorno a otro, de un ambiente a otro, de una frontera a otra. El guardarropa de Bint Saeed permite a sus clientas presentarse con confianza y seguridad, sin tener que adaptarse a cada tendencia pasajera.',
       aboutP3:
-        'Arraigada en Abu Dabi, Bint Saeed construye su lenguaje de diseño con códigos perdurables como el recuerdo tejido del Khous, la delicadeza del Talli, la calidez de las piedras naturales y detalles distintivos que se traducen en siluetas modernas pensadas para una vida en movimiento.',
+        'Arraigada en Abu Dhabi, Bint Saeed construye su lenguaje de diseño con códigos perdurables como el recuerdo tejido del Khous, la delicadeza del Talli, la calidez de las piedras naturales y detalles distintivos que se traducen en siluetas modernas pensadas para una vida en movimiento.',
       gazellesAlt: 'Gacelas',
       thankYou: 'Gracias',
       notifyWhenLaunch: 'Te avisaremos cuando lancemos el sitio',
@@ -1317,7 +1313,7 @@ export const translations = {
       emailInvalid: 'Por favor, introduce un correo electrónico válido',
       subscribing: 'Suscribiendo…',
       notifyMe: 'Avísame',
-      location: 'Abu Dabi',
+      location: 'Abu Dhabi',
       instagramLabel: 'Instagram',
     },
     language: {
@@ -1351,8 +1347,7 @@ export const translations = {
       subtitle: 'Новая Коллекция 2026',
       title1: 'Вечная',
       title2: 'Элегантность',
-      description:
-        'Bint Saeed — дом роскошных абай в Абу-Даби, посвящённый дочери в каждой женщине; мы несём наследие вперёд через утончённый дизайн, украшения и курируемые lifestyle-вещи. Откройте современную роскошь с эмиратским мастерством.',
+      description: HOME_META_DESCRIPTION.ru,
       shopCollection: 'Смотреть Коллекцию',
       discoverCollection: 'Откройте коллекцию',
       watchFilm: 'Смотреть Фильм',
@@ -1398,7 +1393,7 @@ export const translations = {
       subtitle: 'Наша Философия',
       quote: '"Мода уходит, стиль остается."',
       description:
-        'Создаём для дочери в каждой женщине—вложения в элегантность с корнями в наследии ОАЭ, Al Talli и Khous, вне краткосрочных трендов.',
+        'Изысканная элегантность с корнями в наследии ОАЭ — Al Talli, Khous и безвременная конструкция. Вещи, которые несут мастерство и намерение вперёд.',
       ourStory: 'Наша История',
     },
     cta: {
@@ -1570,7 +1565,7 @@ export const translations = {
       emailInvalid: 'Пожалуйста, введите корректный адрес email',
       subscribing: 'Подписка…',
       notifyMe: 'Сообщить мне',
-      location: 'Абу-Даби',
+      location: 'Abu Dhabi',
       instagramLabel: 'Instagram',
     },
     language: {
@@ -1604,8 +1599,7 @@ export const translations = {
       subtitle: '2026 新款系列',
       title1: '永恒',
       title2: '优雅',
-      description:
-        '宾特·赛义德是阿布扎比的奢华阿巴亚之家，关爱每位女性心中的女儿，以精致设计、珠宝与甄选生活方式单品传承并推进传统。感受由阿联酋工艺塑造的现代奢华。',
+      description: HOME_META_DESCRIPTION.zh,
       shopCollection: '浏览系列',
       discoverCollection: '探索系列',
       watchFilm: '观看影片',
@@ -1651,7 +1645,7 @@ export const translations = {
       subtitle: '我们的理念',
       quote: '"时尚会褪色，风格永存。"',
       description:
-        '我们为每位女性心中的女儿而创作——根植阿联酋传承、Al Talli 与 Khous 的优雅投资，超越短暂潮流。',
+        '根植阿联酋传承的精致优雅——Al Talli、Khous 与恒久工艺。承载匠心与意图的时装作品。',
       ourStory: '品牌故事',
     },
     cta: {
@@ -1823,7 +1817,7 @@ export const translations = {
       emailInvalid: '请输入有效的电子邮箱地址',
       subscribing: '订阅中…',
       notifyMe: '通知我',
-      location: '阿布扎比',
+      location: 'Abu Dhabi',
       instagramLabel: 'Instagram',
     },
     language: {
@@ -1857,8 +1851,7 @@ export const translations = {
       subtitle: 'Neue Kollektion 2026',
       title1: 'Zeitlose',
       title2: 'Eleganz',
-      description:
-        'Bint Saeed ist ein Luxus-Abaya-Haus in Abu Dhabi, dem Mädchen in jeder Frau gewidmet – es trägt das Erbe durch raffiniertes Design, Schmuck und kuratierte Lifestyle-Stücke weiter. Entdecken Sie modernen Luxus, geformt von emiratischem Handwerk.',
+      description: HOME_META_DESCRIPTION.de,
       shopCollection: 'Kollektion ansehen',
       discoverCollection: 'Kollektion entdecken',
       watchFilm: 'Film ansehen',
@@ -1904,7 +1897,7 @@ export const translations = {
       subtitle: 'Unsere Philosophie',
       quote: '"Mode vergeht, Stil bleibt."',
       description:
-        'Wir schaffen für das Mädchen in jeder Frau – Eleganz, verwurzelt im Erbe der VAE, Al Talli und Khous, jenseits kurzfristiger Trends.',
+        'Raffinierte Eleganz mit Wurzeln im Erbe der VAE — Al Talli, Khous und zeitlose Konstruktion. Stücke, die Handwerk und Intention nach vorn tragen.',
       ourStory: 'Unsere Geschichte',
     },
     cta: {
@@ -2129,7 +2122,7 @@ export const seoKeywords = {
   ],
   fr: [
     'abaya de luxe',
-    'abaya Abou Dabi',
+    'abaya Abu Dhabi',
     'mode Émirats',
     'abaya créateur',
     'abaya moderne',
@@ -2159,7 +2152,7 @@ export const seoKeywords = {
   ],
   es: [
     'abaya de lujo',
-    'abaya Abu Dabi',
+    'abaya Abu Dhabi',
     'moda emiratí',
     'abaya de diseñador',
     'abaya moderna',

@@ -3,21 +3,22 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { localizedPath } from '@/lib/i18n/routing'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getHeritageMetaSnippet } from '@/lib/products/heritageSeo'
+import { BRAND_NAME, CITY_NAME, MADE_IN_PHRASE } from '@/lib/i18n/brandProperNouns'
 
 const SITE = new URL('https://www.bintsaeed.com')
 
 /** Intro line per locale — brand, Abu Dhabi, UAE, Emirati brand signal. */
 const PRODUCT_INTRO: Record<AppLocale, string> = {
-  en: 'Bint Saeed — Emirati luxury fashion brand from Abu Dhabi, UAE.',
-  ar: 'بِنت سعيد — علامة أزياء فاخرة إماراتية من أبوظبي، الإمارات العربية المتحدة.',
-  fr: 'Bint Saeed — marque de mode de luxe émiratie depuis Abu Dhabi (EAU).',
-  it: 'Bint Saeed — brand di moda di lusso emiratino da Abu Dhabi (EAU).',
-  es: 'Bint Saeed — marca de moda de lujo emiratí desde Abu Dhabi (EAU).',
-  ru: 'Bint Saeed — эмиратский люксовый бренд из Абу‑Даби (ОАЭ).',
-  zh: 'Bint Saeed — 阿联酋阿布扎比奢华时尚品牌。',
-  de: 'Bint Saeed — emiratische Luxusmodemarke aus Abu Dhabi (VAE).',
-  nl: 'Bint Saeed — Emiratisch luxemerken uit Abu Dhabi (VAE).',
-  pt: 'Bint Saeed — marca de moda de luxo emirati de Abu Dhabi (EAU).',
+  en: `${BRAND_NAME} — Emirati luxury fashion brand from ${MADE_IN_PHRASE}.`,
+  ar: `${BRAND_NAME} — علامة أزياء فاخرة إماراتية من ${MADE_IN_PHRASE}.`,
+  fr: `${BRAND_NAME} — marque de mode de luxe émiratie depuis ${CITY_NAME} (EAU).`,
+  it: `${BRAND_NAME} — brand di moda di lusso emiratino da ${CITY_NAME} (EAU).`,
+  es: `${BRAND_NAME} — marca de moda de lujo emiratí desde ${CITY_NAME} (EAU).`,
+  ru: `${BRAND_NAME} — эмиратский люксовый бренд из ${CITY_NAME} (ОАЭ).`,
+  zh: `${BRAND_NAME} — 阿联酋 ${CITY_NAME} 奢华时尚品牌。`,
+  de: `${BRAND_NAME} — emiratische Luxusmodemarke aus ${CITY_NAME} (VAE).`,
+  nl: `${BRAND_NAME} — Emiratisch luxemerken uit ${CITY_NAME} (VAE).`,
+  pt: `${BRAND_NAME} — marca de moda de luxo emirati de ${CITY_NAME} (EAU).`,
 }
 
 export function buildProductMetaDescription(

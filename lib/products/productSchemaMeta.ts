@@ -1,7 +1,15 @@
+import type { AppLocale } from '@/lib/i18n/routing'
 import type { Product } from '@/data/products'
 import { getProductSlug } from '@/lib/products/links'
 import { getHeritageCraft } from '@/lib/products/heritageSeo'
 import { productIsOneSizeOnly } from '@/lib/shopProductOptions'
+import {
+  buildLocalizedProductKeywords,
+  getLocalizedProductFaq,
+  localizePropertyLabel,
+  SCHEMA_MADE_IN,
+  SCHEMA_SUITABLE_FOR,
+} from '@/lib/products/productSchemaI18n'
 
 export type ProductFaqItem = {
   question: string
@@ -208,95 +216,39 @@ export function getProductSchemaFacts(product: Product): ProductSchemaFacts {
 export function buildProductSchemaKeywords(
   product: Product,
   colorName?: string,
+  locale: AppLocale = 'en',
 ): string {
-  const slug = getProductSlug(product).toLowerCase()
-  const craft = getHeritageCraft(slug)
-  const type = productTypeLabel(product.category)
-  const typeTitle = productTypeTitle(product.category)
-  const color = colorName?.trim() || product.colors[0]?.name || ''
-  const fabric = primaryFabricLabel(product.fabric)
-
-  const terms = new Set<string>([
-    product.name,
-    'Bint Saeed',
-    'Emirati brand',
-    'Made in UAE',
-    'Made in Abu Dhabi',
-    `Luxury ${typeTitle}`,
-    `Designer ${typeTitle}`,
-    `Abu Dhabi ${typeTitle}`,
-    `UAE ${typeTitle}`,
-    `Wedding ${typeTitle}`,
-    `Eid ${typeTitle}`,
-    `Evening ${typeTitle}`,
-    `Travel ${typeTitle}`,
-    `Luxury ${type}`,
-    `Designer ${type}`,
-    `Abu Dhabi ${type}`,
-    `UAE ${type}`,
-    `Wedding ${type}`,
-    `Eid ${type}`,
-    `Evening ${type}`,
-    `Travel ${type}`,
-  ])
-
-  if (color) {
-    terms.add(`${color} ${typeTitle}`)
-    terms.add(`${color} ${type}`)
-    terms.add(`${color} Bint Saeed ${type}`)
-  }
-
-  if (fabric) {
-    terms.add(`${fabric} ${typeTitle}`)
-    terms.add(`${fabric} ${type}`)
-  }
-
-  if (productIsOneSizeOnly(product)) {
-    terms.add(`One Size ${typeTitle}`)
-    terms.add(`One Size ${type}`)
-  }
-
-  if (craft === 'khous') {
-    terms.add('Khous weaving')
-    terms.add('Handwoven trim')
-    terms.add('Emirati heritage abaya')
-  }
-  if (craft === 'al-talli') {
-    terms.add('Al Talli')
-    terms.add('Emirati heritage embroidery')
-  }
-  if (product.category === 'Kaftans') {
-    terms.add('Luxury kaftan Abu Dhabi')
-    terms.add('Modest evening wear')
-  }
-
-  return [...terms].join(', ')
+  return buildLocalizedProductKeywords(product, locale, colorName)
 }
 
 export function buildProductAdditionalProperties(
   product: Product,
   facts: ProductSchemaFacts,
+  locale: AppLocale = 'en',
 ): Array<Record<string, string>> {
+  const madeIn = SCHEMA_MADE_IN[locale]
+  const suitableFor = SCHEMA_SUITABLE_FOR[locale]
+
   const props: Array<Record<string, string>> = [
     {
       '@type': 'PropertyValue',
-      name: 'Brand origin',
-      value: 'Abu Dhabi, United Arab Emirates',
+      name: localizePropertyLabel('Brand origin', locale),
+      value: madeIn,
     },
     {
       '@type': 'PropertyValue',
-      name: 'Emirati brand',
+      name: localizePropertyLabel('Emirati brand', locale),
       value: 'Bint Saeed',
     },
     {
       '@type': 'PropertyValue',
-      name: 'Made in',
-      value: facts.madeIn ?? DEFAULT_MADE_IN,
+      name: localizePropertyLabel('Made in', locale),
+      value: facts.madeIn ?? madeIn,
     },
     {
       '@type': 'PropertyValue',
-      name: 'Suitable For',
-      value: facts.suitableFor ?? DEFAULT_SUITABLE_FOR,
+      name: localizePropertyLabel('Suitable For', locale),
+      value: suitableFor,
     },
   ]
 
@@ -314,7 +266,11 @@ export function buildProductAdditionalProperties(
 
   for (const [name, value] of optional) {
     if (value?.trim()) {
-      props.push({ '@type': 'PropertyValue', name, value: value.trim() })
+      props.push({
+        '@type': 'PropertyValue',
+        name: localizePropertyLabel(name, locale),
+        value: value.trim(),
+      })
     }
   }
 
@@ -322,14 +278,14 @@ export function buildProductAdditionalProperties(
   if (craft === 'khous') {
     props.push({
       '@type': 'PropertyValue',
-      name: 'Heritage craft',
+      name: localizePropertyLabel('Heritage craft', locale),
       value: 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
     })
   }
   if (craft === 'al-talli') {
     props.push({
       '@type': 'PropertyValue',
-      name: 'Heritage craft',
+      name: localizePropertyLabel('Heritage craft', locale),
       value: 'Traditional Al Talli trim',
     })
   }
@@ -337,59 +293,28 @@ export function buildProductAdditionalProperties(
   return props
 }
 
-function buildDefaultFaq(product: Product): ProductFaqItem[] {
-  const name = product.name
-  const craft = getHeritageCraft(getProductSlug(product))
-  const items: ProductFaqItem[] = [
-    {
-      question: `Where is the ${name} made?`,
-      answer: `The ${name} is made in Abu Dhabi, United Arab Emirates by Bint Saeed.`,
-    },
-    {
-      question: `Is the ${name} suitable for weddings and special occasions?`,
-      answer: `Yes. The ${name} is designed for weddings, Eid, celebrations, dinners, travel, gatherings and everyday elegance.`,
-    },
-  ]
+export function getProductFaq(
+  product: Product,
+  customFaq?: ProductFaqItem[],
+  locale: AppLocale = 'en',
+): ProductFaqItem[] {
+  if (locale === 'en') {
+    const facts = getProductSchemaFacts(product)
+    const slugFaq = facts.faq ?? []
+    const merged = [...slugFaq]
+    const seen = new Set(slugFaq.map((item) => item.question.toLowerCase()))
 
-  if (productIsOneSizeOnly(product)) {
-    items.push({
-      question: `Is the ${name} one size?`,
-      answer: `Yes. The ${name} is designed as a one-size silhouette.`,
-    })
-  }
-
-  if (craft === 'khous') {
-    items.push({
-      question: `Does the ${name} feature Khous-inspired detailing?`,
-      answer: `Yes. The ${name} features handwoven trim inspired by the Emirati tradition of Khous weaving, made in Abu Dhabi.`,
-    })
-  }
-
-  if (craft === 'al-talli') {
-    items.push({
-      question: `Does the ${name} feature Al Talli trim?`,
-      answer: `Yes. The ${name} features traditional Al Talli trim celebrating Emirati heritage craftsmanship.`,
-    })
-  }
-
-  return items
-}
-
-export function getProductFaq(product: Product, customFaq?: ProductFaqItem[]): ProductFaqItem[] {
-  const facts = getProductSchemaFacts(product)
-  const slugFaq = facts.faq ?? []
-  const merged = [...slugFaq]
-  const seen = new Set(slugFaq.map((item) => item.question.toLowerCase()))
-
-  for (const item of customFaq ?? []) {
-    if (!seen.has(item.question.toLowerCase())) {
-      merged.push(item)
-      seen.add(item.question.toLowerCase())
+    for (const item of customFaq ?? []) {
+      if (!seen.has(item.question.toLowerCase())) {
+        merged.push(item)
+        seen.add(item.question.toLowerCase())
+      }
     }
+
+    if (merged.length > 0) return merged
   }
 
-  if (merged.length > 0) return merged
-  return buildDefaultFaq(product)
+  return getLocalizedProductFaq(product, locale, customFaq)
 }
 
 export function buildFaqPageJsonLd(

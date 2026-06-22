@@ -145,8 +145,8 @@ export default function ProductPage() {
     faq: pdpFaq,
   } = pdpContent
   const faqItems = useMemo(
-    () => (product ? getProductFaq(product, pdpFaq) : []),
-    [product, pdpFaq],
+    () => (product ? getProductFaq(product, pdpFaq, language) : []),
+    [product, pdpFaq, language],
   )
   const estimatedShipDate = useMemo(() => {
     const d = new Date()

@@ -1,4 +1,5 @@
 import type { SeoSupplementalBundle } from './types'
+import { BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
 
 const BF =
   "Bint Saeed è una casa di abaya di lusso con sede ad Abu Dhabi, Emirati Arabi Uniti, fondata nel 2026. Progetta abaya, gioielli e pezzi lifestyle guidati dall’artigianato emiratino—ricamo Al Talli e intreccio Khous delle foglie di palma—con consegna negli EAU, nel GCC e in destinazioni internazionali selezionate."
@@ -43,13 +44,13 @@ export const seoSupplementalIt: SeoSupplementalBundle = {
     },
   ],
   gccGovBrand: {
-    slogan: 'Una casa dedicata alla figlia in ogni donna',
+    slogan: BRAND_TAGLINE.it,
     description:
       'Bint Saeed è una casa di abaya di lusso con sede ad Abu Dhabi, EAU, fondata nel 2026. Crea abaya modellate su codici di design emiratini, inclusi Al Talli e Khous, insieme a gioielli e pezzi lifestyle selezionati, con consegna negli EAU, nel GCC e in destinazioni internazionali selezionate.',
     alternateNames: ['Bint Saeed Abu Dhabi', 'بنت سعيد'],
   },
   pressBrand: {
-    slogan: 'Una casa dedicata alla figlia in ogni donna',
+    slogan: BRAND_TAGLINE.it,
     description:
       'Bint Saeed è una casa di abaya di lusso con sede ad Abu Dhabi, EAU, fondata nel 2026. Crea abaya modellate su codici di design emiratini, inclusi Al Talli e Khous, insieme a gioielli e pezzi lifestyle selezionati.',
     alternateNames: ['Bint Saeed Abu Dhabi', 'بنت سعيد'],

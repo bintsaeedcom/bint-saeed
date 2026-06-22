@@ -3,10 +3,11 @@ import { getProductSlug } from '@/lib/products/links'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
-import { buildHeritageRichDescription } from '@/lib/products/heritageSeo'
+import { getSchemaAudienceType } from '@/lib/brand/brandPositioning'
 import { resolveProductSku } from '@/lib/products/sku'
 import { getProductColorOptions } from '@/lib/products/productColorAvailability'
 import { getProductPdpContent } from '@/data/productPdpContent'
+import { buildLocalizedSchemaDescription } from '@/lib/products/productSchemaI18n'
 import {
   buildFaqPageJsonLd,
   buildProductAdditionalProperties,
@@ -50,11 +51,12 @@ function buildImageObjects(
 function buildSchemaDescription(
   product: Product,
   slug: string,
+  locale: AppLocale,
   color?: string,
 ): string {
   const pdp = getProductPdpContent(product, { color })
-  if (pdp.introParagraphs?.[0]) return pdp.introParagraphs[0].trim()
-  return buildHeritageRichDescription(slug, product.description)
+  const base = pdp.introParagraphs?.[0]?.trim() || product.description.trim()
+  return buildLocalizedSchemaDescription(product, locale, base)
 }
 
 function schemaManufacturer() {
@@ -69,34 +71,34 @@ function schemaManufacturer() {
   }
 }
 
-function schemaAudience() {
+function schemaAudience(locale: AppLocale) {
   return {
     '@type': 'PeopleAudience' as const,
     suggestedGender: 'female' as const,
-    audienceType:
-      'Women seeking luxury modest fashion, abayas, kaftans and evening wear from Abu Dhabi, UAE',
+    audienceType: getSchemaAudienceType(locale),
   }
 }
 
 function schemaSharedFields(
   product: Product,
   slug: string,
+  locale: AppLocale,
   color?: string,
   lang?: string,
 ) {
   const facts = getProductSchemaFacts(product)
 
   return {
-    description: buildSchemaDescription(product, slug, color),
-    keywords: buildProductSchemaKeywords(product, color),
+    description: buildSchemaDescription(product, slug, locale, color),
+    keywords: buildProductSchemaKeywords(product, color, locale),
     material: product.fabric,
     countryOfOrigin: {
       '@type': 'Country' as const,
       name: 'United Arab Emirates',
     },
-    additionalProperty: buildProductAdditionalProperties(product, facts),
+    additionalProperty: buildProductAdditionalProperties(product, facts, locale),
     manufacturer: schemaManufacturer(),
-    audience: schemaAudience(),
+    audience: schemaAudience(locale),
     ...(lang ? { inLanguage: lang } : {}),
   }
 }
@@ -128,6 +130,7 @@ function buildProductNode(
   product: Product,
   input: {
     pageUrl: string
+    locale: AppLocale
     lang: string
     activeImages: string[]
     selectedColor?: string
@@ -153,7 +156,7 @@ function buildProductNode(
     color: color || product.colors[0]?.name,
     image: buildImageObjects(product, images, color, input.lang),
     offers: buildOffer(product, input.pageUrl),
-    ...schemaSharedFields(product, slug, color, input.lang),
+    ...schemaSharedFields(product, slug, input.locale, color, input.lang),
   }
 }
 
@@ -171,7 +174,7 @@ export function buildShopProductJsonLd(input: {
   const lang = schemaInLanguageForLocale(locale)
   const variantColors = getProductColorOptions(product)
   const pdp = getProductPdpContent(product, { color: selectedColor })
-  const faqItems = getProductFaq(product, pdp.faq)
+  const faqItems = getProductFaq(product, pdp.faq, locale)
   const faqNode = buildFaqPageJsonLd(pageUrl, faqItems, lang)
 
   let productNode: Record<string, unknown>
@@ -186,12 +189,13 @@ export function buildShopProductJsonLd(input: {
       category: product.category,
       brand: { '@type': 'Brand', name: 'Bint Saeed' },
       image: buildImageObjects(product, activeImages, selectedColor, lang),
-      ...schemaSharedFields(product, slug, selectedColor, lang),
+      ...schemaSharedFields(product, slug, locale, selectedColor, lang),
       hasVariant: variantColors.map((color) => {
         const variantImages = product.colorImages?.[color.name] ?? product.images
         const colorSlug = color.name.toLowerCase().replace(/\s+/g, '-')
         return buildProductNode(product, {
           pageUrl,
+          locale,
           lang,
           activeImages,
           selectedColor,
@@ -205,6 +209,7 @@ export function buildShopProductJsonLd(input: {
   } else {
     productNode = buildProductNode(product, {
       pageUrl,
+      locale,
       lang,
       activeImages,
       selectedColor,

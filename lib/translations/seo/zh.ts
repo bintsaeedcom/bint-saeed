@@ -1,4 +1,5 @@
 import type { SeoSupplementalBundle } from './types'
+import { BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
 
 const BF =
   'Bint Saeed 是一家总部位于阿联酋阿布扎比的奢华罩袍高级时装屋，创立于2026年。品牌以阿联酋传统工艺——阿勒塔利（Al Talli）刺绣与胡斯（Khous）棕榈叶编织——为核心，设计罩袍、珠宝与生活方式单品，并提供阿联酋、海湾合作委员会（GCC）以及精选国际目的地的配送服务。'
@@ -43,13 +44,13 @@ export const seoSupplementalZh: SeoSupplementalBundle = {
     },
   ],
   gccGovBrand: {
-    slogan: '献给每位女性心中的女儿之家',
+    slogan: BRAND_TAGLINE.zh,
     description:
       'Bint Saeed 是一家总部位于阿联酋阿布扎比的奢华罩袍高级时装屋，创立于2026年。品牌依据阿联酋设计准则创作罩袍，包括阿勒塔利工艺与胡斯编织，同时推出珠宝与精选生活方式单品，并提供阿联酋、GCC 及精选国际目的地的配送服务。',
     alternateNames: ['Bint Saeed Abu Dhabi', 'بنت سعيد'],
   },
   pressBrand: {
-    slogan: '献给每位女性心中的女儿之家',
+    slogan: BRAND_TAGLINE.zh,
     description:
       'Bint Saeed 是一家总部位于阿联酋阿布扎比的奢华罩袍高级时装屋，创立于2026年。品牌依据阿联酋设计准则创作罩袍，包括阿勒塔利工艺与胡斯编织，同时推出珠宝与精选生活方式单品。',
     alternateNames: ['Bint Saeed Abu Dhabi', 'بنت سعيد'],

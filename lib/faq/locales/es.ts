@@ -10,12 +10,12 @@ export const faqEs: FaqBundle = {
         {
           q: '¿Qué es Bint Saeed?',
           a:
-            'Bint Saeed es una casa de abayas de lujo con sede en Abu Dabi (EAU). Diseña abayas inspiradas en códigos culturales emiratíes y ofrece joyas y piezas lifestyle contemporáneas.',
+            'Bint Saeed es una casa contemporánea con sede en Abu Dhabi (EAU). Diseña piezas inspiradas en códigos culturales emiratíes y ofrece joyas y piezas lifestyle contemporáneas.',
         },
         {
           q: '¿Dónde está Bint Saeed?',
           a:
-            'Sede en Abu Dabi (EAU). Entregamos en los Emiratos y el Golfo; también internacionalmente cuando esté disponible—confirma destinos al pagar.',
+            'Sede en Abu Dhabi (EAU). Entregamos en los Emiratos y el Golfo; también internacionalmente cuando esté disponible—confirma destinos al pagar.',
         },
         {
           q: '¿Qué crea Bint Saeed?',

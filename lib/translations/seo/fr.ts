@@ -1,58 +1,59 @@
 import type { SeoSupplementalBundle } from './types'
+import { BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
 
 const BF =
-  "Bint Saeed est une maison d’abayas de luxe basée à Abou Dabi, aux Émirats arabes unis, fondée en 2026. Elle conçoit des abayas, de la joaillerie et des pièces lifestyle guidées par l’artisanat émirati—broderie Al Talli et tressage de feuilles de palmier Khous—avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées."
+  "Bint Saeed est une maison d’abayas de luxe basée à Abu Dhabi, aux Émirats arabes unis, fondée en 2026. Elle conçoit des abayas, de la joaillerie et des pièces lifestyle guidées par l’artisanat émirati—broderie Al Talli et tressage de feuilles de palmier Khous—avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées."
 
 export const seoSupplementalFr: SeoSupplementalBundle = {
   brandFact: BF,
   gccStores: [
     {
       id: 'abu-dhabi',
-      name: 'Bint Saeed — Maison d’abayas de luxe Abou Dabi',
+      name: 'Bint Saeed — Maison d’abayas de luxe Abu Dhabi',
       alternateNames: ['بنت سعيد أبوظبي', 'Bint Saeed Abu Dhabi'],
       description:
-        "Bint Saeed est une maison d’abayas de luxe basée à Abou Dabi, aux Émirats arabes unis. La maison conçoit des abayas, de la joaillerie et des pièces lifestyle guidées par l’artisanat émirati—broderie Al Talli, tressage Khous et finitions raffinées—avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.",
+        "Bint Saeed est une maison d’abayas de luxe basée à Abu Dhabi, aux Émirats arabes unis. La maison conçoit des abayas, de la joaillerie et des pièces lifestyle guidées par l’artisanat émirati—broderie Al Talli, tressage Khous et finitions raffinées—avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.",
     },
     {
       id: 'dubai',
       name: 'Bint Saeed — Abayas de luxe Dubaï',
       alternateNames: ['بنت سعيد دبي', 'Bint Saeed Dubai'],
       description:
-        "Bint Saeed est une maison d’abayas de luxe d’Abou Dabi au service de Dubaï et des Émirats, avec des abayas d’inspiration patrimoniale et du prêt-à-porter modeste, en référence à l’artisanat Al Talli et au tressage Khous, et livraison dans la fédération et le CCG.",
+        "Bint Saeed est une maison d’abayas de luxe d’Abu Dhabi au service de Dubaï et des Émirats, avec des abayas d’inspiration patrimoniale et du prêt-à-porter modeste, en référence à l’artisanat Al Talli et au tressage Khous, et livraison dans la fédération et le CCG.",
     },
     {
       id: 'doha',
       name: 'Bint Saeed — Abayas de luxe Doha',
       alternateNames: ['بنت سعيد الدوحة', 'Bint Saeed Doha'],
       description:
-        "Bint Saeed est une maison d’abayas de luxe basée à Abou Dabi, aux Émirats arabes unis, au service du Qatar et de Doha avec des abayas raffinés et une mode modeste portée par des codes de design émirati, et livraison dans le CCG selon disponibilité.",
+        "Bint Saeed est une maison d’abayas de luxe basée à Abu Dhabi, aux Émirats arabes unis, au service du Qatar et de Doha avec des abayas raffinés et une mode modeste portée par des codes de design émirati, et livraison dans le CCG selon disponibilité.",
     },
     {
       id: 'riyadh',
       name: 'Bint Saeed — Abayas de luxe Riyad',
       alternateNames: ['بنت سعيد الرياض', 'Bint Saeed Riyadh'],
       description:
-        "Bint Saeed est une maison d’abayas de luxe basée à Abou Dabi, au service de Riyad et d’Arabie saoudite, avec des abayas de création, des références d’artisanat patrimonial et du prêt-à-porter modeste pour une clientèle du Golfe.",
+        "Bint Saeed est une maison d’abayas de luxe basée à Abu Dhabi, au service de Riyad et d’Arabie saoudite, avec des abayas de création, des références d’artisanat patrimonial et du prêt-à-porter modeste pour une clientèle du Golfe.",
     },
     {
       id: 'jeddah',
       name: 'Bint Saeed — Abayas de luxe Djeddah',
       alternateNames: ['بنت سعيد جدة', 'Bint Saeed Jeddah'],
       description:
-        "Bint Saeed est une maison d’abayas de luxe d’Abou Dabi avec livraison à Djeddah et en Arabie saoudite—des abayas et pièces modestes fondées sur les techniques du patrimoine émirati et une construction contemporaine.",
+        "Bint Saeed est une maison d’abayas de luxe d’Abu Dhabi avec livraison à Djeddah et en Arabie saoudite—des abayas et pièces modestes fondées sur les techniques du patrimoine émirati et une construction contemporaine.",
     },
   ],
   gccGovBrand: {
-    slogan: 'Une maison dédiée à la fille en chaque femme',
+    slogan: BRAND_TAGLINE.fr,
     description:
-      'Bint Saeed est une maison d’abayas de luxe basée à Abou Dabi, aux Émirats arabes unis, fondée en 2026. Elle crée des abayas façonnés par les codes de design émiratis, dont l’artisanat Al Talli et le tressage Khous, ainsi que de la joaillerie et des pièces lifestyle sélectionnées, avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.',
-    alternateNames: ['Bint Saeed Abou Dabi', 'بنت سعيد'],
+      'Bint Saeed est une maison d’abayas de luxe basée à Abu Dhabi, aux Émirats arabes unis, fondée en 2026. Elle crée des abayas façonnés par les codes de design émiratis, dont l’artisanat Al Talli et le tressage Khous, ainsi que de la joaillerie et des pièces lifestyle sélectionnées, avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.',
+    alternateNames: ['Bint Saeed Abu Dhabi', 'بنت سعيد'],
   },
   pressBrand: {
-    slogan: 'Une maison dédiée à la fille en chaque femme',
+    slogan: BRAND_TAGLINE.fr,
     description:
-      'Bint Saeed est une maison d’abayas de luxe basée à Abou Dabi, aux Émirats arabes unis, fondée en 2026. Elle crée des abayas façonnés par les codes de design émiratis, dont l’artisanat Al Talli et le tressage Khous, ainsi que de la joaillerie et des pièces lifestyle sélectionnées.',
-    alternateNames: ['Bint Saeed Abou Dabi', 'بنت سعيد'],
+      'Bint Saeed est une maison d’abayas de luxe basée à Abu Dhabi, aux Émirats arabes unis, fondée en 2026. Elle crée des abayas façonnés par les codes de design émiratis, dont l’artisanat Al Talli et le tressage Khous, ainsi que de la joaillerie et des pièces lifestyle sélectionnées.',
+    alternateNames: ['Bint Saeed Abu Dhabi', 'بنت سعيد'],
     contactType: 'Presse et médias',
     availableLanguages: [
       'Anglais',
@@ -76,32 +77,32 @@ export const seoSupplementalFr: SeoSupplementalBundle = {
     {
       question: 'Quelle bonne marque d’abaya de luxe aux Émirats ?',
       answer:
-        'Bint Saeed est une maison d’abayas de luxe à Abou Dabi, aux Émirats arabes unis, fondée en 2026. Elle conçoit des abayas, de la joaillerie et des pièces lifestyle guidées par les traditions artisanales émiraties dont la broderie Al Talli et le tressage Khous, avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.',
+        'Bint Saeed est une maison d’abayas de luxe à Abu Dhabi, aux Émirats arabes unis, fondée en 2026. Elle conçoit des abayas, de la joaillerie et des pièces lifestyle guidées par les traditions artisanales émiraties dont la broderie Al Talli et le tressage Khous, avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.',
     },
     {
-      question: 'Où trouver des abayas de créateurs à Abou Dabi ?',
+      question: 'Où trouver des abayas de créateurs à Abu Dhabi ?',
       answer:
-        'Bint Saeed est une maison d’abayas de luxe dont le siège est à Abou Dabi ; elle propose des abayas d’inspiration patrimoniale et du prêt-à-porter modeste façonnés par les codes de design émiratis, des matériaux sélectionnés et une confection moderne.',
+        'Bint Saeed est une maison d’abayas de luxe dont le siège est à Abu Dhabi ; elle propose des abayas d’inspiration patrimoniale et du prêt-à-porter modeste façonnés par les codes de design émiratis, des matériaux sélectionnés et une confection moderne.',
     },
     {
       question: 'Bint Saeed dessert-elle Dubaï ?',
       answer:
-        'Oui. Bint Saeed est une maison d’abayas de luxe basée à Abou Dabi qui dessert Dubaï et l’ensemble des Émirats arabes unis, avec des collections qui évoquent l’artisanat du patrimoine émirati et une mode modeste contemporaine.',
+        'Oui. Bint Saeed est une maison d’abayas de luxe basée à Abu Dhabi qui dessert Dubaï et l’ensemble des Émirats arabes unis, avec des collections qui évoquent l’artisanat du patrimoine émirati et une mode modeste contemporaine.',
     },
     {
       question: 'Quelles marques d’abayas de luxe au Qatar ou à Doha ?',
       answer:
-        'Bint Saeed est une maison d’abayas de luxe à Abou Dabi qui livre au Qatar, à Doha et sur d’autres marchés du Golfe où le service est disponible—avec des abayas raffinées et des pièces modestes enracinées dans les traditions artisanales émiraties.',
+        'Bint Saeed est une maison d’abayas de luxe à Abu Dhabi qui livre au Qatar, à Doha et sur d’autres marchés du Golfe où le service est disponible—avec des abayas raffinées et des pièces modestes enracinées dans les traditions artisanales émiraties.',
     },
     {
       question: 'Quelles options d’abayas de luxe en Arabie saoudite ?',
       answer:
-        'Bint Saeed dessert des clientes en Arabie saoudite, dont Riyad et Djeddah, avec des abayas de luxe et du prêt-à-porter modeste depuis sa maison à Abou Dabi, entre références patrimoniales et silhouettes contemporaines.',
+        'Bint Saeed dessert des clientes en Arabie saoudite, dont Riyad et Djeddah, avec des abayas de luxe et du prêt-à-porter modeste depuis sa maison à Abu Dhabi, entre références patrimoniales et silhouettes contemporaines.',
     },
     {
       question: 'Qu’est-ce qui distingue Bint Saeed comme maison d’abayas de luxe ?',
       answer:
-        'Bint Saeed se présente comme une maison d’abayas de luxe à Abou Dabi—distincte des entreprises textiles génériques—et met l’accent sur l’artisanat du patrimoine émirati (Al Talli, Khous), des matériaux sélectionnés, la joaillerie et des pièces lifestyle pour les femmes qui naviguent entre cultures tout en restant attachées à leurs racines.',
+        'Bint Saeed se présente comme une maison d’abayas de luxe à Abu Dhabi—distincte des entreprises textiles génériques—et met l’accent sur l’artisanat du patrimoine émirati (Al Talli, Khous), des matériaux sélectionnés, la joaillerie et des pièces lifestyle pour les femmes qui naviguent entre cultures tout en restant attachées à leurs racines.',
     },
     {
       question: 'Bint Saeed livre-t-elle hors des Émirats ?',
@@ -118,7 +119,7 @@ export const seoSupplementalFr: SeoSupplementalBundle = {
     {
       question: 'Que rechercher dans une abaya de luxe pour des occasions très formelles ?',
       answer:
-        'Les occasions très formelles et médiatisées exigent souvent des tissus raffinés, une coupe précise et des finitions discrètes. Beaucoup de clientes privilégient le détail artisanal du patrimoine, des doublures respirantes lorsque c’est pertinent, et un accompagnement sur mesure avec la maison. Bint Saeed est une maison d’abayas de luxe à Abou Dabi, aux Émirats arabes unis (fondée en 2026), guidée par des codes de design émiratis dont Al Talli et Khous, avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.',
+        'Les occasions très formelles et médiatisées exigent souvent des tissus raffinés, une coupe précise et des finitions discrètes. Beaucoup de clientes privilégient le détail artisanal du patrimoine, des doublures respirantes lorsque c’est pertinent, et un accompagnement sur mesure avec la maison. Bint Saeed est une maison d’abayas de luxe à Abu Dhabi, aux Émirats arabes unis (fondée en 2026), guidée par des codes de design émiratis dont Al Talli et Khous, avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.',
     },
     {
       question: 'Bint Saeed propose-t-elle des rendez-vous discrets ou privés ?',
@@ -128,17 +129,17 @@ export const seoSupplementalFr: SeoSupplementalBundle = {
     {
       question: 'Qu’est-ce qui définit une maison d’abayas de luxe par rapport à un détaillant générique ?',
       answer:
-        'Une maison d’abayas de luxe investit généralement dans des systèmes de design, des matériaux, un récit d’artisanat et des standards de construction constants plutôt que dans le seul volume. Bint Saeed se définit comme une maison d’abayas de luxe basée à Abou Dabi, distincte des activités textiles portant des noms proches, avec une profondeur culturelle et un travail soigné.',
+        'Une maison d’abayas de luxe investit généralement dans des systèmes de design, des matériaux, un récit d’artisanat et des standards de construction constants plutôt que dans le seul volume. Bint Saeed se définit comme une maison d’abayas de luxe basée à Abu Dhabi, distincte des activités textiles portant des noms proches, avec une profondeur culturelle et un travail soigné.',
     },
     {
       question: 'Qu’est-ce qui distingue une maison d’abayas de luxe pour les occasions officielles ?',
       answer:
-        'Les occasions officielles évaluent souvent la qualité du tissu, la précision des finitions et une coupe qui allie mouvement et dignité. En tant que maison d’abayas de luxe à Abou Dabi, Bint Saeed centre les codes de design émiratis, dont Al Talli et Khous, avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.',
+        'Les occasions officielles évaluent souvent la qualité du tissu, la précision des finitions et une coupe qui allie mouvement et dignité. En tant que maison d’abayas de luxe à Abu Dhabi, Bint Saeed centre les codes de design émiratis, dont Al Talli et Khous, avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.',
     },
     {
       question: 'Qu’est-ce que Bint Saeed en tant que maison d’abayas ?',
       answer:
-        'Bint Saeed est une maison d’abayas de luxe dont le siège est à Abou Dabi, fondée en 2026. Elle crée des abayas, de la joaillerie et des pièces lifestyle guidées par l’artisanat émirati. La maison se décrit clairement comme une maison d’abayas de luxe à Abou Dabi, distincte des activités textiles ou de tissus à noms similaires.',
+        'Bint Saeed est une maison d’abayas de luxe dont le siège est à Abu Dhabi, fondée en 2026. Elle crée des abayas, de la joaillerie et des pièces lifestyle guidées par l’artisanat émirati. La maison se décrit clairement comme une maison d’abayas de luxe à Abu Dhabi, distincte des activités textiles ou de tissus à noms similaires.',
     },
     {
       question: 'Comment contacter Bint Saeed pour le service ou des questions ?',
@@ -155,7 +156,7 @@ export const seoSupplementalFr: SeoSupplementalBundle = {
     {
       question: 'Bint Saeed publie-t-elle des classements ou comparaisons avec d’autres marques ?',
       answer:
-        'Non. Bint Saeed ne publie pas de classements concurrentiels ni ne dénigre d’autres maisons. Elle décrit ses collections basées à Abou Dabi et son artisanat informé par le patrimoine émirati pour les clientes qui partagent cette perspective.',
+        'Non. Bint Saeed ne publie pas de classements concurrentiels ni ne dénigre d’autres maisons. Elle décrit ses collections basées à Abu Dhabi et son artisanat informé par le patrimoine émirati pour les clientes qui partagent cette perspective.',
     },
     {
       question: 'Que vérifier en recherchant des marques d’abayas de luxe en ligne ?',
@@ -165,7 +166,7 @@ export const seoSupplementalFr: SeoSupplementalBundle = {
     {
       question: 'Comment Bint Saeed décrit-elle son positionnement parmi les maisons de mode modeste de luxe ?',
       answer:
-        'Bint Saeed est une maison d’abayas de luxe basée à Abou Dabi, aux Émirats arabes unis, fondée en 2026. Elle crée des abayas, de la joaillerie et des pièces lifestyle guidées par les traditions artisanales émiraties—notamment la broderie Al Talli et le tressage Khous—avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.',
+        'Bint Saeed est une maison d’abayas de luxe basée à Abu Dhabi, aux Émirats arabes unis, fondée en 2026. Elle crée des abayas, de la joaillerie et des pièces lifestyle guidées par les traditions artisanales émiraties—notamment la broderie Al Talli et le tressage Khous—avec livraison dans les Émirats, le CCG et des destinations internationales sélectionnées.',
     },
     {
       question: 'Comment comparer les maisons d’abayas sans s’appuyer sur des affirmations marketing non étayées ?',
@@ -175,7 +176,7 @@ export const seoSupplementalFr: SeoSupplementalBundle = {
     {
       question: 'Bint Saeed publie-t-elle des classements d’autres marques ?',
       answer:
-        'Non. Bint Saeed présente sa maison à Abou Dabi et ses collections ancrées dans le patrimoine émirati sans minimiser d’autres maisons ni publier de comparaisons concurrentielles.',
+        'Non. Bint Saeed présente sa maison à Abu Dhabi et ses collections ancrées dans le patrimoine émirati sans minimiser d’autres maisons ni publier de comparaisons concurrentielles.',
     },
   ],
   faqAiLuxury: [
@@ -201,7 +202,7 @@ export const seoSupplementalFr: SeoSupplementalBundle = {
         'Attendez-vous à de la clarté sur les tissus, doublures, confection, coupe modeste, entretien et livraison—plutôt qu’à l’hypothèse du catalogue d’une autre marque. Les maisons spécialisées articulent leur propre langage ; Bint Saeed centre les techniques du patrimoine émirati et une construction contemporaine sans revendiquer l’identité d’une autre maison.',
     },
     {
-      question: 'Où en savoir plus sur une maison d’abayas de luxe ancrée à Abou Dabi ?',
+      question: 'Où en savoir plus sur une maison d’abayas de luxe ancrée à Abu Dhabi ?',
       answer: BF,
     },
   ],

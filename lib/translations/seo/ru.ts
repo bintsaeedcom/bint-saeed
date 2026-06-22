@@ -1,4 +1,5 @@
 import type { SeoSupplementalBundle } from './types'
+import { BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
 
 const BF =
   'Bint Saeed — дом абай класса люкс с базой в Абу-Даби, Объединённые Арабские Эмираты, основанный в 2026 году. Дом создаёт абайи, украшения и предметы lifestyle на основе эмиратских ремесленных традиций — вышивка Аль-Талли и плетение Хус из пальмовых листьев — с доставкой по ОАЭ, странам GCC и избранным международным направлениям.'
@@ -43,13 +44,13 @@ export const seoSupplementalRu: SeoSupplementalBundle = {
     },
   ],
   gccGovBrand: {
-    slogan: 'Дом, посвящённый дочери в каждой женщине',
+    slogan: BRAND_TAGLINE.ru,
     description:
       'Bint Saeed — дом абай класса люкс в Абу-Даби, ОАЭ, основанный в 2026 году. Бренд создаёт абайи по эмиратским кодам дизайна, включая ремесло Аль-Талли и плетение Хус, а также украшения и отобранные предметы lifestyle с доставкой по ОАЭ, GCC и избранным международным направлениям.',
     alternateNames: ['Bint Saeed Abu Dhabi', 'بنت سعيد'],
   },
   pressBrand: {
-    slogan: 'Дом, посвящённый дочери в каждой женщине',
+    slogan: BRAND_TAGLINE.ru,
     description:
       'Bint Saeed — дом абай класса люкс в Абу-Даби, ОАЭ, основанный в 2026 году. Бренд создаёт абайи по эмиратским кодам дизайна, включая Аль-Талли и Хус, а также украшения и отобранные предметы lifestyle.',
     alternateNames: ['Bint Saeed Abu Dhabi', 'بنت سعيد'],
