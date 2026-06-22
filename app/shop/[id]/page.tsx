@@ -18,6 +18,7 @@ import { getProductPdpContent } from '@/data/productPdpContent'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
 import { getProductColorOptions, getProductImagesForColor } from '@/lib/products/productColorAvailability'
 import { buildShopProductJsonLd } from '@/lib/products/productJsonLd'
+import { getProductFaq } from '@/lib/products/productSchemaMeta'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -141,7 +142,12 @@ export default function ProductPage() {
     careDetails,
     brandStory,
     fitAndSizeDetails,
+    faq: pdpFaq,
   } = pdpContent
+  const faqItems = useMemo(
+    () => (product ? getProductFaq(product, pdpFaq) : []),
+    [product, pdpFaq],
+  )
   const estimatedShipDate = useMemo(() => {
     const d = new Date()
     d.setDate(d.getDate() + 14)
@@ -928,7 +934,7 @@ export default function ProductPage() {
               </div>
 
               {/* Shipping & Returns */}
-              <div>
+              <div className={faqItems.length > 0 ? 'border-b border-brand-stone/30' : ''}>
                 <button
                   onClick={() => toggleDropdown('shipping')}
                   className="w-full flex items-center justify-between py-3"
@@ -964,6 +970,39 @@ export default function ProductPage() {
                   </div>
                 )}
               </div>
+
+              {faqItems.length > 0 && (
+                <div>
+                  <button
+                    onClick={() => toggleDropdown('faq')}
+                    className="w-full flex items-center justify-between py-3"
+                    data-cursor-hover
+                  >
+                    <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                      FAQ
+                    </h3>
+                    <FiChevronDown
+                      className={`w-4 h-4 text-brand-darkRed transition-transform ${
+                        openDropdown === 'faq' ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  {openDropdown === 'faq' && (
+                    <div className="space-y-4 pb-5">
+                      {faqItems.map((item, idx) => (
+                        <div key={`faq-${idx}`} className={isRTL ? 'text-right' : ''}>
+                          <p className="font-montserrat text-[11px] font-semibold tracking-wide text-brand-darkRed">
+                            {item.question}
+                          </p>
+                          <p className="mt-1 font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed">
+                            {item.answer}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {relatedStyles.length > 0 && (

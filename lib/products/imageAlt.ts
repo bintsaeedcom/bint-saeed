@@ -123,7 +123,9 @@ export function getProductImageAlt(
   const craft = getHeritageCraft(slug)
 
   const subject = `${product.name} luxury ${type} in ${color}, ${angle} view`
-  const heritage = craft ? `, ${getHeritageAltPhrase(craft, angle)}` : ''
+  const heritage = craft
+    ? `, ${getHeritageAltPhrase(craft, angle)}`
+    : ', made in Abu Dhabi'
 
   return withBrandAlt(`${subject}${heritage}`)
 }

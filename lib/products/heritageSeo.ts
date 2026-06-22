@@ -39,8 +39,8 @@ export function getHeritageAltPhrase(craft: HeritageCraft, angle: string): strin
   }
 
   return isDetail
-    ? 'detail of traditional Al Talli trim, Emirati heritage embroidery and Abu Dhabi culture'
-    : 'traditional Al Talli trim celebrating Emirati heritage and Abu Dhabi culture'
+    ? 'detail of traditional Al Talli trim, Emirati heritage embroidery, made in Abu Dhabi'
+    : 'traditional Al Talli trim celebrating Emirati heritage, made in Abu Dhabi'
 }
 
 const HERITAGE_META_EN: Record<HeritageCraft, string> = {

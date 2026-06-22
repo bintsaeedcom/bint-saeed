@@ -11,6 +11,8 @@ export type ProductPdpContent = {
   /** Closing brand story paragraph inside Product Details. */
   brandStory?: string
   fitAndSizeDetails: string[]
+  /** Visible PDP FAQ and FAQPage schema source. */
+  faq?: Array<{ question: string; answer: string }>
 }
 
 type MayfairColorKey = 'deep-maroon' | 'black' | 'peach'

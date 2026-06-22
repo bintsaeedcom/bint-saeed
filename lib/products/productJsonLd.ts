@@ -3,13 +3,17 @@ import { getProductSlug } from '@/lib/products/links'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
-import {
-  buildHeritageRichDescription,
-  getHeritageSchemaKeywords,
-  getHeritageSchemaProperties,
-} from '@/lib/products/heritageSeo'
+import { buildHeritageRichDescription } from '@/lib/products/heritageSeo'
 import { resolveProductSku } from '@/lib/products/sku'
 import { getProductColorOptions } from '@/lib/products/productColorAvailability'
+import { getProductPdpContent } from '@/data/productPdpContent'
+import {
+  buildFaqPageJsonLd,
+  buildProductAdditionalProperties,
+  buildProductSchemaKeywords,
+  getProductFaq,
+  getProductSchemaFacts,
+} from '@/lib/products/productSchemaMeta'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
@@ -43,28 +47,57 @@ function buildImageObjects(
   })
 }
 
-function schemaSharedFields(product: Product, slug: string) {
-  const richDescription = buildHeritageRichDescription(slug, product.description)
-  const keywords = getHeritageSchemaKeywords(slug)
+function buildSchemaDescription(
+  product: Product,
+  slug: string,
+  color?: string,
+): string {
+  const pdp = getProductPdpContent(product, { color })
+  if (pdp.introParagraphs?.[0]) return pdp.introParagraphs[0].trim()
+  return buildHeritageRichDescription(slug, product.description)
+}
+
+function schemaManufacturer() {
+  return {
+    '@type': 'Organization' as const,
+    name: 'Bint Saeed, Abu Dhabi, UAE',
+    address: {
+      '@type': 'PostalAddress' as const,
+      addressLocality: 'Abu Dhabi',
+      addressCountry: 'AE',
+    },
+  }
+}
+
+function schemaAudience() {
+  return {
+    '@type': 'PeopleAudience' as const,
+    suggestedGender: 'female' as const,
+    audienceType:
+      'Women seeking luxury modest fashion, abayas, kaftans and evening wear from Abu Dhabi, UAE',
+  }
+}
+
+function schemaSharedFields(
+  product: Product,
+  slug: string,
+  color?: string,
+  lang?: string,
+) {
+  const facts = getProductSchemaFacts(product)
 
   return {
-    description: richDescription,
-    keywords,
+    description: buildSchemaDescription(product, slug, color),
+    keywords: buildProductSchemaKeywords(product, color),
     material: product.fabric,
     countryOfOrigin: {
-      '@type': 'Country',
+      '@type': 'Country' as const,
       name: 'United Arab Emirates',
     },
-    additionalProperty: getHeritageSchemaProperties(slug),
-    manufacturer: {
-      '@type': 'Organization',
-      name: 'Bint Saeed',
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: 'Abu Dhabi',
-        addressCountry: 'AE',
-      },
-    },
+    additionalProperty: buildProductAdditionalProperties(product, facts),
+    manufacturer: schemaManufacturer(),
+    audience: schemaAudience(),
+    ...(lang ? { inLanguage: lang } : {}),
   }
 }
 
@@ -91,6 +124,39 @@ function buildOffer(product: Product, pageUrl: string) {
   }
 }
 
+function buildProductNode(
+  product: Product,
+  input: {
+    pageUrl: string
+    lang: string
+    activeImages: string[]
+    selectedColor?: string
+    variantColor?: string
+    variantImages?: string[]
+    nodeId: string
+    displayName: string
+  },
+) {
+  const slug = getProductSlug(product)
+  const color = input.variantColor ?? input.selectedColor
+  const images = input.variantImages ?? input.activeImages
+  const sku = resolveProductSku(product, color) ?? product.id
+
+  return {
+    '@type': 'Product' as const,
+    '@id': input.nodeId,
+    name: input.displayName,
+    sku,
+    mpn: sku,
+    brand: { '@type': 'Brand' as const, name: 'Bint Saeed' },
+    category: product.category,
+    color: color || product.colors[0]?.name,
+    image: buildImageObjects(product, images, color, input.lang),
+    offers: buildOffer(product, input.pageUrl),
+    ...schemaSharedFields(product, slug, color, input.lang),
+  }
+}
+
 /** PDP Product / ProductGroup JSON-LD tuned for Google Shopping, image search, and AI crawlers. */
 export function buildShopProductJsonLd(input: {
   product: Product
@@ -103,60 +169,55 @@ export function buildShopProductJsonLd(input: {
   const slug = getProductSlug(product)
   const pageUrl = `${SITE_URL}${productPagePath}`
   const lang = schemaInLanguageForLocale(locale)
-  const brand = { '@type': 'Brand' as const, name: 'Bint Saeed' }
-  const offer = buildOffer(product, pageUrl)
-  const shared = schemaSharedFields(product, slug)
   const variantColors = getProductColorOptions(product)
+  const pdp = getProductPdpContent(product, { color: selectedColor })
+  const faqItems = getProductFaq(product, pdp.faq)
+  const faqNode = buildFaqPageJsonLd(pageUrl, faqItems, lang)
+
+  let productNode: Record<string, unknown>
 
   if (product.colorImages && Object.keys(product.colorImages).length > 0) {
-    return {
-      '@context': 'https://schema.org',
+    productNode = {
       '@type': 'ProductGroup',
       '@id': `${pageUrl}#product`,
       name: product.name,
-      inLanguage: lang,
-      brand,
       productGroupID: product.id,
       variesBy: 'https://schema.org/color',
       category: product.category,
+      brand: { '@type': 'Brand', name: 'Bint Saeed' },
       image: buildImageObjects(product, activeImages, selectedColor, lang),
-      ...shared,
+      ...schemaSharedFields(product, slug, selectedColor, lang),
       hasVariant: variantColors.map((color) => {
         const variantImages = product.colorImages?.[color.name] ?? product.images
         const colorSlug = color.name.toLowerCase().replace(/\s+/g, '-')
-        const sku = resolveProductSku(product, color.name) ?? `${product.id}-${colorSlug}`
-        return {
-          '@type': 'Product',
-          '@id': `${pageUrl}#variant-${colorSlug}`,
-          name: `${product.name} — ${color.name}`,
-          inLanguage: lang,
-          color: color.name,
-          sku,
-          brand,
-          category: product.category,
-          image: buildImageObjects(product, variantImages, color.name, lang),
-          offers: offer,
-          ...shared,
-        }
+        return buildProductNode(product, {
+          pageUrl,
+          lang,
+          activeImages,
+          selectedColor,
+          variantColor: color.name,
+          variantImages,
+          nodeId: `${pageUrl}#variant-${colorSlug}`,
+          displayName: `${product.name} — ${color.name}`,
+        })
       }),
     }
+  } else {
+    productNode = buildProductNode(product, {
+      pageUrl,
+      lang,
+      activeImages,
+      selectedColor,
+      nodeId: `${pageUrl}#product`,
+      displayName: product.name,
+    })
   }
 
-  const singleColor = selectedColor || product.colors[0]?.name
-  const sku = resolveProductSku(product, singleColor) ?? product.id
+  const graph: Record<string, unknown>[] = [productNode]
+  if (faqNode) graph.push(faqNode)
 
   return {
     '@context': 'https://schema.org',
-    '@type': 'Product',
-    '@id': `${pageUrl}#product`,
-    name: product.name,
-    inLanguage: lang,
-    sku,
-    brand,
-    category: product.category,
-    color: selectedColor || product.colors[0]?.name,
-    image: buildImageObjects(product, activeImages, selectedColor, lang),
-    offers: offer,
-    ...shared,
+    '@graph': graph,
   }
 }
