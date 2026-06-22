@@ -16,6 +16,7 @@ import {
   getProductImagesForColor,
 } from '@/lib/products/productColorAvailability'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
+import { productIsOneSizeOnly, productShowsSizeSelector } from '@/lib/shopProductOptions'
 
 interface QuickBuyProps {
   isOpen: boolean
@@ -47,12 +48,22 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
     [product],
   )
 
+  const showSizeSelector = productShowsSizeSelector(
+    product.category ?? 'Kaftans',
+    product.sizes,
+    product.slug,
+  )
+
   useEffect(() => {
     if (!isOpen) return
     const available = colorOptions.map((color) => color.name)
     setSelectedColor(available[0] ?? '')
-    setSelectedSize('')
-  }, [isOpen, product.id, colorOptions])
+    if (productIsOneSizeOnly({ slug: product.slug, sizes: product.sizes })) {
+      setSelectedSize('One Size')
+    } else {
+      setSelectedSize('')
+    }
+  }, [isOpen, product.id, product.slug, product.sizes, colorOptions])
 
   const activeImages = useMemo(
     () => getProductImagesForColor(product, selectedColor),
@@ -188,6 +199,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               </div>
 
               {/* Size Selection */}
+              {showSizeSelector && (
               <div className="mb-5">
                 <label className={`font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-3 block ${isRTL ? 'text-right' : ''}`}>
                   {isRTL ? 'المقاس' : 'Size'}
@@ -210,6 +222,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                   ))}
                 </div>
               </div>
+              )}
 
               {/* Color Selection */}
               {colorOptions.length > 1 && (

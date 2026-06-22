@@ -3,35 +3,80 @@ import { getProductSlug } from '@/lib/products/links'
 import { getPdpSizeOptions, categoryNeedsLengthCmDropdown } from '@/lib/shopProductOptions'
 
 export type ProductPdpContent = {
+  /** Rich intro above accordions; first paragraph stays visible, rest behind Read more. */
+  introParagraphs?: string[]
   productDetails: string[]
+  compositionDetails?: string[]
+  careDetails?: string[]
+  /** Closing brand story paragraph inside Product Details. */
+  brandStory?: string
   fitAndSizeDetails: string[]
 }
 
-/** Royal V-Neck Kaftan — finalized reference PDP (same structure all other products now mirror with placeholders). */
-const V_NECK_CAFTAN_CONTENT: ProductPdpContent = {
-  productDetails: [
-    'Deep Maroon crepe chiffon kaftan with fluid, draped silhouette.',
-    'V-neckline for a clean and elongated shape.',
-    'Lightweight outer layer designed to move and flow with the body.',
-    'Attached scarf detail draped from the left shoulder.',
-    'Open-cut sleeves allowing subtle visibility of the arms.',
-    'Can be adjusted using hidden internal ties to create a defined, cape-like shape.',
-    'Internal ties can also be wrapped toward the back to softly define the waist.',
-    'Layered construction with an attached inner dress for coverage.',
-    'Length: 136 cm / 53.5 inches.',
-    'Colour: Deep Maroon.',
-    'Composition — Outer: Crepe Chiffon (100% Polyester).',
-    'Composition — Inner: 100% Polyester.',
-    'Care: Professional dry clean.',
-    'Detail: Signature Bint Saeed gold emblem.',
-    'Origin: Made in Abu Dhabi, United Arab Emirates.',
-  ],
-  fitAndSizeDetails: [
-    'Model height: 155 cm / 61 inches.',
-    'Model wears size XS.',
-    'Designed for a fluid, relaxed fit.',
-    'Adjustable silhouette through internal tie construction.',
-  ],
+type MayfairColorKey = 'deep-maroon' | 'black' | 'peach'
+
+const MAYFAIR_COLOR_COPY: Record<MayfairColorKey, { label: string; adj: string }> = {
+  'deep-maroon': { label: 'Deep Maroon', adj: 'deep maroon' },
+  black: { label: 'Black', adj: 'black' },
+  peach: { label: 'Peach', adj: 'peach' },
+}
+
+function normalizeMayfairColor(color?: string): MayfairColorKey {
+  const c = (color ?? '').toLowerCase()
+  if (c.includes('black')) return 'black'
+  if (c.includes('peach')) return 'peach'
+  return 'deep-maroon'
+}
+
+function buildMayfairKaftanContent(color?: string): ProductPdpContent {
+  const { label, adj } = MAYFAIR_COLOR_COPY[normalizeMayfairColor(color)]
+
+  return {
+    introParagraphs: [
+      `The Mayfair Kaftan is designed for women who understand that elegance is never static. Cut from ${adj} crepe chiffon and layered over an attached inner dress, this ${adj} chiffon kaftan creates a fluid silhouette that drapes effortlessly from shoulder to hem.`,
+      'A softly cascading scarf detail falls from the left shoulder and can be styled diagonally across the body using the signature Bint Saeed gold-tone emblem pin. Hidden internal ties allow the silhouette to be adjusted in multiple ways, creating either a flowing cape-like shape or a more defined profile. The result is a piece that transforms with the woman who wears it, adapting naturally to different occasions and moments.',
+      'Lightweight, versatile, and designed to be worn for years rather than seasons, the Mayfair Kaftan moves effortlessly between occasions. Worn for a wedding, a celebration, a dinner abroad, or an ordinary day that deserves something extraordinary, it adapts naturally to the life of the woman who wears it. It is not defined by a destination, a city, or a moment. It becomes part of her story and travels wherever she does.',
+      'It is a piece chosen not only for how it looks, but for how it makes a woman feel the moment she puts it on.',
+    ],
+    productDetails: [
+      `${label} crepe chiffon kaftan`,
+      'Fluid silhouette with layered construction',
+      'Attached inner dress for ease of wear',
+      'V-neckline',
+      'Attached scarf detail draped from the left shoulder',
+      'Signature Bint Saeed gold-tone emblem pin included',
+      'Scarf can be styled diagonally across the body',
+      'Hidden internal tie construction allowing multiple styling options',
+      'Can be worn with a fluid silhouette or a softly defined shape',
+      'Open-cut sleeves creating graceful movement',
+      'Lightweight construction designed for comfort and elegance',
+      `Colour: ${label}`,
+      'Made in Abu Dhabi, UAE',
+    ],
+    compositionDetails: [
+      'Outer: Crepe Chiffon (100% Polyester)',
+      'Inner Dress: 100% Polyester',
+    ],
+    fitAndSizeDetails: [
+      'One size',
+      'Designed for a fluid and relaxed fit',
+      'Hidden internal ties allow the silhouette to be adjusted',
+      'Model height: 155 cm / 61 inches',
+      'Maximum garment length: 165 cm',
+    ],
+    careDetails: [
+      'Professional dry clean recommended',
+      'If needed, gently hand wash separately in cold water',
+      'Do not soak',
+      'Do not bleach',
+      'Do not tumble dry',
+      'Lay flat or hang to dry away from direct sunlight',
+      'Steam or iron on a low setting if required',
+      'Store hanging to preserve the garment’s shape and drape',
+    ],
+    brandStory:
+      'Created in Abu Dhabi, UAE and made to order, the Mayfair Kaftan reflects Bint Saeed’s belief that clothing should move with the woman who wears it. Rather than following seasonal trends, each piece is designed to become part of a woman’s personal wardrobe, carried across occasions, destinations, and years to come.',
+  }
 }
 
 function colorList(product: Product): string {
@@ -120,27 +165,98 @@ function accessoryPlaceholderContent(product: Product): ProductPdpContent {
   }
 }
 
+function isMayfairKaftan(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'mayfair-kaftan' || product.id === 'bs-002'
+}
+
+function isNothingHillKaftan(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'nothing-hill-kaftan' || product.id === 'cf-002'
+}
+
+type NothingHillColorKey = 'peach-pink' | 'black' | 'peach'
+
+const NOTHING_HILL_COLOR_COPY: Record<NothingHillColorKey, { label: string; adj: string }> = {
+  'peach-pink': { label: 'Peach Pink', adj: 'peach pink' },
+  peach: { label: 'Peach', adj: 'peach' },
+  black: { label: 'Black', adj: 'black' },
+}
+
+function normalizeNothingHillColor(color?: string): NothingHillColorKey {
+  const c = (color ?? '').toLowerCase()
+  if (c.includes('black')) return 'black'
+  if (c.includes('peach pink') || c.includes('peach-pink')) return 'peach-pink'
+  if (c.includes('peach')) return 'peach'
+  return 'peach-pink'
+}
+
+function buildNothingHillKaftanContent(color?: string): ProductPdpContent {
+  const { label, adj } = NOTHING_HILL_COLOR_COPY[normalizeNothingHillColor(color)]
+
+  return {
+    introParagraphs: [
+      `The Nothing Hill Kaftan speaks in a softer register — luminous ${adj} crepe chiffon shaped by a graceful bateau neckline that skims the shoulders and lets the fabric fall in an unhurried line from collarbone to hem. Layered over an attached inner dress, this ${adj} chiffon kaftan offers the ease of one garment with the quiet depth of considered Emirati luxury design.`,
+      'From the left shoulder, an attached scarf detail falls in a gentle cascade. Worn diagonally with the signature Bint Saeed gold-tone emblem pin, or left open for a softer profile, it invites understated reinvention. Concealed internal ties let the silhouette shift between fluid movement and a gently defined shape — without ever feeling fixed to a single way of wearing.',
+      'Designed to outlast seasons, the Nothing Hill Kaftan moves between daylight and evening with equal composure. Worn for a gathering at home, a terrace abroad, or a moment that asks for something beautiful without announcement, it settles into a woman’s rhythm rather than demanding attention. It is not tied to one city, one occasion, or one version of herself.',
+      'It is chosen for the confidence of ease — the feeling that arrives when fabric, neckline, and craft ask nothing of her but to move naturally.',
+    ],
+    productDetails: [
+      `${label} crepe chiffon kaftan`,
+      'Fluid silhouette with layered construction',
+      'Attached inner dress for ease of wear',
+      'Graceful bateau neckline creating a refined silhouette while allowing the fabric to drape effortlessly across the shoulders',
+      'Attached scarf detail draped from the left shoulder',
+      'Signature Bint Saeed gold-tone emblem pin included',
+      'Scarf can be styled diagonally across the body',
+      'Hidden internal tie construction allowing multiple styling options',
+      'Can be worn with a fluid silhouette or a softly defined shape',
+      'Open-cut sleeves creating graceful movement',
+      'Lightweight construction designed for comfort and elegance',
+      `Colour: ${label}`,
+      'Made in Abu Dhabi, UAE',
+    ],
+    compositionDetails: [
+      'Outer: Crepe Chiffon (100% Polyester)',
+      'Inner Dress: 100% Polyester',
+    ],
+    fitAndSizeDetails: [
+      'One size',
+      'Designed for a fluid and relaxed fit',
+      'Hidden internal ties allow the silhouette to be adjusted',
+      'Model height: 155 cm / 61 inches',
+      'Maximum garment length: 125 cm',
+    ],
+    careDetails: [
+      'Professional dry clean recommended',
+      'If needed, gently hand wash separately in cold water',
+      'Do not soak',
+      'Do not bleach',
+      'Do not tumble dry',
+      'Lay flat or hang to dry away from direct sunlight',
+      'Steam or iron on a low setting if required',
+      'Store hanging to preserve the garment’s shape and drape',
+    ],
+    brandStory:
+      'Designed and made to order in Abu Dhabi, UAE, the Nothing Hill Kaftan reflects Bint Saeed’s belief that luxury should feel personal, not performative. Rather than chasing seasonal novelty, each piece is created to remain in a woman’s wardrobe — carried across destinations, occasions, and the years she chooses to keep it close.',
+  }
+}
+
 /**
  * PDP copy source of truth.
- * — bs-002 / mayfair-kaftan slug keeps finalized reference copy.
+ * — Mayfair & Nothing Hill Kaftans use finalized reference copy (colour-aware).
  * — All other products use the same topic layout as that page; replace bracketed lines when ready.
  */
-export const productPdpContentById: Partial<Record<string, ProductPdpContent>> = {
-  'bs-002': V_NECK_CAFTAN_CONTENT,
-}
+export function getProductPdpContent(product: Product, opts?: { color?: string }): ProductPdpContent {
+  const color = opts?.color?.trim() || product.colors[0]?.name
 
-/** Slug fallback when id differs (merged catalog, deep links, or API shape). */
-export const productPdpContentBySlug: Partial<Record<string, ProductPdpContent>> = {
-  'mayfair-kaftan': V_NECK_CAFTAN_CONTENT,
-}
+  if (isMayfairKaftan(product)) {
+    return buildMayfairKaftanContent(color)
+  }
 
-export function getProductPdpContent(product: Product): ProductPdpContent {
-  const byId = productPdpContentById[product.id]
-  if (byId) return byId
-
-  const slug = getProductSlug(product).toLowerCase()
-  const bySlug = productPdpContentBySlug[slug]
-  if (bySlug) return bySlug
+  if (isNothingHillKaftan(product)) {
+    return buildNothingHillKaftanContent(color)
+  }
 
   if (product.category === 'Accessories') {
     return accessoryPlaceholderContent(product)

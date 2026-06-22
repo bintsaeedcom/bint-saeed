@@ -1,6 +1,26 @@
 /** Clickable sizes for ready-to-wear (shop) — excludes accessories, which use product.sizes (e.g. One Size). */
 export const STANDARD_APPAREL_SIZES = ['XS', 'S', 'M', 'L', 'XL'] as const
 
+const ONE_SIZE_ONLY_SLUGS = new Set(['mayfair-kaftan', 'nothing-hill-kaftan'])
+
+export function productIsOneSizeOnly(product: {
+  slug?: string
+  sizes?: readonly string[]
+}): boolean {
+  const slug = (product.slug ?? '').trim().toLowerCase()
+  if (slug && ONE_SIZE_ONLY_SLUGS.has(slug)) return true
+  const sizes = product.sizes ?? []
+  return sizes.length === 1 && /one\s*size/i.test(sizes[0] ?? '')
+}
+
+export function productShowsSizeSelector(
+  category: string,
+  productSizes: readonly string[],
+  slug?: string,
+): boolean {
+  return !productIsOneSizeOnly({ slug, sizes: productSizes })
+}
+
 export const LENGTH_CM_MIN = 52
 export const LENGTH_CM_MAX = 65
 
@@ -24,7 +44,12 @@ export function categoryNeedsLengthCmDropdown(category: string): boolean {
   return category === 'Abayas' || category === 'Kaftans' || category === 'Dresses'
 }
 
-export function getPdpSizeOptions(category: string, productSizes: readonly string[]): string[] {
+export function getPdpSizeOptions(
+  category: string,
+  productSizes: readonly string[],
+  slug?: string,
+): string[] {
+  if (productIsOneSizeOnly({ slug, sizes: productSizes })) return ['One Size']
   if (category === 'Accessories') return [...productSizes]
   return [...STANDARD_APPAREL_SIZES]
 }

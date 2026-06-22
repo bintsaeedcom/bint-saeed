@@ -26,6 +26,8 @@ import {
   getPdpSizeOptions,
   CUSTOMISATION_MAX_CHARS,
   productOffersPersonalisation,
+  productShowsSizeSelector,
+  productIsOneSizeOnly,
 } from '@/lib/shopProductOptions'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { resolveProductSku } from '@/lib/products/sku'
@@ -102,7 +104,7 @@ export default function ProductPage() {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false)
-  
+  const [introExpanded, setIntroExpanded] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
   const { isRTL, language } = useLanguage()
   const { formatPrice, formatAmount, convertPrice, currency } = useCurrency()
@@ -122,10 +124,24 @@ export default function ProductPage() {
         : [],
     [product],
   )
-  const { productDetails, fitAndSizeDetails } = useMemo(
-    () => (product ? getProductPdpContent(product) : { productDetails: [], fitAndSizeDetails: [] }),
-    [product]
+  const pdpContent = useMemo(
+    () =>
+      product
+        ? getProductPdpContent(product, { color: selectedColor })
+        : {
+            productDetails: [],
+            fitAndSizeDetails: [],
+          },
+    [product, selectedColor],
   )
+  const {
+    introParagraphs,
+    productDetails,
+    compositionDetails,
+    careDetails,
+    brandStory,
+    fitAndSizeDetails,
+  } = pdpContent
   const estimatedShipDate = useMemo(() => {
     const d = new Date()
     d.setDate(d.getDate() + 14)
@@ -159,14 +175,19 @@ export default function ProductPage() {
     )
   }
 
-  const sizeOptions = getPdpSizeOptions(product.category, product.sizes)
+  const sizeOptions = getPdpSizeOptions(product.category, product.sizes, getProductSlug(product))
+  const showSizeSelector = productShowsSizeSelector(product.category, product.sizes, getProductSlug(product))
   const showPersonalisation = productOffersPersonalisation(product.category)
   const colorOptions = useMemo(() => getProductColorOptions(product), [product])
 
   useEffect(() => {
+    if (productIsOneSizeOnly(product)) {
+      setSelectedSize('One Size')
+      return
+    }
     if (!sizeOptions.length) return
     setSelectedSize((current) => (current && sizeOptions.includes(current) ? current : sizeOptions[0] ?? ''))
-  }, [sizeOptions, product.id])
+  }, [sizeOptions, product.id, product.slug, product.sizes])
 
   useEffect(() => {
     const availableColors = colorOptions.map((color) => color.name)
@@ -221,6 +242,11 @@ export default function ProductPage() {
   }, [selectedColor])
 
   useEffect(() => {
+    setIntroExpanded(false)
+  }, [product?.id, selectedColor])
+
+  useEffect(() => {
+    if (!product) return
     trackEvent('view_item', {
       item_id: product.id,
       item_name: product.name,
@@ -228,7 +254,7 @@ export default function ProductPage() {
       currency: currency.code,
       value: convertPrice(product.price, product.id),
     })
-  }, [product.id])
+  }, [product, product?.id, currency.code, convertPrice])
 
   const displayUnitPrice = convertPrice(product?.price ?? 0, product?.id)
   const sizeAndMeasurementDetails = [product.measurements, ...fitAndSizeDetails]
@@ -593,6 +619,7 @@ export default function ProductPage() {
             )}
 
             {/* Size Selection */}
+            {showSizeSelector ? (
             <div className="mb-3 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
@@ -632,6 +659,11 @@ export default function ProductPage() {
                 Made to order · ships {estimatedShipDate}
               </p>
             </div>
+            ) : (
+              <p className="mb-3 border-b border-brand-stone/20 pb-3 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
+                One size · made to order · ships {estimatedShipDate}
+              </p>
+            )}
 
             {showPersonalisation && (
               <div className="mb-3 border-b border-brand-stone/20 pb-3">
@@ -752,11 +784,57 @@ export default function ProductPage() {
               </div>
             </div>
 
-            {/* Short Description */}
-            <p className="mb-1 whitespace-pre-line font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-[1.6]">
-              {product.description}
-            </p>
-            {product.id !== 'bs-002' && (
+            {/* Intro / short description */}
+            {introParagraphs && introParagraphs.length > 0 ? (
+              <div className={`mb-2 ${isRTL ? 'text-right' : ''}`}>
+                <p className="mb-2 whitespace-pre-line font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-[1.6]">
+                  {introParagraphs[0]}
+                </p>
+                {introParagraphs.length > 1 && (
+                  <>
+                    <AnimatePresence initial={false}>
+                      {introExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.25, ease: 'easeInOut' }}
+                          className="overflow-hidden"
+                        >
+                          <div className="space-y-3 pb-2">
+                            {introParagraphs.slice(1).map((paragraph, idx) => (
+                              <p
+                                key={`intro-${idx}`}
+                                className="whitespace-pre-line font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-[1.6]"
+                              >
+                                {paragraph}
+                              </p>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                    <button
+                      type="button"
+                      onClick={() => setIntroExpanded((open) => !open)}
+                      className={`inline-flex items-center gap-1.5 font-montserrat text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+                      data-cursor-hover
+                      aria-expanded={introExpanded}
+                    >
+                      {introExpanded ? (isRTL ? 'عرض أقل' : 'Read less') : isRTL ? 'اقرأ المزيد' : 'Read more'}
+                      <FiChevronDown
+                        className={`h-3.5 w-3.5 transition-transform ${introExpanded ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+                  </>
+                )}
+              </div>
+            ) : (
+              <p className="mb-1 whitespace-pre-line font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-[1.6]">
+                {product.description}
+              </p>
+            )}
+            {!introParagraphs?.length && product.id !== 'bs-002' && (
               <p className="mb-2 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-dustyBlue">
                 {isRTL
                   ? 'صُنع حسب الطلب، متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
@@ -789,6 +867,35 @@ export default function ProductPage() {
                         • {item}
                       </p>
                     ))}
+                    {compositionDetails && compositionDetails.length > 0 && (
+                      <div className="space-y-2 pt-3">
+                        <p className={`font-montserrat text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
+                          Composition
+                        </p>
+                        {compositionDetails.map((item, idx) => (
+                          <p key={`comp-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                            • {item}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                    {careDetails && careDetails.length > 0 && (
+                      <div className="space-y-2 pt-3">
+                        <p className={`font-montserrat text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
+                          Care
+                        </p>
+                        {careDetails.map((item, idx) => (
+                          <p key={`care-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                            • {item}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                    {brandStory && (
+                      <p className={`pt-3 font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-[1.6] ${isRTL ? 'text-right' : ''}`}>
+                        {brandStory}
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
