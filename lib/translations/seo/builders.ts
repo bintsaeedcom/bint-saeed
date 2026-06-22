@@ -1,5 +1,6 @@
 import type { FaqPair, SeoSupplementalBundle } from './types'
 import { GCC_STORE_ADDRESS_BY_ID } from './gccStoreAddresses'
+import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
 
 const BRAND_NAME = 'Bint Saeed'
 
@@ -76,7 +77,7 @@ export function buildPressBrandJsonLd(siteUrl: string, bundle: SeoSupplementalBu
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: b.contactType,
-      email: 'info@bintsaeed.com',
+      email: OFFICIAL_EMAILS.press,
       availableLanguage: b.availableLanguages,
       areaServed: 'Worldwide',
     },

@@ -7,6 +7,7 @@ import { FiArrowLeft, FiMail, FiPhone, FiMapPin, FiClock, FiSend } from 'react-i
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import toast from 'react-hot-toast'
+import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 
 /** Display + deep links */
 const CONTACT_PHONE_DISPLAY = '+971 50 2299402'
@@ -53,9 +54,9 @@ export default function ContactPage() {
   const contactInfo = [
     {
       icon: FiMail,
-      label: isRTL ? 'البريد الإلكتروني' : 'Email',
-      value: 'contact@bintsaeed.com',
-      href: 'mailto:contact@bintsaeed.com',
+      label: isRTL ? 'البريد الإلكتروني' : 'General Inquiries',
+      value: OFFICIAL_EMAILS.hello,
+      href: officialMailto('hello'),
     },
     {
       icon: FaWhatsapp,
@@ -81,6 +82,16 @@ export default function ContactPage() {
       value: isRTL ? 'الأحد - الخميس: 9 ص - 6 م' : 'Sun - Thu: 9 AM - 6 PM',
       href: null,
     },
+  ]
+
+  const departmentEmails: { label: string; email: keyof typeof OFFICIAL_EMAILS }[] = [
+    { label: isRTL ? 'الطلبات' : 'Orders', email: 'orders' },
+    { label: isRTL ? 'الدعم' : 'Customer Support', email: 'support' },
+    { label: isRTL ? 'الإرجاع والاستبدال' : 'Returns & Exchanges', email: 'returns' },
+    { label: isRTL ? 'الشراكات' : 'Partnerships', email: 'partnerships' },
+    { label: isRTL ? 'الصحافة والإعلام' : 'Press & Media', email: 'press' },
+    { label: isRTL ? 'الجملة' : 'Wholesale', email: 'wholesale' },
+    { label: isRTL ? 'الشؤون القانونية' : 'Legal', email: 'legal' },
   ]
 
   return (
@@ -261,6 +272,26 @@ export default function ContactPage() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            <div className={`space-y-3 ${isRTL ? 'text-right' : ''}`}>
+              <h3 className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-clayRed">
+                {isRTL ? 'البريد حسب القسم' : 'Department Inboxes'}
+              </h3>
+              <ul className="space-y-2">
+                {departmentEmails.map(({ label, email }) => (
+                  <li key={email} className="font-montserrat text-sm text-brand-darkRed">
+                    <span className="text-brand-clayRed">{label}: </span>
+                    <a
+                      href={officialMailto(email)}
+                      className="hover:text-brand-dustyBlue transition-colors"
+                      data-cursor-hover
+                    >
+                      {OFFICIAL_EMAILS[email]}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </motion.div>
         </div>

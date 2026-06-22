@@ -4,6 +4,7 @@ import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { getHomeDefaultTitle, getHomeMetaDescription } from '@/lib/i18n/homePageCopy'
 import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
+import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
 
 /** Canonical site origin (must match live host / Search Console property). */
 const BASE = 'https://www.bintsaeed.com'
@@ -640,7 +641,7 @@ export function buildLocalBusinessJsonLd(
     alternateName: LOCAL_BUSINESS_ALTERNATE[locale],
     image: `${BASE}/og-image.png`,
     url: BASE,
-    email: 'info@bintsaeed.com',
+    email: OFFICIAL_EMAILS.hello,
     description: desc,
     address: {
       '@type': 'PostalAddress',

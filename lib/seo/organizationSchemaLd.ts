@@ -1,6 +1,7 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { getBrandTagline } from '@/lib/brand/brandPositioning'
+import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
 
 /** Long-form Organization description for JSON-LD (per locale). */
 const ORGANIZATION_DESCRIPTION: Record<AppLocale, string> = {
@@ -62,7 +63,7 @@ export function buildOrganizationJsonLd(locale: AppLocale) {
       'Bint Saeed Designer Abayas Dubai',
     ],
     url: 'https://www.bintsaeed.com',
-    email: 'info@bintsaeed.com',
+    email: OFFICIAL_EMAILS.hello,
     logo: {
       '@type': 'ImageObject',
       url: 'https://www.bintsaeed.com/og-image.png',
@@ -140,7 +141,7 @@ export function buildOrganizationJsonLd(locale: AppLocale) {
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        email: 'info@bintsaeed.com',
+        email: OFFICIAL_EMAILS.support,
         contactType: 'customer service',
         availableLanguage: [
           'English',
@@ -157,8 +158,23 @@ export function buildOrganizationJsonLd(locale: AppLocale) {
       },
       {
         '@type': 'ContactPoint',
-        email: 'legal@bintsaeed.com',
+        email: OFFICIAL_EMAILS.orders,
+        contactType: 'sales',
+      },
+      {
+        '@type': 'ContactPoint',
+        email: OFFICIAL_EMAILS.returns,
+        contactType: 'returns',
+      },
+      {
+        '@type': 'ContactPoint',
+        email: OFFICIAL_EMAILS.legal,
         contactType: 'legal',
+      },
+      {
+        '@type': 'ContactPoint',
+        email: OFFICIAL_EMAILS.press,
+        contactType: 'press',
       },
     ],
     sameAs: [...SAME_AS],

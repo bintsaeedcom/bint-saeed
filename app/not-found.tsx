@@ -5,6 +5,7 @@ import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiHome, FiShoppingBag, FiMail, FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 
 export default function NotFound() {
   const { isRTL } = useLanguage()
@@ -121,12 +122,12 @@ export default function NotFound() {
               {isRTL ? 'تحتاجين مساعدة؟' : 'Need help?'}
             </p>
             <a 
-              href="mailto:contact@bintsaeed.com"
+              href={officialMailto('support')}
               className={`inline-flex items-center gap-2 mt-2 font-montserrat text-sm text-brand-darkRed hover:text-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
               <FiMail className="w-4 h-4" />
-              contact@bintsaeed.com
+              {OFFICIAL_EMAILS.support}
             </a>
           </div>
         </motion.div>

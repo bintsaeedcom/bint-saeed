@@ -60,7 +60,7 @@ export const faqDe: FaqBundle = {
         },
         {
           q: 'Wie starte ich eine Rücksendung?',
-          a: 'Mail an contact@bintsaeed.com mit Bestellnummer. Für berechtigte VAE‑Bestellungen ggf. frankiertes Label.',
+          a: 'Mail an returns@bintsaeed.com mit Bestellnummer. Für berechtigte VAE‑Bestellungen ggf. frankiertes Label.',
         },
         {
           q: 'Erstattung?',

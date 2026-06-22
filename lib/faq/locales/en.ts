@@ -60,7 +60,7 @@ export const faqEn: FaqBundle = {
         },
         {
           q: 'How do I initiate a return?',
-          a: 'Contact us at contact@bintsaeed.com with your order number. We provide return instructions and a prepaid shipping label for eligible UAE orders.',
+          a: 'Contact us at returns@bintsaeed.com with your order number. We provide return instructions and a prepaid shipping label for eligible UAE orders.',
         },
         {
           q: 'Do you offer refunds?',

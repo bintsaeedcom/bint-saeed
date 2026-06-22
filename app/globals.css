@@ -703,9 +703,29 @@ h1, h2, h3, h4, h5, h6, p, a, span, button, label, li {
   white-space: nowrap;
 }
 
-/* Slightly scale up dense PDP control copy for readability. */
-.pdp-info [class*="text-[11px]"] {
-  font-size: 12px !important;
+/* Dense PDP panel copy — global `p` is 15px; `.pdp-copy` restores 11px hierarchy */
+.pdp-info .pdp-copy {
+  font-size: 11px;
+  line-height: 1.55;
+  letter-spacing: 0.04em;
+}
+
+.pdp-info .pdp-copy.pdp-copy--intro {
+  line-height: 1.6;
+}
+
+/* Legal policy pages — tighter rhythm than site-wide `p` defaults */
+.policy-prose p {
+  line-height: 1.55;
+}
+
+.policy-prose section > p + p {
+  margin-top: 0;
+}
+
+.policy-prose ul {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /* Responsive images — discourage drag / image-save selection */

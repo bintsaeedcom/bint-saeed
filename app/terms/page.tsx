@@ -275,13 +275,9 @@ export default function TermsPage() {
                   legal@bintsaeed.com
                 </a><br />
                 General Inquiries:{' '}
-                <a href="mailto:contact@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
-                  contact@bintsaeed.com
+                <a href="mailto:hello@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
+                  hello@bintsaeed.com
                 </a>
-              </p>
-              <p className="mt-4 text-xs text-neutral-500">
-                Legal drafting note: these terms should be reviewed by qualified counsel before high-risk market
-                expansion or jurisdiction-specific dispute handling.
               </p>
             </section>
           </div>

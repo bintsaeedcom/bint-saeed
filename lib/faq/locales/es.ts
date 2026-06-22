@@ -60,7 +60,7 @@ export const faqEs: FaqBundle = {
         },
         {
           q: '¿Cómo inicio un cambio?',
-          a: 'Escribe a contact@bintsaeed.com con tu número de pedido. Etiqueta prepagada para pedidos elegibles en EAU.',
+          a: 'Escribe a returns@bintsaeed.com con tu número de pedido. Etiqueta prepagada para pedidos elegibles en EAU.',
         },
         {
           q: '¿Reembolso?',

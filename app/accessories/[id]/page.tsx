@@ -18,6 +18,13 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import {
+  PDP_ACCORDION_PANEL,
+  PDP_ACCORDION_TITLE,
+  PDP_COPY_INTRO,
+  PDP_COPY_RELAXED,
+  PDP_MTO_NOTE,
+} from '@/lib/pdp/pdpTypography'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -573,10 +580,10 @@ export default function AccessoryDetailPage() {
               </div>
             </div>
 
-            <p className="mb-1 whitespace-pre-line font-montserrat text-[11px] leading-[1.6] tracking-wide text-brand-darkRed/75">
+            <p className={`mb-1 ${PDP_COPY_INTRO} pdp-copy--intro`}>
               {isRTL ? accessory.descriptionAr : accessory.description}
             </p>
-            <p className="mb-2 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-dustyBlue">
+            <p className={`mb-2 ${PDP_MTO_NOTE}`}>
               {isRTL
                 ? 'صُنع حسب الطلب، متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
                 : 'Made to order — available within this chapter (availability confirmed when you order).'}
@@ -591,7 +598,7 @@ export default function AccessoryDetailPage() {
                   className="flex w-full items-center justify-between py-3"
                   data-cursor-hover
                 >
-                  <h2 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h2 className={PDP_ACCORDION_TITLE}>
                     {isRTL ? 'تفاصيل المنتج' : 'Product Details'}
                   </h2>
                   <FiChevronDown
@@ -599,8 +606,8 @@ export default function AccessoryDetailPage() {
                   />
                 </button>
                 {openDropdown === 'description' && (
-                  <div className="space-y-2 pb-5">
-                    <p className={`font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/75 ${isRTL ? 'text-right' : ''}`}>
+                  <div className={PDP_ACCORDION_PANEL}>
+                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
                       • {isRTL ? accessory.descriptionAr : accessory.description}
                     </p>
                   </div>
@@ -614,7 +621,7 @@ export default function AccessoryDetailPage() {
                   className="flex w-full items-center justify-between py-3"
                   data-cursor-hover
                 >
-                  <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h3 className={PDP_ACCORDION_TITLE}>
                     {isRTL ? 'المواد' : 'Materials'}
                   </h3>
                   <FiChevronDown
@@ -622,8 +629,8 @@ export default function AccessoryDetailPage() {
                   />
                 </button>
                 {openDropdown === 'materials' && (
-                  <div className="space-y-2 pb-5">
-                    <p className={`font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/75 ${isRTL ? 'text-right' : ''}`}>
+                  <div className={PDP_ACCORDION_PANEL}>
+                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
                       • {isRTL ? accessory.materialsAr : accessory.materials}
                     </p>
                   </div>
@@ -637,7 +644,7 @@ export default function AccessoryDetailPage() {
                   className="flex w-full items-center justify-between py-3"
                   data-cursor-hover
                 >
-                  <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h3 className={PDP_ACCORDION_TITLE}>
                     {isRTL ? 'العناية' : 'Care'}
                   </h3>
                   <FiChevronDown
@@ -645,11 +652,11 @@ export default function AccessoryDetailPage() {
                   />
                 </button>
                 {openDropdown === 'care' && (
-                  <div className="space-y-2 pb-5 font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/75">
-                    <p className={isRTL ? 'text-right' : ''}>{isRTL ? '• تجنبي ملامسة العطور والمواد الكيميائية' : '• Avoid contact with perfumes and chemicals'}</p>
-                    <p className={isRTL ? 'text-right' : ''}>{isRTL ? '• احفظيها في مكان جاف' : '• Store in a dry place'}</p>
-                    <p className={isRTL ? 'text-right' : ''}>{isRTL ? '• امسحيها بقطعة قماش ناعمة' : '• Wipe with a soft cloth'}</p>
-                    <p className={isRTL ? 'text-right' : ''}>{isRTL ? '• أزيليها قبل السباحة أو الاستحمام' : '• Remove before swimming or bathing'}</p>
+                  <div className={PDP_ACCORDION_PANEL}>
+                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>{isRTL ? '• تجنبي ملامسة العطور والمواد الكيميائية' : '• Avoid contact with perfumes and chemicals'}</p>
+                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>{isRTL ? '• احفظيها في مكان جاف' : '• Store in a dry place'}</p>
+                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>{isRTL ? '• امسحيها بقطعة قماش ناعمة' : '• Wipe with a soft cloth'}</p>
+                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>{isRTL ? '• أزيليها قبل السباحة أو الاستحمام' : '• Remove before swimming or bathing'}</p>
                   </div>
                 )}
               </div>
@@ -661,7 +668,7 @@ export default function AccessoryDetailPage() {
                   className="flex w-full items-center justify-between py-3"
                   data-cursor-hover
                 >
-                  <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h3 className={PDP_ACCORDION_TITLE}>
                     {isRTL ? 'الشحن والإرجاع' : 'Shipping & Returns'}
                   </h3>
                   <FiChevronDown
@@ -669,49 +676,49 @@ export default function AccessoryDetailPage() {
                   />
                 </button>
                 {openDropdown === 'shipping' && (
-                  <div className="space-y-2 pb-5 font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-darkRed/75">
-                    <p>{isRTL ? '• الشحن المجاني متاح داخل الإمارات للطلبات فوق 1000 درهم.' : '• Free shipping within the UAE on orders over 1000 AED.'}</p>
-                    <p>
+                  <div className={PDP_ACCORDION_PANEL}>
+                    <p className={PDP_COPY_RELAXED}>{isRTL ? '• الشحن المجاني متاح داخل الإمارات للطلبات فوق 1000 درهم.' : '• Free shipping within the UAE on orders over 1000 AED.'}</p>
+                    <p className={PDP_COPY_RELAXED}>
                       {isRTL
                         ? '• القطع الجاهزة للشحن تُرسل خلال 1-3 أيام عمل للطلبات المقدمة قبل الساعة 3:00 مساءً بتوقيت الإمارات.'
                         : '• In-stock styles dispatch within 1-3 business days for orders placed before 3:00 PM UAE time.'}
                     </p>
-                    <p>
+                    <p className={PDP_COPY_RELAXED}>
                       {isRTL
                         ? '• القطع المسبقة الطلب تُشحن في التاريخ الموضح على صفحة المنتج.'
                         : '• Pre-order styles dispatch on the date shown on the product page.'}
                     </p>
-                    <p>
+                    <p className={PDP_COPY_RELAXED}>
                       {isRTL
                         ? '• الطلبات المختلطة (جاهز + مسبق الطلب) تُشحن معاً في تاريخ المسبق الطلب المعلن.'
                         : '• Mixed orders (in-stock + pre-order) dispatch together on the stated pre-order date.'}
                     </p>
-                    <p>
+                    <p className={PDP_COPY_RELAXED}>
                       {isRTL
                         ? '• جميع المبيعات نهائية. لا نوفر استرداداً نقدياً، مع وجود بعض الاستثناءات.'
                         : '• All sales are final. We do not offer refunds, some exclusions apply.'}
                     </p>
-                    <p>
+                    <p className={PDP_COPY_RELAXED}>
                       {isRTL
                         ? '• يُقبل استبدال القطع الجاهزة فقط خلال 14 يوماً إذا كانت غير مستخدمة وغير متضررة مع البطاقات.'
                         : '• Exchanges for in-stock items are accepted within 14 days for unworn, undamaged pieces with tags attached.'}
                     </p>
-                    <p>
+                    <p className={PDP_COPY_RELAXED}>
                       {isRTL
                         ? '• لا يمكن إرجاع أو استبدال القطع المخفّضة.'
                         : '• Discounted items cannot be returned or exchanged.'}
                     </p>
-                    <p>
+                    <p className={PDP_COPY_RELAXED}>
                       {isRTL
                         ? '• القطع المسبقة الطلب لا يمكن إرجاعها أو استبدالها.'
                         : '• Pre-order items cannot be returned or exchanged.'}
                     </p>
-                    <p>
+                    <p className={PDP_COPY_RELAXED}>
                       {isRTL
                         ? '• القطع المخصصة لا يمكن إرجاعها أو استبدالها.'
                         : '• Personalised items cannot be returned or exchanged.'}
                     </p>
-                    <p>
+                    <p className={PDP_COPY_RELAXED}>
                       {isRTL ? '• للمزيد من المعلومات، راجعي ' : '• For more information, please review our '}
                       <LocaleLink href="/terms" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
                         {isRTL ? 'سياسة الاسترجاع والاستبدال' : 'Refunds and Exchanges policy'}

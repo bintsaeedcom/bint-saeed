@@ -60,7 +60,7 @@ export const faqIt: FaqBundle = {
         },
         {
           q: 'Come avviare un reso?',
-          a: 'Scrivi a contact@bintsaeed.com con numero ordine. Etichetta prepagata per ordini idonei negli UAE.',
+          a: 'Scrivi a returns@bintsaeed.com con numero ordine. Etichetta prepagata per ordini idonei negli UAE.',
         },
         {
           q: 'Rimborsi?',

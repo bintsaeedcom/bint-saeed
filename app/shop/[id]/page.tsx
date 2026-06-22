@@ -32,6 +32,16 @@ import {
 } from '@/lib/shopProductOptions'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { resolveProductSku } from '@/lib/products/sku'
+import {
+  PDP_ACCORDION_PANEL,
+  PDP_ACCORDION_SUBTITLE,
+  PDP_ACCORDION_TITLE,
+  PDP_COPY_INTRO,
+  PDP_COPY_RELAXED,
+  PDP_FAQ_QUESTION,
+  PDP_MTO_NOTE,
+  PDP_RELATED_TITLE,
+} from '@/lib/pdp/pdpTypography'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -793,7 +803,7 @@ export default function ProductPage() {
             {/* Intro / short description */}
             {introParagraphs && introParagraphs.length > 0 ? (
               <div className={`mb-2 ${isRTL ? 'text-right' : ''}`}>
-                <p className="mb-2 whitespace-pre-line font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-[1.6]">
+                <p className={`mb-2 ${PDP_COPY_INTRO} pdp-copy--intro`}>
                   {introParagraphs[0]}
                 </p>
                 {introParagraphs.length > 1 && (
@@ -811,7 +821,7 @@ export default function ProductPage() {
                             {introParagraphs.slice(1).map((paragraph, idx) => (
                               <p
                                 key={`intro-${idx}`}
-                                className="whitespace-pre-line font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-[1.6]"
+                                className={`${PDP_COPY_INTRO} pdp-copy--intro`}
                               >
                                 {paragraph}
                               </p>
@@ -836,12 +846,12 @@ export default function ProductPage() {
                 )}
               </div>
             ) : (
-              <p className="mb-1 whitespace-pre-line font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-[1.6]">
+              <p className={`mb-1 ${PDP_COPY_INTRO} pdp-copy--intro`}>
                 {product.description}
               </p>
             )}
             {!introParagraphs?.length && product.id !== 'bs-002' && (
-              <p className="mb-2 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-dustyBlue">
+              <p className={`mb-2 ${PDP_MTO_NOTE}`}>
                 {isRTL
                   ? 'صُنع حسب الطلب، متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
                   : 'Made to order — available within this chapter (availability confirmed when you order).'}
@@ -857,7 +867,7 @@ export default function ProductPage() {
                   className="w-full flex items-center justify-between py-3"
                   data-cursor-hover
                 >
-                  <h2 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h2 className={PDP_ACCORDION_TITLE}>
                     Product Details
                   </h2>
                   <FiChevronDown
@@ -867,19 +877,19 @@ export default function ProductPage() {
                   />
                 </button>
                 {openDropdown === 'description' && (
-                  <div className="space-y-2 pb-5">
+                  <div className={PDP_ACCORDION_PANEL}>
                     {productDetails.map((item, idx) => (
-                      <p key={`pd-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                      <p key={`pd-${idx}`} className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
                         • {item}
                       </p>
                     ))}
                     {compositionDetails && compositionDetails.length > 0 && (
                       <div className="space-y-2 pt-3">
-                        <p className={`font-montserrat text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
+                        <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>
                           Composition
                         </p>
                         {compositionDetails.map((item, idx) => (
-                          <p key={`comp-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                          <p key={`comp-${idx}`} className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
                             • {item}
                           </p>
                         ))}
@@ -887,18 +897,18 @@ export default function ProductPage() {
                     )}
                     {careDetails && careDetails.length > 0 && (
                       <div className="space-y-2 pt-3">
-                        <p className={`font-montserrat text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
+                        <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>
                           Care
                         </p>
                         {careDetails.map((item, idx) => (
-                          <p key={`care-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                          <p key={`care-${idx}`} className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
                             • {item}
                           </p>
                         ))}
                       </div>
                     )}
                     {brandStory && (
-                      <p className={`pt-3 font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-[1.6] ${isRTL ? 'text-right' : ''}`}>
+                      <p className={`pt-3 ${PDP_COPY_INTRO} pdp-copy--intro ${isRTL ? 'text-right' : ''}`}>
                         {brandStory}
                       </p>
                     )}
@@ -913,7 +923,7 @@ export default function ProductPage() {
                   className="w-full flex items-center justify-between py-3"
                   data-cursor-hover
                 >
-                  <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h3 className={PDP_ACCORDION_TITLE}>
                     Size & Measurements
                   </h3>
                   <FiChevronDown
@@ -923,9 +933,9 @@ export default function ProductPage() {
                   />
                 </button>
                 {openDropdown === 'size' && (
-                  <div className="space-y-2 pb-5">
+                  <div className={PDP_ACCORDION_PANEL}>
                     {sizeAndMeasurementDetails.map((item, idx) => (
-                      <p key={`sz-${idx}`} className={`font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                      <p key={`sz-${idx}`} className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
                         • {item}
                       </p>
                     ))}
@@ -940,7 +950,7 @@ export default function ProductPage() {
                   className="w-full flex items-center justify-between py-3"
                   data-cursor-hover
                 >
-                  <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                  <h3 className={PDP_ACCORDION_TITLE}>
                     Shipping & Returns
                   </h3>
                   <FiChevronDown
@@ -950,17 +960,17 @@ export default function ProductPage() {
                   />
                 </button>
                 {openDropdown === 'shipping' && (
-                  <div className="space-y-2 pb-5 font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed">
-                    <p>{isRTL ? '• الشحن المجاني متاح داخل الإمارات للطلبات فوق 1000 درهم.' : '• Free shipping within the UAE on orders over 1000 AED.'}</p>
-                    <p>• In-stock styles dispatch within 1-3 business days for orders placed before 3:00 PM UAE time.</p>
-                    <p>• Pre-order styles dispatch on the date shown on the product page.</p>
-                    <p>• Mixed orders (in-stock + pre-order) dispatch together on the stated pre-order date.</p>
-                    <p>• All sales are final. We do not offer refunds, some exclusions apply.</p>
-                    <p>• Exchanges for in-stock items are accepted within 14 days for unworn, undamaged pieces with tags attached.</p>
-                    <p>• Discounted items cannot be returned or exchanged.</p>
-                    <p>• Pre-order items cannot be returned or exchanged.</p>
-                    <p>• Personalised items cannot be returned or exchanged.</p>
-                    <p>
+                  <div className={PDP_ACCORDION_PANEL}>
+                    <p className={PDP_COPY_RELAXED}>{isRTL ? '• الشحن المجاني متاح داخل الإمارات للطلبات فوق 1000 درهم.' : '• Free shipping within the UAE on orders over 1000 AED.'}</p>
+                    <p className={PDP_COPY_RELAXED}>• In-stock styles dispatch within 1-3 business days for orders placed before 3:00 PM UAE time.</p>
+                    <p className={PDP_COPY_RELAXED}>• Pre-order styles dispatch on the date shown on the product page.</p>
+                    <p className={PDP_COPY_RELAXED}>• Mixed orders (in-stock + pre-order) dispatch together on the stated pre-order date.</p>
+                    <p className={PDP_COPY_RELAXED}>• All sales are final. We do not offer refunds, some exclusions apply.</p>
+                    <p className={PDP_COPY_RELAXED}>• Exchanges for in-stock items are accepted within 14 days for unworn, undamaged pieces with tags attached.</p>
+                    <p className={PDP_COPY_RELAXED}>• Discounted items cannot be returned or exchanged.</p>
+                    <p className={PDP_COPY_RELAXED}>• Pre-order items cannot be returned or exchanged.</p>
+                    <p className={PDP_COPY_RELAXED}>• Personalised items cannot be returned or exchanged.</p>
+                    <p className={PDP_COPY_RELAXED}>
                       • For more information, please review our{' '}
                       <LocaleLink href="/terms" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
                         Refunds and Exchanges policy
@@ -978,7 +988,7 @@ export default function ProductPage() {
                     className="w-full flex items-center justify-between py-3"
                     data-cursor-hover
                   >
-                    <h3 className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
+                    <h3 className={PDP_ACCORDION_TITLE}>
                       FAQ
                     </h3>
                     <FiChevronDown
@@ -991,10 +1001,10 @@ export default function ProductPage() {
                     <div className="space-y-4 pb-5">
                       {faqItems.map((item, idx) => (
                         <div key={`faq-${idx}`} className={isRTL ? 'text-right' : ''}>
-                          <p className="font-montserrat text-[11px] font-semibold tracking-wide text-brand-darkRed">
+                          <p className={PDP_FAQ_QUESTION}>
                             {item.question}
                           </p>
-                          <p className="mt-1 font-montserrat text-[11px] text-brand-darkRed/75 tracking-wide leading-relaxed">
+                          <p className={`mt-1 ${PDP_COPY_RELAXED}`}>
                             {item.answer}
                           </p>
                         </div>
@@ -1007,7 +1017,7 @@ export default function ProductPage() {
 
             {relatedStyles.length > 0 && (
               <section className="relative z-20 mt-8">
-                <h3 className="mb-5 font-montserrat text-xs uppercase tracking-[0.22em] text-brand-darkRed">
+                <h3 className={PDP_RELATED_TITLE}>
                   {isRTL ? 'يناسبها أيضاً' : 'Pairs well with'}
                 </h3>
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -1032,7 +1042,7 @@ export default function ProductPage() {
                         <p data-product-name="true" className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
                           {item.name}
                         </p>
-                        <p className="font-montserrat text-xs tracking-wide text-brand-darkRed/80">
+                        <p className="font-montserrat text-[11px] tracking-wide text-brand-darkRed/80">
                           {formatPrice(item.price, item.id)}
                         </p>
                       </div>

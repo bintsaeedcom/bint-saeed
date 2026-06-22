@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiRefreshCw, FiHome, FiAlertTriangle } from 'react-icons/fi'
+import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 
 export default function Error({
   error,
@@ -103,11 +104,11 @@ export default function Error({
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
               <a 
-                href="mailto:contact@bintsaeed.com"
+                href={officialMailto('support')}
                 className="font-montserrat text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
                 data-cursor-hover
               >
-                contact@bintsaeed.com
+                {OFFICIAL_EMAILS.support}
               </a>
               <span className="hidden sm:block text-brand-stone">•</span>
               <a 

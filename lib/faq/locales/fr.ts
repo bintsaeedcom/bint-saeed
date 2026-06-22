@@ -60,7 +60,7 @@ export const faqFr: FaqBundle = {
         },
         {
           q: 'Comment lancer un retour / échange ?',
-          a: 'Écrivez à contact@bintsaeed.com avec votre numéro de commande. Étiquette prépayée possible pour commandes éligibles aux EAU.',
+          a: 'Écrivez à returns@bintsaeed.com avec votre numéro de commande. Étiquette prépayée possible pour commandes éligibles aux EAU.',
         },
         {
           q: 'Remboursement ?',

@@ -8,6 +8,7 @@ import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { FAQ_BY_LOCALE } from '@/lib/faq/faqByLocale'
+import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 
 const FAQ_EMAIL_CTA: Record<AppLocale, string> = {
   en: 'Email Us',
@@ -150,7 +151,7 @@ export default function FAQPage() {
           </p>
           <div className={`flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
             <a
-              href="mailto:contact@bintsaeed.com"
+              href={officialMailto('support')}
               className={`inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >

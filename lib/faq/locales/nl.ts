@@ -60,7 +60,7 @@ export const faqNl: FaqBundle = {
         },
         {
           q: 'Hoe start ik een retour?',
-          a: 'Mail contact@bintsaeed.com met ordernummer. Voor geschikte VAE‑orders eventueel voorbetaald label.',
+          a: 'Mail returns@bintsaeed.com met ordernummer. Voor geschikte VAE‑orders eventueel voorbetaald label.',
         },
         {
           q: 'Terugbetaling?',

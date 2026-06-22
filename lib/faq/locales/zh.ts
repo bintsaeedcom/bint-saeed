@@ -61,7 +61,7 @@ export const faqZh: FaqBundle = {
         },
         {
           q: '如何发起退换？',
-          a: '请发送邮件至 contact@bintsaeed.com 并附上订单号。符合条件的阿联酋订单可获得退货运单指引。',
+          a: '请发送邮件至 returns@bintsaeed.com 并附上订单号。符合条件的阿联酋订单可获得退货运单指引。',
         },
         {
           q: '是否退款？',

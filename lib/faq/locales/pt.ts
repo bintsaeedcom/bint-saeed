@@ -60,7 +60,7 @@ export const faqPt: FaqBundle = {
         },
         {
           q: 'Como iniciar uma devolução?',
-          a: 'Escreva para contact@bintsaeed.com com o número da encomenda. Etiqueta pré‑paga para encomendas elegíveis nos EAU.',
+          a: 'Escreva para returns@bintsaeed.com com o número da encomenda. Etiqueta pré‑paga para encomendas elegíveis nos EAU.',
         },
         {
           q: 'Reembolso?',
