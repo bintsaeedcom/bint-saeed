@@ -5,8 +5,6 @@ import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { notifyHealthAlert } from '@/lib/ops/notifications'
 import {
   cartSubtotalInCurrency,
-  getExpressShippingFee,
-  getSignaturePackagingFee,
   lineUnitInCurrency,
   normalizeCurrencyCode,
   toStripeMinorUnits,
@@ -66,7 +64,6 @@ export async function POST(request: NextRequest) {
       items,
       discountCode,
       customerEmail,
-      packagingType,
       checkoutNotes,
       clientContext,
       currency: currencyRaw,
@@ -147,25 +144,6 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    const packaging = packagingType === 'signature' ? 'signature' : 'sustainable'
-    if (packaging === 'signature') {
-      const packagingFee = getSignaturePackagingFee(checkoutCurrency)
-      lineItems.push({
-        price_data: {
-          currency: stripeCurrency,
-          product_data: {
-            name: 'Signature Packaging',
-            description: 'Premium signature shipment box',
-            images: [],
-          },
-          unit_amount: toStripeMinorUnits(packagingFee, checkoutCurrency),
-        },
-        quantity: 1,
-      })
-    }
-
-    const expressShippingAmount = getExpressShippingFee(checkoutCurrency)
-
     const sessionOptions: Stripe.Checkout.SessionCreateParams = {
       payment_method_types: ['card', 'link'],
       payment_method_options: {
@@ -204,37 +182,7 @@ export async function POST(request: NextRequest) {
               amount: 0,
               currency: stripeCurrency,
             },
-            display_name: 'Standard Shipping (2 weeks)',
-            delivery_estimate: {
-              minimum: {
-                unit: 'business_day',
-                value: 10,
-              },
-              maximum: {
-                unit: 'business_day',
-                value: 14,
-              },
-            },
-          },
-        },
-        {
-          shipping_rate_data: {
-            type: 'fixed_amount',
-            fixed_amount: {
-              amount: toStripeMinorUnits(expressShippingAmount, checkoutCurrency),
-              currency: stripeCurrency,
-            },
-            display_name: 'Express Shipping (1 week)',
-            delivery_estimate: {
-              minimum: {
-                unit: 'business_day',
-                value: 5,
-              },
-              maximum: {
-                unit: 'business_day',
-                value: 7,
-              },
-            },
+            display_name: 'Included',
           },
         },
       ],
@@ -259,7 +207,7 @@ export async function POST(request: NextRequest) {
           }))
         ),
         discountCodeUsed: discountCodeStr,
-        packagingType: packaging,
+        packagingType: 'signature',
         clientIp,
         clientTimezone,
         clientLocalTime,
@@ -271,8 +219,8 @@ export async function POST(request: NextRequest) {
       invoice_creation: {
         enabled: true,
         invoice_data: {
-          description: 'Bint Saeed Order - Delivery within 2 weeks',
-          footer: 'Thank you for shopping with Bint Saeed. Orders are handcrafted and delivered within 2 weeks.',
+          description: 'Bint Saeed Order',
+          footer: 'Thank you for shopping with Bint Saeed.',
         },
       },
     }

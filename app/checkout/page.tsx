@@ -6,7 +6,7 @@ import LocaleLink from '@/components/LocaleLink'
 import AppBreadcrumb from '@/components/AppBreadcrumb'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { FiArrowLeft, FiArrowRight, FiLock, FiShoppingBag, FiTruck } from 'react-icons/fi'
+import { FiArrowLeft, FiArrowRight, FiLock, FiShoppingBag } from 'react-icons/fi'
 import { loadStripe } from '@stripe/stripe-js'
 import toast from 'react-hot-toast'
 import { useCartStore } from '@/store/cartStore'
@@ -14,13 +14,12 @@ import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
-import { getSignaturePackagingFee } from '@/lib/pricing'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
-import { getCartLineImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
+import { getCartLineImageAlt } from '@/lib/products/imageAlt'
 
-type PackagingType = 'sustainable' | 'signature'
+const CHECKOUT_NOTES_MAX_CHARS = 150
 
 function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   if (typeof window === 'undefined') return 'desktop'
@@ -48,7 +47,7 @@ export default function CheckoutPage() {
     )
 
   const [payBusy, setPayBusy] = useState(false)
-  const [packagingType, setPackagingType] = useState<PackagingType>('sustainable')
+  const [checkoutNotes, setCheckoutNotes] = useState('')
   const [legalAcknowledged, setLegalAcknowledged] = useState(false)
 
   useEffect(() => {
@@ -67,17 +66,15 @@ export default function CheckoutPage() {
   }, [cartSubtotal, currency.code, items])
 
   const subtotal = cartSubtotal(items)
-  const signaturePackagingFee =
-    packagingType === 'signature' ? getSignaturePackagingFee(currency.code) : 0
-  const estimatedTotal = subtotal + signaturePackagingFee
+  const estimatedTotal = subtotal
 
   const startStripeCheckout = async () => {
     if (items.length === 0) return
     if (!legalAcknowledged) {
       toast.error(
         isRTL
-          ? 'يرجى تأكيد الشروط وسياسة الشحن والإرجاع'
-          : 'Please confirm Terms and Shipment & Return Policy',
+          ? 'يرجى قبول سياسة الشحن والإرجاع والشروط والأحكام'
+          : 'Please accept the Shipment & Return Policy and Terms & Conditions',
       )
       return
     }
@@ -100,7 +97,7 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           items,
           currency: currency.code,
-          packagingType,
+          checkoutNotes: checkoutNotes.trim() || undefined,
           clientContext: {
             localTime: new Date().toString(),
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
@@ -156,12 +153,12 @@ export default function CheckoutPage() {
           <div className={`mt-6 flex items-start justify-between gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <div>
               <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed md:text-4xl">
-                {isRTL ? 'دفع آمن' : 'Secure Checkout'}
+                {isRTL ? 'راجعي طلبك' : 'Review Your Order'}
               </h1>
               <p className="mt-2 max-w-xl font-montserrat text-sm tracking-wide text-brand-clayRed/70">
                 {isRTL
-                  ? 'راجعي طلبك قبل المتابعة إلى شريك الدفع الآمن، Stripe.'
-                  : 'Review your order before continuing to our secure payment partner, Stripe.'}
+                  ? 'راجعي اختيارك قبل المتابعة إلى الدفع الآمن.'
+                  : 'Review your selection before proceeding to secure payment.'}
               </p>
             </div>
             <LocaleLink
@@ -244,70 +241,24 @@ export default function CheckoutPage() {
               transition={{ delay: 0.05 }}
               className="rounded-2xl border border-brand-stone/20 bg-white p-6 shadow-sm md:p-8"
             >
-              <h2 className="mb-2 font-rozha text-xl text-brand-darkRed">
-                {isRTL ? 'التغليف' : 'Packaging'}
-              </h2>
-              <p className="mb-5 font-montserrat text-xs tracking-wide text-brand-clayRed/60">
-                {isRTL
-                  ? 'اختاري بين تغليف التوقيع (30 درهم) أو تغليف مستدام مجاني.'
-                  : 'Choose between signature packaging (+30 AED) or a complimentary sustainable option.'}
+              <label
+                htmlFor="checkout-special-notes"
+                className={`mb-2.5 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed ${isRTL ? 'text-right' : ''}`}
+              >
+                {isRTL ? 'ملاحظات خاصة (اختياري)' : 'Special Notes (Optional)'}
+              </label>
+              <textarea
+                id="checkout-special-notes"
+                value={checkoutNotes}
+                onChange={(e) => setCheckoutNotes(e.target.value.slice(0, CHECKOUT_NOTES_MAX_CHARS))}
+                placeholder={isRTL ? 'أي طلبات أو تعديلات خاصة...' : 'Any special requests or alterations...'}
+                rows={4}
+                maxLength={CHECKOUT_NOTES_MAX_CHARS}
+                className="w-full resize-none border border-brand-stone/40 bg-brand-pageCanvas px-4 py-3 font-montserrat text-sm tracking-wide transition-colors focus:border-brand-darkRed focus:outline-none"
+              />
+              <p className={`mt-2 font-montserrat text-[11px] text-brand-clayRed/60 ${isRTL ? 'text-right' : ''}`}>
+                {checkoutNotes.length}/{CHECKOUT_NOTES_MAX_CHARS}
               </p>
-
-              <div className={`grid gap-4 md:grid-cols-2 ${isRTL ? 'text-right' : ''}`}>
-                <button
-                  type="button"
-                  onClick={() => setPackagingType('signature')}
-                  className={`group overflow-hidden rounded-xl border text-left transition ${
-                    packagingType === 'signature'
-                      ? 'border-brand-darkRed bg-brand-darkRed/[0.03]'
-                      : 'border-brand-stone/30 bg-brand-pageCanvas hover:border-brand-dustyBlue'
-                  }`}
-                  data-cursor-hover
-                >
-                  <div className="relative aspect-[9/16] w-full overflow-hidden bg-[#efebe7]">
-                    <Image
-                      src="/shipment/shipment%20box.svg"
-                      alt={withBrandAlt('Signature packaging shipment box')}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <p className="font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed">
-                      {isRTL ? 'تغليف التوقيع' : 'Signature Packaging'}
-                    </p>
-                    <p className="mt-1 font-montserrat text-sm text-brand-clayRed/80">+30 AED</p>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPackagingType('sustainable')}
-                  className={`group overflow-hidden rounded-xl border text-left transition ${
-                    packagingType === 'sustainable'
-                      ? 'border-brand-darkRed bg-brand-darkRed/[0.03]'
-                      : 'border-brand-stone/30 bg-brand-pageCanvas hover:border-brand-dustyBlue'
-                  }`}
-                  data-cursor-hover
-                >
-                  <div className="relative aspect-[9/16] w-full overflow-hidden bg-[#efebe7]">
-                    <Image
-                      src="https://images.unsplash.com/photo-1583251633146-d0c6c36f0b0f?w=1200&q=80&auto=format&fit=crop"
-                      alt={withBrandAlt('Sustainable packaging option')}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <p className="font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed">
-                      {isRTL ? 'تغليف مستدام' : 'Sustainable Packaging'}
-                    </p>
-                    <p className="mt-1 font-montserrat text-sm text-brand-clayRed/80">
-                      {isRTL ? 'مجاناً' : 'Free'}
-                    </p>
-                  </div>
-                </button>
-              </div>
             </motion.section>
           </div>
 
@@ -328,28 +279,6 @@ export default function CheckoutPage() {
                   <span>{isRTL ? 'المجموع الفرعي' : 'Subtotal'}</span>
                   <span className="text-white">{formatCartSubtotal(items)}</span>
                 </div>
-                <div
-                  className={`mt-3 flex justify-between font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
-                >
-                  <span>{isRTL ? 'التغليف' : 'Packaging'}</span>
-                  <span className="text-white">
-                    {signaturePackagingFee > 0
-                      ? `+ ${formatAmount(signaturePackagingFee)}`
-                      : isRTL
-                        ? 'مجاناً'
-                        : 'Free'}
-                  </span>
-                </div>
-                <div
-                  className={`mt-6 flex items-start gap-3 border-t border-white/10 pt-6 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
-                >
-                  <FiTruck className="mt-0.5 h-4 w-4 shrink-0 text-brand-dustyBlue/80" />
-                  <p className="font-montserrat text-xs leading-relaxed text-white/55">
-                    {isRTL
-                      ? 'خيارات الشحن وتكاليف التوصيل ستظهر في الخطوة التالية.'
-                      : 'Shipping options and delivery costs will be shown on the next step.'}
-                  </p>
-                </div>
                 <div className="mt-8 border-t border-white/10 pt-6">
                   <div
                     className={`flex justify-between font-rozha text-xl ${isRTL ? 'flex-row-reverse' : ''}`}
@@ -357,9 +286,6 @@ export default function CheckoutPage() {
                     <span className="text-white/80">{isRTL ? 'الإجمالي التقريبي' : 'Estimated total'}</span>
                     <span>{formatAmount(estimatedTotal)}</span>
                   </div>
-                  <p className="mt-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white/35">
-                    {isRTL ? '+ الشحن والضرائب في سترايب' : '+ Shipping & tax in Stripe'}
-                  </p>
                 </div>
 
                 <label
@@ -372,9 +298,7 @@ export default function CheckoutPage() {
                     className="mt-0.5 h-4 w-4 border border-white/40 bg-transparent accent-brand-dustyBlue"
                   />
                   <span className="font-montserrat text-[11px] leading-relaxed tracking-wide text-white/70">
-                    {isRTL
-                      ? 'أؤكد أن طلبي مصنوع عند الطلب وقد قرأت ووافقت على '
-                      : 'I confirm my order is made to order and I have read and accept the '}
+                    {isRTL ? 'قرأتُ ووافقتُ على ' : 'I have read and accept the '}
                     <LocaleLink
                       href="/shipment-return-policy"
                       className="underline hover:text-brand-dustyBlue"
