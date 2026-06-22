@@ -210,8 +210,8 @@ const SUMMER_ELEGANCE_SLIDES = [
 
 const ESSENTIALS_SLIDES = [
   '/collection-section/2.PNG',
-  '/collection-section/4.JPG',
-  '/collection-section/45.jpg',
+  '/collection-section/3.JPG',
+  '/collection-section/5.jpg',
 ] as const
 
 const SLIDE_INTERVAL_MS = 6500
@@ -616,7 +616,7 @@ const CATEGORY_STRIP = [
     key: 'Accessories',
     label: 'Accessories',
     href: '/accessories',
-    image: '/collection-section/8.png',
+    image: '/collection-section/5.jpg',
   },
   {
     key: 'Personalisation',
