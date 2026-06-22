@@ -274,25 +274,25 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
   },
   checkout: {
     en:
-      'Secure checkout for Bint Saeed orders — luxury abayas and accessories from Abu Dhabi. Complete your purchase with trusted payment and shipping details.',
+      'Review your Bint Saeed order before secure payment — luxury abayas and accessories from Abu Dhabi. Proceed to Stripe when you are ready.',
     ar:
-      'إتمام الشراء الآمن لطلبات بِنت سعيد، عباءات فاخرة وإكسسوارات من أبوظبي. أكملي الدفع عبر قنوات موثوقة مع تفاصيل الشحن المناسبة.',
+      'راجعي طلبك من بِنت سعيد قبل الدفع الآمن — عباءات فاخرة وإكسسوارات من أبوظبي. تابعي إلى سترايب عندما تكونين جاهزة.',
     fr:
-      'Paiement sécurisé Bint Saeed — finalisez abayas et accessoires de luxe depuis Abu Dhabi via un checkout fiable.',
+      'Vérifiez votre commande Bint Saeed avant le paiement sécurisé — abayas et accessoires de luxe depuis Abu Dhabi.',
     it:
-      'Checkout sicuro Bint Saeed — completa ordini di abaya e accessori luxury da Abu Dhabi con pagamento affidabile.',
+      'Rivedi il tuo ordine Bint Saeed prima del pagamento sicuro — abaya e accessori luxury da Abu Dhabi.',
     es:
-      'Pago seguro Bint Saeed — finaliza abayas y accesorios de lujo desde Abu Dhabi con un proceso de compra protegido.',
+      'Revisa tu pedido Bint Saeed antes del pago seguro — abayas y accesorios de lujo desde Abu Dhabi.',
     ru:
-      'Оформление заказа Bint Saeed — безопасная оплата роскошных абай и аксессуаров из Абу‑Даби.',
+      'Проверьте заказ Bint Saeed перед безопасной оплатой — роскошные абайи и аксессуары из Абу‑Даби.',
     zh:
-      'Bint Saeed 安全结账：完成阿布扎比奢华阿巴亚与配饰订单，支付与配送信息受保护。',
+      '在安全支付前确认 Bint Saeed 订单——阿布扎比奢华阿巴亚与配饰。',
     de:
-      'Sicherer Checkout bei Bint Saeed — Luxus‑Abayas und Accessoires aus Abu Dhabi mit vertrauenswürdiger Zahlung.',
+      'Prüfen Sie Ihre Bint Saeed Bestellung vor der sicheren Zahlung — Luxus‑Abayas aus Abu Dhabi.',
     nl:
-      'Veilig afrekenen bij Bint Saeed — luxe abaya’s en accessoires uit Abu Dhabi met betrouwbare betaling.',
+      'Controleer uw Bint Saeed bestelling vóór veilige betaling — luxe abaya’s uit Abu Dhabi.',
     pt:
-      'Checkout seguro Bint Saeed — finalize abayas e acessórios de luxo de Abu Dhabi com pagamento confiável.',
+      'Reveja o seu pedido Bint Saeed antes do pagamento seguro — abayas de luxo de Abu Dhabi.',
   },
   checkout_success: {
     en:

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
-import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowLeft, FiArrowRight, FiGlobe, FiTruck, FiInfo } from 'react-icons/fi'
+import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -19,8 +19,9 @@ export default function CartPage() {
     item.productUrl ?? getProductHref(staticProducts.find((product) => product.id === item.id) ?? { id: item.id, name: item.name })
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
-  const { formatPrice, formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
+  const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL } = useLanguage()
+  const estimatedTotal = cartSubtotal(items)
 
   if (items.length === 0) {
     return (
@@ -116,10 +117,10 @@ export default function CartPage() {
                       </LocaleLink>
                       <div className="font-montserrat text-xs text-brand-clayRed/60 tracking-wide space-y-1">
                         <p>Size: {item.size}</p>
-                        <p>Color: {item.color}</p>
+                        <p>Colour: {item.color}</p>
                         {item.sku && (
                           <p className="font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-clayRed/60">
-                            SKU {item.sku}
+                            {isRTL ? `رمز المنتج: ${item.sku}` : `Product code: ${item.sku}`}
                           </p>
                         )}
                         {(item.lengthCm || item.customLength) && (
@@ -226,57 +227,33 @@ export default function CartPage() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className={`sticky top-32 bg-[#f8f7f5] p-8 ${isRTL ? 'text-right' : ''}`}>
-              <h2 className="font-rozha text-2xl text-brand-darkRed mb-6">
+            <div className={`sticky top-32 rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-8 text-brand-ivory shadow-xl ${isRTL ? 'text-right' : ''}`}>
+              <h2 className="mb-6 font-rozha text-2xl text-brand-dustyBlue/95">
                 {isRTL ? 'ملخص الطلب' : 'Order Summary'}
               </h2>
 
-              <div className="space-y-4 mb-6">
-                <div className={`flex justify-between font-montserrat text-sm tracking-wide ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className="text-brand-clayRed/70">{isRTL ? 'المجموع الفرعي' : 'Subtotal'}</span>
-                  <span className="text-brand-darkRed">{formatCartSubtotal(items)}</span>
-                </div>
-                
-                {/* Shipping Notice */}
-                <div className={`flex items-start gap-2 p-3 bg-brand-dustyBlue/10 rounded-lg ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
-                  <FiInfo className="w-4 h-4 text-brand-dustyBlue flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-montserrat text-xs text-brand-clayRed tracking-wide">
-                      {isRTL 
-                        ? 'يتم احتساب الشحن عند الدفع بناءً على موقعك'
-                        : 'Shipping calculated at checkout based on your location'}
-                    </p>
-                  </div>
-                </div>
-                {items.some((i) => i.customisationMessage) && (
-                  <div className={`flex items-start gap-2 p-3 bg-brand-stone/10 rounded-lg ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
-                    <FiInfo className="w-4 h-4 text-brand-darkRed flex-shrink-0 mt-0.5" />
-                    <p className="font-montserrat text-xs text-brand-darkRed/90 tracking-wide">
-                      {isRTL
-                        ? 'القطع المخصصة غير قابلة للإرجاع أو الاستبدال.'
-                        : 'Customised pieces in your bag cannot be returned or exchanged.'}
-                    </p>
-                  </div>
-                )}
+              <div
+                className={`flex justify-between font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
+              >
+                <span>{isRTL ? 'المجموع الفرعي' : 'Subtotal'}</span>
+                <span className="text-white">{formatCartSubtotal(items)}</span>
               </div>
 
-              <div className="border-t border-brand-stone/30 pt-6 mb-6">
-                <div className={`flex justify-between font-montserrat text-base tracking-wide ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className="text-brand-darkRed uppercase tracking-[0.1em]">
-                    {isRTL ? 'المجموع' : 'Subtotal'}
-                  </span>
-                  <span className="text-brand-darkRed font-medium">
-                    {formatCartSubtotal(items)}
-                  </span>
+              <div className="mt-8 border-t border-white/10 pt-6">
+                <div
+                  className={`flex justify-between font-rozha text-xl ${isRTL ? 'flex-row-reverse' : ''}`}
+                >
+                  <span className="text-white/80">{isRTL ? 'الإجمالي التقريبي' : 'Estimated Total'}</span>
+                  <span>{formatAmount(estimatedTotal)}</span>
                 </div>
-                <p className={`font-montserrat text-[10px] text-brand-clayRed/50 tracking-wide mt-1 ${isRTL ? 'text-right' : ''}`}>
-                  {isRTL ? '+ الشحن (يُحسب عند الدفع)' : '+ Shipping (calculated at checkout)'}
+                <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
+                  {isRTL ? 'الضرائب مشمولة.' : 'Taxes included.'}
                 </p>
               </div>
 
               <LocaleLink
                 href="/checkout"
-                className={`w-full py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`mt-8 flex w-full min-h-[52px] items-center justify-center gap-2 bg-brand-dustyBlue py-4 font-montserrat text-sm uppercase tracking-[0.18em] text-[#1a0008] transition-colors hover:bg-white ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
                 onClick={() =>
                   trackEvent('begin_checkout', {
@@ -287,53 +264,24 @@ export default function CartPage() {
                   })
                 }
               >
-                {isRTL ? 'متابعة الدفع' : 'Proceed to Checkout'}
-                <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
+                {isRTL ? 'راجعي طلبك' : 'Review Your Order'}
+                <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
               </LocaleLink>
 
-              {/* Worldwide Shipping Badge */}
-              <div className={`flex items-center justify-center gap-2 mt-6 py-3 border-t border-b border-brand-stone/20 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <FiGlobe className="w-4 h-4 text-brand-darkRed" />
-                <span className="font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed">
-                  {isRTL ? 'نشحن لجميع أنحاء العالم' : 'We Ship Worldwide'}
-                </span>
-              </div>
-
-              {/* Shipping Info */}
-              <div className="mt-4 space-y-3">
-                <div className={`flex items-start gap-3 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
-                  <FiTruck className="w-4 h-4 text-brand-clayRed/50 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-montserrat text-xs text-brand-clayRed/70 tracking-wide">
-                      {isRTL ? 'شحن مجاني داخل الإمارات للطلبات فوق 1000 درهم' : 'Free UAE shipping on orders over 1000 AED'}
-                    </p>
-                  </div>
-                </div>
-                <div className={`flex items-start gap-3 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
-                  <FiGlobe className="w-4 h-4 text-brand-clayRed/50 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-montserrat text-xs text-brand-clayRed/70 tracking-wide">
-                      {isRTL ? 'الشحن الدولي متاح - يُحسب عند الدفع' : 'International shipping available - rates at checkout'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Delivery Time */}
-              <div className={`mt-4 p-3 bg-brand-stone/10 rounded-lg ${isRTL ? 'text-right' : ''}`}>
-                <p className="font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-clayRed/50 mb-1">
-                  {isRTL ? 'مدة التوصيل' : 'Delivery Time'}
+              <div className="mt-8 space-y-3 border-t border-white/10 pt-6">
+                <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
+                  {isRTL ? '🌍 نشحن إلى جميع أنحاء العالم' : '🌍 We Ship Worldwide'}
                 </p>
-                <p className="font-montserrat text-xs text-brand-darkRed tracking-wide">
-                  {isRTL ? 'الطلبات تُصنع يدوياً وتُسلم خلال أسبوعين' : 'Orders are handcrafted and delivered within 2 weeks'}
+                <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
+                  {isRTL
+                    ? '🚚 شحن مجاني داخل الإمارات للطلبات فوق 1,000 درهم'
+                    : '🚚 Complimentary UAE shipping on orders above AED 1,000'}
                 </p>
-              </div>
-
-              {/* Secure Payment */}
-              <div className="flex justify-center gap-4 mt-6 pt-4 border-t border-brand-stone/30">
-                <span className="font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-clayRed/50">
-                  {isRTL ? 'دفع آمن' : 'Secure Payment'}
-                </span>
+                <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
+                  {isRTL
+                    ? '🌐 الشحن الدولي متاح. تُحسب أسعار التوصيل عند الدفع.'
+                    : '🌐 International shipping available. Delivery rates are calculated at checkout.'}
+                </p>
               </div>
             </div>
           </div>

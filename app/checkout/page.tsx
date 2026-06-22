@@ -19,8 +19,6 @@ import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { getCartLineImageAlt } from '@/lib/products/imageAlt'
 
-const CHECKOUT_NOTES_MAX_CHARS = 150
-
 function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   if (typeof window === 'undefined') return 'desktop'
   const ua = navigator.userAgent || ''
@@ -47,7 +45,6 @@ export default function CheckoutPage() {
     )
 
   const [payBusy, setPayBusy] = useState(false)
-  const [checkoutNotes, setCheckoutNotes] = useState('')
   const [legalAcknowledged, setLegalAcknowledged] = useState(false)
 
   useEffect(() => {
@@ -97,7 +94,6 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           items,
           currency: currency.code,
-          checkoutNotes: checkoutNotes.trim() || undefined,
           clientContext: {
             localTime: new Date().toString(),
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
@@ -146,7 +142,7 @@ export default function CheckoutPage() {
             variant="muted"
             segments={[
               { label: isRTL ? 'السلة' : 'Bag', href: '/cart' },
-              { label: isRTL ? 'الدفع' : 'Checkout' },
+              { label: isRTL ? 'مراجعة الطلب' : 'Review Your Order' },
             ]}
             className="text-brand-clayRed/70 [&_a]:text-brand-clayRed/70 [&_span:last-child]:text-brand-darkRed"
           />
@@ -234,32 +230,6 @@ export default function CheckoutPage() {
                 ))}
               </ul>
             </motion.section>
-
-            <motion.section
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 }}
-              className="rounded-2xl border border-brand-stone/20 bg-white p-6 shadow-sm md:p-8"
-            >
-              <label
-                htmlFor="checkout-special-notes"
-                className={`mb-2.5 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed ${isRTL ? 'text-right' : ''}`}
-              >
-                {isRTL ? 'ملاحظات خاصة (اختياري)' : 'Special Notes (Optional)'}
-              </label>
-              <textarea
-                id="checkout-special-notes"
-                value={checkoutNotes}
-                onChange={(e) => setCheckoutNotes(e.target.value.slice(0, CHECKOUT_NOTES_MAX_CHARS))}
-                placeholder={isRTL ? 'أي طلبات أو تعديلات خاصة...' : 'Any special requests or alterations...'}
-                rows={4}
-                maxLength={CHECKOUT_NOTES_MAX_CHARS}
-                className="w-full resize-none border border-brand-stone/40 bg-brand-pageCanvas px-4 py-3 font-montserrat text-sm tracking-wide transition-colors focus:border-brand-darkRed focus:outline-none"
-              />
-              <p className={`mt-2 font-montserrat text-[11px] text-brand-clayRed/60 ${isRTL ? 'text-right' : ''}`}>
-                {checkoutNotes.length}/{CHECKOUT_NOTES_MAX_CHARS}
-              </p>
-            </motion.section>
           </div>
 
           <div className="lg:col-span-5">
@@ -271,7 +241,7 @@ export default function CheckoutPage() {
                 className={`rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-8 text-brand-ivory shadow-xl ${isRTL ? 'text-right' : ''}`}
               >
                 <h2 className="mb-6 font-rozha text-2xl text-brand-dustyBlue/95">
-                  {isRTL ? 'ملخص الطلب' : 'Order summary'}
+                  {isRTL ? 'ملخص الطلب' : 'Order Summary'}
                 </h2>
                 <div
                   className={`flex justify-between font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
@@ -283,9 +253,12 @@ export default function CheckoutPage() {
                   <div
                     className={`flex justify-between font-rozha text-xl ${isRTL ? 'flex-row-reverse' : ''}`}
                   >
-                    <span className="text-white/80">{isRTL ? 'الإجمالي التقريبي' : 'Estimated total'}</span>
+                    <span className="text-white/80">{isRTL ? 'الإجمالي التقريبي' : 'Estimated Total'}</span>
                     <span>{formatAmount(estimatedTotal)}</span>
                   </div>
+                  <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
+                    {isRTL ? 'الضرائب مشمولة.' : 'Taxes included.'}
+                  </p>
                 </div>
 
                 <label

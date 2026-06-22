@@ -283,7 +283,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   </span>
                 </div>
                 <p className={`font-montserrat text-[10px] text-brand-clayRed/50 ${isRTL ? 'text-right' : ''}`}>
-                  {isRTL ? 'يُحسب الشحن عند الدفع' : 'Shipping calculated at checkout'}
+                  {isRTL ? 'تُحسب أسعار التوصيل عند الدفع' : 'Delivery rates are calculated at payment'}
                 </p>
 
                 {/* Buttons */}
@@ -294,7 +294,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                     className={`w-full py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                     data-cursor-hover
                   >
-                    {isRTL ? 'إتمام الشراء' : 'Checkout'}
+                    {isRTL ? 'راجعي طلبك' : 'Review Your Order'}
                     <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                   </LocaleLink>
                   <button
