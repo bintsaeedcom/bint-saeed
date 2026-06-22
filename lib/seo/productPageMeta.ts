@@ -3,22 +3,23 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { localizedPath } from '@/lib/i18n/routing'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getHeritageMetaSnippet } from '@/lib/products/heritageSeo'
-import { BRAND_NAME, CITY_NAME, MADE_IN_PHRASE } from '@/lib/i18n/brandProperNouns'
+import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 
 const SITE = new URL('https://www.bintsaeed.com')
+const G = LOCALE_GEO
 
-/** Intro line per locale — brand, Abu Dhabi, UAE, Emirati brand signal. */
+/** Intro line per locale — brand, city, country, Emirati brand signal. */
 const PRODUCT_INTRO: Record<AppLocale, string> = {
-  en: `${BRAND_NAME} — Emirati luxury fashion brand from ${MADE_IN_PHRASE}.`,
-  ar: `${BRAND_NAME} — علامة أزياء فاخرة إماراتية من ${MADE_IN_PHRASE}.`,
-  fr: `${BRAND_NAME} — marque de mode de luxe émiratie depuis ${CITY_NAME} (EAU).`,
-  it: `${BRAND_NAME} — brand di moda di lusso emiratino da ${CITY_NAME} (EAU).`,
-  es: `${BRAND_NAME} — marca de moda de lujo emiratí desde ${CITY_NAME} (EAU).`,
-  ru: `${BRAND_NAME} — эмиратский люксовый бренд из ${CITY_NAME} (ОАЭ).`,
-  zh: `${BRAND_NAME} — 阿联酋 ${CITY_NAME} 奢华时尚品牌。`,
-  de: `${BRAND_NAME} — emiratische Luxusmodemarke aus ${CITY_NAME} (VAE).`,
-  nl: `${BRAND_NAME} — Emiratisch luxemerken uit ${CITY_NAME} (VAE).`,
-  pt: `${BRAND_NAME} — marca de moda de luxo emirati de ${CITY_NAME} (EAU).`,
+  en: `${BRAND_NAME} — Emirati luxury fashion brand from ${G.en.madeIn}.`,
+  ar: `${BRAND_NAME} — علامة أزياء فاخرة إماراتية من ${G.ar.madeIn}.`,
+  fr: `${BRAND_NAME} — marque de mode de luxe émiratie depuis ${G.fr.madeIn}.`,
+  it: `${BRAND_NAME} — brand di moda di lusso emiratino da ${G.it.madeIn}.`,
+  es: `${BRAND_NAME} — marca de moda de lujo emiratí desde ${G.es.madeIn}.`,
+  ru: `${BRAND_NAME} — эмиратский люксовый бренд из ${G.ru.madeIn}.`,
+  zh: `${BRAND_NAME} — 阿联酋${G.zh.city}奢华时尚品牌。`,
+  de: `${BRAND_NAME} — emiratische Luxusmodemarke aus ${G.de.madeIn}.`,
+  nl: `${BRAND_NAME} — Emiratisch luxemerken uit ${G.nl.madeIn}.`,
+  pt: `${BRAND_NAME} — marca de moda de luxo emirati de ${G.pt.madeIn}.`,
 }
 
 export function buildProductMetaDescription(

@@ -4,7 +4,7 @@ import { getProductSlug } from '@/lib/products/links'
 import { getHeritageCraft } from '@/lib/products/heritageSeo'
 import { productIsOneSizeOnly } from '@/lib/shopProductOptions'
 import { MODEST_DISCOVERY_KEYWORDS } from '@/lib/brand/brandPositioning'
-import { BRAND_NAME, CITY_NAME, MADE_IN_PHRASE } from '@/lib/i18n/brandProperNouns'
+import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
 
 export const SCHEMA_SUITABLE_FOR: Record<AppLocale, string> = {
@@ -21,16 +21,16 @@ export const SCHEMA_SUITABLE_FOR: Record<AppLocale, string> = {
 }
 
 export const SCHEMA_MADE_IN: Record<AppLocale, string> = {
-  en: MADE_IN_PHRASE,
-  ar: MADE_IN_PHRASE,
-  fr: MADE_IN_PHRASE,
-  it: MADE_IN_PHRASE,
-  es: MADE_IN_PHRASE,
-  ru: MADE_IN_PHRASE,
-  zh: MADE_IN_PHRASE,
-  de: MADE_IN_PHRASE,
-  nl: MADE_IN_PHRASE,
-  pt: MADE_IN_PHRASE,
+  en: LOCALE_GEO.en.madeIn,
+  ar: LOCALE_GEO.ar.madeIn,
+  fr: LOCALE_GEO.fr.madeIn,
+  it: LOCALE_GEO.it.madeIn,
+  es: LOCALE_GEO.es.madeIn,
+  ru: LOCALE_GEO.ru.madeIn,
+  zh: LOCALE_GEO.zh.madeIn,
+  de: LOCALE_GEO.de.madeIn,
+  nl: LOCALE_GEO.nl.madeIn,
+  pt: LOCALE_GEO.pt.madeIn,
 }
 
 const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
@@ -262,17 +262,19 @@ function productTypeLabel(category: string, locale: AppLocale): string {
   return map[category]?.[locale] ?? map.Abayas.en
 }
 
+const G = LOCALE_GEO
+
 const CONTEMPORARY_KEYWORDS: Record<AppLocale, string[]> = {
-  en: ['contemporary fashion', 'contemporary luxury', 'Abu Dhabi fashion house', 'evolving lifestyles'],
-  ar: ['أزياء معاصرة', `دار أزياء ${CITY_NAME}`, 'أسلوب حياة متطوّر'],
-  fr: ['mode contemporaine', 'luxe contemporain', `maison de mode ${CITY_NAME}`],
-  it: ['moda contemporanea', 'lusso contemporaneo', `casa di moda ${CITY_NAME}`],
-  es: ['moda contemporánea', 'lujo contemporáneo', `casa de moda ${CITY_NAME}`],
-  ru: ['современная мода', 'современная роскошь', `дом моды ${CITY_NAME}`],
-  zh: ['当代时尚', '当代奢华', `${CITY_NAME} fashion house`],
-  de: ['zeitgenössische Mode', 'zeitgenössischer Luxus', `Modehaus ${CITY_NAME}`],
-  nl: ['eigentijdse mode', 'eigentijds luxe', `modehuis ${CITY_NAME}`],
-  pt: ['moda contemporânea', 'luxo contemporâneo', `casa de moda ${CITY_NAME}`],
+  en: ['contemporary fashion', 'contemporary luxury', `${G.en.city} fashion house`, 'evolving lifestyles'],
+  ar: ['أزياء معاصرة', `دار أزياء ${G.ar.city}`, 'أسلوب حياة متطوّر'],
+  fr: ['mode contemporaine', 'luxe contemporain', `maison de mode ${G.fr.city}`],
+  it: ['moda contemporanea', 'lusso contemporaneo', `casa di moda ${G.it.city}`],
+  es: ['moda contemporánea', 'lujo contemporáneo', `casa de moda ${G.es.city}`],
+  ru: ['современная мода', 'современная роскошь', `дом моды ${G.ru.city}`],
+  zh: ['当代时尚', '当代奢华', `${G.zh.city}时尚品牌屋`],
+  de: ['zeitgenössische Mode', 'zeitgenössischer Luxus', `Modehaus ${G.de.city}`],
+  nl: ['eigentijdse mode', 'eigentijds luxe', `modehuis ${G.nl.city}`],
+  pt: ['moda contemporânea', 'luxo contemporâneo', `casa de moda ${G.pt.city}`],
 }
 
 export function buildLocalizedProductKeywords(
@@ -356,7 +358,7 @@ const FAQ_TEMPLATES: Record<
   ar: {
     madeIn: (name) => ({
       question: `أين يُصنع ${name}؟`,
-      answer: `يُصنع ${name} في ${MADE_IN_PHRASE}، من قِبل ${BRAND_NAME}.`,
+      answer: `يُصنع ${name} في ${G.ar.madeIn}، من قِبل ${BRAND_NAME}.`,
     }),
     occasions: (name) => ({
       question: `هل يناسب ${name} الأعراس والمناسبات الخاصة؟`,
@@ -368,7 +370,7 @@ const FAQ_TEMPLATES: Record<
     }),
     khous: (name) => ({
       question: `هل يتضمن ${name} تفاصيل مستوحاة من الخوص؟`,
-      answer: `نعم. يتضمن ${name} زخرفة منسوجة يدوياً مستوحاة من تقاليد الخوص الإماراتية، صُنعت في ${CITY_NAME}.`,
+      answer: `نعم. يتضمن ${name} زخرفة منسوجة يدوياً مستوحاة من تقاليد الخوص الإماراتية، صُنعت في ${G.ar.city}.`,
     }),
     talli: (name) => ({
       question: `هل يتضمن ${name} زخرفة التلي؟`,
@@ -383,7 +385,7 @@ const FAQ_TEMPLATES: Record<
   fr: {
     madeIn: (name) => ({
       question: `Où est fabriqué ${name} ?`,
-      answer: `${name} est fabriqué à Abu Dhabi, Émirats arabes unis, par Bint Saeed.`,
+      answer: `${name} est fabriqué à ${G.fr.madeIn}, par ${BRAND_NAME}.`,
     }),
     occasions: (name) => ({
       question: `${name} convient-il aux mariages et occasions spéciales ?`,
@@ -395,7 +397,7 @@ const FAQ_TEMPLATES: Record<
     }),
     khous: (name) => ({
       question: `${name} présente-t-il des détails inspirés du Khous ?`,
-      answer: `Oui. ${name} comporte une garniture tissée à la main inspirée de la tradition émiratie du tissage Khous, fabriquée à Abu Dhabi.`,
+      answer: `Oui. ${name} comporte une garniture tissée à la main inspirée de la tradition émiratie du tissage Khous, fabriquée à ${G.fr.city}.`,
     }),
     talli: (name) => ({
       question: `${name} comporte-t-il une garniture Al Talli ?`,
@@ -405,7 +407,7 @@ const FAQ_TEMPLATES: Record<
   it: {
     madeIn: (name) => ({
       question: `Dove è realizzato ${name}?`,
-      answer: `${name} è realizzato ad Abu Dhabi, Emirati Arabi Uniti, da Bint Saeed.`,
+      answer: `${name} è realizzato a ${G.it.madeIn}, da ${BRAND_NAME}.`,
     }),
     occasions: (name) => ({
       question: `${name} è adatto a matrimoni e occasioni speciali?`,
@@ -417,7 +419,7 @@ const FAQ_TEMPLATES: Record<
     }),
     khous: (name) => ({
       question: `${name} presenta dettagli ispirati al Khous?`,
-      answer: `Sì. ${name} presenta una finitura tessuta a mano ispirata alla tradizione emiratina della tessitura Khous, realizzata ad Abu Dhabi.`,
+      answer: `Sì. ${name} presenta una finitura tessuta a mano ispirata alla tradizione emiratina della tessitura Khous, realizzata a ${G.it.city}.`,
     }),
     talli: (name) => ({
       question: `${name} presenta finiture Al Talli?`,
@@ -427,7 +429,7 @@ const FAQ_TEMPLATES: Record<
   es: {
     madeIn: (name) => ({
       question: `¿Dónde se fabrica ${name}?`,
-      answer: `${name} se fabrica en Abu Dhabi, Emiratos Árabes Unidos, por Bint Saeed.`,
+      answer: `${name} se fabrica en ${G.es.madeIn}, por ${BRAND_NAME}.`,
     }),
     occasions: (name) => ({
       question: `¿Es ${name} adecuado para bodas y ocasiones especiales?`,
@@ -439,7 +441,7 @@ const FAQ_TEMPLATES: Record<
     }),
     khous: (name) => ({
       question: `¿${name} incluye detalles inspirados en Khous?`,
-      answer: `Sí. ${name} incluye un ribete tejido a mano inspirado en la tradición emiratí del tejido Khous, hecho en Abu Dhabi.`,
+      answer: `Sí. ${name} incluye un ribete tejido a mano inspirado en la tradición emiratí del tejido Khous, hecho en ${G.es.city}.`,
     }),
     talli: (name) => ({
       question: `¿${name} incluye ribete Al Talli?`,
@@ -449,7 +451,7 @@ const FAQ_TEMPLATES: Record<
   ru: {
     madeIn: (name) => ({
       question: `Где производится ${name}?`,
-      answer: `${name} производится в ${MADE_IN_PHRASE}, брендом ${BRAND_NAME}.`,
+      answer: `${name} производится в ${G.ru.madeIn}, брендом ${BRAND_NAME}.`,
     }),
     occasions: (name) => ({
       question: `Подходит ли ${name} для свадеб и особых случаев?`,
@@ -461,7 +463,7 @@ const FAQ_TEMPLATES: Record<
     }),
     khous: (name) => ({
       question: `Есть ли у ${name} детали в духе Khous?`,
-      answer: `Да. ${name} украшен ручной отделкой, вдохновлённой эмиратской традицией плетения Khous, сделанной в ${CITY_NAME}.`,
+      answer: `Да. ${name} украшен ручной отделкой, вдохновлённой эмиратской традицией плетения Khous, сделанной в ${G.ru.city}.`,
     }),
     talli: (name) => ({
       question: `Есть ли у ${name} отделка Al Talli?`,
@@ -471,7 +473,7 @@ const FAQ_TEMPLATES: Record<
   zh: {
     madeIn: (name) => ({
       question: `${name} 在哪里制作？`,
-      answer: `${name} 由 ${BRAND_NAME} 在 ${MADE_IN_PHRASE} 制作。`,
+      answer: `${name} 由 ${BRAND_NAME} 在 ${G.zh.madeIn} 制作。`,
     }),
     occasions: (name) => ({
       question: `${name} 适合婚礼和特殊场合吗？`,
@@ -483,7 +485,7 @@ const FAQ_TEMPLATES: Record<
     }),
     khous: (name) => ({
       question: `${name} 是否有 Khous 灵感细节？`,
-      answer: `是的。${name} 配有手工编织饰边，灵感来自阿联酋 Khous 编织传统，在 ${CITY_NAME} 制作。`,
+      answer: `是的。${name} 配有手工编织饰边，灵感来自阿联酋 Khous 编织传统，在 ${G.zh.city} 制作。`,
     }),
     talli: (name) => ({
       question: `${name} 是否有 Al Talli 饰边？`,
@@ -493,7 +495,7 @@ const FAQ_TEMPLATES: Record<
   de: {
     madeIn: (name) => ({
       question: `Wo wird ${name} hergestellt?`,
-      answer: `${name} wird in Abu Dhabi, VAE, von Bint Saeed hergestellt.`,
+      answer: `${name} wird in ${G.de.madeIn} von ${BRAND_NAME} hergestellt.`,
     }),
     occasions: (name) => ({
       question: `Ist ${name} für Hochzeiten und besondere Anlässe geeignet?`,
@@ -505,7 +507,7 @@ const FAQ_TEMPLATES: Record<
     }),
     khous: (name) => ({
       question: `Hat ${name} Khous-inspirierte Details?`,
-      answer: `Ja. ${name} hat handgewebte Besätze, inspiriert von der emiratischen Khous-Webtradition, hergestellt in Abu Dhabi.`,
+      answer: `Ja. ${name} hat handgewebte Besätze, inspiriert von der emiratischen Khous-Webtradition, hergestellt in ${G.de.city}.`,
     }),
     talli: (name) => ({
       question: `Hat ${name} Al-Talli-Besatz?`,
@@ -515,7 +517,7 @@ const FAQ_TEMPLATES: Record<
   nl: {
     madeIn: (name) => ({
       question: `Waar wordt ${name} gemaakt?`,
-      answer: `${name} wordt gemaakt in Abu Dhabi, VAE, door Bint Saeed.`,
+      answer: `${name} wordt gemaakt in ${G.nl.madeIn} door ${BRAND_NAME}.`,
     }),
     occasions: (name) => ({
       question: `Is ${name} geschikt voor bruiloften en speciale gelegenheden?`,
@@ -527,7 +529,7 @@ const FAQ_TEMPLATES: Record<
     }),
     khous: (name) => ({
       question: `Heeft ${name} Khous-geïnspireerde details?`,
-      answer: `Ja. ${name} heeft handgeweven afwerking geïnspireerd op de Emirati Khous-traditie, gemaakt in Abu Dhabi.`,
+      answer: `Ja. ${name} heeft handgeweven afwerking geïnspireerd op de Emirati Khous-traditie, gemaakt in ${G.nl.city}.`,
     }),
     talli: (name) => ({
       question: `Heeft ${name} Al Talli-afwerking?`,
@@ -537,7 +539,7 @@ const FAQ_TEMPLATES: Record<
   pt: {
     madeIn: (name) => ({
       question: `Onde é feito ${name}?`,
-      answer: `${name} é feito em Abu Dhabi, EAU, pela Bint Saeed.`,
+      answer: `${name} é feito em ${G.pt.madeIn} pela ${BRAND_NAME}.`,
     }),
     occasions: (name) => ({
       question: `${name} é adequado para casamentos e ocasiões especiais?`,
@@ -549,7 +551,7 @@ const FAQ_TEMPLATES: Record<
     }),
     khous: (name) => ({
       question: `${name} inclui detalhes inspirados em Khous?`,
-      answer: `Sim. ${name} inclui acabamento tecido à mão inspirado na tradição emiratense de tecelagem Khous, feito em Abu Dhabi.`,
+      answer: `Sim. ${name} inclui acabamento tecido à mão inspirado na tradição emiratense de tecelagem Khous, feito em ${G.pt.city}.`,
     }),
     talli: (name) => ({
       question: `${name} inclui acabamento Al Talli?`,
@@ -608,16 +610,16 @@ export function buildLocalizedSchemaDescription(
   baseDescription: string,
 ): string {
   const intro: Record<AppLocale, string> = {
-    en: `${product.name} by ${BRAND_NAME} — a contemporary house from ${CITY_NAME} devoted to evolving lifestyles.`,
-    ar: `${product.name} من ${BRAND_NAME} — دار معاصرة من ${CITY_NAME} مكرّسة لأسلوب حياة يتطوّر.`,
-    fr: `${product.name} par ${BRAND_NAME} — une maison contemporaine d’${CITY_NAME} au service de modes de vie en évolution.`,
-    it: `${product.name} di ${BRAND_NAME} — una casa contemporanea di ${CITY_NAME} dedicata a stili di vita in evoluzione.`,
-    es: `${product.name} de ${BRAND_NAME} — una casa contemporánea de ${CITY_NAME} dedicada a estilos de vida en evolución.`,
-    ru: `${product.name} от ${BRAND_NAME} — современный дом из ${CITY_NAME} для меняющегося образа жизни.`,
-    zh: `${product.name} — ${BRAND_NAME} ${CITY_NAME} 当代品牌屋，致力于不断演进的生活方式。`,
-    de: `${product.name} von ${BRAND_NAME} — ein zeitgenössisches Haus aus ${CITY_NAME} für sich wandelnde Lebensstile.`,
-    nl: `${product.name} van ${BRAND_NAME} — een eigentijds huis uit ${CITY_NAME} voor veranderende levensstijlen.`,
-    pt: `${product.name} da ${BRAND_NAME} — uma casa contemporânea de ${CITY_NAME} dedicada a estilos de vida em evolução.`,
+    en: `${product.name} by ${BRAND_NAME} — a contemporary house from ${G.en.city} devoted to evolving lifestyles.`,
+    ar: `${product.name} من ${BRAND_NAME} — دار معاصرة من ${G.ar.city} مكرّسة لأسلوب حياة يتطوّر.`,
+    fr: `${product.name} par ${BRAND_NAME} — une maison contemporaine d’${G.fr.city} au service de modes de vie en évolution.`,
+    it: `${product.name} di ${BRAND_NAME} — una casa contemporanea di ${G.it.city} dedicata a stili di vita in evoluzione.`,
+    es: `${product.name} de ${BRAND_NAME} — una casa contemporánea de ${G.es.city} dedicada a estilos de vida en evolución.`,
+    ru: `${product.name} от ${BRAND_NAME} — современный дом из ${G.ru.city} для меняющегося образа жизни.`,
+    zh: `${product.name} — ${BRAND_NAME}，源自${G.zh.city}的当代品牌屋，致力于不断演进的生活方式。`,
+    de: `${product.name} von ${BRAND_NAME} — ein zeitgenössisches Haus aus ${G.de.city} für sich wandelnde Lebensstile.`,
+    nl: `${product.name} van ${BRAND_NAME} — een eigentijds huis uit ${G.nl.city} voor veranderende levensstijlen.`,
+    pt: `${product.name} da ${BRAND_NAME} — uma casa contemporânea de ${G.pt.city} dedicada a estilos de vida em evolução.`,
   }
 
   return `${intro[locale]} ${baseDescription}`.replace(/\s+/g, ' ').trim()

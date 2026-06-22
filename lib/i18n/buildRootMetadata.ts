@@ -4,8 +4,10 @@ import { localizedPath, stripLocaleFromPathname } from './routing'
 import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
-import { BRAND_NAME, CITY_NAME } from '@/lib/i18n/brandProperNouns'
+import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 import { BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
+
+const G = LOCALE_GEO
 
 function metadataBaseUrl(): URL {
   return new URL((process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, ''))
@@ -28,16 +30,16 @@ export function absoluteCanonicalForLocaleRoute(locale: AppLocale, pathnameFromH
 }
 
 const OG_HERO_IMAGE_ALT: Record<AppLocale, string> = {
-  en: `${BRAND_NAME} — contemporary house, ${CITY_NAME}`,
-  ar: `${BRAND_NAME} — دار معاصرة، ${CITY_NAME}`,
-  fr: `${BRAND_NAME} — maison contemporaine, ${CITY_NAME}`,
-  it: `${BRAND_NAME} — casa contemporanea, ${CITY_NAME}`,
-  es: `${BRAND_NAME} — casa contemporánea, ${CITY_NAME}`,
-  ru: `${BRAND_NAME} — современный дом, ${CITY_NAME}`,
-  zh: `${BRAND_NAME} — contemporary house, ${CITY_NAME}`,
-  de: `${BRAND_NAME} — zeitgenössisches Haus, ${CITY_NAME}`,
-  nl: `${BRAND_NAME} — eigentijds huis, ${CITY_NAME}`,
-  pt: `${BRAND_NAME} — casa contemporânea, ${CITY_NAME}`,
+  en: `${BRAND_NAME} — contemporary house, ${G.en.city}`,
+  ar: `${BRAND_NAME} — دار معاصرة، ${G.ar.city}`,
+  fr: `${BRAND_NAME} — maison contemporaine, ${G.fr.city}`,
+  it: `${BRAND_NAME} — casa contemporanea, ${G.it.city}`,
+  es: `${BRAND_NAME} — casa contemporánea, ${G.es.city}`,
+  ru: `${BRAND_NAME} — современный дом, ${G.ru.city}`,
+  zh: `${BRAND_NAME} — 当代品牌屋，${G.zh.city}`,
+  de: `${BRAND_NAME} — zeitgenössisches Haus, ${G.de.city}`,
+  nl: `${BRAND_NAME} — eigentijds huis, ${G.nl.city}`,
+  pt: `${BRAND_NAME} — casa contemporânea, ${G.pt.city}`,
 }
 
 const OG_LOCALE: Record<AppLocale, string> = {
@@ -58,17 +60,16 @@ function keywordsFor(locale: AppLocale): string[] {
 }
 
 function aiOther(locale: AppLocale): Record<string, string> {
-  const base = {
+  return {
     'ai:brand': BRAND_NAME,
     'ai:category': 'Contemporary fashion house; abayas, kaftans, dresses, jewellery, lifestyle',
-    'ai:location': `${CITY_NAME}, United Arab Emirates`,
+    'ai:location': G[locale].madeIn,
     'ai:materials': 'Natural stones, Khous weaving, Al Talli craftsmanship',
     'ai:offering': 'Abayas, kaftans, dresses, jewellery, and curated lifestyle objects',
     'ai:identity': BRAND_TAGLINE[locale],
     'ai:positioning': 'Contemporary house carrying heritage forward into modern life',
     'ai:audience': 'Contemporary women seeking refined, heritage-informed luxury fashion',
   }
-  return base
 }
 
 /** Inner path without locale prefix, normalized (matches middleware `x-bs-pathname`). */

@@ -555,7 +555,7 @@ export const translations = {
       emailInvalid: 'الرجاء إدخال بريد إلكتروني صالح',
       subscribing: 'جاري الاشتراك',
       notifyMe: 'أعلمني',
-      location: 'Abu Dhabi',
+      location: 'أبوظبي',
       instagramLabel: 'إنستغرام',
     },
 
@@ -1313,7 +1313,7 @@ export const translations = {
       emailInvalid: 'Por favor, introduce un correo electrónico válido',
       subscribing: 'Suscribiendo…',
       notifyMe: 'Avísame',
-      location: 'Abu Dhabi',
+      location: 'Abu Dabi',
       instagramLabel: 'Instagram',
     },
     language: {
@@ -1565,7 +1565,7 @@ export const translations = {
       emailInvalid: 'Пожалуйста, введите корректный адрес email',
       subscribing: 'Подписка…',
       notifyMe: 'Сообщить мне',
-      location: 'Abu Dhabi',
+      location: 'Абу-Даби',
       instagramLabel: 'Instagram',
     },
     language: {
@@ -1817,7 +1817,7 @@ export const translations = {
       emailInvalid: '请输入有效的电子邮箱地址',
       subscribing: '订阅中…',
       notifyMe: '通知我',
-      location: 'Abu Dhabi',
+      location: '阿布扎比',
       instagramLabel: 'Instagram',
     },
     language: {

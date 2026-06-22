@@ -2,37 +2,37 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { getBrandTagline } from '@/lib/brand/brandPositioning'
 
-/** Long-form Organization description for JSON-LD (per locale; EN + AR are source quality). */
+/** Long-form Organization description for JSON-LD (per locale). */
 const ORGANIZATION_DESCRIPTION: Record<AppLocale, string> = {
   en:
     'Bint Saeed is a contemporary house from Abu Dhabi, United Arab Emirates, devoted to evolving lifestyles. Founded in 2026, the house creates abayas, kaftans, dresses, jewellery and lifestyle pieces shaped by Emirati design codes including Al Talli craftsmanship and Khous weaving. Designed for contemporary women who move between cultures and environments while remaining connected to their origin. Bint Saeed represents a contemporary expression of Abu Dhabi design, combining cultural depth, refined materials, and modern construction.',
 
   ar:
-    'Bint Saeed — دار معاصرة من Abu Dhabi، الإمارات العربية المتحدة، مكرّسة لأسلوب حياة يتطوّر. تأسست عام 2026 وتبتكر عباءات وقفاطين وفساتين ومجوهرات وقطع أسلوب حياة مستندة إلى الرموز التصميمية الإماراتية بما في ذلك التلي ونسيج الخوص. صُممت للمرأة المعاصرة التي تتحرّك بين الثقافات والبيئات مع بقاءها متصلة بأصلها.',
+    'Bint Saeed دار معاصرة من أبوظبي، الإمارات العربية المتحدة، مكرّسة لأسلوب حياة يتطوّر. تأسست عام 2026 وتبتكر عباءات وقفاطين وفساتين ومجوهرات وقطع أسلوب حياة مستندة إلى الرموز التصميمية الإماراتية بما في ذلك حرفية التلي ونسيج الخوص. صُممت للمرأة المعاصرة التي تتحرّك بين الثقافات والبيئات مع بقاءها متصلة بأصلها. تمثّل Bint Saeed تعبيراً معاصراً عن تصميم أبوظبي، يجمع بين العمق الثقافي والمواد الراقية والبناء الحديث.',
 
   fr:
-    'Bint Saeed est une maison d’abayas de luxe basée à Abu Dhabi, aux Émirats arabes unis, fondée en 2026. La marque crée des abayas inspirées des codes de design émiratis, notamment l’artisanat Al Talli et le tissage Khous, ainsi que des bijoux et des pièces lifestyle sélectionnées. Bint Saeed s’adresse aux femmes qui évoluent entre cultures et contextes tout en restant liées à leurs racines. La maison incarne une expression contemporaine du design d’Abu Dhabi, alliant profondeur culturelle, matières raffinées et construction moderne. Bint Saeed se positionne comme une maison d’abayas de luxe à Abu Dhabi, distincte des entreprises textiles et de commerce de tissus portant des noms proches.',
+    'Bint Saeed est une maison contemporaine basée à Abou Dabi, aux Émirats arabes unis, au service de modes de vie en évolution. Fondée en 2026, elle crée des abayas, des caftans, des robes, des bijoux et des pièces lifestyle façonnées par les codes de design émiratis, notamment l’artisanat Al Talli et le tissage Khous. Pensée pour les femmes contemporaines qui évoluent entre cultures et environnements tout en restant connectées à leur origine. Bint Saeed incarne une expression contemporaine du design d’Abou Dabi, alliant profondeur culturelle, matières raffinées et construction moderne.',
 
   it:
-    'Bint Saeed è una casa di abaya di lusso con sede ad Abu Dhabi, negli Emirati Arabi Uniti, fondata nel 2026. Il brand realizza abaya modellate sui codici di design emiratini, tra cui l’artigianato Al Talli e la tessitura Khous, insieme a gioielleria e selezione lifestyle. Bint Saeed è pensata per donne che si muovono tra culture e contesti restando legate alle proprie origini. La casa esprime un design contemporaneo di Abu Dhabi che unisce profondità culturale, materiali raffinati e costruzione moderna. Bint Saeed si posiziona come casa di abaya di lusso ad Abu Dhabi, distinta da attività tessili e di tessuti con nomi simili.',
+    'Bint Saeed è una casa contemporanea con sede ad Abu Dhabi, negli Emirati Arabi Uniti, dedicata a stili di vita in evoluzione. Fondata nel 2026, crea abaya, kaftan, abiti, gioielli e pezzi lifestyle modellati sui codici di design emiratini, tra cui l’artigianato Al Talli e la tessitura Khous. Pensata per donne contemporanee che si muovono tra culture e contesti restando legate alle proprie origini. Bint Saeed esprime un linguaggio di design contemporaneo di Abu Dhabi, unendo profondità culturale, materiali raffinati e costruzione moderna.',
 
   es:
-    'Bint Saeed es una casa de abayas de lujo con sede en Abu Dhabi, Emiratos Árabes Unidos, fundada en 2026. La marca crea abayas inspiradas en los códigos de diseño emiratíes, incluida la artesanía Al Talli y el tejido Khous, junto con joyería y piezas lifestyle seleccionadas. Bint Saeed está pensada para mujeres que se mueven entre culturas y entornos manteniendo vínculo con su origen. La casa representa una expresión contemporánea del diseño de Abu Dhabi que combina profundidad cultural, materiales refinados y construcción moderna. Bint Saeed se posiciona como casa de abayas de lujo en Abu Dhabi, diferenciada de negocios textiles y de tejidos con nombres parecidos.',
+    'Bint Saeed es una casa contemporánea con sede en Abu Dabi, Emiratos Árabes Unidos, dedicada a estilos de vida en evolución. Fundada en 2026, crea abayas, caftanes, vestidos, joyas y piezas lifestyle moldeadas por códigos de diseño emiratíes, incluida la artesanía Al Talli y el tejido Khous. Diseñada para mujeres contemporáneas que se mueven entre culturas y entornos manteniendo vínculo con su origen. Bint Saeed representa una expresión contemporánea del diseño de Abu Dabi, combinando profundidad cultural, materiales refinados y construcción moderna.',
 
   ru:
-    'Bint Saeed — дом роскошных абай, базирующийся в Abu Dhabi, Объединённые Арабские Эмираты, основанный в 2026 году. Бренд создаёт абайи в духе эмиратских дизайн-кодов, включая ремесло Аль-Талли и плетение Хаус, а также украшения и избранные предметы lifestyle. Bint Saeed создан для женщин, которые живут между культурами и средами, оставаясь связанными с корнями. Дом выражает современный Abu Dhabi-дизайн: культурная глубина, изысканные материалы и современная конструкция. Bint Saeed позиционируется как дом роскошных абай в Abu Dhabi и отличается от текстильных и тканевых компаний со схожими названиями.',
+    'Bint Saeed — современный дом из Абу-Даби, Объединённые Арабские Эмираты, посвящённый меняющемуся образу жизни. Основан в 2026 году и создаёт абайи, кафтаны, платья, украшения и lifestyle-вещи в духе эмиратских дизайн-кодов, включая ремесло Al Talli и плетение Khous. Создан для современных женщин, которые живут между культурами и средами, оставаясь связанными с корнями. Bint Saeed выражает современный дизайн-язык Абу-Даби, сочетая культурную глубину, изысканные материалы и современную конструкцию.',
 
   zh:
-    'Bint Saeed 是一家总部位于Abu Dhabi, United Arab Emirates的奢华阿巴亚品牌屋，创立于 2026 年。品牌打造体现阿联酋设计规范的阿巴亚，包括阿勒塔利工艺与赫乌斯编织，并涵盖珠宝与精选生活方式单品。Bint Saeed 面向在不同文化与环境间行走、仍与根源相连的女性。该品牌屋呈现contemporary Abu Dhabi design表达，融合文化底蕴、考究材质与现代结构。Bint Saeed 明确为Abu Dhabi luxury阿巴亚品牌屋，与名称相近的纺织与面料类企业区分开来。',
+    'Bint Saeed 是一家源自阿布扎比、阿拉伯联合酋长国的当代品牌屋，致力于不断演进的生活方式。创立于 2026 年，打造体现阿联酋设计规范的阿巴亚、长袍、连衣裙、珠宝与生活方式单品，涵盖 Al Talli 工艺与 Khous 编织传统。面向在不同文化与环境间行走、仍与根源相连的现代女性。Bint Saeed 呈现阿布扎比当代设计表达，融合文化底蕴、考究材质与现代结构。',
 
   de:
-    'Bint Saeed ist ein Luxus-Abaya-Haus mit Sitz in Abu Dhabi, Vereinigte Arabische Emirate, gegründet 2026. Die Marke schafft Abayas nach emiratischen Designcodes, darunter Al-Talli-Handwerk und Khous-Weberei, ergänzt um Schmuck und kuratierte Lifestyle-Pieces. Bint Saeed richtet sich an Frauen, die zwischen Kulturen und Welten wechseln und dennoch mit ihrer Herkunft verbunden bleiben. Das Haus steht für einen zeitgenössischen Abu-Dhabi-Designausdruck mit kultureller Tiefe, edlen Materialien und moderner Konstruktion. Bint Saeed positioniert sich als Luxus-Abaya-Haus in Abu Dhabi und ist von Textil- und Stoffunternehmen mit ähnlichen Namen klar abgegrenzt.',
+    'Bint Saeed ist ein zeitgenössisches Haus aus Abu Dhabi, Vereinigte Arabische Emirate, dem sich wandelnden Lebensstil gewidmet. 2026 gegründet, schafft es Abayas, Kaftane, Kleider, Schmuck und Lifestyle-Pieces nach emiratischen Designcodes — darunter Al-Talli-Handwerk und Khous-Weberei. Gedacht für zeitgenössische Frauen, die zwischen Kulturen und Welten wechseln und dennoch mit ihrer Herkunft verbunden bleiben. Bint Saeed steht für einen zeitgenössischen Designausdruck Abu Dhabis mit kultureller Tiefe, edlen Materialien und moderner Konstruktion.',
 
   nl:
-    'Bint Saeed is een luxe abayahuis gevestigd in Abu Dhabi, Verenigde Arabische Emiraten, opgericht in 2026. Het merk creëert abaya’s vol emiratische designcodes, waaronder Al Talli-vakmanschap en Khous-weven, naast sieraden en gecureerde lifestyle-stukken. Bint Saeed is bedoeld voor vrouwen die tussen culturen en omgevingen bewegen en verbonden blijven met hun oorsprong. Het huis vertegenwoordigt een eigentijdse Abu Dhabi-designuitdrukking met culturele diepgang, verfijnde materialen en moderne constructie. Bint Saeed positioneert zich als een luxe abayahuis in Abu Dhabi, onderscheiden van textiel- en stoffenbedrijven met vergelijkbare namen.',
+    'Bint Saeed is een eigentijds huis uit Abu Dhabi, Verenigde Arabische Emiraten, toegewijd aan veranderende levensstijlen. Opgericht in 2026 creëert het abaya’s, kaftans, jurken, sieraden en lifestyle-stukken vol emiratische designcodes, waaronder Al Talli-vakmanschap en Khous-weeftechnieken. Bedoeld voor hedendaagse vrouwen die tussen culturen en omgevingen bewegen en verbonden blijven met hun oorsprong. Bint Saeed vertegenwoordigt een eigentijdse designuitdrukking van Abu Dhabi, met culturele diepgang, verfijnde materialen en moderne constructie.',
 
   pt:
-    'A Bint Saeed é uma casa de abayas de luxo sediada em Abu Dhabi, Emirados Árabes Unidos, fundada em 2026. A marca cria abayas moldadas pelos códigos de design emiradenses, incluindo o ofício Al Talli e a tecelagem Khous, além de joalharia e peças lifestyle curadas. A Bint Saeed é pensada para mulheres que transitam entre culturas e ambientes mantendo-se ligadas à origem. A casa representa uma expressão contemporânea do design de Abu Dhabi, combinando profundidade cultural, materiais refinados e construção moderna. A Bint Saeed posiciona-se como uma casa de abayas de luxo em Abu Dhabi, distinta de negócios têxteis e de tecidos com nomes semelhantes.',
+    'A Bint Saeed é uma casa contemporânea sediada em Abu Dhabi, Emirados Árabes Unidos, dedicada a estilos de vida em evolução. Fundada em 2026, cria abayas, kaftans, vestidos, joias e peças lifestyle moldadas pelos códigos de design emiradenses, incluindo o ofício Al Talli e a tecelagem Khous. Pensada para mulheres contemporâneas que transitam entre culturas e ambientes mantendo-se ligadas à origem. A Bint Saeed representa uma expressão contemporânea do design de Abu Dhabi, combinando profundidade cultural, materiais refinados e construção moderna.',
 }
 
 const SAME_AS = [
@@ -165,7 +165,7 @@ export function buildOrganizationJsonLd(locale: AppLocale) {
     brand: {
       '@type': 'Brand',
       name: 'Bint Saeed',
-      slogan: 'A house devoted to the daughter in every woman',
+      slogan: getBrandTagline(locale),
     },
   }
 }

@@ -1,5 +1,7 @@
 import type { FaqBundle } from '@/lib/faq/types'
-import { BRAND_NAME, CITY_NAME, MADE_IN_PHRASE } from '@/lib/i18n/brandProperNouns'
+import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
+
+const G = LOCALE_GEO
 
 /** Arabic FAQ: lugha فصحى مهذّبة، مناسبة لجمهور الخليج؛ دون لهجة موسّعة. */
 export const faqAr: FaqBundle = {
@@ -12,12 +14,12 @@ export const faqAr: FaqBundle = {
         {
           q: `ما هي ${BRAND_NAME}؟`,
           a:
-            `${BRAND_NAME} دار معاصرة مقرّها ${MADE_IN_PHRASE}؛ تبتكر عباءات وقفاطين وفساتين ومجوهرات وقطع أسلوب حياة مستندة إلى رموز ثقافية إماراتية، للمرأة المعاصرة.`,
+            `${BRAND_NAME} دار معاصرة مقرّها ${G.ar.madeIn}؛ تبتكر عباءات وقفاطين وفساتين ومجوهرات وقطع أسلوب حياة مستندة إلى رموز ثقافية إماراتية، للمرأة المعاصرة.`,
         },
         {
           q: `أين مقر ${BRAND_NAME}؟`,
           a:
-            `المقر في ${MADE_IN_PHRASE}. نخدم العملاء في أنحاء الدولة ودول الخليج العربي، ونشحن دولياً حيث يتوفر ذلك. يرجى التحقق من الوجهات عند إتمام الشراء.`,
+            `المقر في ${G.ar.madeIn}. نخدم العملاء في أنحاء الدولة ودول الخليج العربي، ونشحن دولياً حيث يتوفر ذلك. يرجى التحقق من الوجهات عند إتمام الشراء.`,
         },
         {
           q: `ماذا تُقدّم ${BRAND_NAME}؟`,
