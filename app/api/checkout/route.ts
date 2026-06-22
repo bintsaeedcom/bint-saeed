@@ -108,13 +108,7 @@ export async function POST(request: NextRequest) {
         },
         checkoutCurrency,
       )
-      const rawImage = String(item.image ?? '').trim().slice(0, 500)
-      const productImage =
-        rawImage.length > 0
-          ? rawImage.startsWith('http')
-            ? rawImage
-            : `${baseUrl}${rawImage.startsWith('/') ? '' : '/'}${rawImage}`
-          : undefined
+      const productImage = absoluteProductImageUrl(baseUrl, String(item.image ?? ''))
       const lengthPart =
         item.lengthCm != null && String(item.lengthCm).length > 0
           ? `, Length: ${String(item.lengthCm).slice(0, 24)} cm`
