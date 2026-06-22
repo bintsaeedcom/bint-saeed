@@ -210,8 +210,8 @@ const SUMMER_ELEGANCE_SLIDES = [
 
 const ESSENTIALS_SLIDES = [
   '/collection-section/2.PNG',
-  '/collection-section/3.JPG',
-  '/collection-section/5.jpg',
+  '/collection-section/4.JPG',
+  '/collection-section/45.jpg',
 ] as const
 
 const SLIDE_INTERVAL_MS = 6500
@@ -563,8 +563,8 @@ function CampaignPanoramaSection() {
       <div className="relative w-full">
         <div className="relative aspect-[16/6] min-h-[220px] w-full overflow-hidden bg-brand-stone/15 md:min-h-[280px] lg:min-h-[360px]">
           <Image
-            src="/gazelles.jpg"
-            alt={withBrandAlt('Bint Saeed campaign panorama')}
+            src="/bint-saeed-abu-dhabi-gazelles-father-of-the-gazelle.jpg"
+            alt={withBrandAlt('Bint Saeed campaign panorama — Abu Dhabi gazelles')}
             fill
             sizes="100vw"
             className="object-cover object-center"
@@ -616,7 +616,7 @@ const CATEGORY_STRIP = [
     key: 'Accessories',
     label: 'Accessories',
     href: '/accessories',
-    image: '/collection-section/5.jpg',
+    image: '/collection-section/8.png',
   },
   {
     key: 'Personalisation',
