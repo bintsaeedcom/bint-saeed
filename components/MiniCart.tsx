@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
-import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowRight } from 'react-icons/fi'
+import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowRight, FiLock, FiPackage } from 'react-icons/fi'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode } from 'swiper/modules'
 import { useCartStore } from '@/store/cartStore'
@@ -47,7 +47,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     const same = primary ? pool.filter((p) => p.category === primary) : []
     const rest = primary ? pool.filter((p) => p.category !== primary) : pool
     const ordered = [...same, ...rest]
-    return ordered.slice(0, 16)
+    return ordered.slice(0, 2)
   }, [items])
 
   // Close on escape key
@@ -307,14 +307,26 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                 </div>
 
                 {/* Trust Badges */}
-                <div className={`flex items-center justify-center gap-3 pt-3 border-t border-brand-stone/20 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className="font-montserrat text-[9px] text-brand-clayRed/40 tracking-wide">
-                    {isRTL ? '🔒 دفع آمن' : '🔒 Secure checkout'}
+                <div
+                  className={`flex flex-col gap-2.5 border-t border-brand-stone/20 pt-4 sm:flex-row sm:items-center sm:justify-center sm:gap-5 ${isRTL ? 'sm:flex-row-reverse' : ''}`}
+                >
+                  <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <FiLock className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
+                    <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
+                      {isRTL ? 'دفع آمن' : 'Secure checkout'}
+                    </span>
+                  </div>
+                  <span className="hidden text-brand-stone/35 sm:inline" aria-hidden>
+                    •
                   </span>
-                  <span className="text-brand-stone/30">•</span>
-                  <span className="font-montserrat text-[9px] text-brand-clayRed/40 tracking-wide">
-                    {isRTL ? '🚚 شحن مجاني داخل الإمارات +1000 درهم' : '🚚 Free UAE shipping 1000+ AED'}
-                  </span>
+                  <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <FiPackage className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
+                    <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
+                      {isRTL
+                        ? 'توصيل مجاني داخل الإمارات للطلبات فوق ١٬٠٠٠ درهم'
+                        : 'Free UAE delivery on orders over 1,000 AED'}
+                    </span>
+                  </div>
                 </div>
               </div>
             )}

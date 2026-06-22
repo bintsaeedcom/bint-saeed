@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { FiX, FiShoppingBag, FiCheck, FiArrowRight } from 'react-icons/fi'
+import { FiX, FiShoppingBag, FiCheck, FiArrowRight, FiPackage, FiRotateCcw } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -288,14 +288,24 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               </div>
 
               {/* Trust badges */}
-              <div className="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-brand-stone/20">
-                <span className="font-montserrat text-[10px] text-brand-clayRed/50 tracking-wide">
-                  {isRTL ? '✓ شحن مجاني داخل الإمارات +1000 درهم' : '✓ Free UAE shipping 1000+ AED'}
+              <div className="mt-4 flex flex-col gap-2.5 border-t border-brand-stone/20 pt-4 sm:flex-row sm:items-center sm:justify-center sm:gap-5">
+                <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <FiPackage className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
+                  <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
+                    {isRTL
+                      ? 'توصيل مجاني داخل الإمارات للطلبات فوق ١٬٠٠٠ درهم'
+                      : 'Free UAE delivery on orders over 1,000 AED'}
+                  </span>
+                </div>
+                <span className="hidden text-brand-stone/35 sm:inline" aria-hidden>
+                  •
                 </span>
-                <span className="text-brand-stone/30">|</span>
-                <span className="font-montserrat text-[10px] text-brand-clayRed/50 tracking-wide">
-                  {isRTL ? '✓ إرجاع خلال 14 يوم' : '✓ 14-day returns'}
-                </span>
+                <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <FiRotateCcw className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
+                  <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
+                    {isRTL ? 'إرجاع خلال ١٤ يوماً' : '14-day returns'}
+                  </span>
+                </div>
               </div>
             </div>
           </motion.div>

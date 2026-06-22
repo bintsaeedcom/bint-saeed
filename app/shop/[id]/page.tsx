@@ -134,7 +134,7 @@ export default function ProductPage() {
             }
             return staticProducts
               .filter((p) => p.id !== product.id && p.category === product.category)
-              .slice(0, 3)
+              .slice(0, 2)
           })()
         : [],
     [product],
@@ -1026,7 +1026,7 @@ export default function ProductPage() {
             {relatedStyles.length > 0 && (
               <section className="relative z-20 mt-8">
                 <h3 className={PDP_RELATED_TITLE}>
-                  {isRTL ? 'يناسبها أيضاً' : 'Pairs well with'}
+                  {isRTL ? 'قد يعجبك أيضاً' : 'You may also like'}
                 </h3>
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   {relatedStyles.map((item) => (
