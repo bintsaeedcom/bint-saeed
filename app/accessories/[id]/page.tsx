@@ -21,10 +21,13 @@ import { withBrandAlt } from '@/lib/products/imageAlt'
 import {
   PDP_ACCORDION_PANEL,
   PDP_ACCORDION_TITLE,
+  PDP_BULLET_ITEM,
+  PDP_BULLET_LIST,
   PDP_COPY_INTRO,
   PDP_COPY_RELAXED,
   PDP_MTO_NOTE,
 } from '@/lib/pdp/pdpTypography'
+import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -58,7 +61,7 @@ export default function AccessoryDetailPage() {
 
   const addItem = useCartStore((state) => state.addItem)
   const { formatPrice } = useCurrency()
-  const { isRTL } = useLanguage()
+  const { isRTL, t } = useLanguage()
   const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
   const mainGalleryModules = useMemo(
     () => (thumbConnected ? [Navigation, Thumbs, Pagination] : [Navigation, Pagination]),
@@ -607,9 +610,11 @@ export default function AccessoryDetailPage() {
                 </button>
                 {openDropdown === 'description' && (
                   <div className={PDP_ACCORDION_PANEL}>
-                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
-                      • {isRTL ? accessory.descriptionAr : accessory.description}
-                    </p>
+                    <ul className={PDP_BULLET_LIST}>
+                      <li className={PDP_BULLET_ITEM}>
+                        {isRTL ? accessory.descriptionAr : accessory.description}
+                      </li>
+                    </ul>
                   </div>
                 )}
               </div>
@@ -630,9 +635,11 @@ export default function AccessoryDetailPage() {
                 </button>
                 {openDropdown === 'materials' && (
                   <div className={PDP_ACCORDION_PANEL}>
-                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
-                      • {isRTL ? accessory.materialsAr : accessory.materials}
-                    </p>
+                    <ul className={PDP_BULLET_LIST}>
+                      <li className={PDP_BULLET_ITEM}>
+                        {isRTL ? accessory.materialsAr : accessory.materials}
+                      </li>
+                    </ul>
                   </div>
                 )}
               </div>
@@ -653,10 +660,20 @@ export default function AccessoryDetailPage() {
                 </button>
                 {openDropdown === 'care' && (
                   <div className={PDP_ACCORDION_PANEL}>
-                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>{isRTL ? '• تجنبي ملامسة العطور والمواد الكيميائية' : '• Avoid contact with perfumes and chemicals'}</p>
-                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>{isRTL ? '• احفظيها في مكان جاف' : '• Store in a dry place'}</p>
-                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>{isRTL ? '• امسحيها بقطعة قماش ناعمة' : '• Wipe with a soft cloth'}</p>
-                    <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>{isRTL ? '• أزيليها قبل السباحة أو الاستحمام' : '• Remove before swimming or bathing'}</p>
+                    <ul className={PDP_BULLET_LIST}>
+                      <li className={PDP_BULLET_ITEM}>
+                        {isRTL ? 'تجنبي ملامسة العطور والمواد الكيميائية' : 'Avoid contact with perfumes and chemicals'}
+                      </li>
+                      <li className={PDP_BULLET_ITEM}>
+                        {isRTL ? 'احفظيها في مكان جاف' : 'Store in a dry place'}
+                      </li>
+                      <li className={PDP_BULLET_ITEM}>
+                        {isRTL ? 'امسحيها بقطعة قماش ناعمة' : 'Wipe with a soft cloth'}
+                      </li>
+                      <li className={PDP_BULLET_ITEM}>
+                        {isRTL ? 'أزيليها قبل السباحة أو الاستحمام' : 'Remove before swimming or bathing'}
+                      </li>
+                    </ul>
                   </div>
                 )}
               </div>
@@ -669,7 +686,7 @@ export default function AccessoryDetailPage() {
                   data-cursor-hover
                 >
                   <h3 className={PDP_ACCORDION_TITLE}>
-                    {isRTL ? 'الشحن والإرجاع' : 'Shipping & Returns'}
+                    {t.product.shippingReturns}
                   </h3>
                   <FiChevronDown
                     className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'shipping' ? 'rotate-180' : ''}`}
@@ -677,54 +694,7 @@ export default function AccessoryDetailPage() {
                 </button>
                 {openDropdown === 'shipping' && (
                   <div className={PDP_ACCORDION_PANEL}>
-                    <p className={PDP_COPY_RELAXED}>{isRTL ? '• الشحن المجاني متاح داخل الإمارات للطلبات فوق 1000 درهم.' : '• Free shipping within the UAE on orders over 1000 AED.'}</p>
-                    <p className={PDP_COPY_RELAXED}>
-                      {isRTL
-                        ? '• القطع الجاهزة للشحن تُرسل خلال 1-3 أيام عمل للطلبات المقدمة قبل الساعة 3:00 مساءً بتوقيت الإمارات.'
-                        : '• In-stock styles dispatch within 1-3 business days for orders placed before 3:00 PM UAE time.'}
-                    </p>
-                    <p className={PDP_COPY_RELAXED}>
-                      {isRTL
-                        ? '• القطع المسبقة الطلب تُشحن في التاريخ الموضح على صفحة المنتج.'
-                        : '• Pre-order styles dispatch on the date shown on the product page.'}
-                    </p>
-                    <p className={PDP_COPY_RELAXED}>
-                      {isRTL
-                        ? '• الطلبات المختلطة (جاهز + مسبق الطلب) تُشحن معاً في تاريخ المسبق الطلب المعلن.'
-                        : '• Mixed orders (in-stock + pre-order) dispatch together on the stated pre-order date.'}
-                    </p>
-                    <p className={PDP_COPY_RELAXED}>
-                      {isRTL
-                        ? '• جميع المبيعات نهائية. لا نوفر استرداداً نقدياً، مع وجود بعض الاستثناءات.'
-                        : '• All sales are final. We do not offer refunds, some exclusions apply.'}
-                    </p>
-                    <p className={PDP_COPY_RELAXED}>
-                      {isRTL
-                        ? '• يُقبل استبدال القطع الجاهزة فقط خلال 14 يوماً إذا كانت غير مستخدمة وغير متضررة مع البطاقات.'
-                        : '• Exchanges for in-stock items are accepted within 14 days for unworn, undamaged pieces with tags attached.'}
-                    </p>
-                    <p className={PDP_COPY_RELAXED}>
-                      {isRTL
-                        ? '• لا يمكن إرجاع أو استبدال القطع المخفّضة.'
-                        : '• Discounted items cannot be returned or exchanged.'}
-                    </p>
-                    <p className={PDP_COPY_RELAXED}>
-                      {isRTL
-                        ? '• القطع المسبقة الطلب لا يمكن إرجاعها أو استبدالها.'
-                        : '• Pre-order items cannot be returned or exchanged.'}
-                    </p>
-                    <p className={PDP_COPY_RELAXED}>
-                      {isRTL
-                        ? '• القطع المخصصة لا يمكن إرجاعها أو استبدالها.'
-                        : '• Personalised items cannot be returned or exchanged.'}
-                    </p>
-                    <p className={PDP_COPY_RELAXED}>
-                      {isRTL ? '• للمزيد من المعلومات، راجعي ' : '• For more information, please review our '}
-                      <LocaleLink href="/terms" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
-                        {isRTL ? 'سياسة الاسترجاع والاستبدال' : 'Refunds and Exchanges policy'}
-                      </LocaleLink>
-                      .
-                    </p>
+                    <PdpShippingReturnsBullets isRTL={isRTL} />
                   </div>
                 )}
               </div>

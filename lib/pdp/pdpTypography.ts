@@ -14,6 +14,10 @@ export const PDP_ACCORDION_SUBTITLE =
 
 export const PDP_ACCORDION_PANEL = 'space-y-2 pb-5'
 
+/** Hanging-indent bullet lists for accordion panels (Product Details, Care, Shipping, etc.). */
+export const PDP_BULLET_LIST = 'pdp-bullet-list'
+export const PDP_BULLET_ITEM = `pdp-bullet-item ${PDP_COPY_RELAXED}`
+
 export const PDP_FAQ_QUESTION =
   'pdp-copy font-montserrat text-[11px] font-semibold tracking-wide text-brand-darkRed'
 

@@ -47,7 +47,7 @@ export default function ShipmentReturnPolicyPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mb-10 text-center"
+          className={`mb-10 ${isRTL ? 'text-right' : 'text-left'}`}
         >
           <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-neutral-500">
             Legal
@@ -56,7 +56,7 @@ export default function ShipmentReturnPolicyPage() {
             Shipment & Return Policy
           </h1>
           <p className="font-montserrat tracking-wide text-neutral-700">Last updated: June 2026</p>
-          <p className="mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600">
+          <p className="mt-4 max-w-3xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600">
             This policy sets out shipping timelines, exchange eligibility, return procedures, and remedy pathways for
             purchases made through Bint Saeed.
           </p>
@@ -68,7 +68,7 @@ export default function ShipmentReturnPolicyPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="rounded-sm border border-neutral-200 bg-white p-8 shadow-sm md:p-10"
         >
-          <div className={`policy-prose space-y-5 font-montserrat text-[13px] leading-[1.55] tracking-wide text-neutral-800 ${isRTL ? 'text-right' : ''}`}>
+          <div className={`policy-prose flex flex-col gap-4 font-montserrat text-[13px] leading-[1.55] tracking-wide text-neutral-800 ${isRTL ? 'text-right' : 'text-left'}`}>
             <section className="rounded-sm border border-neutral-200 bg-neutral-50 p-4 md:p-5">
               <h2 className="mb-1.5 font-rozha text-xl text-neutral-900">Summary Notice</h2>
               <p className="text-sm text-neutral-600">
@@ -89,7 +89,7 @@ export default function ShipmentReturnPolicyPage() {
               ))}
             </div>
 
-            <section className="space-y-2">
+            <section className="flex flex-col gap-2">
               <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">1. Opening Statement</h2>
               <p>
                 Each Bint Saeed piece is created following the specific request and selection of the client. Production
@@ -102,7 +102,7 @@ export default function ShipmentReturnPolicyPage() {
               </p>
             </section>
 
-            <section className="space-y-2">
+            <section className="flex flex-col gap-2">
               <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">2. General Policy</h2>
               <p>
                 As many Bint Saeed pieces are produced on demand following a confirmed order, we do not offer refunds for
@@ -146,7 +146,7 @@ export default function ShipmentReturnPolicyPage() {
               </p>
             </section>
 
-            <section className="space-y-2">
+            <section className="flex flex-col gap-2">
               <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">
                 3. Exceptions (UAE Consumer Protection Alignment)
               </h2>
@@ -175,7 +175,7 @@ export default function ShipmentReturnPolicyPage() {
               </p>
             </section>
 
-            <section className="space-y-2">
+            <section className="flex flex-col gap-2">
               <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">4. Non-Eligible Cases</h2>
               <p>The following do not qualify as grounds for refund, exchange, or return:</p>
               <ul className={`list-disc space-y-1 ${isRTL ? 'pr-5' : 'pl-5'}`}>
@@ -188,7 +188,7 @@ export default function ShipmentReturnPolicyPage() {
               </ul>
             </section>
 
-            <section className="space-y-2">
+            <section className="flex flex-col gap-2">
               <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">5. EU Clients – Right of Withdrawal</h2>
               <p>
                 For clients located within the European Union, consumer regulations may provide a 14-day right of
@@ -205,7 +205,7 @@ export default function ShipmentReturnPolicyPage() {
               </p>
             </section>
 
-            <section className="space-y-2">
+            <section className="flex flex-col gap-2">
               <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">6. EU Exception (Defective Items Only)</h2>
               <p>In the event of a manufacturing defect:</p>
               <ul className={`list-disc space-y-1 ${isRTL ? 'pr-5' : 'pl-5'}`}>
@@ -218,7 +218,7 @@ export default function ShipmentReturnPolicyPage() {
               </p>
             </section>
 
-            <section className="space-y-2">
+            <section className="flex flex-col gap-2">
               <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">7. Final Acknowledgment</h2>
               <p>
                 By placing an order with Bint Saeed, the client confirms that they have reviewed and accepted the
@@ -230,7 +230,7 @@ export default function ShipmentReturnPolicyPage() {
               </p>
             </section>
 
-            <section className="space-y-2">
+            <section className="flex flex-col gap-2">
               <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">8. Shipping Timelines</h2>
               <p>
                 We aim to dispatch every order as efficiently as possible while maintaining the quality standards of
@@ -284,7 +284,7 @@ export default function ShipmentReturnPolicyPage() {
               </p>
             </section>
 
-            <section className="space-y-2">
+            <section className="flex flex-col gap-2">
               <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">9. Force Majeure</h2>
               <p>
                 Bint Saeed shall not be held liable for delays, interruptions, or failure to fulfil obligations where
@@ -309,7 +309,7 @@ export default function ShipmentReturnPolicyPage() {
               </p>
             </section>
 
-            <section className="space-y-2">
+            <section className="flex flex-col gap-2">
               <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">10. Contact</h2>
               <p>For exchanges, return requests, and defect claims:</p>
               <p>

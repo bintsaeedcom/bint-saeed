@@ -60,24 +60,17 @@ function buildMayfairKaftanContent(color?: string): ProductPdpContent {
       'Inner Dress: 100% Polyester',
     ],
     fitAndSizeDetails: [
-      'One size',
-      'Designed for a fluid and relaxed fit',
-      'Hidden internal ties allow the silhouette to be adjusted',
-      'Model height: 155 cm / 61 inches',
-      'Maximum garment length: 165 cm',
+      'One Size',
+      'Maximum garment length: 165 cm / 65 inches',
+      'Adjustable silhouette through hidden internal ties',
+      'Model is 155 cm / 61 inches tall',
     ],
     careDetails: [
       'Professional dry clean recommended',
-      'If needed, gently hand wash separately in cold water',
-      'Do not soak',
+      'Gentle hand wash in cold water if required',
       'Do not bleach',
       'Do not tumble dry',
-      'Lay flat or hang to dry away from direct sunlight',
-      'Steam or iron on a low setting if required',
-      'Store hanging to preserve the garment’s shape and drape',
     ],
-    brandStory:
-      'Created in Abu Dhabi, UAE and made to order, the Mayfair Kaftan reflects Bint Saeed’s belief that clothing should move with the woman who wears it. Rather than following seasonal trends, each piece is designed to become part of a woman’s personal wardrobe, carried across occasions, destinations, and years to come.',
   }
 }
 

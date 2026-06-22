@@ -49,19 +49,19 @@ const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
     madeIn: DEFAULT_MADE_IN,
     faq: [
       {
-        question: 'Is the Mayfair Kaftan suitable for weddings?',
+        question: 'Is the Mayfair Kaftan suitable for weddings, Eid, and special occasions?',
         answer:
-          'Yes. The Mayfair Kaftan is designed for weddings, celebrations, Eid gatherings, dinners and special occasions.',
+          'Yes. The Mayfair Kaftan is designed for weddings, engagement celebrations, Eid gatherings, formal dinners, and special occasions. Crafted from Deep Maroon crepe chiffon, its fluid silhouette creates elegant movement and transitions effortlessly from daytime events to evening occasions.',
       },
       {
         question: 'Is the Mayfair Kaftan one size?',
         answer:
-          'Yes. The Mayfair Kaftan is designed as a one-size silhouette with hidden internal ties that allow the shape to be adjusted.',
+          'Yes. The Mayfair Kaftan is designed as a one-size silhouette. It can be worn completely loose for a flowing, effortless look or adjusted using the hidden internal ties to create a more defined, cape-like shape. This allows the silhouette to adapt naturally to different styling preferences and occasions.',
       },
       {
-        question: 'Can the scarf be styled in different ways?',
+        question: 'What makes the Mayfair Kaftan different from other kaftans?',
         answer:
-          'Yes. The attached scarf detail can be styled diagonally across the body using the signature Bint Saeed gold-tone emblem pin.',
+          'The Mayfair Kaftan combines a fluid one-size silhouette, hidden internal tie construction, an attached scarf detail, and the signature Bint Saeed gold-tone emblem pin. The scarf can be worn draped from the shoulder or styled diagonally across the body using the emblem pin, creating different looks while remaining permanently attached to the garment. Designed in Abu Dhabi, UAE, it is created for women who value versatility, elegance, and pieces that can be worn across occasions, destinations, and seasons.',
       },
     ],
   },

@@ -36,12 +36,15 @@ import {
   PDP_ACCORDION_PANEL,
   PDP_ACCORDION_SUBTITLE,
   PDP_ACCORDION_TITLE,
+  PDP_BULLET_ITEM,
+  PDP_BULLET_LIST,
   PDP_COPY_INTRO,
   PDP_COPY_RELAXED,
   PDP_FAQ_QUESTION,
   PDP_MTO_NOTE,
   PDP_RELATED_TITLE,
 } from '@/lib/pdp/pdpTypography'
+import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -117,7 +120,7 @@ export default function ProductPage() {
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false)
   const [introExpanded, setIntroExpanded] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
-  const { isRTL, language } = useLanguage()
+  const { isRTL, language, t } = useLanguage()
   const { formatPrice, formatAmount, convertPrice, currency } = useCurrency()
 
   const relatedStyles = useMemo(
@@ -273,7 +276,12 @@ export default function ProductPage() {
   }, [product, product?.id, currency.code, convertPrice])
 
   const displayUnitPrice = convertPrice(product?.price ?? 0, product?.id)
-  const sizeAndMeasurementDetails = [product.measurements, ...fitAndSizeDetails]
+  const sizeAndFitDetails =
+    fitAndSizeDetails.length > 0
+      ? fitAndSizeDetails
+      : product.measurements?.trim()
+        ? [product.measurements]
+        : []
   const isVideoFile = (src: string) => /\.(mp4|mov|webm|ogg)$/i.test(src)
   const isHeicFile = (src: string) => /\.(heic|heif)$/i.test(src)
   /** Large local PNGs/JPGs under public/Webshop — bypass next/image optimizer (avoids 400 on ~7MB assets). */
@@ -878,21 +886,25 @@ export default function ProductPage() {
                 </button>
                 {openDropdown === 'description' && (
                   <div className={PDP_ACCORDION_PANEL}>
-                    {productDetails.map((item, idx) => (
-                      <p key={`pd-${idx}`} className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
-                        • {item}
-                      </p>
-                    ))}
+                    <ul className={PDP_BULLET_LIST}>
+                      {productDetails.map((item, idx) => (
+                        <li key={`pd-${idx}`} className={PDP_BULLET_ITEM}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
                     {compositionDetails && compositionDetails.length > 0 && (
                       <div className="space-y-2 pt-3">
                         <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>
                           Composition
                         </p>
-                        {compositionDetails.map((item, idx) => (
-                          <p key={`comp-${idx}`} className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
-                            • {item}
-                          </p>
-                        ))}
+                        <ul className={PDP_BULLET_LIST}>
+                          {compositionDetails.map((item, idx) => (
+                            <li key={`comp-${idx}`} className={PDP_BULLET_ITEM}>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     )}
                     {careDetails && careDetails.length > 0 && (
@@ -900,11 +912,13 @@ export default function ProductPage() {
                         <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>
                           Care
                         </p>
-                        {careDetails.map((item, idx) => (
-                          <p key={`care-${idx}`} className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
-                            • {item}
-                          </p>
-                        ))}
+                        <ul className={PDP_BULLET_LIST}>
+                          {careDetails.map((item, idx) => (
+                            <li key={`care-${idx}`} className={PDP_BULLET_ITEM}>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     )}
                     {brandStory && (
@@ -916,7 +930,7 @@ export default function ProductPage() {
                 )}
               </div>
 
-              {/* Size & Measurements */}
+              {/* Size & Fit */}
               <div className="border-b border-brand-stone/30">
                 <button
                   onClick={() => toggleDropdown('size')}
@@ -924,7 +938,7 @@ export default function ProductPage() {
                   data-cursor-hover
                 >
                   <h3 className={PDP_ACCORDION_TITLE}>
-                    Size & Measurements
+                    {t.product.sizeMeasurements}
                   </h3>
                   <FiChevronDown
                     className={`w-4 h-4 text-brand-darkRed transition-transform ${
@@ -934,11 +948,13 @@ export default function ProductPage() {
                 </button>
                 {openDropdown === 'size' && (
                   <div className={PDP_ACCORDION_PANEL}>
-                    {sizeAndMeasurementDetails.map((item, idx) => (
-                      <p key={`sz-${idx}`} className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
-                        • {item}
-                      </p>
-                    ))}
+                    <ul className={PDP_BULLET_LIST}>
+                      {sizeAndFitDetails.map((item, idx) => (
+                        <li key={`sz-${idx}`} className={PDP_BULLET_ITEM}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
               </div>
@@ -951,7 +967,7 @@ export default function ProductPage() {
                   data-cursor-hover
                 >
                   <h3 className={PDP_ACCORDION_TITLE}>
-                    Shipping & Returns
+                    {t.product.shippingReturns}
                   </h3>
                   <FiChevronDown
                     className={`w-4 h-4 text-brand-darkRed transition-transform ${
@@ -961,22 +977,7 @@ export default function ProductPage() {
                 </button>
                 {openDropdown === 'shipping' && (
                   <div className={PDP_ACCORDION_PANEL}>
-                    <p className={PDP_COPY_RELAXED}>{isRTL ? '• الشحن المجاني متاح داخل الإمارات للطلبات فوق 1000 درهم.' : '• Free shipping within the UAE on orders over 1000 AED.'}</p>
-                    <p className={PDP_COPY_RELAXED}>• In-stock styles dispatch within 1-3 business days for orders placed before 3:00 PM UAE time.</p>
-                    <p className={PDP_COPY_RELAXED}>• Pre-order styles dispatch on the date shown on the product page.</p>
-                    <p className={PDP_COPY_RELAXED}>• Mixed orders (in-stock + pre-order) dispatch together on the stated pre-order date.</p>
-                    <p className={PDP_COPY_RELAXED}>• All sales are final. We do not offer refunds, some exclusions apply.</p>
-                    <p className={PDP_COPY_RELAXED}>• Exchanges for in-stock items are accepted within 14 days for unworn, undamaged pieces with tags attached.</p>
-                    <p className={PDP_COPY_RELAXED}>• Discounted items cannot be returned or exchanged.</p>
-                    <p className={PDP_COPY_RELAXED}>• Pre-order items cannot be returned or exchanged.</p>
-                    <p className={PDP_COPY_RELAXED}>• Personalised items cannot be returned or exchanged.</p>
-                    <p className={PDP_COPY_RELAXED}>
-                      • For more information, please review our{' '}
-                      <LocaleLink href="/terms" className="underline hover:text-brand-dustyBlue" data-cursor-hover>
-                        Refunds and Exchanges policy
-                      </LocaleLink>
-                      .
-                    </p>
+                    <PdpShippingReturnsBullets isRTL={isRTL} />
                   </div>
                 )}
               </div>
