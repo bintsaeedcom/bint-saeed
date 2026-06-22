@@ -1,6 +1,7 @@
 import type { Product } from '@/data/products'
 import { getProductSlug } from '@/lib/products/links'
-import { getPdpSizeOptions, categoryNeedsLengthCmDropdown } from '@/lib/shopProductOptions'
+import { getProductSchemaFacts } from '@/lib/products/productSchemaMeta'
+import { getPdpSizeOptions, productIsOneSizeOnly } from '@/lib/shopProductOptions'
 
 export type ProductPdpContent = {
   /** Rich intro above accordions; first paragraph stays visible, rest behind Read more. */
@@ -78,53 +79,127 @@ function colorList(product: Product): string {
   return product.colors.map((c) => c.name).join(', ')
 }
 
-/** Split first fabric clause vs rest for composition placeholders (you will refine later). */
+const STANDARD_CARE_DETAILS = [
+  'Professional dry clean recommended',
+  'Gentle hand wash in cold water if required',
+  'Do not bleach',
+  'Do not tumble dry',
+] as const
+
+function cmToInches(cm: number): number {
+  return Math.round(cm / 2.54)
+}
+
+function parseMaxLength(measurements: string): { cm: number; inches: number } | null {
+  const match =
+    measurements.match(/maximum garment length[:\s]*(\d+)\s*cm/i) ??
+    measurements.match(/length[:\s]*(\d+)\s*cm/i)
+  if (!match) return null
+  const cm = Number.parseInt(match[1]!, 10)
+  return { cm, inches: cmToInches(cm) }
+}
+
+function fabricCompositionDetails(product: Product): string[] {
+  const raw = (product.fabric ?? '').trim()
+  if (!raw || /to be finalized|to be confirmed/i.test(raw)) return []
+  const parts = raw.split(',').map((s) => s.trim()).filter(Boolean)
+  if (parts.length === 1) return [parts[0]!]
+  if (parts.length === 2) return [`Outer: ${parts[0]}`, parts[1]!.toLowerCase().includes('lining') ? parts[1]! : `Lining: ${parts[1]}`]
+  return parts.map((part, index) => (index === 0 ? `Outer: ${part}` : part))
+}
+
+/** Split first fabric clause vs rest for accessory placeholders. */
 function fabricOuterInner(product: Product): { outer: string; innerHint: string } {
   const raw = (product.fabric ?? '').trim()
   const parts = raw.split(',').map((s) => s.trim()).filter(Boolean)
   if (parts.length <= 1) {
-    return { outer: raw || '[Composition — outer / main — replace]', innerHint: '[Composition — lining / inner — replace]' }
+    return { outer: raw || '[Composition — primary — replace]', innerHint: '[Composition — secondary — replace]' }
   }
   return {
-    outer: `${parts[0]} (extend with full fibre breakdown when confirmed).`,
-    innerHint: parts.slice(1).join(', ') + ' — refine lining / secondary composition as needed.',
+    outer: parts[0]!,
+    innerHint: parts.slice(1).join(', '),
   }
 }
 
-/** Ready-to-wear & sets: same topic order as Royal V-Neck Kaftan PDP (15 + 4 bullets). */
-function apparelPlaceholderContent(product: Product): ProductPdpContent {
-  const { outer, innerHint } = fabricOuterInner(product)
-  const colors = colorList(product)
-  const sizeOptions = getPdpSizeOptions(product.category, product.sizes)
-  const needsLength = categoryNeedsLengthCmDropdown(product.category)
+function resolveSelectedColorName(product: Product, color?: string): string {
+  const trimmed = color?.trim()
+  if (trimmed) {
+    const match = product.colors.find((c) => c.name.toLowerCase() === trimmed.toLowerCase())
+    if (match) return match.name
+    return trimmed
+  }
+  return product.colors[0]?.name ?? ''
+}
 
-  const descSeed = product.description.replace(/\s+/g, ' ').trim().slice(0, 200)
+function buildProductDetailBullets(product: Product, colorName: string): string[] {
+  const facts = getProductSchemaFacts(product)
+  const bullets: string[] = []
+
+  if (facts.fit) bullets.push(facts.fit)
+  if (facts.neckline) {
+    const shortNeckline = facts.neckline.split('—')[0]?.trim() ?? facts.neckline
+    bullets.push(shortNeckline)
+  }
+  if (facts.stylingDetail) bullets.push(facts.stylingDetail)
+  if (facts.closure) bullets.push(facts.closure)
+  if (facts.lining) bullets.push(facts.lining)
+  if (facts.innerDress) bullets.push(facts.innerDress)
+  if (facts.pockets) bullets.push(facts.pockets)
+
+  if (colorName) bullets.push(`Colour: ${colorName}`)
+  else if (product.colors.length) bullets.push(`Available colours: ${colorList(product)}`)
+
+  bullets.push('Made in Abu Dhabi, UAE')
+  return bullets
+}
+
+function buildStructuredApparelIntro(product: Product, facts: ReturnType<typeof getProductSchemaFacts>): string[] {
+  const desc = product.description.replace(/\s+/g, ' ').trim()
+  const stylingLine = facts.stylingDetail
+    ? `${facts.stylingDetail}. Hidden construction and finishing are considered throughout, so the piece reads as effortless from every angle.`
+    : 'Refined construction and finishing are considered throughout, so the piece reads as effortless from every angle.'
+
+  return [
+    `${product.name} is designed for women who understand that elegance is never static. ${desc}`,
+    stylingLine,
+    `Lightweight, versatile, and designed to be worn for years rather than seasons, ${product.name} moves effortlessly between occasions. Worn for a wedding, a celebration, a dinner abroad, or an ordinary day that deserves something extraordinary, it adapts naturally to the life of the woman who wears it. It is not defined by a destination, a city, or a moment. It becomes part of her story and travels wherever she does.`,
+    'It is a piece chosen not only for how it looks, but for how it makes a woman feel the moment she puts it on.',
+  ]
+}
+
+function buildStructuredFitAndSizeDetails(product: Product): string[] {
+  const sizeOptions = getPdpSizeOptions(product.category, product.sizes, getProductSlug(product))
+  const maxLength = parseMaxLength(product.measurements)
+
+  if (productIsOneSizeOnly(product)) {
+    const lines = ['One Size']
+    if (maxLength) lines.push(`Maximum garment length: ${maxLength.cm} cm / ${maxLength.inches} inches`)
+    if (getProductSchemaFacts(product).fit?.toLowerCase().includes('internal ties')) {
+      lines.push('Adjustable silhouette through hidden internal ties')
+    }
+    lines.push('Model is 155 cm / 61 inches tall')
+    return lines
+  }
+
+  return [
+    `Available sizes: ${sizeOptions.join(', ')}`,
+    product.measurements.replace(/\s+/g, ' ').trim(),
+    'Model is 155 cm / 61 inches tall',
+  ]
+}
+
+/** Ready-to-wear & sets: same accordion structure as Mayfair Kaftan PDP. */
+function buildStructuredApparelContent(product: Product, color?: string): ProductPdpContent {
+  const facts = getProductSchemaFacts(product)
+  const colorName = resolveSelectedColorName(product, color)
+  const compositionDetails = fabricCompositionDetails(product)
+
   return {
-    productDetails: [
-      `[Overview — replace] ${descSeed || product.name}`,
-      `[Neckline / upper body — replace] Describe neckline, collar, or upper opening.`,
-      `[Outer layer — replace] Hand-feel, weight, and how the outer behaves in motion.`,
-      `[Signature detail — replace] Scarf, trim, embroidery zone, or defining feature.`,
-      `[Sleeves — replace] Sleeve shape, length, and openings.`,
-      `[Adjustment / styling 1 — replace] Ties, belts, closure, or styling option.`,
-      `[Adjustment / styling 2 — replace] Secondary adjustment or alternative drape.`,
-      `[Construction / layering — replace] Inner dress, lining strategy, or structure.`,
-      `[Length — edit in catalog “Measurements” too] ${product.measurements}`,
-      `[Colours offered — replace] Available: ${colors}.`,
-      `[Composition — outer / main — replace] ${outer}`,
-      `[Composition — lining / inner — replace] ${innerHint}`,
-      `[Care — replace] Professional dry clean unless the atelier specifies otherwise.`,
-      `[House detail — replace] Signature emblem, hardware, or finishing note.`,
-      'Origin: Made in Abu Dhabi, United Arab Emirates.',
-    ],
-    fitAndSizeDetails: [
-      `[Model reference — replace] Add model height and unit when campaign imagery is ready.`,
-      `[Model wears — replace] Tie to sizes offered: ${sizeOptions.join(', ')}.`,
-      `[Fit intent — replace] Describe intended ease (fluid, tailored, oversized, etc.).`,
-      needsLength
-        ? `[Lengths — replace] Chapter sizing and optional custom length note after checkout.`
-        : `[Between sizes — replace] Guidance for choosing between sizes.`,
-    ],
+    introParagraphs: buildStructuredApparelIntro(product, facts),
+    productDetails: buildProductDetailBullets(product, colorName),
+    ...(compositionDetails.length ? { compositionDetails } : {}),
+    careDetails: [...STANDARD_CARE_DETAILS],
+    fitAndSizeDetails: buildStructuredFitAndSizeDetails(product),
   }
 }
 
@@ -191,16 +266,16 @@ function buildNothingHillKaftanContent(color?: string): ProductPdpContent {
 
   return {
     introParagraphs: [
-      `The Nothing Hill Kaftan speaks in a softer register — luminous ${adj} crepe chiffon shaped by a graceful bateau neckline that skims the shoulders and lets the fabric fall in an unhurried line from collarbone to hem. Layered over an attached inner dress, this ${adj} chiffon kaftan offers the ease of one garment with the quiet depth of considered Emirati luxury design.`,
-      'From the left shoulder, an attached scarf detail falls in a gentle cascade. Worn diagonally with the signature Bint Saeed gold-tone emblem pin, or left open for a softer profile, it invites understated reinvention. Concealed internal ties let the silhouette shift between fluid movement and a gently defined shape — without ever feeling fixed to a single way of wearing.',
-      'Designed to outlast seasons, the Nothing Hill Kaftan moves between daylight and evening with equal composure. Worn for a gathering at home, a terrace abroad, or a moment that asks for something beautiful without announcement, it settles into a woman’s rhythm rather than demanding attention. It is not tied to one city, one occasion, or one version of herself.',
-      'It is chosen for the confidence of ease — the feeling that arrives when fabric, neckline, and craft ask nothing of her but to move naturally.',
+      `The Nothing Hill Kaftan is designed for women who understand that elegance is never static. Cut from ${adj} crepe chiffon and layered over an attached inner dress, this ${adj} chiffon kaftan creates a fluid silhouette that drapes effortlessly from shoulder to hem.`,
+      'A softly cascading scarf detail falls from the left shoulder and can be styled diagonally across the body using the signature Bint Saeed gold-tone emblem pin. Hidden internal ties allow the silhouette to be adjusted in multiple ways, creating either a flowing cape-like shape or a more defined profile. The result is a piece that transforms with the woman who wears it, adapting naturally to different occasions and moments.',
+      'Lightweight, versatile, and designed to be worn for years rather than seasons, the Nothing Hill Kaftan moves effortlessly between occasions. Worn for a wedding, a celebration, a dinner abroad, or an ordinary day that deserves something extraordinary, it adapts naturally to the life of the woman who wears it. It is not defined by a destination, a city, or a moment. It becomes part of her story and travels wherever she does.',
+      'It is a piece chosen not only for how it looks, but for how it makes a woman feel the moment she puts it on.',
     ],
     productDetails: [
       `${label} crepe chiffon kaftan`,
       'Fluid silhouette with layered construction',
       'Attached inner dress for ease of wear',
-      'Graceful bateau neckline creating a refined silhouette while allowing the fabric to drape effortlessly across the shoulders',
+      'Graceful bateau neckline',
       'Attached scarf detail draped from the left shoulder',
       'Signature Bint Saeed gold-tone emblem pin included',
       'Scarf can be styled diagonally across the body',
@@ -216,24 +291,12 @@ function buildNothingHillKaftanContent(color?: string): ProductPdpContent {
       'Inner Dress: 100% Polyester',
     ],
     fitAndSizeDetails: [
-      'One size',
-      'Designed for a fluid and relaxed fit',
-      'Hidden internal ties allow the silhouette to be adjusted',
-      'Model height: 155 cm / 61 inches',
-      'Maximum garment length: 125 cm',
+      'One Size',
+      'Maximum garment length: 125 cm / 49 inches',
+      'Adjustable silhouette through hidden internal ties',
+      'Model is 155 cm / 61 inches tall',
     ],
-    careDetails: [
-      'Professional dry clean recommended',
-      'If needed, gently hand wash separately in cold water',
-      'Do not soak',
-      'Do not bleach',
-      'Do not tumble dry',
-      'Lay flat or hang to dry away from direct sunlight',
-      'Steam or iron on a low setting if required',
-      'Store hanging to preserve the garment’s shape and drape',
-    ],
-    brandStory:
-      'Designed and made to order in Abu Dhabi, UAE, the Nothing Hill Kaftan reflects Bint Saeed’s belief that luxury should feel personal, not performative. Rather than chasing seasonal novelty, each piece is created to remain in a woman’s wardrobe — carried across destinations, occasions, and the years she chooses to keep it close.',
+    careDetails: [...STANDARD_CARE_DETAILS],
   }
 }
 
@@ -257,5 +320,5 @@ export function getProductPdpContent(product: Product, opts?: { color?: string }
     return accessoryPlaceholderContent(product)
   }
 
-  return apparelPlaceholderContent(product)
+  return buildStructuredApparelContent(product, color)
 }

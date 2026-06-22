@@ -40,6 +40,7 @@ import {
   PDP_BULLET_LIST,
   PDP_COPY_INTRO,
   PDP_COPY_RELAXED,
+  formatPdpProductCodeLine,
   PDP_FAQ_QUESTION,
   PDP_MTO_NOTE,
   PDP_RELATED_TITLE,
@@ -161,6 +162,12 @@ export default function ProductPage() {
     () => (product ? getProductFaq(product, pdpFaq, language) : []),
     [product, pdpFaq, language],
   )
+  const productDetailsBullets = useMemo(() => {
+    if (!product) return productDetails
+    const sku = resolveProductSku(product, selectedColor)
+    if (!sku) return productDetails
+    return [...productDetails, formatPdpProductCodeLine(sku, isRTL)]
+  }, [product, productDetails, selectedColor, isRTL])
   const estimatedShipDate = useMemo(() => {
     const d = new Date()
     d.setDate(d.getDate() + 14)
@@ -887,7 +894,7 @@ export default function ProductPage() {
                 {openDropdown === 'description' && (
                   <div className={PDP_ACCORDION_PANEL}>
                     <ul className={PDP_BULLET_LIST}>
-                      {productDetails.map((item, idx) => (
+                      {productDetailsBullets.map((item, idx) => (
                         <li key={`pd-${idx}`} className={PDP_BULLET_ITEM}>
                           {item}
                         </li>

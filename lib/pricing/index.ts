@@ -17,6 +17,7 @@ import { SUPPORTED_CURRENCIES } from './types'
 export {
   PRODUCT_CATALOG_PRICES,
   PRODUCT_CATALOG_TRIPLES,
+  KAFTAN_CATALOG_PRICES,
   getCatalogAedPrice,
   getListedPriceForSlug,
   hasCatalogPrice,

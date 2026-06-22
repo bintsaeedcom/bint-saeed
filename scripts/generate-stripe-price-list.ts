@@ -5,6 +5,8 @@ import { products } from '../data/products'
 import { accessories } from '../data/accessories'
 import {
   PRODUCT_CATALOG_TRIPLES,
+  PRODUCT_CATALOG_PRICES,
+  KAFTAN_CATALOG_PRICES,
   buildFullPriceMap,
 } from '../lib/pricing/productPrices'
 import {
@@ -85,7 +87,7 @@ lines.push('')
 lines.push('| Slug | ' + currencies.join(' | ') + ' |')
 lines.push('| --- | ' + currencies.map(() => '---:').join(' | ') + ' |')
 for (const [slug, triple] of Object.entries(PRODUCT_CATALOG_TRIPLES)) {
-  const map = buildFullPriceMap(triple)
+  const map = PRODUCT_CATALOG_PRICES[slug] ?? buildFullPriceMap(triple)
   lines.push(`| \`${slug}\` | ${currencies.map((c) => map[c]).join(' | ')} |`)
 }
 

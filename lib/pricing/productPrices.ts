@@ -17,14 +17,32 @@ export const PRODUCT_CATALOG_TRIPLES: Record<string, ProductCatalogTriple> = {
   'marylebone-abaya': { AED: 2499, GBP: 505, EUR: 585 },
   'park-lane-abaya': { AED: 2199, GBP: 445, EUR: 515 },
   'hyde-park-set': { AED: 1399, GBP: 280, EUR: 325 },
-  'mayfair-kaftan': { AED: 975, GBP: 195, EUR: 229 },
-  'nothing-hill-kaftan': { AED: 975, GBP: 195, EUR: 229 },
+  'mayfair-kaftan': { AED: 975, GBP: 199, EUR: 229 },
+  'nothing-hill-kaftan': { AED: 975, GBP: 199, EUR: 229 },
   'soho-set': { AED: 1499, GBP: 299, EUR: 350 },
   'covent-garden-signature-set': { AED: 3199, GBP: 645, EUR: 745 },
   'covent-garden-long-dress': { AED: 1699, GBP: 340, EUR: 395 },
   'hampstead-dress': { AED: 1799, GBP: 360, EUR: 420 },
   'knightsbridge-dress': { AED: 2199, GBP: 440, EUR: 510 },
 }
+
+/** Hand-set list prices for kaftans (all checkout currencies). */
+export const KAFTAN_CATALOG_PRICES: CurrencyPriceMap = {
+  AED: 975,
+  SAR: 995,
+  QAR: 975,
+  KWD: 79,
+  BHD: 99,
+  OMR: 99,
+  USD: 259,
+  GBP: 199,
+  EUR: 229,
+  CHF: 229,
+  CNY: 1899,
+  RUB: 19999,
+}
+
+const KAFTAN_CATALOG_SLUGS = ['mayfair-kaftan', 'nothing-hill-kaftan'] as const
 
 function roundToNearest(value: number, step: number): number {
   return Math.round(value / step) * step
@@ -56,9 +74,12 @@ export function buildFullPriceMap(triple: ProductCatalogTriple): CurrencyPriceMa
 }
 
 /** Full fixed list price per slug (all checkout currencies). */
-export const PRODUCT_CATALOG_PRICES: Record<string, CurrencyPriceMap> = Object.fromEntries(
-  Object.entries(PRODUCT_CATALOG_TRIPLES).map(([slug, triple]) => [slug, buildFullPriceMap(triple)]),
-)
+export const PRODUCT_CATALOG_PRICES: Record<string, CurrencyPriceMap> = {
+  ...Object.fromEntries(
+    Object.entries(PRODUCT_CATALOG_TRIPLES).map(([slug, triple]) => [slug, buildFullPriceMap(triple)]),
+  ),
+  ...Object.fromEntries(KAFTAN_CATALOG_SLUGS.map((slug) => [slug, KAFTAN_CATALOG_PRICES])),
+}
 
 export function hasCatalogPrice(slug: string): boolean {
   return slug in PRODUCT_CATALOG_PRICES

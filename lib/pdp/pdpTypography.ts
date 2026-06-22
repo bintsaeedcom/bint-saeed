@@ -18,6 +18,11 @@ export const PDP_ACCORDION_PANEL = 'space-y-2 pb-5'
 export const PDP_BULLET_LIST = 'pdp-bullet-list'
 export const PDP_BULLET_ITEM = `pdp-bullet-item ${PDP_COPY_RELAXED}`
 
+/** Final Product Details bullet — shown after origin line when a catalogue SKU exists. */
+export function formatPdpProductCodeLine(sku: string, isRTL: boolean): string {
+  return isRTL ? `رمز المنتج: ${sku}` : `Product code: ${sku}`
+}
+
 export const PDP_FAQ_QUESTION =
   'pdp-copy font-montserrat text-[11px] font-semibold tracking-wide text-brand-darkRed'
 

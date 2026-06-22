@@ -2,7 +2,7 @@
 
 Fixed international retail prices (not live FX). Personalisation on abayas is **complimentary**.
 
-Last synced from codebase: 2026-06-17
+Last synced from codebase: 2026-06-22
 
 **Stripe `unit_amount`** = minor units (fils / pence / cents). KWD, BHD, OMR use 3 decimal places (×1000).
 
@@ -17,8 +17,8 @@ Last synced from codebase: 2026-06-17
 | Belgravia Abaya | `belgravia-abaya` | 3199 | 3299 | 3199 | 336 | 329 | 269 | 645 | 745 | 820 | 690 | 80000 | 6199 |
 | Park Lane Abaya | `park-lane-abaya` | 2199 | 2199 | 2199 | 231 | 226 | 185 | 445 | 515 | 565 | 470 | 55000 | 4299 |
 | Hyde Park Set | `hyde-park-set` | 1399 | 1399 | 1399 | 147 | 144 | 118 | 280 | 325 | 355 | 300 | 35000 | 2699 |
-| Mayfair Kaftan | `mayfair-kaftan` | 975 | 999 | 999 | 102 | 100 | 82 | 195 | 229 | 250 | 210 | 24000 | 1899 |
-| Nothing Hill Kaftan | `nothing-hill-kaftan` | 975 | 999 | 999 | 102 | 100 | 82 | 195 | 229 | 250 | 210 | 24000 | 1899 |
+| Mayfair Kaftan | `mayfair-kaftan` | 975 | 995 | 975 | 99 | 99 | 79 | 199 | 229 | 259 | 229 | 19999 | 1899 |
+| Nothing Hill Kaftan | `nothing-hill-kaftan` | 975 | 995 | 975 | 99 | 99 | 79 | 199 | 229 | 259 | 229 | 19999 | 1899 |
 | Knightsbridge Dress | `knightsbridge-dress` | 2199 | 2199 | 2199 | 231 | 226 | 185 | 440 | 510 | 560 | 470 | 55000 | 4299 |
 | Covent Garden Long Dress | `covent-garden-long-dress` | 1699 | 1699 | 1699 | 178 | 175 | 143 | 340 | 395 | 430 | 365 | 42000 | 3299 |
 | Hampstead Dress | `hampstead-dress` | 1799 | 1799 | 1799 | 189 | 185 | 151 | 360 | 420 | 455 | 385 | 45000 | 3499 |
@@ -36,8 +36,8 @@ Last synced from codebase: 2026-06-17
 | Belgravia Abaya | `belgravia-abaya` | 319900 | 329900 | 319900 | 336000 | 329000 | 269000 | 64500 | 74500 | 82000 | 69000 | 8000000 | 619900 |
 | Park Lane Abaya | `park-lane-abaya` | 219900 | 219900 | 219900 | 231000 | 226000 | 185000 | 44500 | 51500 | 56500 | 47000 | 5500000 | 429900 |
 | Hyde Park Set | `hyde-park-set` | 139900 | 139900 | 139900 | 147000 | 144000 | 118000 | 28000 | 32500 | 35500 | 30000 | 3500000 | 269900 |
-| Mayfair Kaftan | `mayfair-kaftan` | 97500 | 99900 | 99900 | 102000 | 100000 | 82000 | 19500 | 22900 | 25000 | 21000 | 2400000 | 189900 |
-| Nothing Hill Kaftan | `nothing-hill-kaftan` | 97500 | 99900 | 99900 | 102000 | 100000 | 82000 | 19500 | 22900 | 25000 | 21000 | 2400000 | 189900 |
+| Mayfair Kaftan | `mayfair-kaftan` | 97500 | 99500 | 97500 | 99000 | 99000 | 79000 | 19900 | 22900 | 25900 | 22900 | 1999900 | 189900 |
+| Nothing Hill Kaftan | `nothing-hill-kaftan` | 97500 | 99500 | 97500 | 99000 | 99000 | 79000 | 19900 | 22900 | 25900 | 22900 | 1999900 | 189900 |
 | Knightsbridge Dress | `knightsbridge-dress` | 219900 | 219900 | 219900 | 231000 | 226000 | 185000 | 44000 | 51000 | 56000 | 47000 | 5500000 | 429900 |
 | Covent Garden Long Dress | `covent-garden-long-dress` | 169900 | 169900 | 169900 | 178000 | 175000 | 143000 | 34000 | 39500 | 43000 | 36500 | 4200000 | 329900 |
 | Hampstead Dress | `hampstead-dress` | 179900 | 179900 | 179900 | 189000 | 185000 | 151000 | 36000 | 42000 | 45500 | 38500 | 4500000 | 349900 |
@@ -97,8 +97,8 @@ Last synced from codebase: 2026-06-17
 | `marylebone-abaya` | 2499 | 505 | 585 |
 | `park-lane-abaya` | 2199 | 445 | 515 |
 | `hyde-park-set` | 1399 | 280 | 325 |
-| `mayfair-kaftan` | 975 | 195 | 229 |
-| `nothing-hill-kaftan` | 975 | 195 | 229 |
+| `mayfair-kaftan` | 975 | 199 | 229 |
+| `nothing-hill-kaftan` | 975 | 199 | 229 |
 | `soho-set` | 1499 | 299 | 350 |
 | `covent-garden-signature-set` | 3199 | 645 | 745 |
 | `covent-garden-long-dress` | 1699 | 340 | 395 |
@@ -116,8 +116,8 @@ Last synced from codebase: 2026-06-17
 | `marylebone-abaya` | 2499 | 2499 | 2499 | 262 | 257 | 210 | 505 | 585 | 640 | 540 | 62000 | 4899 |
 | `park-lane-abaya` | 2199 | 2199 | 2199 | 231 | 226 | 185 | 445 | 515 | 565 | 470 | 55000 | 4299 |
 | `hyde-park-set` | 1399 | 1399 | 1399 | 147 | 144 | 118 | 280 | 325 | 355 | 300 | 35000 | 2699 |
-| `mayfair-kaftan` | 975 | 999 | 999 | 102 | 100 | 82 | 195 | 229 | 250 | 210 | 24000 | 1899 |
-| `nothing-hill-kaftan` | 975 | 999 | 999 | 102 | 100 | 82 | 195 | 229 | 250 | 210 | 24000 | 1899 |
+| `mayfair-kaftan` | 975 | 995 | 975 | 99 | 99 | 79 | 199 | 229 | 259 | 229 | 19999 | 1899 |
+| `nothing-hill-kaftan` | 975 | 995 | 975 | 99 | 99 | 79 | 199 | 229 | 259 | 229 | 19999 | 1899 |
 | `soho-set` | 1499 | 1499 | 1499 | 157 | 154 | 126 | 299 | 350 | 380 | 320 | 37000 | 2899 |
 | `covent-garden-signature-set` | 3199 | 3299 | 3199 | 336 | 329 | 269 | 645 | 745 | 820 | 690 | 80000 | 6199 |
 | `covent-garden-long-dress` | 1699 | 1699 | 1699 | 178 | 175 | 143 | 340 | 395 | 430 | 365 | 42000 | 3299 |

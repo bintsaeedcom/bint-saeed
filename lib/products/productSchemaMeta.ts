@@ -66,8 +66,7 @@ const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
     ],
   },
   'nothing-hill-kaftan': {
-    neckline:
-      'Bateau neckline — refined silhouette with fabric draping effortlessly across the shoulders',
+    neckline: 'Graceful bateau neckline',
     fit: 'One size; fluid and relaxed fit with hidden internal ties',
     maximumGarmentLength: '125 cm',
     innerDress: 'Attached inner dress',
@@ -78,19 +77,19 @@ const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
     madeIn: DEFAULT_MADE_IN,
     faq: [
       {
-        question: 'Is the Nothing Hill Kaftan suitable for weddings?',
+        question: 'Is the Nothing Hill Kaftan suitable for weddings, Eid, and special occasions?',
         answer:
-          'Yes. The Nothing Hill Kaftan is designed for weddings, celebrations, Eid gatherings, dinners and special occasions.',
+          'Yes. The Nothing Hill Kaftan is designed for weddings, engagement celebrations, Eid gatherings, formal dinners, and special occasions. Crafted from Peach Pink crepe chiffon with a graceful bateau neckline, its fluid silhouette creates elegant movement and transitions effortlessly from daytime events to evening occasions.',
       },
       {
         question: 'Is the Nothing Hill Kaftan one size?',
         answer:
-          'Yes. The Nothing Hill Kaftan is designed as a one-size silhouette with hidden internal ties that allow the shape to be adjusted.',
+          'Yes. The Nothing Hill Kaftan is designed as a one-size silhouette. It can be worn completely loose for a flowing, effortless look or adjusted using the hidden internal ties to create a more defined, cape-like shape. This allows the silhouette to adapt naturally to different styling preferences and occasions.',
       },
       {
-        question: 'Can the scarf be styled in different ways?',
+        question: 'What makes the Nothing Hill Kaftan different from other kaftans?',
         answer:
-          'Yes. The attached scarf detail can be styled diagonally across the body using the signature Bint Saeed gold-tone emblem pin.',
+          'The Nothing Hill Kaftan combines a fluid one-size silhouette, hidden internal tie construction, an attached scarf detail, a graceful bateau neckline, and the signature Bint Saeed gold-tone emblem pin. The scarf can be worn draped from the shoulder or styled diagonally across the body using the emblem pin, creating different looks while remaining permanently attached to the garment. Designed in Abu Dhabi, UAE, it is created for women who value versatility, elegance, and pieces that can be worn across occasions, destinations, and seasons.',
       },
     ],
   },
@@ -293,6 +292,50 @@ export function buildProductAdditionalProperties(
   return props
 }
 
+function buildDefaultEnglishGarmentFaq(product: Product, facts: ProductSchemaFacts): ProductFaqItem[] {
+  const name = product.name
+  const craft = getHeritageCraft(getProductSlug(product))
+  const oneSize = productIsOneSizeOnly(product)
+
+  const occasionLead = `Yes. The ${name} is designed for weddings, engagement celebrations, Eid gatherings, formal dinners, and special occasions.`
+  const occasionAnswer = facts.stylingDetail
+    ? `${occasionLead} ${facts.stylingDetail}. Its silhouette transitions effortlessly from daytime events to evening occasions.`
+    : `${occasionLead} It transitions effortlessly from daytime events to evening occasions.`
+
+  const items: ProductFaqItem[] = [
+    {
+      question: `Is the ${name} suitable for weddings, Eid, and special occasions?`,
+      answer: occasionAnswer,
+    },
+  ]
+
+  if (oneSize) {
+    items.push({
+      question: `Is the ${name} one size?`,
+      answer: `Yes. The ${name} is designed as a one-size silhouette with a fluid and relaxed fit.`,
+    })
+  } else {
+    items.push({
+      question: `What sizes does the ${name} come in?`,
+      answer: `The ${name} is available in sizes ${product.sizes.join(', ')}. Refer to the Size & Fit section for measurements and model reference.`,
+    })
+  }
+
+  const distinctiveAnswer =
+    craft === 'khous'
+      ? `The ${name} features handwoven trim inspired by the Emirati tradition of Khous weaving. Designed in Abu Dhabi, UAE, it is created for women who value heritage craftsmanship, elegance, and pieces that endure beyond seasons.`
+      : craft === 'al-talli'
+        ? `The ${name} features traditional Al Talli trim. Designed in Abu Dhabi, UAE, it is created for women who value heritage craftsmanship, elegance, and pieces that endure beyond seasons.`
+        : `The ${name} reflects Bint Saeed's contemporary Emirati design language. Designed in Abu Dhabi, UAE, it is created for women who value elegance, versatility, and pieces that can be worn across occasions and seasons.`
+
+  items.push({
+    question: `What makes the ${name} distinctive?`,
+    answer: distinctiveAnswer,
+  })
+
+  return items
+}
+
 export function getProductFaq(
   product: Product,
   customFaq?: ProductFaqItem[],
@@ -312,6 +355,7 @@ export function getProductFaq(
     }
 
     if (merged.length > 0) return merged
+    return buildDefaultEnglishGarmentFaq(product, facts)
   }
 
   return getLocalizedProductFaq(product, locale, customFaq)
