@@ -10,6 +10,7 @@ import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 import { CurrencyProvider } from '@/lib/currency/CurrencyContext'
 import { AnalyticsProvider } from '@/lib/analytics/AnalyticsContext'
 import AnalyticsBootstrap from '@/components/AnalyticsBootstrap'
+import AnalyticsTracker from '@/components/AnalyticsTracker'
 
 import { buildRootMetadata } from '@/lib/i18n/buildRootMetadata'
 import { getServerLocale, getServerPathname } from '@/lib/i18n/serverLocale'
@@ -212,6 +213,7 @@ export default async function RootLayout({
             <CurrencyProvider>
               <ContentProtection />
               <AnalyticsBootstrap />
+              <AnalyticsTracker />
               <LayoutWrapper>
                 {children}
               </LayoutWrapper>

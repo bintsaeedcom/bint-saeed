@@ -97,6 +97,17 @@ export default function LocationConsent() {
           IT: 'EUR',
           ES: 'EUR',
           NL: 'EUR',
+          CA: 'CAD',
+          SG: 'SGD',
+          BN: 'BND',
+          MY: 'MYR',
+          MA: 'MAD',
+          NG: 'NGN',
+          ID: 'IDR',
+          KZ: 'KZT',
+          AZ: 'AZN',
+          UZ: 'UZS',
+          HK: 'HKD',
         }
 
         const suggestedCurrency = countryToCurrency[data.country_code] || 'USD'

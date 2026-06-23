@@ -49,6 +49,7 @@ export const SET_STYLE_SKU_BY_SLUG = Object.fromEntries(
 /** Canonical 3-letter colour codes for variant SKUs. */
 const COLOR_SKU_SUFFIX: Record<string, string> = {
   Black: 'BLK',
+  'Deep Black': 'BLK',
   Burgundy: 'BUR',
   'Navy Blue': 'NVY',
   'Navy Grey': 'NVG',

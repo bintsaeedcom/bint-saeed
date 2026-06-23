@@ -12,6 +12,17 @@ export const SUPPORTED_CURRENCIES = [
   'CHF',
   'RUB',
   'CNY',
+  'CAD',
+  'SGD',
+  'BND',
+  'MYR',
+  'MAD',
+  'NGN',
+  'IDR',
+  'KZT',
+  'AZN',
+  'UZS',
+  'HKD',
 ] as const
 
 export type SupportedCurrency = (typeof SUPPORTED_CURRENCIES)[number]

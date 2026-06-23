@@ -40,9 +40,51 @@ export const KAFTAN_CATALOG_PRICES: CurrencyPriceMap = {
   CHF: 229,
   CNY: 1899,
   RUB: 19999,
+  CAD: 369,
+  SGD: 359,
+  BND: 359,
+  MYR: 1199,
+  MAD: 2690,
+  NGN: 429000,
+  IDR: 4990000,
+  KZT: 135000,
+  AZN: 449,
+  UZS: 3490000,
+  HKD: 2099,
 }
 
-const KAFTAN_CATALOG_SLUGS = ['mayfair-kaftan', 'nothing-hill-kaftan'] as const
+/** Hand-set list prices for Belgravia Abaya (all checkout currencies). */
+export const BELGRAVIA_CATALOG_PRICES: CurrencyPriceMap = {
+  AED: 3199,
+  SAR: 3299,
+  QAR: 3199,
+  OMR: 329,
+  BHD: 329,
+  KWD: 269,
+  GBP: 645,
+  EUR: 745,
+  USD: 829,
+  CHF: 690,
+  RUB: 79999,
+  CNY: 6199,
+  CAD: 1199,
+  SGD: 1179,
+  BND: 1179,
+  MYR: 3899,
+  MAD: 8790,
+  NGN: 1399000,
+  IDR: 15990000,
+  KZT: 445000,
+  AZN: 1479,
+  UZS: 11490000,
+  HKD: 6899,
+}
+
+const EXPLICIT_CATALOG_PRICE_BY_SLUG: Record<string, CurrencyPriceMap> = {
+  'belgravia-abaya': BELGRAVIA_CATALOG_PRICES,
+  'mayfair-kaftan': KAFTAN_CATALOG_PRICES,
+  'nothing-hill-kaftan': KAFTAN_CATALOG_PRICES,
+}
 
 function roundToNearest(value: number, step: number): number {
   return Math.round(value / step) * step
@@ -76,9 +118,11 @@ export function buildFullPriceMap(triple: ProductCatalogTriple): CurrencyPriceMa
 /** Full fixed list price per slug (all checkout currencies). */
 export const PRODUCT_CATALOG_PRICES: Record<string, CurrencyPriceMap> = {
   ...Object.fromEntries(
-    Object.entries(PRODUCT_CATALOG_TRIPLES).map(([slug, triple]) => [slug, buildFullPriceMap(triple)]),
+    Object.entries(PRODUCT_CATALOG_TRIPLES)
+      .filter(([slug]) => !(slug in EXPLICIT_CATALOG_PRICE_BY_SLUG))
+      .map(([slug, triple]) => [slug, buildFullPriceMap(triple)]),
   ),
-  ...Object.fromEntries(KAFTAN_CATALOG_SLUGS.map((slug) => [slug, KAFTAN_CATALOG_PRICES])),
+  ...EXPLICIT_CATALOG_PRICE_BY_SLUG,
 }
 
 export function hasCatalogPrice(slug: string): boolean {

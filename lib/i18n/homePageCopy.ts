@@ -16,6 +16,7 @@ const HOME_HERO_RAW: Record<AppLocale, string> = {
   de: HOME_META_DESCRIPTION.de,
   nl: HOME_META_DESCRIPTION.nl,
   pt: HOME_META_DESCRIPTION.pt,
+  id: HOME_META_DESCRIPTION.id,
 }
 
 /** Raw hero line used for meta + JSON-LD short descriptions (before clipping). */
@@ -43,6 +44,7 @@ const HOME_DEFAULT_TITLE: Record<AppLocale, string> = {
   de: HOME_META_TITLE.de,
   nl: HOME_META_TITLE.nl,
   pt: HOME_META_TITLE.pt,
+  id: HOME_META_TITLE.id,
 }
 
 export function getHomeDefaultTitle(locale: AppLocale): string {
@@ -60,6 +62,7 @@ const HOME_OG_TITLE: Record<AppLocale, string> = {
   de: HOME_META_TITLE.de,
   nl: HOME_META_TITLE.nl,
   pt: HOME_META_TITLE.pt,
+  id: HOME_META_TITLE.id,
 }
 
 export function getHomeOgTitle(locale: AppLocale): string {

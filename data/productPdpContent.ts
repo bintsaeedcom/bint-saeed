@@ -1,7 +1,10 @@
 import type { Product } from '@/data/products'
+import { getProductPdpContentId } from '@/data/productPdpContentId'
+import type { AppLocale } from '@/lib/i18n/routing'
 import { getProductSlug } from '@/lib/products/links'
 import { getProductSchemaFacts } from '@/lib/products/productSchemaMeta'
 import { buildVariantSku } from '@/lib/products/sku'
+import { getBelgraviaPdpFaq } from '@/lib/products/belgraviaSchemaI18n'
 import { getPdpSizeOptions, productIsOneSizeOnly } from '@/lib/shopProductOptions'
 
 export type ProductPdpContent = {
@@ -104,6 +107,13 @@ const STANDARD_CARE_DETAILS = [
   'Do not bleach',
   'Do not tumble dry',
 ] as const
+
+const ABAYA_CARE_DETAILS = ['Professional dry clean only'] as const
+
+function careDetailsForProduct(product: Product): string[] {
+  if (product.category === 'Abayas') return [...ABAYA_CARE_DETAILS]
+  return [...STANDARD_CARE_DETAILS]
+}
 
 function cmToInches(cm: number): number {
   return Math.round(cm / 2.54)
@@ -217,7 +227,7 @@ function buildStructuredApparelContent(product: Product, color?: string): Produc
     introParagraphs: buildStructuredApparelIntro(product, facts),
     productDetails: buildProductDetailBullets(product, colorName),
     ...(compositionDetails.length ? { compositionDetails } : {}),
-    careDetails: [...STANDARD_CARE_DETAILS],
+    careDetails: careDetailsForProduct(product),
     fitAndSizeDetails: buildStructuredFitAndSizeDetails(product),
   }
 }
@@ -262,6 +272,70 @@ function isMayfairKaftan(product: Product): boolean {
 function isNothingHillKaftan(product: Product): boolean {
   const slug = getProductSlug(product).toLowerCase()
   return slug === 'nothing-hill-kaftan' || product.id === 'cf-002'
+}
+
+function isBelgraviaAbaya(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'belgravia-abaya' || product.id === 'ab-006'
+}
+
+type BelgraviaColorKey = 'deep-black' | 'navy-blue'
+
+const BELGRAVIA_COLOR_COPY: Record<BelgraviaColorKey, { label: string }> = {
+  'deep-black': { label: 'Deep Black' },
+  'navy-blue': { label: 'Navy Blue' },
+}
+
+function normalizeBelgraviaColor(color?: string): BelgraviaColorKey {
+  const c = (color ?? '').toLowerCase()
+  if (c.includes('navy')) return 'navy-blue'
+  if (c.includes('black')) return 'deep-black'
+  return 'deep-black'
+}
+
+const BELGRAVIA_COMPOSITION_DETAILS = [
+  'Outer: Light crepe blend (80% polyester, 20% viscose)',
+  'Lining composition: (70% polyester, 30% viscose)',
+] as const
+
+function buildBelgraviaAbayaContent(color?: string): ProductPdpContent {
+  const { label } = BELGRAVIA_COLOR_COPY[normalizeBelgraviaColor(color)]
+
+  return {
+    introParagraphs: [
+      'The Belgravia Abaya draws inspiration from the Bisht, one of the most recognisable garments of the Arabian Peninsula, reinterpreted through a contemporary silhouette designed for modern life.',
+      'Available in Deep Black and Navy Blue, the abaya is distinguished by a handwoven trim inspired by Al Khous, the traditional Emirati art of palm frond weaving passed down through generations. The pattern references the geometry of woven palm fronds, introducing texture and cultural craftsmanship to an elegant, understated silhouette.',
+      'Created in Abu Dhabi, the Belgravia Abaya reflects Bint Saeed’s commitment to carrying traditional craftsmanship forward through contemporary design. Its relaxed Bisht-inspired cut creates graceful movement while maintaining a refined structure, while hidden pockets and a fully lined construction ensure comfort and ease of wear.',
+      'Designed to move effortlessly between occasions, countries, and lifestyles, the Belgravia Abaya can be worn for a wedding in Riyadh, a dinner in London, an event in Paris, or everyday life in the Gulf. Timeless rather than trend-driven, it is created for women who value elegance, craftsmanship, and pieces that remain relevant wherever they are worn.',
+      'Like all Bint Saeed abayas, the Belgravia Abaya is made to order and can be personalised with a name, date, or meaningful message inside the hidden pocket.',
+    ],
+    productDetails: [
+      'Bisht-inspired abaya silhouette',
+      'Available in Deep Black and Navy Blue',
+      'Handwoven trim inspired by traditional Al Khous palm frond weaving',
+      'Open-front construction',
+      'Optional concealed snap-button closure available upon request',
+      'Fully lined for comfort and a refined finish',
+      'Hidden side pockets',
+      'Personalisation available inside the hidden pocket',
+      'Relaxed flowing silhouette designed for ease of movement',
+      'Lightweight crepe blend outer fabric',
+      'Contemporary design inspired by Emirati and GCC traditions and crafts',
+      'Suitable for everyday elegance, gatherings, weddings, and special occasions',
+      'Model height: 155 cm / 61 inches',
+      'Length: 138 cm / 54.5 inches',
+      `Colour: ${label}`,
+      'Made in Abu Dhabi, United Arab Emirates',
+    ],
+    compositionDetails: [...BELGRAVIA_COMPOSITION_DETAILS],
+    fitAndSizeDetails: [
+      'Available sizes: XS, S, M, L, XL, XXL',
+      'Length: 138 cm / 54.5 inches',
+      'Model height: 155 cm / 61 inches',
+    ],
+    careDetails: [...ABAYA_CARE_DETAILS],
+    faq: getBelgraviaPdpFaq(),
+  }
 }
 
 type NothingHillColorKey = 'peach-pink' | 'black' | 'peach'
@@ -315,10 +389,20 @@ function buildNothingHillKaftanContent(color?: string): ProductPdpContent {
 /**
  * PDP copy source of truth.
  * — Mayfair & Nothing Hill Kaftans use finalized reference copy (colour-aware).
+ * — Belgravia Abaya uses finalized reference copy (colour-aware).
  * — All other products use the same topic layout as that page; replace bracketed lines when ready.
  */
-export function getProductPdpContent(product: Product, opts?: { color?: string }): ProductPdpContent {
+export function getProductPdpContent(
+  product: Product,
+  opts?: { color?: string; locale?: AppLocale },
+): ProductPdpContent {
   const color = opts?.color?.trim() || product.colors[0]?.name
+  const locale = opts?.locale ?? 'en'
+
+  if (locale === 'id') {
+    const idContent = getProductPdpContentId(product, color)
+    if (idContent) return idContent
+  }
 
   if (isMayfairKaftan(product)) {
     return buildMayfairKaftanContent(color)
@@ -326,6 +410,10 @@ export function getProductPdpContent(product: Product, opts?: { color?: string }
 
   if (isNothingHillKaftan(product)) {
     return buildNothingHillKaftanContent(color)
+  }
+
+  if (isBelgraviaAbaya(product)) {
+    return buildBelgraviaAbayaContent(color)
   }
 
   if (product.category === 'Accessories') {

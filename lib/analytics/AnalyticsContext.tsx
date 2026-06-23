@@ -8,6 +8,8 @@ import {
   markGpsPromptHandled,
 } from '@/lib/geo/locationEvents'
 import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
+import { languageLabels } from '@/lib/geo/geoDetection'
+import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 
 interface VisitorData {
   visitorId: string
@@ -41,6 +43,8 @@ interface VisitorData {
     title: string
     timestamp: string
     timeOnPage: number
+    language?: string
+    currency?: string
   }[]
   totalTimeOnSite: number
   referrer: string
@@ -179,6 +183,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
   const currentPathRef = useRef('')
   const visitorRef = useRef<VisitorData | null>(null)
   const lastSessionSummarySentAtRef = useRef(0)
+  const lastSlackPageRef = useRef('')
 
   // Initialize visitor on mount
   useEffect(() => {
@@ -520,6 +525,13 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
   const trackPageView = useCallback((path: string, title: string) => {
     const now = Date.now()
     const prevPath = currentPathRef.current
+    const { locale } = stripLocaleFromPathname(path)
+    const languageCode = locale === 'en' ? 'en' : locale
+    const languageLabel = languageLabels[languageCode] || languageCode
+    const currencyCode =
+      typeof window !== 'undefined'
+        ? localStorage.getItem('bint-saeed-currency') || 'AED'
+        : 'AED'
 
     setVisitor((prev) => {
       if (!prev) return prev
@@ -541,6 +553,8 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
         title,
         timestamp: new Date().toISOString(),
         timeOnPage: 0,
+        language: languageCode,
+        currency: currencyCode,
       }
 
       return {
@@ -551,6 +565,29 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
 
     pageStartTimeRef.current = now
     currentPathRef.current = path
+
+    const notifySlack = (attempt = 0) => {
+      const snapshot = visitorRef.current
+      if (!snapshot) {
+        if (attempt < 24) window.setTimeout(() => notifySlack(attempt + 1), 200)
+        return
+      }
+      if (lastSlackPageRef.current === path) return
+      lastSlackPageRef.current = path
+
+      const sessionSeconds = snapshot.pageViews.reduce((sum, pv) => sum + (pv.timeOnPage || 0), 0)
+
+      void sendSlackNotification('page_view', {
+        ...snapshot,
+        currentPage: { path, title },
+        language: languageCode,
+        languageLabel,
+        currency: currencyCode,
+        browser: getBrowserContext(),
+        totalTimeOnSite: sessionSeconds,
+      })
+    }
+    notifySlack()
   }, [])
 
   // Track cart events

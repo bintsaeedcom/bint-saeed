@@ -33,6 +33,7 @@ const PRODUCT_INTRO: Record<AppLocale, string> = {
   de: `${BRAND_NAME} — emiratische Luxusmodemarke aus ${G.de.madeIn}.`,
   nl: `${BRAND_NAME} — Emiratisch luxemerken uit ${G.nl.madeIn}.`,
   pt: `${BRAND_NAME} — marca de moda de luxo emirati de ${G.pt.madeIn}.`,
+  id: `${BRAND_NAME} — merek fashion mewah Emirati dari ${G.id.madeIn}.`,
 }
 
 export function buildProductMetaDescription(
@@ -63,7 +64,7 @@ export function productHreflangLanguages(slug: string): Record<string, string> {
     'x-default': new URL(pathname, SITE).toString(),
     en: new URL(pathname, SITE).toString(),
   }
-  for (const L of ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt'] as const) {
+  for (const L of ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id'] as const) {
     languages[L] = new URL(localizedPath(L, pathname), SITE).toString()
   }
   return languages
@@ -109,6 +110,10 @@ const NOT_FOUND: Record<AppLocale, { title: string; description: string }> = {
   pt: {
     title: 'Produto não encontrado | Bint Saeed',
     description: 'Este modelo não está disponível na coleção atual da Bint Saeed.',
+  },
+  id: {
+    title: 'Produk tidak ditemukan | Bint Saeed',
+    description: 'Model ini tidak tersedia dalam koleksi Bint Saeed saat ini.',
   },
 }
 

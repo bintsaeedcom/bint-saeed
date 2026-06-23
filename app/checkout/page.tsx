@@ -32,7 +32,7 @@ export default function CheckoutPage() {
   const { localize } = useLocaleHref()
   const { items } = useCartStore()
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
   const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.trim() ?? ''
   const stripeEnvReady = stripePublishableKey.startsWith('pk_')
 
@@ -190,6 +190,7 @@ export default function CheckoutPage() {
                         alt={getCartLineImageAlt(
                           item,
                           staticProducts.find((product) => product.id === item.id),
+                          language,
                         )}
                         fill
                         className="img-zoom object-cover object-top"

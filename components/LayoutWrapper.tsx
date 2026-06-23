@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import CookieConsent from '@/components/CookieConsent'
+import RegionalExperiencePopup from '@/components/RegionalExperiencePopup'
 import SmoothScrollProvider from '@/components/SmoothScrollProvider'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 
@@ -53,6 +54,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
         <Footer />
         <WhatsAppButton />
         <CookieConsent />
+        <RegionalExperiencePopup />
       </SmoothScrollProvider>
     </>
   )

@@ -3,8 +3,9 @@
 import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import AboutTopicNav from '@/components/AboutTopicNav'
-import { useLanguage } from '@/lib/i18n/LanguageContext'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { getCraftsmanshipCopy } from '@/lib/content/craftsmanshipCopyI18n'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { FiArrowRight } from 'react-icons/fi'
 
 /** Full-bleed bands (top → middle → bottom). */
@@ -98,11 +99,15 @@ function MosaicTileImage({
 
 /** Opening band — matches `/accessories` hero: dark-red wash over media, title + description bottom-aligned */
 function CraftsmanshipHero({ className = '' }: { className?: string }) {
-  const { t, isRTL } = useLanguage()
+  const { t, isRTL, language } = useLanguage()
+  const copy = getCraftsmanshipCopy(language)
   const v = CRAFT_VIDEO_BANDS[0]
-  const title = t.footer?.craftsmanship ?? 'Craftsmanship'
+  const title = language === 'id' ? copy.breadcrumbCraftsmanship : (t.footer?.craftsmanship ?? 'Craftsmanship')
   const eyebrow = t.about?.craftSubtitle ?? 'The Process'
   const description = t.about?.craftsmanshipDesc ?? ''
+  const homeLabel = language === 'id' ? copy.breadcrumbHome : isRTL ? 'الرئيسية' : 'Home'
+  const craftLabel = language === 'id' ? copy.breadcrumbCraftsmanship : isRTL ? 'الحرفية' : 'Craftsmanship'
+  const backLabel = language === 'id' ? copy.backToHome : isRTL ? 'العودة للرئيسية' : 'Back to Home'
 
   return (
     <section
@@ -132,12 +137,12 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
             <AppPageWayfinding
               rtl={isRTL}
               segments={[
-                { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-                { label: isRTL ? 'الحرفية' : 'Craftsmanship' },
+                { label: homeLabel, href: '/home' },
+                { label: craftLabel },
               ]}
               backLink={{
                 href: '/home',
-                label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+                label: backLabel,
               }}
             />
           </motion.div>
@@ -345,6 +350,9 @@ function PhaseAtmosphere({
 }
 
 export default function CraftsmanshipClient() {
+  const { language } = useLanguage()
+  const copy = getCraftsmanshipCopy(language)
+
   return (
     <div className="relative isolate min-h-screen w-full min-w-0 bg-brand-pageCanvas">
       <div
@@ -370,32 +378,22 @@ export default function CraftsmanshipClient() {
           <div className="relative mx-auto max-w-[90rem]">
             <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16 xl:gap-24">
               <header className="lg:col-span-4 xl:col-span-3 lg:pt-0">
-                <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">Phase I</p>
+                <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">{copy.phaseI.label}</p>
                 <h2
                   id="phase-i"
                   className="font-rozha text-[clamp(1.65rem,3vw,2.35rem)] leading-tight tracking-[0.04em] text-brand-darkRed"
                 >
-                  Development
+                  {copy.phaseI.title}
                 </h2>
                 <div className="mt-10 hidden h-px w-16 bg-gradient-to-r from-brand-dustyBlue/60 to-transparent lg:block" aria-hidden />
               </header>
               <div className="lg:col-span-8 xl:col-span-9">
                 <div className="grid items-start gap-10 md:grid-cols-2 md:gap-x-16 md:gap-y-10 lg:gap-y-12">
                   <ProsePhase>
-                    <p className="mb-0">
-                      At Bint Saeed, each piece begins with a defined process of development. As a house based in Abu Dhabi,
-                      the work moves between locations with a clear structure. Patterns are created in Italy, where
-                      proportion, balance, and construction are resolved before any material is cut. This stage determines
-                      how each abaya will fall, move, and maintain its shape over time.
-                    </p>
+                    <p className="mb-0">{copy.phaseI.paragraphs[0]}</p>
                   </ProsePhase>
                   <ProsePhase>
-                    <p className="mb-0">
-                      The process then continues in Abu Dhabi, where prototypes are produced to test construction and
-                      proportion. Once these are approved, a sample is made to confirm the final form, material behaviour,
-                      and fit. Only after these stages are completed and reviewed does a piece move into production. This
-                      sequence ensures that every garment is technically resolved before it is made in its final form.
-                    </p>
+                    <p className="mb-0">{copy.phaseI.paragraphs[1]}</p>
                   </ProsePhase>
                 </div>
               </div>
@@ -427,44 +425,28 @@ export default function CraftsmanshipClient() {
           <div className="relative mx-auto max-w-[90rem]">
             <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16 xl:gap-24">
               <header className="lg:col-span-4 xl:col-span-3">
-                <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-clayRed/90">Phase II</p>
+                <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-clayRed/90">{copy.phaseII.label}</p>
                 <h2
                   id="phase-ii"
                   className="font-rozha text-[clamp(1.65rem,3vw,2.35rem)] leading-tight tracking-[0.04em] text-brand-darkRed"
                 >
-                  Making
+                  {copy.phaseII.title}
                 </h2>
                 <div className="mt-10 hidden h-px w-16 bg-gradient-to-r from-brand-darkRed/45 to-transparent lg:block" aria-hidden />
               </header>
               <div className="lg:col-span-8 xl:col-span-9">
                 <div className="grid items-start gap-12 md:grid-cols-2 md:gap-x-14 md:gap-y-12">
                   <ProsePhase>
-                    <p className="mb-0">
-                      Production takes place in Abu Dhabi, United Arab Emirates, under the direction of craftsmen with over
-                      25 years of experience. Their role is to ensure that each piece is constructed with consistency,
-                      precision, and control across every stage.
-                    </p>
+                    <p className="mb-0">{copy.phaseII.paragraphs[0]}</p>
                   </ProsePhase>
                   <ProsePhase>
-                    <p className="mb-0">
-                      Materials are sourced across Europe and Asia. Components such as buttons are selected from European
-                      suppliers, while natural stones are sourced, cut, and polished in Asia. Each element is chosen for its
-                      performance, ensuring it contributes to the structure, durability, and overall balance of the garment.
-                    </p>
+                    <p className="mb-0">{copy.phaseII.paragraphs[1]}</p>
                   </ProsePhase>
                   <ProsePhase>
-                    <p className="mb-0">
-                      Production is kept controlled in volume, allowing each piece to receive the necessary time and attention.
-                      This approach ensures that construction, finishing, and overall quality remain consistent from one piece
-                      to the next.
-                    </p>
+                    <p className="mb-0">{copy.phaseII.paragraphs[2]}</p>
                   </ProsePhase>
                   <ProsePhase>
-                    <p className="mb-0">
-                      In line with this approach, pieces are produced primarily on an order basis, with each garment made
-                      specifically for the client. This allows production to remain focused and avoids excess inventory,
-                      maintaining a more considered and responsible way of working.
-                    </p>
+                    <p className="mb-0">{copy.phaseII.paragraphs[3]}</p>
                   </ProsePhase>
                 </div>
               </div>
@@ -496,37 +478,25 @@ export default function CraftsmanshipClient() {
           <div className="relative mx-auto max-w-[90rem]">
             <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16 xl:gap-24">
               <header className="lg:col-span-4 xl:col-span-3">
-                <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">Phase III</p>
+                <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">{copy.phaseIII.label}</p>
                 <h2
                   id="phase-iii"
                   className="font-rozha text-[clamp(1.65rem,3vw,2.35rem)] leading-tight tracking-[0.04em] text-brand-darkRed"
                 >
-                  Direction
+                  {copy.phaseIII.title}
                 </h2>
                 <div className="mt-10 hidden h-px w-16 bg-gradient-to-r from-brand-dustyBlue/55 to-transparent lg:block" aria-hidden />
               </header>
               <div className="flex flex-col gap-12 lg:col-span-8 xl:col-span-9 lg:gap-14">
                 <ProsePhase className="max-w-3xl">
-                  <p className="mb-0">
-                    Each design is developed and carried through to completion under a single direction. The Creative Director
-                    oversees the process from initial concept to final execution, ensuring that proportion, construction, and
-                    detail remain aligned throughout.
-                  </p>
+                  <p className="mb-0">{copy.phaseIII.paragraphs[0]}</p>
                 </ProsePhase>
                 <div className="grid items-start gap-12 md:grid-cols-2 md:gap-x-14">
                   <ProsePhase>
-                    <p className="mb-0">
-                      Elements such as Al Talli and Khous are integrated into the structure of the garment rather than applied
-                      as surface decoration. Their use is determined during development and resolved within the construction
-                      process, ensuring consistency in both appearance and performance.
-                    </p>
+                    <p className="mb-0">{copy.phaseIII.paragraphs[1]}</p>
                   </ProsePhase>
                   <ProsePhase>
-                    <p className="mb-0">
-                      The result is a piece that reflects a clear standard of development, controlled production, and considered
-                      design. Each abaya is made to hold its form, perform in use, and maintain its quality over time. Bint Saeed
-                      operates as a contemporary house, shaped in Abu Dhabi and developed through an international process.
-                    </p>
+                    <p className="mb-0">{copy.phaseIII.paragraphs[2]}</p>
                   </ProsePhase>
                 </div>
               </div>
@@ -545,14 +515,14 @@ export default function CraftsmanshipClient() {
         <DecorativeCorners tone="dustyBlue" />
         <div className="relative mx-auto flex max-w-lg flex-col items-center text-center">
           <p className="mb-10 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] tracking-[0.02em] text-brand-darkRed">
-            Explore the collection
+            {copy.ctaHeading}
           </p>
           <LocaleLink
             href="/shop?from=craftsmanship"
             className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-[4px] border border-brand-darkRed/40 bg-brand-darkRed/[0.06] px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-brand-darkRed shadow-[0_18px_48px_-28px_rgba(42,0,18,0.22)] transition-colors hover:border-brand-dustyBlue hover:bg-brand-dustyBlue hover:text-brand-pageCanvas"
             data-cursor-hover
           >
-            View Collection
+            {copy.ctaButton}
             <FiArrowRight className="h-4 w-4" />
           </LocaleLink>
         </div>

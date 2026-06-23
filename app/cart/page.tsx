@@ -22,7 +22,7 @@ export default function CartPage() {
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
   const estimatedTotal = cartSubtotal(items)
   const compactButtonRadius = 'rounded-[4px]'
 
@@ -118,6 +118,7 @@ export default function CartPage() {
                         alt={getCartLineImageAlt(
                           item,
                           staticProducts.find((product) => product.id === item.id),
+                          language,
                         )}
                         fill
                         unoptimized={isWebshopPicturePath(item.image)}

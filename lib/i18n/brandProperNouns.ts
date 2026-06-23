@@ -72,6 +72,12 @@ export const LOCALE_GEO: Record<AppLocale, LocaleGeo> = {
     countryShort: 'EAU',
     madeIn: 'Abu Dhabi, Emirados Árabes Unidos',
   },
+  id: {
+    city: 'Abu Dhabi',
+    country: 'Uni Emirat Arab',
+    countryShort: 'UEA',
+    madeIn: 'Abu Dhabi, Uni Emirat Arab',
+  },
 }
 
 /** Heritage craft names — Arabic script in AR; Latin elsewhere. */
@@ -86,6 +92,7 @@ export const CRAFT_NAMES: Record<AppLocale, { khous: string; alTalli: string }> 
   de: { khous: 'Khous', alTalli: 'Al Talli' },
   nl: { khous: 'Khous', alTalli: 'Al Talli' },
   pt: { khous: 'Khous', alTalli: 'Al Talli' },
+  id: { khous: 'Khous', alTalli: 'Al Talli' },
 }
 
 /** @deprecated Use `geoForLocale(locale).city` */

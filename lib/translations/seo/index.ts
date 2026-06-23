@@ -10,6 +10,7 @@ import { seoSupplementalZh } from './zh'
 import { seoSupplementalDe } from './de'
 import { seoSupplementalNl } from './nl'
 import { seoSupplementalPt } from './pt'
+import { seoSupplementalId } from './id'
 
 const BUNDLES: Record<AppLocale, SeoSupplementalBundle> = {
   en: seoSupplementalEn,
@@ -22,6 +23,7 @@ const BUNDLES: Record<AppLocale, SeoSupplementalBundle> = {
   de: seoSupplementalDe,
   nl: seoSupplementalNl,
   pt: seoSupplementalPt,
+  id: seoSupplementalId,
 }
 
 /** Supplemental SEO JSON-LD strings for the active UI locale (`AppLocale`). */

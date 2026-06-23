@@ -7,6 +7,7 @@ import { getSchemaAudienceType } from '@/lib/brand/brandPositioning'
 import { resolveProductSku } from '@/lib/products/sku'
 import { getProductColorOptions } from '@/lib/products/productColorAvailability'
 import { getProductPdpContent } from '@/data/productPdpContent'
+import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
 import { buildLocalizedSchemaDescription } from '@/lib/products/productSchemaI18n'
 import {
   buildFaqPageJsonLd,
@@ -16,6 +17,7 @@ import {
   getProductSchemaFacts,
 } from '@/lib/products/productSchemaMeta'
 import { getKaftanPageSeo, getKaftanSchemaAudience, isKaftanSlug } from '@/lib/products/kaftanSchemaI18n'
+import { getBelgraviaSchemaAudience, isBelgraviaSlug } from '@/lib/products/belgraviaSchemaI18n'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
@@ -47,9 +49,10 @@ function buildImageObjects(
   images: string[],
   color?: string,
   lang?: string,
+  locale: AppLocale = 'en',
 ): Array<Record<string, unknown>> {
   return images.map((src, index) => {
-    const caption = getProductImageAlt(product, src, { color, index })
+    const caption = getProductImageAlt(product, src, { color, index, locale })
     const url = absoluteCatalogImageUrl(src)
     const isWebp = src.toLowerCase().endsWith('.webp')
     const filename = src.split('/').pop() ?? ''
@@ -84,8 +87,9 @@ function buildSchemaDescription(
   const kaftanSeo = getKaftanPageSeo(slug, locale)
   if (kaftanSeo) return kaftanSeo.description
 
-  const pdp = getProductPdpContent(product, { color })
-  const base = pdp.introParagraphs?.[0]?.trim() || product.description.trim()
+  const pdp = getProductPdpContent(product, { color, locale })
+  const catalog = getLocalizedProductCatalogFields(product, locale)
+  const base = pdp.introParagraphs?.[0]?.trim() || catalog.description.trim()
   return buildLocalizedSchemaDescription(product, locale, base)
 }
 
@@ -104,7 +108,9 @@ function schemaManufacturer() {
 function schemaAudience(locale: AppLocale, slug: string) {
   const audienceType = isKaftanSlug(slug)
     ? getKaftanSchemaAudience(locale)
-    : getSchemaAudienceType(locale)
+    : isBelgraviaSlug(slug)
+      ? getBelgraviaSchemaAudience(locale)
+      : getSchemaAudienceType(locale)
 
   return {
     '@type': 'PeopleAudience' as const,
@@ -184,7 +190,7 @@ function buildProductNode(
     brand: { '@type': 'Brand' as const, name: 'Bint Saeed' },
     category: product.category,
     color: color || product.colors[0]?.name,
-    image: buildImageObjects(product, images, color, input.lang),
+    image: buildImageObjects(product, images, color, input.lang, input.locale),
     offers: buildOffer(product, input.pageUrl),
     ...schemaSharedFields(product, slug, input.locale, color, input.lang),
   }
@@ -203,7 +209,7 @@ export function buildShopProductJsonLd(input: {
   const pageUrl = `${SITE_URL}${productPagePath}`
   const lang = schemaInLanguageForLocale(locale)
   const variantColors = getProductColorOptions(product)
-  const pdp = getProductPdpContent(product, { color: selectedColor })
+  const pdp = getProductPdpContent(product, { color: selectedColor, locale })
   const faqItems = getProductFaq(product, pdp.faq, locale)
   const faqNode = buildFaqPageJsonLd(pageUrl, faqItems, lang)
 
@@ -218,7 +224,7 @@ export function buildShopProductJsonLd(input: {
       variesBy: 'https://schema.org/color',
       category: product.category,
       brand: { '@type': 'Brand', name: 'Bint Saeed' },
-      image: buildImageObjects(product, activeImages, selectedColor, lang),
+      image: buildImageObjects(product, activeImages, selectedColor, lang, locale),
       ...schemaSharedFields(product, slug, locale, selectedColor, lang),
       hasVariant: variantColors.map((color) => {
         const variantImages = product.colorImages?.[color.name] ?? product.images

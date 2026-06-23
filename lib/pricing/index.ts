@@ -137,7 +137,7 @@ export function cartSubtotalInCurrency(
   return items.reduce((sum, item) => sum + lineTotalInCurrency(item, currency), 0)
 }
 
-/** Stripe minor units — 3-decimal GCC currencies use 1000 subunits. */
+/** Stripe minor units — 3-decimal GCC currencies use 1000 subunits; IDR/NGN use ×100. */
 export function toStripeMinorUnits(amount: number, currency: SupportedCurrency): number {
   const code = currency.toUpperCase()
   const threeDecimal = code === 'BHD' || code === 'KWD' || code === 'OMR'
@@ -178,6 +178,28 @@ export function formatAmountForCurrency(amount: number, currency: SupportedCurre
       return `${formatted} ₽`
     case 'CNY':
       return `¥${formatted}`
+    case 'CAD':
+      return `C$${formatted}`
+    case 'SGD':
+      return `S$${formatted}`
+    case 'BND':
+      return `B$${formatted}`
+    case 'MYR':
+      return `RM ${formatted}`
+    case 'MAD':
+      return `${formatted} MAD`
+    case 'NGN':
+      return `₦${formatted}`
+    case 'IDR':
+      return `Rp ${amount.toLocaleString('id-ID', { maximumFractionDigits: 0 })}`
+    case 'KZT':
+      return `₸${formatted}`
+    case 'AZN':
+      return `₼${formatted}`
+    case 'UZS':
+      return `${amount.toLocaleString('uz-UZ', { maximumFractionDigits: 0 })} so'm`
+    case 'HKD':
+      return `HK$${formatted}`
     default:
       return `${formatted} ${currency}`
   }

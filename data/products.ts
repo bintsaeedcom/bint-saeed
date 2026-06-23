@@ -1,4 +1,5 @@
 import { slugifyProductName } from '@/lib/products/links'
+import { BELGRAVIA_MATERIAL } from '@/lib/products/belgraviaSchemaI18n'
 
 export interface Product {
   id: string
@@ -477,16 +478,16 @@ export const products: Product[] = [
     name: 'Belgravia Abaya',
     price: 3199,
     description:
-      'Signature abaya with tonal embroidery and trim inspired by traditional Khous weaving — a refined expression of Emirati heritage.',
-    fabric: 'Japanese crepe, tonal embroidery thread',
-    measurements: 'Length: 140cm (size M). Available in custom lengths upon request.',
+      'Bisht-inspired abaya with handwoven trim inspired by Al Khous palm frond weaving — a contemporary expression of Emirati heritage, made in Abu Dhabi.',
+    fabric: BELGRAVIA_MATERIAL,
+    measurements: 'Length: 138cm (size M). Available in custom lengths upon request.',
     images: belgraviaAbayaGallery('black'),
     colorImages: {
-      Black: belgraviaAbayaGallery('black'),
+      'Deep Black': belgraviaAbayaGallery('black'),
       'Navy Blue': belgraviaAbayaGallery('navy-blue'),
     },
     colors: [
-      { name: 'Black', hex: '#1a1a1a' },
+      { name: 'Deep Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],

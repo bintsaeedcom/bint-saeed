@@ -538,18 +538,41 @@ function formatSlackMessage(type: string, data: any) {
         ]
       }
 
-    case 'page_view':
+    case 'page_view': {
+      const lang = data.languageLabel || data.language || 'Unknown'
+      const curr = data.currency || 'AED'
+      const pagePath = data.currentPage?.path || data.browser?.path || 'Unknown'
+      const pageTitle = data.currentPage?.title || data.browser?.title || pagePath
       return {
         blocks: [
           {
             type: 'section',
-            text: { 
-              type: 'mrkdwn', 
-              text: `👁️ *Page View*: ${data.currentPage?.title || data.currentPage?.path}\n_${locationText} • ${timeOnSite} on site_` 
-            }
-          }
-        ]
+            text: {
+              type: 'mrkdwn',
+              text: `👁️ *Page view*\n*${pageTitle}*\n\`${pagePath}\``,
+            },
+          },
+          {
+            type: 'section',
+            fields: [
+              { type: 'mrkdwn', text: `*Language:*\n🌐 ${lang} (\`${data.language || 'en'}\`)` },
+              { type: 'mrkdwn', text: `*Currency:*\n💱 ${curr}` },
+              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `*Device:*\n${device}` },
+            ],
+          },
+          {
+            type: 'context',
+            elements: [
+              {
+                type: 'mrkdwn',
+                text: `Visitor \`${data.visitorId || 'Unknown'}\` · ${timeOnSite} on site · ${timestamp} GST`,
+              },
+            ],
+          },
+        ],
       }
+    }
 
     case 'cart_event':
       const cartEmoji = data.cartEvent?.action === 'add' ? '🛒' : data.cartEvent?.action === 'checkout' ? '💳' : '❌'

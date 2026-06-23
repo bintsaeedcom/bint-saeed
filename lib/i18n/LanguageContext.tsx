@@ -2,14 +2,15 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
-import { translations, Language, Translations } from './translations'
+import { translations, type Language, type Translations } from './translations'
 import { stripLocaleFromPathname } from './routing'
 import type { AppLocale } from './routing'
 
-export const VALID_LANGUAGES: Language[] = ['en', 'ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt']
+export const VALID_LANGUAGES: Language[] = ['en', 'ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id']
 
 function resolveTranslations(lang: Language): Translations {
   if (lang === 'nl' || lang === 'pt') return translations.en
+  if (lang === 'id') return translations.id
   return translations[lang]
 }
 
@@ -62,6 +63,8 @@ export function LanguageProvider({
     </LanguageContext.Provider>
   )
 }
+
+export type { Language, Translations }
 
 export function useLanguage() {
   const context = useContext(LanguageContext)

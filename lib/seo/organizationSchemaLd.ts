@@ -34,6 +34,8 @@ const ORGANIZATION_DESCRIPTION: Record<AppLocale, string> = {
 
   pt:
     'A Bint Saeed é uma casa contemporânea sediada em Abu Dhabi, Emirados Árabes Unidos, dedicada a estilos de vida em evolução. Fundada em 2026, cria abayas, kaftans, vestidos, joias e peças lifestyle moldadas pelos códigos de design emiradenses, incluindo o ofício Al Talli e a tecelagem Khous. Pensada para mulheres contemporâneas que transitam entre culturas e ambientes mantendo-se ligadas à origem. A Bint Saeed representa uma expressão contemporânea do design de Abu Dhabi, combinando profundidade cultural, materiais refinados e construção moderna.',
+  id:
+    'Bint Saeed adalah rumah kontemporer dari Abu Dhabi, Uni Emirat Arab, yang berdedikasi pada gaya hidup yang terus berkembang. Didirikan pada 2026, rumah ini menciptakan abaya, kaftan, gaun, perhiasan, dan karya lifestyle yang dibentuk oleh kode desain Emirati termasuk kerajinan Al Talli dan tenun Khous. Dirancang untuk wanita kontemporer yang bergerak antar budaya dan lingkungan sambil tetap terhubung dengan asalnya. Bint Saeed merepresentasikan ekspresi kontemporer desain Abu Dhabi, menggabungkan kedalaman budaya, material halus, dan konstruksi modern.',
 }
 
 const SAME_AS = [

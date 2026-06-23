@@ -41,7 +41,7 @@ function isLinkPreviewBot(userAgent: string | null): boolean {
 }
 
 function localePrefixFromPathname(pathname: string): string {
-  const m = pathname.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt)(\/.*)?$/)
+  const m = pathname.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt|id)(\/.*)?$/)
   if (m && isLocalePrefix(m[1])) {
     return `/${m[1]}`
   }
@@ -152,7 +152,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  const localeMatch = pathname.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt)(\/.*)?$/)
+  const localeMatch = pathname.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt|id)(\/.*)?$/)
   if (localeMatch && isLocalePrefix(localeMatch[1])) {
     const locale = localeMatch[1]
     const rest = localeMatch[2] && localeMatch[2].length > 0 ? localeMatch[2] : '/'

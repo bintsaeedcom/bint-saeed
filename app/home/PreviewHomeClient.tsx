@@ -706,7 +706,7 @@ function CategoryNavigationStrip() {
 }
 
 function QuickShopCarousel() {
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
   const reduceMotion = useReducedMotion()
   const [isPaused, setIsPaused] = useState(false)
   const [catalog, setCatalog] = useState<Product[]>(staticProducts)
@@ -811,7 +811,7 @@ function QuickShopCarousel() {
               <div className="relative h-[20.95rem] w-full shrink-0 overflow-hidden bg-[#f3f0ea] md:h-[25.85rem] lg:h-[27.15rem]">
                 <SafeCarouselImage
                   src={product.images[0]}
-                  alt={getProductImageAlt(product, product.images[0], { color: product.colors[0]?.name, index: 0 })}
+                  alt={getProductImageAlt(product, product.images[0], { color: product.colors[0]?.name, index: 0, locale: language })}
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
                   className="pointer-events-none object-cover object-top transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-visible:opacity-0 group-hover:scale-[1.03]"
                 />
@@ -820,6 +820,7 @@ function QuickShopCarousel() {
                   alt={getProductImageAlt(product, product.images[1] || product.images[0], {
                     color: product.colors[0]?.name,
                     index: 1,
+                    locale: language,
                   })}
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
                   className="pointer-events-none object-cover object-center opacity-0 transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-visible:opacity-100 group-hover:scale-[1.03]"

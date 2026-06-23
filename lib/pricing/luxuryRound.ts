@@ -70,6 +70,36 @@ export function luxuryRoundFromAed(aed: number, currency: SupportedCurrency): nu
       if (raw < 500) return roundToNearest(raw, 10)
       return roundGccApparelStyle(raw)
 
+    case 'CAD':
+    case 'SGD':
+    case 'BND':
+    case 'MYR':
+    case 'HKD':
+      return raw < 50 ? roundUpToNearest(raw, 1) : roundToNearest(raw, 1)
+
+    case 'MAD':
+      if (raw < 100) return roundUpToNearest(raw, 10)
+      return roundToNearest(raw, 10)
+
+    case 'NGN':
+      if (raw < 10_000) return roundToNearest(raw, 1000)
+      return roundToNearest(raw, 10_000)
+
+    case 'IDR':
+      if (raw < 100_000) return roundToNearest(raw, 10_000)
+      return roundToNearest(raw, 100_000)
+
+    case 'KZT':
+      if (raw < 10_000) return roundToNearest(raw, 1000)
+      return roundToNearest(raw, 5000)
+
+    case 'AZN':
+      return raw < 50 ? roundUpToNearest(raw, 1) : roundToNearest(raw, 1)
+
+    case 'UZS':
+      if (raw < 100_000) return roundToNearest(raw, 10_000)
+      return roundToNearest(raw, 100_000)
+
     default:
       return Math.round(raw)
   }

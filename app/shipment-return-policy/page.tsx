@@ -3,8 +3,10 @@
 import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import PolicyDocument from '@/components/legal/PolicyDocument'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
+import { getShipmentReturnContent } from '@/lib/legal/policyContentId'
 
 const SECTION_LIST = [
   '1. Opening Statement',
@@ -20,7 +22,18 @@ const SECTION_LIST = [
 ]
 
 export default function ShipmentReturnPolicyPage() {
-  const { t, isRTL } = useLanguage()
+  const { t, isRTL, language } = useLanguage()
+
+  if (language === 'id') {
+    return (
+      <PolicyDocument
+        content={getShipmentReturnContent('id')}
+        isRTL={isRTL}
+        backLabel={t.shop.backToHome}
+        variant="shipment"
+      />
+    )
+  }
 
   return (
     <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>

@@ -26,6 +26,8 @@ export function schemaInLanguageForLocale(locale: AppLocale): string {
       return 'nl'
     case 'pt':
       return 'pt'
+    case 'id':
+      return 'id'
     default:
       return 'en'
   }

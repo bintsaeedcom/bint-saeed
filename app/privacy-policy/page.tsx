@@ -3,8 +3,10 @@
 import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import PolicyDocument from '@/components/legal/PolicyDocument'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getEnabledTrackersFromEnv } from '@/lib/analytics/trackerCatalog'
+import { buildAnalyticsLine, getPrivacyPolicyContent } from '@/lib/legal/policyContentId'
 
 const SECTION_LIST = [
   '1. Privacy Notice and Legal Framework',
@@ -23,8 +25,22 @@ const SECTION_LIST = [
 ]
 
 export default function PrivacyPolicyPage() {
-  const { t, isRTL } = useLanguage()
+  const { t, isRTL, language } = useLanguage()
   const activeTrackers = getEnabledTrackersFromEnv()
+
+  if (language === 'id') {
+    const analyticsLine = buildAnalyticsLine(
+      'id',
+      activeTrackers.map((tracker) => tracker.title),
+    )
+    return (
+      <PolicyDocument
+        content={getPrivacyPolicyContent('id', analyticsLine)}
+        isRTL={isRTL}
+        backLabel={t.shop.backToHome}
+      />
+    )
+  }
 
   return (
     <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>

@@ -41,7 +41,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
   const [isAdded, setIsAdded] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
   const { formatPrice } = useCurrency()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
 
   const colorOptions = useMemo(
     () => getProductColorOptions(product),
@@ -176,7 +176,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                     alt={getProductImageAlt(
                       catalogProduct,
                       previewImage,
-                      { color: selectedColor || product.colors[0]?.name, index: 0 },
+                      { color: selectedColor || product.colors[0]?.name, index: 0, locale: language },
                     )}
                     fill
                     className="img-zoom object-cover object-top"

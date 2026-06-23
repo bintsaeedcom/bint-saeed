@@ -28,6 +28,8 @@ const countryToLanguage: Record<string, string> = {
   FR: 'fr', BE: 'fr', LU: 'fr', MC: 'fr',
   // Spanish
   ES: 'es', MX: 'es', AR: 'es', CO: 'es', PE: 'es', VE: 'es', CL: 'es', EC: 'es', GT: 'es', CU: 'es', BO: 'es', DO: 'es', HN: 'es', PY: 'es', SV: 'es', NI: 'es', CR: 'es', PA: 'es', UY: 'es', PR: 'es',
+  // Indonesian
+  ID: 'id',
   // English
   GB: 'en', US: 'en', AU: 'en', CA: 'en', IE: 'en', NZ: 'en', IN: 'en', ZA: 'en', PH: 'en', NG: 'en', PK: 'en', BD: 'en',
 }
@@ -35,11 +37,13 @@ const countryToLanguage: Record<string, string> = {
 const countryToCurrency: Record<string, string> = {
   AE: 'AED', SA: 'SAR', KW: 'KWD', QA: 'QAR', BH: 'BHD', OM: 'OMR',
   US: 'USD', GB: 'GBP', CH: 'CHF',
+  CA: 'CAD', SG: 'SGD', BN: 'BND', MY: 'MYR', MA: 'MAD', NG: 'NGN', ID: 'IDR',
+  KZ: 'KZT', AZ: 'AZN', UZ: 'UZS', HK: 'HKD',
   DE: 'EUR', AT: 'EUR', FR: 'EUR', IT: 'EUR', ES: 'EUR', NL: 'EUR', BE: 'EUR', LU: 'EUR', MC: 'EUR',
 }
 
-const SUPPORTED_LANGUAGES = ['en', 'ar', 'zh', 'ru', 'it', 'de', 'fr', 'es']
-const LANGUAGES_FOR_CONFIRM_POPUP = ['ar', 'zh', 'ru', 'it', 'de', 'fr', 'es'] // Show "Stay in X or English?" for these
+const SUPPORTED_LANGUAGES = ['en', 'ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'id']
+const LANGUAGES_FOR_CONFIRM_POPUP = ['ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'id']
 
 export async function fetchGeoData(): Promise<GeoData | null> {
   if (typeof navigator !== 'undefined' && isLikelySearchBotUserAgent(navigator.userAgent)) {
@@ -66,11 +70,45 @@ export async function fetchGeoData(): Promise<GeoData | null> {
   }
 }
 
+export const REGIONAL_EXPERIENCE_KEY = 'bint-saeed-regional-experience'
+
+export function hasRegionalExperienceChoice(): boolean {
+  if (typeof window === 'undefined') return true
+  if (localStorage.getItem(REGIONAL_EXPERIENCE_KEY)) return true
+  if (localStorage.getItem('bint-saeed-locale-confirm-dismissed')) return true
+  if (localStorage.getItem('bint-saeed-tailor-experience')) return true
+  if (localStorage.getItem('bint-saeed-location-consent')) return true
+  if (localStorage.getItem('bint-saeed-location-dismissed')) return true
+  return false
+}
+
+export function persistRegionalExperienceChoice(choice: 'confirmed' | 'changed' | 'dismissed') {
+  localStorage.setItem(REGIONAL_EXPERIENCE_KEY, choice)
+  localStorage.setItem('bint-saeed-locale-confirm-dismissed', 'true')
+  if (choice === 'dismissed') {
+    localStorage.setItem('bint-saeed-location-dismissed', 'true')
+  } else {
+    localStorage.setItem('bint-saeed-tailor-experience', 'accepted')
+    localStorage.setItem('bint-saeed-location-consent', 'true')
+  }
+}
+
+/** Show regional popup once when geo differs from defaults or visitor is outside UAE. */
+export function shouldShowRegionalExperiencePopup(geo: GeoData, currentLocale: string): boolean {
+  if (hasRegionalExperienceChoice()) return false
+  const langMismatch = geo.suggestedLanguage !== currentLocale
+  const currencySaved =
+    typeof window !== 'undefined' && !!localStorage.getItem('bint-saeed-currency')
+  const currencyMismatch = !currencySaved && geo.suggestedCurrency !== 'AED'
+  return langMismatch || currencyMismatch || geo.countryCode !== 'AE'
+}
+
 export function shouldShowLocaleConfirmPopup(detectedLang: string): boolean {
   return LANGUAGES_FOR_CONFIRM_POPUP.includes(detectedLang)
 }
 
 export const languageLabels: Record<string, string> = {
+  en: 'English',
   ar: 'العربية',
   zh: '中文',
   ru: 'Русский',
@@ -78,6 +116,7 @@ export const languageLabels: Record<string, string> = {
   de: 'Deutsch',
   fr: 'Français',
   es: 'Español',
+  id: 'Bahasa Indonesia',
 }
 
 // SEO keyword translations per language (for hidden schema)
@@ -242,5 +281,28 @@ export const seoKeywordTranslations: Record<string, Record<string, string>> = {
     nudeAbaya: 'nude Abaya',
     pinkAbaya: 'rosa Abaya',
     navyBlueAbaya: 'dunkelblaue Abaya',
+  },
+  id: {
+    luxuryAbayaUAE: 'abaya mewah UEA',
+    abayaAbuDhabi: 'abaya Abu Dhabi',
+    elegantAbayas: 'abaya elegan',
+    designerAbaya: 'abaya desainer',
+    luxuryModestFashion: 'fashion modest mewah',
+    blackAbayaDubai: 'abaya hitam Dubai',
+    modernAbayaUAE: 'abaya modern UEA',
+    abaya: 'abaya',
+    dubaiAbaya: 'abaya Dubai',
+    abayaStyle: 'gaya abaya',
+    abayaBrand: 'merek abaya',
+    silkAbaya: 'abaya sutra',
+    bestAbaya: 'abaya terbaik',
+    abayaDesign: 'desain abaya',
+    laceAbaya: 'abaya renda',
+    purpleAbaya: 'abaya ungu',
+    greenAbaya: 'abaya hijau',
+    beigeAbaya: 'abaya beige',
+    nudeAbaya: 'abaya nude',
+    pinkAbaya: 'abaya merah muda',
+    navyBlueAbaya: 'abaya biru navy',
   },
 }

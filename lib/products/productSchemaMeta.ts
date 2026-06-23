@@ -14,6 +14,16 @@ import {
   getLocalizedKaftanFaq,
   getLocalizedKaftanSchemaFacts,
 } from '@/lib/products/kaftanSchemaI18n'
+import {
+  getLocalizedBelgraviaFaq,
+  getLocalizedBelgraviaSchemaFacts,
+  isBelgraviaSlug,
+} from '@/lib/products/belgraviaSchemaI18n'
+import {
+  buildAbayaProductKeywordVariants,
+  getLocalizedAbayaSchemaKeywordTerms,
+} from '@/lib/products/abayaSchemaKeywordsI18n'
+import { getLocalizedBelgraviaExclusiveKeywords } from '@/lib/products/belgraviaSchemaKeywordsI18n'
 
 export type ProductFaqItem = {
   question: string
@@ -21,16 +31,22 @@ export type ProductFaqItem = {
 }
 
 export type ProductSchemaFacts = {
+  productType?: string
+  productCategory?: string
   neckline?: string
   fit?: string
   maximumGarmentLength?: string
+  modelHeight?: string
   lining?: string
   innerDress?: string
   closure?: string
   pockets?: string
+  trim?: string
+  personalisation?: string
   stylingDetail?: string
   suitableFor?: string
   care?: string
+  material?: string
   madeIn?: string
   faq?: ProductFaqItem[]
 }
@@ -64,12 +80,6 @@ const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
   'marylebone-abaya': {
     closure: 'Open front',
     stylingDetail: 'Wide sleeves for layering over dresses or sets',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    madeIn: DEFAULT_MADE_IN,
-  },
-  'belgravia-abaya': {
-    stylingDetail:
-      'Tonal embroidery and handwoven trim inspired by the Emirati tradition of Khous weaving',
     suitableFor: DEFAULT_SUITABLE_FOR,
     madeIn: DEFAULT_MADE_IN,
   },
@@ -149,6 +159,9 @@ export function getProductSchemaFacts(product: Product, locale: AppLocale = 'en'
   const kaftanFacts = getLocalizedKaftanSchemaFacts(slug, locale)
   if (kaftanFacts) return kaftanFacts
 
+  const belgraviaFacts = getLocalizedBelgraviaSchemaFacts(slug, locale)
+  if (belgraviaFacts) return belgraviaFacts
+
   const base = SLUG_FACTS[slug] ?? {}
   const fromMeasurements = extractMaxLength(product.measurements)
 
@@ -168,7 +181,23 @@ export function buildProductSchemaKeywords(
   colorName?: string,
   locale: AppLocale = 'en',
 ): string {
-  return buildLocalizedProductKeywords(product, locale, colorName)
+  const slug = getProductSlug(product).toLowerCase()
+  const terms = new Set(
+    buildLocalizedProductKeywords(product, locale, colorName)
+      .split(', ')
+      .filter(Boolean),
+  )
+
+  if (product.category === 'Abayas') {
+    for (const t of getLocalizedAbayaSchemaKeywordTerms(locale)) terms.add(t)
+    for (const t of buildAbayaProductKeywordVariants(product, colorName, locale)) terms.add(t)
+  }
+
+  if (isBelgraviaSlug(slug)) {
+    for (const t of getLocalizedBelgraviaExclusiveKeywords(locale, colorName)) terms.add(t)
+  }
+
+  return [...terms].join(', ')
 }
 
 export function buildProductAdditionalProperties(
@@ -203,14 +232,20 @@ export function buildProductAdditionalProperties(
   ]
 
   const optional: Array<[string, string | undefined]> = [
+    ['Product type', facts.productType],
+    ['Product category', facts.productCategory],
     ['Neckline', facts.neckline],
     ['Fit', facts.fit],
     ['Maximum garment length', facts.maximumGarmentLength],
+    ['Model height', facts.modelHeight],
     ['Lining', facts.lining],
     ['Inner dress', facts.innerDress],
     ['Closure', facts.closure],
     ['Pockets', facts.pockets],
+    ['Trim', facts.trim],
+    ['Personalisation', facts.personalisation],
     ['Styling detail', facts.stylingDetail],
+    ['Material', facts.material],
     ['Care', facts.care],
   ]
 
@@ -297,6 +332,19 @@ export function getProductFaq(
   if (kaftanFaq.length > 0) {
     const merged = [...kaftanFaq]
     const seen = new Set(kaftanFaq.map((item) => item.question.toLowerCase()))
+    for (const item of customFaq ?? []) {
+      if (!seen.has(item.question.toLowerCase())) {
+        merged.push(item)
+        seen.add(item.question.toLowerCase())
+      }
+    }
+    return merged
+  }
+
+  const belgraviaFaq = getLocalizedBelgraviaFaq(slug, locale)
+  if (belgraviaFaq.length > 0) {
+    const merged = [...belgraviaFaq]
+    const seen = new Set(belgraviaFaq.map((item) => item.question.toLowerCase()))
     for (const item of customFaq ?? []) {
       if (!seen.has(item.question.toLowerCase())) {
         merged.push(item)

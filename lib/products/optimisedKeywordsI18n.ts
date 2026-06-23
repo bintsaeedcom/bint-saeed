@@ -9,6 +9,7 @@ import {
   MAYFAIR_OPTIMISED_KEYWORDS,
 } from './optimisedKeywords'
 import { SCHEMA_AUGMENT_ROWS } from './schemaAugmentKeywordsI18n'
+import { indonesiaKeywordFromEn } from '@/lib/i18n/indonesiaKeywordFromEn'
 
 function kw(
   en: string,
@@ -21,8 +22,9 @@ function kw(
   de: string,
   nl: string,
   pt: string,
+  id?: string,
 ): Record<AppLocale, string> {
-  return { en, ar, fr, it, es, ru, zh, de, nl, pt }
+  return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: id ?? indonesiaKeywordFromEn(en) }
 }
 
 type KwRow = [string, string, string, string, string, string, string, string, string, string]

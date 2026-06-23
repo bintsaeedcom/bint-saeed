@@ -14,6 +14,17 @@ export const SIGNATURE_PACKAGING_PRICES: CurrencyPriceMap = {
   CHF: 7,
   RUB: 2450,
   CNY: 59,
+  CAD: 11,
+  SGD: 11,
+  BND: 11,
+  MYR: 37,
+  MAD: 83,
+  NGN: 13200,
+  IDR: 154000,
+  KZT: 4200,
+  AZN: 14,
+  UZS: 110000,
+  HKD: 65,
 }
 
 /** Express shipping upgrade (master 50 AED). */
@@ -30,4 +41,15 @@ export const EXPRESS_SHIPPING_PRICES: CurrencyPriceMap = {
   CHF: 12,
   RUB: 4100,
   CNY: 99,
+  CAD: 19,
+  SGD: 18,
+  BND: 18,
+  MYR: 62,
+  MAD: 138,
+  NGN: 22000,
+  IDR: 257000,
+  KZT: 6900,
+  AZN: 23,
+  UZS: 179000,
+  HKD: 108,
 }

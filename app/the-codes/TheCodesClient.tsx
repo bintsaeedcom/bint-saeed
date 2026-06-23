@@ -14,7 +14,7 @@ import { buildTheCodesJsonLd } from '@/lib/seo/theCodesJsonLd'
 import {
   CODES_HERO,
   codesPageImagePath,
-  THE_CODES_SECTIONS,
+  getTheCodesSections,
   type CodesSectionContent,
 } from '@/lib/the-codes/codesPageContent'
 
@@ -29,7 +29,6 @@ function SectionStripes(_props?: { variant?: 'default' | 'hero' | 'soft' | 'bold
 
 type CodeSection = CodesSectionContent
 
-const SECTIONS: CodeSection[] = THE_CODES_SECTIONS
 
 /** Public folder `The Codes Page/` — encode spaces for Next/Image `src`. */
 function codesPageImage(fileName: string) {
@@ -94,6 +93,7 @@ export default function TheCodesClient() {
   const pathname = usePathname()
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
   const codesJsonLd = useMemo(() => buildTheCodesJsonLd(language), [language])
+  const sections = useMemo(() => getTheCodesSections(language), [language])
 
   const expandedTextBySection: Record<string, string> = {
     'the-monogram':
@@ -196,7 +196,7 @@ export default function TheCodesClient() {
       </div>
 
       <div className="relative space-y-6 md:space-y-10 lg:space-y-14">
-        {SECTIONS.map((section, index) => {
+        {sections.map((section, index) => {
           const isEven = index % 2 === 0
           const textOrder = isEven ? 'lg:order-1' : 'lg:order-2'
           const imageOrder = isEven ? 'lg:order-2' : 'lg:order-1'

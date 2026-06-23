@@ -1,13 +1,25 @@
 import type { RouteMetaKey } from '@/lib/seo/routeMetaKeys'
 import type { AppLocale } from '@/lib/i18n/routing'
+import { indonesiaRouteMetaFromEn } from '@/lib/i18n/indonesiaRouteMetaFromEn'
 
 type Loc = Record<AppLocale, string>
+type LocInput = Record<Exclude<AppLocale, 'id'>, string> & { en: string }
+
+function enrichLoc(loc: LocInput): Loc {
+  return { ...loc, id: indonesiaRouteMetaFromEn(loc.en) }
+}
+
+function enrichLocMap<K extends string>(raw: Record<K, LocInput>): Record<K, Loc> {
+  return Object.fromEntries(
+    Object.entries(raw).map(([key, value]) => [key, enrichLoc(value as LocInput)])
+  ) as Record<K, Loc>
+}
 
 /**
  * Meta descriptions: natural search phrasing per market; brand + Abu Dhabi + offer.
  * Arabic: formal, refined, GCC-standard (MSA); no slang.
  */
-export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
+const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   faq: {
     en:
       'FAQ for Bint Saeed, a luxury abaya house in Abu Dhabi: shipping, sizing, exchanges, official purchase on bintsaeed.com, and GCC delivery.',
@@ -713,3 +725,5 @@ export const META_DESCRIPTION: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
       'Bint Saeed — casa de abayas de luxo em Abu Dhabi (EAU). Abayas, joalharia e lifestyle com códigos emiradenses; envios EAU/Golfo.',
   },
 }
+
+export const META_DESCRIPTION = enrichLocMap(META_DESCRIPTION_RAW)

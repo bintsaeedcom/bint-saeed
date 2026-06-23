@@ -14,6 +14,7 @@ import { trackEvent } from '@/lib/analytics/tracking'
 import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
 import { getProductPdpContent } from '@/data/productPdpContent'
+import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
 import { getProductColorOptions, getProductImagesForColor } from '@/lib/products/productColorAvailability'
 import { buildShopProductJsonLd } from '@/lib/products/productJsonLd'
@@ -138,15 +139,19 @@ export default function ProductPage() {
         : [],
     [product],
   )
+  const catalogFields = useMemo(
+    () => (product ? getLocalizedProductCatalogFields(product, language) : null),
+    [product, language],
+  )
   const pdpContent = useMemo(
     () =>
       product
-        ? getProductPdpContent(product, { color: selectedColor })
+        ? getProductPdpContent(product, { color: selectedColor, locale: language })
         : {
             productDetails: [],
             fitAndSizeDetails: [],
           },
-    [product, selectedColor],
+    [product, selectedColor, language],
   )
   const {
     introParagraphs,
@@ -253,7 +258,7 @@ export default function ProductPage() {
     [product, selectedColor],
   )
   const activeImageAlt = (image: string, index: number) =>
-    getProductImageAlt(product, image, { color: selectedColor, index })
+    getProductImageAlt(product, image, { color: selectedColor, index, locale: language })
 
   useEffect(() => {
     if (!activeImages.length) return
@@ -940,7 +945,7 @@ export default function ProductPage() {
               </div>
             ) : (
               <p className={`mb-1 ${PDP_COPY_INTRO} pdp-copy--intro`}>
-                {product.description}
+                {catalogFields?.description ?? product.description}
               </p>
             )}
             {!introParagraphs?.length && product.id !== 'bs-002' && (
@@ -974,7 +979,7 @@ export default function ProductPage() {
                       <div className="relative z-20 aspect-[9/16] overflow-hidden bg-brand-stone/10">
                         <PdpGalleryImage
                           src={item.images[0]}
-                          alt={getProductImageAlt(item, item.images[0], { color: item.colors[0]?.name, index: 0 })}
+                          alt={getProductImageAlt(item, item.images[0], { color: item.colors[0]?.name, index: 0, locale: language })}
                           className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                       </div>

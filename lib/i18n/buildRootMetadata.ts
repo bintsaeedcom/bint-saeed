@@ -40,6 +40,7 @@ const OG_HERO_IMAGE_ALT: Record<AppLocale, string> = {
   de: `${BRAND_NAME} — zeitgenössisches Haus, ${G.de.city}`,
   nl: `${BRAND_NAME} — eigentijds huis, ${G.nl.city}`,
   pt: `${BRAND_NAME} — casa contemporânea, ${G.pt.city}`,
+  id: `${BRAND_NAME} — rumah kontemporer, ${G.id.city}`,
 }
 
 const OG_LOCALE: Record<AppLocale, string> = {
@@ -53,6 +54,7 @@ const OG_LOCALE: Record<AppLocale, string> = {
   de: 'de_DE',
   nl: 'nl_NL',
   pt: 'pt_PT',
+  id: 'en_AE',
 }
 
 function keywordsFor(locale: AppLocale): string[] {
@@ -110,7 +112,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
     'x-default': new URL(innerPath === '/' ? '/' : innerPath, base).toString(),
     en: new URL(innerPath === '/' ? '/' : innerPath, base).toString(),
   }
-  for (const L of ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt'] as const) {
+  for (const L of ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id'] as const) {
     languages[L] = new URL(localizedPath(L, innerPath), base).toString()
   }
 

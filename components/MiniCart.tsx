@@ -27,7 +27,7 @@ interface MiniCartProps {
 export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const { items, removeItem, updateQuantity } = useCartStore()
   const { formatPrice, formatAmount, currency, formatCartSubtotal } = useCurrency()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
   const summarize = (value: string, max = 46) =>
     value.length > max ? `${value.slice(0, max).trimEnd()}…` : value
   const productHref = (item: (typeof items)[number]) =>
@@ -135,6 +135,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                             alt={getCartLineImageAlt(
                               item,
                               staticProducts.find((product) => product.id === item.id),
+                              language,
                             )}
                             fill
                             unoptimized={isWebshopPicturePath(item.image)}
@@ -255,6 +256,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                               alt={getProductImageAlt(p, p.images[0] ?? '', {
                                 color: p.colors[0]?.name,
                                 index: 0,
+                                locale: language,
                               })}
                               fill
                               sizes="124px"

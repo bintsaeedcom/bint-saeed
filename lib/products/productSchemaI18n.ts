@@ -20,6 +20,7 @@ export const SCHEMA_SUITABLE_FOR: Record<AppLocale, string> = {
   de: 'Hochzeiten, Eid, Feiern, Dinners, Reisen, Zusammenkünfte und alltägliche Eleganz',
   nl: 'Bruiloften, Eid, vieringen, diners, reizen, bijeenkomsten en alledaagse elegantie',
   pt: 'Casamentos, Eid, celebrações, jantares, viagens, encontros e elegância quotidiana',
+  id: 'Pernikahan, Id, perayaan, makan malam, perjalanan, pertemuan, dan keanggunan sehari-hari',
 }
 
 export const SCHEMA_MADE_IN: Record<AppLocale, string> = {
@@ -33,6 +34,7 @@ export const SCHEMA_MADE_IN: Record<AppLocale, string> = {
   de: LOCALE_GEO.de.madeIn,
   nl: LOCALE_GEO.nl.madeIn,
   pt: LOCALE_GEO.pt.madeIn,
+  id: LOCALE_GEO.id.madeIn,
 }
 
 const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
@@ -47,6 +49,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Markenherkunft',
     nl: 'Merkherkomst',
     pt: 'Origem da marca',
+    id: 'Brand origin',
   },
   'Emirati brand': {
     en: 'Emirati brand',
@@ -59,6 +62,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Emiratische Marke',
     nl: 'Emiratisch merk',
     pt: 'Marca emirati',
+    id: 'Emirati brand',
   },
   'Made in': {
     en: 'Made in',
@@ -71,6 +75,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Hergestellt in',
     nl: 'Gemaakt in',
     pt: 'Feito em',
+    id: 'Dibuat di',
   },
   'Suitable For': {
     en: 'Suitable For',
@@ -83,6 +88,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Geeignet für',
     nl: 'Geschikt voor',
     pt: 'Adequado para',
+    id: 'Suitable For',
   },
   Neckline: {
     en: 'Neckline',
@@ -95,6 +101,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Ausschnitt',
     nl: 'Halslijn',
     pt: 'Decote',
+    id: 'Neckline',
   },
   Fit: {
     en: 'Fit',
@@ -107,6 +114,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Passform',
     nl: 'Pasvorm',
     pt: 'Caimento',
+    id: 'Fit',
   },
   'Maximum garment length': {
     en: 'Maximum garment length',
@@ -119,6 +127,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Maximale Kleiderlänge',
     nl: 'Maximale lengte',
     pt: 'Comprimento máximo da peça',
+    id: 'Maximum garment length',
   },
   Lining: {
     en: 'Lining',
@@ -131,6 +140,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Futter',
     nl: 'Voering',
     pt: 'Forro',
+    id: 'Lining',
   },
   'Inner dress': {
     en: 'Inner dress',
@@ -143,6 +153,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Innenkleid',
     nl: 'Binnenjurk',
     pt: 'Vestido interior',
+    id: 'Inner dress',
   },
   Closure: {
     en: 'Closure',
@@ -155,6 +166,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Verschluss',
     nl: 'Sluiting',
     pt: 'Fecho',
+    id: 'Closure',
   },
   Pockets: {
     en: 'Pockets',
@@ -167,6 +179,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Taschen',
     nl: 'Zakken',
     pt: 'Bolsos',
+    id: 'Pockets',
   },
   'Styling detail': {
     en: 'Styling detail',
@@ -179,6 +192,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Styling-Detail',
     nl: 'Stylingdetail',
     pt: 'Detalhe de estilo',
+    id: 'Styling detail',
   },
   Care: {
     en: 'Care',
@@ -191,6 +205,85 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Pflege',
     nl: 'Onderhoud',
     pt: 'Cuidados',
+    id: 'Care',
+  },
+  'Product type': {
+    en: 'Product type',
+    ar: 'نوع المنتج',
+    fr: 'Type de produit',
+    it: 'Tipo di prodotto',
+    es: 'Tipo de producto',
+    ru: 'Тип изделия',
+    zh: '产品类型',
+    de: 'Produkttyp',
+    nl: 'Producttype',
+    pt: 'Tipo de produto',
+    id: 'Product type',
+  },
+  'Product category': {
+    en: 'Product category',
+    ar: 'فئة المنتج',
+    fr: 'Catégorie de produit',
+    it: 'Categoria prodotto',
+    es: 'Categoría de producto',
+    ru: 'Категория изделия',
+    zh: '产品类别',
+    de: 'Produktkategorie',
+    nl: 'Productcategorie',
+    pt: 'Categoria do produto',
+    id: 'Product category',
+  },
+  Trim: {
+    en: 'Trim',
+    ar: 'الزخرفة',
+    fr: 'Garniture',
+    it: 'Finitura',
+    es: 'Adorno',
+    ru: 'Отделка',
+    zh: '饰边',
+    de: 'Besatz',
+    nl: 'Afwerking',
+    pt: 'Acabamento',
+    id: 'Trim',
+  },
+  Personalisation: {
+    en: 'Personalisation',
+    ar: 'التخصيص',
+    fr: 'Personnalisation',
+    it: 'Personalizzazione',
+    es: 'Personalización',
+    ru: 'Персонализация',
+    zh: '个性化',
+    de: 'Personalisierung',
+    nl: 'Personalisatie',
+    pt: 'Personalização',
+    id: 'Personalisation',
+  },
+  'Model height': {
+    en: 'Model height',
+    ar: 'طول العارضة',
+    fr: 'Taille du mannequin',
+    it: 'Altezza modella',
+    es: 'Altura de la modelo',
+    ru: 'Рост модели',
+    zh: '模特身高',
+    de: 'Modellgröße',
+    nl: 'Model lengte',
+    pt: 'Altura da modelo',
+    id: 'Model height',
+  },
+  Material: {
+    en: 'Material',
+    ar: 'الخامة',
+    fr: 'Matière',
+    it: 'Materiale',
+    es: 'Material',
+    ru: 'Материал',
+    zh: '材质',
+    de: 'Material',
+    nl: 'Materiaal',
+    pt: 'Material',
+    id: 'Material',
   },
   'Heritage craft': {
     en: 'Heritage craft',
@@ -203,6 +296,7 @@ const PROPERTY_LABELS: Record<string, Record<AppLocale, string>> = {
     de: 'Heritage-Handwerk',
     nl: 'Erfgoedambacht',
     pt: 'Artesanato de herança',
+    id: 'Warisan craft',
   },
 }
 
@@ -223,6 +317,7 @@ function productTypeLabel(category: string, locale: AppLocale): string {
       de: 'Abaya',
       nl: 'abaya',
       pt: 'abaya',
+      id: 'abaya',
     },
     Kaftans: {
       en: 'kaftan',
@@ -235,6 +330,7 @@ function productTypeLabel(category: string, locale: AppLocale): string {
       de: 'Kaftan',
       nl: 'kaftan',
       pt: 'kaftan',
+      id: 'kaftan',
     },
     Dresses: {
       en: 'dress',
@@ -247,6 +343,7 @@ function productTypeLabel(category: string, locale: AppLocale): string {
       de: 'Kleid',
       nl: 'jurk',
       pt: 'vestido',
+      id: 'dress',
     },
     Sets: {
       en: 'set',
@@ -259,6 +356,7 @@ function productTypeLabel(category: string, locale: AppLocale): string {
       de: 'Set',
       nl: 'set',
       pt: 'conjunto',
+      id: 'set',
     },
   }
   return map[category]?.[locale] ?? map.Abayas.en
@@ -277,6 +375,7 @@ const CONTEMPORARY_KEYWORDS: Record<AppLocale, string[]> = {
   de: ['zeitgenössische Mode', 'zeitgenössischer Luxus', `Modehaus ${G.de.city}`],
   nl: ['eigentijdse mode', 'eigentijds luxe', `modehuis ${G.nl.city}`],
   pt: ['moda contemporânea', 'luxo contemporâneo', `casa de moda ${G.pt.city}`],
+  id: ['fashion kontemporer', 'kemewahan kontemporer', `rumah fashion ${G.id.city}`, 'gaya hidup berkembang'],
 }
 
 export function buildLocalizedProductKeywords(
@@ -559,6 +658,33 @@ const FAQ_TEMPLATES: Record<
       answer: `Sim. ${name} inclui acabamento Al Talli tradicional que celebra o artesanato do património emirati.`,
     }),
   },
+  id: {
+    madeIn: (name) => ({
+      question: `Di mana ${name} dibuat?`,
+      answer: `${name} dibuat di ${G.id.madeIn} oleh ${BRAND_NAME}.`,
+    }),
+    occasions: (name) => ({
+      question: `Apakah ${name} cocok untuk pernikahan dan acara khusus?`,
+      answer: `Ya. ${name} dirancang untuk pernikahan, Id, perayaan, makan malam, perjalanan, pertemuan, dan keanggunan sehari-hari.`,
+    }),
+    oneSize: (name) => ({
+      question: `Apakah ${name} one size?`,
+      answer: `Ya. ${name} dirancang sebagai siluet one-size.`,
+    }),
+    khous: (name) => ({
+      question: `Apakah ${name} memiliki detail terinspirasi Khous?`,
+      answer: `Ya. ${name} memiliki trim tenun tangan terinspirasi tradisi tenun Khous Emirati, dibuat di ${G.id.city}.`,
+    }),
+    talli: (name) => ({
+      question: `Apakah ${name} memiliki trim Al Talli?`,
+      answer: `Ya. ${name} memiliki trim Al Talli tradisional yang merayakan kerajinan warisan Emirati.`,
+    }),
+    scarfStyle: (name) => ({
+      question: `Bisakah scarf pada ${name} ditata dengan berbagai cara?`,
+      answer:
+        'Ya. Detail scarf terpasang dapat ditata secara diagonal di tubuh menggunakan pin emblem emas khas Bint Saeed.',
+    }),
+  },
 }
 
 const KAFTAN_SLUGS = new Set(['mayfair-kaftan', 'nothing-hill-kaftan'])
@@ -606,6 +732,7 @@ export function buildLocalizedSchemaDescription(
     de: `${product.name} von ${BRAND_NAME} — ein zeitgenössisches Haus aus ${G.de.city} für sich wandelnde Lebensstile.`,
     nl: `${product.name} van ${BRAND_NAME} — een eigentijds huis uit ${G.nl.city} voor veranderende levensstijlen.`,
     pt: `${product.name} da ${BRAND_NAME} — uma casa contemporânea de ${G.pt.city} dedicada a estilos de vida em evolução.`,
+    id: `${product.name} oleh ${BRAND_NAME} — rumah kontemporer dari ${G.id.city} yang berdedikasi pada gaya hidup yang terus berkembang.`,
   }
 
   return `${intro[locale]} ${baseDescription}`.replace(/\s+/g, ' ').trim()

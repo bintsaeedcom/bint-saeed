@@ -57,35 +57,29 @@ const HERITAGE_META_AR: Record<HeritageCraft, string> = {
     'زخرفة التلي التراثية وإرث إماراتي. أزياء فاخرة من أبوظبي من علامة إماراتية تحتفي بثقافة الإمارات.',
 }
 
-/** Extra meta-description clause for heritage PDPs (locale-aware). */
-export function getHeritageMetaSnippet(locale: AppLocale, slug: string): string {
-  const craft = getHeritageCraft(slug)
-  if (!craft) return ''
-  if (locale === 'ar') return HERITAGE_META_AR[craft]
-  return HERITAGE_META_EN[craft]
+const HERITAGE_META_ID: Record<HeritageCraft, string> = {
+  khous:
+    'Trim tenun tangan terinspirasi tradisi tenun Khous Emirati. Dibuat di Abu Dhabi — fashion mewah dari merek Emirati yang merayakan budaya UEA.',
+  'al-talli':
+    'Trim Al Talli tradisional dan kerajinan warisan Emirati. Fashion mewah Abu Dhabi dari merek Emirati.',
 }
 
-/** Schema keywords — heritage discovery terms for search and AI crawlers. */
-export function getHeritageSchemaKeywords(slug: string): string | undefined {
-  const craft = getHeritageCraft(slug)
-  if (!craft) {
-    return 'Bint Saeed, Emirati brand, Abu Dhabi culture, luxury abaya, UAE fashion'
-  }
-  if (craft === 'khous') {
-    return [
-      'Emirati heritage',
-      'Handwoven trim',
-      'Made in Abu Dhabi',
-      'Emirati culture',
-      'Abu Dhabi culture',
-      'Emirati brand',
-      'Bint Saeed',
-      'luxury abaya',
-      'luxury set',
-      'UAE fashion',
-    ].join(', ')
-  }
-  return [
+const HERITAGE_SCHEMA_KEYWORDS_EN = {
+  default:
+    'Bint Saeed, Emirati brand, Abu Dhabi culture, luxury abaya, UAE fashion',
+  khous: [
+    'Emirati heritage',
+    'Handwoven trim',
+    'Made in Abu Dhabi',
+    'Emirati culture',
+    'Abu Dhabi culture',
+    'Emirati brand',
+    'Bint Saeed',
+    'luxury abaya',
+    'luxury set',
+    'UAE fashion',
+  ].join(', '),
+  'al-talli': [
     'Emirati heritage',
     'Al Talli',
     'Talli embroidery',
@@ -94,7 +88,59 @@ export function getHeritageSchemaKeywords(slug: string): string | undefined {
     'Emirati brand',
     'Bint Saeed',
     'UAE fashion',
-  ].join(', ')
+  ].join(', '),
+} as const
+
+const HERITAGE_SCHEMA_KEYWORDS_ID = {
+  default:
+    'Bint Saeed, merek Emirati, budaya Abu Dhabi, abaya mewah, fashion UEA',
+  khous: [
+    'warisan Emirati',
+    'trim tenun tangan',
+    'dibuat di Abu Dhabi',
+    'budaya Emirati',
+    'budaya Abu Dhabi',
+    'merek Emirati',
+    'Bint Saeed',
+    'abaya mewah',
+    'set mewah',
+    'fashion UEA',
+  ].join(', '),
+  'al-talli': [
+    'warisan Emirati',
+    'Al Talli',
+    'bordir Talli',
+    'budaya Emirati',
+    'budaya Abu Dhabi',
+    'merek Emirati',
+    'Bint Saeed',
+    'fashion UEA',
+  ].join(', '),
+} as const
+
+function heritageMetaForLocale(locale: AppLocale, craft: HeritageCraft): string {
+  if (locale === 'ar') return HERITAGE_META_AR[craft]
+  if (locale === 'id') return HERITAGE_META_ID[craft]
+  return HERITAGE_META_EN[craft]
+}
+
+/** Extra meta-description clause for heritage PDPs (locale-aware). */
+export function getHeritageMetaSnippet(locale: AppLocale, slug: string): string {
+  const craft = getHeritageCraft(slug)
+  if (!craft) return ''
+  return heritageMetaForLocale(locale, craft)
+}
+
+/** Schema keywords — heritage discovery terms for search and AI crawlers. */
+export function getHeritageSchemaKeywords(
+  slug: string,
+  locale: AppLocale = 'en',
+): string | undefined {
+  const craft = getHeritageCraft(slug)
+  const keywords = locale === 'id' ? HERITAGE_SCHEMA_KEYWORDS_ID : HERITAGE_SCHEMA_KEYWORDS_EN
+
+  if (!craft) return keywords.default
+  return keywords[craft]
 }
 
 export function getHeritageSchemaProperties(slug: string): Array<Record<string, string>> {
@@ -153,14 +199,20 @@ export function getHeritageSchemaProperties(slug: string): Array<Record<string, 
 }
 
 /** Richer schema / discovery description layered on catalog copy. */
-export function buildHeritageRichDescription(slug: string, baseDescription: string): string {
+export function buildHeritageRichDescription(
+  slug: string,
+  baseDescription: string,
+  locale: AppLocale = 'en',
+): string {
   const craft = getHeritageCraft(slug)
   const trimmed = baseDescription.trim()
   if (!craft) {
+    if (locale === 'id') {
+      return `${trimmed} Bint Saeed — merek mewah Emirati dari Abu Dhabi, UEA.`
+        .replace(/\s+/g, ' ')
+        .trim()
+    }
     return `${trimmed} Bint Saeed — Emirati luxury brand from Abu Dhabi, UAE.`.replace(/\s+/g, ' ').trim()
   }
-  if (craft === 'khous') {
-    return `${trimmed} ${HERITAGE_META_EN.khous}`.replace(/\s+/g, ' ').trim()
-  }
-  return `${trimmed} ${HERITAGE_META_EN['al-talli']}`.replace(/\s+/g, ' ').trim()
+  return `${trimmed} ${heritageMetaForLocale(locale, craft)}`.replace(/\s+/g, ' ').trim()
 }

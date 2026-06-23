@@ -10,6 +10,7 @@ import {
   productNotFoundMetadata,
 } from '@/lib/seo/productPageMeta'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
+import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
 import { absoluteCatalogImageUrl } from '@/lib/products/productJsonLd'
 
 type ProductLayoutProps = {
@@ -26,12 +27,13 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
   }
 
   const slug = getProductSlug(product)
+  const catalogFields = getLocalizedProductCatalogFields(product, locale)
   const canonicalUrl = productCanonicalUrl(locale, slug)
   const pageTitle = buildProductPageTitle(locale, { name: product.name, slug })
   const description = buildProductMetaDescription(locale, {
     name: product.name,
-    description: product.description,
-    fabric: product.fabric,
+    description: catalogFields.description,
+    fabric: catalogFields.fabric,
     slug,
   })
   const image = product.images[0] ?? '/og-image.png'
@@ -39,6 +41,7 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
   const imageAlt = getProductImageAlt(product, image, {
     color: product.colors[0]?.name,
     index: 0,
+    locale,
   })
 
   return {

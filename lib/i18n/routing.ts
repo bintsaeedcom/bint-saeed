@@ -1,5 +1,5 @@
 /** URL prefix locales — `/` alone is always English. */
-export const LOCALE_PREFIXES = ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt'] as const
+export const LOCALE_PREFIXES = ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id'] as const
 
 export type LocalePrefix = (typeof LOCALE_PREFIXES)[number]
 
@@ -13,7 +13,7 @@ export function isLocalePrefix(s: string): s is LocalePrefix {
 
 export function stripLocaleFromPathname(pathname: string): { locale: AppLocale; pathname: string } {
   const pathOnly = (pathname.split(/[?#]/)[0] || '/').replace(/\/+$/, '') || '/'
-  const m = pathOnly.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt)(\/.*)?$/)
+  const m = pathOnly.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt|id)(\/.*)?$/)
   if (!m) return { locale: 'en', pathname: pathOnly === '' ? '/' : pathOnly }
   const rest = m[2] && m[2].length > 0 ? m[2] : '/'
   return { locale: m[1] as LocalePrefix, pathname: rest }

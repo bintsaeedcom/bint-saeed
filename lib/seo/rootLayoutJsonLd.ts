@@ -34,6 +34,8 @@ const PRODUCT_DESCRIPTION: Record<AppLocale, string> = {
     'Erfgoed-geïnspireerde abaya’s en bescheiden ready-to-wear van Bint Saeed (VAE), vaak met Al Talli-borduur en Khous-vlechtwerk. Materialen en silhouetten verschillen per collectie—zie productpagina’s.',
   pt:
     'Abayas e pronto-a-vestir modesto inspirados no património pela Bint Saeed (EAU), muitas vezes com bordado Al Talli e trançado Khous. Materiais e silhuetas variam por coleção—veja cada produto.',
+  id:
+    'Abaya terinspirasi warisan dan ready-to-wear modest oleh Bint Saeed (UEA), sering merujuk bordir Al Talli dan tenun Khous. Material dan siluet bervariasi per koleksi—lihat halaman produk.',
 }
 
 const ITEM_LIST_NAME: Record<AppLocale, string> = {
@@ -47,6 +49,7 @@ const ITEM_LIST_NAME: Record<AppLocale, string> = {
   de: 'Luxus-Abayas VAE | Designer-Abayas Abu Dhabi | Bint Saeed',
   nl: 'Luxe abaya’s VAE | Designer-abaya’s Abu Dhabi | Bint Saeed',
   pt: 'Abayas de luxo EAU | Abayas de designer Abu Dhabi | Bint Saeed',
+  id: 'Mewah Abayas UAE | Desainer Abayas Abu Dhabi | Bint Saeed',
 }
 
 const ITEM_LIST_DESC: Record<AppLocale, string> = {
@@ -70,6 +73,8 @@ const ITEM_LIST_DESC: Record<AppLocale, string> = {
     'Luxe abaya’s VAE. Designer-abaya’s Abu Dhabi. Zijde, kant, Al Talli-borduur. Bint Saeed luxe modeste mode.',
   pt:
     'Abayas de luxo EAU. Abayas de designer Abu Dhabi. Seda, renda, bordado Al Talli. Coleção de moda modesta Bint Saeed.',
+  id:
+    'Abaya mewah UEA. Abaya desainer Abu Dhabi. Sutra, renda, bordir Al Talli. Koleksi fashion modest Bint Saeed.',
 }
 
 const ITEM_LIST_ENTRIES: Record<AppLocale, { pos: number; name: string }[]> = {
@@ -142,6 +147,13 @@ const ITEM_LIST_ENTRIES: Record<AppLocale, { pos: number; name: string }[]> = {
     { pos: 3, name: 'Abayas de luxo Dubai' },
     { pos: 4, name: 'Abayas de seda' },
     { pos: 5, name: 'Abaya preta Dubai' },
+  ],
+  id: [
+    { pos: 1, name: 'Abaya mewah UEA' },
+    { pos: 2, name: 'Abaya desainer Abu Dhabi' },
+    { pos: 3, name: 'Abaya mewah Dubai' },
+    { pos: 4, name: 'Abaya sutra' },
+    { pos: 5, name: 'Abaya hitam Dubai' },
   ],
 }
 
@@ -240,6 +252,7 @@ const CATALOG_NAME: Record<AppLocale, string> = {
   de: 'Bint Saeed Luxus-Abaya-Kollektion 2026',
   nl: 'Bint Saeed luxe abaya-collectie 2026',
   pt: 'Coleção de abayas de luxo Bint Saeed 2026',
+  id: 'Bint Saeed Mewah Abaya Koleksi 2026',
 }
 
 const CATALOG_OFFER_TITLES: Record<AppLocale, [string, string, string, string, string, string]> = {
@@ -322,6 +335,14 @@ const CATALOG_OFFER_TITLES: Record<AppLocale, [string, string, string, string, s
     'Abayas coloridas de luxo',
     'Coleção abayas verão 2026',
     'Coleção abayas inverno 2026',
+  ],
+  id: [
+    'Abaya hitam mewah',
+    'Abaya bisht desainer',
+    'Abaya bordir Al Talli',
+    'Abaya warna mewah',
+    'Koleksi abaya musim panas 2026',
+    'Koleksi abaya musim dingin 2026',
   ],
 }
 
@@ -406,6 +427,14 @@ const BRAND_KNOWS_ABOUT: Record<AppLocale, string[]> = {
     'Joalharia em pedra natural',
     'Moda modesta EAU',
   ],
+  id: [
+    'Abaya mewah',
+    'Warisan Emirati',
+    'Tenun Khous',
+    'Kerajinan Al Talli',
+    'Perhiasan batu alam',
+    'Fashion modest UEA',
+  ],
 }
 
 const FOUNDING_PLACE_NAME: Record<AppLocale, string> = {
@@ -419,6 +448,7 @@ const FOUNDING_PLACE_NAME: Record<AppLocale, string> = {
   de: 'Abu Dhabi, Vereinigte Arabische Emirate',
   nl: 'Abu Dhabi, Verenigde Arabische Emiraten',
   pt: 'Abu Dhabi, Emirados Árabes Unidos',
+  id: 'Abu Dhabi, Uni Emirat Arab',
 }
 
 const AREA_SERVED_WORLDWIDE: Record<AppLocale, string> = {
@@ -432,6 +462,7 @@ const AREA_SERVED_WORLDWIDE: Record<AppLocale, string> = {
   de: 'Weltweit',
   nl: 'Wereldwijd',
   pt: 'Em todo o mundo',
+  id: 'Worldwide',
 }
 
 function offerCatalog(locale: AppLocale) {
@@ -622,6 +653,16 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'Moda modesta de luxo',
     'Abaya seda',
   ],
+  id: [
+    'Bint Saeed',
+    'Abaya mewah UEA',
+    'Abaya desainer Abu Dhabi',
+    'Rumah abaya mewah',
+    'Abaya Abu Dhabi',
+    'Abaya Dubai',
+    'Fashion modest mewah',
+    'Abaya sutra',
+  ],
 }
 
 export function buildLocalBusinessJsonLd(
@@ -684,6 +725,7 @@ const PRODUCT_SCHEMA_NAME: Record<AppLocale, string> = {
   de: 'Bint Saeed Luxus-Abayas',
   nl: 'Bint Saeed luxe abaya’s',
   pt: 'Abayas de luxo Bint Saeed',
+  id: 'Bint Saeed Mewah Abayas',
 }
 
 const PRODUCT_CATEGORY: Record<AppLocale, string> = {
@@ -697,6 +739,7 @@ const PRODUCT_CATEGORY: Record<AppLocale, string> = {
   de: 'Luxus-Abayas',
   nl: 'Luxe abaya’s',
   pt: 'Abayas de luxo',
+  id: 'Mewah Abayas',
 }
 
 export function buildProductJsonLd(locale: AppLocale) {

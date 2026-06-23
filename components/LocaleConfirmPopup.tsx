@@ -1,14 +1,18 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { useLanguage, VALID_LANGUAGES, type Language } from '@/lib/i18n/LanguageContext'
 import { fetchGeoData, shouldShowLocaleConfirmPopup, languageLabels } from '@/lib/geo/geoDetection'
+import { localizedPath, stripLocaleFromPathname, type AppLocale } from '@/lib/i18n/routing'
 
 export default function LocaleConfirmPopup() {
   const [isVisible, setIsVisible] = useState(false)
   const [detectedLang, setDetectedLang] = useState<string | null>(null)
   const { setLanguage } = useLanguage()
+  const pathname = usePathname() || '/'
+  const router = useRouter()
 
   useEffect(() => {
     const localeConfirmDismissed = localStorage.getItem('bint-saeed-locale-confirm-dismissed')
@@ -34,13 +38,22 @@ export default function LocaleConfirmPopup() {
     }
   }, [])
 
+  const applyDetectedLocale = (lang: string) => {
+    if (!VALID_LANGUAGES.includes(lang as Language)) return
+    const { pathname: inner } = stripLocaleFromPathname(pathname)
+    const target = localizedPath(lang === 'en' ? 'en' : (lang as AppLocale), inner)
+    router.push(target, { scroll: false })
+    setLanguage(lang as Language)
+  }
+
   const handleStay = () => {
+    if (detectedLang) applyDetectedLocale(detectedLang)
     localStorage.setItem('bint-saeed-locale-confirm-dismissed', 'true')
     setIsVisible(false)
   }
 
   const handleSwitchToEnglish = () => {
-    setLanguage('en')
+    applyDetectedLocale('en')
     localStorage.setItem('bint-saeed-locale-confirm-dismissed', 'true')
     setIsVisible(false)
   }

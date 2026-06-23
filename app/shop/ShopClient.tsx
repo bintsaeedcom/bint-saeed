@@ -59,7 +59,7 @@ export default function ShopClient() {
   const [sortBy, setSortBy] = useState<SortId>('newest')
   const sortMenuRef = useRef<HTMLDivElement | null>(null)
   const { formatPrice } = useCurrency()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
   const { localize } = useLocaleHref()
 
   const applyCategory = useCallback(
@@ -359,6 +359,7 @@ export default function ShopClient() {
                       alt={getProductImageAlt(product, productPrimaryImage(product), {
                         color: product.colors[0]?.name,
                         index: 0,
+                        locale: language,
                       })}
                       fill
                       sizes="(max-width: 1024px) 50vw, 33vw"

@@ -77,6 +77,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'FAQ | Bint Saeed',
     nl: 'Veelgestelde vragen | Bint Saeed',
     pt: 'Perguntas frequentes | Bint Saeed',
+    id: 'Pertanyaan Umum | Bint Saeed',
   },
   shop_index: {
     en: 'Shop | Bint Saeed',
@@ -89,6 +90,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Shop | Bint Saeed',
     nl: 'Shop | Bint Saeed',
     pt: 'Loja | Bint Saeed',
+    id: 'Belanja | Bint Saeed',
   },
   about: {
     en: 'About | Bint Saeed',
@@ -101,6 +103,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Über uns | Bint Saeed',
     nl: 'Over ons | Bint Saeed',
     pt: 'Sobre nós | Bint Saeed',
+    id: 'Tentang | Bint Saeed',
   },
   contact: {
     en: 'Contact | Bint Saeed',
@@ -113,6 +116,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Kontakt | Bint Saeed',
     nl: 'Contact | Bint Saeed',
     pt: 'Contacto | Bint Saeed',
+    id: 'Kontak | Bint Saeed',
   },
   heritage: {
     en: 'Heritage | Bint Saeed',
@@ -125,6 +129,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Heritage | Bint Saeed',
     nl: 'Erfgoed | Bint Saeed',
     pt: 'Património | Bint Saeed',
+    id: 'Warisan | Bint Saeed',
   },
   heritage_al_talli: {
     en: 'Al Talli | Bint Saeed',
@@ -137,6 +142,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Al Talli | Bint Saeed',
     nl: 'Al Talli | Bint Saeed',
     pt: 'Al Talli | Bint Saeed',
+    id: 'Al Talli | Bint Saeed',
   },
   heritage_khous: {
     en: 'Khous | Bint Saeed',
@@ -149,6 +155,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Khous | Bint Saeed',
     nl: 'Khous | Bint Saeed',
     pt: 'Khous | Bint Saeed',
+    id: 'Khous | Bint Saeed',
   },
   heritage_sadu: {
     en: 'Sadu | Bint Saeed',
@@ -161,6 +168,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Sadu | Bint Saeed',
     nl: 'Sadu | Bint Saeed',
     pt: 'Sadu | Bint Saeed',
+    id: 'Sadu | Bint Saeed',
   },
   accessories: {
     en: 'Accessories | Bint Saeed',
@@ -173,6 +181,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Accessoires | Bint Saeed',
     nl: 'Accessoires | Bint Saeed',
     pt: 'Acessórios | Bint Saeed',
+    id: 'Aksesori | Bint Saeed',
   },
   accessories_product: {
     en: 'Accessory | Bint Saeed',
@@ -185,6 +194,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Accessoire | Bint Saeed',
     nl: 'Accessoire | Bint Saeed',
     pt: 'Acessório | Bint Saeed',
+    id: 'Aksesori | Bint Saeed',
   },
   cart: {
     en: 'Bag | Bint Saeed',
@@ -197,6 +207,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Warenkorb | Bint Saeed',
     nl: 'Tas | Bint Saeed',
     pt: 'Sacola | Bint Saeed',
+    id: 'Tas | Bint Saeed',
   },
   checkout: {
     en: 'Review Your Order | Bint Saeed',
@@ -209,6 +220,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Bestellung prüfen | Bint Saeed',
     nl: 'Bestelling controleren | Bint Saeed',
     pt: 'Rever o seu pedido | Bint Saeed',
+    id: 'Tinjau Pesanan | Bint Saeed',
   },
   checkout_success: {
     en: 'Order confirmed | Bint Saeed',
@@ -221,6 +233,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Bestellung bestätigt | Bint Saeed',
     nl: 'Bestelling bevestigd | Bint Saeed',
     pt: 'Pedido confirmado | Bint Saeed',
+    id: 'Pesanan Dikonfirmasi | Bint Saeed',
   },
   account: {
     en: 'Account | Bint Saeed',
@@ -233,6 +246,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Konto | Bint Saeed',
     nl: 'Account | Bint Saeed',
     pt: 'Conta | Bint Saeed',
+    id: 'Akun | Bint Saeed',
   },
   register: {
     en: 'Register | Bint Saeed',
@@ -245,6 +259,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Registrierung | Bint Saeed',
     nl: 'Registreren | Bint Saeed',
     pt: 'Registo | Bint Saeed',
+    id: 'Daftar | Bint Saeed',
   },
   privacy: {
     en: 'Privacy policy | Bint Saeed',
@@ -257,6 +272,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Datenschutz | Bint Saeed',
     nl: 'Privacybeleid | Bint Saeed',
     pt: 'Privacidade | Bint Saeed',
+    id: 'Kebijakan Privasi | Bint Saeed',
   },
   terms: {
     en: 'Terms | Bint Saeed',
@@ -269,6 +285,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'AGB | Bint Saeed',
     nl: 'Voorwaarden | Bint Saeed',
     pt: 'Termos | Bint Saeed',
+    id: 'Syarat & Ketentuan | Bint Saeed',
   },
   cookies: {
     en: 'Cookie policy | Bint Saeed',
@@ -281,6 +298,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Cookie-Richtlinie | Bint Saeed',
     nl: 'Cookies | Bint Saeed',
     pt: 'Cookies | Bint Saeed',
+    id: 'Kebijakan Cookie | Bint Saeed',
   },
   size_guide: {
     en: 'Size guide | Bint Saeed',
@@ -293,6 +311,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Größentabelle | Bint Saeed',
     nl: 'Maattabel | Bint Saeed',
     pt: 'Guia de tamanhos | Bint Saeed',
+    id: 'Panduan Ukuran | Bint Saeed',
   },
   verify_email: {
     en: 'Verify email | Bint Saeed',
@@ -305,6 +324,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'E-Mail bestätigen | Bint Saeed',
     nl: 'E-mail verifiëren | Bint Saeed',
     pt: 'Verificar e-mail | Bint Saeed',
+    id: 'Verifikasi Email | Bint Saeed',
   },
   the_codes: {
     en: 'The Codes | Bint Saeed',
@@ -317,6 +337,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'The Codes | Bint Saeed',
     nl: 'The Codes | Bint Saeed',
     pt: 'The Codes | Bint Saeed',
+    id: 'Kode Desain | Bint Saeed',
   },
   craftsmanship: {
     en: 'Craftsmanship | Bint Saeed',
@@ -329,6 +350,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Handwerk | Bint Saeed',
     nl: 'Vakmanschap | Bint Saeed',
     pt: 'Artesanato | Bint Saeed',
+    id: 'Kerajinan | Bint Saeed',
   },
   personalisation: {
     en: 'Personalise Your Abaya — Hidden Pocket | Bint Saeed',
@@ -341,6 +363,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Personalisierung — versteckte Tasche | Bint Saeed',
     nl: 'Personalisatie — verborgen zakje | Bint Saeed',
     pt: 'Personalização — bolso escondido | Bint Saeed',
+    id: 'Personalisasi Abaya — Saku Tersembunyi | Bint Saeed',
   },
   strands: {
     en: 'Abaya Strands — Natural Stone Customisation | Bint Saeed',
@@ -353,6 +376,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Abaya-Strands — Naturstein-Anpassung | Bint Saeed',
     nl: 'Abaya-strands — natuursteen personalisatie | Bint Saeed',
     pt: 'Strands de abaya — pedras naturais | Bint Saeed',
+    id: 'Abaya Strands — Kustomisasi Batu Alam | Bint Saeed',
   },
   product_care: {
     en: 'Product care | Bint Saeed',
@@ -365,6 +389,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Pflege | Bint Saeed',
     nl: 'Verzorging | Bint Saeed',
     pt: 'Cuidados | Bint Saeed',
+    id: 'Perawatan Produk | Bint Saeed',
   },
   giving_forward: {
     en: 'Giving Forward | Bint Saeed',
@@ -377,6 +402,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Giving Forward | Bint Saeed',
     nl: 'Giving Forward | Bint Saeed',
     pt: 'Giving Forward | Bint Saeed',
+    id: 'Memberi Ke Depan | Bint Saeed',
   },
   careers: {
     en: 'Careers | Bint Saeed',
@@ -389,6 +415,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Karriere | Bint Saeed',
     nl: 'Vacatures | Bint Saeed',
     pt: 'Carreiras | Bint Saeed',
+    id: 'Karier | Bint Saeed',
   },
   preview_gate: {
     en: 'Preview access | Bint Saeed',
@@ -401,6 +428,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Preview-Zugang | Bint Saeed',
     nl: 'Preview-toegang | Bint Saeed',
     pt: 'Acesso antecipado | Bint Saeed',
+    id: 'Akses Pratinjau | Bint Saeed',
   },
   preview_blocked: {
     en: 'Access restricted | Bint Saeed',
@@ -413,6 +441,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Zugriff eingeschränkt | Bint Saeed',
     nl: 'Toegang beperkt | Bint Saeed',
     pt: 'Acesso restrito | Bint Saeed',
+    id: 'Akses Dibatasi | Bint Saeed',
   },
   social_redirect: {
     en: 'Official channel | Bint Saeed',
@@ -425,6 +454,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Offizieller Kanal | Bint Saeed',
     nl: 'Officieel kanaal | Bint Saeed',
     pt: 'Canal oficial | Bint Saeed',
+    id: 'Saluran Resmi | Bint Saeed',
   },
   product: {
     en: 'Product | Bint Saeed',
@@ -437,6 +467,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Produkt | Bint Saeed',
     nl: 'Product | Bint Saeed',
     pt: 'Produto | Bint Saeed',
+    id: 'Produk | Bint Saeed',
   },
   generic: {
     en: 'Bint Saeed',
@@ -449,6 +480,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     de: 'Bint Saeed',
     nl: 'Bint Saeed',
     pt: 'Bint Saeed',
+    id: 'Bint Saeed',
   },
 }
 
