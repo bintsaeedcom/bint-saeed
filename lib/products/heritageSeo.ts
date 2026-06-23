@@ -1,7 +1,7 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 
 /** Required closing phrase on every commerce image alt. */
-export const BRAND_GEO_PHRASE = 'Bint Saeed Abu Dhabi, UAE'
+export const BRAND_GEO_PHRASE = 'Bint Saeed Abu Dhabi, United Arab Emirates'
 
 export type HeritageCraft = 'khous' | 'al-talli'
 

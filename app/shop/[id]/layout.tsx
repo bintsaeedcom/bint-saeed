@@ -4,6 +4,7 @@ import { getProductSlug, resolveProductIdentifier } from '@/lib/products/links'
 import { getServerLocale } from '@/lib/i18n/serverLocale'
 import {
   buildProductMetaDescription,
+  buildProductPageTitle,
   productCanonicalUrl,
   productHreflangLanguages,
   productNotFoundMetadata,
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
 
   const slug = getProductSlug(product)
   const canonicalUrl = productCanonicalUrl(locale, slug)
+  const pageTitle = buildProductPageTitle(locale, { name: product.name, slug })
   const description = buildProductMetaDescription(locale, {
     name: product.name,
     description: product.description,
@@ -40,14 +42,14 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
   })
 
   return {
-    title: `${product.name} | Bint Saeed`,
+    title: pageTitle,
     description,
     alternates: {
       canonical: canonicalUrl,
       languages: productHreflangLanguages(slug),
     },
     openGraph: {
-      title: `${product.name} | Bint Saeed`,
+      title: pageTitle,
       description,
       url: canonicalUrl,
       type: 'website',
@@ -61,7 +63,7 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${product.name} | Bint Saeed`,
+      title: pageTitle,
       description,
       images: [imageUrl],
       creator: '@bintsaeed_brand',

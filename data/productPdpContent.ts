@@ -1,6 +1,7 @@
 import type { Product } from '@/data/products'
 import { getProductSlug } from '@/lib/products/links'
 import { getProductSchemaFacts } from '@/lib/products/productSchemaMeta'
+import { buildVariantSku } from '@/lib/products/sku'
 import { getPdpSizeOptions, productIsOneSizeOnly } from '@/lib/shopProductOptions'
 
 export type ProductPdpContent = {
@@ -31,6 +32,37 @@ function normalizeMayfairColor(color?: string): MayfairColorKey {
   return 'deep-maroon'
 }
 
+const NOTHING_HILL_STYLE_SKU = 'BS-KF-002'
+
+const KAFTAN_COMPOSITION_DETAILS = [
+  'Outer: Crepe Chiffon (100% Polyester)',
+  'Inner Dress: 100% Polyester',
+] as const
+
+const NOTHING_HILL_COMPOSITION_DETAILS = [
+  'Outer: Chiffon (100% Polyester)',
+  'Inner Dress: 100% Polyester',
+] as const
+
+const KAFTAN_CARE_DETAILS = [
+  'Professional dry clean recommended',
+  'Gentle hand wash in cold water if required',
+  'Do not bleach',
+  'Do not tumble dry',
+] as const
+
+function kaftanFitAndSizeDetails(maxLengthCm: number, opts?: { includeAdjustableTies?: boolean }): string[] {
+  const lines = [
+    'One Size',
+    `Maximum garment length: ${maxLengthCm} cm / ${cmToInches(maxLengthCm)} inches`,
+  ]
+  if (opts?.includeAdjustableTies !== false) {
+    lines.push('Adjustable silhouette through hidden internal ties')
+  }
+  lines.push('Model is 155 cm / 61 inches tall')
+  return lines
+}
+
 function buildMayfairKaftanContent(color?: string): ProductPdpContent {
   const { label, adj } = MAYFAIR_COLOR_COPY[normalizeMayfairColor(color)]
 
@@ -56,22 +88,9 @@ function buildMayfairKaftanContent(color?: string): ProductPdpContent {
       `Colour: ${label}`,
       'Made in Abu Dhabi, UAE',
     ],
-    compositionDetails: [
-      'Outer: Crepe Chiffon (100% Polyester)',
-      'Inner Dress: 100% Polyester',
-    ],
-    fitAndSizeDetails: [
-      'One Size',
-      'Maximum garment length: 165 cm / 65 inches',
-      'Adjustable silhouette through hidden internal ties',
-      'Model is 155 cm / 61 inches tall',
-    ],
-    careDetails: [
-      'Professional dry clean recommended',
-      'Gentle hand wash in cold water if required',
-      'Do not bleach',
-      'Do not tumble dry',
-    ],
+    compositionDetails: [...KAFTAN_COMPOSITION_DETAILS],
+    fitAndSizeDetails: kaftanFitAndSizeDetails(165),
+    careDetails: [...KAFTAN_CARE_DETAILS],
   }
 }
 
@@ -266,37 +285,30 @@ function buildNothingHillKaftanContent(color?: string): ProductPdpContent {
 
   return {
     introParagraphs: [
-      `The Nothing Hill Kaftan is designed for women who understand that elegance is never static. Cut from ${adj} crepe chiffon and layered over an attached inner dress, this ${adj} chiffon kaftan creates a fluid silhouette that drapes effortlessly from shoulder to hem.`,
-      'A softly cascading scarf detail falls from the left shoulder and can be styled diagonally across the body using the signature Bint Saeed gold-tone emblem pin. Hidden internal ties allow the silhouette to be adjusted in multiple ways, creating either a flowing cape-like shape or a more defined profile. The result is a piece that transforms with the woman who wears it, adapting naturally to different occasions and moments.',
-      'Lightweight, versatile, and designed to be worn for years rather than seasons, the Nothing Hill Kaftan moves effortlessly between occasions. Worn for a wedding, a celebration, a dinner abroad, or an ordinary day that deserves something extraordinary, it adapts naturally to the life of the woman who wears it. It is not defined by a destination, a city, or a moment. It becomes part of her story and travels wherever she does.',
-      'It is a piece chosen not only for how it looks, but for how it makes a woman feel the moment she puts it on.',
+      `The Nothing Hill Kaftan is designed for women who appreciate elegance in its most effortless form. Crafted from layers of soft ${adj} chiffon and finished with a refined bateau neckline, it creates a flowing silhouette that moves gracefully with every step.`,
+      'Lightweight and fluid, the chiffon drapes naturally from shoulder to hem, creating a sense of movement while maintaining a beautifully balanced shape. A signature Bint Saeed gold-tone emblem sits discreetly at the front, offering a subtle expression of the house identity.',
+      `The soft ${adj} tone brings warmth and femininity to the design, making it equally suited to celebrations, intimate gatherings, destination events, and occasions that call for understated elegance. The airy construction allows the silhouette to float around the body, creating a presence that feels both refined and effortless.`,
+      'Designed to be worn season after season, the Nothing Hill Kaftan is not defined by trends or occasions alone. It is a piece chosen for the ease it brings to dressing beautifully, whether worn for a special event, an evening gathering, or a moment worth remembering.',
+      'Light, graceful, and timeless, it becomes part of the woman’s story, accompanying her wherever life takes her.',
     ],
     productDetails: [
-      `${label} crepe chiffon kaftan`,
-      'Fluid silhouette with layered construction',
+      `Soft ${adj} chiffon kaftan`,
+      'Flowing layered silhouette with graceful movement',
       'Attached inner dress for ease of wear',
-      'Graceful bateau neckline',
-      'Attached scarf detail draped from the left shoulder',
-      'Signature Bint Saeed gold-tone emblem pin included',
-      'Scarf can be styled diagonally across the body',
-      'Hidden internal tie construction allowing multiple styling options',
-      'Can be worn with a fluid silhouette or a softly defined shape',
-      'Open-cut sleeves creating graceful movement',
+      'Elegant bateau neckline',
+      'Signature Bint Saeed gold-tone emblem included',
+      'Soft draped chiffon panels creating fluid movement',
       'Lightweight construction designed for comfort and elegance',
+      'Designed to move naturally with the wearer',
+      'Suitable for celebrations, gatherings, destination events, and special occasions',
+      'Airy silhouette with a soft feminine drape',
       `Colour: ${label}`,
       'Made in Abu Dhabi, UAE',
+      `Product code: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
-    compositionDetails: [
-      'Outer: Crepe Chiffon (100% Polyester)',
-      'Inner Dress: 100% Polyester',
-    ],
-    fitAndSizeDetails: [
-      'One Size',
-      'Maximum garment length: 125 cm / 49 inches',
-      'Adjustable silhouette through hidden internal ties',
-      'Model is 155 cm / 61 inches tall',
-    ],
-    careDetails: [...STANDARD_CARE_DETAILS],
+    compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
+    fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),
+    careDetails: [...KAFTAN_CARE_DETAILS],
   }
 }
 

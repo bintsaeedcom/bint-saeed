@@ -3,10 +3,23 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { localizedPath } from '@/lib/i18n/routing'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getHeritageMetaSnippet } from '@/lib/products/heritageSeo'
+import { getKaftanPageSeo } from '@/lib/products/kaftanSchemaI18n'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 
 const SITE = new URL('https://www.bintsaeed.com')
 const G = LOCALE_GEO
+
+export function buildProductPageTitle(
+  locale: AppLocale,
+  body: { name: string; slug?: string },
+): string {
+  const slug = body.slug?.toLowerCase()
+  if (slug) {
+    const kaftan = getKaftanPageSeo(slug, locale)
+    if (kaftan) return kaftan.title
+  }
+  return `${body.name} | Bint Saeed`
+}
 
 /** Intro line per locale — brand, city, country, Emirati brand signal. */
 const PRODUCT_INTRO: Record<AppLocale, string> = {
@@ -26,6 +39,12 @@ export function buildProductMetaDescription(
   locale: AppLocale,
   body: { name: string; description: string; fabric: string; slug?: string },
 ): string {
+  const slug = body.slug?.toLowerCase()
+  if (slug) {
+    const kaftan = getKaftanPageSeo(slug, locale)
+    if (kaftan) return clipMetaDescription(kaftan.description, 200)
+  }
+
   const heritage = body.slug ? getHeritageMetaSnippet(locale, body.slug) : ''
   const merged = [PRODUCT_INTRO[locale], body.name, body.description, heritage, body.fabric]
     .filter(Boolean)

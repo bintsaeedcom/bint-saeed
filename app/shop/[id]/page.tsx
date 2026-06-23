@@ -32,9 +32,7 @@ import {
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { resolveProductSku } from '@/lib/products/sku'
 import {
-  PDP_ACCORDION_PANEL,
   PDP_ACCORDION_SUBTITLE,
-  PDP_ACCORDION_TITLE,
   PDP_BULLET_ITEM,
   PDP_BULLET_LIST,
   PDP_COPY_INTRO,
@@ -46,6 +44,7 @@ import {
 } from '@/lib/pdp/pdpTypography'
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
+import PdpAccordion, { type PdpAccordionSectionConfig } from '@/components/pdp/PdpAccordion'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -343,11 +342,106 @@ export default function ProductPage() {
     showAddedToBagToast(isRTL)
   }
 
-  const toggleDropdown = (key: string) => {
+  const handleAccordionOpen = (key: string) => {
     if (key === 'size') trackEvent('open_size_guide', { page: 'product', item_id: product.id })
     if (key === 'description') trackEvent('open_personalisation_info', { page: 'product', item_id: product.id })
-    setOpenDropdown(openDropdown === key ? null : key)
   }
+
+  const pdpAccordionSections = useMemo((): PdpAccordionSectionConfig[] => {
+    const sections: PdpAccordionSectionConfig[] = [
+      {
+        id: 'description',
+        title: 'Product Details',
+        titleTag: 'h2',
+        children: (
+          <>
+            <ul className={PDP_BULLET_LIST}>
+              {productDetailsBullets.map((item, idx) => (
+                <li key={`pd-${idx}`} className={PDP_BULLET_ITEM}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            {compositionDetails && compositionDetails.length > 0 && (
+              <div className="space-y-2 pt-3">
+                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>Composition</p>
+                <ul className={PDP_BULLET_LIST}>
+                  {compositionDetails.map((item, idx) => (
+                    <li key={`comp-${idx}`} className={PDP_BULLET_ITEM}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {careDetails && careDetails.length > 0 && (
+              <div className="space-y-2 pt-3">
+                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>Care</p>
+                <ul className={PDP_BULLET_LIST}>
+                  {careDetails.map((item, idx) => (
+                    <li key={`care-${idx}`} className={PDP_BULLET_ITEM}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {brandStory && (
+              <p className={`pt-3 ${PDP_COPY_INTRO} pdp-copy--intro ${isRTL ? 'text-right' : ''}`}>
+                {brandStory}
+              </p>
+            )}
+          </>
+        ),
+      },
+      {
+        id: 'size',
+        title: t.product.sizeMeasurements,
+        children: (
+          <ul className={PDP_BULLET_LIST}>
+            {sizeAndFitDetails.map((item, idx) => (
+              <li key={`sz-${idx}`} className={PDP_BULLET_ITEM}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        ),
+      },
+      {
+        id: 'shipping',
+        title: t.product.shippingReturns,
+        bordered: faqItems.length > 0,
+        children: <PdpShippingReturnsBullets isRTL={isRTL} />,
+      },
+    ]
+
+    if (faqItems.length > 0) {
+      sections.push({
+        id: 'faq',
+        title: 'FAQ',
+        bordered: false,
+        panelClassName: 'space-y-4 pb-5',
+        children: faqItems.map((item, idx) => (
+          <div key={`faq-${idx}`} className={isRTL ? 'text-right' : ''}>
+            <p className={PDP_FAQ_QUESTION}>{item.question}</p>
+            <p className={`mt-1 ${PDP_COPY_RELAXED}`}>{item.answer}</p>
+          </div>
+        )),
+      })
+    }
+
+    return sections
+  }, [
+    brandStory,
+    careDetails,
+    compositionDetails,
+    faqItems,
+    isRTL,
+    productDetailsBullets,
+    sizeAndFitDetails,
+    t.product.shippingReturns,
+    t.product.sizeMeasurements,
+  ])
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
@@ -857,155 +951,12 @@ export default function ProductPage() {
               </p>
             )}
 
-            {/* Accordion Details */}
-            <div className="border-t border-brand-stone/30">
-              {/* Description */}
-              <div className="border-b border-brand-stone/30">
-                <button
-                  onClick={() => toggleDropdown('description')}
-                  className="w-full flex items-center justify-between py-3"
-                  data-cursor-hover
-                >
-                  <h2 className={PDP_ACCORDION_TITLE}>
-                    Product Details
-                  </h2>
-                  <FiChevronDown
-                    className={`w-4 h-4 text-brand-darkRed transition-transform ${
-                      openDropdown === 'description' ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-                {openDropdown === 'description' && (
-                  <div className={PDP_ACCORDION_PANEL}>
-                    <ul className={PDP_BULLET_LIST}>
-                      {productDetailsBullets.map((item, idx) => (
-                        <li key={`pd-${idx}`} className={PDP_BULLET_ITEM}>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                    {compositionDetails && compositionDetails.length > 0 && (
-                      <div className="space-y-2 pt-3">
-                        <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>
-                          Composition
-                        </p>
-                        <ul className={PDP_BULLET_LIST}>
-                          {compositionDetails.map((item, idx) => (
-                            <li key={`comp-${idx}`} className={PDP_BULLET_ITEM}>
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {careDetails && careDetails.length > 0 && (
-                      <div className="space-y-2 pt-3">
-                        <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>
-                          Care
-                        </p>
-                        <ul className={PDP_BULLET_LIST}>
-                          {careDetails.map((item, idx) => (
-                            <li key={`care-${idx}`} className={PDP_BULLET_ITEM}>
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {brandStory && (
-                      <p className={`pt-3 ${PDP_COPY_INTRO} pdp-copy--intro ${isRTL ? 'text-right' : ''}`}>
-                        {brandStory}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              {/* Size & Fit */}
-              <div className="border-b border-brand-stone/30">
-                <button
-                  onClick={() => toggleDropdown('size')}
-                  className="w-full flex items-center justify-between py-3"
-                  data-cursor-hover
-                >
-                  <h3 className={PDP_ACCORDION_TITLE}>
-                    {t.product.sizeMeasurements}
-                  </h3>
-                  <FiChevronDown
-                    className={`w-4 h-4 text-brand-darkRed transition-transform ${
-                      openDropdown === 'size' ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-                {openDropdown === 'size' && (
-                  <div className={PDP_ACCORDION_PANEL}>
-                    <ul className={PDP_BULLET_LIST}>
-                      {sizeAndFitDetails.map((item, idx) => (
-                        <li key={`sz-${idx}`} className={PDP_BULLET_ITEM}>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              {/* Shipping & Returns */}
-              <div className={faqItems.length > 0 ? 'border-b border-brand-stone/30' : ''}>
-                <button
-                  onClick={() => toggleDropdown('shipping')}
-                  className="w-full flex items-center justify-between py-3"
-                  data-cursor-hover
-                >
-                  <h3 className={PDP_ACCORDION_TITLE}>
-                    {t.product.shippingReturns}
-                  </h3>
-                  <FiChevronDown
-                    className={`w-4 h-4 text-brand-darkRed transition-transform ${
-                      openDropdown === 'shipping' ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-                {openDropdown === 'shipping' && (
-                  <div className={PDP_ACCORDION_PANEL}>
-                    <PdpShippingReturnsBullets isRTL={isRTL} />
-                  </div>
-                )}
-              </div>
-
-              {faqItems.length > 0 && (
-                <div>
-                  <button
-                    onClick={() => toggleDropdown('faq')}
-                    className="w-full flex items-center justify-between py-3"
-                    data-cursor-hover
-                  >
-                    <h3 className={PDP_ACCORDION_TITLE}>
-                      FAQ
-                    </h3>
-                    <FiChevronDown
-                      className={`w-4 h-4 text-brand-darkRed transition-transform ${
-                        openDropdown === 'faq' ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </button>
-                  {openDropdown === 'faq' && (
-                    <div className="space-y-4 pb-5">
-                      {faqItems.map((item, idx) => (
-                        <div key={`faq-${idx}`} className={isRTL ? 'text-right' : ''}>
-                          <p className={PDP_FAQ_QUESTION}>
-                            {item.question}
-                          </p>
-                          <p className={`mt-1 ${PDP_COPY_RELAXED}`}>
-                            {item.answer}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+            <PdpAccordion
+              openId={openDropdown}
+              onOpenChange={setOpenDropdown}
+              onSectionOpen={handleAccordionOpen}
+              sections={pdpAccordionSections}
+            />
 
             {relatedStyles.length > 0 && (
               <section className="relative z-20 mt-8">

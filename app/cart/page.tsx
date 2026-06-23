@@ -24,6 +24,7 @@ export default function CartPage() {
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL } = useLanguage()
   const estimatedTotal = cartSubtotal(items)
+  const compactButtonRadius = 'rounded-[4px]'
 
   if (items.length === 0) {
     return (
@@ -57,7 +58,7 @@ export default function CartPage() {
             </p>
             <LocaleLink
               href="/shop"
-              className="inline-flex items-center gap-2 px-10 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors"
+              className="inline-flex items-center gap-2 rounded-[4px] bg-brand-darkRed px-10 py-4 font-montserrat text-sm uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-dustyBlue"
               data-cursor-hover
               data-analytics-event="click_cta_home_to_collection"
               data-analytics-section="cart-empty-state"
@@ -107,7 +108,7 @@ export default function CartPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex gap-6 pb-8 border-b border-brand-stone/20"
+                  className="flex gap-4 border-b border-brand-stone/20 pb-7 sm:gap-6 sm:pb-8"
                 >
                   {/* Image */}
                   <LocaleLink href={productHref(item)} className="flex-shrink-0" data-cursor-hover>
@@ -134,7 +135,7 @@ export default function CartPage() {
                           {item.name}
                         </h3>
                       </LocaleLink>
-                      <div className="font-montserrat text-xs text-brand-clayRed/60 tracking-wide space-y-1">
+                      <div className="space-y-1 font-montserrat text-xs tracking-wide text-brand-clayRed/60">
                         <p>Size: {item.size}</p>
                         <p>Colour: {item.color}</p>
                         {item.sku && (
@@ -153,19 +154,18 @@ export default function CartPage() {
                     </div>
 
                     {/* Price & Actions */}
-                    <div className="flex items-end justify-between mt-4">
+                    <div className="mt-4 flex items-end justify-between">
                       <p className="font-montserrat text-base text-brand-darkRed tracking-wide">
                         {formatAmount(lineUnitForCurrency(item, currency.code))}
-                        {item.quantity > 1 && (
-                          <span className="block font-montserrat text-xs text-brand-clayRed/60">
-                            {formatAmount(lineTotalForCurrency(item, currency.code))} total
-                          </span>
-                        )}
+                        <span className="block font-montserrat text-xs text-brand-clayRed/60">
+                          {isRTL ? 'الإجمالي: ' : 'Line total: '}
+                          {formatAmount(lineTotalForCurrency(item, currency.code))}
+                        </span>
                       </p>
 
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-3 sm:gap-4">
                         {/* Quantity */}
-                        <div className="flex items-center border border-brand-stone/30">
+                        <div className={`flex items-center border border-brand-stone/30 ${compactButtonRadius}`}>
                           <button
                             onClick={() =>
                               {
@@ -186,7 +186,7 @@ export default function CartPage() {
                                 })
                               }
                             }
-                            className="px-3 py-2 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
+                            className={`px-3 py-2 text-brand-darkRed transition-colors hover:bg-brand-dustyBlue/10 ${compactButtonRadius}`}
                             data-cursor-hover
                           >
                             <FiMinus className="w-3 h-3" />
@@ -212,7 +212,7 @@ export default function CartPage() {
                                 })
                               }
                             }
-                            className="px-3 py-2 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
+                            className={`px-3 py-2 text-brand-darkRed transition-colors hover:bg-brand-dustyBlue/10 ${compactButtonRadius}`}
                             data-cursor-hover
                           >
                             <FiPlus className="w-3 h-3" />
@@ -272,7 +272,7 @@ export default function CartPage() {
 
               <LocaleLink
                 href="/checkout"
-                className={`mt-8 flex w-full min-h-[52px] items-center justify-center gap-2 bg-brand-dustyBlue py-4 font-montserrat text-sm uppercase tracking-[0.18em] text-[#1a0008] transition-colors hover:bg-white ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`mt-8 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue py-4 font-montserrat text-sm uppercase tracking-[0.18em] text-[#1a0008] transition-colors hover:bg-white ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
                 onClick={() =>
                   trackEvent('begin_checkout', {
@@ -283,7 +283,7 @@ export default function CartPage() {
                   })
                 }
               >
-                {isRTL ? 'راجعي طلبك' : 'Review Your Order'}
+                {isRTL ? 'المتابعة للدفع الآمن' : 'Proceed to Secure Payment'}
                 <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
               </LocaleLink>
 

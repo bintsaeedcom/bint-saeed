@@ -138,10 +138,11 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
       <div className="border-b border-brand-stone/20 bg-brand-pageCanvas">
-        <div className="container mx-auto min-w-0 px-4 py-6 pt-24 sm:px-6 sm:py-8 sm:pt-28 lg:px-12">
+        <div className="container mx-auto min-w-0 px-4 pb-4 pt-20 sm:px-6 sm:pb-6 sm:pt-24 lg:px-12 lg:pt-28">
           <AppPageWayfinding
             rtl={isRTL}
             variant="muted"
+            className="space-y-2.5"
             breadcrumbClassName="text-brand-clayRed/70 [&_a]:text-brand-clayRed/70 [&_span]:text-brand-darkRed"
             segments={[
               { label: isRTL ? 'السلة' : 'Bag', href: '/cart' },
@@ -152,7 +153,7 @@ export default function CheckoutPage() {
               label: isRTL ? 'تعديل السلة' : 'Edit bag',
             }}
           />
-          <div className={`mt-5 sm:mt-6 ${isRTL ? 'text-right' : ''}`}>
+          <div className={`${isRTL ? 'text-right' : ''} mt-3 sm:mt-4`}>
             <h1
               data-document-h1="true"
               className="font-rozha text-[1.75rem] leading-tight text-brand-darkRed sm:text-3xl md:text-4xl"
@@ -178,7 +179,7 @@ export default function CheckoutPage() {
             >
               <ul className="divide-y divide-brand-stone/15">
                 {items.map((item) => (
-                  <li key={lineKey(item)} className="flex gap-3 py-5 first:pt-0 sm:gap-4">
+                  <li key={lineKey(item)} className="flex items-start gap-3 py-5 first:pt-0 sm:gap-4">
                     <LocaleLink
                       href={productHref(item)}
                       className="relative h-20 w-16 shrink-0 overflow-hidden bg-[#f0eeeb] sm:h-24 sm:w-20"
@@ -214,11 +215,10 @@ export default function CheckoutPage() {
                       <p className="mt-2 font-montserrat text-sm text-brand-darkRed">
                         {formatAmount(lineUnitForCurrency(item, currency.code))}
                         <span className="text-brand-clayRed/50"> × {item.quantity}</span>
-                        {item.quantity > 1 && (
-                          <span className="block text-xs text-brand-clayRed/55">
-                            {formatAmount(lineTotalForCurrency(item, currency.code))} total
-                          </span>
-                        )}
+                        <span className="block text-xs text-brand-clayRed/55">
+                          {isRTL ? 'الإجمالي: ' : 'Line total: '}
+                          {formatAmount(lineTotalForCurrency(item, currency.code))}
+                        </span>
                       </p>
                     </div>
                   </li>
@@ -282,7 +282,7 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={() => void startStripeCheckout()}
                   disabled={payBusy || !stripeEnvReady || !legalAcknowledged}
-                  className={`mt-5 flex w-full min-h-[52px] items-center justify-center gap-2 bg-brand-dustyBlue px-3 py-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 sm:mt-6 sm:gap-3 sm:text-sm sm:tracking-[0.18em] ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`mt-5 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue px-3 py-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 sm:mt-6 sm:gap-3 sm:text-sm sm:tracking-[0.18em] ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
                   {payBusy ? (

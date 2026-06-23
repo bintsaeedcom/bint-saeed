@@ -1,6 +1,6 @@
 import type { Product } from '@/data/products'
 import { getProductSlug } from '@/lib/products/links'
-import { getProductImageAlt } from '@/lib/products/imageAlt'
+import { getProductImageAlt, PRODUCT_IMAGE_DIMENSIONS } from '@/lib/products/imageAlt'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { getSchemaAudienceType } from '@/lib/brand/brandPositioning'
@@ -15,8 +15,27 @@ import {
   getProductFaq,
   getProductSchemaFacts,
 } from '@/lib/products/productSchemaMeta'
+import { getKaftanPageSeo, getKaftanSchemaAudience, isKaftanSlug } from '@/lib/products/kaftanSchemaI18n'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
+
+const OFFER_AREA_SERVED_COUNTRIES = [
+  'United Arab Emirates',
+  'Saudi Arabia',
+  'Qatar',
+  'Kuwait',
+  'Bahrain',
+  'Oman',
+  'United Kingdom',
+  'France',
+  'Italy',
+  'Germany',
+  'Netherlands',
+  'Switzerland',
+  'Belgium',
+  'Spain',
+  'Portugal',
+] as const
 
 export function absoluteCatalogImageUrl(src: string): string {
   const path = src.startsWith('/') ? src : `/${src}`
@@ -28,11 +47,13 @@ function buildImageObjects(
   images: string[],
   color?: string,
   lang?: string,
-): Array<Record<string, string | boolean>> {
+): Array<Record<string, unknown>> {
   return images.map((src, index) => {
     const caption = getProductImageAlt(product, src, { color, index })
     const url = absoluteCatalogImageUrl(src)
     const isWebp = src.toLowerCase().endsWith('.webp')
+    const filename = src.split('/').pop() ?? ''
+    const dimensions = PRODUCT_IMAGE_DIMENSIONS[filename]
     return {
       '@type': 'ImageObject',
       '@id': `${url}#image`,
@@ -42,6 +63,12 @@ function buildImageObjects(
       caption,
       description: caption,
       ...(isWebp ? { encodingFormat: 'image/webp' } : {}),
+      ...(dimensions
+        ? {
+            width: { '@type': 'QuantitativeValue', value: dimensions.width, unitCode: 'E37' },
+            height: { '@type': 'QuantitativeValue', value: dimensions.height, unitCode: 'E37' },
+          }
+        : {}),
       ...(lang ? { inLanguage: lang } : {}),
       representativeOfPage: index === 0,
     }
@@ -54,6 +81,9 @@ function buildSchemaDescription(
   locale: AppLocale,
   color?: string,
 ): string {
+  const kaftanSeo = getKaftanPageSeo(slug, locale)
+  if (kaftanSeo) return kaftanSeo.description
+
   const pdp = getProductPdpContent(product, { color })
   const base = pdp.introParagraphs?.[0]?.trim() || product.description.trim()
   return buildLocalizedSchemaDescription(product, locale, base)
@@ -71,11 +101,15 @@ function schemaManufacturer() {
   }
 }
 
-function schemaAudience(locale: AppLocale) {
+function schemaAudience(locale: AppLocale, slug: string) {
+  const audienceType = isKaftanSlug(slug)
+    ? getKaftanSchemaAudience(locale)
+    : getSchemaAudienceType(locale)
+
   return {
     '@type': 'PeopleAudience' as const,
     suggestedGender: 'female' as const,
-    audienceType: getSchemaAudienceType(locale),
+    audienceType,
   }
 }
 
@@ -86,7 +120,7 @@ function schemaSharedFields(
   color?: string,
   lang?: string,
 ) {
-  const facts = getProductSchemaFacts(product)
+  const facts = getProductSchemaFacts(product, locale)
 
   return {
     description: buildSchemaDescription(product, slug, locale, color),
@@ -98,7 +132,7 @@ function schemaSharedFields(
     },
     additionalProperty: buildProductAdditionalProperties(product, facts, locale),
     manufacturer: schemaManufacturer(),
-    audience: schemaAudience(locale),
+    audience: schemaAudience(locale, slug),
     ...(lang ? { inLanguage: lang } : {}),
   }
 }
@@ -116,12 +150,8 @@ function buildOffer(product: Product, pageUrl: string) {
       name: 'Bint Saeed',
     },
     areaServed: [
-      { '@type': 'Country', name: 'United Arab Emirates' },
-      { '@type': 'Country', name: 'Saudi Arabia' },
-      { '@type': 'Country', name: 'Qatar' },
-      { '@type': 'Country', name: 'Kuwait' },
-      { '@type': 'Country', name: 'Bahrain' },
-      { '@type': 'Country', name: 'Oman' },
+      ...OFFER_AREA_SERVED_COUNTRIES.map((name) => ({ '@type': 'Country' as const, name })),
+      { '@type': 'Place' as const, name: 'Worldwide' },
     ],
   }
 }

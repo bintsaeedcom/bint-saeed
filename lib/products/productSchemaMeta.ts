@@ -10,6 +10,10 @@ import {
   SCHEMA_MADE_IN,
   SCHEMA_SUITABLE_FOR,
 } from '@/lib/products/productSchemaI18n'
+import {
+  getLocalizedKaftanFaq,
+  getLocalizedKaftanSchemaFacts,
+} from '@/lib/products/kaftanSchemaI18n'
 
 export type ProductFaqItem = {
   question: string
@@ -37,62 +41,6 @@ const DEFAULT_SUITABLE_FOR =
 const DEFAULT_MADE_IN = 'Abu Dhabi, United Arab Emirates'
 
 const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
-  'mayfair-kaftan': {
-    neckline: 'V-neckline',
-    fit: 'One size; fluid and relaxed fit with hidden internal ties',
-    maximumGarmentLength: '165 cm',
-    innerDress: 'Attached inner dress',
-    stylingDetail:
-      'Attached scarf detail with signature Bint Saeed gold-tone emblem pin; hidden internal tie construction',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    care: 'Professional dry clean recommended',
-    madeIn: DEFAULT_MADE_IN,
-    faq: [
-      {
-        question: 'Is the Mayfair Kaftan suitable for weddings, Eid, and special occasions?',
-        answer:
-          'Yes. The Mayfair Kaftan is designed for weddings, engagement celebrations, Eid gatherings, formal dinners, and special occasions. Crafted from Deep Maroon crepe chiffon, its fluid silhouette creates elegant movement and transitions effortlessly from daytime events to evening occasions.',
-      },
-      {
-        question: 'Is the Mayfair Kaftan one size?',
-        answer:
-          'Yes. The Mayfair Kaftan is designed as a one-size silhouette. It can be worn completely loose for a flowing, effortless look or adjusted using the hidden internal ties to create a more defined, cape-like shape. This allows the silhouette to adapt naturally to different styling preferences and occasions.',
-      },
-      {
-        question: 'What makes the Mayfair Kaftan different from other kaftans?',
-        answer:
-          'The Mayfair Kaftan combines a fluid one-size silhouette, hidden internal tie construction, an attached scarf detail, and the signature Bint Saeed gold-tone emblem pin. The scarf can be worn draped from the shoulder or styled diagonally across the body using the emblem pin, creating different looks while remaining permanently attached to the garment. Designed in Abu Dhabi, UAE, it is created for women who value versatility, elegance, and pieces that can be worn across occasions, destinations, and seasons.',
-      },
-    ],
-  },
-  'nothing-hill-kaftan': {
-    neckline: 'Graceful bateau neckline',
-    fit: 'One size; fluid and relaxed fit with hidden internal ties',
-    maximumGarmentLength: '125 cm',
-    innerDress: 'Attached inner dress',
-    stylingDetail:
-      'Attached scarf detail with signature Bint Saeed gold-tone emblem pin; hidden internal tie construction',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    care: 'Professional dry clean recommended',
-    madeIn: DEFAULT_MADE_IN,
-    faq: [
-      {
-        question: 'Is the Nothing Hill Kaftan suitable for weddings, Eid, and special occasions?',
-        answer:
-          'Yes. The Nothing Hill Kaftan is designed for weddings, engagement celebrations, Eid gatherings, formal dinners, and special occasions. Crafted from Peach Pink crepe chiffon with a graceful bateau neckline, its fluid silhouette creates elegant movement and transitions effortlessly from daytime events to evening occasions.',
-      },
-      {
-        question: 'Is the Nothing Hill Kaftan one size?',
-        answer:
-          'Yes. The Nothing Hill Kaftan is designed as a one-size silhouette. It can be worn completely loose for a flowing, effortless look or adjusted using the hidden internal ties to create a more defined, cape-like shape. This allows the silhouette to adapt naturally to different styling preferences and occasions.',
-      },
-      {
-        question: 'What makes the Nothing Hill Kaftan different from other kaftans?',
-        answer:
-          'The Nothing Hill Kaftan combines a fluid one-size silhouette, hidden internal tie construction, an attached scarf detail, a graceful bateau neckline, and the signature Bint Saeed gold-tone emblem pin. The scarf can be worn draped from the shoulder or styled diagonally across the body using the emblem pin, creating different looks while remaining permanently attached to the garment. Designed in Abu Dhabi, UAE, it is created for women who value versatility, elegance, and pieces that can be worn across occasions, destinations, and seasons.',
-      },
-    ],
-  },
   'knightsbridge-abaya-jacket': {
     fit: 'Jacket-style abaya with refined drape',
     stylingDetail: 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
@@ -196,8 +144,11 @@ function primaryFabricLabel(fabric: string): string | undefined {
   return first || undefined
 }
 
-export function getProductSchemaFacts(product: Product): ProductSchemaFacts {
+export function getProductSchemaFacts(product: Product, locale: AppLocale = 'en'): ProductSchemaFacts {
   const slug = getProductSlug(product).toLowerCase()
+  const kaftanFacts = getLocalizedKaftanSchemaFacts(slug, locale)
+  if (kaftanFacts) return kaftanFacts
+
   const base = SLUG_FACTS[slug] ?? {}
   const fromMeasurements = extractMaxLength(product.measurements)
 
@@ -247,7 +198,7 @@ export function buildProductAdditionalProperties(
     {
       '@type': 'PropertyValue',
       name: localizePropertyLabel('Suitable For', locale),
-      value: suitableFor,
+      value: facts.suitableFor ?? suitableFor,
     },
   ]
 
@@ -341,8 +292,22 @@ export function getProductFaq(
   customFaq?: ProductFaqItem[],
   locale: AppLocale = 'en',
 ): ProductFaqItem[] {
+  const slug = getProductSlug(product).toLowerCase()
+  const kaftanFaq = getLocalizedKaftanFaq(slug, locale)
+  if (kaftanFaq.length > 0) {
+    const merged = [...kaftanFaq]
+    const seen = new Set(kaftanFaq.map((item) => item.question.toLowerCase()))
+    for (const item of customFaq ?? []) {
+      if (!seen.has(item.question.toLowerCase())) {
+        merged.push(item)
+        seen.add(item.question.toLowerCase())
+      }
+    }
+    return merged
+  }
+
   if (locale === 'en') {
-    const facts = getProductSchemaFacts(product)
+    const facts = getProductSchemaFacts(product, locale)
     const slugFaq = facts.faq ?? []
     const merged = [...slugFaq]
     const seen = new Set(slugFaq.map((item) => item.question.toLowerCase()))

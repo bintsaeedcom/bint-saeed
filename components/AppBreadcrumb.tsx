@@ -63,7 +63,7 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
           return (
             <li
               key={`${seg.label}-${i}`}
-              className={`flex shrink-0 items-center gap-x-1.5 sm:gap-x-2.5 ${isLast ? 'min-w-0 max-w-full' : ''}`}
+              className={`flex items-center gap-x-1.5 sm:gap-x-2.5 ${isLast ? 'min-w-0 max-w-full flex-1' : 'shrink-0'}`}
             >
               {i > 0 ? (
                 <span

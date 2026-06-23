@@ -6,6 +6,8 @@ import { productIsOneSizeOnly } from '@/lib/shopProductOptions'
 import { MODEST_DISCOVERY_KEYWORDS } from '@/lib/brand/brandPositioning'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
+import { buildLocalisedOptimisedSchemaKeywords } from '@/lib/products/optimisedKeywordsI18n'
+import { getLocalizedKaftanFaq } from '@/lib/products/kaftanSchemaI18n'
 
 export const SCHEMA_SUITABLE_FOR: Record<AppLocale, string> = {
   en: 'Weddings, Eid, celebrations, dinners, travel, gatherings and everyday elegance',
@@ -282,24 +284,27 @@ export function buildLocalizedProductKeywords(
   locale: AppLocale,
   colorName?: string,
 ): string {
+  const optimised = buildLocalisedOptimisedSchemaKeywords(product, colorName, locale)
+
+  if (locale === 'en') {
+    return optimised
+  }
+
   const type = productTypeLabel(product.category, locale)
   const color = colorName?.trim() || product.colors[0]?.name || ''
   const slug = getProductSlug(product).toLowerCase()
   const craft = getHeritageCraft(slug)
 
   const terms = new Set<string>([
-    product.name,
-    'Bint Saeed',
+    ...optimised.split(', '),
     ...CONTEMPORARY_KEYWORDS[locale],
     ...MODEST_DISCOVERY_KEYWORDS[locale],
     `${product.name} ${type}`,
     color ? `${color} ${type}` : '',
-    locale === 'en' ? 'Made in UAE' : '',
-    locale === 'en' ? 'Made in Abu Dhabi' : '',
   ])
 
   if (productIsOneSizeOnly(product)) {
-    terms.add(locale === 'en' ? `One Size ${type}` : `One size ${type}`)
+    terms.add(`One size ${type}`)
   }
 
   if (craft === 'khous') {
@@ -308,10 +313,6 @@ export function buildLocalizedProductKeywords(
   }
   if (craft === 'al-talli') {
     terms.add('Al Talli')
-  }
-  if (product.category === 'Kaftans') {
-    terms.add(locale === 'en' ? 'Luxury kaftan Abu Dhabi' : `${type} Abu Dhabi`)
-    terms.add(locale === 'en' ? 'Crepe chiffon kaftan' : type)
   }
 
   return [...terms].filter(Boolean).join(', ')
@@ -581,24 +582,9 @@ export function getLocalizedProductFaq(
   customFaq?: ProductFaqItem[],
 ): ProductFaqItem[] {
   const slug = getProductSlug(product).toLowerCase()
-  const t = FAQ_TEMPLATES[locale]
-  const en = FAQ_TEMPLATES.en
 
   if (KAFTAN_SLUGS.has(slug)) {
-    const occasions = t.occasions ?? en.occasions
-    const oneSize = t.oneSize ?? en.oneSize
-    const scarfStyle = t.scarfStyle ?? en.scarfStyle!
-    return [
-      occasions(product.name),
-      {
-        ...oneSize(product.name),
-        answer:
-          locale === 'en'
-            ? `Yes. The ${product.name} is designed as a one-size silhouette with hidden internal ties that allow the shape to be adjusted.`
-            : oneSize(product.name).answer,
-      },
-      scarfStyle(product.name),
-    ]
+    return getLocalizedKaftanFaq(slug, locale)
   }
 
   return buildLocalizedDefaultFaq(product, locale)

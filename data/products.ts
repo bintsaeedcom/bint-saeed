@@ -203,6 +203,8 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
       '/Webshop pictures/Kaftans/Nothing Hill Kaftan/bint-saeed-nothing-hill-kaftan-peach-pink-side.webp',
     back:
       '/Webshop pictures/Kaftans/Nothing Hill Kaftan/bint-saeed-nothing-hill-kaftan-peach-pink-back.webp',
+    detail:
+      '/Webshop pictures/Kaftans/Nothing Hill Kaftan/bint-saeed-nothing-hill-kaftan-gold-tone-signature-emblem-close-up.webp',
   },
   'knightsbridge-dress': {
     front:
@@ -339,7 +341,12 @@ const NOTHING_HILL_KAFTAN_DIR = '/Webshop pictures/Kaftans/Nothing Hill Kaftan'
 
 function nothingHillKaftanGallery(): string[] {
   const base = `${NOTHING_HILL_KAFTAN_DIR}/bint-saeed-nothing-hill-kaftan-peach-pink`
-  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  return [
+    `${base}-front.webp`,
+    `${base}-side.webp`,
+    `${base}-back.webp`,
+    `${NOTHING_HILL_KAFTAN_DIR}/bint-saeed-nothing-hill-kaftan-gold-tone-signature-emblem-close-up.webp`,
+  ]
 }
 
 const HAMPSTEAD_DRESS_DIR = '/Webshop pictures/Dresses/Hampstead Dress'
@@ -540,9 +547,9 @@ export const products: Product[] = [
     name: 'Nothing Hill Kaftan',
     price: 975,
     description:
-      'Peach pink crepe-chiffon kaftan with a graceful bateau neckline, inner dress, scarf detail, and signature gold emblem pin.',
-    fabric: 'Crepe Chiffon (100% Polyester), Inner Dress: 100% Polyester',
-    measurements: 'Maximum garment length: 125 cm.',
+      'Soft peach pink chiffon kaftan with refined bateau neckline, flowing silhouette, and signature gold-tone Bint Saeed emblem.',
+    fabric: 'Chiffon (100% Polyester), Inner Dress: 100% Polyester',
+    measurements: 'Maximum garment length: 165 cm.',
     images: nothingHillKaftanGallery(),
     colors: [{ name: 'Peach Pink', hex: '#f4c2c2' }],
     sizes: ['One Size'],

@@ -8,7 +8,7 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
-import { FiChevronDown, FiPlus, FiMinus, FiHeart, FiX, FiGlobe, FiAward } from 'react-icons/fi'
+import { FiPlus, FiMinus, FiHeart, FiX, FiGlobe, FiAward } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { accessories, accessoryCategories } from '@/data/accessories'
 import { useCartStore } from '@/store/cartStore'
@@ -18,8 +18,6 @@ import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import {
-  PDP_ACCORDION_PANEL,
-  PDP_ACCORDION_TITLE,
   PDP_BULLET_ITEM,
   PDP_BULLET_LIST,
   PDP_COPY_INTRO,
@@ -28,6 +26,7 @@ import {
 } from '@/lib/pdp/pdpTypography'
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
+import PdpAccordion, { type PdpAccordionSectionConfig } from '@/components/pdp/PdpAccordion'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -136,9 +135,58 @@ export default function AccessoryDetailPage() {
     showAddedToBagToast(isRTL)
   }
 
-  const toggleDropdown = (key: string) => {
-    setOpenDropdown(openDropdown === key ? null : key)
-  }
+  const pdpAccordionSections = useMemo((): PdpAccordionSectionConfig[] => {
+    const description = isRTL ? accessory.descriptionAr : accessory.description
+    const materials = isRTL ? accessory.materialsAr : accessory.materials
+
+    return [
+      {
+        id: 'description',
+        title: isRTL ? 'تفاصيل المنتج' : 'Product Details',
+        titleTag: 'h2',
+        children: (
+          <ul className={PDP_BULLET_LIST}>
+            <li className={PDP_BULLET_ITEM}>{description}</li>
+          </ul>
+        ),
+      },
+      {
+        id: 'materials',
+        title: isRTL ? 'المواد' : 'Materials',
+        children: (
+          <ul className={PDP_BULLET_LIST}>
+            <li className={PDP_BULLET_ITEM}>{materials}</li>
+          </ul>
+        ),
+      },
+      {
+        id: 'care',
+        title: isRTL ? 'العناية' : 'Care',
+        children: (
+          <ul className={PDP_BULLET_LIST}>
+            <li className={PDP_BULLET_ITEM}>
+              {isRTL ? 'تجنبي ملامسة العطور والمواد الكيميائية' : 'Avoid contact with perfumes and chemicals'}
+            </li>
+            <li className={PDP_BULLET_ITEM}>
+              {isRTL ? 'احفظيها في مكان جاف' : 'Store in a dry place'}
+            </li>
+            <li className={PDP_BULLET_ITEM}>
+              {isRTL ? 'امسحيها بقطعة قماش ناعمة' : 'Wipe with a soft cloth'}
+            </li>
+            <li className={PDP_BULLET_ITEM}>
+              {isRTL ? 'أزيليها قبل السباحة أو الاستحمام' : 'Remove before swimming or bathing'}
+            </li>
+          </ul>
+        ),
+      },
+      {
+        id: 'shipping',
+        title: t.product.shippingReturns,
+        bordered: false,
+        children: <PdpShippingReturnsBullets isRTL={isRTL} />,
+      },
+    ]
+  }, [accessory.description, accessory.descriptionAr, accessory.materials, accessory.materialsAr, isRTL, t.product.shippingReturns])
 
   const detailAngles = accessory.detailAngles
   const hasAngleColumn = !!detailAngles && detailAngles.length === 2
@@ -580,113 +628,11 @@ export default function AccessoryDetailPage() {
                 : 'Made to order — available within this chapter (availability confirmed when you order).'}
             </p>
 
-            {/* Accordions — same pattern as `/shop/[id]` */}
-            <div className="border-t border-brand-stone/30">
-              <div className="border-b border-brand-stone/30">
-                <button
-                  type="button"
-                  onClick={() => toggleDropdown('description')}
-                  className="flex w-full items-center justify-between py-3"
-                  data-cursor-hover
-                >
-                  <h2 className={PDP_ACCORDION_TITLE}>
-                    {isRTL ? 'تفاصيل المنتج' : 'Product Details'}
-                  </h2>
-                  <FiChevronDown
-                    className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'description' ? 'rotate-180' : ''}`}
-                  />
-                </button>
-                {openDropdown === 'description' && (
-                  <div className={PDP_ACCORDION_PANEL}>
-                    <ul className={PDP_BULLET_LIST}>
-                      <li className={PDP_BULLET_ITEM}>
-                        {isRTL ? accessory.descriptionAr : accessory.description}
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              <div className="border-b border-brand-stone/30">
-                <button
-                  type="button"
-                  onClick={() => toggleDropdown('materials')}
-                  className="flex w-full items-center justify-between py-3"
-                  data-cursor-hover
-                >
-                  <h3 className={PDP_ACCORDION_TITLE}>
-                    {isRTL ? 'المواد' : 'Materials'}
-                  </h3>
-                  <FiChevronDown
-                    className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'materials' ? 'rotate-180' : ''}`}
-                  />
-                </button>
-                {openDropdown === 'materials' && (
-                  <div className={PDP_ACCORDION_PANEL}>
-                    <ul className={PDP_BULLET_LIST}>
-                      <li className={PDP_BULLET_ITEM}>
-                        {isRTL ? accessory.materialsAr : accessory.materials}
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              <div className="border-b border-brand-stone/30">
-                <button
-                  type="button"
-                  onClick={() => toggleDropdown('care')}
-                  className="flex w-full items-center justify-between py-3"
-                  data-cursor-hover
-                >
-                  <h3 className={PDP_ACCORDION_TITLE}>
-                    {isRTL ? 'العناية' : 'Care'}
-                  </h3>
-                  <FiChevronDown
-                    className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'care' ? 'rotate-180' : ''}`}
-                  />
-                </button>
-                {openDropdown === 'care' && (
-                  <div className={PDP_ACCORDION_PANEL}>
-                    <ul className={PDP_BULLET_LIST}>
-                      <li className={PDP_BULLET_ITEM}>
-                        {isRTL ? 'تجنبي ملامسة العطور والمواد الكيميائية' : 'Avoid contact with perfumes and chemicals'}
-                      </li>
-                      <li className={PDP_BULLET_ITEM}>
-                        {isRTL ? 'احفظيها في مكان جاف' : 'Store in a dry place'}
-                      </li>
-                      <li className={PDP_BULLET_ITEM}>
-                        {isRTL ? 'امسحيها بقطعة قماش ناعمة' : 'Wipe with a soft cloth'}
-                      </li>
-                      <li className={PDP_BULLET_ITEM}>
-                        {isRTL ? 'أزيليها قبل السباحة أو الاستحمام' : 'Remove before swimming or bathing'}
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              <div>
-                <button
-                  type="button"
-                  onClick={() => toggleDropdown('shipping')}
-                  className="flex w-full items-center justify-between py-3"
-                  data-cursor-hover
-                >
-                  <h3 className={PDP_ACCORDION_TITLE}>
-                    {t.product.shippingReturns}
-                  </h3>
-                  <FiChevronDown
-                    className={`h-4 w-4 text-brand-darkRed transition-transform ${openDropdown === 'shipping' ? 'rotate-180' : ''}`}
-                  />
-                </button>
-                {openDropdown === 'shipping' && (
-                  <div className={PDP_ACCORDION_PANEL}>
-                    <PdpShippingReturnsBullets isRTL={isRTL} />
-                  </div>
-                )}
-              </div>
-            </div>
+            <PdpAccordion
+              openId={openDropdown}
+              onOpenChange={setOpenDropdown}
+              sections={pdpAccordionSections}
+            />
           </motion.div>
         </div>
       </div>

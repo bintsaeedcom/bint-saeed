@@ -14,6 +14,32 @@ export const BRAND_ALT_PHRASE = BRAND_GEO_PHRASE
 const FALLBACK_ANGLES = ['front', 'side', 'back', 'three-quarter'] as const
 const VIEW_SUFFIXES = ['three-quarter', 'cuff-close-up', 'close-up', 'lifestyle-2', 'lifestyle-1', 'lifestyle', 'front', 'back', 'side', 'detail', 'extra'] as const
 
+/** Per-file alt overrides for catalogue shots where filename inference is too generic. */
+const PRODUCT_IMAGE_ALT_OVERRIDES: Record<string, string> = {
+  'bint-saeed-mayfair-kaftan-marroon-front.webp':
+    "Mayfair Kaftan in Deep Maroon crepe chiffon, front view. Luxury women's occasion kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, featuring a V-neckline, flowing silhouette, attached scarf detail and signature gold-tone emblem.",
+  'bint-saeed-mayfair-kaftan-marroon-side.webp':
+    'Mayfair Kaftan in Deep Maroon crepe chiffon, side view. Designer chiffon kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, showcasing fluid draping, layered construction and elegant occasionwear styling.',
+  'bint-saeed-mayfair-kaftan-marroon-back.webp':
+    'Mayfair Kaftan in Deep Maroon crepe chiffon, back view. Contemporary luxury kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, highlighting graceful movement, lightweight layered chiffon and refined eveningwear design.',
+  'bint-saeed-nothing-hill-kaftan-peach-pink-front.webp':
+    "Nothing Hill Kaftan in Peach Pink chiffon, front view. Luxury women's occasion kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, featuring a bateau neckline, flowing silhouette and signature gold-tone emblem.",
+  'bint-saeed-nothing-hill-kaftan-peach-pink-side.webp':
+    'Nothing Hill Kaftan in Peach Pink chiffon, side view. Designer chiffon kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, showcasing fluid draping, layered construction and graceful movement.',
+  'bint-saeed-nothing-hill-kaftan-peach-pink-back.webp':
+    'Nothing Hill Kaftan in Peach Pink chiffon, back view. Contemporary luxury kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, highlighting its flowing silhouette, lightweight layered chiffon and refined occasionwear design.',
+  'bint-saeed-nothing-hill-kaftan-gold-tone-signature-emblem-close-up.webp':
+    'Nothing Hill Kaftan in Peach Pink chiffon, close-up view. Designer chiffon kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, showcasing soft peach pink chiffon fabric, delicate layered texture and the signature gold-tone Bint Saeed emblem pin.',
+}
+
+/** Pixel dimensions for schema ImageObject enrichment (keyed by filename). */
+export const PRODUCT_IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
+  'bint-saeed-nothing-hill-kaftan-gold-tone-signature-emblem-close-up.webp': {
+    width: 2160,
+    height: 2700,
+  },
+}
+
 const KNOWN_COLOR_SLUGS = [
   'dark-marroon',
   'marroon',
@@ -112,6 +138,10 @@ export function getProductImageAlt(
   imageSrc: string,
   opts?: { color?: string; index?: number },
 ): string {
+  const filename = imageSrc.split('/').pop() ?? ''
+  const override = PRODUCT_IMAGE_ALT_OVERRIDES[filename]
+  if (override) return withBrandAlt(override)
+
   const color =
     opts?.color?.trim() ||
     inferColorFromSrc(imageSrc) ||
