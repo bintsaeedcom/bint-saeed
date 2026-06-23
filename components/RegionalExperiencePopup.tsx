@@ -31,6 +31,7 @@ const LANGUAGE_OPTIONS: { code: Language; native: string }[] = [
   { code: 'es', native: 'Español' },
   { code: 'ru', native: 'Русский' },
   { code: 'id', native: 'Bahasa Indonesia' },
+  { code: 'ms', native: 'Bahasa Melayu' },
 ]
 
 function waitForCookieConsent(): Promise<void> {

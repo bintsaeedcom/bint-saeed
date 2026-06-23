@@ -1,5 +1,6 @@
 import { HOME_META_DESCRIPTION, BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
 import { translationsId } from '@/lib/i18n/translationsId'
+import { translationsMs } from '@/lib/i18n/translationsMs'
 
 export const translations = {
   en: {
@@ -2086,9 +2087,10 @@ export const translations = {
   },
 
   id: translationsId,
+  ms: translationsMs,
 }
 
-export type Language = 'en' | 'ar' | 'fr' | 'it' | 'es' | 'ru' | 'zh' | 'de' | 'nl' | 'pt' | 'id'
+export type Language = 'en' | 'ar' | 'fr' | 'it' | 'es' | 'ru' | 'zh' | 'de' | 'nl' | 'pt' | 'id' | 'ms'
 export type Translations = typeof translations.en
 
 // Multilingual SEO keyword packs (additive with root layout meta keywords). nl/pt = site copy in llms.txt; UI uses en–de only.
@@ -2257,5 +2259,21 @@ export const seoKeywords = {
     'abaya kontemporer',
     'abaya buatan tangan',
     'fashion Dubai',
+  ],
+
+  ms: [
+    'abaya mewah',
+    'abaya Abu Dhabi',
+    'fesyen UAE',
+    'abaya pereka',
+    'abaya moden',
+    'fesyen warisan',
+    'gaya Emirati',
+    'fesyen sopan mewah',
+    'fesyen sopan',
+    'fesyen Arab',
+    'abaya kontemporari',
+    'abaya buatan tangan',
+    'fesyen Dubai',
   ],
 }

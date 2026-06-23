@@ -1,5 +1,6 @@
 import type { Product } from '@/data/products'
 import { getProductPdpContentId } from '@/data/productPdpContentId'
+import { getProductPdpContentMs } from '@/data/productPdpContentMs'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getProductSlug } from '@/lib/products/links'
 import { getProductSchemaFacts } from '@/lib/products/productSchemaMeta'
@@ -402,6 +403,11 @@ export function getProductPdpContent(
   if (locale === 'id') {
     const idContent = getProductPdpContentId(product, color)
     if (idContent) return idContent
+  }
+
+  if (locale === 'ms') {
+    const msContent = getProductPdpContentMs(product, color)
+    if (msContent) return msContent
   }
 
   if (isMayfairKaftan(product)) {

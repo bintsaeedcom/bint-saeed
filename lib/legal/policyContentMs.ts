@@ -1,5 +1,4 @@
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
-import * as policyMs from '@/lib/legal/policyContentMs'
 
 export type PolicyLang = 'en' | 'id' | 'ms' | 'ar'
 
@@ -34,7 +33,7 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
     {
       title: '1. Privacy Notice and Legal Framework',
       body: [
-        'This policy applies to personal data processed by Bint Saeed through this website, associated customer journeys, and operational communications. It is designed to align with UAE Federal Decree-Law No. 45 of 2021 and GDPR principles where applicable.',
+        'This policy applies to personal data processed by Bint Saeed through this website, associated tersuaier journeys, and operational communications. It is designed to align with UAE Federal Decree-Law No. 45 of 2021 and GDPR principles where applicable.',
       ],
     },
     {
@@ -53,7 +52,7 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
           title: 'Technical and usage data',
           list: [
             'IP-derived location signals, browser, device type, and session-level navigation behavior.',
-            'Cookie and consent preferences used for compliance and website functionality.',
+            'Kuki and consent preferences used for compliance and website functionality.',
           ],
         },
       ],
@@ -62,8 +61,8 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
       title: '3. How We Use Personal Data',
       body: [],
       list: [
-        'Process, fulfil, and support customer orders and product enquiries.',
-        'Provide customer care, transactional communications, and service notices.',
+        'Process, fulfil, and support tersuaier orders and product enquiries.',
+        'Provide tersuaier care, transactional communications, and service notices.',
         'Improve website usability, security, and performance.',
         'Operate analytics programs only where consent is granted.',
         'Comply with legal, tax, and fraud-prevention obligations.',
@@ -73,7 +72,7 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
       title: '4. Legal Basis for Processing',
       body: ['Where relevant under GDPR, processing may rely on:'],
       list: [
-        'Consent, including optional cookie/analytics consent.',
+        'Consent, including optional kuki/analytics consent.',
         'Contract performance, including order processing and delivery.',
         'Legal obligations, including accounting and compliance records.',
         'Legitimate interests, including fraud prevention and site security.',
@@ -114,15 +113,15 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
         'Subject to applicable law, you may request access, correction, deletion, restriction, portability, or objection to certain processing.',
       ],
       list: [
-        'You may manage non-essential cookie consent through site controls.',
-        'Identity verification may be required before actioning certain rights requests.',
+        'You may manage non-essential kuki consent through site controls.',
+        'Msentity verification may be required before actioning certain rights requests.',
         'We respond within applicable legal timelines.',
       ],
     },
     {
-      title: '9. Cookies and Tracking',
+      title: '9. Kukis and Tracking',
       body: [
-        'We use essential cookies for website operation and optional cookies for analytics/behavior insights only after consent. For full details, please review our Cookie Policy.',
+        'We use essential kukis for website operation and optional kukis for analytics/behavior insights only after consent. For full details, please review our Kuki Policy.',
       ],
     },
     {
@@ -153,33 +152,33 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
   ]
 }
 
-function privacyIdSections(analyticsLine: string): PolicySection[] {
+function privacyMsSections(analyticsLine: string): PolicySection[] {
   return [
     {
       title: '1. Pemberitahuan Privasi dan Kerangka Hukum',
       body: [
-        'Kebijakan ini berlaku untuk data pribadi yang diproses oleh Bint Saeed melalui situs web ini, perjalanan pelanggan terkait, dan komunikasi operasional. Kebijakan ini dirancang selaras dengan Dekrit Federal UEA No. 45 Tahun 2021 dan prinsip GDPR sejauh berlaku.',
+        'Dasar ini berlaku untuk data peribadi yang diproses oleh Bint Saeed melalui laman web ini, perjalanan pelanggan terkait, dan komunikasi operasional. Dasar ini direka selaras dengan Dekrit Federal UAE No. 45 Tahun 2021 dan prinsip GDPR sejauh berlaku.',
       ],
     },
     {
       title: '2. Informasi yang Kami Kumpulkan',
       body: [
-        'Kami mengumpulkan informasi yang Anda berikan secara langsung serta data teknis terbatas yang dikumpulkan secara otomatis.',
+        'Kami mengumpul maklumat yang anda berikan secara langsung serta data teknis terbatas yang dikumpulkan secara otomatis.',
       ],
       subsections: [
         {
           title: 'Data pribadi dan pesanan',
           list: [
-            'Nama, email, nomor telepon, serta detail pengiriman dan penagihan.',
-            'Detail pesanan, preferensi produk, dan komunikasi dukungan.',
+            'Nama, email, nombor telepon, serta butiran penghantaran dan bil.',
+            'Butiran pesanan, preferensi produk, dan komunikasi dukungan.',
             'Input personalisasi yang diberikan untuk pemenuhan pesanan.',
           ],
         },
         {
           title: 'Data teknis dan penggunaan',
           list: [
-            'Sinyal lokasi dari IP, browser, jenis perangkat, dan perilaku navigasi tingkat sesi.',
-            'Preferensi cookie dan persetujuan untuk kepatuhan dan fungsionalitas situs web.',
+            'Sinyal lokasi dari IP, browser, jenis perangkat, dan tingkah laku navigasi tingkat sesi.',
+            'Preferensi kuki dan kebenaran untuk pematuhan dan fungsionalitas laman web.',
           ],
         },
       ],
@@ -189,43 +188,43 @@ function privacyIdSections(analyticsLine: string): PolicySection[] {
       body: [],
       list: [
         'Memproses, memenuhi, dan mendukung pesanan pelanggan serta pertanyaan produk.',
-        'Menyediakan layanan pelanggan, komunikasi transaksional, dan pemberitahuan layanan.',
-        'Meningkatkan kegunaan, keamanan, dan kinerja situs web.',
-        'Mengoperasikan program analitik hanya apabila persetujuan diberikan.',
+        'Menyediakan perkhidmatan pelanggan, komunikasi transaksional, dan pemberitahuan perkhidmatan.',
+        'Meningkatkan kegunaan, keamanan, dan prestasi laman web.',
+        'Mengoperasikan program analitik hanya apabila kebenaran diberikan.',
         'Mematuhi kewajiban hukum, perpajakan, dan pencegahan penipuan.',
       ],
     },
     {
       title: '4. Dasar Hukum Pemrosesan',
-      body: ['Sejauh relevan menurut GDPR, pemrosesan dapat didasarkan pada:'],
+      body: ['Sejauh relevan menurut GDPR, pemprosesan dapat didasarkan pada:'],
       list: [
-        'Persetujuan, termasuk persetujuan cookie/analitik opsional.',
-        'Pelaksanaan kontrak, termasuk pemrosesan dan pengiriman pesanan.',
-        'Kewajiban hukum, termasuk catatan akuntansi dan kepatuhan.',
-        'Kepentingan sah, termasuk pencegahan penipuan dan keamanan situs.',
+        'Persetujuan, termasuk kebenaran kuki/analitik opsional.',
+        'Pelaksanaan kontrak, termasuk pemprosesan dan penghantaran pesanan.',
+        'Kewajiban hukum, termasuk catatan akauntansi dan pematuhan.',
+        'Kepentingan sah, termasuk pencegahan penipuan dan keselamatan laman.',
       ],
       subsections: [
         {
           title: '',
-          list: ['Apabila pemrosesan didasarkan pada persetujuan, Anda dapat menarik persetujuan kapan saja.'],
+          list: ['Apabila pemprosesan didasarkan pada kebenaran, anda dapat menarik kebenaran pada bila-bila masa.'],
         },
       ],
     },
     {
       title: '5. Berbagi dan Pengungkapan',
       body: [
-        'Kami tidak menjual data pribadi. Kami dapat membagikan data hanya jika diperlukan, termasuk kepada:',
+        'Kami tidak menjual data peribadi. Kami dapat membagikan data hanya jika diperlukan, termasuk kepada:',
       ],
       list: [
-        'Penyedia pembayaran, mitra logistik, dan vendor layanan esensial.',
-        'Penasihat profesional atau otoritas apabila diwajibkan oleh hukum.',
-        'Penyedia layanan yang bertindak di bawah kewajiban kerahasiaan dan keamanan kontraktual.',
+        'Penyedia pembayaran, mitra logistik, dan vendor perkhidmatan esensial.',
+        'Penasihat profesional atau pihak berkuasa apabila diwajibkan oleh hukum.',
+        'Penyedia perkhidmatan yang bertindak di bawah kewajiban kerahasiaan dan keamanan kontraktual.',
       ],
     },
     {
       title: '6. Layanan dan Pemroses Pihak Ketiga',
       body: [
-        'Kami menggunakan penyedia pihak ketiga terpilih untuk menjalankan fungsi perdagangan, komunikasi, infrastruktur, dan analitik. Bergantung pada konfigurasi, ini dapat mencakup pemrosesan pembayaran, hosting/CDN, email operasional, serta alat analitik/perilaku opsional.',
+        'Kami menggunakan penyedia pihak ketiga terpilih untuk menjalankan fungsi perdagangan, komunikasi, infrastruktur, dan analitik. Bergantung pada konfigurasi, ini dapat mencakup pemprosesan pembayaran, hosting/CDN, email operasional, serta alat analitik/tingkah laku opsional.',
         analyticsLine,
         'Pemrosesan pembayaran: Data kartu/pembayaran diproses oleh penyedia pembayaran aman (termasuk Stripe), dan tidak disimpan secara penuh oleh Bint Saeed.',
       ],
@@ -237,45 +236,45 @@ function privacyIdSections(analyticsLine: string): PolicySection[] {
       ],
     },
     {
-      title: '8. Hak Privasi Anda',
+      title: '8. Hak Privasi anda',
       body: [
-        'Tunduk pada hukum yang berlaku, Anda dapat meminta akses, koreksi, penghapusan, pembatasan, portabilitas, atau keberatan terhadap pemrosesan tertentu.',
+        'Tunduk pada hukum yang berlaku, anda dapat meminta akses, koreksi, pemadaman, pembatasan, portabilitas, atau keberatan terhadap pemprosesan tertentu.',
       ],
       list: [
-        'Anda dapat mengelola persetujuan cookie non-esensial melalui kontrol situs.',
-        'Verifikasi identitas mungkin diperlukan sebelum menindaklanjuti permintaan hak tertentu.',
+        'anda boleh mengurus kebenaran kuki bukan penting melalui kawalan laman.',
+        'Pengesahan identitas mungkin diperlukan sebelum menindaklanjuti permintaan hak tertentu.',
         'Kami merespons dalam jangka waktu hukum yang berlaku.',
       ],
     },
     {
-      title: '9. Cookie dan Pelacakan',
+      title: '9. Kuki dan Pelacakan',
       body: [
-        'Kami menggunakan cookie esensial untuk operasional situs web dan cookie opsional untuk wawasan analitik/perilaku hanya setelah persetujuan. Untuk detail lengkap, silakan tinjau Kebijakan Cookie kami.',
+        'Kami menggunakan kuki esensial untuk operasional laman web dan kuki opsional untuk wawasan analitik/tingkah laku hanya setelah kebenaran. Untuk butiran lengkap, sila tinjau Dasar Kuki kami.',
       ],
     },
     {
       title: '10. Retensi Data',
       body: [
-        'Kami menyimpan data pribadi hanya selama diperlukan untuk pemenuhan, kepatuhan, keamanan, dan pencatatan. Catatan perdagangan tertentu dapat disimpan sesuai persyaratan hukum/bisnis UEA.',
+        'Kami menyimpan data peribadi hanya selama diperlukan untuk pemenuhan, pematuhan, keamanan, dan pencatatan. Catatan perdagangan tertentu dapat disimpan sesuai terma hukum/bisnis UAE.',
       ],
     },
     {
       title: '11. Transfer Internasional',
       body: [
-        'Apabila data pribadi diproses lintas yurisdiksi, kami menerapkan perlindungan dan kontrol kontraktual yang sesuai dengan ekspektasi transfer UEA dan GDPR yang berlaku.',
+        'Apabila data peribadi diproses lintas bidang kuasa, kami menerapkan perlindungan dan kontrol kontraktual yang sesuai dengan ekspektasi transfer UAE dan GDPR yang berlaku.',
       ],
     },
     {
       title: '12. Keluhan dan Otoritas Pengawas',
       body: [
-        'Anda dapat mengajukan keluhan kepada otoritas pengawas yang berwenang di yurisdiksi Anda, termasuk otoritas UEA sejauh berlaku.',
+        'anda dapat mengajukan keluhan kepada pihak berkuasa pengawas yang berwenang di bidang kuasa anda, termasuk pihak berkuasa UAE sejauh berlaku.',
       ],
     },
     {
-      title: '13. Kontak dan Pembaruan Kebijakan',
+      title: '13. Kontak dan Pembaruan Dasar',
       body: [
-        'Kami dapat merevisi Kebijakan Privasi ini secara berkala. Versi terbaru berlaku efektif saat dipublikasikan di halaman ini.',
-        `Bint Saeed\nPertanyaan Privasi dan Hukum: ${OFFICIAL_EMAILS.legal}\nPertanyaan Umum: ${OFFICIAL_EMAILS.hello}`,
+        'Kami dapat merevisi Dasar Privasi ini secara berkala. Versi terbaru berlaku efektif saat dipublikasikan di halaman ini.',
+        `Bint Saeed\nPertanyaan Privasi dan Hukum: ${OFFICIAL_EMAILS.legal}\nSoalan Lazim: ${OFFICIAL_EMAILS.hello}`,
       ],
     },
   ]
@@ -302,7 +301,7 @@ const PRIVACY_EN: Omit<PolicyContent, 'sections'> & { sections?: PolicySection[]
     '6. Third-Party Services and Processors',
     '7. Security and Organisational Controls',
     '8. Your Privacy Rights',
-    '9. Cookies and Tracking',
+    '9. Kukis and Tracking',
     '10. Data Retention',
     '11. International Transfers',
     '12. Complaints and Supervisory Authorities',
@@ -310,17 +309,17 @@ const PRIVACY_EN: Omit<PolicyContent, 'sections'> & { sections?: PolicySection[]
   ],
 }
 
-const PRIVACY_ID: Omit<PolicyContent, 'sections'> = {
-  pageTitle: 'Kebijakan Privasi',
-  breadcrumb: 'Kebijakan Privasi',
-  homeBreadcrumb: 'Beranda',
+const PRIVACY_MS: Omit<PolicyContent, 'sections'> = {
+  pageTitle: 'Dasar Privasi',
+  breadcrumb: 'Dasar Privasi',
+  homeBreadcrumb: 'Laman Utama',
   heroLabel: 'Hukum',
-  lastUpdated: 'Terakhir diperbarui: Mei 2026',
+  lastUpdated: 'Kemas kini terakhir: Mei 2026',
   intro:
-    'Kebijakan Privasi ini menjelaskan bagaimana Bint Saeed mengumpulkan, menggunakan, melindungi, dan mengungkapkan data pribadi sehubungan dengan situs web ini dan layanan terkait.',
+    'Dasar Privasi ini menjelaskan bagaimana Bint Saeed mengumpul, menggunakan, melindungi, dan mendedahkan data peribadi sehubungan dengan laman web ini dan perkhidmatan terkait.',
   summaryTitle: 'Pemberitahuan Privasi',
   summaryBody: [
-    'Kami beroperasi dalam kerangka hukum dan regulasi yang berlaku di Uni Emirat Arab sambil mempertahankan penanganan persetujuan yang patuh GDPR bagi pengguna terkait, termasuk pengguna di Uni Eropa.',
+    'Kami beroperasi dalam kerangka hukum dan regulasi yang berlaku di Emiriah Arab Bersatu sambil mempertahankan penanganan kebenaran yang patuh GDPR bagi pengguna terkait, termasuk pengguna di Eropah.',
   ],
   sectionList: [
     '1. Pemberitahuan Privasi dan Kerangka Hukum',
@@ -330,12 +329,12 @@ const PRIVACY_ID: Omit<PolicyContent, 'sections'> = {
     '5. Berbagi dan Pengungkapan',
     '6. Layanan dan Pemroses Pihak Ketiga',
     '7. Keamanan dan Kontrol Organisasi',
-    '8. Hak Privasi Anda',
-    '9. Cookie dan Pelacakan',
+    '8. Hak Privasi anda',
+    '9. Kuki dan Pelacakan',
     '10. Retensi Data',
     '11. Transfer Internasional',
     '12. Keluhan dan Otoritas Pengawas',
-    '13. Kontak dan Pembaruan Kebijakan',
+    '13. Kontak dan Pembaruan Dasar',
   ],
 }
 
@@ -343,7 +342,7 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
   {
     title: '1. Scope and Acceptance',
     body: [
-      'These Terms and Conditions apply to all visitors, users, and customers who access or use the Bint Saeed website, content, products, and related services. By accessing this website, creating an account, or placing an order, you confirm that you have read, understood, and agreed to these Terms.',
+      'These Terms and Conditions apply to all visitors, users, and tersuaiers who access or use the Bint Saeed website, content, products, and related services. By accessing this website, creating an account, or placing an order, you confirm that you have read, understood, and agreed to these Terms.',
     ],
   },
   {
@@ -384,13 +383,13 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
   {
     title: '5. Shipping, Delivery, and Risk Transfer',
     body: [
-      'Delivery windows are estimates and are not guaranteed. Delays may occur due to logistics, customs, public holidays, weather, or events outside our reasonable control.',
+      'Delivery windows are estimates and are not guaranteed. Delays may occur due to logistics, tersuais, public holidays, weather, or events outside our reasonable control.',
     ],
     list: [
       'Complimentary shipping within the United Arab Emirates applies to orders with a merchandise subtotal of AED 1,000 or more.',
       'Shipping fees for orders below this threshold, and for international destinations, are calculated at checkout.',
       'Shipping terms, costs, and estimated timelines are shown at checkout or applicable policy pages.',
-      'International orders may be subject to customs duties, import taxes, and local clearance fees.',
+      'International orders may be subject to tersuais duties, import taxes, and local clearance fees.',
       'Risk of loss transfers upon delivery to the shipping address or accepted recipient.',
     ],
   },
@@ -467,38 +466,38 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
   },
 ]
 
-const TERMS_ID_SECTIONS: PolicySection[] = [
+const TERMS_MS_SECTIONS: PolicySection[] = [
   {
     title: '1. Ruang Lingkup dan Penerimaan',
     body: [
-      'Syarat dan Ketentuan ini berlaku bagi seluruh pengunjung, pengguna, dan pelanggan yang mengakses atau menggunakan situs web, konten, produk, dan layanan terkait Bint Saeed. Dengan mengakses situs web ini, membuat akun, atau melakukan pemesanan, Anda menyatakan telah membaca, memahami, dan menyetujui Syarat ini.',
+      'Terma dan Syarat ini berlaku bagi seluruh pengunjung, pengguna, dan pelanggan yang mengakses atau menggunakan laman web, konten, produk, dan perkhidmatan terkait Bint Saeed. Dengan mengakses laman web ini, membuat akaun, atau melakukan pesanan, anda menyatakan telah membaca, memahami, dan menyetujui Terma ini.',
     ],
   },
   {
-    title: '2. Kelayakan dan Tanggung Jawab Akun',
+    title: '2. Kelayakan dan Tanggung Jawab Akaun',
     body: [
-      'Anda harus memiliki kapasitas hukum untuk mengadakan perjanjian yang mengikat menurut hukum yang berlaku. Apabila Anda membuat akun, Anda bertanggung jawab menjaga kerahasiaan kredensial login dan seluruh aktivitas yang dilakukan melalui akun Anda.',
+      'anda harus memiliki keupayaan undang-undang untuk mengadakan perjanjian yang mengikat menurut hukum yang berlaku. Apabila anda membuat akaun, anda bertanggung jawab menjaga kerahasiaan butiran log masuk dan seluruh aktivitas yang dilakukan melalui akaun anda.',
     ],
     list: [
-      'Anda setuju memberikan informasi yang akurat, lengkap, dan terkini untuk pesanan dan komunikasi.',
-      'Anda bertanggung jawab memastikan detail pengiriman, penagihan, dan kontak tetap akurat.',
+      'anda setuju memberikan maklumat yang akurat, lengkap, dan terkini untuk pesanan dan komunikasi.',
+      'anda bertanggung jawab memastikan butiran penghantaran, bil, dan kontak tetap akurat.',
       'Kami dapat menangguhkan atau membatasi akses apabila penyalahgunaan, penipuan, atau risiko keamanan secara wajar dicurigai.',
     ],
   },
   {
     title: '3. Produk, Ketersediaan, dan Harga',
     body: [
-      'Kami berupaya menampilkan detail produk, ketersediaan, dan harga secara akurat. Namun, kesalahan sesekali dapat terjadi. Gambar produk bersifat ilustratif dan dapat sedikit berbeda karena pencahayaan, kalibrasi layar, serta karakteristik produksi buatan tangan.',
+      'Kami berupaya menampilkan butiran produk, ketersediaan, dan harga secara akurat. Namun, kesalahan sesekali dapat terjadi. Gambar produk bersifat ilustratif dan dapat sedikit berbeda karena pencahayaan, kalibrasi layar, serta karakteristik produksi buatan tangan.',
     ],
     list: [
       'Seluruh harga ditampilkan dalam AED kecuali dinyatakan lain.',
-      'PPN yang berlaku ditangani sesuai persyaratan perpajakan UEA.',
-      'Kami dapat memperbarui kurasi produk dan harga kapan saja sebelum konfirmasi pesanan.',
-      'Karya custom dan personalisasi tunduk pada lead time tertentu serta ketentuan final sale.',
+      'PPN yang berlaku ditangani sesuai terma perpajakan UAE.',
+      'Kami dapat memperbarui kurasi produk dan harga pada bila-bila masa sebelum konfirmasi pesanan.',
+      'Karya tersuai dan personalisasi tunduk pada lead time tertentu serta terma final sale.',
     ],
   },
   {
-    title: '4. Pesanan, Pembayaran, dan Verifikasi',
+    title: '4. Pesanan, Pembayaran, dan Pengesahan',
     body: [
       'Pengajuan permintaan pesanan bukan merupakan penerimaan akhir oleh Bint Saeed. Pesanan diterima ketika kami mengeluarkan konfirmasi pesanan dan otorisasi pembayaran berhasil diselesaikan.',
     ],
@@ -510,43 +509,43 @@ const TERMS_ID_SECTIONS: PolicySection[] = [
     ],
   },
   {
-    title: '5. Pengiriman, Penyerahan, dan Alih Risiko',
+    title: '5. Penghantaran, Penyerahan, dan Alih Risiko',
     body: [
-      'Jangka waktu pengiriman bersifat estimasi dan tidak dijamin. Keterlambatan dapat terjadi akibat logistik, bea cukai, hari libur, cuaca, atau peristiwa di luar kendali wajar kami.',
+      'Jangka waktu penghantaran bersifat estimasi dan tidak dijamin. Keterlambatan dapat terjadi akibat logistik, bea cukai, hari libur, cuaca, atau peristiwa di luar kendali wajar kami.',
     ],
     list: [
-      'Pengiriman gratis dalam Uni Emirat Arab berlaku untuk pesanan dengan subtotal barang AED 1.000 atau lebih.',
-      'Biaya pengiriman untuk pesanan di bawah ambang tersebut, serta destinasi internasional, dihitung saat checkout.',
-      'Ketentuan, biaya, dan estimasi waktu pengiriman ditampilkan saat checkout atau pada halaman kebijakan terkait.',
+      'Penghantaran percuma dalam Emiriah Arab Bersatu berlaku untuk pesanan dengan subtotal barang AED 1.000 atau lebih.',
+      'Biaya penghantaran untuk pesanan di bawah ambang tersebut, serta destinasi internasional, dihitung saat checkout.',
+      'Ketentuan, biaya, dan estimasi waktu penghantaran ditampilkan saat checkout atau pada halaman dasar terkait.',
       'Pesanan internasional dapat dikenakan bea masuk, pajak impor, dan biaya clearance lokal.',
-      'Risiko kerugian beralih saat barang diserahkan ke alamat pengiriman atau penerima yang sah.',
+      'Risiko kerugian beralih saat barang diserahkan ke alamat penghantaran atau penerima yang sah.',
     ],
   },
   {
-    title: '6. Pengembalian, Perbaikan, dan Kefinalan Pesanan',
+    title: '6. Pemulangan, Perbaikan, dan Kefinalan Pesanan',
     body: [
-      'Penanganan pengembalian dan perbaikan diatur oleh Kebijakan Pengiriman & Pengembalian kami. Seluruh klien disarankan meninjau kebijakan lengkap sebelum memesan.',
+      'Penanganan pemulangan dan perbaikan diatur oleh Dasar Penghantaran & Pemulangan kami. Seluruh pelanggan disyorkan meninjau dasar lengkap sebelum memesan.',
     ],
     list: [
-      'Produk dibuat berdasarkan pesanan dan pembatalan/pengembalian terbatas setelah produksi dimulai.',
+      'Produk dihasilkan berdasarkan pesanan dan pembatalan/pemulangan terbatas setelah produksi dimulai.',
       'Klaim cacat atau ketidaksesuaian material harus diajukan beserta bukti dalam jangka waktu yang ditetapkan.',
-      'Remedi dapat mencakup perbaikan atau penggantian terlebih dahulu, dan pengembalian dana apabila diwajibkan oleh hukum yang berlaku.',
+      'Remedi dapat mencakup perbaikan atau penggantian terlebih dahulu, dan pemulangan dana apabila diwajibkan oleh hukum yang berlaku.',
     ],
   },
   {
     title: '7. Personalisasi dan Pekerjaan Custom',
     body: [
-      'Dengan mengirimkan teks personalisasi, Anda menyatakan memiliki hak untuk menggunakan konten tersebut dan bahwa konten tidak melanggar hak pihak ketiga atau hukum yang berlaku. Kami dapat menolak permintaan personalisasi yang melanggar hukum, menyinggung, atau tidak patuh kebijakan.',
+      'Dengan menghantar teks personalisasi, anda menyatakan memiliki hak untuk menggunakan konten tersebut dan bahwa konten tidak melanggar hak pihak ketiga atau hukum yang berlaku. Kami dapat menolak permintaan personalisasi yang melanggar hukum, menyinggung, atau tidak patuh dasar.',
     ],
   },
   {
     title: '8. Hak Kekayaan Intelektual',
     body: [
-      'Seluruh konten situs web, aset kreatif, desain, fotografi, merek dagang, teks, dan materi teknis dimiliki atau dilisensikan kepada Bint Saeed dan dilindungi oleh hukum kekayaan intelektual yang berlaku.',
+      'Seluruh konten laman web, aset kreatif, reka bentuk, fotografi, tanda dagangan, teks, dan materi teknis dimiliki atau dilisensikan kepada Bint Saeed dan dilindungi oleh hukum harta intelek yang berlaku.',
     ],
     list: [
-      'Dilarang menyalin, mereproduksi, melakukan scraping, mempublikasikan ulang, atau menggunakan kembali secara komersial tanpa persetujuan tertulis.',
-      'Dilarang menggunakan elemen merek, gambar produk, atau materi proprietary dalam karya turunan tanpa persetujuan.',
+      'Dilarang menyalin, mereproduksi, melakukan scraping, mempublikasikan ulang, atau menggunakan kembali secara komersial tanpa kebenaran tertulis.',
+      'Dilarang menggunakan elemen merek, gambar produk, atau materi proprietary dalam karya turunan tanpa kebenaran.',
       `Permintaan izin dapat dikirim ke ${OFFICIAL_EMAILS.legal}.`,
     ],
   },
@@ -554,43 +553,43 @@ const TERMS_ID_SECTIONS: PolicySection[] = [
     title: '9. Penggunaan yang Diizinkan dan Dilarang',
     body: [],
     list: [
-      'Anda hanya boleh menggunakan situs web ini untuk aktivitas penelusuran/pembelian yang sah, pribadi, dan komersial yang wajar.',
-      'Akses melanggar hukum, upaya gangguan, penyalahgunaan bot, atau perilaku penipuan dilarang.',
+      'anda hanya boleh menggunakan laman web ini untuk aktivitas pelayaran/pembelian yang sah, pribadi, dan komersial yang wajar.',
+      'Akses melanggar hukum, upaya gangguan, penyalahgunaan bot, atau tingkah laku penipuan dilarang.',
       'Kami berhak memblokir akses dan mengambil tindakan hukum apabila penyalahgunaan teridentifikasi.',
     ],
   },
   {
     title: '10. Pernyataan Kontribusi Sosial',
     body: [
-      'Apabila pernyataan kontribusi sosial dikomunikasikan di situs atau dalam komunikasi produk, pernyataan tersebut menjelaskan model alokasi dampak sosial yang kami maksudkan dan tidak mengubah harga pembelian Anda kecuali dinyatakan secara tegas.',
+      'Apabila pernyataan sumbangan sosial dikomunikasikan di laman atau dalam komunikasi produk, pernyataan tersebut menjelaskan model peruntukan impak sosial yang kami maksudkan dan tidak mengubah harga pembelian anda kecuali dinyatakan secara tegas.',
     ],
   },
   {
     title: '11. Penafian dan Batasan Tanggung Jawab',
     body: [
-      'Sejauh diizinkan oleh hukum yang berlaku, situs web dan layanan disediakan secara "apa adanya" dan "sebagaimana tersedia" tanpa jaminan operasi tanpa gangguan.',
-      'Bint Saeed tidak bertanggung jawab atas kerugian tidak langsung, insidental, khusus, konsekuensial, atau hukuman yang timbul dari penggunaan situs web, keterlambatan pengiriman, gangguan layanan pihak ketiga, atau peristiwa di luar kendali wajar. Tanggung jawab dibatasi pada jumlah yang dibayarkan untuk pesanan terkait, kecuali apabila tanggung jawab tidak dapat dikecualikan menurut hukum.',
-      'Sejauh diizinkan oleh hukum, Bint Saeed tidak bertanggung jawab atas cedera, penyakit, reaksi alergi, bahaya tak disengaja, kematian, kerusakan properti, hilangnya penghasilan, tekanan emosional, atau kerugian lain akibat penyalahgunaan, penanganan tidak tepat, alterasi tanpa izin, atau penggunaan produk yang bertentangan dengan panduan perawatan dan keselamatan.',
+      'Sejauh diizinkan oleh hukum yang berlaku, laman web dan perkhidmatan disediakan secara "apa adanya" dan "sebagaimana tersedia" tanpa jaminan operasi tanpa gangguan.',
+      'Bint Saeed tidak bertanggung jawab atas kerugian tidak langsung, insidental, khusus, konsekuensial, atau hukuman yang timbul dari penggunaan laman web, keterlambatan penghantaran, gangguan perkhidmatan pihak ketiga, atau peristiwa di luar kendali wajar. Tanggung jawab dibatasi pada jumlah yang dibayarkan untuk pesanan terkait, kecuali apabila tanggung jawab tidak dapat dikecualikan menurut hukum.',
+      'Sejauh diizinkan oleh hukum, Bint Saeed tidak bertanggung jawab atas cedera, penyakit, reaksi alergi, bahaya tak disengaja, kematian, kerusakan properti, hilangnya penghasilan, tekanan emosional, atau kerugian lain akibat penyalahgunaan, penanganan tidak tepat, alterasi tanpa izin, atau penggunaan produk yang bertentangan dengan panduan penjagaan dan keselamatan.',
     ],
   },
   {
     title: '12. Ganti Rugi',
     body: [
-      'Anda setuju untuk mengganti rugi dan membebaskan Bint Saeed dari klaim, kewajiban, kerugian, dan biaya yang timbul akibat pelanggaran Syarat ini, penyalahgunaan situs web, atau pelanggaran hukum yang berlaku.',
+      'anda setuju untuk mengganti rugi dan membebaskan Bint Saeed dari klaim, kewajiban, kerugian, dan biaya yang timbul akibat pelanggaran Terma ini, penyalahgunaan laman web, atau pelanggaran hukum yang berlaku.',
     ],
   },
   {
     title: '13. Hukum yang Berlaku dan Yurisdiksi',
     body: [
-      'Syarat ini diatur oleh hukum Uni Emirat Arab. Tunduk pada hak perlindungan konsumen wajib menurut hukum yang berlaku, sengketa berada di bawah yurisdiksi pengadilan UEA yang berwenang.',
-      'Untuk kejelasan regulasi, situs web ini dioperasikan oleh perusahaan yang terdaftar di Abu Dhabi, Uni Emirat Arab, dengan nomor lisensi komersial CN-6384424 yang dikeluarkan oleh Abu Dhabi Registration Authority (ADRA).',
+      'Terma ini diatur oleh hukum Emiriah Arab Bersatu. Tunduk pada hak perlindungan konsumen wajib menurut hukum yang berlaku, sengketa berada di bawah bidang kuasa pengadilan UAE yang berwenang.',
+      'Untuk kejelasan regulasi, laman web ini dioperasikan oleh perusahaan yang terdaftar di Abu Dhabi, Emiriah Arab Bersatu, dengan nombor lisensi komersial CN-6384424 yang dikeluarkan oleh Abu Dhabi Registration Authority (ADRA).',
     ],
   },
   {
     title: '14. Perubahan, Keterpisahan, dan Kontak',
     body: [
-      'Kami dapat merevisi Syarat ini dari waktu ke waktu. Versi terbaru berlaku efektif sejak dipublikasikan di halaman ini. Apabila ketentuan tertentu dinyatakan tidak dapat diberlakukan, ketentuan lainnya tetap berlaku penuh.',
-      `Bint Saeed\nPertanyaan Hukum: ${OFFICIAL_EMAILS.legal}\nPertanyaan Umum: ${OFFICIAL_EMAILS.hello}`,
+      'Kami dapat merevisi Terma ini dari waktu ke waktu. Versi terbaru berlaku efektif sejak dipublikasikan di halaman ini. Apabila terma tertentu dinyatakan tidak dapat diberlakukan, terma lainnya tetap berlaku penuh.',
+      `Bint Saeed\nPertanyaan Hukum: ${OFFICIAL_EMAILS.legal}\nSoalan Lazim: ${OFFICIAL_EMAILS.hello}`,
     ],
   },
 ]
@@ -625,25 +624,25 @@ const TERMS_EN: Omit<PolicyContent, 'sections'> = {
   ],
 }
 
-const TERMS_ID: Omit<PolicyContent, 'sections'> = {
-  pageTitle: 'Syarat & Ketentuan',
-  breadcrumb: 'Syarat & Ketentuan',
-  homeBreadcrumb: 'Beranda',
+const TERMS_MS: Omit<PolicyContent, 'sections'> = {
+  pageTitle: 'Terma & Ketentuan',
+  breadcrumb: 'Terma & Ketentuan',
+  homeBreadcrumb: 'Laman Utama',
   heroLabel: 'Hukum',
-  lastUpdated: 'Terakhir diperbarui: Mei 2026',
+  lastUpdated: 'Kemas kini terakhir: Mei 2026',
   intro:
-    'Syarat ini mengatur akses dan penggunaan situs web, produk, dan layanan terkait Bint Saeed. Disusun untuk kejelasan, kepastian komersial, dan kepatuhan terhadap persyaratan hukum UEA yang berlaku.',
+    'Terma ini mengatur akses dan penggunaan laman web, produk, dan perkhidmatan terkait Bint Saeed. Disusun untuk kejelasan, kepastian komersial, dan pematuhan terhadap terma hukum UAE yang berlaku.',
   summaryTitle: 'Ringkasan',
   summaryBody: [
-    'Dengan menggunakan situs web ini atau melakukan pemesanan, Anda menyetujui Syarat ini. Apabila tidak setuju, mohon tidak menggunakan situs.',
+    'Dengan menggunakan laman web ini atau membuat pesanan, anda bersetuju dengan Terma ini. Jika tidak bersetuju, sila jangan menggunakan laman ini.',
   ],
   sectionList: [
     '1. Ruang Lingkup dan Penerimaan',
-    '2. Kelayakan dan Tanggung Jawab Akun',
+    '2. Kelayakan dan Tanggung Jawab Akaun',
     '3. Produk, Ketersediaan, dan Harga',
-    '4. Pesanan, Pembayaran, dan Verifikasi',
-    '5. Pengiriman, Penyerahan, dan Alih Risiko',
-    '6. Pengembalian, Perbaikan, dan Kefinalan Pesanan',
+    '4. Pesanan, Pembayaran, dan Pengesahan',
+    '5. Penghantaran, Penyerahan, dan Alih Risiko',
+    '6. Pemulangan, Perbaikan, dan Kefinalan Pesanan',
     '7. Personalisasi dan Pekerjaan Custom',
     '8. Hak Kekayaan Intelektual',
     '9. Penggunaan yang Diizinkan dan Dilarang',
@@ -686,7 +685,7 @@ function shipmentEnSections(): PolicySection[] {
           title: '',
           body: [
             'Return shipping costs remain the responsibility of the client unless otherwise required by applicable law.',
-            'Personalised pieces, custom specifications, altered garments, and items produced to a client’s specific requirements are not eligible for exchange except where a verified manufacturing defect or material non-conformity exists.',
+            'Personalised pieces, tersuai specifications, altered pakaians, and items produced to a client’s specific requirements are not eligible for exchange except where a verified manufacturing defect or material non-conformity exists.',
           ],
           list: [],
         },
@@ -747,7 +746,7 @@ function shipmentEnSections(): PolicySection[] {
         'However, this right generally does not apply to:',
         'As many Bint Saeed pieces are produced on demand following a confirmed order, they generally fall within this exemption. Returns and cancellations are therefore not accepted once production has commenced.',
       ],
-      list: ['Goods made to the consumer’s specifications.', 'Clearly personalised or custom-made items.'],
+      list: ['Goods made to the consumer’s specifications.', 'Clearly personalised or tersuai-made items.'],
     },
     {
       title: '6. EU Exception (Defective Items Only)',
@@ -769,7 +768,7 @@ function shipmentEnSections(): PolicySection[] {
       body: [
         'We aim to dispatch every order as efficiently as possible while maintaining the quality standards of Bint Saeed.',
         'While we make every effort to meet estimated timelines, delivery dates are not guaranteed and may be affected by circumstances outside our reasonable control.',
-        'Bint Saeed is not responsible for delays arising from customs inspections, customs clearance procedures, import restrictions, courier operational delays, failed delivery attempts, incorrect delivery information provided by the client, or other circumstances beyond our reasonable control.',
+        'Bint Saeed is not responsible for delays arising from tersuais inspections, tersuais clearance procedures, import restrictions, courier operational delays, failed delivery attempts, incorrect delivery information provided by the client, or other circumstances beyond our reasonable control.',
         'While we will always assist clients in tracking and resolving shipping issues where possible, we cannot guarantee delivery timelines once an order has been transferred to the courier.',
       ],
       list: [
@@ -777,10 +776,10 @@ function shipmentEnSections(): PolicySection[] {
         'Shipping fees for orders below this threshold, and for international destinations, are calculated at checkout.',
         'Made-to-order pieces are usually shipped within approximately two weeks following order confirmation.',
         'In-stock items, including selected jewellery and ready-to-ship styles, are usually dispatched within 1–3 business days.',
-        'Estimated delivery timelines may vary depending on destination, customs processing, and courier operations.',
+        'Estimated delivery timelines may vary depending on destination, tersuais processing, and courier operations.',
         'Once an order has been dispatched, clients will receive shipping confirmation and tracking details where available.',
-        'Once an order has been transferred to the courier, delivery timelines are subject to the courier’s network, local delivery infrastructure, customs procedures, and destination country regulations.',
-        'Any customs duties, import taxes, local charges, or clearance fees imposed by the destination country remain the responsibility of the recipient unless otherwise stated at checkout.',
+        'Once an order has been transferred to the courier, delivery timelines are subject to the courier’s network, local delivery infrastructure, tersuais procedures, and destination country regulations.',
+        'Any tersuais duties, import taxes, local charges, or clearance fees imposed by the destination country remain the responsibility of the recipient unless otherwise stated at checkout.',
       ],
     },
     {
@@ -794,7 +793,7 @@ function shipmentEnSections(): PolicySection[] {
         'War or armed conflict.',
         'Civil unrest or political instability.',
         'Acts of government or public authorities.',
-        'Customs inspections, customs delays, or import restrictions.',
+        'Customs inspections, tersuais delays, or import restrictions.',
         'Transport disruptions.',
         'Natural disasters.',
         'Labour disputes or strikes.',
@@ -808,7 +807,7 @@ function shipmentEnSections(): PolicySection[] {
       body: [
         'For exchanges, return requests, and defect claims:',
         OFFICIAL_EMAILS.returns,
-        'For general customer support:',
+        'For general tersuaier support:',
         OFFICIAL_EMAILS.support,
         'Please include your order number, contact details, and any supporting photographs where applicable. Our team will review your request and provide guidance on the next steps.',
         'At Bint Saeed, we are committed to handling every enquiry with fairness, professionalism, and care.',
@@ -817,56 +816,56 @@ function shipmentEnSections(): PolicySection[] {
   ]
 }
 
-function shipmentIdSections(): PolicySection[] {
+function shipmentMsSections(): PolicySection[] {
   return [
     {
       title: '1. Pernyataan Pembuka',
       body: [
-        'Setiap karya Bint Saeed dibuat mengikuti permintaan dan pilihan spesifik klien. Produksi dimulai hanya setelah pesanan dikonfirmasi.',
-        'Komitmen kami adalah menyerahkan setiap karya dalam kondisi, kualitas, dan craftsmanship yang diharapkan dari Bint Saeed. Apabila terjadi masalah, tim kami akan bekerja erat dengan klien untuk menemukan penyelesaian yang tepat.',
+        'Setiap karya Bint Saeed dihasilkan mengikuti permintaan dan pilihan spesifik pelanggan. Produksi dimulai hanya setelah pesanan disahkan.',
+        'Komitmen kami adalah menyerahkan setiap karya dalam kondisi, kualitas, dan craftsmanship yang diharapkan dari Bint Saeed. Apabila terjadi masalah, tim kami akan bekerja erat dengan pelanggan untuk menemukan penyelesaian yang tepat.',
       ],
     },
     {
-      title: '2. Kebijakan Umum',
+      title: '2. Dasar Umum',
       body: [
-        'Karena banyak karya Bint Saeed diproduksi berdasarkan permintaan setelah pesanan dikonfirmasi, kami tidak menawarkan pengembalian dana untuk perubahan pikiran, preferensi pribadi, atau pilihan ukuran yang ditentukan klien.',
-        'Namun, kami memahami bahwa situasi dapat muncul di mana ukuran alternatif diperlukan.',
-        'Produk yang memenuhi syarat dapat ditukar dalam 14 hari sejak pengiriman, tunduk pada persetujuan Departemen Pengembalian Bint Saeed dan ketentuan di bawah ini.',
-        `Untuk meminta penukaran, klien harus menghubungi ${OFFICIAL_EMAILS.returns} dalam 14 hari sejak menerima pesanan.`,
-        'Otorisasi sebelumnya diperlukan sebelum barang dikembalikan. Setelah disetujui, instruksi pengembalian rinci akan diberikan oleh tim kami.',
-        'Agar memenuhi syarat penukaran, barang harus:',
+        'Karena banyak karya Bint Saeed diproduksi berdasarkan permintaan setelah pesanan disahkan, kami tidak menawarkan pemulangan dana untuk perubahan pikiran, preferensi pribadi, atau pilihan saiz yang ditentukan pelanggan.',
+        'Namun, kami memahami bahwa situasi dapat muncul di mana saiz alternatif diperlukan.',
+        'Produk yang memenuhi terma dapat ditukar dalam 14 hari sejak penghantaran, tunduk pada kebenaran Departemen Pemulangan Bint Saeed dan terma di bawah ini.',
+        `Untuk meminta pertukaran, pelanggan harus menghubungi ${OFFICIAL_EMAILS.returns} dalam 14 hari sejak menerima pesanan.`,
+        'Otorisasi sebelumnya diperlukan sebelum barang dikembalikan. Setelah disetujui, instruksi pemulangan rinci akan diberikan oleh tim kami.',
+        'Agar memenuhi terma pertukaran, barang harus:',
       ],
       list: [
         'Belum dipakai, tidak digunakan, dan dalam kondisi asli.',
         'Dikembalikan dengan seluruh label asli masih terpasang.',
         'Dikembalikan dalam kemasan asli.',
         'Bebas dari parfum, asap, noda, alterasi, kerusakan, atau tanda pemakaian.',
-        'Disetujui oleh Departemen Pengembalian Bint Saeed sebelum pengiriman balik.',
+        'Disetujui oleh Departemen Pemulangan Bint Saeed sebelum penghantaran balik.',
       ],
       subsections: [
         {
           title: '',
           body: [
-            'Biaya pengiriman pengembalian menjadi tanggung jawab klien kecuali diwajibkan lain oleh hukum yang berlaku.',
-            'Karya personalisasi, spesifikasi custom, garment yang diubah, dan barang yang diproduksi sesuai kebutuhan spesifik klien tidak memenuhi syarat penukaran kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material.',
+            'Biaya penghantaran pemulangan menjadi tanggung jawab pelanggan kecuali diwajibkan lain oleh hukum yang berlaku.',
+            'Karya personalisasi, spesifikasi tersuai, pakaian yang diubah, dan barang yang diproduksi sesuai kebutuhan spesifik pelanggan tidak memenuhi terma pertukaran kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material.',
           ],
           list: [],
         },
       ],
     },
     {
-      title: '3. Pengecualian (Selaras Perlindungan Konsumen UEA)',
-      body: ['Sesuai hukum yang berlaku di Uni Emirat Arab, pengecualian dapat berlaku apabila:'],
+      title: '3. Pengecualian (Selaras Perlindungan Konsumen UAE)',
+      body: ['Sesuai hukum yang berlaku di Emiriah Arab Bersatu, pengecualian dapat berlaku apabila:'],
       list: [
         'Barang memiliki cacat produksi yang terverifikasi.',
-        'Barang secara material berbeda dari pesanan yang dikonfirmasi.',
+        'Barang secara material berbeda dari pesanan yang disahkan.',
       ],
       subsections: [
         {
           title: '',
           body: ['Dalam kasus tersebut:'],
           list: [
-            'Klien harus memberi tahu kami dalam 48 jam sejak pengiriman.',
+            'Klien harus memberi tahu kami dalam 48 jam sejak penghantaran.',
             'Bukti fotografi yang jelas harus dikirim melalui email.',
             'Barang harus tetap tidak digunakan dan dalam kondisi asli.',
           ],
@@ -874,14 +873,14 @@ function shipmentIdSections(): PolicySection[] {
         {
           title: '',
           body: [
-            'Setelah peninjauan, Bint Saeed akan bekerja sama dengan klien menentukan penyelesaian paling tepat, yang dapat mencakup:',
+            'Setelah peninjauan, Bint Saeed akan bekerja sama dengan pelanggan menentukan penyelesaian paling tepat, yang dapat mencakup:',
           ],
           list: [
             'Perbaikan barang.',
             'Penggantian barang.',
             'Penukaran barang.',
             'Kredit toko.',
-            'Pengembalian dana, apabila perbaikan atau penggantian tidak secara wajar memungkinkan.',
+            'Pemulangan dana, apabila perbaikan atau penggantian tidak secara wajar memungkinkan.',
           ],
         },
         {
@@ -894,60 +893,60 @@ function shipmentIdSections(): PolicySection[] {
       ],
     },
     {
-      title: '4. Kasus yang Tidak Memenuhi Syarat',
-      body: ['Hal berikut bukan alasan yang memenuhi syarat untuk pengembalian dana, penukaran, atau pengembalian:'],
+      title: '4. Kasus yang Tidak Memenuhi Terma',
+      body: ['Hal berikut bukan alasan yang memenuhi terma untuk pemulangan dana, pertukaran, atau pemulangan:'],
       list: [
         'Perubahan pikiran.',
         'Preferensi pribadi.',
-        'Ukuran yang salah dipilih oleh klien.',
+        'Saiz yang salah dipilih oleh pelanggan.',
         'Variasi minor yang melekat pada produksi buatan tangan.',
         'Perbedaan warna akibat pengaturan layar atau tampilan perangkat.',
-        'Kerusakan akibat perawatan tidak tepat, penyalahgunaan, alterasi, atau pemakaian normal.',
+        'Kerusakan akibat penjagaan tidak tepat, penyalahgunaan, alterasi, atau pemakaian normal.',
       ],
     },
     {
       title: '5. Klien UE – Hak Penarikan',
       body: [
-        'Bagi klien yang berada di Uni Eropa, regulasi konsumen dapat memberikan hak penarikan 14 hari untuk pembelian online.',
+        'Bagi pelanggan yang berada di Eropah, regulasi konsumen dapat memberikan hak penarikan 14 hari untuk pembelian online.',
         'Namun, hak ini umumnya tidak berlaku untuk:',
-        'Karena banyak karya Bint Saeed diproduksi berdasarkan permintaan setelah pesanan dikonfirmasi, karya tersebut umumnya termasuk dalam pengecualian ini. Pengembalian dan pembatalan oleh karena itu tidak diterima setelah produksi dimulai.',
+        'Karena banyak karya Bint Saeed diproduksi berdasarkan permintaan setelah pesanan disahkan, karya tersebut umumnya termasuk dalam pengecualian ini. Pemulangan dan pembatalan oleh karena itu tidak diterima setelah produksi dimulai.',
       ],
-      list: ['Barang dibuat sesuai spesifikasi konsumen.', 'Barang yang jelas dipersonalisasi atau dibuat custom.'],
+      list: ['Barang dihasilkan sesuai spesifikasi konsumen.', 'Barang yang jelas dipersonalisasi atau dihasilkan tersuai.'],
     },
     {
       title: '6. Pengecualian UE (Hanya Barang Cacat)',
       body: [
         'Apabila terjadi cacat produksi:',
-        'Kami akan menilai perkara dan memberikan penyelesaian yang tepat, yang dapat mencakup perbaikan, penggantian, penukaran, kredit toko, atau pengembalian dana apabila diwajibkan oleh hukum yang berlaku.',
+        'Kami akan menilai perkara dan memberikan penyelesaian yang tepat, yang dapat mencakup perbaikan, penggantian, pertukaran, kredit toko, atau pemulangan dana apabila diwajibkan oleh hukum yang berlaku.',
       ],
       list: [
-        'Klien harus memberi tahu kami dalam 48 jam sejak pengiriman.',
+        'Klien harus memberi tahu kami dalam 48 jam sejak penghantaran.',
         'Bukti fotografi pendukung harus dikirim melalui email.',
       ],
     },
     {
       title: '7. Pengakuan Akhir',
       body: [
-        'Dengan melakukan pemesanan kepada Bint Saeed, klien menyatakan telah meninjau dan menerima deskripsi produk, informasi ukuran, timeline produksi, serta ketentuan yang diuraikan dalam kebijakan ini.',
-        'Klien selanjutnya mengakui sifat made-to-order dari banyak karya Bint Saeed dan memahami batasan yang berlaku terkait pengembalian dana, penukaran, dan pembatalan.',
+        'Dengan melakukan pesanan kepada Bint Saeed, pelanggan menyatakan telah meninjau dan menerima penerangan produk, maklumat saiz, timeline produksi, serta terma yang diuraikan dalam dasar ini.',
+        'Klien selanjutnya mengakui sifat made-to-order dari banyak karya Bint Saeed dan memahami batasan yang berlaku terkait pemulangan dana, pertukaran, dan pembatalan.',
       ],
     },
     {
-      title: '8. Jadwal Pengiriman',
+      title: '8. Jadwal Penghantaran',
       body: [
-        'Kami berupaya mengirim setiap pesanan seefisien mungkin sambil mempertahankan standar kualitas Bint Saeed.',
-        'Meskipun kami berupaya memenuhi estimasi waktu, tanggal pengiriman tidak dijamin dan dapat terpengaruh oleh keadaan di luar kendali wajar kami.',
-        'Bint Saeed tidak bertanggung jawab atas keterlambatan akibat inspeksi bea cukai, prosedur clearance, pembatasan impor, keterlambatan operasional kurir, upaya pengiriman gagal, informasi pengiriman salah yang diberikan klien, atau keadaan lain di luar kendali wajar kami.',
-        'Meskipun kami akan selalu membantu klien melacak dan menyelesaikan masalah pengiriman sejauh memungkinkan, kami tidak dapat menjamin jadwal pengiriman setelah pesanan diserahkan ke kurir.',
+        'Kami berupaya menghantar setiap pesanan seefisien mungkin sambil mempertahankan standar kualitas Bint Saeed.',
+        'Meskipun kami berupaya memenuhi estimasi waktu, tanggal penghantaran tidak dijamin dan dapat terpengaruh oleh keadaan di luar kendali wajar kami.',
+        'Bint Saeed tidak bertanggung jawab atas keterlambatan akibat inspeksi bea cukai, prosedur clearance, pembatasan impor, keterlambatan operasional kurir, upaya penghantaran gagal, maklumat penghantaran salah yang diberikan pelanggan, atau keadaan lain di luar kendali wajar kami.',
+        'Meskipun kami akan selalu membantu pelanggan melacak dan menyelesaikan masalah penghantaran sejauh memungkinkan, kami tidak dapat menjamin jadwal penghantaran setelah pesanan diserahkan ke kurir.',
       ],
       list: [
-        'Pengiriman gratis dalam Uni Emirat Arab berlaku untuk pesanan dengan subtotal barang AED 1.000 atau lebih.',
-        'Biaya pengiriman untuk pesanan di bawah ambang tersebut, serta destinasi internasional, dihitung saat checkout.',
+        'Penghantaran percuma dalam Emiriah Arab Bersatu berlaku untuk pesanan dengan subtotal barang AED 1.000 atau lebih.',
+        'Biaya penghantaran untuk pesanan di bawah ambang tersebut, serta destinasi internasional, dihitung saat checkout.',
         'Karya made-to-order biasanya dikirim dalam kira-kira dua minggu setelah konfirmasi pesanan.',
         'Barang ready stock, termasuk perhiasan terpilih dan gaya siap kirim, biasanya dikirim dalam 1–3 hari kerja.',
-        'Estimasi waktu pengiriman dapat bervariasi tergantung destinasi, pemrosesan bea cukai, dan operasional kurir.',
-        'Setelah pesanan dikirim, klien akan menerima konfirmasi pengiriman dan detail pelacakan jika tersedia.',
-        'Setelah pesanan diserahkan ke kurir, jadwal pengiriman tunduk pada jaringan kurir, infrastruktur pengiriman lokal, prosedur bea cukai, dan regulasi negara tujuan.',
+        'Estimasi waktu penghantaran dapat bervariasi tergantung destinasi, pemprosesan bea cukai, dan operasional kurir.',
+        'Setelah pesanan dikirim, pelanggan akan menerima konfirmasi penghantaran dan butiran pelacakan jika tersedia.',
+        'Setelah pesanan diserahkan ke kurir, jadwal penghantaran tunduk pada jaringan kurir, infrastruktur penghantaran lokal, prosedur bea cukai, dan regulasi negara tujuan.',
         'Bea masuk, pajak impor, biaya lokal, atau biaya clearance yang dikenakan negara tujuan menjadi tanggung jawab penerima kecuali dinyatakan lain saat checkout.',
       ],
     },
@@ -956,12 +955,12 @@ function shipmentIdSections(): PolicySection[] {
       body: [
         'Bint Saeed tidak bertanggung jawab atas keterlambatan, gangguan, atau kegagalan memenuhi kewajiban apabila keadaan tersebut timbul dari peristiwa di luar kendali wajar kami.',
         'Peristiwa ini dapat mencakup, namun tidak terbatas pada:',
-        'Dalam situasi tersebut, produksi, pengiriman, penyerahan, dan kewajiban lain dapat ditangguhkan atau ditunda selama peristiwa berlangsung dan periode pemulihan wajar setelahnya.',
+        'Dalam situasi tersebut, produksi, penghantaran, penyerahan, dan kewajiban lain dapat ditangguhkan atau ditunda selama peristiwa berlangsung dan periode pemulihan wajar setelahnya.',
       ],
       list: [
         'Perang atau konflik bersenjata.',
         'Kerusuhan sipil atau ketidakstabilan politik.',
-        'Tindakan pemerintah atau otoritas publik.',
+        'Tindakan pemerintah atau pihak berkuasa publik.',
         'Inspeksi bea cukai, keterlambatan bea cukai, atau pembatasan impor.',
         'Gangguan transportasi.',
         'Bencana alam.',
@@ -974,11 +973,11 @@ function shipmentIdSections(): PolicySection[] {
     {
       title: '10. Kontak',
       body: [
-        'Untuk penukaran, permintaan pengembalian, dan klaim cacat:',
+        'Untuk pertukaran, permintaan pemulangan, dan klaim cacat:',
         OFFICIAL_EMAILS.returns,
         'Untuk dukungan pelanggan umum:',
         OFFICIAL_EMAILS.support,
-        'Mohon sertakan nomor pesanan, detail kontak, dan foto pendukung jika berlaku. Tim kami akan meninjau permintaan Anda dan memberikan panduan langkah selanjutnya.',
+        'Sila sertakan nombor pesanan, butiran kontak, dan foto pendukung jika berlaku. Pasukan kami akan meninjau permintaan anda dan memberikan panduan langkah selanjutnya.',
         'Di Bint Saeed, kami berkomitmen menangani setiap pertanyaan dengan keadilan, profesionalisme, dan perhatian.',
       ],
     },
@@ -1012,28 +1011,28 @@ const SHIPMENT_EN: Omit<PolicyContent, 'sections'> = {
   ],
 }
 
-const SHIPMENT_ID: Omit<PolicyContent, 'sections'> = {
-  pageTitle: 'Kebijakan Pengiriman & Pengembalian',
-  breadcrumb: 'Kebijakan Pengiriman & Pengembalian',
-  homeBreadcrumb: 'Beranda',
+const SHIPMENT_MS: Omit<PolicyContent, 'sections'> = {
+  pageTitle: 'Dasar Penghantaran & Pemulangan',
+  breadcrumb: 'Dasar Penghantaran & Pemulangan',
+  homeBreadcrumb: 'Laman Utama',
   heroLabel: 'Hukum',
-  lastUpdated: 'Terakhir diperbarui: Juni 2026',
+  lastUpdated: 'Kemas kini terakhir: Juni 2026',
   intro:
-    'Kebijakan ini mengatur jadwal pengiriman, kelayakan penukaran, prosedur pengembalian, dan jalur remedi untuk pembelian melalui Bint Saeed.',
+    'Dasar ini mengatur jadwal penghantaran, kelayakan pertukaran, prosedur pemulangan, dan jalur remedi untuk pembelian melalui Bint Saeed.',
   summaryTitle: 'Ringkasan',
   summaryBody: [
-    'Di Bint Saeed, setiap karya dibuat dengan perhatian dan diperiksa sebelum pengiriman. Kami menganjurkan klien meninjau deskripsi produk, informasi ukuran, dan detail produk dengan saksama sebelum memesan.',
-    'Meskipun mayoritas karya Bint Saeed diproduksi berdasarkan permintaan, item terpilih dapat tersedia untuk pengiriman segera.',
+    'Di Bint Saeed, setiap karya dihasilkan dengan perhatian dan diperiksa sebelum penghantaran. Kami mengesyorkan pelanggan meninjau penerangan produk, maklumat saiz, dan butiran produk dengan saksama sebelum memesan.',
+    'Meskipun mayoritas karya Bint Saeed diproduksi berdasarkan permintaan, item terpilih dapat tersedia untuk penghantaran segera.',
   ],
   sectionList: [
     '1. Pernyataan Pembuka',
-    '2. Kebijakan Umum',
-    '3. Pengecualian (Selaras Perlindungan Konsumen UEA)',
-    '4. Kasus yang Tidak Memenuhi Syarat',
+    '2. Dasar Umum',
+    '3. Pengecualian (Selaras Perlindungan Konsumen UAE)',
+    '4. Kasus yang Tidak Memenuhi Terma',
     '5. Klien UE – Hak Penarikan',
     '6. Pengecualian UE (Hanya Barang Cacat)',
     '7. Pengakuan Akhir',
-    '8. Jadwal Pengiriman',
+    '8. Jadwal Penghantaran',
     '9. Force Majeure',
     '10. Kontak',
   ],
@@ -1045,7 +1044,7 @@ function resolvePolicyMeta<T extends Omit<PolicyContent, 'sections'>>(
   id: T,
   arBreadcrumb: string,
 ): Omit<PolicyContent, 'sections'> {
-  if (lang === 'id') return { ...id, homeBreadcrumb: id.homeBreadcrumb }
+  if (lang === 'ms') return { ...id, homeBreadcrumb: id.homeBreadcrumb }
   if (lang === 'ar') {
     return {
       ...en,
@@ -1062,12 +1061,7 @@ export function buildAnalyticsLine(
 ): string {
   if (lang === 'ms') {
     return trackerTitles.length > 0
-      ? `Perkhidmatan analitik (berasaskan persekitaran): ${trackerTitles.join(', ')}`
-      : 'Tiada penjejak analitik pilihan yang diaktifkan dalam persekitaran ini pada masa ini.'
-  }
-  if (lang === 'id') {
-    return trackerTitles.length > 0
-      ? `Layanan analitik (berbasis lingkungan): ${trackerTitles.join(', ')}`
+      ? `Layanan analitik (berasaskan persekitaran): ${trackerTitles.join(', ')}`
       : 'Tidak ada pelacak analitik opsional yang saat ini diaktifkan di lingkungan ini.'
   }
   return trackerTitles.length > 0
@@ -1079,28 +1073,25 @@ export function getPrivacyPolicyContent(
   lang: PolicyLang,
   analyticsLine?: string,
 ): PolicyContent {
-  if (lang === 'ms') return policyMs.getPrivacyPolicyContent('ms', analyticsLine)
   const line =
     analyticsLine ??
     buildAnalyticsLine(
       lang,
       [],
     )
-  const meta = resolvePolicyMeta(lang, PRIVACY_EN, PRIVACY_ID, AR_BREADCRUMBS.privacy)
-  const sections = lang === 'id' ? privacyIdSections(line) : privacyEnSections(line)
+  const meta = resolvePolicyMeta(lang, PRIVACY_EN, PRIVACY_MS, AR_BREADCRUMBS.privacy)
+  const sections = lang === 'ms' ? privacyMsSections(line) : privacyEnSections(line)
   return { ...meta, sections }
 }
 
 export function getTermsContent(lang: PolicyLang): PolicyContent {
-  if (lang === 'ms') return policyMs.getTermsContent('ms')
-  const meta = resolvePolicyMeta(lang, TERMS_EN, TERMS_ID, AR_BREADCRUMBS.terms)
-  const sections = lang === 'id' ? TERMS_ID_SECTIONS : TERMS_EN_SECTIONS
+  const meta = resolvePolicyMeta(lang, TERMS_EN, TERMS_MS, AR_BREADCRUMBS.terms)
+  const sections = lang === 'ms' ? TERMS_MS_SECTIONS : TERMS_EN_SECTIONS
   return { ...meta, sections }
 }
 
 export function getShipmentReturnContent(lang: PolicyLang): PolicyContent {
-  if (lang === 'ms') return policyMs.getShipmentReturnContent('ms')
-  const meta = resolvePolicyMeta(lang, SHIPMENT_EN, SHIPMENT_ID, AR_BREADCRUMBS.shipment)
-  const sections = lang === 'id' ? shipmentIdSections() : shipmentEnSections()
+  const meta = resolvePolicyMeta(lang, SHIPMENT_EN, SHIPMENT_MS, AR_BREADCRUMBS.shipment)
+  const sections = lang === 'ms' ? shipmentMsSections() : shipmentEnSections()
   return { ...meta, sections }
 }

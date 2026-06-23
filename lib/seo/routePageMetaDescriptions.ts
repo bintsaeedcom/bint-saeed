@@ -1,12 +1,13 @@
 import type { RouteMetaKey } from '@/lib/seo/routeMetaKeys'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { indonesiaRouteMetaFromEn } from '@/lib/i18n/indonesiaRouteMetaFromEn'
+import { malaysiaRouteMetaFromEn } from '@/lib/i18n/malaysiaRouteMetaFromEn'
 
 type Loc = Record<AppLocale, string>
-type LocInput = Record<Exclude<AppLocale, 'id'>, string> & { en: string }
+type LocInput = Record<Exclude<AppLocale, 'id' | 'ms'>, string> & { en: string }
 
 function enrichLoc(loc: LocInput): Loc {
-  return { ...loc, id: indonesiaRouteMetaFromEn(loc.en) }
+  return { ...loc, id: indonesiaRouteMetaFromEn(loc.en), ms: malaysiaRouteMetaFromEn(loc.en) }
 }
 
 function enrichLocMap<K extends string>(raw: Record<K, LocInput>): Record<K, Loc> {

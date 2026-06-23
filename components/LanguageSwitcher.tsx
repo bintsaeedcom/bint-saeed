@@ -27,6 +27,7 @@ const ALL_LANGUAGES: LangRow[] = [
   { code: 'es', label: 'Español', native: 'ES', flag: '🇪🇸' },
   { code: 'ru', label: 'Русский', native: 'RU', flag: '🇷🇺' },
   { code: 'id', label: 'Bahasa Indonesia', native: 'ID', flag: '🇮🇩' },
+  { code: 'ms', label: 'Bahasa Melayu', native: 'MS', flag: '🇲🇾' },
 ]
 
 export default function LanguageSwitcher({

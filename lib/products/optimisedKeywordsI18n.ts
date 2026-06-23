@@ -10,6 +10,7 @@ import {
 } from './optimisedKeywords'
 import { SCHEMA_AUGMENT_ROWS } from './schemaAugmentKeywordsI18n'
 import { indonesiaKeywordFromEn } from '@/lib/i18n/indonesiaKeywordFromEn'
+import { malaysiaKeywordFromEn } from '@/lib/i18n/malaysiaKeywordFromEn'
 
 function kw(
   en: string,
@@ -23,8 +24,9 @@ function kw(
   nl: string,
   pt: string,
   id?: string,
+  ms?: string,
 ): Record<AppLocale, string> {
-  return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: id ?? indonesiaKeywordFromEn(en) }
+  return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: id ?? indonesiaKeywordFromEn(en), ms: ms ?? malaysiaKeywordFromEn(en) }
 }
 
 type KwRow = [string, string, string, string, string, string, string, string, string, string]

@@ -24,6 +24,7 @@ const CARE: Record<AppLocale, string> = {
   nl: 'Professionele stomerij aanbevolen',
   pt: 'Limpeza a seco profissional recomendada',
   id: 'Pembersihan kering profesional disarankan',
+  ms: 'Pembersihan kering profesional disyorkan',
 }
 
 const INNER_DRESS: Record<AppLocale, string> = {
@@ -38,6 +39,7 @@ const INNER_DRESS: Record<AppLocale, string> = {
   nl: 'Vastgenaaid binnenjurkje',
   pt: 'Vestido interior integrado',
   id: 'Gaun dalam terpasang',
+  ms: 'Gaun dalam terpasang',
 }
 
 const KAFTAN_AUDIENCE: Record<AppLocale, string> = {
@@ -52,6 +54,7 @@ const KAFTAN_AUDIENCE: Record<AppLocale, string> = {
   nl: 'Vrouwen die luxe gelegenheidskleding, elegante reisgarderobes, eigentijdse kaftans en verfijnde event-styling zoeken.',
   pt: 'Mulheres que procuram vestuário de ocasião de luxo, guarda-roupa de viagem elegante, kaftans contemporâneos e styling refinado para eventos.',
   id: 'Wanita yang mencari busana acara mewah, garderobe perjalanan elegan, kaftan kontemporer, dan berpakaian acara yang halus.',
+  ms: 'Wanita yang mencari pakaian majlis mewah, almari perjalanan elegan, kaftan kontemporari, dan gaya acara yang halus.',
 }
 
 type KaftanLocalePack = {
@@ -420,6 +423,39 @@ const MAYFAIR: Record<AppLocale, KaftanLocalePack> = {
         question: 'Apa yang membedakan Kaftan Mayfair dari kaftan lainnya?',
         answer:
           'Kaftan Mayfair menggabungkan siluet one-size mengalir, tali internal tersembunyi, detail scarf terpasang, dan pin emblem emas khas Bint Saeed. Dibuat dari chiffon crepe maroon gelap dan dirancang di Abu Dhabi, Uni Emirat Arab, menawarkan styling serbaguna, gerakan anggun, dan pendekatan abadi untuk busana acara.',
+      },
+    ],
+  },
+  ms: {
+    pageTitle: 'Kaftan Mayfair | Kaftan Majlis Chiffon Maroon Gelap | Bint Saeed',
+    metaDescription:
+      'Kaftan Mayfair. Kaftan chiffon maroon gelap dengan garis leher V, siluet mengalir, gaun dalam terpasang, dan emblem emas khas. Direka di Abu Dhabi, Emiriah Arab Bersatu oleh Bint Saeed.',
+    facts: {
+      neckline: 'Garis leher V',
+      fit: 'Siluet one-size dengan fit mengalir dan santai. Tali dalaman tersembunyi membolehkan kaftan dipakai longgar atau diselaraskan untuk bentuk lebih jelas.',
+      maximumGarmentLength: '165 cm',
+      innerDress: INNER_DRESS.ms,
+      stylingDetail:
+        'Butiran scarf terpasang dengan pin emblem emas khas Bint Saeed dan konstruksi tali dalaman tersembunyi.',
+      suitableFor:
+        'Perkahwinan, sambutan pertunangan, perhimpunan Aidilfitri, majlis malam, acara destinasi, dan berpakaian siang elegan.',
+      care: CARE.ms,
+    },
+    faq: [
+      {
+        question: 'Adakah Kaftan Mayfair sesuai untuk perkahwinan, Aidilfitri, dan acara khas?',
+        answer:
+          'Ya. Kaftan Mayfair direka untuk majlis perkahwinan, Aidilfitri, dan acara formal dengan siluet mengalir yang anggun.',
+      },
+      {
+        question: 'Adakah Kaftan Mayfair one size?',
+        answer:
+          'Ya. Siluet one-size dengan tali dalaman tersembunyi untuk fit mengalir atau lebih terstruktur.',
+      },
+      {
+        question: 'Apa yang membezakan Kaftan Mayfair daripada kaftan lain?',
+        answer:
+          'Scarf terpasang, pin emblem emas khas Bint Saeed, dan chiffon crepe maroon gelap — direka di Abu Dhabi.',
       },
     ],
   },
@@ -948,6 +984,39 @@ const NOTHING_HILL: Record<AppLocale, KaftanLocalePack> = {
         question: 'Apakah Kaftan Nothing Hill cocok untuk pernikahan destinasi dan acara internasional?',
         answer:
           'Ya. Kaftan Nothing Hill dirancang untuk pernikahan, perayaan destinasi, pertemuan formal, dan acara khusus. Chiffon ringan dan siluet mengalir menjadikannya pilihan elegan di Timur Tengah, Eropa, dan seterusnya.',
+      },
+    ],
+  },
+  ms: {
+    pageTitle: 'Kaftan Nothing Hill | Kaftan Majlis Chiffon Peach Pink | Bint Saeed',
+    metaDescription:
+      'Kaftan Nothing Hill. Kaftan chiffon peach pink dengan garis leher bateau halus, siluet mengalir, dan emblem emas khas. Direka di Abu Dhabi, Emiriah Arab Bersatu oleh Bint Saeed.',
+    facts: {
+      neckline: 'Garis leher bateau',
+      fit: 'Siluet one-size dengan potongan mengalir dan santai yang direka untuk jatuh luwes merentasi pelbagai bentuk badan sambil mengekalkan pergerakan anggun.',
+      maximumGarmentLength: '165 cm',
+      innerDress: INNER_DRESS.ms,
+      stylingDetail:
+        'Konstruksi chiffon berlapis mengalir dengan pin emblem emas khas Bint Saeed.',
+      suitableFor:
+        'Perkahwinan, sambutan pertunangan, perhimpunan Aidilfitri, majlis malam, acara destinasi, acara budaya, perjalanan mewah, sambutan taman, dan berpakaian siang elegan.',
+      care: CARE.ms,
+    },
+    faq: [
+      {
+        question: 'Adakah Kaftan Nothing Hill sesuai untuk perkahwinan, Aidilfitri, dan acara khas?',
+        answer:
+          'Ya. Kaftan Nothing Hill direka untuk perkahwinan, sambutan pertunangan, perhimpunan Aidilfitri, majlis malam, acara destinasi, dan acara khusus. Diperbuat daripada chiffon peach pink lembut, siluet mengalirnya mencipta pergerakan anggun dengan keanggunan dan keselesaan.',
+      },
+      {
+        question: 'Adakah Kaftan Nothing Hill one size?',
+        answer:
+          'Ya. Kaftan Nothing Hill direka sebagai siluet one-size dengan fit mengalir dan santai. Konstruksi ringannya membolehkan chiffon jatuh secara semula jadi merentasi pelbagai bentuk badan dengan penampilan elegan.',
+      },
+      {
+        question: 'Apa yang membezakan Kaftan Nothing Hill daripada kaftan lain?',
+        answer:
+          'Kaftan Nothing Hill menonjolkan chiffon peach pink lembut, garis leher bateau halus, siluet mengalir, dan pin emblem emas khas Bint Saeed. Direka di Abu Dhabi, Emiriah Arab Bersatu, ia menawarkan keanggunan luwes untuk majlis siang dan malam.',
       },
     ],
   },

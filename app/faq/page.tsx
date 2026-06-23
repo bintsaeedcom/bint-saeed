@@ -23,6 +23,7 @@ const FAQ_EMAIL_CTA: Record<AppLocale, string> = {
   nl: 'E-mail ons',
   pt: 'Enviar e-mail',
   id: 'Email Us',
+  ms: 'Email Us',
 }
 
 export default function FAQPage() {

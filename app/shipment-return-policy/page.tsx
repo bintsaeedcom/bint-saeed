@@ -24,10 +24,11 @@ const SECTION_LIST = [
 export default function ShipmentReturnPolicyPage() {
   const { t, isRTL, language } = useLanguage()
 
-  if (language === 'id') {
+  if (language === 'id' || language === 'ms') {
+    const lang = language as 'id' | 'ms'
     return (
       <PolicyDocument
-        content={getShipmentReturnContent('id')}
+        content={getShipmentReturnContent(lang)}
         isRTL={isRTL}
         backLabel={t.shop.backToHome}
         variant="shipment"

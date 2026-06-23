@@ -1,5 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { indonesiaImageAltFromEn } from '@/lib/i18n/indonesiaImageAltFromEn'
+import { malaysiaImageAltFromEn } from '@/lib/i18n/malaysiaImageAltFromEn'
 
 /** Build a full locale map for one catalogue image alt (en + 10 prefix locales). */
 export function altLoc(
@@ -14,8 +15,9 @@ export function altLoc(
   nl: string,
   pt: string,
   id?: string,
+  ms?: string,
 ): Record<AppLocale, string> {
-  return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: id ?? indonesiaImageAltFromEn(en) }
+  return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: id ?? indonesiaImageAltFromEn(en), ms: ms ?? malaysiaImageAltFromEn(en) }
 }
 
 type AltEntry = { filename: string; alts: Record<AppLocale, string> }

@@ -1,6 +1,7 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { THE_CODES_SECTIONS_ID } from '@/lib/the-codes/codesPageContentId'
+import { THE_CODES_SECTIONS_MS } from '@/lib/the-codes/codesPageContentMs'
 
 export const CODES_PAGE_DIR = 'The Codes Page'
 
@@ -103,5 +104,6 @@ export const THE_CODES_SECTIONS: CodesSectionContent[] = [
 
 export function getTheCodesSections(locale: AppLocale): CodesSectionContent[] {
   if (locale === 'id') return THE_CODES_SECTIONS_ID
+  if (locale === 'ms') return THE_CODES_SECTIONS_MS
   return THE_CODES_SECTIONS
 }

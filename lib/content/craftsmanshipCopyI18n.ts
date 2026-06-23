@@ -87,7 +87,43 @@ const CRAFTSMANSHIP_ID: CraftsmanshipCopy = {
   ctaButton: 'Lihat Koleksi',
 }
 
+const CRAFTSMANSHIP_MS: CraftsmanshipCopy = {
+  breadcrumbHome: 'Laman Utama',
+  breadcrumbCraftsmanship: 'Kraftangan',
+  backToHome: 'Kembali ke Laman Utama',
+  phaseI: {
+    label: 'Fasa I',
+    title: 'Pembangunan',
+    paragraphs: [
+      'Di Bint Saeed, setiap karya bermula dengan proses pembangunan yang teratur. Sebagai rumah yang berpangkalan di Abu Dhabi, kerja bergerak merentasi lokasi dengan struktur yang jelas. Corak dihasilkan di Itali, di mana proporsi, keseimbangan, dan konstruksi diselesaikan sebelum kain dipotong. Peringkat ini menentukan bagaimana setiap abaya akan jatuh, bergerak, dan mengekalkan bentuknya dari masa ke masa.',
+      'Proses kemudian diteruskan di Abu Dhabi, di mana prototaip dihasilkan untuk menguji konstruksi dan proporsi. Setelah diluluskan, sampel dibuat untuk mengesahkan bentuk akhir, tingkah laku bahan, dan potongan. Hanya selepas peringkat ini selesai dan disemak, karya bergerak ke pengeluaran. Urutan ini memastikan setiap pakaian diselesaikan dari segi teknikal sebelum dihasilkan dalam bentuk muktamad.',
+    ],
+  },
+  phaseII: {
+    label: 'Fasa II',
+    title: 'Pembuatan',
+    paragraphs: [
+      'Pengeluaran berlangsung di Abu Dhabi, Emiriah Arab Bersatu, di bawah bimbingan tukang dengan pengalaman lebih 25 tahun. Peranan mereka ialah memastikan setiap karya dibina dengan konsistensi, ketepatan, dan kawalan di setiap peringkat.',
+      'Bahan diperoleh dari Eropah dan Asia. Komponen seperti butang dipilih daripada pembekal Eropah, manakala batu semula jadi diperoleh, dipotong, dan digilap di Asia. Setiap elemen dipilih berdasarkan prestasinya, memastikan sumbangan kepada struktur, ketahanan, dan keseimbangan keseluruhan pakaian.',
+      'Pengeluaran dikekalkan dalam volum terkawal, membolehkan setiap karya menerima masa dan perhatian yang diperlukan. Pendekatan ini memastikan konstruksi, kemasan, dan kualiti keseluruhan kekal konsisten dari satu karya ke karya seterusnya.',
+      'Selaras dengan pendekatan ini, karya dihasilkan terutamanya atas pesanan, dengan setiap pakaian dibuat khusus untuk pelanggan. Ini membolehkan pengeluaran kekal fokus dan mengelakkan inventori berlebihan, mengekalkan cara kerja yang lebih terancang dan bertanggungjawab.',
+    ],
+  },
+  phaseIII: {
+    label: 'Fasa III',
+    title: 'Hala Tuju',
+    paragraphs: [
+      'Setiap reka bentuk dibangunkan dan dibawa hingga siap di bawah satu hala tuju. Pengarah Kreatif menyelia proses daripada konsep awal hingga pelaksanaan akhir, memastikan proporsi, konstruksi, dan butiran kekal selaras sepanjang proses.',
+      'Elemen seperti Al Talli dan Khous disepadukan ke dalam struktur pakaian, bukan ditambah sebagai hiasan permukaan. Penggunaannya ditentukan semasa pembangunan dan diselesaikan dalam proses konstruksi, memastikan konsistensi dalam penampilan dan prestasi.',
+      'Hasilnya ialah karya yang mencerminkan standard pembangunan yang jelas, pengeluaran terkawal, dan reka bentuk yang terancang. Setiap abaya dihasilkan untuk mengekalkan bentuk, berfungsi dalam pemakaian, dan mengekalkan kualitinya dari masa ke masa. Bint Saeed beroperasi sebagai rumah kontemporari, dibentuk di Abu Dhabi dan dibangunkan melalui proses antarabangsa.',
+    ],
+  },
+  ctaHeading: 'Terokai koleksi',
+  ctaButton: 'Lihat Koleksi',
+}
+
 export function getCraftsmanshipCopy(locale: Language | string): CraftsmanshipCopy {
   if (locale === 'id') return CRAFTSMANSHIP_ID
+  if (locale === 'ms') return CRAFTSMANSHIP_MS
   return CRAFTSMANSHIP_EN
 }

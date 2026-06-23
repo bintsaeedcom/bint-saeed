@@ -28,6 +28,8 @@ export function schemaInLanguageForLocale(locale: AppLocale): string {
       return 'pt'
     case 'id':
       return 'id'
+    case 'ms':
+      return 'ms'
     default:
       return 'en'
   }

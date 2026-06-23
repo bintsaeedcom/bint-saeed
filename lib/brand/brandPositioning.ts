@@ -16,6 +16,7 @@ export const BRAND_TAGLINE: Record<AppLocale, string> = {
   nl: `Een eigentijds huis uit ${G.nl.city}, toegewijd aan veranderende levensstijlen.`,
   pt: `Uma casa contemporânea de ${G.pt.city} dedicada a estilos de vida em evolução.`,
   id: `Rumah kontemporer dari ${G.id.city} yang berdedikasi pada gaya hidup yang terus berkembang.`,
+  ms: `Rumah kontemporari dari ${G.ms.city} yang berdedikasi kepada gaya hidup yang sentiasa berkembang.`,
 }
 
 export const HOME_META_TITLE: Record<AppLocale, string> = {
@@ -30,6 +31,7 @@ export const HOME_META_TITLE: Record<AppLocale, string> = {
   nl: `${BRAND_NAME} | Eigentijds huis — ${G.nl.city}`,
   pt: `${BRAND_NAME} | Casa contemporânea — ${G.pt.city}`,
   id: `${BRAND_NAME} | Rumah Kontemporer — ${G.id.city}`,
+  ms: `${BRAND_NAME} | Rumah Kontemporari — ${G.ms.city}`,
 }
 
 /** Homepage meta description (SEO / Google snippet) — tagline-led, not abaya-house-led. */
@@ -45,6 +47,7 @@ export const HOME_META_DESCRIPTION: Record<AppLocale, string> = {
   nl: `Een eigentijds huis uit ${G.nl.city} voor veranderende levensstijlen. Abaya’s, kaftans, jurken, sieraden en lifestyle — op bestelling, met levend erfgoed.`,
   pt: `Uma casa contemporânea de ${G.pt.city} dedicada a estilos de vida em evolução. Abayas, kaftans, vestidos, joias e lifestyle — sob encomenda, com herança viva.`,
   id: `Rumah kontemporer dari ${G.id.city} yang berdedikasi pada gaya hidup yang terus berkembang. Abaya, kaftan, gaun, perhiasan, dan lifestyle — dibuat sesuai pesanan, membawa warisan ke depan.`,
+  ms: `Rumah kontemporari dari ${G.ms.city} yang berdedikasi kepada gaya hidup yang sentiasa berkembang. Abaya, kaftan, gaun, perhiasan, dan gaya hidup — dihasilkan mengikut pesanan, membawa warisan ke hadapan.`,
 }
 
 /** Schema `audience` — contemporary women (not modest-only framing). */
@@ -60,6 +63,7 @@ export const SCHEMA_AUDIENCE_TYPE: Record<AppLocale, string> = {
   nl: `Hedendaagse vrouwen die luxemode, verfijnde stijl en veranderende levensstijlen uit ${G.nl.city} (${G.nl.countryShort}) zoeken`,
   pt: `Mulheres contemporâneas que procuram moda de luxo, vestir refinado e estilos de vida em evolução a partir de ${G.pt.city} (${G.pt.countryShort})`,
   id: `Wanita kontemporer yang mencari fashion mewah, berpakaian halus, dan gaya hidup berkembang dari ${G.id.city} (${G.id.countryShort})`,
+  ms: `Wanita kontemporari yang mencari fesyen mewah, berpakaian halus, dan gaya hidup berkembang dari ${G.ms.city} (${G.ms.countryShort})`,
 }
 
 /** Invisible discovery keywords — modest terms for schema/SEO only, not front-end copy. */
@@ -141,6 +145,15 @@ export const MODEST_DISCOVERY_KEYWORDS: Record<AppLocale, string[]> = {
     'fashion modest mewah',
     `fashion modest ${G.id.city}`,
     'fashion modest UEA',
+  ],
+  ms: [
+    'fesyen sopan',
+    'pakaian sopan',
+    'busana sopan',
+    'abaya sopan',
+    'fesyen sopan mewah',
+    `fesyen sopan ${G.ms.city}`,
+    'fesyen sopan UAE',
   ],
 }
 

@@ -151,6 +151,21 @@ const copyByLocale: Partial<Record<AppLocale, RegionalCopy>> = {
     apply: 'Terapkan',
     close: 'Tutup',
   },
+  ms: {
+    eyebrow: 'Bint Saeed',
+    title: 'Pengalaman serantau anda',
+    body:
+      'Kami telah menyesuaikan bahasa dan mata wang untuk wilayah anda. Anda boleh teruskan dengan tetapan ini atau pilih bahasa dan mata wang lain pada bila-bila masa.',
+    detectedLine: (city, country) => (city ? `${city} · ${country}` : country),
+    settingsLine: (language, currency) => `${language} · ${currency}`,
+    primary: (language) => `Teruskan dalam ${language}`,
+    secondary: 'Tukar bahasa atau mata wang',
+    changeTitle: 'Keutamaan',
+    languageLabel: 'Bahasa',
+    currencyLabel: 'Mata wang',
+    apply: 'Gunakan',
+    close: 'Tutup',
+  },
 }
 
 export function getRegionalExperienceCopy(locale: AppLocale): RegionalCopy {

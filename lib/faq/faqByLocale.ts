@@ -11,6 +11,7 @@ import { faqZh } from '@/lib/faq/locales/zh'
 import { faqNl } from '@/lib/faq/locales/nl'
 import { faqPt } from '@/lib/faq/locales/pt'
 import { faqId } from '@/lib/faq/locales/id'
+import { faqMs } from '@/lib/faq/locales/ms'
 
 /** FAQ page + FAQ JSON-LD source of truth per locale. */
 export const FAQ_BY_LOCALE: Record<AppLocale, FaqBundle> = {
@@ -25,6 +26,7 @@ export const FAQ_BY_LOCALE: Record<AppLocale, FaqBundle> = {
   nl: faqNl,
   pt: faqPt,
   id: faqId,
+  ms: faqMs,
 }
 
 export type { FaqBundle } from '@/lib/faq/types'

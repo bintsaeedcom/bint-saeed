@@ -17,7 +17,7 @@ const countryToLanguage: Record<string, string> = {
   // Arabic
   AE: 'ar', SA: 'ar', KW: 'ar', QA: 'ar', BH: 'ar', OM: 'ar', EG: 'ar', JO: 'ar', LB: 'ar', SY: 'ar', IQ: 'ar', YE: 'ar',
   // Mandarin
-  CN: 'zh', TW: 'zh', HK: 'zh', SG: 'zh', MY: 'zh',
+  CN: 'zh', TW: 'zh', HK: 'zh', SG: 'zh',
   // Russian
   RU: 'ru', KZ: 'ru', BY: 'ru', KG: 'ru', TJ: 'ru', TM: 'ru', UZ: 'ru',
   // Italian
@@ -30,6 +30,8 @@ const countryToLanguage: Record<string, string> = {
   ES: 'es', MX: 'es', AR: 'es', CO: 'es', PE: 'es', VE: 'es', CL: 'es', EC: 'es', GT: 'es', CU: 'es', BO: 'es', DO: 'es', HN: 'es', PY: 'es', SV: 'es', NI: 'es', CR: 'es', PA: 'es', UY: 'es', PR: 'es',
   // Indonesian
   ID: 'id',
+  // Malay
+  MY: 'ms',
   // English
   GB: 'en', US: 'en', AU: 'en', CA: 'en', IE: 'en', NZ: 'en', IN: 'en', ZA: 'en', PH: 'en', NG: 'en', PK: 'en', BD: 'en',
 }
@@ -42,8 +44,8 @@ const countryToCurrency: Record<string, string> = {
   DE: 'EUR', AT: 'EUR', FR: 'EUR', IT: 'EUR', ES: 'EUR', NL: 'EUR', BE: 'EUR', LU: 'EUR', MC: 'EUR',
 }
 
-const SUPPORTED_LANGUAGES = ['en', 'ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'id']
-const LANGUAGES_FOR_CONFIRM_POPUP = ['ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'id']
+const SUPPORTED_LANGUAGES = ['en', 'ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'id', 'ms']
+const LANGUAGES_FOR_CONFIRM_POPUP = ['ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'id', 'ms']
 
 export async function fetchGeoData(): Promise<GeoData | null> {
   if (typeof navigator !== 'undefined' && isLikelySearchBotUserAgent(navigator.userAgent)) {
@@ -117,6 +119,7 @@ export const languageLabels: Record<string, string> = {
   fr: 'Français',
   es: 'Español',
   id: 'Bahasa Indonesia',
+  ms: 'Bahasa Melayu',
 }
 
 // SEO keyword translations per language (for hidden schema)
@@ -288,6 +291,29 @@ export const seoKeywordTranslations: Record<string, Record<string, string>> = {
     elegantAbayas: 'abaya elegan',
     designerAbaya: 'abaya desainer',
     luxuryModestFashion: 'fashion modest mewah',
+    blackAbayaDubai: 'abaya hitam Dubai',
+    modernAbayaUAE: 'abaya modern UEA',
+    abaya: 'abaya',
+    dubaiAbaya: 'abaya Dubai',
+    abayaStyle: 'gaya abaya',
+    abayaBrand: 'merek abaya',
+    silkAbaya: 'abaya sutra',
+    bestAbaya: 'abaya terbaik',
+    abayaDesign: 'desain abaya',
+    laceAbaya: 'abaya renda',
+    purpleAbaya: 'abaya ungu',
+    greenAbaya: 'abaya hijau',
+    beigeAbaya: 'abaya beige',
+    nudeAbaya: 'abaya nude',
+    pinkAbaya: 'abaya merah muda',
+    navyBlueAbaya: 'abaya biru navy',
+  },
+  ms: {
+    luxuryAbayaUAE: 'abaya mewah UAE',
+    abayaAbuDhabi: 'abaya Abu Dhabi',
+    elegantAbayas: 'abaya elegan',
+    designerAbaya: 'abaya desainer',
+    luxuryModestFashion: 'fesyen sopan mewah',
     blackAbayaDubai: 'abaya hitam Dubai',
     modernAbayaUAE: 'abaya modern UEA',
     abaya: 'abaya',

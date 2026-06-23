@@ -28,14 +28,15 @@ export default function PrivacyPolicyPage() {
   const { t, isRTL, language } = useLanguage()
   const activeTrackers = getEnabledTrackersFromEnv()
 
-  if (language === 'id') {
+  if (language === 'id' || language === 'ms') {
+    const lang = language as 'id' | 'ms'
     const analyticsLine = buildAnalyticsLine(
-      'id',
+      lang,
       activeTrackers.map((tracker) => tracker.title),
     )
     return (
       <PolicyDocument
-        content={getPrivacyPolicyContent('id', analyticsLine)}
+        content={getPrivacyPolicyContent(lang, analyticsLine)}
         isRTL={isRTL}
         backLabel={t.shop.backToHome}
       />

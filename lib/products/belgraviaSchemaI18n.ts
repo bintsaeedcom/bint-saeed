@@ -66,6 +66,40 @@ const BELGRAVIA_FAQ_EN: ProductFaqItem[] = [
   },
 ]
 
+const BELGRAVIA_FAQ_MS: ProductFaqItem[] = [
+  {
+    question: 'Bolehkah Abaya Belgravia dipakai di luar Timur Tengah?',
+    answer:
+      'Sudah tentu. Berpunca daripada kraftangan Emirati, Abaya Belgravia direka untuk wanita yang bergerak antara budaya, bandar, dan majlis. Siluet terinspirasi Bisht yang abadi membolehkannya dipakai untuk majlis malam di London, acara di Paris, sambutan di Riyadh, atau kehidupan harian di Teluk.',
+  },
+  {
+    question: 'Bolehkah Abaya Belgravia diperibadikan?',
+    answer:
+      'Ya. Seperti semua abaya Bint Saeed, Abaya Belgravia boleh diperibadikan dengan nama, tarikh, atau mesej bermakna di dalam poket tersembunyi — butiran peribadi yang kekal dekat dengan pemakainya.',
+  },
+  {
+    question: 'Apakah Al Khous dan bagaimana ia tercermin pada Abaya Belgravia?',
+    answer:
+      'Al Khous ialah kraftangan tradisional Emirati berdasarkan tenunan pelepah palem. Hiasan tenunan tangan Abaya Belgravia terinspirasi warisan ini, menterjemahkan elemen tenunan pelepah palem ke dalam abaya mewah kontemporari sambil meraikan tradisi yang diwarisi merentasi generasi.',
+  },
+  {
+    question: 'Apakah yang membezakan Abaya Belgravia daripada abaya lain?',
+    answer:
+      'Abaya Belgravia dibezakan oleh hiasan tenunan tangan terinspirasi tenunan Al Khous, siluet terinspirasi Bisht yang santai, poket tersembunyi, lapisan penuh, dan pilihan penutup butang snap tersembunyi. Direka dan dihasilkan di Abu Dhabi, Emiriah Arab Bersatu, menggabungkan kraftangan budaya dengan keanggunan abadi.',
+  },
+  {
+    question: 'Mengapakah Abaya Belgravia terinspirasi Bisht?',
+    answer:
+      'Bisht ialah salah satu pakaian paling dikenali di Semenanjung Arab, lama dikaitkan dengan maruah, majlis, dan kraftangan. Abaya Belgravia mentafsirkan semula elemen siluet ini melalui lensa kontemporari — abaya depan terbuka yang menghormati inspirasinya sambil kekal relevan bagi cara berpakaian wanita hari ini.',
+  },
+  {
+    question:
+      'Adakah Abaya Belgravia sesuai untuk pemakaian harian, majlis malam, perkahwinan, dan acara khas?',
+    answer:
+      'Ya. Abaya Belgravia direka untuk keanggunan harian, majlis malam, pertemuan, perkahwinan, sambutan pertunangan, perhimpunan Aidilfitri, acara budaya, acara destinasi, dan majlis istimewa. Siluet mengalir terinspirasi Bisht dan hiasan tenunan tangan membolehkannya bergerak antara kehidupan GCC, perjalanan antarabangsa, dan acara formal.',
+  },
+]
+
 const BELGRAVIA_FAQ_ID: ProductFaqItem[] = [
   {
     question: 'Apakah Abaya Belgravia bisa dikenakan di luar Timur Tengah?',
@@ -136,12 +170,16 @@ export function getLocalizedBelgraviaSchemaFacts(
 
 export function getLocalizedBelgraviaFaq(slug: string, locale: AppLocale = 'en'): ProductFaqItem[] {
   if (!isBelgraviaSlug(slug)) return []
-  return locale === 'id' ? BELGRAVIA_FAQ_ID : BELGRAVIA_FAQ_EN
+  if (locale === 'id') return BELGRAVIA_FAQ_ID
+  if (locale === 'ms') return BELGRAVIA_FAQ_MS
+  return BELGRAVIA_FAQ_EN
 }
 
 /** Shared PDP + schema FAQ source of truth. */
 export function getBelgraviaPdpFaq(locale: AppLocale = 'en'): ProductFaqItem[] {
-  return locale === 'id' ? BELGRAVIA_FAQ_ID : BELGRAVIA_FAQ_EN
+  if (locale === 'id') return BELGRAVIA_FAQ_ID
+  if (locale === 'ms') return BELGRAVIA_FAQ_MS
+  return BELGRAVIA_FAQ_EN
 }
 
 export { BELGRAVIA_MATERIAL }
