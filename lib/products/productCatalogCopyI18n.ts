@@ -26,7 +26,7 @@ const ID_CATALOG_COPY: Record<string, CatalogFields> = {
     description:
       'Abaya blazer terstruktur dengan bahu tailored dan trim terinspirasi anyaman Khous tradisional serta warisan Emirati.',
     fabric: 'Crepe Jepang, benang bordir tonal',
-    measurements: 'Panjang: 140 cm (ukuran M).',
+    measurements: 'Panjang: 138 cm (ukuran M).',
   },
   'marylebone-abaya': {
     description: 'Abaya signature depan terbuka dengan lengan lebar untuk dilapisi di atas gaun atau set.',
@@ -111,9 +111,10 @@ const MS_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'kensington-abaya': {
     description:
-      'Abaya blazer berstruktur dengan bahu tailored dan hiasan terinspirasi tenunan Khous tradisional serta warisan Emirati.',
-    fabric: 'Crepe Jepun, benang sulaman tonal',
-    measurements: 'Panjang: 140 cm (saiz M).',
+      'Abaya blazer berstruktur dalam hitam pekat dengan bahu tailored dan hiasan simpai terinspirasi Al Khous — keyakinan melalui kesederhanaan, dihasilkan di Abu Dhabi.',
+    fabric:
+      'Luar: 80% polyester, 20% viscose; lapisan: 70% polyester, 30% viscose; simpai tenunan organza glitter hitam',
+    measurements: 'Panjang: 138 cm (saiz M).',
   },
   'marylebone-abaya': {
     description: 'Abaya signature depan terbuka dengan lengan lebar untuk dilapisi di atas gaun atau set.',

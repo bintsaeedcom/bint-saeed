@@ -2,6 +2,7 @@ import type { Product } from '@/data/products'
 import type { ProductPdpContent } from '@/data/productPdpContent'
 import { getProductSlug } from '@/lib/products/links'
 import { getBelgraviaPdpFaq } from '@/lib/products/belgraviaSchemaI18n'
+import { getKensingtonPdpFaq } from '@/lib/products/kensingtonSchemaI18n'
 import { buildVariantSku } from '@/lib/products/sku'
 
 type MayfairColorKey = 'deep-maroon' | 'black' | 'peach'
@@ -194,6 +195,48 @@ export function buildBelgraviaAbayaContentId(color?: string): ProductPdpContent 
   }
 }
 
+const KENSINGTON_COMPOSITION_DETAILS = [
+  'Luar: 80% Polyester, 20% Viscose',
+  'Lapisan: 70% Polyester, 30% Viscose',
+] as const
+
+export function buildKensingtonAbayaContentId(): ProductPdpContent {
+  return {
+    introParagraphs: [
+      'Abaya Kensington dirancang untuk wanita yang menghargai kepercayaan diri yang diekspresikan melalui kesederhanaan. Dibuat dalam hitam pekat dengan siluet memanjang yang bersih, ia menciptakan kehadiran melalui struktur, gerakan, dan proporsi — bukan ornamen.',
+      'Terinspirasi dari kepercayaan diri dan struktur pakaian luar yang dijahit rapi, Abaya Kensington menggabungkan kemudahan berpakaian tradisional dengan penampilan rapi blazer yang terpotong sempurna. Garis bersih di bahu dan tubuh menciptakan siluet yang terasa tenang, elegan, dan effortless dikenakan.',
+      'Trim bertekstur di dada dan manset mengambil inspirasi dari Al Khous, seni tradisional Emirati menganyam pelepah palem yang diwariskan lintas generasi. Diinterpretasikan melalui tenun organza glitter hitam yang halus, detail ini memperkenalkan kedalaman dan tekstur sambil tetap understated.',
+      'Dirancang untuk dilapisi dengan effortless di atas gaun, tailoring, busana acara, atau pakaian sehari-hari, ia bertransisi secara alami antara kehidupan harian, pertemuan bisnis, makan malam, pertemuan, perjalanan, dan acara khusus. Estetika abadinya memungkinkannya bergerak lintas negara, musim, dan bab kehidupan sambil tetap terhubung dengan kerajinan dan keanggunan yang menginspirasinya.',
+      'Berlapis penuh dengan kain krep lembut dan diselesaikan dengan dua saku samping tersembunyi, Abaya Kensington menyeimbangkan kepraktisan dengan kehalusan sambil mempertahankan siluet bersih yang elegan. Seperti semua abaya Bint Saeed, ia dapat dipersonalisasi dengan label interior tersembunyi berisi nama, tanggal, atau pesan bermakna — sangat berarti untuk hadiah dan perayaan.',
+      'Elegan, serba guna, dan diciptakan untuk dikenakan selama bertahun-tahun, Abaya Kensington dirancang untuk menemani wanita yang memakainya ke mana pun hidup membawanya.',
+    ],
+    productDetails: [
+      'Hitam Dalam',
+      'Leher bulat',
+      'Bantalan bahu ringan',
+      'Penutup kancing snap depan',
+      'Trim tenun khas Bint Saeed terinspirasi anyaman pelepah palem Al Khous tradisional',
+      'Dua saku samping tersembunyi',
+      'Lapisan kain krep lembut',
+      'Label personalisasi interior tersembunyi opsional',
+      'Panjang: 138 cm / 54,5 inci',
+      'Tinggi model: 155 cm / 61 inci',
+      'Model mengenakan ukuran XS',
+      'Dibuat di Abu Dhabi, Uni Emirat Arab',
+    ],
+    compositionDetails: [...KENSINGTON_COMPOSITION_DETAILS],
+    fitAndSizeDetails: [
+      'Ukuran tersedia: XS, S, M, L, XL',
+      'Dirancang untuk potongan terstruktur namun mengalir',
+      'Panjang: 138 cm / 54,5 inci',
+      'Tinggi model: 155 cm / 61 inci',
+      'Model mengenakan ukuran XS',
+    ],
+    careDetails: [...ABAYA_CARE_DETAILS],
+    faq: getKensingtonPdpFaq('id'),
+  }
+}
+
 function isMayfairKaftan(product: Product): boolean {
   const slug = getProductSlug(product).toLowerCase()
   return slug === 'mayfair-kaftan' || product.id === 'bs-002'
@@ -209,10 +252,16 @@ function isBelgraviaAbaya(product: Product): boolean {
   return slug === 'belgravia-abaya' || product.id === 'ab-006'
 }
 
+function isKensingtonAbaya(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'kensington-abaya' || product.id === 'ab-004'
+}
+
 /** Indonesian PDP copy for hero products; returns null for other slugs. */
 export function getProductPdpContentId(product: Product, color?: string): ProductPdpContent | null {
   if (isMayfairKaftan(product)) return buildMayfairKaftanContentId(color)
   if (isNothingHillKaftan(product)) return buildNothingHillKaftanContentId(color)
   if (isBelgraviaAbaya(product)) return buildBelgraviaAbayaContentId(color)
+  if (isKensingtonAbaya(product)) return buildKensingtonAbayaContentId()
   return null
 }

@@ -6,6 +6,8 @@ import { getProductSlug } from '@/lib/products/links'
 import { getProductSchemaFacts } from '@/lib/products/productSchemaMeta'
 import { buildVariantSku } from '@/lib/products/sku'
 import { getBelgraviaPdpFaq } from '@/lib/products/belgraviaSchemaI18n'
+import { getKensingtonPdpFaq } from '@/lib/products/kensingtonSchemaI18n'
+import { applyAbayaPdpStandards } from '@/lib/products/abayaPdpStandards'
 import { getPdpSizeOptions, productIsOneSizeOnly } from '@/lib/shopProductOptions'
 
 export type ProductPdpContent = {
@@ -275,6 +277,11 @@ function isNothingHillKaftan(product: Product): boolean {
   return slug === 'nothing-hill-kaftan' || product.id === 'cf-002'
 }
 
+function isKensingtonAbaya(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'kensington-abaya' || product.id === 'ab-004'
+}
+
 function isBelgraviaAbaya(product: Product): boolean {
   const slug = getProductSlug(product).toLowerCase()
   return slug === 'belgravia-abaya' || product.id === 'ab-006'
@@ -292,6 +299,48 @@ function normalizeBelgraviaColor(color?: string): BelgraviaColorKey {
   if (c.includes('navy')) return 'navy-blue'
   if (c.includes('black')) return 'deep-black'
   return 'deep-black'
+}
+
+const KENSINGTON_COMPOSITION_DETAILS = [
+  'Outer: 80% Polyester, 20% Viscose',
+  'Lining: 70% Polyester, 30% Viscose',
+] as const
+
+function buildKensingtonAbayaContent(): ProductPdpContent {
+  return {
+    introParagraphs: [
+      'The Kensington Abaya was designed for women who appreciate confidence expressed through simplicity. Crafted in deep black with a clean, elongated silhouette, it creates presence through structure, movement, and proportion rather than ornamentation.',
+      'Inspired by the confidence and structure of tailored outerwear, the Kensington Abaya combines the ease of traditional dressing with the polished appearance of a well-cut blazer. Clean lines through the shoulders and body create a silhouette that feels composed, elegant, and effortless to wear.',
+      'Textured trims across the chest and cuffs draw inspiration from Al Khous, the traditional Emirati art of palm frond weaving passed down through generations. Interpreted through a subtle black glitter organza weave, the detailing introduces depth and texture while remaining understated.',
+      'Designed to layer effortlessly over dresses, tailoring, occasionwear, or everyday attire, it transitions naturally between daily life, business meetings, dinners, gatherings, travel, and special occasions. Its timeless aesthetic allows it to move across countries, seasons, and chapters of life while remaining connected to the craftsmanship and elegance that inspired its creation.',
+      'Fully lined with a soft crepe lining and finished with two hidden side pockets, the Kensington Abaya balances practicality with refinement while maintaining a clean, elegant silhouette. Like all Bint Saeed abayas, it can be personalised with a hidden interior label featuring a name, date, or meaningful message, creating a more personal connection to the piece and making it especially meaningful for gifting.',
+      'Elegant, versatile, and created to be worn for years rather than seasons, the Kensington Abaya is designed to accompany the woman who wears it wherever life takes her.',
+    ],
+    productDetails: [
+      'Deep Black',
+      'Round neckline',
+      'Light shoulder padding',
+      'Front snap-button closure',
+      'Bint Saeed signature woven trim inspired by traditional Al Khous palm frond weaving',
+      'Two hidden side pockets',
+      'Soft crepe lining',
+      'Optional hidden interior personalisation label',
+      'Length: 138 cm / 54.5 inches',
+      'Model height: 155 cm / 61 inches',
+      'Model wears size XS',
+      'Made in Abu Dhabi, United Arab Emirates',
+    ],
+    compositionDetails: [...KENSINGTON_COMPOSITION_DETAILS],
+    fitAndSizeDetails: [
+      'Available sizes: XS, S, M, L, XL',
+      'Designed for a structured yet fluid fit',
+      'Length: 138 cm / 54.5 inches',
+      'Model height: 155 cm / 61 inches',
+      'Model wears size XS',
+    ],
+    careDetails: [...ABAYA_CARE_DETAILS],
+    faq: getKensingtonPdpFaq(),
+  }
 }
 
 const BELGRAVIA_COMPOSITION_DETAILS = [
@@ -391,6 +440,8 @@ function buildNothingHillKaftanContent(color?: string): ProductPdpContent {
  * PDP copy source of truth.
  * — Mayfair & Nothing Hill Kaftans use finalized reference copy (colour-aware).
  * — Belgravia Abaya uses finalized reference copy (colour-aware).
+ * — Hero abayas (Belgravia, Kensington): add your feature bullets in the builders below;
+ *   `applyAbayaPdpStandards` always appends “Custom length available upon request” — do not remove.
  * — All other products use the same topic layout as that page; replace bracketed lines when ready.
  */
 export function getProductPdpContent(
@@ -400,31 +451,37 @@ export function getProductPdpContent(
   const color = opts?.color?.trim() || product.colors[0]?.name
   const locale = opts?.locale ?? 'en'
 
+  let content: ProductPdpContent
+
   if (locale === 'id') {
     const idContent = getProductPdpContentId(product, color)
-    if (idContent) return idContent
+    if (idContent) {
+      content = idContent
+      return applyAbayaPdpStandards(product, content, locale)
+    }
   }
 
   if (locale === 'ms') {
     const msContent = getProductPdpContentMs(product, color)
-    if (msContent) return msContent
+    if (msContent) {
+      content = msContent
+      return applyAbayaPdpStandards(product, content, locale)
+    }
   }
 
   if (isMayfairKaftan(product)) {
-    return buildMayfairKaftanContent(color)
+    content = buildMayfairKaftanContent(color)
+  } else if (isNothingHillKaftan(product)) {
+    content = buildNothingHillKaftanContent(color)
+  } else if (isBelgraviaAbaya(product)) {
+    content = buildBelgraviaAbayaContent(color)
+  } else if (isKensingtonAbaya(product)) {
+    content = buildKensingtonAbayaContent()
+  } else if (product.category === 'Accessories') {
+    content = accessoryPlaceholderContent(product)
+  } else {
+    content = buildStructuredApparelContent(product, color)
   }
 
-  if (isNothingHillKaftan(product)) {
-    return buildNothingHillKaftanContent(color)
-  }
-
-  if (isBelgraviaAbaya(product)) {
-    return buildBelgraviaAbayaContent(color)
-  }
-
-  if (product.category === 'Accessories') {
-    return accessoryPlaceholderContent(product)
-  }
-
-  return buildStructuredApparelContent(product, color)
+  return applyAbayaPdpStandards(product, content, locale)
 }

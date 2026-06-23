@@ -20,10 +20,17 @@ import {
   isBelgraviaSlug,
 } from '@/lib/products/belgraviaSchemaI18n'
 import {
+  getLocalizedKensingtonFaq,
+  getLocalizedKensingtonSchemaFacts,
+  isKensingtonSlug,
+} from '@/lib/products/kensingtonSchemaI18n'
+import {
   buildAbayaProductKeywordVariants,
   getLocalizedAbayaSchemaKeywordTerms,
 } from '@/lib/products/abayaSchemaKeywordsI18n'
+import { SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
 import { getLocalizedBelgraviaExclusiveKeywords } from '@/lib/products/belgraviaSchemaKeywordsI18n'
+import { getLocalizedKensingtonExclusiveKeywords } from '@/lib/products/kensingtonSchemaKeywordsI18n'
 
 export type ProductFaqItem = {
   question: string
@@ -37,6 +44,7 @@ export type ProductSchemaFacts = {
   fit?: string
   maximumGarmentLength?: string
   modelHeight?: string
+  modelWears?: string
   lining?: string
   innerDress?: string
   closure?: string
@@ -68,12 +76,6 @@ const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
     closure: 'Concealed placket',
     stylingDetail: 'Traditional Al Talli trim',
     lining: 'Cotton lining',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    madeIn: DEFAULT_MADE_IN,
-  },
-  'kensington-abaya': {
-    fit: 'Structured blazer abaya with tailored shoulder',
-    stylingDetail: 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
     suitableFor: DEFAULT_SUITABLE_FOR,
     madeIn: DEFAULT_MADE_IN,
   },
@@ -162,6 +164,9 @@ export function getProductSchemaFacts(product: Product, locale: AppLocale = 'en'
   const belgraviaFacts = getLocalizedBelgraviaSchemaFacts(slug, locale)
   if (belgraviaFacts) return belgraviaFacts
 
+  const kensingtonFacts = getLocalizedKensingtonSchemaFacts(slug, locale)
+  if (kensingtonFacts) return kensingtonFacts
+
   const base = SLUG_FACTS[slug] ?? {}
   const fromMeasurements = extractMaxLength(product.measurements)
 
@@ -197,6 +202,10 @@ export function buildProductSchemaKeywords(
     for (const t of getLocalizedBelgraviaExclusiveKeywords(locale, colorName)) terms.add(t)
   }
 
+  if (isKensingtonSlug(slug)) {
+    for (const t of getLocalizedKensingtonExclusiveKeywords(locale, colorName)) terms.add(t)
+  }
+
   return [...terms].join(', ')
 }
 
@@ -226,6 +235,11 @@ export function buildProductAdditionalProperties(
     },
     {
       '@type': 'PropertyValue',
+      name: localizePropertyLabel('Manufacturer', locale),
+      value: SCHEMA_MANUFACTURER,
+    },
+    {
+      '@type': 'PropertyValue',
       name: localizePropertyLabel('Suitable For', locale),
       value: facts.suitableFor ?? suitableFor,
     },
@@ -238,6 +252,7 @@ export function buildProductAdditionalProperties(
     ['Fit', facts.fit],
     ['Maximum garment length', facts.maximumGarmentLength],
     ['Model height', facts.modelHeight],
+    ['Model wears', facts.modelWears],
     ['Lining', facts.lining],
     ['Inner dress', facts.innerDress],
     ['Closure', facts.closure],
@@ -345,6 +360,19 @@ export function getProductFaq(
   if (belgraviaFaq.length > 0) {
     const merged = [...belgraviaFaq]
     const seen = new Set(belgraviaFaq.map((item) => item.question.toLowerCase()))
+    for (const item of customFaq ?? []) {
+      if (!seen.has(item.question.toLowerCase())) {
+        merged.push(item)
+        seen.add(item.question.toLowerCase())
+      }
+    }
+    return merged
+  }
+
+  const kensingtonFaq = getLocalizedKensingtonFaq(slug, locale)
+  if (kensingtonFaq.length > 0) {
+    const merged = [...kensingtonFaq]
+    const seen = new Set(kensingtonFaq.map((item) => item.question.toLowerCase()))
     for (const item of customFaq ?? []) {
       if (!seen.has(item.question.toLowerCase())) {
         merged.push(item)

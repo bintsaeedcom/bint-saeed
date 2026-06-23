@@ -1,6 +1,5 @@
 import type { AppLocale } from '@/lib/i18n/routing'
-import { indonesiaImageAltFromEn } from '@/lib/i18n/indonesiaImageAltFromEn'
-import { malaysiaImageAltFromEn } from '@/lib/i18n/malaysiaImageAltFromEn'
+import { PRODUCT_IMAGE_ALT_LOCALE_ID_MS } from '@/lib/products/imageAltLocaleIdMs'
 
 /** Build a full locale map for one catalogue image alt (en + 10 prefix locales). */
 export function altLoc(
@@ -17,7 +16,7 @@ export function altLoc(
   id?: string,
   ms?: string,
 ): Record<AppLocale, string> {
-  return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: id ?? indonesiaImageAltFromEn(en), ms: ms ?? malaysiaImageAltFromEn(en) }
+  return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: id ?? en, ms: ms ?? en }
 }
 
 type AltEntry = { filename: string; alts: Record<AppLocale, string> }
@@ -252,6 +251,66 @@ const ALT_ENTRIES: AltEntry[] = [
       'Abaya Belgravia em azul-marinho, vista traseira. Abaya de designer da Bint Saeed Abu Dhabi, Emirados Árabes Unidos, destacando linhas limpas, caimento de comprimento total e acabamento tecido à mão inspirado na tradição emirati de tecelagem Khous.',
     ),
   },
+  {
+    filename: 'bint-saeed-kensington-abaya-black-front.webp',
+    alts: altLoc(
+      'Kensington Abaya luxury black abaya by Bint Saeed Abu Dhabi, United Arab Emirates, front view featuring a blazer-inspired silhouette, round neckline, and signature Al Khous-inspired woven trim detailing. Designed for women seeking elegant everyday dressing, businesswear, travel, and refined occasionwear. Made in Abu Dhabi, United Arab Emirates. Worldwide shipping.',
+      'عباءة Kensington عباءة سوداء فاخرة من Bint Saeed أبوظبي، الإمارات العربية المتحدة، منظر أمامي يبرز قصّة مستوحاة من البليزر، وخط عنق دائري، وتفاصيل الزخرفة المنسوجة المميزة المستوحاة من الخوص. صُممت للنساء اللواتي يبحثن عن أناقة يومية، وملابس العمل، والسفر، وأزياء المناسبات الراقية. صُنعت في أبوظبي، الإمارات العربية المتحدة. شحن عالمي.',
+      'Abaya Kensington, abaya noire de luxe par Bint Saeed Abou Dabi, Émirats arabes unis, vue de face mettant en valeur une silhouette inspirée du blazer, un col rond et un galon tissé signature inspiré d’Al Khous. Conçue pour les femmes en quête d’élégance au quotidien, de tenues professionnelles, de voyage et d’occasionwear raffiné. Fabriquée à Abou Dabi, Émirats arabes unis. Livraison mondiale.',
+      'Abaya Kensington, abaya nera di lusso di Bint Saeed Abu Dhabi, Emirati Arabi Uniti, vista frontale con silhouette ispirata al blazer, scollo tondo e finitura tessuta signature ispirata ad Al Khous. Pensata per donne che cercano eleganza quotidiana, abbigliamento business, viaggio e occasionwear raffinato. Realizzata ad Abu Dhabi, Emirati Arabi Uniti. Spedizione in tutto il mondo.',
+      'Abaya Kensington, abaya negra de lujo de Bint Saeed Abu Dabi, Emiratos Árabes Unidos, vista frontal con silueta inspirada en el blazer, escote redondo y detalle de ribete tejido distintivo inspirado en Al Khous. Diseñada para mujeres que buscan elegancia diaria, ropa de trabajo, viaje y occasionwear refinado. Hecha en Abu Dabi, Emiratos Árabes Unidos. Envío a todo el mundo.',
+      'Абайя Kensington, роскошная чёрная абайя от Bint Saeed Абу-Даби, Объединённые Арабские Эмираты, вид спереди с силуэтом в стиле блейзера, круглым вырезом и фирменной тканый отделкой, вдохновлённой Al Khous. Создана для женщин, ищущих элегантность на каждый день, деловой гардероб, путешествия и изысканный occasionwear. Сделано в Абу-Даби, ОАЭ. Доставка по всему миру.',
+      'Kensington 阿巴亚，奢华黑色阿巴亚，Bint Saeed阿布扎比、阿拉伯联合酋长国，正面视图呈现西装灵感廓形、圆领与标志性Al Khous灵感编织饰边细节。为追求日常优雅、商务着装、旅行与精致场合穿着的女性而设计。阿联酋阿布扎比制造。全球配送。',
+      'Kensington Abaya, luxuriöse schwarze Abaya von Bint Saeed Abu Dhabi, Vereinigte Arabische Emirate, Frontansicht mit blazer-inspirierter Silhouette, rundem Ausschnitt und charakteristischer Al-Khous-inspirierter Webbesatz-Detailierung. Für Frauen, die elegante Alltagsmode, Businesswear, Reisen und raffiniertes Occasionwear suchen. Hergestellt in Abu Dhabi, VAE. Weltweiter Versand.',
+      'Kensington abaya, luxe zwarte abaya van Bint Saeed Abu Dhabi, Verenigde Arabische Emiraten, vooraanzicht met blazer-geïnspireerd silhouet, ronde halslijn en kenmerkende Al Khous-geïnspireerde geweven afwerking. Ontworpen voor vrouwen die elegante dagelijkse stijl, businesswear, reizen en verfijnde occasionwear zoeken. Gemaakt in Abu Dhabi, VAE. Wereldwijde verzending.',
+      'Abaya Kensington, abaya preta de luxo da Bint Saeed Abu Dhabi, Emirados Árabes Unidos, vista frontal com silhueta inspirada no blazer, decote redondo e detalhe de acabamento tecido distintivo inspirado em Al Khous. Concebida para mulheres que procuram elegância quotidiana, roupa de trabalho, viagem e occasionwear refinado. Feita em Abu Dhabi, Emirados Árabes Unidos. Envio mundial.',
+    ),
+  },
+  {
+    filename: 'bint-saeed-kensington-abaya-black-side.webp',
+    alts: altLoc(
+      'Kensington Abaya designer black abaya by Bint Saeed Abu Dhabi, United Arab Emirates, side view showcasing a structured yet fluid silhouette, graceful movement, and signature Al Khous-inspired woven trim detailing. Contemporary luxury abaya designed in Abu Dhabi, United Arab Emirates. Worldwide shipping.',
+      'عباءة Kensington عباءة سوداء مصمّمة من Bint Saeed أبوظبي، الإمارات العربية المتحدة، منظر جانبي يبرز قصّة منظمة وانسيابية، وحركة رشيقة، وتفاصيل الزخرفة المنسوجة المميزة المستوحاة من الخوص. عباءة فاخرة معاصرة صُممت في أبوظبي، الإمارات العربية المتحدة. شحن عالمي.',
+      'Abaya Kensington, abaya noire de créateur par Bint Saeed Abou Dabi, Émirats arabes unis, vue de profil mettant en valeur une silhouette structurée et fluide, un mouvement gracieux et un galon tissé signature inspiré d’Al Khous. Abaya de luxe contemporaine conçue à Abou Dabi, Émirats arabes unis. Livraison mondiale.',
+      'Abaya Kensington, abaya nera designer di Bint Saeed Abu Dhabi, Emirati Arabi Uniti, vista laterale che mette in risalto una silhouette strutturata e fluida, movimento aggraziato e finitura tessuta signature ispirata ad Al Khous. Abaya di lusso contemporanea progettata ad Abu Dhabi, Emirati Arabi Uniti. Spedizione in tutto il mondo.',
+      'Abaya Kensington, abaya negra de diseñador de Bint Saeed Abu Dabi, Emiratos Árabes Unidos, vista lateral que muestra una silueta estructurada y fluida, movimiento elegante y detalle de ribete tejido distintivo inspirado en Al Khous. Abaya de lujo contemporánea diseñada en Abu Dabi, Emiratos Árabes Unidos. Envío a todo el mundo.',
+      'Абайя Kensington, дизайнерская чёрная абайя от Bint Saeed Абу-Даби, Объединённые Арабские Эмираты, вид сбоку с структурированным и плавным силуэтом, грациозным движением и фирменной тканый отделкой, вдохновлённой Al Khous. Современная роскошная абайя, созданная в Абу-Даби, ОАЭ. Доставка по всему миру.',
+      'Kensington 阿巴亚，设计师黑色阿巴亚，Bint Saeed阿布扎比、阿拉伯联合酋长国，侧面视图展现结构化而流畅的廓形、优雅动感与标志性Al Khous灵感编织饰边细节。当代奢华阿巴亚，阿布扎比设计。全球配送。',
+      'Kensington Abaya, Designer-Schwarz-Abaya von Bint Saeed Abu Dhabi, Vereinigte Arabische Emirate, Seitenansicht mit strukturierter und fließender Silhouette, anmutiger Bewegung und charakteristischer Al-Khous-inspirierter Webbesatz-Detailierung. Zeitgenössische Luxusabaya, entworfen in Abu Dhabi, VAE. Weltweiter Versand.',
+      'Kensington abaya, designer zwarte abaya van Bint Saeed Abu Dhabi, Verenigde Arabische Emiraten, zijaanzicht met gestructureerd en vloeiend silhouet, sierlijke beweging en kenmerkende Al Khous-geïnspireerde geweven afwerking. Eigentijdse luxe abaya ontworpen in Abu Dhabi, VAE. Wereldwijde verzending.',
+      'Abaya Kensington, abaya preta de designer da Bint Saeed Abu Dhabi, Emirados Árabes Unidos, vista lateral com silhueta estruturada e fluida, movimento gracioso e detalhe de acabamento tecido distintivo inspirado em Al Khous. Abaya de luxo contemporânea concebida em Abu Dhabi, Emirados Árabes Unidos. Envio mundial.',
+    ),
+  },
+  {
+    filename: 'bint-saeed-kensington-abaya-black-back.webp',
+    alts: altLoc(
+      'Kensington Abaya luxury black abaya by Bint Saeed Abu Dhabi, United Arab Emirates, back view highlighting clean tailoring, outerwear-inspired structure, and an elegant full-length silhouette. Contemporary designer abaya made in Abu Dhabi, United Arab Emirates. Worldwide shipping.',
+      'عباءة Kensington عباءة سوداء فاخرة من Bint Saeed أبوظبي، الإمارات العربية المتحدة، منظر خلفي يبرز الخياطة النظيفة، وبنية مستوحاة من الملابس الخارجية، وقصّة أنيقة بطول كامل. عباءة مصمّمة معاصرة صُنعت في أبوظبي، الإمارات العربية المتحدة. شحن عالمي.',
+      'Abaya Kensington, abaya noire de luxe par Bint Saeed Abou Dabi, Émirats arabes unis, vue de dos soulignant une coupe épurée, une structure inspirée de l’outerwear et une silhouette élégante pleine longueur. Abaya de créateur contemporaine fabriquée à Abou Dabi, Émirats arabes unis. Livraison mondiale.',
+      'Abaya Kensington, abaya nera di lusso di Bint Saeed Abu Dhabi, Emirati Arabi Uniti, vista posteriore che evidenzia sartoria pulita, struttura ispirata all’outerwear e silhouette elegante a tutta lunghezza. Abaya designer contemporanea realizzata ad Abu Dhabi, Emirati Arabi Uniti. Spedizione in tutto il mondo.',
+      'Abaya Kensington, abaya negra de lujo de Bint Saeed Abu Dabi, Emiratos Árabes Unidos, vista trasera que destaca sastrería limpia, estructura inspirada en outerwear y silueta elegante de largo completo. Abaya de diseñador contemporánea hecha en Abu Dabi, Emiratos Árabes Unidos. Envío a todo el mundo.',
+      'Абайя Kensington, роскошная чёрная абайя от Bint Saeed Абу-Даби, Объединённые Арабские Эмираты, вид сзади с чистым кроем, структурой в стиле верхней одежды и элегантным силуэтом во всю длину. Современная дизайнерская абайя, сделанная в Абу-Даби, ОАЭ. Доставка по всему миру.',
+      'Kensington 阿巴亚，奢华黑色阿巴亚，Bint Saeed阿布扎比、阿拉伯联合酋长国，背面视图凸显利落剪裁、外套灵感结构与优雅全长廓形。当代设计师阿巴亚，阿联酋阿布扎比制造。全球配送。',
+      'Kensington Abaya, luxuriöse schwarze Abaya von Bint Saeed Abu Dhabi, Vereinigte Arabische Emirate, Rückansicht mit klarer Schneiderarbeit, outerwear-inspirierter Struktur und eleganter Ganzkörpersilhouette. Zeitgenössische Designer-Abaya, hergestellt in Abu Dhabi, VAE. Weltweiter Versand.',
+      'Kensington abaya, luxe zwarte abaya van Bint Saeed Abu Dhabi, Verenigde Arabische Emiraten, achteraanzicht met strakke tailoring, outerwear-geïnspireerde structuur en elegant silhouet over volledige lengte. Eigentijdse designer abaya gemaakt in Abu Dhabi, VAE. Wereldwijde verzending.',
+      'Abaya Kensington, abaya preta de luxo da Bint Saeed Abu Dhabi, Emirados Árabes Unidos, vista traseira destacando alfaiataria limpa, estrutura inspirada em outerwear e silhueta elegante de comprimento total. Abaya de designer contemporânea feita em Abu Dhabi, Emirados Árabes Unidos. Envio mundial.',
+    ),
+  },
+  {
+    filename: 'bint-saeed-kensington-abaya-black-cuff-close-up.webp',
+    alts: altLoc(
+      'Close-up of the Kensington Abaya cuff by Bint Saeed Abu Dhabi, United Arab Emirates, featuring signature woven trim inspired by Al Khous, the traditional Emirati art of palm frond weaving, interpreted through a refined black glitter organza weave. Designed in Abu Dhabi, United Arab Emirates. Worldwide shipping.',
+      'لقطة مقرّبة لكم عباءة Kensington من Bint Saeed أبوظبي، الإمارات العربية المتحدة، تبرز الزخرفة المنسوجة المميزة المستوحاة من الخوص، فن الإماراتي التقليدي في نسيج سعف النخيل، المفسّر عبر نسيج أورغانزا أسود لامع راقٍ. صُممت في أبوظبي، الإمارات العربية المتحدة. شحن عالمي.',
+      'Gros plan du poignet de l’Abaya Kensington par Bint Saeed Abou Dabi, Émirats arabes unis, mettant en valeur un galon tissé signature inspiré d’Al Khous, art émirati traditionnel du tissage des palmes, interprété par un tissage organza noir pailleté raffiné. Conçue à Abou Dabi, Émirats arabes unis. Livraison mondiale.',
+      'Primo piano del polsino dell’Abaya Kensington di Bint Saeed Abu Dhabi, Emirati Arabi Uniti, con finitura tessuta signature ispirata ad Al Khous, arte tradizionale emiratina della tessitura delle fronde di palma, interpretata con un raffinato tessuto organza nero glitter. Progettata ad Abu Dhabi, Emirati Arabi Uniti. Spedizione in tutto il mondo.',
+      'Primer plano del puño de la Abaya Kensington de Bint Saeed Abu Dabi, Emiratos Árabes Unidos, con ribete tejido distintivo inspirado en Al Khous, arte tradicional emiratí del tejido de hojas de palma, interpretado mediante un refinado tejido de organza negra con brillo. Diseñada en Abu Dabi, Emiratos Árabes Unidos. Envío a todo el mundo.',
+      'Крупный план манжеты абайи Kensington от Bint Saeed Абу-Даби, Объединённые Арабские Эмираты, с фирменной тканый отделкой, вдохновлённой Al Khous — традиционным эмиратским искусством плетения пальмовых листьев, в исполнении из утончённого чёрного глиттер-органзы. Создано в Абу-Даби, ОАЭ. Доставка по всему миру.',
+      'Kensington 阿巴亚袖口特写，Bint Saeed阿布扎比、阿拉伯联合酋长国，展现标志性编织饰边，灵感源自阿联酋传统棕榈叶编织艺术Al Khous，以精致黑色闪粉欧根纱织法呈现。阿布扎比设计。全球配送。',
+      'Nahaufnahme der Manschette der Kensington Abaya von Bint Saeed Abu Dhabi, Vereinigte Arabische Emirate, mit charakteristischem Webbesatz inspiriert von Al Khous, der traditionellen emiratischen Kunst des Palmwedel-Webens, interpretiert durch ein raffiniertes schwarzes Glitzer-Organza-Gewebe. Entworfen in Abu Dhabi, VAE. Weltweiter Versand.',
+      'Close-up van de mouw van de Kensington abaya van Bint Saeed Abu Dhabi, Verenigde Arabische Emiraten, met kenmerkende geweven afwerking geïnspireerd op Al Khous, de traditionele Emiratische kunst van palmbladweven, geïnterpreteerd in een verfijnd zwart glitter organza-weefsel. Ontworpen in Abu Dhabi, VAE. Wereldwijde verzending.',
+      'Close-up da manga da Abaya Kensington da Bint Saeed Abu Dhabi, Emirados Árabes Unidos, com acabamento tecido distintivo inspirado em Al Khous, a arte tradicional emirati de tecelagem de folhas de palmeira, interpretado num refinado tecido de organza preta com brilho. Concebida em Abu Dhabi, Emirados Árabes Unidos. Envio mundial.',
+    ),
+  },
 ]
 
 export const PRODUCT_IMAGE_ALT_I18N: Record<string, Record<AppLocale, string>> = Object.fromEntries(
@@ -264,6 +323,9 @@ export function getLocalizedProductImageAltOverride(
 ): string | undefined {
   const row = PRODUCT_IMAGE_ALT_I18N[filename]
   if (!row) return undefined
+  const native = PRODUCT_IMAGE_ALT_LOCALE_ID_MS[filename]
+  if (locale === 'id' && native?.id) return native.id
+  if (locale === 'ms' && native?.ms) return native.ms
   return row[locale] ?? row.en
 }
 

@@ -2,6 +2,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 import type { ProductFaqItem, ProductSchemaFacts } from '@/lib/products/productSchemaMeta'
 import { getLocalizedAbayaSchemaKeywordTerms } from '@/lib/products/abayaSchemaKeywordsI18n'
+import { getSharedAbayaSchemaAudience } from '@/lib/products/abayaSchemaShared'
 import { getLocalizedBelgraviaExclusiveKeywords } from '@/lib/products/belgraviaSchemaKeywordsI18n'
 
 export const BELGRAVIA_SLUG = 'belgravia-abaya'
@@ -10,7 +11,13 @@ const BELGRAVIA_MATERIAL =
   'Outer: Light crepe blend (80% polyester, 20% viscose); lining (70% polyester, 30% viscose)'
 
 const BELGRAVIA_AUDIENCE_EN =
-  'Women seeking luxury abayas, contemporary outerwear, elegant occasion wear, cultural craftsmanship, international daily dressing, and refined pieces designed in Abu Dhabi, United Arab Emirates.'
+  `${getSharedAbayaSchemaAudience('en').slice(0, -1)}, Bisht-inspired abayas, elegant occasion wear, cultural craftsmanship, international occasion wear, and destination dressing across the Gulf, Europe, and beyond.`
+
+const BELGRAVIA_AUDIENCE_ID =
+  `${getSharedAbayaSchemaAudience('id').slice(0, -1)}, abaya terinspirasi Bisht, busana acara yang elegan, kerajinan budaya, busana acara internasional, dan penampilan destinasi di seluruh Teluk, Eropa, dan seterusnya.`
+
+const BELGRAVIA_AUDIENCE_MS =
+  `${getSharedAbayaSchemaAudience('ms').slice(0, -1)}, abaya terinspirasi Bisht, pakaian majlis yang anggun, kraftangan budaya, pakaian majlis antarabangsa, dan pemakaian destinasi di seluruh Teluk, Eropah, dan seterusnya.`
 
 const BELGRAVIA_FACTS_EN: Omit<ProductSchemaFacts, 'faq' | 'madeIn'> = {
   productType: 'Bisht-inspired abaya',
@@ -30,6 +37,46 @@ const BELGRAVIA_FACTS_EN: Omit<ProductSchemaFacts, 'faq' | 'madeIn'> = {
   material: BELGRAVIA_MATERIAL,
   suitableFor:
     'Luxury travel, everyday elegance, gatherings, dinners, weddings, engagement celebrations, Eid gatherings, cultural occasions, destination events, international occasion wear, and contemporary daily dressing across the Gulf, Europe, and beyond.',
+}
+
+const BELGRAVIA_FACTS_ID: Omit<ProductSchemaFacts, 'faq' | 'madeIn'> = {
+  productType: 'Abaya terinspirasi Bisht',
+  productCategory: 'Abaya, Pakaian Luar, Jubah, Rompi, Jaket',
+  neckline: 'Abaya depan terbuka terinspirasi Bisht',
+  fit: 'Siluet santai terinspirasi Bisht dengan potongan mengalir, dirancang untuk gerakan yang anggun, lapisan yang elegan, dan kenyamanan sehari-hari.',
+  maximumGarmentLength: '138 cm / 54,5 inci',
+  modelHeight: '155 cm / 61 inci',
+  closure: 'Konstruksi depan terbuka. Pilihan penutup kancing snap tersembunyi tersedia atas permintaan.',
+  pockets: 'Saku samping tersembunyi',
+  lining: 'Berlapis penuh untuk kenyamanan dan tampilan yang rapi.',
+  personalisation: 'Personalisasi tersedia di dalam saku tersembunyi dengan nama, tanggal, atau pesan bermakna.',
+  trim: 'Trim tenun tangan terinspirasi Al Khous / Khous, seni tradisional Emirati dalam menganyam pelepah palem.',
+  stylingDetail:
+    'Siluet abaya terinspirasi Bisht dengan trim tenun tangan terinspirasi Khous, penyelesaian bersih, saku tersembunyi, lapisan penuh, dan pilihan penutup kancing snap tersembunyi.',
+  care: 'Hanya cuci kering profesional.',
+  material: BELGRAVIA_MATERIAL,
+  suitableFor:
+    'Perjalanan mewah, keanggunan sehari-hari, pertemuan, makan malam, pernikahan, perayaan pertunangan, pertemuan Idulfitri, acara budaya, acara destinasi, busana acara internasional, dan penampilan harian kontemporer di seluruh Teluk, Eropa, dan seterusnya.',
+}
+
+const BELGRAVIA_FACTS_MS: Omit<ProductSchemaFacts, 'faq' | 'madeIn'> = {
+  productType: 'Abaya terinspirasi Bisht',
+  productCategory: 'Abaya, Pakaian Luar, Jubah, Vest, Jaket',
+  neckline: 'Abaya depan terbuka terinspirasi Bisht',
+  fit: 'Siluet santai terinspirasi Bisht dengan potongan mengalir, direka untuk pergerakan yang anggun, lapisan yang elegan, dan keselesaan harian.',
+  maximumGarmentLength: '138 cm / 54.5 inci',
+  modelHeight: '155 cm / 61 inci',
+  closure: 'Rekaan depan terbuka. Pilihan penutup butang snap tersembunyi tersedia atas permintaan.',
+  pockets: 'Poket sisi tersembunyi',
+  lining: 'Berlapis penuh untuk keselesaan dan kemasan yang halus.',
+  personalisation: 'Personalisasi tersedia di dalam poket tersembunyi dengan nama, tarikh, atau mesej bermakna.',
+  trim: 'Trim tenunan tangan terinspirasi Al Khous / Khous, seni tradisional Emirati dalam menenun pelepah palem.',
+  stylingDetail:
+    'Siluet abaya terinspirasi Bisht dengan trim tenunan tangan terinspirasi Khous, kemasan bersih, poket tersembunyi, lapisan penuh, dan pilihan penutup butang snap tersembunyi.',
+  care: 'Basuh kering profesional sahaja.',
+  material: BELGRAVIA_MATERIAL,
+  suitableFor:
+    'Perjalanan mewah, keanggunan harian, pertemuan, majlis makan malam, perkahwinan, perayaan pertunangan, perhimpunan Aidilfitri, acara budaya, acara destinasi, pakaian majlis antarabangsa, dan pemakaian harian kontemporari di seluruh Teluk, Eropah, dan seterusnya.',
 }
 
 const BELGRAVIA_FAQ_EN: ProductFaqItem[] = [
@@ -94,9 +141,9 @@ const BELGRAVIA_FAQ_MS: ProductFaqItem[] = [
   },
   {
     question:
-      'Adakah Abaya Belgravia sesuai untuk pemakaian harian, majlis malam, perkahwinan, dan acara khas?',
+      'Adakah Abaya Belgravia sesuai untuk pemakaian harian, majlis makan malam, perkahwinan, dan acara khas?',
     answer:
-      'Ya. Abaya Belgravia direka untuk keanggunan harian, majlis malam, pertemuan, perkahwinan, sambutan pertunangan, perhimpunan Aidilfitri, acara budaya, acara destinasi, dan majlis istimewa. Siluet mengalir terinspirasi Bisht dan hiasan tenunan tangan membolehkannya bergerak antara kehidupan GCC, perjalanan antarabangsa, dan acara formal.',
+      'Ya. Abaya Belgravia direka untuk keanggunan harian, majlis makan malam, pertemuan, perkahwinan, sambutan pertunangan, perhimpunan Aidilfitri, acara budaya, acara destinasi, dan majlis istimewa. Siluet mengalir terinspirasi Bisht dan hiasan tenunan tangan membolehkannya bergerak antara kehidupan GCC, perjalanan antarabangsa, dan acara formal.',
   },
 ]
 
@@ -130,7 +177,7 @@ const BELGRAVIA_FAQ_ID: ProductFaqItem[] = [
     question:
       'Apakah Abaya Belgravia cocok untuk pemakaian harian, makan malam, pernikahan, dan acara khusus?',
     answer:
-      'Ya. Abaya Belgravia dirancang untuk keanggunan sehari-hari, makan malam, pertemuan, pernikahan, perayaan tunangan, pertemuan Id, acara budaya, acara destinasi, dan acara khusus. Siluet mengalir terinspirasi Bisht dan trim tenun tangan memungkinkannya bergerak antara kehidupan GCC, perjalanan internasional, dan acara formal.',
+      'Ya. Abaya Belgravia dirancang untuk keanggunan sehari-hari, makan malam, pertemuan, pernikahan, perayaan tunangan, pertemuan Idulfitri, acara budaya, acara destinasi, dan acara khusus. Siluet mengalir terinspirasi Bisht dan trim tenun tangan memungkinkannya bergerak antara kehidupan GCC, perjalanan internasional, dan acara formal.',
   },
 ]
 
@@ -138,7 +185,9 @@ export function isBelgraviaSlug(slug: string): boolean {
   return slug.toLowerCase() === BELGRAVIA_SLUG
 }
 
-export function getBelgraviaSchemaAudience(_locale: AppLocale = 'en'): string {
+export function getBelgraviaSchemaAudience(locale: AppLocale = 'en'): string {
+  if (locale === 'id') return BELGRAVIA_AUDIENCE_ID
+  if (locale === 'ms') return BELGRAVIA_AUDIENCE_MS
   return BELGRAVIA_AUDIENCE_EN
 }
 
@@ -158,9 +207,23 @@ export { getLocalizedAbayaSchemaKeywordTerms } from '@/lib/products/abayaSchemaK
 
 export function getLocalizedBelgraviaSchemaFacts(
   slug: string,
-  _locale: AppLocale = 'en',
+  locale: AppLocale = 'en',
 ): ProductSchemaFacts | null {
   if (!isBelgraviaSlug(slug)) return null
+  if (locale === 'id') {
+    return {
+      madeIn: LOCALE_GEO.id.madeIn,
+      ...BELGRAVIA_FACTS_ID,
+      faq: BELGRAVIA_FAQ_ID,
+    }
+  }
+  if (locale === 'ms') {
+    return {
+      madeIn: LOCALE_GEO.ms.madeIn,
+      ...BELGRAVIA_FACTS_MS,
+      faq: BELGRAVIA_FAQ_MS,
+    }
+  }
   return {
     madeIn: LOCALE_GEO.en.madeIn,
     ...BELGRAVIA_FACTS_EN,

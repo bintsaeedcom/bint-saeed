@@ -64,6 +64,13 @@ const HERITAGE_META_ID: Record<HeritageCraft, string> = {
     'Trim Al Talli tradisional dan kerajinan warisan Emirati. Fashion mewah Abu Dhabi dari merek Emirati.',
 }
 
+const HERITAGE_META_MS: Record<HeritageCraft, string> = {
+  khous:
+    'Hiasan tenunan tangan terinspirasi tradisi tenunan Khous Emirati. Dihasilkan di Abu Dhabi — fesyen mewah daripada jenama Emirati yang meraikan budaya UAE.',
+  'al-talli':
+    'Hiasan Al Talli tradisional dan kraftangan warisan Emirati. Fesyen mewah Abu Dhabi daripada jenama Emirati.',
+}
+
 const HERITAGE_SCHEMA_KEYWORDS_EN = {
   default:
     'Bint Saeed, Emirati brand, Abu Dhabi culture, luxury abaya, UAE fashion',
@@ -118,9 +125,37 @@ const HERITAGE_SCHEMA_KEYWORDS_ID = {
   ].join(', '),
 } as const
 
+const HERITAGE_SCHEMA_KEYWORDS_MS = {
+  default:
+    'Bint Saeed, jenama Emirati, budaya Abu Dhabi, abaya mewah, fesyen UAE',
+  khous: [
+    'warisan Emirati',
+    'hiasan tenunan tangan',
+    'dihasilkan di Abu Dhabi',
+    'budaya Emirati',
+    'budaya Abu Dhabi',
+    'jenama Emirati',
+    'Bint Saeed',
+    'abaya mewah',
+    'set mewah',
+    'fesyen UAE',
+  ].join(', '),
+  'al-talli': [
+    'warisan Emirati',
+    'Al Talli',
+    'sulaman Talli',
+    'budaya Emirati',
+    'budaya Abu Dhabi',
+    'jenama Emirati',
+    'Bint Saeed',
+    'fesyen UAE',
+  ].join(', '),
+} as const
+
 function heritageMetaForLocale(locale: AppLocale, craft: HeritageCraft): string {
   if (locale === 'ar') return HERITAGE_META_AR[craft]
   if (locale === 'id') return HERITAGE_META_ID[craft]
+  if (locale === 'ms') return HERITAGE_META_MS[craft]
   return HERITAGE_META_EN[craft]
 }
 
@@ -137,7 +172,12 @@ export function getHeritageSchemaKeywords(
   locale: AppLocale = 'en',
 ): string | undefined {
   const craft = getHeritageCraft(slug)
-  const keywords = locale === 'id' ? HERITAGE_SCHEMA_KEYWORDS_ID : HERITAGE_SCHEMA_KEYWORDS_EN
+  const keywords =
+    locale === 'id'
+      ? HERITAGE_SCHEMA_KEYWORDS_ID
+      : locale === 'ms'
+        ? HERITAGE_SCHEMA_KEYWORDS_MS
+        : HERITAGE_SCHEMA_KEYWORDS_EN
 
   if (!craft) return keywords.default
   return keywords[craft]
@@ -209,6 +249,11 @@ export function buildHeritageRichDescription(
   if (!craft) {
     if (locale === 'id') {
       return `${trimmed} Bint Saeed — merek mewah Emirati dari Abu Dhabi, UEA.`
+        .replace(/\s+/g, ' ')
+        .trim()
+    }
+    if (locale === 'ms') {
+      return `${trimmed} Bint Saeed — jenama mewah Emirati dari Abu Dhabi, UAE.`
         .replace(/\s+/g, ' ')
         .trim()
     }

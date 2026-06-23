@@ -18,6 +18,8 @@ import {
 } from '@/lib/products/productSchemaMeta'
 import { getKaftanPageSeo, getKaftanSchemaAudience, isKaftanSlug } from '@/lib/products/kaftanSchemaI18n'
 import { getBelgraviaSchemaAudience, isBelgraviaSlug } from '@/lib/products/belgraviaSchemaI18n'
+import { getKensingtonSchemaAudience, isKensingtonSlug } from '@/lib/products/kensingtonSchemaI18n'
+import { getSharedAbayaSchemaAudience, SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
@@ -96,7 +98,7 @@ function buildSchemaDescription(
 function schemaManufacturer() {
   return {
     '@type': 'Organization' as const,
-    name: 'Bint Saeed, Abu Dhabi, UAE',
+    name: SCHEMA_MANUFACTURER,
     address: {
       '@type': 'PostalAddress' as const,
       addressLocality: 'Abu Dhabi',
@@ -105,12 +107,16 @@ function schemaManufacturer() {
   }
 }
 
-function schemaAudience(locale: AppLocale, slug: string) {
+function schemaAudience(locale: AppLocale, slug: string, product: Product) {
   const audienceType = isKaftanSlug(slug)
     ? getKaftanSchemaAudience(locale)
     : isBelgraviaSlug(slug)
       ? getBelgraviaSchemaAudience(locale)
-      : getSchemaAudienceType(locale)
+      : isKensingtonSlug(slug)
+        ? getKensingtonSchemaAudience(locale)
+        : product.category === 'Abayas'
+          ? getSharedAbayaSchemaAudience(locale)
+          : getSchemaAudienceType(locale)
 
   return {
     '@type': 'PeopleAudience' as const,
@@ -138,7 +144,7 @@ function schemaSharedFields(
     },
     additionalProperty: buildProductAdditionalProperties(product, facts, locale),
     manufacturer: schemaManufacturer(),
-    audience: schemaAudience(locale, slug),
+    audience: schemaAudience(locale, slug, product),
     ...(lang ? { inLanguage: lang } : {}),
   }
 }

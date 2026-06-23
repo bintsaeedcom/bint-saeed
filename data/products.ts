@@ -444,11 +444,12 @@ export const products: Product[] = [
     name: 'Kensington Abaya',
     price: 2899,
     description:
-      'Structured blazer abaya with a tailored shoulder and trim inspired by traditional Khous weaving and Emirati heritage.',
-    fabric: 'Japanese crepe, tonal embroidery thread',
-    measurements: 'Length: 140cm (size M).',
+      'Structured blazer abaya in deep black with tailored shoulders and Al Khous–inspired braid detailing — confidence through simplicity, made in Abu Dhabi.',
+    fabric:
+      'Outer: 80% polyester, 20% viscose; lining: 70% polyester, 30% viscose; signature woven braid in black glitter organza',
+    measurements: 'Length: 138cm (size M). Available in custom lengths upon request.',
     images: orderedProductGallery('kensington-abaya'),
-    colors: [{ name: 'Black', hex: '#1a1a1a' }],
+    colors: [{ name: 'Deep Black', hex: '#1a1a1a' }],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     category: 'Abayas',
   },

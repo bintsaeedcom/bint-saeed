@@ -2,8 +2,8 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { BRAND_NAME } from '@/lib/i18n/brandProperNouns'
 import type { Product } from '@/data/products'
 import { resolveProductSku } from '@/lib/products/sku'
-import { indonesiaKeywordFromEn } from '@/lib/i18n/indonesiaKeywordFromEn'
-import { malaysiaKeywordFromEn } from '@/lib/i18n/malaysiaKeywordFromEn'
+import { SHARED_ABAYA_KEYWORDS_ID } from '@/lib/products/abayaSchemaKeywordsId'
+import { SHARED_ABAYA_KEYWORDS_MS } from '@/lib/products/abayaSchemaKeywordsMs'
 
 function kw(
   en: string,
@@ -16,10 +16,8 @@ function kw(
   de: string,
   nl: string,
   pt: string,
-  id?: string,
-  ms?: string,
 ): Record<AppLocale, string> {
-  return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: id ?? indonesiaKeywordFromEn(en), ms: ms ?? malaysiaKeywordFromEn(en) }
+  return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: en, ms: en }
 }
 
 type KwRow = [string, string, string, string, string, string, string, string, string, string]
@@ -34,8 +32,34 @@ function pickLocale(rows: Record<AppLocale, string>[], locale: AppLocale): strin
   return rows.map((r) => r[locale])
 }
 
-const ABAYA_TYPE = kw('abaya', 'عباية', 'abaya', 'abaya', 'abaya', 'абайя', '阿巴亚', 'Abaya', 'abaya', 'abaya')
-const LUXURY_WORD = kw('luxury', 'فاخر', 'luxe', 'lusso', 'lujo', 'роскошный', '奢华', 'Luxus', 'luxe', 'luxo')
+const ABAYA_TYPE: Record<AppLocale, string> = {
+  en: 'abaya',
+  ar: 'عباية',
+  fr: 'abaya',
+  it: 'abaya',
+  es: 'abaya',
+  ru: 'абайя',
+  zh: '阿巴亚',
+  de: 'Abaya',
+  nl: 'abaya',
+  pt: 'abaya',
+  id: 'abaya',
+  ms: 'abaya',
+}
+const LUXURY_WORD: Record<AppLocale, string> = {
+  en: 'luxury',
+  ar: 'فاخر',
+  fr: 'luxe',
+  it: 'lusso',
+  es: 'lujo',
+  ru: 'роскошный',
+  zh: '奢华',
+  de: 'Luxus',
+  nl: 'luxe',
+  pt: 'luxo',
+  id: 'mewah',
+  ms: 'mewah',
+}
 
 const SHARED_ABAYA_KEYWORD_ROWS: KwRow[] = [
   ['Luxury Abaya', 'عباية فاخرة', 'Abaya de luxe', 'Abaya di lusso', 'Abaya de lujo', 'Роскошная абайя', '奢华阿巴亚', 'Luxus-Abaya', 'Luxe abaya', 'Abaya de luxo'],
@@ -125,11 +149,26 @@ const SHARED_ABAYA_KEYWORD_ROWS: KwRow[] = [
   ['Abu Dhabi heritage', 'تراث أبوظبي', 'Patrimoine Abou Dabi', 'Eredità Abu Dhabi', 'Patrimonio Abu Dabi', 'Наследие Абу-Даби', '阿布扎比传承', 'Erbe Abu Dhabi', 'Abu Dhabi erfgoed', 'Património Abu Dhabi'],
   ['international abaya', 'عباية عالمية', 'abaya internationale', 'abaya internazionale', 'abaya internacional', 'международная абайя', '国际阿巴亚', 'internationale Abaya', 'internationale abaya', 'abaya internacional'],
   ['luxury Gulf fashion', 'أزياء خليجية فاخرة', 'mode du Golfe de luxe', 'moda del Golfo di lusso', 'moda del Golfo de lujo', 'роскошная мода Персидского залива', '奢华海湾时尚', 'Luxus-Golf-Mode', 'luxe Golf mode', 'moda do Golfo de luxo'],
+  ['long blazer', 'بليزر طويل', 'blazer long', 'blazer lungo', 'blazer largo', 'длинный блейзер', '长款西装', 'langer Blazer', 'lange blazer', 'blazer comprido'],
+  ["women's long blazer", 'بليزر طويل نسائي', 'blazer long femme', 'blazer lungo donna', 'blazer largo mujer', 'женский длинный блейзер', '女士长款西装', 'langer Damenblazer', 'lange damesblazer', 'blazer comprido feminino'],
+  ['structured long blazer', 'بليزر طويل منظّم', 'blazer long structuré', 'blazer lungo strutturato', 'blazer largo estructurado', 'структурированный длинный блейзер', '结构化长款西装', 'strukturierter langer Blazer', 'gestructureerde lange blazer', 'blazer comprido estruturado'],
+  ['modest long blazer', 'بليزر طويل محتشم', 'blazer long modeste', 'blazer lungo modesto', 'blazer largo modesto', 'скромный длинный блейзер', '端庄长款西装', 'bescheidener langer Blazer', 'bescheiden lange blazer', 'blazer comprido modesto'],
+  ['luxury long blazer', 'بليزر طويل فاخر', 'blazer long de luxe', 'blazer lungo di lusso', 'blazer largo de lujo', 'роскошный длинный блейзер', '奢华长款西装', 'luxuriöser langer Blazer', 'luxe lange blazer', 'blazer comprido de luxo'],
+  ['contemporary blazer abaya', 'عباية بليزر معاصرة', 'abaya blazer contemporaine', 'abaya blazer contemporanea', 'abaya blazer contemporánea', 'современная абайя-блейзер', '当代西装阿巴亚', 'zeitgenössische Blazer-Abaya', 'eigentijdse blazer abaya', 'abaya blazer contemporânea'],
+  ['black abaya for dinners', 'عباية سوداء للعشاء', 'abaya noire pour dîners', 'abaya nera per cene', 'abaya negra para cenas', 'чёрная абайя для ужинов', '晚宴黑色阿巴亚', 'schwarze Abaya für Abendessen', 'zwarte abaya voor diners', 'abaya preta para jantares'],
+  ['black abaya for work', 'عباية سوداء للعمل', 'abaya noire pour le travail', 'abaya nera per il lavoro', 'abaya negra para el trabajo', 'чёрная абайя для работы', '通勤黑色阿巴亚', 'schwarze Abaya für die Arbeit', 'zwarte abaya voor werk', 'abaya preta para trabalho'],
+  ['black abaya for business', 'عباية سوداء للأعمال', 'abaya noire business', 'abaya nera business', 'abaya negra de negocios', 'деловая чёрная абайя', '商务黑色阿巴亚', 'schwarze Business-Abaya', 'zwarte business abaya', 'abaya preta business'],
+  ['GCC business women fashion', 'أزياء سيدات الأعمال في الخليج', 'mode femmes d’affaires GCC', 'moda donne business GCC', 'moda mujeres de negocios GCC', 'мода деловых женщин GCC', '海湾职业女性时尚', 'GCC-Business-Frauenmode', 'GCC business women mode', 'moda mulheres de negócios GCC'],
+  ['expat fashion GCC', 'أزياء المغتربين في الخليج', 'mode expat GCC', 'moda expat GCC', 'moda expat GCC', 'мода экспатов GCC', '海湾外籍人士时尚', 'Expat-Mode GCC', 'expat mode GCC', 'moda expat GCC'],
+  ['modest fashion GCC', 'أزياء محتشمة الخليج', 'mode modeste GCC', 'moda modesta GCC', 'moda modesta GCC', 'скромная мода GCC', '海湾端庄时尚', 'bescheidene Mode GCC', 'bescheiden mode GCC', 'moda modesta GCC'],
+  ['black abaya for travel', 'عباية سوداء للسفر', 'abaya noire de voyage', 'abaya nera da viaggio', 'abaya negra de viaje', 'чёрная дорожная абайя', '旅行黑色阿巴亚', 'schwarze Reise-Abaya', 'zwarte reisabaya', 'abaya preta de viagem'],
 ]
 const SHARED_ABAYA_KEYWORD_I18N = rowsToKw(SHARED_ABAYA_KEYWORD_ROWS)
 
 /** Flat deduplicated list of shared abaya schema keywords for a locale. */
 export function getLocalizedAbayaSchemaKeywordTerms(locale: AppLocale): string[] {
+  if (locale === 'id') return [...SHARED_ABAYA_KEYWORDS_ID]
+  if (locale === 'ms') return [...SHARED_ABAYA_KEYWORDS_MS]
   const terms = new Set<string>()
   for (const row of SHARED_ABAYA_KEYWORD_I18N) {
     terms.add(row[locale])
