@@ -3,6 +3,11 @@ import type { ProductPdpContent } from '@/data/productPdpContent'
 import { getProductSlug } from '@/lib/products/links'
 import { getBelgraviaPdpFaq } from '@/lib/products/belgraviaSchemaI18n'
 import { getKensingtonPdpFaq } from '@/lib/products/kensingtonSchemaI18n'
+import { getKnightsbridgePdpFaq } from '@/lib/products/knightsbridgeSchemaI18n'
+import {
+  getKnightsbridgeStylePairingNote,
+  knightsbridgePdpColorLabel,
+} from '@/lib/products/knightsbridgePairing'
 import { buildVariantSku } from '@/lib/products/sku'
 
 type MayfairColorKey = 'deep-maroon' | 'black' | 'peach'
@@ -237,6 +242,57 @@ export function buildKensingtonAbayaContentId(): ProductPdpContent {
   }
 }
 
+function isKnightsbridgeNavyColor(color?: string): boolean {
+  return (color ?? '').toLowerCase().includes('navy')
+}
+
+export function buildKnightsbridgeAbayaJacketContentId(color?: string): ProductPdpContent {
+  const catalogColor = isKnightsbridgeNavyColor(color) ? 'Navy Grey' : 'Dark Brown'
+  const colorLabel = knightsbridgePdpColorLabel(catalogColor, 'id')
+
+  return {
+    introParagraphs: [
+      'Wanita yang gayanya terasa effortless seringkali adalah yang paling tidak tertarik mengikuti tren. Berani menjadi diri sendiri, mereka biasanya justru yang menetapkannya.',
+      'Abaya Jaket Khous diciptakan untuk wanita yang bergerak dengan percaya diri menjalani hidup dengan syaratnya sendiri. Berada di antara abaya dan jaket, ia menggabungkan kemudahan berpakaian tradisional dengan kepercayaan diri pakaian luar kontemporer.',
+      'Dipotong dalam siluet santai dan tersedia dalam Coklat Tua dan Abu-abu Navy, ia berlapis dengan effortless di atas gaun, tailoring, knitwear, dan pakaian sehari-hari. Dikenakan dengan sneakers atau heels, ia beradaptasi secara alami pada perjalanan, kehidupan harian, dan kehidupan antarkota.',
+      'Detail bertekstur di saku dada dan manset mengambil inspirasi dari Al Khous, seni tradisional Emirati menganyam pelepah palem yang diwariskan lintas generasi. Diinterpretasikan melalui desain kontemporer, detail ini memperkenalkan kedalaman, struktur, dan karakter sambil mempertahankan penampilan yang halus.',
+      'Detail bahu yang khas memberi siluet pengaruh militer yang halus, menciptakan kehadiran percaya diri yang seimbang dengan kenyamanan dan kemudahan bergerak. Empat saku fungsional, termasuk dua saku dada dan dua saku samping tersembunyi, memperkuat kepraktisan untuk kehidupan sehari-hari.',
+      'Diselesaikan dengan kancing emas khas Bint Saeed Knotted Lines of Lineage, desain ini membawa salah satu kode abadi rumah mode. Terinspirasi hubungan yang mengikat generasi, detail ini mengingatkan bahwa hal paling bermakna seringkali adalah yang kita bawa ke depan.',
+      'Diciptakan di Abu Dhabi, Abaya Jaket Khous mencerminkan komitmen Bint Saeed membawa elemen warisan Emirati ke dalam lemari pakaian kontemporer. Baik untuk kopi di London, perjalanan, rapat di Dubai, atau kehidupan sehari-hari di Teluk, ia menawarkan siluet khas bagi wanita yang memahami bahwa gaya tidak hanya untuk momen istimewa.',
+      'Nyaman, serbaguna, dan dirancang untuk sering dikenakan, Abaya Jaket Khous merayakan gagasan bahwa keanggunan sejati terungkap tidak hanya pada momen penting, tetapi pada cara wanita memilih menampilkan dirinya setiap hari.',
+    ],
+    productDetails: [
+      `Abaya jaket ${colorLabel} dengan siluet santai`,
+      'Kerah runcing',
+      'Penutup kancing depan tersembunyi',
+      'Dua saku dada',
+      'Dua saku samping tersembunyi',
+      'Detail tab bahu',
+      'Lengan panjang dengan manset berkancing',
+      'Detail tenun terinspirasi Khous khas Bint Saeed pada saku dada dan manset',
+      'Kancing emas khas Bint Saeed Knotted Lines of Lineage',
+      'Gaun dalam terpasang',
+      'Label personalisasi interior tersembunyi opsional dengan nama, tanggal, atau pesan bermakna',
+      `Warna: ${colorLabel} dengan detail kontras Khous alami`,
+      'Panjang: 143 cm / 56,3 inci',
+      'Dibuat di Abu Dhabi, Uni Emirat Arab',
+    ],
+    compositionDetails: [
+      'Luar: 60% Polyester, 40% Katun',
+      'Gaun dalam: 100% Polyester',
+    ],
+    fitAndSizeDetails: [
+      'Tinggi model: 160 cm / 63 inci',
+      'Model mengenakan ukuran XS',
+      'Dirancang untuk potongan santai',
+      'Ukuran tersedia: XS, S, M, L, XL, XXL',
+    ],
+    careDetails: ['Pembersihan kering profesional saja'],
+    stylePairingNote: getKnightsbridgeStylePairingNote('knightsbridge-abaya-jacket', catalogColor, 'id'),
+    faq: getKnightsbridgePdpFaq('id'),
+  }
+}
+
 function isMayfairKaftan(product: Product): boolean {
   const slug = getProductSlug(product).toLowerCase()
   return slug === 'mayfair-kaftan' || product.id === 'bs-002'
@@ -257,11 +313,17 @@ function isKensingtonAbaya(product: Product): boolean {
   return slug === 'kensington-abaya' || product.id === 'ab-004'
 }
 
+function isKnightsbridgeAbayaJacket(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'knightsbridge-abaya-jacket' || product.id === 'bs-001'
+}
+
 /** Indonesian PDP copy for hero products; returns null for other slugs. */
 export function getProductPdpContentId(product: Product, color?: string): ProductPdpContent | null {
   if (isMayfairKaftan(product)) return buildMayfairKaftanContentId(color)
   if (isNothingHillKaftan(product)) return buildNothingHillKaftanContentId(color)
   if (isBelgraviaAbaya(product)) return buildBelgraviaAbayaContentId(color)
   if (isKensingtonAbaya(product)) return buildKensingtonAbayaContentId()
+  if (isKnightsbridgeAbayaJacket(product)) return buildKnightsbridgeAbayaJacketContentId(color)
   return null
 }

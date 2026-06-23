@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiGlobe, FiChevronDown } from 'react-icons/fi'
+import { FiChevronDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { Language } from '@/lib/i18n/translations'
 import { stripLocaleFromPathname, localizedPath } from '@/lib/i18n/routing'
@@ -100,8 +100,9 @@ export default function LanguageSwitcher({
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.1em] transition-colors ${textColor}`}
         data-cursor-hover
+        aria-label={currentLang?.label ?? 'Language'}
       >
-        <FiGlobe className="w-4 h-4" />
+        <span aria-hidden>{currentLang?.flag}</span>
         <span>{currentLang?.native}</span>
         <FiChevronDown className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>

@@ -400,9 +400,10 @@ export const products: Product[] = [
     name: 'Knightsbridge Abaya Jacket',
     price: 3299,
     description:
-      'Jacket-style abaya with refined drape and trim inspired by traditional Khous weaving — Emirati heritage craftsmanship from Abu Dhabi.',
-    fabric: 'Premium Japanese Crepe, Silk lining, Hand-embroidered details',
-    measurements: 'Model wears size M. Length: 140cm (size M). Available in custom lengths upon request.',
+      'Khous Jacket Abaya between traditional dressing and contemporary outerwear — relaxed silhouette with Al Khous-inspired detailing, structured shoulders, and signature Knotted Lines of Lineage buttons. Created in Abu Dhabi.',
+    fabric: '60% Polyester, 40% Cotton outer; 100% Polyester inner dress',
+    measurements:
+      'Model height: 160 cm / 63 inches. Model wears size XS. Length: 143 cm / 56.3 inches. Available in custom lengths upon request.',
     images: knightsbridgeAbayaJacketGallery('dark-brown'),
     colorImages: {
       'Dark Brown': knightsbridgeAbayaJacketGallery('dark-brown'),

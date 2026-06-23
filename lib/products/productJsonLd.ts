@@ -19,6 +19,10 @@ import {
 import { getKaftanPageSeo, getKaftanSchemaAudience, isKaftanSlug } from '@/lib/products/kaftanSchemaI18n'
 import { getBelgraviaSchemaAudience, isBelgraviaSlug } from '@/lib/products/belgraviaSchemaI18n'
 import { getKensingtonSchemaAudience, isKensingtonSlug } from '@/lib/products/kensingtonSchemaI18n'
+import {
+  getKnightsbridgeSchemaAudience,
+  isKnightsbridgeAbayaSlug,
+} from '@/lib/products/knightsbridgeSchemaI18n'
 import { getSharedAbayaSchemaAudience, SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
@@ -114,9 +118,11 @@ function schemaAudience(locale: AppLocale, slug: string, product: Product) {
       ? getBelgraviaSchemaAudience(locale)
       : isKensingtonSlug(slug)
         ? getKensingtonSchemaAudience(locale)
-        : product.category === 'Abayas'
-          ? getSharedAbayaSchemaAudience(locale)
-          : getSchemaAudienceType(locale)
+        : isKnightsbridgeAbayaSlug(slug)
+          ? getKnightsbridgeSchemaAudience(locale)
+          : product.category === 'Abayas'
+            ? getSharedAbayaSchemaAudience(locale)
+            : getSchemaAudienceType(locale)
 
   return {
     '@type': 'PeopleAudience' as const,

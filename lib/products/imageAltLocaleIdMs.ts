@@ -111,4 +111,41 @@ export const PRODUCT_IMAGE_ALT_LOCALE_ID_MS: Record<string, { id: string; ms: st
     id: 'Detail manset Abaya Kensington dari Bint Saeed Abu Dhabi, Uni Emirat Arab, menampilkan trim tenun khas terinspirasi Al Khous, seni tradisional Emirati dalam menganyam pelepah palem, yang diinterpretasikan melalui anyaman organza glitter hitam yang halus. Dirancang di Abu Dhabi, Uni Emirat Arab. Pengiriman ke seluruh dunia.',
     ms: 'Detail manset Abaya Kensington dari Bint Saeed Abu Dhabi, Emiriah Arab Bersatu, menampilkan trim tenunan khas terinspirasi Al Khous, seni tradisional Emiriah dalam menganyam pelepah palma, yang diinterpretasikan melalui anyaman organza glitter hitam yang halus. Direka di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
   },
+
+  // ─── Knightsbridge Abaya Jacket (Khous Jacket Abaya) ───────────────────────
+
+  'bint-saeed-knightsbridge-abaya-jacket-dark-brown-front.webp': {
+    id: 'Abaya Jaket Khous, abaya jaket mewah dari Bint Saeed dalam Dark Brown, tampak depan menampilkan siluet santai, kerah runcing, saku dada, detail tenun terinspirasi Khous, dan kancing emas khas. Dirancang untuk wanita yang menginginkan penampilan sehari-hari yang lebih berkelas, perjalanan, dan pakaian luar sopan kontemporer. Dibuat di Abu Dhabi, Uni Emirat Arab. Pengiriman ke seluruh dunia.',
+    ms: 'Abaya Jaket Khous, abaya jaket mewah dari Bint Saeed dalam Dark Brown, pandangan hadapan menampilkan siluet santai, kolar runcing, poket dada, perincian tenunan terinspirasi Khous, dan butang emas khas. Direka untuk wanita yang mendambakan pemakaian harian yang lebih berkelas, perjalanan, dan pakaian luar sopan kontemporari. Dibuat di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
+  },
+
+  'bint-saeed-knightsbridge-abaya-jacket-dark-brown-side.webp': {
+    id: 'Abaya Jaket Khous, abaya jaket desainer dari Bint Saeed dalam Dark Brown, tampak samping menampilkan siluet terinspirasi pakaian luar yang santai, gerakan mengalir, dan detail tenun terinspirasi Khous. Pakaian luar sopan kontemporer yang dirancang di Abu Dhabi, Uni Emirat Arab. Pengiriman ke seluruh dunia.',
+    ms: 'Abaya Jaket Khous, abaya jaket pereka fesyen dari Bint Saeed dalam Dark Brown, pandangan sisi menampilkan siluet berinspirasi pakaian luar yang santai, pergerakan mengalir, dan perincian tenunan terinspirasi Khous. Pakaian luar sopan kontemporari yang direka di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
+  },
+
+  'bint-saeed-knightsbridge-abaya-jacket-dark-brown-back.webp': {
+    id: 'Abaya Jaket Khous, abaya mewah dari Bint Saeed dalam Dark Brown, tampak belakang menonjolkan jahitan bersih, proporsi santai, dan siluet panjang terinspirasi jaket. Abaya desainer kontemporer dibuat di Abu Dhabi, Uni Emirat Arab. Pengiriman ke seluruh dunia.',
+    ms: 'Abaya Jaket Khous, abaya mewah dari Bint Saeed dalam Dark Brown, pandangan belakang menonjolkan jahitan bersih, perkadaran santai, dan siluet panjang berinspirasi jaket. Abaya pereka fesyen kontemporari dibuat di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
+  },
+
+  'bint-saeed-knightsbridge-abaya-jacket-navy-grey-front.webp': {
+    id: 'Abaya Jaket Khous, abaya jaket mewah dari Bint Saeed dalam Navy Grey, tampak depan menampilkan siluet santai, kerah runcing, saku dada, detail tenun terinspirasi Khous, dan kancing emas khas. Dirancang untuk wanita yang menginginkan penampilan sehari-hari yang lebih berkelas, perjalanan, dan pakaian luar sopan kontemporer. Dibuat di Abu Dhabi, Uni Emirat Arab. Pengiriman ke seluruh dunia.',
+    ms: 'Abaya Jaket Khous, abaya jaket mewah dari Bint Saeed dalam Navy Grey, pandangan hadapan menampilkan siluet santai, kolar runcing, poket dada, perincian tenunan terinspirasi Khous, dan butang emas khas. Direka untuk wanita yang mendambakan pemakaian harian yang lebih berkelas, perjalanan, dan pakaian luar sopan kontemporari. Dibuat di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
+  },
+
+  'bint-saeed-knightsbridge-abaya-jacket-navy-grey-side.webp': {
+    id: 'Abaya Jaket Khous, abaya jaket desainer dari Bint Saeed dalam Navy Grey, tampak samping menampilkan siluet terinspirasi pakaian luar yang santai, gerakan mengalir, dan detail tenun terinspirasi Khous. Pakaian luar sopan kontemporer yang dirancang di Abu Dhabi, Uni Emirat Arab. Pengiriman ke seluruh dunia.',
+    ms: 'Abaya Jaket Khous, abaya jaket pereka fesyen dari Bint Saeed dalam Navy Grey, pandangan sisi menampilkan siluet berinspirasi pakaian luar yang santai, pergerakan mengalir, dan perincian tenunan terinspirasi Khous. Pakaian luar sopan kontemporari yang direka di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
+  },
+
+  'bint-saeed-knightsbridge-abaya-jacket-navy-grey-back.webp': {
+    id: 'Abaya Jaket Khous, abaya mewah dari Bint Saeed dalam Navy Grey, tampak belakang menonjolkan jahitan bersih, proporsi santai, dan siluet panjang terinspirasi jaket. Abaya desainer kontemporer dibuat di Abu Dhabi, Uni Emirat Arab. Pengiriman ke seluruh dunia.',
+    ms: 'Abaya Jaket Khous, abaya mewah dari Bint Saeed dalam Navy Grey, pandangan belakang menonjolkan jahitan bersih, perkadaran santai, dan siluet panjang berinspirasi jaket. Abaya pereka fesyen kontemporari dibuat di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
+  },
+
+  'bint-saeed-knightsbridge-abaya-jacket-navy-grey-lifestyle-1.webp': {
+    id: 'Abaya Jaket Khous, abaya jaket mewah dari Bint Saeed dalam Navy Grey, digaya sebagai pakaian luar sopan kontemporer untuk keanggunan sehari-hari, perjalanan, pertemuan kopi, dan kehidupan kota. Siluet santai dengan detail tenun terinspirasi Khous, dirancang di Abu Dhabi, Uni Emirat Arab. Pengiriman ke seluruh dunia.',
+    ms: 'Abaya Jaket Khous, abaya jaket mewah dari Bint Saeed dalam Navy Grey, digayakan sebagai pakaian luar sopan kontemporari untuk keanggunan harian, perjalanan, pertemuan kopi, dan kehidupan bandar. Siluet santai dengan perincian tenunan terinspirasi Khous, direka di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
+  },
 }

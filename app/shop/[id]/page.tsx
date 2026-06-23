@@ -17,6 +17,12 @@ import { getProductPdpContent } from '@/data/productPdpContent'
 import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
 import { getProductColorOptions, getProductImagesForColor } from '@/lib/products/productColorAvailability'
+import {
+  getKnightsbridgePairedSlug,
+  getProductHrefWithColor,
+  isKnightsbridgePairingSlug,
+  normalizeKnightsbridgeCatalogColor,
+} from '@/lib/products/knightsbridgePairing'
 import { buildShopProductJsonLd } from '@/lib/products/productJsonLd'
 import { getProductFaq } from '@/lib/products/productSchemaMeta'
 import { useCartStore } from '@/store/cartStore'
@@ -62,6 +68,23 @@ const PDP_PRIMARY_CTA =
 const MANUAL_PAIRINGS: Record<string, string[]> = {
   'knightsbridge-abaya-jacket': ['knightsbridge-dress'],
   'knightsbridge-dress': ['knightsbridge-abaya-jacket'],
+}
+
+function resolveRelatedStyles(product: Product): Product[] {
+  const pairedSlug = getKnightsbridgePairedSlug(product.slug)
+  if (pairedSlug && isKnightsbridgePairingSlug(product.slug)) {
+    const paired = staticProducts.filter((p) => p.slug === pairedSlug)
+    return paired
+  }
+
+  const manualPairSlugs = MANUAL_PAIRINGS[product.slug]
+  if (manualPairSlugs) {
+    return staticProducts.filter((p) => manualPairSlugs.includes(p.slug))
+  }
+
+  return staticProducts
+    .filter((p) => p.id !== product.id && p.category === product.category)
+    .slice(0, 2)
 }
 
 export default function ProductPage() {
@@ -125,19 +148,12 @@ export default function ProductPage() {
   const { formatPrice, formatAmount, convertPrice, currency } = useCurrency()
 
   const relatedStyles = useMemo(
-    () =>
-      product
-        ? (() => {
-            const manualPairSlugs = MANUAL_PAIRINGS[product.slug]
-            if (manualPairSlugs) {
-              return staticProducts.filter((p) => manualPairSlugs.includes(p.slug))
-            }
-            return staticProducts
-              .filter((p) => p.id !== product.id && p.category === product.category)
-              .slice(0, 2)
-          })()
-        : [],
+    () => (product ? resolveRelatedStyles(product) : []),
     [product],
+  )
+  const knightsbridgePairColor = useMemo(
+    () => normalizeKnightsbridgeCatalogColor(selectedColor || product?.colors[0]?.name),
+    [selectedColor, product?.colors],
   )
   const catalogFields = useMemo(
     () => (product ? getLocalizedProductCatalogFields(product, language) : null),
@@ -160,8 +176,10 @@ export default function ProductPage() {
     careDetails,
     brandStory,
     fitAndSizeDetails,
+    stylePairingNote,
     faq: pdpFaq,
   } = pdpContent
+  const hasManualPairing = Boolean(product && isKnightsbridgePairingSlug(product.slug))
   const faqItems = useMemo(
     () => (product ? getProductFaq(product, pdpFaq, language) : []),
     [product, pdpFaq, language],
@@ -963,23 +981,45 @@ export default function ProductPage() {
               sections={pdpAccordionSections}
             />
 
+            {stylePairingNote && (
+              <p className={`mt-6 font-montserrat text-[12px] leading-relaxed text-brand-darkRed/75 ${isRTL ? 'text-right' : ''}`}>
+                {stylePairingNote}
+              </p>
+            )}
+
             {relatedStyles.length > 0 && (
               <section className="relative z-20 mt-8">
                 <h3 className={PDP_RELATED_TITLE}>
-                  {isRTL ? 'قد يعجبك أيضاً' : 'You may also like'}
+                  {hasManualPairing
+                    ? isRTL
+                      ? 'يتناسق مع'
+                      : 'Pairs well with'
+                    : isRTL
+                      ? 'قد يعجبك أيضاً'
+                      : 'You may also like'}
                 </h3>
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  {relatedStyles.map((item) => (
+                  {relatedStyles.map((item) => {
+                    const pairedColor = isKnightsbridgePairingSlug(product.slug)
+                      ? knightsbridgePairColor
+                      : item.colors[0]?.name ?? ''
+                    const pairedImages = getProductImagesForColor(item, pairedColor)
+                    const pairedImage = pairedImages[0] ?? item.images[0]
+                    return (
                     <LocaleLink
                       key={item.id}
-                      href={getProductHref(item)}
+                      href={
+                        isKnightsbridgePairingSlug(product.slug)
+                          ? getProductHrefWithColor(item, pairedColor)
+                          : getProductHref(item)
+                      }
                       className="group relative z-20 block pointer-events-auto"
                       data-cursor-hover
                     >
                       <div className="relative z-20 aspect-[9/16] overflow-hidden bg-brand-stone/10">
                         <PdpGalleryImage
-                          src={item.images[0]}
-                          alt={getProductImageAlt(item, item.images[0], { color: item.colors[0]?.name, index: 0, locale: language })}
+                          src={pairedImage}
+                          alt={getProductImageAlt(item, pairedImage, { color: pairedColor, index: 0, locale: language })}
                           className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                       </div>
@@ -992,7 +1032,8 @@ export default function ProductPage() {
                         </p>
                       </div>
                     </LocaleLink>
-                  ))}
+                    )
+                  })}
                 </div>
               </section>
             )}

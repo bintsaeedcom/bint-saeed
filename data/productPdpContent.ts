@@ -7,6 +7,12 @@ import { getProductSchemaFacts } from '@/lib/products/productSchemaMeta'
 import { buildVariantSku } from '@/lib/products/sku'
 import { getBelgraviaPdpFaq } from '@/lib/products/belgraviaSchemaI18n'
 import { getKensingtonPdpFaq } from '@/lib/products/kensingtonSchemaI18n'
+import { getKnightsbridgePdpFaq } from '@/lib/products/knightsbridgeSchemaI18n'
+import {
+  getKnightsbridgeStylePairingNote,
+  knightsbridgePdpColorLabel,
+  normalizeKnightsbridgeCatalogColor,
+} from '@/lib/products/knightsbridgePairing'
 import { applyAbayaPdpStandards } from '@/lib/products/abayaPdpStandards'
 import { getPdpSizeOptions, productIsOneSizeOnly } from '@/lib/shopProductOptions'
 
@@ -19,6 +25,8 @@ export type ProductPdpContent = {
   /** Closing brand story paragraph inside Product Details. */
   brandStory?: string
   fitAndSizeDetails: string[]
+  /** Optional note above related / paired styles (e.g. Knightsbridge set). */
+  stylePairingNote?: string
   /** Visible PDP FAQ and FAQPage schema source. */
   faq?: Array<{ question: string; answer: string }>
 }
@@ -287,6 +295,16 @@ function isBelgraviaAbaya(product: Product): boolean {
   return slug === 'belgravia-abaya' || product.id === 'ab-006'
 }
 
+function isKnightsbridgeAbayaJacket(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'knightsbridge-abaya-jacket' || product.id === 'bs-001'
+}
+
+function isKnightsbridgeDress(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'knightsbridge-dress' || product.id === 'bs-003'
+}
+
 type BelgraviaColorKey = 'deep-black' | 'navy-blue'
 
 const BELGRAVIA_COLOR_COPY: Record<BelgraviaColorKey, { label: string }> = {
@@ -340,6 +358,78 @@ function buildKensingtonAbayaContent(): ProductPdpContent {
     ],
     careDetails: [...ABAYA_CARE_DETAILS],
     faq: getKensingtonPdpFaq(),
+  }
+}
+
+const KNIGHTSBRIDGE_ABAYA_CARE = ['Professional dry clean only'] as const
+
+function isKnightsbridgeNavyColor(color?: string): boolean {
+  return (color ?? '').toLowerCase().includes('navy')
+}
+
+function buildKnightsbridgeAbayaJacketContent(color?: string, locale: AppLocale = 'en'): ProductPdpContent {
+  const isNavy = isKnightsbridgeNavyColor(color)
+  const catalogColor = isNavy ? 'Navy Grey' : 'Dark Brown'
+  const colorLabel = knightsbridgePdpColorLabel(catalogColor, locale)
+
+  return {
+    introParagraphs: [
+      'The women whose style feels effortless are often the ones least interested in following trends. Unafraid to be themselves, they are usually the women setting them.',
+      'The Khous Jacket Abaya was created for women who move confidently through life on their own terms. Sitting somewhere between an abaya and a jacket, it combines the ease of traditional dressing with the confidence of contemporary outerwear.',
+      'Cut in a relaxed silhouette and available in Dark Brown and Navy Gray, it layers effortlessly over dresses, tailoring, knitwear, and everyday essentials. Worn with sneakers or heels, it adapts naturally to changing environments, making it an ideal companion for travel, daily wear, and life between cities.',
+      'Textured detailing across the chest pockets and cuffs draws inspiration from Al Khous, the traditional Emirati art of palm frond weaving passed down through generations. Reinterpreted through contemporary design, these details introduce depth, structure, and character while maintaining a refined appearance.',
+      'Distinctive shoulder detailing lends the silhouette a subtle military influence, creating a confident presence balanced by comfort and ease of movement. Four functional pockets, including two chest pockets and two hidden side pockets, reinforce its practicality for everyday life.',
+      'Finished with Bint Saeed’s signature gold-tone Knotted Lines of Lineage buttons, the design carries one of the house’s enduring codes. Inspired by the connections that tie generations together, these details serve as a reminder that the most meaningful things in life are often the ones we carry forward.',
+      'Created in Abu Dhabi, the Khous Jacket Abaya reflects Bint Saeed’s commitment to carrying elements of Emirati heritage into a contemporary wardrobe. Whether worn for a coffee in London, a day of travel, a meeting in Dubai, or everyday life in the Gulf, it offers a distinctive silhouette for women who understand that style is not reserved for special occasions.',
+      'Comfortable, versatile, and designed to be worn often, the Khous Jacket Abaya celebrates the idea that true elegance is revealed not only in important moments, but in the way a woman chooses to present herself every day.',
+    ],
+    productDetails: [
+      `${colorLabel} jacket abaya with a relaxed silhouette`,
+      'Pointed collar',
+      'Concealed front button closure',
+      'Two chest pockets',
+      'Two hidden side pockets',
+      'Shoulder tab detailing',
+      'Long sleeves with buttoned cuffs',
+      'Bint Saeed signature Khous-inspired woven detailing on the chest pockets and cuffs',
+      'Bint Saeed signature gold-tone Knotted Lines of Lineage buttons',
+      'Attached inner dress',
+      'Optional hidden interior personalisation label with a name, date, or meaningful message',
+      `Colour: ${colorLabel} with natural Khous contrast detailing`,
+      'Length: 143 cm / 56.3 inches',
+      'Made in Abu Dhabi, United Arab Emirates',
+    ],
+    compositionDetails: [
+      'Outer: 60% Polyester, 40% Cotton',
+      'Inner Dress: 100% Polyester',
+    ],
+    fitAndSizeDetails: [
+      'Model height: 160 cm / 63 inches',
+      'Model wears size XS',
+      'Designed for a relaxed fit',
+      'Available sizes: XS, S, M, L, XL, XXL',
+    ],
+    careDetails: [...KNIGHTSBRIDGE_ABAYA_CARE],
+    stylePairingNote: getKnightsbridgeStylePairingNote('knightsbridge-abaya-jacket', catalogColor, locale),
+    faq: getKnightsbridgePdpFaq(locale),
+  }
+}
+
+function buildKnightsbridgeDressContent(
+  product: Product,
+  color?: string,
+  locale: AppLocale = 'en',
+): ProductPdpContent {
+  const catalogColor = normalizeKnightsbridgeCatalogColor(color ?? product.colors[0]?.name)
+  const colorLabel = knightsbridgePdpColorLabel(catalogColor, locale)
+  const base = buildStructuredApparelContent(product, catalogColor)
+  const productDetails = base.productDetails.map((line) =>
+    line.startsWith('Colour:') ? `Colour: ${colorLabel}` : line,
+  )
+  return {
+    ...base,
+    productDetails,
+    stylePairingNote: getKnightsbridgeStylePairingNote('knightsbridge-dress', catalogColor, locale),
   }
 }
 
@@ -440,7 +530,7 @@ function buildNothingHillKaftanContent(color?: string): ProductPdpContent {
  * PDP copy source of truth.
  * — Mayfair & Nothing Hill Kaftans use finalized reference copy (colour-aware).
  * — Belgravia Abaya uses finalized reference copy (colour-aware).
- * — Hero abayas (Belgravia, Kensington): add your feature bullets in the builders below;
+ * — Hero abayas (Belgravia, Kensington, Knightsbridge Abaya Jacket): add your feature bullets in the builders below;
  *   `applyAbayaPdpStandards` always appends “Custom length available upon request” — do not remove.
  * — All other products use the same topic layout as that page; replace bracketed lines when ready.
  */
@@ -477,6 +567,10 @@ export function getProductPdpContent(
     content = buildBelgraviaAbayaContent(color)
   } else if (isKensingtonAbaya(product)) {
     content = buildKensingtonAbayaContent()
+  } else if (isKnightsbridgeAbayaJacket(product)) {
+    content = buildKnightsbridgeAbayaJacketContent(color, locale)
+  } else if (isKnightsbridgeDress(product)) {
+    content = buildKnightsbridgeDressContent(product, color, locale)
   } else if (product.category === 'Accessories') {
     content = accessoryPlaceholderContent(product)
   } else {

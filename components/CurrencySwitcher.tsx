@@ -72,6 +72,17 @@ export default function CurrencySwitcher({
     OMR: '🇴🇲',
     RUB: '🇷🇺',
     CNY: '🇨🇳',
+    CAD: '🇨🇦',
+    SGD: '🇸🇬',
+    BND: '🇧🇳',
+    MYR: '🇲🇾',
+    MAD: '🇲🇦',
+    NGN: '🇳🇬',
+    IDR: '🇮🇩',
+    KZT: '🇰🇿',
+    AZN: '🇦🇿',
+    UZS: '🇺🇿',
+    HKD: '🇭🇰',
   }
 
   return (

@@ -11,10 +11,10 @@ type CatalogFields = {
 const ID_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
     description:
-      'Abaya bergaya jaket dengan drape halus dan trim terinspirasi anyaman Khous tradisional — kerajinan warisan Emirati dari Abu Dhabi.',
-    fabric: 'Crepe Jepang premium, lapisan sutra, detail bordir tangan',
+      'Abaya jaket Khous antara berpakaian tradisional dan pakaian luar kontemporer — siluet santai dengan detail terinspirasi Al Khous, bahu terstruktur, dan kancing Knotted Lines of Lineage khas. Dibuat di Abu Dhabi.',
+    fabric: 'Luar: 60% Polyester, 40% Katun; gaun dalam: 100% Polyester',
     measurements:
-      'Model mengenakan ukuran M. Panjang: 140 cm (ukuran M). Panjang kustom tersedia atas permintaan.',
+      'Tinggi model: 160 cm / 63 inci. Model mengenakan ukuran XS. Panjang: 143 cm / 56,3 inci. Panjang kustom tersedia atas permintaan.',
   },
   'covent-garden-abaya': {
     description:
@@ -98,10 +98,10 @@ const ID_CATALOG_COPY: Record<string, CatalogFields> = {
 const MS_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
     description:
-      'Abaya gaya jaket dengan jatuh lembut dan hiasan terinspirasi tenunan Khous tradisional — kraftangan warisan Emirati dari Abu Dhabi.',
-    fabric: 'Crepe Jepun premium, lapisan sutera, butiran sulaman tangan',
+      'Abaya jaket Khous antara pemakaian tradisional dan pakaian luar kontemporari — siluet santai dengan perincian terinspirasi Al Khous, bahu berstruktur, dan butang Knotted Lines of Lineage khas. Dihasilkan di Abu Dhabi.',
+    fabric: 'Luar: 60% Polyester, 40% Kapas; gaun dalaman: 100% Polyester',
     measurements:
-      'Model memakai saiz M. Panjang: 140 cm (saiz M). Panjang tersuai tersedia atas permintaan.',
+      'Tinggi model: 160 cm / 63 inci. Model memakai saiz XS. Panjang: 143 cm / 56.3 inci. Panjang tersuai tersedia atas permintaan.',
   },
   'covent-garden-abaya': {
     description:

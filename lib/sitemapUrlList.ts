@@ -1,4 +1,5 @@
 import { isPrelaunch } from '@/lib/seo'
+import { buildCatalogSitemapEntries } from '@/lib/sitemap/catalogUrls'
 
 /** Canonical origin for sitemap `<loc>` values (align with `NEXT_PUBLIC_SITE_URL` in production). */
 export const SITEMAP_BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
@@ -58,7 +59,8 @@ export function getSitemapUrlEntries(): SitemapUrlEntry[] {
   if (isPrelaunch) {
     return [allUrls[0], allUrls[1]]
   }
-  return allUrls
+  const catalogUrls = buildCatalogSitemapEntries(SITEMAP_BASE_URL)
+  return [...allUrls, ...catalogUrls]
 }
 
 /** Absolute URLs only — for IndexNow and similar tooling. */

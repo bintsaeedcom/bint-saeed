@@ -25,12 +25,18 @@ import {
   isKensingtonSlug,
 } from '@/lib/products/kensingtonSchemaI18n'
 import {
+  getLocalizedKnightsbridgeFaq,
+  getLocalizedKnightsbridgeSchemaFacts,
+} from '@/lib/products/knightsbridgeSchemaI18n'
+import {
   buildAbayaProductKeywordVariants,
   getLocalizedAbayaSchemaKeywordTerms,
 } from '@/lib/products/abayaSchemaKeywordsI18n'
 import { SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
 import { getLocalizedBelgraviaExclusiveKeywords } from '@/lib/products/belgraviaSchemaKeywordsI18n'
 import { getLocalizedKensingtonExclusiveKeywords } from '@/lib/products/kensingtonSchemaKeywordsI18n'
+import { getLocalizedKnightsbridgeExclusiveKeywords } from '@/lib/products/knightsbridgeSchemaKeywordsI18n'
+import { isKnightsbridgeAbayaSlug } from '@/lib/products/knightsbridgeSchemaI18n'
 
 export type ProductFaqItem = {
   question: string
@@ -65,13 +71,6 @@ const DEFAULT_SUITABLE_FOR =
 const DEFAULT_MADE_IN = 'Abu Dhabi, United Arab Emirates'
 
 const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
-  'knightsbridge-abaya-jacket': {
-    fit: 'Jacket-style abaya with refined drape',
-    stylingDetail: 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    lining: 'Silk lining',
-    madeIn: DEFAULT_MADE_IN,
-  },
   'covent-garden-abaya': {
     closure: 'Concealed placket',
     stylingDetail: 'Traditional Al Talli trim',
@@ -167,6 +166,9 @@ export function getProductSchemaFacts(product: Product, locale: AppLocale = 'en'
   const kensingtonFacts = getLocalizedKensingtonSchemaFacts(slug, locale)
   if (kensingtonFacts) return kensingtonFacts
 
+  const knightsbridgeFacts = getLocalizedKnightsbridgeSchemaFacts(slug, locale)
+  if (knightsbridgeFacts) return knightsbridgeFacts
+
   const base = SLUG_FACTS[slug] ?? {}
   const fromMeasurements = extractMaxLength(product.measurements)
 
@@ -204,6 +206,10 @@ export function buildProductSchemaKeywords(
 
   if (isKensingtonSlug(slug)) {
     for (const t of getLocalizedKensingtonExclusiveKeywords(locale, colorName)) terms.add(t)
+  }
+
+  if (isKnightsbridgeAbayaSlug(slug)) {
+    for (const t of getLocalizedKnightsbridgeExclusiveKeywords(locale, colorName)) terms.add(t)
   }
 
   return [...terms].join(', ')
@@ -373,6 +379,19 @@ export function getProductFaq(
   if (kensingtonFaq.length > 0) {
     const merged = [...kensingtonFaq]
     const seen = new Set(kensingtonFaq.map((item) => item.question.toLowerCase()))
+    for (const item of customFaq ?? []) {
+      if (!seen.has(item.question.toLowerCase())) {
+        merged.push(item)
+        seen.add(item.question.toLowerCase())
+      }
+    }
+    return merged
+  }
+
+  const knightsbridgeFaq = getLocalizedKnightsbridgeFaq(slug, locale)
+  if (knightsbridgeFaq.length > 0) {
+    const merged = [...knightsbridgeFaq]
+    const seen = new Set(knightsbridgeFaq.map((item) => item.question.toLowerCase()))
     for (const item of customFaq ?? []) {
       if (!seen.has(item.question.toLowerCase())) {
         merged.push(item)
