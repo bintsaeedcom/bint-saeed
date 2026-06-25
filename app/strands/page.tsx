@@ -120,7 +120,17 @@ export default function StrandsPage() {
     }),
     [language],
   )
-  const strandProducts = useMemo(() => accessories.filter((item) => item.category === 'abaya-charms'), [])
+  const strandProducts = useMemo(() => {
+    const strands = accessories.filter((item) => item.category === 'abaya-charms')
+    const isNewStrandShot = (src: string) =>
+      src.includes('strand-front') || src.includes('rosette-strand-front')
+    return [...strands].sort((a, b) => {
+      const aNew = isNewStrandShot(a.images[0] ?? '')
+      const bNew = isNewStrandShot(b.images[0] ?? '')
+      if (aNew === bNew) return 0
+      return aNew ? -1 : 1
+    })
+  }, [])
   const marylebone = useMemo(() => products.find((product) => product.slug === 'marylebone-abaya'), [])
   const maryleboneHref = marylebone ? getProductHref(marylebone) : '/shop/marylebone-abaya'
   const maryleboneImage = marylebone?.images[0] || '/Webshop pictures/Abayas/Marylebone Abaya/bint-saeed-marylebone-abaya-black-front.webp'

@@ -80,6 +80,40 @@ const nextConfig = {
       },
       { source: '/charms', destination: '/strands', permanent: true },
       { source: '/charms/:path*', destination: '/strands/:path*', permanent: true },
+      // Legacy abaya-charm product shots → strands folder (post-rename deploy safety)
+      {
+        source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-tigereye-abaya-charm.PNG',
+        destination:
+          '/Webshop%20pictures/accessoiries/strands/bint-saeed-tiger-eye-natural-stone-strand-front.webp',
+        permanent: true,
+      },
+      {
+        source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-aventurine-abaya-charm.PNG',
+        destination:
+          '/Webshop%20pictures/accessoiries/strands/bint-saeed-aventurine-natural-stone-strand-front.webp',
+        permanent: true,
+      },
+      {
+        source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-onyx-abaya-charm.PNG',
+        destination: '/Webshop%20pictures/accessoiries/strands/bint-saeed-onyx-abaya-charm.PNG',
+        permanent: true,
+      },
+      {
+        source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-orange-colored-jade-abaya-charm.PNG',
+        destination:
+          '/Webshop%20pictures/accessoiries/strands/bint-saeed-sunstone-carnelian-natural-stone-al-ain-rosette-strand-front.webp',
+        permanent: true,
+      },
+      {
+        source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-amathys-abaya-charm.PNG',
+        destination: '/Webshop%20pictures/accessoiries/strands/bint-saeed-amathys-abaya-charm.PNG',
+        permanent: true,
+      },
+      {
+        source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-green-jade-abaya-charm.PNG',
+        destination: '/Webshop%20pictures/accessoiries/strands/bint-saeed-green-jade-abaya-charm.PNG',
+        permanent: true,
+      },
       { source: '/preview', destination: '/home', permanent: true },
       { source: '/preview/:path*', destination: '/home/:path*', permanent: true },
       { source: '/accessoiries', destination: '/accessories', permanent: true },
