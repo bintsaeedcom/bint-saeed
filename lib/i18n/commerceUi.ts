@@ -94,6 +94,7 @@ type CommerceUiAccessories = {
   materials: string
   careBullets: string[]
   oneSize: string
+  uniqueSize: string
   selectColour: string
 }
 
@@ -294,6 +295,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         'Wipe gently with a dry, soft cloth.',
       ],
       oneSize: 'One Size',
+      uniqueSize: 'Unique Size',
       selectColour: 'Select colour',
     },
     footer: {
@@ -464,6 +466,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         'نظّفي برفق بقطعة قماش ناعمة وجافة.',
       ],
       oneSize: 'مقاس واحد',
+      uniqueSize: 'مقاس فريد',
       selectColour: 'اختاري اللون',
     },
     footer: {
@@ -634,6 +637,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         'Nettoyer delicatement avec un chiffon doux et sec.',
       ],
       oneSize: 'Taille unique',
+      uniqueSize: 'Taille unique',
       selectColour: 'Choisir la couleur',
     },
     footer: {
@@ -804,6 +808,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         'Vorsichtig mit einem trockenen, weichen Tuch reinigen.',
       ],
       oneSize: 'Einheitsgroesse',
+      uniqueSize: 'Einzigartige Groesse',
       selectColour: 'Farbe wahlen',
     },
     footer: {
@@ -974,6 +979,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         'Pulisci delicatamente con un panno morbido e asciutto.',
       ],
       oneSize: 'Taglia unica',
+      uniqueSize: 'Taglia unica',
       selectColour: 'Seleziona colore',
     },
     footer: {
@@ -1144,6 +1150,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         'Limpia suavemente con un pano seco y suave.',
       ],
       oneSize: 'Talla unica',
+      uniqueSize: 'Talla unica',
       selectColour: 'Seleccionar color',
     },
     footer: {
@@ -1314,6 +1321,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         'Аккуратно очищайте сухой мягкой тканью.',
       ],
       oneSize: 'Единый размер',
+      uniqueSize: 'Уникальный размер',
       selectColour: 'Выберите цвет',
     },
     footer: {
@@ -1484,6 +1492,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         '使用柔软干布轻轻擦拭。',
       ],
       oneSize: '均码',
+      uniqueSize: '独特尺码',
       selectColour: '选择颜色',
     },
     footer: {
@@ -1654,6 +1663,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         'Reinig voorzichtig met een droge, zachte doek.',
       ],
       oneSize: 'One size',
+      uniqueSize: 'Unieke maat',
       selectColour: 'Kleur kiezen',
     },
     footer: {
@@ -1824,6 +1834,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         'Limpe suavemente com um pano seco e macio.',
       ],
       oneSize: 'Tamanho unico',
+      uniqueSize: 'Tamanho unico',
       selectColour: 'Selecionar cor',
     },
     footer: {
@@ -1994,6 +2005,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         'Bersihkan perlahan dengan kain lembut dan kering.',
       ],
       oneSize: 'Satu ukuran',
+      uniqueSize: 'Ukuran unik',
       selectColour: 'Pilih warna',
     },
     footer: {
@@ -2164,6 +2176,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
         'Lap perlahan dengan kain lembut dan kering.',
       ],
       oneSize: 'Satu saiz',
+      uniqueSize: 'Saiz unik',
       selectColour: 'Pilih warna',
     },
     footer: {

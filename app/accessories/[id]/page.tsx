@@ -33,6 +33,7 @@ import {
 } from '@/lib/pdp/pdpTypography'
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
+import { accessoryDisplaySize } from '@/lib/accessories/accessorySizeLabel'
 import PdpAccordion, { type PdpAccordionSectionConfig } from '@/components/pdp/PdpAccordion'
 
 import 'swiper/css'
@@ -110,6 +111,7 @@ export default function AccessoryDetailPage() {
   }
 
   const categoryInfo = accessoryCategories.find(c => c.id === accessory.category)
+  const sizeLabel = accessoryDisplaySize(accessory.category, ui.accessories)
 
   const handleAddToCart = () => {
     if (!selectedColor && accessory.colors.length > 1) {
@@ -123,7 +125,7 @@ export default function AccessoryDetailPage() {
       name: isRTL ? accessory.nameAr : accessory.name,
       price: accessory.price,
       image: accessory.images[0],
-      size: 'One Size',
+      size: sizeLabel,
       color:
         selectedColor ||
         (accessory.colors[0]
@@ -547,7 +549,7 @@ export default function AccessoryDetailPage() {
               </div>
             </div>
 
-            {/* Size — one size only (jewellery & all strands) */}
+            {/* Size — jewellery, strands & bag charms use unique size labelling */}
             <div className="mb-3 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
@@ -556,7 +558,7 @@ export default function AccessoryDetailPage() {
               </div>
               <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
                 <span className={`min-w-[52px] border px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] ${PDP_BUTTON_RADIUS} ${PDP_FILLED_PLUM}`}>
-                  {ui.accessories.oneSize}
+                  {sizeLabel}
                 </span>
               </div>
             </div>

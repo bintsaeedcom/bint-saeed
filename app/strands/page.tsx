@@ -9,6 +9,7 @@ import { accessories } from '@/data/accessories'
 import { products } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
@@ -105,6 +106,7 @@ const COLLECTION_JSON_LD_BASE = {
 
 export default function StrandsPage() {
   const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const { formatPrice } = useCurrency()
   const collectionJsonLd = useMemo(
     () => ({
@@ -460,7 +462,8 @@ export default function StrandsPage() {
             ]}
             backLink={{
               href: '/home',
-              label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+              label: ui.common.back,
+              useHistory: true,
             }}
           />
         </div>

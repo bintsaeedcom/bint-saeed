@@ -174,7 +174,8 @@ export default function AccessoriesPage() {
                 ]}
                 backLink={{
                   href: '/home',
-                  label: ui.accessories.backToHome,
+                  label: ui.common.back,
+                  useHistory: true,
                 }}
               />
             </motion.div>
