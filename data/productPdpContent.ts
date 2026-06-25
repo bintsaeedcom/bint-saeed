@@ -17,10 +17,31 @@ import {
 } from '@/lib/products/knightsbridgePairing'
 import { applyAbayaPdpStandards } from '@/lib/products/abayaPdpStandards'
 import { getPdpSizeOptions, productIsOneSizeOnly } from '@/lib/shopProductOptions'
+import { COVENT_GARDEN_SIGNATURE_SET_FAQ_EN } from '@/data/coventGardenSignatureSetPdpFaq'
+import {
+  buildCoventGardenSignatureSetDetailGroups,
+  COVENT_GARDEN_SIGNATURE_SET_CARE,
+  COVENT_GARDEN_SIGNATURE_SET_COMPOSITION_GROUPS,
+  COVENT_GARDEN_SIGNATURE_SET_FIT_AND_SIZE,
+  COVENT_GARDEN_SIGNATURE_SET_ORIGIN,
+} from '@/data/coventGardenSignatureSetPdpDetails'
+import type { PdpDetailGroup, PdpIntroParagraph } from '@/lib/products/pdpIntroRich'
+import { pdpIntroParagraphsToPlainText } from '@/lib/products/pdpIntroRich'
+import { COVENT_GARDEN_SIGNATURE_SET_INTRO_EN } from '@/data/coventGardenSignatureSetPdpIntro'
+
+export type { PdpDetailGroup } from '@/lib/products/pdpIntroRich'
 
 export type ProductPdpContent = {
   /** Rich intro above accordions; first paragraph stays visible, rest behind Read more. */
   introParagraphs?: string[]
+  /** Optional structured intro with house-code links (rendered when present). */
+  introParagraphParts?: PdpIntroParagraph[]
+  /** Optional grouped product-detail bullets (e.g. jacket + dress on sets). */
+  productDetailGroups?: PdpDetailGroup[]
+  /** Optional grouped composition bullets. */
+  compositionGroups?: PdpDetailGroup[]
+  /** Optional origin line(s) shown under an Origin subtitle in Product Details. */
+  originDetails?: string[]
   productDetails: string[]
   compositionDetails?: string[]
   careDetails?: string[]
@@ -381,18 +402,22 @@ function isCoventGardenSignatureSet(product: Product): boolean {
 }
 
 function buildCoventGardenSignatureSetContent(product: Product, color?: string): ProductPdpContent {
-  const base = buildStructuredApparelContent(product, color)
+  const colorName = resolveSelectedColorName(product, color)
+  const introParagraphParts = COVENT_GARDEN_SIGNATURE_SET_INTRO_EN
 
   return {
-    ...base,
-    introParagraphs: [
-      'The most elegant wardrobes are rarely built around individual pieces. They are built around combinations that feel effortless every time they are worn.',
-      'The Covent Garden Signature Set was created for women who appreciate the confidence of beautifully coordinated dressing. Comprising the Covent Garden Dress and a matching tailored jacket, it offers a refined silhouette equally suited to business meetings, elegant lunches, afternoon tea, private dinners, gallery openings, cultural events, and every occasion where timeless elegance feels appropriate.',
-      "Available in Burgundy, Deep Black, and Navy Blue, the tailored jacket is distinguished by two front pockets featuring Bint Saeed's signature woven detailing inspired by Al Khous, one of the United Arab Emirates' oldest traditional crafts. For generations, Emiratis transformed the leaves of the date palm into beautifully woven objects that formed part of everyday life, making Al Khous an enduring expression of the country's cultural heritage. Reinterpreted through contemporary tailoring, the woven detailing introduces texture, craftsmanship, and subtle character while maintaining a clean, elegant silhouette. The jacket is fully lined and finished with Bint Saeed's signature gold-tone buttons.",
-      'The coordinating Covent Garden Dress completes the silhouette with graceful proportions and understated elegance. Fully lined for comfort, it creates effortless movement while offering the flexibility to alter the length according to personal preference. Worn together, the dress and jacket create a beautifully balanced ensemble, while each piece can also be styled independently as part of a thoughtfully curated wardrobe.',
-      "Created in Abu Dhabi, the Covent Garden Signature Set reflects Bint Saeed's vision of carrying elements of Emirati heritage into a contemporary international wardrobe. Whether worn for an important meeting in London, an afternoon tea in Abu Dhabi, a dinner in Paris, or an evening at the theatre in New York, it celebrates women who understand that elegance is not reserved for special occasions, but expressed through the way they choose to present themselves every day.",
-      'Timeless, refined, and designed to be worn for years rather than seasons, the Covent Garden Signature Set is created for women who appreciate craftsmanship, beautifully balanced tailoring, and the confidence that comes from a wardrobe where every piece belongs together.',
-    ],
+    introParagraphParts,
+    introParagraphs: pdpIntroParagraphsToPlainText(introParagraphParts),
+    productDetails: [],
+    productDetailGroups: buildCoventGardenSignatureSetDetailGroups(colorName),
+    compositionGroups: COVENT_GARDEN_SIGNATURE_SET_COMPOSITION_GROUPS.map((group) => ({
+      title: group.title,
+      items: [...group.items],
+    })),
+    careDetails: [...COVENT_GARDEN_SIGNATURE_SET_CARE],
+    fitAndSizeDetails: [...COVENT_GARDEN_SIGNATURE_SET_FIT_AND_SIZE],
+    originDetails: [...COVENT_GARDEN_SIGNATURE_SET_ORIGIN],
+    faq: COVENT_GARDEN_SIGNATURE_SET_FAQ_EN,
   }
 }
 

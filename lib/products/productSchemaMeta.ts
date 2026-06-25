@@ -32,6 +32,12 @@ import {
 } from '@/lib/products/knightsbridgeDressSchemaLocalePacks'
 import { getLocalizedKnightsbridgeDressExclusiveKeywords } from '@/lib/products/knightsbridgeDressSchemaKeywordsI18n'
 import {
+  getLocalizedCoventGardenSignatureSetFaq,
+  getLocalizedCoventGardenSignatureSetSchemaFacts,
+  isCoventGardenSignatureSetSlug,
+} from '@/lib/products/coventGardenSignatureSetSchemaLocalePacks'
+import { getLocalizedCoventGardenSignatureSetExclusiveKeywords } from '@/lib/products/coventGardenSignatureSetSchemaKeywordsI18n'
+import {
   getLocalizedKnightsbridgeFaq,
   getLocalizedKnightsbridgeSchemaFacts,
 } from '@/lib/products/knightsbridgeSchemaI18n'
@@ -151,12 +157,13 @@ const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
     madeIn: DEFAULT_MADE_IN,
   },
   'covent-garden-signature-set': {
-    productType: 'Khous-inspired two-piece coordinate set',
+    productType: 'Covent Garden dress and short-sleeve tailored jacket set',
     productCategory: 'Set, Two-Piece Set, Coordinate Set, Luxury Modest Fashion, Premium Modest Fashion, Contemporary Womenswear',
     stylingDetail:
-      'Two-piece set — top and skirt; handwoven trim inspired by the Emirati tradition of Khous weaving',
+      'Two-piece set — coordinating fitted maxi dress and short-sleeve tailored jacket with Al Khous-inspired woven pocket flaps and Knotted Line buttons',
     trim: 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
-    material: 'Organic Cotton blend, Linen accents, Natural dyes',
+    lining: 'Soft crepe lining',
+    material: 'Outer: 80% Polyester, 20% Viscose; Lining: 70% Polyester, 30% Viscose',
     suitableFor: DEFAULT_SUITABLE_FOR,
     madeIn: DEFAULT_MADE_IN,
   },
@@ -218,6 +225,9 @@ export function getProductSchemaFacts(product: Product, locale: AppLocale = 'en'
   const dressFacts = getLocalizedKnightsbridgeDressSchemaFacts(slug, locale)
   if (dressFacts) return dressFacts
 
+  const coventGardenSetFacts = getLocalizedCoventGardenSignatureSetSchemaFacts(slug, locale)
+  if (coventGardenSetFacts) return coventGardenSetFacts
+
   const knightsbridgeFacts = getLocalizedKnightsbridgeSchemaFacts(slug, locale)
   if (knightsbridgeFacts) return knightsbridgeFacts
 
@@ -268,6 +278,12 @@ export function buildProductSchemaKeywords(
 
   if (isKnightsbridgeDressSlug(slug)) {
     for (const t of getLocalizedKnightsbridgeDressExclusiveKeywords(locale, colorName)) terms.add(t)
+  }
+
+  if (isCoventGardenSignatureSetSlug(slug)) {
+    for (const t of getLocalizedCoventGardenSignatureSetExclusiveKeywords(locale, colorName)) {
+      terms.add(t)
+    }
   }
 
   const heritageKeywords = getHeritageSchemaKeywords(slug, locale)
@@ -355,7 +371,9 @@ export function buildProductAdditionalProperties(
       value:
         slug === 'knightsbridge-dress'
           ? 'Al Khous-inspired woven detailing inspired by the traditional Emirati art of weaving date palm fronds'
-          : 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
+          : slug === 'covent-garden-signature-set'
+            ? 'Al Khous-inspired woven pocket flaps inspired by the traditional Emirati art of weaving date palm fronds'
+            : 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
     })
     props.push({
       '@type': 'PropertyValue',
@@ -429,6 +447,12 @@ export function getProductFaq(
   locale: AppLocale = 'en',
 ): ProductFaqItem[] {
   const slug = getProductSlug(product).toLowerCase()
+
+  const coventGardenSetFaq = getLocalizedCoventGardenSignatureSetFaq(slug, locale)
+  if (coventGardenSetFaq.length > 0) {
+    return coventGardenSetFaq
+  }
+
   const kaftanFaq = getLocalizedKaftanFaq(slug, locale)
   if (kaftanFaq.length > 0) {
     const merged = [...kaftanFaq]

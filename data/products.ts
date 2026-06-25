@@ -311,7 +311,14 @@ const COVENT_GARDEN_SET_DIR = '/Webshop pictures/Sets/Covent Garden Set'
 
 function coventGardenSignatureSetGallery(color: 'burgundy' | 'black' | 'navy-blue'): string[] {
   const base = `${COVENT_GARDEN_SET_DIR}/bint-saeed-covent-garden-set-${color}`
-  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  if (color === 'burgundy') {
+    images.push(
+      `${COVENT_GARDEN_SET_DIR}/bint-saeed-covent-garden-dress-burgundy-lifestyle-001.webp`,
+    )
+  }
+  images.push(`${base}-lifestyle-002.webp`)
+  return images
 }
 
 const COVENT_GARDEN_ABAYA_DIR = '/Webshop pictures/Abayas/Covent Garden Abaya '
@@ -621,9 +628,10 @@ export const products: Product[] = [
     slug: 'covent-garden-signature-set',
     name: 'Covent Garden Signature Set',
     price: 3199,
-    description: 'Khous signature classic two-piece set — top and skirt for full looks or separated styling.',
-    fabric: 'Organic Cotton blend, Linen accents, Natural dyes',
-    measurements: 'Top length: 70cm, Skirt length: 95cm (size M). Relaxed fit.',
+    description: 'Covent Garden dress and tailored jacket set — coordinated two-piece dressing with Al Khous-inspired detailing.',
+    fabric: 'Outer: 80% Polyester, 20% Viscose; Lining: 70% Polyester, 30% Viscose',
+    measurements:
+      'Jacket length: 69 cm / 27.2 inches; Dress length: 138 cm / 54.5 inches (size XS). Model height: 155 cm / 61 inches.',
     images: coventGardenSignatureSetGallery('burgundy'),
     colorImages: {
       Burgundy: coventGardenSignatureSetGallery('burgundy'),

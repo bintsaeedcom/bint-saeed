@@ -51,6 +51,7 @@ import {
   PDP_RELATED_TITLE,
 } from '@/lib/pdp/pdpTypography'
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
+import PdpIntroParagraph from '@/components/PdpIntroParagraph'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
 import PdpAccordion, { type PdpAccordionSectionConfig } from '@/components/pdp/PdpAccordion'
 
@@ -173,7 +174,11 @@ export default function ProductPage() {
   )
   const {
     introParagraphs,
+    introParagraphParts,
     productDetails,
+    productDetailGroups,
+    compositionGroups,
+    originDetails,
     compositionDetails,
     careDetails,
     brandStory,
@@ -380,24 +385,71 @@ export default function ProductPage() {
         titleTag: 'h2',
         children: (
           <>
-            <ul className={PDP_BULLET_LIST}>
-              {productDetailsBullets.map((item, idx) => (
-                <li key={`pd-${idx}`} className={PDP_BULLET_ITEM}>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            {compositionDetails && compositionDetails.length > 0 && (
-              <div className="space-y-2 pt-3">
-                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{ui.composition}</p>
-                <ul className={PDP_BULLET_LIST}>
-                  {compositionDetails.map((item, idx) => (
-                    <li key={`comp-${idx}`} className={PDP_BULLET_ITEM}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+            {productDetailGroups && productDetailGroups.length > 0 ? (
+              <div className="space-y-4">
+                {productDetailGroups.map((group) => (
+                  <div key={group.title} className="space-y-2">
+                    <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{group.title}</p>
+                    <ul className={PDP_BULLET_LIST}>
+                      {group.items.map((item, idx) => (
+                        <li key={`pdg-${group.title}-${idx}`} className={PDP_BULLET_ITEM}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+                {productDetailsBullets.length > 0 && (
+                  <ul className={PDP_BULLET_LIST}>
+                    {productDetailsBullets.map((item, idx) => (
+                      <li key={`pd-${idx}`} className={PDP_BULLET_ITEM}>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
+            ) : (
+              <ul className={PDP_BULLET_LIST}>
+                {productDetailsBullets.map((item, idx) => (
+                  <li key={`pd-${idx}`} className={PDP_BULLET_ITEM}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {compositionGroups && compositionGroups.length > 0 ? (
+              <div className="space-y-4 pt-3">
+                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{ui.composition}</p>
+                {compositionGroups.map((group) => (
+                  <div key={group.title} className="space-y-2">
+                    <p className={`font-montserrat text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed/80 ${isRTL ? 'text-right' : ''}`}>
+                      {group.title}
+                    </p>
+                    <ul className={PDP_BULLET_LIST}>
+                      {group.items.map((item, idx) => (
+                        <li key={`compg-${group.title}-${idx}`} className={PDP_BULLET_ITEM}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              compositionDetails &&
+              compositionDetails.length > 0 && (
+                <div className="space-y-2 pt-3">
+                  <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{ui.composition}</p>
+                  <ul className={PDP_BULLET_LIST}>
+                    {compositionDetails.map((item, idx) => (
+                      <li key={`comp-${idx}`} className={PDP_BULLET_ITEM}>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
             )}
             {careDetails && careDetails.length > 0 && (
               <div className="space-y-2 pt-3">
@@ -405,6 +457,18 @@ export default function ProductPage() {
                 <ul className={PDP_BULLET_LIST}>
                   {careDetails.map((item, idx) => (
                     <li key={`care-${idx}`} className={PDP_BULLET_ITEM}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {originDetails && originDetails.length > 0 && (
+              <div className="space-y-2 pt-3">
+                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>Origin</p>
+                <ul className={PDP_BULLET_LIST}>
+                  {originDetails.map((item, idx) => (
+                    <li key={`origin-${idx}`} className={PDP_BULLET_ITEM}>
                       {item}
                     </li>
                   ))}
@@ -460,8 +524,11 @@ export default function ProductPage() {
     brandStory,
     careDetails,
     compositionDetails,
+    compositionGroups,
     faqItems,
     isRTL,
+    originDetails,
+    productDetailGroups,
     productDetailsBullets,
     sizeAndFitDetails,
     t.product.shippingReturns,
@@ -916,7 +983,51 @@ export default function ProductPage() {
             </div>
 
             {/* Intro / short description */}
-            {introParagraphs && introParagraphs.length > 0 ? (
+            {introParagraphParts && introParagraphParts.length > 0 ? (
+              <div className={`mb-2 ${isRTL ? 'text-right' : ''}`}>
+                <PdpIntroParagraph
+                  parts={introParagraphParts[0]}
+                  className={`mb-2 ${PDP_COPY_INTRO} pdp-copy--intro`}
+                />
+                {introParagraphParts.length > 1 && (
+                  <>
+                    <AnimatePresence initial={false}>
+                      {introExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.25, ease: 'easeInOut' }}
+                          className="overflow-hidden"
+                        >
+                          <div className="space-y-3 pb-2">
+                            {introParagraphParts.slice(1).map((paragraph, idx) => (
+                              <PdpIntroParagraph
+                                key={`intro-rich-${idx}`}
+                                parts={paragraph}
+                                className={`${PDP_COPY_INTRO} pdp-copy--intro`}
+                              />
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                    <button
+                      type="button"
+                      onClick={() => setIntroExpanded((open) => !open)}
+                      className={`inline-flex items-center gap-1.5 font-montserrat text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+                      data-cursor-hover
+                      aria-expanded={introExpanded}
+                    >
+                      {introExpanded ? ui.readLess : ui.readMore}
+                      <FiChevronDown
+                        className={`h-3.5 w-3.5 transition-transform ${introExpanded ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+                  </>
+                )}
+              </div>
+            ) : introParagraphs && introParagraphs.length > 0 ? (
               <div className={`mb-2 ${isRTL ? 'text-right' : ''}`}>
                 <p className={`mb-2 ${PDP_COPY_INTRO} pdp-copy--intro`}>
                   {introParagraphs[0]}
@@ -965,7 +1076,7 @@ export default function ProductPage() {
                 {catalogFields?.description}
               </p>
             )}
-            {!introParagraphs?.length && product.id !== 'bs-002' && (
+            {!introParagraphParts?.length && !introParagraphs?.length && product.id !== 'bs-002' && (
               <p className={`mb-2 ${PDP_MTO_NOTE}`}>
                 {ui.madeToOrderNote}
               </p>

@@ -1,5 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { PRODUCT_IMAGE_ALT_LOCALE_ID_MS } from '@/lib/products/imageAltLocaleIdMs'
+import { COVENT_GARDEN_SIGNATURE_SET_IMAGE_ALT_ENTRIES } from '@/lib/products/coventGardenSignatureSetImageAltI18n'
 
 /** Build a full locale map for one catalogue image alt (en + 10 prefix locales). */
 export function altLoc(
@@ -537,6 +538,7 @@ const ALT_ENTRIES: AltEntry[] = [
       'Vestido maxi Knightsbridge da Bint Saeed em Navy Grey em cenário arquitetónico, com silhueta fluida e decote distintivo inspirado em Al Khous, o artesanato tradicional emirati de tecer folhas de palmeira-dáctilo. Vestido de designer contemporâneo criado em Abu Dhabi para mulheres cujos guarda-roupas transitam com naturalidade entre culturas, destinos e elegância quotidiana.',
     ),
   },
+  ...COVENT_GARDEN_SIGNATURE_SET_IMAGE_ALT_ENTRIES,
 ]
 
 export const PRODUCT_IMAGE_ALT_I18N: Record<string, Record<AppLocale, string>> = Object.fromEntries(

@@ -3,6 +3,7 @@ import { localizedPath } from '@/lib/i18n/routing'
 import { getHeritageCraft } from '@/lib/products/heritageSeo'
 import { isKnightsbridgeAbayaSlug } from '@/lib/products/knightsbridgeSchemaI18n'
 import { isKnightsbridgeDressSlug } from '@/lib/products/knightsbridgeDressSchemaI18n'
+import { isCoventGardenSignatureSetSlug } from '@/lib/products/coventGardenSignatureSetSchemaI18n'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
@@ -73,6 +74,15 @@ export function buildProductSemanticJsonLdFields(
   if (isKnightsbridgeAbayaSlug(normalized)) {
     related.push(
       relatedProductNode(productRef('Knightsbridge Dress', '/shop/knightsbridge-dress'), locale),
+    )
+  }
+
+  if (isCoventGardenSignatureSetSlug(normalized)) {
+    related.push(
+      relatedProductNode(
+        productRef('Covent Garden Long Dress', '/shop/covent-garden-long-dress'),
+        locale,
+      ),
     )
   }
 

@@ -26,6 +26,10 @@ import {
   getKnightsbridgeDressSchemaAudience,
   isKnightsbridgeDressSlug,
 } from '@/lib/products/knightsbridgeDressSchemaI18n'
+import {
+  getCoventGardenSignatureSetSchemaAudience,
+  isCoventGardenSignatureSetSlug,
+} from '@/lib/products/coventGardenSignatureSetSchemaI18n'
 import { getFallbackSchemaAudience } from '@/lib/products/categorySchemaAudience'
 import { buildProductSemanticJsonLdFields } from '@/lib/products/productSemanticJsonLd'
 import { getSharedAbayaSchemaAudience, SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
@@ -127,7 +131,9 @@ function schemaAudience(locale: AppLocale, slug: string, product: Product) {
           ? getKnightsbridgeSchemaAudience(locale)
           : isKnightsbridgeDressSlug(slug)
             ? getKnightsbridgeDressSchemaAudience(locale)
-            : product.category === 'Abayas'
+            : isCoventGardenSignatureSetSlug(slug)
+              ? getCoventGardenSignatureSetSchemaAudience(locale)
+              : product.category === 'Abayas'
               ? getSharedAbayaSchemaAudience(locale)
               : getFallbackSchemaAudience(product.category, locale)
 
