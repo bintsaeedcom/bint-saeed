@@ -18,8 +18,8 @@ import {
 } from '@/lib/accessories/jewelleryDiscoveryI18n'
 import { CODES_IMAGE_FILES, codesPageImagePath } from '@/lib/the-codes/codesPageContent'
 
-/** Strands hero background — `public/collection-section/` (file is `.jpg`; use `/collection-section/45.png` if you add a PNG). */
-const HERO_CAMPAIGN_IMAGE = '/collection-section/45.jpg'
+/** Strands hero banner — `public/strands-banner.jpg` */
+const HERO_CAMPAIGN_IMAGE = '/strands-banner.jpg'
 /** Same six-strand flatlay as House Codes — `public/The Codes Page/`. */
 const CONCEPT_FLATLAY_IMAGE = codesPageImagePath(CODES_IMAGE_FILES.naturalStoneBeads)
 const STRAND_HERO_ALT = withBrandAlt(
@@ -438,7 +438,7 @@ export default function StrandsPage() {
       />
       <section className="relative z-0 h-[85vh] max-h-[85vh] overflow-hidden bg-[#1a0210] text-[#e8ddd4] md:sticky md:top-0 md:will-change-transform">
         <div
-          className="absolute inset-0 opacity-65"
+          className="absolute inset-0"
           style={{ transform: `translateY(${heroOffset}px)` }}
           aria-hidden
         >
@@ -453,7 +453,8 @@ export default function StrandsPage() {
             />
             <canvas ref={heroCanvasRef} className="pointer-events-none absolute inset-0 z-0 hidden h-full w-full md:block" aria-hidden />
           </div>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,2,16,0.92)_0%,rgba(26,2,16,0.62)_46%,rgba(26,2,16,0.22)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,2,16,0.88)_0%,rgba(26,2,16,0.45)_42%,rgba(26,2,16,0.12)_72%,transparent_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_35%,rgba(26,2,16,0.55)_100%)]" />
         </div>
 
         <div className={`absolute top-28 z-20 px-6 md:left-[60px] ${isRTL ? 'right-6 md:right-[60px] left-auto' : 'left-6'}`}>
