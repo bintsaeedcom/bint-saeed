@@ -162,9 +162,11 @@ export default function StrandsPage() {
   const heroWebglInitializedRef = useRef(false)
   const heroMouseRef = useRef({ x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 })
   const carouselRef = useRef<HTMLDivElement | null>(null)
+  const carouselTrackRef = useRef<HTMLDivElement | null>(null)
   const stepsRef = useRef<HTMLElement | null>(null)
   const quoteRef = useRef<HTMLElement | null>(null)
   const dragStateRef = useRef({ active: false, startX: 0, scrollLeft: 0 })
+  const trackDragRef = useRef({ active: false })
   const [heroOffset, setHeroOffset] = useState(0)
   const [stepsVisible, setStepsVisible] = useState(false)
   const [quoteVisible, setQuoteVisible] = useState(false)
@@ -382,6 +384,32 @@ export default function StrandsPage() {
     updateCarouselProgress()
   }
 
+  const seekCarouselFromTrack = (clientX: number) => {
+    const el = carouselRef.current
+    const track = carouselTrackRef.current
+    if (!el || !track) return
+    const { left, width } = track.getBoundingClientRect()
+    if (width <= 0) return
+    const ratio = Math.min(1, Math.max(0, (clientX - left) / width))
+    const max = el.scrollWidth - el.clientWidth
+    el.scrollLeft = ratio * max
+    updateCarouselProgress()
+  }
+
+  const startTrackDrag = (clientX: number) => {
+    trackDragRef.current = { active: true }
+    seekCarouselFromTrack(clientX)
+  }
+
+  const moveTrackDrag = (clientX: number) => {
+    if (!trackDragRef.current.active) return
+    seekCarouselFromTrack(clientX)
+  }
+
+  const endTrackDrag = () => {
+    trackDragRef.current.active = false
+  }
+
   const endDrag = () => {
     dragStateRef.current.active = false
   }
@@ -583,7 +611,7 @@ export default function StrandsPage() {
 
       <section
         id="stone-showcase"
-        className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-28 pb-48 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:min-h-[100vh] md:py-36 md:pb-56 md:will-change-transform"
+        className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-28 pb-32 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-36 md:pb-40"
       >
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE COLLECTION</p>
@@ -641,23 +669,23 @@ export default function StrandsPage() {
             onTouchStart={(event) => startDrag(event.touches[0]?.clientX || 0)}
             onTouchMove={(event) => moveDrag(event.touches[0]?.clientX || 0)}
             onTouchEnd={endDrag}
-            className="flex cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 active:cursor-grabbing md:px-14 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 active:cursor-grabbing md:px-14 [scrollbar-width:none] [touch-action:pan-x] [&::-webkit-scrollbar]:hidden"
           >
           {strandProducts.map((product) => {
             const color = product.colors[0]
             return (
               <article
                 key={product.id}
-                className="flex h-[560px] w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-[6px] border border-[#e8ddd4] bg-[#faf8f5] shadow-[0_8px_32px_rgba(26,2,16,0.08)] md:w-[360px]"
+                className="flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-[6px] border border-[#e8ddd4] bg-[#faf8f5] shadow-[0_8px_32px_rgba(26,2,16,0.08)] md:w-[360px]"
               >
-                <div className="relative h-[288px] shrink-0" style={{ backgroundColor: color?.hex || '#e8ddd4' }}>
+                <div className="relative aspect-[3/4] w-full shrink-0" style={{ backgroundColor: color?.hex || '#e8ddd4' }}>
                   {product.images[0] ? (
                     <Image
                       src={product.images[0]}
                       alt={getStrandCarouselAlt(product.id)}
                       fill
                       sizes="(max-width: 768px) 280px, 360px"
-                      className="object-cover object-top"
+                      className="object-contain object-center p-3 md:p-4"
                     />
                   ) : null}
                 </div>
@@ -691,32 +719,41 @@ export default function StrandsPage() {
           })}
           </div>
         </div>
-        <div className={`${INNER_CONTAINER_CLASS} mt-8 pb-20 md:pb-28`}>
-          <div className="flex items-center justify-center gap-4 md:gap-6">
+        <div className={`${INNER_CONTAINER_CLASS} mt-8 pb-12 md:hidden`}>
+          <div className="flex items-center justify-center gap-4">
             <button
               type="button"
               onClick={() => scrollCarousel('prev')}
               disabled={carouselEdges.atStart}
               aria-label="Previous stones"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5] text-[#7A1C28] shadow-[0_4px_16px_rgba(26,2,16,0.08)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30 md:hidden"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5] text-[#7A1C28] shadow-[0_4px_16px_rgba(26,2,16,0.08)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30"
               data-cursor-hover
             >
               <FiChevronLeft className="h-5 w-5" />
             </button>
             <div className="min-w-0 flex-1">
               <p className="mb-4 text-center font-montserrat text-[10px] font-medium uppercase tracking-[0.22em] text-[#8a7a70]">
-                Swipe or use arrows to explore every stone
+                Swipe the stones above or drag this bar
               </p>
               <div
-                className="relative h-3 w-full overflow-hidden rounded-full bg-[#e8ddd4] ring-1 ring-[#7A1C28]/10"
-                role="scrollbar"
+                ref={carouselTrackRef}
+                className="relative h-3 w-full cursor-pointer overflow-hidden rounded-full bg-[#e8ddd4] ring-1 ring-[#7A1C28]/10"
+                role="slider"
                 aria-valuenow={Math.round(carouselScroll.thumbLeftPct)}
                 aria-valuemin={0}
                 aria-valuemax={100}
                 aria-label="Stone carousel position"
+                onClick={(event) => seekCarouselFromTrack(event.clientX)}
+                onMouseDown={(event) => startTrackDrag(event.clientX)}
+                onMouseMove={(event) => moveTrackDrag(event.clientX)}
+                onMouseUp={endTrackDrag}
+                onMouseLeave={endTrackDrag}
+                onTouchStart={(event) => startTrackDrag(event.touches[0]?.clientX || 0)}
+                onTouchMove={(event) => moveTrackDrag(event.touches[0]?.clientX || 0)}
+                onTouchEnd={endTrackDrag}
               >
                 <div
-                  className="absolute top-0 h-3 rounded-full bg-[#7A1C28] shadow-sm transition-[left,width] duration-150 ease-out"
+                  className="pointer-events-none absolute top-0 h-3 rounded-full bg-[#7A1C28] shadow-sm transition-[left,width] duration-150 ease-out"
                   style={{
                     width: `${carouselScroll.thumbWidthPct}%`,
                     left: `${carouselScroll.thumbLeftPct}%`,
@@ -729,7 +766,7 @@ export default function StrandsPage() {
               onClick={() => scrollCarousel('next')}
               disabled={carouselEdges.atEnd}
               aria-label="Next stones"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5] text-[#7A1C28] shadow-[0_4px_16px_rgba(26,2,16,0.08)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30 md:hidden"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5] text-[#7A1C28] shadow-[0_4px_16px_rgba(26,2,16,0.08)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30"
               data-cursor-hover
             >
               <FiChevronRight className="h-5 w-5" />
@@ -753,7 +790,7 @@ export default function StrandsPage() {
             </p>
           </div>
 
-          <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
             {strandProducts.map((product) => {
               const color = product.colors[0]
               return (
@@ -777,7 +814,7 @@ export default function StrandsPage() {
                         alt={getStrandCarouselAlt(product.id)}
                         fill
                         sizes="(max-width: 640px) 45vw, (max-width: 1280px) 25vw, 20vw"
-                        className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                        className="object-contain object-center p-3 transition-transform duration-500 group-hover:scale-[1.02] md:p-4"
                       />
                     ) : null}
                     {product.isLimitedEdition ? (
@@ -846,7 +883,7 @@ export default function StrandsPage() {
 
       <section
         ref={quoteRef}
-        className="closing-section relative z-50 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform"
+        className="closing-section relative z-50 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10"
       >
         <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
           <div className="mx-auto max-w-[640px]">
@@ -864,7 +901,7 @@ export default function StrandsPage() {
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <LocaleLink
-              href="#stone-showcase"
+              href="#shop-all-strands"
               className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
               data-cursor-hover
             >
@@ -934,7 +971,7 @@ export default function StrandsPage() {
 
         .closing-section::before {
           z-index: 0;
-          background: rgba(15, 8, 10, 0.82);
+          background: rgba(15, 8, 10, 0.58);
         }
 
         .closing-section::after {
