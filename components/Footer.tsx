@@ -6,6 +6,7 @@ import { FiGlobe, FiTruck, FiClock, FiHeart, FiX } from 'react-icons/fi'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
 import SubscribeForm from './SubscribeForm'
+import FooterPaymentMethods from './FooterPaymentMethods'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { useEffect, useState } from 'react'
@@ -251,6 +252,12 @@ export default function Footer() {
               </ul>
             </div>
           </div>
+
+          <FooterPaymentMethods
+            label={ui.checkout.securePayment}
+            align="center"
+            className="mt-10 border-t border-white/10 pt-8"
+          />
         </div>
       </div>
 
