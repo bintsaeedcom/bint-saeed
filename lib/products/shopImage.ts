@@ -11,7 +11,12 @@ export function productPrimaryImage(product: Pick<Product, 'images'>): string {
 }
 
 export function productImageSrc(src: string): string {
-  return isWebshopPicturePath(src) ? encodeURI(src) : src
+  const trimmed = src.trim()
+  if (!trimmed || trimmed.startsWith('http')) return trimmed
+  if (!isWebshopPicturePath(trimmed)) return trimmed
+  // Accessories catalogue paths are already percent-encoded (`%20`); encodeURI would break them.
+  if (/%[0-9A-Fa-f]{2}/.test(trimmed)) return trimmed
+  return encodeURI(trimmed)
 }
 
 /** Absolute HTTPS URL for Stripe Checkout line-item images (spaces must be encoded). */

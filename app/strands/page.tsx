@@ -673,13 +673,12 @@ export default function StrandsPage() {
             className="flex cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 active:cursor-grabbing md:px-14 [scrollbar-width:none] [touch-action:pan-x] [&::-webkit-scrollbar]:hidden"
           >
           {strandProducts.map((product) => {
-            const color = product.colors[0]
             return (
               <article
                 key={product.id}
                 className="flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-[6px] border border-[#e8ddd4] bg-[#faf8f5] shadow-[0_8px_32px_rgba(26,2,16,0.08)] md:w-[360px]"
               >
-                <div className="relative aspect-[3/4] w-full shrink-0" style={{ backgroundColor: color?.hex || '#e8ddd4' }}>
+                <div className="relative aspect-[3/4] w-full shrink-0 bg-[#f0eeeb]">
                   {product.images[0] ? (
                     <Image
                       src={product.images[0]}
@@ -793,7 +792,6 @@ export default function StrandsPage() {
 
           <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
             {strandProducts.map((product) => {
-              const color = product.colors[0]
               return (
                 <article
                   key={`shop-${product.id}`}
@@ -801,14 +799,9 @@ export default function StrandsPage() {
                 >
                   <LocaleLink
                     href={`/accessories/${product.id}`}
-                    className="relative block aspect-[3/4] overflow-hidden"
+                    className="relative block aspect-[3/4] overflow-hidden bg-[#f0eeeb]"
                     data-cursor-hover
                   >
-                    <div
-                      className="absolute inset-0"
-                      style={{ backgroundColor: color?.hex || '#e8ddd4' }}
-                      aria-hidden
-                    />
                     {product.images[0] ? (
                       <Image
                         src={product.images[0]}
