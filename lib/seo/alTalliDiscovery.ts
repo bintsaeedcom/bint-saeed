@@ -1,6 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { localizedPath } from '@/lib/i18n/routing'
-import { absoluteCodesPageImageUrl, CODES_IMAGE_FILES } from '@/lib/the-codes/codesPageContent'
+import { absoluteCodesPageImageUrl, CODES_IMAGE_FILES } from '@/lib/the-codes/codesPageAssets'
 
 export const AL_TALLI_HERITAGE_PATH = '/heritage/al-talli'
 

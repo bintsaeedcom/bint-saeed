@@ -1,29 +1,15 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import {
+  absoluteCodesPageImageUrl,
+  CODES_IMAGE_FILES,
+  CODES_PAGE_DIR,
+  codesPageImagePath,
+} from '@/lib/the-codes/codesPageAssets'
 import { THE_CODES_SECTIONS_ID } from '@/lib/the-codes/codesPageContentId'
 import { THE_CODES_SECTIONS_MS } from '@/lib/the-codes/codesPageContentMs'
 
-export const CODES_PAGE_DIR = 'The Codes Page'
-
-export function codesPageImagePath(fileName: string): string {
-  return `/${encodeURIComponent(CODES_PAGE_DIR)}/${encodeURIComponent(fileName)}`
-}
-
-const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
-
-export function absoluteCodesPageImageUrl(fileName: string): string {
-  return `${SITE}${codesPageImagePath(fileName)}`
-}
-
-/** SEO WebP assets in `public/The Codes Page/`. */
-export const CODES_IMAGE_FILES = {
-  monogram: 'bint-saeed-abu-dhabi-monogram-luxury-house.webp',
-  alTalli: 'bint-saeed-abu-dhabi-al-talli-emirati-heritage.webp',
-  khous: 'bint-saeed-abu-dhabi-khous-emirati-heritage.webp',
-  alAinRosette: 'bint-saeed-abu-dhabi-al-ain-rosette-emirati-heritage.webp',
-  knottedLines: 'bint-saeed-abu-dhabi-knotted-lines-of-lineage.webp',
-  naturalStoneBeads: 'bint-saeed-abu-dhabi-natural-stone-beads-emirati-heritage.webp',
-} as const
+export { absoluteCodesPageImageUrl, CODES_IMAGE_FILES, CODES_PAGE_DIR, codesPageImagePath }
 
 export const CODES_HERO = {
   file: CODES_IMAGE_FILES.khous,
