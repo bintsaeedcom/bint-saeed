@@ -60,6 +60,7 @@ export const useCartStore = create<CartStore>()(
       items: [],
 
       addItem: (item) => {
+        const quantityAdded = item.quantity
         set((state) => {
           const existingIndex = state.items.findIndex((i) => sameCartLine(i, item))
 
@@ -71,6 +72,12 @@ export const useCartStore = create<CartStore>()(
 
           return { items: [...state.items, item] }
         })
+
+        if (typeof window !== 'undefined') {
+          queueMicrotask(() => {
+            void import('@/lib/analytics/cartSlack').then((m) => m.notifyCartAddSlack(item, quantityAdded))
+          })
+        }
       },
 
       removeItem: (id, size, color, lengthCm, customisationMessage) => {

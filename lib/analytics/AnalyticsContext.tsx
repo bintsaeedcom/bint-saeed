@@ -493,6 +493,8 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
         : undefined,
       sessionEndReason: reason,
     })
+
+    void import('@/lib/analytics/cartSlack').then((m) => m.notifyAbandonedCartSlack())
   }, [])
 
   // Handle visibility change (tab switch)

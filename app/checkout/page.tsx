@@ -57,6 +57,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (items.length === 0) return
+    void import('@/lib/analytics/cartSlack').then((m) => m.markCheckoutStarted())
     trackEvent('begin_checkout', {
       currency: currency.code,
       value: Number(cartSubtotal(items).toFixed(2)),

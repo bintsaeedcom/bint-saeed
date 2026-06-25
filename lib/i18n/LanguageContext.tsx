@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useLayoutEffect, ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import { translations, type Language, type Translations } from './translations'
 import { stripLocaleFromPathname } from './routing'
@@ -40,10 +40,17 @@ export function LanguageProvider({
     setLanguageState(locale === 'en' ? 'en' : (locale as Language))
   }, [pathname])
 
+  useLayoutEffect(() => {
+    const langAttr = language === 'zh' ? 'zh-CN' : language
+    const dir = language === 'ar' ? 'rtl' : 'ltr'
+    document.documentElement.lang = langAttr
+    document.documentElement.dir = dir
+    document.body.dir = dir
+    document.body.dataset.locale = language
+  }, [language])
+
   useEffect(() => {
     localStorage.setItem('language', language)
-    document.documentElement.lang = language === 'zh' ? 'zh-CN' : language
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr'
   }, [language])
 
   const setLanguage = (lang: Language) => {

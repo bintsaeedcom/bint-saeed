@@ -1,13 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { motion } from 'framer-motion'
-import { FiLock, FiMail, FiUser } from 'react-icons/fi'
+import { FiLock, FiMail } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { passwordsMatch, validatePassword } from '@/lib/auth/passwordPolicy'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
@@ -32,61 +33,63 @@ function GoogleIcon({ className }: { className?: string }) {
   )
 }
 
-export default function RegisterPage() {
-  const { isRTL } = useLanguage()
-  const [name, setName] = useState('')
+const ERROR_MESSAGES: Record<string, { en: string; ar: string }> = {
+  google_not_configured: {
+    en: 'Google sign-in is not configured yet.',
+    ar: 'تسجيل الدخول عبر Google غير مُعدّ بعد.',
+  },
+  google_denied: {
+    en: 'Google sign-in was cancelled.',
+    ar: 'تم إلغاء تسجيل الدخول عبر Google.',
+  },
+  google_state: {
+    en: 'Sign-in session expired. Please try again.',
+    ar: 'انتهت جلسة تسجيل الدخول. حاولي مرة أخرى.',
+  },
+  google_failed: {
+    en: 'Google sign-in failed. Please try again.',
+    ar: 'فشل تسجيل الدخول عبر Google. حاولي مرة أخرى.',
+  },
+  session: {
+    en: 'Could not create your session. Please try again.',
+    ar: 'تعذّر إنشاء الجلسة. حاولي مرة أخرى.',
+  },
+}
+
+export default function SignInPage() {
+  const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [confirm, setConfirm] = useState('')
   const [busy, setBusy] = useState(false)
-  const [devLink, setDevLink] = useState<string | null>(null)
+
+  useEffect(() => {
+    const error = searchParams?.get('error')
+    if (!error) return
+    const msg = ERROR_MESSAGES[error]
+    toast.error(msg ? (isRTL ? msg.ar : msg.en) : isRTL ? 'فشل تسجيل الدخول' : 'Sign-in failed')
+  }, [searchParams, isRTL])
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setDevLink(null)
-
-    if (!name.trim()) {
-      toast.error(isRTL ? 'الاسم مطلوب' : 'Name is required')
-      return
-    }
-
-    const passwordCheck = validatePassword(password)
-    if (!passwordCheck.ok) {
-      toast.error(passwordCheck.error)
-      return
-    }
-
-    if (!passwordsMatch(password, confirm)) {
-      toast.error(isRTL ? 'كلمتا المرور غير متطابقتين' : 'Passwords do not match')
-      return
-    }
-
     setBusy(true)
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          password,
-          confirmPassword: confirm,
-          name: name.trim(),
-        }),
+        body: JSON.stringify({ email, password }),
+        credentials: 'include',
       })
-      const data = (await res.json()) as {
-        ok?: boolean
-        error?: string
-        devLink?: string
-        message?: string
-      }
+      const data = (await res.json()) as { ok?: boolean; error?: string }
       if (!res.ok) {
-        toast.error(data.error || (isRTL ? 'فشل التسجيل' : 'Registration failed'))
+        toast.error(data.error || (isRTL ? 'بيانات الدخول غير صحيحة' : 'Invalid email or password'))
         return
       }
-      toast.success(data.message || (isRTL ? 'تحققي من بريدك' : 'Check your email'))
-      if (data.devLink) setDevLink(data.devLink)
-      setPassword('')
-      setConfirm('')
+      toast.success(isRTL ? 'تم تسجيل الدخول' : 'Signed in')
+      router.push('/account')
+      router.refresh()
     } catch {
       toast.error(isRTL ? 'حدث خطأ' : 'Something went wrong')
     } finally {
@@ -101,9 +104,9 @@ export default function RegisterPage() {
           rtl={isRTL}
           className="mb-10"
           segments={[
-            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-            { label: isRTL ? 'الحساب' : 'Account', href: '/account' },
-            { label: isRTL ? 'إنشاء حساب' : 'Create Account' },
+            { label: ui.common.home, href: '/home' },
+            { label: ui.account.account, href: '/account' },
+            { label: ui.account.signIn },
           ]}
           backLink={{
             href: '/account',
@@ -120,12 +123,10 @@ export default function RegisterPage() {
             Bint Saeed
           </p>
           <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed mb-2">
-            {isRTL ? 'إنشاء حساب' : 'Create an account'}
+            {ui.account.signIn}
           </h1>
           <p className="font-montserrat text-sm text-brand-clayRed/70 mb-8 leading-relaxed">
-            {isRTL
-              ? 'سنرسل لك رسالة لتأكيد بريدك الإلكتروني قبل تفعيل الحساب.'
-              : 'We’ll email you a confirmation link — your account is activated only after you verify your email.'}
+            {ui.account.signInDesc}
           </p>
 
           <a
@@ -149,23 +150,6 @@ export default function RegisterPage() {
           </div>
 
           <form onSubmit={onSubmit} className="space-y-5">
-            <div>
-              <label className="mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
-                {isRTL ? 'الاسم' : 'Name'}
-              </label>
-              <div className="relative">
-                <FiUser className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-stone/50 rtl:left-auto rtl:right-3" />
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  autoComplete="name"
-                  className="w-full border border-brand-stone/40 bg-brand-pageCanvas py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
-                  placeholder={isRTL ? 'الاسم' : 'Your name'}
-                />
-              </div>
-            </div>
             <div>
               <label className="mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
                 {isRTL ? 'البريد الإلكتروني' : 'Email'}
@@ -192,32 +176,9 @@ export default function RegisterPage() {
                 <input
                   type="password"
                   required
-                  minLength={8}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="new-password"
-                  className="w-full border border-brand-stone/40 bg-brand-pageCanvas py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
-                  placeholder="••••••••"
-                />
-              </div>
-              <p className="mt-1 font-montserrat text-[10px] text-brand-clayRed/50">
-                {isRTL
-                  ? '٨ أحرف على الأقل، حرف كبير واحد ورقم واحد'
-                  : 'At least 8 characters, one capital letter, and one number'}
-              </p>
-            </div>
-            <div>
-              <label className="mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
-                {isRTL ? 'تأكيد كلمة المرور' : 'Confirm password'}
-              </label>
-              <div className="relative">
-                <FiLock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-stone/50 rtl:left-auto rtl:right-3" />
-                <input
-                  type="password"
-                  required
-                  value={confirm}
-                  onChange={(e) => setConfirm(e.target.value)}
-                  autoComplete="new-password"
+                  autoComplete="current-password"
                   className="w-full border border-brand-stone/40 bg-brand-pageCanvas py-3 ps-10 pe-4 font-montserrat text-sm focus:border-brand-darkRed focus:outline-none rtl:ps-4 rtl:pe-10"
                   placeholder="••••••••"
                 />
@@ -230,27 +191,16 @@ export default function RegisterPage() {
               className="w-full bg-brand-darkRed py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-white transition-colors hover:bg-brand-dustyBlue disabled:opacity-50"
               data-cursor-hover
             >
-              {busy ? (isRTL ? 'جاري الإرسال…' : 'Sending…') : isRTL ? 'إنشاء الحساب' : 'Create account'}
+              {busy ? (isRTL ? 'جاري الدخول…' : 'Signing in…') : ui.account.signIn}
             </button>
           </form>
 
           <p className="mt-6 text-center font-montserrat text-xs text-brand-clayRed/60">
-            {isRTL ? 'لديك حساب بالفعل؟' : 'Already have an account?'}{' '}
-            <LocaleLink href="/sign-in" className="text-brand-dustyBlue underline">
-              {isRTL ? 'تسجيل الدخول' : 'Sign in'}
+            {isRTL ? 'ليس لديك حساب؟' : "Don't have an account?"}{' '}
+            <LocaleLink href="/register" className="text-brand-dustyBlue underline">
+              {ui.account.createAccount}
             </LocaleLink>
           </p>
-
-          {devLink ? (
-            <div className="mt-6 rounded-lg border border-dashed border-brand-dustyBlue/40 bg-brand-dustyBlue/5 p-4">
-              <p className="font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-darkRed mb-2">
-                Dev only — no RESEND_API_KEY
-              </p>
-              <a href={devLink} className="break-all font-montserrat text-xs text-brand-dustyBlue underline">
-                {devLink}
-              </a>
-            </div>
-          ) : null}
         </motion.div>
       </div>
     </div>

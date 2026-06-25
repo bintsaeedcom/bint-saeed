@@ -62,13 +62,17 @@ export type ProductSchemaFacts = {
   neckline?: string
   fit?: string
   maximumGarmentLength?: string
+  jacketLength?: string
+  dressLength?: string
   modelHeight?: string
   modelWears?: string
   lining?: string
   innerDress?: string
+  jacket?: string
   closure?: string
   pockets?: string
   trim?: string
+  buttons?: string
   personalisation?: string
   stylingDetail?: string
   styling?: string
@@ -76,6 +80,7 @@ export type ProductSchemaFacts = {
   care?: string
   material?: string
   madeIn?: string
+  availableColours?: string
   faq?: ProductFaqItem[]
 }
 
@@ -157,14 +162,11 @@ const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
     madeIn: DEFAULT_MADE_IN,
   },
   'covent-garden-signature-set': {
-    productType: 'Covent Garden dress and short-sleeve tailored jacket set',
-    productCategory: 'Set, Two-Piece Set, Coordinate Set, Luxury Modest Fashion, Premium Modest Fashion, Contemporary Womenswear',
-    stylingDetail:
-      'Two-piece set — coordinating fitted maxi dress and short-sleeve tailored jacket with Al Khous-inspired woven pocket flaps and Knotted Line buttons',
-    trim: 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
-    lining: 'Soft crepe lining',
-    material: 'Outer: 80% Polyester, 20% Viscose; Lining: 70% Polyester, 30% Viscose',
-    suitableFor: DEFAULT_SUITABLE_FOR,
+    productType:
+      'Contemporary premium two-piece set comprising a fitted dress and matching short-sleeve tailored jacket inspired by Emirati heritage.',
+    productCategory:
+      'Contemporary Two-Piece Set, Designer Set, Premium Two-Piece Set, Dress and Jacket Set, Matching Set, Co-Ord Set, Tailored Set, Short-Sleeve Jacket, Fitted Dress, Contemporary Womenswear, Premium Womenswear, Formal Set, Workwear Set, Occasion Set, Modest Fashion',
+    fit: 'Tailored short-sleeve jacket with a coordinating fitted dress.',
     madeIn: DEFAULT_MADE_IN,
   },
   'soho-set': {
@@ -337,20 +339,28 @@ export function buildProductAdditionalProperties(
     ['Product category', facts.productCategory],
     ['Neckline', facts.neckline],
     ['Fit', facts.fit],
+    ['Jacket', facts.jacket],
+    ['Jacket length', facts.jacketLength],
+    ['Dress length', facts.dressLength],
     ['Maximum garment length', facts.maximumGarmentLength],
     ['Model height', facts.modelHeight],
     ['Model wears', facts.modelWears],
     ['Lining', facts.lining],
-    ['Inner dress', facts.innerDress],
     ['Closure', facts.closure],
     ['Pockets', facts.pockets],
     ['Trim', facts.trim],
+    ['Buttons', facts.buttons],
     ['Personalisation', facts.personalisation],
     ['Styling', facts.styling],
     ['Styling detail', facts.stylingDetail],
     ['Material', facts.material],
     ['Care', facts.care],
+    ['Available colours', facts.availableColours],
   ]
+
+  if (facts.innerDress?.trim()) {
+    optional.push([facts.jacket ? 'Dress' : 'Inner dress', facts.innerDress])
+  }
 
   for (const [name, value] of optional) {
     if (value?.trim()) {

@@ -5,12 +5,12 @@ import 'react-phone-number-input/style.css'
 import './phone-input-theme.css'
 import LayoutWrapper from '@/components/LayoutWrapper'
 import ContentProtection from '@/components/ContentProtection'
-import { Toaster } from 'react-hot-toast'
+import AnalyticsBootstrap from '@/components/AnalyticsBootstrap'
+import AnalyticsTracker from '@/components/AnalyticsTracker'
+import AppToaster from '@/components/AppToaster'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 import { CurrencyProvider } from '@/lib/currency/CurrencyContext'
 import { AnalyticsProvider } from '@/lib/analytics/AnalyticsContext'
-import AnalyticsBootstrap from '@/components/AnalyticsBootstrap'
-import AnalyticsTracker from '@/components/AnalyticsTracker'
 
 import { buildRootMetadata } from '@/lib/i18n/buildRootMetadata'
 import { getServerLocale, getServerPathname } from '@/lib/i18n/serverLocale'
@@ -207,7 +207,7 @@ export default async function RootLayout({
         <meta name="distribution" content="Global" />
         <meta name="rating" content="General" />
       </head>
-      <body className="min-h-screen font-sans antialiased">
+      <body className="min-h-screen font-sans antialiased" dir={dir} data-locale={locale}>
         <LanguageProvider initialLocale={locale}>
           <AnalyticsProvider>
             <CurrencyProvider>
@@ -217,33 +217,7 @@ export default async function RootLayout({
               <LayoutWrapper>
                 {children}
               </LayoutWrapper>
-              <Toaster 
-                position="bottom-right"
-                toastOptions={{
-                  style: {
-                    background:
-                      'linear-gradient(135deg, rgba(59,10,18,0.96) 0%, rgba(31,5,8,0.94) 100%)',
-                    color: '#F5EDE8',
-                    fontFamily: 'var(--font-montserrat)',
-                    letterSpacing: '0.03em',
-                    border: '1px solid rgba(212,189,172,0.28)',
-                    borderRadius: '12px',
-                    boxShadow: '0 18px 36px rgba(12, 2, 8, 0.35)',
-                    padding: '12px 14px',
-                    minWidth: '250px',
-                  },
-                  success: {
-                    style: {
-                      borderColor: 'rgba(146,170,193,0.45)',
-                    },
-                  },
-                  error: {
-                    style: {
-                      borderColor: 'rgba(193,144,134,0.5)',
-                    },
-                  },
-                }}
-              />
+              <AppToaster />
             </CurrencyProvider>
           </AnalyticsProvider>
         </LanguageProvider>

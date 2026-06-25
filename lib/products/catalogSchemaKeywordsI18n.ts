@@ -42,11 +42,8 @@ const CATALOG_EXCLUSIVE_EN: Record<string, readonly string[]> = {
   'covent-garden-signature-set': [
     'Covent Garden Signature Set',
     'Bint Saeed Covent Garden Set',
-    'Khous set',
-    'two-piece set',
-    'luxury coordinate set',
-    'premium coordinate set',
-    'contemporary premium set',
+    'premium two-piece set',
+    'dress and jacket set',
     'BS-ST-002',
   ],
   'soho-set': [

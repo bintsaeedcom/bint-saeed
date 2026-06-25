@@ -78,12 +78,79 @@ const COVENT_GARDEN_SET_EXCLUSIVE_ROWS: KwRow[] = [
 
 const COVENT_GARDEN_SET_EXCLUSIVE_I18N = rowsToKw(COVENT_GARDEN_SET_EXCLUSIVE_ROWS)
 
+/** Approved EN discovery terms — merged with translated rows above. */
+const COVENT_GARDEN_SET_KEYWORDS_EN = [
+  'Covent Garden Signature Set',
+  'Bint Saeed Covent Garden Set',
+  'Bint Saeed Abu Dhabi',
+  'contemporary two-piece set',
+  'premium two-piece set',
+  'designer two-piece set',
+  'dress and jacket set',
+  'matching dress and jacket',
+  'co-ord set',
+  'coordinated set',
+  "women's coordinated set",
+  'tailored set',
+  'short sleeve jacket set',
+  'short sleeve blazer set',
+  'fitted dress set',
+  'formal two-piece set',
+  'workwear set',
+  'business meeting outfit',
+  'elegant work outfit',
+  'afternoon tea outfit',
+  'dinner outfit',
+  'gallery opening outfit',
+  'cultural event outfit',
+  'premium womenswear',
+  'contemporary womenswear',
+  'modest fashion',
+  'premium modest fashion',
+  'designer modest fashion',
+  'Abu Dhabi fashion',
+  'Abu Dhabi designer',
+  'Abu Dhabi contemporary fashion',
+  'made in Abu Dhabi',
+  'created in Abu Dhabi',
+  'United Arab Emirates fashion',
+  'UAE fashion',
+  'Emirati fashion',
+  'Emirati designer',
+  'Emirati heritage',
+  'Emirati culture',
+  'traditional Emirati artisanal craft',
+  'Al Khous',
+  'Khous',
+  'Al Khous weaving',
+  'date palm weaving',
+  'date palm frond weaving',
+  'palm frond weaving',
+  'traditional UAE craft',
+  'contemporary Emirati design',
+  'cultural fashion',
+  'heritage fashion',
+  'Knotted Line buttons',
+  'gold-tone buttons',
+  'Burgundy two-piece set',
+  'Deep Black two-piece set',
+  'Navy Blue two-piece set',
+  'premium gift for wife',
+  'premium gift for mother',
+  'premium gift for daughter',
+  'BS-ST-002',
+] as const
+
 /** Covent Garden Signature Set-only schema keywords merged with shared pools in productSchemaMeta. */
 export function getLocalizedCoventGardenSignatureSetExclusiveKeywords(
   locale: AppLocale,
   colorName?: string,
 ): string[] {
-  const terms = new Set<string>(COVENT_GARDEN_SET_EXCLUSIVE_I18N.map((row) => row[locale]))
+  const terms = new Set<string>(
+    locale === 'en'
+      ? [...COVENT_GARDEN_SET_KEYWORDS_EN, ...COVENT_GARDEN_SET_EXCLUSIVE_I18N.map((row) => row.en)]
+      : COVENT_GARDEN_SET_EXCLUSIVE_I18N.map((row) => row[locale]),
+  )
   const color = colorName?.trim()
   if (color) {
     terms.add(color)

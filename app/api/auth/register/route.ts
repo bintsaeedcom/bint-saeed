@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import { randomBytes } from 'crypto'
 import { authStore, usingRedis } from '@/lib/auth/store'
 import { sendVerificationEmail } from '@/lib/auth/sendVerificationEmail'
+import { passwordsMatch, validatePassword } from '@/lib/auth/passwordPolicy'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -19,17 +20,31 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const emailRaw = body.email
     const password = body.password
-    const name = typeof body.name === 'string' ? body.name.trim().slice(0, 120) : undefined
+    const confirmPassword = body.confirmPassword
+    const nameRaw = body.name
 
     if (!emailRaw || typeof emailRaw !== 'string') {
       return NextResponse.json({ error: 'Email is required.' }, { status: 400 })
     }
+    if (!nameRaw || typeof nameRaw !== 'string' || !nameRaw.trim()) {
+      return NextResponse.json({ error: 'Name is required.' }, { status: 400 })
+    }
     if (!password || typeof password !== 'string') {
       return NextResponse.json({ error: 'Password is required.' }, { status: 400 })
     }
-    if (password.length < 8) {
-      return NextResponse.json({ error: 'Password must be at least 8 characters.' }, { status: 400 })
+    if (!confirmPassword || typeof confirmPassword !== 'string') {
+      return NextResponse.json({ error: 'Please confirm your password.' }, { status: 400 })
     }
+
+    const passwordCheck = validatePassword(password)
+    if (!passwordCheck.ok) {
+      return NextResponse.json({ error: passwordCheck.error }, { status: 400 })
+    }
+    if (!passwordsMatch(password, confirmPassword)) {
+      return NextResponse.json({ error: 'Passwords do not match.' }, { status: 400 })
+    }
+
+    const name = nameRaw.trim().slice(0, 120)
 
     const email = norm(emailRaw)
     if (!EMAIL_RE.test(email)) {
@@ -50,7 +65,7 @@ export async function POST(request: NextRequest) {
     await authStore.setPendingVerify(email, token, {
       email,
       passwordHash,
-      name: name || undefined,
+      name,
     })
 
     const sent = await sendVerificationEmail(request, { to: email, token, name })

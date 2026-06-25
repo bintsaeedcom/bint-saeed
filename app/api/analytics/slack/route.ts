@@ -239,22 +239,22 @@ export async function POST(request: NextRequest) {
 }
 
 function resolveSlackWebhookForType(type: string): string | undefined {
-  // Route abandoned-cart / recovery alerts to a dedicated channel when configured.
-  const recoveryTypes = new Set([
-    'cart_event',
-    'checkout_started',
-  ])
+  const recoveryTypes = new Set(['checkout_started'])
   const abandonedTypes = new Set([
     'abandoned_cart',
     'checkout_abandoned',
     'cart_recovery_started',
     'cart_recovered',
   ])
+  const cartTypes = new Set(['cart_add', 'cart_event'])
   if (abandonedTypes.has(type) && SLACK_ABANDONED_CART_WEBHOOK_URL) {
     return SLACK_ABANDONED_CART_WEBHOOK_URL
   }
   if (recoveryTypes.has(type) && SLACK_RECOVERY_WEBHOOK_URL) {
     return SLACK_RECOVERY_WEBHOOK_URL
+  }
+  if (cartTypes.has(type)) {
+    return SLACK_WEBHOOK_URL || undefined
   }
   return SLACK_WEBHOOK_URL || undefined
 }
@@ -567,6 +567,95 @@ function formatSlackMessage(type: string, data: any) {
               {
                 type: 'mrkdwn',
                 text: `Visitor \`${data.visitorId || 'Unknown'}\` · ${timeOnSite} on site · ${timestamp} GST`,
+              },
+            ],
+          },
+        ],
+      }
+    }
+
+    case 'cart_add': {
+      const cart = data.cartEvent || {}
+      const lines = [
+        cart.productName ? `*${cart.productName}*` : null,
+        cart.color ? `Colour: ${cart.color}` : null,
+        cart.size ? `Size: ${cart.size}` : null,
+        cart.quantity ? `Qty: ${cart.quantity}` : null,
+        cart.linePriceAed ? `Price: AED ${cart.linePriceAed}` : null,
+        cart.sku ? `SKU: ${cart.sku}` : null,
+        cart.productUrl && typeof data.browser?.url === 'string'
+          ? `Product: ${cart.productUrl}`
+          : cart.productUrl
+            ? `Product: ${cart.productUrl}`
+            : null,
+      ].filter(Boolean)
+      return {
+        blocks: [
+          {
+            type: 'header',
+            text: { type: 'plain_text', text: '🛒 Added to bag', emoji: true },
+          },
+          {
+            type: 'section',
+            text: { type: 'mrkdwn', text: lines.join('\n') || 'Item added to cart' },
+          },
+          {
+            type: 'section',
+            fields: [
+              { type: 'mrkdwn', text: `*Bag total:*\nAED ${data.cartValueAed ?? '—'}` },
+              { type: 'mrkdwn', text: `*Items in bag:*\n${data.cartItems ?? '—'}` },
+              { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
+              { type: 'mrkdwn', text: `*Device:*\n${device}` },
+            ],
+          },
+          {
+            type: 'context',
+            elements: [
+              {
+                type: 'mrkdwn',
+                text: `Visitor \`${data.visitorId || 'Unknown'}\` · ${timestamp} GST`,
+              },
+            ],
+          },
+        ],
+      }
+    }
+
+    case 'abandoned_cart': {
+      const itemLines =
+        Array.isArray(data.items) && data.items.length > 0
+          ? data.items
+              .map(
+                (item: { name?: string; quantity?: number; color?: string; size?: string }) =>
+                  `• ${item.name || 'Item'}${item.quantity ? ` ×${item.quantity}` : ''}${item.color ? ` — ${item.color}` : ''}${item.size ? ` / ${item.size}` : ''}`,
+              )
+              .join('\n')
+          : 'Items in bag'
+      return {
+        blocks: [
+          {
+            type: 'header',
+            text: { type: 'plain_text', text: '🛍️ Abandoned bag', emoji: true },
+          },
+          {
+            type: 'section',
+            fields: [
+              { type: 'mrkdwn', text: `*Bag value:*\nAED ${data.cartValueAed ?? '—'}` },
+              { type: 'mrkdwn', text: `*Items:*\n${data.cartItems ?? '—'}` },
+              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `*Device:*\n${device}` },
+            ],
+          },
+          {
+            type: 'section',
+            text: { type: 'mrkdwn', text: `*Bag contents:*\n${itemLines}` },
+          },
+          {
+            type: 'context',
+            elements: [
+              {
+                type: 'mrkdwn',
+                text: `Visitor \`${data.visitorId || 'Unknown'}\` · ${timestamp} GST · ${data.browser?.path || 'Unknown page'}`,
               },
             ],
           },

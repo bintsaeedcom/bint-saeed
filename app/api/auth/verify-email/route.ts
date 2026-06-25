@@ -35,6 +35,7 @@ export async function GET(request: NextRequest) {
       passwordHash: payload.passwordHash,
       name: payload.name,
       verifiedAt: new Date().toISOString(),
+      authProvider: 'email',
     }
     await authStore.setVerifiedUser(payload.email, record)
 
