@@ -671,14 +671,14 @@ export default function StrandsPage() {
                 key={product.id}
                 className="flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-[6px] border border-[#e8ddd4] bg-[#faf8f5] shadow-[0_8px_32px_rgba(26,2,16,0.08)] md:w-[360px]"
               >
-                <div className="relative aspect-[3/4] w-full shrink-0 bg-[#f0eeeb]">
+                <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden bg-[#f0eeeb]">
                   {product.images[0] ? (
                     <Image
                       src={product.images[0]}
                       alt={getStrandCarouselAlt(product.id)}
                       fill
                       sizes="(max-width: 768px) 280px, 360px"
-                      className="object-contain object-center p-3 md:p-4"
+                      className="object-cover object-center"
                     />
                   ) : null}
                 </div>
@@ -801,7 +801,7 @@ export default function StrandsPage() {
                         alt={getStrandCarouselAlt(product.id)}
                         fill
                         sizes="(max-width: 640px) 45vw, (max-width: 1280px) 25vw, 20vw"
-                        className="object-contain object-center p-3 transition-transform duration-500 group-hover:scale-[1.02] md:p-4"
+                        className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
                       />
                     ) : null}
                     {product.isLimitedEdition ? (
