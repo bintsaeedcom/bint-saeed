@@ -3,7 +3,6 @@ import { getProductSlug } from '@/lib/products/links'
 import { getProductImageAlt, PRODUCT_IMAGE_DIMENSIONS } from '@/lib/products/imageAlt'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
-import { getSchemaAudienceType } from '@/lib/brand/brandPositioning'
 import { resolveProductSku } from '@/lib/products/sku'
 import { getProductColorOptions } from '@/lib/products/productColorAvailability'
 import { getProductPdpContent } from '@/data/productPdpContent'
@@ -23,6 +22,12 @@ import {
   getKnightsbridgeSchemaAudience,
   isKnightsbridgeAbayaSlug,
 } from '@/lib/products/knightsbridgeSchemaI18n'
+import {
+  getKnightsbridgeDressSchemaAudience,
+  isKnightsbridgeDressSlug,
+} from '@/lib/products/knightsbridgeDressSchemaI18n'
+import { getFallbackSchemaAudience } from '@/lib/products/categorySchemaAudience'
+import { buildProductSemanticJsonLdFields } from '@/lib/products/productSemanticJsonLd'
 import { getSharedAbayaSchemaAudience, SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
@@ -120,9 +125,11 @@ function schemaAudience(locale: AppLocale, slug: string, product: Product) {
         ? getKensingtonSchemaAudience(locale)
         : isKnightsbridgeAbayaSlug(slug)
           ? getKnightsbridgeSchemaAudience(locale)
-          : product.category === 'Abayas'
-            ? getSharedAbayaSchemaAudience(locale)
-            : getSchemaAudienceType(locale)
+          : isKnightsbridgeDressSlug(slug)
+            ? getKnightsbridgeDressSchemaAudience(locale)
+            : product.category === 'Abayas'
+              ? getSharedAbayaSchemaAudience(locale)
+              : getFallbackSchemaAudience(product.category, locale)
 
   return {
     '@type': 'PeopleAudience' as const,
@@ -151,6 +158,7 @@ function schemaSharedFields(
     additionalProperty: buildProductAdditionalProperties(product, facts, locale),
     manufacturer: schemaManufacturer(),
     audience: schemaAudience(locale, slug, product),
+    ...buildProductSemanticJsonLdFields(slug, locale),
     ...(lang ? { inLanguage: lang } : {}),
   }
 }

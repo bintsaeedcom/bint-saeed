@@ -7,6 +7,7 @@ import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
 import SubscribeForm from './SubscribeForm'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { useEffect, useState } from 'react'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 
@@ -20,7 +21,8 @@ const socialLinks = [
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
-  const { t, isRTL } = useLanguage()
+  const { t, isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false)
   const [quickEmail, setQuickEmail] = useState('')
   const [quickEmailError, setQuickEmailError] = useState('')
@@ -89,15 +91,13 @@ export default function Footer() {
           <div className="mb-10 rounded-2xl border border-white/15 bg-[linear-gradient(160deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-5 shadow-[0_22px_48px_rgba(5,1,5,0.35)] backdrop-blur-md md:p-7">
             <div className="mb-5 max-w-2xl">
               <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.34em] text-brand-dustyBlue/85">
-                {isRTL ? 'القائمة البريدية' : 'Email List'}
+                {ui.footer.emailList}
               </p>
               <h3 className="font-rozha text-2xl text-brand-stone md:text-3xl">
-                {isRTL ? 'اشتركي للحصول على الإصدارات الجديدة أولاً' : 'Be first to know about new drops'}
+                {ui.footer.subscribeEyebrow}
               </h3>
               <p className="mt-2 font-montserrat text-sm tracking-wide text-white/55">
-                {isRTL
-                  ? 'اشتركي لتصلكم الإصدارات الجديدة، الدعوات الخاصة، وتحديثات العلامة.'
-                  : 'Subscribe for new collection launches, private invites, and brand updates.'}
+                {ui.footer.subscribeEyebrow}
               </p>
             </div>
             <div className="rounded-xl border border-white/10 bg-black/20 p-4 md:p-5">
@@ -110,7 +110,7 @@ export default function Footer() {
                       setQuickEmail(e.target.value)
                       if (quickEmailError) setQuickEmailError('')
                     }}
-                    placeholder={isRTL ? 'البريد الإلكتروني' : 'Email Address'}
+                    placeholder={ui.footer.emailPlaceholder}
                     className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-5 py-3.5 font-montserrat text-sm tracking-wide text-brand-stone placeholder-white/35 focus:outline-none focus:border-brand-dustyBlue/35"
                   />
                   {quickEmailError ? (
@@ -123,7 +123,7 @@ export default function Footer() {
                   className="inline-flex min-h-[46px] items-center justify-center rounded-[4px] bg-brand-dustyBlue px-7 font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#1a0008] transition-colors hover:bg-brand-stone"
                   data-cursor-hover
                 >
-                  {isRTL ? 'اشتراك' : 'Subscribe'}
+                  {ui.footer.subscribe}
                 </button>
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function Footer() {
               <div className={`mt-6 space-y-4 ${isRTL ? 'items-end' : 'items-start'} flex flex-col`}>
                 <div className={`${isRTL ? 'text-right' : 'text-left'}`}>
                   <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/45">
-                    {isRTL ? 'اللغة' : 'Language'}
+                    {ui.footer.language}
                   </p>
                   <div className="inline-flex border-b border-white/50 pb-1">
                     <LanguageSwitcher variant="light" align="start" />
@@ -151,7 +151,7 @@ export default function Footer() {
 
                 <div className={`${isRTL ? 'text-right' : 'text-left'}`}>
                   <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/45">
-                    {isRTL ? 'الدولة/المنطقة' : 'Country/Region'}
+                    {ui.footer.countryRegion}
                   </p>
                   <div className="inline-flex border-b border-white/50 pb-1">
                     <CurrencySwitcher variant="light" showSymbol={false} align="start" />
@@ -268,10 +268,10 @@ export default function Footer() {
               </div>
               <div>
                 <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {isRTL ? 'شحن عالمي' : 'Worldwide Shipping'}
+                  {ui.footer.worldwideShipping}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'توصيل عالمي' : 'Delivered globally'}
+                  {ui.footer.deliveredGlobally}
                 </p>
               </div>
             </div>
@@ -283,10 +283,10 @@ export default function Footer() {
               </div>
               <div>
                 <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {isRTL ? 'شحن مجاني داخل الإمارات' : 'Free UAE Shipping'}
+                  {ui.footer.freeUaeShippingTitle}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'للطلبات فوق 1000 درهم' : 'On orders above 1000 AED'}
+                  {ui.footer.freeUaeShippingDesc}
                 </p>
               </div>
             </div>
@@ -298,10 +298,10 @@ export default function Footer() {
               </div>
               <div>
                 <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {isRTL ? 'يُصنع عند الطلب' : 'Crafted to Order'}
+                  {ui.footer.craftedToOrderTitle}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'يُنتج فقط عند الطلب' : 'Produced only upon request'}
+                  {ui.footer.craftedToOrderDesc}
                 </p>
               </div>
             </div>
@@ -313,10 +313,10 @@ export default function Footer() {
               </div>
               <div>
                 <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {isRTL ? 'نعطي للأمام' : 'Giving Forward'}
+                  {ui.footer.givingForwardTitle}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {isRTL ? 'يتم تخصيص 20 درهم من كل قطعة للأعمال الخيرية' : '20 AED from each piece is dedicated to charity'}
+                  {ui.footer.givingForwardDesc}
                 </p>
               </div>
             </div>
@@ -364,7 +364,7 @@ export default function Footer() {
                 className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
                 data-cursor-hover
               >
-                Shipment & Return Policy
+                {ui.checkout.shipmentPolicy}
               </LocaleLink>
             </div>
 
@@ -397,27 +397,25 @@ export default function Footer() {
             type="button"
             className="absolute inset-0 bg-black/45"
             onClick={() => setIsSubscribeOpen(false)}
-            aria-label={isRTL ? 'إغلاق نافذة الاشتراك' : 'Close subscribe modal'}
+            aria-label={ui.footer.closeModal}
           />
           <div className="absolute right-0 top-0 h-full w-full max-w-[740px] overflow-y-auto bg-[#f6f3ef] p-6 shadow-[-24px_0_70px_rgba(8,2,8,0.35)] md:p-8">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="font-montserrat text-2xl uppercase tracking-[0.14em] text-brand-darkRed">
-                {isRTL ? 'النشرة البريدية' : 'Newsletter'}
+                {ui.footer.newsletter}
               </h3>
               <button
                 type="button"
                 onClick={() => setIsSubscribeOpen(false)}
                 className="rounded-full border border-brand-darkRed/15 p-2 text-brand-darkRed/75 transition-colors hover:bg-brand-darkRed/5 hover:text-brand-darkRed"
                 data-cursor-hover
-                aria-label={isRTL ? 'إغلاق' : 'Close'}
+                aria-label={ui.footer.close}
               >
                 <FiX className="h-5 w-5" />
               </button>
             </div>
             <p className="mb-6 font-montserrat text-sm leading-relaxed tracking-wide text-brand-darkRed/75">
-              {isRTL
-                ? 'يرجى إدخال البيانات التالية للاشتراك في القائمة البريدية.'
-                : 'Please provide the information below to subscribe to our newsletter.'}
+              {ui.footer.subscribeEyebrow}
             </p>
             <SubscribeForm variant="dark" initialEmail={quickEmail} />
           </div>

@@ -564,9 +564,10 @@ export const products: Product[] = [
     name: 'Knightsbridge Dress',
     price: 2199,
     description:
-      'Midi-length dress with layered skirt and trim inspired by traditional Khous weaving — evening-ready Emirati heritage design.',
-    fabric: 'French Tulle, Swarovski crystals, Duchess satin lining',
-    measurements: 'Fitted bodice, flowing skirt. Length: 160cm (size M). Train: 30cm.',
+      'Feminine cotton-blend maxi dress with Khous-inspired woven halter detailing — effortless elegance for life beyond a single season, made in Abu Dhabi.',
+    fabric: 'Outer: 60% Cotton, 40% Polyester',
+    measurements:
+      'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
     images: knightsbridgeDressGallery('dark-brown'),
     colorImages: {
       'Dark Brown': knightsbridgeDressGallery('dark-brown'),

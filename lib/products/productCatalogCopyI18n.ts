@@ -1,6 +1,7 @@
 import type { Product } from '@/data/products'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getProductSlug } from '@/lib/products/links'
+import { CATALOG_COPY_BY_LOCALE } from '@/data/productCatalogCopyLocales'
 
 type CatalogFields = {
   description: string
@@ -64,15 +65,15 @@ const ID_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'knightsbridge-dress': {
     description:
-      'Gaun midi dengan rok berlapis dan trim terinspirasi anyaman Khous tradisional — desain warisan Emirati siap malam.',
-    fabric: 'French Tulle, kristal Swarovski, lapisan duchess satin',
+      'Gaun maxi feminin dari campuran katun dengan detail anyaman halter terinspirasi Khous — keanggunan effortless untuk kehidupan di luar satu musim, dibuat di Abu Dhabi.',
+    fabric: 'Luar: 60% Katun, 40% Polyester',
     measurements:
-      'Bodice pas, rok mengalir. Panjang: 160 cm (ukuran M). Ekor: 30 cm.',
+      'Siluet maxi feminin dengan lipatan kotak lembut terstruktur. Panjang kustom tersedia atas permintaan.',
   },
   'covent-garden-long-dress': {
     description: 'Kolom ramping dari stretch crepe dengan vent belakang tinggi untuk kemudahan bergerak.',
     fabric: 'Stretch crepe, lapisan power mesh',
-    measurements: 'Panjang lantai 148 cm (ukuran M).',
+    measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'hampstead-dress': {
     description:
@@ -152,15 +153,15 @@ const MS_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'knightsbridge-dress': {
     description:
-      'Gaun midi dengan rok berlapis dan hiasan terinspirasi tenunan Khous tradisional — reka bentuk warisan Emirati untuk malam.',
-    fabric: 'French Tulle, kristal Swarovski, lapisan duchess satin',
+      'Gaun maxi feminin daripada campuran kapas dengan perincian tenunan halter terinspirasi Khous — keanggunan effortless untuk kehidupan melangkaui satu musim, dihasilkan di Abu Dhabi.',
+    fabric: 'Luar: 60% Kapas, 40% Poliester',
     measurements:
-      'Bodice ketat, rok mengalir. Panjang: 160 cm (saiz M). Ekor: 30 cm.',
+      'Siluet maxi feminin dengan lipatan kotak lembut berstruktur. Panjang tersuai tersedia atas permintaan.',
   },
   'covent-garden-long-dress': {
     description: 'Kolum ramping daripada stretch crepe dengan vent belakang tinggi untuk kemudahan bergerak.',
     fabric: 'Stretch crepe, lapisan power mesh',
-    measurements: 'Panjang lantai 148 cm (saiz M).',
+    measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'hampstead-dress': {
     description:
@@ -187,17 +188,24 @@ export function getLocalizedProductCatalogFields(
   product: Product,
   locale: AppLocale = 'en',
 ): { description: string; fabric: string; measurements: string } {
+  const slug = getProductSlug(product)
+  const localized = CATALOG_COPY_BY_LOCALE[locale]?.[slug]
+  if (localized) return localized
   if (locale === 'id') {
-    const localized = ID_CATALOG_COPY[getProductSlug(product)]
-    if (localized) return localized
+    const idCopy = ID_CATALOG_COPY[slug]
+    if (idCopy) return idCopy
   }
   if (locale === 'ms') {
-    const localized = MS_CATALOG_COPY[getProductSlug(product)]
-    if (localized) return localized
+    const msCopy = MS_CATALOG_COPY[slug]
+    if (msCopy) return msCopy
   }
-  return {
-    description: product.description,
-    fabric: product.fabric,
-    measurements: product.measurements,
+  if (locale === 'en') {
+    return {
+      description: product.description,
+      fabric: product.fabric,
+      measurements: product.measurements,
+    }
   }
+  // Non-EN: never surface English catalog fields — use schema facts downstream if needed.
+  return { description: '', fabric: product.fabric, measurements: product.measurements }
 }

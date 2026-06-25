@@ -9,7 +9,6 @@ import type { AppLocale } from './routing'
 export const VALID_LANGUAGES: Language[] = ['en', 'ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms']
 
 function resolveTranslations(lang: Language): Translations {
-  if (lang === 'nl' || lang === 'pt') return translations.en
   if (lang === 'id') return translations.id
   if (lang === 'ms') return translations.ms as unknown as Translations
   return translations[lang]

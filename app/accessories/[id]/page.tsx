@@ -14,6 +14,8 @@ import { accessories, accessoryCategories } from '@/data/accessories'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
+import { productPageUi } from '@/lib/i18n/productPageUi'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { withBrandAlt } from '@/lib/products/imageAlt'
@@ -60,7 +62,9 @@ export default function AccessoryDetailPage() {
 
   const addItem = useCartStore((state) => state.addItem)
   const { formatPrice } = useCurrency()
-  const { isRTL, t } = useLanguage()
+  const { isRTL, t, language } = useLanguage()
+  const ui = commerceUi(language)
+  const productUi = productPageUi(language)
   const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
   const mainGalleryModules = useMemo(
     () => (thumbConnected ? [Navigation, Thumbs, Pagination] : [Navigation, Pagination]),
@@ -86,14 +90,14 @@ export default function AccessoryDetailPage() {
       <div className="flex min-h-screen items-center justify-center bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8">
         <div className={`text-center ${isRTL ? 'rtl' : ''}`}>
           <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed mb-4">
-            {isRTL ? 'المنتج غير موجود' : 'Product Not Found'}
+            {productUi.productNotFound}
           </h1>
           <LocaleLink
             href="/accessories"
             className="font-montserrat text-sm uppercase tracking-[0.15em] text-brand-clayRed hover:text-brand-dustyBlue"
             data-cursor-hover
           >
-            {isRTL ? 'العودة للإكسسوارات' : 'Return to Accessories'}
+            {ui.accessories.returnToAccessories}
           </LocaleLink>
         </div>
       </div>
@@ -104,7 +108,7 @@ export default function AccessoryDetailPage() {
 
   const handleAddToCart = () => {
     if (!selectedColor && accessory.colors.length > 1) {
-      toast.error(isRTL ? 'الرجاء اختيار اللون' : 'Please select a colour')
+      toast.error(ui.accessories.selectColour)
       return
     }
 
@@ -142,7 +146,7 @@ export default function AccessoryDetailPage() {
     return [
       {
         id: 'description',
-        title: isRTL ? 'تفاصيل المنتج' : 'Product Details',
+        title: productUi.productDetails,
         titleTag: 'h2',
         children: (
           <ul className={PDP_BULLET_LIST}>
@@ -152,7 +156,7 @@ export default function AccessoryDetailPage() {
       },
       {
         id: 'materials',
-        title: isRTL ? 'المواد' : 'Materials',
+        title: ui.accessories.materials,
         children: (
           <ul className={PDP_BULLET_LIST}>
             <li className={PDP_BULLET_ITEM}>{materials}</li>
@@ -161,20 +165,20 @@ export default function AccessoryDetailPage() {
       },
       {
         id: 'care',
-        title: isRTL ? 'العناية' : 'Care',
+        title: productUi.care,
         children: (
           <ul className={PDP_BULLET_LIST}>
             <li className={PDP_BULLET_ITEM}>
-              {isRTL ? 'تجنبي ملامسة العطور والمواد الكيميائية' : 'Avoid contact with perfumes and chemicals'}
+              {ui.accessories.careBullets[0]}
             </li>
             <li className={PDP_BULLET_ITEM}>
-              {isRTL ? 'احفظيها في مكان جاف' : 'Store in a dry place'}
+              {ui.accessories.careBullets[1]}
             </li>
             <li className={PDP_BULLET_ITEM}>
-              {isRTL ? 'امسحيها بقطعة قماش ناعمة' : 'Wipe with a soft cloth'}
+              {ui.accessories.careBullets[2]}
             </li>
             <li className={PDP_BULLET_ITEM}>
-              {isRTL ? 'أزيليها قبل السباحة أو الاستحمام' : 'Remove before swimming or bathing'}
+              {ui.accessories.careBullets[3]}
             </li>
           </ul>
         ),
@@ -235,18 +239,15 @@ export default function AccessoryDetailPage() {
         layout="bar"
         rtl={isRTL}
         segments={[
-          { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-          { label: isRTL ? 'الإكسسوارات' : 'Accessories', href: '/accessories' },
+          { label: productUi.home, href: '/home' },
+          { label: ui.common.accessories, href: '/accessories' },
           {
             label: (isRTL ? categoryInfo?.nameAr : categoryInfo?.name) ?? '',
             href: `/accessories?type=${accessory.category}`,
           },
           { label: isRTL ? accessory.nameAr : accessory.name },
         ].filter((s) => s.label.length > 0)}
-        backLink={{
-          href: '/accessories',
-          label: isRTL ? 'العودة إلى الإكسسوارات' : 'Back to Accessories',
-        }}
+        backLink={{ href: '/accessories', label: ui.accessories.returnToAccessories }}
       />
 
       <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-8 sm:py-8 lg:py-12">
@@ -287,7 +288,7 @@ export default function AccessoryDetailPage() {
                             image_index: index,
                           })
                         }}
-                        aria-label={`Show image ${index + 1}`}
+                        aria-label={ui.shop.openProduct.replace('{name}', `${displayName} ${index + 1}`)}
                         data-cursor-hover
                       >
                         {isVideoFile(image) ? (
@@ -522,7 +523,7 @@ export default function AccessoryDetailPage() {
             <div className="mb-3 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
-                  {isRTL ? 'اللون' : 'Color'}
+                  {ui.cart.colour}
                 </span>
                 {selectedColor && (
                   <span className="font-montserrat text-[11px] tracking-wide text-brand-darkRed/65">
@@ -555,12 +556,12 @@ export default function AccessoryDetailPage() {
             <div className="mb-3 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
-                  {isRTL ? 'المقاس' : 'Size'}
+                  {ui.cart.size}
                 </span>
               </div>
               <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
                 <span className={`min-w-[52px] border px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] ${PDP_BUTTON_RADIUS} ${PDP_FILLED_PLUM}`}>
-                  {isRTL ? 'مقاس واحد' : 'One Size'}
+                  {ui.accessories.oneSize}
                 </span>
               </div>
             </div>
@@ -593,7 +594,7 @@ export default function AccessoryDetailPage() {
                   className={`w-full px-6 py-3 sm:flex-1 ${PDP_PRIMARY_CTA}`}
                 data-cursor-hover
               >
-                {isRTL ? 'أضيفي للسلة' : 'Add to Bag'}
+                {productUi.addToBag}
               </button>
 
             </div>
@@ -602,19 +603,19 @@ export default function AccessoryDetailPage() {
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiAward className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
-                  {isRTL ? 'صنع أخلاقي' : 'Ethically made'}
+                  {productUi.ethicallyMade}
                 </span>
               </div>
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiHeart className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
-                  {isRTL ? 'نعطي للأمام' : 'We Give Forward'}
+                  {productUi.weGiveForward}
                 </span>
               </div>
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiGlobe className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
-                  {isRTL ? 'شحن عالمي' : 'Worldwide shipping'}
+                  {productUi.worldwideShipping}
                 </span>
               </div>
             </div>
@@ -623,9 +624,7 @@ export default function AccessoryDetailPage() {
               {isRTL ? accessory.descriptionAr : accessory.description}
             </p>
             <p className={`mb-2 ${PDP_MTO_NOTE}`}>
-              {isRTL
-                ? 'صُنع حسب الطلب، متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
-                : 'Made to order — available within this chapter (availability confirmed when you order).'}
+              {productUi.madeToOrderNote}
             </p>
 
             <PdpAccordion

@@ -1,7 +1,8 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { Product } from '@/data/products'
 import { getProductSlug } from '@/lib/products/links'
-import { getHeritageCraft } from '@/lib/products/heritageSeo'
+import { getHeritageCraft, getHeritageSchemaKeywords } from '@/lib/products/heritageSeo'
+import { getCatalogExclusiveSchemaKeywords } from '@/lib/products/catalogSchemaKeywordsI18n'
 import { productIsOneSizeOnly } from '@/lib/shopProductOptions'
 import {
   buildLocalizedProductKeywords,
@@ -24,6 +25,12 @@ import {
   getLocalizedKensingtonSchemaFacts,
   isKensingtonSlug,
 } from '@/lib/products/kensingtonSchemaI18n'
+import {
+  getLocalizedKnightsbridgeDressFaq,
+  getLocalizedKnightsbridgeDressSchemaFacts,
+  isKnightsbridgeDressSlug,
+} from '@/lib/products/knightsbridgeDressSchemaLocalePacks'
+import { getLocalizedKnightsbridgeDressExclusiveKeywords } from '@/lib/products/knightsbridgeDressSchemaKeywordsI18n'
 import {
   getLocalizedKnightsbridgeFaq,
   getLocalizedKnightsbridgeSchemaFacts,
@@ -58,6 +65,7 @@ export type ProductSchemaFacts = {
   trim?: string
   personalisation?: string
   stylingDetail?: string
+  styling?: string
   suitableFor?: string
   care?: string
   material?: string
@@ -72,56 +80,97 @@ const DEFAULT_MADE_IN = 'Abu Dhabi, United Arab Emirates'
 
 const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
   'covent-garden-abaya': {
+    productType: 'Luxury linen abaya with traditional Al Talli trim',
+    productCategory: 'Abaya, Linen Abaya, Occasion Abaya, Luxury Modest Fashion',
     closure: 'Concealed placket',
     stylingDetail: 'Traditional Al Talli trim',
+    trim: 'Traditional Al Talli trim',
     lining: 'Cotton lining',
+    material: 'European linen blend, cotton lining',
     suitableFor: DEFAULT_SUITABLE_FOR,
     madeIn: DEFAULT_MADE_IN,
   },
   'marylebone-abaya': {
+    productType: 'Open-front layering abaya',
+    productCategory: 'Abaya, Layering Abaya, Contemporary Outerwear, Luxury Modest Fashion',
     closure: 'Open front',
     stylingDetail: 'Wide sleeves for layering over dresses or sets',
+    material: 'Wool-silk blend, matte satin binding',
     suitableFor: DEFAULT_SUITABLE_FOR,
     madeIn: DEFAULT_MADE_IN,
   },
   'park-lane-abaya': {
+    productType: 'Everyday city abaya with fluid drape',
+    productCategory: 'Abaya, Everyday Abaya, Contemporary Womenswear, Luxury Modest Fashion',
     fit: 'Clean line with fluid drape',
     suitableFor: DEFAULT_SUITABLE_FOR,
     madeIn: DEFAULT_MADE_IN,
   },
   'knightsbridge-dress': {
-    fit: 'Fitted bodice with flowing layered skirt',
-    stylingDetail: 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
-    lining: 'Duchess satin lining',
-    suitableFor: DEFAULT_SUITABLE_FOR,
+    productType: 'Contemporary designer cotton-blend maxi dress inspired by Emirati heritage.',
+    productCategory:
+      'Maxi Dress, Halter Dress, Designer Dress, Luxury Dress, Elegant Dress, Day Dress, Evening Dress, Summer Dress, Travel Dress, Cotton Blend Dress, Princess Silhouette Dress, Resort Wear, Contemporary Womenswear, Luxury Modest Fashion',
+    fit: 'Fitted through the bodice with a full box-pleated skirt.',
+    neckline:
+      'Halter neckline with Bint Saeed signature woven detailing inspired by Al Khous, the traditional Emirati art of weaving date palm fronds.',
+    maximumGarmentLength: '143 cm / 56.3 inches',
+    modelHeight: '160 cm / 63 inches',
+    modelWears: 'XS',
+    closure: 'Concealed back zip closure with crossover neck fastening.',
+    styling:
+      'Designed to be worn on its own or paired seamlessly with the Knightsbridge Abaya for a coordinated Bint Saeed look.',
+    stylingDetail:
+      'Maxi dress with flowing silhouette, soft box pleats, signature Khous-inspired woven halter neckline, concealed back zip closure, crossover neck fastening, and hidden side seam pockets.',
+    pockets: 'Hidden side seam pockets.',
+    trim: 'Signature Khous-inspired woven detailing at the halter neckline.',
+    material: 'Outer: 60% Cotton, 40% Polyester',
+    care: 'Professional dry clean only.',
+    suitableFor:
+      'Summer holidays, elegant lunches, afternoon tea, resort destinations, travel, city weekends, gallery visits, everyday dressing, evening gatherings, luxury vacations, destination dressing, pairing with the Knightsbridge Abaya, and international wardrobes.',
     madeIn: DEFAULT_MADE_IN,
   },
   'covent-garden-long-dress': {
+    productType: 'Slim column evening dress in stretch crepe',
+    productCategory: 'Dress, Column Dress, Evening Dress, Designer Dress, Luxury Modest Fashion',
     fit: 'Slim column silhouette',
     stylingDetail: 'High back vent for ease of movement',
     lining: 'Power mesh lining',
+    material: 'Stretch crepe, power mesh lining',
     suitableFor: DEFAULT_SUITABLE_FOR,
     madeIn: DEFAULT_MADE_IN,
   },
   'hampstead-dress': {
+    productType: 'Structured dress with traditional Al Talli trim',
+    productCategory: 'Dress, Evening Dress, Designer Dress, Luxury Modest Fashion',
     fit: 'Structured shoulders',
     stylingDetail: 'Traditional Al Talli trim',
+    trim: 'Traditional Al Talli trim',
     lining: 'Silk lining',
+    material: 'Virgin Wool blend, Silk lining, Mother-of-pearl buttons',
     suitableFor: DEFAULT_SUITABLE_FOR,
     madeIn: DEFAULT_MADE_IN,
   },
   'covent-garden-signature-set': {
+    productType: 'Khous-inspired two-piece coordinate set',
+    productCategory: 'Set, Two-Piece Set, Coordinate Set, Luxury Modest Fashion',
     stylingDetail:
       'Two-piece set — top and skirt; handwoven trim inspired by the Emirati tradition of Khous weaving',
+    trim: 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
+    material: 'Organic Cotton blend, Linen accents, Natural dyes',
     suitableFor: DEFAULT_SUITABLE_FOR,
     madeIn: DEFAULT_MADE_IN,
   },
   'soho-set': {
+    productType: 'Coordinate top and skirt set with Al Talli trim',
+    productCategory: 'Set, Two-Piece Set, Coordinate Set, Luxury Modest Fashion',
     stylingDetail: 'Coordinate top and skirt set with traditional Al Talli trim',
+    trim: 'Traditional Al Talli trim',
     suitableFor: DEFAULT_SUITABLE_FOR,
     madeIn: DEFAULT_MADE_IN,
   },
   'hyde-park-set': {
+    productType: 'Contemporary designer coordinate set',
+    productCategory: 'Set, Two-Piece Set, Contemporary Womenswear',
     suitableFor: DEFAULT_SUITABLE_FOR,
     madeIn: DEFAULT_MADE_IN,
   },
@@ -166,6 +215,9 @@ export function getProductSchemaFacts(product: Product, locale: AppLocale = 'en'
   const kensingtonFacts = getLocalizedKensingtonSchemaFacts(slug, locale)
   if (kensingtonFacts) return kensingtonFacts
 
+  const dressFacts = getLocalizedKnightsbridgeDressSchemaFacts(slug, locale)
+  if (dressFacts) return dressFacts
+
   const knightsbridgeFacts = getLocalizedKnightsbridgeSchemaFacts(slug, locale)
   if (knightsbridgeFacts) return knightsbridgeFacts
 
@@ -175,6 +227,8 @@ export function getProductSchemaFacts(product: Product, locale: AppLocale = 'en'
   return {
     madeIn: DEFAULT_MADE_IN,
     suitableFor: DEFAULT_SUITABLE_FOR,
+    material: base.material ?? product.fabric,
+    care: base.care ?? 'Professional dry clean only.',
     ...base,
     maximumGarmentLength: base.maximumGarmentLength ?? fromMeasurements,
     fit:
@@ -211,6 +265,17 @@ export function buildProductSchemaKeywords(
   if (isKnightsbridgeAbayaSlug(slug)) {
     for (const t of getLocalizedKnightsbridgeExclusiveKeywords(locale, colorName)) terms.add(t)
   }
+
+  if (isKnightsbridgeDressSlug(slug)) {
+    for (const t of getLocalizedKnightsbridgeDressExclusiveKeywords(locale, colorName)) terms.add(t)
+  }
+
+  const heritageKeywords = getHeritageSchemaKeywords(slug, locale)
+  if (heritageKeywords) {
+    for (const t of heritageKeywords.split(', ').filter(Boolean)) terms.add(t)
+  }
+
+  for (const t of getCatalogExclusiveSchemaKeywords(slug, locale, colorName)) terms.add(t)
 
   return [...terms].join(', ')
 }
@@ -265,6 +330,7 @@ export function buildProductAdditionalProperties(
     ['Pockets', facts.pockets],
     ['Trim', facts.trim],
     ['Personalisation', facts.personalisation],
+    ['Styling', facts.styling],
     ['Styling detail', facts.stylingDetail],
     ['Material', facts.material],
     ['Care', facts.care],
@@ -281,11 +347,20 @@ export function buildProductAdditionalProperties(
   }
 
   const craft = getHeritageCraft(getProductSlug(product))
+  const slug = getProductSlug(product).toLowerCase()
   if (craft === 'khous') {
     props.push({
       '@type': 'PropertyValue',
       name: localizePropertyLabel('Heritage craft', locale),
-      value: 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
+      value:
+        slug === 'knightsbridge-dress'
+          ? 'Al Khous-inspired woven detailing inspired by the traditional Emirati art of weaving date palm fronds'
+          : 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
+    })
+    props.push({
+      '@type': 'PropertyValue',
+      name: localizePropertyLabel('Emirati heritage', locale),
+      value: 'Khous palm weaving',
     })
   }
   if (craft === 'al-talli') {
@@ -293,6 +368,11 @@ export function buildProductAdditionalProperties(
       '@type': 'PropertyValue',
       name: localizePropertyLabel('Heritage craft', locale),
       value: 'Traditional Al Talli trim',
+    })
+    props.push({
+      '@type': 'PropertyValue',
+      name: localizePropertyLabel('Emirati heritage', locale),
+      value: 'Al Talli embroidery',
     })
   }
 
@@ -379,6 +459,19 @@ export function getProductFaq(
   if (kensingtonFaq.length > 0) {
     const merged = [...kensingtonFaq]
     const seen = new Set(kensingtonFaq.map((item) => item.question.toLowerCase()))
+    for (const item of customFaq ?? []) {
+      if (!seen.has(item.question.toLowerCase())) {
+        merged.push(item)
+        seen.add(item.question.toLowerCase())
+      }
+    }
+    return merged
+  }
+
+  const dressFaq = getLocalizedKnightsbridgeDressFaq(slug, locale)
+  if (dressFaq.length > 0) {
+    const merged = [...dressFaq]
+    const seen = new Set(dressFaq.map((item) => item.question.toLowerCase()))
     for (const item of customFaq ?? []) {
       if (!seen.has(item.question.toLowerCase())) {
         merged.push(item)

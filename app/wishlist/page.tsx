@@ -8,13 +8,15 @@ import { FiHeart, FiTrash2 } from 'react-icons/fi'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getProductHref } from '@/lib/products/links'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 
 export default function WishlistPage() {
   const { items, removeItem } = useWishlistStore()
   const { formatPrice } = useCurrency()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
 
   return (
     <div className={`min-h-screen bg-brand-pageCanvas pt-28 pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -23,12 +25,12 @@ export default function WishlistPage() {
           rtl={isRTL}
           className="mb-10"
           segments={[
-            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-            { label: isRTL ? 'المفضلة' : 'Favorites' },
+            { label: ui.common.home, href: '/home' },
+            { label: ui.account.account },
           ]}
           backLink={{
             href: '/shop',
-            label: isRTL ? 'العودة للتسوق' : 'Back to Shop',
+            label: ui.cart.continueShopping,
           }}
         />
         <div className={`mb-10 ${isRTL ? 'text-right' : ''}`}>
@@ -36,12 +38,10 @@ export default function WishlistPage() {
             Bint Saeed
           </p>
           <h1 data-document-h1="true" className="mt-2 font-rozha text-3xl text-brand-darkRed md:text-4xl">
-            {isRTL ? 'المفضلة' : 'Favorites'}
+            {ui.account.account}
           </h1>
           <p className="mt-3 max-w-lg font-montserrat text-sm leading-relaxed text-brand-clayRed/70">
-            {isRTL
-              ? 'تُحفظ القطع على هذا المتصفح. عند تفعيل تسجيل الدخول لاحقًا، يمكن ربط المفضلة بحسابك.'
-              : 'Pieces you heart are saved in this browser. When account sign-in is available, favorites can sync to your profile.'}
+            {ui.account.registerDesc}
           </p>
         </div>
 
@@ -49,17 +49,17 @@ export default function WishlistPage() {
           <div className={`rounded-lg border border-brand-stone/30 bg-white py-16 text-center ${isRTL ? 'text-right' : ''}`}>
             <FiHeart className="mx-auto mb-4 h-12 w-12 text-brand-stone/40" aria-hidden />
             <p className="font-rozha text-xl text-brand-darkRed">
-              {isRTL ? 'لا توجد قطع محفوظة بعد' : 'No saved pieces yet'}
+              {ui.miniCart.yourBagIsEmpty}
             </p>
             <p className="mt-2 font-montserrat text-sm text-brand-clayRed/60">
-              {isRTL ? 'تسوقي المجموعة وأضيفي ما يعجبك.' : 'Explore the collection and tap the heart on any product.'}
+              {ui.miniCart.discoverCollection}
             </p>
             <LocaleLink
               href="/shop"
               className="mt-8 inline-block bg-brand-darkRed px-8 py-3 font-montserrat text-xs uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-dustyBlue"
               data-cursor-hover
             >
-              {isRTL ? 'تسوقي' : 'Shop'}
+              {ui.common.shop}
             </LocaleLink>
           </div>
         ) : (
@@ -95,7 +95,7 @@ export default function WishlistPage() {
                       type="button"
                       onClick={() => removeItem(item.id)}
                       className="flex h-10 w-10 flex-shrink-0 items-center justify-center self-start border border-brand-stone/40 text-brand-darkRed transition-colors hover:border-brand-darkRed hover:bg-brand-stone/10"
-                      aria-label={isRTL ? 'إزالة من المفضلة' : 'Remove from favorites'}
+                      aria-label={ui.common.close}
                       data-cursor-hover
                     >
                       <FiTrash2 className="h-4 w-4" />

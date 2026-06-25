@@ -1,0 +1,97 @@
+---
+description: Locked Bint Saeed PDP copy standards — descriptions, FAQ, alt text, schema copy
+globs: data/productPdpContent.ts,data/products.ts,lib/products/**
+alwaysApply: false
+---
+
+# Bint Saeed PDP Writing Rules (Locked)
+
+Applies to every future product description, FAQ, feature list, schema copy, and image alt text when the user has approved copy work.
+
+**Complements existing guardrails:** Lara/Khalid/Faris permission rules still apply. Do not rewrite live copy without explicit user approval. These rules govern *how* approved PDP copy is written and implemented.
+
+---
+
+## 1. Never write generic luxury copy
+
+Avoid clichés: *Style is never accidental*, *Every piece is chosen with purpose*, *Quiet luxury*, *Timeless sophistication*, *Crafted with intention*, *Elevated essentials*, *Understated luxury*.
+
+Write like editorial product journalism, not marketing.
+
+## 2. Every product has its own psychological identity
+
+Do not reuse the same emotional hook across products.
+
+| Product | Identity |
+|---------|----------|
+| Kensington Abaya | Tailored confidence |
+| Khous Jacket Abaya | Women who set trends rather than follow them |
+| Knightsbridge Dress | Effortless elegance that moves naturally through life |
+| Covent Garden Signature Set | The confidence of beautifully coordinated dressing |
+
+Each new product needs a distinct emotional perspective, recognisably Bint Saeed.
+
+## 3. Create desire before describing the product
+
+Never open with materials or construction. Open with an observation about wardrobes, dressing, elegance, confidence, modern women, coordinated dressing, or craftsmanship — so the reader desires becoming the woman described first.
+
+## 4. Explain the product naturally
+
+After the hook, clearly state: what it is, who it was created for, where it can be worn, how it fits into a woman's wardrobe. Never leave the customer wondering what the product is.
+
+## 5. Every description must educate
+
+When a House Code appears (Al Khous, Al Talli, Knotted Lines of Lineage, Rosette, etc.), naturally explain what it is, its Emirati heritage connection, and why Bint Saeed reinterprets it. Never drop the name alone — teach and build authority.
+
+## 6. Strengthen the Knowledge Graph
+
+Naturally reinforce entity relationships without keyword stuffing:
+
+Bint Saeed → Abu Dhabi → United Arab Emirates → Emirati Heritage → Traditional Emirati Craft → Al Khous → Date Palm Weaving → Contemporary Design → Luxury Womenswear
+
+## 7. Write for humans AND AI
+
+Optimise simultaneously for Google Search, AI Overviews, Knowledge Graph, ChatGPT, Gemini, Claude, Perplexity, Pinterest, visual search, and semantic search. Establish entities and relationships — do not repeat keywords.
+
+## 8. Luxury language
+
+Write at the level of Hermès, Loro Piana, Brunello Cucinelli, The Row, Ralph Lauren Collection. Avoid e-commerce tone, ChatGPT tone, and SEO-copy tone. Be precise. Trust the garment.
+
+## 9. Avoid repetition across the catalogue
+
+Do not lean on the same words on every PDP: *timeless*, *versatile*, *effortless*, *confidence*, *elegant*, *movement*. Each product should have its own vocabulary.
+
+## 10. End with philosophy, not a summary
+
+Never close by repeating features. Close with an idea that reinforces the product's identity — a sentence that leaves the reader wanting to become that woman.
+
+Example closing line (Covent Garden Signature Set):
+*"...created for women who appreciate craftsmanship, beautifully balanced tailoring, and the confidence that comes from a wardrobe where every piece belongs together."*
+
+## 11. Product first, brand second
+
+Sell the product. Let the product naturally reinforce Bint Saeed philosophy. Do not write an About-page description.
+
+## 12. International positioning
+
+Use believable lifestyle cities only when they genuinely suit the product: London, Paris, New York, Milan, Abu Dhabi, Lake Como, Cannes. Never force locations.
+
+## 13. Accessibility + SEO + AI + conversion
+
+Every description, FAQ, feature list, schema field, and alt text must satisfy accessibility, luxury positioning, SEO, AI discovery, semantic search, Knowledge Graph relationships, and conversion — none at the expense of another.
+
+## 14. The guiding question
+
+Always ask: **"Why would she emotionally want this piece?"** — not *"What does this piece do?"*
+
+The emotional reason for owning the garment comes before the technical explanation.
+
+---
+
+## Implementation notes (code)
+
+When wiring approved copy in `data/productPdpContent.ts` or related schema/FAQ/alt files:
+
+- Change only what the user scoped (e.g. intro paragraphs only unless they ask for bullets/FAQ/schema).
+- Do not change pricing, checkout, image loading, or product functionality unless explicitly requested.
+- Preserve existing schema structure; enrich copy within approved fields only.

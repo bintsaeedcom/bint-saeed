@@ -15,6 +15,7 @@ import {
 } from '@/data/accessories'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi, type CommerceUi } from '@/lib/i18n/commerceUi'
 import { stripLocaleFromPathname, localizedPath } from '@/lib/i18n/routing'
 import {
   applyAccessoryFilters,
@@ -48,7 +49,8 @@ export default function AccessoriesPage() {
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const { formatPrice } = useCurrency()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
 
   useEffect(() => {
     if (!searchParams) return
@@ -160,12 +162,12 @@ export default function AccessoriesPage() {
               <AppPageWayfinding
                 rtl={isRTL}
                 segments={[
-                  { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-                  { label: isRTL ? 'الإكسسوارات' : 'Accessories' },
+                  { label: ui.common.home, href: '/home' },
+                  { label: ui.common.accessories },
                 ]}
                 backLink={{
                   href: '/home',
-                  label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+                  label: ui.accessories.backToHome,
                 }}
               />
             </motion.div>
@@ -177,15 +179,13 @@ export default function AccessoriesPage() {
               className={isRTL ? 'text-right' : ''}
             >
               <span className="mb-4 block font-montserrat text-[10px] font-medium uppercase tracking-[0.28em] text-[#6f1524] sm:tracking-[0.34em]">
-                {isRTL ? 'مجموعة الإكسسوارات' : 'Accessories Collection'}
+                {ui.accessories.collectionEyebrow}
               </span>
               <h1 data-document-h1="true" className="font-rozha text-[clamp(2.75rem,8vw,5.75rem)] uppercase leading-[0.98] tracking-[0.01em] text-brand-darkRed">
-                {isRTL ? 'الإكسسوارات' : 'ACCESSORIES'}
+                {ui.accessories.collectionTitle}
               </h1>
               <p className="mt-6 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/85 md:text-base">
-                {isRTL
-                  ? 'اكتشفي مجموعتنا الراقية من تعليقات العباءة والقلادات والأقراط والأساور وتعليقات الحقائب والهواتف.'
-                  : 'Discover our curated collection of abaya strands, necklaces, earrings, bracelets, bag strands, and phone strands.'}
+                {ui.accessories.collectionTitle}
               </p>
             </motion.div>
           </div>
@@ -223,12 +223,12 @@ export default function AccessoriesPage() {
               data-cursor-hover
             >
               <FiFilter className="w-4 h-4" />
-              {isRTL ? 'التصفية' : 'Filter'}
+              {ui.accessories.filter}
             </button>
 
             {/* Count */}
             <span className="font-montserrat text-xs text-brand-clayRed/60 tracking-wide">
-              {filteredAccessories.length} {isRTL ? 'منتج' : 'Products'}
+              {filteredAccessories.length} {ui.accessories.products}
             </span>
           </div>
 
@@ -238,13 +238,13 @@ export default function AccessoriesPage() {
           >
             <div className="flex flex-col gap-1.5">
               <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                {isRTL ? 'السعر' : 'Price'}
+                {ui.accessories.price}
               </span>
               <select
                 value={priceRange}
                 onChange={(e) => setPriceAndUrl(e.target.value as PriceRangeId)}
                 className="min-w-[200px] cursor-pointer border border-brand-stone/40 bg-white px-3 py-2 font-montserrat text-xs tracking-wide text-brand-darkRed focus:border-brand-dustyBlue focus:outline-none"
-                aria-label={isRTL ? 'تصفية حسب السعر' : 'Filter by price'}
+                aria-label={ui.accessories.price}
               >
                 {PRICE_RANGE_OPTIONS.map((opt) => (
                   <option key={opt.id} value={opt.id}>
@@ -255,7 +255,7 @@ export default function AccessoriesPage() {
             </div>
             <div className="min-w-0 flex-1">
               <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                {isRTL ? 'نوع الحجر' : 'Stone type'}
+                {ui.accessories.stoneType}
               </span>
               <div className={`mt-2 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
                 {STONE_OPTIONS.map((st) => {
@@ -285,7 +285,7 @@ export default function AccessoriesPage() {
                 className="shrink-0 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue underline-offset-4 hover:underline"
                 data-cursor-hover
               >
-                {isRTL ? 'مسح السعر والحجر' : 'Clear price & stone'}
+                {ui.accessories.clearFilters}
               </button>
             )}
           </div>
@@ -326,7 +326,7 @@ export default function AccessoriesPage() {
                 <div className="relative aspect-[4/5] w-full overflow-hidden bg-brand-stone/15">
                   <Image
                     src={ACCESSORY_IMAGE_ABAYA_CHARMS_HERO}
-                    alt={withBrandAlt(isRTL ? 'سلاسل العباءة' : 'Abaya strands')}
+                    alt={withBrandAlt(ui.accessories.collectionTitle)}
                     fill
                     className="img-zoom object-contain"
                     sizes="(max-width: 1024px) 100vw, 44vw"
@@ -346,6 +346,7 @@ export default function AccessoriesPage() {
                         setHoveredProduct={setHoveredProduct}
                         formatPrice={formatPrice}
                         isRTL={isRTL}
+                        ui={ui}
                       />
                     ))}
                   </AnimatePresence>
@@ -367,6 +368,7 @@ export default function AccessoriesPage() {
                     setHoveredProduct={setHoveredProduct}
                     formatPrice={formatPrice}
                     isRTL={isRTL}
+                    ui={ui}
                   />
                 ))}
               </AnimatePresence>
@@ -396,7 +398,7 @@ export default function AccessoriesPage() {
               <div className="p-6">
                 <div className={`flex items-center justify-between mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <p className="font-montserrat text-2xl text-brand-darkRed">
-                    {isRTL ? 'التصنيفات' : 'Categories'}
+                    {ui.shop.productCategories}
                   </p>
                   <button
                     onClick={() => setIsFilterOpen(false)}
@@ -410,13 +412,13 @@ export default function AccessoriesPage() {
                 <div className="space-y-2">
                   <div className="mb-6 space-y-3 border-b border-brand-stone/20 pb-6">
                     <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                      {isRTL ? 'السعر' : 'Price'}
+                      {ui.accessories.price}
                     </p>
                     <select
                       value={priceRange}
                       onChange={(e) => setPriceAndUrl(e.target.value as PriceRangeId)}
                       className="w-full cursor-pointer border border-brand-stone/40 bg-white px-3 py-2.5 font-montserrat text-sm text-brand-darkRed"
-                      aria-label={isRTL ? 'السعر' : 'Price'}
+                      aria-label={ui.accessories.price}
                     >
                       {PRICE_RANGE_OPTIONS.map((opt) => (
                         <option key={opt.id} value={opt.id}>
@@ -425,7 +427,7 @@ export default function AccessoriesPage() {
                       ))}
                     </select>
                     <p className="mt-4 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                      {isRTL ? 'نوع الحجر' : 'Stone type'}
+                      {ui.accessories.stoneType}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {STONE_OPTIONS.map((st) => {
@@ -454,13 +456,13 @@ export default function AccessoriesPage() {
                         }}
                         className="mt-3 w-full border border-brand-stone/30 py-2 font-montserrat text-[11px] uppercase tracking-[0.1em] text-brand-dustyBlue"
                       >
-                        {isRTL ? 'مسح السعر والحجر' : 'Clear price & stone'}
+                        {ui.accessories.clearFilters}
                       </button>
                     )}
                   </div>
 
                   <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                    {isRTL ? 'التصنيف' : 'Category'}
+                    {ui.shop.productCategories}
                   </p>
                   {accessoryCategories.map((category) => (
                     <button
@@ -497,7 +499,8 @@ function AccessoryCard({
   hoveredProduct, 
   setHoveredProduct, 
   formatPrice,
-  isRTL 
+  isRTL,
+  ui,
 }: { 
   accessory: Accessory
   index: number
@@ -505,6 +508,7 @@ function AccessoryCard({
   setHoveredProduct: (id: string | null) => void
   formatPrice: (price: number) => string
   isRTL: boolean
+  ui: CommerceUi
 }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-10%' })
@@ -567,7 +571,7 @@ function AccessoryCard({
                 className={`flex w-full cursor-pointer items-center justify-center gap-2 bg-brand-darkRed py-3 font-montserrat text-xs uppercase tracking-[0.15em] text-white hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               >
                 <FiShoppingBag className="w-4 h-4 shrink-0" aria-hidden />
-                {isRTL ? 'عرض المنتج' : 'View product'}
+                {ui.shop.viewProduct}
               </button>
             </div>
 
@@ -575,12 +579,12 @@ function AccessoryCard({
             <div className={`absolute top-4 ${isRTL ? 'right-4' : 'left-4'} flex flex-col gap-2`}>
               {accessory.isBestseller && (
                 <span className="px-3 py-1 bg-brand-clayRed text-white font-montserrat text-[10px] uppercase tracking-[0.15em]">
-                  {isRTL ? 'الأكثر مبيعاً' : 'Bestseller'}
+                  {ui.accessories.products}
                 </span>
               )}
               {accessory.isLimitedEdition && (
                 <span className="px-3 py-1 border border-brand-darkRed/90 bg-white/95 text-brand-darkRed font-montserrat text-[10px] uppercase tracking-[0.15em]">
-                  {isRTL ? 'إصدار محدود' : 'Limited Edition'}
+                  {ui.accessories.collectionEyebrow}
                 </span>
               )}
             </div>

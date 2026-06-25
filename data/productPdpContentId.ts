@@ -1,4 +1,5 @@
 import type { Product } from '@/data/products'
+import { buildKnightsbridgeDressPdpContent } from '@/data/knightsbridgeDressPdpContent'
 import type { ProductPdpContent } from '@/data/productPdpContent'
 import { getProductSlug } from '@/lib/products/links'
 import { getBelgraviaPdpFaq } from '@/lib/products/belgraviaSchemaI18n'
@@ -318,6 +319,11 @@ function isKnightsbridgeAbayaJacket(product: Product): boolean {
   return slug === 'knightsbridge-abaya-jacket' || product.id === 'bs-001'
 }
 
+function isKnightsbridgeDress(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'knightsbridge-dress' || product.id === 'bs-003'
+}
+
 /** Indonesian PDP copy for hero products; returns null for other slugs. */
 export function getProductPdpContentId(product: Product, color?: string): ProductPdpContent | null {
   if (isMayfairKaftan(product)) return buildMayfairKaftanContentId(color)
@@ -325,5 +331,6 @@ export function getProductPdpContentId(product: Product, color?: string): Produc
   if (isBelgraviaAbaya(product)) return buildBelgraviaAbayaContentId(color)
   if (isKensingtonAbaya(product)) return buildKensingtonAbayaContentId()
   if (isKnightsbridgeAbayaJacket(product)) return buildKnightsbridgeAbayaJacketContentId(color)
+  if (isKnightsbridgeDress(product)) return buildKnightsbridgeDressPdpContent(color, 'id')
   return null
 }

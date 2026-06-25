@@ -28,6 +28,7 @@ import { getProductFaq } from '@/lib/products/productSchemaMeta'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { productPageUi } from '@/lib/i18n/productPageUi'
 import { getProductHref, getProductSlug, resolveProductIdentifier } from '@/lib/products/links'
 import {
   getPdpSizeOptions,
@@ -145,6 +146,7 @@ export default function ProductPage() {
   const [introExpanded, setIntroExpanded] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
   const { isRTL, language, t } = useLanguage()
+  const ui = productPageUi(language)
   const { formatPrice, formatAmount, convertPrice, currency } = useCurrency()
 
   const relatedStyles = useMemo(
@@ -210,13 +212,13 @@ export default function ProductPage() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8">
         <div className="text-center">
-          <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed mb-4">Product Not Found</h1>
+          <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed mb-4">{ui.productNotFound}</h1>
           <LocaleLink
             href="/shop"
             className="font-montserrat text-sm uppercase tracking-[0.15em] text-brand-darkRed hover:text-brand-dustyBlue"
             data-cursor-hover
           >
-            Return to Shop
+            {ui.returnToShop}
           </LocaleLink>
         </div>
       </div>
@@ -327,15 +329,15 @@ export default function ProductPage() {
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      toast.error('Please select a size')
+      toast.error(t.product.selectSize)
       return
     }
     if (!selectedColor) {
-      toast.error('Please select a color')
+      toast.error(t.product.selectColor)
       return
     }
     if (showPersonalisation && customisationActive && !customisationMessage.trim()) {
-      toast.error('Please enter your personalisation text, or turn personalisation off')
+      toast.error(ui.personalisation.emptyError)
       return
     }
 
@@ -374,7 +376,7 @@ export default function ProductPage() {
     const sections: PdpAccordionSectionConfig[] = [
       {
         id: 'description',
-        title: 'Product Details',
+        title: ui.productDetails,
         titleTag: 'h2',
         children: (
           <>
@@ -387,7 +389,7 @@ export default function ProductPage() {
             </ul>
             {compositionDetails && compositionDetails.length > 0 && (
               <div className="space-y-2 pt-3">
-                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>Composition</p>
+                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{ui.composition}</p>
                 <ul className={PDP_BULLET_LIST}>
                   {compositionDetails.map((item, idx) => (
                     <li key={`comp-${idx}`} className={PDP_BULLET_ITEM}>
@@ -399,7 +401,7 @@ export default function ProductPage() {
             )}
             {careDetails && careDetails.length > 0 && (
               <div className="space-y-2 pt-3">
-                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>Care</p>
+                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{ui.care}</p>
                 <ul className={PDP_BULLET_LIST}>
                   {careDetails.map((item, idx) => (
                     <li key={`care-${idx}`} className={PDP_BULLET_ITEM}>
@@ -441,7 +443,7 @@ export default function ProductPage() {
     if (faqItems.length > 0) {
       sections.push({
         id: 'faq',
-        title: 'FAQ',
+        title: ui.faq,
         bordered: false,
         panelClassName: 'space-y-4 pb-5',
         children: faqItems.map((item, idx) => (
@@ -464,6 +466,7 @@ export default function ProductPage() {
     sizeAndFitDetails,
     t.product.shippingReturns,
     t.product.sizeMeasurements,
+    ui,
   ])
 
   return (
@@ -473,13 +476,13 @@ export default function ProductPage() {
         layout="bar"
         rtl={isRTL}
         segments={[
-          { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-          { label: isRTL ? 'المتجر' : 'Shop', href: '/shop' },
+          { label: ui.home, href: '/home' },
+          { label: ui.shop, href: '/shop' },
           { label: product.name },
         ]}
         backLink={{
           href: '/shop',
-          label: isRTL ? 'العودة إلى المتجر' : 'Back to Shop',
+          label: ui.backToShop,
         }}
       />
 
@@ -720,7 +723,7 @@ export default function ProductPage() {
             <div className="mb-1.5 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
-                  Color
+                  {t.product.color}
                 </span>
                 {selectedColor && (
                   <span className="font-montserrat text-[11px] text-brand-darkRed/65 tracking-wide">
@@ -742,7 +745,7 @@ export default function ProductPage() {
                     style={{ backgroundColor: color.hex }}
                     title={color.name}
                     aria-pressed={selectedColor === color.name}
-                    aria-label={`Colour ${color.name}`}
+                    aria-label={`${t.product.color} ${color.name}`}
                     data-cursor-hover
                   />
                 ))}
@@ -755,7 +758,7 @@ export default function ProductPage() {
             <div className="mb-3 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
-                  Size
+                  {t.product.size}
                 </span>
                 <button
                   type="button"
@@ -767,7 +770,7 @@ export default function ProductPage() {
                   data-cursor-hover
                 >
                   <FiMaximize2 className="w-3 h-3" />
-                  Size Guide
+                  {t.product.sizeGuide}
                 </button>
               </div>
               <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
@@ -788,24 +791,22 @@ export default function ProductPage() {
                 ))}
               </div>
               <p className="mt-2 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
-                Made to order · ships {estimatedShipDate}
+                {ui.madeToOrderShips(estimatedShipDate)}
               </p>
             </div>
             ) : (
               <p className="mb-3 border-b border-brand-stone/20 pb-3 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
-                One size · made to order · ships {estimatedShipDate}
+                {ui.oneSizeMadeToOrderShips(estimatedShipDate)}
               </p>
             )}
 
             {showPersonalisation && (
               <div className="mb-3 border-b border-brand-stone/20 pb-3">
                 <h2 className="mb-2 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
-                  Personalisation
+                  {ui.personalisation.title}
                 </h2>
                 <p className={`mb-2 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
-                  {isRTL
-                    ? 'أضيفي اسماً أو تاريخاً أو رسالة على البطاقة الداخلية — مجاناً.'
-                    : 'Add a name, special date or message to the inner label — complimentary.'}
+                  {ui.personalisation.desc}
                 </p>
                 <div className={`flex flex-col gap-2 sm:flex-row sm:flex-wrap ${isRTL ? 'sm:justify-end' : ''}`}>
                   <button
@@ -822,7 +823,7 @@ export default function ProductPage() {
                     aria-pressed={!customisationActive}
                     data-cursor-hover
                   >
-                    {isRTL ? 'بدون تخصيص' : 'No personalisation'}
+                    {ui.personalisation.noPersonalisation}
                   </button>
                   <button
                     type="button"
@@ -835,7 +836,7 @@ export default function ProductPage() {
                     aria-pressed={customisationActive}
                     data-cursor-hover
                   >
-                    {isRTL ? 'تخصيص' : 'Personalise'}
+                    {ui.personalisation.personalise}
                   </button>
                 </div>
                 {customisationActive && (
@@ -845,16 +846,14 @@ export default function ProductPage() {
                       value={customisationMessage}
                       onChange={(e) => setCustomisationMessage(e.target.value.slice(0, CUSTOMISATION_MAX_CHARS))}
                       maxLength={CUSTOMISATION_MAX_CHARS}
-                      placeholder={isRTL ? 'النص (٣٥ حرفاً كحد أقصى)' : 'Your message (max 35 characters)'}
+                      placeholder={ui.personalisation.placeholder}
                       className={`w-full border border-brand-stone/50 px-3 py-2.5 font-montserrat text-[11px] tracking-wide transition-colors focus:border-brand-darkRed ${PDP_BUTTON_RADIUS}`}
                     />
                     <p className={`font-montserrat text-[11px] text-brand-darkRed/55 ${isRTL ? 'text-right' : ''}`}>
                       {customisationMessage.length}/{CUSTOMISATION_MAX_CHARS}
                     </p>
                     <p className={`font-montserrat text-[11px] text-brand-darkRed/80 leading-relaxed border border-brand-stone/20 bg-white p-2.5 ${isRTL ? 'text-right' : ''}`}>
-                      {isRTL
-                        ? 'القطع المخصصة تُنفَّذ حسب طلبك ولا يمكن إرجاعها أو استبدالها.'
-                        : 'Customised pieces are made to your request and cannot be returned or exchanged.'}
+                      {ui.personalisation.customisedNoReturn}
                     </p>
                   </div>
                 )}
@@ -891,7 +890,7 @@ export default function ProductPage() {
                 className={`w-full px-6 py-3 sm:flex-1 ${PDP_PRIMARY_CTA}`}
                 data-cursor-hover
               >
-                Add to Bag
+                {ui.addToBag}
               </button>
 
             </div>
@@ -899,19 +898,19 @@ export default function ProductPage() {
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiAward className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
-                  {isRTL ? 'صنع أخلاقي' : 'Ethically made'}
+                  {ui.ethicallyMade}
                 </span>
               </div>
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiHeart className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
-                  {isRTL ? 'نعطي للأمام' : 'We Give Forward'}
+                  {ui.weGiveForward}
                 </span>
               </div>
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiGlobe className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
-                  {isRTL ? 'شحن عالمي' : 'Worldwide shipping'}
+                  {ui.worldwideShipping}
                 </span>
               </div>
             </div>
@@ -953,7 +952,7 @@ export default function ProductPage() {
                       data-cursor-hover
                       aria-expanded={introExpanded}
                     >
-                      {introExpanded ? (isRTL ? 'عرض أقل' : 'Read less') : isRTL ? 'اقرأ المزيد' : 'Read more'}
+                      {introExpanded ? ui.readLess : ui.readMore}
                       <FiChevronDown
                         className={`h-3.5 w-3.5 transition-transform ${introExpanded ? 'rotate-180' : ''}`}
                       />
@@ -963,14 +962,12 @@ export default function ProductPage() {
               </div>
             ) : (
               <p className={`mb-1 ${PDP_COPY_INTRO} pdp-copy--intro`}>
-                {catalogFields?.description ?? product.description}
+                {catalogFields?.description}
               </p>
             )}
             {!introParagraphs?.length && product.id !== 'bs-002' && (
               <p className={`mb-2 ${PDP_MTO_NOTE}`}>
-                {isRTL
-                  ? 'صُنع حسب الطلب، متاحة ضمن الفصل الحالي (التوفر يُؤكَّد عند الطلب).'
-                  : 'Made to order — available within this chapter (availability confirmed when you order).'}
+                {ui.madeToOrderNote}
               </p>
             )}
 
@@ -990,13 +987,7 @@ export default function ProductPage() {
             {relatedStyles.length > 0 && (
               <section className="relative z-20 mt-8">
                 <h3 className={PDP_RELATED_TITLE}>
-                  {hasManualPairing
-                    ? isRTL
-                      ? 'يتناسق مع'
-                      : 'Pairs well with'
-                    : isRTL
-                      ? 'قد يعجبك أيضاً'
-                      : 'You may also like'}
+                  {hasManualPairing ? ui.pairsWellWith : ui.youMayAlsoLike}
                 </h3>
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   {relatedStyles.map((item) => {

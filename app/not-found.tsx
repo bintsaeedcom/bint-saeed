@@ -5,10 +5,12 @@ import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiHome, FiShoppingBag, FiMail, FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 
 export default function NotFound() {
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const isComingSoonOnly = process.env.NEXT_PUBLIC_COMING_SOON_ONLY === 'true'
 
   return (
@@ -46,20 +48,18 @@ export default function NotFound() {
               404
             </h1>
             <span className="block font-rozha text-4xl leading-none text-brand-darkRed sm:hidden">
-              {isRTL ? 'الصفحة غير موجودة' : 'Page Not Found'}
+              {ui.notFound.title}
             </span>
             <div className="absolute inset-0 hidden items-center justify-center sm:flex">
               <span className="font-rozha text-4xl sm:text-5xl text-brand-darkRed">
-                {isRTL ? 'الصفحة غير موجودة' : 'Page Not Found'}
+                {ui.notFound.title}
               </span>
             </div>
           </div>
           
           {/* Description */}
           <p className={`font-montserrat text-sm sm:text-base text-brand-clayRed/70 tracking-wide mb-8 sm:mb-10 max-w-md mx-auto px-4 ${isRTL ? 'text-right' : ''}`}>
-            {isRTL 
-              ? 'الصفحة التي تبحثين عنها غير موجودة أو تم نقلها. دعينا نساعدك في العثور على ما تبحثين عنه.'
-              : 'The page you\'re looking for doesn\'t exist or has been moved. Let us help you find what you\'re looking for.'}
+            {ui.notFound.description}
           </p>
           
           {/* Action Buttons */}
@@ -70,7 +70,7 @@ export default function NotFound() {
               data-cursor-hover
             >
               <FiHome className="w-4 h-4" />
-              {isRTL ? 'العودة للرئيسية' : 'Back to Home'}
+              {ui.notFound.backToHome}
             </LocaleLink>
             {!isComingSoonOnly ? (
               <LocaleLink
@@ -79,7 +79,7 @@ export default function NotFound() {
                 data-cursor-hover
               >
                 <FiShoppingBag className="w-4 h-4" />
-                {isRTL ? 'تسوقي الآن' : 'Shop Collection'}
+                {ui.notFound.shopCollection}
               </LocaleLink>
             ) : null}
           </div>
@@ -94,14 +94,14 @@ export default function NotFound() {
           {!isComingSoonOnly ? (
             <div className={`${isRTL ? 'text-right' : ''}`}>
               <p className="font-montserrat text-xs uppercase tracking-[0.2em] text-brand-clayRed/50 mb-4">
-                {isRTL ? 'روابط مفيدة' : 'Popular Pages'}
+                {ui.notFound.popularPages}
               </p>
               <div className={`flex flex-wrap justify-center gap-4 sm:gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 {[
-                  { href: '/about', label: isRTL ? 'من نحن' : 'About Us' },
-                  { href: '/accessories', label: isRTL ? 'الإكسسوارات' : 'Accessories' },
-                  { href: '/the-codes', label: isRTL ? 'الرموز' : 'The Codes' },
-                  { href: '/contact', label: isRTL ? 'تواصلي معنا' : 'Contact' },
+                  { href: '/about', label: ui.notFound.about },
+                  { href: '/accessories', label: ui.common.accessories },
+                  { href: '/the-codes', label: ui.notFound.theCodes },
+                  { href: '/contact', label: ui.notFound.contact },
                 ].map((link) => (
                   <LocaleLink
                     key={link.href}
@@ -119,7 +119,7 @@ export default function NotFound() {
           {/* Contact */}
           <div className={`mt-8 sm:mt-10 pt-6 border-t border-brand-stone/20 ${isRTL ? 'text-right' : ''}`}>
             <p className="font-montserrat text-xs text-brand-clayRed/50 tracking-wide">
-              {isRTL ? 'تحتاجين مساعدة؟' : 'Need help?'}
+              {ui.notFound.needHelp}
             </p>
             <a 
               href={officialMailto('support')}

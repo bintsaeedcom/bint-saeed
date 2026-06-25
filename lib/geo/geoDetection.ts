@@ -26,6 +26,10 @@ const countryToLanguage: Record<string, string> = {
   DE: 'de', AT: 'de', CH: 'de',
   // French
   FR: 'fr', BE: 'fr', LU: 'fr', MC: 'fr',
+  // Dutch
+  NL: 'nl',
+  // Portuguese
+  PT: 'pt', BR: 'pt',
   // Spanish
   ES: 'es', MX: 'es', AR: 'es', CO: 'es', PE: 'es', VE: 'es', CL: 'es', EC: 'es', GT: 'es', CU: 'es', BO: 'es', DO: 'es', HN: 'es', PY: 'es', SV: 'es', NI: 'es', CR: 'es', PA: 'es', UY: 'es', PR: 'es',
   // Indonesian
@@ -44,8 +48,8 @@ const countryToCurrency: Record<string, string> = {
   DE: 'EUR', AT: 'EUR', FR: 'EUR', IT: 'EUR', ES: 'EUR', NL: 'EUR', BE: 'EUR', LU: 'EUR', MC: 'EUR',
 }
 
-const SUPPORTED_LANGUAGES = ['en', 'ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'id', 'ms']
-const LANGUAGES_FOR_CONFIRM_POPUP = ['ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'id', 'ms']
+const SUPPORTED_LANGUAGES = ['en', 'ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'nl', 'pt', 'id', 'ms']
+const LANGUAGES_FOR_CONFIRM_POPUP = ['ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'nl', 'pt', 'id', 'ms']
 
 export async function fetchGeoData(): Promise<GeoData | null> {
   if (typeof navigator !== 'undefined' && isLikelySearchBotUserAgent(navigator.userAgent)) {
@@ -118,6 +122,8 @@ export const languageLabels: Record<string, string> = {
   de: 'Deutsch',
   fr: 'Français',
   es: 'Español',
+  nl: 'Nederlands',
+  pt: 'Português',
   id: 'Bahasa Indonesia',
   ms: 'Bahasa Melayu',
 }

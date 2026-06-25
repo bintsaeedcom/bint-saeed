@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FiX } from 'react-icons/fi'
 import { useCurrency, currencies } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { dispatchRequestPreciseLocation } from '@/lib/geo/locationEvents'
 import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
 
@@ -203,7 +204,7 @@ export default function LocationConsent() {
                     type="button"
                     onClick={handleDecline}
                     className="shrink-0 p-1.5 text-brand-darkRed/35 hover:text-brand-darkRed transition-colors rounded-full hover:bg-brand-stone/20"
-                    aria-label={language === 'ar' ? 'إغلاق' : 'Close'}
+                    aria-label={commerceUi(language).common.close}
                     data-cursor-hover
                   >
                     <FiX className="w-5 h-5" strokeWidth={1.25} />

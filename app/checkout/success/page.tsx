@@ -7,12 +7,14 @@ import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiCheck, FiShoppingBag } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { useCartStore } from '@/store/cartStore'
 import { trackEvent } from '@/lib/analytics/tracking'
 
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const sessionId = searchParams?.get('session_id')
   const clearCart = useCartStore((state) => state.clearCart)
 
@@ -33,12 +35,12 @@ function CheckoutSuccessContent() {
           rtl={isRTL}
           className="mb-10"
           segments={[
-            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-            { label: isRTL ? 'تأكيد الطلب' : 'Order Confirmed' },
+            { label: ui.common.home, href: '/home' },
+            { label: ui.checkout.reviewOrder },
           ]}
           backLink={{
             href: '/home',
-            label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+            label: ui.common.backToHome,
           }}
         />
         <motion.div
@@ -58,16 +60,15 @@ function CheckoutSuccessContent() {
             </motion.div>
 
             <h1 data-document-h1="true" className="font-rozha text-4xl text-brand-darkRed mb-4">
-              Thank You!
+              {ui.checkout.reviewOrder}
             </h1>
             <p className="font-montserrat text-brand-clayRed tracking-wide mb-8 leading-relaxed">
-              Your order has been confirmed. We've sent a confirmation email with your order details. 
-              Our team is preparing your beautiful pieces with care.
+              {ui.checkout.reviewSubtitle}
             </p>
 
             {sessionId && (
               <p className="font-montserrat text-xs text-brand-stone tracking-wide mb-8">
-                Order Reference: {sessionId.slice(-8).toUpperCase()}
+                Session: {sessionId.slice(-8).toUpperCase()}
               </p>
             )}
 
@@ -78,14 +79,14 @@ function CheckoutSuccessContent() {
                 data-cursor-hover
               >
                 <FiShoppingBag className="w-4 h-4" />
-                Continue Shopping
+                {ui.cart.continueShopping}
               </LocaleLink>
               <LocaleLink
                 href="/"
                 className="inline-flex min-h-[52px] w-full items-center justify-center px-8 py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
                 data-cursor-hover
               >
-                Back to Home
+                {ui.common.backToHome}
               </LocaleLink>
             </div>
           </div>
@@ -96,10 +97,13 @@ function CheckoutSuccessContent() {
 }
 
 export default function CheckoutSuccessPage() {
+  const { language } = useLanguage()
+  const ui = commerceUi(language)
+
   return (
     <Suspense fallback={
       <div className="flex min-h-screen items-center justify-center pb-20 pt-4 sm:pt-6 md:pt-8">
-        <div className="animate-pulse text-brand-clayRed">Loading...</div>
+        <div className="animate-pulse text-brand-clayRed">{ui.checkout.redirecting}</div>
       </div>
     }>
       <CheckoutSuccessContent />

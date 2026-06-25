@@ -6,6 +6,7 @@ import { FiShoppingBag, FiCheck } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getProductHref } from '@/lib/products/links'
 import toast from 'react-hot-toast'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
@@ -38,7 +39,8 @@ export default function StickyAddToCart({
   const [isAdded, setIsAdded] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
   const { formatPrice } = useCurrency()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,13 +53,13 @@ export default function StickyAddToCart({
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      toast.error(isRTL ? 'الرجاء اختيار المقاس' : 'Please select a size')
+      toast.error(ui.quickBuy.chooseSizeError)
       // Scroll to size selection
       document.getElementById('size-selection')?.scrollIntoView({ behavior: 'smooth' })
       return
     }
     if (!selectedColor) {
-      toast.error(isRTL ? 'الرجاء اختيار اللون' : 'Please select a color')
+      toast.error(ui.quickBuy.chooseColourError)
       document.getElementById('color-selection')?.scrollIntoView({ behavior: 'smooth' })
       return
     }
@@ -101,7 +103,7 @@ export default function StickyAddToCart({
                 <p className="font-montserrat text-[10px] text-brand-clayRed/50 uppercase tracking-wider">
                   {selectedSize && selectedColor 
                     ? `${selectedSize} • ${selectedColor}` 
-                    : isRTL ? 'اختاري المقاس واللون' : 'Select size & color'}
+                    : ui.stickyAddToCart.selectSizeAndColour}
                 </p>
               </div>
 
@@ -119,12 +121,12 @@ export default function StickyAddToCart({
                 {isAdded ? (
                   <>
                     <FiCheck className="w-4 h-4" />
-                    {isRTL ? 'تمت الإضافة!' : 'Added!'}
+                    {ui.stickyAddToCart.added}
                   </>
                 ) : (
                   <>
                     <FiShoppingBag className="w-4 h-4" />
-                    {isRTL ? 'أضيفي للسلة' : 'Add to Bag'}
+                    {ui.stickyAddToCart.addToBag}
                   </>
                 )}
               </button>

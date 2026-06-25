@@ -52,6 +52,7 @@ Execution standards:
 - If work is blocked, state exact blocker and a fallback path.
 - Optimize for conversion and discoverability using best-practice technical SEO (metadata, crawlability, internal links, performance, structured data where relevant) without changing approved brand tone.
 - SEO/CRO suggestions are allowed, but SEO-related code/content edits require explicit user approval before implementation.
+- When implementing user-approved PDP descriptions, FAQs, feature lists, schema copy, or image alt text, follow `pdp-writing-rules.mdc`.
 
 Blocked-work protocol:
 

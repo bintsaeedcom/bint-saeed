@@ -1,7 +1,9 @@
+import { buildKnightsbridgeDressPdpContent } from '@/data/knightsbridgeDressPdpContent'
 import type { Product } from '@/data/products'
-import { getProductPdpContentId } from '@/data/productPdpContentId'
-import { getProductPdpContentMs } from '@/data/productPdpContentMs'
+import { getProductPdpContentLocale } from '@/data/productPdpLocaleRegistry'
 import type { AppLocale } from '@/lib/i18n/routing'
+import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
+import { pdpStructuredStrings } from '@/lib/products/productPdpStructuredI18n'
 import { getProductSlug } from '@/lib/products/links'
 import { getProductSchemaFacts } from '@/lib/products/productSchemaMeta'
 import { buildVariantSku } from '@/lib/products/sku'
@@ -228,6 +230,74 @@ function buildStructuredFitAndSizeDetails(product: Product): string[] {
   ]
 }
 
+/** Ready-to-wear & sets: localized accordion structure when no hero locale pack exists. */
+function buildStructuredApparelContentForLocale(
+  product: Product,
+  color: string | undefined,
+  locale: AppLocale,
+): ProductPdpContent {
+  const strings = pdpStructuredStrings(locale)
+  const facts = getProductSchemaFacts(product, locale)
+  const catalog = getLocalizedProductCatalogFields(product, locale)
+  const colorName = resolveSelectedColorName(product, color)
+  const compositionDetails = fabricCompositionDetails({
+    ...product,
+    fabric: catalog.fabric || product.fabric,
+  })
+
+  const stylingLine = facts.stylingDetail
+    ? `${facts.stylingDetail}. ${strings.stylingSuffix}`
+    : strings.stylingSuffix
+
+  const introParagraphs = [
+    strings.introLead(product.name, catalog.description.replace(/\s+/g, ' ').trim()),
+    stylingLine,
+    strings.introOccasions(product.name),
+    strings.introClosing,
+  ]
+
+  const bullets: string[] = []
+  if (facts.fit) bullets.push(facts.fit)
+  if (facts.neckline) {
+    const shortNeckline = facts.neckline.split('—')[0]?.trim() ?? facts.neckline
+    bullets.push(shortNeckline)
+  }
+  if (facts.stylingDetail) bullets.push(facts.stylingDetail)
+  if (facts.closure) bullets.push(facts.closure)
+  if (facts.lining) bullets.push(facts.lining)
+  if (facts.innerDress) bullets.push(facts.innerDress)
+  if (facts.pockets) bullets.push(facts.pockets)
+  if (colorName) bullets.push(`${strings.colour}: ${colorName}`)
+  else if (product.colors.length) bullets.push(`${strings.availableColours}: ${colorList(product)}`)
+  bullets.push(strings.madeIn)
+
+  const sizeOptions = getPdpSizeOptions(product.category, product.sizes, getProductSlug(product))
+  const maxLength = parseMaxLength(catalog.measurements || product.measurements)
+  let fitAndSizeDetails: string[]
+  if (productIsOneSizeOnly(product)) {
+    fitAndSizeDetails = [strings.oneSize]
+    if (maxLength) fitAndSizeDetails.push(strings.maxLength(maxLength.cm, maxLength.inches))
+    if (facts.fit?.toLowerCase().includes('internal ties') || facts.fit?.toLowerCase().includes('tali')) {
+      fitAndSizeDetails.push(strings.adjustableTies)
+    }
+    fitAndSizeDetails.push(strings.modelHeight)
+  } else {
+    fitAndSizeDetails = [
+      `${strings.availableSizes}: ${sizeOptions.join(', ')}`,
+      (catalog.measurements || product.measurements).replace(/\s+/g, ' ').trim(),
+      strings.modelHeight,
+    ]
+  }
+
+  return {
+    introParagraphs,
+    productDetails: bullets,
+    ...(compositionDetails.length ? { compositionDetails } : {}),
+    careDetails: careDetailsForProduct(product),
+    fitAndSizeDetails,
+  }
+}
+
 /** Ready-to-wear & sets: same accordion structure as Mayfair Kaftan PDP. */
 function buildStructuredApparelContent(product: Product, color?: string): ProductPdpContent {
   const facts = getProductSchemaFacts(product)
@@ -305,6 +375,27 @@ function isKnightsbridgeDress(product: Product): boolean {
   return slug === 'knightsbridge-dress' || product.id === 'bs-003'
 }
 
+function isCoventGardenSignatureSet(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'covent-garden-signature-set' || product.id === 'bs-005'
+}
+
+function buildCoventGardenSignatureSetContent(product: Product, color?: string): ProductPdpContent {
+  const base = buildStructuredApparelContent(product, color)
+
+  return {
+    ...base,
+    introParagraphs: [
+      'The most elegant wardrobes are rarely built around individual pieces. They are built around combinations that feel effortless every time they are worn.',
+      'The Covent Garden Signature Set was created for women who appreciate the confidence of beautifully coordinated dressing. Comprising the Covent Garden Dress and a matching tailored jacket, it offers a refined silhouette equally suited to business meetings, elegant lunches, afternoon tea, private dinners, gallery openings, cultural events, and every occasion where timeless elegance feels appropriate.',
+      "Available in Burgundy, Deep Black, and Navy Blue, the tailored jacket is distinguished by two front pockets featuring Bint Saeed's signature woven detailing inspired by Al Khous, one of the United Arab Emirates' oldest traditional crafts. For generations, Emiratis transformed the leaves of the date palm into beautifully woven objects that formed part of everyday life, making Al Khous an enduring expression of the country's cultural heritage. Reinterpreted through contemporary tailoring, the woven detailing introduces texture, craftsmanship, and subtle character while maintaining a clean, elegant silhouette. The jacket is fully lined and finished with Bint Saeed's signature gold-tone buttons.",
+      'The coordinating Covent Garden Dress completes the silhouette with graceful proportions and understated elegance. Fully lined for comfort, it creates effortless movement while offering the flexibility to alter the length according to personal preference. Worn together, the dress and jacket create a beautifully balanced ensemble, while each piece can also be styled independently as part of a thoughtfully curated wardrobe.',
+      "Created in Abu Dhabi, the Covent Garden Signature Set reflects Bint Saeed's vision of carrying elements of Emirati heritage into a contemporary international wardrobe. Whether worn for an important meeting in London, an afternoon tea in Abu Dhabi, a dinner in Paris, or an evening at the theatre in New York, it celebrates women who understand that elegance is not reserved for special occasions, but expressed through the way they choose to present themselves every day.",
+      'Timeless, refined, and designed to be worn for years rather than seasons, the Covent Garden Signature Set is created for women who appreciate craftsmanship, beautifully balanced tailoring, and the confidence that comes from a wardrobe where every piece belongs together.',
+    ],
+  }
+}
+
 type BelgraviaColorKey = 'deep-black' | 'navy-blue'
 
 const BELGRAVIA_COLOR_COPY: Record<BelgraviaColorKey, { label: string }> = {
@@ -324,7 +415,7 @@ const KENSINGTON_COMPOSITION_DETAILS = [
   'Lining: 70% Polyester, 30% Viscose',
 ] as const
 
-function buildKensingtonAbayaContent(): ProductPdpContent {
+function buildKensingtonAbayaContent(locale: AppLocale = 'en'): ProductPdpContent {
   return {
     introParagraphs: [
       'The Kensington Abaya was designed for women who appreciate confidence expressed through simplicity. Crafted in deep black with a clean, elongated silhouette, it creates presence through structure, movement, and proportion rather than ornamentation.',
@@ -357,7 +448,7 @@ function buildKensingtonAbayaContent(): ProductPdpContent {
       'Model wears size XS',
     ],
     careDetails: [...ABAYA_CARE_DETAILS],
-    faq: getKensingtonPdpFaq(),
+    faq: getKensingtonPdpFaq(locale),
   }
 }
 
@@ -420,17 +511,7 @@ function buildKnightsbridgeDressContent(
   color?: string,
   locale: AppLocale = 'en',
 ): ProductPdpContent {
-  const catalogColor = normalizeKnightsbridgeCatalogColor(color ?? product.colors[0]?.name)
-  const colorLabel = knightsbridgePdpColorLabel(catalogColor, locale)
-  const base = buildStructuredApparelContent(product, catalogColor)
-  const productDetails = base.productDetails.map((line) =>
-    line.startsWith('Colour:') ? `Colour: ${colorLabel}` : line,
-  )
-  return {
-    ...base,
-    productDetails,
-    stylePairingNote: getKnightsbridgeStylePairingNote('knightsbridge-dress', catalogColor, locale),
-  }
+  return buildKnightsbridgeDressPdpContent(color, locale)
 }
 
 const BELGRAVIA_COMPOSITION_DETAILS = [
@@ -438,7 +519,7 @@ const BELGRAVIA_COMPOSITION_DETAILS = [
   'Lining composition: (70% polyester, 30% viscose)',
 ] as const
 
-function buildBelgraviaAbayaContent(color?: string): ProductPdpContent {
+function buildBelgraviaAbayaContent(color?: string, locale: AppLocale = 'en'): ProductPdpContent {
   const { label } = BELGRAVIA_COLOR_COPY[normalizeBelgraviaColor(color)]
 
   return {
@@ -474,7 +555,7 @@ function buildBelgraviaAbayaContent(color?: string): ProductPdpContent {
       'Model height: 155 cm / 61 inches',
     ],
     careDetails: [...ABAYA_CARE_DETAILS],
-    faq: getBelgraviaPdpFaq(),
+    faq: getBelgraviaPdpFaq(locale),
   }
 }
 
@@ -541,36 +622,32 @@ export function getProductPdpContent(
   const color = opts?.color?.trim() || product.colors[0]?.name
   const locale = opts?.locale ?? 'en'
 
+  if (locale !== 'en') {
+    const localized = getProductPdpContentLocale(product, color, locale)
+    const content =
+      localized ??
+      (product.category === 'Accessories'
+        ? accessoryPlaceholderContent(product)
+        : buildStructuredApparelContentForLocale(product, color, locale))
+    return applyAbayaPdpStandards(product, content, locale)
+  }
+
   let content: ProductPdpContent
-
-  if (locale === 'id') {
-    const idContent = getProductPdpContentId(product, color)
-    if (idContent) {
-      content = idContent
-      return applyAbayaPdpStandards(product, content, locale)
-    }
-  }
-
-  if (locale === 'ms') {
-    const msContent = getProductPdpContentMs(product, color)
-    if (msContent) {
-      content = msContent
-      return applyAbayaPdpStandards(product, content, locale)
-    }
-  }
 
   if (isMayfairKaftan(product)) {
     content = buildMayfairKaftanContent(color)
   } else if (isNothingHillKaftan(product)) {
     content = buildNothingHillKaftanContent(color)
   } else if (isBelgraviaAbaya(product)) {
-    content = buildBelgraviaAbayaContent(color)
+    content = buildBelgraviaAbayaContent(color, locale)
   } else if (isKensingtonAbaya(product)) {
-    content = buildKensingtonAbayaContent()
+    content = buildKensingtonAbayaContent(locale)
   } else if (isKnightsbridgeAbayaJacket(product)) {
     content = buildKnightsbridgeAbayaJacketContent(color, locale)
   } else if (isKnightsbridgeDress(product)) {
     content = buildKnightsbridgeDressContent(product, color, locale)
+  } else if (isCoventGardenSignatureSet(product)) {
+    content = buildCoventGardenSignatureSetContent(product, color)
   } else if (product.category === 'Accessories') {
     content = accessoryPlaceholderContent(product)
   } else {

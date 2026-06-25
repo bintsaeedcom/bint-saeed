@@ -1,6 +1,8 @@
 import { HOME_META_DESCRIPTION, BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
 import { translationsId } from '@/lib/i18n/translationsId'
 import { translationsMs } from '@/lib/i18n/translationsMs'
+import { translationsNl } from '@/lib/i18n/translationsNl'
+import { translationsPt } from '@/lib/i18n/translationsPt'
 
 export const translations = {
   en: {
@@ -2086,6 +2088,8 @@ export const translations = {
     },
   },
 
+  nl: translationsNl,
+  pt: translationsPt,
   id: translationsId,
   ms: translationsMs,
 }

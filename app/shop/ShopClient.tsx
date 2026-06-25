@@ -13,6 +13,7 @@ import { getProductImageAlt } from '@/lib/products/imageAlt'
 import type { Product } from '@/data/products'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getProductHref } from '@/lib/products/links'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 import { trackEvent } from '@/lib/analytics/tracking'
@@ -40,14 +41,7 @@ const CATEGORY_QUERY_VALUE: Record<(typeof categories)[number], string | null> =
   Sets: 'sets',
 }
 
-const SORT_OPTIONS = [
-  { id: 'newest', label: 'New arrivals' },
-  { id: 'price-asc', label: 'Price, low to high' },
-  { id: 'price-desc', label: 'Price, high to low' },
-  { id: 'name', label: 'Name, A–Z' },
-] as const
-
-type SortId = (typeof SORT_OPTIONS)[number]['id']
+type SortId = 'newest' | 'price-asc' | 'price-desc' | 'name'
 
 export default function ShopClient() {
   const router = useRouter()
@@ -60,7 +54,18 @@ export default function ShopClient() {
   const sortMenuRef = useRef<HTMLDivElement | null>(null)
   const { formatPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const { localize } = useLocaleHref()
+  const sortOptions = useMemo(
+    () =>
+      [
+        { id: 'newest', label: ui.shop.sortNewest },
+        { id: 'price-asc', label: ui.shop.sortPriceAsc },
+        { id: 'price-desc', label: ui.shop.sortPriceDesc },
+        { id: 'name', label: ui.shop.sortName },
+      ] as const,
+    [ui],
+  )
 
   const applyCategory = useCallback(
     (cat: (typeof categories)[number]) => {
@@ -126,11 +131,11 @@ export default function ShopClient() {
 
   const categoryLabel = useCallback(
     (cat: string) => {
-      if (cat === 'All') return isRTL ? 'الكل' : 'All'
+      if (cat === 'All') return ui.shop.categoryAll
       const n = categoryCounts[cat]
       return n != null ? `${cat} (${n})` : cat
     },
-    [categoryCounts, isRTL]
+    [categoryCounts, ui.shop.categoryAll]
   )
 
   const handleBack = useCallback(() => {
@@ -160,7 +165,7 @@ export default function ShopClient() {
     }
   }, [filteredProducts, sortBy])
 
-  const sortLabel = SORT_OPTIONS.find((o) => o.id === sortBy)?.label ?? 'New arrivals'
+  const sortLabel = sortOptions.find((o) => o.id === sortBy)?.label ?? ui.shop.sortNewest
   return (
     <div className={`min-h-screen overflow-x-hidden bg-brand-pageCanvas text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
       <header className="section-full overflow-hidden border-b border-black/5 bg-stone-50">
@@ -171,25 +176,23 @@ export default function ShopClient() {
               variant="muted"
               className="mb-6 md:mb-10"
               segments={[
-                { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-                { label: isRTL ? 'المتجر' : 'Shop' },
+                { label: ui.common.home, href: '/home' },
+                { label: ui.common.shop },
               ]}
               backLink={{
                 href: '/home',
-                label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+                label: ui.common.backToHome,
               }}
             />
 
             <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue sm:tracking-[0.34em]">
-              {isRTL ? 'التشكيلة' : 'COLLECTION'}
+              {ui.shop.collectionEyebrow}
             </p>
             <h1 data-document-h1="true" className="font-rozha text-[clamp(2.75rem,8vw,5.75rem)] font-normal leading-[0.98] tracking-[0.01em] text-brand-darkRed">
-              {isRTL ? 'الفصل ١' : 'CHAPTER I'}
+              {ui.shop.chapterTitle}
             </h1>
             <p className="mt-6 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600 md:text-base">
-              {isRTL
-                ? 'قطع محدودة، خامات مختارة، وتفاصيل من صنع يدّي. اكتشفي القطع التي تحمل هوية الدار.'
-                : 'Wherever life is lived, from Abu Dhabi to London, from Riyadh to Paris, from Doha to Marbella, you do not need to change how you present yourself. Each piece carries your elegance and your way of being, with consistency, wherever you are.'}
+              {ui.shop.chapterIntro}
             </p>
           </div>
         </div>
@@ -203,14 +206,14 @@ export default function ShopClient() {
               onClick={handleBack}
               className="flex shrink-0 items-center gap-2 px-2 py-2 font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-clayRed/70 transition-colors hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue"
               data-cursor-hover
-              aria-label={isRTL ? 'رجوع' : 'Back'}
+              aria-label={ui.common.back}
             >
               {isRTL ? (
                 <FiArrowRight className="h-3.5 w-3.5" aria-hidden />
               ) : (
                 <FiArrowLeft className="h-3.5 w-3.5" aria-hidden />
               )}
-              {isRTL ? 'رجوع' : 'Back'}
+              {ui.common.back}
             </button>
 
             <div className={`hidden min-w-0 items-center gap-1 overflow-x-auto [scrollbar-width:none] md:flex [&::-webkit-scrollbar]:hidden ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -240,7 +243,7 @@ export default function ShopClient() {
               aria-haspopup="dialog"
             >
               <FiFilter className="h-3.5 w-3.5" aria-hidden />
-              {isRTL ? 'تصفية' : 'Refine'}
+              {ui.shop.refine}
             </button>
           </div>
 
@@ -251,7 +254,7 @@ export default function ShopClient() {
                 isRTL ? 'flex-row-reverse' : ''
               }`}
               role="tablist"
-              aria-label={isRTL ? 'فئات المنتجات' : 'Product categories'}
+              aria-label={ui.shop.productCategories}
             >
               {categories.map((cat) => {
                 const active = activeCategory === cat
@@ -283,17 +286,13 @@ export default function ShopClient() {
               data-cursor-hover
             >
               <FiMaximize2 className="h-3 w-3" aria-hidden />
-              {isRTL ? 'المقاسات' : 'Sizing'}
+              {ui.shop.sizing}
             </LocaleLink>
             <span className="whitespace-nowrap font-montserrat text-[10px] tabular-nums tracking-[0.1em] text-brand-clayRed/60">
               {sortedProducts.length}{' '}
               {sortedProducts.length === 1
-                ? isRTL
-                  ? 'قطعة'
-                  : 'piece'
-                : isRTL
-                  ? 'قطع'
-                  : 'pieces'}
+                ? ui.shop.piece
+                : ui.shop.pieces}
             </span>
 
             <div className="relative" ref={sortMenuRef}>
@@ -312,7 +311,7 @@ export default function ShopClient() {
               </button>
               {sortOpen && (
                 <div className="absolute right-0 top-full z-50 mt-2 max-h-[min(280px,70dvh)] min-w-[200px] max-w-[calc(100vw-2rem)] overflow-y-auto overscroll-contain border border-stone-200 bg-white py-2 shadow-lg shadow-stone-900/10">
-                  {SORT_OPTIONS.map((opt) => (
+                  {sortOptions.map((opt) => (
                     <button
                       key={opt.id}
                       type="button"
@@ -349,7 +348,7 @@ export default function ShopClient() {
                 <LocaleLink
                   href={getProductHref(product)}
                   className="relative z-20 block aspect-[9/16] overflow-hidden bg-stone-200"
-                  aria-label={`${isRTL ? 'فتح' : 'Open'} ${product.name}`}
+                  aria-label={ui.shop.openProduct.replace('{name}', product.name)}
                   data-cursor-hover
                   onClick={() => trackEvent('select_item', { item_id: product.id, item_name: product.name, item_category: product.category })}
                 >
@@ -370,7 +369,7 @@ export default function ShopClient() {
                   </div>
                   <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/25 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   <span className="absolute bottom-5 left-1/2 z-[1] -translate-x-1/2 font-montserrat text-[9px] uppercase tracking-[0.35em] text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    {isRTL ? 'اكتشفي' : 'Discover'}
+                    {ui.shop.discover}
                   </span>
                 </LocaleLink>
                 <div className="mt-5 space-y-2 border-t border-black/5 pt-4">
@@ -400,7 +399,7 @@ export default function ShopClient() {
                     className="relative z-20 inline-flex items-center border-b border-brand-darkRed/40 pt-2 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
                     data-cursor-hover
                   >
-                    {isRTL ? 'عرض المنتج' : 'View product'}
+                    {ui.shop.viewProduct}
                   </LocaleLink>
                 </div>
               </article>
@@ -410,7 +409,7 @@ export default function ShopClient() {
 
         {sortedProducts.length === 0 && (
           <p className="py-24 text-center font-montserrat text-sm tracking-wide text-neutral-500">
-            {isRTL ? 'لا توجد قطع في هذا القسم حالياً.' : 'No pieces in this chapter yet.'}
+            {ui.shop.noPiecesInChapter}
           </p>
         )}
       </section>
@@ -428,7 +427,7 @@ export default function ShopClient() {
           >
             <motion.button
               type="button"
-              aria-label="Close"
+              aria-label={ui.common.close}
               className="absolute inset-0 bg-black/40 backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -449,7 +448,7 @@ export default function ShopClient() {
             >
           <div className="flex items-center justify-between border-b border-stone-200 px-6 py-5">
             <span className="font-rozha text-xl text-brand-darkRed">
-              {isRTL ? 'تصفية' : 'Refine'}
+              {ui.shop.refine}
             </span>
             <button
               type="button"
@@ -462,7 +461,7 @@ export default function ShopClient() {
           </div>
           <div className="flex-1 overflow-y-auto px-6 py-6">
             <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-neutral-500">
-              {isRTL ? 'الفئة' : 'Category'}
+              {ui.shop.productCategories}
             </p>
             <ul className="list-none space-y-3 p-0">
               {categories.map((cat) => (
@@ -492,7 +491,7 @@ export default function ShopClient() {
               data-cursor-hover
             >
               <FiMaximize2 className="h-3.5 w-3.5" />
-              {isRTL ? 'دليل المقاسات' : 'Size guide'}
+              {ui.shop.sizeGuide}
             </LocaleLink>
           </div>
         </motion.aside>

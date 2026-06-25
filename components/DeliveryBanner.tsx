@@ -1,29 +1,25 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX, FiTruck, FiGift, FiCreditCard } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 
 export default function DeliveryBanner() {
   const [isVisible, setIsVisible] = useState(true)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
 
-  const messages = [
-    {
-      icon: FiTruck,
-      text: isRTL ? 'شحن مجاني داخل الإمارات للطلبات فوق 1000 درهم • توصيل خلال أسبوعين' : 'Free UAE Shipping on Orders Over 1000 AED • Delivery in 2 Weeks',
-    },
-    {
-      icon: FiGift,
-      text: isRTL ? 'نشحن لجميع أنحاء العالم • رسوم الشحن تُحسب عند الدفع' : 'We Ship Worldwide • Shipping Calculated at Checkout',
-    },
-    {
-      icon: FiCreditCard,
-      text: isRTL ? 'ادفعي على 4 دفعات بدون فوائد مع تابي' : 'Pay in 4 Interest-Free Payments with Tabby',
-    },
-  ]
+  const messages = useMemo(
+    () => [
+      { icon: FiTruck, text: ui.deliveryBanner.uaeFree },
+      { icon: FiGift, text: ui.deliveryBanner.worldwide },
+      { icon: FiCreditCard, text: ui.deliveryBanner.tabby },
+    ],
+    [ui.deliveryBanner],
+  )
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -56,7 +52,6 @@ export default function DeliveryBanner() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Dots */}
           <div className="hidden md:flex items-center gap-1.5 ml-4">
             {messages.map((_, index) => (
               <button
@@ -70,10 +65,10 @@ export default function DeliveryBanner() {
           </div>
         </div>
 
-        {/* Close button */}
         <button
           onClick={() => setIsVisible(false)}
           className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-4' : 'right-4'} text-brand-darkRed/60 hover:text-brand-darkRed transition-colors`}
+          aria-label={ui.common.close}
           data-cursor-hover
         >
           <FiX className="w-4 h-4" />

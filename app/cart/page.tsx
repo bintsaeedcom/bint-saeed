@@ -7,6 +7,7 @@ import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowLeft, FiArrowRight } f
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
@@ -23,6 +24,7 @@ export default function CartPage() {
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const estimatedTotal = cartSubtotal(items)
   const compactButtonRadius = 'rounded-[4px]'
 
@@ -36,12 +38,12 @@ export default function CartPage() {
             className="mb-10"
             breadcrumbClassName="text-brand-clayRed/70 [&_a]:text-brand-clayRed/70 [&_span]:text-brand-darkRed"
             segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-              { label: isRTL ? 'السلة' : 'Bag' },
+              { label: ui.common.home, href: '/home' },
+              { label: ui.common.bag },
             ]}
             backLink={{
               href: '/shop',
-              label: isRTL ? 'متابعة التسوق' : 'Continue Shopping',
+              label: ui.cart.continueShopping,
             }}
           />
           <motion.div
@@ -51,10 +53,10 @@ export default function CartPage() {
           >
             <FiShoppingBag className="w-16 h-16 text-brand-stone mx-auto mb-8" />
             <h1 data-document-h1="true" className="font-rozha text-3xl md:text-4xl text-brand-darkRed mb-4">
-              Your Bag is Empty
+              {ui.cart.empty}
             </h1>
             <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide mb-10">
-              Discover our collection and find pieces that speak to you.
+              {ui.cart.emptyDescription}
             </p>
             <LocaleLink
               href="/shop"
@@ -63,7 +65,7 @@ export default function CartPage() {
               data-analytics-event="click_cta_home_to_collection"
               data-analytics-section="cart-empty-state"
             >
-              Continue Shopping
+              {ui.cart.continueShopping}
               <FiArrowRight className="w-4 h-4" />
             </LocaleLink>
           </motion.div>
@@ -83,16 +85,16 @@ export default function CartPage() {
             className="mb-4"
             breadcrumbClassName="text-brand-clayRed/70 [&_a]:text-brand-clayRed/70 [&_span]:text-brand-darkRed"
             segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-              { label: isRTL ? 'السلة' : 'Bag' },
+              { label: ui.common.home, href: '/home' },
+              { label: ui.common.bag },
             ]}
             backLink={{
               href: '/shop',
-              label: isRTL ? 'متابعة التسوق' : 'Continue Shopping',
+              label: ui.cart.continueShopping,
             }}
           />
           <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed md:text-3xl">
-            Shopping Bag ({items.length})
+            {ui.cart.shoppingBag} ({items.length})
           </h1>
         </div>
       </div>
@@ -137,20 +139,20 @@ export default function CartPage() {
                         </h3>
                       </LocaleLink>
                       <div className="space-y-1 font-montserrat text-xs tracking-wide text-brand-clayRed/60">
-                        <p>Size: {item.size}</p>
-                        <p>Colour: {item.color}</p>
+                        <p>{ui.cart.size}: {item.size}</p>
+                        <p>{ui.cart.colour}: {item.color}</p>
                         {item.sku && (
                           <p className="font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-clayRed/60">
-                            {isRTL ? `رمز المنتج: ${item.sku}` : `Product code: ${item.sku}`}
+                            {ui.cart.productCode.replace('{sku}', item.sku)}
                           </p>
                         )}
                         {(item.lengthCm || item.customLength) && (
-                          <p>Length: {item.lengthCm ? `${item.lengthCm} cm` : item.customLength}</p>
+                          <p>{ui.cart.length}: {item.lengthCm ? `${item.lengthCm} cm` : item.customLength}</p>
                         )}
                         {item.customisationMessage && (
-                          <p>Personalisation: {item.customisationMessage}</p>
+                          <p>{ui.cart.personalisation}: {item.customisationMessage}</p>
                         )}
-                        {item.notes && <p>Notes: {item.notes}</p>}
+                        {item.notes && <p>{ui.cart.note}: {item.notes}</p>}
                       </div>
                     </div>
 
@@ -159,7 +161,7 @@ export default function CartPage() {
                       <p className="font-montserrat text-base text-brand-darkRed tracking-wide">
                         {formatAmount(lineUnitForCurrency(item, currency.code))}
                         <span className="block font-montserrat text-xs text-brand-clayRed/60">
-                          {isRTL ? 'الإجمالي: ' : 'Line total: '}
+                          {ui.cart.lineTotal}:{' '}
                           {formatAmount(lineTotalForCurrency(item, currency.code))}
                         </span>
                       </p>
@@ -249,13 +251,13 @@ export default function CartPage() {
           <div className="lg:col-span-1">
             <div className={`sticky top-32 rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-8 text-brand-ivory shadow-xl ${isRTL ? 'text-right' : ''}`}>
               <h2 className="mb-6 font-rozha text-2xl text-brand-dustyBlue/95">
-                {isRTL ? 'ملخص الطلب' : 'Order Summary'}
+                {ui.cart.orderSummary}
               </h2>
 
               <div
                 className={`flex justify-between font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
               >
-                <span>{isRTL ? 'المجموع الفرعي' : 'Subtotal'}</span>
+                <span>{ui.cart.subtotal}</span>
                 <span className="text-white">{formatCartSubtotal(items)}</span>
               </div>
 
@@ -263,11 +265,11 @@ export default function CartPage() {
                 <div
                   className={`flex justify-between font-rozha text-xl ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
-                  <span className="text-white/80">{isRTL ? 'الإجمالي التقريبي' : 'Estimated Total'}</span>
+                  <span className="text-white/80">{ui.cart.estimatedTotal}</span>
                   <span>{formatAmount(estimatedTotal)}</span>
                 </div>
                 <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
-                  {isRTL ? 'الضرائب مشمولة.' : 'Taxes included.'}
+                  {ui.cart.taxesIncluded}
                 </p>
               </div>
 
@@ -284,23 +286,19 @@ export default function CartPage() {
                   })
                 }
               >
-                {isRTL ? 'المتابعة للدفع الآمن' : 'Proceed to Secure Payment'}
+                {ui.cart.proceedSecurePayment}
                 <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
               </LocaleLink>
 
               <div className="mt-8 space-y-3 border-t border-white/10 pt-6">
                 <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
-                  {isRTL ? '🌍 نشحن إلى جميع أنحاء العالم' : '🌍 We Ship Worldwide'}
+                  {ui.cart.shipWorldwide}
                 </p>
                 <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
-                  {isRTL
-                    ? '🚚 شحن مجاني داخل الإمارات للطلبات فوق 1,000 درهم'
-                    : '🚚 Complimentary UAE shipping on orders above AED 1,000'}
+                  {ui.cart.freeUaeShipping}
                 </p>
                 <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
-                  {isRTL
-                    ? '🌐 الشحن الدولي متاح. تُحسب أسعار التوصيل عند الدفع.'
-                    : '🌐 International shipping available. Delivery rates are calculated at checkout.'}
+                  {ui.cart.intlShippingNote} {ui.cart.deliveryAtPayment}
                 </p>
               </div>
             </div>

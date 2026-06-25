@@ -1,25 +1,18 @@
 import type { AppLocale } from '@/lib/i18n/routing'
-import type { Product } from '@/data/products'
 import type { ProductPdpContent } from '@/data/productPdpContent'
+import type { Product } from '@/data/products'
+import { pdpStructuredStrings } from '@/lib/products/productPdpStructuredI18n'
 
 /**
  * Standard abaya PDP feature — always keep in Product Details (and Fit & Size).
  * When updating hero copy, add new bullets without removing this line.
  */
-export const ABAYA_CUSTOM_LENGTH_FEATURE: Record<'en' | 'id' | 'ms', string> = {
-  en: 'Custom length available upon request',
-  id: 'Panjang custom tersedia atas permintaan',
-  ms: 'Panjang tersuai tersedia atas permintaan',
+export function abayaCustomLengthLine(locale: AppLocale): string {
+  return pdpStructuredStrings(locale).customLength
 }
 
 const CUSTOM_LENGTH_PATTERN =
-  /custom length|panjang (custom|tersuai|kustom)|custom lengths upon request/i
-
-function customLengthLine(locale: AppLocale): string {
-  if (locale === 'id') return ABAYA_CUSTOM_LENGTH_FEATURE.id
-  if (locale === 'ms') return ABAYA_CUSTOM_LENGTH_FEATURE.ms
-  return ABAYA_CUSTOM_LENGTH_FEATURE.en
-}
+  /custom length|panjang (custom|tersuai|kustom)|comprimento personalizado|longueur sur mesure|largo personalizado|läng(e)? auf anfrage|lunghezza personalizzata|длин[аы] по запросу|定制长度|aangepaste lengte|طول مخصص/i
 
 function hasCustomLengthLine(lines: string[]): boolean {
   return lines.some((line) => CUSTOM_LENGTH_PATTERN.test(line))
@@ -30,7 +23,9 @@ function insertCustomLengthFeature(details: string[], line: string): string[] {
   if (hasCustomLengthLine(details)) return details
 
   const originIdx = details.findIndex((d) =>
-    /^(Made in|Dibuat di|Dihasilkan di)/i.test(d.trim()),
+    /^(Made in|Dibuat di|Dihasilkan di|Fabriqué|Hergestellt|Realizzato|Hecho|Сделано|制作|Gemaakt|Feito|صُنع)/i.test(
+      d.trim(),
+    ),
   )
   if (originIdx >= 0) {
     return [...details.slice(0, originIdx), line, ...details.slice(originIdx)]
@@ -47,7 +42,7 @@ export function applyAbayaPdpStandards(
 ): ProductPdpContent {
   if (product.category !== 'Abayas') return content
 
-  const line = customLengthLine(locale)
+  const line = abayaCustomLengthLine(locale)
 
   return {
     ...content,

@@ -10,6 +10,7 @@ import { FreeMode } from 'swiper/modules'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
@@ -28,6 +29,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const { items, removeItem, updateQuantity } = useCartStore()
   const { formatPrice, formatAmount, currency, formatCartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const summarize = (value: string, max = 46) =>
     value.length > max ? `${value.slice(0, max).trimEnd()}…` : value
   const productHref = (item: (typeof items)[number]) =>
@@ -92,7 +94,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
             {/* Header */}
             <div className={`flex items-center justify-between p-4 sm:p-6 border-b border-brand-stone/20 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <h2 className="font-rozha text-xl sm:text-2xl text-brand-darkRed">
-                {isRTL ? 'سلة التسوق' : 'Shopping Bag'} ({items.length})
+                {ui.cart.shoppingBag} ({items.length})
               </h2>
               <button
                 onClick={onClose}
@@ -109,10 +111,10 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                 <div className="flex flex-col items-center justify-center h-full p-6 text-center">
                   <FiShoppingBag className="w-12 h-12 text-brand-stone/50 mb-4" />
                   <p className="font-rozha text-xl text-brand-darkRed mb-2">
-                    {isRTL ? 'السلة فارغة' : 'Your bag is empty'}
+                    {ui.miniCart.yourBagIsEmpty}
                   </p>
                   <p className="font-montserrat text-sm text-brand-clayRed/60 mb-6">
-                    {isRTL ? 'اكتشفي مجموعتنا' : 'Discover our collection'}
+                    {ui.miniCart.discoverCollection}
                   </p>
                   <LocaleLink
                     href="/shop"
@@ -120,7 +122,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                     className="px-6 py-3 bg-brand-darkRed text-white font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
                     data-cursor-hover
                   >
-                    {isRTL ? 'تسوقي الآن' : 'Shop Now'}
+                    {ui.cart.shopNow}
                   </LocaleLink>
                 </div>
               ) : (
@@ -158,19 +160,19 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                         </p>
                         {item.customisationMessage && (
                           <p className="font-montserrat text-[10px] text-brand-darkRed/80 mt-1 line-clamp-2">
-                            {isRTL ? 'التخصيص:' : 'Personalisation:'} “{summarize(item.customisationMessage)}”
+                            {ui.cart.personalisation}: “{summarize(item.customisationMessage)}”
                           </p>
                         )}
                         {item.notes && (
                           <p className="font-montserrat text-[10px] text-brand-clayRed/80 mt-1 line-clamp-2">
-                            {isRTL ? 'ملاحظة:' : 'Note:'} {summarize(item.notes)}
+                            {ui.cart.note}: {summarize(item.notes)}
                           </p>
                         )}
                         <p className="font-montserrat text-sm text-brand-darkRed mt-2">
                           {formatAmount(lineUnitForCurrency(item, currency.code))}
                           {item.quantity > 1 && (
                             <span className="block font-montserrat text-[10px] text-brand-clayRed/60">
-                              {formatAmount(lineTotalForCurrency(item, currency.code))} {isRTL ? 'المجموع' : 'line total'}
+                              {formatAmount(lineTotalForCurrency(item, currency.code))} {ui.cart.lineTotal}
                             </span>
                           )}
                         </p>
@@ -231,7 +233,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
               {items.length > 0 && youMayAlsoLike.length > 0 && (
                 <div className={`border-t border-brand-stone/15 py-4 ${isRTL ? 'text-right' : ''}`}>
                   <p className="px-4 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-clayRed/70">
-                    {isRTL ? 'قد يعجبك أيضاً' : 'You may also like'}
+                    {ui.miniCart.youMayAlsoLike}
                   </p>
                   <Swiper
                     modules={[FreeMode]}
@@ -281,14 +283,14 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                 {/* Subtotal */}
                 <div className={`flex justify-between items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <span className="font-montserrat text-sm text-brand-clayRed/70 uppercase tracking-wider">
-                    {isRTL ? 'المجموع الفرعي' : 'Subtotal'}
+                    {ui.cart.subtotal}
                   </span>
                   <span className="font-montserrat text-lg font-medium text-brand-darkRed">
                     {formatCartSubtotal(items)}
                   </span>
                 </div>
                 <p className={`font-montserrat text-[10px] text-brand-clayRed/50 ${isRTL ? 'text-right' : ''}`}>
-                  {isRTL ? 'تُحسب أسعار التوصيل عند الدفع' : 'Delivery rates are calculated at payment'}
+                  {ui.cart.deliveryAtPayment}
                 </p>
 
                 {/* Buttons */}
@@ -299,7 +301,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                     className={`w-full py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                     data-cursor-hover
                   >
-                    {isRTL ? 'راجعي طلبك' : 'Review Your Order'}
+                    {ui.miniCart.reviewYourOrder}
                     <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                   </LocaleLink>
                   <button
@@ -307,7 +309,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                     className="w-full py-3 text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:text-brand-dustyBlue transition-colors"
                     data-cursor-hover
                   >
-                    {isRTL ? 'متابعة التسوق' : 'Continue Shopping'}
+                    {ui.cart.continueShopping}
                   </button>
                 </div>
 
@@ -318,7 +320,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <FiLock className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
                     <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
-                      {isRTL ? 'دفع آمن' : 'Secure checkout'}
+                      {ui.trust.secureCheckout}
                     </span>
                   </div>
                   <span className="hidden text-brand-stone/35 sm:inline" aria-hidden>
@@ -327,9 +329,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <FiPackage className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
                     <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
-                      {isRTL
-                        ? 'توصيل مجاني داخل الإمارات للطلبات فوق ١٬٠٠٠ درهم'
-                        : 'Free UAE delivery on orders over 1,000 AED'}
+                      {ui.cart.freeUaeShipping}
                     </span>
                   </div>
                 </div>

@@ -7,6 +7,7 @@ import { FiX, FiShoppingBag, FiCheck, FiArrowRight, FiPackage, FiRotateCcw } fro
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getProductHref } from '@/lib/products/links'
 import toast from 'react-hot-toast'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
@@ -42,6 +43,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
   const addItem = useCartStore((state) => state.addItem)
   const { formatPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
 
   const colorOptions = useMemo(
     () => getProductColorOptions(product),
@@ -80,11 +82,11 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      toast.error(isRTL ? 'الرجاء اختيار المقاس' : 'Please select a size')
+      toast.error(ui.quickBuy.chooseSizeError)
       return
     }
     if (!selectedColor) {
-      toast.error(isRTL ? 'الرجاء اختيار اللون' : 'Please select a color')
+      toast.error(ui.quickBuy.chooseColourError)
       return
     }
 
@@ -202,7 +204,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               {showSizeSelector && (
               <div className="mb-5">
                 <label className={`font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-3 block ${isRTL ? 'text-right' : ''}`}>
-                  {isRTL ? 'المقاس' : 'Size'}
+                  {ui.quickBuy.size}
                   {selectedSize && <span className="text-brand-clayRed/60 ml-2">({selectedSize})</span>}
                 </label>
                 <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
@@ -228,7 +230,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               {colorOptions.length > 1 && (
               <div className="mb-6">
                 <label className={`font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed mb-3 block ${isRTL ? 'text-right' : ''}`}>
-                  {isRTL ? 'اللون' : 'Color'}
+                  {ui.quickBuy.color}
                   {selectedColor && <span className="text-brand-clayRed/60 ml-2">({selectedColor})</span>}
                 </label>
                 <div className={`flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
@@ -266,12 +268,12 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                   {isAdded ? (
                     <>
                       <FiCheck className="w-5 h-5" />
-                      {isRTL ? 'تمت الإضافة!' : 'Added!'}
+                      {ui.quickBuy.added}
                     </>
                   ) : (
                     <>
                       <FiShoppingBag className="w-4 h-4" />
-                      {isRTL ? 'أضيفي للسلة' : 'Add to Bag'}
+                      {ui.quickBuy.addToBag}
                     </>
                   )}
                 </button>
@@ -282,7 +284,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                   className={`w-full py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-all flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
-                  {isRTL ? 'اشتري الآن' : 'Buy Now'}
+                  {ui.quickBuy.buyNow}
                   <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                 </button>
               </div>
@@ -292,9 +294,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                 <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <FiPackage className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
                   <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
-                    {isRTL
-                      ? 'توصيل مجاني داخل الإمارات للطلبات فوق ١٬٠٠٠ درهم'
-                      : 'Free UAE delivery on orders over 1,000 AED'}
+                    {ui.cart.freeUaeShipping}
                   </span>
                 </div>
                 <span className="hidden text-brand-stone/35 sm:inline" aria-hidden>
@@ -303,7 +303,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                 <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <FiRotateCcw className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
                   <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
-                    {isRTL ? 'إرجاع خلال ١٤ يوماً' : '14-day returns'}
+                    {ui.checkout.shipmentPolicy}
                   </span>
                 </div>
               </div>

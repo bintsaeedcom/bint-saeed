@@ -16,6 +16,7 @@ import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
@@ -707,6 +708,7 @@ function CategoryNavigationStrip() {
 
 function QuickShopCarousel() {
   const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const reduceMotion = useReducedMotion()
   const [isPaused, setIsPaused] = useState(false)
   const [catalog, setCatalog] = useState<Product[]>(staticProducts)
@@ -838,7 +840,7 @@ function QuickShopCarousel() {
                 </div>
                 <div
                   className={`flex flex-wrap items-center gap-1 ${isRTL ? 'justify-end' : ''}`}
-                  aria-label={isRTL ? 'ألوان متوفرة' : 'Available colours'}
+                  aria-label={ui.shopExtras.availableColours}
                 >
                   {product.colors.slice(0, 6).map((c) => (
                     <span
