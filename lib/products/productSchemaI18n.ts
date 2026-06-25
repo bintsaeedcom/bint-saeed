@@ -447,7 +447,7 @@ function productTypeLabel(category: string, locale: AppLocale): string {
 const G = LOCALE_GEO
 
 const CONTEMPORARY_KEYWORDS: Record<AppLocale, string[]> = {
-  en: ['contemporary fashion', 'contemporary luxury', `${G.en.city} fashion house`, 'evolving lifestyles'],
+  en: ['contemporary fashion', 'contemporary premium brand', 'contemporary luxury', `${G.en.city} fashion house`, 'evolving lifestyles'],
   ar: ['أزياء معاصرة', `دار أزياء ${G.ar.city}`, 'أسلوب حياة متطوّر'],
   fr: ['mode contemporaine', 'luxe contemporain', `maison de mode ${G.fr.city}`],
   it: ['moda contemporanea', 'lusso contemporaneo', `casa di moda ${G.it.city}`],

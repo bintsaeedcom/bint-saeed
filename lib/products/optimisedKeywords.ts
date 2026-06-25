@@ -154,6 +154,7 @@ export const OUR_OPTIMISED_KEYWORDS = {
     'quiet luxury brands',
     'quiet luxury',
     'luxury UAE brands',
+    'contemporary premium UAE brands',
     'Eid dress',
     'holiday kaftan',
     'vacation kaftan',

@@ -109,7 +109,7 @@ const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
   'knightsbridge-dress': {
     productType: 'Contemporary designer cotton-blend maxi dress inspired by Emirati heritage.',
     productCategory:
-      'Maxi Dress, Halter Dress, Designer Dress, Luxury Dress, Elegant Dress, Day Dress, Evening Dress, Summer Dress, Travel Dress, Cotton Blend Dress, Princess Silhouette Dress, Resort Wear, Contemporary Womenswear, Luxury Modest Fashion',
+      'Maxi Dress, Halter Dress, Designer Dress, Luxury Dress, Premium Dress, Elegant Dress, Day Dress, Evening Dress, Summer Dress, Travel Dress, Cotton Blend Dress, Princess Silhouette Dress, Resort Wear, Contemporary Womenswear, Luxury Modest Fashion, Premium Modest Fashion',
     fit: 'Fitted through the bodice with a full box-pleated skirt.',
     neckline:
       'Halter neckline with Bint Saeed signature woven detailing inspired by Al Khous, the traditional Emirati art of weaving date palm fronds.',
@@ -126,12 +126,12 @@ const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
     material: 'Outer: 60% Cotton, 40% Polyester',
     care: 'Professional dry clean only.',
     suitableFor:
-      'Summer holidays, elegant lunches, afternoon tea, resort destinations, travel, city weekends, gallery visits, everyday dressing, evening gatherings, luxury vacations, destination dressing, pairing with the Knightsbridge Abaya, and international wardrobes.',
+      'Summer holidays, elegant lunches, afternoon tea, resort destinations, travel, city weekends, gallery visits, everyday dressing, evening gatherings, luxury vacations, premium vacations, destination dressing, pairing with the Knightsbridge Abaya, and international wardrobes.',
     madeIn: DEFAULT_MADE_IN,
   },
   'covent-garden-long-dress': {
     productType: 'Slim column evening dress in stretch crepe',
-    productCategory: 'Dress, Column Dress, Evening Dress, Designer Dress, Luxury Modest Fashion',
+    productCategory: 'Dress, Column Dress, Evening Dress, Designer Dress, Luxury Modest Fashion, Premium Modest Fashion',
     fit: 'Slim column silhouette',
     stylingDetail: 'High back vent for ease of movement',
     lining: 'Power mesh lining',
@@ -152,7 +152,7 @@ const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
   },
   'covent-garden-signature-set': {
     productType: 'Khous-inspired two-piece coordinate set',
-    productCategory: 'Set, Two-Piece Set, Coordinate Set, Luxury Modest Fashion',
+    productCategory: 'Set, Two-Piece Set, Coordinate Set, Luxury Modest Fashion, Premium Modest Fashion, Contemporary Womenswear',
     stylingDetail:
       'Two-piece set — top and skirt; handwoven trim inspired by the Emirati tradition of Khous weaving',
     trim: 'Handwoven trim inspired by the Emirati tradition of Khous weaving',
@@ -162,7 +162,7 @@ const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
   },
   'soho-set': {
     productType: 'Coordinate top and skirt set with Al Talli trim',
-    productCategory: 'Set, Two-Piece Set, Coordinate Set, Luxury Modest Fashion',
+    productCategory: 'Set, Two-Piece Set, Coordinate Set, Luxury Modest Fashion, Premium Modest Fashion, Contemporary Womenswear',
     stylingDetail: 'Coordinate top and skirt set with traditional Al Talli trim',
     trim: 'Traditional Al Talli trim',
     suitableFor: DEFAULT_SUITABLE_FOR,

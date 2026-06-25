@@ -11,7 +11,7 @@ const MADE_IN = 'Abu Dhabi, United Arab Emirates'
 const FACTS_EN: ProductSchemaFacts = {
   productType: 'Contemporary designer cotton-blend maxi dress inspired by Emirati heritage.',
   productCategory:
-    'Maxi Dress, Halter Dress, Designer Dress, Luxury Dress, Elegant Dress, Day Dress, Evening Dress, Summer Dress, Travel Dress, Cotton Blend Dress, Princess Silhouette Dress, Resort Wear, Contemporary Womenswear, Luxury Modest Fashion',
+    'Maxi Dress, Halter Dress, Designer Dress, Luxury Dress, Premium Dress, Elegant Dress, Day Dress, Evening Dress, Summer Dress, Travel Dress, Cotton Blend Dress, Princess Silhouette Dress, Resort Wear, Contemporary Womenswear, Luxury Modest Fashion, Premium Modest Fashion',
   neckline:
     'Halter neckline with Bint Saeed signature woven detailing inspired by Al Khous, the traditional Emirati art of weaving date palm fronds.',
   fit: 'Fitted through the bodice with a full box-pleated skirt.',
@@ -28,7 +28,7 @@ const FACTS_EN: ProductSchemaFacts = {
   care: 'Professional dry clean only.',
   material: KNIGHTSBRIDGE_DRESS_MATERIAL,
   suitableFor:
-    'Summer holidays, elegant lunches, afternoon tea, resort destinations, travel, city weekends, gallery visits, everyday dressing, evening gatherings, luxury vacations, destination dressing, pairing with the Knightsbridge Abaya, and international wardrobes.',
+    'Summer holidays, elegant lunches, afternoon tea, resort destinations, travel, city weekends, gallery visits, everyday dressing, evening gatherings, luxury vacations, premium vacations, destination dressing, pairing with the Knightsbridge Abaya, and international wardrobes.',
   madeIn: MADE_IN,
 }
 

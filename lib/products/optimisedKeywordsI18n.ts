@@ -192,6 +192,7 @@ const DISCOVERY_ROWS: KwRow[] = [
   ['quiet luxury brands', 'علامات الهدوء الفاخر', 'marques quiet luxury', 'brand quiet luxury', 'marcas quiet luxury', 'бренды quiet luxury', '静奢品牌', 'Quiet-Luxury-Marken', 'quiet luxury merken', 'marcas quiet luxury'],
   ['quiet luxury', 'الفخامة الهادئة', 'quiet luxury', 'quiet luxury', 'quiet luxury', 'quiet luxury', '静奢', 'Quiet Luxury', 'quiet luxury', 'quiet luxury'],
   ['luxury UAE brands', 'علامات فاخرة إماراتية', 'marques de luxe EAU', 'brand di lusso EAU', 'marcas de lujo EAU', 'роскошные бренды ОАЭ', '阿联酋奢侈品牌', 'Luxusmarken VAE', 'luxe VAE-merken', 'marcas de luxo EAU'],
+  ['contemporary premium UAE brands', 'علامات معاصرة راقية إماراتية', 'marques contemporaines premium EAU', 'brand contemporanei premium EAU', 'marcas contemporáneas premium EAU', 'современные премиальные бренды ОАЭ', '阿联酋当代高端品牌', 'zeitgenössische Premiummarken VAE', 'eigentijdse premium VAE-merken', 'marcas contemporâneas premium EAU'],
   ['Eid dress', 'فستان العيد', 'robe Aïd', 'abito Eid', 'vestido Eid', 'платье на Ид', '开斋节连衣裙', 'Eid-Kleid', 'Eid jurk', 'vestido Eid'],
   ['holiday kaftan', 'قفطان العطلات', 'caftan de vacances', 'kaftan festivo', 'caftán festivo', 'праздничный кафтан', '假日长袍', 'Festtags-Kaftan', 'feestdagen kaftan', 'kaftan festivo'],
   ['vacation kaftan', 'قفطان إجازة', 'caftan de vacances', 'kaftan vacanza', 'caftán de vacaciones', 'курортный кафтан', '度假长袍', 'Urlaubs-Kaftan', 'vakantiekaftan', 'kaftan de férias'],

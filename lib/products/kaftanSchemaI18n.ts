@@ -43,18 +43,18 @@ const INNER_DRESS: Record<AppLocale, string> = {
 }
 
 const KAFTAN_AUDIENCE: Record<AppLocale, string> = {
-  en: 'Women seeking luxury occasion wear, elegant travel wardrobes, contemporary kaftans, and refined event dressing.',
-  ar: 'نساء يبحثن عن أزياء فاخرة للمناسبات، وخزانة سفر أنيقة، وقفاطين معاصرة، وإطلالات مناسبات راقية.',
-  fr: 'Femmes en quête de tenues de cérémonie de luxe, garde-robes de voyage élégantes, caftans contemporains et habillage raffiné pour les événements.',
-  it: 'Donne in cerca di abbigliamento da cerimonia di lusso, guardaroba da viaggio eleganti, kaftan contemporanei e styling raffinato per eventi.',
-  es: 'Mujeres que buscan ropa de ocasión de lujo, armarios de viaje elegantes, caftanes contemporáneos y vestir refinado para eventos.',
-  ru: 'Женщины, ищущие роскошную одежду для особых случаев, элегантный дорожный гардероб, современные кафтаны и изысканные образы для мероприятий.',
-  zh: '追求奢华场合着装、优雅旅行衣橱、当代长袍与精致活动穿搭的女性。',
-  de: 'Frauen, die luxuriöse Anlassmode, elegante Reisegarderoben, zeitgenössische Kaftane und raffinierte Event-Looks suchen.',
-  nl: 'Vrouwen die luxe gelegenheidskleding, elegante reisgarderobes, eigentijdse kaftans en verfijnde event-styling zoeken.',
-  pt: 'Mulheres que procuram vestuário de ocasião de luxo, guarda-roupa de viagem elegante, kaftans contemporâneos e styling refinado para eventos.',
-  id: 'Wanita yang mencari busana acara mewah, garderobe perjalanan elegan, kaftan kontemporer, dan berpakaian acara yang halus.',
-  ms: 'Wanita yang mencari pakaian majlis mewah, almari perjalanan elegan, kaftan kontemporari, dan gaya acara yang halus.',
+  en: 'Women seeking luxury occasion wear, premium occasion wear, elegant travel wardrobes, contemporary kaftans, and refined event dressing.',
+  ar: 'نساء يبحثن عن أزياء فاخرة للمناسبات، أزياء راقية للمناسبات، وخزانة سفر أنيقة، وقفاطين معاصرة، وإطلالات مناسبات راقية.',
+  fr: 'Femmes en quête de tenues de cérémonie de luxe, tenues de cérémonie premium, garde-robes de voyage élégantes, caftans contemporains et habillage raffiné pour les événements.',
+  it: 'Donne in cerca di abbigliamento da cerimonia di lusso, abbigliamento da cerimonia premium, guardaroba da viaggio eleganti, kaftan contemporanei e styling raffinato per eventi.',
+  es: 'Mujeres que buscan ropa de ocasión de lujo, ropa de ocasión premium, armarios de viaje elegantes, caftanes contemporáneos y vestir refinado para eventos.',
+  ru: 'Женщины, ищущие роскошную и премиальную одежду для особых случаев, элегантный дорожный гардероб, современные кафтаны и изысканные образы для мероприятий.',
+  zh: '追求奢华场合着装、高端场合着装、优雅旅行衣橱、当代长袍与精致活动穿搭的女性。',
+  de: 'Frauen, die luxuriöse und Premium-Anlassmode, elegante Reisegarderoben, zeitgenössische Kaftane und raffinierte Event-Looks suchen.',
+  nl: 'Vrouwen die luxe gelegenheidskleding, premium gelegenheidskleding, elegante reisgarderobes, eigentijdse kaftans en verfijnde event-styling zoeken.',
+  pt: 'Mulheres que procuram vestuário de ocasião de luxo, vestuário de ocasião premium, guarda-roupa de viagem elegante, kaftans contemporâneos e styling refinado para eventos.',
+  id: 'Wanita yang mencari busana acara mewah, busana acara premium, garderobe perjalanan elegan, kaftan kontemporer, dan berpakaian acara yang halus.',
+  ms: 'Wanita yang mencari pakaian majlis mewah, pakaian majlis premium, almari perjalanan elegan, kaftan kontemporari, dan gaya acara yang halus.',
 }
 
 type KaftanLocalePack = {
@@ -77,7 +77,7 @@ const MAYFAIR: Record<AppLocale, KaftanLocalePack> = {
       stylingDetail:
         'Attached scarf detail featuring the signature Bint Saeed gold-tone emblem pin and hidden internal tie construction.',
       suitableFor:
-        'Weddings, engagement celebrations, Eid gatherings, formal dinners, destination events, cultural occasions, luxury travel, and elegant daytime dressing.',
+        'Weddings, engagement celebrations, Eid gatherings, formal dinners, destination events, cultural occasions, luxury travel, premium travel, and elegant daytime dressing.',
       care: CARE.en,
     },
     faq: [
@@ -474,7 +474,7 @@ const NOTHING_HILL: Record<AppLocale, KaftanLocalePack> = {
       stylingDetail:
         'Flowing layered chiffon construction featuring the signature Bint Saeed gold-tone emblem pin.',
       suitableFor:
-        'Weddings, engagement celebrations, Eid gatherings, formal dinners, destination events, cultural occasions, luxury travel, garden celebrations, and elegant daytime dressing.',
+        'Weddings, engagement celebrations, Eid gatherings, formal dinners, destination events, cultural occasions, luxury travel, premium travel, garden celebrations, and elegant daytime dressing.',
       care: CARE.en,
     },
     faq: [

@@ -45,6 +45,8 @@ const CATALOG_EXCLUSIVE_EN: Record<string, readonly string[]> = {
     'Khous set',
     'two-piece set',
     'luxury coordinate set',
+    'premium coordinate set',
+    'contemporary premium set',
     'BS-ST-002',
   ],
   'soho-set': [

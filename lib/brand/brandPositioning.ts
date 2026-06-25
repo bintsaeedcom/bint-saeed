@@ -52,18 +52,18 @@ export const HOME_META_DESCRIPTION: Record<AppLocale, string> = {
 
 /** Schema `audience` — contemporary women (not modest-only framing). */
 export const SCHEMA_AUDIENCE_TYPE: Record<AppLocale, string> = {
-  en: `Contemporary women seeking luxury fashion, refined dressing and evolving lifestyles from ${G.en.city}, ${G.en.countryShort}`,
-  ar: `المرأة المعاصرة الباحثة عن أزياء فاخرة وإطلالات راقية وأسلوب حياة متطوّر من ${G.ar.city}، ${G.ar.countryShort}`,
-  fr: `Femmes contemporaines en quête de mode de luxe, d’élégance raffinée et de modes de vie évolutifs depuis ${G.fr.city} (${G.fr.countryShort})`,
-  it: `Donne contemporanee in cerca di moda di lusso, abbigliamento raffinato e stili di vita in evoluzione da ${G.it.city} (${G.it.countryShort})`,
-  es: `Mujeres contemporáneas que buscan moda de lujo, vestir refinado y estilos de vida en evolución desde ${G.es.city} (${G.es.countryShort})`,
-  ru: `Современные женщины, ищущие люксовую моду, изысканный стиль и меняющийся образ жизни из ${G.ru.city} (${G.ru.countryShort})`,
-  zh: `追求奢华时尚、精致着装与演进生活方式的当代女性（${G.zh.city}，${G.zh.countryShort}）`,
-  de: `Zeitgenössische Frauen, die Luxusmode, raffinierte Garderobe und sich wandelnde Lebensstile aus ${G.de.city} (${G.de.countryShort}) suchen`,
-  nl: `Hedendaagse vrouwen die luxemode, verfijnde stijl en veranderende levensstijlen uit ${G.nl.city} (${G.nl.countryShort}) zoeken`,
-  pt: `Mulheres contemporâneas que procuram moda de luxo, vestir refinado e estilos de vida em evolução a partir de ${G.pt.city} (${G.pt.countryShort})`,
-  id: `Wanita kontemporer yang mencari fashion mewah, berpakaian halus, dan gaya hidup berkembang dari ${G.id.city} (${G.id.countryShort})`,
-  ms: `Wanita kontemporari yang mencari fesyen mewah, berpakaian halus, dan gaya hidup berkembang dari ${G.ms.city} (${G.ms.countryShort})`,
+  en: `Contemporary women seeking luxury fashion, premium fashion, refined dressing and evolving lifestyles from ${G.en.city}, ${G.en.countryShort}`,
+  ar: `المرأة المعاصرة الباحثة عن أزياء فاخرة وأزياء راقية وإطلالات راقية وأسلوب حياة متطوّر من ${G.ar.city}، ${G.ar.countryShort}`,
+  fr: `Femmes contemporaines en quête de mode de luxe, de mode premium, d’élégance raffinée et de modes de vie évolutifs depuis ${G.fr.city} (${G.fr.countryShort})`,
+  it: `Donne contemporanee in cerca di moda di lusso, moda premium, abbigliamento raffinato e stili di vita in evoluzione da ${G.it.city} (${G.it.countryShort})`,
+  es: `Mujeres contemporáneas que buscan moda de lujo, moda premium, vestir refinado y estilos de vida en evolución desde ${G.es.city} (${G.es.countryShort})`,
+  ru: `Современные женщины, ищущие люксовую моду, премиальную моду, изысканный стиль и меняющийся образ жизни из ${G.ru.city} (${G.ru.countryShort})`,
+  zh: `追求奢华时尚、高端时尚、精致着装与演进生活方式的当代女性（${G.zh.city}，${G.zh.countryShort}）`,
+  de: `Zeitgenössische Frauen, die Luxusmode, Premiummode, raffinierte Garderobe und sich wandelnde Lebensstile aus ${G.de.city} (${G.de.countryShort}) suchen`,
+  nl: `Hedendaagse vrouwen die luxemode, premiummode, verfijnde stijl en veranderende levensstijlen uit ${G.nl.city} (${G.nl.countryShort}) zoeken`,
+  pt: `Mulheres contemporâneas que procuram moda de luxo, moda premium, vestir refinado e estilos de vida em evolução a partir de ${G.pt.city} (${G.pt.countryShort})`,
+  id: `Wanita kontemporer yang mencari fashion mewah, fashion premium, berpakaian halus, dan gaya hidup berkembang dari ${G.id.city} (${G.id.countryShort})`,
+  ms: `Wanita kontemporari yang mencari fesyen mewah, fesyen premium, berpakaian halus, dan gaya hidup berkembang dari ${G.ms.city} (${G.ms.countryShort})`,
 }
 
 /** Invisible discovery keywords — modest terms for schema/SEO only, not front-end copy. */
@@ -74,6 +74,9 @@ export const MODEST_DISCOVERY_KEYWORDS: Record<AppLocale, string[]> = {
     'modest clothing',
     'modest evening wear',
     'luxury modest fashion',
+    'premium modest fashion',
+    'contemporary premium brand',
+    'luxury abaya brand',
     'modest abaya',
     'modest dress UAE',
     'GCC modest fashion',
