@@ -6,9 +6,6 @@ const CATALOG_EXCLUSIVE_EN: Record<string, readonly string[]> = {
   'covent-garden-abaya': [
     'Covent Garden Abaya',
     'Bint Saeed Covent Garden Abaya',
-    'Al Talli abaya',
-    'linen abaya',
-    'luxury linen abaya',
     'BS-AB-002',
   ],
   'marylebone-abaya': [
@@ -26,10 +23,16 @@ const CATALOG_EXCLUSIVE_EN: Record<string, readonly string[]> = {
     'BS-AB-006',
   ],
   'covent-garden-long-dress': [
+    'Covent Garden Dress',
     'Covent Garden Long Dress',
-    'Bint Saeed Covent Garden Long Dress',
-    'column dress',
-    'stretch crepe dress',
+    'Bint Saeed Covent Garden Dress',
+    'Bint Saeed Abu Dhabi',
+    'elegant long dress',
+    'tailored maxi dress',
+    'under-abaya dress',
+    'signature under-abaya dress',
+    'Emirati brand',
+    'Abu Dhabi designer dress',
     'BS-DR-002',
   ],
   'hampstead-dress': [

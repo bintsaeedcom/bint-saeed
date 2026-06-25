@@ -11,6 +11,7 @@ export type PdpDetailGroup = {
 }
 
 export const THE_CODES_KHOUS_HREF = '/the-codes#khous'
+export const THE_CODES_AL_TALLI_HREF = '/the-codes#al-talli'
 export const THE_CODES_KNOTTED_LINES_HREF = '/the-codes#knotted-lines-of-lineage'
 
 export function pdpIntroPartsToPlainText(parts: PdpIntroPart[]): string {

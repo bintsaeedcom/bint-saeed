@@ -4,6 +4,13 @@ import { getHeritageCraft } from '@/lib/products/heritageSeo'
 import { isKnightsbridgeAbayaSlug } from '@/lib/products/knightsbridgeSchemaI18n'
 import { isKnightsbridgeDressSlug } from '@/lib/products/knightsbridgeDressSchemaI18n'
 import { isCoventGardenSignatureSetSlug } from '@/lib/products/coventGardenSignatureSetSchemaI18n'
+import { isCoventGardenAbayaSlug } from '@/lib/products/coventGardenAbayaSchemaI18n'
+import { isCoventGardenLongDressSlug } from '@/lib/products/coventGardenLongDressSchemaI18n'
+import { isBelgraviaSlug } from '@/lib/products/belgraviaSchemaI18n'
+import { isKensingtonSlug } from '@/lib/products/kensingtonSchemaI18n'
+import { AL_TALLI_HERITAGE_PATH, buildAlTalliDefinedTermNode, alTalliHeritagePageUrl } from '@/lib/seo/alTalliDiscovery'
+
+const KHOUS_HERITAGE_PATH = '/heritage/khous'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
@@ -14,6 +21,36 @@ type SemanticProductRef = {
 
 function productRef(name: string, path: string): SemanticProductRef {
   return { name, path }
+}
+
+/** Pairing graph for cross-discovery between catalogue PDPs. */
+const SEMANTIC_RELATIONS: Record<string, SemanticProductRef[]> = {
+  'belgravia-abaya': [productRef('Kensington Abaya', '/shop/kensington-abaya')],
+  'kensington-abaya': [productRef('Belgravia Abaya', '/shop/belgravia-abaya')],
+  'marylebone-abaya': [
+    productRef('Covent Garden Long Dress', '/shop/covent-garden-long-dress'),
+    productRef('Soho Set', '/shop/soho-set'),
+  ],
+  'park-lane-abaya': [productRef('Covent Garden Abaya', '/shop/covent-garden-abaya')],
+  'covent-garden-long-dress': [
+    productRef('Covent Garden Abaya', '/shop/covent-garden-abaya'),
+    productRef('Marylebone Abaya', '/shop/marylebone-abaya'),
+    productRef('Kensington Abaya', '/shop/kensington-abaya'),
+  ],
+  'hampstead-dress': [
+    productRef('Covent Garden Abaya', '/shop/covent-garden-abaya'),
+    productRef('Marylebone Abaya', '/shop/marylebone-abaya'),
+  ],
+  'soho-set': [
+    productRef('Marylebone Abaya', '/shop/marylebone-abaya'),
+    productRef('Hampstead Dress', '/shop/hampstead-dress'),
+  ],
+  'covent-garden-signature-set': [
+    productRef('Covent Garden Long Dress', '/shop/covent-garden-long-dress'),
+    productRef('Covent Garden Abaya', '/shop/covent-garden-abaya'),
+  ],
+  'mayfair-kaftan': [productRef('Nothing Hill Kaftan', '/shop/nothing-hill-kaftan')],
+  'nothing-hill-kaftan': [productRef('Mayfair Kaftan', '/shop/mayfair-kaftan')],
 }
 
 function productUrl(locale: AppLocale, path: string): string {
@@ -41,6 +78,7 @@ export function buildProductSemanticJsonLdFields(
   const craft = getHeritageCraft(normalized)
   const about: Array<Record<string, unknown>> = []
   const related: Array<Record<string, unknown>> = []
+  const fields: Record<string, unknown> = {}
 
   if (craft === 'khous') {
     about.push({
@@ -50,16 +88,27 @@ export function buildProductSemanticJsonLdFields(
         'Traditional Emirati craft of weaving date palm fronds into functional and decorative objects.',
       sameAs: heritagePageUrl(locale, 'khous'),
     })
+    related.push(
+      relatedProductNode(productRef('Khous Heritage', KHOUS_HERITAGE_PATH), locale),
+    )
   }
 
   if (craft === 'al-talli') {
-    about.push({
-      '@type': 'Thing',
-      name: 'Al Talli',
-      description:
-        'Traditional Emirati hand embroidery using metallic threads, passed down through generations.',
-      sameAs: heritagePageUrl(locale, 'al-talli'),
-    })
+    const definedTerm = buildAlTalliDefinedTermNode(locale)
+    about.push(definedTerm)
+    related.push(
+      relatedProductNode(
+        productRef('Al Talli Heritage', AL_TALLI_HERITAGE_PATH),
+        locale,
+      ),
+    )
+    fields.mentions = definedTerm
+    fields.subjectOf = {
+      '@type': 'WebPage',
+      '@id': `${alTalliHeritagePageUrl(locale)}#webpage`,
+      name: 'Al Talli — UNESCO Emirati Heritage | Bint Saeed',
+      url: alTalliHeritagePageUrl(locale),
+    }
   }
 
   if (isKnightsbridgeDressSlug(normalized)) {
@@ -86,7 +135,37 @@ export function buildProductSemanticJsonLdFields(
     )
   }
 
-  const fields: Record<string, unknown> = {}
+  if (isCoventGardenAbayaSlug(normalized)) {
+    related.push(
+      relatedProductNode(
+        productRef('Covent Garden Long Dress', '/shop/covent-garden-long-dress'),
+        locale,
+      ),
+      relatedProductNode(productRef('Hampstead Dress', '/shop/hampstead-dress'), locale),
+    )
+  }
+
+  if (isCoventGardenLongDressSlug(normalized)) {
+    related.push(
+      relatedProductNode(productRef('Covent Garden Abaya', '/shop/covent-garden-abaya'), locale),
+    )
+  }
+
+  if (isBelgraviaSlug(normalized) || isKensingtonSlug(normalized)) {
+    related.push(
+      relatedProductNode(productRef('Knightsbridge Abaya Jacket', '/shop/knightsbridge-abaya-jacket'), locale),
+    )
+  }
+
+  for (const ref of SEMANTIC_RELATIONS[normalized] ?? []) {
+    related.push(relatedProductNode(ref, locale))
+  }
+
+  fields.isPartOf = {
+    '@type': 'Brand',
+    name: 'Bint Saeed',
+    url: SITE_URL,
+  }
 
   if (about.length === 1) {
     fields.about = about[0]

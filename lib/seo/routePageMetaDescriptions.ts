@@ -155,25 +155,25 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   heritage_al_talli: {
     en:
-      'Al Talli embroidery — heritage craft referenced by Bint Saeed, luxury abaya house in Abu Dhabi. UNESCO‑recognised Emirati technique at the heart of design.',
+      'What is Al Talli? UNESCO-listed Emirati embroidery from Abu Dhabi. Discover the craft and shop designer abayas and dresses with authentic Al Talli trim by Bint Saeed — made in the UAE.',
     ar:
-      'تطريز التلي، حرفة تراثية يستند إليها تصميم بِنت سعيد في أبوظبي؛ تقنية إماراتية معترف بها من اليونسكو وتشكّل جزءاً من الهوية البصرية للدار.',
+      'ما هو التلي؟ تطريز إماراتي مدرج في اليونسكو من أبوظبي. اكتشفي الحرفة وتسوقي عبايات وفساتين بتفاصيل التلي الأصيلة من Bint Saeed — صُنعت في الإمارات.',
     fr:
-      'Broderie Al Talli — savoir‑faire UNESCO au cœur des créations Bint Saeed à Abu Dhabi : maisons d’abayas de luxe inspirées du patrimoine émirati.',
+      'Qu’est-ce que l’Al Talli ? Broderie émiratie UNESCO à Abu Dhabi. Découvrez l’artisanat et achetez des abayas et robes Al Talli par Bint Saeed — fabriquées aux EAU.',
     it:
-      'Al Talli — ricamo patrimonio UNESCO citato da Bint Saeed ad Abu Dhabi per abaya di lusso legate alla cultura emiratina.',
+      'Che cos’è Al Talli? Ricamo emiratino UNESCO da Abu Dhabi. Scopri l’artigianato e acquista abaya e abiti Al Talli Bint Saeed — made in UAE.',
     es:
-      'Al Talli — bordado patrimonio UNESCO que inspira a Bint Saeed en Abu Dhabi en abayas de lujo ancladas en la cultura emiratí.',
+      '¿Qué es Al Talli? Bordado emiratí UNESCO desde Abu Dabi. Descubre el oficio y compra abayas y vestidos Al Talli de Bint Saeed — hechos en EAU.',
     ru:
-      'Аль‑Талли — эмиратская техника вышивки (UNESCO), которую развивает Bint Saeed в Абу‑Даби в коллекциях люксовых абай.',
+      'Что такое Al Talli? Эмиратская вышивка ЮНЕСКО из Абу-Даби. Узнайте о ремесле и купите абайи и платья с Al Talli от Bint Saeed — сделано в ОАЭ.',
     zh:
-      '阿勒塔利刺绣：联合国教科文组织认定的阿联酋传统工艺，亦是阿布扎比 Bint Saeed 奢华阿巴亚系列的重要灵感来源。',
+      '什么是 Al Talli？联合国教科文组织阿联酋刺绣，源自阿布扎比。了解工艺并选购 Bint Saeed 正宗 Al Talli 饰边长袍与连衣裙——阿联酋制造。',
     de:
-      'Al Talli — UNESCO‑geschütztes Emirati‑Stickwerk, das Bint Saeed in Abu Dhabi für Luxus‑Abayas mit lokaler Identität nutzt.',
+      'Was ist Al Talli? UNESCO-emiratische Stickerei aus Abu Dhabi. Entdecken Sie das Handwerk und shoppen Sie Al-Talli-Abayas und Kleider von Bint Saeed — made in UAE.',
     nl:
-      'Al Talli — UNESCO‑erfgoed uit de VAE, verwerkt door Bint Saeed in Abu Dhabi in luxe abaya’s met emiratische signatuur.',
+      'Wat is Al Talli? UNESCO Emiratisch borduurwerk uit Abu Dhabi. Ontdek het ambacht en shop designer abaya’s en jurken met Al Talli van Bint Saeed — gemaakt in de VAE.',
     pt:
-      'Al Talli — bordado património UNESCO integrado pela Bint Saeed em Abu Dhabi em abayas de luxo com identidade emiradense.',
+      'O que é Al Talli? Bordado emirati UNESCO de Abu Dhabi. Descubra o ofício e compre abayas e vestidos Al Talli da Bint Saeed — feitos nos EAU.',
   },
   heritage_khous: {
     en:

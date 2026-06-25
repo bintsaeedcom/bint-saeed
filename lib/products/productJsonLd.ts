@@ -30,6 +30,26 @@ import {
   getCoventGardenSignatureSetSchemaAudience,
   isCoventGardenSignatureSetSlug,
 } from '@/lib/products/coventGardenSignatureSetSchemaI18n'
+import {
+  getCoventGardenLongDressSchemaAudience,
+  isCoventGardenLongDressSlug,
+} from '@/lib/products/coventGardenLongDressSchemaI18n'
+import {
+  getCoventGardenAbayaSchemaAudience,
+  isCoventGardenAbayaSlug,
+} from '@/lib/products/coventGardenAbayaSchemaI18n'
+import {
+  getHampsteadDressSchemaAudience,
+  getHydeParkSetSchemaAudience,
+  getMaryleboneAbayaSchemaAudience,
+  getParkLaneAbayaSchemaAudience,
+  getSohoSetSchemaAudience,
+  isHampsteadDressSlug,
+  isHydeParkSetSlug,
+  isMaryleboneAbayaSlug,
+  isParkLaneAbayaSlug,
+  isSohoSetSlug,
+} from '@/lib/products/secondaryCatalogSchemaI18n'
 import { getFallbackSchemaAudience } from '@/lib/products/categorySchemaAudience'
 import { buildProductSemanticJsonLdFields } from '@/lib/products/productSemanticJsonLd'
 import { getSharedAbayaSchemaAudience, SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
@@ -133,7 +153,21 @@ function schemaAudience(locale: AppLocale, slug: string, product: Product) {
             ? getKnightsbridgeDressSchemaAudience(locale)
             : isCoventGardenSignatureSetSlug(slug)
               ? getCoventGardenSignatureSetSchemaAudience(locale)
-              : product.category === 'Abayas'
+              : isCoventGardenLongDressSlug(slug)
+                ? getCoventGardenLongDressSchemaAudience(locale)
+                : isCoventGardenAbayaSlug(slug)
+                  ? getCoventGardenAbayaSchemaAudience(locale)
+                  : isMaryleboneAbayaSlug(slug)
+                    ? getMaryleboneAbayaSchemaAudience(locale)
+                    : isParkLaneAbayaSlug(slug)
+                      ? getParkLaneAbayaSchemaAudience(locale)
+                      : isHampsteadDressSlug(slug)
+                        ? getHampsteadDressSchemaAudience(locale)
+                        : isSohoSetSlug(slug)
+                          ? getSohoSetSchemaAudience(locale)
+                          : isHydeParkSetSlug(slug)
+                            ? getHydeParkSetSchemaAudience(locale)
+                            : product.category === 'Abayas'
               ? getSharedAbayaSchemaAudience(locale)
               : getFallbackSchemaAudience(product.category, locale)
 

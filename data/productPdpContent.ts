@@ -28,6 +28,24 @@ import {
 import type { PdpDetailGroup, PdpIntroParagraph } from '@/lib/products/pdpIntroRich'
 import { pdpIntroParagraphsToPlainText } from '@/lib/products/pdpIntroRich'
 import { COVENT_GARDEN_SIGNATURE_SET_INTRO_EN } from '@/data/coventGardenSignatureSetPdpIntro'
+import { COVENT_GARDEN_LONG_DRESS_INTRO_EN } from '@/data/coventGardenLongDressPdpIntro'
+import { COVENT_GARDEN_ABAYA_INTRO_EN } from '@/data/coventGardenAbayaPdpIntro'
+import {
+  COVENT_GARDEN_ABAYA_CARE,
+  COVENT_GARDEN_ABAYA_COMPOSITION,
+  COVENT_GARDEN_ABAYA_FIT_AND_SIZE,
+  COVENT_GARDEN_ABAYA_ORIGIN,
+  COVENT_GARDEN_ABAYA_PRODUCT_DETAILS,
+} from '@/data/coventGardenAbayaPdpDetails'
+import {
+  COVENT_GARDEN_LONG_DRESS_CARE,
+  COVENT_GARDEN_LONG_DRESS_COMPOSITION,
+  COVENT_GARDEN_LONG_DRESS_FIT_AND_SIZE,
+  COVENT_GARDEN_LONG_DRESS_ORIGIN,
+  COVENT_GARDEN_LONG_DRESS_PRODUCT_DETAILS,
+} from '@/data/coventGardenLongDressPdpDetails'
+import { COVENT_GARDEN_ABAYA_FAQ_EN } from '@/data/coventGardenAbayaPdpFaq'
+import { COVENT_GARDEN_LONG_DRESS_FAQ_EN } from '@/data/coventGardenLongDressPdpFaq'
 
 export type { PdpDetailGroup } from '@/lib/products/pdpIntroRich'
 
@@ -401,6 +419,46 @@ function isCoventGardenSignatureSet(product: Product): boolean {
   return slug === 'covent-garden-signature-set' || product.id === 'bs-005'
 }
 
+function isCoventGardenAbaya(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'covent-garden-abaya' || product.id === 'ab-002'
+}
+
+function isCoventGardenLongDress(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'covent-garden-long-dress' || product.id === 'dr-009'
+}
+
+function buildCoventGardenAbayaContent(product: Product): ProductPdpContent {
+  const introParagraphParts = COVENT_GARDEN_ABAYA_INTRO_EN
+
+  return {
+    introParagraphParts,
+    introParagraphs: pdpIntroParagraphsToPlainText(introParagraphParts),
+    productDetails: [...COVENT_GARDEN_ABAYA_PRODUCT_DETAILS],
+    compositionDetails: [...COVENT_GARDEN_ABAYA_COMPOSITION],
+    careDetails: [...COVENT_GARDEN_ABAYA_CARE],
+    fitAndSizeDetails: [...COVENT_GARDEN_ABAYA_FIT_AND_SIZE],
+    originDetails: [...COVENT_GARDEN_ABAYA_ORIGIN],
+    faq: COVENT_GARDEN_ABAYA_FAQ_EN,
+  }
+}
+
+function buildCoventGardenLongDressContent(product: Product): ProductPdpContent {
+  const introParagraphParts = COVENT_GARDEN_LONG_DRESS_INTRO_EN
+
+  return {
+    introParagraphParts,
+    introParagraphs: pdpIntroParagraphsToPlainText(introParagraphParts),
+    productDetails: [...COVENT_GARDEN_LONG_DRESS_PRODUCT_DETAILS],
+    compositionDetails: [...COVENT_GARDEN_LONG_DRESS_COMPOSITION],
+    careDetails: [...COVENT_GARDEN_LONG_DRESS_CARE],
+    fitAndSizeDetails: [...COVENT_GARDEN_LONG_DRESS_FIT_AND_SIZE],
+    originDetails: [...COVENT_GARDEN_LONG_DRESS_ORIGIN],
+    faq: COVENT_GARDEN_LONG_DRESS_FAQ_EN,
+  }
+}
+
 function buildCoventGardenSignatureSetContent(product: Product, color?: string): ProductPdpContent {
   const colorName = resolveSelectedColorName(product, color)
   const introParagraphParts = COVENT_GARDEN_SIGNATURE_SET_INTRO_EN
@@ -671,6 +729,10 @@ export function getProductPdpContent(
     content = buildKnightsbridgeAbayaJacketContent(color, locale)
   } else if (isKnightsbridgeDress(product)) {
     content = buildKnightsbridgeDressContent(product, color, locale)
+  } else if (isCoventGardenAbaya(product)) {
+    content = buildCoventGardenAbayaContent(product)
+  } else if (isCoventGardenLongDress(product)) {
+    content = buildCoventGardenLongDressContent(product)
   } else if (isCoventGardenSignatureSet(product)) {
     content = buildCoventGardenSignatureSetContent(product, color)
   } else if (product.category === 'Accessories') {

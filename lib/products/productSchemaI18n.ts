@@ -2,6 +2,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import type { Product } from '@/data/products'
 import { getProductSlug } from '@/lib/products/links'
 import { getHeritageCraft } from '@/lib/products/heritageSeo'
+import { getAlTalliHeritageFaqItem } from '@/lib/products/alTalliHeritageFaqI18n'
 import { productIsOneSizeOnly } from '@/lib/shopProductOptions'
 import { MODEST_DISCOVERY_KEYWORDS } from '@/lib/brand/brandPositioning'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
@@ -807,7 +808,7 @@ export function buildLocalizedDefaultFaq(product: Product, locale: AppLocale): P
 
   if (productIsOneSizeOnly(product)) items.push(t.oneSize(name))
   if (craft === 'khous') items.push(t.khous(name))
-  if (craft === 'al-talli') items.push(t.talli(name))
+  if (craft === 'al-talli') items.push(getAlTalliHeritageFaqItem(locale))
 
   return items
 }

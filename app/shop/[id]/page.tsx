@@ -23,6 +23,11 @@ import {
   isKnightsbridgePairingSlug,
   normalizeKnightsbridgeCatalogColor,
 } from '@/lib/products/knightsbridgePairing'
+import {
+  getDressAbayaPairingRelatedSlugs,
+  isDressAbayaPairingSlug,
+  resolveDressAbayaPairedColor,
+} from '@/lib/products/dressAbayaPairing'
 import { buildShopProductJsonLd } from '@/lib/products/productJsonLd'
 import { getProductFaq } from '@/lib/products/productSchemaMeta'
 import { useCartStore } from '@/store/cartStore'
@@ -75,8 +80,15 @@ const MANUAL_PAIRINGS: Record<string, string[]> = {
 function resolveRelatedStyles(product: Product): Product[] {
   const pairedSlug = getKnightsbridgePairedSlug(product.slug)
   if (pairedSlug && isKnightsbridgePairingSlug(product.slug)) {
-    const paired = staticProducts.filter((p) => p.slug === pairedSlug)
-    return paired
+    return staticProducts.filter((p) => p.slug === pairedSlug)
+  }
+
+  const dressAbayaSlugs = getDressAbayaPairingRelatedSlugs(product.slug)
+  if (dressAbayaSlugs) {
+    const bySlug = new Map(staticProducts.map((p) => [getProductSlug(p), p]))
+    return dressAbayaSlugs
+      .map((slug) => bySlug.get(slug))
+      .filter((p): p is Product => Boolean(p))
   }
 
   const manualPairSlugs = MANUAL_PAIRINGS[product.slug]
@@ -186,7 +198,10 @@ export default function ProductPage() {
     stylePairingNote,
     faq: pdpFaq,
   } = pdpContent
-  const hasManualPairing = Boolean(product && isKnightsbridgePairingSlug(product.slug))
+  const hasManualPairing = Boolean(
+    product &&
+      (isKnightsbridgePairingSlug(product.slug) || isDressAbayaPairingSlug(product.slug)),
+  )
   const faqItems = useMemo(
     () => (product ? getProductFaq(product, pdpFaq, language) : []),
     [product, pdpFaq, language],
@@ -1102,16 +1117,21 @@ export default function ProductPage() {
                 </h3>
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   {relatedStyles.map((item) => {
+                    const activeColor = selectedColor || product?.colors[0]?.name || ''
                     const pairedColor = isKnightsbridgePairingSlug(product.slug)
                       ? knightsbridgePairColor
-                      : item.colors[0]?.name ?? ''
+                      : isDressAbayaPairingSlug(product.slug)
+                        ? resolveDressAbayaPairedColor(product.slug, item, activeColor)
+                        : item.colors[0]?.name ?? ''
                     const pairedImages = getProductImagesForColor(item, pairedColor)
                     const pairedImage = pairedImages[0] ?? item.images[0]
+                    const useColorLink =
+                      isKnightsbridgePairingSlug(product.slug) || isDressAbayaPairingSlug(product.slug)
                     return (
                     <LocaleLink
                       key={item.id}
                       href={
-                        isKnightsbridgePairingSlug(product.slug)
+                        useColorLink
                           ? getProductHrefWithColor(item, pairedColor)
                           : getProductHref(item)
                       }

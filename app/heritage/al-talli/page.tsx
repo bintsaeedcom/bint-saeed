@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
@@ -8,12 +8,16 @@ import AboutTopicNav from '@/components/AboutTopicNav'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { buildAlTalliHeritageJsonLd } from '@/lib/seo/alTalliHeritageJsonLd'
+import { AL_TALLI_FEATURED_PRODUCTS } from '@/lib/seo/alTalliDiscovery'
 
 export default function AlTalliPage() {
-  const { isRTL } = useLanguage()
-  
+  const { isRTL, language } = useLanguage()
+  const jsonLd = useMemo(() => buildAlTalliHeritageJsonLd(language), [language])
+
   return (
     <div className={`min-h-screen bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <HeroSection />
       <AboutTopicNav />
       <StorySection />
@@ -311,13 +315,30 @@ function BintSaeedSection() {
               </p>
             </div>
             <LocaleLink
-              href="/shop?from=heritage-al-talli"
+              href="/shop/covent-garden-abaya"
               className={`mt-8 inline-flex min-h-[52px] items-center justify-center gap-3 px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
-              {isRTL ? 'تسوقي المجموعة' : 'Shop the Collection'}
+              {isRTL ? 'تسوقي عباية Covent Garden' : 'Shop Covent Garden Abaya'}
               <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
             </LocaleLink>
+            <div className={`mt-10 grid gap-3 sm:grid-cols-3 ${isRTL ? 'text-right' : ''}`}>
+              {AL_TALLI_FEATURED_PRODUCTS.map((item) => (
+                <LocaleLink
+                  key={item.path}
+                  href={item.path}
+                  className="group block border border-brand-stone/40 bg-white p-4 transition-colors hover:border-brand-darkRed/40 hover:bg-brand-stone/10"
+                  data-cursor-hover
+                >
+                  <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/70">
+                    {isRTL ? 'تسوقي' : 'Shop'}
+                  </span>
+                  <span className="mt-2 block font-rozha text-lg text-brand-darkRed group-hover:text-brand-dustyBlue">
+                    {item.name}
+                  </span>
+                </LocaleLink>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>

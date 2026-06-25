@@ -1,4 +1,5 @@
 import type { AppLocale } from '@/lib/i18n/routing'
+import { getLocalizedAlTalliDiscoveryKeywords } from '@/lib/products/alTalliDiscoveryKeywordsI18n'
 
 /** Required closing phrase on every commerce image alt. */
 export const BRAND_GEO_PHRASE = 'Bint Saeed Abu Dhabi, United Arab Emirates'
@@ -87,13 +88,10 @@ const HERITAGE_SCHEMA_KEYWORDS_EN = {
     'UAE fashion',
   ].join(', '),
   'al-talli': [
-    'Emirati heritage',
-    'Al Talli',
-    'Talli embroidery',
-    'Emirati culture',
-    'Abu Dhabi culture',
-    'Emirati brand',
+    ...getLocalizedAlTalliDiscoveryKeywords('en'),
     'Bint Saeed',
+    'luxury abaya',
+    'designer abaya',
     'UAE fashion',
   ].join(', '),
 } as const
@@ -114,13 +112,9 @@ const HERITAGE_SCHEMA_KEYWORDS_ID = {
     'fashion UEA',
   ].join(', '),
   'al-talli': [
-    'warisan Emirati',
-    'Al Talli',
-    'bordir Talli',
-    'budaya Emirati',
-    'budaya Abu Dhabi',
-    'merek Emirati',
+    ...getLocalizedAlTalliDiscoveryKeywords('id'),
     'Bint Saeed',
+    'abaya mewah',
     'fashion UEA',
   ].join(', '),
 } as const
@@ -141,13 +135,9 @@ const HERITAGE_SCHEMA_KEYWORDS_MS = {
     'fesyen UAE',
   ].join(', '),
   'al-talli': [
-    'warisan Emirati',
-    'Al Talli',
-    'sulaman Talli',
-    'budaya Emirati',
-    'budaya Abu Dhabi',
-    'jenama Emirati',
+    ...getLocalizedAlTalliDiscoveryKeywords('ms'),
     'Bint Saeed',
+    'abaya mewah',
     'fesyen UAE',
   ].join(', '),
 } as const

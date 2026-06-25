@@ -38,6 +38,39 @@ import {
 } from '@/lib/products/coventGardenSignatureSetSchemaLocalePacks'
 import { getLocalizedCoventGardenSignatureSetExclusiveKeywords } from '@/lib/products/coventGardenSignatureSetSchemaKeywordsI18n'
 import {
+  getLocalizedCoventGardenLongDressFaq,
+  getLocalizedCoventGardenLongDressSchemaFacts,
+  isCoventGardenLongDressSlug,
+} from '@/lib/products/coventGardenLongDressSchemaLocalePacks'
+import { getLocalizedCoventGardenLongDressExclusiveKeywords } from '@/lib/products/coventGardenLongDressSchemaKeywordsI18n'
+import {
+  getLocalizedCoventGardenAbayaFaq,
+  isCoventGardenAbayaSlug,
+} from '@/lib/products/coventGardenAbayaFaqI18n'
+import {
+  getLocalizedCoventGardenAbayaSchemaFacts,
+} from '@/lib/products/coventGardenAbayaSchemaLocalePacks'
+import { getLocalizedCoventGardenAbayaExclusiveKeywords } from '@/lib/products/coventGardenAbayaSchemaKeywordsI18n'
+import { getLocalizedAlTalliDiscoveryKeywords } from '@/lib/products/alTalliDiscoveryKeywordsI18n'
+import { getGlobalPdpSchemaDiscoveryKeywords } from '@/lib/products/globalPdpSchemaDiscoveryI18n'
+import { getLocalizedKaftanExclusiveKeywords } from '@/lib/products/kaftanSchemaKeywordsI18n'
+import {
+  getLocalizedSecondaryCatalogSchemaFacts,
+  getLocalizedSecondaryCatalogSchemaFaq,
+} from '@/lib/products/secondaryCatalogSchemaLocalePacks'
+import { getLocalizedSecondaryCatalogExclusiveKeywords } from '@/lib/products/secondaryCatalogSchemaKeywordsI18n'
+import {
+  isHampsteadDressSlug,
+  isHydeParkSetSlug,
+  isMaryleboneAbayaSlug,
+  isParkLaneAbayaSlug,
+  isSohoSetSlug,
+} from '@/lib/products/secondaryCatalogSchemaI18n'
+import {
+  AL_TALLI_HERITAGE_PRODUCT_SLUGS,
+  patchAlTalliHeritageFaq,
+} from '@/lib/products/alTalliHeritageFaqI18n'
+import {
   getLocalizedKnightsbridgeFaq,
   getLocalizedKnightsbridgeSchemaFacts,
 } from '@/lib/products/knightsbridgeSchemaI18n'
@@ -89,102 +122,6 @@ const DEFAULT_SUITABLE_FOR =
 
 const DEFAULT_MADE_IN = 'Abu Dhabi, United Arab Emirates'
 
-const SLUG_FACTS: Partial<Record<string, ProductSchemaFacts>> = {
-  'covent-garden-abaya': {
-    productType: 'Luxury linen abaya with traditional Al Talli trim',
-    productCategory: 'Abaya, Linen Abaya, Occasion Abaya, Luxury Modest Fashion',
-    closure: 'Concealed placket',
-    stylingDetail: 'Traditional Al Talli trim',
-    trim: 'Traditional Al Talli trim',
-    lining: 'Cotton lining',
-    material: 'European linen blend, cotton lining',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    madeIn: DEFAULT_MADE_IN,
-  },
-  'marylebone-abaya': {
-    productType: 'Open-front layering abaya',
-    productCategory: 'Abaya, Layering Abaya, Contemporary Outerwear, Luxury Modest Fashion',
-    closure: 'Open front',
-    stylingDetail: 'Wide sleeves for layering over dresses or sets',
-    material: 'Wool-silk blend, matte satin binding',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    madeIn: DEFAULT_MADE_IN,
-  },
-  'park-lane-abaya': {
-    productType: 'Everyday city abaya with fluid drape',
-    productCategory: 'Abaya, Everyday Abaya, Contemporary Womenswear, Luxury Modest Fashion',
-    fit: 'Clean line with fluid drape',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    madeIn: DEFAULT_MADE_IN,
-  },
-  'knightsbridge-dress': {
-    productType: 'Contemporary designer cotton-blend maxi dress inspired by Emirati heritage.',
-    productCategory:
-      'Maxi Dress, Halter Dress, Designer Dress, Luxury Dress, Premium Dress, Elegant Dress, Day Dress, Evening Dress, Summer Dress, Travel Dress, Cotton Blend Dress, Princess Silhouette Dress, Resort Wear, Contemporary Womenswear, Luxury Modest Fashion, Premium Modest Fashion',
-    fit: 'Fitted through the bodice with a full box-pleated skirt.',
-    neckline:
-      'Halter neckline with Bint Saeed signature woven detailing inspired by Al Khous, the traditional Emirati art of weaving date palm fronds.',
-    maximumGarmentLength: '143 cm / 56.3 inches',
-    modelHeight: '160 cm / 63 inches',
-    modelWears: 'XS',
-    closure: 'Concealed back zip closure with crossover neck fastening.',
-    styling:
-      'Designed to be worn on its own or paired seamlessly with the Knightsbridge Abaya for a coordinated Bint Saeed look.',
-    stylingDetail:
-      'Maxi dress with flowing silhouette, soft box pleats, signature Khous-inspired woven halter neckline, concealed back zip closure, crossover neck fastening, and hidden side seam pockets.',
-    pockets: 'Hidden side seam pockets.',
-    trim: 'Signature Khous-inspired woven detailing at the halter neckline.',
-    material: 'Outer: 60% Cotton, 40% Polyester',
-    care: 'Professional dry clean only.',
-    suitableFor:
-      'Summer holidays, elegant lunches, afternoon tea, resort destinations, travel, city weekends, gallery visits, everyday dressing, evening gatherings, luxury vacations, premium vacations, destination dressing, pairing with the Knightsbridge Abaya, and international wardrobes.',
-    madeIn: DEFAULT_MADE_IN,
-  },
-  'covent-garden-long-dress': {
-    productType: 'Slim column evening dress in stretch crepe',
-    productCategory: 'Dress, Column Dress, Evening Dress, Designer Dress, Luxury Modest Fashion, Premium Modest Fashion',
-    fit: 'Slim column silhouette',
-    stylingDetail: 'High back vent for ease of movement',
-    lining: 'Power mesh lining',
-    material: 'Stretch crepe, power mesh lining',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    madeIn: DEFAULT_MADE_IN,
-  },
-  'hampstead-dress': {
-    productType: 'Structured dress with traditional Al Talli trim',
-    productCategory: 'Dress, Evening Dress, Designer Dress, Luxury Modest Fashion',
-    fit: 'Structured shoulders',
-    stylingDetail: 'Traditional Al Talli trim',
-    trim: 'Traditional Al Talli trim',
-    lining: 'Silk lining',
-    material: 'Virgin Wool blend, Silk lining, Mother-of-pearl buttons',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    madeIn: DEFAULT_MADE_IN,
-  },
-  'covent-garden-signature-set': {
-    productType:
-      'Contemporary premium two-piece set comprising a fitted dress and matching short-sleeve tailored jacket inspired by Emirati heritage.',
-    productCategory:
-      'Contemporary Two-Piece Set, Designer Set, Premium Two-Piece Set, Dress and Jacket Set, Matching Set, Co-Ord Set, Tailored Set, Short-Sleeve Jacket, Fitted Dress, Contemporary Womenswear, Premium Womenswear, Formal Set, Workwear Set, Occasion Set, Modest Fashion',
-    fit: 'Tailored short-sleeve jacket with a coordinating fitted dress.',
-    madeIn: DEFAULT_MADE_IN,
-  },
-  'soho-set': {
-    productType: 'Coordinate top and skirt set with Al Talli trim',
-    productCategory: 'Set, Two-Piece Set, Coordinate Set, Luxury Modest Fashion, Premium Modest Fashion, Contemporary Womenswear',
-    stylingDetail: 'Coordinate top and skirt set with traditional Al Talli trim',
-    trim: 'Traditional Al Talli trim',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    madeIn: DEFAULT_MADE_IN,
-  },
-  'hyde-park-set': {
-    productType: 'Contemporary designer coordinate set',
-    productCategory: 'Set, Two-Piece Set, Contemporary Womenswear',
-    suitableFor: DEFAULT_SUITABLE_FOR,
-    madeIn: DEFAULT_MADE_IN,
-  },
-}
-
 function productTypeLabel(category: string): string {
   if (category === 'Abayas') return 'abaya'
   if (category === 'Kaftans') return 'kaftan'
@@ -230,22 +167,28 @@ export function getProductSchemaFacts(product: Product, locale: AppLocale = 'en'
   const coventGardenSetFacts = getLocalizedCoventGardenSignatureSetSchemaFacts(slug, locale)
   if (coventGardenSetFacts) return coventGardenSetFacts
 
+  const coventGardenDressFacts = getLocalizedCoventGardenLongDressSchemaFacts(slug, locale)
+  if (coventGardenDressFacts) return coventGardenDressFacts
+
+  const coventGardenAbayaFacts = getLocalizedCoventGardenAbayaSchemaFacts(slug, locale)
+  if (coventGardenAbayaFacts) return coventGardenAbayaFacts
+
+  const secondaryFacts = getLocalizedSecondaryCatalogSchemaFacts(slug, locale)
+  if (secondaryFacts) return secondaryFacts
+
   const knightsbridgeFacts = getLocalizedKnightsbridgeSchemaFacts(slug, locale)
   if (knightsbridgeFacts) return knightsbridgeFacts
 
-  const base = SLUG_FACTS[slug] ?? {}
   const fromMeasurements = extractMaxLength(product.measurements)
 
   return {
     madeIn: DEFAULT_MADE_IN,
     suitableFor: DEFAULT_SUITABLE_FOR,
-    material: base.material ?? product.fabric,
-    care: base.care ?? 'Professional dry clean only.',
-    ...base,
-    maximumGarmentLength: base.maximumGarmentLength ?? fromMeasurements,
+    material: product.fabric,
+    care: 'Professional dry clean only.',
+    maximumGarmentLength: fromMeasurements,
     fit:
-      base.fit ??
-      (productIsOneSizeOnly(product) ? 'One size; fluid and relaxed fit' : undefined),
+      productIsOneSizeOnly(product) ? 'One size; fluid and relaxed fit' : undefined,
   }
 }
 
@@ -260,6 +203,10 @@ export function buildProductSchemaKeywords(
       .split(', ')
       .filter(Boolean),
   )
+
+  for (const t of getGlobalPdpSchemaDiscoveryKeywords(locale)) {
+    terms.add(t)
+  }
 
   if (product.category === 'Abayas') {
     for (const t of getLocalizedAbayaSchemaKeywordTerms(locale)) terms.add(t)
@@ -288,9 +235,43 @@ export function buildProductSchemaKeywords(
     }
   }
 
+  if (isCoventGardenLongDressSlug(slug)) {
+    for (const t of getLocalizedCoventGardenLongDressExclusiveKeywords(locale, colorName)) {
+      terms.add(t)
+    }
+  }
+
+  if (isCoventGardenAbayaSlug(slug)) {
+    for (const t of getLocalizedCoventGardenAbayaExclusiveKeywords(locale, colorName)) {
+      terms.add(t)
+    }
+  }
+
+  if (
+    isMaryleboneAbayaSlug(slug) ||
+    isParkLaneAbayaSlug(slug) ||
+    isHampsteadDressSlug(slug) ||
+    isSohoSetSlug(slug) ||
+    isHydeParkSetSlug(slug)
+  ) {
+    for (const t of getLocalizedSecondaryCatalogExclusiveKeywords(slug, locale, colorName)) {
+      terms.add(t)
+    }
+  }
+
+  for (const t of getLocalizedKaftanExclusiveKeywords(slug, locale, colorName)) {
+    terms.add(t)
+  }
+
   const heritageKeywords = getHeritageSchemaKeywords(slug, locale)
   if (heritageKeywords) {
     for (const t of heritageKeywords.split(', ').filter(Boolean)) terms.add(t)
+  }
+
+  if (getHeritageCraft(slug) === 'al-talli') {
+    for (const t of getLocalizedAlTalliDiscoveryKeywords(locale)) {
+      terms.add(t)
+    }
   }
 
   for (const t of getCatalogExclusiveSchemaKeywords(slug, locale, colorName)) terms.add(t)
@@ -395,12 +376,17 @@ export function buildProductAdditionalProperties(
     props.push({
       '@type': 'PropertyValue',
       name: localizePropertyLabel('Heritage craft', locale),
-      value: 'Traditional Al Talli trim',
+      value: 'Traditional Al Talli trim — UNESCO Intangible Cultural Heritage of the United Arab Emirates',
     })
     props.push({
       '@type': 'PropertyValue',
       name: localizePropertyLabel('Emirati heritage', locale),
       value: 'Al Talli embroidery',
+    })
+    props.push({
+      '@type': 'PropertyValue',
+      name: localizePropertyLabel('UNESCO recognition', locale),
+      value: 'Al Talli inscribed 2022 — Representative List of the Intangible Cultural Heritage of Humanity',
     })
   }
 
@@ -461,6 +447,29 @@ export function getProductFaq(
   const coventGardenSetFaq = getLocalizedCoventGardenSignatureSetFaq(slug, locale)
   if (coventGardenSetFaq.length > 0) {
     return coventGardenSetFaq
+  }
+
+  const coventGardenDressFaq = getLocalizedCoventGardenLongDressFaq(slug, locale)
+  if (coventGardenDressFaq.length > 0) {
+    return coventGardenDressFaq
+  }
+
+  const coventGardenAbayaFaq = getLocalizedCoventGardenAbayaFaq(slug, locale)
+  if (coventGardenAbayaFaq.length > 0) {
+    return coventGardenAbayaFaq
+  }
+
+  const secondaryFaq = getLocalizedSecondaryCatalogSchemaFaq(slug, locale)
+  if (secondaryFaq.length > 0) {
+    const merged = [...secondaryFaq]
+    const seen = new Set(secondaryFaq.map((item) => item.question.toLowerCase()))
+    for (const item of customFaq ?? []) {
+      if (!seen.has(item.question.toLowerCase())) {
+        merged.push(item)
+        seen.add(item.question.toLowerCase())
+      }
+    }
+    return merged
   }
 
   const kaftanFaq = getLocalizedKaftanFaq(slug, locale)
@@ -542,10 +551,18 @@ export function getProductFaq(
     }
 
     if (merged.length > 0) return merged
-    return buildDefaultEnglishGarmentFaq(product, facts)
+    const defaultFaq = buildDefaultEnglishGarmentFaq(product, facts)
+    if (AL_TALLI_HERITAGE_PRODUCT_SLUGS.has(slug) && !isCoventGardenAbayaSlug(slug)) {
+      return patchAlTalliHeritageFaq(defaultFaq, locale)
+    }
+    return defaultFaq
   }
 
-  return getLocalizedProductFaq(product, locale, customFaq)
+  const localizedFaq = getLocalizedProductFaq(product, locale, customFaq)
+  if (AL_TALLI_HERITAGE_PRODUCT_SLUGS.has(slug) && !isCoventGardenAbayaSlug(slug)) {
+    return patchAlTalliHeritageFaq(localizedFaq, locale)
+  }
+  return localizedFaq
 }
 
 export function buildFaqPageJsonLd(

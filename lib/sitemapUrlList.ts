@@ -41,7 +41,7 @@ const allUrls: SitemapUrlEntry[] = [
   { loc: `${SITEMAP_BASE_URL}/about`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
   { loc: `${SITEMAP_BASE_URL}/the-codes`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
   { loc: `${SITEMAP_BASE_URL}/heritage`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-  { loc: `${SITEMAP_BASE_URL}/heritage/al-talli`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
+  { loc: `${SITEMAP_BASE_URL}/heritage/al-talli`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.95' },
   { loc: `${SITEMAP_BASE_URL}/heritage/khous`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
   { loc: `${SITEMAP_BASE_URL}/craftsmanship`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
   { loc: `${SITEMAP_BASE_URL}/contact`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.5' },

@@ -16,7 +16,7 @@ import {
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi, type CommerceUi } from '@/lib/i18n/commerceUi'
-import { stripLocaleFromPathname, localizedPath } from '@/lib/i18n/routing'
+import { stripLocaleFromPathname, localizedPath, type AppLocale } from '@/lib/i18n/routing'
 import {
   applyAccessoryFilters,
   type PriceRangeId,
@@ -26,6 +26,7 @@ import {
 } from '@/lib/accessories/filterAccessories'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import { getAccessoryCarouselAlt, buildAccessoriesCollectionJsonLd } from '@/lib/accessories/accessoryJsonLd'
 
 function parsePriceParam(v: string | null): PriceRangeId {
   if (!v) return 'all'
@@ -146,8 +147,14 @@ export default function AccessoriesPage() {
   const activeTab = accessoryCategories.find(c => c.id === activeCategory)
   const isAbayaStrandsLayout = activeCategory === 'abaya-charms'
 
+  const collectionJsonLd = useMemo(() => buildAccessoriesCollectionJsonLd(accessories, language), [language])
+
   return (
     <div className={`min-h-screen bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
       {/* Hero Banner */}
       <section className="relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas pb-12 pt-24 md:pb-16 md:pt-28">
         <div className="container mx-auto px-6 lg:px-12">
@@ -346,6 +353,7 @@ export default function AccessoriesPage() {
                         setHoveredProduct={setHoveredProduct}
                         formatPrice={formatPrice}
                         isRTL={isRTL}
+                        language={language}
                         ui={ui}
                       />
                     ))}
@@ -368,6 +376,7 @@ export default function AccessoriesPage() {
                     setHoveredProduct={setHoveredProduct}
                     formatPrice={formatPrice}
                     isRTL={isRTL}
+                    language={language}
                     ui={ui}
                   />
                 ))}
@@ -500,6 +509,7 @@ function AccessoryCard({
   setHoveredProduct, 
   formatPrice,
   isRTL,
+  language,
   ui,
 }: { 
   accessory: Accessory
@@ -508,6 +518,7 @@ function AccessoryCard({
   setHoveredProduct: (id: string | null) => void
   formatPrice: (price: number) => string
   isRTL: boolean
+  language: AppLocale
   ui: CommerceUi
 }) {
   const ref = useRef(null)
@@ -551,7 +562,7 @@ function AccessoryCard({
           <div className="relative mb-4 aspect-[3/4] overflow-hidden bg-[#f5f5f5]">
             <Image
               src={accessory.images[0]}
-              alt={withBrandAlt(isRTL ? accessory.nameAr : accessory.name)}
+              alt={getAccessoryCarouselAlt(accessory, language, isRTL)}
               fill
               className="pointer-events-none img-zoom object-cover object-top transition-all duration-700 group-hover:scale-105"
             />

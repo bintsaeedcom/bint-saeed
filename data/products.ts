@@ -166,6 +166,8 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     front: '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-front.webp',
     side: '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-side.webp',
     back: '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-back.webp',
+    detail:
+      '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.jpg',
   },
   'kensington-abaya': {
     front: '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-front.webp',
@@ -325,17 +327,27 @@ const COVENT_GARDEN_ABAYA_DIR = '/Webshop pictures/Abayas/Covent Garden Abaya '
 
 function coventGardenAbayaGallery(color: 'burgundy' | 'black' | 'navy-blue'): string[] {
   const base = `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-${color}`
-  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  if (color === 'burgundy') {
+    images.push(
+      `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.jpg`,
+    )
+  }
+  return images
 }
 
 const COVENT_GARDEN_LONG_DRESS_DIR = '/Webshop pictures/Dresses/Covent Garden Dress'
 
-function coventGardenLongDressGallery(color: 'burgundy' | 'navy-grey'): string[] {
-  const base = `${COVENT_GARDEN_LONG_DRESS_DIR}/bint-saeed-covent-garden-long-dress-${color}`
-  if (color === 'burgundy') {
-    return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
-  }
-  return [`${base}-front.webp`]
+function coventGardenLongDressGallery(color: 'burgundy' | 'black' | 'navy-blue'): string[] {
+  const burgundyBase = `${COVENT_GARDEN_LONG_DRESS_DIR}/bint-saeed-covent-garden-long-dress-burgundy`
+  const burgundySet = [
+    `${burgundyBase}-front.webp`,
+    `${burgundyBase}-side.webp`,
+    `${burgundyBase}-back.webp`,
+  ]
+  if (color === 'burgundy') return burgundySet
+  // Colour-specific assets pending — show burgundy gallery until dedicated files are added.
+  return burgundySet
 }
 
 const MAYFAIR_KAFTAN_DIR = '/Webshop pictures/Kaftans/Mayfair Kaftan'
@@ -592,11 +604,22 @@ export const products: Product[] = [
     slug: 'covent-garden-long-dress',
     name: 'Covent Garden Long Dress',
     price: 1699,
-    description: 'Slim column in stretch crepe with a high back vent for ease of movement.',
-    fabric: 'Stretch crepe, power mesh lining',
-    measurements: 'Floor length 148cm (size M).',
+    description:
+      'Timeless under-abaya dress with a softly fitted silhouette, hidden side pockets, and soft crepe lining — polished from work to cultural events.',
+    fabric: 'Outer: 80% Polyester, 20% Viscose; Lining: 70% Polyester, 30% Viscose',
+    measurements:
+      'Dress length: 138 cm / 54.5 inches (size XS). Model height: 155 cm / 61 inches. Length adjustable upon request.',
     images: coventGardenLongDressGallery('burgundy'),
-    colors: [{ name: 'Burgundy', hex: '#6f1524' }],
+    colorImages: {
+      Burgundy: coventGardenLongDressGallery('burgundy'),
+      'Deep Black': coventGardenLongDressGallery('black'),
+      'Navy Blue': coventGardenLongDressGallery('navy-blue'),
+    },
+    colors: [
+      { name: 'Burgundy', hex: '#6f1524' },
+      { name: 'Deep Black', hex: '#1a1a1a' },
+      { name: 'Navy Blue', hex: '#1f3a5f' },
+    ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Dresses',
   },

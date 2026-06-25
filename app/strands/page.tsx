@@ -10,13 +10,26 @@ import { products } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
+import {
+  getJewelleryCategoryDiscoveryKeywords,
+  mergeAccessorySchemaKeywords,
+} from '@/lib/accessories/jewelleryDiscoveryI18n'
 import { CODES_IMAGE_FILES, codesPageImagePath } from '@/lib/the-codes/codesPageContent'
 
 /** Strands hero background — `public/collection-section/` (file is `.jpg`; use `/collection-section/45.png` if you add a PNG). */
 const HERO_CAMPAIGN_IMAGE = '/collection-section/45.jpg'
 /** Same six-strand flatlay as House Codes — `public/The Codes Page/`. */
 const CONCEPT_FLATLAY_IMAGE = codesPageImagePath(CODES_IMAGE_FILES.naturalStoneBeads)
-const STRAND_IMAGE_ALT = withBrandAlt('Natural stone abaya strands — Emirati heritage house code')
+const STRAND_HERO_ALT = withBrandAlt(
+  'Natural stone bead abaya strands collection — interchangeable onyx, jade, amethyst, malachite and rose quartz for Marylebone Abaya',
+)
+const STRAND_FLATLAY_ALT = withBrandAlt(
+  'Six natural stone bead strands flatlay — Al Ain rosette abaya charms handcrafted in Abu Dhabi',
+)
+const MARYLEBONE_PAIRING_ALT = withBrandAlt(
+  'Marylebone Abaya styled with interchangeable natural stone bead strand — pairs with Al Ain necklace and earrings',
+)
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 
 const STONE_VISUAL_NOTES: Record<string, string> = {
@@ -65,17 +78,22 @@ const STEP_COPY = [
 
 const CLOSING_QUOTE = "The details you choose say everything you don't."
 
-const COLLECTION_JSON_LD = {
+const COLLECTION_JSON_LD_BASE = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
-  name: 'Natural Stone Abaya Strands',
+  name: 'Natural Stone Abaya Strands — Bint Saeed Al Ain Jewellery',
   description:
-    'Interchangeable natural stone abaya strands handcrafted in Abu Dhabi. Designed for the Bint Saeed Marylebone Abaya. Available in onyx, jade, amethyst, aventurine, rose quartz, malachite, lapis lazuli and more.',
+    'Interchangeable natural stone bead abaya strands handcrafted in Abu Dhabi. Onyx, jade, amethyst hearts, tiger eye, malachite, lapis lazuli, rose quartz and blue aventurine — designed for the Bint Saeed Marylebone Abaya. Pairs with Al Ain necklaces, natural stone bead earrings and designer jewellery.',
   url: 'https://www.bintsaeed.com/strands',
   brand: {
     '@type': 'Brand',
     name: 'Bint Saeed',
     url: 'https://www.bintsaeed.com',
+  },
+  isPartOf: {
+    '@type': 'Collection',
+    name: 'Bint Saeed Accessories — Necklaces, Earrings & Abaya Strands',
+    url: 'https://www.bintsaeed.com/accessories',
   },
   offers: {
     '@type': 'AggregateOffer',
@@ -84,10 +102,24 @@ const COLLECTION_JSON_LD = {
     priceCurrency: 'AED',
     offerCount: '10',
   },
-}
+} as const
 
 export default function StrandsPage() {
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const collectionJsonLd = useMemo(
+    () => ({
+      ...COLLECTION_JSON_LD_BASE,
+      keywords: mergeAccessorySchemaKeywords(
+        getJewelleryCategoryDiscoveryKeywords('abaya-charms', language),
+        [
+          'malachite necklace pairs with strand',
+          'onyx jade amethyst earrings UAE',
+          'natural stone bead jewellery Abu Dhabi',
+        ],
+      ),
+    }),
+    [language],
+  )
   const strandProducts = useMemo(() => accessories.filter((item) => item.category === 'abaya-charms'), [])
   const marylebone = useMemo(() => products.find((product) => product.slug === 'marylebone-abaya'), [])
   const maryleboneHref = marylebone ? getProductHref(marylebone) : '/shop/marylebone-abaya'
@@ -340,7 +372,7 @@ export default function StrandsPage() {
     <main className={`min-h-screen overflow-x-clip bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(COLLECTION_JSON_LD) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
       />
       <section className="relative z-0 h-[85vh] max-h-[85vh] overflow-hidden bg-[#1a0210] text-[#e8ddd4] md:sticky md:top-0 md:will-change-transform">
         <div
@@ -351,7 +383,7 @@ export default function StrandsPage() {
           <div className="absolute inset-0">
             <Image
               src={HERO_CAMPAIGN_IMAGE}
-              alt={STRAND_IMAGE_ALT}
+              alt={STRAND_HERO_ALT}
               fill
               priority={true}
               sizes="100vw"
@@ -482,7 +514,7 @@ export default function StrandsPage() {
             <div className="overflow-hidden rounded-[4px] bg-[#e8ddd4]">
               <Image
                 src={CONCEPT_FLATLAY_IMAGE}
-                alt={STRAND_IMAGE_ALT}
+                alt={STRAND_FLATLAY_ALT}
                 width={480}
                 height={600}
                 sizes="(max-width: 768px) 90vw, 42vw"
@@ -580,7 +612,7 @@ export default function StrandsPage() {
                   {product.images[0] ? (
                     <Image
                       src={product.images[0]}
-                      alt={STRAND_IMAGE_ALT}
+                      alt={getStrandCarouselAlt(product.id)}
                       fill
                       sizes="(max-width: 768px) 280px, 360px"
                       className="object-cover object-top"
@@ -667,7 +699,7 @@ export default function StrandsPage() {
       <section className="strands-fabric-light relative z-40 -mt-6 overflow-hidden rounded-t-[16px] bg-[#7A1C28] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
           <div className="relative min-h-[52vh] overflow-hidden rounded-[4px] md:min-h-[620px]">
-            <Image src={maryleboneImage} alt={STRAND_IMAGE_ALT} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
+            <Image src={maryleboneImage} alt={MARYLEBONE_PAIRING_ALT} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
           </div>
           <div className="flex items-center">
             <div className="max-w-xl">

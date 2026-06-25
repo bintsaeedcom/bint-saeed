@@ -1,6 +1,6 @@
 /**
  * Product shots from `public/Webshop pictures/accessoiries/`
- * (URL-encoded spaces; subfolders: `necklaces/`, `abaya charms/`, `earrings/`, `bag charm/`, `phone charm/`.)
+ * (URL-encoded spaces; subfolders: `necklaces/`, `strands/`, `earrings/`, `bag charm/`, `phone charm/`.)
  */
 const A = '/Webshop%20pictures/accessoiries'
 
@@ -10,16 +10,20 @@ export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ = `${A}/necklaces/rose-quartz-
 export const ACCESSORY_IMAGE_PHONE_CHARM = `${A}/phone%20charm/phone%20charm.png`
 /** Second angle / alternate shot for phone strand PDP column */
 export const ACCESSORY_IMAGE_PHONE_CHARM_ALT = `${A}/phone%20charm/AF5B4736-A8F0-41F6-94CB-530FF12AD809.PNG`
-/** Category hero when no per-stone abaya shot exists. */
+/** Category hero when no per-stone strand shot exists. */
 export const ACCESSORY_IMAGE_ABAYA_CHARMS_HERO = `${A}/abaya%20charms.JPG`
 
-const ABAYA = `${A}/abaya%20charms`
-export const ACCESSORY_IMAGE_ABAYA_CHARM_ONYX = `${ABAYA}/bint-saeed-onyx-abaya-charm.PNG`
-export const ACCESSORY_IMAGE_ABAYA_CHARM_TIGER_EYE = `${ABAYA}/bint-saeed-tigereye-abaya-charm.PNG`
-export const ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE = `${ABAYA}/bint-saeed-orange-colored-jade-abaya-charm.PNG`
-export const ACCESSORY_IMAGE_ABAYA_CHARM_AVENTURINE = `${ABAYA}/bint-saeed-aventurine-abaya-charm.PNG`
-export const ACCESSORY_IMAGE_ABAYA_CHARM_AMETHYST = `${ABAYA}/bint-saeed-amathys-abaya-charm.PNG`
-export const ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE = `${ABAYA}/bint-saeed-green-jade-abaya-charm.PNG`
+const STRANDS = `${A}/strands`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_ONYX = `${STRANDS}/bint-saeed-onyx-abaya-charm.PNG`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_TIGER_EYE = `${STRANDS}/bint-saeed-tiger-eye-natural-stone-strand-front.webp`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE = `${STRANDS}/bint-saeed-orange-colored-jade-abaya-charm.PNG`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_FUCHSIA_JADE = `${STRANDS}/bint-saeed-pink-jade-natural-stone-strand-front.webp`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_AVENTURINE = `${STRANDS}/bint-saeed-aventurine-natural-stone-strand-front.webp`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_ROSE_QUARTZ = `${STRANDS}/bint-saeed-rose-quartz-carnelian-natural-stone-al-ain-rosette-strand-front.webp`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_MALACHITE = `${STRANDS}/bint-saeed-malachite-carnelian-natural-stoneal-ain-rosette-strand-front.webp`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_LAPIS = `${STRANDS}/bint-saeed-lapis-lazuli-carnelian-natural-stone-ain-rosette-strand-front.webp`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_AMETHYST = `${STRANDS}/bint-saeed-amathys-abaya-charm.PNG`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE = `${STRANDS}/bint-saeed-green-jade-abaya-charm.PNG`
 
 export const ACCESSORY_IMAGE_EARRINGS_HERO = `${A}/earrings/5AEC9940-AD10-4C6A-9410-4DCB5BCB5ACD.PNG`
 export const ACCESSORY_IMAGE_BAG_CHARM = `${A}/bag%20charm/9D8CE389-54D5-4235-B71B-A9BB92AC97EA.PNG`
@@ -514,7 +518,7 @@ export const accessories: Accessory[] = [
       'Fuchsia jade strand for a bold jewel-toned highlight on neutral abayas.',
     descriptionAr:
       'سلسلة يشم فوشي لتألق قوي على العباءات المحايدة.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARMS_HERO],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_FUCHSIA_JADE],
     materials: 'Natural jade, 18K gold-plated findings',
     materialsAr: 'يشم طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Fuchsia Jade', nameAr: 'يشم فوشي', hex: '#c026d3' }],
@@ -546,7 +550,7 @@ export const accessories: Accessory[] = [
       'Soft rose quartz with a luminous, romantic line along the abaya edge.',
     descriptionAr:
       'كوارتز وردي ناعم بلمعة رومانسية على حافة العباءة.',
-    images: [ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_ROSE_QUARTZ],
     materials: 'Natural rose quartz, 18K gold-plated findings',
     materialsAr: 'كوارتز وردي طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Rose Quartz', nameAr: 'كوارتز وردي', hex: '#f4b8c5' }],
@@ -562,7 +566,7 @@ export const accessories: Accessory[] = [
       'Deep malachite green with natural banding — a striking signature accent.',
     descriptionAr:
       'ملاكيت أخضر عميق بخطوط طبيعية، لمسة توقيع مميزة.',
-    images: [ACCESSORY_IMAGE_NECKLACE_MALACHITE],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_MALACHITE],
     materials: 'Natural malachite, 18K gold-plated findings',
     materialsAr: 'ملاكيت طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Malachite Green', nameAr: 'أخضر ملاكيت', hex: '#1f7a5e' }],
@@ -578,7 +582,7 @@ export const accessories: Accessory[] = [
       'Rich lapis lazuli with golden pyrite flecks; an elevated jewel tone for evening abayas.',
     descriptionAr:
       'لازورد غني ببقع البيريت الذهبية؛ لون فاخر لمساء العباءة.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARMS_HERO],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_LAPIS],
     materials: 'Natural lapis lazuli, 18K gold-plated findings',
     materialsAr: 'لازورد طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Lapis Lazuli', nameAr: 'لازورد', hex: '#1e40af' }],

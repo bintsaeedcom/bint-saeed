@@ -20,6 +20,11 @@ import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import {
+  buildAccessoryProductJsonLd,
+  getAccessoryImageAlt,
+  getAccessoryPdpImages,
+} from '@/lib/accessories/accessoryJsonLd'
+import {
   PDP_BULLET_ITEM,
   PDP_BULLET_LIST,
   PDP_COPY_INTRO,
@@ -201,26 +206,20 @@ export default function AccessoryDetailPage() {
     : 'lg:grid-cols-[4.75rem_minmax(0,1fr)]'
 
   const displayName = isRTL ? accessory.nameAr : accessory.name
-  const productJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: displayName,
-    brand: {
-      '@type': 'Brand',
-      name: 'Bint Saeed',
-    },
-    description: isRTL ? accessory.descriptionAr : accessory.description,
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'AED',
-      price: String(accessory.price),
-      availability: 'https://schema.org/InStock',
-      seller: {
-        '@type': 'Organization',
-        name: 'Bint Saeed',
-      },
-    },
-  }
+  const pdpImages = useMemo(() => getAccessoryPdpImages(accessory), [accessory])
+  const productJsonLd = useMemo(
+    () =>
+      buildAccessoryProductJsonLd({
+        accessory,
+        displayName,
+        description: isRTL ? accessory.descriptionAr : accessory.description,
+        pageUrl: `https://www.bintsaeed.com/accessories/${accessory.id}`,
+        locale: language,
+      }),
+    [accessory, displayName, isRTL, language],
+  )
+  const imageAltFor = (imageSrc: string, index: number) =>
+    getAccessoryImageAlt(accessory, imageSrc, index, language)
 
   useEffect(() => {
     trackEvent('view_item', {
@@ -275,7 +274,7 @@ export default function AccessoryDetailPage() {
                   touchStartPreventDefault={false}
                   className="product-gallery-thumbs !overflow-visible"
                 >
-                  {accessory.images.map((image, index) => (
+                  {pdpImages.map((image, index) => (
                     <SwiperSlide key={index} className="!h-auto">
                       <button
                         type="button"
@@ -302,14 +301,14 @@ export default function AccessoryDetailPage() {
                         ) : isHeicFile(image) ? (
                           <img
                             src={image}
-                            alt={withBrandAlt(`${displayName} — thumbnail ${index + 1}`)}
+                            alt={imageAltFor(image, index)}
                             className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
                             loading="lazy"
                           />
                         ) : (
                           <PdpGalleryImage
                             src={image}
-                            alt={withBrandAlt(`${displayName} — thumbnail ${index + 1}`)}
+                            alt={imageAltFor(image, index)}
                             className="img-zoom object-cover transition-opacity group-hover:opacity-80"
                           />
                         )}
@@ -346,7 +345,7 @@ export default function AccessoryDetailPage() {
                     {...(thumbConnected ? { thumbs: { swiper: thumbsSwiper } } : {})}
                     className="h-full w-full min-h-0 product-gallery-swiper"
                   >
-                    {accessory.images.map((image, index) => (
+                    {pdpImages.map((image, index) => (
                       <SwiperSlide key={index}>
                         <div
                           className={`relative h-full w-full ${isVideoFile(image) ? 'cursor-default' : 'cursor-zoom-in'}`}
@@ -382,18 +381,14 @@ export default function AccessoryDetailPage() {
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
-                              alt={withBrandAlt(
-                                `${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`,
-                              )}
+                              alt={imageAltFor(image, index)}
                               className="h-full w-full img-zoom object-cover"
                               loading={index === 0 ? 'eager' : 'lazy'}
                             />
                           ) : (
                             <PdpGalleryImage
                               src={image}
-                              alt={withBrandAlt(
-                                `${displayName} — ${index === 0 ? 'campaign' : index === 1 ? 'close-up' : `product ${index - 1}`}`,
-                              )}
+                              alt={imageAltFor(image, index)}
                               priority={index === 0}
                               className="img-zoom object-cover object-top"
                             />
@@ -419,7 +414,7 @@ export default function AccessoryDetailPage() {
                     touchStartPreventDefault={false}
                     className="product-gallery-thumbs !overflow-visible"
                   >
-                    {accessory.images.map((image, index) => (
+                    {pdpImages.map((image, index) => (
                       <SwiperSlide key={index} className="!h-auto">
                         <button
                           type="button"
@@ -446,14 +441,14 @@ export default function AccessoryDetailPage() {
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
-                              alt={withBrandAlt(`${displayName} — thumbnail ${index + 1}`)}
+                              alt={imageAltFor(image, index)}
                               className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
                               loading="lazy"
                             />
                           ) : (
                             <PdpGalleryImage
                               src={image}
-                              alt={withBrandAlt(`${displayName} — thumbnail ${index + 1}`)}
+                              alt={imageAltFor(image, index)}
                               className="img-zoom object-cover transition-opacity group-hover:opacity-80"
                             />
                           )}
@@ -656,8 +651,8 @@ export default function AccessoryDetailPage() {
             </button>
             <div className="relative m-4 h-full max-h-[72vh] w-full max-w-[51.2rem]">
               <PdpGalleryImage
-                src={accessory.images[lightboxIndex]}
-                alt={withBrandAlt(displayName)}
+                src={pdpImages[lightboxIndex] ?? accessory.images[0]!}
+                alt={imageAltFor(pdpImages[lightboxIndex] ?? accessory.images[0]!, lightboxIndex)}
                 priority
                 className="object-contain object-center"
               />
