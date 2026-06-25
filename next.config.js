@@ -80,6 +80,7 @@ const nextConfig = {
       },
       { source: '/charms', destination: '/strands', permanent: true },
       { source: '/charms/:path*', destination: '/strands/:path*', permanent: true },
+      { source: '/strands/shop', destination: '/accessories?type=abaya-charms', permanent: false },
       // Legacy abaya-charm product shots → strands folder (post-rename deploy safety)
       {
         source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-tigereye-abaya-charm.PNG',

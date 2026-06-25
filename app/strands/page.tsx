@@ -9,6 +9,7 @@ import { accessories } from '@/data/accessories'
 import { products } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
 import {
@@ -106,6 +107,7 @@ const COLLECTION_JSON_LD_BASE = {
 
 export default function StrandsPage() {
   const { isRTL, language } = useLanguage()
+  const { formatPrice } = useCurrency()
   const collectionJsonLd = useMemo(
     () => ({
       ...COLLECTION_JSON_LD_BASE,
@@ -117,6 +119,28 @@ export default function StrandsPage() {
           'natural stone bead jewellery Abu Dhabi',
         ],
       ),
+      mainEntity: {
+        '@type': 'ItemList',
+        name: 'Bint Saeed Natural Stone Abaya Strands',
+        numberOfItems: 10,
+        itemListElement: accessories
+          .filter((item) => item.category === 'abaya-charms')
+          .map((product, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            url: `https://www.bintsaeed.com/accessories/${product.id}`,
+            item: {
+              '@type': 'Product',
+              name: product.name,
+              url: `https://www.bintsaeed.com/accessories/${product.id}`,
+              offers: {
+                '@type': 'Offer',
+                priceCurrency: 'AED',
+                price: String(product.price),
+              },
+            },
+          })),
+      },
     }),
     [language],
   )
@@ -567,6 +591,14 @@ export default function StrandsPage() {
           <p className="mt-5 max-w-2xl font-montserrat text-[15px] leading-[1.85] tracking-wide text-[#1a0210]/70">
             Each stone is natural. No two are identical.
           </p>
+          <LocaleLink
+            href="#shop-all-strands"
+            className="mt-6 inline-flex items-center gap-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.14em] text-[#7A1C28] transition-opacity hover:opacity-70"
+            data-cursor-hover
+          >
+            Shop all ten strands
+            <span aria-hidden>→</span>
+          </LocaleLink>
         </div>
 
         <div className="relative mx-auto mt-12 max-w-[1280px]">
@@ -703,6 +735,87 @@ export default function StrandsPage() {
               <FiChevronRight className="h-5 w-5" />
             </button>
           </div>
+        </div>
+      </section>
+
+      <section
+        id="shop-all-strands"
+        className="relative z-[35] -mt-2 border-t border-[#e8ddd4] bg-[#faf8f5] py-20 md:py-28"
+      >
+        <div className={INNER_CONTAINER_CLASS}>
+          <div className="text-left">
+            <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">SHOP THE COLLECTION</p>
+            <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2rem,4vw,3.25rem)] leading-[1.05] text-[#1a0210]">
+              All natural stone strands
+            </h2>
+            <p className="mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-[#1a0210]/70">
+              Ten interchangeable stone strands for the Marylebone Abaya — select by colour, surface, and character. Each strand has its own product page with full details.
+            </p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {strandProducts.map((product) => {
+              const color = product.colors[0]
+              return (
+                <article
+                  key={`shop-${product.id}`}
+                  className="group flex flex-col overflow-hidden rounded-[6px] border border-[#e8ddd4] bg-white shadow-[0_4px_20px_rgba(26,2,16,0.06)]"
+                >
+                  <LocaleLink
+                    href={`/accessories/${product.id}`}
+                    className="relative block aspect-[3/4] overflow-hidden"
+                    data-cursor-hover
+                  >
+                    <div
+                      className="absolute inset-0"
+                      style={{ backgroundColor: color?.hex || '#e8ddd4' }}
+                      aria-hidden
+                    />
+                    {product.images[0] ? (
+                      <Image
+                        src={product.images[0]}
+                        alt={getStrandCarouselAlt(product.id)}
+                        fill
+                        sizes="(max-width: 640px) 45vw, (max-width: 1280px) 25vw, 20vw"
+                        className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                    ) : null}
+                    {product.isLimitedEdition ? (
+                      <span className="absolute left-3 top-3 rounded-full border border-[#c9a96b] bg-[#f6f0e4]/95 px-2.5 py-1 font-montserrat text-[9px] uppercase tracking-[0.08em] text-[#8a6020]">
+                        Limited
+                      </span>
+                    ) : null}
+                  </LocaleLink>
+                  <div className="flex flex-1 flex-col p-4 text-left">
+                    <h3 className="font-rozha text-lg leading-tight text-[#2a1e18]">
+                      {isRTL ? product.nameAr : product.name}
+                    </h3>
+                    <p className="mt-2 font-montserrat text-sm font-medium text-[#7A1C28]">
+                      {formatPrice(product.price)}
+                    </p>
+                    <LocaleLink
+                      href={`/accessories/${product.id}`}
+                      className="mt-4 inline-flex w-full items-center justify-center rounded-[3px] border border-[#7A1C28] bg-white px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.1em] text-[#7A1C28] transition-colors hover:bg-[#7A1C28] hover:text-[#e8d8c8]"
+                      data-cursor-hover
+                    >
+                      View strand
+                    </LocaleLink>
+                  </div>
+                </article>
+              )
+            })}
+          </div>
+
+          <p className="mt-10 text-center font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#8a7a70]">
+            Also in{' '}
+            <LocaleLink
+              href="/accessories?type=abaya-charms"
+              className="text-[#7A1C28] underline-offset-4 hover:underline"
+              data-cursor-hover
+            >
+              Accessories — Abaya Strands
+            </LocaleLink>
+          </p>
         </div>
       </section>
 

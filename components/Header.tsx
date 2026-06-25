@@ -27,7 +27,12 @@ const searchableContent = [
   { title: 'Accessories', href: '/accessories', category: 'Collection' },
   {
     title: 'Abaya Strands',
-    href: '/strands',
+    href: '/strands#shop-all-strands',
+    category: 'Accessories',
+  },
+  {
+    title: 'Shop All Strands',
+    href: '/accessories?type=abaya-charms',
     category: 'Accessories',
   },
   { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
@@ -156,8 +161,9 @@ export default function Header() {
             { label: 'All Accessories', href: '/accessories' },
             {
               label: 'Abaya Strands',
-              href: '/strands',
+              href: '/strands#shop-all-strands',
             },
+            { label: 'Shop All Strands', href: '/accessories?type=abaya-charms' },
             { label: 'Necklaces', href: '/accessories?type=necklaces' },
             { label: 'Earrings', href: '/accessories?type=earrings' },
             { label: 'Bracelets', href: '/accessories?type=bracelets' },
@@ -169,7 +175,7 @@ export default function Header() {
       features: [
         {
           title: 'Abaya Strands',
-          href: '/strands',
+          href: '/strands#shop-all-strands',
           image: ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
         },
         {

@@ -88,7 +88,6 @@ const HERITAGE_SCHEMA_KEYWORDS_EN = {
     'UAE fashion',
   ].join(', '),
   'al-talli': [
-    ...getLocalizedAlTalliDiscoveryKeywords('en'),
     'Bint Saeed',
     'luxury abaya',
     'designer abaya',
@@ -112,7 +111,6 @@ const HERITAGE_SCHEMA_KEYWORDS_ID = {
     'fashion UEA',
   ].join(', '),
   'al-talli': [
-    ...getLocalizedAlTalliDiscoveryKeywords('id'),
     'Bint Saeed',
     'abaya mewah',
     'fashion UEA',
@@ -135,7 +133,6 @@ const HERITAGE_SCHEMA_KEYWORDS_MS = {
     'fesyen UAE',
   ].join(', '),
   'al-talli': [
-    ...getLocalizedAlTalliDiscoveryKeywords('ms'),
     'Bint Saeed',
     'abaya mewah',
     'fesyen UAE',
@@ -170,6 +167,13 @@ export function getHeritageSchemaKeywords(
         : HERITAGE_SCHEMA_KEYWORDS_EN
 
   if (!craft) return keywords.default
+
+  if (craft === 'al-talli') {
+    const alTalliTerms = getLocalizedAlTalliDiscoveryKeywords(locale)
+    const suffix = keywords['al-talli'].split(', ').filter(Boolean)
+    return [...new Set([...alTalliTerms, ...suffix])].join(', ')
+  }
+
   return keywords[craft]
 }
 
