@@ -45,7 +45,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
       <SmoothScrollProvider>
         <Header />
         <main
-          className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : 'pt-16'}`}
+          className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : 'pt-[7.25rem] xl:pt-16'}`}
         >
           <div className="relative z-[2] w-full min-w-0 max-w-none bg-brand-pageCanvas">
             {children}

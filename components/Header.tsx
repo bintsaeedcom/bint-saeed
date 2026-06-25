@@ -262,6 +262,16 @@ export default function Header() {
     setSearchResults([])
   }
 
+  const localeSwitcherClass = `flex shrink-0 items-center gap-2 rounded-full border px-2.5 py-1 ${
+    isTransparentHomeHeader ? 'border-white/25 bg-white/[0.02]' : 'border-white/15 bg-white/[0.03]'
+  }`
+
+  const logoClassName = `w-auto max-w-[min(72vw,780px)] transition-all duration-300 sm:max-w-[min(80vw,780px)] lg:max-w-[min(92vw,820px)] [filter:none] [text-shadow:none] ${
+    isScrolled
+      ? 'h-[clamp(2.5rem,5.5vw,3.5rem)] max-h-[52px] sm:max-h-[58px] md:max-h-[66px] lg:max-h-[78px] xl:max-h-[96px]'
+      : 'h-[clamp(2.85rem,7.5vw,4.5rem)] max-h-[68px] sm:max-h-[76px] md:h-[clamp(3.1rem,7vw,4.25rem)] md:max-h-[84px] lg:max-h-[94px] xl:max-h-[118px]'
+  }`
+
   return (
     <>
       {/* Main Header - Elegant Single Row Design */}
@@ -285,7 +295,7 @@ export default function Header() {
             {/* Row 1 — brand above nav */}
             <div
               className={`relative flex items-center justify-center transition-[padding] duration-500 ${
-                isScrolled ? 'py-0.5 md:py-0.5' : 'py-0.5 md:py-1 lg:py-1.5'
+                isScrolled ? 'py-0.5 md:py-0.5' : 'py-1 md:py-1.5 lg:py-2 xl:py-2.5'
               }`}
             >
               <div className="absolute left-0.5 top-1/2 z-[62] -translate-y-1/2 xl:hidden">
@@ -301,24 +311,20 @@ export default function Header() {
               </div>
 
               {disableHomeLogoNavigation ? (
-                <div className="block max-w-[min(92vw,720px)]">
+                <div className="block max-w-[min(92vw,820px)]">
                   <Image
                     src="/logo-bintsaeed.svg"
                     alt="Bint Saeed"
                     width={800}
                     height={210}
-                    className={`w-auto max-w-[min(68vw,720px)] transition-all duration-300 sm:max-w-[min(76vw,720px)] lg:max-w-[min(92vw,720px)] [filter:none] [text-shadow:none] ${
-                      isScrolled
-                        ? 'h-[clamp(2.05rem,4.7vw,2.55rem)] max-h-[48px] sm:max-h-[52px] md:max-h-[56px]'
-                        : 'h-[clamp(2.2rem,6vw,3rem)] max-h-[58px] sm:max-h-[64px] md:h-[clamp(2.35rem,5.6vw,3.2rem)] md:max-h-[68px] lg:max-h-[74px] xl:max-h-[80px]'
-                    } scale-[1.18]`}
+                    className={logoClassName}
                     priority
                   />
                 </div>
               ) : (
                 <LocaleLink
                   href="/home"
-                  className="block max-w-[min(92vw,720px)]"
+                  className="block max-w-[min(92vw,820px)]"
                   data-cursor-hover
                 >
                   <Image
@@ -326,11 +332,7 @@ export default function Header() {
                     alt="Bint Saeed"
                     width={800}
                     height={210}
-                    className={`w-auto max-w-[min(68vw,720px)] transition-all duration-300 sm:max-w-[min(76vw,720px)] lg:max-w-[min(92vw,720px)] [filter:none] [text-shadow:none] ${
-                      isScrolled
-                        ? 'h-[clamp(2.05rem,4.7vw,2.55rem)] max-h-[48px] sm:max-h-[52px] md:max-h-[56px]'
-                        : 'h-[clamp(2.2rem,6vw,3rem)] max-h-[58px] sm:max-h-[64px] md:h-[clamp(2.35rem,5.6vw,3.2rem)] md:max-h-[68px] lg:max-h-[74px] xl:max-h-[80px]'
-                    } scale-[1.18]`}
+                    className={logoClassName}
                     priority
                   />
                 </LocaleLink>
@@ -352,16 +354,28 @@ export default function Header() {
                   )}
                 </button>
               </div>
+            </div>
 
-              <div className="absolute right-0.5 top-0.5 z-[62] hidden items-center sm:right-1 sm:top-1 xl:flex">
-                <div className={`flex items-center gap-2 rounded-full border px-2.5 py-1 ${
-                  isTransparentHomeHeader ? 'border-white/25 bg-white/[0.02]' : 'border-white/15 bg-white/[0.03]'
-                }`}>
-                  <CurrencySwitcher variant="light" showSymbol={false} />
-                  <span className="h-4 w-px bg-white/15" aria-hidden />
-                  <LanguageSwitcher variant="light" />
-                </div>
-              </div>
+            {/* Mobile search — visible below logo; opens full search overlay */}
+            <div className={`xl:hidden px-1 ${isScrolled ? 'pb-1.5' : 'pb-2'}`}>
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(true)}
+                className={`flex w-full items-center gap-2.5 border px-3 py-2 font-montserrat text-[13px] transition-colors ${
+                  isRTL ? 'flex-row-reverse text-right' : 'text-left'
+                } ${
+                  isTransparentHomeHeader
+                    ? 'border-white/25 bg-white/[0.08] text-white/70 hover:border-white/40 hover:bg-white/[0.12]'
+                    : 'border-white/20 bg-white/[0.05] text-white/75 hover:border-white/30 hover:bg-white/[0.1]'
+                }`}
+                data-cursor-hover
+                aria-label={t.nav.search}
+              >
+                <FiSearch className="h-4 w-4 shrink-0 text-brand-dustyBlue" aria-hidden />
+                <span className="min-w-0 flex-1 truncate">
+                  {t.search.placeholder || 'Search for products, collection, pages…'}
+                </span>
+              </button>
             </div>
 
             {/* Divider between brand and topics */}
@@ -446,8 +460,14 @@ export default function Header() {
             {/* Spacer on mobile so row 2 layout matches (brand already centered above) */}
             <div className="min-w-0 flex-1 xl:hidden" aria-hidden />
 
-            {/* Right: account and cart */}
-            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-3 xl:flex xl:gap-5">
+            {/* Right: locale, account and cart */}
+            <div className={`pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-2 xl:flex xl:gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={localeSwitcherClass}>
+                <CurrencySwitcher variant="light" showSymbol={false} />
+                <span className="h-4 w-px bg-white/15" aria-hidden />
+                <LanguageSwitcher variant="light" />
+              </div>
+              <span className="h-5 w-px shrink-0 bg-white/12" aria-hidden />
               <button
                 type="button"
                 onClick={() => {
@@ -732,6 +752,27 @@ export default function Header() {
                 </button>
               </div>
 
+              {/* Mobile menu search */}
+              <div className="px-6 pb-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false)
+                    setIsSearchOpen(true)
+                  }}
+                  className={`flex w-full items-center gap-2.5 border border-white/20 bg-white/[0.06] px-3 py-2.5 font-montserrat text-[13px] text-white/75 transition-colors hover:border-white/35 hover:bg-white/[0.1] ${
+                    isRTL ? 'flex-row-reverse text-right' : 'text-left'
+                  }`}
+                  data-cursor-hover
+                  aria-label={t.nav.search}
+                >
+                  <FiSearch className="h-4 w-4 shrink-0 text-brand-dustyBlue" aria-hidden />
+                  <span className="min-w-0 flex-1 truncate">
+                    {t.search.placeholder || 'Search for products, collection, pages…'}
+                  </span>
+                </button>
+              </div>
+
               {/* Navigation + same destinations as desktop mega menu */}
               <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-4">
                 {navItems.map((item, index) => {
@@ -835,20 +876,8 @@ export default function Header() {
 
               {/* Footer — safe-area inset so currency/language sit above home indicator / browser chrome */}
               <div className="border-t border-white/10 px-6 pb-[max(1.75rem,env(safe-area-inset-bottom,0px))] pt-5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-5">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsMobileMenuOpen(false)
-                        setIsSearchOpen(true)
-                      }}
-                      className="text-white/70 hover:text-white transition-colors"
-                      data-cursor-hover
-                      aria-label={t.nav.search}
-                    >
-                      <FiSearch className="w-6 h-6" />
-                    </button>
+                <div className={`flex items-center justify-between gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className={`flex items-center gap-5 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <LocaleLink
                       href="/cart"
                       onClick={() => setIsMobileMenuOpen(false)}
@@ -865,6 +894,11 @@ export default function Header() {
                     >
                       <FiUser className="w-6 h-6" />
                     </LocaleLink>
+                  </div>
+                  <div className={`flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-2.5 py-1 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <CurrencySwitcher variant="light" showSymbol={false} align="end" dropdownPlacement="above" />
+                    <span className="h-4 w-px bg-white/15" aria-hidden />
+                    <LanguageSwitcher variant="light" align="end" dropdownPlacement="above" />
                   </div>
                 </div>
               </div>

@@ -17,17 +17,11 @@ import {
   getJewelleryCategoryDiscoveryKeywords,
   mergeAccessorySchemaKeywords,
 } from '@/lib/accessories/jewelleryDiscoveryI18n'
-import { CODES_IMAGE_FILES, codesPageImagePath } from '@/lib/the-codes/codesPageContent'
 
 /** Strands hero banner — `public/strands-banner.jpg` */
 const HERO_CAMPAIGN_IMAGE = '/strands-banner.jpg'
-/** Same six-strand flatlay as House Codes — `public/The Codes Page/`. */
-const CONCEPT_FLATLAY_IMAGE = codesPageImagePath(CODES_IMAGE_FILES.naturalStoneBeads)
 const STRAND_HERO_ALT = withBrandAlt(
   'Natural stone bead abaya strands collection — interchangeable onyx, jade, amethyst, malachite and rose quartz for Marylebone Abaya',
-)
-const STRAND_FLATLAY_ALT = withBrandAlt(
-  'Six natural stone bead strands flatlay — Al Ain rosette abaya charms handcrafted in Abu Dhabi',
 )
 const MARYLEBONE_PAIRING_ALT = withBrandAlt(
   'Marylebone Abaya styled with interchangeable natural stone bead strand — pairs with Al Ain necklace and earrings',
@@ -158,172 +152,14 @@ export default function StrandsPage() {
   const marylebone = useMemo(() => products.find((product) => product.slug === 'marylebone-abaya'), [])
   const maryleboneHref = marylebone ? getProductHref(marylebone) : '/shop/marylebone-abaya'
   const maryleboneImage = marylebone?.images[0] || '/Webshop pictures/Abayas/Marylebone Abaya/bint-saeed-marylebone-abaya-black-front.webp'
-  const heroCanvasRef = useRef<HTMLCanvasElement | null>(null)
-  const heroWebglInitializedRef = useRef(false)
-  const heroMouseRef = useRef({ x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 })
   const carouselRef = useRef<HTMLDivElement | null>(null)
   const carouselTrackRef = useRef<HTMLDivElement | null>(null)
   const stepsRef = useRef<HTMLElement | null>(null)
   const dragStateRef = useRef({ active: false, startX: 0, scrollLeft: 0 })
   const trackDragRef = useRef({ active: false })
-  const [heroOffset, setHeroOffset] = useState(0)
   const [stepsVisible, setStepsVisible] = useState(false)
   const [carouselScroll, setCarouselScroll] = useState({ thumbWidthPct: 100, thumbLeftPct: 0 })
   const [carouselEdges, setCarouselEdges] = useState({ atStart: true, atEnd: false })
-
-  useEffect(() => {
-    let frame = 0
-    const update = () => {
-      window.cancelAnimationFrame(frame)
-      frame = window.requestAnimationFrame(() => {
-        setHeroOffset(window.scrollY * 0.5)
-      })
-    }
-    update()
-    window.addEventListener('scroll', update, { passive: true })
-    return () => {
-      window.cancelAnimationFrame(frame)
-      window.removeEventListener('scroll', update)
-    }
-  }, [])
-
-  useEffect(() => {
-    const canvas = heroCanvasRef.current
-    if (!canvas) return
-    if (heroWebglInitializedRef.current) return
-    heroWebglInitializedRef.current = true
-
-    const media = window.matchMedia('(min-width: 768px)')
-    if (!media.matches) {
-      heroWebglInitializedRef.current = false
-      return
-    }
-
-    const gl = canvas.getContext('webgl', { alpha: true, antialias: false })
-    if (!gl) {
-      heroWebglInitializedRef.current = false
-      return
-    }
-
-    const vertexShader = gl.createShader(gl.VERTEX_SHADER)
-    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER)
-    const program = gl.createProgram()
-    if (!vertexShader || !fragmentShader || !program) {
-      heroWebglInitializedRef.current = false
-      return
-    }
-
-    gl.shaderSource(
-      vertexShader,
-      `
-        attribute vec2 a_position;
-        varying vec2 v_uv;
-        void main() {
-          v_uv = (a_position + 1.0) * 0.5;
-          gl_Position = vec4(a_position, 0.0, 1.0);
-        }
-      `,
-    )
-    gl.shaderSource(
-      fragmentShader,
-      `
-        precision mediump float;
-        uniform sampler2D u_image;
-        uniform float u_time;
-        uniform vec2 u_resolution;
-        uniform vec2 u_mouse;
-        varying vec2 v_uv;
-
-        void main() {
-          vec2 uv = v_uv;
-          float cover = max(u_resolution.x / u_resolution.y / (4.0 / 5.0), 1.0);
-          uv.x = (uv.x - 0.5) / cover + 0.5;
-          vec2 fromMouse = uv - u_mouse;
-          float mouseDistance = max(length(fromMouse), 0.001);
-          float repulsion = smoothstep(0.18, 0.0, mouseDistance) * 0.004;
-          uv += normalize(fromMouse) * repulsion;
-          uv.x += sin((uv.y + u_time * 0.006) * 10.0) * 0.0012;
-          uv.y += sin((uv.x + u_time * 0.005) * 8.0) * 0.0016;
-          vec4 color = texture2D(u_image, uv);
-          float grain = sin((uv.x + u_time * 0.012) * 90.0) * sin((uv.y - u_time * 0.009) * 70.0);
-          color.rgb *= vec3(0.9, 0.86, 0.88) + grain * 0.0025;
-          gl_FragColor = color;
-        }
-      `,
-    )
-    gl.compileShader(vertexShader)
-    gl.compileShader(fragmentShader)
-    gl.attachShader(program, vertexShader)
-    gl.attachShader(program, fragmentShader)
-    gl.linkProgram(program)
-    gl.useProgram(program)
-
-    const buffer = gl.createBuffer()
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW)
-
-    const position = gl.getAttribLocation(program, 'a_position')
-    gl.enableVertexAttribArray(position)
-    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
-
-    const resolution = gl.getUniformLocation(program, 'u_resolution')
-    const time = gl.getUniformLocation(program, 'u_time')
-    const mouse = gl.getUniformLocation(program, 'u_mouse')
-    const texture = gl.createTexture()
-    gl.bindTexture(gl.TEXTURE_2D, texture)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
-
-    let animation = 0
-    let disposed = false
-    const handlePointerMove = (event: PointerEvent) => {
-      const rect = canvas.getBoundingClientRect()
-      if (!rect.width || !rect.height) return
-      heroMouseRef.current.targetX = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width))
-      heroMouseRef.current.targetY = Math.min(1, Math.max(0, 1 - (event.clientY - rect.top) / rect.height))
-    }
-    const image = new window.Image()
-    image.onload = () => {
-      if (disposed) return
-      gl.bindTexture(gl.TEXTURE_2D, texture)
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
-
-      const draw = (now: number) => {
-        const width = canvas.clientWidth * window.devicePixelRatio
-        const height = canvas.clientHeight * window.devicePixelRatio
-        if (canvas.width !== width || canvas.height !== height) {
-          canvas.width = width
-          canvas.height = height
-          gl.viewport(0, 0, width, height)
-        }
-        const currentMouse = heroMouseRef.current
-        currentMouse.x += (currentMouse.targetX - currentMouse.x) * 0.008
-        currentMouse.y += (currentMouse.targetY - currentMouse.y) * 0.008
-        gl.uniform2f(resolution, width, height)
-        gl.uniform1f(time, now * 0.001)
-        gl.uniform2f(mouse, currentMouse.x, currentMouse.y)
-        gl.drawArrays(gl.TRIANGLES, 0, 6)
-        animation = window.requestAnimationFrame(draw)
-      }
-      animation = window.requestAnimationFrame(draw)
-    }
-    image.src = HERO_CAMPAIGN_IMAGE
-    window.addEventListener('pointermove', handlePointerMove, { passive: true })
-
-    return () => {
-      disposed = true
-      window.cancelAnimationFrame(animation)
-      window.removeEventListener('pointermove', handlePointerMove)
-      gl.deleteTexture(texture)
-      gl.deleteBuffer(buffer)
-      gl.deleteProgram(program)
-      gl.deleteShader(vertexShader)
-      gl.deleteShader(fragmentShader)
-      heroWebglInitializedRef.current = false
-    }
-  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -432,24 +268,15 @@ export default function StrandsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
       />
       <section className="relative z-0 h-[85vh] max-h-[85vh] overflow-hidden bg-[#1a0210] text-[#e8ddd4] md:sticky md:top-0 md:will-change-transform">
-        <div
-          className="absolute inset-0"
-          style={{ transform: `translateY(${heroOffset}px)` }}
-          aria-hidden
-        >
-          <div className="absolute inset-0">
-            <Image
-              src={HERO_CAMPAIGN_IMAGE}
-              alt={STRAND_HERO_ALT}
-              fill
-              priority={true}
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-            <canvas ref={heroCanvasRef} className="pointer-events-none absolute inset-0 z-0 hidden h-full w-full md:block" aria-hidden />
-          </div>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,2,16,0.88)_0%,rgba(26,2,16,0.45)_42%,rgba(26,2,16,0.12)_72%,transparent_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_35%,rgba(26,2,16,0.55)_100%)]" />
+        <div className="absolute inset-0 shadow-[inset_0_-32px_64px_rgba(0,0,0,0.22)]" aria-hidden>
+          <Image
+            src={HERO_CAMPAIGN_IMAGE}
+            alt={STRAND_HERO_ALT}
+            fill
+            priority={true}
+            sizes="100vw"
+            className="object-cover object-center"
+          />
         </div>
 
         <div className={`absolute top-28 z-20 px-6 md:left-[60px] ${isRTL ? 'right-6 md:right-[60px] left-auto' : 'left-6'}`}>
@@ -570,14 +397,13 @@ export default function StrandsPage() {
             className="group block overflow-hidden rounded-[4px] bg-[#faf8f5]"
             data-cursor-hover
           >
-            <div className="overflow-hidden rounded-[4px] bg-[#e8ddd4]">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[4px] bg-[#e8ddd4]">
               <Image
-                src={CONCEPT_FLATLAY_IMAGE}
-                alt={STRAND_FLATLAY_ALT}
-                width={480}
-                height={600}
+                src={HERO_CAMPAIGN_IMAGE}
+                alt={STRAND_HERO_ALT}
+                fill
                 sizes="(max-width: 768px) 90vw, 42vw"
-                className="h-auto w-full object-cover"
+                className="object-cover object-center"
               />
             </div>
           </LocaleLink>
