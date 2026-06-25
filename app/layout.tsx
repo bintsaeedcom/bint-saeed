@@ -181,7 +181,7 @@ export default async function RootLayout({
                 sameAs: ['https://www.instagram.com/bintsaeed'],
                 priceRange: 'AED 2000 - AED 3500',
                 currenciesAccepted: 'AED',
-                paymentAccepted: 'Credit Card, Apple Pay',
+                paymentAccepted: 'Credit Card, Apple Pay, Google Pay',
                 openingHoursSpecification: {
                   '@type': 'OpeningHoursSpecification',
                   dayOfWeek: [

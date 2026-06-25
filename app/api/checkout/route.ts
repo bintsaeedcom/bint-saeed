@@ -12,6 +12,7 @@ import {
 import { products as staticProducts } from '@/data/products'
 import { resolveSkuByProductId } from '@/lib/products/sku'
 import { absoluteProductImageUrl } from '@/lib/products/shopImage'
+import { buildCheckoutPaymentParams } from '@/lib/stripe/checkoutPaymentMethods'
 
 function getStripeSecretKey(): string | null {
   const key = process.env.STRIPE_SECRET_KEY?.trim()
@@ -140,12 +141,7 @@ export async function POST(request: NextRequest) {
     })
 
     const sessionOptions: Stripe.Checkout.SessionCreateParams = {
-      payment_method_types: ['card', 'link'],
-      payment_method_options: {
-        card: {
-          request_three_d_secure: 'automatic',
-        },
-      },
+      ...buildCheckoutPaymentParams(),
       line_items: lineItems,
       mode: 'payment',
       success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
