@@ -6,7 +6,6 @@ import { getBelgraviaPdpFaq } from '@/lib/products/belgraviaSchemaI18n'
 import { getKensingtonPdpFaq } from '@/lib/products/kensingtonSchemaI18n'
 import { getKnightsbridgePdpFaq } from '@/lib/products/knightsbridgeSchemaI18n'
 import {
-  getKnightsbridgeStylePairingNote,
   knightsbridgePdpColorLabel,
 } from '@/lib/products/knightsbridgePairing'
 import { buildVariantSku } from '@/lib/products/sku'
@@ -289,7 +288,6 @@ export function buildKnightsbridgeAbayaJacketContentZh(color?: string): ProductP
       '可选尺码：XS, S, M, L, XL, XXL',
     ],
     careDetails: ['仅限专业干洗'],
-    stylePairingNote: getKnightsbridgeStylePairingNote('knightsbridge-abaya-jacket', catalogColor, 'zh'),
     faq: getKnightsbridgePdpFaq('zh'),
   }
 }

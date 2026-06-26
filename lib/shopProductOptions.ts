@@ -1,5 +1,5 @@
 /** Clickable sizes for ready-to-wear (shop) — excludes accessories, which use product.sizes (e.g. One Size). */
-export const STANDARD_APPAREL_SIZES = ['XS', 'S', 'M', 'L', 'XL'] as const
+export const STANDARD_APPAREL_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'] as const
 
 const ONE_SIZE_ONLY_SLUGS = new Set(['mayfair-kaftan', 'nothing-hill-kaftan'])
 

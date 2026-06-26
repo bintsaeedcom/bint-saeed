@@ -1,9 +1,9 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductFaqItem, ProductSchemaFacts } from '@/lib/products/productSchemaMeta'
-import { getAlTalliHeritageFaqItem } from '@/lib/products/alTalliHeritageFaqI18n'
 import { patchAlTalliHeritageFaq } from '@/lib/products/alTalliHeritageFaqI18n'
 import { appendAlTalliCareFaq } from '@/lib/products/alTalliCareFaqI18n'
 import { getHampsteadDressPdpFaq } from '@/lib/products/hampsteadDressPdpI18n'
+import { getSohoSetPdpFaq } from '@/lib/products/sohoSetFaqI18n'
 
 const MADE_IN = 'Abu Dhabi, United Arab Emirates'
 
@@ -11,14 +11,12 @@ export const MARYLEBONE_SLUG = 'marylebone-abaya'
 export const PARK_LANE_SLUG = 'park-lane-abaya'
 export const HAMPSTEAD_SLUG = 'hampstead-dress'
 export const SOHO_SLUG = 'soho-set'
-export const HYDE_PARK_SLUG = 'hyde-park-set'
 
 const SECONDARY_SLUGS = new Set([
   MARYLEBONE_SLUG,
   PARK_LANE_SLUG,
   HAMPSTEAD_SLUG,
   SOHO_SLUG,
-  HYDE_PARK_SLUG,
 ])
 
 export function isSecondaryCatalogSchemaSlug(slug: string): boolean {
@@ -89,15 +87,6 @@ const SOHO_EN: ProductSchemaFacts = {
     'Luxury travelwear, city dressing, lunches, dinners, cultural events, journeys between cities, Gulf wardrobes, and international modest fashion in Abu Dhabi, Dubai, London, Paris, Milan, Toronto, Singapore, and worldwide.',
 }
 
-const HYDE_PARK_EN: ProductSchemaFacts = {
-  productType: 'Contemporary designer coordinate set — polished two-piece dressing from Bint Saeed Abu Dhabi.',
-  productCategory:
-    'Set, Two-Piece Set, Coordinate Set, Designer Set, Contemporary Womenswear, Modest Fashion, Premium Modest Fashion',
-  stylingDetail: 'Coordinate set designed for versatile day and occasion dressing.',
-  suitableFor:
-    'Contemporary dressing, gatherings, travel, Gulf wardrobes, and international modest fashion.',
-}
-
 const FAQ_BY_SLUG: Record<string, ProductSchemaFacts['faq']> = {
   [MARYLEBONE_SLUG]: [
     {
@@ -116,21 +105,6 @@ const FAQ_BY_SLUG: Record<string, ProductSchemaFacts['faq']> = {
       question: 'Is the Park Lane Abaya suitable for everyday wear?',
       answer:
         'Yes. The Park Lane Abaya is designed for refined everyday city dressing with a clean line and fluid drape — made in Abu Dhabi for GCC and international wardrobes.',
-    },
-  ],
-  [SOHO_SLUG]: [
-    getAlTalliHeritageFaqItem('en'),
-    {
-      question: 'Is the Soho Set suitable for day-to-evening dressing?',
-      answer:
-        'Yes. The Soho Set is a coordinate top and skirt with Al Talli heritage detailing — polished for lunches, dinners, cultural events, and occasion dressing.',
-    },
-  ],
-  [HYDE_PARK_SLUG]: [
-    {
-      question: 'What is the Hyde Park Set?',
-      answer:
-        'The Hyde Park Set is a contemporary coordinate set from Bint Saeed Abu Dhabi — designed for versatile modest dressing in GCC and international wardrobes.',
     },
   ],
 }
@@ -162,14 +136,16 @@ export function getLocalizedSecondaryCatalogSchemaFacts(
       ar: { productType: 'طقم منسّق بتفاصيل التلي التراثية — من النهار إلى المساء' },
       fr: { productType: 'Set coordonné avec détails Al Talli — du jour au soir' },
     })
-  } else if (s === HYDE_PARK_SLUG) {
-    base = facts(s, locale, HYDE_PARK_EN)
   }
 
   if (!base) return null
 
   const faq =
-    s === HAMPSTEAD_SLUG ? getHampsteadDressPdpFaq(locale) : FAQ_BY_SLUG[s]
+    s === HAMPSTEAD_SLUG
+      ? getHampsteadDressPdpFaq(locale)
+      : s === SOHO_SLUG
+        ? getSohoSetPdpFaq(locale)
+        : FAQ_BY_SLUG[s]
   if (!faq) return base
 
   const localizedFaq =
@@ -182,9 +158,7 @@ export function getLocalizedSecondaryCatalogSchemaFacts(
         }))
 
   const withAlTalli =
-    s === HAMPSTEAD_SLUG || s === SOHO_SLUG
-      ? patchAlTalliHeritageFaq(localizedFaq, locale)
-      : localizedFaq
+    s === HAMPSTEAD_SLUG ? patchAlTalliHeritageFaq(localizedFaq, locale) : localizedFaq
 
   return { ...base, faq: appendAlTalliCareFaq(withAlTalli, s, locale) }
 }

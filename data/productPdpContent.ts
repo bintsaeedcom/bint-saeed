@@ -11,7 +11,6 @@ import { getBelgraviaPdpFaq } from '@/lib/products/belgraviaSchemaI18n'
 import { getKensingtonPdpFaq } from '@/lib/products/kensingtonSchemaI18n'
 import { getKnightsbridgePdpFaq } from '@/lib/products/knightsbridgeSchemaI18n'
 import {
-  getKnightsbridgeStylePairingNote,
   knightsbridgePdpColorLabel,
   normalizeKnightsbridgeCatalogColor,
 } from '@/lib/products/knightsbridgePairing'
@@ -49,6 +48,7 @@ import { getHouseCodesDetailGroup } from '@/lib/products/pdpHouseCodesGroupsI18n
 import { COVENT_GARDEN_LONG_DRESS_FAQ_EN } from '@/data/coventGardenLongDressPdpFaq'
 import { buildHampsteadDressPdpContent } from '@/lib/products/hampsteadDressPdpI18n'
 import { buildSohoSetPdpContent } from '@/lib/products/sohoSetPdpI18n'
+import { buildHydeParkSetPdpContent } from '@/lib/products/hydeParkSetPdpI18n'
 
 export type { PdpDetailGroup } from '@/lib/products/pdpIntroRich'
 
@@ -442,12 +442,25 @@ function isSohoSet(product: Product): boolean {
   return slug === 'soho-set' || product.id === 'st-003'
 }
 
+function isHydeParkSet(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'hyde-park-set' || product.id === 'ab-008'
+}
+
 function buildSohoSetContent(
   product: Product,
   color: string | undefined,
   locale: AppLocale,
 ): ProductPdpContent {
   return buildSohoSetPdpContent(locale)
+}
+
+function buildHydeParkSetContent(
+  _product: Product,
+  _color: string | undefined,
+  locale: AppLocale,
+): ProductPdpContent {
+  return buildHydeParkSetPdpContent(locale)
 }
 
 function buildCoventGardenAbayaContent(product: Product): ProductPdpContent {
@@ -608,7 +621,6 @@ function buildKnightsbridgeAbayaJacketContent(color?: string, locale: AppLocale 
     ],
     careDetails: [...KNIGHTSBRIDGE_ABAYA_CARE],
     productDetailGroups: [getHouseCodesDetailGroup('knotted-line-al-khous', locale)],
-    stylePairingNote: getKnightsbridgeStylePairingNote('knightsbridge-abaya-jacket', catalogColor, locale),
     faq: getKnightsbridgePdpFaq(locale),
   }
 }
@@ -736,6 +748,9 @@ export function getProductPdpContent(
     if (isSohoSet(product)) {
       return applyAbayaPdpStandards(product, buildSohoSetContent(product, color, locale), locale)
     }
+    if (isHydeParkSet(product)) {
+      return applyAbayaPdpStandards(product, buildHydeParkSetContent(product, color, locale), locale)
+    }
     const localized = getProductPdpContentLocale(product, color, locale)
     const content =
       localized ??
@@ -767,6 +782,8 @@ export function getProductPdpContent(
     content = buildHampsteadDressPdpContent('en')
   } else if (isSohoSet(product)) {
     content = buildSohoSetContent(product, color, locale)
+  } else if (isHydeParkSet(product)) {
+    content = buildHydeParkSetContent(product, color, locale)
   } else if (isCoventGardenSignatureSet(product)) {
     content = buildCoventGardenSignatureSetContent(product, color)
   } else if (product.category === 'Accessories') {

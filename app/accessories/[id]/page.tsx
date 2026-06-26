@@ -112,6 +112,10 @@ export default function AccessoryDetailPage() {
     }
   }, [aid, isRTL])
 
+  useEffect(() => {
+    setOpenDropdown(null)
+  }, [aid, selectedColor])
+
   if (!accessory) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8">

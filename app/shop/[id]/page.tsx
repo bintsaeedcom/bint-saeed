@@ -8,7 +8,7 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
-import { FiChevronDown, FiPlus, FiMinus, FiHeart, FiX, FiMaximize2, FiGlobe, FiAward } from 'react-icons/fi'
+import { FiPlus, FiMinus, FiHeart, FiX, FiMaximize2, FiGlobe, FiAward } from 'react-icons/fi'
 import SizeGuideModal from '@/components/SizeGuideModal'
 import { trackEvent } from '@/lib/analytics/tracking'
 import toast from 'react-hot-toast'
@@ -156,7 +156,6 @@ export default function ProductPage() {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false)
-  const [introExpanded, setIntroExpanded] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
   const { isRTL, language, t } = useLanguage()
   const ui = productPageUi(language)
@@ -312,7 +311,7 @@ export default function ProductPage() {
   }, [selectedColor])
 
   useEffect(() => {
-    setIntroExpanded(false)
+    setOpenDropdown(null)
   }, [product?.id, selectedColor])
 
   useEffect(() => {
@@ -393,11 +392,47 @@ export default function ProductPage() {
   }
 
   const pdpAccordionSections = useMemo((): PdpAccordionSectionConfig[] => {
-    const sections: PdpAccordionSectionConfig[] = [
+    const sections: PdpAccordionSectionConfig[] = []
+
+    if (introParagraphParts && introParagraphParts.length > 1) {
+      sections.push({
+        id: 'intro',
+        title: ui.readMore,
+        titleTag: 'h2',
+        children: (
+          <div className="space-y-3">
+            {introParagraphParts.slice(1).map((paragraph, idx) => (
+              <PdpIntroParagraph
+                key={`intro-rich-${idx}`}
+                parts={paragraph}
+                className={`${PDP_COPY_INTRO} pdp-copy--intro`}
+              />
+            ))}
+          </div>
+        ),
+      })
+    } else if (introParagraphs && introParagraphs.length > 1) {
+      sections.push({
+        id: 'intro',
+        title: ui.readMore,
+        titleTag: 'h2',
+        children: (
+          <div className="space-y-3">
+            {introParagraphs.slice(1).map((paragraph, idx) => (
+              <p key={`intro-${idx}`} className={`${PDP_COPY_INTRO} pdp-copy--intro`}>
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        ),
+      })
+    }
+
+    sections.push(
       {
         id: 'description',
         title: ui.productDetails,
-        titleTag: 'h2',
+        titleTag: sections.length === 0 ? 'h2' : 'h3',
         children: (
           <>
             {productDetailGroups && productDetailGroups.length > 0 ? (
@@ -517,7 +552,7 @@ export default function ProductPage() {
         bordered: faqItems.length > 0,
         children: <PdpShippingReturnsBullets isRTL={isRTL} />,
       },
-    ]
+    )
 
     if (faqItems.length > 0) {
       sections.push({
@@ -541,6 +576,8 @@ export default function ProductPage() {
     compositionDetails,
     compositionGroups,
     faqItems,
+    introParagraphParts,
+    introParagraphs,
     isRTL,
     originDetails,
     productDetailGroups,
@@ -1004,87 +1041,12 @@ export default function ProductPage() {
                   parts={introParagraphParts[0]}
                   className={`mb-2 ${PDP_COPY_INTRO} pdp-copy--intro`}
                 />
-                {introParagraphParts.length > 1 && (
-                  <>
-                    <AnimatePresence initial={false}>
-                      {introExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.25, ease: 'easeInOut' }}
-                          className="overflow-hidden"
-                        >
-                          <div className="space-y-3 pb-2">
-                            {introParagraphParts.slice(1).map((paragraph, idx) => (
-                              <PdpIntroParagraph
-                                key={`intro-rich-${idx}`}
-                                parts={paragraph}
-                                className={`${PDP_COPY_INTRO} pdp-copy--intro`}
-                              />
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                    <button
-                      type="button"
-                      onClick={() => setIntroExpanded((open) => !open)}
-                      className={`inline-flex items-center gap-1.5 font-montserrat text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
-                      data-cursor-hover
-                      aria-expanded={introExpanded}
-                    >
-                      {introExpanded ? ui.readLess : ui.readMore}
-                      <FiChevronDown
-                        className={`h-3.5 w-3.5 transition-transform ${introExpanded ? 'rotate-180' : ''}`}
-                      />
-                    </button>
-                  </>
-                )}
               </div>
             ) : introParagraphs && introParagraphs.length > 0 ? (
               <div className={`mb-2 ${isRTL ? 'text-right' : ''}`}>
                 <p className={`mb-2 ${PDP_COPY_INTRO} pdp-copy--intro`}>
                   {introParagraphs[0]}
                 </p>
-                {introParagraphs.length > 1 && (
-                  <>
-                    <AnimatePresence initial={false}>
-                      {introExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.25, ease: 'easeInOut' }}
-                          className="overflow-hidden"
-                        >
-                          <div className="space-y-3 pb-2">
-                            {introParagraphs.slice(1).map((paragraph, idx) => (
-                              <p
-                                key={`intro-${idx}`}
-                                className={`${PDP_COPY_INTRO} pdp-copy--intro`}
-                              >
-                                {paragraph}
-                              </p>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                    <button
-                      type="button"
-                      onClick={() => setIntroExpanded((open) => !open)}
-                      className={`inline-flex items-center gap-1.5 font-montserrat text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
-                      data-cursor-hover
-                      aria-expanded={introExpanded}
-                    >
-                      {introExpanded ? ui.readLess : ui.readMore}
-                      <FiChevronDown
-                        className={`h-3.5 w-3.5 transition-transform ${introExpanded ? 'rotate-180' : ''}`}
-                      />
-                    </button>
-                  </>
-                )}
               </div>
             ) : (
               <p className={`mb-1 ${PDP_COPY_INTRO} pdp-copy--intro`}>

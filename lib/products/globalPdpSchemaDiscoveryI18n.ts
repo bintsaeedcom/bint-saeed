@@ -1,4 +1,5 @@
 import type { AppLocale } from '@/lib/i18n/routing'
+import { getGlobalSchemaKeywordExpansion } from '@/lib/seo/schemaKeywordExpansion'
 
 function kw(
   en: string,
@@ -63,8 +64,10 @@ const GLOBAL_PDP_I18N = GLOBAL_PDP_ROWS.map(([en, ar, fr, it, es, ru, zh, de, nl
 
 /** Universal PDP schema keywords — global reach and conversion intent. */
 export function getGlobalPdpSchemaDiscoveryKeywords(locale: AppLocale = 'en'): string[] {
-  if (locale === 'en') {
-    return [...GLOBAL_PDP_ROWS.map((row) => row[0])]
-  }
-  return GLOBAL_PDP_I18N.map((row) => row[locale])
+  const base =
+    locale === 'en'
+      ? [...GLOBAL_PDP_ROWS.map((row) => row[0])]
+      : GLOBAL_PDP_I18N.map((row) => row[locale])
+  const expansion = getGlobalSchemaKeywordExpansion(locale)
+  return [...new Set([...base, ...expansion])]
 }

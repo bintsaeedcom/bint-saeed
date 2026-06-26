@@ -251,6 +251,8 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     front: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-front.webp',
     side: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-side.webp',
     back: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-back.webp',
+    detail: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-lifestyle-1.webp',
+    extra: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-lifestyle-2.webp',
   },
 }
 
@@ -409,9 +411,15 @@ function sohoSetGallery(color: 'black' | 'navy-blue'): string[] {
 
 const HYDE_PARK_SET_DIR = '/Webshop pictures/Sets/Hyde Park Set'
 
-function hydeParkSetGallery(): string[] {
-  const base = `${HYDE_PARK_SET_DIR}/bint-saeed-hyde-park-set-black`
-  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+function hydeParkSetGallery(color: 'black' | 'navy-blue'): string[] {
+  const base = `${HYDE_PARK_SET_DIR}/bint-saeed-hyde-park-set-${color}`
+  return [
+    `${base}-front.webp`,
+    `${base}-side.webp`,
+    `${base}-back.webp`,
+    `${base}-lifestyle-1.webp`,
+    `${base}-lifestyle-2.webp`,
+  ]
 }
 
 /** Hidden from `/shop` grid when no gallery images are wired. */
@@ -462,7 +470,7 @@ export const products: Product[] = [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
     ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Abayas',
   },
   {
@@ -477,7 +485,7 @@ export const products: Product[] = [
     measurements: 'Length: 138cm (size M). Available in custom lengths upon request.',
     images: orderedProductGallery('kensington-abaya'),
     colors: [{ name: 'Deep Black', hex: '#1a1a1a' }],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Abayas',
   },
   {
@@ -548,11 +556,19 @@ export const products: Product[] = [
     slug: 'hyde-park-set',
     name: 'Hyde Park Set',
     price: 1399,
-    description: 'Placeholder style pending full product details and imagery.',
+    description:
+      'Oversized premium crepe shirt and wide-leg palazzo trouser set with Knotted Line buttons — exclusively in Deep Black.',
     fabric: 'Fabric composition — to be finalized with production.',
     measurements: 'Measurements — to be confirmed.',
-    images: hydeParkSetGallery(),
-    colors: [{ name: 'Black', hex: '#1a1a1a' }],
+    images: hydeParkSetGallery('black'),
+    colorImages: {
+      'Deep Black': hydeParkSetGallery('black'),
+      'Navy Blue': hydeParkSetGallery('navy-blue'),
+    },
+    colors: [
+      { name: 'Deep Black', hex: '#1a1a1a' },
+      { name: 'Navy Blue', hex: '#1f3a5f' },
+    ],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Sets',
   },
@@ -603,7 +619,7 @@ export const products: Product[] = [
       { name: 'Dark Brown', hex: '#3D2817' },
       { name: 'Navy Grey', hex: '#3A4450' },
     ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Dresses',
   },
   {
@@ -673,7 +689,7 @@ export const products: Product[] = [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
     ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Sets',
   },
   {
@@ -694,7 +710,7 @@ export const products: Product[] = [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
     ],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Sets',
   },
 ]

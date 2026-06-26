@@ -17,6 +17,7 @@ import {
 } from '@/lib/products/productSchemaMeta'
 import { getKaftanPageSeo, getKaftanSchemaAudience, isKaftanSlug } from '@/lib/products/kaftanSchemaI18n'
 import { getCoventGardenAbayaPageSeo } from '@/lib/products/coventGardenAbayaPageSeoI18n'
+import { getSohoSetPageSeo } from '@/lib/products/sohoSetPageSeoI18n'
 import { getBelgraviaSchemaAudience, isBelgraviaSlug } from '@/lib/products/belgraviaSchemaI18n'
 import { getKensingtonSchemaAudience, isKensingtonSlug } from '@/lib/products/kensingtonSchemaI18n'
 import {
@@ -40,16 +41,18 @@ import {
   isCoventGardenAbayaSlug,
 } from '@/lib/products/coventGardenAbayaSchemaI18n'
 import {
+  getSohoSetSchemaAudience,
+  isSohoSetSlug,
+} from '@/lib/products/sohoSetSchemaI18n'
+import {
   getHampsteadDressSchemaAudience,
   getHydeParkSetSchemaAudience,
   getMaryleboneAbayaSchemaAudience,
   getParkLaneAbayaSchemaAudience,
-  getSohoSetSchemaAudience,
   isHampsteadDressSlug,
   isHydeParkSetSlug,
   isMaryleboneAbayaSlug,
   isParkLaneAbayaSlug,
-  isSohoSetSlug,
 } from '@/lib/products/secondaryCatalogSchemaI18n'
 import { getFallbackSchemaAudience } from '@/lib/products/categorySchemaAudience'
 import { buildProductSemanticJsonLdFields } from '@/lib/products/productSemanticJsonLd'
@@ -122,6 +125,9 @@ function buildSchemaDescription(
 ): string {
   const coventGardenSeo = getCoventGardenAbayaPageSeo(slug, locale)
   if (coventGardenSeo) return coventGardenSeo.description
+
+  const sohoSeo = getSohoSetPageSeo(slug, locale)
+  if (sohoSeo) return sohoSeo.description
 
   const kaftanSeo = getKaftanPageSeo(slug, locale)
   if (kaftanSeo) return kaftanSeo.description

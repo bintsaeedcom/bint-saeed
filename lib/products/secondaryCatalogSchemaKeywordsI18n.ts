@@ -1,7 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import {
   HAMPSTEAD_SLUG,
-  HYDE_PARK_SLUG,
   MARYLEBONE_SLUG,
   PARK_LANE_SLUG,
   SOHO_SLUG,
@@ -67,19 +66,11 @@ const SOHO_ROWS: KwRow[] = [
   ['BS-ST-003', 'BS-ST-003', 'BS-ST-003', 'BS-ST-003', 'BS-ST-003', 'BS-ST-003', 'BS-ST-003', 'BS-ST-003', 'BS-ST-003', 'BS-ST-003'],
 ]
 
-const HYDE_PARK_ROWS: KwRow[] = [
-  ['Hyde Park Set', 'مجموعة Hyde Park', 'Set Hyde Park', 'Hyde Park Set', 'Set Hyde Park', 'Комплект Hyde Park', 'Hyde Park 套装', 'Hyde Park Set', 'Hyde Park Set', 'Set Hyde Park'],
-  ['designer coordinate set', 'طقم منسّق مصمّم', 'set coordonné designer', 'set coordinato designer', 'set coordinado diseñador', 'дизайнерский комплект', '设计师套装', 'Designer-Koordinaten-Set', 'designer coördinatieset', 'set coordenado designer'],
-  ['contemporary two-piece set', 'طقم ثنائي معاصر', 'set deux pièces contemporain', 'set due pezzi contemporaneo', 'set dos piezas contemporáneo', 'современный комплект', '当代两件套', 'zeitgenössisches Zweiteiler-Set', 'eigentijds tweedelig set', 'set contemporâneo duas peças'],
-  ['BS-ST-001', 'BS-ST-001', 'BS-ST-001', 'BS-ST-001', 'BS-ST-001', 'BS-ST-001', 'BS-ST-001', 'BS-ST-001', 'BS-ST-001', 'BS-ST-001'],
-]
-
 const PACKS: Record<string, Record<AppLocale, string>[]> = {
   [MARYLEBONE_SLUG]: rowsToKw(MARYLEBONE_ROWS),
   [PARK_LANE_SLUG]: rowsToKw(PARK_LANE_ROWS),
   [HAMPSTEAD_SLUG]: rowsToKw(HAMPSTEAD_ROWS),
   [SOHO_SLUG]: rowsToKw(SOHO_ROWS),
-  [HYDE_PARK_SLUG]: rowsToKw(HYDE_PARK_ROWS),
 }
 
 const EN_EXTRA: Record<string, readonly string[]> = {
@@ -110,11 +101,6 @@ const EN_EXTRA: Record<string, readonly string[]> = {
     'heritage coordinate set',
     'modest occasion set',
     'luxury gift for mother set',
-  ],
-  [HYDE_PARK_SLUG]: [
-    'Bint Saeed Hyde Park Set',
-    'modest coordinate set UAE',
-    'premium two-piece set Abu Dhabi',
   ],
 }
 

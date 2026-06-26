@@ -1,6 +1,7 @@
 import { ENGLISH_ROOT_KEYWORDS } from '@/lib/i18n/englishRootKeywords'
 import { seoKeywords } from '@/lib/i18n/translations'
 import type { AppLocale } from '@/lib/i18n/routing'
+import { getGlobalSchemaKeywordExpansion } from '@/lib/seo/schemaKeywordExpansion'
 
 function dedupeKeywords(list: readonly string[]): string[] {
   const seen = new Set<string>()
@@ -46,25 +47,27 @@ function arabicKeywordsFromRoot(): string[] {
  */
 export function mergedMetaKeywordsForLocale(locale: AppLocale): string[] {
   const pack = seoKeywords[locale as keyof typeof seoKeywords]
+  const expansion = getGlobalSchemaKeywordExpansion(locale)
 
   if (locale === 'en') {
-    return dedupeKeywords([...ENGLISH_ROOT_KEYWORDS, ...(pack ?? [])])
+    return dedupeKeywords([...ENGLISH_ROOT_KEYWORDS, ...(pack ?? []), ...expansion])
   }
 
   if (locale === 'ar') {
-    return dedupeKeywords([...(pack ?? []), ...arabicKeywordsFromRoot()])
+    return dedupeKeywords([...(pack ?? []), ...arabicKeywordsFromRoot(), ...expansion])
   }
 
   if (locale === 'ru') {
     return dedupeKeywords([
       ...(pack ?? []),
       ...ENGLISH_ROOT_KEYWORDS.filter((k) => isCyrillicScript(k)),
+      ...expansion,
     ])
   }
 
   if (locale === 'zh') {
-    return dedupeKeywords([...(pack ?? []), ...ENGLISH_ROOT_KEYWORDS.filter((k) => isCjkScript(k))])
+    return dedupeKeywords([...(pack ?? []), ...ENGLISH_ROOT_KEYWORDS.filter((k) => isCjkScript(k)), ...expansion])
   }
 
-  return dedupeKeywords([...(pack ?? []), ...latinScriptKeywordsFromRoot()])
+  return dedupeKeywords([...(pack ?? []), ...latinScriptKeywordsFromRoot(), ...expansion])
 }

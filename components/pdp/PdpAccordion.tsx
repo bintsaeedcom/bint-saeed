@@ -1,7 +1,7 @@
 'use client'
 
 import { useLayoutEffect, useRef, type MouseEvent, type ReactNode } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { FiChevronDown } from 'react-icons/fi'
 import { PDP_ACCORDION_PANEL, PDP_ACCORDION_TITLE } from '@/lib/pdp/pdpTypography'
 
@@ -26,6 +26,7 @@ type PdpAccordionProps = {
 /**
  * PDP detail accordion — animated expand/collapse with scroll anchoring so toggling
  * a section (e.g. Size & Fit inside a sticky panel) does not jump the viewport.
+ * Uses CSS grid row animation for reliable collapse (avoids height:auto exit issues).
  */
 export default function PdpAccordion({
   openId,
@@ -75,6 +76,7 @@ export default function PdpAccordion({
         const isOpen = openId === section.id
         const TitleTag = section.titleTag ?? 'h3'
         const showBorder = section.bordered ?? index < sections.length - 1
+        const panelId = `pdp-accordion-panel-${section.id}`
 
         return (
           <div
@@ -86,6 +88,7 @@ export default function PdpAccordion({
               onClick={(event) => handleToggle(section.id, event)}
               className="flex w-full items-center justify-between py-3"
               aria-expanded={isOpen}
+              aria-controls={panelId}
               data-cursor-hover
             >
               <TitleTag className={PDP_ACCORDION_TITLE}>{section.title}</TitleTag>
@@ -96,21 +99,21 @@ export default function PdpAccordion({
                 aria-hidden
               />
             </button>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25, ease: 'easeInOut' }}
-                  className="overflow-hidden"
-                >
-                  <div className={section.panelClassName ?? PDP_ACCORDION_PANEL}>
-                    {section.children}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <motion.div
+              id={panelId}
+              role="region"
+              aria-hidden={!isOpen}
+              initial={false}
+              animate={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              className="grid [overflow-anchor:none]"
+            >
+              <div className="min-h-0 overflow-hidden">
+                <div className={section.panelClassName ?? PDP_ACCORDION_PANEL}>
+                  {section.children}
+                </div>
+              </div>
+            </motion.div>
           </div>
         )
       })}

@@ -1,11 +1,10 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { buildAbayaSchemaAudience } from '@/lib/products/abayaSchemaPackResolve'
-import { getDressSchemaAudience, getSetSchemaAudience } from '@/lib/products/categorySchemaAudience'
+import { getDressSchemaAudience } from '@/lib/products/categorySchemaAudience'
 import {
   getLocalizedSecondaryCatalogSchemaFacts,
   getLocalizedSecondaryCatalogSchemaFaq,
   HAMPSTEAD_SLUG,
-  HYDE_PARK_SLUG,
   MARYLEBONE_SLUG,
   PARK_LANE_SLUG,
   SOHO_SLUG,
@@ -14,11 +13,16 @@ import { getLocalizedSecondaryCatalogExclusiveKeywords } from '@/lib/products/se
 
 export {
   HAMPSTEAD_SLUG,
-  HYDE_PARK_SLUG,
   MARYLEBONE_SLUG,
   PARK_LANE_SLUG,
   SOHO_SLUG,
 } from '@/lib/products/secondaryCatalogSchemaLocalePacks'
+
+export {
+  HYDE_PARK_SET_SLUG as HYDE_PARK_SLUG,
+  getHydeParkSetSchemaAudience,
+  isHydeParkSetSlug,
+} from '@/lib/products/hydeParkSetSchemaI18n'
 
 const MARYLEBONE_AUDIENCE_EXT: Record<AppLocale, string> = {
   en: ', open-front abayas, layering abayas, wide-sleeve abayas, outerwear abayas, abayas to layer over dresses, travel wardrobes, and women pairing with the Covent Garden Long Dress',
@@ -65,21 +69,6 @@ const HAMPSTEAD_AUDIENCE_EXT: Record<AppLocale, string> = {
   ms: ', gaun Al Talli, gaun malam berstruktur, gaun warisan, dan gabung dengan Covent Garden Abaya',
 }
 
-const SOHO_AUDIENCE_EXT: Record<AppLocale, string> = {
-  en: ', Al Talli sets, coordinate sets, day-to-evening sets, heritage modest sets, and women discovering Emirati craftsmanship through contemporary dressing',
-  ar: ', أطقم التلي، أطقم منسّقة، أطقم من النهار للمساء، وأطقم تراثية محتشمة',
-  fr: ', sets Al Talli, sets coordonnés, sets jour-soir, et sets modestes patrimoniaux',
-  it: ', set Al Talli, set coordinati, set giorno-sera, e set modesti heritage',
-  es: ', sets Al Talli, sets coordinados, sets día-noche, y sets modestos patrimoniales',
-  ru: ', комплекты Al Talli, координированные комплекты, комплекты день-вечер, и скромные комплекты наследия',
-  zh: ', Al Talli 套装、协调套装、日夜套装、传承端庄套装',
-  de: ', Al-Talli-Sets, Koordinaten-Sets, Tag-zu-Abend-Sets, und Heritage-Modest-Sets',
-  nl: ', Al Talli-sets, coördinatiesets, dag-tot-avond sets, en erfgoed bescheiden sets',
-  pt: ', sets Al Talli, sets coordenados, sets dia-noite, e sets modestos património',
-  id: ', set Al Talli, set koordinat, set siang-malam, dan set modest warisan',
-  ms: ', set Al Talli, set selaras, set siang-malam, dan set sopan warisan',
-}
-
 export function isMaryleboneAbayaSlug(slug: string): boolean {
   return slug.toLowerCase() === MARYLEBONE_SLUG
 }
@@ -90,14 +79,6 @@ export function isParkLaneAbayaSlug(slug: string): boolean {
 
 export function isHampsteadDressSlug(slug: string): boolean {
   return slug.toLowerCase() === HAMPSTEAD_SLUG
-}
-
-export function isSohoSetSlug(slug: string): boolean {
-  return slug.toLowerCase() === SOHO_SLUG
-}
-
-export function isHydeParkSetSlug(slug: string): boolean {
-  return slug.toLowerCase() === HYDE_PARK_SLUG
 }
 
 export function getMaryleboneAbayaSchemaAudience(locale: AppLocale = 'en'): string {
@@ -112,13 +93,10 @@ export function getHampsteadDressSchemaAudience(locale: AppLocale = 'en'): strin
   return `${getDressSchemaAudience(locale).slice(0, -1)}${HAMPSTEAD_AUDIENCE_EXT[locale] ?? HAMPSTEAD_AUDIENCE_EXT.en}.`
 }
 
-export function getSohoSetSchemaAudience(locale: AppLocale = 'en'): string {
-  return `${getSetSchemaAudience(locale).slice(0, -1)}${SOHO_AUDIENCE_EXT[locale] ?? SOHO_AUDIENCE_EXT.en}.`
-}
-
-export function getHydeParkSetSchemaAudience(locale: AppLocale = 'en'): string {
-  return getSetSchemaAudience(locale)
-}
+export {
+  getSohoSetSchemaAudience,
+  isSohoSetSlug,
+} from '@/lib/products/sohoSetSchemaI18n'
 
 export {
   getLocalizedSecondaryCatalogSchemaFacts,

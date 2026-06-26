@@ -51,6 +51,18 @@ import {
   getLocalizedCoventGardenAbayaSchemaFacts,
 } from '@/lib/products/coventGardenAbayaSchemaLocalePacks'
 import { getLocalizedCoventGardenAbayaExclusiveKeywords } from '@/lib/products/coventGardenAbayaSchemaKeywordsI18n'
+import {
+  getLocalizedSohoSetSchemaFacts,
+  getLocalizedSohoSetSchemaFaq,
+  isSohoSetSlug,
+} from '@/lib/products/sohoSetSchemaI18n'
+import { getLocalizedSohoSetExclusiveKeywords } from '@/lib/products/sohoSetSchemaKeywordsI18n'
+import {
+  getLocalizedHydeParkSetSchemaFacts,
+  getLocalizedHydeParkSetSchemaFaq,
+  isHydeParkSetSlug,
+} from '@/lib/products/hydeParkSetSchemaI18n'
+import { getLocalizedHydeParkSetExclusiveKeywords } from '@/lib/products/hydeParkSetSchemaKeywordsI18n'
 import { getLocalizedAlTalliDiscoveryKeywords } from '@/lib/products/alTalliDiscoveryKeywordsI18n'
 import { getGlobalPdpSchemaDiscoveryKeywords } from '@/lib/products/globalPdpSchemaDiscoveryI18n'
 import { getLocalizedKaftanExclusiveKeywords } from '@/lib/products/kaftanSchemaKeywordsI18n'
@@ -61,10 +73,8 @@ import {
 import { getLocalizedSecondaryCatalogExclusiveKeywords } from '@/lib/products/secondaryCatalogSchemaKeywordsI18n'
 import {
   isHampsteadDressSlug,
-  isHydeParkSetSlug,
   isMaryleboneAbayaSlug,
   isParkLaneAbayaSlug,
-  isSohoSetSlug,
 } from '@/lib/products/secondaryCatalogSchemaI18n'
 import {
   AL_TALLI_HERITAGE_PRODUCT_SLUGS,
@@ -173,6 +183,12 @@ export function getProductSchemaFacts(product: Product, locale: AppLocale = 'en'
   const coventGardenAbayaFacts = getLocalizedCoventGardenAbayaSchemaFacts(slug, locale)
   if (coventGardenAbayaFacts) return coventGardenAbayaFacts
 
+  const sohoSetFacts = getLocalizedSohoSetSchemaFacts(slug, locale)
+  if (sohoSetFacts) return sohoSetFacts
+
+  const hydeParkSetFacts = getLocalizedHydeParkSetSchemaFacts(slug, locale)
+  if (hydeParkSetFacts) return hydeParkSetFacts
+
   const secondaryFacts = getLocalizedSecondaryCatalogSchemaFacts(slug, locale)
   if (secondaryFacts) return secondaryFacts
 
@@ -247,12 +263,22 @@ export function buildProductSchemaKeywords(
     }
   }
 
+  if (isSohoSetSlug(slug)) {
+    for (const t of getLocalizedSohoSetExclusiveKeywords(locale, colorName)) {
+      terms.add(t)
+    }
+  }
+
+  if (isHydeParkSetSlug(slug)) {
+    for (const t of getLocalizedHydeParkSetExclusiveKeywords(locale, colorName)) {
+      terms.add(t)
+    }
+  }
+
   if (
     isMaryleboneAbayaSlug(slug) ||
     isParkLaneAbayaSlug(slug) ||
-    isHampsteadDressSlug(slug) ||
-    isSohoSetSlug(slug) ||
-    isHydeParkSetSlug(slug)
+    isHampsteadDressSlug(slug)
   ) {
     for (const t of getLocalizedSecondaryCatalogExclusiveKeywords(slug, locale, colorName)) {
       terms.add(t)
@@ -457,6 +483,16 @@ export function getProductFaq(
   const coventGardenAbayaFaq = getLocalizedCoventGardenAbayaFaq(slug, locale)
   if (coventGardenAbayaFaq.length > 0) {
     return coventGardenAbayaFaq
+  }
+
+  const sohoSetFaq = getLocalizedSohoSetSchemaFaq(slug, locale)
+  if (sohoSetFaq.length > 0) {
+    return sohoSetFaq
+  }
+
+  const hydeParkSetFaq = getLocalizedHydeParkSetSchemaFaq(slug, locale)
+  if (hydeParkSetFaq.length > 0) {
+    return hydeParkSetFaq
   }
 
   const secondaryFaq = getLocalizedSecondaryCatalogSchemaFaq(slug, locale)

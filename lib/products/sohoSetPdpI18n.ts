@@ -16,10 +16,8 @@ import {
   pdpIntroParagraphsToPlainText,
 } from '@/lib/products/pdpIntroRich'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
-import {
-  SOHO_SLUG,
-  getLocalizedSecondaryCatalogSchemaFaq,
-} from '@/lib/products/secondaryCatalogSchemaLocalePacks'
+import { getSohoSetPdpFaq as getSohoSetFaq } from '@/lib/products/sohoSetFaqI18n'
+import { SOHO_SLUG } from '@/lib/products/secondaryCatalogSchemaLocalePacks'
 
 export const SOHO_SET_SLUG = SOHO_SLUG
 
@@ -528,7 +526,7 @@ export function getSohoSetIntro(locale: AppLocale = 'en'): PdpIntroParagraph[] {
 }
 
 export function getSohoSetPdpFaq(locale: AppLocale = 'en'): ProductFaqItem[] {
-  return getLocalizedSecondaryCatalogSchemaFaq(SOHO_SET_SLUG, locale)
+  return getSohoSetFaq(locale)
 }
 
 export function buildSohoSetPdpContent(locale: AppLocale = 'en'): ProductPdpContent {

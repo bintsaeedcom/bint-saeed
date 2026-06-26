@@ -59,8 +59,13 @@ const CATALOG_EXCLUSIVE_EN: Record<string, readonly string[]> = {
   'hyde-park-set': [
     'Hyde Park Set',
     'Bint Saeed Hyde Park Set',
-    'designer set',
+    'Knotted Line set',
+    'premium travel set',
+    'oversized shirt palazzo set',
+    'Deep Black coordinate set',
+    'shirt and trouser set',
     'BS-ST-001',
+    'BS-ST-001-BLK',
   ],
 }
 
