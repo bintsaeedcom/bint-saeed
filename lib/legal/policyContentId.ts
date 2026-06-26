@@ -1,4 +1,5 @@
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
+import * as policyAr from '@/lib/legal/policyContentAr'
 import * as policyMs from '@/lib/legal/policyContentMs'
 
 export type PolicyLang = 'en' | 'id' | 'ms' | 'ar'
@@ -1070,6 +1071,9 @@ export function buildAnalyticsLine(
       ? `Layanan analitik (berbasis lingkungan): ${trackerTitles.join(', ')}`
       : 'Tidak ada pelacak analitik opsional yang saat ini diaktifkan di lingkungan ini.'
   }
+  if (lang === 'ar') {
+    return policyAr.buildAnalyticsLineAr(trackerTitles)
+  }
   return trackerTitles.length > 0
     ? `Analytics services (environment-based): ${trackerTitles.join(', ')}`
     : 'No optional analytics trackers are currently enabled in this environment.'
@@ -1086,6 +1090,9 @@ export function getPrivacyPolicyContent(
       lang,
       [],
     )
+  if (lang === 'ar') {
+    return { ...policyAr.PRIVACY_AR, sections: policyAr.privacyArSections(line) }
+  }
   const meta = resolvePolicyMeta(lang, PRIVACY_EN, PRIVACY_ID, AR_BREADCRUMBS.privacy)
   const sections = lang === 'id' ? privacyIdSections(line) : privacyEnSections(line)
   return { ...meta, sections }
@@ -1093,6 +1100,9 @@ export function getPrivacyPolicyContent(
 
 export function getTermsContent(lang: PolicyLang): PolicyContent {
   if (lang === 'ms') return policyMs.getTermsContent('ms')
+  if (lang === 'ar') {
+    return { ...policyAr.TERMS_AR, sections: policyAr.termsArSections() }
+  }
   const meta = resolvePolicyMeta(lang, TERMS_EN, TERMS_ID, AR_BREADCRUMBS.terms)
   const sections = lang === 'id' ? TERMS_ID_SECTIONS : TERMS_EN_SECTIONS
   return { ...meta, sections }
@@ -1100,6 +1110,9 @@ export function getTermsContent(lang: PolicyLang): PolicyContent {
 
 export function getShipmentReturnContent(lang: PolicyLang): PolicyContent {
   if (lang === 'ms') return policyMs.getShipmentReturnContent('ms')
+  if (lang === 'ar') {
+    return { ...policyAr.SHIPMENT_AR, sections: policyAr.shipmentArSections() }
+  }
   const meta = resolvePolicyMeta(lang, SHIPMENT_EN, SHIPMENT_ID, AR_BREADCRUMBS.shipment)
   const sections = lang === 'id' ? shipmentIdSections() : shipmentEnSections()
   return { ...meta, sections }

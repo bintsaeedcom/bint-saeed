@@ -12,6 +12,7 @@ import { getProductHref } from '@/lib/products/links'
 import toast from 'react-hot-toast'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
+import { localizedColorName } from '@/lib/products/imageAltI18n'
 import {
   getProductColorOptions,
   getProductImagesForColor,
@@ -244,7 +245,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                           : 'border-transparent hover:scale-105'
                       }`}
                       style={{ backgroundColor: color.hex }}
-                      title={color.name}
+                      title={localizedColorName(color.name, language)}
                       data-cursor-hover
                     />
                   ))}

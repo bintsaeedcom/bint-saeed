@@ -28,8 +28,8 @@ export default function PrivacyPolicyPage() {
   const { t, isRTL, language } = useLanguage()
   const activeTrackers = getEnabledTrackersFromEnv()
 
-  if (language === 'id' || language === 'ms') {
-    const lang = language as 'id' | 'ms'
+  if (language === 'id' || language === 'ms' || language === 'ar') {
+    const lang = language as 'id' | 'ms' | 'ar'
     const analyticsLine = buildAnalyticsLine(
       lang,
       activeTrackers.map((tracker) => tracker.title),

@@ -16,6 +16,7 @@ import { products as staticProducts, type Product } from '@/data/products'
 import { getProductPdpContent } from '@/data/productPdpContent'
 import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
+import { localizedColorName } from '@/lib/products/imageAltI18n'
 import { getProductColorOptions, getProductImagesForColor } from '@/lib/products/productColorAvailability'
 import {
   getKnightsbridgePairedSlug,
@@ -846,7 +847,7 @@ export default function ProductPage() {
                 </span>
                 {selectedColor && (
                   <span className="font-montserrat text-[11px] text-brand-darkRed/65 tracking-wide">
-                    {selectedColor}
+                    {selectedColor ? localizedColorName(selectedColor, language) : null}
                   </span>
                 )}
               </div>
@@ -862,9 +863,9 @@ export default function ProductPage() {
                         : 'border-brand-stone/30 hover:scale-105 hover:border-brand-dustyBlue'
                     }`}
                     style={{ backgroundColor: color.hex }}
-                    title={color.name}
+                    title={localizedColorName(color.name, language)}
                     aria-pressed={selectedColor === color.name}
-                    aria-label={`${t.product.color} ${color.name}`}
+                    aria-label={`${t.product.color} ${localizedColorName(color.name, language)}`}
                     data-cursor-hover
                   />
                 ))}

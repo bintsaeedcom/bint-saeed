@@ -1,8 +1,10 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiAlertTriangle, FiHome, FiRefreshCw } from 'react-icons/fi'
+import { getErrorPageCopyFromPathname } from '@/lib/i18n/errorPageCopyI18n'
 import './globals.css'
 
 export default function GlobalError({
@@ -12,8 +14,17 @@ export default function GlobalError({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const [pathname, setPathname] = useState('/')
+
+  useEffect(() => {
+    setPathname(window.location.pathname)
+  }, [])
+
+  const copy = getErrorPageCopyFromPathname(pathname)
+  const isRTL = pathname.startsWith('/ar')
+
   return (
-    <html lang="en">
+    <html lang={isRTL ? 'ar' : 'en'} dir={isRTL ? 'rtl' : 'ltr'}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -47,15 +58,15 @@ export default function GlobalError({
               Bint Saeed
             </p>
             <h1 data-document-h1="true" className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-darkRed mb-4">
-              We Hit an Unexpected Issue
+              {copy.globalTitle}
             </h1>
             <p className="font-montserrat text-sm sm:text-base text-brand-clayRed/70 tracking-[0.03em] mb-8 max-w-md mx-auto px-4">
-              Please try again. If the issue continues, return home and try again in a moment.
+              {copy.globalDescription}
             </p>
 
             {error.digest ? (
               <p className="font-montserrat text-xs text-brand-stone mb-6 px-4 tracking-[0.03em]">
-                Error ID: {error.digest}
+                {copy.errorId}: {error.digest}
               </p>
             ) : null}
 
@@ -66,7 +77,7 @@ export default function GlobalError({
                 data-cursor-hover
               >
                 <FiRefreshCw className="w-4 h-4" />
-                Try Again
+                {copy.tryAgain}
               </button>
               <LocaleLink
                 href="/"
@@ -74,7 +85,7 @@ export default function GlobalError({
                 data-cursor-hover
               >
                 <FiHome className="w-4 h-4" />
-                Go to Home
+                {copy.goToHome}
               </LocaleLink>
             </div>
           </div>

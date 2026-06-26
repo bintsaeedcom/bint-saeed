@@ -3,6 +3,9 @@
  * Refuses malformed addresses and common domain typos.
  */
 
+import type { AppLocale } from '@/lib/i18n/routing'
+import { subscriberValidationMessages } from '@/lib/i18n/subscriberValidationI18n'
+
 const COMMON_DOMAIN_TYPOS: Record<string, string> = {
   'gmial.com': 'gmail.com',
   'gmal.com': 'gmail.com',
@@ -21,48 +24,49 @@ export type SubscriberEmailResult =
 
 const BASIC_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-export function validateSubscriberEmail(raw: string): SubscriberEmailResult {
+export function validateSubscriberEmail(raw: string, locale: AppLocale | string = 'en'): SubscriberEmailResult {
+  const msg = subscriberValidationMessages(locale)
   const email = raw.trim()
   if (!email) {
-    return { valid: false, message: 'Please enter your email address' }
+    return { valid: false, message: msg.empty }
   }
   if (email.length > 254) {
-    return { valid: false, message: 'Email address is too long' }
+    return { valid: false, message: msg.tooLong }
   }
   if (!BASIC_EMAIL.test(email)) {
-    return { valid: false, message: 'Please enter a valid email address' }
+    return { valid: false, message: msg.invalid }
   }
 
   const at = email.indexOf('@')
   if (at < 1) {
-    return { valid: false, message: 'Please enter a valid email address' }
+    return { valid: false, message: msg.invalid }
   }
 
   const local = email.slice(0, at)
   const domain = email.slice(at + 1)
 
   if (!local || !domain || local.length > 64) {
-    return { valid: false, message: 'Please enter a valid email address' }
+    return { valid: false, message: msg.invalid }
   }
   if (local.startsWith('.') || local.endsWith('.') || local.includes('..')) {
-    return { valid: false, message: 'Please enter a valid email address' }
+    return { valid: false, message: msg.invalid }
   }
   if (domain.includes('..') || domain.startsWith('.') || domain.endsWith('.')) {
-    return { valid: false, message: 'Please enter a valid email address' }
+    return { valid: false, message: msg.invalid }
   }
 
   const domainLower = domain.toLowerCase()
   const lastDot = domainLower.lastIndexOf('.')
   const tld = lastDot >= 0 ? domainLower.slice(lastDot + 1) : ''
   if (tld.length < 2 || tld.length > 63 || !/^[a-z0-9]+$/i.test(tld)) {
-    return { valid: false, message: 'Please enter a valid email address' }
+    return { valid: false, message: msg.invalid }
   }
 
   const typo = COMMON_DOMAIN_TYPOS[domainLower]
   if (typo) {
     return {
       valid: false,
-      message: `Did you mean ${local}@${typo}?`,
+      message: msg.typo(local, typo),
     }
   }
 

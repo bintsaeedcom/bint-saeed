@@ -24,8 +24,8 @@ const SECTION_LIST = [
 export default function ShipmentReturnPolicyPage() {
   const { t, isRTL, language } = useLanguage()
 
-  if (language === 'id' || language === 'ms') {
-    const lang = language as 'id' | 'ms'
+  if (language === 'id' || language === 'ms' || language === 'ar') {
+    const lang = language as 'id' | 'ms' | 'ar'
     return (
       <PolicyDocument
         content={getShipmentReturnContent(lang)}

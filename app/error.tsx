@@ -6,6 +6,8 @@ import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FiRefreshCw, FiHome, FiAlertTriangle } from 'react-icons/fi'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getErrorPageCopy } from '@/lib/i18n/errorPageCopyI18n'
 
 export default function Error({
   error,
@@ -14,6 +16,9 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const { language, isRTL } = useLanguage()
+  const copy = getErrorPageCopy(language)
+
   useEffect(() => {
     // Log error to monitoring service in production
     console.error('Application error:', error)
@@ -27,7 +32,7 @@ export default function Error({
           display: none !important;
         }
       `}</style>
-      <div className="min-h-screen bg-brand-pageCanvas flex items-center justify-center px-4 sm:px-6 safe-area-inset">
+      <div className={`min-h-screen bg-brand-pageCanvas flex items-center justify-center px-4 sm:px-6 safe-area-inset ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="text-center max-w-xl w-full border border-brand-stone/25 bg-white/85 p-8 sm:p-10 shadow-[0_22px_55px_rgba(28,14,18,0.12)] backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -55,18 +60,18 @@ export default function Error({
           {/* Title */}
           <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
           <h1 data-document-h1="true" className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-darkRed mb-4">
-            Something Went Wrong
+            {copy.title}
           </h1>
           
           {/* Description */}
           <p className="font-montserrat text-sm sm:text-base text-brand-clayRed/70 tracking-wide mb-8 max-w-md mx-auto px-4">
-            We apologize for the inconvenience. Please try again, or contact us if the problem persists.
+            {copy.description}
           </p>
 
           {/* Error digest for support */}
           {error.digest && (
             <p className="font-montserrat text-xs text-brand-stone mb-6 px-4">
-              Error ID: {error.digest}
+              {copy.errorId}: {error.digest}
             </p>
           )}
           
@@ -78,7 +83,7 @@ export default function Error({
               data-cursor-hover
             >
               <FiRefreshCw className="w-4 h-4" />
-              Try Again
+              {copy.tryAgain}
             </button>
             <LocaleLink
               href="/"
@@ -86,7 +91,7 @@ export default function Error({
               data-cursor-hover
             >
               <FiHome className="w-4 h-4" />
-              Go to Home
+              {copy.goToHome}
             </LocaleLink>
           </div>
 
@@ -100,7 +105,7 @@ export default function Error({
           {/* Contact Support */}
           <div className="pt-6 border-t border-brand-stone/20">
             <p className="font-montserrat text-xs text-brand-clayRed/50 tracking-wide mb-2">
-              Need assistance?
+              {copy.needAssistance}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
               <a 
@@ -118,7 +123,7 @@ export default function Error({
                 className="font-montserrat text-brand-darkRed hover:text-brand-dustyBlue transition-colors"
                 data-cursor-hover
               >
-                WhatsApp Support
+                {copy.whatsAppSupport}
               </a>
             </div>
           </div>

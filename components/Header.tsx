@@ -19,44 +19,7 @@ import {
   ACCESSORY_IMAGE_PHONE_CHARM,
 } from '@/data/accessories'
 
-// Search suggestions and pages
-const searchableContent = [
-  { title: 'New Arrivals', href: '/shop', category: 'Collection' },
-  { title: 'Dresses', href: '/shop?category=dresses', category: 'Collection' },
-  { title: 'Ready to Wear', href: '/shop?category=ready-to-wear', category: 'Collection' },
-  { title: 'Accessories', href: '/accessories', category: 'Collection' },
-  {
-    title: 'Abaya Strands',
-    href: '/strands#shop-all-strands',
-    category: 'Accessories',
-  },
-  {
-    title: 'Shop All Strands',
-    href: '/accessories?type=signature-strands',
-    category: 'Accessories',
-  },
-  { title: 'Necklaces', href: '/accessories?type=necklaces', category: 'Accessories' },
-  { title: 'Earrings', href: '/accessories?type=earrings', category: 'Accessories' },
-  { title: 'Bracelets', href: '/accessories?type=bracelets', category: 'Accessories' },
-  { title: 'Phone Strands', href: '/accessories?type=phone-strands', category: 'Accessories' },
-  { title: 'About Us', href: '/about', category: 'About' },
-  { title: 'Our Story', href: '/about', category: 'About' },
-  { title: 'The Codes', href: '/the-codes', category: 'About' },
-  { title: 'Craftsmanship', href: '/craftsmanship', category: 'About' },
-  { title: 'Personalisation', href: '/personalisation', category: 'About' },
-  { title: 'Giving Forward', href: '/giving-forward', category: 'About' },
-  { title: 'Al Talli', href: '/the-codes#al-talli', category: 'Heritage' },
-  { title: 'Khous Weaving', href: '/the-codes#khous', category: 'Heritage' },
-  { title: 'Size Guide', href: '/size-guide', category: 'Help' },
-  { title: 'Contact Us', href: '/contact', category: 'Help' },
-  { title: 'FAQ', href: '/faq', category: 'Help' },
-  { title: 'Shipping & Returns', href: '/terms', category: 'Help' },
-  { title: 'Abayas', href: '/shop?category=abayas', category: 'Products' },
-  { title: 'Jacket', href: '/shop?category=jacket', category: 'Products' },
-  { title: 'Kaftans', href: '/shop?category=kaftans', category: 'Products' },
-  { title: 'Black Abaya', href: '/shop?category=abayas&color=black', category: 'Products' },
-  { title: 'Luxury Abaya', href: '/shop?category=abayas&style=luxury', category: 'Products' },
-]
+import { getSearchableContent, type SearchableItem } from '@/lib/i18n/searchableContentI18n'
 
 /** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
 const headerBarGradient =
@@ -74,7 +37,7 @@ export default function Header() {
   const [expandedMobileSection, setExpandedMobileSection] = useState<string | null>(null)
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [searchResults, setSearchResults] = useState<typeof searchableContent>([])
+  const [searchResults, setSearchResults] = useState<SearchableItem[]>([])
   const searchInputRef = useRef<HTMLInputElement>(null)
   const megaMenuLeaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -97,7 +60,8 @@ export default function Header() {
     }, 140)
   }
   const cartItems = useCartStore((state) => state.items)
-  const { t, isRTL } = useLanguage()
+  const { t, isRTL, language } = useLanguage()
+  const searchableContent = getSearchableContent(language)
   const innerPath = stripLocaleFromPathname(pathname ?? '/').pathname
   const disableHomeLogoNavigation = innerPath === '/comingsoon'
   const isHomePage = innerPath === '/home'

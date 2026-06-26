@@ -8,6 +8,7 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiCheck, FiShoppingBag } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getCheckoutSuccessCopy } from '@/lib/i18n/checkoutSuccessCopyI18n'
 import { useCartStore } from '@/store/cartStore'
 import { trackEvent } from '@/lib/analytics/tracking'
 
@@ -15,6 +16,7 @@ function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const successCopy = getCheckoutSuccessCopy(language)
   const sessionId = searchParams?.get('session_id')
   const clearCart = useCartStore((state) => state.clearCart)
 
@@ -36,7 +38,7 @@ function CheckoutSuccessContent() {
           className="mb-10"
           segments={[
             { label: ui.common.home, href: '/home' },
-            { label: ui.checkout.reviewOrder },
+            { label: successCopy.breadcrumb },
           ]}
           backLink={{
             href: '/home',
@@ -60,15 +62,15 @@ function CheckoutSuccessContent() {
             </motion.div>
 
             <h1 data-document-h1="true" className="font-rozha text-4xl text-brand-darkRed mb-4">
-              {ui.checkout.reviewOrder}
+              {successCopy.title}
             </h1>
             <p className="font-montserrat text-brand-clayRed tracking-wide mb-8 leading-relaxed">
-              {ui.checkout.reviewSubtitle}
+              {successCopy.subtitle}
             </p>
 
             {sessionId && (
               <p className="font-montserrat text-xs text-brand-stone tracking-wide mb-8">
-                Session: {sessionId.slice(-8).toUpperCase()}
+                {successCopy.sessionReference}: {sessionId.slice(-8).toUpperCase()}
               </p>
             )}
 

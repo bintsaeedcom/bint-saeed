@@ -1,12 +1,12 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getEnabledTrackersFromEnv } from '@/lib/analytics/trackerCatalog'
+import { COOKIE_POLICY_AR, OFFICIAL_EMAILS } from '@/lib/legal/cookiePolicyContentAr'
 
-const SECTION_LIST = [
+const SECTION_LIST_EN = [
   '1. What Are Cookies',
   '2. Essential Cookies (Always Active)',
   '3. Analytics and Behavioral Cookies (Optional)',
@@ -18,7 +18,7 @@ const SECTION_LIST = [
   '9. Contact',
 ]
 
-const ESSENTIAL_COOKIES = [
+const ESSENTIAL_COOKIES_EN = [
   { name: 'cookieConsent', purpose: 'Stores your cookie choice state', provider: 'Bint Saeed', duration: 'up to 1 year' },
   { name: 'analyticsConsent', purpose: 'Stores analytics consent preference', provider: 'Bint Saeed', duration: 'up to 1 year' },
   { name: 'marketingConsent', purpose: 'Stores marketing consent preference', provider: 'Bint Saeed', duration: 'up to 1 year' },
@@ -28,8 +28,28 @@ const ESSENTIAL_COOKIES = [
 ]
 
 export default function CookiePolicyPage() {
-  const { t, isRTL } = useLanguage()
+  const { t, isRTL, language } = useLanguage()
   const activeTrackers = getEnabledTrackersFromEnv()
+  const isAr = language === 'ar'
+  const ar = COOKIE_POLICY_AR
+
+  const breadcrumb = isAr ? ar.breadcrumb : 'Cookie Policy'
+  const homeBreadcrumb = isAr ? ar.homeBreadcrumb : 'Home'
+  const heroLabel = isAr ? ar.heroLabel : 'Legal'
+  const pageTitle = isAr ? ar.pageTitle : 'Cookie Policy'
+  const lastUpdated = isAr ? ar.lastUpdated : 'Last updated: May 2026'
+  const intro = isAr
+    ? ar.intro
+    : 'This policy explains how Bint Saeed uses cookies and similar technologies. We request consent before setting non-essential cookies and provide controls to manage preferences.'
+  const summaryTitle = isAr ? ar.summaryTitle : 'About This Cookie Policy'
+  const summaryBody = isAr
+    ? ar.summaryBody
+    : 'Our cookie controls are designed to align with UAE legal requirements and GDPR/ePrivacy consent expectations for relevant users, including users located in the EU.'
+  const sectionList = isAr ? ar.sectionList : SECTION_LIST_EN
+  const essentialCookies = isAr ? ar.essentialCookies.cookies : ESSENTIAL_COOKIES_EN
+  const tableHeaders = isAr
+    ? ar.essentialCookies.tableHeaders
+    : { cookie: 'Cookie / Key', purpose: 'Purpose', provider: 'Provider', retention: 'Retention' }
 
   return (
     <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -44,8 +64,8 @@ export default function CookiePolicyPage() {
             rtl={isRTL}
             variant="muted"
             segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-              { label: isRTL ? 'سياسة ملفات تعريف الارتباط' : 'Cookie Policy' },
+              { label: isAr ? homeBreadcrumb : isRTL ? 'الرئيسية' : homeBreadcrumb, href: '/home' },
+              { label: breadcrumb },
             ]}
             backLink={{ href: '/', label: t.shop.backToHome }}
           />
@@ -58,15 +78,14 @@ export default function CookiePolicyPage() {
           className="mb-12 text-center"
         >
           <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-neutral-500">
-            Legal
+            {heroLabel}
           </span>
           <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-neutral-900 md:text-6xl">
-            Cookie Policy
+            {pageTitle}
           </h1>
-          <p className="font-montserrat tracking-wide text-neutral-700">Last updated: May 2026</p>
+          <p className="font-montserrat tracking-wide text-neutral-700">{lastUpdated}</p>
           <p className="mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600">
-            This policy explains how Bint Saeed uses cookies and similar technologies. We request consent before
-            setting non-essential cookies and provide controls to manage preferences.
+            {intro}
           </p>
         </motion.div>
 
@@ -78,15 +97,12 @@ export default function CookiePolicyPage() {
         >
           <div className={`space-y-9 font-montserrat text-[13px] leading-relaxed tracking-wide text-neutral-800 ${isRTL ? 'text-right' : ''}`}>
             <section className="rounded-sm border border-neutral-200 bg-neutral-50 p-5 md:p-6">
-              <h2 className="mb-2 font-rozha text-xl text-neutral-900">About This Cookie Policy</h2>
-              <p className="text-sm text-neutral-600">
-                Our cookie controls are designed to align with UAE legal requirements and GDPR/ePrivacy consent
-                expectations for relevant users, including users located in the EU.
-              </p>
+              <h2 className="mb-2 font-rozha text-xl text-neutral-900">{summaryTitle}</h2>
+              <p className="text-sm text-neutral-600">{summaryBody}</p>
             </section>
 
             <div className="grid gap-2 rounded-sm border border-neutral-200 p-5 md:grid-cols-2 md:gap-3 md:p-6">
-              {SECTION_LIST.map((item) => (
+              {sectionList.map((item) => (
                 <p key={item} className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-600">
                   {item}
                 </p>
@@ -94,31 +110,33 @@ export default function CookiePolicyPage() {
             </div>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">1. What Are Cookies</h2>
-              <p>
-                Cookies are small text files placed on your device when you visit a website. They support secure
-                functionality, remember preferences, and may help us understand aggregated usage patterns.
-              </p>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                {isAr ? ar.whatAreCookies.title : '1. What Are Cookies'}
+              </h2>
+              <p>{isAr ? ar.whatAreCookies.body : 'Cookies are small text files placed on your device when you visit a website. They support secure functionality, remember preferences, and may help us understand aggregated usage patterns.'}</p>
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">2. Essential Cookies (Always Active)</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                {isAr ? ar.essentialCookies.title : '2. Essential Cookies (Always Active)'}
+              </h2>
               <p className="mb-4">
-                These cookies are necessary for core website operation, security, checkout, and consent management.
-                They are set regardless of optional analytics consent.
+                {isAr
+                  ? ar.essentialCookies.intro
+                  : 'These cookies are necessary for core website operation, security, checkout, and consent management. They are set regardless of optional analytics consent.'}
               </p>
               <div className="overflow-x-auto rounded-sm border border-neutral-200">
                 <table className="w-full min-w-[640px] border-collapse">
                   <thead>
-                    <tr className="bg-neutral-50 text-left">
-                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">Cookie / Key</th>
-                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">Purpose</th>
-                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">Provider</th>
-                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">Retention</th>
+                    <tr className={`bg-neutral-50 ${isRTL ? 'text-right' : 'text-left'}`}>
+                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">{tableHeaders.cookie}</th>
+                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">{tableHeaders.purpose}</th>
+                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">{tableHeaders.provider}</th>
+                      <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">{tableHeaders.retention}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {ESSENTIAL_COOKIES.map((cookie) => (
+                    {essentialCookies.map((cookie) => (
                       <tr key={cookie.name} className="align-top">
                         <td className="border-b border-neutral-200 px-4 py-3 font-mono text-[12px] text-neutral-900">{cookie.name}</td>
                         <td className="border-b border-neutral-200 px-4 py-3 text-sm text-neutral-700">{cookie.purpose}</td>
@@ -132,10 +150,13 @@ export default function CookiePolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">3. Analytics and Behavioral Cookies (Optional)</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                {isAr ? ar.analytics.title : '3. Analytics and Behavioral Cookies (Optional)'}
+              </h2>
               <p>
-                Optional analytics and behavioral cookies are loaded only after consent through our cookie controls.
-                Without consent, these tools do not run in tracking mode.
+                {isAr
+                  ? ar.analytics.body
+                  : 'Optional analytics and behavioral cookies are loaded only after consent through our cookie controls. Without consent, these tools do not run in tracking mode.'}
               </p>
               {activeTrackers.length > 0 ? (
                 <div className="mt-4 space-y-4">
@@ -157,71 +178,100 @@ export default function CookiePolicyPage() {
                 </div>
               ) : (
                 <p className="mt-3 text-sm text-neutral-600">
-                  No optional analytics trackers are currently enabled in this environment.
+                  {isAr ? ar.analytics.noTrackers : 'No optional analytics trackers are currently enabled in this environment.'}
                 </p>
               )}
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">4. Third-Party Services and Cookies</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                {isAr ? ar.thirdParty.title : '4. Third-Party Services and Cookies'}
+              </h2>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
-                <li><strong>Stripe:</strong> payment processing and fraud-prevention cookies for checkout security.</li>
-                <li><strong>Analytics providers:</strong> activated only when configured and consent is granted.</li>
-                <li><strong>Hosting/infrastructure vendors:</strong> may process technical request metadata for service reliability.</li>
+                {isAr ? (
+                  ar.thirdParty.items.map((item) => (
+                    <li key={item.label}>
+                      <strong>{item.label}</strong> {item.text}
+                    </li>
+                  ))
+                ) : (
+                  <>
+                    <li><strong>Stripe:</strong> payment processing and fraud-prevention cookies for checkout security.</li>
+                    <li><strong>Analytics providers:</strong> activated only when configured and consent is granted.</li>
+                    <li><strong>Hosting/infrastructure vendors:</strong> may process technical request metadata for service reliability.</li>
+                  </>
+                )}
               </ul>
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">5. Cookie Consent and Preference Management</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                {isAr ? ar.consent.title : '5. Cookie Consent and Preference Management'}
+              </h2>
               <p>
-                On first visit, you can accept all cookies or essential only. Your preferences are stored and can be
-                changed later. If you decline optional categories, non-essential trackers are not loaded in tracking
-                mode.
+                {isAr
+                  ? ar.consent.body
+                  : 'On first visit, you can accept all cookies or essential only. Your preferences are stored and can be changed later. If you decline optional categories, non-essential trackers are not loaded in tracking mode.'}
               </p>
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">6. Withdrawing or Changing Consent</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                {isAr ? ar.withdraw.title : '6. Withdrawing or Changing Consent'}
+              </h2>
               <p>
-                You can change preferences by reopening cookie controls or by clearing site cookies/local storage and
-                revisiting the website. You can also use browser controls to block cookies.
+                {isAr
+                  ? ar.withdraw.body
+                  : 'You can change preferences by reopening cookie controls or by clearing site cookies/local storage and revisiting the website. You can also use browser controls to block cookies.'}
               </p>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
-                <li>Chrome: Settings → Privacy and security → Cookies</li>
-                <li>Firefox: Settings → Privacy & Security → Cookies</li>
-                <li>Safari: Preferences → Privacy</li>
-                <li>Edge: Settings → Cookies and site permissions</li>
+                {(isAr ? ar.withdraw.browserInstructions : [
+                  'Chrome: Settings → Privacy and security → Cookies',
+                  'Firefox: Settings → Privacy & Security → Cookies',
+                  'Safari: Preferences → Privacy',
+                  'Edge: Settings → Cookies and site permissions',
+                ]).map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">7. Cookie Retention</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                {isAr ? ar.retention.title : '7. Cookie Retention'}
+              </h2>
               <p>
-                Cookie retention differs by purpose and provider. Session cookies are removed when sessions end, while
-                persistent cookies may remain up to their defined expiry period.
+                {isAr
+                  ? ar.retention.body
+                  : 'Cookie retention differs by purpose and provider. Session cookies are removed when sessions end, while persistent cookies may remain up to their defined expiry period.'}
               </p>
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">8. Policy Updates</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                {isAr ? ar.updates.title : '8. Policy Updates'}
+              </h2>
               <p>
-                We may update this Cookie Policy to reflect legal, technical, or operational changes. Material updates
-                will be reflected by a revised “Last updated” date and, where required, renewed consent prompts.
+                {isAr
+                  ? ar.updates.body
+                  : 'We may update this Cookie Policy to reflect legal, technical, or operational changes. Material updates will be reflected by a revised “Last updated” date and, where required, renewed consent prompts.'}
               </p>
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">9. Contact</h2>
-              <p>If you have questions about this Cookie Policy or cookie controls, contact:</p>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                {isAr ? ar.contact.title : '9. Contact'}
+              </h2>
+              <p>{isAr ? ar.contact.body : 'If you have questions about this Cookie Policy or cookie controls, contact:'}</p>
               <p className="mt-4">
                 <strong>Bint Saeed</strong><br />
-                Legal Inquiries:{' '}
-                <a href="mailto:legal@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
-                  legal@bintsaeed.com
+                {isAr ? ar.contact.legalLabel : 'Legal Inquiries:'}{' '}
+                <a href={`mailto:${OFFICIAL_EMAILS.legal}`} className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
+                  {OFFICIAL_EMAILS.legal}
                 </a><br />
-                General Inquiries:{' '}
-                <a href="mailto:hello@bintsaeed.com" className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
-                  hello@bintsaeed.com
+                {isAr ? ar.contact.generalLabel : 'General Inquiries:'}{' '}
+                <a href={`mailto:${OFFICIAL_EMAILS.hello}`} className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950">
+                  {OFFICIAL_EMAILS.hello}
                 </a>
               </p>
             </section>

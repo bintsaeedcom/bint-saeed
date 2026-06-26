@@ -8,6 +8,7 @@ import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import { validateOptionalPhone } from '@/lib/validateOptionalPhone'
 import PhoneWithCountry from '@/components/PhoneWithCountry'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getSubscribeFormCopy } from '@/lib/i18n/subscribeFormI18n'
 
 interface SubscribeFormProps {
   variant?: 'light' | 'dark'
@@ -15,7 +16,8 @@ interface SubscribeFormProps {
 }
 
 export default function SubscribeForm({ variant = 'light', initialEmail = '' }: SubscribeFormProps) {
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const copy = getSubscribeFormCopy(language)
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -32,19 +34,19 @@ export default function SubscribeForm({ variant = 'light', initialEmail = '' }: 
       setEmailError('')
       return
     }
-    const check = validateSubscriberEmail(initialEmail)
+    const check = validateSubscriberEmail(initialEmail, language)
     setEmailError(check.valid ? '' : check.message)
-  }, [initialEmail])
+  }, [initialEmail, language])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const check = validateSubscriberEmail(formData.email)
+    const check = validateSubscriberEmail(formData.email, language)
     if (!check.valid) {
       setEmailError(check.message)
       toast.error(check.message)
       return
     }
-    const phoneCheck = validateOptionalPhone(phone)
+    const phoneCheck = validateOptionalPhone(phone, language)
     if (!phoneCheck.ok) {
       setPhoneError(phoneCheck.message)
       toast.error(phoneCheck.message)
@@ -70,11 +72,11 @@ export default function SubscribeForm({ variant = 'light', initialEmail = '' }: 
       const data = await response.json().catch(() => ({}))
 
       if (response.ok) {
-        toast.success('Welcome to Bint Saeed!')
+        toast.success(copy.success)
         setFormData({ firstName: '', lastName: '', email: '' })
         setPhone(undefined)
       } else {
-        const msg = typeof data.error === 'string' ? data.error : 'Something went wrong. Please try again.'
+        const msg = typeof data.error === 'string' ? data.error : copy.errorGeneric
         toast.error(msg)
         if (response.status === 400 && msg) {
           if (msg.toLowerCase().includes('phone')) setPhoneError(msg)
@@ -82,7 +84,7 @@ export default function SubscribeForm({ variant = 'light', initialEmail = '' }: 
         }
       }
     } catch {
-      toast.error('Something went wrong. Please try again.')
+      toast.error(copy.errorGeneric)
     } finally {
       setIsSubmitting(false)
     }
@@ -101,7 +103,7 @@ export default function SubscribeForm({ variant = 'light', initialEmail = '' }: 
       <div className="grid md:grid-cols-2 gap-4">
         <input
           type="text"
-          placeholder="First Name"
+          placeholder={copy.firstName}
           value={formData.firstName}
           onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
           required
@@ -109,7 +111,7 @@ export default function SubscribeForm({ variant = 'light', initialEmail = '' }: 
         />
         <input
           type="text"
-          placeholder="Last Name"
+          placeholder={copy.lastName}
           value={formData.lastName}
           onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
           required
@@ -121,15 +123,8 @@ export default function SubscribeForm({ variant = 'light', initialEmail = '' }: 
           htmlFor="subscribe-phone"
           className={`block text-xs uppercase tracking-[0.2em] font-montserrat ${variant === 'dark' ? 'text-brand-dustyBlue/60' : 'text-white/60'}`}
         >
-          {isRTL ? (
-            <>
-              الهاتف <span className="normal-case tracking-normal opacity-70">(اختياري)</span>
-            </>
-          ) : (
-            <>
-              Phone <span className="normal-case tracking-normal opacity-70">(optional)</span>
-            </>
-          )}
+          {copy.phoneOptional}{' '}
+          <span className="normal-case tracking-normal opacity-70">{copy.phoneOptionalNote}</span>
         </label>
         <PhoneWithCountry
           id="subscribe-phone"
@@ -141,7 +136,7 @@ export default function SubscribeForm({ variant = 'light', initialEmail = '' }: 
           }}
           onBlur={() => {
             if (!phone) return
-            const v = validateOptionalPhone(phone)
+            const v = validateOptionalPhone(phone, language)
             setPhoneError(v.ok ? '' : v.message)
           }}
           disabled={isSubmitting}
@@ -157,7 +152,7 @@ export default function SubscribeForm({ variant = 'light', initialEmail = '' }: 
         <div className="flex-1 w-full space-y-1">
           <input
             type="email"
-            placeholder="Email Address"
+            placeholder={copy.email}
             value={formData.email}
             onChange={(e) => {
               setFormData({ ...formData, email: e.target.value })
@@ -165,7 +160,7 @@ export default function SubscribeForm({ variant = 'light', initialEmail = '' }: 
             }}
             onBlur={() => {
               if (!formData.email.trim()) return
-              const check = validateSubscriberEmail(formData.email)
+              const check = validateSubscriberEmail(formData.email, language)
               setEmailError(check.valid ? '' : check.message)
             }}
             required
@@ -186,11 +181,11 @@ export default function SubscribeForm({ variant = 'light', initialEmail = '' }: 
           className={`${buttonClass} md:self-stretch md:shrink-0`}
           data-cursor-hover
         >
-          {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+          {isSubmitting ? copy.subscribing : copy.subscribe}
         </motion.button>
       </div>
       <p className={`text-xs tracking-wide ${variant === 'dark' ? 'text-white/30' : 'text-brand-stone/70'}`}>
-        By subscribing, you agree to our Privacy Policy and consent to receive updates.
+        {copy.privacyLine}
       </p>
     </form>
   )

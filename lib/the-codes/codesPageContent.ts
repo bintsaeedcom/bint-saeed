@@ -6,6 +6,7 @@ import {
   CODES_PAGE_DIR,
   codesPageImagePath,
 } from '@/lib/the-codes/codesPageAssets'
+import { CODES_HERO_AR, THE_CODES_SECTIONS_AR } from '@/lib/the-codes/codesPageContentAr'
 import { THE_CODES_SECTIONS_ID } from '@/lib/the-codes/codesPageContentId'
 import { THE_CODES_SECTIONS_MS } from '@/lib/the-codes/codesPageContentMs'
 
@@ -88,7 +89,13 @@ export const THE_CODES_SECTIONS: CodesSectionContent[] = [
   },
 ]
 
+export function getTheCodesHero(locale: AppLocale) {
+  if (locale === 'ar') return CODES_HERO_AR
+  return CODES_HERO
+}
+
 export function getTheCodesSections(locale: AppLocale): CodesSectionContent[] {
+  if (locale === 'ar') return THE_CODES_SECTIONS_AR
   if (locale === 'id') return THE_CODES_SECTIONS_ID
   if (locale === 'ms') return THE_CODES_SECTIONS_MS
   return THE_CODES_SECTIONS

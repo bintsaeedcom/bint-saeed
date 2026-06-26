@@ -12,8 +12,8 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { buildTheCodesJsonLd } from '@/lib/seo/theCodesJsonLd'
 import {
-  CODES_HERO,
   codesPageImagePath,
+  getTheCodesHero,
   getTheCodesSections,
   type CodesSectionContent,
 } from '@/lib/the-codes/codesPageContent'
@@ -94,6 +94,7 @@ export default function TheCodesClient() {
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
   const codesJsonLd = useMemo(() => buildTheCodesJsonLd(language), [language])
   const sections = useMemo(() => getTheCodesSections(language), [language])
+  const hero = useMemo(() => getTheCodesHero(language), [language])
 
   const expandedTextBySection: Record<string, string> = {
     'the-monogram':
@@ -130,8 +131,8 @@ export default function TheCodesClient() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(codesJsonLd) }} />
       <header className="relative h-[50vh] overflow-hidden bg-brand-darkRed md:h-[60vh]">
         <Image
-          src={codesPageImage(CODES_HERO.file)}
-          alt={CODES_HERO.alt}
+          src={codesPageImage(hero.file)}
+          alt={hero.alt}
           fill
           className="object-cover opacity-40"
           priority

@@ -3,27 +3,22 @@
 import { usePathname } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
-
-const ABOUT_TOPIC_LINKS = [
-  { href: '/about', label: 'Our Story' },
-  { href: '/the-codes', label: 'The Codes' },
-  { href: '/craftsmanship', label: 'Craftsmanship' },
-  { href: '/personalisation', label: 'Personalisation' },
-  { href: '/giving-forward', label: 'Giving Forward' },
-  { href: '/contact', label: 'Contact' },
-] as const
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getAboutTopicNavAriaLabel, getAboutTopicNavLinks } from '@/lib/i18n/aboutTopicNavI18n'
 
 export default function AboutTopicNav() {
   const pathname = usePathname() || ''
+  const { language } = useLanguage()
   const { pathname: inner } = stripLocaleFromPathname(pathname)
+  const links = getAboutTopicNavLinks(language)
 
   return (
     <nav
-      aria-label="About topics"
+      aria-label={getAboutTopicNavAriaLabel(language)}
       className="sticky top-16 z-40 border-b border-brand-stone/30 bg-brand-pageCanvas"
     >
       <div className="mx-auto flex max-w-[1200px] items-center gap-1 overflow-x-auto px-6 py-4 lg:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {ABOUT_TOPIC_LINKS.map((item) => {
+        {links.map((item) => {
           const isActive =
             inner === item.href ||
             (item.href !== '/about' && inner.startsWith(`${item.href}/`))

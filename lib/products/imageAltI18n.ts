@@ -78,6 +78,7 @@ const COLOR_NAME_I18N: Record<string, Record<AppLocale, string>> = {
   'Deep Maroon': altLoc('Deep Maroon', 'العنابي الغامق', 'bordeaux profond', 'bordeaux profondo', 'burdeos profundo', 'глубокий бордовый', '深酒红', 'tiefes Bordeaux', 'diep bordeauxrood', 'bordeaux profundo'),
   'Peach Pink': altLoc('Peach Pink', 'الوردي الخوخي', 'rose pêche', 'rosa pesca', 'rosa melocotón', 'персиково-розовый', '蜜桃粉', 'pfirsichrosa', 'perzikroze', 'rosa pêssego'),
   'Navy Grey': altLoc('Navy Grey', 'الرمادي الداكن', 'gris marine', 'grigio navy', 'gris marino', 'тёмно-серый', '海军灰', 'Marinegrau', 'marinegrijs', 'cinza-marinho'),
+  Burgundy: altLoc('Burgundy', 'عنابي', 'bordeaux', 'bordeaux', 'burdeos', 'бордовый', '酒红', 'Bordeaux', 'bordeaux', 'bordeaux'),
   Black: altLoc('Black', 'أسود', 'noir', 'nero', 'negro', 'чёрный', '黑色', 'Schwarz', 'zwart', 'preto'),
 }
 

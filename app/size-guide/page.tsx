@@ -5,21 +5,22 @@ import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiCheck } from 'react-icons/fi'
+import { getSizeGuideCopy } from '@/lib/i18n/sizeGuideCopyI18n'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 const SIZE_HEADERS = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL'] as const
 const UK_SIZE = ['6', '8', '10', '12', '14', '16', '18', '20'] as const
 
-const inchRows = [
-  { label: 'Bust', values: ['31.5-32.7', '32.7-34.3', '34.6-36.2', '36.6-38.2', '38.6-40.2', '40.6-42.1', '42.5-44.5', '44.5-46.9'] },
-  { label: 'Waist', values: ['24.4-25.2', '25.6-26.8', '27.2-28.7', '29.1-30.7', '31.1-32.7', '33.1-34.6', '35.0-37.0', '37.0-39.4'] },
-  { label: 'Hips', values: ['35.0-36.2', '36.2-37.8', '38.2-40.2', '40.2-42.5', '42.5-44.9', '44.9-47.2', '47.2-49.6', '49.6-52.0'] },
+const inchRowValues = [
+  ['31.5-32.7', '32.7-34.3', '34.6-36.2', '36.6-38.2', '38.6-40.2', '40.6-42.1', '42.5-44.5', '44.5-46.9'],
+  ['24.4-25.2', '25.6-26.8', '27.2-28.7', '29.1-30.7', '31.1-32.7', '33.1-34.6', '35.0-37.0', '37.0-39.4'],
+  ['35.0-36.2', '36.2-37.8', '38.2-40.2', '40.2-42.5', '42.5-44.9', '44.9-47.2', '47.2-49.6', '49.6-52.0'],
 ] as const
 
-const cmRows = [
-  { label: 'Bust', values: ['80-83', '83-87', '88-92', '93-97', '98-102', '103-107', '108-113', '113-119'] },
-  { label: 'Waist', values: ['62-64', '65-68', '69-73', '74-78', '79-83', '84-88', '89-94', '94-100'] },
-  { label: 'Hips', values: ['89-92', '92-96', '97-102', '102-108', '108-114', '114-120', '120-126', '126-132'] },
+const cmRowValues = [
+  ['80-83', '83-87', '88-92', '93-97', '98-102', '103-107', '108-113', '113-119'],
+  ['62-64', '65-68', '69-73', '74-78', '79-83', '84-88', '89-94', '94-100'],
+  ['89-92', '92-96', '97-102', '102-108', '108-114', '114-120', '120-126', '126-132'],
 ] as const
 
 const intlRows = [
@@ -35,18 +36,19 @@ const intlRows = [
   { label: 'RU', values: ['40', '42', '44', '46', '48', '50'] },
 ] as const
 
-const measureItems = [
-  { id: '1', title: 'Sleeve', copy: 'Top shoulder point down to the wrist.' },
-  { id: '2', title: 'Bust', copy: 'Maximum circumference on the fullest part of the chest.' },
-  { id: '3', title: 'Under Bust', copy: 'Body circumference directly under the bust.' },
-  { id: '4', title: 'Waist', copy: 'Circumference around your natural waistline.' },
-  { id: '5', title: 'Hips', copy: 'Circumference around the fullest part of the hips.' },
-  { id: '6', title: 'Leg', copy: 'Outside leg length from waist to floor.' },
-  { id: '7', title: 'Full Length', copy: 'Top shoulder point to floor.' },
-] as const
 
 export default function SizeGuidePage() {
-  const { t, isRTL } = useLanguage()
+  const { t, isRTL, language } = useLanguage()
+  const copy = getSizeGuideCopy(language)
+  const rowLabelKeys = ['bust', 'waist', 'hips'] as const
+  const inchRows = rowLabelKeys.map((key, i) => ({
+    label: copy.rowLabels[key],
+    values: inchRowValues[i]!,
+  }))
+  const cmRows = rowLabelKeys.map((key, i) => ({
+    label: copy.rowLabels[key],
+    values: cmRowValues[i]!,
+  }))
   const [selected, setSelected] = useState<(typeof SIZE_HEADERS)[number] | null>(null)
 
   return (
@@ -76,7 +78,7 @@ export default function SizeGuidePage() {
           </h1>
 
           <p className="mx-auto max-w-5xl text-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-darkRed/80 md:text-[13px]">
-            This size chart provides general sizing information, which can vary depending on style. For more specific sizing information, please contact our concierge team.
+            {copy.intro}
           </p>
         </div>
       </section>
@@ -86,7 +88,8 @@ export default function SizeGuidePage() {
           <div className="lg:col-span-7">
             <div className="relative border border-brand-stone/25 bg-white/72 p-4 md:p-5">
               <MeasurementTable
-                title="Body Measurements - Inch"
+                title={copy.bodyMeasurementsInch}
+                ukSizeLabel={copy.ukSize}
                 selected={selected}
                 setSelected={setSelected}
                 rows={inchRows}
@@ -95,7 +98,8 @@ export default function SizeGuidePage() {
 
             <div className="relative mt-6 border border-brand-stone/25 bg-white/72 p-4 md:p-5">
               <MeasurementTable
-                title="Body Measurements - CM"
+                title={copy.bodyMeasurementsCm}
+                ukSizeLabel={copy.ukSize}
                 selected={selected}
                 setSelected={setSelected}
                 rows={cmRows}
@@ -103,14 +107,14 @@ export default function SizeGuidePage() {
             </div>
 
             <h2 className="mt-8 mb-3 font-montserrat text-[28px] uppercase tracking-[0.08em] text-brand-darkRed">
-              International Conversions
+              {copy.internationalConversions}
             </h2>
             <div className="relative overflow-x-auto border border-brand-stone/28 bg-white/78">
               <table className="min-w-[690px] w-full">
                 <thead>
                   <tr className="bg-brand-stone/25">
                     <th className="px-3 py-3 text-left font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
-                      Size
+                      {copy.size}
                     </th>
                     {SIZE_HEADERS.slice(0, 6).map((size) => (
                       <th key={size} className="px-2 py-3 text-center font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
@@ -137,18 +141,18 @@ export default function SizeGuidePage() {
 
           <aside className="lg:col-span-5">
             <div className="sticky top-28 border border-brand-stone/25 bg-white/75 p-5 md:p-6">
-              <h2 className="mb-4 font-montserrat text-xl uppercase tracking-[0.14em] text-brand-darkRed">How To Measure</h2>
+              <h2 className="mb-4 font-montserrat text-xl uppercase tracking-[0.14em] text-brand-darkRed">{copy.howToMeasure}</h2>
               <div className="mb-6 border border-brand-stone/20 bg-[#f9f6f2] p-3">
                 <Image
                   src="/size-guide-figure.svg"
-                  alt="Body measurement guide"
+                  alt={copy.imageAlt}
                   width={620}
                   height={760}
                   className="h-auto w-full"
                 />
               </div>
               <div className="space-y-3">
-                {measureItems.map((item) => (
+                {copy.measureItems.map((item) => (
                   <div key={item.id} className="flex gap-3 border-t border-brand-stone/25 pt-3 first:border-t-0 first:pt-0">
                     <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-darkRed text-[10px] font-montserrat text-white">
                       {item.id}
@@ -203,11 +207,13 @@ export default function SizeGuidePage() {
 
 function MeasurementTable({
   title,
+  ukSizeLabel,
   rows,
   selected,
   setSelected,
 }: {
   title: string
+  ukSizeLabel: string
   rows: readonly { label: string; values: readonly string[] }[]
   selected: (typeof SIZE_HEADERS)[number] | null
   setSelected: (size: (typeof SIZE_HEADERS)[number] | null) => void
@@ -240,7 +246,7 @@ function MeasurementTable({
             })}
           </tr>
           <tr className="bg-white/80">
-            <th className="px-3 py-2 text-left font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">UK Size</th>
+            <th className="px-3 py-2 text-left font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">{ukSizeLabel}</th>
             {UK_SIZE.map((value, idx) => (
               <th key={`${title}-uk-${value}`} className={`px-2 py-2 text-center font-montserrat text-[11px] ${selected === SIZE_HEADERS[idx] ? 'text-brand-darkRed font-medium' : 'text-brand-clayRed/85'}`}>
                 {value}

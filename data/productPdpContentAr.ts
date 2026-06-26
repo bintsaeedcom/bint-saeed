@@ -1,5 +1,10 @@
 import type { Product } from '@/data/products'
 import { buildKnightsbridgeDressPdpContent } from '@/data/knightsbridgeDressPdpContent'
+import {
+  buildCoventGardenAbayaContentAr,
+  buildCoventGardenLongDressContentAr,
+  buildCoventGardenSignatureSetContentAr,
+} from '@/lib/products/coventGardenPdpContentAr'
 import type { ProductPdpContent } from '@/data/productPdpContent'
 import { getProductSlug } from '@/lib/products/links'
 import { getBelgraviaPdpFaq } from '@/lib/products/belgraviaSchemaI18n'
@@ -322,6 +327,21 @@ function isKnightsbridgeDress(product: Product): boolean {
   return slug === 'knightsbridge-dress' || product.id === 'bs-003'
 }
 
+function isCoventGardenAbaya(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'covent-garden-abaya'
+}
+
+function isCoventGardenLongDress(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'covent-garden-long-dress'
+}
+
+function isCoventGardenSignatureSet(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'covent-garden-signature-set'
+}
+
 /** Arabic PDP copy for hero products; returns null for other slugs. */
 export function getProductPdpContentAr(product: Product, color?: string): ProductPdpContent | null {
   if (isMayfairKaftan(product)) return buildMayfairKaftanContentAr(color)
@@ -330,5 +350,8 @@ export function getProductPdpContentAr(product: Product, color?: string): Produc
   if (isKensingtonAbaya(product)) return buildKensingtonAbayaContentAr()
   if (isKnightsbridgeAbayaJacket(product)) return buildKnightsbridgeAbayaJacketContentAr(color)
   if (isKnightsbridgeDress(product)) return buildKnightsbridgeDressPdpContent(color, 'ar')
+  if (isCoventGardenAbaya(product)) return buildCoventGardenAbayaContentAr()
+  if (isCoventGardenLongDress(product)) return buildCoventGardenLongDressContentAr()
+  if (isCoventGardenSignatureSet(product)) return buildCoventGardenSignatureSetContentAr(color)
   return null
 }

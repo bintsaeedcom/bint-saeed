@@ -27,8 +27,8 @@ const SECTION_LIST = [
 export default function TermsPage() {
   const { t, isRTL, language } = useLanguage()
 
-  if (language === 'id' || language === 'ms') {
-    const lang = language as 'id' | 'ms'
+  if (language === 'id' || language === 'ms' || language === 'ar') {
+    const lang = language as 'id' | 'ms' | 'ar'
     return (
       <PolicyDocument
         content={getTermsContent(lang)}
@@ -37,8 +37,20 @@ export default function TermsPage() {
         sectionAfter={{
           5: (
             <ShipmentPolicyLink
-              label={lang === 'ms' ? 'Dasar penuh:' : 'Kebijakan lengkap:'}
-              linkLabel={lang === 'ms' ? 'Dasar Penghantaran & Pemulangan' : 'Kebijakan Pengiriman & Pengembalian'}
+              label={
+                lang === 'ms'
+                  ? 'Dasar penuh:'
+                  : lang === 'ar'
+                    ? 'السياسة الكاملة:'
+                    : 'Kebijakan lengkap:'
+              }
+              linkLabel={
+                lang === 'ms'
+                  ? 'Dasar Penghantaran & Pemulangan'
+                  : lang === 'ar'
+                    ? 'سياسة الشحن والإرجاع'
+                    : 'Kebijakan Pengiriman & Pengembalian'
+              }
             />
           ),
         }}

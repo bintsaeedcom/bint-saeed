@@ -1,26 +1,35 @@
+'use client'
+
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiArrowRight } from 'react-icons/fi'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getCareersCopy } from '@/lib/content/careersCopyI18n'
 
 export default function CareersPage() {
+  const { isRTL, language } = useLanguage()
+  const copy = getCareersCopy(language)
+
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8">
+    <div className={`relative min-h-screen overflow-x-clip bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>
       <section className="relative container mx-auto px-6 pb-20 pt-24 lg:px-16 lg:pb-28 lg:pt-28">
         <AppPageWayfinding
+          rtl={isRTL}
           className="mb-8"
           segments={[
-            { label: 'Home', href: '/home' },
-            { label: 'Careers' },
+            { label: copy.breadcrumbHome, href: '/home' },
+            { label: copy.breadcrumb },
           ]}
-          backLink={{ href: '/home', label: 'Back to Home' }}
+          backLink={{ href: '/home', label: copy.backToHome }}
         />
         <span className="mb-6 block font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
           Bint Saeed
         </span>
-        <h1 data-document-h1="true" className="font-rozha text-4xl leading-[1.08] text-brand-darkRed md:text-5xl">Careers</h1>
+        <h1 data-document-h1="true" className="font-rozha text-4xl leading-[1.08] text-brand-darkRed md:text-5xl">
+          {copy.pageTitle}
+        </h1>
         <h2 className="mt-5 max-w-2xl font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
-          We are building with care across design, operations, and client experience. If you are interested in future
-          opportunities, please reach out to our team and include your role focus and portfolio.
+          {copy.intro}
         </h2>
 
         <div className="mt-10 flex flex-wrap gap-4">
@@ -29,15 +38,15 @@ export default function CareersPage() {
             className="inline-flex items-center gap-2 border border-brand-dustyBlue/65 bg-brand-dustyBlue px-7 py-3 font-montserrat text-xs uppercase tracking-[0.16em] text-[#1a0008] transition-colors hover:bg-brand-stone"
             data-cursor-hover
           >
-            Contact Team
-            <FiArrowRight className="h-4 w-4" />
+            {copy.contactCta}
+            <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
           </LocaleLink>
           <LocaleLink
             href="/about"
             className="inline-flex items-center gap-2 border border-brand-darkRed/35 bg-white/80 px-7 py-3 font-montserrat text-xs uppercase tracking-[0.16em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
             data-cursor-hover
           >
-            About The House
+            {copy.aboutCta}
           </LocaleLink>
         </div>
       </section>

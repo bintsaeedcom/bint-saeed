@@ -17,6 +17,8 @@ import Image from 'next/image'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getHomeEditorialCopy } from '@/lib/i18n/homeEditorialCopyI18n'
+import { localizedColorName } from '@/lib/products/imageAltI18n'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
@@ -201,8 +203,7 @@ function CollectionCardVisual({
   )
 }
 
-/** Preview manifesto (EditorialIntro) — English editorial copy */
-const MANIFESTO_LEAD = 'Bint Saeed'
+/** Preview manifesto (EditorialIntro) — copy from homeEditorialCopyI18n */
 /** Magazine grid — collection assets in public/collection-section/ (no spaces in path) */
 const SUMMER_ELEGANCE_SLIDES = [
   '/collection-section/67.png',
@@ -265,11 +266,6 @@ function CollectionCrossfadeSlideshow({ slides, altForIndex }: CollectionCrossfa
   )
 }
 
-const MANIFESTO_QUOTE = 'A sense of self that does not shift with setting.'
-const MANIFESTO_SNIPPET = [
-  'Wherever life is lived, from Abu Dhabi to London, from Riyadh to Paris, from Doha to Marbella, you do not need to change how you present yourself. Each piece carries your elegance, your way of being, with consistency, wherever you are.',
-  'Bint Saeed exists at the intersection of heritage and a contemporary life, carried across borders and recognised by its consistency.',
-]
 const HOUSE_MOTION_EASE = 'power3.out'
 const HOUSE_REVEAL_DURATION = 0.9
 const HOUSE_MASK_DURATION = 1.15
@@ -364,29 +360,15 @@ export default function Home() {
   )
 }
 
-const HOME_PILLARS = [
-  {
-    title: 'Crafted in Abu Dhabi',
-    copy: 'Each piece is finished in small runs, with a focus on cut, drape, and longevity.',
-  },
-  {
-    title: 'Natural Stone Signatures',
-    copy: 'Strands and details are selected for story, symbolism, and timeless wearability.',
-  },
-  {
-    title: 'Personalisation Included',
-    copy: 'A hidden pocket note can be added for gifting, milestones, and private meaning.',
-  },
-] as const
-
 function ThreePillarsBar() {
-  const { isRTL } = useLanguage()
+  const { language, isRTL } = useLanguage()
+  const copy = getHomeEditorialCopy(language)
 
   return (
     <section data-story-section className="section-full relative bg-[#e8ddd4] py-5 md:py-6">
       <div className="section-inner">
         <div className={`grid gap-3 md:grid-cols-3 ${isRTL ? 'text-right' : ''}`}>
-          {HOME_PILLARS.map((pillar, idx) => (
+          {copy.pillars.map((pillar, idx) => (
             <div
               key={pillar.title}
               data-reveal
@@ -410,15 +392,9 @@ function ThreePillarsBar() {
   )
 }
 
-const STRAND_SWATCHES = [
-  { name: 'Onyx', hex: '#1a0210' },
-  { name: 'Tiger Eye', hex: '#8b5a2b' },
-  { name: 'Rose Quartz', hex: '#f4b8c5' },
-  { name: 'Malachite', hex: '#1f7a5e' },
-] as const
-
 function CharmHeroFeatureSection() {
-  const { isRTL } = useLanguage()
+  const { language, isRTL } = useLanguage()
+  const copy = getHomeEditorialCopy(language)
 
   return (
     <section data-story-section className={`${OVERLAP_PANEL_CLASS} w-full overflow-hidden bg-transparent px-0 py-0`}>
@@ -437,17 +413,17 @@ function CharmHeroFeatureSection() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
             <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
-              ABAYA STRANDS
+              {copy.abayaStrandsEyebrow}
             </p>
             <h2 data-reveal className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
-              NATURAL STONE STRANDS
+              {copy.abayaStrandsHeading}
             </h2>
             <p data-reveal className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[#8a7a70]">
-              Designed for abayas, bags, and phone styling. Build your signature stack with curated stones and limited edition drops.
+              {copy.abayaStrandsBody}
             </p>
 
             <div data-reveal className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
-              {STRAND_SWATCHES.map((stone) => (
+              {copy.strandSwatches.map((stone) => (
                 <span
                   key={stone.name}
                   className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-muted)]/25 bg-[var(--color-light)] px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink)]"
@@ -464,7 +440,7 @@ function CharmHeroFeatureSection() {
                 className="inline-flex min-h-[44px] items-center rounded-[4px] bg-[#6f1524] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[#821b2d]"
                 data-cursor-hover
               >
-                Shop Strands
+                {copy.shopStrandsCta}
               </LocaleLink>
             </div>
             </div>
@@ -494,7 +470,8 @@ function CharmHeroFeatureSection() {
 }
 
 function CharmHeroFeatureSectionMirror() {
-  const { isRTL } = useLanguage()
+  const { language, isRTL } = useLanguage()
+  const copy = getHomeEditorialCopy(language)
 
   return (
     <section data-story-section className={`${OVERLAP_PANEL_CLASS} w-full overflow-hidden bg-transparent px-0 py-0`}>
@@ -530,13 +507,13 @@ function CharmHeroFeatureSectionMirror() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
           <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
-              Carried Close
+              {copy.carriedCloseEyebrow}
             </p>
             <h2 data-reveal className="mt-3 font-rozha text-3xl leading-tight text-[#e8d8c8] md:text-4xl">
-              PERSONALISATION
+              {copy.personalisationHeading}
             </h2>
             <p data-reveal className="mt-4 font-montserrat text-sm leading-relaxed tracking-[0.02em] text-[#8a7a70]">
-              Every piece includes a hidden pocket, personalised with a name, date, or private message. Perfect for Eid, weddings, and milestones.
+              {copy.personalisationBody}
             </p>
 
             <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
@@ -545,7 +522,7 @@ function CharmHeroFeatureSectionMirror() {
                 className="inline-flex min-h-[44px] items-center rounded-[4px] bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
                 data-cursor-hover
               >
-                SHOP
+                {copy.shopCta}
               </LocaleLink>
             </div>
           </div>
@@ -556,7 +533,8 @@ function CharmHeroFeatureSectionMirror() {
 }
 
 function CampaignPanoramaSection() {
-  const { isRTL } = useLanguage()
+  const { language, isRTL } = useLanguage()
+  const copy = getHomeEditorialCopy(language)
 
   return (
     <section className={`${OVERLAP_PANEL_CLASS} w-full overflow-hidden bg-[#f6f2eb] px-0 py-0`}>
@@ -579,7 +557,7 @@ function CampaignPanoramaSection() {
                 className="group inline-flex min-h-[44px] min-w-[44px] cursor-pointer items-center gap-3 rounded-[4px] bg-[#6f1524] px-5 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.2em] !text-[#e8d8c8] shadow-[0_10px_24px_rgba(0,0,0,0.3)] transition-all duration-400 hover:bg-[#821b2d] hover:shadow-[0_14px_30px_rgba(0,0,0,0.36)]"
                 data-cursor-hover
               >
-                Return to Shop
+                {copy.returnToShopCta}
                 <FiArrowRight
                   className={`h-4 w-4 transition-transform duration-500 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
                 />
@@ -628,7 +606,8 @@ const CATEGORY_STRIP = [
 ] as const
 
 function CategoryNavigationStrip() {
-  const { isRTL } = useLanguage()
+  const { language, isRTL } = useLanguage()
+  const copy = getHomeEditorialCopy(language)
   const [active, setActive] = useState(0)
 
   const pricesByCategory = staticProducts.reduce<Record<string, number[]>>((acc, product) => {
@@ -640,19 +619,22 @@ function CategoryNavigationStrip() {
 
   const categoryMeta: Record<string, { priceLabel: string; subline?: string }> = {
     Abayas: {
-      priceLabel: `DHS ${Math.min(...(pricesByCategory.Abayas ?? [0])).toLocaleString()}-${Math.max(...(pricesByCategory.Abayas ?? [0])).toLocaleString()}`,
+      priceLabel: copy.formatPriceRange(
+        Math.min(...(pricesByCategory.Abayas ?? [0])),
+        Math.max(...(pricesByCategory.Abayas ?? [0])),
+      ),
     },
     Kaftans: {
-      priceLabel: `DHS ${Math.min(...(pricesByCategory.Kaftans ?? [0])).toLocaleString()}+`,
+      priceLabel: copy.formatPriceFrom(Math.min(...(pricesByCategory.Kaftans ?? [0]))),
     },
     Sets: {
-      priceLabel: `DHS ${Math.min(...(pricesByCategory.Sets ?? [0])).toLocaleString()}+`,
+      priceLabel: copy.formatPriceFrom(Math.min(...(pricesByCategory.Sets ?? [0]))),
     },
     Accessories: {
-      priceLabel: 'New in',
+      priceLabel: copy.categoryNewIn,
     },
     Personalisation: {
-      priceLabel: 'Hidden pocket gift',
+      priceLabel: copy.categoryHiddenPocketGift,
     },
   }
 
@@ -672,7 +654,7 @@ function CategoryNavigationStrip() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#1f0508]/60 via-[#1f0508]/10 to-transparent" />
             <div className={`absolute bottom-4 ${isRTL ? 'left-4 text-right' : 'right-4 text-left'}`}>
-              <p className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-dustyBlue/95">Category Focus</p>
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-dustyBlue/95">{copy.categoryFocus}</p>
               <p className="mt-1 font-rozha text-2xl text-brand-ivory">{activeItem.label}</p>
             </div>
           </div>
@@ -709,6 +691,7 @@ function CategoryNavigationStrip() {
 function QuickShopCarousel() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const copy = getHomeEditorialCopy(language)
   const reduceMotion = useReducedMotion()
   const [isPaused, setIsPaused] = useState(false)
   const [catalog, setCatalog] = useState<Product[]>(staticProducts)
@@ -835,7 +818,7 @@ function QuickShopCarousel() {
                     {product.name}
                   </h3>
                   <p className="font-montserrat text-[10.5px] uppercase leading-snug tracking-[0.06em] text-[#6f1524]">
-                    DHS. {product.price.toLocaleString()}
+                    {copy.formatProductPrice(product.price)}
                   </p>
                 </div>
                 <div
@@ -845,7 +828,7 @@ function QuickShopCarousel() {
                   {product.colors.slice(0, 6).map((c) => (
                     <span
                       key={c.name}
-                      title={c.name}
+                      title={localizedColorName(c.name, language)}
                       className="h-2 w-2 shrink-0 rounded-full border border-black/12 md:h-[9px] md:w-[9px]"
                       style={{ backgroundColor: c.hex }}
                     />
@@ -913,10 +896,8 @@ function QuickShopCarousel() {
 function HeroSection() {
   const ref = useRef(null)
   const reduceMotion = useReducedMotion()
-  const { t, isRTL } = useLanguage()
-  // Preview-specific hero copy (English)
-  const heroHeadline = 'FOR THE DAUGHTER IN EVERY WOMAN'
-  const heroSubline = 'Carrying Heritage Forward.'
+  const { t, language, isRTL } = useLanguage()
+  const copy = getHomeEditorialCopy(language)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -964,7 +945,7 @@ function HeroSection() {
                   style={reduceMotion ? undefined : { y: titleY }}
                   className="mb-8 max-w-[85vw] font-rozha text-[clamp(32px,5vw,64px)] font-normal leading-[1.15] tracking-[-0.01em] !text-[#e8d8c8] md:max-w-[100vw] md:whitespace-nowrap"
                 >
-                  {heroHeadline}
+                  {copy.heroHeadline}
                 </motion.h1>
 
                 <motion.p
@@ -975,7 +956,7 @@ function HeroSection() {
                   style={reduceMotion ? undefined : { x: introX }}
                   className="mb-6 max-w-md border-l-[2px] border-[#6f1524] pl-[14px] font-montserrat text-[15px] leading-[1.7] tracking-[0.02em] !text-[#e8d8c8] md:mb-8"
                 >
-                  {heroSubline}
+                  {copy.heroSubline}
                 </motion.p>
               </motion.div>
 
@@ -1005,7 +986,7 @@ function HeroSection() {
                     data-analytics-event="click_nav_about"
                     data-analytics-section="home-hero"
                   >
-                    Brand Story
+                    {copy.heroBrandStoryCta}
                   </LocaleLink>
                 </MagneticWrap>
               </motion.div>
@@ -1026,7 +1007,8 @@ function EditorialIntro() {
     offset: ['start end', 'end start'],
   })
   const panelY = useTransform(scrollYProgress, [0, 1], [12, -10])
-  const { isRTL } = useLanguage()
+  const { language, isRTL } = useLanguage()
+  const copy = getHomeEditorialCopy(language)
 
   return (
     <section
@@ -1070,10 +1052,10 @@ function EditorialIntro() {
                 }`}
               >
                 <span className="mb-5 block font-montserrat text-[11px] uppercase tracking-[0.3em] text-[#9a8a96]">
-                  From Abu Dhabi to the world
+                  {copy.manifestoImageEyebrow}
                 </span>
                 <p className="max-w-[30rem] font-rozha text-[clamp(24px,2.9vw,38px)] italic leading-[1.18] tracking-[-0.01em] text-[#f5e1da]">
-                  &ldquo;{MANIFESTO_QUOTE}&rdquo;
+                  &ldquo;{copy.manifestoQuote}&rdquo;
                 </p>
               </div>
             </div>
@@ -1088,12 +1070,12 @@ function EditorialIntro() {
           >
             <div className="relative h-full min-h-[26rem] border-y border-[#2a1e18]/10 bg-[#e8ddd4] p-[52px] shadow-[0_22px_56px_rgba(23,9,14,0.08)] md:min-h-[30rem] md:p-[62px] lg:min-h-[34rem] lg:border-r lg:border-[#2a1e18]/10">
               <div className="space-y-7">
-                <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">MANIFESTO</p>
+                <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">{copy.manifestoLabel}</p>
                 <h2 className="font-rozha text-[clamp(24px,2.4vw,34px)] leading-[1.18] text-[#2a1e18]">
-                  {MANIFESTO_LEAD}
+                  {copy.manifestoLead}
                 </h2>
                 <div className="space-y-5 font-montserrat text-[16px] leading-[1.68] tracking-[0.01em] text-[#8a7a70]">
-                  {MANIFESTO_SNIPPET.map((paragraph, i) => (
+                  {copy.manifestoSnippets.map((paragraph, i) => (
                     <p key={i}>{paragraph}</p>
                   ))}
                 </div>
@@ -1103,7 +1085,7 @@ function EditorialIntro() {
               className="inline-flex min-h-[46px] items-center rounded-[4px] border border-[#6f1524] bg-[#6f1524] px-6 font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:border-[#821b2d] hover:bg-[#821b2d] hover:text-[#f2e5d8]"
                     data-cursor-hover
                   >
-                    Read our story
+                    {copy.manifestoReadStory}
                   </LocaleLink>
                 </MagneticWrap>
               </div>
@@ -1118,7 +1100,8 @@ function EditorialIntro() {
 function MagazineGrid() {
   const ref = useRef<HTMLDivElement | null>(null)
   const isInView = useInView(ref, { margin: '-10%', once: true })
-  const { t, isRTL } = useLanguage()
+  const { t, language, isRTL } = useLanguage()
+  const copy = getHomeEditorialCopy(language)
   const collectionCards = [
     {
       images: [
@@ -1177,9 +1160,9 @@ function MagazineGrid() {
         >
           <div data-reveal>
             <span className="mb-3 block font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
-              CHAPTER I
+              {copy.chapterLabel}
             </span>
-            <h2 className="font-rozha text-4xl uppercase text-[var(--color-ink)] md:text-5xl">THE COLLECTION</h2>
+            <h2 className="font-rozha text-4xl uppercase text-[var(--color-ink)] md:text-5xl">{copy.collectionHeading}</h2>
           </div>
           <LocaleLink
             href="/shop"
@@ -1221,45 +1204,29 @@ function homeCodesImage(fileName: string) {
 function EditorialSplit() {
   const ref = useRef<HTMLDivElement | null>(null)
   const isInView = useInView(ref, { margin: '-12%', once: true })
-  const { isRTL } = useLanguage()
-  const storyCodes = [
-    {
-      title: 'The Monogram',
-      subtitle: 'Signature mark',
-      image: homeCodesImage(CODES_IMAGE_FILES.monogram),
-      alt: withBrandAlt('Bint Saeed luxury house monogram — house code'),
-    },
-    {
-      title: 'Khous',
-      subtitle: 'Palm craftsmanship',
-      image: homeCodesImage(CODES_IMAGE_FILES.khous),
-      alt: withBrandAlt('Khous palm-frond weaving Emirati heritage — house code'),
-    },
-    {
-      title: 'Knotted Lines',
-      subtitle: 'Line & continuity',
-      image: homeCodesImage(CODES_IMAGE_FILES.knottedLines),
-      alt: withBrandAlt('Knotted Lines of Lineage gold motif — house code'),
-    },
-    {
-      title: 'Al Ain Rosette',
-      subtitle: 'Regional motif',
-      image: homeCodesImage(CODES_IMAGE_FILES.alAinRosette),
-      alt: withBrandAlt('Al Ain Rosette carnelian stone motif — house code'),
-    },
-    {
-      title: 'Al Talli',
-      subtitle: 'Gold threadwork',
-      image: homeCodesImage(CODES_IMAGE_FILES.alTalli),
-      alt: withBrandAlt('Traditional Al Talli Emirati heritage embroidery — house code'),
-    },
-    {
-      title: 'The Strands',
-      subtitle: 'Beaded lines',
-      image: homeCodesImage(CODES_IMAGE_FILES.naturalStoneBeads),
-      alt: withBrandAlt('Natural stone abaya strands — Emirati heritage house code'),
-    },
+  const { language, isRTL } = useLanguage()
+  const copy = getHomeEditorialCopy(language)
+  const storyCodeImages = [
+    homeCodesImage(CODES_IMAGE_FILES.monogram),
+    homeCodesImage(CODES_IMAGE_FILES.khous),
+    homeCodesImage(CODES_IMAGE_FILES.knottedLines),
+    homeCodesImage(CODES_IMAGE_FILES.alAinRosette),
+    homeCodesImage(CODES_IMAGE_FILES.alTalli),
+    homeCodesImage(CODES_IMAGE_FILES.naturalStoneBeads),
   ] as const
+  const storyCodeAlts = [
+    withBrandAlt('Bint Saeed luxury house monogram — house code'),
+    withBrandAlt('Khous palm-frond weaving Emirati heritage — house code'),
+    withBrandAlt('Knotted Lines of Lineage gold motif — house code'),
+    withBrandAlt('Al Ain Rosette carnelian stone motif — house code'),
+    withBrandAlt('Traditional Al Talli Emirati heritage embroidery — house code'),
+    withBrandAlt('Natural stone abaya strands — Emirati heritage house code'),
+  ] as const
+  const storyCodes = copy.storyCodes.map((code, index) => ({
+    ...code,
+    image: storyCodeImages[index]!,
+    alt: storyCodeAlts[index]!,
+  }))
 
   return (
     <section ref={ref} data-story-section className={`section-full ${OVERLAP_PANEL_CLASS} bg-[#faf8f5] py-14 md:py-16`}>
@@ -1272,9 +1239,9 @@ function EditorialSplit() {
           <div className={`mb-5 flex flex-col items-start gap-2 md:flex-row md:items-end md:justify-between ${isRTL ? 'md:flex-row-reverse md:text-right' : ''}`}>
             <div>
               <p className="mb-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
-                House Codes
+                {copy.houseCodesEyebrow}
               </p>
-              <h2 className="font-rozha text-[32px] uppercase leading-none whitespace-nowrap text-[#2a1e18] md:text-4xl">THE HOUSE CODES</h2>
+              <h2 className="font-rozha text-[32px] uppercase leading-none whitespace-nowrap text-[#2a1e18] md:text-4xl">{copy.houseCodesHeading}</h2>
             </div>
             <LocaleLink
               href="/the-codes"
@@ -1283,7 +1250,7 @@ function EditorialSplit() {
               data-analytics-event="click_view_collection_codes_page"
               data-analytics-section="home-codes-section"
             >
-              Discover the Codes
+              {copy.discoverCodesCta}
             </LocaleLink>
           </div>
 
@@ -1386,7 +1353,8 @@ function CollectionStrip() {
 function CreatedForYouSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: '-12%', once: true })
-  const { isRTL } = useLanguage()
+  const { language, isRTL } = useLanguage()
+  const copy = getHomeEditorialCopy(language)
 
   return (
     <section ref={ref} data-story-section data-curtain-reveal className="section-full relative overflow-hidden bg-[#6f1524] py-14 md:py-16">
@@ -1397,12 +1365,12 @@ function CreatedForYouSection() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className={`overflow-hidden rounded-2xl border border-[rgba(232,216,200,0.25)] bg-[#6f1524] px-6 py-8 shadow-[0_16px_42px_rgba(46,25,14,0.12)] md:px-10 md:py-10 ${isRTL ? 'text-right' : 'text-center'}`}
         >
-          <p className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">Carried Close</p>
+          <p className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">{copy.createdForYouEyebrow}</p>
           <h2 className="mx-auto max-w-3xl font-rozha text-4xl leading-tight text-[#e8d8c8] md:text-5xl">
-            PERSONALISATION
+            {copy.createdForYouHeading}
           </h2>
           <p className={`mx-auto mt-4 max-w-4xl font-montserrat text-lg leading-[1.6] tracking-[0.01em] text-[rgba(232,216,200,0.7)] ${isRTL ? 'text-right' : 'text-center'}`}>
-            Every piece includes a hidden pocket, personalised with a name, date, or private message. Perfect for Eid, weddings, and milestones.
+            {copy.createdForYouBody}
           </p>
           <div className={`mt-7 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : 'justify-center'}`}>
             <LocaleLink
@@ -1412,7 +1380,7 @@ function CreatedForYouSection() {
               data-analytics-event="click_personalisation_teaser"
               data-analytics-section="home-personalisation-teaser"
             >
-              SHOP
+              {copy.shopCta}
             </LocaleLink>
           </div>
         </motion.div>

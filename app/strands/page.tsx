@@ -10,6 +10,7 @@ import { products } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getStrandsPageCopy } from '@/lib/i18n/strandsPageCopyI18n'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
@@ -25,52 +26,9 @@ const MARYLEBONE_PAIRING_ALT = withBrandAlt(
 )
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 
-const STONE_VISUAL_NOTES: Record<string, string> = {
-  'Onyx Strand': 'Deep black with a high-gloss surface. A classic stone, found across Brazil and India. The one every Marylebone Abaya arrives wearing.',
-  'Tiger Eye Strand': 'Warm golden-brown with a natural moving sheen that shifts with the light. Found in South Africa. No two pieces catch it the same way.',
-  'Sunstone Strand': 'Warm peach-orange sunstone with a smooth, luminous finish. A vivid natural tone with gentle warmth in the light.',
-  'Fuchsia Jade Strand': 'Natural jade in a deep saturated rose. An unusual colour — not commonly found at this intensity.',
-  'Blue Aventurine Strand': 'A cool dusty blue with a subtle internal shimmer. Sourced from India and Chile. Understated from a distance, detailed up close.',
-  'Rose Quartz Strand': 'Pale blush, semi-translucent. The light passes through it rather than reflecting off. Found across Brazil and Madagascar.',
-  'Malachite Strand': 'Deep green with natural banded markings — no two pieces share the same pattern. Found in Central Africa.',
-  'Lapis Lazuli Strand': 'A deep blue flecked with natural gold, sourced from Afghanistan. Used in jewellery and art for thousands of years.',
-  'Amethyst Hearts Strand': 'Violet quartz shaped into hearts and polished to a faceted surface. Found across Brazil and Zambia.',
-  'Jade Hearts Strand': 'Cool green jade, hand-shaped into heart forms. Each one slightly different. Each one made once.',
-}
-
-const CONCEPT_STONE_SWATCHES = [
-  { name: 'Onyx', color: '#1a1a1a' },
-  { name: 'Tiger Eye', color: '#8B6914' },
-  { name: 'Sunstone', color: '#E8833A' },
-  { name: 'Fuchsia Jade', color: '#C2185B' },
-  { name: 'Blue Aventurine', color: '#7BA7C2' },
-  { name: 'Rose Quartz', color: '#E8B4B8' },
-  { name: 'Malachite', color: '#2E7D32' },
-  { name: 'Lapis Lazuli', color: '#1A237E' },
-  { name: 'Amethyst', color: '#7B1FA2' },
-  { name: 'Jade', color: '#4CAF82' },
-] as const
-
-const STEP_COPY = [
-  {
-    numeral: 'I',
-    title: 'SELECT THE STONE',
-    body: 'Choose a natural stone strand by colour, surface, and character.',
-  },
-  {
-    numeral: 'II',
-    title: 'WEAR IT YOUR WAY',
-    body: 'The Marylebone Abaya is designed to hold it. Nothing more is needed.',
-  },
-  {
-    numeral: 'III',
-    title: 'CHANGE WHEN YOU CHOOSE',
-    body: 'Rotate stones across occasions. The abaya stays the same.',
-  },
-] as const
-
 export default function StrandsPage() {
   const { isRTL, language } = useLanguage()
+  const copy = getStrandsPageCopy(language)
   const ui = commerceUi(language)
   const { formatPrice } = useCurrency()
   const collectionJsonLd = useMemo(() => buildStrandsCollectionJsonLd(language), [language])
@@ -233,20 +191,20 @@ export default function StrandsPage() {
 
         <div className="absolute bottom-10 left-6 right-6 z-10 max-w-[600px] text-left md:bottom-[60px] md:left-[60px] md:right-auto">
             <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090] sm:tracking-[0.34em]">
-              THE ABAYA STRAND · BINT SAEED
+              {copy.heroEyebrow}
             </p>
             <h1
               data-document-h1="true"
               className="max-w-[760px] font-rozha text-[clamp(36px,6vw,72px)] leading-[0.98] tracking-[0.01em]"
               style={{ color: '#e8ddd4' }}
             >
-              Your abaya has never been finished. Until now.
+              {copy.heroHeadline}
             </h1>
             <p className="mt-3 max-w-[480px] font-montserrat text-[14px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.75)]">
-              The first abaya house to offer interchangeable natural stone strands. Worn on the cuff. Changed by choice.
+              {copy.heroSubline1}
             </p>
             <p className="mt-3 max-w-[480px] font-montserrat text-[14px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.75)]">
-              Natural stone. Handcrafted in Abu Dhabi. Made for the Marylebone Abaya.
+              {copy.heroSubline2}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <LocaleLink
@@ -254,14 +212,14 @@ export default function StrandsPage() {
                 className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
                 data-cursor-hover
               >
-                SHOP STRANDS
+                {copy.ctaShopStrands}
               </LocaleLink>
               <LocaleLink
                 href={maryleboneHref}
                 className="inline-flex items-center justify-center rounded-[4px] border border-[#e8ddd4]/40 bg-[#1a0210]/35 px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] backdrop-blur-md transition-colors hover:border-[#e8ddd4]/70 hover:bg-[#1a0210]/55"
                 data-cursor-hover
               >
-                SEE THE MARYLEBONE
+                {copy.ctaSeeMarylebone}
               </LocaleLink>
             </div>
         </div>
@@ -270,7 +228,7 @@ export default function StrandsPage() {
           <div className="strands-marquee flex w-max font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#6a8090]/65">
             {Array.from({ length: 8 }).map((_, index) => (
               <span key={index} className="px-4">
-                NATURAL STONE · BINT SAEED · ABAYA STRANDS · ABU DHABI · CRAFTED TO ORDER ·
+                {copy.marquee}
               </span>
             ))}
           </div>
@@ -280,21 +238,21 @@ export default function StrandsPage() {
       <section className="relative z-10 -mt-6 rounded-t-[16px] bg-[#e8ddd4] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-center`}>
           <div>
-            <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE CONCEPT</p>
+            <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.conceptLabel}</p>
             <h2 className="mt-4 font-rozha text-[clamp(2.5rem,5vw,4.75rem)] leading-[1] text-[#1a0210]">
-              One Abaya.
+              {copy.conceptHeadingLine1}
               <br />
-              Many Accents.
+              {copy.conceptHeadingLine2}
             </h2>
             <p className="mt-6 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72">
-              The Bint Saeed abaya strand is a natural stone detail worn on the cuff of the Marylebone Abaya. Handcrafted in Abu Dhabi. Made to be changed.
+              {copy.conceptP1}
             </p>
             <p className="mt-4 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72">
-              Every Marylebone Abaya arrives with a standard onyx strand. Choose a different stone for a different day. Match it to your bag, your outfit, your occasion. The abaya stays the same. You decide what it says.
+              {copy.conceptP2}
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:flex-nowrap md:justify-between md:gap-4">
-              {CONCEPT_STONE_SWATCHES.map((stone) => (
+              {copy.conceptStoneSwatches.map((stone) => (
                 <div key={stone.name} className="group relative text-center">
                   <div
                     className="mx-auto h-6 w-6 rounded-full border border-[#1a0210]/15 shadow-sm"
@@ -307,22 +265,22 @@ export default function StrandsPage() {
               ))}
             </div>
             <p className="mt-[10px] max-w-2xl hyphens-none font-montserrat text-[11px] tracking-[0.06em] text-[#8a7a70] [word-break:keep-all]">
-              Onyx · Tiger Eye · Sunstone · Fuchsia Jade · Blue Aventurine · Rose Quartz · Malachite · Lapis Lazuli · Amethyst · Jade
+              {copy.conceptStoneList}
             </p>
             <LocaleLink
               href="#stone-showcase"
               className="mt-[6px] block font-montserrat text-[11px] font-medium tracking-[0.06em] text-[#7A1C28] no-underline transition-opacity duration-200 hover:opacity-75"
               data-cursor-hover
             >
-              Explore all stones →
+              {copy.conceptExploreStones}
             </LocaleLink>
 
             <div className="mt-6">
               <div className="mb-4 h-[0.5px] w-full bg-[#e8ddd4]" aria-hidden />
               <p className="flex flex-wrap items-center gap-2 font-montserrat text-[14px] font-medium tracking-[0.02em] text-[#6f5f56]">
-                Don't have the Marylebone Abaya yet?{' '}
+                {copy.conceptMarylebonePrompt}{' '}
                 <LocaleLink href={maryleboneHref} className="font-semibold tracking-[0.02em] text-[#7A1C28] no-underline transition-opacity duration-200 hover:opacity-75" data-cursor-hover>
-                  View the Marylebone Abaya →
+                  {copy.conceptMaryleboneLink}
                 </LocaleLink>
               </p>
             </div>
@@ -348,10 +306,10 @@ export default function StrandsPage() {
 
       <section ref={stepsRef} className="relative z-20 -mt-6 rounded-t-[16px] bg-[#1a0210] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
-          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">HOW IT WORKS</p>
-          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#e8ddd4]">Three steps.</h2>
+          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.howItWorksLabel}</p>
+          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#e8ddd4]">{copy.howItWorksHeading}</h2>
           <div className="mt-12 grid gap-px bg-[rgba(232,216,200,0.1)] md:grid-cols-3">
-            {STEP_COPY.map((step, index) => (
+            {copy.steps.map((step, index) => (
               <article
                 key={step.numeral}
                 className={`bg-[#1a0210] p-8 text-left transition-all duration-700 ${
@@ -373,17 +331,17 @@ export default function StrandsPage() {
         className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-28 pb-32 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-36 md:pb-40"
       >
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
-          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE COLLECTION</p>
-          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#1a0210]">Choose by colour and character.</h2>
+          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.collectionLabel}</p>
+          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#1a0210]">{copy.collectionHeading}</h2>
           <p className="mt-5 max-w-2xl font-montserrat text-[15px] leading-[1.85] tracking-wide text-[#1a0210]/70">
-            Each stone is natural. No two are identical.
+            {copy.collectionIntro}
           </p>
           <LocaleLink
             href="#shop-all-strands"
             className="mt-6 inline-flex items-center gap-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.14em] text-[#7A1C28] transition-opacity hover:opacity-70"
             data-cursor-hover
           >
-            Shop all ten strands
+            {copy.shopAllTenCta}
             <span aria-hidden>→</span>
           </LocaleLink>
         </div>
@@ -401,7 +359,7 @@ export default function StrandsPage() {
             type="button"
             onClick={() => scrollCarousel('prev')}
             disabled={carouselEdges.atStart}
-            aria-label="Previous stones"
+            aria-label={copy.carouselPrevAria}
             className="absolute left-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5]/95 text-[#7A1C28] shadow-[0_4px_20px_rgba(26,2,16,0.12)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30 md:flex"
             data-cursor-hover
           >
@@ -411,7 +369,7 @@ export default function StrandsPage() {
             type="button"
             onClick={() => scrollCarousel('next')}
             disabled={carouselEdges.atEnd}
-            aria-label="Next stones"
+            aria-label={copy.carouselNextAria}
             className="absolute right-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5]/95 text-[#7A1C28] shadow-[0_4px_20px_rgba(26,2,16,0.12)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30 md:flex"
             data-cursor-hover
           >
@@ -450,18 +408,18 @@ export default function StrandsPage() {
                 <div className="flex flex-1 flex-col p-5 text-left">
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-rozha text-xl leading-tight text-[#2a1e18]">
-                      {isRTL ? product.nameAr : product.name}
+                      {product.name}
                     </h3>
                   </div>
                   <p className="mt-3 font-montserrat text-[13px] leading-relaxed text-[#8a7a70]">
-                    {STONE_VISUAL_NOTES[product.name] || 'Natural stone selected for colour, surface, and visual texture.'}
+                    {copy.stoneVisualNotes[product.name] || copy.stoneVisualFallback}
                   </p>
                   <p className="mt-4 font-montserrat text-sm font-medium text-[#7A1C28]">
                     AED {product.price.toLocaleString()}
                   </p>
                   {product.isLimitedEdition ? (
                     <span className="mt-3 inline-flex rounded-full border border-[#c9a96b] bg-[#f6f0e4] px-3 py-1 font-montserrat text-[10px] uppercase tracking-[0.08em] text-[#8a6020]">
-                      Limited Edition
+                      {copy.limitedEdition}
                     </span>
                   ) : null}
                   <LocaleLink
@@ -469,7 +427,7 @@ export default function StrandsPage() {
                     className="mt-auto flex w-full items-center justify-center rounded-[3px] bg-[#7A1C28] p-3 font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
                     data-cursor-hover
                   >
-                    VIEW STRAND
+                    {copy.viewStrandCta}
                   </LocaleLink>
                 </div>
               </article>
@@ -483,7 +441,7 @@ export default function StrandsPage() {
               type="button"
               onClick={() => scrollCarousel('prev')}
               disabled={carouselEdges.atStart}
-              aria-label="Previous stones"
+              aria-label={copy.carouselPrevAria}
               className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5] text-[#7A1C28] shadow-[0_4px_16px_rgba(26,2,16,0.08)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30"
               data-cursor-hover
             >
@@ -491,7 +449,7 @@ export default function StrandsPage() {
             </button>
             <div className="min-w-0 flex-1">
               <p className="mb-4 text-center font-montserrat text-[10px] font-medium uppercase tracking-[0.22em] text-[#8a7a70]">
-                Swipe the stones above or drag this bar
+                {copy.carouselSwipeHint}
               </p>
               <div
                 ref={carouselTrackRef}
@@ -500,7 +458,7 @@ export default function StrandsPage() {
                 aria-valuenow={Math.round(carouselScroll.thumbLeftPct)}
                 aria-valuemin={0}
                 aria-valuemax={100}
-                aria-label="Stone carousel position"
+                aria-label={copy.carouselPositionAria}
                 onClick={(event) => seekCarouselFromTrack(event.clientX)}
                 onMouseDown={(event) => startTrackDrag(event.clientX)}
                 onMouseMove={(event) => moveTrackDrag(event.clientX)}
@@ -523,7 +481,7 @@ export default function StrandsPage() {
               type="button"
               onClick={() => scrollCarousel('next')}
               disabled={carouselEdges.atEnd}
-              aria-label="Next stones"
+              aria-label={copy.carouselNextAria}
               className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5] text-[#7A1C28] shadow-[0_4px_16px_rgba(26,2,16,0.08)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30"
               data-cursor-hover
             >
@@ -539,12 +497,12 @@ export default function StrandsPage() {
       >
         <div className={INNER_CONTAINER_CLASS}>
           <div className="text-left">
-            <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">SHOP THE COLLECTION</p>
+            <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.shopCollectionLabel}</p>
             <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2rem,4vw,3.25rem)] leading-[1.05] text-[#1a0210]">
-              All natural stone strands
+              {copy.shopCollectionHeading}
             </h2>
             <p className="mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-[#1a0210]/70">
-              Ten interchangeable stone strands for the Marylebone Abaya — select by colour, surface, and character. Each strand has its own product page with full details.
+              {copy.shopCollectionIntro}
             </p>
           </div>
 
@@ -571,13 +529,13 @@ export default function StrandsPage() {
                     ) : null}
                     {product.isLimitedEdition ? (
                       <span className="absolute left-3 top-3 rounded-full border border-[#c9a96b] bg-[#f6f0e4]/95 px-2.5 py-1 font-montserrat text-[9px] uppercase tracking-[0.08em] text-[#8a6020]">
-                        Limited
+                        {copy.limitedEditionShort}
                       </span>
                     ) : null}
                   </LocaleLink>
                   <div className="flex flex-1 flex-col p-4 text-left">
                     <h3 className="font-rozha text-lg leading-tight text-[#2a1e18]">
-                      {isRTL ? product.nameAr : product.name}
+                      {product.name}
                     </h3>
                     <p className="mt-2 font-montserrat text-sm font-medium text-[#7A1C28]">
                       {formatPrice(product.price)}
@@ -587,7 +545,7 @@ export default function StrandsPage() {
                       className="mt-4 inline-flex w-full items-center justify-center rounded-[3px] border border-[#7A1C28] bg-white px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.1em] text-[#7A1C28] transition-colors hover:bg-[#7A1C28] hover:text-[#e8d8c8]"
                       data-cursor-hover
                     >
-                      View strand
+                      {copy.viewStrandGridCta}
                     </LocaleLink>
                   </div>
                 </article>
@@ -596,13 +554,13 @@ export default function StrandsPage() {
           </div>
 
           <p className="mt-10 text-center font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#8a7a70]">
-            Also in{' '}
+            {copy.alsoInPrefix}{' '}
             <LocaleLink
               href="/accessories?type=signature-strands"
               className="text-[#7A1C28] underline-offset-4 hover:underline"
               data-cursor-hover
             >
-              Accessories — Abaya Strands
+              {copy.alsoInLink}
             </LocaleLink>
           </p>
         </div>
@@ -615,18 +573,17 @@ export default function StrandsPage() {
           </div>
           <div className="flex items-center">
             <div className="max-w-xl">
-              <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">THE ANCHOR PIECE</p>
-              <h2 className="mt-5 font-rozha text-[clamp(2rem,3vw,2.5rem)] leading-tight text-[#e8ddd4]">The Marylebone Abaya.</h2>
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">{copy.anchorLabel}</p>
+              <h2 className="mt-5 font-rozha text-[clamp(2rem,3vw,2.5rem)] leading-tight text-[#e8ddd4]">{copy.anchorHeading}</h2>
               <p className="mt-5 max-w-xl font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
-                The strand drapes from a specially constructed cuff — a detail found only on the Marylebone. Made to order in Abu Dhabi, from AED{' '}
-                {marylebone ? marylebone.price.toLocaleString() : '500'}.
+                {copy.anchorBody(marylebone ? marylebone.price.toLocaleString() : '500')}
               </p>
               <LocaleLink
                 href={maryleboneHref}
                 className="mt-8 inline-flex items-center justify-center rounded-[4px] bg-[#e8ddd4] px-8 py-[13px] font-montserrat text-xs uppercase tracking-[0.08em] text-[#7A1C28] transition-colors hover:bg-[#faf8f5]"
                 data-cursor-hover
               >
-                VIEW THE MARYLEBONE
+                {copy.anchorCta}
               </LocaleLink>
             </div>
           </div>

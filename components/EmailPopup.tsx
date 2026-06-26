@@ -9,6 +9,7 @@ import { FiX } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import toast from 'react-hot-toast'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
+import { getEmailPopupCopy } from '@/lib/i18n/emailPopupI18n'
 
 export default function EmailPopup() {
   const pathname = usePathname()
@@ -18,7 +19,8 @@ export default function EmailPopup() {
   const [discountCode, setDiscountCode] = useState('')
   const [formData, setFormData] = useState({ name: '', email: '' })
   const [emailError, setEmailError] = useState('')
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const copy = getEmailPopupCopy(language)
 
   useEffect(() => {
     const inner = pathname ? stripLocaleFromPathname(pathname).pathname : '/'
@@ -36,7 +38,6 @@ export default function EmailPopup() {
   }, [pathname])
 
   const generateDiscountCode = () => {
-    // Generate unique discount code: BINT + random alphanumeric
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
     let code = 'WELCOME'
     for (let i = 0; i < 6; i++) {
@@ -47,7 +48,7 @@ export default function EmailPopup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const check = validateSubscriberEmail(formData.email)
+    const check = validateSubscriberEmail(formData.email, language)
     if (!check.valid) {
       setEmailError(check.message)
       toast.error(check.message)
@@ -81,13 +82,13 @@ export default function EmailPopup() {
         const msg = typeof data.error === 'string' ? data.error : ''
         if (msg) {
           setEmailError(msg)
-          toast.error(isRTL ? 'يرجى التحقق من البريد الإلكتروني.' : msg)
+          toast.error(copy.emailCheckError)
         } else {
-          toast.error(isRTL ? 'حدث خطأ. حاولي مرة أخرى.' : 'Something went wrong. Please try again.')
+          toast.error(copy.genericError)
         }
       }
     } catch {
-      toast.error(isRTL ? 'حدث خطأ. حاولي مرة أخرى.' : 'Something went wrong. Please try again.')
+      toast.error(copy.genericError)
     } finally {
       setIsSubmitting(false)
     }
@@ -100,14 +101,13 @@ export default function EmailPopup() {
 
   const copyCode = () => {
     navigator.clipboard.writeText(discountCode)
-    toast.success(isRTL ? 'تم نسخ الكود!' : 'Code copied!')
+    toast.success(copy.codeCopied)
   }
 
   return (
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             key="email-popup-backdrop"
             initial={{ opacity: 0 }}
@@ -118,7 +118,6 @@ export default function EmailPopup() {
             data-cursor-hover
           />
 
-          {/* Modal */}
           <motion.div
             key="email-popup-modal"
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -128,7 +127,6 @@ export default function EmailPopup() {
             className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-3xl md:w-full z-[201] overflow-hidden flex flex-col md:flex-row max-h-[90vh] md:max-h-[500px] shadow-2xl"
             data-cursor-hover
           >
-            {/* Close Button */}
             <button
               onClick={handleClose}
               className="absolute top-4 right-4 z-10 p-2 text-white hover:text-brand-dustyBlue transition-colors bg-brand-darkRed/80 rounded-full"
@@ -137,41 +135,36 @@ export default function EmailPopup() {
               <FiX className="w-5 h-5" />
             </button>
 
-            {/* Image Side */}
             <div className="relative w-full md:w-1/2 h-48 md:h-auto flex-shrink-0 bg-brand-darkRed">
               <Image
                 src="https://images.unsplash.com/photo-1590003511523-9c5e5e60a3b1?w=800&q=90"
-                alt="Bint Saeed Collection"
+                alt={copy.imageAlt}
                 fill
                 className="object-cover opacity-80"
               />
               <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-brand-darkRed/40 to-transparent" />
-              {/* Decorative text */}
               <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10">
                 <span className="font-rozha text-3xl md:text-4xl text-white/90 leading-tight">
-                  {isRTL ? 'خصم حصري' : 'Exclusive Offer'}
+                  {copy.exclusiveOffer}
                 </span>
               </div>
             </div>
 
-            {/* Content Side */}
             <div className={`flex-1 p-8 md:p-10 flex flex-col justify-center bg-brand-stone ${isRTL ? 'text-right' : ''}`}>
               {!showSuccess ? (
                 <>
                   <h2 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-3">
-                    {isRTL ? 'احصلي على خصم 10%' : 'Get 10% Off'}
+                    {copy.headline}
                   </h2>
                   <p className="font-montserrat text-sm text-brand-darkRed/70 tracking-wide mb-6">
-                    {isRTL 
-                      ? 'اشتركي في نشرتنا واحصلي على خصم حصري على طلبك الأول، بالإضافة إلى أحدث التصاميم والعروض.'
-                      : 'Subscribe to our newsletter and receive an exclusive discount on your first order, plus the latest designs and offers.'}
+                    {copy.body}
                   </p>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <input
                       type="text"
                       required
-                      placeholder={isRTL ? 'الاسم الأول' : 'First name'}
+                      placeholder={copy.firstName}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className={`w-full px-4 py-3 bg-white border border-brand-darkRed/20 font-montserrat text-sm tracking-wide focus:border-brand-darkRed focus:outline-none transition-colors ${isRTL ? 'text-right' : ''}`}
@@ -181,7 +174,7 @@ export default function EmailPopup() {
                       <input
                         type="email"
                         required
-                        placeholder={isRTL ? 'البريد الإلكتروني' : 'Email'}
+                        placeholder={copy.email}
                         value={formData.email}
                         onChange={(e) => {
                           setFormData({ ...formData, email: e.target.value })
@@ -189,7 +182,7 @@ export default function EmailPopup() {
                         }}
                         onBlur={() => {
                           if (!formData.email.trim()) return
-                          const v = validateSubscriberEmail(formData.email)
+                          const v = validateSubscriberEmail(formData.email, language)
                           setEmailError(v.valid ? '' : v.message)
                         }}
                         aria-invalid={emailError ? true : undefined}
@@ -208,34 +201,27 @@ export default function EmailPopup() {
                       className="w-full py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors disabled:opacity-50"
                       data-cursor-hover
                     >
-                      {isSubmitting 
-                        ? (isRTL ? 'جاري التسجيل...' : 'Signing up...') 
-                        : (isRTL ? 'اشتركي الآن' : 'Sign me up!')}
+                      {isSubmitting ? copy.signingUp : copy.signUp}
                     </button>
                   </form>
 
                   <p className="font-montserrat text-xs text-brand-darkRed/50 mt-4">
-                    {isRTL 
-                      ? 'بالاشتراك، توافقين على سياسة الخصوصية وتلقي رسائل تسويقية.'
-                      : 'By subscribing, you agree to our Privacy Policy and receiving marketing emails.'}
+                    {copy.privacyLine}
                   </p>
                 </>
               ) : (
-                /* Success State */
                 <div className="text-center">
                   <div className="w-16 h-16 bg-brand-darkRed/20 rounded-full flex items-center justify-center mx-auto mb-6">
                     <span className="text-3xl">🎉</span>
                   </div>
                   <h2 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-3">
-                    {isRTL ? 'مرحباً بك!' : 'Welcome!'}
+                    {copy.welcome}
                   </h2>
                   <p className="font-montserrat text-sm text-brand-darkRed/70 tracking-wide mb-6">
-                    {isRTL 
-                      ? 'هذا كود الخصم الخاص بك:'
-                      : 'Here\'s your exclusive discount code:'}
+                    {copy.discountIntro}
                   </p>
-                  
-                  <div 
+
+                  <div
                     onClick={copyCode}
                     className="bg-white border-2 border-dashed border-brand-darkRed px-6 py-4 mb-4 cursor-pointer hover:bg-brand-dustyBlue/20 transition-colors"
                     data-cursor-hover
@@ -244,11 +230,9 @@ export default function EmailPopup() {
                       {discountCode}
                     </span>
                   </div>
-                  
+
                   <p className="font-montserrat text-xs text-brand-darkRed/60 mb-6">
-                    {isRTL 
-                      ? 'اضغطي لنسخ الكود • صالح لمدة 30 يوم'
-                      : 'Click to copy • Valid for 30 days'}
+                    {copy.copyHint}
                   </p>
 
                   <button
@@ -256,7 +240,7 @@ export default function EmailPopup() {
                     className="px-8 py-3 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
                     data-cursor-hover
                   >
-                    {isRTL ? 'ابدئي التسوق' : 'Start Shopping'}
+                    {copy.startShopping}
                   </button>
                 </div>
               )}

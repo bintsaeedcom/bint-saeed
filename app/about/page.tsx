@@ -5,43 +5,15 @@ import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getAboutPageCopy } from '@/lib/content/aboutPageCopyI18n'
 
 const HERO_IMAGE = '/about/campaign-portrait.PNG'
 const HERO_IMAGE_2 = '/about/campaign-seated.PNG'
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
-const ABOUT_IMAGE_ALT = 'Bint Saeed — Abu Dhabi'
-
-const WOMAN_STEPS = [
-  {
-    numeral: 'I',
-    title: 'WHERE SHE IS',
-    body: 'Today, a woman moves between cities, cultures, and expectations. She builds a life across places, steps into different roles, and expands what is possible for herself.',
-  },
-  {
-    numeral: 'II',
-    title: 'WHAT SHE CARRIES',
-    body: 'Yet through all of this, she remains a daughter. Not defined by limitation, but by depth. By where she comes from, and what she carries forward.',
-  },
-  {
-    numeral: 'III',
-    title: 'HOW SHE DRESSES',
-    body: 'Bint Saeed exists at that intersection. Between heritage and a contemporary life lived locally and across borders. Between where you come from and where you are going. Between the values you have inherited and how you present yourself today.',
-  },
-] as const
-
-const DESIGN_CODES = [
-  { numeral: 'I', name: 'THE MONOGRAM', description: 'A mark carried' },
-  { numeral: 'II', name: 'AL TALLI', description: 'Heritage passed down' },
-  { numeral: 'III', name: 'KHOUS', description: 'Structure as craft' },
-  { numeral: 'IV', name: 'AL AIN ROSETTE', description: 'Desert bloom' },
-  { numeral: 'V', name: 'KNOTTED LINES', description: 'Connection across time' },
-  { numeral: 'VI', name: 'THE STRANDS', description: 'Drawn from the earth' },
-] as const
-
-const CLOSING_QUOTE = 'A sense of self that does not shift with setting.'
 
 export default function AboutPage() {
-  const { isRTL, t } = useLanguage()
+  const { language, isRTL } = useLanguage()
+  const copy = getAboutPageCopy(language)
   const womanRef = useRef<HTMLElement | null>(null)
   const quoteRef = useRef<HTMLElement | null>(null)
   const [heroOffset, setHeroOffset] = useState(0)
@@ -91,7 +63,7 @@ export default function AboutPage() {
         >
           <Image
             src={HERO_IMAGE}
-            alt={ABOUT_IMAGE_ALT}
+            alt={copy.imageAlt}
             fill
             priority
             sizes="100vw"
@@ -105,32 +77,32 @@ export default function AboutPage() {
             rtl={isRTL}
             variant="light"
             segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-              { label: isRTL ? 'عنّا' : 'About' },
+              { label: copy.breadcrumbHome, href: '/home' },
+              { label: copy.breadcrumbAbout },
             ]}
             backLink={{
               href: '/home',
-              label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+              label: copy.backToHome,
             }}
           />
         </div>
 
         <div className="absolute bottom-10 left-6 right-6 z-10 max-w-[600px] pb-14 text-left md:bottom-[60px] md:left-[60px] md:right-auto md:pb-16">
           <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090] sm:tracking-[0.34em]">
-            BINT SAEED · ABU DHABI
+            {copy.heroEyebrow}
           </p>
           <h1
             data-document-h1="true"
             className="max-w-[760px] font-rozha text-[clamp(36px,6vw,72px)] leading-[0.98] tracking-[0.01em]"
             style={{ color: '#e8ddd4' }}
           >
-            Carrying Heritage Forward.
+            {copy.heroHeadline}
           </h1>
           <p className="mt-3 max-w-[480px] font-montserrat text-[14px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.75)]">
-            A house shaped by origin. Devoted to the daughter in every woman.
+            {copy.heroSubline}
           </p>
           <p className="mt-3 max-w-[480px] font-montserrat text-[13px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.55)]">
-            Abu Dhabi · Emirati design codes · Contemporary global presence
+            {copy.heroTagline}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <LocaleLink
@@ -138,14 +110,14 @@ export default function AboutPage() {
               className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
               data-cursor-hover
             >
-              READ THE STORY
+              {copy.ctaReadStory}
             </LocaleLink>
             <LocaleLink
               href="/shop"
               className="inline-flex items-center justify-center rounded-[4px] border border-[#e8ddd4]/40 bg-[#1a0210]/35 px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] backdrop-blur-md transition-colors hover:border-[#e8ddd4]/70 hover:bg-[#1a0210]/55"
               data-cursor-hover
             >
-              EXPLORE THE COLLECTION
+              {copy.ctaExploreCollection}
             </LocaleLink>
           </div>
         </div>
@@ -154,7 +126,7 @@ export default function AboutPage() {
           <div className="about-marquee flex w-max font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#6a8090]/65">
             {Array.from({ length: 8 }).map((_, index) => (
               <span key={index} className="px-4">
-                BINT SAEED · ABU DHABI · CARRYING HERITAGE FORWARD · DEVOTED TO THE DAUGHTER IN EVERY WOMAN ·
+                {copy.marquee}
               </span>
             ))}
           </div>
@@ -167,38 +139,28 @@ export default function AboutPage() {
       >
         <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-start`}>
           <div>
-            <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE ORIGIN</p>
+            <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.originLabel}</p>
             <h2 className="mt-4 font-rozha text-[clamp(2.5rem,5vw,4.75rem)] leading-[1] text-[#1a0210]">
-              A house shaped by origin, carried across the world.
+              {copy.originHeading}
             </h2>
             <div className="mt-6 space-y-6 font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72 [&_em]:italic [&_strong]:font-semibold [&_strong]:text-[#1a0210]">
               <p>
-                In Arabic, <em>Bint</em> means daughter of. It is not a reference to where you are, but to where you
-                come from. It carries lineage, memory, and belonging. It holds the story that exists before you, and
-                continues through you.{' '}
-                <strong>
-                  Because no matter where life leads, a woman remains connected to her origin. It does not disappear
-                  when she moves. It does not change when she grows.
-                </strong>
+                {copy.originP1BeforeBint}
+                <em>{copy.originP1Bint}</em>
+                {copy.originP1AfterBint}
+                <strong>{copy.originP1Strong}</strong>
               </p>
               <p>
-                <strong>
-                  Rooted in Abu Dhabi, Bint Saeed emerges from a place that has always moved forward while preserving
-                  its cultural identity.
-                </strong>{' '}
-                A place where ambition and identity exist side by side, where growth is built on origin rather than
-                replacing it. From here, the house extends into a way of living that moves between places with ease.
+                <strong>{copy.originP2Strong}</strong>
+                {copy.originP2Rest}
               </p>
-              <p>
-                From Abu Dhabi to Paris, from London to Riyadh, the same sense of self remains. A way of being that
-                does not shift with setting, and a way of dressing that follows it naturally.
-              </p>
+              <p>{copy.originP3}</p>
             </div>
           </div>
           <div className="overflow-hidden rounded-[4px] bg-[#faf8f5]">
             <Image
               src={HERO_IMAGE_2}
-              alt={ABOUT_IMAGE_ALT}
+              alt={copy.imageAlt}
               width={480}
               height={600}
               sizes="(max-width: 768px) 90vw, 42vw"
@@ -213,12 +175,12 @@ export default function AboutPage() {
         className="relative z-20 -mt-6 rounded-t-[16px] bg-[#1a0210] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]"
       >
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
-          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">THE WOMAN</p>
+          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.womanLabel}</p>
           <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#e8ddd4]">
-            She does not begin again. She continues.
+            {copy.womanHeading}
           </h2>
           <div className="mt-12 grid gap-px bg-[rgba(232,216,200,0.1)] md:grid-cols-3">
-            {WOMAN_STEPS.map((step, index) => (
+            {copy.womanSteps.map((step, index) => (
               <article
                 key={step.numeral}
                 className={`bg-[#1a0210] p-8 text-left transition-all duration-700 ${
@@ -236,30 +198,34 @@ export default function AboutPage() {
           </div>
           <div className="mt-12 space-y-6 font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#e8ddd4]/72 [&_strong]:font-semibold [&_strong]:text-[#e8ddd4]">
             <h3 className="font-rozha text-[clamp(1.55rem,3vw,2.25rem)] leading-[1.12] text-[#e8ddd4]">
-              <strong>Each creation carries that sense of continuity.</strong> Not defined by location, but recognised by its consistency. A clear visual language that holds its place wherever it is worn. Origin, expressed in form, in attitude, in the way you are recognised.
+              <strong>{copy.womanClosingH3Strong}</strong>
+              {copy.womanClosingH3Rest}
             </h3>
             <p>
-              <strong>Today, a woman moves between cities, cultures, and expectations.</strong> She builds a life across places, steps into different roles, and expands what is possible for herself.{' '}
-              <strong>Yet through all of this, she remains a daughter.</strong> Not defined by limitation, but by depth. By where she comes from, and what she carries forward.
+              <strong>{copy.womanClosingP1Strong1}</strong>
+              {copy.womanClosingP1Middle}
+              <strong>{copy.womanClosingP1Strong2}</strong>
+              {copy.womanClosingP1Rest}
             </p>
             <p>
-              <strong>Bint Saeed exists at that intersection.</strong> Between heritage and a contemporary life lived locally and across borders. Between where you come from and where you are going.{' '}
-              <strong>Between the values you have inherited and how you present yourself today.</strong>
+              <strong>{copy.womanClosingP2Strong1}</strong>
+              {copy.womanClosingP2Middle}
+              <strong>{copy.womanClosingP2Strong2}</strong>
             </p>
           </div>
         </div>
       </section>
       <section className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
-          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">THE CODES</p>
+          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.codesLabel}</p>
           <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#1a0210]">
-            Six design codes. One visual language.
+            {copy.codesHeading}
           </h2>
           <p className="mt-5 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72">
-            Every piece carries one or more of the six Bint Saeed design codes — drawn from Emirati craft tradition and translated into a contemporary form.
+            {copy.codesIntro}
           </p>
           <div className="mt-12 grid grid-cols-2 gap-px bg-[#e8ddd4] md:grid-cols-3">
-            {DESIGN_CODES.map((code) => (
+            {copy.designCodes.map((code) => (
               <div key={code.numeral} className="bg-[#faf8f5] p-7">
                 <p className="font-rozha text-[32px] leading-none text-[rgba(122,28,40,0.25)]">{code.numeral}</p>
                 <p className="mt-2 font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#1a0210]">{code.name}</p>
@@ -268,18 +234,20 @@ export default function AboutPage() {
             ))}
           </div>
           <LocaleLink href="/the-codes" className="mt-8 block font-montserrat text-[13px] font-medium text-[#7A1C28] transition-opacity hover:opacity-75" data-cursor-hover>
-            Explore the full codes →
+            {copy.codesLink}
           </LocaleLink>
           <div className="mt-12 space-y-6 font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72 [&_strong]:font-semibold [&_strong]:text-[#1a0210]">
             <h3 className="font-rozha text-[clamp(1.55rem,3vw,2.25rem)] leading-[1.12] text-[#1a0210]">
-              The house draws from Emirati design codes, including Al Talli craftsmanship and the structural logic of Khous weaving.{' '}
-              <strong>Every piece reflects the elegance of the Gulf, expressed through a way of dressing that moves effortlessly across borders.</strong>
+              {copy.codesClosingH3}
+              <strong>{copy.codesClosingH3Strong}</strong>
             </h3>
             <p>
-              <strong>For women who move through the world without leaving themselves behind,</strong> and who understand that identity is not something to adjust depending on place, but something carried out with confidence and certainty.
+              <strong>{copy.codesClosingP1Strong}</strong>
+              {copy.codesClosingP1Rest}
             </p>
             <p>
-              <strong>Bint Saeed stands as a house devoted to the daughter in every woman. A reminder that no matter where you go, you do not begin again, you continue.</strong>
+              <strong>{copy.codesClosingP2Strong}</strong>
+              {copy.codesClosingP2Rest}
             </p>
           </div>
         </div>
@@ -288,22 +256,18 @@ export default function AboutPage() {
       <section className="about-fabric-light relative z-40 -mt-6 overflow-hidden rounded-t-[16px] bg-[#7A1C28] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
         <div className={`${INNER_CONTAINER_CLASS} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
           <div className="relative min-h-[52vh] overflow-hidden rounded-[4px] md:min-h-[620px]">
-            <Image src={HERO_IMAGE} alt={ABOUT_IMAGE_ALT} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
+            <Image src={HERO_IMAGE} alt={copy.imageAlt} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
           </div>
           <div className="flex items-center">
             <div className="max-w-xl">
-              <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">THE HOUSE</p>
-              <h2 className="mt-5 font-rozha text-[clamp(2rem,3vw,2.5rem)] leading-tight text-[#e8ddd4]">Giving Forward.</h2>
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">{copy.houseLabel}</p>
+              <h2 className="mt-5 font-rozha text-[clamp(2rem,3vw,2.5rem)] leading-tight text-[#e8ddd4]">{copy.houseHeading}</h2>
               <div className="mt-5 space-y-5 font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
-                <p>
-                  Bint Saeed emerged from a place within the heart where the desire exists to create something that leaves a mark beyond what is visible, something that continues in meaning, in impact, and in the lives it reaches.
-                </p>
-                <p>
-                  With every Bint Saeed piece, a gesture of giving continues, extending beyond what is created. Not every daughter or son grows up with a sense of belonging, support, or continuity. Some are left to find their way without the foundations others are given. For this reason, 20 AED from each piece is dedicated, inshallah, to charitable initiatives under the Mother of the Nation Endowment for Orphans, under the patronage of His Highness Sheikh Mohamed bin Zayed Al Nahyan, through the Endowments and Minors&apos; Funds Authority, as well as to initiatives by the Emirates Red Crescent. In this way, what is carried forward is not only a story of origin, but a contribution that continues, reaching beyond the garment into the lives it is able to touch.
-                </p>
+                <p>{copy.houseP1}</p>
+                <p>{copy.houseP2}</p>
               </div>
               <LocaleLink href="/giving-forward" className="mt-8 inline-flex items-center justify-center rounded-[4px] bg-[#e8ddd4] px-8 py-[13px] font-montserrat text-xs uppercase tracking-[0.08em] text-[#7A1C28] transition-colors hover:bg-[#faf8f5]" data-cursor-hover>
-                READ ABOUT GIVING FORWARD
+                {copy.ctaGivingForward}
               </LocaleLink>
             </div>
           </div>
@@ -322,12 +286,12 @@ export default function AboutPage() {
                 quoteVisible ? 'opacity-100' : 'opacity-0'
               }`}
             >
-              {CLOSING_QUOTE}
+              {copy.closingQuote}
             </p>
           </div>
           <div className="mx-auto my-6 h-px w-[60px] bg-[#e8ddd4]" />
           <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-[#7A1C28]/70">
-            BINT SAEED · ABU DHABI
+            {copy.closingBrand}
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <LocaleLink
@@ -337,14 +301,14 @@ export default function AboutPage() {
               data-analytics-event="click_collection_from_about"
               data-analytics-section="about-cta"
             >
-              EXPLORE THE COLLECTION
+              {copy.ctaExploreCollection}
             </LocaleLink>
             <LocaleLink
               href="/the-codes"
               className="inline-flex items-center justify-center rounded-[4px] border border-[#e8ddd4]/35 bg-transparent px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:border-[#e8ddd4]/70"
               data-cursor-hover
             >
-              OUR STORY IN CODES
+              {copy.ctaOurStoryInCodes}
             </LocaleLink>
           </div>
         </div>
