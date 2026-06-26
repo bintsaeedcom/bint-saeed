@@ -1,4 +1,5 @@
 import type { Accessory } from '@/data/accessories'
+import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 import {
   ACCESSORY_IMAGE_EARRINGS_HERO,
   ACCESSORY_IMAGE_NECKLACE,
@@ -27,6 +28,13 @@ export type StrandPdpSeoPack = {
 }
 
 const BASE_KEYWORDS = [
+  'Signature Strands',
+  'abaya jewellery',
+  'garment jewellery',
+  'garment adornment',
+  'detachable garment jewellery',
+  'interchangeable abaya jewellery',
+  'natural stone garment jewellery',
   'natural stone beads abaya strand',
   'natural stone bead necklace',
   'natural stone earrings UAE',
@@ -39,12 +47,13 @@ const BASE_KEYWORDS = [
   'gold-plated clip abaya strand',
   'hand-strung stone beads',
   'pairs well with necklace and earrings',
-  'Bint Saeed abaya strands',
+  'Bint Saeed Signature Strands',
   'Emirati luxury abaya jewellery',
   'stone bead abaya draping',
   'designer jewellery Abu Dhabi',
   'GCC luxury stone jewellery',
-  'buy malachite onyx jade necklace online',
+  'worldwide shipping abaya jewellery',
+  'buy garment jewellery online',
 ] as const
 
 function kw(...stone: string[]): string[] {
@@ -53,7 +62,7 @@ function kw(...stone: string[]): string[] {
 
 /** Conversion-focused alt, pairing jewellery, and discovery keywords per strand PDP. */
 export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
-  'abaya-charm-onyx-natural-stone': {
+  'signature-strand-onyx': {
     pairing: {
       necklaceId: 'signature-onyx-necklace',
       necklaceImage: '', // same asset as strand — gallery shows earrings only
@@ -79,7 +88,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       'pairs with onyx necklace',
     ),
   },
-  'abaya-charm-tiger-eye-natural-stone': {
+  'signature-strand-tiger-eye': {
     pairing: {
       necklaceId: 'signature-tiger-eye-necklace',
       necklaceImage: '',
@@ -105,7 +114,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       'pairs with tiger eye necklace',
     ),
   },
-  'abaya-charm-orange-jade-natural-stone': {
+  'signature-strand-sunstone': {
     pairing: {
       necklaceId: 'necklace-layered-gold',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
@@ -115,23 +124,23 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       earringsLabel: 'Pearl Drop Earrings',
     },
     carouselAlt:
-      'Orange jade natural stone bead abaya strand — vivid coral jade beads pair with layered gold Al Ain necklace and pearl drop earrings',
+      'Sunstone natural stone bead abaya strand — warm peach-orange sunstone beads pair with layered gold Al Ain necklace and pearl drop earrings',
     strandAlt:
-      'Orange jade natural stone bead abaya strand, vivid coral-toned jade beads with 18K gold clip — accent for Marylebone Abaya, pairs with layered gold necklace and pearl earrings',
+      'Sunstone natural stone bead abaya strand, warm peach-orange sunstone beads with 18K gold clip — accent for Marylebone Abaya, pairs with layered gold necklace and pearl earrings',
     necklaceAlt:
-      'Al Ain layered gold necklace with delicate pendants — pairs with orange jade abaya strand and pearl drop earrings for evening abaya styling',
+      'Al Ain layered gold necklace with delicate pendants — pairs with sunstone abaya strand and pearl drop earrings for evening abaya styling',
     earringsAlt:
-      'Pearl drop earrings with gold-plated hooks — pairs with orange jade abaya strand and layered gold Al Ain necklace',
+      'Pearl drop earrings with gold-plated hooks — pairs with sunstone abaya strand and layered gold Al Ain necklace',
     keywords: kw(
-      'orange jade abaya strand',
-      'jade bead strand',
-      'coral jade abaya charm',
-      'natural jade beads',
-      'jade abaya accessory UAE',
+      'sunstone abaya strand',
+      'sunstone bead strand',
+      'peach sunstone abaya charm',
+      'natural sunstone beads',
+      'sunstone abaya accessory UAE',
       'pairs with gold necklace',
     ),
   },
-  'abaya-charm-fuchsia-jade-natural-stone': {
+  'signature-strand-fuchsia-jade': {
     pairing: {
       necklaceId: 'necklace-layered-gold',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
@@ -157,7 +166,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       'pairs with gold necklace and earrings',
     ),
   },
-  'abaya-charm-blue-aventurine-natural-stone': {
+  'signature-strand-blue-aventurine': {
     pairing: {
       necklaceId: 'necklace-statement-pendant',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
@@ -183,7 +192,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       'pairs with heritage necklace',
     ),
   },
-  'abaya-charm-rose-quartz-natural-stone': {
+  'signature-strand-rose-quartz': {
     pairing: {
       necklaceId: 'signature-rose-quartz-necklace',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ,
@@ -209,7 +218,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       'pairs with rose quartz necklace',
     ),
   },
-  'abaya-charm-malachite-natural-stone': {
+  'signature-strand-malachite': {
     pairing: {
       necklaceId: 'signature-malachite-necklace',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE_MALACHITE,
@@ -235,7 +244,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       'pairs with malachite necklace and earrings',
     ),
   },
-  'abaya-charm-lapis-lazuli-natural-stone': {
+  'signature-strand-lapis-lazuli': {
     pairing: {
       necklaceId: 'necklace-statement-pendant',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
@@ -261,7 +270,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       'pairs with heritage necklace and hoops',
     ),
   },
-  'abaya-charm-amethyst-hearts-natural-stone': {
+  'signature-strand-amethyst-hearts': {
     pairing: {
       necklaceId: 'necklace-statement-pendant',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
@@ -288,7 +297,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       'heart-cut amethyst jewellery',
     ),
   },
-  'abaya-charm-jade-hearts-natural-stone': {
+  'signature-strand-jade-hearts': {
     pairing: {
       necklaceId: 'necklace-layered-gold',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
@@ -318,11 +327,11 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
 }
 
 export function isStrandAccessory(accessory: Pick<Accessory, 'category' | 'id'>): boolean {
-  return accessory.category === 'abaya-charms' && accessory.id in STRAND_PDP_BY_ID
+  return accessory.category === 'signature-strands' && accessory.id in STRAND_PDP_BY_ID
 }
 
 export function getStrandPdpPack(accessoryId: string): StrandPdpSeoPack | undefined {
-  return STRAND_PDP_BY_ID[accessoryId]
+  return STRAND_PDP_BY_ID[resolveAccessoryId(accessoryId)]
 }
 
 /** PDP gallery: strand hero + distinct pairing shots (skips necklace when same file as strand). */
@@ -404,7 +413,7 @@ export function buildAccessoryProductJsonLd({
     description,
     url: pageUrl,
     sku: accessory.id,
-    category: 'Abaya Strands',
+    category: 'Signature Strands',
     brand: {
       '@type': 'Brand',
       name: 'Bint Saeed',

@@ -37,7 +37,7 @@ const allUrls: SitemapUrlEntry[] = [
   { loc: `${SITEMAP_BASE_URL}/shop`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
   { loc: `${SITEMAP_BASE_URL}/accessories`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
   {
-    loc: `${SITEMAP_BASE_URL}/accessories?type=abaya-charms`,
+    loc: `${SITEMAP_BASE_URL}/accessories?type=signature-strands`,
     lastmod: new Date().toISOString(),
     changefreq: 'weekly',
     priority: '0.88',

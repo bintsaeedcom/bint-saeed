@@ -1,6 +1,7 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
 import { getAlTalliHeritageFaqItem } from '@/lib/products/alTalliHeritageFaqI18n'
+import { appendAlTalliCareFaq } from '@/lib/products/alTalliCareFaqI18n'
 import { COVENT_GARDEN_ABAYA_FAQ_EN } from '@/data/coventGardenAbayaPdpFaq'
 
 export const COVENT_GARDEN_ABAYA_SLUG = 'covent-garden-abaya'
@@ -155,7 +156,8 @@ export function isCoventGardenAbayaSlug(slug: string): boolean {
 }
 
 export function getCoventGardenAbayaFaq(locale: AppLocale = 'en'): ProductFaqItem[] {
-  return ABAYA_FAQ[locale] ?? ABAYA_FAQ.en
+  const faq = ABAYA_FAQ[locale] ?? ABAYA_FAQ.en
+  return appendAlTalliCareFaq(faq, COVENT_GARDEN_ABAYA_SLUG, locale)
 }
 
 export function getLocalizedCoventGardenAbayaFaq(

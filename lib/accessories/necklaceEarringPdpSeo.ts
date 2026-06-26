@@ -47,9 +47,9 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'malachite abaya jewellery set',
     ),
     relatedAccessoryIds: [
-      'abaya-charm-malachite-natural-stone',
+      'signature-strand-malachite',
       'earrings-geometric',
-      'abaya-charm-rose-quartz-natural-stone',
+      'signature-strand-rose-quartz',
     ],
   },
   'signature-tiger-eye-necklace': {
@@ -65,7 +65,7 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'tiger eye jewellery online',
     ),
     relatedAccessoryIds: [
-      'abaya-charm-tiger-eye-natural-stone',
+      'signature-strand-tiger-eye',
       'earrings-hoops',
       'signature-onyx-necklace',
     ],
@@ -83,7 +83,7 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'buy onyx necklace online',
     ),
     relatedAccessoryIds: [
-      'abaya-charm-onyx-natural-stone',
+      'signature-strand-onyx',
       'earrings-geometric',
       'signature-tiger-eye-necklace',
     ],
@@ -101,7 +101,7 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'rose quartz gift necklace',
     ),
     relatedAccessoryIds: [
-      'abaya-charm-rose-quartz-natural-stone',
+      'signature-strand-rose-quartz',
       'earrings-pearl-drop',
       'signature-malachite-necklace',
     ],
@@ -119,9 +119,9 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'designer gold necklace Abu Dhabi',
     ),
     relatedAccessoryIds: [
-      'abaya-charm-orange-jade-natural-stone',
-      'abaya-charm-fuchsia-jade-natural-stone',
-      'abaya-charm-jade-hearts-natural-stone',
+      'signature-strand-sunstone',
+      'signature-strand-fuchsia-jade',
+      'signature-strand-jade-hearts',
       'earrings-pearl-drop',
     ],
   },
@@ -138,9 +138,9 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'traditional Gulf jewellery',
     ),
     relatedAccessoryIds: [
-      'abaya-charm-lapis-lazuli-natural-stone',
-      'abaya-charm-amethyst-hearts-natural-stone',
-      'abaya-charm-blue-aventurine-natural-stone',
+      'signature-strand-lapis-lazuli',
+      'signature-strand-amethyst-hearts',
+      'signature-strand-blue-aventurine',
       'earrings-geometric',
     ],
   },
@@ -158,8 +158,8 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     ),
     relatedAccessoryIds: [
       'signature-rose-quartz-necklace',
-      'abaya-charm-rose-quartz-natural-stone',
-      'abaya-charm-jade-hearts-natural-stone',
+      'signature-strand-rose-quartz',
+      'signature-strand-jade-hearts',
       'necklace-layered-gold',
     ],
   },
@@ -177,9 +177,9 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     ),
     relatedAccessoryIds: [
       'signature-malachite-necklace',
-      'abaya-charm-malachite-natural-stone',
-      'abaya-charm-onyx-natural-stone',
-      'abaya-charm-amethyst-hearts-natural-stone',
+      'signature-strand-malachite',
+      'signature-strand-onyx',
+      'signature-strand-amethyst-hearts',
     ],
   },
   'earrings-hoops': {
@@ -196,8 +196,8 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     ),
     relatedAccessoryIds: [
       'signature-tiger-eye-necklace',
-      'abaya-charm-tiger-eye-natural-stone',
-      'abaya-charm-lapis-lazuli-natural-stone',
+      'signature-strand-tiger-eye',
+      'signature-strand-lapis-lazuli',
       'necklace-statement-pendant',
     ],
   },

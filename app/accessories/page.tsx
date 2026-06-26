@@ -26,6 +26,7 @@ import {
 } from '@/lib/accessories/filterAccessories'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import { resolveAccessoryCategoryId } from '@/lib/accessories/accessoryRouteAliases'
 import { getAccessoryCarouselAlt, buildAccessoriesCollectionJsonLd } from '@/lib/accessories/accessoryJsonLd'
 
 function parsePriceParam(v: string | null): PriceRangeId {
@@ -57,7 +58,7 @@ export default function AccessoriesPage() {
     if (!searchParams) return
     const raw = searchParams.get('type') ?? searchParams.get('category')
     if (raw) {
-      const id = raw.toLowerCase().replace(/_/g, '-')
+      const id = resolveAccessoryCategoryId(raw)
       if (accessoryCategories.some((c) => c.id === id && id !== 'all')) {
         setActiveCategory(id)
       }
@@ -145,7 +146,7 @@ export default function AccessoriesPage() {
   const hasExtraFilters = priceRange !== 'all' || selectedStones.length > 0
 
   const activeTab = accessoryCategories.find(c => c.id === activeCategory)
-  const isAbayaStrandsLayout = activeCategory === 'abaya-charms'
+  const isAbayaStrandsLayout = activeCategory === 'signature-strands'
 
   const collectionJsonLd = useMemo(() => buildAccessoriesCollectionJsonLd(accessories, language), [language])
 

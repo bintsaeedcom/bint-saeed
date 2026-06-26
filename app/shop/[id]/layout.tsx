@@ -5,6 +5,7 @@ import { getServerLocale } from '@/lib/i18n/serverLocale'
 import {
   buildProductMetaDescription,
   buildProductPageTitle,
+  getProductPageMetaKeywords,
   productCanonicalUrl,
   productHreflangLanguages,
   productNotFoundMetadata,
@@ -43,10 +44,12 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
     index: 0,
     locale,
   })
+  const keywords = getProductPageMetaKeywords(locale, slug, product.colors[0]?.name)
 
   return {
     title: pageTitle,
     description,
+    ...(keywords ? { keywords } : {}),
     alternates: {
       canonical: canonicalUrl,
       languages: productHreflangLanguages(slug),

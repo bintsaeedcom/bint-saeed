@@ -2,6 +2,8 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductFaqItem, ProductSchemaFacts } from '@/lib/products/productSchemaMeta'
 import { getAlTalliHeritageFaqItem } from '@/lib/products/alTalliHeritageFaqI18n'
 import { patchAlTalliHeritageFaq } from '@/lib/products/alTalliHeritageFaqI18n'
+import { appendAlTalliCareFaq } from '@/lib/products/alTalliCareFaqI18n'
+import { getHampsteadDressPdpFaq } from '@/lib/products/hampsteadDressPdpI18n'
 
 const MADE_IN = 'Abu Dhabi, United Arab Emirates'
 
@@ -60,30 +62,31 @@ const PARK_LANE_EN: ProductSchemaFacts = {
 
 const HAMPSTEAD_EN: ProductSchemaFacts = {
   productType:
-    'Structured designer dress with traditional Al Talli trim — evening and city wear rooted in Emirati heritage, reimagined for contemporary global wardrobes.',
+    'Tailored fitted maxi dress with an elegant draped neckline — fully lined with signature Al Talli waist trim, made in Abu Dhabi for global wardrobes.',
   productCategory:
-    'Dress, Designer Dress, Luxury Dress, Evening Dress, Structured Dress, Al Talli Dress, Heritage Dress, Emirati Dress, Modest Fashion, Premium Modest Fashion, Contemporary Womenswear',
-  fit: 'Structured shoulders with a refined silhouette.',
-  trim: 'Traditional Al Talli trim recognised by UNESCO as Intangible Cultural Heritage.',
-  lining: 'Silk lining',
+    'Dress, Designer Dress, Luxury Dress, Evening Dress, Maxi Dress, Layering Dress, Al Talli Dress, Heritage Dress, Emirati Dress, Modest Fashion, Premium Modest Fashion, Contemporary Womenswear',
+  fit: 'Tailored fitted silhouette with softly flared hem.',
+  trim: 'Bint Saeed signature Al Talli woven trim at the waist — UNESCO-recognised Intangible Cultural Heritage.',
+  lining: 'Fully lined (70% Polyester, 30% Viscose)',
   styling:
-    'Pairs beautifully with the Covent Garden Abaya and Marylebone Abaya — created for women who value Emirati heritage craftsmanship worldwide.',
+    'Designed to be worn on its own or layered beneath an abaya — pairs with the Covent Garden Abaya, Marylebone Abaya, Kensington Abaya and Belgravia Abaya.',
   stylingDetail:
-    'Structured dress with Al Talli heritage trim, silk lining, and mother-of-pearl buttons — made in Abu Dhabi.',
-  material: 'Virgin Wool blend, Silk lining, Mother-of-pearl buttons',
+    'Tailored maxi dress with draped neckline, hidden side seam pockets, softly flared hem, and signature Al Talli waist trim — made in Abu Dhabi.',
+  material: 'Outer: 80% Polyester, 20% Viscose; Lining: 70% Polyester, 30% Viscose',
   suitableFor:
-    'Evening wear, city dressing, weddings, formal dinners, cultural events, embassy receptions, Gulf wardrobes, and international occasionwear in London, Paris, Toronto, Brunei, and destinations worldwide.',
+    'Evening wear, city dressing, weddings, formal dinners, cultural events, layering beneath abayas, Gulf wardrobes, and international occasionwear in Abu Dhabi, Dubai, Riyadh, Doha, Kuwait City, Muscat, London, Paris, Milan, Toronto, and destinations worldwide.',
 }
 
 const SOHO_EN: ProductSchemaFacts = {
   productType:
-    'Coordinate top and skirt set with traditional Al Talli trim — polished day-to-evening dressing celebrating Emirati heritage.',
+    'Oversized shirt and wide-leg palazzo trouser set in fluid premium crepe with Al Talli side-seam trim and Knotted Line buttons — luxury travelwear with contemporary tailoring from Abu Dhabi.',
   productCategory:
-    'Set, Two-Piece Set, Coordinate Set, Al Talli Set, Heritage Set, Designer Set, Luxury Set, Modest Fashion, Premium Modest Fashion, Contemporary Womenswear',
-  trim: 'Traditional Al Talli trim — UNESCO-recognised Emirati heritage craftsmanship.',
-  stylingDetail: 'Coordinate top and skirt set with Al Talli detailing for day-to-evening versatility.',
+    'Set, Two-Piece Set, Coordinate Set, Shirt and Trouser Set, Al Talli Set, Heritage Set, Designer Set, Luxury Set, Travel Set, Modest Fashion, Premium Modest Fashion, Contemporary Womenswear',
+  trim: 'Bint Saeed signature Al Talli trim along trouser side seams — UNESCO-recognised Emirati heritage craftsmanship.',
+  stylingDetail:
+    'Oversized crepe shirt with wide-leg palazzo trousers, chest pockets, hidden side seam pockets, gold-tone Knotted Line buttons, and Al Talli heritage trim.',
   suitableFor:
-    'Day-to-evening dressing, lunches, dinners, cultural events, weddings, Gulf wardrobes, and international modest fashion worldwide.',
+    'Luxury travelwear, city dressing, lunches, dinners, cultural events, journeys between cities, Gulf wardrobes, and international modest fashion in Abu Dhabi, Dubai, London, Paris, Milan, Toronto, Singapore, and worldwide.',
 }
 
 const HYDE_PARK_EN: ProductSchemaFacts = {
@@ -113,14 +116,6 @@ const FAQ_BY_SLUG: Record<string, ProductSchemaFacts['faq']> = {
       question: 'Is the Park Lane Abaya suitable for everyday wear?',
       answer:
         'Yes. The Park Lane Abaya is designed for refined everyday city dressing with a clean line and fluid drape — made in Abu Dhabi for GCC and international wardrobes.',
-    },
-  ],
-  [HAMPSTEAD_SLUG]: [
-    getAlTalliHeritageFaqItem('en'),
-    {
-      question: 'What makes the Hampstead Dress distinctive?',
-      answer:
-        'The Hampstead Dress combines structured shoulders with traditional Al Talli trim, silk lining, and mother-of-pearl buttons — Emirati heritage craftsmanship designed in Abu Dhabi for women worldwide.',
     },
   ],
   [SOHO_SLUG]: [
@@ -159,8 +154,8 @@ export function getLocalizedSecondaryCatalogSchemaFacts(
     })
   } else if (s === HAMPSTEAD_SLUG) {
     base = facts(s, locale, HAMPSTEAD_EN, {
-      ar: { productType: 'فستان مصمّم بكتفين مُهيكَلين وتفاصيل التلي التراثية — من أبوظبي للعالم' },
-      fr: { productType: 'Robe structurée avec garniture Al Talli patrimoniale — Abu Dhabi' },
+      ar: { productType: 'فستان مصمّم مبطّن من كريب فاخر بخط عنق منسدل — تفاصيل تلي على الخصر من أبوظبي للعالم' },
+      fr: { productType: 'Robe doublée en crêpe premium au col drapé — garniture Al Talli à la taille, Abu Dhabi' },
     })
   } else if (s === SOHO_SLUG) {
     base = facts(s, locale, SOHO_EN, {
@@ -173,7 +168,8 @@ export function getLocalizedSecondaryCatalogSchemaFacts(
 
   if (!base) return null
 
-  const faq = FAQ_BY_SLUG[s]
+  const faq =
+    s === HAMPSTEAD_SLUG ? getHampsteadDressPdpFaq(locale) : FAQ_BY_SLUG[s]
   if (!faq) return base
 
   const localizedFaq =
@@ -190,7 +186,7 @@ export function getLocalizedSecondaryCatalogSchemaFacts(
       ? patchAlTalliHeritageFaq(localizedFaq, locale)
       : localizedFaq
 
-  return { ...base, faq: withAlTalli }
+  return { ...base, faq: appendAlTalliCareFaq(withAlTalli, s, locale) }
 }
 
 export function getLocalizedSecondaryCatalogSchemaFaq(

@@ -373,7 +373,14 @@ const HAMPSTEAD_DRESS_DIR = '/Webshop pictures/Dresses/Hampstead Dress'
 
 function hampsteadDressGallery(color: 'black' | 'burgundy' | 'navy-blue'): string[] {
   const base = `${HAMPSTEAD_DRESS_DIR}/bint-saeed-hampstead-dress-${color}`
-  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  if (color === 'black') {
+    images.push(
+      `${base}-front-al-talli-detail-shot.png`,
+      `${base}-bint-saeed-label-detail-shot.png`,
+    )
+  }
+  return images
 }
 
 const BELGRAVIA_ABAYA_DIR = '/Webshop pictures/Abayas/Belgravia Abaya'

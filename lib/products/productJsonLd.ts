@@ -16,6 +16,7 @@ import {
   getProductSchemaFacts,
 } from '@/lib/products/productSchemaMeta'
 import { getKaftanPageSeo, getKaftanSchemaAudience, isKaftanSlug } from '@/lib/products/kaftanSchemaI18n'
+import { getCoventGardenAbayaPageSeo } from '@/lib/products/coventGardenAbayaPageSeoI18n'
 import { getBelgraviaSchemaAudience, isBelgraviaSlug } from '@/lib/products/belgraviaSchemaI18n'
 import { getKensingtonSchemaAudience, isKensingtonSlug } from '@/lib/products/kensingtonSchemaI18n'
 import {
@@ -119,6 +120,9 @@ function buildSchemaDescription(
   locale: AppLocale,
   color?: string,
 ): string {
+  const coventGardenSeo = getCoventGardenAbayaPageSeo(slug, locale)
+  if (coventGardenSeo) return coventGardenSeo.description
+
   const kaftanSeo = getKaftanPageSeo(slug, locale)
   if (kaftanSeo) return kaftanSeo.description
 

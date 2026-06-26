@@ -46,3 +46,9 @@ export {
 } from '@/lib/products/coventGardenAbayaSchemaLocalePacks'
 
 export type { ProductFaqItem, ProductSchemaFacts } from '@/lib/products/productSchemaMeta'
+
+export {
+  getCoventGardenAbayaPageSeo,
+  getCoventGardenAbayaMetaKeywords,
+  getCoventGardenAbayaMetaKeywordTerms,
+} from '@/lib/products/coventGardenAbayaPageSeoI18n'

@@ -1,6 +1,7 @@
 import type { ProductPdpContent } from '@/data/productPdpContent'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getKnightsbridgeDressPdpFaq } from '@/lib/products/knightsbridgeDressSchemaLocalePacks'
+import { getHouseCodesDetailGroup } from '@/lib/products/pdpHouseCodesGroupsI18n'
 import {
   getKnightsbridgeStylePairingNote,
   knightsbridgePdpColorLabel,
@@ -32,7 +33,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       'Maxi dress in a cotton blend',
-      'Halter neckline with Bint Saeed signature Khous-inspired woven detailing',
+      'Halter neckline',
       'Concealed back zip closure with crossover neck fastening',
       'Hidden side seam pockets',
       'Soft box pleats',
@@ -60,7 +61,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       'فستان ماكسي من مزيج قطن',
-      'ياقة halter بتفاصيل منسوجة مميزة من Bint Saeed مستوحاة من الخوص',
+      'ياقة halter',
       'إغلاق سحاب خلفي مخفي مع تثبيت رقبة متقاطعة',
       'جيوب جانبية مخفية في درزات الجوانب',
       'طيات صندوقية ناعمة',
@@ -90,7 +91,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       'Robe maxi en melange de coton',
-      'Encolure halter avec finitions tissees signature Bint Saeed inspirees du Khous',
+      'Encolure halter',
       'Fermeture eclair dissimulee dans le dos avec attache croisee au cou',
       'Poches laterales dissimulees dans les coutures laterales',
       'Plis coffre souples',
@@ -120,7 +121,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       'Maxikleid aus Baumwollmischung',
-      'Halter-Ausschnitt mit Bint Saeed Signatur-Webdetails inspiriert von Khous',
+      'Halter-Ausschnitt',
       'Verdeckter Rueckverschluss mit Kreuzverschluss am Hals',
       'Versteckte Seitentaschen in den Seitennaehten',
       'Weiche Boxfalten',
@@ -150,7 +151,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       'Abito maxi in misto cotone',
-      'Scollo halter con dettagli tessuti signature Bint Saeed ispirati al Khous',
+      'Scollo halter',
       'Chiusura lampo posteriore nascosta con allacciatura incrociata al collo',
       'Tasche laterali nascoste nelle cuciture laterali',
       'Piega a scatola morbida',
@@ -180,7 +181,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       'Vestido maxi en mezcla de algodon',
-      'Escote halter con detalles tejidos signature de Bint Saeed inspirados en Khous',
+      'Escote halter',
       'Cierre de cremallera trasero oculto con cierre cruzado en el cuello',
       'Bolsillos laterales ocultos en las costuras laterales',
       'Pliegues de caja suaves',
@@ -210,7 +211,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       'Платье макси из хлопковой смеси',
-      'Вырез halter с фирменной тканой отделкой Bint Saeed, вдохновлённой Khous',
+      'Вырез halter',
       'Скрытая застёжка-молния сзади с перекрёстной фиксацией на шее',
       'Скрытые боковые карманы в боковых швах',
       'Мягкие складки «коробочкой»',
@@ -240,7 +241,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       '棉混纺长款连衣裙',
-      'halter 领口，配 Bint Saeed 标志性 Khous 灵感编织细节',
+      'halter 领口',
       '隐藏式背部拉链，交叉领口扣合',
       '侧缝隐藏式侧袋',
       '柔和箱褶',
@@ -270,7 +271,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       'Maxi-jurk in katoenmix',
-      'Halter-halslijn met kenmerkende Bint Saeed geweven Khous-geinspireerde details',
+      'Halter-halslijn',
       'Verborgen ritssluiting aan de achterkant met kruisvastmaking bij de hals',
       'Verborgen zijzakken in de zijnaad',
       'Zachte boxplooien',
@@ -300,7 +301,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       'Vestido maxi em mistura de algodao',
-      'Decote halter com detalhes tecidos signature Bint Saeed inspirados no Khous',
+      'Decote halter',
       'Fecho de correr oculto nas costas com fecho cruzado no pescoco',
       'Bolsos laterais ocultos nas costuras laterais',
       'Pregas caixa suaves',
@@ -330,7 +331,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       'Gaun maxi dari campuran katun',
-      'Leher halter dengan detail anyaman signature Bint Saeed terinspirasi Khous',
+      'Leher halter',
       'Ritsleting belakang tersembunyi dengan pengait leher silang',
       'Saku samping tersembunyi di jahitan sisi',
       'Lipatan kotak lembut',
@@ -360,7 +361,7 @@ const BODIES: Record<AppLocale, DressBody> = {
     ],
     featureLines: [
       'Gaun maxi daripada campuran kapas',
-      'Leher halter dengan perincian tenunan signature Bint Saeed terinspirasi Khous',
+      'Leher halter',
       'Zip belakang tersembunyi dengan pengikat leher bersilang',
       'Poket sisi tersembunyi di jahitan sisi',
       'Lipatan kotak lembut',
@@ -408,6 +409,7 @@ export function buildKnightsbridgeDressPdpContent(
   return {
     introParagraphs: body.introParagraphs,
     productDetails: [...body.featureLines, colourLine, body.madeInLine],
+    productDetailGroups: [getHouseCodesDetailGroup('al-khous', locale)],
     compositionDetails: [...body.compositionDetails],
     fitAndSizeDetails: body.fitAndSizeDetails,
     careDetails: [...CARE],

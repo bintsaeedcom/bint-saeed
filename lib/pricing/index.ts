@@ -1,5 +1,6 @@
 import { products as staticProducts } from '@/data/products'
 import { accessories } from '@/data/accessories'
+import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 import {
   EXPRESS_SHIPPING_PRICES,
   SIGNATURE_PACKAGING_PRICES,
@@ -58,7 +59,7 @@ export function resolveCatalogAedPrice(productId: string): number | null {
   if (product) {
     return getCatalogAedPrice(product.slug) ?? product.price
   }
-  const accessory = accessories.find((a) => a.id === productId)
+  const accessory = accessories.find((a) => a.id === resolveAccessoryId(productId))
   return accessory?.price ?? null
 }
 
@@ -86,7 +87,7 @@ export function getListedPrice(
       const catalog = getListedPriceForSlug(slug, currency)
       if (catalog != null) return catalog
     }
-    const accessory = accessories.find((a) => a.id === productId)
+    const accessory = accessories.find((a) => a.id === resolveAccessoryId(productId))
     if (accessory) {
       return accessoryPriceMap(accessory.price)[currency]
     }

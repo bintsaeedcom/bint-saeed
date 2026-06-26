@@ -36,9 +36,9 @@ export interface Accessory {
     | 'necklaces'
     | 'earrings'
     | 'bracelets'
-    | 'bag-charms'
-    | 'phone-charms'
-    | 'abaya-charms'
+    | 'bag-strands'
+    | 'phone-strands'
+    | 'signature-strands'
   price: number
   description: string
   descriptionAr: string
@@ -63,8 +63,8 @@ export const accessoryCategories = [
     icon: '✦',
   },
   {
-    id: 'abaya-charms',
-    name: 'Abaya Strands',
+    id: 'signature-strands',
+    name: 'Signature Strands',
     nameAr: 'سلاسل العباءة',
     icon: '✺',
     description: 'Stone strands designed for abaya draping and edges',
@@ -95,7 +95,7 @@ export const accessoryCategories = [
     descriptionAr: 'أساور مصنوعة يدوياً بمقاس موحّد',
   },
   {
-    id: 'bag-charms',
+    id: 'bag-strands',
     name: 'Bag Strands',
     nameAr: 'تعليقات الحقائب',
     icon: '❖',
@@ -103,7 +103,7 @@ export const accessoryCategories = [
     descriptionAr: 'تعليقات فاخرة لحقائبك المفضلة',
   },
   {
-    id: 'phone-charms',
+    id: 'phone-strands',
     name: 'Phone Strands',
     nameAr: 'تعليقات الهاتف',
     icon: '✧',
@@ -320,10 +320,10 @@ export const accessories: Accessory[] = [
 
   // Bag Strands
   {
-    id: 'bag-charm-tassel',
+    id: 'bag-strand-tassel',
     name: 'Silk Tassel Strand',
     nameAr: 'تعليقة شرابة حريرية',
-    category: 'bag-charms',
+    category: 'bag-strands',
     price: 175,
     description: 'Luxurious silk tassel bag strand with gold-plated hardware.',
     descriptionAr: 'تعليقة حقيبة شرابة حريرية فاخرة مع معدن مطلي بالذهب.',
@@ -339,10 +339,10 @@ export const accessories: Accessory[] = [
     isBestseller: true,
   },
   {
-    id: 'bag-charm-pearl-cluster',
+    id: 'bag-strand-pearl-cluster',
     name: 'Pearl Cluster Strand',
     nameAr: 'تعليقة عنقود اللؤلؤ',
-    category: 'bag-charms',
+    category: 'bag-strands',
     price: 220,
     description: 'Elegant pearl cluster strand to elevate any handbag.',
     descriptionAr: 'تعليقة عنقود لؤلؤ أنيقة لرفع مستوى أي حقيبة يد.',
@@ -355,10 +355,10 @@ export const accessories: Accessory[] = [
     isNew: true,
   },
   {
-    id: 'bag-charm-letter',
+    id: 'bag-strand-letter',
     name: 'Monogram Letter Strand',
     nameAr: 'تعليقة حرف مونوغرام',
-    category: 'bag-charms',
+    category: 'bag-strands',
     price: 195,
     description: 'Personalized letter strand. Available in all letters A-Z.',
     descriptionAr: 'تعليقة حرف شخصية. متوفرة بجميع الحروف A-Z.',
@@ -370,10 +370,10 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'bag-charm-bint',
+    id: 'bag-strand-bint',
     name: 'Bag Strand',
     nameAr: 'تعليقة حقيبة',
-    category: 'bag-charms',
+    category: 'bag-strands',
     price: 175,
     description: 'Clip-on bag strand for handbags and evening clutches.',
     descriptionAr: 'تعليقة حقيبة بحلقة تعليق للحقائب ومساء الخروج.',
@@ -388,10 +388,10 @@ export const accessories: Accessory[] = [
 
   // Phone Strands
   {
-    id: 'phone-charm-pearl-strap',
+    id: 'phone-strand-pearl-strap',
     name: 'Pearl Phone Strap',
     nameAr: 'حزام هاتف لؤلؤي',
-    category: 'phone-charms',
+    category: 'phone-strands',
     price: 145,
     description: 'Elegant pearl phone strap with universal attachment.',
     descriptionAr: 'حزام هاتف لؤلؤي أنيق مع مشبك عالمي.',
@@ -406,10 +406,10 @@ export const accessories: Accessory[] = [
     isBestseller: true,
   },
   {
-    id: 'phone-charm-beaded',
+    id: 'phone-strand-beaded',
     name: 'Beaded Phone Chain',
     nameAr: 'سلسلة هاتف بالخرز',
-    category: 'phone-charms',
+    category: 'phone-strands',
     price: 125,
     description: 'Colorful beaded phone chain for a playful touch.',
     descriptionAr: 'سلسلة هاتف ملونة بالخرز للمسة مرحة.',
@@ -424,10 +424,10 @@ export const accessories: Accessory[] = [
     isNew: true,
   },
   {
-    id: 'phone-charm-tassel',
+    id: 'phone-strand-tassel',
     name: 'Mini Tassel Phone Strand',
     nameAr: 'تعليقة هاتف شرابة صغيرة',
-    category: 'phone-charms',
+    category: 'phone-strands',
     price: 95,
     description: 'Cute mini tassel strand for your phone case.',
     descriptionAr: 'تعليقة شرابة صغيرة لطيفة لغلاف هاتفك.',
@@ -442,10 +442,10 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'phone-charm-bint',
+    id: 'phone-strand-bint',
     name: 'Phone Strand',
     nameAr: 'تعليقة هاتف',
-    category: 'phone-charms',
+    category: 'phone-strands',
     price: 145,
     description: 'Phone strand with universal attachment for cases and straps.',
     descriptionAr: 'تعليقة هاتف مع تثبيت متوافق مع الأغطية والأحزمة.',
@@ -461,10 +461,10 @@ export const accessories: Accessory[] = [
 
   // Abaya strands — natural stone line (10 products; stone-specific PDPs)
   {
-    id: 'abaya-charm-onyx-natural-stone',
-    name: 'Onyx',
+    id: 'signature-strand-onyx',
+    name: 'Onyx Strand',
     nameAr: 'أونكس حجر طبيعي',
-    category: 'abaya-charms',
+    category: 'signature-strands',
     price: 400,
     description:
       'Natural black onyx abaya strand with secure clip attachment for draping along the edge or sleeve.',
@@ -477,10 +477,10 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'abaya-charm-tiger-eye-natural-stone',
-    name: 'Tiger Eye',
+    id: 'signature-strand-tiger-eye',
+    name: 'Tiger Eye Strand',
     nameAr: 'عين النمر حجر طبيعي',
-    category: 'abaya-charms',
+    category: 'signature-strands',
     price: 430,
     description:
       'Warm tiger eye beads with subtle chatoyancy; designed for movement when styled on the abaya.',
@@ -493,26 +493,26 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'abaya-charm-orange-jade-natural-stone',
-    name: 'Orange Jade',
-    nameAr: 'اليشم البرتقالي حجر طبيعي',
-    category: 'abaya-charms',
+    id: 'signature-strand-sunstone',
+    name: 'Sunstone Strand',
+    nameAr: 'ستراند حجر الشمس',
+    category: 'signature-strands',
     price: 465,
     description:
-      'Orange-toned jade beads for a vivid accent along the abaya silhouette.',
+      'Warm sunstone beads with a peach-orange glow — a luminous accent along the abaya silhouette.',
     descriptionAr:
-      'خرز يشم بلون برتقالي نقي كلون مميز على خط العباءة.',
+      'خرز حجر الشمس الدافئ بلون خوخي برتقالي — لمسة مضيئة على خط العباءة.',
     images: [ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE],
-    materials: 'Natural jade, 18K gold-plated findings',
-    materialsAr: 'يشم طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
-    colors: [{ name: 'Orange Jade', nameAr: 'يشم برتقالي', hex: '#ea580c' }],
+    materials: 'Natural sunstone, 18K gold-plated findings',
+    materialsAr: 'حجر الشمس طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Sunstone', nameAr: 'حجر الشمس', hex: '#ea580c' }],
     inStock: true,
   },
   {
-    id: 'abaya-charm-fuchsia-jade-natural-stone',
-    name: 'Fuchsia Jade',
+    id: 'signature-strand-fuchsia-jade',
+    name: 'Fuchsia Jade Strand',
     nameAr: 'اليشم الفوشي حجر طبيعي',
-    category: 'abaya-charms',
+    category: 'signature-strands',
     price: 500,
     description:
       'Fuchsia jade strand for a bold jewel-toned highlight on neutral abayas.',
@@ -525,10 +525,10 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'abaya-charm-blue-aventurine-natural-stone',
-    name: 'Blue Aventurine',
+    id: 'signature-strand-blue-aventurine',
+    name: 'Blue Aventurine Strand',
     nameAr: 'أفنتورين أزرق حجر طبيعي',
-    category: 'abaya-charms',
+    category: 'signature-strands',
     price: 530,
     description:
       'Blue aventurine beads with gentle sparkle — a cool contrast on deep or black fabric.',
@@ -541,10 +541,10 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'abaya-charm-rose-quartz-natural-stone',
-    name: 'Rose Quartz',
+    id: 'signature-strand-rose-quartz',
+    name: 'Rose Quartz Strand',
     nameAr: 'كوارتز وردي حجر طبيعي',
-    category: 'abaya-charms',
+    category: 'signature-strands',
     price: 565,
     description:
       'Soft rose quartz with a luminous, romantic line along the abaya edge.',
@@ -557,10 +557,10 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'abaya-charm-malachite-natural-stone',
-    name: 'Malachite',
+    id: 'signature-strand-malachite',
+    name: 'Malachite Strand',
     nameAr: 'ملاكيت حجر طبيعي',
-    category: 'abaya-charms',
+    category: 'signature-strands',
     price: 600,
     description:
       'Deep malachite green with natural banding — a striking signature accent.',
@@ -573,10 +573,10 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'abaya-charm-lapis-lazuli-natural-stone',
-    name: 'Lapis Lazuli',
+    id: 'signature-strand-lapis-lazuli',
+    name: 'Lapis Lazuli Strand',
     nameAr: 'لازورد حجر طبيعي',
-    category: 'abaya-charms',
+    category: 'signature-strands',
     price: 645,
     description:
       'Rich lapis lazuli with golden pyrite flecks; an elevated jewel tone for evening abayas.',
@@ -589,10 +589,10 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'abaya-charm-amethyst-hearts-natural-stone',
-    name: 'Amethyst Hearts',
+    id: 'signature-strand-amethyst-hearts',
+    name: 'Amethyst Hearts Strand',
     nameAr: 'قلوب جمشت حجر طبيعي',
-    category: 'abaya-charms',
+    category: 'signature-strands',
     price: 720,
     description:
       'Heart-cut amethyst beads — limited edition release with clip attachment.',
@@ -606,10 +606,10 @@ export const accessories: Accessory[] = [
     isLimitedEdition: true,
   },
   {
-    id: 'abaya-charm-jade-hearts-natural-stone',
-    name: 'Jade Hearts',
+    id: 'signature-strand-jade-hearts',
+    name: 'Jade Hearts Strand',
     nameAr: 'قلوب اليشم حجر طبيعي',
-    category: 'abaya-charms',
+    category: 'signature-strands',
     price: 750,
     description:
       'Heart-shaped jade beads — limited edition; serene green movement on the abaya line.',

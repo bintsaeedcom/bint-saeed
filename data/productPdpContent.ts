@@ -44,8 +44,11 @@ import {
   COVENT_GARDEN_LONG_DRESS_ORIGIN,
   COVENT_GARDEN_LONG_DRESS_PRODUCT_DETAILS,
 } from '@/data/coventGardenLongDressPdpDetails'
-import { COVENT_GARDEN_ABAYA_FAQ_EN } from '@/data/coventGardenAbayaPdpFaq'
+import { getCoventGardenAbayaPdpFaq } from '@/lib/products/coventGardenAbayaFaqI18n'
+import { getHouseCodesDetailGroup } from '@/lib/products/pdpHouseCodesGroupsI18n'
 import { COVENT_GARDEN_LONG_DRESS_FAQ_EN } from '@/data/coventGardenLongDressPdpFaq'
+import { buildHampsteadDressPdpContent } from '@/lib/products/hampsteadDressPdpI18n'
+import { buildSohoSetPdpContent } from '@/lib/products/sohoSetPdpI18n'
 
 export type { PdpDetailGroup } from '@/lib/products/pdpIntroRich'
 
@@ -429,6 +432,24 @@ function isCoventGardenLongDress(product: Product): boolean {
   return slug === 'covent-garden-long-dress' || product.id === 'dr-009'
 }
 
+function isHampsteadDress(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'hampstead-dress' || product.id === 'bs-004'
+}
+
+function isSohoSet(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'soho-set' || product.id === 'st-003'
+}
+
+function buildSohoSetContent(
+  product: Product,
+  color: string | undefined,
+  locale: AppLocale,
+): ProductPdpContent {
+  return buildSohoSetPdpContent(locale)
+}
+
 function buildCoventGardenAbayaContent(product: Product): ProductPdpContent {
   const introParagraphParts = COVENT_GARDEN_ABAYA_INTRO_EN
 
@@ -436,11 +457,12 @@ function buildCoventGardenAbayaContent(product: Product): ProductPdpContent {
     introParagraphParts,
     introParagraphs: pdpIntroParagraphsToPlainText(introParagraphParts),
     productDetails: [...COVENT_GARDEN_ABAYA_PRODUCT_DETAILS],
+    productDetailGroups: [getHouseCodesDetailGroup('knotted-line-al-talli', 'en')],
     compositionDetails: [...COVENT_GARDEN_ABAYA_COMPOSITION],
     careDetails: [...COVENT_GARDEN_ABAYA_CARE],
     fitAndSizeDetails: [...COVENT_GARDEN_ABAYA_FIT_AND_SIZE],
     originDetails: [...COVENT_GARDEN_ABAYA_ORIGIN],
-    faq: COVENT_GARDEN_ABAYA_FAQ_EN,
+    faq: getCoventGardenAbayaPdpFaq('en'),
   }
 }
 
@@ -467,7 +489,10 @@ function buildCoventGardenSignatureSetContent(product: Product, color?: string):
     introParagraphParts,
     introParagraphs: pdpIntroParagraphsToPlainText(introParagraphParts),
     productDetails: [],
-    productDetailGroups: buildCoventGardenSignatureSetDetailGroups(colorName),
+    productDetailGroups: [
+      ...buildCoventGardenSignatureSetDetailGroups(colorName),
+      getHouseCodesDetailGroup('knotted-line-only', 'en'),
+    ],
     compositionGroups: COVENT_GARDEN_SIGNATURE_SET_COMPOSITION_GROUPS.map((group) => ({
       title: group.title,
       items: [...group.items],
@@ -513,7 +538,6 @@ function buildKensingtonAbayaContent(locale: AppLocale = 'en'): ProductPdpConten
       'Round neckline',
       'Light shoulder padding',
       'Front snap-button closure',
-      'Bint Saeed signature woven trim inspired by traditional Al Khous palm frond weaving',
       'Two hidden side pockets',
       'Soft crepe lining',
       'Optional hidden interior personalisation label',
@@ -531,6 +555,7 @@ function buildKensingtonAbayaContent(locale: AppLocale = 'en'): ProductPdpConten
       'Model wears size XS',
     ],
     careDetails: [...ABAYA_CARE_DETAILS],
+    productDetailGroups: [getHouseCodesDetailGroup('al-khous', locale)],
     faq: getKensingtonPdpFaq(locale),
   }
 }
@@ -565,8 +590,6 @@ function buildKnightsbridgeAbayaJacketContent(color?: string, locale: AppLocale 
       'Two hidden side pockets',
       'Shoulder tab detailing',
       'Long sleeves with buttoned cuffs',
-      'Bint Saeed signature Khous-inspired woven detailing on the chest pockets and cuffs',
-      'Bint Saeed signature gold-tone Knotted Lines of Lineage buttons',
       'Attached inner dress',
       'Optional hidden interior personalisation label with a name, date, or meaningful message',
       `Colour: ${colorLabel} with natural Khous contrast detailing`,
@@ -584,6 +607,7 @@ function buildKnightsbridgeAbayaJacketContent(color?: string, locale: AppLocale 
       'Available sizes: XS, S, M, L, XL, XXL',
     ],
     careDetails: [...KNIGHTSBRIDGE_ABAYA_CARE],
+    productDetailGroups: [getHouseCodesDetailGroup('knotted-line-al-khous', locale)],
     stylePairingNote: getKnightsbridgeStylePairingNote('knightsbridge-abaya-jacket', catalogColor, locale),
     faq: getKnightsbridgePdpFaq(locale),
   }
@@ -616,7 +640,6 @@ function buildBelgraviaAbayaContent(color?: string, locale: AppLocale = 'en'): P
     productDetails: [
       'Bisht-inspired abaya silhouette',
       'Available in Deep Black and Navy Blue',
-      'Handwoven trim inspired by traditional Al Khous palm frond weaving',
       'Open-front construction',
       'Optional concealed snap-button closure available upon request',
       'Fully lined for comfort and a refined finish',
@@ -638,6 +661,7 @@ function buildBelgraviaAbayaContent(color?: string, locale: AppLocale = 'en'): P
       'Model height: 155 cm / 61 inches',
     ],
     careDetails: [...ABAYA_CARE_DETAILS],
+    productDetailGroups: [getHouseCodesDetailGroup('al-khous', locale)],
     faq: getBelgraviaPdpFaq(locale),
   }
 }
@@ -706,6 +730,12 @@ export function getProductPdpContent(
   const locale = opts?.locale ?? 'en'
 
   if (locale !== 'en') {
+    if (isHampsteadDress(product)) {
+      return applyAbayaPdpStandards(product, buildHampsteadDressPdpContent(locale), locale)
+    }
+    if (isSohoSet(product)) {
+      return applyAbayaPdpStandards(product, buildSohoSetContent(product, color, locale), locale)
+    }
     const localized = getProductPdpContentLocale(product, color, locale)
     const content =
       localized ??
@@ -733,6 +763,10 @@ export function getProductPdpContent(
     content = buildCoventGardenAbayaContent(product)
   } else if (isCoventGardenLongDress(product)) {
     content = buildCoventGardenLongDressContent(product)
+  } else if (isHampsteadDress(product)) {
+    content = buildHampsteadDressPdpContent('en')
+  } else if (isSohoSet(product)) {
+    content = buildSohoSetContent(product, color, locale)
   } else if (isCoventGardenSignatureSet(product)) {
     content = buildCoventGardenSignatureSetContent(product, color)
   } else if (product.category === 'Accessories') {

@@ -5,8 +5,8 @@ const UNIQUE_SIZE_CATEGORIES = new Set<Accessory['category']>([
   'necklaces',
   'earrings',
   'bracelets',
-  'abaya-charms',
-  'bag-charms',
+  'signature-strands',
+  'bag-strands',
 ])
 
 export function accessoryUsesUniqueSizeLabel(category: Accessory['category']): boolean {

@@ -4,6 +4,7 @@ import { localizedPath } from '@/lib/i18n/routing'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getHeritageMetaSnippet } from '@/lib/products/heritageSeo'
 import { getKaftanPageSeo } from '@/lib/products/kaftanSchemaI18n'
+import { getCoventGardenAbayaPageSeo, getCoventGardenAbayaMetaKeywords } from '@/lib/products/coventGardenAbayaPageSeoI18n'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 
 const SITE = new URL('https://www.bintsaeed.com')
@@ -15,6 +16,8 @@ export function buildProductPageTitle(
 ): string {
   const slug = body.slug?.toLowerCase()
   if (slug) {
+    const coventGarden = getCoventGardenAbayaPageSeo(slug, locale)
+    if (coventGarden) return coventGarden.title
     const kaftan = getKaftanPageSeo(slug, locale)
     if (kaftan) return kaftan.title
   }
@@ -43,6 +46,8 @@ export function buildProductMetaDescription(
 ): string {
   const slug = body.slug?.toLowerCase()
   if (slug) {
+    const coventGarden = getCoventGardenAbayaPageSeo(slug, locale)
+    if (coventGarden) return clipMetaDescription(coventGarden.description, 200)
     const kaftan = getKaftanPageSeo(slug, locale)
     if (kaftan) return clipMetaDescription(kaftan.description, 200)
   }
@@ -52,6 +57,17 @@ export function buildProductMetaDescription(
     .filter(Boolean)
     .join(' ')
   return clipMetaDescription(merged.replace(/\s+/g, ' ').trim(), 200)
+}
+
+export function getProductPageMetaKeywords(
+  locale: AppLocale,
+  slug: string,
+  colorName?: string,
+): string | undefined {
+  const normalized = slug.toLowerCase()
+  const coventGarden = getCoventGardenAbayaPageSeo(normalized, locale)
+  if (coventGarden) return getCoventGardenAbayaMetaKeywords(locale, colorName)
+  return undefined
 }
 
 export function productCanonicalUrl(locale: AppLocale, slug: string): string {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, useMemo } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
@@ -11,6 +11,12 @@ import type { Swiper as SwiperType } from 'swiper'
 import { FiPlus, FiMinus, FiHeart, FiX, FiGlobe, FiAward } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { accessories, accessoryCategories } from '@/data/accessories'
+import {
+  findAccessoryById,
+  isSignatureStrandCategory,
+  resolveAccessoryId,
+} from '@/lib/accessories/accessoryRouteAliases'
+import { localizedPath } from '@/lib/i18n/routing'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -24,6 +30,7 @@ import {
   getAccessoryImageAlt,
   getAccessoryPdpImages,
 } from '@/lib/accessories/accessoryJsonLd'
+import { accessoryCanonicalUrl } from '@/lib/accessories/accessoryPageUrl'
 import {
   PDP_BULLET_ITEM,
   PDP_BULLET_LIST,
@@ -34,6 +41,13 @@ import {
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
 import { accessoryDisplaySize } from '@/lib/accessories/accessorySizeLabel'
+import {
+  buildStrandPdpAccordionSections,
+  getStrandPdpContent,
+  getStrandPdpSectionTitles,
+  signatureStrandsCategoryLabel,
+  strandPdpIntroBlock,
+} from '@/lib/accessories/strandPdpContent'
 import PdpAccordion, { type PdpAccordionSectionConfig } from '@/components/pdp/PdpAccordion'
 
 import 'swiper/css'
@@ -49,6 +63,7 @@ const PDP_PRIMARY_CTA =
 
 export default function AccessoryDetailPage() {
   const params = useParams()
+  const router = useRouter()
   const rawId = params?.id
   const aid =
     typeof rawId === 'string'
@@ -56,7 +71,8 @@ export default function AccessoryDetailPage() {
       : Array.isArray(rawId) && typeof rawId[0] === 'string'
         ? decodeURIComponent(rawId[0])
         : ''
-  const accessory = accessories.find((a) => a.id === aid)
+  const canonicalId = resolveAccessoryId(aid)
+  const accessory = findAccessoryById(aid)
 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
   const mainSwiperRef = useRef<SwiperType | null>(null)
@@ -78,7 +94,12 @@ export default function AccessoryDetailPage() {
   )
 
   useEffect(() => {
-    const a = accessories.find((x) => x.id === aid)
+    if (!aid || aid === canonicalId) return
+    router.replace(localizedPath(language, `/accessories/${canonicalId}`))
+  }, [aid, canonicalId, language, router])
+
+  useEffect(() => {
+    const a = findAccessoryById(aid)
     if (!a) {
       setSelectedColor('')
       return
@@ -146,7 +167,24 @@ export default function AccessoryDetailPage() {
     showAddedToBagToast(isRTL)
   }
 
+  const strandPdpContent = getStrandPdpContent(accessory.id, language)
+  const strandSectionTitles = getStrandPdpSectionTitles(language)
+
   const pdpAccordionSections = useMemo((): PdpAccordionSectionConfig[] => {
+    if (strandPdpContent) {
+      return buildStrandPdpAccordionSections({
+        content: strandPdpContent,
+        productDetailsTitle: productUi.productDetails,
+        materialsTitle: ui.accessories.materials,
+        careTitle: productUi.care,
+        faqTitle: productUi.faq,
+        shippingTitle: t.product.shippingReturns,
+        stoneOriginTitle: strandSectionTitles.stoneOrigin,
+        naturalStoneTitle: strandSectionTitles.naturalStone,
+        isRTL,
+      })
+    }
+
     const description = isRTL ? accessory.descriptionAr : accessory.description
     const materials = isRTL ? accessory.materialsAr : accessory.materials
 
@@ -197,7 +235,24 @@ export default function AccessoryDetailPage() {
         children: <PdpShippingReturnsBullets isRTL={isRTL} />,
       },
     ]
-  }, [accessory.description, accessory.descriptionAr, accessory.materials, accessory.materialsAr, isRTL, t.product.shippingReturns])
+  }, [
+    accessory.description,
+    accessory.descriptionAr,
+    accessory.id,
+    accessory.materials,
+    accessory.materialsAr,
+    isRTL,
+    productUi.care,
+    productUi.faq,
+    productUi.productDetails,
+    language,
+    strandPdpContent,
+    strandSectionTitles.naturalStone,
+    strandSectionTitles.stoneOrigin,
+    t.product.shippingReturns,
+    ui.accessories.careBullets,
+    ui.accessories.materials,
+  ])
 
   const detailAngles = accessory.detailAngles
   const hasAngleColumn = !!detailAngles && detailAngles.length === 2
@@ -207,18 +262,25 @@ export default function AccessoryDetailPage() {
     ? 'lg:grid-cols-[4.75rem_minmax(0,1fr)_minmax(8.75rem,11.25rem)]'
     : 'lg:grid-cols-[4.75rem_minmax(0,1fr)]'
 
-  const displayName = isRTL ? accessory.nameAr : accessory.name
+  const displayName =
+    strandPdpContent?.headline ??
+    (language === 'ar' ? accessory.nameAr : accessory.name)
+  const pdpDescription = strandPdpContent
+    ? strandPdpContent.introParagraphs.join(' ')
+    : language === 'ar'
+      ? accessory.descriptionAr
+      : accessory.description
   const pdpImages = useMemo(() => getAccessoryPdpImages(accessory), [accessory])
   const productJsonLd = useMemo(
     () =>
       buildAccessoryProductJsonLd({
         accessory,
         displayName,
-        description: isRTL ? accessory.descriptionAr : accessory.description,
-        pageUrl: `https://www.bintsaeed.com/accessories/${accessory.id}`,
+        description: pdpDescription,
+        pageUrl: accessoryCanonicalUrl(language, accessory.id),
         locale: language,
       }),
-    [accessory, displayName, isRTL, language],
+    [accessory, displayName, language, pdpDescription],
   )
   const imageAltFor = (imageSrc: string, index: number) =>
     getAccessoryImageAlt(accessory, imageSrc, index, language)
@@ -233,6 +295,11 @@ export default function AccessoryDetailPage() {
     })
   }, [accessory.category, accessory.id, accessory.price, displayName])
 
+  const categoryBreadcrumbLabel =
+    isSignatureStrandCategory(accessory.category)
+      ? signatureStrandsCategoryLabel(language)
+      : (isRTL ? categoryInfo?.nameAr : categoryInfo?.name) ?? ''
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
@@ -243,7 +310,7 @@ export default function AccessoryDetailPage() {
           { label: productUi.home, href: '/home' },
           { label: ui.common.accessories, href: '/accessories' },
           {
-            label: (isRTL ? categoryInfo?.nameAr : categoryInfo?.name) ?? '',
+            label: categoryBreadcrumbLabel,
             href: `/accessories?type=${accessory.category}`,
           },
           { label: isRTL ? accessory.nameAr : accessory.name },
@@ -617,9 +684,13 @@ export default function AccessoryDetailPage() {
               </div>
             </div>
 
-            <p className={`mb-1 ${PDP_COPY_INTRO} pdp-copy--intro`}>
-              {isRTL ? accessory.descriptionAr : accessory.description}
-            </p>
+            {strandPdpContent ? (
+              <div className="mb-1">{strandPdpIntroBlock(strandPdpContent, isRTL)}</div>
+            ) : (
+              <p className={`mb-1 ${PDP_COPY_INTRO} pdp-copy--intro`}>
+                {isRTL ? accessory.descriptionAr : accessory.description}
+              </p>
+            )}
             <p className={`mb-2 ${PDP_MTO_NOTE}`}>
               {productUi.madeToOrderNote}
             </p>

@@ -13,10 +13,7 @@ import { commerceUi } from '@/lib/i18n/commerceUi'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
-import {
-  getJewelleryCategoryDiscoveryKeywords,
-  mergeAccessorySchemaKeywords,
-} from '@/lib/accessories/jewelleryDiscoveryI18n'
+import { buildStrandsCollectionJsonLd } from '@/lib/accessories/strandsCollectionSchemaI18n'
 
 /** Strands hero banner — `public/strands-banner.jpg` */
 const HERO_CAMPAIGN_IMAGE = '/strands-banner.jpg'
@@ -29,22 +26,22 @@ const MARYLEBONE_PAIRING_ALT = withBrandAlt(
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 
 const STONE_VISUAL_NOTES: Record<string, string> = {
-  Onyx: 'Deep black with a high-gloss surface. A classic stone, found across Brazil and India. The one every Marylebone Abaya arrives wearing.',
-  'Tiger Eye': 'Warm golden-brown with a natural moving sheen that shifts with the light. Found in South Africa. No two pieces catch it the same way.',
-  'Orange Jade': 'A vivid coral jade with a smooth, opaque finish. One of the more striking colour expressions of natural jade.',
-  'Fuchsia Jade': 'Natural jade in a deep saturated rose. An unusual colour — not commonly found at this intensity.',
-  'Blue Aventurine': 'A cool dusty blue with a subtle internal shimmer. Sourced from India and Chile. Understated from a distance, detailed up close.',
-  'Rose Quartz': 'Pale blush, semi-translucent. The light passes through it rather than reflecting off. Found across Brazil and Madagascar.',
-  Malachite: 'Deep green with natural banded markings — no two pieces share the same pattern. Found in Central Africa.',
-  'Lapis Lazuli': 'A deep blue flecked with natural gold, sourced from Afghanistan. Used in jewellery and art for thousands of years.',
-  'Amethyst Hearts': 'Violet quartz shaped into hearts and polished to a faceted surface. Found across Brazil and Zambia.',
-  'Jade Hearts': 'Cool green jade, hand-shaped into heart forms. Each one slightly different. Each one made once.',
+  'Onyx Strand': 'Deep black with a high-gloss surface. A classic stone, found across Brazil and India. The one every Marylebone Abaya arrives wearing.',
+  'Tiger Eye Strand': 'Warm golden-brown with a natural moving sheen that shifts with the light. Found in South Africa. No two pieces catch it the same way.',
+  'Sunstone Strand': 'Warm peach-orange sunstone with a smooth, luminous finish. A vivid natural tone with gentle warmth in the light.',
+  'Fuchsia Jade Strand': 'Natural jade in a deep saturated rose. An unusual colour — not commonly found at this intensity.',
+  'Blue Aventurine Strand': 'A cool dusty blue with a subtle internal shimmer. Sourced from India and Chile. Understated from a distance, detailed up close.',
+  'Rose Quartz Strand': 'Pale blush, semi-translucent. The light passes through it rather than reflecting off. Found across Brazil and Madagascar.',
+  'Malachite Strand': 'Deep green with natural banded markings — no two pieces share the same pattern. Found in Central Africa.',
+  'Lapis Lazuli Strand': 'A deep blue flecked with natural gold, sourced from Afghanistan. Used in jewellery and art for thousands of years.',
+  'Amethyst Hearts Strand': 'Violet quartz shaped into hearts and polished to a faceted surface. Found across Brazil and Zambia.',
+  'Jade Hearts Strand': 'Cool green jade, hand-shaped into heart forms. Each one slightly different. Each one made once.',
 }
 
 const CONCEPT_STONE_SWATCHES = [
   { name: 'Onyx', color: '#1a1a1a' },
   { name: 'Tiger Eye', color: '#8B6914' },
-  { name: 'Orange Jade', color: '#E8833A' },
+  { name: 'Sunstone', color: '#E8833A' },
   { name: 'Fuchsia Jade', color: '#C2185B' },
   { name: 'Blue Aventurine', color: '#7BA7C2' },
   { name: 'Rose Quartz', color: '#E8B4B8' },
@@ -72,74 +69,13 @@ const STEP_COPY = [
   },
 ] as const
 
-const COLLECTION_JSON_LD_BASE = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: 'Natural Stone Abaya Strands — Bint Saeed Al Ain Jewellery',
-  description:
-    'Interchangeable natural stone bead abaya strands handcrafted in Abu Dhabi. Onyx, jade, amethyst hearts, tiger eye, malachite, lapis lazuli, rose quartz and blue aventurine — designed for the Bint Saeed Marylebone Abaya. Pairs with Al Ain necklaces, natural stone bead earrings and designer jewellery.',
-  url: 'https://www.bintsaeed.com/strands',
-  brand: {
-    '@type': 'Brand',
-    name: 'Bint Saeed',
-    url: 'https://www.bintsaeed.com',
-  },
-  isPartOf: {
-    '@type': 'Collection',
-    name: 'Bint Saeed Accessories — Necklaces, Earrings & Abaya Strands',
-    url: 'https://www.bintsaeed.com/accessories',
-  },
-  offers: {
-    '@type': 'AggregateOffer',
-    lowPrice: '400',
-    highPrice: '750',
-    priceCurrency: 'AED',
-    offerCount: '10',
-  },
-} as const
-
 export default function StrandsPage() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
   const { formatPrice } = useCurrency()
-  const collectionJsonLd = useMemo(
-    () => ({
-      ...COLLECTION_JSON_LD_BASE,
-      keywords: mergeAccessorySchemaKeywords(
-        getJewelleryCategoryDiscoveryKeywords('abaya-charms', language),
-        [
-          'malachite necklace pairs with strand',
-          'onyx jade amethyst earrings UAE',
-          'natural stone bead jewellery Abu Dhabi',
-        ],
-      ),
-      mainEntity: {
-        '@type': 'ItemList',
-        name: 'Bint Saeed Natural Stone Abaya Strands',
-        numberOfItems: 10,
-        itemListElement: accessories
-          .filter((item) => item.category === 'abaya-charms')
-          .map((product, index) => ({
-            '@type': 'ListItem',
-            position: index + 1,
-            url: `https://www.bintsaeed.com/accessories/${product.id}`,
-            item: {
-              '@type': 'Product',
-              name: product.name,
-              url: `https://www.bintsaeed.com/accessories/${product.id}`,
-              offers: {
-                '@type': 'Offer',
-                priceCurrency: 'AED',
-                price: String(product.price),
-              },
-            },
-          })),
-      },
-    }),
-    [language],
-  )
+  const collectionJsonLd = useMemo(() => buildStrandsCollectionJsonLd(language), [language])
   const strandProducts = useMemo(() => {
-    const strands = accessories.filter((item) => item.category === 'abaya-charms')
+    const strands = accessories.filter((item) => item.category === 'signature-strands')
     const isNewStrandShot = (src: string) =>
       src.includes('strand-front') || src.includes('rosette-strand-front')
     return [...strands].sort((a, b) => {
@@ -371,7 +307,7 @@ export default function StrandsPage() {
               ))}
             </div>
             <p className="mt-[10px] max-w-2xl hyphens-none font-montserrat text-[11px] tracking-[0.06em] text-[#8a7a70] [word-break:keep-all]">
-              Onyx · Tiger Eye · Orange Jade · Fuchsia Jade · Blue Aventurine · Rose Quartz · Malachite · Lapis Lazuli · Amethyst · Jade
+              Onyx · Tiger Eye · Sunstone · Fuchsia Jade · Blue Aventurine · Rose Quartz · Malachite · Lapis Lazuli · Amethyst · Jade
             </p>
             <LocaleLink
               href="#stone-showcase"
@@ -662,7 +598,7 @@ export default function StrandsPage() {
           <p className="mt-10 text-center font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#8a7a70]">
             Also in{' '}
             <LocaleLink
-              href="/accessories?type=abaya-charms"
+              href="/accessories?type=signature-strands"
               className="text-[#7A1C28] underline-offset-4 hover:underline"
               data-cursor-hover
             >

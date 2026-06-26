@@ -16,6 +16,8 @@ const LEGACY_SHOP_SLUG_REDIRECTS = [
   ['signature-long-dress', 'covent-garden-long-dress'],
 ]
 
+const { productRedirects, categoryRedirects } = require('./lib/accessories/legacyAccessoryRedirects.js')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
@@ -80,7 +82,18 @@ const nextConfig = {
       },
       { source: '/charms', destination: '/strands', permanent: true },
       { source: '/charms/:path*', destination: '/strands/:path*', permanent: true },
-      { source: '/strands/shop', destination: '/accessories?type=abaya-charms', permanent: false },
+      { source: '/strands/shop', destination: '/accessories?type=signature-strands', permanent: true },
+      ...productRedirects.map(([from, to]) => ({
+        source: `/accessories/${from}`,
+        destination: `/accessories/${to}`,
+        permanent: true,
+      })),
+      ...categoryRedirects.map(([from, to]) => ({
+        source: '/accessories',
+        has: [{ type: 'query', key: 'type', value: from }],
+        destination: `/accessories?type=${to}`,
+        permanent: true,
+      })),
       // Legacy abaya-charm product shots → strands folder (post-rename deploy safety)
       {
         source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-tigereye-abaya-charm.PNG',

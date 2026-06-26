@@ -75,9 +75,17 @@ const EARRING_CATEGORY_ROWS: KwRow[] = [
 ]
 
 const STRAND_CATEGORY_ROWS: KwRow[] = [
-  ['stone bead abaya charm', 'تعليقة عباءة خرز حجر', 'charm abaya perles pierre', 'charm abaya perle pietra', 'colgante abaya cuentas piedra', 'украшение для абайи из каменных бусин', '石珠长袍挂饰', 'Steinperlen-Abaya-Charm', 'stenen kraal abaya charm', 'charm abaya contas pedra'],
+  ['Signature Strands', 'ستراندات التوقيع', 'Signature Strands', 'Signature Strands', 'Signature Strands', 'Signature Strands', 'Signature Strands', 'Signature Strands', 'Signature Strands', 'Signature Strands'],
+  ['garment jewellery', 'مجوهرات الملابس', 'bijoux pour vêtements', 'gioielli per capi', 'joyería para prendas', 'украшения для одежды', '服装珠宝', 'Kleidungsschmuck', 'kleding sieraden', 'joias para vestuário'],
+  ['garment adornment', 'زينة الملابس', 'ornement de vêtement', 'ornamento per capo', 'adorno de prenda', 'украшение для одежды', '服装装饰', 'Kleidungsverzierung', 'kledingversiering', 'adorno de vestuário'],
+  ['detachable garment jewellery', 'مجوهرات ملابس قابلة للفصل', 'bijoux vêtement amovible', 'gioielli capo staccabili', 'joyería prenda desmontable', 'съёмные украшения для одежды', '可拆卸服装珠宝', 'abnehmbarer Kleidungsschmuck', 'afneembare kleding sieraden', 'joias vestuário destacável'],
+  ['interchangeable abaya jewellery', 'مجوهرات عباءة قابلة للتبديل', 'bijoux abaya interchangeables', 'gioielli abaya intercambiabili', 'joyería abaya intercambiable', 'сменные украшения для абайи', '可更换长袍珠宝', 'austauschbarer Abaya-Schmuck', 'verwisselbare abaya sieraden', 'joias abaya intercambiáveis'],
+  ['natural stone garment jewellery', 'مجوهرات ملابس أحجار طبيعية', 'bijoux vêtement pierres naturelles', 'gioielli capo pietre naturali', 'joyería prenda piedra natural', 'украшения для одежды из натуральных камней', '天然石服装珠宝', 'Naturstein-Kleidungsschmuck', 'natuursteen kleding sieraden', 'joias vestuário pedra natural'],
   ['clip-on abaya strand', 'سلسلة عباءة بحلقة تعليق', 'fil abaya à clip', 'filo abaya con clip', 'hilo abaya con clip', 'нить для абайи на зажиме', '夹扣长袍链饰', 'Abaya-Strang mit Clip', 'abaya streng met clip', 'fio abaya com clip'],
+  ['cuff strand abaya', 'سلسلة كُم العباءة', 'fil de manchette abaya', 'filo polsino abaya', 'hilo puño abaya', 'нить на манжете абайи', '长袍袖口链饰', 'Abaya-Manschetten-Strang', 'manchet abaya streng', 'fio punho abaya'],
   ['Al Ain rosette strand', 'سلسلة وردة القوع', 'fil rosette Al Ain', 'filo rosetta Al Ain', 'hilo rosetón Al Ain', 'нить Al Ain rosette', 'Al Ain玫瑰花链饰', 'Al Ain Rosetten-Strang', 'Al Ain rozet streng', 'fio roseta Al Ain'],
+  ['buy abaya jewellery online', 'شراء مجوهرات عباءة أونلاين', 'acheter bijoux abaya en ligne', 'acquista gioielli abaya online', 'comprar joyería abaya online', 'купить украшения для абайи онлайн', '在线购买长袍珠宝', 'Abaya-Schmuck online kaufen', 'abaya sieraden online kopen', 'comprar joias abaya online'],
+  ['worldwide shipping abaya jewellery', 'شحن مجوهرات عباءة عالمي', 'livraison bijoux abaya mondiale', 'spedizione gioielli abaya mondiale', 'envío joyería abaya mundial', 'доставка украшений для абайи по всему миру', '全球长袍珠宝配送', 'weltweiter Versand Abaya-Schmuck', 'wereldwijde verzending abaya sieraden', 'envio mundial joias abaya'],
 ]
 
 const JEWELLERY_GLOBAL_I18N = JEWELLERY_GLOBAL_ROWS.map(([en, ar, fr, it, es, ru, zh, de, nl, pt]) =>
@@ -117,7 +125,7 @@ export function getJewelleryCategoryDiscoveryKeywords(
   if (category === 'earrings') {
     return [...global, ...rowsForLocale(EARRING_CATEGORY_ROWS, locale)]
   }
-  if (category === 'abaya-charms') {
+  if (category === 'signature-strands') {
     return [...global, ...rowsForLocale(STRAND_CATEGORY_ROWS, locale)]
   }
   return global
