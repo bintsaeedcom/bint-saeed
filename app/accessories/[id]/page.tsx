@@ -49,17 +49,15 @@ import {
   strandPdpIntroBlock,
 } from '@/lib/accessories/strandPdpContent'
 import PdpAccordion, { type PdpAccordionSectionConfig } from '@/components/pdp/PdpAccordion'
+import { CTA_BUTTON_RADIUS, PDP_FILLED_PLUM, pdpCtaPrimary } from '@/lib/ui/ctaClasses'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
 import 'swiper/css/pagination'
 
-const PDP_BUTTON_RADIUS = 'rounded-[4px]'
 const PDP_OUTLINED_PLUM = 'bg-white text-brand-darkRed border-brand-darkRed'
-const PDP_FILLED_PLUM = 'bg-brand-darkRed text-white border-brand-darkRed'
-const PDP_PRIMARY_CTA =
-  `inline-flex min-h-[46px] items-center justify-center ${PDP_BUTTON_RADIUS} bg-brand-darkRed text-white font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-brand-dustyBlue`
+const PDP_PRIMARY_CTA = pdpCtaPrimary
 
 export default function AccessoryDetailPage() {
   const params = useParams()
@@ -628,7 +626,7 @@ export default function AccessoryDetailPage() {
                 </span>
               </div>
               <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
-                <span className={`min-w-[52px] border px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] ${PDP_BUTTON_RADIUS} ${PDP_FILLED_PLUM}`}>
+                <span className={`min-w-[52px] border px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] ${CTA_BUTTON_RADIUS} ${PDP_FILLED_PLUM}`}>
                   {sizeLabel}
                 </span>
               </div>
@@ -636,7 +634,7 @@ export default function AccessoryDetailPage() {
 
             {/* Quantity & Add to Cart */}
             <div className="mb-1 flex flex-col gap-2 sm:flex-row sm:gap-3">
-              <div className={`flex w-full items-center justify-center border border-brand-stone/50 sm:w-auto sm:justify-start ${PDP_BUTTON_RADIUS}`}>
+              <div className={`flex w-full items-center justify-center border border-brand-stone/50 sm:w-auto sm:justify-start ${CTA_BUTTON_RADIUS}`}>
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}

@@ -9,6 +9,7 @@ import { validateOptionalPhone } from '@/lib/validateOptionalPhone'
 import PhoneWithCountry from '@/components/PhoneWithCountry'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getSubscribeFormCopy } from '@/lib/i18n/subscribeFormI18n'
+import { CTA_BUTTON_RADIUS, CTA_FORM_TRACKING } from '@/lib/ui/ctaClasses'
 
 interface SubscribeFormProps {
   variant?: 'light' | 'dark'
@@ -95,8 +96,8 @@ export default function SubscribeForm({ variant = 'light', initialEmail = '' }: 
     : 'w-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder-white/50 font-montserrat text-sm tracking-[0.1em] focus:outline-none focus:border-brand-rose transition-colors'
 
   const buttonClass = variant === 'dark'
-    ? 'px-8 py-4 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-xs uppercase tracking-[0.2em] rounded-xl hover:bg-brand-stone transition-colors disabled:opacity-50'
-    : 'px-8 py-3 bg-brand-rose text-brand-darkRed font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-white transition-colors disabled:opacity-50'
+    ? `px-8 py-4 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-xs uppercase ${CTA_FORM_TRACKING} ${CTA_BUTTON_RADIUS} hover:bg-brand-stone transition-colors disabled:opacity-50`
+    : `px-8 py-3 bg-brand-rose text-brand-darkRed font-montserrat text-sm uppercase ${CTA_FORM_TRACKING} ${CTA_BUTTON_RADIUS} hover:bg-white transition-colors disabled:opacity-50`
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

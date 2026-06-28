@@ -92,6 +92,7 @@ function buildOrderFromSession(session: Stripe.Checkout.Session): StoredOrder {
 
   return {
     id,
+    paymentProvider: 'stripe',
     stripeSessionId: session.id,
     paymentIntentId: typeof session.payment_intent === 'string' ? session.payment_intent : session.payment_intent?.id,
     customerEmail,

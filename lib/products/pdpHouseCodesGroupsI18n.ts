@@ -7,6 +7,7 @@ export type HouseCodesVariant =
   | 'al-khous'
   | 'knotted-line-al-khous'
   | 'knotted-line-only'
+  | 'knotted-line-emblem'
   | 'soho-set'
 
 const GROUP_TITLE: Record<AppLocale, string> = {
@@ -177,6 +178,56 @@ const ITEMS: ItemSet = {
     pt: ['Botões dourados signature Knotted Line da Bint Saeed'],
     id: ['Kancing emas signature Knotted Line Bint Saeed'],
     ms: ['Butang emas signature Knotted Line Bint Saeed'],
+  },
+  'knotted-line-emblem': {
+    en: [
+      'Signature gold-tone Knotted Line buttons at the shoulders',
+      'Signature Bint Saeed emblem cufflinks',
+    ],
+    ar: [
+      'أزرار Knotted Line الذهبية المميزة عند الكتفين',
+      'أزرار أكمام شعار Bint Saeed المميزة',
+    ],
+    fr: [
+      'Boutons dorés signature Knotted Line aux épaules',
+      'Boutons de manchette emblème signature Bint Saeed',
+    ],
+    it: [
+      'Bottoni dorati signature Knotted Line alle spalle',
+      'Gemelli emblema signature Bint Saeed',
+    ],
+    es: [
+      'Botones dorados signature Knotted Line en los hombros',
+      'Gemelos emblema signature Bint Saeed',
+    ],
+    ru: [
+      'Фирменные золотистые пуговицы Knotted Line на плечах',
+      'Запонки с эмблемой Bint Saeed',
+    ],
+    zh: [
+      '肩部标志性金色调 Knotted Line 纽扣',
+      'Bint Saeed 标志性徽标袖扣',
+    ],
+    de: [
+      'Signatur-Knotted-Line-Knöpfe in Goldoptik an den Schultern',
+      'Bint Saeed Signatur-Emblem-Manschettenknöpfe',
+    ],
+    nl: [
+      'Signature goudkleurige Knotted Line-knopen bij de schouders',
+      'Bint Saeed signature embleem manchetknopen',
+    ],
+    pt: [
+      'Botões dourados signature Knotted Line nos ombros',
+      'Abotoaduras emblema signature Bint Saeed',
+    ],
+    id: [
+      'Kancing emas signature Knotted Line di bahu',
+      'Kancing manset emblem signature Bint Saeed',
+    ],
+    ms: [
+      'Butang emas signature Knotted Line di bahu',
+      'Kancing manset emblem signature Bint Saeed',
+    ],
   },
   'soho-set': {
     en: [

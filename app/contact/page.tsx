@@ -9,6 +9,7 @@ import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import toast from 'react-hot-toast'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
+import { ctaFormSubmit, utilityPageH1 } from '@/lib/ui/ctaClasses'
 
 /** Display + deep links */
 const CONTACT_PHONE_DISPLAY = '+971 50 2299402'
@@ -122,7 +123,7 @@ export default function ContactPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h1 data-document-h1="true" className="font-rozha text-5xl md:text-6xl text-brand-darkRed mb-4">
+          <h1 data-document-h1="true" className={`${utilityPageH1} mb-4`}>
             {isRTL ? 'تواصلي معنا' : 'Contact Us'}
           </h1>
           <h2 className="font-montserrat text-brand-clayRed tracking-wide max-w-xl mx-auto">
@@ -221,7 +222,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`${ctaFormSubmit} ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
                 {isSubmitting ? (

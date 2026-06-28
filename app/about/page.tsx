@@ -6,6 +6,12 @@ import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getAboutPageCopy } from '@/lib/content/aboutPageCopyI18n'
+import {
+  ctaPrimary,
+  ctaPrimarySoft,
+  ctaSecondaryOnDark,
+  ctaSecondaryOutlineOnDark,
+} from '@/lib/ui/ctaClasses'
 
 const HERO_IMAGE = '/about/campaign-portrait.PNG'
 const HERO_IMAGE_2 = '/about/campaign-seated.PNG'
@@ -107,14 +113,14 @@ export default function AboutPage() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <LocaleLink
               href="#about-origin"
-              className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
+              className={ctaPrimary}
               data-cursor-hover
             >
               {copy.ctaReadStory}
             </LocaleLink>
             <LocaleLink
               href="/shop"
-              className="inline-flex items-center justify-center rounded-[4px] border border-[#e8ddd4]/40 bg-[#1a0210]/35 px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] backdrop-blur-md transition-colors hover:border-[#e8ddd4]/70 hover:bg-[#1a0210]/55"
+              className={ctaSecondaryOnDark}
               data-cursor-hover
             >
               {copy.ctaExploreCollection}
@@ -266,7 +272,7 @@ export default function AboutPage() {
                 <p>{copy.houseP1}</p>
                 <p>{copy.houseP2}</p>
               </div>
-              <LocaleLink href="/giving-forward" className="mt-8 inline-flex items-center justify-center rounded-[4px] bg-[#e8ddd4] px-8 py-[13px] font-montserrat text-xs uppercase tracking-[0.08em] text-[#7A1C28] transition-colors hover:bg-[#faf8f5]" data-cursor-hover>
+              <LocaleLink href="/giving-forward" className={`mt-8 ${ctaPrimarySoft}`} data-cursor-hover>
                 {copy.ctaGivingForward}
               </LocaleLink>
             </div>
@@ -296,7 +302,7 @@ export default function AboutPage() {
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <LocaleLink
               href="/shop"
-              className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
+              className={ctaPrimary}
               data-cursor-hover
               data-analytics-event="click_collection_from_about"
               data-analytics-section="about-cta"
@@ -305,7 +311,7 @@ export default function AboutPage() {
             </LocaleLink>
             <LocaleLink
               href="/the-codes"
-              className="inline-flex items-center justify-center rounded-[4px] border border-[#e8ddd4]/35 bg-transparent px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:border-[#e8ddd4]/70"
+              className={ctaSecondaryOutlineOnDark}
               data-cursor-hover
             >
               {copy.ctaOurStoryInCodes}

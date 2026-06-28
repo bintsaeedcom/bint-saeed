@@ -18,14 +18,34 @@ function CheckoutSuccessContent() {
   const ui = commerceUi(language)
   const successCopy = getCheckoutSuccessCopy(language)
   const sessionId = searchParams?.get('session_id')
+  const paymentId = searchParams?.get('payment_id')
   const clearCart = useCartStore((state) => state.clearCart)
 
   useEffect(() => {
+    const referenceId = sessionId || paymentId
+    if (!referenceId) return
+
+    trackEvent('purchase', {
+      session_id: sessionId ?? undefined,
+      payment_id: paymentId ?? undefined,
+    })
+
     if (sessionId) {
-      trackEvent('purchase', { session_id: sessionId })
       clearCart()
+      return
     }
-  }, [sessionId, clearCart])
+
+    if (paymentId) {
+      void fetch(`/api/payments/mollie/status?payment_id=${encodeURIComponent(paymentId)}`)
+        .then((response) => response.json())
+        .then((data: { paid?: boolean }) => {
+          if (data.paid) clearCart()
+        })
+        .catch(() => {
+          /* webhook may still complete the order */
+        })
+    }
+  }, [sessionId, paymentId, clearCart])
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-20 pt-24 sm:pt-28">
@@ -68,9 +88,9 @@ function CheckoutSuccessContent() {
               {successCopy.subtitle}
             </p>
 
-            {sessionId && (
+            {(sessionId || paymentId) && (
               <p className="font-montserrat text-xs text-brand-stone tracking-wide mb-8">
-                {successCopy.sessionReference}: {sessionId.slice(-8).toUpperCase()}
+                {successCopy.sessionReference}: {(sessionId || paymentId || '').slice(-8).toUpperCase()}
               </p>
             )}
 

@@ -49,6 +49,8 @@ import { COVENT_GARDEN_LONG_DRESS_FAQ_EN } from '@/data/coventGardenLongDressPdp
 import { buildHampsteadDressPdpContent } from '@/lib/products/hampsteadDressPdpI18n'
 import { buildSohoSetPdpContent } from '@/lib/products/sohoSetPdpI18n'
 import { buildHydeParkSetPdpContent } from '@/lib/products/hydeParkSetPdpI18n'
+import { buildMaryleboneAbayaPdpContent } from '@/data/maryleboneAbayaPdpContent'
+import { buildParkLaneAbayaPdpContent } from '@/data/parkLaneAbayaPdpContent'
 
 export type { PdpDetailGroup } from '@/lib/products/pdpIntroRich'
 
@@ -447,6 +449,16 @@ function isHydeParkSet(product: Product): boolean {
   return slug === 'hyde-park-set' || product.id === 'ab-008'
 }
 
+function isMaryleboneAbaya(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'marylebone-abaya' || product.id === 'ab-005'
+}
+
+function isParkLaneAbaya(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'park-lane-abaya' || product.id === 'ab-007'
+}
+
 function buildSohoSetContent(
   product: Product,
   color: string | undefined,
@@ -751,6 +763,13 @@ export function getProductPdpContent(
     if (isHydeParkSet(product)) {
       return applyAbayaPdpStandards(product, buildHydeParkSetContent(product, color, locale), locale)
     }
+    if (isParkLaneAbaya(product)) {
+      return applyAbayaPdpStandards(product, buildParkLaneAbayaPdpContent(color, locale), locale)
+    }
+    if (isMaryleboneAbaya(product)) {
+      const base = buildStructuredApparelContentForLocale(product, color, locale)
+      return applyAbayaPdpStandards(product, buildMaryleboneAbayaPdpContent(base), locale)
+    }
     const localized = getProductPdpContentLocale(product, color, locale)
     const content =
       localized ??
@@ -784,6 +803,10 @@ export function getProductPdpContent(
     content = buildSohoSetContent(product, color, locale)
   } else if (isHydeParkSet(product)) {
     content = buildHydeParkSetContent(product, color, locale)
+  } else if (isParkLaneAbaya(product)) {
+    content = buildParkLaneAbayaPdpContent(color, locale)
+  } else if (isMaryleboneAbaya(product)) {
+    content = buildMaryleboneAbayaPdpContent(buildStructuredApparelContent(product, color))
   } else if (isCoventGardenSignatureSet(product)) {
     content = buildCoventGardenSignatureSetContent(product, color)
   } else if (product.category === 'Accessories') {

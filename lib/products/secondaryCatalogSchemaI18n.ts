@@ -10,6 +10,7 @@ import {
   SOHO_SLUG,
 } from '@/lib/products/secondaryCatalogSchemaLocalePacks'
 import { getLocalizedSecondaryCatalogExclusiveKeywords } from '@/lib/products/secondaryCatalogSchemaKeywordsI18n'
+import { getLocalizedParkLaneAbayaExclusiveKeywords } from '@/lib/products/parkLaneAbayaSchemaKeywordsI18n'
 
 export {
   HAMPSTEAD_SLUG,
@@ -39,19 +40,19 @@ const MARYLEBONE_AUDIENCE_EXT: Record<AppLocale, string> = {
   ms: ', abaya terbuka, abaya layering, abaya lengan lebar, outerwear, dan layering atas gaun',
 }
 
-const PARK_LANE_AUDIENCE_EXT: Record<AppLocale, string> = {
-  en: ', everyday abayas, city abayas, work abayas, commuter dressing, daily modest fashion, and women seeking refined UAE everyday elegance worldwide',
-  ar: ', عبايات يومية، عبايات المدينة، عبايات العمل، وأناقة يومية راقية',
-  fr: ', abayas quotidiennes, abayas urbaines, abayas bureau, et élégance quotidienne raffinée',
-  it: ', abaya quotidiane, abaya città, abaya lavoro, e eleganza quotidiana raffinata',
-  es: ', abayas diarias, abayas ciudad, abayas trabajo, y elegancia diaria refinada',
-  ru: ', повседневные абайи, городские абайи, рабочие абайи, и изысканная ежедневная элегантность',
-  zh: ', 日常长袍、都市长袍、职场长袍，以及精致日常优雅',
-  de: ', Alltags-Abayas, City-Abayas, Büro-Abayas, und raffinierte Alltagseleganz',
-  nl: ', everyday abaya’s, city abaya’s, werk abaya’s, en verfijnde dagelijkse elegantie',
-  pt: ', abayas quotidianas, abayas cidade, abayas trabalho, e elegância diária refinada',
-  id: ', abaya sehari-hari, abaya kota, abaya kerja, dan keanggunan harian halus',
-  ms: ', abaya harian, abaya bandar, abaya kerja, dan keanggunan harian halus',
+const PARK_LANE_SCHEMA_AUDIENCE: Record<AppLocale, string> = {
+  en: 'Women seeking designer abayas, luxury abayas, premium abayas, A-line abayas, tailored abayas, contemporary abayas, city abayas, business abayas, executive abayas, diplomat abayas, embassy abayas, official occasion abayas, and modest fashion that moves effortlessly between cultures. Women who value exceptional tailoring over embellishment, integrated shoulder scarves, signature Knotted Line shoulder buttons, removable Bint Saeed emblem cufflinks, hidden side seam pockets, and optional hidden inner label personalisation — created in Abu Dhabi for GCC, UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman, and international wardrobes across London, Paris, Riyadh, Doha, New York, and beyond. Diplomats, executives, embassy staff, women working with Arab clients, royal families travelling abroad, VIP guests, high-net-worth family members, business women, expatriates in the Gulf, and occasionwear buyers choosing refined contemporary layers or timeless abayas. Men seeking meaningful luxury gifts for their wife, daughter, mother, fiancée, girlfriend, or sister.',
+  ar: 'النساء الباحثات عن عبايات مصمّمة، فاخرة، راقية، بقصة A-line، مفصّلة، معاصرة، للمدينة والأعمال والتنفيذيات والدبلوماسيات واستقبالات السفارات والمناسبات الرسمية. من يقدّرن التفصيل الاستثنائي، ووشاح الكتف المدمج، وأزرار Knotted Line، وأزرار الشعار القابلة للإزالة، والجيوب المخفية، والتخصيص الداخلي — من أبوظبي للخليج والإمارات والعالم. دبلوماسيات، تنفيذيات، موظفات سفارات، نساء يعملن مع عملاء عرب، عائلات ملكية مسافرة، ضيوف كبار، ونساء يختارن طبقة معاصرة أو عباية خالدة. رجال يبحثون عن هدايا فاخرة.',
+  fr: 'Femmes en quête d’abayas de créateur, de luxe, premium, A-line, taillées, contemporaines, urbaines, business, executive, diplomatiques, d’ambassade et d’occasions officielles. Celles qui valorisent la tailleur exceptionnelle, l’écharpe d’épaule intégrée, les boutons Knotted Line, les boutons de manchette emblème amovibles, les poches cachées et la personnalisation intérieure — créées à Abou Dabi pour le Golfe et le monde. Diplomates, dirigeantes, personnel d’ambassade, familles royales en voyage, clientes VIP. Hommes en quête de cadeaux de luxe.',
+  it: 'Donne in cerca di abaya designer, di lusso, premium, A-line, sartoriali, contemporanee, città, business, executive, diplomatiche, ambasciata e occasioni ufficiali. Chi valorizza la sartoria eccezionale, la sciarpa spalla integrata, i bottoni Knotted Line, i gemelli emblema rimovibili, le tasche nascoste e la personalizzazione interna — create ad Abu Dhabi per il Golfo e il mondo. Diplomatiche, executive, staff ambasciata, famiglie reali in viaggio, ospiti VIP. Uomini in cerca di regali di lusso.',
+  es: 'Mujeres que buscan abayas de diseñador, de lujo, premium, A-line, de sastrería, contemporáneas, ciudad, negocios, ejecutivas, diplomáticas, de embajada y de ocasiones oficiales. Quienes valoran la sastrería excepcional, el bufanda de hombro integrado, los botones Knotted Line, los gemelos emblema extraíbles, los bolsillos ocultos y la personalización interior — creadas en Abu Dabi para el Golfo y el mundo. Diplomáticas, ejecutivas, personal de embajada, familias reales en viaje, invitadas VIP. Hombres en busca de regalos de lujo.',
+  ru: 'Женщины, ищущие дизайнерские, люксовые, премиальные абайи A-line, с кроем, современные, городские, деловые, для дипломатов, посольств и официальных мероприятий. Те, кто ценит исключительный крой, встроенный шарф на плече, пуговицы Knotted Line, съёмные запонки-эмблемы, скрытые карманы и персонализацию — из Абу-Даби для Залива и мира. Дипломатки, руководительницы, сотрудницы посольств, королевские семьи в поездках, VIP-гости. Мужчины, ищущие роскошные подарки.',
+  zh: '寻求设计师、奢华、高端、A字、剪裁、当代、都市、商务、外交、使馆与正式场合长袍的女性；重视卓越剪裁、一体式肩巾、Knotted Line肩钮、可拆卸徽标袖扣、隐藏口袋与内标定制——阿布扎比创作，面向海湾与世界。外交官、高管、使馆人员、与阿拉伯客户共事的女性、出国王室、VIP宾客。寻找奢华礼品的男性。',
+  de: 'Frauen, die Designer-, Luxus-, Premium-, A-Linien-, taillierte, zeitgenössische, City-, Business-, Executive-, Diplomaten- und Botschafts-Abayas suchen. Frauen, die außergewöhnliche Schneiderkunst, integrierten Schulterschal, Knotted-Line-Knöpfe, abnehmbare Emblem-Manschettenknöpfe, versteckte Taschen und Personalisierung schätzen — aus Abu Dhabi für den Golf und die Welt. Diplomatinnen, Führungskräfte, Botschaftspersonal, reisende Königshäuser, VIP-Gäste. Männer, die Luxusgeschenke suchen.',
+  nl: 'Vrouwen die designer-, luxe-, premium-, A-line-, getailleerde, eigentijdse, city-, business-, executive-, diplomaten- en ambassade-abaya’s zoeken. Vrouwen die uitzonderlijk vakmanschap, geïntegreerde schoudersjaal, Knotted Line knopen, verwijderbare embleem manchetknopen, verborgen zakken en personalisatie waarderen — gemaakt in Abu Dhabi voor de Golf en de wereld. Diplomaten, executives, ambassadepersoneel, reizende koninklijke families, VIP-gasten. Mannen die luxe cadeaus zoeken.',
+  pt: 'Mulheres que procuram abayas de designer, luxo, premium, A-line, de alfaiataria, contemporâneas, cidade, negócios, executivas, diplomáticas, de embaixada e ocasiões oficiais. Quem valoriza alfaiataria excecional, lenço de ombro integrado, botões Knotted Line, abotoaduras emblema removíveis, bolsos ocultos e personalização interior — criadas em Abu Dhabi para o Golfo e o mundo. Diplomatas, executivas, staff de embaixada, famílias reais em viagem, convidadas VIP. Homens à procura de presentes de luxo.',
+  id: 'Wanita yang mencari abaya desainer, mewah, premium, A-line, tailored, kontemporer, kota, bisnis, eksekutif, diplomatik, kedutaan, dan acara resmi. Yang menghargai tailoring luar biasa, scarf bahu terintegrasi, kancing Knotted Line, kancing manset emblem lepas, saku tersembunyi, dan personalisasi label dalam — dari Abu Dhabi untuk GCC dan dunia. Diplomat, eksekutif, staf kedutaan, keluarga kerajaan bepergian, tamu VIP. Pria mencari hadiah mewah.',
+  ms: 'Wanita yang mencari abaya pereka, mewah, premium, A-line, terjahit, kontemporari, bandar, perniagaan, eksekutif, diplomatik, kedutaan, dan majlis rasmi. Yang menghargai jahitan luar biasa, skarf bahu bersepadu, butang Knotted Line, kancing manset emblem boleh tanggal, poket tersembunyi, dan pemeribadian label dalaman — dari Abu Dhabi untuk GCC dan dunia. Diplomat, eksekutif, kakitangan kedutaan, keluarga diraja melancong, tetamu VIP. Lelaki mencari hadiah mewah.',
 }
 
 const HAMPSTEAD_AUDIENCE_EXT: Record<AppLocale, string> = {
@@ -86,7 +87,14 @@ export function getMaryleboneAbayaSchemaAudience(locale: AppLocale = 'en'): stri
 }
 
 export function getParkLaneAbayaSchemaAudience(locale: AppLocale = 'en'): string {
-  return buildAbayaSchemaAudience(locale, PARK_LANE_AUDIENCE_EXT)
+  return PARK_LANE_SCHEMA_AUDIENCE[locale] ?? PARK_LANE_SCHEMA_AUDIENCE.en
+}
+
+export function getParkLaneAbayaSchemaKeywords(
+  locale: AppLocale = 'en',
+  colorName?: string,
+): string {
+  return getLocalizedParkLaneAbayaExclusiveKeywords(locale, colorName).join(', ')
 }
 
 export function getHampsteadDressSchemaAudience(locale: AppLocale = 'en'): string {

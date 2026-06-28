@@ -8,6 +8,7 @@ import { FiLock, FiMail, FiUser } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { passwordsMatch, validatePassword } from '@/lib/auth/passwordPolicy'
+import { ctaFormSubmitCompact } from '@/lib/ui/ctaClasses'
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
@@ -227,7 +228,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={busy}
-              className="w-full bg-brand-darkRed py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-white transition-colors hover:bg-brand-dustyBlue disabled:opacity-50"
+              className={ctaFormSubmitCompact}
               data-cursor-hover
             >
               {busy ? (isRTL ? 'جاري الإرسال…' : 'Sending…') : isRTL ? 'إنشاء الحساب' : 'Create account'}

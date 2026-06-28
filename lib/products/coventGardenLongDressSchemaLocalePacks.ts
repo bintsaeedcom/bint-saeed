@@ -13,7 +13,7 @@ const FACTS_EN: ProductSchemaFacts = {
   productType:
     'Contemporary tailored fitted maxi dress — an elegant long dress designed as a signature under-abaya dress and beautiful worn on its own.',
   productCategory:
-    'Long Dress, Maxi Dress, Elegant Long Dress, Fitted Dress, Tailored Dress, Designer Dress, Premium Dress, Contemporary Dress, Under-Abaya Dress, Sleeveless Dress, Modest Fashion, Premium Modest Fashion, Contemporary Womenswear, Work Dress, Day Dress, Evening Dress, Occasion Dress, Wedding Guest Dress, Formal Dress, Gulf Wardrobe Dress',
+    'Long Dress, Maxi Dress, Elegant Long Dress, Formal Dress, Classy Dress, Simple Dress, Fitted Dress, Tailored Dress, Designer Dress, Premium Dress, Contemporary Dress, Under-Abaya Dress, Sleeveless Dress, Modest Fashion, Premium Modest Fashion, Contemporary Womenswear, Work Dress, Day Dress, Evening Dress, Occasion Dress, Wedding Guest Dress, Gulf Wardrobe Dress, Dress Colour Variants',
   fit: 'Softly fitted maxi dress silhouette with graceful movement.',
   neckline: 'Clean round neckline.',
   dressLength: '138 cm / 54.5 inches',

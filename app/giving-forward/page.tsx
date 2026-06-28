@@ -6,6 +6,7 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getGivingForwardCopy } from '@/lib/content/givingForwardCopyI18n'
+import { ctaPrimaryWithGap, ctaSecondaryOnLight, utilityPageH1 } from '@/lib/ui/ctaClasses'
 
 export default function GivingForwardPage() {
   const { isRTL, language } = useLanguage()
@@ -26,7 +27,7 @@ export default function GivingForwardPage() {
         <span className="mb-6 block font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
           Bint Saeed
         </span>
-        <h1 data-document-h1="true" className="font-rozha text-4xl leading-[1.08] text-brand-darkRed md:text-5xl">
+        <h1 data-document-h1="true" className={utilityPageH1}>
           {copy.pageTitle}
         </h1>
         <div className="mt-6">
@@ -53,7 +54,7 @@ export default function GivingForwardPage() {
         <div className={`mt-10 flex flex-wrap gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <LocaleLink
             href="/shop?from=giving-forward"
-            className={`inline-flex items-center gap-2 border border-brand-dustyBlue/65 bg-brand-dustyBlue px-7 py-3 font-montserrat text-xs uppercase tracking-[0.16em] text-[#1a0008] transition-colors hover:bg-brand-stone ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`${ctaPrimaryWithGap} ${isRTL ? 'flex-row-reverse' : ''}`}
             data-cursor-hover
           >
             {copy.shopCta}
@@ -61,7 +62,7 @@ export default function GivingForwardPage() {
           </LocaleLink>
           <LocaleLink
             href="/contact"
-            className="inline-flex items-center gap-2 border border-brand-darkRed/35 bg-white/80 px-7 py-3 font-montserrat text-xs uppercase tracking-[0.16em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+            className={ctaSecondaryOnLight}
             data-cursor-hover
           >
             {copy.contactCta}

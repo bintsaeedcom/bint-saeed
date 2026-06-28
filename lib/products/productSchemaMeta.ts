@@ -63,6 +63,7 @@ import {
   isHydeParkSetSlug,
 } from '@/lib/products/hydeParkSetSchemaI18n'
 import { getLocalizedHydeParkSetExclusiveKeywords } from '@/lib/products/hydeParkSetSchemaKeywordsI18n'
+import { getLocalizedParkLaneAbayaExclusiveKeywords } from '@/lib/products/parkLaneAbayaSchemaKeywordsI18n'
 import { getLocalizedAlTalliDiscoveryKeywords } from '@/lib/products/alTalliDiscoveryKeywordsI18n'
 import { getGlobalPdpSchemaDiscoveryKeywords } from '@/lib/products/globalPdpSchemaDiscoveryI18n'
 import { getLocalizedKaftanExclusiveKeywords } from '@/lib/products/kaftanSchemaKeywordsI18n'
@@ -275,11 +276,13 @@ export function buildProductSchemaKeywords(
     }
   }
 
-  if (
-    isMaryleboneAbayaSlug(slug) ||
-    isParkLaneAbayaSlug(slug) ||
-    isHampsteadDressSlug(slug)
-  ) {
+  if (isParkLaneAbayaSlug(slug)) {
+    for (const t of getLocalizedParkLaneAbayaExclusiveKeywords(locale, colorName)) {
+      terms.add(t)
+    }
+  }
+
+  if (isMaryleboneAbayaSlug(slug) || isHampsteadDressSlug(slug)) {
     for (const t of getLocalizedSecondaryCatalogExclusiveKeywords(slug, locale, colorName)) {
       terms.add(t)
     }

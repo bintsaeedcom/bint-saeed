@@ -7,6 +7,8 @@ export type OrderFulfillmentStatus =
   | 'cancelled'
   | 'refunded'
 
+export type PaymentProviderName = 'stripe' | 'mollie'
+
 export interface OrderLine {
   productId?: string
   name: string
@@ -18,8 +20,11 @@ export interface OrderLine {
 
 export interface StoredOrder {
   id: string
+  /** Stripe Checkout session id, or Mollie payment id (tr_…). */
   stripeSessionId: string
+  paymentProvider?: PaymentProviderName
   paymentIntentId?: string
+  molliePaymentId?: string
   customerEmail: string
   customerName?: string
   customerPhone?: string
@@ -31,7 +36,7 @@ export interface StoredOrder {
   amountTotal: number
   currency: string
   fulfillmentStatus: OrderFulfillmentStatus
-  /** From Stripe Checkout custom field */
+  /** From Stripe Checkout custom field or Mollie checkout notes */
   deliveryNotes?: string
   /** Owner notes (packing, VIP, etc.) */
   internalNotes?: string

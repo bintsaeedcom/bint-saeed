@@ -19,3 +19,14 @@ export function bnplConfigured(): { tabby: boolean; tamara: boolean } {
     tamara: Boolean(getTamaraCheckoutUrl()),
   }
 }
+
+export {
+  getPaymentProvider,
+  getPublicPaymentProvider,
+  isCheckoutProviderConfigured,
+  isMollieConfigured,
+  isStripeConfigured,
+  getCheckoutConfigHint,
+  getCheckoutNotConfiguredMessage,
+} from '@/lib/payments/provider'
+export type { PaymentProvider } from '@/lib/payments/provider'

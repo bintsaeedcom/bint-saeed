@@ -186,9 +186,12 @@ export default function AdminOrdersPage() {
       </div>
 
       <p className="mt-6 font-montserrat text-xs leading-relaxed text-white/40">
-        Add <code className="text-brand-dustyBlue/80">STRIPE_WEBHOOK_SECRET</code> and point Stripe to{' '}
-        <code className="text-brand-dustyBlue/80">/api/webhooks/stripe</code> (event: checkout.session.completed). Use
-        Upstash Redis for persistent orders across deploys.
+        Stripe: add <code className="text-brand-dustyBlue/80">STRIPE_WEBHOOK_SECRET</code> and point to{' '}
+        <code className="text-brand-dustyBlue/80">/api/webhooks/stripe</code> (event: checkout.session.completed).
+        Mollie: set <code className="text-brand-dustyBlue/80">MOLLIE_API_KEY</code> and{' '}
+        <code className="text-brand-dustyBlue/80">PAYMENT_PROVIDER=mollie</code>; webhooks use{' '}
+        <code className="text-brand-dustyBlue/80">/api/webhooks/mollie</code>. Use Upstash Redis for persistent orders
+        across deploys.
       </p>
 
       <AnimatePresence>
@@ -218,12 +221,19 @@ export default function AdminOrdersPage() {
               </div>
 
               <a
-                href={`https://dashboard.stripe.com/search?query=${encodeURIComponent(selected.stripeSessionId)}`}
+                href={
+                  selected.paymentProvider === 'mollie' || selected.stripeSessionId.startsWith('tr_')
+                    ? `https://my.mollie.com/dashboard/payments/${encodeURIComponent(selected.molliePaymentId || selected.stripeSessionId)}`
+                    : `https://dashboard.stripe.com/search?query=${encodeURIComponent(selected.stripeSessionId)}`
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mb-6 inline-flex items-center gap-2 text-xs text-brand-dustyBlue hover:underline"
               >
-                Open in Stripe <FiExternalLink className="h-3 w-3" />
+                {selected.paymentProvider === 'mollie' || selected.stripeSessionId.startsWith('tr_')
+                  ? 'Open in Mollie'
+                  : 'Open in Stripe'}{' '}
+                <FiExternalLink className="h-3 w-3" />
               </a>
 
               <div className="space-y-4 font-montserrat text-sm">

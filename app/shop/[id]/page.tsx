@@ -60,19 +60,22 @@ import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
 import PdpIntroParagraph from '@/components/PdpIntroParagraph'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
 import PdpAccordion, { type PdpAccordionSectionConfig } from '@/components/pdp/PdpAccordion'
+import {
+  CTA_BUTTON_RADIUS,
+  PDP_FILLED_PLUM,
+  pdpCtaPrimary,
+  pdpSizeButtonBase,
+} from '@/lib/ui/ctaClasses'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
 import 'swiper/css/pagination'
 
-const PDP_BUTTON_RADIUS = 'rounded-[4px]'
-const PDP_CONTROL_BUTTON_BASE =
-  `min-w-[94px] px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] border transition-all ${PDP_BUTTON_RADIUS}`
 const PDP_OUTLINED_PLUM = 'bg-white text-brand-darkRed border-brand-darkRed'
-const PDP_FILLED_PLUM = 'bg-brand-darkRed text-white border-brand-darkRed'
-const PDP_PRIMARY_CTA =
-  `inline-flex min-h-[46px] items-center justify-center ${PDP_BUTTON_RADIUS} bg-brand-darkRed text-white font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors hover:bg-brand-dustyBlue`
+const PDP_CONTROL_BUTTON_BASE = pdpSizeButtonBase
+const PDP_PRIMARY_CTA = pdpCtaPrimary
+
 const MANUAL_PAIRINGS: Record<string, string[]> = {
   'knightsbridge-abaya-jacket': ['knightsbridge-dress'],
   'knightsbridge-dress': ['knightsbridge-abaya-jacket'],
@@ -899,7 +902,7 @@ export default function ProductPage() {
                     key={size}
                     type="button"
                     onClick={() => setSelectedSize(size)}
-                    className={`min-w-[52px] px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] border transition-all ${PDP_BUTTON_RADIUS} ${
+                    className={`min-w-[52px] px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] border transition-all ${CTA_BUTTON_RADIUS} ${
                       selectedSize === size
                         ? PDP_FILLED_PLUM
                         : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
@@ -967,7 +970,7 @@ export default function ProductPage() {
                       onChange={(e) => setCustomisationMessage(e.target.value.slice(0, CUSTOMISATION_MAX_CHARS))}
                       maxLength={CUSTOMISATION_MAX_CHARS}
                       placeholder={ui.personalisation.placeholder}
-                      className={`w-full border border-brand-stone/50 px-3 py-2.5 font-montserrat text-[11px] tracking-wide transition-colors focus:border-brand-darkRed ${PDP_BUTTON_RADIUS}`}
+                      className={`w-full border border-brand-stone/50 px-3 py-2.5 font-montserrat text-[11px] tracking-wide transition-colors focus:border-brand-darkRed ${CTA_BUTTON_RADIUS}`}
                     />
                     <p className={`font-montserrat text-[11px] text-brand-darkRed/55 ${isRTL ? 'text-right' : ''}`}>
                       {customisationMessage.length}/{CUSTOMISATION_MAX_CHARS}
@@ -983,7 +986,7 @@ export default function ProductPage() {
             {/* Quantity & Add to Cart */}
             <div className="mb-1 flex flex-col gap-2 sm:flex-row sm:gap-3">
               {/* Quantity */}
-              <div className={`flex w-full items-center justify-center border border-brand-stone/50 sm:w-auto sm:justify-start ${PDP_BUTTON_RADIUS}`}>
+              <div className={`flex w-full items-center justify-center border border-brand-stone/50 sm:w-auto sm:justify-start ${CTA_BUTTON_RADIUS}`}>
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}

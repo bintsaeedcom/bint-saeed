@@ -1,6 +1,6 @@
 import { Redis } from '@upstash/redis'
 
-const EVENT_KEY_PREFIX = 'bs:stripe:event:'
+const EVENT_KEY_PREFIX = 'bs:pay:event:'
 const DEFAULT_TTL_SECONDS = 60 * 60 * 24 * 14 // 14 days
 
 let redis: Redis | null = null
@@ -14,8 +14,8 @@ function getRedis(): Redis | null {
   return redis
 }
 
-function keyFor(eventId: string) {
-  return `${EVENT_KEY_PREFIX}${eventId}`
+function keyFor(provider: 'stripe' | 'mollie', eventId: string) {
+  return `${EVENT_KEY_PREFIX}${provider}:${eventId}`
 }
 
 function pruneMemory() {
@@ -25,25 +25,41 @@ function pruneMemory() {
   }
 }
 
-export async function wasStripeEventProcessed(eventId: string): Promise<boolean> {
+export async function wasPaymentEventProcessed(
+  provider: 'stripe' | 'mollie',
+  eventId: string,
+): Promise<boolean> {
   const r = getRedis()
   if (r) {
-    const value = await r.get<string>(keyFor(eventId))
+    const value = await r.get<string>(keyFor(provider, eventId))
     return value === '1'
   }
 
   pruneMemory()
-  const expiresAt = memoryEvents.get(eventId)
+  const expiresAt = memoryEvents.get(`${provider}:${eventId}`)
   return typeof expiresAt === 'number' && expiresAt > Date.now()
 }
 
-export async function markStripeEventProcessed(eventId: string, ttlSeconds = DEFAULT_TTL_SECONDS): Promise<void> {
+export async function markPaymentEventProcessed(
+  provider: 'stripe' | 'mollie',
+  eventId: string,
+  ttlSeconds = DEFAULT_TTL_SECONDS,
+): Promise<void> {
   const r = getRedis()
+  const memoryKey = `${provider}:${eventId}`
   if (r) {
-    await r.set(keyFor(eventId), '1', { ex: Math.max(60, Math.floor(ttlSeconds)) })
+    await r.set(keyFor(provider, eventId), '1', { ex: Math.max(60, Math.floor(ttlSeconds)) })
     return
   }
 
   pruneMemory()
-  memoryEvents.set(eventId, Date.now() + Math.max(60, Math.floor(ttlSeconds)) * 1000)
+  memoryEvents.set(memoryKey, Date.now() + Math.max(60, Math.floor(ttlSeconds)) * 1000)
+}
+
+export async function wasStripeEventProcessed(eventId: string): Promise<boolean> {
+  return wasPaymentEventProcessed('stripe', eventId)
+}
+
+export async function markStripeEventProcessed(eventId: string, ttlSeconds = DEFAULT_TTL_SECONDS): Promise<void> {
+  await markPaymentEventProcessed('stripe', eventId, ttlSeconds)
 }

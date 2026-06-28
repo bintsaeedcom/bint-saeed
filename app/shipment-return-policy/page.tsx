@@ -7,6 +7,7 @@ import PolicyDocument from '@/components/legal/PolicyDocument'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 import { getShipmentReturnContent } from '@/lib/legal/policyContentId'
+import { policySectionH2Plain } from '@/lib/ui/ctaClasses'
 
 const SECTION_LIST = [
   '1. Opening Statement',
@@ -103,7 +104,7 @@ export default function ShipmentReturnPolicyPage() {
             </div>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">1. Opening Statement</h2>
+              <h2 className={policySectionH2Plain}>1. Opening Statement</h2>
               <p>
                 Each Bint Saeed piece is created following the specific request and selection of the client. Production
                 begins only after an order is confirmed.
@@ -116,7 +117,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">2. General Policy</h2>
+              <h2 className={policySectionH2Plain}>2. General Policy</h2>
               <p>
                 As many Bint Saeed pieces are produced on demand following a confirmed order, we do not offer refunds for
                 change of mind, personal preference, or sizing selections made by the client.
@@ -160,7 +161,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">
+              <h2 className={policySectionH2Plain}>
                 3. Exceptions (UAE Consumer Protection Alignment)
               </h2>
               <p>In accordance with applicable laws of the United Arab Emirates, exceptions may apply where:</p>
@@ -189,7 +190,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">4. Non-Eligible Cases</h2>
+              <h2 className={policySectionH2Plain}>4. Non-Eligible Cases</h2>
               <p>The following do not qualify as grounds for refund, exchange, or return:</p>
               <ul className={`list-disc space-y-1 ${isRTL ? 'pr-5' : 'pl-5'}`}>
                 <li>Change of mind.</li>
@@ -202,7 +203,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">5. EU Clients – Right of Withdrawal</h2>
+              <h2 className={policySectionH2Plain}>5. EU Clients – Right of Withdrawal</h2>
               <p>
                 For clients located within the European Union, consumer regulations may provide a 14-day right of
                 withdrawal for online purchases.
@@ -219,7 +220,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">6. EU Exception (Defective Items Only)</h2>
+              <h2 className={policySectionH2Plain}>6. EU Exception (Defective Items Only)</h2>
               <p>In the event of a manufacturing defect:</p>
               <ul className={`list-disc space-y-1 ${isRTL ? 'pr-5' : 'pl-5'}`}>
                 <li>Clients must notify us within 48 hours of delivery.</li>
@@ -232,7 +233,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">7. Final Acknowledgment</h2>
+              <h2 className={policySectionH2Plain}>7. Final Acknowledgment</h2>
               <p>
                 By placing an order with Bint Saeed, the client confirms that they have reviewed and accepted the
                 product description, sizing information, production timeline, and the terms outlined within this policy.
@@ -244,7 +245,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">8. Shipping Timelines</h2>
+              <h2 className={policySectionH2Plain}>8. Shipping Timelines</h2>
               <p>
                 We aim to dispatch every order as efficiently as possible while maintaining the quality standards of
                 Bint Saeed.
@@ -298,7 +299,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">9. Force Majeure</h2>
+              <h2 className={policySectionH2Plain}>9. Force Majeure</h2>
               <p>
                 Bint Saeed shall not be held liable for delays, interruptions, or failure to fulfil obligations where
                 such circumstances arise from events beyond our reasonable control.
@@ -323,7 +324,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-rozha text-xl text-neutral-900 md:text-2xl">10. Contact</h2>
+              <h2 className={policySectionH2Plain}>10. Contact</h2>
               <p>For exchanges, return requests, and defect claims:</p>
               <p>
                 <a

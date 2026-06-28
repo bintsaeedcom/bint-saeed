@@ -2,7 +2,6 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import {
   HAMPSTEAD_SLUG,
   MARYLEBONE_SLUG,
-  PARK_LANE_SLUG,
   SOHO_SLUG,
 } from '@/lib/products/secondaryCatalogSchemaLocalePacks'
 
@@ -39,15 +38,6 @@ const MARYLEBONE_ROWS: KwRow[] = [
   ['BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004'],
 ]
 
-const PARK_LANE_ROWS: KwRow[] = [
-  ['Park Lane Abaya', 'عباية Park Lane', 'Abaya Park Lane', 'Park Lane Abaya', 'Abaya Park Lane', 'Абайя Park Lane', 'Park Lane 长袍', 'Park Lane Abaya', 'Park Lane abaya', 'Abaya Park Lane'],
-  ['everyday abaya', 'عباية يومية', 'abaya quotidienne', 'abaya quotidiana', 'abaya diaria', 'повседневная абайя', '日常长袍', 'Alltags-Abaya', 'everyday abaya', 'abaya quotidiana'],
-  ['city abaya', 'عباية المدينة', 'abaya urbaine', 'abaya città', 'abaya ciudad', 'городская абайя', '都市长袍', 'City-Abaya', 'city abaya', 'abaya cidade'],
-  ['work abaya', 'عباية للعمل', 'abaya bureau', 'abaya lavoro', 'abaya trabajo', 'рабочая абайя', '职场长袍', 'Büro-Abaya', 'werk abaya', 'abaya trabalho'],
-  ['fluid drape abaya', 'عباية بانسيابية', 'abaya tombé fluide', 'abaya drappeggio fluido', 'abaya caída fluida', 'абайя с плавной драпировкой', '飘逸长袍', 'Abaya mit fließendem Fall', 'vloeiende drape abaya', 'abaya drapeado fluido'],
-  ['BS-AB-006', 'BS-AB-006', 'BS-AB-006', 'BS-AB-006', 'BS-AB-006', 'BS-AB-006', 'BS-AB-006', 'BS-AB-006', 'BS-AB-006', 'BS-AB-006'],
-]
-
 const HAMPSTEAD_ROWS: KwRow[] = [
   ['Hampstead Dress', 'فستان Hampstead', 'Robe Hampstead', 'Hampstead Dress', 'Vestido Hampstead', 'Платье Hampstead', 'Hampstead 连衣裙', 'Hampstead Dress', 'Hampstead Dress', 'Vestido Hampstead'],
   ['Al Talli dress', 'فستان التلي', 'robe Al Talli', 'abito Al Talli', 'vestido Al Talli', 'платье Al Talli', 'Al Talli 连衣裙', 'Al-Talli-Kleid', 'Al Talli jurk', 'vestido Al Talli'],
@@ -68,7 +58,6 @@ const SOHO_ROWS: KwRow[] = [
 
 const PACKS: Record<string, Record<AppLocale, string>[]> = {
   [MARYLEBONE_SLUG]: rowsToKw(MARYLEBONE_ROWS),
-  [PARK_LANE_SLUG]: rowsToKw(PARK_LANE_ROWS),
   [HAMPSTEAD_SLUG]: rowsToKw(HAMPSTEAD_ROWS),
   [SOHO_SLUG]: rowsToKw(SOHO_ROWS),
 }
@@ -80,13 +69,6 @@ const EN_EXTRA: Record<string, readonly string[]> = {
     'travel abaya',
     'wedding layering abaya',
     'international wardrobe abaya',
-  ],
-  [PARK_LANE_SLUG]: [
-    'Bint Saeed Park Lane Abaya',
-    'daily abaya',
-    'commuter abaya',
-    'modest workwear abaya',
-    'buy everyday abaya online',
   ],
   [HAMPSTEAD_SLUG]: [
     'Bint Saeed Hampstead Dress',

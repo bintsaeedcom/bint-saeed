@@ -5,6 +5,7 @@ import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { buildFaqPageJsonLd } from '@/lib/products/productSchemaMeta'
 import { SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
+import { appendGlobalPdpSchemaAudienceExtension } from '@/lib/products/globalPdpSchemaAudienceI18n'
 import {
   getGlobalJewelleryDiscoveryKeywords,
   getJewelleryCategoryDiscoveryKeywords,
@@ -319,7 +320,10 @@ function buildSignatureStrandJsonLdGraph(input: JsonLdInput): Record<string, unk
     audience: {
       '@type': 'PeopleAudience',
       suggestedGender: 'female',
-      audienceType: getSignatureStrandSchemaAudience(locale),
+      audienceType: appendGlobalPdpSchemaAudienceExtension(
+        getSignatureStrandSchemaAudience(locale),
+        locale,
+      ),
     },
     additionalProperty: buildSignatureStrandAdditionalProperties(accessory, displayName, locale),
     image: gallery.map((src, index) => ({
@@ -384,18 +388,28 @@ export function buildAccessoryProductJsonLd({
     accessory.category === 'earrings'
       ? {
           '@type': 'PeopleAudience',
-          audienceType: 'Women seeking luxury natural stone and designer earrings in the UAE and GCC',
+          suggestedGender: 'female',
+          audienceType: appendGlobalPdpSchemaAudienceExtension(
+            'Women seeking luxury natural stone and designer earrings in the UAE and GCC',
+            locale,
+          ),
         }
       : accessory.category === 'necklaces'
         ? {
             '@type': 'PeopleAudience',
-            audienceType:
+            suggestedGender: 'female',
+            audienceType: appendGlobalPdpSchemaAudienceExtension(
               'Women seeking hand-strung natural stone bead necklaces and Al Ain designer jewellery',
+              locale,
+            ),
           }
         : {
             '@type': 'PeopleAudience',
-            audienceType:
+            suggestedGender: 'female',
+            audienceType: appendGlobalPdpSchemaAudienceExtension(
               'Women styling Marylebone Abaya with interchangeable natural stone bead strands and matching jewellery',
+              locale,
+            ),
           }
 
   return {

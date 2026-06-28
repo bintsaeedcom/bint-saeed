@@ -1,12 +1,13 @@
 import Image from 'next/image'
 
+/** Brand marks — card logos from aaronfagan/svg-credit-card-payment-icons; wallets from datatrans/payment-logos */
 const PAYMENT_METHODS = [
-  { id: 'visa', label: 'Visa', src: '/payments/visa.svg', width: 38, height: 12 },
-  { id: 'mastercard', label: 'Mastercard', src: '/payments/mastercard.svg', width: 28, height: 18 },
-  { id: 'amex', label: 'American Express', src: '/payments/amex.svg', width: 38, height: 12 },
-  { id: 'apple-pay', label: 'Apple Pay', src: '/payments/apple-pay.svg', width: 42, height: 18 },
-  { id: 'google-pay', label: 'Google Pay', src: '/payments/google-pay.svg', width: 46, height: 18 },
-  { id: 'link', label: 'Link', src: '/payments/link.svg', width: 34, height: 12 },
+  { id: 'visa', label: 'Visa', src: '/payments/visa.svg', width: 48, height: 16 },
+  { id: 'mastercard', label: 'Mastercard', src: '/payments/mastercard.svg', width: 40, height: 24 },
+  { id: 'amex', label: 'American Express', src: '/payments/amex.svg', width: 48, height: 16 },
+  { id: 'apple-pay', label: 'Apple Pay', src: '/payments/apple-pay.svg', width: 44, height: 18 },
+  { id: 'google-pay', label: 'Google Pay', src: '/payments/google-pay.svg', width: 48, height: 18 },
+  { id: 'link', label: 'Link', src: '/payments/link.svg', width: 36, height: 14 },
 ] as const
 
 type Props = {
@@ -37,7 +38,7 @@ export default function FooterPaymentMethods({ label, className = '', align = 's
                 alt={method.label}
                 width={method.width}
                 height={method.height}
-                className="h-auto max-h-[15px] w-auto max-w-[52px] object-contain"
+                className="h-auto max-h-[18px] w-auto max-w-[56px] object-contain"
               />
             </span>
           </li>

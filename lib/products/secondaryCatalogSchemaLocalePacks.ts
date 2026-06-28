@@ -4,6 +4,7 @@ import { patchAlTalliHeritageFaq } from '@/lib/products/alTalliHeritageFaqI18n'
 import { appendAlTalliCareFaq } from '@/lib/products/alTalliCareFaqI18n'
 import { getHampsteadDressPdpFaq } from '@/lib/products/hampsteadDressPdpI18n'
 import { getSohoSetPdpFaq } from '@/lib/products/sohoSetFaqI18n'
+import { PARK_LANE_ABAYA_FAQ_EN } from '@/data/parkLaneAbayaPdpFaq'
 
 const MADE_IN = 'Abu Dhabi, United Arab Emirates'
 
@@ -49,13 +50,19 @@ const MARYLEBONE_EN: ProductSchemaFacts = {
 }
 
 const PARK_LANE_EN: ProductSchemaFacts = {
-  productType: 'Refined everyday city abaya with a clean line and fluid drape — contemporary modest dressing made in Abu Dhabi.',
+  productType:
+    'Contemporary designer abaya with a graceful A-line silhouette, integrated shoulder scarf, signature gold-tone Knotted Line shoulder buttons, and removable emblem cufflinks — made in Abu Dhabi.',
   productCategory:
-    'Abaya, Everyday Abaya, City Abaya, Designer Abaya, Luxury Abaya, Contemporary Abaya, Modest Fashion, Premium Modest Fashion, Gulf Wardrobe Abaya',
-  fit: 'Clean line with fluid drape designed for city movement.',
-  stylingDetail: 'Everyday abaya with refined silhouette and graceful movement for work, travel, and daily elegance.',
+    'Abaya, A-Line Abaya, Designer Abaya, Luxury Abaya, Contemporary Abaya, City Abaya, Executive Abaya, Diplomatic Abaya, Modest Fashion, Premium Modest Fashion, Gulf Wardrobe Abaya, International Occasion Abaya',
+  fit: 'Relaxed A-line silhouette designed to be worn open or closed with fluid drape.',
+  neckline: 'Integrated shoulder scarf flowing from the left shoulder',
+  closure: 'Optional snap button closure',
+  pockets: 'Hidden side seam pockets',
+  stylingDetail:
+    'Graceful A-line abaya with integrated shoulder scarf, signature gold-tone Knotted Line shoulder buttons, wide cuffs with removable Bint Saeed emblem cufflinks, and hidden side seam pockets.',
+  material: 'Outer: 75% Polyester, 25% Viscose',
   suitableFor:
-    'Everyday dressing, city movement, work, travel, lunches, gatherings, Eid, Gulf wardrobes, and international modest fashion in Abu Dhabi, Dubai, London, Paris, and worldwide.',
+    'Business meetings, embassy receptions, diplomatic events, official delegations, leadership meetings, cultural engagements, formal dinners, weddings, city movement, work, travel, everyday dressing, Gulf wardrobes, and international modest fashion in Abu Dhabi, Dubai, Riyadh, Doha, London, Paris, and destinations worldwide.',
 }
 
 const HAMPSTEAD_EN: ProductSchemaFacts = {
@@ -100,13 +107,7 @@ const FAQ_BY_SLUG: Record<string, ProductSchemaFacts['faq']> = {
         'Yes. Its fluid wool-silk drape and open-front silhouette transition from city weekends to weddings, Eid gatherings, and international travel wardrobes.',
     },
   ],
-  [PARK_LANE_SLUG]: [
-    {
-      question: 'Is the Park Lane Abaya suitable for everyday wear?',
-      answer:
-        'Yes. The Park Lane Abaya is designed for refined everyday city dressing with a clean line and fluid drape — made in Abu Dhabi for GCC and international wardrobes.',
-    },
-  ],
+  [PARK_LANE_SLUG]: PARK_LANE_ABAYA_FAQ_EN,
 }
 
 export function getLocalizedSecondaryCatalogSchemaFacts(

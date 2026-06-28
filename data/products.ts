@@ -341,15 +341,8 @@ function coventGardenAbayaGallery(color: 'burgundy' | 'black' | 'navy-blue'): st
 const COVENT_GARDEN_LONG_DRESS_DIR = '/Webshop pictures/Dresses/Covent Garden Dress'
 
 function coventGardenLongDressGallery(color: 'burgundy' | 'black' | 'navy-blue'): string[] {
-  const burgundyBase = `${COVENT_GARDEN_LONG_DRESS_DIR}/bint-saeed-covent-garden-long-dress-burgundy`
-  const burgundySet = [
-    `${burgundyBase}-front.webp`,
-    `${burgundyBase}-side.webp`,
-    `${burgundyBase}-back.webp`,
-  ]
-  if (color === 'burgundy') return burgundySet
-  // Colour-specific assets pending — show burgundy gallery until dedicated files are added.
-  return burgundySet
+  const base = `${COVENT_GARDEN_LONG_DRESS_DIR}/bint-saeed-covent-garden-long-dress-${color}`
+  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
 }
 
 const MAYFAIR_KAFTAN_DIR = '/Webshop pictures/Kaftans/Mayfair Kaftan'
@@ -493,7 +486,8 @@ export const products: Product[] = [
     slug: 'marylebone-abaya',
     name: 'Marylebone Abaya',
     price: 2499,
-    description: 'Open-front signature abaya with wide sleeves to layer over dresses or sets.',
+    description:
+      'The abaya with natural stone jewellery for your wardrobe — graceful A-line tailoring with removable Onyx Strands and signature Knotted Line details.',
     fabric: 'Wool-silk blend, matte satin binding',
     measurements: 'Length: 135cm (size M).',
     images: maryleboneAbayaGallery('black'),
@@ -534,8 +528,9 @@ export const products: Product[] = [
     slug: 'park-lane-abaya',
     name: 'Park Lane Abaya',
     price: 2199,
-    description: 'Refined everyday abaya with a clean line and fluid drape designed for city movement.',
-    fabric: 'Fabric composition — to be finalized with production.',
+    description:
+      'The abaya that speaks before you do. Graceful A-line tailoring with integrated shoulder scarf and signature gold-tone Knotted Line details.',
+    fabric: 'Outer: 75% Polyester, 25% Viscose',
     measurements: 'Length: 138cm (size M). Available in custom lengths upon request.',
     images: parkLaneAbayaGallery('black'),
     colorImages: {

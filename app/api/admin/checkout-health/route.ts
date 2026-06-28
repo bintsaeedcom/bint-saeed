@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { requireAdmin } from '@/lib/admin/apiAuth'
 import { parseAllowedOrigins } from '@/lib/security/allowedCheckoutOrigin'
+import {
+  getPaymentProvider,
+  inferMollieKeyMode,
+  isMollieConfigured,
+  isStripeConfigured,
+} from '@/lib/payments/provider'
+import { getMollieApiKey } from '@/lib/mollie/config'
+import { getMollieClient } from '@/lib/mollie/client'
 
 export const dynamic = 'force-dynamic'
 
@@ -38,15 +46,19 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  const provider = getPaymentProvider()
   const publishableKey = getPublishableKey()
   const secretKey = getSecretKey()
   const webhookSecret = getWebhookSecret()
+  const mollieApiKey = getMollieApiKey() ?? ''
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim() ?? ''
   const allowedOrigins = parseAllowedOrigins()
 
   const publishableConfigured = publishableKey.startsWith('pk_')
   const secretConfigured = secretKey.startsWith('sk_')
   const webhookConfigured = webhookSecret.startsWith('whsec_')
+  const mollieConfigured = isMollieConfigured()
+  const mollieMode = inferMollieKeyMode(mollieApiKey)
   const siteUrlConfigured = siteUrl.length > 0
   const stripeMode = inferStripeMode(publishableKey, secretKey)
 
@@ -67,43 +79,83 @@ export async function GET(request: NextRequest) {
     }
   }
 
+  let mollieApiReachable = false
+  let mollieProfileId: string | null = null
+  let mollieError: string | null = null
+
+  if (mollieConfigured) {
+    try {
+      const profile = await getMollieClient().profiles.getCurrent()
+      mollieApiReachable = true
+      mollieProfileId = profile.id ?? null
+    } catch (error: unknown) {
+      mollieError = error instanceof Error ? error.message : 'Could not reach Mollie API'
+    }
+  }
+
   const warnings: string[] = []
-  if (!publishableConfigured) warnings.push('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is missing or invalid.')
-  if (!secretConfigured) warnings.push('STRIPE_SECRET_KEY is missing or invalid.')
-  if (!webhookConfigured) warnings.push('STRIPE_WEBHOOK_SECRET is missing or invalid.')
+  if (provider === 'stripe') {
+    if (!publishableConfigured) warnings.push('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is missing or invalid.')
+    if (!secretConfigured) warnings.push('STRIPE_SECRET_KEY is missing or invalid.')
+    if (!webhookConfigured) warnings.push('STRIPE_WEBHOOK_SECRET is missing or invalid.')
+    if (stripeMode === 'mixed') warnings.push('Stripe keys are mixed between test and live modes.')
+    if (secretConfigured && !stripeApiReachable && stripeError) {
+      warnings.push(`Stripe API check failed: ${stripeError}`)
+    }
+  }
+
+  if (provider === 'mollie') {
+    if (!mollieConfigured) warnings.push('MOLLIE_API_KEY is missing or invalid.')
+    if (mollieConfigured && !mollieApiReachable && mollieError) {
+      warnings.push(`Mollie API check failed: ${mollieError}`)
+    }
+  }
+
   if (!siteUrlConfigured && process.env.NODE_ENV === 'production') {
     warnings.push('NEXT_PUBLIC_SITE_URL is not set for production fallback URLs.')
   }
-  if (stripeMode === 'mixed') {
-    warnings.push('Stripe keys are mixed between test and live modes.')
-  }
-  if (secretConfigured && !stripeApiReachable && stripeError) {
-    warnings.push(`Stripe API check failed: ${stripeError}`)
-  }
 
-  const checkoutReady =
+  const stripeReady =
     publishableConfigured &&
     secretConfigured &&
     webhookConfigured &&
     stripeMode !== 'mixed' &&
     (stripeApiReachable || process.env.NODE_ENV !== 'production')
 
+  const mollieReady =
+    mollieConfigured && (mollieApiReachable || process.env.NODE_ENV !== 'production')
+
+  const checkoutReady = provider === 'mollie' ? mollieReady : stripeReady
+
   return NextResponse.json({
     ok: checkoutReady,
     checkedAt: new Date().toISOString(),
-    mode: stripeMode,
+    provider,
+    mode: provider === 'mollie' ? mollieMode : stripeMode,
     env: process.env.NODE_ENV ?? 'development',
     checkout: {
       publishableConfigured,
       secretConfigured,
       webhookConfigured,
+      mollieConfigured,
       siteUrlConfigured,
       allowedOrigins,
+      webhookUrls: {
+        stripe: '/api/webhooks/stripe',
+        mollie: '/api/webhooks/mollie',
+      },
     },
     stripe: {
+      configured: isStripeConfigured(),
       apiReachable: stripeApiReachable,
       accountId: stripeAccountId,
       error: stripeError,
+    },
+    mollie: {
+      configured: mollieConfigured,
+      apiReachable: mollieApiReachable,
+      profileId: mollieProfileId,
+      error: mollieError,
     },
     warnings,
   })

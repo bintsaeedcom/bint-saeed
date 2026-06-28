@@ -5,6 +5,7 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getCareersCopy } from '@/lib/content/careersCopyI18n'
+import { ctaPrimaryWithGap, ctaSecondaryOnLight, utilityPageH1 } from '@/lib/ui/ctaClasses'
 
 export default function CareersPage() {
   const { isRTL, language } = useLanguage()
@@ -25,7 +26,7 @@ export default function CareersPage() {
         <span className="mb-6 block font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
           Bint Saeed
         </span>
-        <h1 data-document-h1="true" className="font-rozha text-4xl leading-[1.08] text-brand-darkRed md:text-5xl">
+        <h1 data-document-h1="true" className={utilityPageH1}>
           {copy.pageTitle}
         </h1>
         <h2 className="mt-5 max-w-2xl font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
@@ -35,7 +36,7 @@ export default function CareersPage() {
         <div className="mt-10 flex flex-wrap gap-4">
           <LocaleLink
             href="/contact"
-            className="inline-flex items-center gap-2 border border-brand-dustyBlue/65 bg-brand-dustyBlue px-7 py-3 font-montserrat text-xs uppercase tracking-[0.16em] text-[#1a0008] transition-colors hover:bg-brand-stone"
+            className={ctaPrimaryWithGap}
             data-cursor-hover
           >
             {copy.contactCta}
@@ -43,7 +44,7 @@ export default function CareersPage() {
           </LocaleLink>
           <LocaleLink
             href="/about"
-            className="inline-flex items-center gap-2 border border-brand-darkRed/35 bg-white/80 px-7 py-3 font-montserrat text-xs uppercase tracking-[0.16em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+            className={ctaSecondaryOnLight}
             data-cursor-hover
           >
             {copy.aboutCta}

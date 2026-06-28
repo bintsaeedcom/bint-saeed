@@ -10,6 +10,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import toast from 'react-hot-toast'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import { getEmailPopupCopy } from '@/lib/i18n/emailPopupI18n'
+import { ctaFormSubmit, ctaFormSubmitInline } from '@/lib/ui/ctaClasses'
 
 export default function EmailPopup() {
   const pathname = usePathname()
@@ -198,7 +199,7 @@ export default function EmailPopup() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors disabled:opacity-50"
+                      className={`${ctaFormSubmit} disabled:opacity-50`}
                       data-cursor-hover
                     >
                       {isSubmitting ? copy.signingUp : copy.signUp}
@@ -237,7 +238,7 @@ export default function EmailPopup() {
 
                   <button
                     onClick={handleClose}
-                    className="px-8 py-3 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
+                    className={ctaFormSubmitInline}
                     data-cursor-hover
                   >
                     {copy.startShopping}

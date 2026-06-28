@@ -6,6 +6,7 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import LocaleLink from '@/components/LocaleLink'
 import type { PolicyContent, PolicySection } from '@/lib/legal/policyContentId'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
+import { policySectionH2, policySectionH2Plain } from '@/lib/ui/ctaClasses'
 
 const EMAIL_RE = /[a-zA-Z0-9._%+-]+@bintsaeed\.com/g
 
@@ -107,10 +108,7 @@ function PolicySectionBlock({
   const shipmentListPad = isRTL ? 'pr-5' : 'pl-5'
   const pad = variant === 'shipment' ? shipmentListPad : listPad
   const listSpacing = variant === 'shipment' ? 'space-y-1' : 'space-y-2'
-  const h2Class =
-    variant === 'shipment'
-      ? 'font-rozha text-xl text-neutral-900 md:text-2xl'
-      : 'mb-4 font-rozha text-2xl text-neutral-900'
+  const h2Class = variant === 'shipment' ? policySectionH2Plain : policySectionH2
   const sectionClass = variant === 'shipment' ? 'flex flex-col gap-2' : undefined
 
   return (

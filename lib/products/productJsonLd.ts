@@ -55,6 +55,7 @@ import {
   isParkLaneAbayaSlug,
 } from '@/lib/products/secondaryCatalogSchemaI18n'
 import { getFallbackSchemaAudience } from '@/lib/products/categorySchemaAudience'
+import { appendGlobalPdpSchemaAudienceExtension } from '@/lib/products/globalPdpSchemaAudienceI18n'
 import { buildProductSemanticJsonLdFields } from '@/lib/products/productSemanticJsonLd'
 import { getSharedAbayaSchemaAudience, SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
 
@@ -184,7 +185,7 @@ function schemaAudience(locale: AppLocale, slug: string, product: Product) {
   return {
     '@type': 'PeopleAudience' as const,
     suggestedGender: 'female' as const,
-    audienceType,
+    audienceType: appendGlobalPdpSchemaAudienceExtension(audienceType, locale),
   }
 }
 

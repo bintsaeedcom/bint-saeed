@@ -19,6 +19,12 @@ import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { getCartLineImageAlt } from '@/lib/products/imageAlt'
+import {
+  getCheckoutConfigHint,
+  getCheckoutNotConfiguredMessage,
+  getPublicPaymentProvider,
+  isCheckoutProviderConfigured,
+} from '@/lib/payments'
 
 function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   if (typeof window === 'undefined') return 'desktop'
@@ -35,8 +41,9 @@ export default function CheckoutPage() {
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const paymentProvider = getPublicPaymentProvider()
+  const checkoutEnvReady = isCheckoutProviderConfigured(paymentProvider)
   const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.trim() ?? ''
-  const stripeEnvReady = stripePublishableKey.startsWith('pk_')
 
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
@@ -65,7 +72,7 @@ export default function CheckoutPage() {
     })
   }, [cartSubtotal, currency.code, items])
 
-  const startStripeCheckout = async () => {
+  const startCheckout = async () => {
     if (items.length === 0) return
     if (!legalAcknowledged) {
       toast.error(
@@ -73,17 +80,41 @@ export default function CheckoutPage() {
       )
       return
     }
-    if (!stripeEnvReady) {
-      toast.error(
-        ui.checkout.stripeNotConfigured,
-      )
+    if (!checkoutEnvReady) {
+      toast.error(getCheckoutNotConfiguredMessage(paymentProvider))
       return
     }
 
     setPayBusy(true)
-    trackEvent('add_shipping_info', { checkout_provider: 'stripe', currency: currency.code })
-    trackEvent('add_payment_info', { checkout_provider: 'stripe', currency: currency.code })
+    trackEvent('add_shipping_info', { checkout_provider: paymentProvider, currency: currency.code })
+    trackEvent('add_payment_info', { checkout_provider: paymentProvider, currency: currency.code })
     try {
+      if (paymentProvider === 'mollie') {
+        const response = await fetch('/api/payments/mollie/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            items,
+            currency: currency.code,
+            clientContext: {
+              localTime: new Date().toString(),
+              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
+              deviceType: detectDeviceType(),
+            },
+          }),
+        })
+
+        const { url, error } = await response.json()
+        if (!response.ok) {
+          throw new Error(error || 'Checkout is unavailable')
+        }
+        if (typeof url === 'string' && url.startsWith('https://')) {
+          window.location.assign(url)
+          return
+        }
+        throw new Error('Mollie checkout URL missing')
+      }
+
       const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -278,8 +309,8 @@ export default function CheckoutPage() {
 
                 <button
                   type="button"
-                  onClick={() => void startStripeCheckout()}
-                  disabled={payBusy || !stripeEnvReady || !legalAcknowledged}
+                  onClick={() => void startCheckout()}
+                  disabled={payBusy || !checkoutEnvReady || !legalAcknowledged}
                   className={`mt-5 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue px-3 py-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 sm:mt-6 sm:gap-3 sm:text-sm sm:tracking-[0.18em] ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
@@ -293,9 +324,9 @@ export default function CheckoutPage() {
                     </>
                   )}
                 </button>
-                {!stripeEnvReady ? (
+                {!checkoutEnvReady ? (
                   <p className="mt-3 text-center font-montserrat text-[10px] uppercase tracking-[0.15em] text-amber-300/80">
-                    {ui.checkout.stripeEnvHint}
+                    {getCheckoutConfigHint(paymentProvider)}
                   </p>
                 ) : null}
               </motion.div>
