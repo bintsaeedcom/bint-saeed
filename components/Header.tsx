@@ -241,7 +241,7 @@ export default function Header() {
                 isScrolled ? 'py-0.5 md:py-0.5' : 'py-1 md:py-1.5 lg:py-2 xl:py-2.5'
               }`}
             >
-              <div className="absolute left-0.5 top-1/2 z-[62] -translate-y-1/2 2xl:hidden">
+              <div className={`absolute left-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center 2xl:hidden ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <button
                   type="button"
                   className="p-2 text-white"
@@ -250,6 +250,15 @@ export default function Header() {
                   aria-label="Toggle menu"
                 >
                   <FiMenu className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsSearchOpen(true)}
+                  className="p-2 text-white/80 transition-colors hover:text-white"
+                  data-cursor-hover
+                  aria-label={t.nav.search}
+                >
+                  <FiSearch className="h-[17px] w-[17px]" />
                 </button>
               </div>
 
@@ -302,28 +311,6 @@ export default function Header() {
                   )}
                 </button>
               </div>
-            </div>
-
-            {/* Mobile search — visible below logo; opens full search overlay */}
-            <div className={`2xl:hidden px-1 ${isScrolled ? 'pb-1.5' : 'pb-2'}`}>
-              <button
-                type="button"
-                onClick={() => setIsSearchOpen(true)}
-                className={`flex w-full items-center gap-2.5 border px-3 py-2 font-montserrat text-[13px] transition-colors ${
-                  isRTL ? 'flex-row-reverse text-right' : 'text-left'
-                } ${
-                  isTransparentHomeHeader
-                    ? 'border-white/25 bg-white/[0.08] text-white/70 hover:border-white/40 hover:bg-white/[0.12]'
-                    : 'border-white/20 bg-white/[0.05] text-white/75 hover:border-white/30 hover:bg-white/[0.1]'
-                }`}
-                data-cursor-hover
-                aria-label={t.nav.search}
-              >
-                <FiSearch className="h-4 w-4 shrink-0 text-brand-dustyBlue" aria-hidden />
-                <span className="min-w-0 flex-1 truncate">
-                  {t.search.placeholder || 'Search for products, collection, pages…'}
-                </span>
-              </button>
             </div>
 
             {/* Divider between brand and topics */}
@@ -661,27 +648,6 @@ export default function Header() {
                   data-cursor-hover
                 >
                   <FiX className="w-6 h-6" />
-                </button>
-              </div>
-
-              {/* Mobile menu search */}
-              <div className="px-6 pb-4">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false)
-                    setIsSearchOpen(true)
-                  }}
-                  className={`flex w-full items-center gap-2.5 border border-white/20 bg-white/[0.06] px-3 py-2.5 font-montserrat text-[13px] text-white/75 transition-colors hover:border-white/35 hover:bg-white/[0.1] ${
-                    isRTL ? 'flex-row-reverse text-right' : 'text-left'
-                  }`}
-                  data-cursor-hover
-                  aria-label={t.nav.search}
-                >
-                  <FiSearch className="h-4 w-4 shrink-0 text-brand-dustyBlue" aria-hidden />
-                  <span className="min-w-0 flex-1 truncate">
-                    {t.search.placeholder || 'Search for products, collection, pages…'}
-                  </span>
                 </button>
               </div>
 

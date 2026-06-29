@@ -26,6 +26,7 @@ import {
   isCheckoutRailConfigured,
   type CheckoutRail,
 } from '@/lib/payments'
+import CheckoutPaymentRailIcons from '@/components/checkout/CheckoutPaymentRailIcons'
 
 function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   if (typeof window === 'undefined') return 'desktop'
@@ -39,6 +40,12 @@ function railLabel(rail: CheckoutRail, ui: ReturnType<typeof commerceUi>): strin
   if (rail === 'paypal') return ui.checkout.payWithPayPal
   if (rail === 'mollie') return ui.checkout.payWithMollie
   return ui.checkout.payWithCard
+}
+
+function continueLabel(rail: CheckoutRail | null, ui: ReturnType<typeof commerceUi>): string {
+  if (rail === 'paypal') return ui.checkout.continueWithPayPal
+  if (rail === 'mollie') return ui.checkout.continueWithMollie
+  return ui.checkout.continueWithCard
 }
 
 export default function CheckoutPage() {
@@ -261,11 +268,15 @@ export default function CheckoutPage() {
                       </p>
                       <p className="mt-2 font-montserrat text-sm text-brand-darkRed">
                         {formatAmount(lineUnitForCurrency(item, currency.code))}
-                        <span className="text-brand-clayRed/50"> × {item.quantity}</span>
-                        <span className="block text-xs text-brand-clayRed/55">
-                          {ui.cart.lineTotal}:{' '}
-                          {formatAmount(lineTotalForCurrency(item, currency.code))}
-                        </span>
+                        {item.quantity > 1 ? (
+                          <>
+                            <span className="text-brand-clayRed/50"> × {item.quantity}</span>
+                            <span className="block text-xs text-brand-clayRed/55">
+                              {ui.cart.lineTotal}:{' '}
+                              {formatAmount(lineTotalForCurrency(item, currency.code))}
+                            </span>
+                          </>
+                        ) : null}
                       </p>
                     </div>
                   </li>
@@ -303,7 +314,7 @@ export default function CheckoutPage() {
                     {availableRails.map((rail) => (
                       <label
                         key={rail}
-                        className={`flex cursor-pointer items-center gap-3 rounded-[4px] border px-3 py-3 transition-colors ${
+                        className={`flex cursor-pointer items-start gap-3 rounded-[4px] border px-3 py-3 transition-colors ${
                           activeRail === rail
                             ? 'border-brand-dustyBlue/70 bg-white/10'
                             : 'border-white/10 bg-white/5 hover:border-white/20'
@@ -315,10 +326,16 @@ export default function CheckoutPage() {
                           value={rail}
                           checked={activeRail === rail}
                           onChange={() => setSelectedRail(rail)}
-                          className="h-4 w-4 accent-brand-dustyBlue"
+                          className="mt-1 h-4 w-4 shrink-0 accent-brand-dustyBlue"
                         />
-                        <span className="font-montserrat text-[11px] leading-snug tracking-wide text-white/80">
-                          {railLabel(rail, ui)}
+                        <span className="min-w-0 flex-1 space-y-2">
+                          <span className="sr-only">{railLabel(rail, ui)}</span>
+                          <CheckoutPaymentRailIcons rail={rail} />
+                          {rail === 'mollie' ? (
+                            <span className="block font-montserrat text-[11px] leading-snug tracking-wide text-white/75">
+                              {ui.checkout.payWithMollie}
+                            </span>
+                          ) : null}
                         </span>
                       </label>
                     ))}
@@ -359,16 +376,20 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={() => void startCheckout()}
                   disabled={payBusy || !checkoutEnvReady || !legalAcknowledged || !activeRail}
-                  className={`mt-5 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue px-3 py-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 sm:mt-6 sm:gap-3 sm:text-sm sm:tracking-[0.18em] ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`mt-5 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-[4px] px-4 py-3.5 font-montserrat text-sm font-medium tracking-wide transition-colors sm:mt-6 ${
+                    payBusy || !checkoutEnvReady || !legalAcknowledged || !activeRail
+                      ? 'cursor-not-allowed bg-white/15 text-white/45'
+                      : 'bg-brand-dustyBlue text-[#1a0008] hover:bg-white hover:text-brand-darkRed'
+                  } ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
                   {payBusy ? (
                     ui.checkout.processingPayment
                   ) : (
                     <>
-                      <FiLock className="h-4 w-4 opacity-90" />
-                      {ui.checkout.continueSecurePayment}
-                      <FiArrowRight className={`h-4 w-4 opacity-90 ${isRTL ? 'rotate-180' : ''}`} />
+                      <FiLock className="h-4 w-4 shrink-0 opacity-90" />
+                      <span className="truncate">{continueLabel(activeRail, ui)}</span>
+                      <FiArrowRight className={`h-4 w-4 shrink-0 opacity-90 ${isRTL ? 'rotate-180' : ''}`} />
                     </>
                   )}
                 </button>

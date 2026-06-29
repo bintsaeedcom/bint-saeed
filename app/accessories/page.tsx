@@ -63,8 +63,10 @@ export default function AccessoriesPage() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
 
-  const colorOptions = useMemo(() => buildAccessoryColorOptions(accessories), [])
-  const colorOptionIds = useMemo(() => new Set(colorOptions.map((c) => c.id)), [colorOptions])
+  const colorOptionIds = useMemo(
+    () => new Set(buildAccessoryColorOptions(accessories).map((c) => c.id)),
+    [],
+  )
 
   useEffect(() => {
     if (!searchParams) return
@@ -139,23 +141,6 @@ export default function AccessoriesPage() {
     [selectedStones, replaceAccessoryQuery]
   )
 
-  const toggleColorAndUrl = useCallback(
-    (colorId: ColorFilterId) => {
-      const next = selectedColors.includes(colorId)
-        ? selectedColors.filter((c) => c !== colorId)
-        : [...selectedColors, colorId]
-      setSelectedColors(next)
-      trackEvent('filter_usage', {
-        filter_type: 'accessories_color',
-        filter_value: colorId,
-        filter_state: next.includes(colorId) ? 'enabled' : 'disabled',
-        page: 'accessories',
-      })
-      replaceAccessoryQuery({ colors: next })
-    },
-    [selectedColors, replaceAccessoryQuery]
-  )
-
   const clearPriceAndStoneFilters = useCallback(() => {
     setPriceRange('all')
     setSelectedStones([])
@@ -185,8 +170,24 @@ export default function AccessoriesPage() {
     [activeCategory, priceRange, selectedStones, selectedColors]
   )
 
-  const hasExtraFilters =
-    priceRange !== 'all' || selectedStones.length > 0 || selectedColors.length > 0
+  const hasExtraFilters = priceRange !== 'all' || selectedStones.length > 0
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { all: accessories.length }
+    for (const item of accessories) {
+      counts[item.category] = (counts[item.category] ?? 0) + 1
+    }
+    return counts
+  }, [])
+
+  const categoryLabel = useCallback(
+    (category: (typeof accessoryCategories)[number]) => {
+      const name = isRTL ? category.nameAr : category.name
+      const count = categoryCounts[category.id]
+      return count != null && category.id !== 'all' ? `${name} (${count})` : name
+    },
+    [categoryCounts, isRTL],
+  )
 
   const activeTab = accessoryCategories.find(c => c.id === activeCategory)
   const isAbayaStrandsLayout = activeCategory === 'signature-strands'
@@ -244,204 +245,222 @@ export default function AccessoriesPage() {
         </div>
       </section>
 
-      {/* Category Tabs */}
-      <section className="sticky top-[50px] z-40 border-b border-brand-stone/30 bg-brand-pageCanvas md:top-16">
+      {/* Collection layout — category sidebar + product grid */}
+      <section className="border-b border-brand-stone/30 bg-brand-pageCanvas">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between py-4">
-            {/* Categories - Desktop */}
-            <div className={`hidden md:flex items-center gap-4 overflow-x-auto ${isRTL ? 'flex-row-reverse' : ''}`}>
-              {accessoryCategories.map((category) => (
-                <button
-                  key={category.id}
-                  type="button"
-                  onClick={() => setCategoryAndUrl(category.id)}
-                  className={`flex items-center gap-2 px-4 py-2 font-montserrat text-xs uppercase tracking-[0.1em] transition-all duration-300 whitespace-nowrap ${
-                    activeCategory === category.id
-                      ? 'bg-brand-darkRed text-brand-ivory'
-                      : 'text-brand-clayRed/70 hover:text-brand-dustyBlue hover:bg-brand-dustyBlue/10'
-                  } ${isRTL ? 'flex-row-reverse' : ''}`}
-                  data-cursor-hover
-                >
-                  <span className="text-sm">{category.icon}</span>
-                  {isRTL ? category.nameAr : category.name}
-                </button>
-              ))}
-            </div>
-
-            {/* Mobile Filter Button */}
+          {/* Mobile toolbar — categories via Refine drawer only */}
+          <div
+            className={`sticky top-[50px] z-40 flex items-center justify-between gap-3 border-b border-brand-stone/25 bg-brand-pageCanvas py-3 md:top-16 md:hidden ${isRTL ? 'flex-row-reverse' : ''}`}
+          >
             <button
+              type="button"
               onClick={() => setIsFilterOpen(true)}
-              className={`md:hidden flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.15em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`flex items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
+              aria-expanded={isFilterOpen}
+              aria-haspopup="dialog"
             >
-              <FiFilter className="w-4 h-4" />
-              {ui.accessories.filter}
+              <FiFilter className="h-4 w-4" aria-hidden />
+              {ui.shop.productCategories}
             </button>
-
-            {/* Count */}
-            <span className="font-montserrat text-xs text-brand-clayRed/60 tracking-wide">
+            <span className="font-montserrat text-[10px] tabular-nums tracking-[0.1em] text-brand-clayRed/60">
               {filteredAccessories.length} {ui.accessories.products}
             </span>
           </div>
 
-          {/* Price, colour + stone filters — desktop */}
           <div
-            className={`hidden md:flex flex-wrap items-end gap-6 gap-y-4 border-t border-brand-stone/25 py-4 ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`flex gap-10 py-8 md:py-10 lg:gap-12 lg:py-12 ${isRTL ? 'flex-row-reverse' : ''}`}
           >
-            <div className="flex flex-col gap-1.5">
-              <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                {ui.accessories.price}
-              </span>
-              <select
-                value={priceRange}
-                onChange={(e) => setPriceAndUrl(e.target.value as PriceRangeId)}
-                className="min-w-[200px] cursor-pointer border border-brand-stone/40 bg-white px-3 py-2 font-montserrat text-xs tracking-wide text-brand-darkRed focus:border-brand-dustyBlue focus:outline-none"
-                aria-label={ui.accessories.price}
-              >
-                {PRICE_RANGE_OPTIONS.map((opt) => (
-                  <option key={opt.id} value={opt.id}>
-                    {isRTL ? opt.labelAr : opt.labelEn}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="min-w-0 flex-1">
-              <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                {ui.shopExtras.availableColours}
-              </span>
-              <div className={`mt-2 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
-                {colorOptions.map((color) => {
-                  const on = selectedColors.includes(color.id)
-                  return (
-                    <button
-                      key={color.id}
-                      type="button"
-                      onClick={() => toggleColorAndUrl(color.id)}
-                      className={`flex items-center gap-2 rounded-sm border px-2.5 py-1.5 font-montserrat text-[11px] uppercase tracking-[0.08em] transition-colors ${
-                        on
-                          ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
-                          : 'border-brand-stone/40 text-brand-clayRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
-                      } ${isRTL ? 'flex-row-reverse' : ''}`}
-                      data-cursor-hover
-                    >
-                      <span
-                        className="h-3 w-3 shrink-0 rounded-full border border-brand-stone/50"
-                        style={{ backgroundColor: color.hex }}
-                        aria-hidden
-                      />
-                      {isRTL ? color.labelAr : color.labelEn}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-            <div className="min-w-0 flex-1">
-              <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                {ui.accessories.stoneType}
-              </span>
-              <div className={`mt-2 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
-                {STONE_OPTIONS.map((st) => {
-                  const on = selectedStones.includes(st.id)
-                  return (
-                    <button
-                      key={st.id}
-                      type="button"
-                      onClick={() => toggleStoneAndUrl(st.id)}
-                      className={`rounded-sm border px-2.5 py-1.5 font-montserrat text-[11px] uppercase tracking-[0.08em] transition-colors ${
-                        on
-                          ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
-                          : 'border-brand-stone/40 text-brand-clayRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
-                      }`}
-                      data-cursor-hover
-                    >
-                      {isRTL ? st.labelAr : st.labelEn}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-            {hasExtraFilters && (
-              <button
-                type="button"
-                onClick={clearPriceAndStoneFilters}
-                className="shrink-0 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue underline-offset-4 hover:underline"
-                data-cursor-hover
-              >
-                {ui.accessories.clearFilters}
-              </button>
-            )}
-            {(activeCategory !== 'all' || hasExtraFilters) && (
-              <button
-                type="button"
-                onClick={resetAllFiltersAndUrl}
-                className="shrink-0 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-clayRed/70 underline-offset-4 hover:underline"
-                data-cursor-hover
-              >
-                {ui.shop.categoryAll}
-              </button>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Category Description */}
-      {activeTab && activeTab.id !== 'all' && (
-        <section className="bg-brand-stone/5 py-8">
-          <div className="container mx-auto px-6 lg:px-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={`flex items-start gap-4 border-y border-brand-stone/25 py-6 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
+            {/* Category + refine sidebar */}
+            <aside
+              className={`hidden w-52 shrink-0 md:block lg:w-56 xl:w-64 ${isRTL ? 'text-right' : ''}`}
+              aria-label={ui.shop.productCategories}
             >
-              <span className="text-4xl">{activeTab.icon}</span>
-              <div>
-                  <h2 className="font-rozha text-[clamp(2rem,5vw,3.5rem)] leading-[1.05] text-brand-darkRed">
-                  {isRTL ? activeTab.nameAr : activeTab.name}
-                </h2>
-                <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide">
-                  {isRTL ? activeTab.descriptionAr : activeTab.description}
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      )}
+              <div className="sticky top-24 space-y-8">
+                <div>
+                  <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/55">
+                    {ui.shop.productCategories}
+                  </p>
+                  <ul className="space-y-1">
+                    {accessoryCategories.map((category) => {
+                      const active = activeCategory === category.id
+                      return (
+                        <li key={category.id}>
+                          <button
+                            type="button"
+                            onClick={() => setCategoryAndUrl(category.id)}
+                            className={`flex w-full items-center gap-2.5 px-3 py-2.5 font-montserrat text-sm tracking-wide transition-colors ${
+                              isRTL ? 'flex-row-reverse text-right' : 'text-left'
+                            } ${
+                              active
+                                ? 'bg-brand-darkRed text-brand-ivory'
+                                : 'text-brand-clayRed/80 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
+                            }`}
+                            data-cursor-hover
+                          >
+                            <span className="text-base leading-none" aria-hidden>
+                              {category.icon}
+                            </span>
+                            <span className="min-w-0 flex-1 leading-snug">{categoryLabel(category)}</span>
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
 
-      {/* Products Grid — Abaya Strands: 1 hero image + 2×5 grid */}
-      <section className="py-12 md:py-20">
-        <div className="container mx-auto px-6 lg:px-12">
-          {filteredAccessories.length === 0 ? (
-            <div className={`py-16 text-center ${isRTL ? 'text-right' : ''}`}>
-              <p className="font-montserrat text-sm tracking-wide text-brand-clayRed/70">
-                {ui.shop.noPiecesInChapter}
-              </p>
-              <button
-                type="button"
-                onClick={resetAllFiltersAndUrl}
-                className="mt-6 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue underline-offset-4 hover:underline"
-                data-cursor-hover
-              >
-                {ui.accessories.clearFilters}
-              </button>
-            </div>
-          ) : isAbayaStrandsLayout ? (
-            <div
-              className={`flex flex-col gap-10 lg:gap-14 lg:items-start ${isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
-            >
-              <div className="relative w-full shrink-0 lg:w-[44%] lg:max-w-[520px]">
-                <div className="relative aspect-[4/5] w-full overflow-hidden bg-brand-stone/15">
-                  <Image
-                    src={ACCESSORY_IMAGE_ABAYA_CHARMS_HERO}
-                    alt={withBrandAlt(ui.accessories.collectionTitle)}
-                    fill
-                    className="img-zoom object-contain"
-                    sizes="(max-width: 1024px) 100vw, 44vw"
-                    priority
-                  />
+                <div className="border-t border-brand-stone/25 pt-6">
+                  <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/55">
+                    {ui.shop.refine}
+                  </p>
+                  <div className="space-y-5">
+                    <div>
+                      <label
+                        htmlFor="accessories-price-filter"
+                        className="mb-1.5 block font-montserrat text-[10px] uppercase tracking-[0.16em] text-brand-clayRed/50"
+                      >
+                        {ui.accessories.price}
+                      </label>
+                      <select
+                        id="accessories-price-filter"
+                        value={priceRange}
+                        onChange={(e) => setPriceAndUrl(e.target.value as PriceRangeId)}
+                        className="w-full cursor-pointer border border-brand-stone/40 bg-white px-3 py-2 font-montserrat text-xs tracking-wide text-brand-darkRed focus:border-brand-dustyBlue focus:outline-none"
+                      >
+                        {PRICE_RANGE_OPTIONS.map((opt) => (
+                          <option key={opt.id} value={opt.id}>
+                            {isRTL ? opt.labelAr : opt.labelEn}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.16em] text-brand-clayRed/50">
+                        {ui.accessories.stoneType}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {STONE_OPTIONS.map((st) => {
+                          const on = selectedStones.includes(st.id)
+                          return (
+                            <button
+                              key={st.id}
+                              type="button"
+                              onClick={() => toggleStoneAndUrl(st.id)}
+                              className={`rounded-sm border px-2 py-1 font-montserrat text-[10px] uppercase tracking-[0.06em] transition-colors ${
+                                on
+                                  ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
+                                  : 'border-brand-stone/40 text-brand-clayRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
+                              }`}
+                              data-cursor-hover
+                            >
+                              {isRTL ? st.labelAr : st.labelEn}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+
+                    {hasExtraFilters && (
+                      <button
+                        type="button"
+                        onClick={clearPriceAndStoneFilters}
+                        className="font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue underline-offset-4 hover:underline"
+                        data-cursor-hover
+                      >
+                        {ui.accessories.clearFilters}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="min-w-0 flex-1">
-                <motion.div layout className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:gap-6 lg:gap-8">
+            </aside>
+
+            <div className="min-w-0 flex-1">
+              <div className={`mb-6 hidden items-center justify-between md:flex ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
+                  {activeTab ? categoryLabel(activeTab) : categoryLabel(accessoryCategories[0])}
+                </p>
+                <span className="font-montserrat text-[10px] tabular-nums tracking-[0.1em] text-brand-clayRed/60">
+                  {filteredAccessories.length} {ui.accessories.products}
+                </span>
+              </div>
+
+              {activeTab && activeTab.id !== 'all' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`mb-8 flex items-start gap-4 border-y border-brand-stone/25 py-5 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
+                >
+                  <span className="text-3xl" aria-hidden>
+                    {activeTab.icon}
+                  </span>
+                  <div>
+                    <h2 className="font-rozha text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.08] text-brand-darkRed">
+                      {isRTL ? activeTab.nameAr : activeTab.name}
+                    </h2>
+                    <p className="mt-1 font-montserrat text-sm tracking-wide text-brand-clayRed/70">
+                      {isRTL ? activeTab.descriptionAr : activeTab.description}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+
+              {filteredAccessories.length === 0 ? (
+                <div className={`py-16 text-center ${isRTL ? 'text-right' : ''}`}>
+                  <p className="font-montserrat text-sm tracking-wide text-brand-clayRed/70">
+                    {ui.shop.noPiecesInChapter}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={resetAllFiltersAndUrl}
+                    className="mt-6 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue underline-offset-4 hover:underline"
+                    data-cursor-hover
+                  >
+                    {ui.accessories.clearFilters}
+                  </button>
+                </div>
+              ) : isAbayaStrandsLayout ? (
+                <div
+                  className={`flex flex-col gap-10 lg:items-start lg:gap-12 ${isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
+                >
+                  <div className="relative w-full shrink-0 lg:w-[44%] lg:max-w-[520px]">
+                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-brand-stone/15">
+                      <Image
+                        src={ACCESSORY_IMAGE_ABAYA_CHARMS_HERO}
+                        alt={withBrandAlt(ui.accessories.collectionTitle)}
+                        fill
+                        className="img-zoom object-contain"
+                        sizes="(max-width: 1024px) 100vw, 44vw"
+                        priority
+                      />
+                    </div>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <motion.div layout className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:gap-6 lg:gap-8">
+                      <AnimatePresence mode="popLayout">
+                        {filteredAccessories.map((accessory, index) => (
+                          <AccessoryCard
+                            key={accessory.id}
+                            accessory={accessory}
+                            index={index}
+                            hoveredProduct={hoveredProduct}
+                            setHoveredProduct={setHoveredProduct}
+                            formatPrice={formatPrice}
+                            isRTL={isRTL}
+                            language={language}
+                            ui={ui}
+                          />
+                        ))}
+                      </AnimatePresence>
+                    </motion.div>
+                  </div>
+                </div>
+              ) : (
+                <motion.div
+                  layout
+                  className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:gap-8 xl:grid-cols-3"
+                >
                   <AnimatePresence mode="popLayout">
                     {filteredAccessories.map((accessory, index) => (
                       <AccessoryCard
@@ -458,30 +477,9 @@ export default function AccessoriesPage() {
                     ))}
                   </AnimatePresence>
                 </motion.div>
-              </div>
+              )}
             </div>
-          ) : (
-            <motion.div
-              layout
-              className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:gap-8 lg:grid-cols-3 xl:grid-cols-4"
-            >
-              <AnimatePresence mode="popLayout">
-                {filteredAccessories.map((accessory, index) => (
-                  <AccessoryCard
-                    key={accessory.id}
-                    accessory={accessory}
-                    index={index}
-                    hoveredProduct={hoveredProduct}
-                    setHoveredProduct={setHoveredProduct}
-                    formatPrice={formatPrice}
-                    isRTL={isRTL}
-                    language={language}
-                    ui={ui}
-                  />
-                ))}
-              </AnimatePresence>
-            </motion.div>
-          )}
+          </div>
         </div>
       </section>
 
@@ -497,108 +495,30 @@ export default function AccessoriesPage() {
               onClick={() => setIsFilterOpen(false)}
             />
             <motion.div
-              initial={{ x: isRTL ? '-100%' : '100%' }}
+              initial={{ x: isRTL ? '100%' : '-100%' }}
               animate={{ x: 0 }}
-              exit={{ x: isRTL ? '-100%' : '100%' }}
+              exit={{ x: isRTL ? '100%' : '-100%' }}
               transition={{ type: 'tween', duration: 0.3 }}
-              className={`fixed ${isRTL ? 'left-0' : 'right-0'} top-0 bottom-0 z-50 w-[min(100vw,20rem)] overflow-y-auto bg-white`}
+              className={`fixed ${isRTL ? 'right-0' : 'left-0'} top-0 bottom-0 z-50 w-[min(100vw,20rem)] overflow-y-auto bg-white shadow-xl`}
             >
               <div className="p-6">
-                <div className={`flex items-center justify-between mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <p className="font-montserrat text-2xl text-brand-darkRed">
-                    {ui.shop.productCategories}
-                  </p>
+                <div className={`mb-8 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <p className="font-montserrat text-2xl text-brand-darkRed">{ui.shop.refine}</p>
                   <button
+                    type="button"
                     onClick={() => setIsFilterOpen(false)}
                     className="text-brand-darkRed"
                     data-cursor-hover
+                    aria-label={ui.common.close}
                   >
-                    <FiX className="w-6 h-6" />
+                    <FiX className="h-6 w-6" />
                   </button>
                 </div>
 
-                <div className="space-y-2">
-                  <div className="mb-6 space-y-3 border-b border-brand-stone/20 pb-6">
-                    <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                      {ui.accessories.price}
-                    </p>
-                    <select
-                      value={priceRange}
-                      onChange={(e) => setPriceAndUrl(e.target.value as PriceRangeId)}
-                      className="w-full cursor-pointer border border-brand-stone/40 bg-white px-3 py-2.5 font-montserrat text-sm text-brand-darkRed"
-                      aria-label={ui.accessories.price}
-                    >
-                      {PRICE_RANGE_OPTIONS.map((opt) => (
-                        <option key={opt.id} value={opt.id}>
-                          {isRTL ? opt.labelAr : opt.labelEn}
-                        </option>
-                      ))}
-                    </select>
-                    <p className="mt-4 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                      {ui.shopExtras.availableColours}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {colorOptions.map((color) => {
-                        const on = selectedColors.includes(color.id)
-                        return (
-                          <button
-                            key={color.id}
-                            type="button"
-                            onClick={() => toggleColorAndUrl(color.id)}
-                            className={`flex items-center gap-2 rounded-sm border px-2 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.06em] ${
-                              on
-                                ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
-                                : 'border-brand-stone/40 text-brand-clayRed'
-                            } ${isRTL ? 'flex-row-reverse' : ''}`}
-                          >
-                            <span
-                              className="h-3 w-3 shrink-0 rounded-full border border-brand-stone/50"
-                              style={{ backgroundColor: color.hex }}
-                              aria-hidden
-                            />
-                            {isRTL ? color.labelAr : color.labelEn}
-                          </button>
-                        )
-                      })}
-                    </div>
-                    <p className="mt-4 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                      {ui.accessories.stoneType}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {STONE_OPTIONS.map((st) => {
-                        const on = selectedStones.includes(st.id)
-                        return (
-                          <button
-                            key={st.id}
-                            type="button"
-                            onClick={() => toggleStoneAndUrl(st.id)}
-                            className={`rounded-sm border px-2 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.06em] ${
-                              on
-                                ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
-                                : 'border-brand-stone/40 text-brand-clayRed'
-                            }`}
-                          >
-                            {isRTL ? st.labelAr : st.labelEn}
-                          </button>
-                        )
-                      })}
-                    </div>
-                    {hasExtraFilters && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          clearPriceAndStoneFilters()
-                        }}
-                        className="mt-3 w-full border border-brand-stone/30 py-2 font-montserrat text-[11px] uppercase tracking-[0.1em] text-brand-dustyBlue"
-                      >
-                        {ui.accessories.clearFilters}
-                      </button>
-                    )}
-                  </div>
-
-                  <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                    {ui.shop.productCategories}
-                  </p>
+                <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
+                  {ui.shop.productCategories}
+                </p>
+                <div className="mb-8 space-y-1">
                   {accessoryCategories.map((category) => (
                     <button
                       key={category.id}
@@ -607,17 +527,70 @@ export default function AccessoriesPage() {
                         setCategoryAndUrl(category.id)
                         setIsFilterOpen(false)
                       }}
-                      className={`w-full flex items-center gap-3 px-4 py-3 font-montserrat text-sm tracking-wide transition-colors ${isRTL ? 'flex-row-reverse text-right' : ''} ${
+                      className={`flex w-full items-center gap-3 px-4 py-3 font-montserrat text-sm tracking-wide transition-colors ${isRTL ? 'flex-row-reverse text-right' : ''} ${
                         activeCategory === category.id
                           ? 'bg-brand-darkRed text-brand-ivory'
                           : 'text-brand-clayRed hover:bg-brand-dustyBlue/10'
                       }`}
                       data-cursor-hover
                     >
-                      <span>{category.icon}</span>
-                      {isRTL ? category.nameAr : category.name}
+                      <span aria-hidden>{category.icon}</span>
+                      {categoryLabel(category)}
                     </button>
                   ))}
+                </div>
+
+                <div className="space-y-4 border-t border-brand-stone/20 pt-6">
+                  <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
+                    {ui.accessories.price}
+                  </p>
+                  <select
+                    value={priceRange}
+                    onChange={(e) => setPriceAndUrl(e.target.value as PriceRangeId)}
+                    className="w-full cursor-pointer border border-brand-stone/40 bg-white px-3 py-2.5 font-montserrat text-sm text-brand-darkRed"
+                    aria-label={ui.accessories.price}
+                  >
+                    {PRICE_RANGE_OPTIONS.map((opt) => (
+                      <option key={opt.id} value={opt.id}>
+                        {isRTL ? opt.labelAr : opt.labelEn}
+                      </option>
+                    ))}
+                  </select>
+
+                  <p className="pt-2 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
+                    {ui.accessories.stoneType}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {STONE_OPTIONS.map((st) => {
+                      const on = selectedStones.includes(st.id)
+                      return (
+                        <button
+                          key={st.id}
+                          type="button"
+                          onClick={() => toggleStoneAndUrl(st.id)}
+                          className={`rounded-sm border px-2 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.06em] ${
+                            on
+                              ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
+                              : 'border-brand-stone/40 text-brand-clayRed'
+                          }`}
+                        >
+                          {isRTL ? st.labelAr : st.labelEn}
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  {hasExtraFilters && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        clearPriceAndStoneFilters()
+                      }}
+                      className="mt-2 w-full border border-brand-stone/30 py-2 font-montserrat text-[11px] uppercase tracking-[0.1em] text-brand-dustyBlue"
+                    >
+                      {ui.accessories.clearFilters}
+                    </button>
+                  )}
                 </div>
               </div>
             </motion.div>

@@ -160,10 +160,12 @@ export default function CartPage() {
                     <div className="mt-4 flex items-end justify-between">
                       <p className="font-montserrat text-base text-brand-darkRed tracking-wide">
                         {formatAmount(lineUnitForCurrency(item, currency.code))}
-                        <span className="block font-montserrat text-xs text-brand-clayRed/60">
-                          {ui.cart.lineTotal}:{' '}
-                          {formatAmount(lineTotalForCurrency(item, currency.code))}
-                        </span>
+                        {item.quantity > 1 ? (
+                          <span className="block font-montserrat text-xs text-brand-clayRed/60">
+                            {ui.cart.lineTotal}:{' '}
+                            {formatAmount(lineTotalForCurrency(item, currency.code))}
+                          </span>
+                        ) : null}
                       </p>
 
                       <div className="flex items-center gap-3 sm:gap-4">
