@@ -172,21 +172,10 @@ export default function AccessoriesPage() {
 
   const hasExtraFilters = priceRange !== 'all' || selectedStones.length > 0
 
-  const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = { all: accessories.length }
-    for (const item of accessories) {
-      counts[item.category] = (counts[item.category] ?? 0) + 1
-    }
-    return counts
-  }, [])
-
   const categoryLabel = useCallback(
-    (category: (typeof accessoryCategories)[number]) => {
-      const name = isRTL ? category.nameAr : category.name
-      const count = categoryCounts[category.id]
-      return count != null && category.id !== 'all' ? `${name} (${count})` : name
-    },
-    [categoryCounts, isRTL],
+    (category: (typeof accessoryCategories)[number]) =>
+      isRTL ? category.nameAr : category.name,
+    [isRTL],
   )
 
   const activeTab = accessoryCategories.find(c => c.id === activeCategory)
@@ -250,7 +239,7 @@ export default function AccessoriesPage() {
         <div className="container mx-auto px-6 lg:px-12">
           {/* Mobile toolbar — categories via Refine drawer only */}
           <div
-            className={`sticky top-[50px] z-40 flex items-center justify-between gap-3 border-b border-brand-stone/25 bg-brand-pageCanvas py-3 md:top-16 md:hidden ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`sticky top-[50px] z-40 border-b border-brand-stone/25 bg-brand-pageCanvas py-3 md:top-16 md:hidden ${isRTL ? 'text-right' : ''}`}
           >
             <button
               type="button"
@@ -263,9 +252,6 @@ export default function AccessoriesPage() {
               <FiFilter className="h-4 w-4" aria-hidden />
               {ui.shop.productCategories}
             </button>
-            <span className="font-montserrat text-[10px] tabular-nums tracking-[0.1em] text-brand-clayRed/60">
-              {filteredAccessories.length} {ui.accessories.products}
-            </span>
           </div>
 
           <div
@@ -377,15 +363,6 @@ export default function AccessoriesPage() {
             </aside>
 
             <div className="min-w-0 flex-1">
-              <div className={`mb-6 hidden items-center justify-between md:flex ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                  {activeTab ? categoryLabel(activeTab) : categoryLabel(accessoryCategories[0])}
-                </p>
-                <span className="font-montserrat text-[10px] tabular-nums tracking-[0.1em] text-brand-clayRed/60">
-                  {filteredAccessories.length} {ui.accessories.products}
-                </span>
-              </div>
-
               {activeTab && activeTab.id !== 'all' && (
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}

@@ -121,21 +121,9 @@ export default function ShopClient() {
     }
   }, [sortOpen])
 
-  const categoryCounts = useMemo(() => {
-    const m: Record<string, number> = {}
-    for (const p of catalog) {
-      m[p.category] = (m[p.category] ?? 0) + 1
-    }
-    return m
-  }, [catalog])
-
   const categoryLabel = useCallback(
-    (cat: string) => {
-      if (cat === 'All') return ui.shop.categoryAll
-      const n = categoryCounts[cat]
-      return n != null ? `${cat} (${n})` : cat
-    },
-    [categoryCounts, ui.shop.categoryAll]
+    (cat: string) => (cat === 'All' ? ui.shop.categoryAll : cat),
+    [ui.shop.categoryAll],
   )
 
   const handleBack = useCallback(() => {
@@ -288,12 +276,6 @@ export default function ShopClient() {
               <FiMaximize2 className="h-3 w-3" aria-hidden />
               {ui.shop.sizing}
             </LocaleLink>
-            <span className="whitespace-nowrap font-montserrat text-[10px] tabular-nums tracking-[0.1em] text-brand-clayRed/60">
-              {sortedProducts.length}{' '}
-              {sortedProducts.length === 1
-                ? ui.shop.piece
-                : ui.shop.pieces}
-            </span>
 
             <div className="relative" ref={sortMenuRef}>
               <button

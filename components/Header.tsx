@@ -14,6 +14,10 @@ import MiniCart from './MiniCart'
 import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 import { getSearchableContent, type SearchableItem } from '@/lib/i18n/searchableContentI18n'
+import {
+  ACCESSORY_IMAGE_NECKLACE,
+  ACCESSORY_IMAGE_PHONE_CHARM,
+} from '@/data/accessories'
 
 /** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
 const headerBarGradient =
@@ -126,7 +130,18 @@ export default function Header() {
           ],
         },
       ],
-      features: [],
+      features: [
+        {
+          title: 'Necklaces',
+          href: '/accessories?type=necklaces',
+          image: ACCESSORY_IMAGE_NECKLACE,
+        },
+        {
+          title: 'Phone Charms',
+          href: '/accessories?type=phone-strands',
+          image: ACCESSORY_IMAGE_PHONE_CHARM,
+        },
+      ],
     },
     '/about': {
       columns: [
