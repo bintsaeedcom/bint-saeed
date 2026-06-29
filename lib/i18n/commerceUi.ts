@@ -78,6 +78,11 @@ type CommerceUiCheckout = {
   stripeNotConfigured: string
   stripeEnvHint: string
   processingPayment: string
+  paymentMethod: string
+  payWithCard: string
+  payWithPayPal: string
+  payWithMollie: string
+  selectPaymentMethod: string
 }
 
 type CommerceUiAccessories = {
@@ -277,6 +282,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: 'Stripe checkout is not configured for this environment yet.',
       stripeEnvHint: 'Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY and STRIPE_SECRET_KEY to enable checkout.',
       processingPayment: 'Processing payment...',
+      paymentMethod: 'Payment method',
+      payWithCard: 'Card — Visa, Mastercard, Apple Pay & Google Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL, Klarna & more (Europe)',
+      selectPaymentMethod: 'Please choose a payment method',
     },
     accessories: {
       collectionTitle: 'Accessories',
@@ -450,6 +460,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: 'الدفع عبر Stripe غير مُهيأ بعد في هذه البيئة.',
       stripeEnvHint: 'أضيفي NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY و STRIPE_SECRET_KEY لتفعيل الدفع.',
       processingPayment: 'جاري معالجة الدفع...',
+      paymentMethod: 'طريقة الدفع',
+      payWithCard: 'بطاقة — فيزا وماستركارد وApple Pay وGoogle Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL وKlarna والمزيد (أوروبا)',
+      selectPaymentMethod: 'يرجى اختيار طريقة الدفع',
     },
     accessories: {
       collectionTitle: 'الإكسسوارات',
@@ -623,6 +638,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: 'Le paiement Stripe n est pas configure pour cet environnement.',
       stripeEnvHint: 'Definissez NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY et STRIPE_SECRET_KEY pour activer le paiement.',
       processingPayment: 'Traitement du paiement...',
+      paymentMethod: 'Mode de paiement',
+      payWithCard: 'Carte — Visa, Mastercard, Apple Pay et Google Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL, Klarna et plus (Europe)',
+      selectPaymentMethod: 'Veuillez choisir un mode de paiement',
     },
     accessories: {
       collectionTitle: 'Accessoires',
@@ -796,6 +816,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: 'Stripe Checkout ist fur diese Umgebung noch nicht konfiguriert.',
       stripeEnvHint: 'Setzen Sie NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY und STRIPE_SECRET_KEY, um Checkout zu aktivieren.',
       processingPayment: 'Zahlung wird verarbeitet...',
+      paymentMethod: 'Zahlungsmethode',
+      payWithCard: 'Karte — Visa, Mastercard, Apple Pay & Google Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL, Klarna & mehr (Europa)',
+      selectPaymentMethod: 'Bitte wahlen Sie eine Zahlungsmethode',
     },
     accessories: {
       collectionTitle: 'Accessoires',
@@ -969,6 +994,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: 'Stripe checkout non e configurato per questo ambiente.',
       stripeEnvHint: 'Imposta NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY e STRIPE_SECRET_KEY per abilitare il checkout.',
       processingPayment: 'Elaborazione pagamento...',
+      paymentMethod: 'Metodo di pagamento',
+      payWithCard: 'Carta — Visa, Mastercard, Apple Pay e Google Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL, Klarna e altro (Europa)',
+      selectPaymentMethod: 'Seleziona un metodo di pagamento',
     },
     accessories: {
       collectionTitle: 'Accessori',
@@ -1142,6 +1172,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: 'Stripe checkout no esta configurado para este entorno.',
       stripeEnvHint: 'Configura NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY y STRIPE_SECRET_KEY para activar el pago.',
       processingPayment: 'Procesando pago...',
+      paymentMethod: 'Metodo de pago',
+      payWithCard: 'Tarjeta — Visa, Mastercard, Apple Pay y Google Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL, Klarna y mas (Europa)',
+      selectPaymentMethod: 'Elige un metodo de pago',
     },
     accessories: {
       collectionTitle: 'Accesorios',
@@ -1315,6 +1350,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: 'Stripe checkout не настроен для этой среды.',
       stripeEnvHint: 'Укажите NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY и STRIPE_SECRET_KEY для включения оплаты.',
       processingPayment: 'Обработка оплаты...',
+      paymentMethod: 'Способ оплаты',
+      payWithCard: 'Карта — Visa, Mastercard, Apple Pay и Google Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL, Klarna и др. (Европа)',
+      selectPaymentMethod: 'Выберите способ оплаты',
     },
     accessories: {
       collectionTitle: 'Аксессуары',
@@ -1488,6 +1528,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: '此环境尚未配置 Stripe 结账。',
       stripeEnvHint: '请设置 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY 和 STRIPE_SECRET_KEY 以启用结账。',
       processingPayment: '正在处理付款...',
+      paymentMethod: '付款方式',
+      payWithCard: '银行卡 — Visa、Mastercard、Apple Pay 和 Google Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL、Klarna 等（欧洲）',
+      selectPaymentMethod: '请选择付款方式',
     },
     accessories: {
       collectionTitle: '配饰',
@@ -1661,6 +1706,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: 'Stripe checkout is nog niet geconfigureerd voor deze omgeving.',
       stripeEnvHint: 'Stel NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY en STRIPE_SECRET_KEY in om checkout te activeren.',
       processingPayment: 'Betaling wordt verwerkt...',
+      paymentMethod: 'Betaalmethode',
+      payWithCard: 'Kaart — Visa, Mastercard, Apple Pay en Google Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL, Klarna en meer (Europa)',
+      selectPaymentMethod: 'Kies een betaalmethode',
     },
     accessories: {
       collectionTitle: 'Accessoires',
@@ -1834,6 +1884,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: 'Stripe checkout ainda nao esta configurado para este ambiente.',
       stripeEnvHint: 'Defina NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY e STRIPE_SECRET_KEY para ativar o checkout.',
       processingPayment: 'A processar pagamento...',
+      paymentMethod: 'Metodo de pagamento',
+      payWithCard: 'Cartao — Visa, Mastercard, Apple Pay e Google Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL, Klarna e mais (Europa)',
+      selectPaymentMethod: 'Escolha um metodo de pagamento',
     },
     accessories: {
       collectionTitle: 'Acessorios',
@@ -2007,6 +2062,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: 'Stripe checkout belum dikonfigurasi untuk lingkungan ini.',
       stripeEnvHint: 'Setel NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY dan STRIPE_SECRET_KEY untuk mengaktifkan checkout.',
       processingPayment: 'Memproses pembayaran...',
+      paymentMethod: 'Metode pembayaran',
+      payWithCard: 'Kartu — Visa, Mastercard, Apple Pay & Google Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL, Klarna & lainnya (Eropa)',
+      selectPaymentMethod: 'Pilih metode pembayaran',
     },
     accessories: {
       collectionTitle: 'Aksesori',
@@ -2180,6 +2240,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stripeNotConfigured: 'Stripe checkout belum dikonfigurasi untuk persekitaran ini.',
       stripeEnvHint: 'Tetapkan NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY dan STRIPE_SECRET_KEY untuk mengaktifkan checkout.',
       processingPayment: 'Memproses pembayaran...',
+      paymentMethod: 'Kaedah pembayaran',
+      payWithCard: 'Kad — Visa, Mastercard, Apple Pay & Google Pay',
+      payWithPayPal: 'PayPal',
+      payWithMollie: 'iDEAL, Klarna & lagi (Eropah)',
+      selectPaymentMethod: 'Sila pilih kaedah pembayaran',
     },
     accessories: {
       collectionTitle: 'Aksesori',

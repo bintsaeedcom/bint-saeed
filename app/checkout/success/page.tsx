@@ -19,19 +19,37 @@ function CheckoutSuccessContent() {
   const successCopy = getCheckoutSuccessCopy(language)
   const sessionId = searchParams?.get('session_id')
   const paymentId = searchParams?.get('payment_id')
+  const paypalToken = searchParams?.get('token')
   const clearCart = useCartStore((state) => state.clearCart)
 
   useEffect(() => {
-    const referenceId = sessionId || paymentId
+    const referenceId = sessionId || paymentId || paypalToken
     if (!referenceId) return
 
     trackEvent('purchase', {
       session_id: sessionId ?? undefined,
       payment_id: paymentId ?? undefined,
+      paypal_token: paypalToken ?? undefined,
     })
 
     if (sessionId) {
       clearCart()
+      return
+    }
+
+    if (paypalToken) {
+      void fetch('/api/payments/paypal/capture', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId: paypalToken }),
+      })
+        .then((response) => response.json())
+        .then((data: { paid?: boolean }) => {
+          if (data.paid) clearCart()
+        })
+        .catch(() => {
+          /* webhook may still complete the order */
+        })
       return
     }
 
@@ -45,7 +63,7 @@ function CheckoutSuccessContent() {
           /* webhook may still complete the order */
         })
     }
-  }, [sessionId, paymentId, clearCart])
+  }, [sessionId, paymentId, paypalToken, clearCart])
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-20 pt-24 sm:pt-28">
@@ -88,9 +106,9 @@ function CheckoutSuccessContent() {
               {successCopy.subtitle}
             </p>
 
-            {(sessionId || paymentId) && (
+            {(sessionId || paymentId || paypalToken) && (
               <p className="font-montserrat text-xs text-brand-stone tracking-wide mb-8">
-                {successCopy.sessionReference}: {(sessionId || paymentId || '').slice(-8).toUpperCase()}
+                {successCopy.sessionReference}: {(sessionId || paymentId || paypalToken || '').slice(-8).toUpperCase()}
               </p>
             )}
 

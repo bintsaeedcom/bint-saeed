@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
@@ -18,19 +18,14 @@ import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { getCartLineImageAlt } from '@/lib/products/imageAlt'
+import { fetchGeoData } from '@/lib/geo/geoDetection'
 import {
+  getAvailableCheckoutRails,
   getCheckoutConfigHint,
-  getCheckoutNotConfiguredMessage,
-  getPublicPaymentProvider,
-  isCheckoutProviderConfigured,
+  getDefaultCheckoutRail,
+  isCheckoutRailConfigured,
+  type CheckoutRail,
 } from '@/lib/payments'
-import { isPublicStripePayPalCheckoutEnabled } from '@/lib/stripe/stripePayPalPublic'
-import dynamic from 'next/dynamic'
-
-const StripeElementsCheckoutForm = dynamic(
-  () => import('@/components/checkout/StripeElementsCheckoutForm'),
-  { ssr: false },
-)
 
 function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   if (typeof window === 'undefined') return 'desktop'
@@ -40,6 +35,12 @@ function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   return 'desktop'
 }
 
+function railLabel(rail: CheckoutRail, ui: ReturnType<typeof commerceUi>): string {
+  if (rail === 'paypal') return ui.checkout.payWithPayPal
+  if (rail === 'mollie') return ui.checkout.payWithMollie
+  return ui.checkout.payWithCard
+}
+
 export default function CheckoutPage() {
   const router = useRouter()
   const { localize } = useLocaleHref()
@@ -47,10 +48,6 @@ export default function CheckoutPage() {
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
-  const paymentProvider = getPublicPaymentProvider()
-  const checkoutEnvReady = isCheckoutProviderConfigured(paymentProvider)
-  const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.trim() ?? ''
-  const paypalCheckoutReady = paymentProvider === 'stripe' && isPublicStripePayPalCheckoutEnabled()
 
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
@@ -60,16 +57,37 @@ export default function CheckoutPage() {
       staticProducts.find((product) => product.id === item.id) ?? { id: item.id, name: item.name },
     )
 
+  const [countryCode, setCountryCode] = useState<string | null>(null)
   const [payBusy, setPayBusy] = useState(false)
   const [legalAcknowledged, setLegalAcknowledged] = useState(false)
-  const [elementsClientSecret, setElementsClientSecret] = useState<string | null>(null)
-  const [checkoutStep, setCheckoutStep] = useState<'review' | 'payment'>('review')
+  const [selectedRail, setSelectedRail] = useState<CheckoutRail | null>(null)
+
+  const availableRails = useMemo(
+    () => getAvailableCheckoutRails(countryCode),
+    [countryCode],
+  )
+  const checkoutEnvReady = availableRails.length > 0
+  const activeRail = selectedRail && availableRails.includes(selectedRail)
+    ? selectedRail
+    : availableRails[0] ?? null
 
   useEffect(() => {
     if (items.length === 0) {
       router.replace(localize('/cart'))
     }
   }, [items.length, localize, router])
+
+  useEffect(() => {
+    void fetchGeoData().then((geo) => {
+      setCountryCode(geo?.countryCode ?? null)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!selectedRail && availableRails.length > 0) {
+      setSelectedRail(getDefaultCheckoutRail(countryCode))
+    }
+  }, [availableRails, countryCode, selectedRail])
 
   useEffect(() => {
     if (items.length === 0) return
@@ -81,42 +99,39 @@ export default function CheckoutPage() {
     })
   }, [cartSubtotal, currency.code, items])
 
+  const checkoutPayload = {
+    items,
+    currency: currency.code,
+    clientContext: {
+      localTime: new Date().toString(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
+      deviceType: detectDeviceType(),
+    },
+  }
+
   const startCheckout = async () => {
     if (items.length === 0) return
     if (!legalAcknowledged) {
-      toast.error(
-        ui.checkout.legalRequired,
-      )
+      toast.error(ui.checkout.legalRequired)
       return
     }
-    if (!checkoutEnvReady) {
-      toast.error(getCheckoutNotConfiguredMessage(paymentProvider))
+    if (!activeRail || !isCheckoutRailConfigured(activeRail)) {
+      toast.error(ui.checkout.selectPaymentMethod)
       return
     }
 
     setPayBusy(true)
-    trackEvent('add_shipping_info', { checkout_provider: paymentProvider, currency: currency.code })
-    trackEvent('add_payment_info', { checkout_provider: paymentProvider, currency: currency.code })
+    trackEvent('add_shipping_info', { checkout_provider: activeRail, currency: currency.code })
+    trackEvent('add_payment_info', { checkout_provider: activeRail, currency: currency.code })
     try {
-      if (paymentProvider === 'mollie') {
+      if (activeRail === 'mollie') {
         const response = await fetch('/api/payments/mollie/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            items,
-            currency: currency.code,
-            clientContext: {
-              localTime: new Date().toString(),
-              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
-              deviceType: detectDeviceType(),
-            },
-          }),
+          body: JSON.stringify(checkoutPayload),
         })
-
         const { url, error } = await response.json()
-        if (!response.ok) {
-          throw new Error(error || 'Checkout is unavailable')
-        }
+        if (!response.ok) throw new Error(error || 'Checkout is unavailable')
         if (typeof url === 'string' && url.startsWith('https://')) {
           window.location.assign(url)
           return
@@ -124,37 +139,33 @@ export default function CheckoutPage() {
         throw new Error('Mollie checkout URL missing')
       }
 
+      if (activeRail === 'paypal') {
+        const response = await fetch('/api/payments/paypal/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(checkoutPayload),
+        })
+        const { url, error } = await response.json()
+        if (!response.ok) throw new Error(error || 'Checkout is unavailable')
+        if (typeof url === 'string' && url.startsWith('https://')) {
+          window.location.assign(url)
+          return
+        }
+        throw new Error('PayPal checkout URL missing')
+      }
+
       const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items,
-          currency: currency.code,
-          clientContext: {
-            localTime: new Date().toString(),
-            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
-            deviceType: detectDeviceType(),
-          },
-        }),
+        body: JSON.stringify(checkoutPayload),
       })
-
-      const { url, clientSecret, mode, error } = await response.json()
-      if (!response.ok) {
-        throw new Error(error || 'Checkout is unavailable')
-      }
+      const { url, error } = await response.json()
+      if (!response.ok) throw new Error(error || 'Checkout is unavailable')
       if (error) throw new Error(error)
-
-      if (mode === 'elements' && typeof clientSecret === 'string' && clientSecret.length > 0) {
-        setElementsClientSecret(clientSecret)
-        setCheckoutStep('payment')
-        return
-      }
-
       if (typeof url === 'string' && url.startsWith('https://')) {
         window.location.assign(url)
         return
       }
-
       throw new Error('Stripe checkout URL missing')
     } catch (e) {
       console.error(e)
@@ -195,7 +206,7 @@ export default function CheckoutPage() {
               data-document-h1="true"
               className="font-rozha text-[1.75rem] leading-tight text-brand-darkRed sm:text-3xl md:text-4xl"
             >
-              {checkoutStep === 'payment' ? ui.checkout.securePayment : ui.checkout.reviewOrder}
+              {ui.checkout.reviewOrder}
             </h1>
             <p className="mt-2 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/70">
               {ui.checkout.reviewSubtitle}
@@ -207,26 +218,6 @@ export default function CheckoutPage() {
       <div className="container mx-auto min-w-0 px-4 py-8 sm:px-6 sm:py-10 lg:px-12 lg:py-16">
         <div className="grid min-w-0 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="min-w-0 lg:col-span-7">
-            {checkoutStep === 'payment' && elementsClientSecret && paymentProvider === 'stripe' ? (
-              <motion.section
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="rounded-2xl border border-brand-stone/20 bg-white p-5 shadow-sm sm:p-6 md:p-8"
-              >
-                <StripeElementsCheckoutForm
-                  clientSecret={elementsClientSecret}
-                  publishableKey={stripePublishableKey}
-                  payLabel={ui.checkout.continueSecurePayment}
-                  processingLabel={ui.checkout.processingPayment}
-                  backLabel={ui.checkout.editBag}
-                  rtl={isRTL}
-                  onBack={() => {
-                    setCheckoutStep('review')
-                    setElementsClientSecret(null)
-                  }}
-                />
-              </motion.section>
-            ) : (
             <motion.section
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -281,7 +272,6 @@ export default function CheckoutPage() {
                 ))}
               </ul>
             </motion.section>
-            )}
           </div>
 
           <div className="min-w-0 lg:col-span-5">
@@ -305,21 +295,34 @@ export default function CheckoutPage() {
                   {ui.cart.taxesIncluded}
                 </p>
 
-                {paypalCheckoutReady ? (
-                  <div
-                    className={`mt-4 flex items-center gap-2.5 rounded-[4px] border border-white/10 bg-white/5 px-3 py-2.5 ${isRTL ? 'flex-row-reverse' : ''}`}
-                  >
-                    <Image
-                      src="/payments/paypal.svg"
-                      alt="PayPal"
-                      width={52}
-                      height={16}
-                      className="h-4 w-auto object-contain"
-                    />
-                    <span className="font-montserrat text-[10px] uppercase tracking-[0.12em] text-white/65">
-                      PayPal available at payment
-                    </span>
-                  </div>
+                {availableRails.length > 1 ? (
+                  <fieldset className="mt-6 space-y-2.5 sm:mt-8">
+                    <legend className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.16em] text-white/55">
+                      {ui.checkout.paymentMethod}
+                    </legend>
+                    {availableRails.map((rail) => (
+                      <label
+                        key={rail}
+                        className={`flex cursor-pointer items-center gap-3 rounded-[4px] border px-3 py-3 transition-colors ${
+                          activeRail === rail
+                            ? 'border-brand-dustyBlue/70 bg-white/10'
+                            : 'border-white/10 bg-white/5 hover:border-white/20'
+                        } ${isRTL ? 'flex-row-reverse text-right' : ''}`}
+                      >
+                        <input
+                          type="radio"
+                          name="checkout-rail"
+                          value={rail}
+                          checked={activeRail === rail}
+                          onChange={() => setSelectedRail(rail)}
+                          className="h-4 w-4 accent-brand-dustyBlue"
+                        />
+                        <span className="font-montserrat text-[11px] leading-snug tracking-wide text-white/80">
+                          {railLabel(rail, ui)}
+                        </span>
+                      </label>
+                    ))}
+                  </fieldset>
                 ) : null}
 
                 <label
@@ -355,12 +358,7 @@ export default function CheckoutPage() {
                 <button
                   type="button"
                   onClick={() => void startCheckout()}
-                  disabled={
-                    payBusy ||
-                    !checkoutEnvReady ||
-                    !legalAcknowledged ||
-                    checkoutStep === 'payment'
-                  }
+                  disabled={payBusy || !checkoutEnvReady || !legalAcknowledged || !activeRail}
                   className={`mt-5 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue px-3 py-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 sm:mt-6 sm:gap-3 sm:text-sm sm:tracking-[0.18em] ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
@@ -376,7 +374,7 @@ export default function CheckoutPage() {
                 </button>
                 {!checkoutEnvReady ? (
                   <p className="mt-3 text-center font-montserrat text-[10px] uppercase tracking-[0.15em] text-amber-300/80">
-                    {getCheckoutConfigHint(paymentProvider)}
+                    {getCheckoutConfigHint('stripe')}
                   </p>
                 ) : null}
               </motion.div>

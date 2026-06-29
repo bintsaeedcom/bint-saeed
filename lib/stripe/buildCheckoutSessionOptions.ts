@@ -6,12 +6,12 @@ import { resolveSkuByProductId } from '@/lib/products/sku'
 import type { ParsedCheckoutRequest } from '@/lib/checkout/types'
 import { buildCheckoutPaymentParams } from '@/lib/stripe/checkoutPaymentMethods'
 import { buildCheckoutLineItems } from '@/lib/stripe/buildCheckoutLineItems'
-import { isStripePayPalCheckoutEnabled } from '@/lib/stripe/stripePayPalConfig'
 
 export type StripeCheckoutUiMode = 'hosted' | 'elements'
 
 export function resolveStripeCheckoutUiMode(): StripeCheckoutUiMode {
-  return isStripePayPalCheckoutEnabled() ? 'elements' : 'hosted'
+  // UAE Stripe accounts cannot use Stripe-native PayPal. Use direct PayPal checkout rail instead.
+  return 'hosted'
 }
 
 type BuildSessionOptions = {

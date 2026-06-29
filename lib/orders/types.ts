@@ -7,7 +7,7 @@ export type OrderFulfillmentStatus =
   | 'cancelled'
   | 'refunded'
 
-export type PaymentProviderName = 'stripe' | 'mollie'
+export type PaymentProviderName = 'stripe' | 'mollie' | 'paypal'
 
 export interface OrderLine {
   productId?: string
@@ -25,6 +25,8 @@ export interface StoredOrder {
   paymentProvider?: PaymentProviderName
   paymentIntentId?: string
   molliePaymentId?: string
+  paypalOrderId?: string
+  paypalCaptureId?: string
   customerEmail: string
   customerName?: string
   customerPhone?: string

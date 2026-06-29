@@ -11,6 +11,7 @@ import {
 import { getMollieApiKey } from '@/lib/mollie/config'
 import { getMollieClient } from '@/lib/mollie/client'
 import { getStripePayPalReadiness } from '@/lib/stripe/stripePayPalConfig'
+import { isPayPalConfigured } from '@/lib/paypal/config'
 
 export const dynamic = 'force-dynamic'
 
@@ -126,18 +127,23 @@ export async function GET(request: NextRequest) {
   const mollieReady =
     mollieConfigured && (mollieApiReachable || process.env.NODE_ENV !== 'production')
 
-  const checkoutReady = provider === 'mollie' ? mollieReady : stripeReady
+  const directPayPalConfigured = isPayPalConfigured()
+  const publicPayPalConfigured = Boolean(process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID?.trim())
+  const publicMollieEnabled = process.env.NEXT_PUBLIC_MOLLIE_CHECKOUT_ENABLED === 'true'
 
-  const paypal = getStripePayPalReadiness()
-  if (provider === 'stripe' && paypal.dashboardCpmtConfigured && !paypal.checkoutEnabled) {
+  const checkoutReady = stripeReady || directPayPalConfigured || mollieReady
+
+  const stripePayPalCpmt = getStripePayPalReadiness()
+  if (stripePayPalCpmt.dashboardCpmtConfigured) {
     warnings.push(
-      'PayPal cpmt is set but STRIPE_PAYPAL_ENABLED=false — checkout uses hosted Stripe without PayPal.',
+      'Stripe PayPal cpmt is configured but UAE accounts cannot use Stripe PayPal — use direct PayPal (PAYPAL_CLIENT_ID) instead.',
     )
   }
-  if (provider === 'stripe' && paypal.checkoutEnabled && !paypal.adapterUrlConfigured) {
-    warnings.push(
-      'PayPal checkout is enabled without STRIPE_PAYPAL_ADAPTER_URL — request the Stripe PayPal adapter if PayPal payments fail.',
-    )
+  if (directPayPalConfigured && !publicPayPalConfigured) {
+    warnings.push('Set NEXT_PUBLIC_PAYPAL_CLIENT_ID (same as PAYPAL_CLIENT_ID) so checkout shows PayPal.')
+  }
+  if (mollieConfigured && !publicMollieEnabled) {
+    warnings.push('Set NEXT_PUBLIC_MOLLIE_CHECKOUT_ENABLED=true to show Mollie for EU customers at checkout.')
   }
 
   return NextResponse.json({
@@ -156,6 +162,7 @@ export async function GET(request: NextRequest) {
       webhookUrls: {
         stripe: '/api/webhooks/stripe',
         mollie: '/api/webhooks/mollie',
+        paypal: '/api/payments/paypal/capture',
       },
     },
     stripe: {
@@ -170,7 +177,12 @@ export async function GET(request: NextRequest) {
       profileId: mollieProfileId,
       error: mollieError,
     },
-    paypal,
+    paypal: {
+      directConfigured: directPayPalConfigured,
+      publicClientConfigured: publicPayPalConfigured,
+      mode: process.env.PAYPAL_MODE?.trim() || 'sandbox',
+      stripeCpmtLegacy: stripePayPalCpmt,
+    },
     warnings,
   })
 }

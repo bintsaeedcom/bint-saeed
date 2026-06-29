@@ -29,4 +29,12 @@ export {
   getCheckoutConfigHint,
   getCheckoutNotConfiguredMessage,
 } from '@/lib/payments/provider'
+export {
+  getAvailableCheckoutRails,
+  getDefaultCheckoutRail,
+  isCheckoutRailConfigured,
+  isMollieCountry,
+  type CheckoutRail,
+} from '@/lib/payments/checkoutRails'
+export { isPayPalConfigured } from '@/lib/paypal/config'
 export type { PaymentProvider } from '@/lib/payments/provider'
