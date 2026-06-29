@@ -661,20 +661,6 @@ function AccessoryCard({
                 {ui.shop.viewProduct}
               </button>
             </div>
-
-            {/* Tags */}
-            <div className={`absolute top-4 ${isRTL ? 'right-4' : 'left-4'} flex flex-col gap-2`}>
-              {accessory.isBestseller && (
-                <span className="px-3 py-1 bg-brand-clayRed text-white font-montserrat text-[10px] uppercase tracking-[0.15em]">
-                  {ui.accessories.products}
-                </span>
-              )}
-              {accessory.isLimitedEdition && (
-                <span className="px-3 py-1 border border-brand-darkRed/90 bg-white/95 text-brand-darkRed font-montserrat text-[10px] uppercase tracking-[0.15em]">
-                  {ui.accessories.collectionEyebrow}
-                </span>
-              )}
-            </div>
           </div>
 
           {/* Product Info */}
