@@ -172,19 +172,129 @@ const PALAZZO_ITEMS: Record<AppLocale, string[]> = {
   ],
 }
 
-export const SOHO_SET_COMPOSITION = ['80% Polyester, 20% Viscose'] as const
-
 export const SOHO_SET_COLOUR = ['Deep Black', 'Navy Blue'] as const
 
+const COMPOSITION: Record<AppLocale, string> = {
+  en: '80% Polyester, 20% Viscose',
+  ar: '80% بوليستر، 20% فيسكوز',
+  fr: '80 % polyester, 20 % viscose',
+  it: '80% poliestere, 20% viscosa',
+  es: '80% poliéster, 20% viscosa',
+  ru: '80% полиэстер, 20% вискоза',
+  zh: '80% 聚酯纤维，20% 粘胶纤维',
+  de: '80 % Polyester, 20 % Viskose',
+  nl: '80% polyester, 20% viscose',
+  pt: '80% poliéster, 20% viscose',
+  id: '80% Polyester, 20% Viscose',
+  ms: '80% Polyester, 20% Viscose',
+}
+
+const FIT_OVERSIZED: Record<AppLocale, string> = {
+  en: 'Relaxed oversized fit',
+  ar: 'قصة واسعة مريحة',
+  fr: 'Coupe oversize décontractée',
+  it: 'Vestibilità oversize rilassata',
+  es: 'Corte oversize relajado',
+  ru: 'Свободный oversize-крой',
+  zh: '宽松廓形',
+  de: 'Entspannte Oversize-Passform',
+  nl: 'Ontspannen oversized pasvorm',
+  pt: 'Corte oversized descontraído',
+  id: 'Siluet oversized santai',
+  ms: 'Potongan oversized santai',
+}
+
+const FIT_PALAZZO: Record<AppLocale, string> = {
+  en: 'Full-length wide-leg palazzo trousers',
+  ar: 'بنطال بالازو واسع الساق بطول كامل',
+  fr: 'Pantalon palazzo jambe large pleine longueur',
+  it: 'Pantaloni palazzo a gamba larga a tutta lunghezza',
+  es: 'Pantalones palazzo de pierna ancha de largo completo',
+  ru: 'Брюки-палazzo широкого кроя во всю длину',
+  zh: '全长阔腿长裤',
+  de: 'Palazzo-Hose mit weitem Bein in voller Länge',
+  nl: 'Palazzo-broek met wijde pijp over volledige lengte',
+  pt: 'Calças palazzo de perna larga em comprimento total',
+  id: 'Celana palazzo kaki lebar panjang penuh',
+  ms: 'Seluar palazzo kaki lebar panjang penuh',
+}
+
+const FIT_STYLING: Record<AppLocale, string> = {
+  en: 'Shirt designed to be worn loose, tucked into the waistband or tied at the waist',
+  ar: 'قميص يُرتدى فضفاضاً أو مُدخلاً في الخصر أو مربوطاً عند الخصر',
+  fr: 'Chemise à porter ample, rentrée dans la taille ou nouée à la taille',
+  it: 'Camicia da indossare ampia, infilata in vita o annodata in vita',
+  es: 'Camisa para llevar suelta, metida en la cintura o anudada en la cintura',
+  ru: 'Рубашку можно носить свободно, заправленной или завязанной на талии',
+  zh: '衬衫可宽松穿着、塞入腰头或腰间打结',
+  de: 'Hemd locker, in den Bund gesteckt oder an der Taille gebunden tragbar',
+  nl: 'Overhemd los, in de tailleband of geknoopt om de taille te dragen',
+  pt: 'Camisa para usar solta, metida na cintura ou amarrada na cintura',
+  id: 'Kemeja dapat dikenakan longgar, dimasukkan ke pinggang, atau dikikat di pinggang',
+  ms: 'Kemeja boleh dipakai longgar, dimasukkan ke pinggang, atau diikat di pinggang',
+}
+
+const CARE: Record<AppLocale, string> = {
+  en: 'Professional dry clean only.',
+  ar: 'تنظيف جاف احترافي فقط.',
+  fr: 'Nettoyage à sec professionnel uniquement.',
+  it: 'Solo lavaggio a secco professionale.',
+  es: 'Solo limpieza en seco profesional.',
+  ru: 'Только профессиональная химчистка.',
+  zh: '仅建议专业干洗。',
+  de: 'Nur professionelle Reinigung.',
+  nl: 'Alleen professionele stomerij.',
+  pt: 'Apenas limpeza a seco profissional.',
+  id: 'Hanya dry clean profesional.',
+  ms: 'Dry clean profesional sahaja.',
+}
+
+const ORIGIN: Record<AppLocale, string> = {
+  en: 'Made in Abu Dhabi, United Arab Emirates',
+  ar: 'صُنع في أبوظبي، الإمارات العربية المتحدة',
+  fr: 'Fabriqué à Abou Dabi, Émirats arabes unis',
+  it: 'Realizzato ad Abu Dhabi, Emirati Arabi Uniti',
+  es: 'Hecho en Abu Dabi, Emiratos Árabes Unidos',
+  ru: 'Сделано в Абу-Даби, ОАЭ',
+  zh: '阿联酋阿布扎比制造',
+  de: 'Hergestellt in Abu Dhabi, VAE',
+  nl: 'Gemaakt in Abu Dhabi, VAE',
+  pt: 'Feito em Abu Dhabi, Emirados Árabes Unidos',
+  id: 'Dibuat di Abu Dhabi, UEA',
+  ms: 'Dihasilkan di Abu Dhabi, UAE',
+}
+
+/** @deprecated Use sohoSetComposition(locale) */
+export const SOHO_SET_COMPOSITION = [COMPOSITION.en] as const
+
+/** @deprecated Use sohoSetFitAndSize(locale) */
 export const SOHO_SET_FIT_AND_SIZE = [
-  'Relaxed oversized fit',
-  'Full-length wide-leg palazzo trousers',
-  'Shirt designed to be worn loose, tucked into the waistband or tied at the waist',
+  FIT_OVERSIZED.en,
+  FIT_PALAZZO.en,
+  FIT_STYLING.en,
 ] as const
 
-export const SOHO_SET_CARE = ['Professional dry clean only.'] as const
+/** @deprecated Use sohoSetCare(locale) */
+export const SOHO_SET_CARE = [CARE.en] as const
 
-export const SOHO_SET_ORIGIN = ['Made in Abu Dhabi, United Arab Emirates'] as const
+/** @deprecated Use sohoSetOrigin(locale) */
+export const SOHO_SET_ORIGIN = [ORIGIN.en] as const
+
+export function sohoSetComposition(locale: AppLocale = 'en'): string[] {
+  return [COMPOSITION[locale]]
+}
+
+export function sohoSetFitAndSize(locale: AppLocale = 'en'): string[] {
+  return [FIT_OVERSIZED[locale], FIT_PALAZZO[locale], FIT_STYLING[locale]]
+}
+
+export function sohoSetCare(locale: AppLocale = 'en'): string[] {
+  return [CARE[locale]]
+}
+
+export function sohoSetOrigin(locale: AppLocale = 'en'): string[] {
+  return [ORIGIN[locale]]
+}
 
 export function buildSohoSetDetailGroups(locale: AppLocale = 'en'): PdpDetailGroup[] {
   const shirt = SHIRT_ITEMS[locale] ?? SHIRT_ITEMS.en

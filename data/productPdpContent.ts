@@ -16,36 +16,12 @@ import {
 } from '@/lib/products/knightsbridgePairing'
 import { applyAbayaPdpStandards } from '@/lib/products/abayaPdpStandards'
 import { getPdpSizeOptions, productIsOneSizeOnly } from '@/lib/shopProductOptions'
-import { COVENT_GARDEN_SIGNATURE_SET_FAQ_EN } from '@/data/coventGardenSignatureSetPdpFaq'
-import {
-  buildCoventGardenSignatureSetDetailGroups,
-  COVENT_GARDEN_SIGNATURE_SET_CARE,
-  COVENT_GARDEN_SIGNATURE_SET_COMPOSITION_GROUPS,
-  COVENT_GARDEN_SIGNATURE_SET_FIT_AND_SIZE,
-  COVENT_GARDEN_SIGNATURE_SET_ORIGIN,
-} from '@/data/coventGardenSignatureSetPdpDetails'
 import type { PdpDetailGroup, PdpIntroParagraph } from '@/lib/products/pdpIntroRich'
 import { pdpIntroParagraphsToPlainText } from '@/lib/products/pdpIntroRich'
-import { COVENT_GARDEN_SIGNATURE_SET_INTRO_EN } from '@/data/coventGardenSignatureSetPdpIntro'
-import { COVENT_GARDEN_LONG_DRESS_INTRO_EN } from '@/data/coventGardenLongDressPdpIntro'
-import { COVENT_GARDEN_ABAYA_INTRO_EN } from '@/data/coventGardenAbayaPdpIntro'
-import {
-  COVENT_GARDEN_ABAYA_CARE,
-  COVENT_GARDEN_ABAYA_COMPOSITION,
-  COVENT_GARDEN_ABAYA_FIT_AND_SIZE,
-  COVENT_GARDEN_ABAYA_ORIGIN,
-  COVENT_GARDEN_ABAYA_PRODUCT_DETAILS,
-} from '@/data/coventGardenAbayaPdpDetails'
-import {
-  COVENT_GARDEN_LONG_DRESS_CARE,
-  COVENT_GARDEN_LONG_DRESS_COMPOSITION,
-  COVENT_GARDEN_LONG_DRESS_FIT_AND_SIZE,
-  COVENT_GARDEN_LONG_DRESS_ORIGIN,
-  COVENT_GARDEN_LONG_DRESS_PRODUCT_DETAILS,
-} from '@/data/coventGardenLongDressPdpDetails'
-import { getCoventGardenAbayaPdpFaq } from '@/lib/products/coventGardenAbayaFaqI18n'
+import { buildCoventGardenAbayaPdpContent } from '@/lib/products/coventGardenAbayaPdpI18n'
+import { buildCoventGardenLongDressPdpContent } from '@/lib/products/coventGardenLongDressPdpI18n'
+import { buildCoventGardenSignatureSetPdpContent } from '@/lib/products/coventGardenSignatureSetPdpI18n'
 import { getHouseCodesDetailGroup } from '@/lib/products/pdpHouseCodesGroupsI18n'
-import { COVENT_GARDEN_LONG_DRESS_FAQ_EN } from '@/data/coventGardenLongDressPdpFaq'
 import { buildHampsteadDressPdpContent } from '@/lib/products/hampsteadDressPdpI18n'
 import { buildSohoSetPdpContent } from '@/lib/products/sohoSetPdpI18n'
 import { buildHydeParkSetPdpContent } from '@/lib/products/hydeParkSetPdpI18n'
@@ -167,9 +143,90 @@ const STANDARD_CARE_DETAILS = [
 
 const ABAYA_CARE_DETAILS = ['Professional dry clean only'] as const
 
-function careDetailsForProduct(product: Product): string[] {
-  if (product.category === 'Abayas') return [...ABAYA_CARE_DETAILS]
-  return [...STANDARD_CARE_DETAILS]
+const ABAYA_CARE_I18N: Record<AppLocale, string> = {
+  en: 'Professional dry clean only',
+  ar: 'تنظيف جاف احترافي فقط',
+  fr: 'Nettoyage à sec professionnel uniquement',
+  it: 'Solo lavaggio a secco professionale',
+  es: 'Solo limpieza en seco profesional',
+  ru: 'Только профессиональная химчистка',
+  zh: '仅建议专业干洗',
+  de: 'Nur professionelle Reinigung',
+  nl: 'Alleen professionele stomerij',
+  pt: 'Apenas limpeza a seco profissional',
+  id: 'Hanya dry clean profesional',
+  ms: 'Dry clean profesional sahaja',
+}
+
+function careDetailsForProduct(product: Product, locale: AppLocale = 'en'): string[] {
+  if (product.category === 'Abayas') {
+    return [ABAYA_CARE_I18N[locale]]
+  }
+  const standardCare: Record<AppLocale, string[]> = {
+    en: [...STANDARD_CARE_DETAILS],
+    ar: [
+      'يُنصح بالتنظيف الجاف الاحترافي',
+      'غسل يدوي لطيف بماء بارد عند الحاجة',
+      'عدم استخدام المبيض',
+      'عدم التجفيف الآلي',
+    ],
+    fr: [
+      'Nettoyage à sec professionnel recommandé',
+      'Lavage à la main délicat à l’eau froide si nécessaire',
+      'Ne pas utiliser d’eau de Javel',
+      'Ne pas sécher en machine',
+    ],
+    it: [
+      'Lavaggio a secco professionale consigliato',
+      'Lavaggio a mano delicato in acqua fredda se necessario',
+      'Non usare candeggina',
+      'Non asciugare in asciugatrice',
+    ],
+    es: [
+      'Se recomienda limpieza en seco profesional',
+      'Lavado a mano suave en agua fría si es necesario',
+      'No usar lejía',
+      'No secar en secadora',
+    ],
+    ru: [
+      'Рекомендуется профессиональная химчистка',
+      'При необходимости деликатная ручная стирка в холодной воде',
+      'Не отбеливать',
+      'Не сушить в сушилке',
+    ],
+    zh: ['建议专业干洗', '如需可冷水轻柔手洗', '不可漂白', '不可滚筒烘干'],
+    de: [
+      'Professionelle Reinigung empfohlen',
+      'Bei Bedarf schonende Handwäsche in kaltem Wasser',
+      'Nicht bleichen',
+      'Nicht im Trockner trocknen',
+    ],
+    nl: [
+      'Professionele stomerij aanbevolen',
+      'Zo nodig voorzichtig handwassen in koud water',
+      'Niet bleken',
+      'Niet in de droger',
+    ],
+    pt: [
+      'Limpeza a seco profissional recomendada',
+      'Lavagem delicada à mão em água fria se necessário',
+      'Não usar lixívia',
+      'Não secar na máquina',
+    ],
+    id: [
+      'Dry clean profesional disarankan',
+      'Cuci tangan lembut dengan air dingin jika diperlukan',
+      'Jangan gunakan pemutih',
+      'Jangan tumble dry',
+    ],
+    ms: [
+      'Dry clean profesional disyorkan',
+      'Basuh tangan lembut dengan air sejuk jika perlu',
+      'Jangan gunakan peluntur',
+      'Jangan keringkan dalam pengering',
+    ],
+  }
+  return standardCare[locale]
 }
 
 function cmToInches(cm: number): number {
@@ -337,7 +394,7 @@ function buildStructuredApparelContentForLocale(
     introParagraphs,
     productDetails: bullets,
     ...(compositionDetails.length ? { compositionDetails } : {}),
-    careDetails: careDetailsForProduct(product),
+    careDetails: careDetailsForProduct(product, locale),
     fitAndSizeDetails,
   }
 }
@@ -352,7 +409,7 @@ function buildStructuredApparelContent(product: Product, color?: string): Produc
     introParagraphs: buildStructuredApparelIntro(product, facts),
     productDetails: buildProductDetailBullets(product, colorName),
     ...(compositionDetails.length ? { compositionDetails } : {}),
-    careDetails: careDetailsForProduct(product),
+    careDetails: careDetailsForProduct(product, 'en'),
     fitAndSizeDetails: buildStructuredFitAndSizeDetails(product),
   }
 }
@@ -473,60 +530,6 @@ function buildHydeParkSetContent(
   locale: AppLocale,
 ): ProductPdpContent {
   return buildHydeParkSetPdpContent(locale)
-}
-
-function buildCoventGardenAbayaContent(product: Product): ProductPdpContent {
-  const introParagraphParts = COVENT_GARDEN_ABAYA_INTRO_EN
-
-  return {
-    introParagraphParts,
-    introParagraphs: pdpIntroParagraphsToPlainText(introParagraphParts),
-    productDetails: [...COVENT_GARDEN_ABAYA_PRODUCT_DETAILS],
-    productDetailGroups: [getHouseCodesDetailGroup('knotted-line-al-talli', 'en')],
-    compositionDetails: [...COVENT_GARDEN_ABAYA_COMPOSITION],
-    careDetails: [...COVENT_GARDEN_ABAYA_CARE],
-    fitAndSizeDetails: [...COVENT_GARDEN_ABAYA_FIT_AND_SIZE],
-    originDetails: [...COVENT_GARDEN_ABAYA_ORIGIN],
-    faq: getCoventGardenAbayaPdpFaq('en'),
-  }
-}
-
-function buildCoventGardenLongDressContent(product: Product): ProductPdpContent {
-  const introParagraphParts = COVENT_GARDEN_LONG_DRESS_INTRO_EN
-
-  return {
-    introParagraphParts,
-    introParagraphs: pdpIntroParagraphsToPlainText(introParagraphParts),
-    productDetails: [...COVENT_GARDEN_LONG_DRESS_PRODUCT_DETAILS],
-    compositionDetails: [...COVENT_GARDEN_LONG_DRESS_COMPOSITION],
-    careDetails: [...COVENT_GARDEN_LONG_DRESS_CARE],
-    fitAndSizeDetails: [...COVENT_GARDEN_LONG_DRESS_FIT_AND_SIZE],
-    originDetails: [...COVENT_GARDEN_LONG_DRESS_ORIGIN],
-    faq: COVENT_GARDEN_LONG_DRESS_FAQ_EN,
-  }
-}
-
-function buildCoventGardenSignatureSetContent(product: Product, color?: string): ProductPdpContent {
-  const colorName = resolveSelectedColorName(product, color)
-  const introParagraphParts = COVENT_GARDEN_SIGNATURE_SET_INTRO_EN
-
-  return {
-    introParagraphParts,
-    introParagraphs: pdpIntroParagraphsToPlainText(introParagraphParts),
-    productDetails: [],
-    productDetailGroups: [
-      ...buildCoventGardenSignatureSetDetailGroups(colorName),
-      getHouseCodesDetailGroup('knotted-line-only', 'en'),
-    ],
-    compositionGroups: COVENT_GARDEN_SIGNATURE_SET_COMPOSITION_GROUPS.map((group) => ({
-      title: group.title,
-      items: [...group.items],
-    })),
-    careDetails: [...COVENT_GARDEN_SIGNATURE_SET_CARE],
-    fitAndSizeDetails: [...COVENT_GARDEN_SIGNATURE_SET_FIT_AND_SIZE],
-    originDetails: [...COVENT_GARDEN_SIGNATURE_SET_ORIGIN],
-    faq: COVENT_GARDEN_SIGNATURE_SET_FAQ_EN,
-  }
 }
 
 type BelgraviaColorKey = 'deep-black' | 'navy-blue'
@@ -730,7 +733,7 @@ function buildNothingHillKaftanContent(color?: string): ProductPdpContent {
       'Airy silhouette with a soft feminine drape',
       `Colour: ${label}`,
       'Made in Abu Dhabi, UAE',
-      `Product code: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `Reference: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),
@@ -767,8 +770,20 @@ export function getProductPdpContent(
       return applyAbayaPdpStandards(product, buildParkLaneAbayaPdpContent(color, locale), locale)
     }
     if (isMaryleboneAbaya(product)) {
-      const base = buildStructuredApparelContentForLocale(product, color, locale)
-      return applyAbayaPdpStandards(product, buildMaryleboneAbayaPdpContent(base), locale)
+      return applyAbayaPdpStandards(product, buildMaryleboneAbayaPdpContent(color, locale), locale)
+    }
+    if (isCoventGardenAbaya(product)) {
+      return applyAbayaPdpStandards(product, buildCoventGardenAbayaPdpContent(locale), locale)
+    }
+    if (isCoventGardenLongDress(product)) {
+      return applyAbayaPdpStandards(product, buildCoventGardenLongDressPdpContent(locale), locale)
+    }
+    if (isCoventGardenSignatureSet(product)) {
+      return applyAbayaPdpStandards(
+        product,
+        buildCoventGardenSignatureSetPdpContent(locale, resolveSelectedColorName(product, color)),
+        locale,
+      )
     }
     const localized = getProductPdpContentLocale(product, color, locale)
     const content =
@@ -794,9 +809,9 @@ export function getProductPdpContent(
   } else if (isKnightsbridgeDress(product)) {
     content = buildKnightsbridgeDressContent(product, color, locale)
   } else if (isCoventGardenAbaya(product)) {
-    content = buildCoventGardenAbayaContent(product)
+    content = buildCoventGardenAbayaPdpContent(locale)
   } else if (isCoventGardenLongDress(product)) {
-    content = buildCoventGardenLongDressContent(product)
+    content = buildCoventGardenLongDressPdpContent(locale)
   } else if (isHampsteadDress(product)) {
     content = buildHampsteadDressPdpContent('en')
   } else if (isSohoSet(product)) {
@@ -806,9 +821,9 @@ export function getProductPdpContent(
   } else if (isParkLaneAbaya(product)) {
     content = buildParkLaneAbayaPdpContent(color, locale)
   } else if (isMaryleboneAbaya(product)) {
-    content = buildMaryleboneAbayaPdpContent(buildStructuredApparelContent(product, color))
+    content = buildMaryleboneAbayaPdpContent(color, locale)
   } else if (isCoventGardenSignatureSet(product)) {
-    content = buildCoventGardenSignatureSetContent(product, color)
+    content = buildCoventGardenSignatureSetPdpContent(locale, resolveSelectedColorName(product, color))
   } else if (product.category === 'Accessories') {
     content = accessoryPlaceholderContent(product)
   } else {

@@ -82,6 +82,7 @@ type CommerceUiCheckout = {
 
 type CommerceUiAccessories = {
   collectionTitle: string
+  collectionIntro: string
   collectionEyebrow: string
   backToHome: string
   filter: string
@@ -251,7 +252,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: 'Size',
       colour: 'Colour',
       length: 'Length',
-      productCode: 'Product code: {sku}',
+      productCode: 'Reference: {sku}',
       personalisation: 'Personalisation',
       note: 'Note',
       proceedSecurePayment: 'Proceed to Secure Payment',
@@ -279,6 +280,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: 'Accessories',
+      collectionIntro:
+        'Browse signature strands, necklaces, earrings, bracelets, bag charms, and phone charms. Filter by category, price, colour, and stone.',
       collectionEyebrow: 'Collection',
       backToHome: 'Back to Home',
       filter: 'Filter',
@@ -422,7 +425,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: 'المقاس',
       colour: 'اللون',
       length: 'الطول',
-      productCode: 'رمز المنتج: {sku}',
+      productCode: 'المرجع: {sku}',
       personalisation: 'التخصيص',
       note: 'ملاحظة',
       proceedSecurePayment: 'المتابعة للدفع الآمن',
@@ -450,6 +453,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: 'الإكسسوارات',
+      collectionIntro:
+        'تصفّحي سلاسل التوقيع والقلادات والأقراط والأساور وتعليقات الحقائب والهاتف. صفّي حسب الفئة والسعر واللون ونوع الحجر.',
       collectionEyebrow: 'التشكيلة',
       backToHome: 'العودة للرئيسية',
       filter: 'تصفية',
@@ -593,7 +598,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: 'Taille',
       colour: 'Couleur',
       length: 'Longueur',
-      productCode: 'Code produit: {sku}',
+      productCode: 'Référence : {sku}',
       personalisation: 'Personnalisation',
       note: 'Note',
       proceedSecurePayment: 'Passer au paiement securise',
@@ -621,6 +626,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: 'Accessoires',
+      collectionIntro:
+        'Parcourez les signature strands, colliers, boucles d oreilles, bracelets, charms sac et charms telephone. Filtrez par categorie, prix, couleur et pierre.',
       collectionEyebrow: 'Collection',
       backToHome: 'Retour a l accueil',
       filter: 'Filtrer',
@@ -764,7 +771,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: 'Groesse',
       colour: 'Farbe',
       length: 'Lange',
-      productCode: 'Produktcode: {sku}',
+      productCode: 'Referenz: {sku}',
       personalisation: 'Personalisierung',
       note: 'Hinweis',
       proceedSecurePayment: 'Zur sicheren Zahlung',
@@ -792,6 +799,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: 'Accessoires',
+      collectionIntro:
+        'Entdecken Sie Signature Strands, Halsketten, Ohrringe, Armbander, Taschen- und Handy-Charms. Filtern Sie nach Kategorie, Preis, Farbe und Stein.',
       collectionEyebrow: 'Kollektion',
       backToHome: 'Zur Startseite',
       filter: 'Filtern',
@@ -935,7 +944,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: 'Taglia',
       colour: 'Colore',
       length: 'Lunghezza',
-      productCode: 'Codice prodotto: {sku}',
+      productCode: 'Riferimento: {sku}',
       personalisation: 'Personalizzazione',
       note: 'Nota',
       proceedSecurePayment: 'Procedi al pagamento sicuro',
@@ -963,6 +972,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: 'Accessori',
+      collectionIntro:
+        'Sfoglia signature strands, collane, orecchini, bracciali, charms per borse e telefono. Filtra per categoria, prezzo, colore e pietra.',
       collectionEyebrow: 'Collezione',
       backToHome: 'Torna alla home',
       filter: 'Filtro',
@@ -1106,7 +1117,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: 'Talla',
       colour: 'Color',
       length: 'Largo',
-      productCode: 'Codigo de producto: {sku}',
+      productCode: 'Referencia: {sku}',
       personalisation: 'Personalizacion',
       note: 'Nota',
       proceedSecurePayment: 'Proceder al pago seguro',
@@ -1134,6 +1145,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: 'Accesorios',
+      collectionIntro:
+        'Explora signature strands, collares, pendientes, pulseras y charms para bolso y movil. Filtra por categoria, precio, color y piedra.',
       collectionEyebrow: 'Coleccion',
       backToHome: 'Volver al inicio',
       filter: 'Filtrar',
@@ -1277,7 +1290,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: 'Размер',
       colour: 'Цвет',
       length: 'Длина',
-      productCode: 'Код товара: {sku}',
+      productCode: 'Референс: {sku}',
       personalisation: 'Персонализация',
       note: 'Примечание',
       proceedSecurePayment: 'Перейти к безопасной оплате',
@@ -1305,6 +1318,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: 'Аксессуары',
+      collectionIntro:
+        'Просматривайте signature strands, колье, серьги, браслеты и charms для сумок и телефона. Фильтруйте по категории, цене, цвету и камню.',
       collectionEyebrow: 'Коллекция',
       backToHome: 'Назад на главную',
       filter: 'Фильтр',
@@ -1448,7 +1463,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: '尺码',
       colour: '颜色',
       length: '长度',
-      productCode: '产品编号: {sku}',
+      productCode: '款号: {sku}',
       personalisation: '个性化定制',
       note: '备注',
       proceedSecurePayment: '前往安全支付',
@@ -1476,6 +1491,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: '配饰',
+      collectionIntro:
+        '浏览 signature strands、项链、耳环、手链以及包饰与手机挂饰。可按类别、价格、颜色和宝石筛选。',
       collectionEyebrow: '系列',
       backToHome: '返回首页',
       filter: '筛选',
@@ -1619,7 +1636,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: 'Maat',
       colour: 'Kleur',
       length: 'Lengte',
-      productCode: 'Productcode: {sku}',
+      productCode: 'Referentie: {sku}',
       personalisation: 'Personalisatie',
       note: 'Notitie',
       proceedSecurePayment: 'Doorgaan naar veilig betalen',
@@ -1647,6 +1664,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: 'Accessoires',
+      collectionIntro:
+        'Bekijk signature strands, kettingen, oorbellen, armbanden en tas- en telefooncharms. Filter op categorie, prijs, kleur en steen.',
       collectionEyebrow: 'Collectie',
       backToHome: 'Terug naar home',
       filter: 'Filter',
@@ -1790,7 +1809,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: 'Tamanho',
       colour: 'Cor',
       length: 'Comprimento',
-      productCode: 'Codigo do produto: {sku}',
+      productCode: 'Referência: {sku}',
       personalisation: 'Personalizacao',
       note: 'Nota',
       proceedSecurePayment: 'Prosseguir para pagamento seguro',
@@ -1818,6 +1837,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: 'Acessorios',
+      collectionIntro:
+        'Explore signature strands, colares, brincos, pulseiras e charms para mala e telemovel. Filtre por categoria, preco, cor e pedra.',
       collectionEyebrow: 'Colecao',
       backToHome: 'Voltar ao inicio',
       filter: 'Filtrar',
@@ -1961,7 +1982,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: 'Ukuran',
       colour: 'Warna',
       length: 'Panjang',
-      productCode: 'Kode produk: {sku}',
+      productCode: 'Referensi: {sku}',
       personalisation: 'Personalisasi',
       note: 'Catatan',
       proceedSecurePayment: 'Lanjut ke pembayaran aman',
@@ -1989,6 +2010,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: 'Aksesori',
+      collectionIntro:
+        'Jelajahi signature strands, kalung, anting, gelang, serta charms tas dan ponsel. Saring menurut kategori, harga, warna, dan batu.',
       collectionEyebrow: 'Koleksi',
       backToHome: 'Kembali ke beranda',
       filter: 'Filter',
@@ -2132,7 +2155,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       size: 'Saiz',
       colour: 'Warna',
       length: 'Panjang',
-      productCode: 'Kod produk: {sku}',
+      productCode: 'Rujukan: {sku}',
       personalisation: 'Personalisasi',
       note: 'Nota',
       proceedSecurePayment: 'Teruskan ke pembayaran selamat',
@@ -2160,6 +2183,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     accessories: {
       collectionTitle: 'Aksesori',
+      collectionIntro:
+        'Jelajahi signature strands, kalung, anting, gelang, serta charms tas dan ponsel. Saring menurut kategori, harga, warna, dan batu.',
       collectionEyebrow: 'Koleksi',
       backToHome: 'Kembali ke laman utama',
       filter: 'Tapis',
@@ -2461,7 +2486,7 @@ const EN: CommerceUi = {
   colour: 'Colour',
   length: 'Length',
   notes: 'Notes',
-  productCode: 'Product code',
+  productCode: 'Reference',
   orderSummary: 'Order Summary',
   estimatedTotal: 'Estimated Total',
   taxesIncluded: 'Taxes included.',
@@ -2611,7 +2636,7 @@ const AR: CommerceUi = {
   colour: 'اللون',
   length: 'الطول',
   notes: 'ملاحظة',
-  productCode: 'رمز المنتج',
+  productCode: 'المرجع',
   orderSummary: 'ملخص الطلب',
   estimatedTotal: 'الإجمالي التقريبي',
   taxesIncluded: 'الضرائب مشمولة.',

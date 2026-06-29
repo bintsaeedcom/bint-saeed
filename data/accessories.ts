@@ -10,10 +10,10 @@ export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ = `${A}/necklaces/rose-quartz-
 export const ACCESSORY_IMAGE_PHONE_CHARM = `${A}/phone%20charm/phone%20charm.png`
 /** Second angle / alternate shot for phone strand PDP column */
 export const ACCESSORY_IMAGE_PHONE_CHARM_ALT = `${A}/phone%20charm/AF5B4736-A8F0-41F6-94CB-530FF12AD809.PNG`
-/** Category hero when no per-stone strand shot exists. */
-export const ACCESSORY_IMAGE_ABAYA_CHARMS_HERO = `${A}/abaya%20charms.JPG`
 
 const STRANDS = `${A}/strands`
+/** Category hero for signature strands grid. */
+export const ACCESSORY_IMAGE_ABAYA_CHARMS_HERO = `${STRANDS}/bint-saeed-malachite-carnelian-natural-stoneal-ain-rosette-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_ONYX = `${STRANDS}/bint-saeed-onyx-abaya-charm.PNG`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_TIGER_EYE = `${STRANDS}/bint-saeed-tiger-eye-natural-stone-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE = `${STRANDS}/bint-saeed-sunstone-carnelian-natural-stone-al-ain-rosette-strand-front.webp`
@@ -27,6 +27,14 @@ export const ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE = `${STRANDS}/bint-saeed-gre
 
 export const ACCESSORY_IMAGE_EARRINGS_HERO = `${A}/earrings/5AEC9940-AD10-4C6A-9410-4DCB5BCB5ACD.PNG`
 export const ACCESSORY_IMAGE_BAG_CHARM = `${A}/bag%20charm/9D8CE389-54D5-4235-B71B-A9BB92AC97EA.PNG`
+
+const AL_AIN_ROSETTE_NECKLACE_BASE_NAME = 'Al Ain Rosette Necklace'
+function alAinRosetteNecklaceName(variant: string): string {
+  return `${AL_AIN_ROSETTE_NECKLACE_BASE_NAME} — ${variant}`
+}
+function alAinRosetteNecklaceId(variantSlug: string): string {
+  return `al-ain-rosette-necklace-${variantSlug}`
+}
 
 export interface Accessory {
   id: string
@@ -96,28 +104,28 @@ export const accessoryCategories = [
   },
   {
     id: 'bag-strands',
-    name: 'Bag Strands',
+    name: 'Bag Charms',
     nameAr: 'تعليقات الحقائب',
     icon: '❖',
-    description: 'Luxurious strands for your favorite bags',
+    description: 'Luxurious charms for your favourite bags',
     descriptionAr: 'تعليقات فاخرة لحقائبك المفضلة',
   },
   {
     id: 'phone-strands',
-    name: 'Phone Strands',
+    name: 'Phone Charms',
     nameAr: 'تعليقات الهاتف',
     icon: '✧',
-    description: 'Stylish phone accessories',
-    descriptionAr: 'إكسسوارات هاتف أنيقة',
+    description: 'Stylish phone charms',
+    descriptionAr: 'تعليقات هاتف أنيقة',
   },
 ]
 
 export const accessories: Accessory[] = [
   // Necklaces — Al Ain line (variants: stone or style)
   {
-    id: 'signature-malachite-necklace',
-    name: 'Al Ain Necklace — Malachite',
-    nameAr: 'قلادة القوع: الملاكيت',
+    id: alAinRosetteNecklaceId('malachite'),
+    name: alAinRosetteNecklaceName('Malachite'),
+    nameAr: 'قلادة القوع روزيت: الملاكيت',
     category: 'necklaces',
     price: 1650,
     description:
@@ -132,16 +140,16 @@ export const accessories: Accessory[] = [
     isNew: true,
   },
   {
-    id: 'signature-tiger-eye-necklace',
-    name: 'Al Ain Necklace — Tiger Eye',
-    nameAr: 'قلادة القوع: عين النمر',
+    id: alAinRosetteNecklaceId('tiger-eye'),
+    name: alAinRosetteNecklaceName('Tiger Eye'),
+    nameAr: 'قلادة القوع روزيت: عين النمر',
     category: 'necklaces',
     price: 1480,
     description:
       'Warm brown tiger eye beads with subtle chatoyancy, finished with our signature closure.',
     descriptionAr:
       'خرز عين النمر بني دافئ بلمعان خفيف، مع إغلاق التوقيع.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARM_TIGER_EYE],
+    images: [ACCESSORY_IMAGE_NECKLACE_MALACHITE],
     materials: 'Natural tiger eye beads, 18K gold-plated clasp',
     materialsAr: 'خرز عين النمر طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Tiger Eye Brown', nameAr: 'بني عين النمر', hex: '#8B5A2B' }],
@@ -149,16 +157,16 @@ export const accessories: Accessory[] = [
     isNew: true,
   },
   {
-    id: 'signature-onyx-necklace',
-    name: 'Al Ain Necklace — Onyx',
-    nameAr: 'قلادة القوع: الأونكس',
+    id: alAinRosetteNecklaceId('onyx'),
+    name: alAinRosetteNecklaceName('Onyx'),
+    nameAr: 'قلادة القوع روزيت: الأونكس',
     category: 'necklaces',
     price: 1590,
     description:
       'Polished black onyx beads with warm brown undertones and a refined signature clasp.',
     descriptionAr:
       'خرز أونكس أسود مصقول بتحت لون بني دافئ وإغلاق التوقيع الراقي.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARM_ONYX],
+    images: [ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ],
     materials: 'Natural black onyx beads, 18K gold-plated clasp',
     materialsAr: 'خرز أونكس أسود طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [
@@ -167,9 +175,9 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'signature-rose-quartz-necklace',
-    name: 'Al Ain Necklace — Rose Quartz',
-    nameAr: 'قلادة القوع: الكوارتز الوردي',
+    id: alAinRosetteNecklaceId('rose-quartz'),
+    name: alAinRosetteNecklaceName('Rose Quartz'),
+    nameAr: 'قلادة القوع روزيت: الكوارتز الوردي',
     category: 'necklaces',
     price: 1740,
     description:
@@ -184,35 +192,34 @@ export const accessories: Accessory[] = [
     isNew: true,
   },
   {
-    id: 'necklace-layered-gold',
-    name: 'Al Ain Necklace — Layered Gold',
-    nameAr: 'قلادة القوع: ذهبي متعدد الطبقات',
+    id: alAinRosetteNecklaceId('sunstone'),
+    name: alAinRosetteNecklaceName('Sunstone'),
+    nameAr: 'قلادة القوع روزيت: حجر الشمس',
     category: 'necklaces',
     price: 380,
-    description: 'Multi-layered gold chain necklace with delicate pendants.',
-    descriptionAr: 'قلادة سلسلة ذهبية متعددة الطبقات مع تعليقات رقيقة.',
-    images: [ACCESSORY_IMAGE_NECKLACE],
-    materials: '18K Gold-plated Brass',
-    materialsAr: 'نحاس مطلي بالذهب 18 قيراط',
+    description: 'Warm sunstone bead necklace with luminous peach-orange tones and refined signature closure.',
+    descriptionAr: 'قلادة خرز حجر الشمس بدرجات خوخي برتقالي متوهجة مع إغلاق توقيع راقٍ.',
+    images: [ACCESSORY_IMAGE_NECKLACE_MALACHITE],
+    materials: 'Natural sunstone beads, 18K gold-plated clasp',
+    materialsAr: 'خرز حجر الشمس طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [
-      { name: 'Gold', nameAr: 'ذهبي', hex: '#FFD700' },
-      { name: 'Rose Gold', nameAr: 'ذهبي وردي', hex: '#B76E79' }],
+      { name: 'Sunstone', nameAr: 'حجر الشمس', hex: '#ea580c' }],
     inStock: true,
     isBestseller: true,
   },
   {
-    id: 'necklace-statement-pendant',
-    name: 'Al Ain Necklace — Heritage Pendant',
-    nameAr: 'قلادة القوع: التعليقة التراثية',
+    id: alAinRosetteNecklaceId('lapis-lazuli'),
+    name: alAinRosetteNecklaceName('Lapis Lazuli'),
+    nameAr: 'قلادة القوع روزيت: اللازورد',
     category: 'necklaces',
     price: 520,
-    description: 'Bold pendant necklace featuring traditional Emirati patterns.',
-    descriptionAr: 'قلادة بتعليقة جريئة تتميز بأنماط إماراتية تقليدية.',
-    images: [ACCESSORY_IMAGE_NECKLACE],
-    materials: 'Sterling Silver, 18K Gold Vermeil',
-    materialsAr: 'فضة استرلينية، طلاء ذهب 18 قيراط',
+    description: 'Rich lapis lazuli bead necklace with deep royal blue tones and elegant signature clasp.',
+    descriptionAr: 'قلادة خرز لازورد بدرجات أزرق ملكي عميقة مع إغلاق توقيع أنيق.',
+    images: [ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ],
+    materials: 'Natural lapis lazuli beads, 18K gold-plated clasp',
+    materialsAr: 'خرز لازورد طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [
-      { name: 'Silver/Gold', nameAr: 'فضي/ذهبي', hex: '#C0C0C0' }],
+      { name: 'Lapis Lazuli', nameAr: 'لازورد', hex: '#1e40af' }],
     inStock: true,
   },
 

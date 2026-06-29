@@ -36,17 +36,19 @@ function facts(
 }
 
 const MARYLEBONE_EN: ProductSchemaFacts = {
-  productType: 'Open-front layering abaya designed for contemporary wardrobes — wide sleeves to layer over dresses and sets with refined Abu Dhabi tailoring.',
+  productType:
+    'Graceful A-line abaya with removable genuine natural Onyx Strands on each cuff, signature gold-tone Knotted Line strand details, and interchangeable Bint Saeed Strands — made in Abu Dhabi.',
   productCategory:
-    'Abaya, Layering Abaya, Open-Front Abaya, Designer Abaya, Luxury Abaya, Contemporary Outerwear, Modest Fashion, Premium Modest Fashion, Gulf Wardrobe Abaya, International Occasion Abaya',
-  fit: 'Relaxed open-front silhouette with wide sleeves for elegant layering.',
-  closure: 'Open front',
-  styling:
-    'Designed to layer over the Covent Garden Long Dress, Soho Set, or evening looks — a signature Bint Saeed outerwear piece for GCC and international wardrobes.',
-  stylingDetail: 'Open-front abaya with wide sleeves, matte satin binding, and fluid wool-silk drape for city and occasion layering.',
-  material: 'Wool-silk blend, matte satin binding',
+    'Abaya, A-Line Abaya, Designer Abaya, Luxury Abaya, Abaya Jewellery, Signature Strands Abaya, Natural Stone Abaya, Contemporary Abaya, Modest Fashion, Premium Modest Fashion, Gulf Wardrobe Abaya, International Occasion Abaya',
+  fit: 'Graceful A-line abaya designed to be worn open or closed with soft crepe drape.',
+  closure: 'Optional snap button closure',
+  pockets: 'Hidden side seam pockets',
+  stylingDetail:
+    'Graceful A-line abaya with wide cuffs for interchangeable Bint Saeed Strands, two removable Onyx Strands with gold-plated hematite beads, and signature Knotted Line finishing.',
+  material:
+    'Abaya: 80% Polyester, 20% Viscose; Strands: genuine natural Onyx gemstones with gold-plated hematite spacer beads',
   suitableFor:
-    'Layering over dresses and sets, weddings, Eid, dinners, travel, city weekends, gallery visits, embassy receptions, Gulf wardrobes, and international occasionwear in London, Paris, Toronto, Riyadh, Doha, and destinations worldwide.',
+    'Fashion enthusiasts, fashion editors, curators, cultural heritage audiences, diplomats, embassy receptions, gallery openings, luxury travel, city dressing, weddings, formal dinners, and international modest fashion in London, Paris, Riyadh, Doha, Abu Dhabi, and destinations worldwide.',
 }
 
 const PARK_LANE_EN: ProductSchemaFacts = {
@@ -97,14 +99,14 @@ const SOHO_EN: ProductSchemaFacts = {
 const FAQ_BY_SLUG: Record<string, ProductSchemaFacts['faq']> = {
   [MARYLEBONE_SLUG]: [
     {
-      question: 'Can I layer the Marylebone Abaya over dresses?',
+      question: 'Are the Onyx Strands on the Marylebone Abaya removable?',
       answer:
-        'Yes. The Marylebone Abaya is designed as an open-front layering piece with wide sleeves, ideal over the Covent Garden Long Dress, Soho Set, or evening looks.',
+        'Yes. The Marylebone Abaya includes two removable genuine natural Onyx Strands — one for each cuff — with gold-plated hematite spacer beads. Wide cuffs are designed for interchangeable Bint Saeed Strands across your wardrobe.',
     },
     {
-      question: 'Is the Marylebone Abaya suitable for travel and occasionwear?',
+      question: 'Who is the Marylebone Abaya designed for?',
       answer:
-        'Yes. Its fluid wool-silk drape and open-front silhouette transition from city weekends to weddings, Eid gatherings, and international travel wardrobes.',
+        'The Marylebone Abaya is designed for women who love fashion — fashion editors, curators, cultural heritage audiences connected to fashion, diplomats, and fashion enthusiasts seeking a graceful A-line abaya with natural stone jewellery and signature Knotted Line details, handcrafted in Abu Dhabi.',
     },
   ],
   [PARK_LANE_SLUG]: PARK_LANE_ABAYA_FAQ_EN,
@@ -119,8 +121,14 @@ export function getLocalizedSecondaryCatalogSchemaFacts(
 
   if (s === MARYLEBONE_SLUG) {
     base = facts(s, locale, MARYLEBONE_EN, {
-      ar: { productType: 'عباية مفتوحة للطبقات بأكمام واسعة — للتنسيق فوق الفساتين والأطقم بتفصيل أبوظبي الراقي' },
-      fr: { productType: 'Abaya ouverte à superposer aux manches amples — tailleur contemporain Abu Dhabi' },
+      ar: {
+        productType:
+          'عباية A-line أنيقة بخيوط عقيق طبيعية قابلة للإزالة على كل كُم، وتفاصيل Knotted Line الذهبية، وخيوط Bint Saeed قابلة للتبديل — من أبوظبي',
+      },
+      fr: {
+        productType:
+          'Abaya A-line gracieuse avec fils Onyx naturels amovibles sur chaque manchette, détails Knotted Line dorés et fils Bint Saeed interchangeables — Abu Dhabi',
+      },
     })
   } else if (s === PARK_LANE_SLUG) {
     base = facts(s, locale, PARK_LANE_EN, {

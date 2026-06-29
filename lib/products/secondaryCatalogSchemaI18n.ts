@@ -1,16 +1,14 @@
 import type { AppLocale } from '@/lib/i18n/routing'
-import { buildAbayaSchemaAudience } from '@/lib/products/abayaSchemaPackResolve'
 import { getDressSchemaAudience } from '@/lib/products/categorySchemaAudience'
 import {
-  getLocalizedSecondaryCatalogSchemaFacts,
-  getLocalizedSecondaryCatalogSchemaFaq,
+  getLocalizedMaryleboneAbayaExclusiveKeywords,
+} from '@/lib/products/maryleboneAbayaSchemaKeywordsI18n'
+import { getLocalizedParkLaneAbayaExclusiveKeywords } from '@/lib/products/parkLaneAbayaSchemaKeywordsI18n'
+import {
   HAMPSTEAD_SLUG,
   MARYLEBONE_SLUG,
   PARK_LANE_SLUG,
-  SOHO_SLUG,
 } from '@/lib/products/secondaryCatalogSchemaLocalePacks'
-import { getLocalizedSecondaryCatalogExclusiveKeywords } from '@/lib/products/secondaryCatalogSchemaKeywordsI18n'
-import { getLocalizedParkLaneAbayaExclusiveKeywords } from '@/lib/products/parkLaneAbayaSchemaKeywordsI18n'
 
 export {
   HAMPSTEAD_SLUG,
@@ -25,19 +23,19 @@ export {
   isHydeParkSetSlug,
 } from '@/lib/products/hydeParkSetSchemaI18n'
 
-const MARYLEBONE_AUDIENCE_EXT: Record<AppLocale, string> = {
-  en: ', open-front abayas, layering abayas, wide-sleeve abayas, outerwear abayas, abayas to layer over dresses, travel wardrobes, and women pairing with the Covent Garden Long Dress',
-  ar: ', عبايات مفتوحة، عبايات للطبقات، عبايات أكمام واسعة، عبايات خارجية، والتنسيق فوق الفساتين',
-  fr: ', abayas ouvertes, abayas à superposer, abayas manches larges, outerwear, et superposition sur robes',
-  it: ', abaya aperte, abaya layering, abaya maniche ampie, outerwear, e layering su abiti',
-  es: ', abayas abiertas, abayas para capas, abayas de mangas amplias, outerwear, y capas sobre vestidos',
-  ru: ', абайи с открытым передом, абайи для наслоения, абайи с широкими рукавами, верхняя одежда, и слои над платьями',
-  zh: ', 开襟长袍、叠穿长袍、宽袖长袍、外搭长袍，以及搭配连衣裙',
-  de: ', offene Abayas, Layering-Abayas, Abayas mit weiten Ärmeln, Outerwear, und Layering über Kleidern',
-  nl: ', open-front abaya’s, layering abaya’s, wijde mouw abaya’s, outerwear, en layering over jurken',
-  pt: ', abayas abertas, abayas para camadas, abayas de mangas largas, outerwear, e camadas sobre vestidos',
-  id: ', abaya terbuka, abaya layering, abaya lengan lebar, outerwear, dan layering di atas gaun',
-  ms: ', abaya terbuka, abaya layering, abaya lengan lebar, outerwear, dan layering atas gaun',
+const MARYLEBONE_SCHEMA_AUDIENCE: Record<AppLocale, string> = {
+  en: 'Women who love fashion, fashion enthusiasts, fashion editors, style editors, fashion curators, museum and gallery curators, cultural heritage professionals connected to fashion, textile heritage audiences, collectors of modest luxury, and women seeking graceful A-line abayas with interchangeable natural stone strands. Women interested in abaya jewellery, garment jewellery, Signature Strands, Onyx Strands, removable cuff strands, contemporary designer abayas, luxury abayas, diplomat abayas, embassy abayas, gallery openings, cultural engagements, and modest fashion that bridges Gulf craftsmanship with international style — with signature gold-tone Knotted Line details, handcrafted in Abu Dhabi for GCC, UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman, and international wardrobes across London, Paris, Milan, New York, Riyadh, Doha, and beyond. Diplomats, embassy staff, cultural attachés, editorial stylists, heritage fashion advocates, fashion week buyers, and women building a wardrobe of interchangeable Bint Saeed Strands across selected garments. Men seeking meaningful luxury gifts for their wife, daughter, mother, fiancée, girlfriend, or sister.',
+  ar: 'النساء اللواتي يعشقن الأزياء، عشاق الموضة، محررات الأزياء، منسقات الأزياء، أمناء المتاحف والمعارض، متخصصات التراث الثقافي المرتبطات بالأزياء، جامعات الأزياء المحتشمة الفاخرة، والباحثات عن عبايات A-line أنيقة بخيوط أحجار طبيعية قابلة للتبديل. مهتمات بمجوهرات العباية، خيوط التوقيع، خيوط العقيق، العبايات المصمّمة المعاصرة والفاخرة والدبلوماسية، واستقبالات السفارات والفعاليات الثقافية — بتفاصيل Knotted Line الذهبية، مصنوعة يدوياً في أبوظبي للخليج والعالم. دبلوماسيات، موظفات سفارات، منسقات تحريرية، داعمات أزياء التراث، ومشتركات خزائن خيوط Bint Saeed القابلة للتبديل. رجال يبحثون عن هدايا فاخرة.',
+  fr: 'Femmes passionnées de mode, enthousiastes de la fashion, rédactrices et éditrices mode, conservatrices et curatrices, professionnelles du patrimoine culturel liées à la mode, collectionneuses de luxe modeste, et femmes en quête d’abayas A-line gracieuses avec fils de pierres naturelles interchangeables. Intéressées par la bijouterie d’abaya, les Signature Strands, les fils Onyx, abayas de créateur contemporaines, de luxe, diplomatiques et d’ambassade — détails Knotted Line dorés, fabriquées à Abou Dabi pour le Golfe et le monde. Diplomates, personnel d’ambassade, attachés culturels, stylistes éditoriaux, acheteuses fashion week. Hommes en quête de cadeaux de luxe.',
+  it: 'Donne che amano la moda, appassionate di fashion, editor di moda, curatrici, curatori di musei e gallerie, professioniste del patrimonio culturale legate alla moda, collezioniste di lusso modesto, e donne in cerca di abaya A-line aggraziate con fili di pietre naturali intercambiabili. Interessate a gioielli abaya, Signature Strands, fili Onyx, abaya designer contemporanee, di lusso, diplomatiche e ambasciata — dettagli Knotted Line dorati, create ad Abu Dhabi per il Golfo e il mondo. Diplomatiche, staff ambasciata, stylist editoriali, acquirenti fashion week. Uomini in cerca di regali di lusso.',
+  es: 'Mujeres que aman la moda, entusiastas de la fashion, editoras de moda, curatoras, conservadoras de museos y galerías, profesionales del patrimonio cultural vinculadas a la moda, coleccionistas de lujo modesto, y mujeres que buscan abayas A-line elegantes con hebras de piedras naturales intercambiables. Interesadas en joyería de abaya, Signature Strands, hebras Onyx, abayas de diseñador contemporáneas, de lujo, diplomáticas y de embajada — detalles Knotted Line dorados, hechas en Abu Dabi para el Golfo y el mundo. Diplomáticas, personal de embajada, estilistas editoriales, compradoras de fashion week. Hombres en busca de regalos de lujo.',
+  ru: 'Женщины, любящие моду, энтузиастки моды, редакторы моды, кураторы, кураторы музеев и галерей, специалистки культурного наследия, связанные с модой, коллекционерки скромной роскоши, и те, кто ищет изящные абайи A-line со сменяемыми нитями из натурального камня. Интерес к украшениям для абайи, Signature Strands, нитям оникса, современным дизайнерским, люксовым, дипломатическим абайям — детали Knotted Line, ручная работа в Абу-Даби для Залива и мира. Дипломатки, сотрудницы посольств, редакторские стилисты, покупательницы fashion week. Мужчины, ищущие роскошные подарки.',
+  zh: '热爱时尚的女性、时尚爱好者、时尚编辑、策展人、博物馆与画廊策展人、与时尚相关的文化遗产专业人士、端庄奢华收藏者，以及寻求优雅A字长袍与可互换天然宝石串的女性；关注长袍珠宝、Signature Strands、玛瑙串、当代设计师长袍、奢华长袍、外交与使馆场合——Knotted Line金饰细节，阿布扎比手工制作，面向海湾与世界。外交官、使馆人员、文化参赞、编辑造型师、时尚周买家。寻找奢华礼品的男性。',
+  de: 'Frauen, die Mode lieben, Mode-Enthusiastinnen, Mode-Redakteurinnen, Kuratorinnen, Museum- und Galerie-Kuratorinnen, Kulturerbe-Fachkräfte mit Modebezug, Sammlerinnen bescheidener Luxusmode, und Frauen, die anmutige A-Linien-Abayas mit austauschbaren Naturstein-Strängen suchen. Interesse an Abaya-Schmuck, Signature Strands, Onyx-Strängen, zeitgenössischen Designer-, Luxus-, Diplomaten- und Botschafts-Abayas — goldene Knotted-Line-Details, handgefertigt in Abu Dhabi für den Golf und die Welt. Diplomatinnen, Botschaftspersonal, Editorial-Stylistinnen, Fashion-Week-Käuferinnen. Männer, die Luxusgeschenke suchen.',
+  nl: 'Vrouwen die van mode houden, modeliefhebbers, moderedacteuren, curatoren, museum- en galeriecuratoren, cultureel-erfgoedprofessionals verbonden met mode, verzamelaars van bescheiden luxe, en vrouwen die sierlijke A-line abaya’s met verwisselbare natuursteen strands zoeken. Geïnteresseerd in abaya-sieraden, Signature Strands, Onyx Strands, eigentijdse designer-, luxe-, diplomaten- en ambassade-abaya’s — gouden Knotted Line-details, handgemaakt in Abu Dhabi voor de Golf en de wereld. Diplomaten, ambassadepersoneel, redactionele stylisten, fashionweek-kopers. Mannen die luxe cadeaus zoeken.',
+  pt: 'Mulheres que amam moda, entusiastas de fashion, editoras de moda, curadoras, curadoras de museus e galerias, profissionais de património cultural ligadas à moda, colecionadoras de luxo modesto, e mulheres que procuram abayas A-line graciosas com fios de pedras naturais intercambiáveis. Interessadas em joias de abaya, Signature Strands, fios Onyx, abayas de designer contemporâneas, de luxo, diplomáticas e de embaixada — detalhes Knotted Line dourados, feitas à mão em Abu Dhabi para o Golfo e o mundo. Diplomatas, staff de embaixada, stylists editoriais, compradoras de fashion week. Homens à procura de presentes de luxo.',
+  id: 'Wanita yang mencintai fashion, penggemar fashion, editor fashion, kurator, kurator museum dan galeri, profesional warisan budaya terkait fashion, kolektor modest luxury, dan wanita yang mencari abaya A-line anggun dengan strand batu alam yang dapat dipertukarkan. Tertarik pada perhiasan abaya, Signature Strands, Onyx Strands, abaya desainer kontemporer, mewah, diplomatik, dan kedutaan — detail Knotted Line emas, buatan tangan di Abu Dhabi untuk GCC dan dunia. Diplomat, staf kedutaan, stylist editorial, pembeli fashion week. Pria mencari hadiah mewah.',
+  ms: 'Wanita yang mencintai fesyen, peminat fesyen, editor fesyen, kurator, kurator muzium dan galeri, profesional warisan budaya berkaitan fesyen, pengumpul luxe sopan, dan wanita yang mencari abaya A-line anggun dengan strands batu semula jadi boleh ditukar. Berminat pada barang kemas abaya, Signature Strands, Onyx Strands, abaya pereka kontemporari, mewah, diplomatik, dan kedutaan — butiran Knotted Line emas, buatan tangan di Abu Dhabi untuk GCC dan dunia. Diplomat, kakitangan kedutaan, stylist editorial, pembeli fashion week. Lelaki mencari hadiah mewah.',
 }
 
 const PARK_LANE_SCHEMA_AUDIENCE: Record<AppLocale, string> = {
@@ -83,7 +81,14 @@ export function isHampsteadDressSlug(slug: string): boolean {
 }
 
 export function getMaryleboneAbayaSchemaAudience(locale: AppLocale = 'en'): string {
-  return buildAbayaSchemaAudience(locale, MARYLEBONE_AUDIENCE_EXT)
+  return MARYLEBONE_SCHEMA_AUDIENCE[locale] ?? MARYLEBONE_SCHEMA_AUDIENCE.en
+}
+
+export function getMaryleboneAbayaSchemaKeywords(
+  locale: AppLocale = 'en',
+  colorName?: string,
+): string {
+  return getLocalizedMaryleboneAbayaExclusiveKeywords(locale, colorName).join(', ')
 }
 
 export function getParkLaneAbayaSchemaAudience(locale: AppLocale = 'en'): string {
@@ -109,5 +114,8 @@ export {
 export {
   getLocalizedSecondaryCatalogSchemaFacts,
   getLocalizedSecondaryCatalogSchemaFaq,
+} from '@/lib/products/secondaryCatalogSchemaLocalePacks'
+
+export {
   getLocalizedSecondaryCatalogExclusiveKeywords,
-}
+} from '@/lib/products/secondaryCatalogSchemaKeywordsI18n'

@@ -138,7 +138,7 @@ export function buildNothingHillKaftanContentIt(color?: string): ProductPdpConte
       'Silhouette ariosa con drappeggio femminile morbido',
       `Colore: ${label}`,
       'Realizzato ad Abu Dhabi, UAE',
-      `Codice prodotto: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `Riferimento: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),

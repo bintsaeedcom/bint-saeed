@@ -105,6 +105,7 @@ export const translationsPt = {
     description: 'Descricao',
     fabricMaterials: 'Tecidos e Materiais',
     sizeMeasurements: 'Tamanho e Corte',
+    origin: 'Origem',
     shippingReturns: 'Envio e Devolucoes',
     freeShipping: 'Envio gratuito nos EAU para encomendas acima de 1000 AED',
     expressDelivery: 'Entrega expresso: 1-2 dias uteis (EAU)',

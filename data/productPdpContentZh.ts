@@ -138,7 +138,7 @@ export function buildNothingHillKaftanContentZh(color?: string): ProductPdpConte
       '空气感廓形与柔美垂感',
       `颜色：${label}`,
       '阿联酋阿布扎比制造',
-      `产品编码：${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `款号：${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),

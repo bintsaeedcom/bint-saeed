@@ -1,4 +1,9 @@
+import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductPdpContent } from '@/data/productPdpContent'
+import {
+  buildMaryleboneAbayaPdpContent as buildMaryleboneAbayaPdpContentI18n,
+  getMaryleboneAbayaPdpFaq,
+} from '@/lib/products/maryleboneAbayaPdpI18n'
 
 export const MARYLEBONE_ABAYA_INTRO_EN = [
   'The abaya with natural stone jewellery for your wardrobe.',
@@ -11,9 +16,11 @@ export const MARYLEBONE_ABAYA_INTRO_EN = [
   'The Marylebone Abaya belongs as naturally in London’s business districts and Parisian cafés as it does in Abu Dhabi, Riyadh and Doha. It can be worn as a refined contemporary outer layer or embraced as a timeless abaya, adapting beautifully to every setting.',
 ] as const
 
-export function buildMaryleboneAbayaPdpContent(base: ProductPdpContent): ProductPdpContent {
-  return {
-    ...base,
-    introParagraphs: [...MARYLEBONE_ABAYA_INTRO_EN],
-  }
+export { getMaryleboneAbayaPdpFaq }
+
+export function buildMaryleboneAbayaPdpContent(
+  color?: string,
+  locale: AppLocale = 'en',
+): ProductPdpContent {
+  return buildMaryleboneAbayaPdpContentI18n(color, locale)
 }

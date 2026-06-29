@@ -48,12 +48,12 @@ Last synced from codebase: 2026-06-22
 
 | Name | ID | AED | SAR | QAR | OMR | BHD | KWD | GBP | EUR | USD | CHF | RUB | CNY |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Al Ain Necklace — Malachite | `signature-malachite-necklace` | 1650 | 1699 | 1599 | 173 | 170 | 139 | 335 | 385 | 450 | 350 | 41000 | 3199 |
-| Al Ain Necklace — Tiger Eye | `signature-tiger-eye-necklace` | 1480 | 1499 | 1499 | 155 | 152 | 124 | 300 | 345 | 405 | 320 | 37000 | 2899 |
-| Al Ain Necklace — Onyx | `signature-onyx-necklace` | 1590 | 1599 | 1599 | 167 | 164 | 134 | 320 | 370 | 430 | 340 | 40000 | 3099 |
-| Al Ain Necklace — Rose Quartz | `signature-rose-quartz-necklace` | 1740 | 1799 | 1699 | 183 | 179 | 146 | 350 | 405 | 475 | 370 | 43000 | 3399 |
-| Al Ain Necklace — Layered Gold | `necklace-layered-gold` | 380 | 390 | 375 | 40 | 39 | 32 | 75 | 90 | 105 | 85 | 9500 | 799 |
-| Al Ain Necklace — Heritage Pendant | `necklace-statement-pendant` | 520 | 599 | 599 | 55 | 54 | 44 | 105 | 120 | 140 | 110 | 13000 | 999 |
+| Al Ain Rosette Necklace — Malachite | `al-ain-rosette-necklace-malachite` | 1650 | 1699 | 1599 | 173 | 170 | 139 | 335 | 385 | 450 | 350 | 41000 | 3199 |
+| Al Ain Rosette Necklace — Tiger Eye | `al-ain-rosette-necklace-tiger-eye` | 1480 | 1499 | 1499 | 155 | 152 | 124 | 300 | 345 | 405 | 320 | 37000 | 2899 |
+| Al Ain Rosette Necklace — Onyx | `al-ain-rosette-necklace-onyx` | 1590 | 1599 | 1599 | 167 | 164 | 134 | 320 | 370 | 430 | 340 | 40000 | 3099 |
+| Al Ain Rosette Necklace — Rose Quartz | `al-ain-rosette-necklace-rose-quartz` | 1740 | 1799 | 1699 | 183 | 179 | 146 | 350 | 405 | 475 | 370 | 43000 | 3399 |
+| Al Ain Rosette Necklace — Sunstone | `al-ain-rosette-necklace-sunstone` | 380 | 390 | 375 | 40 | 39 | 32 | 75 | 90 | 105 | 85 | 9500 | 799 |
+| Al Ain Rosette Necklace — Lapis Lazuli | `al-ain-rosette-necklace-lapis-lazuli` | 520 | 599 | 599 | 55 | 54 | 44 | 105 | 120 | 140 | 110 | 13000 | 999 |
 | Pearl Drop Earrings | `earrings-pearl-drop` | 280 | 285 | 275 | 29 | 29 | 24 | 55 | 65 | 75 | 60 | 7000 | 599 |
 | Geometric Studs | `earrings-geometric` | 195 | 200 | 195 | 20 | 20 | 16 | 40 | 50 | 55 | 45 | 4900 | 380 |
 | Textured Gold Hoops | `earrings-hoops` | 320 | 325 | 315 | 34 | 33 | 27 | 65 | 75 | 85 | 70 | 8000 | 699 |

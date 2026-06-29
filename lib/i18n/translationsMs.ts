@@ -105,6 +105,7 @@ export const translationsMs = {
     description: 'Penerangan',
     fabricMaterials: 'Kain & Bahan',
     sizeMeasurements: 'Saiz & Potongan',
+    origin: 'Asal',
     shippingReturns: 'Penghantaran & Pemulangan',
     freeShipping: 'Penghantaran percuma UAE untuk pesanan melebihi 1000 AED',
     expressDelivery: 'Penghantaran ekspres: 1–2 hari bekerja (UAE)',

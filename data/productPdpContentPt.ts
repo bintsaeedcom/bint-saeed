@@ -138,7 +138,7 @@ export function buildNothingHillKaftanContentPt(color?: string): ProductPdpConte
       'Silhueta arejada com drapeado feminino suave',
       `Cor: ${label}`,
       'Feito em Abu Dhabi, EAU',
-      `Codigo do produto: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `Referência: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),

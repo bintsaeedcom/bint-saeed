@@ -1,7 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import {
   HAMPSTEAD_SLUG,
-  MARYLEBONE_SLUG,
   SOHO_SLUG,
 } from '@/lib/products/secondaryCatalogSchemaLocalePacks'
 
@@ -28,16 +27,6 @@ function rowsToKw(rows: KwRow[]): Record<AppLocale, string>[] {
   )
 }
 
-const MARYLEBONE_ROWS: KwRow[] = [
-  ['Marylebone Abaya', 'عباية Marylebone', 'Abaya Marylebone', 'Marylebone Abaya', 'Abaya Marylebone', 'Абайя Marylebone', 'Marylebone 长袍', 'Marylebone Abaya', 'Marylebone abaya', 'Abaya Marylebone'],
-  ['open front abaya', 'عباية مفتوحة الأمام', 'abaya ouvert devant', 'abaya frontale aperta', 'abaya frontal abierta', 'абайя с открытым передом', '开襟长袍', 'Offene-Front-Abaya', 'open front abaya', 'abaya frente aberta'],
-  ['layering abaya', 'عباية للطبقات', 'abaya à superposer', 'abaya layering', 'abaya para capas', 'абайя для наслоения', '叠穿长袍', 'Layering-Abaya', 'layering abaya', 'abaya para camadas'],
-  ['wide sleeve abaya', 'عباية أكمام واسعة', 'abaya manches larges', 'abaya maniche ampie', 'abaya mangas amplias', 'абайя с широкими рукавами', '宽袖长袍', 'Abaya mit weiten Ärmeln', 'wijde mouw abaya', 'abaya mangas largas'],
-  ['outerwear abaya', 'عباية خارجية', 'abaya outerwear', 'abaya outerwear', 'abaya outerwear', 'верхняя абайя', '外搭长袍', 'Abaya-Outerwear', 'outerwear abaya', 'abaya outerwear'],
-  ['Covent Garden Dress layering', 'طبقة فوق فستان Covent Garden', 'superposition robe Covent Garden', 'layering Covent Garden Dress', 'capas Covent Garden Dress', 'слой с платьем Covent Garden', '搭配Covent Garden连衣裙', 'Layering Covent Garden Dress', 'layering Covent Garden Dress', 'camadas Covent Garden Dress'],
-  ['BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004', 'BS-AB-004'],
-]
-
 const HAMPSTEAD_ROWS: KwRow[] = [
   ['Hampstead Dress', 'فستان Hampstead', 'Robe Hampstead', 'Hampstead Dress', 'Vestido Hampstead', 'Платье Hampstead', 'Hampstead 连衣裙', 'Hampstead Dress', 'Hampstead Dress', 'Vestido Hampstead'],
   ['Al Talli dress', 'فستان التلي', 'robe Al Talli', 'abito Al Talli', 'vestido Al Talli', 'платье Al Talli', 'Al Talli 连衣裙', 'Al-Talli-Kleid', 'Al Talli jurk', 'vestido Al Talli'],
@@ -57,19 +46,11 @@ const SOHO_ROWS: KwRow[] = [
 ]
 
 const PACKS: Record<string, Record<AppLocale, string>[]> = {
-  [MARYLEBONE_SLUG]: rowsToKw(MARYLEBONE_ROWS),
   [HAMPSTEAD_SLUG]: rowsToKw(HAMPSTEAD_ROWS),
   [SOHO_SLUG]: rowsToKw(SOHO_ROWS),
 }
 
 const EN_EXTRA: Record<string, readonly string[]> = {
-  [MARYLEBONE_SLUG]: [
-    'Bint Saeed Marylebone Abaya',
-    'layer over dress',
-    'travel abaya',
-    'wedding layering abaya',
-    'international wardrobe abaya',
-  ],
   [HAMPSTEAD_SLUG]: [
     'Bint Saeed Hampstead Dress',
     'buy Al Talli dress',

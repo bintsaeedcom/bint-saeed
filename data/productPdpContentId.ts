@@ -138,7 +138,7 @@ export function buildNothingHillKaftanContentId(color?: string): ProductPdpConte
       'Siluet airy dengan drape feminin yang lembut',
       `Warna: ${label}`,
       'Dibuat di Abu Dhabi, UAE',
-      `Kode produk: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `Referensi: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),

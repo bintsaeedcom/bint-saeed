@@ -13,12 +13,6 @@ import CurrencySwitcher from './CurrencySwitcher'
 import MiniCart from './MiniCart'
 import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
-import {
-  ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
-  ACCESSORY_IMAGE_NECKLACE,
-  ACCESSORY_IMAGE_PHONE_CHARM,
-} from '@/data/accessories'
-
 import { getSearchableContent, type SearchableItem } from '@/lib/i18n/searchableContentI18n'
 
 /** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
@@ -123,31 +117,16 @@ export default function Header() {
           title: 'Accessories',
           links: [
             { label: 'All Accessories', href: '/accessories' },
-            {
-              label: 'Abaya Strands',
-              href: '/strands#shop-all-strands',
-            },
-            { label: 'Shop All Strands', href: '/accessories?type=signature-strands' },
+            { label: 'Signature Strands', href: '/accessories?type=signature-strands' },
             { label: 'Necklaces', href: '/accessories?type=necklaces' },
             { label: 'Earrings', href: '/accessories?type=earrings' },
             { label: 'Bracelets', href: '/accessories?type=bracelets' },
-            { label: 'Bag Strands', href: '/accessories?type=bag-strands' },
-            { label: 'Phone Strands', href: '/accessories?type=phone-strands' },
+            { label: 'Bag Charms', href: '/accessories?type=bag-strands' },
+            { label: 'Phone Charms', href: '/accessories?type=phone-strands' },
           ],
         },
       ],
-      features: [
-        {
-          title: 'Abaya Strands',
-          href: '/strands#shop-all-strands',
-          image: ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
-        },
-        {
-          title: 'Necklaces',
-          href: '/accessories?type=necklaces',
-          image: ACCESSORY_IMAGE_NECKLACE,
-        },
-      ],
+      features: [],
     },
     '/about': {
       columns: [
@@ -230,10 +209,10 @@ export default function Header() {
     isTransparentHomeHeader ? 'border-white/25 bg-white/[0.02]' : 'border-white/15 bg-white/[0.03]'
   }`
 
-  const logoClassName = `w-auto max-w-[min(72vw,780px)] transition-all duration-300 sm:max-w-[min(80vw,780px)] lg:max-w-[min(92vw,820px)] [filter:none] [text-shadow:none] ${
+  const logoClassName = `w-auto max-w-[min(88vw,920px)] transition-all duration-300 sm:max-w-[min(90vw,920px)] 2xl:max-w-[min(94vw,960px)] [filter:none] [text-shadow:none] ${
     isScrolled
-      ? 'h-[clamp(2.5rem,5.5vw,3.5rem)] max-h-[52px] sm:max-h-[58px] md:max-h-[66px] lg:max-h-[78px] xl:max-h-[96px]'
-      : 'h-[clamp(2.85rem,7.5vw,4.5rem)] max-h-[68px] sm:max-h-[76px] md:h-[clamp(3.1rem,7vw,4.25rem)] md:max-h-[84px] lg:max-h-[94px] xl:max-h-[118px]'
+      ? 'h-[clamp(2.85rem,6.5vw,4.5rem)] max-h-[60px] sm:max-h-[70px] md:max-h-[80px] lg:max-h-[92px] xl:max-h-[104px] 2xl:max-h-[118px]'
+      : 'h-[clamp(3.5rem,10vw,6rem)] max-h-[84px] sm:max-h-[96px] md:max-h-[108px] lg:max-h-[124px] xl:max-h-[140px] 2xl:max-h-[156px]'
   }`
 
   return (
@@ -262,7 +241,7 @@ export default function Header() {
                 isScrolled ? 'py-0.5 md:py-0.5' : 'py-1 md:py-1.5 lg:py-2 xl:py-2.5'
               }`}
             >
-              <div className="absolute left-0.5 top-1/2 z-[62] -translate-y-1/2 xl:hidden">
+              <div className="absolute left-0.5 top-1/2 z-[62] -translate-y-1/2 2xl:hidden">
                 <button
                   type="button"
                   className="p-2 text-white"
@@ -275,7 +254,7 @@ export default function Header() {
               </div>
 
               {disableHomeLogoNavigation ? (
-                <div className="block max-w-[min(92vw,820px)]">
+                <div className="block max-w-[min(94vw,960px)]">
                   <Image
                     src="/logo-bintsaeed.svg"
                     alt="Bint Saeed"
@@ -288,7 +267,7 @@ export default function Header() {
               ) : (
                 <LocaleLink
                   href="/home"
-                  className="block max-w-[min(92vw,820px)]"
+                  className="block max-w-[min(94vw,960px)]"
                   data-cursor-hover
                 >
                   <Image
@@ -302,7 +281,12 @@ export default function Header() {
                 </LocaleLink>
               )}
 
-              <div className="absolute right-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center gap-0.5 xl:hidden">
+              <div className="absolute right-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center gap-1 2xl:hidden">
+                <div className={`hidden sm:flex ${localeSwitcherClass}`}>
+                  <CurrencySwitcher variant="light" showSymbol={false} />
+                  <span className="h-4 w-px bg-white/15" aria-hidden />
+                  <LanguageSwitcher variant="light" />
+                </div>
                 <button
                   type="button"
                   onClick={() => setIsMiniCartOpen(true)}
@@ -321,7 +305,7 @@ export default function Header() {
             </div>
 
             {/* Mobile search — visible below logo; opens full search overlay */}
-            <div className={`xl:hidden px-1 ${isScrolled ? 'pb-1.5' : 'pb-2'}`}>
+            <div className={`2xl:hidden px-1 ${isScrolled ? 'pb-1.5' : 'pb-2'}`}>
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
@@ -343,16 +327,16 @@ export default function Header() {
             </div>
 
             {/* Divider between brand and topics */}
-            <div className="mx-auto hidden h-px max-w-[min(100%,56rem)] bg-gradient-to-r from-transparent via-white/16 to-transparent xl:block" aria-hidden />
+            <div className="mx-auto hidden h-px max-w-[min(100%,56rem)] bg-gradient-to-r from-transparent via-white/16 to-transparent 2xl:block" aria-hidden />
 
-            {/* Row 2 — topics + utilities (mirror on RTL) */}
+            {/* Row 2 — topics + utilities (wide desktop only; grid prevents overlap) */}
             <div
-              className={`relative hidden items-center justify-between gap-2 isolate transition-[padding] duration-500 xl:flex ${
-                isRTL ? 'flex-row-reverse' : ''
-              } ${isScrolled ? 'py-0.5 md:py-0.5' : 'py-0.5 md:py-1 xl:py-1.5'}`}
+              className={`relative hidden transition-[padding] duration-500 2xl:grid 2xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] 2xl:items-center 2xl:gap-8 ${
+                isScrolled ? 'py-0.5' : 'py-1 2xl:py-1.5'
+              }`}
             >
             {/* Left: desktop search */}
-            <div className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-start xl:flex">
+            <div className={`pointer-events-auto relative z-[61] flex min-w-0 items-center justify-start ${isRTL ? 'flex-row-reverse' : ''}`}>
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
@@ -365,12 +349,12 @@ export default function Header() {
                 aria-label={t.nav.search}
               >
                 <FiSearch className="h-4 w-4" />
-                <span className="hidden xl:inline">{t.nav.search}</span>
+                <span>{t.nav.search}</span>
               </button>
             </div>
 
-            {/* Center: Navigation — desktop */}
-            <nav className="pointer-events-auto relative z-[61] hidden min-w-0 flex-1 items-center justify-center gap-4 xl:flex xl:gap-7">
+            {/* Center: Navigation */}
+            <nav className={`pointer-events-auto relative z-[61] flex min-w-0 items-center justify-center gap-5 min-[1800px]:gap-7 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <LocaleLink
                 href="/shop"
                 onMouseEnter={() => setActiveMegaMenu('/shop')}
@@ -408,24 +392,8 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Mobile: menu (row 2 only — brand is row 1) */}
-            <div className="relative z-[55] flex w-10 shrink-0 justify-start xl:hidden">
-              <button
-                type="button"
-                className="p-2 text-white"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                data-cursor-hover
-                aria-label="Toggle menu"
-              >
-                <FiMenu className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Spacer on mobile so row 2 layout matches (brand already centered above) */}
-            <div className="min-w-0 flex-1 xl:hidden" aria-hidden />
-
             {/* Right: locale, account and cart */}
-            <div className={`pointer-events-auto relative z-[61] hidden min-w-0 flex-1 flex-shrink-0 items-center justify-end gap-2 xl:flex xl:gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`pointer-events-auto relative z-[61] flex min-w-0 items-center justify-end gap-2 2xl:gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <div className={localeSwitcherClass}>
                 <CurrencySwitcher variant="light" showSymbol={false} />
                 <span className="h-4 w-px bg-white/15" aria-hidden />
@@ -459,34 +427,6 @@ export default function Header() {
                 )}
               </button>
             </div>
-
-            {/* Compact utility row when hamburger layout is active */}
-            <div className="relative z-[55] flex w-10 shrink-0 items-center justify-end gap-1.5 sm:w-auto sm:gap-2 xl:hidden">
-              <button
-                type="button"
-                onClick={() => setIsSearchOpen(true)}
-                className="p-1.5 text-brand-dustyBlue transition-colors duration-300 hover:text-brand-dustyBlue"
-                data-cursor-hover
-                aria-label={t.nav.search}
-              >
-                <FiSearch className="w-[17px] h-[17px]" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setIsMiniCartOpen(true)}
-                className="relative hidden text-white/75 hover:text-white transition-colors duration-300 p-1.5 sm:inline-flex"
-                data-cursor-hover
-                aria-label={t.nav.cart}
-              >
-                <FiShoppingBag className="w-[17px] h-[17px]" />
-                {cartItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-dustyBlue text-white text-[9px] rounded-full flex items-center justify-center font-montserrat font-bold">
-                    {cartItems.length}
-                  </span>
-                )}
-              </button>
-            </div>
           </div>
 
           {/* Desktop Mega Menu */}
@@ -498,11 +438,17 @@ export default function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="pointer-events-auto absolute left-0 right-0 top-full z-[63] hidden -mt-1.5 pt-1.5 xl:block"
+                className="pointer-events-auto absolute left-0 right-0 top-full z-[63] hidden -mt-1.5 pt-1.5 2xl:block"
               >
                 <div className="border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)]">
                   <div className="grid grid-cols-12 gap-6 px-6 py-8 lg:gap-10 lg:px-12">
-                    <div className="col-span-5 grid grid-cols-1 gap-8 xl:col-span-6">
+                    <div
+                      className={
+                        megaMenus[activeMegaMenu].features.length > 0
+                          ? 'col-span-5 grid grid-cols-1 gap-8 xl:col-span-6'
+                          : 'col-span-12'
+                      }
+                    >
                       {megaMenus[activeMegaMenu].columns.map((col) => (
                         <div key={col.title} className="min-w-0">
                           <p className="mb-3 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/70">
@@ -525,6 +471,7 @@ export default function Header() {
                       ))}
                     </div>
 
+                    {megaMenus[activeMegaMenu].features.length > 0 && (
                     <div className="col-span-7 grid grid-cols-2 gap-4 xl:col-span-6 xl:gap-5">
                       {megaMenus[activeMegaMenu].features.map((feature) => (
                         <LocaleLink
@@ -555,6 +502,7 @@ export default function Header() {
                         </LocaleLink>
                       ))}
                     </div>
+                    )}
                   </div>
                 </div>
               </motion.div>

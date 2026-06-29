@@ -138,7 +138,7 @@ export function buildNothingHillKaftanContentFr(color?: string): ProductPdpConte
       'Silhouette aerienne avec un drape feminin doux',
       `Couleur : ${label}`,
       'Fabrique a Abu Dhabi, EAU',
-      `Code produit : ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `Référence : ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),

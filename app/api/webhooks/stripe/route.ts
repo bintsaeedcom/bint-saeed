@@ -9,7 +9,7 @@ export const runtime = 'nodejs'
 
 function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-    apiVersion: '2025-02-24.acacia',
+    apiVersion: '2026-06-24.dahlia',
   })
 }
 
@@ -71,7 +71,7 @@ function buildOrderFromSession(session: Stripe.Checkout.Session): StoredOrder {
     if (d && typeof d.text?.value === 'string') deliveryNotes = d.text.value
   }
 
-  const ship = session.shipping_details
+  const ship = session.collected_information?.shipping_details
   const shipAddr = ship?.address
     ? {
         name: ship.name,
@@ -122,7 +122,7 @@ async function notifyOrderChannel(session: Stripe.Checkout.Session) {
   const deviceType = session.metadata?.clientDeviceType || 'Unknown'
   const ip = session.metadata?.clientIp || 'Unknown'
   const timezone = session.metadata?.clientTimezone || 'Unknown'
-  const shipping = session.shipping_details?.address
+  const shipping = session.collected_information?.shipping_details?.address
   const location = [shipping?.city, shipping?.state, shipping?.country].filter(Boolean).join(', ') || 'Unknown'
   const customerName = session.customer_details?.name || 'Unknown'
   const customerEmail = session.customer_details?.email || session.customer_email || session.metadata?.customerEmail || 'Unknown'

@@ -1,39 +1,14 @@
 import type { AppLocale } from '@/lib/i18n/routing'
+import {
+  A_LINE_ABAYA_SILHOUETTE_LINE,
+  PDP_COLOUR_TITLE,
+  PDP_SILHOUETTE_TITLE,
+} from '@/lib/products/pdpFeatureSectionTitles'
 import { getHouseCodesDetailGroup } from '@/lib/products/pdpHouseCodesGroupsI18n'
 import type { PdpDetailGroup } from '@/lib/products/pdpIntroRich'
 
-const SILHOUETTE_TITLE: Record<AppLocale, string> = {
-  en: 'Silhouette',
-  ar: 'القصة',
-  fr: 'Silhouette',
-  it: 'Silhouette',
-  es: 'Silueta',
-  ru: 'Силуэт',
-  zh: '廓形',
-  de: 'Silhouette',
-  nl: 'Silhouet',
-  pt: 'Silhueta',
-  id: 'Siluet',
-  ms: 'Siluet',
-}
-
-const COLOUR_TITLE: Record<AppLocale, string> = {
-  en: 'Colour',
-  ar: 'اللون',
-  fr: 'Couleur',
-  it: 'Colore',
-  es: 'Color',
-  ru: 'Цвет',
-  zh: '颜色',
-  de: 'Farbe',
-  nl: 'Kleur',
-  pt: 'Cor',
-  id: 'Warna',
-  ms: 'Warna',
-}
-
 export const PARK_LANE_SILHOUETTE_ITEMS = [
-  'Graceful A-line silhouette',
+  A_LINE_ABAYA_SILHOUETTE_LINE,
   'Tailored construction for an elegant drape',
   'Integrated shoulder scarf designed to flow naturally with movement',
   'Hidden side seam pockets',
@@ -56,7 +31,7 @@ export const PARK_LANE_CARE = [
 ] as const
 
 export const PARK_LANE_FIT_AND_SIZE = [
-  'Relaxed A-line silhouette',
+  A_LINE_ABAYA_SILHOUETTE_LINE,
   'Designed to be worn open or closed',
   'Model height: 155 cm / 5\'1"',
   'Model wears size XS',
@@ -68,12 +43,12 @@ export const PARK_LANE_ORIGIN = ['Made in Abu Dhabi, United Arab Emirates'] as c
 export function buildParkLaneAbayaDetailGroups(locale: AppLocale = 'en'): PdpDetailGroup[] {
   return [
     {
-      title: SILHOUETTE_TITLE[locale] ?? SILHOUETTE_TITLE.en,
+      title: PDP_SILHOUETTE_TITLE[locale] ?? PDP_SILHOUETTE_TITLE.en,
       items: [...PARK_LANE_SILHOUETTE_ITEMS],
     },
     getHouseCodesDetailGroup('knotted-line-emblem', locale),
     {
-      title: COLOUR_TITLE[locale] ?? COLOUR_TITLE.en,
+      title: PDP_COLOUR_TITLE[locale] ?? PDP_COLOUR_TITLE.en,
       items: [...PARK_LANE_COLOUR_ITEMS],
     },
   ]

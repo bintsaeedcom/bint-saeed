@@ -7,6 +7,7 @@ import {
   ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ,
 } from '@/data/accessories'
 import type { AppLocale } from '@/lib/i18n/routing'
+import { getAccessorySku } from '@/lib/accessories/accessorySku'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 
 type StrandPairing = {
@@ -64,9 +65,9 @@ function kw(...stone: string[]): string[] {
 export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   'signature-strand-onyx': {
     pairing: {
-      necklaceId: 'signature-onyx-necklace',
+      necklaceId: 'al-ain-rosette-necklace-onyx',
       necklaceImage: '', // same asset as strand — gallery shows earrings only
-      necklaceLabel: 'Al Ain Necklace — Onyx',
+      necklaceLabel: 'Al Ain Rosette Necklace — Onyx',
       earringsId: 'earrings-geometric',
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
       earringsLabel: 'Geometric Stud Earrings',
@@ -90,9 +91,9 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   },
   'signature-strand-tiger-eye': {
     pairing: {
-      necklaceId: 'signature-tiger-eye-necklace',
+      necklaceId: 'al-ain-rosette-necklace-tiger-eye',
       necklaceImage: '',
-      necklaceLabel: 'Al Ain Necklace — Tiger Eye',
+      necklaceLabel: 'Al Ain Rosette Necklace — Tiger Eye',
       earringsId: 'earrings-hoops',
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
       earringsLabel: 'Textured Gold Hoops',
@@ -116,21 +117,21 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   },
   'signature-strand-sunstone': {
     pairing: {
-      necklaceId: 'necklace-layered-gold',
+      necklaceId: 'al-ain-rosette-necklace-sunstone',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Necklace — Layered Gold',
+      necklaceLabel: 'Al Ain Rosette Necklace — Sunstone',
       earringsId: 'earrings-pearl-drop',
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
       earringsLabel: 'Pearl Drop Earrings',
     },
     carouselAlt:
-      'Sunstone natural stone bead abaya strand — warm peach-orange sunstone beads pair with layered gold Al Ain necklace and pearl drop earrings',
+      'Sunstone natural stone bead abaya strand — warm peach-orange sunstone beads pair with Al Ain Rosette Necklace — Sunstone and pearl drop earrings',
     strandAlt:
-      'Sunstone natural stone bead abaya strand, warm peach-orange sunstone beads with 18K gold clip — accent for Marylebone Abaya, pairs with layered gold necklace and pearl earrings',
+      'Sunstone natural stone bead abaya strand, warm peach-orange sunstone beads with 18K gold clip — accent for Marylebone Abaya, pairs with Al Ain Rosette Necklace — Sunstone and pearl earrings',
     necklaceAlt:
-      'Al Ain layered gold necklace with delicate pendants — pairs with sunstone abaya strand and pearl drop earrings for evening abaya styling',
+      'Al Ain Rosette Necklace — Sunstone with luminous warm natural stone beads — pairs with sunstone abaya strand and pearl drop earrings for evening abaya styling',
     earringsAlt:
-      'Pearl drop earrings with gold-plated hooks — pairs with sunstone abaya strand and layered gold Al Ain necklace',
+      'Pearl drop earrings with gold-plated hooks — pairs with sunstone abaya strand and Al Ain Rosette Necklace — Sunstone',
     keywords: kw(
       'sunstone abaya strand',
       'sunstone bead strand',
@@ -142,21 +143,21 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   },
   'signature-strand-fuchsia-jade': {
     pairing: {
-      necklaceId: 'necklace-layered-gold',
+      necklaceId: 'al-ain-rosette-necklace-sunstone',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Necklace — Layered Gold',
+      necklaceLabel: 'Al Ain Rosette Necklace — Sunstone',
       earringsId: 'earrings-pearl-drop',
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
       earringsLabel: 'Pearl Drop Earrings',
     },
     carouselAlt:
-      'Fuchsia jade natural stone bead abaya strand — saturated rose jade beads pair with layered gold necklace and pearl drop earrings',
+      'Fuchsia jade natural stone bead abaya strand — saturated rose jade beads pair with Al Ain Rosette Necklace — Sunstone and pearl drop earrings',
     strandAlt:
-      'Fuchsia jade natural stone bead abaya strand, deep rose jade beads with 18K gold clip — bold jewel tone for neutral abayas, pairs with layered gold necklace',
+      'Fuchsia jade natural stone bead abaya strand, deep rose jade beads with 18K gold clip — bold jewel tone for neutral abayas, pairs with Al Ain Rosette Necklace — Sunstone',
     necklaceAlt:
-      'Al Ain layered gold necklace — pairs with fuchsia jade abaya strand and pearl drop earrings for a layered luxury look',
+      'Al Ain Rosette Necklace — Sunstone — pairs with fuchsia jade abaya strand and pearl drop earrings for a layered luxury look',
     earringsAlt:
-      'Pearl drop earrings — pairs with fuchsia jade abaya strand and layered gold Al Ain necklace',
+      'Pearl drop earrings — pairs with fuchsia jade abaya strand and Al Ain Rosette Necklace — Sunstone',
     keywords: kw(
       'fuchsia jade abaya strand',
       'pink jade bead strand',
@@ -168,21 +169,21 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   },
   'signature-strand-blue-aventurine': {
     pairing: {
-      necklaceId: 'necklace-statement-pendant',
+      necklaceId: 'al-ain-rosette-necklace-lapis-lazuli',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Necklace — Heritage Pendant',
+      necklaceLabel: 'Al Ain Rosette Necklace — Lapis Lazuli',
       earringsId: 'earrings-geometric',
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
       earringsLabel: 'Geometric Stud Earrings',
     },
     carouselAlt:
-      'Blue aventurine natural stone bead abaya strand — cool dusty blue beads pair with heritage pendant necklace and geometric stud earrings',
+      'Blue aventurine natural stone bead abaya strand — cool dusty blue beads pair with Al Ain Rosette Necklace — Lapis Lazuli and geometric stud earrings',
     strandAlt:
-      'Blue aventurine natural stone bead abaya strand, cool blue aventurine with subtle shimmer and 18K gold clip — pairs with heritage pendant Al Ain necklace',
+      'Blue aventurine natural stone bead abaya strand, cool blue aventurine with subtle shimmer and 18K gold clip — pairs with Al Ain Rosette Necklace — Lapis Lazuli',
     necklaceAlt:
-      'Al Ain heritage pendant necklace with Emirati patterns — pairs with blue aventurine abaya strand and geometric stud earrings',
+      'Al Ain Rosette Necklace — Lapis Lazuli — pairs with blue aventurine abaya strand and geometric stud earrings',
     earringsAlt:
-      'Geometric stud earrings inspired by Islamic art — pairs with blue aventurine abaya strand and heritage pendant necklace',
+      'Geometric stud earrings inspired by Islamic art — pairs with blue aventurine abaya strand and Al Ain Rosette Necklace — Lapis Lazuli',
     keywords: kw(
       'blue aventurine abaya strand',
       'aventurine bead strand',
@@ -194,9 +195,9 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   },
   'signature-strand-rose-quartz': {
     pairing: {
-      necklaceId: 'signature-rose-quartz-necklace',
+      necklaceId: 'al-ain-rosette-necklace-rose-quartz',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ,
-      necklaceLabel: 'Al Ain Necklace — Rose Quartz',
+      necklaceLabel: 'Al Ain Rosette Necklace — Rose Quartz',
       earringsId: 'earrings-pearl-drop',
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
       earringsLabel: 'Pearl Drop Earrings',
@@ -220,9 +221,9 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   },
   'signature-strand-malachite': {
     pairing: {
-      necklaceId: 'signature-malachite-necklace',
+      necklaceId: 'al-ain-rosette-necklace-malachite',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE_MALACHITE,
-      necklaceLabel: 'Al Ain Necklace — Malachite',
+      necklaceLabel: 'Al Ain Rosette Necklace — Malachite',
       earringsId: 'earrings-geometric',
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
       earringsLabel: 'Geometric Stud Earrings',
@@ -246,21 +247,21 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   },
   'signature-strand-lapis-lazuli': {
     pairing: {
-      necklaceId: 'necklace-statement-pendant',
+      necklaceId: 'al-ain-rosette-necklace-lapis-lazuli',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Necklace — Heritage Pendant',
+      necklaceLabel: 'Al Ain Rosette Necklace — Lapis Lazuli',
       earringsId: 'earrings-hoops',
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
       earringsLabel: 'Textured Gold Hoops',
     },
     carouselAlt:
-      'Lapis lazuli natural stone bead abaya strand — deep blue with gold pyrite flecks, pairs with heritage pendant necklace and gold hoop earrings',
+      'Lapis lazuli natural stone bead abaya strand — deep blue with gold pyrite flecks, pairs with Al Ain Rosette Necklace — Lapis Lazuli and gold hoop earrings',
     strandAlt:
       'Lapis lazuli natural stone bead abaya strand, rich blue lapis with carnelian and 18K gold clip — evening jewel tone for abaya draping, pairs with heritage Al Ain necklace',
     necklaceAlt:
-      'Al Ain heritage pendant necklace — pairs with lapis lazuli abaya strand and textured gold hoop earrings',
+      'Al Ain Rosette Necklace — Lapis Lazuli — pairs with lapis lazuli abaya strand and textured gold hoop earrings',
     earringsAlt:
-      'Textured gold hoop earrings — pairs with lapis lazuli abaya strand and heritage pendant necklace for evening wear',
+      'Textured gold hoop earrings — pairs with lapis lazuli abaya strand and Al Ain Rosette Necklace — Lapis Lazuli for evening wear',
     keywords: kw(
       'lapis lazuli abaya strand',
       'lapis bead strand',
@@ -272,21 +273,21 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   },
   'signature-strand-amethyst-hearts': {
     pairing: {
-      necklaceId: 'necklace-statement-pendant',
+      necklaceId: 'al-ain-rosette-necklace-lapis-lazuli',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Necklace — Heritage Pendant',
+      necklaceLabel: 'Al Ain Rosette Necklace — Lapis Lazuli',
       earringsId: 'earrings-geometric',
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
       earringsLabel: 'Geometric Stud Earrings',
     },
     carouselAlt:
-      'Amethyst hearts natural stone bead abaya strand — limited edition violet heart-cut beads pair with heritage pendant necklace and geometric stud earrings',
+      'Amethyst hearts natural stone bead abaya strand — limited edition violet heart-cut beads pair with Al Ain Rosette Necklace — Lapis Lazuli and geometric stud earrings',
     strandAlt:
       'Amethyst hearts natural stone bead abaya strand, heart-cut violet amethyst beads with 18K gold clip — limited edition Marylebone accent, pairs with heritage Al Ain necklace and stud earrings',
     necklaceAlt:
-      'Al Ain heritage pendant necklace with traditional Emirati patterns — pairs with amethyst hearts abaya strand and geometric stud earrings',
+      'Al Ain Rosette Necklace — Lapis Lazuli — pairs with amethyst hearts abaya strand and geometric stud earrings',
     earringsAlt:
-      'Geometric stud earrings — pairs with amethyst hearts abaya strand and heritage pendant necklace for a complete amethyst jewellery look',
+      'Geometric stud earrings — pairs with amethyst hearts abaya strand and Al Ain Rosette Necklace — Lapis Lazuli for a complete amethyst jewellery look',
     keywords: kw(
       'amethyst abaya strand',
       'amethyst heart beads',
@@ -299,21 +300,21 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   },
   'signature-strand-jade-hearts': {
     pairing: {
-      necklaceId: 'necklace-layered-gold',
+      necklaceId: 'al-ain-rosette-necklace-sunstone',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Necklace — Layered Gold',
+      necklaceLabel: 'Al Ain Rosette Necklace — Sunstone',
       earringsId: 'earrings-pearl-drop',
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
       earringsLabel: 'Pearl Drop Earrings',
     },
     carouselAlt:
-      'Jade hearts natural stone bead abaya strand — limited edition green heart-shaped jade beads pair with layered gold necklace and pearl drop earrings',
+      'Jade hearts natural stone bead abaya strand — limited edition green heart-shaped jade beads pair with Al Ain Rosette Necklace — Sunstone and pearl drop earrings',
     strandAlt:
-      'Jade hearts natural stone bead abaya strand, heart-shaped green jade beads with 18K gold clip — limited edition serene accent for Marylebone Abaya, pairs with layered gold Al Ain necklace',
+      'Jade hearts natural stone bead abaya strand, heart-shaped green jade beads with 18K gold clip — limited edition serene accent for Marylebone Abaya, pairs with Al Ain Rosette Necklace — Sunstone',
     necklaceAlt:
-      'Al Ain layered gold necklace — pairs with jade hearts abaya strand and pearl drop earrings for layered jade and gold styling',
+      'Al Ain Rosette Necklace — Sunstone — pairs with jade hearts abaya strand and pearl drop earrings for layered jade and gold styling',
     earringsAlt:
-      'Pearl drop earrings — pairs with jade hearts abaya strand and layered gold necklace for a refined jade jewellery set',
+      'Pearl drop earrings — pairs with jade hearts abaya strand and Al Ain Rosette Necklace — Sunstone for a refined jade jewellery set',
     keywords: kw(
       'jade abaya strand',
       'jade heart beads',
@@ -405,6 +406,7 @@ export function buildAccessoryProductJsonLd({
 }: JsonLdInput): Record<string, unknown> {
   const pack = getStrandPdpPack(accessory.id)
   const gallery = getAccessoryPdpImages(accessory)
+  const sku = getAccessorySku(accessory) ?? accessory.id
 
   const base: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -412,7 +414,7 @@ export function buildAccessoryProductJsonLd({
     name: displayName,
     description,
     url: pageUrl,
-    sku: accessory.id,
+    sku,
     category: 'Signature Strands',
     brand: {
       '@type': 'Brand',

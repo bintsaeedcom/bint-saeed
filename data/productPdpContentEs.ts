@@ -138,7 +138,7 @@ export function buildNothingHillKaftanContentEs(color?: string): ProductPdpConte
       'Silueta aireada con drapeado femenino suave',
       `Color: ${label}`,
       'Hecho en Abu Dhabi, UAE',
-      `Codigo de producto: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `Referencia: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),

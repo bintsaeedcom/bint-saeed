@@ -105,6 +105,7 @@ export const translationsId = {
     description: 'Deskripsi',
     fabricMaterials: 'Kain & Material',
     sizeMeasurements: 'Ukuran & Pas',
+    origin: 'Asal',
     shippingReturns: 'Pengiriman & Pengembalian',
     freeShipping: 'Gratis ongkir UEA untuk pesanan di atas 1000 AED',
     expressDelivery: 'Pengiriman ekspres: 1–2 hari kerja (UEA)',

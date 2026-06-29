@@ -19,6 +19,8 @@ import { commerceUi, type CommerceUi } from '@/lib/i18n/commerceUi'
 import { stripLocaleFromPathname, localizedPath, type AppLocale } from '@/lib/i18n/routing'
 import {
   applyAccessoryFilters,
+  buildAccessoryColorOptions,
+  type ColorFilterId,
   type PriceRangeId,
   type StoneFilterId,
   PRICE_RANGE_OPTIONS,
@@ -41,6 +43,12 @@ function parseStonesParam(v: string | null): StoneFilterId[] {
   return parts.filter((p): p is StoneFilterId => valid.has(p as StoneFilterId))
 }
 
+function parseColorsParam(v: string | null, validIds: Set<string>): ColorFilterId[] {
+  if (!v?.trim()) return []
+  const parts = v.split(',').map((s) => s.trim()).filter(Boolean)
+  return parts.filter((p): p is ColorFilterId => validIds.has(p))
+}
+
 export default function AccessoriesPage() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -48,11 +56,15 @@ export default function AccessoriesPage() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [priceRange, setPriceRange] = useState<PriceRangeId>('all')
   const [selectedStones, setSelectedStones] = useState<StoneFilterId[]>([])
+  const [selectedColors, setSelectedColors] = useState<ColorFilterId[]>([])
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const { formatPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+
+  const colorOptions = useMemo(() => buildAccessoryColorOptions(accessories), [])
+  const colorOptionIds = useMemo(() => new Set(colorOptions.map((c) => c.id)), [colorOptions])
 
   useEffect(() => {
     if (!searchParams) return
@@ -62,24 +74,34 @@ export default function AccessoriesPage() {
       if (accessoryCategories.some((c) => c.id === id && id !== 'all')) {
         setActiveCategory(id)
       }
+    } else {
+      setActiveCategory('all')
     }
     setPriceRange(parsePriceParam(searchParams.get('price')))
     setSelectedStones(parseStonesParam(searchParams.get('stones')))
-  }, [searchParams])
+    setSelectedColors(parseColorsParam(searchParams.get('colors'), colorOptionIds))
+  }, [searchParams, colorOptionIds])
 
   const replaceAccessoryQuery = useCallback(
-    (patch: Partial<{ category: string; price: PriceRangeId; stones: StoneFilterId[] }>) => {
+    (patch: Partial<{
+      category: string
+      price: PriceRangeId
+      stones: StoneFilterId[]
+      colors: ColorFilterId[]
+    }>) => {
       const cat = patch.category ?? activeCategory
       const pr = patch.price ?? priceRange
       const st = patch.stones ?? selectedStones
+      const cl = patch.colors ?? selectedColors
       const p = new URLSearchParams()
       if (cat !== 'all') p.set('type', cat)
       if (pr !== 'all') p.set('price', pr)
       if (st.length > 0) p.set('stones', st.join(','))
+      if (cl.length > 0) p.set('colors', cl.join(','))
       const q = p.toString()
       router.replace(q ? `${pathname}?${q}` : pathname, { scroll: false })
     },
-    [activeCategory, priceRange, selectedStones, pathname, router]
+    [activeCategory, priceRange, selectedStones, selectedColors, pathname, router]
   )
 
   const setCategoryAndUrl = useCallback(
@@ -117,9 +139,27 @@ export default function AccessoriesPage() {
     [selectedStones, replaceAccessoryQuery]
   )
 
+  const toggleColorAndUrl = useCallback(
+    (colorId: ColorFilterId) => {
+      const next = selectedColors.includes(colorId)
+        ? selectedColors.filter((c) => c !== colorId)
+        : [...selectedColors, colorId]
+      setSelectedColors(next)
+      trackEvent('filter_usage', {
+        filter_type: 'accessories_color',
+        filter_value: colorId,
+        filter_state: next.includes(colorId) ? 'enabled' : 'disabled',
+        page: 'accessories',
+      })
+      replaceAccessoryQuery({ colors: next })
+    },
+    [selectedColors, replaceAccessoryQuery]
+  )
+
   const clearPriceAndStoneFilters = useCallback(() => {
     setPriceRange('all')
     setSelectedStones([])
+    setSelectedColors([])
     const p = new URLSearchParams()
     if (activeCategory !== 'all') p.set('type', activeCategory)
     const q = p.toString()
@@ -130,6 +170,7 @@ export default function AccessoriesPage() {
     setActiveCategory('all')
     setPriceRange('all')
     setSelectedStones([])
+    setSelectedColors([])
     router.replace(pathname, { scroll: false })
   }, [pathname, router])
 
@@ -139,11 +180,13 @@ export default function AccessoriesPage() {
         categoryId: activeCategory,
         priceRange,
         stones: selectedStones,
+        colors: selectedColors,
       }),
-    [activeCategory, priceRange, selectedStones]
+    [activeCategory, priceRange, selectedStones, selectedColors]
   )
 
-  const hasExtraFilters = priceRange !== 'all' || selectedStones.length > 0
+  const hasExtraFilters =
+    priceRange !== 'all' || selectedStones.length > 0 || selectedColors.length > 0
 
   const activeTab = accessoryCategories.find(c => c.id === activeCategory)
   const isAbayaStrandsLayout = activeCategory === 'signature-strands'
@@ -194,7 +237,7 @@ export default function AccessoriesPage() {
                 {ui.accessories.collectionTitle}
               </h1>
               <p className="mt-6 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/85 md:text-base">
-                {ui.accessories.collectionTitle}
+                {ui.accessories.collectionIntro}
               </p>
             </motion.div>
           </div>
@@ -241,7 +284,7 @@ export default function AccessoriesPage() {
             </span>
           </div>
 
-          {/* Price + stone filters — desktop */}
+          {/* Price, colour + stone filters — desktop */}
           <div
             className={`hidden md:flex flex-wrap items-end gap-6 gap-y-4 border-t border-brand-stone/25 py-4 ${isRTL ? 'flex-row-reverse' : ''}`}
           >
@@ -261,6 +304,36 @@ export default function AccessoriesPage() {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="min-w-0 flex-1">
+              <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
+                {ui.shopExtras.availableColours}
+              </span>
+              <div className={`mt-2 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+                {colorOptions.map((color) => {
+                  const on = selectedColors.includes(color.id)
+                  return (
+                    <button
+                      key={color.id}
+                      type="button"
+                      onClick={() => toggleColorAndUrl(color.id)}
+                      className={`flex items-center gap-2 rounded-sm border px-2.5 py-1.5 font-montserrat text-[11px] uppercase tracking-[0.08em] transition-colors ${
+                        on
+                          ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
+                          : 'border-brand-stone/40 text-brand-clayRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
+                      } ${isRTL ? 'flex-row-reverse' : ''}`}
+                      data-cursor-hover
+                    >
+                      <span
+                        className="h-3 w-3 shrink-0 rounded-full border border-brand-stone/50"
+                        style={{ backgroundColor: color.hex }}
+                        aria-hidden
+                      />
+                      {isRTL ? color.labelAr : color.labelEn}
+                    </button>
+                  )
+                })}
+              </div>
             </div>
             <div className="min-w-0 flex-1">
               <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
@@ -297,6 +370,16 @@ export default function AccessoriesPage() {
                 {ui.accessories.clearFilters}
               </button>
             )}
+            {(activeCategory !== 'all' || hasExtraFilters) && (
+              <button
+                type="button"
+                onClick={resetAllFiltersAndUrl}
+                className="shrink-0 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-clayRed/70 underline-offset-4 hover:underline"
+                data-cursor-hover
+              >
+                {ui.shop.categoryAll}
+              </button>
+            )}
           </div>
         </div>
       </section>
@@ -327,7 +410,21 @@ export default function AccessoriesPage() {
       {/* Products Grid — Abaya Strands: 1 hero image + 2×5 grid */}
       <section className="py-12 md:py-20">
         <div className="container mx-auto px-6 lg:px-12">
-          {isAbayaStrandsLayout ? (
+          {filteredAccessories.length === 0 ? (
+            <div className={`py-16 text-center ${isRTL ? 'text-right' : ''}`}>
+              <p className="font-montserrat text-sm tracking-wide text-brand-clayRed/70">
+                {ui.shop.noPiecesInChapter}
+              </p>
+              <button
+                type="button"
+                onClick={resetAllFiltersAndUrl}
+                className="mt-6 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue underline-offset-4 hover:underline"
+                data-cursor-hover
+              >
+                {ui.accessories.clearFilters}
+              </button>
+            </div>
+          ) : isAbayaStrandsLayout ? (
             <div
               className={`flex flex-col gap-10 lg:gap-14 lg:items-start ${isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
             >
@@ -437,6 +534,33 @@ export default function AccessoriesPage() {
                         </option>
                       ))}
                     </select>
+                    <p className="mt-4 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
+                      {ui.shopExtras.availableColours}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {colorOptions.map((color) => {
+                        const on = selectedColors.includes(color.id)
+                        return (
+                          <button
+                            key={color.id}
+                            type="button"
+                            onClick={() => toggleColorAndUrl(color.id)}
+                            className={`flex items-center gap-2 rounded-sm border px-2 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.06em] ${
+                              on
+                                ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
+                                : 'border-brand-stone/40 text-brand-clayRed'
+                            } ${isRTL ? 'flex-row-reverse' : ''}`}
+                          >
+                            <span
+                              className="h-3 w-3 shrink-0 rounded-full border border-brand-stone/50"
+                              style={{ backgroundColor: color.hex }}
+                              aria-hidden
+                            />
+                            {isRTL ? color.labelAr : color.labelEn}
+                          </button>
+                        )
+                      })}
+                    </div>
                     <p className="mt-4 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
                       {ui.accessories.stoneType}
                     </p>

@@ -30,12 +30,15 @@ import {
   getAccessoryImageAlt,
   getAccessoryPdpImages,
 } from '@/lib/accessories/accessoryJsonLd'
+import { getAccessorySku } from '@/lib/accessories/accessorySku'
+import { getNecklaceEarringPdpContent, faqAnswerParagraphs } from '@/lib/accessories/necklaceEarringPdpContent'
 import { accessoryCanonicalUrl } from '@/lib/accessories/accessoryPageUrl'
 import {
   PDP_BULLET_ITEM,
   PDP_BULLET_LIST,
   PDP_COPY_INTRO,
   PDP_COPY_RELAXED,
+  PDP_FAQ_QUESTION,
   PDP_MTO_NOTE,
 } from '@/lib/pdp/pdpTypography'
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
@@ -170,6 +173,7 @@ export default function AccessoryDetailPage() {
   }
 
   const strandPdpContent = getStrandPdpContent(accessory.id, language)
+  const necklaceEarringPdpContent = getNecklaceEarringPdpContent(accessory.id, language)
   const strandSectionTitles = getStrandPdpSectionTitles(language)
 
   const pdpAccordionSections = useMemo((): PdpAccordionSectionConfig[] => {
@@ -189,6 +193,95 @@ export default function AccessoryDetailPage() {
 
     const description = isRTL ? accessory.descriptionAr : accessory.description
     const materials = isRTL ? accessory.materialsAr : accessory.materials
+    const sku = getAccessorySku(accessory)
+
+    if (necklaceEarringPdpContent) {
+      return [
+        {
+          id: 'description',
+          title: productUi.productDetails,
+          titleTag: 'h2',
+          children: (
+            <div className={`space-y-4 ${isRTL ? 'text-right' : ''}`}>
+              {necklaceEarringPdpContent.introParagraphs.map((paragraph, idx) => (
+                <p key={`necklace-intro-${idx}`} className={PDP_COPY_RELAXED}>
+                  {paragraph}
+                </p>
+              ))}
+              <div className="space-y-2 pt-1">
+                <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/70">
+                  {necklaceEarringPdpContent.featuresTitle}
+                </p>
+                <ul className={PDP_BULLET_LIST}>
+                  {necklaceEarringPdpContent.features.map((item, idx) => (
+                    <li key={`necklace-feature-${idx}`} className={PDP_BULLET_ITEM}>
+                      {item}
+                    </li>
+                  ))}
+                  {sku && (
+                    <li className={PDP_BULLET_ITEM}>
+                      {isRTL ? `المرجع: ${sku}` : `Reference: ${sku}`}
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </div>
+          ),
+        },
+        {
+          id: 'materials',
+          title: ui.accessories.materials,
+          children: (
+            <ul className={PDP_BULLET_LIST}>
+              <li className={PDP_BULLET_ITEM}>{materials}</li>
+            </ul>
+          ),
+        },
+        {
+          id: 'care',
+          title: productUi.care,
+          children: (
+            <div className={`space-y-3 ${isRTL ? 'text-right' : ''}`}>
+              <p className={PDP_COPY_RELAXED}>{necklaceEarringPdpContent.careLead}</p>
+              <ul className={PDP_BULLET_LIST}>
+                {necklaceEarringPdpContent.care.map((item, idx) => (
+                  <li key={`necklace-care-${idx}`} className={PDP_BULLET_ITEM}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ),
+        },
+        ...(necklaceEarringPdpContent.faq.length > 0
+          ? [
+              {
+                id: 'faq',
+                title: productUi.faq,
+                panelClassName: 'space-y-4 pb-5',
+                children: necklaceEarringPdpContent.faq.map((item) => (
+                  <div key={item.question} className={isRTL ? 'text-right' : ''}>
+                    <p className={PDP_FAQ_QUESTION}>{item.question}</p>
+                    <div className="mt-1 space-y-2">
+                      {faqAnswerParagraphs(item.answer).map((paragraph, idx) => (
+                        <p key={`${item.question}-${idx}`} className={PDP_COPY_RELAXED}>
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                )),
+              } satisfies PdpAccordionSectionConfig,
+            ]
+          : []),
+        {
+          id: 'shipping',
+          title: t.product.shippingReturns,
+          bordered: necklaceEarringPdpContent.faq.length === 0,
+          children: <PdpShippingReturnsBullets isRTL={isRTL} />,
+        },
+      ]
+    }
 
     return [
       {
@@ -243,6 +336,7 @@ export default function AccessoryDetailPage() {
     accessory.id,
     accessory.materials,
     accessory.materialsAr,
+    necklaceEarringPdpContent,
     isRTL,
     productUi.care,
     productUi.faq,

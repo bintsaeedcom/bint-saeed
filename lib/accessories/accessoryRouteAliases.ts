@@ -20,6 +20,12 @@ export const LEGACY_ACCESSORY_ID_ALIASES: Record<string, string> = {
   'phone-charm-beaded': 'phone-strand-beaded',
   'phone-charm-tassel': 'phone-strand-tassel',
   'phone-charm-bint': 'phone-strand-bint',
+  'signature-malachite-necklace': 'al-ain-rosette-necklace-malachite',
+  'signature-tiger-eye-necklace': 'al-ain-rosette-necklace-tiger-eye',
+  'signature-onyx-necklace': 'al-ain-rosette-necklace-onyx',
+  'signature-rose-quartz-necklace': 'al-ain-rosette-necklace-rose-quartz',
+  'necklace-layered-gold': 'al-ain-rosette-necklace-sunstone',
+  'necklace-statement-pendant': 'al-ain-rosette-necklace-lapis-lazuli',
 }
 
 /** Legacy category query params → canonical type slugs. */

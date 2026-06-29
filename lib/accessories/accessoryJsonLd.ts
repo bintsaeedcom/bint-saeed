@@ -1,10 +1,15 @@
 import type { Accessory } from '@/data/accessories'
 import { accessories } from '@/data/accessories'
+import { getAccessorySku } from '@/lib/accessories/accessorySku'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { buildFaqPageJsonLd } from '@/lib/products/productSchemaMeta'
 import { SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
+import {
+  getNecklaceEarringSchemaAudience,
+} from '@/lib/accessories/necklaceEarringSchemaI18n'
+import { getGlobalPdpSchemaDiscoveryKeywords } from '@/lib/products/globalPdpSchemaDiscoveryI18n'
 import { appendGlobalPdpSchemaAudienceExtension } from '@/lib/products/globalPdpSchemaAudienceI18n'
 import {
   getGlobalJewelleryDiscoveryKeywords,
@@ -26,6 +31,14 @@ import {
   getNecklaceEarringPdpAlt,
   getNecklaceEarringPdpPack,
 } from '@/lib/accessories/necklaceEarringPdpSeo'
+import { getNecklaceEarringFaqForSchema } from '@/lib/accessories/necklaceEarringPdpContent'
+import {
+  buildNecklaceEarringAdditionalProperties,
+  buildNecklaceEarringSchemaKeywords,
+  getNecklaceGemstoneColor,
+  matchingStrandIdForNecklace,
+} from '@/lib/accessories/necklaceEarringSchemaMeta'
+import { getNecklaceEarringSharedSchemaKeywords } from '@/lib/accessories/necklaceEarringSchemaKeywordsI18n'
 import {
   buildAccessoryProductJsonLd as buildStrandOnlyJsonLd,
   getAccessoryImageAlt as getStrandImageAlt,
@@ -163,47 +176,7 @@ function additionalPropertiesForAccessory(
 
   const pack = getNecklaceEarringPdpPack(accessory.id)
   if (pack) {
-    const relatedNames = pack.relatedAccessoryIds
-      .map((id) => accessories.find((a) => a.id === id)?.name)
-      .filter(Boolean)
-      .slice(0, 4)
-      .join(', ')
-
-    const props: Record<string, unknown>[] = [
-      {
-        '@type': 'PropertyValue',
-        name: 'Collection',
-        value: 'Al Ain — Bint Saeed natural stone jewellery',
-      },
-      {
-        '@type': 'PropertyValue',
-        name: 'Craft',
-        value: 'Handcrafted in Abu Dhabi, United Arab Emirates',
-      },
-    ]
-
-    if (accessory.category === 'necklaces') {
-      props.push({
-        '@type': 'PropertyValue',
-        name: 'Necklace style',
-        value: displayName,
-      })
-    }
-    if (accessory.category === 'earrings') {
-      props.push({
-        '@type': 'PropertyValue',
-        name: 'Earring style',
-        value: displayName,
-      })
-    }
-    if (relatedNames) {
-      props.push({
-        '@type': 'PropertyValue',
-        name: 'Pairs well with',
-        value: relatedNames,
-      })
-    }
-    return props
+    return buildNecklaceEarringAdditionalProperties(accessory, displayName, locale)
   }
 
   return []
@@ -286,6 +259,7 @@ function buildSignatureStrandJsonLdGraph(input: JsonLdInput): Record<string, unk
   const faqNode = buildFaqPageJsonLd(pageUrl, faqItems, lang)
   const localizedMaterials =
     getStrandPdpContent(accessory.id, locale)?.materials.join('; ') ?? accessory.materials
+  const sku = getAccessorySku(accessory) ?? accessory.id
 
   const productNode: Record<string, unknown> = {
     '@type': 'Product',
@@ -293,8 +267,8 @@ function buildSignatureStrandJsonLdGraph(input: JsonLdInput): Record<string, unk
     name: displayName,
     description,
     url: pageUrl,
-    sku: accessory.id,
-    mpn: accessory.id,
+    sku,
+    mpn: sku,
     category: facts.productCategory,
     material: localizedMaterials,
     inLanguage: lang,
@@ -346,6 +320,143 @@ function buildSignatureStrandJsonLdGraph(input: JsonLdInput): Record<string, unk
   }
 }
 
+function necklaceEarringSemanticLinks(
+  accessory: Accessory,
+  displayName: string,
+  pageUrl: string,
+  locale: AppLocale,
+): Record<string, unknown> {
+  const related = relatedProductsForAccessory(accessory)
+  const strandId = matchingStrandIdForNecklace(accessory.id)
+  const strand = strandId ? accessories.find((a) => a.id === strandId) : undefined
+  const labels = getStrandSchemaSemanticLabels(locale)
+
+  const semanticRelated: Record<string, unknown>[] = [
+    {
+      '@type': 'Product',
+      name: 'Marylebone Abaya',
+      url: `${SITE_URL}/shop/marylebone-abaya`,
+    },
+    {
+      '@type': 'CollectionPage',
+      name: labels.strandsCollectionName,
+      url: `${SITE_URL}/strands`,
+    },
+    {
+      '@type': 'CollectionPage',
+      name: 'Bint Saeed Al Ain Natural Stone Jewellery',
+      url: `${SITE_URL}/accessories`,
+    },
+  ]
+
+  if (strand) {
+    semanticRelated.push({
+      '@type': 'Product',
+      name: strand.name,
+      url: `${SITE_URL}/accessories/${strand.id}`,
+    })
+  }
+
+  semanticRelated.push(...related)
+
+  return {
+    about: {
+      '@type': 'Thing',
+      name: 'Natural stone jewellery',
+      description:
+        'Hand-strung natural gemstone necklaces, designer earrings and Signature Strands handcrafted in Abu Dhabi, United Arab Emirates.',
+      sameAs: `${SITE_URL}/accessories`,
+    },
+    isPartOf: {
+      '@type': 'Collection',
+      name: 'Bint Saeed Al Ain Natural Stone Jewellery',
+      url: `${SITE_URL}/accessories`,
+    },
+    isRelatedTo: semanticRelated,
+    subjectOf: {
+      '@type': 'WebPage',
+      name: displayName,
+      url: pageUrl,
+      inLanguage: schemaInLanguageForLocale(locale),
+    },
+  }
+}
+
+function buildNecklaceEarringJsonLdGraph(input: JsonLdInput): Record<string, unknown> {
+  const { accessory, displayName, description, pageUrl, locale = 'en' } = input
+  const lang = schemaInLanguageForLocale(locale)
+  const gallery = getAccessoryPdpImages(accessory)
+  const categoryLabel = CATEGORY_SCHEMA_LABEL[accessory.category] ?? 'Accessories'
+  const sku = getAccessorySku(accessory) ?? accessory.id
+  const faqItems = getNecklaceEarringFaqForSchema(accessory.id, locale)
+  const faqNode = buildFaqPageJsonLd(pageUrl, faqItems, lang)
+  const localizedMaterials = accessory.materials
+  const keywords = buildNecklaceEarringSchemaKeywords(accessory, displayName, locale)
+  const additionalProperty = buildNecklaceEarringAdditionalProperties(accessory, displayName, locale)
+  const audienceCategory =
+    accessory.category === 'earrings' ? 'earrings' : 'necklaces'
+  const gemstoneColor = getNecklaceGemstoneColor(accessory.id)
+
+  const productNode: Record<string, unknown> = {
+    '@type': 'Product',
+    '@id': `${pageUrl}#product`,
+    name: displayName,
+    description,
+    url: pageUrl,
+    sku,
+    mpn: sku,
+    category: categoryLabel,
+    material: localizedMaterials,
+    inLanguage: lang,
+    keywords,
+    ...(gemstoneColor ? { color: gemstoneColor } : {}),
+    countryOfOrigin: {
+      '@type': 'Country',
+      name: 'United Arab Emirates',
+    },
+    brand: {
+      '@type': 'Brand',
+      name: 'Bint Saeed',
+      url: SITE_URL,
+    },
+    manufacturer: {
+      '@type': 'Organization',
+      name: SCHEMA_MANUFACTURER,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Abu Dhabi',
+        addressCountry: 'AE',
+      },
+    },
+    audience: {
+      '@type': 'PeopleAudience',
+      suggestedGender: 'female',
+      audienceType: appendGlobalPdpSchemaAudienceExtension(
+        getNecklaceEarringSchemaAudience(audienceCategory, locale),
+        locale,
+      ),
+    },
+    additionalProperty,
+    image: gallery.map((src, index) => ({
+      '@type': 'ImageObject',
+      contentUrl: src.startsWith('http') ? src : `${SITE_URL}${src}`,
+      name: getAccessoryImageAlt(accessory, src, index, locale),
+      ...(lang ? { inLanguage: lang } : {}),
+      representativeOfPage: index === 0,
+    })),
+    offers: buildOffer(accessory, pageUrl),
+    ...necklaceEarringSemanticLinks(accessory, displayName, pageUrl, locale),
+  }
+
+  const graph: Record<string, unknown>[] = [productNode]
+  if (faqNode) graph.push(faqNode)
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  }
+}
+
 /** Rich Product JSON-LD for all accessory PDPs — global jewellery discovery + cross-sell graph. */
 export function buildAccessoryProductJsonLd({
   accessory,
@@ -356,6 +467,12 @@ export function buildAccessoryProductJsonLd({
 }: JsonLdInput): Record<string, unknown> {
   if (isStrandAccessory(accessory)) {
     return buildSignatureStrandJsonLdGraph({ accessory, displayName, description, pageUrl, locale })
+  }
+
+  const isNecklaceOrEarring =
+    accessory.category === 'necklaces' || accessory.category === 'earrings'
+  if (isNecklaceOrEarring && getNecklaceEarringPdpPack(accessory.id)) {
+    return buildNecklaceEarringJsonLdGraph({ accessory, displayName, description, pageUrl, locale })
   }
 
   const strandOnly = buildStrandOnlyJsonLd({ accessory, displayName, description, pageUrl })
@@ -385,32 +502,23 @@ export function buildAccessoryProductJsonLd({
   const additionalProperty = additionalPropertiesForAccessory(accessory, displayName, locale)
 
   const audience =
-    accessory.category === 'earrings'
+    accessory.category === 'earrings' || accessory.category === 'necklaces'
       ? {
           '@type': 'PeopleAudience',
           suggestedGender: 'female',
           audienceType: appendGlobalPdpSchemaAudienceExtension(
-            'Women seeking luxury natural stone and designer earrings in the UAE and GCC',
+            getNecklaceEarringSchemaAudience(accessory.category, locale),
             locale,
           ),
         }
-      : accessory.category === 'necklaces'
-        ? {
-            '@type': 'PeopleAudience',
-            suggestedGender: 'female',
-            audienceType: appendGlobalPdpSchemaAudienceExtension(
-              'Women seeking hand-strung natural stone bead necklaces and Al Ain designer jewellery',
-              locale,
-            ),
-          }
-        : {
-            '@type': 'PeopleAudience',
-            suggestedGender: 'female',
-            audienceType: appendGlobalPdpSchemaAudienceExtension(
-              'Women styling Marylebone Abaya with interchangeable natural stone bead strands and matching jewellery',
-              locale,
-            ),
-          }
+      : {
+          '@type': 'PeopleAudience',
+          suggestedGender: 'female',
+          audienceType: appendGlobalPdpSchemaAudienceExtension(
+            'Women styling Marylebone Abaya with interchangeable natural stone bead strands and matching jewellery',
+            locale,
+          ),
+        }
 
   return {
     ...strandOnly,
@@ -462,10 +570,12 @@ export function buildAccessoriesCollectionJsonLd(
       'Luxury natural stone bead necklaces, designer earrings, and Signature Strands — interchangeable abaya jewellery and garment jewellery handcrafted in Abu Dhabi. Malachite, onyx, rose quartz, tiger eye, sunstone, jade, amethyst, lapis lazuli and more. Ships worldwide.',
     url: 'https://www.bintsaeed.com/accessories',
     keywords: mergeAccessorySchemaKeywords(
+      getGlobalPdpSchemaDiscoveryKeywords(locale),
       getGlobalJewelleryDiscoveryKeywords(locale),
       getJewelleryCategoryDiscoveryKeywords('necklaces', locale),
       getJewelleryCategoryDiscoveryKeywords('earrings', locale),
       getJewelleryCategoryDiscoveryKeywords('signature-strands', locale),
+      getNecklaceEarringSharedSchemaKeywords(locale),
       getSignatureStrandSharedKeywords(locale),
     ),
     brand: {

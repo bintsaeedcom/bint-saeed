@@ -138,7 +138,7 @@ export function buildNothingHillKaftanContentMs(color?: string): ProductPdpConte
       'Siluet ringan dengan jatuh kain feminin yang lembut',
       `Warna: ${label}`,
       'Dihasilkan di Abu Dhabi, UAE',
-      `Kod produk: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `Rujukan: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),

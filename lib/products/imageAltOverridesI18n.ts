@@ -6,6 +6,7 @@ import { COVENT_GARDEN_ABAYA_IMAGE_ALT_ENTRIES } from '@/lib/products/coventGard
 import { SOHO_SET_IMAGE_ALT_ENTRIES } from '@/lib/products/sohoSetImageAltI18n'
 import { HYDE_PARK_SET_IMAGE_ALT_ENTRIES } from '@/lib/products/hydeParkSetImageAltI18n'
 import { PARK_LANE_ABAYA_IMAGE_ALT_ENTRIES } from '@/lib/products/parkLaneAbayaImageAltI18n'
+import { MARYLEBONE_ABAYA_IMAGE_ALT_ENTRIES } from '@/lib/products/maryleboneAbayaImageAltI18n'
 
 /** Build a full locale map for one catalogue image alt (en + 10 prefix locales). */
 export function altLoc(
@@ -549,6 +550,7 @@ const ALT_ENTRIES: AltEntry[] = [
   ...SOHO_SET_IMAGE_ALT_ENTRIES,
   ...HYDE_PARK_SET_IMAGE_ALT_ENTRIES,
   ...PARK_LANE_ABAYA_IMAGE_ALT_ENTRIES,
+  ...MARYLEBONE_ABAYA_IMAGE_ALT_ENTRIES,
 ]
 
 export const PRODUCT_IMAGE_ALT_I18N: Record<string, Record<AppLocale, string>> = Object.fromEntries(

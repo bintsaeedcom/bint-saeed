@@ -2,12 +2,12 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductPdpContent } from '@/data/productPdpContent'
 import { SOHO_SET_INTRO_EN } from '@/data/sohoSetPdpIntro'
 import {
-  SOHO_SET_CARE,
-  SOHO_SET_COMPOSITION,
   SOHO_SET_COLOUR,
-  SOHO_SET_FIT_AND_SIZE,
-  SOHO_SET_ORIGIN,
   buildSohoSetDetailGroups,
+  sohoSetCare,
+  sohoSetComposition,
+  sohoSetFitAndSize,
+  sohoSetOrigin,
 } from '@/data/sohoSetPdpDetails'
 import type { PdpIntroParagraph } from '@/lib/products/pdpIntroRich'
 import {
@@ -535,10 +535,10 @@ export function buildSohoSetPdpContent(locale: AppLocale = 'en'): ProductPdpCont
     ...intro,
     productDetails: [...SOHO_SET_COLOUR],
     productDetailGroups: buildSohoSetDetailGroups(locale),
-    compositionDetails: [...SOHO_SET_COMPOSITION],
-    fitAndSizeDetails: [...SOHO_SET_FIT_AND_SIZE],
-    careDetails: [...SOHO_SET_CARE],
-    originDetails: [...SOHO_SET_ORIGIN],
+    compositionDetails: sohoSetComposition(locale),
+    fitAndSizeDetails: sohoSetFitAndSize(locale),
+    careDetails: sohoSetCare(locale),
+    originDetails: sohoSetOrigin(locale),
   }
 }
 

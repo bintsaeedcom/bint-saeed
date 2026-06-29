@@ -138,7 +138,7 @@ export function buildNothingHillKaftanContentRu(color?: string): ProductPdpConte
       'Воздушный силуэт с мягкой женственной драпировкой',
       `Цвет: ${label}`,
       'Сделано в Абу-Даби, ОАЭ',
-      `Код изделия: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `Референс: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),

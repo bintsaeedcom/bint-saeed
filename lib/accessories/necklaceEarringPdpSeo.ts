@@ -33,7 +33,7 @@ function ekw(...extra: string[]): string[] {
 }
 
 export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> = {
-  'signature-malachite-necklace': {
+  'al-ain-rosette-necklace-malachite': {
     carouselAlt:
       'Al Ain Malachite necklace — hand-strung natural malachite beads with signature clasp, pairs with malachite abaya strand and geometric stud earrings',
     pdpAlt:
@@ -52,7 +52,7 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'signature-strand-rose-quartz',
     ],
   },
-  'signature-tiger-eye-necklace': {
+  'al-ain-rosette-necklace-tiger-eye': {
     carouselAlt:
       'Al Ain Tiger Eye necklace — warm chatoyant tiger eye beads with signature closure, pairs with tiger eye abaya strand and gold hoop earrings',
     pdpAlt:
@@ -67,10 +67,10 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     relatedAccessoryIds: [
       'signature-strand-tiger-eye',
       'earrings-hoops',
-      'signature-onyx-necklace',
+      'al-ain-rosette-necklace-onyx',
     ],
   },
-  'signature-onyx-necklace': {
+  'al-ain-rosette-necklace-onyx': {
     carouselAlt:
       'Al Ain Onyx necklace — polished black onyx beads with warm undertones and signature clasp, pairs with onyx abaya strand and stud earrings',
     pdpAlt:
@@ -85,10 +85,10 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     relatedAccessoryIds: [
       'signature-strand-onyx',
       'earrings-geometric',
-      'signature-tiger-eye-necklace',
+      'al-ain-rosette-necklace-tiger-eye',
     ],
   },
-  'signature-rose-quartz-necklace': {
+  'al-ain-rosette-necklace-rose-quartz': {
     carouselAlt:
       'Al Ain Rose Quartz necklace — soft pink hand-knotted rose quartz beads, pairs with rose quartz abaya strand and pearl drop earrings',
     pdpAlt:
@@ -103,20 +103,20 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     relatedAccessoryIds: [
       'signature-strand-rose-quartz',
       'earrings-pearl-drop',
-      'signature-malachite-necklace',
+      'al-ain-rosette-necklace-malachite',
     ],
   },
-  'necklace-layered-gold': {
+  'al-ain-rosette-necklace-sunstone': {
     carouselAlt:
-      'Al Ain layered gold necklace — multi-layer gold chain with delicate pendants, pairs with jade and orange stone abaya strands and pearl earrings',
+      'Al Ain Rosette Sunstone necklace — warm peach-orange sunstone beads with signature clasp, pairs with sunstone and jade abaya strands and pearl drop earrings',
     pdpAlt:
-      'Al Ain layered gold necklace with multi-layer 18K gold-plated chain and delicate pendants — luxury modest fashion necklace for abaya styling, Bint Saeed UAE',
+      'Al Ain Rosette Sunstone necklace with luminous natural sunstone beads and 18K gold-plated signature clasp — handcrafted stone bead necklace by Bint Saeed Abu Dhabi',
     keywords: nkw(
-      'layered gold necklace',
-      'gold chain necklace UAE',
-      'modest fashion gold necklace',
-      'multi-layer necklace abaya',
-      'designer gold necklace Abu Dhabi',
+      'sunstone necklace',
+      'sunstone bead necklace UAE',
+      'peach-orange stone necklace',
+      'buy sunstone necklace online',
+      'sunstone abaya jewellery set',
     ),
     relatedAccessoryIds: [
       'signature-strand-sunstone',
@@ -125,17 +125,17 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'earrings-pearl-drop',
     ],
   },
-  'necklace-statement-pendant': {
+  'al-ain-rosette-necklace-lapis-lazuli': {
     carouselAlt:
-      'Al Ain heritage pendant necklace — bold Emirati pattern pendant on sterling silver and gold vermeil, pairs with lapis and amethyst abaya strands',
+      'Al Ain Rosette Lapis Lazuli necklace — deep royal blue lapis beads with signature clasp, pairs with lapis and amethyst abaya strands',
     pdpAlt:
-      'Al Ain heritage pendant necklace with traditional Emirati patterns on sterling silver and 18K gold vermeil — statement designer necklace for modest evening wear',
+      'Al Ain Rosette Lapis Lazuli necklace with rich natural lapis lazuli beads and 18K gold-plated signature clasp — luxury blue stone necklace by Bint Saeed UAE',
     keywords: nkw(
-      'heritage pendant necklace',
-      'Emirati pattern necklace',
-      'statement necklace UAE',
-      'sterling silver gold vermeil necklace',
-      'traditional Gulf jewellery',
+      'lapis lazuli necklace',
+      'lapis bead necklace UAE',
+      'royal blue stone necklace',
+      'buy lapis necklace online',
+      'lapis abaya jewellery set',
     ),
     relatedAccessoryIds: [
       'signature-strand-lapis-lazuli',
@@ -157,10 +157,10 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'pearl earrings gift UAE',
     ),
     relatedAccessoryIds: [
-      'signature-rose-quartz-necklace',
+      'al-ain-rosette-necklace-rose-quartz',
       'signature-strand-rose-quartz',
       'signature-strand-jade-hearts',
-      'necklace-layered-gold',
+      'al-ain-rosette-necklace-sunstone',
     ],
   },
   'earrings-geometric': {
@@ -176,7 +176,7 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'designer stud earrings Abu Dhabi',
     ),
     relatedAccessoryIds: [
-      'signature-malachite-necklace',
+      'al-ain-rosette-necklace-malachite',
       'signature-strand-malachite',
       'signature-strand-onyx',
       'signature-strand-amethyst-hearts',
@@ -195,10 +195,10 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'designer hoop earrings Abu Dhabi',
     ),
     relatedAccessoryIds: [
-      'signature-tiger-eye-necklace',
+      'al-ain-rosette-necklace-tiger-eye',
       'signature-strand-tiger-eye',
       'signature-strand-lapis-lazuli',
-      'necklace-statement-pendant',
+      'al-ain-rosette-necklace-lapis-lazuli',
     ],
   },
 }

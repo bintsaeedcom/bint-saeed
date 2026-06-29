@@ -7,7 +7,6 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FiArrowRight, FiLock } from 'react-icons/fi'
-import { loadStripe } from '@stripe/stripe-js'
 import toast from 'react-hot-toast'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
@@ -25,6 +24,13 @@ import {
   getPublicPaymentProvider,
   isCheckoutProviderConfigured,
 } from '@/lib/payments'
+import { isPublicStripePayPalCheckoutEnabled } from '@/lib/stripe/stripePayPalPublic'
+import dynamic from 'next/dynamic'
+
+const StripeElementsCheckoutForm = dynamic(
+  () => import('@/components/checkout/StripeElementsCheckoutForm'),
+  { ssr: false },
+)
 
 function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   if (typeof window === 'undefined') return 'desktop'
@@ -44,6 +50,7 @@ export default function CheckoutPage() {
   const paymentProvider = getPublicPaymentProvider()
   const checkoutEnvReady = isCheckoutProviderConfigured(paymentProvider)
   const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.trim() ?? ''
+  const paypalCheckoutReady = paymentProvider === 'stripe' && isPublicStripePayPalCheckoutEnabled()
 
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
@@ -55,6 +62,8 @@ export default function CheckoutPage() {
 
   const [payBusy, setPayBusy] = useState(false)
   const [legalAcknowledged, setLegalAcknowledged] = useState(false)
+  const [elementsClientSecret, setElementsClientSecret] = useState<string | null>(null)
+  const [checkoutStep, setCheckoutStep] = useState<'review' | 'payment'>('review')
 
   useEffect(() => {
     if (items.length === 0) {
@@ -129,26 +138,24 @@ export default function CheckoutPage() {
         }),
       })
 
-      const { sessionId, url, error } = await response.json()
+      const { url, clientSecret, mode, error } = await response.json()
       if (!response.ok) {
         throw new Error(error || 'Checkout is unavailable')
       }
       if (error) throw new Error(error)
+
+      if (mode === 'elements' && typeof clientSecret === 'string' && clientSecret.length > 0) {
+        setElementsClientSecret(clientSecret)
+        setCheckoutStep('payment')
+        return
+      }
 
       if (typeof url === 'string' && url.startsWith('https://')) {
         window.location.assign(url)
         return
       }
 
-      const stripe = await loadStripe(stripePublishableKey)
-      if (stripe && sessionId) {
-        const { error: redirectError } = await stripe.redirectToCheckout({ sessionId })
-        if (redirectError) {
-          throw new Error(redirectError.message)
-        }
-      } else {
-        throw new Error('Stripe not available')
-      }
+      throw new Error('Stripe checkout URL missing')
     } catch (e) {
       console.error(e)
       toast.error(ui.checkout.checkoutError)
@@ -188,7 +195,7 @@ export default function CheckoutPage() {
               data-document-h1="true"
               className="font-rozha text-[1.75rem] leading-tight text-brand-darkRed sm:text-3xl md:text-4xl"
             >
-              {ui.checkout.reviewOrder}
+              {checkoutStep === 'payment' ? ui.checkout.securePayment : ui.checkout.reviewOrder}
             </h1>
             <p className="mt-2 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/70">
               {ui.checkout.reviewSubtitle}
@@ -200,6 +207,26 @@ export default function CheckoutPage() {
       <div className="container mx-auto min-w-0 px-4 py-8 sm:px-6 sm:py-10 lg:px-12 lg:py-16">
         <div className="grid min-w-0 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="min-w-0 lg:col-span-7">
+            {checkoutStep === 'payment' && elementsClientSecret && paymentProvider === 'stripe' ? (
+              <motion.section
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="rounded-2xl border border-brand-stone/20 bg-white p-5 shadow-sm sm:p-6 md:p-8"
+              >
+                <StripeElementsCheckoutForm
+                  clientSecret={elementsClientSecret}
+                  publishableKey={stripePublishableKey}
+                  payLabel={ui.checkout.continueSecurePayment}
+                  processingLabel={ui.checkout.processingPayment}
+                  backLabel={ui.checkout.editBag}
+                  rtl={isRTL}
+                  onBack={() => {
+                    setCheckoutStep('review')
+                    setElementsClientSecret(null)
+                  }}
+                />
+              </motion.section>
+            ) : (
             <motion.section
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -254,6 +281,7 @@ export default function CheckoutPage() {
                 ))}
               </ul>
             </motion.section>
+            )}
           </div>
 
           <div className="min-w-0 lg:col-span-5">
@@ -276,6 +304,23 @@ export default function CheckoutPage() {
                 <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
                   {ui.cart.taxesIncluded}
                 </p>
+
+                {paypalCheckoutReady ? (
+                  <div
+                    className={`mt-4 flex items-center gap-2.5 rounded-[4px] border border-white/10 bg-white/5 px-3 py-2.5 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  >
+                    <Image
+                      src="/payments/paypal.svg"
+                      alt="PayPal"
+                      width={52}
+                      height={16}
+                      className="h-4 w-auto object-contain"
+                    />
+                    <span className="font-montserrat text-[10px] uppercase tracking-[0.12em] text-white/65">
+                      PayPal available at payment
+                    </span>
+                  </div>
+                ) : null}
 
                 <label
                   className={`mt-6 flex items-start gap-2.5 sm:mt-8 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
@@ -310,7 +355,12 @@ export default function CheckoutPage() {
                 <button
                   type="button"
                   onClick={() => void startCheckout()}
-                  disabled={payBusy || !checkoutEnvReady || !legalAcknowledged}
+                  disabled={
+                    payBusy ||
+                    !checkoutEnvReady ||
+                    !legalAcknowledged ||
+                    checkoutStep === 'payment'
+                  }
                   className={`mt-5 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue px-3 py-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 sm:mt-6 sm:gap-3 sm:text-sm sm:tracking-[0.18em] ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >

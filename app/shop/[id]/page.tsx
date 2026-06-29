@@ -519,7 +519,7 @@ export default function ProductPage() {
             )}
             {originDetails && originDetails.length > 0 && (
               <div className="space-y-2 pt-3">
-                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>Origin</p>
+                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{t.product.origin}</p>
                 <ul className={PDP_BULLET_LIST}>
                   {originDetails.map((item, idx) => (
                     <li key={`origin-${idx}`} className={PDP_BULLET_ITEM}>

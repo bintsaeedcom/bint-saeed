@@ -106,6 +106,7 @@ export const translationsNl = {
     description: 'Beschrijving',
     fabricMaterials: 'Stof & Materialen',
     sizeMeasurements: 'Maat & Pasvorm',
+    origin: 'Herkomst',
     shippingReturns: 'Verzending & Retour',
     freeShipping: 'Gratis VAE-verzending bij bestellingen boven 1000 AED',
     expressDelivery: 'Expresslevering: 1-2 werkdagen (VAE)',

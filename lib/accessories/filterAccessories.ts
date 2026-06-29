@@ -96,10 +96,46 @@ export function accessoryMatchesStoneSelection(a: Accessory, selectedStones: Sto
   return selectedStones.some((id) => accessoryMatchesStone(a, id))
 }
 
+export type ColorFilterId = string
+
+export type AccessoryColorOption = {
+  id: ColorFilterId
+  labelEn: string
+  labelAr: string
+  hex: string
+}
+
+function colorFilterId(name: string): ColorFilterId {
+  return name
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+}
+
+export function buildAccessoryColorOptions(items: Accessory[]): AccessoryColorOption[] {
+  const seen = new Map<ColorFilterId, AccessoryColorOption>()
+  for (const item of items) {
+    for (const color of item.colors) {
+      const id = colorFilterId(color.name)
+      if (!seen.has(id)) {
+        seen.set(id, { id, labelEn: color.name, labelAr: color.nameAr, hex: color.hex })
+      }
+    }
+  }
+  return [...seen.values()].sort((a, b) => a.labelEn.localeCompare(b.labelEn))
+}
+
+export function accessoryMatchesColorSelection(a: Accessory, selectedColors: ColorFilterId[]): boolean {
+  if (selectedColors.length === 0) return true
+  const ids = new Set(a.colors.map((c) => colorFilterId(c.name)))
+  return selectedColors.some((id) => ids.has(id))
+}
+
 export interface AccessoryFilters {
   categoryId: string
   priceRange: PriceRangeId
   stones: StoneFilterId[]
+  colors: ColorFilterId[]
 }
 
 export function applyAccessoryFilters(items: Accessory[], f: AccessoryFilters): Accessory[] {
@@ -108,6 +144,7 @@ export function applyAccessoryFilters(items: Accessory[], f: AccessoryFilters): 
 
   list = list.filter((a) => accessoryInPriceRange(a, f.priceRange))
   list = list.filter((a) => accessoryMatchesStoneSelection(a, f.stones))
+  list = list.filter((a) => accessoryMatchesColorSelection(a, f.colors))
 
   return list
 }

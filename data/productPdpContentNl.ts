@@ -138,7 +138,7 @@ export function buildNothingHillKaftanContentNl(color?: string): ProductPdpConte
       'Luchtig silhouet met zachte vrouwelijke valling',
       `Kleur: ${label}`,
       'Gemaakt in Abu Dhabi, VAE',
-      `Productcode: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `Referentie: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),

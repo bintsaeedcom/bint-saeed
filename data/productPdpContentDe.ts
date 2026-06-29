@@ -138,7 +138,7 @@ export function buildNothingHillKaftanContentDe(color?: string): ProductPdpConte
       'Luftige Silhouette mit sanft femininem Fall',
       `Farbe: ${label}`,
       'Hergestellt in Abu Dhabi, VAE',
-      `Produktcode: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `Referenz: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),

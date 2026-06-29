@@ -10,6 +10,7 @@ import {
 } from '@/lib/payments/provider'
 import { getMollieApiKey } from '@/lib/mollie/config'
 import { getMollieClient } from '@/lib/mollie/client'
+import { getStripePayPalReadiness } from '@/lib/stripe/stripePayPalConfig'
 
 export const dynamic = 'force-dynamic'
 
@@ -68,8 +69,8 @@ export async function GET(request: NextRequest) {
 
   if (secretConfigured) {
     try {
-      const stripe = new Stripe(secretKey, { apiVersion: '2025-02-24.acacia' })
-      const account = await stripe.accounts.retrieve()
+      const stripe = new Stripe(secretKey, { apiVersion: '2026-06-24.dahlia' })
+      const account = await stripe.accounts.retrieve(null)
       stripeApiReachable = true
       if (!('deleted' in account) || !account.deleted) {
         stripeAccountId = account.id
@@ -127,6 +128,18 @@ export async function GET(request: NextRequest) {
 
   const checkoutReady = provider === 'mollie' ? mollieReady : stripeReady
 
+  const paypal = getStripePayPalReadiness()
+  if (provider === 'stripe' && paypal.dashboardCpmtConfigured && !paypal.checkoutEnabled) {
+    warnings.push(
+      'PayPal cpmt is set but STRIPE_PAYPAL_ENABLED=false — checkout uses hosted Stripe without PayPal.',
+    )
+  }
+  if (provider === 'stripe' && paypal.checkoutEnabled && !paypal.adapterUrlConfigured) {
+    warnings.push(
+      'PayPal checkout is enabled without STRIPE_PAYPAL_ADAPTER_URL — request the Stripe PayPal adapter if PayPal payments fail.',
+    )
+  }
+
   return NextResponse.json({
     ok: checkoutReady,
     checkedAt: new Date().toISOString(),
@@ -157,6 +170,7 @@ export async function GET(request: NextRequest) {
       profileId: mollieProfileId,
       error: mollieError,
     },
+    paypal,
     warnings,
   })
 }

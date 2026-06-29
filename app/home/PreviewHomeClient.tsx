@@ -1051,7 +1051,7 @@ function EditorialIntro() {
                   isRTL ? 'items-start text-left' : 'items-end text-right'
                 }`}
               >
-                <span className="mb-5 block font-montserrat text-[11px] uppercase tracking-[0.3em] text-[#9a8a96]">
+                <span className="mb-5 block font-montserrat text-[11px] uppercase tracking-[0.3em] text-brand-dustyBlue">
                   {copy.manifestoImageEyebrow}
                 </span>
                 <p className="max-w-[30rem] font-rozha text-[clamp(24px,2.9vw,38px)] italic leading-[1.18] tracking-[-0.01em] text-[#f5e1da]">

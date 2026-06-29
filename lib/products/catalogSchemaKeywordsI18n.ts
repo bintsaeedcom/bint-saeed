@@ -11,8 +11,13 @@ const CATALOG_EXCLUSIVE_EN: Record<string, readonly string[]> = {
   'marylebone-abaya': [
     'Marylebone Abaya',
     'Bint Saeed Marylebone Abaya',
-    'open front abaya',
-    'layering abaya',
+    'graceful A-line abaya',
+    'abaya jewellery',
+    'Onyx Strands abaya',
+    'fashion editor abaya',
+    'fashion curator abaya',
+    'cultural heritage fashion abaya',
+    'diplomat abaya',
     'BS-AB-004',
   ],
   'park-lane-abaya': [

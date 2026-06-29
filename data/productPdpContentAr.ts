@@ -1,10 +1,8 @@
 import type { Product } from '@/data/products'
 import { buildKnightsbridgeDressPdpContent } from '@/data/knightsbridgeDressPdpContent'
-import {
-  buildCoventGardenAbayaContentAr,
-  buildCoventGardenLongDressContentAr,
-  buildCoventGardenSignatureSetContentAr,
-} from '@/lib/products/coventGardenPdpContentAr'
+import { buildCoventGardenAbayaPdpContent } from '@/lib/products/coventGardenAbayaPdpI18n'
+import { buildCoventGardenLongDressPdpContent } from '@/lib/products/coventGardenLongDressPdpI18n'
+import { buildCoventGardenSignatureSetPdpContent } from '@/lib/products/coventGardenSignatureSetPdpI18n'
 import type { ProductPdpContent } from '@/data/productPdpContent'
 import { getProductSlug } from '@/lib/products/links'
 import { getBelgraviaPdpFaq } from '@/lib/products/belgraviaSchemaI18n'
@@ -143,7 +141,7 @@ export function buildNothingHillKaftanContentAr(color?: string): ProductPdpConte
       'قوام هوائي بانسدال أنثوي ناعم',
       `اللون: ${label}`,
       'صُنع في أبوظبي، الإمارات العربية المتحدة',
-      `رمز المنتج: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
+      `المرجع: ${buildVariantSku(NOTHING_HILL_STYLE_SKU, label)}`,
     ],
     compositionDetails: [...NOTHING_HILL_COMPOSITION_DETAILS],
     fitAndSizeDetails: kaftanFitAndSizeDetails(165, { includeAdjustableTies: false }),
@@ -350,8 +348,8 @@ export function getProductPdpContentAr(product: Product, color?: string): Produc
   if (isKensingtonAbaya(product)) return buildKensingtonAbayaContentAr()
   if (isKnightsbridgeAbayaJacket(product)) return buildKnightsbridgeAbayaJacketContentAr(color)
   if (isKnightsbridgeDress(product)) return buildKnightsbridgeDressPdpContent(color, 'ar')
-  if (isCoventGardenAbaya(product)) return buildCoventGardenAbayaContentAr()
-  if (isCoventGardenLongDress(product)) return buildCoventGardenLongDressContentAr()
-  if (isCoventGardenSignatureSet(product)) return buildCoventGardenSignatureSetContentAr(color)
+  if (isCoventGardenAbaya(product)) return buildCoventGardenAbayaPdpContent('ar')
+  if (isCoventGardenLongDress(product)) return buildCoventGardenLongDressPdpContent('ar')
+  if (isCoventGardenSignatureSet(product)) return buildCoventGardenSignatureSetPdpContent('ar', color)
   return null
 }
