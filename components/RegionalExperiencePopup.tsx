@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX, FiChevronDown } from 'react-icons/fi'
@@ -10,8 +10,9 @@ import {
   fetchGeoData,
   hasRegionalExperienceChoice,
   persistRegionalExperienceChoice,
+  resolveRegionalLocalLanguage,
   shouldShowRegionalExperiencePopup,
-  languageLabels,
+  languageLabelsEnglish,
   type GeoData,
 } from '@/lib/geo/geoDetection'
 import { getRegionalExperienceCopy } from '@/lib/geo/regionalExperienceCopy'
@@ -32,6 +33,8 @@ const LANGUAGE_OPTIONS: { code: Language; native: string }[] = [
   { code: 'ru', native: 'Русский' },
   { code: 'id', native: 'Bahasa Indonesia' },
   { code: 'ms', native: 'Bahasa Melayu' },
+  { code: 'nl', native: 'Nederlands' },
+  { code: 'pt', native: 'Português' },
 ]
 
 function waitForCookieConsent(): Promise<void> {
@@ -60,13 +63,12 @@ export default function RegionalExperiencePopup() {
   const [pendingCurrency, setPendingCurrency] = useState('AED')
 
   const { currency, setCurrency } = useCurrency()
-  const { language, setLanguage, isRTL } = useLanguage()
+  const { setLanguage } = useLanguage()
   const router = useRouter()
   const pathname = usePathname() || '/'
+  const t = getRegionalExperienceCopy()
 
   const { locale: urlLocale, pathname: innerPath } = stripLocaleFromPathname(pathname)
-  const copyLocale = (geo?.suggestedLanguage === 'en' ? 'en' : geo?.suggestedLanguage || language) as AppLocale
-  const t = useMemo(() => getRegionalExperienceCopy(copyLocale), [copyLocale])
 
   const applyLocale = useCallback(
     (lang: Language) => {
@@ -87,16 +89,15 @@ export default function RegionalExperiencePopup() {
     [setCurrency],
   )
 
-  const applyGeoDefaults = useCallback(
+  const applySuggestedCurrencySilently = useCallback(
     (data: GeoData) => {
-      applyCurrency(data.suggestedCurrency)
-      const savedLang = localStorage.getItem('language')
-      const onEnglishPath = urlLocale === 'en'
-      if (onEnglishPath && !savedLang && data.suggestedLanguage !== 'en') {
-        applyLocale(data.suggestedLanguage as Language)
+      const currencySaved =
+        typeof window !== 'undefined' && !!localStorage.getItem('bint-saeed-currency')
+      if (!currencySaved) {
+        applyCurrency(data.suggestedCurrency)
       }
     },
-    [applyCurrency, applyLocale, urlLocale],
+    [applyCurrency],
   )
 
   useEffect(() => {
@@ -117,7 +118,7 @@ export default function RegionalExperiencePopup() {
           : 'en',
       )
       setPendingCurrency(data.suggestedCurrency)
-      applyGeoDefaults(data)
+      applySuggestedCurrencySilently(data)
 
       if (!shouldShowRegionalExperiencePopup(data, urlLocale)) {
         persistRegionalExperienceChoice('confirmed')
@@ -138,18 +139,35 @@ export default function RegionalExperiencePopup() {
       cancelled = true
       if (popupTimer) window.clearTimeout(popupTimer)
     }
-  }, [applyGeoDefaults, urlLocale])
+  }, [applySuggestedCurrencySilently, urlLocale])
+
+  useEffect(() => {
+    if (!isVisible) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [isVisible])
 
   const dismiss = (choice: 'confirmed' | 'changed' | 'dismissed') => {
     persistRegionalExperienceChoice(choice)
     setIsVisible(false)
   }
 
-  const handleContinue = () => {
-    if (geo) {
-      applyCurrency(geo.suggestedCurrency)
-      applyLocale((geo.suggestedLanguage as Language) || 'en')
-    }
+  const handleContinueEnglish = () => {
+    if (geo) applyCurrency(geo.suggestedCurrency)
+    applyLocale('en')
+    dispatchRequestPreciseLocation()
+    dismiss('confirmed')
+  }
+
+  const handleContinueLocal = () => {
+    if (!geo) return
+    const localLang = resolveRegionalLocalLanguage(geo, urlLocale)
+    if (!localLang) return
+    applyCurrency(geo.suggestedCurrency)
+    applyLocale(localLang as Language)
     dispatchRequestPreciseLocation()
     dismiss('confirmed')
   }
@@ -161,12 +179,18 @@ export default function RegionalExperiencePopup() {
     dismiss('changed')
   }
 
-  const suggestedLangLabel = geo
-    ? languageLabels[geo.suggestedLanguage] || geo.suggestedLanguage
-    : languageLabels.en
+  const localLangCode = geo ? resolveRegionalLocalLanguage(geo, urlLocale) : null
+  const localLangLabel = localLangCode
+    ? languageLabelsEnglish[localLangCode] || localLangCode
+    : null
   const suggestedCurrencyLabel = geo
     ? currencies.find((c) => c.code === geo.suggestedCurrency)?.code || geo.suggestedCurrency
     : currency.code
+
+  const primaryButtonClass =
+    'w-full border border-brand-darkRed bg-brand-darkRed py-3.5 px-5 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-darkMagenta sm:flex-1'
+  const secondaryButtonClass =
+    'w-full border border-brand-darkRed/20 bg-transparent py-3.5 px-5 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/60 transition-colors hover:border-brand-darkRed/35 hover:bg-brand-stone/10 hover:text-brand-darkRed/80 sm:flex-1'
 
   return (
     <AnimatePresence>
@@ -177,34 +201,28 @@ export default function RegionalExperiencePopup() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none fixed inset-0 z-[88] bg-[#1a0a0f]/[0.14] backdrop-blur-[3px]"
+            className="fixed inset-0 z-[88] bg-[#1a0a0f]/20 backdrop-blur-[6px]"
             aria-hidden
           />
           <motion.div
             role="dialog"
             aria-modal="true"
             aria-labelledby="regional-experience-title"
-            initial={{ opacity: 0, y: 32, scale: 0.98, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: 24, scale: 0.99, filter: 'blur(4px)' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-4 bottom-6 z-[92] mx-auto max-h-[min(90vh,calc(100dvh-2rem))] w-full max-w-[26rem] overflow-y-auto sm:inset-x-auto sm:bottom-auto sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2"
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 16, scale: 0.99 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[92] flex items-center justify-center p-4 sm:p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <div
-              className={`relative overflow-hidden rounded-sm border border-brand-stone/30 bg-[#faf8f6] shadow-[0_32px_70px_-18px_rgba(59,0,20,0.28)] ${
-                isRTL ? 'text-right' : 'text-left'
-              }`}
+              dir="ltr"
+              className="relative w-full max-w-[26rem] overflow-hidden rounded-sm border border-brand-stone/30 bg-[#faf8f6] text-left shadow-[0_32px_70px_-18px_rgba(59,0,20,0.28)]"
             >
-              <div
-                className={`absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-brand-rose/55 to-transparent ${
-                  isRTL ? 'right-0' : 'left-0'
-                }`}
-                aria-hidden
-              />
+              <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-transparent via-brand-rose/55 to-transparent" aria-hidden />
 
-              <div className={`px-7 pt-8 pb-7 ${isRTL ? 'pr-8 pl-6' : 'pl-8 pr-6'}`}>
-                <div className={`flex items-start justify-between gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className="px-7 pb-7 pt-8">
+                <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0 space-y-2.5">
                     <p className="font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/65">
                       {t.eyebrow}
@@ -237,9 +255,15 @@ export default function RegionalExperiencePopup() {
                       {t.detectedLine(geo.city || '', geo.countryName)}
                     </p>
                   )}
-                  <p className="font-montserrat text-[12px] text-brand-clayRed/90">
-                    {t.settingsLine(suggestedLangLabel, suggestedCurrencyLabel)}
-                  </p>
+                  {geo.suggestedLanguage !== 'en' && localLangLabel ? (
+                    <p className="font-montserrat text-[12px] text-brand-clayRed/90">
+                      {t.settingsLine(localLangLabel, suggestedCurrencyLabel)}
+                    </p>
+                  ) : localLangLabel ? (
+                    <p className="font-montserrat text-[12px] text-brand-clayRed/90">
+                      {t.currentLanguageLine(localLangLabel)}
+                    </p>
+                  ) : null}
                 </div>
 
                 <AnimatePresence initial={false}>
@@ -263,9 +287,7 @@ export default function RegionalExperiencePopup() {
                             <select
                               value={pendingLang}
                               onChange={(e) => setPendingLang(e.target.value as Language)}
-                              className={`w-full appearance-none border border-brand-stone/35 bg-white/80 py-3 font-montserrat text-[13px] text-brand-darkRed outline-none focus:border-brand-darkRed/40 ${
-                                isRTL ? 'pl-10 pr-4 text-right' : 'pl-4 pr-10'
-                              }`}
+                              className="w-full appearance-none border border-brand-stone/35 bg-white/80 py-3 pl-4 pr-10 font-montserrat text-[13px] text-brand-darkRed outline-none focus:border-brand-darkRed/40"
                             >
                               {LANGUAGE_OPTIONS.map((opt) => (
                                 <option key={opt.code} value={opt.code}>
@@ -273,11 +295,7 @@ export default function RegionalExperiencePopup() {
                                 </option>
                               ))}
                             </select>
-                            <FiChevronDown
-                              className={`pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2 text-brand-darkRed/45 ${
-                                isRTL ? 'left-3' : 'right-3'
-                              }`}
-                            />
+                            <FiChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-darkRed/45" />
                           </div>
                         </label>
 
@@ -289,9 +307,7 @@ export default function RegionalExperiencePopup() {
                             <select
                               value={pendingCurrency}
                               onChange={(e) => setPendingCurrency(e.target.value)}
-                              className={`w-full appearance-none border border-brand-stone/35 bg-white/80 py-3 font-montserrat text-[13px] text-brand-darkRed outline-none focus:border-brand-darkRed/40 ${
-                                isRTL ? 'pl-10 pr-4 text-right' : 'pl-4 pr-10'
-                              }`}
+                              className="w-full appearance-none border border-brand-stone/35 bg-white/80 py-3 pl-4 pr-10 font-montserrat text-[13px] text-brand-darkRed outline-none focus:border-brand-darkRed/40"
                             >
                               {currencies.map((c) => (
                                 <option key={c.code} value={c.code}>
@@ -299,11 +315,7 @@ export default function RegionalExperiencePopup() {
                                 </option>
                               ))}
                             </select>
-                            <FiChevronDown
-                              className={`pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2 text-brand-darkRed/45 ${
-                                isRTL ? 'left-3' : 'right-3'
-                              }`}
-                            />
+                            <FiChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-darkRed/45" />
                           </div>
                         </label>
 
@@ -320,24 +332,35 @@ export default function RegionalExperiencePopup() {
                   )}
                 </AnimatePresence>
 
-                <div className={`mt-8 flex flex-col gap-3 ${isRTL ? 'sm:flex-row-reverse' : 'sm:flex-row'}`}>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <button
                     type="button"
-                    onClick={() => setShowPreferences((v) => !v)}
-                    className="sm:flex-1 border border-brand-darkRed/15 py-3.5 px-5 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-darkRed transition-colors hover:border-brand-darkRed/30 hover:bg-white/60"
+                    onClick={handleContinueEnglish}
+                    className={primaryButtonClass}
                     data-cursor-hover
                   >
-                    {t.secondary}
+                    {t.continueEnglish}
                   </button>
-                  <button
-                    type="button"
-                    onClick={handleContinue}
-                    className="sm:flex-1 bg-brand-darkRed py-3.5 px-5 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white shadow-sm transition-colors hover:bg-brand-darkMagenta"
-                    data-cursor-hover
-                  >
-                    {t.primary(suggestedLangLabel)}
-                  </button>
+                  {localLangCode && localLangCode !== 'en' && localLangLabel ? (
+                    <button
+                      type="button"
+                      onClick={handleContinueLocal}
+                      className={secondaryButtonClass}
+                      data-cursor-hover
+                    >
+                      {t.continueLocal(localLangLabel)}
+                    </button>
+                  ) : null}
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => setShowPreferences((v) => !v)}
+                  className="mt-4 w-full py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/45 transition-colors hover:text-brand-darkRed/70"
+                  data-cursor-hover
+                >
+                  {t.secondary}
+                </button>
               </div>
             </div>
           </motion.div>

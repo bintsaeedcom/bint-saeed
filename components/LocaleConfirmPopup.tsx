@@ -4,15 +4,22 @@ import { useState, useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage, VALID_LANGUAGES, type Language } from '@/lib/i18n/LanguageContext'
-import { fetchGeoData, shouldShowLocaleConfirmPopup, languageLabels } from '@/lib/geo/geoDetection'
+import {
+  fetchGeoData,
+  resolveRegionalLocalLanguage,
+  shouldShowRegionalExperiencePopup,
+  languageLabelsEnglish,
+} from '@/lib/geo/geoDetection'
 import { localizedPath, stripLocaleFromPathname, type AppLocale } from '@/lib/i18n/routing'
 
+/** Legacy fallback — prefer RegionalExperiencePopup in LayoutWrapper. */
 export default function LocaleConfirmPopup() {
   const [isVisible, setIsVisible] = useState(false)
-  const [detectedLang, setDetectedLang] = useState<string | null>(null)
+  const [localLangCode, setLocalLangCode] = useState<string | null>(null)
   const { setLanguage } = useLanguage()
   const pathname = usePathname() || '/'
   const router = useRouter()
+  const { locale: urlLocale } = stripLocaleFromPathname(pathname)
 
   useEffect(() => {
     const localeConfirmDismissed = localStorage.getItem('bint-saeed-locale-confirm-dismissed')
@@ -20,9 +27,11 @@ export default function LocaleConfirmPopup() {
 
     const run = async () => {
       const geo = await fetchGeoData()
-      if (!geo || !shouldShowLocaleConfirmPopup(geo.suggestedLanguage)) return
-      sessionStorage.setItem('bint-saeed-detected-lang', geo.suggestedLanguage)
-      setDetectedLang(geo.suggestedLanguage)
+      if (!geo || !shouldShowRegionalExperiencePopup(geo, urlLocale)) return
+      const local = resolveRegionalLocalLanguage(geo, urlLocale)
+      if (!local) return
+      sessionStorage.setItem('bint-saeed-detected-lang', local)
+      setLocalLangCode(local)
       setIsVisible(true)
     }
 
@@ -36,9 +45,9 @@ export default function LocaleConfirmPopup() {
       window.addEventListener('cookie-consent-closed', onCookieClosed)
       return () => window.removeEventListener('cookie-consent-closed', onCookieClosed)
     }
-  }, [])
+  }, [urlLocale])
 
-  const applyDetectedLocale = (lang: string) => {
+  const applyLocale = (lang: string) => {
     if (!VALID_LANGUAGES.includes(lang as Language)) return
     const { pathname: inner } = stripLocaleFromPathname(pathname)
     const target = localizedPath(lang === 'en' ? 'en' : (lang as AppLocale), inner)
@@ -46,20 +55,21 @@ export default function LocaleConfirmPopup() {
     setLanguage(lang as Language)
   }
 
-  const handleStay = () => {
-    if (detectedLang) applyDetectedLocale(detectedLang)
+  const handleContinueEnglish = () => {
+    applyLocale('en')
     localStorage.setItem('bint-saeed-locale-confirm-dismissed', 'true')
     setIsVisible(false)
   }
 
-  const handleSwitchToEnglish = () => {
-    applyDetectedLocale('en')
+  const handleContinueLocal = () => {
+    if (!localLangCode) return
+    applyLocale(localLangCode)
     localStorage.setItem('bint-saeed-locale-confirm-dismissed', 'true')
     setIsVisible(false)
   }
 
-  const show = isVisible && detectedLang && detectedLang !== 'en'
-  const label = show ? languageLabels[detectedLang] || detectedLang : ''
+  const show = isVisible && localLangCode && localLangCode !== 'en'
+  const label = show ? languageLabelsEnglish[localLangCode] || localLangCode : ''
 
   return (
     <AnimatePresence>
@@ -79,24 +89,24 @@ export default function LocaleConfirmPopup() {
             id="locale-confirm-title"
             className="mb-6 text-center font-montserrat text-sm tracking-wide text-brand-darkRed/80"
           >
-            Continue in {label} or switch to English?
+            Continue in English or switch to {label}?
           </p>
           <div className="flex flex-col justify-center gap-3 sm:flex-row">
             <button
               type="button"
-              onClick={handleStay}
+              onClick={handleContinueEnglish}
               className="flex-1 rounded-lg bg-brand-darkRed px-6 py-3.5 font-montserrat text-xs uppercase tracking-[0.12em] text-white transition-colors hover:bg-brand-dustyBlue"
               data-cursor-hover
             >
-              Stay in {label}
+              Continue in English
             </button>
             <button
               type="button"
-              onClick={handleSwitchToEnglish}
+              onClick={handleContinueLocal}
               className="flex-1 rounded-lg border border-brand-stone/40 px-6 py-3.5 font-montserrat text-xs uppercase tracking-[0.12em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
               data-cursor-hover
             >
-              Continue in English
+              Continue in {label}
             </button>
           </div>
         </motion.div>

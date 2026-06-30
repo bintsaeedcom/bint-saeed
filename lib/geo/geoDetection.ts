@@ -99,14 +99,36 @@ export function persistRegionalExperienceChoice(choice: 'confirmed' | 'changed' 
   }
 }
 
-/** Show regional popup once when geo differs from defaults or visitor is outside UAE. */
+/** English display names for the regional popup (copy is always English). */
+export const languageLabelsEnglish: Record<string, string> = {
+  en: 'English',
+  ar: 'Arabic',
+  zh: 'Chinese',
+  ru: 'Russian',
+  it: 'Italian',
+  de: 'German',
+  fr: 'French',
+  es: 'Spanish',
+  nl: 'Dutch',
+  pt: 'Portuguese',
+  id: 'Indonesian',
+  ms: 'Malay',
+}
+
+/** Local language offered as the secondary button (geo region or current URL locale). */
+export function resolveRegionalLocalLanguage(geo: GeoData, currentLocale: string): string | null {
+  if (geo.suggestedLanguage !== 'en') return geo.suggestedLanguage
+  if (currentLocale !== 'en' && LANGUAGES_FOR_CONFIRM_POPUP.includes(currentLocale)) {
+    return currentLocale
+  }
+  return null
+}
+
+/** Show regional popup once when geo or URL suggests a non-English experience. */
 export function shouldShowRegionalExperiencePopup(geo: GeoData, currentLocale: string): boolean {
   if (hasRegionalExperienceChoice()) return false
-  const langMismatch = geo.suggestedLanguage !== currentLocale
-  const currencySaved =
-    typeof window !== 'undefined' && !!localStorage.getItem('bint-saeed-currency')
-  const currencyMismatch = !currencySaved && geo.suggestedCurrency !== 'AED'
-  return langMismatch || currencyMismatch || geo.countryCode !== 'AE'
+  if (geo.suggestedLanguage !== 'en') return true
+  return currentLocale !== 'en'
 }
 
 export function shouldShowLocaleConfirmPopup(detectedLang: string): boolean {

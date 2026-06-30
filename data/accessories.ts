@@ -6,10 +6,10 @@ const A = '/Webshop%20pictures/accessoiries'
 
 export const ACCESSORY_IMAGE_NECKLACE = `${A}/necklaces/malachite-necklace.PNG`
 export const ACCESSORY_IMAGE_NECKLACE_MALACHITE = `${A}/necklaces/malachite-necklace.PNG`
-export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ = `${A}/necklaces/rose-quartz-necklace.PNG`
-export const ACCESSORY_IMAGE_PHONE_CHARM = `${A}/phone%20charm/phone%20charm.png`
+export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ = `${A}/necklaces/bint-saeed-rose-quartz-necklace.PNG`
+export const ACCESSORY_IMAGE_PHONE_CHARM = `${A}/phone%20charm/bint-saeed-phone-charm.PNG`
 /** Second angle / alternate shot for phone strand PDP column */
-export const ACCESSORY_IMAGE_PHONE_CHARM_ALT = `${A}/phone%20charm/AF5B4736-A8F0-41F6-94CB-530FF12AD809.PNG`
+export const ACCESSORY_IMAGE_PHONE_CHARM_ALT = `${A}/phone%20charm/phone%20charm-extra.png`
 
 const STRANDS = `${A}/strands`
 /** Category hero for signature strands grid. */
@@ -25,8 +25,8 @@ export const ACCESSORY_IMAGE_ABAYA_CHARM_LAPIS = `${STRANDS}/bint-saeed-lapis-la
 export const ACCESSORY_IMAGE_ABAYA_CHARM_AMETHYST = `${STRANDS}/bint-saeed-amathys-abaya-charm.PNG`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE = `${STRANDS}/bint-saeed-green-jade-abaya-charm.PNG`
 
-export const ACCESSORY_IMAGE_EARRINGS_HERO = `${A}/earrings/5AEC9940-AD10-4C6A-9410-4DCB5BCB5ACD.PNG`
-export const ACCESSORY_IMAGE_BAG_CHARM = `${A}/bag%20charm/9D8CE389-54D5-4235-B71B-A9BB92AC97EA.PNG`
+export const ACCESSORY_IMAGE_EARRINGS_HERO = `${A}/earrings/bint-saeed-earrings.PNG`
+export const ACCESSORY_IMAGE_BAG_CHARM = `${A}/bag%20charm/bint-saeed-bag-charm.PNG`
 
 const AL_AIN_ROSETTE_NECKLACE_BASE_NAME = 'Al Ain Rosette Necklace'
 function alAinRosetteNecklaceName(variant: string): string {

@@ -230,7 +230,7 @@ export const translations = {
     
     // Cookie Consent
     cookie: {
-      title: 'We Value Your Privacy',
+      title: 'We value your privacy',
       message: 'We use cookies, including third-party cookies, for functional purposes, to perform statistical analyses, to offer you a better browsing experience, and to send you personalized advertising messages. You can either accept these cookies by clicking "Accept all cookies", or click "Cookies settings" to set your preferences. If you click on "Reject all cookies", we will only use cookies necessary for the proper functioning and security of this site. You can adjust your preferences at any time in the "Privacy & Cookie Notice" section at the bottom of any page.',
       learnMore: 'More Information',
       acceptAll: 'Accept all cookies',
