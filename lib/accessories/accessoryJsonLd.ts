@@ -87,7 +87,7 @@ const CATEGORY_SCHEMA_LABEL: Record<Accessory['category'], string> = {
   'signature-strands': 'Signature Strands',
   bracelets: 'Bracelets',
   'bag-strands': 'Bag Strands',
-  'phone-strands': 'Phone Strands',
+  'phone-strands': 'Phone Charms',
 }
 
 export function getAccessoryCarouselAlt(

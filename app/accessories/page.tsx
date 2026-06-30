@@ -30,6 +30,7 @@ import { trackEvent } from '@/lib/analytics/tracking'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { resolveAccessoryCategoryId } from '@/lib/accessories/accessoryRouteAliases'
 import { getAccessoryCarouselAlt, buildAccessoriesCollectionJsonLd } from '@/lib/accessories/accessoryJsonLd'
+import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 
 function parsePriceParam(v: string | null): PriceRangeId {
   if (!v) return 'all'
@@ -637,9 +638,10 @@ function AccessoryCard({
           {/* Image Container */}
           <div className="relative mb-4 aspect-[3/4] overflow-hidden bg-[#f5f5f5]">
             <Image
-              src={accessory.images[0]}
+              src={productImageSrc(accessory.images[0] ?? '')}
               alt={getAccessoryCarouselAlt(accessory, language, isRTL)}
               fill
+              unoptimized={isWebshopPicturePath(accessory.images[0] ?? '')}
               className="pointer-events-none img-zoom object-cover object-top transition-all duration-700 group-hover:scale-105"
             />
             

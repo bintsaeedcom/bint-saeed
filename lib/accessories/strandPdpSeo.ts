@@ -337,6 +337,16 @@ export function getStrandPdpPack(accessoryId: string): StrandPdpSeoPack | undefi
 
 /** PDP gallery: strand hero + distinct pairing shots (skips necklace when same file as strand). */
 export function getAccessoryPdpImages(accessory: Accessory): string[] {
+  if (accessory.category === 'phone-strands') {
+    const primary = accessory.images[0]
+    if (!primary) return [...accessory.images]
+    const gallery = [primary]
+    for (const src of accessory.detailAngles ?? []) {
+      if (!gallery.includes(src)) gallery.push(src)
+    }
+    return gallery
+  }
+
   const pack = getStrandPdpPack(accessory.id)
   if (!pack) return [...accessory.images]
 

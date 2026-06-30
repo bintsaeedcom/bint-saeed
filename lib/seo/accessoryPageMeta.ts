@@ -4,6 +4,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 import { getStrandPdpContent } from '@/lib/accessories/strandPdp/resolveStrandPdpContent'
+import { getPhoneCharmPdpContent } from '@/lib/accessories/phoneCharmPdpContent'
 import { isSignatureStrandCategory } from '@/lib/accessories/accessoryRouteAliases'
 
 const G = LOCALE_GEO
@@ -41,6 +42,8 @@ const STRAND_META_SUFFIX: Record<AppLocale, string> = {
 function accessoryDisplayName(accessory: Accessory, locale: AppLocale): string {
   const strand = getStrandPdpContent(accessory.id, locale)
   if (strand?.headline) return strand.headline
+  const phoneCharm = getPhoneCharmPdpContent(accessory.id, locale)
+  if (phoneCharm?.headline) return phoneCharm.headline
   return locale === 'ar' ? accessory.nameAr : accessory.name
 }
 
@@ -53,6 +56,13 @@ export function buildAccessoryMetaDescription(accessory: Accessory, locale: AppL
   if (strand) {
     const lead = strand.introParagraphs[0] ?? ''
     const merged = [ACCESSORY_INTRO[locale], lead, STRAND_META_SUFFIX[locale]].join(' ')
+    return clipMetaDescription(merged.replace(/\s+/g, ' ').trim(), 200)
+  }
+
+  const phoneCharm = getPhoneCharmPdpContent(accessory.id, locale)
+  if (phoneCharm) {
+    const lead = phoneCharm.introParagraphs[0] ?? ''
+    const merged = [ACCESSORY_INTRO[locale], lead, phoneCharm.headline].join(' ')
     return clipMetaDescription(merged.replace(/\s+/g, ' ').trim(), 200)
   }
 

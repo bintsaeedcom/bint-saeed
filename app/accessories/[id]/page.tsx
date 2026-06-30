@@ -32,6 +32,7 @@ import {
 } from '@/lib/accessories/accessoryJsonLd'
 import { getAccessorySku } from '@/lib/accessories/accessorySku'
 import { getNecklaceEarringPdpContent, faqAnswerParagraphs } from '@/lib/accessories/necklaceEarringPdpContent'
+import { getPhoneCharmPdpContent } from '@/lib/accessories/phoneCharmPdpContent'
 import { accessoryCanonicalUrl } from '@/lib/accessories/accessoryPageUrl'
 import {
   PDP_BULLET_ITEM,
@@ -174,6 +175,7 @@ export default function AccessoryDetailPage() {
 
   const strandPdpContent = getStrandPdpContent(accessory.id, language)
   const necklaceEarringPdpContent = getNecklaceEarringPdpContent(accessory.id, language)
+  const phoneCharmPdpContent = getPhoneCharmPdpContent(accessory.id, language)
   const strandSectionTitles = getStrandPdpSectionTitles(language)
 
   const pdpAccordionSections = useMemo((): PdpAccordionSectionConfig[] => {
@@ -194,6 +196,87 @@ export default function AccessoryDetailPage() {
     const description = isRTL ? accessory.descriptionAr : accessory.description
     const materials = isRTL ? accessory.materialsAr : accessory.materials
     const sku = getAccessorySku(accessory)
+
+    if (phoneCharmPdpContent) {
+      return [
+        {
+          id: 'description',
+          title: productUi.productDetails,
+          titleTag: 'h2',
+          children: (
+            <div className={`space-y-4 ${isRTL ? 'text-right' : ''}`}>
+              {phoneCharmPdpContent.introParagraphs.map((paragraph, idx) => (
+                <p key={`phone-intro-${idx}`} className={PDP_COPY_RELAXED}>
+                  {paragraph}
+                </p>
+              ))}
+              <div className="space-y-4 border-t border-brand-stone/15 pt-4">
+                {(
+                  [
+                    ['Design', phoneCharmPdpContent.design],
+                    ['Natural Stones', phoneCharmPdpContent.naturalStones],
+                    ['House Signatures', phoneCharmPdpContent.houseSignatures],
+                    ['Care', phoneCharmPdpContent.care],
+                    ['Compatibility', phoneCharmPdpContent.compatibility],
+                  ] as const
+                ).map(([title, items]) => (
+                  <div key={title} className="space-y-2">
+                    <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/70">
+                      {title}
+                    </p>
+                    <ul className={PDP_BULLET_LIST}>
+                      {items.map((item, idx) => (
+                        <li key={`${title}-${idx}`} className={PDP_BULLET_ITEM}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+                <div className="space-y-1">
+                  <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/70">
+                    Colour
+                  </p>
+                  <p className={PDP_COPY_RELAXED}>{phoneCharmPdpContent.colour}</p>
+                </div>
+                {sku ? (
+                  <p className={PDP_COPY_RELAXED}>
+                    {isRTL ? `المرجع: ${sku}` : `Reference: ${sku}`}
+                  </p>
+                ) : null}
+              </div>
+            </div>
+          ),
+        },
+        ...(phoneCharmPdpContent.faq.length > 0
+          ? [
+              {
+                id: 'faq',
+                title: productUi.faq,
+                panelClassName: 'space-y-4 pb-5',
+                children: phoneCharmPdpContent.faq.map((item) => (
+                  <div key={item.question} className={isRTL ? 'text-right' : ''}>
+                    <p className={PDP_FAQ_QUESTION}>{item.question}</p>
+                    <div className="mt-1 space-y-2">
+                      {faqAnswerParagraphs(item.answer).map((paragraph, idx) => (
+                        <p key={`${item.question}-${idx}`} className={PDP_COPY_RELAXED}>
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                )),
+              } satisfies PdpAccordionSectionConfig,
+            ]
+          : []),
+        {
+          id: 'shipping',
+          title: t.product.shippingReturns,
+          bordered: phoneCharmPdpContent.faq.length === 0,
+          children: <PdpShippingReturnsBullets isRTL={isRTL} />,
+        },
+      ]
+    }
 
     if (necklaceEarringPdpContent) {
       return [
@@ -337,6 +420,7 @@ export default function AccessoryDetailPage() {
     accessory.materials,
     accessory.materialsAr,
     necklaceEarringPdpContent,
+    phoneCharmPdpContent,
     isRTL,
     productUi.care,
     productUi.faq,
@@ -360,12 +444,15 @@ export default function AccessoryDetailPage() {
 
   const displayName =
     strandPdpContent?.headline ??
+    phoneCharmPdpContent?.headline ??
     (language === 'ar' ? accessory.nameAr : accessory.name)
   const pdpDescription = strandPdpContent
     ? strandPdpContent.introParagraphs.join(' ')
-    : language === 'ar'
-      ? accessory.descriptionAr
-      : accessory.description
+    : phoneCharmPdpContent
+      ? phoneCharmPdpContent.introParagraphs.join(' ')
+      : language === 'ar'
+        ? accessory.descriptionAr
+        : accessory.description
   const pdpImages = useMemo(() => getAccessoryPdpImages(accessory), [accessory])
   const productJsonLd = useMemo(
     () =>

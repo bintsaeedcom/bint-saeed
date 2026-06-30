@@ -188,7 +188,7 @@ function CollectionCardVisual({
       </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-sovereign)]/62 via-[var(--color-sovereign)]/10 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 z-[2] p-4 md:p-5">
-        <h3 className="font-rozha text-xl text-brand-dustyBlue drop-shadow-[0_1px_0_rgba(255,255,255,0.9)] md:text-2xl">
+        <h3 className="font-rozha text-xl text-white md:text-2xl">
           {label}
         </h3>
       </div>

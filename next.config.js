@@ -128,6 +128,11 @@ const nextConfig = {
         destination: '/Webshop%20pictures/accessoiries/strands/bint-saeed-green-jade-abaya-charm.PNG',
         permanent: true,
       },
+      {
+        source: '/Webshop%20pictures/accessoiries/bag%20charm/9D8CE389-54D5-4235-B71B-A9BB92AC97EA.PNG',
+        destination: '/Webshop%20pictures/accessoiries/bag%20charm/bint-saeed-bag-charm.PNG',
+        permanent: true,
+      },
       { source: '/preview', destination: '/home', permanent: true },
       { source: '/preview/:path*', destination: '/home/:path*', permanent: true },
       { source: '/accessoiries', destination: '/accessories', permanent: true },

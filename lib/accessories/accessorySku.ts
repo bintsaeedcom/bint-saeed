@@ -30,11 +30,14 @@ const ACCESSORY_SKU_BY_ID: Record<string, string> = {
   'bag-strand-letter': 'BSA-JWL-BAG-LTR-001',
   'bag-strand-bint': 'BSA-JWL-BAG-BNT-001',
 
-  // Phone strands (PHN)
-  'phone-strand-pearl-strap': 'BSA-JWL-PHN-PRL-001',
-  'phone-strand-beaded': 'BSA-JWL-PHN-BEA-001',
-  'phone-strand-tassel': 'BSA-JWL-PHN-TAS-001',
-  'phone-strand-bint': 'BSA-JWL-PHN-BNT-001',
+  // Al Ain Rosette Phone Charms (PHN)
+  'al-ain-rosette-phone-charm-fuchsia-jade': 'BSA-JWL-PHN-FJA-001',
+  'al-ain-rosette-phone-charm-orange-jade': 'BSA-JWL-PHN-OJA-001',
+  'al-ain-rosette-phone-charm-onyx': 'BSA-JWL-PHN-ONX-001',
+  'al-ain-rosette-phone-charm-tiger-eye': 'BSA-JWL-PHN-TGE-001',
+  'al-ain-rosette-phone-charm-malachite': 'BSA-JWL-PHN-MAL-001',
+  'al-ain-rosette-phone-charm-lapis-lazuli': 'BSA-JWL-PHN-LAP-001',
+  'al-ain-rosette-phone-charm-rose-quartz': 'BSA-JWL-PHN-RSQ-001',
 
   // Signature strands (STR)
   'signature-strand-onyx': 'BSA-JWL-STR-ONX-001',

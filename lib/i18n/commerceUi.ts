@@ -2668,7 +2668,7 @@ const EN: CommerceUi = {
   returns14Days: '14-day returns',
   accessoriesCollection: 'Accessories Collection',
   accessoriesHeroDescription:
-    'Discover our curated collection of abaya strands, necklaces, earrings, bracelets, bag strands, and phone strands.',
+    'Discover our curated collection of abaya strands, necklaces, earrings, bracelets, bag charms, and phone charms.',
   price: 'Price',
   filterByPrice: 'Filter by price',
   stoneType: 'Stone type',
