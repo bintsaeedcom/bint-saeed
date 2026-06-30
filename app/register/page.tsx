@@ -97,10 +97,10 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-brand-pageCanvas pt-28 pb-20">
-      <div className="container mx-auto max-w-lg px-6">
+      <div className="container mx-auto max-w-6xl px-6 lg:px-10">
         <AppPageWayfinding
           rtl={isRTL}
-          className="mb-10"
+          className="mb-10 lg:mb-12"
           segments={[
             { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
             { label: isRTL ? 'الحساب' : 'Account', href: '/account' },
@@ -112,23 +112,29 @@ export default function RegisterPage() {
           }}
         />
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="rounded-2xl border border-brand-stone/25 bg-white p-8 shadow-sm md:p-10"
-        >
-          <p className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-3">
-            Bint Saeed
-          </p>
-          <h1 data-document-h1="true" className="font-rozha text-3xl text-brand-darkRed mb-2">
-            {isRTL ? 'إنشاء حساب' : 'Create an account'}
-          </h1>
-          <p className="font-montserrat text-sm text-brand-clayRed/70 mb-8 leading-relaxed">
-            {isRTL
-              ? 'سنرسل لك رسالة لتأكيد بريدك الإلكتروني قبل تفعيل الحساب.'
-              : 'We’ll email you a confirmation link — your account is activated only after you verify your email.'}
-          </p>
+        <div className="lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,30rem)] lg:items-start lg:gap-14 xl:gap-20">
+          <header className={`mb-8 lg:mb-0 lg:pt-4 ${isRTL ? 'text-right' : ''}`}>
+            <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue lg:mb-4">
+              Bint Saeed
+            </p>
+            <h1
+              data-document-h1="true"
+              className="font-rozha text-3xl text-brand-darkRed whitespace-nowrap md:text-4xl lg:text-[2.65rem] lg:leading-tight"
+            >
+              {isRTL ? 'إنشاء حساب' : 'Create an account'}
+            </h1>
+            <p className="mt-3 max-w-md font-montserrat text-sm leading-relaxed text-brand-clayRed/70 lg:mt-5 lg:text-base">
+              {isRTL
+                ? 'سنرسل لك رسالة لتأكيد بريدك الإلكتروني قبل تفعيل الحساب.'
+                : 'We’ll email you a confirmation link — your account is activated only after you verify your email.'}
+            </p>
+          </header>
 
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full max-w-md rounded-2xl border border-brand-stone/25 bg-white p-8 shadow-sm mx-auto lg:mx-0 lg:max-w-none md:p-10"
+          >
           <a
             href="/api/auth/google?next=/account"
             className="mb-6 flex w-full items-center justify-center gap-3 border border-brand-stone/40 bg-white py-3.5 font-montserrat text-xs uppercase tracking-[0.16em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue/50 hover:bg-brand-pageCanvas"
@@ -252,7 +258,8 @@ export default function RegisterPage() {
               </a>
             </div>
           ) : null}
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </div>
   )

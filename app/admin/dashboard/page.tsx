@@ -77,6 +77,31 @@ interface CheckoutHealth {
   warnings: string[]
 }
 
+interface OpsHealth {
+  ok: boolean
+  checkedAt: string
+  auth: {
+    googleOAuthConfigured: boolean
+    sessionSecretConfigured: boolean
+    redisConfigured: boolean
+    resendConfigured: boolean
+    resendFromConfigured: boolean
+    siteUrlConfigured: boolean
+    googleRedirectUri: string | null
+    googleReady: boolean
+    emailRegisterReady: boolean
+  }
+  newsletter: {
+    mailerliteConfigured: boolean
+    groupIdConfigured: boolean
+    slackConfigured: boolean
+    apiReachable: boolean
+    error: string | null
+    ready: boolean
+  }
+  warnings: string[]
+}
+
 interface ProductAdminRow {
   id: string
   name: string
@@ -105,6 +130,7 @@ export default function AdminDashboard() {
   const [showNotifications, setShowNotifications] = useState(false)
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [checkoutHealth, setCheckoutHealth] = useState<CheckoutHealth | null>(null)
+  const [opsHealth, setOpsHealth] = useState<OpsHealth | null>(null)
   const [orders, setOrders] = useState<StoredOrder[]>([])
   const [customers, setCustomers] = useState<CustomerRecord[]>([])
   const [products, setProducts] = useState<ProductAdminRow[]>([])
@@ -136,6 +162,14 @@ export default function AdminDashboard() {
         setCheckoutHealth(checkoutData as CheckoutHealth)
       } else {
         setCheckoutHealth(null)
+      }
+
+      const opsRes = await fetch('/api/admin/ops-health')
+      const opsData = await opsRes.json()
+      if (opsRes.ok) {
+        setOpsHealth(opsData as OpsHealth)
+      } else {
+        setOpsHealth(null)
       }
 
       // Fetch commerce data for command-center widgets
@@ -437,6 +471,84 @@ export default function AdminDashboard() {
           ) : (
             <p className="font-montserrat text-sm text-gray-500">
               Could not load checkout diagnostics. Make sure you are authenticated as admin.
+            </p>
+          )}
+        </div>
+
+        {/* Auth + newsletter diagnostics */}
+        <div className="mb-8 rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+          <div className="mb-4 flex items-start justify-between gap-4">
+            <div>
+              <h2 className="font-rozha text-2xl text-brand-darkRed">Auth & Newsletter</h2>
+              <p className="font-montserrat text-xs uppercase tracking-[0.16em] text-gray-500">
+                Google login + MailerLite readiness
+              </p>
+            </div>
+            {opsHealth ? (
+              <span
+                className={`inline-flex items-center gap-2 rounded-full px-3 py-1 font-montserrat text-xs uppercase tracking-[0.12em] ${
+                  opsHealth.ok ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+                }`}
+              >
+                {opsHealth.ok ? <FiCheckCircle className="h-4 w-4" /> : <FiAlertTriangle className="h-4 w-4" />}
+                {opsHealth.ok ? 'Ready' : 'Needs Setup'}
+              </span>
+            ) : (
+              <span className="font-montserrat text-xs uppercase tracking-[0.12em] text-gray-500">Unavailable</span>
+            )}
+          </div>
+
+          {opsHealth ? (
+            <>
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+                <HealthPill label="Google OAuth" ok={opsHealth.auth.googleOAuthConfigured} />
+                <HealthPill label="Session secret" ok={opsHealth.auth.sessionSecretConfigured} />
+                <HealthPill label="Upstash Redis" ok={opsHealth.auth.redisConfigured} />
+                <HealthPill label="Site URL" ok={opsHealth.auth.siteUrlConfigured} />
+                <HealthPill label="MailerLite API" ok={opsHealth.newsletter.apiReachable} />
+                <HealthPill label="Resend email" ok={opsHealth.auth.resendConfigured} />
+              </div>
+
+              <div className="mt-4 grid gap-3 lg:grid-cols-2">
+                <div className="rounded-lg border border-gray-100 bg-stone-50 p-4">
+                  <p className="font-montserrat text-[11px] uppercase tracking-[0.15em] text-gray-500">Google redirect URI</p>
+                  <p className="mt-1 break-all font-montserrat text-xs text-gray-700">
+                    {opsHealth.auth.googleRedirectUri ?? 'Set NEXT_PUBLIC_SITE_URL first'}
+                  </p>
+                  <p className="mt-2 font-montserrat text-xs text-gray-500">
+                    Google sign-in ready: {opsHealth.auth.googleReady ? 'Yes' : 'No'}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-gray-100 bg-stone-50 p-4">
+                  <p className="font-montserrat text-[11px] uppercase tracking-[0.15em] text-gray-500">Newsletter</p>
+                  <p className="mt-1 font-montserrat text-xs text-gray-700">
+                    Group ID: {opsHealth.newsletter.groupIdConfigured ? 'Configured' : 'Optional / not set'}
+                  </p>
+                  <p className="mt-1 font-montserrat text-xs text-gray-500">
+                    Slack alerts: {opsHealth.newsletter.slackConfigured ? 'On' : 'Off'}
+                  </p>
+                  <p className="mt-1 font-montserrat text-xs text-gray-500">
+                    Checked: {new Date(opsHealth.checkedAt).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+
+              {opsHealth.warnings.length > 0 && (
+                <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4">
+                  <p className="font-montserrat text-[11px] uppercase tracking-[0.15em] text-amber-700">Warnings</p>
+                  <ul className="mt-2 space-y-1">
+                    {opsHealth.warnings.map((warning) => (
+                      <li key={warning} className="font-montserrat text-xs text-amber-800">
+                        • {warning}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
+          ) : (
+            <p className="font-montserrat text-sm text-gray-500">
+              Could not load auth/newsletter diagnostics. Make sure you are authenticated as admin.
             </p>
           )}
         </div>
