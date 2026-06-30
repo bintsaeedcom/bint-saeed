@@ -29,6 +29,9 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const isHomeEditorial =
     inner === '/home' || (inner.startsWith('/home/') && !isHomeAccessShell)
 
+  const isDevErrorPreview =
+    inner === '/dev/error-preview' || inner.startsWith('/dev/error-preview/')
+
   /** Full-bleed hero under fixed header — no top gap on main */
   const isFlushHeroLayout =
     isHomeEditorial ||
@@ -36,7 +39,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
     inner.startsWith('/craftsmanship/') ||
     inner === '/accessories'
 
-  if (isComingSoon || isHomeAccessShell) {
+  if (isComingSoon || isHomeAccessShell || isDevErrorPreview) {
     return <main>{children}</main>
   }
 

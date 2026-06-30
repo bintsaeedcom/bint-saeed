@@ -71,9 +71,7 @@ export const FOOTER_EXTRA_PAYMENT_ASSETS: PaymentMethodAsset[] = [
     id: 'link',
     label: 'Link',
     src: '/payment/link.svg',
-    width: 40,
-    height: 16,
-    imageClass: 'h-[15px] w-[38px] object-contain',
+    ...CARD_BADGE,
   },
 ]
 

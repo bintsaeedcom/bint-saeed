@@ -3,8 +3,16 @@
 import { useEffect, useState } from 'react'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
-import { FiAlertTriangle, FiHome, FiRefreshCw } from 'react-icons/fi'
+import { FiAlertTriangle, FiRefreshCw } from 'react-icons/fi'
 import { getErrorPageCopyFromPathname } from '@/lib/i18n/errorPageCopyI18n'
+import ErrorPageNavLinks, {
+  ERROR_PAGE_COLLECTION_HREF,
+  ERROR_PAGE_HOME_HREF,
+} from '@/components/ErrorPageNavLinks'
+import {
+  errorPageBrandLabel,
+  errorPagePrimaryBtn,
+} from '@/components/ErrorPageShell'
 import './globals.css'
 
 export default function GlobalError({
@@ -35,58 +43,68 @@ export default function GlobalError({
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Rozha+One&display=swap"
         />
       </head>
-      <body className="min-h-screen bg-brand-pageCanvas font-montserrat antialiased">
-        <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 safe-area-inset">
-          <div className="text-center max-w-xl w-full border border-brand-stone/25 bg-white/90 p-8 sm:p-10 shadow-[0_22px_55px_rgba(28,14,18,0.12)] backdrop-blur-sm">
-            <div className="mb-8">
-              <LocaleLink href="/" data-cursor-hover>
-                <Image
-                  src="/gold logo.png"
-                  alt="Bint Saeed"
-                  width={96}
-                  height={96}
-                  className="mx-auto h-14 w-auto sm:h-16 [filter:none]"
-                />
-              </LocaleLink>
-            </div>
+      <body className="min-h-screen bg-[#faf8f6] font-montserrat antialiased">
+        <div
+          className={`relative min-h-screen overflow-hidden ${isRTL ? 'rtl' : 'ltr'}`}
+          dir={isRTL ? 'rtl' : 'ltr'}
+        >
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(193,144,134,0.12),transparent_55%)]"
+            aria-hidden
+          />
+          <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-14 sm:px-6 sm:py-20">
+            <div className="relative w-full max-w-[26rem] overflow-hidden rounded-sm border border-brand-stone/25 bg-[#faf8f6] text-center shadow-[0_24px_56px_-20px_rgba(59,0,20,0.16)]">
+              <div
+                className="absolute bottom-0 left-0 top-0 w-px bg-gradient-to-b from-transparent via-brand-rose/55 to-transparent"
+                aria-hidden
+              />
+              <div className="px-8 pb-9 pt-10 sm:px-9 sm:pb-10 sm:pt-11">
+                <LocaleLink href={ERROR_PAGE_HOME_HREF} className="inline-block" data-cursor-hover>
+                  <Image
+                    src="/gold logo.png"
+                    alt="Bint Saeed"
+                    width={120}
+                    height={120}
+                    priority
+                    className="mx-auto h-14 w-auto sm:h-[3.75rem]"
+                  />
+                </LocaleLink>
 
-            <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 bg-brand-rose/10 rounded-full flex items-center justify-center">
-              <FiAlertTriangle className="w-10 h-10 sm:w-12 sm:h-12 text-brand-clayRed" />
-            </div>
+                <p className={`${errorPageBrandLabel} mt-7`}>Bint Saeed</p>
 
-            <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">
-              Bint Saeed
-            </p>
-            <h1 data-document-h1="true" className="font-rozha text-3xl sm:text-4xl md:text-5xl text-brand-darkRed mb-4">
-              {copy.globalTitle}
-            </h1>
-            <p className="font-montserrat text-sm sm:text-base text-brand-clayRed/70 tracking-[0.03em] mb-8 max-w-md mx-auto px-4">
-              {copy.globalDescription}
-            </p>
+                <div className="mx-auto mt-5 flex h-11 w-11 items-center justify-center rounded-full border border-brand-stone/22 bg-white/70">
+                  <FiAlertTriangle className="h-5 w-5 text-brand-clayRed/75" strokeWidth={1.25} />
+                </div>
 
-            {error.digest ? (
-              <p className="font-montserrat text-xs text-brand-stone mb-6 px-4 tracking-[0.03em]">
-                {copy.errorId}: {error.digest}
-              </p>
-            ) : null}
+                <h1 className="mt-4 font-rozha text-[1.65rem] leading-tight text-brand-darkRed sm:text-[1.85rem]">
+                  {copy.globalTitle}
+                </h1>
+                <p className="mx-auto mt-4 max-w-[21rem] font-montserrat text-[12px] font-light leading-[1.75] tracking-wide text-neutral-600">
+                  {copy.globalDescription}
+                </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
-              <button
-                onClick={() => reset()}
-                className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-brand-darkRed text-white font-montserrat text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
-                data-cursor-hover
-              >
-                <FiRefreshCw className="w-4 h-4" />
-                {copy.tryAgain}
-              </button>
-              <LocaleLink
-                href="/"
-                className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
-                data-cursor-hover
-              >
-                <FiHome className="w-4 h-4" />
-                {copy.goToHome}
-              </LocaleLink>
+                {error.digest ? (
+                  <p className="mt-3 font-montserrat text-[11px] tracking-[0.08em] text-brand-stone/80">
+                    {copy.errorId}: {error.digest}
+                  </p>
+                ) : null}
+
+                <div className="mt-7">
+                  <ErrorPageNavLinks
+                    isRTL={isRTL}
+                    homeLabel={copy.home}
+                    collectionLabel={copy.collection}
+                    homeHref={ERROR_PAGE_HOME_HREF}
+                    collectionHref={ERROR_PAGE_COLLECTION_HREF}
+                    leading={
+                      <button type="button" onClick={() => reset()} className={errorPagePrimaryBtn} data-cursor-hover>
+                        <FiRefreshCw className="h-3.5 w-3.5 shrink-0" strokeWidth={1.25} />
+                        {copy.tryAgain}
+                      </button>
+                    }
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

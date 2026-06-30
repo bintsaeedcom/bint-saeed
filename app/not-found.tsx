@@ -1,102 +1,35 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
-import Image from 'next/image'
-import { FiHome, FiShoppingBag, FiMail, FiArrowRight } from 'react-icons/fi'
+import ErrorPageShell, { errorPageFooterLabel } from '@/components/ErrorPageShell'
+import ErrorPageNavLinks from '@/components/ErrorPageNavLinks'
+import { FiMail } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getErrorPageCopy } from '@/lib/i18n/errorPageCopyI18n'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 
 export default function NotFound() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const nav = getErrorPageCopy(language)
   const isComingSoonOnly = process.env.NEXT_PUBLIC_COMING_SOON_ONLY === 'true'
 
   return (
-    <>
-      <style jsx global>{`
-        header,
-        footer {
-          display: none !important;
-        }
-      `}</style>
-      <div className={`min-h-screen bg-brand-pageCanvas flex items-center justify-center px-4 sm:px-6 safe-area-inset ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="text-center max-w-xl w-full border border-brand-stone/25 bg-white/85 p-8 sm:p-10 shadow-[0_22px_55px_rgba(28,14,18,0.12)] backdrop-blur-sm">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* Logo */}
-          <div className="mb-8">
-            <LocaleLink href="/" data-cursor-hover>
-              <Image
-                src="/gold logo.png"
-                alt="Bint Saeed"
-                width={96}
-                height={96}
-                className="mx-auto h-14 w-auto sm:h-16 [filter:none]"
-              />
-            </LocaleLink>
-          </div>
-
-          {/* 404 Number with brand styling */}
-          <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue">Bint Saeed</p>
-          <div className="relative mb-5">
-            <h1 data-document-h1="true" className="font-rozha text-[84px] leading-none text-brand-stone/15 select-none sm:text-[150px] md:text-[180px]">
-              404
-            </h1>
-            <span className="block font-rozha text-4xl leading-none text-brand-darkRed sm:hidden">
-              {ui.notFound.title}
-            </span>
-            <div className="absolute inset-0 hidden items-center justify-center sm:flex">
-              <span className="font-rozha text-4xl sm:text-5xl text-brand-darkRed">
-                {ui.notFound.title}
-              </span>
-            </div>
-          </div>
-          
-          {/* Description */}
-          <p className={`font-montserrat text-sm sm:text-base text-brand-clayRed/70 tracking-wide mb-8 sm:mb-10 max-w-md mx-auto px-4 ${isRTL ? 'text-right' : ''}`}>
-            {ui.notFound.description}
-          </p>
-          
-          {/* Action Buttons */}
-          <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
-            <LocaleLink
-              href="/"
-              className={`inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-brand-darkRed text-white font-montserrat text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
-              data-cursor-hover
-            >
-              <FiHome className="w-4 h-4" />
-              {ui.notFound.backToHome}
-            </LocaleLink>
-            {!isComingSoonOnly ? (
-              <LocaleLink
-                href="/shop"
-                className={`inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs sm:text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
-                data-cursor-hover
-              >
-                <FiShoppingBag className="w-4 h-4" />
-                {ui.notFound.shopCollection}
-              </LocaleLink>
-            ) : null}
-          </div>
-
-          {/* Decorative line */}
-          <div className="flex items-center justify-center gap-4 my-8 sm:my-10">
-            <div className="w-16 sm:w-24 h-px bg-brand-stone/30" />
-            <span className="font-rozha text-brand-stone/50 text-lg">✦</span>
-            <div className="w-16 sm:w-24 h-px bg-brand-stone/30" />
-          </div>
-
+    <ErrorPageShell
+      isRTL={isRTL}
+      statusCode="404"
+      title={ui.notFound.title}
+      description={ui.notFound.description}
+      descriptionSingleLine
+      footer={
+        <div className="text-center">
           {!isComingSoonOnly ? (
-            <div className={`${isRTL ? 'text-right' : ''}`}>
-              <p className="font-montserrat text-xs uppercase tracking-[0.2em] text-brand-clayRed/50 mb-4">
+            <>
+              <p className={`${errorPageFooterLabel} mb-3`}>
                 {ui.notFound.popularPages}
               </p>
-              <div className={`flex flex-wrap justify-center gap-4 sm:gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`flex flex-wrap justify-center gap-x-5 gap-y-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 {[
                   { href: '/about', label: ui.notFound.about },
                   { href: '/accessories', label: ui.common.accessories },
@@ -106,33 +39,36 @@ export default function NotFound() {
                   <LocaleLink
                     key={link.href}
                     href={link.href}
-                    className="font-montserrat text-xs sm:text-sm text-brand-clayRed hover:text-brand-dustyBlue transition-colors underline-hover"
+                    className="font-montserrat text-[11px] tracking-wide text-brand-clayRed/80 underline-offset-4 transition-colors hover:text-brand-darkRed hover:underline"
                     data-cursor-hover
                   >
                     {link.label}
                   </LocaleLink>
                 ))}
               </div>
-            </div>
+            </>
           ) : null}
-
-          {/* Contact */}
-          <div className={`mt-8 sm:mt-10 pt-6 border-t border-brand-stone/20 ${isRTL ? 'text-right' : ''}`}>
-            <p className="font-montserrat text-xs text-brand-clayRed/50 tracking-wide">
+          <div className={`${isComingSoonOnly ? '' : 'mt-7 border-t border-brand-stone/20 pt-6'} text-center`}>
+            <p className={errorPageFooterLabel}>
               {ui.notFound.needHelp}
             </p>
-            <a 
+            <a
               href={officialMailto('support')}
-              className={`inline-flex items-center gap-2 mt-2 font-montserrat text-sm text-brand-darkRed hover:text-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`mt-2 inline-flex items-center justify-center gap-2 font-montserrat text-[12px] text-brand-darkRed transition-colors hover:text-brand-darkMagenta ${isRTL ? 'flex-row-reverse' : ''}`}
               data-cursor-hover
             >
-              <FiMail className="w-4 h-4" />
+              <FiMail className="h-4 w-4 shrink-0" strokeWidth={1.25} />
               {OFFICIAL_EMAILS.support}
             </a>
           </div>
-        </motion.div>
-      </div>
-      </div>
-    </>
+        </div>
+      }
+    >
+      <ErrorPageNavLinks
+        isRTL={isRTL}
+        homeLabel={nav.home}
+        collectionLabel={nav.collection}
+      />
+    </ErrorPageShell>
   )
 }

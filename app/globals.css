@@ -122,6 +122,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html[data-bs-error-page] header,
+html[data-bs-error-page] footer,
+html[data-bs-error-page] [data-whatsapp-button],
+html[data-bs-error-page] [data-cookie-consent],
+html[data-bs-error-page] [data-regional-popup] {
+  display: none !important;
+}
+
 /**
  * Break out of padded/max-width parents to true viewport width (videos, full-bleed bands).
  * Uses margin technique so backgrounds reach both edges reliably across browsers.

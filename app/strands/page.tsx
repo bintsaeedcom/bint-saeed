@@ -16,8 +16,8 @@ import { withBrandAlt } from '@/lib/products/imageAlt'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
 import { buildStrandsCollectionJsonLd } from '@/lib/accessories/strandsCollectionSchemaI18n'
 
-/** Strands hero banner — `public/strands-banner.jpg` */
-const HERO_CAMPAIGN_IMAGE = '/strands-banner.jpg'
+/** Strands hero banner — `public/charms/charm-fabric-dark.webp` */
+const HERO_CAMPAIGN_IMAGE = '/charms/charm-fabric-dark.webp'
 const STRAND_HERO_ALT = withBrandAlt(
   'Natural stone bead abaya strands collection — interchangeable onyx, jade, amethyst, malachite and rose quartz for Marylebone Abaya',
 )

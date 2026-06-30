@@ -38,6 +38,10 @@ function isInnerPathAllowlistedDuringComingSoon(normalizedInner: string): boolea
 
   if (normalizedInner === '/accessories' || normalizedInner.startsWith('/accessories/')) return true
 
+  if (normalizedInner === '/dev/error-preview' || normalizedInner.startsWith('/dev/error-preview/')) {
+    return true
+  }
+
   return false
 }
 

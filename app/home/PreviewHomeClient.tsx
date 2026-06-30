@@ -20,9 +20,10 @@ import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getHomeEditorialCopy } from '@/lib/i18n/homeEditorialCopyI18n'
 import { localizedColorName } from '@/lib/products/imageAltI18n'
 import { products as staticProducts } from '@/data/products'
-import { getProductHref } from '@/lib/products/links'
+import { getProductHref, getProductSlug } from '@/lib/products/links'
 import { getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
 import { CODES_IMAGE_FILES, codesPageImagePath } from '@/lib/the-codes/codesPageContent'
+import { HOME_STORY_CODE_HREFS } from '@/lib/the-codes/homeStoryCodeHrefs'
 import type { Product } from '@/data/products'
 
 /** Corner brackets / full-bleed grid stripes removed — typography uses border-s + border-b on copy only (see hero). */
@@ -390,6 +391,25 @@ const HOME_STRANDS_FEATURE_IMAGES = {
   hero: '/home/strands-feature/bint-saeed-home-strands-feature.webp',
 } as const
 
+const HOME_PERSONALISATION_FEATURE_IMAGE = '/Personalisation Page/secret pocket.JPG'
+
+const DARK_PANEL_BG_LAYERS = (
+  <>
+    <div className="absolute inset-0 opacity-25">
+      <Image
+        src="/background1.JPG"
+        alt=""
+        fill
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        className="object-cover object-center"
+        aria-hidden
+      />
+    </div>
+    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(114,32,48,0.44)_0%,rgba(114,32,48,0.18)_45%,rgba(114,32,48,0.28)_100%)]" />
+    <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
+  </>
+)
+
 function CharmHeroFeatureSection() {
   const { language, isRTL } = useLanguage()
   const copy = getHomeEditorialCopy(language)
@@ -476,33 +496,25 @@ function CharmHeroFeatureSectionMirror() {
       <div className="grid min-h-[68vh] w-full max-w-none items-stretch lg:grid-cols-2">
         <LocaleLink
           data-reveal
-          href="/strands"
-          className="group relative overflow-hidden bg-[var(--color-sovereign)]"
+          href="/personalisation"
+          className="group relative isolate min-h-[68vh] overflow-hidden bg-[#1a0210]"
           data-cursor-hover
         >
-          <div className="relative h-full min-h-[68vh]">
+          {DARK_PANEL_BG_LAYERS}
+          <div className="relative z-[1] h-full min-h-[68vh]">
             <Image
-              src="/88.jpg"
-              alt={withBrandAlt('Bint Saeed strand collection')}
+              src={HOME_PERSONALISATION_FEATURE_IMAGE}
+              alt={withBrandAlt('Bint Saeed hidden inner label personalisation')}
               fill
-              sizes="(max-width: 1024px) 100vw, 58vw"
-              className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-center opacity-90 mix-blend-multiply transition-transform duration-700 group-hover:scale-[1.02]"
             />
+            <div className="pointer-events-none absolute inset-0 bg-[#1a0210]/30" aria-hidden />
           </div>
         </LocaleLink>
 
         <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
-          <div className="absolute inset-0 opacity-25">
-            <Image
-              src="/background1.JPG"
-              alt={withBrandAlt('Bint Saeed strand collection')}
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-center"
-            />
-          </div>
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(114,32,48,0.44)_0%,rgba(114,32,48,0.18)_45%,rgba(114,32,48,0.28)_100%)]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1a0210]/96 via-[#1a0210]/88 to-[#1a0210]/80" />
+          {DARK_PANEL_BG_LAYERS}
           <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
               {copy.carriedCloseEyebrow}
@@ -569,6 +581,20 @@ function CampaignPanoramaSection() {
 }
 
 const QUICK_SHOP_LOOP_MS = 72_000
+
+function quickShopCarouselImages(product: Product): { primary: string; hover: string } {
+  const slug = getProductSlug(product)
+  if (slug === 'park-lane-abaya') {
+    return {
+      primary: product.images[1] ?? product.images[0] ?? '',
+      hover: product.images[2] ?? product.images[1] ?? product.images[0] ?? '',
+    }
+  }
+  return {
+    primary: product.images[0] ?? '',
+    hover: product.images[1] ?? product.images[0] ?? '',
+  }
+}
 
 const CATEGORY_STRIP = [
   {
@@ -783,7 +809,9 @@ function QuickShopCarousel() {
               willChange: segmentPx > 0 ? 'transform' : undefined,
             }}
           >
-          {[...quickProducts, ...quickProducts].map((product, idx) => (
+          {[...quickProducts, ...quickProducts].map((product, idx) => {
+            const carouselImages = quickShopCarouselImages(product)
+            return (
             <LocaleLink
               key={`${product.id}-${idx}`}
               href={getProductHref(product)}
@@ -793,14 +821,14 @@ function QuickShopCarousel() {
               {/* Images must not capture hits — stacked fill layers steal taps from the link otherwise */}
               <div className="relative h-[20.95rem] w-full shrink-0 overflow-hidden bg-[#f3f0ea] md:h-[25.85rem] lg:h-[27.15rem]">
                 <SafeCarouselImage
-                  src={product.images[0]}
-                  alt={getProductImageAlt(product, product.images[0], { color: product.colors[0]?.name, index: 0, locale: language })}
+                  src={carouselImages.primary}
+                  alt={getProductImageAlt(product, carouselImages.primary, { color: product.colors[0]?.name, index: 0, locale: language })}
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
                   className="pointer-events-none object-cover object-top transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-visible:opacity-0 group-hover:scale-[1.03]"
                 />
                 <SafeCarouselImage
-                  src={product.images[1] || product.images[0]}
-                  alt={getProductImageAlt(product, product.images[1] || product.images[0], {
+                  src={carouselImages.hover}
+                  alt={getProductImageAlt(product, carouselImages.hover, {
                     color: product.colors[0]?.name,
                     index: 1,
                     locale: language,
@@ -839,7 +867,8 @@ function QuickShopCarousel() {
                 </div>
               </div>
             </LocaleLink>
-          ))}
+            )
+          })}
           </div>
         </motion.div>
       </div>
@@ -876,6 +905,17 @@ function QuickShopCarousel() {
               loopStartRef.current = performance.now() - (v / 100) * QUICK_SHOP_LOOP_MS
             }}
           />
+          <div className="mt-6 flex justify-center">
+            <LocaleLink
+              href="/shop"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-[4px] border border-brand-darkRed/28 bg-white/80 px-6 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-darkRed transition-colors hover:border-brand-darkRed/45 hover:bg-brand-stone/10"
+              data-cursor-hover
+              data-analytics-event="click_cta_quick_shop_carousel"
+              data-analytics-section="home-quick-shop-carousel"
+            >
+              {copy.shopNowCta}
+            </LocaleLink>
+          </div>
         </div>
       ) : null}
 
@@ -1111,7 +1151,7 @@ function MagazineGrid() {
         collectionChapterImage('bint-saeed-home-collection-abayas-02.webp'),
       ],
       label: 'Abayas',
-      href: '/shop',
+      href: '/shop?category=abayas',
       section: 'home-collection-card-abayas',
     },
     {
@@ -1120,7 +1160,7 @@ function MagazineGrid() {
         collectionChapterImage('bint-saeed-home-collection-kaftans-02.webp'),
       ],
       label: 'Kaftans',
-      href: '/shop',
+      href: '/shop?category=kaftans',
       section: 'home-collection-card-kaftans',
     },
     {
@@ -1129,7 +1169,7 @@ function MagazineGrid() {
         collectionChapterImage('bint-saeed-home-collection-sets-02.webp'),
       ],
       label: 'Sets',
-      href: '/shop',
+      href: '/shop?category=sets',
       section: 'home-collection-card-sets',
     },
     {
@@ -1225,6 +1265,7 @@ function EditorialSplit() {
     ...code,
     image: storyCodeImages[index]!,
     alt: storyCodeAlts[index]!,
+    href: HOME_STORY_CODE_HREFS[index] ?? '/the-codes',
   }))
 
   return (
@@ -1235,22 +1276,11 @@ function EditorialSplit() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className={`mb-5 flex flex-col items-start gap-2 md:flex-row md:items-end md:justify-between ${isRTL ? 'md:flex-row-reverse md:text-right' : ''}`}>
-            <div>
-              <p className="mb-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
-                {copy.houseCodesEyebrow}
-              </p>
-              <h2 className="font-rozha text-[32px] uppercase leading-none whitespace-nowrap text-[#2a1e18] md:text-4xl">{copy.houseCodesHeading}</h2>
-            </div>
-            <LocaleLink
-              href="/the-codes"
-              className="inline-flex min-h-[32px] items-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue transition-colors hover:text-[#2a1e18] md:min-h-[40px]"
-              data-cursor-hover
-              data-analytics-event="click_view_collection_codes_page"
-              data-analytics-section="home-codes-section"
-            >
-              {copy.discoverCodesCta}
-            </LocaleLink>
+          <div className={`mb-5 ${isRTL ? 'text-right' : ''}`}>
+            <p className="mb-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
+              {copy.houseCodesEyebrow}
+            </p>
+            <h2 className="font-rozha text-[32px] uppercase leading-none whitespace-nowrap text-[#2a1e18] md:text-4xl">{copy.houseCodesHeading}</h2>
           </div>
 
           <div className="overflow-hidden border-t border-[#e8ddd4] md:hidden">
@@ -1262,7 +1292,7 @@ function EditorialSplit() {
               {[...storyCodes, ...storyCodes].map((code, index) => (
                 <LocaleLink
                   key={`${code.title}-${index}`}
-                  href="/the-codes"
+                  href={code.href}
                   className="group w-[76vw] min-w-[76vw] shrink-0 p-3 text-left transition-colors"
                   data-cursor-hover
                 >
@@ -1287,7 +1317,7 @@ function EditorialSplit() {
             {storyCodes.map((code, index) => (
               <LocaleLink
                 key={code.title}
-                href="/the-codes"
+                href={code.href}
                 className={`group p-4 text-left transition-colors hover:bg-[#f5f0ea] ${
                   index !== storyCodes.length - 1
                     ? 'border-b border-[#e8ddd4] lg:border-b-0 lg:border-r lg:border-[#e8ddd4]'
@@ -1309,6 +1339,18 @@ function EditorialSplit() {
                 </h3>
               </LocaleLink>
             ))}
+          </div>
+
+          <div className="mt-6 flex justify-center border-t border-[#e8ddd4] pt-6">
+            <LocaleLink
+              href="/the-codes"
+              className="inline-flex min-h-[40px] items-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue transition-colors hover:text-[#2a1e18]"
+              data-cursor-hover
+              data-analytics-event="click_view_collection_codes_page"
+              data-analytics-section="home-codes-section"
+            >
+              {copy.discoverCodesCta}
+            </LocaleLink>
           </div>
         </motion.div>
       </div>

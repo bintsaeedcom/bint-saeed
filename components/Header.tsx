@@ -8,8 +8,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FiSearch, FiUser, FiShoppingBag, FiMenu, FiX, FiArrowRight, FiChevronDown } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import LanguageSwitcher from './LanguageSwitcher'
-import CurrencySwitcher from './CurrencySwitcher'
 import MiniCart from './MiniCart'
 import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
@@ -17,6 +15,8 @@ import { getSearchableContent, type SearchableItem } from '@/lib/i18n/searchable
 import {
   ACCESSORY_IMAGE_NECKLACE,
   ACCESSORY_IMAGE_PHONE_CHARM,
+  ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
+  ACCESSORY_IMAGE_EARRINGS_HERO,
 } from '@/data/accessories'
 
 /** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
@@ -25,6 +25,50 @@ const headerBarGradient =
 
 const mobileMenuGradient =
   'bg-[radial-gradient(ellipse_130%_95%_at_50%_0%,#321922_0%,#2d141e_38%,#1a0f14_72%,#12080b_100%)]'
+
+function CartCountBadge({ count, rtl }: { count: number; rtl: boolean }) {
+  if (count <= 0) return null
+  return (
+    <span
+      className={`pointer-events-none absolute flex h-4 w-4 items-center justify-center rounded-full bg-brand-dustyBlue font-montserrat text-[9px] font-bold leading-none text-white ${
+        rtl ? '-left-1.5 -top-1.5' : '-right-1.5 -top-1.5'
+      }`}
+    >
+      {count > 9 ? '9+' : count}
+    </span>
+  )
+}
+
+function HeaderCartTrigger({
+  onClick,
+  label,
+  rtl,
+  count,
+  className,
+  iconClassName,
+}: {
+  onClick: () => void
+  label: string
+  rtl: boolean
+  count: number
+  className: string
+  iconClassName: string
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`inline-flex shrink-0 items-center justify-center ${className}`}
+      data-cursor-hover
+      aria-label={label}
+    >
+      <span className="relative inline-flex shrink-0 items-center justify-center leading-none">
+        <FiShoppingBag className={iconClassName} />
+        <CartCountBadge count={count} rtl={rtl} />
+      </span>
+    </button>
+  )
+}
 
 export default function Header() {
   const pathname = usePathname()
@@ -117,9 +161,19 @@ export default function Header() {
           image: '/collection-section/bint-saeed-luxury-abayas-collection-nav.webp?v=2',
         },
         {
+          title: 'Kaftans',
+          href: '/shop?category=kaftans',
+          image: '/home/collection-chapter/bint-saeed-home-collection-kaftans-01.webp',
+        },
+        {
           title: 'Sets',
           href: '/shop?category=sets',
           image: '/collection-section/bint-saeed-luxury-sets-collection-nav.webp',
+        },
+        {
+          title: 'Dresses',
+          href: '/shop?category=dresses',
+          image: '/collection-section/bint-saeed-hampstead-dress-black-front-al-talli-detail-shot.png',
         },
       ],
     },
@@ -140,9 +194,19 @@ export default function Header() {
       ],
       features: [
         {
+          title: 'Signature Strands',
+          href: '/accessories?type=signature-strands',
+          image: ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
+        },
+        {
           title: 'Necklaces',
           href: '/accessories?type=necklaces',
           image: ACCESSORY_IMAGE_NECKLACE,
+        },
+        {
+          title: 'Earrings',
+          href: '/accessories?type=earrings',
+          image: ACCESSORY_IMAGE_EARRINGS_HERO,
         },
         {
           title: 'Phone Charms',
@@ -228,10 +292,6 @@ export default function Header() {
     setSearchResults([])
   }
 
-  const localeSwitcherClass = `flex shrink-0 items-center gap-2 rounded-full border px-2.5 py-1 ${
-    isTransparentHomeHeader ? 'border-white/25 bg-white/[0.02]' : 'border-white/15 bg-white/[0.03]'
-  }`
-
   const logoClassName = `w-auto max-w-[min(88vw,920px)] transition-all duration-300 sm:max-w-[min(90vw,920px)] 2xl:max-w-[min(94vw,960px)] [filter:none] [text-shadow:none] ${
     isScrolled
       ? 'h-[clamp(2.85rem,6.5vw,4.5rem)] max-h-[60px] sm:max-h-[70px] md:max-h-[80px] lg:max-h-[92px] xl:max-h-[104px] 2xl:max-h-[118px]'
@@ -314,25 +374,14 @@ export default function Header() {
               )}
 
               <div className="absolute right-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center gap-1 2xl:hidden">
-                <div className={`hidden sm:flex ${localeSwitcherClass}`}>
-                  <CurrencySwitcher variant="light" showSymbol={false} />
-                  <span className="h-4 w-px bg-white/15" aria-hidden />
-                  <LanguageSwitcher variant="light" />
-                </div>
-                <button
-                  type="button"
+                <HeaderCartTrigger
                   onClick={() => setIsMiniCartOpen(true)}
-                  className="relative p-1.5 text-white/75 transition-colors duration-300 hover:text-white"
-                  data-cursor-hover
-                  aria-label={t.nav.cart}
-                >
-                  <FiShoppingBag className="h-[17px] w-[17px]" />
-                  {cartItems.length > 0 && (
-                    <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-dustyBlue px-0.5 font-montserrat text-[9px] font-bold text-white">
-                      {cartItems.length}
-                    </span>
-                  )}
-                </button>
+                  label={t.nav.cart}
+                  rtl={isRTL}
+                  count={cartItems.length}
+                  className="p-1.5 text-white/75 transition-colors duration-300 hover:text-white"
+                  iconClassName="h-[17px] w-[17px]"
+                />
               </div>
             </div>
 
@@ -404,12 +453,6 @@ export default function Header() {
 
             {/* Right: locale, account and cart */}
             <div className={`pointer-events-auto relative z-[61] flex min-w-0 items-center justify-end gap-2 2xl:gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className={localeSwitcherClass}>
-                <CurrencySwitcher variant="light" showSymbol={false} />
-                <span className="h-4 w-px bg-white/15" aria-hidden />
-                <LanguageSwitcher variant="light" />
-              </div>
-              <span className="h-5 w-px shrink-0 bg-white/12" aria-hidden />
               <button
                 type="button"
                 onClick={() => {
@@ -422,20 +465,14 @@ export default function Header() {
                 <FiUser className="w-[18px] h-[18px]" />
               </button>
               
-              <button
-                type="button"
+              <HeaderCartTrigger
                 onClick={() => setIsMiniCartOpen(true)}
-                className="relative rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
-                data-cursor-hover
-                aria-label={t.nav.cart}
-              >
-                <FiShoppingBag className="w-[18px] h-[18px]" />
-                {cartItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-dustyBlue text-white text-[9px] rounded-full flex items-center justify-center font-montserrat font-bold">
-                    {cartItems.length}
-                  </span>
-                )}
-              </button>
+                label={t.nav.cart}
+                rtl={isRTL}
+                count={cartItems.length}
+                className="rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
+                iconClassName="h-[18px] w-[18px]"
+              />
             </div>
           </div>
 
@@ -775,32 +812,25 @@ export default function Header() {
                 })}
               </div>
 
-              {/* Footer — safe-area inset so currency/language sit above home indicator / browser chrome */}
+              {/* Footer — safe-area inset above home indicator / browser chrome */}
               <div className="border-t border-white/10 px-6 pb-[max(1.75rem,env(safe-area-inset-bottom,0px))] pt-5">
-                <div className={`flex items-center justify-between gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <div className={`flex items-center gap-5 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    <LocaleLink
-                      href="/cart"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="text-white/70 hover:text-white transition-colors"
-                      data-cursor-hover
-                    >
-                      <FiShoppingBag className="w-6 h-6" />
-                    </LocaleLink>
-                    <LocaleLink
-                      href="/account"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="text-white/70 hover:text-white transition-colors"
-                      data-cursor-hover
-                    >
-                      <FiUser className="w-6 h-6" />
-                    </LocaleLink>
-                  </div>
-                  <div className={`flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-2.5 py-1 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    <CurrencySwitcher variant="light" showSymbol={false} align="end" dropdownPlacement="above" />
-                    <span className="h-4 w-px bg-white/15" aria-hidden />
-                    <LanguageSwitcher variant="light" align="end" dropdownPlacement="above" />
-                  </div>
+                <div className={`flex items-center gap-5 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <LocaleLink
+                    href="/cart"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-white/70 hover:text-white transition-colors"
+                    data-cursor-hover
+                  >
+                    <FiShoppingBag className="w-6 h-6" />
+                  </LocaleLink>
+                  <LocaleLink
+                    href="/account"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-white/70 hover:text-white transition-colors"
+                    data-cursor-hover
+                  >
+                    <FiUser className="w-6 h-6" />
+                  </LocaleLink>
                 </div>
               </div>
             </div>

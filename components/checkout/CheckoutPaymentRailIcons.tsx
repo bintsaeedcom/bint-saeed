@@ -22,9 +22,7 @@ export default function CheckoutPaymentRailIcons({ rail, className = '' }: Props
         return (
           <li
             key={id}
-            className={`flex h-7 items-center justify-center overflow-hidden rounded-[4px] shadow-sm ${
-              id === 'link' ? 'min-w-[2.75rem] bg-white px-2' : ''
-            } ${asset.chipClass ?? ''}`}
+            className={`flex h-7 items-center justify-center overflow-hidden rounded-[4px] shadow-sm ${asset.chipClass ?? ''}`}
           >
             <PaymentMethodIcon id={id} />
           </li>

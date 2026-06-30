@@ -6,12 +6,8 @@ import { PaymentMethodIcon } from '@/components/PaymentMethodIcon'
 
 const PAYMENT_METHODS = [...PAYMENT_METHOD_ASSETS, ...FOOTER_EXTRA_PAYMENT_ASSETS]
 
-function paymentTileClass(id: string): string {
-  if (id === 'link') {
-    return 'flex h-8 min-w-[2.75rem] items-center justify-center rounded-[4px] bg-white px-2 shadow-[0_2px_10px_rgba(0,0,0,0.14)]'
-  }
-  return 'flex h-8 items-center justify-center overflow-hidden rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.14)]'
-}
+const PAYMENT_TILE_CLASS =
+  'flex h-8 items-center justify-center overflow-hidden rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.14)]'
 
 type Props = {
   label: string
@@ -35,7 +31,7 @@ export default function FooterPaymentMethods({ label, className = '', align = 's
       >
         {PAYMENT_METHODS.map((method) => (
           <li key={method.id}>
-            <span className={paymentTileClass(method.id)}>
+            <span className={PAYMENT_TILE_CLASS}>
               <PaymentMethodIcon id={method.id} />
             </span>
           </li>

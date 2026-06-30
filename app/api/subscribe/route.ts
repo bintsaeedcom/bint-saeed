@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const { email, firstName, lastName, name, source, phone: phoneRaw } = body
+    const { email, firstName, lastName, name, source, phone: phoneRaw, notifyChannel } = body
 
     if (typeof email !== 'string') {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 })
@@ -135,6 +135,12 @@ export async function POST(request: NextRequest) {
         ]
         if (normalizedPhone) {
           slackFields.push({ type: 'mrkdwn', text: `*Phone:*\n${normalizedPhone}` })
+        }
+        if (notifyChannel === 'email' || notifyChannel === 'whatsapp') {
+          slackFields.push({
+            type: 'mrkdwn',
+            text: `*Notify via:*\n${notifyChannel === 'whatsapp' ? 'WhatsApp' : 'Email'}`,
+          })
         }
         if (source) {
           slackFields.push({ type: 'mrkdwn', text: `*Source:*\n${String(source)}` })

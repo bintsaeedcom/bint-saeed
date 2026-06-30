@@ -6,6 +6,8 @@ export type ErrorPageCopy = {
   description: string
   errorId: string
   tryAgain: string
+  home: string
+  collection: string
   goToHome: string
   needAssistance: string
   whatsAppSupport: string
@@ -18,6 +20,8 @@ const EN: ErrorPageCopy = {
   description: 'We apologize for the inconvenience. Please try again, or contact us if the problem persists.',
   errorId: 'Error ID',
   tryAgain: 'Try Again',
+  home: 'Home',
+  collection: 'Collection',
   goToHome: 'Go to Home',
   needAssistance: 'Need assistance?',
   whatsAppSupport: 'WhatsApp Support',
@@ -30,6 +34,8 @@ const AR: ErrorPageCopy = {
   description: 'نعتذر عن الإزعاج. يرجى المحاولة مرة أخرى، أو التواصلي معنا إذا استمرت المشكلة.',
   errorId: 'رقم الخطأ',
   tryAgain: 'حاولي مرة أخرى',
+  home: 'الرئيسية',
+  collection: 'المجموعة',
   goToHome: 'العودة للرئيسية',
   needAssistance: 'تحتاجين مساعدة؟',
   whatsAppSupport: 'دعم واتساب',

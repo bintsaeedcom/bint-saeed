@@ -25,7 +25,7 @@ type Props = {
 }
 
 const backLinkBase =
-  'inline-flex shrink-0 items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.16em] transition-colors sm:text-xs'
+  'inline-flex shrink-0 items-center gap-1.5 font-montserrat text-[10px] uppercase leading-none tracking-[0.14em] transition-colors sm:gap-2 sm:text-xs'
 
 /**
  * Breadcrumb + optional back link. Keeps both elements per luxury PDP pattern.
@@ -57,22 +57,19 @@ export default function AppPageWayfinding({
     }
   }
 
-  const renderBackControl = (className: string) => {
+  const renderBackControl = (extraClass = '') => {
     if (!backLink) return null
+
+    const className = `${backLinkClass} ${extraClass} ${rtl ? 'flex-row-reverse' : ''}`
 
     if (backLink.useHistory) {
       return (
-        <button
-          type="button"
-          onClick={handleHistoryBack}
-          className={`group ${className}`}
-          data-cursor-hover
-        >
+        <button type="button" onClick={handleHistoryBack} className={`group ${className}`} data-cursor-hover>
           <FiArrowLeft
-            className={`h-4 w-4 transition-transform ${rtl ? 'rotate-180 group-hover:translate-x-1' : 'group-hover:-translate-x-1'}`}
+            className={`h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4 ${rtl ? 'rotate-180 group-hover:translate-x-0.5' : 'group-hover:-translate-x-0.5'}`}
             aria-hidden
           />
-          {backLink.label}
+          <span className="truncate">{backLink.label}</span>
         </button>
       )
     }
@@ -82,77 +79,41 @@ export default function AppPageWayfinding({
     return (
       <LocaleLink href={backLink.href} className={`group ${className}`} data-cursor-hover>
         <FiArrowLeft
-          className={`h-4 w-4 transition-transform ${rtl ? 'rotate-180 group-hover:translate-x-1' : 'group-hover:-translate-x-1'}`}
+          className={`h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4 ${rtl ? 'rotate-180 group-hover:translate-x-0.5' : 'group-hover:-translate-x-0.5'}`}
           aria-hidden
         />
-        {backLink.label}
+        <span className="truncate">{backLink.label}</span>
       </LocaleLink>
     )
   }
 
+  const rowClass = `flex min-w-0 w-full items-center gap-2 sm:gap-3 ${rtl ? 'flex-row-reverse' : ''}`
+
   if (layout === 'bar') {
     return (
       <div className={`border-b border-brand-stone/20 pt-24 md:pt-28 lg:pt-32 ${className}`}>
-        <div
-          className={`mx-auto flex min-w-0 w-full max-w-[1400px] items-center justify-between gap-3 px-4 py-2 sm:gap-4 sm:px-8 ${rtl ? 'flex-row-reverse' : ''}`}
-        >
+        <div className={`mx-auto max-w-[1400px] px-4 py-2 sm:px-8 ${rowClass}`}>
           <AppBreadcrumb
             rtl={rtl}
             variant={variant}
             segments={segments}
             className={`min-w-0 flex-1 ${breadcrumbClassName}`}
           />
-          {backLink ? (
-            backLink.useHistory ? (
-              <button
-                type="button"
-                onClick={handleHistoryBack}
-                className={`${backLinkClass} hidden md:inline-flex ${rtl ? 'flex-row-reverse' : ''}`}
-                data-cursor-hover
-              >
-                {backLink.label}
-              </button>
-            ) : backLink.href ? (
-              <LocaleLink
-                href={backLink.href}
-                className={`${backLinkClass} hidden md:inline-flex ${rtl ? 'flex-row-reverse' : ''}`}
-                data-cursor-hover
-              >
-                {backLink.label}
-              </LocaleLink>
-            ) : null
-          ) : null}
+          {renderBackControl('max-w-[38%] sm:max-w-none')}
         </div>
-        {backLink ? (
-          <div className={`mx-auto w-full max-w-[1400px] px-4 pb-2 sm:px-8 md:hidden ${rtl ? 'text-right' : ''}`}>
-            {backLink.useHistory ? (
-              <button
-                type="button"
-                onClick={handleHistoryBack}
-                className={`${backLinkClass} ${rtl ? 'flex-row-reverse' : ''}`}
-                data-cursor-hover
-              >
-                {backLink.label}
-              </button>
-            ) : backLink.href ? (
-              <LocaleLink
-                href={backLink.href}
-                className={`${backLinkClass} ${rtl ? 'flex-row-reverse' : ''}`}
-                data-cursor-hover
-              >
-                {backLink.label}
-              </LocaleLink>
-            ) : null}
-          </div>
-        ) : null}
       </div>
     )
   }
 
   return (
-    <div className={`space-y-3 ${className}`}>
-      <AppBreadcrumb rtl={rtl} variant={variant} segments={segments} className={breadcrumbClassName} />
-      {renderBackControl(`${backLinkClass} ${rtl ? 'flex-row-reverse' : ''}`)}
+    <div className={`${rowClass} ${className}`}>
+      <AppBreadcrumb
+        rtl={rtl}
+        variant={variant}
+        segments={segments}
+        className={`min-w-0 flex-1 ${breadcrumbClassName}`}
+      />
+      {renderBackControl('max-w-[38%] sm:max-w-none')}
     </div>
   )
 }

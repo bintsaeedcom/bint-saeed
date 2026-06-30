@@ -322,7 +322,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       emailList: 'EXCLUSIVE PREVIEWS',
       subscribeHeading: 'PRIVATE ACCESS',
       subscribeDescription:
-        'Explore the world of Bint Saeed through new collections, natural stone strand releases, craftsmanship and exclusive previews. Be among the first to discover every new chapter of the House.',
+        'Be among the first to enter every new chapter of the House',
       emailPlaceholder: 'Enter your email',
       subscribe: 'Subscribe',
       language: 'Language',
@@ -504,8 +504,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     footer: {
       emailList: 'معاينات حصرية',
       subscribeHeading: 'وصول خاص',
-      subscribeDescription:
-        'استكشفي عالم Bint Saeed عبر مجموعات جديدة، وإصدارات خيوط الأحجار الطبيعية، والحرفية، ومعاينات حصرية. كوني من أوائل من يكتشف كل فصل جديد من الدار.',
+      subscribeDescription: 'كوني من أوائل من يدخلون كل فصل جديد من الدار.',
       emailPlaceholder: 'أدخلي بريدك الإلكتروني',
       subscribe: 'اشتركي',
       language: 'اللغة',
@@ -687,8 +686,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     footer: {
       emailList: 'APERÇUS EXCLUSIFS',
       subscribeHeading: 'ACCÈS PRIVÉ',
-      subscribeDescription:
-        'Explorez l’univers Bint Saeed à travers de nouvelles collections, des lancements de fils en pierres naturelles, l’artisanat et des aperçus exclusifs. Soyez parmi les premières à découvrir chaque nouveau chapitre de la Maison.',
+      subscribeDescription: 'Soyez parmi les premières à entrer dans chaque nouveau chapitre de la Maison.',
       emailPlaceholder: 'Votre e-mail',
       subscribe: 'S inscrire',
       language: 'Langue',
@@ -870,8 +868,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     footer: {
       emailList: 'EXKLUSIVE VORSCHAUEN',
       subscribeHeading: 'PRIVATER ZUGANG',
-      subscribeDescription:
-        'Entdecken Sie die Welt von Bint Saeed durch neue Kollektionen, Natural-Stone-Strand-Releases, Handwerk und exklusive Vorschauen. Seien Sie unter den Ersten, die jedes neue Kapitel des Hauses entdecken.',
+      subscribeDescription: 'Seien Sie unter den Ersten, die jedes neue Kapitel des Hauses betreten.',
       emailPlaceholder: 'Ihre E-Mail',
       subscribe: 'Abonnieren',
       language: 'Sprache',
@@ -1053,8 +1050,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     footer: {
       emailList: 'ANTEPRIME ESCLUSIVE',
       subscribeHeading: 'ACCESSO PRIVATO',
-      subscribeDescription:
-        'Esplorate il mondo di Bint Saeed attraverso nuove collezioni, lanci di fili in pietre naturali, artigianato e anteprime esclusive. Siate tra le prime a scoprire ogni nuovo capitolo della Maison.',
+      subscribeDescription: 'Siate tra le prime a entrare in ogni nuovo capitolo della Maison.',
       emailPlaceholder: 'La tua email',
       subscribe: 'Iscriviti',
       language: 'Lingua',
@@ -1236,8 +1232,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     footer: {
       emailList: 'AVANCES EXCLUSIVOS',
       subscribeHeading: 'ACCESO PRIVADO',
-      subscribeDescription:
-        'Explore el mundo de Bint Saeed a través de nuevas colecciones, lanzamientos de hilos de piedras naturales, artesanía y avances exclusivos. Sea de las primeras en descubrir cada nuevo capítulo de la Maison.',
+      subscribeDescription: 'Sea de las primeras en entrar en cada nuevo capítulo de la Maison.',
       emailPlaceholder: 'Tu email',
       subscribe: 'Suscribirse',
       language: 'Idioma',
@@ -1419,8 +1414,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     footer: {
       emailList: 'ЭКСКЛЮЗИВНЫЕ ПРЕВЬЮ',
       subscribeHeading: 'ПРИВАТНЫЙ ДОСТУП',
-      subscribeDescription:
-        'Откройте для себя мир Bint Saeed через новые коллекции, релизы нитей из натурального камня, мастерство и эксклюзивные превью. Будьте среди первых, кто узнаёт о каждой новой главе Дома.',
+      subscribeDescription: 'Будьте среди первых, кто входит в каждую новую главу Дома.',
       emailPlaceholder: 'Ваш email',
       subscribe: 'Подписаться',
       language: 'Язык',
@@ -1602,8 +1596,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     footer: {
       emailList: '独家预览',
       subscribeHeading: '专属访问',
-      subscribeDescription:
-        '通过全新系列、天然石串饰发布、工艺故事与独家预览，探索 Bint Saeed 的世界。率先发现品牌的每一个新篇章。',
+      subscribeDescription: '率先走进品牌的每一个新篇章。',
       emailPlaceholder: '请输入邮箱',
       subscribe: '订阅',
       language: '语言',
@@ -1785,8 +1778,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     footer: {
       emailList: 'EXCLUSIEVE PREVIEWS',
       subscribeHeading: 'PRIVÉ TOEGANG',
-      subscribeDescription:
-        'Ontdek de wereld van Bint Saeed via nieuwe collecties, natural stone strand-releases, vakmanschap en exclusieve previews. Wees een van de eersten die elk nieuw hoofdstuk van het Huis ontdekt.',
+      subscribeDescription: 'Wees een van de eersten die elk nieuw hoofdstuk van het Huis betreedt.',
       emailPlaceholder: 'Vul je e-mailadres in',
       subscribe: 'Inschrijven',
       language: 'Taal',
@@ -1968,8 +1960,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     footer: {
       emailList: 'PRÉVIAS EXCLUSIVAS',
       subscribeHeading: 'ACESSO PRIVADO',
-      subscribeDescription:
-        'Explore o mundo da Bint Saeed através de novas coleções, lançamentos de fios em pedras naturais, artesanato e prévias exclusivas. Seja das primeiras a descobrir cada novo capítulo da Maison.',
+      subscribeDescription: 'Seja das primeiras a entrar em cada novo capítulo da Maison.',
       emailPlaceholder: 'Introduza o seu email',
       subscribe: 'Subscrever',
       language: 'Idioma',
@@ -2151,8 +2142,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     footer: {
       emailList: 'PREVIEW EKSKLUSIF',
       subscribeHeading: 'AKSES PRIVAT',
-      subscribeDescription:
-        'Jelajahi dunia Bint Saeed melalui koleksi baru, rilis rantai batu alam, kerajinan, dan preview eksklusif. Jadilah yang pertama menemukan setiap bab baru dari Maison.',
+      subscribeDescription: 'Jadilah yang pertama memasuki setiap bab baru Maison.',
       emailPlaceholder: 'Masukkan email Anda',
       subscribe: 'Berlangganan',
       language: 'Bahasa',
@@ -2334,8 +2324,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     footer: {
       emailList: 'PREVIEW EKSKLUSIF',
       subscribeHeading: 'AKSES PERIBADI',
-      subscribeDescription:
-        'Terokai dunia Bint Saeed melalui koleksi baharu, pelancaran rantai batu semula jadi, ketukangan dan preview eksklusif. Jadilah antara yang pertama menemui setiap bab baharu Maison.',
+      subscribeDescription: 'Jadilah antara yang pertama memasuki setiap bab baharu Maison.',
       emailPlaceholder: 'Masukkan e-mel anda',
       subscribe: 'Langgan',
       language: 'Bahasa',

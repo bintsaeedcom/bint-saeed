@@ -89,6 +89,21 @@ const HOME_STRANDS_SHOP_CTA: Record<Language, string> = {
   ms: 'Beli strands',
 }
 
+const HOME_SHOP_NOW_CTA: Record<Language, string> = {
+  en: 'Shop Now',
+  ar: 'تسوّقي الآن',
+  fr: 'Acheter',
+  it: 'Acquista',
+  es: 'Comprar',
+  ru: 'В магазин',
+  zh: '立即选购',
+  de: 'Jetzt shoppen',
+  nl: 'Shop nu',
+  pt: 'Comprar',
+  id: 'Belanja sekarang',
+  ms: 'Beli sekarang',
+}
+
 const HOME_PERSONALISATION_EYEBROW: Record<Language, string> = {
   en: 'PERSONALISED ABAYAS',
   ar: 'عباءات مخصّصة',
@@ -199,6 +214,7 @@ export type HomeEditorialCopy = {
   personalisationBody: string
   personalisationCta: string
   shopCta: string
+  shopNowCta: string
   returnToShopCta: string
   categoryFocus: string
   categoryNewIn: string
@@ -276,6 +292,7 @@ const HOME_EN: HomeEditorialCopy = {
   personalisationBody: HOME_PERSONALISATION_BODY.en,
   personalisationCta: HOME_PERSONALISATION_CTA.en,
   shopCta: 'SHOP',
+  shopNowCta: 'SHOP NOW',
   returnToShopCta: 'Return to Shop',
   categoryFocus: 'Category Focus',
   categoryNewIn: 'New in',
@@ -345,6 +362,7 @@ const HOME_AR: HomeEditorialCopy = {
   personalisationBody: HOME_PERSONALISATION_BODY.ar,
   personalisationCta: HOME_PERSONALISATION_CTA.ar,
   shopCta: 'تسوّقي',
+  shopNowCta: 'تسوّقي الآن',
   returnToShopCta: 'العودة للمتجر',
   categoryFocus: 'تركيز الفئة',
   categoryNewIn: 'وصل حديثاً',
@@ -384,5 +402,6 @@ export function getHomeEditorialCopy(locale: Language | string): HomeEditorialCo
     personalisationHeading: HOME_PERSONALISATION_HEADING[lang],
     personalisationBody: HOME_PERSONALISATION_BODY[lang],
     personalisationCta: HOME_PERSONALISATION_CTA[lang],
+    shopNowCta: HOME_SHOP_NOW_CTA[lang],
   }
 }

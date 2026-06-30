@@ -1,11 +1,17 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 
+export type SubscribeNotifyChannel = 'email' | 'whatsapp'
+
 export type SubscribeFormCopy = {
-  firstName: string
-  lastName: string
   email: string
   phoneOptional: string
   phoneOptionalNote: string
+  phoneRequired: string
+  notifyEmail: string
+  notifyWhatsApp: string
+  notifyHintEmail: string
+  notifyHintWhatsApp: string
+  phoneRequiredWhatsApp: string
   subscribe: string
   subscribing: string
   success: string
@@ -14,11 +20,15 @@ export type SubscribeFormCopy = {
 }
 
 const EN: SubscribeFormCopy = {
-  firstName: 'First Name',
-  lastName: 'Last Name',
   email: 'Email Address',
-  phoneOptional: 'Phone',
+  phoneOptional: 'Mobile number',
   phoneOptionalNote: '(optional)',
+  phoneRequired: 'Mobile number',
+  notifyEmail: 'Email updates',
+  notifyWhatsApp: 'WhatsApp alerts',
+  notifyHintEmail: 'Subscribe for new collections and House previews by email.',
+  notifyHintWhatsApp: 'Get notified on WhatsApp when new chapters launch. Add your mobile number below.',
+  phoneRequiredWhatsApp: 'Please add your mobile number for WhatsApp alerts.',
   subscribe: 'Subscribe',
   subscribing: 'Subscribing...',
   success: 'Welcome to Bint Saeed!',
@@ -27,11 +37,15 @@ const EN: SubscribeFormCopy = {
 }
 
 const AR: SubscribeFormCopy = {
-  firstName: 'الاسم الأول',
-  lastName: 'اسم العائلة',
   email: 'البريد الإلكتروني',
-  phoneOptional: 'الهاتف',
+  phoneOptional: 'رقم الجوال',
   phoneOptionalNote: '(اختياري)',
+  phoneRequired: 'رقم الجوال',
+  notifyEmail: 'تحديثات بالبريد',
+  notifyWhatsApp: 'تنبيهات واتساب',
+  notifyHintEmail: 'اشتركي لتصلكِ المجموعات الجديدة ومعاينات الدار عبر البريد.',
+  notifyHintWhatsApp: 'تلقّي تنبيهاً على واتساب عند إطلاق فصول جديدة. أضيفي رقم جوالك أدناه.',
+  phoneRequiredWhatsApp: 'يرجى إضافة رقم الجوال لتنبيهات واتساب.',
   subscribe: 'اشتركي',
   subscribing: 'جارٍ الاشتراك...',
   success: 'أهلاً بكِ في Bint Saeed!',

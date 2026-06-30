@@ -2,15 +2,14 @@
 
 import LocaleLink from '@/components/LocaleLink'
 import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter } from 'react-icons/fa6'
-import { FiGlobe, FiTruck, FiClock, FiHeart, FiX } from 'react-icons/fi'
+import { FiGlobe, FiTruck, FiClock, FiHeart } from 'react-icons/fi'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
 import SubscribeForm from './SubscribeForm'
 import FooterPaymentMethods from './FooterPaymentMethods'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
-import { useEffect, useState } from 'react'
-import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
+import { useState } from 'react'
 
 const socialLinks = [
   { icon: FaInstagram, href: 'https://www.instagram.com/bintsaeed_brand/', label: 'Instagram' },
@@ -24,29 +23,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
   const { t, isRTL, language } = useLanguage()
   const ui = commerceUi(language)
-  const [isSubscribeOpen, setIsSubscribeOpen] = useState(false)
-  const [quickEmail, setQuickEmail] = useState('')
-  const [quickEmailError, setQuickEmailError] = useState('')
   const [mobileOpenSection, setMobileOpenSection] = useState<'shop' | 'about' | 'help' | null>('shop')
-
-  useEffect(() => {
-    if (!isSubscribeOpen) return
-    const onEsc = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsSubscribeOpen(false)
-    }
-    window.addEventListener('keydown', onEsc)
-    return () => window.removeEventListener('keydown', onEsc)
-  }, [isSubscribeOpen])
-
-  const openSubscribeModal = () => {
-    const check = validateSubscriberEmail(quickEmail)
-    if (quickEmail.trim() && !check.valid) {
-      setQuickEmailError(check.message)
-      return
-    }
-    setQuickEmailError('')
-    setIsSubscribeOpen(true)
-  }
 
   const footerLinks = {
     shop: [
@@ -102,31 +79,7 @@ export default function Footer() {
               </p>
             </div>
             <div className="rounded-xl border border-white/10 bg-black/20 p-4 md:p-5">
-              <div className="flex flex-col gap-3 md:flex-row md:items-center">
-                <div className="flex-1 space-y-1">
-                  <input
-                    type="email"
-                    value={quickEmail}
-                    onChange={(e) => {
-                      setQuickEmail(e.target.value)
-                      if (quickEmailError) setQuickEmailError('')
-                    }}
-                    placeholder={ui.footer.emailPlaceholder}
-                    className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-5 py-3.5 font-montserrat text-sm tracking-wide text-brand-stone placeholder-white/35 focus:outline-none focus:border-brand-dustyBlue/35"
-                  />
-                  {quickEmailError ? (
-                    <p className="text-xs font-montserrat tracking-wide text-red-300">{quickEmailError}</p>
-                  ) : null}
-                </div>
-                <button
-                  type="button"
-                  onClick={openSubscribeModal}
-                  className="inline-flex min-h-[46px] items-center justify-center rounded-[4px] bg-brand-dustyBlue px-7 font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#1a0008] transition-colors hover:bg-brand-stone"
-                  data-cursor-hover
-                >
-                  {ui.footer.subscribe}
-                </button>
-              </div>
+              <SubscribeForm variant="dark" />
             </div>
           </div>
 
@@ -397,37 +350,6 @@ export default function Footer() {
 
       {/* Bottom accent line - Rose gradient */}
       <div className="h-1 bg-gradient-to-r from-brand-darkRed via-brand-rose to-brand-darkRed" />
-
-      {isSubscribeOpen ? (
-        <div className="fixed inset-0 z-[120]">
-          <button
-            type="button"
-            className="absolute inset-0 bg-black/45"
-            onClick={() => setIsSubscribeOpen(false)}
-            aria-label={ui.footer.closeModal}
-          />
-          <div className="absolute right-0 top-0 h-full w-full max-w-[740px] overflow-y-auto bg-[#f6f3ef] p-6 shadow-[-24px_0_70px_rgba(8,2,8,0.35)] md:p-8">
-            <div className="mb-6 flex items-center justify-between">
-              <h3 className="font-montserrat text-2xl uppercase tracking-[0.14em] text-brand-darkRed">
-                {ui.footer.newsletter}
-              </h3>
-              <button
-                type="button"
-                onClick={() => setIsSubscribeOpen(false)}
-                className="rounded-full border border-brand-darkRed/15 p-2 text-brand-darkRed/75 transition-colors hover:bg-brand-darkRed/5 hover:text-brand-darkRed"
-                data-cursor-hover
-                aria-label={ui.footer.close}
-              >
-                <FiX className="h-5 w-5" />
-              </button>
-            </div>
-            <p className="mb-6 font-montserrat text-sm leading-relaxed tracking-wide text-brand-darkRed/75">
-              {ui.footer.subscribeDescription}
-            </p>
-            <SubscribeForm variant="dark" initialEmail={quickEmail} />
-          </div>
-        </div>
-      ) : null}
     </footer>
   )
 }
