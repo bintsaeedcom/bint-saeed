@@ -1,26 +1,17 @@
 import {
   FOOTER_EXTRA_PAYMENT_ASSETS,
   PAYMENT_METHOD_ASSETS,
-  type PaymentMethodAsset,
 } from '@/lib/payments/paymentMethodAssets'
 import { PaymentMethodIcon } from '@/components/PaymentMethodIcon'
 
-const PAYMENT_METHODS: Array<
-  PaymentMethodAsset & { tileClass: string }
-> = PAYMENT_METHOD_ASSETS.map((asset) => ({
-    ...asset,
-    tileClass:
-      asset.id === 'paypal'
-        ? 'min-w-[3.5rem] px-2'
-        : asset.id === 'apple-pay' || asset.id === 'google-pay'
-          ? 'min-w-[3.5rem] px-2'
-          : 'min-w-[3.25rem] px-2.5',
-  })).concat(
-    FOOTER_EXTRA_PAYMENT_ASSETS.map((asset) => ({
-      ...asset,
-      tileClass: 'min-w-[3.25rem] px-2.5',
-    })),
-  )
+const PAYMENT_METHODS = [...PAYMENT_METHOD_ASSETS, ...FOOTER_EXTRA_PAYMENT_ASSETS]
+
+function paymentTileClass(id: string): string {
+  if (id === 'link') {
+    return 'flex h-8 min-w-[2.75rem] items-center justify-center rounded-[4px] bg-white px-2 shadow-[0_2px_10px_rgba(0,0,0,0.14)]'
+  }
+  return 'flex h-8 items-center justify-center overflow-hidden rounded-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.14)]'
+}
 
 type Props = {
   label: string
@@ -39,14 +30,12 @@ export default function FooterPaymentMethods({ label, className = '', align = 's
         {label}
       </p>
       <ul
-        className={`flex flex-wrap items-center gap-2 ${align === 'center' ? 'justify-center' : 'justify-start'}`}
+        className={`flex flex-wrap items-center gap-2.5 ${align === 'center' ? 'justify-center' : 'justify-start'}`}
         aria-label={label}
       >
         {PAYMENT_METHODS.map((method) => (
           <li key={method.id}>
-            <span
-              className={`flex h-9 items-center justify-center rounded-[5px] border border-white/10 bg-[#f8f6f3] shadow-[0_2px_10px_rgba(0,0,0,0.14)] ${method.tileClass} ${method.chipClass ?? ''}`}
-            >
+            <span className={paymentTileClass(method.id)}>
               <PaymentMethodIcon id={method.id} />
             </span>
           </li>

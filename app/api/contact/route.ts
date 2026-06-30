@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { isSafePublicIpForLookup } from '@/lib/security/isSafePublicIp'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { sanitizeUserText } from '@/lib/security/sanitizeUserText'
+import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 
 const MAX_NAME = 120
 const MAX_EMAIL = 254
@@ -16,14 +17,16 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const name = sanitizeUserText(body.name, MAX_NAME)
-    const email = sanitizeUserText(body.email, MAX_EMAIL)
+    const rawEmail = sanitizeUserText(body.email, MAX_EMAIL)
     const phone = sanitizeUserText(body.phone, MAX_PHONE)
     const subject = sanitizeUserText(body.subject, MAX_SUBJECT)
     const message = sanitizeUserText(body.message, MAX_MESSAGE)
 
-    if (!email || !email.includes('@')) {
-      return NextResponse.json({ error: 'Valid email is required.' }, { status: 400 })
+    const emailCheck = validateSubscriberEmail(rawEmail)
+    if (!emailCheck.valid) {
+      return NextResponse.json({ error: emailCheck.message }, { status: 400 })
     }
+    const email = emailCheck.email
     if (!message) {
       return NextResponse.json({ error: 'Message is required.' }, { status: 400 })
     }

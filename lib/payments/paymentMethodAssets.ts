@@ -1,20 +1,17 @@
 /**
  * Payment brand marks — `/public/payment/`
  *
- * Live checkout/footer icons (visa, mastercard, paypal, apple-pay, google-pay):
- * react-icons/fa6 brand marks.
- *
- * SVG files on disk (datatrans/payment-logos, Tabby CDN, payment_icons):
- * kept for static reference and future rails (ideal, klarna, tabby, tamara).
+ * Footer and checkout use the on-disk SVG badges (datatrans-style card tiles).
+ * react-icons/fa6 remains a fallback when no `src` is set.
  */
 export type Fa6PaymentIconId = 'visa' | 'mastercard' | 'paypal' | 'apple-pay' | 'google-pay'
 
 export type PaymentMethodAsset = {
   id: string
   label: string
-  /** Font Awesome 6 brand icon (preferred for card/wallet marks). */
+  /** Font Awesome 6 brand icon (fallback only). */
   icon?: Fa6PaymentIconId
-  /** Static SVG path when no react-icons mapping exists. */
+  /** Static SVG path — preferred when present. */
   src?: string
   width?: number
   height?: number
@@ -23,7 +20,13 @@ export type PaymentMethodAsset = {
   chipClass?: string
 }
 
-const ICON_CHIP = 'border-transparent bg-[#f8f6f3] px-2'
+/** Standard 120×80 payment badge — visible at footer scale. */
+const CARD_BADGE = {
+  width: 120,
+  height: 80,
+  imageClass: 'h-[26px] w-[39px] object-contain',
+} as const
+
 const BADGE_CHIP = 'border-transparent bg-transparent p-0 shadow-none'
 const BADGE_IMAGE = 'max-h-[24px] max-w-[38px]'
 
@@ -31,42 +34,34 @@ export const PAYMENT_METHOD_ASSETS: PaymentMethodAsset[] = [
   {
     id: 'visa',
     label: 'Visa',
-    icon: 'visa',
     src: '/payment/visa.svg',
-    iconClass: 'h-5 w-[2.1rem] text-[#1434CB]',
-    chipClass: ICON_CHIP,
+    ...CARD_BADGE,
   },
   {
     id: 'mastercard',
     label: 'Mastercard',
-    icon: 'mastercard',
     src: '/payment/mastercard.svg',
-    iconClass: 'h-5 w-[2.1rem]',
-    chipClass: ICON_CHIP,
+    ...CARD_BADGE,
   },
   {
     id: 'apple-pay',
     label: 'Apple Pay',
-    icon: 'apple-pay',
     src: '/payment/apple-pay.svg',
-    iconClass: 'h-5 w-[2.35rem] text-black',
-    chipClass: ICON_CHIP,
+    width: 166,
+    height: 106,
+    imageClass: 'h-[26px] w-auto max-w-[41px] object-contain',
   },
   {
     id: 'google-pay',
     label: 'Google Pay',
-    icon: 'google-pay',
     src: '/payment/google-pay.svg',
-    iconClass: 'h-5 w-[2.5rem]',
-    chipClass: ICON_CHIP,
+    ...CARD_BADGE,
   },
   {
     id: 'paypal',
     label: 'PayPal',
-    icon: 'paypal',
     src: '/payment/paypal.svg',
-    iconClass: 'h-5 w-[2.35rem] text-[#003087]',
-    chipClass: ICON_CHIP,
+    ...CARD_BADGE,
   },
 ]
 
@@ -78,7 +73,7 @@ export const FOOTER_EXTRA_PAYMENT_ASSETS: PaymentMethodAsset[] = [
     src: '/payment/link.svg',
     width: 40,
     height: 16,
-    imageClass: 'max-h-[14px] max-w-[40px]',
+    imageClass: 'h-[15px] w-[38px] object-contain',
   },
 ]
 

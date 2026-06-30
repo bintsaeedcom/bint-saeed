@@ -392,6 +392,11 @@ function ThreePillarsBar() {
   )
 }
 
+const HOME_STRANDS_FEATURE_IMAGES = {
+  panelBg: '/home/strands-feature/bint-saeed-home-strands-panel-bg.webp',
+  hero: '/home/strands-feature/bint-saeed-home-strands-feature.webp',
+} as const
+
 function CharmHeroFeatureSection() {
   const { language, isRTL } = useLanguage()
   const copy = getHomeEditorialCopy(language)
@@ -402,7 +407,7 @@ function CharmHeroFeatureSection() {
           <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
             <div className="absolute inset-0 opacity-25">
               <Image
-                src="/background1.JPG"
+                src={HOME_STRANDS_FEATURE_IMAGES.panelBg}
                 alt={withBrandAlt('Bint Saeed strand collection')}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -455,7 +460,7 @@ function CharmHeroFeatureSection() {
             <div className="relative h-full min-h-[68vh] overflow-hidden">
               <div className="absolute -inset-[14%]">
                 <Image
-                  src="/collection-section/45.jpg"
+                  src={HOME_STRANDS_FEATURE_IMAGES.hero}
                   alt={withBrandAlt('Bint Saeed strand collection')}
                   fill
                   sizes="(max-width: 1024px) 100vw, 58vw"
@@ -518,11 +523,11 @@ function CharmHeroFeatureSectionMirror() {
 
             <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
               <LocaleLink
-                href="/shop"
+                href="/personalisation"
                 className="inline-flex min-h-[44px] items-center rounded-[4px] bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
                 data-cursor-hover
               >
-                {copy.shopCta}
+                {copy.personalisationCta}
               </LocaleLink>
             </div>
           </div>
@@ -1097,6 +1102,10 @@ function EditorialIntro() {
   )
 }
 
+function collectionChapterImage(fileName: string) {
+  return `/home/collection-chapter/${fileName}`
+}
+
 function MagazineGrid() {
   const ref = useRef<HTMLDivElement | null>(null)
   const isInView = useInView(ref, { margin: '-10%', once: true })
@@ -1105,9 +1114,8 @@ function MagazineGrid() {
   const collectionCards = [
     {
       images: [
-        '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-lifestyle-2.webp',
-        '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-front.webp',
-        '/Webshop pictures/Abayas/Belgravia Abaya/bint-saeed-belgravia-abaya-black-side.webp',
+        collectionChapterImage('bint-saeed-home-collection-abayas-01.webp'),
+        collectionChapterImage('bint-saeed-home-collection-abayas-02.webp'),
       ],
       label: 'Abayas',
       href: '/shop',
@@ -1115,10 +1123,8 @@ function MagazineGrid() {
     },
     {
       images: [
-        '/Webshop pictures/Kaftans/Mayfair Kaftan/bint-saeed-mayfair-kaftan-marroon-front.webp',
-        '/Webshop pictures/Kaftans/Mayfair Kaftan/bint-saeed-mayfair-kaftan-marroon-side.webp',
-        '/Webshop pictures/Kaftans/Nothing Hill Kaftan/bint-saeed-nothing-hill-kaftan-peach-pink-front.webp',
-        '/collection-section/8.png',
+        collectionChapterImage('bint-saeed-home-collection-kaftans-01.webp'),
+        collectionChapterImage('bint-saeed-home-collection-kaftans-02.webp'),
       ],
       label: 'Kaftans',
       href: '/shop',
@@ -1126,8 +1132,8 @@ function MagazineGrid() {
     },
     {
       images: [
-        '/Webshop%20pictures/Sets/Covent%20Garden%20Set/Covent%20Garden%20Set-%20S.JPG',
-        '/Webshop%20pictures/Sets/Soho%20Set/Soho%20Set-%20B.JPG',
+        collectionChapterImage('bint-saeed-home-collection-sets-01.webp'),
+        collectionChapterImage('bint-saeed-home-collection-sets-02.webp'),
       ],
       label: 'Sets',
       href: '/shop',
@@ -1135,8 +1141,8 @@ function MagazineGrid() {
     },
     {
       images: [
-        '/Webshop%20pictures/accessoiries/necklaces/malachite-necklace.PNG',
-        '/Webshop%20pictures/accessoiries/phone%20charm/phone%20charm.png',
+        collectionChapterImage('bint-saeed-home-collection-accessories-01.webp'),
+        collectionChapterImage('bint-saeed-home-collection-accessories-02.webp'),
       ],
       label: 'Accessories',
       href: '/accessories',

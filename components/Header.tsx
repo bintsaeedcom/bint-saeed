@@ -65,8 +65,8 @@ export default function Header() {
   const isHomePage = innerPath === '/home'
   const isTransparentHomeHeader = isHomePage && !isScrolled
 
+  const shopNavItem = { label: 'Shop Now', href: '/shop' as const }
   const navItems = [
-    { label: t.nav.collections, href: '/shop' },
     { label: 'Strands', href: '/strands' },
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
     { label: 'Personalisation', href: '/personalisation' },
@@ -111,8 +111,16 @@ export default function Header() {
         },
       ],
       features: [
-        { title: 'Abayas', href: '/shop?category=abayas', image: '/collection-section/67.png' },
-        { title: 'Dresses', href: '/shop?category=dresses', image: '/collection-section/68.png' },
+        {
+          title: 'Abayas',
+          href: '/shop?category=abayas',
+          image: '/collection-section/bint-saeed-luxury-abayas-collection-nav.webp?v=2',
+        },
+        {
+          title: 'Sets',
+          href: '/shop?category=sets',
+          image: '/collection-section/bint-saeed-luxury-sets-collection-nav.webp',
+        },
       ],
     },
     '/accessories': {
@@ -358,10 +366,10 @@ export default function Header() {
             {/* Center: Navigation */}
             <nav className={`pointer-events-auto relative z-[61] flex min-w-0 items-center justify-center gap-5 min-[1800px]:gap-7 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <LocaleLink
-                href="/shop"
-                onMouseEnter={() => setActiveMegaMenu('/shop')}
+                href={shopNavItem.href}
+                onMouseEnter={() => setActiveMegaMenu(shopNavItem.href)}
                 className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                  activeMegaMenu === '/shop'
+                  activeMegaMenu === shopNavItem.href
                     ? 'text-brand-dustyBlue'
                     : isTransparentHomeHeader
                       ? 'text-white hover:text-brand-dustyBlue'
@@ -371,7 +379,7 @@ export default function Header() {
                 data-analytics-event="click_cta_home_to_collection"
                 data-analytics-section="header-main-nav"
               >
-                Shop Now
+                {shopNavItem.label}
               </LocaleLink>
               {navItems.map((item) => (
                 <LocaleLink
@@ -668,7 +676,7 @@ export default function Header() {
 
               {/* Navigation + same destinations as desktop mega menu */}
               <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-4">
-                {navItems.map((item, index) => {
+                {[shopNavItem, ...navItems].map((item, index) => {
                   const mega = megaMenus[item.href]
                   const isExpanded = expandedMobileSection === item.href
                   return (

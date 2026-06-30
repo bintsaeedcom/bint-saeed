@@ -95,10 +95,10 @@ export default function Footer() {
                 {ui.footer.emailList}
               </p>
               <h3 className="font-rozha text-2xl text-brand-stone md:text-3xl">
-                {ui.footer.subscribeEyebrow}
+                {ui.footer.subscribeHeading}
               </h3>
-              <p className="mt-2 font-montserrat text-sm tracking-wide text-white/55">
-                {ui.footer.subscribeEyebrow}
+              <p className="mt-2 font-montserrat text-sm leading-relaxed tracking-wide text-white/55">
+                {ui.footer.subscribeDescription}
               </p>
             </div>
             <div className="rounded-xl border border-white/10 bg-black/20 p-4 md:p-5">
@@ -422,7 +422,7 @@ export default function Footer() {
               </button>
             </div>
             <p className="mb-6 font-montserrat text-sm leading-relaxed tracking-wide text-brand-darkRed/75">
-              {ui.footer.subscribeEyebrow}
+              {ui.footer.subscribeDescription}
             </p>
             <SubscribeForm variant="dark" initialEmail={quickEmail} />
           </div>

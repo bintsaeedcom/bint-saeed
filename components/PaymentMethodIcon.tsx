@@ -30,6 +30,18 @@ export function PaymentMethodIcon({ id, className = '', iconClass }: Props) {
   const asset = getPaymentMethodAsset(id)
   if (!asset) return null
 
+  if (asset.src) {
+    return (
+      <Image
+        src={asset.src}
+        alt={asset.label}
+        width={asset.width ?? 120}
+        height={asset.height ?? 80}
+        className={`shrink-0 ${asset.imageClass ?? 'h-[26px] w-[39px] object-contain'} ${className}`}
+      />
+    )
+  }
+
   const FaIcon = asset.icon ? FA6_PAYMENT_ICONS[asset.icon] : null
   if (FaIcon) {
     return (
@@ -40,17 +52,7 @@ export function PaymentMethodIcon({ id, className = '', iconClass }: Props) {
     )
   }
 
-  if (!asset.src) return null
-
-  return (
-    <Image
-      src={asset.src}
-      alt={asset.label}
-      width={asset.width ?? 40}
-      height={asset.height ?? 16}
-      className={`h-auto w-auto object-contain ${asset.imageClass ?? ''} ${className}`}
-    />
-  )
+  return null
 }
 
 export function paymentMethodChipClass(asset: PaymentMethodAsset): string {
