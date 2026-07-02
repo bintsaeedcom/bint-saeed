@@ -8,6 +8,7 @@ import { parseCheckoutRequestBody } from '@/lib/checkout/parseCheckoutRequest'
 import { createPayPalOrder } from '@/lib/paypal/client'
 import { isPayPalConfigured } from '@/lib/paypal/config'
 import { toPayPalAmountValue } from '@/lib/paypal/amount'
+import { resolvePayPalSettlementCurrency } from '@/lib/paypal/settlementCurrency'
 import { savePendingPayPalCheckout } from '@/lib/paypal/pendingCheckoutStore'
 
 export const runtime = 'nodejs'
@@ -37,7 +38,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: parsed.error }, { status: parsed.status })
     }
 
-    const currency = parsed.currency as SupportedCurrency
+    const displayCurrency = parsed.currency as SupportedCurrency
+    // PayPal cannot present AED / most GCC currencies. Settle in a PayPal-supported currency,
+    // reading the amount straight from our fixed price sheet (no live FX).
+    const currency = resolvePayPalSettlementCurrency(displayCurrency)
     const cartSubtotal = cartSubtotalInCurrency(parsed.items, currency)
     if (cartSubtotal <= 0) {
       return NextResponse.json({ error: 'Invalid cart total.' }, { status: 400 })
