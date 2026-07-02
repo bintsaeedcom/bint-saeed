@@ -232,7 +232,12 @@ export default function CheckoutPage() {
               className="rounded-2xl border border-brand-stone/20 bg-white p-5 shadow-sm sm:p-6 md:p-8"
             >
               <ul className="divide-y divide-brand-stone/15">
-                {items.map((item) => (
+                {items.map((item) => {
+                  const catalogProduct = staticProducts.find((product) => product.id === item.id)
+                  const imageSrc = productImageSrc(
+                    item.image?.trim() || catalogProduct?.images[0] || '/placeholders/product-front-F.svg',
+                  )
+                  return (
                   <li key={lineKey(item)} className="flex items-start gap-3 py-5 first:pt-0 sm:gap-4">
                     <LocaleLink
                       href={productHref(item)}
@@ -240,14 +245,10 @@ export default function CheckoutPage() {
                       data-cursor-hover
                     >
                       <Image
-                        src={productImageSrc(item.image)}
-                        alt={getCartLineImageAlt(
-                          item,
-                          staticProducts.find((product) => product.id === item.id),
-                          language,
-                        )}
+                        src={imageSrc}
+                        alt={getCartLineImageAlt(item, catalogProduct, language)}
                         fill
-                        unoptimized={isWebshopPicturePath(item.image)}
+                        unoptimized={isWebshopPicturePath(imageSrc)}
                         className="img-zoom object-cover object-top"
                         sizes="(max-width: 640px) 64px, 80px"
                       />
@@ -282,7 +283,8 @@ export default function CheckoutPage() {
                       </p>
                     </div>
                   </li>
-                ))}
+                  )
+                })}
               </ul>
             </motion.section>
           </div>

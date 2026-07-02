@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
+import { sanitizePersistedCart } from '@/lib/cart/sanitizePersistedCart'
 import { lineTotalAed } from '@/lib/shopProductOptions'
 
 export interface CartItem {
@@ -114,6 +115,10 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'bint-saeed-cart',
       storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        if (!state) return
+        state.items = sanitizePersistedCart(state.items)
+      },
     }
   )
 )
