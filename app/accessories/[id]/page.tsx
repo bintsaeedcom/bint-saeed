@@ -30,7 +30,7 @@ import {
   getAccessoryImageAlt,
   getAccessoryPdpImages,
 } from '@/lib/accessories/accessoryJsonLd'
-import { getAccessorySku } from '@/lib/accessories/accessorySku'
+import { resolveAccessorySkuFromSelection } from '@/lib/accessories/accessorySku'
 import { getNecklaceEarringPdpContent, faqAnswerParagraphs } from '@/lib/accessories/necklaceEarringPdpContent'
 import { getPhoneCharmPdpContent } from '@/lib/accessories/phoneCharmPdpContent'
 import { accessoryCanonicalUrl } from '@/lib/accessories/accessoryPageUrl'
@@ -41,6 +41,7 @@ import {
   PDP_COPY_RELAXED,
   PDP_FAQ_QUESTION,
   PDP_MTO_NOTE,
+  formatPdpProductCodeLine,
 } from '@/lib/pdp/pdpTypography'
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
@@ -146,6 +147,14 @@ export default function AccessoryDetailPage() {
       return
     }
 
+    const colorLabel =
+      selectedColor ||
+      (accessory.colors[0]
+        ? isRTL
+          ? accessory.colors[0].nameAr
+          : accessory.colors[0].name
+        : '')
+
     addItem({
       id: accessory.id,
       productUrl: `/accessories/${accessory.id}`,
@@ -153,14 +162,9 @@ export default function AccessoryDetailPage() {
       price: accessory.price,
       image: accessory.images[0],
       size: sizeLabel,
-      color:
-        selectedColor ||
-        (accessory.colors[0]
-          ? isRTL
-            ? accessory.colors[0].nameAr
-            : accessory.colors[0].name
-          : ''),
+      color: colorLabel,
       quantity,
+      sku: resolveAccessorySkuFromSelection(accessory, colorLabel),
     })
 
     trackEvent('add_to_cart', {
@@ -195,7 +199,7 @@ export default function AccessoryDetailPage() {
 
     const description = isRTL ? accessory.descriptionAr : accessory.description
     const materials = isRTL ? accessory.materialsAr : accessory.materials
-    const sku = getAccessorySku(accessory)
+    const referenceSku = resolveAccessorySkuFromSelection(accessory, selectedColor)
 
     if (phoneCharmPdpContent) {
       return [
@@ -239,9 +243,9 @@ export default function AccessoryDetailPage() {
                   </p>
                   <p className={PDP_COPY_RELAXED}>{phoneCharmPdpContent.colour}</p>
                 </div>
-                {sku ? (
+                {referenceSku ? (
                   <p className={PDP_COPY_RELAXED}>
-                    {isRTL ? `المرجع: ${sku}` : `Reference: ${sku}`}
+                    {formatPdpProductCodeLine(referenceSku, isRTL)}
                   </p>
                 ) : null}
               </div>
@@ -301,9 +305,9 @@ export default function AccessoryDetailPage() {
                       {item}
                     </li>
                   ))}
-                  {sku && (
+                  {referenceSku && (
                     <li className={PDP_BULLET_ITEM}>
-                      {isRTL ? `المرجع: ${sku}` : `Reference: ${sku}`}
+                      {formatPdpProductCodeLine(referenceSku, isRTL)}
                     </li>
                   )}
                 </ul>
@@ -374,6 +378,9 @@ export default function AccessoryDetailPage() {
         children: (
           <ul className={PDP_BULLET_LIST}>
             <li className={PDP_BULLET_ITEM}>{description}</li>
+            {referenceSku ? (
+              <li className={PDP_BULLET_ITEM}>{formatPdpProductCodeLine(referenceSku, isRTL)}</li>
+            ) : null}
           </ul>
         ),
       },
@@ -416,7 +423,9 @@ export default function AccessoryDetailPage() {
   }, [
     accessory.description,
     accessory.descriptionAr,
-    accessory.id,
+    accessory.category,
+    accessory.colors,
+    selectedColor,
     accessory.materials,
     accessory.materialsAr,
     necklaceEarringPdpContent,

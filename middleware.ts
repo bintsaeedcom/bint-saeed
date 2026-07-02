@@ -84,6 +84,23 @@ export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl
 
   try {
+  // IndexNow key proof: serve `/{INDEXNOW_KEY}.txt` (body = the key). Handled here so we
+  // don't need a catch-all `[filename]` route that would swallow every unknown single-segment
+  // URL and bypass the branded 404 page.
+  const indexNowMatch = pathname.match(/^\/([A-Za-z0-9-]{8,128})\.txt$/)
+  if (indexNowMatch) {
+    const key = process.env.INDEXNOW_KEY?.trim() ?? ''
+    if (key && indexNowMatch[1] === key) {
+      return new NextResponse(key, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+        },
+      })
+    }
+  }
+
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||

@@ -1,11 +1,14 @@
 import type { Accessory } from '@/data/accessories'
+import { accessories as staticAccessories } from '@/data/accessories'
+import { buildVariantSku } from '@/lib/products/sku'
 
 /**
- * Unified accessory SKU system aligned with garment SKU discipline:
- * - Stable, deterministic, category-led, and scalable by variant code.
- * - Format: BSA-JWL-<FAMILY>-<VARIANT>-001
+ * Accessory reference codes aligned with garment SKU discipline:
+ * - Parent style: BS-BG-### (bag charms) · BS-PH-### (phone charms)
+ * - Colour variant: BS-BG-001-BLK (bag charms with colour picker)
+ * - Other jewellery families keep stable BSA-JWL-* style codes (one code per product).
  */
-const ACCESSORY_SKU_BY_ID: Record<string, string> = {
+const JEWELLERY_STYLE_SKU_BY_ID: Record<string, string> = {
   // Al Ain Rosette Necklaces (ALN)
   'al-ain-rosette-necklace-malachite': 'BSA-JWL-ALN-MAL-001',
   'al-ain-rosette-necklace-lapis-lazuli': 'BSA-JWL-ALN-LAP-001',
@@ -24,21 +27,6 @@ const ACCESSORY_SKU_BY_ID: Record<string, string> = {
   'bracelet-cuff-heritage': 'BSA-JWL-BRC-HRT-001',
   'bracelet-bangle-set': 'BSA-JWL-BRC-BNG-001',
 
-  // Bag strands (BAG)
-  'bag-strand-tassel': 'BSA-JWL-BAG-TAS-001',
-  'bag-strand-pearl-cluster': 'BSA-JWL-BAG-PRL-001',
-  'bag-strand-letter': 'BSA-JWL-BAG-LTR-001',
-  'bag-strand-bint': 'BSA-JWL-BAG-BNT-001',
-
-  // Al Ain Rosette Phone Charms (PHN)
-  'al-ain-rosette-phone-charm-fuchsia-jade': 'BSA-JWL-PHN-FJA-001',
-  'al-ain-rosette-phone-charm-orange-jade': 'BSA-JWL-PHN-OJA-001',
-  'al-ain-rosette-phone-charm-onyx': 'BSA-JWL-PHN-ONX-001',
-  'al-ain-rosette-phone-charm-tiger-eye': 'BSA-JWL-PHN-TGE-001',
-  'al-ain-rosette-phone-charm-malachite': 'BSA-JWL-PHN-MAL-001',
-  'al-ain-rosette-phone-charm-lapis-lazuli': 'BSA-JWL-PHN-LAP-001',
-  'al-ain-rosette-phone-charm-rose-quartz': 'BSA-JWL-PHN-RSQ-001',
-
   // Signature strands (STR)
   'signature-strand-onyx': 'BSA-JWL-STR-ONX-001',
   'signature-strand-tiger-eye': 'BSA-JWL-STR-TGE-001',
@@ -52,11 +40,92 @@ const ACCESSORY_SKU_BY_ID: Record<string, string> = {
   'signature-strand-jade-hearts': 'BSA-JWL-STR-JDH-001',
 }
 
+/** Bag charm parent style codes — colour suffix appended when selected (BS-BG-001-BLK). */
+const BAG_CHARM_STYLE_SKU_BY_ID: Record<string, string> = {
+  'bag-strand-tassel': 'BS-BG-001',
+  'bag-strand-pearl-cluster': 'BS-BG-002',
+  'bag-strand-letter': 'BS-BG-003',
+  'bag-strand-bint': 'BS-BG-004',
+}
+
+/** Phone charm parent style codes — one stone per product, no colour suffix. */
+const PHONE_CHARM_STYLE_SKU_BY_ID: Record<string, string> = {
+  'al-ain-rosette-phone-charm-fuchsia-jade': 'BS-PH-001',
+  'al-ain-rosette-phone-charm-orange-jade': 'BS-PH-002',
+  'al-ain-rosette-phone-charm-onyx': 'BS-PH-003',
+  'al-ain-rosette-phone-charm-tiger-eye': 'BS-PH-004',
+  'al-ain-rosette-phone-charm-malachite': 'BS-PH-005',
+  'al-ain-rosette-phone-charm-lapis-lazuli': 'BS-PH-006',
+  'al-ain-rosette-phone-charm-rose-quartz': 'BS-PH-007',
+}
+
+function bagCharmStyleSku(accessoryId: string): string | undefined {
+  return BAG_CHARM_STYLE_SKU_BY_ID[accessoryId]
+}
+
+function phoneCharmStyleSku(accessoryId: string): string | undefined {
+  return PHONE_CHARM_STYLE_SKU_BY_ID[accessoryId]
+}
+
+function jewelleryStyleSku(accessoryId: string): string | undefined {
+  return JEWELLERY_STYLE_SKU_BY_ID[accessoryId]
+}
+
+export function getAccessoryStyleSku(
+  accessory: Pick<Accessory, 'id' | 'category'>,
+): string | undefined {
+  if (accessory.category === 'bag-strands') return bagCharmStyleSku(accessory.id)
+  if (accessory.category === 'phone-strands') return phoneCharmStyleSku(accessory.id)
+  return jewelleryStyleSku(accessory.id)
+}
+
+/**
+ * Full catalogue reference for PDP, cart, and checkout.
+ * Bag charms append a 3-letter colour suffix when a colour is selected.
+ */
+export function resolveAccessorySku(
+  accessory: Pick<Accessory, 'id' | 'category'>,
+  colorName?: string,
+): string | undefined {
+  if (accessory.category === 'bag-strands') {
+    const styleSku = bagCharmStyleSku(accessory.id)
+    if (!styleSku) return undefined
+    return buildVariantSku(styleSku, colorName)
+  }
+  if (accessory.category === 'phone-strands') {
+    return phoneCharmStyleSku(accessory.id)
+  }
+  return jewelleryStyleSku(accessory.id)
+}
+
 export function getAccessorySkuById(accessoryId: string): string | undefined {
-  return ACCESSORY_SKU_BY_ID[accessoryId]
+  const accessory = staticAccessories.find((item) => item.id === accessoryId)
+  if (!accessory) return undefined
+  return getAccessoryStyleSku(accessory)
 }
 
-export function getAccessorySku(accessory: Pick<Accessory, 'id'>): string | undefined {
-  return getAccessorySkuById(accessory.id)
+export function getAccessorySku(accessory: Pick<Accessory, 'id' | 'category'>): string | undefined {
+  return getAccessoryStyleSku(accessory)
 }
 
+export function resolveAccessorySkuFromSelection(
+  accessory: Pick<Accessory, 'id' | 'category' | 'colors'>,
+  selectedColorLabel?: string,
+): string | undefined {
+  const colorName = selectedColorLabel
+    ? accessory.colors.find(
+        (color) => color.name === selectedColorLabel || color.nameAr === selectedColorLabel,
+      )?.name ?? selectedColorLabel
+    : accessory.colors[0]?.name
+  return resolveAccessorySku(accessory, colorName)
+}
+
+export function resolveSkuByAccessoryId(
+  accessoryId: string,
+  catalog: readonly Accessory[] = staticAccessories,
+  colorName?: string,
+): string | undefined {
+  const accessory = catalog.find((item) => item.id === accessoryId)
+  if (!accessory) return undefined
+  return resolveAccessorySkuFromSelection(accessory, colorName)
+}

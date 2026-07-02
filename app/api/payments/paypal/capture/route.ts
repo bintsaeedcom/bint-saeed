@@ -9,6 +9,7 @@ import {
 import { saveOrder, findOrderIdBySession } from '@/lib/orders/orderStore'
 import { markPaymentEventProcessed, wasPaymentEventProcessed } from '@/lib/payments/webhookEventStore'
 import { createTrelloCardForOrder, notifyHealthAlert } from '@/lib/ops/notifications'
+import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -39,6 +40,7 @@ async function persistPayPalOrder(orderId: string) {
   } catch {
     /* optional */
   }
+  await dispatchOrderEmails(order)
 
   return { ok: true as const, orderId: order.id, duplicate: false }
 }

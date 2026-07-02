@@ -2,124 +2,131 @@
 
 Fixed international retail prices (not live FX). Personalisation on abayas is **complimentary**.
 
-Last synced from codebase: 2026-06-22
+Last synced from codebase: 2026-07-02
 
 **Stripe `unit_amount`** = minor units (fils / pence / cents). KWD, BHD, OMR use 3 decimal places (×1000).
 
-## Ready-to-wear (shop)
+**Ready-to-wear:** AED / GBP / EUR are catalogue anchors; all other currencies use the Belgravia + Kaftan luxury calibration (psychological rounding, close to reference FX).
 
-| Name | Slug | AED | SAR | QAR | OMR | BHD | KWD | GBP | EUR | USD | CHF | RUB | CNY |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Knightsbridge Abaya Jacket | `knightsbridge-abaya-jacket` | 3299 | 3399 | 3299 | 346 | 340 | 277 | 665 | 770 | 845 | 710 | 82000 | 6399 |
-| Covent Garden Abaya | `covent-garden-abaya` | 2799 | 2899 | 2799 | 294 | 288 | 235 | 565 | 650 | 720 | 600 | 70000 | 5499 |
-| Kensington Abaya | `kensington-abaya` | 2899 | 2999 | 2899 | 304 | 299 | 244 | 585 | 675 | 745 | 620 | 72000 | 5699 |
-| Marylebone Abaya | `marylebone-abaya` | 2499 | 2499 | 2499 | 262 | 257 | 210 | 505 | 585 | 640 | 540 | 62000 | 4899 |
-| Belgravia Abaya | `belgravia-abaya` | 3199 | 3299 | 3199 | 336 | 329 | 269 | 645 | 745 | 820 | 690 | 80000 | 6199 |
-| Park Lane Abaya | `park-lane-abaya` | 2199 | 2199 | 2199 | 231 | 226 | 185 | 445 | 515 | 565 | 470 | 55000 | 4299 |
-| Hyde Park Set | `hyde-park-set` | 1399 | 1399 | 1399 | 147 | 144 | 118 | 280 | 325 | 355 | 300 | 35000 | 2699 |
-| Mayfair Kaftan | `mayfair-kaftan` | 975 | 995 | 975 | 99 | 99 | 79 | 199 | 229 | 259 | 229 | 19999 | 1899 |
-| Nothing Hill Kaftan | `nothing-hill-kaftan` | 975 | 995 | 975 | 99 | 99 | 79 | 199 | 229 | 259 | 229 | 19999 | 1899 |
-| Knightsbridge Dress | `knightsbridge-dress` | 2199 | 2199 | 2199 | 231 | 226 | 185 | 440 | 510 | 560 | 470 | 55000 | 4299 |
-| Covent Garden Long Dress | `covent-garden-long-dress` | 1699 | 1699 | 1699 | 178 | 175 | 143 | 340 | 395 | 430 | 365 | 42000 | 3299 |
-| Hampstead Dress | `hampstead-dress` | 1799 | 1799 | 1799 | 189 | 185 | 151 | 360 | 420 | 455 | 385 | 45000 | 3499 |
-| Covent Garden Signature Set | `covent-garden-signature-set` | 3199 | 3299 | 3199 | 336 | 329 | 269 | 645 | 745 | 820 | 690 | 80000 | 6199 |
-| Soho Set | `soho-set` | 1499 | 1499 | 1499 | 157 | 154 | 126 | 299 | 350 | 380 | 320 | 37000 | 2899 |
+**Accessories:** AED not confirmed for strands, charms, or necklaces — **do not create Stripe prices yet**. Placeholder AED in the shop is for layout only.
+
+## Ready-to-wear (shop) — enter in Stripe
+
+| Name | Slug | AED | SAR | QAR | OMR | BHD | KWD | GBP | EUR | USD | CHF | RUB | CNY | CAD | SGD | BND | MYR | MAD | NGN | IDR | KZT | AZN | UZS | HKD |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Knightsbridge Abaya Jacket | `knightsbridge-abaya-jacket` | 3299 | 3395 | 3299 | 349 | 339 | 279 | 675 | 795 | 949 | 749 | 69900 | 6398 | 1295 | 1195 | 1195 | 3795 | 8290 | 1249000 | 16195000 | 439000 | 1549 | 10750000 | 7198 |
+| Covent Garden Abaya | `covent-garden-abaya` | 2799 | 2895 | 2799 | 299 | 289 | 239 | 575 | 695 | 799 | 639 | 59900 | 5398 | 1095 | 999 | 999 | 3195 | 7290 | 1059000 | 13795000 | 369000 | 1319 | 9145000 | 6098 |
+| Kensington Abaya | `kensington-abaya` | 2899 | 2995 | 2899 | 309 | 299 | 249 | 599 | 719 | 829 | 659 | 61900 | 5598 | 1145 | 1045 | 1045 | 3295 | 7490 | 1099000 | 14300000 | 379000 | 1369 | 9495000 | 6298 |
+| Marylebone Abaya | `marylebone-abaya` | 2499 | 2595 | 2499 | 269 | 259 | 219 | 525 | 619 | 729 | 559 | 52900 | 4898 | 995 | 899 | 899 | 2845 | 6490 | 949000 | 12350000 | 329000 | 1179 | 8950000 | 5398 |
+| Belgravia Abaya | `belgravia-abaya` | 3199 | 3295 | 3199 | 339 | 329 | 279 | 649 | 779 | 919 | 719 | 67900 | 6198 | 1295 | 1145 | 1145 | 3695 | 8290 | 1219000 | 15790000 | 419000 | 1499 | 8195000 | 6898 |
+| Park Lane Abaya | `park-lane-abaya` | 2199 | 2295 | 2199 | 239 | 229 | 189 | 449 | 549 | 649 | 499 | 46900 | 4298 | 899 | 799 | 799 | 2495 | 5690 | 829000 | 10895000 | 289000 | 1029 | 7195000 | 4798 |
+| Hyde Park Set | `hyde-park-set` | 1399 | 1495 | 1399 | 149 | 149 | 119 | 285 | 349 | 419 | 339 | 29900 | 2698 | 549 | 499 | 499 | 1595 | 3690 | 529000 | 6895000 | 185000 | 659 | 4595000 | 3098 |
+| Mayfair Kaftan | `mayfair-kaftan` | 975 | 1045 | 975 | 109 | 99 | 89 | 199 | 249 | 299 | 239 | 20900 | 1998 | 399 | 349 | 349 | 1145 | 2595 | 379000 | 4950000 | 129000 | 469 | 3295000 | 2198 |
+| Nothing Hill Kaftan | `nothing-hill-kaftan` | 975 | 1045 | 975 | 109 | 99 | 89 | 199 | 249 | 299 | 239 | 20900 | 1998 | 399 | 349 | 349 | 1145 | 2595 | 379000 | 4950000 | 129000 | 469 | 3295000 | 2198 |
+| Knightsbridge Dress | `knightsbridge-dress` | 2199 | 2295 | 2199 | 239 | 229 | 189 | 449 | 549 | 649 | 499 | 46900 | 4298 | 899 | 799 | 799 | 2495 | 5690 | 829000 | 10895000 | 289000 | 1029 | 7195000 | 4798 |
+| Covent Garden Long Dress | `covent-garden-long-dress` | 1699 | 1745 | 1699 | 179 | 179 | 149 | 349 | 429 | 519 | 389 | 35900 | 3398 | 699 | 599 | 599 | 1945 | 4390 | 649000 | 8395000 | 225000 | 799 | 5595000 | 3698 |
+| Hampstead Dress | `hampstead-dress` | 1799 | 1845 | 1799 | 189 | 189 | 149 | 369 | 449 | 549 | 409 | 37900 | 3598 | 719 | 649 | 649 | 2095 | 4690 | 689000 | 8895000 | 239000 | 849 | 5895000 | 3898 |
+| Covent Garden Signature Set | `covent-garden-signature-set` | 3199 | 3295 | 3199 | 339 | 329 | 279 | 649 | 779 | 919 | 719 | 67900 | 6198 | 1295 | 1145 | 1145 | 3695 | 8290 | 1219000 | 15790000 | 419000 | 1499 | 10450000 | 6898 |
+| Soho Set | `soho-set` | 1499 | 1545 | 1499 | 159 | 159 | 129 | 299 | 379 | 449 | 349 | 31900 | 2998 | 599 | 529 | 529 | 1695 | 3890 | 569000 | 7395000 | 199000 | 709 | 4895000 | 3298 |
 
 ## Stripe minor units — ready-to-wear
 
-| Name | Slug | AED unit_amount | SAR unit_amount | QAR unit_amount | OMR unit_amount | BHD unit_amount | KWD unit_amount | GBP unit_amount | EUR unit_amount | USD unit_amount | CHF unit_amount | RUB unit_amount | CNY unit_amount |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Knightsbridge Abaya Jacket | `knightsbridge-abaya-jacket` | 329900 | 339900 | 329900 | 346000 | 340000 | 277000 | 66500 | 77000 | 84500 | 71000 | 8200000 | 639900 |
-| Covent Garden Abaya | `covent-garden-abaya` | 279900 | 289900 | 279900 | 294000 | 288000 | 235000 | 56500 | 65000 | 72000 | 60000 | 7000000 | 549900 |
-| Kensington Abaya | `kensington-abaya` | 289900 | 299900 | 289900 | 304000 | 299000 | 244000 | 58500 | 67500 | 74500 | 62000 | 7200000 | 569900 |
-| Marylebone Abaya | `marylebone-abaya` | 249900 | 249900 | 249900 | 262000 | 257000 | 210000 | 50500 | 58500 | 64000 | 54000 | 6200000 | 489900 |
-| Belgravia Abaya | `belgravia-abaya` | 319900 | 329900 | 319900 | 336000 | 329000 | 269000 | 64500 | 74500 | 82000 | 69000 | 8000000 | 619900 |
-| Park Lane Abaya | `park-lane-abaya` | 219900 | 219900 | 219900 | 231000 | 226000 | 185000 | 44500 | 51500 | 56500 | 47000 | 5500000 | 429900 |
-| Hyde Park Set | `hyde-park-set` | 139900 | 139900 | 139900 | 147000 | 144000 | 118000 | 28000 | 32500 | 35500 | 30000 | 3500000 | 269900 |
-| Mayfair Kaftan | `mayfair-kaftan` | 97500 | 99500 | 97500 | 99000 | 99000 | 79000 | 19900 | 22900 | 25900 | 22900 | 1999900 | 189900 |
-| Nothing Hill Kaftan | `nothing-hill-kaftan` | 97500 | 99500 | 97500 | 99000 | 99000 | 79000 | 19900 | 22900 | 25900 | 22900 | 1999900 | 189900 |
-| Knightsbridge Dress | `knightsbridge-dress` | 219900 | 219900 | 219900 | 231000 | 226000 | 185000 | 44000 | 51000 | 56000 | 47000 | 5500000 | 429900 |
-| Covent Garden Long Dress | `covent-garden-long-dress` | 169900 | 169900 | 169900 | 178000 | 175000 | 143000 | 34000 | 39500 | 43000 | 36500 | 4200000 | 329900 |
-| Hampstead Dress | `hampstead-dress` | 179900 | 179900 | 179900 | 189000 | 185000 | 151000 | 36000 | 42000 | 45500 | 38500 | 4500000 | 349900 |
-| Covent Garden Signature Set | `covent-garden-signature-set` | 319900 | 329900 | 319900 | 336000 | 329000 | 269000 | 64500 | 74500 | 82000 | 69000 | 8000000 | 619900 |
-| Soho Set | `soho-set` | 149900 | 149900 | 149900 | 157000 | 154000 | 126000 | 29900 | 35000 | 38000 | 32000 | 3700000 | 289900 |
+| Name | Slug | AED unit_amount | SAR unit_amount | QAR unit_amount | OMR unit_amount | BHD unit_amount | KWD unit_amount | GBP unit_amount | EUR unit_amount | USD unit_amount | CHF unit_amount | RUB unit_amount | CNY unit_amount | CAD unit_amount | SGD unit_amount | BND unit_amount | MYR unit_amount | MAD unit_amount | NGN unit_amount | IDR unit_amount | KZT unit_amount | AZN unit_amount | UZS unit_amount | HKD unit_amount |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Knightsbridge Abaya Jacket | `knightsbridge-abaya-jacket` | 329900 | 339500 | 329900 | 349000 | 339000 | 279000 | 67500 | 79500 | 94900 | 74900 | 6990000 | 639800 | 129500 | 119500 | 119500 | 379500 | 829000 | 50000000 | 50000000 | 43900000 | 154900 | 50000000 | 719800 |
+| Covent Garden Abaya | `covent-garden-abaya` | 279900 | 289500 | 279900 | 299000 | 289000 | 239000 | 57500 | 69500 | 79900 | 63900 | 5990000 | 539800 | 109500 | 99900 | 99900 | 319500 | 729000 | 50000000 | 50000000 | 36900000 | 131900 | 50000000 | 609800 |
+| Kensington Abaya | `kensington-abaya` | 289900 | 299500 | 289900 | 309000 | 299000 | 249000 | 59900 | 71900 | 82900 | 65900 | 6190000 | 559800 | 114500 | 104500 | 104500 | 329500 | 749000 | 50000000 | 50000000 | 37900000 | 136900 | 50000000 | 629800 |
+| Marylebone Abaya | `marylebone-abaya` | 249900 | 259500 | 249900 | 269000 | 259000 | 219000 | 52500 | 61900 | 72900 | 55900 | 5290000 | 489800 | 99500 | 89900 | 89900 | 284500 | 649000 | 50000000 | 50000000 | 32900000 | 117900 | 50000000 | 539800 |
+| Belgravia Abaya | `belgravia-abaya` | 319900 | 329500 | 319900 | 339000 | 329000 | 279000 | 64900 | 77900 | 91900 | 71900 | 6790000 | 619800 | 129500 | 114500 | 114500 | 369500 | 829000 | 50000000 | 50000000 | 41900000 | 149900 | 50000000 | 689800 |
+| Park Lane Abaya | `park-lane-abaya` | 219900 | 229500 | 219900 | 239000 | 229000 | 189000 | 44900 | 54900 | 64900 | 49900 | 4690000 | 429800 | 89900 | 79900 | 79900 | 249500 | 569000 | 50000000 | 50000000 | 28900000 | 102900 | 50000000 | 479800 |
+| Hyde Park Set | `hyde-park-set` | 139900 | 149500 | 139900 | 149000 | 149000 | 119000 | 28500 | 34900 | 41900 | 33900 | 2990000 | 269800 | 54900 | 49900 | 49900 | 159500 | 369000 | 50000000 | 50000000 | 18500000 | 65900 | 50000000 | 309800 |
+| Mayfair Kaftan | `mayfair-kaftan` | 97500 | 104500 | 97500 | 109000 | 99000 | 89000 | 19900 | 24900 | 29900 | 23900 | 2090000 | 199800 | 39900 | 34900 | 34900 | 114500 | 259500 | 37900000 | 50000000 | 12900000 | 46900 | 50000000 | 219800 |
+| Nothing Hill Kaftan | `nothing-hill-kaftan` | 97500 | 104500 | 97500 | 109000 | 99000 | 89000 | 19900 | 24900 | 29900 | 23900 | 2090000 | 199800 | 39900 | 34900 | 34900 | 114500 | 259500 | 37900000 | 50000000 | 12900000 | 46900 | 50000000 | 219800 |
+| Knightsbridge Dress | `knightsbridge-dress` | 219900 | 229500 | 219900 | 239000 | 229000 | 189000 | 44900 | 54900 | 64900 | 49900 | 4690000 | 429800 | 89900 | 79900 | 79900 | 249500 | 569000 | 50000000 | 50000000 | 28900000 | 102900 | 50000000 | 479800 |
+| Covent Garden Long Dress | `covent-garden-long-dress` | 169900 | 174500 | 169900 | 179000 | 179000 | 149000 | 34900 | 42900 | 51900 | 38900 | 3590000 | 339800 | 69900 | 59900 | 59900 | 194500 | 439000 | 50000000 | 50000000 | 22500000 | 79900 | 50000000 | 369800 |
+| Hampstead Dress | `hampstead-dress` | 179900 | 184500 | 179900 | 189000 | 189000 | 149000 | 36900 | 44900 | 54900 | 40900 | 3790000 | 359800 | 71900 | 64900 | 64900 | 209500 | 469000 | 50000000 | 50000000 | 23900000 | 84900 | 50000000 | 389800 |
+| Covent Garden Signature Set | `covent-garden-signature-set` | 319900 | 329500 | 319900 | 339000 | 329000 | 279000 | 64900 | 77900 | 91900 | 71900 | 6790000 | 619800 | 129500 | 114500 | 114500 | 369500 | 829000 | 50000000 | 50000000 | 41900000 | 149900 | 50000000 | 689800 |
+| Soho Set | `soho-set` | 149900 | 154500 | 149900 | 159000 | 159000 | 129000 | 29900 | 37900 | 44900 | 34900 | 3190000 | 299800 | 59900 | 52900 | 52900 | 169500 | 389000 | 50000000 | 50000000 | 19900000 | 70900 | 50000000 | 329800 |
 
-## Accessories
+## Accessories — AED pending (not for Stripe yet)
 
-| Name | ID | AED | SAR | QAR | OMR | BHD | KWD | GBP | EUR | USD | CHF | RUB | CNY |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Al Ain Rosette Necklace — Malachite | `al-ain-rosette-necklace-malachite` | 1650 | 1699 | 1599 | 173 | 170 | 139 | 335 | 385 | 450 | 350 | 41000 | 3199 |
-| Al Ain Rosette Necklace — Tiger Eye | `al-ain-rosette-necklace-tiger-eye` | 1480 | 1499 | 1499 | 155 | 152 | 124 | 300 | 345 | 405 | 320 | 37000 | 2899 |
-| Al Ain Rosette Necklace — Onyx | `al-ain-rosette-necklace-onyx` | 1590 | 1599 | 1599 | 167 | 164 | 134 | 320 | 370 | 430 | 340 | 40000 | 3099 |
-| Al Ain Rosette Necklace — Rose Quartz | `al-ain-rosette-necklace-rose-quartz` | 1740 | 1799 | 1699 | 183 | 179 | 146 | 350 | 405 | 475 | 370 | 43000 | 3399 |
-| Al Ain Rosette Necklace — Sunstone | `al-ain-rosette-necklace-sunstone` | 380 | 390 | 375 | 40 | 39 | 32 | 75 | 90 | 105 | 85 | 9500 | 799 |
-| Al Ain Rosette Necklace — Lapis Lazuli | `al-ain-rosette-necklace-lapis-lazuli` | 520 | 599 | 599 | 55 | 54 | 44 | 105 | 120 | 140 | 110 | 13000 | 999 |
-| Pearl Drop Earrings | `earrings-pearl-drop` | 280 | 285 | 275 | 29 | 29 | 24 | 55 | 65 | 75 | 60 | 7000 | 599 |
-| Geometric Studs | `earrings-geometric` | 195 | 200 | 195 | 20 | 20 | 16 | 40 | 50 | 55 | 45 | 4900 | 380 |
-| Textured Gold Hoops | `earrings-hoops` | 320 | 325 | 315 | 34 | 33 | 27 | 65 | 75 | 85 | 70 | 8000 | 699 |
-| Pearl Chain Bracelet | `bracelet-pearl-chain` | 295 | 300 | 290 | 31 | 30 | 25 | 60 | 70 | 80 | 65 | 7300 | 599 |
-| Heritage Cuff Bracelet | `bracelet-cuff-heritage` | 420 | 430 | 415 | 44 | 43 | 35 | 85 | 100 | 115 | 90 | 10000 | 799 |
-| Stacking Bangle Set | `bracelet-bangle-set` | 350 | 355 | 345 | 37 | 36 | 29 | 70 | 85 | 95 | 75 | 8700 | 699 |
-| Silk Tassel Strand | `bag-charm-tassel` | 175 | 180 | 175 | 18 | 18 | 15 | 40 | 45 | 50 | 40 | 4400 | 340 |
-| Pearl Cluster Strand | `bag-charm-pearl-cluster` | 220 | 225 | 220 | 23 | 23 | 18 | 45 | 55 | 60 | 50 | 5500 | 430 |
-| Monogram Letter Strand | `bag-charm-letter` | 195 | 200 | 195 | 20 | 20 | 16 | 40 | 50 | 55 | 45 | 4900 | 380 |
-| Bag Strand | `bag-charm-bint` | 175 | 180 | 175 | 18 | 18 | 15 | 40 | 45 | 50 | 40 | 4400 | 340 |
-| Pearl Phone Strap | `phone-charm-pearl-strap` | 145 | 150 | 145 | 15 | 15 | 12 | 30 | 35 | 40 | 35 | 3600 | 280 |
-| Beaded Phone Chain | `phone-charm-beaded` | 125 | 130 | 125 | 13 | 13 | 11 | 30 | 30 | 35 | 30 | 3100 | 240 |
-| Mini Tassel Phone Strand | `phone-charm-tassel` | 95 | 95 | 95 | 10 | 10 | 8 | 20 | 25 | 30 | 25 | 2400 | 190 |
-| Phone Strand | `phone-charm-bint` | 145 | 150 | 145 | 15 | 15 | 12 | 30 | 35 | 40 | 35 | 3600 | 280 |
-| Onyx | `abaya-charm-onyx-natural-stone` | 400 | 410 | 395 | 42 | 41 | 34 | 80 | 95 | 110 | 90 | 10000 | 799 |
-| Tiger Eye | `abaya-charm-tiger-eye-natural-stone` | 430 | 440 | 425 | 45 | 44 | 36 | 85 | 100 | 115 | 95 | 11000 | 899 |
-| Orange Jade | `abaya-charm-orange-jade-natural-stone` | 465 | 475 | 460 | 49 | 48 | 39 | 95 | 110 | 125 | 100 | 12000 | 899 |
-| Fuchsia Jade | `abaya-charm-fuchsia-jade-natural-stone` | 500 | 499 | 495 | 53 | 52 | 42 | 100 | 115 | 135 | 110 | 12000 | 999 |
-| Blue Aventurine | `abaya-charm-blue-aventurine-natural-stone` | 530 | 599 | 599 | 56 | 55 | 45 | 105 | 125 | 145 | 110 | 13000 | 1099 |
-| Rose Quartz | `abaya-charm-rose-quartz-natural-stone` | 565 | 599 | 599 | 59 | 58 | 47 | 115 | 130 | 155 | 120 | 14000 | 1099 |
-| Malachite | `abaya-charm-malachite-natural-stone` | 600 | 599 | 599 | 63 | 62 | 50 | 120 | 140 | 165 | 130 | 15000 | 1199 |
-| Lapis Lazuli | `abaya-charm-lapis-lazuli-natural-stone` | 645 | 699 | 699 | 68 | 66 | 54 | 130 | 150 | 175 | 140 | 16000 | 1299 |
-| Amethyst Hearts | `abaya-charm-amethyst-hearts-natural-stone` | 720 | 799 | 699 | 76 | 74 | 60 | 145 | 165 | 195 | 150 | 18000 | 1399 |
-| Jade Hearts | `abaya-charm-jade-hearts-natural-stone` | 750 | 799 | 799 | 79 | 77 | 63 | 150 | 175 | 205 | 160 | 19000 | 1499 |
+| Name | ID | Category | Placeholder AED | Status |
+| --- | --- | --- | ---: | --- |
+| Al Ain Rosette Necklace — Malachite | `al-ain-rosette-necklace-malachite` | necklaces | 1650 | pending AED confirmation |
+| Al Ain Rosette Necklace — Tiger Eye | `al-ain-rosette-necklace-tiger-eye` | necklaces | 1480 | pending AED confirmation |
+| Al Ain Rosette Necklace — Onyx | `al-ain-rosette-necklace-onyx` | necklaces | 1590 | pending AED confirmation |
+| Al Ain Rosette Necklace — Rose Quartz | `al-ain-rosette-necklace-rose-quartz` | necklaces | 1740 | pending AED confirmation |
+| Al Ain Rosette Necklace — Sunstone | `al-ain-rosette-necklace-sunstone` | necklaces | 380 | pending AED confirmation |
+| Al Ain Rosette Necklace — Lapis Lazuli | `al-ain-rosette-necklace-lapis-lazuli` | necklaces | 520 | pending AED confirmation |
+| Pearl Drop Earrings | `earrings-pearl-drop` | earrings | 280 | pending AED confirmation |
+| Geometric Studs | `earrings-geometric` | earrings | 195 | pending AED confirmation |
+| Textured Gold Hoops | `earrings-hoops` | earrings | 320 | pending AED confirmation |
+| Pearl Chain Bracelet | `bracelet-pearl-chain` | bracelets | 295 | pending AED confirmation |
+| Heritage Cuff Bracelet | `bracelet-cuff-heritage` | bracelets | 420 | pending AED confirmation |
+| Stacking Bangle Set | `bracelet-bangle-set` | bracelets | 350 | pending AED confirmation |
+| Silk Tassel Strand | `bag-strand-tassel` | bag-strands | 175 | pending AED confirmation |
+| Pearl Cluster Strand | `bag-strand-pearl-cluster` | bag-strands | 220 | pending AED confirmation |
+| Monogram Letter Strand | `bag-strand-letter` | bag-strands | 195 | pending AED confirmation |
+| Bag Strand | `bag-strand-bint` | bag-strands | 175 | pending AED confirmation |
+| Fuchsia Coloured Jade Al Ain Rosette Phone Charm | `al-ain-rosette-phone-charm-fuchsia-jade` | phone-strands | 245 | pending AED confirmation |
+| Orange Coloured Jade Al Ain Rosette Phone Charm | `al-ain-rosette-phone-charm-orange-jade` | phone-strands | 245 | pending AED confirmation |
+| Onyx Al Ain Rosette Phone Charm | `al-ain-rosette-phone-charm-onyx` | phone-strands | 245 | pending AED confirmation |
+| Tiger Eye Al Ain Rosette Phone Charm | `al-ain-rosette-phone-charm-tiger-eye` | phone-strands | 245 | pending AED confirmation |
+| Malachite Al Ain Rosette Phone Charm | `al-ain-rosette-phone-charm-malachite` | phone-strands | 245 | pending AED confirmation |
+| Lapis Lazuli Al Ain Rosette Phone Charm | `al-ain-rosette-phone-charm-lapis-lazuli` | phone-strands | 245 | pending AED confirmation |
+| Rose Quartz Al Ain Rosette Phone Charm | `al-ain-rosette-phone-charm-rose-quartz` | phone-strands | 245 | pending AED confirmation |
+| Onyx Strand | `signature-strand-onyx` | signature-strands | 400 | pending AED confirmation |
+| Tiger Eye Strand | `signature-strand-tiger-eye` | signature-strands | 430 | pending AED confirmation |
+| Sunstone Strand | `signature-strand-sunstone` | signature-strands | 465 | pending AED confirmation |
+| Fuchsia Jade Strand | `signature-strand-fuchsia-jade` | signature-strands | 500 | pending AED confirmation |
+| Blue Aventurine Strand | `signature-strand-blue-aventurine` | signature-strands | 530 | pending AED confirmation |
+| Rose Quartz Strand | `signature-strand-rose-quartz` | signature-strands | 565 | pending AED confirmation |
+| Malachite Strand | `signature-strand-malachite` | signature-strands | 600 | pending AED confirmation |
+| Lapis Lazuli Strand | `signature-strand-lapis-lazuli` | signature-strands | 645 | pending AED confirmation |
+| Amethyst Hearts Strand | `signature-strand-amethyst-hearts` | signature-strands | 720 | pending AED confirmation |
+| Jade Hearts Strand | `signature-strand-jade-hearts` | signature-strands | 750 | pending AED confirmation |
 
 ## Checkout add-ons
 
-| Item | AED | SAR | QAR | OMR | BHD | KWD | GBP | EUR | USD | CHF | RUB | CNY |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Signature packaging | 30 | 35 | 35 | 3.2 | 3 | 2.5 | 6 | 7 | 8 | 7 | 2450 | 59 |
-| Express shipping | 50 | 55 | 55 | 5.5 | 5 | 4.5 | 10 | 12 | 14 | 12 | 4100 | 99 |
+| Item | AED | SAR | QAR | OMR | BHD | KWD | GBP | EUR | USD | CHF | RUB | CNY | CAD | SGD | BND | MYR | MAD | NGN | IDR | KZT | AZN | UZS | HKD |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Signature packaging | 30 | 35 | 35 | 3.2 | 3 | 2.5 | 6 | 7 | 8 | 7 | 2450 | 59 | 11 | 11 | 11 | 37 | 83 | 13200 | 154000 | 4200 | 14 | 110000 | 65 |
+| Express shipping | 50 | 55 | 55 | 5.5 | 5 | 4.5 | 10 | 12 | 14 | 12 | 4100 | 99 | 19 | 18 | 18 | 62 | 138 | 22000 | 257000 | 6900 | 23 | 179000 | 108 |
 
-## Catalogue source (AED / GBP / EUR)
+## Catalogue source (AED / GBP / EUR anchors — AED unchanged)
 
 | Slug | AED | GBP | EUR |
 | --- | ---: | ---: | ---: |
-| `knightsbridge-abaya-jacket` | 3299 | 665 | 770 |
-| `kensington-abaya` | 2899 | 585 | 675 |
-| `belgravia-abaya` | 3199 | 645 | 745 |
-| `covent-garden-abaya` | 2799 | 565 | 650 |
-| `marylebone-abaya` | 2499 | 505 | 585 |
-| `park-lane-abaya` | 2199 | 445 | 515 |
-| `hyde-park-set` | 1399 | 280 | 325 |
-| `mayfair-kaftan` | 975 | 199 | 229 |
-| `nothing-hill-kaftan` | 975 | 199 | 229 |
-| `soho-set` | 1499 | 299 | 350 |
-| `covent-garden-signature-set` | 3199 | 645 | 745 |
-| `covent-garden-long-dress` | 1699 | 340 | 395 |
-| `hampstead-dress` | 1799 | 360 | 420 |
-| `knightsbridge-dress` | 2199 | 440 | 510 |
+| `knightsbridge-abaya-jacket` | 3299 | 675 | 795 |
+| `covent-garden-abaya` | 2799 | 575 | 695 |
+| `kensington-abaya` | 2899 | 599 | 719 |
+| `marylebone-abaya` | 2499 | 525 | 619 |
+| `belgravia-abaya` | 3199 | 649 | 779 |
+| `park-lane-abaya` | 2199 | 449 | 549 |
+| `hyde-park-set` | 1399 | 285 | 349 |
+| `mayfair-kaftan` | 975 | 199 | 249 |
+| `nothing-hill-kaftan` | 975 | 199 | 249 |
+| `knightsbridge-dress` | 2199 | 449 | 549 |
+| `covent-garden-long-dress` | 1699 | 349 | 429 |
+| `hampstead-dress` | 1799 | 369 | 449 |
+| `covent-garden-signature-set` | 3199 | 649 | 779 |
+| `soho-set` | 1499 | 299 | 379 |
 
-## Full currency map (all catalogue SKUs)
+## Full currency map (all ready-to-wear slugs)
 
-| Slug | AED | SAR | QAR | OMR | BHD | KWD | GBP | EUR | USD | CHF | RUB | CNY |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| `knightsbridge-abaya-jacket` | 3299 | 3399 | 3299 | 346 | 340 | 277 | 665 | 770 | 845 | 710 | 82000 | 6399 |
-| `kensington-abaya` | 2899 | 2999 | 2899 | 304 | 299 | 244 | 585 | 675 | 745 | 620 | 72000 | 5699 |
-| `belgravia-abaya` | 3199 | 3299 | 3199 | 336 | 329 | 269 | 645 | 745 | 820 | 690 | 80000 | 6199 |
-| `covent-garden-abaya` | 2799 | 2899 | 2799 | 294 | 288 | 235 | 565 | 650 | 720 | 600 | 70000 | 5499 |
-| `marylebone-abaya` | 2499 | 2499 | 2499 | 262 | 257 | 210 | 505 | 585 | 640 | 540 | 62000 | 4899 |
-| `park-lane-abaya` | 2199 | 2199 | 2199 | 231 | 226 | 185 | 445 | 515 | 565 | 470 | 55000 | 4299 |
-| `hyde-park-set` | 1399 | 1399 | 1399 | 147 | 144 | 118 | 280 | 325 | 355 | 300 | 35000 | 2699 |
-| `mayfair-kaftan` | 975 | 995 | 975 | 99 | 99 | 79 | 199 | 229 | 259 | 229 | 19999 | 1899 |
-| `nothing-hill-kaftan` | 975 | 995 | 975 | 99 | 99 | 79 | 199 | 229 | 259 | 229 | 19999 | 1899 |
-| `soho-set` | 1499 | 1499 | 1499 | 157 | 154 | 126 | 299 | 350 | 380 | 320 | 37000 | 2899 |
-| `covent-garden-signature-set` | 3199 | 3299 | 3199 | 336 | 329 | 269 | 645 | 745 | 820 | 690 | 80000 | 6199 |
-| `covent-garden-long-dress` | 1699 | 1699 | 1699 | 178 | 175 | 143 | 340 | 395 | 430 | 365 | 42000 | 3299 |
-| `hampstead-dress` | 1799 | 1799 | 1799 | 189 | 185 | 151 | 360 | 420 | 455 | 385 | 45000 | 3499 |
-| `knightsbridge-dress` | 2199 | 2199 | 2199 | 231 | 226 | 185 | 440 | 510 | 560 | 470 | 55000 | 4299 |
+| Slug | AED | SAR | QAR | OMR | BHD | KWD | GBP | EUR | USD | CHF | RUB | CNY | CAD | SGD | BND | MYR | MAD | NGN | IDR | KZT | AZN | UZS | HKD |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `knightsbridge-abaya-jacket` | 3299 | 3395 | 3299 | 349 | 339 | 279 | 675 | 795 | 949 | 749 | 69900 | 6398 | 1295 | 1195 | 1195 | 3795 | 8290 | 1249000 | 16195000 | 439000 | 1549 | 10750000 | 7198 |
+| `covent-garden-abaya` | 2799 | 2895 | 2799 | 299 | 289 | 239 | 575 | 695 | 799 | 639 | 59900 | 5398 | 1095 | 999 | 999 | 3195 | 7290 | 1059000 | 13795000 | 369000 | 1319 | 9145000 | 6098 |
+| `kensington-abaya` | 2899 | 2995 | 2899 | 309 | 299 | 249 | 599 | 719 | 829 | 659 | 61900 | 5598 | 1145 | 1045 | 1045 | 3295 | 7490 | 1099000 | 14300000 | 379000 | 1369 | 9495000 | 6298 |
+| `marylebone-abaya` | 2499 | 2595 | 2499 | 269 | 259 | 219 | 525 | 619 | 729 | 559 | 52900 | 4898 | 995 | 899 | 899 | 2845 | 6490 | 949000 | 12350000 | 329000 | 1179 | 8950000 | 5398 |
+| `belgravia-abaya` | 3199 | 3295 | 3199 | 339 | 329 | 279 | 649 | 779 | 919 | 719 | 67900 | 6198 | 1295 | 1145 | 1145 | 3695 | 8290 | 1219000 | 15790000 | 419000 | 1499 | 8195000 | 6898 |
+| `park-lane-abaya` | 2199 | 2295 | 2199 | 239 | 229 | 189 | 449 | 549 | 649 | 499 | 46900 | 4298 | 899 | 799 | 799 | 2495 | 5690 | 829000 | 10895000 | 289000 | 1029 | 7195000 | 4798 |
+| `hyde-park-set` | 1399 | 1495 | 1399 | 149 | 149 | 119 | 285 | 349 | 419 | 339 | 29900 | 2698 | 549 | 499 | 499 | 1595 | 3690 | 529000 | 6895000 | 185000 | 659 | 4595000 | 3098 |
+| `mayfair-kaftan` | 975 | 1045 | 975 | 109 | 99 | 89 | 199 | 249 | 299 | 239 | 20900 | 1998 | 399 | 349 | 349 | 1145 | 2595 | 379000 | 4950000 | 129000 | 469 | 3295000 | 2198 |
+| `nothing-hill-kaftan` | 975 | 1045 | 975 | 109 | 99 | 89 | 199 | 249 | 299 | 239 | 20900 | 1998 | 399 | 349 | 349 | 1145 | 2595 | 379000 | 4950000 | 129000 | 469 | 3295000 | 2198 |
+| `knightsbridge-dress` | 2199 | 2295 | 2199 | 239 | 229 | 189 | 449 | 549 | 649 | 499 | 46900 | 4298 | 899 | 799 | 799 | 2495 | 5690 | 829000 | 10895000 | 289000 | 1029 | 7195000 | 4798 |
+| `covent-garden-long-dress` | 1699 | 1745 | 1699 | 179 | 179 | 149 | 349 | 429 | 519 | 389 | 35900 | 3398 | 699 | 599 | 599 | 1945 | 4390 | 649000 | 8395000 | 225000 | 799 | 5595000 | 3698 |
+| `hampstead-dress` | 1799 | 1845 | 1799 | 189 | 189 | 149 | 369 | 449 | 549 | 409 | 37900 | 3598 | 719 | 649 | 649 | 2095 | 4690 | 689000 | 8895000 | 239000 | 849 | 5895000 | 3898 |
+| `covent-garden-signature-set` | 3199 | 3295 | 3199 | 339 | 329 | 279 | 649 | 779 | 919 | 719 | 67900 | 6198 | 1295 | 1145 | 1145 | 3695 | 8290 | 1219000 | 15790000 | 419000 | 1499 | 10450000 | 6898 |
+| `soho-set` | 1499 | 1545 | 1499 | 159 | 159 | 129 | 299 | 379 | 449 | 349 | 31900 | 2998 | 599 | 529 | 529 | 1695 | 3890 | 569000 | 7395000 | 199000 | 709 | 4895000 | 3298 |

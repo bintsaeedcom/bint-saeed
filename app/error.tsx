@@ -29,7 +29,7 @@ export default function Error({
       description={copy.description}
       meta={
         error.digest ? (
-          <p className="font-montserrat text-[11px] tracking-[0.08em] text-brand-stone/80">
+          <p className="text-center font-montserrat text-[11px] tracking-[0.08em] text-brand-stone/80">
             {copy.errorId}: {error.digest}
           </p>
         ) : null

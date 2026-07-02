@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/admin/apiAuth'
 import { isGoogleOAuthConfigured } from '@/lib/auth/googleOAuth'
 import { isRedisConfigured } from '@/lib/auth/redisStore'
+import { orderAlertRecipients } from '@/lib/orders/sendOwnerOrderAlertEmail'
 
 export const dynamic = 'force-dynamic'
 
@@ -81,11 +82,40 @@ export async function GET(request: NextRequest) {
   const newsletterReady = Boolean(mailerliteKey && mailerliteReachable)
   const emailRegisterReady = Boolean(resendKey && redisConfigured)
 
+  // Order-tracking notification channels — at least one owner channel should be live so a
+  // paid order can never go unnoticed.
+  const ownerAlertEmailConfigured = Boolean(resendKey)
+  const ownerAlertRecipient = orderAlertRecipients().join(', ')
+  const slackOrdersConfigured = Boolean(process.env.SLACK_ORDERS_WEBHOOK_URL?.trim())
+  const trelloConfigured = Boolean(
+    process.env.TRELLO_API_KEY?.trim() &&
+      process.env.TRELLO_API_TOKEN?.trim() &&
+      process.env.TRELLO_CLIENT_ORDERS_LIST_ID?.trim(),
+  )
+  const orderAlertsReady = ownerAlertEmailConfigured || slackOrdersConfigured
+  if (!orderAlertsReady) {
+    warnings.push(
+      'No order alert channel is live. Set RESEND_API_KEY (+ optional ORDER_ALERT_EMAIL) or SLACK_ORDERS_WEBHOOK_URL so you are notified of every order.',
+    )
+  }
+  if (!redisConfigured) {
+    warnings.push('Orders are only kept in memory without Upstash Redis — they are lost on redeploy/restart.')
+  }
+
   const origin = siteUrl.replace(/\/$/, '')
 
   return NextResponse.json({
-    ok: googleReady && newsletterReady,
+    ok: googleReady && newsletterReady && orderAlertsReady,
     checkedAt: new Date().toISOString(),
+    orders: {
+      redisConfigured,
+      ownerAlertEmailConfigured,
+      ownerAlertRecipient,
+      slackOrdersConfigured,
+      trelloConfigured,
+      customerConfirmationConfigured: Boolean(resendKey),
+      ready: orderAlertsReady,
+    },
     auth: {
       googleOAuthConfigured,
       sessionSecretConfigured: sessionConfigured,

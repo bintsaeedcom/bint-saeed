@@ -1,7 +1,6 @@
 import { cartSubtotalInCurrency, lineUnitInCurrency } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
-import { products as staticProducts } from '@/data/products'
-import { resolveSkuByProductId } from '@/lib/products/sku'
+import { resolveLineItemSku } from '@/lib/checkout/resolveLineItemSku'
 import type { CheckoutCartItem } from '@/lib/checkout/types'
 import type { OrderLine, StoredOrder } from '@/lib/orders/types'
 import type { PendingPayPalCheckout } from '@/lib/paypal/pendingCheckoutStore'
@@ -92,7 +91,7 @@ export function serializePayPalOrderItems(items: CheckoutCartItem[]) {
       customisationSurcharge: item.customisationSurcharge,
       sku:
         item.sku ||
-        resolveSkuByProductId(item.id, staticProducts, item.color ?? '') ||
+        resolveLineItemSku(item.id, item.color ?? '') ||
         undefined,
     })),
   )

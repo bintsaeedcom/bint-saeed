@@ -6,9 +6,9 @@ import { accessories } from '../data/accessories'
 import {
   PRODUCT_CATALOG_TRIPLES,
   PRODUCT_CATALOG_PRICES,
-  KAFTAN_CATALOG_PRICES,
-  buildFullPriceMap,
+  buildLuxuryCatalogPriceMap,
 } from '../lib/pricing/productPrices'
+import { isAccessoryCategoryPendingAed } from '../lib/pricing/accessoryCatalogPrices'
 import {
   EXPRESS_SHIPPING_PRICES,
   SIGNATURE_PACKAGING_PRICES,
@@ -27,13 +27,19 @@ lines.push(`Last synced from codebase: ${new Date().toISOString().slice(0, 10)}`
 lines.push('')
 lines.push('**Stripe `unit_amount`** = minor units (fils / pence / cents). KWD, BHD, OMR use 3 decimal places (×1000).')
 lines.push('')
-
-lines.push('## Ready-to-wear (shop)')
+lines.push(
+  '**Ready-to-wear:** AED / GBP / EUR are catalogue anchors; all other currencies use the Belgravia + Kaftan luxury calibration (psychological rounding, close to reference FX).',
+)
 lines.push('')
 lines.push(
-  '| Name | Slug | ' + currencies.join(' | ') + ' |',
+  '**Accessories:** AED not confirmed for strands, charms, or necklaces — **do not create Stripe prices yet**. Placeholder AED in the shop is for layout only.',
 )
-lines.push('| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |')
+lines.push('')
+
+lines.push('## Ready-to-wear (shop) — enter in Stripe')
+lines.push('')
+lines.push('| Name | Slug | ' + currencies.join(' | ') + ' |')
+lines.push('| --- | --- | ' + currencies.map(() => '---:').join(' | ') + ' |')
 
 for (const p of products) {
   const prices = currencies.map((c) => getListedPrice(p.price, c, undefined, p.id))
@@ -52,28 +58,28 @@ for (const p of products) {
 }
 
 lines.push('')
-lines.push('## Accessories')
+lines.push('## Accessories — AED pending (not for Stripe yet)')
 lines.push('')
-lines.push('| Name | ID | ' + currencies.join(' | ') + ' |')
-lines.push('| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |')
+lines.push('| Name | ID | Category | Placeholder AED | Status |')
+lines.push('| --- | --- | --- | ---: | --- |')
 
 for (const a of accessories) {
-  const prices = currencies.map((c) => getListedPrice(a.price, c))
-  lines.push(`| ${a.name} | \`${a.id}\` | ${prices.join(' | ')} |`)
+  if (a.id === 'all' || !isAccessoryCategoryPendingAed(a.category)) continue
+  lines.push(`| ${a.name} | \`${a.id}\` | ${a.category} | ${a.price} | pending AED confirmation |`)
 }
 
 lines.push('')
 lines.push('## Checkout add-ons')
 lines.push('')
 lines.push('| Item | ' + currencies.join(' | ') + ' |')
-lines.push('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |')
+lines.push('| --- | ' + currencies.map(() => '---:').join(' | ') + ' |')
 lines.push(
   `| Signature packaging | ${currencies.map((c) => SIGNATURE_PACKAGING_PRICES[c]).join(' | ')} |`,
 )
 lines.push(`| Express shipping | ${currencies.map((c) => EXPRESS_SHIPPING_PRICES[c]).join(' | ')} |`)
 
 lines.push('')
-lines.push('## Catalogue source (AED / GBP / EUR)')
+lines.push('## Catalogue source (AED / GBP / EUR anchors — AED unchanged)')
 lines.push('')
 lines.push('| Slug | AED | GBP | EUR |')
 lines.push('| --- | ---: | ---: | ---: |')
@@ -82,12 +88,12 @@ for (const [slug, row] of Object.entries(PRODUCT_CATALOG_TRIPLES)) {
 }
 
 lines.push('')
-lines.push('## Full currency map (all catalogue SKUs)')
+lines.push('## Full currency map (all ready-to-wear slugs)')
 lines.push('')
 lines.push('| Slug | ' + currencies.join(' | ') + ' |')
 lines.push('| --- | ' + currencies.map(() => '---:').join(' | ') + ' |')
 for (const [slug, triple] of Object.entries(PRODUCT_CATALOG_TRIPLES)) {
-  const map = PRODUCT_CATALOG_PRICES[slug] ?? buildFullPriceMap(triple)
+  const map = PRODUCT_CATALOG_PRICES[slug] ?? buildLuxuryCatalogPriceMap(triple)
   lines.push(`| \`${slug}\` | ${currencies.map((c) => map[c]).join(' | ')} |`)
 }
 

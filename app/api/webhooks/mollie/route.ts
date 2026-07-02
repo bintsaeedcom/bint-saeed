@@ -11,6 +11,7 @@ import {
 import { getMollieApiKey } from '@/lib/mollie/config'
 import { getMollieClient } from '@/lib/mollie/client'
 import { createTrelloCardForOrder, notifyHealthAlert } from '@/lib/ops/notifications'
+import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
 import type { PendingMollieCheckout } from '@/lib/mollie/pendingCheckoutStore'
 
 export const runtime = 'nodejs'
@@ -69,6 +70,17 @@ async function notifyMollieOrderChannel(
           text: `*Items / size / personalisation:*\n${lines.join('\n')}`,
         },
       },
+      ...(pending.checkoutNotes?.trim()
+        ? [
+            {
+              type: 'section',
+              text: {
+                type: 'mrkdwn',
+                text: `*Client note:*\n>${pending.checkoutNotes.trim().replace(/\n/g, '\n>')}`,
+              },
+            },
+          ]
+        : []),
     ],
   }
 
@@ -179,6 +191,7 @@ export async function POST(request: NextRequest) {
       clientTimezone: pending.clientContext?.timezone,
       uaeTimestamp: new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' }),
     })
+    await dispatchOrderEmails(order)
 
     await markPaymentEventProcessed('mollie', eventId)
     return NextResponse.json({ received: true, orderId: order.id })

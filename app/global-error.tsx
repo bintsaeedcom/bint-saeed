@@ -79,12 +79,12 @@ export default function GlobalError({
                 <h1 className="mt-4 font-rozha text-[1.65rem] leading-tight text-brand-darkRed sm:text-[1.85rem]">
                   {copy.globalTitle}
                 </h1>
-                <p className="mx-auto mt-4 max-w-[21rem] font-montserrat text-[12px] font-light leading-[1.75] tracking-wide text-neutral-600">
+                <p className="mx-auto mt-4 max-w-[21rem] text-center font-montserrat text-[12px] font-light leading-[1.75] tracking-wide text-neutral-600">
                   {copy.globalDescription}
                 </p>
 
                 {error.digest ? (
-                  <p className="mt-3 font-montserrat text-[11px] tracking-[0.08em] text-brand-stone/80">
+                  <p className="mt-3 text-center font-montserrat text-[11px] tracking-[0.08em] text-brand-stone/80">
                     {copy.errorId}: {error.digest}
                   </p>
                 ) : null}

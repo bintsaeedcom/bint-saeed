@@ -3,6 +3,7 @@
 import { useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiCheck, FiShoppingBag } from 'react-icons/fi'
@@ -84,30 +85,55 @@ function CheckoutSuccessContent() {
           }}
         />
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-lg text-center"
         >
-          <div className="glass-card rounded-2xl p-12">
+          <div className="glass-card relative overflow-hidden rounded-2xl px-8 py-12 sm:px-12 sm:py-14">
+            <div
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-stone/45 to-transparent"
+              aria-hidden
+            />
+
+            <LocaleLink href="/home" className="inline-block" data-cursor-hover>
+              <Image
+                src="/gold logo.png"
+                alt="Bint Saeed"
+                width={120}
+                height={120}
+                priority
+                className="mx-auto h-14 w-auto sm:h-16"
+              />
+            </LocaleLink>
+            <p className="mt-6 font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-dustyBlue">
+              Bint Saeed
+            </p>
+
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-              className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.25, type: 'spring', stiffness: 200 }}
+              className="mx-auto mt-9 flex h-16 w-16 items-center justify-center rounded-full border border-brand-stone/30 bg-white/70 shadow-[0_10px_30px_-14px_rgba(59,0,20,0.35)]"
             >
-              <FiCheck className="w-10 h-10 text-green-600" />
+              <FiCheck className="h-7 w-7 text-brand-darkRed" strokeWidth={1.5} />
             </motion.div>
 
-            <h1 data-document-h1="true" className="font-rozha text-4xl text-brand-darkRed mb-4">
+            <h1 data-document-h1="true" className="mt-7 font-rozha text-[2rem] leading-tight text-brand-darkRed sm:text-4xl">
               {successCopy.title}
             </h1>
-            <p className="font-montserrat text-brand-clayRed tracking-wide mb-8 leading-relaxed">
+            <p className="mx-auto mt-4 max-w-sm font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed">
               {successCopy.subtitle}
             </p>
 
+            <div className="my-8 flex items-center justify-center gap-3" aria-hidden>
+              <div className="h-px w-12 bg-brand-stone/25 sm:w-16" />
+              <span className="font-rozha text-xs text-brand-stone/45">✦</span>
+              <div className="h-px w-12 bg-brand-stone/25 sm:w-16" />
+            </div>
+
             {(sessionId || paymentId || paypalToken) && (
-              <p className="font-montserrat text-xs text-brand-stone tracking-wide mb-8">
+              <p className="mb-8 font-montserrat text-[11px] uppercase tracking-[0.22em] text-brand-stone">
                 {successCopy.sessionReference}: {(sessionId || paymentId || paypalToken || '').slice(-8).toUpperCase()}
               </p>
             )}

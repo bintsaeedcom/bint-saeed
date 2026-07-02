@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
@@ -99,6 +99,15 @@ interface OpsHealth {
     error: string | null
     ready: boolean
   }
+  orders?: {
+    redisConfigured: boolean
+    ownerAlertEmailConfigured: boolean
+    ownerAlertRecipient: string
+    slackOrdersConfigured: boolean
+    trelloConfigured: boolean
+    customerConfirmationConfigured: boolean
+    ready: boolean
+  }
   warnings: string[]
 }
 
@@ -113,6 +122,23 @@ interface ProductAdminRow {
     name?: string
     published?: boolean
   }
+}
+
+function beep() {
+  if (typeof window === 'undefined') return
+  const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+  if (!Ctx) return
+  const ctx = new Ctx()
+  const osc = ctx.createOscillator()
+  const gain = ctx.createGain()
+  osc.type = 'sine'
+  osc.frequency.value = 880
+  gain.gain.value = 0.06
+  osc.connect(gain)
+  gain.connect(ctx.destination)
+  osc.start()
+  osc.stop(ctx.currentTime + 0.18)
+  osc.onended = () => ctx.close()
 }
 
 export default function AdminDashboard() {
@@ -135,6 +161,8 @@ export default function AdminDashboard() {
   const [customers, setCustomers] = useState<CustomerRecord[]>([])
   const [products, setProducts] = useState<ProductAdminRow[]>([])
   const [commerceReady, setCommerceReady] = useState(false)
+  const [newOrderAlert, setNewOrderAlert] = useState<StoredOrder | null>(null)
+  const knownOrderIds = useRef<Set<string> | null>(null)
 
   // Fetch data
   const fetchData = async () => {
@@ -184,7 +212,25 @@ export default function AdminDashboard() {
         productsRes.json(),
       ])
 
-      if (ordersRes.ok) setOrders(ordersData.orders || [])
+      if (ordersRes.ok) {
+        const nextOrders: StoredOrder[] = ordersData.orders || []
+        // Detect orders that appeared since the last poll so you never miss one.
+        if (knownOrderIds.current === null) {
+          knownOrderIds.current = new Set(nextOrders.map((o) => o.id))
+        } else {
+          const fresh = nextOrders.filter((o) => !knownOrderIds.current!.has(o.id))
+          if (fresh.length > 0) {
+            setNewOrderAlert(fresh[0])
+            try {
+              beep()
+            } catch {
+              /* audio requires a prior user gesture — safe to ignore */
+            }
+          }
+          for (const o of nextOrders) knownOrderIds.current.add(o.id)
+        }
+        setOrders(nextOrders)
+      }
       if (customersRes.ok) setCustomers(customersData.customers || [])
       if (productsRes.ok) setProducts(productsData.products || [])
       setCommerceReady(ordersRes.ok && customersRes.ok && productsRes.ok)
@@ -201,6 +247,15 @@ export default function AdminDashboard() {
     const interval = setInterval(fetchData, 10000) // Poll every 10 seconds
     return () => clearInterval(interval)
   }, [])
+
+  // Keep an unmissable badge in the browser tab title while a new order is unacknowledged.
+  useEffect(() => {
+    const base = 'Analytics Dashboard · Bint Saeed'
+    document.title = newOrderAlert ? `🔔 New order — ${base}` : base
+    return () => {
+      document.title = base
+    }
+  }, [newOrderAlert])
 
   const getDeviceIcon = (type: string) => {
     switch (type) {
@@ -242,6 +297,11 @@ export default function AdminDashboard() {
   const publishedProducts = products.filter((p) => p.override.published !== false).length
   const draftProducts = Math.max(0, products.length - publishedProducts)
   const avgOrderValue = orders.length > 0 ? totalRevenue / orders.length : 0
+  const needsAttention =
+    (orderStatusCounts.paid || 0) + (orderStatusCounts.processing || 0) + (orderStatusCounts.ready_to_ship || 0)
+  const latestOrders = [...orders]
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 8)
 
   return (
     <div className="min-h-screen bg-stone-100 text-neutral-900">
@@ -282,6 +342,50 @@ export default function AdminDashboard() {
       </div>
 
       <div className="container mx-auto px-6 py-8">
+        {/* Live new-order alert */}
+        <AnimatePresence>
+          {newOrderAlert && (
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              className="mb-6 flex flex-col gap-3 rounded-xl border border-emerald-300 bg-emerald-50 p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div className="flex items-center gap-3">
+                <span className="relative flex h-3 w-3">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500" />
+                </span>
+                <div>
+                  <p className="font-montserrat text-sm font-semibold text-emerald-800">
+                    New order received — {newOrderAlert.currency} {newOrderAlert.amountTotal.toFixed(2)}
+                  </p>
+                  <p className="font-montserrat text-xs text-emerald-700">
+                    {newOrderAlert.id} · {newOrderAlert.customerEmail || 'Unknown customer'}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/admin/orders"
+                  className="inline-flex items-center gap-2 rounded-md bg-emerald-600 px-4 py-2 font-montserrat text-xs uppercase tracking-[0.12em] text-white hover:bg-emerald-700"
+                >
+                  <FiTruck className="h-3.5 w-3.5" />
+                  View order
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setNewOrderAlert(null)}
+                  className="rounded-md border border-emerald-300 p-2 text-emerald-700 hover:bg-emerald-100"
+                  aria-label="Dismiss new order alert"
+                >
+                  <FiX className="h-4 w-4" />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <StatCard 
@@ -339,7 +443,40 @@ export default function AdminDashboard() {
             <HealthPill label="Admin links" ok />
           </div>
 
+          <div className="mt-4 rounded-lg border border-gray-100 bg-stone-50 p-4">
+            <div className="flex items-center justify-between gap-3">
+              <p className="font-montserrat text-[11px] uppercase tracking-[0.15em] text-gray-500">
+                Order alerts — how you get notified
+              </p>
+              <span
+                className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 font-montserrat text-[10px] uppercase tracking-[0.12em] ${
+                  opsHealth?.orders?.ready ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'
+                }`}
+              >
+                {opsHealth?.orders?.ready ? <FiCheckCircle className="h-3 w-3" /> : <FiAlertTriangle className="h-3 w-3" />}
+                {opsHealth?.orders?.ready ? 'You will be notified' : 'No alert channel live'}
+              </span>
+            </div>
+            <div className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
+              <HealthPill label="Owner email alert" ok={Boolean(opsHealth?.orders?.ownerAlertEmailConfigured)} />
+              <HealthPill label="Slack orders" ok={Boolean(opsHealth?.orders?.slackOrdersConfigured)} />
+              <HealthPill label="Trello board" ok={Boolean(opsHealth?.orders?.trelloConfigured)} />
+              <HealthPill label="Persistent storage" ok={Boolean(opsHealth?.orders?.redisConfigured)} />
+            </div>
+            {opsHealth?.orders?.ownerAlertEmailConfigured && (
+              <p className="mt-3 font-montserrat text-[11px] text-gray-500">
+                Alerts sent to <span className="text-gray-700">{opsHealth.orders.ownerAlertRecipient}</span> on every order.
+              </p>
+            )}
+          </div>
+
           <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <KpiTile
+              icon={<FiBell className="h-4 w-4" />}
+              label="Orders to fulfil"
+              value={String(needsAttention)}
+              tone={needsAttention > 0 ? 'text-rose-700' : 'text-emerald-700'}
+            />
             <KpiTile
               icon={<FiDollarSign className="h-4 w-4" />}
               label="Revenue (all time)"
@@ -396,6 +533,59 @@ export default function AdminDashboard() {
             <QuickLink href="/admin/products" icon={<FiPackage className="h-3.5 w-3.5" />} label="Open Catalog Manager" />
             <QuickLink href="/admin/dashboard" icon={<FiRotateCcw className="h-3.5 w-3.5" />} label="Refresh command center" />
           </div>
+        </div>
+
+        {/* Latest orders */}
+        <div className="mb-8 rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+          <div className="mb-4 flex items-start justify-between gap-4">
+            <div>
+              <h2 className="font-rozha text-2xl text-brand-darkRed">Latest Orders</h2>
+              <p className="font-montserrat text-xs uppercase tracking-[0.16em] text-gray-500">
+                Most recent {latestOrders.length} · {needsAttention} awaiting fulfilment
+              </p>
+            </div>
+            <QuickLink href="/admin/orders" icon={<FiExternalLink className="h-3.5 w-3.5" />} label="Open Orders Hub" />
+          </div>
+
+          {latestOrders.length === 0 ? (
+            <div className="rounded-lg border border-dashed border-gray-200 bg-stone-50 p-8 text-center">
+              <FiPackage className="mx-auto mb-3 h-8 w-8 text-gray-300" />
+              <p className="font-montserrat text-sm text-gray-500">
+                No orders yet. When a payment completes, it appears here instantly and you are alerted.
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[640px] text-left font-montserrat text-sm">
+                <thead>
+                  <tr className="border-b border-gray-100 text-[10px] uppercase tracking-[0.16em] text-gray-400">
+                    <th className="px-3 py-2">Order</th>
+                    <th className="px-3 py-2">Customer</th>
+                    <th className="px-3 py-2">Total</th>
+                    <th className="px-3 py-2">Status</th>
+                    <th className="px-3 py-2">Placed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {latestOrders.map((o) => (
+                    <tr key={o.id} className="border-b border-gray-50 hover:bg-stone-50">
+                      <td className="px-3 py-2.5 font-mono text-xs text-gray-700">{o.id}</td>
+                      <td className="max-w-[200px] truncate px-3 py-2.5 text-gray-800">{o.customerEmail || '—'}</td>
+                      <td className="whitespace-nowrap px-3 py-2.5 tabular-nums text-gray-900">
+                        {o.currency} {o.amountTotal.toFixed(2)}
+                      </td>
+                      <td className="px-3 py-2.5">
+                        <OrderStatusBadge status={o.fulfillmentStatus} />
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-2.5 text-xs text-gray-500">
+                        {new Date(o.createdAt).toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
 
         {/* Checkout diagnostics */}
@@ -919,6 +1109,28 @@ function StatCard({
       <p className="font-rozha text-3xl text-gray-900">{value}</p>
       <p className="font-montserrat text-xs uppercase tracking-wider text-gray-500">{label}</p>
     </div>
+  )
+}
+
+function OrderStatusBadge({ status }: { status: string }) {
+  const tone: Record<string, string> = {
+    paid: 'bg-emerald-100 text-emerald-700',
+    processing: 'bg-amber-100 text-amber-700',
+    ready_to_ship: 'bg-blue-100 text-blue-700',
+    shipped: 'bg-indigo-100 text-indigo-700',
+    delivered: 'bg-gray-100 text-gray-600',
+    cancelled: 'bg-gray-100 text-gray-500',
+    refunded: 'bg-rose-100 text-rose-700',
+  }
+  const label = status.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
+  return (
+    <span
+      className={`inline-block rounded-full px-2.5 py-0.5 font-montserrat text-[11px] ${
+        tone[status] || 'bg-gray-100 text-gray-600'
+      }`}
+    >
+      {label}
+    </span>
   )
 }
 

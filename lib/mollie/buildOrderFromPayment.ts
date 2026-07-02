@@ -1,7 +1,6 @@
 import { cartSubtotalInCurrency, lineUnitInCurrency } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
-import { products as staticProducts } from '@/data/products'
-import { resolveSkuByProductId } from '@/lib/products/sku'
+import { resolveLineItemSku } from '@/lib/checkout/resolveLineItemSku'
 import { toMollieAmountValue } from '@/lib/mollie/amount'
 import type { CheckoutCartItem } from '@/lib/checkout/types'
 import type { OrderLine } from '@/lib/orders/types'
@@ -76,7 +75,7 @@ export function buildMolliePaymentLines(items: CheckoutCartItem[], currency: Sup
     const quantity = item.quantity
     const totalAmount = unitAmount * quantity
     const sku =
-      item.sku || resolveSkuByProductId(item.id, staticProducts, item.color ?? '') || undefined
+      item.sku || resolveLineItemSku(item.id, item.color ?? '') || undefined
 
     return {
       type: 'physical' as const,
@@ -188,7 +187,7 @@ export function serializeMollieOrderItems(items: CheckoutCartItem[]) {
       customisationMessage: item.customisationMessage,
       customisationSurcharge: item.customisationSurcharge,
       sku:
-        item.sku || resolveSkuByProductId(item.id, staticProducts, item.color ?? '') || undefined,
+        item.sku || resolveLineItemSku(item.id, item.color ?? '') || undefined,
     })),
   )
 }

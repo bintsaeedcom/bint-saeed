@@ -93,7 +93,7 @@ export default function ErrorPageShell({
 
             {statusCode ? (
               <div className="mt-5 space-y-2">
-                <p className="font-rozha text-[3.25rem] leading-none text-brand-stone/22 sm:text-[3.75rem]">
+                <p className="text-center font-rozha text-[3.25rem] leading-none text-brand-stone/22 sm:text-[3.75rem]">
                   {statusCode}
                 </p>
                 <h1
@@ -113,10 +113,8 @@ export default function ErrorPageShell({
             )}
 
             <p
-              className={`mx-auto mt-4 font-montserrat text-[11px] font-light tracking-[0.01em] sm:text-[12px] ${
-                descriptionSingleLine
-                  ? 'max-w-none px-1 leading-[1.65] text-brand-clayRed/80 sm:whitespace-nowrap'
-                  : 'max-w-[21rem] leading-[1.75] tracking-wide text-neutral-600'
+              className={`mx-auto mt-4 text-center font-montserrat text-[11px] font-light leading-[1.75] tracking-wide text-neutral-600 sm:text-[12px] ${
+                descriptionSingleLine ? 'max-w-[22rem]' : 'max-w-[21rem]'
               }`}
             >
               {description}

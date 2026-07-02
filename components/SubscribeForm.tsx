@@ -61,15 +61,15 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
     }
 
     const phoneCheck = validateOptionalPhone(phone, language)
+    if (!phoneCheck.ok) {
+      setPhoneError(phoneCheck.message)
+      toast.error(phoneCheck.message)
+      return
+    }
     if (notifyChannel === 'whatsapp' && !phoneCheck.phone) {
       const msg = copy.phoneRequiredWhatsApp
       setPhoneError(msg)
       toast.error(msg)
-      return
-    }
-    if (!phoneCheck.ok) {
-      setPhoneError(phoneCheck.message)
-      toast.error(phoneCheck.message)
       return
     }
 

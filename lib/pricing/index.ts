@@ -10,21 +10,32 @@ import {
   getCatalogAedPrice,
   getListedPriceForSlug,
   PRODUCT_CATALOG_PRICES,
-  buildFullPriceMap,
 } from './productPrices'
+import { getListedPriceForAccessory, isAccessoryPricingConfirmed } from './accessoryCatalogPrices'
 import type { SupportedCurrency } from './types'
 import { SUPPORTED_CURRENCIES } from './types'
 
 export {
   PRODUCT_CATALOG_PRICES,
   PRODUCT_CATALOG_TRIPLES,
-  KAFTAN_CATALOG_PRICES,
   getCatalogAedPrice,
   getListedPriceForSlug,
   hasCatalogPrice,
+  buildLuxuryCatalogPriceMap,
   buildFullPriceMap,
 } from './productPrices'
-export type { ProductCatalogTriple } from './productPrices'
+export type { ProductCatalogTriple } from './luxuryCatalogPriceMap'
+export {
+  BELGRAVIA_CATALOG_PRICES,
+  KAFTAN_CATALOG_PRICES,
+} from './luxuryCatalogPriceMap'
+export {
+  ACCESSORY_CATALOG_PRICES,
+  ACCESSORY_CATEGORIES_PENDING_AED,
+  getListedPriceForAccessory,
+  isAccessoryPricingConfirmed,
+  isAccessoryCategoryPendingAed,
+} from './accessoryCatalogPrices'
 export {
   EXPRESS_SHIPPING_PRICES,
   SIGNATURE_PACKAGING_PRICES,
@@ -63,14 +74,6 @@ export function resolveCatalogAedPrice(productId: string): number | null {
   return accessory?.price ?? null
 }
 
-function accessoryPriceMap(aed: number) {
-  return buildFullPriceMap({
-    AED: aed,
-    GBP: luxuryRoundFromAed(aed, 'GBP'),
-    EUR: luxuryRoundFromAed(aed, 'EUR'),
-  })
-}
-
 /**
  * Listed retail price in `currency` for a master AED amount.
  * When `productId` is set, uses the per-SKU catalogue table first.
@@ -89,7 +92,12 @@ export function getListedPrice(
     }
     const accessory = accessories.find((a) => a.id === resolveAccessoryId(productId))
     if (accessory) {
-      return accessoryPriceMap(accessory.price)[currency]
+      if (isAccessoryPricingConfirmed(accessory)) {
+        const listed = getListedPriceForAccessory(accessory.id, currency)
+        if (listed != null) return listed
+      }
+      if (currency === 'AED') return accessory.price
+      return luxuryRoundFromAed(accessory.price, currency)
     }
   }
   if (currency === 'AED') return aedMaster

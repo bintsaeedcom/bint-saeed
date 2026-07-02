@@ -1,7 +1,6 @@
 import type Stripe from 'stripe'
 import { lineUnitInCurrency, normalizeCurrencyCode, toStripeMinorUnits } from '@/lib/pricing'
-import { products as staticProducts } from '@/data/products'
-import { resolveSkuByProductId } from '@/lib/products/sku'
+import { resolveLineItemSku } from '@/lib/checkout/resolveLineItemSku'
 import { absoluteProductImageUrl } from '@/lib/products/shopImage'
 import type { CheckoutCartItem } from '@/lib/checkout/types'
 
@@ -22,7 +21,7 @@ export function buildCheckoutLineItems(
     const color = item.color ?? ''
     const sku =
       item.sku?.trim() ||
-      resolveSkuByProductId(productId, staticProducts, color) ||
+      resolveLineItemSku(productId, color) ||
       undefined
     const unitAmount = lineUnitInCurrency(
       {

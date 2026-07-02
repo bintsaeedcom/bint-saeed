@@ -52,6 +52,8 @@ export default function AdminOrdersPage() {
 
   useEffect(() => {
     load()
+    const interval = setInterval(load, 20000) // keep the pipeline live
+    return () => clearInterval(interval)
   }, [load])
 
   useEffect(() => {

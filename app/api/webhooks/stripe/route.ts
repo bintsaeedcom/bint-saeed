@@ -4,6 +4,8 @@ import { saveOrder, findOrderIdBySession, listOrders, updateOrderFulfillment, ge
 import { markStripeEventProcessed, wasStripeEventProcessed } from '@/lib/payments/webhookEventStore'
 import type { OrderLine, StoredOrder } from '@/lib/orders/types'
 import { createTrelloCardForOrder, notifyHealthAlert } from '@/lib/ops/notifications'
+import { sendOrderConfirmationEmail } from '@/lib/orders/sendOrderConfirmationEmail'
+import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
 
 export const runtime = 'nodejs'
 
@@ -90,6 +92,14 @@ function buildOrderFromSession(session: Stripe.Checkout.Session): StoredOrder {
   const customerName = session.customer_details?.name || undefined
   const customerPhone = session.customer_details?.phone || undefined
 
+  // Only treat as paid once Stripe confirms the money is captured. Delayed/async
+  // payment methods complete the session first as 'unpaid'/'processing' and settle
+  // later via checkout.session.async_payment_succeeded.
+  const fulfillmentStatus: StoredOrder['fulfillmentStatus'] =
+    session.payment_status === 'paid' || session.payment_status === 'no_payment_required'
+      ? 'paid'
+      : 'processing'
+
   return {
     id,
     paymentProvider: 'stripe',
@@ -105,7 +115,7 @@ function buildOrderFromSession(session: Stripe.Checkout.Session): StoredOrder {
     amountShipping: (session.shipping_cost?.amount_total ?? 0) / 100,
     amountTotal: (session.amount_total ?? 0) / 100,
     currency: (session.currency || 'aed').toUpperCase(),
-    fulfillmentStatus: 'paid',
+    fulfillmentStatus,
     deliveryNotes,
     discountCode: session.metadata?.discountCodeUsed || undefined,
     createdAt: now,
@@ -137,6 +147,7 @@ async function notifyOrderChannel(session: Stripe.Checkout.Session) {
     customisationMessage?: string
     customLength?: string
     lengthCm?: number
+    notes?: string
   }
   let metaItems: MetaItem[] = []
   try {
@@ -150,18 +161,29 @@ async function notifyOrderChannel(session: Stripe.Checkout.Session) {
   const lines = metaItems.length
     ? metaItems.map((item) => {
         const personalisation = item.customisationMessage?.trim()
+        const itemNote = item.notes?.trim()
         const lengthValue = item.lengthCm ? `${item.lengthCm} cm` : item.customLength || ''
         const details = [
           item.size ? `size: ${item.size}` : '',
           item.color ? `variant/colour: ${item.color}` : '',
           lengthValue ? `length: ${lengthValue}` : '',
           personalisation ? `personalisation: "${personalisation}"` : '',
+          itemNote ? `note: "${itemNote}"` : '',
         ]
           .filter(Boolean)
           .join(' | ')
         return `• ${item.name || 'Item'} x${item.quantity ?? 1}${details ? ` (${details})` : ''}`
       })
     : ['• No line-level metadata found']
+
+  // Order-level client note: Stripe Checkout custom field + any checkout note carried in metadata.
+  let deliveryNote = ''
+  if (Array.isArray(session.custom_fields)) {
+    const field = session.custom_fields.find((f) => f.key === 'delivery_notes')
+    if (field && typeof field.text?.value === 'string') deliveryNote = field.text.value.trim()
+  }
+  const checkoutNote = session.metadata?.checkoutNotes?.trim() || ''
+  const clientNote = [deliveryNote, checkoutNote].filter(Boolean).join('\n')
 
   const payload = {
     blocks: [
@@ -189,6 +211,17 @@ async function notifyOrderChannel(session: Stripe.Checkout.Session) {
           text: `*Items / size / personalisation:*\n${lines.join('\n')}`,
         },
       },
+      ...(clientNote
+        ? [
+            {
+              type: 'section',
+              text: {
+                type: 'mrkdwn',
+                text: `*Client note:*\n>${clientNote.replace(/\n/g, '\n>')}`,
+              },
+            },
+          ]
+        : []),
     ],
   }
 
@@ -273,6 +306,10 @@ export async function POST(request: NextRequest) {
           clientTimezone: full.metadata?.clientTimezone || undefined,
           uaeTimestamp: new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' }),
         })
+        // Always alert the house so an order is never missed. The customer confirmation
+        // only sends once payment is captured; delayed methods send it later from
+        // checkout.session.async_payment_succeeded.
+        await dispatchOrderEmails(order)
         break
       }
       case 'checkout.session.async_payment_succeeded': {
@@ -280,6 +317,8 @@ export async function POST(request: NextRequest) {
         const orderId = await findOrderIdBySession(session.id)
         if (orderId) {
           await markOrderWithStripeNote(orderId, `Checkout async payment succeeded (${session.id}).`, 'paid')
+          const paidOrder = await getOrderById(orderId)
+          if (paidOrder) await sendOrderConfirmationEmail(paidOrder)
         }
         break
       }

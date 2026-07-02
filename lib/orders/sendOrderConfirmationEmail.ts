@@ -1,0 +1,199 @@
+import { Resend } from 'resend'
+import type { StoredOrder } from '@/lib/orders/types'
+import { formatAmountForCurrency, normalizeCurrencyCode } from '@/lib/pricing'
+import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
+
+const BRAND_INK = '#1a0210'
+const BRAND_CANVAS = '#faf9f7'
+const BRAND_CARD = '#faf8f5'
+const BRAND_BORDER = '#e8e4df'
+const BRAND_MUTED = '#8a7a7a'
+const BRAND_BODY = '#5c4a4a'
+const BRAND_ACCENT = '#6a8090'
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
+function siteOrigin(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim()
+  if (explicit) return explicit.replace(/\/$/, '')
+  const vercel = process.env.VERCEL_URL?.trim()
+  if (vercel) return `https://${vercel.replace(/\/$/, '')}`
+  return 'https://www.bintsaeed.com'
+}
+
+function money(amount: number, currency: string): string {
+  return formatAmountForCurrency(amount, normalizeCurrencyCode(currency))
+}
+
+function formatAddress(address?: Record<string, unknown>): string {
+  if (!address) return ''
+  const parts = [
+    address.name,
+    address.line1,
+    address.line2,
+    [address.postal_code, address.city].filter(Boolean).join(' '),
+    address.state,
+    address.country,
+  ]
+    .map((p) => (typeof p === 'string' ? p.trim() : ''))
+    .filter(Boolean)
+  return parts.map(escapeHtml).join('<br/>')
+}
+
+function orderConfirmationHtml(order: StoredOrder): string {
+  const origin = siteOrigin()
+  const greeting = order.customerName
+    ? `Dear ${escapeHtml(order.customerName.split(' ')[0])},`
+    : 'Dear guest,'
+
+  const itemRows = order.lines
+    .map((line) => {
+      const lineTotal = money(line.unitPrice * line.quantity, line.currency || order.currency)
+      const detail = line.description ? escapeHtml(line.description) : ''
+      return `
+        <tr>
+          <td style="padding:14px 0;border-bottom:1px solid ${BRAND_BORDER};vertical-align:top;">
+            <p style="margin:0;font-size:14px;color:${BRAND_INK};font-family:Georgia,'Times New Roman',serif;">${escapeHtml(line.name)}</p>
+            ${detail ? `<p style="margin:4px 0 0;font-size:12px;line-height:1.5;color:${BRAND_MUTED};font-family:'Montserrat',Helvetica,Arial,sans-serif;">${detail}</p>` : ''}
+            <p style="margin:4px 0 0;font-size:12px;color:${BRAND_MUTED};font-family:'Montserrat',Helvetica,Arial,sans-serif;">Qty: ${line.quantity}</p>
+          </td>
+          <td style="padding:14px 0;border-bottom:1px solid ${BRAND_BORDER};text-align:right;vertical-align:top;white-space:nowrap;">
+            <p style="margin:0;font-size:14px;color:${BRAND_INK};font-family:'Montserrat',Helvetica,Arial,sans-serif;">${lineTotal}</p>
+          </td>
+        </tr>`
+    })
+    .join('')
+
+  const shippingBlock = formatAddress(order.shippingAddress)
+  const totalsRow = (label: string, value: string, bold = false) => `
+    <tr>
+      <td style="padding:4px 0;font-size:${bold ? '15px' : '13px'};color:${bold ? BRAND_INK : BRAND_BODY};font-family:'Montserrat',Helvetica,Arial,sans-serif;${bold ? 'font-weight:600;' : ''}">${label}</td>
+      <td style="padding:4px 0;text-align:right;font-size:${bold ? '15px' : '13px'};color:${bold ? BRAND_INK : BRAND_BODY};font-family:'Montserrat',Helvetica,Arial,sans-serif;${bold ? 'font-weight:600;' : ''}">${value}</td>
+    </tr>`
+
+  return `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
+<body style="margin:0;background:${BRAND_CANVAS};font-family:Georgia,'Times New Roman',serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:${BRAND_CANVAS};padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" style="max-width:560px;background:${BRAND_CARD};border:1px solid ${BRAND_BORDER};">
+          <tr>
+            <td style="padding:40px 36px 20px;text-align:center;">
+              <p style="margin:0;font-size:11px;letter-spacing:0.35em;text-transform:uppercase;color:${BRAND_ACCENT};">Bint Saeed</p>
+              <h1 style="margin:16px 0 0;font-size:26px;font-weight:400;color:${BRAND_INK};">Your order is confirmed</h1>
+              <p style="margin:12px 0 0;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:${BRAND_MUTED};font-family:'Montserrat',Helvetica,Arial,sans-serif;">Order ${escapeHtml(order.id)}</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 36px 8px;font-size:15px;line-height:1.65;color:${BRAND_BODY};font-family:'Montserrat',Helvetica,Arial,sans-serif;">
+              <p style="margin:0 0 14px;">${greeting}</p>
+              <p style="margin:0 0 8px;">Thank you for your order. Each piece is prepared with great care by our atelier in Abu Dhabi. You will receive a further note when your order is on its way.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 36px 0;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">${itemRows}</table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:18px 36px 8px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                ${totalsRow('Subtotal', money(order.amountSubtotal, order.currency))}
+                ${totalsRow('Shipping', order.amountShipping > 0 ? money(order.amountShipping, order.currency) : 'Complimentary')}
+                ${totalsRow('Total', money(order.amountTotal, order.currency), true)}
+              </table>
+            </td>
+          </tr>
+          ${
+            shippingBlock
+              ? `<tr>
+            <td style="padding:20px 36px 0;">
+              <p style="margin:0 0 6px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:${BRAND_ACCENT};font-family:'Montserrat',Helvetica,Arial,sans-serif;">Shipping to</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:${BRAND_BODY};font-family:'Montserrat',Helvetica,Arial,sans-serif;">${shippingBlock}</p>
+            </td>
+          </tr>`
+              : ''
+          }
+          <tr>
+            <td style="padding:28px 36px 8px;text-align:center;">
+              <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto;">
+                <tr>
+                  <td style="border-radius:2px;background:${BRAND_INK};">
+                    <a href="${origin}/shop" target="_blank" rel="noopener"
+                      style="display:inline-block;padding:16px 36px;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:${BRAND_CARD};text-decoration:none;font-family:'Montserrat',Helvetica,Arial,sans-serif;">
+                      Continue shopping
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 36px 32px;border-top:1px solid #f0ebe6;font-size:11px;line-height:1.7;color:${BRAND_MUTED};text-align:center;font-family:'Montserrat',Helvetica,Arial,sans-serif;">
+              Questions about your order? Write to <a href="mailto:${OFFICIAL_EMAILS.orders}" style="color:${BRAND_ACCENT};text-decoration:none;">${OFFICIAL_EMAILS.orders}</a><br/>
+              Personalised or made-to-measure pieces are non-returnable.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`
+}
+
+export type SendOrderConfirmationResult =
+  | { ok: true }
+  | { ok: false; skipped?: boolean; error: string }
+
+/**
+ * Send a branded order-confirmation email. Never throws — the Stripe webhook must
+ * still return 200 even if email delivery fails. Missing config is a soft skip.
+ */
+export async function sendOrderConfirmationEmail(
+  order: StoredOrder,
+): Promise<SendOrderConfirmationResult> {
+  const apiKey = process.env.RESEND_API_KEY?.trim()
+  const from =
+    process.env.RESEND_ORDER_FROM_EMAIL?.trim() ||
+    process.env.RESEND_FROM_EMAIL?.trim() ||
+    'Bint Saeed <onboarding@resend.dev>'
+
+  if (!order.customerEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(order.customerEmail)) {
+    return { ok: false, skipped: true, error: 'No valid customer email on order.' }
+  }
+
+  if (!apiKey) {
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[bint-saeed orders] RESEND_API_KEY missing — skipping confirmation email for ${order.id}`)
+    }
+    return { ok: false, skipped: true, error: 'Transactional email is not configured.' }
+  }
+
+  try {
+    const resend = new Resend(apiKey)
+    const { error } = await resend.emails.send({
+      from,
+      to: order.customerEmail,
+      replyTo: OFFICIAL_EMAILS.orders,
+      subject: `Your Bint Saeed order is confirmed — ${order.id}`,
+      html: orderConfirmationHtml(order),
+    })
+    if (error) {
+      console.error('Order confirmation email error:', error)
+      return { ok: false, error: 'Resend rejected the message.' }
+    }
+    return { ok: true }
+  } catch (e) {
+    console.error('Order confirmation email exception:', e)
+    return { ok: false, error: 'Unexpected email failure.' }
+  }
+}
