@@ -37,11 +37,14 @@ function AdminLoginForm() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#1a0a10] px-6">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#12080b] p-8 shadow-2xl">
-        <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-stone">Owner login</h1>
-        <p className="mt-2 font-montserrat text-sm text-white/50">
-          Product and order dashboards — set <code className="text-brand-dustyBlue/90">ADMIN_DASHBOARD_PASSWORD</code> in
-          your environment.
+      <div className="w-full max-w-md rounded-2xl border border-white/15 bg-[#1c1015] p-8 shadow-2xl">
+        <h1 data-document-h1="true" className="font-rozha text-3xl text-white">Owner login</h1>
+        <p className="mt-3 font-montserrat text-sm leading-relaxed text-white/80">
+          Product and order dashboards — set{' '}
+          <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[13px] text-brand-dustyBlue">
+            ADMIN_DASHBOARD_PASSWORD
+          </code>{' '}
+          in your environment.
         </p>
         <form onSubmit={submit} className="mt-8 space-y-4">
           <div>
@@ -54,7 +57,7 @@ function AdminLoginForm() {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 font-montserrat text-sm text-white placeholder-white/30 focus:border-brand-dustyBlue/50 focus:outline-none"
+              className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 font-montserrat text-sm text-white placeholder-white/50 focus:border-brand-dustyBlue/60 focus:outline-none"
               placeholder="Password"
               required
             />

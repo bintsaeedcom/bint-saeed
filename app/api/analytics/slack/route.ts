@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/admin/apiAuth'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
+import {
+  recordAnalyticsEvent,
+  getActiveVisitors,
+  getNotifications,
+  getAnalyticsStats,
+  getAbandonedCartStats,
+} from '@/lib/analytics/analyticsStore'
 
 function normalizedWebhook(...values: Array<string | undefined>): string | undefined {
   for (const value of values) {
@@ -199,42 +206,40 @@ export async function POST(request: NextRequest) {
   try {
     const { type, data } = await request.json()
 
-    // Store visitor data
+    // Store visitor data in memory (legacy live map) and in the persistent analytics store.
     if (data?.visitorId) {
       activeVisitors.set(data.visitorId, {
         ...data,
         lastSeen: new Date().toISOString(),
       })
     }
+    // Persist to Redis-backed store so the dashboard shows real numbers on serverless.
+    await recordAnalyticsEvent(type, data)
 
-    // Format Slack message based on notification type
-    let message = formatSlackMessage(type, data)
-
+    // Slack delivery is best-effort: analytics is already persisted above, so a missing or
+    // failing webhook must not drop the event or return an error to the client tracker.
     const webhookUrl = resolveSlackWebhookForType(type)
-
-    if (!webhookUrl) {
-      console.error('Slack analytics webhook is not configured for type:', type)
-      return NextResponse.json({ error: 'Slack webhook not configured' }, { status: 503 })
+    if (webhookUrl) {
+      try {
+        const message = formatSlackMessage(type, data)
+        const slackResponse = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(message),
+        })
+        if (!slackResponse.ok) {
+          const details = await slackResponse.text()
+          console.error('Slack webhook delivery failed:', slackResponse.status, details)
+        }
+      } catch (slackError) {
+        console.error('Slack webhook delivery error:', slackError)
+      }
     }
-
-    const slackResponse = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(message),
-    })
-    if (!slackResponse.ok) {
-      const details = await slackResponse.text()
-      console.error('Slack webhook delivery failed:', slackResponse.status, details)
-      return NextResponse.json({ error: 'Slack delivery failed' }, { status: 502 })
-    }
-
-    // Also store notification for the admin dashboard
-    await storeNotification(type, data)
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Slack notification error:', error)
-    return NextResponse.json({ error: 'Failed to send notification' }, { status: 500 })
+    console.error('Analytics event error:', error)
+    return NextResponse.json({ error: 'Failed to record event' }, { status: 500 })
   }
 }
 
@@ -778,30 +783,6 @@ function formatTime(seconds: number): string {
   return `${hours}h ${mins % 60}m`
 }
 
-// Store notification for admin dashboard
-async function storeNotification(type: string, data: any) {
-  // In production, store in database
-  // For now, we'll use the in-memory store
-  const notification = {
-    id: Date.now().toString(),
-    type,
-    data,
-    timestamp: new Date().toISOString(),
-    read: false,
-  }
-
-  // Get existing notifications from memory or initialize
-  const notifications = (global as any).notifications || []
-  notifications.unshift(notification)
-  
-  // Keep only last 100 notifications
-  if (notifications.length > 100) {
-    notifications.pop()
-  }
-  
-  (global as any).notifications = notifications
-}
-
 // GET endpoint for admin dashboard
 export async function GET(request: NextRequest) {
   if (!(await requireAdmin(request))) {
@@ -812,31 +793,20 @@ export async function GET(request: NextRequest) {
   const type = searchParams.get('type')
 
   if (type === 'active') {
-    // Return active visitors (seen in last 5 minutes)
-    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString()
-    const active = Array.from(activeVisitors.values())
-      .filter(v => v.lastSeen > fiveMinutesAgo)
-    
-    return NextResponse.json({ 
-      activeVisitors: active,
-      count: active.length 
-    })
+    const active = await getActiveVisitors()
+    return NextResponse.json({ activeVisitors: active, count: active.length })
   }
 
   if (type === 'notifications') {
-    const notifications = (global as any).notifications || []
+    const notifications = await getNotifications()
     return NextResponse.json({ notifications })
   }
 
-  // Return stats
-  const allVisitors = Array.from(activeVisitors.values())
-  const today = new Date().toDateString()
-  const todayVisitors = allVisitors.filter(v => new Date(v.currentVisit).toDateString() === today)
-  
-  return NextResponse.json({
-    totalVisitors: allVisitors.length,
-    todayVisitors: todayVisitors.length,
-    newVisitors: todayVisitors.filter(v => v.isNewVisitor).length,
-    returningVisitors: todayVisitors.filter(v => !v.isNewVisitor).length,
-  })
+  if (type === 'abandoned') {
+    const abandoned = await getAbandonedCartStats()
+    return NextResponse.json(abandoned)
+  }
+
+  const stats = await getAnalyticsStats()
+  return NextResponse.json(stats)
 }
