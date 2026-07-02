@@ -124,13 +124,15 @@ function CheckoutSuccessContent() {
             </h1>
 
             {(sessionId || paymentId || paypalToken) && (
-              <div className="mt-4 flex justify-center">
-                <span className="inline-flex items-center gap-2 rounded-full border border-brand-stone/25 bg-white/60 px-4 py-1.5 text-center font-montserrat text-[11px] uppercase tracking-[0.22em] text-brand-clayRed">
-                  {successCopy.sessionReference}
-                  <span className="font-semibold text-brand-darkRed">
+              <div className="mt-4 flex w-full justify-center">
+                <div className="inline-flex flex-col items-center gap-1 rounded-full border border-brand-stone/25 bg-white/60 px-5 py-2.5 text-center">
+                  <span className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-clayRed">
+                    {successCopy.sessionReference}
+                  </span>
+                  <span className="font-montserrat text-sm font-semibold tracking-[0.18em] text-brand-darkRed">
                     {(sessionId || paymentId || paypalToken || '').slice(-8).toUpperCase()}
                   </span>
-                </span>
+                </div>
               </div>
             )}
 
