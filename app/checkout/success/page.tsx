@@ -106,7 +106,7 @@ function CheckoutSuccessContent() {
                 className="mx-auto h-14 w-auto sm:h-16"
               />
             </LocaleLink>
-            <p className="mt-6 font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-dustyBlue">
+            <p className="mt-6 text-center font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-dustyBlue">
               Bint Saeed
             </p>
 
@@ -122,7 +122,19 @@ function CheckoutSuccessContent() {
             <h1 data-document-h1="true" className="mt-7 font-rozha text-[2rem] leading-tight text-brand-darkRed sm:text-4xl">
               {successCopy.title}
             </h1>
-            <p className="mx-auto mt-4 max-w-sm font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed">
+
+            {(sessionId || paymentId || paypalToken) && (
+              <div className="mt-4 flex justify-center">
+                <span className="inline-flex items-center gap-2 rounded-full border border-brand-stone/25 bg-white/60 px-4 py-1.5 text-center font-montserrat text-[11px] uppercase tracking-[0.22em] text-brand-clayRed">
+                  {successCopy.sessionReference}
+                  <span className="font-semibold text-brand-darkRed">
+                    {(sessionId || paymentId || paypalToken || '').slice(-8).toUpperCase()}
+                  </span>
+                </span>
+              </div>
+            )}
+
+            <p className="mx-auto mt-5 max-w-sm text-center font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed">
               {successCopy.subtitle}
             </p>
 
@@ -131,12 +143,6 @@ function CheckoutSuccessContent() {
               <span className="font-rozha text-xs text-brand-stone/45">✦</span>
               <div className="h-px w-12 bg-brand-stone/25 sm:w-16" />
             </div>
-
-            {(sessionId || paymentId || paypalToken) && (
-              <p className="mb-8 font-montserrat text-[11px] uppercase tracking-[0.22em] text-brand-stone">
-                {successCopy.sessionReference}: {(sessionId || paymentId || paypalToken || '').slice(-8).toUpperCase()}
-              </p>
-            )}
 
             <div className="space-y-4">
               <LocaleLink

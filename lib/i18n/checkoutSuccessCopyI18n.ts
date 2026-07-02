@@ -11,14 +11,14 @@ const EN: CheckoutSuccessCopy = {
   breadcrumb: 'Order confirmed',
   title: 'Order Confirmed',
   subtitle: 'Thank you for your order. You will receive a confirmation email shortly.',
-  sessionReference: 'Session',
+  sessionReference: 'Order reference',
 }
 
 const AR: CheckoutSuccessCopy = {
   breadcrumb: 'تأكيد الطلب',
   title: 'تم تأكيد الطلب',
   subtitle: 'شكراً لطلبك. ستصلك رسالة تأكيد عبر البريد الإلكتروني قريباً.',
-  sessionReference: 'الجلسة',
+  sessionReference: 'رقم الطلب',
 }
 
 export function getCheckoutSuccessCopy(locale: AppLocale | string): CheckoutSuccessCopy {

@@ -251,24 +251,28 @@ export default function CartPage() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className={`sticky top-32 rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-8 text-brand-ivory shadow-xl ${isRTL ? 'text-right' : ''}`}>
-              <h2 className="mb-6 font-rozha text-2xl text-brand-dustyBlue/95">
+            <div className={`relative sticky top-32 overflow-hidden rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-6 text-brand-ivory shadow-xl sm:p-8 ${isRTL ? 'text-right' : ''}`}>
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent"
+                aria-hidden
+              />
+              <h2 className="mb-6 font-montserrat text-[11px] uppercase tracking-[0.28em] text-brand-dustyBlue/90">
                 {ui.cart.orderSummary}
               </h2>
 
               <div
-                className={`flex justify-between font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
               >
-                <span>{ui.cart.subtotal}</span>
-                <span className="text-white">{formatCartSubtotal(items)}</span>
+                <span className="min-w-0">{ui.cart.subtotal}</span>
+                <span className="shrink-0 whitespace-nowrap text-white">{formatCartSubtotal(items)}</span>
               </div>
 
               <div className="mt-8 border-t border-white/10 pt-6">
                 <div
-                  className={`flex justify-between font-rozha text-xl ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex items-baseline justify-between gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
-                  <span className="text-white/80">{ui.cart.estimatedTotal}</span>
-                  <span>{formatAmount(estimatedTotal)}</span>
+                  <span className="min-w-0 font-montserrat text-[13px] uppercase tracking-[0.16em] text-white/80">{ui.cart.estimatedTotal}</span>
+                  <span className="shrink-0 whitespace-nowrap font-rozha text-xl text-white">{formatAmount(estimatedTotal)}</span>
                 </div>
                 <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
                   {ui.cart.taxesIncluded}

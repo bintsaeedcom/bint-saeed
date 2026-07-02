@@ -18,6 +18,7 @@ import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { getCartLineImageAlt } from '@/lib/products/imageAlt'
+import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { fetchGeoData } from '@/lib/geo/geoDetection'
 import {
   getAvailableCheckoutRails,
@@ -239,13 +240,14 @@ export default function CheckoutPage() {
                       data-cursor-hover
                     >
                       <Image
-                        src={item.image}
+                        src={productImageSrc(item.image)}
                         alt={getCartLineImageAlt(
                           item,
                           staticProducts.find((product) => product.id === item.id),
                           language,
                         )}
                         fill
+                        unoptimized={isWebshopPicturePath(item.image)}
                         className="img-zoom object-cover object-top"
                         sizes="(max-width: 640px) 64px, 80px"
                       />
@@ -291,16 +293,20 @@ export default function CheckoutPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08 }}
-                className={`rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-6 text-brand-ivory shadow-xl sm:p-8 ${isRTL ? 'text-right' : ''}`}
+                className={`relative overflow-hidden rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-6 text-brand-ivory shadow-xl sm:p-8 ${isRTL ? 'text-right' : ''}`}
               >
-                <h2 className="mb-5 font-rozha text-xl text-brand-dustyBlue/95 sm:mb-6 sm:text-2xl">
+                <div
+                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent"
+                  aria-hidden
+                />
+                <h2 className="mb-5 font-montserrat text-[11px] uppercase tracking-[0.28em] text-brand-dustyBlue/90 sm:mb-6">
                   {ui.cart.orderSummary}
                 </h2>
                 <div
-                  className={`flex justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
-                  <span>{ui.cart.subtotal}</span>
-                  <span className="shrink-0 text-white">{formatCartSubtotal(items)}</span>
+                  <span className="min-w-0">{ui.cart.subtotal}</span>
+                  <span className="shrink-0 whitespace-nowrap text-white">{formatCartSubtotal(items)}</span>
                 </div>
                 <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
                   {ui.cart.taxesIncluded}
