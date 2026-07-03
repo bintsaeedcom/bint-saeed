@@ -19,6 +19,7 @@ export type StoneVariantId =
   | 'signature-strand-onyx'
   | 'signature-strand-sunstone'
   | 'signature-strand-fuchsia-jade'
+  | 'signature-strand-orange-jade'
   | 'signature-strand-blue-aventurine'
   | 'signature-strand-rose-quartz'
   | 'signature-strand-malachite'
@@ -1028,6 +1029,208 @@ const FUCHSIA_JADE: VariantPack = {
     materialStone: 'Batu permata Fuchsia Jade semula jadi',
     strandLabel: 'Signature Strands Fuchsia Jade',
     stoneLabel: 'Fuchsia Jade',
+    variationNote:
+      'Variasi semula jadi pada warna dan tona merupakan sebahagian daripada apa yang menjadikan setiap Signature Strand unik.',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+}
+
+const ORANGE_JADE: VariantPack = {
+  en: {
+    headline: 'Orange Jade Signature Strands',
+    introP1:
+      'The Orange Jade Signature Strands introduce warm jewel tones, radiant contrast and expressive elegance to selected Bint Saeed creations. Hand-assembled in Abu Dhabi from natural Orange Jade gemstones and finished with Bint Saeed’s signature gold-tone Knotted Line elements, they offer a refined way to transform a familiar silhouette through a single thoughtful detail.',
+    introP4:
+      'The warm amber-orange tones of natural Jade create a radiant highlight against neutral abayas, while faceted gold-plated Hematite accents positioned between every gemstone capture and reflect light with subtle brilliance. Because every gemstone is naturally formed, each Signature Strand is entirely unique in its colour, markings and natural character.',
+    stoneOrigin:
+      'Jade has been treasured for millennia across East and Central Asia, with notable sources including Myanmar, Guatemala and China. Orange Jade is valued for its warm amber tones and smooth polish. Every gemstone displays its own natural variations, ensuring every Signature Strand is one of a kind.',
+    beadDetail: 'Natural Orange Jade gemstone beads (approximately 7 mm)',
+    materialStone: 'Natural Orange Jade gemstones',
+    strandLabel: 'Orange Jade Signature Strands',
+    stoneLabel: 'Orange Jade',
+    variationNote: 'Natural variations in colour and tone are part of what makes every Signature Strand unique.',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+  ar: {
+    headline: 'ستراندات Orange Jade Signature Strands',
+    introP1:
+      'تقدّم ستراندات Orange Jade Signature Strands درجات جوهرية دافئة وتبايناً مشرقاً وأناقة معبّرة إلى مختارات من إبداعات Bint Saeed. تُجمَّع يدوياً في Abu Dhabi من أحجار Orange Jade الطبيعية وتُنهى بعناصر Knotted Line الذهبية الحصرية من Bint Saeed، لتقدّم طريقة راقية لتحويل صورة مألوفة من خلال تفصيلة واحدة مدروسة.',
+    introP4:
+      'تمنح درجات الكهرماني البرتقالي الدافئة في Jade الطبيعي لمسة لونية مشرقة فوق العبايات الهادئة، بينما تلتقط لمسات Hematite المطلية ذهباً والمقطّعة بين كل حجر الضوء وتعكسه ببريق رقيق. ولأن كل حجر يتشكّل طبيعياً، يكون كل Signature Strand فريداً تماماً في لونه وعلاماته وطابعه الطبيعي.',
+    stoneOrigin:
+      'حجر Jade مُقدَّر منذ آلاف السنين في شرق ووسط آسيا، ومن أبرز مصادره Myanmar وGuatemala وChina. ويُعرف Orange Jade بتدرجاته الكهرمانية الدافئة وصقله الناعم. يحمل كل حجر تبايناته الطبيعية الخاصة، ما يضمن أن كل Signature Strand فريد من نوعه.',
+    beadDetail: 'خرز أحجار Orange Jade الطبيعية (قطرها تقريباً 7 مم)',
+    materialStone: 'أحجار Orange Jade الطبيعية',
+    strandLabel: 'ستراندات Orange Jade Signature Strands',
+    stoneLabel: 'Orange Jade',
+    variationNote: 'التباينات الطبيعية في اللون والدرجة جزء مما يجعل كل Signature Strand فريداً.',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+  fr: {
+    headline: 'Signature Strands Orange Jade',
+    introP1:
+      'Les Signature Strands Orange Jade apportent des tonalités joaillières chaleureuses, un contraste rayonnant et une élégance expressive aux créations Bint Saeed sélectionnées. Assemblés à la main à Abu Dhabi à partir de pierres naturelles Orange Jade et finis avec les éléments Knotted Line dorés signature de Bint Saeed, ils offrent une manière raffinée de transformer une silhouette familière par un seul détail réfléchi.',
+    introP4:
+      'Les tons ambre-orangé chaleureux de la Jade naturelle créent un accent rayonnant sur les abayas neutres, tandis que des accents d’Hematite plaquée or facettés entre chaque gemme captent et reflètent la lumière avec une brillance subtile. Chaque pierre étant formée naturellement, chaque Signature Strand est entièrement unique par sa couleur, ses marques et son caractère naturel.',
+    stoneOrigin:
+      'La Jade est prisée depuis des millénaires en Asie de l’Est et d’Asie centrale, avec des sources notables comme Myanmar, Guatemala et China. L’Orange Jade est appréciée pour ses tons ambrés chaleureux et son poli lisse. Chaque gemme présente ses propres variations naturelles, garantissant l’unicité de chaque Signature Strand.',
+    beadDetail: 'Perles en pierre naturelle Orange Jade (environ 7 mm)',
+    materialStone: 'Pierres naturelles Orange Jade',
+    strandLabel: 'Signature Strands Orange Jade',
+    stoneLabel: 'Orange Jade',
+    variationNote:
+      'Les variations naturelles de couleur et de tonalité font partie de ce qui rend chaque Signature Strand unique.',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+  it: {
+    headline: 'Signature Strands Orange Jade',
+    introP1:
+      'I Signature Strands Orange Jade introducono tonalità gioiello calde, contrasto radioso ed eleganza espressiva nelle creazioni Bint Saeed selezionate. Assemblati a mano ad Abu Dhabi con gemme naturali Orange Jade e rifiniti con gli elementi Knotted Line dorati signature di Bint Saeed, offrono un modo raffinato di trasformare una silhouette familiare attraverso un solo dettaglio ponderato.',
+    introP4:
+      'I toni ambra-arancio caldi della Jade naturale creano un accento radioso sulle abaya neutre, mentre accenti di Hematite placcata oro sfaccettati tra ogni gemma catturano e riflettono la luce con brillantezza sottile. Poiché ogni gemma è formata naturalmente, ogni Signature Strand è interamente unico nel colore, nelle venature e nel carattere naturale.',
+    stoneOrigin:
+      'La Jade è apprezzata da millenni in Asia orientale e centrale, con fonti notevoli tra cui Myanmar, Guatemala e China. L’Orange Jade è valorizzata per i suoi toni ambrati caldi e la lucidatura uniforme. Ogni gemma mostra le proprie variazioni naturali, garantendo l’unicità di ogni Signature Strand.',
+    beadDetail: 'Perle in pietra naturale Orange Jade (circa 7 mm)',
+    materialStone: 'Gemme naturali Orange Jade',
+    strandLabel: 'Signature Strands Orange Jade',
+    stoneLabel: 'Orange Jade',
+    variationNote:
+      'Le variazioni naturali di colore e tonalità fanno parte di ciò che rende ogni Signature Strand unico.',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+  es: {
+    headline: 'Signature Strands Orange Jade',
+    introP1:
+      'Los Signature Strands Orange Jade aportan tonos joya cálidos, contraste radiante y elegancia expresiva a creaciones seleccionadas de Bint Saeed. Ensamblados a mano en Abu Dhabi con gemas naturales Orange Jade y acabados con los elementos Knotted Line dorados característicos de Bint Saeed, ofrecen una forma refinada de transformar una silueta familiar mediante un solo detalle cuidado.',
+    introP4:
+      'Los tonos ámbar-naranja cálidos de la Jade natural crean un punto de color radiante sobre abayas neutras, mientras los acentos de Hematite chapada en oro facetados entre cada gema captan y reflejan la luz con brillo sutil. Como cada gema se forma de manera natural, cada Signature Strand es enteramente único en color, marcas y carácter natural.',
+    stoneOrigin:
+      'La Jade ha sido apreciada durante milenios en Asia oriental y central, con fuentes destacadas como Myanmar, Guatemala y China. La Orange Jade se valora por sus tonos ámbar cálidos y su pulido suave. Cada gema muestra sus propias variaciones naturales, garantizando que cada Signature Strand sea único.',
+    beadDetail: 'Cuentas de piedra natural Orange Jade (aproximadamente 7 mm)',
+    materialStone: 'Gemas naturales Orange Jade',
+    strandLabel: 'Signature Strands Orange Jade',
+    stoneLabel: 'Orange Jade',
+    variationNote:
+      'Las variaciones naturales de color y tono forman parte de lo que hace único cada Signature Strand.',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+  ru: {
+    headline: 'Signature Strands «Orange Jade»',
+    introP1:
+      'Signature Strands «Orange Jade» добавляют тёплые ювелирные оттенки, сияющий контраст и выразительную элегантность в избранные творения Bint Saeed. Собраны вручную в Abu Dhabi из натуральных камней Orange Jade и завершены фирменными золотистыми элементами Knotted Line от Bint Saeed — они предлагают утончённый способ преобразить знакомый силуэт через одну продуманную деталь.',
+    introP4:
+      'Тёплые янтарно-оранжевые тона натурального Jade создают сияющий акцент на нейтральных абаях, а фасетированные акценты из позолоченного Hematite между камнями мягко улавливают и отражают свет. Поскольку каждый камень сформирован природой, каждый Signature Strand уникален по цвету, рисунку и природному характеру.',
+    stoneOrigin:
+      'Jade ценится на протяжении тысячелетий в Восточной и Центральной Азии; среди значимых источников — Myanmar, Guatemala и China. Orange Jade известен тёплыми янтарными оттенками и гладкой полировкой. Каждый камень имеет собственные природные вариации, поэтому каждый Signature Strand неповторим.',
+    beadDetail: 'Бусины из натурального Orange Jade (примерно 7 мм)',
+    materialStone: 'Натуральные камни Orange Jade',
+    strandLabel: 'Signature Strands «Orange Jade»',
+    stoneLabel: 'Orange Jade',
+    variationNote: 'Природные различия в цвете и тоне делают каждый Signature Strand уникальным.',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+  zh: {
+    headline: 'Orange Jade Signature Strands',
+    introP1:
+      'Orange Jade Signature Strands 为精选 Bint Saeed 作品注入温暖宝石色调、明亮对比与富有表现力的优雅感。于 Abu Dhabi 以天然 Orange Jade 手工组装，并以 Bint Saeed 标志性金色 Knotted Line 元素收尾，以一处精心细节优雅改变熟悉轮廓。',
+    introP4:
+      '天然 Jade 的温暖琥珀橙色调在中性色 Abaya 上形成明亮点缀；每颗宝石之间加入切面镀金 Hematite 点缀，随动作捕捉并反射细腻光泽。因每颗宝石皆天然形成，每条 Signature Strand 在色泽、纹理与自然个性上皆独一无二。',
+    stoneOrigin:
+      'Jade 在东亚与中亚地区已被珍视数千年，主要来源包括 Myanmar、Guatemala 与 China。Orange Jade 以温暖琥珀色与顺滑抛光而备受喜爱。每颗宝石都具天然差异，确保每条 Signature Strand 都独一无二。',
+    beadDetail: '天然 Orange Jade 珠（约 7 毫米）',
+    materialStone: '天然 Orange Jade',
+    strandLabel: 'Orange Jade Signature Strands',
+    stoneLabel: 'Orange Jade',
+    variationNote: '色泽与色调的天然差异，正是每条 Signature Strand 的独特之处。',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+  de: {
+    headline: 'Orange Jade Signature Strands',
+    introP1:
+      'Die Orange Jade Signature Strands bringen warme Juweltöne, strahlenden Kontrast und ausdrucksstarke Eleganz in ausgewählte Bint Saeed-Kreationen. Handmontiert in Abu Dhabi aus natürlichen Orange Jade-Edelsteinen und veredelt mit Bint Saeeds charakteristischen goldfarbenen Knotted Line-Elementen bieten sie eine raffinierte Möglichkeit, eine vertraute Silhouette durch ein einziges durchdachtes Detail zu verwandeln.',
+    introP4:
+      'Die warmen Bernstein-Orange-Töne natürlicher Jade setzen ein strahlendes Highlight auf neutralen Abayas, während facettierte, vergoldete Hematite-Akzente zwischen jedem Edelstein Licht mit subtiler Brillanz einfangen und reflektieren. Da jeder Stein natürlich entstanden ist, ist jeder Signature Strand in Farbe, Maserung und natürlichem Charakter völlig einzigartig.',
+    stoneOrigin:
+      'Jade wird seit Jahrtausenden in Ost- und Zentralasien geschätzt; bedeutende Quellen sind Myanmar, Guatemala und China. Orange Jade ist für seine warmen Bernsteintöne und die glatte Politur bekannt. Jeder Edelstein zeigt eigene natürliche Variationen – jeder Signature Strand ist damit ein Unikat.',
+    beadDetail: 'Natürliche Orange Jade-Edelsteinperlen (ca. 7 mm)',
+    materialStone: 'Natürliche Orange Jade-Edelsteine',
+    strandLabel: 'Orange Jade Signature Strands',
+    stoneLabel: 'Orange Jade',
+    variationNote:
+      'Natürliche Variationen in Farbe und Ton gehören zu dem, was jeden Signature Strand einzigartig macht.',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+  nl: {
+    headline: 'Orange Jade Signature Strands',
+    introP1:
+      'De Orange Jade Signature Strands brengen warme juweeltinten, stralend contrast en expressieve elegantie in geselecteerde Bint Saeed-creaties. Handmatig geassembleerd in Abu Dhabi van natuurlijke Orange Jade-edelstenen en afgewerkt met Bint Saeeds kenmerkende goudkleurige Knotted Line-elementen, bieden ze een verfijnde manier om een vertrouwde silhouet te transformeren via één doordacht detail.',
+    introP4:
+      'De warme amber-oranje tinten van natuurlijke Jade vormen een stralend accent op neutrale abaya’s, terwijl gefacetteerde, vergulde Hematite-accenten tussen elke edelsteen licht met subtiele glans vangen en weerkaatsen. Omdat elke edelsteen natuurlijk gevormd is, is elke Signature Strand volledig uniek in kleur, tekening en natuurlijk karakter.',
+    stoneOrigin:
+      'Jade wordt al millennia gewaardeerd in Oost- en Centraal-Azië, met belangrijke bronnen in Myanmar, Guatemala en China. Orange Jade staat bekend om zijn warme ambertinten en gladde polijsting. Elke edelsteen toont eigen natuurlijke variaties, waardoor elke Signature Strand uniek is.',
+    beadDetail: 'Natuurlijke Orange Jade-edelstenen kralen (ongeveer 7 mm)',
+    materialStone: 'Natuurlijke Orange Jade-edelstenen',
+    strandLabel: 'Orange Jade Signature Strands',
+    stoneLabel: 'Orange Jade',
+    variationNote:
+      'Natuurlijke variaties in kleur en toon maken deel uit van wat elke Signature Strand uniek maakt.',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+  pt: {
+    headline: 'Signature Strands Orange Jade',
+    introP1:
+      'Os Signature Strands Orange Jade introduzem tons de joia quentes, contraste radiante e elegância expressiva nas criações Bint Saeed selecionadas. Montados à mão em Abu Dhabi com gemas naturais Orange Jade e finalizados com os elementos Knotted Line dourados assinatura da Bint Saeed, oferecem uma forma refinada de transformar uma silhueta familiar através de um único detalhe cuidado.',
+    introP4:
+      'Os tons âmbar-laranja quentes da Jade natural criam um destaque radiante sobre abayas neutras, enquanto acentos de Hematite folheada a ouro facetados entre cada gema captam e reflectem a luz com brilho subtil. Como cada gema se forma naturalmente, cada Signature Strand é inteiramente único em cor, marcas e carácter natural.',
+    stoneOrigin:
+      'A Jade é valorizada há milénios no Leste e Centro da Ásia, com fontes de destaque em Myanmar, Guatemala e China. A Orange Jade é apreciada pelos seus tons âmbar quentes e polimento suave. Cada gema exibe as suas próprias variações naturais, garantindo que cada Signature Strand seja único.',
+    beadDetail: 'Contas de pedra natural Orange Jade (aproximadamente 7 mm)',
+    materialStone: 'Gemas naturais Orange Jade',
+    strandLabel: 'Signature Strands Orange Jade',
+    stoneLabel: 'Orange Jade',
+    variationNote:
+      'As variações naturais de cor e tonalidade fazem parte do que torna cada Signature Strand único.',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+  id: {
+    headline: 'Signature Strands Orange Jade',
+    introP1:
+      'Signature Strands Orange Jade menghadirkan rona permata hangat, kontras berseri, dan keanggunan ekspresif pada kreasi Bint Saeed terpilih. Dirakit tangan di Abu Dhabi dari batu permata Orange Jade alami dan diselesaikan dengan elemen Knotted Line bernuansa emas khas Bint Saeed, mereka menawarkan cara berkelas untuk mengubah siluet yang sudah dikenal melalui satu detail yang penuh pertimbangan.',
+    introP4:
+      'Rona amber-oranye hangat dari Jade alami menciptakan aksen berseri pada abaya netral, sementara aksen Hematite berlapis emas berfaset di antara setiap batu menangkap dan memantulkan cahaya dengan kilau halus. Karena setiap batu terbentuk secara alami, setiap Signature Strand sepenuhnya unik dalam warna, corak, dan karakter alaminya.',
+    stoneOrigin:
+      'Jade telah dihargai selama ribuan tahun di Asia Timur dan Asia Tengah, dengan sumber penting termasuk Myanmar, Guatemala, dan China. Orange Jade dinilai karena rona amber hangat dan polesan halusnya. Setiap batu permata menampilkan variasi alaminya sendiri, memastikan setiap Signature Strand benar-benar unik.',
+    beadDetail: 'Manik batu permata Orange Jade alami (sekitar 7 mm)',
+    materialStone: 'Batu permata Orange Jade alami',
+    strandLabel: 'Signature Strands Orange Jade',
+    stoneLabel: 'Orange Jade',
+    variationNote: 'Variasi alami pada warna dan rona merupakan bagian dari apa yang membuat setiap Signature Strand unik.',
+    introP2Style: 'evening',
+    limitedEdition: false,
+  },
+  ms: {
+    headline: 'Signature Strands Orange Jade',
+    introP1:
+      'Signature Strands Orange Jade memperkenalkan tona permata hangat, kontras berseri dan keanggunan yang ekspresif kepada ciptaan Bint Saeed terpilih. Dipasang tangan di Abu Dhabi daripada batu permata Orange Jade semula jadi dan disiapkan dengan elemen Knotted Line bernuansa emas khas Bint Saeed, ia menawarkan cara yang anggun untuk mengubah siluet yang biasa melalui satu butiran yang dipikirkan dengan teliti.',
+    introP4:
+      'Tona amber-oren hangat pada Jade semula jadi mencipta aksen berseri pada abaya neutral, manakala aksen Hematite bersalut emas berfaset di antara setiap batu menangkap dan memantulkan cahaya dengan kilauan halus. Memandangkan setiap batu terbentuk secara semula jadi, setiap Signature Strand benar-benar unik dalam warna, corak dan karakter semula jadinya.',
+    stoneOrigin:
+      'Jade telah dihargai selama ribuan tahun di Asia Timur dan Asia Tengah, dengan sumber penting termasuk Myanmar, Guatemala dan China. Orange Jade dinilai kerana tona amber hangat dan penggilapan licinnya. Setiap batu permata mempamerkan variasi semula jadinya sendiri, memastikan setiap Signature Strand benar-benar unik.',
+    beadDetail: 'Manik batu permata Orange Jade semula jadi (kira-kira 7 mm)',
+    materialStone: 'Batu permata Orange Jade semula jadi',
+    strandLabel: 'Signature Strands Orange Jade',
+    stoneLabel: 'Orange Jade',
     variationNote:
       'Variasi semula jadi pada warna dan tona merupakan sebahagian daripada apa yang menjadikan setiap Signature Strand unik.',
     introP2Style: 'evening',
@@ -2065,6 +2268,7 @@ export const STONE_VARIANTS_I18N: Record<StoneVariantId, Record<AppLocale, Stone
   'signature-strand-onyx': ONYX,
   'signature-strand-sunstone': SUNSTONE,
   'signature-strand-fuchsia-jade': FUCHSIA_JADE,
+  'signature-strand-orange-jade': ORANGE_JADE,
   'signature-strand-blue-aventurine': BLUE_AVENTURINE,
   'signature-strand-rose-quartz': ROSE_QUARTZ,
   'signature-strand-malachite': MALACHITE,

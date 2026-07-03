@@ -16,7 +16,8 @@ const STRANDS = `${A}/strands`
 export const ACCESSORY_IMAGE_ABAYA_CHARMS_HERO = `${STRANDS}/bint-saeed-malachite-carnelian-natural-stoneal-ain-rosette-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_ONYX = `${STRANDS}/bint-saeed-onyx-abaya-charm.PNG`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_TIGER_EYE = `${STRANDS}/bint-saeed-tiger-eye-natural-stone-strand-front.webp`
-export const ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE = `${STRANDS}/bint-saeed-sunstone-carnelian-natural-stone-al-ain-rosette-strand-front.webp`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_SUNSTONE = `${STRANDS}/bint-saeed-sunstone-carnelian-natural-stone-al-ain-rosette-strand-front.webp`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE = `${STRANDS}/bint-saeed-orange-colored-jade-abaya-charm.PNG`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_FUCHSIA_JADE = `${STRANDS}/bint-saeed-pink-jade-natural-stone-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_AVENTURINE = `${STRANDS}/bint-saeed-aventurine-natural-stone-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_ROSE_QUARTZ = `${STRANDS}/bint-saeed-rose-quartz-carnelian-natural-stone-al-ain-rosette-strand-front.webp`
@@ -508,7 +509,7 @@ export const accessories: Accessory[] = [
     name: 'Onyx Strand',
     nameAr: 'أونكس حجر طبيعي',
     category: 'signature-strands',
-    price: 400,
+    price: 299,
     description:
       'Natural black onyx abaya strand with secure clip attachment for draping along the edge or sleeve.',
     descriptionAr:
@@ -524,7 +525,7 @@ export const accessories: Accessory[] = [
     name: 'Tiger Eye Strand',
     nameAr: 'عين النمر حجر طبيعي',
     category: 'signature-strands',
-    price: 430,
+    price: 299,
     description:
       'Warm tiger eye beads with subtle chatoyancy; designed for movement when styled on the abaya.',
     descriptionAr:
@@ -540,12 +541,12 @@ export const accessories: Accessory[] = [
     name: 'Sunstone Strand',
     nameAr: 'ستراند حجر الشمس',
     category: 'signature-strands',
-    price: 465,
+    price: 599,
     description:
       'Warm sunstone beads with a peach-orange glow — a luminous accent along the abaya silhouette.',
     descriptionAr:
       'خرز حجر الشمس الدافئ بلون خوخي برتقالي — لمسة مضيئة على خط العباءة.',
-    images: [ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE],
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_SUNSTONE],
     materials: 'Natural sunstone, 18K gold-plated findings',
     materialsAr: 'حجر الشمس طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Sunstone', nameAr: 'حجر الشمس', hex: '#ea580c' }],
@@ -556,7 +557,7 @@ export const accessories: Accessory[] = [
     name: 'Fuchsia Jade Strand',
     nameAr: 'اليشم الفوشي حجر طبيعي',
     category: 'signature-strands',
-    price: 500,
+    price: 249,
     description:
       'Fuchsia jade strand for a bold jewel-toned highlight on neutral abayas.',
     descriptionAr:
@@ -566,6 +567,23 @@ export const accessories: Accessory[] = [
     materialsAr: 'يشم طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
     colors: [{ name: 'Fuchsia Jade', nameAr: 'يشم فوشي', hex: '#c026d3' }],
     inStock: true,
+  },
+  {
+    id: 'signature-strand-orange-jade',
+    name: 'Orange Jade Strand',
+    nameAr: 'اليشم البرتقالي حجر طبيعي',
+    category: 'signature-strands',
+    price: 249,
+    description:
+      'Orange jade strand for a warm, luminous highlight on neutral abayas.',
+    descriptionAr:
+      'سلسلة يشم برتقالي للمسة دافئة ومضيئة على العباءات المحايدة.',
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE],
+    materials: 'Natural jade, 18K gold-plated findings',
+    materialsAr: 'يشم طبيعي، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Orange Jade', nameAr: 'يشم برتقالي', hex: '#ea580c' }],
+    inStock: true,
+    isNew: true,
   },
   {
     id: 'signature-strand-blue-aventurine',
@@ -588,7 +606,7 @@ export const accessories: Accessory[] = [
     name: 'Rose Quartz Strand',
     nameAr: 'كوارتز وردي حجر طبيعي',
     category: 'signature-strands',
-    price: 565,
+    price: 399,
     description:
       'Soft rose quartz with a luminous, romantic line along the abaya edge.',
     descriptionAr:
@@ -604,7 +622,7 @@ export const accessories: Accessory[] = [
     name: 'Malachite Strand',
     nameAr: 'ملاكيت حجر طبيعي',
     category: 'signature-strands',
-    price: 600,
+    price: 599,
     description:
       'Deep malachite green with natural banding — a striking signature accent.',
     descriptionAr:
@@ -620,7 +638,7 @@ export const accessories: Accessory[] = [
     name: 'Lapis Lazuli Strand',
     nameAr: 'لازورد حجر طبيعي',
     category: 'signature-strands',
-    price: 645,
+    price: 599,
     description:
       'Rich lapis lazuli with golden pyrite flecks; an elevated jewel tone for evening abayas.',
     descriptionAr:

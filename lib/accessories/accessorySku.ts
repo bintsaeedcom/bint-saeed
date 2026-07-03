@@ -32,6 +32,7 @@ const JEWELLERY_STYLE_SKU_BY_ID: Record<string, string> = {
   'signature-strand-tiger-eye': 'BSA-JWL-STR-TGE-001',
   'signature-strand-sunstone': 'BSA-JWL-STR-SUN-001',
   'signature-strand-fuchsia-jade': 'BSA-JWL-STR-FJA-001',
+  'signature-strand-orange-jade': 'BSA-JWL-STR-OJA-001',
   'signature-strand-blue-aventurine': 'BSA-JWL-STR-BAV-001',
   'signature-strand-rose-quartz': 'BSA-JWL-STR-RSQ-001',
   'signature-strand-malachite': 'BSA-JWL-STR-MAL-001',
