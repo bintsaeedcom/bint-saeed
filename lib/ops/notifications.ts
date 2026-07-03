@@ -81,6 +81,102 @@ export async function notifyHealthAlert(args: {
   })
 }
 
+const PROVIDER_LABEL: Record<string, string> = {
+  stripe: 'Stripe',
+  mollie: 'Mollie',
+  paypal: 'PayPal',
+}
+
+/** Posts a rich "new paid order" message to SLACK_ORDERS_WEBHOOK_URL. Best-effort; never throws. */
+export async function notifySlackNewPaidOrder(
+  order: StoredOrder,
+  context?: {
+    clientIp?: string
+    clientDeviceType?: string
+    clientLocalTime?: string
+    clientTimezone?: string
+    paymentRef?: string
+  },
+): Promise<void> {
+  const webhookUrl = process.env.SLACK_ORDERS_WEBHOOK_URL?.trim()
+  if (!webhookUrl) return
+
+  const provider = order.paymentProvider || 'stripe'
+  const providerLabel = PROVIDER_LABEL[provider] || provider
+  const uaeTime = toUaeTime(order.createdAt)
+  const localTime = context?.clientLocalTime || toLocalTime(order.createdAt)
+  const timezone = context?.clientTimezone || 'Unknown'
+  const ip = context?.clientIp || 'Unknown'
+  const deviceType = context?.clientDeviceType || 'Unknown'
+  const customerName = order.customerName || 'Unknown'
+  const customerEmail = order.customerEmail || 'Unknown'
+  const customerPhone = order.customerPhone || 'Unknown'
+  const amountPaid = `${order.currency} ${order.amountTotal.toFixed(2)}`
+  const paymentRef = context?.paymentRef || order.paypalOrderId || order.molliePaymentId || order.stripeSessionId
+
+  const shipping = order.shippingAddress as
+    | { city?: string; state?: string; country?: string }
+    | undefined
+  const location =
+    [shipping?.city, shipping?.state, shipping?.country].filter(Boolean).join(', ') || 'Unknown'
+
+  const lines = order.lines.length
+    ? order.lines.map((line) => {
+        const details = line.description?.trim()
+        return `• ${line.name} x${line.quantity}${details ? ` (${details})` : ''}`
+      })
+    : ['• No line items found']
+
+  const clientNote = order.deliveryNotes?.trim()
+
+  const payload = {
+    blocks: [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: `🧵 New Paid Client Order (${providerLabel})`,
+          emoji: true,
+        },
+      },
+      {
+        type: 'section',
+        fields: [
+          { type: 'mrkdwn', text: `*Amount paid:*\n${amountPaid}` },
+          { type: 'mrkdwn', text: `*Order ID:*\n\`${order.id}\`` },
+          { type: 'mrkdwn', text: `*Payment ref:*\n\`${paymentRef}\`` },
+          { type: 'mrkdwn', text: `*Customer name:*\n${customerName}` },
+          { type: 'mrkdwn', text: `*Email / Phone:*\n${customerEmail}\n${customerPhone}` },
+          { type: 'mrkdwn', text: `*IP / Device:*\n\`${ip}\`\n${deviceType}` },
+          { type: 'mrkdwn', text: `*Location:*\n${location}` },
+          { type: 'mrkdwn', text: `*UAE time:*\n${uaeTime}` },
+          { type: 'mrkdwn', text: `*Local time (${timezone}):*\n${localTime}` },
+        ],
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Items / size / personalisation:*\n${lines.join('\n')}`,
+        },
+      },
+      ...(clientNote
+        ? [
+            {
+              type: 'section',
+              text: {
+                type: 'mrkdwn',
+                text: `*Client note:*\n>${clientNote.replace(/\n/g, '\n>')}`,
+              },
+            },
+          ]
+        : []),
+    ],
+  }
+
+  await postToWebhook(webhookUrl, payload)
+}
+
 export async function createTrelloCardForOrder(
   order: StoredOrder,
   context?: {

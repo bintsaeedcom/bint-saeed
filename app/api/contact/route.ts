@@ -55,7 +55,8 @@ export async function POST(request: NextRequest) {
 
     const timestamp = new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
 
-    const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL
+    const slackWebhookUrl =
+      process.env.SLACK_CONTACT_WEBHOOK_URL?.trim() || process.env.SLACK_WEBHOOK_URL
     if (slackWebhookUrl) {
       const slackMessage = {
         blocks: [

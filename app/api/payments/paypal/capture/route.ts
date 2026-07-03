@@ -8,7 +8,7 @@ import {
 } from '@/lib/paypal/pendingCheckoutStore'
 import { saveOrder, findOrderIdBySession } from '@/lib/orders/orderStore'
 import { markPaymentEventProcessed, wasPaymentEventProcessed } from '@/lib/payments/webhookEventStore'
-import { createTrelloCardForOrder, notifyHealthAlert } from '@/lib/ops/notifications'
+import { createTrelloCardForOrder, notifyHealthAlert, notifySlackNewPaidOrder } from '@/lib/ops/notifications'
 import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
 
 export const runtime = 'nodejs'
@@ -36,7 +36,24 @@ async function persistPayPalOrder(orderId: string) {
   await deletePendingPayPalCheckout(orderId)
 
   try {
-    await createTrelloCardForOrder(order)
+    await createTrelloCardForOrder(order, {
+      sessionId: order.paypalOrderId,
+      clientIp: pending.clientIp,
+      clientDeviceType: pending.clientContext?.deviceType,
+      clientLocalTime: pending.clientContext?.localTime,
+      clientTimezone: pending.clientContext?.timezone,
+    })
+  } catch {
+    /* optional */
+  }
+  try {
+    await notifySlackNewPaidOrder(order, {
+      clientIp: pending.clientIp,
+      clientDeviceType: pending.clientContext?.deviceType,
+      clientLocalTime: pending.clientContext?.localTime,
+      clientTimezone: pending.clientContext?.timezone,
+      paymentRef: order.paypalOrderId,
+    })
   } catch {
     /* optional */
   }

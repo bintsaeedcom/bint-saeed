@@ -121,8 +121,10 @@ export async function POST(request: NextRequest) {
       console.log('❌ MAILERLITE: API key not configured')
     }
 
-    // Send to Slack with Mailerlite status
-    const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL
+    // Send to Slack with Mailerlite status. Prefer a dedicated subscribers channel so email
+    // signups don't get buried under visitor-traffic pings; fall back to the main webhook.
+    const slackWebhookUrl =
+      process.env.SLACK_SUBSCRIBERS_WEBHOOK_URL?.trim() || process.env.SLACK_WEBHOOK_URL
     if (slackWebhookUrl) {
       try {
         const errMsg = (mailerliteResult.error || 'Not configured').slice(0, 150)
