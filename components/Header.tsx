@@ -19,6 +19,8 @@ import {
 
 const MEGA_MENU_PLACEHOLDER_A = '/placeholders/product-front-F.svg'
 const MEGA_MENU_PLACEHOLDER_B = '/placeholders/product-extra-E.svg'
+const MEGA_MENU_SIGNATURE_STRANDS = '/collection-section/bint-saeed-signature-strands-collection-nav.webp'
+const MEGA_MENU_ALL_STRANDS = '/collection-section/bint-saeed-all-strands-collection-nav.png'
 
 /** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
 const headerBarGradient =
@@ -183,12 +185,12 @@ export default function Header() {
         {
           title: 'Signature Strands',
           href: '/accessories?type=signature-strands',
-          image: MEGA_MENU_PLACEHOLDER_A,
+          image: MEGA_MENU_SIGNATURE_STRANDS,
         },
         {
           title: 'Shop All Strands',
           href: '/strands',
-          image: MEGA_MENU_PLACEHOLDER_B,
+          image: MEGA_MENU_ALL_STRANDS,
         },
       ],
     },
@@ -521,13 +523,13 @@ export default function Header() {
                     <div
                       className={
                         megaMenus[activeMegaMenu].features.length > 0
-                          ? 'col-span-5 grid grid-cols-1 gap-8 xl:col-span-6'
+                          ? 'col-span-5 grid grid-cols-1 gap-4 xl:col-span-6'
                           : 'col-span-12'
                       }
                     >
                       {megaMenus[activeMegaMenu].columns.map((col) => (
                         <div key={col.title} className="min-w-0">
-                          <p className="mb-3 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/70">
+                          <p className="mb-2 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/70">
                             {col.title}
                           </p>
                           <div className="space-y-2.5">
