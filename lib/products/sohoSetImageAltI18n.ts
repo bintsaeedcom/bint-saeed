@@ -146,6 +146,21 @@ function entry(
   }
 }
 
+const NAVY_BLUE_LIFESTYLE_3_ALTS = altLoc(
+  `Detail of the Bint Saeed Soho Set in Navy Blue — close-up of UNESCO-recognised traditional Emirati Al Talli trim in gold along premium crepe, with Bint Saeed Abu Dhabi house mark. Luxury designer travel coordinate set for UAE, GCC, London, Paris, and worldwide wardrobes. Made in Abu Dhabi, United Arab Emirates. Worldwide shipping.`,
+  `تفاصيل طقم Bint Saeed Soho بالكحلي — لقطة مقرّبة لتفاصيل التلي الإماراتي التقليدي المعترف به من اليونسكو باللون الذهبي على كريب فاخر، مع علامة دار Bint Saeed أبوظبي. طقم سفر مصمّم فاخر منسّق للإمارات والخليج ولندن وباريس والخزائن العالمية. صُنع في أبوظبي، الإمارات العربية المتحدة. شحن عالمي.`,
+  `Détail du set Bint Saeed Soho en Bleu marine — gros plan de la garniture Al Talli émiratie traditionnelle reconnue par l’UNESCO en or sur crêpe premium, avec la marque de la maison Bint Saeed Abou Dabi. Ensemble voyage coordonné de créateur de luxe pour les EAU, le Golfe, Londres, Paris et garde-robes mondiales. Fabriqué à Abou Dabi, Émirats arabes unis. Livraison mondiale.`,
+  `Dettaglio del Bint Saeed Soho Set in Blu navy — primo piano della finitura Al Talli tradizionale emiratina riconosciuta dall’UNESCO in oro su crepe premium, con marchio della casa Bint Saeed Abu Dhabi. Set viaggio coordinato designer di lusso per EAU, Golfo, Londra, Parigi e guardaroba mondiali. Realizzato ad Abu Dhabi, Emirati Arabi Uniti. Spedizione mondiale.`,
+  `Detalle del set Bint Saeed Soho en Azul marino — primer plano del ribete Al Talli tradicional emiratí reconocido por la UNESCO en oro sobre crepe premium, con la marca de la casa Bint Saeed Abu Dabi. Set de viaje coordinado de diseñador de lujo para EAU, Golfo, Londres, París y armarios mundiales. Hecho en Abu Dabi, Emiratos Árabes Unidos. Envío mundial.`,
+  `Деталь комплекта Bint Saeed Soho цвета тёмно-синий — крупный план традиционной эмиратской отделки Al Talli (ЮНЕСКО) золотого тона на премиальном крепе с знаком дома Bint Saeed Абу-Даби. Люксовый дизайнерский travel set для ОАЭ, стран Залива, Лондона, Парижа и мировых гардеробов. Сделано в Абу-Даби, ОАЭ. Доставка по всему миру.`,
+  `Bint Saeed Soho Set海军蓝细节——联合国教科文组织认可的传统阿联酋Al Talli金色饰边高级绉绸特写，附Bint Saeed阿布扎比品牌标识。面向阿联酋、海湾、伦敦、巴黎及全球衣橱的奢华设计师旅行协调套装。阿布扎比制造。全球配送。`,
+  `Detail des Bint Saeed Soho Set in Marineblau — Nahaufnahme des UNESCO-anerkannten traditionellen emiratischen Al-Talli-Besatzes in Gold auf Premium-Krepp mit Hausmarke Bint Saeed Abu Dhabi. Luxus-Designer-Reise-Koordinaten-Set für VAE, Golf, London, Paris und weltweite Garderoben. Hergestellt in Abu Dhabi, VAE. Weltweiter Versand.`,
+  `Detail van de Bint Saeed Soho Set in Marineblauw — close-up van door UNESCO erkende traditionele Emiratische Al Talli-afwerking in goud op premium crêpe, met huismerk Bint Saeed Abu Dhabi. Luxe designer reis-coördinatieset voor VAE, Golf, Londen, Parijs en wereldwijde garderobes. Gemaakt in Abu Dhabi, VAE. Wereldwijde verzending.`,
+  `Detalhe do set Bint Saeed Soho em Azul-marinho — close-up do acabamento Al Talli tradicional emirati reconhecido pela UNESCO em dourado sobre crepe premium, com marca da casa Bint Saeed Abu Dhabi. Set viagem coordenado de designer de luxo para EAU, Golfo, Londres, Paris e guarda-roupa mundiais. Feito em Abu Dhabi, Emirados Árabes Unidos. Envio mundial.`,
+  `Detail Bint Saeed Soho Set Navy Blue — close-up trim Al Talli tradisional Emirati diakui UNESCO berwarna emas pada krepe premium, dengan tanda rumah Bint Saeed Abu Dhabi. Set perjalanan koordinat desainer mewah untuk UEA, GCC, London, Paris, dan garderobe dunia. Dibuat di Abu Dhabi, UEA. Pengiriman dunia.`,
+  `Perincian Bint Saeed Soho Set Navy Blue — close-up hiasan Al Talli tradisional Emirati diiktiraf UNESCO berwarna emas pada krepe premium, dengan tanda rumah Bint Saeed Abu Dhabi. Set perjalanan koordinat pereka mewah untuk UAE, GCC, London, Paris, dan almari dunia. Dihasilkan di Abu Dhabi, UAE. Penghantaran seluruh dunia.`,
+)
+
 /** Curated PDP image alts — Soho Set (Deep Black & Navy Blue). Travel set + Al Talli discovery optimised. */
 export const SOHO_SET_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('black', 'front'),
@@ -158,4 +173,8 @@ export const SOHO_SET_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('navy-blue', 'back'),
   entry('navy-blue', 'lifestyle-1'),
   entry('navy-blue', 'lifestyle-2'),
+  {
+    filename: 'bint-saeed-soho-set-navy-blue-lifestyle-3.webp',
+    alts: NAVY_BLUE_LIFESTYLE_3_ALTS,
+  },
 ]

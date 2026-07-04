@@ -53,37 +53,48 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const check = validateSubscriberEmail(email, language)
-    if (!check.valid) {
-      setEmailError(check.message)
-      toast.error(check.message)
-      return
-    }
-
-    const phoneCheck = validateOptionalPhone(phone, language)
-    if (!phoneCheck.ok) {
-      setPhoneError(phoneCheck.message)
-      toast.error(phoneCheck.message)
-      return
-    }
-    if (notifyChannel === 'whatsapp' && !phoneCheck.phone) {
-      const msg = copy.phoneRequiredWhatsApp
-      setPhoneError(msg)
-      toast.error(msg)
-      return
-    }
-
     setEmailError('')
     setPhoneError('')
+
+    if (notifyChannel === 'email') {
+      const check = validateSubscriberEmail(email, language)
+      if (!check.valid) {
+        setEmailError(check.message)
+        toast.error(check.message)
+        return
+      }
+    } else {
+      const phoneCheck = validateOptionalPhone(phone, language)
+      if (!phoneCheck.ok) {
+        setPhoneError(phoneCheck.message)
+        toast.error(phoneCheck.message)
+        return
+      }
+      if (!phoneCheck.phone) {
+        const msg = copy.phoneRequiredWhatsApp
+        setPhoneError(msg)
+        toast.error(msg)
+        return
+      }
+    }
+
     setIsSubmitting(true)
 
     try {
       const payload: Record<string, string | undefined> = {
-        email: check.email,
         notifyChannel,
         source: 'footer',
       }
-      if (phoneCheck.phone) payload.phone = phoneCheck.phone
+
+      if (notifyChannel === 'email') {
+        const check = validateSubscriberEmail(email, language)
+        if (!check.valid) return
+        payload.email = check.email
+      } else {
+        const phoneCheck = validateOptionalPhone(phone, language)
+        if (!phoneCheck.ok || !phoneCheck.phone) return
+        payload.phone = phoneCheck.phone
+      }
 
       const response = await fetch('/api/subscribe', {
         method: 'POST',
@@ -119,7 +130,10 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
         <div className={`flex flex-col gap-2 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
           <button
             type="button"
-            onClick={() => setNotifyChannel('email')}
+            onClick={() => {
+              setNotifyChannel('email')
+              setPhoneError('')
+            }}
             className={channelBtn(notifyChannel === 'email')}
             aria-pressed={notifyChannel === 'email'}
           >
@@ -127,7 +141,10 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
           </button>
           <button
             type="button"
-            onClick={() => setNotifyChannel('whatsapp')}
+            onClick={() => {
+              setNotifyChannel('whatsapp')
+              setEmailError('')
+            }}
             className={channelBtn(notifyChannel === 'whatsapp')}
             aria-pressed={notifyChannel === 'whatsapp'}
           >
@@ -139,64 +156,63 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
         </p>
       </div>
 
-      <div className={`space-y-1 ${isRTL ? 'text-right' : ''}`}>
-        <input
-          type="email"
-          placeholder={copy.email}
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value)
-            if (emailError) setEmailError('')
-          }}
-          onBlur={() => {
-            if (!email.trim()) return
-            const check = validateSubscriberEmail(email, language)
-            setEmailError(check.valid ? '' : check.message)
-          }}
-          required
-          aria-invalid={emailError ? true : undefined}
-          className={`${inputClass} ${emailError ? (variant === 'dark' ? 'border-red-400/50' : 'border-red-300') : ''}`}
-          dir={isRTL ? 'rtl' : 'ltr'}
-        />
-        {emailError ? (
-          <p className={`text-xs font-montserrat tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
-            {emailError}
-          </p>
-        ) : null}
-      </div>
-
-      <div className={`space-y-1 ${isRTL ? 'text-right' : ''}`}>
-        <label
-          htmlFor="subscribe-phone"
-          className={`block text-[10px] uppercase tracking-[0.18em] font-montserrat ${variant === 'dark' ? 'text-white/45' : 'text-white/60'}`}
-        >
-          {notifyChannel === 'whatsapp' ? copy.phoneRequired : copy.phoneOptional}{' '}
-          {notifyChannel === 'email' ? (
-            <span className="normal-case tracking-normal opacity-70">{copy.phoneOptionalNote}</span>
+      {notifyChannel === 'email' ? (
+        <div className={`space-y-1 ${isRTL ? 'text-right' : ''}`}>
+          <input
+            type="email"
+            placeholder={copy.email}
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value)
+              if (emailError) setEmailError('')
+            }}
+            onBlur={() => {
+              if (!email.trim()) return
+              const check = validateSubscriberEmail(email, language)
+              setEmailError(check.valid ? '' : check.message)
+            }}
+            required
+            aria-invalid={emailError ? true : undefined}
+            className={`${inputClass} ${emailError ? (variant === 'dark' ? 'border-red-400/50' : 'border-red-300') : ''}`}
+            dir={isRTL ? 'rtl' : 'ltr'}
+          />
+          {emailError ? (
+            <p className={`text-xs font-montserrat tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
+              {emailError}
+            </p>
           ) : null}
-        </label>
-        <PhoneWithCountry
-          id="subscribe-phone"
-          variant={variant}
-          value={phone}
-          onChange={(v) => {
-            setPhone(v)
-            if (phoneError) setPhoneError('')
-          }}
-          onBlur={() => {
-            if (!phone) return
-            const v = validateOptionalPhone(phone, language)
-            setPhoneError(v.ok ? '' : v.message)
-          }}
-          disabled={isSubmitting}
-          error={!!phoneError}
-        />
-        {phoneError ? (
-          <p className={`text-xs font-montserrat tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
-            {phoneError}
-          </p>
-        ) : null}
-      </div>
+        </div>
+      ) : (
+        <div className={`space-y-1 ${isRTL ? 'text-right' : ''}`}>
+          <label
+            htmlFor="subscribe-phone"
+            className={`block text-[10px] uppercase tracking-[0.18em] font-montserrat ${variant === 'dark' ? 'text-white/45' : 'text-white/60'}`}
+          >
+            {copy.phoneRequired}
+          </label>
+          <PhoneWithCountry
+            id="subscribe-phone"
+            variant={variant}
+            value={phone}
+            onChange={(v) => {
+              setPhone(v)
+              if (phoneError) setPhoneError('')
+            }}
+            onBlur={() => {
+              if (!phone) return
+              const v = validateOptionalPhone(phone, language)
+              setPhoneError(v.ok ? '' : v.message)
+            }}
+            disabled={isSubmitting}
+            error={!!phoneError}
+          />
+          {phoneError ? (
+            <p className={`text-xs font-montserrat tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
+              {phoneError}
+            </p>
+          ) : null}
+        </div>
+      )}
 
       <div className={`flex flex-col gap-3 md:flex-row md:items-stretch ${isRTL ? 'md:flex-row-reverse' : ''}`}>
         <motion.button

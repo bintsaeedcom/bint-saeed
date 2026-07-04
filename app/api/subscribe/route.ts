@@ -55,21 +55,26 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { email, firstName, lastName, name, source, phone: phoneRaw, notifyChannel } = body
 
-    if (typeof email !== 'string') {
-      return NextResponse.json({ error: 'Email is required' }, { status: 400 })
-    }
-
-    const emailCheck = validateSubscriberEmail(email)
-    if (!emailCheck.valid) {
-      return NextResponse.json({ error: emailCheck.message }, { status: 400 })
-    }
-    const normalizedEmail = emailCheck.email
-
+    const channel = notifyChannel === 'whatsapp' ? 'whatsapp' : 'email'
     const phoneCheck = validateOptionalPhone(phoneRaw)
     if (!phoneCheck.ok) {
       return NextResponse.json({ error: phoneCheck.message }, { status: 400 })
     }
     const normalizedPhone = phoneCheck.phone
+
+    let normalizedEmail: string | undefined
+    if (channel === 'email') {
+      if (typeof email !== 'string') {
+        return NextResponse.json({ error: 'Email is required' }, { status: 400 })
+      }
+      const emailCheck = validateSubscriberEmail(email)
+      if (!emailCheck.valid) {
+        return NextResponse.json({ error: emailCheck.message }, { status: 400 })
+      }
+      normalizedEmail = emailCheck.email
+    } else if (!normalizedPhone) {
+      return NextResponse.json({ error: 'Phone is required for WhatsApp alerts' }, { status: 400 })
+    }
 
     const forwardedFor = request.headers.get('x-forwarded-for')
     const ip = forwardedFor ? forwardedFor.split(',')[0].trim() : 'Unknown'
@@ -85,7 +90,7 @@ export async function POST(request: NextRequest) {
     const subscriberName = firstName ?? name
     const subscriberLastName = lastName
 
-    if (mailerliteApiKey) {
+    if (mailerliteApiKey && normalizedEmail) {
       try {
         // Try with group first if configured
         mailerliteResult = await addToMailerLite(mailerliteApiKey, normalizedEmail, {
@@ -132,16 +137,17 @@ export async function POST(request: NextRequest) {
           ? '✅ Added to MailerLite' 
           : `❌ MailerLite: ${errMsg}`
 
-        const slackFields: { type: 'mrkdwn'; text: string }[] = [
-          { type: 'mrkdwn', text: `*Email:*\n${normalizedEmail}` },
-        ]
+        const slackFields: { type: 'mrkdwn'; text: string }[] = []
+        if (normalizedEmail) {
+          slackFields.push({ type: 'mrkdwn', text: `*Email:*\n${normalizedEmail}` })
+        }
         if (normalizedPhone) {
           slackFields.push({ type: 'mrkdwn', text: `*Phone:*\n${normalizedPhone}` })
         }
-        if (notifyChannel === 'email' || notifyChannel === 'whatsapp') {
+        if (channel === 'email' || channel === 'whatsapp') {
           slackFields.push({
             type: 'mrkdwn',
-            text: `*Notify via:*\n${notifyChannel === 'whatsapp' ? 'WhatsApp' : 'Email'}`,
+            text: `*Notify via:*\n${channel === 'whatsapp' ? 'WhatsApp' : 'Email'}`,
           })
         }
         if (source) {

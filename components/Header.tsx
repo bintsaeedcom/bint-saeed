@@ -13,7 +13,6 @@ import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 import { getSearchableContent, type SearchableItem } from '@/lib/i18n/searchableContentI18n'
 import {
-  ACCESSORY_IMAGE_NECKLACE,
   ACCESSORY_IMAGE_PHONE_CHARM,
 } from '@/data/accessories'
 
@@ -21,6 +20,7 @@ const MEGA_MENU_SIGNATURE_STRANDS = '/collection-section/bint-saeed-signature-st
 const MEGA_MENU_ALL_STRANDS = '/collection-section/bint-saeed-all-strands-collection-nav.webp'
 const MEGA_MENU_LUXURY_ABAYAS = '/collection-section/bint-saeed-luxury-abayas-collection-nav.webp'
 const MEGA_MENU_LUXURY_SETS = '/collection-section/bint-saeed-luxury-sets-collection-nav.webp'
+const MEGA_MENU_NECKLACES = '/collection-section/bint-saeed-necklaces-collection-nav.webp'
 const MEGA_MENU_OUR_STORY = '/collection-section/bint-saeed-our-story-collection-nav.webp'
 const MEGA_MENU_THE_CODES = '/collection-section/bint-saeed-the-codes-collection-nav.webp'
 const MEGA_MENU_HIDDEN_POCKET = '/collection-section/bint-saeed-hidden-pocket-collection-nav.webp'
@@ -250,7 +250,7 @@ export default function Header() {
         {
           title: 'Necklaces',
           href: '/accessories?type=necklaces',
-          image: ACCESSORY_IMAGE_NECKLACE,
+          image: MEGA_MENU_NECKLACES,
         },
         {
           title: 'Phone Charms',

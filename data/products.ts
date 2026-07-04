@@ -306,7 +306,14 @@ function parkLaneAbayaGallery(color: 'black' | 'dark-marroon' | 'navy-blue'): st
   const base = `${PARK_LANE_ABAYA_DIR}/bint-saeed-parklane-abaya-${color}`
   const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
   if (color === 'black') {
-    images.push(`${base}-extra.webp`)
+    images.push(`${base}-extra.webp`, `${base}-lifestyle-extra.webp`)
+  }
+  if (color === 'dark-marroon') {
+    images.push(
+      `${base}-lifestyle-01.webp`,
+      `${base}-lifestyle-02.webp`,
+      `${base}-lifestyle-extra.webp`,
+    )
   }
   return images
 }
@@ -393,13 +400,17 @@ const SOHO_SET_DIR = '/Webshop pictures/Sets/Soho Set'
 
 function sohoSetGallery(color: 'black' | 'navy-blue'): string[] {
   const base = `${SOHO_SET_DIR}/bint-saeed-soho-set-${color}`
-  return [
+  const images = [
     `${base}-front.webp`,
     `${base}-side.webp`,
     `${base}-back.webp`,
     `${base}-lifestyle-1.webp`,
     `${base}-lifestyle-2.webp`,
   ]
+  if (color === 'navy-blue') {
+    images.push(`${base}-lifestyle-3.webp`)
+  }
+  return images
 }
 
 const HYDE_PARK_SET_DIR = '/Webshop pictures/Sets/Hyde Park Set'

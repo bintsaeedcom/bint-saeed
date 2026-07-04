@@ -183,6 +183,7 @@ const nextConfig = {
         'bint-saeed-the-codes-collection-nav',
         'bint-saeed-hidden-pocket-collection-nav',
         'bint-saeed-name-labels-collection-nav',
+        'bint-saeed-necklaces-collection-nav',
       ].map((base) => ({
         source: `/collection-section/${base}.png`,
         destination: `/collection-section/${base}.webp`,

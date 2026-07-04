@@ -128,6 +128,21 @@ const BLACK_EXTRA_ALTS = altLoc(
   `Pandangan terperinci Bint Saeed Park Lane Abaya Deep Black — close-up butang Knotted Line emas signature di bahu, kancing manset emblem Bint Saeed boleh tanggal pada cuff lebar, dan skarf bahu bersepadu pada crepe lembut. ${DISCOVERY_TAIL.ms}`,
 )
 
+const BLACK_LIFESTYLE_EXTRA_ALTS = altLoc(
+  `Detail of the Bint Saeed Park Lane Abaya in Deep Black — close-up of wide cuffs with removable gold-tone Bint Saeed emblem cufflinks against softly textured crepe. ${DISCOVERY_TAIL.en}`,
+  `تفاصيل عباية Bint Saeed Park Lane بالأسود العميق — لقطة مقرّبة للأكمام الواسعة بأزرار شعار Bint Saeed الذهبية القابلة للإزالة على كريب ناعم الملمس. ${DISCOVERY_TAIL.ar}`,
+  `Détail de l’abaya Bint Saeed Park Lane en Noir profond — gros plan des larges poignets avec boutons de manchette emblème Bint Saeed dorés amovibles sur crepe texturé. ${DISCOVERY_TAIL.fr}`,
+  `Dettaglio della Bint Saeed Park Lane Abaya in Nero profondo — primo piano dei polsini ampi con gemelli emblema Bint Saeed dorati rimovibili su crepe morbido. ${DISCOVERY_TAIL.it}`,
+  `Detalle de la abaya Bint Saeed Park Lane en Negro profundo — primer plano de puños anchos con gemelos emblema Bint Saeed dorados extraíbles sobre crepe texturizado. ${DISCOVERY_TAIL.es}`,
+  `Деталь абайи Bint Saeed Park Lane цвета глубокий чёрный — крупный план широких манжет со съёмными золотистыми запонками-эмблемой Bint Saeed на мягком крепе. ${DISCOVERY_TAIL.ru}`,
+  `Bint Saeed Park Lane深黑色细节——宽袖口可拆卸Bint Saeed金色徽标袖扣特写，柔和绉绸面料。${DISCOVERY_TAIL.zh}`,
+  `Detail der Bint Saeed Park Lane Abaya in Tiefschwarz — Nahaufnahme weiter Manschetten mit abnehmbaren goldfarbenen Bint Saeed-Emblem-Manschettenknöpfen auf weichem Krepp. ${DISCOVERY_TAIL.de}`,
+  `Detail van de Bint Saeed Park Lane abaya in Diepzwart — close-up van brede manchetten met verwijderbare goudkleurige Bint Saeed embleem manchetknopen op zacht crepe. ${DISCOVERY_TAIL.nl}`,
+  `Detalhe da abaya Bint Saeed Park Lane em Preto profundo — close-up de punhos largos com abotoaduras emblema Bint Saeed douradas removíveis sobre crepe macio. ${DISCOVERY_TAIL.pt}`,
+  `Detail Bint Saeed Park Lane Abaya Deep Black — close-up cuff lebar dengan kancing manset emblem Bint Saeed emas yang dapat dilepas pada crepe lembut. ${DISCOVERY_TAIL.id}`,
+  `Perincian Bint Saeed Park Lane Abaya Deep Black — close-up cuff lebar dengan kancing manset emblem Bint Saeed emas boleh tanggal pada crepe lembut. ${DISCOVERY_TAIL.ms}`,
+)
+
 function entry(color: ColorSlug, view: 'front' | 'side' | 'back'): AltEntry {
   const alts =
     view === 'front' ? frontAlts(color) : view === 'side' ? sideAlts(color) : backAlts(color)
@@ -137,15 +152,76 @@ function entry(color: ColorSlug, view: 'front' | 'side' | 'back'): AltEntry {
   }
 }
 
+const DARK_MAROON_LIFESTYLE_ALTS = altLoc(
+  `Bint Saeed Park Lane Abaya in Dark Maroon, lifestyle portrait with integrated shoulder scarf, signature gold-tone Knotted Line shoulder buttons, and architectural tailoring against warm natural light. ${DISCOVERY_TAIL.en}`,
+  `عباية Bint Saeed Park Lane بالعنابي الغامق، صورة حياتية مع وشاح الكتف المدمج، وأزرار Knotted Line الذهبية المميزة عند الكتفين، وتفصيل معماري في ضوء طبيعي دافئ. ${DISCOVERY_TAIL.ar}`,
+  `Abaya Bint Saeed Park Lane en Bordeaux foncé, portrait lifestyle avec écharpe d’épaule intégrée, boutons dorés signature Knotted Line aux épaules et tailleur architectural sous lumière naturelle chaude. ${DISCOVERY_TAIL.fr}`,
+  `Bint Saeed Park Lane Abaya in Bordeaux scuro, ritratto lifestyle con sciarpa spalla integrata, bottoni dorati signature Knotted Line alle spalle e sartoria architettonica in luce naturale calda. ${DISCOVERY_TAIL.it}`,
+  `Abaya Bint Saeed Park Lane en Burdeos oscuro, retrato lifestyle con bufanda de hombro integrada, botones dorados signature Knotted Line en los hombros y sastrería arquitectónica bajo luz natural cálida. ${DISCOVERY_TAIL.es}`,
+  `Абайя Bint Saeed Park Lane цвета тёмный бордовый, lifestyle-портрет со встроенным шарфом на плече, фирменными золотистыми пуговицами Knotted Line на плечах и архитектурным кроем в тёплом естественном свете. ${DISCOVERY_TAIL.ru}`,
+  `Bint Saeed Park Lane 长袍深酒红色生活方式肖像，一体式肩巾、标志性Knotted Line金色肩钮与建筑感剪裁，温暖自然光下。${DISCOVERY_TAIL.zh}`,
+  `Bint Saeed Park Lane Abaya in Dunkelbordeaux, Lifestyle-Porträt mit integriertem Schulterschal, charakteristischen goldfarbenen Knotted-Line-Schulterknöpfen und architektonischem Schnitt in warmem natürlichem Licht. ${DISCOVERY_TAIL.de}`,
+  `Bint Saeed Park Lane abaya in Donker bordeaux, lifestyle-portret met geïntegreerde schoudersjaal, kenmerkende goudkleurige Knotted Line schouderknopen en architecturaal tailoring in warm natuurlijk licht. ${DISCOVERY_TAIL.nl}`,
+  `Abaya Bint Saeed Park Lane em Bordô escuro, retrato lifestyle com lenço de ombro integrado, botões dourados signature Knotted Line nos ombros e alfaiataria arquitetónica sob luz natural quente. ${DISCOVERY_TAIL.pt}`,
+  `Bint Saeed Park Lane Abaya Dark Maroon, potret lifestyle dengan scarf bahu terintegrasi, kancing Knotted Line emas signature di bahu, dan tailoring arsitektural dalam cahaya alami hangat. ${DISCOVERY_TAIL.id}`,
+  `Bint Saeed Park Lane Abaya Dark Maroon, potret gaya hidup dengan skarf bahu bersepadu, butang Knotted Line emas signature di bahu, dan jahitan seni bina dalam cahaya semula jadi hangat. ${DISCOVERY_TAIL.ms}`,
+)
+
+const DARK_MAROON_LIFESTYLE_EXTRA_ALTS = altLoc(
+  `Detail of the Bint Saeed Park Lane Abaya in Dark Maroon — close-up of wide cuffs with removable gold-tone Bint Saeed emblem cufflinks against softly textured crepe. ${DISCOVERY_TAIL.en}`,
+  `تفاصيل عباية Bint Saeed Park Lane بالعنابي الغامق — لقطة مقرّبة للأكمام الواسعة بأزرار شعار Bint Saeed الذهبية القابلة للإزالة على كريب ناعم الملمس. ${DISCOVERY_TAIL.ar}`,
+  `Détail de l’abaya Bint Saeed Park Lane en Bordeaux foncé — gros plan des larges poignets avec boutons de manchette emblème Bint Saeed dorés amovibles sur crepe texturé. ${DISCOVERY_TAIL.fr}`,
+  `Dettaglio della Bint Saeed Park Lane Abaya in Bordeaux scuro — primo piano dei polsini ampi con gemelli emblema Bint Saeed dorati rimovibili su crepe morbido. ${DISCOVERY_TAIL.it}`,
+  `Detalle de la abaya Bint Saeed Park Lane en Burdeos oscuro — primer plano de puños anchos con gemelos emblema Bint Saeed dorados extraíbles sobre crepe texturizado. ${DISCOVERY_TAIL.es}`,
+  `Деталь абайи Bint Saeed Park Lane цвета тёмный бордовый — крупный план широких манжет со съёмными золотистыми запонками-эмблемой Bint Saeed на мягком крепе. ${DISCOVERY_TAIL.ru}`,
+  `Bint Saeed Park Lane深酒红色细节——宽袖口可拆卸Bint Saeed金色徽标袖扣特写，柔和绉绸面料。${DISCOVERY_TAIL.zh}`,
+  `Detail der Bint Saeed Park Lane Abaya in Dunkelbordeaux — Nahaufnahme weiter Manschetten mit abnehmbaren goldfarbenen Bint Saeed-Emblem-Manschettenknöpfen auf weichem Krepp. ${DISCOVERY_TAIL.de}`,
+  `Detail van de Bint Saeed Park Lane abaya in Donker bordeaux — close-up van brede manchetten met verwijderbare goudkleurige Bint Saeed embleem manchetknopen op zacht crepe. ${DISCOVERY_TAIL.nl}`,
+  `Detalhe da abaya Bint Saeed Park Lane em Bordô escuro — close-up de punhos largos com abotoaduras emblema Bint Saeed douradas removíveis sobre crepe macio. ${DISCOVERY_TAIL.pt}`,
+  `Detail Bint Saeed Park Lane Abaya Dark Maroon — close-up cuff lebar dengan kancing manset emblem Bint Saeed emas yang dapat dilepas pada crepe lembut. ${DISCOVERY_TAIL.id}`,
+  `Perincian Bint Saeed Park Lane Abaya Dark Maroon — close-up cuff lebar dengan kancing manset emblem Bint Saeed emas boleh tanggal pada crepe lembut. ${DISCOVERY_TAIL.ms}`,
+)
+
+const DARK_MAROON_LIFESTYLE_02_ALTS = altLoc(
+  `Bint Saeed Park Lane Abaya in Dark Maroon, full-length lifestyle view with graceful A-line drape, integrated shoulder scarf, and signature gold-tone Bint Saeed emblem cufflinks in warm architectural light. ${DISCOVERY_TAIL.en}`,
+  `عباية Bint Saeed Park Lane بالعنابي الغامق، إطلالة حياتية كاملة الطول بانسيابية A-line أنيقة، ووشاح كتف مدمج، وأزرار شعار Bint Saeed الذهبية في ضوء معماري دافئ. ${DISCOVERY_TAIL.ar}`,
+  `Abaya Bint Saeed Park Lane en Bordeaux foncé, vue lifestyle pleine longueur avec tombée A-line gracieuse, écharpe d’épaule intégrée et boutons de manchette emblème Bint Saeed dorés sous lumière architecturale chaude. ${DISCOVERY_TAIL.fr}`,
+  `Bint Saeed Park Lane Abaya in Bordeaux scuro, vista lifestyle a tutta lunghezza con drappeggio A-line aggraziato, sciarpa spalla integrata e gemelli emblema Bint Saeed dorati in luce architettonica calda. ${DISCOVERY_TAIL.it}`,
+  `Abaya Bint Saeed Park Lane en Burdeos oscuro, vista lifestyle de largo completo con caída A-line elegante, bufanda de hombro integrada y gemelos emblema Bint Saeed dorados bajo luz arquitectónica cálida. ${DISCOVERY_TAIL.es}`,
+  `Абайя Bint Saeed Park Lane цвета тёмный бордовый, lifestyle в полный рост с изящной драпировкой A-line, встроенным шарфом на плече и золотистыми запонками-эмблемой Bint Saeed в тёплом архитектурном свете. ${DISCOVERY_TAIL.ru}`,
+  `Bint Saeed Park Lane深酒红色全长生活方式造型，优雅A字垂坠、一体式肩巾与标志性Bint Saeed金色徽标袖扣，温暖建筑光影下。${DISCOVERY_TAIL.zh}`,
+  `Bint Saeed Park Lane Abaya in Dunkelbordeaux, Lifestyle-Ansicht in voller Länge mit anmutigem A-Linien-Fall, integriertem Schulterschal und goldfarbenen Bint Saeed-Emblem-Manschettenknöpfen in warmem architektonischem Licht. ${DISCOVERY_TAIL.de}`,
+  `Bint Saeed Park Lane abaya in Donker bordeaux, lifestyle-weergave over volledige lengte met sierlijke A-line drape, geïntegreerde schoudersjaal en goudkleurige Bint Saeed embleem manchetknopen in warm architecturaal licht. ${DISCOVERY_TAIL.nl}`,
+  `Abaya Bint Saeed Park Lane em Bordô escuro, vista lifestyle de comprimento total com caimento A-line gracioso, lenço de ombro integrado e abotoaduras emblema Bint Saeed douradas sob luz arquitetónica quente. ${DISCOVERY_TAIL.pt}`,
+  `Bint Saeed Park Lane Abaya Dark Maroon, tampilan lifestyle panjang penuh dengan drape A-line anggun, scarf bahu terintegrasi, dan kancing manset emblem Bint Saeed emas dalam cahaya arsitektural hangat. ${DISCOVERY_TAIL.id}`,
+  `Bint Saeed Park Lane Abaya Dark Maroon, pandangan gaya hidup panjang penuh dengan jatuhan A-line anggun, skarf bahu bersepadu, dan kancing manset emblem Bint Saeed emas dalam cahaya seni bina hangat. ${DISCOVERY_TAIL.ms}`,
+)
+
 /** Curated PDP image alts — Park Lane Abaya (Deep Black, Dark Maroon, Navy Blue). */
 export const PARK_LANE_ABAYA_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('black', 'front'),
   entry('black', 'side'),
   entry('black', 'back'),
   { filename: 'bint-saeed-parklane-abaya-black-extra.webp', alts: BLACK_EXTRA_ALTS },
+  {
+    filename: 'bint-saeed-parklane-abaya-black-lifestyle-extra.webp',
+    alts: BLACK_LIFESTYLE_EXTRA_ALTS,
+  },
   entry('dark-marroon', 'front'),
   entry('dark-marroon', 'side'),
   entry('dark-marroon', 'back'),
+  {
+    filename: 'bint-saeed-parklane-abaya-dark-marroon-lifestyle-01.webp',
+    alts: DARK_MAROON_LIFESTYLE_ALTS,
+  },
+  {
+    filename: 'bint-saeed-parklane-abaya-dark-marroon-lifestyle-02.webp',
+    alts: DARK_MAROON_LIFESTYLE_02_ALTS,
+  },
+  {
+    filename: 'bint-saeed-parklane-abaya-dark-marroon-lifestyle-extra.webp',
+    alts: DARK_MAROON_LIFESTYLE_EXTRA_ALTS,
+  },
   entry('navy-blue', 'front'),
   entry('navy-blue', 'side'),
   entry('navy-blue', 'back'),
