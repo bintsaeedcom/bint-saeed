@@ -8,10 +8,11 @@ import {
   FiEye, FiMapPin, FiClock, FiMail,
   FiRefreshCw, FiBell, FiX, FiSmartphone,
   FiMonitor, FiTablet, FiAlertTriangle, FiCheckCircle, FiActivity, FiExternalLink,
-  FiPackage, FiTrendingUp, FiTruck, FiShoppingBag, FiChevronRight,
+  FiPackage, FiTrendingUp, FiTruck, FiShoppingBag, FiChevronRight, FiDownload,
 } from 'react-icons/fi'
 import type { StoredOrder } from '@/lib/orders/types'
 import type { CustomerRecord } from '@/lib/customers/types'
+import { formatVisitorLocation } from '@/lib/geo/formatVisitorLocation'
 
 interface Visitor {
   visitorId: string
@@ -20,7 +21,7 @@ interface Visitor {
   visitCount: number
   currentVisit: string
   lastSeen: string
-  location: { country: string; city: string; countryCode: string } | null
+  location: { country: string; city: string; region?: string; countryCode: string } | null
   device: { type: 'mobile' | 'tablet' | 'desktop'; browser: string; os: string }
   pageViews: { path: string; title: string; timestamp: string; timeOnPage: number }[]
   totalTimeOnSite: number
@@ -42,7 +43,7 @@ interface AbandonedCart {
   cartValueAed?: number
   cartItems?: number
   items?: { name?: string; quantity?: number; color?: string; size?: string }[]
-  location?: { country?: string; city?: string } | null
+  location?: { country?: string; city?: string; region?: string } | null
   device?: { type?: string; browser?: string; os?: string }
   contactEmail?: string
   page?: string
@@ -55,6 +56,45 @@ interface AbandonedStats {
   openValueAed: number
   recoveredToday: number
   carts: AbandonedCart[]
+}
+
+interface VisitorLocationRow {
+  location: string
+  count: number
+  city?: string
+  region?: string
+  country?: string
+  countryCode?: string
+}
+
+interface GeoTrendSeries {
+  location: string
+  total: number
+  daily: Record<string, number>
+}
+
+interface GeoTrendResult {
+  days: { date: string; locations: VisitorLocationRow[] }[]
+  series: GeoTrendSeries[]
+  totals: VisitorLocationRow[]
+}
+
+interface PagePopularityRow {
+  path: string
+  views: number
+}
+
+interface ProductEngagementRow {
+  productId: string
+  name: string
+  views: number
+  clicks: number
+  cartAdds: number
+}
+
+interface ContentPopularity {
+  pages: PagePopularityRow[]
+  products: ProductEngagementRow[]
 }
 
 interface CheckoutHealth {
@@ -133,6 +173,10 @@ function beep() {
   osc.onended = () => ctx.close()
 }
 
+function formatAed(n: number) {
+  return `AED ${n.toLocaleString('en-AE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+}
+
 function formatTime(seconds: number) {
   if (!seconds) return '0s'
   if (seconds < 60) return `${seconds}s`
@@ -140,6 +184,14 @@ function formatTime(seconds: number) {
   if (mins < 60) return `${mins}m`
   const hours = Math.floor(mins / 60)
   return `${hours}h ${mins % 60}m`
+}
+
+function formatUaeDateTime(iso: string) {
+  return new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Dubai',
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(new Date(iso))
 }
 
 function timeAgo(iso: string) {
@@ -167,6 +219,9 @@ export default function AdminDashboard() {
   const [customers, setCustomers] = useState<CustomerRecord[]>([])
   const [products, setProducts] = useState<ProductAdminRow[]>([])
   const [abandoned, setAbandoned] = useState<AbandonedStats | null>(null)
+  const [visitorLocations, setVisitorLocations] = useState<VisitorLocationRow[]>([])
+  const [geoTrend, setGeoTrend] = useState<GeoTrendResult | null>(null)
+  const [popularity, setPopularity] = useState<ContentPopularity | null>(null)
   const [commerceReady, setCommerceReady] = useState(false)
   const [newOrderAlert, setNewOrderAlert] = useState<StoredOrder | null>(null)
   const knownOrderIds = useRef<Set<string> | null>(null)
@@ -174,19 +229,25 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     setIsRefreshing(true)
     try {
-      const [activeRes, notifRes, statsRes, abandonedRes] = await Promise.all([
+      const [activeRes, notifRes, statsRes, abandonedRes, geoRes, geoTrendRes, popularRes] = await Promise.all([
         fetch('/api/analytics/slack?type=active'),
         fetch('/api/analytics/slack?type=notifications'),
         fetch('/api/analytics/slack'),
         fetch('/api/analytics/slack?type=abandoned'),
+        fetch('/api/analytics/slack?type=geo'),
+        fetch('/api/analytics/slack?type=geo-trend&days=7'),
+        fetch('/api/analytics/slack?type=popular'),
       ])
-      const [activeData, notifData, statsData, abandonedData] = await Promise.all([
-        activeRes.json(), notifRes.json(), statsRes.json(), abandonedRes.json(),
+      const [activeData, notifData, statsData, abandonedData, geoData, geoTrendData, popularData] = await Promise.all([
+        activeRes.json(), notifRes.json(), statsRes.json(), abandonedRes.json(), geoRes.json(), geoTrendRes.json(), popularRes.json(),
       ])
       setActiveVisitors(activeData.activeVisitors || [])
       setNotifications(notifData.notifications || [])
       if (statsRes.ok) setStats(statsData)
       if (abandonedRes.ok) setAbandoned(abandonedData as AbandonedStats)
+      if (geoRes.ok) setVisitorLocations(geoData.locations || [])
+      if (geoTrendRes.ok) setGeoTrend(geoTrendData as GeoTrendResult)
+      if (popularRes.ok) setPopularity(popularData as ContentPopularity)
 
       const checkoutRes = await fetch('/api/admin/checkout-health')
       const checkoutData = await checkoutRes.json()
@@ -260,21 +321,21 @@ export default function AdminDashboard() {
   const unreadCount = notifications.filter((n) => !n.read).length
   const storageMode = opsHealth?.orders?.redisConfigured ? 'Redis (persistent)' : 'Memory (temporary)'
 
-  const money = (n: number) => `AED ${n.toLocaleString('en-AE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+  const money = formatAed
 
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900">
+    <div className="admin-analytics-light min-h-screen bg-neutral-100 text-neutral-900">
       {/* Top bar */}
-      <header className="sticky top-0 z-30 border-b border-neutral-200 bg-white/90 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-neutral-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3.5">
           <div className="flex items-center gap-3">
             <div>
-              <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-neutral-400">Bint Saeed</p>
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-neutral-500">Bint Saeed</p>
               <h1 data-document-h1="true" className="font-montserrat text-lg font-semibold tracking-tight text-neutral-900">
                 Dashboard
               </h1>
             </div>
-            <span className="hidden items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 text-[11px] font-medium text-neutral-500 sm:inline-flex">
+            <span className="hidden items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 text-[11px] font-medium text-neutral-600 sm:inline-flex">
               <span className={`h-1.5 w-1.5 rounded-full ${opsHealth?.orders?.redisConfigured ? 'bg-emerald-500' : 'bg-amber-500'}`} />
               {storageMode}
             </span>
@@ -287,7 +348,7 @@ export default function AdminDashboard() {
             >
               <FiBell className="h-4 w-4" />
               {unreadCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-semibold text-white">
+                <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-semibold text-neutral-900">
                   {unreadCount}
                 </span>
               )}
@@ -363,7 +424,7 @@ export default function AdminDashboard() {
                 <div className="overflow-x-auto">
                   <table className="w-full min-w-[560px] text-left text-sm">
                     <thead>
-                      <tr className="border-b border-neutral-100 text-[10px] uppercase tracking-wider text-neutral-400">
+                      <tr className="border-b border-neutral-100 text-[10px] uppercase tracking-wider text-neutral-500">
                         <th className="px-4 py-2.5 font-medium">Order</th>
                         <th className="px-4 py-2.5 font-medium">Customer</th>
                         <th className="px-4 py-2.5 font-medium">Total</th>
@@ -373,12 +434,12 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody>
                       {latestOrders.map((o) => (
-                        <tr key={o.id} className="border-b border-neutral-50 last:border-0 hover:bg-neutral-50">
-                          <td className="px-4 py-2.5 font-mono text-xs text-neutral-500">{o.id}</td>
-                          <td className="max-w-[180px] truncate px-4 py-2.5 text-neutral-700">{o.customerEmail || '—'}</td>
+                        <tr key={o.id} className="border-b border-neutral-100 last:border-0 hover:bg-neutral-50">
+                          <td className="px-4 py-2.5 font-mono text-xs text-neutral-600">{o.id}</td>
+                          <td className="max-w-[180px] truncate px-4 py-2.5 text-neutral-800">{o.customerEmail || '—'}</td>
                           <td className="whitespace-nowrap px-4 py-2.5 font-medium tabular-nums text-neutral-900">{o.currency} {o.amountTotal.toFixed(2)}</td>
                           <td className="px-4 py-2.5"><StatusBadge status={o.fulfillmentStatus} /></td>
-                          <td className="whitespace-nowrap px-4 py-2.5 text-xs text-neutral-400">{timeAgo(o.createdAt)}</td>
+                          <td className="whitespace-nowrap px-4 py-2.5 text-xs text-neutral-500">{timeAgo(o.createdAt)}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -391,8 +452,11 @@ export default function AdminDashboard() {
           {/* Recent activity */}
           <section>
             <Card className="flex h-full flex-col">
-              <CardHeader title="Recent activity" subtitle="Live visitor & cart events" />
-              <div className="max-h-[360px] flex-1 divide-y divide-neutral-50 overflow-y-auto">
+              <CardHeader
+                title="Recent activity"
+                subtitle="Signal feed — who arrived, what they browsed, and when carts moved"
+              />
+              <div className="max-h-[360px] flex-1 divide-y divide-neutral-100 overflow-y-auto">
                 {notifications.length === 0 ? (
                   <EmptyState icon={<FiActivity />} text="No activity captured yet." />
                 ) : (
@@ -400,18 +464,166 @@ export default function AdminDashboard() {
                     <div key={n.id} className="flex items-start gap-2.5 px-4 py-2.5">
                       <span className="mt-0.5 text-sm">{notifIcon(n.type)}</span>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-xs font-medium text-neutral-800">{prettyType(n.type)}</p>
-                        <p className="text-[11px] text-neutral-400">
-                          {n.data?.location?.city || n.data?.cartEvent?.productName || 'Unknown'} · {timeAgo(n.timestamp)}
+                        <p className="truncate text-xs font-semibold text-neutral-900">{prettyType(n.type)}</p>
+                        <p className="text-[11px] text-neutral-700">{notifDetail(n)}</p>
+                        <p className="text-[11px] text-neutral-600">
+                          {formatVisitorLocation(n.data?.location)} · {formatUaeDateTime(n.timestamp)} ({timeAgo(n.timestamp)})
                         </p>
                       </div>
                     </div>
                   ))
                 )}
               </div>
+              <p className="border-t border-neutral-100 px-4 py-2.5 text-[11px] leading-relaxed text-neutral-500">
+                Use this to spot live demand — new vs returning visitors, product interest, and checkout drop-offs.
+                For a roll-up of where people are browsing from, see <strong className="text-neutral-600">Visitor geography</strong> below.
+              </p>
             </Card>
           </section>
         </div>
+
+        {/* Visitor geography */}
+        <section>
+          <Card>
+            <CardHeader
+              title="Visitor geography"
+              subtitle="IP-derived city / region / country — today + 7-day trend for ad & boutique planning"
+              action={
+                <a
+                  href="/api/admin/analytics/export?days=7"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-[11px] font-medium text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900"
+                >
+                  <FiDownload className="h-3.5 w-3.5" />
+                  Export CSV
+                </a>
+              }
+            />
+
+            {geoTrend && geoTrend.series.length > 0 ? (
+              <div className="border-b border-neutral-100 px-4 py-4">
+                <p className="mb-3 text-[10px] uppercase tracking-wider text-neutral-500">Last 7 days — top areas</p>
+                <GeoTrendChart series={geoTrend.series} dayLabels={geoTrend.days.map((d) => d.date)} />
+              </div>
+            ) : null}
+
+            <div className="grid gap-0 lg:grid-cols-2">
+              <div className="border-b border-neutral-100 lg:border-b-0 lg:border-r lg:border-neutral-100">
+                <p className="px-4 pt-3 text-[10px] uppercase tracking-wider text-neutral-500">Today</p>
+                {visitorLocations.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full min-w-[280px] text-left text-sm">
+                      <tbody>
+                        {visitorLocations.slice(0, 8).map((row) => (
+                          <tr key={row.location} className="border-b border-neutral-100 last:border-0 hover:bg-neutral-50">
+                            <td className="max-w-[220px] truncate px-4 py-2 text-xs text-neutral-800">{row.location}</td>
+                            <td className="px-4 py-2 text-right text-xs font-medium tabular-nums text-neutral-900">{row.count}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <EmptyState icon={<FiMapPin />} text="No location data yet today." />
+                )}
+              </div>
+
+              <div>
+                <p className="px-4 pt-3 text-[10px] uppercase tracking-wider text-neutral-500">7-day totals</p>
+                {geoTrend && geoTrend.totals.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full min-w-[280px] text-left text-sm">
+                      <tbody>
+                        {geoTrend.totals.slice(0, 8).map((row) => (
+                          <tr key={row.location} className="border-b border-neutral-100 last:border-0 hover:bg-neutral-50">
+                            <td className="max-w-[220px] truncate px-4 py-2 text-xs text-neutral-800">{row.location}</td>
+                            <td className="px-4 py-2 text-right text-xs font-medium tabular-nums text-neutral-900">{row.count}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <EmptyState icon={<FiMapPin />} text="7-day roll-up builds as traffic arrives." />
+                )}
+              </div>
+            </div>
+
+            <p className="border-t border-neutral-100 px-4 py-3 text-[11px] leading-relaxed text-neutral-500">
+              <strong className="text-neutral-600">No consent needed</strong> for this level — city / emirate / country from IP only, not street or GPS.
+              CSV includes daily geo breakdown plus top pages & products for Meta/Google geo tests. Daily buckets auto-delete after 14 days to keep Redis lean.
+            </p>
+          </Card>
+        </section>
+
+        {/* Content popularity */}
+        <section className="grid gap-4 lg:grid-cols-2">
+          <Card>
+            <CardHeader
+              title="Top pages"
+              subtitle="Page views while live — all-time counter since tracking started"
+            />
+            {popularity && popularity.pages.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-neutral-100 text-[10px] uppercase tracking-wider text-neutral-500">
+                      <th className="px-4 py-2.5 font-medium">Path</th>
+                      <th className="px-4 py-2.5 font-medium text-right">Views</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {popularity.pages.slice(0, 10).map((row) => (
+                      <tr key={row.path} className="border-b border-neutral-100 last:border-0 hover:bg-neutral-50">
+                        <td className="max-w-[240px] truncate px-4 py-2.5 font-mono text-xs text-neutral-800">{row.path}</td>
+                        <td className="px-4 py-2.5 text-right text-xs font-medium tabular-nums text-neutral-900">{row.views}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <EmptyState icon={<FiEye />} text="No page data yet. Views accumulate as visitors browse the site." />
+            )}
+          </Card>
+
+          <Card>
+            <CardHeader
+              title="Top products"
+              subtitle="PDP views, shop clicks, and add-to-cart — first-party live counter"
+            />
+            {popularity && popularity.products.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[420px] text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-neutral-100 text-[10px] uppercase tracking-wider text-neutral-500">
+                      <th className="px-4 py-2.5 font-medium">Product</th>
+                      <th className="px-4 py-2.5 font-medium text-right">Views</th>
+                      <th className="px-4 py-2.5 font-medium text-right">Clicks</th>
+                      <th className="px-4 py-2.5 font-medium text-right">Adds</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {popularity.products.slice(0, 10).map((row) => (
+                      <tr key={row.productId} className="border-b border-neutral-100 last:border-0 hover:bg-neutral-50">
+                        <td className="max-w-[200px] truncate px-4 py-2.5 text-xs text-neutral-800">{row.name}</td>
+                        <td className="px-4 py-2.5 text-right text-xs tabular-nums text-neutral-700">{row.views}</td>
+                        <td className="px-4 py-2.5 text-right text-xs tabular-nums text-neutral-700">{row.clicks}</td>
+                        <td className="px-4 py-2.5 text-right text-xs font-medium tabular-nums text-neutral-900">{row.cartAdds}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <EmptyState icon={<FiShoppingCart />} text="No product engagement yet. Opens and clicks track from shop and PDP." />
+            )}
+            <p className="border-t border-neutral-100 px-4 py-3 text-[11px] leading-relaxed text-neutral-500">
+              <strong className="text-neutral-600">Views</strong> = product page opened.
+              <strong className="text-neutral-600"> Clicks</strong> = tapped from shop/accessories grid.
+              <strong className="text-neutral-600"> Adds</strong> = added to bag. Also flows to GA4 when analytics consent is granted.
+            </p>
+          </Card>
+        </section>
 
         {/* Abandoned carts */}
         <section>
@@ -427,29 +639,36 @@ export default function AdminDashboard() {
             </div>
             {abandoned && abandoned.carts.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[560px] text-left text-sm">
+                <table className="w-full min-w-[720px] text-left text-sm">
                   <thead>
-                    <tr className="border-b border-neutral-100 text-[10px] uppercase tracking-wider text-neutral-400">
+                    <tr className="border-b border-neutral-100 text-[10px] uppercase tracking-wider text-neutral-500">
                       <th className="px-4 py-2.5 font-medium">Visitor</th>
+                      <th className="px-4 py-2.5 font-medium">Location</th>
                       <th className="px-4 py-2.5 font-medium">Items</th>
                       <th className="px-4 py-2.5 font-medium">Value</th>
                       <th className="px-4 py-2.5 font-medium">Stage</th>
-                      <th className="px-4 py-2.5 font-medium">Updated</th>
+                      <th className="px-4 py-2.5 font-medium">When</th>
                     </tr>
                   </thead>
                   <tbody>
                     {abandoned.carts.slice(0, 10).map((c) => (
-                      <tr key={c.visitorId} className="border-b border-neutral-50 last:border-0 hover:bg-neutral-50">
+                      <tr key={c.visitorId} className="border-b border-neutral-100 last:border-0 hover:bg-neutral-50">
                         <td className="px-4 py-2.5">
-                          <p className="font-mono text-xs text-neutral-500">{c.visitorId.slice(0, 10)}</p>
-                          {c.contactEmail && <p className="text-[11px] text-neutral-400">{c.contactEmail}</p>}
+                          <p className="font-mono text-xs text-neutral-600">{c.visitorId.slice(0, 10)}</p>
+                          {c.contactEmail && <p className="text-[11px] text-neutral-500">{c.contactEmail}</p>}
                         </td>
-                        <td className="max-w-[200px] truncate px-4 py-2.5 text-xs text-neutral-600">
+                        <td className="max-w-[180px] px-4 py-2.5 text-xs text-neutral-700">
+                          {formatVisitorLocation(c.location)}
+                        </td>
+                        <td className="max-w-[200px] truncate px-4 py-2.5 text-xs text-neutral-700">
                           {c.items?.map((i) => `${i.quantity ?? 1}× ${i.name || 'Item'}`).join(', ') || `${c.cartItems ?? 0} item(s)`}
                         </td>
                         <td className="whitespace-nowrap px-4 py-2.5 font-medium tabular-nums text-neutral-900">{c.cartValueAed ? money(c.cartValueAed) : '—'}</td>
                         <td className="px-4 py-2.5"><CartStageBadge status={c.status} /></td>
-                        <td className="whitespace-nowrap px-4 py-2.5 text-xs text-neutral-400">{timeAgo(c.updatedAt)}</td>
+                        <td className="whitespace-nowrap px-4 py-2.5 text-xs text-neutral-600">
+                          <p>{formatUaeDateTime(c.updatedAt)}</p>
+                          <p className="text-[10px] text-neutral-500">{timeAgo(c.updatedAt)}</p>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -458,8 +677,8 @@ export default function AdminDashboard() {
             ) : (
               <EmptyState icon={<FiShoppingBag />} text="No abandoned carts tracked yet. Cart and checkout events populate this in real time." />
             )}
-            <p className="border-t border-neutral-100 px-4 py-3 text-[11px] leading-relaxed text-neutral-400">
-              <strong className="text-neutral-500">How to read this:</strong> a cart becomes “abandoned” when a shopper adds items or starts
+            <p className="border-t border-neutral-100 px-4 py-3 text-[11px] leading-relaxed text-neutral-500">
+              <strong className="text-neutral-600">How to read this:</strong> a cart becomes “abandoned” when a shopper adds items or starts
               checkout but doesn’t pay. “Value at risk” is the total AED sitting in open bags — recover it with a follow-up. “Recovered today”
               counts carts that later became paid orders.
             </p>
@@ -476,7 +695,7 @@ export default function AdminDashboard() {
             {activeVisitors.length === 0 ? (
               <EmptyState icon={<FiUsers />} text="No active visitors right now." />
             ) : (
-              <div className="max-h-[420px] divide-y divide-neutral-50 overflow-y-auto">
+              <div className="max-h-[420px] divide-y divide-neutral-100 overflow-y-auto">
                 {activeVisitors.map((v) => (
                   <button
                     key={v.visitorId}
@@ -488,10 +707,10 @@ export default function AdminDashboard() {
                         {v.isNewVisitor ? <FiUserPlus className="h-4 w-4" /> : <FiUserCheck className="h-4 w-4" />}
                       </span>
                       <div>
-                        <p className="text-sm font-medium text-neutral-800">
-                          {v.location ? `${v.location.city}, ${v.location.country}` : 'Unknown location'}
+                        <p className="text-sm font-medium text-neutral-900">
+                          {formatVisitorLocation(v.location)}
                         </p>
-                        <div className="flex items-center gap-2.5 text-[11px] text-neutral-400">
+                        <div className="flex items-center gap-2.5 text-[11px] text-neutral-500">
                           <span className="inline-flex items-center gap-1">{deviceIcon(v.device?.type)}{v.device?.browser}</span>
                           <span className="inline-flex items-center gap-1"><FiClock className="h-3 w-3" />{formatTime(v.totalTimeOnSite)}</span>
                           <span className="inline-flex items-center gap-1"><FiEye className="h-3 w-3" />{v.pageViews?.length || 0}</span>
@@ -504,7 +723,7 @@ export default function AdminDashboard() {
                           <FiShoppingCart className="h-3 w-3" />{v.cartEvents.filter((e) => e.action === 'add').length}
                         </span>
                       )}
-                      <FiChevronRight className="h-4 w-4 text-neutral-300" />
+                      <FiChevronRight className="h-4 w-4 text-neutral-400" />
                     </div>
                   </button>
                 ))}
@@ -515,7 +734,7 @@ export default function AdminDashboard() {
 
         {/* System status */}
         <section className="space-y-3">
-          <h2 className="px-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-400">System status</h2>
+          <h2 className="px-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-500">System status</h2>
           <div className="grid gap-4 lg:grid-cols-2">
             {/* Commerce + order alerts */}
             <Card>
@@ -531,12 +750,12 @@ export default function AdminDashboard() {
                 <Pill label="Slack orders" ok={Boolean(opsHealth?.orders?.slackOrdersConfigured)} />
                 <Pill label="Persistent storage" ok={Boolean(opsHealth?.orders?.redisConfigured)} />
               </div>
-              <div className="flex items-center justify-between border-t border-neutral-100 px-4 py-2.5 text-[11px] text-neutral-400">
+              <div className="flex items-center justify-between border-t border-neutral-100 px-4 py-2.5 text-[11px] text-neutral-500">
                 <span>
                   {opsHealth?.orders?.ready ? 'You will be notified of every order.' : 'No order alert channel is live.'}
                 </span>
                 {opsHealth?.orders?.ownerAlertEmailConfigured && (
-                  <span className="truncate text-neutral-500">{opsHealth.orders.ownerAlertRecipient}</span>
+                  <span className="truncate text-neutral-600">{opsHealth.orders.ownerAlertRecipient}</span>
                 )}
               </div>
             </Card>
@@ -552,7 +771,7 @@ export default function AdminDashboard() {
                 <MiniStat label="Delivered" value={String(orderStatusCounts.delivered || 0)} />
                 <MiniStat label="Refunded" value={String(orderStatusCounts.refunded || 0)} />
               </div>
-              <div className="flex items-center gap-4 border-t border-neutral-100 px-4 py-2.5 text-[11px] text-neutral-500">
+              <div className="flex items-center gap-4 border-t border-neutral-100 px-4 py-2.5 text-[11px] text-neutral-600">
                 <span>{publishedProducts} published</span>
                 <span>{draftProducts} draft/hidden</span>
                 <span>{customers.length} customers</span>
@@ -608,20 +827,20 @@ export default function AdminDashboard() {
         {selectedVisitor && (
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-900/40 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
             onClick={() => setSelectedVisitor(null)}
           >
             <motion.div
               initial={{ scale: 0.97, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.97, opacity: 0 }}
-              className="max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white shadow-xl"
+              className="max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-xl border border-neutral-200 bg-white shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
                 <div>
                   <h2 className="text-base font-semibold text-neutral-900">Visitor detail</h2>
-                  <p className="font-mono text-[11px] text-neutral-400">{selectedVisitor.visitorId}</p>
+                  <p className="font-mono text-[11px] text-neutral-500">{selectedVisitor.visitorId}</p>
                 </div>
-                <button onClick={() => setSelectedVisitor(null)} className="rounded-lg p-2 text-neutral-400 hover:bg-neutral-100">
+                <button onClick={() => setSelectedVisitor(null)} className="rounded-lg p-2 text-neutral-500 hover:bg-neutral-100">
                   <FiX className="h-4 w-4" />
                 </button>
               </div>
@@ -634,9 +853,9 @@ export default function AdminDashboard() {
                   <div className="rounded-lg border border-emerald-100 bg-emerald-50 p-3">
                     <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-emerald-700">Contact captured</p>
                     <div className="grid gap-2 text-sm sm:grid-cols-3">
-                      {selectedVisitor.contactInfo.name && <div><span className="text-[11px] text-emerald-600">Name</span><p className="text-neutral-800">{selectedVisitor.contactInfo.name}</p></div>}
-                      {selectedVisitor.contactInfo.email && <div><span className="text-[11px] text-emerald-600">Email</span><p className="text-neutral-800">{selectedVisitor.contactInfo.email}</p></div>}
-                      {selectedVisitor.contactInfo.phone && <div><span className="text-[11px] text-emerald-600">Phone</span><p className="text-neutral-800">{selectedVisitor.contactInfo.phone}</p></div>}
+                      {selectedVisitor.contactInfo.name && <div><span className="text-[11px] text-emerald-600">Name</span><p className="text-neutral-900">{selectedVisitor.contactInfo.name}</p></div>}
+                      {selectedVisitor.contactInfo.email && <div><span className="text-[11px] text-emerald-600">Email</span><p className="text-neutral-900">{selectedVisitor.contactInfo.email}</p></div>}
+                      {selectedVisitor.contactInfo.phone && <div><span className="text-[11px] text-emerald-600">Phone</span><p className="text-neutral-900">{selectedVisitor.contactInfo.phone}</p></div>}
                     </div>
                   </div>
                 )}
@@ -648,14 +867,14 @@ export default function AdminDashboard() {
                 </div>
                 {selectedVisitor.pageViews?.length > 0 && (
                   <div>
-                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-neutral-400">Page journey</p>
+                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-neutral-500">Page journey</p>
                     <div className="space-y-1.5">
                       {selectedVisitor.pageViews.map((pv, i) => (
                         <div key={i} className="flex items-center gap-3 rounded-lg bg-neutral-50 px-3 py-2">
-                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-neutral-900 text-[10px] text-white">{i + 1}</span>
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-neutral-800 text-[10px] text-white">{i + 1}</span>
                           <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm text-neutral-800">{pv.title || pv.path}</p>
-                            <p className="text-[11px] text-neutral-400">{pv.timeOnPage}s on page</p>
+                            <p className="truncate text-sm text-neutral-900">{pv.title || pv.path}</p>
+                            <p className="text-[11px] text-neutral-500">{pv.timeOnPage}s on page</p>
                           </div>
                         </div>
                       ))}
@@ -678,11 +897,11 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
               <h2 className="text-base font-semibold text-neutral-900">Notifications</h2>
-              <button onClick={() => setShowNotifications(false)} className="rounded-lg p-2 text-neutral-400 hover:bg-neutral-100">
+              <button onClick={() => setShowNotifications(false)} className="rounded-lg p-2 text-neutral-500 hover:bg-neutral-100">
                 <FiX className="h-4 w-4" />
               </button>
             </div>
-            <div className="flex-1 divide-y divide-neutral-50 overflow-y-auto">
+            <div className="flex-1 divide-y divide-neutral-100 overflow-y-auto">
               {notifications.length === 0 ? (
                 <EmptyState icon={<FiBell />} text="No notifications yet." />
               ) : (
@@ -690,11 +909,11 @@ export default function AdminDashboard() {
                   <div key={n.id} className="flex items-start gap-3 px-5 py-3">
                     <span className="text-base">{notifIcon(n.type)}</span>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-neutral-800">{prettyType(n.type)}</p>
-                      <p className="text-[11px] text-neutral-400">
-                        {[n.data?.location?.city, n.data?.location?.country].filter(Boolean).join(', ') || 'Unknown'}
+                      <p className="text-sm font-medium text-neutral-900">{prettyType(n.type)}</p>
+                      <p className="text-[11px] text-neutral-500">
+                        {formatVisitorLocation(n.data?.location)}
                       </p>
-                      <p className="mt-0.5 text-[11px] text-neutral-300">{new Date(n.timestamp).toLocaleString()}</p>
+                      <p className="mt-0.5 text-[11px] text-neutral-400">{new Date(n.timestamp).toLocaleString()}</p>
                     </div>
                   </div>
                 ))
@@ -709,8 +928,57 @@ export default function AdminDashboard() {
 
 /* ---------- UI primitives ---------- */
 
+function GeoTrendChart({ series, dayLabels }: { series: GeoTrendSeries[]; dayLabels: string[] }) {
+  const maxTotal = Math.max(...series.map((s) => s.total), 1)
+  const shortDay = (iso: string) => {
+    const d = new Date(`${iso}T12:00:00`)
+    return d.toLocaleDateString('en-GB', { weekday: 'short' })
+  }
+
+  return (
+    <div className="space-y-3">
+      {series.map((row) => (
+        <div key={row.location}>
+          <div className="mb-1 flex items-center justify-between gap-2 text-[11px]">
+            <span className="truncate text-neutral-800">{row.location}</span>
+            <span className="shrink-0 tabular-nums text-neutral-600">{row.total}</span>
+          </div>
+          <div
+            className="h-2 overflow-hidden rounded-full bg-neutral-100"
+            title={`${row.total} signals in 7 days`}
+          >
+            <div
+              className="h-full rounded-full bg-brand-dustyBlue/80"
+              style={{ width: `${Math.max(4, (row.total / maxTotal) * 100)}%` }}
+            />
+          </div>
+          <div className="mt-1.5 flex gap-1">
+            {dayLabels.map((day) => {
+              const count = row.daily[day] || 0
+              const dayMax = Math.max(...series.map((s) => s.daily[day] || 0), 1)
+              const h = count ? Math.max(12, (count / dayMax) * 100) : 4
+              return (
+                <div key={`${row.location}-${day}`} className="flex min-w-0 flex-1 flex-col items-center gap-1">
+                  <div className="flex h-10 w-full items-end justify-center rounded bg-neutral-50 px-0.5 pb-0.5">
+                    <div
+                      className={`w-full max-w-[14px] rounded-sm ${count ? 'bg-brand-dustyBlue/70' : 'bg-neutral-200'}`}
+                      style={{ height: `${h}%` }}
+                      title={`${shortDay(day)}: ${count}`}
+                    />
+                  </div>
+                  <span className="text-[9px] text-neutral-400">{shortDay(day)}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <div className={`overflow-hidden rounded-xl border border-neutral-200 bg-white ${className}`}>{children}</div>
+  return <div className={`overflow-hidden rounded-xl border border-neutral-200 bg-white text-neutral-900 shadow-sm ${className}`}>{children}</div>
 }
 
 function CardHeader({ title, subtitle, action }: { title: string; subtitle?: string; action?: React.ReactNode }) {
@@ -718,7 +986,7 @@ function CardHeader({ title, subtitle, action }: { title: string; subtitle?: str
     <div className="flex items-center justify-between gap-3 border-b border-neutral-100 px-4 py-3">
       <div>
         <h3 className="text-sm font-semibold text-neutral-900">{title}</h3>
-        {subtitle && <p className="text-[11px] text-neutral-400">{subtitle}</p>}
+        {subtitle && <p className="text-[11px] text-neutral-500">{subtitle}</p>}
       </div>
       {action}
     </div>
@@ -727,7 +995,7 @@ function CardHeader({ title, subtitle, action }: { title: string; subtitle?: str
 
 function CardLink({ href, label }: { href: string; label: string }) {
   return (
-    <Link href={href} className="inline-flex items-center gap-1 text-xs font-medium text-neutral-500 hover:text-neutral-900">
+    <Link href={href} className="inline-flex items-center gap-1 text-xs font-medium text-neutral-600 hover:text-neutral-900">
       {label} <FiExternalLink className="h-3 w-3" />
     </Link>
   )
@@ -735,13 +1003,13 @@ function CardLink({ href, label }: { href: string; label: string }) {
 
 function Kpi({ label, value, icon, tone = 'default', live = false }: { label: string; value: string; icon: React.ReactNode; tone?: 'default' | 'alert'; live?: boolean }) {
   return (
-    <div className="rounded-xl border border-neutral-200 bg-white p-3.5">
+    <div className="rounded-xl border border-neutral-200 bg-white p-3.5 shadow-sm">
       <div className="flex items-center justify-between">
-        <span className="text-neutral-300">{icon}</span>
+        <span className="text-neutral-400">{icon}</span>
         {live && <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />}
       </div>
       <p className={`mt-2 text-xl font-semibold tabular-nums ${tone === 'alert' ? 'text-rose-600' : 'text-neutral-900'}`}>{value}</p>
-      <p className="mt-0.5 text-[11px] uppercase tracking-wide text-neutral-400">{label}</p>
+      <p className="mt-0.5 text-[11px] uppercase tracking-wide text-neutral-500">{label}</p>
     </div>
   )
 }
@@ -750,7 +1018,7 @@ function MiniStat({ label, value, tone = 'default' }: { label: string; value: st
   const color = tone === 'alert' ? 'text-rose-600' : tone === 'good' ? 'text-emerald-600' : 'text-neutral-900'
   return (
     <div className="rounded-lg border border-neutral-100 bg-neutral-50 px-3 py-2">
-      <p className="text-[10px] uppercase tracking-wide text-neutral-400">{label}</p>
+      <p className="text-[10px] uppercase tracking-wide text-neutral-500">{label}</p>
       <p className={`mt-0.5 text-base font-semibold tabular-nums ${color}`}>{value}</p>
     </div>
   )
@@ -758,9 +1026,9 @@ function MiniStat({ label, value, tone = 'default' }: { label: string; value: st
 
 function Pill({ label, ok }: { label: string; ok: boolean }) {
   return (
-    <div className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 ${ok ? 'border-emerald-100 bg-emerald-50' : 'border-amber-100 bg-amber-50'}`}>
+    <div className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 ${ok ? 'border-emerald-200 bg-emerald-50' : 'border-amber-200 bg-amber-50'}`}>
       <span className={`h-1.5 w-1.5 rounded-full ${ok ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-      <span className="truncate text-[11px] font-medium text-neutral-600">{label}</span>
+      <span className="truncate text-[11px] font-medium text-neutral-700">{label}</span>
     </div>
   )
 }
@@ -803,7 +1071,7 @@ function EmptyState({ icon, text }: { icon: React.ReactNode; text: string }) {
   return (
     <div className="flex flex-col items-center justify-center px-6 py-10 text-center">
       <span className="mb-2 text-neutral-300 [&>svg]:h-6 [&>svg]:w-6">{icon}</span>
-      <p className="max-w-xs text-xs text-neutral-400">{text}</p>
+      <p className="max-w-xs text-xs text-neutral-500">{text}</p>
     </div>
   )
 }
@@ -811,11 +1079,11 @@ function EmptyState({ icon, text }: { icon: React.ReactNode; text: string }) {
 function InfoTile({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="rounded-lg border border-neutral-100 bg-neutral-50 p-3">
-      <div className="mb-1 flex items-center gap-1.5 text-neutral-400">
+      <div className="mb-1 flex items-center gap-1.5 text-neutral-500">
         <span className="[&>svg]:h-3.5 [&>svg]:w-3.5">{icon}</span>
         <span className="text-[10px] uppercase tracking-wider">{label}</span>
       </div>
-      <p className="text-sm text-neutral-800">{value}</p>
+      <p className="text-sm text-neutral-900">{value}</p>
     </div>
   )
 }
@@ -824,7 +1092,7 @@ function InfoStat({ value, label }: { value: string; label: string }) {
   return (
     <div className="rounded-lg bg-neutral-50 p-2.5 text-center">
       <p className="text-lg font-semibold text-neutral-900">{value}</p>
-      <p className="text-[10px] uppercase tracking-wide text-neutral-400">{label}</p>
+      <p className="text-[10px] uppercase tracking-wide text-neutral-500">{label}</p>
     </div>
   )
 }
@@ -853,4 +1121,38 @@ function notifIcon(type: string) {
 
 function prettyType(type: string) {
   return type.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
+}
+
+function notifDetail(n: Notification): string {
+  const d = n.data || {}
+  switch (n.type) {
+    case 'new_visitor':
+      return 'First visit to the site'
+    case 'returning_visitor':
+      return `Return visit${d.visitCount ? ` (#${d.visitCount})` : ''}`
+    case 'page_view':
+      return d.page?.path ? `Viewed ${d.page.path}` : 'Browsed a page'
+    case 'cart_add':
+    case 'cart_event':
+      return d.cartEvent?.productName
+        ? `Added ${d.cartEvent.productName}`
+        : d.productName
+          ? `Cart: ${d.productName}`
+          : 'Cart activity'
+    case 'abandoned_cart':
+    case 'checkout_abandoned':
+      return d.cartValueAed
+        ? `Left checkout — ${formatAed(Number(d.cartValueAed))} at risk`
+        : 'Left without completing payment'
+    case 'checkout_started':
+      return 'Started checkout'
+    case 'contact_captured':
+      return d.contactInfo?.email ? `Email captured: ${d.contactInfo.email}` : 'Contact details captured'
+    case 'order_completed':
+      return 'Completed a purchase'
+    case 'session_summary':
+      return `${d.pageViews || 0} page(s) · ${formatTime(Number(d.totalTimeOnSite || 0))} on site`
+    default:
+      return d.cartEvent?.productName || d.page?.path || 'Site event'
+  }
 }

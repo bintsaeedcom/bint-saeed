@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/admin/apiAuth'
 import { getAllOverrides, setOverride, clearOverride, type ProductOverride } from '@/lib/products/overridesStore'
 import { products } from '@/data/products'
+import { accessories } from '@/data/accessories'
+import { getStyleSku } from '@/lib/products/sku'
+import { getAccessorySku } from '@/lib/accessories/accessorySku'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,15 +13,30 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
   const overrides = await getAllOverrides()
+  const garmentRows = products.map((p) => ({
+    id: p.id,
+    slug: p.slug,
+    sku: getStyleSku(p),
+    name: p.name,
+    price: p.price,
+    category: p.category,
+    image: p.images[0] ?? '',
+    kind: 'garment' as const,
+    override: overrides[p.id] ?? {},
+  }))
+  const accessoryRows = accessories.map((a) => ({
+    id: a.id,
+    slug: a.id,
+    sku: getAccessorySku(a),
+    name: a.name,
+    price: a.price,
+    category: a.category,
+    image: a.images[0] ?? '',
+    kind: 'accessory' as const,
+    override: {},
+  }))
   return NextResponse.json({
-    products: products.map((p) => ({
-      id: p.id,
-      name: p.name,
-      price: p.price,
-      category: p.category,
-      image: p.images[0] ?? '',
-      override: overrides[p.id] ?? {},
-    })),
+    products: [...garmentRows, ...accessoryRows],
   })
 }
 

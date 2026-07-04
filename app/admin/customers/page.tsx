@@ -68,7 +68,7 @@ export default function AdminCustomersPage() {
   }
 
   return (
-    <div className="p-6 text-neutral-900 lg:p-10">
+    <div className="p-6 text-white lg:p-10">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 data-document-h1="true" className="font-rozha text-3xl text-white">Customers</h1>

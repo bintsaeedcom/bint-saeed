@@ -36,7 +36,7 @@ function AdminLoginForm() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#1a0a10] px-6">
+    <div className="admin-area flex min-h-screen items-center justify-center bg-[#1a0a10] px-6">
       <div className="w-full max-w-md rounded-2xl border border-white/15 bg-[#1c1015] p-8 shadow-2xl">
         <h1 data-document-h1="true" className="font-rozha text-3xl text-white">Owner login</h1>
         <p className="mt-3 font-montserrat text-sm leading-relaxed text-white/80">

@@ -1,6 +1,7 @@
 'use client'
 
 import { ConsentState } from '@/lib/analytics/consent'
+import { mirrorDashboardEngagement } from '@/lib/analytics/dashboardEngagement'
 
 declare global {
   interface Window {
@@ -166,6 +167,7 @@ export function updateAnalyticsConsent(consent: ConsentState) {
 }
 
 export function trackEvent(name: string, params?: AnalyticsParams) {
+  mirrorDashboardEngagement(name, params)
   if (!state.consent.analytics || typeof window === 'undefined') return
   const cleanParams = toCleanParams(params)
 

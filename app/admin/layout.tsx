@@ -97,7 +97,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </Link>
             </nav>
           </header>
-          <main className="flex-1 overflow-auto">{children}</main>
+          <main className="admin-area flex-1 overflow-auto">{children}</main>
         </div>
       </div>
     </div>

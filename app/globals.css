@@ -252,6 +252,16 @@ h6 {
   font-weight: 400;
 }
 
+/* Admin owner console sits on a dark shell — keep page titles readable. */
+.admin-area [data-document-h1="true"] {
+  color: #ffffff;
+}
+
+/* Analytics dashboard uses light cards — dark titles. */
+.admin-analytics-light [data-document-h1="true"] {
+  color: var(--color-ink);
+}
+
 [data-hero-h1="true"] {
   font-family: var(--font-display);
   font-size: var(--text-hero);

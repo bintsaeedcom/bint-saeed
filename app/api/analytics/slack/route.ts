@@ -7,7 +7,11 @@ import {
   getNotifications,
   getAnalyticsStats,
   getAbandonedCartStats,
+  getVisitorLocationOverview,
+  getContentPopularity,
+  getGeoTrend,
 } from '@/lib/analytics/analyticsStore'
+import { getClientIpFromRequest, lookupGeoFromIp } from '@/lib/geo/ipGeoServer'
 
 function normalizedWebhook(...values: Array<string | undefined>): string | undefined {
   for (const value of values) {
@@ -206,15 +210,39 @@ export async function POST(request: NextRequest) {
   try {
     const { type, data } = await request.json()
 
-    // Store visitor data in memory (legacy live map) and in the persistent analytics store.
+    let payload = data
     if (data?.visitorId) {
-      activeVisitors.set(data.visitorId, {
-        ...data,
+      const loc = data.location as Record<string, string> | undefined
+      const needsGeo =
+        !loc?.city || loc.city === 'Unknown' || !loc?.country || loc.country === 'Unknown'
+      if (needsGeo) {
+        const ip = getClientIpFromRequest(request)
+        if (ip) {
+          const geo = await lookupGeoFromIp(ip)
+          if (geo) {
+            payload = {
+              ...data,
+              location: {
+                ...(loc || {}),
+                city: geo.city || loc?.city || 'Unknown',
+                region: geo.region || loc?.region,
+                country: geo.country || loc?.country || 'Unknown',
+                countryCode: geo.countryCode || loc?.countryCode,
+                ip,
+                accuracyLevel: 'ip',
+              },
+            }
+          }
+        }
+      }
+
+      activeVisitors.set(payload.visitorId, {
+        ...payload,
         lastSeen: new Date().toISOString(),
       })
     }
     // Persist to Redis-backed store so the dashboard shows real numbers on serverless.
-    await recordAnalyticsEvent(type, data)
+    await recordAnalyticsEvent(type, payload)
 
     // Slack delivery is best-effort: analytics is already persisted above, so a missing or
     // failing webhook must not drop the event or return an error to the client tracker.
@@ -244,6 +272,7 @@ export async function POST(request: NextRequest) {
 }
 
 function resolveSlackWebhookForType(type: string): string | undefined {
+  if (type === 'product_view' || type === 'product_click') return undefined
   const recoveryTypes = new Set(['checkout_started'])
   const abandonedTypes = new Set([
     'abandoned_cart',
@@ -805,6 +834,23 @@ export async function GET(request: NextRequest) {
   if (type === 'abandoned') {
     const abandoned = await getAbandonedCartStats()
     return NextResponse.json(abandoned)
+  }
+
+  if (type === 'geo') {
+    const locations = await getVisitorLocationOverview()
+    return NextResponse.json({ locations })
+  }
+
+  if (type === 'geo-trend') {
+    const daysRaw = Number(searchParams.get('days') || 7)
+    const days = Number.isFinite(daysRaw) ? Math.min(30, Math.max(1, Math.floor(daysRaw))) : 7
+    const trend = await getGeoTrend(days)
+    return NextResponse.json(trend)
+  }
+
+  if (type === 'popular') {
+    const popular = await getContentPopularity()
+    return NextResponse.json(popular)
   }
 
   const stats = await getAnalyticsStats()

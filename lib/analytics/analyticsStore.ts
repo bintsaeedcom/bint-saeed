@@ -1,4 +1,6 @@
 import { Redis } from '@upstash/redis'
+import { stripLocaleFromPathname } from '@/lib/i18n/routing'
+import { geoFieldKey, geoMetaFromLocation } from '@/lib/geo/geoAnalyticsKey'
 
 /**
  * Redis-backed store for live visitor analytics, the recent-activity feed, and abandoned-cart
@@ -13,12 +15,21 @@ const KEY_NOTIF = 'bs:av:notif' // list of JSON notifications (newest first)
 const KEY_CART = (id: string) => `bs:av:cart:${id}` // latest cart snapshot per visitor
 const KEY_CARTS = 'bs:av:carts' // sorted set: member=visitorId, score=updatedAt(ms)
 const KEY_DAY = (day: string) => `bs:av:day:${day}` // hash: total/new/returning counts
+const KEY_PAGE_HITS = 'bs:av:page_hits' // hash: path -> all-time views
+const KEY_PRODUCT_HITS = 'bs:av:product_hits' // hash: v:{id}|c:{id}|a:{id} -> all-time counts
+const KEY_PROD_NAMES = 'bs:av:pn' // hash: productId -> display name
+const KEY_GEO_DAY = (day: string) => `bs:av:geo:${day}` // hash: location field -> daily signals
+const KEY_GEO_META = 'bs:av:geo:meta' // hash: location field -> JSON label/meta (written once)
+const KEY_PAGE_DAY = (day: string) => `bs:av:pg:${day}` // hash: path -> daily views
+const KEY_PROD_DAY = (day: string) => `bs:av:pd:${day}` // hash: v:{id}|c:{id}|a:{id} -> daily counts
 
 const VISITOR_TTL = 60 * 60 // 1h
 const CART_TTL = 60 * 60 * 24 * 3 // 3 days
 const DAY_TTL = 60 * 60 * 24 * 40 // ~40 days
+const METRICS_DAY_TTL = 60 * 60 * 24 * 14 // auto-expire daily marketing buckets after 14d
 const NOTIF_MAX = 100
 const ACTIVE_WINDOW_MS = 5 * 60 * 1000
+const METRIC_ONLY_TYPES = new Set(['product_view', 'product_click'])
 
 export interface AnalyticsVisitor {
   visitorId: string
@@ -49,7 +60,7 @@ export interface AbandonedCartSnapshot {
   cartValueAed?: number
   cartItems?: number
   items?: { name?: string; quantity?: number; color?: string; size?: string }[]
-  location?: { country?: string; city?: string } | null
+  location?: { country?: string; city?: string; region?: string; countryCode?: string } | null
   device?: { type?: string; browser?: string; os?: string }
   contactEmail?: string
   page?: string
@@ -85,9 +96,57 @@ function getRedis(): Redis | null {
 const memVisitors = new Map<string, AnalyticsVisitor>()
 const memNotifs: AnalyticsNotification[] = []
 const memCarts = new Map<string, AbandonedCartSnapshot>()
+const memPageHits = new Map<string, number>()
+const memProductHits = new Map<string, ProductEngagementRow>()
+const memGeoDay = new Map<string, Map<string, number>>()
+const memGeoMeta = new Map<string, GeoMetaStored>()
 
 function todayKey(): string {
   return new Date().toISOString().slice(0, 10)
+}
+
+function lastNDays(n: number): string[] {
+  const out: string[] = []
+  const cursor = new Date()
+  for (let i = 0; i < n; i += 1) {
+    out.push(cursor.toISOString().slice(0, 10))
+    cursor.setUTCDate(cursor.getUTCDate() - 1)
+  }
+  return out
+}
+
+type GeoMetaStored = {
+  label: string
+  city?: string
+  region?: string
+  country?: string
+  countryCode?: string
+}
+
+function productMetricField(field: 'views' | 'clicks' | 'cartAdds', productId: string): string {
+  const prefix = field === 'views' ? 'v' : field === 'clicks' ? 'c' : 'a'
+  return `${prefix}:${productId}`
+}
+
+function parseProductHitFields(raw: Record<string, string>): ProductEngagementRow[] {
+  const byId = new Map<string, ProductEngagementRow>()
+  for (const [field, value] of Object.entries(raw)) {
+    const match = field.match(/^([vca]):(.+)$/)
+    if (!match) continue
+    const [, kind, productId] = match
+    const count = Number(value) || 0
+    if (!count) continue
+    const row = byId.get(productId) || { productId, name: productId, views: 0, clicks: 0, cartAdds: 0 }
+    if (kind === 'v') row.views = count
+    if (kind === 'c') row.clicks = count
+    if (kind === 'a') row.cartAdds = count
+    byId.set(productId, row)
+  }
+  return Array.from(byId.values())
+}
+
+function mergeProductNames(rows: ProductEngagementRow[], names: Record<string, string>): ProductEngagementRow[] {
+  return rows.map((row) => ({ ...row, name: names[row.productId] || row.name }))
 }
 
 function num(value: unknown): number | undefined {
@@ -148,11 +207,241 @@ function toCartSnapshot(type: string, data: Record<string, unknown>): AbandonedC
   }
 }
 
+export interface PagePopularityRow {
+  path: string
+  views: number
+}
+
+export interface ProductEngagementRow {
+  productId: string
+  name: string
+  views: number
+  clicks: number
+  cartAdds: number
+}
+
+export interface ContentPopularity {
+  pages: PagePopularityRow[]
+  products: ProductEngagementRow[]
+}
+
+function normalizeAnalyticsPath(rawPath: string): string {
+  const pathOnly = rawPath.split(/[?#]/)[0] || '/'
+  const { pathname } = stripLocaleFromPathname(pathOnly)
+  return pathname || '/'
+}
+
+function extractPagePath(data: Record<string, unknown>): string | null {
+  const current = data.currentPage as { path?: string } | undefined
+  if (current?.path) return normalizeAnalyticsPath(current.path)
+  const browser = data.browser as { path?: string } | undefined
+  if (browser?.path) return normalizeAnalyticsPath(browser.path)
+  if (typeof data.path === 'string') return normalizeAnalyticsPath(data.path)
+  return null
+}
+
+async function loadGeoMetaMap(r: Redis | null): Promise<Map<string, GeoMetaStored>> {
+  const map = new Map<string, GeoMetaStored>()
+  if (r) {
+    const raw = await r.hgetall<Record<string, string>>(KEY_GEO_META)
+    for (const [field, value] of Object.entries(raw || {})) {
+      try {
+        map.set(field, JSON.parse(value) as GeoMetaStored)
+      } catch {
+        /* skip */
+      }
+    }
+    return map
+  }
+  memGeoMeta.forEach((meta, field) => map.set(field, meta))
+  return map
+}
+
+function rowsFromGeoDay(raw: Record<string, string>, metaMap: Map<string, GeoMetaStored>): VisitorLocationRow[] {
+  return Object.entries(raw || {})
+    .map(([field, count]) => {
+      const meta = metaMap.get(field)
+      return {
+        location: meta?.label || field,
+        count: Number(count) || 0,
+        city: meta?.city,
+        region: meta?.region,
+        country: meta?.country,
+        countryCode: meta?.countryCode,
+      }
+    })
+    .filter((row) => row.count > 0)
+    .sort((a, b) => b.count - a.count)
+}
+
+function bumpGeoMemory(day: string, location: AnalyticsVisitor['location']): void {
+  const field = geoFieldKey(location)
+  const meta = geoMetaFromLocation(location)
+  if (!field || !meta) return
+  let dayMap = memGeoDay.get(day)
+  if (!dayMap) {
+    dayMap = new Map()
+    memGeoDay.set(day, dayMap)
+  }
+  dayMap.set(field, (dayMap.get(field) || 0) + 1)
+  if (!memGeoMeta.has(field)) memGeoMeta.set(field, meta)
+}
+
+function bumpPageMemory(path: string, day: string): void {
+  memPageHits.set(path, (memPageHits.get(path) || 0) + 1)
+}
+
+function bumpProductMemory(
+  productId: string,
+  name: string,
+  field: 'views' | 'clicks' | 'cartAdds',
+): void {
+  const existing = memProductHits.get(productId) || {
+    productId,
+    name,
+    views: 0,
+    clicks: 0,
+    cartAdds: 0,
+  }
+  if (name) existing.name = name
+  existing[field] += 1
+  memProductHits.set(productId, existing)
+}
+
+type RedisPipeline = ReturnType<Redis['pipeline']>
+
+function appendProductMetricPipe(
+  pipe: RedisPipeline,
+  day: string,
+  productId: string,
+  name: string,
+  field: 'views' | 'clicks' | 'cartAdds',
+): void {
+  const f = productMetricField(field, productId)
+  pipe.hincrby(KEY_PRODUCT_HITS, f, 1)
+  pipe.hincrby(KEY_PROD_DAY(day), f, 1)
+  pipe.expire(KEY_PROD_DAY(day), METRICS_DAY_TTL)
+  if (name) pipe.hset(KEY_PROD_NAMES, { [productId]: name })
+}
+
+function appendPageViewPipe(pipe: RedisPipeline, path: string, day: string): void {
+  pipe.hincrby(KEY_PAGE_HITS, path, 1)
+  pipe.hincrby(KEY_PAGE_DAY(day), path, 1)
+  pipe.expire(KEY_PAGE_DAY(day), METRICS_DAY_TTL)
+}
+
+function appendGeoPipe(pipe: RedisPipeline, location: AnalyticsVisitor['location'], day: string): void {
+  const field = geoFieldKey(location)
+  const meta = geoMetaFromLocation(location)
+  if (!field || !meta) return
+  pipe.hincrby(KEY_GEO_DAY(day), field, 1)
+  pipe.expire(KEY_GEO_DAY(day), METRICS_DAY_TTL)
+  pipe.hsetnx(KEY_GEO_META, field, JSON.stringify(meta))
+}
+
+function appendEngagementToPipeline(
+  pipe: RedisPipeline,
+  type: string,
+  data: Record<string, unknown>,
+  day: string,
+): void {
+  if (type === 'page_view') {
+    const path = extractPagePath(data)
+    if (path) appendPageViewPipe(pipe, path, day)
+    return
+  }
+  if (type === 'product_view') {
+    const productId = typeof data.productId === 'string' ? data.productId : ''
+    if (!productId) return
+    const name = typeof data.productName === 'string' ? data.productName : productId
+    appendProductMetricPipe(pipe, day, productId, name, 'views')
+    const path = typeof data.path === 'string' ? normalizeAnalyticsPath(data.path) : null
+    if (path) appendPageViewPipe(pipe, path, day)
+    return
+  }
+  if (type === 'product_click') {
+    const productId = typeof data.productId === 'string' ? data.productId : ''
+    if (!productId) return
+    const name = typeof data.productName === 'string' ? data.productName : productId
+    appendProductMetricPipe(pipe, day, productId, name, 'clicks')
+    return
+  }
+  if (type === 'cart_add') {
+    const cartEvent = data.cartEvent as { productId?: string; productName?: string } | undefined
+    const productId = cartEvent?.productId
+    if (!productId) return
+    const name = cartEvent?.productName || productId
+    appendProductMetricPipe(pipe, day, productId, name, 'cartAdds')
+  }
+}
+
+function appendEngagementMemory(type: string, data: Record<string, unknown>, day: string): void {
+  if (type === 'page_view') {
+    const path = extractPagePath(data)
+    if (path) bumpPageMemory(path, day)
+    return
+  }
+  if (type === 'product_view') {
+    const productId = typeof data.productId === 'string' ? data.productId : ''
+    if (!productId) return
+    const name = typeof data.productName === 'string' ? data.productName : productId
+    bumpProductMemory(productId, name, 'views')
+    const path = typeof data.path === 'string' ? normalizeAnalyticsPath(data.path) : null
+    if (path) bumpPageMemory(path, day)
+    return
+  }
+  if (type === 'product_click') {
+    const productId = typeof data.productId === 'string' ? data.productId : ''
+    if (!productId) return
+    const name = typeof data.productName === 'string' ? data.productName : productId
+    bumpProductMemory(productId, name, 'clicks')
+    return
+  }
+  if (type === 'cart_add') {
+    const cartEvent = data.cartEvent as { productId?: string; productName?: string } | undefined
+    const productId = cartEvent?.productId
+    if (!productId) return
+    const name = cartEvent?.productName || productId
+    bumpProductMemory(productId, name, 'cartAdds')
+  }
+}
+
+export async function getContentPopularity(limit = 10): Promise<ContentPopularity> {
+  const r = getRedis()
+  if (r) {
+    const [pageRaw, productRaw, namesRaw] = await Promise.all([
+      r.hgetall<Record<string, string>>(KEY_PAGE_HITS),
+      r.hgetall<Record<string, string>>(KEY_PRODUCT_HITS),
+      r.hgetall<Record<string, string>>(KEY_PROD_NAMES),
+    ])
+    const pages = Object.entries(pageRaw || {})
+      .map(([path, views]) => ({ path, views: Number(views) || 0 }))
+      .sort((a, b) => b.views - a.views)
+      .slice(0, limit)
+    const products = mergeProductNames(parseProductHitFields(productRaw || {}), namesRaw || {})
+      .sort((a, b) => b.views + b.clicks + b.cartAdds - (a.views + a.clicks + a.cartAdds))
+      .slice(0, limit)
+    return { pages: pages.filter((p) => p.views > 0), products }
+  }
+
+  const pages = Array.from(memPageHits.entries())
+    .map(([path, views]) => ({ path, views }))
+    .sort((a, b) => b.views - a.views)
+    .slice(0, limit)
+  const products = Array.from(memProductHits.values())
+    .sort((a, b) => b.views + b.clicks + b.cartAdds - (a.views + a.clicks + a.cartAdds))
+    .slice(0, limit)
+  return { pages, products }
+}
+
 export async function recordAnalyticsEvent(type: string, rawData: unknown): Promise<void> {
   const data = (rawData && typeof rawData === 'object' ? rawData : {}) as Record<string, unknown>
   const nowMs = Date.now()
+  const day = todayKey()
+  const skipNotif = METRIC_ONLY_TYPES.has(type)
   const visitor = toVisitor(type, data)
   const cart = toCartSnapshot(type, data)
+  const location = data.location as AnalyticsVisitor['location']
   const notif: AnalyticsNotification = {
     id: `${nowMs}-${Math.random().toString(36).slice(2, 8)}`,
     type,
@@ -165,13 +454,17 @@ export async function recordAnalyticsEvent(type: string, rawData: unknown): Prom
   const r = getRedis()
   if (r) {
     const pipe = r.pipeline()
+    appendEngagementToPipeline(pipe, type, data, day)
+    if (location) appendGeoPipe(pipe, location, day)
     if (visitor) {
       pipe.set(KEY_VISITOR(visitor.visitorId), JSON.stringify(visitor), { ex: VISITOR_TTL })
       pipe.zadd(KEY_ACTIVE, { score: nowMs, member: visitor.visitorId })
       pipe.zremrangebyscore(KEY_ACTIVE, 0, nowMs - VISITOR_TTL * 1000)
     }
-    pipe.lpush(KEY_NOTIF, JSON.stringify(notif))
-    pipe.ltrim(KEY_NOTIF, 0, NOTIF_MAX - 1)
+    if (!skipNotif) {
+      pipe.lpush(KEY_NOTIF, JSON.stringify(notif))
+      pipe.ltrim(KEY_NOTIF, 0, NOTIF_MAX - 1)
+    }
     if (isVisitEvent) {
       const day = KEY_DAY(todayKey())
       pipe.hincrby(day, 'total', 1)
@@ -193,9 +486,13 @@ export async function recordAnalyticsEvent(type: string, rawData: unknown): Prom
   }
 
   // Memory fallback
+  appendEngagementMemory(type, data, day)
+  if (location) bumpGeoMemory(day, location)
   if (visitor) memVisitors.set(visitor.visitorId, visitor)
-  memNotifs.unshift(notif)
-  if (memNotifs.length > NOTIF_MAX) memNotifs.length = NOTIF_MAX
+  if (!skipNotif) {
+    memNotifs.unshift(notif)
+    if (memNotifs.length > NOTIF_MAX) memNotifs.length = NOTIF_MAX
+  }
   if (cart) {
     if (cart.status === 'recovered') memCarts.delete(cart.visitorId)
     else memCarts.set(cart.visitorId, cart)
@@ -302,4 +599,85 @@ export async function getAbandonedCartStats(limit = 20): Promise<AbandonedCartSt
     recoveredToday,
     carts,
   }
+}
+
+export interface VisitorLocationRow {
+  location: string
+  count: number
+  city?: string
+  region?: string
+  country?: string
+  countryCode?: string
+}
+
+export interface GeoDayBucket {
+  date: string
+  locations: VisitorLocationRow[]
+}
+
+export interface GeoTrendSeries {
+  location: string
+  total: number
+  daily: Record<string, number>
+}
+
+export interface GeoTrendResult {
+  days: GeoDayBucket[]
+  series: GeoTrendSeries[]
+  totals: VisitorLocationRow[]
+}
+
+async function readGeoDay(day: string, metaMap: Map<string, GeoMetaStored>, r: Redis | null): Promise<VisitorLocationRow[]> {
+  if (r) {
+    const raw = await r.hgetall<Record<string, string>>(KEY_GEO_DAY(day))
+    return rowsFromGeoDay(raw || {}, metaMap)
+  }
+  const dayMap = memGeoDay.get(day)
+  if (!dayMap) return []
+  const raw: Record<string, string> = {}
+  dayMap.forEach((count, field) => {
+    raw[field] = String(count)
+  })
+  return rowsFromGeoDay(raw, metaMap)
+}
+
+/** Last N days of IP-derived geography — one Redis read per day (+ meta once). */
+export async function getGeoTrend(days = 7): Promise<GeoTrendResult> {
+  const r = getRedis()
+  const dayKeys = lastNDays(days).reverse()
+  const metaMap = await loadGeoMetaMap(r)
+  const buckets: GeoDayBucket[] = []
+  const totalsMap = new Map<string, VisitorLocationRow>()
+  const seriesDaily = new Map<string, Record<string, number>>()
+
+  for (const date of dayKeys) {
+    const locations = await readGeoDay(date, metaMap, r)
+    buckets.push({ date, locations })
+    for (const row of locations) {
+      const key = row.location.toLowerCase()
+      const existing = totalsMap.get(key)
+      if (existing) existing.count += row.count
+      else totalsMap.set(key, { ...row })
+      const daily = seriesDaily.get(key) || {}
+      daily[date] = (daily[date] || 0) + row.count
+      seriesDaily.set(key, daily)
+    }
+  }
+
+  const totals = Array.from(totalsMap.values()).sort((a, b) => b.count - a.count)
+  const series: GeoTrendSeries[] = totals.slice(0, 6).map((row) => ({
+    location: row.location,
+    total: row.count,
+    daily: seriesDaily.get(row.location.toLowerCase()) || {},
+  }))
+
+  return { days: buckets, series, totals }
+}
+
+/** Today’s geo roll-up — cheap single-day read for the dashboard table. */
+export async function getVisitorLocationOverview(limit = 12): Promise<VisitorLocationRow[]> {
+  const r = getRedis()
+  const metaMap = await loadGeoMetaMap(r)
+  const rows = await readGeoDay(todayKey(), metaMap, r)
+  return rows.slice(0, limit)
 }

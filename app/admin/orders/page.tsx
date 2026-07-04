@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiSearch, FiRefreshCw, FiX, FiExternalLink } from 'react-icons/fi'
+import { FiSearch, FiRefreshCw, FiX, FiExternalLink, FiMail } from 'react-icons/fi'
 import type { StoredOrder, OrderFulfillmentStatus } from '@/lib/orders/types'
 
 const STATUS_OPTIONS: OrderFulfillmentStatus[] = [
@@ -34,6 +34,8 @@ export default function AdminOrdersPage() {
   const [selected, setSelected] = useState<StoredOrder | null>(null)
   const [notesDraft, setNotesDraft] = useState('')
   const [saving, setSaving] = useState(false)
+  const [resending, setResending] = useState(false)
+  const [resendMessage, setResendMessage] = useState<string | null>(null)
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -57,7 +59,10 @@ export default function AdminOrdersPage() {
   }, [load])
 
   useEffect(() => {
-    if (selected) setNotesDraft(selected.internalNotes || '')
+    if (selected) {
+      setNotesDraft(selected.internalNotes || '')
+      setResendMessage(null)
+    }
   }, [selected])
 
   const filtered = orders.filter((o) => {
@@ -88,8 +93,28 @@ export default function AdminOrdersPage() {
     }
   }
 
+  const resendConfirmation = async (id: string) => {
+    setResending(true)
+    setResendMessage(null)
+    try {
+      const res = await fetch(`/api/admin/orders/${encodeURIComponent(id)}/resend-confirmation`, {
+        method: 'POST',
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setResendMessage(data.message || 'Confirmation email sent.')
+      } else {
+        setResendMessage(data.error || 'Could not send confirmation email.')
+      }
+    } catch {
+      setResendMessage('Could not send confirmation email.')
+    } finally {
+      setResending(false)
+    }
+  }
+
   return (
-    <div className="p-6 text-neutral-900 lg:p-10">
+    <div className="p-6 text-white lg:p-10">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 data-document-h1="true" className="font-rozha text-3xl text-white">Orders</h1>
@@ -244,6 +269,28 @@ export default function AdminOrdersPage() {
                   <p className="text-white/90">{selected.customerEmail}</p>
                   {selected.customerName ? <p className="text-white/70">{selected.customerName}</p> : null}
                   {selected.customerPhone ? <p className="text-white/70">{selected.customerPhone}</p> : null}
+                </div>
+
+                <div className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+                  <p className="text-[10px] uppercase tracking-wider text-white/40">Customer email</p>
+                  <p className="mt-1 text-xs leading-relaxed text-white/60">
+                    Resend the branded order confirmation to the customer — same email they should have received at checkout.
+                    Use if they didn&apos;t get it, it landed in spam, or you need a copy re-sent manually.
+                  </p>
+                  <button
+                    type="button"
+                    disabled={resending || !selected.customerEmail}
+                    onClick={() => resendConfirmation(selected.id)}
+                    className="mt-3 inline-flex items-center gap-2 rounded-lg border border-brand-dustyBlue/40 bg-brand-dustyBlue/10 px-4 py-2 text-xs uppercase tracking-wider text-brand-stone hover:bg-brand-dustyBlue/20 disabled:opacity-50"
+                  >
+                    <FiMail className="h-3.5 w-3.5" />
+                    {resending ? 'Sending…' : 'Resend confirmation'}
+                  </button>
+                  {resendMessage ? (
+                    <p className={`mt-2 text-xs ${resendMessage.includes('sent') ? 'text-emerald-400' : 'text-amber-300'}`}>
+                      {resendMessage}
+                    </p>
+                  ) : null}
                 </div>
                 {selected.deliveryNotes ? (
                   <div>
