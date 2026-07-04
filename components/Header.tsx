@@ -20,7 +20,11 @@ import {
 const MEGA_MENU_PLACEHOLDER_A = '/placeholders/product-front-F.svg'
 const MEGA_MENU_PLACEHOLDER_B = '/placeholders/product-extra-E.svg'
 const MEGA_MENU_SIGNATURE_STRANDS = '/collection-section/bint-saeed-signature-strands-collection-nav.webp'
-const MEGA_MENU_ALL_STRANDS = '/collection-section/bint-saeed-all-strands-collection-nav.png'
+const MEGA_MENU_ALL_STRANDS = '/collection-section/bint-saeed-all-strands-collection-nav.webp'
+const MEGA_MENU_LUXURY_ABAYAS = '/collection-section/bint-saeed-luxury-abayas-collection-nav.webp'
+const MEGA_MENU_LUXURY_SETS = '/collection-section/bint-saeed-luxury-sets-collection-nav.webp'
+const MEGA_MENU_OUR_STORY = '/collection-section/bint-saeed-our-story-collection-nav.webp'
+const MEGA_MENU_THE_CODES = '/collection-section/bint-saeed-the-codes-collection-nav.webp'
 
 /** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
 const headerBarGradient =
@@ -161,12 +165,12 @@ export default function Header() {
         {
           title: 'Abayas',
           href: '/shop?category=abayas',
-          image: '/collection-section/bint-saeed-luxury-abayas-collection-nav.webp?v=2',
+          image: MEGA_MENU_LUXURY_ABAYAS,
         },
         {
           title: 'Sets',
           href: '/shop?category=sets',
-          image: '/collection-section/bint-saeed-luxury-sets-collection-nav.webp',
+          image: MEGA_MENU_LUXURY_SETS,
         },
       ],
     },
@@ -261,8 +265,8 @@ export default function Header() {
         },
       ],
       features: [
-        { title: 'Our Story', href: '/about', image: '/og-image.png' },
-        { title: 'The Codes', href: '/the-codes', image: '/collection-section/67.png' },
+        { title: 'Our Story', href: '/about', image: MEGA_MENU_OUR_STORY },
+        { title: 'The Codes', href: '/the-codes', image: MEGA_MENU_THE_CODES },
       ],
     },
   }

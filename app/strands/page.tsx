@@ -15,6 +15,7 @@ import { withBrandAlt } from '@/lib/products/imageAlt'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
 import { buildStrandsCollectionJsonLd } from '@/lib/accessories/strandsCollectionSchemaI18n'
 import { editorialSectionH2 } from '@/lib/ui/editorialTypography'
+import { ctaButtonRow, ctaInButtonRow, ctaPrimary, ctaSecondaryOnLight } from '@/lib/ui/ctaClasses'
 
 /** Strands hero banner — `public/strands/charm-fabric-dark.webp` (served under /strands/, not /charms/ redirect) */
 const HERO_CAMPAIGN_IMAGE = '/strands/charm-fabric-dark.webp'
@@ -185,14 +186,14 @@ export default function StrandsPage() {
           <AppPageWayfinding
             rtl={isRTL}
             variant="light"
-            className="mb-2"
+            className="mb-3"
             segments={[
               { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
               { label: isRTL ? 'الخيوط' : 'Strands' },
             ]}
           />
 
-            <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090] sm:tracking-[0.34em]">
+            <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090] sm:tracking-[0.34em]">
               {copy.heroEyebrow}
             </p>
             <h1
@@ -254,38 +255,25 @@ export default function StrandsPage() {
               {copy.conceptP2}
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:flex-nowrap md:justify-between md:gap-4">
-              {copy.conceptStoneSwatches.map((stone) => (
-                <div key={stone.name} className="group relative text-center">
-                  <div
-                    className="mx-auto h-6 w-6 rounded-full border border-[#1a0210]/15 shadow-sm"
-                    style={{ backgroundColor: stone.color }}
-                  />
-                  <div className="pointer-events-none absolute bottom-[calc(100%+8px)] left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded-[3px] bg-[#1a0210] px-2 py-1 font-montserrat text-[10px] uppercase tracking-[0.08em] text-[#e8d8c8] opacity-0 transition-opacity group-hover:opacity-100">
-                    {stone.name}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="mt-[10px] max-w-2xl hyphens-none font-montserrat text-[11px] tracking-[0.06em] text-[#8a7a70] [word-break:keep-all]">
+            <p className="mt-8 max-w-2xl hyphens-none font-montserrat text-[11px] tracking-[0.06em] text-[#8a7a70] [word-break:keep-all]">
               {copy.conceptStoneList}
             </p>
-            <LocaleLink
-              href="#stone-showcase"
-              className="mt-[6px] block font-montserrat text-[11px] font-medium tracking-[0.06em] text-[#7A1C28] no-underline transition-opacity duration-200 hover:opacity-75"
-              data-cursor-hover
-            >
-              {copy.conceptExploreStones}
-            </LocaleLink>
 
-            <div className="mt-6">
-              <div className="mb-4 h-[0.5px] w-full bg-[#e8ddd4]" aria-hidden />
-              <p className="flex flex-wrap items-center gap-2 font-montserrat text-[14px] font-medium tracking-[0.02em] text-[#6f5f56]">
-                {copy.conceptMarylebonePrompt}{' '}
-                <LocaleLink href={maryleboneHref} className="font-semibold tracking-[0.02em] text-[#7A1C28] no-underline transition-opacity duration-200 hover:opacity-75" data-cursor-hover>
-                  {copy.conceptMaryleboneLink}
-                </LocaleLink>
-              </p>
+            <div className={`mt-8 ${ctaButtonRow} ${isRTL ? 'md:flex-row-reverse' : ''}`}>
+              <LocaleLink
+                href="#stone-showcase"
+                className={`${ctaPrimary} ${ctaInButtonRow}`}
+                data-cursor-hover
+              >
+                {copy.conceptExploreStones}
+              </LocaleLink>
+              <LocaleLink
+                href={maryleboneHref}
+                className={`${ctaSecondaryOnLight} ${ctaInButtonRow}`}
+                data-cursor-hover
+              >
+                {copy.conceptMaryleboneLink}
+              </LocaleLink>
             </div>
           </div>
 
@@ -427,7 +415,7 @@ export default function StrandsPage() {
                   ) : null}
                   <LocaleLink
                     href={`/accessories/${product.id}`}
-                    className="mt-auto flex w-full items-center justify-center rounded-[3px] bg-[#7A1C28] p-3 font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
+                    className={`mt-auto w-full ${ctaPrimary}`}
                     data-cursor-hover
                   >
                     {copy.viewStrandCta}

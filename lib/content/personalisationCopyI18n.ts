@@ -21,6 +21,9 @@ export type PersonalisationCopy = {
   stepsTitle: string
   steps: { numeral: string; title: string; body: string }[]
   complimentaryNote: string
+  complimentaryOtherNote: string
+  contactServiceCta: string
+  pickAbayaCta: string
   closingQuote: string
   shopCta: string
   strandsCta: string
@@ -38,7 +41,7 @@ const EN: PersonalisationCopy = {
   secretEyebrow: 'THE SECRET',
   secretTitle: 'Some things are not meant to be shown.',
   secretBody:
-    'Each Bint Saeed piece includes a discreet space within it — a small pocket, covered and hidden inside the garment. A name. A meaningful date. A few words written for yourself or for someone you love.',
+    'Each Bint Saeed Abaya includes a discreet space within it — a small pocket, covered and hidden inside the garment. A name. A meaningful date. A few words written for yourself or for someone you love.',
   pocketEyebrow: 'THE POCKET',
   pocketTitle: 'Where it lives.',
   pocketBody: 'The pocket sits discreetly inside the garment, invisible from the outside. Only you know it is there.',
@@ -53,21 +56,25 @@ const EN: PersonalisationCopy = {
     {
       numeral: 'I',
       title: 'ADD YOUR MESSAGE',
-      body: 'During checkout, add a name, a date, or a short private message to be placed within the garment.',
+      body: 'On the garment page, select Personalise. There you may inscribe a name, a meaningful date, or a few words held privately within the piece.',
     },
     {
       numeral: 'II',
       title: 'WE PLACE IT INSIDE',
-      body: 'Your message is printed on a Bint Saeed label and placed inside the hidden pocket before the piece is completed.',
+      body: 'Your message is printed on a Bint Saeed silk label and stitched within the hidden pocket — sewn discreetly to the inner lining of the abaya before the garment is completed.',
     },
     {
       numeral: 'III',
       title: 'YOU CARRY IT',
-      body: 'The pocket is sealed. Only you know it is there.',
+      body: 'You carry something meaningful — your name, a private message for yourself, or words gifted to someone dear, held close whenever the abaya is worn.',
     },
   ],
-  complimentaryNote: 'Personalisation is complimentary on every order.',
-  closingQuote: 'It turns a piece into something that belongs to you in a deeper way.',
+  complimentaryNote: 'Personalisation is complimentary on all abayas.',
+  complimentaryOtherNote:
+    'If you wish to personalise one of our other items, please contact our Customer Service.',
+  contactServiceCta: 'Contact Customer Service',
+  pickAbayaCta: 'Pick your piece to personalise now',
+  closingQuote: 'It turns a piece into something that belongs to you\nin a deeper way.',
   shopCta: 'EXPLORE THE COLLECTION',
   strandsCta: 'DISCOVER THE STRANDS',
   hiddenPocketAlt: 'Bint Saeed hidden pocket personalisation detail — Abu Dhabi',
@@ -84,7 +91,7 @@ const AR: PersonalisationCopy = {
   secretEyebrow: 'السر',
   secretTitle: 'بعض الأشياء ليست للعرض.',
   secretBody:
-    'تتضمن كل قطعة من Bint Saeed مساحة خفية — جيباً صغيراً مغطى ومخفياً داخل القطعة. اسماً. تاريخاً ذا معنى. كلمات قليلة لنفسك أو لمن تحبين.',
+    'تتضمن كل عباءة من Bint Saeed مساحة خفية — جيباً صغيراً مغطى ومخفياً داخل القطعة. اسماً. تاريخاً ذا معنى. كلمات قليلة لنفسك أو لمن تحبين.',
   pocketEyebrow: 'الجيب',
   pocketTitle: 'حيث يعيش.',
   pocketBody: 'يجلس الجيب بخفة داخل القطعة، غير مرئي من الخارج. أنتِ وحدك تعرفين أنه هناك.',
@@ -99,20 +106,23 @@ const AR: PersonalisationCopy = {
     {
       numeral: 'I',
       title: 'أضيفي رسالتك',
-      body: 'أثناء الدفع، أضيفي اسماً أو تاريخاً أو رسالة قصيرة خاصة لوضعها داخل القطعة.',
+      body: 'من صفحة القطعة، اختاري «تخصيص». هناك تُدوّنين اسماً أو تاريخاً ذا معنى أو كلمات قليلة تُحفظ بخفاء داخل القطعة.',
     },
     {
       numeral: 'II',
       title: 'نضعها في الداخل',
-      body: 'تُطبع رسالتك على ملصق Bint Saeed وتُوضع داخل الجيب المخفي قبل إكمال القطعة.',
+      body: 'تُطبع رسالتك على ملصق حريري من Bint Saeed وتُخاط داخل الجيب المخفي — المثبّت بخفاء على البطانة الداخلية للعباءة قبل إكمال القطعة.',
     },
     {
       numeral: 'III',
       title: 'تحملينها',
-      body: 'يُغلق الجيب. أنتِ وحدك تعرفين أنه هناك.',
+      body: 'تحملين شيئاً ذا معنى — اسمك، رسالة خاصة لنفسك، أو كلمات تُهدى لمن تحبين، تبقى قريبة كلما ارتُديت العباءة.',
     },
   ],
-  complimentaryNote: 'التخصيص مجاني مع كل طلب.',
+  complimentaryNote: 'التخصيص مجاني على جميع العباءات.',
+  complimentaryOtherNote: 'إذا رغبتِ بتخصيص إحدى قطعنا الأخرى، يُرجى التواصل مع خدمة العملاء.',
+  contactServiceCta: 'تواصلي مع خدمة العملاء',
+  pickAbayaCta: 'اختاري قطعتك للتخصيص الآن',
   closingQuote: 'يحوّل القطعة إلى شيء ينتمي إليك بعمق أكبر.',
   shopCta: 'استكشفي المجموعة',
   strandsCta: 'اكتشفي الخيوط',
