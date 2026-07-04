@@ -22,7 +22,7 @@ function faqAnswerParagraphs(answer: string | string[]): string[] {
 const MALACHITE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
   en: {
     introParagraphs: [
-      'Some pieces become part of the way you are recognised. The Al Ain Rosette Malachite Necklace is hand-strung from natural malachite gemstones, accented with gold-plated hematite beads and finished with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Designed to adapt to every occasion, it may be worn as a single long necklace or doubled around the neck to create a shorter layered silhouette.',
+      'Some pieces become part of the way you are recognised. The Al Ain Oasis Necklace - Malachite is hand-strung from natural malachite gemstones, accented with gold-plated hematite beads and finished with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Designed to adapt to every occasion, it may be worn as a single long necklace or doubled around the neck to create a shorter layered silhouette.',
       'Natural gemstones have long been treasured for their individuality. Their depth of colour, distinctive veining and organic character bring a sense of richness that only nature can create, making every necklace as unique as the woman who wears it.',
       'Handcrafted in Abu Dhabi, the necklace combines natural gemstones with one of Bint Saeed’s House Codes. Inspired by the warm desert tones surrounding Al Ain, the Al Ain Rosette appears throughout the House’s jewellery and ready-to-wear collections as a signature expression of Bint Saeed’s design language.',
       'Complete the look by pairing the necklace with the matching Al Ain Rosette Earrings and the House’s signature Bint Saeed Strands.',
@@ -49,7 +49,7 @@ const MALACHITE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
     ],
     faq: [
       {
-        question: 'What is the Al Ain Rosette Malachite Necklace made from?',
+        question: 'What is the Al Ain Oasis Necklace - Malachite made from?',
         answer: [
           'The necklace is handcrafted using natural malachite gemstone beads, gold-plated hematite accent beads and the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. It is finished with a gold-tone clasp and adjustable extension chain.',
           'Malachite is a naturally occurring gemstone formed over thousands of years in copper-rich regions. Celebrated for its distinctive green bands and depth of colour, every malachite bead is unique, ensuring no two Bint Saeed creations are ever exactly alike.',
@@ -68,7 +68,7 @@ const MALACHITE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       {
         question: 'Can the necklace be worn in different ways?',
         answer:
-          'Yes. The Al Ain Rosette Malachite Necklace is designed to be worn as a single long necklace or doubled around the neck to create a shorter layered silhouette.',
+          'Yes. The Al Ain Oasis Necklace - Malachite is designed to be worn as a single long necklace or doubled around the neck to create a shorter layered silhouette.',
       },
       {
         question: 'Is every necklace identical?',
@@ -78,12 +78,12 @@ const MALACHITE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       {
         question: 'Where is the necklace made?',
         answer:
-          'Every Al Ain Rosette Malachite Necklace is handcrafted in Abu Dhabi, United Arab Emirates.',
+          'Every Al Ain Oasis Necklace - Malachite is handcrafted in Abu Dhabi, United Arab Emirates.',
       },
       {
         question: 'Does the necklace arrive in gift packaging?',
         answer:
-          'Yes. Every Al Ain Rosette Malachite Necklace is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
+          'Yes. Every Al Ain Oasis Necklace - Malachite is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
       },
       {
         question: 'How should I care for my necklace?',
@@ -168,7 +168,7 @@ const MALACHITE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
 const ROSE_QUARTZ_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
   en: {
     introParagraphs: [
-      'Elegant in its simplicity, the Al Ain Rosette Rose Quartz Necklace brings together the gentle beauty of natural rose quartz with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Delicately accented with gold-plated hematite beads, the necklace may be worn as a single long strand or doubled around the neck for a more layered silhouette.',
+      'Elegant in its simplicity, the Al Ain Oasis Necklace - Rose Quartz brings together the gentle beauty of natural rose quartz with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Delicately accented with gold-plated hematite beads, the necklace may be worn as a single long strand or doubled around the neck for a more layered silhouette.',
       'Valued for centuries, natural gemstones are admired for their individuality. The soft blush tones of rose quartz, combined with the warmth of Carnelian and luminous gold accents, create a composition that feels both timeless and distinctive. As every stone is formed by nature, each necklace possesses its own unique colour, veining and character.',
       'Handcrafted in Abu Dhabi, the necklace reflects Bint Saeed’s appreciation for natural materials and enduring craftsmanship. Complete the look with the matching Al Ain Rosette Earrings and the Al Ain Rosette Rose Quartz Signature Strand, designed to complement selected Bint Saeed abayas, dresses and tailoring.',
     ],
@@ -194,7 +194,7 @@ const ROSE_QUARTZ_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>
     ],
     faq: [
       {
-        question: 'What is the Al Ain Rosette Rose Quartz Necklace made from?',
+        question: 'What is the Al Ain Oasis Necklace - Rose Quartz made from?',
         answer: [
           'The necklace is handcrafted using natural rose quartz gemstone beads, gold-plated hematite accent beads and the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. It is completed with a gold-tone clasp and adjustable extension chain.',
           'Rose quartz is a naturally occurring variety of quartz, admired for its delicate pink tones and subtle translucency. Every gemstone is unique, making each Bint Saeed necklace one of a kind.',
@@ -223,12 +223,12 @@ const ROSE_QUARTZ_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>
       {
         question: 'Where is the necklace made?',
         answer:
-          'Every Al Ain Rosette Rose Quartz Necklace is handcrafted in Abu Dhabi, United Arab Emirates.',
+          'Every Al Ain Oasis Necklace - Rose Quartz is handcrafted in Abu Dhabi, United Arab Emirates.',
       },
       {
         question: 'Does the necklace arrive in gift packaging?',
         answer:
-          'Yes. Every Al Ain Rosette Rose Quartz Necklace is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
+          'Yes. Every Al Ain Oasis Necklace - Rose Quartz is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
       },
       {
         question: 'How should I care for my necklace?',
@@ -312,7 +312,7 @@ const ROSE_QUARTZ_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>
 const LAPIS_LAZULI_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
   en: {
     introParagraphs: [
-      'Rich in colour and natural character, the Al Ain Rosette Lapis Lazuli Necklace is hand-strung from natural lapis lazuli gemstones, accented with gold-plated hematite beads and completed with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Designed with versatility in mind, it may be worn as a single long necklace or doubled around the neck to create a more layered silhouette.',
+      'Rich in colour and natural character, the Al Ain Oasis Necklace - Lapis Lazuli is hand-strung from natural lapis lazuli gemstones, accented with gold-plated hematite beads and completed with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Designed with versatility in mind, it may be worn as a single long necklace or doubled around the neck to create a more layered silhouette.',
       'Treasured since antiquity, lapis lazuli has long been admired for its deep royal blue colour and naturally occurring golden pyrite inclusions. Combined with the warmth of Carnelian and luminous gold accents, each necklace reflects the individuality that only natural gemstones can offer. No two creations are ever exactly alike.',
       'Handcrafted in Abu Dhabi, the necklace reflects Bint Saeed’s appreciation for natural materials and enduring craftsmanship. Complete the look with the matching Al Ain Rosette Earrings and the Al Ain Rosette Lapis Lazuli Signature Strand, designed to complement selected Bint Saeed abayas, dresses and tailoring.',
     ],
@@ -338,7 +338,7 @@ const LAPIS_LAZULI_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack
     ],
     faq: [
       {
-        question: 'What is the Al Ain Rosette Lapis Lazuli Necklace made from?',
+        question: 'What is the Al Ain Oasis Necklace - Lapis Lazuli made from?',
         answer: [
           'The necklace is handcrafted using natural lapis lazuli gemstone beads, gold-plated hematite accent beads and the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. It is completed with a gold-tone clasp and adjustable extension chain.',
           'Lapis lazuli is a naturally occurring gemstone, prized for its intense royal blue colour and distinctive golden pyrite inclusions. Every gemstone is unique, ensuring each Bint Saeed necklace possesses its own individual character.',
@@ -367,12 +367,12 @@ const LAPIS_LAZULI_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack
       {
         question: 'Where is the necklace made?',
         answer:
-          'Every Al Ain Rosette Lapis Lazuli Necklace is handcrafted in Abu Dhabi, United Arab Emirates.',
+          'Every Al Ain Oasis Necklace - Lapis Lazuli is handcrafted in Abu Dhabi, United Arab Emirates.',
       },
       {
         question: 'Does the necklace arrive in gift packaging?',
         answer:
-          'Yes. Every Al Ain Rosette Lapis Lazuli Necklace is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
+          'Yes. Every Al Ain Oasis Necklace - Lapis Lazuli is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
       },
       {
         question: 'How should I care for my necklace?',
@@ -456,7 +456,7 @@ const LAPIS_LAZULI_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack
 const SUNSTONE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
   en: {
     introParagraphs: [
-      'Radiant by nature, the Al Ain Rosette Sunstone Necklace is hand-strung from natural sunstone gemstones, accented with gold-plated hematite beads and completed with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Designed with versatility in mind, it may be worn as a single long necklace or doubled around the neck to create a shorter layered silhouette.',
+      'Radiant by nature, the Al Ain Oasis Necklace - Sunstone is hand-strung from natural sunstone gemstones, accented with gold-plated hematite beads and completed with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Designed with versatility in mind, it may be worn as a single long necklace or doubled around the neck to create a shorter layered silhouette.',
       'Natural gemstones have been admired for generations for the individuality they bring to every creation. The warm peach and golden tones of sunstone, enhanced by its natural shimmer, are complemented by luminous gold accents and the rich warmth of Carnelian. As every gemstone is formed by nature, each necklace possesses its own distinctive colour, inclusions and character.',
       'Handcrafted in Abu Dhabi, the necklace reflects Bint Saeed’s appreciation for natural materials and enduring craftsmanship. Complete the look with the matching Al Ain Rosette Earrings and the Al Ain Rosette Sunstone Signature Strand, designed to complement selected Bint Saeed abayas, dresses and tailoring.',
     ],
@@ -482,7 +482,7 @@ const SUNSTONE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> =
     ],
     faq: [
       {
-        question: 'What is the Al Ain Rosette Sunstone Necklace made from?',
+        question: 'What is the Al Ain Oasis Necklace - Sunstone made from?',
         answer: [
           'The necklace is handcrafted using natural sunstone gemstone beads, gold-plated hematite accent beads and the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. It is completed with a gold-tone clasp and adjustable extension chain.',
           'Sunstone is a naturally occurring feldspar gemstone, admired for its warm peach, golden and copper tones, together with its characteristic natural shimmer known as aventurescence. Every gemstone is unique, ensuring each Bint Saeed necklace possesses its own individual character.',
@@ -511,12 +511,12 @@ const SUNSTONE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> =
       {
         question: 'Where is the necklace made?',
         answer:
-          'Every Al Ain Rosette Sunstone Necklace is handcrafted in Abu Dhabi, United Arab Emirates.',
+          'Every Al Ain Oasis Necklace - Sunstone is handcrafted in Abu Dhabi, United Arab Emirates.',
       },
       {
         question: 'Does the necklace arrive in gift packaging?',
         answer:
-          'Yes. Every Al Ain Rosette Sunstone Necklace is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
+          'Yes. Every Al Ain Oasis Necklace - Sunstone is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
       },
       {
         question: 'How should I care for my necklace?',
@@ -600,7 +600,7 @@ const SUNSTONE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> =
 const TIGER_EYE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
   en: {
     introParagraphs: [
-      'Distinctive in colour and character, the Al Ain Rosette Tiger Eye Necklace is hand-strung from natural tiger eye gemstones, accented with gold-plated hematite beads and completed with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Designed with versatility in mind, it may be worn as a single long necklace or doubled around the neck to create a shorter layered silhouette.',
+      'Distinctive in colour and character, the Al Ain Oasis Necklace - Tiger Eye is hand-strung from natural tiger eye gemstones, accented with gold-plated hematite beads and completed with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Designed with versatility in mind, it may be worn as a single long necklace or doubled around the neck to create a shorter layered silhouette.',
       'Natural gemstones have been admired for generations for their individuality. The rich golden-brown tones of tiger eye, together with its distinctive silky lustre, create a composition that is both timeless and expressive. As every gemstone is formed by nature, each necklace possesses its own unique colour, chatoyancy and natural character.',
       'Handcrafted in Abu Dhabi, the necklace reflects Bint Saeed’s appreciation for natural materials and enduring craftsmanship. Complete the look with the matching Al Ain Rosette Earrings and the Al Ain Rosette Tiger Eye Signature Strand, designed to complement selected Bint Saeed abayas, dresses and tailoring.',
     ],
@@ -626,7 +626,7 @@ const TIGER_EYE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
     ],
     faq: [
       {
-        question: 'What is the Al Ain Rosette Tiger Eye Necklace made from?',
+        question: 'What is the Al Ain Oasis Necklace - Tiger Eye made from?',
         answer: [
           'The necklace is handcrafted using natural tiger eye gemstone beads, gold-plated hematite accent beads and the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. It is completed with a gold-tone clasp and adjustable extension chain.',
           'Tiger eye is a naturally occurring gemstone admired for its rich golden-brown tones and distinctive silky optical effect, known as chatoyancy, which creates a moving band of light across the surface. Every gemstone is unique, ensuring each Bint Saeed necklace possesses its own individual character.',
@@ -655,12 +655,12 @@ const TIGER_EYE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       {
         question: 'Where is the necklace made?',
         answer:
-          'Every Al Ain Rosette Tiger Eye Necklace is handcrafted in Abu Dhabi, United Arab Emirates.',
+          'Every Al Ain Oasis Necklace - Tiger Eye is handcrafted in Abu Dhabi, United Arab Emirates.',
       },
       {
         question: 'Does the necklace arrive in gift packaging?',
         answer:
-          'Yes. Every Al Ain Rosette Tiger Eye Necklace is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
+          'Yes. Every Al Ain Oasis Necklace - Tiger Eye is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
       },
       {
         question: 'How should I care for my necklace?',
@@ -744,7 +744,7 @@ const TIGER_EYE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
 const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
   en: {
     introParagraphs: [
-      'Refined in its simplicity, the Al Ain Rosette Onyx Necklace is hand-strung from natural black onyx gemstones, accented with gold-plated hematite beads and completed with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Designed with versatility in mind, it may be worn as a single long necklace or doubled around the neck to create a shorter layered silhouette.',
+      'Refined in its simplicity, the Al Ain Oasis Necklace - Onyx is hand-strung from natural black onyx gemstones, accented with gold-plated hematite beads and completed with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Designed with versatility in mind, it may be worn as a single long necklace or doubled around the neck to create a shorter layered silhouette.',
       'Natural gemstones have been admired for generations for their individuality. The deep black tones of onyx create a striking contrast with the warmth of Carnelian and luminous gold accents, resulting in a composition that is both timeless and distinctive. As every gemstone is formed by nature, each necklace possesses its own subtle character and natural beauty.',
       'Handcrafted in Abu Dhabi, the necklace reflects Bint Saeed’s appreciation for natural materials and enduring craftsmanship. Complete the look with the matching Al Ain Rosette Earrings and the Al Ain Rosette Onyx Signature Strand, designed to complement selected Bint Saeed abayas, dresses and tailoring.',
     ],
@@ -770,7 +770,7 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
     ],
     faq: [
       {
-        question: 'What is the Al Ain Rosette Onyx Necklace made from?',
+        question: 'What is the Al Ain Oasis Necklace - Onyx made from?',
         answer: [
           'The necklace is handcrafted using natural black onyx gemstone beads, gold-plated hematite accent beads and the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. It is completed with a gold-tone clasp and adjustable extension chain.',
           'Onyx is a naturally occurring variety of chalcedony, admired for its rich black colour and smooth polished finish. Every gemstone is unique, ensuring each Bint Saeed necklace possesses its own individual character.',
@@ -799,12 +799,12 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
       {
         question: 'Where is the necklace made?',
         answer:
-          'Every Al Ain Rosette Onyx Necklace is handcrafted in Abu Dhabi, United Arab Emirates.',
+          'Every Al Ain Oasis Necklace - Onyx is handcrafted in Abu Dhabi, United Arab Emirates.',
       },
       {
         question: 'Does the necklace arrive in gift packaging?',
         answer:
-          'Yes. Every Al Ain Rosette Onyx Necklace is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
+          'Yes. Every Al Ain Oasis Necklace - Onyx is presented in a signature Bint Saeed gift box, making it ideal for gifting and safekeeping.',
       },
       {
         question: 'How should I care for my necklace?',

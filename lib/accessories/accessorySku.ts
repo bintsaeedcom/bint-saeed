@@ -9,7 +9,7 @@ import { buildVariantSku } from '@/lib/products/sku'
  * - Other jewellery families keep stable BSA-JWL-* style codes (one code per product).
  */
 const JEWELLERY_STYLE_SKU_BY_ID: Record<string, string> = {
-  // Al Ain Rosette Necklaces (ALN)
+  // Al Ain Oasis Necklaces (ALN)
   'al-ain-rosette-necklace-malachite': 'BSA-JWL-ALN-MAL-001',
   'al-ain-rosette-necklace-lapis-lazuli': 'BSA-JWL-ALN-LAP-001',
   'al-ain-rosette-necklace-rose-quartz': 'BSA-JWL-ALN-RSQ-001',
@@ -17,10 +17,12 @@ const JEWELLERY_STYLE_SKU_BY_ID: Record<string, string> = {
   'al-ain-rosette-necklace-onyx': 'BSA-JWL-ALN-ONX-001',
   'al-ain-rosette-necklace-sunstone': 'BSA-JWL-ALN-SUN-001',
 
-  // Earrings (EAR)
-  'earrings-pearl-drop': 'BSA-JWL-EAR-PRL-001',
-  'earrings-geometric': 'BSA-JWL-EAR-GEO-001',
-  'earrings-hoops': 'BSA-JWL-EAR-HOP-001',
+  // Al Ain Oasis Earrings (EAR-OAS)
+  'al-ain-oasis-earrings-malachite': 'BSA-JWL-EAR-MAL-001',
+  'al-ain-oasis-earrings-rose-quartz': 'BSA-JWL-EAR-RSQ-001',
+  // Al Quaa Earrings (EAR-QUA)
+  'al-quaa-earrings-onyx': 'BSA-JWL-EAR-ONX-001',
+  'al-quaa-earrings-lapis-lazuli': 'BSA-JWL-EAR-LAP-001',
 
   // Bracelets (BRC)
   'bracelet-pearl-chain': 'BSA-JWL-BRC-PRL-001',
@@ -51,6 +53,7 @@ const BAG_CHARM_STYLE_SKU_BY_ID: Record<string, string> = {
 
 /** Phone charm parent style codes — one stone per product, no colour suffix. */
 const PHONE_CHARM_STYLE_SKU_BY_ID: Record<string, string> = {
+  // Al Quaa Phone Charms (BS-PH)
   'al-ain-rosette-phone-charm-fuchsia-jade': 'BS-PH-001',
   'al-ain-rosette-phone-charm-orange-jade': 'BS-PH-002',
   'al-ain-rosette-phone-charm-onyx': 'BS-PH-003',

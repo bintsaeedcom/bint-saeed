@@ -97,7 +97,7 @@ function buildPhoneCharmPack({
   variationNote,
   naturalStoneBullets,
 }: StonePackInput): PhoneCharmPdpContentPack {
-  const headline = `${stoneLabel} Al Ain Rosette Phone Charm`
+  const headline = `Al Quaa Phone Charm - ${stoneLabel}`
 
   return {
     headline,

@@ -8,7 +8,12 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { products as staticProducts, categories, isVisibleOnShopGrid } from '@/data/products'
-import { isWebshopPicturePath, productImageSrc, productPrimaryImage } from '@/lib/products/shopImage'
+import {
+  isWebshopPicturePath,
+  productImageSrc,
+  shopGridPrimaryColor,
+  shopGridPrimaryImage,
+} from '@/lib/products/shopImage'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
 import type { Product } from '@/data/products'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
@@ -317,7 +322,10 @@ export default function ShopClient() {
 
       <section className="mx-auto max-w-[1400px] px-5 py-10 md:px-10 md:py-20 lg:px-14">
         <ul className="grid list-none grid-cols-2 gap-x-3 gap-y-10 p-0 sm:gap-x-7 sm:gap-y-16 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-18">
-          {sortedProducts.map((product) => (
+          {sortedProducts.map((product) => {
+            const gridImage = shopGridPrimaryImage(product)
+            const gridColor = shopGridPrimaryColor(product)
+            return (
             <li
               key={product.id}
               className="group relative z-10 min-w-0"
@@ -332,15 +340,15 @@ export default function ShopClient() {
                 >
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
                     <Image
-                      src={productImageSrc(productPrimaryImage(product))}
-                      alt={getProductImageAlt(product, productPrimaryImage(product), {
-                        color: product.colors[0]?.name,
-                        index: 0,
+                      src={productImageSrc(gridImage)}
+                      alt={getProductImageAlt(product, gridImage, {
+                        color: gridColor,
+                        index: 1,
                         locale: language,
                       })}
                       fill
                       sizes="(max-width: 1024px) 50vw, 33vw"
-                      unoptimized={isWebshopPicturePath(productPrimaryImage(product))}
+                      unoptimized={isWebshopPicturePath(gridImage)}
                       className="pointer-events-none img-zoom object-cover object-top"
                       priority={false}
                     />
@@ -382,7 +390,8 @@ export default function ShopClient() {
                 </div>
               </article>
             </li>
-          ))}
+            )
+          })}
         </ul>
 
         {sortedProducts.length === 0 && (

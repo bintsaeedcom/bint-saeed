@@ -10,6 +10,24 @@ export function productPrimaryImage(product: Pick<Product, 'images'>): string {
   return product.images[0] ?? FRONT_PLACEHOLDER
 }
 
+/** Hero image for `/shop` product cards (may differ from PDP default colour). */
+export function shopGridPrimaryImage(
+  product: Pick<Product, 'slug' | 'images' | 'colorImages'>,
+): string {
+  if (product.slug === 'park-lane-abaya') {
+    const maroonGallery = product.colorImages?.['Dark Maroon'] ?? product.images
+    return maroonGallery[1] ?? maroonGallery[0] ?? FRONT_PLACEHOLDER
+  }
+  return productPrimaryImage(product)
+}
+
+export function shopGridPrimaryColor(
+  product: Pick<Product, 'slug' | 'colors'>,
+): string | undefined {
+  if (product.slug === 'park-lane-abaya') return 'Dark Maroon'
+  return product.colors[0]?.name
+}
+
 export function productImageSrc(src: string): string {
   const trimmed = src.trim()
   if (!trimmed || trimmed.startsWith('http')) return trimmed

@@ -29,12 +29,30 @@ export const ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE = `${STRANDS}/bint-saeed-jad
 export const ACCESSORY_IMAGE_EARRINGS_HERO = `${A}/earrings/bint-saeed-earrings.PNG`
 export const ACCESSORY_IMAGE_BAG_CHARM = `${A}/bag%20charm/bint-saeed-bag-charm.PNG`
 
-const AL_AIN_ROSETTE_NECKLACE_BASE_NAME = 'Al Ain Rosette Necklace'
-function alAinRosetteNecklaceName(variant: string): string {
-  return `${AL_AIN_ROSETTE_NECKLACE_BASE_NAME} — ${variant}`
+const AL_AIN_OASIS_NECKLACE_BASE_NAME = 'Al Ain Oasis Necklace'
+function alAinOasisNecklaceName(variant: string): string {
+  return `${AL_AIN_OASIS_NECKLACE_BASE_NAME} - ${variant}`
 }
 function alAinRosetteNecklaceId(variantSlug: string): string {
   return `al-ain-rosette-necklace-${variantSlug}`
+}
+
+const AL_QUAA_PHONE_CHARM_BASE_NAME = 'Al Quaa Phone Charm'
+function alQuaaPhoneCharmName(variant: string): string {
+  return `${AL_QUAA_PHONE_CHARM_BASE_NAME} - ${variant}`
+}
+function alAinRosettePhoneCharmId(variantSlug: string): string {
+  return `al-ain-rosette-phone-charm-${variantSlug}`
+}
+
+const AL_AIN_OASIS_EARRINGS_BASE_NAME = 'Al Ain Oasis Earrings'
+function alAinOasisEarringsName(variant: string): string {
+  return `${AL_AIN_OASIS_EARRINGS_BASE_NAME} - ${variant}`
+}
+
+const AL_QUAA_EARRINGS_BASE_NAME = 'Al Quaa Earrings'
+function alQuaaEarringsName(variant: string): string {
+  return `${AL_QUAA_EARRINGS_BASE_NAME} - ${variant}`
 }
 
 export interface Accessory {
@@ -125,7 +143,7 @@ export const accessories: Accessory[] = [
   // Necklaces — Al Ain line (variants: stone or style)
   {
     id: alAinRosetteNecklaceId('malachite'),
-    name: alAinRosetteNecklaceName('Malachite'),
+    name: alAinOasisNecklaceName('Malachite'),
     nameAr: 'قلادة القوع روزيت: الملاكيت',
     category: 'necklaces',
     price: 1650,
@@ -142,7 +160,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: alAinRosetteNecklaceId('tiger-eye'),
-    name: alAinRosetteNecklaceName('Tiger Eye'),
+    name: alAinOasisNecklaceName('Tiger Eye'),
     nameAr: 'قلادة القوع روزيت: عين النمر',
     category: 'necklaces',
     price: 1480,
@@ -159,7 +177,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: alAinRosetteNecklaceId('onyx'),
-    name: alAinRosetteNecklaceName('Onyx'),
+    name: alAinOasisNecklaceName('Onyx'),
     nameAr: 'قلادة القوع روزيت: الأونكس',
     category: 'necklaces',
     price: 1590,
@@ -177,7 +195,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: alAinRosetteNecklaceId('rose-quartz'),
-    name: alAinRosetteNecklaceName('Rose Quartz'),
+    name: alAinOasisNecklaceName('Rose Quartz'),
     nameAr: 'قلادة القوع روزيت: الكوارتز الوردي',
     category: 'necklaces',
     price: 1740,
@@ -194,7 +212,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: alAinRosetteNecklaceId('sunstone'),
-    name: alAinRosetteNecklaceName('Sunstone'),
+    name: alAinOasisNecklaceName('Sunstone'),
     nameAr: 'قلادة القوع روزيت: حجر الشمس',
     category: 'necklaces',
     price: 380,
@@ -210,7 +228,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: alAinRosetteNecklaceId('lapis-lazuli'),
-    name: alAinRosetteNecklaceName('Lapis Lazuli'),
+    name: alAinOasisNecklaceName('Lapis Lazuli'),
     nameAr: 'قلادة القوع روزيت: اللازورد',
     category: 'necklaces',
     price: 520,
@@ -224,53 +242,67 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
 
-  // Earrings
+  // Earrings — Al Ain Oasis & Al Quaa lines
   {
-    id: 'earrings-pearl-drop',
-    name: 'Pearl Drop Earrings',
-    nameAr: 'أقراط لؤلؤ متدلية',
+    id: 'al-ain-oasis-earrings-malachite',
+    name: alAinOasisEarringsName('Malachite'),
+    nameAr: 'أقراط واحة العين — ملاكيت',
     category: 'earrings',
-    price: 280,
-    description: 'Classic pearl drop earrings with gold-plated hooks.',
-    descriptionAr: 'أقراط لؤلؤ متدلية كلاسيكية مع خطافات مطلية بالذهب.',
+    price: 595,
+    description:
+      'Hand-assembled malachite earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
+    descriptionAr: 'أقراط ملاكيت مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
     images: [ACCESSORY_IMAGE_EARRINGS_HERO],
-    materials: '18K Gold-plated, Freshwater Pearls',
-    materialsAr: 'مطلي بالذهب 18 قيراط، لؤلؤ المياه العذبة',
-    colors: [
-      { name: 'Gold/White', nameAr: 'ذهبي/أبيض', hex: '#FFD700' }],
-    inStock: true,
-    isBestseller: true,
-  },
-  {
-    id: 'earrings-geometric',
-    name: 'Geometric Studs',
-    nameAr: 'أقراط هندسية',
-    category: 'earrings',
-    price: 195,
-    description: 'Modern geometric stud earrings inspired by Islamic art.',
-    descriptionAr: 'أقراط هندسية عصرية مستوحاة من الفن الإسلامي.',
-    images: [ACCESSORY_IMAGE_EARRINGS_HERO],
-    materials: 'Sterling Silver',
-    materialsAr: 'فضة استرلينية',
-    colors: [
-      { name: 'Silver', nameAr: 'فضي', hex: '#C0C0C0' },
-      { name: 'Gold', nameAr: 'ذهبي', hex: '#FFD700' }],
+    materials: 'Natural malachite, Carnelian, 18K gold-plated hematite',
+    materialsAr: 'ملاكيت طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
+    colors: [{ name: 'Malachite Green', nameAr: 'أخضر ملاكيت', hex: '#1f7a5e' }],
     inStock: true,
     isNew: true,
   },
   {
-    id: 'earrings-hoops',
-    name: 'Textured Gold Hoops',
-    nameAr: 'أقراط حلقية ذهبية محكمة',
+    id: 'al-ain-oasis-earrings-rose-quartz',
+    name: alAinOasisEarringsName('Rose Quartz'),
+    nameAr: 'أقراط واحة العين — كوارتز وردي',
     category: 'earrings',
-    price: 320,
-    description: 'Medium-sized hoops with hammered texture finish.',
-    descriptionAr: 'أقراط حلقية متوسطة الحجم بتشطيب محكم.',
+    price: 595,
+    description:
+      'Hand-assembled rose quartz earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
+    descriptionAr: 'أقراط كوارتز وردي مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
     images: [ACCESSORY_IMAGE_EARRINGS_HERO],
-    materials: '18K Gold-plated Brass',
-    materialsAr: 'نحاس مطلي بالذهب 18 قيراط',
-    colors: [
-      { name: 'Gold', nameAr: 'ذهبي', hex: '#FFD700' }],
+    materials: 'Natural rose quartz, Carnelian, 18K gold-plated hematite',
+    materialsAr: 'كوارتز وردي طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
+    colors: [{ name: 'Rose Quartz Pink', nameAr: 'وردي كوارتز', hex: '#f4b8c5' }],
+    inStock: true,
+    isBestseller: true,
+  },
+  {
+    id: 'al-quaa-earrings-onyx',
+    name: alQuaaEarringsName('Onyx'),
+    nameAr: 'أقراط القوع — أونكس',
+    category: 'earrings',
+    price: 495,
+    description:
+      'Hand-assembled onyx earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
+    descriptionAr: 'أقراط أونكس مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
+    images: [ACCESSORY_IMAGE_EARRINGS_HERO],
+    materials: 'Natural black onyx, Carnelian, 18K gold-plated hematite',
+    materialsAr: 'أونكس أسود طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
+    colors: [{ name: 'Black Onyx', nameAr: 'أونكس أسود', hex: '#1a1a1a' }],
+    inStock: true,
+  },
+  {
+    id: 'al-quaa-earrings-lapis-lazuli',
+    name: alQuaaEarringsName('Lapis Lazuli'),
+    nameAr: 'أقراط القوع — لازورد',
+    category: 'earrings',
+    price: 495,
+    description:
+      'Hand-assembled lapis lazuli earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
+    descriptionAr: 'أقراط لازورد مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
+    images: [ACCESSORY_IMAGE_EARRINGS_HERO],
+    materials: 'Natural lapis lazuli, Carnelian, 18K gold-plated hematite',
+    materialsAr: 'لازورد طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
+    colors: [{ name: 'Lapis Lazuli', nameAr: 'لازورد', hex: '#1e40af' }],
     inStock: true,
   },
 
@@ -394,13 +426,13 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
 
-  // Al Ain Rosette Phone Charms — natural stone line (7 products)
+  // Al Quaa Phone Charms — natural stone line (7 products)
   {
-    id: 'al-ain-rosette-phone-charm-fuchsia-jade',
-    name: 'Fuchsia Coloured Jade Al Ain Rosette Phone Charm',
+    id: alAinRosettePhoneCharmId('fuchsia-jade'),
+    name: alQuaaPhoneCharmName('Fuchsia Coloured Jade'),
     nameAr: 'تعليقة هاتف روزيت العين — يشم فوشي',
     category: 'phone-strands',
-    price: 245,
+    price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
@@ -412,11 +444,11 @@ export const accessories: Accessory[] = [
     isNew: true,
   },
   {
-    id: 'al-ain-rosette-phone-charm-orange-jade',
-    name: 'Orange Coloured Jade Al Ain Rosette Phone Charm',
+    id: alAinRosettePhoneCharmId('orange-jade'),
+    name: alQuaaPhoneCharmName('Orange Coloured Jade'),
     nameAr: 'تعليقة هاتف روزيت العين — يشم برتقالي',
     category: 'phone-strands',
-    price: 245,
+    price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
@@ -427,11 +459,11 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'al-ain-rosette-phone-charm-onyx',
-    name: 'Onyx Al Ain Rosette Phone Charm',
+    id: alAinRosettePhoneCharmId('onyx'),
+    name: alQuaaPhoneCharmName('Onyx'),
     nameAr: 'تعليقة هاتف روزيت العين — أونكس',
     category: 'phone-strands',
-    price: 245,
+    price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
@@ -443,11 +475,11 @@ export const accessories: Accessory[] = [
     isBestseller: true,
   },
   {
-    id: 'al-ain-rosette-phone-charm-tiger-eye',
-    name: 'Tiger Eye Al Ain Rosette Phone Charm',
+    id: alAinRosettePhoneCharmId('tiger-eye'),
+    name: alQuaaPhoneCharmName('Tiger Eye'),
     nameAr: 'تعليقة هاتف روزيت العين — عين النمر',
     category: 'phone-strands',
-    price: 245,
+    price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
@@ -458,11 +490,11 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'al-ain-rosette-phone-charm-malachite',
-    name: 'Malachite Al Ain Rosette Phone Charm',
+    id: alAinRosettePhoneCharmId('malachite'),
+    name: alQuaaPhoneCharmName('Malachite'),
     nameAr: 'تعليقة هاتف روزيت العين — ملاكيت',
     category: 'phone-strands',
-    price: 245,
+    price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
@@ -473,11 +505,11 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'al-ain-rosette-phone-charm-lapis-lazuli',
-    name: 'Lapis Lazuli Al Ain Rosette Phone Charm',
+    id: alAinRosettePhoneCharmId('lapis-lazuli'),
+    name: alQuaaPhoneCharmName('Lapis Lazuli'),
     nameAr: 'تعليقة هاتف روزيت العين — لازورد',
     category: 'phone-strands',
-    price: 245,
+    price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],
@@ -488,11 +520,11 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: 'al-ain-rosette-phone-charm-rose-quartz',
-    name: 'Rose Quartz Al Ain Rosette Phone Charm',
+    id: alAinRosettePhoneCharmId('rose-quartz'),
+    name: alQuaaPhoneCharmName('Rose Quartz'),
     nameAr: 'تعليقة هاتف روزيت العين — كوارتز وردي',
     category: 'phone-strands',
-    price: 245,
+    price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM],

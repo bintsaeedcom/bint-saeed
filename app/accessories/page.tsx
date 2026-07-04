@@ -58,6 +58,7 @@ export default function AccessoriesPage() {
   const [selectedColors, setSelectedColors] = useState<ColorFilterId[]>([])
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const categoryScrollRef = useRef<HTMLDivElement>(null)
   const { formatPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
@@ -82,6 +83,13 @@ export default function AccessoriesPage() {
     setSelectedStones(parseStonesParam(searchParams.get('stones')))
     setSelectedColors(parseColorsParam(searchParams.get('colors'), colorOptionIds))
   }, [searchParams, colorOptionIds])
+
+  useEffect(() => {
+    const scroller = categoryScrollRef.current
+    if (!scroller) return
+    const active = scroller.querySelector<HTMLElement>('[aria-selected="true"]')
+    active?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' })
+  }, [activeCategory])
 
   const replaceAccessoryQuery = useCallback(
     (patch: Partial<{
@@ -230,21 +238,69 @@ export default function AccessoriesPage() {
       {/* Collection layout — category sidebar + product grid */}
       <section className="border-b border-brand-stone/30 bg-brand-pageCanvas">
         <div className="container mx-auto px-6 lg:px-12">
-          {/* Mobile toolbar — categories via Refine drawer only */}
+          {/* Mobile toolbar — category strip + refine drawer */}
           <div
-            className={`sticky top-[50px] z-40 border-b border-brand-stone/25 bg-brand-pageCanvas py-3 md:top-16 md:hidden ${isRTL ? 'text-right' : ''}`}
+            className={`sticky top-[50px] z-40 border-b border-brand-stone/25 bg-brand-pageCanvas md:top-16 md:hidden ${isRTL ? 'text-right' : ''}`}
           >
-            <button
-              type="button"
-              onClick={() => setIsFilterOpen(true)}
-              className={`flex items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
-              data-cursor-hover
-              aria-expanded={isFilterOpen}
-              aria-haspopup="dialog"
+            <div
+              className={`flex items-center justify-between gap-3 py-3 ${isRTL ? 'flex-row-reverse' : ''}`}
             >
-              <FiFilter className="h-4 w-4" aria-hidden />
-              {ui.shop.productCategories}
-            </button>
+              <p className="min-w-0 truncate font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-darkRed">
+                {activeTab ? categoryLabel(activeTab) : ui.shop.productCategories}
+              </p>
+              <button
+                type="button"
+                onClick={() => setIsFilterOpen(true)}
+                className={`flex shrink-0 items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+                data-cursor-hover
+                aria-expanded={isFilterOpen}
+                aria-haspopup="dialog"
+              >
+                <FiFilter className="h-4 w-4" aria-hidden />
+                {ui.shop.refine}
+              </button>
+            </div>
+            <div
+              className={`relative pb-3 ${isRTL ? 'text-right' : ''}`}
+            >
+              <div
+                ref={categoryScrollRef}
+                className={`flex snap-x snap-mandatory gap-1 overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+                  isRTL ? 'flex-row-reverse' : ''
+                }`}
+                role="tablist"
+                aria-label={ui.shop.productCategories}
+              >
+                {accessoryCategories.map((category) => {
+                  const active = activeCategory === category.id
+                  return (
+                    <button
+                      key={category.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={active}
+                      onClick={() => setCategoryAndUrl(category.id)}
+                      className={`snap-start shrink-0 whitespace-nowrap px-3 py-2 font-montserrat text-[10px] uppercase tracking-[0.1em] transition-all duration-300 ${
+                        active
+                          ? 'bg-brand-darkRed text-brand-ivory'
+                          : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
+                      }`}
+                      data-cursor-hover
+                    >
+                      {categoryLabel(category)}
+                    </button>
+                  )
+                })}
+              </div>
+              <div
+                className={`pointer-events-none absolute inset-y-0 w-5 bg-gradient-to-r from-brand-pageCanvas to-transparent ${isRTL ? 'right-0 bg-gradient-to-l' : 'left-0'}`}
+                aria-hidden
+              />
+              <div
+                className={`pointer-events-none absolute inset-y-0 w-5 bg-gradient-to-l from-brand-pageCanvas to-transparent ${isRTL ? 'left-0 bg-gradient-to-r' : 'right-0'}`}
+                aria-hidden
+              />
+            </div>
           </div>
 
           <div

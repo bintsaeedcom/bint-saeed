@@ -265,7 +265,6 @@ export default function Header() {
           title: 'Personalisation',
           links: [
             { label: 'Personalisation', href: '/personalisation' },
-            { label: 'Craftsmanship', href: '/craftsmanship' },
             { label: 'Contact', href: '/contact' },
           ],
         },
@@ -278,7 +277,7 @@ export default function Header() {
           ctaLabel: 'Discover More',
         },
         {
-          title: 'Name Labels',
+          title: 'Personalised labels',
           href: '/personalisation',
           image: MEGA_MENU_NAME_LABELS,
           ctaLabel: 'Discover More',
@@ -847,11 +846,7 @@ export default function Header() {
                                 className="overflow-hidden"
                               >
                                 <div
-                                  className={`mb-3 rounded-[2px] border border-white/12 bg-white/[0.07] px-4 py-3 ${
-                                    isRTL
-                                      ? 'border-e-2 border-e-brand-dustyBlue/50 text-right'
-                                      : 'border-s-2 border-s-brand-dustyBlue/50 text-left'
-                                  }`}
+                                  className={`mb-3 px-1 pb-2 ${isRTL ? 'text-right' : 'text-left'}`}
                                 >
                                   <LocaleLink
                                     href={item.href}
@@ -891,27 +886,6 @@ export default function Header() {
                                     </div>
                                   ))}
 
-                                  {mega.features.length > 0 ? (
-                                    <div className="mt-4 border-t border-white/10 pt-3">
-                                      <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/45">
-                                        {isRTL ? 'مميز' : 'Featured'}
-                                      </p>
-                                      <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
-                                        {mega.features.map((feature) => (
-                                          <LocaleLink
-                                            key={feature.title}
-                                            href={feature.href}
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                            className="inline-flex min-h-9 items-center rounded-[2px] border border-white/15 bg-white/[0.05] px-3 py-1.5 font-montserrat text-[11px] tracking-[0.04em] text-white/85 transition-colors hover:border-brand-dustyBlue/40 hover:text-brand-dustyBlue"
-                                            data-cursor-hover
-                                            data-analytics-section="header-mobile-nav"
-                                          >
-                                            {feature.title}
-                                          </LocaleLink>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  ) : null}
                                 </div>
                               </motion.div>
                             ) : null}

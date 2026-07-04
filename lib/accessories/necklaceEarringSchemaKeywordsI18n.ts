@@ -127,25 +127,28 @@ const NECKLACE_STONE_ALIASES: Record<string, string[]> = {
 }
 
 const EARRING_PRODUCT_ALIASES: Record<string, string[]> = {
-  'earrings-pearl-drop': [
-    'pearl drop earrings',
-    'freshwater pearl earrings',
-    'classic pearl earrings gift UAE',
-    'modest fashion pearl earrings',
+  'al-ain-oasis-earrings-malachite': [
+    'malachite earrings',
+    'Al Ain Oasis earrings',
+    'natural malachite earrings UAE',
+    'pairs with malachite necklace',
+  ],
+  'al-ain-oasis-earrings-rose-quartz': [
+    'rose quartz earrings',
+    'Al Ain Oasis earrings',
+    'blush stone earrings UAE',
     'pairs with rose quartz necklace',
   ],
-  'earrings-geometric': [
-    'geometric stud earrings',
-    'Islamic art stud earrings',
-    'sterling silver stud earrings UAE',
-    'pairs with malachite necklace',
+  'al-quaa-earrings-onyx': [
+    'onyx earrings',
+    'Al Quaa earrings',
+    'black onyx earrings UAE',
     'pairs with onyx necklace',
   ],
-  'earrings-hoops': [
-    'gold hoop earrings',
-    'hammered gold hoop earrings',
-    'evening hoop earrings UAE',
-    'pairs with tiger eye necklace',
+  'al-quaa-earrings-lapis-lazuli': [
+    'lapis lazuli earrings',
+    'Al Quaa earrings',
+    'blue stone earrings UAE',
     'pairs with lapis lazuli necklace',
   ],
 }

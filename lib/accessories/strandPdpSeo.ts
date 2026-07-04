@@ -61,25 +61,34 @@ function kw(...stone: string[]): string[] {
   return [...BASE_KEYWORDS, ...stone]
 }
 
+const OASIS_EARRINGS_MALACHITE_ID = 'al-ain-oasis-earrings-malachite'
+const OASIS_EARRINGS_ROSE_QUARTZ_ID = 'al-ain-oasis-earrings-rose-quartz'
+const QUAA_EARRINGS_ONYX_ID = 'al-quaa-earrings-onyx'
+const QUAA_EARRINGS_LAPIS_ID = 'al-quaa-earrings-lapis-lazuli'
+const OASIS_EARRINGS_MALACHITE_LABEL = 'Al Ain Oasis Earrings - Malachite'
+const OASIS_EARRINGS_ROSE_QUARTZ_LABEL = 'Al Ain Oasis Earrings - Rose Quartz'
+const QUAA_EARRINGS_ONYX_LABEL = 'Al Quaa Earrings - Onyx'
+const QUAA_EARRINGS_LAPIS_LABEL = 'Al Quaa Earrings - Lapis Lazuli'
+
 /** Conversion-focused alt, pairing jewellery, and discovery keywords per strand PDP. */
 export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   'signature-strand-onyx': {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-onyx',
       necklaceImage: '', // same asset as strand — gallery shows earrings only
-      necklaceLabel: 'Al Ain Rosette Necklace — Onyx',
-      earringsId: 'earrings-geometric',
+      necklaceLabel: 'Al Ain Oasis Necklace - Onyx',
+      earringsId: QUAA_EARRINGS_ONYX_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: 'Geometric Stud Earrings',
+      earringsLabel: QUAA_EARRINGS_ONYX_LABEL,
     },
     carouselAlt:
-      'Black onyx natural stone bead abaya strand with 18K gold clip — pairs with Al Ain Onyx necklace and geometric stud earrings for Marylebone Abaya',
+      'Black onyx natural stone bead abaya strand with 18K gold clip — pairs with Al Ain Oasis Necklace - Onyx and Al Quaa Earrings - Onyx for Marylebone Abaya',
     strandAlt:
-      'Onyx natural stone bead abaya strand, hand-strung black onyx beads with 18K gold-plated clip — interchange for Bint Saeed Marylebone Abaya, pairs with Al Ain Onyx necklace',
+      'Onyx natural stone bead abaya strand, hand-strung black onyx beads with 18K gold-plated clip — interchange for Bint Saeed Marylebone Abaya, pairs with Al Ain Oasis Necklace - Onyx',
     necklaceAlt:
-      'Al Ain Onyx necklace with hand-strung natural black onyx beads — pairs with onyx abaya strand and geometric stud earrings',
+      'Al Ain Oasis Necklace - Onyx with hand-strung natural black onyx beads — pairs with onyx abaya strand and Al Quaa Earrings - Onyx',
     earringsAlt:
-      'Geometric stud earrings in sterling silver — pairs with onyx abaya strand and Al Ain Onyx necklace for a complete stone jewellery look',
+      'Al Quaa Earrings - Onyx with natural onyx and Carnelian Al Ain Rosette details — pairs with onyx abaya strand and Al Ain Oasis Necklace - Onyx',
     keywords: kw(
       'black onyx abaya strand',
       'onyx bead strand',
@@ -93,19 +102,19 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-tiger-eye',
       necklaceImage: '',
-      necklaceLabel: 'Al Ain Rosette Necklace — Tiger Eye',
-      earringsId: 'earrings-hoops',
+      necklaceLabel: 'Al Ain Oasis Necklace - Tiger Eye',
+      earringsId: QUAA_EARRINGS_ONYX_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: 'Textured Gold Hoops',
+      earringsLabel: QUAA_EARRINGS_ONYX_LABEL,
     },
     carouselAlt:
-      'Tiger eye natural stone bead abaya strand with warm chatoyant beads — pairs with Al Ain Tiger Eye necklace and gold hoop earrings',
+      'Tiger eye natural stone bead abaya strand with warm chatoyant beads — pairs with Al Ain Oasis Necklace - Tiger Eye and Al Quaa Earrings - Onyx',
     strandAlt:
-      'Tiger eye natural stone bead abaya strand, warm golden-brown chatoyant beads with 18K gold clip — designed for Marylebone Abaya draping, pairs with Al Ain Tiger Eye necklace',
+      'Tiger eye natural stone bead abaya strand, warm golden-brown chatoyant beads with 18K gold clip — designed for Marylebone Abaya draping, pairs with Al Ain Oasis Necklace - Tiger Eye',
     necklaceAlt:
-      'Al Ain Tiger Eye necklace with natural tiger eye beads and signature clasp — pairs with tiger eye abaya strand and textured gold hoops',
+      'Al Ain Oasis Necklace - Tiger Eye with natural tiger eye beads and signature clasp — pairs with tiger eye abaya strand and Al Quaa Earrings - Onyx',
     earringsAlt:
-      'Textured gold hoop earrings with hammered finish — pairs with tiger eye abaya strand and Al Ain Tiger Eye necklace',
+      'Al Quaa Earrings - Onyx — pairs with tiger eye abaya strand and Al Ain Oasis Necklace - Tiger Eye',
     keywords: kw(
       'tiger eye abaya strand',
       'tiger eye bead strand',
@@ -119,19 +128,19 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-sunstone',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Rosette Necklace — Sunstone',
-      earringsId: 'earrings-pearl-drop',
+      necklaceLabel: 'Al Ain Oasis Necklace - Sunstone',
+      earringsId: OASIS_EARRINGS_ROSE_QUARTZ_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: 'Pearl Drop Earrings',
+      earringsLabel: OASIS_EARRINGS_ROSE_QUARTZ_LABEL,
     },
     carouselAlt:
-      'Sunstone natural stone bead abaya strand — warm peach-orange sunstone beads pair with Al Ain Rosette Necklace — Sunstone and pearl drop earrings',
+      'Sunstone natural stone bead abaya strand — warm peach-orange sunstone beads pair with Al Ain Oasis Necklace - Sunstone and Al Ain Oasis Earrings - Rose Quartz',
     strandAlt:
-      'Sunstone natural stone bead abaya strand, warm peach-orange sunstone beads with 18K gold clip — accent for Marylebone Abaya, pairs with Al Ain Rosette Necklace — Sunstone and pearl earrings',
+      'Sunstone natural stone bead abaya strand, warm peach-orange sunstone beads with 18K gold clip — accent for Marylebone Abaya, pairs with Al Ain Oasis Necklace - Sunstone and pearl earrings',
     necklaceAlt:
-      'Al Ain Rosette Necklace — Sunstone with luminous warm natural stone beads — pairs with sunstone abaya strand and pearl drop earrings for evening abaya styling',
+      'Al Ain Oasis Necklace - Sunstone with luminous warm natural stone beads — pairs with sunstone abaya strand and Al Ain Oasis Earrings - Rose Quartz for evening abaya styling',
     earringsAlt:
-      'Pearl drop earrings with gold-plated hooks — pairs with sunstone abaya strand and Al Ain Rosette Necklace — Sunstone',
+      'Al Ain Oasis Earrings - Rose Quartz with natural rose quartz and Carnelian Al Ain Rosette details — pairs with sunstone abaya strand and Al Ain Oasis Necklace - Sunstone',
     keywords: kw(
       'sunstone abaya strand',
       'sunstone bead strand',
@@ -145,19 +154,19 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-sunstone',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Rosette Necklace — Sunstone',
-      earringsId: 'earrings-pearl-drop',
+      necklaceLabel: 'Al Ain Oasis Necklace - Sunstone',
+      earringsId: OASIS_EARRINGS_ROSE_QUARTZ_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: 'Pearl Drop Earrings',
+      earringsLabel: OASIS_EARRINGS_ROSE_QUARTZ_LABEL,
     },
     carouselAlt:
-      'Fuchsia jade natural stone bead abaya strand — saturated rose jade beads pair with Al Ain Rosette Necklace — Sunstone and pearl drop earrings',
+      'Fuchsia jade natural stone bead abaya strand — saturated rose jade beads pair with Al Ain Oasis Necklace - Sunstone and Al Ain Oasis Earrings - Rose Quartz',
     strandAlt:
-      'Fuchsia jade natural stone bead abaya strand, deep rose jade beads with 18K gold clip — bold jewel tone for neutral abayas, pairs with Al Ain Rosette Necklace — Sunstone',
+      'Fuchsia jade natural stone bead abaya strand, deep rose jade beads with 18K gold clip — bold jewel tone for neutral abayas, pairs with Al Ain Oasis Necklace - Sunstone',
     necklaceAlt:
-      'Al Ain Rosette Necklace — Sunstone — pairs with fuchsia jade abaya strand and pearl drop earrings for a layered luxury look',
+      'Al Ain Oasis Necklace - Sunstone — pairs with fuchsia jade abaya strand and Al Ain Oasis Earrings - Rose Quartz for a layered luxury look',
     earringsAlt:
-      'Pearl drop earrings — pairs with fuchsia jade abaya strand and Al Ain Rosette Necklace — Sunstone',
+      'Al Ain Oasis Earrings - Rose Quartz — pairs with fuchsia jade abaya strand and Al Ain Oasis Necklace - Sunstone',
     keywords: kw(
       'fuchsia jade abaya strand',
       'pink jade bead strand',
@@ -171,19 +180,19 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-sunstone',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Rosette Necklace — Sunstone',
-      earringsId: 'earrings-pearl-drop',
+      necklaceLabel: 'Al Ain Oasis Necklace - Sunstone',
+      earringsId: OASIS_EARRINGS_ROSE_QUARTZ_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: 'Pearl Drop Earrings',
+      earringsLabel: OASIS_EARRINGS_ROSE_QUARTZ_LABEL,
     },
     carouselAlt:
-      'Orange jade natural stone bead abaya strand — warm amber jade beads pair with Al Ain Rosette Necklace — Sunstone and pearl drop earrings',
+      'Orange jade natural stone bead abaya strand — warm amber jade beads pair with Al Ain Oasis Necklace - Sunstone and Al Ain Oasis Earrings - Rose Quartz',
     strandAlt:
-      'Orange jade natural stone bead abaya strand, warm amber-orange jade beads with 18K gold clip — luminous highlight for neutral abayas, pairs with Al Ain Rosette Necklace — Sunstone',
+      'Orange jade natural stone bead abaya strand, warm amber-orange jade beads with 18K gold clip — luminous highlight for neutral abayas, pairs with Al Ain Oasis Necklace - Sunstone',
     necklaceAlt:
-      'Al Ain Rosette Necklace — Sunstone — pairs with orange jade abaya strand and pearl drop earrings for a warm layered look',
+      'Al Ain Oasis Necklace - Sunstone — pairs with orange jade abaya strand and Al Ain Oasis Earrings - Rose Quartz for a warm layered look',
     earringsAlt:
-      'Pearl drop earrings — pairs with orange jade abaya strand and Al Ain Rosette Necklace — Sunstone',
+      'Al Ain Oasis Earrings - Rose Quartz — pairs with orange jade abaya strand and Al Ain Oasis Necklace - Sunstone',
     keywords: kw(
       'orange jade abaya strand',
       'amber jade bead strand',
@@ -197,19 +206,19 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-lapis-lazuli',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Rosette Necklace — Lapis Lazuli',
-      earringsId: 'earrings-geometric',
+      necklaceLabel: 'Al Ain Oasis Necklace - Lapis Lazuli',
+      earringsId: QUAA_EARRINGS_LAPIS_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: 'Geometric Stud Earrings',
+      earringsLabel: QUAA_EARRINGS_LAPIS_LABEL,
     },
     carouselAlt:
-      'Blue aventurine natural stone bead abaya strand — cool dusty blue beads pair with Al Ain Rosette Necklace — Lapis Lazuli and geometric stud earrings',
+      'Blue aventurine natural stone bead abaya strand — cool dusty blue beads pair with Al Ain Oasis Necklace - Lapis Lazuli and Al Quaa Earrings - Lapis Lazuli',
     strandAlt:
-      'Blue aventurine natural stone bead abaya strand, cool blue aventurine with subtle shimmer and 18K gold clip — pairs with Al Ain Rosette Necklace — Lapis Lazuli',
+      'Blue aventurine natural stone bead abaya strand, cool blue aventurine with subtle shimmer and 18K gold clip — pairs with Al Ain Oasis Necklace - Lapis Lazuli',
     necklaceAlt:
-      'Al Ain Rosette Necklace — Lapis Lazuli — pairs with blue aventurine abaya strand and geometric stud earrings',
+      'Al Ain Oasis Necklace - Lapis Lazuli — pairs with blue aventurine abaya strand and Al Quaa Earrings - Lapis Lazuli',
     earringsAlt:
-      'Geometric stud earrings inspired by Islamic art — pairs with blue aventurine abaya strand and Al Ain Rosette Necklace — Lapis Lazuli',
+      'Al Quaa Earrings - Lapis Lazuli — pairs with blue aventurine abaya strand and Al Ain Oasis Necklace - Lapis Lazuli',
     keywords: kw(
       'blue aventurine abaya strand',
       'aventurine bead strand',
@@ -223,19 +232,19 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-rose-quartz',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ,
-      necklaceLabel: 'Al Ain Rosette Necklace — Rose Quartz',
-      earringsId: 'earrings-pearl-drop',
+      necklaceLabel: 'Al Ain Oasis Necklace - Rose Quartz',
+      earringsId: OASIS_EARRINGS_ROSE_QUARTZ_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: 'Pearl Drop Earrings',
+      earringsLabel: OASIS_EARRINGS_ROSE_QUARTZ_LABEL,
     },
     carouselAlt:
-      'Rose quartz natural stone bead abaya strand — soft blush beads pair with Al Ain Rose Quartz necklace and pearl drop earrings',
+      'Rose quartz natural stone bead abaya strand — soft blush beads pair with Al Ain Oasis Necklace - Rose Quartz and Al Ain Oasis Earrings - Rose Quartz',
     strandAlt:
-      'Rose quartz natural stone bead abaya strand, luminous blush rose quartz with carnelian accents and 18K gold clip — romantic line for Marylebone Abaya, pairs with Al Ain Rose Quartz necklace',
+      'Rose quartz natural stone bead abaya strand, luminous blush rose quartz with carnelian accents and 18K gold clip — romantic line for Marylebone Abaya, pairs with Al Ain Oasis Necklace - Rose Quartz',
     necklaceAlt:
-      'Al Ain Rose Quartz necklace, hand-knotted natural rose quartz beads — pairs with rose quartz abaya strand and pearl drop earrings',
+      'Al Ain Oasis Necklace - Rose Quartz, hand-knotted natural rose quartz beads — pairs with rose quartz abaya strand and Al Ain Oasis Earrings - Rose Quartz',
     earringsAlt:
-      'Pearl drop earrings — pairs with rose quartz abaya strand and Al Ain Rose Quartz necklace for a soft romantic jewellery set',
+      'Al Ain Oasis Earrings - Rose Quartz — pairs with rose quartz abaya strand and Al Ain Oasis Necklace - Rose Quartz for a soft romantic jewellery set',
     keywords: kw(
       'rose quartz abaya strand',
       'pink quartz bead strand',
@@ -249,19 +258,19 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-malachite',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE_MALACHITE,
-      necklaceLabel: 'Al Ain Rosette Necklace — Malachite',
-      earringsId: 'earrings-geometric',
+      necklaceLabel: 'Al Ain Oasis Necklace - Malachite',
+      earringsId: OASIS_EARRINGS_MALACHITE_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: 'Geometric Stud Earrings',
+      earringsLabel: OASIS_EARRINGS_MALACHITE_LABEL,
     },
     carouselAlt:
-      'Malachite natural stone bead abaya strand — deep green banded malachite beads pair with Al Ain Malachite necklace and geometric stud earrings',
+      'Malachite natural stone bead abaya strand — deep green banded malachite beads pair with Al Ain Oasis Necklace - Malachite and Al Ain Oasis Earrings - Malachite',
     strandAlt:
-      'Malachite natural stone bead abaya strand, deep green banded malachite and carnelian beads with 18K gold clip — signature accent for Marylebone Abaya, pairs with Al Ain Malachite necklace',
+      'Malachite natural stone bead abaya strand, deep green banded malachite and carnelian beads with 18K gold clip — signature accent for Marylebone Abaya, pairs with Al Ain Oasis Necklace - Malachite',
     necklaceAlt:
-      'Al Ain Malachite necklace with hand-strung natural malachite beads — pairs with malachite abaya strand and geometric stud earrings',
+      'Al Ain Oasis Necklace - Malachite with hand-strung natural malachite beads — pairs with malachite abaya strand and Al Ain Oasis Earrings - Malachite',
     earringsAlt:
-      'Geometric stud earrings — pairs with malachite abaya strand and Al Ain Malachite necklace for a coordinated green stone look',
+      'Al Ain Oasis Earrings - Malachite — pairs with malachite abaya strand and Al Ain Oasis Necklace - Malachite for a coordinated green stone look',
     keywords: kw(
       'malachite abaya strand',
       'malachite bead strand',
@@ -275,19 +284,19 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-lapis-lazuli',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Rosette Necklace — Lapis Lazuli',
-      earringsId: 'earrings-hoops',
+      necklaceLabel: 'Al Ain Oasis Necklace - Lapis Lazuli',
+      earringsId: QUAA_EARRINGS_LAPIS_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: 'Textured Gold Hoops',
+      earringsLabel: QUAA_EARRINGS_LAPIS_LABEL,
     },
     carouselAlt:
-      'Lapis lazuli natural stone bead abaya strand — deep blue with gold pyrite flecks, pairs with Al Ain Rosette Necklace — Lapis Lazuli and gold hoop earrings',
+      'Lapis lazuli natural stone bead abaya strand — deep blue with gold pyrite flecks, pairs with Al Ain Oasis Necklace - Lapis Lazuli and Al Quaa Earrings - Lapis Lazuli',
     strandAlt:
-      'Lapis lazuli natural stone bead abaya strand, rich blue lapis with carnelian and 18K gold clip — evening jewel tone for abaya draping, pairs with heritage Al Ain necklace',
+      'Lapis lazuli natural stone bead abaya strand, rich blue lapis with carnelian and 18K gold clip — evening jewel tone for abaya draping, pairs with Al Ain Oasis Necklace - Lapis Lazuli',
     necklaceAlt:
-      'Al Ain Rosette Necklace — Lapis Lazuli — pairs with lapis lazuli abaya strand and textured gold hoop earrings',
+      'Al Ain Oasis Necklace - Lapis Lazuli — pairs with lapis lazuli abaya strand and Al Quaa Earrings - Lapis Lazuli',
     earringsAlt:
-      'Textured gold hoop earrings — pairs with lapis lazuli abaya strand and Al Ain Rosette Necklace — Lapis Lazuli for evening wear',
+      'Al Quaa Earrings - Lapis Lazuli — pairs with lapis lazuli abaya strand and Al Ain Oasis Necklace - Lapis Lazuli for evening wear',
     keywords: kw(
       'lapis lazuli abaya strand',
       'lapis bead strand',
@@ -301,19 +310,19 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-lapis-lazuli',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Rosette Necklace — Lapis Lazuli',
-      earringsId: 'earrings-geometric',
+      necklaceLabel: 'Al Ain Oasis Necklace - Lapis Lazuli',
+      earringsId: QUAA_EARRINGS_LAPIS_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: 'Geometric Stud Earrings',
+      earringsLabel: QUAA_EARRINGS_LAPIS_LABEL,
     },
     carouselAlt:
-      'Amethyst hearts natural stone bead abaya strand — limited edition violet heart-cut beads pair with Al Ain Rosette Necklace — Lapis Lazuli and geometric stud earrings',
+      'Amethyst hearts natural stone bead abaya strand — limited edition violet heart-cut beads pair with Al Ain Oasis Necklace - Lapis Lazuli and Al Quaa Earrings - Lapis Lazuli',
     strandAlt:
       'Amethyst hearts natural stone bead abaya strand, heart-cut violet amethyst beads with 18K gold clip — limited edition Marylebone accent, pairs with heritage Al Ain necklace and stud earrings',
     necklaceAlt:
-      'Al Ain Rosette Necklace — Lapis Lazuli — pairs with amethyst hearts abaya strand and geometric stud earrings',
+      'Al Ain Oasis Necklace - Lapis Lazuli — pairs with amethyst hearts abaya strand and Al Quaa Earrings - Lapis Lazuli',
     earringsAlt:
-      'Geometric stud earrings — pairs with amethyst hearts abaya strand and Al Ain Rosette Necklace — Lapis Lazuli for a complete amethyst jewellery look',
+      'Al Quaa Earrings - Lapis Lazuli — pairs with amethyst hearts abaya strand and Al Ain Oasis Necklace - Lapis Lazuli for a complete amethyst jewellery look',
     keywords: kw(
       'amethyst abaya strand',
       'amethyst heart beads',
@@ -328,19 +337,19 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-sunstone',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE,
-      necklaceLabel: 'Al Ain Rosette Necklace — Sunstone',
-      earringsId: 'earrings-pearl-drop',
+      necklaceLabel: 'Al Ain Oasis Necklace - Sunstone',
+      earringsId: OASIS_EARRINGS_ROSE_QUARTZ_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: 'Pearl Drop Earrings',
+      earringsLabel: OASIS_EARRINGS_ROSE_QUARTZ_LABEL,
     },
     carouselAlt:
-      'Jade hearts natural stone bead abaya strand — limited edition green heart-shaped jade beads pair with Al Ain Rosette Necklace — Sunstone and pearl drop earrings',
+      'Jade hearts natural stone bead abaya strand — limited edition green heart-shaped jade beads pair with Al Ain Oasis Necklace - Sunstone and Al Ain Oasis Earrings - Rose Quartz',
     strandAlt:
-      'Jade hearts natural stone bead abaya strand, heart-shaped green jade beads with 18K gold clip — limited edition serene accent for Marylebone Abaya, pairs with Al Ain Rosette Necklace — Sunstone',
+      'Jade hearts natural stone bead abaya strand, heart-shaped green jade beads with 18K gold clip — limited edition serene accent for Marylebone Abaya, pairs with Al Ain Oasis Necklace - Sunstone',
     necklaceAlt:
-      'Al Ain Rosette Necklace — Sunstone — pairs with jade hearts abaya strand and pearl drop earrings for layered jade and gold styling',
+      'Al Ain Oasis Necklace - Sunstone — pairs with jade hearts abaya strand and Al Ain Oasis Earrings - Rose Quartz for layered jade and gold styling',
     earringsAlt:
-      'Pearl drop earrings — pairs with jade hearts abaya strand and Al Ain Rosette Necklace — Sunstone for a refined jade jewellery set',
+      'Al Ain Oasis Earrings - Rose Quartz — pairs with jade hearts abaya strand and Al Ain Oasis Necklace - Sunstone for a refined jade jewellery set',
     keywords: kw(
       'jade abaya strand',
       'jade heart beads',
