@@ -12,11 +12,9 @@ import {
   persistRegionalExperienceChoice,
   resolveRegionalLocalLanguage,
   shouldShowRegionalExperiencePopup,
-  languageLabelsEnglish,
   type GeoData,
 } from '@/lib/geo/geoDetection'
-import { getRegionalExperienceCopy } from '@/lib/geo/regionalExperienceCopy'
-import { dispatchRequestPreciseLocation } from '@/lib/geo/locationEvents'
+import { getRegionalExperienceCopy, getContinueInLanguageCta } from '@/lib/geo/regionalExperienceCopy'
 import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
 import { localizedPath, stripLocaleFromPathname, type AppLocale } from '@/lib/i18n/routing'
 
@@ -158,7 +156,6 @@ export default function RegionalExperiencePopup() {
   const handleContinueEnglish = () => {
     if (geo) applyCurrency(geo.suggestedCurrency)
     applyLocale('en')
-    dispatchRequestPreciseLocation()
     dismiss('confirmed')
   }
 
@@ -168,29 +165,30 @@ export default function RegionalExperiencePopup() {
     if (!localLang) return
     applyCurrency(geo.suggestedCurrency)
     applyLocale(localLang as Language)
-    dispatchRequestPreciseLocation()
     dismiss('confirmed')
   }
 
   const handleApplyPreferences = () => {
     applyCurrency(pendingCurrency)
     applyLocale(pendingLang)
-    dispatchRequestPreciseLocation()
     dismiss('changed')
   }
 
   const localLangCode = geo ? resolveRegionalLocalLanguage(geo, urlLocale) : null
-  const localLangLabel = localLangCode
-    ? languageLabelsEnglish[localLangCode] || localLangCode
-    : null
+  const localLangCta = localLangCode ? getContinueInLanguageCta(localLangCode) : null
   const suggestedCurrencyLabel = geo
     ? currencies.find((c) => c.code === geo.suggestedCurrency)?.code || geo.suggestedCurrency
     : currency.code
+  const bodyCopy = geo
+    ? geo.city
+      ? t.bodyWithCity(geo.city, geo.countryName, suggestedCurrencyLabel)
+      : t.bodyCountryOnly(geo.countryName, suggestedCurrencyLabel)
+    : ''
 
   const primaryButtonClass =
-    'w-full border border-brand-darkRed bg-brand-darkRed py-3.5 px-5 font-montserrat text-[10px] uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-darkMagenta sm:flex-1'
+    'w-full border border-brand-darkRed bg-brand-darkRed py-3.5 px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-white transition-colors hover:bg-brand-darkMagenta sm:flex-1'
   const secondaryButtonClass =
-    'w-full border border-brand-darkRed/20 bg-transparent py-3.5 px-5 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/60 transition-colors hover:border-brand-darkRed/35 hover:bg-brand-stone/10 hover:text-brand-darkRed/80 sm:flex-1'
+    'w-full border border-brand-darkRed/20 bg-transparent py-3.5 px-5 font-montserrat text-[12px] tracking-[0.02em] text-brand-darkRed transition-colors hover:border-brand-darkRed/35 hover:bg-brand-stone/10 sm:flex-1'
 
   return (
     <AnimatePresence>
@@ -223,13 +221,13 @@ export default function RegionalExperiencePopup() {
 
               <div className="px-7 pb-7 pt-8">
                 <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0 space-y-2.5">
-                    <p className="font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/65">
+                  <div className="min-w-0 space-y-2">
+                    <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-clayRed/70">
                       {t.eyebrow}
                     </p>
                     <h2
                       id="regional-experience-title"
-                      className="font-rozha text-[1.75rem] leading-tight text-brand-darkRed"
+                      className="font-rozha text-[clamp(1.35rem,4.5vw,1.65rem)] leading-[1.1] text-brand-darkRed whitespace-nowrap"
                     >
                       {t.title}
                     </h2>
@@ -245,26 +243,9 @@ export default function RegionalExperiencePopup() {
                   </button>
                 </div>
 
-                <p className="mt-5 font-montserrat text-[13px] font-light leading-[1.7] tracking-wide text-neutral-600">
-                  {t.body}
+                <p className="mt-5 font-montserrat text-[13px] leading-[1.65] text-neutral-600">
+                  {bodyCopy}
                 </p>
-
-                <div className="mt-6 space-y-3 border-t border-brand-stone/20 pt-5">
-                  {(geo.city || geo.countryName) && (
-                    <p className="font-montserrat text-[11px] uppercase tracking-[0.22em] text-neutral-400">
-                      {t.detectedLine(geo.city || '', geo.countryName)}
-                    </p>
-                  )}
-                  {geo.suggestedLanguage !== 'en' && localLangLabel ? (
-                    <p className="font-montserrat text-[12px] text-brand-clayRed/90">
-                      {t.settingsLine(localLangLabel, suggestedCurrencyLabel)}
-                    </p>
-                  ) : localLangLabel ? (
-                    <p className="font-montserrat text-[12px] text-brand-clayRed/90">
-                      {t.currentLanguageLine(localLangLabel)}
-                    </p>
-                  ) : null}
-                </div>
 
                 <AnimatePresence initial={false}>
                   {showPreferences && (
@@ -341,14 +322,14 @@ export default function RegionalExperiencePopup() {
                   >
                     {t.continueEnglish}
                   </button>
-                  {localLangCode && localLangCode !== 'en' && localLangLabel ? (
+                  {localLangCode && localLangCode !== 'en' && localLangCta ? (
                     <button
                       type="button"
                       onClick={handleContinueLocal}
                       className={secondaryButtonClass}
                       data-cursor-hover
                     >
-                      {t.continueLocal(localLangLabel)}
+                      {localLangCta}
                     </button>
                   ) : null}
                 </div>
@@ -356,7 +337,7 @@ export default function RegionalExperiencePopup() {
                 <button
                   type="button"
                   onClick={() => setShowPreferences((v) => !v)}
-                  className="mt-4 w-full py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/45 transition-colors hover:text-brand-darkRed/70"
+                  className="mt-4 w-full py-2 font-montserrat text-[11px] tracking-[0.04em] text-brand-darkRed/55 transition-colors hover:text-brand-darkRed/80"
                   data-cursor-hover
                 >
                   {t.secondary}

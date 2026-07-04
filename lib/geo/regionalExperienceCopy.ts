@@ -3,12 +3,9 @@ import type { AppLocale } from '@/lib/i18n/routing'
 export type RegionalCopy = {
   eyebrow: string
   title: string
-  body: string
-  detectedLine: (city: string, country: string) => string
-  settingsLine: (language: string, currency: string) => string
-  currentLanguageLine: (language: string) => string
+  bodyWithCity: (city: string, country: string, currency: string) => string
+  bodyCountryOnly: (country: string, currency: string) => string
   continueEnglish: string
-  continueLocal: (language: string) => string
   secondary: string
   changeTitle: string
   languageLabel: string
@@ -17,18 +14,29 @@ export type RegionalCopy = {
   close: string
 }
 
-/** Popup copy is always English — luxury sites keep this prompt international. */
+/** Primary CTA for switching to the visitor's regional language — always in that language. */
+export const continueInLanguageCta: Record<string, string> = {
+  ar: 'المتابعة بالعربية',
+  zh: '继续使用中文',
+  ru: 'Продолжить на русском',
+  it: 'Continua in italiano',
+  de: 'Weiter auf Deutsch',
+  fr: 'Continuer en français',
+  es: 'Continuar en español',
+  nl: 'Doorgaan in het Nederlands',
+  pt: 'Continuar em português',
+  id: 'Lanjutkan dalam Bahasa Indonesia',
+  ms: 'Teruskan dalam Bahasa Melayu',
+}
+
 const en: RegionalCopy = {
   eyebrow: 'Bint Saeed',
   title: 'Your regional experience',
-  body:
-    'We have detected your location. You may continue in English or switch to the language and currency suggested for your region.',
-  detectedLine: (city, country) =>
-    city ? `Browsing from ${city}, ${country}` : `Browsing from ${country}`,
-  settingsLine: (language, currency) => `Suggested for your region: ${language} · ${currency}`,
-  currentLanguageLine: (language) => `Current language: ${language}`,
+  bodyWithCity: (city, country, currency) =>
+    `Since you're browsing from ${city}, ${country}, our prices are shown in ${currency}. You can change your language or currency at any time.`,
+  bodyCountryOnly: (country, currency) =>
+    `For ${country}, our prices are shown in ${currency}. You can change your language or currency at any time.`,
   continueEnglish: 'Continue in English',
-  continueLocal: (language) => `Continue in ${language}`,
   secondary: 'Change language or currency',
   changeTitle: 'Preferences',
   languageLabel: 'Language',
@@ -39,4 +47,8 @@ const en: RegionalCopy = {
 
 export function getRegionalExperienceCopy(_locale?: AppLocale): RegionalCopy {
   return en
+}
+
+export function getContinueInLanguageCta(languageCode: string): string | undefined {
+  return continueInLanguageCta[languageCode]
 }

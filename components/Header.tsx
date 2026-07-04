@@ -15,9 +15,10 @@ import { getSearchableContent, type SearchableItem } from '@/lib/i18n/searchable
 import {
   ACCESSORY_IMAGE_NECKLACE,
   ACCESSORY_IMAGE_PHONE_CHARM,
-  ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
-  ACCESSORY_IMAGE_EARRINGS_HERO,
 } from '@/data/accessories'
+
+const MEGA_MENU_PLACEHOLDER_A = '/placeholders/product-front-F.svg'
+const MEGA_MENU_PLACEHOLDER_B = '/placeholders/product-extra-E.svg'
 
 /** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
 const headerBarGradient =
@@ -161,19 +162,33 @@ export default function Header() {
           image: '/collection-section/bint-saeed-luxury-abayas-collection-nav.webp?v=2',
         },
         {
-          title: 'Kaftans',
-          href: '/shop?category=kaftans',
-          image: '/home/collection-chapter/bint-saeed-home-collection-kaftans-01.webp',
-        },
-        {
           title: 'Sets',
           href: '/shop?category=sets',
           image: '/collection-section/bint-saeed-luxury-sets-collection-nav.webp',
         },
+      ],
+    },
+    '/strands': {
+      columns: [
         {
-          title: 'Dresses',
-          href: '/shop?category=dresses',
-          image: '/collection-section/bint-saeed-hampstead-dress-black-front-al-talli-detail-shot.png',
+          title: 'Strands',
+          links: [
+            { label: 'All Strands', href: '/strands' },
+            { label: 'Signature Strands', href: '/accessories?type=signature-strands' },
+            { label: 'Marylebone Abaya', href: '/shop/marylebone-abaya' },
+          ],
+        },
+      ],
+      features: [
+        {
+          title: 'Signature Strands',
+          href: '/accessories?type=signature-strands',
+          image: MEGA_MENU_PLACEHOLDER_A,
+        },
+        {
+          title: 'Shop All Strands',
+          href: '/strands',
+          image: MEGA_MENU_PLACEHOLDER_B,
         },
       ],
     },
@@ -194,24 +209,38 @@ export default function Header() {
       ],
       features: [
         {
-          title: 'Signature Strands',
-          href: '/accessories?type=signature-strands',
-          image: ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
-        },
-        {
           title: 'Necklaces',
           href: '/accessories?type=necklaces',
           image: ACCESSORY_IMAGE_NECKLACE,
         },
         {
-          title: 'Earrings',
-          href: '/accessories?type=earrings',
-          image: ACCESSORY_IMAGE_EARRINGS_HERO,
-        },
-        {
           title: 'Phone Charms',
           href: '/accessories?type=phone-strands',
           image: ACCESSORY_IMAGE_PHONE_CHARM,
+        },
+      ],
+    },
+    '/personalisation': {
+      columns: [
+        {
+          title: 'Personalisation',
+          links: [
+            { label: 'Personalisation', href: '/personalisation' },
+            { label: 'Craftsmanship', href: '/craftsmanship' },
+            { label: 'Contact', href: '/contact' },
+          ],
+        },
+      ],
+      features: [
+        {
+          title: 'Hidden Pocket',
+          href: '/personalisation',
+          image: MEGA_MENU_PLACEHOLDER_A,
+        },
+        {
+          title: 'Name Labels',
+          href: '/personalisation',
+          image: MEGA_MENU_PLACEHOLDER_B,
         },
       ],
     },
@@ -520,7 +549,7 @@ export default function Header() {
 
                     {megaMenus[activeMegaMenu].features.length > 0 && (
                     <div className="col-span-7 grid grid-cols-2 gap-4 xl:col-span-6 xl:gap-5">
-                      {megaMenus[activeMegaMenu].features.map((feature) => (
+                      {megaMenus[activeMegaMenu].features.slice(0, 2).map((feature) => (
                         <LocaleLink
                           key={feature.title}
                           href={feature.href}

@@ -301,7 +301,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      // Precise (GPS) location is never requested automatically — see LocationConsent soft prompt.
+      // IP-based location only — no browser GPS prompt from the regional popup.
 
       // Fallback if everything fails
       if (!location) {
@@ -390,7 +390,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
-  // Optional GPS only after the user accepts the in-app tailor experience (avoids a cold system dialog).
+  // GPS is never requested from the regional popup; this listener only runs if another flow dispatches the event.
   useEffect(() => {
     const runGps = () => {
       if (typeof window === 'undefined' || !navigator.geolocation) return

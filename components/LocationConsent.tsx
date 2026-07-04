@@ -6,7 +6,6 @@ import { FiX } from 'react-icons/fi'
 import { useCurrency, currencies } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
-import { dispatchRequestPreciseLocation } from '@/lib/geo/locationEvents'
 import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
 
 const TAILOR_KEY = 'bint-saeed-tailor-experience'
@@ -43,7 +42,7 @@ const copy = {
     eyebrow: 'Bint Saeed',
     title: 'A personal touch',
     body:
-      'For a seamless experience—prices in your local currency, the right language, and sizing guidance suited to your region—we invite you to tailor this visit. If you choose to continue, your browser may ask to share your location so we can refine these details. You may skip at any time.',
+      'For a seamless visit, we can show prices in your local currency and the language that suits your region. You may skip this at any time.',
     currencyHint: (name: string, code: string) =>
       `We also suggest viewing prices in ${name} (${code}) for this region.`,
     primary: 'Tailor my visit',
@@ -53,7 +52,7 @@ const copy = {
     eyebrow: 'بنت سعيد',
     title: 'لمسة شخصية',
     body:
-      'لتجربة أنسَم، أسعار بعملتك المحلية، ولغة تناسبك، وإرشاد للمقاسات حسب منطقتك، ندعوك لضبط هذه الزيارة. إن وافقتِ، قد يطلب المتصفح مشاركة موقعك لتحسين هذه التفاصيل. يمكنك التخطي في أي وقت.',
+      'لتجربة أنسَم، يمكننا عرض الأسعار بعملتك المحلية واللغة المناسبة لمنطقتك. يمكنك التخطي في أي وقت.',
     currencyHint: (name: string, code: string) =>
       `نقترح أيضًا عرض الأسعار بـ ${name} (${code}) لهذه المنطقة.`,
     primary: 'ضبط زيارتي',
@@ -138,7 +137,6 @@ export default function LocationConsent() {
       setCurrency(detectedLocation.currency)
     }
     persistTailorChoice('accepted')
-    dispatchRequestPreciseLocation()
     setIsVisible(false)
   }
 
