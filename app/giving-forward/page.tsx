@@ -17,12 +17,11 @@ export default function GivingForwardPage() {
       <section className="relative container mx-auto px-6 pb-20 pt-24 lg:px-16 lg:pb-28 lg:pt-28">
         <AppPageWayfinding
           rtl={isRTL}
-          className="mb-8"
+          className="mb-3"
           segments={[
             { label: copy.breadcrumbHome, href: '/home' },
             { label: copy.breadcrumb },
           ]}
-          backLink={{ href: '/home', label: copy.backToHome }}
         />
         <span className="mb-6 block font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
           Bint Saeed

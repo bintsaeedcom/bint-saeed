@@ -107,7 +107,6 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
   const description = t.about?.craftsmanshipDesc ?? ''
   const homeLabel = language === 'id' ? copy.breadcrumbHome : isRTL ? 'الرئيسية' : 'Home'
   const craftLabel = language === 'id' ? copy.breadcrumbCraftsmanship : isRTL ? 'الحرفية' : 'Craftsmanship'
-  const backLabel = language === 'id' ? copy.backToHome : isRTL ? 'العودة للرئيسية' : 'Back to Home'
 
   return (
     <section
@@ -132,7 +131,7 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
             initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-8"
+            className="mb-3"
           >
             <AppPageWayfinding
               rtl={isRTL}
@@ -140,10 +139,6 @@ function CraftsmanshipHero({ className = '' }: { className?: string }) {
                 { label: homeLabel, href: '/home' },
                 { label: craftLabel },
               ]}
-              backLink={{
-                href: '/home',
-                label: backLabel,
-              }}
             />
           </motion.div>
 

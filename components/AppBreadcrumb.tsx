@@ -19,32 +19,24 @@ type Props = {
 }
 
 const ITEM_CLASS = 'inline-flex shrink-0 items-center self-center'
-const TEXT_SIZE = 'text-[10px] leading-none md:text-xs'
+/** One size everywhere — desktop and mobile */
+const CRUMB_TEXT =
+  'font-montserrat text-[10px] leading-none uppercase tracking-[0.12em]'
 
 /**
  * Single-row breadcrumb: HOME / SHOP / … — scrolls horizontally on tiny widths.
- * Each segment and separator shares one fixed row height (no vertical jump on mobile).
  */
 export default function AppBreadcrumb({ segments, variant = 'default', className = '', rtl = false }: Props) {
   if (!segments.length) return null
 
   const lastIdx = segments.length - 1
 
-  const tracking =
-    variant === 'muted'
-      ? 'tracking-[0.1em] sm:tracking-[0.22em] md:tracking-[0.28em]'
-      : variant === 'light'
-        ? 'tracking-[0.1em] sm:tracking-[0.22em] md:tracking-[0.28em]'
-        : 'tracking-[0.12em] sm:tracking-[0.14em]'
-
-  const crumbText = `font-montserrat uppercase ${TEXT_SIZE} ${tracking}`
-
   const linkClass =
     variant === 'muted'
-      ? `${crumbText} whitespace-nowrap text-neutral-500 transition-colors hover:text-brand-dustyBlue`
+      ? `${CRUMB_TEXT} whitespace-nowrap text-neutral-500 transition-colors hover:text-brand-dustyBlue`
       : variant === 'light'
-        ? `${crumbText} whitespace-nowrap text-white/65 transition-colors hover:text-white`
-        : `${crumbText} whitespace-nowrap text-brand-darkRed/70 transition-colors hover:text-brand-dustyBlue`
+        ? `${CRUMB_TEXT} whitespace-nowrap text-white/65 transition-colors hover:text-white`
+        : `${CRUMB_TEXT} whitespace-nowrap text-brand-darkRed/70 transition-colors hover:text-brand-dustyBlue`
 
   const sepClass =
     variant === 'muted' ? 'text-neutral-400' : variant === 'light' ? 'text-white/35' : 'text-brand-darkRed/30'
@@ -58,12 +50,12 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
     const isLast = i === lastIdx
     const isMiddle = i > 0 && !isLast
     const showLink = Boolean(seg.href) && !isLast
-    const truncateMiddle = isMiddle ? 'max-w-[28vw] truncate sm:max-w-none' : ''
+    const truncateMiddle = isMiddle ? 'max-w-[34vw] truncate sm:max-w-[28vw] md:max-w-none' : ''
 
     if (i > 0) {
       nodes.push(
         <li key={`sep-${i}`} className={ITEM_CLASS} aria-hidden>
-          <span className={`inline-flex items-center ${crumbText} ${sepClass} select-none`}>/</span>
+          <span className={`inline-flex items-center ${CRUMB_TEXT} ${sepClass} select-none`}>/</span>
         </li>,
       )
     }
@@ -81,8 +73,8 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
           </LocaleLink>
         ) : (
           <span
-            className={`inline-flex items-center font-normal ${crumbText} ${
-              isLast ? `min-w-0 max-w-[50vw] truncate sm:max-w-none ${currentClass}` : `whitespace-nowrap ${currentClass}`
+            className={`inline-flex items-center ${CRUMB_TEXT} ${
+              isLast ? `min-w-0 max-w-[46vw] truncate sm:max-w-none ${currentClass}` : `whitespace-nowrap ${currentClass}`
             } ${truncateMiddle}`}
             title={seg.label}
             aria-current={isLast ? 'page' : undefined}
@@ -101,7 +93,7 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
       className={`w-full min-w-0 max-w-full ${className}`}
     >
       <ol
-        className={`m-0 flex h-4 w-full min-w-0 max-w-full list-none flex-nowrap items-center gap-x-1 overflow-x-auto p-0 sm:h-[18px] sm:gap-x-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+        className={`m-0 flex h-[14px] w-full min-w-0 max-w-full list-none flex-nowrap items-center gap-x-1 overflow-x-auto p-0 sm:gap-x-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
           rtl ? 'flex-row-reverse justify-end' : ''
         }`}
       >

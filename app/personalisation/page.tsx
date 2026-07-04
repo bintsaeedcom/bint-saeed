@@ -79,19 +79,17 @@ export default function PersonalisationPage() {
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,2,16,0.92)_0%,rgba(26,2,16,0.62)_46%,rgba(26,2,16,0.22)_100%)]" />
         </div>
 
-        <div className={`absolute top-28 z-20 px-6 md:top-32 ${isRTL ? 'right-6 md:right-[60px] left-auto' : 'left-6 md:left-[60px]'}`}>
+        <div className={`absolute bottom-10 z-10 max-w-[600px] pb-14 md:bottom-[60px] md:pb-16 ${isRTL ? 'right-6 text-right md:right-[60px] left-auto' : 'left-6 text-left md:left-[60px]'}`}>
           <AppPageWayfinding
             rtl={isRTL}
             variant="light"
+            className="mb-3"
             segments={[
               { label: copy.breadcrumbHome, href: '/home' },
               { label: copy.breadcrumb },
             ]}
-            backLink={{ href: '/home', label: copy.backToHome }}
           />
-        </div>
 
-        <div className={`absolute bottom-10 z-10 max-w-[600px] pb-14 md:bottom-[60px] md:pb-16 ${isRTL ? 'right-6 text-right md:right-[60px]' : 'left-6 text-left md:left-[60px]'}`}>
           <h1
             data-document-h1="true"
             className="max-w-[760px] font-rozha text-[clamp(36px,6vw,72px)] leading-[0.98] tracking-[0.01em]"

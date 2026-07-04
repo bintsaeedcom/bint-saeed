@@ -145,7 +145,7 @@ export default function TheCodesClient() {
               initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-6"
+              className="mb-3"
             >
               <AppPageWayfinding
                 rtl={isRTL}
@@ -154,10 +154,6 @@ export default function TheCodesClient() {
                   { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
                   { label: isRTL ? 'الرموز' : 'The Codes' },
                 ]}
-                backLink={{
-                  href: '/home',
-                  label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
-                }}
               />
             </motion.div>
 

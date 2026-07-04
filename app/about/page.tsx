@@ -78,22 +78,17 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,2,16,0.92)_0%,rgba(26,2,16,0.62)_46%,rgba(26,2,16,0.22)_100%)]" />
         </div>
 
-        <div className={`absolute top-28 z-20 px-6 md:top-32 md:left-[60px] ${isRTL ? 'right-6 md:right-[60px] left-auto' : 'left-6'}`}>
+        <div className={`absolute bottom-10 left-6 right-6 z-10 max-w-[600px] pb-14 text-left md:bottom-[60px] md:left-[60px] md:right-auto md:pb-16 ${isRTL ? 'text-right' : ''}`}>
           <AppPageWayfinding
             rtl={isRTL}
             variant="light"
+            className="mb-3"
             segments={[
               { label: copy.breadcrumbHome, href: '/home' },
               { label: copy.breadcrumbAbout },
             ]}
-            backLink={{
-              href: '/home',
-              label: copy.backToHome,
-            }}
           />
-        </div>
 
-        <div className="absolute bottom-10 left-6 right-6 z-10 max-w-[600px] pb-14 text-left md:bottom-[60px] md:left-[60px] md:right-auto md:pb-16">
           <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090] sm:tracking-[0.34em]">
             {copy.heroEyebrow}
           </p>

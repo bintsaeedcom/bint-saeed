@@ -173,23 +173,17 @@ export default function StrandsPage() {
           />
         </div>
 
-        <div className={`absolute top-28 z-20 px-6 md:left-[60px] ${isRTL ? 'right-6 md:right-[60px] left-auto' : 'left-6'}`}>
+        <div className={`absolute bottom-10 left-6 right-6 z-10 max-w-[600px] text-left md:bottom-[60px] md:left-[60px] md:right-auto ${isRTL ? 'text-right md:right-[60px] md:left-auto' : ''}`}>
           <AppPageWayfinding
             rtl={isRTL}
             variant="light"
+            className="mb-3"
             segments={[
               { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
               { label: isRTL ? 'الخيوط' : 'Strands' },
             ]}
-            backLink={{
-              href: '/home',
-              label: ui.common.back,
-              useHistory: true,
-            }}
           />
-        </div>
 
-        <div className="absolute bottom-10 left-6 right-6 z-10 max-w-[600px] text-left md:bottom-[60px] md:left-[60px] md:right-auto">
             <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090] sm:tracking-[0.34em]">
               {copy.heroEyebrow}
             </p>

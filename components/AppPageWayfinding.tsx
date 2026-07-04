@@ -1,10 +1,13 @@
 'use client'
 
+import { useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import { FiArrowLeft } from 'react-icons/fi'
 import AppBreadcrumb, { type BreadcrumbSegment } from '@/components/AppBreadcrumb'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 
 export type WayfindingBackLink = {
   href?: string
@@ -25,10 +28,38 @@ type Props = {
 }
 
 const backLinkBase =
-  'inline-flex shrink-0 items-center gap-1.5 font-montserrat text-[10px] uppercase leading-none tracking-[0.14em] transition-colors sm:gap-2 sm:text-xs'
+  'inline-flex shrink-0 items-center gap-1.5 font-montserrat text-[10px] uppercase leading-none tracking-[0.12em] transition-colors'
+
+function segmentsIncludeHome(segments: BreadcrumbSegment[]): boolean {
+  return segments.some((s) => s.href === '/home' || s.href === '/')
+}
+
+function isRedundantHomeBack(backLink: WayfindingBackLink, segments: BreadcrumbSegment[]): boolean {
+  if (backLink.useHistory) return false
+  if (!segmentsIncludeHome(segments)) return false
+  const href = backLink.href
+  return href === '/home' || href === '/' || !href
+}
+
+function resolveBackLink(
+  backLink: WayfindingBackLink | undefined,
+  segments: BreadcrumbSegment[],
+  backLabel: string,
+): WayfindingBackLink | null {
+  if (backLink) {
+    if (isRedundantHomeBack(backLink, segments)) {
+      return { useHistory: true, href: '/home', label: backLabel }
+    }
+    return backLink
+  }
+  if (segmentsIncludeHome(segments)) {
+    return { useHistory: true, href: '/home', label: backLabel }
+  }
+  return null
+}
 
 /**
- * Breadcrumb + optional back link. Keeps both elements per luxury PDP pattern.
+ * Breadcrumb on one row; optional history back control directly underneath.
  */
 export default function AppPageWayfinding({
   segments,
@@ -41,79 +72,78 @@ export default function AppPageWayfinding({
 }: Props) {
   const router = useRouter()
   const { localize } = useLocaleHref()
+  const { language } = useLanguage()
+  const ui = commerceUi(language)
+
+  const resolvedBack = useMemo(
+    () => resolveBackLink(backLink, segments, ui.common.back),
+    [backLink, segments, ui.common.back],
+  )
 
   const backLinkClass =
     variant === 'light'
-      ? `${backLinkBase} text-white/70 hover:text-white`
-      : `${backLinkBase} text-brand-darkRed/70 hover:text-brand-dustyBlue`
+      ? `${backLinkBase} text-white/60 hover:text-white`
+      : `${backLinkBase} text-brand-darkRed/60 hover:text-brand-dustyBlue`
 
   const handleHistoryBack = () => {
     if (typeof window !== 'undefined' && window.history.length > 1) {
       router.back()
       return
     }
-    if (backLink?.href) {
-      router.push(localize(backLink.href))
+    if (resolvedBack?.href) {
+      router.push(localize(resolvedBack.href))
     }
   }
 
-  const renderBackControl = (extraClass = '') => {
-    if (!backLink) return null
+  const renderBackControl = () => {
+    if (!resolvedBack) return null
 
-    const className = `${backLinkClass} ${extraClass} ${rtl ? 'flex-row-reverse' : ''}`
+    const className = `${backLinkClass} ${rtl ? 'flex-row-reverse' : ''}`
 
-    if (backLink.useHistory) {
+    if (resolvedBack.useHistory) {
       return (
         <button type="button" onClick={handleHistoryBack} className={`group ${className}`} data-cursor-hover>
           <FiArrowLeft
-            className={`h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4 ${rtl ? 'rotate-180 group-hover:translate-x-0.5' : 'group-hover:-translate-x-0.5'}`}
+            className={`h-3.5 w-3.5 shrink-0 ${rtl ? 'rotate-180 group-hover:translate-x-0.5' : 'group-hover:-translate-x-0.5'}`}
             aria-hidden
           />
-          <span className="truncate">{backLink.label}</span>
+          <span>{resolvedBack.label}</span>
         </button>
       )
     }
 
-    if (!backLink.href) return null
+    if (!resolvedBack.href) return null
 
     return (
-      <LocaleLink href={backLink.href} className={`group ${className}`} data-cursor-hover>
+      <LocaleLink href={resolvedBack.href} className={`group ${className}`} data-cursor-hover>
         <FiArrowLeft
-          className={`h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4 ${rtl ? 'rotate-180 group-hover:translate-x-0.5' : 'group-hover:-translate-x-0.5'}`}
+          className={`h-3.5 w-3.5 shrink-0 ${rtl ? 'rotate-180 group-hover:translate-x-0.5' : 'group-hover:-translate-x-0.5'}`}
           aria-hidden
         />
-        <span className="truncate">{backLink.label}</span>
+        <span>{resolvedBack.label}</span>
       </LocaleLink>
     )
   }
 
-  const rowClass = `flex min-w-0 w-full items-center gap-2 sm:gap-3 ${rtl ? 'flex-row-reverse' : ''}`
-
-  if (layout === 'bar') {
-    return (
-      <div className={`border-b border-brand-stone/20 pt-24 md:pt-28 lg:pt-32 ${className}`}>
-        <div className={`mx-auto max-w-[1400px] px-4 py-2 sm:px-8 ${rowClass}`}>
-          <AppBreadcrumb
-            rtl={rtl}
-            variant={variant}
-            segments={segments}
-            className={`min-w-0 flex-1 ${breadcrumbClassName}`}
-          />
-          {renderBackControl('max-w-[38%] sm:max-w-none')}
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className={`${rowClass} ${className}`}>
+  const stack = (
+    <div className={`flex w-full min-w-0 flex-col gap-1 ${rtl ? 'items-end' : 'items-start'}`}>
       <AppBreadcrumb
         rtl={rtl}
         variant={variant}
         segments={segments}
-        className={`min-w-0 flex-1 ${breadcrumbClassName}`}
+        className={`w-full ${breadcrumbClassName}`}
       />
-      {renderBackControl('max-w-[38%] sm:max-w-none')}
+      {renderBackControl()}
     </div>
   )
+
+  if (layout === 'bar') {
+    return (
+      <div className={`border-b border-brand-stone/20 pt-24 md:pt-28 lg:pt-32 ${className}`}>
+        <div className="mx-auto max-w-[1400px] px-4 py-2 sm:px-8">{stack}</div>
+      </div>
+    )
+  }
+
+  return <div className={`w-full min-w-0 ${className}`}>{stack}</div>
 }

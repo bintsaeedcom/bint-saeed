@@ -199,7 +199,7 @@ export default function AccessoriesPage() {
               initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-8"
+              className="mb-3"
             >
               <AppPageWayfinding
                 rtl={isRTL}
@@ -207,11 +207,6 @@ export default function AccessoriesPage() {
                   { label: ui.common.home, href: '/home' },
                   { label: ui.common.accessories },
                 ]}
-                backLink={{
-                  href: '/home',
-                  label: ui.common.back,
-                  useHistory: true,
-                }}
               />
             </motion.div>
 

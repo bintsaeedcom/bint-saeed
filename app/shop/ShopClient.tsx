@@ -162,15 +162,11 @@ export default function ShopClient() {
             <AppPageWayfinding
               rtl={isRTL}
               variant="muted"
-              className="mb-6 md:mb-10"
+              className="mb-3"
               segments={[
                 { label: ui.common.home, href: '/home' },
                 { label: ui.common.shop },
               ]}
-              backLink={{
-                href: '/home',
-                label: ui.common.backToHome,
-              }}
             />
 
             <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue sm:tracking-[0.34em]">
