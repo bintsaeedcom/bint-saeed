@@ -3,6 +3,7 @@
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
+import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { getCraftsmanshipCopy } from '@/lib/content/craftsmanshipCopyI18n'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { FiArrowRight } from 'react-icons/fi'
@@ -25,6 +26,16 @@ const CRAFT_VIDEO_BANDS = [
       'Video: hand stitching and garment finishing by experienced craftspeople—tailored construction for Bint Saeed luxury abayas in Abu Dhabi',
   },
 ] as const
+
+const LABEL_STITCHING_IMAGE = {
+  src: '/craftsmanship/bint-saeed-label-stitching.png',
+  alt: 'Bint Saeed woven label detail and hand finishing on a bespoke abaya—quality-controlled construction at the Bint Saeed atelier in Abu Dhabi',
+} as const
+
+const KHOUS_BRAID_IMAGE = {
+  src: '/craftsmanship/bint-saeed-khous-braid.png',
+  alt: 'Bint Saeed—Khous braid integrated into garment structure; Emirati palm-frond weaving referenced in contemporary luxury abaya design, Abu Dhabi',
+} as const
 
 const MOSAIC_IMAGES = [
   [
@@ -51,16 +62,6 @@ const MOSAIC_IMAGES = [
       alt: 'Bint Saeed—premium tailoring threads for luxury abaya construction; materials chosen for durability, consistency, and refined finish',
     },
   ],
-  [
-    {
-      src: '/craftsmanship/bint-saeed-khous-braid.png',
-      alt: 'Bint Saeed—Khous braid integrated into garment structure; Emirati palm-frond weaving referenced in contemporary luxury abaya design, Abu Dhabi',
-    },
-    {
-      src: '/craftsmanship/bint-saeed-label-stitching.png',
-      alt: 'Bint Saeed woven label detail and hand finishing on a bespoke abaya—quality-controlled construction at the Bint Saeed atelier in Abu Dhabi',
-    },
-  ],
 ] as const
 
 function DecorativeCorners(_props?: { tone?: 'dustyBlue' | 'darkRed' }) {
@@ -74,18 +75,21 @@ function MosaicTileImage({
   src,
   alt,
   className = '',
+  priority = false,
 }: {
   src: string
   alt: string
   className?: string
+  priority?: boolean
 }) {
   return (
     <div className={`relative h-full min-h-[200px] w-full overflow-hidden ${className}`}>
       <img
         src={src}
         alt={alt}
-        loading="lazy"
-        decoding="async"
+        loading={priority ? 'eager' : 'lazy'}
+        decoding={priority ? 'sync' : 'async'}
+        fetchPriority={priority ? 'high' : 'auto'}
         className="absolute inset-0 z-[1] h-full w-full object-cover brightness-[1.03] contrast-[1.02]"
       />
       <div
@@ -230,6 +234,44 @@ function ParallaxMosaic({
   )
 }
 
+/** Opening editorial — label leads, flush under topic nav (no gap). */
+function OpeningAtelierGallery({ rtl }: { rtl: boolean }) {
+  return (
+    <section
+      className="bs-full-bleed relative border-b border-brand-stone/20 bg-[#0a0608]"
+      aria-label="Bint Saeed atelier finishing"
+    >
+      <div
+        className={`grid md:min-h-[min(72vh,720px)] md:grid-cols-12 ${rtl ? '[direction:rtl]' : ''}`}
+      >
+        <div className="relative md:col-span-7 lg:col-span-8">
+          <div className="relative aspect-[4/5] w-full md:aspect-auto md:min-h-[min(72vh,720px)] md:h-full">
+            <MosaicTileImage
+              src={LABEL_STITCHING_IMAGE.src}
+              alt={LABEL_STITCHING_IMAGE.alt}
+              priority
+              className="absolute inset-0 h-full min-h-0"
+            />
+          </div>
+        </div>
+        <div className="relative border-t border-white/[0.06] md:col-span-5 md:border-l md:border-t-0 md:border-white/[0.08] lg:col-span-4">
+          <div className="relative aspect-[3/4] w-full md:aspect-auto md:min-h-[min(72vh,720px)] md:h-full">
+            <MosaicTileImage
+              src={KHOUS_BRAID_IMAGE.src}
+              alt={KHOUS_BRAID_IMAGE.alt}
+              className="absolute inset-0 h-full min-h-0"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-14 bg-gradient-to-t from-brand-pageCanvas to-transparent md:h-20"
+        aria-hidden
+      />
+    </section>
+  )
+}
+
 function ProsePhase({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   const { isRTL } = useLanguage()
   return (
@@ -275,7 +317,7 @@ export default function CraftsmanshipClient() {
   const { t, isRTL, language } = useLanguage()
   const copy = getCraftsmanshipCopy(language)
   const title = language === 'id' ? copy.breadcrumbCraftsmanship : (t.footer?.craftsmanship ?? 'Craftsmanship')
-  const eyebrow = t.about?.craftSubtitle ?? 'The Process'
+  const eyebrow = getAboutEditorialHeroEyebrow(language)
   const description = t.about?.craftsmanshipDesc ?? ''
   const homeLabel = language === 'id' ? copy.breadcrumbHome : isRTL ? 'الرئيسية' : 'Home'
   const craftLabel = language === 'id' ? copy.breadcrumbCraftsmanship : isRTL ? 'الحرفية' : 'Craftsmanship'
@@ -294,7 +336,7 @@ export default function CraftsmanshipClient() {
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={ABOUT_SECTION_HERO_IMAGES.craftsmanship}
-        imageAlt="Bint Saeed craftsmanship — precision fabric cutting in the Abu Dhabi atelier"
+        imageAlt="Bint Saeed — craftsmanship editorial banner"
         priority
         segments={[
           { label: homeLabel, href: '/home' },
@@ -305,10 +347,12 @@ export default function CraftsmanshipClient() {
         description={description || undefined}
       />
 
+      <OpeningAtelierGallery rtl={isRTL} />
+
       {/* Phase I — overflowing band + split columns (approved copy unchanged) */}
       <PhaseAtmosphere variant="ivory">
         <article
-          className="relative px-6 pb-20 pt-8 md:pb-28 md:pt-10 lg:px-16 lg:pb-36 lg:pt-12"
+          className="relative px-6 pb-20 pt-14 md:pb-28 md:pt-20 lg:px-16 lg:pb-36 lg:pt-24"
           aria-labelledby="phase-i"
         >
           <DecorativeCorners tone="dustyBlue" />
@@ -345,11 +389,11 @@ export default function CraftsmanshipClient() {
         <PhaseDivider />
       </div>
 
-      {/* Film 2 of 3 — mid-page atelier */}
+      {/* Film 1 of 3 — development through production */}
       <ScreenVideo
         className="relative z-[25]"
-        src={CRAFT_VIDEO_BANDS[1].src}
-        ariaLabel={CRAFT_VIDEO_BANDS[1].ariaLabel}
+        src={CRAFT_VIDEO_BANDS[0].src}
+        ariaLabel={CRAFT_VIDEO_BANDS[0].ariaLabel}
       />
 
       {/* Phase II */}
@@ -398,11 +442,11 @@ export default function CraftsmanshipClient() {
         <PhaseDivider />
       </div>
 
-      {/* Film 3 of 3 */}
+      {/* Film 2 of 3 — mid-page atelier */}
       <ScreenVideo
         className="relative z-[35]"
-        src={CRAFT_VIDEO_BANDS[2].src}
-        ariaLabel={CRAFT_VIDEO_BANDS[2].ariaLabel}
+        src={CRAFT_VIDEO_BANDS[1].src}
+        ariaLabel={CRAFT_VIDEO_BANDS[1].ariaLabel}
       />
 
       {/* Phase III */}
@@ -442,7 +486,12 @@ export default function CraftsmanshipClient() {
         </article>
       </PhaseAtmosphere>
 
-      <ParallaxMosaic items={[...MOSAIC_IMAGES[2]]} layout="twoWide" />
+      {/* Film 3 of 3 — hand finishing */}
+      <ScreenVideo
+        className="relative z-[40]"
+        src={CRAFT_VIDEO_BANDS[2].src}
+        ariaLabel={CRAFT_VIDEO_BANDS[2].ariaLabel}
+      />
 
       <section className="relative z-[45] overflow-hidden border-t border-brand-stone/35 bg-brand-pageCanvas px-6 py-24 md:py-32">
         <div

@@ -12,8 +12,10 @@ import {
   EDITORIAL_PAGE_CONTAINER,
   editorialHeroContentShell,
   editorialHeroCopyBlock,
-  editorialHeroCopyBlockWithFooter,
+  editorialHeroCopyStack,
+  editorialHeroCtaReservedSpace,
 } from '@/lib/ui/editorialPageChrome'
+import { ABOUT_EDITORIAL_HERO_IMAGE_OPACITY } from '@/lib/about/aboutEditorialHeroChrome'
 
 export type AboutSectionHeroProps = {
   rtl: boolean
@@ -29,8 +31,6 @@ export type AboutSectionHeroProps = {
   priority?: boolean
   showTopicNav?: boolean
   children?: ReactNode
-  /** Rendered at the bottom of the banner (e.g. marquee strip). */
-  footerSlot?: ReactNode
 }
 
 export default function AboutSectionHero({
@@ -43,11 +43,10 @@ export default function AboutSectionHero({
   description,
   titleClassName,
   descriptionClassName,
-  imageOpacity = 40,
+  imageOpacity = ABOUT_EDITORIAL_HERO_IMAGE_OPACITY,
   priority = false,
   showTopicNav = true,
   children,
-  footerSlot,
 }: AboutSectionHeroProps) {
   return (
     <>
@@ -66,8 +65,8 @@ export default function AboutSectionHero({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/55 to-brand-darkRed/20" />
         <div className={editorialHeroContentShell}>
-          <div className={footerSlot ? editorialHeroCopyBlockWithFooter : editorialHeroCopyBlock}>
-            <div className={EDITORIAL_PAGE_CONTAINER}>
+          <div className={editorialHeroCopyBlock}>
+            <div className={`${EDITORIAL_PAGE_CONTAINER} ${editorialHeroCopyStack}`}>
             <motion.div
               initial={{ opacity: 0, x: rtl ? 20 : -16 }}
               animate={{ opacity: 1, x: 0 }}
@@ -92,13 +91,12 @@ export default function AboutSectionHero({
                 titleClassName={titleClassName}
                 descriptionClassName={descriptionClassName}
               >
-                {children}
+                {children ?? <div className={editorialHeroCtaReservedSpace} aria-hidden />}
               </EditorialHeroCopy>
             </motion.div>
           </div>
           </div>
         </div>
-        {footerSlot}
       </header>
       {showTopicNav ? <AboutTopicNav /> : null}
     </>

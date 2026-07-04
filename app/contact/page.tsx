@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import AboutSectionHero from '@/components/AboutSectionHero'
 import ContactSubjectSelect from '@/components/ContactSubjectSelect'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
+import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { FiMail, FiPhone, FiMapPin, FiClock, FiSend } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -17,8 +18,6 @@ import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import {
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
-  editorialHeroAlign,
-  editorialIntroStripText,
 } from '@/lib/ui/editorialPageChrome'
 
 /** Display + deep links */
@@ -197,6 +196,10 @@ export default function ContactPage() {
     label: isRTL ? option.labelAr : option.labelEn,
   }))
 
+  const contactHeroDescription = isRTL
+    ? 'سواء كانت هذه زيارتك الأولى لـ Bint Saeed أو أنكِ جزء من مجتمعنا، يسعدنا مساعدتك في كل استفسار.'
+    : 'Whether you\u2019re discovering Bint Saeed for the first time or already part of our community, we\u2019re pleased to assist with every enquiry.'
+
   return (
     <div className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-brand-pageCanvas pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
       <AboutSectionHero
@@ -208,19 +211,10 @@ export default function ContactPage() {
           { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
           { label: isRTL ? 'تواصلي معنا' : 'Contact' },
         ]}
-        eyebrow={isRTL ? 'BINT SAEED · ABU DHABI' : 'BINT SAEED · ABU DHABI'}
+        eyebrow={getAboutEditorialHeroEyebrow(language)}
         title={isRTL ? 'تواصلي معنا' : 'Contact Us'}
+        description={contactHeroDescription}
       />
-
-      <div className="border-b border-brand-stone/20 bg-brand-pageCanvas">
-        <div className={`${EDITORIAL_PAGE_CONTAINER} py-5 lg:py-6`}>
-          <p className={`${editorialIntroStripText} ${editorialHeroAlign(isRTL)}`}>
-            {isRTL
-              ? 'سواء كانت هذه زيارتك الأولى لـ Bint Saeed أو أنكِ جزء من مجتمعنا، يسعدنا مساعدتك في كل استفسار.'
-              : 'Whether you\u2019re discovering Bint Saeed for the first time or already part of our community, we\u2019re pleased to assist with every enquiry.'}
-          </p>
-        </div>
-      </div>
 
       <div className={`${EDITORIAL_PAGE_CONTAINER} pt-8`}>
         <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">

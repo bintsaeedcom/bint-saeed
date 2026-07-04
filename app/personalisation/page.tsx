@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
-import AboutHeroMarquee from '@/components/AboutHeroMarquee'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getPersonalisationCopy } from '@/lib/content/personalisationCopyI18n'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
+import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { editorialSectionH2 } from '@/lib/ui/editorialTypography'
 import {
   EDITORIAL_PAGE_CONTAINER,
@@ -63,15 +63,13 @@ export default function PersonalisationPage() {
         imageSrc={HERO_IMAGE}
         imageAlt={copy.hiddenPocketAlt}
         priority
-        imageOpacity={65}
         segments={[
           { label: copy.breadcrumbHome, href: '/home' },
           { label: copy.breadcrumb },
         ]}
-        eyebrow={copy.breadcrumb}
+        eyebrow={getAboutEditorialHeroEyebrow(language)}
         title={copy.heroTitle}
         description={copy.heroSub}
-        footerSlot={<AboutHeroMarquee text={copy.marquee} />}
       />
 
       <section className="relative z-10 -mt-6 rounded-t-[16px] bg-[#e8ddd4] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">

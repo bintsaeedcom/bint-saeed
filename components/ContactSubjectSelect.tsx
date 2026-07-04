@@ -22,7 +22,7 @@ type Props = {
 
 const triggerBase = [
   'flex w-full items-center justify-between gap-3 rounded-[2px] border bg-white px-4 py-3.5',
-  'font-montserrat text-sm tracking-[0.03em] transition-[border-color,box-shadow,background-color] duration-200',
+  'font-montserrat text-sm normal-case tracking-[0.03em] transition-[border-color,box-shadow,background-color] duration-200',
   'outline-none hover:border-brand-stone/55',
   'focus:border-brand-darkRed/35 focus:shadow-[0_0_0_1px_rgba(111,21,36,0.08)]',
 ].join(' ')
@@ -117,7 +117,7 @@ export default function ContactSubjectSelect({
                       setIsOpen(false)
                       onBlur?.()
                     }}
-                    className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 font-montserrat text-sm tracking-[0.02em] transition-colors hover:bg-brand-dustyBlue/[0.08] ${
+                    className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 font-montserrat text-sm normal-case tracking-[0.02em] transition-colors hover:bg-brand-dustyBlue/[0.08] ${
                       isRTL ? 'flex-row-reverse' : ''
                     } ${isSelected ? 'bg-brand-dustyBlue/[0.06] text-brand-darkRed' : 'text-brand-darkRed/85'}`}
                     data-cursor-hover

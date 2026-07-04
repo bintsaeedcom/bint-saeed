@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
-import AboutHeroMarquee from '@/components/AboutHeroMarquee'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getAboutPageCopy } from '@/lib/content/aboutPageCopyI18n'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
@@ -116,7 +115,6 @@ export default function AboutPage() {
         imageSrc={HERO_IMAGE}
         imageAlt={copy.imageAlt}
         priority
-        imageOpacity={55}
         segments={[
           { label: copy.breadcrumbHome, href: '/home' },
           { label: copy.breadcrumbAbout },
@@ -124,7 +122,6 @@ export default function AboutPage() {
         eyebrow={copy.heroEyebrow}
         title={copy.heroHeadline}
         description={copy.heroSubline}
-        footerSlot={<AboutHeroMarquee text={copy.marquee} />}
       >
         <div className={`mt-5 ${ctaButtonRow}`} data-bs-cta-row data-bs-cta-row-layout="wrap">
           <LocaleLink

@@ -5,6 +5,7 @@ import AboutSectionHero from '@/components/AboutSectionHero'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
+import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { getGivingForwardCopy } from '@/lib/content/givingForwardCopyI18n'
 import { EDITORIAL_PAGE_CONTAINER, EDITORIAL_PAGE_SHELL } from '@/lib/ui/editorialPageChrome'
 import { ctaPrimaryWithGap, ctaSecondaryOnLight } from '@/lib/ui/ctaClasses'
@@ -23,8 +24,9 @@ export default function GivingForwardPage() {
           { label: copy.breadcrumbHome, href: '/home' },
           { label: copy.breadcrumb },
         ]}
-        eyebrow="BINT SAEED · ABU DHABI"
+        eyebrow={getAboutEditorialHeroEyebrow(language)}
         title={copy.pageTitle}
+        description={copy.intro[0]}
       />
 
       <section className={`${EDITORIAL_PAGE_CONTAINER} pb-20 pt-10 lg:pb-28 lg:pt-12`}>

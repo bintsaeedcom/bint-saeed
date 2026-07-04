@@ -26,16 +26,16 @@ export const EDITORIAL_HERO_HEIGHT = 'h-[min(46dvh,420px)] min-h-[360px] max-h-[
 export const EDITORIAL_BRAND_HERO_HEIGHT = EDITORIAL_HERO_HEIGHT
 
 export const editorialHeroEyebrowLight =
-  'bs-editorial-eyebrow mb-2.5 block max-w-full font-montserrat text-[10px] font-medium uppercase leading-[1.45] tracking-[0.18em] text-white/60 sm:mb-3 sm:tracking-[0.26em] md:tracking-[0.32em]'
+  'bs-editorial-eyebrow mb-2.5 block max-w-full font-montserrat text-[10px] font-medium uppercase leading-[1.45] tracking-[0.18em] text-brand-dustyBlue sm:mb-3 sm:tracking-[0.26em] md:tracking-[0.32em]'
 
 export const editorialHeroEyebrowDusty =
   'bs-editorial-eyebrow mb-2.5 block max-w-full font-montserrat text-[10px] font-medium uppercase leading-[1.45] tracking-[0.18em] text-[#6a8090] sm:mb-3 sm:tracking-[0.26em] md:tracking-[0.32em]'
 
 export const editorialHeroTitleLight =
-  'bs-editorial-hero-title mb-2 max-w-[20rem] font-rozha text-[clamp(1.625rem,3.6vw,2.875rem)] leading-[1.02] tracking-[0.01em] text-white sm:max-w-xl'
+  'bs-editorial-hero-title mb-2 max-w-none whitespace-nowrap font-rozha text-[clamp(1.125rem,calc(0.5rem+3.6vw),2.875rem)] leading-[1.02] tracking-[0.01em] text-white'
 
 export const editorialHeroTitleOnDarkBrand =
-  'bs-editorial-hero-title mb-2 max-w-[20rem] font-rozha text-[clamp(1.625rem,3.6vw,2.875rem)] leading-[1.02] tracking-[0.01em] text-[#e8ddd4] sm:max-w-2xl'
+  'bs-editorial-hero-title mb-2 max-w-none whitespace-nowrap font-rozha text-[clamp(1.125rem,calc(0.5rem+3.6vw),2.875rem)] leading-[1.02] tracking-[0.01em] text-[#e8ddd4]'
 
 export const editorialHeroDescLight =
   'max-w-md font-montserrat text-[11px] font-normal leading-[1.85] tracking-[0.05em] text-white/55 sm:text-xs'
@@ -51,7 +51,12 @@ export const editorialHeroContentShell = `relative z-10 flex h-full min-h-0 flex
 
 export const editorialHeroCopyBlock = 'mt-auto w-full min-w-0 pb-6 md:pb-7'
 
-export const editorialHeroCopyBlockWithFooter = 'mt-auto w-full min-w-0 pb-[4.25rem] sm:pb-[4.5rem]'
+/** Locks breadcrumb → eyebrow → title → copy to the same vertical band as Our Story */
+export const editorialHeroCopyStack =
+  'flex min-h-[11.75rem] flex-col justify-end sm:min-h-[12.5rem] md:min-h-[13.25rem]'
+
+/** Reserved CTA row height on banners without hero buttons (Our Story reference) */
+export const editorialHeroCtaReservedSpace = 'pointer-events-none mt-5 min-h-[3.25rem] shrink-0'
 
 /** @deprecated Use editorialHeroContentShell + editorialHeroCopyBlock */
 export const editorialBrandHeroContentShell = editorialHeroContentShell

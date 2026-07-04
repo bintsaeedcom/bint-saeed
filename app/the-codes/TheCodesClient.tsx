@@ -6,6 +6,8 @@ import Image from 'next/image'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
+import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
+import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { buildTheCodesJsonLd } from '@/lib/seo/theCodesJsonLd'
@@ -133,14 +135,14 @@ export default function TheCodesClient() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(codesJsonLd) }} />
       <AboutSectionHero
         rtl={isRTL}
-        imageSrc={codesPageImage(hero.file)}
+        imageSrc={ABOUT_SECTION_HERO_IMAGES.givingForward}
         imageAlt={hero.alt}
         priority
         segments={[
           { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
           { label: isRTL ? 'الرموز' : 'The Codes' },
         ]}
-        eyebrow={isRTL ? 'لغة الدار' : 'House Language'}
+        eyebrow={getAboutEditorialHeroEyebrow(language)}
         title={isRTL ? 'الرموز' : 'The Codes'}
         description={
           isRTL
