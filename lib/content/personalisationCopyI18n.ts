@@ -74,7 +74,7 @@ const EN: PersonalisationCopy = {
     'If you wish to personalise one of our other items, please contact our Customer Service.',
   contactServiceCta: 'Contact Customer Service',
   pickAbayaCta: 'Pick your piece to personalise now',
-  closingQuote: 'It turns a piece into something that belongs to you\nin a deeper way.',
+  closingQuote: 'It turns a piece into something\nthat belongs to you in a deeper way.',
   shopCta: 'EXPLORE THE COLLECTION',
   strandsCta: 'DISCOVER THE STRANDS',
   hiddenPocketAlt: 'Bint Saeed hidden pocket personalisation detail — Abu Dhabi',

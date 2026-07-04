@@ -26,6 +26,16 @@ const MEGA_MENU_THE_CODES = '/collection-section/bint-saeed-the-codes-collection
 const MEGA_MENU_HIDDEN_POCKET = '/collection-section/bint-saeed-hidden-pocket-collection-nav.webp'
 const MEGA_MENU_NAME_LABELS = '/collection-section/bint-saeed-name-labels-collection-nav.webp'
 
+function megaMenuFeatureCta(ctaLabel: string | undefined, language: string): string {
+  if (!ctaLabel) return language === 'ar' ? 'تسوقي الآن' : 'Shop Now'
+  if (language === 'ar') {
+    if (ctaLabel === 'Explore') return 'استكشفي'
+    if (ctaLabel === 'Discover Now') return 'اكتشفي الآن'
+    if (ctaLabel === 'Discover More') return 'اكتشفي المزيد'
+  }
+  return ctaLabel
+}
+
 /** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
 const headerBarGradient =
   'bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]'
@@ -89,6 +99,29 @@ export default function Header() {
   const [searchResults, setSearchResults] = useState<SearchableItem[]>([])
   const searchInputRef = useRef<HTMLInputElement>(null)
   const megaMenuLeaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const mobileNavScrollRef = useRef<HTMLDivElement>(null)
+  const mobileSectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
+
+  const scrollMobileSectionIntoView = (href: string) => {
+    const section = mobileSectionRefs.current[href]
+    const scroller = mobileNavScrollRef.current
+    if (!section || !scroller) return
+    const padding = 20
+    const sectionTop = section.offsetTop
+    const sectionBottom = sectionTop + section.offsetHeight
+    const viewTop = scroller.scrollTop
+    const viewBottom = viewTop + scroller.clientHeight
+    if (sectionTop < viewTop + padding) {
+      scroller.scrollTo({ top: Math.max(0, sectionTop - padding), behavior: 'smooth' })
+      return
+    }
+    if (sectionBottom > viewBottom - padding) {
+      scroller.scrollTo({
+        top: sectionBottom - scroller.clientHeight + padding,
+        behavior: 'smooth',
+      })
+    }
+  }
 
   const clearMegaMenuLeaveTimer = () => {
     if (megaMenuLeaveTimerRef.current != null) {
@@ -140,7 +173,7 @@ export default function Header() {
     string,
     {
       columns: { title: string; links: { label: string; href: string }[] }[]
-      features: { title: string; href: string; image: string }[]
+      features: { title: string; href: string; image: string; ctaLabel?: string }[]
     }
   > = {
     '/shop': {
@@ -242,11 +275,13 @@ export default function Header() {
           title: 'Hidden Pocket',
           href: '/personalisation',
           image: MEGA_MENU_HIDDEN_POCKET,
+          ctaLabel: 'Discover More',
         },
         {
           title: 'Name Labels',
           href: '/personalisation',
           image: MEGA_MENU_NAME_LABELS,
+          ctaLabel: 'Discover More',
         },
       ],
     },
@@ -265,8 +300,8 @@ export default function Header() {
         },
       ],
       features: [
-        { title: 'Our Story', href: '/about', image: MEGA_MENU_OUR_STORY },
-        { title: 'The Codes', href: '/the-codes', image: MEGA_MENU_THE_CODES },
+        { title: 'Our Story', href: '/about', image: MEGA_MENU_OUR_STORY, ctaLabel: 'Discover Now' },
+        { title: 'The Codes', href: '/the-codes', image: MEGA_MENU_THE_CODES, ctaLabel: 'Explore' },
       ],
     },
   }
@@ -579,7 +614,7 @@ export default function Header() {
                               {feature.title}
                             </span>
                             <span className="whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-darkRed/70 transition-colors group-hover:text-brand-dustyBlue xl:text-[11px]">
-                              Shop Now
+                              {megaMenuFeatureCta(feature.ctaLabel, language)}
                             </span>
                           </div>
                         </LocaleLink>
@@ -748,55 +783,162 @@ export default function Header() {
               </div>
 
               {/* Navigation + same destinations as desktop mega menu */}
-              <div className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-4">
+              <div
+                ref={mobileNavScrollRef}
+                className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-8 [-webkit-overflow-scrolling:touch]"
+              >
                 {[shopNavItem, ...navItems].map((item, index) => {
                   const mega = megaMenus[item.href]
                   const isExpanded = expandedMobileSection === item.href
+                  const subLinkCount = mega
+                    ? mega.columns.reduce((sum, col) => sum + col.links.length, 0)
+                    : 0
+
                   return (
                     <motion.div
                       key={item.label}
-                      initial={{ opacity: 0, x: -20 }}
+                      ref={(el) => {
+                        mobileSectionRefs.current[item.href] = el
+                      }}
+                      initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.08 }}
-                      className="border-b border-white/10 py-3 last:border-b-0"
+                      className="border-b border-white/10 py-1 last:border-b-0"
                     >
                       {mega ? (
-                        <div className="flex w-full min-w-0 items-center justify-between gap-3 py-3">
-                          <LocaleLink
-                            href={item.href}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white max-[380px]:text-[12px]"
-                            data-cursor-hover
-                            data-analytics-event={getMainNavAnalyticsEvent(item.href)}
-                            data-analytics-section="header-mobile-nav"
-                          >
-                            {item.label}
-                          </LocaleLink>
+                        <>
                           <button
                             type="button"
-                            onClick={() =>
-                              setExpandedMobileSection((prev) => (prev === item.href ? null : item.href))
-                            }
-                            className="shrink-0 p-1 text-white/65"
-                            aria-label={`Toggle ${item.label} submenu`}
+                            onClick={() => {
+                              setExpandedMobileSection((prev) => {
+                                const next = prev === item.href ? null : item.href
+                                if (next) {
+                                  requestAnimationFrame(() => scrollMobileSectionIntoView(item.href))
+                                }
+                                return next
+                              })
+                            }}
+                            className={`flex w-full min-w-0 items-center justify-between gap-3 py-3.5 ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}
+                            aria-expanded={isExpanded}
+                            data-cursor-hover
                           >
-                            <FiChevronDown
-                              className={`h-5 w-5 transition-transform duration-200 ${
-                                isExpanded ? 'rotate-180' : ''
+                            <span className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white">
+                              {item.label}
+                            </span>
+                            <span
+                              className={`inline-flex shrink-0 items-center gap-1.5 font-montserrat text-[9px] uppercase tracking-[0.14em] ${
+                                isExpanded ? 'text-brand-dustyBlue' : 'text-white/45'
                               }`}
-                            />
+                            >
+                              <span className="hidden min-[360px]:inline">
+                                {isExpanded
+                                  ? isRTL
+                                    ? 'إخفاء'
+                                    : 'Hide'
+                                  : isRTL
+                                    ? `${subLinkCount} مواضيع`
+                                    : `${subLinkCount} topics`}
+                              </span>
+                              <FiChevronDown
+                                className={`h-5 w-5 transition-transform duration-200 ${
+                                  isExpanded ? 'rotate-180 text-brand-dustyBlue' : 'text-white/55'
+                                }`}
+                                aria-hidden
+                              />
+                            </span>
                           </button>
-                        </div>
+
+                          <AnimatePresence initial={false}>
+                            {isExpanded ? (
+                              <motion.div
+                                key={`${item.href}-panel`}
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                                className="overflow-hidden"
+                              >
+                                <div
+                                  className={`mb-3 rounded-[2px] border border-white/12 bg-white/[0.07] px-4 py-3 ${
+                                    isRTL
+                                      ? 'border-e-2 border-e-brand-dustyBlue/50 text-right'
+                                      : 'border-s-2 border-s-brand-dustyBlue/50 text-left'
+                                  }`}
+                                >
+                                  <LocaleLink
+                                    href={item.href}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className={`mb-3 inline-flex min-h-10 items-center gap-2 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue transition-colors hover:text-white ${isRTL ? 'flex-row-reverse' : ''}`}
+                                    data-cursor-hover
+                                    data-analytics-event={getMainNavAnalyticsEvent(item.href)}
+                                    data-analytics-section="header-mobile-nav"
+                                  >
+                                    {isRTL ? `عرض ${item.label}` : `View all ${item.label}`}
+                                    <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+                                  </LocaleLink>
+
+                                  {mega.columns.map((col) => (
+                                    <div key={col.title} className="min-w-0">
+                                      <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/50">
+                                        {col.title}
+                                      </p>
+                                      <div className="space-y-0.5">
+                                        {col.links.map((link) => (
+                                          <LocaleLink
+                                            key={`${col.title}-${link.label}`}
+                                            href={link.href}
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className={`flex min-h-11 items-center justify-between gap-3 py-2 font-montserrat text-[13px] leading-snug text-white/90 transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+                                            data-cursor-hover
+                                            data-analytics-section="header-mobile-nav"
+                                          >
+                                            <span>{link.label}</span>
+                                            <FiArrowRight
+                                              className={`h-3.5 w-3.5 shrink-0 text-white/35 ${isRTL ? 'rotate-180' : ''}`}
+                                              aria-hidden
+                                            />
+                                          </LocaleLink>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  ))}
+
+                                  {mega.features.length > 0 ? (
+                                    <div className="mt-4 border-t border-white/10 pt-3">
+                                      <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/45">
+                                        {isRTL ? 'مميز' : 'Featured'}
+                                      </p>
+                                      <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+                                        {mega.features.map((feature) => (
+                                          <LocaleLink
+                                            key={feature.title}
+                                            href={feature.href}
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className="inline-flex min-h-9 items-center rounded-[2px] border border-white/15 bg-white/[0.05] px-3 py-1.5 font-montserrat text-[11px] tracking-[0.04em] text-white/85 transition-colors hover:border-brand-dustyBlue/40 hover:text-brand-dustyBlue"
+                                            data-cursor-hover
+                                            data-analytics-section="header-mobile-nav"
+                                          >
+                                            {feature.title}
+                                          </LocaleLink>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  ) : null}
+                                </div>
+                              </motion.div>
+                            ) : null}
+                          </AnimatePresence>
+                        </>
                       ) : (
                         <LocaleLink
                           href={item.href}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="group flex min-w-0 items-center justify-between gap-3 py-3"
+                          className={`group flex min-h-11 min-w-0 items-center justify-between gap-3 py-3 ${isRTL ? 'flex-row-reverse' : ''}`}
                           data-cursor-hover
                           data-analytics-event={getMainNavAnalyticsEvent(item.href)}
                           data-analytics-section="header-mobile-nav"
                         >
-                          <span className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white max-[380px]:text-[12px]">
+                          <span className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white">
                             {item.label}
                           </span>
                           <FiArrowRight
@@ -804,45 +946,6 @@ export default function Header() {
                           />
                         </LocaleLink>
                       )}
-                      {mega ? (
-                        <div
-                          className={`overflow-hidden transition-all duration-250 ${
-                            isExpanded ? 'max-h-[42rem] pb-3 pt-1 opacity-100' : 'max-h-0 py-0 opacity-0'
-                          } ${isRTL ? 'text-right' : 'text-left'}`}
-                        >
-                          <LocaleLink
-                            href={item.href}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="inline-flex items-center gap-2 py-2 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue transition-colors hover:text-white"
-                            data-cursor-hover
-                            data-analytics-event={getMainNavAnalyticsEvent(item.href)}
-                            data-analytics-section="header-mobile-nav"
-                          >
-                            View {item.label}
-                            <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-                          </LocaleLink>
-                          {mega.columns.map((col) => (
-                            <div key={col.title} className="min-w-0">
-                              <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/45">
-                                {col.title}
-                              </p>
-                              <div className="space-y-1">
-                                {col.links.map((link) => (
-                                  <LocaleLink
-                                    key={`${col.title}-${link.label}`}
-                                    href={link.href}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="block py-2 font-montserrat text-[13px] text-white/85 transition-colors hover:text-brand-dustyBlue"
-                                    data-cursor-hover
-                                  >
-                                    {link.label}
-                                  </LocaleLink>
-                                ))}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      ) : null}
                     </motion.div>
                   )
                 })}

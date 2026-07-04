@@ -3,6 +3,7 @@ import { isSafePublicIpForLookup } from '@/lib/security/isSafePublicIp'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { sanitizeUserText } from '@/lib/security/sanitizeUserText'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
+import { validateContactName } from '@/lib/validateContactName'
 
 const MAX_NAME = 120
 const MAX_EMAIL = 254
@@ -16,7 +17,12 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const name = sanitizeUserText(body.name, MAX_NAME)
+    const nameRaw = sanitizeUserText(body.name, MAX_NAME)
+    const nameCheck = validateContactName(nameRaw)
+    if (!nameCheck.valid) {
+      return NextResponse.json({ error: nameCheck.message }, { status: 400 })
+    }
+    const name = nameCheck.name
     const rawEmail = sanitizeUserText(body.email, MAX_EMAIL)
     const phone = sanitizeUserText(body.phone, MAX_PHONE)
     const subject = sanitizeUserText(body.subject, MAX_SUBJECT)

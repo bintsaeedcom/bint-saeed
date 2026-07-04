@@ -1,38 +1,34 @@
 'use client'
 
 import LocaleLink from '@/components/LocaleLink'
-import AboutTopicNav from '@/components/AboutTopicNav'
-import AppPageWayfinding from '@/components/AppPageWayfinding'
+import AboutSectionHero from '@/components/AboutSectionHero'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { getGivingForwardCopy } from '@/lib/content/givingForwardCopyI18n'
-import { ctaPrimaryWithGap, ctaSecondaryOnLight, utilityPageH1 } from '@/lib/ui/ctaClasses'
+import { EDITORIAL_PAGE_CONTAINER, EDITORIAL_PAGE_SHELL } from '@/lib/ui/editorialPageChrome'
+import { ctaPrimaryWithGap, ctaSecondaryOnLight } from '@/lib/ui/ctaClasses'
 
 export default function GivingForwardPage() {
   const { isRTL, language } = useLanguage()
   const copy = getGivingForwardCopy(language)
 
   return (
-    <div className={`relative min-h-screen overflow-x-clip bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <section className="relative container mx-auto px-6 pb-20 pt-24 lg:px-16 lg:pb-28 lg:pt-28">
-        <AppPageWayfinding
-          rtl={isRTL}
-          className="mb-3"
-          segments={[
-            { label: copy.breadcrumbHome, href: '/home' },
-            { label: copy.breadcrumb },
-          ]}
-        />
-        <span className="mb-6 block font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
-          Bint Saeed
-        </span>
-        <h1 data-document-h1="true" className={utilityPageH1}>
-          {copy.pageTitle}
-        </h1>
-        <div className="mt-6">
-          <AboutTopicNav />
-        </div>
-        <div className="mt-5 max-w-4xl space-y-6 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
+    <div className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
+      <AboutSectionHero
+        rtl={isRTL}
+        imageSrc={ABOUT_SECTION_HERO_IMAGES.givingForward}
+        imageAlt="Bint Saeed — Giving Forward editorial banner"
+        segments={[
+          { label: copy.breadcrumbHome, href: '/home' },
+          { label: copy.breadcrumb },
+        ]}
+        eyebrow="Bint Saeed"
+        title={copy.pageTitle}
+      />
+
+      <section className={`${EDITORIAL_PAGE_CONTAINER} pb-20 pt-10 lg:pb-28 lg:pt-12`}>
+        <div className="max-w-4xl space-y-6 font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75">
           {copy.intro.map((paragraph) => (
             <p key={paragraph.slice(0, 24)}>{paragraph}</p>
           ))}

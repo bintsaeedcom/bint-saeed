@@ -87,6 +87,18 @@ export const THE_CODES_SECTIONS: CodesSectionContent[] = [
       'Knotted Lines of Lineage gold motif on fabric — continuity house code, Bint Saeed',
     ),
   },
+  {
+    id: 'the-strands',
+    eyebrow: 'Stone & thread',
+    title: 'The Strands',
+    paragraphs: [
+      'The Strands are composed of natural stones, set in sequence along the shoulder and across the garment. Within the house, they extend the knotted line into a continuous thread — measured in placement, deliberate in weight, and held close to the wearer. Neither ornament nor afterthought, they balance the silhouette while carrying connection between origin and presence as a defining house code.',
+    ],
+    imageFile: CODES_IMAGE_FILES.strands,
+    imageAlt: withBrandAlt(
+      'Natural stone abaya strands — wearable house code of thread and balance, Bint Saeed Abu Dhabi',
+    ),
+  },
 ]
 
 export function getTheCodesHero(locale: AppLocale) {

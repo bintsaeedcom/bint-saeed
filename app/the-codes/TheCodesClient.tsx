@@ -5,9 +5,7 @@ import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
-import AboutTopicNav from '@/components/AboutTopicNav'
-import AppPageWayfinding from '@/components/AppPageWayfinding'
-import { FiArrowDown } from 'react-icons/fi'
+import AboutSectionHero from '@/components/AboutSectionHero'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { buildTheCodesJsonLd } from '@/lib/seo/theCodesJsonLd'
@@ -17,6 +15,8 @@ import {
   getTheCodesSections,
   type CodesSectionContent,
 } from '@/lib/the-codes/codesPageContent'
+import { EDITORIAL_PAGE_CONTAINER, EDITORIAL_PAGE_SHELL } from '@/lib/ui/editorialPageChrome'
+import { ctaPrimary } from '@/lib/ui/ctaClasses'
 
 /** Editorial grid / corner brackets disabled site-wide — use border-s + border-b on copy only. */
 function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
@@ -107,6 +107,8 @@ export default function TheCodesClient() {
       'The Al Ain Rosette is developed as a house motif, carved in carnelian stone. Its colour is chosen for its natural warmth, reflecting the desert tones of Al Ain in the United Arab Emirates. Its form draws from desert flora, recalling both the desert hyacinth and the soft five-petalled bloom of Tribulus omanense, the national flower of the UAE. At present, it appears in jewellery, phone strands, and small objects, where it introduces a recognisable element that can extend across the house over time.',
     'knotted-lines-of-lineage':
       'Knotted Lines are developed as a defining element within the house. Each line is shaped in relation to another, forming knots that reflect connection across time, experience, and generation. What is inherited and what is lived become intertwined, creating a continuous thread rather than separate moments.\n\nWithin Bint Saeed, these knots take form as buttons on abayas and as strands across garments. The strands, often composed of natural stones, are placed with care, frequently along the shoulder, where they bring balance to the silhouette while remaining close to the wearer.\n\nTheir placement is considered. Each knot serves as a reminder of the story you carry, shaped by where you come from and what you move through. A story that is interconnected, personal, and ongoing, one you recognise, stand within, and carry forward with pride.',
+    'the-strands':
+      'The Strands belong to a longer lineage of adornment in the region, where thread, stone, and gesture have long marked continuity across generations. At Bint Saeed, each strand is assembled from natural stones chosen for tone, grain, and proportion. They are positioned with care — most often at the shoulder — where they introduce equilibrium to the abaya without disturbing its line.\n\nAs a house code, The Strands translate an abstract principle into something worn: that what is carried from where you come from remains present, yet restrained. They appear across abayas and objects as a recognisable signature of the house — a quiet thread that persists from piece to piece, and from one chapter of the story to the next.',
   }
 
   useEffect(() => {
@@ -126,73 +128,28 @@ export default function TheCodesClient() {
 
   return (
     <main
-      className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-8 md:pb-16 ${isRTL ? 'rtl' : 'ltr'}`}
+      className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-brand-pageCanvas pb-8 md:pb-16 ${isRTL ? 'rtl' : 'ltr'}`}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(codesJsonLd) }} />
-      <header className="relative h-[50vh] overflow-hidden bg-brand-darkRed md:h-[60vh]">
-        <Image
-          src={codesPageImage(hero.file)}
-          alt={hero.alt}
-          fill
-          className="object-cover opacity-40"
-          priority
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/50 to-transparent" />
-        <div className="relative z-10 flex h-full flex-col justify-end pb-16 md:pb-20">
-          <div className="container mx-auto px-6 lg:px-12">
-            <motion.div
-              initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mb-3"
-            >
-              <AppPageWayfinding
-                rtl={isRTL}
-                variant="light"
-                segments={[
-                  { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-                  { label: isRTL ? 'الرموز' : 'The Codes' },
-                ]}
-              />
-            </motion.div>
+      <AboutSectionHero
+        rtl={isRTL}
+        imageSrc={codesPageImage(hero.file)}
+        imageAlt={hero.alt}
+        priority
+        segments={[
+          { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+          { label: isRTL ? 'الرموز' : 'The Codes' },
+        ]}
+        eyebrow={isRTL ? 'لغة الدار' : 'House Language'}
+        title={isRTL ? 'الرموز' : 'The Codes'}
+        description={
+          isRTL
+            ? 'العناصر التي تحمل إرث الدار. متجذرة في الأصل. محددة بدقة.'
+            : 'The elements that carry the legacy of the house. Rooted in origin. Defined with precision.'
+        }
+      />
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className={isRTL ? 'text-right' : ''}
-            >
-              <span className="mb-4 block font-montserrat text-xs uppercase tracking-[0.4em] text-white/60">
-                House Language
-              </span>
-              <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-white md:text-7xl lg:text-8xl">
-                The Codes
-              </h1>
-              <p className="max-w-lg font-montserrat text-base tracking-wide text-white/70">
-                The elements that carry the legacy of the house.
-                <br />
-                Rooted in origin. Defined with precision.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </header>
-      <AboutTopicNav />
-
-      <div className="relative container mx-auto max-w-4xl px-6 pb-10 pt-8 text-center md:pb-14 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="relative mt-2 flex flex-col items-center gap-2 text-brand-darkRed/45"
-        >
-          <span className="font-montserrat text-[10px] uppercase tracking-[0.28em]">Scroll</span>
-          <FiArrowDown className="h-4 w-4 animate-bounce text-brand-dustyBlue/60" aria-hidden />
-        </motion.div>
-      </div>
-
-      <div className="relative space-y-6 md:space-y-10 lg:space-y-14">
+      <div className="relative space-y-4 md:space-y-8 lg:space-y-10">
         {sections.map((section, index) => {
           const isEven = index % 2 === 0
           const textOrder = isEven ? 'lg:order-1' : 'lg:order-2'
@@ -204,7 +161,7 @@ export default function TheCodesClient() {
               className="relative scroll-mt-28 overflow-hidden md:scroll-mt-32"
               aria-labelledby={`${section.id}-heading`}
             >
-              <div className="container relative z-[1] mx-auto grid max-w-6xl gap-10 px-6 py-14 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-12 lg:py-20">
+              <div className={`${EDITORIAL_PAGE_CONTAINER} relative z-[1] grid max-w-6xl gap-10 py-10 lg:grid-cols-2 lg:items-center lg:gap-16 lg:py-16`}>
                 <motion.div
                   initial={{ opacity: 0, y: 28 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -245,6 +202,7 @@ export default function TheCodesClient() {
                               khous: 'click_read_more_khous',
                               'al-ain-rosette': 'click_read_more_al_ain_rosette',
                               'knotted-lines-of-lineage': 'click_read_more_knotted_lineage',
+                              'the-strands': 'click_read_more_strands',
                             }
                             const isOpening = !expandedSections[section.id]
                             if (isOpening && eventMap[section.id]) {
@@ -287,14 +245,15 @@ export default function TheCodesClient() {
         })}
       </div>
 
-      <footer className="relative container mx-auto max-w-3xl px-6 pb-24 pt-16 text-center lg:px-12">
-        <p className="font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-darkRed/50">
+      <footer className={`${EDITORIAL_PAGE_CONTAINER} flex flex-col items-center pb-24 pt-16 text-center`}>
+        <p className="w-full font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-clayRed/70">
           Continue the story
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-4">
+        <div className="mt-6 flex w-full justify-center">
           <LocaleLink
             href="/shop?from=the-codes"
-            className="inline-flex min-h-[44px] items-center justify-center border-b border-brand-darkRed/35 px-2 py-2 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+            className={ctaPrimary}
+            data-bs-cta
             data-cursor-hover
             data-analytics-event="click_view_collection_codes_page"
             data-analytics-section="the-codes-footer-cta"

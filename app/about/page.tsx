@@ -3,9 +3,18 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
+import AboutTopicNav from '@/components/AboutTopicNav'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import EditorialHeroCopy from '@/components/EditorialHeroCopy'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getAboutPageCopy } from '@/lib/content/aboutPageCopyI18n'
+import {
+  EDITORIAL_BRAND_HERO_HEIGHT,
+  EDITORIAL_PAGE_CONTAINER,
+  EDITORIAL_PAGE_SHELL,
+  editorialBrandHeroContentShell,
+  editorialHeroAlign,
+} from '@/lib/ui/editorialPageChrome'
 import {
   ctaPrimary,
   ctaPrimarySoft,
@@ -37,8 +46,7 @@ const WOMAN_STEP_REVEAL_HIDDEN_RTL = [
 
 const HERO_IMAGE = '/about/campaign-portrait.PNG'
 const HERO_IMAGE_2 = '/about/campaign-seated.PNG'
-const CLOSING_FABRIC_BG = '/strands/charm-fabric-dark.webp'
-const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
+const INNER_CONTAINER_CLASS = EDITORIAL_PAGE_CONTAINER
 
 /** Sticky card-stack scroll — identical overlap/stack on mobile and desktop */
 const ABOUT_STACK_SECTION =
@@ -122,8 +130,8 @@ export default function AboutPage() {
   }, [copy.womanSteps.length, copy.designCodes.length])
 
   return (
-    <main className={`min-h-screen overflow-x-clip bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
-      <section className="relative z-0 h-[85vh] max-h-[85vh] overflow-hidden bg-[#1a0210] text-[#e8ddd4]">
+    <main className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
+      <section className={`relative z-0 ${EDITORIAL_BRAND_HERO_HEIGHT} overflow-hidden bg-[#1a0210] text-[#e8ddd4]`}>
         <div
           className="absolute inset-0 opacity-55"
           style={{ transform: `translateY(${heroOffset}px)` }}
@@ -140,54 +148,48 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,2,16,0.92)_0%,rgba(26,2,16,0.62)_46%,rgba(26,2,16,0.22)_100%)]" />
         </div>
 
-        <div className={`absolute bottom-10 left-6 right-6 z-10 max-w-[600px] pb-14 text-left md:bottom-[60px] md:left-[60px] md:right-auto md:pb-16 ${isRTL ? 'text-right' : ''}`}>
-          <AppPageWayfinding
-            rtl={isRTL}
-            variant="light"
-            className="mb-3"
-            segments={[
-              { label: copy.breadcrumbHome, href: '/home' },
-              { label: copy.breadcrumbAbout },
-            ]}
-          />
+        <div className={`${editorialBrandHeroContentShell} ${editorialHeroAlign(isRTL)}`}>
+          <div className={EDITORIAL_PAGE_CONTAINER}>
+            <AppPageWayfinding
+              rtl={isRTL}
+              variant="light"
+              className="mb-3"
+              segments={[
+                { label: copy.breadcrumbHome, href: '/home' },
+                { label: copy.breadcrumbAbout },
+              ]}
+            />
 
-          <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090] sm:tracking-[0.34em]">
-            {copy.heroEyebrow}
-          </p>
-          <h1
-            data-document-h1="true"
-            className="max-w-[760px] font-rozha text-[clamp(36px,6vw,72px)] leading-[0.98] tracking-[0.01em]"
-            style={{ color: '#e8ddd4' }}
-          >
-            {copy.heroHeadline}
-          </h1>
-          <p className="mt-3 max-w-[480px] font-montserrat text-[14px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.75)]">
-            {copy.heroSubline}
-          </p>
-          <p className="mt-3 max-w-[480px] font-montserrat text-[13px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.55)]">
-            {copy.heroTagline}
-          </p>
-          <div className={`mt-8 ${ctaButtonRow}`} data-bs-cta-row data-bs-cta-row-layout="wrap">
-            <LocaleLink
-              href="#about-origin"
-              className={`${ctaPrimary} ${ctaInButtonRow}`}
-              data-bs-cta
-              data-cursor-hover
+            <EditorialHeroCopy
+              rtl={isRTL}
+              eyebrow={copy.heroEyebrow}
+              title={copy.heroHeadline}
+              description={copy.heroSubline}
+              variant="brand-dark"
             >
-              {copy.ctaReadStory}
-            </LocaleLink>
-            <LocaleLink
-              href="/shop"
-              className={`${ctaSecondaryOnDark} ${ctaInButtonRow}`}
-              data-bs-cta
-              data-cursor-hover
-            >
-              {copy.ctaExploreCollection}
-            </LocaleLink>
+              <div className={`mt-6 ${ctaButtonRow}`} data-bs-cta-row data-bs-cta-row-layout="wrap">
+                <LocaleLink
+                  href="#about-origin"
+                  className={`${ctaPrimary} ${ctaInButtonRow}`}
+                  data-bs-cta
+                  data-cursor-hover
+                >
+                  {copy.ctaReadStory}
+                </LocaleLink>
+                <LocaleLink
+                  href="/shop"
+                  className={`${ctaSecondaryOnDark} ${ctaInButtonRow}`}
+                  data-bs-cta
+                  data-cursor-hover
+                >
+                  {copy.ctaExploreCollection}
+                </LocaleLink>
+              </div>
+            </EditorialHeroCopy>
           </div>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 z-20 overflow-hidden border-t border-[#2a0a14] bg-[#1a0210]/80 py-4">
+        <div className="absolute inset-x-0 bottom-0 z-20 overflow-hidden border-t border-[#2a0a14] bg-[#1a0210]/80 py-3">
           <div className="about-marquee flex w-max font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#6a8090]/65">
             {Array.from({ length: 8 }).map((_, index) => (
               <span key={index} className="px-4">
@@ -197,6 +199,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <AboutTopicNav />
 
       <section
         id="about-origin"
@@ -380,20 +384,24 @@ export default function AboutPage() {
 
       <section
         ref={quoteRef}
-        className={`closing-section relative z-50 isolate -mt-10 flex min-h-[52vh] items-center overflow-hidden rounded-t-[16px] bg-[#0f080a] py-28 text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:py-36 ${editorialSectionFooterPad}`}
+        className="closing-section relative z-50 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10"
       >
         <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
-          <div className="mx-auto max-w-[640px]">
+          <div className="mx-auto max-w-[min(94vw,860px)]">
             <p
-              className={`text-center font-rozha text-[clamp(22px,3.5vw,44px)] italic leading-[1.3] tracking-[-0.01em] text-[#e8d8c8] transition-opacity duration-700 ${
+              className={`text-center font-rozha text-[clamp(20px,3.2vw,40px)] italic leading-[1.22] tracking-[-0.01em] text-[#e8d8c8] transition-opacity duration-700 ${
                 quoteVisible ? 'opacity-100' : 'opacity-0'
               }`}
             >
-              {copy.closingQuote}
+              {copy.closingQuote.split('\n').map((line, index) => (
+                <span key={index} className="block">
+                  {line}
+                </span>
+              ))}
             </p>
           </div>
           <div className="mx-auto my-6 h-px w-[60px] bg-[#e8ddd4]" />
-          <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-[#7A1C28]/70">
+          <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-[#6a8090]">
             {copy.closingBrand}
           </p>
           <div className={`mt-8 ${ctaButtonRow} justify-center`} data-bs-cta-row data-bs-cta-row-layout="wrap">
@@ -456,6 +464,12 @@ export default function AboutPage() {
 
         .closing-section {
           position: relative;
+          min-height: auto;
+          height: auto;
+          padding: 120px 40px 100px;
+          background-image: url('/strands/charm-fabric-dark.webp');
+          background-size: cover;
+          background-position: center;
         }
 
         .closing-section::before,
@@ -468,14 +482,12 @@ export default function AboutPage() {
 
         .closing-section::before {
           z-index: 0;
-          background-image: url('${CLOSING_FABRIC_BG}');
-          background-size: cover;
-          background-position: center;
+          background: rgba(15, 8, 10, 0.82);
         }
 
         .closing-section::after {
           z-index: 1;
-          background: rgba(15, 8, 10, 0.58);
+          background: transparent;
         }
 
         @media (max-width: 767px) {
@@ -484,8 +496,7 @@ export default function AboutPage() {
           }
 
           .closing-section {
-            padding-top: 5rem;
-            padding-bottom: 5rem;
+            padding: 80px 24px 80px;
           }
         }
       `}</style>

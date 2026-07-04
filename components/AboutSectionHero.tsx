@@ -1,0 +1,99 @@
+'use client'
+
+import type { ReactNode } from 'react'
+import Image from 'next/image'
+import { motion } from 'framer-motion'
+import AppPageWayfinding from '@/components/AppPageWayfinding'
+import EditorialHeroCopy from '@/components/EditorialHeroCopy'
+import type { BreadcrumbSegment } from '@/components/AppBreadcrumb'
+import AboutTopicNav from '@/components/AboutTopicNav'
+import {
+  EDITORIAL_HERO_HEIGHT,
+  EDITORIAL_PAGE_CONTAINER,
+  editorialHeroContentShell,
+} from '@/lib/ui/editorialPageChrome'
+
+export type AboutSectionHeroProps = {
+  rtl: boolean
+  imageSrc: string
+  imageAlt: string
+  segments: BreadcrumbSegment[]
+  title: string
+  eyebrow?: string
+  description?: string
+  titleClassName?: string
+  descriptionClassName?: string
+  imageOpacity?: number
+  priority?: boolean
+  showTopicNav?: boolean
+  children?: ReactNode
+  /** Rendered at the bottom of the banner (e.g. marquee strip). */
+  footerSlot?: ReactNode
+}
+
+export default function AboutSectionHero({
+  rtl,
+  imageSrc,
+  imageAlt,
+  segments,
+  title,
+  eyebrow,
+  description,
+  titleClassName,
+  descriptionClassName,
+  imageOpacity = 40,
+  priority = false,
+  showTopicNav = true,
+  children,
+  footerSlot,
+}: AboutSectionHeroProps) {
+  return (
+    <>
+      <header className={`relative ${EDITORIAL_HERO_HEIGHT} overflow-hidden bg-brand-darkRed`}>
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          fill
+          className="object-cover"
+          style={{ opacity: imageOpacity / 100 }}
+          priority={priority}
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/55 to-brand-darkRed/20" />
+        <div className={editorialHeroContentShell}>
+          <div className={EDITORIAL_PAGE_CONTAINER}>
+            <motion.div
+              initial={{ opacity: 0, x: rtl ? 20 : -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-3 w-full min-w-0"
+            >
+              <AppPageWayfinding rtl={rtl} variant="light" segments={segments} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65 }}
+              className="w-full min-w-0"
+            >
+              <EditorialHeroCopy
+                rtl={rtl}
+                eyebrow={eyebrow}
+                title={title}
+                description={description}
+                variant="banner"
+                titleClassName={titleClassName}
+                descriptionClassName={descriptionClassName}
+              >
+                {children}
+              </EditorialHeroCopy>
+            </motion.div>
+          </div>
+        </div>
+        {footerSlot}
+      </header>
+      {showTopicNav ? <AboutTopicNav /> : null}
+    </>
+  )
+}

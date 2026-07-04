@@ -166,7 +166,7 @@ const ABOUT_EN: AboutPageCopy = {
   houseP2:
     'With every Bint Saeed piece, a gesture of giving continues, extending beyond what is created. Not every daughter or son grows up with a sense of belonging, support, or continuity. Some are left to find their way without the foundations others are given. For this reason, 20 AED from each piece is dedicated, inshallah, to charitable initiatives under the Mother of the Nation Endowment for Orphans, under the patronage of His Highness Sheikh Mohamed bin Zayed Al Nahyan, through the Endowments and Minors\' Funds Authority, as well as to initiatives by the Emirates Red Crescent. In this way, what is carried forward is not only a story of origin, but a contribution that continues, reaching beyond the garment into the lives it is able to touch.',
   ctaGivingForward: 'READ ABOUT GIVING FORWARD',
-  closingQuote: 'A sense of self that does not shift with setting.',
+  closingQuote: 'A sense of self that does not\nshift with setting.',
   closingBrand: 'BINT SAEED · ABU DHABI',
   ctaOurStoryInCodes: 'OUR STORY IN CODES',
 }

@@ -1,12 +1,21 @@
 'use client'
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
+import AboutTopicNav from '@/components/AboutTopicNav'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import EditorialHeroCopy from '@/components/EditorialHeroCopy'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getPersonalisationCopy } from '@/lib/content/personalisationCopyI18n'
 import { editorialSectionH2 } from '@/lib/ui/editorialTypography'
+import {
+  EDITORIAL_BRAND_HERO_HEIGHT,
+  EDITORIAL_PAGE_CONTAINER,
+  EDITORIAL_PAGE_SHELL,
+  editorialBrandHeroContentShell,
+  editorialHeroAlign,
+} from '@/lib/ui/editorialPageChrome'
 import {
   ctaButtonRow,
   ctaInButtonRow,
@@ -14,57 +23,13 @@ import {
   ctaSecondaryOutlineOnDark,
 } from '@/lib/ui/ctaClasses'
 
-const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
+const INNER_CONTAINER_CLASS = EDITORIAL_PAGE_CONTAINER
 const PERSONALISATION_PAGE = encodeURIComponent('Personalisation Page')
 const HERO_IMAGE = `/${PERSONALISATION_PAGE}/${encodeURIComponent('secret pocket.JPG')}`
 const SECRET_POCKET_IMAGE = HERO_IMAGE
 const LABEL_IMAGES = ['label1.PNG', 'label2.PNG', 'label3.PNG', 'label4.PNG'].map(
   (file) => `/${PERSONALISATION_PAGE}/${encodeURIComponent(file)}`,
 )
-const LABEL_CAROUSEL_DURATION_SEC = 90
-
-/** Slow horizontal film strip — duplicated row for seamless loop */
-function LabelImageMarquee({ images, alt }: { images: string[]; alt: string }) {
-  const looped = [...images, ...images]
-
-  return (
-    <div
-      dir="ltr"
-      className="personalisation-label-marquee relative mt-0 w-full min-w-0 overflow-hidden"
-      style={
-        {
-          ['--coming-soon-marquee-duration' as string]: `${LABEL_CAROUSEL_DURATION_SEC}s`,
-        } as CSSProperties
-      }
-      role="region"
-      aria-label={alt}
-    >
-      <div className="personalisation-label-marquee-fade pointer-events-none absolute inset-0 z-10" aria-hidden />
-      <div className="coming-soon-marquee-track-x coming-soon-marquee-track-x--ltr flex w-max flex-row flex-nowrap items-center gap-4 py-1 md:gap-5">
-        {looped.map((src, i) => {
-          const index = i % images.length
-          const isDuplicate = i >= images.length
-          return (
-            <div
-              key={`${src}-${i}`}
-              className="relative aspect-[3/4] w-[min(48vw,10.5rem)] shrink-0 overflow-hidden rounded-[4px] sm:w-40 md:w-48 lg:w-52"
-            >
-              <Image
-                src={src}
-                alt={isDuplicate ? '' : `${alt} — ${index + 1}`}
-                fill
-                draggable={false}
-                className="object-cover object-center select-none"
-                sizes="(max-width: 640px) 48vw, 208px"
-                aria-hidden={isDuplicate}
-              />
-            </div>
-          )
-        })}
-      </div>
-    </div>
-  )
-}
 
 /** TODO: replace src with pocket location video once filmed */
 const POCKET_VIDEO_SRC = ''
@@ -112,8 +77,8 @@ export default function PersonalisationPage() {
   }, [])
 
   return (
-    <main className={`min-h-screen overflow-x-clip bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
-      <section className="relative z-0 flex min-h-0 flex-col overflow-hidden bg-[#1a0210] text-[#e8ddd4] md:max-h-[min(72vh,720px)]">
+    <main className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
+      <section className={`relative z-0 ${EDITORIAL_BRAND_HERO_HEIGHT} overflow-hidden bg-[#1a0210] text-[#e8ddd4]`}>
         <div className="absolute inset-0 overflow-hidden" aria-hidden>
           <div
             className="absolute inset-0 opacity-65"
@@ -132,10 +97,8 @@ export default function PersonalisationPage() {
           <div className="absolute inset-0 shadow-[inset_0_-24px_48px_rgba(0,0,0,0.28)]" />
         </div>
 
-        <div
-          className={`relative z-10 flex min-h-[min(58vh,560px)] flex-col justify-between px-6 pb-[4.75rem] pt-[5.25rem] md:min-h-[min(62vh,640px)] md:px-[60px] md:pb-[4.5rem] md:pt-[6.5rem] ${isRTL ? 'text-right' : 'text-left'}`}
-        >
-          <div className="max-w-[600px]">
+        <div className={`${editorialBrandHeroContentShell} ${editorialHeroAlign(isRTL)}`}>
+          <div className={EDITORIAL_PAGE_CONTAINER}>
             <AppPageWayfinding
               rtl={isRTL}
               variant="light"
@@ -146,16 +109,13 @@ export default function PersonalisationPage() {
               ]}
             />
 
-            <h1
-              data-document-h1="true"
-              className="max-w-[760px] font-rozha text-[clamp(32px,5.4vw,64px)] leading-[0.98] tracking-[0.01em]"
-              style={{ color: '#e8ddd4' }}
-            >
-              {copy.heroTitle}
-            </h1>
-            <p className="mt-2.5 max-w-[480px] font-montserrat text-[14px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.75)]">
-              {copy.heroSub}
-            </p>
+            <EditorialHeroCopy
+              rtl={isRTL}
+              eyebrow={copy.breadcrumb}
+              title={copy.heroTitle}
+              description={copy.heroSub}
+              variant="brand-dark"
+            />
           </div>
         </div>
 
@@ -169,6 +129,8 @@ export default function PersonalisationPage() {
           </div>
         </div>
       </section>
+
+      <AboutTopicNav />
 
       <section className="relative z-10 -mt-6 rounded-t-[16px] bg-[#e8ddd4] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
         <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-center`}>
@@ -229,8 +191,21 @@ export default function PersonalisationPage() {
             {copy.messageBody}
           </p>
         </div>
-        <div className="relative mt-10 w-full overflow-x-clip">
-          <LabelImageMarquee images={LABEL_IMAGES} alt={copy.labelAlt} />
+        <div className="mx-auto mt-10 grid max-w-[min(100%,1080px)] grid-cols-2 justify-items-center gap-3 px-4 sm:grid-cols-4 md:gap-4 lg:gap-5">
+          {LABEL_IMAGES.map((src, index) => (
+            <div
+              key={src}
+              className="relative aspect-[3/4] w-full max-w-[11.5rem] overflow-hidden rounded-[4px] sm:max-w-[12.5rem]"
+            >
+              <Image
+                src={src}
+                alt={`${copy.labelAlt} — ${index + 1}`}
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 640px) 44vw, 200px"
+              />
+            </div>
+          ))}
         </div>
       </section>
 
@@ -258,10 +233,10 @@ export default function PersonalisationPage() {
               </article>
             ))}
           </div>
-          <div className={`mt-12 ${ctaButtonRow} justify-center`} data-bs-cta-row>
+          <div className="mt-10 flex justify-center" data-bs-cta-row>
             <LocaleLink
               href="/shop?category=abayas"
-              className={`${ctaPrimary} ${ctaInButtonRow}`}
+              className={`${ctaPrimary} inline-flex w-auto max-w-[min(100%,22rem)] px-5 sm:max-w-md sm:px-6`}
               data-bs-cta
               data-cursor-hover
               data-analytics-event="click_shop_abayas_from_personalisation"
@@ -292,16 +267,15 @@ export default function PersonalisationPage() {
         className="closing-section relative z-50 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform"
       >
         <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
-          <div className="mx-auto max-w-[min(92vw,780px)]">
+          <div className="mx-auto max-w-[min(94vw,860px)]">
             <p
-              className={`text-center font-rozha text-[clamp(22px,3.5vw,44px)] italic leading-[1.28] tracking-[-0.01em] text-[#e8d8c8] text-balance transition-opacity duration-700 ${
+              className={`text-center font-rozha text-[clamp(20px,3.2vw,40px)] italic leading-[1.22] tracking-[-0.01em] text-[#e8d8c8] transition-opacity duration-700 ${
                 quoteVisible ? 'opacity-100' : 'opacity-0'
               }`}
             >
               {copy.closingQuote.split('\n').map((line, index, lines) => (
-                <span key={index}>
+                <span key={index} className="block">
                   {line}
-                  {index < lines.length - 1 ? <br /> : null}
                 </span>
               ))}
             </p>
@@ -346,21 +320,6 @@ export default function PersonalisationPage() {
         .personalisation-marquee {
           animation: personalisationMarquee 95s linear infinite;
           will-change: transform;
-        }
-
-        .personalisation-label-marquee {
-          direction: ltr;
-          unicode-bidi: isolate;
-        }
-
-        .personalisation-label-marquee-fade {
-          background: linear-gradient(
-            to right,
-            #faf8f5 0%,
-            transparent 10%,
-            transparent 90%,
-            #faf8f5 100%
-          );
         }
 
         .closing-section {

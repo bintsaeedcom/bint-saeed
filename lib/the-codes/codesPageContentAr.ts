@@ -7,6 +7,7 @@ const IMG = {
   khous: 'bint-saeed-abu-dhabi-khous-emirati-heritage.webp',
   alAinRosette: 'bint-saeed-abu-dhabi-al-ain-rosette-emirati-heritage.webp',
   knottedLines: 'bint-saeed-abu-dhabi-knotted-lines-of-lineage.webp',
+  strands: 'bint-saeed-abu-dhabi-natural-stone-beads-emirati-heritage.webp',
 } as const
 
 export const CODES_HERO_AR = {
@@ -64,5 +65,15 @@ export const THE_CODES_SECTIONS_AR: CodesSectionContent[] = [
     ],
     imageFile: IMG.knottedLines,
     imageAlt: withBrandAlt('زخرفة Knotted Lines الذهبية على القماش — رمز الاستمرارية في دار Bint Saeed'),
+  },
+  {
+    id: 'the-strands',
+    eyebrow: 'الحجر والخيط',
+    title: 'The Strands',
+    paragraphs: [
+      'تتكوّن The Strands من أحجار طبيعية، مرتبة على الكتف وعبر الثوب. في الدار، تُمدّ الخط المربوط إلى خيط متصل — محسوب في الموضع، متعمّد في الوزن، وقريب من مرتديته. ليست زينة ولا لاحقة؛ توازن القصة بينما تحمل الاتصال بين الأصل والحضور كرمز محدّد للدار.',
+    ],
+    imageFile: IMG.strands,
+    imageAlt: withBrandAlt('خيوط عباءة من أحجار طبيعية — رمز دار قابل للارتداء من الخيط والتوازن، Bint Saeed أبوظبي'),
   },
 ]

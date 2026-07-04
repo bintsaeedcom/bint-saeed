@@ -11,7 +11,6 @@ import {
   accessories,
   accessoryCategories,
   Accessory,
-  ACCESSORY_IMAGE_ABAYA_CHARMS_HERO,
 } from '@/data/accessories'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -27,7 +26,6 @@ import {
   STONE_OPTIONS,
 } from '@/lib/accessories/filterAccessories'
 import { trackEvent } from '@/lib/analytics/tracking'
-import { withBrandAlt } from '@/lib/products/imageAlt'
 import { resolveAccessoryCategoryId } from '@/lib/accessories/accessoryRouteAliases'
 import { getAccessoryCarouselAlt, buildAccessoriesCollectionJsonLd } from '@/lib/accessories/accessoryJsonLd'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
@@ -180,7 +178,6 @@ export default function AccessoriesPage() {
   )
 
   const activeTab = accessoryCategories.find(c => c.id === activeCategory)
-  const isAbayaStrandsLayout = activeCategory === 'signature-strands'
 
   const collectionJsonLd = useMemo(() => buildAccessoriesCollectionJsonLd(accessories, language), [language])
 
@@ -191,7 +188,7 @@ export default function AccessoriesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
       />
       {/* Hero Banner */}
-      <section className="relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas pb-12 pt-24 md:pb-16 md:pt-28">
+      <section className="relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas pb-5 pt-0 md:pb-6">
         <div className="container mx-auto px-6 lg:px-12">
           <div className={`relative flex flex-col justify-end text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
             {/* Back Button */}
@@ -251,7 +248,7 @@ export default function AccessoriesPage() {
           </div>
 
           <div
-            className={`flex gap-10 py-8 md:py-10 lg:gap-12 lg:py-12 ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`flex gap-10 pt-3 pb-8 md:py-8 lg:gap-12 lg:pt-4 lg:pb-10 ${isRTL ? 'flex-row-reverse' : ''}`}
           >
             {/* Category + refine sidebar */}
             <aside
@@ -392,42 +389,6 @@ export default function AccessoriesPage() {
                   >
                     {ui.accessories.clearFilters}
                   </button>
-                </div>
-              ) : isAbayaStrandsLayout ? (
-                <div
-                  className={`flex flex-col gap-10 lg:items-start lg:gap-12 ${isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
-                >
-                  <div className="relative w-full shrink-0 lg:w-[44%] lg:max-w-[520px]">
-                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-brand-stone/15">
-                      <Image
-                        src={ACCESSORY_IMAGE_ABAYA_CHARMS_HERO}
-                        alt={withBrandAlt(ui.accessories.collectionTitle)}
-                        fill
-                        className="img-zoom object-contain"
-                        sizes="(max-width: 1024px) 100vw, 44vw"
-                        priority
-                      />
-                    </div>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <motion.div layout className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:gap-6 lg:gap-8">
-                      <AnimatePresence mode="popLayout">
-                        {filteredAccessories.map((accessory, index) => (
-                          <AccessoryCard
-                            key={accessory.id}
-                            accessory={accessory}
-                            index={index}
-                            hoveredProduct={hoveredProduct}
-                            setHoveredProduct={setHoveredProduct}
-                            formatPrice={formatPrice}
-                            isRTL={isRTL}
-                            language={language}
-                            ui={ui}
-                          />
-                        ))}
-                      </AnimatePresence>
-                    </motion.div>
-                  </div>
                 </div>
               ) : (
                 <motion.div

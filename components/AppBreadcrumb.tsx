@@ -19,12 +19,12 @@ type Props = {
 }
 
 const ITEM_CLASS = 'inline-flex shrink-0 items-center self-center'
-/** One size everywhere — desktop and mobile */
+/** One size everywhere — scales consistently across OS/browser font engines */
 const CRUMB_TEXT =
-  'font-montserrat text-[10px] leading-none uppercase tracking-[0.12em]'
+  'font-montserrat text-[10px] leading-[1.25] uppercase tracking-[0.12em] [font-feature-settings:"kern"_1,"liga"_0]'
 
 /**
- * Single-row breadcrumb: HOME / SHOP / … — scrolls horizontally on tiny widths.
+ * Single-row breadcrumb: HOME / SHOP / … — scrolls horizontally on narrow widths.
  */
 export default function AppBreadcrumb({ segments, variant = 'default', className = '', rtl = false }: Props) {
   if (!segments.length) return null
@@ -50,7 +50,7 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
     const isLast = i === lastIdx
     const isMiddle = i > 0 && !isLast
     const showLink = Boolean(seg.href) && !isLast
-    const truncateMiddle = isMiddle ? 'max-w-[34vw] truncate sm:max-w-[28vw] md:max-w-none' : ''
+    const truncateMiddle = isMiddle ? 'max-w-[38vw] truncate sm:max-w-[24vw] md:max-w-none' : ''
 
     if (i > 0) {
       nodes.push(
@@ -61,11 +61,11 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
     }
 
     nodes.push(
-      <li key={`crumb-${i}`} className={`${ITEM_CLASS} ${isLast ? 'min-w-0' : ''}`}>
+      <li key={`crumb-${i}`} className={`${ITEM_CLASS} ${isLast ? 'min-w-0 max-w-full' : ''}`}>
         {showLink ? (
           <LocaleLink
             href={seg.href!}
-            className={`inline-flex items-center ${linkClass} ${truncateMiddle}`}
+            className={`inline-flex max-w-full items-center ${linkClass} ${truncateMiddle}`}
             title={seg.label}
             data-cursor-hover
           >
@@ -73,9 +73,7 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
           </LocaleLink>
         ) : (
           <span
-            className={`inline-flex items-center ${CRUMB_TEXT} ${
-              isLast ? `min-w-0 max-w-[46vw] truncate sm:max-w-none ${currentClass}` : `whitespace-nowrap ${currentClass}`
-            } ${truncateMiddle}`}
+            className={`inline-flex max-w-full items-center ${CRUMB_TEXT} whitespace-nowrap ${currentClass} ${truncateMiddle}`}
             title={seg.label}
             aria-current={isLast ? 'page' : undefined}
           >
@@ -90,10 +88,10 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
     <nav
       aria-label="Breadcrumb"
       dir={rtl ? 'rtl' : 'ltr'}
-      className={`w-full min-w-0 max-w-full ${className}`}
+      className={`bs-editorial-breadcrumb w-full min-w-0 max-w-full ${className}`}
     >
       <ol
-        className={`m-0 flex h-[14px] w-full min-w-0 max-w-full list-none flex-nowrap items-center gap-x-1 overflow-x-auto p-0 sm:gap-x-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+        className={`m-0 flex min-h-[1.125rem] w-full min-w-0 max-w-full list-none flex-nowrap items-center gap-x-1 overflow-x-auto p-0 [-webkit-overflow-scrolling:touch] sm:gap-x-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
           rtl ? 'flex-row-reverse justify-end' : ''
         }`}
       >

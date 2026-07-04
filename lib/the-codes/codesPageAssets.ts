@@ -18,4 +18,6 @@ export const CODES_IMAGE_FILES = {
   alAinRosette: 'bint-saeed-abu-dhabi-al-ain-rosette-emirati-heritage.webp',
   knottedLines: 'bint-saeed-abu-dhabi-knotted-lines-of-lineage.webp',
   naturalStoneBeads: 'bint-saeed-abu-dhabi-natural-stone-beads-emirati-heritage.webp',
+  /** Placeholder editorial asset for The Strands code — replace when dedicated photography is ready */
+  strands: 'bint-saeed-abu-dhabi-natural-stone-beads-emirati-heritage.webp',
 } as const

@@ -41,6 +41,36 @@
       width: auto;
     }
   }
+
+  /* Editorial heroes — consistent rendering across WebKit, Blink, Gecko */
+  .bs-editorial-eyebrow,
+  .bs-editorial-breadcrumb {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  .bs-editorial-eyebrow {
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: manual;
+  }
+
+  .bs-editorial-hero-title {
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .bs-editorial-breadcrumb ol {
+    scrollbar-width: none;
+  }
+
+  .bs-editorial-breadcrumb ol::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 :root {

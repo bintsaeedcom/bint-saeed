@@ -7,6 +7,7 @@ const IMG = {
   khous: 'bint-saeed-abu-dhabi-khous-emirati-heritage.webp',
   alAinRosette: 'bint-saeed-abu-dhabi-al-ain-rosette-emirati-heritage.webp',
   knottedLines: 'bint-saeed-abu-dhabi-knotted-lines-of-lineage.webp',
+  strands: 'bint-saeed-abu-dhabi-natural-stone-beads-emirati-heritage.webp',
 } as const
 
 export const THE_CODES_SECTIONS_MS: CodesSectionContent[] = [
@@ -68,6 +69,18 @@ export const THE_CODES_SECTIONS_MS: CodesSectionContent[] = [
     imageFile: IMG.knottedLines,
     imageAlt: withBrandAlt(
       'Motif emas Knotted Lines of Lineage pada kain — kod kesinambungan rumah, Bint Saeed',
+    ),
+  },
+  {
+    id: 'the-strands',
+    eyebrow: 'Batu & benang',
+    title: 'The Strands',
+    paragraphs: [
+      'The Strands disusun daripada batu semula jadi, disusun berurutan di bahu dan merentasi garment. Dalam rumah, ia melanjutkan garis berknot menjadi benang berterusan — terukur dalam penempatan, sengaja dalam berat, dan dekat dengan pemakai. Bukan hiasan atau selepas fikiran; ia mengimbangi siluet sambil membawa hubungan antara asal dan kehadiran sebagai kod rumah yang menentukan.',
+    ],
+    imageFile: IMG.strands,
+    imageAlt: withBrandAlt(
+      'Tali abaya batu semula jadi — kod rumah boleh pakai dari benang dan keseimbangan, Bint Saeed Abu Dhabi',
     ),
   },
 ]

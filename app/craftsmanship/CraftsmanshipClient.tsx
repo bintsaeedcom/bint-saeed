@@ -1,9 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
-import AboutTopicNav from '@/components/AboutTopicNav'
-import AppPageWayfinding from '@/components/AppPageWayfinding'
+import AboutSectionHero from '@/components/AboutSectionHero'
+import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { getCraftsmanshipCopy } from '@/lib/content/craftsmanshipCopyI18n'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { FiArrowRight } from 'react-icons/fi'
@@ -94,78 +93,6 @@ function MosaicTileImage({
         aria-hidden
       />
     </div>
-  )
-}
-
-/** Opening band — matches `/accessories` hero: dark-red wash over media, title + description bottom-aligned */
-function CraftsmanshipHero({ className = '' }: { className?: string }) {
-  const { t, isRTL, language } = useLanguage()
-  const copy = getCraftsmanshipCopy(language)
-  const v = CRAFT_VIDEO_BANDS[0]
-  const title = language === 'id' ? copy.breadcrumbCraftsmanship : (t.footer?.craftsmanship ?? 'Craftsmanship')
-  const eyebrow = t.about?.craftSubtitle ?? 'The Process'
-  const description = t.about?.craftsmanshipDesc ?? ''
-  const homeLabel = language === 'id' ? copy.breadcrumbHome : isRTL ? 'الرئيسية' : 'Home'
-  const craftLabel = language === 'id' ? copy.breadcrumbCraftsmanship : isRTL ? 'الحرفية' : 'Craftsmanship'
-
-  return (
-    <section
-      className={`relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas pb-12 pt-24 md:pb-16 md:pt-28 ${className}`}
-    >
-      <video
-        src={v.src}
-        aria-label={v.ariaLabel}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover opacity-0"
-      />
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-transparent" />
-
-      {/* Mirrors `/accessories` hero: same flex shell, container padding, typography & tracking */}
-      <div className="relative z-10 flex flex-col justify-end">
-        <div className="container mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-3"
-          >
-            <AppPageWayfinding
-              rtl={isRTL}
-              segments={[
-                { label: homeLabel, href: '/home' },
-                { label: craftLabel },
-              ]}
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className={isRTL ? 'text-right' : ''}
-          >
-            <span className="mb-4 block font-montserrat text-[10px] font-medium uppercase tracking-[0.28em] text-[#6f1524] sm:tracking-[0.34em]">
-              {eyebrow}
-            </span>
-            <h1
-              data-document-h1="true"
-              className="font-rozha text-[clamp(2.75rem,8vw,5.75rem)] uppercase leading-[0.98] tracking-[0.01em] text-brand-darkRed"
-            >
-              {title}
-            </h1>
-            {description ? (
-              <p className="mt-6 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/85 md:text-base">
-                {description}
-              </p>
-            ) : null}
-          </motion.div>
-        </div>
-      </div>
-    </section>
   )
 }
 
@@ -345,8 +272,13 @@ function PhaseAtmosphere({
 }
 
 export default function CraftsmanshipClient() {
-  const { language } = useLanguage()
+  const { t, isRTL, language } = useLanguage()
   const copy = getCraftsmanshipCopy(language)
+  const title = language === 'id' ? copy.breadcrumbCraftsmanship : (t.footer?.craftsmanship ?? 'Craftsmanship')
+  const eyebrow = t.about?.craftSubtitle ?? 'The Process'
+  const description = t.about?.craftsmanshipDesc ?? ''
+  const homeLabel = language === 'id' ? copy.breadcrumbHome : isRTL ? 'الرئيسية' : 'Home'
+  const craftLabel = language === 'id' ? copy.breadcrumbCraftsmanship : isRTL ? 'الحرفية' : 'Craftsmanship'
 
   return (
     <div className="relative isolate min-h-screen w-full min-w-0 bg-brand-pageCanvas">
@@ -359,14 +291,24 @@ export default function CraftsmanshipClient() {
         aria-hidden
       />
 
-      {/* Film 1 of 3: hero — HOME / CRAFTSMANSHIP, brand, title on same overlay */}
-      <CraftsmanshipHero className="relative z-[2]" />
-      <AboutTopicNav />
+      <AboutSectionHero
+        rtl={isRTL}
+        imageSrc={ABOUT_SECTION_HERO_IMAGES.craftsmanship}
+        imageAlt="Bint Saeed craftsmanship — precision fabric cutting in the Abu Dhabi atelier"
+        priority
+        segments={[
+          { label: homeLabel, href: '/home' },
+          { label: craftLabel },
+        ]}
+        eyebrow={eyebrow}
+        title={title}
+        description={description || undefined}
+      />
 
       {/* Phase I — overflowing band + split columns (approved copy unchanged) */}
       <PhaseAtmosphere variant="ivory">
         <article
-          className="relative px-6 pb-20 pt-12 md:pb-28 md:pt-16 lg:px-16 lg:pb-36 lg:pt-20"
+          className="relative px-6 pb-20 pt-8 md:pb-28 md:pt-10 lg:px-16 lg:pb-36 lg:pt-12"
           aria-labelledby="phase-i"
         >
           <DecorativeCorners tone="dustyBlue" />
