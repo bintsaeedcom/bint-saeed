@@ -109,23 +109,51 @@ const nextConfig = {
       },
       {
         source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-onyx-abaya-charm.PNG',
-        destination: '/Webshop%20pictures/accessoiries/strands/bint-saeed-onyx-abaya-charm.PNG',
+        destination:
+          '/Webshop%20pictures/accessoiries/strands/bint-saeed-onyx-natural-stone-strand-front.webp',
         permanent: true,
       },
       {
         source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-orange-colored-jade-abaya-charm.PNG',
         destination:
-          '/Webshop%20pictures/accessoiries/strands/bint-saeed-sunstone-carnelian-natural-stone-al-ain-rosette-strand-front.webp',
+          '/Webshop%20pictures/accessoiries/strands/bint-saeed-orange-jade-natural-stone-strand-front.webp',
         permanent: true,
       },
       {
         source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-amathys-abaya-charm.PNG',
-        destination: '/Webshop%20pictures/accessoiries/strands/bint-saeed-amathys-abaya-charm.PNG',
+        destination:
+          '/Webshop%20pictures/accessoiries/strands/bint-saeed-amethyst-hearts-natural-stone-strand-front.webp',
         permanent: true,
       },
       {
         source: '/Webshop%20pictures/accessoiries/abaya%20charms/bint-saeed-green-jade-abaya-charm.PNG',
-        destination: '/Webshop%20pictures/accessoiries/strands/bint-saeed-green-jade-abaya-charm.PNG',
+        destination:
+          '/Webshop%20pictures/accessoiries/strands/bint-saeed-jade-hearts-natural-stone-strand-front.webp',
+        permanent: true,
+      },
+      // Legacy strand PNG filenames → webp (post image refresh)
+      {
+        source: '/Webshop%20pictures/accessoiries/strands/bint-saeed-onyx-abaya-charm.PNG',
+        destination:
+          '/Webshop%20pictures/accessoiries/strands/bint-saeed-onyx-natural-stone-strand-front.webp',
+        permanent: true,
+      },
+      {
+        source: '/Webshop%20pictures/accessoiries/strands/bint-saeed-orange-colored-jade-abaya-charm.PNG',
+        destination:
+          '/Webshop%20pictures/accessoiries/strands/bint-saeed-orange-jade-natural-stone-strand-front.webp',
+        permanent: true,
+      },
+      {
+        source: '/Webshop%20pictures/accessoiries/strands/bint-saeed-amathys-abaya-charm.PNG',
+        destination:
+          '/Webshop%20pictures/accessoiries/strands/bint-saeed-amethyst-hearts-natural-stone-strand-front.webp',
+        permanent: true,
+      },
+      {
+        source: '/Webshop%20pictures/accessoiries/strands/bint-saeed-green-jade-abaya-charm.PNG',
+        destination:
+          '/Webshop%20pictures/accessoiries/strands/bint-saeed-jade-hearts-natural-stone-strand-front.webp',
         permanent: true,
       },
       {

@@ -167,6 +167,32 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       'pairs with gold necklace and earrings',
     ),
   },
+  'signature-strand-orange-jade': {
+    pairing: {
+      necklaceId: 'al-ain-rosette-necklace-sunstone',
+      necklaceImage: ACCESSORY_IMAGE_NECKLACE,
+      necklaceLabel: 'Al Ain Rosette Necklace — Sunstone',
+      earringsId: 'earrings-pearl-drop',
+      earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
+      earringsLabel: 'Pearl Drop Earrings',
+    },
+    carouselAlt:
+      'Orange jade natural stone bead abaya strand — warm amber jade beads pair with Al Ain Rosette Necklace — Sunstone and pearl drop earrings',
+    strandAlt:
+      'Orange jade natural stone bead abaya strand, warm amber-orange jade beads with 18K gold clip — luminous highlight for neutral abayas, pairs with Al Ain Rosette Necklace — Sunstone',
+    necklaceAlt:
+      'Al Ain Rosette Necklace — Sunstone — pairs with orange jade abaya strand and pearl drop earrings for a warm layered look',
+    earringsAlt:
+      'Pearl drop earrings — pairs with orange jade abaya strand and Al Ain Rosette Necklace — Sunstone',
+    keywords: kw(
+      'orange jade abaya strand',
+      'amber jade bead strand',
+      'warm jade abaya charm',
+      'natural orange jade beads',
+      'orange jade jewellery UAE',
+      'pairs with gold necklace and earrings',
+    ),
+  },
   'signature-strand-blue-aventurine': {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-lapis-lazuli',

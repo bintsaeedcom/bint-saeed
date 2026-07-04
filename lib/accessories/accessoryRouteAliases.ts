@@ -4,7 +4,7 @@ import { accessories, type Accessory } from '@/data/accessories'
 export const LEGACY_ACCESSORY_ID_ALIASES: Record<string, string> = {
   'abaya-charm-onyx-natural-stone': 'signature-strand-onyx',
   'abaya-charm-tiger-eye-natural-stone': 'signature-strand-tiger-eye',
-  'abaya-charm-orange-jade-natural-stone': 'signature-strand-sunstone',
+  'abaya-charm-orange-jade-natural-stone': 'signature-strand-orange-jade',
   'abaya-charm-fuchsia-jade-natural-stone': 'signature-strand-fuchsia-jade',
   'abaya-charm-blue-aventurine-natural-stone': 'signature-strand-blue-aventurine',
   'abaya-charm-rose-quartz-natural-stone': 'signature-strand-rose-quartz',

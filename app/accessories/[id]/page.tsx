@@ -140,6 +140,10 @@ export default function AccessoryDetailPage() {
 
   const categoryInfo = accessoryCategories.find(c => c.id === accessory.category)
   const sizeLabel = accessoryDisplaySize(accessory.category, ui.accessories)
+  const isStrandPdp = isSignatureStrandCategory(accessory.category)
+  const galleryImageClass = isStrandPdp
+    ? 'object-contain object-center'
+    : 'object-cover object-top'
 
   const handleAddToCart = () => {
     if (!selectedColor && accessory.colors.length > 1) {
@@ -557,20 +561,20 @@ export default function AccessoryDetailPage() {
                             muted
                             playsInline
                             preload="metadata"
-                            className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
+                            className={`h-full w-full img-zoom ${galleryImageClass} transition-opacity group-hover:opacity-80`}
                           />
                         ) : isHeicFile(image) ? (
                           <img
                             src={image}
                             alt={imageAltFor(image, index)}
-                            className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
+                            className={`h-full w-full img-zoom ${galleryImageClass} transition-opacity group-hover:opacity-80`}
                             loading="lazy"
                           />
                         ) : (
                           <PdpGalleryImage
                             src={image}
                             alt={imageAltFor(image, index)}
-                            className="img-zoom object-cover transition-opacity group-hover:opacity-80"
+                            className={`img-zoom ${galleryImageClass} transition-opacity group-hover:opacity-80`}
                           />
                         )}
                       </button>
@@ -637,13 +641,13 @@ export default function AccessoryDetailPage() {
                               controls
                               playsInline
                               preload="metadata"
-                              className="h-full w-full img-zoom object-cover"
+                              className={`h-full w-full img-zoom ${galleryImageClass}`}
                             />
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
                               alt={imageAltFor(image, index)}
-                              className="h-full w-full img-zoom object-cover"
+                              className={`h-full w-full img-zoom ${galleryImageClass}`}
                               loading={index === 0 ? 'eager' : 'lazy'}
                             />
                           ) : (
@@ -651,7 +655,7 @@ export default function AccessoryDetailPage() {
                               src={image}
                               alt={imageAltFor(image, index)}
                               priority={index === 0}
-                              className="img-zoom object-cover object-top"
+                              className={`img-zoom ${galleryImageClass}`}
                             />
                           )}
                         </div>
@@ -697,20 +701,20 @@ export default function AccessoryDetailPage() {
                               muted
                               playsInline
                               preload="metadata"
-                              className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
+                              className={`h-full w-full img-zoom ${galleryImageClass} transition-opacity group-hover:opacity-80`}
                             />
                           ) : isHeicFile(image) ? (
                             <img
                               src={image}
                               alt={imageAltFor(image, index)}
-                              className="h-full w-full img-zoom object-cover transition-opacity group-hover:opacity-80"
+                              className={`h-full w-full img-zoom ${galleryImageClass} transition-opacity group-hover:opacity-80`}
                               loading="lazy"
                             />
                           ) : (
                             <PdpGalleryImage
                               src={image}
                               alt={imageAltFor(image, index)}
-                              className="img-zoom object-cover transition-opacity group-hover:opacity-80"
+                              className={`img-zoom ${galleryImageClass} transition-opacity group-hover:opacity-80`}
                             />
                           )}
                         </button>

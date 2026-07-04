@@ -637,7 +637,11 @@ function AccessoryCard({
               alt={getAccessoryCarouselAlt(accessory, language, isRTL)}
               fill
               unoptimized={isWebshopPicturePath(accessory.images[0] ?? '')}
-              className="pointer-events-none img-zoom object-cover object-top transition-all duration-700 group-hover:scale-105"
+              className={`pointer-events-none img-zoom transition-all duration-700 group-hover:scale-105 ${
+                accessory.category === 'signature-strands'
+                  ? 'object-contain object-center'
+                  : 'object-cover object-top'
+              }`}
             />
             
             {/* Opens product PDP (same slug as card link) */}

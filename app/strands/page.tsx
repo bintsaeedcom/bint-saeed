@@ -396,7 +396,7 @@ export default function StrandsPage() {
                       alt={getStrandCarouselAlt(product.id)}
                       fill
                       sizes="(max-width: 768px) 280px, 360px"
-                      className="object-cover object-center"
+                      className="object-contain object-center"
                     />
                   ) : null}
                 </div>
@@ -519,7 +519,7 @@ export default function StrandsPage() {
                         alt={getStrandCarouselAlt(product.id)}
                         fill
                         sizes="(max-width: 640px) 45vw, (max-width: 1280px) 25vw, 20vw"
-                        className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+                        className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.03]"
                       />
                     ) : null}
                     {product.isLimitedEdition ? (

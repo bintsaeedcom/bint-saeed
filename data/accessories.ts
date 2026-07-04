@@ -14,17 +14,17 @@ export const ACCESSORY_IMAGE_PHONE_CHARM_ALT = `${A}/phone%20charm/phone%20charm
 const STRANDS = `${A}/strands`
 /** Category hero for signature strands grid. */
 export const ACCESSORY_IMAGE_ABAYA_CHARMS_HERO = `${STRANDS}/bint-saeed-malachite-carnelian-natural-stoneal-ain-rosette-strand-front.webp`
-export const ACCESSORY_IMAGE_ABAYA_CHARM_ONYX = `${STRANDS}/bint-saeed-onyx-abaya-charm.PNG`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_ONYX = `${STRANDS}/bint-saeed-onyx-natural-stone-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_TIGER_EYE = `${STRANDS}/bint-saeed-tiger-eye-natural-stone-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_SUNSTONE = `${STRANDS}/bint-saeed-sunstone-carnelian-natural-stone-al-ain-rosette-strand-front.webp`
-export const ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE = `${STRANDS}/bint-saeed-orange-colored-jade-abaya-charm.PNG`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_ORANGE_JADE = `${STRANDS}/bint-saeed-orange-jade-natural-stone-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_FUCHSIA_JADE = `${STRANDS}/bint-saeed-pink-jade-natural-stone-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_AVENTURINE = `${STRANDS}/bint-saeed-aventurine-natural-stone-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_ROSE_QUARTZ = `${STRANDS}/bint-saeed-rose-quartz-carnelian-natural-stone-al-ain-rosette-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_MALACHITE = `${STRANDS}/bint-saeed-malachite-carnelian-natural-stoneal-ain-rosette-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_LAPIS = `${STRANDS}/bint-saeed-lapis-lazuli-carnelian-natural-stone-ain-rosette-strand-front.webp`
-export const ACCESSORY_IMAGE_ABAYA_CHARM_AMETHYST = `${STRANDS}/bint-saeed-amathys-abaya-charm.PNG`
-export const ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE = `${STRANDS}/bint-saeed-green-jade-abaya-charm.PNG`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_AMETHYST = `${STRANDS}/bint-saeed-amethyst-hearts-natural-stone-strand-front.webp`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE = `${STRANDS}/bint-saeed-jade-hearts-natural-stone-strand-front.webp`
 
 export const ACCESSORY_IMAGE_EARRINGS_HERO = `${A}/earrings/bint-saeed-earrings.PNG`
 export const ACCESSORY_IMAGE_BAG_CHARM = `${A}/bag%20charm/bint-saeed-bag-charm.PNG`
