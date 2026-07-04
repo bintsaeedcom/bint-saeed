@@ -4,6 +4,45 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  /* Sitewide CTA label containment — opt-in via data-bs-cta or inline-flex action buttons */
+  [data-bs-cta],
+  :where(button, a[href]).inline-flex.items-center.justify-center:not(.whitespace-nowrap) {
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.35;
+  }
+
+  [data-bs-cta-row] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  [data-bs-cta-row] > [data-bs-cta] {
+    width: 100%;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    [data-bs-cta-row][data-bs-cta-row-layout='wrap'] {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    [data-bs-cta-row][data-bs-cta-row-layout='wrap'] > [data-bs-cta] {
+      flex: 1 1 min(100%, 12rem);
+      width: auto;
+    }
+  }
+}
+
 :root {
   /* Primary stacks reference next/font variables applied on <html> (see app/layout.tsx). */
   --font-display: var(--font-rozha), serif;

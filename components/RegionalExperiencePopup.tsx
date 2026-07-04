@@ -15,6 +15,7 @@ import {
   type GeoData,
 } from '@/lib/geo/geoDetection'
 import { getRegionalExperienceCopy, getContinueInLanguageCta } from '@/lib/geo/regionalExperienceCopy'
+import { ctaButtonRow, ctaInButtonRow, ctaPopupPrimary, ctaPopupSecondary } from '@/lib/ui/ctaClasses'
 import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
 import { localizedPath, stripLocaleFromPathname, type AppLocale } from '@/lib/i18n/routing'
 
@@ -185,11 +186,6 @@ export default function RegionalExperiencePopup() {
       : t.bodyCountryOnly(geo.countryName, suggestedCurrencyLabel)
     : ''
 
-  const primaryButtonClass =
-    'w-full border border-brand-darkRed bg-brand-darkRed py-3.5 px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-white transition-colors hover:bg-brand-darkMagenta sm:flex-1'
-  const secondaryButtonClass =
-    'w-full border border-brand-darkRed/20 bg-transparent py-3.5 px-5 font-montserrat text-[12px] tracking-[0.02em] text-brand-darkRed transition-colors hover:border-brand-darkRed/35 hover:bg-brand-stone/10 sm:flex-1'
-
   return (
     <AnimatePresence>
       {isVisible && geo && (
@@ -303,7 +299,8 @@ export default function RegionalExperiencePopup() {
                         <button
                           type="button"
                           onClick={handleApplyPreferences}
-                          className="w-full border border-brand-darkRed/20 bg-white py-3.5 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-darkRed transition-colors hover:border-brand-darkRed/35 hover:bg-brand-stone/10"
+                          className={`${ctaPopupSecondary} border-brand-darkRed/20 bg-white text-[10px] uppercase tracking-[0.22em] hover:border-brand-darkRed/35 hover:bg-brand-stone/10`}
+                          data-bs-cta
                           data-cursor-hover
                         >
                           {t.apply}
@@ -313,11 +310,12 @@ export default function RegionalExperiencePopup() {
                   )}
                 </AnimatePresence>
 
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <div className={`mt-8 ${ctaButtonRow}`} data-bs-cta-row data-bs-cta-row-layout="wrap">
                   <button
                     type="button"
                     onClick={handleContinueEnglish}
-                    className={primaryButtonClass}
+                    className={`${ctaPopupPrimary} ${ctaInButtonRow}`}
+                    data-bs-cta
                     data-cursor-hover
                   >
                     {t.continueEnglish}
@@ -326,7 +324,8 @@ export default function RegionalExperiencePopup() {
                     <button
                       type="button"
                       onClick={handleContinueLocal}
-                      className={secondaryButtonClass}
+                      className={`${ctaPopupSecondary} ${ctaInButtonRow}`}
+                      data-bs-cta
                       data-cursor-hover
                     >
                       {localLangCta}

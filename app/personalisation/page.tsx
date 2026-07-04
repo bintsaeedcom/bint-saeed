@@ -6,6 +6,13 @@ import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getPersonalisationCopy } from '@/lib/content/personalisationCopyI18n'
+import { editorialSectionH2 } from '@/lib/ui/editorialTypography'
+import {
+  ctaButtonRow,
+  ctaInButtonRow,
+  ctaPrimary,
+  ctaSecondaryOutlineOnDark,
+} from '@/lib/ui/ctaClasses'
 
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 const PERSONALISATION_PAGE = encodeURIComponent('Personalisation Page')
@@ -117,7 +124,7 @@ export default function PersonalisationPage() {
         <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-center`}>
           <div>
             <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.secretEyebrow}</p>
-            <h2 className="mt-4 font-rozha text-[clamp(2.5rem,5vw,4.75rem)] leading-[1] text-[#1a0210]">
+            <h2 className={`mt-4 ${editorialSectionH2} text-[#1a0210]`}>
               {copy.secretTitle}
             </h2>
             <p className="mt-6 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72">
@@ -140,7 +147,7 @@ export default function PersonalisationPage() {
       <section className="relative z-20 -mt-6 rounded-t-[16px] bg-[#1a0210] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.pocketEyebrow}</p>
-          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#e8ddd4]">{copy.pocketTitle}</h2>
+          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#e8ddd4]`}>{copy.pocketTitle}</h2>
           <p className="mt-5 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#e8ddd4]/72">
             {copy.pocketBody}
           </p>
@@ -165,7 +172,7 @@ export default function PersonalisationPage() {
       <section className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.messageEyebrow}</p>
-          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#1a0210]">
+          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#1a0210]`}>
             {copy.messageTitle}
           </h2>
           <p className="mt-5 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72">
@@ -193,7 +200,7 @@ export default function PersonalisationPage() {
       >
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.stepsEyebrow}</p>
-          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#e8ddd4]">{copy.stepsTitle}</h2>
+          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#e8ddd4]`}>{copy.stepsTitle}</h2>
           <div className="mt-12 grid gap-px bg-[rgba(232,216,200,0.1)] md:grid-cols-3">
             {copy.steps.map((step, index) => (
               <article
@@ -235,10 +242,11 @@ export default function PersonalisationPage() {
           <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-[#7A1C28]/70">
             BINT SAEED · ABU DHABI
           </p>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <div className={`mt-8 ${ctaButtonRow} justify-center`} data-bs-cta-row data-bs-cta-row-layout="wrap">
             <LocaleLink
               href="/shop"
-              className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
+              className={`${ctaPrimary} ${ctaInButtonRow}`}
+              data-bs-cta
               data-cursor-hover
               data-analytics-event="click_collection_from_personalisation"
               data-analytics-section="personalisation-cta"
@@ -247,7 +255,8 @@ export default function PersonalisationPage() {
             </LocaleLink>
             <LocaleLink
               href="/strands"
-              className="inline-flex items-center justify-center rounded-[4px] border border-[#e8ddd4]/35 bg-transparent px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:border-[#e8ddd4]/70"
+              className={`${ctaSecondaryOutlineOnDark} ${ctaInButtonRow}`}
+              data-bs-cta
               data-cursor-hover
             >
               {copy.strandsCta}

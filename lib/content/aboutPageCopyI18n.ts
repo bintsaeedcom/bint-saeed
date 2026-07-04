@@ -46,7 +46,8 @@ export type AboutPageCopy = {
   womanClosingP2Middle: string
   womanClosingP2Strong2: string
   codesLabel: string
-  codesHeading: string
+  codesHeadingLine1: string
+  codesHeadingLine2: string
   codesIntro: string
   designCodes: AboutDesignCode[]
   codesLink: string
@@ -143,7 +144,8 @@ const ABOUT_EN: AboutPageCopy = {
     ' Between heritage and a contemporary life lived locally and across borders. Between where you come from and where you are going. ',
   womanClosingP2Strong2: 'Between the values you have inherited and how you present yourself today.',
   codesLabel: 'THE CODES',
-  codesHeading: 'Six design codes. One visual language.',
+  codesHeadingLine1: 'Six design codes.',
+  codesHeadingLine2: 'One visual language.',
   codesIntro:
     'Every piece carries one or more of the six Bint Saeed design codes — drawn from Emirati craft tradition and translated into a contemporary form.',
   designCodes: DESIGN_CODES_EN,
@@ -227,7 +229,8 @@ const ABOUT_AR: AboutPageCopy = {
     ' بين الإرث وحياة معاصرة تُعاش محلياً وعبر الحدود. بين من أين أتيت وإلى أين تتجه. ',
   womanClosingP2Strong2: 'بين القيم التي ورثتها وكيف تقدّم نفسك اليوم.',
   codesLabel: 'الرموز',
-  codesHeading: 'ستة رموز تصميم. لغة بصرية واحدة.',
+  codesHeadingLine1: 'ستة رموز تصميم.',
+  codesHeadingLine2: 'لغة بصرية واحدة.',
   codesIntro:
     'تحمل كل قطعة واحداً أو أكثر من رموز Bint Saeed الستة — مستمدة من تقاليد الحرف الإماراتية ومترجمة إلى شكل معاصر.',
   designCodes: DESIGN_CODES_AR,

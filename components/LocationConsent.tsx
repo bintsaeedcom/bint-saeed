@@ -7,6 +7,7 @@ import { useCurrency, currencies } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
+import { ctaButtonRow, ctaInButtonRow, ctaPopupPrimary, ctaPopupSecondary } from '@/lib/ui/ctaClasses'
 
 const TAILOR_KEY = 'bint-saeed-tailor-experience'
 
@@ -229,13 +230,18 @@ export default function LocationConsent() {
                   </p>
                 )}
 
-                <div className={`mt-8 flex flex-col sm:flex-row gap-3 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+                <div
+                  className={`mt-8 ${ctaButtonRow} ${isRTL ? 'sm:flex-row-reverse' : ''}`}
+                  data-bs-cta-row
+                  data-bs-cta-row-layout="wrap"
+                >
                   <button
                     type="button"
                     onClick={handleDecline}
-                    className={`sm:flex-1 py-3.5 px-5 border border-brand-darkRed/15 text-brand-darkRed font-montserrat text-[10px] uppercase tracking-[0.22em] hover:border-brand-darkRed/30 hover:bg-white/60 transition-colors ${
+                    className={`${ctaPopupSecondary} ${ctaInButtonRow} border-brand-darkRed/15 text-[10px] uppercase tracking-[0.22em] hover:border-brand-darkRed/30 hover:bg-white/60 ${
                       isRTL ? 'order-2 sm:order-1' : ''
                     }`}
+                    data-bs-cta
                     data-cursor-hover
                   >
                     {t.secondary}
@@ -243,9 +249,10 @@ export default function LocationConsent() {
                   <button
                     type="button"
                     onClick={handleAccept}
-                    className={`sm:flex-1 py-3.5 px-5 bg-brand-darkRed text-white font-montserrat text-[10px] uppercase tracking-[0.22em] hover:bg-brand-darkMagenta transition-colors shadow-sm ${
+                    className={`${ctaPopupPrimary} ${ctaInButtonRow} text-[10px] tracking-[0.22em] shadow-sm ${
                       isRTL ? 'order-1 sm:order-2' : ''
                     }`}
+                    data-bs-cta
                     data-cursor-hover
                   >
                     {t.primary}

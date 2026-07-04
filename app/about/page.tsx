@@ -11,19 +11,52 @@ import {
   ctaPrimarySoft,
   ctaSecondaryOnDark,
   ctaSecondaryOutlineOnDark,
+  ctaButtonRow,
+  ctaInButtonRow,
 } from '@/lib/ui/ctaClasses'
+import {
+  editorialBodyOnDark,
+  editorialBodyOnLight,
+  editorialReflectiveLeadOnDark,
+  editorialReflectiveLeadOnLight,
+  editorialSectionFooterPad,
+  editorialSectionH2,
+} from '@/lib/ui/editorialTypography'
+
+const WOMAN_STEP_REVEAL_HIDDEN = [
+  'opacity-0 translate-y-10 md:translate-y-0 md:-translate-x-8',
+  'opacity-0 translate-y-10',
+  'opacity-0 translate-y-10 md:translate-y-0 md:translate-x-8',
+] as const
+
+const WOMAN_STEP_REVEAL_HIDDEN_RTL = [
+  'opacity-0 translate-y-10 md:translate-y-0 md:translate-x-8',
+  'opacity-0 translate-y-10',
+  'opacity-0 translate-y-10 md:translate-y-0 md:-translate-x-8',
+] as const
 
 const HERO_IMAGE = '/about/campaign-portrait.PNG'
 const HERO_IMAGE_2 = '/about/campaign-seated.PNG'
+const CLOSING_FABRIC_BG = '/charms/charm-fabric-dark.webp'
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
+
+/** Sticky card-stack scroll — identical overlap/stack on mobile and desktop */
+const ABOUT_STACK_SECTION =
+  'sticky top-0 -mt-10 min-h-[100vh] will-change-transform rounded-t-[16px] shadow-[0_-12px_40px_rgba(0,0,0,0.3)]'
 
 export default function AboutPage() {
   const { language, isRTL } = useLanguage()
   const copy = getAboutPageCopy(language)
-  const womanRef = useRef<HTMLElement | null>(null)
+  const womanStepRefs = useRef<(HTMLElement | null)[]>([])
+  const womanClosingRef = useRef<HTMLDivElement | null>(null)
+  const designCodeRefs = useRef<(HTMLElement | null)[]>([])
+  const codesClosingRef = useRef<HTMLDivElement | null>(null)
   const quoteRef = useRef<HTMLElement | null>(null)
   const [heroOffset, setHeroOffset] = useState(0)
-  const [womanVisible, setWomanVisible] = useState(false)
+  const [visibleWomanSteps, setVisibleWomanSteps] = useState<boolean[]>([false, false, false])
+  const [womanClosingVisible, setWomanClosingVisible] = useState(false)
+  const [visibleDesignCodes, setVisibleDesignCodes] = useState<boolean[]>([false, false, false, false, false, false])
+  const [codesClosingVisible, setCodesClosingVisible] = useState(false)
   const [quoteVisible, setQuoteVisible] = useState(false)
 
   useEffect(() => {
@@ -46,18 +79,47 @@ export default function AboutPage() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.target === womanRef.current && entry.isIntersecting) setWomanVisible(true)
-          if (entry.target === quoteRef.current && entry.isIntersecting) setQuoteVisible(true)
+          if (!entry.isIntersecting) return
+          if (entry.target === quoteRef.current) setQuoteVisible(true)
+          if (entry.target === womanClosingRef.current) setWomanClosingVisible(true)
+          if (entry.target === codesClosingRef.current) setCodesClosingVisible(true)
+
+          const stepIndex = womanStepRefs.current.findIndex((el) => el === entry.target)
+          if (stepIndex !== -1) {
+            setVisibleWomanSteps((prev) => {
+              if (prev[stepIndex]) return prev
+              const next = [...prev]
+              next[stepIndex] = true
+              return next
+            })
+          }
+
+          const codeIndex = designCodeRefs.current.findIndex((el) => el === entry.target)
+          if (codeIndex !== -1) {
+            setVisibleDesignCodes((prev) => {
+              if (prev[codeIndex]) return prev
+              const next = [...prev]
+              next[codeIndex] = true
+              return next
+            })
+          }
         })
       },
-      { threshold: 0.28 },
+      { threshold: 0.32, rootMargin: '0px 0px -6% 0px' },
     )
-    const woman = womanRef.current
+
     const quote = quoteRef.current
-    if (woman) observer.observe(woman)
+    const womanClosing = womanClosingRef.current
+    const codesClosing = codesClosingRef.current
+    const steps = womanStepRefs.current.filter(Boolean) as HTMLElement[]
+    const codes = designCodeRefs.current.filter(Boolean) as HTMLElement[]
     if (quote) observer.observe(quote)
+    if (womanClosing) observer.observe(womanClosing)
+    if (codesClosing) observer.observe(codesClosing)
+    steps.forEach((step) => observer.observe(step))
+    codes.forEach((code) => observer.observe(code))
     return () => observer.disconnect()
-  }, [])
+  }, [copy.womanSteps.length, copy.designCodes.length])
 
   return (
     <main className={`min-h-screen overflow-x-clip bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -105,17 +167,19 @@ export default function AboutPage() {
           <p className="mt-3 max-w-[480px] font-montserrat text-[13px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.55)]">
             {copy.heroTagline}
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className={`mt-8 ${ctaButtonRow}`} data-bs-cta-row data-bs-cta-row-layout="wrap">
             <LocaleLink
               href="#about-origin"
-              className={ctaPrimary}
+              className={`${ctaPrimary} ${ctaInButtonRow}`}
+              data-bs-cta
               data-cursor-hover
             >
               {copy.ctaReadStory}
             </LocaleLink>
             <LocaleLink
               href="/shop"
-              className={ctaSecondaryOnDark}
+              className={`${ctaSecondaryOnDark} ${ctaInButtonRow}`}
+              data-bs-cta
               data-cursor-hover
             >
               {copy.ctaExploreCollection}
@@ -136,23 +200,23 @@ export default function AboutPage() {
 
       <section
         id="about-origin"
-        className="relative z-10 -mt-6 rounded-t-[16px] bg-[#e8ddd4] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]"
+        className={`relative z-10 bg-[#e8ddd4] py-28 md:py-36 ${ABOUT_STACK_SECTION}`}
       >
-        <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-start`}>
+        <div className={`${INNER_CONTAINER_CLASS} ${editorialSectionFooterPad} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-start`}>
           <div>
             <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.originLabel}</p>
-            <h2 className="mt-4 font-rozha text-[clamp(2.5rem,5vw,4.75rem)] leading-[1] text-[#1a0210]">
+            <h2 className={`mt-4 ${editorialSectionH2} text-[#1a0210]`}>
               {copy.originHeading}
             </h2>
-            <div className="mt-6 space-y-6 font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72 [&_em]:italic [&_strong]:font-semibold [&_strong]:text-[#1a0210]">
+            <div className={`mt-6 space-y-6 ${editorialBodyOnLight}`}>
               <p>
                 {copy.originP1BeforeBint}
                 <em>{copy.originP1Bint}</em>
                 {copy.originP1AfterBint}
-                <strong>{copy.originP1Strong}</strong>
+                {copy.originP1Strong}
               </p>
               <p>
-                <strong>{copy.originP2Strong}</strong>
+                {copy.originP2Strong}
                 {copy.originP2Rest}
               </p>
               <p>{copy.originP3}</p>
@@ -172,97 +236,135 @@ export default function AboutPage() {
       </section>
 
       <section
-        ref={womanRef}
-        className="relative z-20 -mt-6 rounded-t-[16px] bg-[#1a0210] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]"
+        className={`relative z-20 bg-[#1a0210] py-28 md:py-36 ${ABOUT_STACK_SECTION}`}
       >
-        <div className={`${INNER_CONTAINER_CLASS} text-left`}>
+        <div className={`${INNER_CONTAINER_CLASS} ${editorialSectionFooterPad} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.womanLabel}</p>
-          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#e8ddd4]">
+          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#e8ddd4]`}>
             {copy.womanHeading}
           </h2>
           <div className="mt-12 grid gap-px bg-[rgba(232,216,200,0.1)] md:grid-cols-3">
-            {copy.womanSteps.map((step, index) => (
-              <article
-                key={step.numeral}
-                className={`bg-[#1a0210] p-8 text-left transition-all duration-700 ${
-                  womanVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <p className="mb-6 font-rozha text-[48px] leading-none text-[rgba(122,28,40,0.35)]">{step.numeral}</p>
-                <h3 className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#e8d8c8]">
-                  {step.title}
-                </h3>
-                <p className="font-montserrat text-[13px] font-normal leading-[1.7] text-[rgba(232,216,200,0.6)]">{step.body}</p>
-              </article>
-            ))}
+            {copy.womanSteps.map((step, index) => {
+              const hiddenOffset = (isRTL ? WOMAN_STEP_REVEAL_HIDDEN_RTL : WOMAN_STEP_REVEAL_HIDDEN)[index]
+              const isVisible = visibleWomanSteps[index]
+
+              return (
+                <article
+                  key={step.numeral}
+                  ref={(el) => {
+                    womanStepRefs.current[index] = el
+                  }}
+                  className={`bg-[#1a0210] p-8 text-left transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform ${
+                    isVisible ? 'translate-x-0 translate-y-0 opacity-100' : hiddenOffset
+                  }`}
+                  style={{ transitionDelay: `${index * 180}ms` }}
+                >
+                  <p className="mb-6 font-rozha text-[48px] leading-none text-[rgba(122,28,40,0.35)]">{step.numeral}</p>
+                  <h3 className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#e8d8c8]">
+                    {step.title}
+                  </h3>
+                  <p className="font-montserrat text-[13px] font-normal leading-[1.7] text-[rgba(232,216,200,0.6)]">{step.body}</p>
+                </article>
+              )
+            })}
           </div>
-          <div className="mt-12 space-y-6 font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#e8ddd4]/72 [&_strong]:font-semibold [&_strong]:text-[#e8ddd4]">
-            <h3 className="font-rozha text-[clamp(1.55rem,3vw,2.25rem)] leading-[1.12] text-[#e8ddd4]">
-              <strong>{copy.womanClosingH3Strong}</strong>
+          <div
+            ref={womanClosingRef}
+            className={`mt-12 space-y-6 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              womanClosingVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+            } ${editorialBodyOnDark}`}
+          >
+            <p className={`max-w-3xl ${editorialReflectiveLeadOnDark}`}>
+              {copy.womanClosingH3Strong}
               {copy.womanClosingH3Rest}
-            </h3>
+            </p>
             <p>
-              <strong>{copy.womanClosingP1Strong1}</strong>
+              {copy.womanClosingP1Strong1}
               {copy.womanClosingP1Middle}
-              <strong>{copy.womanClosingP1Strong2}</strong>
+              {copy.womanClosingP1Strong2}
               {copy.womanClosingP1Rest}
             </p>
             <p>
-              <strong>{copy.womanClosingP2Strong1}</strong>
+              {copy.womanClosingP2Strong1}
               {copy.womanClosingP2Middle}
-              <strong>{copy.womanClosingP2Strong2}</strong>
+              {copy.womanClosingP2Strong2}
             </p>
           </div>
         </div>
       </section>
-      <section className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
-        <div className={`${INNER_CONTAINER_CLASS} text-left`}>
+      <section className={`relative z-30 bg-[#faf8f5] py-28 md:py-36 ${ABOUT_STACK_SECTION}`}>
+        <div className={`${INNER_CONTAINER_CLASS} ${editorialSectionFooterPad} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.codesLabel}</p>
-          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#1a0210]">
-            {copy.codesHeading}
+          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#1a0210]`}>
+            <span className="block">{copy.codesHeadingLine1}</span>
+            <span className="block">{copy.codesHeadingLine2}</span>
           </h2>
-          <p className="mt-5 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72">
+          <p className={`mt-5 max-w-2xl ${editorialBodyOnLight}`}>
             {copy.codesIntro}
           </p>
-          <div className="mt-12 grid grid-cols-2 gap-px bg-[#e8ddd4] md:grid-cols-3">
-            {copy.designCodes.map((code) => (
-              <div key={code.numeral} className="bg-[#faf8f5] p-7">
-                <p className="font-rozha text-[32px] leading-none text-[rgba(122,28,40,0.25)]">{code.numeral}</p>
-                <p className="mt-2 font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#1a0210]">{code.name}</p>
-                <p className="mt-2 font-montserrat text-[13px] leading-[1.7] text-[#1a0210]/60">{code.description}</p>
-              </div>
-            ))}
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
+            {copy.designCodes.map((code, index) => {
+              const isVisible = visibleDesignCodes[index]
+
+              return (
+                <article
+                  key={code.numeral}
+                  ref={(el) => {
+                    designCodeRefs.current[index] = el
+                  }}
+                  className={`group relative overflow-hidden rounded-[6px] border border-[#e8ddd4] bg-[#faf8f5] p-7 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:border-[#7A1C28]/20 hover:bg-white hover:shadow-[0_10px_36px_rgba(26,2,16,0.07)] md:p-8 ${
+                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                  }`}
+                  style={{ transitionDelay: `${(index % 3) * 120}ms` }}
+                >
+                  <p className="font-rozha text-[40px] leading-none text-[rgba(122,28,40,0.28)] transition-colors duration-500 group-hover:text-[rgba(122,28,40,0.42)]">
+                    {code.numeral}
+                  </p>
+                  <div className="mt-4 h-px w-8 bg-[#7A1C28]/25 transition-all duration-500 group-hover:w-12 group-hover:bg-[#7A1C28]/40" aria-hidden />
+                  <p className="mt-4 font-montserrat text-[11px] uppercase tracking-[0.22em] text-[#1a0210]">
+                    {code.name}
+                  </p>
+                  <p className="mt-3 font-montserrat text-[13px] leading-[1.75] text-[#1a0210]/58">
+                    {code.description}
+                  </p>
+                </article>
+              )
+            })}
           </div>
-          <LocaleLink href="/the-codes" className="mt-8 block font-montserrat text-[13px] font-medium text-[#7A1C28] transition-opacity hover:opacity-75" data-cursor-hover>
+          <LocaleLink href="/the-codes" className="mt-10 block font-montserrat text-[13px] font-medium text-[#7A1C28] transition-opacity hover:opacity-75" data-cursor-hover>
             {copy.codesLink}
           </LocaleLink>
-          <div className="mt-12 space-y-6 font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72 [&_strong]:font-semibold [&_strong]:text-[#1a0210]">
-            <h3 className="font-rozha text-[clamp(1.55rem,3vw,2.25rem)] leading-[1.12] text-[#1a0210]">
+          <div
+            ref={codesClosingRef}
+            className={`mt-14 space-y-6 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              codesClosingVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+            } ${editorialBodyOnLight}`}
+          >
+            <p className={`max-w-3xl ${editorialReflectiveLeadOnLight}`}>
               {copy.codesClosingH3}
-              <strong>{copy.codesClosingH3Strong}</strong>
-            </h3>
+              {copy.codesClosingH3Strong}
+            </p>
             <p>
-              <strong>{copy.codesClosingP1Strong}</strong>
+              {copy.codesClosingP1Strong}
               {copy.codesClosingP1Rest}
             </p>
             <p>
-              <strong>{copy.codesClosingP2Strong}</strong>
+              {copy.codesClosingP2Strong}
               {copy.codesClosingP2Rest}
             </p>
           </div>
         </div>
       </section>
 
-      <section className="about-fabric-light relative z-40 -mt-6 overflow-hidden rounded-t-[16px] bg-[#7A1C28] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
-        <div className={`${INNER_CONTAINER_CLASS} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
+      <section className={`about-fabric-light relative z-40 overflow-hidden bg-[#7A1C28] py-28 md:py-36 ${ABOUT_STACK_SECTION}`}>
+        <div className={`${INNER_CONTAINER_CLASS} ${editorialSectionFooterPad} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
           <div className="relative min-h-[52vh] overflow-hidden rounded-[4px] md:min-h-[620px]">
             <Image src={HERO_IMAGE} alt={copy.imageAlt} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
           </div>
           <div className="flex items-center">
             <div className="max-w-xl">
               <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">{copy.houseLabel}</p>
-              <h2 className="mt-5 font-rozha text-[clamp(2rem,3vw,2.5rem)] leading-tight text-[#e8ddd4]">{copy.houseHeading}</h2>
+              <h2 className={`mt-5 ${editorialSectionH2} text-[#e8ddd4]`}>{copy.houseHeading}</h2>
               <div className="mt-5 space-y-5 font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
                 <p>{copy.houseP1}</p>
                 <p>{copy.houseP2}</p>
@@ -278,7 +380,7 @@ export default function AboutPage() {
 
       <section
         ref={quoteRef}
-        className="closing-section relative z-50 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform"
+        className={`closing-section relative z-50 isolate -mt-10 flex min-h-[52vh] items-center overflow-hidden rounded-t-[16px] bg-[#0f080a] py-28 text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:py-36 ${editorialSectionFooterPad}`}
       >
         <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
           <div className="mx-auto max-w-[640px]">
@@ -294,10 +396,11 @@ export default function AboutPage() {
           <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-[#7A1C28]/70">
             {copy.closingBrand}
           </p>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <div className={`mt-8 ${ctaButtonRow} justify-center`} data-bs-cta-row data-bs-cta-row-layout="wrap">
             <LocaleLink
               href="/shop"
-              className={ctaPrimary}
+              className={`${ctaPrimary} ${ctaInButtonRow}`}
+              data-bs-cta
               data-cursor-hover
               data-analytics-event="click_collection_from_about"
               data-analytics-section="about-cta"
@@ -306,7 +409,8 @@ export default function AboutPage() {
             </LocaleLink>
             <LocaleLink
               href="/the-codes"
-              className={ctaSecondaryOutlineOnDark}
+              className={`${ctaSecondaryOutlineOnDark} ${ctaInButtonRow}`}
+              data-bs-cta
               data-cursor-hover
             >
               {copy.ctaOurStoryInCodes}
@@ -323,10 +427,6 @@ export default function AboutPage() {
           to {
             transform: translateX(-50%);
           }
-        }
-
-        .about-fabric-light {
-          position: relative;
         }
 
         .about-fabric-light::before,
@@ -366,56 +466,26 @@ export default function AboutPage() {
           pointer-events: none;
         }
 
-        .closing-section {
-          min-height: auto;
-          height: auto;
-          padding: 120px 40px 100px;
-          background-image: url('/charms/charm-fabric-dark.webp');
-          background-size: cover;
-          background-position: center;
-        }
-
         .closing-section::before {
           z-index: 0;
-          background: rgba(15, 8, 10, 0.82);
+          background-image: url('${CLOSING_FABRIC_BG}');
+          background-size: cover;
+          background-position: center;
         }
 
         .closing-section::after {
           z-index: 1;
-          background: transparent;
+          background: rgba(15, 8, 10, 0.58);
         }
 
         @media (max-width: 767px) {
-          .about-fabric-light {
-          position: relative;
-        }
-
-        .about-fabric-light::before,
-        .about-fabric-light::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-        }
-
-        .about-fabric-light::before {
-          z-index: 0;
-          background-image: url('/charms/charm-fabric-light.webp');
-          background-position: center;
-          background-size: cover;
-        }
-
-        .about-fabric-light::after {
-          z-index: 1;
-          background: rgba(26, 2, 16, 0.75);
-        }
-
-        .about-marquee {
+          .about-marquee {
             animation-duration: 120s;
           }
 
           .closing-section {
-            padding: 80px 24px 80px;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
           }
         }
       `}</style>

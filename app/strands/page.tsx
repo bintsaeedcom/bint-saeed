@@ -15,6 +15,7 @@ import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
 import { buildStrandsCollectionJsonLd } from '@/lib/accessories/strandsCollectionSchemaI18n'
+import { editorialSectionH2 } from '@/lib/ui/editorialTypography'
 
 /** Strands hero banner — `public/charms/charm-fabric-dark.webp` */
 const HERO_CAMPAIGN_IMAGE = '/charms/charm-fabric-dark.webp'
@@ -233,7 +234,7 @@ export default function StrandsPage() {
         <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-center`}>
           <div>
             <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.conceptLabel}</p>
-            <h2 className="mt-4 font-rozha text-[clamp(2.5rem,5vw,4.75rem)] leading-[1] text-[#1a0210]">
+            <h2 className={`mt-4 ${editorialSectionH2} text-[#1a0210]`}>
               {copy.conceptHeadingLine1}
               <br />
               {copy.conceptHeadingLine2}
@@ -301,7 +302,7 @@ export default function StrandsPage() {
       <section ref={stepsRef} className="relative z-20 -mt-6 rounded-t-[16px] bg-[#1a0210] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.howItWorksLabel}</p>
-          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#e8ddd4]">{copy.howItWorksHeading}</h2>
+          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#e8ddd4]`}>{copy.howItWorksHeading}</h2>
           <div className="mt-12 grid gap-px bg-[rgba(232,216,200,0.1)] md:grid-cols-3">
             {copy.steps.map((step, index) => (
               <article
@@ -326,7 +327,7 @@ export default function StrandsPage() {
       >
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.collectionLabel}</p>
-          <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2.4rem,5vw,4.5rem)] leading-[1] text-[#1a0210]">{copy.collectionHeading}</h2>
+          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#1a0210]`}>{copy.collectionHeading}</h2>
           <p className="mt-5 max-w-2xl font-montserrat text-[15px] leading-[1.85] tracking-wide text-[#1a0210]/70">
             {copy.collectionIntro}
           </p>
@@ -492,7 +493,7 @@ export default function StrandsPage() {
         <div className={INNER_CONTAINER_CLASS}>
           <div className="text-left">
             <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.shopCollectionLabel}</p>
-            <h2 className="mt-4 max-w-3xl font-rozha text-[clamp(2rem,4vw,3.25rem)] leading-[1.05] text-[#1a0210]">
+            <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#1a0210]`}>
               {copy.shopCollectionHeading}
             </h2>
             <p className="mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-[#1a0210]/70">
@@ -568,7 +569,7 @@ export default function StrandsPage() {
           <div className="flex items-center">
             <div className="max-w-xl">
               <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">{copy.anchorLabel}</p>
-              <h2 className="mt-5 font-rozha text-[clamp(2rem,3vw,2.5rem)] leading-tight text-[#e8ddd4]">{copy.anchorHeading}</h2>
+              <h2 className={`mt-5 ${editorialSectionH2} text-[#e8ddd4]`}>{copy.anchorHeading}</h2>
               <p className="mt-5 max-w-xl font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
                 {copy.anchorBody(marylebone ? marylebone.price.toLocaleString() : '500')}
               </p>
