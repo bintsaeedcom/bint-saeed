@@ -173,6 +173,21 @@ const nextConfig = {
         permanent: true,
       })),
       { source: '/heritage/sadu', destination: '/heritage/khous', permanent: true },
+      // Mega menu collection nav — legacy PNG paths → webp
+      ...[
+        'bint-saeed-all-strands-collection-nav',
+        'bint-saeed-signature-strands-collection-nav',
+        'bint-saeed-luxury-abayas-collection-nav',
+        'bint-saeed-luxury-sets-collection-nav',
+        'bint-saeed-our-story-collection-nav',
+        'bint-saeed-the-codes-collection-nav',
+        'bint-saeed-hidden-pocket-collection-nav',
+        'bint-saeed-name-labels-collection-nav',
+      ].map((base) => ({
+        source: `/collection-section/${base}.png`,
+        destination: `/collection-section/${base}.webp`,
+        permanent: true,
+      })),
       // Social links → always coming soon page (/)
       { source: '/facebook', destination: '/?utm_source=facebook&utm_medium=social&utm_campaign=bio', permanent: true },
       { source: '/instgram', destination: '/?utm_source=instagram&utm_medium=social&utm_campaign=bio', permanent: true },

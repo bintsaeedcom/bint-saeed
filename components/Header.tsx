@@ -17,14 +17,14 @@ import {
   ACCESSORY_IMAGE_PHONE_CHARM,
 } from '@/data/accessories'
 
-const MEGA_MENU_PLACEHOLDER_A = '/placeholders/product-front-F.svg'
-const MEGA_MENU_PLACEHOLDER_B = '/placeholders/product-extra-E.svg'
 const MEGA_MENU_SIGNATURE_STRANDS = '/collection-section/bint-saeed-signature-strands-collection-nav.webp'
 const MEGA_MENU_ALL_STRANDS = '/collection-section/bint-saeed-all-strands-collection-nav.webp'
 const MEGA_MENU_LUXURY_ABAYAS = '/collection-section/bint-saeed-luxury-abayas-collection-nav.webp'
 const MEGA_MENU_LUXURY_SETS = '/collection-section/bint-saeed-luxury-sets-collection-nav.webp'
 const MEGA_MENU_OUR_STORY = '/collection-section/bint-saeed-our-story-collection-nav.webp'
 const MEGA_MENU_THE_CODES = '/collection-section/bint-saeed-the-codes-collection-nav.webp'
+const MEGA_MENU_HIDDEN_POCKET = '/collection-section/bint-saeed-hidden-pocket-collection-nav.webp'
+const MEGA_MENU_NAME_LABELS = '/collection-section/bint-saeed-name-labels-collection-nav.webp'
 
 /** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
 const headerBarGradient =
@@ -241,12 +241,12 @@ export default function Header() {
         {
           title: 'Hidden Pocket',
           href: '/personalisation',
-          image: MEGA_MENU_PLACEHOLDER_A,
+          image: MEGA_MENU_HIDDEN_POCKET,
         },
         {
           title: 'Name Labels',
           href: '/personalisation',
-          image: MEGA_MENU_PLACEHOLDER_B,
+          image: MEGA_MENU_NAME_LABELS,
         },
       ],
     },
@@ -527,7 +527,7 @@ export default function Header() {
                     <div
                       className={
                         megaMenus[activeMegaMenu].features.length > 0
-                          ? 'col-span-5 grid grid-cols-1 gap-4 xl:col-span-6'
+                          ? 'col-span-5 grid grid-cols-1 content-start gap-3 self-start xl:col-span-6'
                           : 'col-span-12'
                       }
                     >
@@ -568,6 +568,7 @@ export default function Header() {
                               src={feature.image}
                               alt={`${feature.title} — featured collection | Bint Saeed`}
                               fill
+                              unoptimized
                               sizes="(max-width: 1536px) 20vw, 300px"
                               className="pointer-events-none object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                               aria-hidden
@@ -821,7 +822,7 @@ export default function Header() {
                             <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
                           </LocaleLink>
                           {mega.columns.map((col) => (
-                            <div key={col.title}>
+                            <div key={col.title} className="min-w-0">
                               <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/45">
                                 {col.title}
                               </p>
