@@ -3,18 +3,15 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
-import AboutTopicNav from '@/components/AboutTopicNav'
-import AppPageWayfinding from '@/components/AppPageWayfinding'
-import EditorialHeroCopy from '@/components/EditorialHeroCopy'
+import AboutSectionHero from '@/components/AboutSectionHero'
+import AboutHeroMarquee from '@/components/AboutHeroMarquee'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getPersonalisationCopy } from '@/lib/content/personalisationCopyI18n'
+import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { editorialSectionH2 } from '@/lib/ui/editorialTypography'
 import {
-  EDITORIAL_BRAND_HERO_HEIGHT,
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
-  editorialBrandHeroContentShell,
-  editorialHeroAlign,
 } from '@/lib/ui/editorialPageChrome'
 import {
   ctaButtonRow,
@@ -25,7 +22,7 @@ import {
 
 const INNER_CONTAINER_CLASS = EDITORIAL_PAGE_CONTAINER
 const PERSONALISATION_PAGE = encodeURIComponent('Personalisation Page')
-const HERO_IMAGE = `/${PERSONALISATION_PAGE}/${encodeURIComponent('secret pocket.JPG')}`
+const HERO_IMAGE = ABOUT_SECTION_HERO_IMAGES.personalisation
 const SECRET_POCKET_IMAGE = HERO_IMAGE
 const LABEL_IMAGES = ['label1.PNG', 'label2.PNG', 'label3.PNG', 'label4.PNG'].map(
   (file) => `/${PERSONALISATION_PAGE}/${encodeURIComponent(file)}`,
@@ -39,25 +36,8 @@ export default function PersonalisationPage() {
   const copy = getPersonalisationCopy(language)
   const stepsRef = useRef<HTMLElement | null>(null)
   const quoteRef = useRef<HTMLElement | null>(null)
-  const [heroOffset, setHeroOffset] = useState(0)
   const [stepsVisible, setStepsVisible] = useState(false)
   const [quoteVisible, setQuoteVisible] = useState(false)
-
-  useEffect(() => {
-    let frame = 0
-    const update = () => {
-      window.cancelAnimationFrame(frame)
-      frame = window.requestAnimationFrame(() => {
-        setHeroOffset(window.scrollY * 0.5)
-      })
-    }
-    update()
-    window.addEventListener('scroll', update, { passive: true })
-    return () => {
-      window.cancelAnimationFrame(frame)
-      window.removeEventListener('scroll', update)
-    }
-  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -78,59 +58,21 @@ export default function PersonalisationPage() {
 
   return (
     <main className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
-      <section className={`relative z-0 ${EDITORIAL_BRAND_HERO_HEIGHT} overflow-hidden bg-[#1a0210] text-[#e8ddd4]`}>
-        <div className="absolute inset-0 overflow-hidden" aria-hidden>
-          <div
-            className="absolute inset-0 opacity-65"
-            style={{ transform: `translateY(${heroOffset}px)` }}
-          >
-            <Image
-              src={HERO_IMAGE}
-              alt={copy.hiddenPocketAlt}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,2,16,0.92)_0%,rgba(26,2,16,0.62)_46%,rgba(26,2,16,0.22)_100%)]" />
-          </div>
-          <div className="absolute inset-0 shadow-[inset_0_-24px_48px_rgba(0,0,0,0.28)]" />
-        </div>
-
-        <div className={`${editorialBrandHeroContentShell} ${editorialHeroAlign(isRTL)}`}>
-          <div className={EDITORIAL_PAGE_CONTAINER}>
-            <AppPageWayfinding
-              rtl={isRTL}
-              variant="light"
-              className="mb-3"
-              segments={[
-                { label: copy.breadcrumbHome, href: '/home' },
-                { label: copy.breadcrumb },
-              ]}
-            />
-
-            <EditorialHeroCopy
-              rtl={isRTL}
-              eyebrow={copy.breadcrumb}
-              title={copy.heroTitle}
-              description={copy.heroSub}
-              variant="brand-dark"
-            />
-          </div>
-        </div>
-
-        <div className="absolute inset-x-0 bottom-0 z-20 overflow-hidden border-t border-[#2a0a14] bg-[#1a0210]/80 py-3">
-          <div className="personalisation-marquee flex w-max font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#6a8090]/65">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <span key={index} className="px-4">
-                {copy.marquee}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <AboutTopicNav />
+      <AboutSectionHero
+        rtl={isRTL}
+        imageSrc={HERO_IMAGE}
+        imageAlt={copy.hiddenPocketAlt}
+        priority
+        imageOpacity={65}
+        segments={[
+          { label: copy.breadcrumbHome, href: '/home' },
+          { label: copy.breadcrumb },
+        ]}
+        eyebrow={copy.breadcrumb}
+        title={copy.heroTitle}
+        description={copy.heroSub}
+        footerSlot={<AboutHeroMarquee text={copy.marquee} />}
+      />
 
       <section className="relative z-10 -mt-6 rounded-t-[16px] bg-[#e8ddd4] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
         <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-center`}>
@@ -308,20 +250,6 @@ export default function PersonalisationPage() {
       </section>
 
       <style jsx global>{`
-        @keyframes personalisationMarquee {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-
-        .personalisation-marquee {
-          animation: personalisationMarquee 95s linear infinite;
-          will-change: transform;
-        }
-
         .closing-section {
           position: relative;
         }
@@ -354,10 +282,6 @@ export default function PersonalisationPage() {
         }
 
         @media (max-width: 767px) {
-          .personalisation-marquee {
-            animation-duration: 120s;
-          }
-
           .closing-section {
             padding: 80px 24px 80px;
           }

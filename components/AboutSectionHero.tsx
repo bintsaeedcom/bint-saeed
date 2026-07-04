@@ -11,6 +11,8 @@ import {
   EDITORIAL_HERO_HEIGHT,
   EDITORIAL_PAGE_CONTAINER,
   editorialHeroContentShell,
+  editorialHeroCopyBlock,
+  editorialHeroCopyBlockWithFooter,
 } from '@/lib/ui/editorialPageChrome'
 
 export type AboutSectionHeroProps = {
@@ -49,7 +51,10 @@ export default function AboutSectionHero({
 }: AboutSectionHeroProps) {
   return (
     <>
-      <header className={`relative ${EDITORIAL_HERO_HEIGHT} overflow-hidden bg-brand-darkRed`}>
+      <header
+        className={`relative ${EDITORIAL_HERO_HEIGHT} overflow-hidden bg-brand-darkRed`}
+        style={{ minHeight: '360px', maxHeight: '420px' }}
+      >
         <Image
           src={imageSrc}
           alt={imageAlt}
@@ -61,7 +66,8 @@ export default function AboutSectionHero({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/55 to-brand-darkRed/20" />
         <div className={editorialHeroContentShell}>
-          <div className={EDITORIAL_PAGE_CONTAINER}>
+          <div className={footerSlot ? editorialHeroCopyBlockWithFooter : editorialHeroCopyBlock}>
+            <div className={EDITORIAL_PAGE_CONTAINER}>
             <motion.div
               initial={{ opacity: 0, x: rtl ? 20 : -16 }}
               animate={{ opacity: 1, x: 0 }}
@@ -89,6 +95,7 @@ export default function AboutSectionHero({
                 {children}
               </EditorialHeroCopy>
             </motion.div>
+          </div>
           </div>
         </div>
         {footerSlot}

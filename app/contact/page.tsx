@@ -210,7 +210,6 @@ export default function ContactPage() {
         ]}
         eyebrow={isRTL ? 'BINT SAEED · ABU DHABI' : 'BINT SAEED · ABU DHABI'}
         title={isRTL ? 'تواصلي معنا' : 'Contact Us'}
-        titleClassName="mb-0 font-rozha text-[clamp(1.625rem,3.2vw,2.35rem)] leading-[1.02] tracking-[0.01em] text-white"
       />
 
       <div className="border-b border-brand-stone/20 bg-brand-pageCanvas">

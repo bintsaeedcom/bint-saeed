@@ -64,6 +64,26 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  @keyframes bsAboutHeroMarquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .bs-about-hero-marquee {
+    animation: bsAboutHeroMarquee 95s linear infinite;
+    will-change: transform;
+  }
+
+  @media (max-width: 767px) {
+    .bs-about-hero-marquee {
+      animation-duration: 120s;
+    }
+  }
+
   .bs-editorial-breadcrumb ol {
     scrollbar-width: none;
   }

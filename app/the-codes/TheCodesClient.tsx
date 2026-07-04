@@ -89,7 +89,7 @@ function scrollToHash(hash: string) {
 }
 
 export default function TheCodesClient() {
-  const { isRTL, language } = useLanguage()
+  const { isRTL, language, t } = useLanguage()
   const pathname = usePathname()
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
   const codesJsonLd = useMemo(() => buildTheCodesJsonLd(language), [language])
@@ -149,7 +149,7 @@ export default function TheCodesClient() {
         }
       />
 
-      <div className="relative space-y-4 md:space-y-8 lg:space-y-10">
+      <div className="relative space-y-0 md:space-y-2 lg:space-y-4">
         {sections.map((section, index) => {
           const isEven = index % 2 === 0
           const textOrder = isEven ? 'lg:order-1' : 'lg:order-2'
@@ -161,7 +161,7 @@ export default function TheCodesClient() {
               className="relative scroll-mt-28 overflow-hidden md:scroll-mt-32"
               aria-labelledby={`${section.id}-heading`}
             >
-              <div className={`${EDITORIAL_PAGE_CONTAINER} relative z-[1] grid max-w-6xl gap-10 py-10 lg:grid-cols-2 lg:items-center lg:gap-16 lg:py-16`}>
+              <div className={`${EDITORIAL_PAGE_CONTAINER} relative z-[1] grid max-w-6xl gap-8 py-6 lg:grid-cols-2 lg:items-center lg:gap-12 lg:py-10`}>
                 <motion.div
                   initial={{ opacity: 0, y: 28 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -192,7 +192,7 @@ export default function TheCodesClient() {
                           {expandedTextBySection[section.id]}
                         </p>
                       ) : null}
-                      {expandedTextBySection[section.id] ? (
+                      {expandedTextBySection[section.id] && !expandedSections[section.id] ? (
                         <button
                           type="button"
                           onClick={() => {
@@ -204,19 +204,18 @@ export default function TheCodesClient() {
                               'knotted-lines-of-lineage': 'click_read_more_knotted_lineage',
                               'the-strands': 'click_read_more_strands',
                             }
-                            const isOpening = !expandedSections[section.id]
-                            if (isOpening && eventMap[section.id]) {
+                            if (eventMap[section.id]) {
                               trackEvent(eventMap[section.id], { section_id: section.id })
                             }
                             setExpandedSections((prev) => ({
                               ...prev,
-                              [section.id]: !prev[section.id],
+                              [section.id]: true,
                             }))
                           }}
                           className="inline-flex min-h-[44px] items-center justify-center border-b border-brand-darkRed/35 bg-transparent px-1 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
                           data-cursor-hover
                         >
-                          Read More
+                          {t.about.readMore}
                         </button>
                       ) : null}
                     </div>
@@ -245,11 +244,11 @@ export default function TheCodesClient() {
         })}
       </div>
 
-      <footer className={`${EDITORIAL_PAGE_CONTAINER} flex flex-col items-center pb-24 pt-16 text-center`}>
-        <p className="w-full font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-clayRed/70">
-          Continue the story
-        </p>
-        <div className="mt-6 flex w-full justify-center">
+      <footer className="relative w-full border-t border-brand-stone/20 bg-brand-pageCanvas py-16 md:py-20">
+        <div className="mx-auto flex w-full max-w-3xl flex-col items-center justify-center gap-6 px-6 text-center sm:px-8">
+          <p className="font-montserrat text-[11px] uppercase tracking-[0.26em] text-brand-clayRed/70">
+            {isRTL ? 'واصلي القصة' : 'Continue the story'}
+          </p>
           <LocaleLink
             href="/shop?from=the-codes"
             className={ctaPrimary}
@@ -258,7 +257,7 @@ export default function TheCodesClient() {
             data-analytics-event="click_view_collection_codes_page"
             data-analytics-section="the-codes-footer-cta"
           >
-            View collection
+            {isRTL ? 'استكشفي المجموعة' : 'View collection'}
           </LocaleLink>
         </div>
       </footer>

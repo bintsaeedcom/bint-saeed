@@ -790,9 +790,6 @@ export default function Header() {
                 {[shopNavItem, ...navItems].map((item, index) => {
                   const mega = megaMenus[item.href]
                   const isExpanded = expandedMobileSection === item.href
-                  const subLinkCount = mega
-                    ? mega.columns.reduce((sum, col) => sum + col.links.length, 0)
-                    : 0
 
                   return (
                     <motion.div
@@ -826,19 +823,10 @@ export default function Header() {
                               {item.label}
                             </span>
                             <span
-                              className={`inline-flex shrink-0 items-center gap-1.5 font-montserrat text-[9px] uppercase tracking-[0.14em] ${
-                                isExpanded ? 'text-brand-dustyBlue' : 'text-white/45'
+                              className={`inline-flex shrink-0 items-center ${
+                                isExpanded ? 'text-brand-dustyBlue' : 'text-white/55'
                               }`}
                             >
-                              <span className="hidden min-[360px]:inline">
-                                {isExpanded
-                                  ? isRTL
-                                    ? 'إخفاء'
-                                    : 'Hide'
-                                  : isRTL
-                                    ? `${subLinkCount} مواضيع`
-                                    : `${subLinkCount} topics`}
-                              </span>
                               <FiChevronDown
                                 className={`h-5 w-5 transition-transform duration-200 ${
                                   isExpanded ? 'rotate-180 text-brand-dustyBlue' : 'text-white/55'

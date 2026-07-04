@@ -23,7 +23,7 @@ export default function GivingForwardPage() {
           { label: copy.breadcrumbHome, href: '/home' },
           { label: copy.breadcrumb },
         ]}
-        eyebrow="Bint Saeed"
+        eyebrow="BINT SAEED · ABU DHABI"
         title={copy.pageTitle}
       />
 

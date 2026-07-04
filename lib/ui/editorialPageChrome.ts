@@ -14,11 +14,16 @@ export function editorialHeroAlign(rtl: boolean): string {
   return rtl ? 'text-right' : 'text-left'
 }
 
-/** Compact banner height — dvh avoids mobile browser chrome jumps */
-export const EDITORIAL_HERO_HEIGHT = 'h-[min(38dvh,380px)] md:h-[min(42dvh,420px)]'
+/** Fixed header clearance when hero is full-bleed under the site header */
+export const SITE_HEADER_OFFSET = 'pt-[8.75rem] sm:pt-[9rem] 2xl:pt-[11rem]'
 
-/** Taller brand-dark heroes with marquee strip (Our Story, Personalisation) */
-export const EDITORIAL_BRAND_HERO_HEIGHT = 'h-[min(44dvh,440px)] sm:h-[min(48dvh,480px)]'
+export const SITE_HEADER_STICKY_TOP = 'top-[8.75rem] sm:top-[9rem] 2xl:top-[11rem]'
+
+/** One banner height for every About sub-page — visible, never clipped */
+export const EDITORIAL_HERO_HEIGHT = 'h-[min(46dvh,420px)] min-h-[360px] max-h-[420px]'
+
+/** @deprecated Use EDITORIAL_HERO_HEIGHT — kept for any legacy imports */
+export const EDITORIAL_BRAND_HERO_HEIGHT = EDITORIAL_HERO_HEIGHT
 
 export const editorialHeroEyebrowLight =
   'bs-editorial-eyebrow mb-2.5 block max-w-full font-montserrat text-[10px] font-medium uppercase leading-[1.45] tracking-[0.18em] text-white/60 sm:mb-3 sm:tracking-[0.26em] md:tracking-[0.32em]'
@@ -41,7 +46,12 @@ export const editorialHeroDescOnDarkBrand =
 export const editorialIntroStripText =
   'max-w-lg font-montserrat text-[12px] font-normal leading-[1.9] tracking-[0.06em] text-brand-clayRed/72'
 
-export const editorialHeroContentShell = 'relative z-10 flex h-full min-h-0 flex-col justify-end pb-6 md:pb-8'
+/** Inner flex column: clears fixed header, anchors copy block toward banner bottom */
+export const editorialHeroContentShell = `relative z-10 flex h-full min-h-0 flex-col ${SITE_HEADER_OFFSET}`
 
-export const editorialBrandHeroContentShell =
-  'relative z-10 flex h-full min-h-0 flex-col justify-end pb-[4.25rem] sm:pb-[4.5rem] md:pb-[4.75rem]'
+export const editorialHeroCopyBlock = 'mt-auto w-full min-w-0 pb-6 md:pb-7'
+
+export const editorialHeroCopyBlockWithFooter = 'mt-auto w-full min-w-0 pb-[4.25rem] sm:pb-[4.5rem]'
+
+/** @deprecated Use editorialHeroContentShell + editorialHeroCopyBlock */
+export const editorialBrandHeroContentShell = editorialHeroContentShell

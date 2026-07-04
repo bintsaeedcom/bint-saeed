@@ -3,17 +3,14 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
-import AboutTopicNav from '@/components/AboutTopicNav'
-import AppPageWayfinding from '@/components/AppPageWayfinding'
-import EditorialHeroCopy from '@/components/EditorialHeroCopy'
+import AboutSectionHero from '@/components/AboutSectionHero'
+import AboutHeroMarquee from '@/components/AboutHeroMarquee'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getAboutPageCopy } from '@/lib/content/aboutPageCopyI18n'
+import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import {
-  EDITORIAL_BRAND_HERO_HEIGHT,
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
-  editorialBrandHeroContentShell,
-  editorialHeroAlign,
 } from '@/lib/ui/editorialPageChrome'
 import {
   ctaPrimary,
@@ -44,7 +41,7 @@ const WOMAN_STEP_REVEAL_HIDDEN_RTL = [
   'opacity-0 translate-y-10 md:translate-y-0 md:-translate-x-8',
 ] as const
 
-const HERO_IMAGE = '/about/campaign-portrait.PNG'
+const HERO_IMAGE = ABOUT_SECTION_HERO_IMAGES.about
 const HERO_IMAGE_2 = '/about/campaign-seated.PNG'
 const INNER_CONTAINER_CLASS = EDITORIAL_PAGE_CONTAINER
 
@@ -60,28 +57,11 @@ export default function AboutPage() {
   const designCodeRefs = useRef<(HTMLElement | null)[]>([])
   const codesClosingRef = useRef<HTMLDivElement | null>(null)
   const quoteRef = useRef<HTMLElement | null>(null)
-  const [heroOffset, setHeroOffset] = useState(0)
   const [visibleWomanSteps, setVisibleWomanSteps] = useState<boolean[]>([false, false, false])
   const [womanClosingVisible, setWomanClosingVisible] = useState(false)
   const [visibleDesignCodes, setVisibleDesignCodes] = useState<boolean[]>([false, false, false, false, false, false])
   const [codesClosingVisible, setCodesClosingVisible] = useState(false)
   const [quoteVisible, setQuoteVisible] = useState(false)
-
-  useEffect(() => {
-    let frame = 0
-    const update = () => {
-      window.cancelAnimationFrame(frame)
-      frame = window.requestAnimationFrame(() => {
-        setHeroOffset(window.scrollY * 0.5)
-      })
-    }
-    update()
-    window.addEventListener('scroll', update, { passive: true })
-    return () => {
-      window.cancelAnimationFrame(frame)
-      window.removeEventListener('scroll', update)
-    }
-  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -131,76 +111,40 @@ export default function AboutPage() {
 
   return (
     <main className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
-      <section className={`relative z-0 ${EDITORIAL_BRAND_HERO_HEIGHT} overflow-hidden bg-[#1a0210] text-[#e8ddd4]`}>
-        <div
-          className="absolute inset-0 opacity-55"
-          style={{ transform: `translateY(${heroOffset}px)` }}
-          aria-hidden
-        >
-          <Image
-            src={HERO_IMAGE}
-            alt={copy.imageAlt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,2,16,0.92)_0%,rgba(26,2,16,0.62)_46%,rgba(26,2,16,0.22)_100%)]" />
+      <AboutSectionHero
+        rtl={isRTL}
+        imageSrc={HERO_IMAGE}
+        imageAlt={copy.imageAlt}
+        priority
+        imageOpacity={55}
+        segments={[
+          { label: copy.breadcrumbHome, href: '/home' },
+          { label: copy.breadcrumbAbout },
+        ]}
+        eyebrow={copy.heroEyebrow}
+        title={copy.heroHeadline}
+        description={copy.heroSubline}
+        footerSlot={<AboutHeroMarquee text={copy.marquee} />}
+      >
+        <div className={`mt-5 ${ctaButtonRow}`} data-bs-cta-row data-bs-cta-row-layout="wrap">
+          <LocaleLink
+            href="#about-origin"
+            className={`${ctaPrimary} ${ctaInButtonRow}`}
+            data-bs-cta
+            data-cursor-hover
+          >
+            {copy.ctaReadStory}
+          </LocaleLink>
+          <LocaleLink
+            href="/shop"
+            className={`${ctaSecondaryOnDark} ${ctaInButtonRow}`}
+            data-bs-cta
+            data-cursor-hover
+          >
+            {copy.ctaExploreCollection}
+          </LocaleLink>
         </div>
-
-        <div className={`${editorialBrandHeroContentShell} ${editorialHeroAlign(isRTL)}`}>
-          <div className={EDITORIAL_PAGE_CONTAINER}>
-            <AppPageWayfinding
-              rtl={isRTL}
-              variant="light"
-              className="mb-3"
-              segments={[
-                { label: copy.breadcrumbHome, href: '/home' },
-                { label: copy.breadcrumbAbout },
-              ]}
-            />
-
-            <EditorialHeroCopy
-              rtl={isRTL}
-              eyebrow={copy.heroEyebrow}
-              title={copy.heroHeadline}
-              description={copy.heroSubline}
-              variant="brand-dark"
-            >
-              <div className={`mt-6 ${ctaButtonRow}`} data-bs-cta-row data-bs-cta-row-layout="wrap">
-                <LocaleLink
-                  href="#about-origin"
-                  className={`${ctaPrimary} ${ctaInButtonRow}`}
-                  data-bs-cta
-                  data-cursor-hover
-                >
-                  {copy.ctaReadStory}
-                </LocaleLink>
-                <LocaleLink
-                  href="/shop"
-                  className={`${ctaSecondaryOnDark} ${ctaInButtonRow}`}
-                  data-bs-cta
-                  data-cursor-hover
-                >
-                  {copy.ctaExploreCollection}
-                </LocaleLink>
-              </div>
-            </EditorialHeroCopy>
-          </div>
-        </div>
-
-        <div className="absolute inset-x-0 bottom-0 z-20 overflow-hidden border-t border-[#2a0a14] bg-[#1a0210]/80 py-3">
-          <div className="about-marquee flex w-max font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#6a8090]/65">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <span key={index} className="px-4">
-                {copy.marquee}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <AboutTopicNav />
+      </AboutSectionHero>
 
       <section
         id="about-origin"
@@ -428,15 +372,6 @@ export default function AboutPage() {
       </section>
 
       <style jsx global>{`
-        @keyframes aboutMarquee {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-
         .about-fabric-light::before,
         .about-fabric-light::after {
           content: '';
@@ -455,11 +390,6 @@ export default function AboutPage() {
         .about-fabric-light::after {
           z-index: 1;
           background: rgba(26, 2, 16, 0.75);
-        }
-
-        .about-marquee {
-          animation: aboutMarquee 95s linear infinite;
-          will-change: transform;
         }
 
         .closing-section {
@@ -491,10 +421,6 @@ export default function AboutPage() {
         }
 
         @media (max-width: 767px) {
-          .about-marquee {
-            animation-duration: 120s;
-          }
-
           .closing-section {
             padding: 80px 24px 80px;
           }

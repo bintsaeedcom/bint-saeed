@@ -8,6 +8,7 @@ import CookieConsent from '@/components/CookieConsent'
 import RegionalExperiencePopup from '@/components/RegionalExperiencePopup'
 import SmoothScrollProvider from '@/components/SmoothScrollProvider'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
+import { isAboutEditorialRoute } from '@/lib/about/aboutEditorialRoutes'
 
 interface LayoutWrapperProps {
   children: React.ReactNode
@@ -33,7 +34,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
     inner === '/dev/error-preview' || inner.startsWith('/dev/error-preview/')
 
   /** Full-bleed hero under fixed header — no top gap on main */
-  const isFlushHeroLayout = isHomeEditorial
+  const isFlushHeroLayout = isHomeEditorial || isAboutEditorialRoute(inner)
 
   if (isComingSoon || isHomeAccessShell || isDevErrorPreview) {
     return <main>{children}</main>
@@ -44,7 +45,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
       <SmoothScrollProvider>
         <Header />
         <main
-          className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : 'pt-[8.75rem] sm:pt-[9rem] 2xl:pt-16'}`}
+          className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : 'pt-[8.75rem] sm:pt-[9rem] 2xl:pt-[11rem]'}`}
         >
           <div className="relative z-[2] w-full min-w-0 max-w-none bg-brand-pageCanvas">
             {children}

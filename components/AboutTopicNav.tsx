@@ -5,7 +5,7 @@ import LocaleLink from '@/components/LocaleLink'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getAboutTopicNavAriaLabel, getAboutTopicNavLinks } from '@/lib/i18n/aboutTopicNavI18n'
-import { EDITORIAL_PAGE_CONTAINER } from '@/lib/ui/editorialPageChrome'
+import { EDITORIAL_PAGE_CONTAINER, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
 
 export default function AboutTopicNav() {
   const pathname = usePathname() || ''
@@ -16,7 +16,7 @@ export default function AboutTopicNav() {
   return (
     <nav
       aria-label={getAboutTopicNavAriaLabel(language)}
-      className="sticky top-16 z-40 w-full min-w-0 border-b border-brand-stone/30 bg-brand-pageCanvas"
+      className={`sticky ${SITE_HEADER_STICKY_TOP} z-40 w-full min-w-0 border-b border-brand-stone/30 bg-brand-pageCanvas`}
     >
       <div
         className={`${EDITORIAL_PAGE_CONTAINER} flex items-center gap-1 overflow-x-auto py-3.5 sm:py-4 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}
