@@ -296,7 +296,7 @@ export default function PersonalisationPage() {
           min-height: auto;
           height: auto;
           padding: 120px 40px 100px;
-          background-image: url('/charms/charm-fabric-dark.webp');
+          background-image: url('/strands/charm-fabric-dark.webp');
           background-size: cover;
           background-position: center;
         }

@@ -37,7 +37,7 @@ const WOMAN_STEP_REVEAL_HIDDEN_RTL = [
 
 const HERO_IMAGE = '/about/campaign-portrait.PNG'
 const HERO_IMAGE_2 = '/about/campaign-seated.PNG'
-const CLOSING_FABRIC_BG = '/charms/charm-fabric-dark.webp'
+const CLOSING_FABRIC_BG = '/strands/charm-fabric-dark.webp'
 const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 
 /** Sticky card-stack scroll — identical overlap/stack on mobile and desktop */
@@ -439,7 +439,7 @@ export default function AboutPage() {
 
         .about-fabric-light::before {
           z-index: 0;
-          background-image: url('/charms/charm-fabric-light.webp');
+          background-image: url('/strands/charm-fabric-light.webp');
           background-position: center;
           background-size: cover;
         }

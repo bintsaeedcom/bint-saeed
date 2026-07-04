@@ -11,14 +11,13 @@ import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getStrandsPageCopy } from '@/lib/i18n/strandsPageCopyI18n'
-import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
 import { buildStrandsCollectionJsonLd } from '@/lib/accessories/strandsCollectionSchemaI18n'
 import { editorialSectionH2 } from '@/lib/ui/editorialTypography'
 
-/** Strands hero banner — `public/charms/charm-fabric-dark.webp` */
-const HERO_CAMPAIGN_IMAGE = '/charms/charm-fabric-dark.webp'
+/** Strands hero banner — `public/strands/charm-fabric-dark.webp` (served under /strands/, not /charms/ redirect) */
+const HERO_CAMPAIGN_IMAGE = '/strands/charm-fabric-dark.webp'
 const STRAND_HERO_ALT = withBrandAlt(
   'Natural stone bead abaya strands collection — interchangeable onyx, jade, amethyst, malachite and rose quartz for Marylebone Abaya',
 )
@@ -31,7 +30,6 @@ export default function StrandsPage() {
   const { isRTL, language } = useLanguage()
   const copy = getStrandsPageCopy(language)
   const ui = commerceUi(language)
-  const { formatPrice } = useCurrency()
   const collectionJsonLd = useMemo(() => buildStrandsCollectionJsonLd(language), [language])
   const strandProducts = useMemo(() => {
     const strands = accessories.filter((item) => item.category === 'signature-strands')
@@ -92,8 +90,12 @@ export default function StrandsPage() {
   const scrollCarousel = (direction: 'prev' | 'next') => {
     const el = carouselRef.current
     if (!el) return
-    const step = Math.max(el.clientWidth * 0.82, 280)
-    el.scrollBy({ left: direction === 'next' ? step : -step, behavior: 'smooth' })
+    const firstCard = el.querySelector('article')
+    const gap = 20
+    const cardStep = firstCard
+      ? firstCard.getBoundingClientRect().width + gap
+      : Math.max(el.clientWidth * 0.82, 280)
+    el.scrollBy({ left: direction === 'next' ? cardStep : -cardStep, behavior: 'smooth' })
   }
 
   const startDrag = (clientX: number) => {
@@ -162,8 +164,8 @@ export default function StrandsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
       />
-      <section className="relative z-0 h-[85vh] max-h-[85vh] overflow-hidden bg-[#1a0210] text-[#e8ddd4] md:sticky md:top-0 md:will-change-transform">
-        <div className="absolute inset-0 shadow-[inset_0_-32px_64px_rgba(0,0,0,0.22)]" aria-hidden>
+      <section className="relative z-0 flex min-h-0 flex-col overflow-hidden bg-[#1a0210] text-[#e8ddd4] md:sticky md:top-0 md:max-h-[min(72vh,720px)] md:will-change-transform">
+        <div className="absolute inset-0" aria-hidden>
           <Image
             src={HERO_CAMPAIGN_IMAGE}
             alt={STRAND_HERO_ALT}
@@ -172,36 +174,41 @@ export default function StrandsPage() {
             sizes="100vw"
             className="object-cover object-center"
           />
+          <div className="absolute inset-0 bg-[#1a0210]/45" />
+          <div className="absolute inset-0 shadow-[inset_0_-24px_48px_rgba(0,0,0,0.28)]" />
         </div>
 
-        <div className={`absolute bottom-10 left-6 right-6 z-10 max-w-[600px] text-left md:bottom-[60px] md:left-[60px] md:right-auto ${isRTL ? 'text-right md:right-[60px] md:left-auto' : ''}`}>
+        <div
+          className={`relative z-10 flex min-h-[min(58vh,560px)] flex-col justify-between px-6 pb-[4.75rem] pt-[5.25rem] md:min-h-[min(62vh,640px)] md:px-[60px] md:pb-[4.5rem] md:pt-[6.5rem] ${isRTL ? 'text-right' : 'text-left'}`}
+        >
+          <div className="max-w-[600px]">
           <AppPageWayfinding
             rtl={isRTL}
             variant="light"
-            className="mb-3"
+            className="mb-2"
             segments={[
               { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
               { label: isRTL ? 'الخيوط' : 'Strands' },
             ]}
           />
 
-            <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090] sm:tracking-[0.34em]">
+            <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090] sm:tracking-[0.34em]">
               {copy.heroEyebrow}
             </p>
             <h1
               data-document-h1="true"
-              className="max-w-[760px] font-rozha text-[clamp(36px,6vw,72px)] leading-[0.98] tracking-[0.01em]"
+              className="max-w-[760px] font-rozha text-[clamp(32px,5.4vw,64px)] leading-[0.98] tracking-[0.01em]"
               style={{ color: '#e8ddd4' }}
             >
               {copy.heroHeadline}
             </h1>
-            <p className="mt-3 max-w-[480px] font-montserrat text-[14px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.75)]">
+            <p className="mt-2.5 max-w-[480px] font-montserrat text-[14px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.75)]">
               {copy.heroSubline1}
             </p>
-            <p className="mt-3 max-w-[480px] font-montserrat text-[14px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.75)]">
+            <p className="mt-2.5 max-w-[480px] font-montserrat text-[14px] font-normal leading-[1.7] tracking-[0.02em] text-[rgba(232,216,200,0.75)]">
               {copy.heroSubline2}
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <LocaleLink
                 href="#stone-showcase"
                 className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
@@ -217,9 +224,10 @@ export default function StrandsPage() {
                 {copy.ctaSeeMarylebone}
               </LocaleLink>
             </div>
+          </div>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 z-20 overflow-hidden border-t border-[#2a0a14] bg-[#1a0210]/80 py-4">
+        <div className="absolute inset-x-0 bottom-0 z-20 overflow-hidden border-t border-[#2a0a14] bg-[#1a0210]/80 py-3">
           <div className="strands-marquee flex w-max font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#6a8090]/65">
             {Array.from({ length: 8 }).map((_, index) => (
               <span key={index} className="px-4">
@@ -323,7 +331,7 @@ export default function StrandsPage() {
 
       <section
         id="stone-showcase"
-        className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-28 pb-32 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-36 md:pb-40"
+        className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-20 pb-24 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-28 md:pb-28"
       >
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.collectionLabel}</p>
@@ -332,11 +340,11 @@ export default function StrandsPage() {
             {copy.collectionIntro}
           </p>
           <LocaleLink
-            href="#shop-all-strands"
+            href="/accessories?type=signature-strands"
             className="mt-6 inline-flex items-center gap-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.14em] text-[#7A1C28] transition-opacity hover:opacity-70"
             data-cursor-hover
           >
-            {copy.shopAllTenCta}
+            {copy.shopAllStrandsCta}
             <span aria-hidden>→</span>
           </LocaleLink>
         </div>
@@ -381,7 +389,7 @@ export default function StrandsPage() {
             onTouchStart={(event) => startDrag(event.touches[0]?.clientX || 0)}
             onTouchMove={(event) => moveDrag(event.touches[0]?.clientX || 0)}
             onTouchEnd={endDrag}
-            className="flex cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 active:cursor-grabbing md:px-14 [scrollbar-width:none] [touch-action:pan-x] [&::-webkit-scrollbar]:hidden"
+            className="strands-carousel flex cursor-grab snap-x snap-proximity gap-5 overflow-x-auto scroll-smooth px-4 pb-2 active:cursor-grabbing md:px-14 [scrollbar-width:none] [touch-action:pan-x] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
           >
           {strandProducts.map((product) => {
             return (
@@ -484,81 +492,17 @@ export default function StrandsPage() {
             </button>
           </div>
         </div>
-      </section>
 
-      <section
-        id="shop-all-strands"
-        className="relative z-[35] -mt-2 border-t border-[#e8ddd4] bg-[#faf8f5] py-20 md:py-28"
-      >
-        <div className={INNER_CONTAINER_CLASS}>
-          <div className="text-left">
-            <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.shopCollectionLabel}</p>
-            <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#1a0210]`}>
-              {copy.shopCollectionHeading}
-            </h2>
-            <p className="mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-[#1a0210]/70">
-              {copy.shopCollectionIntro}
-            </p>
-          </div>
-
-          <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
-            {strandProducts.map((product) => {
-              return (
-                <article
-                  key={`shop-${product.id}`}
-                  className="group flex flex-col overflow-hidden rounded-[6px] border border-[#e8ddd4] bg-white shadow-[0_4px_20px_rgba(26,2,16,0.06)]"
-                >
-                  <LocaleLink
-                    href={`/accessories/${product.id}`}
-                    className="relative block aspect-[3/4] overflow-hidden bg-[#f0eeeb]"
-                    data-cursor-hover
-                  >
-                    {product.images[0] ? (
-                      <Image
-                        src={product.images[0]}
-                        alt={getStrandCarouselAlt(product.id)}
-                        fill
-                        sizes="(max-width: 640px) 45vw, (max-width: 1280px) 25vw, 20vw"
-                        className="object-contain object-center transition-transform duration-500 group-hover:scale-[1.03]"
-                      />
-                    ) : null}
-                    {product.isLimitedEdition ? (
-                      <span className="absolute left-3 top-3 rounded-full border border-[#c9a96b] bg-[#f6f0e4]/95 px-2.5 py-1 font-montserrat text-[9px] uppercase tracking-[0.08em] text-[#8a6020]">
-                        {copy.limitedEditionShort}
-                      </span>
-                    ) : null}
-                  </LocaleLink>
-                  <div className="flex flex-1 flex-col p-4 text-left">
-                    <h3 className="font-rozha text-lg leading-tight text-[#2a1e18]">
-                      {product.name}
-                    </h3>
-                    <p className="mt-2 font-montserrat text-sm font-medium text-[#7A1C28]">
-                      {formatPrice(product.price)}
-                    </p>
-                    <LocaleLink
-                      href={`/accessories/${product.id}`}
-                      className="mt-4 inline-flex w-full items-center justify-center rounded-[3px] border border-[#7A1C28] bg-white px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.1em] text-[#7A1C28] transition-colors hover:bg-[#7A1C28] hover:text-[#e8d8c8]"
-                      data-cursor-hover
-                    >
-                      {copy.viewStrandGridCta}
-                    </LocaleLink>
-                  </div>
-                </article>
-              )
-            })}
-          </div>
-
-          <p className="mt-10 text-center font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#8a7a70]">
-            {copy.alsoInPrefix}{' '}
-            <LocaleLink
-              href="/accessories?type=signature-strands"
-              className="text-[#7A1C28] underline-offset-4 hover:underline"
-              data-cursor-hover
-            >
-              {copy.alsoInLink}
-            </LocaleLink>
-          </p>
-        </div>
+        <p className={`${INNER_CONTAINER_CLASS} mt-10 text-center font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#8a7a70]`}>
+          {copy.alsoInPrefix}{' '}
+          <LocaleLink
+            href="/accessories?type=signature-strands"
+            className="text-[#7A1C28] underline-offset-4 hover:underline"
+            data-cursor-hover
+          >
+            {copy.alsoInLink}
+          </LocaleLink>
+        </p>
       </section>
 
       <section className="strands-fabric-light relative z-40 -mt-6 overflow-hidden rounded-t-[16px] bg-[#7A1C28] py-20 pb-28 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:pb-36 md:will-change-transform">
@@ -614,7 +558,7 @@ export default function StrandsPage() {
 
         .strands-fabric-light::before {
           z-index: 0;
-          background-image: url('/charms/charm-fabric-light.webp');
+          background-image: url('/strands/charm-fabric-light.webp');
           background-position: center;
           background-size: cover;
         }

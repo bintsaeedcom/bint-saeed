@@ -34,7 +34,7 @@ export type StrandsPageCopy = {
   collectionLabel: string
   collectionHeading: string
   collectionIntro: string
-  shopAllTenCta: string
+  shopAllStrandsCta: string
   stoneVisualNotes: Record<string, string>
   stoneVisualFallback: string
   limitedEdition: string
@@ -159,7 +159,7 @@ const STRANDS_EN: StrandsPageCopy = {
   collectionLabel: 'THE COLLECTION',
   collectionHeading: 'Choose by colour and character.',
   collectionIntro: 'Each stone is natural. No two are identical.',
-  shopAllTenCta: 'Shop all ten strands',
+  shopAllStrandsCta: 'Shop all strands',
   stoneVisualNotes: STONE_VISUAL_NOTES_EN,
   stoneVisualFallback: 'Natural stone selected for colour, surface, and visual texture.',
   limitedEdition: 'Limited Edition',
@@ -238,7 +238,7 @@ const STRANDS_AR: StrandsPageCopy = {
   collectionLabel: 'المجموعة',
   collectionHeading: 'اختاري حسب اللون والطابع.',
   collectionIntro: 'كل حجر طبيعي. لا يوجد اثنان متطابقان.',
-  shopAllTenCta: 'تسوّقي العشرة خيوط',
+  shopAllStrandsCta: 'تسوّقي كل الخيوط',
   stoneVisualNotes: STONE_VISUAL_NOTES_AR,
   stoneVisualFallback: 'حجر طبيعي مُختار للون والسطح والملمس البصري.',
   limitedEdition: 'إصدار محدود',

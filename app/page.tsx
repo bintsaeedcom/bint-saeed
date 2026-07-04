@@ -23,7 +23,7 @@ const COMING_SOON_IMAGES = Array.from({ length: 24 }, (_, i) => i + 1)
 const MARQUEE_DURATION_SEC = 140
 
 /** `public/charms/charm-fabric-dark.webp` — ABOUT band backdrop */
-const ABOUT_FABRIC_BG = '/charms/charm-fabric-dark.webp'
+const ABOUT_FABRIC_BG = '/strands/charm-fabric-dark.webp'
 
 const aboutRevealContainer = {
   hidden: {},

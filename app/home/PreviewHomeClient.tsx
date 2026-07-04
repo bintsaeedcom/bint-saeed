@@ -24,6 +24,7 @@ import { getProductHref, getProductSlug } from '@/lib/products/links'
 import { getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
 import { CODES_IMAGE_FILES, codesPageImagePath } from '@/lib/the-codes/codesPageContent'
 import { HOME_STORY_CODE_HREFS } from '@/lib/the-codes/homeStoryCodeHrefs'
+import { ctaPrimary } from '@/lib/ui/ctaClasses'
 import type { Product } from '@/data/products'
 
 /** Corner brackets / full-bleed grid stripes removed — typography uses border-s + border-b on copy only (see hero). */
@@ -582,12 +583,14 @@ function CampaignPanoramaSection() {
 
 const QUICK_SHOP_LOOP_MS = 72_000
 
-function quickShopCarouselImages(product: Product): { primary: string; hover: string } {
+function quickShopCarouselImages(product: Product): { primary: string; hover: string; color?: string } {
   const slug = getProductSlug(product)
   if (slug === 'park-lane-abaya') {
+    const maroonGallery = product.colorImages?.['Dark Maroon'] ?? product.images
     return {
-      primary: product.images[1] ?? product.images[0] ?? '',
-      hover: product.images[2] ?? product.images[1] ?? product.images[0] ?? '',
+      primary: maroonGallery[1] ?? maroonGallery[0] ?? '',
+      hover: maroonGallery[2] ?? maroonGallery[1] ?? maroonGallery[0] ?? '',
+      color: 'Dark Maroon',
     }
   }
   return {
@@ -811,6 +814,7 @@ function QuickShopCarousel() {
           >
           {[...quickProducts, ...quickProducts].map((product, idx) => {
             const carouselImages = quickShopCarouselImages(product)
+            const carouselColor = carouselImages.color ?? product.colors[0]?.name
             return (
             <LocaleLink
               key={`${product.id}-${idx}`}
@@ -822,14 +826,14 @@ function QuickShopCarousel() {
               <div className="relative h-[20.95rem] w-full shrink-0 overflow-hidden bg-[#f3f0ea] md:h-[25.85rem] lg:h-[27.15rem]">
                 <SafeCarouselImage
                   src={carouselImages.primary}
-                  alt={getProductImageAlt(product, carouselImages.primary, { color: product.colors[0]?.name, index: 0, locale: language })}
+                  alt={getProductImageAlt(product, carouselImages.primary, { color: carouselColor, index: 0, locale: language })}
                   sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
                   className="pointer-events-none object-cover object-top transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-visible:opacity-0 group-hover:scale-[1.03]"
                 />
                 <SafeCarouselImage
                   src={carouselImages.hover}
                   alt={getProductImageAlt(product, carouselImages.hover, {
-                    color: product.colors[0]?.name,
+                    color: carouselColor,
                     index: 1,
                     locale: language,
                   })}
@@ -908,7 +912,7 @@ function QuickShopCarousel() {
           <div className="mt-6 flex justify-center">
             <LocaleLink
               href="/shop"
-              className="inline-flex min-h-[44px] items-center justify-center rounded-[4px] border border-brand-darkRed/28 bg-white/80 px-6 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-darkRed transition-colors hover:border-brand-darkRed/45 hover:bg-brand-stone/10"
+              className={ctaPrimary}
               data-cursor-hover
               data-analytics-event="click_cta_quick_shop_carousel"
               data-analytics-section="home-quick-shop-carousel"
