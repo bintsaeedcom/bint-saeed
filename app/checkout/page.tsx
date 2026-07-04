@@ -27,6 +27,7 @@ import {
   isCheckoutRailConfigured,
   type CheckoutRail,
 } from '@/lib/payments'
+import { getCheckoutAttributionContext } from '@/lib/analytics/checkoutAttribution'
 import CheckoutPaymentRailIcons from '@/components/checkout/CheckoutPaymentRailIcons'
 
 function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
@@ -114,6 +115,7 @@ export default function CheckoutPage() {
       localTime: new Date().toString(),
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
       deviceType: detectDeviceType(),
+      ...getCheckoutAttributionContext(),
     },
   }
 

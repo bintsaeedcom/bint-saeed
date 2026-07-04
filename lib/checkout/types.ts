@@ -2,6 +2,11 @@ export type CheckoutClientContext = {
   localTime?: string
   timezone?: string
   deviceType?: string
+  deviceLabel?: string
+  city?: string
+  country?: string
+  trafficSource?: string
+  sessionSeconds?: number
 }
 
 export type CheckoutCartItem = {

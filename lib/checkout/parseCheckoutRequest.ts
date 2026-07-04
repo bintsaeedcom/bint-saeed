@@ -14,10 +14,22 @@ function extractClientIp(request: NextRequest): string {
 function parseClientContext(raw: unknown): CheckoutClientContext {
   if (!raw || typeof raw !== 'object') return {}
   const value = raw as Record<string, unknown>
+  const sessionSecondsRaw = Number(value.sessionSeconds)
+  const sessionSeconds =
+    Number.isFinite(sessionSecondsRaw) && sessionSecondsRaw > 0
+      ? Math.min(Math.round(sessionSecondsRaw), 999_999)
+      : undefined
+
   return {
     localTime: typeof value.localTime === 'string' ? value.localTime.trim().slice(0, 120) : undefined,
     timezone: typeof value.timezone === 'string' ? value.timezone.trim().slice(0, 64) : undefined,
     deviceType: typeof value.deviceType === 'string' ? value.deviceType.trim().slice(0, 24) : undefined,
+    deviceLabel: typeof value.deviceLabel === 'string' ? value.deviceLabel.trim().slice(0, 120) : undefined,
+    city: typeof value.city === 'string' ? value.city.trim().slice(0, 120) : undefined,
+    country: typeof value.country === 'string' ? value.country.trim().slice(0, 64) : undefined,
+    trafficSource:
+      typeof value.trafficSource === 'string' ? value.trafficSource.trim().slice(0, 500) : undefined,
+    sessionSeconds,
   }
 }
 

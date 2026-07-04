@@ -11,6 +11,9 @@ import {
 import { getMollieApiKey } from '@/lib/mollie/config'
 import { getMollieClient } from '@/lib/mollie/client'
 import { createTrelloCardForOrder, notifyHealthAlert } from '@/lib/ops/notifications'
+import { orderAttributionFromMetadata } from '@/lib/checkout/attributionMetadata'
+import { buildOrderAttributionSlackFields } from '@/lib/ops/orderSlackAttribution'
+import { formatMolliePaymentMethodLabel } from '@/lib/ops/orderPaymentMethodLabel'
 import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
 import type { PendingMollieCheckout } from '@/lib/mollie/pendingCheckoutStore'
 
@@ -21,16 +24,25 @@ async function notifyMollieOrderChannel(
   paymentId: string,
   pending: PendingMollieCheckout,
   amountPaid: string,
+  paymentMethod?: string,
 ) {
   const webhookUrl = process.env.SLACK_ORDERS_WEBHOOK_URL?.trim()
   if (!webhookUrl) return
 
   const uaeTime = new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
   const localTime = pending.clientContext?.localTime || 'Unknown'
-  const deviceType = pending.clientContext?.deviceType || 'Unknown'
   const ip = pending.clientIp || 'Unknown'
   const timezone = pending.clientContext?.timezone || 'Unknown'
   const customerEmail = pending.customerEmail || 'Unknown'
+  const attr = orderAttributionFromMetadata(null, {
+    deviceLabel: pending.clientContext?.deviceLabel,
+    deviceType: pending.clientContext?.deviceType,
+    visitorCity: pending.clientContext?.city,
+    visitorCountry: pending.clientContext?.country,
+    trafficSource: pending.clientContext?.trafficSource,
+    sessionSeconds: pending.clientContext?.sessionSeconds,
+  })
+  const attributionFields = buildOrderAttributionSlackFields({ attr, ip })
 
   const lines = pending.items.map((item) => {
     const personalisation = item.customisationMessage?.trim()
@@ -56,12 +68,16 @@ async function notifyMollieOrderChannel(
         type: 'section',
         fields: [
           { type: 'mrkdwn', text: `*Amount paid:*\n${amountPaid}` },
+          { type: 'mrkdwn', text: `*Payment method:*\n${formatMolliePaymentMethodLabel(paymentMethod)}` },
           { type: 'mrkdwn', text: `*Payment ID:*\n\`${paymentId}\`` },
           { type: 'mrkdwn', text: `*Email:*\n${customerEmail}` },
-          { type: 'mrkdwn', text: `*IP / Device:*\n\`${ip}\`\n${deviceType}` },
           { type: 'mrkdwn', text: `*UAE time:*\n${uaeTime}` },
           { type: 'mrkdwn', text: `*Local time (${timezone}):*\n${localTime}` },
         ],
+      },
+      {
+        type: 'section',
+        fields: attributionFields,
       },
       {
         type: 'section',
@@ -111,6 +127,13 @@ function parsePendingFromMetadata(metadata: Record<string, string | undefined | 
         localTime: metadata.clientLocalTime || undefined,
         timezone: metadata.clientTimezone || undefined,
         deviceType: metadata.clientDeviceType || undefined,
+        deviceLabel: metadata.clientDeviceLabel || undefined,
+        city: metadata.clientCity || undefined,
+        country: metadata.clientCountry || undefined,
+        trafficSource: metadata.clientTrafficSource || undefined,
+        sessionSeconds: metadata.clientSessionSeconds
+          ? Number(metadata.clientSessionSeconds)
+          : undefined,
       },
       clientIp: metadata.clientIp || undefined,
       createdAt: new Date().toISOString(),
@@ -182,7 +205,9 @@ export async function POST(request: NextRequest) {
     await deletePendingMollieCheckout(payment.id)
 
     const amountPaid = `${order.currency} ${order.amountTotal.toFixed(2)}`
-    await notifyMollieOrderChannel(payment.id, pending, amountPaid)
+    const mollieMethod =
+      typeof payment.method === 'string' ? payment.method : undefined
+    await notifyMollieOrderChannel(payment.id, pending, amountPaid, mollieMethod)
     await createTrelloCardForOrder(order, {
       sessionId: payment.id,
       clientIp: pending.clientIp,

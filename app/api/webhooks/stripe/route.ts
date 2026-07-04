@@ -4,6 +4,9 @@ import { saveOrder, findOrderIdBySession, listOrders, updateOrderFulfillment, ge
 import { markStripeEventProcessed, wasStripeEventProcessed } from '@/lib/payments/webhookEventStore'
 import type { OrderLine, StoredOrder } from '@/lib/orders/types'
 import { createTrelloCardForOrder, notifyHealthAlert } from '@/lib/ops/notifications'
+import { orderAttributionFromMetadata } from '@/lib/checkout/attributionMetadata'
+import { buildOrderAttributionSlackFields } from '@/lib/ops/orderSlackAttribution'
+import { resolveStripePaymentMethodLabel } from '@/lib/ops/orderPaymentMethodLabel'
 import { sendOrderConfirmationEmail } from '@/lib/orders/sendOrderConfirmationEmail'
 import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
 
@@ -129,11 +132,14 @@ async function notifyOrderChannel(session: Stripe.Checkout.Session) {
 
   const uaeTime = new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
   const localTime = session.metadata?.clientLocalTime || 'Unknown'
-  const deviceType = session.metadata?.clientDeviceType || 'Unknown'
   const ip = session.metadata?.clientIp || 'Unknown'
   const timezone = session.metadata?.clientTimezone || 'Unknown'
   const shipping = session.collected_information?.shipping_details?.address
-  const location = [shipping?.city, shipping?.state, shipping?.country].filter(Boolean).join(', ') || 'Unknown'
+  const shipTo = [shipping?.city, shipping?.state, shipping?.country].filter(Boolean).join(', ') || 'Unknown'
+  const attr = orderAttributionFromMetadata(session.metadata, {
+    deviceType: session.metadata?.clientDeviceType || undefined,
+  })
+  const attributionFields = buildOrderAttributionSlackFields({ attr, ip, shipTo })
   const customerName = session.customer_details?.name || 'Unknown'
   const customerEmail = session.customer_details?.email || session.customer_email || session.metadata?.customerEmail || 'Unknown'
   const customerPhone = session.customer_details?.phone || 'Unknown'
@@ -184,6 +190,7 @@ async function notifyOrderChannel(session: Stripe.Checkout.Session) {
   }
   const checkoutNote = session.metadata?.checkoutNotes?.trim() || ''
   const clientNote = [deliveryNote, checkoutNote].filter(Boolean).join('\n')
+  const paymentMethod = await resolveStripePaymentMethodLabel(getStripe(), session)
 
   const payload = {
     blocks: [
@@ -195,14 +202,17 @@ async function notifyOrderChannel(session: Stripe.Checkout.Session) {
         type: 'section',
         fields: [
           { type: 'mrkdwn', text: `*Amount paid:*\n${amountPaid}` },
+          { type: 'mrkdwn', text: `*Payment method:*\n${paymentMethod}` },
           { type: 'mrkdwn', text: `*Order session:*\n\`${session.id}\`` },
           { type: 'mrkdwn', text: `*Customer name:*\n${customerName}` },
           { type: 'mrkdwn', text: `*Email / Phone:*\n${customerEmail}\n${customerPhone}` },
-          { type: 'mrkdwn', text: `*IP / Device:*\n\`${ip}\`\n${deviceType}` },
-          { type: 'mrkdwn', text: `*Location:*\n${location}` },
           { type: 'mrkdwn', text: `*UAE time:*\n${uaeTime}` },
           { type: 'mrkdwn', text: `*Local time (${timezone}):*\n${localTime}` },
         ],
+      },
+      {
+        type: 'section',
+        fields: attributionFields,
       },
       {
         type: 'section',

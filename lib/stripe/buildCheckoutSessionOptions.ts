@@ -2,6 +2,7 @@ import type Stripe from 'stripe'
 import { cartSubtotalInCurrency } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 import { resolveLineItemSku } from '@/lib/checkout/resolveLineItemSku'
+import { buildCheckoutAttributionMetadata } from '@/lib/checkout/attributionMetadata'
 import type { ParsedCheckoutRequest } from '@/lib/checkout/types'
 import { buildCheckoutPaymentParams } from '@/lib/stripe/checkoutPaymentMethods'
 import { buildCheckoutLineItems } from '@/lib/stripe/buildCheckoutLineItems'
@@ -60,6 +61,7 @@ export function buildStripeCheckoutSessionParams({
     cartSubtotal: String(
       cartSubtotalInCurrency(parsed.items, parsed.currency as SupportedCurrency),
     ),
+    ...buildCheckoutAttributionMetadata(parsed.clientContext),
   }
 
   const shared: Stripe.Checkout.SessionCreateParams = {

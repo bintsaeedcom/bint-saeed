@@ -5,6 +5,7 @@ import { notifyHealthAlert } from '@/lib/ops/notifications'
 import { cartSubtotalInCurrency } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 import { parseCheckoutRequestBody } from '@/lib/checkout/parseCheckoutRequest'
+import { buildCheckoutAttributionMetadata } from '@/lib/checkout/attributionMetadata'
 import { getMollieClient } from '@/lib/mollie/client'
 import { getMollieApiKey } from '@/lib/mollie/config'
 import { toMollieAmountValue } from '@/lib/mollie/amount'
@@ -70,6 +71,7 @@ export async function POST(request: NextRequest) {
       clientDeviceType: clientContext.deviceType ?? '',
       checkoutNotes,
       cartSubtotal: String(cartSubtotal),
+      ...buildCheckoutAttributionMetadata(clientContext),
     }
 
     const payment = await mollie.payments.create({

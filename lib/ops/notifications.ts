@@ -1,5 +1,9 @@
 import { Redis } from '@upstash/redis'
+import type { OrderAttributionContext } from '@/lib/checkout/attributionMetadata'
+import { orderAttributionFromMetadata } from '@/lib/checkout/attributionMetadata'
 import type { OrderFulfillmentStatus, StoredOrder } from '@/lib/orders/types'
+import { buildOrderAttributionSlackFields } from '@/lib/ops/orderSlackAttribution'
+import { formatOrderPaymentMethodLabel } from '@/lib/ops/orderPaymentMethodLabel'
 
 function toUaeTime(iso: string) {
   return new Date(iso).toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
@@ -96,6 +100,9 @@ export async function notifySlackNewPaidOrder(
     clientLocalTime?: string
     clientTimezone?: string
     paymentRef?: string
+    paymentMethod?: string
+    attribution?: Partial<OrderAttributionContext>
+    attributionMetadata?: Record<string, string | null | undefined>
   },
 ): Promise<void> {
   const webhookUrl = process.env.SLACK_ORDERS_WEBHOOK_URL?.trim()
@@ -107,18 +114,27 @@ export async function notifySlackNewPaidOrder(
   const localTime = context?.clientLocalTime || toLocalTime(order.createdAt)
   const timezone = context?.clientTimezone || 'Unknown'
   const ip = context?.clientIp || 'Unknown'
-  const deviceType = context?.clientDeviceType || 'Unknown'
   const customerName = order.customerName || 'Unknown'
   const customerEmail = order.customerEmail || 'Unknown'
   const customerPhone = order.customerPhone || 'Unknown'
   const amountPaid = `${order.currency} ${order.amountTotal.toFixed(2)}`
   const paymentRef = context?.paymentRef || order.paypalOrderId || order.molliePaymentId || order.stripeSessionId
+  const paymentMethod = formatOrderPaymentMethodLabel({
+    provider: order.paymentProvider,
+    paymentMethod: context?.paymentMethod,
+  })
 
   const shipping = order.shippingAddress as
     | { city?: string; state?: string; country?: string }
     | undefined
-  const location =
+  const shipTo =
     [shipping?.city, shipping?.state, shipping?.country].filter(Boolean).join(', ') || 'Unknown'
+
+  const attr = orderAttributionFromMetadata(context?.attributionMetadata ?? null, {
+    deviceType: context?.clientDeviceType,
+    ...context?.attribution,
+  })
+  const attributionFields = buildOrderAttributionSlackFields({ attr, ip, shipTo })
 
   const lines = order.lines.length
     ? order.lines.map((line) => {
@@ -143,15 +159,18 @@ export async function notifySlackNewPaidOrder(
         type: 'section',
         fields: [
           { type: 'mrkdwn', text: `*Amount paid:*\n${amountPaid}` },
+          { type: 'mrkdwn', text: `*Payment method:*\n${paymentMethod}` },
           { type: 'mrkdwn', text: `*Order ID:*\n\`${order.id}\`` },
           { type: 'mrkdwn', text: `*Payment ref:*\n\`${paymentRef}\`` },
           { type: 'mrkdwn', text: `*Customer name:*\n${customerName}` },
           { type: 'mrkdwn', text: `*Email / Phone:*\n${customerEmail}\n${customerPhone}` },
-          { type: 'mrkdwn', text: `*IP / Device:*\n\`${ip}\`\n${deviceType}` },
-          { type: 'mrkdwn', text: `*Location:*\n${location}` },
           { type: 'mrkdwn', text: `*UAE time:*\n${uaeTime}` },
           { type: 'mrkdwn', text: `*Local time (${timezone}):*\n${localTime}` },
         ],
+      },
+      {
+        type: 'section',
+        fields: attributionFields,
       },
       {
         type: 'section',

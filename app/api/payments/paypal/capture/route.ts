@@ -53,6 +53,15 @@ async function persistPayPalOrder(orderId: string) {
       clientLocalTime: pending.clientContext?.localTime,
       clientTimezone: pending.clientContext?.timezone,
       paymentRef: order.paypalOrderId,
+      paymentMethod: 'PayPal',
+      attribution: {
+        deviceLabel: pending.clientContext?.deviceLabel,
+        deviceType: pending.clientContext?.deviceType,
+        visitorCity: pending.clientContext?.city,
+        visitorCountry: pending.clientContext?.country,
+        trafficSource: pending.clientContext?.trafficSource,
+        sessionSeconds: pending.clientContext?.sessionSeconds,
+      },
     })
   } catch {
     /* optional */

@@ -10,6 +10,10 @@ import {
 import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
 import { languageLabels } from '@/lib/geo/geoDetection'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
+import {
+  persistFirstTouchAttribution,
+  persistSessionStart,
+} from '@/lib/analytics/attributionStorage'
 
 interface VisitorData {
   visitorId: string
@@ -325,6 +329,15 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
         medium: urlParams.get('utm_medium') || undefined,
         campaign: urlParams.get('utm_campaign') || undefined,
       }
+
+      persistSessionStart()
+      persistFirstTouchAttribution({
+        referrer: document.referrer || 'Direct',
+        utmSource: utmParams.source,
+        utmMedium: utmParams.medium,
+        utmCampaign: utmParams.campaign,
+        landingPath: window.location.pathname + window.location.search,
+      })
 
       const visitorData: VisitorData = {
         visitorId,

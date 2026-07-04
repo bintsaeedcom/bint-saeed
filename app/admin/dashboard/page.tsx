@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -212,6 +213,7 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState({ liveVisitors: 0, totalVisitors: 0, todayVisitors: 0, newVisitors: 0, returningVisitors: 0 })
   const [selectedVisitor, setSelectedVisitor] = useState<Visitor | null>(null)
   const [showNotifications, setShowNotifications] = useState(false)
+  const [notificationsPortalReady, setNotificationsPortalReady] = useState(false)
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [checkoutHealth, setCheckoutHealth] = useState<CheckoutHealth | null>(null)
   const [opsHealth, setOpsHealth] = useState<OpsHealth | null>(null)
@@ -225,6 +227,24 @@ export default function AdminDashboard() {
   const [commerceReady, setCommerceReady] = useState(false)
   const [newOrderAlert, setNewOrderAlert] = useState<StoredOrder | null>(null)
   const knownOrderIds = useRef<Set<string> | null>(null)
+
+  useEffect(() => {
+    setNotificationsPortalReady(true)
+  }, [])
+
+  useEffect(() => {
+    if (!showNotifications) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setShowNotifications(false)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = previousOverflow
+    }
+  }, [showNotifications])
 
   const fetchData = async () => {
     setIsRefreshing(true)
@@ -342,9 +362,11 @@ export default function AdminDashboard() {
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setShowNotifications(!showNotifications)}
+              type="button"
+              onClick={() => setShowNotifications((open) => !open)}
               className="relative rounded-lg border border-neutral-200 bg-white p-2 text-neutral-600 transition-colors hover:bg-neutral-50"
               aria-label="Notifications"
+              aria-expanded={showNotifications}
             >
               <FiBell className="h-4 w-4" />
               {unreadCount > 0 && (
@@ -887,41 +909,69 @@ export default function AdminDashboard() {
         )}
       </AnimatePresence>
 
-      {/* Notifications drawer */}
-      <AnimatePresence>
-        {showNotifications && (
-          <motion.div
-            initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
-            transition={{ type: 'tween', duration: 0.25 }}
-            className="fixed right-0 top-0 z-50 flex h-full w-full max-w-sm flex-col border-l border-neutral-200 bg-white shadow-2xl"
-          >
-            <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
-              <h2 className="text-base font-semibold text-neutral-900">Notifications</h2>
-              <button onClick={() => setShowNotifications(false)} className="rounded-lg p-2 text-neutral-500 hover:bg-neutral-100">
-                <FiX className="h-4 w-4" />
-              </button>
-            </div>
-            <div className="flex-1 divide-y divide-neutral-100 overflow-y-auto">
-              {notifications.length === 0 ? (
-                <EmptyState icon={<FiBell />} text="No notifications yet." />
-              ) : (
-                notifications.map((n) => (
-                  <div key={n.id} className="flex items-start gap-3 px-5 py-3">
-                    <span className="text-base">{notifIcon(n.type)}</span>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-neutral-900">{prettyType(n.type)}</p>
-                      <p className="text-[11px] text-neutral-500">
-                        {formatVisitorLocation(n.data?.location)}
-                      </p>
-                      <p className="mt-0.5 text-[11px] text-neutral-400">{new Date(n.timestamp).toLocaleString()}</p>
-                    </div>
+      {/* Notifications drawer — portaled so it sits above admin layout overflow */}
+      {notificationsPortalReady &&
+        createPortal(
+          <AnimatePresence>
+            {showNotifications && (
+              <>
+                <motion.button
+                  type="button"
+                  key="notifications-backdrop"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="fixed inset-0 z-[200] cursor-default bg-black/40"
+                  aria-label="Close notifications"
+                  onClick={() => setShowNotifications(false)}
+                />
+                <motion.div
+                  key="notifications-drawer"
+                  initial={{ x: '100%' }}
+                  animate={{ x: 0 }}
+                  exit={{ x: '100%' }}
+                  transition={{ type: 'tween', duration: 0.25 }}
+                  className="fixed right-0 top-0 z-[201] flex h-full w-full max-w-sm flex-col border-l border-neutral-200 bg-white shadow-2xl"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Notifications"
+                >
+                  <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
+                    <h2 className="text-base font-semibold text-neutral-900">Notifications</h2>
+                    <button
+                      type="button"
+                      onClick={() => setShowNotifications(false)}
+                      className="rounded-lg p-2 text-neutral-600 hover:bg-neutral-100"
+                      aria-label="Close notifications"
+                    >
+                      <FiX className="h-5 w-5" />
+                    </button>
                   </div>
-                ))
-              )}
-            </div>
-          </motion.div>
+                  <div className="flex-1 divide-y divide-neutral-100 overflow-y-auto">
+                    {notifications.length === 0 ? (
+                      <EmptyState icon={<FiBell />} text="No notifications yet." />
+                    ) : (
+                      notifications.map((n) => (
+                        <div key={n.id} className="flex items-start gap-3 px-5 py-3">
+                          <span className="text-base">{notifIcon(n.type)}</span>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-medium text-neutral-900">{prettyType(n.type)}</p>
+                            <p className="text-[11px] text-neutral-500">
+                              {formatVisitorLocation(n.data?.location)}
+                            </p>
+                            <p className="mt-0.5 text-[11px] text-neutral-400">{new Date(n.timestamp).toLocaleString()}</p>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </div>
   )
 }
