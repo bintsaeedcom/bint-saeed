@@ -163,6 +163,7 @@ const nextConfig = {
       },
       { source: '/preview', destination: '/home', permanent: true },
       { source: '/preview/:path*', destination: '/home/:path*', permanent: true },
+      { source: '/dashboard', destination: '/admin/dashboard', permanent: false },
       { source: '/accessoiries', destination: '/accessories', permanent: true },
       { source: '/accessoiries/:path*', destination: '/accessories/:path*', permanent: true },
       { source: '/collections', destination: '/shop', permanent: true },

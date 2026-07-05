@@ -122,20 +122,35 @@ export async function middleware(request: NextRequest) {
     return withAdminPrivacyHeaders(res)
   }
 
-  if (pathname.startsWith('/admin')) {
-    const base = withLocaleHeaders(request, 'en', pathname)
-    if (pathname === '/admin/login' || pathname.startsWith('/admin/login/')) {
-      return withAdminPrivacyHeaders(base)
+  const { pathname: innerPath, locale: pathLocale } = stripLocaleFromPathname(pathname)
+
+  if (innerPath === '/admin' || innerPath.startsWith('/admin/')) {
+    const headers = new Headers(request.headers)
+    headers.set('x-bs-locale', pathLocale)
+    headers.set('x-bs-pathname', innerPath)
+
+    const serveAdmin = () => {
+      if (pathname !== innerPath) {
+        const url = request.nextUrl.clone()
+        url.pathname = innerPath
+        return withAdminPrivacyHeaders(NextResponse.rewrite(url, { request: { headers } }))
+      }
+      return withAdminPrivacyHeaders(NextResponse.next({ request: { headers } }))
     }
+
+    if (innerPath === '/admin/login' || innerPath.startsWith('/admin/login/')) {
+      return serveAdmin()
+    }
+
     const ok = await verifyAdminSessionCookie(request.cookies.get(ADMIN_COOKIE)?.value)
     if (!ok) {
       const url = request.nextUrl.clone()
       url.pathname = '/admin/login'
-      url.searchParams.set('next', pathname)
+      url.searchParams.set('next', innerPath)
       const res = NextResponse.redirect(url)
       return withAdminPrivacyHeaders(res)
     }
-    return withAdminPrivacyHeaders(base)
+    return serveAdmin()
   }
 
   if (isHomeGatedArea(pathname)) {

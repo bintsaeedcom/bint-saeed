@@ -33,10 +33,12 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const isDevErrorPreview =
     inner === '/dev/error-preview' || inner.startsWith('/dev/error-preview/')
 
+  const isAdminArea = inner === '/admin' || inner.startsWith('/admin/')
+
   /** Full-bleed hero under fixed header — no top gap on main */
   const isFlushHeroLayout = isHomeEditorial || isAboutEditorialRoute(inner)
 
-  if (isComingSoon || isHomeAccessShell || isDevErrorPreview) {
+  if (isComingSoon || isHomeAccessShell || isDevErrorPreview || isAdminArea) {
     return <main>{children}</main>
   }
 
