@@ -15,6 +15,7 @@ import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
 import { getProductPdpContent } from '@/data/productPdpContent'
 import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
+import { getLocalizedProductDisplayName } from '@/lib/products/productDisplayNameI18n'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
 import { localizedColorName } from '@/lib/products/imageAltI18n'
 import { getProductColorOptions, getProductImagesForColor } from '@/lib/products/productColorAvailability'
@@ -177,6 +178,10 @@ export default function ProductPage() {
     () => (product ? getLocalizedProductCatalogFields(product, language) : null),
     [product, language],
   )
+  const displayName = useMemo(
+    () => (product ? getLocalizedProductDisplayName(product, language) : ''),
+    [product, language],
+  )
   const pdpContent = useMemo(
     () =>
       product
@@ -322,7 +327,7 @@ export default function ProductPage() {
     if (!product) return
     trackEvent('view_item', {
       item_id: product.id,
-      item_name: product.name,
+      item_name: displayName,
       item_category: product.category,
       currency: currency.code,
       value: convertPrice(product.price, product.id),
@@ -370,7 +375,7 @@ export default function ProductPage() {
     addItem({
       id: product.id,
       productUrl: getProductHref(product),
-      name: product.name,
+      name: displayName,
       price: product.price,
       image: activeImages[0] ?? product.images[0],
       size: selectedSize,
@@ -382,7 +387,7 @@ export default function ProductPage() {
 
     trackEvent('add_to_cart', {
       item_id: product.id,
-      item_name: product.name,
+      item_name: displayName,
       item_category: product.category,
       item_variant: `${selectedSize}-${selectedColor}`,
       quantity,
@@ -601,7 +606,7 @@ export default function ProductPage() {
         segments={[
           { label: ui.home, href: '/home' },
           { label: ui.shop, href: '/shop' },
-          { label: product.name },
+          { label: displayName },
         ]}
         backLink={{
           href: '/shop',
@@ -729,8 +734,8 @@ export default function ProductPage() {
                           tabIndex={isVideoFile(image) ? -1 : 0}
                           aria-label={
                             isVideoFile(image)
-                              ? `${product.name} — video ${index + 1}`
-                              : `${product.name} — open image ${index + 1} in lightbox`
+                              ? `${displayName} — video ${index + 1}`
+                              : `${displayName} — open image ${index + 1} in lightbox`
                           }
                         >
                           {isVideoFile(image) ? (
@@ -827,7 +832,7 @@ export default function ProductPage() {
           >
             {/* Title */}
             <h1 data-document-h1="true" data-product-name="true" className="mb-1 font-rozha text-[1.75rem] md:text-[1.95rem] lg:text-[2.05rem] text-black leading-[1.15]">
-              {product.name}
+              {displayName}
             </h1>
 
             {/* Price */}

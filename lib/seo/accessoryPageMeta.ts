@@ -5,6 +5,12 @@ import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 import { getStrandPdpContent } from '@/lib/accessories/strandPdp/resolveStrandPdpContent'
 import { getPhoneCharmPdpContent } from '@/lib/accessories/phoneCharmPdpContent'
+import { getNecklaceEarringPdpContent } from '@/lib/accessories/necklaceEarringPdpContent'
+import {
+  getLocalizedAccessoryDescription,
+  getLocalizedAccessoryDisplayName,
+  getLocalizedAccessoryMaterials,
+} from '@/lib/accessories/accessoryCatalogCopyI18n'
 import { isSignatureStrandCategory } from '@/lib/accessories/accessoryRouteAliases'
 
 const G = LOCALE_GEO
@@ -44,7 +50,7 @@ function accessoryDisplayName(accessory: Accessory, locale: AppLocale): string {
   if (strand?.headline) return strand.headline
   const phoneCharm = getPhoneCharmPdpContent(accessory.id, locale)
   if (phoneCharm?.headline) return phoneCharm.headline
-  return locale === 'ar' ? accessory.nameAr : accessory.name
+  return getLocalizedAccessoryDisplayName(accessory, locale)
 }
 
 export function buildAccessoryPageTitle(accessory: Accessory, locale: AppLocale): string {
@@ -66,12 +72,19 @@ export function buildAccessoryMetaDescription(accessory: Accessory, locale: AppL
     return clipMetaDescription(merged.replace(/\s+/g, ' ').trim(), 200)
   }
 
-  const description = locale === 'ar' ? accessory.descriptionAr : accessory.description
-  const materials = locale === 'ar' ? accessory.materialsAr : accessory.materials
+  const necklaceEarring = getNecklaceEarringPdpContent(accessory.id, locale)
+  if (necklaceEarring) {
+    const lead = necklaceEarring.introParagraphs[0] ?? ''
+    const merged = [ACCESSORY_INTRO[locale], lead, accessoryDisplayName(accessory, locale)].join(' ')
+    return clipMetaDescription(merged.replace(/\s+/g, ' ').trim(), 200)
+  }
+
+  const description = getLocalizedAccessoryDescription(accessory, locale)
+  const materials = getLocalizedAccessoryMaterials(accessory, locale)
   const categoryHint = isSignatureStrandCategory(accessory.category)
     ? STRAND_META_SUFFIX[locale]
     : ''
-  const merged = [ACCESSORY_INTRO[locale], accessory.name, description, materials, categoryHint]
+  const merged = [ACCESSORY_INTRO[locale], accessoryDisplayName(accessory, locale), description, materials, categoryHint]
     .filter(Boolean)
     .join(' ')
   return clipMetaDescription(merged.replace(/\s+/g, ' ').trim(), 200)

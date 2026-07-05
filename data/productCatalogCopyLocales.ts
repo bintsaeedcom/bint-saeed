@@ -140,7 +140,7 @@ const FR_CATALOG_COPY: Record<string, CatalogFields> = {
     description:
       "Robe maxi feminine en melange de coton avec finitions halter tissees inspirees du Khous — elegance naturelle pour une vie au-dela d'une seule saison, creee a Abu Dhabi.",
     fabric: 'Exterieur : 60 % coton, 40 % polyester',
-    measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
+    measurements: 'Longueur : 143 cm / 56,3 pouces. Taille du mannequin : 160 cm / 63 pouces. Le mannequin porte la taille XS. Longueurs sur mesure disponibles sur demande.',
   },
   'covent-garden-long-dress': {
     description: 'Colonne epuree en crepe stretch avec fente dos haute pour faciliter le mouvement.',

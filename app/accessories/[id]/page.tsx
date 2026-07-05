@@ -32,7 +32,13 @@ import {
 } from '@/lib/accessories/accessoryJsonLd'
 import { resolveAccessorySkuFromSelection } from '@/lib/accessories/accessorySku'
 import { getNecklaceEarringPdpContent, faqAnswerParagraphs } from '@/lib/accessories/necklaceEarringPdpContent'
+import {
+  getLocalizedAccessoryDescription,
+  getLocalizedAccessoryDisplayName,
+  getLocalizedAccessoryMaterials,
+} from '@/lib/accessories/accessoryCatalogCopyI18n'
 import { getPhoneCharmPdpContent } from '@/lib/accessories/phoneCharmPdpContent'
+import { getPhoneCharmSectionLabels } from '@/lib/accessories/phoneCharmPdpSectionLabelsI18n'
 import { accessoryCanonicalUrl } from '@/lib/accessories/accessoryPageUrl'
 import {
   PDP_BULLET_ITEM,
@@ -145,6 +151,16 @@ export default function AccessoryDetailPage() {
     ? 'object-contain object-center'
     : 'object-cover object-top'
 
+  const strandPdpContent = getStrandPdpContent(accessory.id, language)
+  const necklaceEarringPdpContent = getNecklaceEarringPdpContent(accessory.id, language)
+  const phoneCharmPdpContent = getPhoneCharmPdpContent(accessory.id, language)
+  const strandSectionTitles = getStrandPdpSectionTitles(language)
+
+  const displayName =
+    strandPdpContent?.headline ??
+    phoneCharmPdpContent?.headline ??
+    getLocalizedAccessoryDisplayName(accessory, language)
+
   const handleAddToCart = () => {
     if (!selectedColor && accessory.colors.length > 1) {
       toast.error(ui.accessories.selectColour)
@@ -162,7 +178,7 @@ export default function AccessoryDetailPage() {
     addItem({
       id: accessory.id,
       productUrl: `/accessories/${accessory.id}`,
-      name: isRTL ? accessory.nameAr : accessory.name,
+      name: displayName,
       price: accessory.price,
       image: accessory.images[0],
       size: sizeLabel,
@@ -173,18 +189,13 @@ export default function AccessoryDetailPage() {
 
     trackEvent('add_to_cart', {
       item_id: accessory.id,
-      item_name: isRTL ? accessory.nameAr : accessory.name,
+      item_name: displayName,
       item_category: accessory.category,
       item_variant: selectedColor || 'default',
       quantity,
     })
     showAddedToBagToast(isRTL)
   }
-
-  const strandPdpContent = getStrandPdpContent(accessory.id, language)
-  const necklaceEarringPdpContent = getNecklaceEarringPdpContent(accessory.id, language)
-  const phoneCharmPdpContent = getPhoneCharmPdpContent(accessory.id, language)
-  const strandSectionTitles = getStrandPdpSectionTitles(language)
 
   const pdpAccordionSections = useMemo((): PdpAccordionSectionConfig[] => {
     if (strandPdpContent) {
@@ -201,11 +212,16 @@ export default function AccessoryDetailPage() {
       })
     }
 
-    const description = isRTL ? accessory.descriptionAr : accessory.description
-    const materials = isRTL ? accessory.materialsAr : accessory.materials
+    const description = isRTL
+      ? accessory.descriptionAr
+      : getLocalizedAccessoryDescription(accessory, language)
+    const materials = isRTL
+      ? accessory.materialsAr
+      : getLocalizedAccessoryMaterials(accessory, language)
     const referenceSku = resolveAccessorySkuFromSelection(accessory, selectedColor)
 
     if (phoneCharmPdpContent) {
+      const phoneLabels = getPhoneCharmSectionLabels(language)
       return [
         {
           id: 'description',
@@ -221,11 +237,11 @@ export default function AccessoryDetailPage() {
               <div className="space-y-4 border-t border-brand-stone/15 pt-4">
                 {(
                   [
-                    ['Design', phoneCharmPdpContent.design],
-                    ['Natural Stones', phoneCharmPdpContent.naturalStones],
-                    ['House Signatures', phoneCharmPdpContent.houseSignatures],
-                    ['Care', phoneCharmPdpContent.care],
-                    ['Compatibility', phoneCharmPdpContent.compatibility],
+                    [phoneLabels.design, phoneCharmPdpContent.design],
+                    [phoneLabels.naturalStones, phoneCharmPdpContent.naturalStones],
+                    [phoneLabels.houseSignatures, phoneCharmPdpContent.houseSignatures],
+                    [phoneLabels.care, phoneCharmPdpContent.care],
+                    [phoneLabels.compatibility, phoneCharmPdpContent.compatibility],
                   ] as const
                 ).map(([title, items]) => (
                   <div key={title} className="space-y-2">
@@ -243,7 +259,7 @@ export default function AccessoryDetailPage() {
                 ))}
                 <div className="space-y-1">
                   <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/70">
-                    Colour
+                    {phoneLabels.colour}
                   </p>
                   <p className={PDP_COPY_RELAXED}>{phoneCharmPdpContent.colour}</p>
                 </div>
@@ -455,17 +471,15 @@ export default function AccessoryDetailPage() {
     ? 'lg:grid-cols-[4.75rem_minmax(0,1fr)_minmax(8.75rem,11.25rem)]'
     : 'lg:grid-cols-[4.75rem_minmax(0,1fr)]'
 
-  const displayName =
-    strandPdpContent?.headline ??
-    phoneCharmPdpContent?.headline ??
-    (language === 'ar' ? accessory.nameAr : accessory.name)
   const pdpDescription = strandPdpContent
     ? strandPdpContent.introParagraphs.join(' ')
     : phoneCharmPdpContent
       ? phoneCharmPdpContent.introParagraphs.join(' ')
-      : language === 'ar'
-        ? accessory.descriptionAr
-        : accessory.description
+      : necklaceEarringPdpContent
+        ? necklaceEarringPdpContent.introParagraphs.join(' ')
+        : isRTL
+          ? accessory.descriptionAr
+          : getLocalizedAccessoryDescription(accessory, language)
   const pdpImages = useMemo(() => getAccessoryPdpImages(accessory), [accessory])
   const productJsonLd = useMemo(
     () =>
@@ -509,7 +523,7 @@ export default function AccessoryDetailPage() {
             label: categoryBreadcrumbLabel,
             href: `/accessories?type=${accessory.category}`,
           },
-          { label: isRTL ? accessory.nameAr : accessory.name },
+          { label: displayName },
         ].filter((s) => s.label.length > 0)}
         backLink={{ href: '/accessories', label: ui.accessories.returnToAccessories }}
       />

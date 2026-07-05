@@ -1,4 +1,8 @@
 import type { AppLocale } from '@/lib/i18n/routing'
+import {
+  FR_EARRING_PDP_BY_ID,
+  FR_NECKLACE_PDP_BY_ID,
+} from '@/lib/accessories/necklaceEarringPdpContentFr'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
 
 export type NecklaceEarringFaqItem = {
@@ -898,6 +902,8 @@ export function getNecklaceEarringPdpContent(
   id: string,
   locale: AppLocale = 'en',
 ): NecklaceEarringPdpContentPack | undefined {
+  if (locale === 'fr' && FR_NECKLACE_PDP_BY_ID[id]) return FR_NECKLACE_PDP_BY_ID[id]
+  if (locale === 'fr' && FR_EARRING_PDP_BY_ID[id]) return FR_EARRING_PDP_BY_ID[id]
   return PDP_BY_ID[id]?.[locale] ?? PDP_BY_ID[id]?.en
 }
 

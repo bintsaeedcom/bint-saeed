@@ -19,6 +19,7 @@ import type { Product } from '@/data/products'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getLocalizedProductDisplayName } from '@/lib/products/productDisplayNameI18n'
 import { getProductHref } from '@/lib/products/links'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 import { trackEvent } from '@/lib/analytics/tracking'
@@ -325,6 +326,7 @@ export default function ShopClient() {
           {sortedProducts.map((product) => {
             const gridImage = shopGridPrimaryImage(product)
             const gridColor = shopGridPrimaryColor(product)
+            const gridDisplayName = getLocalizedProductDisplayName(product, language)
             return (
             <li
               key={product.id}
@@ -334,9 +336,9 @@ export default function ShopClient() {
                 <LocaleLink
                   href={getProductHref(product)}
                   className="relative z-20 block aspect-[9/16] overflow-hidden bg-stone-200"
-                  aria-label={ui.shop.openProduct.replace('{name}', product.name)}
+                  aria-label={ui.shop.openProduct.replace('{name}', gridDisplayName)}
                   data-cursor-hover
-                  onClick={() => trackEvent('select_item', { item_id: product.id, item_name: product.name, item_category: product.category })}
+                  onClick={() => trackEvent('select_item', { item_id: product.id, item_name: gridDisplayName, item_category: product.category })}
                 >
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
                     <Image
@@ -364,7 +366,7 @@ export default function ShopClient() {
                   </p>
                   <LocaleLink href={getProductHref(product)} className="relative z-20 inline-block max-w-full" data-cursor-hover>
                     <h3 data-product-name="true" className="font-rozha text-[clamp(0.95rem,2.8vw,1.35rem)] font-normal leading-snug tracking-wide text-brand-darkRed transition-colors hover:text-brand-dustyBlue sm:leading-tight">
-                      {product.name}
+                      {gridDisplayName}
                     </h3>
                   </LocaleLink>
                   <p className="font-montserrat text-sm tabular-nums tracking-wide text-[#6f1524]">

@@ -1,6 +1,7 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
 import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
+import { FR_PHONE_CHARM_PACKS } from '@/lib/accessories/phoneCharmPdpContentFr'
 
 export const AL_QUAA_PHONE_CHARM_IDS = [
   'al-quaa-phone-charm-fuchsia-jade',
@@ -222,6 +223,7 @@ export function getPhoneCharmPdpContent(
 ): PhoneCharmPdpContentPack | undefined {
   const canonicalId = resolveAccessoryId(id)
   if (!isAlQuaaPhoneCharmId(canonicalId)) return undefined
+  if (locale === 'fr') return FR_PHONE_CHARM_PACKS[canonicalId]
   return EN_PACKS[canonicalId]
 }
 

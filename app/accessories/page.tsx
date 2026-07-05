@@ -28,6 +28,7 @@ import {
 import { trackEvent } from '@/lib/analytics/tracking'
 import { resolveAccessoryCategoryId } from '@/lib/accessories/accessoryRouteAliases'
 import { getAccessoryCarouselAlt, buildAccessoriesCollectionJsonLd } from '@/lib/accessories/accessoryJsonLd'
+import { getLocalizedAccessoryDisplayName } from '@/lib/accessories/accessoryCatalogCopyI18n'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 
 function parsePriceParam(v: string | null): PriceRangeId {
@@ -614,6 +615,7 @@ function AccessoryCard({
   const isInView = useInView(ref, { once: true, margin: '-10%' })
   const pathname = usePathname()
   const router = useRouter()
+  const accessoryName = getLocalizedAccessoryDisplayName(accessory, language)
 
   const navigateToAccessoryPdp = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -637,7 +639,7 @@ function AccessoryCard({
         onClick={() =>
           trackEvent('select_item', {
             item_id: accessory.id,
-            item_name: isRTL ? accessory.nameAr : accessory.name,
+            item_name: accessoryName,
             item_category: accessory.category,
           })
         }
@@ -668,7 +670,7 @@ function AccessoryCard({
                 onClick={(e) => {
                   trackEvent('select_item', {
                     item_id: accessory.id,
-                    item_name: isRTL ? accessory.nameAr : accessory.name,
+                    item_name: accessoryName,
                     item_category: accessory.category,
                   })
                   navigateToAccessoryPdp(e)
@@ -689,7 +691,7 @@ function AccessoryCard({
                 : accessoryCategories.find(c => c.id === accessory.category)?.name}
             </span>
             <h3 data-product-name="true" className="font-montserrat text-sm text-brand-darkRed mb-1 tracking-wide group-hover:text-brand-dustyBlue transition-colors">
-              {isRTL ? accessory.nameAr : accessory.name}
+              {accessoryName}
             </h3>
             <p className="font-montserrat text-sm tracking-wide text-[#6f1524]">
               {formatPrice(accessory.price)}

@@ -4,6 +4,7 @@ import { getProductPdpContentLocale } from '@/data/productPdpLocaleRegistry'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
 import { pdpStructuredStrings } from '@/lib/products/productPdpStructuredI18n'
+import { getLocalizedProductDisplayName } from '@/lib/products/productDisplayNameI18n'
 import { getProductSlug } from '@/lib/products/links'
 import { getProductSchemaFacts } from '@/lib/products/productSchemaMeta'
 import { buildVariantSku } from '@/lib/products/sku'
@@ -340,6 +341,7 @@ function buildStructuredApparelContentForLocale(
   const strings = pdpStructuredStrings(locale)
   const facts = getProductSchemaFacts(product, locale)
   const catalog = getLocalizedProductCatalogFields(product, locale)
+  const displayName = getLocalizedProductDisplayName(product, locale)
   const colorName = resolveSelectedColorName(product, color)
   const compositionDetails = fabricCompositionDetails({
     ...product,
@@ -351,9 +353,9 @@ function buildStructuredApparelContentForLocale(
     : strings.stylingSuffix
 
   const introParagraphs = [
-    strings.introLead(product.name, catalog.description.replace(/\s+/g, ' ').trim()),
+    strings.introLead(displayName, catalog.description.replace(/\s+/g, ' ').trim()),
     stylingLine,
-    strings.introOccasions(product.name),
+    strings.introOccasions(displayName),
     strings.introClosing,
   ]
 

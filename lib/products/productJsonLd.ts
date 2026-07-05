@@ -1,4 +1,5 @@
 import type { Product } from '@/data/products'
+import { getLocalizedProductDisplayName } from '@/lib/products/productDisplayNameI18n'
 import { getProductSlug } from '@/lib/products/links'
 import { getProductImageAlt, PRODUCT_IMAGE_DIMENSIONS } from '@/lib/products/imageAlt'
 import type { AppLocale } from '@/lib/i18n/routing'
@@ -277,6 +278,7 @@ export function buildShopProductJsonLd(input: {
 }) {
   const { product, activeImages, selectedColor, productPagePath, locale = 'en' } = input
   const slug = getProductSlug(product)
+  const displayName = getLocalizedProductDisplayName(product, locale)
   const pageUrl = `${SITE_URL}${productPagePath}`
   const lang = schemaInLanguageForLocale(locale)
   const variantColors = getProductColorOptions(product)
@@ -290,7 +292,7 @@ export function buildShopProductJsonLd(input: {
     productNode = {
       '@type': 'ProductGroup',
       '@id': `${pageUrl}#product`,
-      name: product.name,
+      name: displayName,
       productGroupID: product.id,
       variesBy: 'https://schema.org/color',
       category: product.category,
@@ -309,7 +311,7 @@ export function buildShopProductJsonLd(input: {
           variantColor: color.name,
           variantImages,
           nodeId: `${pageUrl}#variant-${colorSlug}`,
-          displayName: `${product.name} — ${color.name}`,
+          displayName: `${displayName} — ${color.name}`,
         })
       }),
     }
@@ -321,7 +323,7 @@ export function buildShopProductJsonLd(input: {
       activeImages,
       selectedColor,
       nodeId: `${pageUrl}#product`,
-      displayName: product.name,
+      displayName,
     })
   }
 

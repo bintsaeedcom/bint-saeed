@@ -12,6 +12,7 @@ import {
 } from '@/lib/seo/productPageMeta'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
 import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
+import { getLocalizedProductDisplayName } from '@/lib/products/productDisplayNameI18n'
 import { absoluteCatalogImageUrl } from '@/lib/products/productJsonLd'
 
 type ProductLayoutProps = {
@@ -30,9 +31,10 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
   const slug = getProductSlug(product)
   const catalogFields = getLocalizedProductCatalogFields(product, locale)
   const canonicalUrl = productCanonicalUrl(locale, slug)
-  const pageTitle = buildProductPageTitle(locale, { name: product.name, slug })
+  const displayName = getLocalizedProductDisplayName(product, locale)
+  const pageTitle = buildProductPageTitle(locale, { name: displayName, slug })
   const description = buildProductMetaDescription(locale, {
-    name: product.name,
+    name: displayName,
     description: catalogFields.description,
     fabric: catalogFields.fabric,
     slug,
