@@ -1,5 +1,6 @@
 import type { Accessory } from '@/data/accessories'
 import { accessories as staticAccessories } from '@/data/accessories'
+import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 import { buildVariantSku } from '@/lib/products/sku'
 
 /**
@@ -54,13 +55,13 @@ const BAG_CHARM_STYLE_SKU_BY_ID: Record<string, string> = {
 /** Phone charm parent style codes — one stone per product, no colour suffix. */
 const PHONE_CHARM_STYLE_SKU_BY_ID: Record<string, string> = {
   // Al Quaa Phone Charms (BS-PH)
-  'al-ain-rosette-phone-charm-fuchsia-jade': 'BS-PH-001',
-  'al-ain-rosette-phone-charm-orange-jade': 'BS-PH-002',
-  'al-ain-rosette-phone-charm-onyx': 'BS-PH-003',
-  'al-ain-rosette-phone-charm-tiger-eye': 'BS-PH-004',
-  'al-ain-rosette-phone-charm-malachite': 'BS-PH-005',
-  'al-ain-rosette-phone-charm-lapis-lazuli': 'BS-PH-006',
-  'al-ain-rosette-phone-charm-rose-quartz': 'BS-PH-007',
+  'al-quaa-phone-charm-fuchsia-jade': 'BS-PH-001',
+  'al-quaa-phone-charm-orange-jade': 'BS-PH-002',
+  'al-quaa-phone-charm-onyx': 'BS-PH-003',
+  'al-quaa-phone-charm-tiger-eye': 'BS-PH-004',
+  'al-quaa-phone-charm-malachite': 'BS-PH-005',
+  'al-quaa-phone-charm-lapis-lazuli': 'BS-PH-006',
+  'al-quaa-phone-charm-rose-quartz': 'BS-PH-007',
 }
 
 function bagCharmStyleSku(accessoryId: string): string | undefined {
@@ -68,7 +69,7 @@ function bagCharmStyleSku(accessoryId: string): string | undefined {
 }
 
 function phoneCharmStyleSku(accessoryId: string): string | undefined {
-  return PHONE_CHARM_STYLE_SKU_BY_ID[accessoryId]
+  return PHONE_CHARM_STYLE_SKU_BY_ID[resolveAccessoryId(accessoryId)]
 }
 
 function jewelleryStyleSku(accessoryId: string): string | undefined {
@@ -103,7 +104,7 @@ export function resolveAccessorySku(
 }
 
 export function getAccessorySkuById(accessoryId: string): string | undefined {
-  const accessory = staticAccessories.find((item) => item.id === accessoryId)
+  const accessory = staticAccessories.find((item) => item.id === resolveAccessoryId(accessoryId))
   if (!accessory) return undefined
   return getAccessoryStyleSku(accessory)
 }
@@ -129,7 +130,7 @@ export function resolveSkuByAccessoryId(
   catalog: readonly Accessory[] = staticAccessories,
   colorName?: string,
 ): string | undefined {
-  const accessory = catalog.find((item) => item.id === accessoryId)
+  const accessory = catalog.find((item) => item.id === resolveAccessoryId(accessoryId))
   if (!accessory) return undefined
   return resolveAccessorySkuFromSelection(accessory, colorName)
 }

@@ -1,21 +1,22 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
+import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 
-export const AL_AIN_ROSETTE_PHONE_CHARM_IDS = [
-  'al-ain-rosette-phone-charm-fuchsia-jade',
-  'al-ain-rosette-phone-charm-orange-jade',
-  'al-ain-rosette-phone-charm-onyx',
-  'al-ain-rosette-phone-charm-tiger-eye',
-  'al-ain-rosette-phone-charm-malachite',
-  'al-ain-rosette-phone-charm-lapis-lazuli',
-  'al-ain-rosette-phone-charm-rose-quartz',
+export const AL_QUAA_PHONE_CHARM_IDS = [
+  'al-quaa-phone-charm-fuchsia-jade',
+  'al-quaa-phone-charm-orange-jade',
+  'al-quaa-phone-charm-onyx',
+  'al-quaa-phone-charm-tiger-eye',
+  'al-quaa-phone-charm-malachite',
+  'al-quaa-phone-charm-lapis-lazuli',
+  'al-quaa-phone-charm-rose-quartz',
 ] as const
 
-export type AlAinRosettePhoneCharmId = (typeof AL_AIN_ROSETTE_PHONE_CHARM_IDS)[number]
+export type AlQuaaPhoneCharmId = (typeof AL_QUAA_PHONE_CHARM_IDS)[number]
 
-const PHONE_CHARM_ID_SET = new Set<string>(AL_AIN_ROSETTE_PHONE_CHARM_IDS)
+const PHONE_CHARM_ID_SET = new Set<string>(AL_QUAA_PHONE_CHARM_IDS)
 
-export function isAlAinRosettePhoneCharmId(id: string): id is AlAinRosettePhoneCharmId {
+export function isAlQuaaPhoneCharmId(id: string): id is AlQuaaPhoneCharmId {
   return PHONE_CHARM_ID_SET.has(id)
 }
 
@@ -121,8 +122,8 @@ function buildPhoneCharmPack({
   }
 }
 
-const EN_PACKS: Record<AlAinRosettePhoneCharmId, PhoneCharmPdpContentPack> = {
-  'al-ain-rosette-phone-charm-fuchsia-jade': buildPhoneCharmPack({
+const EN_PACKS: Record<AlQuaaPhoneCharmId, PhoneCharmPdpContentPack> = {
+  'al-quaa-phone-charm-fuchsia-jade': buildPhoneCharmPack({
     stoneLabel: 'Fuchsia Coloured Jade',
     productTitleStone: 'Fuchsia Jade',
     gemstonePhrase: 'vibrant Fuchsia Jade gemstones',
@@ -135,7 +136,7 @@ const EN_PACKS: Record<AlAinRosettePhoneCharmId, PhoneCharmPdpContentPack> = {
       'Natural variations in colour, pattern and inclusions make every piece unique',
     ],
   }),
-  'al-ain-rosette-phone-charm-orange-jade': buildPhoneCharmPack({
+  'al-quaa-phone-charm-orange-jade': buildPhoneCharmPack({
     stoneLabel: 'Orange Coloured Jade',
     productTitleStone: 'Orange Coloured Jade',
     gemstonePhrase: 'vibrant Orange Coloured Jade gemstones',
@@ -148,7 +149,7 @@ const EN_PACKS: Record<AlAinRosettePhoneCharmId, PhoneCharmPdpContentPack> = {
       'Natural variations in colour, pattern and inclusions make every piece unique',
     ],
   }),
-  'al-ain-rosette-phone-charm-onyx': buildPhoneCharmPack({
+  'al-quaa-phone-charm-onyx': buildPhoneCharmPack({
     stoneLabel: 'Onyx',
     productTitleStone: 'Onyx',
     gemstonePhrase: 'genuine Onyx gemstones',
@@ -161,7 +162,7 @@ const EN_PACKS: Record<AlAinRosettePhoneCharmId, PhoneCharmPdpContentPack> = {
       'Natural variations in colour, pattern and inclusions make every piece unique',
     ],
   }),
-  'al-ain-rosette-phone-charm-tiger-eye': buildPhoneCharmPack({
+  'al-quaa-phone-charm-tiger-eye': buildPhoneCharmPack({
     stoneLabel: 'Tiger Eye',
     productTitleStone: 'Tiger Eye',
     gemstonePhrase: 'genuine Tiger Eye gemstones',
@@ -174,7 +175,7 @@ const EN_PACKS: Record<AlAinRosettePhoneCharmId, PhoneCharmPdpContentPack> = {
       'Natural variations in colour, pattern and chatoyancy make every piece unique',
     ],
   }),
-  'al-ain-rosette-phone-charm-malachite': buildPhoneCharmPack({
+  'al-quaa-phone-charm-malachite': buildPhoneCharmPack({
     stoneLabel: 'Malachite',
     productTitleStone: 'Malachite',
     gemstonePhrase: 'genuine Malachite gemstones',
@@ -187,7 +188,7 @@ const EN_PACKS: Record<AlAinRosettePhoneCharmId, PhoneCharmPdpContentPack> = {
       'Natural variations in colour, banding and pattern make every piece unique',
     ],
   }),
-  'al-ain-rosette-phone-charm-lapis-lazuli': buildPhoneCharmPack({
+  'al-quaa-phone-charm-lapis-lazuli': buildPhoneCharmPack({
     stoneLabel: 'Lapis Lazuli',
     productTitleStone: 'Lapis Lazuli',
     gemstonePhrase: 'genuine Lapis Lazuli gemstones',
@@ -200,7 +201,7 @@ const EN_PACKS: Record<AlAinRosettePhoneCharmId, PhoneCharmPdpContentPack> = {
       'Natural variations in colour, natural pyrite inclusions and pattern make every piece unique',
     ],
   }),
-  'al-ain-rosette-phone-charm-rose-quartz': buildPhoneCharmPack({
+  'al-quaa-phone-charm-rose-quartz': buildPhoneCharmPack({
     stoneLabel: 'Rose Quartz',
     productTitleStone: 'Rose Quartz',
     gemstonePhrase: 'genuine Rose Quartz gemstones',
@@ -219,9 +220,9 @@ export function getPhoneCharmPdpContent(
   id: string,
   locale: AppLocale = 'en',
 ): PhoneCharmPdpContentPack | undefined {
-  if (!isAlAinRosettePhoneCharmId(id)) return undefined
-  if (locale !== 'en') return EN_PACKS[id]
-  return EN_PACKS[id]
+  const canonicalId = resolveAccessoryId(id)
+  if (!isAlQuaaPhoneCharmId(canonicalId)) return undefined
+  return EN_PACKS[canonicalId]
 }
 
 export function getPhoneCharmFaqForSchema(id: string, locale: AppLocale = 'en'): ProductFaqItem[] {

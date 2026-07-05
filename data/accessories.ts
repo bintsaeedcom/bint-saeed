@@ -12,7 +12,7 @@ export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ_LIFESTYLE = `${A}/necklaces/bi
 
 const PHONE_CHARM = `${A}/phone%20charm`
 function phoneCharmFrontImage(stoneFileSlug: string): string {
-  return `${PHONE_CHARM}/bint-saeed-${stoneFileSlug}-al-ain-rosette-phone-charm-front.webp`
+  return `${PHONE_CHARM}/bint-saeed-${stoneFileSlug}-al-quaa-phone-charm-front.webp`
 }
 
 export const ACCESSORY_IMAGE_PHONE_CHARM_PINK_JADE = phoneCharmFrontImage('pink-jade')
@@ -55,8 +55,8 @@ const AL_QUAA_PHONE_CHARM_BASE_NAME = 'Al Quaa Phone Charm'
 function alQuaaPhoneCharmName(variant: string): string {
   return `${AL_QUAA_PHONE_CHARM_BASE_NAME} - ${variant}`
 }
-function alAinRosettePhoneCharmId(variantSlug: string): string {
-  return `al-ain-rosette-phone-charm-${variantSlug}`
+function alQuaaPhoneCharmId(variantSlug: string): string {
+  return `al-quaa-phone-charm-${variantSlug}`
 }
 
 const AL_AIN_OASIS_EARRINGS_BASE_NAME = 'Al Ain Oasis Earrings'
@@ -442,7 +442,7 @@ export const accessories: Accessory[] = [
 
   // Al Quaa Phone Charms — natural stone line (7 products)
   {
-    id: alAinRosettePhoneCharmId('fuchsia-jade'),
+    id: alQuaaPhoneCharmId('fuchsia-jade'),
     name: alQuaaPhoneCharmName('Fuchsia Coloured Jade'),
     nameAr: 'تعليقة هاتف روزيت العين — يشم فوشي',
     category: 'phone-strands',
@@ -457,7 +457,7 @@ export const accessories: Accessory[] = [
     isNew: true,
   },
   {
-    id: alAinRosettePhoneCharmId('orange-jade'),
+    id: alQuaaPhoneCharmId('orange-jade'),
     name: alQuaaPhoneCharmName('Orange Coloured Jade'),
     nameAr: 'تعليقة هاتف روزيت العين — يشم برتقالي',
     category: 'phone-strands',
@@ -471,7 +471,7 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: alAinRosettePhoneCharmId('onyx'),
+    id: alQuaaPhoneCharmId('onyx'),
     name: alQuaaPhoneCharmName('Onyx'),
     nameAr: 'تعليقة هاتف روزيت العين — أونكس',
     category: 'phone-strands',
@@ -486,7 +486,7 @@ export const accessories: Accessory[] = [
     isBestseller: true,
   },
   {
-    id: alAinRosettePhoneCharmId('tiger-eye'),
+    id: alQuaaPhoneCharmId('tiger-eye'),
     name: alQuaaPhoneCharmName('Tiger Eye'),
     nameAr: 'تعليقة هاتف روزيت العين — عين النمر',
     category: 'phone-strands',
@@ -500,7 +500,7 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: alAinRosettePhoneCharmId('malachite'),
+    id: alQuaaPhoneCharmId('malachite'),
     name: alQuaaPhoneCharmName('Malachite'),
     nameAr: 'تعليقة هاتف روزيت العين — ملاكيت',
     category: 'phone-strands',
@@ -514,7 +514,7 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: alAinRosettePhoneCharmId('lapis-lazuli'),
+    id: alQuaaPhoneCharmId('lapis-lazuli'),
     name: alQuaaPhoneCharmName('Lapis Lazuli'),
     nameAr: 'تعليقة هاتف روزيت العين — لازورد',
     category: 'phone-strands',
@@ -528,7 +528,7 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: alAinRosettePhoneCharmId('rose-quartz'),
+    id: alQuaaPhoneCharmId('rose-quartz'),
     name: alQuaaPhoneCharmName('Rose Quartz'),
     nameAr: 'تعليقة هاتف روزيت العين — كوارتز وردي',
     category: 'phone-strands',
