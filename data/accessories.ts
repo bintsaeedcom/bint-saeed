@@ -4,12 +4,26 @@
  */
 const A = '/Webshop%20pictures/accessoiries'
 
-export const ACCESSORY_IMAGE_NECKLACE = `${A}/necklaces/malachite-necklace.PNG`
-export const ACCESSORY_IMAGE_NECKLACE_MALACHITE = `${A}/necklaces/malachite-necklace.PNG`
-export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ = `${A}/necklaces/bint-saeed-rose-quartz-necklace.PNG`
-export const ACCESSORY_IMAGE_PHONE_CHARM = `${A}/phone%20charm/bint-saeed-phone-charm.PNG`
-/** Second angle / alternate shot for phone strand PDP column */
-export const ACCESSORY_IMAGE_PHONE_CHARM_ALT = `${A}/phone%20charm/phone%20charm-extra.png`
+export const ACCESSORY_IMAGE_NECKLACE = `${A}/necklaces/bint-saeed-malachite-necklace-front.webp`
+export const ACCESSORY_IMAGE_NECKLACE_MALACHITE = `${A}/necklaces/bint-saeed-malachite-necklace-front.webp`
+export const ACCESSORY_IMAGE_NECKLACE_MALACHITE_LIFESTYLE = `${A}/necklaces/bint-saeed-malachite-necklace-lifestyle.webp`
+export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ = `${A}/necklaces/bint-saeed-rose-quartz-necklace-front.webp`
+export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ_LIFESTYLE = `${A}/necklaces/bint-saeed-rose-quartz-necklace-lifestyle.webp`
+
+const PHONE_CHARM = `${A}/phone%20charm`
+function phoneCharmFrontImage(stoneFileSlug: string): string {
+  return `${PHONE_CHARM}/bint-saeed-${stoneFileSlug}-al-ain-rosette-phone-charm-front.webp`
+}
+
+export const ACCESSORY_IMAGE_PHONE_CHARM_PINK_JADE = phoneCharmFrontImage('pink-jade')
+export const ACCESSORY_IMAGE_PHONE_CHARM_ORANGE_JADE = phoneCharmFrontImage('orange-jade')
+export const ACCESSORY_IMAGE_PHONE_CHARM_ONYX = phoneCharmFrontImage('onyx')
+export const ACCESSORY_IMAGE_PHONE_CHARM_TIGER_EYE = phoneCharmFrontImage('tiger-eye')
+export const ACCESSORY_IMAGE_PHONE_CHARM_MALACHITE = phoneCharmFrontImage('malachite')
+export const ACCESSORY_IMAGE_PHONE_CHARM_LAPIS = phoneCharmFrontImage('lapis-lazuli')
+export const ACCESSORY_IMAGE_PHONE_CHARM_ROSE_QUARTZ = phoneCharmFrontImage('rose-quartz')
+/** Category / nav hero — fuchsia (pink jade) line */
+export const ACCESSORY_IMAGE_PHONE_CHARM = ACCESSORY_IMAGE_PHONE_CHARM_PINK_JADE
 
 const STRANDS = `${A}/strands`
 /** Category hero for signature strands grid. */
@@ -151,7 +165,7 @@ export const accessories: Accessory[] = [
       'Hand-strung malachite beads with signature clasp and extension chain. Deep Malachite Green tones.',
     descriptionAr:
       'خرز ملاكيت مطرّز يدوياً مع إغلاق توقيع وسلسلة تمديد. درجات خضراء عميقة.',
-    images: [ACCESSORY_IMAGE_NECKLACE_MALACHITE],
+    images: [ACCESSORY_IMAGE_NECKLACE_MALACHITE, ACCESSORY_IMAGE_NECKLACE_MALACHITE_LIFESTYLE],
     materials: 'Natural malachite beads, 18K gold-plated clasp',
     materialsAr: 'خرز ملاكيت طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Malachite Green', nameAr: 'أخضر ملاكيت', hex: '#1f7a5e' }],
@@ -203,7 +217,7 @@ export const accessories: Accessory[] = [
       'Soft pink rose quartz beads hand-knotted for a luminous, romantic line with our signature hardware.',
     descriptionAr:
       'خرز كوارتز وردي ناعم مربوط يدوياً لخط مضيء رومانسي مع قطع التوقيع.',
-    images: [ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ],
+    images: [ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ, ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ_LIFESTYLE],
     materials: 'Natural rose quartz beads, 18K gold-plated clasp',
     materialsAr: 'خرز كوارتز وردي طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Rose Quartz Pink', nameAr: 'وردي كوارتز', hex: '#f4b8c5' }],
@@ -435,8 +449,7 @@ export const accessories: Accessory[] = [
     price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
-    images: [ACCESSORY_IMAGE_PHONE_CHARM],
-    detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
+    images: [ACCESSORY_IMAGE_PHONE_CHARM_PINK_JADE],
     materials: 'Fuchsia Coloured Jade, Carnelian, gold-plated hematite',
     materialsAr: 'يشم فوشي، عقيق، هيمايت مطلي بالذهب',
     colors: [{ name: 'Fuchsia Coloured Jade', nameAr: 'يشم فوشي', hex: '#c026d3' }],
@@ -451,8 +464,7 @@ export const accessories: Accessory[] = [
     price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
-    images: [ACCESSORY_IMAGE_PHONE_CHARM],
-    detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
+    images: [ACCESSORY_IMAGE_PHONE_CHARM_ORANGE_JADE],
     materials: 'Orange Coloured Jade, Carnelian, gold-plated hematite',
     materialsAr: 'يشم برتقالي، عقيق، هيمايت مطلي بالذهب',
     colors: [{ name: 'Orange Coloured Jade', nameAr: 'يشم برتقالي', hex: '#ea580c' }],
@@ -466,8 +478,7 @@ export const accessories: Accessory[] = [
     price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
-    images: [ACCESSORY_IMAGE_PHONE_CHARM],
-    detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
+    images: [ACCESSORY_IMAGE_PHONE_CHARM_ONYX],
     materials: 'Onyx, Carnelian, gold-plated hematite',
     materialsAr: 'أونكس، عقيق، هيمايت مطلي بالذهب',
     colors: [{ name: 'Onyx', nameAr: 'أونكس', hex: '#1a1a1a' }],
@@ -482,8 +493,7 @@ export const accessories: Accessory[] = [
     price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
-    images: [ACCESSORY_IMAGE_PHONE_CHARM],
-    detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
+    images: [ACCESSORY_IMAGE_PHONE_CHARM_TIGER_EYE],
     materials: 'Tiger Eye, Carnelian, gold-plated hematite',
     materialsAr: 'عين النمر، عقيق، هيمايت مطلي بالذهب',
     colors: [{ name: 'Tiger Eye', nameAr: 'عين النمر', hex: '#8B5A2B' }],
@@ -497,8 +507,7 @@ export const accessories: Accessory[] = [
     price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
-    images: [ACCESSORY_IMAGE_PHONE_CHARM],
-    detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
+    images: [ACCESSORY_IMAGE_PHONE_CHARM_MALACHITE],
     materials: 'Malachite, Carnelian, gold-plated hematite',
     materialsAr: 'ملاكيت، عقيق، هيمايت مطلي بالذهب',
     colors: [{ name: 'Malachite', nameAr: 'ملاكيت', hex: '#0d9488' }],
@@ -512,8 +521,7 @@ export const accessories: Accessory[] = [
     price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
-    images: [ACCESSORY_IMAGE_PHONE_CHARM],
-    detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
+    images: [ACCESSORY_IMAGE_PHONE_CHARM_LAPIS],
     materials: 'Lapis Lazuli, Carnelian, gold-plated hematite',
     materialsAr: 'لازورد، عقيق، هيمايت مطلي بالذهب',
     colors: [{ name: 'Lapis Lazuli', nameAr: 'لازورد', hex: '#1e3a8a' }],
@@ -527,8 +535,7 @@ export const accessories: Accessory[] = [
     price: 249,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
-    images: [ACCESSORY_IMAGE_PHONE_CHARM],
-    detailAngles: [ACCESSORY_IMAGE_PHONE_CHARM_ALT, ACCESSORY_IMAGE_PHONE_CHARM],
+    images: [ACCESSORY_IMAGE_PHONE_CHARM_ROSE_QUARTZ],
     materials: 'Rose Quartz, Carnelian, gold-plated hematite',
     materialsAr: 'كوارتز وردي، عقيق، هيمايت مطلي بالذهب',
     colors: [{ name: 'Rose Quartz', nameAr: 'كوارتز وردي', hex: '#f9a8d4' }],

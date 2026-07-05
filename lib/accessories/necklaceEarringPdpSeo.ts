@@ -3,6 +3,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 export type NecklaceEarringSeoPack = {
   carouselAlt: string
   pdpAlt: string
+  lifestyleAlt?: string
   keywords: string[]
   relatedAccessoryIds: string[]
 }
@@ -37,7 +38,9 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     carouselAlt:
       'Al Ain Malachite necklace — hand-strung natural malachite beads with signature clasp, pairs with malachite abaya strand and geometric stud earrings',
     pdpAlt:
-      'Al Ain Malachite necklace with deep green natural malachite beads, 18K gold-plated signature clasp and extension chain — luxury stone bead necklace by Bint Saeed Abu Dhabi',
+      'Al Ain Malachite necklace with hand-strung natural malachite beads, 18K gold-plated signature clasp and extension chain on display — deep green luxury stone bead necklace by Bint Saeed Abu Dhabi, pairs with malachite abaya strand',
+    lifestyleAlt:
+      'Model wearing the Al Ain Malachite necklace — natural malachite beads with 18K gold-plated signature hardware styled on black, showing length and drape — handcrafted stone necklace Abu Dhabi',
     keywords: nkw(
       'malachite necklace',
       'malachite bead necklace UAE',
@@ -92,7 +95,9 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     carouselAlt:
       'Al Ain Rose Quartz necklace — soft pink hand-knotted rose quartz beads, pairs with rose quartz abaya strand and pearl drop earrings',
     pdpAlt:
-      'Al Ain Rose Quartz necklace with hand-knotted natural rose quartz beads, luminous romantic line and 18K gold-plated signature hardware — blush stone necklace Abu Dhabi',
+      'Al Ain Rose Quartz necklace with hand-knotted natural rose quartz beads, luminous blush line and 18K gold-plated signature clasp on display — romantic stone bead necklace by Bint Saeed Abu Dhabi',
+    lifestyleAlt:
+      'Model wearing the Al Ain Rose Quartz necklace — soft pink hand-knotted rose quartz beads with signature clasp styled on black, showing convertible length — pairs with rose quartz abaya strand',
     keywords: nkw(
       'rose quartz necklace',
       'pink quartz bead necklace',
@@ -230,6 +235,9 @@ export function getNecklaceEarringCarouselAlt(id: string, _locale: AppLocale = '
   return getNecklaceEarringPdpPack(id)?.carouselAlt
 }
 
-export function getNecklaceEarringPdpAlt(id: string, _imageIndex: number, _locale: AppLocale = 'en'): string | undefined {
-  return getNecklaceEarringPdpPack(id)?.pdpAlt
+export function getNecklaceEarringPdpAlt(id: string, imageIndex: number, _locale: AppLocale = 'en'): string | undefined {
+  const pack = getNecklaceEarringPdpPack(id)
+  if (!pack) return undefined
+  if (imageIndex > 0 && pack.lifestyleAlt) return pack.lifestyleAlt
+  return pack.pdpAlt
 }

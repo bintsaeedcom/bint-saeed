@@ -31,6 +31,10 @@ import {
   getNecklaceEarringPdpAlt,
   getNecklaceEarringPdpPack,
 } from '@/lib/accessories/necklaceEarringPdpSeo'
+import {
+  getPhoneCharmCarouselAlt,
+  getPhoneCharmPdpAlt,
+} from '@/lib/accessories/phoneCharmPdpSeo'
 import { getNecklaceEarringFaqForSchema } from '@/lib/accessories/necklaceEarringPdpContent'
 import {
   buildNecklaceEarringAdditionalProperties,
@@ -98,6 +102,10 @@ export function getAccessoryCarouselAlt(
   if (isStrandAccessory(accessory)) {
     return getStrandCarouselAlt(accessory.id, locale)
   }
+  if (accessory.category === 'phone-strands') {
+    const phoneAlt = getPhoneCharmCarouselAlt(accessory.id, locale)
+    if (phoneAlt) return withBrandAlt(phoneAlt, locale)
+  }
   const packAlt = getNecklaceEarringCarouselAlt(accessory.id, locale)
   if (packAlt) return withBrandAlt(packAlt, locale)
   return withBrandAlt(isRTL ? accessory.nameAr : accessory.name, locale)
@@ -111,6 +119,10 @@ export function getAccessoryImageAlt(
 ): string {
   if (isStrandAccessory(accessory)) {
     return getStrandImageAlt(accessory, imageSrc, imageIndex, locale)
+  }
+  if (accessory.category === 'phone-strands') {
+    const phoneAlt = getPhoneCharmPdpAlt(accessory.id, imageIndex, locale)
+    if (phoneAlt) return withBrandAlt(phoneAlt, locale)
   }
   const packAlt = getNecklaceEarringPdpAlt(accessory.id, imageIndex, locale)
   if (packAlt) return withBrandAlt(packAlt, locale)
