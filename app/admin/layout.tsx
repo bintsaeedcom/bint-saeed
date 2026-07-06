@@ -70,31 +70,26 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 Log out
               </button>
             </div>
-            <nav className="flex gap-1 overflow-x-auto px-2 pb-2">
-              <Link
-                href="/admin/orders"
-                className="shrink-0 rounded-lg px-3 py-1.5 font-montserrat text-xs text-white/70 hover:bg-white/10"
-              >
-                Orders
-              </Link>
-              <Link
-                href="/admin/customers"
-                className="shrink-0 rounded-lg px-3 py-1.5 font-montserrat text-xs text-white/70 hover:bg-white/10"
-              >
-                Customers
-              </Link>
-              <Link
-                href="/admin/products"
-                className="shrink-0 rounded-lg px-3 py-1.5 font-montserrat text-xs text-white/70 hover:bg-white/10"
-              >
-                Catalog
-              </Link>
-              <Link
-                href="/admin/dashboard"
-                className="shrink-0 rounded-lg px-3 py-1.5 font-montserrat text-xs text-white/70 hover:bg-white/10"
-              >
-                Analytics
-              </Link>
+            <nav className="flex gap-1 overflow-x-auto px-2 pb-2 [-webkit-overflow-scrolling:touch]">
+              {[
+                { href: '/admin/orders', label: 'Orders' },
+                { href: '/admin/customers', label: 'Customers' },
+                { href: '/admin/products', label: 'Catalog' },
+                { href: '/admin/dashboard', label: 'Analytics' },
+              ].map((item) => {
+                const active = path === item.href || path.startsWith(`${item.href}/`)
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`shrink-0 rounded-lg px-3 py-1.5 font-montserrat text-xs transition-colors ${
+                      active ? 'bg-white/15 text-white' : 'text-white/70 hover:bg-white/10'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              })}
             </nav>
           </header>
           <main className="admin-area flex-1 overflow-auto">{children}</main>

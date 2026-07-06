@@ -347,20 +347,22 @@ export default function AdminDashboard() {
     <div className="admin-analytics-light min-h-screen bg-neutral-100 text-neutral-900">
       {/* Top bar */}
       <header className="sticky top-0 z-30 border-b border-neutral-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3.5">
-          <div className="flex items-center gap-3">
-            <div>
-              <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-neutral-500">Bint Saeed</p>
-              <h1 data-document-h1="true" className="font-montserrat text-lg font-semibold tracking-tight text-neutral-900">
-                Dashboard
-              </h1>
-            </div>
-            <span className="hidden items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 text-[11px] font-medium text-neutral-600 sm:inline-flex">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-5 sm:py-3.5">
+          <div className="min-w-0 flex-1">
+            <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-neutral-500">Bint Saeed</p>
+            <h1 data-document-h1="true" className="font-montserrat text-base font-semibold tracking-tight text-neutral-900 sm:text-lg">
+              Dashboard
+            </h1>
+            <span className="mt-1 inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2 py-0.5 text-[10px] font-medium text-neutral-600 sm:hidden">
+              <span className={`h-1.5 w-1.5 rounded-full ${opsHealth?.orders?.redisConfigured ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+              {opsHealth?.orders?.redisConfigured ? 'Redis' : 'Memory'}
+            </span>
+            <span className="mt-1 hidden items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 text-[11px] font-medium text-neutral-600 sm:inline-flex">
               <span className={`h-1.5 w-1.5 rounded-full ${opsHealth?.orders?.redisConfigured ? 'bg-emerald-500' : 'bg-amber-500'}`} />
               {storageMode}
             </span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <button
               type="button"
               onClick={() => setShowNotifications((open) => !open)}
@@ -377,16 +379,17 @@ export default function AdminDashboard() {
             </button>
             <button
               onClick={fetchData}
-              className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-xs font-medium text-neutral-600 transition-colors hover:bg-neutral-50"
+              className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-white px-2.5 py-2 text-xs font-medium text-neutral-600 transition-colors hover:bg-neutral-50 sm:px-3"
+              aria-label="Refresh dashboard"
             >
               <FiRefreshCw className={`h-3.5 w-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
-              Refresh
+              <span className="hidden sm:inline">Refresh</span>
             </button>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl space-y-5 px-5 py-6">
+      <main className="mx-auto max-w-7xl space-y-4 px-4 py-4 sm:space-y-5 sm:px-5 sm:py-6">
         {/* New order alert */}
         <AnimatePresence>
           {newOrderAlert && (
@@ -443,7 +446,31 @@ export default function AdminDashboard() {
               {latestOrders.length === 0 ? (
                 <EmptyState icon={<FiPackage />} text="No orders yet. New paid orders appear here instantly and you're alerted." />
               ) : (
-                <div className="overflow-x-auto">
+                <>
+                  <div className="divide-y divide-neutral-100 md:hidden">
+                    {latestOrders.map((o) => (
+                      <Link
+                        key={o.id}
+                        href="/admin/orders"
+                        className="block px-4 py-3 transition-colors hover:bg-neutral-50 active:bg-neutral-50"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="font-mono text-xs text-neutral-600">{o.id}</p>
+                            <p className="mt-0.5 truncate text-sm text-neutral-800">{o.customerEmail || '—'}</p>
+                            <p className="mt-1 text-[11px] text-neutral-500">{timeAgo(o.createdAt)}</p>
+                          </div>
+                          <div className="shrink-0 text-right">
+                            <p className="font-medium tabular-nums text-neutral-900">{o.currency} {o.amountTotal.toFixed(2)}</p>
+                            <div className="mt-1.5 flex justify-end">
+                              <StatusBadge status={o.fulfillmentStatus} />
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="hidden overflow-x-auto md:block">
                   <table className="w-full min-w-[560px] text-left text-sm">
                     <thead>
                       <tr className="border-b border-neutral-100 text-[10px] uppercase tracking-wider text-neutral-500">
@@ -466,7 +493,8 @@ export default function AdminDashboard() {
                       ))}
                     </tbody>
                   </table>
-                </div>
+                  </div>
+                </>
               )}
             </Card>
           </section>
@@ -614,7 +642,29 @@ export default function AdminDashboard() {
               subtitle="PDP views, shop clicks, and add-to-cart — first-party live counter"
             />
             {popularity && popularity.products.length > 0 ? (
-              <div className="overflow-x-auto">
+              <>
+                <div className="divide-y divide-neutral-100 md:hidden">
+                  {popularity.products.slice(0, 10).map((row) => (
+                    <div key={row.productId} className="px-4 py-3">
+                      <p className="text-sm font-medium text-neutral-900">{row.name}</p>
+                      <div className="mt-2 grid grid-cols-3 gap-2 text-center">
+                        <div className="rounded-lg bg-neutral-50 px-2 py-1.5">
+                          <p className="text-sm font-semibold tabular-nums text-neutral-900">{row.views}</p>
+                          <p className="text-[10px] uppercase tracking-wide text-neutral-500">Views</p>
+                        </div>
+                        <div className="rounded-lg bg-neutral-50 px-2 py-1.5">
+                          <p className="text-sm font-semibold tabular-nums text-neutral-900">{row.clicks}</p>
+                          <p className="text-[10px] uppercase tracking-wide text-neutral-500">Clicks</p>
+                        </div>
+                        <div className="rounded-lg bg-neutral-50 px-2 py-1.5">
+                          <p className="text-sm font-semibold tabular-nums text-neutral-900">{row.cartAdds}</p>
+                          <p className="text-[10px] uppercase tracking-wide text-neutral-500">Adds</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="hidden overflow-x-auto md:block">
                 <table className="w-full min-w-[420px] text-left text-sm">
                   <thead>
                     <tr className="border-b border-neutral-100 text-[10px] uppercase tracking-wider text-neutral-500">
@@ -635,7 +685,8 @@ export default function AdminDashboard() {
                     ))}
                   </tbody>
                 </table>
-              </div>
+                </div>
+              </>
             ) : (
               <EmptyState icon={<FiShoppingCart />} text="No product engagement yet. Opens and clicks track from shop and PDP." />
             )}
@@ -660,7 +711,31 @@ export default function AdminDashboard() {
               <MiniStat label="Recovered today" value={String(abandoned?.recoveredToday ?? 0)} tone="good" />
             </div>
             {abandoned && abandoned.carts.length > 0 ? (
-              <div className="overflow-x-auto">
+              <>
+                <div className="divide-y divide-neutral-100 md:hidden">
+                  {abandoned.carts.slice(0, 10).map((c) => (
+                    <div key={c.visitorId} className="px-4 py-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="font-mono text-xs text-neutral-600">{c.visitorId.slice(0, 10)}</p>
+                          {c.contactEmail ? <p className="mt-0.5 truncate text-sm text-neutral-800">{c.contactEmail}</p> : null}
+                          <p className="mt-1 text-xs text-neutral-600">{formatVisitorLocation(c.location)}</p>
+                        </div>
+                        <div className="shrink-0 text-right">
+                          <p className="font-medium tabular-nums text-neutral-900">{c.cartValueAed ? money(c.cartValueAed) : '—'}</p>
+                          <div className="mt-1.5 flex justify-end">
+                            <CartStageBadge status={c.status} />
+                          </div>
+                        </div>
+                      </div>
+                      <p className="mt-2 text-xs text-neutral-700">
+                        {c.items?.map((i) => `${i.quantity ?? 1}× ${i.name || 'Item'}`).join(', ') || `${c.cartItems ?? 0} item(s)`}
+                      </p>
+                      <p className="mt-1 text-[11px] text-neutral-500">{timeAgo(c.updatedAt)}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="hidden overflow-x-auto md:block">
                 <table className="w-full min-w-[720px] text-left text-sm">
                   <thead>
                     <tr className="border-b border-neutral-100 text-[10px] uppercase tracking-wider text-neutral-500">
@@ -695,7 +770,8 @@ export default function AdminDashboard() {
                     ))}
                   </tbody>
                 </table>
-              </div>
+                </div>
+              </>
             ) : (
               <EmptyState icon={<FiShoppingBag />} text="No abandoned carts tracked yet. Cart and checkout events populate this in real time." />
             )}
@@ -722,24 +798,24 @@ export default function AdminDashboard() {
                   <button
                     key={v.visitorId}
                     onClick={() => setSelectedVisitor(v)}
-                    className="flex w-full items-center justify-between gap-4 px-4 py-3 text-left transition-colors hover:bg-neutral-50"
+                    className="flex w-full flex-col gap-3 px-4 py-3 text-left transition-colors hover:bg-neutral-50 sm:flex-row sm:items-center sm:justify-between"
                   >
-                    <div className="flex items-center gap-3">
-                      <span className={`flex h-8 w-8 items-center justify-center rounded-full ${v.isNewVisitor ? 'bg-violet-100 text-violet-600' : 'bg-sky-100 text-sky-600'}`}>
+                    <div className="flex min-w-0 items-center gap-3">
+                      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${v.isNewVisitor ? 'bg-violet-100 text-violet-600' : 'bg-sky-100 text-sky-600'}`}>
                         {v.isNewVisitor ? <FiUserPlus className="h-4 w-4" /> : <FiUserCheck className="h-4 w-4" />}
                       </span>
-                      <div>
+                      <div className="min-w-0">
                         <p className="text-sm font-medium text-neutral-900">
                           {formatVisitorLocation(v.location)}
                         </p>
-                        <div className="flex items-center gap-2.5 text-[11px] text-neutral-500">
+                        <div className="mt-1 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] text-neutral-500">
                           <span className="inline-flex items-center gap-1">{deviceIcon(v.device?.type)}{v.device?.browser}</span>
                           <span className="inline-flex items-center gap-1"><FiClock className="h-3 w-3" />{formatTime(v.totalTimeOnSite)}</span>
                           <span className="inline-flex items-center gap-1"><FiEye className="h-3 w-3" />{v.pageViews?.length || 0}</span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-between gap-2 sm:justify-end">
                       {v.cartEvents?.filter((e) => e.action === 'add').length > 0 && (
                         <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-600">
                           <FiShoppingCart className="h-3 w-3" />{v.cartEvents.filter((e) => e.action === 'add').length}
@@ -849,12 +925,12 @@ export default function AdminDashboard() {
         {selectedVisitor && (
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+            className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-0 sm:items-center sm:p-4"
             onClick={() => setSelectedVisitor(null)}
           >
             <motion.div
               initial={{ scale: 0.97, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.97, opacity: 0 }}
-              className="max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-xl border border-neutral-200 bg-white shadow-xl"
+              className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-t-xl border border-neutral-200 bg-white shadow-xl sm:max-h-[88vh] sm:rounded-xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
@@ -1033,12 +1109,12 @@ function Card({ children, className = '' }: { children: React.ReactNode; classNa
 
 function CardHeader({ title, subtitle, action }: { title: string; subtitle?: string; action?: React.ReactNode }) {
   return (
-    <div className="flex items-center justify-between gap-3 border-b border-neutral-100 px-4 py-3">
-      <div>
+    <div className="flex flex-col gap-3 border-b border-neutral-100 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="min-w-0">
         <h3 className="text-sm font-semibold text-neutral-900">{title}</h3>
         {subtitle && <p className="text-[11px] text-neutral-500">{subtitle}</p>}
       </div>
-      {action}
+      {action ? <div className="shrink-0 self-start sm:self-auto">{action}</div> : null}
     </div>
   )
 }
@@ -1053,13 +1129,13 @@ function CardLink({ href, label }: { href: string; label: string }) {
 
 function Kpi({ label, value, icon, tone = 'default', live = false }: { label: string; value: string; icon: React.ReactNode; tone?: 'default' | 'alert'; live?: boolean }) {
   return (
-    <div className="rounded-xl border border-neutral-200 bg-white p-3.5 shadow-sm">
+    <div className="rounded-xl border border-neutral-200 bg-white p-3 shadow-sm sm:p-3.5">
       <div className="flex items-center justify-between">
         <span className="text-neutral-400">{icon}</span>
         {live && <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />}
       </div>
-      <p className={`mt-2 text-xl font-semibold tabular-nums ${tone === 'alert' ? 'text-rose-600' : 'text-neutral-900'}`}>{value}</p>
-      <p className="mt-0.5 text-[11px] uppercase tracking-wide text-neutral-500">{label}</p>
+      <p className={`mt-1.5 text-lg font-semibold tabular-nums sm:mt-2 sm:text-xl ${tone === 'alert' ? 'text-rose-600' : 'text-neutral-900'}`}>{value}</p>
+      <p className="mt-0.5 text-[10px] uppercase tracking-wide text-neutral-500 sm:text-[11px]">{label}</p>
     </div>
   )
 }

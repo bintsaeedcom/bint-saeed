@@ -114,10 +114,10 @@ export default function AdminOrdersPage() {
   }
 
   return (
-    <div className="p-6 text-white lg:p-10">
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div className="p-4 text-white sm:p-6 lg:p-10">
+      <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 data-document-h1="true" className="font-rozha text-3xl text-white">Orders</h1>
+          <h1 data-document-h1="true" className="font-rozha text-2xl text-white sm:text-3xl">Orders</h1>
           <p className="mt-1 font-montserrat text-sm text-white/50">
             Fulfilment pipeline · Stripe Checkout completes create orders via webhook
             {storage ? ` · Storage: ${storage}` : ''}
@@ -160,7 +160,41 @@ export default function AdminOrdersPage() {
       </div>
 
       <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.04]">
-        <div className="overflow-x-auto">
+        {loading && filtered.length === 0 ? (
+          <div className="px-4 py-16 text-center font-montserrat text-sm text-white/45">Loading…</div>
+        ) : filtered.length === 0 ? (
+          <div className="px-4 py-16 text-center font-montserrat text-sm text-white/45">
+            No orders yet. Complete a Stripe payment and ensure the webhook is configured (see env notes below).
+          </div>
+        ) : (
+          <>
+            <div className="divide-y divide-white/10 md:hidden">
+              {filtered.map((o) => (
+                <button
+                  key={o.id}
+                  type="button"
+                  onClick={() => setSelected(o)}
+                  className="w-full px-4 py-3.5 text-left transition-colors hover:bg-white/[0.06] active:bg-white/[0.06]"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="font-mono text-xs text-brand-stone">{o.id}</p>
+                      <p className="mt-1 truncate text-sm text-white/90">{o.customerEmail || '—'}</p>
+                      <p className="mt-1 text-[11px] text-white/45">{new Date(o.createdAt).toLocaleString()}</p>
+                    </div>
+                    <div className="shrink-0 text-right">
+                      <p className="font-montserrat text-sm tabular-nums text-white/90">
+                        {o.currency} {o.amountTotal.toFixed(2)}
+                      </p>
+                      <span className="mt-2 inline-block rounded-full bg-brand-dustyBlue/20 px-2 py-0.5 text-xs text-brand-stone">
+                        {labels[o.fulfillmentStatus]}
+                      </span>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+            <div className="hidden overflow-x-auto md:block">
           <table className="w-full min-w-[720px] text-left font-montserrat text-sm">
             <thead>
               <tr className="border-b border-white/10 text-[10px] uppercase tracking-[0.2em] text-white/45">
@@ -172,20 +206,7 @@ export default function AdminOrdersPage() {
               </tr>
             </thead>
             <tbody>
-              {loading && filtered.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="px-4 py-16 text-center text-white/45">
-                    Loading…
-                  </td>
-                </tr>
-              ) : filtered.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="px-4 py-16 text-center text-white/45">
-                    No orders yet. Complete a Stripe payment and ensure the webhook is configured (see env notes below).
-                  </td>
-                </tr>
-              ) : (
-                filtered.map((o) => (
+              {filtered.map((o) => (
                   <tr
                     key={o.id}
                     className="cursor-pointer border-b border-white/5 transition-colors hover:bg-white/[0.06]"
@@ -205,11 +226,12 @@ export default function AdminOrdersPage() {
                       {new Date(o.createdAt).toLocaleString()}
                     </td>
                   </tr>
-                ))
-              )}
+                ))}
             </tbody>
           </table>
-        </div>
+            </div>
+          </>
+        )}
       </div>
 
       <p className="mt-6 font-montserrat text-xs leading-relaxed text-white/40">
