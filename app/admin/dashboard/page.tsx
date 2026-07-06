@@ -175,7 +175,23 @@ function beep() {
 }
 
 function formatAed(n: number) {
-  return `AED ${n.toLocaleString('en-AE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+  const amount = Number(n)
+  if (!Number.isFinite(amount)) return 'AED —'
+  return `AED ${amount.toLocaleString('en-AE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+}
+
+function formatOrderTotal(currency: string | undefined, amountTotal: unknown): string {
+  const amount = Number(amountTotal)
+  const code = currency || 'AED'
+  if (!Number.isFinite(amount)) return `${code} —`
+  return `${code} ${amount.toFixed(2)}`
+}
+
+function cartAddCount(cartEvents: unknown): number {
+  if (!Array.isArray(cartEvents)) return 0
+  return cartEvents.filter(
+    (e) => e && typeof e === 'object' && (e as { action?: string }).action === 'add',
+  ).length
 }
 
 function formatTime(seconds: number) {
@@ -259,10 +275,16 @@ export default function AdminDashboard() {
         fetch('/api/analytics/slack?type=popular'),
       ])
       const [activeData, notifData, statsData, abandonedData, geoData, geoTrendData, popularData] = await Promise.all([
-        activeRes.json(), notifRes.json(), statsRes.json(), abandonedRes.json(), geoRes.json(), geoTrendRes.json(), popularRes.json(),
+        activeRes.json().catch(() => ({})),
+        notifRes.json().catch(() => ({})),
+        statsRes.json().catch(() => ({})),
+        abandonedRes.json().catch(() => ({})),
+        geoRes.json().catch(() => ({})),
+        geoTrendRes.json().catch(() => ({})),
+        popularRes.json().catch(() => ({})),
       ])
-      setActiveVisitors(activeData.activeVisitors || [])
-      setNotifications(notifData.notifications || [])
+      setActiveVisitors(Array.isArray(activeData.activeVisitors) ? activeData.activeVisitors : [])
+      setNotifications(Array.isArray(notifData.notifications) ? notifData.notifications : [])
       if (statsRes.ok) setStats(statsData)
       if (abandonedRes.ok) setAbandoned(abandonedData as AbandonedStats)
       if (geoRes.ok) setVisitorLocations(geoData.locations || [])
@@ -330,7 +352,7 @@ export default function AdminDashboard() {
   const recentRevenue = orders
     .filter((o) => Date.now() - new Date(o.createdAt).getTime() <= 7 * 24 * 3600 * 1000)
     .reduce((sum, o) => sum + (o.amountTotal || 0), 0)
-  const publishedProducts = products.filter((p) => p.override.published !== false).length
+  const publishedProducts = products.filter((p) => p.override?.published !== false).length
   const draftProducts = Math.max(0, products.length - publishedProducts)
   const avgOrderValue = orders.length > 0 ? totalRevenue / orders.length : 0
   const needsAttention =
@@ -406,7 +428,7 @@ export default function AdminDashboard() {
                 </span>
                 <div>
                   <p className="text-sm font-semibold text-emerald-900">
-                    New order — {newOrderAlert.currency} {newOrderAlert.amountTotal.toFixed(2)}
+                    New order — {formatOrderTotal(newOrderAlert.currency, newOrderAlert.amountTotal)}
                   </p>
                   <p className="text-xs text-emerald-700">{newOrderAlert.id} · {newOrderAlert.customerEmail || 'Unknown'}</p>
                 </div>
@@ -461,7 +483,7 @@ export default function AdminDashboard() {
                             <p className="mt-1 text-[11px] text-neutral-500">{timeAgo(o.createdAt)}</p>
                           </div>
                           <div className="shrink-0 text-right">
-                            <p className="font-medium tabular-nums text-neutral-900">{o.currency} {o.amountTotal.toFixed(2)}</p>
+                            <p className="font-medium tabular-nums text-neutral-900">{formatOrderTotal(o.currency, o.amountTotal)}</p>
                             <div className="mt-1.5 flex justify-end">
                               <StatusBadge status={o.fulfillmentStatus} />
                             </div>
@@ -486,7 +508,7 @@ export default function AdminDashboard() {
                         <tr key={o.id} className="border-b border-neutral-100 last:border-0 hover:bg-neutral-50">
                           <td className="px-4 py-2.5 font-mono text-xs text-neutral-600">{o.id}</td>
                           <td className="max-w-[180px] truncate px-4 py-2.5 text-neutral-800">{o.customerEmail || '—'}</td>
-                          <td className="whitespace-nowrap px-4 py-2.5 font-medium tabular-nums text-neutral-900">{o.currency} {o.amountTotal.toFixed(2)}</td>
+                          <td className="whitespace-nowrap px-4 py-2.5 font-medium tabular-nums text-neutral-900">{formatOrderTotal(o.currency, o.amountTotal)}</td>
                           <td className="px-4 py-2.5"><StatusBadge status={o.fulfillmentStatus} /></td>
                           <td className="whitespace-nowrap px-4 py-2.5 text-xs text-neutral-500">{timeAgo(o.createdAt)}</td>
                         </tr>
@@ -816,9 +838,9 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                     <div className="flex items-center justify-between gap-2 sm:justify-end">
-                      {v.cartEvents?.filter((e) => e.action === 'add').length > 0 && (
+                      {cartAddCount(v.cartEvents) > 0 && (
                         <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-600">
-                          <FiShoppingCart className="h-3 w-3" />{v.cartEvents.filter((e) => e.action === 'add').length}
+                          <FiShoppingCart className="h-3 w-3" />{cartAddCount(v.cartEvents)}
                         </span>
                       )}
                       <FiChevronRight className="h-4 w-4 text-neutral-400" />
@@ -961,7 +983,7 @@ export default function AdminDashboard() {
                   <InfoStat value={String(selectedVisitor.visitCount)} label="Visits" />
                   <InfoStat value={formatTime(selectedVisitor.totalTimeOnSite)} label="On site" />
                   <InfoStat value={String(selectedVisitor.pageViews?.length || 0)} label="Pages" />
-                  <InfoStat value={String(selectedVisitor.cartEvents?.filter((e) => e.action === 'add').length || 0)} label="Cart adds" />
+                  <InfoStat value={String(cartAddCount(selectedVisitor.cartEvents))} label="Cart adds" />
                 </div>
                 {selectedVisitor.pageViews?.length > 0 && (
                   <div>

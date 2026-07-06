@@ -155,6 +155,33 @@ function num(value: unknown): number | undefined {
   return undefined
 }
 
+/** Sanitize visitor blobs read from Redis — malformed legacy payloads must not crash the dashboard. */
+function normalizeStoredVisitor(raw: unknown): AnalyticsVisitor | null {
+  if (!raw || typeof raw !== 'object') return null
+  const data = raw as Record<string, unknown>
+  const visitorId = typeof data.visitorId === 'string' ? data.visitorId : ''
+  if (!visitorId) return null
+  const lastSeen =
+    typeof data.lastSeen === 'string' && data.lastSeen.trim()
+      ? data.lastSeen
+      : new Date().toISOString()
+  return {
+    visitorId,
+    sessionId: typeof data.sessionId === 'string' ? data.sessionId : undefined,
+    isNewVisitor: typeof data.isNewVisitor === 'boolean' ? data.isNewVisitor : undefined,
+    visitCount: num(data.visitCount),
+    currentVisit: typeof data.currentVisit === 'string' ? data.currentVisit : undefined,
+    lastSeen,
+    location: (data.location as AnalyticsVisitor['location']) ?? null,
+    device: (data.device as AnalyticsVisitor['device']) ?? undefined,
+    pageViews: Array.isArray(data.pageViews) ? (data.pageViews as AnalyticsVisitor['pageViews']) : [],
+    totalTimeOnSite: num(data.totalTimeOnSite) ?? 0,
+    referrer: typeof data.referrer === 'string' ? data.referrer : undefined,
+    contactInfo: (data.contactInfo as AnalyticsVisitor['contactInfo']) ?? undefined,
+    cartEvents: Array.isArray(data.cartEvents) ? (data.cartEvents as AnalyticsVisitor['cartEvents']) : [],
+  }
+}
+
 const CART_TYPES: Record<string, AbandonedCartSnapshot['status']> = {
   cart_add: 'active',
   cart_event: 'active',
@@ -510,16 +537,18 @@ export async function getActiveVisitors(): Promise<AnalyticsVisitor[]> {
     for (const item of raw) {
       if (!item) continue
       try {
-        out.push(typeof item === 'string' ? JSON.parse(item) : (item as AnalyticsVisitor))
+        const parsed = typeof item === 'string' ? JSON.parse(item) : item
+        const visitor = normalizeStoredVisitor(parsed)
+        if (visitor) out.push(visitor)
       } catch {
         /* skip */
       }
     }
-    return out.sort((a, b) => b.lastSeen.localeCompare(a.lastSeen))
+    return out.sort((a, b) => (b.lastSeen || '').localeCompare(a.lastSeen || ''))
   }
   return Array.from(memVisitors.values())
     .filter((v) => new Date(v.lastSeen).getTime() >= cutoff)
-    .sort((a, b) => b.lastSeen.localeCompare(a.lastSeen))
+    .sort((a, b) => (b.lastSeen || '').localeCompare(a.lastSeen || ''))
 }
 
 export async function getNotifications(limit = NOTIF_MAX): Promise<AnalyticsNotification[]> {
