@@ -80,6 +80,24 @@ function withLocaleHeaders(
   return NextResponse.next({ request: { headers } })
 }
 
+/** Legacy owner URLs (and locale-prefixed variants) → current /admin/* routes. */
+function redirectLegacyAdminPath(
+  request: NextRequest,
+  innerPath: string,
+): NextResponse | null {
+  let destination: string | null = null
+  if (innerPath === '/dashboard' || innerPath.startsWith('/dashboard/')) {
+    destination = '/admin/dashboard'
+  } else if (innerPath === '/login' || innerPath.startsWith('/login/')) {
+    destination = '/admin/login'
+  }
+  if (!destination) return null
+
+  const url = request.nextUrl.clone()
+  url.pathname = destination
+  return withAdminPrivacyHeaders(NextResponse.redirect(url))
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl
 
@@ -117,12 +135,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 307)
   }
 
+  const { pathname: innerPath, locale: pathLocale } = stripLocaleFromPathname(pathname)
+
+  const legacyAdminRedirect = redirectLegacyAdminPath(request, innerPath)
+  if (legacyAdminRedirect) return legacyAdminRedirect
+
   if (pathname.startsWith('/api/admin')) {
     const res = withLocaleHeaders(request, 'en', pathname)
     return withAdminPrivacyHeaders(res)
   }
-
-  const { pathname: innerPath, locale: pathLocale } = stripLocaleFromPathname(pathname)
 
   if (innerPath === '/admin' || innerPath.startsWith('/admin/')) {
     const headers = new Headers(request.headers)
