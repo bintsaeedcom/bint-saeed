@@ -182,6 +182,61 @@ function normalizeStoredVisitor(raw: unknown): AnalyticsVisitor | null {
   }
 }
 
+const CART_STATUSES = new Set<AbandonedCartSnapshot['status']>([
+  'active',
+  'abandoned',
+  'checkout_started',
+  'recovered',
+])
+
+function normalizeStoredNotification(raw: unknown): AnalyticsNotification | null {
+  if (!raw || typeof raw !== 'object') return null
+  const data = raw as Record<string, unknown>
+  const id =
+    typeof data.id === 'string' && data.id.trim()
+      ? data.id
+      : `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+  const type = typeof data.type === 'string' && data.type.trim() ? data.type : 'unknown'
+  const timestamp =
+    typeof data.timestamp === 'string' && !Number.isNaN(Date.parse(data.timestamp))
+      ? data.timestamp
+      : new Date().toISOString()
+  return {
+    id,
+    type,
+    data: data.data && typeof data.data === 'object' ? (data.data as Record<string, unknown>) : {},
+    timestamp,
+    read: typeof data.read === 'boolean' ? data.read : false,
+  }
+}
+
+function normalizeStoredCart(raw: unknown): AbandonedCartSnapshot | null {
+  if (!raw || typeof raw !== 'object') return null
+  const data = raw as Record<string, unknown>
+  const visitorId = typeof data.visitorId === 'string' ? data.visitorId.trim() : ''
+  if (!visitorId) return null
+  const statusRaw = typeof data.status === 'string' ? data.status : 'active'
+  const status = CART_STATUSES.has(statusRaw as AbandonedCartSnapshot['status'])
+    ? (statusRaw as AbandonedCartSnapshot['status'])
+    : 'active'
+  const updatedAt =
+    typeof data.updatedAt === 'string' && !Number.isNaN(Date.parse(data.updatedAt))
+      ? data.updatedAt
+      : new Date().toISOString()
+  return {
+    visitorId,
+    cartValueAed: num(data.cartValueAed),
+    cartItems: num(data.cartItems),
+    items: Array.isArray(data.items) ? (data.items as AbandonedCartSnapshot['items']) : undefined,
+    location: (data.location as AbandonedCartSnapshot['location']) ?? null,
+    device: (data.device as AbandonedCartSnapshot['device']) ?? undefined,
+    contactEmail: typeof data.contactEmail === 'string' ? data.contactEmail : undefined,
+    page: typeof data.page === 'string' ? data.page : undefined,
+    updatedAt,
+    status,
+  }
+}
+
 const CART_TYPES: Record<string, AbandonedCartSnapshot['status']> = {
   cart_add: 'active',
   cart_event: 'active',
@@ -558,14 +613,16 @@ export async function getNotifications(limit = NOTIF_MAX): Promise<AnalyticsNoti
     const out: AnalyticsNotification[] = []
     for (const item of raw) {
       try {
-        out.push(typeof item === 'string' ? JSON.parse(item) : item)
+        const parsed = typeof item === 'string' ? JSON.parse(item) : item
+        const notification = normalizeStoredNotification(parsed)
+        if (notification) out.push(notification)
       } catch {
         /* skip */
       }
     }
     return out
   }
-  return memNotifs.slice(0, limit)
+  return memNotifs.slice(0, limit).map((n) => normalizeStoredNotification(n)).filter((n): n is AnalyticsNotification => Boolean(n))
 }
 
 export async function getAnalyticsStats(): Promise<AnalyticsStats> {
@@ -606,7 +663,9 @@ export async function getAbandonedCartStats(limit = 20): Promise<AbandonedCartSt
       for (const item of raw) {
         if (!item) continue
         try {
-          carts.push(typeof item === 'string' ? JSON.parse(item) : (item as AbandonedCartSnapshot))
+          const parsed = typeof item === 'string' ? JSON.parse(item) : item
+          const cart = normalizeStoredCart(parsed)
+          if (cart) carts.push(cart)
         } catch {
           /* skip */
         }
@@ -616,6 +675,8 @@ export async function getAbandonedCartStats(limit = 20): Promise<AbandonedCartSt
     recoveredToday = Number(day.recovered || 0)
   } else {
     carts = Array.from(memCarts.values())
+      .map((cart) => normalizeStoredCart(cart))
+      .filter((cart): cart is AbandonedCartSnapshot => Boolean(cart))
       .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
       .slice(0, limit)
   }

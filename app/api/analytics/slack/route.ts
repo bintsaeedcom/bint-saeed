@@ -821,38 +821,67 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const type = searchParams.get('type')
 
-  if (type === 'active') {
-    const active = await getActiveVisitors()
-    return NextResponse.json({ activeVisitors: active, count: active.length })
-  }
+  try {
+    if (type === 'active') {
+      const active = await getActiveVisitors()
+      return NextResponse.json({ activeVisitors: active, count: active.length })
+    }
 
-  if (type === 'notifications') {
-    const notifications = await getNotifications()
-    return NextResponse.json({ notifications })
-  }
+    if (type === 'notifications') {
+      const notifications = await getNotifications()
+      return NextResponse.json({ notifications })
+    }
 
-  if (type === 'abandoned') {
-    const abandoned = await getAbandonedCartStats()
-    return NextResponse.json(abandoned)
-  }
+    if (type === 'abandoned') {
+      const abandoned = await getAbandonedCartStats()
+      return NextResponse.json(abandoned)
+    }
 
-  if (type === 'geo') {
-    const locations = await getVisitorLocationOverview()
-    return NextResponse.json({ locations })
-  }
+    if (type === 'geo') {
+      const locations = await getVisitorLocationOverview()
+      return NextResponse.json({ locations })
+    }
 
-  if (type === 'geo-trend') {
-    const daysRaw = Number(searchParams.get('days') || 7)
-    const days = Number.isFinite(daysRaw) ? Math.min(30, Math.max(1, Math.floor(daysRaw))) : 7
-    const trend = await getGeoTrend(days)
-    return NextResponse.json(trend)
-  }
+    if (type === 'geo-trend') {
+      const daysRaw = Number(searchParams.get('days') || 7)
+      const days = Number.isFinite(daysRaw) ? Math.min(30, Math.max(1, Math.floor(daysRaw))) : 7
+      const trend = await getGeoTrend(days)
+      return NextResponse.json(trend)
+    }
 
-  if (type === 'popular') {
-    const popular = await getContentPopularity()
-    return NextResponse.json(popular)
-  }
+    if (type === 'popular') {
+      const popular = await getContentPopularity()
+      return NextResponse.json(popular)
+    }
 
-  const stats = await getAnalyticsStats()
-  return NextResponse.json(stats)
+    const stats = await getAnalyticsStats()
+    return NextResponse.json(stats)
+  } catch (error) {
+    console.error('Analytics dashboard GET error:', type ?? 'stats', error)
+    if (type === 'active') {
+      return NextResponse.json({ activeVisitors: [], count: 0 })
+    }
+    if (type === 'notifications') {
+      return NextResponse.json({ notifications: [] })
+    }
+    if (type === 'abandoned') {
+      return NextResponse.json({ openCount: 0, openValueAed: 0, recoveredToday: 0, carts: [] })
+    }
+    if (type === 'geo') {
+      return NextResponse.json({ locations: [] })
+    }
+    if (type === 'geo-trend') {
+      return NextResponse.json({ days: [], series: [], totals: [] })
+    }
+    if (type === 'popular') {
+      return NextResponse.json({ pages: [], products: [] })
+    }
+    return NextResponse.json({
+      liveVisitors: 0,
+      totalVisitors: 0,
+      todayVisitors: 0,
+      newVisitors: 0,
+      returningVisitors: 0,
+    })
+  }
 }

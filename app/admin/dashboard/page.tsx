@@ -195,30 +195,203 @@ function cartAddCount(cartEvents: unknown): number {
 }
 
 function formatTime(seconds: number) {
-  if (!seconds) return '0s'
-  if (seconds < 60) return `${seconds}s`
-  const mins = Math.floor(seconds / 60)
+  const value = Number(seconds)
+  if (!Number.isFinite(value) || value <= 0) return '0s'
+  if (value < 60) return `${Math.floor(value)}s`
+  const mins = Math.floor(value / 60)
   if (mins < 60) return `${mins}m`
   const hours = Math.floor(mins / 60)
   return `${hours}h ${mins % 60}m`
 }
 
+function parseIsoDate(iso: unknown): Date | null {
+  if (typeof iso !== 'string' || !iso.trim()) return null
+  const date = new Date(iso)
+  return Number.isNaN(date.getTime()) ? null : date
+}
+
 function formatUaeDateTime(iso: string) {
-  return new Intl.DateTimeFormat('en-GB', {
-    timeZone: 'Asia/Dubai',
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  }).format(new Date(iso))
+  const date = parseIsoDate(iso)
+  if (!date) return '—'
+  try {
+    return new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Dubai',
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(date)
+  } catch {
+    return '—'
+  }
 }
 
 function timeAgo(iso: string) {
-  const diff = Date.now() - new Date(iso).getTime()
+  const date = parseIsoDate(iso)
+  if (!date) return '—'
+  const diff = Date.now() - date.getTime()
   const mins = Math.floor(diff / 60000)
   if (mins < 1) return 'just now'
   if (mins < 60) return `${mins}m ago`
   const hours = Math.floor(mins / 60)
   if (hours < 24) return `${hours}h ago`
   return `${Math.floor(hours / 24)}d ago`
+}
+
+const EMPTY_STATS = {
+  liveVisitors: 0,
+  totalVisitors: 0,
+  todayVisitors: 0,
+  newVisitors: 0,
+  returningVisitors: 0,
+}
+
+function normalizeDashboardVisitor(raw: unknown): Visitor | null {
+  if (!raw || typeof raw !== 'object') return null
+  const data = raw as Record<string, unknown>
+  const visitorId = typeof data.visitorId === 'string' ? data.visitorId.trim() : ''
+  if (!visitorId) return null
+  const lastSeen =
+    typeof data.lastSeen === 'string' && parseIsoDate(data.lastSeen) ? data.lastSeen : new Date().toISOString()
+  return {
+    visitorId,
+    sessionId: typeof data.sessionId === 'string' ? data.sessionId : '',
+    isNewVisitor: Boolean(data.isNewVisitor),
+    visitCount: Number(data.visitCount) || 0,
+    currentVisit: typeof data.currentVisit === 'string' ? data.currentVisit : lastSeen,
+    lastSeen,
+    location:
+      data.location && typeof data.location === 'object'
+        ? (data.location as Visitor['location'])
+        : null,
+    device:
+      data.device && typeof data.device === 'object'
+        ? (data.device as Visitor['device'])
+        : { type: 'desktop', browser: 'Unknown', os: 'Unknown' },
+    pageViews: Array.isArray(data.pageViews) ? (data.pageViews as Visitor['pageViews']) : [],
+    totalTimeOnSite: Number(data.totalTimeOnSite) || 0,
+    referrer: typeof data.referrer === 'string' ? data.referrer : '',
+    contactInfo:
+      data.contactInfo && typeof data.contactInfo === 'object'
+        ? (data.contactInfo as Visitor['contactInfo'])
+        : undefined,
+    cartEvents: Array.isArray(data.cartEvents) ? (data.cartEvents as Visitor['cartEvents']) : [],
+  }
+}
+
+function normalizeDashboardNotification(raw: unknown): Notification | null {
+  if (!raw || typeof raw !== 'object') return null
+  const data = raw as Record<string, unknown>
+  const id =
+    typeof data.id === 'string' && data.id.trim()
+      ? data.id
+      : `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+  const type = typeof data.type === 'string' && data.type.trim() ? data.type : 'unknown'
+  const timestamp =
+    typeof data.timestamp === 'string' && parseIsoDate(data.timestamp)
+      ? data.timestamp
+      : new Date().toISOString()
+  return {
+    id,
+    type,
+    data: data.data && typeof data.data === 'object' ? data.data : {},
+    timestamp,
+    read: Boolean(data.read),
+  }
+}
+
+function normalizeGeoTrend(raw: unknown): GeoTrendResult | null {
+  if (!raw || typeof raw !== 'object') return null
+  const data = raw as Partial<GeoTrendResult>
+  return {
+    days: Array.isArray(data.days) ? data.days : [],
+    series: Array.isArray(data.series) ? data.series : [],
+    totals: Array.isArray(data.totals) ? data.totals : [],
+  }
+}
+
+function normalizePopularity(raw: unknown): ContentPopularity | null {
+  if (!raw || typeof raw !== 'object') return null
+  const data = raw as Partial<ContentPopularity>
+  return {
+    pages: Array.isArray(data.pages) ? data.pages : [],
+    products: Array.isArray(data.products) ? data.products : [],
+  }
+}
+
+function normalizeAbandonedStats(raw: unknown): AbandonedStats | null {
+  if (!raw || typeof raw !== 'object') return null
+  const data = raw as Partial<AbandonedStats>
+  const carts = Array.isArray(data.carts)
+    ? data.carts.filter(
+        (cart): cart is AbandonedCart =>
+          Boolean(cart && typeof cart === 'object' && typeof cart.visitorId === 'string' && cart.visitorId.trim()),
+      )
+    : []
+  return {
+    openCount: Number(data.openCount) || 0,
+    openValueAed: Number(data.openValueAed) || 0,
+    recoveredToday: Number(data.recoveredToday) || 0,
+    carts,
+  }
+}
+
+function normalizeDashboardStats(raw: unknown) {
+  if (!raw || typeof raw !== 'object') return EMPTY_STATS
+  const data = raw as Partial<typeof EMPTY_STATS>
+  return {
+    liveVisitors: Number(data.liveVisitors) || 0,
+    totalVisitors: Number(data.totalVisitors) || 0,
+    todayVisitors: Number(data.todayVisitors) || 0,
+    newVisitors: Number(data.newVisitors) || 0,
+    returningVisitors: Number(data.returningVisitors) || 0,
+  }
+}
+
+function normalizeDashboardOrder(raw: unknown): StoredOrder | null {
+  if (!raw || typeof raw !== 'object') return null
+  const data = raw as Record<string, unknown>
+  if (typeof data.id !== 'string' || !data.id.trim()) return null
+  const createdAt =
+    typeof data.createdAt === 'string' && parseIsoDate(data.createdAt)
+      ? data.createdAt
+      : new Date().toISOString()
+  const updatedAt =
+    typeof data.updatedAt === 'string' && parseIsoDate(data.updatedAt)
+      ? data.updatedAt
+      : createdAt
+  return {
+    id: data.id,
+    stripeSessionId: typeof data.stripeSessionId === 'string' ? data.stripeSessionId : data.id,
+    paymentProvider: typeof data.paymentProvider === 'string' ? (data.paymentProvider as StoredOrder['paymentProvider']) : undefined,
+    paymentIntentId: typeof data.paymentIntentId === 'string' ? data.paymentIntentId : undefined,
+    molliePaymentId: typeof data.molliePaymentId === 'string' ? data.molliePaymentId : undefined,
+    paypalOrderId: typeof data.paypalOrderId === 'string' ? data.paypalOrderId : undefined,
+    paypalCaptureId: typeof data.paypalCaptureId === 'string' ? data.paypalCaptureId : undefined,
+    customerEmail: typeof data.customerEmail === 'string' ? data.customerEmail : '',
+    customerName: typeof data.customerName === 'string' ? data.customerName : undefined,
+    customerPhone: typeof data.customerPhone === 'string' ? data.customerPhone : undefined,
+    shippingAddress:
+      data.shippingAddress && typeof data.shippingAddress === 'object'
+        ? (data.shippingAddress as StoredOrder['shippingAddress'])
+        : undefined,
+    billingAddress:
+      data.billingAddress && typeof data.billingAddress === 'object'
+        ? (data.billingAddress as StoredOrder['billingAddress'])
+        : undefined,
+    lines: Array.isArray(data.lines) ? (data.lines as StoredOrder['lines']) : [],
+    amountSubtotal: Number(data.amountSubtotal) || 0,
+    amountShipping: Number(data.amountShipping) || 0,
+    amountTotal: Number(data.amountTotal) || 0,
+    currency: typeof data.currency === 'string' ? data.currency : 'AED',
+    fulfillmentStatus:
+      typeof data.fulfillmentStatus === 'string'
+        ? (data.fulfillmentStatus as StoredOrder['fulfillmentStatus'])
+        : 'paid',
+    deliveryNotes: typeof data.deliveryNotes === 'string' ? data.deliveryNotes : undefined,
+    internalNotes: typeof data.internalNotes === 'string' ? data.internalNotes : undefined,
+    discountCode: typeof data.discountCode === 'string' ? data.discountCode : undefined,
+    createdAt,
+    updatedAt,
+  }
 }
 
 export default function AdminDashboard() {
@@ -283,21 +456,33 @@ export default function AdminDashboard() {
         geoTrendRes.json().catch(() => ({})),
         popularRes.json().catch(() => ({})),
       ])
-      setActiveVisitors(Array.isArray(activeData.activeVisitors) ? activeData.activeVisitors : [])
-      setNotifications(Array.isArray(notifData.notifications) ? notifData.notifications : [])
-      if (statsRes.ok) setStats(statsData)
-      if (abandonedRes.ok) setAbandoned(abandonedData as AbandonedStats)
-      if (geoRes.ok) setVisitorLocations(geoData.locations || [])
-      if (geoTrendRes.ok) setGeoTrend(geoTrendData as GeoTrendResult)
-      if (popularRes.ok) setPopularity(popularData as ContentPopularity)
+      setActiveVisitors(
+        Array.isArray(activeData.activeVisitors)
+          ? activeData.activeVisitors
+              .map((visitor: unknown) => normalizeDashboardVisitor(visitor))
+              .filter((visitor: Visitor | null): visitor is Visitor => Boolean(visitor))
+          : [],
+      )
+      setNotifications(
+        Array.isArray(notifData.notifications)
+          ? notifData.notifications
+              .map((notification: unknown) => normalizeDashboardNotification(notification))
+              .filter((notification: Notification | null): notification is Notification => Boolean(notification))
+          : [],
+      )
+      setStats(statsRes.ok ? normalizeDashboardStats(statsData) : EMPTY_STATS)
+      setAbandoned(abandonedRes.ok ? normalizeAbandonedStats(abandonedData) : null)
+      setVisitorLocations(Array.isArray(geoData.locations) ? geoData.locations : [])
+      setGeoTrend(geoTrendRes.ok ? normalizeGeoTrend(geoTrendData) : null)
+      setPopularity(popularRes.ok ? normalizePopularity(popularData) : null)
 
       const checkoutRes = await fetch('/api/admin/checkout-health')
-      const checkoutData = await checkoutRes.json()
-      setCheckoutHealth(checkoutRes.ok ? (checkoutData as CheckoutHealth) : null)
+      const checkoutData = await checkoutRes.json().catch(() => null)
+      setCheckoutHealth(checkoutRes.ok && checkoutData ? (checkoutData as CheckoutHealth) : null)
 
       const opsRes = await fetch('/api/admin/ops-health')
-      const opsData = await opsRes.json()
-      setOpsHealth(opsRes.ok ? (opsData as OpsHealth) : null)
+      const opsData = await opsRes.json().catch(() => null)
+      setOpsHealth(opsRes.ok && opsData ? (opsData as OpsHealth) : null)
 
       const [ordersRes, customersRes, productsRes] = await Promise.all([
         fetch('/api/admin/orders'),
@@ -305,11 +490,17 @@ export default function AdminDashboard() {
         fetch('/api/admin/products/overrides'),
       ])
       const [ordersData, customersData, productsData] = await Promise.all([
-        ordersRes.json(), customersRes.json(), productsRes.json(),
+        ordersRes.json().catch(() => ({})),
+        customersRes.json().catch(() => ({})),
+        productsRes.json().catch(() => ({})),
       ])
 
       if (ordersRes.ok) {
-        const nextOrders: StoredOrder[] = ordersData.orders || []
+        const nextOrders: StoredOrder[] = Array.isArray(ordersData.orders)
+          ? ordersData.orders
+              .map((order: unknown) => normalizeDashboardOrder(order))
+              .filter((order: StoredOrder | null): order is StoredOrder => Boolean(order))
+          : []
         if (knownOrderIds.current === null) {
           knownOrderIds.current = new Set(nextOrders.map((o) => o.id))
         } else {
@@ -571,10 +762,13 @@ export default function AdminDashboard() {
               }
             />
 
-            {geoTrend && geoTrend.series.length > 0 ? (
+            {geoTrend && Array.isArray(geoTrend.series) && geoTrend.series.length > 0 ? (
               <div className="border-b border-neutral-100 px-4 py-4">
                 <p className="mb-3 text-[10px] uppercase tracking-wider text-neutral-500">Last 7 days — top areas</p>
-                <GeoTrendChart series={geoTrend.series} dayLabels={geoTrend.days.map((d) => d.date)} />
+                <GeoTrendChart
+                  series={geoTrend.series}
+                  dayLabels={Array.isArray(geoTrend.days) ? geoTrend.days.map((d) => d.date) : []}
+                />
               </div>
             ) : null}
 
@@ -601,7 +795,7 @@ export default function AdminDashboard() {
 
               <div>
                 <p className="px-4 pt-3 text-[10px] uppercase tracking-wider text-neutral-500">7-day totals</p>
-                {geoTrend && geoTrend.totals.length > 0 ? (
+                {geoTrend && Array.isArray(geoTrend.totals) && geoTrend.totals.length > 0 ? (
                   <div className="overflow-x-auto">
                     <table className="w-full min-w-[280px] text-left text-sm">
                       <tbody>
@@ -739,7 +933,7 @@ export default function AdminDashboard() {
                     <div key={c.visitorId} className="px-4 py-3">
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                          <p className="font-mono text-xs text-neutral-600">{c.visitorId.slice(0, 10)}</p>
+                          <p className="font-mono text-xs text-neutral-600">{(c.visitorId || 'visitor').slice(0, 10)}</p>
                           {c.contactEmail ? <p className="mt-0.5 truncate text-sm text-neutral-800">{c.contactEmail}</p> : null}
                           <p className="mt-1 text-xs text-neutral-600">{formatVisitorLocation(c.location)}</p>
                         </div>
@@ -773,7 +967,7 @@ export default function AdminDashboard() {
                     {abandoned.carts.slice(0, 10).map((c) => (
                       <tr key={c.visitorId} className="border-b border-neutral-100 last:border-0 hover:bg-neutral-50">
                         <td className="px-4 py-2.5">
-                          <p className="font-mono text-xs text-neutral-600">{c.visitorId.slice(0, 10)}</p>
+                          <p className="font-mono text-xs text-neutral-600">{(c.visitorId || 'visitor').slice(0, 10)}</p>
                           {c.contactEmail && <p className="text-[11px] text-neutral-500">{c.contactEmail}</p>}
                         </td>
                         <td className="max-w-[180px] px-4 py-2.5 text-xs text-neutral-700">
@@ -985,16 +1179,16 @@ export default function AdminDashboard() {
                   <InfoStat value={String(selectedVisitor.pageViews?.length || 0)} label="Pages" />
                   <InfoStat value={String(cartAddCount(selectedVisitor.cartEvents))} label="Cart adds" />
                 </div>
-                {selectedVisitor.pageViews?.length > 0 && (
+                {Array.isArray(selectedVisitor.pageViews) && selectedVisitor.pageViews.length > 0 && (
                   <div>
                     <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-neutral-500">Page journey</p>
                     <div className="space-y-1.5">
                       {selectedVisitor.pageViews.map((pv, i) => (
-                        <div key={i} className="flex items-center gap-3 rounded-lg bg-neutral-50 px-3 py-2">
+                        <div key={`${pv.path || pv.title || 'page'}-${i}`} className="flex items-center gap-3 rounded-lg bg-neutral-50 px-3 py-2">
                           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-neutral-800 text-[10px] text-white">{i + 1}</span>
                           <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm text-neutral-900">{pv.title || pv.path}</p>
-                            <p className="text-[11px] text-neutral-500">{pv.timeOnPage}s on page</p>
+                            <p className="truncate text-sm text-neutral-900">{pv.title || pv.path || 'Page'}</p>
+                            <p className="text-[11px] text-neutral-500">{Number(pv.timeOnPage) || 0}s on page</p>
                           </div>
                         </div>
                       ))}
@@ -1058,7 +1252,7 @@ export default function AdminDashboard() {
                             <p className="text-[11px] text-neutral-500">
                               {formatVisitorLocation(n.data?.location)}
                             </p>
-                            <p className="mt-0.5 text-[11px] text-neutral-400">{new Date(n.timestamp).toLocaleString()}</p>
+                            <p className="mt-0.5 text-[11px] text-neutral-400">{formatUaeDateTime(n.timestamp)}</p>
                           </div>
                         </div>
                       ))
@@ -1077,16 +1271,23 @@ export default function AdminDashboard() {
 /* ---------- UI primitives ---------- */
 
 function GeoTrendChart({ series, dayLabels }: { series: GeoTrendSeries[]; dayLabels: string[] }) {
-  const maxTotal = Math.max(...series.map((s) => s.total), 1)
+  const safeSeries = Array.isArray(series) ? series : []
+  const safeDayLabels = Array.isArray(dayLabels) ? dayLabels : []
+  const maxTotal = Math.max(...safeSeries.map((s) => Number(s.total) || 0), 1)
   const shortDay = (iso: string) => {
-    const d = new Date(`${iso}T12:00:00`)
-    return d.toLocaleDateString('en-GB', { weekday: 'short' })
+    const date = parseIsoDate(iso)
+    if (!date) return '—'
+    try {
+      return date.toLocaleDateString('en-GB', { weekday: 'short' })
+    } catch {
+      return '—'
+    }
   }
 
   return (
     <div className="space-y-3">
-      {series.map((row) => (
-        <div key={row.location}>
+      {safeSeries.map((row) => (
+        <div key={row.location || 'unknown'}>
           <div className="mb-1 flex items-center justify-between gap-2 text-[11px]">
             <span className="truncate text-neutral-800">{row.location}</span>
             <span className="shrink-0 tabular-nums text-neutral-600">{row.total}</span>
@@ -1101,9 +1302,9 @@ function GeoTrendChart({ series, dayLabels }: { series: GeoTrendSeries[]; dayLab
             />
           </div>
           <div className="mt-1.5 flex gap-1">
-            {dayLabels.map((day) => {
-              const count = row.daily[day] || 0
-              const dayMax = Math.max(...series.map((s) => s.daily[day] || 0), 1)
+            {safeDayLabels.map((day) => {
+              const count = row.daily?.[day] || 0
+              const dayMax = Math.max(...safeSeries.map((s) => s.daily?.[day] || 0), 1)
               const h = count ? Math.max(12, (count / dayMax) * 100) : 4
               return (
                 <div key={`${row.location}-${day}`} className="flex min-w-0 flex-1 flex-col items-center gap-1">
@@ -1190,7 +1391,8 @@ function StatusChip({ ok, okLabel, badLabel }: { ok: boolean; okLabel: string; b
   )
 }
 
-function StatusBadge({ status }: { status: string }) {
+function StatusBadge({ status }: { status?: string }) {
+  const safeStatus = typeof status === 'string' && status.trim() ? status : 'unknown'
   const tone: Record<string, string> = {
     paid: 'bg-emerald-50 text-emerald-700',
     processing: 'bg-amber-50 text-amber-700',
@@ -1200,8 +1402,8 @@ function StatusBadge({ status }: { status: string }) {
     cancelled: 'bg-neutral-100 text-neutral-500',
     refunded: 'bg-rose-50 text-rose-700',
   }
-  const label = status.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
-  return <span className={`inline-block rounded-full px-2 py-0.5 text-[11px] font-medium ${tone[status] || 'bg-neutral-100 text-neutral-600'}`}>{label}</span>
+  const label = safeStatus.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
+  return <span className={`inline-block rounded-full px-2 py-0.5 text-[11px] font-medium ${tone[safeStatus] || 'bg-neutral-100 text-neutral-600'}`}>{label}</span>
 }
 
 function CartStageBadge({ status }: { status: string }) {
@@ -1251,7 +1453,7 @@ function deviceIcon(type?: string) {
   return <FiMonitor className="h-3.5 w-3.5" />
 }
 
-function notifIcon(type: string) {
+function notifIcon(type?: string) {
   switch (type) {
     case 'new_visitor': return '🆕'
     case 'returning_visitor': return '🔄'
@@ -1267,8 +1469,9 @@ function notifIcon(type: string) {
   }
 }
 
-function prettyType(type: string) {
-  return type.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
+function prettyType(type?: string) {
+  const safeType = typeof type === 'string' && type.trim() ? type : 'unknown'
+  return safeType.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
 }
 
 function notifDetail(n: Notification): string {
