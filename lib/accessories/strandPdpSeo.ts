@@ -3,8 +3,12 @@ import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 import {
   ACCESSORY_IMAGE_EARRINGS_HERO,
   ACCESSORY_IMAGE_NECKLACE,
+  ACCESSORY_IMAGE_NECKLACE_LAPIS,
   ACCESSORY_IMAGE_NECKLACE_MALACHITE,
+  ACCESSORY_IMAGE_NECKLACE_ONYX,
   ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ,
+  ACCESSORY_IMAGE_NECKLACE_SUNSTONE,
+  ACCESSORY_IMAGE_NECKLACE_TIGER_EYE,
 } from '@/data/accessories'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getAccessorySku } from '@/lib/accessories/accessorySku'
@@ -75,7 +79,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   'signature-strand-onyx': {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-onyx',
-      necklaceImage: '', // same asset as strand — gallery shows earrings only
+      necklaceImage: ACCESSORY_IMAGE_NECKLACE_ONYX,
       necklaceLabel: 'Al Ain Oasis Necklace - Onyx',
       earringsId: QUAA_EARRINGS_ONYX_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
@@ -101,7 +105,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   'signature-strand-tiger-eye': {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-tiger-eye',
-      necklaceImage: '',
+      necklaceImage: ACCESSORY_IMAGE_NECKLACE_TIGER_EYE,
       necklaceLabel: 'Al Ain Oasis Necklace - Tiger Eye',
       earringsId: QUAA_EARRINGS_ONYX_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
@@ -127,7 +131,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   'signature-strand-sunstone': {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-sunstone',
-      necklaceImage: ACCESSORY_IMAGE_NECKLACE,
+      necklaceImage: ACCESSORY_IMAGE_NECKLACE_SUNSTONE,
       necklaceLabel: 'Al Ain Oasis Necklace - Sunstone',
       earringsId: OASIS_EARRINGS_ROSE_QUARTZ_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
@@ -153,7 +157,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   'signature-strand-fuchsia-jade': {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-sunstone',
-      necklaceImage: ACCESSORY_IMAGE_NECKLACE,
+      necklaceImage: ACCESSORY_IMAGE_NECKLACE_SUNSTONE,
       necklaceLabel: 'Al Ain Oasis Necklace - Sunstone',
       earringsId: OASIS_EARRINGS_ROSE_QUARTZ_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
@@ -179,7 +183,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   'signature-strand-orange-jade': {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-sunstone',
-      necklaceImage: ACCESSORY_IMAGE_NECKLACE,
+      necklaceImage: ACCESSORY_IMAGE_NECKLACE_SUNSTONE,
       necklaceLabel: 'Al Ain Oasis Necklace - Sunstone',
       earringsId: OASIS_EARRINGS_ROSE_QUARTZ_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
@@ -205,7 +209,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   'signature-strand-blue-aventurine': {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-lapis-lazuli',
-      necklaceImage: ACCESSORY_IMAGE_NECKLACE,
+      necklaceImage: ACCESSORY_IMAGE_NECKLACE_LAPIS,
       necklaceLabel: 'Al Ain Oasis Necklace - Lapis Lazuli',
       earringsId: QUAA_EARRINGS_LAPIS_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
@@ -283,7 +287,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   'signature-strand-lapis-lazuli': {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-lapis-lazuli',
-      necklaceImage: ACCESSORY_IMAGE_NECKLACE,
+      necklaceImage: ACCESSORY_IMAGE_NECKLACE_LAPIS,
       necklaceLabel: 'Al Ain Oasis Necklace - Lapis Lazuli',
       earringsId: QUAA_EARRINGS_LAPIS_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
@@ -309,7 +313,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   'signature-strand-amethyst-hearts': {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-lapis-lazuli',
-      necklaceImage: ACCESSORY_IMAGE_NECKLACE,
+      necklaceImage: ACCESSORY_IMAGE_NECKLACE_LAPIS,
       necklaceLabel: 'Al Ain Oasis Necklace - Lapis Lazuli',
       earringsId: QUAA_EARRINGS_LAPIS_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
@@ -336,7 +340,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
   'signature-strand-jade-hearts': {
     pairing: {
       necklaceId: 'al-ain-rosette-necklace-sunstone',
-      necklaceImage: ACCESSORY_IMAGE_NECKLACE,
+      necklaceImage: ACCESSORY_IMAGE_NECKLACE_SUNSTONE,
       necklaceLabel: 'Al Ain Oasis Necklace - Sunstone',
       earringsId: OASIS_EARRINGS_ROSE_QUARTZ_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,

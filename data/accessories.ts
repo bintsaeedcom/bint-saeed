@@ -3,12 +3,26 @@
  * (URL-encoded spaces; subfolders: `necklaces/`, `strands/`, `earrings/`, `bag charm/`, `phone charm/`.)
  */
 const A = '/Webshop%20pictures/accessoiries'
+const NECKLACES = `${A}/necklaces`
 
-export const ACCESSORY_IMAGE_NECKLACE = `${A}/necklaces/bint-saeed-malachite-necklace-front.webp`
-export const ACCESSORY_IMAGE_NECKLACE_MALACHITE = `${A}/necklaces/bint-saeed-malachite-necklace-front.webp`
-export const ACCESSORY_IMAGE_NECKLACE_MALACHITE_LIFESTYLE = `${A}/necklaces/bint-saeed-malachite-necklace-lifestyle.webp`
-export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ = `${A}/necklaces/bint-saeed-rose-quartz-necklace-front.webp`
-export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ_LIFESTYLE = `${A}/necklaces/bint-saeed-rose-quartz-necklace-lifestyle.webp`
+function necklaceFrontImage(stoneSlug: string): string {
+  return `${NECKLACES}/bint-saeed-${stoneSlug}-necklace-front.webp`
+}
+
+function necklaceLifestyleImage(stoneSlug: string): string {
+  return `${NECKLACES}/bint-saeed-${stoneSlug}-necklace-lifestyle.webp`
+}
+
+/** Default necklace hero (malachite) — used where a stone-specific shot is not uploaded yet. */
+export const ACCESSORY_IMAGE_NECKLACE = necklaceFrontImage('malachite')
+export const ACCESSORY_IMAGE_NECKLACE_MALACHITE = necklaceFrontImage('malachite')
+export const ACCESSORY_IMAGE_NECKLACE_MALACHITE_LIFESTYLE = necklaceLifestyleImage('malachite')
+export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ = necklaceFrontImage('rose-quartz')
+export const ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ_LIFESTYLE = necklaceLifestyleImage('rose-quartz')
+export const ACCESSORY_IMAGE_NECKLACE_TIGER_EYE = necklaceFrontImage('tiger-eye')
+export const ACCESSORY_IMAGE_NECKLACE_ONYX = necklaceFrontImage('onyx')
+export const ACCESSORY_IMAGE_NECKLACE_LAPIS = necklaceFrontImage('lapis-lazuli')
+export const ACCESSORY_IMAGE_NECKLACE_SUNSTONE = necklaceFrontImage('sunstone')
 
 const PHONE_CHARM = `${A}/phone%20charm`
 function phoneCharmFrontImage(stoneFileSlug: string): string {
@@ -160,7 +174,7 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Malachite'),
     nameAr: 'قلادة القوع روزيت: الملاكيت',
     category: 'necklaces',
-    price: 1650,
+    price: 1699,
     description:
       'Hand-strung malachite beads with signature clasp and extension chain. Deep Malachite Green tones.',
     descriptionAr:
@@ -177,12 +191,12 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Tiger Eye'),
     nameAr: 'قلادة القوع روزيت: عين النمر',
     category: 'necklaces',
-    price: 1480,
+    price: 1499,
     description:
       'Warm brown tiger eye beads with subtle chatoyancy, finished with our signature closure.',
     descriptionAr:
       'خرز عين النمر بني دافئ بلمعان خفيف، مع إغلاق التوقيع.',
-    images: [ACCESSORY_IMAGE_NECKLACE_MALACHITE],
+    images: [ACCESSORY_IMAGE_NECKLACE_TIGER_EYE],
     materials: 'Natural tiger eye beads, 18K gold-plated clasp',
     materialsAr: 'خرز عين النمر طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Tiger Eye Brown', nameAr: 'بني عين النمر', hex: '#8B5A2B' }],
@@ -194,12 +208,12 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Onyx'),
     nameAr: 'قلادة القوع روزيت: الأونكس',
     category: 'necklaces',
-    price: 1590,
+    price: 1499,
     description:
       'Polished black onyx beads with warm brown undertones and a refined signature clasp.',
     descriptionAr:
       'خرز أونكس أسود مصقول بتحت لون بني دافئ وإغلاق التوقيع الراقي.',
-    images: [ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ],
+    images: [ACCESSORY_IMAGE_NECKLACE_ONYX],
     materials: 'Natural black onyx beads, 18K gold-plated clasp',
     materialsAr: 'خرز أونكس أسود طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [
@@ -212,7 +226,7 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Rose Quartz'),
     nameAr: 'قلادة القوع روزيت: الكوارتز الوردي',
     category: 'necklaces',
-    price: 1740,
+    price: 1599,
     description:
       'Soft pink rose quartz beads hand-knotted for a luminous, romantic line with our signature hardware.',
     descriptionAr:
@@ -229,10 +243,10 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Sunstone'),
     nameAr: 'قلادة القوع روزيت: حجر الشمس',
     category: 'necklaces',
-    price: 380,
+    price: 1599,
     description: 'Warm sunstone bead necklace with luminous peach-orange tones and refined signature closure.',
     descriptionAr: 'قلادة خرز حجر الشمس بدرجات خوخي برتقالي متوهجة مع إغلاق توقيع راقٍ.',
-    images: [ACCESSORY_IMAGE_NECKLACE_MALACHITE],
+    images: [ACCESSORY_IMAGE_NECKLACE_SUNSTONE],
     materials: 'Natural sunstone beads, 18K gold-plated clasp',
     materialsAr: 'خرز حجر الشمس طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [
@@ -245,10 +259,10 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Lapis Lazuli'),
     nameAr: 'قلادة القوع روزيت: اللازورد',
     category: 'necklaces',
-    price: 520,
+    price: 1699,
     description: 'Rich lapis lazuli bead necklace with deep royal blue tones and elegant signature clasp.',
     descriptionAr: 'قلادة خرز لازورد بدرجات أزرق ملكي عميقة مع إغلاق توقيع أنيق.',
-    images: [ACCESSORY_IMAGE_NECKLACE_ROSE_QUARTZ],
+    images: [ACCESSORY_IMAGE_NECKLACE_LAPIS],
     materials: 'Natural lapis lazuli beads, 18K gold-plated clasp',
     materialsAr: 'خرز لازورد طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [
