@@ -39,7 +39,8 @@ export const LEGACY_ACCESSORY_ID_ALIASES: Record<string, string> = {
   'necklace-statement-pendant': 'al-ain-rosette-necklace-lapis-lazuli',
   'earrings-pearl-drop': 'al-ain-oasis-earrings-rose-quartz',
   'earrings-geometric': 'al-ain-oasis-earrings-malachite',
-  'earrings-hoops': 'al-quaa-earrings-onyx',
+  'al-quaa-earrings-onyx': 'al-ain-oasis-earrings-orange-jade',
+  'earrings-hoops': 'al-ain-oasis-earrings-orange-jade',
 }
 
 /** Legacy category query params → canonical type slugs. */

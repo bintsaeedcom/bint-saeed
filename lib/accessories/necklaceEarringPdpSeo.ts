@@ -69,7 +69,7 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     ),
     relatedAccessoryIds: [
       'signature-strand-tiger-eye',
-      'al-quaa-earrings-onyx',
+      'al-ain-oasis-earrings-orange-jade',
       'al-ain-rosette-necklace-onyx',
     ],
   },
@@ -87,7 +87,7 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     ),
     relatedAccessoryIds: [
       'signature-strand-onyx',
-      'al-quaa-earrings-onyx',
+      'al-ain-oasis-earrings-orange-jade',
       'al-ain-rosette-necklace-tiger-eye',
     ],
   },
@@ -187,23 +187,23 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'al-ain-rosette-necklace-sunstone',
     ],
   },
-  'al-quaa-earrings-onyx': {
+  'al-ain-oasis-earrings-orange-jade': {
     carouselAlt:
-      'Al Quaa Earrings - Onyx with polished black onyx and Carnelian Al Ain Rosette details — pair with onyx and tiger eye abaya strands',
+      'Al Ain Oasis Earrings - Orange Jade with warm orange jade and Carnelian Al Ain Rosette details — pair with sunstone and orange jade abaya strands',
     pdpAlt:
-      'Al Quaa Earrings - Onyx, hand-assembled with natural black onyx and signature Carnelian Al Ain Rosette motifs — evening stone earrings by Bint Saeed Abu Dhabi',
+      'Al Ain Oasis Earrings - Orange Jade, hand-assembled with natural orange jade and signature Carnelian Al Ain Rosette motifs — warm stone earrings by Bint Saeed Abu Dhabi',
     keywords: ekw(
-      'onyx earrings',
-      'Al Quaa earrings UAE',
-      'black onyx earrings',
+      'orange jade earrings',
+      'Al Ain Oasis earrings UAE',
+      'orange stone earrings',
       'natural stone stud earrings',
-      'pairs with onyx necklace',
+      'pairs with sunstone necklace',
     ),
     relatedAccessoryIds: [
-      'al-ain-rosette-necklace-onyx',
-      'signature-strand-onyx',
-      'signature-strand-tiger-eye',
-      'al-ain-rosette-necklace-tiger-eye',
+      'al-ain-rosette-necklace-sunstone',
+      'signature-strand-orange-jade',
+      'signature-strand-sunstone',
+      'signature-strand-fuchsia-jade',
     ],
   },
   'al-quaa-earrings-lapis-lazuli': {
@@ -213,7 +213,7 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'Al Quaa Earrings - Lapis Lazuli, hand-assembled with natural lapis lazuli and signature Carnelian Al Ain Rosette motifs — luxury blue stone earrings by Bint Saeed UAE',
     keywords: ekw(
       'lapis lazuli earrings',
-      'Al Quaa earrings UAE',
+      'Al Ain Oasis earrings UAE',
       'blue stone earrings',
       'natural lapis earrings gift',
       'pairs with lapis lazuli necklace',

@@ -301,19 +301,19 @@ export const FR_EARRING_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack>
       'Le quartz rose est une variété naturelle de quartz, admirée pour ses tons rose délicats et sa translucidité subtile. Chaque pierre est unique.',
     ],
   }),
-  'al-quaa-earrings-onyx': buildEarringPackFr({
-    fullNameFr: 'Boucles d’oreilles Al Quaa — Onyx',
+  'al-ain-oasis-earrings-orange-jade': buildEarringPackFr({
+    fullNameFr: 'Boucles d’oreilles Al Ain Oasis — Jade orange',
     introParagraphs: [
-      'Les Boucles d’oreilles Al Quaa — Onyx sont assemblées à la main avec des pierres d’onyx noir naturel, la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or pour un contraste raffiné.',
-      'Les pierres naturelles sont admirées pour leur individualité. Les tons noirs profonds de l’onyx créent un équilibre saisissant avec la chaleur de la cornaline et les accents dorés lumineux.',
-      'Façonnées à la main à Abou Dabi, ces boucles d’oreilles expriment le langage de design signature de Bint Saeed. Complétez l’ensemble avec le Collier Al Ain Oasis — Onyx assorti.',
+      'Les Boucles d’oreilles Al Ain Oasis — Jade orange sont assemblées à la main avec des pierres de jade orange naturel, la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or pour un contraste lumineux.',
+      'Les pierres naturelles sont admirées pour leur individualité. Les tons orange chauds du jade créent un équilibre élégant avec la chaleur de la cornaline et les accents dorés lumineux.',
+      'Façonnées à la main à Abou Dabi, ces boucles d’oreilles expriment le langage de design signature de Bint Saeed. Complétez l’ensemble avec le Collier Al Ain Oasis — Pierre de soleil assorti.',
     ],
-    stoneFeature: 'Pierres d’onyx noir naturel sélectionnées à la main',
-    necklaceNameFr: 'Collier Al Ain Oasis — Onyx',
-    strandNameFr: 'Signature Strand onyx rosette d’Al Ain',
+    stoneFeature: 'Pierres de jade orange naturel sélectionnées à la main',
+    necklaceNameFr: 'Collier Al Ain Oasis — Pierre de soleil',
+    strandNameFr: 'Signature Strand pierre de soleil rosette d’Al Ain',
     madeFromAnswer: [
-      'Les boucles d’oreilles sont façonnées à la main avec des pierres d’onyx noir naturel, des accents d’hématite plaqués or et la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle.',
-      'L’onyx est une variété naturelle de calcédoine, admirée pour sa couleur noire profonde et sa finition polie lisse. Chaque pierre est unique.',
+      'Les boucles d’oreilles sont façonnées à la main avec des pierres de jade orange naturel, des accents d’hématite plaqués or et la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle.',
+      'Le jade orange est une pierre naturelle appréciée pour ses nuances chaudes et sa profondeur de couleur. Chaque pierre est unique.',
     ],
   }),
   'al-quaa-earrings-lapis-lazuli': buildEarringPackFr({

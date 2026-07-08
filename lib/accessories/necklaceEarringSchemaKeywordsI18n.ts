@@ -139,11 +139,11 @@ const EARRING_PRODUCT_ALIASES: Record<string, string[]> = {
     'blush stone earrings UAE',
     'pairs with rose quartz necklace',
   ],
-  'al-quaa-earrings-onyx': [
-    'onyx earrings',
-    'Al Quaa earrings',
-    'black onyx earrings UAE',
-    'pairs with onyx necklace',
+  'al-ain-oasis-earrings-orange-jade': [
+    'orange jade earrings',
+    'Al Ain Oasis earrings',
+    'orange stone earrings UAE',
+    'pairs with sunstone necklace',
   ],
   'al-quaa-earrings-lapis-lazuli': [
     'lapis lazuli earrings',

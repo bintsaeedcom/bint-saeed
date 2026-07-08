@@ -55,6 +55,8 @@ export const ACCESSORY_IMAGE_ABAYA_CHARM_AMETHYST = `${STRANDS}/bint-saeed-ameth
 export const ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE = `${STRANDS}/bint-saeed-jade-hearts-natural-stone-strand-front.webp`
 
 export const ACCESSORY_IMAGE_EARRINGS_HERO = `${A}/earrings/bint-saeed-earrings.PNG`
+export const ACCESSORY_IMAGE_EARRINGS_MALACHITE = `${A}/earrings/al-ain-oasis-earrings-malachite-sunstone.webp`
+export const ACCESSORY_IMAGE_EARRINGS_ORANGE_JADE = `${A}/earrings/al-ain-oasis-earrings-orange-jade-fron.webp`
 export const ACCESSORY_IMAGE_BAG_CHARM = `${A}/bag%20charm/bint-saeed-bag-charm.PNG`
 
 const AL_AIN_OASIS_NECKLACE_BASE_NAME = 'Al Ain Oasis Necklace'
@@ -280,7 +282,7 @@ export const accessories: Accessory[] = [
     description:
       'Hand-assembled malachite earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
     descriptionAr: 'أقراط ملاكيت مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
-    images: [ACCESSORY_IMAGE_EARRINGS_HERO],
+    images: [ACCESSORY_IMAGE_EARRINGS_MALACHITE],
     materials: 'Natural malachite, Carnelian, 18K gold-plated hematite',
     materialsAr: 'ملاكيت طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Malachite Green', nameAr: 'أخضر ملاكيت', hex: '#1f7a5e' }],
@@ -304,18 +306,18 @@ export const accessories: Accessory[] = [
     isBestseller: true,
   },
   {
-    id: 'al-quaa-earrings-onyx',
-    name: alQuaaEarringsName('Onyx'),
-    nameAr: 'أقراط القوع — أونكس',
+    id: 'al-ain-oasis-earrings-orange-jade',
+    name: alAinOasisEarringsName('Orange Jade'),
+    nameAr: 'أقراط واحة العين — يشم برتقالي',
     category: 'earrings',
-    price: 495,
+    price: 595,
     description:
-      'Hand-assembled onyx earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
-    descriptionAr: 'أقراط أونكس مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
-    images: [ACCESSORY_IMAGE_EARRINGS_HERO],
-    materials: 'Natural black onyx, Carnelian, 18K gold-plated hematite',
-    materialsAr: 'أونكس أسود طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
-    colors: [{ name: 'Black Onyx', nameAr: 'أونكس أسود', hex: '#1a1a1a' }],
+      'Hand-assembled orange jade earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
+    descriptionAr: 'أقراط يشم برتقالي مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
+    images: [ACCESSORY_IMAGE_EARRINGS_ORANGE_JADE],
+    materials: 'Natural orange jade, Carnelian, 18K gold-plated hematite',
+    materialsAr: 'يشم برتقالي طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
+    colors: [{ name: 'Orange Jade', nameAr: 'يشم برتقالي', hex: '#ea580c' }],
     inStock: true,
   },
   {

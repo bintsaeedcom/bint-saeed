@@ -56,11 +56,11 @@ const FR_ACCESSORY_CATALOG: Record<string, AccessoryCatalogCopy> = {
       'Boucles d’oreilles en quartz rose assemblées à la main avec la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or.',
     materials: 'Quartz rose naturel, cornaline, hématite plaquée or 18 carats',
   },
-  'al-quaa-earrings-onyx': {
-    name: 'Boucles d’oreilles Al Quaa — Onyx',
+  'al-ain-oasis-earrings-orange-jade': {
+    name: 'Boucles d’oreilles Al Ain Oasis — Jade orange',
     description:
-      'Boucles d’oreilles en onyx assemblées à la main avec la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or.',
-    materials: 'Onyx noir naturel, cornaline, hématite plaquée or 18 carats',
+      'Boucles d’oreilles en jade orange assemblées à la main avec la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or.',
+    materials: 'Jade orange naturel, cornaline, hématite plaquée or 18 carats',
   },
   'al-quaa-earrings-lapis-lazuli': {
     name: 'Boucles d’oreilles Al Quaa — Lapis lazuli',

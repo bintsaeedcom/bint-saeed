@@ -21,8 +21,8 @@ const JEWELLERY_STYLE_SKU_BY_ID: Record<string, string> = {
   // Al Ain Oasis Earrings (EAR-OAS)
   'al-ain-oasis-earrings-malachite': 'BSA-JWL-EAR-MAL-001',
   'al-ain-oasis-earrings-rose-quartz': 'BSA-JWL-EAR-RSQ-001',
-  // Al Quaa Earrings (EAR-QUA)
-  'al-quaa-earrings-onyx': 'BSA-JWL-EAR-ONX-001',
+  // Additional earrings
+  'al-ain-oasis-earrings-orange-jade': 'BSA-JWL-EAR-OJD-001',
   'al-quaa-earrings-lapis-lazuli': 'BSA-JWL-EAR-LAP-001',
 
   // Bracelets (BRC)

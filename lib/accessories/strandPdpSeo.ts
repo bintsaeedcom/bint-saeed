@@ -67,11 +67,11 @@ function kw(...stone: string[]): string[] {
 
 const OASIS_EARRINGS_MALACHITE_ID = 'al-ain-oasis-earrings-malachite'
 const OASIS_EARRINGS_ROSE_QUARTZ_ID = 'al-ain-oasis-earrings-rose-quartz'
-const QUAA_EARRINGS_ONYX_ID = 'al-quaa-earrings-onyx'
+const OASIS_EARRINGS_ORANGE_JADE_ID = 'al-ain-oasis-earrings-orange-jade'
 const QUAA_EARRINGS_LAPIS_ID = 'al-quaa-earrings-lapis-lazuli'
 const OASIS_EARRINGS_MALACHITE_LABEL = 'Al Ain Oasis Earrings - Malachite'
 const OASIS_EARRINGS_ROSE_QUARTZ_LABEL = 'Al Ain Oasis Earrings - Rose Quartz'
-const QUAA_EARRINGS_ONYX_LABEL = 'Al Quaa Earrings - Onyx'
+const OASIS_EARRINGS_ORANGE_JADE_LABEL = 'Al Ain Oasis Earrings - Orange Jade'
 const QUAA_EARRINGS_LAPIS_LABEL = 'Al Quaa Earrings - Lapis Lazuli'
 
 /** Conversion-focused alt, pairing jewellery, and discovery keywords per strand PDP. */
@@ -81,18 +81,18 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       necklaceId: 'al-ain-rosette-necklace-onyx',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE_ONYX,
       necklaceLabel: 'Al Ain Oasis Necklace - Onyx',
-      earringsId: QUAA_EARRINGS_ONYX_ID,
+      earringsId: OASIS_EARRINGS_ORANGE_JADE_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: QUAA_EARRINGS_ONYX_LABEL,
+      earringsLabel: OASIS_EARRINGS_ORANGE_JADE_LABEL,
     },
     carouselAlt:
-      'Black onyx natural stone bead abaya strand with 18K gold clip — pairs with Al Ain Oasis Necklace - Onyx and Al Quaa Earrings - Onyx for Marylebone Abaya',
+      'Black onyx natural stone bead abaya strand with 18K gold clip — pairs with Al Ain Oasis Necklace - Onyx and Al Ain Oasis Earrings - Orange Jade for Marylebone Abaya',
     strandAlt:
       'Onyx natural stone bead abaya strand, hand-strung black onyx beads with 18K gold-plated clip — interchange for Bint Saeed Marylebone Abaya, pairs with Al Ain Oasis Necklace - Onyx',
     necklaceAlt:
-      'Al Ain Oasis Necklace - Onyx with hand-strung natural black onyx beads — pairs with onyx abaya strand and Al Quaa Earrings - Onyx',
+      'Al Ain Oasis Necklace - Onyx with hand-strung natural black onyx beads — pairs with onyx abaya strand and Al Ain Oasis Earrings - Orange Jade',
     earringsAlt:
-      'Al Quaa Earrings - Onyx with natural onyx and Carnelian Al Ain Rosette details — pairs with onyx abaya strand and Al Ain Oasis Necklace - Onyx',
+      'Al Ain Oasis Earrings - Orange Jade with natural orange jade and Carnelian Al Ain Rosette details — pairs with onyx abaya strand and Al Ain Oasis Necklace - Onyx',
     keywords: kw(
       'black onyx abaya strand',
       'onyx bead strand',
@@ -107,18 +107,18 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       necklaceId: 'al-ain-rosette-necklace-tiger-eye',
       necklaceImage: ACCESSORY_IMAGE_NECKLACE_TIGER_EYE,
       necklaceLabel: 'Al Ain Oasis Necklace - Tiger Eye',
-      earringsId: QUAA_EARRINGS_ONYX_ID,
+      earringsId: OASIS_EARRINGS_ORANGE_JADE_ID,
       earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
-      earringsLabel: QUAA_EARRINGS_ONYX_LABEL,
+      earringsLabel: OASIS_EARRINGS_ORANGE_JADE_LABEL,
     },
     carouselAlt:
-      'Tiger eye natural stone bead abaya strand with warm chatoyant beads — pairs with Al Ain Oasis Necklace - Tiger Eye and Al Quaa Earrings - Onyx',
+      'Tiger eye natural stone bead abaya strand with warm chatoyant beads — pairs with Al Ain Oasis Necklace - Tiger Eye and Al Ain Oasis Earrings - Orange Jade',
     strandAlt:
       'Tiger eye natural stone bead abaya strand, warm golden-brown chatoyant beads with 18K gold clip — designed for Marylebone Abaya draping, pairs with Al Ain Oasis Necklace - Tiger Eye',
     necklaceAlt:
-      'Al Ain Oasis Necklace - Tiger Eye with natural tiger eye beads and signature clasp — pairs with tiger eye abaya strand and Al Quaa Earrings - Onyx',
+      'Al Ain Oasis Necklace - Tiger Eye with natural tiger eye beads and signature clasp — pairs with tiger eye abaya strand and Al Ain Oasis Earrings - Orange Jade',
     earringsAlt:
-      'Al Quaa Earrings - Onyx — pairs with tiger eye abaya strand and Al Ain Oasis Necklace - Tiger Eye',
+      'Al Ain Oasis Earrings - Orange Jade — pairs with tiger eye abaya strand and Al Ain Oasis Necklace - Tiger Eye',
     keywords: kw(
       'tiger eye abaya strand',
       'tiger eye bead strand',
