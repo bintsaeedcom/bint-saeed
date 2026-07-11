@@ -1,6 +1,14 @@
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
 import * as policyAr from '@/lib/legal/policyContentAr'
 import * as policyMs from '@/lib/legal/policyContentMs'
+import {
+  LANGUAGE_CLAUSE_BODY_EN,
+  LANGUAGE_CLAUSE_BODY_ID,
+  LANGUAGE_CLAUSE_SHORT_EN,
+  LANGUAGE_CLAUSE_SHORT_ID,
+  LANGUAGE_CLAUSE_TITLE_EN,
+  LANGUAGE_CLAUSE_TITLE_ID,
+} from '@/lib/legal/languageAndTranslationClause'
 
 export type PolicyLang = 'en' | 'id' | 'ms' | 'ar'
 
@@ -145,7 +153,11 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
       ],
     },
     {
-      title: '13. Contact and Policy Updates',
+      title: `13. ${LANGUAGE_CLAUSE_TITLE_EN}`,
+      body: [LANGUAGE_CLAUSE_SHORT_EN],
+    },
+    {
+      title: '14. Contact and Policy Updates',
       body: [
         'We may revise this Privacy Policy periodically. Updated versions become effective when published on this page.',
         `Bint Saeed\nPrivacy and Legal Inquiries: ${OFFICIAL_EMAILS.legal}\nGeneral Inquiries: ${OFFICIAL_EMAILS.hello}`,
@@ -273,7 +285,11 @@ function privacyIdSections(analyticsLine: string): PolicySection[] {
       ],
     },
     {
-      title: '13. Kontak dan Pembaruan Kebijakan',
+      title: `13. ${LANGUAGE_CLAUSE_TITLE_ID}`,
+      body: [LANGUAGE_CLAUSE_SHORT_ID],
+    },
+    {
+      title: '14. Kontak dan Pembaruan Kebijakan',
       body: [
         'Kami dapat merevisi Kebijakan Privasi ini secara berkala. Versi terbaru berlaku efektif saat dipublikasikan di halaman ini.',
         `Bint Saeed\nPertanyaan Privasi dan Hukum: ${OFFICIAL_EMAILS.legal}\nPertanyaan Umum: ${OFFICIAL_EMAILS.hello}`,
@@ -307,7 +323,8 @@ const PRIVACY_EN: Omit<PolicyContent, 'sections'> & { sections?: PolicySection[]
     '10. Data Retention',
     '11. International Transfers',
     '12. Complaints and Supervisory Authorities',
-    '13. Contact and Policy Updates',
+    '13. Language and Translations',
+    '14. Contact and Policy Updates',
   ],
 }
 
@@ -336,7 +353,8 @@ const PRIVACY_ID: Omit<PolicyContent, 'sections'> = {
     '10. Retensi Data',
     '11. Transfer Internasional',
     '12. Keluhan dan Otoritas Pengawas',
-    '13. Kontak dan Pembaruan Kebijakan',
+    '13. Bahasa dan Terjemahan',
+    '14. Kontak dan Pembaruan Kebijakan',
   ],
 }
 
@@ -464,7 +482,11 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
     ],
   },
   {
-    title: '14. Changes, Severability, and Contact',
+    title: `14. ${LANGUAGE_CLAUSE_TITLE_EN}`,
+    body: [...LANGUAGE_CLAUSE_BODY_EN],
+  },
+  {
+    title: '15. Changes, Severability, and Contact',
     body: [
       'We may revise these Terms from time to time. Updated versions are effective from publication on this page. If any provision is held unenforceable, remaining provisions remain in full force.',
       `Bint Saeed\nLegal Inquiries: ${OFFICIAL_EMAILS.legal}\nGeneral Inquiries: ${OFFICIAL_EMAILS.hello}`,
@@ -592,7 +614,11 @@ const TERMS_ID_SECTIONS: PolicySection[] = [
     ],
   },
   {
-    title: '14. Perubahan, Keterpisahan, dan Kontak',
+    title: `14. ${LANGUAGE_CLAUSE_TITLE_ID}`,
+    body: [...LANGUAGE_CLAUSE_BODY_ID],
+  },
+  {
+    title: '15. Perubahan, Keterpisahan, dan Kontak',
     body: [
       'Kami dapat merevisi Syarat ini dari waktu ke waktu. Versi terbaru berlaku efektif sejak dipublikasikan di halaman ini. Apabila ketentuan tertentu dinyatakan tidak dapat diberlakukan, ketentuan lainnya tetap berlaku penuh.',
       `Bint Saeed\nPertanyaan Hukum: ${OFFICIAL_EMAILS.legal}\nPertanyaan Umum: ${OFFICIAL_EMAILS.hello}`,
@@ -610,7 +636,7 @@ const TERMS_EN: Omit<PolicyContent, 'sections'> = {
     'These Terms govern access to and use of the Bint Saeed website, products, and related services. They are drafted for clarity, commercial certainty, and compliance with applicable UAE legal requirements.',
   summaryTitle: 'Summary Notice',
   summaryBody: [
-    'By using this website or placing an order, you agree to these Terms. If you do not agree, please do not use the site.',
+    'By using this website or placing an order, you agree to these Terms. If you do not agree, please do not use the site. The original language of this website and of these Terms is English; the English text is controlling, and these Terms apply according to the meaning of the English text. Translations (including those prepared with AI tools and automation) are provided for convenience only and do not create separate rights.',
   ],
   sectionList: [
     '1. Scope and Acceptance',
@@ -626,7 +652,8 @@ const TERMS_EN: Omit<PolicyContent, 'sections'> = {
     '11. Disclaimers and Limitation of Liability',
     '12. Indemnity',
     '13. Governing Law and Jurisdiction',
-    '14. Changes, Severability, and Contact',
+    '14. Language and Translations',
+    '15. Changes, Severability, and Contact',
   ],
 }
 
@@ -640,7 +667,7 @@ const TERMS_ID: Omit<PolicyContent, 'sections'> = {
     'Syarat ini mengatur akses dan penggunaan situs web, produk, dan layanan terkait Bint Saeed. Disusun untuk kejelasan, kepastian komersial, dan kepatuhan terhadap persyaratan hukum UEA yang berlaku.',
   summaryTitle: 'Ringkasan',
   summaryBody: [
-    'Dengan menggunakan situs web ini atau melakukan pemesanan, Anda menyetujui Syarat ini. Apabila tidak setuju, mohon tidak menggunakan situs.',
+    'Dengan menggunakan situs web ini atau melakukan pemesanan, Anda menyetujui Syarat ini. Apabila tidak setuju, mohon tidak menggunakan situs. Bahasa asli situs web dan Syarat ini adalah bahasa Inggris; teks bahasa Inggris bersifat mengikat. Terjemahan disediakan hanya untuk kenyamanan.',
   ],
   sectionList: [
     '1. Ruang Lingkup dan Penerimaan',
@@ -656,7 +683,8 @@ const TERMS_ID: Omit<PolicyContent, 'sections'> = {
     '11. Penafian dan Batasan Tanggung Jawab',
     '12. Ganti Rugi',
     '13. Hukum yang Berlaku dan Yurisdiksi',
-    '14. Perubahan, Keterpisahan, dan Kontak',
+    '14. Bahasa dan Terjemahan',
+    '15. Perubahan, Keterpisahan, dan Kontak',
   ],
 }
 
@@ -843,7 +871,11 @@ function shipmentEnSections(): PolicySection[] {
       ],
     },
     {
-      title: '13. Contact',
+      title: `13. ${LANGUAGE_CLAUSE_TITLE_EN}`,
+      body: [LANGUAGE_CLAUSE_SHORT_EN],
+    },
+    {
+      title: '14. Contact',
       body: [
         'For exchanges, return requests, and defect claims:',
         OFFICIAL_EMAILS.returns,
@@ -1037,7 +1069,11 @@ function shipmentIdSections(): PolicySection[] {
       ],
     },
     {
-      title: '13. Kontak',
+      title: `13. ${LANGUAGE_CLAUSE_TITLE_ID}`,
+      body: [LANGUAGE_CLAUSE_SHORT_ID],
+    },
+    {
+      title: '14. Kontak',
       body: [
         'Untuk penukaran, permintaan pengembalian, dan klaim cacat:',
         OFFICIAL_EMAILS.returns,
@@ -1077,7 +1113,8 @@ const SHIPMENT_EN: Omit<PolicyContent, 'sections'> = {
     '10. Customs & Import',
     '11. Undeliverable Shipments',
     '12. Force Majeure',
-    '13. Contact'
+    '13. Language and Translations',
+    '14. Contact'
   ],
 }
 
@@ -1107,7 +1144,8 @@ const SHIPMENT_ID: Omit<PolicyContent, 'sections'> = {
     '10. Bea Cukai & Impor',
     '11. Kiriman yang Tidak Dapat Diserahkan',
     '12. Force Majeure',
-    '13. Kontak'
+    '13. Bahasa dan Terjemahan',
+    '14. Kontak'
   ],
 }
 

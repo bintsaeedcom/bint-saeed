@@ -60,7 +60,10 @@ import {
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
 import PdpIntroParagraph from '@/components/PdpIntroParagraph'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
-import PdpAccordion, { type PdpAccordionSectionConfig } from '@/components/pdp/PdpAccordion'
+import PdpAccordion, {
+  scrollPdpAccordionSectionIntoView,
+  type PdpAccordionSectionConfig,
+} from '@/components/pdp/PdpAccordion'
 import {
   CTA_BUTTON_RADIUS,
   PDP_FILLED_PLUM,
@@ -393,6 +396,11 @@ export default function ProductPage() {
       quantity,
     })
     showAddedToBagToast(isRTL)
+  }
+
+  const openShippingInfo = () => {
+    setOpenDropdown('shipping')
+    window.setTimeout(() => scrollPdpAccordionSectionIntoView('shipping'), 280)
   }
 
   const handleAccordionOpen = (key: string) => {
@@ -1035,12 +1043,18 @@ export default function ProductPage() {
                   {ui.weGiveForward}
                 </span>
               </div>
-              <div className="flex flex-col items-center gap-1 text-center">
+              <button
+                type="button"
+                onClick={openShippingInfo}
+                className="flex flex-col items-center gap-1 text-center transition-opacity hover:opacity-80"
+                aria-controls="pdp-accordion-panel-shipping"
+                data-cursor-hover
+              >
                 <FiGlobe className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
                   {ui.worldwideShipping}
                 </span>
-              </div>
+              </button>
             </div>
 
             {/* Intro / short description */}

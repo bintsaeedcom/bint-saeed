@@ -9,9 +9,6 @@ import {
 const CARE_LEAD_FR = JEWELLERY_CARE_LEAD_FR
 const CARE_FR = JEWELLERY_CARE_FR
 
-const ROSETTE_FAQ_FR =
-  'La rosette d’Al Ain est l’un des codes de la Maison Bint Saeed. Sculptée à la main dans du cornaline naturelle, elle s’inspire des tons chauds du désert entourant Al Ain, l’oasis historique d’Abou Dabi aux Émirats arabes unis. Entourée de palmeraies, de paysages montagneux et de siècles de patrimoine émirati, Al Ain est célébrée comme l’un des paysages culturels les plus précieux du pays. La rosette d’Al Ain porte cette inspiration à travers les collections joaillières et prêt-à-porter de la Maison.'
-
 type NecklaceFrPackInput = {
   fullNameFr: string
   introParagraphs: string[]
@@ -57,7 +54,7 @@ function buildNecklacePackFr(input: NecklaceFrPackInput): NecklaceEarringPdpCont
       },
       {
         question: 'Qu’est-ce que la rosette d’Al Ain ?',
-        answer: ROSETTE_FAQ_FR,
+        answer: '', // overwritten via /the-codes in getNecklaceEarringPdpContent
       },
       {
         question: 'Existe-t-il un Signature Strand assorti ?',
@@ -214,6 +211,10 @@ function buildEarringPackFr(input: EarringFrPackInput): NecklaceEarringPdpConten
     ? `Oui. Le ${strandNameFr} a été conçu pour compléter les boucles d’oreilles et peut être fixé à des abayas, robes et pièces de tailleur Bint Saeed sélectionnées.`
     : 'Oui. Un Signature Strand assorti peut compléter les boucles d’oreilles et s’attacher à des abayas, robes et pièces de tailleur Bint Saeed sélectionnées.'
 
+  const coordinateFeature = strandNameFr
+    ? `Conçu pour s’accorder avec le ${necklaceNameFr} et le ${strandNameFr}`
+    : `Conçu pour s’accorder avec le ${necklaceNameFr}`
+
   return {
     introParagraphs,
     featuresTitle: 'Caractéristiques',
@@ -221,11 +222,11 @@ function buildEarringPackFr(input: EarringFrPackInput): NecklaceEarringPdpConten
       'Code de la Maison : rosette d’Al Ain',
       'Façonné à la main à Abou Dabi, Émirats arabes unis',
       stoneFeature,
-      'Rosette d’Al Ain signature sculptée à la main dans du cornaline naturelle (environ 15 mm)',
       'Perles d’hématite plaquées or intégrées dans le design',
+      'Rosette d’Al Ain signature sculptée à la main dans du cornaline naturelle (environ 15 mm)',
       'Fermoir et tige dorés pour un port confortable',
       'Chaque pierre naturelle est unique par sa couleur, ses veines et son caractère naturel',
-      `Conçu pour s’accorder avec le ${necklaceNameFr}`,
+      coordinateFeature,
       'Présenté dans un écrin cadeau signature Bint Saeed',
     ],
     careLead: CARE_LEAD_FR,
@@ -237,7 +238,7 @@ function buildEarringPackFr(input: EarringFrPackInput): NecklaceEarringPdpConten
       },
       {
         question: 'Qu’est-ce que la rosette d’Al Ain ?',
-        answer: ROSETTE_FAQ_FR,
+        answer: '', // overwritten via /the-codes in getNecklaceEarringPdpContent
       },
       {
         question: 'Existe-t-il un collier assorti ?',

@@ -1,6 +1,10 @@
 import type { StrandPdpContent } from '@/lib/accessories/strandPdp/types'
 import type { AlAinRosetteStrandId } from '@/lib/accessories/strandPdp/alAinRosetteStrandIds'
-import { buildStrandFaqFromTemplates, STRAND_PDP_LOCALE_TEMPLATES } from '@/lib/accessories/strandPdp/localeTemplatesI18n'
+import {
+  buildStrandFaqFromTemplates,
+  resolveStrandCare,
+  STRAND_PDP_LOCALE_TEMPLATES,
+} from '@/lib/accessories/strandPdp/localeTemplatesI18n'
 
 const SHARED_ROSETTE_INTRO_P2 =
   'Created to personalise compatible Bint Saeed designs, including the Marylebone Abaya and future compatible creations, these detachable strands allow a single garment to evolve effortlessly. Whether styled to complement your handbag, shoes or jewellery, they create a fresh expression without changing the garment itself.'
@@ -65,8 +69,8 @@ function buildRosettePdp(
     ],
     stoneOrigin: `${stoneOriginLead} ${SHARED_ROSETTE_CARNELIAN_ORIGIN} Every natural gemstone displays its own unique colour, inclusions and markings, making every Signature Strand one of a kind.`,
     naturalStone: templates.naturalStoneBody,
-    care: [...templates.care],
-    faq: buildStrandFaqFromTemplates(templates, strandLabel, stoneLabel, variationNote),
+    care: [...resolveStrandCare('en')],
+    faq: buildStrandFaqFromTemplates(templates, strandLabel, stoneLabel, variationNote, 'en'),
   }
 }
 

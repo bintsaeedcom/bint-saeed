@@ -161,6 +161,20 @@ const nextConfig = {
         destination: '/Webshop%20pictures/accessoiries/bag%20charm/bint-saeed-bag-charm.PNG',
         permanent: true,
       },
+      {
+        source:
+          '/Webshop%20pictures/accessoiries/bag%20charm/bint-saeed-al-ain-oasis-i-bag-charm-fuchsia-jade-front.png',
+        destination:
+          '/Webshop%20pictures/accessoiries/bag%20charm/bint-saeed-al-ain-oasis-i-bag-charm-fuchsia-jade-front.webp',
+        permanent: true,
+      },
+      {
+        source:
+          '/Webshop%20pictures/accessoiries/bag%20charm/bint-saeed-al-ain-oasis-ii-bag-charm-fuchsia-jade-front.png',
+        destination:
+          '/Webshop%20pictures/accessoiries/bag%20charm/bint-saeed-al-ain-oasis-ii-bag-charm-fuchsia-jade-front.webp',
+        permanent: true,
+      },
       ...[
         'pink-jade',
         'orange-jade',

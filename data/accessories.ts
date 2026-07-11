@@ -59,8 +59,8 @@ export const ACCESSORY_IMAGE_EARRINGS_ORANGE_JADE = `${A}/earrings/al-ain-oasis-
 export const ACCESSORY_IMAGE_EARRINGS_ROSE_QUARTZ = `${A}/earrings/al-quaa-earrings-rose-quartz-front.webp`
 /** Temporary shared hero until lapis earring shots are uploaded. */
 export const ACCESSORY_IMAGE_EARRINGS_HERO = ACCESSORY_IMAGE_EARRINGS_MALACHITE
-export const ACCESSORY_IMAGE_BAG_CHARM_I = `${A}/bag%20charm/bint-saeed-al-ain-oasis-i-bag-charm-fuchsia-jade-front.png`
-export const ACCESSORY_IMAGE_BAG_CHARM_II = `${A}/bag%20charm/bint-saeed-al-ain-oasis-ii-bag-charm-fuchsia-jade-front.png`
+export const ACCESSORY_IMAGE_BAG_CHARM_I = `${A}/bag%20charm/bint-saeed-al-ain-oasis-i-bag-charm-fuchsia-jade-front.webp`
+export const ACCESSORY_IMAGE_BAG_CHARM_II = `${A}/bag%20charm/bint-saeed-al-ain-oasis-ii-bag-charm-fuchsia-jade-front.webp`
 /** Category / nav hero — Al Ain Oasis I */
 export const ACCESSORY_IMAGE_BAG_CHARM = ACCESSORY_IMAGE_BAG_CHARM_I
 
@@ -413,14 +413,14 @@ export const accessories: Accessory[] = [
     name: 'Al Ain Oasis I Bag Charm - Fuchsia Jade',
     nameAr: 'تعليقة حقيبة واحة العين الأولى — يشم فوشي',
     category: 'bag-strands',
-    price: 249,
+    price: 595,
     description:
-      'A natural stone bag charm with two cascading Fuchsia Jade strands and hand-carved Al Ain Rosettes, hand-assembled in Abu Dhabi.',
+      'A natural stone bag charm with two cascading Fuchsia Jade strands and hand-carved Carnelian Al Ain Rosettes, hand-assembled in Abu Dhabi.',
     descriptionAr:
       'تعليقة حقيبة واحة العين الأولى مصنوعة يدوياً من اليشم الفوشي الطبيعي، مُصمّمة للحقائب ومساء الخروج.',
     images: [ACCESSORY_IMAGE_BAG_CHARM_I],
-    materials: 'Natural Fuchsia Jade, hand-carved Al Ain Rosettes, gold-plated faceted hematite',
-    materialsAr: 'يشم فوشي طبيعي، روزيت العين المنحوتة يدوياً، هيمايت مطلي بالذهب',
+    materials: 'Natural Fuchsia Jade, hand-carved Carnelian Al Ain Rosettes, gold-plated faceted hematite',
+    materialsAr: 'يشم فوشي طبيعي، روزيت العين من العقيق المنحوتة يدوياً، هيمايت مطلي بالذهب',
     colors: [{ name: 'Fuchsia Jade', nameAr: 'يشم فوشي', hex: '#c026d3' }],
     inStock: true,
     isNew: true,
@@ -430,14 +430,14 @@ export const accessories: Accessory[] = [
     name: 'Al Ain Oasis II Bag Charm - Fuchsia Jade',
     nameAr: 'تعليقة حقيبة واحة العين الثانية — يشم فوشي',
     category: 'bag-strands',
-    price: 249,
+    price: 685,
     description:
-      'A handcrafted natural stone bag charm with three cascading Fuchsia Jade strands and hand-carved Al Ain Rosettes, hand-assembled in Abu Dhabi.',
+      'A handcrafted natural stone bag charm with three cascading Fuchsia Jade strands and hand-carved Carnelian Al Ain Rosettes, hand-assembled in Abu Dhabi.',
     descriptionAr:
       'تعليقة حقيبة واحة العين الثانية مصنوعة يدوياً من اليشم الفوشي الطبيعي، مُصمّمة للحقائب ومساء الخروج.',
     images: [ACCESSORY_IMAGE_BAG_CHARM_II],
-    materials: 'Natural Fuchsia Jade, hand-carved Al Ain Rosettes, gold-plated faceted hematite',
-    materialsAr: 'يشم فوشي طبيعي، روزيت العين المنحوتة يدوياً، هيمايت مطلي بالذهب',
+    materials: 'Natural Fuchsia Jade, hand-carved Carnelian Al Ain Rosettes, gold-plated faceted hematite',
+    materialsAr: 'يشم فوشي طبيعي، روزيت العين من العقيق المنحوتة يدوياً، هيمايت مطلي بالذهب',
     colors: [{ name: 'Fuchsia Jade', nameAr: 'يشم فوشي', hex: '#c026d3' }],
     inStock: true,
     isNew: true,

@@ -1,4 +1,9 @@
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
+import {
+  LANGUAGE_CLAUSE_BODY_MS,
+  LANGUAGE_CLAUSE_SHORT_MS,
+  LANGUAGE_CLAUSE_TITLE_MS,
+} from '@/lib/legal/languageAndTranslationClause'
 
 export type PolicyLang = 'en' | 'id' | 'ms' | 'ar'
 
@@ -271,7 +276,11 @@ function privacyMsSections(analyticsLine: string): PolicySection[] {
       ],
     },
     {
-      title: '13. Kontak dan Pembaruan Dasar',
+      title: `13. ${LANGUAGE_CLAUSE_TITLE_MS}`,
+      body: [LANGUAGE_CLAUSE_SHORT_MS],
+    },
+    {
+      title: '14. Kontak dan Pembaruan Dasar',
       body: [
         'Kami dapat merevisi Dasar Privasi ini secara berkala. Versi terbaru berlaku efektif saat dipublikasikan di halaman ini.',
         `Bint Saeed\nPertanyaan Privasi dan Hukum: ${OFFICIAL_EMAILS.legal}\nSoalan Lazim: ${OFFICIAL_EMAILS.hello}`,
@@ -334,7 +343,8 @@ const PRIVACY_MS: Omit<PolicyContent, 'sections'> = {
     '10. Retensi Data',
     '11. Transfer Internasional',
     '12. Keluhan dan Otoritas Pengawas',
-    '13. Kontak dan Pembaruan Dasar',
+    '13. Bahasa dan Terjemahan',
+    '14. Kontak dan Pembaruan Dasar',
   ],
 }
 
@@ -587,7 +597,11 @@ const TERMS_MS_SECTIONS: PolicySection[] = [
     ],
   },
   {
-    title: '14. Perubahan, Keterpisahan, dan Kontak',
+    title: `14. ${LANGUAGE_CLAUSE_TITLE_MS}`,
+    body: [...LANGUAGE_CLAUSE_BODY_MS],
+  },
+  {
+    title: '15. Perubahan, Keterpisahan, dan Kontak',
     body: [
       'Kami dapat merevisi Terma ini dari waktu ke waktu. Versi terbaru berlaku efektif sejak dipublikasikan di halaman ini. Apabila terma tertentu dinyatakan tidak dapat diberlakukan, terma lainnya tetap berlaku penuh.',
       `Bint Saeed\nPertanyaan Hukum: ${OFFICIAL_EMAILS.legal}\nSoalan Lazim: ${OFFICIAL_EMAILS.hello}`,
@@ -635,7 +649,7 @@ const TERMS_MS: Omit<PolicyContent, 'sections'> = {
     'Terma ini mengatur akses dan penggunaan laman web, produk, dan perkhidmatan terkait Bint Saeed. Disusun untuk kejelasan, kepastian komersial, dan pematuhan terhadap terma hukum UAE yang berlaku.',
   summaryTitle: 'Ringkasan',
   summaryBody: [
-    'Dengan menggunakan laman web ini atau membuat pesanan, anda bersetuju dengan Terma ini. Jika tidak bersetuju, sila jangan menggunakan laman ini.',
+    'Dengan menggunakan laman web ini atau membuat pesanan, anda bersetuju dengan Terma ini. Jika tidak bersetuju, sila jangan menggunakan laman ini. Bahasa asal laman web dan Terma ini ialah bahasa Inggeris; teks bahasa Inggeris adalah mengikat. Terjemahan disediakan hanya untuk kemudahan.',
   ],
   sectionList: [
     '1. Ruang Lingkup dan Penerimaan',
@@ -651,7 +665,8 @@ const TERMS_MS: Omit<PolicyContent, 'sections'> = {
     '11. Penafian dan Batasan Tanggung Jawab',
     '12. Ganti Rugi',
     '13. Hukum yang Berlaku dan Yurisdiksi',
-    '14. Perubahan, Keterpisahan, dan Kontak',
+    '14. Bahasa dan Terjemahan',
+    '15. Perubahan, Keterpisahan, dan Kontak',
   ],
 }
 
@@ -1035,7 +1050,11 @@ function shipmentMsSections(): PolicySection[] {
       ],
     },
     {
-      title: '13. Kontak',
+      title: `13. ${LANGUAGE_CLAUSE_TITLE_MS}`,
+      body: [LANGUAGE_CLAUSE_SHORT_MS],
+    },
+    {
+      title: '14. Kontak',
       body: [
         'Untuk penukaran, permintaan pengembalian, dan klaim cacat:',
         OFFICIAL_EMAILS.returns,
@@ -1105,7 +1124,8 @@ const SHIPMENT_MS: Omit<PolicyContent, 'sections'> = {
     '10. Kastam & Import',
     '11. Penghantaran yang Tidak Dapat Diserahkan',
     '12. Force Majeure',
-    '13. Hubungi'
+    '13. Bahasa dan Terjemahan',
+    '14. Hubungi'
   ],
 }
 

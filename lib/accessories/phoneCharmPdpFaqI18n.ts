@@ -1,6 +1,9 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { AlQuaaPhoneCharmId, PhoneCharmFaqItem } from '@/lib/accessories/phoneCharmPdpContent'
-import { getTheCodesSections } from '@/lib/the-codes/codesPageContent'
+import {
+  getAlAinRosetteFaqAnswer,
+  getAlAinRosetteFaqQuestion,
+} from '@/lib/the-codes/alAinRosetteFaqAnswer'
 
 export type PhoneCharmStoneKey =
   | 'fuchsia-jade'
@@ -19,14 +22,6 @@ const ID_TO_STONE_KEY: Record<AlQuaaPhoneCharmId, PhoneCharmStoneKey> = {
   'al-quaa-phone-charm-malachite': 'malachite',
   'al-quaa-phone-charm-lapis-lazuli': 'lapis-lazuli',
   'al-quaa-phone-charm-rose-quartz': 'rose-quartz',
-}
-
-/** Same primary Al Ain Rosette paragraph as /the-codes — single source of truth. */
-function getAlAinRosetteFaqAnswer(locale: AppLocale): string {
-  const section = getTheCodesSections(locale).find((s) => s.id === 'al-ain-rosette')
-  const paragraph = section?.paragraphs[0]?.trim()
-  if (paragraph) return paragraph
-  return getTheCodesSections('en').find((s) => s.id === 'al-ain-rosette')!.paragraphs[0]!
 }
 
 const CARE_A_EN =

@@ -1,5 +1,10 @@
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
 import type { PolicyContent, PolicySection } from '@/lib/legal/policyContentId'
+import {
+  LANGUAGE_CLAUSE_BODY_AR,
+  LANGUAGE_CLAUSE_SHORT_AR,
+  LANGUAGE_CLAUSE_TITLE_AR,
+} from '@/lib/legal/languageAndTranslationClause'
 
 export function buildAnalyticsLineAr(trackerTitles: string[]): string {
   return trackerTitles.length > 0
@@ -122,7 +127,11 @@ export function privacyArSections(analyticsLine: string): PolicySection[] {
       ],
     },
     {
-      title: '13. التواصل وتحديثات السياسة',
+      title: `13. ${LANGUAGE_CLAUSE_TITLE_AR}`,
+      body: [LANGUAGE_CLAUSE_SHORT_AR],
+    },
+    {
+      title: '14. التواصل وتحديثات السياسة',
       body: [
         'قد نُعدّل سياسة الخصوصية هذه دورياً. تصبح النسخ المحدّثة سارية عند نشرها على هذه الصفحة.',
         `Bint Saeed\nاستفسارات الخصوصية والقانون: ${OFFICIAL_EMAILS.legal}\nاستفسارات عامة: ${OFFICIAL_EMAILS.hello}`,
@@ -156,7 +165,8 @@ export const PRIVACY_AR: Omit<PolicyContent, 'sections'> = {
     '10. الاحتفاظ بالبيانات',
     '11. التحويلات الدولية',
     '12. الشكاوى والجهات الرقابية',
-    '13. التواصل وتحديثات السياسة',
+    '13. اللغة والترجمات',
+    '14. التواصل وتحديثات السياسة',
   ],
 }
 
@@ -282,7 +292,11 @@ export function termsArSections(): PolicySection[] {
       ],
     },
     {
-      title: '14. التعديلات والقابلية للفصل والتواصل',
+      title: `14. ${LANGUAGE_CLAUSE_TITLE_AR}`,
+      body: [...LANGUAGE_CLAUSE_BODY_AR],
+    },
+    {
+      title: '15. التعديلات والقابلية للفصل والتواصل',
       body: [
         'قد نُعدّل هذه الشروط من وقت لآخر. تصبح النسخ المحدّثة سارية من تاريخ النشر على هذه الصفحة. إذا أُعلن أي بند غير قابل للتنفيذ، تبقى البنود الأخرى سارية بالكامل.',
         `Bint Saeed\nاستفسارات قانونية: ${OFFICIAL_EMAILS.legal}\nاستفسارات عامة: ${OFFICIAL_EMAILS.hello}`,
@@ -301,7 +315,7 @@ export const TERMS_AR: Omit<PolicyContent, 'sections'> = {
     'تحكم هذه الشروط الوصول إلى موقع Bint Saeed ومنتجاته وخدماته المرتبطة واستخدامها. وهي معدّة للوضوح واليقين التجاري والامتثال لمتطلبات UAE القانونية المعمول بها.',
   summaryTitle: 'ملخص',
   summaryBody: [
-    'باستخدام هذا الموقع أو تقديم طلب، فإنك توافق على هذه الشروط. إذا لم توافق، يرجى عدم استخدام الموقع.',
+    'باستخدام هذا الموقع أو تقديم طلب، فإنك توافق على هذه الشروط. إذا لم توافق، يرجى عدم استخدام الموقع. اللغة الأصلية لهذا الموقع ولهذه الشروط هي الإنجليزية؛ ويُعتدّ بالنص الإنجليزي. وتُقدَّم الترجمات للتيسير فقط.',
   ],
   sectionList: [
     '1. النطاق والقبول',
@@ -317,7 +331,8 @@ export const TERMS_AR: Omit<PolicyContent, 'sections'> = {
     '11. إخلاء المسؤولية وتحديد المسؤولية',
     '12. التعويض',
     '13. القانون الحاكم والاختصاص القضائي',
-    '14. التعديلات والقابلية للفصل والتواصل',
+    '14. اللغة والترجمات',
+    '15. التعديلات والقابلية للفصل والتواصل',
   ],
 }
 
@@ -502,7 +517,11 @@ export function shipmentArSections(): PolicySection[] {
       ],
     },
     {
-      title: '13. التواصل',
+      title: `13. ${LANGUAGE_CLAUSE_TITLE_AR}`,
+      body: [LANGUAGE_CLAUSE_SHORT_AR],
+    },
+    {
+      title: '14. التواصل',
       body: [
         'للاستبدال وطلبات الإرجاع ومطالبات العيوب:',
         OFFICIAL_EMAILS.returns,
@@ -541,6 +560,7 @@ export const SHIPMENT_AR: Omit<PolicyContent, 'sections'> = {
     '10. الجمارك والاستيراد',
     '11. الشحنات غير القابلة للتسليم',
     '12. القوة القاهرة',
-    '13. التواصل',
+    '13. اللغة والترجمات',
+    '14. التواصل',
   ],
 }

@@ -3,6 +3,10 @@ import {
   FR_EARRING_PDP_BY_ID,
   FR_NECKLACE_PDP_BY_ID,
 } from '@/lib/accessories/necklaceEarringPdpContentFr'
+import {
+  AR_EARRING_PDP_BY_ID,
+  EN_EARRING_PDP_BY_ID,
+} from '@/lib/accessories/necklaceEarringPdpContentEarringsEn'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
 import {
   JEWELLERY_CARE_AR,
@@ -12,6 +16,10 @@ import {
   JEWELLERY_CARE_LEAD_AR,
   JEWELLERY_CARE_LEAD_EN,
 } from '@/lib/accessories/jewelleryCareCopyI18n'
+import {
+  getAlAinRosetteFaqAnswer,
+  isAlAinRosetteFaqQuestion,
+} from '@/lib/the-codes/alAinRosetteFaqAnswer'
 
 export type NecklaceEarringFaqItem = {
   question: string
@@ -850,9 +858,23 @@ export function getNecklaceEarringPdpContent(
   id: string,
   locale: AppLocale = 'en',
 ): NecklaceEarringPdpContentPack | undefined {
-  if (locale === 'fr' && FR_NECKLACE_PDP_BY_ID[id]) return FR_NECKLACE_PDP_BY_ID[id]
-  if (locale === 'fr' && FR_EARRING_PDP_BY_ID[id]) return FR_EARRING_PDP_BY_ID[id]
-  return PDP_BY_ID[id]?.[locale] ?? PDP_BY_ID[id]?.en
+  let content: NecklaceEarringPdpContentPack | undefined
+  if (locale === 'fr' && FR_NECKLACE_PDP_BY_ID[id]) content = FR_NECKLACE_PDP_BY_ID[id]
+  else if (locale === 'fr' && FR_EARRING_PDP_BY_ID[id]) content = FR_EARRING_PDP_BY_ID[id]
+  else if (locale === 'en' && EN_EARRING_PDP_BY_ID[id]) content = EN_EARRING_PDP_BY_ID[id]
+  else if (locale === 'ar' && AR_EARRING_PDP_BY_ID[id]) content = AR_EARRING_PDP_BY_ID[id]
+  else content = PDP_BY_ID[id]?.[locale] ?? PDP_BY_ID[id]?.en
+
+  if (!content) return undefined
+
+  return {
+    ...content,
+    faq: content.faq.map((item) =>
+      isAlAinRosetteFaqQuestion(item.question)
+        ? { ...item, answer: getAlAinRosetteFaqAnswer(locale) }
+        : item,
+    ),
+  }
 }
 
 /** FAQ items flattened for Product + FAQPage JSON-LD. */

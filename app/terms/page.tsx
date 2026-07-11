@@ -6,6 +6,13 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import PolicyDocument, { ShipmentPolicyLink } from '@/components/legal/PolicyDocument'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getTermsContent } from '@/lib/legal/policyContentId'
+import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
+import {
+  LANGUAGE_CLAUSE_BODY_EN,
+  LANGUAGE_CLAUSE_TITLE_EN,
+} from '@/lib/legal/languageAndTranslationClause'
+import EnglishPolicyVersionNotice from '@/components/legal/EnglishPolicyVersionNotice'
+import type { AppLocale } from '@/lib/i18n/routing'
 
 const SECTION_LIST = [
   '1. Scope and Acceptance',
@@ -21,11 +28,13 @@ const SECTION_LIST = [
   '11. Disclaimers and Limitation of Liability',
   '12. Indemnity',
   '13. Governing Law and Jurisdiction',
-  '14. Changes, Severability, and Contact',
+  '14. Language and Translations',
+  '15. Changes, Severability, and Contact',
 ]
 
 export default function TermsPage() {
   const { t, isRTL, language } = useLanguage()
+  const locale = language as AppLocale
 
   if (language === 'id' || language === 'ms' || language === 'ar') {
     const lang = language as 'id' | 'ms' | 'ar'
@@ -34,6 +43,8 @@ export default function TermsPage() {
         content={getTermsContent(lang)}
         isRTL={isRTL}
         backLabel={t.shop.backToHome}
+        englishPolicy="terms"
+        language={lang}
         sectionAfter={{
           5: (
             <ShipmentPolicyLink
@@ -108,9 +119,14 @@ export default function TermsPage() {
               <h2 className="mb-2 font-rozha text-xl text-neutral-900">Summary Notice</h2>
               <p className="text-sm text-neutral-600">
                 By using this website or placing an order, you agree to these Terms. If you do not agree, please do
-                not use the site.
+                not use the site. The original language of this website and of these Terms is English; the English
+                text is controlling, and these Terms apply according to the meaning of the English text. Translations
+                (including those prepared with AI tools and automation) are provided for convenience only and do not
+                create separate rights.
               </p>
             </section>
+
+            <EnglishPolicyVersionNotice policy="terms" language={locale} />
 
             <div className="grid gap-2 rounded-sm border border-neutral-200 p-5 md:grid-cols-2 md:gap-3 md:p-6">
               {SECTION_LIST.map((item) => (
@@ -299,7 +315,31 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">14. Changes, Severability, and Contact</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                14. {LANGUAGE_CLAUSE_TITLE_EN}
+              </h2>
+              {LANGUAGE_CLAUSE_BODY_EN.map((paragraph) => (
+                <p key={paragraph.slice(0, 48)} className="mt-3 first:mt-0">
+                  {paragraph.includes(OFFICIAL_EMAILS.legal) ? (
+                    <>
+                      {paragraph.split(OFFICIAL_EMAILS.legal)[0]}
+                      <a
+                        href="mailto:legal@bintsaeed.com"
+                        className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950"
+                      >
+                        {OFFICIAL_EMAILS.legal}
+                      </a>
+                      {paragraph.split(OFFICIAL_EMAILS.legal)[1]}
+                    </>
+                  ) : (
+                    paragraph
+                  )}
+                </p>
+              ))}
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">15. Changes, Severability, and Contact</h2>
               <p>
                 We may revise these Terms from time to time. Updated versions are effective from publication on this
                 page. If any provision is held unenforceable, remaining provisions remain in full force.

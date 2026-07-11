@@ -10,7 +10,12 @@ import {
   getPhoneCharmAiOther,
   getPhoneCharmMetaKeywords,
 } from '@/lib/accessories/phoneCharmPdpMetaI18n'
+import {
+  getBagCharmAiOther,
+  getBagCharmMetaKeywords,
+} from '@/lib/accessories/bagCharmPdpMetaI18n'
 import { isAlQuaaPhoneCharmId } from '@/lib/accessories/phoneCharmPdpContent'
+import { isAlAinOasisBagCharmId } from '@/lib/accessories/bagCharmPdpContent'
 import { getListedPriceForAccessory } from '@/lib/pricing/accessoryCatalogPrices'
 import {
   buildAccessoryMetaDescription,
@@ -40,14 +45,24 @@ export async function generateMetadata({ params }: AccessoryLayoutProps): Promis
   const imageAlt = getAccessoryImageAlt(accessory, image, 0, locale)
 
   const isPhoneCharm = isAlQuaaPhoneCharmId(accessory.id)
-  const phoneKeywords = isPhoneCharm ? getPhoneCharmMetaKeywords(accessory.id, locale) : undefined
-  const phoneAiOther = isPhoneCharm ? getPhoneCharmAiOther(accessory.id, locale) : undefined
-  const aedPrice = isPhoneCharm ? getListedPriceForAccessory(accessory.id, 'AED') : null
+  const isBagCharm = isAlAinOasisBagCharmId(accessory.id)
+  const keywords = isPhoneCharm
+    ? getPhoneCharmMetaKeywords(accessory.id, locale)
+    : isBagCharm
+      ? getBagCharmMetaKeywords(accessory.id, locale)
+      : undefined
+  const aiOther = isPhoneCharm
+    ? getPhoneCharmAiOther(accessory.id, locale)
+    : isBagCharm
+      ? getBagCharmAiOther(accessory.id, locale)
+      : undefined
+  const aedPrice =
+    isPhoneCharm || isBagCharm ? getListedPriceForAccessory(accessory.id, 'AED') : null
 
   return {
     title: pageTitle,
     description,
-    ...(phoneKeywords?.length ? { keywords: phoneKeywords } : {}),
+    ...(keywords?.length ? { keywords } : {}),
     alternates: {
       canonical: canonicalUrl,
       languages: accessoryHreflangLanguages(accessory.id),
@@ -84,10 +99,10 @@ export async function generateMetadata({ params }: AccessoryLayoutProps): Promis
         'max-video-preview': -1,
       },
     },
-    ...(phoneAiOther || aedPrice != null
+    ...(aiOther || aedPrice != null
       ? {
           other: {
-            ...(phoneAiOther ?? {}),
+            ...(aiOther ?? {}),
             ...(aedPrice != null
               ? {
                   'product:price:amount': String(aedPrice),

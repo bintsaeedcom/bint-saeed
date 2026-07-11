@@ -7,6 +7,14 @@ import PolicyDocument from '@/components/legal/PolicyDocument'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getEnabledTrackersFromEnv } from '@/lib/analytics/trackerCatalog'
 import { buildAnalyticsLine, getPrivacyPolicyContent } from '@/lib/legal/policyContentId'
+import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
+import {
+  LANGUAGE_CLAUSE_SHORT_EN,
+  LANGUAGE_CLAUSE_TITLE_EN,
+} from '@/lib/legal/languageAndTranslationClause'
+import EnglishPolicyVersionNotice from '@/components/legal/EnglishPolicyVersionNotice'
+import type { AppLocale } from '@/lib/i18n/routing'
+import { splitLegalEmail } from '@/lib/legal/splitLegalEmail'
 
 const SECTION_LIST = [
   '1. Privacy Notice and Legal Framework',
@@ -21,11 +29,13 @@ const SECTION_LIST = [
   '10. Data Retention',
   '11. International Transfers',
   '12. Complaints and Supervisory Authorities',
-  '13. Contact and Policy Updates',
+  '13. Language and Translations',
+  '14. Contact and Policy Updates',
 ]
 
 export default function PrivacyPolicyPage() {
   const { t, isRTL, language } = useLanguage()
+  const locale = language as AppLocale
   const activeTrackers = getEnabledTrackersFromEnv()
 
   if (language === 'id' || language === 'ms' || language === 'ar') {
@@ -39,6 +49,8 @@ export default function PrivacyPolicyPage() {
         content={getPrivacyPolicyContent(lang, analyticsLine)}
         isRTL={isRTL}
         backLabel={t.shop.backToHome}
+        englishPolicy="privacy"
+        language={lang}
       />
     )
   }
@@ -96,6 +108,8 @@ export default function PrivacyPolicyPage() {
                 maintaining GDPR-compliant consent handling for relevant users, including users in the European Union.
               </p>
             </section>
+
+            <EnglishPolicyVersionNotice policy="privacy" language={locale} />
 
             <div className="grid gap-2 rounded-sm border border-neutral-200 p-5 md:grid-cols-2 md:gap-3 md:p-6">
               {SECTION_LIST.map((item) => (
@@ -240,7 +254,29 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">13. Contact and Policy Updates</h2>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                13. {LANGUAGE_CLAUSE_TITLE_EN}
+              </h2>
+              {(() => {
+                const parts = splitLegalEmail(LANGUAGE_CLAUSE_SHORT_EN)
+                if (!parts) return <p>{LANGUAGE_CLAUSE_SHORT_EN}</p>
+                return (
+                  <p>
+                    {parts.before}
+                    <a
+                      href={`mailto:${OFFICIAL_EMAILS.legal}`}
+                      className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950"
+                    >
+                      {OFFICIAL_EMAILS.legal}
+                    </a>
+                    {parts.after}
+                  </p>
+                )
+              })()}
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">14. Contact and Policy Updates</h2>
               <p>
                 We may revise this Privacy Policy periodically. Updated versions become effective when published on this
                 page.

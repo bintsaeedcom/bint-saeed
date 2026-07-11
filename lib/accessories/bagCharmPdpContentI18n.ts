@@ -1,14 +1,21 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { AlAinOasisBagCharmId, BagCharmPdpContentPack } from '@/lib/accessories/bagCharmPdpContent'
+import { getBagCharmFaqItems } from '@/lib/accessories/bagCharmPdpFaqI18n'
+import { buildBagCharmFeatures } from '@/lib/accessories/bagCharmPdpFeaturesI18n'
 
-const PACKS: Record<AppLocale, Record<AlAinOasisBagCharmId, BagCharmPdpContentPack>> = {
+type BagCharmIntroPack = {
+  headline: string
+  introParagraphs: string[]
+}
+
+const PACKS: Record<AppLocale, Record<AlAinOasisBagCharmId, BagCharmIntroPack>> = {
   en: {
     'al-ain-oasis-i-bag-charm-fuchsia-jade': {
       headline: 'Al Ain Oasis I Bag Charm',
       introParagraphs: [
         'A little colour can change the feeling of everything.',
         'The Al Ain Oasis I is a natural stone bag charm designed to bring colour, happiness and a personal touch to the handbags you already love.',
-        'Hand-assembled in Abu Dhabi, United Arab Emirates, two cascading strands combine Fuchsia Jade beads with hand-carved natural stone Al Ain Rosettes. A Bint Saeed house motif, the Al Ain Rosette draws from the desert tones and flora found across the UAE landscape.',
+        'Hand-assembled in Abu Dhabi, United Arab Emirates, two cascading strands combine Fuchsia Jade beads with hand-carved Carnelian Al Ain Rosettes. A Bint Saeed house motif, the Al Ain Rosette draws from the desert tones and flora found across the UAE landscape.',
         'Between each stone, gold-plated faceted hematite catches and reflects the light as the charm moves, creating small flashes of gold.',
         'Designed to personalise a favourite handbag, the Al Ain Oasis I also makes a thoughtful luxury gift for a daughter, sister, friend or someone you simply want to make smile.',
         'As natural stones vary in colour and markings, every piece is individually unique.',
@@ -18,7 +25,7 @@ const PACKS: Record<AppLocale, Record<AlAinOasisBagCharmId, BagCharmPdpContentPa
       headline: 'Al Ain Oasis II Bag Charm',
       introParagraphs: [
         'For the bag she loves, and the woman you thought of when you saw it.',
-        'The Al Ain Oasis II is a handcrafted natural stone bag charm featuring three cascading strands of Fuchsia Jade beads and hand-carved Al Ain Rosettes.',
+        'The Al Ain Oasis II is a handcrafted natural stone bag charm featuring three cascading strands of Fuchsia Jade beads and hand-carved Carnelian Al Ain Rosettes.',
         'Inspired by the desert tones and natural flora of the United Arab Emirates, the Al Ain Rosette is one of Bint Saeed’s signature house motifs. Each carved stone brings colour and character to the design, while gold-plated faceted hematite reflects the light between the beads as the strands move.',
         'Hand-assembled in Abu Dhabi, United Arab Emirates, the Al Ain Oasis II transforms a favourite handbag through colour, movement and personal identity.',
         'A thoughtful luxury gift for a daughter, sister, friend or yourself. A little happiness, made to be carried every day.',
@@ -296,5 +303,16 @@ export function getBagCharmPdpPack(
   id: AlAinOasisBagCharmId,
   locale: AppLocale,
 ): BagCharmPdpContentPack {
-  return PACKS[locale]?.[id] ?? PACKS.en[id]
+  const intro = PACKS[locale]?.[id] ?? PACKS.en[id]
+  const extras = buildBagCharmFeatures(id, locale)
+  return {
+    headline: intro.headline,
+    introParagraphs: intro.introParagraphs,
+    featuresTitle: extras.featuresTitle,
+    features: extras.features,
+    careLead: extras.careLead,
+    care: extras.care,
+    colour: extras.colour,
+    faq: getBagCharmFaqItems(id, locale),
+  }
 }

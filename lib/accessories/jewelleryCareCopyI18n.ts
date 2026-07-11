@@ -21,6 +21,9 @@ export const JEWELLERY_CARE_FAQ_NECKLACE_EN =
 export const JEWELLERY_CARE_FAQ_EARRING_EN =
   'Natural gemstones should last a lifetime with proper care. Handle your earrings gently — stones may chip or break if struck or dropped. Avoid water, perfumes, cosmetics and household chemicals, especially chlorine. After wear, wipe with a soft, dry jewellery cloth and store separately in their Bint Saeed pouch or gift box, away from sunlight, heat and damp. Remove before sleeping, cooking or exercising.'
 
+export const JEWELLERY_CARE_FAQ_EARRING_AR =
+  'الأحجار الطبيعية تدوم عمراً كاملاً بالعناية الصحيحة. تعاملي مع أقراطك بلطف — فقد تتشقّق الأحجار أو تنكسر إذا ضُربت أو سقطت. تجنّبي الماء والعطور ومستحضرات التجميل والمواد الكيميائية المنزلية، ولا سيّما الكلور. بعد الارتداء، امسحيها بقطعة قماش ناعمة وجافة واحفظيها بشكل منفصل في كيس أو علبة Bint Saeed، بعيداً عن الشمس والحرارة والرطوبة. أزيليها قبل النوم والطبخ أو الرياضة.'
+
 export const JEWELLERY_CARE_LEAD_AR =
   'كل قطعة مجوهرات من Bint Saeed تُصنع يدوياً من أحجار طبيعية مختارة بعناية. وبالعناية الواعية، صُممت هذه القطع لترافقك لسنوات — محتفظةً بما منحته الطبيعة لكل حجر من تفرّد.'
 
@@ -114,4 +117,11 @@ export function getJewelleryCareCopy(locale: string): { lead: string; bullets: r
   if (locale === 'ar') return { lead: JEWELLERY_CARE_LEAD_AR, bullets: JEWELLERY_CARE_AR }
   if (locale === 'fr') return { lead: JEWELLERY_CARE_LEAD_FR, bullets: JEWELLERY_CARE_FR }
   return { lead: JEWELLERY_CARE_LEAD_EN, bullets: JEWELLERY_CARE_EN }
+}
+
+/** Shared Signature Strand care — same six instructions across all strand PDPs. */
+export function getStrandCareBullets(locale: string): readonly string[] {
+  if (locale === 'ar') return STRAND_CARE_AR
+  if (locale === 'fr') return STRAND_CARE_FR
+  return STRAND_CARE_EN
 }

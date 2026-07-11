@@ -1,10 +1,15 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { StrandPdpFaqItem } from '@/lib/accessories/strandPdp/types'
 import {
+  getStrandCareBullets,
   STRAND_CARE_AR,
   STRAND_CARE_EN,
   STRAND_CARE_FR,
 } from '@/lib/accessories/jewelleryCareCopyI18n'
+import {
+  getAlAinRosetteFaqAnswer,
+  getAlAinRosetteFaqQuestion,
+} from '@/lib/the-codes/alAinRosetteFaqAnswer'
 
 export type StrandPdpLocaleTemplates = {
   stoneOriginTitle: string
@@ -796,10 +801,15 @@ export function buildStrandFaqFromTemplates(
   strandLabel: string,
   stoneLabel: string,
   variationNote: string,
+  locale: AppLocale = 'en',
 ): StrandPdpFaqItem[] {
   const pack = templates as LocalePack
   return [
     { question: pack.faqQ1, answer: pack.faqA1 },
+    {
+      question: getAlAinRosetteFaqQuestion(locale),
+      answer: getAlAinRosetteFaqAnswer(locale),
+    },
     { question: pack.faqQ2, answer: pack.faqA2 },
     { question: pack.faqQ3, answer: pack.faqA3(strandLabel) },
     { question: pack.faqQ4, answer: pack.faqA4(stoneLabel) },
@@ -811,4 +821,12 @@ export function buildStrandFaqFromTemplates(
       answer: pack.faqA8(stoneLabel, variationNote),
     },
   ]
+}
+
+/** Prefer shared strand care bullets so every strand PDP uses the same instructions. */
+export function resolveStrandCare(locale: AppLocale): readonly string[] {
+  if (locale === 'en' || locale === 'ar' || locale === 'fr') {
+    return getStrandCareBullets(locale)
+  }
+  return STRAND_PDP_LOCALE_TEMPLATES[locale].care
 }

@@ -7,6 +7,13 @@ import PolicyDocument from '@/components/legal/PolicyDocument'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 import { getShipmentReturnContent } from '@/lib/legal/policyContentId'
+import {
+  LANGUAGE_CLAUSE_SHORT_EN,
+  LANGUAGE_CLAUSE_TITLE_EN,
+} from '@/lib/legal/languageAndTranslationClause'
+import { splitLegalEmail } from '@/lib/legal/splitLegalEmail'
+import EnglishPolicyVersionNotice from '@/components/legal/EnglishPolicyVersionNotice'
+import type { AppLocale } from '@/lib/i18n/routing'
 import { policySectionH2Plain } from '@/lib/ui/ctaClasses'
 
 const SECTION_LIST = [
@@ -22,11 +29,13 @@ const SECTION_LIST = [
   '10. Customs & Import',
   '11. Undeliverable Shipments',
   '12. Force Majeure',
-  '13. Contact',
+  '13. Language and Translations',
+  '14. Contact',
 ]
 
 export default function ShipmentReturnPolicyPage() {
   const { t, isRTL, language } = useLanguage()
+  const locale = language as AppLocale
 
   if (language === 'id' || language === 'ms' || language === 'ar') {
     const lang = language as 'id' | 'ms' | 'ar'
@@ -36,6 +45,8 @@ export default function ShipmentReturnPolicyPage() {
         isRTL={isRTL}
         backLabel={t.shop.backToHome}
         variant="shipment"
+        englishPolicy="shipment"
+        language={lang}
       />
     )
   }
@@ -97,6 +108,8 @@ export default function ShipmentReturnPolicyPage() {
                 immediate shipment.
               </p>
             </section>
+
+            <EnglishPolicyVersionNotice policy="shipment" language={locale} compact />
 
             <div className="grid gap-1.5 rounded-sm border border-neutral-200 p-4 md:grid-cols-2 md:gap-2 md:p-5">
               {SECTION_LIST.map((item) => (
@@ -417,7 +430,27 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className={policySectionH2Plain}>13. Contact</h2>
+              <h2 className={policySectionH2Plain}>13. {LANGUAGE_CLAUSE_TITLE_EN}</h2>
+              {(() => {
+                const parts = splitLegalEmail(LANGUAGE_CLAUSE_SHORT_EN)
+                if (!parts) return <p>{LANGUAGE_CLAUSE_SHORT_EN}</p>
+                return (
+                  <p>
+                    {parts.before}
+                    <a
+                      href={`mailto:${OFFICIAL_EMAILS.legal}`}
+                      className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950"
+                    >
+                      {OFFICIAL_EMAILS.legal}
+                    </a>
+                    {parts.after}
+                  </p>
+                )
+              })()}
+            </section>
+
+            <section className="flex flex-col gap-2">
+              <h2 className={policySectionH2Plain}>14. Contact</h2>
               <p>For exchanges, return requests, and defect claims:</p>
               <p>
                 <a

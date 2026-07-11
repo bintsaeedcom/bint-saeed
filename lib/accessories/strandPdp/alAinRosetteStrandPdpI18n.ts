@@ -4,6 +4,7 @@ import type { AlAinRosetteStrandId } from '@/lib/accessories/strandPdp/alAinRose
 import { AL_AIN_ROSETTE_STRAND_PDP_EN } from '@/lib/accessories/strandPdp/alAinRosetteStrandPdpEn'
 import {
   buildStrandFaqFromTemplates,
+  resolveStrandCare,
   STRAND_PDP_LOCALE_TEMPLATES,
 } from '@/lib/accessories/strandPdp/localeTemplatesI18n'
 
@@ -70,12 +71,13 @@ function buildRosettePdp(
     ],
     stoneOrigin: `${stone.stoneOriginLead} ${shared.carnelianOrigin} ${shared.stoneOriginSuffix}`,
     naturalStone: templates.naturalStoneBody,
-    care: [...templates.care],
+    care: [...resolveStrandCare(locale)],
     faq: buildStrandFaqFromTemplates(
       templates,
       stone.strandLabel,
       stone.stoneLabel,
       stone.variationNote,
+      locale,
     ),
   }
 }

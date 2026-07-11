@@ -90,13 +90,13 @@ const FR_ACCESSORY_CATALOG: Record<string, AccessoryCatalogCopy> = {
     name: 'Charm sac Al Ain Oasis I — Jade fuchsia',
     description:
       'Charm sac Al Ain Oasis I assemblé à la main en jade fuchsia naturel, conçu pour sacs à main et pochettes de soirée.',
-    materials: 'Jade fuchsia naturel, rosettes d’Al Ain sculptées à la main, hématite facettée plaquée or',
+    materials: 'Jade fuchsia naturel, rosettes d’Al Ain en cornaline sculptées à la main, hématite facettée plaquée or',
   },
   'al-ain-oasis-ii-bag-charm-fuchsia-jade': {
     name: 'Charm sac Al Ain Oasis II — Jade fuchsia',
     description:
       'Charm sac Al Ain Oasis II assemblé à la main en jade fuchsia naturel, conçu pour sacs à main et pochettes de soirée.',
-    materials: 'Jade fuchsia naturel, rosettes d’Al Ain sculptées à la main, hématite facettée plaquée or',
+    materials: 'Jade fuchsia naturel, rosettes d’Al Ain en cornaline sculptées à la main, hématite facettée plaquée or',
   },
 }
 

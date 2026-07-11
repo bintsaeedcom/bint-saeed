@@ -4,7 +4,10 @@ import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import LocaleLink from '@/components/LocaleLink'
+import EnglishPolicyVersionNotice from '@/components/legal/EnglishPolicyVersionNotice'
 import type { PolicyContent, PolicySection } from '@/lib/legal/policyContentId'
+import type { EnglishPolicyKey } from '@/lib/legal/englishPolicyVersionNoticeI18n'
+import type { AppLocale } from '@/lib/i18n/routing'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 import { policySectionH2, policySectionH2Plain } from '@/lib/ui/ctaClasses'
 
@@ -153,6 +156,9 @@ export type PolicyDocumentProps = {
   backLabel: string
   variant?: 'standard' | 'shipment'
   sectionAfter?: Record<number, ReactNode>
+  /** Canonical English policy this page corresponds to */
+  englishPolicy?: EnglishPolicyKey
+  language?: AppLocale
 }
 
 export default function PolicyDocument({
@@ -161,6 +167,8 @@ export default function PolicyDocument({
   backLabel,
   variant = 'standard',
   sectionAfter,
+  englishPolicy,
+  language = 'en',
 }: PolicyDocumentProps) {
   const heroAlign = variant === 'shipment' ? (isRTL ? 'text-right' : 'text-left') : 'text-center'
   const bodyGap = variant === 'shipment' ? 'policy-prose flex flex-col gap-4' : 'space-y-9'
@@ -232,6 +240,14 @@ export default function PolicyDocument({
                 </p>
               ))}
             </section>
+
+            {englishPolicy ? (
+              <EnglishPolicyVersionNotice
+                policy={englishPolicy}
+                language={language}
+                compact={variant === 'shipment'}
+              />
+            ) : null}
 
             <div className={`grid ${gridGap} rounded-sm border border-neutral-200 ${gridPad}`}>
               {content.sectionList.map((item) => (

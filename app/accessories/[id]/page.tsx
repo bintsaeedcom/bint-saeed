@@ -68,7 +68,10 @@ import {
   signatureStrandsCategoryLabel,
   strandPdpIntroBlock,
 } from '@/lib/accessories/strandPdpContent'
-import PdpAccordion, { type PdpAccordionSectionConfig } from '@/components/pdp/PdpAccordion'
+import PdpAccordion, {
+  scrollPdpAccordionSectionIntoView,
+  type PdpAccordionSectionConfig,
+} from '@/components/pdp/PdpAccordion'
 import { CTA_BUTTON_RADIUS, PDP_FILLED_PLUM, pdpCtaPrimary } from '@/lib/ui/ctaClasses'
 
 import 'swiper/css'
@@ -208,6 +211,11 @@ export default function AccessoryDetailPage() {
       quantity,
     })
     showAddedToBagToast(isRTL)
+  }
+
+  const openShippingInfo = () => {
+    setOpenDropdown('shipping')
+    window.setTimeout(() => scrollPdpAccordionSectionIntoView('shipping'), 280)
   }
 
   const pdpAccordionSections = useMemo((): PdpAccordionSectionConfig[] => {
@@ -413,7 +421,6 @@ export default function AccessoryDetailPage() {
     }
 
     if (bagCharmPdpContent) {
-      const jewelleryCare = getJewelleryCareCopy(language)
       return [
         {
           id: 'description',
@@ -426,21 +433,24 @@ export default function AccessoryDetailPage() {
                   {paragraph}
                 </p>
               ))}
-              {referenceSku ? (
-                <p className={PDP_COPY_RELAXED}>
-                  {formatPdpProductCodeLine(referenceSku, isRTL)}
+              <div className="space-y-2 pt-1">
+                <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/70">
+                  {bagCharmPdpContent.featuresTitle}
                 </p>
-              ) : null}
+                <ul className={PDP_BULLET_LIST}>
+                  {bagCharmPdpContent.features.map((item, idx) => (
+                    <li key={`bag-feature-${idx}`} className={PDP_BULLET_ITEM}>
+                      {item}
+                    </li>
+                  ))}
+                  {referenceSku ? (
+                    <li className={PDP_BULLET_ITEM}>
+                      {formatPdpProductCodeLine(referenceSku, isRTL)}
+                    </li>
+                  ) : null}
+                </ul>
+              </div>
             </div>
-          ),
-        },
-        {
-          id: 'materials',
-          title: ui.accessories.materials,
-          children: (
-            <ul className={PDP_BULLET_LIST}>
-              <li className={PDP_BULLET_ITEM}>{materials}</li>
-            </ul>
           ),
         },
         {
@@ -448,9 +458,11 @@ export default function AccessoryDetailPage() {
           title: productUi.care,
           children: (
             <div className={`space-y-3 ${isRTL ? 'text-right' : ''}`}>
-              <p className={PDP_COPY_RELAXED}>{jewelleryCare.lead}</p>
+              {bagCharmPdpContent.careLead ? (
+                <p className={PDP_COPY_RELAXED}>{bagCharmPdpContent.careLead}</p>
+              ) : null}
               <ul className={PDP_BULLET_LIST}>
-                {jewelleryCare.bullets.map((item, idx) => (
+                {bagCharmPdpContent.care.map((item, idx) => (
                   <li key={`bag-care-${idx}`} className={PDP_BULLET_ITEM}>
                     {item}
                   </li>
@@ -459,6 +471,27 @@ export default function AccessoryDetailPage() {
             </div>
           ),
         },
+        ...(bagCharmPdpContent.faq.length > 0
+          ? [
+              {
+                id: 'faq',
+                title: productUi.faq,
+                panelClassName: 'space-y-4 pb-5',
+                children: bagCharmPdpContent.faq.map((item) => (
+                  <div key={item.question} className={isRTL ? 'text-right' : ''}>
+                    <p className={PDP_FAQ_QUESTION}>{item.question}</p>
+                    <div className="mt-1 space-y-2">
+                      {faqAnswerParagraphs(item.answer).map((paragraph, idx) => (
+                        <p key={`${item.question}-${idx}`} className={PDP_COPY_RELAXED}>
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                )),
+              } satisfies PdpAccordionSectionConfig,
+            ]
+          : []),
         {
           id: 'shipping',
           title: t.product.shippingReturns,
@@ -988,12 +1021,18 @@ export default function AccessoryDetailPage() {
                   {productUi.weGiveForward}
                 </span>
               </div>
-              <div className="flex flex-col items-center gap-1 text-center">
+              <button
+                type="button"
+                onClick={openShippingInfo}
+                className="flex flex-col items-center gap-1 text-center transition-opacity hover:opacity-80"
+                aria-controls="pdp-accordion-panel-shipping"
+                data-cursor-hover
+              >
                 <FiGlobe className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
                   {productUi.worldwideShipping}
                 </span>
-              </div>
+              </button>
             </div>
 
             {strandPdpContent ? (

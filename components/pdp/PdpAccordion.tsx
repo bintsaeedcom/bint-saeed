@@ -23,10 +23,21 @@ type PdpAccordionProps = {
   className?: string
 }
 
+const HEADER_SCROLL_OFFSET_PX = 120
+/** Match expand animation so we measure after the panel has opened. */
+const OPEN_REVEAL_DELAY_MS = 280
+
+export function scrollPdpAccordionSectionIntoView(sectionId: string) {
+  const el = document.getElementById(`pdp-accordion-section-${sectionId}`)
+  if (!el) return
+  const y = window.scrollY + el.getBoundingClientRect().top - HEADER_SCROLL_OFFSET_PX
+  window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' })
+}
+
 /**
- * PDP detail accordion — animated expand/collapse with scroll anchoring so toggling
- * a section (e.g. Size & Fit inside a sticky panel) does not jump the viewport.
- * Uses CSS grid row animation for reliable collapse (avoids height:auto exit issues).
+ * PDP detail accordion — expand/collapse with calm scroll behaviour:
+ * - closing keeps the trigger from jumping
+ * - opening long panels (Shipping, FAQ) gently reveals the section instead of dumping the user at the footer
  */
 export default function PdpAccordion({
   openId,
@@ -39,6 +50,8 @@ export default function PdpAccordion({
     scrollY: number
     topBefore: number
     button: HTMLButtonElement
+    isOpening: boolean
+    sectionId: string
   } | null>(null)
 
   const handleToggle = (id: string, event: MouseEvent<HTMLButtonElement>) => {
@@ -50,6 +63,8 @@ export default function PdpAccordion({
       scrollY: window.scrollY,
       topBefore: button.getBoundingClientRect().top,
       button,
+      isOpening,
+      sectionId: id,
     }
 
     if (isOpening) onSectionOpen?.(id)
@@ -61,11 +76,33 @@ export default function PdpAccordion({
     if (!adj) return
     scrollAdjustRef.current = null
 
+    // Instant micro-correction so sticky-column reflow does not snap the trigger.
     const topAfter = adj.button.getBoundingClientRect().top
     const delta = topAfter - adj.topBefore
     if (Math.abs(delta) > 0.5) {
       window.scrollTo(0, adj.scrollY + delta)
     }
+
+    if (!adj.isOpening) return
+
+    const timer = window.setTimeout(() => {
+      const sectionRoot = document.getElementById(`pdp-accordion-section-${adj.sectionId}`)
+      const panel = document.getElementById(`pdp-accordion-panel-${adj.sectionId}`)
+      if (!sectionRoot) return
+
+      const btnRect = adj.button.getBoundingClientRect()
+      const panelBottom = panel?.getBoundingClientRect().bottom ?? btnRect.bottom
+      const needsReveal =
+        btnRect.top < HEADER_SCROLL_OFFSET_PX - 8 ||
+        btnRect.top > window.innerHeight * 0.4 ||
+        panelBottom > window.innerHeight - 16
+
+      if (needsReveal) {
+        scrollPdpAccordionSectionIntoView(adj.sectionId)
+      }
+    }, OPEN_REVEAL_DELAY_MS)
+
+    return () => window.clearTimeout(timer)
   }, [openId])
 
   return (
@@ -81,7 +118,8 @@ export default function PdpAccordion({
         return (
           <div
             key={section.id}
-            className={showBorder ? 'border-b border-brand-stone/30' : undefined}
+            id={`pdp-accordion-section-${section.id}`}
+            className={`scroll-mt-28 ${showBorder ? 'border-b border-brand-stone/30' : ''}`}
           >
             <button
               type="button"

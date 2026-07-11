@@ -96,6 +96,14 @@ const PHONE_CHARM_CATEGORY_ROWS: KwRow[] = [
   ['Al Ain Rosette phone charm', 'تعليقة هاتف روزيت العين', 'breloque Rosette d’Al Ain', 'ciondolo Rosetta di Al Ain', 'colgante Roseta de Al Ain', 'подвеска розетка Al Ain', 'Al Ain玫瑰花饰手机挂饰', 'Al-Ain-Rosetten-Telefonanhänger', 'Al Ain Rosette telefoonhanger', 'pingente Roseta de Al Ain'],
 ]
 
+const BAG_CHARM_CATEGORY_ROWS: KwRow[] = [
+  ['natural stone bag charm', 'تعليقة حقيبة أحجار طبيعية', 'breloque sac pierres naturelles', 'ciondolo borsa pietre naturali', 'colgante bolso piedra natural', 'подвеска для сумки из натурального камня', '天然石手袋挂饰', 'Naturstein-Taschenanhänger', 'natuursteen tashanger', 'pingente mala pedra natural'],
+  ['luxury bag charm', 'تعليقة حقيبة فاخرة', 'breloque sac luxe', 'ciondolo borsa di lusso', 'colgante bolso de lujo', 'роскошная подвеска для сумки', '奢华手袋挂饰', 'Luxus-Taschenanhänger', 'luxe tashanger', 'pingente mala de luxo'],
+  ['Al Ain Oasis bag charm', 'تعليقة حقيبة واحة العين', 'breloque Al Ain Oasis', 'ciondolo Al Ain Oasis', 'colgante Al Ain Oasis', 'подвеска Al Ain Oasis', 'Al Ain Oasis手袋挂饰', 'Al-Ain-Oasis-Taschenanhänger', 'Al Ain Oasis tashanger', 'pingente Al Ain Oasis'],
+  ['Fuchsia Jade bag charm', 'تعليقة حقيبة يشم فوشي', 'breloque jade fuchsia', 'ciondolo giada fucsia', 'colgante jade fucsia', 'подвеска фуксиевый нефрит', '紫红玉手袋挂饰', 'Fuchsia-Jade-Taschenanhänger', 'fuchsia-jade tashanger', 'pingente jade fúcsia'],
+  ['handbag charm UAE', 'تعليقة حقيبة الإمارات', 'breloque sac EAU', 'ciondolo borsa EAU', 'colgante bolso EAU', 'подвеска для сумки ОАЭ', '阿联酋手袋挂饰', 'Taschenanhänger VAE', 'tashanger VAE', 'pingente mala EAU'],
+]
+
 const JEWELLERY_GLOBAL_I18N = JEWELLERY_GLOBAL_ROWS.map(([en, ar, fr, it, es, ru, zh, de, nl, pt]) =>
   kw(en, ar, fr, it, es, ru, zh, de, nl, pt),
 )
@@ -138,6 +146,9 @@ export function getJewelleryCategoryDiscoveryKeywords(
   }
   if (category === 'phone-strands') {
     return [...global, ...rowsForLocale(PHONE_CHARM_CATEGORY_ROWS, locale)]
+  }
+  if (category === 'bag-strands') {
+    return [...global, ...rowsForLocale(BAG_CHARM_CATEGORY_ROWS, locale)]
   }
   return global
 }

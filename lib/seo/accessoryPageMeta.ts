@@ -9,6 +9,10 @@ import {
   getPhoneCharmMetaDescription,
   getPhoneCharmMetaTitle,
 } from '@/lib/accessories/phoneCharmPdpMetaI18n'
+import {
+  getBagCharmMetaDescription,
+  getBagCharmMetaTitle,
+} from '@/lib/accessories/bagCharmPdpMetaI18n'
 import { getNecklaceEarringPdpContent } from '@/lib/accessories/necklaceEarringPdpContent'
 import {
   getLocalizedAccessoryDescription,
@@ -60,6 +64,8 @@ function accessoryDisplayName(accessory: Accessory, locale: AppLocale): string {
 export function buildAccessoryPageTitle(accessory: Accessory, locale: AppLocale): string {
   const phoneTitle = getPhoneCharmMetaTitle(accessory.id, locale)
   if (phoneTitle) return phoneTitle
+  const bagTitle = getBagCharmMetaTitle(accessory.id, locale)
+  if (bagTitle) return bagTitle
   return `${accessoryDisplayName(accessory, locale)} | ${BRAND_NAME}`
 }
 
@@ -73,6 +79,9 @@ export function buildAccessoryMetaDescription(accessory: Accessory, locale: AppL
 
   const phoneCharmMeta = getPhoneCharmMetaDescription(accessory.id, locale)
   if (phoneCharmMeta) return phoneCharmMeta
+
+  const bagCharmMeta = getBagCharmMetaDescription(accessory.id, locale)
+  if (bagCharmMeta) return bagCharmMeta
 
   const phoneCharm = getPhoneCharmPdpContent(accessory.id, locale)
   if (phoneCharm) {

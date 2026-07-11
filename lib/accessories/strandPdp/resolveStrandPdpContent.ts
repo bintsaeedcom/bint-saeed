@@ -3,6 +3,7 @@ import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 import type { StrandPdpContent } from '@/lib/accessories/strandPdp/types'
 import {
   buildStrandFaqFromTemplates,
+  resolveStrandCare,
   STRAND_PDP_LOCALE_TEMPLATES,
 } from '@/lib/accessories/strandPdp/localeTemplatesI18n'
 import {
@@ -66,12 +67,13 @@ export function getStrandPdpContent(
     ],
     stoneOrigin: stone.stoneOrigin,
     naturalStone: templates.naturalStoneBody,
-    care: [...templates.care],
+    care: [...resolveStrandCare(locale)],
     faq: buildStrandFaqFromTemplates(
       templates,
       stone.strandLabel,
       stone.stoneLabel,
       stone.variationNote,
+      locale,
     ),
   }
 }

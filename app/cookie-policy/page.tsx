@@ -4,7 +4,16 @@ import { motion } from 'framer-motion'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getEnabledTrackersFromEnv } from '@/lib/analytics/trackerCatalog'
+import EnglishPolicyVersionNotice from '@/components/legal/EnglishPolicyVersionNotice'
+import type { AppLocale } from '@/lib/i18n/routing'
 import { COOKIE_POLICY_AR, OFFICIAL_EMAILS } from '@/lib/legal/cookiePolicyContentAr'
+import {
+  LANGUAGE_CLAUSE_SHORT_AR,
+  LANGUAGE_CLAUSE_SHORT_EN,
+  LANGUAGE_CLAUSE_TITLE_AR,
+  LANGUAGE_CLAUSE_TITLE_EN,
+} from '@/lib/legal/languageAndTranslationClause'
+import { splitLegalEmail } from '@/lib/legal/splitLegalEmail'
 
 const SECTION_LIST_EN = [
   '1. What Are Cookies',
@@ -14,8 +23,9 @@ const SECTION_LIST_EN = [
   '5. Cookie Consent and Preference Management',
   '6. Withdrawing or Changing Consent',
   '7. Cookie Retention',
-  '8. Policy Updates',
-  '9. Contact',
+  '8. Language and Translations',
+  '9. Policy Updates',
+  '10. Contact',
 ]
 
 const ESSENTIAL_COOKIES_EN = [
@@ -29,6 +39,7 @@ const ESSENTIAL_COOKIES_EN = [
 
 export default function CookiePolicyPage() {
   const { t, isRTL, language } = useLanguage()
+  const locale = language as AppLocale
   const activeTrackers = getEnabledTrackersFromEnv()
   const isAr = language === 'ar'
   const ar = COOKIE_POLICY_AR
@@ -100,6 +111,8 @@ export default function CookiePolicyPage() {
               <h2 className="mb-2 font-rozha text-xl text-neutral-900">{summaryTitle}</h2>
               <p className="text-sm text-neutral-600">{summaryBody}</p>
             </section>
+
+            <EnglishPolicyVersionNotice policy="cookie" language={locale} />
 
             <div className="grid gap-2 rounded-sm border border-neutral-200 p-5 md:grid-cols-2 md:gap-3 md:p-6">
               {sectionList.map((item) => (
@@ -249,7 +262,30 @@ export default function CookiePolicyPage() {
 
             <section>
               <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
-                {isAr ? ar.updates.title : '8. Policy Updates'}
+                {isAr ? `8. ${LANGUAGE_CLAUSE_TITLE_AR}` : `8. ${LANGUAGE_CLAUSE_TITLE_EN}`}
+              </h2>
+              {(() => {
+                const clause = isAr ? LANGUAGE_CLAUSE_SHORT_AR : LANGUAGE_CLAUSE_SHORT_EN
+                const parts = splitLegalEmail(clause)
+                if (!parts) return <p>{clause}</p>
+                return (
+                  <p>
+                    {parts.before}
+                    <a
+                      href={`mailto:${OFFICIAL_EMAILS.legal}`}
+                      className="text-neutral-800 underline decoration-neutral-400 underline-offset-2 hover:text-neutral-950"
+                    >
+                      {OFFICIAL_EMAILS.legal}
+                    </a>
+                    {parts.after}
+                  </p>
+                )
+              })()}
+            </section>
+
+            <section>
+              <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
+                {isAr ? ar.updates.title : '9. Policy Updates'}
               </h2>
               <p>
                 {isAr
@@ -260,7 +296,7 @@ export default function CookiePolicyPage() {
 
             <section>
               <h2 className="mb-4 font-rozha text-2xl text-neutral-900">
-                {isAr ? ar.contact.title : '9. Contact'}
+                {isAr ? ar.contact.title : '10. Contact'}
               </h2>
               <p>{isAr ? ar.contact.body : 'If you have questions about this Cookie Policy or cookie controls, contact:'}</p>
               <p className="mt-4">

@@ -36,15 +36,29 @@ import {
   getPhoneCharmPdpAlt,
 } from '@/lib/accessories/phoneCharmPdpSeo'
 import {
+  getBagCharmCarouselAlt,
+  getBagCharmPdpAlt,
+} from '@/lib/accessories/bagCharmImageAltI18n'
+import {
   buildPhoneCharmAllCurrencyPriceLine,
   getPhoneCharmMetaKeywords,
   getPhoneCharmSchemaAudience,
 } from '@/lib/accessories/phoneCharmPdpMetaI18n'
 import {
+  buildBagCharmAllCurrencyPriceLine,
+  getBagCharmMetaKeywords,
+  getBagCharmSchemaAudience,
+} from '@/lib/accessories/bagCharmPdpMetaI18n'
+import {
   getPhoneCharmFaqForSchema,
   getPhoneCharmPdpContent,
   isAlQuaaPhoneCharmId,
 } from '@/lib/accessories/phoneCharmPdpContent'
+import {
+  getBagCharmFaqForSchema,
+  getBagCharmPdpContent,
+  isAlAinOasisBagCharmId,
+} from '@/lib/accessories/bagCharmPdpContent'
 import {
   ACCESSORY_CATALOG_PRICES,
   getAccessoryCatalogPriceMap,
@@ -121,6 +135,10 @@ export function getAccessoryCarouselAlt(
     const phoneAlt = getPhoneCharmCarouselAlt(accessory.id, locale)
     if (phoneAlt) return withBrandAlt(phoneAlt, locale)
   }
+  if (accessory.category === 'bag-strands') {
+    const bagAlt = getBagCharmCarouselAlt(accessory.id, locale)
+    if (bagAlt) return withBrandAlt(bagAlt, locale)
+  }
   const packAlt = getNecklaceEarringCarouselAlt(accessory.id, locale)
   if (packAlt) return withBrandAlt(packAlt, locale)
   return withBrandAlt(isRTL ? accessory.nameAr : accessory.name, locale)
@@ -138,6 +156,10 @@ export function getAccessoryImageAlt(
   if (accessory.category === 'phone-strands') {
     const phoneAlt = getPhoneCharmPdpAlt(accessory.id, imageIndex, locale)
     if (phoneAlt) return withBrandAlt(phoneAlt, locale)
+  }
+  if (accessory.category === 'bag-strands') {
+    const bagAlt = getBagCharmPdpAlt(accessory.id, imageIndex, locale)
+    if (bagAlt) return withBrandAlt(bagAlt, locale)
   }
   const packAlt = getNecklaceEarringPdpAlt(accessory.id, imageIndex, locale)
   if (packAlt) return withBrandAlt(packAlt, locale)
@@ -259,14 +281,17 @@ function buildMultiCurrencyOffers(accessory: Accessory, pageUrl: string): Record
   }))
 }
 
-function buildPhoneCharmPriceAdditionalProperties(accessoryId: string): Record<string, unknown>[] {
+function buildCatalogPriceAdditionalProperties(
+  accessoryId: string,
+  allCurrencyLine: string,
+): Record<string, unknown>[] {
   const priceMap = getAccessoryCatalogPriceMap(accessoryId)
   if (!priceMap) return []
   return [
     {
       '@type': 'PropertyValue',
       name: 'Listed prices (all currencies)',
-      value: buildPhoneCharmAllCurrencyPriceLine(accessoryId),
+      value: allCurrencyLine,
     },
     ...SUPPORTED_CURRENCIES.map((currency) => ({
       '@type': 'PropertyValue' as const,
@@ -275,6 +300,20 @@ function buildPhoneCharmPriceAdditionalProperties(accessoryId: string): Record<s
       unitCode: currency,
     })),
   ]
+}
+
+function buildPhoneCharmPriceAdditionalProperties(accessoryId: string): Record<string, unknown>[] {
+  return buildCatalogPriceAdditionalProperties(
+    accessoryId,
+    buildPhoneCharmAllCurrencyPriceLine(accessoryId),
+  )
+}
+
+function buildBagCharmPriceAdditionalProperties(accessoryId: string): Record<string, unknown>[] {
+  return buildCatalogPriceAdditionalProperties(
+    accessoryId,
+    buildBagCharmAllCurrencyPriceLine(accessoryId),
+  )
 }
 
 function phoneCharmSemanticLinks(
@@ -423,6 +462,173 @@ function buildPhoneCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown>
       offers: multiOffers,
     },
     ...phoneCharmSemanticLinks(accessory, displayName, pageUrl, locale),
+  }
+
+  const graph: Record<string, unknown>[] = [productNode]
+  if (faqNode) graph.push(faqNode)
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  }
+}
+
+function bagCharmSemanticLinks(
+  accessory: Accessory,
+  displayName: string,
+  pageUrl: string,
+  locale: AppLocale,
+): Record<string, unknown> {
+  const peerCharms = accessories
+    .filter((a) => a.category === 'bag-strands' && a.id !== accessory.id)
+    .map((a) => ({
+      '@type': 'Product',
+      name: a.name,
+      url: `${SITE_URL}/accessories/${a.id}`,
+    }))
+
+  return {
+    about: {
+      '@type': 'Thing',
+      name: 'Natural stone bag charms & luxury handbag accessories',
+      description:
+        'Hand-assembled natural gemstone bag charms with Carnelian Al Ain Rosette motifs — for lovers of natural stones, luxury bag charms and refined handbag accessories. Handcrafted in Abu Dhabi, United Arab Emirates.',
+      sameAs: `${SITE_URL}/accessories`,
+    },
+    isPartOf: {
+      '@type': 'Collection',
+      name: 'Al Ain Oasis Bag Charms — Bint Saeed',
+      url: `${SITE_URL}/accessories`,
+    },
+    isRelatedTo: [
+      {
+        '@type': 'CollectionPage',
+        name: 'Bint Saeed Accessories',
+        url: `${SITE_URL}/accessories`,
+      },
+      {
+        '@type': 'CollectionPage',
+        name: 'Al Ain Natural Stone Jewellery',
+        url: `${SITE_URL}/accessories`,
+      },
+      ...peerCharms,
+    ],
+    subjectOf: {
+      '@type': 'WebPage',
+      name: displayName,
+      url: pageUrl,
+      inLanguage: schemaInLanguageForLocale(locale),
+    },
+  }
+}
+
+function buildBagCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown> {
+  const { accessory, displayName, description, pageUrl, locale = 'en' } = input
+  const lang = schemaInLanguageForLocale(locale)
+  const gallery = getAccessoryPdpImages(accessory)
+  const sku = getAccessorySku(accessory) ?? accessory.id
+  const faqItems = getBagCharmFaqForSchema(accessory.id, locale)
+  const faqNode = buildFaqPageJsonLd(pageUrl, faqItems, lang)
+  const pdp = getBagCharmPdpContent(accessory.id, locale)
+  const localizedMaterials = pdp
+    ? `${pdp.colour}; Carnelian Al Ain Rosette; gold-plated hematite`
+    : accessory.materials
+  const keywords = mergeAccessorySchemaKeywords(
+    getBagCharmMetaKeywords(accessory.id, locale),
+    getJewelleryCategoryDiscoveryKeywords('bag-strands', locale),
+    getGlobalJewelleryDiscoveryKeywords(locale),
+  )
+  const multiOffers = buildMultiCurrencyOffers(accessory, pageUrl)
+  const aedPrice = ACCESSORY_CATALOG_PRICES[accessory.id]?.AED ?? accessory.price
+  const strandCount = accessory.id.includes('oasis-ii') ? '3' : '2'
+
+  const productNode: Record<string, unknown> = {
+    '@type': 'Product',
+    '@id': `${pageUrl}#product`,
+    name: displayName,
+    description,
+    url: pageUrl,
+    sku,
+    mpn: sku,
+    category: 'Bag Charms',
+    material: localizedMaterials,
+    color: pdp?.colour,
+    inLanguage: lang,
+    keywords,
+    countryOfOrigin: {
+      '@type': 'Country',
+      name: 'United Arab Emirates',
+    },
+    brand: {
+      '@type': 'Brand',
+      name: 'Bint Saeed',
+      url: SITE_URL,
+    },
+    manufacturer: {
+      '@type': 'Organization',
+      name: SCHEMA_MANUFACTURER,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Abu Dhabi',
+        addressCountry: 'AE',
+      },
+    },
+    audience: {
+      '@type': 'PeopleAudience',
+      suggestedGender: 'female',
+      audienceType: appendGlobalPdpSchemaAudienceExtension(
+        getBagCharmSchemaAudience(locale),
+        locale,
+      ),
+    },
+    additionalProperty: [
+      {
+        '@type': 'PropertyValue',
+        name: 'Collection',
+        value: 'Al Ain Oasis Bag Charms',
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Motif',
+        value: 'Al Ain Rosette (Carnelian)',
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Product type',
+        value: 'Natural stone luxury bag charm',
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Cascading strands',
+        value: strandCount,
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Approximate length',
+        value: '15 cm / 5.9 in',
+      },
+      ...buildBagCharmPriceAdditionalProperties(accessory.id),
+    ],
+    image: gallery.map((src, index) => ({
+      '@type': 'ImageObject',
+      contentUrl: src.startsWith('http') ? src : `${SITE_URL}${src}`,
+      name: getAccessoryImageAlt(accessory, src, index, locale),
+      ...(lang ? { inLanguage: lang } : {}),
+      representativeOfPage: index === 0,
+    })),
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'AED',
+      lowPrice: String(aedPrice),
+      highPrice: String(aedPrice),
+      offerCount: String(multiOffers.length),
+      availability: accessory.inStock
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
+      url: pageUrl,
+      offers: multiOffers,
+    },
+    ...bagCharmSemanticLinks(accessory, displayName, pageUrl, locale),
   }
 
   const graph: Record<string, unknown>[] = [productNode]
@@ -702,6 +908,10 @@ export function buildAccessoryProductJsonLd({
 
   if (isAlQuaaPhoneCharmId(accessory.id) || accessory.category === 'phone-strands') {
     return buildPhoneCharmJsonLdGraph({ accessory, displayName, description, pageUrl, locale })
+  }
+
+  if (isAlAinOasisBagCharmId(accessory.id) || accessory.category === 'bag-strands') {
+    return buildBagCharmJsonLdGraph({ accessory, displayName, description, pageUrl, locale })
   }
 
   const isNecklaceOrEarring =
