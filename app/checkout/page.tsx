@@ -29,6 +29,12 @@ import {
 } from '@/lib/payments'
 import { getCheckoutAttributionContext } from '@/lib/analytics/checkoutAttribution'
 import CheckoutPaymentRailIcons from '@/components/checkout/CheckoutPaymentRailIcons'
+import dynamic from 'next/dynamic'
+
+const StripeEmbeddedCheckoutForm = dynamic(
+  () => import('@/components/checkout/StripeEmbeddedCheckoutForm'),
+  { ssr: false },
+)
 
 function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   if (typeof window === 'undefined') return 'desktop'
@@ -70,6 +76,10 @@ export default function CheckoutPage() {
   const [payBusy, setPayBusy] = useState(false)
   const [legalAcknowledged, setLegalAcknowledged] = useState(false)
   const [selectedRail, setSelectedRail] = useState<CheckoutRail | null>(null)
+  const [stripeEmbedded, setStripeEmbedded] = useState<{
+    clientSecret: string
+    publishableKey: string
+  } | null>(null)
 
   const availableRails = useMemo(
     () => getAvailableCheckoutRails(countryCode),
@@ -169,14 +179,34 @@ export default function CheckoutPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(checkoutPayload),
       })
-      const { url, error } = await response.json()
-      if (!response.ok) throw new Error(error || 'Checkout is unavailable')
-      if (error) throw new Error(error)
-      if (typeof url === 'string' && url.startsWith('https://')) {
-        window.location.assign(url)
+      const data = (await response.json()) as {
+        mode?: string
+        url?: string
+        clientSecret?: string
+        publishableKey?: string
+        error?: string
+      }
+      if (!response.ok) throw new Error(data.error || 'Checkout is unavailable')
+      if (data.error) throw new Error(data.error)
+
+      if (data.mode === 'embedded' && data.clientSecret) {
+        const publishableKey =
+          data.publishableKey ||
+          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.trim() ||
+          ''
+        if (!publishableKey) throw new Error('Stripe publishable key missing')
+        setStripeEmbedded({
+          clientSecret: data.clientSecret,
+          publishableKey,
+        })
         return
       }
-      throw new Error('Stripe checkout URL missing')
+
+      if (typeof data.url === 'string' && data.url.startsWith('https://')) {
+        window.location.assign(data.url)
+        return
+      }
+      throw new Error('Stripe checkout session missing')
     } catch (e) {
       console.error(e)
       toast.error(ui.checkout.checkoutError)
@@ -226,6 +256,17 @@ export default function CheckoutPage() {
       </div>
 
       <div className="container mx-auto min-w-0 px-4 py-8 sm:px-6 sm:py-10 lg:px-12 lg:py-16">
+        {stripeEmbedded ? (
+          <div className="mx-auto max-w-3xl">
+            <StripeEmbeddedCheckoutForm
+              clientSecret={stripeEmbedded.clientSecret}
+              publishableKey={stripeEmbedded.publishableKey}
+              backLabel={ui.common.back}
+              rtl={isRTL}
+              onBack={() => setStripeEmbedded(null)}
+            />
+          </div>
+        ) : (
         <div className="grid min-w-0 gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="min-w-0 lg:col-span-7">
             <motion.section
@@ -412,6 +453,7 @@ export default function CheckoutPage() {
             </div>
           </div>
         </div>
+        )}
       </div>
     </div>
   )

@@ -1,21 +1,19 @@
 import type Stripe from 'stripe'
-import {
-  cartSubtotalInCurrency,
-  resolveShippingEligibility,
-  toStripeMinorUnits,
-} from '@/lib/pricing'
+import { cartSubtotalInCurrency } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 import { resolveLineItemSku } from '@/lib/checkout/resolveLineItemSku'
 import { buildCheckoutAttributionMetadata } from '@/lib/checkout/attributionMetadata'
 import type { ParsedCheckoutRequest } from '@/lib/checkout/types'
 import { buildCheckoutPaymentParams } from '@/lib/stripe/checkoutPaymentMethods'
 import { buildCheckoutLineItems } from '@/lib/stripe/buildCheckoutLineItems'
+import { buildProvisionalStripeShippingOption } from '@/lib/stripe/buildStripeShippingOption'
 
-export type StripeCheckoutUiMode = 'hosted' | 'elements'
+export type StripeCheckoutUiMode = 'hosted' | 'elements' | 'embedded'
 
 export function resolveStripeCheckoutUiMode(): StripeCheckoutUiMode {
-  // UAE Stripe accounts cannot use Stripe-native PayPal. Use direct PayPal checkout rail instead.
-  return 'hosted'
+  // Embedded Checkout keeps payment fields on Stripe while allowing destination-accurate shipping.
+  // UAE Stripe accounts still cannot use Stripe-native PayPal — use the direct PayPal rail.
+  return 'embedded'
 }
 
 type BuildSessionOptions = {
@@ -24,27 +22,18 @@ type BuildSessionOptions = {
   uiMode?: StripeCheckoutUiMode
 }
 
+/** Countries we currently accept for Stripe address collection. */
+export const STRIPE_SHIPPING_ALLOWED_COUNTRIES: Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry[] =
+  ['AE', 'SA', 'KW', 'BH', 'OM', 'QA', 'GB', 'US', 'FR', 'DE', 'IT']
+
 export function buildStripeCheckoutSessionParams({
   parsed,
   baseUrl,
   uiMode = resolveStripeCheckoutUiMode(),
 }: BuildSessionOptions): Stripe.Checkout.SessionCreateParams {
   const currency = parsed.currency as SupportedCurrency
-  const stripeCurrency = currency.toLowerCase()
   const lineItems = buildCheckoutLineItems(parsed.items, currency, baseUrl)
   const cartSubtotal = cartSubtotalInCurrency(parsed.items, currency)
-  const shipping = resolveShippingEligibility({
-    subtotal: cartSubtotal,
-    currency,
-    country: parsed.clientContext.country,
-  })
-  const shippingMinor = toStripeMinorUnits(shipping.fee, currency)
-  const shippingDisplayName =
-    shipping.scope === 'worldwide'
-      ? 'Complimentary worldwide shipping'
-      : shipping.scope === 'uae'
-        ? 'Complimentary UAE shipping'
-        : 'Shipping'
 
   const metadata: Stripe.MetadataParam = {
     customerEmail: parsed.customerEmail,
@@ -77,8 +66,9 @@ export function buildStripeCheckoutSessionParams({
     clientDeviceType: parsed.clientContext.deviceType ?? '',
     checkoutNotes: parsed.checkoutNotes,
     cartSubtotal: String(cartSubtotal),
-    shippingFee: String(shipping.fee),
-    shippingScope: shipping.scope,
+    // Fee is recalculated when the client enters a shipping address (embedded flow).
+    shippingFee: 'pending',
+    shippingScope: 'pending',
     ...buildCheckoutAttributionMetadata(parsed.clientContext),
   }
 
@@ -87,25 +77,14 @@ export function buildStripeCheckoutSessionParams({
     line_items: lineItems,
     mode: 'payment',
     shipping_address_collection: {
-      allowed_countries: ['AE', 'SA', 'KW', 'BH', 'OM', 'QA', 'GB', 'US', 'FR', 'DE', 'IT'],
+      allowed_countries: STRIPE_SHIPPING_ALLOWED_COUNTRIES,
     },
     billing_address_collection: 'required',
     allow_promotion_codes: true,
     phone_number_collection: {
       enabled: true,
     },
-    shipping_options: [
-      {
-        shipping_rate_data: {
-          type: 'fixed_amount',
-          fixed_amount: {
-            amount: shippingMinor,
-            currency: stripeCurrency,
-          },
-          display_name: shippingDisplayName,
-        },
-      },
-    ],
+    shipping_options: [buildProvisionalStripeShippingOption(currency)],
     metadata,
     customer_creation: 'always',
     invoice_creation: {
@@ -121,16 +100,31 @@ export function buildStripeCheckoutSessionParams({
     shared.customer_email = parsed.customerEmail
   }
 
+  if (uiMode === 'embedded') {
+    return {
+      ...shared,
+      ui_mode: 'embedded_page',
+      return_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      permissions: {
+        update_shipping_details: 'server_only',
+      },
+    }
+  }
+
   if (uiMode === 'elements') {
     return {
       ...shared,
       ui_mode: 'elements',
       return_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      permissions: {
+        update_shipping_details: 'server_only',
+      },
     }
   }
 
   return {
     ...shared,
+    ui_mode: 'hosted_page',
     success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${baseUrl}/checkout`,
     custom_fields: [

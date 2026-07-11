@@ -51,14 +51,15 @@ export async function POST(request: NextRequest) {
 
     const session = await stripe.checkout.sessions.create(sessionOptions)
 
-    if (uiMode === 'elements') {
+    if (uiMode === 'embedded' || uiMode === 'elements') {
       if (!session.client_secret) {
-        throw new Error('Stripe elements session missing client secret')
+        throw new Error('Stripe checkout session missing client secret')
       }
       return NextResponse.json({
-        mode: 'elements',
+        mode: uiMode === 'embedded' ? 'embedded' : 'elements',
         sessionId: session.id,
         clientSecret: session.client_secret,
+        publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.trim() ?? '',
       })
     }
 
