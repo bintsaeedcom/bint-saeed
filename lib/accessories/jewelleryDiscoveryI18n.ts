@@ -88,6 +88,14 @@ const STRAND_CATEGORY_ROWS: KwRow[] = [
   ['worldwide shipping abaya jewellery', 'شحن مجوهرات عباءة عالمي', 'livraison bijoux abaya mondiale', 'spedizione gioielli abaya mondiale', 'envío joyería abaya mundial', 'доставка украшений для абайи по всему миру', '全球长袍珠宝配送', 'weltweiter Versand Abaya-Schmuck', 'wereldwijde verzending abaya sieraden', 'envio mundial joias abaya'],
 ]
 
+const PHONE_CHARM_CATEGORY_ROWS: KwRow[] = [
+  ['natural stone phone charm', 'تعليقة هاتف أحجار طبيعية', 'breloque téléphone pierres naturelles', 'ciondolo telefono pietre naturali', 'colgante móvil piedra natural', 'подвеска для телефона из натурального камня', '天然石手机挂饰', 'Naturstein-Telefonanhänger', 'natuursteen telefoonhanger', 'pingente telemóvel pedra natural'],
+  ['luxury phone charm', 'تعليقة هاتف فاخرة', 'breloque téléphone luxe', 'ciondolo telefono di lusso', 'colgante móvil de lujo', 'роскошная подвеска для телефона', '奢华手机挂饰', 'Luxus-Telefonanhänger', 'luxe telefoonhanger', 'pingente telemóvel de luxo'],
+  ['gemstone phone accessory', 'إكسسوار هاتف أحجار كريمة', 'accessoire téléphone gemmes', 'accessorio telefono gemme', 'accesorio móvil gemas', 'аксессуар для телефона из самоцветов', '宝石手机配饰', 'Edelstein-Telefonaccessoire', 'edelsteen telefoonaccessoire', 'acessório telemóvel gemas'],
+  ['Al Quaa phone charm', 'تعليقة هاتف القوع', 'breloque Al Quaa', 'ciondolo Al Quaa', 'colgante Al Quaa', 'подвеска Al Quaa', 'Al Quaa手机挂饰', 'Al-Quaa-Telefonanhänger', 'Al Quaa telefoonhanger', 'pingente Al Quaa'],
+  ['Al Ain Rosette phone charm', 'تعليقة هاتف روزيت العين', 'breloque Rosette d’Al Ain', 'ciondolo Rosetta di Al Ain', 'colgante Roseta de Al Ain', 'подвеска розетка Al Ain', 'Al Ain玫瑰花饰手机挂饰', 'Al-Ain-Rosetten-Telefonanhänger', 'Al Ain Rosette telefoonhanger', 'pingente Roseta de Al Ain'],
+]
+
 const JEWELLERY_GLOBAL_I18N = JEWELLERY_GLOBAL_ROWS.map(([en, ar, fr, it, es, ru, zh, de, nl, pt]) =>
   kw(en, ar, fr, it, es, ru, zh, de, nl, pt),
 )
@@ -127,6 +135,9 @@ export function getJewelleryCategoryDiscoveryKeywords(
   }
   if (category === 'signature-strands') {
     return [...global, ...rowsForLocale(STRAND_CATEGORY_ROWS, locale)]
+  }
+  if (category === 'phone-strands') {
+    return [...global, ...rowsForLocale(PHONE_CHARM_CATEGORY_ROWS, locale)]
   }
   return global
 }

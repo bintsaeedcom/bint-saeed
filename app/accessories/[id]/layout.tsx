@@ -7,6 +7,12 @@ import {
 } from '@/lib/accessories/accessoryPageUrl'
 import { getAccessoryImageAlt } from '@/lib/accessories/accessoryJsonLd'
 import {
+  getPhoneCharmAiOther,
+  getPhoneCharmMetaKeywords,
+} from '@/lib/accessories/phoneCharmPdpMetaI18n'
+import { isAlQuaaPhoneCharmId } from '@/lib/accessories/phoneCharmPdpContent'
+import { getListedPriceForAccessory } from '@/lib/pricing/accessoryCatalogPrices'
+import {
   buildAccessoryMetaDescription,
   buildAccessoryPageTitle,
   accessoryNotFoundMetadata,
@@ -33,9 +39,15 @@ export async function generateMetadata({ params }: AccessoryLayoutProps): Promis
   const imageUrl = image.startsWith('http') ? image : absoluteAccessoryImageUrl(image)
   const imageAlt = getAccessoryImageAlt(accessory, image, 0, locale)
 
+  const isPhoneCharm = isAlQuaaPhoneCharmId(accessory.id)
+  const phoneKeywords = isPhoneCharm ? getPhoneCharmMetaKeywords(accessory.id, locale) : undefined
+  const phoneAiOther = isPhoneCharm ? getPhoneCharmAiOther(accessory.id, locale) : undefined
+  const aedPrice = isPhoneCharm ? getListedPriceForAccessory(accessory.id, 'AED') : null
+
   return {
     title: pageTitle,
     description,
+    ...(phoneKeywords?.length ? { keywords: phoneKeywords } : {}),
     alternates: {
       canonical: canonicalUrl,
       languages: accessoryHreflangLanguages(accessory.id),
@@ -72,6 +84,23 @@ export async function generateMetadata({ params }: AccessoryLayoutProps): Promis
         'max-video-preview': -1,
       },
     },
+    ...(phoneAiOther || aedPrice != null
+      ? {
+          other: {
+            ...(phoneAiOther ?? {}),
+            ...(aedPrice != null
+              ? {
+                  'product:price:amount': String(aedPrice),
+                  'product:price:currency': 'AED',
+                  'product:availability': accessory.inStock ? 'in stock' : 'out of stock',
+                  'product:condition': 'new',
+                  'product:brand': 'Bint Saeed',
+                  'product:retailer_item_id': accessory.id,
+                }
+              : {}),
+          },
+        }
+      : {}),
   }
 }
 

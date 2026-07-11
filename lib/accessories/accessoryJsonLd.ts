@@ -35,6 +35,21 @@ import {
   getPhoneCharmCarouselAlt,
   getPhoneCharmPdpAlt,
 } from '@/lib/accessories/phoneCharmPdpSeo'
+import {
+  buildPhoneCharmAllCurrencyPriceLine,
+  getPhoneCharmMetaKeywords,
+  getPhoneCharmSchemaAudience,
+} from '@/lib/accessories/phoneCharmPdpMetaI18n'
+import {
+  getPhoneCharmFaqForSchema,
+  getPhoneCharmPdpContent,
+  isAlQuaaPhoneCharmId,
+} from '@/lib/accessories/phoneCharmPdpContent'
+import {
+  ACCESSORY_CATALOG_PRICES,
+  getAccessoryCatalogPriceMap,
+} from '@/lib/pricing/accessoryCatalogPrices'
+import { SUPPORTED_CURRENCIES } from '@/lib/pricing/types'
 import { getNecklaceEarringFaqForSchema } from '@/lib/accessories/necklaceEarringPdpContent'
 import {
   buildNecklaceEarringAdditionalProperties,
@@ -212,6 +227,210 @@ function buildOffer(accessory: Accessory, pageUrl: string) {
       ...OFFER_AREA_SERVED_COUNTRIES.map((name) => ({ '@type': 'Country' as const, name })),
       { '@type': 'Place' as const, name: 'Worldwide' },
     ],
+  }
+}
+
+/** One Offer per listed currency for AI crawlers + international SEO. */
+function buildMultiCurrencyOffers(accessory: Accessory, pageUrl: string): Record<string, unknown>[] {
+  const priceMap = getAccessoryCatalogPriceMap(accessory.id)
+  const availability = accessory.inStock
+    ? 'https://schema.org/InStock'
+    : 'https://schema.org/OutOfStock'
+  const areaServed = [
+    ...OFFER_AREA_SERVED_COUNTRIES.map((name) => ({ '@type': 'Country' as const, name })),
+    { '@type': 'Place' as const, name: 'Worldwide' },
+  ]
+  const seller = {
+    '@type': 'Organization' as const,
+    name: 'Bint Saeed',
+  }
+
+  if (!priceMap) return [buildOffer(accessory, pageUrl)]
+
+  return SUPPORTED_CURRENCIES.map((currency) => ({
+    '@type': 'Offer' as const,
+    priceCurrency: currency,
+    price: String(priceMap[currency]),
+    availability,
+    url: pageUrl,
+    itemCondition: 'https://schema.org/NewCondition',
+    seller,
+    areaServed,
+  }))
+}
+
+function buildPhoneCharmPriceAdditionalProperties(accessoryId: string): Record<string, unknown>[] {
+  const priceMap = getAccessoryCatalogPriceMap(accessoryId)
+  if (!priceMap) return []
+  return [
+    {
+      '@type': 'PropertyValue',
+      name: 'Listed prices (all currencies)',
+      value: buildPhoneCharmAllCurrencyPriceLine(accessoryId),
+    },
+    ...SUPPORTED_CURRENCIES.map((currency) => ({
+      '@type': 'PropertyValue' as const,
+      name: `Listed price ${currency}`,
+      value: String(priceMap[currency]),
+      unitCode: currency,
+    })),
+  ]
+}
+
+function phoneCharmSemanticLinks(
+  accessory: Accessory,
+  displayName: string,
+  pageUrl: string,
+  locale: AppLocale,
+): Record<string, unknown> {
+  const peerCharms = accessories
+    .filter((a) => a.category === 'phone-strands' && a.id !== accessory.id)
+    .slice(0, 6)
+    .map((a) => ({
+      '@type': 'Product',
+      name: a.name,
+      url: `${SITE_URL}/accessories/${a.id}`,
+    }))
+
+  return {
+    about: {
+      '@type': 'Thing',
+      name: 'Natural stone phone charms & luxury accessories',
+      description:
+        'Hand-assembled natural gemstone phone charms with Carnelian Al Ain Rosette motifs — for lovers of natural stones, luxury phone charms and refined accessories. Handcrafted in Abu Dhabi, United Arab Emirates.',
+      sameAs: `${SITE_URL}/accessories`,
+    },
+    isPartOf: {
+      '@type': 'Collection',
+      name: 'Al Quaa Phone Charms — Bint Saeed',
+      url: `${SITE_URL}/accessories`,
+    },
+    isRelatedTo: [
+      {
+        '@type': 'CollectionPage',
+        name: 'Bint Saeed Accessories',
+        url: `${SITE_URL}/accessories`,
+      },
+      {
+        '@type': 'CollectionPage',
+        name: 'Al Ain Natural Stone Jewellery',
+        url: `${SITE_URL}/accessories`,
+      },
+      ...peerCharms,
+    ],
+    subjectOf: {
+      '@type': 'WebPage',
+      name: displayName,
+      url: pageUrl,
+      inLanguage: schemaInLanguageForLocale(locale),
+    },
+  }
+}
+
+function buildPhoneCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown> {
+  const { accessory, displayName, description, pageUrl, locale = 'en' } = input
+  const lang = schemaInLanguageForLocale(locale)
+  const gallery = getAccessoryPdpImages(accessory)
+  const sku = getAccessorySku(accessory) ?? accessory.id
+  const faqItems = getPhoneCharmFaqForSchema(accessory.id, locale)
+  const faqNode = buildFaqPageJsonLd(pageUrl, faqItems, lang)
+  const pdp = getPhoneCharmPdpContent(accessory.id, locale)
+  const localizedMaterials = pdp
+    ? `${pdp.colour}; Carnelian Al Ain Rosette; gold-plated hematite`
+    : accessory.materials
+  const keywords = mergeAccessorySchemaKeywords(
+    getPhoneCharmMetaKeywords(accessory.id, locale),
+    getJewelleryCategoryDiscoveryKeywords('phone-strands', locale),
+    getGlobalJewelleryDiscoveryKeywords(locale),
+  )
+  const multiOffers = buildMultiCurrencyOffers(accessory, pageUrl)
+  const aedPrice = ACCESSORY_CATALOG_PRICES[accessory.id]?.AED ?? accessory.price
+
+  const productNode: Record<string, unknown> = {
+    '@type': 'Product',
+    '@id': `${pageUrl}#product`,
+    name: displayName,
+    description,
+    url: pageUrl,
+    sku,
+    mpn: sku,
+    category: 'Phone Charms',
+    material: localizedMaterials,
+    color: pdp?.colour,
+    inLanguage: lang,
+    keywords,
+    countryOfOrigin: {
+      '@type': 'Country',
+      name: 'United Arab Emirates',
+    },
+    brand: {
+      '@type': 'Brand',
+      name: 'Bint Saeed',
+      url: SITE_URL,
+    },
+    manufacturer: {
+      '@type': 'Organization',
+      name: SCHEMA_MANUFACTURER,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Abu Dhabi',
+        addressCountry: 'AE',
+      },
+    },
+    audience: {
+      '@type': 'PeopleAudience',
+      suggestedGender: 'female',
+      audienceType: appendGlobalPdpSchemaAudienceExtension(
+        getPhoneCharmSchemaAudience(locale),
+        locale,
+      ),
+    },
+    additionalProperty: [
+      {
+        '@type': 'PropertyValue',
+        name: 'Collection',
+        value: 'Al Quaa Phone Charms',
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Motif',
+        value: 'Al Ain Rosette (Carnelian)',
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Product type',
+        value: 'Natural stone luxury phone charm',
+      },
+      ...buildPhoneCharmPriceAdditionalProperties(accessory.id),
+    ],
+    image: gallery.map((src, index) => ({
+      '@type': 'ImageObject',
+      contentUrl: src.startsWith('http') ? src : `${SITE_URL}${src}`,
+      name: getAccessoryImageAlt(accessory, src, index, locale),
+      ...(lang ? { inLanguage: lang } : {}),
+      representativeOfPage: index === 0,
+    })),
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'AED',
+      lowPrice: String(aedPrice),
+      highPrice: String(aedPrice),
+      offerCount: String(multiOffers.length),
+      availability: accessory.inStock
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
+      url: pageUrl,
+      offers: multiOffers,
+    },
+    ...phoneCharmSemanticLinks(accessory, displayName, pageUrl, locale),
+  }
+
+  const graph: Record<string, unknown>[] = [productNode]
+  if (faqNode) graph.push(faqNode)
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph,
   }
 }
 
@@ -479,6 +698,10 @@ export function buildAccessoryProductJsonLd({
 }: JsonLdInput): Record<string, unknown> {
   if (isStrandAccessory(accessory)) {
     return buildSignatureStrandJsonLdGraph({ accessory, displayName, description, pageUrl, locale })
+  }
+
+  if (isAlQuaaPhoneCharmId(accessory.id) || accessory.category === 'phone-strands') {
+    return buildPhoneCharmJsonLdGraph({ accessory, displayName, description, pageUrl, locale })
   }
 
   const isNecklaceOrEarring =

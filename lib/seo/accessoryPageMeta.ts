@@ -5,6 +5,10 @@ import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 import { getStrandPdpContent } from '@/lib/accessories/strandPdp/resolveStrandPdpContent'
 import { getPhoneCharmPdpContent } from '@/lib/accessories/phoneCharmPdpContent'
+import {
+  getPhoneCharmMetaDescription,
+  getPhoneCharmMetaTitle,
+} from '@/lib/accessories/phoneCharmPdpMetaI18n'
 import { getNecklaceEarringPdpContent } from '@/lib/accessories/necklaceEarringPdpContent'
 import {
   getLocalizedAccessoryDescription,
@@ -54,6 +58,8 @@ function accessoryDisplayName(accessory: Accessory, locale: AppLocale): string {
 }
 
 export function buildAccessoryPageTitle(accessory: Accessory, locale: AppLocale): string {
+  const phoneTitle = getPhoneCharmMetaTitle(accessory.id, locale)
+  if (phoneTitle) return phoneTitle
   return `${accessoryDisplayName(accessory, locale)} | ${BRAND_NAME}`
 }
 
@@ -64,6 +70,9 @@ export function buildAccessoryMetaDescription(accessory: Accessory, locale: AppL
     const merged = [ACCESSORY_INTRO[locale], lead, STRAND_META_SUFFIX[locale]].join(' ')
     return clipMetaDescription(merged.replace(/\s+/g, ' ').trim(), 200)
   }
+
+  const phoneCharmMeta = getPhoneCharmMetaDescription(accessory.id, locale)
+  if (phoneCharmMeta) return phoneCharmMeta
 
   const phoneCharm = getPhoneCharmPdpContent(accessory.id, locale)
   if (phoneCharm) {

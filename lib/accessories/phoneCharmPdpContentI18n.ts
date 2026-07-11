@@ -2,6 +2,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import type { AlQuaaPhoneCharmId, PhoneCharmPdpContentPack } from '@/lib/accessories/phoneCharmPdpContent'
 import { getJewelleryCareCopy } from '@/lib/accessories/jewelleryCareCopyI18n'
 import { getPhoneCharmSectionLabels } from '@/lib/accessories/phoneCharmPdpSectionLabelsI18n'
+import { getPhoneCharmFaqItems } from '@/lib/accessories/phoneCharmPdpFaqI18n'
 
 type StoneLocale = { stoneLabel: string; beadPhrase: string; characterLead: string }
 type LocaleTemplate = {
@@ -20,11 +21,6 @@ type LocaleTemplate = {
   compat1: string
   compat2: string
   colourLine: (stone: string) => string
-  faqNaturalQ: string
-  faqNaturalA: string
-  faqRosetteQ: string
-  faqRosetteA: string
-  faqCareQ: string
   care: string[]
 }
 
@@ -162,11 +158,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Designed for compatible phone cases with attachment points',
     compat2: 'Phone case not included',
     colourLine: (stone) => `Colour: ${stone}`,
-    faqNaturalQ: 'Are the gemstones natural?',
-    faqNaturalA: 'Yes. Every Bint Saeed Natural Stone Phone Charm is handcrafted using genuine natural gemstones. As each stone is unique, slight variations in colour, pattern and inclusions are part of its natural beauty.',
-    faqRosetteQ: 'What is the Al Ain Rosette?',
-    faqRosetteA: 'The Al Ain Rosette is one of Bint Saeed’s signature House Codes. Hand-carved from natural Carnelian, it draws inspiration from the warm desert landscape and rich earth tones of Al Ain, the historic oasis city of the United Arab Emirates.',
-    faqCareQ: 'How should I care for my Natural Stone Phone Charm?',
     care: [
       'Natural gemstones should last a lifetime when treated with the respect they deserve. Handle each phone charm gently; stones may chip or break if struck, dropped onto hard surfaces, or subjected to force.',
       'Avoid contact with water, perfumes, hair spray, nail polish remover and harsh chemicals, especially chlorine.',
@@ -195,11 +186,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'مصممة لأغلفة الهاتف المتوافقة ذات نقاط التثبيت',
     compat2: 'غلاف الهاتف غير مشمول',
     colourLine: (stone) => `اللون: ${stone}`,
-    faqNaturalQ: 'هل الأحجار طبيعية؟',
-    faqNaturalA: 'نعم. كل تعليقة هاتف فاخرة من الأحجار الطبيعية لدى Bint Saeed تُصنع يدوياً من أحجار طبيعية أصيلة. ولأن كل حجر فريد، فإن تباينات اللون والنمط والشوائب جزء أصيل من جماله الطبيعي.',
-    faqRosetteQ: 'ما هي روزيت العين؟',
-    faqRosetteA: 'روزيت العين أحد رموز منزل Bint Saeed التوقيعية. تُنحت يدوياً من العقيق الطبيعي، مستوحاة من مشهد الصحراء الدافئ ودرجات الأرض الغنية في العين، مدينة الواحة التاريخية في الإمارات العربية المتحدة.',
-    faqCareQ: 'كيف أعتني بتعليقة هاتفي الفاخرة من الأحجار الطبيعية؟',
     care: [
       'الأحجار الطبيعية تدوم عمراً كاملاً حين تُعامل بما تستحقه من احترام. تعاملي مع كل تعليقة هاتف فاخرة بلطف؛ فقد تتشقّق الأحجار أو تنكسر إذا ضُربت أو سقطت على سطح صلب أو تعرّضت لقوة.',
       'تجنّبي ملامسة الماء والعطور ومثبت الشعر ومزيل طلاء الأظافر والمواد الكيميائية القاسية، ولا سيّما الكلور.',
@@ -228,11 +214,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Conçue pour les coques de téléphone compatibles munies de points d’attache',
     compat2: 'Coque de téléphone non incluse',
     colourLine: (stone) => `Couleur : ${stone}`,
-    faqNaturalQ: 'Les pierres sont-elles naturelles ?',
-    faqNaturalA: 'Oui. Chaque breloque de luxe pour téléphone en pierres naturelles Bint Saeed est façonnée à la main à partir de véritables gemmes naturelles. Chaque pierre étant unique, de légères variations de couleur, de motif et d’inclusions font partie de sa beauté naturelle.',
-    faqRosetteQ: 'Qu’est-ce que la rosette d’Al Ain ?',
-    faqRosetteA: 'La rosette d’Al Ain est l’un des codes de la Maison Bint Saeed. Sculptée à la main dans de la cornaline naturelle, elle s’inspire du paysage désertique chaleureux et des tons terreux d’Al Ain, oasis historique des Émirats arabes unis.',
-    faqCareQ: 'Comment entretenir ma breloque de luxe pour téléphone en pierres naturelles ?',
     care: [
       'Les pierres naturelles peuvent durer toute une vie lorsqu’elles sont traitées avec le respect qu’elles méritent. Manipulez chaque breloque de luxe avec délicatesse ; les pierres peuvent s’ébrécher ou se briser si elles sont heurtées, tombées ou soumises à une force.',
       'Évitez le contact avec l’eau, les parfums, la laque, le dissolvant et les produits chimiques agressifs, en particulier le chlore.',
@@ -261,11 +242,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Progettato per cover compatibili con punti di attacco',
     compat2: 'Cover non inclusa',
     colourLine: (stone) => `Colore: ${stone}`,
-    faqNaturalQ: 'Le pietre sono naturali?',
-    faqNaturalA: 'Sì. Ogni ciondolo di lusso per telefono in pietra naturale Bint Saeed è realizzato a mano con gemme naturali autentiche. Poiché ogni pietra è unica, leggere variazioni di colore, motivo e inclusioni fanno parte della sua bellezza naturale.',
-    faqRosetteQ: 'Cos’è la Rosetta di Al Ain?',
-    faqRosetteA: 'La Rosetta di Al Ain è uno dei codici signature della Maison Bint Saeed. Intagliata a mano in corniola naturale, trae ispirazione dal paesaggio desertico caldo e dai toni terrosi di Al Ain, la storica città oasi degli Emirati Arabi Uniti.',
-    faqCareQ: 'Come prendersi cura del ciondolo di lusso per telefono in pietra naturale?',
     care: [
       'Le gemme naturali durano una vita se trattate con il rispetto che meritano. Maneggiate ogni ciondolo di lusso con delicatezza; le pietre possono scheggiarsi o rompersi se urtate, fatte cadere o sottoposte a forza.',
       'Evitate il contatto con acqua, profumi, lacca, acetone e sostanze chimiche aggressive, in particolare il cloro.',
@@ -294,11 +270,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Diseñado para fundas compatibles con puntos de sujeción',
     compat2: 'Funda no incluida',
     colourLine: (stone) => `Color: ${stone}`,
-    faqNaturalQ: '¿Las gemas son naturales?',
-    faqNaturalA: 'Sí. Cada colgante de lujo para móvil en piedra natural Bint Saeed se elabora a mano con gemas naturales auténticas. Como cada piedra es única, ligeras variaciones de color, patrón e inclusiones forman parte de su belleza natural.',
-    faqRosetteQ: '¿Qué es la Roseta de Al Ain?',
-    faqRosetteA: 'La Roseta de Al Ain es uno de los códigos signature de la Maison Bint Saeed. Tallada a mano en cornalina natural, se inspira en el cálido paisaje desértico y los tonos terrosos de Al Ain, la histórica ciudad oasis de los Emiratos Árabes Unidos.',
-    faqCareQ: '¿Cómo debo cuidar mi colgante de lujo para móvil en piedra natural?',
     care: [
       'Las gemas naturales duran toda la vida si se tratan con el respeto que merecen. Manipule cada colgante de lujo con delicadeza; las piedras pueden astillarse o romperse si se golpean, caen o se someten a fuerza.',
       'Evite el contacto con agua, perfumes, laca, quitaesmalte y químicos agresivos, especialmente el cloro.',
@@ -327,11 +298,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Рассчитана на совместимые чехлы с точками крепления',
     compat2: 'Чехол не входит в комплект',
     colourLine: (stone) => `Цвет: ${stone}`,
-    faqNaturalQ: 'Камни натуральные?',
-    faqNaturalA: 'Да. Каждая роскошная подвеска для телефона Bint Saeed из натурального камня создаётся вручную из настоящих натуральных камней. Поскольку каждый камень уникален, лёгкие вариации цвета, узора и включений — часть его природной красоты.',
-    faqRosetteQ: 'Что такое розетка Al Ain?',
-    faqRosetteA: 'Розетка Al Ain — один из фирменных кодов Дома Bint Saeed. Вырезана вручную из натурального сердолика и вдохновлена тёплым пустынным пейзажем и землистыми тонами Аль-Айна — исторического оазиса Объединённых Арабских Эмиратов.',
-    faqCareQ: 'Как ухаживать за роскошной подвеской для телефона из натурального камня?',
     care: [
       'Натуральные камни служат всю жизнь при бережном обращении. Обращайтесь с каждой роскошной подвеской аккуратно; камни могут сколоться или разбиться при ударе, падении или сильном воздействии.',
       'Избегайте контакта с водой, духами, лаком для волос, жидкостью для снятия лака и агрессивной химией, особенно хлором.',
@@ -360,11 +326,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: '适用于带挂点的兼容手机壳',
     compat2: '不含手机壳',
     colourLine: (stone) => `颜色：${stone}`,
-    faqNaturalQ: '宝石是天然的吗？',
-    faqNaturalA: '是的。每一件 Bint Saeed 天然石奢华手机挂饰均以真天然宝石手工制作。每颗石材独一无二，轻微的颜色、纹路与内含物差异正是其自然之美的一部分。',
-    faqRosetteQ: '什么是 Al Ain 玫瑰花饰？',
-    faqRosetteA: 'Al Ain 玫瑰花饰是 Bint Saeed 的标志性家徽之一。以天然红玉髓手工雕刻，灵感来自阿联酋历史绿洲城市艾因温暖的沙漠景致与大地色调。',
-    faqCareQ: '如何保养天然石奢华手机挂饰？',
     care: [
       '天然宝石若妥善对待可伴随一生。请轻拿轻放每件奢华手机挂饰；撞击、跌落或受力可能导致石材崩裂。',
       '避免接触水、香水、发胶、卸甲水及刺激性化学品，尤其是氯。',
@@ -393,11 +354,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Für kompatible Hüllen mit Befestigungspunkten konzipiert',
     compat2: 'Hülle nicht enthalten',
     colourLine: (stone) => `Farbe: ${stone}`,
-    faqNaturalQ: 'Sind die Edelsteine natürlich?',
-    faqNaturalA: 'Ja. Jeder Bint Saeed Luxus-Telefonanhänger aus Naturstein wird handgefertigt aus echten natürlichen Edelsteinen. Da jeder Stein einzigartig ist, gehören leichte Unterschiede in Farbe, Muster und Einschlüssen zu seiner natürlichen Schönheit.',
-    faqRosetteQ: 'Was ist die Al-Ain-Rosette?',
-    faqRosetteA: 'Die Al-Ain-Rosette ist einer der Signatur-Hauscodes von Bint Saeed. Handgeschnitzt aus natürlichem Karneol, inspiriert von der warmen Wüstenlandschaft und den erdigen Tönen von Al Ain, der historischen Oasenstadt der Vereinigten Arabischen Emirate.',
-    faqCareQ: 'Wie pflege ich meinen Luxus-Telefonanhänger aus Naturstein?',
     care: [
       'Natürliche Edelsteine halten ein Leben lang, wenn sie mit dem Respekt behandelt werden, den sie verdienen. Gehen Sie behutsam mit jedem Luxus-Telefonanhänger um; Steine können bei Stoß, Fall oder Krafteinwirkung absplittern oder zerbrechen.',
       'Vermeiden Sie Kontakt mit Wasser, Parfüm, Haarspray, Nagellackentferner und aggressiven Chemikalien, insbesondere Chlor.',
@@ -426,11 +382,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Ontworpen voor compatibele hoesjes met bevestigingspunten',
     compat2: 'Hoesje niet inbegrepen',
     colourLine: (stone) => `Kleur: ${stone}`,
-    faqNaturalQ: 'Zijn de edelstenen natuurlijk?',
-    faqNaturalA: 'Ja. Elke Bint Saeed luxe telefoonhanger van natuursteen wordt met de hand gemaakt van echte natuurlijke edelstenen. Omdat elke steen uniek is, horen lichte variaties in kleur, patroon en insluitsels bij zijn natuurlijke schoonheid.',
-    faqRosetteQ: 'Wat is de Al Ain Rosette?',
-    faqRosetteA: 'De Al Ain Rosette is een van Bint Saeeds signatuur House Codes. Met de hand gesneden uit natuurlijke carneool, geïnspireerd door het warme woestijnlandschap en de aardse tinten van Al Ain, de historische oasestad van de Verenigde Arabische Emiraten.',
-    faqCareQ: 'Hoe verzorg ik mijn luxe telefoonhanger van natuursteen?',
     care: [
       'Natuurlijke edelstenen gaan een leven mee als ze met respect worden behandeld. Behandel elke luxe telefoonhanger voorzichtig; stenen kunnen afbrokkelen of breken bij stoten, vallen of kracht.',
       'Vermijd contact met water, parfum, haarlak, nagellakremover en agressieve chemicaliën, vooral chloor.',
@@ -459,11 +410,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Concebido para capas compatíveis com pontos de fixação',
     compat2: 'Capa não incluída',
     colourLine: (stone) => `Cor: ${stone}`,
-    faqNaturalQ: 'As gemas são naturais?',
-    faqNaturalA: 'Sim. Cada pingente de luxo para telemóvel em pedra natural Bint Saeed é feito à mão com gemas naturais genuínas. Como cada pedra é única, ligeiras variações de cor, padrão e inclusões fazem parte da sua beleza natural.',
-    faqRosetteQ: 'O que é a Roseta de Al Ain?',
-    faqRosetteA: 'A Roseta de Al Ain é um dos códigos signature da Maison Bint Saeed. Esculpida à mão em cornalina natural, inspira-se na paisagem desértica quente e nos tons terrosos de Al Ain, a histórica cidade-oásis dos Emirados Árabes Unidos.',
-    faqCareQ: 'Como devo cuidar do meu pingente de luxo para telemóvel em pedra natural?',
     care: [
       'As gemas naturais duram uma vida quando tratadas com o respeito que merecem. Manuseie cada pingente de luxo com delicadeza; as pedras podem lascar ou partir se forem golpeadas, deixadas cair ou sujeitas a força.',
       'Evite contacto com água, perfumes, lacas, removedor de verniz e químicos agressivos, especialmente cloro.',
@@ -492,11 +438,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Dirancang untuk casing kompatibel dengan titik pengait',
     compat2: 'Casing tidak termasuk',
     colourLine: (stone) => `Warna: ${stone}`,
-    faqNaturalQ: 'Apakah batu permata itu alami?',
-    faqNaturalA: 'Ya. Setiap liontin ponsel mewah batu alam Bint Saeed dibuat tangan dari batu permata alami asli. Karena setiap batu unik, sedikit variasi warna, pola, dan inklusi adalah bagian dari keindahan alaminya.',
-    faqRosetteQ: 'Apa itu Rosette Al Ain?',
-    faqRosetteA: 'Rosette Al Ain adalah salah satu House Code signature Bint Saeed. Diukir tangan dari karnelian alami, terinspirasi lanskap gurun yang hangat dan nada bumi Al Ain, kota oasis bersejarah Uni Emirat Arab.',
-    faqCareQ: 'Bagaimana cara merawat liontin ponsel mewah batu alam saya?',
     care: [
       'Batu permata alami dapat bertahan seumur hidup jika diperlakukan dengan hormat. Tangani setiap liontin ponsel mewah dengan lembut; batu dapat terkelupas atau patah jika terbentur, jatuh, atau terkena gaya.',
       'Hindari kontak dengan air, parfum, hair spray, penghapus kuteks, dan bahan kimia keras, terutama klorin.',
@@ -525,11 +466,6 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Direka untuk casing serasi dengan titik lampiran',
     compat2: 'Casing tidak disertakan',
     colourLine: (stone) => `Warna: ${stone}`,
-    faqNaturalQ: 'Adakah batu permata itu semula jadi?',
-    faqNaturalA: 'Ya. Setiap liontin telefon mewah batu semula jadi Bint Saeed dibuat tangan daripada batu permata semula jadi tulen. Memandangkan setiap batu unik, sedikit variasi warna, corak dan inklusi adalah sebahagian daripada keindahan semula jadinya.',
-    faqRosetteQ: 'Apakah Rosette Al Ain?',
-    faqRosetteA: 'Rosette Al Ain ialah salah satu House Code signature Bint Saeed. Diukir tangan daripada karnelian semula jadi, diilhamkan oleh landskap padang pasir yang hangat dan nada bumi Al Ain, bandar oasis bersejarah Emiriah Arab Bersatu.',
-    faqCareQ: 'Bagaimanakah saya menjaga liontin telefon mewah batu semula jadi saya?',
     care: [
       'Batu permata semula jadi boleh bertahan seumur hidup jika dilayan dengan hormat. Kendalikan setiap liontin telefon mewah dengan lembut; batu boleh pecah atau retak jika terhantuk, terjatuh atau dikenakan daya.',
       'Elakkan sentuhan dengan air, minyak wangi, semburan rambut, penanggal varnis kuku dan bahan kimia keras, terutamanya klorin.',
@@ -560,9 +496,6 @@ export function buildPhoneCharmPdpPack(
   const useSharedJewelleryCare = locale === 'en' || locale === 'ar' || locale === 'fr'
   const careBullets = useSharedJewelleryCare ? [...jewelleryCare.bullets] : t.care
   const careLead = useSharedJewelleryCare ? jewelleryCare.lead : ''
-  const careFaqAnswer = useSharedJewelleryCare
-    ? `${jewelleryCare.lead} ${careBullets.join(' ')}`
-    : careBullets.join(' ')
 
   const features = [
     t.houseCode,
@@ -588,10 +521,6 @@ export function buildPhoneCharmPdpPack(
     careLead,
     care: careBullets,
     colour: stone.stoneLabel,
-    faq: [
-      { question: t.faqNaturalQ, answer: t.faqNaturalA },
-      { question: t.faqRosetteQ, answer: t.faqRosetteA },
-      { question: t.faqCareQ, answer: careFaqAnswer },
-    ],
+    faq: getPhoneCharmFaqItems(id, locale),
   }
 }
