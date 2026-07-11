@@ -133,9 +133,9 @@ const EARRING_PRODUCT_ALIASES: Record<string, string[]> = {
     'natural malachite earrings UAE',
     'pairs with malachite necklace',
   ],
-  'al-ain-oasis-earrings-rose-quartz': [
+  'al-quaa-earrings-rose-quartz': [
     'rose quartz earrings',
-    'Al Ain Oasis earrings',
+    'Al Quaa earrings',
     'blush stone earrings UAE',
     'pairs with rose quartz necklace',
   ],
@@ -154,8 +154,8 @@ const EARRING_PRODUCT_ALIASES: Record<string, string[]> = {
 }
 
 function necklaceVariantKey(accessoryId: string): string | undefined {
-  if (!accessoryId.startsWith('al-ain-rosette-necklace-')) return undefined
-  return accessoryId.slice('al-ain-rosette-necklace-'.length)
+  if (!accessoryId.startsWith('al-ain-oasis-necklace-')) return undefined
+  return accessoryId.slice('al-ain-oasis-necklace-'.length)
 }
 
 /** Product-specific keyword variants for schema (display name + search aliases). */

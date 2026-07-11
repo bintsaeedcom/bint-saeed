@@ -1,37 +1,24 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 
 export type PhoneCharmSectionLabels = {
-  design: string
-  naturalStones: string
-  houseSignatures: string
-  care: string
-  compatibility: string
-  colour: string
+  featuresTitle: string
 }
 
-const EN: PhoneCharmSectionLabels = {
-  design: 'Design',
-  naturalStones: 'Natural Stones',
-  houseSignatures: 'House Signatures',
-  care: 'Care',
-  compatibility: 'Compatibility',
-  colour: 'Colour',
-}
-
-const FR: PhoneCharmSectionLabels = {
-  design: 'Design',
-  naturalStones: 'Pierres naturelles',
-  houseSignatures: 'Signatures de la Maison',
-  care: 'Entretien',
-  compatibility: 'Compatibilité',
-  colour: 'Couleur',
-}
-
-const BY_LOCALE: Partial<Record<AppLocale, PhoneCharmSectionLabels>> = {
-  en: EN,
-  fr: FR,
+const BY_LOCALE: Record<AppLocale, PhoneCharmSectionLabels> = {
+  en: { featuresTitle: 'Features' },
+  ar: { featuresTitle: 'المواصفات' },
+  fr: { featuresTitle: 'Caractéristiques' },
+  it: { featuresTitle: 'Caratteristiche' },
+  es: { featuresTitle: 'Características' },
+  ru: { featuresTitle: 'Особенности' },
+  zh: { featuresTitle: '产品特点' },
+  de: { featuresTitle: 'Merkmale' },
+  nl: { featuresTitle: 'Kenmerken' },
+  pt: { featuresTitle: 'Características' },
+  id: { featuresTitle: 'Fitur' },
+  ms: { featuresTitle: 'Ciri-ciri' },
 }
 
 export function getPhoneCharmSectionLabels(locale: AppLocale = 'en'): PhoneCharmSectionLabels {
-  return BY_LOCALE[locale] ?? EN
+  return BY_LOCALE[locale] ?? BY_LOCALE.en
 }

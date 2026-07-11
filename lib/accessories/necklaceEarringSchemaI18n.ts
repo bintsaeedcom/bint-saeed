@@ -49,7 +49,7 @@ export function getNecklaceEarringSchemaAudience(
 }
 
 export function getNecklaceGemstoneLabel(accessoryId: string): string | undefined {
-  if (!accessoryId.startsWith('al-ain-rosette-necklace-')) return undefined
-  const variant = accessoryId.slice('al-ain-rosette-necklace-'.length)
+  if (!accessoryId.startsWith('al-ain-oasis-necklace-')) return undefined
+  const variant = accessoryId.slice('al-ain-oasis-necklace-'.length)
   return NECKLACE_GEMSTONE_LABELS[variant] ?? variant.replace(/-/g, ' ')
 }

@@ -1,5 +1,9 @@
 import type Stripe from 'stripe'
-import { cartSubtotalInCurrency } from '@/lib/pricing'
+import {
+  cartSubtotalInCurrency,
+  resolveShippingEligibility,
+  toStripeMinorUnits,
+} from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 import { resolveLineItemSku } from '@/lib/checkout/resolveLineItemSku'
 import { buildCheckoutAttributionMetadata } from '@/lib/checkout/attributionMetadata'
@@ -25,8 +29,22 @@ export function buildStripeCheckoutSessionParams({
   baseUrl,
   uiMode = resolveStripeCheckoutUiMode(),
 }: BuildSessionOptions): Stripe.Checkout.SessionCreateParams {
-  const stripeCurrency = parsed.currency.toLowerCase()
-  const lineItems = buildCheckoutLineItems(parsed.items, parsed.currency, baseUrl)
+  const currency = parsed.currency as SupportedCurrency
+  const stripeCurrency = currency.toLowerCase()
+  const lineItems = buildCheckoutLineItems(parsed.items, currency, baseUrl)
+  const cartSubtotal = cartSubtotalInCurrency(parsed.items, currency)
+  const shipping = resolveShippingEligibility({
+    subtotal: cartSubtotal,
+    currency,
+    country: parsed.clientContext.country,
+  })
+  const shippingMinor = toStripeMinorUnits(shipping.fee, currency)
+  const shippingDisplayName =
+    shipping.scope === 'worldwide'
+      ? 'Complimentary worldwide shipping'
+      : shipping.scope === 'uae'
+        ? 'Complimentary UAE shipping'
+        : 'Shipping'
 
   const metadata: Stripe.MetadataParam = {
     customerEmail: parsed.customerEmail,
@@ -58,9 +76,9 @@ export function buildStripeCheckoutSessionParams({
     clientLocalTime: parsed.clientContext.localTime ?? '',
     clientDeviceType: parsed.clientContext.deviceType ?? '',
     checkoutNotes: parsed.checkoutNotes,
-    cartSubtotal: String(
-      cartSubtotalInCurrency(parsed.items, parsed.currency as SupportedCurrency),
-    ),
+    cartSubtotal: String(cartSubtotal),
+    shippingFee: String(shipping.fee),
+    shippingScope: shipping.scope,
     ...buildCheckoutAttributionMetadata(parsed.clientContext),
   }
 
@@ -81,10 +99,10 @@ export function buildStripeCheckoutSessionParams({
         shipping_rate_data: {
           type: 'fixed_amount',
           fixed_amount: {
-            amount: 0,
+            amount: shippingMinor,
             currency: stripeCurrency,
           },
-          display_name: 'Included',
+          display_name: shippingDisplayName,
         },
       },
     ],

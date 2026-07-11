@@ -1,13 +1,13 @@
 import type { NecklaceEarringPdpContentPack } from '@/lib/accessories/necklaceEarringPdpContent'
+import {
+  JEWELLERY_CARE_FAQ_EARRING_FR,
+  JEWELLERY_CARE_FAQ_NECKLACE_FR,
+  JEWELLERY_CARE_FR,
+  JEWELLERY_CARE_LEAD_FR,
+} from '@/lib/accessories/jewelleryCareCopyI18n'
 
-const CARE_LEAD_FR =
-  'Chaque création Bint Saeed est façonnée à la main à partir de pierres naturelles soigneusement sélectionnées. Chaque pierre étant unique, les variations de couleur, de veinure et de caractère naturel font partie de l’individualité de chaque pièce.'
-
-const CARE_FR = [
-  'Évitez le contact avec les parfums, les produits cosmétiques, l’eau et les produits chimiques domestiques.',
-  'Après le port, essuyez délicatement avec un chiffon doux pour bijoux.',
-  'Rangez séparément dans la pochette ou l’écrin Bint Saeed pour préserver la beauté de la pièce.',
-] as const
+const CARE_LEAD_FR = JEWELLERY_CARE_LEAD_FR
+const CARE_FR = JEWELLERY_CARE_FR
 
 const ROSETTE_FAQ_FR =
   'La rosette d’Al Ain est l’un des codes de la Maison Bint Saeed. Sculptée à la main dans du cornaline naturelle, elle s’inspire des tons chauds du désert entourant Al Ain, l’oasis historique d’Abou Dabi aux Émirats arabes unis. Entourée de palmeraies, de paysages montagneux et de siècles de patrimoine émirati, Al Ain est célébrée comme l’un des paysages culturels les plus précieux du pays. La rosette d’Al Ain porte cette inspiration à travers les collections joaillières et prêt-à-porter de la Maison.'
@@ -83,14 +83,14 @@ function buildNecklacePackFr(input: NecklaceFrPackInput): NecklaceEarringPdpCont
       {
         question: 'Comment entretenir mon collier ?',
         answer:
-          'Pour préserver sa beauté, évitez le contact avec les parfums, les produits cosmétiques, l’eau et les produits chimiques domestiques. Après le port, essuyez délicatement le collier avec un chiffon doux pour bijoux et rangez-le séparément dans sa pochette ou son écrin Bint Saeed.',
+          JEWELLERY_CARE_FAQ_NECKLACE_FR,
       },
     ],
   }
 }
 
 export const FR_NECKLACE_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack> = {
-  'al-ain-rosette-necklace-malachite': buildNecklacePackFr({
+  'al-ain-oasis-necklace-malachite': buildNecklacePackFr({
     fullNameFr: 'Collier Al Ain Oasis — Malachite',
     introParagraphs: [
       'Certaines pièces deviennent partie de la façon dont l’on vous reconnaît. Le Collier Al Ain Oasis — Malachite est enfilé à la main avec des pierres de malachite naturelles, rehaussé de perles d’hématite plaquées or et terminé par la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle. Conçu pour s’adapter à chaque occasion, il peut être porté en longueur simple ou doublé autour du cou pour une silhouette plus courte et superposée.',
@@ -109,7 +109,7 @@ export const FR_NECKLACE_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack
     wearWaysAnswer:
       'Oui. Le Collier Al Ain Oasis — Malachite est conçu pour être porté en longueur simple ou doublé autour du cou pour une silhouette plus courte et superposée.',
   }),
-  'al-ain-rosette-necklace-rose-quartz': buildNecklacePackFr({
+  'al-ain-oasis-necklace-rose-quartz': buildNecklacePackFr({
     fullNameFr: 'Collier Al Ain Oasis — Quartz rose',
     introParagraphs: [
       'Élégant dans sa simplicité, le Collier Al Ain Oasis — Quartz rose réunit la beauté douce du quartz rose naturel avec la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle. Délicatement rehaussé de perles d’hématite plaquées or, le collier peut être porté en longueur simple ou doublé autour du cou pour une silhouette plus superposée.',
@@ -125,7 +125,7 @@ export const FR_NECKLACE_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack
       'Le quartz rose est une variété naturelle de quartz, admirée pour ses tons rose délicats et sa translucidité subtile. Chaque pierre est unique, faisant de chaque collier Bint Saeed une pièce singulière.',
     ],
   }),
-  'al-ain-rosette-necklace-lapis-lazuli': buildNecklacePackFr({
+  'al-ain-oasis-necklace-lapis-lazuli': buildNecklacePackFr({
     fullNameFr: 'Collier Al Ain Oasis — Lapis lazuli',
     introParagraphs: [
       'Riche en couleur et en caractère naturel, le Collier Al Ain Oasis — Lapis lazuli est enfilé à la main avec des pierres de lapis lazuli naturelles, rehaussé de perles d’hématite plaquées or et terminé par la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle. Conçu pour la polyvalence, il peut être porté en longueur simple ou doublé autour du cou pour une silhouette plus superposée.',
@@ -141,7 +141,7 @@ export const FR_NECKLACE_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack
       'Le lapis lazuli est une pierre naturelle prisée pour son bleu royal intense et ses inclusions distinctives de pyrite dorée. Chaque pierre est unique, conférant à chaque collier Bint Saeed son propre caractère.',
     ],
   }),
-  'al-ain-rosette-necklace-sunstone': buildNecklacePackFr({
+  'al-ain-oasis-necklace-sunstone': buildNecklacePackFr({
     fullNameFr: 'Collier Al Ain Oasis — Pierre de soleil',
     introParagraphs: [
       'Radieux par nature, le Collier Al Ain Oasis — Pierre de soleil est enfilé à la main avec des pierres de soleil naturelles, rehaussé de perles d’hématite plaquées or et terminé par la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle. Conçu pour la polyvalence, il peut être porté en longueur simple ou doublé autour du cou pour une silhouette plus courte.',
@@ -157,7 +157,7 @@ export const FR_NECKLACE_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack
       'La pierre de soleil est un feldspath naturel, admiré pour ses tons pêche, dorés et cuivrés, ainsi que pour son éclat naturel caractéristique appelé aventurescence. Chaque pierre est unique, conférant à chaque collier Bint Saeed son propre caractère.',
     ],
   }),
-  'al-ain-rosette-necklace-tiger-eye': buildNecklacePackFr({
+  'al-ain-oasis-necklace-tiger-eye': buildNecklacePackFr({
     fullNameFr: 'Collier Al Ain Oasis — Œil de tigre',
     introParagraphs: [
       'Distinctif par sa couleur et son caractère, le Collier Al Ain Oasis — Œil de tigre est enfilé à la main avec des pierres d’œil de tigre naturelles, rehaussé de perles d’hématite plaquées or et terminé par la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle. Conçu pour la polyvalence, il peut être porté en longueur simple ou doublé autour du cou pour une silhouette plus courte.',
@@ -173,7 +173,7 @@ export const FR_NECKLACE_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack
       'L’œil de tigre est une pierre naturelle admirée pour ses tons dorés et bruns riches et son effet optique soyeux distinctif, appelé chatoyance, qui crée une bande de lumière mouvante à la surface. Chaque pierre est unique, conférant à chaque collier Bint Saeed son propre caractère.',
     ],
   }),
-  'al-ain-rosette-necklace-onyx': buildNecklacePackFr({
+  'al-ain-oasis-necklace-onyx': buildNecklacePackFr({
     fullNameFr: 'Collier Al Ain Oasis — Onyx',
     introParagraphs: [
       'Raffiné dans sa simplicité, le Collier Al Ain Oasis — Onyx est enfilé à la main avec des pierres d’onyx noir naturel, rehaussé de perles d’hématite plaquées or et terminé par la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle. Conçu pour la polyvalence, il peut être porté en longueur simple ou doublé autour du cou pour une silhouette plus courte.',
@@ -264,7 +264,7 @@ function buildEarringPackFr(input: EarringFrPackInput): NecklaceEarringPdpConten
       {
         question: 'Comment entretenir mes boucles d’oreilles ?',
         answer:
-          'Pour préserver leur beauté, évitez le contact avec les parfums, les produits cosmétiques, l’eau et les produits chimiques domestiques. Après le port, essuyez délicatement avec un chiffon doux pour bijoux et rangez-les séparément dans leur pochette ou écrin Bint Saeed.',
+          JEWELLERY_CARE_FAQ_EARRING_FR,
       },
     ],
   }
@@ -286,10 +286,10 @@ export const FR_EARRING_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack>
       'La malachite est une pierre naturelle formée sur des milliers d’années dans des régions riches en cuivre. Célébrée pour ses bandes vertes distinctives, chaque pierre est unique.',
     ],
   }),
-  'al-ain-oasis-earrings-rose-quartz': buildEarringPackFr({
-    fullNameFr: 'Boucles d’oreilles Al Ain Oasis — Quartz rose',
+  'al-quaa-earrings-rose-quartz': buildEarringPackFr({
+    fullNameFr: 'Boucles d’oreilles Al Quaa — Quartz rose',
     introParagraphs: [
-      'Les Boucles d’oreilles Al Ain Oasis — Quartz rose associent la douceur du quartz rose naturel à la rosette d’Al Ain signature sculptée dans du cornaline naturelle, rehaussée d’accents d’hématite plaqués or.',
+      'Les Boucles d’oreilles Al Quaa — Quartz rose associent la douceur du quartz rose naturel à la rosette d’Al Ain signature sculptée dans du cornaline naturelle, rehaussée d’accents d’hématite plaqués or.',
       'Prisées depuis des siècles, les pierres naturelles sont admirées pour leur individualité. Les tons blush du quartz rose, la chaleur de la cornaline et les accents dorés composent une harmonie à la fois intemporelle et distinctive.',
       'Façonnées à la main à Abou Dabi, ces boucles d’oreilles reflètent l’attention de Bint Saeed pour les matériaux naturels. Complétez l’ensemble avec le Collier Al Ain Oasis — Quartz rose assorti et le Signature Strand quartz rose rosette d’Al Ain.',
     ],

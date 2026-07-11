@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { isAllowedCheckoutOrigin, resolvePublicSiteBaseUrl } from '@/lib/security/allowedCheckoutOrigin'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { notifyHealthAlert } from '@/lib/ops/notifications'
-import { cartSubtotalInCurrency } from '@/lib/pricing'
+import { cartSubtotalInCurrency, resolveShippingFee } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 import { parseCheckoutRequestBody } from '@/lib/checkout/parseCheckoutRequest'
 import { buildCheckoutAttributionMetadata } from '@/lib/checkout/attributionMetadata'
@@ -57,6 +57,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid cart total.' }, { status: 400 })
     }
 
+    const shippingFee = resolveShippingFee({
+      subtotal: cartSubtotal,
+      currency,
+      country: clientContext.country,
+    })
+    const orderTotal = cartSubtotal + shippingFee
+
     const mollie = getMollieClient()
     const orderRef = `BS-${Date.now().toString(36).toUpperCase()}`
     const metadata: Record<string, string> = {
@@ -71,13 +78,14 @@ export async function POST(request: NextRequest) {
       clientDeviceType: clientContext.deviceType ?? '',
       checkoutNotes,
       cartSubtotal: String(cartSubtotal),
+      shippingFee: String(shippingFee),
       ...buildCheckoutAttributionMetadata(clientContext),
     }
 
     const payment = await mollie.payments.create({
       amount: {
         currency,
-        value: toMollieAmountValue(cartSubtotal, currency),
+        value: toMollieAmountValue(orderTotal, currency),
       },
       description: `Bint Saeed order ${orderRef}`,
       redirectUrl: `${baseUrl}/checkout/success?payment_id={id}`,

@@ -38,7 +38,7 @@ export const faqMs: FaqBundle = {
         },
         {
           q: 'Adakah terdapat penghantaran percuma?',
-          a: 'Ya, untuk pesanan melebihi 1000 AED di UAE.',
+          a: 'Ya. Penghantaran percuma UAE untuk pesanan melebihi 1,000 AED. Penghantaran percuma seluruh dunia untuk pesanan melebihi 500 EUR (atau setara bersih dalam mata wang pilihan anda). Di bawah ambang ini, caj penghantaran tetap dikenakan dan disahkan semasa pembayaran.',
         },
         {
           q: 'Adakah terdapat penjejakan?',

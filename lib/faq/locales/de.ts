@@ -38,7 +38,7 @@ export const faqDe: FaqBundle = {
         },
         {
           q: 'Kostenloser Versand?',
-          a: 'Ja bei Bestellungen über 1000 AED in den VAE.',
+          a: 'Ja. Kostenloser Versand in den VAE ab 1.000 AED. Kostenloser weltweiter Versand ab 500 EUR (oder dem klaren Äquivalent in Ihrer Währung). Darunter gilt eine pauschale Versandgebühr, die bei der Zahlung bestätigt wird.',
         },
         {
           q: 'Sendungsverfolgung?',

@@ -387,7 +387,8 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
     ],
     list: [
       'Complimentary shipping within the United Arab Emirates applies to orders with a merchandise subtotal of AED 1,000 or more.',
-      'Shipping fees for orders below this threshold, and for international destinations, are calculated at checkout.',
+      'Complimentary worldwide shipping applies to orders with a merchandise subtotal of EUR 500 or more (or the clean equivalent shown in the selected currency).',
+      'Below these thresholds, a flat shipping fee applies: AED 35 within the UAE, and EUR 30 (or the clean equivalent in the selected currency) for international destinations, confirmed at payment.',
       'Shipping terms, costs, and estimated timelines are shown at checkout or applicable policy pages.',
       'International orders may be subject to tersuais duties, import taxes, and local clearance fees.',
       'Risk of loss transfers upon delivery to the shipping address or accepted recipient.',
@@ -675,7 +676,7 @@ function shipmentEnSections(): PolicySection[] {
       ],
       list: [
         'Be unworn, unused, and in original condition.',
-        'Be returned with all original tags attached.',
+        'Be returned with all original tags, seals and security labels intact and undisturbed.',
         'Be returned in original packaging.',
         'Be free from perfume, smoke, stains, alterations, damage, or signs of wear.',
         'Be approved by the Bint Saeed Returns Department prior to shipment.',
@@ -684,8 +685,11 @@ function shipmentEnSections(): PolicySection[] {
         {
           title: '',
           body: [
-            'Return shipping costs remain the responsibility of the client unless otherwise required by applicable law.',
-            'Personalised pieces, tersuai specifications, altered pakaians, and items produced to a client’s specific requirements are not eligible for exchange except where a verified manufacturing defect or material non-conformity exists.',
+            'Bint Saeed will not accept an exchange or return where tags, seals or security labels have been removed, cut, damaged or altered, or where photographs submitted in support of a request indicate that removal or tampering has been attempted.',
+            'No exchange is processed until approved goods have been physically received and inspected at our atelier.',
+            'Where an approved exchange or return requires goods to be shipped back to Bint Saeed, a flat return shipping fee applies: AED 35 for returns originating within the United Arab Emirates, and EUR 35 (or the clean equivalent in the selected currency) for returns originating internationally. This fee is waived where the return arises from a verified fault of the House — including a manufacturing defect or material non-conformity — or where otherwise required by applicable law.',
+            'Personalised pieces, custom specifications, altered garments, and items produced to a client’s specific requirements are not eligible for exchange except where a verified manufacturing defect or material non-conformity exists.',
+            'For reasons of health, hygiene and personal safety, earrings are final sale and cannot be exchanged or refunded, except where a verified manufacturing defect or material non-conformity exists.',
           ],
           list: [],
         },
@@ -737,6 +741,8 @@ function shipmentEnSections(): PolicySection[] {
         'Minor variations inherent to handcrafted production.',
         'Colour differences resulting from screen settings or device displays.',
         'Damage resulting from improper care, misuse, alteration, or normal wear.',
+        'Removal, cutting, damage or alteration of original tags, seals or security labels — including where photographs indicate that removal or tampering has been attempted.',
+        'Earrings, which are final sale for health, hygiene and personal safety reasons (except where a verified manufacturing defect or material non-conformity exists).',
       ],
     },
     {
@@ -746,7 +752,11 @@ function shipmentEnSections(): PolicySection[] {
         'However, this right generally does not apply to:',
         'As many Bint Saeed pieces are produced on demand following a confirmed order, they generally fall within this exemption. Returns and cancellations are therefore not accepted once production has commenced.',
       ],
-      list: ['Goods made to the consumer’s specifications.', 'Clearly personalised or tersuai-made items.'],
+      list: [
+        'Goods made to the consumer’s specifications.',
+        'Clearly personalised or custom-made items.',
+        'Sealed goods which are not suitable for return due to health protection or hygiene reasons, including earrings.',
+      ],
     },
     {
       title: '6. EU Exception (Defective Items Only)',
@@ -764,26 +774,50 @@ function shipmentEnSections(): PolicySection[] {
       ],
     },
     {
-      title: '8. Shipping Timelines',
+      title: '8. Shipping & Delivery',
       body: [
         'We aim to dispatch every order as efficiently as possible while maintaining the quality standards of Bint Saeed.',
+        'International orders are fulfilled with DHL Express. Within the United Arab Emirates, orders are operated by Jeebly. Additional carriers may be introduced as our logistics network expands.',
+        'If you require delivery for a particular occasion or by a fixed date, please contact Client Services before placing your order. Dispatch and transit times are estimates only and cannot be guaranteed.',
         'While we make every effort to meet estimated timelines, delivery dates are not guaranteed and may be affected by circumstances outside our reasonable control.',
-        'Bint Saeed is not responsible for delays arising from tersuais inspections, tersuais clearance procedures, import restrictions, courier operational delays, failed delivery attempts, incorrect delivery information provided by the client, or other circumstances beyond our reasonable control.',
-        'While we will always assist clients in tracking and resolving shipping issues where possible, we cannot guarantee delivery timelines once an order has been transferred to the courier.',
+        'Once an order has been transferred to the courier, delivery timelines are subject to the courier’s network, local delivery infrastructure, customs procedures, and destination country regulations. While we will always assist clients in tracking and resolving shipping issues where possible, we cannot guarantee delivery timelines after handover to the carrier.',
       ],
       list: [
         'Complimentary shipping within the United Arab Emirates applies to orders with a merchandise subtotal of AED 1,000 or more.',
-        'Shipping fees for orders below this threshold, and for international destinations, are calculated at checkout.',
+        'Complimentary worldwide shipping applies to orders with a merchandise subtotal of EUR 500 or more (or the clean equivalent shown in the selected currency).',
+        'Below these thresholds, a flat shipping fee applies: AED 35 within the UAE, and EUR 30 (or the clean equivalent in the selected currency) for international destinations, confirmed at payment.',
         'Made-to-order pieces are usually shipped within approximately two weeks following order confirmation.',
         'In-stock items, including selected jewellery and ready-to-ship styles, are usually dispatched within 1–3 business days.',
-        'Estimated delivery timelines may vary depending on destination, tersuais processing, and courier operations.',
+        'Once dispatched, UAE deliveries typically arrive within approximately 1–3 business days. International deliveries typically arrive within approximately 3–10 business days, depending on destination and customs clearance.',
         'Once an order has been dispatched, clients will receive shipping confirmation and tracking details where available.',
-        'Once an order has been transferred to the courier, delivery timelines are subject to the courier’s network, local delivery infrastructure, tersuais procedures, and destination country regulations.',
-        'Any tersuais duties, import taxes, local charges, or clearance fees imposed by the destination country remain the responsibility of the recipient unless otherwise stated at checkout.',
       ],
     },
     {
-      title: '9. Force Majeure',
+      title: '9. Delivery Details & Client Responsibilities',
+      body: [
+        'Clients are responsible for ensuring that shipping address, telephone number and email address are complete and accurate at checkout. Couriers may use the telephone number or email provided to arrange delivery.',
+        'Bint Saeed is not responsible for non-delivery, delay or return of a shipment arising from incomplete, incorrect or outdated delivery information supplied by the client.',
+        'Where a destination requires a P.O. Box or other local addressing format for successful delivery, clients must provide those details in full. Failure to do so may result in delay or return of the parcel at the client’s risk.',
+      ],
+    },
+    {
+      title: '10. Customs & Import',
+      body: [
+        'Any customs duties, import taxes, local charges, or clearance fees imposed by the destination country remain the responsibility of the recipient unless otherwise stated at checkout. These charges are separate from the client’s order with Bint Saeed.',
+        'Clients are advised to consult their local customs authority regarding import regulations, restrictions and possible charges before ordering. Customs rules differ by country; unfamiliarity with local requirements may result in delay, additional charges, refusal or return of the shipment.',
+        'Bint Saeed is not liable for parcels refused, held, delayed or seized by customs, nor for any duties, taxes or penalties levied once the shipment has left the United Arab Emirates.',
+      ],
+    },
+    {
+      title: '11. Undeliverable Shipments',
+      body: [
+        'If a shipment is returned to Bint Saeed because of an incorrect or incomplete address, failed delivery attempts, refusal of the parcel, refusal to pay customs charges, import restrictions, or comparable reasons not attributable to a verified fault of the House, Bint Saeed is under no obligation to refund the order.',
+        'At our discretion, we may offer re-shipment at the client’s expense, an exchange where the piece remains eligible, store credit, or other assistance. Where goods are seized by customs, abandoned by the carrier on instruction, or where recovery is not reasonably possible, no credit will be issued.',
+        'As set out elsewhere in this policy, refunds are not offered for change of mind. Monetary refunds, where considered at all, arise only in connection with a verified manufacturing defect or material non-conformity, and only where repair or replacement is not reasonably possible, or where required by applicable law.',
+      ],
+    },
+    {
+      title: '12. Force Majeure',
       body: [
         'Bint Saeed shall not be held liable for delays, interruptions, or failure to fulfil obligations where such circumstances arise from events beyond our reasonable control.',
         'These events may include, but are not limited to:',
@@ -793,7 +827,7 @@ function shipmentEnSections(): PolicySection[] {
         'War or armed conflict.',
         'Civil unrest or political instability.',
         'Acts of government or public authorities.',
-        'Customs inspections, tersuais delays, or import restrictions.',
+        'Customs inspections, customs delays, or import restrictions.',
         'Transport disruptions.',
         'Natural disasters.',
         'Labour disputes or strikes.',
@@ -803,11 +837,11 @@ function shipmentEnSections(): PolicySection[] {
       ],
     },
     {
-      title: '10. Contact',
+      title: '13. Contact',
       body: [
         'For exchanges, return requests, and defect claims:',
         OFFICIAL_EMAILS.returns,
-        'For general tersuaier support:',
+        'For general customer support:',
         OFFICIAL_EMAILS.support,
         'Please include your order number, contact details, and any supporting photographs where applicable. Our team will review your request and provide guidance on the next steps.',
         'At Bint Saeed, we are committed to handling every enquiry with fairness, professionalism, and care.',
@@ -837,7 +871,7 @@ function shipmentMsSections(): PolicySection[] {
       ],
       list: [
         'Belum dipakai, tidak digunakan, dan dalam kondisi asli.',
-        'Dikembalikan dengan seluruh label asli masih terpasang.',
+        'Dikembalikan dengan semua tag, meterai dan label keselamatan asal utuh dan tidak diganggu.',
         'Dikembalikan dalam kemasan asli.',
         'Bebas dari parfum, asap, noda, alterasi, kerusakan, atau tanda pemakaian.',
         'Disetujui oleh Departemen Pemulangan Bint Saeed sebelum penghantaran balik.',
@@ -848,6 +882,7 @@ function shipmentMsSections(): PolicySection[] {
           body: [
             'Biaya penghantaran pemulangan menjadi tanggung jawab pelanggan kecuali diwajibkan lain oleh hukum yang berlaku.',
             'Karya personalisasi, spesifikasi tersuai, pakaian yang diubah, dan barang yang diproduksi sesuai kebutuhan spesifik pelanggan tidak memenuhi terma pertukaran kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material.',
+            'Demi alasan kesihatan, kebersihan, dan keselamatan peribadi, anting bersifat final sale dan tidak boleh ditukar atau dipulangkan wang, kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material.',
           ],
           list: [],
         },
@@ -902,6 +937,7 @@ function shipmentMsSections(): PolicySection[] {
         'Variasi minor yang melekat pada produksi buatan tangan.',
         'Perbedaan warna akibat pengaturan layar atau tampilan perangkat.',
         'Kerusakan akibat penjagaan tidak tepat, penyalahgunaan, alterasi, atau pemakaian normal.',
+        'Anting, yang bersifat final sale demi alasan kesihatan, kebersihan, dan keselamatan peribadi (kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material).',
       ],
     },
     {
@@ -911,7 +947,11 @@ function shipmentMsSections(): PolicySection[] {
         'Namun, hak ini umumnya tidak berlaku untuk:',
         'Karena banyak karya Bint Saeed diproduksi berdasarkan permintaan setelah pesanan disahkan, karya tersebut umumnya termasuk dalam pengecualian ini. Pemulangan dan pembatalan oleh karena itu tidak diterima setelah produksi dimulai.',
       ],
-      list: ['Barang dihasilkan sesuai spesifikasi konsumen.', 'Barang yang jelas dipersonalisasi atau dihasilkan tersuai.'],
+      list: [
+        'Barang dihasilkan sesuai spesifikasi konsumen.',
+        'Barang yang jelas dipersonalisasi atau dihasilkan tersuai.',
+        'Barang yang dimeterai yang tidak sesuai untuk dipulangkan kerana alasan perlindungan kesihatan atau kebersihan, termasuk anting.',
+      ],
     },
     {
       title: '6. Pengecualian UE (Hanya Barang Cacat)',
@@ -932,26 +972,50 @@ function shipmentMsSections(): PolicySection[] {
       ],
     },
     {
-      title: '8. Jadwal Penghantaran',
+      title: '8. Penghantaran & Penyerahan',
       body: [
-        'Kami berupaya menghantar setiap pesanan seefisien mungkin sambil mempertahankan standar kualitas Bint Saeed.',
-        'Meskipun kami berupaya memenuhi estimasi waktu, tanggal penghantaran tidak dijamin dan dapat terpengaruh oleh keadaan di luar kendali wajar kami.',
-        'Bint Saeed tidak bertanggung jawab atas keterlambatan akibat inspeksi bea cukai, prosedur clearance, pembatasan impor, keterlambatan operasional kurir, upaya penghantaran gagal, maklumat penghantaran salah yang diberikan pelanggan, atau keadaan lain di luar kendali wajar kami.',
-        'Meskipun kami akan selalu membantu pelanggan melacak dan menyelesaikan masalah penghantaran sejauh memungkinkan, kami tidak dapat menjamin jadwal penghantaran setelah pesanan diserahkan ke kurir.',
+        'Kami berupaya mengirim setiap pesanan seefisien mungkin dengan menjaga standar kualitas Bint Saeed.',
+        'Pesanan internasional dipenuhi melalui DHL Express. Di dalam Uni Emirat Arab, pesanan dioperasikan oleh Jeebly. Kurir tambahan dapat ditambahkan seiring perluasan jaringan logistik kami.',
+        'Jika Anda membutuhkan penghantaran untuk acara tertentu atau pada tanggal tetap, harap hubungi Client Services sebelum memesan. Waktu penghantaran dan transit hanya perkiraan dan tidak dapat dijamin.',
+        'Meskipun kami berupaya memenuhi jadwal perkiraan, tanggal penghantaran tidak dijamin dan dapat terpengaruh keadaan di luar kendali wajar kami.',
+        'Setelah pesanan diserahkan kepada kurir, jadwal penghantaran tunduk pada jaringan kurir, infrastruktur lokal, prosedur kastam, dan regulasi negara tujuan. Kami akan membantu pelacakan sejauh memungkinkan, namun tidak dapat menjamin jadwal setelah serah terima kepada kurir.',
       ],
       list: [
-        'Penghantaran percuma dalam Emiriah Arab Bersatu berlaku untuk pesanan dengan subtotal barang AED 1.000 atau lebih.',
-        'Biaya penghantaran untuk pesanan di bawah ambang tersebut, serta destinasi internasional, dihitung saat checkout.',
-        'Karya made-to-order biasanya dikirim dalam kira-kira dua minggu setelah konfirmasi pesanan.',
-        'Barang ready stock, termasuk perhiasan terpilih dan gaya siap kirim, biasanya dikirim dalam 1–3 hari kerja.',
-        'Estimasi waktu penghantaran dapat bervariasi tergantung destinasi, pemprosesan bea cukai, dan operasional kurir.',
-        'Setelah pesanan dikirim, pelanggan akan menerima konfirmasi penghantaran dan butiran pelacakan jika tersedia.',
-        'Setelah pesanan diserahkan ke kurir, jadwal penghantaran tunduk pada jaringan kurir, infrastruktur penghantaran lokal, prosedur bea cukai, dan regulasi negara tujuan.',
-        'Bea masuk, pajak impor, biaya lokal, atau biaya clearance yang dikenakan negara tujuan menjadi tanggung jawab penerima kecuali dinyatakan lain saat checkout.',
+        'Penghantaran percuma di dalam Uni Emirat Arab berlaku untuk pesanan dengan subtotal barang AED 1.000 atau lebih.',
+        'Penghantaran percuma di seluruh dunia berlaku untuk pesanan dengan subtotal barang EUR 500 atau lebih (atau setara bersih dalam mata uang yang dipilih).',
+        'Di bawah ambang tersebut, biaya penghantaran tetap berlaku: AED 35 di dalam UAE, dan EUR 30 (atau setara bersih dalam mata uang yang dipilih) untuk destinasi internasional, dikonfirmasi saat pembayaran.',
+        'Karya made-to-order biasanya dikirim dalam sekitar dua minggu setelah konfirmasi pesanan.',
+        'Barang ready-to-ship, termasuk perhiasan terpilih, biasanya dikirim dalam 1–3 hari kerja.',
+        'Setelah dikirim, penghantaran UAE biasanya tiba dalam sekitar 1–3 hari kerja. Penghantaran internasional biasanya tiba dalam sekitar 3–10 hari kerja, tergantung destinasi dan kastam.',
+        'Setelah dikirim, pelanggan akan menerima konfirmasi penghantaran dan detail pelacakan jika tersedia.',
       ],
     },
     {
-      title: '9. Force Majeure',
+      title: '9. Butiran Penghantaran & Tanggungjawab Pelanggan',
+      body: [
+        'Pelanggan bertanggung jawab memastikan alamat penghantaran, nomor telepon, dan email lengkap serta akurat saat checkout. Kurir dapat menggunakan nomor telepon atau email untuk mengatur penghantaran.',
+        'Bint Saeed tidak bertanggung jawab atas kegagalan penghantaran, keterlambatan, atau pengembalian kiriman akibat informasi penghantaran yang tidak lengkap, tidak benar, atau kedaluwarsa dari pelanggan.',
+        'Jika destinasi mensyaratkan P.O. Box atau format alamat lokal tertentu, pelanggan harus memberikan detail tersebut secara lengkap. Kegagalan melakukannya dapat menyebabkan keterlambatan atau pengembalian paket atas risiko pelanggan.',
+      ],
+    },
+    {
+      title: '10. Kastam & Importt',
+      body: [
+        'Duti kastam, pajak import, biaya lokal, atau biaya clearance yang dikenakan negara tujuan tetap menjadi tanggung jawab penerima kecuali dinyatakan lain saat checkout. Biaya ini terpisah dari pesanan pelanggan kepada Bint Saeed.',
+        'Pelanggan disarankan berkonsultasi dengan otoritas kastam setempat mengenai regulasi import, pembatasan, dan kemungkinan biaya sebelum memesan. Aturan kastam berbeda antarnegara; ketidaktahuan dapat menyebabkan keterlambatan, biaya tambahan, penolakan, atau pengembalian kiriman.',
+        'Bint Saeed tidak bertanggung jawab atas paket yang ditolak, ditahan, ditunda, atau disita kastam, maupun atas bea, pajak, atau penalti yang dikenakan setelah kiriman meninggalkan Uni Emirat Arab.',
+      ],
+    },
+    {
+      title: '11. Penghantaran yang Tidak Dapat Diserahkan',
+      body: [
+        'Jika kiriman dikembalikan ke Bint Saeed karena alamat tidak benar atau tidak lengkap, percobaan penghantaran gagal, penolakan paket, penolakan membayar kastam, pembatasan import, atau alasan sebanding yang tidak disebabkan oleh cacat terverifikasi dari House, Bint Saeed tidak berkewajiban mengembalikan dana pesanan.',
+        'Menurut diskresi kami, kami dapat menawarkan penghantaran ulang atas biaya pelanggan, penukaran jika karya masih memenuhi syarat, kredit toko, atau bantuan lain. Jika barang disita kastam, ditinggalkan atas instruksi kurir, atau pemulihan tidak wajar dimungkinkan, tidak ada kredit yang diterbitkan.',
+        'Sebagaimana diatur dalam kebijakan ini, pengembalian dana tidak ditawarkan untuk perubahan pikiran. Pengembalian dana moneter, jika dipertimbangkan, hanya timbul sehubungan dengan cacat produksi terverifikasi atau ketidaksesuaian material, dan hanya apabila perbaikan atau penggantian tidak wajar dimungkinkan, atau jika diwajibkan hukum yang berlaku.',
+      ],
+    },
+    {
+      title: '12. Force Majeure',
       body: [
         'Bint Saeed tidak bertanggung jawab atas keterlambatan, gangguan, atau kegagalan memenuhi kewajiban apabila keadaan tersebut timbul dari peristiwa di luar kendali wajar kami.',
         'Peristiwa ini dapat mencakup, namun tidak terbatas pada:',
@@ -960,8 +1024,8 @@ function shipmentMsSections(): PolicySection[] {
       list: [
         'Perang atau konflik bersenjata.',
         'Kerusuhan sipil atau ketidakstabilan politik.',
-        'Tindakan pemerintah atau pihak berkuasa publik.',
-        'Inspeksi bea cukai, keterlambatan bea cukai, atau pembatasan impor.',
+        'Tindakan pemerintah atau otoritas publik.',
+        'Inspeksi kastam, keterlambatan kastam, atau pembatasan import.',
         'Gangguan transportasi.',
         'Bencana alam.',
         'Perselisihan atau pemogokan buruh.',
@@ -971,16 +1035,17 @@ function shipmentMsSections(): PolicySection[] {
       ],
     },
     {
-      title: '10. Kontak',
+      title: '13. Kontak',
       body: [
-        'Untuk pertukaran, permintaan pemulangan, dan klaim cacat:',
+        'Untuk penukaran, permintaan pengembalian, dan klaim cacat:',
         OFFICIAL_EMAILS.returns,
         'Untuk dukungan pelanggan umum:',
         OFFICIAL_EMAILS.support,
-        'Sila sertakan nombor pesanan, butiran kontak, dan foto pendukung jika berlaku. Pasukan kami akan meninjau permintaan anda dan memberikan panduan langkah selanjutnya.',
+        'Mohon sertakan nomor pesanan, detail kontak, dan foto pendukung jika berlaku. Tim kami akan meninjau permintaan Anda dan memberikan panduan langkah selanjutnya.',
         'Di Bint Saeed, kami berkomitmen menangani setiap pertanyaan dengan keadilan, profesionalisme, dan perhatian.',
       ],
     },
+
   ]
 }
 
@@ -989,7 +1054,7 @@ const SHIPMENT_EN: Omit<PolicyContent, 'sections'> = {
   breadcrumb: 'Shipment & Return Policy',
   homeBreadcrumb: 'Home',
   heroLabel: 'Legal',
-  lastUpdated: 'Last updated: June 2026',
+  lastUpdated: 'Last updated: July 2026',
   intro:
     'This policy sets out shipping timelines, exchange eligibility, return procedures, and remedy pathways for purchases made through Bint Saeed.',
   summaryTitle: 'Summary Notice',
@@ -1005,9 +1070,12 @@ const SHIPMENT_EN: Omit<PolicyContent, 'sections'> = {
     '5. EU Clients – Right of Withdrawal',
     '6. EU Exception (Defective Items Only)',
     '7. Final Acknowledgment',
-    '8. Shipping Timelines',
-    '9. Force Majeure',
-    '10. Contact',
+    '8. Shipping & Delivery',
+    '9. Delivery Details & Client Responsibilities',
+    '10. Customs & Import',
+    '11. Undeliverable Shipments',
+    '12. Force Majeure',
+    '13. Contact'
   ],
 }
 
@@ -1025,16 +1093,19 @@ const SHIPMENT_MS: Omit<PolicyContent, 'sections'> = {
     'Meskipun mayoritas karya Bint Saeed diproduksi berdasarkan permintaan, item terpilih dapat tersedia untuk penghantaran segera.',
   ],
   sectionList: [
-    '1. Pernyataan Pembuka',
-    '2. Dasar Umum',
-    '3. Pengecualian (Selaras Perlindungan Konsumen UAE)',
-    '4. Kasus yang Tidak Memenuhi Terma',
-    '5. Klien UE – Hak Penarikan',
-    '6. Pengecualian UE (Hanya Barang Cacat)',
+    '1. Pernyataan Pembukaan',
+    '2. Dasar Polisi',
+    '3. Pengecualian (Penjajaran Perlindungan Pengguna UAE)',
+    '4. Kes yang Tidak Layak',
+    '5. Pelanggan EU – Hak Penarikan',
+    '6. Pengecualian EU (Item Cacat Sahaja)',
     '7. Pengakuan Akhir',
-    '8. Jadwal Penghantaran',
-    '9. Force Majeure',
-    '10. Kontak',
+    '8. Penghantaran & Penyerahan',
+    '9. Butiran Penghantaran & Tanggungjawab Pelanggan',
+    '10. Kastam & Import',
+    '11. Penghantaran yang Tidak Dapat Diserahkan',
+    '12. Force Majeure',
+    '13. Hubungi'
   ],
 }
 

@@ -9,7 +9,8 @@ import Image from 'next/image'
 import { FiFilter, FiX, FiShoppingBag } from 'react-icons/fi'
 import {
   accessories,
-  accessoryCategories,
+  isAccessoryShopVisible,
+  visibleAccessoryCategories,
   Accessory,
 } from '@/data/accessories'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
@@ -64,9 +65,11 @@ export default function AccessoriesPage() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
 
+  const shopAccessories = useMemo(() => accessories.filter(isAccessoryShopVisible), [])
+
   const colorOptionIds = useMemo(
-    () => new Set(buildAccessoryColorOptions(accessories).map((c) => c.id)),
-    [],
+    () => new Set(buildAccessoryColorOptions(shopAccessories).map((c) => c.id)),
+    [shopAccessories],
   )
 
   useEffect(() => {
@@ -74,8 +77,16 @@ export default function AccessoriesPage() {
     const raw = searchParams.get('type') ?? searchParams.get('category')
     if (raw) {
       const id = resolveAccessoryCategoryId(raw)
-      if (accessoryCategories.some((c) => c.id === id && id !== 'all')) {
+      if (visibleAccessoryCategories.some((c) => c.id === id && id !== 'all')) {
         setActiveCategory(id)
+      } else {
+        // Hidden categories (e.g. bracelets) fall back to All Accessories and clean the URL.
+        setActiveCategory('all')
+        const p = new URLSearchParams(searchParams.toString())
+        p.delete('type')
+        p.delete('category')
+        const q = p.toString()
+        router.replace(q ? `${pathname}?${q}` : pathname, { scroll: false })
       }
     } else {
       setActiveCategory('all')
@@ -83,7 +94,7 @@ export default function AccessoriesPage() {
     setPriceRange(parsePriceParam(searchParams.get('price')))
     setSelectedStones(parseStonesParam(searchParams.get('stones')))
     setSelectedColors(parseColorsParam(searchParams.get('colors'), colorOptionIds))
-  }, [searchParams, colorOptionIds])
+  }, [searchParams, colorOptionIds, pathname, router])
 
   useEffect(() => {
     const scroller = categoryScrollRef.current
@@ -169,26 +180,29 @@ export default function AccessoriesPage() {
 
   const filteredAccessories = useMemo(
     () =>
-      applyAccessoryFilters(accessories, {
+      applyAccessoryFilters(shopAccessories, {
         categoryId: activeCategory,
         priceRange,
         stones: selectedStones,
         colors: selectedColors,
       }),
-    [activeCategory, priceRange, selectedStones, selectedColors]
+    [shopAccessories, activeCategory, priceRange, selectedStones, selectedColors]
   )
 
   const hasExtraFilters = priceRange !== 'all' || selectedStones.length > 0
 
   const categoryLabel = useCallback(
-    (category: (typeof accessoryCategories)[number]) =>
+    (category: (typeof visibleAccessoryCategories)[number]) =>
       isRTL ? category.nameAr : category.name,
     [isRTL],
   )
 
-  const activeTab = accessoryCategories.find(c => c.id === activeCategory)
+  const activeTab = visibleAccessoryCategories.find(c => c.id === activeCategory)
 
-  const collectionJsonLd = useMemo(() => buildAccessoriesCollectionJsonLd(accessories, language), [language])
+  const collectionJsonLd = useMemo(
+    () => buildAccessoriesCollectionJsonLd(shopAccessories, language),
+    [shopAccessories, language],
+  )
 
   return (
     <div className={`min-h-screen bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -272,7 +286,7 @@ export default function AccessoriesPage() {
                 role="tablist"
                 aria-label={ui.shop.productCategories}
               >
-                {accessoryCategories.map((category) => {
+                {visibleAccessoryCategories.map((category) => {
                   const active = activeCategory === category.id
                   return (
                     <button
@@ -318,7 +332,7 @@ export default function AccessoriesPage() {
                     {ui.shop.productCategories}
                   </p>
                   <ul className="space-y-1">
-                    {accessoryCategories.map((category) => {
+                    {visibleAccessoryCategories.map((category) => {
                       const active = activeCategory === category.id
                       return (
                         <li key={category.id}>
@@ -510,7 +524,7 @@ export default function AccessoriesPage() {
                   {ui.shop.productCategories}
                 </p>
                 <div className="mb-8 space-y-1">
-                  {accessoryCategories.map((category) => (
+                  {visibleAccessoryCategories.map((category) => (
                     <button
                       key={category.id}
                       type="button"
@@ -687,8 +701,8 @@ function AccessoryCard({
           <div className={isRTL ? 'text-right' : ''}>
             <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue mb-1 block">
               {isRTL 
-                ? accessoryCategories.find(c => c.id === accessory.category)?.nameAr 
-                : accessoryCategories.find(c => c.id === accessory.category)?.name}
+                ? visibleAccessoryCategories.find(c => c.id === accessory.category)?.nameAr 
+                : visibleAccessoryCategories.find(c => c.id === accessory.category)?.name}
             </span>
             <h3 data-product-name="true" className="font-montserrat text-sm text-brand-darkRed mb-1 tracking-wide group-hover:text-brand-dustyBlue transition-colors">
               {accessoryName}

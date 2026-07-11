@@ -16,6 +16,7 @@ import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { getCartLineImageAlt, getProductImageAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
+import { resolveCartShippingMessages } from '@/lib/shipping/resolveCartShippingMessages'
 
 import 'swiper/css'
 import 'swiper/css/free-mode'
@@ -27,9 +28,14 @@ interface MiniCartProps {
 
 export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const { items, removeItem, updateQuantity } = useCartStore()
-  const { formatPrice, formatAmount, currency, formatCartSubtotal } = useCurrency()
+  const { formatPrice, formatAmount, currency, formatCartSubtotal, cartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const shippingMessages = resolveCartShippingMessages({
+    subtotal: cartSubtotal(items),
+    currency: currency.code,
+    copy: ui.cart,
+  })
   const summarize = (value: string, max = 46) =>
     value.length > max ? `${value.slice(0, max).trimEnd()}…` : value
   const productHref = (item: (typeof items)[number]) =>
@@ -289,8 +295,24 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                     {formatCartSubtotal(items)}
                   </span>
                 </div>
-                <p className={`font-montserrat text-[10px] text-brand-clayRed/50 ${isRTL ? 'text-right' : ''}`}>
-                  {ui.cart.deliveryAtPayment}
+                <div className={`flex justify-between items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <span className="font-montserrat text-[11px] text-brand-clayRed/70 uppercase tracking-wider">
+                    {shippingMessages.feeLabel}
+                  </span>
+                  <span
+                    className={`font-montserrat text-[11px] tracking-wide ${
+                      shippingMessages.unlocked ? 'text-brand-dustyBlue' : 'text-brand-darkRed/80'
+                    }`}
+                  >
+                    {shippingMessages.feeValue}
+                  </span>
+                </div>
+                <p
+                  className={`font-montserrat text-[10px] leading-relaxed ${
+                    shippingMessages.unlocked ? 'text-brand-dustyBlue' : 'text-brand-clayRed/50'
+                  } ${isRTL ? 'text-right' : ''}`}
+                >
+                  {shippingMessages.primary}
                 </p>
 
                 {/* Buttons */}
@@ -329,7 +351,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <FiPackage className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
                     <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
-                      {ui.cart.freeUaeShipping}
+                      {shippingMessages.primary}
                     </span>
                   </div>
                 </div>

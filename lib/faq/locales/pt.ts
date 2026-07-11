@@ -38,7 +38,7 @@ export const faqPt: FaqBundle = {
         },
         {
           q: 'Envio gratuito?',
-          a: 'Sim para encomendas acima de 1000 AED nos EAU.',
+          a: 'Sim. Envio gratuito nos EAU para encomendas acima de 1.000 AED. Envio gratuito mundial para encomendas acima de 500 EUR (ou o equivalente limpo na moeda selecionada). Abaixo destes limiares aplica-se uma taxa fixa confirmada no pagamento.',
         },
         {
           q: 'Tracking?',

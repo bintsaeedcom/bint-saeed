@@ -11,16 +11,16 @@ import { buildVariantSku } from '@/lib/products/sku'
  */
 const JEWELLERY_STYLE_SKU_BY_ID: Record<string, string> = {
   // Al Ain Oasis Necklaces (ALN)
-  'al-ain-rosette-necklace-malachite': 'BSA-JWL-ALN-MAL-001',
-  'al-ain-rosette-necklace-lapis-lazuli': 'BSA-JWL-ALN-LAP-001',
-  'al-ain-rosette-necklace-rose-quartz': 'BSA-JWL-ALN-RSQ-001',
-  'al-ain-rosette-necklace-tiger-eye': 'BSA-JWL-ALN-TGE-001',
-  'al-ain-rosette-necklace-onyx': 'BSA-JWL-ALN-ONX-001',
-  'al-ain-rosette-necklace-sunstone': 'BSA-JWL-ALN-SUN-001',
+  'al-ain-oasis-necklace-malachite': 'BSA-JWL-ALN-MAL-001',
+  'al-ain-oasis-necklace-lapis-lazuli': 'BSA-JWL-ALN-LAP-001',
+  'al-ain-oasis-necklace-rose-quartz': 'BSA-JWL-ALN-RSQ-001',
+  'al-ain-oasis-necklace-tiger-eye': 'BSA-JWL-ALN-TGE-001',
+  'al-ain-oasis-necklace-onyx': 'BSA-JWL-ALN-ONX-001',
+  'al-ain-oasis-necklace-sunstone': 'BSA-JWL-ALN-SUN-001',
 
   // Al Ain Oasis Earrings (EAR-OAS)
   'al-ain-oasis-earrings-malachite': 'BSA-JWL-EAR-MAL-001',
-  'al-ain-oasis-earrings-rose-quartz': 'BSA-JWL-EAR-RSQ-001',
+  'al-quaa-earrings-rose-quartz': 'BSA-JWL-EAR-RSQ-001',
   // Additional earrings
   'al-ain-oasis-earrings-orange-jade': 'BSA-JWL-EAR-OJD-001',
   'al-quaa-earrings-lapis-lazuli': 'BSA-JWL-EAR-LAP-001',
@@ -46,10 +46,8 @@ const JEWELLERY_STYLE_SKU_BY_ID: Record<string, string> = {
 
 /** Bag charm parent style codes — colour suffix appended when selected (BS-BG-001-BLK). */
 const BAG_CHARM_STYLE_SKU_BY_ID: Record<string, string> = {
-  'bag-strand-tassel': 'BS-BG-001',
-  'bag-strand-pearl-cluster': 'BS-BG-002',
-  'bag-strand-letter': 'BS-BG-003',
-  'bag-strand-bint': 'BS-BG-004',
+  'al-ain-oasis-i-bag-charm-fuchsia-jade': 'BS-BG-001',
+  'al-ain-oasis-ii-bag-charm-fuchsia-jade': 'BS-BG-002',
 }
 
 /** Phone charm parent style codes — one stone per product, no colour suffix. */

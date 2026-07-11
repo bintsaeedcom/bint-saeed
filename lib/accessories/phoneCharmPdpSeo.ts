@@ -11,15 +11,15 @@ export type PhoneCharmSeoPack = {
 const PHONE_CHARM_PDP_BY_ID: Record<AlQuaaPhoneCharmId, PhoneCharmSeoPack> = {
   'al-quaa-phone-charm-fuchsia-jade': {
     carouselAlt:
-      'Al Quaa Fuchsia Coloured Jade phone charm — vibrant pink jade beads with hand-carved Carnelian Al Ain Rosette',
+      'Al Quaa Fuchsia Jade phone charm — vibrant pink jade beads with hand-carved Carnelian Al Ain Rosette',
     pdpAlt:
-      'Al Quaa Fuchsia Coloured Jade phone charm with vibrant pink jade beads, hand-carved Carnelian Al Ain Rosette and gold-plated hematite accents on display — natural stone phone charm by Bint Saeed Abu Dhabi',
+      'Al Quaa Fuchsia Jade phone charm with vibrant pink jade beads, hand-carved Carnelian Al Ain Rosette and gold-plated hematite accents on display — natural stone phone charm by Bint Saeed Abu Dhabi',
   },
   'al-quaa-phone-charm-orange-jade': {
     carouselAlt:
-      'Al Quaa Orange Coloured Jade phone charm — warm orange jade beads with Carnelian Al Ain Rosette',
+      'Al Quaa Orange Jade phone charm — warm orange jade beads with Carnelian Al Ain Rosette',
     pdpAlt:
-      'Al Quaa Orange Coloured Jade phone charm with luminous orange jade beads, hand-carved Carnelian Al Ain Rosette and gold-plated hematite on display — handcrafted stone phone charm Abu Dhabi',
+      'Al Quaa Orange Jade phone charm with luminous orange jade beads, hand-carved Carnelian Al Ain Rosette and gold-plated hematite on display — handcrafted stone phone charm Abu Dhabi',
   },
   'al-quaa-phone-charm-onyx': {
     carouselAlt:

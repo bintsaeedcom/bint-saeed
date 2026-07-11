@@ -37,8 +37,8 @@ const GEMSTONE_COLOR: Record<string, string> = {
 }
 
 function necklaceVariantKey(accessoryId: string): string | undefined {
-  if (!accessoryId.startsWith('al-ain-rosette-necklace-')) return undefined
-  return accessoryId.slice('al-ain-rosette-necklace-'.length)
+  if (!accessoryId.startsWith('al-ain-oasis-necklace-')) return undefined
+  return accessoryId.slice('al-ain-oasis-necklace-'.length)
 }
 
 function matchingStrandIdForNecklace(necklaceId: string): string | undefined {

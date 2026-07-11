@@ -38,7 +38,7 @@ export const faqIt: FaqBundle = {
         },
         {
           q: 'Spedizione gratuita?',
-          a: 'Sì per ordini sopra 1000 AED negli Emirati Arabi Uniti.',
+          a: 'Sì. Spedizione gratuita negli EAU per ordini superiori a 1.000 AED. Spedizione gratuita mondiale per ordini superiori a 500 EUR (o l’equivalente netto nella valuta selezionata). Sotto queste soglie si applica una tariffa fissa confermata al pagamento.',
         },
         {
           q: 'Tracking?',

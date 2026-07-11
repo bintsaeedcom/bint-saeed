@@ -4,6 +4,14 @@ import {
   FR_NECKLACE_PDP_BY_ID,
 } from '@/lib/accessories/necklaceEarringPdpContentFr'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
+import {
+  JEWELLERY_CARE_AR,
+  JEWELLERY_CARE_EN,
+  JEWELLERY_CARE_FAQ_NECKLACE_AR,
+  JEWELLERY_CARE_FAQ_NECKLACE_EN,
+  JEWELLERY_CARE_LEAD_AR,
+  JEWELLERY_CARE_LEAD_EN,
+} from '@/lib/accessories/jewelleryCareCopyI18n'
 
 export type NecklaceEarringFaqItem = {
   question: string
@@ -44,13 +52,8 @@ const MALACHITE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       'Designed to coordinate with the Al Ain Rosette Earrings and Bint Saeed Strands',
       'Presented in a Bint Saeed gift box',
     ],
-    careLead:
-      'Every Bint Saeed jewellery creation is handcrafted using carefully selected natural gemstones. As each stone is unique, variations in colour, veining and natural characteristics are part of the individuality of every creation.',
-    care: [
-      'Avoid contact with perfumes, cosmetics, water and household chemicals.',
-      'After wear, gently wipe with a soft jewellery cloth.',
-      'Store separately in the Bint Saeed pouch or gift box to preserve beauty over time.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_EN,
+    care: [...JEWELLERY_CARE_EN],
     faq: [
       {
         question: 'What is the Al Ain Oasis Necklace - Malachite made from?',
@@ -92,7 +95,7 @@ const MALACHITE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       {
         question: 'How should I care for my necklace?',
         answer:
-          'To preserve its beauty, avoid contact with perfumes, cosmetics, water and household chemicals. After wear, gently wipe the necklace with a soft jewellery cloth and store it separately in its Bint Saeed pouch or gift box.',
+          JEWELLERY_CARE_FAQ_NECKLACE_EN,
       },
     ],
   },
@@ -116,13 +119,8 @@ const MALACHITE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       'مصممة للتنسيق مع أقراط القوع روزيت وخيوط Bint Saeed',
       'تُقدَّم في علبة هدايا Bint Saeed',
     ],
-    careLead:
-      'كل قطعة مجوهرات من Bint Saeed مصنوعة يدويًا من أحجار طبيعية مختارة بعناية. وبما أن كل حجر فريد بطبيعته، فإن اختلافات اللون والعروق والسمات الطبيعية جزء من تميز كل قطعة.',
-    care: [
-      'تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية.',
-      'بعد الارتداء، امسحي القطعة بلطف بقطعة قماش ناعمة للمجوهرات.',
-      'احفظي القلادة بشكل منفصل داخل كيس أو علبة Bint Saeed للحفاظ على جمالها بمرور الوقت.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_AR,
+    care: [...JEWELLERY_CARE_AR],
     faq: [
       {
         question: 'ممّ تُصنع قلادة القوع روزيت الملاكيت؟',
@@ -163,7 +161,7 @@ const MALACHITE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       {
         question: 'كيف أعتني بقلادتي؟',
         answer:
-          'للحفاظ على جمالها، تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية. بعد الارتداء، امسحي القلادة بلطف بقطعة قماش ناعمة للمجوهرات واحفظيها بشكل منفصل في كيس أو علبة Bint Saeed.',
+          JEWELLERY_CARE_FAQ_NECKLACE_AR,
       },
     ],
   },
@@ -189,13 +187,8 @@ const ROSE_QUARTZ_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>
       'Designed to coordinate with the Al Ain Rosette Earrings and Al Ain Rosette Rose Quartz Signature Strand',
       'Presented in a signature Bint Saeed gift box',
     ],
-    careLead:
-      'Every Bint Saeed jewellery creation is handcrafted using carefully selected natural gemstones. As each stone is unique, variations in colour, veining and natural characteristics are part of the individuality of every creation.',
-    care: [
-      'Avoid contact with perfumes, cosmetics, water and household chemicals.',
-      'After wear, gently wipe with a soft jewellery cloth.',
-      'Store separately in the Bint Saeed pouch or gift box to preserve beauty over time.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_EN,
+    care: [...JEWELLERY_CARE_EN],
     faq: [
       {
         question: 'What is the Al Ain Oasis Necklace - Rose Quartz made from?',
@@ -237,7 +230,7 @@ const ROSE_QUARTZ_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>
       {
         question: 'How should I care for my necklace?',
         answer:
-          'To preserve its beauty, avoid contact with perfumes, cosmetics, water and household chemicals. After wear, gently wipe the necklace with a soft jewellery cloth and store it separately in its Bint Saeed pouch or gift box.',
+          JEWELLERY_CARE_FAQ_NECKLACE_EN,
       },
     ],
   },
@@ -260,13 +253,8 @@ const ROSE_QUARTZ_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>
       'مصممة للتنسيق مع أقراط القوع روزيت وAl Ain Rosette Rose Quartz Signature Strand',
       'تُقدَّم في علبة هدايا توقيعية من Bint Saeed',
     ],
-    careLead:
-      'كل قطعة مجوهرات من Bint Saeed مصنوعة يدويًا من أحجار طبيعية مختارة بعناية. وبما أن كل حجر فريد بطبيعته، فإن اختلافات اللون والعروق والسمات الطبيعية جزء من تميز كل قطعة.',
-    care: [
-      'تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية.',
-      'بعد الارتداء، امسحي القطعة بلطف بقطعة قماش ناعمة للمجوهرات.',
-      'احفظي القلادة بشكل منفصل داخل كيس أو علبة Bint Saeed للحفاظ على جمالها بمرور الوقت.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_AR,
+    care: [...JEWELLERY_CARE_AR],
     faq: [
       {
         question: 'ممّ تُصنع قلادة القوع روزيت الكوارتز الوردي؟',
@@ -307,7 +295,7 @@ const ROSE_QUARTZ_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>
       {
         question: 'كيف أعتني بقلادتي؟',
         answer:
-          'للحفاظ على جمالها، تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية. بعد الارتداء، امسحي القلادة بلطف بقطعة قماش ناعمة للمجوهرات واحفظيها بشكل منفصل في كيس أو علبة Bint Saeed.',
+          JEWELLERY_CARE_FAQ_NECKLACE_AR,
       },
     ],
   },
@@ -333,13 +321,8 @@ const LAPIS_LAZULI_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack
       'Designed to coordinate with the Al Ain Rosette Earrings and Al Ain Rosette Lapis Lazuli Signature Strand',
       'Presented in a signature Bint Saeed gift box',
     ],
-    careLead:
-      'Every Bint Saeed jewellery creation is handcrafted using carefully selected natural gemstones. As each stone is unique, variations in colour, veining and natural characteristics are part of the individuality of every creation.',
-    care: [
-      'Avoid contact with perfumes, cosmetics, water and household chemicals.',
-      'After wear, gently wipe with a soft jewellery cloth.',
-      'Store separately in the Bint Saeed pouch or gift box to preserve beauty over time.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_EN,
+    care: [...JEWELLERY_CARE_EN],
     faq: [
       {
         question: 'What is the Al Ain Oasis Necklace - Lapis Lazuli made from?',
@@ -381,7 +364,7 @@ const LAPIS_LAZULI_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack
       {
         question: 'How should I care for my necklace?',
         answer:
-          'To preserve its beauty, avoid contact with perfumes, cosmetics, water and household chemicals. After wear, gently wipe the necklace with a soft jewellery cloth and store it separately in its Bint Saeed pouch or gift box.',
+          JEWELLERY_CARE_FAQ_NECKLACE_EN,
       },
     ],
   },
@@ -404,13 +387,8 @@ const LAPIS_LAZULI_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack
       'مصممة للتنسيق مع أقراط القوع روزيت وAl Ain Rosette Lapis Lazuli Signature Strand',
       'تُقدَّم في علبة هدايا توقيعية من Bint Saeed',
     ],
-    careLead:
-      'كل قطعة مجوهرات من Bint Saeed مصنوعة يدويًا من أحجار طبيعية مختارة بعناية. وبما أن كل حجر فريد بطبيعته، فإن اختلافات اللون والعروق والسمات الطبيعية جزء من تميز كل قطعة.',
-    care: [
-      'تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية.',
-      'بعد الارتداء، امسحي القطعة بلطف بقطعة قماش ناعمة للمجوهرات.',
-      'احفظي القلادة بشكل منفصل داخل كيس أو علبة Bint Saeed للحفاظ على جمالها بمرور الوقت.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_AR,
+    care: [...JEWELLERY_CARE_AR],
     faq: [
       {
         question: 'ممّ تُصنع قلادة القوع روزيت اللازورد؟',
@@ -451,7 +429,7 @@ const LAPIS_LAZULI_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack
       {
         question: 'كيف أعتني بقلادتي؟',
         answer:
-          'للحفاظ على جمالها، تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية. بعد الارتداء، امسحي القلادة بلطف بقطعة قماش ناعمة للمجوهرات واحفظيها بشكل منفصل في كيس أو علبة Bint Saeed.',
+          JEWELLERY_CARE_FAQ_NECKLACE_AR,
       },
     ],
   },
@@ -477,13 +455,8 @@ const SUNSTONE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> =
       'Designed to coordinate with the Al Ain Rosette Earrings and Al Ain Rosette Sunstone Signature Strand',
       'Presented in a signature Bint Saeed gift box',
     ],
-    careLead:
-      'Every Bint Saeed jewellery creation is handcrafted using carefully selected natural gemstones. As each stone is unique, variations in colour, veining and natural characteristics are part of the individuality of every creation.',
-    care: [
-      'Avoid contact with perfumes, cosmetics, water and household chemicals.',
-      'After wear, gently wipe with a soft jewellery cloth.',
-      'Store separately in the Bint Saeed pouch or gift box to preserve beauty over time.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_EN,
+    care: [...JEWELLERY_CARE_EN],
     faq: [
       {
         question: 'What is the Al Ain Oasis Necklace - Sunstone made from?',
@@ -525,7 +498,7 @@ const SUNSTONE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> =
       {
         question: 'How should I care for my necklace?',
         answer:
-          'To preserve its beauty, avoid contact with perfumes, cosmetics, water and household chemicals. After wear, gently wipe the necklace with a soft jewellery cloth and store it separately in its Bint Saeed pouch or gift box.',
+          JEWELLERY_CARE_FAQ_NECKLACE_EN,
       },
     ],
   },
@@ -548,13 +521,8 @@ const SUNSTONE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> =
       'مصممة للتنسيق مع أقراط القوع روزيت وAl Ain Rosette Sunstone Signature Strand',
       'تُقدَّم في علبة هدايا توقيعية من Bint Saeed',
     ],
-    careLead:
-      'كل قطعة مجوهرات من Bint Saeed مصنوعة يدويًا من أحجار طبيعية مختارة بعناية. وبما أن كل حجر فريد بطبيعته، فإن اختلافات اللون والعروق والسمات الطبيعية جزء من تميز كل قطعة.',
-    care: [
-      'تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية.',
-      'بعد الارتداء، امسحي القطعة بلطف بقطعة قماش ناعمة للمجوهرات.',
-      'احفظي القلادة بشكل منفصل داخل كيس أو علبة Bint Saeed للحفاظ على جمالها بمرور الوقت.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_AR,
+    care: [...JEWELLERY_CARE_AR],
     faq: [
       {
         question: 'ممّ تُصنع قلادة القوع روزيت حجر الشمس؟',
@@ -595,7 +563,7 @@ const SUNSTONE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> =
       {
         question: 'كيف أعتني بقلادتي؟',
         answer:
-          'للحفاظ على جمالها، تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية. بعد الارتداء، امسحي القلادة بلطف بقطعة قماش ناعمة للمجوهرات واحفظيها بشكل منفصل في كيس أو علبة Bint Saeed.',
+          JEWELLERY_CARE_FAQ_NECKLACE_AR,
       },
     ],
   },
@@ -621,13 +589,8 @@ const TIGER_EYE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       'Designed to coordinate with the Al Ain Rosette Earrings and Al Ain Rosette Tiger Eye Signature Strand',
       'Presented in a signature Bint Saeed gift box',
     ],
-    careLead:
-      'Every Bint Saeed jewellery creation is handcrafted using carefully selected natural gemstones. As each stone is unique, variations in colour, veining and natural characteristics are part of the individuality of every creation.',
-    care: [
-      'Avoid contact with perfumes, cosmetics, water and household chemicals.',
-      'After wear, gently wipe with a soft jewellery cloth.',
-      'Store separately in the Bint Saeed pouch or gift box to preserve beauty over time.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_EN,
+    care: [...JEWELLERY_CARE_EN],
     faq: [
       {
         question: 'What is the Al Ain Oasis Necklace - Tiger Eye made from?',
@@ -669,7 +632,7 @@ const TIGER_EYE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       {
         question: 'How should I care for my necklace?',
         answer:
-          'To preserve its beauty, avoid contact with perfumes, cosmetics, water and household chemicals. After wear, gently wipe the necklace with a soft jewellery cloth and store it separately in its Bint Saeed pouch or gift box.',
+          JEWELLERY_CARE_FAQ_NECKLACE_EN,
       },
     ],
   },
@@ -692,13 +655,8 @@ const TIGER_EYE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       'مصممة للتنسيق مع أقراط القوع روزيت وAl Ain Rosette Tiger Eye Signature Strand',
       'تُقدَّم في علبة هدايا توقيعية من Bint Saeed',
     ],
-    careLead:
-      'كل قطعة مجوهرات من Bint Saeed مصنوعة يدويًا من أحجار طبيعية مختارة بعناية. وبما أن كل حجر فريد بطبيعته، فإن اختلافات اللون والعروق والسمات الطبيعية جزء من تميز كل قطعة.',
-    care: [
-      'تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية.',
-      'بعد الارتداء، امسحي القطعة بلطف بقطعة قماش ناعمة للمجوهرات.',
-      'احفظي القلادة بشكل منفصل داخل كيس أو علبة Bint Saeed للحفاظ على جمالها بمرور الوقت.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_AR,
+    care: [...JEWELLERY_CARE_AR],
     faq: [
       {
         question: 'ممّ تُصنع قلادة القوع روزيت عين النمر؟',
@@ -739,7 +697,7 @@ const TIGER_EYE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       {
         question: 'كيف أعتني بقلادتي؟',
         answer:
-          'للحفاظ على جمالها، تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية. بعد الارتداء، امسحي القلادة بلطف بقطعة قماش ناعمة للمجوهرات واحفظيها بشكل منفصل في كيس أو علبة Bint Saeed.',
+          JEWELLERY_CARE_FAQ_NECKLACE_AR,
       },
     ],
   },
@@ -765,13 +723,8 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
       'Designed to coordinate with the Al Ain Rosette Earrings and Al Ain Rosette Onyx Signature Strand',
       'Presented in a signature Bint Saeed gift box',
     ],
-    careLead:
-      'Every Bint Saeed jewellery creation is handcrafted using carefully selected natural gemstones. As each stone is unique, variations in colour, veining and natural characteristics are part of the individuality of every creation.',
-    care: [
-      'Avoid contact with perfumes, cosmetics, water and household chemicals.',
-      'After wear, gently wipe with a soft jewellery cloth.',
-      'Store separately in the Bint Saeed pouch or gift box to preserve beauty over time.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_EN,
+    care: [...JEWELLERY_CARE_EN],
     faq: [
       {
         question: 'What is the Al Ain Oasis Necklace - Onyx made from?',
@@ -813,7 +766,7 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
       {
         question: 'How should I care for my necklace?',
         answer:
-          'To preserve its beauty, avoid contact with perfumes, cosmetics, water and household chemicals. After wear, gently wipe the necklace with a soft jewellery cloth and store it separately in its Bint Saeed pouch or gift box.',
+          JEWELLERY_CARE_FAQ_NECKLACE_EN,
       },
     ],
   },
@@ -836,13 +789,8 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
       'مصممة للتنسيق مع أقراط القوع روزيت وAl Ain Rosette Onyx Signature Strand',
       'تُقدَّم في علبة هدايا توقيعية من Bint Saeed',
     ],
-    careLead:
-      'كل قطعة مجوهرات من Bint Saeed مصنوعة يدويًا من أحجار طبيعية مختارة بعناية. وبما أن كل حجر فريد بطبيعته، فإن اختلافات اللون والعروق والسمات الطبيعية جزء من تميز كل قطعة.',
-    care: [
-      'تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية.',
-      'بعد الارتداء، امسحي القطعة بلطف بقطعة قماش ناعمة للمجوهرات.',
-      'احفظي القلادة بشكل منفصل داخل كيس أو علبة Bint Saeed للحفاظ على جمالها بمرور الوقت.',
-    ],
+    careLead: JEWELLERY_CARE_LEAD_AR,
+    care: [...JEWELLERY_CARE_AR],
     faq: [
       {
         question: 'ممّ تُصنع قلادة القوع روزيت الأونكس؟',
@@ -883,19 +831,19 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
       {
         question: 'كيف أعتني بقلادتي؟',
         answer:
-          'للحفاظ على جمالها، تجنبي ملامسة العطور ومستحضرات التجميل والماء والمواد الكيميائية المنزلية. بعد الارتداء، امسحي القلادة بلطف بقطعة قماش ناعمة للمجوهرات واحفظيها بشكل منفصل في كيس أو علبة Bint Saeed.',
+          JEWELLERY_CARE_FAQ_NECKLACE_AR,
       },
     ],
   },
 }
 
 const PDP_BY_ID: Record<string, Partial<Record<AppLocale, NecklaceEarringPdpContentPack>>> = {
-  'al-ain-rosette-necklace-malachite': MALACHITE_PACK,
-  'al-ain-rosette-necklace-rose-quartz': ROSE_QUARTZ_PACK,
-  'al-ain-rosette-necklace-lapis-lazuli': LAPIS_LAZULI_PACK,
-  'al-ain-rosette-necklace-sunstone': SUNSTONE_PACK,
-  'al-ain-rosette-necklace-tiger-eye': TIGER_EYE_PACK,
-  'al-ain-rosette-necklace-onyx': ONYX_PACK,
+  'al-ain-oasis-necklace-malachite': MALACHITE_PACK,
+  'al-ain-oasis-necklace-rose-quartz': ROSE_QUARTZ_PACK,
+  'al-ain-oasis-necklace-lapis-lazuli': LAPIS_LAZULI_PACK,
+  'al-ain-oasis-necklace-sunstone': SUNSTONE_PACK,
+  'al-ain-oasis-necklace-tiger-eye': TIGER_EYE_PACK,
+  'al-ain-oasis-necklace-onyx': ONYX_PACK,
 }
 
 export function getNecklaceEarringPdpContent(

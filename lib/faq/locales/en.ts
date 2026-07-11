@@ -34,11 +34,11 @@ export const faqEn: FaqBundle = {
       questions: [
         {
           q: 'How long does delivery take?',
-          a: 'UAE: 1-2 business days (Express) or 2-3 business days (Standard). GCC: 3-5 business days. International: 7-14 business days.',
+          a: 'UAE: typically 1–3 business days. GCC: 3–5 business days. International: 7–14 business days.',
         },
         {
           q: 'Do you offer free shipping?',
-          a: 'Yes. Complimentary shipping applies to orders over 1000 AED within the UAE.',
+          a: 'Yes. Complimentary shipping within the UAE applies to orders over AED 1,000. Complimentary worldwide shipping applies to orders over EUR 500 (or the clean equivalent in your selected currency). Below these thresholds: UAE shipping is AED 35; international shipping is EUR 30 (or the clean equivalent in your selected currency), confirmed at payment.',
         },
         {
           q: 'Can I track my order?',
@@ -56,7 +56,12 @@ export const faqEn: FaqBundle = {
         {
           q: 'What is your return policy?',
           a:
-            'All sales are final and refunds are not offered (subject to limited exceptions). Exchanges may be accepted within 14 days for unworn, undamaged items with tags attached. Discounted and custom-made pieces are final sale.',
+            'All sales are final and refunds are not offered (subject to limited exceptions). Exchanges may be accepted within 14 days for unworn, undamaged items with tags attached. Discounted and custom-made pieces are final sale. For health, hygiene and personal safety reasons, earrings cannot be exchanged or refunded, except where a verified manufacturing defect or material non-conformity exists.',
+        },
+        {
+          q: 'Can I exchange or return earrings?',
+          a:
+            'No. For reasons of health, hygiene and personal safety, earrings are final sale and cannot be exchanged or refunded, except where a verified manufacturing defect or material non-conformity exists. Please contact returns@bintsaeed.com if you believe your earrings have a manufacturing defect.',
         },
         {
           q: 'How do I initiate a return?',
@@ -64,7 +69,7 @@ export const faqEn: FaqBundle = {
         },
         {
           q: 'Do you offer refunds?',
-          a: 'No. We do not offer refunds. If your item is eligible, we may process an exchange within 14 days under our exchange conditions.',
+          a: 'No. We do not offer refunds. If your item is eligible, we may process an exchange within 14 days under our exchange conditions. Earrings are excluded from exchange for health and hygiene reasons, except in the case of a verified manufacturing defect.',
         },
       ],
     },

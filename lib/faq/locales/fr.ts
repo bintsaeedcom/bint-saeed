@@ -34,11 +34,11 @@ export const faqFr: FaqBundle = {
       questions: [
         {
           q: 'Quels délais de livraison ?',
-          a: 'EAU : 1–2 jours ouvrés (express) ou 2–3 jours (standard). Golfe : 3–5 jours ouvrés. International : 7–14 jours selon destination.',
+          a: 'EAU : généralement 1 à 3 jours ouvrés. CCG : 3 à 5 jours ouvrés. International : 7 à 14 jours ouvrés.',
         },
         {
           q: 'Livraison offerte ?',
-          a: 'Oui pour les commandes supérieures à 1000 AED aux Émirats arabes unis.',
+          a: 'Oui. La livraison offerte aux EAU s’applique aux commandes au-dessus de 1 000 AED. La livraison mondiale offerte s’applique aux commandes au-dessus de 500 EUR (ou l’équivalent net dans la devise sélectionnée). Sous ces seuils, des frais de livraison forfaitaires s’appliquent et sont confirmés au paiement.',
         },
         {
           q: 'Suivi de commande ?',

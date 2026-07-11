@@ -38,7 +38,7 @@ export const faqId: FaqBundle = {
         },
         {
           q: 'Apakah ada pengiriman gratis?',
-          a: 'Ya, untuk pesanan di atas 1000 AED di UEA.',
+          a: 'Ya. Gratis pengiriman UEA untuk pesanan di atas 1.000 AED. Gratis pengiriman dunia untuk pesanan di atas 500 EUR (atau setara bersih dalam mata uang pilihan Anda). Di bawah ambang ini, biaya pengiriman tetap berlaku dan dikonfirmasi saat pembayaran.',
         },
         {
           q: 'Apakah ada pelacakan?',

@@ -1,5 +1,10 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { StrandPdpFaqItem } from '@/lib/accessories/strandPdp/types'
+import {
+  STRAND_CARE_AR,
+  STRAND_CARE_EN,
+  STRAND_CARE_FR,
+} from '@/lib/accessories/jewelleryCareCopyI18n'
 
 export type StrandPdpLocaleTemplates = {
   stoneOriginTitle: string
@@ -50,14 +55,7 @@ const EN: LocalePack = {
   naturalStoneTitle: 'Natural Stone',
   naturalStoneBody:
     'Every Signature Strand is created from genuine natural gemstones formed over millions of years. Variations in colour, inclusions and natural markings are not imperfections but part of the stone’s individual beauty, making every pair unique.',
-  care: [
-    'Remove the strands before washing or dry cleaning your garment.',
-    'Avoid contact with water and prolonged moisture.',
-    'Do not spray perfume directly onto the gemstones or gold-tone hardware.',
-    'Store inside the Bint Saeed presentation box when not in use.',
-    'Clean gently using a soft, dry microfibre cloth.',
-    'Avoid prolonged exposure to direct sunlight and high humidity.',
-  ],
+  care: [...STRAND_CARE_EN],
   introP2Evening:
     'Created as one of Bint Saeed’s signature House Codes, these detachable strands invite a more personal way of dressing. Rather than purchasing another garment, they allow the same piece to evolve effortlessly for evening occasions, formal gatherings or everyday elegance.',
   introP2Mood:
@@ -112,14 +110,7 @@ const AR: LocalePack = {
   naturalStoneTitle: 'حجر طبيعي',
   naturalStoneBody:
     'يُصنع كل Signature Strand من أحجار كريمة طبيعية حقيقية تشكّلت عبر ملايين السنين. تباينات اللون والشوائب والعلامات الطبيعية ليست عيوباً بل جزءاً من جمال الحجر الفردي، ما يجعل كل زوج فريداً.',
-  care: [
-    'أزيلي الستراندات قبل غسل القطعة أو تنظيفها جافاً.',
-    'تجنّبي ملامسة الماء والرطوبة لفترات طويلة.',
-    'لا ترشّي العطر مباشرة على الأحجار الكريمة أو التفاصيل الذهبية.',
-    'احفظيها داخل علبة تقديم Bint Saeed عند عدم الاستخدام.',
-    'نظّفي بلطف بقطعة قماش ميكروفايبر ناعمة وجافة.',
-    'تجنّبي التعرّض المطوّل لأشعة الشمس المباشرة والرطوبة العالية.',
-  ],
+  care: [...STRAND_CARE_AR],
   introP2Evening:
     'بوصفها أحد رموز الدار الحصرية من Bint Saeed، تدعو هذه الستراندات القابلة للفصل إلى أسلوب أكثر شخصية في اللبس. بدلاً من شراء قطعة جديدة، تتيح لنفس القطعة أن تتطوّر بسهولة لمناسبات المساء أو التجمعات الرسمية أو الأناقة اليومية.',
   introP2Mood:
@@ -171,14 +162,7 @@ const FR: LocalePack = {
   naturalStoneTitle: 'Pierre naturelle',
   naturalStoneBody:
     'Chaque Signature Strand est créé à partir de véritables pierres naturelles formées sur des millions d’années. Les variations de couleur, les inclusions et les marques naturelles ne sont pas des imperfections mais font partie de la beauté individuelle de la pierre, rendant chaque paire unique.',
-  care: [
-    'Retirez les fils avant de laver ou de nettoyer à sec votre vêtement.',
-    'Évitez le contact avec l’eau et l’humidité prolongée.',
-    'Ne vaporisez pas de parfum directement sur les pierres ou les finitions dorées.',
-    'Rangez-les dans l’écrin Bint Saeed lorsqu’elles ne sont pas utilisées.',
-    'Nettoyez délicatement avec un chiffon microfibre doux et sec.',
-    'Évitez une exposition prolongée au soleil direct et à une forte humidité.',
-  ],
+  care: [...STRAND_CARE_FR],
   introP2Evening:
     'Créés comme l’un des codes de la maison signature de Bint Saeed, ces fils amovibles invitent à une façon plus personnelle de s’habiller. Plutôt que d’acheter un nouveau vêtement, ils permettent à la même pièce d’évoluer sans effort pour les soirées, les réceptions formelles ou l’élégance du quotidien.',
   introP2Mood:
@@ -235,6 +219,7 @@ const IT: LocalePack = {
     'Ogni Signature Strand è creato da autentiche gemme naturali formatesi nel corso di milioni di anni. Le variazioni di colore, le inclusioni e le marcature naturali non sono imperfezioni ma parte della bellezza individuale della pietra, rendendo ogni paio unico.',
   care: [
     'Rimuovi i fili prima di lavare o lavare a secco il capo.',
+    'Maneggiate con cura. Le pietre naturali possono scheggiarsi o rompersi se urtate, fatte cadere o sottoposte a impatto.',
     'Evita il contatto con acqua e umidità prolungata.',
     'Non spruzzare profumo direttamente sulle gemme o sulle finiture dorate.',
     'Conservali nella confezione Bint Saeed quando non in uso.',
@@ -297,6 +282,7 @@ const ES: LocalePack = {
     'Cada Signature Strand está creado con auténticas gemas naturales formadas durante millones de años. Las variaciones de color, inclusiones y marcas naturales no son imperfecciones sino parte de la belleza individual de la piedra, haciendo que cada par sea único.',
   care: [
     'Retire los hilos antes de lavar o limpiar en seco su prenda.',
+    'Manipule con cuidado. Las piedras naturales pueden astillarse o romperse si se golpean, caen o reciben un impacto.',
     'Evite el contacto con agua y humedad prolongada.',
     'No rocíe perfume directamente sobre las gemas o los acabados dorados.',
     'Guárdelos en la caja de presentación Bint Saeed cuando no los use.',
@@ -359,6 +345,7 @@ const RU: LocalePack = {
     'Каждый Signature Strand создан из подлинных натуральных камней, сформировавшихся за миллионы лет. Вариации цвета, включения и природные отметины — не недостатки, а часть индивидуальной красоты камня, делающая каждую пару уникальной.',
   care: [
     'Снимайте нити перед стиркой или химчисткой изделия.',
+    'Обращайтесь бережно. Натуральные камни могут сколоться или сломаться при ударе, падении или сильном воздействии.',
     'Избегайте контакта с водой и длительной влажности.',
     'Не распыляйте парфюм непосредственно на камни или золотистую фурнитуру.',
     'Храните в фирменной коробке Bint Saeed, когда не используете.',
@@ -421,6 +408,7 @@ const ZH: LocalePack = {
     '每一款 Signature Strand 均采用历经数百万年形成的天然宝石精心打造。色泽、内含物与自然纹理的差异并非瑕疵，而是宝石独特之美的一部分，令每一对都独一无二。',
   care: [
     '清洗或干洗服装前请先取下饰带。',
+    '请小心佩戴与收纳。天然宝石若受撞击、跌落或外力作用，可能崩裂或破损。',
     '避免接触水及长时间潮湿环境。',
     '请勿将香水直接喷洒在宝石或金色配件上。',
     '不佩戴时请存放于 Bint Saeed 礼盒内。',
@@ -477,6 +465,7 @@ const DE: LocalePack = {
     'Jeder Signature Strand wird aus echten Natursteinen gefertigt, die über Millionen von Jahren entstanden sind. Farbvariationen, Einschlüsse und natürliche Markierungen sind keine Mängel, sondern Teil der individuellen Schönheit des Steins — jedes Paar ist einzigartig.',
   care: [
     'Entfernen Sie die Stränge vor dem Waschen oder chemischen Reinigen Ihres Kleidungsstücks.',
+    'Behandeln Sie die Strands mit Sorgfalt. Natursteine können bei Stößen, Stürzen oder Belastung absplittern oder brechen.',
     'Vermeiden Sie Kontakt mit Wasser und anhaltender Feuchtigkeit.',
     'Sprühen Sie kein Parfum direkt auf die Edelsteine oder goldfarbenen Beschläge.',
     'Bewahren Sie sie in der Bint Saeed Präsentationsbox auf, wenn sie nicht getragen werden.',
@@ -539,6 +528,7 @@ const NL: LocalePack = {
     'Elke Signature Strand is gemaakt van echte natuurlijke edelstenen die miljoenen jaren geleden zijn gevormd. Variaties in kleur, insluitsels en natuurlijke markeringen zijn geen imperfecties maar deel van de individuele schoonheid van de steen, waardoor elk paar uniek is.',
   care: [
     'Verwijder de strands vóór het wassen of stomerijen van uw kledingstuk.',
+    'Behandel de strands zorgvuldig. Natuurlijke stenen kunnen afbrokkelen of breken bij stoten, vallen of impact.',
     'Vermijd contact met water en langdurige vochtigheid.',
     'Spuit geen parfum direct op de edelstenen of goudkleurige beslag.',
     'Bewaar ze in de Bint Saeed presentatiedoos wanneer ze niet worden gedragen.',
@@ -601,6 +591,7 @@ const PT: LocalePack = {
     'Cada Signature Strand é criado com gemas naturais genuínas formadas ao longo de milhões de anos. Variações de cor, inclusões e marcas naturais não são imperfeições, mas parte da beleza individual da pedra, tornando cada par único.',
   care: [
     'Remova os fios antes de lavar ou limpar a seco a sua peça.',
+    'Manuseie com cuidado. Pedras naturais podem lascar ou partir se forem golpeadas, caírem ou sofrerem impacto.',
     'Evite contacto com água e humidade prolongada.',
     'Não borrife perfume diretamente sobre as gemas ou os acabamentos dourados.',
     'Guarde na caixa de apresentação Bint Saeed quando não estiver a usar.',
@@ -663,6 +654,7 @@ const ID: LocalePack = {
     'Setiap Signature Strand dibuat dari batu permata alami asli yang terbentuk selama jutaan tahun. Variasi warna, inklusi, dan tanda alami bukanlah cacat melainkan bagian dari keindahan individual batu, menjadikan setiap pasang unik.',
   care: [
     'Lepaskan strand sebelum mencuci atau dry clean pakaian Anda.',
+    'Tangani dengan hati-hati. Batu alam dapat retak atau patah jika terbentur, terjatuh, atau terkena benturan.',
     'Hindari kontak dengan air dan kelembapan berkepanjangan.',
     'Jangan menyemprotkan parfum langsung ke batu permata atau aksesori bernuansa emas.',
     'Simpan di dalam kotak presentasi Bint Saeed saat tidak digunakan.',
@@ -725,6 +717,7 @@ const MS: LocalePack = {
     'Setiap Signature Strand dicipta daripada batu permata semula jadi tulen yang terbentuk selama berjuta-juta tahun. Variasi warna, inclusion dan tanda semula jadi bukanlah kecacatan tetapi sebahagian daripada keindahan individu batu, menjadikan setiap pasangan unik.',
   care: [
     'Tanggalkan strand sebelum mencuci atau mencuci kering pakaian anda.',
+    'Kendalikan dengan teliti. Batu semula jadi boleh retak atau pecah jika terhantuk, terjatuh atau terkena hentakan.',
     'Elakkan sentuhan dengan air dan kelembapan berpanjangan.',
     'Jangan menyembur minyak wangi terus ke atas batu permata atau perkakasan bernuansa emas.',
     'Simpan di dalam kotak pembentangan Bint Saeed apabila tidak digunakan.',

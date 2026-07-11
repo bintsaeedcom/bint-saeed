@@ -14,7 +14,6 @@ import {
 import {
   ctaPrimary,
   ctaPrimarySoft,
-  ctaSecondaryOnDark,
   ctaSecondaryOutlineOnDark,
   ctaButtonRow,
   ctaInButtonRow,
@@ -24,7 +23,6 @@ import {
   editorialBodyOnLight,
   editorialReflectiveLeadOnDark,
   editorialReflectiveLeadOnLight,
-  editorialSectionFooterPad,
   editorialSectionH2,
 } from '@/lib/ui/editorialTypography'
 
@@ -47,6 +45,10 @@ const INNER_CONTAINER_CLASS = EDITORIAL_PAGE_CONTAINER
 /** Sticky card-stack scroll — identical overlap/stack on mobile and desktop */
 const ABOUT_STACK_SECTION =
   'sticky top-0 -mt-10 min-h-[100vh] will-change-transform rounded-t-[16px] shadow-[0_-12px_40px_rgba(0,0,0,0.3)]'
+
+/** Extra bottom space so the next stacked card does not cover copy while reading */
+const ABOUT_STACK_PAD = 'pt-28 pb-48 md:pt-36 md:pb-64'
+const ABOUT_STACK_CONTENT_PAD = 'pb-28 md:pb-40'
 
 export default function AboutPage() {
   const { language, isRTL } = useLanguage()
@@ -122,32 +124,42 @@ export default function AboutPage() {
         eyebrow={copy.heroEyebrow}
         title={copy.heroHeadline}
         description={copy.heroSubline}
+      />
+
+      <section
+        id="about-manifesto"
+        aria-labelledby="about-manifesto-heading"
+        className={`about-manifesto relative z-10 overflow-hidden ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}
       >
-        <div className={`mt-5 ${ctaButtonRow}`} data-bs-cta-row data-bs-cta-row-layout="wrap">
-          <LocaleLink
-            href="#about-origin"
-            className={`${ctaPrimary} ${ctaInButtonRow}`}
-            data-bs-cta
-            data-cursor-hover
+        <div className={`${INNER_CONTAINER_CLASS} ${ABOUT_STACK_CONTENT_PAD} relative z-20 text-left`}>
+          <h2
+            id="about-manifesto-heading"
+            className={`${isRTL ? '' : 'font-rozha'} text-[clamp(1.45rem,4.6vw,2rem)] leading-tight tracking-[0.12em] text-white`}
           >
-            {copy.ctaReadStory}
-          </LocaleLink>
-          <LocaleLink
-            href="/shop"
-            className={`${ctaSecondaryOnDark} ${ctaInButtonRow}`}
-            data-bs-cta
-            data-cursor-hover
+            {copy.manifestoTitle}
+          </h2>
+          <div
+            className="mt-4 h-px w-full max-w-3xl bg-gradient-to-r from-transparent via-white/35 to-transparent sm:mt-5"
+            aria-hidden
+          />
+          <h3
+            className={`${isRTL ? '' : 'font-rozha'} mt-6 max-w-3xl text-[clamp(1rem,3.4vw,1.35rem)] font-normal leading-snug tracking-wide text-white/95 sm:mt-8`}
           >
-            {copy.ctaExploreCollection}
-          </LocaleLink>
+            {copy.manifestoSubtitle}
+          </h3>
+          <div className="mt-6 max-w-3xl space-y-5 font-montserrat text-[15px] font-normal leading-[1.65] text-white/85 sm:mt-8 sm:space-y-6 sm:text-[0.95rem]">
+            <p>{copy.manifestoP1}</p>
+            <p>{copy.manifestoP2}</p>
+            <p className="text-white/80">{copy.manifestoP3}</p>
+          </div>
         </div>
-      </AboutSectionHero>
+      </section>
 
       <section
         id="about-origin"
-        className={`relative z-10 bg-[#e8ddd4] py-28 md:py-36 ${ABOUT_STACK_SECTION}`}
+        className={`relative z-20 bg-[#e8ddd4] ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}
       >
-        <div className={`${INNER_CONTAINER_CLASS} ${editorialSectionFooterPad} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-start`}>
+        <div className={`${INNER_CONTAINER_CLASS} ${ABOUT_STACK_CONTENT_PAD} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-start`}>
           <div>
             <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.originLabel}</p>
             <h2 className={`mt-4 ${editorialSectionH2} text-[#1a0210]`}>
@@ -181,9 +193,9 @@ export default function AboutPage() {
       </section>
 
       <section
-        className={`relative z-20 bg-[#1a0210] py-28 md:py-36 ${ABOUT_STACK_SECTION}`}
+        className={`relative z-30 bg-[#1a0210] ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}
       >
-        <div className={`${INNER_CONTAINER_CLASS} ${editorialSectionFooterPad} text-left`}>
+        <div className={`${INNER_CONTAINER_CLASS} ${ABOUT_STACK_CONTENT_PAD} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.womanLabel}</p>
           <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#e8ddd4]`}>
             {copy.womanHeading}
@@ -237,8 +249,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <section className={`relative z-30 bg-[#faf8f5] py-28 md:py-36 ${ABOUT_STACK_SECTION}`}>
-        <div className={`${INNER_CONTAINER_CLASS} ${editorialSectionFooterPad} text-left`}>
+      <section className={`relative z-40 bg-[#faf8f5] ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}>
+        <div className={`${INNER_CONTAINER_CLASS} ${ABOUT_STACK_CONTENT_PAD} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.codesLabel}</p>
           <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#1a0210]`}>
             <span className="block">{copy.codesHeadingLine1}</span>
@@ -301,8 +313,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className={`about-fabric-light relative z-40 overflow-hidden bg-[#7A1C28] py-28 md:py-36 ${ABOUT_STACK_SECTION}`}>
-        <div className={`${INNER_CONTAINER_CLASS} ${editorialSectionFooterPad} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
+      <section className={`about-fabric-light relative z-50 overflow-hidden bg-[#7A1C28] ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}>
+        <div className={`${INNER_CONTAINER_CLASS} ${ABOUT_STACK_CONTENT_PAD} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
           <div className="relative min-h-[52vh] overflow-hidden rounded-[4px] md:min-h-[620px]">
             <Image src={HERO_IMAGE} alt={copy.imageAlt} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
           </div>
@@ -325,7 +337,7 @@ export default function AboutPage() {
 
       <section
         ref={quoteRef}
-        className="closing-section relative z-50 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10"
+        className="closing-section relative z-[60] -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10"
       >
         <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
           <div className="mx-auto max-w-[min(94vw,860px)]">
@@ -369,6 +381,30 @@ export default function AboutPage() {
       </section>
 
       <style jsx global>{`
+        .about-manifesto {
+          background-color: #1a0210;
+        }
+
+        .about-manifesto::before,
+        .about-manifesto::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+        }
+
+        .about-manifesto::before {
+          z-index: 0;
+          background-image: url('/strands/charm-fabric-dark.webp');
+          background-position: center;
+          background-size: cover;
+        }
+
+        .about-manifesto::after {
+          z-index: 1;
+          background: rgba(26, 2, 16, 0.72);
+        }
+
         .about-fabric-light::before,
         .about-fabric-light::after {
           content: '';

@@ -54,17 +54,22 @@ export const ACCESSORY_IMAGE_ABAYA_CHARM_LAPIS = `${STRANDS}/bint-saeed-lapis-la
 export const ACCESSORY_IMAGE_ABAYA_CHARM_AMETHYST = `${STRANDS}/bint-saeed-amethyst-hearts-natural-stone-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE = `${STRANDS}/bint-saeed-jade-hearts-natural-stone-strand-front.webp`
 
-export const ACCESSORY_IMAGE_EARRINGS_HERO = `${A}/earrings/bint-saeed-earrings.PNG`
 export const ACCESSORY_IMAGE_EARRINGS_MALACHITE = `${A}/earrings/al-ain-oasis-earrings-malachite-sunstone.webp`
 export const ACCESSORY_IMAGE_EARRINGS_ORANGE_JADE = `${A}/earrings/al-ain-oasis-earrings-orange-jade-fron.webp`
-export const ACCESSORY_IMAGE_BAG_CHARM = `${A}/bag%20charm/bint-saeed-bag-charm.PNG`
+export const ACCESSORY_IMAGE_EARRINGS_ROSE_QUARTZ = `${A}/earrings/al-quaa-earrings-rose-quartz-front.webp`
+/** Temporary shared hero until lapis earring shots are uploaded. */
+export const ACCESSORY_IMAGE_EARRINGS_HERO = ACCESSORY_IMAGE_EARRINGS_MALACHITE
+export const ACCESSORY_IMAGE_BAG_CHARM_I = `${A}/bag%20charm/bint-saeed-al-ain-oasis-i-bag-charm-fuchsia-jade-front.png`
+export const ACCESSORY_IMAGE_BAG_CHARM_II = `${A}/bag%20charm/bint-saeed-al-ain-oasis-ii-bag-charm-fuchsia-jade-front.png`
+/** Category / nav hero — Al Ain Oasis I */
+export const ACCESSORY_IMAGE_BAG_CHARM = ACCESSORY_IMAGE_BAG_CHARM_I
 
 const AL_AIN_OASIS_NECKLACE_BASE_NAME = 'Al Ain Oasis Necklace'
 function alAinOasisNecklaceName(variant: string): string {
   return `${AL_AIN_OASIS_NECKLACE_BASE_NAME} - ${variant}`
 }
-function alAinRosetteNecklaceId(variantSlug: string): string {
-  return `al-ain-rosette-necklace-${variantSlug}`
+function alAinOasisNecklaceId(variantSlug: string): string {
+  return `al-ain-oasis-necklace-${variantSlug}`
 }
 
 const AL_QUAA_PHONE_CHARM_BASE_NAME = 'Al Quaa Phone Charm'
@@ -169,10 +174,24 @@ export const accessoryCategories = [
   },
 ]
 
+/** Soft-hide until bracelet inventory is ready for launch. Product data stays in `accessories`. */
+export const ACCESSORY_CATEGORIES_HIDDEN_FROM_SHOP = new Set<Accessory['category']>(['bracelets'])
+
+export function isAccessoryShopVisible(accessory: Pick<Accessory, 'category'>): boolean {
+  return !ACCESSORY_CATEGORIES_HIDDEN_FROM_SHOP.has(accessory.category)
+}
+
+/** Category tabs / nav — excludes launch-hidden families. */
+export const visibleAccessoryCategories = accessoryCategories.filter(
+  (category) =>
+    category.id === 'all' ||
+    !ACCESSORY_CATEGORIES_HIDDEN_FROM_SHOP.has(category.id as Accessory['category']),
+)
+
 export const accessories: Accessory[] = [
   // Necklaces — Al Ain line (variants: stone or style)
   {
-    id: alAinRosetteNecklaceId('malachite'),
+    id: alAinOasisNecklaceId('malachite'),
     name: alAinOasisNecklaceName('Malachite'),
     nameAr: 'قلادة القوع روزيت: الملاكيت',
     category: 'necklaces',
@@ -189,7 +208,7 @@ export const accessories: Accessory[] = [
     isNew: true,
   },
   {
-    id: alAinRosetteNecklaceId('tiger-eye'),
+    id: alAinOasisNecklaceId('tiger-eye'),
     name: alAinOasisNecklaceName('Tiger Eye'),
     nameAr: 'قلادة القوع روزيت: عين النمر',
     category: 'necklaces',
@@ -206,7 +225,7 @@ export const accessories: Accessory[] = [
     isNew: true,
   },
   {
-    id: alAinRosetteNecklaceId('onyx'),
+    id: alAinOasisNecklaceId('onyx'),
     name: alAinOasisNecklaceName('Onyx'),
     nameAr: 'قلادة القوع روزيت: الأونكس',
     category: 'necklaces',
@@ -224,7 +243,7 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
   {
-    id: alAinRosetteNecklaceId('rose-quartz'),
+    id: alAinOasisNecklaceId('rose-quartz'),
     name: alAinOasisNecklaceName('Rose Quartz'),
     nameAr: 'قلادة القوع روزيت: الكوارتز الوردي',
     category: 'necklaces',
@@ -241,7 +260,7 @@ export const accessories: Accessory[] = [
     isNew: true,
   },
   {
-    id: alAinRosetteNecklaceId('sunstone'),
+    id: alAinOasisNecklaceId('sunstone'),
     name: alAinOasisNecklaceName('Sunstone'),
     nameAr: 'قلادة القوع روزيت: حجر الشمس',
     category: 'necklaces',
@@ -257,7 +276,7 @@ export const accessories: Accessory[] = [
     isBestseller: true,
   },
   {
-    id: alAinRosetteNecklaceId('lapis-lazuli'),
+    id: alAinOasisNecklaceId('lapis-lazuli'),
     name: alAinOasisNecklaceName('Lapis Lazuli'),
     nameAr: 'قلادة القوع روزيت: اللازورد',
     category: 'necklaces',
@@ -290,15 +309,15 @@ export const accessories: Accessory[] = [
     isNew: true,
   },
   {
-    id: 'al-ain-oasis-earrings-rose-quartz',
-    name: alAinOasisEarringsName('Rose Quartz'),
-    nameAr: 'أقراط واحة العين — كوارتز وردي',
+    id: 'al-quaa-earrings-rose-quartz',
+    name: 'Al Quaa Earrings - Rose Quartz',
+    nameAr: 'أقراط القوع — كوارتز وردي',
     category: 'earrings',
     price: 595,
     description:
       'Hand-assembled rose quartz earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
     descriptionAr: 'أقراط كوارتز وردي مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
-    images: [ACCESSORY_IMAGE_EARRINGS_HERO],
+    images: [ACCESSORY_IMAGE_EARRINGS_ROSE_QUARTZ],
     materials: 'Natural rose quartz, Carnelian, 18K gold-plated hematite',
     materialsAr: 'كوارتز وردي طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Rose Quartz Pink', nameAr: 'وردي كوارتز', hex: '#f4b8c5' }],
@@ -388,102 +407,70 @@ export const accessories: Accessory[] = [
     inStock: true,
   },
 
-  // Bag Strands
+  // Bag Charms — Al Ain Oasis I & II (Fuchsia Jade)
   {
-    id: 'bag-strand-tassel',
-    name: 'Silk Tassel Strand',
-    nameAr: 'تعليقة شرابة حريرية',
+    id: 'al-ain-oasis-i-bag-charm-fuchsia-jade',
+    name: 'Al Ain Oasis I Bag Charm - Fuchsia Jade',
+    nameAr: 'تعليقة حقيبة واحة العين الأولى — يشم فوشي',
     category: 'bag-strands',
-    price: 175,
-    description: 'Luxurious silk tassel bag strand with gold-plated hardware.',
-    descriptionAr: 'تعليقة حقيبة شرابة حريرية فاخرة مع معدن مطلي بالذهب.',
-    images: [ACCESSORY_IMAGE_BAG_CHARM],
-    materials: 'Silk, 18K Gold-plated Hardware',
-    materialsAr: 'حرير، معدن مطلي بالذهب 18 قيراط',
-    colors: [
-      { name: 'Black', nameAr: 'أسود', hex: '#1a0210' },
-      { name: 'Burgundy', nameAr: 'عنابي', hex: '#6f1524' },
-      { name: 'Cream', nameAr: 'كريمي', hex: '#FFFDD0' },
-      { name: 'Navy', nameAr: 'كحلي', hex: '#1f3a5f' }],
-    inStock: true,
-    isBestseller: true,
-  },
-  {
-    id: 'bag-strand-pearl-cluster',
-    name: 'Pearl Cluster Strand',
-    nameAr: 'تعليقة عنقود اللؤلؤ',
-    category: 'bag-strands',
-    price: 220,
-    description: 'Elegant pearl cluster strand to elevate any handbag.',
-    descriptionAr: 'تعليقة عنقود لؤلؤ أنيقة لرفع مستوى أي حقيبة يد.',
-    images: [ACCESSORY_IMAGE_BAG_CHARM],
-    materials: 'Freshwater Pearls, 18K Gold-plated',
-    materialsAr: 'لؤلؤ المياه العذبة، مطلي بالذهب 18 قيراط',
-    colors: [
-      { name: 'Gold/White', nameAr: 'ذهبي/أبيض', hex: '#FFD700' }],
+    price: 249,
+    description:
+      'A natural stone bag charm with two cascading Fuchsia Jade strands and hand-carved Al Ain Rosettes, hand-assembled in Abu Dhabi.',
+    descriptionAr:
+      'تعليقة حقيبة واحة العين الأولى مصنوعة يدوياً من اليشم الفوشي الطبيعي، مُصمّمة للحقائب ومساء الخروج.',
+    images: [ACCESSORY_IMAGE_BAG_CHARM_I],
+    materials: 'Natural Fuchsia Jade, hand-carved Al Ain Rosettes, gold-plated faceted hematite',
+    materialsAr: 'يشم فوشي طبيعي، روزيت العين المنحوتة يدوياً، هيمايت مطلي بالذهب',
+    colors: [{ name: 'Fuchsia Jade', nameAr: 'يشم فوشي', hex: '#c026d3' }],
     inStock: true,
     isNew: true,
   },
   {
-    id: 'bag-strand-letter',
-    name: 'Monogram Letter Strand',
-    nameAr: 'تعليقة حرف مونوغرام',
+    id: 'al-ain-oasis-ii-bag-charm-fuchsia-jade',
+    name: 'Al Ain Oasis II Bag Charm - Fuchsia Jade',
+    nameAr: 'تعليقة حقيبة واحة العين الثانية — يشم فوشي',
     category: 'bag-strands',
-    price: 195,
-    description: 'Personalized letter strand. Available in all letters A-Z.',
-    descriptionAr: 'تعليقة حرف شخصية. متوفرة بجميع الحروف A-Z.',
-    images: [ACCESSORY_IMAGE_BAG_CHARM],
-    materials: '18K Gold Vermeil',
-    materialsAr: 'طلاء ذهب 18 قيراط',
-    colors: [
-      { name: 'Gold', nameAr: 'ذهبي', hex: '#FFD700' }],
+    price: 249,
+    description:
+      'A handcrafted natural stone bag charm with three cascading Fuchsia Jade strands and hand-carved Al Ain Rosettes, hand-assembled in Abu Dhabi.',
+    descriptionAr:
+      'تعليقة حقيبة واحة العين الثانية مصنوعة يدوياً من اليشم الفوشي الطبيعي، مُصمّمة للحقائب ومساء الخروج.',
+    images: [ACCESSORY_IMAGE_BAG_CHARM_II],
+    materials: 'Natural Fuchsia Jade, hand-carved Al Ain Rosettes, gold-plated faceted hematite',
+    materialsAr: 'يشم فوشي طبيعي، روزيت العين المنحوتة يدوياً، هيمايت مطلي بالذهب',
+    colors: [{ name: 'Fuchsia Jade', nameAr: 'يشم فوشي', hex: '#c026d3' }],
     inStock: true,
-  },
-  {
-    id: 'bag-strand-bint',
-    name: 'Bag Strand',
-    nameAr: 'تعليقة حقيبة',
-    category: 'bag-strands',
-    price: 175,
-    description: 'Clip-on bag strand for handbags and evening clutches.',
-    descriptionAr: 'تعليقة حقيبة بحلقة تعليق للحقائب ومساء الخروج.',
-    images: [ACCESSORY_IMAGE_BAG_CHARM],
-    materials: 'Gold-plated hardware, enamel',
-    materialsAr: 'معدن مطلي بالذهب، إينامل',
-    colors: [
-      { name: 'Gold', nameAr: 'ذهبي', hex: '#FFD700' },
-      { name: 'Rose Gold', nameAr: 'ذهبي وردي', hex: '#B76E79' }],
-    inStock: true,
+    isNew: true,
   },
 
   // Al Quaa Phone Charms — natural stone line (7 products)
   {
     id: alQuaaPhoneCharmId('fuchsia-jade'),
-    name: alQuaaPhoneCharmName('Fuchsia Coloured Jade'),
+    name: alQuaaPhoneCharmName('Fuchsia Jade'),
     nameAr: 'تعليقة هاتف روزيت العين — يشم فوشي',
     category: 'phone-strands',
-    price: 249,
+    price: 399,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM_PINK_JADE],
-    materials: 'Fuchsia Coloured Jade, Carnelian, gold-plated hematite',
+    materials: 'Fuchsia Jade, Carnelian, gold-plated hematite',
     materialsAr: 'يشم فوشي، عقيق، هيمايت مطلي بالذهب',
-    colors: [{ name: 'Fuchsia Coloured Jade', nameAr: 'يشم فوشي', hex: '#c026d3' }],
+    colors: [{ name: 'Fuchsia Jade', nameAr: 'يشم فوشي', hex: '#c026d3' }],
     inStock: true,
     isNew: true,
   },
   {
     id: alQuaaPhoneCharmId('orange-jade'),
-    name: alQuaaPhoneCharmName('Orange Coloured Jade'),
+    name: alQuaaPhoneCharmName('Orange Jade'),
     nameAr: 'تعليقة هاتف روزيت العين — يشم برتقالي',
     category: 'phone-strands',
-    price: 249,
+    price: 399,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM_ORANGE_JADE],
-    materials: 'Orange Coloured Jade, Carnelian, gold-plated hematite',
+    materials: 'Orange Jade, Carnelian, gold-plated hematite',
     materialsAr: 'يشم برتقالي، عقيق، هيمايت مطلي بالذهب',
-    colors: [{ name: 'Orange Coloured Jade', nameAr: 'يشم برتقالي', hex: '#ea580c' }],
+    colors: [{ name: 'Orange Jade', nameAr: 'يشم برتقالي', hex: '#ea580c' }],
     inStock: true,
   },
   {
@@ -491,7 +478,7 @@ export const accessories: Accessory[] = [
     name: alQuaaPhoneCharmName('Onyx'),
     nameAr: 'تعليقة هاتف روزيت العين — أونكس',
     category: 'phone-strands',
-    price: 249,
+    price: 475,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM_ONYX],
@@ -506,7 +493,7 @@ export const accessories: Accessory[] = [
     name: alQuaaPhoneCharmName('Tiger Eye'),
     nameAr: 'تعليقة هاتف روزيت العين — عين النمر',
     category: 'phone-strands',
-    price: 249,
+    price: 475,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM_TIGER_EYE],
@@ -520,7 +507,7 @@ export const accessories: Accessory[] = [
     name: alQuaaPhoneCharmName('Malachite'),
     nameAr: 'تعليقة هاتف روزيت العين — ملاكيت',
     category: 'phone-strands',
-    price: 249,
+    price: 525,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM_MALACHITE],
@@ -534,7 +521,7 @@ export const accessories: Accessory[] = [
     name: alQuaaPhoneCharmName('Lapis Lazuli'),
     nameAr: 'تعليقة هاتف روزيت العين — لازورد',
     category: 'phone-strands',
-    price: 249,
+    price: 525,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM_LAPIS],
@@ -548,7 +535,7 @@ export const accessories: Accessory[] = [
     name: alQuaaPhoneCharmName('Rose Quartz'),
     nameAr: 'تعليقة هاتف روزيت العين — كوارتز وردي',
     category: 'phone-strands',
-    price: 249,
+    price: 475,
     description: 'Hand-assembled natural stone phone charm with Carnelian Al Ain Rosettes.',
     descriptionAr: 'تعليقة هاتف من الأحجار الطبيعية مع روزيت العين من العقيق.',
     images: [ACCESSORY_IMAGE_PHONE_CHARM_ROSE_QUARTZ],

@@ -240,7 +240,6 @@ export default function Header() {
             { label: 'Signature Strands', href: '/accessories?type=signature-strands' },
             { label: 'Necklaces', href: '/accessories?type=necklaces' },
             { label: 'Earrings', href: '/accessories?type=earrings' },
-            { label: 'Bracelets', href: '/accessories?type=bracelets' },
             { label: 'Bag Charms', href: '/accessories?type=bag-strands' },
             { label: 'Phone Charms', href: '/accessories?type=phone-strands' },
           ],

@@ -1,4 +1,4 @@
-import { accessories, type Accessory } from '@/data/accessories'
+import { accessories, isAccessoryShopVisible, type Accessory } from '@/data/accessories'
 
 /** Legacy accessory product IDs → canonical URL slugs (no “charm”). */
 export const LEGACY_ACCESSORY_ID_ALIASES: Record<string, string> = {
@@ -12,10 +12,14 @@ export const LEGACY_ACCESSORY_ID_ALIASES: Record<string, string> = {
   'abaya-charm-lapis-lazuli-natural-stone': 'signature-strand-lapis-lazuli',
   'abaya-charm-amethyst-hearts-natural-stone': 'signature-strand-amethyst-hearts',
   'abaya-charm-jade-hearts-natural-stone': 'signature-strand-jade-hearts',
-  'bag-charm-tassel': 'bag-strand-tassel',
-  'bag-charm-pearl-cluster': 'bag-strand-pearl-cluster',
-  'bag-charm-letter': 'bag-strand-letter',
-  'bag-charm-bint': 'bag-strand-bint',
+  'bag-charm-tassel': 'al-ain-oasis-i-bag-charm-fuchsia-jade',
+  'bag-charm-pearl-cluster': 'al-ain-oasis-ii-bag-charm-fuchsia-jade',
+  'bag-charm-letter': 'al-ain-oasis-i-bag-charm-fuchsia-jade',
+  'bag-charm-bint': 'al-ain-oasis-ii-bag-charm-fuchsia-jade',
+  'bag-strand-tassel': 'al-ain-oasis-i-bag-charm-fuchsia-jade',
+  'bag-strand-pearl-cluster': 'al-ain-oasis-ii-bag-charm-fuchsia-jade',
+  'bag-strand-letter': 'al-ain-oasis-i-bag-charm-fuchsia-jade',
+  'bag-strand-bint': 'al-ain-oasis-ii-bag-charm-fuchsia-jade',
   'phone-charm-pearl-strap': 'al-quaa-phone-charm-rose-quartz',
   'phone-charm-beaded': 'al-quaa-phone-charm-fuchsia-jade',
   'phone-charm-tassel': 'al-quaa-phone-charm-onyx',
@@ -31,13 +35,20 @@ export const LEGACY_ACCESSORY_ID_ALIASES: Record<string, string> = {
   'al-ain-rosette-phone-charm-malachite': 'al-quaa-phone-charm-malachite',
   'al-ain-rosette-phone-charm-lapis-lazuli': 'al-quaa-phone-charm-lapis-lazuli',
   'al-ain-rosette-phone-charm-rose-quartz': 'al-quaa-phone-charm-rose-quartz',
-  'signature-malachite-necklace': 'al-ain-rosette-necklace-malachite',
-  'signature-tiger-eye-necklace': 'al-ain-rosette-necklace-tiger-eye',
-  'signature-onyx-necklace': 'al-ain-rosette-necklace-onyx',
-  'signature-rose-quartz-necklace': 'al-ain-rosette-necklace-rose-quartz',
-  'necklace-layered-gold': 'al-ain-rosette-necklace-sunstone',
-  'necklace-statement-pendant': 'al-ain-rosette-necklace-lapis-lazuli',
-  'earrings-pearl-drop': 'al-ain-oasis-earrings-rose-quartz',
+  'al-ain-rosette-necklace-malachite': 'al-ain-oasis-necklace-malachite',
+  'al-ain-rosette-necklace-tiger-eye': 'al-ain-oasis-necklace-tiger-eye',
+  'al-ain-rosette-necklace-onyx': 'al-ain-oasis-necklace-onyx',
+  'al-ain-rosette-necklace-rose-quartz': 'al-ain-oasis-necklace-rose-quartz',
+  'al-ain-rosette-necklace-sunstone': 'al-ain-oasis-necklace-sunstone',
+  'al-ain-rosette-necklace-lapis-lazuli': 'al-ain-oasis-necklace-lapis-lazuli',
+  'al-ain-oasis-earrings-rose-quartz': 'al-quaa-earrings-rose-quartz',
+  'signature-malachite-necklace': 'al-ain-oasis-necklace-malachite',
+  'signature-tiger-eye-necklace': 'al-ain-oasis-necklace-tiger-eye',
+  'signature-onyx-necklace': 'al-ain-oasis-necklace-onyx',
+  'signature-rose-quartz-necklace': 'al-ain-oasis-necklace-rose-quartz',
+  'necklace-layered-gold': 'al-ain-oasis-necklace-sunstone',
+  'necklace-statement-pendant': 'al-ain-oasis-necklace-lapis-lazuli',
+  'earrings-pearl-drop': 'al-quaa-earrings-rose-quartz',
   'earrings-geometric': 'al-ain-oasis-earrings-malachite',
   'al-quaa-earrings-onyx': 'al-ain-oasis-earrings-orange-jade',
   'earrings-hoops': 'al-ain-oasis-earrings-orange-jade',
@@ -62,6 +73,13 @@ export function resolveAccessoryCategoryId(id: string): string {
 export function findAccessoryById(id: string): Accessory | undefined {
   const canonical = resolveAccessoryId(id)
   return accessories.find((a) => a.id === canonical)
+}
+
+/** Public shop / PDP lookup — excludes launch-hidden categories (e.g. bracelets). */
+export function findShopAccessoryById(id: string): Accessory | undefined {
+  const accessory = findAccessoryById(id)
+  if (!accessory || !isAccessoryShopVisible(accessory)) return undefined
+  return accessory
 }
 
 export function isSignatureStrandCategory(category: Accessory['category']): boolean {

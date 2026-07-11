@@ -39,7 +39,34 @@ export {
 export {
   EXPRESS_SHIPPING_PRICES,
   SIGNATURE_PACKAGING_PRICES,
+  UAE_SHIPPING_FEE_PRICES,
+  INTERNATIONAL_SHIPPING_FEE_PRICES,
+  UAE_RETURN_SHIPPING_FEE_PRICES,
+  INTERNATIONAL_RETURN_SHIPPING_FEE_PRICES,
 } from './catalogPrices'
+export {
+  UAE_FREE_SHIPPING_AED,
+  WORLDWIDE_FREE_SHIPPING_EUR,
+  UAE_FREE_SHIPPING_THRESHOLDS,
+  WORLDWIDE_FREE_SHIPPING_THRESHOLDS,
+  UAE_SHIPPING_FEES,
+  INTERNATIONAL_SHIPPING_FEES,
+  SHIPPING_FEE_PRICES,
+  getUaeFreeShippingThreshold,
+  getWorldwideFreeShippingThreshold,
+  getUaeShippingFee,
+  getInternationalShippingFee,
+  getUaeReturnShippingFee,
+  getInternationalReturnShippingFee,
+  getEstimatedShippingFee,
+  getShippingFee,
+  resolveShippingEligibility,
+  resolveShippingFee,
+  getCartShippingStatus,
+  isUaeShippingDestination,
+  normalizeShippingCountryCode,
+} from './shippingPolicy'
+export type { CartShippingStatus, ShippingEligibility } from './shippingPolicy'
 
 export function isSupportedCurrency(code: string): code is SupportedCurrency {
   return (SUPPORTED_CURRENCIES as readonly string[]).includes(code)
@@ -112,9 +139,12 @@ export function getSignaturePackagingFee(currency: SupportedCurrency): number {
   return SIGNATURE_PACKAGING_PRICES[currency]
 }
 
+/** @deprecated Prefer getInternationalShippingFee / getUaeShippingFee. */
 export function getExpressShippingFee(currency: SupportedCurrency): number {
   return EXPRESS_SHIPPING_PRICES[currency]
 }
+
+export { getShippingFee as getFlatShippingFee } from './shippingPolicy'
 
 export type CartLineForPricing = {
   id: string

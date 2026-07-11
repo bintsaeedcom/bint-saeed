@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { findAccessoryById } from '@/lib/accessories/accessoryRouteAliases'
+import { findShopAccessoryById } from '@/lib/accessories/accessoryRouteAliases'
 import {
   absoluteAccessoryImageUrl,
   accessoryCanonicalUrl,
@@ -20,7 +20,7 @@ type AccessoryLayoutProps = {
 
 export async function generateMetadata({ params }: AccessoryLayoutProps): Promise<Metadata> {
   const [{ id }, locale] = await Promise.all([params, getServerLocale()])
-  const accessory = findAccessoryById(decodeURIComponent(id))
+  const accessory = findShopAccessoryById(decodeURIComponent(id))
 
   if (!accessory) {
     return accessoryNotFoundMetadata(locale)

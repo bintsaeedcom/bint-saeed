@@ -12,7 +12,7 @@ import { FiPlus, FiMinus, FiHeart, FiX, FiGlobe, FiAward } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { accessories, accessoryCategories } from '@/data/accessories'
 import {
-  findAccessoryById,
+  findShopAccessoryById,
   isSignatureStrandCategory,
   resolveAccessoryId,
 } from '@/lib/accessories/accessoryRouteAliases'
@@ -33,12 +33,21 @@ import {
 import { resolveAccessorySkuFromSelection } from '@/lib/accessories/accessorySku'
 import { getNecklaceEarringPdpContent, faqAnswerParagraphs } from '@/lib/accessories/necklaceEarringPdpContent'
 import {
+  JEWELLERY_CARE_AR,
+  JEWELLERY_CARE_EN,
+  JEWELLERY_CARE_FR,
+  JEWELLERY_CARE_LEAD_AR,
+  JEWELLERY_CARE_LEAD_EN,
+  JEWELLERY_CARE_LEAD_FR,
+  getJewelleryCareCopy,
+} from '@/lib/accessories/jewelleryCareCopyI18n'
+import {
   getLocalizedAccessoryDescription,
   getLocalizedAccessoryDisplayName,
   getLocalizedAccessoryMaterials,
 } from '@/lib/accessories/accessoryCatalogCopyI18n'
 import { getPhoneCharmPdpContent } from '@/lib/accessories/phoneCharmPdpContent'
-import { getPhoneCharmSectionLabels } from '@/lib/accessories/phoneCharmPdpSectionLabelsI18n'
+import { getBagCharmPdpContent } from '@/lib/accessories/bagCharmPdpContent'
 import { accessoryCanonicalUrl } from '@/lib/accessories/accessoryPageUrl'
 import {
   PDP_BULLET_ITEM,
@@ -81,7 +90,7 @@ export default function AccessoryDetailPage() {
         ? decodeURIComponent(rawId[0])
         : ''
   const canonicalId = resolveAccessoryId(aid)
-  const accessory = findAccessoryById(aid)
+  const accessory = findShopAccessoryById(aid)
 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
   const mainSwiperRef = useRef<SwiperType | null>(null)
@@ -108,7 +117,7 @@ export default function AccessoryDetailPage() {
   }, [aid, canonicalId, language, router])
 
   useEffect(() => {
-    const a = findAccessoryById(aid)
+    const a = findShopAccessoryById(aid)
     if (!a) {
       setSelectedColor('')
       return
@@ -154,12 +163,16 @@ export default function AccessoryDetailPage() {
   const strandPdpContent = getStrandPdpContent(accessory.id, language)
   const necklaceEarringPdpContent = getNecklaceEarringPdpContent(accessory.id, language)
   const phoneCharmPdpContent = getPhoneCharmPdpContent(accessory.id, language)
+  const bagCharmPdpContent = getBagCharmPdpContent(accessory.id, language)
   const strandSectionTitles = getStrandPdpSectionTitles(language)
 
   const displayName =
     strandPdpContent?.headline ??
     phoneCharmPdpContent?.headline ??
     getLocalizedAccessoryDisplayName(accessory, language)
+
+  /** Catalog title for crumbs — not the long PDP headline. */
+  const breadcrumbProductLabel = getLocalizedAccessoryDisplayName(accessory, language)
 
   const handleAddToCart = () => {
     if (!selectedColor && accessory.colors.length > 1) {
@@ -221,7 +234,6 @@ export default function AccessoryDetailPage() {
     const referenceSku = resolveAccessorySkuFromSelection(accessory, selectedColor)
 
     if (phoneCharmPdpContent) {
-      const phoneLabels = getPhoneCharmSectionLabels(language)
       return [
         {
           id: 'description',
@@ -234,41 +246,41 @@ export default function AccessoryDetailPage() {
                   {paragraph}
                 </p>
               ))}
-              <div className="space-y-4 border-t border-brand-stone/15 pt-4">
-                {(
-                  [
-                    [phoneLabels.design, phoneCharmPdpContent.design],
-                    [phoneLabels.naturalStones, phoneCharmPdpContent.naturalStones],
-                    [phoneLabels.houseSignatures, phoneCharmPdpContent.houseSignatures],
-                    [phoneLabels.care, phoneCharmPdpContent.care],
-                    [phoneLabels.compatibility, phoneCharmPdpContent.compatibility],
-                  ] as const
-                ).map(([title, items]) => (
-                  <div key={title} className="space-y-2">
-                    <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/70">
-                      {title}
-                    </p>
-                    <ul className={PDP_BULLET_LIST}>
-                      {items.map((item, idx) => (
-                        <li key={`${title}-${idx}`} className={PDP_BULLET_ITEM}>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-                <div className="space-y-1">
-                  <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/70">
-                    {phoneLabels.colour}
-                  </p>
-                  <p className={PDP_COPY_RELAXED}>{phoneCharmPdpContent.colour}</p>
-                </div>
-                {referenceSku ? (
-                  <p className={PDP_COPY_RELAXED}>
-                    {formatPdpProductCodeLine(referenceSku, isRTL)}
-                  </p>
-                ) : null}
+              <div className="space-y-2 pt-1">
+                <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed/70">
+                  {phoneCharmPdpContent.featuresTitle}
+                </p>
+                <ul className={PDP_BULLET_LIST}>
+                  {phoneCharmPdpContent.features.map((item, idx) => (
+                    <li key={`phone-feature-${idx}`} className={PDP_BULLET_ITEM}>
+                      {item}
+                    </li>
+                  ))}
+                  {referenceSku ? (
+                    <li className={PDP_BULLET_ITEM}>
+                      {formatPdpProductCodeLine(referenceSku, isRTL)}
+                    </li>
+                  ) : null}
+                </ul>
               </div>
+            </div>
+          ),
+        },
+        {
+          id: 'care',
+          title: productUi.care,
+          children: (
+            <div className={`space-y-3 ${isRTL ? 'text-right' : ''}`}>
+              {phoneCharmPdpContent.careLead ? (
+                <p className={PDP_COPY_RELAXED}>{phoneCharmPdpContent.careLead}</p>
+              ) : null}
+              <ul className={PDP_BULLET_LIST}>
+                {phoneCharmPdpContent.care.map((item, idx) => (
+                  <li key={`phone-care-${idx}`} className={PDP_BULLET_ITEM}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           ),
         },
@@ -297,7 +309,12 @@ export default function AccessoryDetailPage() {
           id: 'shipping',
           title: t.product.shippingReturns,
           bordered: phoneCharmPdpContent.faq.length === 0,
-          children: <PdpShippingReturnsBullets isRTL={isRTL} />,
+          children: (
+            <PdpShippingReturnsBullets
+              isRTL={isRTL}
+              productKind={accessory.category === 'earrings' ? 'earrings' : 'default'}
+            />
+          ),
         },
       ]
     }
@@ -385,10 +402,76 @@ export default function AccessoryDetailPage() {
           id: 'shipping',
           title: t.product.shippingReturns,
           bordered: necklaceEarringPdpContent.faq.length === 0,
-          children: <PdpShippingReturnsBullets isRTL={isRTL} />,
+          children: (
+            <PdpShippingReturnsBullets
+              isRTL={isRTL}
+              productKind={accessory.category === 'earrings' ? 'earrings' : 'default'}
+            />
+          ),
         },
       ]
     }
+
+    if (bagCharmPdpContent) {
+      const jewelleryCare = getJewelleryCareCopy(language)
+      return [
+        {
+          id: 'description',
+          title: productUi.productDetails,
+          titleTag: 'h2',
+          children: (
+            <div className={`space-y-4 ${isRTL ? 'text-right' : ''}`}>
+              {bagCharmPdpContent.introParagraphs.map((paragraph, idx) => (
+                <p key={`bag-intro-${idx}`} className={PDP_COPY_RELAXED}>
+                  {paragraph}
+                </p>
+              ))}
+              {referenceSku ? (
+                <p className={PDP_COPY_RELAXED}>
+                  {formatPdpProductCodeLine(referenceSku, isRTL)}
+                </p>
+              ) : null}
+            </div>
+          ),
+        },
+        {
+          id: 'materials',
+          title: ui.accessories.materials,
+          children: (
+            <ul className={PDP_BULLET_LIST}>
+              <li className={PDP_BULLET_ITEM}>{materials}</li>
+            </ul>
+          ),
+        },
+        {
+          id: 'care',
+          title: productUi.care,
+          children: (
+            <div className={`space-y-3 ${isRTL ? 'text-right' : ''}`}>
+              <p className={PDP_COPY_RELAXED}>{jewelleryCare.lead}</p>
+              <ul className={PDP_BULLET_LIST}>
+                {jewelleryCare.bullets.map((item, idx) => (
+                  <li key={`bag-care-${idx}`} className={PDP_BULLET_ITEM}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ),
+        },
+        {
+          id: 'shipping',
+          title: t.product.shippingReturns,
+          bordered: false,
+          children: (
+            <PdpShippingReturnsBullets isRTL={isRTL} productKind="default" />
+          ),
+        },
+      ]
+    }
+
+    const jewelleryCare = getJewelleryCareCopy(language)
+    const isBagCharm = accessory.category === 'bag-strands'
 
     return [
       {
@@ -416,7 +499,18 @@ export default function AccessoryDetailPage() {
       {
         id: 'care',
         title: productUi.care,
-        children: (
+        children: isBagCharm ? (
+          <div className={`space-y-3 ${isRTL ? 'text-right' : ''}`}>
+            <p className={PDP_COPY_RELAXED}>{jewelleryCare.lead}</p>
+            <ul className={PDP_BULLET_LIST}>
+              {jewelleryCare.bullets.map((item, idx) => (
+                <li key={`bag-care-${idx}`} className={PDP_BULLET_ITEM}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
           <ul className={PDP_BULLET_LIST}>
             <li className={PDP_BULLET_ITEM}>
               {ui.accessories.careBullets[0]}
@@ -437,7 +531,12 @@ export default function AccessoryDetailPage() {
         id: 'shipping',
         title: t.product.shippingReturns,
         bordered: false,
-        children: <PdpShippingReturnsBullets isRTL={isRTL} />,
+        children: (
+          <PdpShippingReturnsBullets
+            isRTL={isRTL}
+            productKind={accessory.category === 'earrings' ? 'earrings' : 'default'}
+          />
+        ),
       },
     ]
   }, [
@@ -448,6 +547,7 @@ export default function AccessoryDetailPage() {
     selectedColor,
     accessory.materials,
     accessory.materialsAr,
+    bagCharmPdpContent,
     necklaceEarringPdpContent,
     phoneCharmPdpContent,
     isRTL,
@@ -477,9 +577,11 @@ export default function AccessoryDetailPage() {
       ? phoneCharmPdpContent.introParagraphs.join(' ')
       : necklaceEarringPdpContent
         ? necklaceEarringPdpContent.introParagraphs.join(' ')
-        : isRTL
-          ? accessory.descriptionAr
-          : getLocalizedAccessoryDescription(accessory, language)
+        : bagCharmPdpContent
+          ? bagCharmPdpContent.introParagraphs.join(' ')
+          : isRTL
+            ? accessory.descriptionAr
+            : getLocalizedAccessoryDescription(accessory, language)
   const pdpImages = useMemo(() => getAccessoryPdpImages(accessory), [accessory])
   const productJsonLd = useMemo(
     () =>
@@ -523,7 +625,7 @@ export default function AccessoryDetailPage() {
             label: categoryBreadcrumbLabel,
             href: `/accessories?type=${accessory.category}`,
           },
-          { label: displayName },
+          { label: breadcrumbProductLabel },
         ].filter((s) => s.label.length > 0)}
         backLink={{ href: '/accessories', label: ui.accessories.returnToAccessories }}
       />

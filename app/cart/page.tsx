@@ -15,6 +15,8 @@ import { trackEvent } from '@/lib/analytics/tracking'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { getCartLineImageAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
+import { getEstimatedShippingFee } from '@/lib/pricing'
+import { resolveCartShippingMessages } from '@/lib/shipping/resolveCartShippingMessages'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity } = useCartStore()
@@ -25,7 +27,14 @@ export default function CartPage() {
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
-  const estimatedTotal = cartSubtotal(items)
+  const subtotal = cartSubtotal(items)
+  const shippingMessages = resolveCartShippingMessages({
+    subtotal,
+    currency: currency.code,
+    copy: ui.cart,
+  })
+  const shippingFee = shippingMessages.unlocked ? 0 : getEstimatedShippingFee(currency.code)
+  const estimatedTotal = subtotal + shippingFee
   const compactButtonRadius = 'rounded-[4px]'
 
   if (items.length === 0) {
@@ -267,6 +276,17 @@ export default function CartPage() {
                 <span className="shrink-0 whitespace-nowrap text-white">{formatCartSubtotal(items)}</span>
               </div>
 
+              <div
+                className={`mt-3 flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
+              >
+                <span className="min-w-0">{shippingMessages.feeLabel}</span>
+                <span
+                  className={`shrink-0 whitespace-nowrap ${shippingMessages.unlocked ? 'text-brand-dustyBlue' : 'text-white'}`}
+                >
+                  {shippingMessages.feeValue}
+                </span>
+              </div>
+
               <div className="mt-8 border-t border-white/10 pt-6">
                 <div
                   className={`flex items-baseline justify-between gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}
@@ -297,14 +317,20 @@ export default function CartPage() {
               </LocaleLink>
 
               <div className="mt-8 space-y-3 border-t border-white/10 pt-6">
+                <p
+                  className={`font-montserrat text-xs leading-relaxed tracking-wide ${
+                    shippingMessages.unlocked ? 'text-brand-dustyBlue' : 'text-white/55'
+                  }`}
+                >
+                  {shippingMessages.primary}
+                </p>
+                {shippingMessages.secondary ? (
+                  <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
+                    {shippingMessages.secondary}
+                  </p>
+                ) : null}
                 <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
                   {ui.cart.shipWorldwide}
-                </p>
-                <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
-                  {ui.cart.freeUaeShipping}
-                </p>
-                <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
-                  {ui.cart.intlShippingNote} {ui.cart.deliveryAtPayment}
                 </p>
               </div>
             </div>

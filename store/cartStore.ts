@@ -5,7 +5,7 @@ import { lineTotalAed } from '@/lib/shopProductOptions'
 
 export interface CartItem {
   id: string
-  /** Canonical PDP path for this line item (e.g. /shop/knightsbridge-abaya-jacket, /accessories/al-ain-rosette-necklace-malachite). */
+  /** Canonical PDP path for this line item (e.g. /shop/knightsbridge-abaya-jacket, /accessories/al-ain-oasis-necklace-malachite). */
   productUrl?: string
   name: string
   price: number

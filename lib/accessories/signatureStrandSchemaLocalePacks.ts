@@ -28,7 +28,7 @@ const FACTS_EN: FactsWithoutFaq = {
     'Marylebone Abaya and compatible Bint Saeed garments with interchangeable strand attachment system',
   madeIn: 'Abu Dhabi, United Arab Emirates',
   care:
-    'Remove before washing or dry cleaning. Avoid water, perfume on stones, and prolonged sunlight. Store in Bint Saeed presentation box.',
+    'Remove before washing or dry cleaning. Handle with care — natural stones may chip or break if struck or dropped. Avoid water, perfume on stones, and prolonged sunlight. Store in the Bint Saeed presentation box.',
   suitableFor:
     'Women styling modest fashion worldwide, abaya wearers, luxury garment jewellery collectors, coordinated abaya and jewellery looks, GCC and international clients, gifts for wife or mother, evening and everyday abaya personalisation, and clients seeking interchangeable abaya jewellery without buying a new garment.',
 }
@@ -45,7 +45,7 @@ const FACTS_AR: FactsWithoutFaq = {
     'عباءة Marylebone Abaya وقطع Bint Saeed المتوافقة بنظام تثبيت ستراند قابل للتبديل',
   madeIn: 'أبوظبي، الإمارات العربية المتحدة',
   care:
-    'أزيلي قبل الغسل أو التنظيف الجاف. تجنّبي الماء والعطر على الأحجار وأشعة الشمس المطوّلة. احفظي في علبة تقديم Bint Saeed.',
+    'أزيلي قبل الغسل أو التنظيف الجاف. تعاملي بعناية — الأحجار الطبيعية قد تتشقّق أو تنكسر إذا ضُربت أو سقطت. تجنّبي الماء والعطر على الأحجار وأشعة الشمس المطوّلة. احفظي في علبة تقديم Bint Saeed.',
   suitableFor:
     'النساء اللواتي يرتدين أزياء محتشمة حول العالم، حاملات العباءات، جامعات مجوهرات الملابس الفاخرة، إطلالات عباءة ومجوهرات منسّقة، عميلات الخليج والأسواق الدولية، هدايا للزوجة أو الأم، تخصيص العباءة للمساء واليوم، ومن يبحثن عن مجوهرات عباءة قابلة للتبديل دون شراء قطعة جديدة.',
 }
@@ -62,7 +62,7 @@ const FACTS_FR: FactsWithoutFaq = {
     "Abaya Marylebone et vêtements Bint Saeed compatibles avec système d'attache de fil interchangeable",
   madeIn: 'Abu Dhabi, Émirats arabes unis',
   care:
-    "Retirez avant le lavage ou le nettoyage à sec. Évitez l'eau, le parfum sur les pierres et une exposition prolongée au soleil. Rangez dans l'écrin Bint Saeed.",
+    "Retirez avant le lavage ou le nettoyage à sec. Manipulez avec précaution — les pierres naturelles peuvent s’ébrécher ou se briser en cas de choc ou de chute. Évitez l'eau, le parfum sur les pierres et une exposition prolongée au soleil. Rangez dans l'écrin Bint Saeed.",
   suitableFor:
     "Femmes adoptant la mode modeste dans le monde entier, porteuses d'abaya, collectionneuses de bijoux pour vêtements de luxe, looks abaya et bijoux coordonnés, clientes du Golfe et internationales, cadeaux pour épouse ou mère, personnalisation d'abaya pour le soir et le quotidien, et clientes recherchant des bijoux d'abaya interchangeables sans acheter un nouveau vêtement.",
 }
@@ -79,7 +79,7 @@ const FACTS_IT: FactsWithoutFaq = {
     'Abaya Marylebone e capi Bint Saeed compatibili con sistema di attacco filo intercambiabile',
   madeIn: 'Abu Dhabi, Emirati Arabi Uniti',
   care:
-    'Rimuovere prima del lavaggio o della pulitura a secco. Evitare acqua, profumo sulle pietre e prolungata esposizione al sole. Conservare nella confezione Bint Saeed.',
+    'Rimuovere prima del lavaggio o della pulitura a secco. Maneggiare con cura — le pietre naturali possono scheggiarsi o rompersi se urtate o fatte cadere. Evitare acqua, profumo sulle pietre e prolungata esposizione al sole. Conservare nella confezione Bint Saeed.',
   suitableFor:
     'Donne che indossano moda modesta in tutto il mondo, portatrici di abaya, collezioniste di gioielli per capi di lusso, look abaya e gioielli coordinati, clienti GCC e internazionali, regali per moglie o madre, personalizzazione abaya per sera e quotidiano, e clienti che cercano gioielli abaya intercambiabili senza acquistare un nuovo capo.',
 }
@@ -96,7 +96,7 @@ const FACTS_ES: FactsWithoutFaq = {
     'Abaya Marylebone y prendas Bint Saeed compatibles con sistema de fijación de hilo intercambiable',
   madeIn: 'Abu Dabi, Emiratos Árabes Unidos',
   care:
-    'Retire antes de lavar o limpiar en seco. Evite el agua, el perfume sobre las piedras y la exposición prolongada al sol. Guarde en la caja de presentación Bint Saeed.',
+    'Retire antes de lavar o limpiar en seco. Manipule con cuidado — las piedras naturales pueden astillarse o romperse si se golpean o caen. Evite el agua, el perfume sobre las piedras y la exposición prolongada al sol. Guarde en la caja de presentación Bint Saeed.',
   suitableFor:
     'Mujeres que visten moda modesta en todo el mundo, portadoras de abaya, coleccionistas de joyería para prendas de lujo, looks abaya y joyería coordinados, clientas del GCC e internacionales, regalos para esposa o madre, personalización de abaya para noche y día a día, y clientas que buscan joyería abaya intercambiable sin comprar una prenda nueva.',
 }
@@ -113,7 +113,7 @@ const FACTS_RU: FactsWithoutFaq = {
     'Абайя Marylebone и совместимые изделия Bint Saeed со сменной системой крепления нити',
   madeIn: 'Абу-Даби, Объединённые Арабские Эмираты',
   care:
-    'Снимайте перед стиркой или химчисткой. Избегайте воды, духов на камнях и длительного солнечного света. Храните в фирменной коробке Bint Saeed.',
+    'Снимайте перед стиркой или химчисткой. Обращайтесь бережно — натуральные камни могут сколоться или сломаться при ударе или падении. Избегайте воды, духов на камнях и длительного солнечного света. Храните в фирменной коробке Bint Saeed.',
   suitableFor:
     'Женщины, выбирающие скромную моду по всему миру, носительницы абайи, коллекционерки украшений для одежды класса люкс, согласованные образы абайи и украшений, клиентки из стран Персидского залива и международные покупательницы, подарки жене или матери, персонализация абайи для вечера и повседневности, и те, кто ищет сменные украшения для абайи без покупки нового изделия.',
 }
@@ -127,7 +127,7 @@ const FACTS_ZH: FactsWithoutFaq = {
   attachment: '适用于兼容 Bint Saeed 服装袖口的隐藏式夹扣固定',
   designedFor: 'Marylebone Abaya 及配备可更换链饰固定系统的兼容 Bint Saeed 服装',
   madeIn: '阿布扎比，阿拉伯联合酋长国',
-  care: '洗涤或干洗前请取下。避免水、香水接触宝石及长时间日晒。存放于 Bint Saeed 礼盒中。',
+  care: '洗涤或干洗前请取下。请小心佩戴——天然宝石若受撞击或跌落可能崩裂或破损。避免水、香水接触宝石及长时间日晒。存放于 Bint Saeed 礼盒中。',
   suitableFor:
     '全球穿着端庄时尚的女性、长袍穿着者、奢华服装珠宝收藏者、协调的长袍与珠宝造型、海湾及国际客户、赠予妻子或母亲的礼物、晚间与日常长袍个性化，以及希望无需购买新服装即可获得可更换长袍珠宝的客户。',
 }
@@ -144,7 +144,7 @@ const FACTS_DE: FactsWithoutFaq = {
     'Marylebone Abaya und kompatible Bint Saeed Kleidungsstücke mit austauschbarem Strang-Befestigungssystem',
   madeIn: 'Abu Dhabi, Vereinigte Arabische Emirate',
   care:
-    'Vor dem Waschen oder chemischen Reinigen entfernen. Wasser, Parfum auf Steinen und längere Sonneneinstrahlung vermeiden. In der Bint Saeed Präsentationsbox aufbewahren.',
+    'Vor dem Waschen oder chemischen Reinigen entfernen. Mit Sorgfalt behandeln — Natursteine können bei Stößen oder Stürzen absplittern oder brechen. Wasser, Parfum auf Steinen und längere Sonneneinstrahlung vermeiden. In der Bint Saeed Präsentationsbox aufbewahren.',
   suitableFor:
     'Frauen weltweit, die bescheidene Mode tragen, Abaya-Trägerinnen, Sammlerinnen von Luxus-Kleidungsschmuck, abgestimmte Abaya- und Schmuck-Looks, GCC- und internationale Kundinnen, Geschenke für Ehefrau oder Mutter, Abaya-Personalisierung für Abend und Alltag, und Kundinnen, die austauschbaren Abaya-Schmuck ohne Neukauf eines Kleidungsstücks suchen.',
 }
@@ -161,7 +161,7 @@ const FACTS_NL: FactsWithoutFaq = {
     'Marylebone Abaya en compatibele Bint Saeed kledingstukken met verwisselbaar streng-bevestigingssysteem',
   madeIn: 'Abu Dhabi, Verenigde Arabische Emiraten',
   care:
-    'Verwijder voor het wassen of chemisch reinigen. Vermijd water, parfum op stenen en langdurige zonlicht. Bewaar in de Bint Saeed presentatiedoos.',
+    'Verwijder voor het wassen of chemisch reinigen. Behandel met zorg — natuurlijke stenen kunnen afbrokkelen of breken bij stoten of vallen. Vermijd water, parfum op stenen en langdurige zonlicht. Bewaar in de Bint Saeed presentatiedoos.',
   suitableFor:
     'Vrouwen wereldwijd die bescheiden mode dragen, abaya-draagsters, verzamelaars van luxe kleding sieraden, gecoördineerde abaya- en sieradenlooks, GCC- en internationale klanten, cadeaus voor echtgenote of moeder, abaya-personalisatie voor avond en dagelijks gebruik, en klanten die verwisselbare abaya sieraden zoeken zonder een nieuw kledingstuk te kopen.',
 }
@@ -178,7 +178,7 @@ const FACTS_PT: FactsWithoutFaq = {
     'Abaya Marylebone e peças Bint Saeed compatíveis com sistema de fixação de fio intercambiável',
   madeIn: 'Abu Dhabi, Emirados Árabes Unidos',
   care:
-    'Remova antes de lavar ou limpar a seco. Evite água, perfume sobre as pedras e exposição prolongada ao sol. Guarde na caixa de apresentação Bint Saeed.',
+    'Remova antes de lavar ou limpar a seco. Manuseie com cuidado — pedras naturais podem lascar ou partir se forem golpeadas ou caírem. Evite água, perfume sobre as pedras e exposição prolongada ao sol. Guarde na caixa de apresentação Bint Saeed.',
   suitableFor:
     'Mulheres que vestem moda modesta em todo o mundo, portadoras de abaya, colecionadoras de joias para vestuário de luxo, looks abaya e joias coordenados, clientes do GCC e internacionais, presentes para esposa ou mãe, personalização de abaya para noite e dia a dia, e clientes que procuram joias abaya intercambiáveis sem comprar uma peça nova.',
 }
@@ -195,7 +195,7 @@ const FACTS_ID: FactsWithoutFaq = {
     'Marylebone Abaya dan pakaian Bint Saeed yang kompatibel dengan sistem pemasangan strand yang dapat ditukar',
   madeIn: 'Abu Dhabi, Uni Emirat Arab',
   care:
-    'Lepaskan sebelum mencuci atau dry clean. Hindari air, parfum pada batu, dan paparan sinar matahari berkepanjangan. Simpan di kotak presentasi Bint Saeed.',
+    'Lepaskan sebelum mencuci atau dry clean. Tangani dengan hati-hati — batu alam dapat retak atau patah jika terbentur atau terjatuh. Hindari air, parfum pada batu, dan paparan sinar matahari berkepanjangan. Simpan di kotak presentasi Bint Saeed.',
   suitableFor:
     'Perempuan yang mengenakan mode modest di seluruh dunia, pemakai abaya, kolektor perhiasan pakaian mewah, tampilan abaya dan perhiasan yang selaras, klien GCC dan internasional, hadiah untuk istri atau ibu, personalisasi abaya untuk malam dan sehari-hari, serta klien yang mencari perhiasan abaya yang dapat ditukar tanpa membeli pakaian baru.',
 }
@@ -212,7 +212,7 @@ const FACTS_MS: FactsWithoutFaq = {
     'Marylebone Abaya dan pakaian Bint Saeed yang serasi dengan sistem pemasangan strand boleh ditukar',
   madeIn: 'Abu Dhabi, Emiriah Arab Bersatu',
   care:
-    'Tanggalkan sebelum mencuci atau mencuci kering. Elakkan air, minyak wangi pada batu, dan pendedahan cahaya matahari berpanjangan. Simpan di kotak pembentangan Bint Saeed.',
+    'Tanggalkan sebelum mencuci atau mencuci kering. Kendalikan dengan teliti — batu semula jadi boleh retak atau pecah jika terhantuk atau terjatuh. Elakkan air, minyak wangi pada batu, dan pendedahan cahaya matahari berpanjangan. Simpan di kotak pembentangan Bint Saeed.',
   suitableFor:
     'Wanita yang mengenakan fesyen modest di seluruh dunia, pemakai abaya, pengumpul barang kemas pakaian mewah, penampilan abaya dan barang kemas yang selaras, pelanggan GCC dan antarabangsa, hadiah untuk isteri atau ibu, pemeribadian abaya untuk malam dan harian, serta pelanggan yang mencari barang kemas abaya boleh ditukar tanpa membeli pakaian baharu.',
 }

@@ -1,0 +1,31 @@
+---
+description: Luxury-native translation standards for all Bint Saeed locale copy
+alwaysApply: true
+---
+
+# Luxury Native Translations (Locked)
+
+Applies to every translation and localisation on the Bint Saeed webshop: PDP descriptions, FAQs, materials, care, UI strings, catalog names, and alt text when translated.
+
+## Standard
+
+Write as a native luxury house editor — not as a translator. Target register: Hermès, Chanel, Loro Piana, The Row, Brunello Cucinelli product prose in that language.
+
+## Rules
+
+1. **Native first.** Prefer idiomatic phrasing over literal English structure. Restructure sentences when needed.
+2. **No machine-translation tone.** Avoid stiff calques, word-for-word order, and ecommerce filler.
+3. **Luxury calm.** Precise, confident, unhurried. No hype, no emoji, no marketing clichés.
+4. **Keep brand entities.** Preserve: Bint Saeed, Al Ain Rosette / روزيت العين / Rosette d’Al Ain, Al Quaa, Al Ain Oasis, House Codes, Abu Dhabi, United Arab Emirates — with the established local form of each.
+5. **Local product nouns.** Do not force English “phone charm / bag charm” if the market has a more elegant retail term; stay consistent within that locale once chosen.
+6. **Correct address.** Match formality to the market (e.g. French *vous*; Arabic feminine retail address where the site already uses it).
+7. **Stone names.** Use the gemstone name luxury jewellery uses in that language (œuil de tigre, quarzo rosa, 虎眼石, etc.) — not transliterated English unless that is the local jewellery norm.
+8. **Same meaning, not same scaffolding.** Preserve the emotional arc and facts of the English source; do not copy English paragraph rhythm when it sounds foreign.
+9. **Never invent claims.** Do not add materials, origins, or promises absent from the approved English.
+10. **EN remains source of truth.** Locales follow approved English meaning; polish voice, do not rewrite brand strategy.
+
+## When updating copy
+
+- If the user supplies English only, localise all active `AppLocale`s to this standard in the same task unless they ask otherwise.
+- Prefer editing existing locale packs over leaving EN fallback for live PDPs.
+- After localisation, spot-check one romance language, one Germanic, Arabic, and Chinese for native luxury tone.

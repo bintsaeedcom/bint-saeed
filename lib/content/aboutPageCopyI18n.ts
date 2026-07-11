@@ -24,6 +24,12 @@ export type AboutPageCopy = {
   ctaReadStory: string
   ctaExploreCollection: string
   marquee: string
+  /** Opening manifesto — appears first after the hero (coming-soon ABOUT copy). */
+  manifestoTitle: string
+  manifestoSubtitle: string
+  manifestoP1: string
+  manifestoP2: string
+  manifestoP3: string
   originLabel: string
   originHeading: string
   originP1BeforeBint: string
@@ -97,6 +103,14 @@ const ABOUT_EN: AboutPageCopy = {
   ctaReadStory: 'READ THE STORY',
   ctaExploreCollection: 'EXPLORE THE COLLECTION',
   marquee: 'BINT SAEED · ABU DHABI · CARRYING HERITAGE FORWARD · DEVOTED TO THE DAUGHTER IN EVERY WOMAN ·',
+  manifestoTitle: 'ABOUT',
+  manifestoSubtitle: 'A house shaped by origin, carried across the world.',
+  manifestoP1:
+    'The woman of today does not live as the woman of decades ago. She moves between responsibilities, countries, meetings, family life, travel, and occasion with a pace that asks more of her than ever before. Yet whatever she becomes in the world, she remains a daughter first, carrying with her the values, recognitions, and standards she was shaped by.',
+  manifestoP2:
+    'Bint Saeed fills the gap where consistent elegance is often lost as women transition between settings, environments, and borders. The Bint Saeed wardrobe allows its clientele to present themselves with confidence and certainty, without the need to adapt to every passing trend.',
+  manifestoP3:
+    'Rooted in Abu Dhabi, Bint Saeed builds its design language through enduring codes like the woven memory of Khous, the delicacy of Talli, the warmth of natural gemstones, and signature details carried into modern silhouettes made for a life in motion.',
   originLabel: 'THE ORIGIN',
   originHeading: 'A house shaped by origin, carried across the world.',
   originP1BeforeBint: 'In Arabic, ',
@@ -183,6 +197,14 @@ const ABOUT_AR: AboutPageCopy = {
   ctaReadStory: 'اقرأي القصة',
   ctaExploreCollection: 'استكشفي المجموعة',
   marquee: 'BINT SAEED · ABU DHABI · حمل الإرث إلى الأمام · مكرّسة للابنة في كل امرأة ·',
+  manifestoTitle: 'من نحن',
+  manifestoSubtitle: 'بيت صاغته الأصول، وحمل عبر العالم.',
+  manifestoP1:
+    'امرأة اليوم لا تشبه امرأة العقود الماضية. تعيش بين المسؤوليات والبلدان والمناسبات والسفر، بإيقاع لم تعرفه من قبلها. ومهما بلغت في العالم، تظل ابنة أولاً، تحمل معها القيم والمعايير التي صنعتها.',
+  manifestoP2:
+    'بنت سعيد تملأ الفراغ الذي تضيع فيه الأناقة حين تنتقل المرأة بين البيئات والحدود. خزانتها تمنح من يرتدينها الثقة واليقين، بعيداً عن كل موضة عابرة.',
+  manifestoP3:
+    'من أبوظبي، تبني بنت سعيد لغتها التصميمية من رموز راسخة، ذاكرة الخوص ورقة التلي ودفء الأحجار الطبيعية، وتفاصيل تُصاغ في قطع عصرية لامرأة لا تتوقف.',
   originLabel: 'الأصل',
   originHeading: 'دار تشكّلها الأصل، تُحمل عبر العالم.',
   originP1BeforeBint: 'بالعربية، ',

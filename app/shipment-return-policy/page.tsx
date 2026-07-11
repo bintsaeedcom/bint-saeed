@@ -17,9 +17,12 @@ const SECTION_LIST = [
   '5. EU Clients – Right of Withdrawal',
   '6. EU Exception (Defective Items Only)',
   '7. Final Acknowledgment',
-  '8. Shipping Timelines',
-  '9. Force Majeure',
-  '10. Contact',
+  '8. Shipping & Delivery',
+  '9. Delivery Details & Client Responsibilities',
+  '10. Customs & Import',
+  '11. Undeliverable Shipments',
+  '12. Force Majeure',
+  '13. Contact',
 ]
 
 export default function ShipmentReturnPolicyPage() {
@@ -69,7 +72,7 @@ export default function ShipmentReturnPolicyPage() {
           <h1 data-document-h1="true" className="mb-4 font-rozha text-5xl text-neutral-900 md:text-6xl">
             Shipment & Return Policy
           </h1>
-          <p className="font-montserrat tracking-wide text-neutral-700">Last updated: June 2026</p>
+          <p className="font-montserrat tracking-wide text-neutral-700">Last updated: July 2026</p>
           <p className="mt-4 max-w-3xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600">
             This policy sets out shipping timelines, exchange eligibility, return procedures, and remedy pathways for
             purchases made through Bint Saeed.
@@ -144,19 +147,37 @@ export default function ShipmentReturnPolicyPage() {
               <p>To be eligible for exchange, items must:</p>
               <ul className={`list-disc space-y-1 ${isRTL ? 'pr-5' : 'pl-5'}`}>
                 <li>Be unworn, unused, and in original condition.</li>
-                <li>Be returned with all original tags attached.</li>
+                <li>
+                  Be returned with all original tags, seals and security labels intact and undisturbed.
+                </li>
                 <li>Be returned in original packaging.</li>
                 <li>Be free from perfume, smoke, stains, alterations, damage, or signs of wear.</li>
                 <li>Be approved by the Bint Saeed Returns Department prior to shipment.</li>
               </ul>
               <p>
-                Return shipping costs remain the responsibility of the client unless otherwise required by applicable
-                law.
+                Bint Saeed will not accept an exchange or return where tags, seals or security labels have been
+                removed, cut, damaged or altered, or where photographs submitted in support of a request indicate that
+                removal or tampering has been attempted.
+              </p>
+              <p>
+                No exchange is processed until approved goods have been physically received and inspected at our
+                atelier.
+              </p>
+              <p>
+                Where an approved exchange or return requires goods to be shipped back to Bint Saeed, a flat return
+                shipping fee applies: AED 35 for returns originating within the United Arab Emirates, and EUR 35 (or the
+                clean equivalent in the selected currency) for returns originating internationally. This fee is waived
+                where the return arises from a verified fault of the House — including a manufacturing defect or material
+                non-conformity — or where otherwise required by applicable law.
               </p>
               <p>
                 Personalised pieces, custom specifications, altered garments, and items produced to a client’s specific
                 requirements are not eligible for exchange except where a verified manufacturing defect or material
                 non-conformity exists.
+              </p>
+              <p>
+                For reasons of health, hygiene and personal safety, earrings are final sale and cannot be exchanged or
+                refunded, except where a verified manufacturing defect or material non-conformity exists.
               </p>
             </section>
 
@@ -199,6 +220,14 @@ export default function ShipmentReturnPolicyPage() {
                 <li>Minor variations inherent to handcrafted production.</li>
                 <li>Colour differences resulting from screen settings or device displays.</li>
                 <li>Damage resulting from improper care, misuse, alteration, or normal wear.</li>
+                <li>
+                  Removal, cutting, damage or alteration of original tags, seals or security labels — including where
+                  photographs indicate that removal or tampering has been attempted.
+                </li>
+                <li>
+                  Earrings, which are final sale for health, hygiene and personal safety reasons (except where a verified
+                  manufacturing defect or material non-conformity exists).
+                </li>
               </ul>
             </section>
 
@@ -212,6 +241,10 @@ export default function ShipmentReturnPolicyPage() {
               <ul className={`list-disc space-y-1 ${isRTL ? 'pr-5' : 'pl-5'}`}>
                 <li>Goods made to the consumer’s specifications.</li>
                 <li>Clearly personalised or custom-made items.</li>
+                <li>
+                  Sealed goods which are not suitable for return due to health protection or hygiene reasons, including
+                  earrings.
+                </li>
               </ul>
               <p>
                 As many Bint Saeed pieces are produced on demand following a confirmed order, they generally fall within
@@ -245,10 +278,14 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className={policySectionH2Plain}>8. Shipping Timelines</h2>
+              <h2 className={policySectionH2Plain}>8. Shipping & Delivery</h2>
               <p>
                 We aim to dispatch every order as efficiently as possible while maintaining the quality standards of
                 Bint Saeed.
+              </p>
+              <p>
+                International orders are fulfilled with DHL Express. Within the United Arab Emirates, orders are
+                operated by Jeebly. Additional carriers may be introduced as our logistics network expands.
               </p>
               <ul className={`list-disc space-y-1 ${isRTL ? 'pr-5' : 'pl-5'}`}>
                 <li>
@@ -256,8 +293,13 @@ export default function ShipmentReturnPolicyPage() {
                   of AED 1,000 or more.
                 </li>
                 <li>
-                  Shipping fees for orders below this threshold, and for international destinations, are calculated at
-                  checkout.
+                  Complimentary worldwide shipping applies to orders with a merchandise subtotal of EUR 500 or more (or
+                  the clean equivalent shown in the selected currency).
+                </li>
+                <li>
+                  Below these thresholds, a flat shipping fee applies: AED 35 within the UAE, and the international flat
+                  fee (EUR 30 or the clean equivalent in the selected currency) for other destinations, confirmed at
+                  payment.
                 </li>
                 <li>
                   Made-to-order pieces are usually shipped within approximately two weeks following order confirmation.
@@ -267,39 +309,90 @@ export default function ShipmentReturnPolicyPage() {
                   1–3 business days.
                 </li>
                 <li>
-                  Estimated delivery timelines may vary depending on destination, customs processing, and courier
-                  operations.
+                  Once dispatched, UAE deliveries typically arrive within approximately 1–3 business days. International
+                  deliveries typically arrive within approximately 3–10 business days, depending on destination and
+                  customs clearance.
                 </li>
                 <li>
-                  Once an order has been dispatched, clients will receive shipping confirmation and tracking details where
-                  available.
-                </li>
-                <li>
-                  Once an order has been transferred to the courier, delivery timelines are subject to the courier’s
-                  network, local delivery infrastructure, customs procedures, and destination country regulations.
-                </li>
-                <li>
-                  Any customs duties, import taxes, local charges, or clearance fees imposed by the destination country
-                  remain the responsibility of the recipient unless otherwise stated at checkout.
+                  Once an order has been dispatched, clients will receive shipping confirmation and tracking details
+                  where available.
                 </li>
               </ul>
+              <p>
+                If you require delivery for a particular occasion or by a fixed date, please contact Client Services
+                before placing your order. Dispatch and transit times are estimates only and cannot be guaranteed.
+              </p>
               <p>
                 While we make every effort to meet estimated timelines, delivery dates are not guaranteed and may be
                 affected by circumstances outside our reasonable control.
               </p>
               <p>
-                Bint Saeed is not responsible for delays arising from customs inspections, customs clearance procedures,
-                import restrictions, courier operational delays, failed delivery attempts, incorrect delivery information
-                provided by the client, or other circumstances beyond our reasonable control.
-              </p>
-              <p>
-                While we will always assist clients in tracking and resolving shipping issues where possible, we cannot
-                guarantee delivery timelines once an order has been transferred to the courier.
+                Once an order has been transferred to the courier, delivery timelines are subject to the courier’s
+                network, local delivery infrastructure, customs procedures, and destination country regulations. While we
+                will always assist clients in tracking and resolving shipping issues where possible, we cannot guarantee
+                delivery timelines after handover to the carrier.
               </p>
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className={policySectionH2Plain}>9. Force Majeure</h2>
+              <h2 className={policySectionH2Plain}>9. Delivery Details & Client Responsibilities</h2>
+              <p>
+                Clients are responsible for ensuring that shipping address, telephone number and email address are
+                complete and accurate at checkout. Couriers may use the telephone number or email provided to arrange
+                delivery.
+              </p>
+              <p>
+                Bint Saeed is not responsible for non-delivery, delay or return of a shipment arising from incomplete,
+                incorrect or outdated delivery information supplied by the client.
+              </p>
+              <p>
+                Where a destination requires a P.O. Box or other local addressing format for successful delivery, clients
+                must provide those details in full. Failure to do so may result in delay or return of the parcel at the
+                client’s risk.
+              </p>
+            </section>
+
+            <section className="flex flex-col gap-2">
+              <h2 className={policySectionH2Plain}>10. Customs & Import</h2>
+              <p>
+                Any customs duties, import taxes, local charges, or clearance fees imposed by the destination country
+                remain the responsibility of the recipient unless otherwise stated at checkout. These charges are
+                separate from the client’s order with Bint Saeed.
+              </p>
+              <p>
+                Clients are advised to consult their local customs authority regarding import regulations, restrictions
+                and possible charges before ordering. Customs rules differ by country; unfamiliarity with local
+                requirements may result in delay, additional charges, refusal or return of the shipment.
+              </p>
+              <p>
+                Bint Saeed is not liable for parcels refused, held, delayed or seized by customs, nor for any duties,
+                taxes or penalties levied once the shipment has left the United Arab Emirates.
+              </p>
+            </section>
+
+            <section className="flex flex-col gap-2">
+              <h2 className={policySectionH2Plain}>11. Undeliverable Shipments</h2>
+              <p>
+                If a shipment is returned to Bint Saeed because of an incorrect or incomplete address, failed delivery
+                attempts, refusal of the parcel, refusal to pay customs charges, import restrictions, or comparable
+                reasons not attributable to a verified fault of the House, Bint Saeed is under no obligation to refund
+                the order.
+              </p>
+              <p>
+                At our discretion, we may offer re-shipment at the client’s expense, an exchange where the piece remains
+                eligible, store credit, or other assistance. Where goods are seized by customs, abandoned by the
+                carrier on instruction, or where recovery is not reasonably possible, no credit will be issued.
+              </p>
+              <p>
+                As set out elsewhere in this policy, refunds are not offered for change of mind. Monetary refunds, where
+                considered at all, arise only in connection with a verified manufacturing defect or material
+                non-conformity, and only where repair or replacement is not reasonably possible, or where required by
+                applicable law.
+              </p>
+            </section>
+
+            <section className="flex flex-col gap-2">
+              <h2 className={policySectionH2Plain}>12. Force Majeure</h2>
               <p>
                 Bint Saeed shall not be held liable for delays, interruptions, or failure to fulfil obligations where
                 such circumstances arise from events beyond our reasonable control.
@@ -324,7 +417,7 @@ export default function ShipmentReturnPolicyPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className={policySectionH2Plain}>10. Contact</h2>
+              <h2 className={policySectionH2Plain}>13. Contact</h2>
               <p>For exchanges, return requests, and defect claims:</p>
               <p>
                 <a

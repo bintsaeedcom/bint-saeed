@@ -1,4 +1,4 @@
-import { accessories } from '@/data/accessories'
+import { accessories, isAccessoryShopVisible } from '@/data/accessories'
 import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 import { products } from '@/data/products'
 import { productPrimaryImage } from '@/lib/products/shopImage'
@@ -12,7 +12,10 @@ type CatalogLine = {
 }
 
 const CATALOG_BY_ID = new Map<string, CatalogLine>(
-  [...products, ...accessories].map((item) => [
+  [
+    ...products,
+    ...accessories.filter(isAccessoryShopVisible),
+  ].map((item) => [
     item.id,
     {
       id: item.id,

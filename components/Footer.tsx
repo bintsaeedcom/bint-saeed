@@ -9,6 +9,13 @@ import SubscribeForm from './SubscribeForm'
 import FooterPaymentMethods from './FooterPaymentMethods'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { useCurrency } from '@/lib/currency/CurrencyContext'
+import {
+  formatAmountForCurrency,
+  getUaeFreeShippingThreshold,
+  getWorldwideFreeShippingThreshold,
+} from '@/lib/pricing'
+import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
 import { useState } from 'react'
 
 const socialLinks = [
@@ -23,6 +30,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
   const { t, isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const { currency } = useCurrency()
+  const uaeAmount = formatAmountForCurrency(getUaeFreeShippingThreshold(currency.code), currency.code)
+  const worldwideAmount = formatAmountForCurrency(
+    getWorldwideFreeShippingThreshold(currency.code),
+    currency.code,
+  )
   const [mobileOpenSection, setMobileOpenSection] = useState<'shop' | 'about' | 'help' | null>('shop')
 
   const footerLinks = {
@@ -231,7 +244,7 @@ export default function Footer() {
                   {ui.footer.worldwideShipping}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {ui.footer.deliveredGlobally}
+                  {withShippingAmount(ui.footer.deliveredGlobally, worldwideAmount)}
                 </p>
               </div>
             </div>
@@ -246,7 +259,7 @@ export default function Footer() {
                   {ui.footer.freeUaeShippingTitle}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {ui.footer.freeUaeShippingDesc}
+                  {withShippingAmount(ui.footer.freeUaeShippingDesc, uaeAmount)}
                 </p>
               </div>
             </div>

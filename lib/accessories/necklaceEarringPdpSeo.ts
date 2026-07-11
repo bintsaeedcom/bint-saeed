@@ -34,7 +34,7 @@ function ekw(...extra: string[]): string[] {
 }
 
 export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> = {
-  'al-ain-rosette-necklace-malachite': {
+  'al-ain-oasis-necklace-malachite': {
     carouselAlt:
       'Al Ain Malachite necklace — hand-strung natural malachite beads with signature clasp, pairs with malachite abaya strand and geometric stud earrings',
     pdpAlt:
@@ -55,7 +55,7 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'signature-strand-rose-quartz',
     ],
   },
-  'al-ain-rosette-necklace-tiger-eye': {
+  'al-ain-oasis-necklace-tiger-eye': {
     carouselAlt:
       'Al Ain Tiger Eye necklace — warm chatoyant tiger eye beads with signature closure, pairs with tiger eye abaya strand and gold hoop earrings',
     pdpAlt:
@@ -70,10 +70,10 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     relatedAccessoryIds: [
       'signature-strand-tiger-eye',
       'al-ain-oasis-earrings-orange-jade',
-      'al-ain-rosette-necklace-onyx',
+      'al-ain-oasis-necklace-onyx',
     ],
   },
-  'al-ain-rosette-necklace-onyx': {
+  'al-ain-oasis-necklace-onyx': {
     carouselAlt:
       'Al Ain Onyx necklace — polished black onyx beads with warm undertones and signature clasp, pairs with onyx abaya strand and stud earrings',
     pdpAlt:
@@ -88,10 +88,10 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     relatedAccessoryIds: [
       'signature-strand-onyx',
       'al-ain-oasis-earrings-orange-jade',
-      'al-ain-rosette-necklace-tiger-eye',
+      'al-ain-oasis-necklace-tiger-eye',
     ],
   },
-  'al-ain-rosette-necklace-rose-quartz': {
+  'al-ain-oasis-necklace-rose-quartz': {
     carouselAlt:
       'Al Ain Rose Quartz necklace — soft pink hand-knotted rose quartz beads, pairs with rose quartz abaya strand and pearl drop earrings',
     pdpAlt:
@@ -107,11 +107,11 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
     ),
     relatedAccessoryIds: [
       'signature-strand-rose-quartz',
-      'al-ain-oasis-earrings-rose-quartz',
-      'al-ain-rosette-necklace-malachite',
+      'al-quaa-earrings-rose-quartz',
+      'al-ain-oasis-necklace-malachite',
     ],
   },
-  'al-ain-rosette-necklace-sunstone': {
+  'al-ain-oasis-necklace-sunstone': {
     carouselAlt:
       'Al Ain Oasis Sunstone necklace — warm peach-orange sunstone beads with signature clasp, pairs with sunstone and jade abaya strands and pearl drop earrings',
     pdpAlt:
@@ -127,10 +127,10 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'signature-strand-sunstone',
       'signature-strand-fuchsia-jade',
       'signature-strand-jade-hearts',
-      'al-ain-oasis-earrings-rose-quartz',
+      'al-quaa-earrings-rose-quartz',
     ],
   },
-  'al-ain-rosette-necklace-lapis-lazuli': {
+  'al-ain-oasis-necklace-lapis-lazuli': {
     carouselAlt:
       'Al Ain Oasis Lapis Lazuli necklace — deep royal blue lapis beads with signature clasp, pairs with lapis and amethyst abaya strands',
     pdpAlt:
@@ -162,29 +162,29 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'pairs with malachite necklace',
     ),
     relatedAccessoryIds: [
-      'al-ain-rosette-necklace-malachite',
+      'al-ain-oasis-necklace-malachite',
       'signature-strand-malachite',
       'signature-strand-rose-quartz',
-      'al-ain-oasis-earrings-rose-quartz',
+      'al-quaa-earrings-rose-quartz',
     ],
   },
-  'al-ain-oasis-earrings-rose-quartz': {
+  'al-quaa-earrings-rose-quartz': {
     carouselAlt:
-      'Al Ain Oasis Earrings - Rose Quartz with soft blush natural rose quartz — pair with rose quartz abaya strand and Al Ain Oasis Necklace - Rose Quartz',
+      'Al Quaa Earrings - Rose Quartz with soft blush natural rose quartz — pair with rose quartz abaya strand and Al Ain Oasis Necklace - Rose Quartz',
     pdpAlt:
-      'Al Ain Oasis Earrings - Rose Quartz, hand-assembled with natural rose quartz and signature Carnelian Al Ain Rosette motifs — romantic stone earrings by Bint Saeed UAE',
+      'Al Quaa Earrings - Rose Quartz, hand-assembled with natural rose quartz and signature Carnelian Al Ain Rosette motifs — romantic stone earrings by Bint Saeed UAE',
     keywords: ekw(
       'rose quartz earrings',
-      'Al Ain Oasis earrings UAE',
+      'Al Quaa earrings UAE',
       'blush stone earrings',
       'natural rose quartz earrings gift',
       'pairs with rose quartz necklace',
     ),
     relatedAccessoryIds: [
-      'al-ain-rosette-necklace-rose-quartz',
+      'al-ain-oasis-necklace-rose-quartz',
       'signature-strand-rose-quartz',
       'signature-strand-jade-hearts',
-      'al-ain-rosette-necklace-sunstone',
+      'al-ain-oasis-necklace-sunstone',
     ],
   },
   'al-ain-oasis-earrings-orange-jade': {
@@ -200,7 +200,7 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'pairs with sunstone necklace',
     ),
     relatedAccessoryIds: [
-      'al-ain-rosette-necklace-sunstone',
+      'al-ain-oasis-necklace-sunstone',
       'signature-strand-orange-jade',
       'signature-strand-sunstone',
       'signature-strand-fuchsia-jade',
@@ -219,7 +219,7 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
       'pairs with lapis lazuli necklace',
     ),
     relatedAccessoryIds: [
-      'al-ain-rosette-necklace-lapis-lazuli',
+      'al-ain-oasis-necklace-lapis-lazuli',
       'signature-strand-lapis-lazuli',
       'signature-strand-amethyst-hearts',
       'signature-strand-blue-aventurine',

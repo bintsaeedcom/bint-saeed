@@ -38,7 +38,7 @@ export const faqEs: FaqBundle = {
         },
         {
           q: '¿Envío gratis?',
-          a: 'Sí en pedidos superiores a 1000 AED en los Emiratos Árabes Unidos.',
+          a: 'Sí. Envío gratuito en EAU en pedidos superiores a 1.000 AED. Envío gratuito mundial en pedidos superiores a 500 EUR (o el equivalente limpio en su moneda). Por debajo de estos umbrales se aplica una tarifa plana confirmada en el pago.',
         },
         {
           q: '¿Seguimiento?',

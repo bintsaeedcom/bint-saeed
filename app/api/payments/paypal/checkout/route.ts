@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { isAllowedCheckoutOrigin, resolvePublicSiteBaseUrl } from '@/lib/security/allowedCheckoutOrigin'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { notifyHealthAlert } from '@/lib/ops/notifications'
-import { cartSubtotalInCurrency } from '@/lib/pricing'
+import { cartSubtotalInCurrency, resolveShippingFee } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 import { parseCheckoutRequestBody } from '@/lib/checkout/parseCheckoutRequest'
 import { createPayPalOrder } from '@/lib/paypal/client'
@@ -47,9 +47,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid cart total.' }, { status: 400 })
     }
 
+    const shippingFee = resolveShippingFee({
+      subtotal: cartSubtotal,
+      currency,
+      country: parsed.clientContext.country,
+    })
+    const orderTotal = cartSubtotal + shippingFee
+
     const orderRef = `BS-${Date.now().toString(36).toUpperCase()}`
     const { orderId, approvalUrl } = await createPayPalOrder({
-      amountValue: toPayPalAmountValue(cartSubtotal),
+      amountValue: toPayPalAmountValue(orderTotal),
       currency,
       description: `Bint Saeed order ${orderRef}`,
       returnUrl: `${baseUrl}/checkout/success`,

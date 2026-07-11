@@ -38,7 +38,7 @@ export const faqNl: FaqBundle = {
         },
         {
           q: 'Gratis verzending?',
-          a: 'Ja bij bestellingen boven 1000 AED in de VAE.',
+          a: 'Ja. Gratis verzending in de VAE bij bestellingen boven 1.000 AED. Gratis wereldwijde verzending bij bestellingen boven 500 EUR (of het nette equivalent in uw valuta). Onder deze drempels geldt een vast verzendtarief dat bij betaling wordt bevestigd.',
         },
         {
           q: 'Tracking?',

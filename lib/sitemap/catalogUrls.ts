@@ -1,4 +1,4 @@
-import { accessories } from '@/data/accessories'
+import { accessories, isAccessoryShopVisible } from '@/data/accessories'
 import { isVisibleOnShopGrid, products } from '@/data/products'
 import { getProductSlug } from '@/lib/products/links'
 import { LOCALE_PREFIXES, localizedPath, type AppLocale } from '@/lib/i18n/routing'
@@ -34,6 +34,7 @@ export function buildCatalogSitemapEntries(baseUrl: string): SitemapUrlEntry[] {
   }
 
   for (const accessory of accessories) {
+    if (!isAccessoryShopVisible(accessory)) continue
     if (!accessory.images.length) continue
     for (const locale of PDP_LOCALES) {
       const path = localizedPath(locale, `/accessories/${accessory.id}`)

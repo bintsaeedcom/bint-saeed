@@ -8,37 +8,37 @@ type AccessoryCatalogCopy = {
 }
 
 const FR_ACCESSORY_CATALOG: Record<string, AccessoryCatalogCopy> = {
-  'al-ain-rosette-necklace-malachite': {
+  'al-ain-oasis-necklace-malachite': {
     name: 'Collier Al Ain Oasis — Malachite',
     description:
       'Collier en malachite naturelle enfilé à la main, rehaussé de perles d’hématite plaquées or et terminé par la rosette d’Al Ain signature.',
     materials: 'Perles de malachite naturelle, fermoir plaqué or 18 carats',
   },
-  'al-ain-rosette-necklace-rose-quartz': {
+  'al-ain-oasis-necklace-rose-quartz': {
     name: 'Collier Al Ain Oasis — Quartz rose',
     description:
       'Perles de quartz rose naturel enfilées à la main pour une ligne lumineuse et romantique avec notre fermoir signature.',
     materials: 'Perles de quartz rose naturel, fermoir plaqué or 18 carats',
   },
-  'al-ain-rosette-necklace-lapis-lazuli': {
+  'al-ain-oasis-necklace-lapis-lazuli': {
     name: 'Collier Al Ain Oasis — Lapis lazuli',
     description:
       'Collier en perles de lapis lazuli aux tons bleu royal profonds, terminé par un fermoir signature élégant.',
     materials: 'Perles de lapis lazuli naturel, fermoir plaqué or 18 carats',
   },
-  'al-ain-rosette-necklace-sunstone': {
+  'al-ain-oasis-necklace-sunstone': {
     name: 'Collier Al Ain Oasis — Pierre de soleil',
     description:
       'Collier en perles de pierre de soleil aux tons pêche-orange lumineux et fermoir signature raffiné.',
     materials: 'Perles de pierre de soleil naturelle, fermoir plaqué or 18 carats',
   },
-  'al-ain-rosette-necklace-tiger-eye': {
+  'al-ain-oasis-necklace-tiger-eye': {
     name: 'Collier Al Ain Oasis — Œil de tigre',
     description:
       'Collier en perles d’œil de tigre aux reflets dorés chaleureux et fermoir signature raffiné.',
     materials: 'Perles d’œil de tigre naturel, fermoir plaqué or 18 carats',
   },
-  'al-ain-rosette-necklace-onyx': {
+  'al-ain-oasis-necklace-onyx': {
     name: 'Collier Al Ain Oasis — Onyx',
     description:
       'Perles d’onyx noir poli avec une sous-tonalité brune chaleureuse et fermoir signature raffiné.',
@@ -50,8 +50,8 @@ const FR_ACCESSORY_CATALOG: Record<string, AccessoryCatalogCopy> = {
       'Boucles d’oreilles en malachite assemblées à la main avec la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or.',
     materials: 'Malachite naturelle, cornaline, hématite plaquée or 18 carats',
   },
-  'al-ain-oasis-earrings-rose-quartz': {
-    name: 'Boucles d’oreilles Al Ain Oasis — Quartz rose',
+  'al-quaa-earrings-rose-quartz': {
+    name: 'Boucles d’oreilles Al Quaa — Quartz rose',
     description:
       'Boucles d’oreilles en quartz rose assemblées à la main avec la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or.',
     materials: 'Quartz rose naturel, cornaline, hématite plaquée or 18 carats',
@@ -86,28 +86,17 @@ const FR_ACCESSORY_CATALOG: Record<string, AccessoryCatalogCopy> = {
       'Lot de 3 bracelets fins parfaits pour se superposer. Disponibles en plusieurs tailles.',
     materials: 'Laiton plaqué or 18 carats',
   },
-  'bag-strand-tassel': {
-    name: 'Tresse soie à glands',
+  'al-ain-oasis-i-bag-charm-fuchsia-jade': {
+    name: 'Charm sac Al Ain Oasis I — Jade fuchsia',
     description:
-      'Tresse de sac à glands en soie luxueuse avec pièces métalliques plaquées or.',
-    materials: 'Soie, pièces métalliques plaquées or 18 carats',
+      'Charm sac Al Ain Oasis I assemblé à la main en jade fuchsia naturel, conçu pour sacs à main et pochettes de soirée.',
+    materials: 'Jade fuchsia naturel, rosettes d’Al Ain sculptées à la main, hématite facettée plaquée or',
   },
-  'bag-strand-pearl-cluster': {
-    name: 'Tresse grappe de perles',
+  'al-ain-oasis-ii-bag-charm-fuchsia-jade': {
+    name: 'Charm sac Al Ain Oasis II — Jade fuchsia',
     description:
-      'Tresse élégante à grappe de perles pour sublimer toute pochette ou sac.',
-    materials: 'Perles d’eau douce, plaqué or 18 carats',
-  },
-  'bag-strand-letter': {
-    name: 'Tresse monogramme lettre',
-    description:
-      'Tresse personnalisée à initiale. Disponible pour toutes les lettres A-Z.',
-    materials: 'Vermeil or 18 carats',
-  },
-  'bag-strand-bint': {
-    name: 'Tresse sac',
-    description: 'Tresse à clip pour sacs à main et pochettes de soirée.',
-    materials: 'Pièces métalliques plaquées or, émail',
+      'Charm sac Al Ain Oasis II assemblé à la main en jade fuchsia naturel, conçu pour sacs à main et pochettes de soirée.',
+    materials: 'Jade fuchsia naturel, rosettes d’Al Ain sculptées à la main, hématite facettée plaquée or',
   },
 }
 
@@ -115,13 +104,22 @@ function frCopy(id: string): AccessoryCatalogCopy | undefined {
   return FR_ACCESSORY_CATALOG[id]
 }
 
+function withoutColouredJadeQualifier(label: string): string {
+  return label
+    .replace(/\bColou?red\s+/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+}
+
 export function getLocalizedAccessoryDisplayName(
   accessory: Pick<Accessory, 'id' | 'name' | 'nameAr'>,
   locale: AppLocale = 'en',
 ): string {
-  if (locale === 'ar') return accessory.nameAr
-  if (locale === 'fr') return frCopy(accessory.id)?.name ?? accessory.name
-  return accessory.name
+  if (locale === 'ar') return withoutColouredJadeQualifier(accessory.nameAr)
+  if (locale === 'fr') {
+    return withoutColouredJadeQualifier(frCopy(accessory.id)?.name ?? accessory.name)
+  }
+  return withoutColouredJadeQualifier(accessory.name)
 }
 
 export function getLocalizedAccessoryDescription(

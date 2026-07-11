@@ -180,7 +180,11 @@ export default function TermsPage() {
               </p>
               <ul className={`list-disc space-y-2 ${isRTL ? 'pr-6' : 'pl-6'}`}>
                 <li>Complimentary shipping within the United Arab Emirates applies to orders with a merchandise subtotal of AED 1,000 or more.</li>
-                <li>Shipping fees for orders below this threshold, and for international destinations, are calculated at checkout.</li>
+                <li>Complimentary worldwide shipping applies to orders with a merchandise subtotal of EUR 500 or more (or the clean equivalent shown in the selected currency).</li>
+                <li>Below these thresholds, a flat shipping fee applies: AED 35 within the UAE, and the international flat fee (EUR 30 or the clean equivalent in the selected currency) for other destinations, confirmed at payment.</li>
+                <li>International orders are fulfilled with DHL Express; UAE orders are operated by Jeebly.</li>
+                <li>Customs duties, import taxes and clearance charges at destination remain the recipient’s responsibility. Clients should review local import rules before ordering.</li>
+                <li>Clients are responsible for providing a complete and accurate delivery address, telephone number and email. Bint Saeed is not responsible for non-delivery arising from incorrect details supplied by the client.</li>
                 <li>Shipping terms, costs, and estimated timelines are shown at checkout or applicable policy pages.</li>
                 <li>International orders may be subject to customs duties, import taxes, and local clearance fees.</li>
                 <li>Risk of loss transfers upon delivery to the shipping address or accepted recipient.</li>

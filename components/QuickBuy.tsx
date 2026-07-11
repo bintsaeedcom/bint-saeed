@@ -8,6 +8,8 @@ import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { formatAmountForCurrency, getUaeFreeShippingThreshold } from '@/lib/pricing'
+import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
 import { getProductHref } from '@/lib/products/links'
 import toast from 'react-hot-toast'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
@@ -42,9 +44,13 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
   const [selectedColor, setSelectedColor] = useState('')
   const [isAdded, setIsAdded] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
-  const { formatPrice } = useCurrency()
+  const { formatPrice, currency } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const uaeShippingNote = withShippingAmount(
+    ui.cart.freeUaeShipping,
+    formatAmountForCurrency(getUaeFreeShippingThreshold(currency.code), currency.code),
+  )
 
   const colorOptions = useMemo(
     () => getProductColorOptions(product),
@@ -295,7 +301,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                 <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <FiPackage className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
                   <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
-                    {ui.cart.freeUaeShipping}
+                    {uaeShippingNote}
                   </span>
                 </div>
                 <span className="hidden text-brand-stone/35 sm:inline" aria-hidden>

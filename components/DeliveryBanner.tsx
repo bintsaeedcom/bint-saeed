@@ -5,20 +5,33 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FiX, FiTruck, FiGift, FiCreditCard } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { useCurrency } from '@/lib/currency/CurrencyContext'
+import {
+  formatAmountForCurrency,
+  getUaeFreeShippingThreshold,
+  getWorldwideFreeShippingThreshold,
+} from '@/lib/pricing'
+import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
 
 export default function DeliveryBanner() {
   const [isVisible, setIsVisible] = useState(true)
   const [currentIndex, setCurrentIndex] = useState(0)
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const { currency } = useCurrency()
+  const uaeAmount = formatAmountForCurrency(getUaeFreeShippingThreshold(currency.code), currency.code)
+  const worldwideAmount = formatAmountForCurrency(
+    getWorldwideFreeShippingThreshold(currency.code),
+    currency.code,
+  )
 
   const messages = useMemo(
     () => [
-      { icon: FiTruck, text: ui.deliveryBanner.uaeFree },
-      { icon: FiGift, text: ui.deliveryBanner.worldwide },
+      { icon: FiTruck, text: withShippingAmount(ui.deliveryBanner.uaeFree, uaeAmount) },
+      { icon: FiGift, text: withShippingAmount(ui.deliveryBanner.worldwide, worldwideAmount) },
       { icon: FiCreditCard, text: ui.deliveryBanner.tabby },
     ],
-    [ui.deliveryBanner],
+    [ui.deliveryBanner, uaeAmount, worldwideAmount],
   )
 
   useEffect(() => {
