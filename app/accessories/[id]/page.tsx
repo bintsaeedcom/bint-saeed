@@ -1037,6 +1037,10 @@ export default function AccessoryDetailPage() {
 
             {strandPdpContent ? (
               <div className="mb-1">{strandPdpIntroBlock(strandPdpContent, isRTL)}</div>
+            ) : necklaceEarringPdpContent?.introParagraphs[0] ? (
+              <p className={`mb-1 ${PDP_COPY_INTRO} pdp-copy--intro`}>
+                {necklaceEarringPdpContent.introParagraphs[0]}
+              </p>
             ) : (
               <p className={`mb-1 ${PDP_COPY_INTRO} pdp-copy--intro`}>
                 {isRTL ? accessory.descriptionAr : accessory.description}

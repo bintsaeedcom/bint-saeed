@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import type { Product } from '@/data/products'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { localizedPath } from '@/lib/i18n/routing'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
@@ -6,10 +7,25 @@ import { getHeritageMetaSnippet } from '@/lib/products/heritageSeo'
 import { getKaftanPageSeo } from '@/lib/products/kaftanSchemaI18n'
 import { getCoventGardenAbayaPageSeo, getCoventGardenAbayaMetaKeywords } from '@/lib/products/coventGardenAbayaPageSeoI18n'
 import { getSohoSetPageSeo, getSohoSetMetaKeywords } from '@/lib/products/sohoSetPageSeoI18n'
+import { getShopCatalogPageSeo } from '@/lib/seo/shopCatalogPageSeoI18n'
+import { buildProductSchemaKeywords } from '@/lib/products/productSchemaMeta'
+import { getProductSlug } from '@/lib/products/links'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 
 const SITE = new URL('https://www.bintsaeed.com')
 const G = LOCALE_GEO
+
+function resolveDedicatedPageSeo(
+  slug: string,
+  locale: AppLocale,
+): { title: string; description: string } | null {
+  return (
+    getCoventGardenAbayaPageSeo(slug, locale) ??
+    getSohoSetPageSeo(slug, locale) ??
+    getKaftanPageSeo(slug, locale) ??
+    getShopCatalogPageSeo(slug, locale)
+  )
+}
 
 export function buildProductPageTitle(
   locale: AppLocale,
@@ -17,12 +33,8 @@ export function buildProductPageTitle(
 ): string {
   const slug = body.slug?.toLowerCase()
   if (slug) {
-    const coventGarden = getCoventGardenAbayaPageSeo(slug, locale)
-    if (coventGarden) return coventGarden.title
-    const soho = getSohoSetPageSeo(slug, locale)
-    if (soho) return soho.title
-    const kaftan = getKaftanPageSeo(slug, locale)
-    if (kaftan) return kaftan.title
+    const dedicated = resolveDedicatedPageSeo(slug, locale)
+    if (dedicated) return dedicated.title
   }
   return `${body.name} | Bint Saeed`
 }
@@ -49,12 +61,8 @@ export function buildProductMetaDescription(
 ): string {
   const slug = body.slug?.toLowerCase()
   if (slug) {
-    const coventGarden = getCoventGardenAbayaPageSeo(slug, locale)
-    if (coventGarden) return clipMetaDescription(coventGarden.description, 200)
-    const soho = getSohoSetPageSeo(slug, locale)
-    if (soho) return clipMetaDescription(soho.description, 200)
-    const kaftan = getKaftanPageSeo(slug, locale)
-    if (kaftan) return clipMetaDescription(kaftan.description, 200)
+    const dedicated = resolveDedicatedPageSeo(slug, locale)
+    if (dedicated) return clipMetaDescription(dedicated.description, 200)
   }
 
   const heritage = body.slug ? getHeritageMetaSnippet(locale, body.slug) : ''
@@ -66,15 +74,39 @@ export function buildProductMetaDescription(
 
 export function getProductPageMetaKeywords(
   locale: AppLocale,
-  slug: string,
+  product: Product,
   colorName?: string,
 ): string | undefined {
-  const normalized = slug.toLowerCase()
-  const coventGarden = getCoventGardenAbayaPageSeo(normalized, locale)
+  const slug = getProductSlug(product).toLowerCase()
+  const coventGarden = getCoventGardenAbayaPageSeo(slug, locale)
   if (coventGarden) return getCoventGardenAbayaMetaKeywords(locale, colorName)
-  const soho = getSohoSetPageSeo(normalized, locale)
+  const soho = getSohoSetPageSeo(slug, locale)
   if (soho) return getSohoSetMetaKeywords(locale, colorName)
-  return undefined
+  return buildProductSchemaKeywords(product, colorName, locale)
+}
+
+const AI_CATEGORY: Record<string, string> = {
+  Abayas: 'Luxury designer abayas; Emirati modest fashion',
+  Dresses: 'Luxury designer dresses; Emirati contemporary fashion',
+  Sets: 'Luxury coordinate sets; Emirati travelwear',
+  Kaftans: 'Luxury occasion kaftans; Emirati fashion',
+}
+
+/** AI-oriented meta `other` tags — mirrors accessory PDP discovery signals. */
+export function getProductPageAiOther(
+  product: Product,
+  locale: AppLocale = 'en',
+): Record<string, string> {
+  const slug = getProductSlug(product)
+  return {
+    'ai:brand': BRAND_NAME,
+    'ai:category': AI_CATEGORY[product.category] ?? 'Luxury Emirati fashion',
+    'ai:product': product.name,
+    'ai:location': LOCALE_GEO[locale].madeIn,
+    'ai:intent':
+      'Organic discovery for luxury modest fashion, Emirati designer wardrobes, GCC and international shoppers',
+    'ai:slug': slug,
+  }
 }
 
 export function productCanonicalUrl(locale: AppLocale, slug: string): string {

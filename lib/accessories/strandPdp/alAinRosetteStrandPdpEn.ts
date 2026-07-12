@@ -60,6 +60,7 @@ function buildRosettePdp(
       templates.detailAttach,
       templates.detailPersonalise,
       templates.detailNotJewellery,
+      templates.detailGiftBox,
     ],
     materials: [
       materialStone,

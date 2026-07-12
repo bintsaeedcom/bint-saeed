@@ -7,6 +7,8 @@ import {
   AR_EARRING_PDP_BY_ID,
   EN_EARRING_PDP_BY_ID,
 } from '@/lib/accessories/necklaceEarringPdpContentEarringsEn'
+import { getEarringPdpContentI18n } from '@/lib/accessories/earringPdpContentI18n'
+import { getNecklacePdpContentI18n } from '@/lib/accessories/necklacePdpContentI18n'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
 import {
   JEWELLERY_CARE_AR,
@@ -57,8 +59,8 @@ const MALACHITE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       'Convertible design, wear as a single long necklace or doubled around the neck',
       'Gold-tone signature clasp with adjustable extension chain',
       'Each natural stone is unique in colour, veining and natural character',
-      'Designed to coordinate with the Al Ain Rosette Earrings and Bint Saeed Strands',
-      'Presented in a Bint Saeed gift box',
+      'Designed to coordinate with the Al Ain Oasis Earrings - Malachite and Signature Strand - Malachite',
+      'Presented in a signature Bint Saeed gift box',
     ],
     careLead: JEWELLERY_CARE_LEAD_EN,
     care: [...JEWELLERY_CARE_EN],
@@ -192,7 +194,7 @@ const ROSE_QUARTZ_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>
       'Convertible design, wear as a single long necklace or doubled around the neck',
       'Gold-tone signature clasp with adjustable extension chain',
       'Each natural gemstone is unique in colour, veining and natural character',
-      'Designed to coordinate with the Al Ain Rosette Earrings and Al Ain Rosette Rose Quartz Signature Strand',
+      'Designed to coordinate with the Al Quaa Earrings - Rose Quartz and Signature Strand - Rose Quartz',
       'Presented in a signature Bint Saeed gift box',
     ],
     careLead: JEWELLERY_CARE_LEAD_EN,
@@ -326,7 +328,7 @@ const LAPIS_LAZULI_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack
       'Convertible design, wear as a single long necklace or doubled around the neck',
       'Gold-tone signature clasp with adjustable extension chain',
       'Each natural gemstone displays its own colour, veining and pyrite inclusions',
-      'Designed to coordinate with the Al Ain Rosette Earrings and Al Ain Rosette Lapis Lazuli Signature Strand',
+      'Designed to coordinate with the Al Quaa Earrings - Lapis Lazuli and Signature Strand - Lapis Lazuli',
       'Presented in a signature Bint Saeed gift box',
     ],
     careLead: JEWELLERY_CARE_LEAD_EN,
@@ -460,7 +462,7 @@ const SUNSTONE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> =
       'Convertible design, wear as a single long necklace or doubled around the neck',
       'Gold-tone signature clasp with adjustable extension chain',
       'Each natural gemstone displays its own colour, shimmer and natural character',
-      'Designed to coordinate with the Al Ain Rosette Earrings and Al Ain Rosette Sunstone Signature Strand',
+      'Designed to coordinate with the Al Ain Oasis Earrings - Orange Jade and Signature Strand - Sunstone',
       'Presented in a signature Bint Saeed gift box',
     ],
     careLead: JEWELLERY_CARE_LEAD_EN,
@@ -594,7 +596,7 @@ const TIGER_EYE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
       'Convertible design, wear as a single long necklace or doubled around the neck',
       'Gold-tone signature clasp with adjustable extension chain',
       'Each natural gemstone displays its own colour, silky lustre and natural character',
-      'Designed to coordinate with the Al Ain Rosette Earrings and Al Ain Rosette Tiger Eye Signature Strand',
+      'Designed to coordinate with signature earrings and Signature Strand - Tiger Eye',
       'Presented in a signature Bint Saeed gift box',
     ],
     careLead: JEWELLERY_CARE_LEAD_EN,
@@ -716,7 +718,7 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
     introParagraphs: [
       'Refined in its simplicity, the Al Ain Oasis Necklace - Onyx is hand-strung from natural black onyx gemstones, accented with gold-plated hematite beads and completed with the House’s signature Al Ain Rosette, hand-carved from natural Carnelian. Designed with versatility in mind, it may be worn as a single long necklace or doubled around the neck to create a shorter layered silhouette.',
       'Natural gemstones have been admired for generations for their individuality. The deep black tones of onyx create a striking contrast with the warmth of Carnelian and luminous gold accents, resulting in a composition that is both timeless and distinctive. As every gemstone is formed by nature, each necklace possesses its own subtle character and natural beauty.',
-      'Handcrafted in Abu Dhabi, the necklace reflects Bint Saeed’s appreciation for natural materials and enduring craftsmanship. Complete the look with the matching Al Ain Rosette Earrings and the Al Ain Rosette Onyx Signature Strand, designed to complement selected Bint Saeed abayas, dresses and tailoring.',
+      'Handcrafted in Abu Dhabi, the necklace reflects Bint Saeed’s appreciation for natural materials and enduring craftsmanship. Complete the look with signature earrings and the Signature Strand - Onyx, designed to complement selected Bint Saeed abayas, dresses and tailoring.',
     ],
     featuresTitle: 'Features',
     features: [
@@ -728,7 +730,7 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
       'Convertible design, wear as a single long necklace or doubled around the neck',
       'Gold-tone signature clasp with adjustable extension chain',
       'Each natural gemstone is unique in tone and natural character',
-      'Designed to coordinate with the Al Ain Rosette Earrings and Al Ain Rosette Onyx Signature Strand',
+      'Designed to coordinate with signature earrings and Signature Strand - Onyx',
       'Presented in a signature Bint Saeed gift box',
     ],
     careLead: JEWELLERY_CARE_LEAD_EN,
@@ -749,7 +751,7 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
       {
         question: 'Is there a matching Signature Strand available?',
         answer:
-          'Yes. The Al Ain Rosette Onyx Signature Strand has been designed to complement the necklace and may be attached to selected Bint Saeed abayas, dresses and tailoring, allowing your jewellery and garments to share the same natural gemstone details. Paired with the matching Al Ain Rosette Earrings, it creates a complete expression of the House’s natural stone collection.',
+          'Yes. The Signature Strand - Onyx has been designed to complement the necklace and may be attached to selected Bint Saeed abayas, dresses and tailoring, allowing your jewellery and garments to share the same natural gemstone details. Paired with signature earrings, it creates a complete expression of the House’s natural stone collection.',
       },
       {
         question: 'Can the necklace be worn in different ways?',
@@ -782,7 +784,7 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
     introParagraphs: [
       'راقية في بساطتها، تُرصَّع قلادة القوع روزيت الأونكس يدوياً من أحجار الأونكس الأسود الطبيعية، مع خرز هيمايت مطلي بالذهب، وتكتمل برمز الدار «روزيت القوع» المنحوت يدوياً من العقيق الطبيعي. صُممت بمرونة في الارتداء؛ يمكن ارتداؤها كقلادة طويلة واحدة أو مضاعفتها حول العنق لإطلالة أقصر بطبقات.',
       'يُعجب الناس بالأحجار الطبيعية منذ أجيال لتميزها. درجات الأسود العميقة للأونكس تخلق تبايناً لافتاً مع دفء العقيق ولمسات الذهب المضيئة، فتبدو التركيبة خالدة ومميزة في آنٍ واحد. وبما أن كل حجر يتشكّل في الطبيعة، تتمتع كل قلادة بطابعها الرقيق وجمالها الطبيعي.',
-      'صُنعت يدوياً في أبوظبي، وتعكس القلادة تقدير Bint Saeed للمواد الطبيعية والحرفية الدائمة. أكملي الإطلالة مع أقراط القوع روزيت المطابقة وAl Ain Rosette Onyx Signature Strand، المصمم ليكمل عباءات وفساتين وقطع خياطة مختارة من Bint Saeed.',
+      'صُنعت يدوياً في أبوظبي، وتعكس القلادة تقدير Bint Saeed للمواد الطبيعية والحرفية الدائمة. أكملي الإطلالة مع الأقراط التوقيعية وSignature Strand — أونكس، المصمم ليكمل عباءات وفساتين وقطع خياطة مختارة من Bint Saeed.',
     ],
     featuresTitle: 'المميزات',
     features: [
@@ -794,7 +796,7 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
       'تصميم قابل للتحويل: ارتداء طويل أو مزدوج حول العنق',
       'إغلاق توقيع ذهبي مع سلسلة تمديد قابلة للتعديل',
       'كل حجر طبيعي فريد في درجته وطابعه الطبيعي',
-      'مصممة للتنسيق مع أقراط القوع روزيت وAl Ain Rosette Onyx Signature Strand',
+      'مصممة للتنسيق مع الأقراط التوقيعية وSignature Strand — أونكس',
       'تُقدَّم في علبة هدايا توقيعية من Bint Saeed',
     ],
     careLead: JEWELLERY_CARE_LEAD_AR,
@@ -815,7 +817,7 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
       {
         question: 'هل يتوفر Signature Strand مطابق؟',
         answer:
-          'نعم. صُمم Al Ain Rosette Onyx Signature Strand ليكمل القلادة ويمكن تثبيته على عباءات وفساتين وقطع خياطة مختارة من Bint Saeed، لتتشارك مجوهراتك وملابسك في تفاصيل الأحجار الطبيعية نفسها. مع أقراط القوع روزيت المطابقة، يُكمل تعبيراً متكاملاً عن مجموعة الأحجار الطبيعية في الدار.',
+          'نعم. صُمم Signature Strand — أونكس ليكمل القلادة ويمكن تثبيته على عباءات وفساتين وقطع خياطة مختارة من Bint Saeed، لتتشارك مجوهراتك وملابسك في تفاصيل الأحجار الطبيعية نفسها. مع الأقراط التوقيعية، يُكمل تعبيراً متكاملاً عن مجموعة الأحجار الطبيعية في الدار.',
       },
       {
         question: 'هل يمكن ارتداء القلادة بطرق مختلفة؟',
@@ -863,7 +865,24 @@ export function getNecklaceEarringPdpContent(
   else if (locale === 'fr' && FR_EARRING_PDP_BY_ID[id]) content = FR_EARRING_PDP_BY_ID[id]
   else if (locale === 'en' && EN_EARRING_PDP_BY_ID[id]) content = EN_EARRING_PDP_BY_ID[id]
   else if (locale === 'ar' && AR_EARRING_PDP_BY_ID[id]) content = AR_EARRING_PDP_BY_ID[id]
-  else content = PDP_BY_ID[id]?.[locale] ?? PDP_BY_ID[id]?.en
+  else content = PDP_BY_ID[id]?.[locale]
+
+  // Secondary locales (it/es/ru/…) — full translated earring / necklace packs.
+  if (!content) {
+    content = getEarringPdpContentI18n(id, locale)
+  }
+  if (!content) {
+    content = getNecklacePdpContentI18n(id, locale)
+  }
+
+  // Earrings: authored packs are en/ar/fr only — fall back to EN so other locales keep FAQ/features/meta.
+  if (!content && EN_EARRING_PDP_BY_ID[id]) {
+    content = EN_EARRING_PDP_BY_ID[id]
+  }
+  // Necklaces: authored packs are en/ar (and fr above) — fall back to EN after secondary i18n.
+  if (!content) {
+    content = PDP_BY_ID[id]?.en
+  }
 
   if (!content) return undefined
 

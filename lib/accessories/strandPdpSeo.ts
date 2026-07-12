@@ -2,7 +2,9 @@ import type { Accessory } from '@/data/accessories'
 import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 import {
   ACCESSORY_IMAGE_EARRINGS_HERO,
+  ACCESSORY_IMAGE_EARRINGS_LAPIS,
   ACCESSORY_IMAGE_EARRINGS_ROSE_QUARTZ,
+  ACCESSORY_IMAGE_EARRINGS_MALACHITE,
   ACCESSORY_IMAGE_NECKLACE,
   ACCESSORY_IMAGE_NECKLACE_LAPIS,
   ACCESSORY_IMAGE_NECKLACE_MALACHITE,
@@ -213,7 +215,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       necklaceImage: ACCESSORY_IMAGE_NECKLACE_LAPIS,
       necklaceLabel: 'Al Ain Oasis Necklace - Lapis Lazuli',
       earringsId: QUAA_EARRINGS_LAPIS_ID,
-      earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
+      earringsImage: ACCESSORY_IMAGE_EARRINGS_LAPIS,
       earringsLabel: QUAA_EARRINGS_LAPIS_LABEL,
     },
     carouselAlt:
@@ -291,7 +293,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       necklaceImage: ACCESSORY_IMAGE_NECKLACE_LAPIS,
       necklaceLabel: 'Al Ain Oasis Necklace - Lapis Lazuli',
       earringsId: QUAA_EARRINGS_LAPIS_ID,
-      earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
+      earringsImage: ACCESSORY_IMAGE_EARRINGS_LAPIS,
       earringsLabel: QUAA_EARRINGS_LAPIS_LABEL,
     },
     carouselAlt:
@@ -317,7 +319,7 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       necklaceImage: ACCESSORY_IMAGE_NECKLACE_LAPIS,
       necklaceLabel: 'Al Ain Oasis Necklace - Lapis Lazuli',
       earringsId: QUAA_EARRINGS_LAPIS_ID,
-      earringsImage: ACCESSORY_IMAGE_EARRINGS_HERO,
+      earringsImage: ACCESSORY_IMAGE_EARRINGS_LAPIS,
       earringsLabel: QUAA_EARRINGS_LAPIS_LABEL,
     },
     carouselAlt:
@@ -363,6 +365,33 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       'limited edition jade strand UAE',
       'pairs with jade necklace and earrings',
       'heart-shaped jade jewellery',
+    ),
+  },
+  'signature-strand-jade': {
+    pairing: {
+      necklaceId: 'al-ain-oasis-necklace-malachite',
+      necklaceImage: ACCESSORY_IMAGE_NECKLACE_MALACHITE,
+      necklaceLabel: 'Al Ain Oasis Necklace - Malachite',
+      earringsId: OASIS_EARRINGS_MALACHITE_ID,
+      earringsImage: ACCESSORY_IMAGE_EARRINGS_MALACHITE,
+      earringsLabel: OASIS_EARRINGS_MALACHITE_LABEL,
+    },
+    carouselAlt:
+      'Natural Jade Signature Strand — genuine undyed natural jade beads in soft muted green with gold-tone Knotted Line finishes, pairs with Al Ain Oasis Necklace - Malachite and Al Ain Oasis Earrings - Malachite',
+    strandAlt:
+      'Natural Jade abaya strand, round natural jade gemstone beads (not coloured jade) with 18K gold-plated Knotted Line ends — hand-assembled in Abu Dhabi for Marylebone Abaya, pairs with Al Ain Oasis Necklace - Malachite',
+    necklaceAlt:
+      'Al Ain Oasis Necklace - Malachite — pairs with Natural Jade Signature Strand and Al Ain Oasis Earrings - Malachite',
+    earringsAlt:
+      'Al Ain Oasis Earrings - Malachite — pairs with Natural Jade Signature Strand and Al Ain Oasis Necklace - Malachite',
+    keywords: kw(
+      'natural jade abaya strand',
+      'undyed jade bead strand',
+      'natural jade abaya charm',
+      'genuine jade beads UAE',
+      'natural jade jewellery set',
+      'pairs with malachite necklace',
+      'not coloured jade strand',
     ),
   },
 }

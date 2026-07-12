@@ -65,6 +65,7 @@ import {
 } from '@/lib/pricing/accessoryCatalogPrices'
 import { SUPPORTED_CURRENCIES } from '@/lib/pricing/types'
 import { getNecklaceEarringFaqForSchema } from '@/lib/accessories/necklaceEarringPdpContent'
+import { getLocalizedAccessoryMaterials } from '@/lib/accessories/accessoryCatalogCopyI18n'
 import {
   buildNecklaceEarringAdditionalProperties,
   buildNecklaceEarringSchemaKeywords,
@@ -72,6 +73,10 @@ import {
   matchingStrandIdForNecklace,
 } from '@/lib/accessories/necklaceEarringSchemaMeta'
 import { getNecklaceEarringSharedSchemaKeywords } from '@/lib/accessories/necklaceEarringSchemaKeywordsI18n'
+import {
+  buildNaturalStoneBirthstoneAdditionalProperties,
+  getNaturalStoneBirthstoneKeywords,
+} from '@/lib/accessories/naturalStoneBirthstoneSeoI18n'
 import {
   buildAccessoryProductJsonLd as buildStrandOnlyJsonLd,
   getAccessoryImageAlt as getStrandImageAlt,
@@ -381,6 +386,7 @@ function buildPhoneCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown>
     getPhoneCharmMetaKeywords(accessory.id, locale),
     getJewelleryCategoryDiscoveryKeywords('phone-strands', locale),
     getGlobalJewelleryDiscoveryKeywords(locale),
+    getNaturalStoneBirthstoneKeywords(accessory.id, locale),
   )
   const multiOffers = buildMultiCurrencyOffers(accessory, pageUrl)
   const aedPrice = ACCESSORY_CATALOG_PRICES[accessory.id]?.AED ?? accessory.price
@@ -441,6 +447,7 @@ function buildPhoneCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown>
         value: 'Natural stone luxury phone charm',
       },
       ...buildPhoneCharmPriceAdditionalProperties(accessory.id),
+      ...buildNaturalStoneBirthstoneAdditionalProperties(accessory.id, locale),
     ],
     image: gallery.map((src, index) => ({
       '@type': 'ImageObject',
@@ -537,6 +544,7 @@ function buildBagCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown> {
     getBagCharmMetaKeywords(accessory.id, locale),
     getJewelleryCategoryDiscoveryKeywords('bag-strands', locale),
     getGlobalJewelleryDiscoveryKeywords(locale),
+    getNaturalStoneBirthstoneKeywords(accessory.id, locale),
   )
   const multiOffers = buildMultiCurrencyOffers(accessory, pageUrl)
   const aedPrice = ACCESSORY_CATALOG_PRICES[accessory.id]?.AED ?? accessory.price
@@ -608,6 +616,7 @@ function buildBagCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown> {
         value: '15 cm / 5.9 in',
       },
       ...buildBagCharmPriceAdditionalProperties(accessory.id),
+      ...buildNaturalStoneBirthstoneAdditionalProperties(accessory.id, locale),
     ],
     image: gallery.map((src, index) => ({
       '@type': 'ImageObject',
@@ -827,7 +836,7 @@ function buildNecklaceEarringJsonLdGraph(input: JsonLdInput): Record<string, unk
   const sku = getAccessorySku(accessory) ?? accessory.id
   const faqItems = getNecklaceEarringFaqForSchema(accessory.id, locale)
   const faqNode = buildFaqPageJsonLd(pageUrl, faqItems, lang)
-  const localizedMaterials = accessory.materials
+  const localizedMaterials = getLocalizedAccessoryMaterials(accessory, locale)
   const keywords = buildNecklaceEarringSchemaKeywords(accessory, displayName, locale)
   const additionalProperty = buildNecklaceEarringAdditionalProperties(accessory, displayName, locale)
   const audienceCategory =

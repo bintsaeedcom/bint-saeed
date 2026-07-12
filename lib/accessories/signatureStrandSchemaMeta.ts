@@ -14,6 +14,10 @@ import {
 import { getSignatureStrandFaq } from '@/lib/accessories/signatureStrandFaqI18n'
 import { getSignatureStrandSchemaFacts } from '@/lib/accessories/signatureStrandSchemaLocalePacks'
 import { localizeStrandSchemaPropertyLabel } from '@/lib/accessories/strandSchemaPropertyLabelsI18n'
+import {
+  buildNaturalStoneBirthstoneAdditionalProperties,
+  getNaturalStoneBirthstoneKeywords,
+} from '@/lib/accessories/naturalStoneBirthstoneSeoI18n'
 
 export { getSignatureStrandFaq } from '@/lib/accessories/signatureStrandFaqI18n'
 export {
@@ -35,6 +39,7 @@ export function buildSignatureStrandSchemaKeywords(
     getSignatureStrandSharedKeywords(locale),
     pack?.keywords,
     buildSignatureStrandStoneKeywords(displayName, pack?.keywords?.slice(0, 6)),
+    getNaturalStoneBirthstoneKeywords(accessory.id, locale),
   )
 }
 
@@ -64,6 +69,8 @@ export function buildSignatureStrandAdditionalProperties(
       value: `${pack.pairing.necklaceLabel} and ${pack.pairing.earringsLabel}`,
     })
   }
+
+  props.push(...buildNaturalStoneBirthstoneAdditionalProperties(accessory.id, locale))
 
   return props
 }

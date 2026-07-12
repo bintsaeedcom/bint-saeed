@@ -20,6 +20,7 @@ export type StoneVariantId =
   | 'signature-strand-sunstone'
   | 'signature-strand-fuchsia-jade'
   | 'signature-strand-orange-jade'
+  | 'signature-strand-jade'
   | 'signature-strand-blue-aventurine'
   | 'signature-strand-rose-quartz'
   | 'signature-strand-malachite'
@@ -1238,6 +1239,212 @@ const ORANGE_JADE: VariantPack = {
   },
 }
 
+const NATURAL_JADE: VariantPack = {
+  en: {
+    headline: 'Natural Jade Signature Strands',
+    introP1:
+      'The Natural Jade Signature Strands introduce quiet depth, muted green-teal calm and refined presence to selected Bint Saeed creations. Hand-assembled in Abu Dhabi from natural jade gemstones — never coloured jade — and finished with Bint Saeed’s signature gold-tone Knotted Line elements, they allow a familiar silhouette to be reimagined through one thoughtful detail.',
+    introP4:
+      'Natural jade is valued for its soft muted green-to-teal tones and polished surface. Between every gemstone, faceted gold-plated Hematite accents introduce delicate brilliance, creating a beautiful interplay of light throughout the strand. Because every gemstone is naturally formed, each Signature Strand is entirely unique in its colour, markings and character.',
+    stoneOrigin:
+      'Jade has been treasured for millennia across East and Central Asia, with notable sources including Myanmar, Guatemala and China. Natural Jade is valued for soft muted green-to-teal tones and its genuine, undyed colour — never coloured or dyed jade. Every gemstone displays its own natural variations, ensuring every Signature Strand is one of a kind.',
+    beadDetail: 'Natural Jade gemstone beads (approximately 7 mm)',
+    materialStone: 'Natural Jade gemstones',
+    strandLabel: 'Natural Jade Signature Strands',
+    stoneLabel: 'Natural Jade',
+    variationNote:
+      'Variations in colour, tone and markings are natural — a hallmark of genuine jade, not coloured jade.',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+  ar: {
+    headline: 'ستراندات اليشم الطبيعي Signature Strands',
+    introP1:
+      'تقدّم ستراندات اليشم الطبيعي Signature Strands عمقاً هادئاً وهدوءاً مخضراً مائلًا إلى التركواز وأناقة رصينة إلى مختارات من إبداعات Bint Saeed. تُجمَّع يدوياً في أبوظبي من أحجار اليشم الطبيعية — وليس اليشم الملوَّن — وتُنهى بعناصر Knotted Line الذهبية الحصرية من Bint Saeed، لتُعيد تخيّل صورة مألوفة من خلال تفصيلة واحدة مدروسة.',
+    introP4:
+      'يُقدَّر اليشم الطبيعي لدرجاته الخضراء التركوازية الهادئة المخفّفة وسطحه المصقول. بين كل حجر كريم، تضيف لمسات الهيماتيت المطلية ذهباً والمقطّعة بريقاً رقيقاً، مما يخلق تفاعلاً جميلاً للضوء على طول الستراند. ولأن كل حجر يتشكّل طبيعياً، يكون كل Signature Strand فريداً تماماً في لونه وعلاماته وطابعه.',
+    stoneOrigin:
+      'حجر اليشم مُقدَّر منذ آلاف السنين في شرق ووسط آسيا، ومن أبرز مصادره ميانمار وغواتيمالا والصين. ويُعرف اليشم الطبيعي بدرجاته الخضراء التركوازية الهادئة ولونه الأصيل غير المصبوغ — وليس اليشم الملوَّن أو المصبوغ. يحمل كل حجر تبايناته الطبيعية الخاصة، ما يضمن أن كل Signature Strand فريد من نوعه.',
+    beadDetail: 'خرز أحجار اليشم الطبيعي (قطرها تقريباً 7 مم)',
+    materialStone: 'أحجار اليشم الطبيعي',
+    strandLabel: 'ستراندات اليشم الطبيعي Signature Strands',
+    stoneLabel: 'يشم طبيعي',
+    variationNote:
+      'تباينات اللون والدرجة والعلامات طبيعية — وهي سمة اليشم الأصيل، وليس اليشم الملوَّن.',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+  fr: {
+    headline: 'Signature Strands Jade naturelle',
+    introP1:
+      'Les Signature Strands Jade naturelle apportent une profondeur discrète, un calme vert-sarcelle atténué et une présence raffinée aux créations Bint Saeed sélectionnées. Assemblés à la main à Abu Dhabi à partir de pierres de jade naturelles — jamais de jade coloré — et finis avec les éléments Knotted Line dorés signature de Bint Saeed, ils permettent de réinventer une silhouette familière par un seul détail réfléchi.',
+    introP4:
+      'La jade naturelle est prisée pour ses tons verts-sarcelle doux et atténués et sa surface polie. Entre chaque gemme, des accents d’Hématite plaquée or facettés introduisent une brillance délicate, créant un jeu de lumière tout au long du fil. Chaque pierre étant formée naturellement, chaque Signature Strand est entièrement unique par sa couleur, ses marques et son caractère.',
+    stoneOrigin:
+      'La jade est prisée depuis des millénaires en Asie de l’Est et d’Asie centrale, avec des sources notables comme Myanmar, Guatemala et China. La Jade naturelle est appréciée pour ses tons verts-sarcelle doux et atténués et sa couleur authentique, non teintée — jamais de jade coloré ou teinté. Chaque gemme présente ses propres variations naturelles, garantissant l’unicité de chaque Signature Strand.',
+    beadDetail: 'Perles en pierre naturelle Jade (environ 7 mm)',
+    materialStone: 'Pierres de Jade naturelles',
+    strandLabel: 'Signature Strands Jade naturelle',
+    stoneLabel: 'Jade naturelle',
+    variationNote:
+      'Les variations de couleur, de tonalité et de marques sont naturelles — signature de la jade authentique, non colorée.',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+  it: {
+    headline: 'Signature Strands Giada naturale',
+    introP1:
+      'I Signature Strands Giada naturale introducono profondità quieta, un calmo verde-teal attenuato e presenza raffinata nelle creazioni Bint Saeed selezionate. Assemblati a mano ad Abu Dhabi con gemme di giada naturale — mai giada colorata — e rifiniti con gli elementi Knotted Line dorati signature di Bint Saeed, permettono di reinterpretare una silhouette familiare attraverso un solo dettaglio ponderato.',
+    introP4:
+      'La giada naturale è apprezzata per i suoi toni verde-teal soffusi e attenuati e la superficie lucidata. Tra ogni gemma, accenti di Ematite placcata oro sfaccettati introducono una brillantezza delicata, creando un bel gioco di luce lungo il filo. Poiché ogni gemma è formata naturalmente, ogni Signature Strand è interamente unico nel colore, nelle venature e nel carattere.',
+    stoneOrigin:
+      'La giada è apprezzata da millenni in Asia orientale e centrale, con fonti notevoli tra cui Myanmar, Guatemala e China. La Giada naturale è valorizzata per i toni verde-teal soffusi e attenuati e il colore autentico, non tinto — mai giada colorata o tinta. Ogni gemma mostra le proprie variazioni naturali, garantendo l’unicità di ogni Signature Strand.',
+    beadDetail: 'Perle in pietra naturale Giada (circa 7 mm)',
+    materialStone: 'Gemme di Giada naturale',
+    strandLabel: 'Signature Strands Giada naturale',
+    stoneLabel: 'Giada naturale',
+    variationNote:
+      'Le variazioni di colore, tonalità e marcature sono naturali — tratto distintivo della giada autentica, non colorata.',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+  es: {
+    headline: 'Signature Strands Jade natural',
+    introP1:
+      'Los Signature Strands Jade natural aportan profundidad serena, una calma verde-teal atenuada y presencia refinada a creaciones seleccionadas de Bint Saeed. Ensamblados a mano en Abu Dhabi con gemas de jade natural — nunca jade coloreado — y acabados con los elementos Knotted Line dorados característicos de Bint Saeed, permiten reimaginar una silueta familiar mediante un solo detalle cuidado.',
+    introP4:
+      'El jade natural se valora por sus tonos verde-teal suaves y atenuados y su superficie pulida. Entre cada gema, acentos de Hematita chapada en oro facetados introducen un brillo delicado, creando un hermoso juego de luz a lo largo del hilo. Como cada gema se forma de manera natural, cada Signature Strand es enteramente único en color, marcas y carácter.',
+    stoneOrigin:
+      'El jade ha sido apreciado durante milenios en Asia oriental y central, con fuentes destacadas como Myanmar, Guatemala y China. El Jade natural se valora por sus tonos verde-teal suaves y atenuados y su color auténtico, sin teñir — nunca jade coloreado o teñido. Cada gema muestra sus propias variaciones naturales, garantizando que cada Signature Strand sea único.',
+    beadDetail: 'Cuentas de piedra natural Jade (aproximadamente 7 mm)',
+    materialStone: 'Gemas de Jade natural',
+    strandLabel: 'Signature Strands Jade natural',
+    stoneLabel: 'Jade natural',
+    variationNote:
+      'Las variaciones de color, tono y marcas son naturales — sello del jade genuino, no coloreado.',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+  ru: {
+    headline: 'Signature Strands «Натуральный нефрит»',
+    introP1:
+      'Signature Strands «Натуральный нефрит» привносят тихую глубину, приглушённый зелёно-бирюзовый покой и утончённое присутствие в избранные творения Bint Saeed. Собраны вручную в Абу-Даби из натурального нефрита — никогда не окрашенного — и завершены фирменными золотистыми элементами Knotted Line от Bint Saeed — они позволяют по-новому увидеть привычный силуэт через одну продуманную деталь.',
+    introP4:
+      'Натуральный нефрит ценят за мягкие приглушённые зелёно-бирюзовые тона и полированную поверхность. Между каждой самоцветной бусиной фасетированные акценты из позолоченного гематита добавляют тонкое сияние, создавая красивую игру света вдоль нити. Поскольку каждый камень сформирован природой, каждый Signature Strand уникален по цвету, рисунку и характеру.',
+    stoneOrigin:
+      'Нефрит ценится на протяжении тысячелетий в Восточной и Центральной Азии; среди значимых источников — Myanmar, Guatemala и China. Натуральный нефрит известен мягкими приглушёнными зелёно-бирюзовыми тонами и подлинным, неокрашенным цветом — никогда не окрашенный и не тонированный нефрит. Каждый камень имеет собственные природные вариации, поэтому каждый Signature Strand неповторим.',
+    beadDetail: 'Бусины из натурального нефрита (примерно 7 мм)',
+    materialStone: 'Натуральный нефрит',
+    strandLabel: 'Signature Strands «Натуральный нефрит»',
+    stoneLabel: 'Натуральный нефрит',
+    variationNote:
+      'Различия в цвете, тоне и рисунке естественны — признак подлинного нефрита, а не окрашенного.',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+  zh: {
+    headline: '天然翡翠 Signature Strands',
+    introP1:
+      '天然翡翠 Signature Strands 为精选 Bint Saeed 作品注入沉静层次、柔和青绿至灰绿的静谧感与内敛气韵。于阿布扎比以天然翡翠手工组装——绝非染色翡翠——并以 Bint Saeed 标志性金色 Knotted Line 元素收尾，让熟悉的轮廓借由一处精心细节焕然一新。',
+    introP4:
+      '天然翡翠以柔和、低饱和的青绿至灰绿色调与抛光表面见长。每颗宝石之间，镶嵌切面镀金赤铁矿点缀，为整条链饰带来精致光泽。因每颗宝石皆天然形成，每条 Signature Strand 在色泽、纹理与个性上皆独一无二。',
+    stoneOrigin:
+      '翡翠在东亚与中亚地区已被珍视数千年，主要来源包括 Myanmar、Guatemala 与 China。天然翡翠以柔和青绿至灰绿色调与真实、未经染色的本色而备受喜爱——绝非染色或着色翡翠。每颗宝石都具天然差异，确保每条 Signature Strand 都独一无二。',
+    beadDetail: '天然翡翠珠（约 7 毫米）',
+    materialStone: '天然翡翠',
+    strandLabel: '天然翡翠 Signature Strands',
+    stoneLabel: '天然翡翠',
+    variationNote: '色泽、色调与纹理的自然差异，正是真翡翠的标志——而非染色翡翠。',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+  de: {
+    headline: 'Natürliche Jade Signature Strands',
+    introP1:
+      'Die Natürliche Jade Signature Strands bringen ruhige Tiefe, gedämpfte Grün-Teal-Ruhe und raffinierte Präsenz in ausgewählte Bint Saeed-Kreationen. Handmontiert in Abu Dhabi aus natürlichen Jade-Edelsteinen — niemals gefärbte Jade — und veredelt mit Bint Saeeds charakteristischen goldfarbenen Knotted Line-Elementen erlauben sie, eine vertraute Silhouette durch ein einziges durchdachtes Detail neu zu denken.',
+    introP4:
+      'Natürliche Jade wird für ihre weichen, gedämpften Grün-bis-Teal-Töne und die polierte Oberfläche geschätzt. Zwischen jedem Edelstein führen facettierte, vergoldete Hämatit-Akzente eine zarte Brillanz ein und schaffen ein schönes Lichtspiel entlang des Strangs. Da jeder Stein natürlich entstanden ist, ist jeder Signature Strand in Farbe, Maserung und Charakter völlig einzigartig.',
+    stoneOrigin:
+      'Jade wird seit Jahrtausenden in Ost- und Zentralasien geschätzt; bedeutende Quellen sind Myanmar, Guatemala und China. Natürliche Jade ist für weiche, gedämpfte Grün-bis-Teal-Töne und ihre echte, ungefärbte Farbe bekannt — niemals gefärbte oder kolorierte Jade. Jeder Edelstein zeigt eigene natürliche Variationen – jeder Signature Strand ist damit ein Unikat.',
+    beadDetail: 'Natürliche Jade-Edelsteinperlen (ca. 7 mm)',
+    materialStone: 'Natürliche Jade-Edelsteine',
+    strandLabel: 'Natürliche Jade Signature Strands',
+    stoneLabel: 'Natürliche Jade',
+    variationNote:
+      'Variationen in Farbe, Ton und Maserung sind natürlich — Kennzeichen echter Jade, nicht gefärbter Jade.',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+  nl: {
+    headline: 'Natuurlijke Jade Signature Strands',
+    introP1:
+      'De Natuurlijke Jade Signature Strands brengen stille diepte, gedempt groen-teal kalmte en verfijnde aanwezigheid in geselecteerde Bint Saeed-creaties. Handmatig geassembleerd in Abu Dhabi van natuurlijke jade-edelstenen — nooit gekleurde jade — en afgewerkt met Bint Saeeds kenmerkende goudkleurige Knotted Line-elementen, laten ze een vertrouwd silhouet opnieuw beleven via één doordacht detail.',
+    introP4:
+      'Natuurlijke jade wordt gewaardeerd om zachte, gedempte groen-tot-teal tinten en een gepolijst oppervlak. Tussen elke edelsteen brengen gefacetteerde, vergulde Hematite-accenten een delicate glans, wat een mooi lichtspel langs de streng creëert. Omdat elke edelsteen natuurlijk gevormd is, is elke Signature Strand volledig uniek in kleur, tekening en karakter.',
+    stoneOrigin:
+      'Jade wordt al millennia gewaardeerd in Oost- en Centraal-Azië, met belangrijke bronnen in Myanmar, Guatemala en China. Natuurlijke Jade staat bekend om zachte, gedempte groen-tot-teal tinten en haar echte, ongekleurde kleur — nooit gekleurde of geverfde jade. Elke edelsteen toont eigen natuurlijke variaties, waardoor elke Signature Strand uniek is.',
+    beadDetail: 'Natuurlijke Jade-edelstenen kralen (ongeveer 7 mm)',
+    materialStone: 'Natuurlijke Jade-edelstenen',
+    strandLabel: 'Natuurlijke Jade Signature Strands',
+    stoneLabel: 'Natuurlijke Jade',
+    variationNote:
+      'Variaties in kleur, toon en tekening zijn natuurlijk — kenmerk van echte jade, niet van gekleurde jade.',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+  pt: {
+    headline: 'Signature Strands Jade natural',
+    introP1:
+      'Os Signature Strands Jade natural introduzem profundidade serena, calma verde-teal atenuada e presença refinada nas criações Bint Saeed selecionadas. Montados à mão em Abu Dhabi com gemas de jade natural — nunca jade colorida — e finalizados com os elementos Knotted Line dourados assinatura da Bint Saeed, permitem reimaginar uma silhueta familiar através de um único detalhe cuidado.',
+    introP4:
+      'A jade natural é valorizada pelos tons verde-teal suaves e atenuados e pela superfície polida. Entre cada gema, acentos de Hematite folheada a ouro facetados introduzem um brilho subtil, criando um belo jogo de luz ao longo do fio. Como cada gema se forma naturalmente, cada Signature Strand é inteiramente único em cor, marcas e carácter.',
+    stoneOrigin:
+      'A jade é valorizada há milénios no Leste e Centro da Ásia, com fontes de destaque em Myanmar, Guatemala e China. A Jade natural é apreciada pelos tons verde-teal suaves e atenuados e pela cor autêntica, sem tingimento — nunca jade colorida ou tingida. Cada gema exibe as suas próprias variações naturais, garantindo que cada Signature Strand seja único.',
+    beadDetail: 'Contas de pedra natural Jade (aproximadamente 7 mm)',
+    materialStone: 'Gemas de Jade natural',
+    strandLabel: 'Signature Strands Jade natural',
+    stoneLabel: 'Jade natural',
+    variationNote:
+      'As variações de cor, tonalidade e marcas são naturais — marca da jade genuína, não colorida.',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+  id: {
+    headline: 'Signature Strands Jade Alami',
+    introP1:
+      'Signature Strands Jade Alami menghadirkan kedalaman tenang, ketenangan hijau-teal redup, dan kehadiran yang halus pada kreasi Bint Saeed terpilih. Dirakit tangan di Abu Dhabi dari batu permata jade alami — bukan jade berwarna — dan diselesaikan dengan elemen Knotted Line bernuansa emas khas Bint Saeed, mereka memungkinkan siluet yang sudah dikenal dibayangkan ulang melalui satu detail yang penuh pertimbangan.',
+    introP4:
+      'Jade alami dihargai karena rona hijau-ke-teal yang lembut dan redup serta permukaan polesannya. Di antara setiap batu, aksen Hematite berlapis emas berfaset menambahkan kilau halus, menciptakan permainan cahaya yang indah sepanjang untaian. Karena setiap batu terbentuk secara alami, setiap Signature Strand sepenuhnya unik dalam warna, corak, dan karakternya.',
+    stoneOrigin:
+      'Jade telah dihargai selama ribuan tahun di Asia Timur dan Asia Tengah, dengan sumber penting termasuk Myanmar, Guatemala, dan China. Jade Alami dinilai karena rona hijau-ke-teal yang lembut dan redup serta warna aslinya yang tidak diwarnai — bukan jade berwarna atau dicelup. Setiap batu permata menampilkan variasi alaminya sendiri, memastikan setiap Signature Strand benar-benar unik.',
+    beadDetail: 'Manik batu permata Jade alami (sekitar 7 mm)',
+    materialStone: 'Batu permata Jade alami',
+    strandLabel: 'Signature Strands Jade Alami',
+    stoneLabel: 'Jade Alami',
+    variationNote:
+      'Variasi pada warna, rona, dan corak bersifat alami — ciri jade sejati, bukan jade berwarna.',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+  ms: {
+    headline: 'Signature Strands Jade Semula Jadi',
+    introP1:
+      'Signature Strands Jade Semula Jadi memperkenalkan kedalaman tenang, ketenangan hijau-teal redup dan kehadiran yang halus kepada ciptaan Bint Saeed terpilih. Dipasang tangan di Abu Dhabi daripada batu permata jade semula jadi — bukan jade berwarna — dan disiapkan dengan elemen Knotted Line bernuansa emas khas Bint Saeed, ia membolehkan siluet yang biasa dibayangkan semula melalui satu butiran yang dipikirkan dengan teliti.',
+    introP4:
+      'Jade semula jadi dihargai kerana tona hijau-ke-teal yang lembut dan redup serta permukaan digilapnya. Di antara setiap batu, aksen Hematite bersalut emas berfaset menambahkan kilauan halus, mencipta permainan cahaya yang indah sepanjang untaian. Memandangkan setiap batu terbentuk secara semula jadi, setiap Signature Strand benar-benar unik dalam warna, corak dan karakternya.',
+    stoneOrigin:
+      'Jade telah dihargai selama ribuan tahun di Asia Timur dan Asia Tengah, dengan sumber penting termasuk Myanmar, Guatemala dan China. Jade Semula Jadi dinilai kerana tona hijau-ke-teal yang lembut dan redup serta warna aslinya yang tidak diwarnai — bukan jade berwarna atau dicelup. Setiap batu permata mempamerkan variasi semula jadinya sendiri, memastikan setiap Signature Strand benar-benar unik.',
+    beadDetail: 'Manik batu permata Jade semula jadi (kira-kira 7 mm)',
+    materialStone: 'Batu permata Jade semula jadi',
+    strandLabel: 'Signature Strands Jade Semula Jadi',
+    stoneLabel: 'Jade Semula Jadi',
+    variationNote:
+      'Variasi pada warna, tona dan corak adalah semula jadi — ciri jade tulen, bukan jade berwarna.',
+    introP2Style: 'mood',
+    limitedEdition: false,
+  },
+}
+
 const ROSE_QUARTZ: VariantPack = {
   en: {
     headline: 'Rose Quartz Signature Strands',
@@ -2269,6 +2476,7 @@ export const STONE_VARIANTS_I18N: Record<StoneVariantId, Record<AppLocale, Stone
   'signature-strand-sunstone': SUNSTONE,
   'signature-strand-fuchsia-jade': FUCHSIA_JADE,
   'signature-strand-orange-jade': ORANGE_JADE,
+  'signature-strand-jade': NATURAL_JADE,
   'signature-strand-blue-aventurine': BLUE_AVENTURINE,
   'signature-strand-rose-quartz': ROSE_QUARTZ,
   'signature-strand-malachite': MALACHITE,

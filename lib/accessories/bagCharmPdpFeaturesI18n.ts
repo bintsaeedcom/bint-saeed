@@ -24,6 +24,7 @@ type FeatureTemplate = {
   keyring: string
   variation: string
   colourLine: string
+  giftBox: string
   care: string[]
   stoneLabel: string
 }
@@ -49,6 +50,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       'May also be used as a keyring — handle with care; natural stones are fragile and may chip or break if struck against hard surfaces',
     variation: 'Natural variations in colour and pattern make each bag charm unique',
     colourLine: 'Colour: Fuchsia Jade',
+    giftBox: 'Presented in a signature Bint Saeed gift box',
     care: [
       'Natural gemstones should last a lifetime when treated with the respect they deserve. Handle each bag charm gently; stones may chip or break if struck, dropped onto hard surfaces, or subjected to force.',
       'Avoid contact with water, perfumes, hair spray, nail polish remover and harsh chemicals, especially chlorine.',
@@ -75,6 +77,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       'يمكن استخدامها أيضاً كتعليقة مفاتيح — بحذر؛ الأحجار الطبيعية هشّة وقد تتشقّق أو تنكسر إذا اصطدمت بسطح صلب',
     variation: 'التباينات الطبيعية في اللون والنمط تجعل كل تعليقة حقيبة فريدة',
     colourLine: 'اللون: يشم فوشي',
+    giftBox: 'تُقدَّم في علبة هدايا توقيعية من Bint Saeed',
     care: [
       'الأحجار الطبيعية تدوم عمراً كاملاً حين تُعامل بما تستحقه من احترام. تعاملي مع كل تعليقة حقيبة بلطف؛ فقد تتشقّق الأحجار أو تنكسر إذا ضُربت أو سقطت على سطح صلب أو تعرّضت لقوة.',
       'تجنّبي ملامسة الماء والعطور ومثبت الشعر ومزيل طلاء الأظافر والمواد الكيميائية القاسية، ولا سيّما الكلور.',
@@ -101,6 +104,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       'Peut aussi servir de porte-clés — avec précaution ; les pierres naturelles sont fragiles et peuvent s’ébrécher ou se briser au contact d’une surface dure',
     variation: 'Les variations naturelles de couleur et de motif rendent chaque breloque unique',
     colourLine: 'Couleur : Jade fuchsia',
+    giftBox: 'Présentée dans un écrin cadeau signature Bint Saeed',
     care: [
       'Les pierres naturelles peuvent durer toute une vie lorsqu’elles sont traitées avec le respect qu’elles méritent. Manipulez chaque breloque avec délicatesse ; les pierres peuvent s’ébrécher ou se briser si elles sont heurtées, tombées ou soumises à une force.',
       'Évitez le contact avec l’eau, les parfums, la laque, le dissolvant et les produits chimiques agressifs, en particulier le chlore.',
@@ -127,6 +131,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       'Può essere usato anche come portachiavi — con cautela; le pietre naturali sono fragili e possono scheggiarsi o rompersi se colpite contro superfici dure',
     variation: 'Le variazioni naturali di colore e pattern rendono unico ogni ciondolo',
     colourLine: 'Colore: Giada fucsia',
+    giftBox: 'Presentato in un cofanetto regalo firma Bint Saeed',
     care: [
       'Le gemme naturali possono durare una vita intera se trattate con il rispetto che meritano. Maneggiate ogni ciondolo con delicatezza; le pietre possono scheggiarsi o rompersi se urtate, fatte cadere o sottoposte a forza.',
       'Evitate il contatto con acqua, profumi, lacca, solvente e prodotti chimici aggressivi, in particolare il cloro.',
@@ -153,6 +158,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       'También puede usarse como llavero — con cuidado; las piedras naturales son frágiles y pueden astillarse o romperse si golpean superficies duras',
     variation: 'Las variaciones naturales de color y patrón hacen único cada colgante',
     colourLine: 'Color: Jade fucsia',
+    giftBox: 'Presentado en un estuche de regalo firma Bint Saeed',
     care: [
       'Las gemas naturales pueden durar toda una vida si se tratan con el respeto que merecen. Manipule cada colgante con delicadeza; las piedras pueden astillarse o romperse si se golpean, caen o se someten a fuerza.',
       'Evite el contacto con agua, perfumes, laca, quitaesmalte y químicos agresivos, especialmente el cloro.',
@@ -179,6 +185,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       'Также может использоваться как брелок — осторожно; натуральные камни хрупки и могут сколоться или разбиться при ударе о твёрдую поверхность',
     variation: 'Природные вариации цвета и узора делают каждую подвеску уникальной',
     colourLine: 'Цвет: фуксиевый нефрит',
+    giftBox: 'Подаётся в фирменной подарочной коробке Bint Saeed',
     care: [
       'Натуральные камни служат всю жизнь, если относиться к ним с уважением. Обращайтесь с подвеской бережно; камни могут сколоться или разбиться при ударе, падении или силе.',
       'Избегайте контакта с водой, духами, лаком, жидкостью для снятия лака и агрессивной химией, особенно хлором.',
@@ -205,6 +212,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       '亦可作钥匙扣使用 — 请小心；天然石材脆弱，撞击硬面可能崩裂',
     variation: '天然颜色与纹理差异使每件挂饰独一无二',
     colourLine: '颜色：紫红玉',
+    giftBox: '置于 Bint Saeed 签名礼盒中呈献',
     care: [
       '天然宝石若得到应有的尊重护理，可伴随一生。请轻拿轻放；撞击、跌落硬面或受力可能导致崩裂。',
       '避免接触水、香水、定型喷雾、卸甲水及刺激性化学品，尤其是氯。',
@@ -231,6 +239,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       'Auch als Schlüsselanhänger nutzbar — vorsichtig; Natursteine sind empfindlich und können bei Aufprall auf harte Oberflächen absplittern oder brechen',
     variation: 'Natürliche Variationen in Farbe und Muster machen jeden Anhänger einzigartig',
     colourLine: 'Farbe: Fuchsia-Jade',
+    giftBox: 'Präsentiert in einer signature Bint Saeed Geschenkbox',
     care: [
       'Natursteine halten ein Leben lang, wenn sie mit dem gebührenden Respekt behandelt werden. Behandeln Sie jeden Anhänger behutsam; Steine können bei Stoß, Sturz oder Krafteinwirkung absplittern oder brechen.',
       'Vermeiden Sie Kontakt mit Wasser, Parfum, Haarspray, Nagellackentferner und aggressiven Chemikalien, insbesondere Chlor.',
@@ -257,6 +266,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       'Kan ook als sleutelhanger worden gebruikt — voorzichtig; natuursteen is kwetsbaar en kan splinteren of breken bij stoot tegen harde oppervlakken',
     variation: 'Natuurlijke variaties in kleur en patroon maken elke tashanger uniek',
     colourLine: 'Kleur: Fuchsia-jade',
+    giftBox: 'Gepresenteerd in een signature Bint Saeed cadeauverpakking',
     care: [
       'Natuurlijke edelstenen gaan een leven mee wanneer ze met gepast respect worden behandeld. Behandel elke tashanger voorzichtig; stenen kunnen splinteren of breken bij stoot, val of kracht.',
       'Vermijd contact met water, parfum, haarlak, nagellakremover en agressieve chemicaliën, vooral chloor.',
@@ -283,6 +293,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       'Também pode ser usado como porta-chaves — com cuidado; pedras naturais são frágeis e podem lascar ou partir se baterem em superfícies duras',
     variation: 'Variações naturais de cor e padrão tornam cada pingente único',
     colourLine: 'Cor: Jade fúcsia',
+    giftBox: 'Apresentado numa caixa de presente signature Bint Saeed',
     care: [
       'Gemas naturais podem durar uma vida quando tratadas com o respeito que merecem. Manuseie cada pingente com cuidado; as pedras podem lascar ou partir se forem atingidas, caírem ou sofrerem força.',
       'Evite contacto com água, perfumes, lacas, removedor de verniz e químicos agressivos, especialmente cloro.',
@@ -309,6 +320,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       'Juga dapat digunakan sebagai gantungan kunci — hati-hati; batu alam rapuh dan dapat retak atau patah jika terbentur permukaan keras',
     variation: 'Variasi alami warna dan pola membuat setiap liontin unik',
     colourLine: 'Warna: Jade fuchsia',
+    giftBox: 'Disajikan dalam kotak hadiah signature Bint Saeed',
     care: [
       'Batu alam dapat bertahan seumur hidup jika diperlakukan dengan hormat. Tangani setiap liontin dengan lembut; batu dapat retak atau patah jika terbentur, jatuh, atau terkena gaya.',
       'Hindari kontak dengan air, parfum, hairspray, penghapus kuteks, dan bahan kimia keras, terutama klorin.',
@@ -335,6 +347,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
       'Boleh juga digunakan sebagai gantungan kunci — berhati-hati; batu semula jadi rapuh dan boleh retak atau pecah jika terlanggar permukaan keras',
     variation: 'Variasi semula jadi warna dan corak menjadikan setiap liontin unik',
     colourLine: 'Warna: Jed fuchsia',
+    giftBox: 'Dihidangkan dalam kotak hadiah signature Bint Saeed',
     care: [
       'Batu semula jadi boleh bertahan seumur hidup jika dilayan dengan hormat. Kendalikan setiap liontin dengan lembut; batu boleh retak atau pecah jika terlanggar, jatuh atau dikenakan daya.',
       'Elakkan sentuhan dengan air, minyak wangi, hairspray, penanggal cat kuku dan bahan kimia keras, terutamanya klorin.',
@@ -369,6 +382,7 @@ export function buildBagCharmFeatures(
       t.hematite,
       t.keyring,
       t.variation,
+      t.giftBox,
       t.colourLine,
     ],
     careLead: useSharedJewelleryCare ? jewelleryCare.lead : '',

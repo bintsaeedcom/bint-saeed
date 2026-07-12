@@ -1,4 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
+import { getEarringLocalizedAlts } from '@/lib/accessories/earringImageAltI18n'
+import { getNecklaceLocalizedAlts } from '@/lib/accessories/necklaceImageAltI18n'
 
 export type NecklaceEarringSeoPack = {
   carouselAlt: string
@@ -75,9 +77,9 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
   },
   'al-ain-oasis-necklace-onyx': {
     carouselAlt:
-      'Al Ain Onyx necklace — polished black onyx beads with warm undertones and signature clasp, pairs with onyx abaya strand and stud earrings',
+      'Al Ain Oasis Necklace - Onyx — polished black onyx beads with signature clasp, pairs with Signature Strand - Onyx and signature earrings',
     pdpAlt:
-      'Al Ain Onyx necklace with hand-strung natural black onyx beads, warm brown undertones and refined 18K gold-plated signature clasp — luxury onyx bead necklace UAE',
+      'Al Ain Oasis Necklace - Onyx with hand-strung natural black onyx beads and refined 18K gold-plated signature clasp — luxury onyx bead necklace by Bint Saeed UAE',
     keywords: nkw(
       'onyx necklace',
       'black onyx bead necklace',
@@ -151,11 +153,12 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
   },
   'al-ain-oasis-earrings-malachite': {
     carouselAlt:
-      'Al Ain Oasis Earrings - Malachite with natural malachite and Carnelian Al Ain Rosette details — pair with malachite abaya strand and Al Ain Oasis Necklace - Malachite',
+      'Al Ain Oasis Earrings - Malachite with natural Malachite and Sunstone and Carnelian Al Ain Rosette — pair with malachite Signature Strand and Al Ain Oasis Necklace - Malachite',
     pdpAlt:
-      'Al Ain Oasis Earrings - Malachite, hand-assembled with natural malachite gemstones and signature Carnelian Al Ain Rosette motifs — luxury stone earrings by Bint Saeed Abu Dhabi',
+      'Al Ain Oasis Earrings - Malachite, hand-assembled with Malachite and Sunstone, Carnelian Al Ain Rosette, gold-plated Hematite and pavé zirconia leverback — luxury stone earrings by Bint Saeed Abu Dhabi',
     keywords: ekw(
       'malachite earrings',
+      'malachite sunstone earrings',
       'Al Ain Oasis earrings UAE',
       'natural malachite earrings',
       'designer stone earrings Abu Dhabi',
@@ -170,13 +173,14 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
   },
   'al-quaa-earrings-rose-quartz': {
     carouselAlt:
-      'Al Quaa Earrings - Rose Quartz with soft blush natural rose quartz — pair with rose quartz abaya strand and Al Ain Oasis Necklace - Rose Quartz',
+      'Al Quaa Earrings - Rose Quartz with soft blush natural rose quartz and pear-cut pink zirconia stud — pair with rose quartz Signature Strand and Al Ain Oasis Necklace - Rose Quartz',
     pdpAlt:
-      'Al Quaa Earrings - Rose Quartz, hand-assembled with natural rose quartz and signature Carnelian Al Ain Rosette motifs — romantic stone earrings by Bint Saeed UAE',
+      'Al Quaa Earrings - Rose Quartz, hand-assembled with natural rose quartz, Carnelian Al Ain Rosette, gold-plated Hematite and pear-cut pink zirconia stud — romantic stone earrings by Bint Saeed UAE',
     keywords: ekw(
       'rose quartz earrings',
       'Al Quaa earrings UAE',
       'blush stone earrings',
+      'pear-cut pink zirconia stud earrings',
       'natural rose quartz earrings gift',
       'pairs with rose quartz necklace',
     ),
@@ -189,15 +193,16 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
   },
   'al-ain-oasis-earrings-orange-jade': {
     carouselAlt:
-      'Al Ain Oasis Earrings - Orange Jade with warm orange jade and Carnelian Al Ain Rosette details — pair with sunstone and orange jade abaya strands',
+      'Al Ain Oasis Earrings - Orange Jade with Orange Coloured Jade and Sunstone and Carnelian Al Ain Rosette — pair with sunstone and orange jade Signature Strands',
     pdpAlt:
-      'Al Ain Oasis Earrings - Orange Jade, hand-assembled with natural orange jade and signature Carnelian Al Ain Rosette motifs — warm stone earrings by Bint Saeed Abu Dhabi',
+      'Al Ain Oasis Earrings - Orange Jade, hand-assembled with Orange Coloured Jade and Sunstone, Carnelian Al Ain Rosette, gold-plated Hematite and pavé zirconia leverback — warm stone earrings by Bint Saeed Abu Dhabi',
     keywords: ekw(
       'orange jade earrings',
+      'orange coloured jade sunstone earrings',
       'Al Ain Oasis earrings UAE',
       'orange stone earrings',
-      'natural stone stud earrings',
-      'pairs with sunstone necklace',
+      'natural stone drop earrings',
+      'pairs with Al Ain Oasis necklace',
     ),
     relatedAccessoryIds: [
       'al-ain-oasis-necklace-sunstone',
@@ -208,13 +213,14 @@ export const NECKLACE_EARRING_PDP_BY_ID: Record<string, NecklaceEarringSeoPack> 
   },
   'al-quaa-earrings-lapis-lazuli': {
     carouselAlt:
-      'Al Quaa Earrings - Lapis Lazuli with deep royal blue natural lapis — pair with lapis and amethyst abaya strands and Al Ain Oasis Necklace - Lapis Lazuli',
+      'Al Quaa Earrings - Lapis Lazuli with deep royal blue natural lapis and pear-cut clear zirconia stud — pair with lapis Signature Strand and Al Ain Oasis Necklace - Lapis Lazuli',
     pdpAlt:
-      'Al Quaa Earrings - Lapis Lazuli, hand-assembled with natural lapis lazuli and signature Carnelian Al Ain Rosette motifs — luxury blue stone earrings by Bint Saeed UAE',
+      'Al Quaa Earrings - Lapis Lazuli, hand-assembled with natural lapis lazuli, Carnelian Al Ain Rosette, gold-plated Hematite and pear-cut clear zirconia stud — luxury blue stone earrings by Bint Saeed UAE',
     keywords: ekw(
       'lapis lazuli earrings',
-      'Al Ain Oasis earrings UAE',
+      'Al Quaa earrings UAE',
       'blue stone earrings',
+      'pear-cut clear zirconia stud earrings',
       'natural lapis earrings gift',
       'pairs with lapis lazuli necklace',
     ),
@@ -231,11 +237,29 @@ export function getNecklaceEarringPdpPack(id: string): NecklaceEarringSeoPack | 
   return NECKLACE_EARRING_PDP_BY_ID[id]
 }
 
-export function getNecklaceEarringCarouselAlt(id: string, _locale: AppLocale = 'en'): string | undefined {
+export function getNecklaceEarringCarouselAlt(id: string, locale: AppLocale = 'en'): string | undefined {
+  const necklaceLocalized = getNecklaceLocalizedAlts(id, locale)
+  if (necklaceLocalized?.carouselAlt) return necklaceLocalized.carouselAlt
+  const earringLocalized = getEarringLocalizedAlts(id, locale)
+  if (earringLocalized?.carouselAlt) return earringLocalized.carouselAlt
   return getNecklaceEarringPdpPack(id)?.carouselAlt
 }
 
-export function getNecklaceEarringPdpAlt(id: string, imageIndex: number, _locale: AppLocale = 'en'): string | undefined {
+export function getNecklaceEarringPdpAlt(id: string, imageIndex: number, locale: AppLocale = 'en'): string | undefined {
+  const necklaceLocalized = getNecklaceLocalizedAlts(id, locale)
+  if (necklaceLocalized) {
+    if (imageIndex > 0 && getNecklaceEarringPdpPack(id)?.lifestyleAlt) {
+      return getNecklaceEarringPdpPack(id)?.lifestyleAlt
+    }
+    return necklaceLocalized.pdpAlt
+  }
+  const earringLocalized = getEarringLocalizedAlts(id, locale)
+  if (earringLocalized) {
+    if (imageIndex > 0 && getNecklaceEarringPdpPack(id)?.lifestyleAlt) {
+      return getNecklaceEarringPdpPack(id)?.lifestyleAlt
+    }
+    return earringLocalized.pdpAlt
+  }
   const pack = getNecklaceEarringPdpPack(id)
   if (!pack) return undefined
   if (imageIndex > 0 && pack.lifestyleAlt) return pack.lifestyleAlt

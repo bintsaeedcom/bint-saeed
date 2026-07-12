@@ -53,11 +53,13 @@ export const ACCESSORY_IMAGE_ABAYA_CHARM_MALACHITE = `${STRANDS}/bint-saeed-mala
 export const ACCESSORY_IMAGE_ABAYA_CHARM_LAPIS = `${STRANDS}/bint-saeed-lapis-lazuli-carnelian-natural-stone-ain-rosette-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_AMETHYST = `${STRANDS}/bint-saeed-amethyst-hearts-natural-stone-strand-front.webp`
 export const ACCESSORY_IMAGE_ABAYA_CHARM_GREEN_JADE = `${STRANDS}/bint-saeed-jade-hearts-natural-stone-strand-front.webp`
+export const ACCESSORY_IMAGE_ABAYA_CHARM_NATURAL_JADE = `${STRANDS}/bint-saeed-jade-natural-stone-strand-front.webp`
 
 export const ACCESSORY_IMAGE_EARRINGS_MALACHITE = `${A}/earrings/al-ain-oasis-earrings-malachite-sunstone.webp`
 export const ACCESSORY_IMAGE_EARRINGS_ORANGE_JADE = `${A}/earrings/al-ain-oasis-earrings-orange-jade-fron.webp`
 export const ACCESSORY_IMAGE_EARRINGS_ROSE_QUARTZ = `${A}/earrings/al-quaa-earrings-rose-quartz-front.webp`
-/** Temporary shared hero until lapis earring shots are uploaded. */
+export const ACCESSORY_IMAGE_EARRINGS_LAPIS = `${A}/earrings/al-quaa-earrings-lapis-lazuli-front.webp`
+/** Category / nav hero — Al Ain Oasis malachite line */
 export const ACCESSORY_IMAGE_EARRINGS_HERO = ACCESSORY_IMAGE_EARRINGS_MALACHITE
 export const ACCESSORY_IMAGE_BAG_CHARM_I = `${A}/bag%20charm/bint-saeed-al-ain-oasis-i-bag-charm-fuchsia-jade-front.webp`
 export const ACCESSORY_IMAGE_BAG_CHARM_II = `${A}/bag%20charm/bint-saeed-al-ain-oasis-ii-bag-charm-fuchsia-jade-front.webp`
@@ -195,7 +197,7 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Malachite'),
     nameAr: 'قلادة القوع روزيت: الملاكيت',
     category: 'necklaces',
-    price: 1699,
+    price: 2599,
     description:
       'Hand-strung malachite beads with signature clasp and extension chain. Deep Malachite Green tones.',
     descriptionAr:
@@ -212,7 +214,7 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Tiger Eye'),
     nameAr: 'قلادة القوع روزيت: عين النمر',
     category: 'necklaces',
-    price: 1499,
+    price: 1599,
     description:
       'Warm brown tiger eye beads with subtle chatoyancy, finished with our signature closure.',
     descriptionAr:
@@ -229,7 +231,7 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Onyx'),
     nameAr: 'قلادة القوع روزيت: الأونكس',
     category: 'necklaces',
-    price: 1499,
+    price: 1599,
     description:
       'Polished black onyx beads with warm brown undertones and a refined signature clasp.',
     descriptionAr:
@@ -237,9 +239,7 @@ export const accessories: Accessory[] = [
     images: [ACCESSORY_IMAGE_NECKLACE_ONYX],
     materials: 'Natural black onyx beads, 18K gold-plated clasp',
     materialsAr: 'خرز أونكس أسود طبيعي، مشبك مطلي بالذهب 18 قيراط',
-    colors: [
-      { name: 'Black Onyx', nameAr: 'أونكس أسود', hex: '#1a1a1a' },
-      { name: 'Warm Brown', nameAr: 'بني دافئ', hex: '#5c4033' }],
+    colors: [{ name: 'Black Onyx', nameAr: 'أونكس أسود', hex: '#1a1a1a' }],
     inStock: true,
   },
   {
@@ -247,7 +247,7 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Rose Quartz'),
     nameAr: 'قلادة القوع روزيت: الكوارتز الوردي',
     category: 'necklaces',
-    price: 1599,
+    price: 1899,
     description:
       'Soft pink rose quartz beads hand-knotted for a luminous, romantic line with our signature hardware.',
     descriptionAr:
@@ -264,7 +264,7 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Sunstone'),
     nameAr: 'قلادة القوع روزيت: حجر الشمس',
     category: 'necklaces',
-    price: 1599,
+    price: 1899,
     description: 'Warm sunstone bead necklace with luminous peach-orange tones and refined signature closure.',
     descriptionAr: 'قلادة خرز حجر الشمس بدرجات خوخي برتقالي متوهجة مع إغلاق توقيع راقٍ.',
     images: [ACCESSORY_IMAGE_NECKLACE_SUNSTONE],
@@ -280,7 +280,7 @@ export const accessories: Accessory[] = [
     name: alAinOasisNecklaceName('Lapis Lazuli'),
     nameAr: 'قلادة القوع روزيت: اللازورد',
     category: 'necklaces',
-    price: 1699,
+    price: 2199,
     description: 'Rich lapis lazuli bead necklace with deep royal blue tones and elegant signature clasp.',
     descriptionAr: 'قلادة خرز لازورد بدرجات أزرق ملكي عميقة مع إغلاق توقيع أنيق.',
     images: [ACCESSORY_IMAGE_NECKLACE_LAPIS],
@@ -297,13 +297,16 @@ export const accessories: Accessory[] = [
     name: alAinOasisEarringsName('Malachite'),
     nameAr: 'أقراط واحة العين — ملاكيت',
     category: 'earrings',
-    price: 595,
+    price: 645,
     description:
-      'Hand-assembled malachite earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
-    descriptionAr: 'أقراط ملاكيت مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
+      'The finishing touch that brings everything together. Hand-assembled Malachite and Sunstone earrings with a Carnelian Al Ain Rosette, gold-plated Hematite and brilliant zirconia.',
+    descriptionAr:
+      'اللمسة الأخيرة التي تُكمِل كل شيء. أقراط ملاكيت وحجر شمس مُجمَّعة يدوياً مع روزيت القوع من العقيق وهيمايت مطلي بالذهب وزركونيا لامعة.',
     images: [ACCESSORY_IMAGE_EARRINGS_MALACHITE],
-    materials: 'Natural malachite, Carnelian, 18K gold-plated hematite',
-    materialsAr: 'ملاكيت طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
+    materials:
+      'Natural Malachite, Sunstone, Carnelian Al Ain Rosette, 18K gold-plated Hematite, zirconia in 14K gold-plated nickel-free copper',
+    materialsAr:
+      'ملاكيت طبيعي، حجر شمس، روزيت القوع من العقيق، هيمايت مطلي بالذهب 18 قيراط، زركونيا في نحاس خالٍ من النيكل مطلي بالذهب 14 قيراط',
     colors: [{ name: 'Malachite Green', nameAr: 'أخضر ملاكيت', hex: '#1f7a5e' }],
     inStock: true,
     isNew: true,
@@ -313,13 +316,16 @@ export const accessories: Accessory[] = [
     name: 'Al Quaa Earrings - Rose Quartz',
     nameAr: 'أقراط القوع — كوارتز وردي',
     category: 'earrings',
-    price: 595,
+    price: 545,
     description:
-      'Hand-assembled rose quartz earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
-    descriptionAr: 'أقراط كوارتز وردي مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
+      'The finishing touch that brings everything together. Hand-assembled Rose Quartz earrings with a Carnelian Al Ain Rosette, gold-plated Hematite and delicate pink zirconia.',
+    descriptionAr:
+      'اللمسة الأخيرة التي تُكمِل كل شيء. أقراط كوارتز وردي مُجمَّعة يدوياً مع روزيت القوع من العقيق وهيمايت مطلي بالذهب وزركونيا وردية رقيقة.',
     images: [ACCESSORY_IMAGE_EARRINGS_ROSE_QUARTZ],
-    materials: 'Natural rose quartz, Carnelian, 18K gold-plated hematite',
-    materialsAr: 'كوارتز وردي طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
+    materials:
+      'Natural Rose Quartz, Carnelian Al Ain Rosette, 18K gold-plated Hematite, pear-cut pink zirconia stud in 18K gold-plated brass',
+    materialsAr:
+      'كوارتز وردي طبيعي، روزيت القوع من العقيق، هيمايت مطلي بالذهب 18 قيراط، مسمار زركونيا وردية بقطع كمّثري في نحاس مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Rose Quartz Pink', nameAr: 'وردي كوارتز', hex: '#f4b8c5' }],
     inStock: true,
     isBestseller: true,
@@ -329,14 +335,17 @@ export const accessories: Accessory[] = [
     name: alAinOasisEarringsName('Orange Jade'),
     nameAr: 'أقراط واحة العين — يشم برتقالي',
     category: 'earrings',
-    price: 595,
+    price: 570,
     description:
-      'Hand-assembled orange jade earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
-    descriptionAr: 'أقراط يشم برتقالي مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
+      'The finishing touch that brings everything together. Hand-assembled Orange Coloured Jade and Sunstone earrings with a Carnelian Al Ain Rosette, gold-plated Hematite and brilliant zirconia.',
+    descriptionAr:
+      'اللمسة الأخيرة التي تُكمِل كل شيء. أقراط يشم برتقالي اللون وحجر شمس مُجمَّعة يدوياً مع روزيت القوع من العقيق وهيمايت مطلي بالذهب وزركونيا لامعة.',
     images: [ACCESSORY_IMAGE_EARRINGS_ORANGE_JADE],
-    materials: 'Natural orange jade, Carnelian, 18K gold-plated hematite',
-    materialsAr: 'يشم برتقالي طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
-    colors: [{ name: 'Orange Jade', nameAr: 'يشم برتقالي', hex: '#ea580c' }],
+    materials:
+      'Natural Orange Coloured Jade, Sunstone, Carnelian Al Ain Rosette, 18K gold-plated Hematite, zirconia in 14K gold-plated nickel-free copper',
+    materialsAr:
+      'يشم برتقالي اللون طبيعي، حجر شمس، روزيت القوع من العقيق، هيمايت مطلي بالذهب 18 قيراط، زركونيا في نحاس خالٍ من النيكل مطلي بالذهب 14 قيراط',
+    colors: [{ name: 'Orange Coloured Jade', nameAr: 'يشم برتقالي اللون', hex: '#ea580c' }],
     inStock: true,
   },
   {
@@ -344,13 +353,16 @@ export const accessories: Accessory[] = [
     name: alQuaaEarringsName('Lapis Lazuli'),
     nameAr: 'أقراط القوع — لازورد',
     category: 'earrings',
-    price: 495,
+    price: 545,
     description:
-      'Hand-assembled lapis lazuli earrings with signature Al Ain Rosette motifs hand-carved from natural Carnelian and gold-plated hematite accents.',
-    descriptionAr: 'أقراط لازورد مطرّزة يدوياً مع روزيت العين من العقيق وتفاصيل هيمايت مطلية بالذهب.',
-    images: [ACCESSORY_IMAGE_EARRINGS_HERO],
-    materials: 'Natural lapis lazuli, Carnelian, 18K gold-plated hematite',
-    materialsAr: 'لازورد طبيعي، عقيق، هيمايت مطلي بالذهب 18 قيراط',
+      'The finishing touch that brings everything together. Hand-assembled Lapis Lazuli earrings with a Carnelian Al Ain Rosette, gold-plated Hematite and brilliant clear zirconia.',
+    descriptionAr:
+      'اللمسة الأخيرة التي تُكمِل كل شيء. أقراط لازورد مُجمَّعة يدوياً مع روزيت القوع من العقيق وهيمايت مطلي بالذهب وزركونيا شفافة لامعة.',
+    images: [ACCESSORY_IMAGE_EARRINGS_LAPIS],
+    materials:
+      'Natural Lapis Lazuli, Carnelian Al Ain Rosette, 18K gold-plated Hematite, pear-cut clear zirconia stud in 18K gold-plated brass',
+    materialsAr:
+      'لازورد طبيعي، روزيت القوع من العقيق، هيمايت مطلي بالذهب 18 قيراط، مسمار زركونيا شفافة بقطع كمّثري في نحاس مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Lapis Lazuli', nameAr: 'لازورد', hex: '#1e40af' }],
     inStock: true,
   },
@@ -551,7 +563,7 @@ export const accessories: Accessory[] = [
     name: 'Onyx Strand',
     nameAr: 'أونكس حجر طبيعي',
     category: 'signature-strands',
-    price: 299,
+    price: 629,
     description:
       'Natural black onyx abaya strand with secure clip attachment for draping along the edge or sleeve.',
     descriptionAr:
@@ -567,7 +579,7 @@ export const accessories: Accessory[] = [
     name: 'Tiger Eye Strand',
     nameAr: 'عين النمر حجر طبيعي',
     category: 'signature-strands',
-    price: 299,
+    price: 629,
     description:
       'Warm tiger eye beads with subtle chatoyancy; designed for movement when styled on the abaya.',
     descriptionAr:
@@ -580,10 +592,10 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-sunstone',
-    name: 'Sunstone Strand',
-    nameAr: 'ستراند حجر الشمس',
+    name: 'Al Ain Oasis Sunstone Strand',
+    nameAr: 'ستراند واحة العين — حجر الشمس',
     category: 'signature-strands',
-    price: 599,
+    price: 899,
     description:
       'Warm sunstone beads with a peach-orange glow — a luminous accent along the abaya silhouette.',
     descriptionAr:
@@ -599,7 +611,7 @@ export const accessories: Accessory[] = [
     name: 'Fuchsia Jade Strand',
     nameAr: 'اليشم الفوشي حجر طبيعي',
     category: 'signature-strands',
-    price: 249,
+    price: 499,
     description:
       'Fuchsia jade strand for a bold jewel-toned highlight on neutral abayas.',
     descriptionAr:
@@ -615,7 +627,7 @@ export const accessories: Accessory[] = [
     name: 'Orange Jade Strand',
     nameAr: 'اليشم البرتقالي حجر طبيعي',
     category: 'signature-strands',
-    price: 249,
+    price: 499,
     description:
       'Orange jade strand for a warm, luminous highlight on neutral abayas.',
     descriptionAr:
@@ -632,7 +644,7 @@ export const accessories: Accessory[] = [
     name: 'Blue Aventurine Strand',
     nameAr: 'أفنتورين أزرق حجر طبيعي',
     category: 'signature-strands',
-    price: 530,
+    price: 629,
     description:
       'Blue aventurine beads with gentle sparkle — a cool contrast on deep or black fabric.',
     descriptionAr:
@@ -645,10 +657,10 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-rose-quartz',
-    name: 'Rose Quartz Strand',
-    nameAr: 'كوارتز وردي حجر طبيعي',
+    name: 'Al Ain Oasis Rose Quartz Strand',
+    nameAr: 'ستراند واحة العين — كوارتز وردي',
     category: 'signature-strands',
-    price: 399,
+    price: 899,
     description:
       'Soft rose quartz with a luminous, romantic line along the abaya edge.',
     descriptionAr:
@@ -661,10 +673,10 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-malachite',
-    name: 'Malachite Strand',
-    nameAr: 'ملاكيت حجر طبيعي',
+    name: 'Al Ain Oasis Malachite Strand',
+    nameAr: 'ستراند واحة العين — ملاكيت',
     category: 'signature-strands',
-    price: 599,
+    price: 1099,
     description:
       'Deep malachite green with natural banding — a striking signature accent.',
     descriptionAr:
@@ -677,8 +689,8 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-lapis-lazuli',
-    name: 'Lapis Lazuli Strand',
-    nameAr: 'لازورد حجر طبيعي',
+    name: 'Al Ain Oasis Lapis Lazuli Strand',
+    nameAr: 'ستراند واحة العين — لازورد',
     category: 'signature-strands',
     price: 599,
     description:
@@ -696,7 +708,7 @@ export const accessories: Accessory[] = [
     name: 'Amethyst Hearts Strand',
     nameAr: 'قلوب جمشت حجر طبيعي',
     category: 'signature-strands',
-    price: 720,
+    price: 899,
     description:
       'Heart-cut amethyst beads — limited edition release with clip attachment.',
     descriptionAr:
@@ -713,7 +725,7 @@ export const accessories: Accessory[] = [
     name: 'Jade Hearts Strand',
     nameAr: 'قلوب اليشم حجر طبيعي',
     category: 'signature-strands',
-    price: 750,
+    price: 799,
     description:
       'Heart-shaped jade beads — limited edition; serene green movement on the abaya line.',
     descriptionAr:
@@ -724,5 +736,21 @@ export const accessories: Accessory[] = [
     colors: [{ name: 'Jade Green', nameAr: 'يشم أخضر', hex: '#059669' }],
     inStock: true,
     isLimitedEdition: true,
+  },
+  {
+    id: 'signature-strand-jade',
+    name: 'Natural Jade Strand',
+    nameAr: 'ستراند اليشم الطبيعي',
+    category: 'signature-strands',
+    price: 799,
+    description:
+      'Round natural jade beads in soft muted green — genuine undyed jade with gold-tone Knotted Line finishes.',
+    descriptionAr:
+      'خرز يشم طبيعي مستدير بدرجات خضراء هادئة — يشم أصلي غير ملوَّن مع تشطيبات Knotted Line ذهبية.',
+    images: [ACCESSORY_IMAGE_ABAYA_CHARM_NATURAL_JADE],
+    materials: 'Natural jade (not coloured), 18K gold-plated findings',
+    materialsAr: 'يشم طبيعي (غير ملوَّن)، تثبيتات مطلية بالذهب 18 قيراط',
+    colors: [{ name: 'Natural Jade', nameAr: 'يشم طبيعي', hex: '#5f7a72' }],
+    inStock: true,
   },
 ]

@@ -41,6 +41,7 @@ export function isAlAinRosetteFaqQuestion(question: string): boolean {
     q.includes('розетка al ain') ||
     q.includes('al-ain-rosette') ||
     q.includes('روزيت العين') ||
+    q.includes('روزيت القوع') ||
     q.includes('玫瑰花饰') ||
     q.includes('rosette al ain')
   )

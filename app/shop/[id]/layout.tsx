@@ -5,6 +5,7 @@ import { getServerLocale } from '@/lib/i18n/serverLocale'
 import {
   buildProductMetaDescription,
   buildProductPageTitle,
+  getProductPageAiOther,
   getProductPageMetaKeywords,
   productCanonicalUrl,
   productHreflangLanguages,
@@ -46,7 +47,8 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
     index: 0,
     locale,
   })
-  const keywords = getProductPageMetaKeywords(locale, slug, product.colors[0]?.name)
+  const keywords = getProductPageMetaKeywords(locale, product, product.colors[0]?.name)
+  const aiOther = getProductPageAiOther(product, locale)
 
   return {
     title: pageTitle,
@@ -77,6 +79,7 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
       creator: '@bintsaeed_brand',
       site: '@bintsaeed_brand',
     },
+    other: aiOther,
     robots: {
       index: true,
       follow: true,

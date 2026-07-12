@@ -142,8 +142,8 @@ const EARRING_PRODUCT_ALIASES: Record<string, string[]> = {
   'al-ain-oasis-earrings-orange-jade': [
     'orange jade earrings',
     'Al Ain Oasis earrings',
-    'orange stone earrings UAE',
-    'pairs with sunstone necklace',
+    'orange coloured jade earrings UAE',
+    'pairs with Al Ain Oasis necklace',
   ],
   'al-quaa-earrings-lapis-lazuli': [
     'lapis lazuli earrings',

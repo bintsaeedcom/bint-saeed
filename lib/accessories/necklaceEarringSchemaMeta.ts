@@ -14,6 +14,10 @@ import {
   getNecklaceEarringSharedSchemaKeywords,
 } from '@/lib/accessories/necklaceEarringSchemaKeywordsI18n'
 import { getGlobalPdpSchemaDiscoveryKeywords } from '@/lib/products/globalPdpSchemaDiscoveryI18n'
+import {
+  buildNaturalStoneBirthstoneAdditionalProperties,
+  getNaturalStoneBirthstoneKeywords,
+} from '@/lib/accessories/naturalStoneBirthstoneSeoI18n'
 
 const NECKLACE_PRODUCT_TYPE =
   'Hand-strung natural gemstone necklace with Al Ain Rosette House Code, gold-plated hematite accents and convertible long or doubled wear — handcrafted in Abu Dhabi.'
@@ -61,13 +65,14 @@ export function buildNecklaceEarringSchemaKeywords(
     getNecklaceEarringSharedSchemaKeywords(locale),
     pack?.keywords,
     buildNecklaceEarringProductSchemaKeywords(accessory.id, displayName),
+    getNaturalStoneBirthstoneKeywords(accessory.id, locale),
   )
 }
 
 export function buildNecklaceEarringAdditionalProperties(
   accessory: Accessory,
   displayName: string,
-  _locale: AppLocale = 'en',
+  locale: AppLocale = 'en',
 ): Record<string, unknown>[] {
   const pack = getNecklaceEarringPdpPack(accessory.id)
   const sku = getAccessorySku(accessory)
@@ -119,7 +124,8 @@ export function buildNecklaceEarringAdditionalProperties(
       { '@type': 'PropertyValue', name: 'Natural gemstone', value: gemstone },
       { '@type': 'PropertyValue', name: 'Stone type', value: displayName },
     )
-    const color = variant ? GEMSTONE_COLOR[variant] : undefined
+    const color =
+      (variant ? GEMSTONE_COLOR[variant] : undefined) ?? getNecklaceGemstoneColor(accessory.id)
     if (color) {
       props.push({ '@type': 'PropertyValue', name: 'Colour', value: color })
     }
@@ -177,12 +183,22 @@ export function buildNecklaceEarringAdditionalProperties(
     })
   }
 
+  props.push(...buildNaturalStoneBirthstoneAdditionalProperties(accessory.id, locale))
+
   return props
 }
 
 export function getNecklaceGemstoneColor(accessoryId: string): string | undefined {
-  const variant = necklaceVariantKey(accessoryId)
-  return variant ? GEMSTONE_COLOR[variant] : undefined
+  const necklaceVariant = necklaceVariantKey(accessoryId)
+  if (necklaceVariant) return GEMSTONE_COLOR[necklaceVariant]
+
+  const earringColors: Record<string, string> = {
+    'al-ain-oasis-earrings-malachite': 'Green',
+    'al-ain-oasis-earrings-orange-jade': 'Orange',
+    'al-quaa-earrings-rose-quartz': 'Pink',
+    'al-quaa-earrings-lapis-lazuli': 'Blue',
+  }
+  return earringColors[accessoryId]
 }
 
 export { matchingStrandIdForNecklace }

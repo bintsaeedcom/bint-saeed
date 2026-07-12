@@ -28,6 +28,7 @@ export type StrandPdpLocaleTemplates = {
   detailAttach: string
   detailPersonalise: string
   detailNotJewellery: string
+  detailGiftBox: string
   materialHematite: string
   materialKnottedLine: string
   pairOf: (strandShortName: string) => string
@@ -80,6 +81,7 @@ const EN: LocalePack = {
     'Designed to personalise your garment according to the occasion, your accessories or your mood',
   detailNotJewellery:
     'Created exclusively for Bint Saeed garments and not intended to be worn as jewellery',
+  detailGiftBox: 'Presented in a signature Bint Saeed gift box',
   materialHematite: 'Faceted gold-plated Hematite accent beads',
   materialKnottedLine: 'Bint Saeed signature gold-tone Knotted Line elements',
   pairOf: (name) => `Pair of detachable ${name} Signature Strands`,
@@ -132,6 +134,7 @@ const AR: LocalePack = {
   detailAttach: 'يُرفق أو يُزال بسهولة خلال ثوانٍ',
   detailPersonalise: 'صُمّم لتخصيص قطعتك وفق المناسبة أو إكسسواراتك أو مزاجك',
   detailNotJewellery: 'صُنع حصرياً لقطع Bint Saeed وغير مخصّص ليُرتدى كمجوهرات',
+  detailGiftBox: 'تُقدَّم في علبة هدايا توقيعية من Bint Saeed',
   materialHematite: 'خرز هيماتيت مطلي ذهباً ومقطّع',
   materialKnottedLine: 'عناصر Knotted Line الذهبية الحصرية من Bint Saeed',
   pairOf: (name) => `زوج من ستراندات ${name} Signature Strands القابلة للفصل`,
@@ -187,6 +190,7 @@ const FR: LocalePack = {
     'Conçu pour personnaliser votre vêtement selon l’occasion, vos accessoires ou votre humeur',
   detailNotJewellery:
     'Créé exclusivement pour les vêtements Bint Saeed et non destiné à être porté comme bijou',
+  detailGiftBox: 'Présenté dans un écrin cadeau signature Bint Saeed',
   materialHematite: 'Perles d’accent en Hématite plaquée or facettées',
   materialKnottedLine: 'Éléments Knotted Line dorés signature Bint Saeed',
   pairOf: (name) => `Paire de Signature Strands ${name} amovibles`,
@@ -250,6 +254,7 @@ const IT: LocalePack = {
     'Progettato per personalizzare il capo secondo l’occasione, gli accessori o il tuo umore',
   detailNotJewellery:
     'Creato esclusivamente per capi Bint Saeed e non destinato a essere indossato come gioiello',
+  detailGiftBox: 'Presentato in un cofanetto regalo firma Bint Saeed',
   materialHematite: 'Perle d’accento in Ematite placcata oro sfaccettate',
   materialKnottedLine: 'Elementi Knotted Line dorati signature Bint Saeed',
   pairOf: (name) => `Paio di Signature Strands ${name} staccabili`,
@@ -313,6 +318,7 @@ const ES: LocalePack = {
     'Diseñado para personalizar su prenda según la ocasión, sus accesorios o su estado de ánimo',
   detailNotJewellery:
     'Creado exclusivamente para prendas Bint Saeed y no destinado a usarse como joyería',
+  detailGiftBox: 'Presentado en un estuche de regalo firma Bint Saeed',
   materialHematite: 'Cuentas de acento de Hematita chapada en oro facetadas',
   materialKnottedLine: 'Elementos Knotted Line dorados signature Bint Saeed',
   pairOf: (name) => `Par de Signature Strands ${name} desmontables`,
@@ -376,6 +382,7 @@ const RU: LocalePack = {
     'Создано для персонализации изделия в зависимости от случая, аксессуаров или настроения',
   detailNotJewellery:
     'Создано исключительно для изделий Bint Saeed и не предназначено для ношения как украшение',
+  detailGiftBox: 'Подаётся в фирменной подарочной коробке Bint Saeed',
   materialHematite: 'Фацетные акцентные бусины из позолоченного гематита',
   materialKnottedLine: 'Фирменные золотистые элементы Knotted Line Bint Saeed',
   pairOf: (name) => `Пара съёмных Signature Strands ${name}`,
@@ -435,6 +442,7 @@ const ZH: LocalePack = {
   detailAttach: '可在数秒内轻松装卸',
   detailPersonalise: '专为随场合、配饰或心境个性化您的服装而设计',
   detailNotJewellery: '专为 Bint Saeed 服装而创，非作为珠宝佩戴',
+  detailGiftBox: '置于 Bint Saeed 签名礼盒中呈献',
   materialHematite: '切面镀金赤铁矿点缀珠',
   materialKnottedLine: 'Bint Saeed 标志性金色 Knotted Line 元素',
   pairOf: (name) => `一对可拆卸 ${name} Signature Strands`,
@@ -496,6 +504,7 @@ const DE: LocalePack = {
     'Entwickelt, um Ihr Kleidungsstück je nach Anlass, Accessoires oder Stimmung zu personalisieren',
   detailNotJewellery:
     'Exklusiv für Bint Saeed Kleidungsstücke geschaffen und nicht als Schmuck gedacht',
+  detailGiftBox: 'Präsentiert in einer signature Bint Saeed Geschenkbox',
   materialHematite: 'Facettierte Akzentperlen aus goldplattiertem Hämatit',
   materialKnottedLine: 'Charakteristische goldfarbene Knotted Line Elemente von Bint Saeed',
   pairOf: (name) => `Paar abnehmbarer ${name} Signature Strands`,
@@ -559,6 +568,7 @@ const NL: LocalePack = {
     'Ontworpen om uw kledingstuk te personaliseren volgens de gelegenheid, uw accessoires of uw stemming',
   detailNotJewellery:
     'Exclusief gecreëerd voor Bint Saeed kledingstukken en niet bedoeld om als sieraad te worden gedragen',
+  detailGiftBox: 'Gepresenteerd in een signature Bint Saeed cadeauverpakking',
   materialHematite: 'Gefacetteerde accentkralen van goudverguld hematiet',
   materialKnottedLine: 'Kenmerkende goudkleurige Knotted Line elementen van Bint Saeed',
   pairOf: (name) => `Paar afneembare ${name} Signature Strands`,
@@ -622,6 +632,7 @@ const PT: LocalePack = {
     'Concebido para personalizar a sua peça de acordo com a ocasião, os seus acessórios ou o seu humor',
   detailNotJewellery:
     'Criado exclusivamente para peças Bint Saeed e não destinado a ser usado como joia',
+  detailGiftBox: 'Apresentado numa caixa de presente signature Bint Saeed',
   materialHematite: 'Contas de destaque em Hematite folheada a ouro facetadas',
   materialKnottedLine: 'Elementos Knotted Line dourados signature Bint Saeed',
   pairOf: (name) => `Par de Signature Strands ${name} destacáveis`,
@@ -685,6 +696,7 @@ const ID: LocalePack = {
     'Dirancang untuk mempersonalisasi pakaian Anda sesuai acara, aksesori, atau suasana hati',
   detailNotJewellery:
     'Diciptakan secara eksklusif untuk pakaian Bint Saeed dan tidak dimaksudkan untuk dikenakan sebagai perhiasan',
+  detailGiftBox: 'Disajikan dalam kotak hadiah signature Bint Saeed',
   materialHematite: 'Manik aksen Hematite berlapis emas berfaset',
   materialKnottedLine: 'Elemen Knotted Line bernuansa emas khas Bint Saeed',
   pairOf: (name) => `Sepasang Signature Strands ${name} yang dapat dilepas`,
@@ -748,6 +760,7 @@ const MS: LocalePack = {
     'Direka untuk memperibadikan pakaian anda mengikut majlis, aksesori atau mood anda',
   detailNotJewellery:
     'Dicipta secara eksklusif untuk pakaian Bint Saeed dan tidak bertujuan untuk dipakai sebagai barang kemas',
+  detailGiftBox: 'Dihidangkan dalam kotak hadiah signature Bint Saeed',
   materialHematite: 'Manik aksen Hematite bersalut emas berfaset',
   materialKnottedLine: 'Elemen Knotted Line bernuansa emas khas Bint Saeed',
   pairOf: (name) => `Sepasang Signature Strands ${name} boleh tanggal`,

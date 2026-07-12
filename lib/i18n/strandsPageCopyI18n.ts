@@ -75,22 +75,24 @@ const STONE_VISUAL_NOTES_EN: Record<string, string> = {
     'Deep black with a high-gloss surface. A classic stone, found across Brazil and India. The one every Marylebone Abaya arrives wearing.',
   'Tiger Eye Strand':
     'Warm golden-brown with a natural moving sheen that shifts with the light. Found in South Africa. No two pieces catch it the same way.',
-  'Sunstone Strand':
+  'Al Ain Oasis Sunstone Strand':
     'Warm peach-orange sunstone with a smooth, luminous finish. A vivid natural tone with gentle warmth in the light.',
   'Fuchsia Jade Strand':
     'Natural jade in a deep saturated rose. An unusual colour — not commonly found at this intensity.',
   'Blue Aventurine Strand':
     'A cool dusty blue with a subtle internal shimmer. Sourced from India and Chile. Understated from a distance, detailed up close.',
-  'Rose Quartz Strand':
+  'Al Ain Oasis Rose Quartz Strand':
     'Pale blush, semi-translucent. The light passes through it rather than reflecting off. Found across Brazil and Madagascar.',
-  'Malachite Strand':
+  'Al Ain Oasis Malachite Strand':
     'Deep green with natural banded markings — no two pieces share the same pattern. Found in Central Africa.',
-  'Lapis Lazuli Strand':
+  'Al Ain Oasis Lapis Lazuli Strand':
     'A deep blue flecked with natural gold, sourced from Afghanistan. Used in jewellery and art for thousands of years.',
   'Amethyst Hearts Strand':
     'Violet quartz shaped into hearts and polished to a faceted surface. Found across Brazil and Zambia.',
   'Jade Hearts Strand':
     'Cool green jade, hand-shaped into heart forms. Each one slightly different. Each one made once.',
+  'Natural Jade Strand':
+    'Genuine undyed natural jade in soft muted green — not coloured jade. Round polished beads with a quiet, mineral calm.',
 }
 
 const STONE_VISUAL_NOTES_AR: Record<string, string> = {
@@ -98,22 +100,24 @@ const STONE_VISUAL_NOTES_AR: Record<string, string> = {
     'أسود عميق بسطح لامع عالٍ. حجر كلاسيكي يُوجد في البرازيل والهند. الحجر الذي تصل به كل عباءة Marylebone.',
   'Tiger Eye Strand':
     'بني ذهبي دافئ بلمعان طبيعي متحرك يتغيّر مع الضوء. يُوجد في جنوب أفريقيا. لا قطعتين تلتقطان الضوء بنفس الطريقة.',
-  'Sunstone Strand':
+  'Al Ain Oasis Sunstone Strand':
     'حجر الشمس بلون خوخي برتقالي دافئ بلمسة نهائية ناعمة ومضيئة. لون طبيعي حيّ بدفء لطيف في الضوء.',
   'Fuchsia Jade Strand':
     'يشم طبيعي بلون وردي عميق مشبع. لون غير معتاد — لا يُوجد عادةً بهذه الكثافة.',
   'Blue Aventurine Strand':
     'أزرق بارد مغبّر بلمعان داخلي خفيف. يُستورد من الهند وتشيلي. هادئ من بعيد، مفصّل عن قرب.',
-  'Rose Quartz Strand':
+  'Al Ain Oasis Rose Quartz Strand':
     'وردي باهت، شبه شفاف. يمرّ الضوء عبره بدلاً من أن ينعكس عنه. يُوجد في البرازيل ومدغشقر.',
-  'Malachite Strand':
+  'Al Ain Oasis Malachite Strand':
     'أخضر عميق بعلامات طبيعية متموّجة — لا قطعتين تشتركان في النمط نفسه. يُوجد في وسط أفريقيا.',
-  'Lapis Lazuli Strand':
+  'Al Ain Oasis Lapis Lazuli Strand':
     'أزرق عميق مرصّع بلمسات ذهبية طبيعية، يُستورد من أفغانستان. يُستخدم في المجوهرات والفن منذ آلاف السنين.',
   'Amethyst Hearts Strand':
     'كوارتز بنفسجي مُشكَّل على شكل قلوب ومُصقول بسطح مُوجَّه. يُوجد في البرازيل وزامبيا.',
   'Jade Hearts Strand':
     'يشم أخضر بارد، مُشكَّل يدوياً على شكل قلوب. كل واحدة مختلفة قليلاً. كل واحدة تُصنع مرة واحدة.',
+  'Natural Jade Strand':
+    'يشم طبيعي أصلي غير ملوَّن بدرجات خضراء هادئة. خرز مستدير مصقول بهدوء معدني رقيق.',
 }
 
 const STRANDS_EN: StrandsPageCopy = {

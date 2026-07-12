@@ -15,6 +15,8 @@ type NecklaceFrPackInput = {
   beadFeature: string
   uniquenessFeature: string
   strandNameFr: string
+  /** Overrides default “boucles d’oreilles rosette d’Al Ain + strand” feature line. */
+  coordinateFeature?: string
   madeFromAnswer: [string, string]
   wearWaysAnswer?: string
 }
@@ -26,6 +28,7 @@ function buildNecklacePackFr(input: NecklaceFrPackInput): NecklaceEarringPdpCont
     beadFeature,
     uniquenessFeature,
     strandNameFr,
+    coordinateFeature,
     madeFromAnswer,
     wearWaysAnswer = 'Oui. Le collier peut être porté en longueur simple ou doublé autour du cou pour une silhouette plus courte et superposée.',
   } = input
@@ -42,7 +45,8 @@ function buildNecklacePackFr(input: NecklaceFrPackInput): NecklaceEarringPdpCont
       'Design convertible : port long ou doublé autour du cou',
       'Fermoir signature doré avec chaîne d’extension ajustable',
       uniquenessFeature,
-      `Conçu pour s’accorder avec les boucles d’oreilles rosette d’Al Ain et le ${strandNameFr}`,
+      coordinateFeature ??
+        `Conçu pour s’accorder avec les boucles d’oreilles rosette d’Al Ain et le ${strandNameFr}`,
       'Présenté dans un écrin cadeau signature Bint Saeed',
     ],
     careLead: CARE_LEAD_FR,
@@ -159,12 +163,14 @@ export const FR_NECKLACE_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack
     introParagraphs: [
       'Distinctif par sa couleur et son caractère, le Collier Al Ain Oasis — Œil de tigre est enfilé à la main avec des pierres d’œil de tigre naturelles, rehaussé de perles d’hématite plaquées or et terminé par la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle. Conçu pour la polyvalence, il peut être porté en longueur simple ou doublé autour du cou pour une silhouette plus courte.',
       'Les pierres naturelles sont admirées depuis des générations pour leur individualité. Les tons dorés et bruns riches de l’œil de tigre, avec son lustre soyeux distinctif, composent une harmonie à la fois intemporelle et expressive. Chaque pierre étant formée par la nature, chaque collier possède sa couleur, sa chatoyance et son caractère naturel uniques.',
-      'Façonné à la main à Abou Dabi, le collier reflète l’attention de Bint Saeed pour les matériaux naturels et un savoir-faire durable. Complétez l’ensemble avec les boucles d’oreilles rosette d’Al Ain assorties et le Signature Strand œil de tigre rosette d’Al Ain, conçu pour accompagner des abayas, robes et pièces de tailleur Bint Saeed sélectionnées.',
+      'Façonné à la main à Abou Dabi, le collier reflète l’attention de Bint Saeed pour les matériaux naturels et un savoir-faire durable. Complétez l’ensemble avec les boucles d’oreilles signature et le Signature Strand œil de tigre, conçu pour accompagner des abayas, robes et pièces de tailleur Bint Saeed sélectionnées.',
     ],
     beadFeature: 'Perles d’œil de tigre naturel (environ 5 mm)',
     uniquenessFeature:
       'Chaque pierre naturelle affiche sa propre couleur, son lustre soyeux et son caractère naturel',
-    strandNameFr: 'Signature Strand œil de tigre rosette d’Al Ain',
+    strandNameFr: 'Signature Strand œil de tigre',
+    coordinateFeature:
+      'Conçu pour s’accorder avec les boucles d’oreilles signature et le Signature Strand œil de tigre',
     madeFromAnswer: [
       'Le collier est façonné à la main avec des perles d’œil de tigre naturel, des perles d’hématite plaquées or et la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle. Il est terminé par un fermoir doré et une chaîne d’extension ajustable.',
       'L’œil de tigre est une pierre naturelle admirée pour ses tons dorés et bruns riches et son effet optique soyeux distinctif, appelé chatoyance, qui crée une bande de lumière mouvante à la surface. Chaque pierre est unique, conférant à chaque collier Bint Saeed son propre caractère.',
@@ -175,12 +181,14 @@ export const FR_NECKLACE_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack
     introParagraphs: [
       'Raffiné dans sa simplicité, le Collier Al Ain Oasis — Onyx est enfilé à la main avec des pierres d’onyx noir naturel, rehaussé de perles d’hématite plaquées or et terminé par la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle. Conçu pour la polyvalence, il peut être porté en longueur simple ou doublé autour du cou pour une silhouette plus courte.',
       'Les pierres naturelles sont admirées depuis des générations pour leur individualité. Les tons noirs profonds de l’onyx créent un contraste saisissant avec la chaleur de la cornaline et les accents dorés lumineux, pour une composition à la fois intemporelle et distinctive. Chaque pierre étant formée par la nature, chaque collier possède son caractère subtil et sa beauté naturelle propres.',
-      'Façonné à la main à Abou Dabi, le collier reflète l’attention de Bint Saeed pour les matériaux naturels et un savoir-faire durable. Complétez l’ensemble avec les boucles d’oreilles rosette d’Al Ain assorties et le Signature Strand onyx rosette d’Al Ain, conçu pour accompagner des abayas, robes et pièces de tailleur Bint Saeed sélectionnées.',
+      'Façonné à la main à Abou Dabi, le collier reflète l’attention de Bint Saeed pour les matériaux naturels et un savoir-faire durable. Complétez l’ensemble avec les boucles d’oreilles signature et le Signature Strand onyx, conçu pour accompagner des abayas, robes et pièces de tailleur Bint Saeed sélectionnées.',
     ],
     beadFeature: 'Perles d’onyx noir naturel (environ 5 mm)',
     uniquenessFeature:
       'Chaque pierre naturelle est unique par sa tonalité et son caractère naturel',
-    strandNameFr: 'Signature Strand onyx rosette d’Al Ain',
+    strandNameFr: 'Signature Strand onyx',
+    coordinateFeature:
+      'Conçu pour s’accorder avec les boucles d’oreilles signature et le Signature Strand onyx',
     madeFromAnswer: [
       'Le collier est façonné à la main avec des perles d’onyx noir naturel, des perles d’hématite plaquées or et la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle. Il est terminé par un fermoir doré et une chaîne d’extension ajustable.',
       'L’onyx est une variété naturelle de calcédoine, admirée pour sa couleur noire profonde et sa finition polie lisse. Chaque pierre est unique, conférant à chaque collier Bint Saeed son propre caractère.',
@@ -191,10 +199,19 @@ export const FR_NECKLACE_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack
 type EarringFrPackInput = {
   fullNameFr: string
   introParagraphs: string[]
-  stoneFeature: string
+  stoneFeature: string | string[]
   necklaceNameFr: string
   madeFromAnswer: [string, string]
   strandNameFr?: string
+  handcraftedFeature?: string
+  extraFeatures?: string[]
+  claspFeature?: string
+  uniquenessFeature?: string
+  identicalAnswer?: string
+}
+
+function asFeatureListFr(value: string | string[]): string[] {
+  return Array.isArray(value) ? value : [value]
 }
 
 function buildEarringPackFr(input: EarringFrPackInput): NecklaceEarringPdpContentPack {
@@ -205,14 +222,25 @@ function buildEarringPackFr(input: EarringFrPackInput): NecklaceEarringPdpConten
     necklaceNameFr,
     madeFromAnswer,
     strandNameFr,
+    handcraftedFeature = 'Assemblé à la main à Abou Dabi, Émirats arabes unis',
+    extraFeatures = [],
+    claspFeature = 'Fermoir et tige dorés pour un port confortable',
+    uniquenessFeature =
+      'Chaque pierre naturelle est unique par sa couleur, son motif et ses inclusions',
+    identicalAnswer =
+      'Non. Chaque création Bint Saeed met en valeur des pierres naturelles. Les variations de couleur, de motif et d’inclusions font partie de l’individualité de chaque pièce et doivent être célébrées comme la marque des matériaux naturels.',
   } = input
 
   const strandAnswer = strandNameFr
-    ? `Oui. Le ${strandNameFr} a été conçu pour compléter les boucles d’oreilles et peut être fixé à des abayas, robes et pièces de tailleur Bint Saeed sélectionnées.`
+    ? strandNameFr.toLowerCase().includes('strands')
+      ? `Oui. Les ${strandNameFr} ont été conçus pour compléter les boucles d’oreilles et peuvent être fixés à des abayas, robes et pièces de tailleur Bint Saeed sélectionnées.`
+      : `Oui. Le ${strandNameFr} a été conçu pour compléter les boucles d’oreilles et peut être fixé à des abayas, robes et pièces de tailleur Bint Saeed sélectionnées.`
     : 'Oui. Un Signature Strand assorti peut compléter les boucles d’oreilles et s’attacher à des abayas, robes et pièces de tailleur Bint Saeed sélectionnées.'
 
   const coordinateFeature = strandNameFr
-    ? `Conçu pour s’accorder avec le ${necklaceNameFr} et le ${strandNameFr}`
+    ? strandNameFr.toLowerCase().includes('strands')
+      ? `Conçu pour s’accorder avec le ${necklaceNameFr} et les Signature Strands Bint Saeed`
+      : `Conçu pour s’accorder avec le ${necklaceNameFr} et le ${strandNameFr}`
     : `Conçu pour s’accorder avec le ${necklaceNameFr}`
 
   return {
@@ -220,12 +248,13 @@ function buildEarringPackFr(input: EarringFrPackInput): NecklaceEarringPdpConten
     featuresTitle: 'Caractéristiques',
     features: [
       'Code de la Maison : rosette d’Al Ain',
-      'Façonné à la main à Abou Dabi, Émirats arabes unis',
-      stoneFeature,
-      'Perles d’hématite plaquées or intégrées dans le design',
+      handcraftedFeature,
+      ...asFeatureListFr(stoneFeature),
+      'Perles d’hématite plaquées or facettées qui captent la lumière',
       'Rosette d’Al Ain signature sculptée à la main dans du cornaline naturelle (environ 15 mm)',
-      'Fermoir et tige dorés pour un port confortable',
-      'Chaque pierre naturelle est unique par sa couleur, ses veines et son caractère naturel',
+      ...extraFeatures,
+      claspFeature,
+      uniquenessFeature,
       coordinateFeature,
       'Présenté dans un écrin cadeau signature Bint Saeed',
     ],
@@ -250,13 +279,12 @@ function buildEarringPackFr(input: EarringFrPackInput): NecklaceEarringPdpConten
       },
       {
         question: 'Chaque paire est-elle identique ?',
-        answer:
-          'Non. Chaque création Bint Saeed met en valeur des pierres naturelles. Les variations de couleur, de veinure et de caractère naturel font partie de l’individualité de chaque pièce et doivent être célébrées comme la marque des matériaux naturels.',
+        answer: identicalAnswer,
       },
       {
         question: 'Où sont fabriquées les boucles d’oreilles ?',
         answer:
-          'Chaque paire est façonnée à la main à Abou Dabi, aux Émirats arabes unis, selon les standards de savoir-faire et de qualité de Bint Saeed.',
+          'Chaque paire est assemblée à la main à Abou Dabi, aux Émirats arabes unis, selon les standards de savoir-faire et de qualité de Bint Saeed.',
       },
       {
         question: 'Les boucles d’oreilles sont-elles livrées dans un écrin cadeau ?',
@@ -264,8 +292,7 @@ function buildEarringPackFr(input: EarringFrPackInput): NecklaceEarringPdpConten
       },
       {
         question: 'Comment entretenir mes boucles d’oreilles ?',
-        answer:
-          JEWELLERY_CARE_FAQ_EARRING_FR,
+        answer: JEWELLERY_CARE_FAQ_EARRING_FR,
       },
     ],
   }
@@ -275,61 +302,109 @@ export const FR_EARRING_PDP_BY_ID: Record<string, NecklaceEarringPdpContentPack>
   'al-ain-oasis-earrings-malachite': buildEarringPackFr({
     fullNameFr: 'Boucles d’oreilles Al Ain Oasis — Malachite',
     introParagraphs: [
-      'Les Boucles d’oreilles Al Ain Oasis — Malachite sont assemblées à la main avec des pierres de malachite naturelles, la rosette d’Al Ain signature de la Maison sculptée dans du cornaline naturelle et des accents d’hématite plaqués or qui captent la lumière à chaque mouvement.',
-      'Les pierres naturelles sont admirées pour leur individualité. La profondeur de leur couleur, leurs veines distinctives et leur caractère organique apportent une richesse que seule la nature peut créer, rendant chaque paire aussi unique que la femme qui la porte.',
-      'Façonnées à la main à Abou Dabi, ces boucles d’oreilles associent des matériaux naturels à l’un des codes de la Maison Bint Saeed. Complétez l’ensemble avec le Collier Al Ain Oasis — Malachite assorti et le Signature Strand malachite rosette d’Al Ain.',
+      'La touche finale qui rassemble le tout.',
+      'Certaines pièces complètent une tenue. D’autres deviennent partie de la façon dont l’on se souvient de vous.',
+      'Les Boucles d’oreilles Al Ain Oasis — Malachite sont assemblées à la main à Abou Dabi, Émirats arabes unis, associant de véritables pierres de malachite et de pierre de soleil à une rosette d’Al Ain sculptée à la main dans du cornaline, de l’hématite plaquée or facettée qui captive la lumière, et une zirconia brillante sertie dans du cuivre sans nickel plaqué or 14 carats.',
+      'Créées pour accompagner le Collier Al Ain Oasis — Malachite et les Signature Strands Bint Saeed, chaque pièce appartient à une collection conçue pour être portée ensemble ou chérie seule. Le résultat est une joaillerie réfléchie, polyvalente et indéniablement Bint Saeed.',
+      'Associées à une abaya fluide, à une tenue du soir raffinée ou à vos pièces du quotidien préférées, les Boucles d’oreilles Al Ain Oasis apportent chaleur, couleur et savoir-faire à chaque allure. Leurs proportions équilibrées mettent en valeur les pierres naturelles tout en restant assez légères pour être portées du matin au soir.',
+      'Chaque pierre est naturellement unique, portant ses propres variations de couleur, de motif et d’inclusions. Assemblées avec soin à Abou Dabi, ces boucles d’oreilles constituent un cadeau significatif pour un anniversaire, l’Aïd, une remise de diplôme, un anniversaire de mariage, ou simplement pour célébrer une personne chère.',
+      'Assez élégantes pour les grandes occasions. Assez polyvalentes pour chaque jour. Assez distinctives pour devenir partie de votre style signature.',
     ],
-    stoneFeature: 'Pierres de malachite naturelle sélectionnées à la main',
+    stoneFeature: ['Véritable malachite', 'Véritable pierre de soleil'],
+    handcraftedFeature:
+      'Boucles d’oreilles pendantes en pierres naturelles assemblées à la main à Abou Dabi, Émirats arabes unis',
+    extraFeatures: [
+      'Cuivre sans nickel plaqué or 14 carats',
+      'Silhouette légère conçue pour un port confortable toute la journée',
+      'Longueur de chute : 5,5 cm (2,17 in)',
+    ],
+    claspFeature: 'Fermoir leverback pavé de zirconia',
     necklaceNameFr: 'Collier Al Ain Oasis — Malachite',
-    strandNameFr: 'Signature Strand malachite rosette d’Al Ain',
+    strandNameFr: 'Signature Strands Bint Saeed',
     madeFromAnswer: [
-      'Les boucles d’oreilles sont façonnées à la main avec des pierres de malachite naturelle, des accents d’hématite plaqués or et la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle.',
-      'La malachite est une pierre naturelle formée sur des milliers d’années dans des régions riches en cuivre. Célébrée pour ses bandes vertes distinctives, chaque pierre est unique.',
+      'Chaque paire associe de véritables pierres de malachite et de pierre de soleil, une rosette d’Al Ain sculptée à la main dans du cornaline, de l’hématite plaquée or facettée, et une zirconia brillante sertie dans du cuivre sans nickel plaqué or 14 carats, terminée par un fermoir leverback pavé de zirconia.',
+      'Chaque pierre est naturellement unique, portant ses propres variations de couleur, de motif et d’inclusions, rendant chaque paire unique en son genre.',
     ],
   }),
   'al-quaa-earrings-rose-quartz': buildEarringPackFr({
     fullNameFr: 'Boucles d’oreilles Al Quaa — Quartz rose',
     introParagraphs: [
-      'Les Boucles d’oreilles Al Quaa — Quartz rose associent la douceur du quartz rose naturel à la rosette d’Al Ain signature sculptée dans du cornaline naturelle, rehaussée d’accents d’hématite plaqués or.',
-      'Prisées depuis des siècles, les pierres naturelles sont admirées pour leur individualité. Les tons blush du quartz rose, la chaleur de la cornaline et les accents dorés composent une harmonie à la fois intemporelle et distinctive.',
-      'Façonnées à la main à Abou Dabi, ces boucles d’oreilles reflètent l’attention de Bint Saeed pour les matériaux naturels. Complétez l’ensemble avec le Collier Al Ain Oasis — Quartz rose assorti et le Signature Strand quartz rose rosette d’Al Ain.',
+      'La touche finale qui rassemble le tout.',
+      'Les Boucles d’oreilles Al Quaa — Quartz rose sont conçues pour les femmes qui savent que les plus petits détails laissent souvent la plus forte impression. Assemblées à la main à Abou Dabi, Émirats arabes unis, chaque paire associe de véritables pierres de quartz rose, une rosette d’Al Ain sculptée à la main dans du cornaline, des perles d’hématite plaquées or facettées qui captent la lumière, et une zirconia rose délicate sertie dans du laiton plaqué or 18 carats.',
+      'Conçues pour s’accorder naturellement avec le Collier Al Ain Oasis — Quartz rose et les Signature Strands Bint Saeed, chaque pièce est créée pour compléter la suivante, facilitant la constitution d’une collection joaillière harmonieuse au fil du temps. Associées à une abaya Bint Saeed ou à vos pièces du quotidien préférées, ces boucles d’oreilles en pierres naturelles apportent chaleur, savoir-faire et élégance intemporelle à chaque allure.',
+      'Chaque pierre naturelle est unique, avec sa propre couleur, son motif et ses inclusions, rendant chaque paire unique en son genre. Assemblées avec soin à Abou Dabi, elles constituent un cadeau significatif pour un anniversaire, l’Aïd, une remise de diplôme, un anniversaire de mariage, ou simplement pour célébrer une personne chère.',
+      'Assez élégantes pour les grandes occasions. Assez polyvalentes pour le quotidien. Assez distinctives pour rester en mémoire.',
     ],
-    stoneFeature: 'Pierres de quartz rose naturel sélectionnées à la main',
+    stoneFeature: 'Véritables pierres de quartz rose',
+    handcraftedFeature:
+      'Boucles d’oreilles pendantes en pierres naturelles assemblées à la main à Abou Dabi, Émirats arabes unis',
+    extraFeatures: [
+      'Laiton plaqué or 18 carats',
+      'Silhouette élégante et légère conçue pour un port confortable toute la journée',
+      'Longueur de chute : 4 cm (1,57 in)',
+    ],
+    claspFeature: 'Clou en zirconia rose taille poire',
     necklaceNameFr: 'Collier Al Ain Oasis — Quartz rose',
-    strandNameFr: 'Signature Strand quartz rose rosette d’Al Ain',
+    strandNameFr: 'Signature Strands Bint Saeed',
     madeFromAnswer: [
-      'Les boucles d’oreilles sont façonnées à la main avec des pierres de quartz rose naturel, des accents d’hématite plaqués or et la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle.',
-      'Le quartz rose est une variété naturelle de quartz, admirée pour ses tons rose délicats et sa translucidité subtile. Chaque pierre est unique.',
+      'Chaque paire associe de véritables pierres de quartz rose, une rosette d’Al Ain sculptée à la main dans du cornaline, des perles d’hématite plaquées or facettées, et un clou en zirconia rose taille poire serti dans du laiton plaqué or 18 carats.',
+      'Chaque pierre naturelle est unique, avec sa propre couleur, son motif et ses inclusions, rendant chaque paire unique en son genre.',
     ],
   }),
   'al-ain-oasis-earrings-orange-jade': buildEarringPackFr({
     fullNameFr: 'Boucles d’oreilles Al Ain Oasis — Jade orange',
     introParagraphs: [
-      'Les Boucles d’oreilles Al Ain Oasis — Jade orange sont assemblées à la main avec des pierres de jade orange naturel, la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or pour un contraste lumineux.',
-      'Les pierres naturelles sont admirées pour leur individualité. Les tons orange chauds du jade créent un équilibre élégant avec la chaleur de la cornaline et les accents dorés lumineux.',
-      'Façonnées à la main à Abou Dabi, ces boucles d’oreilles expriment le langage de design signature de Bint Saeed. Complétez l’ensemble avec le Collier Al Ain Oasis — Pierre de soleil assorti.',
+      'La touche finale qui rassemble le tout.',
+      'Certaines pièces complètent une tenue. D’autres deviennent partie de la façon dont l’on se souvient de vous.',
+      'Les Boucles d’oreilles Al Ain Oasis — Jade orange sont assemblées à la main à Abou Dabi, Émirats arabes unis, associant de véritables pierres de jade orange et de pierre de soleil à une rosette d’Al Ain sculptée à la main dans du cornaline, de l’hématite plaquée or facettée qui captive la lumière, et une zirconia brillante sertie dans du cuivre sans nickel plaqué or 14 carats.',
+      'Créées pour accompagner le Collier Al Ain Oasis — Jade orange et les Signature Strands Bint Saeed, chaque pièce appartient à une collection conçue pour être portée ensemble ou chérie seule. Le résultat est une joaillerie réfléchie, polyvalente et indéniablement Bint Saeed.',
+      'Associées à une abaya fluide, à une tenue du soir raffinée ou à vos pièces du quotidien préférées, les Boucles d’oreilles Al Ain Oasis apportent chaleur, couleur et savoir-faire à chaque allure. Les riches tons orange du jade sont complétés par l’éclat naturel de la pierre de soleil, créant une composition inspirée du paysage désertique chaud entourant la ville oasis historique d’Al Ain.',
+      'Chaque pierre est naturellement unique, portant ses propres variations de couleur, de motif et d’inclusions. Assemblées avec soin à Abou Dabi, ces boucles d’oreilles constituent un cadeau significatif pour un anniversaire, l’Aïd, une remise de diplôme, un anniversaire de mariage, ou simplement pour célébrer une personne chère.',
+      'Assez élégantes pour les grandes occasions. Assez polyvalentes pour chaque jour. Assez distinctives pour devenir partie de votre style signature.',
     ],
-    stoneFeature: 'Pierres de jade orange naturel sélectionnées à la main',
-    necklaceNameFr: 'Collier Al Ain Oasis — Pierre de soleil',
-    strandNameFr: 'Signature Strand pierre de soleil rosette d’Al Ain',
+    stoneFeature: ['Véritable jade orange', 'Véritable pierre de soleil'],
+    handcraftedFeature:
+      'Boucles d’oreilles pendantes en pierres naturelles assemblées à la main à Abou Dabi, Émirats arabes unis',
+    extraFeatures: [
+      'Cuivre sans nickel plaqué or 14 carats',
+      'Silhouette légère conçue pour un port confortable toute la journée',
+      'Longueur de chute : 5,5 cm (2,17 in)',
+    ],
+    claspFeature: 'Fermoir leverback pavé de zirconia',
+    necklaceNameFr: 'Collier Al Ain Oasis — Jade orange',
+    strandNameFr: 'Signature Strands Bint Saeed',
     madeFromAnswer: [
-      'Les boucles d’oreilles sont façonnées à la main avec des pierres de jade orange naturel, des accents d’hématite plaqués or et la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle.',
-      'Le jade orange est une pierre naturelle appréciée pour ses nuances chaudes et sa profondeur de couleur. Chaque pierre est unique.',
+      'Chaque paire associe de véritables pierres de jade orange et de pierre de soleil, une rosette d’Al Ain sculptée à la main dans du cornaline, de l’hématite plaquée or facettée, et une zirconia brillante sertie dans du cuivre sans nickel plaqué or 14 carats, terminée par un fermoir leverback pavé de zirconia.',
+      'Chaque pierre est naturellement unique, portant ses propres variations de couleur, de motif et d’inclusions, rendant chaque paire unique en son genre.',
     ],
   }),
   'al-quaa-earrings-lapis-lazuli': buildEarringPackFr({
     fullNameFr: 'Boucles d’oreilles Al Quaa — Lapis lazuli',
     introParagraphs: [
-      'Les Boucles d’oreilles Al Quaa — Lapis lazuli sont assemblées à la main avec des pierres de lapis lazuli naturelles, la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or.',
-      'Précieux depuis l’Antiquité, le lapis lazuli est admiré pour son bleu royal profond et ses inclusions naturelles de pyrite dorée. Chaque pierre étant unique, chaque paire possède son propre caractère.',
-      'Façonnées à la main à Abou Dabi, ces boucles d’oreilles reflètent l’attention de Bint Saeed pour les matériaux naturels. Complétez l’ensemble avec le Collier Al Ain Oasis — Lapis lazuli assorti et le Signature Strand lapis lazuli rosette d’Al Ain.',
+      'La touche finale qui rassemble le tout.',
+      'Les Boucles d’oreilles Al Quaa — Lapis lazuli sont conçues pour les femmes qui savent que les plus petits détails laissent souvent la plus forte impression. Assemblées à la main à Abou Dabi, Émirats arabes unis, chaque paire associe de véritables pierres de lapis lazuli, une rosette d’Al Ain sculptée à la main dans du cornaline, des perles d’hématite plaquées or facettées qui captent la lumière, et une zirconia transparente brillante sertie dans du laiton plaqué or 18 carats.',
+      'Conçues pour s’accorder naturellement avec le Collier Al Ain Oasis — Lapis lazuli et les Signature Strands Bint Saeed, chaque pièce est créée pour compléter la suivante, facilitant la constitution d’une collection joaillière harmonieuse au fil du temps. Associées à une abaya Bint Saeed ou à vos pièces du quotidien préférées, ces boucles d’oreilles en pierres naturelles apportent profondeur, savoir-faire et élégance intemporelle à chaque allure.',
+      'Chaque pierre naturelle est unique, avec sa propre couleur, son motif et ses inclusions naturelles de pyrite, rendant chaque paire unique en son genre. Assemblées avec soin à Abou Dabi, elles constituent un cadeau significatif pour un anniversaire, l’Aïd, une remise de diplôme, un anniversaire de mariage, ou simplement pour célébrer une personne chère.',
+      'Assez élégantes pour les grandes occasions. Assez polyvalentes pour le quotidien. Assez distinctives pour rester en mémoire.',
     ],
-    stoneFeature: 'Pierres de lapis lazuli naturel sélectionnées à la main',
+    stoneFeature: 'Véritables pierres de lapis lazuli',
+    handcraftedFeature:
+      'Boucles d’oreilles pendantes en pierres naturelles assemblées à la main à Abou Dabi, Émirats arabes unis',
+    extraFeatures: [
+      'Laiton plaqué or 18 carats',
+      'Silhouette élégante et légère conçue pour un port confortable toute la journée',
+      'Longueur de chute : 4 cm (1,57 in)',
+    ],
+    claspFeature: 'Clou en zirconia transparente taille poire',
+    uniquenessFeature:
+      'Chaque pierre naturelle est unique par sa couleur, son motif et ses inclusions naturelles de pyrite',
+    identicalAnswer:
+      'Non. Chaque création Bint Saeed met en valeur des pierres naturelles. Les variations de couleur, de motif et d’inclusions naturelles de pyrite font partie de l’individualité de chaque pièce et doivent être célébrées comme la marque des matériaux naturels.',
     necklaceNameFr: 'Collier Al Ain Oasis — Lapis lazuli',
-    strandNameFr: 'Signature Strand lapis lazuli rosette d’Al Ain',
+    strandNameFr: 'Signature Strands Bint Saeed',
     madeFromAnswer: [
-      'Les boucles d’oreilles sont façonnées à la main avec des pierres de lapis lazuli naturel, des accents d’hématite plaqués or et la rosette d’Al Ain signature de la Maison, sculptée à la main dans du cornaline naturelle.',
-      'Le lapis lazuli est une pierre naturelle prisée pour son bleu royal intense et ses inclusions distinctives de pyrite dorée. Chaque pierre est unique.',
+      'Chaque paire associe de véritables pierres de lapis lazuli, une rosette d’Al Ain sculptée à la main dans du cornaline, des perles d’hématite plaquées or facettées, et un clou en zirconia transparente taille poire serti dans du laiton plaqué or 18 carats.',
+      'Chaque pierre naturelle est unique, avec sa propre couleur, son motif et ses inclusions naturelles de pyrite, rendant chaque paire unique en son genre.',
     ],
   }),
 }

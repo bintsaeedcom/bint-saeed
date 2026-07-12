@@ -21,6 +21,7 @@ type LocaleTemplate = {
   compat1: string
   compat2: string
   colourLine: (stone: string) => string
+  giftBox: string
   care: string[]
 }
 
@@ -158,6 +159,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Designed for compatible phone cases with attachment points',
     compat2: 'Phone case not included',
     colourLine: (stone) => `Colour: ${stone}`,
+    giftBox: 'Presented in a signature Bint Saeed gift box',
     care: [
       'Natural gemstones should last a lifetime when treated with the respect they deserve. Handle each phone charm gently; stones may chip or break if struck, dropped onto hard surfaces, or subjected to force.',
       'Avoid contact with water, perfumes, hair spray, nail polish remover and harsh chemicals, especially chlorine.',
@@ -186,6 +188,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'مصممة لأغلفة الهاتف المتوافقة ذات نقاط التثبيت',
     compat2: 'غلاف الهاتف غير مشمول',
     colourLine: (stone) => `اللون: ${stone}`,
+    giftBox: 'تُقدَّم في علبة هدايا توقيعية من Bint Saeed',
     care: [
       'الأحجار الطبيعية تدوم عمراً كاملاً حين تُعامل بما تستحقه من احترام. تعاملي مع كل تعليقة هاتف فاخرة بلطف؛ فقد تتشقّق الأحجار أو تنكسر إذا ضُربت أو سقطت على سطح صلب أو تعرّضت لقوة.',
       'تجنّبي ملامسة الماء والعطور ومثبت الشعر ومزيل طلاء الأظافر والمواد الكيميائية القاسية، ولا سيّما الكلور.',
@@ -214,6 +217,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Conçue pour les coques de téléphone compatibles munies de points d’attache',
     compat2: 'Coque de téléphone non incluse',
     colourLine: (stone) => `Couleur : ${stone}`,
+    giftBox: 'Présentée dans un écrin cadeau signature Bint Saeed',
     care: [
       'Les pierres naturelles peuvent durer toute une vie lorsqu’elles sont traitées avec le respect qu’elles méritent. Manipulez chaque breloque de luxe avec délicatesse ; les pierres peuvent s’ébrécher ou se briser si elles sont heurtées, tombées ou soumises à une force.',
       'Évitez le contact avec l’eau, les parfums, la laque, le dissolvant et les produits chimiques agressifs, en particulier le chlore.',
@@ -242,6 +246,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Progettato per cover compatibili con punti di attacco',
     compat2: 'Cover non inclusa',
     colourLine: (stone) => `Colore: ${stone}`,
+    giftBox: 'Presentato in un cofanetto regalo firma Bint Saeed',
     care: [
       'Le gemme naturali durano una vita se trattate con il rispetto che meritano. Maneggiate ogni ciondolo di lusso con delicatezza; le pietre possono scheggiarsi o rompersi se urtate, fatte cadere o sottoposte a forza.',
       'Evitate il contatto con acqua, profumi, lacca, acetone e sostanze chimiche aggressive, in particolare il cloro.',
@@ -270,6 +275,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Diseñado para fundas compatibles con puntos de sujeción',
     compat2: 'Funda no incluida',
     colourLine: (stone) => `Color: ${stone}`,
+    giftBox: 'Presentado en un estuche de regalo firma Bint Saeed',
     care: [
       'Las gemas naturales duran toda la vida si se tratan con el respeto que merecen. Manipule cada colgante de lujo con delicadeza; las piedras pueden astillarse o romperse si se golpean, caen o se someten a fuerza.',
       'Evite el contacto con agua, perfumes, laca, quitaesmalte y químicos agresivos, especialmente el cloro.',
@@ -298,6 +304,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Рассчитана на совместимые чехлы с точками крепления',
     compat2: 'Чехол не входит в комплект',
     colourLine: (stone) => `Цвет: ${stone}`,
+    giftBox: 'Подаётся в фирменной подарочной коробке Bint Saeed',
     care: [
       'Натуральные камни служат всю жизнь при бережном обращении. Обращайтесь с каждой роскошной подвеской аккуратно; камни могут сколоться или разбиться при ударе, падении или сильном воздействии.',
       'Избегайте контакта с водой, духами, лаком для волос, жидкостью для снятия лака и агрессивной химией, особенно хлором.',
@@ -326,6 +333,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: '适用于带挂点的兼容手机壳',
     compat2: '不含手机壳',
     colourLine: (stone) => `颜色：${stone}`,
+    giftBox: '置于 Bint Saeed 签名礼盒中呈献',
     care: [
       '天然宝石若妥善对待可伴随一生。请轻拿轻放每件奢华手机挂饰；撞击、跌落或受力可能导致石材崩裂。',
       '避免接触水、香水、发胶、卸甲水及刺激性化学品，尤其是氯。',
@@ -354,6 +362,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Für kompatible Hüllen mit Befestigungspunkten konzipiert',
     compat2: 'Hülle nicht enthalten',
     colourLine: (stone) => `Farbe: ${stone}`,
+    giftBox: 'Präsentiert in einer signature Bint Saeed Geschenkbox',
     care: [
       'Natürliche Edelsteine halten ein Leben lang, wenn sie mit dem Respekt behandelt werden, den sie verdienen. Gehen Sie behutsam mit jedem Luxus-Telefonanhänger um; Steine können bei Stoß, Fall oder Krafteinwirkung absplittern oder zerbrechen.',
       'Vermeiden Sie Kontakt mit Wasser, Parfüm, Haarspray, Nagellackentferner und aggressiven Chemikalien, insbesondere Chlor.',
@@ -382,6 +391,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Ontworpen voor compatibele hoesjes met bevestigingspunten',
     compat2: 'Hoesje niet inbegrepen',
     colourLine: (stone) => `Kleur: ${stone}`,
+    giftBox: 'Gepresenteerd in een signature Bint Saeed cadeauverpakking',
     care: [
       'Natuurlijke edelstenen gaan een leven mee als ze met respect worden behandeld. Behandel elke luxe telefoonhanger voorzichtig; stenen kunnen afbrokkelen of breken bij stoten, vallen of kracht.',
       'Vermijd contact met water, parfum, haarlak, nagellakremover en agressieve chemicaliën, vooral chloor.',
@@ -410,6 +420,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Concebido para capas compatíveis com pontos de fixação',
     compat2: 'Capa não incluída',
     colourLine: (stone) => `Cor: ${stone}`,
+    giftBox: 'Apresentado numa caixa de presente signature Bint Saeed',
     care: [
       'As gemas naturais duram uma vida quando tratadas com o respeito que merecem. Manuseie cada pingente de luxo com delicadeza; as pedras podem lascar ou partir se forem golpeadas, deixadas cair ou sujeitas a força.',
       'Evite contacto com água, perfumes, lacas, removedor de verniz e químicos agressivos, especialmente cloro.',
@@ -438,6 +449,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Dirancang untuk casing kompatibel dengan titik pengait',
     compat2: 'Casing tidak termasuk',
     colourLine: (stone) => `Warna: ${stone}`,
+    giftBox: 'Disajikan dalam kotak hadiah signature Bint Saeed',
     care: [
       'Batu permata alami dapat bertahan seumur hidup jika diperlakukan dengan hormat. Tangani setiap liontin ponsel mewah dengan lembut; batu dapat terkelupas atau patah jika terbentur, jatuh, atau terkena gaya.',
       'Hindari kontak dengan air, parfum, hair spray, penghapus kuteks, dan bahan kimia keras, terutama klorin.',
@@ -466,6 +478,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
     compat1: 'Direka untuk casing serasi dengan titik lampiran',
     compat2: 'Casing tidak disertakan',
     colourLine: (stone) => `Warna: ${stone}`,
+    giftBox: 'Dihidangkan dalam kotak hadiah signature Bint Saeed',
     care: [
       'Batu permata semula jadi boleh bertahan seumur hidup jika dilayan dengan hormat. Kendalikan setiap liontin telefon mewah dengan lembut; batu boleh pecah atau retak jika terhantuk, terjatuh atau dikenakan daya.',
       'Elakkan sentuhan dengan air, minyak wangi, semburan rambut, penanggal varnis kuku dan bahan kimia keras, terutamanya klorin.',
@@ -510,6 +523,7 @@ export function buildPhoneCharmPdpPack(
     t.variation,
     t.compat1,
     t.compat2,
+    t.giftBox,
     t.colourLine(stone.stoneLabel),
   ]
 

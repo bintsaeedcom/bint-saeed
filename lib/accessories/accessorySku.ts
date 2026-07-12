@@ -42,6 +42,7 @@ const JEWELLERY_STYLE_SKU_BY_ID: Record<string, string> = {
   'signature-strand-lapis-lazuli': 'BSA-JWL-STR-LAP-001',
   'signature-strand-amethyst-hearts': 'BSA-JWL-STR-AMH-001',
   'signature-strand-jade-hearts': 'BSA-JWL-STR-JDH-001',
+  'signature-strand-jade': 'BSA-JWL-STR-JAD-001',
 }
 
 /** Bag charm parent style codes — colour suffix appended when selected (BS-BG-001-BLK). */

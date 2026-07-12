@@ -14,8 +14,23 @@ import {
   getBagCharmAiOther,
   getBagCharmMetaKeywords,
 } from '@/lib/accessories/bagCharmPdpMetaI18n'
+import {
+  getEarringAiOther,
+  getEarringMetaKeywords,
+} from '@/lib/accessories/earringPdpMetaI18n'
+import {
+  getNecklaceAiOther,
+  getNecklaceMetaKeywords,
+  isNecklacePdpId,
+} from '@/lib/accessories/necklacePdpMetaI18n'
+import {
+  mergeNaturalStoneBirthstoneAiOther,
+  mergeNaturalStoneBirthstoneKeywords,
+  resolveNaturalStonesFromAccessoryId,
+} from '@/lib/accessories/naturalStoneBirthstoneSeoI18n'
 import { isAlQuaaPhoneCharmId } from '@/lib/accessories/phoneCharmPdpContent'
 import { isAlAinOasisBagCharmId } from '@/lib/accessories/bagCharmPdpContent'
+import { isEarringPdpId } from '@/lib/accessories/earringPdpContentI18n'
 import { getListedPriceForAccessory } from '@/lib/pricing/accessoryCatalogPrices'
 import {
   buildAccessoryMetaDescription,
@@ -46,18 +61,45 @@ export async function generateMetadata({ params }: AccessoryLayoutProps): Promis
 
   const isPhoneCharm = isAlQuaaPhoneCharmId(accessory.id)
   const isBagCharm = isAlAinOasisBagCharmId(accessory.id)
-  const keywords = isPhoneCharm
+  const isEarring = isEarringPdpId(accessory.id)
+  const isNecklacePdp = isNecklacePdpId(accessory.id)
+  const isNecklace = isNecklacePdp || accessory.category === 'necklaces'
+  const isStrand =
+    accessory.category === 'signature-strands' || accessory.id.startsWith('signature-strand-')
+  const hasNaturalStone = resolveNaturalStonesFromAccessoryId(accessory.id).length > 0
+
+  const baseKeywords = isPhoneCharm
     ? getPhoneCharmMetaKeywords(accessory.id, locale)
     : isBagCharm
       ? getBagCharmMetaKeywords(accessory.id, locale)
-      : undefined
-  const aiOther = isPhoneCharm
+      : isEarring
+        ? getEarringMetaKeywords(accessory.id, locale)
+        : isNecklacePdp
+          ? getNecklaceMetaKeywords(accessory.id, locale)
+          : undefined
+
+  const keywords = hasNaturalStone
+    ? mergeNaturalStoneBirthstoneKeywords(accessory.id, baseKeywords, locale)
+    : baseKeywords
+
+  const baseAiOther = isPhoneCharm
     ? getPhoneCharmAiOther(accessory.id, locale)
     : isBagCharm
       ? getBagCharmAiOther(accessory.id, locale)
-      : undefined
+      : isEarring
+        ? getEarringAiOther(accessory.id, locale)
+        : isNecklacePdp
+          ? getNecklaceAiOther(accessory.id, locale)
+          : undefined
+
+  const aiOther = hasNaturalStone
+    ? mergeNaturalStoneBirthstoneAiOther(accessory.id, locale, baseAiOther)
+    : baseAiOther
+
   const aedPrice =
-    isPhoneCharm || isBagCharm ? getListedPriceForAccessory(accessory.id, 'AED') : null
+    isPhoneCharm || isBagCharm || isEarring || isNecklace || isStrand
+      ? getListedPriceForAccessory(accessory.id, 'AED')
+      : null
 
   return {
     title: pageTitle,

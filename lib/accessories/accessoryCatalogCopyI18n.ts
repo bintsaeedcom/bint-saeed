@@ -1,5 +1,6 @@
 import type { Accessory } from '@/data/accessories'
 import type { AppLocale } from '@/lib/i18n/routing'
+import { getEarringLocalizedDisplayName } from '@/lib/accessories/earringPdpMetaI18n'
 
 type AccessoryCatalogCopy = {
   name: string
@@ -47,26 +48,30 @@ const FR_ACCESSORY_CATALOG: Record<string, AccessoryCatalogCopy> = {
   'al-ain-oasis-earrings-malachite': {
     name: 'Boucles d’oreilles Al Ain Oasis — Malachite',
     description:
-      'Boucles d’oreilles en malachite assemblées à la main avec la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or.',
-    materials: 'Malachite naturelle, cornaline, hématite plaquée or 18 carats',
+      'La touche finale qui rassemble le tout. Boucles d’oreilles en malachite et pierre de soleil assemblées à la main avec rosette d’Al Ain en cornaline, hématite plaquée or et zirconia brillante.',
+    materials:
+      'Malachite naturelle, pierre de soleil, rosette d’Al Ain en cornaline, hématite plaquée or 18 carats, zirconia dans du cuivre sans nickel plaqué or 14 carats',
   },
   'al-quaa-earrings-rose-quartz': {
     name: 'Boucles d’oreilles Al Quaa — Quartz rose',
     description:
-      'Boucles d’oreilles en quartz rose assemblées à la main avec la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or.',
-    materials: 'Quartz rose naturel, cornaline, hématite plaquée or 18 carats',
+      'La touche finale qui rassemble le tout. Boucles d’oreilles en quartz rose assemblées à la main avec rosette d’Al Ain en cornaline, hématite plaquée or et clou en zirconia rose taille poire.',
+    materials:
+      'Quartz rose naturel, rosette d’Al Ain en cornaline, hématite plaquée or 18 carats, clou en zirconia rose taille poire dans du laiton plaqué or 18 carats',
   },
   'al-ain-oasis-earrings-orange-jade': {
     name: 'Boucles d’oreilles Al Ain Oasis — Jade orange',
     description:
-      'Boucles d’oreilles en jade orange assemblées à la main avec la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or.',
-    materials: 'Jade orange naturel, cornaline, hématite plaquée or 18 carats',
+      'La touche finale qui rassemble le tout. Boucles d’oreilles en jade orange et pierre de soleil assemblées à la main avec rosette d’Al Ain en cornaline, hématite plaquée or et zirconia brillante.',
+    materials:
+      'Jade orange naturel, pierre de soleil, rosette d’Al Ain en cornaline, hématite plaquée or 18 carats, zirconia dans du cuivre sans nickel plaqué or 14 carats',
   },
   'al-quaa-earrings-lapis-lazuli': {
     name: 'Boucles d’oreilles Al Quaa — Lapis lazuli',
     description:
-      'Boucles d’oreilles en lapis lazuli assemblées à la main avec la rosette d’Al Ain signature sculptée dans du cornaline naturelle et des accents d’hématite plaqués or.',
-    materials: 'Lapis lazuli naturel, cornaline, hématite plaquée or 18 carats',
+      'La touche finale qui rassemble le tout. Boucles d’oreilles en lapis lazuli assemblées à la main avec rosette d’Al Ain en cornaline, hématite plaquée or et clou en zirconia transparente taille poire.',
+    materials:
+      'Lapis lazuli naturel, rosette d’Al Ain en cornaline, hématite plaquée or 18 carats, clou en zirconia transparente taille poire dans du laiton plaqué or 18 carats',
   },
   'bracelet-pearl-chain': {
     name: 'Bracelet chaîne perles',
@@ -115,6 +120,8 @@ export function getLocalizedAccessoryDisplayName(
   accessory: Pick<Accessory, 'id' | 'name' | 'nameAr'>,
   locale: AppLocale = 'en',
 ): string {
+  const earringName = getEarringLocalizedDisplayName(accessory.id, locale)
+  if (earringName) return withoutColouredJadeQualifier(earringName)
   if (locale === 'ar') return withoutColouredJadeQualifier(accessory.nameAr)
   if (locale === 'fr') {
     return withoutColouredJadeQualifier(frCopy(accessory.id)?.name ?? accessory.name)

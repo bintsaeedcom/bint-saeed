@@ -49,7 +49,15 @@ export function getNecklaceEarringSchemaAudience(
 }
 
 export function getNecklaceGemstoneLabel(accessoryId: string): string | undefined {
-  if (!accessoryId.startsWith('al-ain-oasis-necklace-')) return undefined
-  const variant = accessoryId.slice('al-ain-oasis-necklace-'.length)
-  return NECKLACE_GEMSTONE_LABELS[variant] ?? variant.replace(/-/g, ' ')
+  if (accessoryId.startsWith('al-ain-oasis-necklace-')) {
+    const variant = accessoryId.slice('al-ain-oasis-necklace-'.length)
+    return NECKLACE_GEMSTONE_LABELS[variant] ?? variant.replace(/-/g, ' ')
+  }
+  const earringGemstones: Record<string, string> = {
+    'al-ain-oasis-earrings-malachite': 'Malachite, Sunstone',
+    'al-ain-oasis-earrings-orange-jade': 'Orange Coloured Jade, Sunstone',
+    'al-quaa-earrings-rose-quartz': 'Rose Quartz',
+    'al-quaa-earrings-lapis-lazuli': 'Lapis Lazuli',
+  }
+  return earringGemstones[accessoryId]
 }

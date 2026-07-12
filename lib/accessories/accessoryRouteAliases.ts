@@ -12,6 +12,7 @@ export const LEGACY_ACCESSORY_ID_ALIASES: Record<string, string> = {
   'abaya-charm-lapis-lazuli-natural-stone': 'signature-strand-lapis-lazuli',
   'abaya-charm-amethyst-hearts-natural-stone': 'signature-strand-amethyst-hearts',
   'abaya-charm-jade-hearts-natural-stone': 'signature-strand-jade-hearts',
+  'abaya-charm-jade-natural-stone': 'signature-strand-jade',
   'bag-charm-tassel': 'al-ain-oasis-i-bag-charm-fuchsia-jade',
   'bag-charm-pearl-cluster': 'al-ain-oasis-ii-bag-charm-fuchsia-jade',
   'bag-charm-letter': 'al-ain-oasis-i-bag-charm-fuchsia-jade',

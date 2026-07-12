@@ -13,6 +13,16 @@ import {
   getBagCharmMetaDescription,
   getBagCharmMetaTitle,
 } from '@/lib/accessories/bagCharmPdpMetaI18n'
+import {
+  getEarringMetaDescription,
+  getEarringMetaTitle,
+  getEarringLocalizedDisplayName,
+} from '@/lib/accessories/earringPdpMetaI18n'
+import {
+  getNecklaceMetaDescription,
+  getNecklaceMetaTitle,
+  getNecklaceLocalizedDisplayName,
+} from '@/lib/accessories/necklacePdpMetaI18n'
 import { getNecklaceEarringPdpContent } from '@/lib/accessories/necklaceEarringPdpContent'
 import {
   getLocalizedAccessoryDescription,
@@ -58,6 +68,10 @@ function accessoryDisplayName(accessory: Accessory, locale: AppLocale): string {
   if (strand?.headline) return strand.headline
   const phoneCharm = getPhoneCharmPdpContent(accessory.id, locale)
   if (phoneCharm?.headline) return phoneCharm.headline
+  const earringName = getEarringLocalizedDisplayName(accessory.id, locale)
+  if (earringName) return earringName
+  const necklaceName = getNecklaceLocalizedDisplayName(accessory.id, locale)
+  if (necklaceName) return necklaceName
   return getLocalizedAccessoryDisplayName(accessory, locale)
 }
 
@@ -66,6 +80,10 @@ export function buildAccessoryPageTitle(accessory: Accessory, locale: AppLocale)
   if (phoneTitle) return phoneTitle
   const bagTitle = getBagCharmMetaTitle(accessory.id, locale)
   if (bagTitle) return bagTitle
+  const earringTitle = getEarringMetaTitle(accessory.id, locale)
+  if (earringTitle) return earringTitle
+  const necklaceTitle = getNecklaceMetaTitle(accessory.id, locale)
+  if (necklaceTitle) return necklaceTitle
   return `${accessoryDisplayName(accessory, locale)} | ${BRAND_NAME}`
 }
 
@@ -82,6 +100,12 @@ export function buildAccessoryMetaDescription(accessory: Accessory, locale: AppL
 
   const bagCharmMeta = getBagCharmMetaDescription(accessory.id, locale)
   if (bagCharmMeta) return bagCharmMeta
+
+  const earringMeta = getEarringMetaDescription(accessory.id, locale)
+  if (earringMeta) return earringMeta
+
+  const necklaceMeta = getNecklaceMetaDescription(accessory.id, locale)
+  if (necklaceMeta) return necklaceMeta
 
   const phoneCharm = getPhoneCharmPdpContent(accessory.id, locale)
   if (phoneCharm) {
