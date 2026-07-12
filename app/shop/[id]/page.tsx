@@ -217,12 +217,13 @@ export default function ProductPage() {
     () => (product ? getProductFaq(product, pdpFaq, language) : []),
     [product, pdpFaq, language],
   )
-  const productDetailsBullets = useMemo(() => {
-    if (!product) return productDetails
+  const productDetailsBullets = useMemo(() => productDetails, [productDetails])
+  const productReferenceLine = useMemo(() => {
+    if (!product) return null
     const sku = resolveProductSku(product, selectedColor)
-    if (!sku) return productDetails
-    return [...productDetails, formatPdpProductCodeLine(sku, isRTL)]
-  }, [product, productDetails, selectedColor, isRTL])
+    if (!sku) return null
+    return formatPdpProductCodeLine(sku, isRTL)
+  }, [product, selectedColor, isRTL])
   const estimatedShipDate = useMemo(() => {
     const d = new Date()
     d.setDate(d.getDate() + 14)
@@ -542,6 +543,11 @@ export default function ProductPage() {
                 </ul>
               </div>
             )}
+            {productReferenceLine && (
+              <p className={`pt-3 ${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
+                {productReferenceLine}
+              </p>
+            )}
             {brandStory && (
               <p className={`pt-3 ${PDP_COPY_INTRO} pdp-copy--intro ${isRTL ? 'text-right' : ''}`}>
                 {brandStory}
@@ -599,6 +605,7 @@ export default function ProductPage() {
     originDetails,
     productDetailGroups,
     productDetailsBullets,
+    productReferenceLine,
     sizeAndFitDetails,
     t.product.shippingReturns,
     t.product.sizeMeasurements,

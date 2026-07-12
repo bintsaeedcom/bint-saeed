@@ -33,7 +33,7 @@ type FeatureTemplate = {
 const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
   en: {
     stoneLabel: 'Fuchsia Jade',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'Handcrafted in Abu Dhabi, United Arab Emirates',
     handAssembled: 'Hand-assembled natural stone bag charm',
     length: 'Approximate length: 15 cm / 5.9 in',
@@ -60,7 +60,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
   },
   ar: {
     stoneLabel: 'يشم فوشي',
-    houseCode: 'رمز المنزل: روزيت العين',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'مصنوعة يدوياً في أبوظبي، الإمارات العربية المتحدة',
     handAssembled: 'تعليقة حقيبة من الأحجار الطبيعية مجمّعة يدوياً',
     length: 'الطول التقريبي: 15 سم / 5.9 إنش',
@@ -87,7 +87,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
   },
   fr: {
     stoneLabel: 'Jade fuchsia',
-    houseCode: 'Code de la Maison : Rosette d’Al Ain',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'Façonnée à la main à Abou Dabi, Émirats arabes unis',
     handAssembled: 'Breloque de sac en pierres naturelles assemblée à la main',
     length: 'Longueur approximative : 15 cm / 5,9 in',
@@ -222,7 +222,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
   },
   de: {
     stoneLabel: 'Fuchsia-Jade',
-    houseCode: 'House Code: Al-Ain-Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'Handgefertigt in Abu Dhabi, Vereinigte Arabische Emirate',
     handAssembled: 'Handmontierter Naturstein-Taschenanhänger',
     length: 'Ungefähre Länge: 15 cm / 5,9 in',
@@ -249,7 +249,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
   },
   nl: {
     stoneLabel: 'Fuchsia-jade',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'Handgemaakt in Abu Dhabi, Verenigde Arabische Emiraten',
     handAssembled: 'Met de hand gemonteerde natuursteen-tashanger',
     length: 'Geschatte lengte: 15 cm / 5,9 in',
@@ -361,11 +361,13 @@ export function buildBagCharmFeatures(
   id: AlAinOasisBagCharmId,
   locale: AppLocale,
 ): { featuresTitle: string; features: string[]; careLead: string; care: string[]; colour: string } {
-  const t = FEATURES_BY_LOCALE[locale] ?? FEATURES_BY_LOCALE.en
+  const t = FEATURES_BY_LOCALE[locale]
+  if (!t) {
+    throw new Error(`Missing bag charm features for locale: ${locale}`)
+  }
   const strand = ID_TO_STRAND[id]
   const labels = getPhoneCharmSectionLabels(locale)
   const jewelleryCare = getJewelleryCareCopy(locale)
-  const useSharedJewelleryCare = locale === 'en' || locale === 'ar' || locale === 'fr'
 
   return {
     featuresTitle: labels.featuresTitle,
@@ -385,8 +387,8 @@ export function buildBagCharmFeatures(
       t.giftBox,
       t.colourLine,
     ],
-    careLead: useSharedJewelleryCare ? jewelleryCare.lead : '',
-    care: useSharedJewelleryCare ? [...jewelleryCare.bullets] : t.care,
+    careLead: jewelleryCare.lead,
+    care: [...jewelleryCare.bullets],
     colour: t.stoneLabel,
   }
 }

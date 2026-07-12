@@ -1,6 +1,7 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductPdpContent } from '@/data/productPdpContent'
 import { PDP_COLOUR_TITLE, PDP_SILHOUETTE_TITLE } from '@/lib/products/pdpFeatureSectionTitles'
+import { PDP_HOUSE_CODES_TITLE } from '@/lib/products/pdpHouseCodesGroupsI18n'
 import type { PdpDetailGroup } from '@/lib/products/pdpIntroRich'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
 
@@ -9,12 +10,12 @@ export const MARYLEBONE_ABAYA_SLUG = 'marylebone-abaya'
 type LocalePack = {
   introParagraphs: readonly string[]
   silhouetteItems: readonly string[]
-  houseSignaturesTitle: string
-  houseSignaturesItems: readonly string[]
+  houseCodesItems: readonly string[]
   colourItems: readonly string[]
   compositionGroups: readonly PdpDetailGroup[]
   careDetails: readonly string[]
   fitAndSizeDetails: readonly string[]
+  originDetails: readonly string[]
   faq: ProductFaqItem[]
 }
 
@@ -39,11 +40,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Optional snap button closure',
       'Optional hidden inner label personalisation',
     ],
-    houseSignaturesTitle: 'House Signatures',
-    houseSignaturesItems: [
-      'Signature gold-tone Knotted Line details',
-      'Signature interchangeable natural stone strands',
-      'Crafted in Abu Dhabi, United Arab Emirates',
+    houseCodesItems: [
+      'Bint Saeed signature gold-tone Knotted Line details',
+      'The Strands — interchangeable natural stone strands',
     ],
     colourItems: ['Deep Black', 'Navy Blue'],
     compositionGroups: [
@@ -68,6 +67,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Model wears size XS',
       'Custom length available upon request',
     ],
+    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
     faq: [
       {
         question: 'Are the Onyx Strands on the Marylebone Abaya removable?',
@@ -101,11 +101,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'إغلاق بأزرار سناب اختياري',
       'تخصيص اختياري ببطاقة داخلية مخفية',
     ],
-    houseSignaturesTitle: 'توقيعات الدار',
-    houseSignaturesItems: [
-      'تفاصيل Knotted Line الذهبية المميزة',
-      'خيوط أحجار طبيعية قابلة للتبديل من توقيع الدار',
-      'صُنعت في أبوظبي، الإمارات العربية المتحدة',
+    houseCodesItems: [
+      'تفاصيل Knotted Line الذهبية المميزة من Bint Saeed',
+      'The Strands — ستراندات أحجار طبيعية قابلة للتبديل',
     ],
     colourItems: ['أسود عميق', 'كحلي'],
     compositionGroups: [
@@ -130,6 +128,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'العارضة ترتدي مقاس XS',
       'الطول المخصص متاح عند الطلب',
     ],
+    originDetails: ['صُنعت في أبوظبي، الإمارات العربية المتحدة'],
     faq: [
       {
         question: 'هل خيوط Onyx Strands على Marylebone Abaya قابلة للإزالة؟',
@@ -163,11 +162,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Fermeture par boutons-pression optionnelle',
       'Personnalisation optionnelle par étiquette intérieure dissimulée',
     ],
-    houseSignaturesTitle: 'Signatures de la Maison',
-    houseSignaturesItems: [
+    houseCodesItems: [
       'Détails dorés signature Knotted Line',
       'Fils en pierres naturelles interchangeables signature',
-      'Fabriquée à Abou Dabi, Émirats arabes unis',
     ],
     colourItems: ['Noir profond', 'Bleu marine'],
     compositionGroups: [
@@ -192,6 +189,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'La mannequin porte la taille XS',
       'Longueur sur mesure disponible sur demande',
     ],
+    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
     faq: [
       {
         question: 'Les Onyx Strands de la Marylebone Abaya sont-ils amovibles ?',
@@ -225,11 +223,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Chiusura a bottoni a pressione opzionale',
       'Personalizzazione opzionale con etichetta interna nascosta',
     ],
-    houseSignaturesTitle: 'Firme della Maison',
-    houseSignaturesItems: [
+    houseCodesItems: [
       'Dettagli dorati signature Knotted Line',
       'Fili in pietre naturali intercambiabili signature',
-      'Realizzata ad Abu Dhabi, Emirati Arabi Uniti',
     ],
     colourItems: ['Nero profondo', 'Blu navy'],
     compositionGroups: [
@@ -254,6 +250,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'La modella indossa taglia XS',
       'Lunghezza personalizzata disponibile su richiesta',
     ],
+    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
     faq: [
       {
         question: 'Gli Onyx Strands sulla Marylebone Abaya sono rimovibili?',
@@ -287,11 +284,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Cierre de botones a presión opcional',
       'Personalización opcional con etiqueta interior oculta',
     ],
-    houseSignaturesTitle: 'Firmas de la Casa',
-    houseSignaturesItems: [
+    houseCodesItems: [
       'Detalles dorados signature Knotted Line',
       'Hebras de piedras naturales intercambiables signature',
-      'Hecha en Abu Dabi, Emiratos Árabes Unidos',
     ],
     colourItems: ['Negro profundo', 'Azul marino'],
     compositionGroups: [
@@ -316,6 +311,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'La modelo lleva talla XS',
       'Largo personalizado disponible bajo pedido',
     ],
+    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
     faq: [
       {
         question: '¿Son extraíbles los Onyx Strands de la Marylebone Abaya?',
@@ -349,11 +345,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Опциональная застёжка на кнопки',
       'Опциональная персонализация скрытой внутренней биркой',
     ],
-    houseSignaturesTitle: 'Фирменные знаки дома',
-    houseSignaturesItems: [
+    houseCodesItems: [
       'Фирменные золотистые детали Knotted Line',
       'Фирменные сменные нити из натурального камня',
-      'Сделано в Абу-Даби, ОАЭ',
     ],
     colourItems: ['Глубокий чёрный', 'Тёмно-синий'],
     compositionGroups: [
@@ -378,6 +372,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Модель носит размер XS',
       'Индивидуальная длина по запросу',
     ],
+    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
     faq: [
       {
         question: 'Съёмные ли Onyx Strands на Marylebone Abaya?',
@@ -411,11 +406,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       '可选按扣开合',
       '可选隐藏内标定制',
     ],
-    houseSignaturesTitle: '品牌标志',
-    houseSignaturesItems: [
+    houseCodesItems: [
       '标志性金色调 Knotted Line 细节',
       '标志性可更换天然宝石饰带',
-      '阿联酋阿布扎比制造',
     ],
     colourItems: ['深黑色', '海军蓝'],
     compositionGroups: [
@@ -440,6 +433,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       '模特穿着 XS 码',
       '可按需定制长度',
     ],
+    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
     faq: [
       {
         question: 'Marylebone Abaya 上的 Onyx Strands 可拆卸吗？',
@@ -473,11 +467,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Optionale Druckknopf-Schließung',
       'Optionale Personalisierung mit verstecktem Innenetikett',
     ],
-    houseSignaturesTitle: 'Haus-Signaturen',
-    houseSignaturesItems: [
+    houseCodesItems: [
       'Charakteristische goldfarbene Knotted-Line-Details',
       'Charakteristische austauschbare Naturstein-Stränge',
-      'Hergestellt in Abu Dhabi, VAE',
     ],
     colourItems: ['Tiefschwarz', 'Marineblau'],
     compositionGroups: [
@@ -502,6 +494,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Modell trägt Größe XS',
       'Individuelle Länge auf Anfrage',
     ],
+    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
     faq: [
       {
         question: 'Sind die Onyx Strands an der Marylebone Abaya abnehmbar?',
@@ -535,11 +528,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Optionele drukknoopsluiting',
       'Optionele personalisatie met verborgen binnenlabel',
     ],
-    houseSignaturesTitle: 'Huis-kenmerken',
-    houseSignaturesItems: [
+    houseCodesItems: [
       'Kenmerkende goudkleurige Knotted Line-details',
       'Kenmerkende verwisselbare natuursteenstrengen',
-      'Gemaakt in Abu Dhabi, VAE',
     ],
     colourItems: ['Diepzwart', 'Marineblauw'],
     compositionGroups: [
@@ -564,6 +555,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Model draagt maat XS',
       'Aangepaste lengte op aanvraag',
     ],
+    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
     faq: [
       {
         question: 'Zijn de Onyx Strands op de Marylebone Abaya verwijderbaar?',
@@ -597,11 +589,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Fecho de botões de pressão opcional',
       'Personalização opcional com etiqueta interior oculta',
     ],
-    houseSignaturesTitle: 'Assinaturas da Casa',
-    houseSignaturesItems: [
+    houseCodesItems: [
       'Detalhes dourados signature Knotted Line',
       'Fios em pedras naturais intercambiáveis signature',
-      'Feita em Abu Dhabi, Emirados Árabes Unidos',
     ],
     colourItems: ['Preto profundo', 'Azul-marinho'],
     compositionGroups: [
@@ -626,6 +616,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Modelo usa tamanho XS',
       'Comprimento personalizado disponível sob pedido',
     ],
+    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
     faq: [
       {
         question: 'Os Onyx Strands na Marylebone Abaya são removíveis?',
@@ -659,11 +650,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Penutup kancing snap opsional',
       'Personalisasi opsional dengan label dalam tersembunyi',
     ],
-    houseSignaturesTitle: 'Tanda Khas Rumah',
-    houseSignaturesItems: [
+    houseCodesItems: [
       'Detail Knotted Line emas signature',
       'Strand batu alami yang dapat ditukar signature',
-      'Dibuat di Abu Dhabi, Uni Emirat Arab',
     ],
     colourItems: ['Hitam pekat', 'Navy Blue'],
     compositionGroups: [
@@ -688,6 +677,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Model memakai ukuran XS',
       'Panjang kustom tersedia atas permintaan',
     ],
+    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
     faq: [
       {
         question: 'Apakah Onyx Strands pada Marylebone Abaya dapat dilepas?',
@@ -721,11 +711,9 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Penutup butang snap pilihan',
       'Pemperibadian pilihan dengan label dalaman tersembunyi',
     ],
-    houseSignaturesTitle: 'Tanda Khas Rumah',
-    houseSignaturesItems: [
+    houseCodesItems: [
       'Butiran Knotted Line emas signature',
       'Strand batu semula jadi boleh ditukar signature',
-      'Dihasilkan di Abu Dhabi, Emiriah Arab Bersatu',
     ],
     colourItems: ['Hitam pekat', 'Navy Blue'],
     compositionGroups: [
@@ -750,6 +738,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Model memakai saiz XS',
       'Panjang tersuai tersedia atas permintaan',
     ],
+    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
     faq: [
       {
         question: 'Adakah Onyx Strands pada Marylebone Abaya boleh ditanggalkan?',
@@ -772,8 +761,8 @@ function buildDetailGroups(pack: LocalePack, locale: AppLocale): PdpDetailGroup[
       items: [...pack.silhouetteItems],
     },
     {
-      title: pack.houseSignaturesTitle,
-      items: [...pack.houseSignaturesItems],
+      title: PDP_HOUSE_CODES_TITLE[locale] ?? PDP_HOUSE_CODES_TITLE.en,
+      items: [...pack.houseCodesItems],
     },
     {
       title: PDP_COLOUR_TITLE[locale],
@@ -809,6 +798,7 @@ export function buildMaryleboneAbayaPdpContent(
     })),
     careDetails: [...pack.careDetails],
     fitAndSizeDetails: [...pack.fitAndSizeDetails],
+    originDetails: [...pack.originDetails],
     faq: getMaryleboneAbayaPdpFaq(locale),
   }
 }

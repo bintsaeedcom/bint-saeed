@@ -8,7 +8,7 @@ import AppBreadcrumb, { type BreadcrumbSegment } from '@/components/AppBreadcrum
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
-import { EDITORIAL_PAGE_CONTAINER } from '@/lib/ui/editorialPageChrome'
+import { EDITORIAL_PAGE_CONTAINER, SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 
 export type WayfindingBackLink = {
   href?: string
@@ -140,7 +140,7 @@ export default function AppPageWayfinding({
 
   if (layout === 'bar') {
     return (
-      <div className={`border-b border-brand-stone/20 pt-24 md:pt-28 lg:pt-32 ${className}`}>
+      <div className={`border-b border-brand-stone/20 ${SITE_CONTENT_TOP_PAD} ${className}`}>
         <div className={`${EDITORIAL_PAGE_CONTAINER} py-2`}>{stack}</div>
       </div>
     )

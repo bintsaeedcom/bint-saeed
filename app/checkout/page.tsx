@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FiArrowRight, FiLock } from 'react-icons/fi'
@@ -217,7 +218,7 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-brand-pageCanvas pt-4 font-montserrat text-brand-clayRed sm:pt-6 md:pt-8">
+      <div className={`flex min-h-screen items-center justify-center bg-brand-pageCanvas font-montserrat text-brand-clayRed ${SITE_CONTENT_TOP_PAD}`}>
         {ui.checkout.redirecting}
       </div>
     )
@@ -226,7 +227,7 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
       <div className="border-b border-brand-stone/20 bg-brand-pageCanvas">
-        <div className="container mx-auto min-w-0 px-4 pb-4 pt-20 sm:px-6 sm:pb-6 sm:pt-24 lg:px-12 lg:pt-28">
+        <div className={`container mx-auto min-w-0 px-4 pb-4 ${SITE_CONTENT_TOP_PAD} sm:px-6 sm:pb-6 lg:px-12`}>
           <AppPageWayfinding
             rtl={isRTL}
             variant="muted"

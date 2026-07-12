@@ -149,7 +149,7 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
       {
         type: 'text',
         value:
-          'A completare il design una fascia statement removibile, finita con bordo Al Talli e la spilla emblema dorata signature di Bint Saeed. Indossata drappeggiata naturalmente dalla spalla o in diagonale sul corpo, trasforma la silhouette con cerimonia, distinzione ed eleganza senza tempo.',
+          'A completare il design una fascia statement removibile, finita con bordo Al Talli e la spilla Monogram dorata signature di Bint Saeed. Indossata drappeggiata naturalmente dalla spalla o in diagonale sul corpo, trasforma la silhouette con cerimonia, distinzione ed eleganza senza tempo.',
       },
     ],
     [
@@ -190,7 +190,7 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
       {
         type: 'text',
         value:
-          'Completando el diseño, una faja statement desmontable acabada con ribete Al Talli y el pin emblema dorado signature de Bint Saeed. Llevada drapeada naturalmente desde el hombro o en diagonal sobre el cuerpo, transforma la silueta con ceremonia, distinción y elegancia atemporal.',
+          'Completando el diseño, una faja statement desmontable acabada con ribete Al Talli y el pin Monogram dorado signature de Bint Saeed. Llevada drapeada naturalmente desde el hombro o en diagonal sobre el cuerpo, transforma la silueta con ceremonia, distinción y elegancia atemporal.',
       },
     ],
     [
@@ -394,7 +394,7 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
       {
         type: 'text',
         value:
-          'Completando o design, uma echarpe statement destacável acabada com acabamento Al Talli e o alfinete emblema dourado signature da Bint Saeed. Usada drapeada naturalmente do ombro ou em diagonal pelo corpo, transforma a silhueta com cerimónia, distinção e elegância intemporal.',
+          'Completando o design, uma echarpe statement destacável acabada com acabamento Al Talli e o alfinete Monogram dourado signature da Bint Saeed. Usada drapeada naturalmente do ombro ou em diagonal pelo corpo, transforma a silhueta com cerimónia, distinção e elegância intemporal.',
       },
     ],
     [
@@ -435,7 +435,7 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
       {
         type: 'text',
         value:
-          'Melengkapi desain, selempang statement yang dapat dilepas dihiasi trim Al Talli dan pin emblema emas signature Bint Saeed. Dikenakan terurai alami dari bahu atau secara diagonal di tubuh, ia mengubah siluet dengan upacara, keistimewaan, dan elegansi abadi.',
+          'Melengkapi desain, selempang statement yang dapat dilepas dihiasi trim Al Talli dan pin Monogram emas signature Bint Saeed. Dikenakan terurai alami dari bahu atau secara diagonal di tubuh, ia mengubah siluet dengan upacara, keistimewaan, dan elegansi abadi.',
       },
     ],
     [
@@ -498,7 +498,7 @@ const SILHOUETTE_ITEMS: Record<AppLocale, readonly string[]> = {
   en: [
     'Elegant A-line abaya',
     'Open-front design with optional concealed snap-button closure available upon request',
-    'Detachable statement sash finished with Bint Saeed’s signature gold-tone emblem pin for multiple styling options',
+    'Detachable statement sash finished with Bint Saeed signature gold-tone Monogram pin for multiple styling options',
     'Shoulder epaulettes with signature button detailing',
     'Wide cuffs with heritage woven trim',
     'Fully lined with a soft crepe lining for exceptional comfort and a refined finish',
@@ -528,7 +528,7 @@ const SILHOUETTE_ITEMS: Record<AppLocale, readonly string[]> = {
   it: [
     'Abaya A-line elegante',
     'Design aperto sul davanti con chiusura a pressione nascosta opzionale su richiesta',
-    'Fascia statement removibile con spilla emblema dorata signature di Bint Saeed',
+    'Fascia statement removibile con spilla Monogram dorata signature di Bint Saeed',
     'Spalline con bottoni signature',
     'Polsini ampi con bordo tessuto patrimoniale',
     'Completamente foderata in crepe morbido per comfort eccezionale',
@@ -538,7 +538,7 @@ const SILHOUETTE_ITEMS: Record<AppLocale, readonly string[]> = {
   es: [
     'Abaya A-line elegante',
     'Diseño abierto frontal con cierre a presión oculto opcional bajo pedido',
-    'Faja statement desmontable con pin emblema dorado signature de Bint Saeed',
+    'Faja statement desmontable con pin Monogram dorado signature de Bint Saeed',
     'Hombreras con botones signature',
     'Puños amplios con ribete tejido patrimonial',
     'Completamente forrada con crepé suave para confort excepcional',
@@ -588,7 +588,7 @@ const SILHOUETTE_ITEMS: Record<AppLocale, readonly string[]> = {
   pt: [
     'Abaya A-line elegante',
     'Design aberto à frente com fecho de mola oculto opcional sob pedido',
-    'Echarpe statement destacável com alfinete emblema dourado signature da Bint Saeed',
+    'Echarpe statement destacável com alfinete Monogram dourado signature da Bint Saeed',
     'Almofadas de ombro com botões signature',
     'Punhos largos com acabamento tecido patrimonial',
     'Totalmente forrada com crepe macio para conforto excecional',
@@ -598,7 +598,7 @@ const SILHOUETTE_ITEMS: Record<AppLocale, readonly string[]> = {
   id: [
     'Abaya A-line elegan',
     'Desain depan terbuka dengan penutup kancing tersembunyi opsional atas permintaan',
-    'Selempang statement dapat dilepas dengan pin emblema emas signature Bint Saeed',
+    'Selempang statement dapat dilepas dengan pin Monogram emas signature Bint Saeed',
     'Epaulet bahu dengan detail kancing signature',
     'Manset lebar dengan trim tenun warisan',
     'Berlapis krepe lembut sepenuhnya untuk kenyamanan luar biasa',

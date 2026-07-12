@@ -2,6 +2,7 @@
 
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FiHeart, FiTrash2 } from 'react-icons/fi'
@@ -19,7 +20,7 @@ export default function WishlistPage() {
   const ui = commerceUi(language)
 
   return (
-    <div className={`min-h-screen bg-brand-pageCanvas pt-28 pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="container mx-auto max-w-3xl px-6 lg:px-12">
         <AppPageWayfinding
           rtl={isRTL}

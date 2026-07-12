@@ -1,7 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { NecklaceEarringPdpContentPack } from '@/lib/accessories/necklaceEarringPdpContent'
-import { getJewelleryCareCopy } from '@/lib/accessories/jewelleryCareCopyI18n'
-import { JEWELLERY_CARE_FAQ_NECKLACE_EN } from '@/lib/accessories/jewelleryCareCopyI18n'
+import { getJewelleryCareCopy, getJewelleryCareFaqNecklace } from '@/lib/accessories/jewelleryCareCopyI18n'
 import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 import { isNecklacePdpId } from '@/lib/accessories/necklacePdpMetaI18n'
 
@@ -71,7 +70,7 @@ type SharedUi = {
 const UI: Record<SecondaryLocale, SharedUi> = {
   it: {
     featuresTitle: 'Caratteristiche',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handcrafted: 'Artigianale ad Abu Dhabi, Emirati Arabi Uniti',
     hematite: 'Perle di ematite placcata oro integrate nel design',
     rosette: 'Signature Al Ain Rosette intagliata a mano in corniola naturale (circa 15 mm)',
@@ -95,7 +94,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
       'No. Ogni creazione Bint Saeed presenta gemme naturali. Variazioni di tono, inclusioni e caratteristiche naturali fanno parte dell’individualità di ogni pezzo e vanno celebrate come segno dei materiali naturali.',
     wearWays:
       'Sì. La collana può essere indossata come lunghezza singola o raddoppiata intorno al collo per una silhouette più corta e stratificata.',
-    careFaq: JEWELLERY_CARE_FAQ_NECKLACE_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Che cos’è l’Al Ain Rosette?',
     qStrand: 'È disponibile un Signature Strand abbinato?',
     qWear: 'La collana può essere indossata in modi diversi?',
@@ -110,7 +109,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   es: {
     featuresTitle: 'Características',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handcrafted: 'Hecho a mano en Abu Dabi, Emiratos Árabes Unidos',
     hematite: 'Cuentas de hematita baño de oro integradas en el diseño',
     rosette: 'Signature Al Ain Rosette tallada a mano en cornalina natural (aproximadamente 15 mm)',
@@ -134,7 +133,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
       'No. Cada creación Bint Saeed presenta gemas naturales. Las variaciones de tono, inclusiones y características naturales forman parte de la individualidad de cada pieza y deben celebrarse como sello de los materiales naturales.',
     wearWays:
       'Sí. El collar puede llevarse como longitud sencilla o doblado alrededor del cuello para una silueta más corta y en capas.',
-    careFaq: JEWELLERY_CARE_FAQ_NECKLACE_EN,
+    careFaq: '', // filled in buildPack
     qRosette: '¿Qué es la Al Ain Rosette?',
     qStrand: '¿Hay un Signature Strand a juego disponible?',
     qWear: '¿Se puede llevar el collar de distintas maneras?',
@@ -149,7 +148,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   ru: {
     featuresTitle: 'Особенности',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handcrafted: 'Ручная работа в Абу-Даби, Объединённые Арабские Эмираты',
     hematite: 'Бусины позолоченного гематита, вплетённые в дизайн',
     rosette: 'Signature Al Ain Rosette, вырезанная вручную из натурального сердолика (около 15 мм)',
@@ -173,7 +172,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
       'Нет. Каждое творение Bint Saeed включает натуральные самоцветы. Различия в тоне, включениях и природных свойствах — часть индивидуальности каждой вещи и должны цениться как знак натуральных материалов.',
     wearWays:
       'Да. Ожерелье можно носить одной длинной нитью или удвоить вокруг шеи для более короткого многослойного силуэта.',
-    careFaq: JEWELLERY_CARE_FAQ_NECKLACE_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Что такое Al Ain Rosette?',
     qStrand: 'Есть ли подходящий Signature Strand?',
     qWear: 'Можно ли носить ожерелье по-разному?',
@@ -188,7 +187,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   zh: {
     featuresTitle: '特点',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handcrafted: '于阿联酋阿布扎比手工制作',
     hematite: '贯穿设计的镀金赤铁矿点缀珠',
     rosette: 'Signature Al Ain Rosette，天然红玉髓手工雕刻（约 15 毫米）',
@@ -211,7 +210,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
     identicalOnyx:
       '否。每件 Bint Saeed 作品皆采用天然宝石。色调、包裹体与天然特质的差异属于每件作品的个性，应作为天然材质的标志加以珍视。',
     wearWays: '是。项链可作单层长链佩戴，或双绕颈间呈较短层次廓形。',
-    careFaq: JEWELLERY_CARE_FAQ_NECKLACE_EN,
+    careFaq: '', // filled in buildPack
     qRosette: '什么是 Al Ain Rosette？',
     qStrand: '是否有配套 Signature Strand？',
     qWear: '项链是否可以不同方式佩戴？',
@@ -225,7 +224,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   de: {
     featuresTitle: 'Merkmale',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handcrafted: 'Handgefertigt in Abu Dhabi, Vereinigte Arabische Emirate',
     hematite: 'Vergoldete Hämatit-Akzentperlen durch das gesamte Design',
     rosette: 'Signature Al Ain Rosette, handgeschnitzt aus natürlichem Karneol (etwa 15 mm)',
@@ -249,7 +248,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
       'Nein. Jede Bint-Saeed-Kreation zeigt Natursteine. Variationen in Ton, Einschlüssen und natürlichen Eigenschaften gehören zur Individualität jedes Stücks und sollten als Merkmal natürlicher Materialien gefeiert werden.',
     wearWays:
       'Ja. Die Halskette kann als einzelne lange Länge oder doppelt um den Hals getragen werden, für eine kürzere, geschichtete Silhouette.',
-    careFaq: JEWELLERY_CARE_FAQ_NECKLACE_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Was ist die Al Ain Rosette?',
     qStrand: 'Gibt es einen passenden Signature Strand?',
     qWear: 'Kann die Halskette auf verschiedene Weise getragen werden?',
@@ -264,7 +263,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   nl: {
     featuresTitle: 'Kenmerken',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handcrafted: 'Handgemaakt in Abu Dhabi, Verenigde Arabische Emiraten',
     hematite: 'Verguld hematiet accentkralen doorheen het ontwerp',
     rosette: 'Signature Al Ain Rosette, handgesneden uit natuurlijke carneool (ongeveer 15 mm)',
@@ -288,7 +287,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
       'Nee. Elke Bint Saeed-creatie toont natuurlijke edelstenen. Variaties in toon, inclusies en natuurlijke kenmerken horen bij de individualiteit van elk stuk en verdienen het om als kenmerk van natuurlijke materialen te worden gevierd.',
     wearWays:
       'Ja. De ketting kan als enkele lange lengte of dubbel om de hals worden gedragen voor een korter gelaagd silhouet.',
-    careFaq: JEWELLERY_CARE_FAQ_NECKLACE_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Wat is de Al Ain Rosette?',
     qStrand: 'Is er een bijpassende Signature Strand beschikbaar?',
     qWear: 'Kan de ketting op verschillende manieren worden gedragen?',
@@ -303,7 +302,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   pt: {
     featuresTitle: 'Características',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handcrafted: 'Feito à mão em Abu Dhabi, Emirados Árabes Unidos',
     hematite: 'Contas de hematite banho de ouro integradas no design',
     rosette: 'Signature Al Ain Rosette esculpida à mão em cornalina natural (aproximadamente 15 mm)',
@@ -327,7 +326,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
       'Não. Cada criação Bint Saeed apresenta gemas naturais. Variações de tom, inclusões e características naturais fazem parte da individualidade de cada peça e devem ser celebradas como marca dos materiais naturais.',
     wearWays:
       'Sim. O colar pode ser usado como comprimento simples ou dobrado à volta do pescoço para uma silhueta mais curta e em camadas.',
-    careFaq: JEWELLERY_CARE_FAQ_NECKLACE_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'O que é a Al Ain Rosette?',
     qStrand: 'Existe um Signature Strand a condizer disponível?',
     qWear: 'O colar pode ser usado de formas diferentes?',
@@ -342,7 +341,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   id: {
     featuresTitle: 'Fitur',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handcrafted: 'Dibuat tangan di Abu Dhabi, Uni Emirat Arab',
     hematite: 'Manik aksen hematit berlapis emas di seluruh desain',
     rosette: 'Signature Al Ain Rosette diukir tangan dari karnelian alami (sekitar 15 mm)',
@@ -366,7 +365,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
       'Tidak. Setiap kreasi Bint Saeed menampilkan batu permata alami. Variasi nada, inklusi, dan karakteristik alami adalah bagian dari individualitas setiap karya dan patut dirayakan sebagai ciri bahan alami.',
     wearWays:
       'Ya. Kalung dapat dikenakan sebagai panjang tunggal atau digandakan di leher untuk siluet berlapis yang lebih pendek.',
-    careFaq: JEWELLERY_CARE_FAQ_NECKLACE_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Apa itu Al Ain Rosette?',
     qStrand: 'Apakah Signature Strand yang serasi tersedia?',
     qWear: 'Apakah kalung dapat dikenakan dengan cara berbeda?',
@@ -381,7 +380,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   ms: {
     featuresTitle: 'Ciri-ciri',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handcrafted: 'Dibuat tangan di Abu Dhabi, Emiriah Arab Bersatu',
     hematite: 'Manik aksen hematit bersalut emas di seluruh reka bentuk',
     rosette: 'Signature Al Ain Rosette diukir tangan daripada karnelian semula jadi (kira-kira 15 mm)',
@@ -405,7 +404,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
       'Tidak. Setiap ciptaan Bint Saeed menampilkan batu permata semula jadi. Variasi nada, inklusi dan ciri semula jadi adalah sebahagian daripada keindividuan setiap karya dan patut diraikan sebagai tanda bahan semula jadi.',
     wearWays:
       'Ya. Rantai leher boleh dipakai sebagai panjang tunggal atau digandakan di leher untuk siluet berlapis yang lebih pendek.',
-    careFaq: JEWELLERY_CARE_FAQ_NECKLACE_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Apakah Al Ain Rosette?',
     qStrand: 'Adakah Signature Strand yang sepadan tersedia?',
     qWear: 'Bolehkah rantai leher dipakai dengan cara berbeza?',
@@ -1395,7 +1394,7 @@ function buildPack(
       },
       {
         question: ui.qCare,
-        answer: ui.careFaq,
+        answer: getJewelleryCareFaqNecklace(locale),
       },
     ],
   }

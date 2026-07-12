@@ -152,7 +152,7 @@ const META_KEYWORDS: Record<AppLocale, readonly string[]> = {
     'custom length abaya',
     'crepe lined abaya',
     'hidden pocket abaya',
-    'gold-tone emblem pin',
+    'gold-tone Monogram pin',
     'women in the UAE',
     'women in the GCC',
     'expatriates in the GCC',

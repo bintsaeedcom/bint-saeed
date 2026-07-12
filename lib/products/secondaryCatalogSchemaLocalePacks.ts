@@ -4,7 +4,8 @@ import { patchAlTalliHeritageFaq } from '@/lib/products/alTalliHeritageFaqI18n'
 import { appendAlTalliCareFaq } from '@/lib/products/alTalliCareFaqI18n'
 import { getHampsteadDressPdpFaq } from '@/lib/products/hampsteadDressPdpI18n'
 import { getSohoSetPdpFaq } from '@/lib/products/sohoSetFaqI18n'
-import { PARK_LANE_ABAYA_FAQ_EN } from '@/data/parkLaneAbayaPdpFaq'
+import { getMaryleboneAbayaPdpFaq } from '@/lib/products/maryleboneAbayaPdpI18n'
+import { getParkLaneAbayaPdpFaq } from '@/lib/products/parkLaneAbayaPdpI18n'
 
 const MADE_IN = 'Abu Dhabi, United Arab Emirates'
 
@@ -53,7 +54,7 @@ const MARYLEBONE_EN: ProductSchemaFacts = {
 
 const PARK_LANE_EN: ProductSchemaFacts = {
   productType:
-    'Contemporary designer abaya with a graceful A-line silhouette, integrated shoulder scarf, signature gold-tone Knotted Line shoulder buttons, and removable emblem cufflinks — made in Abu Dhabi.',
+    'Contemporary designer abaya with a graceful A-line silhouette, integrated shoulder scarf, signature gold-tone Knotted Line shoulder buttons, and removable Bint Saeed signature gold-tone Monogram cufflinks — made in Abu Dhabi.',
   productCategory:
     'Abaya, A-Line Abaya, Designer Abaya, Luxury Abaya, Contemporary Abaya, City Abaya, Executive Abaya, Diplomatic Abaya, Modest Fashion, Premium Modest Fashion, Gulf Wardrobe Abaya, International Occasion Abaya',
   fit: 'Relaxed A-line silhouette designed to be worn open or closed with fluid drape.',
@@ -61,7 +62,7 @@ const PARK_LANE_EN: ProductSchemaFacts = {
   closure: 'Optional snap button closure',
   pockets: 'Hidden side seam pockets',
   stylingDetail:
-    'Graceful A-line abaya with integrated shoulder scarf, signature gold-tone Knotted Line shoulder buttons, wide cuffs with removable Bint Saeed emblem cufflinks, and hidden side seam pockets.',
+    'Graceful A-line abaya with integrated shoulder scarf, signature gold-tone Knotted Line shoulder buttons, wide cuffs with removable Bint Saeed signature gold-tone Monogram cufflinks, and hidden side seam pockets.',
   material: 'Outer: 75% Polyester, 25% Viscose',
   suitableFor:
     'Business meetings, embassy receptions, diplomatic events, official delegations, leadership meetings, cultural engagements, formal dinners, weddings, city movement, work, travel, everyday dressing, Gulf wardrobes, and international modest fashion in Abu Dhabi, Dubai, Riyadh, Doha, London, Paris, and destinations worldwide.',
@@ -94,22 +95,6 @@ const SOHO_EN: ProductSchemaFacts = {
     'Oversized crepe shirt with wide-leg palazzo trousers, chest pockets, hidden side seam pockets, gold-tone Knotted Line buttons, and Al Talli heritage trim.',
   suitableFor:
     'Luxury travelwear, city dressing, lunches, dinners, cultural events, journeys between cities, Gulf wardrobes, and international modest fashion in Abu Dhabi, Dubai, London, Paris, Milan, Toronto, Singapore, and worldwide.',
-}
-
-const FAQ_BY_SLUG: Record<string, ProductSchemaFacts['faq']> = {
-  [MARYLEBONE_SLUG]: [
-    {
-      question: 'Are the Onyx Strands on the Marylebone Abaya removable?',
-      answer:
-        'Yes. The Marylebone Abaya includes two removable genuine natural Onyx Strands — one for each cuff — with gold-plated hematite spacer beads. Wide cuffs are designed for interchangeable Bint Saeed Strands across your wardrobe.',
-    },
-    {
-      question: 'Who is the Marylebone Abaya designed for?',
-      answer:
-        'The Marylebone Abaya is designed for women who love fashion — fashion editors, curators, cultural heritage audiences connected to fashion, diplomats, and fashion enthusiasts seeking a graceful A-line abaya with natural stone jewellery and signature Knotted Line details, handcrafted in Abu Dhabi.',
-    },
-  ],
-  [PARK_LANE_SLUG]: PARK_LANE_ABAYA_FAQ_EN,
 }
 
 export function getLocalizedSecondaryCatalogSchemaFacts(
@@ -150,24 +135,19 @@ export function getLocalizedSecondaryCatalogSchemaFacts(
   if (!base) return null
 
   const faq =
-    s === HAMPSTEAD_SLUG
-      ? getHampsteadDressPdpFaq(locale)
-      : s === SOHO_SLUG
-        ? getSohoSetPdpFaq(locale)
-        : FAQ_BY_SLUG[s]
+    s === MARYLEBONE_SLUG
+      ? getMaryleboneAbayaPdpFaq(locale)
+      : s === PARK_LANE_SLUG
+        ? getParkLaneAbayaPdpFaq(locale)
+        : s === HAMPSTEAD_SLUG
+          ? getHampsteadDressPdpFaq(locale)
+          : s === SOHO_SLUG
+            ? getSohoSetPdpFaq(locale)
+            : undefined
   if (!faq) return base
 
-  const localizedFaq =
-    locale === 'en'
-      ? faq
-      : faq.map((item) => ({
-          ...item,
-          question: item.question,
-          answer: item.answer,
-        }))
-
   const withAlTalli =
-    s === HAMPSTEAD_SLUG ? patchAlTalliHeritageFaq(localizedFaq, locale) : localizedFaq
+    s === HAMPSTEAD_SLUG ? patchAlTalliHeritageFaq(faq, locale) : faq
 
   return { ...base, faq: appendAlTalliCareFaq(withAlTalli, s, locale) }
 }

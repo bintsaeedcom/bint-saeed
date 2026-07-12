@@ -3,6 +3,7 @@
 import { Suspense } from 'react'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { FiCheck, FiAlertCircle, FiArrowRight } from 'react-icons/fi'
@@ -24,7 +25,7 @@ function VerifyEmailContent() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-pageCanvas px-6 pt-24 pb-16">
+    <div className={`min-h-screen bg-brand-pageCanvas px-6 ${SITE_CONTENT_TOP_PAD} pb-16`}>
       <div className="mx-auto w-full max-w-md">
         <AppPageWayfinding
           rtl={isRTL}
@@ -123,7 +124,7 @@ export default function VerifyEmailPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-brand-pageCanvas pt-24 font-montserrat text-brand-clayRed/60">
+        <div className={`min-h-screen flex items-center justify-center bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} font-montserrat text-brand-clayRed/60`}>
           Loading…
         </div>
       }

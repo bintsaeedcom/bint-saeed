@@ -150,6 +150,7 @@ export const translationsMs = {
     faq: 'Soalan Lazim',
     privacy: 'Privasi',
     cookies: 'Kuki',
+    cookieSettings: 'Tetapan kuki',
     terms: 'Terma',
     allRightsReserved: 'Hak cipta terpelihara.',
     brandDescription: BRAND_TAGLINE.ms,
@@ -204,8 +205,7 @@ export const translationsMs = {
   },
   cookie: {
     title: 'Kami Menghargai Privasi Anda',
-    message:
-      'Kami menggunakan kuki, termasuk kuki pihak ketiga, untuk fungsi laman, analitik, pengalaman melayari yang lebih baik, dan mesej iklan diperibadikan. Klik "Terima semua kuki" atau "Tetapan kuki" untuk keutamaan anda. "Tolak semua kuki" hanya menggunakan kuki yang diperlukan.',
+    message: 'Kami menggunakan kuki, termasuk kuki pihak ketiga, untuk fungsi penting, analitik pilihan (dengan kebenaran), dan pengalaman melayari yang lebih baik. Keutamaan pemasaran direkodkan untuk alat pengiklanan akan datang dan tidak memuatkan piksel iklan pada masa ini kecuali diaktifkan secara berasingan. Klik "Terima semua", "Tetapan kuki", atau "Tolak semua". Anda boleh ubah keutamaan pada bila-bila masa melalui Cookie settings di footer.',
     learnMore: 'Maklumat Lanjut',
     acceptAll: 'Terima semua kuki',
     essentialOnly: 'Tolak semua kuki',
@@ -219,7 +219,7 @@ export const translationsMs = {
     optional: 'Pilihan',
     essentialDesc: 'Diperlukan agar laman berfungsi dengan baik.',
     analyticsDesc: 'Membantu kami memahami interaksi pelawat.',
-    marketingDesc: 'Digunakan untuk iklan dan tawaran yang relevan.',
+    marketingDesc: 'Diperuntukkan untuk alat pengiklanan akan datang. Tidak digunakan buat masa ini untuk memuatkan piksel iklan di laman ini.',
   },
   search: {
     title: 'Cari',

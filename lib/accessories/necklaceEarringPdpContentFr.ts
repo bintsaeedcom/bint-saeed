@@ -37,7 +37,7 @@ function buildNecklacePackFr(input: NecklaceFrPackInput): NecklaceEarringPdpCont
     introParagraphs,
     featuresTitle: 'Caractéristiques',
     features: [
-      'Code de la Maison : rosette d’Al Ain',
+      'Bint Saeed Signature House Codes: Al Ain Rosette',
       'Façonné à la main à Abou Dabi, Émirats arabes unis',
       beadFeature,
       'Perles d’hématite plaquées or intégrées dans le design',
@@ -247,7 +247,7 @@ function buildEarringPackFr(input: EarringFrPackInput): NecklaceEarringPdpConten
     introParagraphs,
     featuresTitle: 'Caractéristiques',
     features: [
-      'Code de la Maison : rosette d’Al Ain',
+      'Bint Saeed Signature House Codes: Al Ain Rosette',
       handcraftedFeature,
       ...asFeatureListFr(stoneFeature),
       'Perles d’hématite plaquées or facettées qui captent la lumière',

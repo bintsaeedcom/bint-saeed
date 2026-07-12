@@ -4,6 +4,7 @@ import { useState } from 'react'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import { FiCheck } from 'react-icons/fi'
 import { getSizeGuideCopy } from '@/lib/i18n/sizeGuideCopyI18n'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -53,7 +54,7 @@ export default function SizeGuidePage() {
 
   return (
     <div className={`relative min-h-screen overflow-hidden bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
-      <section className="relative border-b border-brand-stone/25 pb-14 pt-8 md:pt-12 md:pb-16">
+      <section className={`relative border-b border-brand-stone/25 pb-14 ${SITE_CONTENT_TOP_PAD} md:pb-16`}>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_70%_at_20%_8%,rgba(146,170,193,0.12)_0%,transparent_56%)]" />
         <div className="container relative mx-auto px-6 lg:px-12">
           <AppPageWayfinding

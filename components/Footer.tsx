@@ -16,6 +16,7 @@ import {
   getWorldwideFreeShippingThreshold,
 } from '@/lib/pricing'
 import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
+import { useStableToggleScroll } from '@/lib/ui/useStableToggleScroll'
 import { useState } from 'react'
 
 const socialLinks = [
@@ -37,6 +38,7 @@ export default function Footer() {
     currency.code,
   )
   const [mobileOpenSection, setMobileOpenSection] = useState<'shop' | 'about' | 'help' | null>('shop')
+  const { prepareToggle: prepareFooterToggle } = useStableToggleScroll(mobileOpenSection)
 
   const footerLinks = {
     shop: [
@@ -131,8 +133,12 @@ export default function Footer() {
             <div className="self-start">
               <button
                 type="button"
-                onClick={() => setMobileOpenSection((prev) => (prev === 'shop' ? null : 'shop'))}
+                onClick={(event) => {
+                  prepareFooterToggle(event)
+                  setMobileOpenSection((prev) => (prev === 'shop' ? null : 'shop'))
+                }}
                 className="mb-3 flex w-full items-center justify-between xl:pointer-events-none"
+                aria-expanded={mobileOpenSection === 'shop'}
               >
                 <h4 className="font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
                   {t.footer.shop}
@@ -162,8 +168,12 @@ export default function Footer() {
             <div className="self-start">
               <button
                 type="button"
-                onClick={() => setMobileOpenSection((prev) => (prev === 'about' ? null : 'about'))}
+                onClick={(event) => {
+                  prepareFooterToggle(event)
+                  setMobileOpenSection((prev) => (prev === 'about' ? null : 'about'))
+                }}
                 className="mb-3 flex w-full items-center justify-between xl:pointer-events-none"
+                aria-expanded={mobileOpenSection === 'about'}
               >
                 <h4 className="font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
                   {t.footer.about}
@@ -193,8 +203,12 @@ export default function Footer() {
             <div className="self-start">
               <button
                 type="button"
-                onClick={() => setMobileOpenSection((prev) => (prev === 'help' ? null : 'help'))}
+                onClick={(event) => {
+                  prepareFooterToggle(event)
+                  setMobileOpenSection((prev) => (prev === 'help' ? null : 'help'))
+                }}
                 className="mb-3 flex w-full items-center justify-between xl:pointer-events-none"
+                aria-expanded={mobileOpenSection === 'help'}
               >
                 <h4 className="font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-dustyBlue">
                   {t.footer.help}
@@ -325,6 +339,14 @@ export default function Footer() {
               >
                 {t.footer.cookies}
               </LocaleLink>
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event('open-cookie-settings'))}
+                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
+                data-cursor-hover
+              >
+                {t.footer.cookieSettings}
+              </button>
               <LocaleLink
                 href="/terms"
                 className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"

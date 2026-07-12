@@ -57,5 +57,7 @@ const MESSAGES: Record<AppLocale, PhoneValidationMessages> = {
 }
 
 export function optionalPhoneValidationMessages(locale: AppLocale | string = 'en'): PhoneValidationMessages {
-  return MESSAGES[locale as AppLocale] ?? MESSAGES.en
+  const pack = MESSAGES[locale as AppLocale]
+  if (!pack) throw new Error(`Missing phone validation messages for locale: ${locale}`)
+  return pack
 }

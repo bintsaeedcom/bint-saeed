@@ -146,7 +146,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
       `The result feels closer to jewellery than a traditional phone accessory. ${character}, it gives even the simplest phone case an entirely different character and a small burst of happiness every time you pick it up.`,
       `Choose it for yourself or gift it to a daughter, sister or friend whose phone is never far from her hand. A personal detail she can carry every day.`,
       `Every natural stone has its own colour variations and markings. No two phone charms are exactly alike.`,],
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'Handcrafted in Abu Dhabi, United Arab Emirates',
     handAssembled: 'Hand-assembled natural stone phone charm',
     length: 'Approximate length: 15 cm / 5.9 in',
@@ -175,7 +175,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
       `النتيجة أقرب إلى المجوهرات منها إلى إكسسوار هاتف تقليدي. ${character}، فتمنح حتى أبسط غلاف هاتف حضوراً مختلفاً تماماً، ولمسة سعادة صغيرة في كل مرة تمسكينه.`,
       `اختاريها لنفسك، أو أهديها لابنة أو أخت أو صديقة لا يبتعد هاتفها عن يدها. تفصيلة شخصية تحملها كل يوم.`,
       `لكل حجر طبيعي تباينات لونية وعلامات خاصة به. لا توجد تعليقتا هاتف فاخرتان متطابقتان تماماً.`,],
-    houseCode: 'رمز المنزل: روزيت العين',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'مصنوعة يدوياً في أبوظبي، الإمارات العربية المتحدة',
     handAssembled: 'تعليقة هاتف من الأحجار الطبيعية مجمّعة يدوياً',
     length: 'الطول التقريبي: 15 سم / 5.9 إنش',
@@ -204,7 +204,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
       `Le résultat se rapproche davantage d’un bijou que d’un accessoire de téléphone ordinaire. ${character}, elle confère même à la coque la plus simple un caractère tout autre, et une petite touche de bonheur à chaque fois que vous le prenez en main.`,
       `Choisissez-la pour vous, ou offrez-la à une fille, une sœur ou une amie dont le téléphone n’est jamais loin de la main. Un détail personnel à porter chaque jour.`,
       `Chaque pierre naturelle porte ses propres variations de couleur et de marques. Aucune breloque de luxe n’est exactement identique à une autre.`,],
-    houseCode: 'Code de la Maison : Rosette d’Al Ain',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'Façonnée à la main à Abou Dabi, Émirats arabes unis',
     handAssembled: 'Breloque de téléphone en pierres naturelles assemblée à la main',
     length: 'Longueur approximative : 15 cm / 5,9 in',
@@ -233,7 +233,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
       `Il risultato è più vicino a un gioiello che a un accessorio per telefono tradizionale. ${character}, dona anche alla cover più semplice un carattere del tutto diverso e un piccolo momento di felicità ogni volta che lo prendete in mano.`,
       `Sceglietelo per voi, o regalatelo a una figlia, una sorella o un’amica il cui telefono non è mai lontano dalla mano. Un dettaglio personale da portare ogni giorno.`,
       `Ogni pietra naturale ha le proprie variazioni di colore e i propri segni. Nessun ciondolo di lusso è esattamente uguale a un altro.`,],
-    houseCode: 'House Code: Rosetta di Al Ain',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'Realizzato a mano ad Abu Dhabi, Emirati Arabi Uniti',
     handAssembled: 'Ciondolo per telefono in pietra naturale assemblato a mano',
     length: 'Lunghezza approssimativa: 15 cm / 5,9 in',
@@ -349,7 +349,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
       `Das Ergebnis wirkt näher an Schmuck als an ein herkömmliches Handy-Accessoire. ${character}, verleiht er selbst der schlichtesten Hülle einen ganz anderen Charakter und einen kleinen Glücksmoment, jedes Mal wenn Sie zum Telefon greifen.`,
       `Wählen Sie ihn für sich, oder schenken Sie ihn einer Tochter, Schwester oder Freundin, deren Telefon nie weit von der Hand ist. Ein persönliches Detail für jeden Tag.`,
       `Jeder Naturstein hat eigene Farbvariationen und Zeichnungen. Kein Luxus-Telefonanhänger gleicht dem anderen genau.`,],
-    houseCode: 'House Code: Al-Ain-Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'Handgefertigt in Abu Dhabi, Vereinigte Arabische Emirate',
     handAssembled: 'Handmontierter Naturstein-Telefonanhänger',
     length: 'Ungefähre Länge: 15 cm / 5,9 in',
@@ -378,7 +378,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
       `Het resultaat voelt dichter bij sieraden dan bij een traditioneel telefoonaccessoire. ${character}, geeft hij zelfs het eenvoudigste hoesje een volledig ander karakter en een klein moment van blijdschap telkens wanneer u hem oppakt.`,
       `Kies hem voor uzelf, of geef hem aan een dochter, zus of vriendin wiens telefoon nooit ver van haar hand is. Een persoonlijk detail om elke dag te dragen.`,
       `Elke natuursteen heeft eigen kleurvariaties en tekeningen. Geen twee luxe telefoonhangers zijn precies hetzelfde.`,],
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'Met de hand vervaardigd in Abu Dhabi, Verenigde Arabische Emiraten',
     handAssembled: 'Met de hand gemonteerde luxe telefoonhanger van natuursteen',
     length: 'Circa lengte: 15 cm / 5,9 in',
@@ -436,7 +436,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
       `Hasilnya lebih dekat ke perhiasan daripada aksesori ponsel biasa. ${character}, bahkan casing paling sederhana pun mendapat karakter yang sama sekali berbeda dan sedikit kebahagiaan setiap kali Anda mengangkatnya.`,
       `Pilih untuk diri sendiri, atau hadiahkan kepada putri, saudara perempuan, atau teman yang ponselnya hampir tak pernah jauh dari tangan. Detail pribadi yang bisa dibawa setiap hari.`,
       `Setiap batu alam memiliki variasi warna dan tanda tersendiri. Tidak ada dua liontin ponsel mewah yang persis sama.`,],
-    houseCode: 'House Code: Rosette Al Ain',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'Dibuat tangan di Abu Dhabi, Uni Emirat Arab',
     handAssembled: 'Liontin ponsel batu alam dirakit tangan',
     length: 'Panjang sekitar: 15 cm / 5,9 in',
@@ -465,7 +465,7 @@ const TEMPLATES: Record<AppLocale, LocaleTemplate> = {
       `Hasilnya lebih hampir kepada barang kemas daripada aksesori telefon biasa. ${character}, malah casing paling mudah pun mendapat watak yang sama sekali berbeza dan sedikit kebahagiaan setiap kali anda mengangkatnya.`,
       `Pilih untuk diri sendiri, atau hadiahkan kepada anak perempuan, kakak/adik atau rakan yang telefonnya hampir tidak pernah jauh dari tangan. Perincian peribadi untuk dibawa setiap hari.`,
       `Setiap batu semula jadi mempunyai variasi warna dan tanda tersendiri. Tiada dua liontin telefon mewah yang sama tepat.`,],
-    houseCode: 'House Code: Rosette Al Ain',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     craftedIn: 'Dibuat tangan di Abu Dhabi, Emiriah Arab Bersatu',
     handAssembled: 'Liontin telefon batu semula jadi dipasang tangan',
     length: 'Panjang anggaran: 15 cm / 5.9 in',
@@ -502,13 +502,20 @@ export function buildPhoneCharmPdpPack(
   locale: AppLocale,
 ): PhoneCharmPdpContentPack {
   const stoneKey = ID_TO_STONE_KEY[id]
-  const stone = STONE_BY_LOCALE[locale][stoneKey] ?? STONE_BY_LOCALE.en[stoneKey]
-  const t = TEMPLATES[locale] ?? TEMPLATES.en
+  const stones = STONE_BY_LOCALE[locale]
+  const templates = TEMPLATES[locale]
+  if (!stones || !templates) {
+    throw new Error(`Missing phone charm content for locale: ${locale}`)
+  }
+  const stone = stones[stoneKey]
+  if (!stone) {
+    throw new Error(`Missing phone charm stone "${stoneKey}" for locale: ${locale}`)
+  }
+  const t = templates
   const labels = getPhoneCharmSectionLabels(locale)
   const jewelleryCare = getJewelleryCareCopy(locale)
-  const useSharedJewelleryCare = locale === 'en' || locale === 'ar' || locale === 'fr'
-  const careBullets = useSharedJewelleryCare ? [...jewelleryCare.bullets] : t.care
-  const careLead = useSharedJewelleryCare ? jewelleryCare.lead : ''
+  const careBullets = [...jewelleryCare.bullets]
+  const careLead = jewelleryCare.lead
 
   const features = [
     t.houseCode,

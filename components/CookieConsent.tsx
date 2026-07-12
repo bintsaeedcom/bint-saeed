@@ -21,6 +21,15 @@ export default function CookieConsent() {
   }, [])
 
   useEffect(() => {
+    const openSettings = () => {
+      setShowDetails(true)
+      setShowConsent(true)
+    }
+    window.addEventListener('open-cookie-settings', openSettings)
+    return () => window.removeEventListener('open-cookie-settings', openSettings)
+  }, [])
+
+  useEffect(() => {
     if (!showConsent) return
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'

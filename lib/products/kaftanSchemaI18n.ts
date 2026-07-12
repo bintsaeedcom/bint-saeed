@@ -68,14 +68,14 @@ const MAYFAIR: Record<AppLocale, KaftanLocalePack> = {
   en: {
     pageTitle: 'Mayfair Kaftan | Deep Maroon Chiffon Occasion Kaftan | Bint Saeed',
     metaDescription:
-      'Mayfair Kaftan. Deep Maroon chiffon kaftan featuring a V-neckline, flowing silhouette, attached inner dress and signature gold-tone emblem. Designed in Abu Dhabi, United Arab Emirates by Bint Saeed.',
+      'Mayfair Kaftan. Deep Maroon chiffon kaftan featuring a V-neckline, flowing silhouette, attached inner dress and Bint Saeed signature gold-tone Monogram. Designed in Abu Dhabi, United Arab Emirates by Bint Saeed.',
     facts: {
       neckline: 'V-neckline',
       fit: 'One-size silhouette with a fluid, relaxed fit. Hidden internal ties allow the Mayfair Kaftan to be worn loose for a flowing effect or adjusted to create a more defined shape while maintaining graceful movement.',
       maximumGarmentLength: '165 cm',
       innerDress: INNER_DRESS.en,
       stylingDetail:
-        'Attached scarf detail featuring the signature Bint Saeed gold-tone emblem pin and hidden internal tie construction.',
+        'Attached scarf detail featuring the Bint Saeed signature gold-tone Monogram pin and hidden internal tie construction.',
       suitableFor:
         'Weddings, engagement celebrations, Eid gatherings, formal dinners, destination events, cultural occasions, luxury travel, premium travel, and elegant daytime dressing.',
       care: CARE.en,
@@ -94,7 +94,7 @@ const MAYFAIR: Record<AppLocale, KaftanLocalePack> = {
       {
         question: 'What makes the Mayfair Kaftan different from other kaftans?',
         answer:
-          'The Mayfair Kaftan combines a flowing one-size silhouette, hidden internal ties, an attached scarf detail, and the signature Bint Saeed gold-tone emblem pin. Crafted from Deep Maroon crepe chiffon and designed in Abu Dhabi, United Arab Emirates, it offers versatile styling, graceful movement, and a timeless approach to occasion dressing.',
+          'The Mayfair Kaftan combines a flowing one-size silhouette, hidden internal ties, an attached scarf detail, and the Bint Saeed signature gold-tone Monogram pin. Crafted from Deep Maroon crepe chiffon and designed in Abu Dhabi, United Arab Emirates, it offers versatile styling, graceful movement, and a timeless approach to occasion dressing.',
       },
     ],
   },
@@ -465,14 +465,14 @@ const NOTHING_HILL: Record<AppLocale, KaftanLocalePack> = {
   en: {
     pageTitle: 'Nothing Hill Kaftan | Peach Pink Chiffon Occasion Kaftan | Bint Saeed',
     metaDescription:
-      'Nothing Hill Kaftan. Peach Pink chiffon kaftan featuring a refined bateau neckline, flowing silhouette and signature gold-tone emblem. Designed in Abu Dhabi, United Arab Emirates by Bint Saeed.',
+      'Nothing Hill Kaftan. Peach Pink chiffon kaftan featuring a refined bateau neckline, flowing silhouette and Bint Saeed signature gold-tone Monogram. Designed in Abu Dhabi, United Arab Emirates by Bint Saeed.',
     facts: {
       neckline: 'Bateau neckline',
       fit: 'One-size silhouette with a fluid, relaxed fit designed to drape effortlessly across different body shapes while maintaining graceful movement.',
       maximumGarmentLength: '165 cm',
       innerDress: INNER_DRESS.en,
       stylingDetail:
-        'Flowing layered chiffon construction featuring the signature Bint Saeed gold-tone emblem pin.',
+        'Flowing layered chiffon construction featuring the Bint Saeed signature gold-tone Monogram pin.',
       suitableFor:
         'Weddings, engagement celebrations, Eid gatherings, formal dinners, destination events, cultural occasions, luxury travel, premium travel, garden celebrations, and elegant daytime dressing.',
       care: CARE.en,
@@ -491,7 +491,7 @@ const NOTHING_HILL: Record<AppLocale, KaftanLocalePack> = {
       {
         question: 'What makes the Nothing Hill Kaftan different from other kaftans?',
         answer:
-          'The Nothing Hill Kaftan combines a flowing layered silhouette, a refined bateau neckline, soft Peach Pink chiffon, and the signature Bint Saeed gold-tone emblem pin. Designed in Abu Dhabi, United Arab Emirates, it offers a lighter and more romantic interpretation of occasion dressing while maintaining the elegance and versatility that define the Bint Saeed collection.',
+          'The Nothing Hill Kaftan combines a flowing layered silhouette, a refined bateau neckline, soft Peach Pink chiffon, and the Bint Saeed signature gold-tone Monogram pin. Designed in Abu Dhabi, United Arab Emirates, it offers a lighter and more romantic interpretation of occasion dressing while maintaining the elegance and versatility that define the Bint Saeed collection.',
       },
       {
         question: 'What is the difference between the Nothing Hill Kaftan and the Mayfair Kaftan?',

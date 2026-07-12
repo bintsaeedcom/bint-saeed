@@ -1,5 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getHouseCodesDetailGroup } from '@/lib/products/pdpHouseCodesGroupsI18n'
+import { PDP_COLOUR_TITLE } from '@/lib/products/pdpFeatureSectionTitles'
 import type { PdpDetailGroup } from '@/lib/products/pdpIntroRich'
 import { pdpStructuredStrings } from '@/lib/products/productPdpStructuredI18n'
 
@@ -370,5 +371,9 @@ export function buildHydeParkSetDetailGroups(locale: AppLocale = 'en'): PdpDetai
       items: [...palazzo],
     },
     getHouseCodesDetailGroup('knotted-line-only', locale),
+    {
+      title: PDP_COLOUR_TITLE[locale] ?? PDP_COLOUR_TITLE.en,
+      items: [...HYDE_PARK_SET_COLOUR],
+    },
   ]
 }

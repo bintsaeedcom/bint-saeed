@@ -2,109 +2,209 @@ import type { FaqBundle } from '@/lib/faq/types'
 
 export const faqEs: FaqBundle = {
   title: 'Preguntas frecuentes',
-  subtitle: 'Pedidos, envíos y políticas de Bint Saeed',
-  categories: [
+  subtitle:
+    'Respuestas claras sobre la Maison, pedidos, envíos, cambios, tallas, personalización, pago y cuidado de la joyería.',
+  topics: [
     {
-      name: 'Sobre Bint Saeed',
-      questions: [
+      id: 'the-house',
+      name: 'La Maison',
+      subtopics: [
         {
-          q: '¿Qué es Bint Saeed?',
-          a:
-            'Bint Saeed es una casa contemporánea con sede en Abu Dabi (EAU). Diseña piezas inspiradas en códigos culturales emiratíes y ofrece joyas y piezas lifestyle contemporáneas.',
+          name: 'Identidad',
+          questions: [
+            {
+              q: '¿Qué es Bint Saeed?',
+              a: 'Bint Saeed es una maison de abayas de lujo con sede en Abu Dhabi, Emiratos Árabes Unidos. La maison construye su lenguaje de diseño a través de códigos culturales emiratíes, al tiempo que crea joyería y piezas lifestyle pensadas para una vida contemporánea y global. En árabe, Bint significa «hija de», una palabra que porta linaje, memoria y pertenencia.',
+            },
+            {
+              q: '¿Dónde tiene su sede Bint Saeed?',
+              a: 'Bint Saeed está arraigada en Abu Dhabi, Emiratos Árabes Unidos. Atendemos a clientas en los Emiratos y en la región, y enviamos a nivel internacional cuando se ofrece. Los destinos disponibles para su pedido se confirman en el pago.',
+            },
+            {
+              q: '¿Qué crea Bint Saeed?',
+              a: 'Abayas y prendas afines informadas por códigos de diseño emiratíes, incluida la delicadeza de Al Talli y la memoria tejida de Khous, junto a joyería y objetos seleccionados configurados con gemas naturales y detalles signature. La maison trabaja a través de códigos perdurables como el Monogram, Al Talli, Khous, Al Ain Rosette, Knotted Lines of Lineage y The Strands.',
+            },
+            {
+              q: '¿Qué distingue a Bint Saeed de otras marcas?',
+              a: 'Bint Saeed existe en la intersección entre el patrimonio emiratí y una vida contemporánea vivida en lo local y más allá de las fronteras. Arraigada en Abu Dhabi, la maison construye su lenguaje de diseño a través de códigos perdurables como la memoria tejida de Khous, la delicadeza de Talli, la calidez de las gemas naturales y detalles signature llevados a siluetas modernas para una vida en movimiento. La tradición artesanal emiratí se traduce en una forma contemporánea, para que la elegancia del Golfo pueda llevarse con seguridad en el extranjero como en casa, sin ajustar la identidad a cada entorno o tendencia pasajera. La maison también fue pionera en joyería creada para la ropa: Signature Strands, hilos intercambiables de piedras naturales que se llevan en el puño, para que una misma prenda cambie de acento a voluntad. La atención al detalle no es mera decoración; es el modo en que el origen se porta en la forma, en la actitud y en un guardarropa que se mueve entre mundos con certeza.',
+            },
+          ],
         },
         {
-          q: '¿Dónde está Bint Saeed?',
-          a:
-            'Sede en Abu Dabi (EAU). Entregamos en los Emiratos y el Golfo; también internacionalmente cuando esté disponible—confirma destinos al pagar.',
-        },
-        {
-          q: '¿Qué crea Bint Saeed?',
-          a:
-            'Abayas basadas en códigos de diseño emiratíes—Al Talli, Khous—junto con joyas y piezas seleccionadas para armario y estilo de vida.',
-        },
-        {
-          q: '¿Dónde comprar oficialmente (no en marketplaces)?',
-          a:
-            'Marca independiente y ligada al patrimonio: compra oficial en bintsaeed.com con envío EAU/Golfo (ver checkout). Sin distribuidores salvo anuncio en nuestros canales—si dudas, compra solo aquí.',
+          name: 'Comprar en la Maison',
+          questions: [
+            {
+              q: '¿Dónde puedo comprar Bint Saeed de forma oficial?',
+              a: 'Bint Saeed es una maison independiente de los Emiratos, guiada por el patrimonio. La colección oficial está disponible en bintsaeed.com. No estamos afiliados a minoristas terceros, salvo que se anuncie un stockista autorizado en nuestros propios canales. En caso de duda, compre únicamente a través de este sitio oficial.',
+            },
+            {
+              q: '¿Cómo da Bint Saeed a cambio?',
+              a: 'Veinte AED de cada artículo vendido se destinan a la caridad, en línea con el Mother of the Nation Endowment for Orphans y las iniciativas Emirates Red Crescent. El detalle completo se publica en nuestra página Giving Forward.',
+            },
+          ],
         },
       ],
     },
     {
+      id: 'orders-shipping',
       name: 'Pedidos y envíos',
-      questions: [
+      subtopics: [
         {
-          q: '¿Plazos de entrega?',
-          a: 'EAU: 1–2 días laborables (express) o 2–3 (estándar). Golfo: 3–5 días. Internacional: 7–14 según país.',
+          name: 'Expedición y entrega',
+          questions: [
+            {
+              q: '¿Cuánto tarda la entrega?',
+              a: 'Los artículos en stock, incluida joyería seleccionada y estilos listos para enviar, suelen expedirse en un plazo de 1 a 3 días hábiles. Las piezas hechas a pedido suelen enviarse en aproximadamente dos semanas tras la confirmación del pedido. Una vez expedidos, los envíos a los Emiratos suelen llegar en aproximadamente 1 a 3 días hábiles. Las entregas internacionales suelen llegar en aproximadamente 3 a 10 días hábiles, según del destino y del despacho aduanero. Los plazos de expedición y tránsito son solo estimaciones y no pueden garantizarse. El detalle completo figura en nuestra Shipment & Return Policy.',
+            },
+            {
+              q: '¿Qué transportistas utilizan?',
+              a: 'En los Emiratos Árabes Unidos, los pedidos se operan con Jeebly. Los pedidos internacionales se realizan con DHL Express. Podrán introducirse transportistas adicionales a medida que se amplíe nuestra red logística.',
+            },
+          ],
         },
         {
-          q: '¿Envío gratis?',
-          a: 'Sí. Envío gratuito en EAU en pedidos superiores a 1.000 AED. Envío gratuito mundial en pedidos superiores a 500 EUR (o el equivalente limpio en su moneda). Por debajo de estos umbrales se aplica una tarifa plana confirmada en el pago.',
+          name: 'Envío gratuito',
+          questions: [
+            {
+              q: '¿Ofrecen envío gratuito?',
+              a: 'El envío gratuito dentro de los Emiratos Árabes Unidos se aplica a pedidos con un subtotal de mercancía de AED 1,000 o más. El envío mundial gratuito se aplica a pedidos con un subtotal de mercancía de EUR 500 o más, o el equivalente neto mostrado en la divisa seleccionada. Por debajo de estos umbrales, se aplica una tarifa plana de envío: AED 35 dentro de los Emiratos, y EUR 30 (o el equivalente neto en la divisa seleccionada) para otros destinos, confirmada en el pago.',
+            },
+          ],
         },
         {
-          q: '¿Seguimiento?',
-          a: 'Sí: número por email (SMS si aplica) tras el envío.',
-        },
-        {
-          q: '¿Envían internacional?',
-          a: 'Sí donde esté disponible. Aranceles e impuestos pueden ser del cliente.',
+          name: 'Seguimiento y aduanas',
+          questions: [
+            {
+              q: '¿Puedo hacer seguimiento de mi pedido?',
+              a: 'Una vez expedido un pedido, las clientas reciben confirmación de envío y los datos de seguimiento cuando están disponibles.',
+            },
+            {
+              q: '¿Envían a nivel internacional?',
+              a: 'Sí, enviamos a todo el mundo cuando se ofrece. Los pedidos internacionales pueden estar sujetos a derechos de aduana, impuestos y tasas de despacho, que siguen siendo responsabilidad del destinatario. Destinos y cargos se confirman en el pago.',
+            },
+          ],
         },
       ],
     },
     {
+      id: 'returns-exchanges',
       name: 'Devoluciones y cambios',
-      questions: [
+      subtopics: [
         {
-          q: '¿Política de devolución?',
-          a:
-            'Ventas finales; reembolsos solo en casos limitados. Cambio en 14 días si la pieza no se ha usado, está intacta y con etiquetas. Rebajas y a medida: venta final.',
+          name: 'Política de cambio',
+          questions: [
+            {
+              q: '¿Cuál es su política de cambio?',
+              a: 'Los artículos elegibles pueden cambiarse en un plazo de 14 días desde la entrega, sujeto a la aprobación del equipo Returns de Bint Saeed. Los artículos deben estar sin estrenar y sin usar, con etiquetas, precintos y embalaje original intactos, y libres de perfume, humo, manchas, alteraciones o signos de uso. Ningún cambio se procesa hasta que la mercancía aprobada haya sido recibida e inspeccionada en nuestro atelier. Las condiciones completas figuran en nuestra Shipment & Return Policy.',
+            },
+            {
+              q: '¿Ofrecen reembolsos?',
+              a: 'No ofrecemos reembolsos por cambio de opinión, preferencia o elección de talla de la clienta. Cuando la ley o un defecto de fabricación verificado exijan una solución, las vías pueden incluir reparación, sustitución, cambio, crédito en tienda o reembolso, según se describe en nuestra Shipment & Return Policy.',
+            },
+          ],
         },
         {
-          q: '¿Cómo inicio un cambio?',
-          a: 'Escribe a returns@bintsaeed.com con tu número de pedido. Etiqueta prepagada para pedidos elegibles en EAU.',
+          name: 'Pendientes y piezas personalizadas',
+          questions: [
+            {
+              q: '¿Puedo cambiar o devolver pendientes?',
+              a: 'Por razones de salud, higiene y seguridad personal, los pendientes son de venta final y no pueden cambiarse ni reembolsarse, salvo que exista un defecto de fabricación verificado o una no conformidad material. Contacte returns@bintsaeed.com si considera que sus pendientes presentan un defecto de fabricación.',
+            },
+            {
+              q: '¿Pueden cambiarse las piezas personalizadas o a medida?',
+              a: 'Las piezas personalizadas, a medida, alteradas o según especificación de la clienta no son elegibles para cambio, salvo que exista un defecto de fabricación verificado o una no conformidad material.',
+            },
+          ],
         },
         {
-          q: '¿Reembolso?',
-          a: 'No. Solo cambio para artículos elegibles en 14 días según condiciones.',
+          name: 'Cómo solicitar un cambio',
+          questions: [
+            {
+              q: '¿Cómo solicito un cambio?',
+              a: 'Contacte returns@bintsaeed.com con su número de pedido antes de devolver cualquier mercancía. Se requiere autorización previa. Cuando un cambio aprobado exija el reenvío de la mercancía a Bint Saeed, se aplica una tarifa plana de envío de retorno: AED 35 para devoluciones originadas en los Emiratos, y EUR 35 (o el equivalente neto en la divisa seleccionada) para devoluciones internacionales. La tarifa se anula en caso de fallo verificado de la Maison.',
+            },
+          ],
         },
       ],
     },
     {
-      name: 'Tallas y ajuste',
-      questions: [
+      id: 'sizing-personalisation',
+      name: 'Tallas y personalización',
+      subtopics: [
         {
-          q: '¿Cómo elijo talla?',
-          a: 'Consulta la guía; entre dos tallas suele recomendarse la mayor.',
+          name: 'Ajuste',
+          questions: [
+            {
+              q: '¿Cómo encuentro mi talla?',
+              a: 'Utilice nuestra Size Guide para las medidas de busto, cintura, cadera y largo en pulgadas y centímetros, junto con las conversiones internacionales. Las medidas pueden variar ligeramente según el estilo. Si necesita orientación, contacte Client Services antes de pedir.',
+            },
+            {
+              q: '¿Ofrecen largo a medida?',
+              a: 'El largo a medida está disponible bajo petición para abayas seleccionadas. Puede añadir notas de largo cuando se ofrezca en la página del producto o en el pago, o contactar Client Services para obtener asistencia.',
+            },
+          ],
         },
         {
-          q: '¿Medida personalizada?',
-          a: 'Posible—longitud y notas en checkout o contacto.',
-        },
-        {
-          q: '¿Arreglos tras la compra?',
-          a: 'Posibles con coste extra; escríbenos en 7 días tras recibir.',
+          name: 'Personalización',
+          questions: [
+            {
+              q: '¿Qué personalización ofrecen?',
+              a: 'Cada abaya Bint Saeed incluye un bolsillo oculto. En la página de la prenda, seleccione Personalise para inscribir un nombre, una fecha significativa o unas pocas palabras. Su mensaje se imprime en una etiqueta de seda Bint Saeed y se cose dentro del bolsillo oculto, de forma discreta en el forro interior antes de completar la prenda.',
+            },
+            {
+              q: '¿La personalización es gratuita?',
+              a: 'La personalización es gratuita en todas las abayas. Si desea personalizar uno de nuestros otros artículos, contacte Customer Service.',
+            },
+          ],
         },
       ],
     },
     {
+      id: 'payment-security',
       name: 'Pago y seguridad',
-      questions: [
+      subtopics: [
         {
-          q: '¿Métodos de pago?',
-          a: 'Visa, Mastercard, Amex, Apple Pay si está activo, transferencia para algunos clientes EAU.',
+          name: 'Pago',
+          questions: [
+            {
+              q: '¿Qué métodos de pago aceptan?',
+              a: 'Los pagos se procesan a través de Stripe Embedded Checkout, PayPal y Mollie cuando se ofrecen. Los pagos con tarjeta suelen incluir Visa y Mastercard. Apple Pay y Google Pay están disponibles cuando están habilitados para su dispositivo y región. Los precios se muestran en la divisa que seleccione; cada divisa usa un precio de venta fijo, no una conversión de cambio en vivo.',
+            },
+            {
+              q: '¿Es segura mi información de pago?',
+              a: 'Sí. Las transacciones con tarjeta las procesan nuestros socios de pago. Bint Saeed no almacena números de tarjeta completos en nuestros servidores.',
+            },
+            {
+              q: '¿Ofrecen planes de pago?',
+              a: 'El pago íntegro se realiza en el checkout. Por el momento no se ofrecen opciones a plazos.',
+            },
+          ],
         },
+      ],
+    },
+    {
+      id: 'jewellery-care',
+      name: 'Cuidado de la joyería',
+      subtopics: [
         {
-          q: '¿Pago seguro?',
-          a: 'Pagos con Stripe (PCI-DSS). No guardamos tu tarjeta completa.',
-        },
-        {
-          q: '¿Plazos en cuotas?',
-          a: 'Pago íntegro en checkout hoy; planes futuros se anunciarán en la web.',
+          name: 'Gemas naturales',
+          questions: [
+            {
+              q: '¿Cómo debo cuidar la joyería Bint Saeed?',
+              a: 'Cada creación de joyería Bint Saeed se configura a mano a partir de gemas naturales cuidadosamente seleccionadas. Manipule cada pieza con delicadeza; las piedras pueden astillarse o romperse si reciben un golpe o se caen. Limpie únicamente con un paño suave y seco para joyería. Evite el agua, los baños de jabón, el cloro, el perfume, la laca y el quitaesmalte. Retire la joyería antes de dormir, cocinar y hacer ejercicio. Guarde cada creación por separado en su funda o estuche Bint Saeed, lejos de la luz solar, el calor excesivo y la humedad.',
+            },
+            {
+              q: '¿Cómo debo cuidar los Signature Strands?',
+              a: 'Retire los hilos antes de lavar o limpiar en seco su prenda. Manipule con cuidado; las gemas naturales pueden astillarse o romperse si reciben un golpe o se caen. Evite el agua y la humedad prolongada. No pulverice perfume, laca ni quitaesmalte directamente sobre las gemas o el herraje dorado. Limpie con delicadeza únicamente con un paño de microfibra suave y seco. Guárdelos en el estuche de presentación Bint Saeed cuando no se usen, lejos de la luz solar, el calor excesivo y la humedad.',
+            },
+          ],
         },
       ],
     },
   ],
   contact: {
-    title: '¿Necesitas más ayuda?',
-    description: 'Nuestro equipo está para ayudarte',
+    title: '¿Aún tienes una pregunta?',
+    description:
+      'Escribe a support@bintsaeed.com o contáctanos por WhatsApp. Client Services está disponible de domingo a jueves, de 9:00 a 18:00 (hora de Abu Dabi).',
   },
 }

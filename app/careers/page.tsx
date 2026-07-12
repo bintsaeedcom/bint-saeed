@@ -6,14 +6,15 @@ import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getCareersCopy } from '@/lib/content/careersCopyI18n'
 import { ctaPrimaryWithGap, ctaSecondaryOnLight, utilityPageH1 } from '@/lib/ui/ctaClasses'
+import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 
 export default function CareersPage() {
   const { isRTL, language } = useLanguage()
   const copy = getCareersCopy(language)
 
   return (
-    <div className={`relative min-h-screen overflow-x-clip bg-brand-pageCanvas pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <section className="relative container mx-auto px-6 pb-20 pt-24 lg:px-16 lg:pb-28 lg:pt-28">
+    <div className={`relative min-h-screen overflow-x-clip bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} ${isRTL ? 'rtl' : 'ltr'}`}>
+      <section className="relative container mx-auto px-6 pb-20 lg:px-16 lg:pb-28">
         <AppPageWayfinding
           rtl={isRTL}
           className="mb-8"

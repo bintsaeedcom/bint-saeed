@@ -14,7 +14,7 @@ export const PARK_LANE_ABAYA_INTRO_EN = [
   'Some garments rely on embellishment to be noticed. The Park Lane Abaya proves that exceptional tailoring is enough.',
   'Designed with a graceful A-line silhouette, this contemporary designer abaya creates effortless movement while maintaining a beautifully balanced shape. Crafted from a softly textured crepe with a refined grain, it drapes naturally from the shoulders, allowing every step to feel poised, confident and elegant.',
   'Inspired by the precision of contemporary tailoring, the shoulders are finished with Bint Saeed’s signature gold-tone Knotted Line buttons. More than a design detail, they create subtle structure through the upper silhouette, encouraging a confident posture from the moment the abaya is worn.',
-  'Flowing from the left shoulder is an integrated scarf that moves naturally with the wearer, adding softness and graceful movement without interrupting the clean architectural lines of the silhouette. Finished with signature gold-tone Bint Saeed emblem cufflinks, the wide cuffs introduce a discreet touch of distinction while remaining elegantly understated.',
+  'Flowing from the left shoulder is an integrated scarf that moves naturally with the wearer, adding softness and graceful movement without interrupting the clean architectural lines of the silhouette. Finished with Bint Saeed signature gold-tone Monogram cufflinks, the wide cuffs introduce a discreet touch of distinction while remaining elegantly understated.',
   'Available in Deep Black, Dark Maroon and Navy Blue, every detail of the Park Lane Abaya has been thoughtfully considered. This modern abaya is defined by its refined silhouette, integrated shoulder scarf and subtle gold-tone accents, creating a harmonious balance between movement and structure. Hidden side seam pockets provide everyday practicality, while the clean tailoring allows the woman wearing it to remain the focal point. Rather than relying on embellishment, the Park Lane Abaya celebrates proportion, craftsmanship and timeless elegance, making it an abaya that remains relevant season after season.',
   'The Park Lane Abaya belongs as naturally in London’s business districts and Parisian cafés as it does in Abu Dhabi, Riyadh and Doha. Created for women who move effortlessly between cultures and occasions, it can be worn as a refined contemporary layer or embraced as a timeless abaya, adapting beautifully to every setting.',
 ] as const
@@ -81,7 +81,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Tailored construction for an elegant drape',
       'Integrated shoulder scarf designed to flow naturally with movement',
       'Hidden side seam pockets',
-      'Wide cuffs with removable signature Bint Saeed emblem gold-tone cufflinks',
+      'Wide cuffs with removable Bint Saeed signature gold-tone Monogram cufflinks',
       'Optional snap button closure',
       'Optional hidden inner label personalisation',
     ],
@@ -324,7 +324,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
         {
           type: 'text',
           value:
-            'Scorrendo dalla spalla sinistra, una sciarpa integrata si muove naturalmente con chi la indossa, aggiungendo morbidezza e movimento aggraziato senza interrompere le linee architettoniche pulite della silhouette. Finiti con i gemelli emblema dorati signature Bint Saeed, i polsini ampi introducono un tocco di distinzione discreto restando elegantemente sobri.',
+            'Scorrendo dalla spalla sinistra, una sciarpa integrata si muove naturalmente con chi la indossa, aggiungendo morbidezza e movimento aggraziato senza interrompere le linee architettoniche pulite della silhouette. Finiti con i gemelli Monogram dorati signature Bint Saeed, i polsini ampi introducono un tocco di distinzione discreto restando elegantemente sobri.',
         },
       ],
       [
@@ -347,7 +347,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Costruzione sartoriale per un drappeggio elegante',
       'Sciarpa spalla integrata progettata per fluire con il movimento',
       'Tasche laterali nascoste nelle cuciture',
-      'Polsini ampi con gemelli emblema dorati Bint Saeed rimovibili',
+      'Polsini ampi con gemelli Monogram dorati Bint Saeed rimovibili',
       'Chiusura opzionale a bottoni a pressione',
       'Personalizzazione opzionale con etichetta interna nascosta',
     ],
@@ -369,7 +369,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: 'Cosa distingue la Park Lane Abaya dalle altre abaya?',
         answer:
-          'La Park Lane Abaya è stata progettata per distinguersi dalle aspettative tradizionali. Piuttosto che contare sull’abbellimento, raggiunge l’eleganza attraverso tailoring eccezionale, silhouette A-line aggraziata e sciarpa spalla integrata. Spalle strutturate, bottoni Knotted Line dorati e gemelli emblema Bint Saeed creano una silhouette adatta sia come strato designer contemporaneo sia come abaya senza tempo.',
+          'La Park Lane Abaya è stata progettata per distinguersi dalle aspettative tradizionali. Piuttosto che contare sull’abbellimento, raggiunge l’eleganza attraverso tailoring eccezionale, silhouette A-line aggraziata e sciarpa spalla integrata. Spalle strutturate, bottoni Knotted Line dorati e gemelli Monogram Bint Saeed creano una silhouette adatta sia come strato designer contemporaneo sia come abaya senza tempo.',
       },
       {
         question: 'Dove posso indossare la Park Lane Abaya?',
@@ -394,7 +394,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: 'Come devo curare la Park Lane Abaya?',
         answer:
-          'Per preservare il drappeggio elegante e la finitura raffinata, lavaggio in lavatrice delicato a 30 °C. Rimuovere sempre i gemelli emblema dorati Bint Saeed prima del lavaggio o della lavanderia a secco.',
+          'Per preservare il drappeggio elegante e la finitura raffinata, lavaggio in lavatrice delicato a 30 °C. Rimuovere sempre i gemelli Monogram dorati Bint Saeed prima del lavaggio o della lavanderia a secco.',
       },
     ],
   },
@@ -423,7 +423,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
         {
           type: 'text',
           value:
-            'Fluyendo desde el hombro izquierdo, una bufanda integrada se mueve naturalmente con quien la lleva, añadiendo suavidad y movimiento gracioso sin interrumpir las líneas arquitectónicas limpias de la silueta. Acabados con gemelos emblema dorados signature Bint Saeed, los amplios puños introducen un toque de distinción discreto permaneciendo elegantemente sobrios.',
+            'Fluyendo desde el hombro izquierdo, una bufanda integrada se mueve naturalmente con quien la lleva, añadiendo suavidad y movimiento gracioso sin interrumpir las líneas arquitectónicas limpias de la silueta. Acabados con gemelos Monogram dorados signature Bint Saeed, los amplios puños introducen un toque de distinción discreto permaneciendo elegantemente sobrios.',
         },
       ],
       [
@@ -446,7 +446,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Construcción entallada para un drapeado elegante',
       'Bufanda de hombro integrada diseñada para fluir con el movimiento',
       'Bolsillos laterales ocultos en las costuras',
-      'Puños amplios con gemelos emblema dorados Bint Saeed extraíbles',
+      'Puños amplios con gemelos Monogram dorados Bint Saeed extraíbles',
       'Cierre opcional con botones a presión',
       'Personalización opcional con etiqueta interior oculta',
     ],
@@ -468,7 +468,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: '¿Qué distingue a la Park Lane Abaya de otras abayas?',
         answer:
-          'La Park Lane Abaya fue diseñada para destacar de las expectativas tradicionales. En lugar de depender del adorno, logra su elegancia mediante sastrería excepcional, silueta A-line elegante y bufanda de hombro integrada. Hombros estructurados, botones Knotted Line dorados y gemelos emblema Bint Saeed crean una silueta igualmente adecuada como capa de diseñador contemporánea o como abaya atemporal.',
+          'La Park Lane Abaya fue diseñada para destacar de las expectativas tradicionales. En lugar de depender del adorno, logra su elegancia mediante sastrería excepcional, silueta A-line elegante y bufanda de hombro integrada. Hombros estructurados, botones Knotted Line dorados y gemelos Monogram Bint Saeed crean una silueta igualmente adecuada como capa de diseñador contemporánea o como abaya atemporal.',
       },
       {
         question: '¿Dónde puedo llevar la Park Lane Abaya?',
@@ -493,7 +493,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: '¿Cómo debo cuidar la Park Lane Abaya?',
         answer:
-          'Para preservar el drapeado elegante y el acabado refinado, lavado a máquina suave a 30 °C. Retire siempre los gemelos emblema dorados Bint Saeed antes del lavado o la limpieza en seco.',
+          'Para preservar el drapeado elegante y el acabado refinado, lavado a máquina suave a 30 °C. Retire siempre los gemelos Monogram dorados Bint Saeed antes del lavado o la limpieza en seco.',
       },
     ],
   },
@@ -915,7 +915,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
         {
           type: 'text',
           value:
-            'Fluindo do ombro esquerdo, um lenço integrado move-se naturalmente com quem a usa, adicionando suavidade e movimento gracioso sem interromper as linhas arquitetónicas limpas da silhueta. Acabados com abotoaduras emblema douradas signature Bint Saeed, os punhos largos introduzem um toque discreto de distinção.',
+            'Fluindo do ombro esquerdo, um lenço integrado move-se naturalmente com quem a usa, adicionando suavidade e movimento gracioso sem interromper as linhas arquitetónicas limpas da silhueta. Acabados com abotoaduras Monogram douradas signature Bint Saeed, os punhos largos introduzem um toque discreto de distinção.',
         },
       ],
       [
@@ -938,7 +938,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Construção alfaiataria para um caimento elegante',
       'Lenço de ombro integrado concebido para fluir com o movimento',
       'Bolsos laterais ocultos nas costuras',
-      'Punhos largos com abotoaduras emblema douradas Bint Saeed removíveis',
+      'Punhos largos com abotoaduras Monogram douradas Bint Saeed removíveis',
       'Fecho opcional com botões de pressão',
       'Personalização opcional com etiqueta interior oculta',
     ],
@@ -960,7 +960,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: 'O que distingue a Park Lane Abaya de outras abayas?',
         answer:
-          'A Park Lane Abaya foi concebida para se destacar das expectativas tradicionais. Em vez de depender do adorno, alcança elegância através de alfaiataria excecional, silhueta A-line graciosa e lenço de ombro integrado. Ombros estruturados, botões Knotted Line dourados e abotoaduras emblema Bint Saeed criam uma silhueta igualmente adequada como camada de designer contemporânea ou abaya intemporal.',
+          'A Park Lane Abaya foi concebida para se destacar das expectativas tradicionais. Em vez de depender do adorno, alcança elegância através de alfaiataria excecional, silhueta A-line graciosa e lenço de ombro integrado. Ombros estruturados, botões Knotted Line dourados e abotoaduras Monogram Bint Saeed criam uma silhueta igualmente adequada como camada de designer contemporânea ou abaya intemporal.',
       },
       {
         question: 'Onde posso usar a Park Lane Abaya?',
@@ -985,7 +985,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: 'Como devo cuidar da Park Lane Abaya?',
         answer:
-          'Para preservar o caimento elegante e o acabamento refinado, lavagem na máquina suave a 30 °C. Remova sempre as abotoaduras emblema douradas Bint Saeed antes da lavagem ou limpeza a seco.',
+          'Para preservar o caimento elegante e o acabamento refinado, lavagem na máquina suave a 30 °C. Remova sempre as abotoaduras Monogram douradas Bint Saeed antes da lavagem ou limpeza a seco.',
       },
     ],
   },
@@ -1014,7 +1014,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
         {
           type: 'text',
           value:
-            'Mengalir dari bahu kiri, scarf terintegrasi bergerak secara alami bersama pemakainya, menambah kelembutan dan gerakan anggun tanpa mengganggu garis arsitektural siluet yang bersih. Selesai dengan cufflink emblem emas signature Bint Saeed, manset lebar memperkenalkan sentuhan pembedaan yang halus.',
+            'Mengalir dari bahu kiri, scarf terintegrasi bergerak secara alami bersama pemakainya, menambah kelembutan dan gerakan anggun tanpa mengganggu garis arsitektural siluet yang bersih. Selesai dengan cufflink Monogram emas signature Bint Saeed, manset lebar memperkenalkan sentuhan pembedaan yang halus.',
         },
       ],
       [
@@ -1037,7 +1037,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Konstruksi tailored untuk drape elegan',
       'Scarf bahu terintegrasi dirancang mengalir dengan gerakan',
       'Saku sisi tersembunyi di jahitan',
-      'Manset lebar dengan cufflink emblem emas Bint Saeed yang dapat dilepas',
+      'Manset lebar dengan cufflink Monogram emas Bint Saeed yang dapat dilepas',
       'Penutup kancing snap opsional',
       'Personalisasi label dalam tersembunyi opsional',
     ],
@@ -1059,7 +1059,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: 'Apa yang membuat Park Lane Abaya berbeda dari abaya lainnya?',
         answer:
-          'Park Lane Abaya dirancang untuk menonjol dari ekspektasi tradisional. Alih-alih mengandalkan hiasan, ia mencapai keanggunan melalui tailoring luar biasa, siluet A-line anggun, dan scarf bahu terintegrasi. Bahu terstruktur, kancing Knotted Line emas, dan cufflink emblem Bint Saeed menciptakan siluet yang sama cocoknya sebagai lapisan desainer kontemporer atau abaya abadi.',
+          'Park Lane Abaya dirancang untuk menonjol dari ekspektasi tradisional. Alih-alih mengandalkan hiasan, ia mencapai keanggunan melalui tailoring luar biasa, siluet A-line anggun, dan scarf bahu terintegrasi. Bahu terstruktur, kancing Knotted Line emas, dan cufflink Monogram Bint Saeed menciptakan siluet yang sama cocoknya sebagai lapisan desainer kontemporer atau abaya abadi.',
       },
       {
         question: 'Di mana saya bisa memakai Park Lane Abaya?',
@@ -1084,7 +1084,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: 'Bagaimana cara merawat Park Lane Abaya?',
         answer:
-          'Untuk menjaga drape elegan dan finishing halus, cuci mesin lembut pada 30°C. Selalu lepaskan cufflink emblem emas Bint Saeed sebelum mencuci atau dry clean.',
+          'Untuk menjaga drape elegan dan finishing halus, cuci mesin lembut pada 30°C. Selalu lepaskan cufflink Monogram emas Bint Saeed sebelum mencuci atau dry clean.',
       },
     ],
   },
@@ -1113,7 +1113,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
         {
           type: 'text',
           value:
-            'Mengalir dari bahu kiri, skaf terintegrasi bergerak secara semula jadi bersama pemakainya, menambah kelembutan dan pergerakan anggun tanpa mengganggu garisan seni bina siluet yang bersih. Disiapkan dengan cufflink emblem emas signature Bint Saeed, manset lebar memperkenalkan sentuhan keistimewaan yang halus.',
+            'Mengalir dari bahu kiri, skaf terintegrasi bergerak secara semula jadi bersama pemakainya, menambah kelembutan dan pergerakan anggun tanpa mengganggu garisan seni bina siluet yang bersih. Disiapkan dengan cufflink Monogram emas signature Bint Saeed, manset lebar memperkenalkan sentuhan keistimewaan yang halus.',
         },
       ],
       [
@@ -1136,7 +1136,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       'Pembinaan tailored untuk drape elegan',
       'Skaf bahu terintegrasi direka untuk mengalir dengan pergerakan',
       'Poket sisi tersembunyi di jahitan',
-      'Manset lebar dengan cufflink emblem emas Bint Saeed boleh tanggal',
+      'Manset lebar dengan cufflink Monogram emas Bint Saeed boleh tanggal',
       'Penutup butang snap pilihan',
       'Pemperibadian label dalaman tersembunyi pilihan',
     ],
@@ -1158,7 +1158,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: 'Apakah yang membezakan Park Lane Abaya daripada abaya lain?',
         answer:
-          'Park Lane Abaya direka untuk menonjol daripada jangkaan tradisional. Daripada bergantung pada hiasan, ia mencapai keanggunan melalui tailoring luar biasa, siluet A-line anggun, dan skaf bahu terintegrasi. Bahu berstruktur, butang Knotted Line emas, dan cufflink emblem Bint Saeed mencipta siluet yang sama sesuainya sebagai lapisan pereka kontemporari atau abaya abadi.',
+          'Park Lane Abaya direka untuk menonjol daripada jangkaan tradisional. Daripada bergantung pada hiasan, ia mencapai keanggunan melalui tailoring luar biasa, siluet A-line anggun, dan skaf bahu terintegrasi. Bahu berstruktur, butang Knotted Line emas, dan cufflink Monogram Bint Saeed mencipta siluet yang sama sesuainya sebagai lapisan pereka kontemporari atau abaya abadi.',
       },
       {
         question: 'Di manakah saya boleh memakai Park Lane Abaya?',
@@ -1183,7 +1183,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: 'Bagaimana saya menjaga Park Lane Abaya?',
         answer:
-          'Untuk mengekalkan drape elegan dan kemasan halus, basuh mesin lembut pada 30°C. Sentiasa tanggalkan cufflink emblem emas Bint Saeed sebelum mencuci atau dry clean.',
+          'Untuk mengekalkan drape elegan dan kemasan halus, basuh mesin lembut pada 30°C. Sentiasa tanggalkan cufflink Monogram emas Bint Saeed sebelum mencuci atau dry clean.',
       },
     ],
   },

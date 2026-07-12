@@ -165,7 +165,7 @@ export const ACCESSORY_CATALOG_PRICES: Record<string, CurrencyPriceMap> = {
     USD: 229, CHF: 195, RUB: 17500, CNY: 1598, CAD: 319, SGD: 289, BND: 289, MYR: 945,
     MAD: 2150, NGN: 309000, IDR: 3995000, KZT: 105000, AZN: 379, UZS: 2695000, HKD: 1798,
   },
-  /** Signature Strand — Amethyst Hearts, Al Ain Oasis Rose Quartz & Sunstone share the AED 899 retail map. */
+  /** Signature Strand — Amethyst Hearts, Al Ain Oasis Rose Quartz, Sunstone & Lapis Lazuli share the AED 899 retail map. */
   'signature-strand-amethyst-hearts': {
     AED: 899, SAR: 949, QAR: 899, OMR: 99, BHD: 95, KWD: 79, GBP: 189, EUR: 225,
     USD: 259, CHF: 219, RUB: 19900, CNY: 1798, CAD: 359, SGD: 329, BND: 329, MYR: 1069,
@@ -177,6 +177,11 @@ export const ACCESSORY_CATALOG_PRICES: Record<string, CurrencyPriceMap> = {
     MAD: 2390, NGN: 349000, IDR: 4495000, KZT: 119000, AZN: 429, UZS: 3050000, HKD: 1998,
   },
   'signature-strand-sunstone': {
+    AED: 899, SAR: 949, QAR: 899, OMR: 99, BHD: 95, KWD: 79, GBP: 189, EUR: 225,
+    USD: 259, CHF: 219, RUB: 19900, CNY: 1798, CAD: 359, SGD: 329, BND: 329, MYR: 1069,
+    MAD: 2390, NGN: 349000, IDR: 4495000, KZT: 119000, AZN: 429, UZS: 3050000, HKD: 1998,
+  },
+  'signature-strand-lapis-lazuli': {
     AED: 899, SAR: 949, QAR: 899, OMR: 99, BHD: 95, KWD: 79, GBP: 189, EUR: 225,
     USD: 259, CHF: 219, RUB: 19900, CNY: 1798, CAD: 359, SGD: 329, BND: 329, MYR: 1069,
     MAD: 2390, NGN: 349000, IDR: 4495000, KZT: 119000, AZN: 429, UZS: 3050000, HKD: 1998,

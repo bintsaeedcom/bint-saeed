@@ -51,7 +51,7 @@ const MALACHITE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
     ],
     featuresTitle: 'Features',
     features: [
-      'House Code: Al Ain Rosette',
+      'Bint Saeed Signature House Codes: Al Ain Rosette',
       'Handcrafted in Abu Dhabi, United Arab Emirates',
       'Hand-strung natural malachite gemstone beads (approximately 5 mm)',
       'Gold-plated hematite accent beads woven throughout the design',
@@ -186,7 +186,7 @@ const ROSE_QUARTZ_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>
     ],
     featuresTitle: 'Features',
     features: [
-      'House Code: Al Ain Rosette',
+      'Bint Saeed Signature House Codes: Al Ain Rosette',
       'Handcrafted in Abu Dhabi, United Arab Emirates',
       'Natural rose quartz gemstone beads (approximately 5 mm)',
       'Gold-plated hematite accent beads throughout the design',
@@ -320,7 +320,7 @@ const LAPIS_LAZULI_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack
     ],
     featuresTitle: 'Features',
     features: [
-      'House Code: Al Ain Rosette',
+      'Bint Saeed Signature House Codes: Al Ain Rosette',
       'Handcrafted in Abu Dhabi, United Arab Emirates',
       'Natural lapis lazuli gemstone beads (approximately 5 mm)',
       'Gold-plated hematite accent beads throughout the design',
@@ -454,7 +454,7 @@ const SUNSTONE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> =
     ],
     featuresTitle: 'Features',
     features: [
-      'House Code: Al Ain Rosette',
+      'Bint Saeed Signature House Codes: Al Ain Rosette',
       'Handcrafted in Abu Dhabi, United Arab Emirates',
       'Natural sunstone gemstone beads (approximately 5 mm)',
       'Gold-plated hematite accent beads throughout the design',
@@ -588,7 +588,7 @@ const TIGER_EYE_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> 
     ],
     featuresTitle: 'Features',
     features: [
-      'House Code: Al Ain Rosette',
+      'Bint Saeed Signature House Codes: Al Ain Rosette',
       'Handcrafted in Abu Dhabi, United Arab Emirates',
       'Natural tiger eye gemstone beads (approximately 5 mm)',
       'Gold-plated hematite accent beads throughout the design',
@@ -722,7 +722,7 @@ const ONYX_PACK: Partial<Record<AppLocale, NecklaceEarringPdpContentPack>> = {
     ],
     featuresTitle: 'Features',
     features: [
-      'House Code: Al Ain Rosette',
+      'Bint Saeed Signature House Codes: Al Ain Rosette',
       'Handcrafted in Abu Dhabi, United Arab Emirates',
       'Natural black onyx gemstone beads (approximately 5 mm)',
       'Gold-plated hematite accent beads throughout the design',
@@ -875,15 +875,7 @@ export function getNecklaceEarringPdpContent(
     content = getNecklacePdpContentI18n(id, locale)
   }
 
-  // Earrings: authored packs are en/ar/fr only — fall back to EN so other locales keep FAQ/features/meta.
-  if (!content && EN_EARRING_PDP_BY_ID[id]) {
-    content = EN_EARRING_PDP_BY_ID[id]
-  }
-  // Necklaces: authored packs are en/ar (and fr above) — fall back to EN after secondary i18n.
-  if (!content) {
-    content = PDP_BY_ID[id]?.en
-  }
-
+  // Never silently fall back to English for another locale.
   if (!content) return undefined
 
   return {

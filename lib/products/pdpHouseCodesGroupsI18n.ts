@@ -10,89 +10,93 @@ export type HouseCodesVariant =
   | 'knotted-line-emblem'
   | 'soho-set'
 
-const GROUP_TITLE: Record<AppLocale, string> = {
-  en: 'House Codes',
-  ar: 'رموز الدار',
-  fr: 'House Codes',
-  it: 'House Codes',
-  es: 'House Codes',
-  ru: 'House Codes',
-  zh: 'House Codes',
-  de: 'House Codes',
-  nl: 'House Codes',
-  pt: 'House Codes',
-  id: 'House Codes',
-  ms: 'House Codes',
+/** Clearer than “House Codes” alone — used on every PDP that shows this block. */
+export const PDP_HOUSE_CODES_TITLE: Record<AppLocale, string> = {
+  en: 'Bint Saeed Signature House Codes',
+  ar: 'Bint Saeed Signature House Codes',
+  fr: 'Bint Saeed Signature House Codes',
+  it: 'Bint Saeed Signature House Codes',
+  es: 'Bint Saeed Signature House Codes',
+  ru: 'Bint Saeed Signature House Codes',
+  zh: 'Bint Saeed Signature House Codes',
+  de: 'Bint Saeed Signature House Codes',
+  nl: 'Bint Saeed Signature House Codes',
+  pt: 'Bint Saeed Signature House Codes',
+  id: 'Bint Saeed Signature House Codes',
+  ms: 'Bint Saeed Signature House Codes',
 }
+
+/** Locked EN phrasing for Monogram hardware (pin vs cufflinks). */
+export const MONOGRAM_PIN_EN = 'Bint Saeed signature gold-tone Monogram pin'
+export const MONOGRAM_CUFFLINKS_EN = 'Bint Saeed signature gold-tone Monogram cufflinks'
+export const KNOTTED_LINE_BUTTONS_EN = 'Bint Saeed signature gold-tone Knotted Line buttons'
+export const AL_TALLI_TRIM_EN = 'Al Talli woven trim'
+export const AL_KHOUS_TRIM_EN = 'Al Khous woven trim'
 
 type ItemSet = Record<HouseCodesVariant, Record<AppLocale, string[]>>
 
 const ITEMS: ItemSet = {
   'knotted-line-al-talli': {
-    en: [
-      'Bint Saeed signature gold-tone Knotted Line buttons',
-      'Al Talli woven trim',
-      'Bint Saeed signature gold-tone emblem',
-    ],
+    en: [KNOTTED_LINE_BUTTONS_EN, AL_TALLI_TRIM_EN, MONOGRAM_PIN_EN],
     ar: [
       'أزرار Knotted Line الذهبية المميزة من Bint Saeed',
-      'تفاصيل التلي المنسوجة',
-      'شعار Bint Saeed الذهبي المميز',
+      'تفاصيل التلي المنسوجة Al Talli',
+      'دبوس Monogram الذهبي المميز من Bint Saeed',
     ],
     fr: [
       'Boutons dorés signature Knotted Line de Bint Saeed',
       'Garniture tissée Al Talli',
-      'Emblème doré signature Bint Saeed',
+      'Épingle Monogram dorée signature Bint Saeed',
     ],
     it: [
       'Bottoni dorati signature Knotted Line di Bint Saeed',
       'Finitura in Al Talli tessuto',
-      'Emblema dorato signature Bint Saeed',
+      'Spilla Monogram dorata signature Bint Saeed',
     ],
     es: [
       'Botones dorados signature Knotted Line de Bint Saeed',
       'Ribete tejido Al Talli',
-      'Emblema dorado signature Bint Saeed',
+      'Alfiler Monogram dorado signature Bint Saeed',
     ],
     ru: [
       'Фирменные золотистые пуговицы Knotted Line от Bint Saeed',
       'Тканая отделка Al Talli',
-      'Фирменная золотистая эмблема Bint Saeed',
+      'Фирменная золотистая булавка Monogram Bint Saeed',
     ],
     zh: [
       'Bint Saeed 标志性金色调 Knotted Line 纽扣',
       'Al Talli 编织饰边',
-      'Bint Saeed 标志性金色调徽标',
+      'Bint Saeed 标志性金色调 Monogram 别针',
     ],
     de: [
       'Bint Saeed Signatur-Knotted-Line-Knöpfe in Goldoptik',
       'Al-Talli-Webbesatz',
-      'Bint Saeed Signatur-Emblem in Goldoptik',
+      'Bint Saeed Signatur-Monogram-Nadel in Goldoptik',
     ],
     nl: [
       'Bint Saeed signature goudkleurige Knotted Line-knopen',
       'Al Talli-weefwerk',
-      'Bint Saeed signature goudkleurig embleem',
+      'Bint Saeed signature goudkleurige Monogram-speld',
     ],
     pt: [
       'Botões dourados signature Knotted Line da Bint Saeed',
       'Acabamento em Al Talli tecido',
-      'Emblema dourado signature Bint Saeed',
+      'Alfinete Monogram dourado signature da Bint Saeed',
     ],
     id: [
       'Kancing emas signature Knotted Line Bint Saeed',
       'Trim tenun Al Talli',
-      'Emblem emas signature Bint Saeed',
+      'Pin Monogram emas signature Bint Saeed',
     ],
     ms: [
       'Butang emas signature Knotted Line Bint Saeed',
       'Hiasan tenunan Al Talli',
-      'Emblem emas signature Bint Saeed',
+      'Pin Monogram emas signature Bint Saeed',
     ],
   },
   'al-talli': {
-    en: ['Al Talli woven trim'],
-    ar: ['تفاصيل التلي المنسوجة'],
+    en: [AL_TALLI_TRIM_EN],
+    ar: ['تفاصيل التلي المنسوجة Al Talli'],
     fr: ['Garniture tissée Al Talli'],
     it: ['Finitura in Al Talli tessuto'],
     es: ['Ribete tejido Al Talli'],
@@ -105,8 +109,8 @@ const ITEMS: ItemSet = {
     ms: ['Hiasan tenunan Al Talli'],
   },
   'al-khous': {
-    en: ['Al Khous woven trim'],
-    ar: ['تفاصيل الخوص المنسوجة'],
+    en: [AL_KHOUS_TRIM_EN],
+    ar: ['تفاصيل الخوص المنسوجة Al Khous'],
     fr: ['Garniture tissée Al Khous'],
     it: ['Finitura in Al Khous tessuto'],
     es: ['Ribete tejido Al Khous'],
@@ -119,13 +123,10 @@ const ITEMS: ItemSet = {
     ms: ['Hiasan tenunan Al Khous'],
   },
   'knotted-line-al-khous': {
-    en: [
-      'Bint Saeed signature gold-tone Knotted Line buttons',
-      'Al Khous woven trim',
-    ],
+    en: [KNOTTED_LINE_BUTTONS_EN, AL_KHOUS_TRIM_EN],
     ar: [
       'أزرار Knotted Line الذهبية المميزة من Bint Saeed',
-      'تفاصيل الخوص المنسوجة',
+      'تفاصيل الخوص المنسوجة Al Khous',
     ],
     fr: [
       'Boutons dorés signature Knotted Line de Bint Saeed',
@@ -143,7 +144,10 @@ const ITEMS: ItemSet = {
       'Фирменные золотистые пуговицы Knotted Line от Bint Saeed',
       'Тканая отделка Al Khous',
     ],
-    zh: ['Bint Saeed 标志性金色调 Knotted Line 纽扣', 'Al Khous 编织饰边'],
+    zh: [
+      'Bint Saeed 标志性金色调 Knotted Line 纽扣',
+      'Al Khous 编织饰边',
+    ],
     de: [
       'Bint Saeed Signatur-Knotted-Line-Knöpfe in Goldoptik',
       'Al-Khous-Webbesatz',
@@ -166,7 +170,7 @@ const ITEMS: ItemSet = {
     ],
   },
   'knotted-line-only': {
-    en: ['Bint Saeed signature gold-tone Knotted Line buttons'],
+    en: [KNOTTED_LINE_BUTTONS_EN],
     ar: ['أزرار Knotted Line الذهبية المميزة من Bint Saeed'],
     fr: ['Boutons dorés signature Knotted Line de Bint Saeed'],
     it: ['Bottoni dorati signature Knotted Line di Bint Saeed'],
@@ -181,66 +185,66 @@ const ITEMS: ItemSet = {
   },
   'knotted-line-emblem': {
     en: [
-      'Signature gold-tone Knotted Line buttons at the shoulders',
-      'Signature Bint Saeed emblem cufflinks',
+      'Bint Saeed signature gold-tone Knotted Line buttons at the shoulders',
+      MONOGRAM_CUFFLINKS_EN,
     ],
     ar: [
-      'أزرار Knotted Line الذهبية المميزة عند الكتفين',
-      'أزرار أكمام شعار Bint Saeed المميزة',
+      'أزرار Knotted Line الذهبية على الأكتاف من Bint Saeed',
+      'أزرار كم Monogram الذهبية المميزة من Bint Saeed',
     ],
     fr: [
-      'Boutons dorés signature Knotted Line aux épaules',
-      'Boutons de manchette emblème signature Bint Saeed',
+      'Boutons dorés signature Knotted Line aux épaules de Bint Saeed',
+      'Boutons de manchette Monogram dorés signature Bint Saeed',
     ],
     it: [
-      'Bottoni dorati signature Knotted Line alle spalle',
-      'Gemelli emblema signature Bint Saeed',
+      'Bottoni dorati signature Knotted Line sulle spalle di Bint Saeed',
+      'Gemelli Monogram dorati signature Bint Saeed',
     ],
     es: [
-      'Botones dorados signature Knotted Line en los hombros',
-      'Gemelos emblema signature Bint Saeed',
+      'Botones dorados signature Knotted Line en los hombros de Bint Saeed',
+      'Gemelos Monogram dorados signature Bint Saeed',
     ],
     ru: [
-      'Фирменные золотистые пуговицы Knotted Line на плечах',
-      'Запонки с эмблемой Bint Saeed',
+      'Фирменные золотистые пуговицы Knotted Line на плечах от Bint Saeed',
+      'Фирменные золотистые запонки Monogram Bint Saeed',
     ],
     zh: [
-      '肩部标志性金色调 Knotted Line 纽扣',
-      'Bint Saeed 标志性徽标袖扣',
+      'Bint Saeed 肩部标志性金色调 Knotted Line 纽扣',
+      'Bint Saeed 标志性金色调 Monogram 袖扣',
     ],
     de: [
-      'Signatur-Knotted-Line-Knöpfe in Goldoptik an den Schultern',
-      'Bint Saeed Signatur-Emblem-Manschettenknöpfe',
+      'Bint Saeed Signatur-Knotted-Line-Knöpfe an den Schultern in Goldoptik',
+      'Bint Saeed Signatur-Monogram-Manschettenknöpfe in Goldoptik',
     ],
     nl: [
-      'Signature goudkleurige Knotted Line-knopen bij de schouders',
-      'Bint Saeed signature embleem manchetknopen',
+      'Bint Saeed signature goudkleurige Knotted Line-knopen op de schouders',
+      'Bint Saeed signature goudkleurige Monogram-manchetknopen',
     ],
     pt: [
-      'Botões dourados signature Knotted Line nos ombros',
-      'Abotoaduras emblema signature Bint Saeed',
+      'Botões dourados signature Knotted Line nos ombros da Bint Saeed',
+      'Abotoaduras Monogram douradas signature da Bint Saeed',
     ],
     id: [
-      'Kancing emas signature Knotted Line di bahu',
-      'Kancing manset emblem signature Bint Saeed',
+      'Kancing emas signature Knotted Line di bahu Bint Saeed',
+      'Manset Monogram emas signature Bint Saeed',
     ],
     ms: [
-      'Butang emas signature Knotted Line di bahu',
-      'Kancing manset emblem signature Bint Saeed',
+      'Butang emas signature Knotted Line di bahu Bint Saeed',
+      'Butang manset Monogram emas signature Bint Saeed',
     ],
   },
   'soho-set': {
     en: [
-      'Bint Saeed signature gold-tone Knotted Line buttons',
+      KNOTTED_LINE_BUTTONS_EN,
       'Signature Al Talli woven trim along both outer side seams',
     ],
     ar: [
       'أزرار Knotted Line الذهبية المميزة من Bint Saeed',
-      'تفاصيل التلي المنسوجة المميزة على جانبي البنطال الخارجيين',
+      'تفاصيل التلي المنسوجة Al Talli على كلا الدرزين الجانبيين الخارجيين',
     ],
     fr: [
       'Boutons dorés signature Knotted Line de Bint Saeed',
-      'Garniture tissée Al Talli signature le long des coutures latérales extérieures',
+      'Garniture tissée Al Talli signature le long des deux coutures latérales extérieures',
     ],
     it: [
       'Bottoni dorati signature Knotted Line di Bint Saeed',
@@ -256,7 +260,7 @@ const ITEMS: ItemSet = {
     ],
     zh: [
       'Bint Saeed 标志性金色调 Knotted Line 纽扣',
-      '沿裤外侧缝的标志性 Al Talli 编织饰边',
+      '沿两侧外缝的标志性 Al Talli 编织饰边',
     ],
     de: [
       'Bint Saeed Signatur-Knotted-Line-Knöpfe in Goldoptik',
@@ -287,7 +291,7 @@ export function getHouseCodesDetailGroup(
 ): PdpDetailGroup {
   const items = ITEMS[variant][locale] ?? ITEMS[variant].en
   return {
-    title: GROUP_TITLE[locale] ?? GROUP_TITLE.en,
+    title: PDP_HOUSE_CODES_TITLE[locale] ?? PDP_HOUSE_CODES_TITLE.en,
     items: [...items],
   }
 }

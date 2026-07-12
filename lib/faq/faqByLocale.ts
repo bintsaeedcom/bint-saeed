@@ -30,3 +30,4 @@ export const FAQ_BY_LOCALE: Record<AppLocale, FaqBundle> = {
 }
 
 export type { FaqBundle } from '@/lib/faq/types'
+export { flattenFaqQuestions } from '@/lib/faq/types'

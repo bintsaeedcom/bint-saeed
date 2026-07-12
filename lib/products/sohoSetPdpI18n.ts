@@ -2,7 +2,6 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductPdpContent } from '@/data/productPdpContent'
 import { SOHO_SET_INTRO_EN } from '@/data/sohoSetPdpIntro'
 import {
-  SOHO_SET_COLOUR,
   buildSohoSetDetailGroups,
   sohoSetCare,
   sohoSetComposition,
@@ -533,7 +532,7 @@ export function buildSohoSetPdpContent(locale: AppLocale = 'en'): ProductPdpCont
   const intro = buildSohoSetPdpIntro(locale)
   return {
     ...intro,
-    productDetails: [...SOHO_SET_COLOUR],
+    productDetails: [],
     productDetailGroups: buildSohoSetDetailGroups(locale),
     compositionDetails: sohoSetComposition(locale),
     fitAndSizeDetails: sohoSetFitAndSize(locale),

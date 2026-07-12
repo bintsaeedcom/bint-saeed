@@ -90,7 +90,7 @@ function buildEarringPackEnAr(input: EarringEnPackInput): {
       introParagraphs: input.introParagraphsEn,
       featuresTitle: 'Features',
       features: [
-        'House Code: Al Ain Rosette',
+        'Bint Saeed Signature House Codes: Al Ain Rosette',
         handcraftedEn,
         ...asFeatureList(input.stoneFeatureEn),
         'Faceted gold-plated Hematite beads that catch the light',

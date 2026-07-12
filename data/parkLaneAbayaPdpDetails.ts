@@ -12,7 +12,7 @@ export const PARK_LANE_SILHOUETTE_ITEMS = [
   'Tailored construction for an elegant drape',
   'Integrated shoulder scarf designed to flow naturally with movement',
   'Hidden side seam pockets',
-  'Wide cuffs with removable signature Bint Saeed emblem gold-tone cufflinks',
+  'Wide cuffs with removable Bint Saeed signature gold-tone Monogram cufflinks',
   'Optional snap button closure',
   'Optional hidden inner label personalisation',
 ] as const

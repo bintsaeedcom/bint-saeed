@@ -536,7 +536,7 @@ const FAQ_TEMPLATES: Record<
     scarfStyle: (name) => ({
       question: `Can the scarf on the ${name} be styled in different ways?`,
       answer:
-        'Yes. The attached scarf detail can be styled diagonally across the body using the signature Bint Saeed gold-tone emblem pin.',
+        'Yes. The attached scarf detail can be styled diagonally across the body using the Bint Saeed signature gold-tone Monogram pin.',
     }),
   },
   ar: {

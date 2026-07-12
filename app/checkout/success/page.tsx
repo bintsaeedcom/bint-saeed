@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import { FiCheck, FiShoppingBag } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
@@ -67,7 +68,7 @@ function CheckoutSuccessContent() {
   }, [sessionId, paymentId, paypalToken, clearCart])
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-20 pt-24 sm:pt-28">
+    <div className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-20 ${SITE_CONTENT_TOP_PAD}`}>
       <div className="absolute top-20 right-0 h-96 w-96 rounded-full bg-brand-stone/10 blur-3xl" />
       <div className="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-brand-dustyBlue/5 blur-3xl" />
 
@@ -176,7 +177,7 @@ export default function CheckoutSuccessPage() {
 
   return (
     <Suspense fallback={
-      <div className="flex min-h-screen items-center justify-center pb-20 pt-4 sm:pt-6 md:pt-8">
+      <div className={`flex min-h-screen items-center justify-center pb-20 ${SITE_CONTENT_TOP_PAD}`}>
         <div className="animate-pulse text-brand-clayRed">{ui.checkout.redirecting}</div>
       </div>
     }>

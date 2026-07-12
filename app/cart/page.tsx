@@ -13,6 +13,7 @@ import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import { getCartLineImageAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { getEstimatedShippingFee } from '@/lib/pricing'
@@ -39,7 +40,7 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-brand-pageCanvas pb-20 pt-24 sm:pt-28">
+      <div className={`min-h-screen bg-brand-pageCanvas pb-20 ${SITE_CONTENT_TOP_PAD}`}>
         <div className="container mx-auto px-6 lg:px-12">
           <AppPageWayfinding
             rtl={isRTL}
@@ -86,7 +87,7 @@ export default function CartPage() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
       {/* Header */}
-      <div className="border-b border-brand-stone/20 pb-4 pt-24 sm:pb-6 sm:pt-28">
+      <div className={`border-b border-brand-stone/20 pb-4 ${SITE_CONTENT_TOP_PAD} sm:pb-6`}>
         <div className="container mx-auto min-w-0 px-4 sm:px-6 lg:px-12">
           <AppPageWayfinding
             rtl={isRTL}

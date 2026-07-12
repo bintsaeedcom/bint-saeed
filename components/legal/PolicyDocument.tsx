@@ -10,6 +10,7 @@ import type { EnglishPolicyKey } from '@/lib/legal/englishPolicyVersionNoticeI18
 import type { AppLocale } from '@/lib/i18n/routing'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 import { policySectionH2, policySectionH2Plain } from '@/lib/ui/ctaClasses'
+import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 
 const EMAIL_RE = /[a-zA-Z0-9._%+-]+@bintsaeed\.com/g
 
@@ -170,14 +171,16 @@ export default function PolicyDocument({
   englishPolicy,
   language = 'en',
 }: PolicyDocumentProps) {
-  const heroAlign = variant === 'shipment' ? (isRTL ? 'text-right' : 'text-left') : 'text-center'
+  const heroAlign = isRTL ? 'text-right' : variant === 'shipment' ? 'text-left' : 'text-center'
   const bodyGap = variant === 'shipment' ? 'policy-prose flex flex-col gap-4' : 'space-y-9'
   const cardPad = variant === 'shipment' ? 'p-8 md:p-10' : 'p-8 md:p-12'
   const heroMargin = variant === 'shipment' ? 'mb-10' : 'mb-12'
   const introClass =
     variant === 'shipment'
       ? 'mt-4 max-w-3xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600'
-      : 'mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600'
+      : isRTL
+        ? 'mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600 mr-0 ml-auto'
+        : 'mx-auto mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600'
   const bodyLeading = variant === 'shipment' ? 'leading-[1.55]' : 'leading-relaxed'
   const summaryPad = variant === 'shipment' ? 'p-4 md:p-5' : 'p-5 md:p-6'
   const summaryTitleMb = variant === 'shipment' ? 'mb-1.5' : 'mb-2'
@@ -186,7 +189,10 @@ export default function PolicyDocument({
   const textAlign = isRTL ? 'text-right' : variant === 'shipment' ? 'text-left' : ''
 
   return (
-    <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div
+      className={`relative min-h-screen bg-[#f6f4f1] pb-20 ${SITE_CONTENT_TOP_PAD} ${isRTL ? 'rtl' : 'ltr'}`}
+      dir={isRTL ? 'rtl' : 'ltr'}
+    >
       <div className="relative mx-auto max-w-4xl px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, x: isRTL ? 20 : -20 }}

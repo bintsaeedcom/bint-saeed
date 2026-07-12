@@ -106,7 +106,7 @@ function buildMayfairKaftanContent(color?: string): ProductPdpContent {
   return {
     introParagraphs: [
       `The Mayfair Kaftan is designed for women who understand that elegance is never static. Cut from ${adj} crepe chiffon and layered over an attached inner dress, this ${adj} chiffon kaftan creates a fluid silhouette that drapes effortlessly from shoulder to hem.`,
-      'A softly cascading scarf detail falls from the left shoulder and can be styled diagonally across the body using the signature Bint Saeed gold-tone emblem pin. Hidden internal ties allow the silhouette to be adjusted in multiple ways, creating either a flowing cape-like shape or a more defined profile. The result is a piece that transforms with the woman who wears it, adapting naturally to different occasions and moments.',
+      'A softly cascading scarf detail falls from the left shoulder and can be styled diagonally across the body using the Bint Saeed signature gold-tone Monogram pin. Hidden internal ties allow the silhouette to be adjusted in multiple ways, creating either a flowing cape-like shape or a more defined profile. The result is a piece that transforms with the woman who wears it, adapting naturally to different occasions and moments.',
       'Lightweight, versatile, and designed to be worn for years rather than seasons, the Mayfair Kaftan moves effortlessly between occasions. Worn for a wedding, a celebration, a dinner abroad, or an ordinary day that deserves something extraordinary, it adapts naturally to the life of the woman who wears it. It is not defined by a destination, a city, or a moment. It becomes part of her story and travels wherever she does.',
       'It is a piece chosen not only for how it looks, but for how it makes a woman feel the moment she puts it on.',
     ],
@@ -116,7 +116,7 @@ function buildMayfairKaftanContent(color?: string): ProductPdpContent {
       'Attached inner dress for ease of wear',
       'V-neckline',
       'Attached scarf detail draped from the left shoulder',
-      'Signature Bint Saeed gold-tone emblem pin included',
+      'Bint Saeed signature gold-tone Monogram pin included',
       'Scarf can be styled diagonally across the body',
       'Hidden internal tie construction allowing multiple styling options',
       'Can be worn with a fluid silhouette or a softly defined shape',
@@ -717,7 +717,7 @@ function buildNothingHillKaftanContent(color?: string): ProductPdpContent {
   return {
     introParagraphs: [
       `The Nothing Hill Kaftan is designed for women who appreciate elegance in its most effortless form. Crafted from layers of soft ${adj} chiffon and finished with a refined bateau neckline, it creates a flowing silhouette that moves gracefully with every step.`,
-      'Lightweight and fluid, the chiffon drapes naturally from shoulder to hem, creating a sense of movement while maintaining a beautifully balanced shape. A signature Bint Saeed gold-tone emblem sits discreetly at the front, offering a subtle expression of the house identity.',
+      'Lightweight and fluid, the chiffon drapes naturally from shoulder to hem, creating a sense of movement while maintaining a beautifully balanced shape. A signature Bint Saeed gold-tone Monogram sits discreetly at the front, offering a subtle expression of the house identity.',
       `The soft ${adj} tone brings warmth and femininity to the design, making it equally suited to celebrations, intimate gatherings, destination events, and occasions that call for understated elegance. The airy construction allows the silhouette to float around the body, creating a presence that feels both refined and effortless.`,
       'Designed to be worn season after season, the Nothing Hill Kaftan is not defined by trends or occasions alone. It is a piece chosen for the ease it brings to dressing beautifully, whether worn for a special event, an evening gathering, or a moment worth remembering.',
       'Light, graceful, and timeless, it becomes part of the woman’s story, accompanying her wherever life takes her.',
@@ -727,7 +727,7 @@ function buildNothingHillKaftanContent(color?: string): ProductPdpContent {
       'Flowing layered silhouette with graceful movement',
       'Attached inner dress for ease of wear',
       'Elegant bateau neckline',
-      'Signature Bint Saeed gold-tone emblem included',
+      'Bint Saeed signature gold-tone Monogram pin included',
       'Soft draped chiffon panels creating fluid movement',
       'Lightweight construction designed for comfort and elegance',
       'Designed to move naturally with the wearer',

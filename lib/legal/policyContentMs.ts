@@ -103,7 +103,7 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
       body: [
         'We use selected third-party providers to run commerce, communications, infrastructure, and analytics functions. Depending on configuration, this may include payment processing, hosting/CDN, operational email, and optional analytics/behavior tools.',
         analyticsLine,
-        'Payment processing: Card/payment data is processed by secure payment providers (including Stripe), not stored in full by Bint Saeed.',
+        'Payment processing: Card/payment data is processed by secure payment providers (including Stripe, PayPal, and Mollie where offered), not stored in full by Bint Saeed.',
       ],
     },
     {
@@ -118,7 +118,7 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
         'Subject to applicable law, you may request access, correction, deletion, restriction, portability, or objection to certain processing.',
       ],
       list: [
-        'You may manage non-essential kuki consent through site controls.',
+        'You may manage non-essential kuki consent through the Cookie settings control in the website footer.',
         'Msentity verification may be required before actioning certain rights requests.',
         'We respond within applicable legal timelines.',
       ],
@@ -231,7 +231,7 @@ function privacyMsSections(analyticsLine: string): PolicySection[] {
       body: [
         'Kami menggunakan penyedia pihak ketiga terpilih untuk menjalankan fungsi perdagangan, komunikasi, infrastruktur, dan analitik. Bergantung pada konfigurasi, ini dapat mencakup pemprosesan pembayaran, hosting/CDN, email operasional, serta alat analitik/tingkah laku opsional.',
         analyticsLine,
-        'Pemrosesan pembayaran: Data kartu/pembayaran diproses oleh penyedia pembayaran aman (termasuk Stripe), dan tidak disimpan secara penuh oleh Bint Saeed.',
+        'Pemrosesan pembayaran: Data kartu/pembayaran diproses oleh penyedia pembayaran aman (termasuk Stripe, PayPal, dan Mollie jika ditawarkan), dan tidak disimpan secara penuh oleh Bint Saeed.',
       ],
     },
     {
@@ -246,7 +246,7 @@ function privacyMsSections(analyticsLine: string): PolicySection[] {
         'Tunduk pada hukum yang berlaku, anda dapat meminta akses, koreksi, pemadaman, pembatasan, portabilitas, atau keberatan terhadap pemprosesan tertentu.',
       ],
       list: [
-        'anda boleh mengurus kebenaran kuki bukan penting melalui kawalan laman.',
+        'anda boleh mengurus kebenaran kuki bukan penting melalui kawalan Cookie settings di footer laman.',
         'Pengesahan identitas mungkin diperlukan sebelum menindaklanjuti permintaan hak tertentu.',
         'Kami merespons dalam jangka waktu hukum yang berlaku.',
       ],
@@ -294,7 +294,7 @@ const PRIVACY_EN: Omit<PolicyContent, 'sections'> & { sections?: PolicySection[]
   breadcrumb: 'Privacy Policy',
   homeBreadcrumb: 'Home',
   heroLabel: 'Legal',
-  lastUpdated: 'Last updated: May 2026',
+  lastUpdated: 'Last updated: July 2026',
   intro:
     'This Privacy Policy explains how Bint Saeed collects, uses, safeguards, and discloses personal data in connection with this website and related services.',
   summaryTitle: 'Privacy Notice',
@@ -323,7 +323,7 @@ const PRIVACY_MS: Omit<PolicyContent, 'sections'> = {
   breadcrumb: 'Dasar Privasi',
   homeBreadcrumb: 'Laman Utama',
   heroLabel: 'Hukum',
-  lastUpdated: 'Kemas kini terakhir: Mei 2026',
+  lastUpdated: 'Kemas kini terakhir: Julai 2026',
   intro:
     'Dasar Privasi ini menjelaskan bagaimana Bint Saeed mengumpul, menggunakan, melindungi, dan mendedahkan data peribadi sehubungan dengan laman web ini dan perkhidmatan terkait.',
   summaryTitle: 'Pemberitahuan Privasi',
@@ -372,7 +372,7 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
       'We aim to present product details, availability, and pricing accurately. However, occasional errors may occur. Product display images are illustrative and may vary slightly due to lighting, screen calibration, and handcrafted production characteristics.',
     ],
     list: [
-      'All prices are displayed in AED unless otherwise stated.',
+      'Prices are shown in the currency you select on the website. Fixed retail amounts are set per currency and are not live foreign-exchange conversions. AED is the default presentment currency for UAE browsing unless you select another supported currency.',
       'Applicable VAT is handled in accordance with UAE tax requirements.',
       'We may update product assortment and pricing at any time before order confirmation.',
       'Custom and personalised pieces are subject to specific lead times and final-sale conditions.',
@@ -384,7 +384,7 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
       'Submission of an order request does not constitute final acceptance by Bint Saeed. An order is accepted when we issue an order confirmation and payment authorization is successfully completed.',
     ],
     list: [
-      'Payments are processed through secure payment providers, including Stripe.',
+      'Payments are processed through secure payment providers, including Stripe (Embedded Checkout), PayPal, and Mollie where offered for your destination. Full card details are handled by these processors and are not stored in full by Bint Saeed.',
       'We reserve the right to decline, cancel, or limit orders for lawful reasons.',
       'Fraud prevention, identity checks, and payment verification may be required.',
       'Where a payment error or pricing error occurs, we may cancel and refund the affected order.',
@@ -410,7 +410,7 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
       'Return and repair handling is governed by our Shipment & Return Policy. All clients should review the full policy before ordering.',
     ],
     list: [
-      'Items are made to order and cancellations/returns are limited once production has started.',
+      'Many pieces are made to order; cancellations and returns are limited once production has started. Ready-to-ship ready-to-wear and accessories follow the Shipment & Return Policy, including final-sale rules that apply to earrings and any other items marked as such on the product page.',
       'Defect or material non-conformity claims must be submitted with evidence within the stated window.',
       'Remedies may include repair or replacement first, and refund where required by applicable law.',
     ],
@@ -450,9 +450,9 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
   {
     title: '11. Disclaimers and Limitation of Liability',
     body: [
-      'To the fullest extent permitted by applicable law, the website and services are provided on an "as is" and "as available" basis without warranties of uninterrupted operation.',
-      'Bint Saeed shall not be liable for indirect, incidental, special, consequential, or punitive damages arising from use of the website, delay in delivery, third-party service interruption, or other events beyond reasonable control. Liability is limited to the amount paid for the relevant order, except where non-excludable liability applies by law.',
-      'To the fullest extent permitted by law, Bint Saeed is not liable for injury, illness, allergic reaction, accidental harm, death, property damage, loss of earnings, emotional distress, or any other loss resulting from misuse, improper handling, unauthorised alteration, or use of products contrary to care and safety guidance.',
+      'To the extent permitted by applicable law, the website and services are provided on an "as is" and "as available" basis, without a warranty of uninterrupted operation.',
+      'Bint Saeed is not liable for indirect, incidental, special, consequential, or punitive damages arising from use of the website, delivery delay, third-party service interruption, or other events beyond reasonable control. Except where liability cannot be limited by law, our liability is limited to the amount paid for the relevant order.',
+      'Except where liability cannot be limited by law, Bint Saeed is not responsible for loss or harm arising from misuse of products, failure to follow care guidance, unauthorised alteration, or improper handling.',
     ],
   },
   {
@@ -501,7 +501,7 @@ const TERMS_MS_SECTIONS: PolicySection[] = [
       'Kami berupaya menampilkan butiran produk, ketersediaan, dan harga secara akurat. Namun, kesalahan sesekali dapat terjadi. Gambar produk bersifat ilustratif dan dapat sedikit berbeda karena pencahayaan, kalibrasi layar, serta karakteristik produksi buatan tangan.',
     ],
     list: [
-      'Seluruh harga ditampilkan dalam AED kecuali dinyatakan lain.',
+      'Harga ditampilkan dalam mata wang yang anda pilih di laman. Jumlah runcit tetap ditetapkan bagi setiap mata wang dan bukan penukaran forex langsung. AED ialah mata wang presentasi lalai untuk pelayaran UAE kecuali anda memilih mata wang lain yang disokong.',
       'PPN yang berlaku ditangani sesuai terma perpajakan UAE.',
       'Kami dapat memperbarui kurasi produk dan harga pada bila-bila masa sebelum konfirmasi pesanan.',
       'Karya tersuai dan personalisasi tunduk pada lead time tertentu serta terma final sale.',
@@ -513,7 +513,7 @@ const TERMS_MS_SECTIONS: PolicySection[] = [
       'Pengajuan permintaan pesanan bukan merupakan penerimaan akhir oleh Bint Saeed. Pesanan diterima ketika kami mengeluarkan konfirmasi pesanan dan otorisasi pembayaran berhasil diselesaikan.',
     ],
     list: [
-      'Pembayaran diproses melalui penyedia pembayaran aman, termasuk Stripe.',
+      'Pembayaran diproses melalui penyedia pembayaran aman, termasuk Stripe (Embedded Checkout), PayPal, dan Mollie jika ditawarkan untuk destinasi anda. Butiran kad penuh dikendalikan oleh pemproses tersebut dan tidak disimpan sepenuhnya oleh Bint Saeed.',
       'Kami berhak menolak, membatalkan, atau membatasi pesanan atas alasan yang sah.',
       'Pencegahan penipuan, pemeriksaan identitas, dan verifikasi pembayaran dapat diperlukan.',
       'Apabila terjadi kesalahan pembayaran atau harga, kami dapat membatalkan dan mengembalikan dana pesanan terkait.',
@@ -538,7 +538,7 @@ const TERMS_MS_SECTIONS: PolicySection[] = [
       'Penanganan pemulangan dan perbaikan diatur oleh Dasar Penghantaran & Pemulangan kami. Seluruh pelanggan disyorkan meninjau dasar lengkap sebelum memesan.',
     ],
     list: [
-      'Produk dihasilkan berdasarkan pesanan dan pembatalan/pemulangan terbatas setelah produksi dimulai.',
+      'Banyak produk dihasilkan berdasarkan pesanan; pembatalan/pemulangan terbatas setelah produksi dimulai. Ready-to-wear sedia dihantar dan aksesori mengikuti Dasar Penghantaran & Pemulangan, termasuk peraturan final sale untuk anting-anting dan item lain yang ditanda sedemikian pada halaman produk.',
       'Klaim cacat atau ketidaksesuaian material harus diajukan beserta bukti dalam jangka waktu yang ditetapkan.',
       'Remedi dapat mencakup perbaikan atau penggantian terlebih dahulu, dan pemulangan dana apabila diwajibkan oleh hukum yang berlaku.',
     ],
@@ -578,9 +578,9 @@ const TERMS_MS_SECTIONS: PolicySection[] = [
   {
     title: '11. Penafian dan Batasan Tanggung Jawab',
     body: [
-      'Sejauh diizinkan oleh hukum yang berlaku, laman web dan perkhidmatan disediakan secara "apa adanya" dan "sebagaimana tersedia" tanpa jaminan operasi tanpa gangguan.',
-      'Bint Saeed tidak bertanggung jawab atas kerugian tidak langsung, insidental, khusus, konsekuensial, atau hukuman yang timbul dari penggunaan laman web, keterlambatan penghantaran, gangguan perkhidmatan pihak ketiga, atau peristiwa di luar kendali wajar. Tanggung jawab dibatasi pada jumlah yang dibayarkan untuk pesanan terkait, kecuali apabila tanggung jawab tidak dapat dikecualikan menurut hukum.',
-      'Sejauh diizinkan oleh hukum, Bint Saeed tidak bertanggung jawab atas cedera, penyakit, reaksi alergi, bahaya tak disengaja, kematian, kerusakan properti, hilangnya penghasilan, tekanan emosional, atau kerugian lain akibat penyalahgunaan, penanganan tidak tepat, alterasi tanpa izin, atau penggunaan produk yang bertentangan dengan panduan penjagaan dan keselamatan.',
+      'Sejauh diizinkan hukum yang berlaku, laman web dan perkhidmatan disediakan secara "apa adanya" dan "sebagaimana tersedia", tanpa jaminan operasi tanpa gangguan.',
+      'Bint Saeed tidak bertanggung jawab atas kerugian tidak langsung, insidental, khusus, konsekuensial, atau hukuman yang timbul dari penggunaan laman web, keterlambatan penghantaran, gangguan perkhidmatan pihak ketiga, atau peristiwa di luar kendali wajar. Kecuali jika tanggung jawab tidak dapat dibatasi oleh hukum, tanggung jawab kami terbatas pada jumlah yang dibayarkan untuk pesanan terkait.',
+      'Kecuali jika tanggung jawab tidak dapat dibatasi oleh hukum, Bint Saeed tidak bertanggung jawab atas kerugian atau kerosakan yang timbul daripada penyalahgunaan produk, kegagalan mengikuti panduan penjagaan, perubahan tanpa izin, atau penanganan yang tidak tepat.',
     ],
   },
   {
@@ -614,7 +614,7 @@ const TERMS_EN: Omit<PolicyContent, 'sections'> = {
   breadcrumb: 'Terms & Conditions',
   homeBreadcrumb: 'Home',
   heroLabel: 'Legal',
-  lastUpdated: 'Last updated: May 2026',
+  lastUpdated: 'Last updated: July 2026',
   intro:
     'These Terms govern access to and use of the Bint Saeed website, products, and related services. They are drafted for clarity, commercial certainty, and compliance with applicable UAE legal requirements.',
   summaryTitle: 'Summary Notice',
@@ -644,7 +644,7 @@ const TERMS_MS: Omit<PolicyContent, 'sections'> = {
   breadcrumb: 'Terma & Ketentuan',
   homeBreadcrumb: 'Laman Utama',
   heroLabel: 'Hukum',
-  lastUpdated: 'Kemas kini terakhir: Mei 2026',
+  lastUpdated: 'Kemas kini terakhir: Julai 2026',
   intro:
     'Terma ini mengatur akses dan penggunaan laman web, produk, dan perkhidmatan terkait Bint Saeed. Disusun untuk kejelasan, kepastian komersial, dan pematuhan terhadap terma hukum UAE yang berlaku.',
   summaryTitle: 'Ringkasan',
@@ -702,7 +702,7 @@ function shipmentEnSections(): PolicySection[] {
           body: [
             'Bint Saeed will not accept an exchange or return where tags, seals or security labels have been removed, cut, damaged or altered, or where photographs submitted in support of a request indicate that removal or tampering has been attempted.',
             'No exchange is processed until approved goods have been physically received and inspected at our atelier.',
-            'Where an approved exchange or return requires goods to be shipped back to Bint Saeed, a flat return shipping fee applies: AED 35 for returns originating within the United Arab Emirates, and EUR 35 (or the clean equivalent in the selected currency) for returns originating internationally. This fee is waived where the return arises from a verified fault of the House — including a manufacturing defect or material non-conformity — or where otherwise required by applicable law.',
+            'Where an approved exchange or return requires goods to be shipped back to Bint Saeed, a flat return shipping fee applies: AED 35 for returns originating within the United Arab Emirates, and EUR 35 (or the clean equivalent in the selected currency) for returns originating internationally. This fee is waived where the return arises from a verified fault of the House, including a manufacturing defect or material non-conformity, or where otherwise required by applicable law.',
             'Personalised pieces, custom specifications, altered garments, and items produced to a client’s specific requirements are not eligible for exchange except where a verified manufacturing defect or material non-conformity exists.',
             'For reasons of health, hygiene and personal safety, earrings are final sale and cannot be exchanged or refunded, except where a verified manufacturing defect or material non-conformity exists.',
           ],
@@ -756,7 +756,7 @@ function shipmentEnSections(): PolicySection[] {
         'Minor variations inherent to handcrafted production.',
         'Colour differences resulting from screen settings or device displays.',
         'Damage resulting from improper care, misuse, alteration, or normal wear.',
-        'Removal, cutting, damage or alteration of original tags, seals or security labels — including where photographs indicate that removal or tampering has been attempted.',
+        'Removal, cutting, damage or alteration of original tags, seals or security labels, including where photographs indicate that removal or tampering has been attempted.',
         'Earrings, which are final sale for health, hygiene and personal safety reasons (except where a verified manufacturing defect or material non-conformity exists).',
       ],
     },
@@ -1103,7 +1103,7 @@ const SHIPMENT_MS: Omit<PolicyContent, 'sections'> = {
   breadcrumb: 'Dasar Penghantaran & Pemulangan',
   homeBreadcrumb: 'Laman Utama',
   heroLabel: 'Hukum',
-  lastUpdated: 'Kemas kini terakhir: Juni 2026',
+  lastUpdated: 'Kemas kini terakhir: Julai 2026',
   intro:
     'Dasar ini mengatur jadwal penghantaran, kelayakan pertukaran, prosedur pemulangan, dan jalur remedi untuk pembelian melalui Bint Saeed.',
   summaryTitle: 'Ringkasan',

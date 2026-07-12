@@ -1,9 +1,10 @@
 'use client'
 
-import { useLayoutEffect, useRef, type MouseEvent, type ReactNode } from 'react'
+import { type MouseEvent, type ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { FiChevronDown } from 'react-icons/fi'
 import { PDP_ACCORDION_PANEL, PDP_ACCORDION_TITLE } from '@/lib/pdp/pdpTypography'
+import { useStableToggleScroll } from '@/lib/ui/useStableToggleScroll'
 
 export type PdpAccordionSectionConfig = {
   id: string
@@ -24,9 +25,8 @@ type PdpAccordionProps = {
 }
 
 const HEADER_SCROLL_OFFSET_PX = 120
-/** Match expand animation so we measure after the panel has opened. */
-const OPEN_REVEAL_DELAY_MS = 280
 
+/** Intentional navigation helper (e.g. Worldwide Shipping shortcut). Not used for accordion toggles. */
 export function scrollPdpAccordionSectionIntoView(sectionId: string) {
   const el = document.getElementById(`pdp-accordion-section-${sectionId}`)
   if (!el) return
@@ -35,9 +35,8 @@ export function scrollPdpAccordionSectionIntoView(sectionId: string) {
 }
 
 /**
- * PDP detail accordion — expand/collapse with calm scroll behaviour:
- * - closing keeps the trigger from jumping
- * - opening long panels (Shipping, FAQ) gently reveals the section instead of dumping the user at the footer
+ * PDP detail accordion — expand/collapse in place.
+ * Toggle clicks only correct sticky-column drift; they never auto-scroll the page.
  */
 export default function PdpAccordion({
   openId,
@@ -46,68 +45,19 @@ export default function PdpAccordion({
   onSectionOpen,
   className = '',
 }: PdpAccordionProps) {
-  const scrollAdjustRef = useRef<{
-    scrollY: number
-    topBefore: number
-    button: HTMLButtonElement
-    isOpening: boolean
-    sectionId: string
-  } | null>(null)
+  const { prepareToggle } = useStableToggleScroll(openId)
 
   const handleToggle = (id: string, event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    const button = event.currentTarget
+    prepareToggle(event)
     const isOpening = openId !== id
-
-    scrollAdjustRef.current = {
-      scrollY: window.scrollY,
-      topBefore: button.getBoundingClientRect().top,
-      button,
-      isOpening,
-      sectionId: id,
-    }
-
     if (isOpening) onSectionOpen?.(id)
     onOpenChange(isOpening ? id : null)
   }
 
-  useLayoutEffect(() => {
-    const adj = scrollAdjustRef.current
-    if (!adj) return
-    scrollAdjustRef.current = null
-
-    // Instant micro-correction so sticky-column reflow does not snap the trigger.
-    const topAfter = adj.button.getBoundingClientRect().top
-    const delta = topAfter - adj.topBefore
-    if (Math.abs(delta) > 0.5) {
-      window.scrollTo(0, adj.scrollY + delta)
-    }
-
-    if (!adj.isOpening) return
-
-    const timer = window.setTimeout(() => {
-      const sectionRoot = document.getElementById(`pdp-accordion-section-${adj.sectionId}`)
-      const panel = document.getElementById(`pdp-accordion-panel-${adj.sectionId}`)
-      if (!sectionRoot) return
-
-      const btnRect = adj.button.getBoundingClientRect()
-      const panelBottom = panel?.getBoundingClientRect().bottom ?? btnRect.bottom
-      const needsReveal =
-        btnRect.top < HEADER_SCROLL_OFFSET_PX - 8 ||
-        btnRect.top > window.innerHeight * 0.4 ||
-        panelBottom > window.innerHeight - 16
-
-      if (needsReveal) {
-        scrollPdpAccordionSectionIntoView(adj.sectionId)
-      }
-    }, OPEN_REVEAL_DELAY_MS)
-
-    return () => window.clearTimeout(timer)
-  }, [openId])
-
   return (
     <div
       className={`pdp-accordion border-t border-brand-stone/30 [overflow-anchor:none] ${className}`}
+      data-stable-toggle-root
     >
       {sections.map((section, index) => {
         const isOpen = openId === section.id
@@ -119,7 +69,7 @@ export default function PdpAccordion({
           <div
             key={section.id}
             id={`pdp-accordion-section-${section.id}`}
-            className={`scroll-mt-28 ${showBorder ? 'border-b border-brand-stone/30' : ''}`}
+            className={`scroll-mt-28 [overflow-anchor:none] ${showBorder ? 'border-b border-brand-stone/30' : ''}`}
           >
             <button
               type="button"

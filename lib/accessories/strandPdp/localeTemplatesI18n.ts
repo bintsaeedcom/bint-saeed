@@ -838,8 +838,5 @@ export function buildStrandFaqFromTemplates(
 
 /** Prefer shared strand care bullets so every strand PDP uses the same instructions. */
 export function resolveStrandCare(locale: AppLocale): readonly string[] {
-  if (locale === 'en' || locale === 'ar' || locale === 'fr') {
-    return getStrandCareBullets(locale)
-  }
-  return STRAND_PDP_LOCALE_TEMPLATES[locale].care
+  return getStrandCareBullets(locale)
 }

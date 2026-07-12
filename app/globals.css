@@ -156,11 +156,17 @@
  * often feels glitchy with trackpads/wheel because it fights inertial scrolling.
  * Use `scrollIntoView({ behavior: 'smooth' })` only where intentional (e.g. hash nav).
  */
+[data-stable-toggle-root],
+[data-stable-toggle-root] * {
+  overflow-anchor: none;
+}
+
 html {
   scroll-behavior: auto;
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+  overflow-anchor: none;
   font-family: var(--font-body);
   background-color: var(--bs-header-edge);
   /* Depth aligned with Header (`#12080b` → `#2d141e`) — no extra warm burgundy blob */

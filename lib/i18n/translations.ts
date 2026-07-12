@@ -177,6 +177,7 @@ export const translations = {
       faq: 'FAQ',
       privacy: 'Privacy',
       cookies: 'Cookies',
+      cookieSettings: 'Cookie settings',
       terms: 'Terms',
       allRightsReserved: 'All rights reserved.',
       brandDescription: BRAND_TAGLINE.en,
@@ -231,7 +232,7 @@ export const translations = {
     // Cookie Consent
     cookie: {
       title: 'We value your privacy',
-      message: 'We use cookies, including third-party cookies, for functional purposes, to perform statistical analyses, to offer you a better browsing experience, and to send you personalized advertising messages. You can either accept these cookies by clicking "Accept all cookies", or click "Cookies settings" to set your preferences. If you click on "Reject all cookies", we will only use cookies necessary for the proper functioning and security of this site. You can adjust your preferences at any time in the "Privacy & Cookie Notice" section at the bottom of any page.',
+      message: 'We use cookies, including third-party cookies, for essential site functions, optional analytics (when you consent), and a better browsing experience. Marketing preference is recorded for future advertising tools and does not currently load ad pixels unless separately enabled. Click "Accept all cookies" to allow optional cookies, "Cookies settings" to review categories, or "Reject all cookies" to keep only essential cookies. You can change preferences anytime via Cookie settings in the website footer.',
       learnMore: 'More Information',
       acceptAll: 'Accept all cookies',
       essentialOnly: 'Reject all cookies',
@@ -245,7 +246,7 @@ export const translations = {
       optional: 'Optional',
       essentialDesc: 'Required for the website to function properly. Cannot be disabled.',
       analyticsDesc: 'Help us understand how visitors interact with our website.',
-      marketingDesc: 'Used to show you relevant advertisements and offers.',
+      marketingDesc: 'Reserved for future advertising tools. Not currently used to load ad pixels on this site.',
     },
     
     // Search
@@ -464,6 +465,7 @@ export const translations = {
       faq: 'الأسئلة الشائعة',
       privacy: 'الخصوصية',
       cookies: 'الكوكيز',
+      cookieSettings: 'إعدادات الكوكيز',
       terms: 'الشروط',
       allRightsReserved: 'جميع الحقوق محفوظة.',
       brandDescription: 'أزياء فاخرة مصممة للمرأة العصرية. حيث يلتقي التراث بالأناقة المعاصرة.',
@@ -518,7 +520,7 @@ export const translations = {
     // Cookie Consent
     cookie: {
       title: 'نحن نقدر خصوصيتك',
-      message: 'نستخدم الكوكيز، بما فيها كوكيز الطرف الثالث، لأغراض وظيفية وتحليلات إحصائية وتحسين تجربة التصفح وإرسال رسائل إعلانية مخصصة. يمكنك قبول الكوكيز بالنقر على "قبول الكل" أو "إعدادات الكوكيز" لضبط تفضيلاتك. بالنقر على "رفض الكل" سنستخدم فقط الكوكيز الضرورية لآمان الموقع.',
+      message: 'نستخدم الكوكيز، بما فيها كوكيز الطرف الثالث، للوظائف الأساسية وتحليلات اختيارية (عند الموافقة) وتحسين تجربة التصفح. تُسجَّل تفضيلات التسويق لأدوات إعلانية مستقبلية ولا تُحمِّل حالياً بكسلات إعلانية ما لم تُفعَّل بشكل منفصل. يمكنك القبول عبر "قبول الكل" أو ضبط الفئات عبر "إعدادات الكوكيز" أو الرفض للإبقاء على الكوكيز الضرورية فقط. يمكنك تغيير التفضيلات في أي وقت عبر إعدادات الكوكيز في تذييل الموقع.',
       learnMore: 'مزيد من المعلومات',
       acceptAll: 'قبول الكل',
       essentialOnly: 'رفض الكل',
@@ -532,7 +534,7 @@ export const translations = {
       optional: 'اختيارية',
       essentialDesc: 'مطلوبة لعمل الموقع بشكل صحيح. لا يمكن تعطيلها.',
       analyticsDesc: 'تساعدنا على فهم كيفية تفاعل الزوار مع موقعنا.',
-      marketingDesc: 'تُستخدم لعرض إعلانات وعروض مناسبة لك.',
+      marketingDesc: 'مخصّصة لأدوات إعلانية مستقبلية. لا تُستخدم حالياً لتحميل بكسلات إعلانية على هذا الموقع.',
     },
     
     // Search
@@ -726,6 +728,7 @@ export const translations = {
       faq: 'FAQ',
       privacy: 'Confidentialité',
       cookies: 'Cookies',
+      cookieSettings: 'Paramètres cookies',
       terms: 'Conditions',
       allRightsReserved: 'Tous droits réservés.',
       brandDescription: 'Mode de luxe pour la femme moderne.',
@@ -776,7 +779,7 @@ export const translations = {
     },
     cookie: {
       title: 'Nous Respectons Votre Vie Privée',
-      message: 'Nous utilisons des cookies, y compris des cookies tiers, pour des raisons fonctionnelles, des analyses statistiques, une meilleure expérience de navigation et des publicités personnalisées. Cliquez sur "Tout accepter" ou "Paramètres des cookies" pour définir vos préférences. "Refuser tout" n\'utilise que les cookies essentiels.',
+      message: 'Nous utilisons des cookies, y compris des cookies tiers, pour le fonctionnement essentiel, des analyses optionnelles (avec votre consentement) et une meilleure expérience de navigation. La préférence marketing est enregistrée pour de futurs outils publicitaires et ne charge actuellement aucun pixel publicitaire sauf activation séparée. Cliquez sur « Tout accepter », « Paramètres des cookies » ou « Refuser tout ». Vous pouvez modifier vos préférences à tout moment via Cookie settings dans le pied de page.',
       learnMore: 'Plus d\'informations',
       acceptAll: 'Tout accepter',
       essentialOnly: 'Tout refuser',
@@ -790,7 +793,7 @@ export const translations = {
       optional: 'Optionnel',
       essentialDesc: 'Requis pour le fonctionnement du site.',
       analyticsDesc: 'Nous aident à comprendre l\'utilisation du site.',
-      marketingDesc: 'Utilisés pour afficher des publicités pertinentes.',
+      marketingDesc: 'Réservé à de futurs outils publicitaires. Ne charge actuellement aucun pixel publicitaire sur ce site.',
     },
     search: {
       title: 'Rechercher',
@@ -979,6 +982,7 @@ export const translations = {
       faq: 'FAQ',
       privacy: 'Privacy',
       cookies: 'Cookies',
+      cookieSettings: 'Impostazioni cookie',
       terms: 'Termini',
       allRightsReserved: 'Tutti i diritti riservati.',
       brandDescription: 'Moda di lusso per la donna moderna.',
@@ -1029,7 +1033,7 @@ export const translations = {
     },
     cookie: {
       title: 'Rispettiamo la Tua Privacy',
-      message: 'Utilizziamo cookie, anche di terze parti, per funzionalità, analisi statistiche, una migliore esperienza di navigazione e messaggi pubblicitari personalizzati. Clicca "Accetta tutto" o "Impostazioni cookie" per le preferenze. "Rifiuta tutto" usa solo i cookie necessari.',
+      message: 'Utilizziamo cookie, anche di terze parti, per funzioni essenziali, analytics opzionali (con consenso) e una migliore navigazione. La preferenza marketing è registrata per futuri strumenti pubblicitari e non carica attualmente pixel pubblicitari salvo attivazione separata. Clicca "Accetta tutto", "Impostazioni cookie" o "Rifiuta tutto". Puoi modificare le preferenze in qualsiasi momento tramite Cookie settings nel footer.',
       learnMore: 'Maggiori informazioni',
       acceptAll: 'Accetta tutto',
       essentialOnly: 'Rifiuta tutto',
@@ -1043,7 +1047,7 @@ export const translations = {
       optional: 'Opzionale',
       essentialDesc: 'Necessari per il funzionamento del sito.',
       analyticsDesc: 'Ci aiutano a capire l\'uso del sito.',
-      marketingDesc: 'Usati per mostrare pubblicità rilevanti.',
+      marketingDesc: 'Riservato a futuri strumenti pubblicitari. Attualmente non carica pixel pubblicitari su questo sito.',
     },
     search: {
       title: 'Cerca',
@@ -1232,6 +1236,7 @@ export const translations = {
       faq: 'FAQ',
       privacy: 'Privacidad',
       cookies: 'Cookies',
+      cookieSettings: 'Configuración de cookies',
       terms: 'Términos',
       allRightsReserved: 'Todos los derechos reservados.',
       brandDescription: 'Moda de lujo para la mujer moderna.',
@@ -1282,7 +1287,7 @@ export const translations = {
     },
     cookie: {
       title: 'Valoramos Tu Privacidad',
-      message: 'Usamos cookies, incluidas de terceros, para funcionalidad, análisis estadísticos, mejor experiencia de navegación y publicidad personalizada. Haz clic en "Aceptar todo" o "Configuración de cookies" para preferencias. "Rechazar todo" usa solo cookies esenciales.',
+      message: 'Usamos cookies, incluidas de terceros, para funciones esenciales, analítica opcional (con tu consentimiento) y una mejor experiencia. La preferencia de marketing se registra para herramientas publicitarias futuras y no carga píxeles publicitarios actualmente salvo activación separada. Haz clic en "Aceptar todo", "Configuración de cookies" o "Rechazar todo". Puedes cambiar preferencias en Cookie settings del pie de página.',
       learnMore: 'Más información',
       acceptAll: 'Aceptar todo',
       essentialOnly: 'Rechazar todo',
@@ -1296,7 +1301,7 @@ export const translations = {
       optional: 'Opcional',
       essentialDesc: 'Necesarios para el funcionamiento del sitio.',
       analyticsDesc: 'Nos ayudan a entender el uso del sitio.',
-      marketingDesc: 'Usados para mostrar anuncios relevantes.',
+      marketingDesc: 'Reservado para futuras herramientas publicitarias. Actualmente no carga píxeles publicitarios en este sitio.',
     },
     search: {
       title: 'Buscar',
@@ -1485,6 +1490,7 @@ export const translations = {
       faq: 'FAQ',
       privacy: 'Конфиденциальность',
       cookies: 'Cookies',
+      cookieSettings: 'Настройки cookies',
       terms: 'Условия',
       allRightsReserved: 'Все права защищены.',
       brandDescription: 'Роскошная мода для современной женщины.',
@@ -1535,7 +1541,7 @@ export const translations = {
     },
     cookie: {
       title: 'Мы Ценим Вашу Приватность',
-      message: 'Мы используем cookies, включая сторонние, для функциональности, статистических анализов, улучшения навигации и персонализированной рекламы. Нажмите "Принять все" или "Настройки cookies" для предпочтений. "Отклонить все" использует только необходимые cookies.',
+      message: 'Мы используем cookies, включая сторонние, для основных функций, опциональной аналитики (с согласия) и удобства просмотра. Маркетинговое предпочтение сохраняется для будущих рекламных инструментов и сейчас не загружает рекламные пиксели, если они не включены отдельно. Нажмите «Принять все», «Настройки cookies» или «Отклонить все». Изменить предпочтения можно через Cookie settings в подвале сайта.',
       learnMore: 'Подробнее',
       acceptAll: 'Принять все',
       essentialOnly: 'Отклонить все',
@@ -1549,7 +1555,7 @@ export const translations = {
       optional: 'Опционально',
       essentialDesc: 'Необходимы для работы сайта.',
       analyticsDesc: 'Помогают понять использование сайта.',
-      marketingDesc: 'Используются для показа релевантной рекламы.',
+      marketingDesc: 'Зарезервировано для будущих рекламных инструментов. Сейчас не загружает рекламные пиксели на сайте.',
     },
     search: {
       title: 'Поиск',
@@ -1738,6 +1744,7 @@ export const translations = {
       faq: '常见问题',
       privacy: '隐私',
       cookies: 'Cookie',
+      cookieSettings: 'Cookie 设置',
       terms: '条款',
       allRightsReserved: '版权所有。',
       brandDescription: '为现代女性打造的奢华时尚。',
@@ -1788,7 +1795,7 @@ export const translations = {
     },
     cookie: {
       title: '我们重视您的隐私',
-      message: '我们使用 cookies，包括第三方 cookies，用于功能、统计分析、优化浏览体验和个性化广告。点击"全部接受"或"Cookie 设置"以设置偏好。"拒绝全部"仅使用必要 cookies。',
+      message: '我们使用 cookies（含第三方）用于网站必要功能、可选分析（经您同意）以及更好的浏览体验。营销偏好会记录以供未来广告工具使用，目前不会加载广告像素，除非另行启用。请点击“全部接受”、“Cookie 设置”或“拒绝全部”。您可随时通过页脚的 Cookie settings 更改偏好。',
       learnMore: '更多信息',
       acceptAll: '全部接受',
       essentialOnly: '拒绝全部',
@@ -1802,7 +1809,7 @@ export const translations = {
       optional: '可选',
       essentialDesc: '网站运行所必需。',
       analyticsDesc: '帮助我们了解网站使用情况。',
-      marketingDesc: '用于展示相关广告。',
+      marketingDesc: '预留给未来广告工具。目前不会在本站加载广告像素。',
     },
     search: {
       title: '搜索',
@@ -1991,6 +1998,7 @@ export const translations = {
       faq: 'FAQ',
       privacy: 'Datenschutz',
       cookies: 'Cookies',
+      cookieSettings: 'Cookie-Einstellungen',
       terms: 'AGB',
       allRightsReserved: 'Alle Rechte vorbehalten.',
       brandDescription: 'Luxusmode für die moderne Frau.',
@@ -2041,7 +2049,7 @@ export const translations = {
     },
     cookie: {
       title: 'Wir Schätzen Ihre Privatsphäre',
-      message: 'Wir verwenden Cookies, einschließlich Drittanbieter-Cookies, für Funktionalität, statistische Analysen, besseres Browsing und personalisierte Werbung. Klicken Sie auf "Alle akzeptieren" oder "Cookie-Einstellungen" für Ihre Präferenzen. "Alle ablehnen" verwendet nur notwendige Cookies.',
+      message: 'Wir verwenden Cookies, einschließlich Drittanbieter-Cookies, für wesentliche Funktionen, optionale Analysen (mit Einwilligung) und ein besseres Surferlebnis. Die Marketing-Präferenz wird für künftige Werbemittel gespeichert und lädt derzeit keine Werbe-Pixel, sofern nicht separat aktiviert. Klicken Sie auf „Alle akzeptieren“, „Cookie-Einstellungen“ oder „Alle ablehnen“. Präferenzen können Sie jederzeit über Cookie settings in der Fußzeile ändern.',
       learnMore: 'Weitere Informationen',
       acceptAll: 'Alle akzeptieren',
       essentialOnly: 'Alle ablehnen',
@@ -2055,7 +2063,7 @@ export const translations = {
       optional: 'Optional',
       essentialDesc: 'Erforderlich für die Website.',
       analyticsDesc: 'Hilft uns, die Nutzung zu verstehen.',
-      marketingDesc: 'Für relevante Werbung.',
+      marketingDesc: 'Für künftige Werbemittel vorgesehen. Lädt derzeit keine Werbe-Pixel auf dieser Website.',
     },
     search: {
       title: 'Suchen',

@@ -152,6 +152,7 @@ export const translationsNl = {
     faq: 'FAQ',
     privacy: 'Privacy',
     cookies: 'Cookies',
+    cookieSettings: 'Cookie-instellingen',
     terms: 'Voorwaarden',
     allRightsReserved: 'Alle rechten voorbehouden.',
     brandDescription: BRAND_TAGLINE.nl,
@@ -206,8 +207,7 @@ export const translationsNl = {
   },
   cookie: {
     title: 'Wij Waarderen Je Privacy',
-    message:
-      'Wij gebruiken cookies, inclusief cookies van derden, voor functionele doeleinden, statistische analyses, een betere browse-ervaring en gepersonaliseerde advertenties. Klik op "Alle cookies accepteren" of "Cookie-instellingen" om je voorkeuren te beheren. Als je op "Alle cookies weigeren" klikt, gebruiken we alleen cookies die nodig zijn voor het correcte functioneren en de veiligheid van deze site.',
+    message: 'We gebruiken cookies, inclusief cookies van derden, voor essentiële functies, optionele analytics (met toestemming) en een betere browse-ervaring. Marketingvoorkeur wordt bewaard voor toekomstige advertentietools en laadt momenteel geen advertentiepixels tenzij apart ingeschakeld. Klik op "Alles accepteren", "Cookie-instellingen" of "Alles weigeren". U kunt voorkeuren altijd wijzigen via Cookie settings in de footer.',
     learnMore: 'Meer Informatie',
     acceptAll: 'Alle cookies accepteren',
     essentialOnly: 'Alle cookies weigeren',
@@ -221,7 +221,7 @@ export const translationsNl = {
     optional: 'Optioneel',
     essentialDesc: 'Noodzakelijk voor een correcte werking van de website. Kan niet worden uitgeschakeld.',
     analyticsDesc: 'Helpt ons begrijpen hoe bezoekers met onze website omgaan.',
-    marketingDesc: 'Wordt gebruikt om relevante advertenties en aanbiedingen te tonen.',
+    marketingDesc: 'Gereserveerd voor toekomstige advertentietools. Wordt momenteel niet gebruikt om advertentiepixels te laden.',
   },
   search: {
     title: 'Zoeken',

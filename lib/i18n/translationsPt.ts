@@ -151,6 +151,7 @@ export const translationsPt = {
     faq: 'FAQ',
     privacy: 'Privacidade',
     cookies: 'Cookies',
+    cookieSettings: 'Definições de cookies',
     terms: 'Termos',
     allRightsReserved: 'Todos os direitos reservados.',
     brandDescription: BRAND_TAGLINE.pt,
@@ -206,8 +207,7 @@ export const translationsPt = {
   },
   cookie: {
     title: 'Valorizamos a Sua Privacidade',
-    message:
-      'Utilizamos cookies, incluindo cookies de terceiros, para finalidades funcionais, analises estatisticas, melhor experiencia de navegacao e mensagens publicitarias personalizadas. Pode aceitar estes cookies clicando em "Aceitar todos os cookies", ou clicar em "Definicoes de cookies" para definir as suas preferencias. Se clicar em "Rejeitar todos os cookies", utilizaremos apenas os cookies necessarios para o funcionamento correto e para a seguranca deste site.',
+    message: 'Usamos cookies, incluindo de terceiros, para funções essenciais, analytics opcional (com consentimento) e uma melhor navegação. A preferência de marketing é registada para ferramentas publicitárias futuras e não carrega pixels publicitários neste site salvo ativação separada. Clique em "Aceitar tudo", "Definições de cookies" ou "Recusar tudo". Pode alterar preferências em Cookie settings no rodapé.',
     learnMore: 'Mais Informacoes',
     acceptAll: 'Aceitar todos os cookies',
     essentialOnly: 'Rejeitar todos os cookies',
@@ -221,7 +221,7 @@ export const translationsPt = {
     optional: 'Opcional',
     essentialDesc: 'Necessarios para o correto funcionamento do website. Nao podem ser desativados.',
     analyticsDesc: 'Ajudam-nos a compreender como os visitantes interagem com o nosso website.',
-    marketingDesc: 'Utilizados para apresentar anuncios e ofertas relevantes.',
+    marketingDesc: 'Reservado para futuras ferramentas publicitárias. Atualmente não carrega pixels publicitários neste site.',
   },
   search: {
     title: 'Pesquisar',

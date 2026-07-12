@@ -226,14 +226,82 @@ const nextConfig = {
         destination: `/collection-section/${base}.webp`,
         permanent: true,
       })),
-      // Social links → always coming soon page (/)
-      { source: '/facebook', destination: '/?utm_source=facebook&utm_medium=social&utm_campaign=bio', permanent: true },
-      { source: '/instgram', destination: '/?utm_source=instagram&utm_medium=social&utm_campaign=bio', permanent: true },
-      { source: '/instagram', destination: '/?utm_source=instagram&utm_medium=social&utm_campaign=bio', permanent: true },
-      { source: '/x', destination: '/?utm_source=x&utm_medium=social&utm_campaign=bio', permanent: true },
-      { source: '/pinterest', destination: '/?utm_source=pinterest&utm_medium=social&utm_campaign=bio', permanent: true },
-      { source: '/tiktok', destination: '/?utm_source=tiktok&utm_medium=social&utm_campaign=bio', permanent: true },
-      { source: '/snapchat', destination: '/?utm_source=snapchat&utm_medium=social&utm_campaign=bio', permanent: true },
+      // Social bio links → public homepage (`/home` when live; coming-soon `/` while gated)
+      ...(process.env.NEXT_PUBLIC_COMING_SOON_ONLY === 'true'
+        ? [
+            {
+              source: '/facebook',
+              destination: '/?utm_source=facebook&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/instgram',
+              destination: '/?utm_source=instagram&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/instagram',
+              destination: '/?utm_source=instagram&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/x',
+              destination: '/?utm_source=x&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/pinterest',
+              destination: '/?utm_source=pinterest&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/tiktok',
+              destination: '/?utm_source=tiktok&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/snapchat',
+              destination: '/?utm_source=snapchat&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+          ]
+        : [
+            {
+              source: '/facebook',
+              destination: '/home?utm_source=facebook&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/instgram',
+              destination: '/home?utm_source=instagram&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/instagram',
+              destination: '/home?utm_source=instagram&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/x',
+              destination: '/home?utm_source=x&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/pinterest',
+              destination: '/home?utm_source=pinterest&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/tiktok',
+              destination: '/home?utm_source=tiktok&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+            {
+              source: '/snapchat',
+              destination: '/home?utm_source=snapchat&utm_medium=social&utm_campaign=bio',
+              permanent: true,
+            },
+          ]),
     ]
   },
 }

@@ -10,7 +10,7 @@ import type { PdpDetailGroup } from '@/lib/products/pdpIntroRich'
 export const COVENT_GARDEN_ABAYA_SILHOUETTE_ITEMS = [
   A_LINE_ABAYA_SILHOUETTE_LINE,
   'Open-front design with optional concealed snap-button closure available upon request',
-  'Detachable statement sash finished with Bint Saeed’s signature gold-tone emblem pin for multiple styling options',
+  'Detachable statement sash finished with Bint Saeed signature gold-tone Monogram pin for multiple styling options',
   'Shoulder epaulettes with signature button detailing',
   'Wide cuffs with heritage woven trim',
   'Fully lined with a soft crepe lining for exceptional comfort and a refined finish',

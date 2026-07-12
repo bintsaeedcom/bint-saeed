@@ -1,5 +1,6 @@
 /**
- * Social link redirects always go to the coming soon page.
- * Change this if the coming soon page moves (e.g. to /coming-soon).
+ * Public marketing entry. While coming-soon-only is on, social bios land on `/`.
+ * After launch (`NEXT_PUBLIC_COMING_SOON_ONLY` not true), bios land on `/home`.
  */
-export const COMING_SOON_PATH = '/'
+export const COMING_SOON_PATH =
+  process.env.NEXT_PUBLIC_COMING_SOON_ONLY === 'true' ? '/' : '/home'

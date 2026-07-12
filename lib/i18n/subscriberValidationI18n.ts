@@ -83,5 +83,7 @@ const MESSAGES: Record<AppLocale, ValidationMessages> = {
 }
 
 export function subscriberValidationMessages(locale: AppLocale | string = 'en'): ValidationMessages {
-  return MESSAGES[locale as AppLocale] ?? MESSAGES.en
+  const pack = MESSAGES[locale as AppLocale]
+  if (!pack) throw new Error(`Missing subscriber validation messages for locale: ${locale}`)
+  return pack
 }

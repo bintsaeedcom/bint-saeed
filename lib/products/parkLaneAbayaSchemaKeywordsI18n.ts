@@ -73,7 +73,7 @@ const PARK_LANE_KEYWORDS_EN = [
   'A-line silhouette abaya',
   'integrated shoulder scarf',
   'signature Knotted Line buttons',
-  'Bint Saeed emblem cufflinks',
+  'Bint Saeed signature gold-tone Monogram cufflinks',
   'removable cufflinks abaya',
   'wide cuff abaya',
   'hidden side seam pockets',

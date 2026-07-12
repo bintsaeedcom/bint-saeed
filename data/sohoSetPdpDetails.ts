@@ -1,6 +1,7 @@
 import type { PdpDetailGroup } from '@/lib/products/pdpIntroRich'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getHouseCodesDetailGroup } from '@/lib/products/pdpHouseCodesGroupsI18n'
+import { PDP_COLOUR_TITLE } from '@/lib/products/pdpFeatureSectionTitles'
 
 const SHIRT_TITLE: Record<AppLocale, string> = {
   en: 'Shirt',
@@ -310,5 +311,9 @@ export function buildSohoSetDetailGroups(locale: AppLocale = 'en'): PdpDetailGro
       items: [...palazzo],
     },
     getHouseCodesDetailGroup('soho-set', locale),
+    {
+      title: PDP_COLOUR_TITLE[locale] ?? PDP_COLOUR_TITLE.en,
+      items: [...SOHO_SET_COLOUR],
+    },
   ]
 }

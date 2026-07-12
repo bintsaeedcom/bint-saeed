@@ -1,7 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { NecklaceEarringPdpContentPack } from '@/lib/accessories/necklaceEarringPdpContent'
-import { getJewelleryCareCopy } from '@/lib/accessories/jewelleryCareCopyI18n'
-import { JEWELLERY_CARE_FAQ_EARRING_EN } from '@/lib/accessories/jewelleryCareCopyI18n'
+import { getJewelleryCareCopy, getJewelleryCareFaqEarring } from '@/lib/accessories/jewelleryCareCopyI18n'
 import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 
 export const EARRING_IDS = [
@@ -75,7 +74,7 @@ type SharedUi = {
 const UI: Record<SecondaryLocale, SharedUi> = {
   it: {
     featuresTitle: 'Caratteristiche',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handAssembled:
       'Orecchini pendenti in pietra naturale assemblati a mano ad Abu Dhabi, Emirati Arabi Uniti',
     hematite: 'Perle di ematite sfaccettata placcata oro che catturano la luce',
@@ -103,7 +102,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
     drop4: 'Lunghezza del drop: 4 cm (1,57 in)',
     studPink: 'Perno in zirconia rosa taglio a pera',
     studClear: 'Perno in zirconia trasparente taglio a pera',
-    careFaq: JEWELLERY_CARE_FAQ_EARRING_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Che cos’è l’Al Ain Rosette?',
     qNecklace: 'Esiste una collana abbinata?',
     qStrand: 'È disponibile un Signature Strand abbinato?',
@@ -121,7 +120,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   es: {
     featuresTitle: 'Características',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handAssembled:
       'Pendientes largos de piedra natural ensamblados a mano en Abu Dabi, Emiratos Árabes Unidos',
     hematite: 'Cuentas de hematita facetada baño de oro que captan la luz',
@@ -149,7 +148,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
     drop4: 'Longitud de caída: 4 cm (1,57 in)',
     studPink: 'Pendiente en zirconia rosa talla pera',
     studClear: 'Pendiente en zirconia transparente talla pera',
-    careFaq: JEWELLERY_CARE_FAQ_EARRING_EN,
+    careFaq: '', // filled in buildPack
     qRosette: '¿Qué es la Al Ain Rosette?',
     qNecklace: '¿Hay un collar a juego?',
     qStrand: '¿Hay un Signature Strand a juego disponible?',
@@ -167,7 +166,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   ru: {
     featuresTitle: 'Особенности',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handAssembled:
       'Серьги-капли из натурального камня ручной сборки в Абу-Даби, Объединённые Арабские Эмираты',
     hematite: 'Бусины гранёного позолоченного гематита, ловящие свет',
@@ -195,7 +194,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
     drop4: 'Длина капли: 4 см (1,57 in)',
     studPink: 'Штифт из розового циркония грушевидной огранки',
     studClear: 'Штифт из прозрачного циркония грушевидной огранки',
-    careFaq: JEWELLERY_CARE_FAQ_EARRING_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Что такое Al Ain Rosette?',
     qNecklace: 'Есть ли подходящее ожерелье?',
     qStrand: 'Есть ли подходящий Signature Strand?',
@@ -213,7 +212,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   zh: {
     featuresTitle: '特点',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handAssembled: '于阿联酋阿布扎比手工组装的天然石垂坠耳环',
     hematite: '捕捉光线的镀金切面赤铁矿珠',
     rosette: 'Signature Al Ain Rosette，天然红玉髓手工雕刻（约 15 毫米）',
@@ -236,7 +235,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
     drop4: '垂长：4 厘米（1.57 英寸）',
     studPink: '梨形粉锆石耳钉',
     studClear: '梨形透明锆石耳钉',
-    careFaq: JEWELLERY_CARE_FAQ_EARRING_EN,
+    careFaq: '', // filled in buildPack
     qRosette: '什么是 Al Ain Rosette？',
     qNecklace: '是否有配套项链？',
     qStrand: '是否有配套 Signature Strand？',
@@ -251,7 +250,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   de: {
     featuresTitle: 'Merkmale',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handAssembled:
       'Handmontierte Tropfenohrringe aus Naturstein in Abu Dhabi, Vereinigte Arabische Emirate',
     hematite: 'Facettiertes vergoldetes Hämatit, das das Licht einfängt',
@@ -279,7 +278,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
     drop4: 'Tropfenlänge: 4 cm (1,57 in)',
     studPink: 'Birnenförmiger rosa Zirkonia-Stecker',
     studClear: 'Birnenförmiger klarer Zirkonia-Stecker',
-    careFaq: JEWELLERY_CARE_FAQ_EARRING_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Was ist die Al Ain Rosette?',
     qNecklace: 'Gibt es eine passende Halskette?',
     qStrand: 'Gibt es einen passenden Signature Strand?',
@@ -297,7 +296,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   nl: {
     featuresTitle: 'Kenmerken',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handAssembled:
       'Handgemonteerde natuursteen druppeloorbellen in Abu Dhabi, Verenigde Arabische Emiraten',
     hematite: 'Gefacetteerd verguld hematiet dat het licht vangt',
@@ -325,7 +324,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
     drop4: 'Druppellengte: 4 cm (1,57 in)',
     studPink: 'Peer-cut roze zirconia stud',
     studClear: 'Peer-cut heldere zirconia stud',
-    careFaq: JEWELLERY_CARE_FAQ_EARRING_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Wat is de Al Ain Rosette?',
     qNecklace: 'Is er een bijpassende ketting?',
     qStrand: 'Is er een bijpassende Signature Strand beschikbaar?',
@@ -343,7 +342,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   pt: {
     featuresTitle: 'Características',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handAssembled:
       'Brincos pendentes em pedra natural montados à mão em Abu Dhabi, Emirados Árabes Unidos',
     hematite: 'Contas de hematite facetada banho de ouro que captam a luz',
@@ -371,7 +370,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
     drop4: 'Comprimento de queda: 4 cm (1,57 in)',
     studPink: 'Pino em zirconia rosa corte pêra',
     studClear: 'Pino em zirconia transparente corte pêra',
-    careFaq: JEWELLERY_CARE_FAQ_EARRING_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'O que é a Al Ain Rosette?',
     qNecklace: 'Existe um colar a condizer?',
     qStrand: 'Existe um Signature Strand a condizer disponível?',
@@ -389,7 +388,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   id: {
     featuresTitle: 'Fitur',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handAssembled:
       'Anting drop batu alam dirakit tangan di Abu Dhabi, Uni Emirat Arab',
     hematite: 'Manik hematit berfaset berlapis emas yang menangkap cahaya',
@@ -417,7 +416,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
     drop4: 'Panjang drop: 4 cm (1,57 in)',
     studPink: 'Stud zirconia merah muda potongan pir',
     studClear: 'Stud zirconia bening potongan pir',
-    careFaq: JEWELLERY_CARE_FAQ_EARRING_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Apa itu Al Ain Rosette?',
     qNecklace: 'Apakah ada kalung yang serasi?',
     qStrand: 'Apakah Signature Strand yang serasi tersedia?',
@@ -435,7 +434,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
   },
   ms: {
     featuresTitle: 'Ciri-ciri',
-    houseCode: 'House Code: Al Ain Rosette',
+    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
     handAssembled:
       'Anting drop batu semula jadi dipasang tangan di Abu Dhabi, Emiriah Arab Bersatu',
     hematite: 'Manik hematit berfaset bersalut emas yang menangkap cahaya',
@@ -463,7 +462,7 @@ const UI: Record<SecondaryLocale, SharedUi> = {
     drop4: 'Panjang drop: 4 cm (1,57 in)',
     studPink: 'Stud zirconia merah jambu potongan pir',
     studClear: 'Stud zirconia jernih potongan pir',
-    careFaq: JEWELLERY_CARE_FAQ_EARRING_EN,
+    careFaq: '', // filled in buildPack
     qRosette: 'Apakah Al Ain Rosette?',
     qNecklace: 'Adakah rantai leher yang sepadan?',
     qStrand: 'Adakah Signature Strand yang sepadan tersedia?',
@@ -1224,7 +1223,7 @@ function buildPack(
       },
       {
         question: ui.qCare,
-        answer: ui.careFaq,
+        answer: getJewelleryCareFaqEarring(locale),
       },
     ],
   }

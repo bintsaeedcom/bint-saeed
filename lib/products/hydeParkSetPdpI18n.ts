@@ -2,7 +2,6 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductPdpContent } from '@/data/productPdpContent'
 import { HYDE_PARK_SET_INTRO_EN } from '@/data/hydeParkSetPdpIntro'
 import {
-  HYDE_PARK_SET_COLOUR,
   buildHydeParkSetDetailGroups,
   hydeParkSetCare,
   hydeParkSetComposition,
@@ -435,7 +434,7 @@ export function buildHydeParkSetPdpContent(locale: AppLocale = 'en'): ProductPdp
   const intro = buildHydeParkSetPdpIntro(locale)
   return {
     ...intro,
-    productDetails: [...HYDE_PARK_SET_COLOUR],
+    productDetails: [],
     productDetailGroups: buildHydeParkSetDetailGroups(locale),
     compositionDetails: hydeParkSetComposition(locale),
     fitAndSizeDetails: hydeParkSetFitAndSize(locale),

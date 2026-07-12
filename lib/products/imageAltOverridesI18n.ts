@@ -37,7 +37,7 @@ const ALT_ENTRIES: AltEntry[] = [
   {
     filename: 'bint-saeed-mayfair-kaftan-marroon-front.webp',
     alts: altLoc(
-      "Mayfair Kaftan in Deep Maroon crepe chiffon, front view. Luxury women's occasion kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, featuring a V-neckline, flowing silhouette, attached scarf detail and signature gold-tone emblem.",
+      "Mayfair Kaftan in Deep Maroon crepe chiffon, front view. Luxury women's occasion kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, featuring a V-neckline, flowing silhouette, attached scarf detail and Bint Saeed signature gold-tone Monogram.",
       'قفطان Mayfair بشيفون كريب عنابي غامق، منظر أمامي. قفطان نسائي فاخر للمناسبات من Bint Saeed أبوظبي، الإمارات العربية المتحدة، بخط عنق V، وقصّة انسيابية، ووشاح مرفق، وشعار ذهبي مميز.',
       'Kaftan Mayfair en mousseline crêpe bordeaux profond, vue de face. Kaftan de cérémonie féminin de luxe par Bint Saeed Abou Dabi, Émirats arabes unis, avec encolure en V, silhouette fluide, écharpe intégrée et emblème doré signature.',
       'Kaftan Mayfair in chiffon crepe bordeaux profondo, vista frontale. Kaftan da cerimonia femminile di lusso di Bint Saeed Abu Dhabi, Emirati Arabi Uniti, con scollatura a V, silhouette fluida, sciarpa integrata ed emblema dorato signature.',
@@ -82,7 +82,7 @@ const ALT_ENTRIES: AltEntry[] = [
   {
     filename: 'bint-saeed-nothing-hill-kaftan-peach-pink-front.webp',
     alts: altLoc(
-      "Nothing Hill Kaftan in Peach Pink chiffon, front view. Luxury women's occasion kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, featuring a bateau neckline, flowing silhouette and signature gold-tone emblem.",
+      "Nothing Hill Kaftan in Peach Pink chiffon, front view. Luxury women's occasion kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, featuring a bateau neckline, flowing silhouette and Bint Saeed signature gold-tone Monogram.",
       'قفطان Nothing Hill بشيفون وردي خوخي، منظر أمامي. قفطان نسائي فاخر للمناسبات من Bint Saeed أبوظبي، الإمارات العربية المتحدة، بخط عنق بوتيه، وقصّة انسيابية، وشعار ذهبي مميز.',
       'Kaftan Nothing Hill en mousseline rose pêche, vue de face. Kaftan de cérémonie féminin de luxe par Bint Saeed Abou Dabi, Émirats arabes unis, avec encolure bateau, silhouette fluide et emblème doré signature.',
       'Kaftan Nothing Hill in chiffon rosa pesca, vista frontale. Kaftan da cerimonia femminile di lusso di Bint Saeed Abu Dhabi, Emirati Arabi Uniti, con scollatura a barca, silhouette fluida ed emblema dorato signature.',
@@ -127,7 +127,7 @@ const ALT_ENTRIES: AltEntry[] = [
   {
     filename: 'bint-saeed-nothing-hill-kaftan-gold-tone-signature-emblem-close-up.webp',
     alts: altLoc(
-      'Nothing Hill Kaftan in Peach Pink chiffon, close-up view. Designer chiffon kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, showcasing soft peach pink chiffon fabric, delicate layered texture and the signature gold-tone Bint Saeed emblem pin.',
+      'Nothing Hill Kaftan in Peach Pink chiffon, close-up view. Designer chiffon kaftan by Bint Saeed Abu Dhabi, United Arab Emirates, showcasing soft peach pink chiffon fabric, delicate layered texture and the Bint Saeed signature gold-tone Monogram pin.',
       'قفطان Nothing Hill بشيفون وردي خوخي، منظر مقرّب. قفطان شيفون مصمّم من Bint Saeed أبوظبي، الإمارات العربية المتحدة، يبرز نسيج الشيفون الوردي الخوخي الناعم والملمس الطبقي الرقيق ودبوس الشعار الذهبي المميز من Bint Saeed.',
       'Kaftan Nothing Hill en mousseline rose pêche, vue rapprochée. Kaftan en mousseline de créateur par Bint Saeed Abou Dabi, Émirats arabes unis, mettant en valeur le tissu rose pêche doux, la texture superposée délicate et l’épingle emblème dorée signature Bint Saeed.',
       'Kaftan Nothing Hill in chiffon rosa pesca, vista ravvicinata. Kaftan in chiffon designer di Bint Saeed Abu Dhabi, Emirati Arabi Uniti, che mette in risalto il morbido chiffon rosa pesca, la delicata texture stratificata e la spilla emblema dorata signature Bint Saeed.',

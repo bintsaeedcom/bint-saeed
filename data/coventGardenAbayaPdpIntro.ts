@@ -52,7 +52,7 @@ export const COVENT_GARDEN_ABAYA_INTRO_EN: PdpIntroParagraph[] = [
     {
       type: 'text',
       value:
-        'Completing the design is a detachable statement sash, finished with Al Talli trim and Bint Saeed’s signature gold-tone emblem pin. Worn draped naturally from the shoulder or styled diagonally across the body, it transforms the silhouette with a sense of ceremony, distinction, and timeless elegance.',
+        'Completing the design is a detachable statement sash, finished with Al Talli trim and Bint Saeed signature gold-tone Monogram pin. Worn draped naturally from the shoulder or styled diagonally across the body, it transforms the silhouette with a sense of ceremony, distinction, and timeless elegance.',
     },
   ],
   [

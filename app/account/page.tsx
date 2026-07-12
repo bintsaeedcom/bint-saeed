@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import { motion } from 'framer-motion'
 import { FiArrowRight, FiLock, FiLogOut, FiUser, FiUserPlus } from 'react-icons/fi'
 import toast from 'react-hot-toast'
@@ -66,7 +67,7 @@ export default function AccountPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-brand-pageCanvas pt-28 pb-24 flex items-center justify-center">
+      <div className={`min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} pb-24 flex items-center justify-center`}>
         <p className="font-montserrat text-sm text-brand-clayRed/50">
           {isRTL ? 'جاري التحميل…' : 'Loading…'}
         </p>
@@ -76,7 +77,7 @@ export default function AccountPage() {
 
   if (user) {
     return (
-      <div className="min-h-screen bg-brand-pageCanvas pt-28 pb-24">
+      <div className={`min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} pb-24`}>
         <div className="container mx-auto max-w-2xl px-6">
           <AppPageWayfinding
             rtl={isRTL}
@@ -138,7 +139,7 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-pageCanvas pt-28 pb-24">
+    <div className={`min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} pb-24`}>
       <div className="container mx-auto max-w-2xl px-6">
         <AppPageWayfinding
           rtl={isRTL}

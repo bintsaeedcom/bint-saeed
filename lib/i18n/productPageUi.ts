@@ -410,5 +410,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
 }
 
 export function productPageUi(locale: AppLocale): ProductPageUi {
-  return PRODUCT_PAGE_UI[locale] ?? PRODUCT_PAGE_UI.en
+  const pack = PRODUCT_PAGE_UI[locale]
+  if (!pack) throw new Error(`Missing product page UI for locale: ${locale}`)
+  return pack
 }

@@ -24,7 +24,7 @@ const FACTS_EN: ProductSchemaFacts = {
     'Complimentary personalisation available on Bint Saeed’s signature hidden inner label with a name, date, or meaningful message.',
   lining: 'Fully lined with a soft crepe lining for exceptional comfort and a refined finish.',
   trim:
-    'Wide cuffs finished with Al Talli woven trim recognised by UNESCO as Intangible Cultural Heritage; shoulder epaulettes with signature gold-tone Knotted Line buttons; detachable statement sash with Al Talli trim and gold-tone emblem pin.',
+    'Wide cuffs finished with Al Talli woven trim recognised by UNESCO as Intangible Cultural Heritage; shoulder epaulettes with signature gold-tone Knotted Line buttons; detachable statement sash with Al Talli trim and gold-tone Monogram pin.',
   styling:
     'Pairs beautifully with the Covent Garden Dress and Hampstead Dress. Created for women in the GCC, UAE, and international wardrobes who value Emirati heritage reimagined through contemporary design.',
   stylingDetail:

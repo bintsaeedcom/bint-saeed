@@ -692,7 +692,7 @@ export const accessories: Accessory[] = [
     name: 'Al Ain Oasis Lapis Lazuli Strand',
     nameAr: 'ستراند واحة العين — لازورد',
     category: 'signature-strands',
-    price: 599,
+    price: 899,
     description:
       'Rich lapis lazuli with golden pyrite flecks; an elevated jewel tone for evening abayas.',
     descriptionAr:

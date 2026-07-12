@@ -19,6 +19,13 @@ export const SITE_HEADER_OFFSET = 'pt-[8.75rem] sm:pt-[9rem] 2xl:pt-[11rem]'
 
 export const SITE_HEADER_STICKY_TOP = 'top-[8.75rem] sm:top-[9rem] 2xl:top-[11rem]'
 
+/**
+ * Breathing room below LayoutWrapper’s main header offset.
+ * Use on content pages (FAQ, careers, cart, PDPs, etc.).
+ * Do NOT also add pt-24/pt-28 — that double-clears the fixed header.
+ */
+export const SITE_CONTENT_TOP_PAD = 'pt-4 sm:pt-6 md:pt-8'
+
 /** One banner height for every About sub-page — visible, never clipped */
 export const EDITORIAL_HERO_HEIGHT = 'h-[min(46dvh,420px)] min-h-[360px] max-h-[420px]'
 

@@ -1,6 +1,13 @@
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
+import type { AppLocale } from '@/lib/i18n/routing'
 import * as policyAr from '@/lib/legal/policyContentAr'
 import * as policyMs from '@/lib/legal/policyContentMs'
+import {
+  buildLocalizedAnalyticsLine,
+  getLocalizedPrivacyContent,
+  getLocalizedTermsContent,
+  type EuZhLocale,
+} from '@/lib/legal/policyContentLocales'
 import {
   LANGUAGE_CLAUSE_BODY_EN,
   LANGUAGE_CLAUSE_BODY_ID,
@@ -10,7 +17,7 @@ import {
   LANGUAGE_CLAUSE_TITLE_ID,
 } from '@/lib/legal/languageAndTranslationClause'
 
-export type PolicyLang = 'en' | 'id' | 'ms' | 'ar'
+export type PolicyLang = AppLocale
 
 export type PolicySection = {
   title: string
@@ -43,7 +50,7 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
     {
       title: '1. Privacy Notice and Legal Framework',
       body: [
-        'This policy applies to personal data processed by Bint Saeed through this website, associated customer journeys, and operational communications. It is designed to align with UAE Federal Decree-Law No. 45 of 2021 and GDPR principles where applicable.',
+        'This policy applies to personal data processed by Bint Saeed through this website, related customer journeys, and operational communications. It reflects UAE Federal Decree-Law No. 45 of 2021 and, where applicable, GDPR principles.',
       ],
     },
     {
@@ -108,13 +115,13 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
       body: [
         'We use selected third-party providers to run commerce, communications, infrastructure, and analytics functions. Depending on configuration, this may include payment processing, hosting/CDN, operational email, and optional analytics/behavior tools.',
         analyticsLine,
-        'Payment processing: Card/payment data is processed by secure payment providers (including Stripe), not stored in full by Bint Saeed.',
+        'Payment processing: Card/payment data is processed by secure payment providers (including Stripe, PayPal, and Mollie where offered), not stored in full by Bint Saeed.',
       ],
     },
     {
       title: '7. Security and Organisational Controls',
       body: [
-        'We implement technical and organisational safeguards appropriate to the nature of data we process, including access controls, secure transport, and operational controls for data handling.',
+        'We apply technical and organisational measures suited to the data we process, including access controls, secure transport, and operational controls for data handling.',
       ],
     },
     {
@@ -123,7 +130,7 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
         'Subject to applicable law, you may request access, correction, deletion, restriction, portability, or objection to certain processing.',
       ],
       list: [
-        'You may manage non-essential cookie consent through site controls.',
+        'You may manage non-essential cookie consent through the Cookie settings control in the website footer.',
         'Identity verification may be required before actioning certain rights requests.',
         'We respond within applicable legal timelines.',
       ],
@@ -143,7 +150,7 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
     {
       title: '11. International Transfers',
       body: [
-        'Where personal data is processed across jurisdictions, we apply appropriate safeguards and contractual controls consistent with applicable UAE and GDPR transfer expectations.',
+        'Where personal data is processed across jurisdictions, we apply contractual and organisational controls consistent with applicable UAE and GDPR transfer requirements.',
       ],
     },
     {
@@ -240,7 +247,7 @@ function privacyIdSections(analyticsLine: string): PolicySection[] {
       body: [
         'Kami menggunakan penyedia pihak ketiga terpilih untuk menjalankan fungsi perdagangan, komunikasi, infrastruktur, dan analitik. Bergantung pada konfigurasi, ini dapat mencakup pemrosesan pembayaran, hosting/CDN, email operasional, serta alat analitik/perilaku opsional.',
         analyticsLine,
-        'Pemrosesan pembayaran: Data kartu/pembayaran diproses oleh penyedia pembayaran aman (termasuk Stripe), dan tidak disimpan secara penuh oleh Bint Saeed.',
+        'Pemrosesan pembayaran: Data kartu/pembayaran diproses oleh penyedia pembayaran aman (termasuk Stripe, PayPal, dan Mollie jika ditawarkan), dan tidak disimpan secara penuh oleh Bint Saeed.',
       ],
     },
     {
@@ -255,7 +262,7 @@ function privacyIdSections(analyticsLine: string): PolicySection[] {
         'Tunduk pada hukum yang berlaku, Anda dapat meminta akses, koreksi, penghapusan, pembatasan, portabilitas, atau keberatan terhadap pemrosesan tertentu.',
       ],
       list: [
-        'Anda dapat mengelola persetujuan cookie non-esensial melalui kontrol situs.',
+        'Anda dapat mengelola persetujuan cookie non-esensial melalui kontrol Cookie settings di footer situs.',
         'Verifikasi identitas mungkin diperlukan sebelum menindaklanjuti permintaan hak tertentu.',
         'Kami merespons dalam jangka waktu hukum yang berlaku.',
       ],
@@ -303,12 +310,12 @@ const PRIVACY_EN: Omit<PolicyContent, 'sections'> & { sections?: PolicySection[]
   breadcrumb: 'Privacy Policy',
   homeBreadcrumb: 'Home',
   heroLabel: 'Legal',
-  lastUpdated: 'Last updated: May 2026',
+  lastUpdated: 'Last updated: July 2026',
   intro:
-    'This Privacy Policy explains how Bint Saeed collects, uses, safeguards, and discloses personal data in connection with this website and related services.',
+    'This Privacy Policy explains how Bint Saeed collects, uses, protects, and discloses personal data in connection with this website and related services.',
   summaryTitle: 'Privacy Notice',
   summaryBody: [
-    'We operate within the applicable legal and regulatory framework of the United Arab Emirates while maintaining GDPR-compliant consent handling for relevant users, including users in the European Union.',
+    'We operate under the applicable legal framework of the United Arab Emirates and apply GDPR consent standards for relevant users, including users in the European Union.',
   ],
   sectionList: [
     '1. Privacy Notice and Legal Framework',
@@ -333,7 +340,7 @@ const PRIVACY_ID: Omit<PolicyContent, 'sections'> = {
   breadcrumb: 'Kebijakan Privasi',
   homeBreadcrumb: 'Beranda',
   heroLabel: 'Hukum',
-  lastUpdated: 'Terakhir diperbarui: Mei 2026',
+  lastUpdated: 'Terakhir diperbarui: Juli 2026',
   intro:
     'Kebijakan Privasi ini menjelaskan bagaimana Bint Saeed mengumpulkan, menggunakan, melindungi, dan mengungkapkan data pribadi sehubungan dengan situs web ini dan layanan terkait.',
   summaryTitle: 'Pemberitahuan Privasi',
@@ -382,7 +389,7 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
       'We aim to present product details, availability, and pricing accurately. However, occasional errors may occur. Product display images are illustrative and may vary slightly due to lighting, screen calibration, and handcrafted production characteristics.',
     ],
     list: [
-      'All prices are displayed in AED unless otherwise stated.',
+      'Prices are shown in the currency you select on the website. Fixed retail amounts are set per currency and are not live foreign-exchange conversions. AED is the default presentment currency for UAE browsing unless you select another supported currency.',
       'Applicable VAT is handled in accordance with UAE tax requirements.',
       'We may update product assortment and pricing at any time before order confirmation.',
       'Custom and personalised pieces are subject to specific lead times and final-sale conditions.',
@@ -394,7 +401,7 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
       'Submission of an order request does not constitute final acceptance by Bint Saeed. An order is accepted when we issue an order confirmation and payment authorization is successfully completed.',
     ],
     list: [
-      'Payments are processed through secure payment providers, including Stripe.',
+      'Payments are processed through secure payment providers, including Stripe (Embedded Checkout), PayPal, and Mollie where offered for your destination. Full card details are handled by these processors and are not stored in full by Bint Saeed.',
       'We reserve the right to decline, cancel, or limit orders for lawful reasons.',
       'Fraud prevention, identity checks, and payment verification may be required.',
       'Where a payment error or pricing error occurs, we may cancel and refund the affected order.',
@@ -422,7 +429,7 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
       'Return and repair handling is governed by our Shipment & Return Policy. All clients should review the full policy before ordering.',
     ],
     list: [
-      'Items are made to order and cancellations/returns are limited once production has started.',
+      'Many pieces are made to order; cancellations and returns are limited once production has started. Ready-to-ship ready-to-wear and accessories follow the Shipment & Return Policy, including final-sale rules that apply to earrings and any other items marked as such on the product page.',
       'Defect or material non-conformity claims must be submitted with evidence within the stated window.',
       'Exchanges require all original tags, seals and security labels intact; removal or attempted removal renders a request ineligible.',
       'Remedies may include repair or replacement first, and refund where required by applicable law.',
@@ -463,9 +470,9 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
   {
     title: '11. Disclaimers and Limitation of Liability',
     body: [
-      'To the fullest extent permitted by applicable law, the website and services are provided on an "as is" and "as available" basis without warranties of uninterrupted operation.',
-      'Bint Saeed shall not be liable for indirect, incidental, special, consequential, or punitive damages arising from use of the website, delay in delivery, third-party service interruption, or other events beyond reasonable control. Liability is limited to the amount paid for the relevant order, except where non-excludable liability applies by law.',
-      'To the fullest extent permitted by law, Bint Saeed is not liable for injury, illness, allergic reaction, accidental harm, death, property damage, loss of earnings, emotional distress, or any other loss resulting from misuse, improper handling, unauthorised alteration, or use of products contrary to care and safety guidance.',
+      'To the extent permitted by applicable law, the website and services are provided on an "as is" and "as available" basis, without a warranty of uninterrupted operation.',
+      'Bint Saeed is not liable for indirect, incidental, special, consequential, or punitive damages arising from use of the website, delivery delay, third-party service interruption, or other events beyond reasonable control. Except where liability cannot be limited by law, our liability is limited to the amount paid for the relevant order.',
+      'Except where liability cannot be limited by law, Bint Saeed is not responsible for loss or harm arising from misuse of products, failure to follow care guidance, unauthorised alteration, or improper handling.',
     ],
   },
   {
@@ -518,7 +525,7 @@ const TERMS_ID_SECTIONS: PolicySection[] = [
       'Kami berupaya menampilkan detail produk, ketersediaan, dan harga secara akurat. Namun, kesalahan sesekali dapat terjadi. Gambar produk bersifat ilustratif dan dapat sedikit berbeda karena pencahayaan, kalibrasi layar, serta karakteristik produksi buatan tangan.',
     ],
     list: [
-      'Seluruh harga ditampilkan dalam AED kecuali dinyatakan lain.',
+      'Harga ditampilkan dalam mata uang yang Anda pilih di situs. Jumlah eceran tetap ditetapkan per mata uang dan bukan konversi valuta asing secara langsung. AED adalah mata uang presentasi default untuk penjelajahan di UAE kecuali Anda memilih mata uang lain yang didukung.',
       'PPN yang berlaku ditangani sesuai persyaratan perpajakan UEA.',
       'Kami dapat memperbarui kurasi produk dan harga kapan saja sebelum konfirmasi pesanan.',
       'Karya custom dan personalisasi tunduk pada lead time tertentu serta ketentuan final sale.',
@@ -530,7 +537,7 @@ const TERMS_ID_SECTIONS: PolicySection[] = [
       'Pengajuan permintaan pesanan bukan merupakan penerimaan akhir oleh Bint Saeed. Pesanan diterima ketika kami mengeluarkan konfirmasi pesanan dan otorisasi pembayaran berhasil diselesaikan.',
     ],
     list: [
-      'Pembayaran diproses melalui penyedia pembayaran aman, termasuk Stripe.',
+      'Pembayaran diproses melalui penyedia pembayaran aman, termasuk Stripe (Embedded Checkout), PayPal, dan Mollie jika ditawarkan untuk destinasi Anda. Detail kartu penuh ditangani oleh pemroses tersebut dan tidak disimpan secara lengkap oleh Bint Saeed.',
       'Kami berhak menolak, membatalkan, atau membatasi pesanan atas alasan yang sah.',
       'Pencegahan penipuan, pemeriksaan identitas, dan verifikasi pembayaran dapat diperlukan.',
       'Apabila terjadi kesalahan pembayaran atau harga, kami dapat membatalkan dan mengembalikan dana pesanan terkait.',
@@ -555,7 +562,7 @@ const TERMS_ID_SECTIONS: PolicySection[] = [
       'Penanganan pengembalian dan perbaikan diatur oleh Kebijakan Pengiriman & Pengembalian kami. Seluruh klien disarankan meninjau kebijakan lengkap sebelum memesan.',
     ],
     list: [
-      'Produk dibuat berdasarkan pesanan dan pembatalan/pengembalian terbatas setelah produksi dimulai.',
+      'Banyak produk dibuat berdasarkan pesanan; pembatalan/pengembalian terbatas setelah produksi dimulai. Ready-to-wear siap kirim dan aksesoris mengikuti Kebijakan Pengiriman & Pengembalian, termasuk aturan final sale untuk anting dan item lain yang ditandai demikian di halaman produk.',
       'Klaim cacat atau ketidaksesuaian material harus diajukan beserta bukti dalam jangka waktu yang ditetapkan.',
       'Remedi dapat mencakup perbaikan atau penggantian terlebih dahulu, dan pengembalian dana apabila diwajibkan oleh hukum yang berlaku.',
     ],
@@ -595,9 +602,9 @@ const TERMS_ID_SECTIONS: PolicySection[] = [
   {
     title: '11. Penafian dan Batasan Tanggung Jawab',
     body: [
-      'Sejauh diizinkan oleh hukum yang berlaku, situs web dan layanan disediakan secara "apa adanya" dan "sebagaimana tersedia" tanpa jaminan operasi tanpa gangguan.',
-      'Bint Saeed tidak bertanggung jawab atas kerugian tidak langsung, insidental, khusus, konsekuensial, atau hukuman yang timbul dari penggunaan situs web, keterlambatan pengiriman, gangguan layanan pihak ketiga, atau peristiwa di luar kendali wajar. Tanggung jawab dibatasi pada jumlah yang dibayarkan untuk pesanan terkait, kecuali apabila tanggung jawab tidak dapat dikecualikan menurut hukum.',
-      'Sejauh diizinkan oleh hukum, Bint Saeed tidak bertanggung jawab atas cedera, penyakit, reaksi alergi, bahaya tak disengaja, kematian, kerusakan properti, hilangnya penghasilan, tekanan emosional, atau kerugian lain akibat penyalahgunaan, penanganan tidak tepat, alterasi tanpa izin, atau penggunaan produk yang bertentangan dengan panduan perawatan dan keselamatan.',
+      'Sejauh diizinkan hukum yang berlaku, situs web dan layanan disediakan secara "apa adanya" dan "sebagaimana tersedia", tanpa jaminan operasi tanpa gangguan.',
+      'Bint Saeed tidak bertanggung jawab atas kerugian tidak langsung, insidental, khusus, konsekuensial, atau hukuman yang timbul dari penggunaan situs web, keterlambatan pengiriman, gangguan layanan pihak ketiga, atau peristiwa di luar kendali wajar. Kecuali jika tanggung jawab tidak dapat dibatasi oleh hukum, tanggung jawab kami terbatas pada jumlah yang dibayarkan untuk pesanan terkait.',
+      'Kecuali jika tanggung jawab tidak dapat dibatasi oleh hukum, Bint Saeed tidak bertanggung jawab atas kerugian atau kerusakan yang timbul dari penyalahgunaan produk, kegagalan mengikuti panduan perawatan, perubahan tanpa izin, atau penanganan yang tidak tepat.',
     ],
   },
   {
@@ -631,12 +638,12 @@ const TERMS_EN: Omit<PolicyContent, 'sections'> = {
   breadcrumb: 'Terms & Conditions',
   homeBreadcrumb: 'Home',
   heroLabel: 'Legal',
-  lastUpdated: 'Last updated: May 2026',
+  lastUpdated: 'Last updated: July 2026',
   intro:
-    'These Terms govern access to and use of the Bint Saeed website, products, and related services. They are drafted for clarity, commercial certainty, and compliance with applicable UAE legal requirements.',
+    'These Terms govern access to and use of the Bint Saeed website, products, and related services under applicable UAE law.',
   summaryTitle: 'Summary Notice',
   summaryBody: [
-    'By using this website or placing an order, you agree to these Terms. If you do not agree, please do not use the site. The original language of this website and of these Terms is English; the English text is controlling, and these Terms apply according to the meaning of the English text. Translations (including those prepared with AI tools and automation) are provided for convenience only and do not create separate rights.',
+    'By using this website or placing an order, you agree to these Terms. If you do not agree, please do not use the site. The original language of this website and of these Terms is English. The English text controls, and these Terms apply according to the meaning of the English text. Translations are for convenience only and do not create separate rights.',
   ],
   sectionList: [
     '1. Scope and Acceptance',
@@ -662,9 +669,9 @@ const TERMS_ID: Omit<PolicyContent, 'sections'> = {
   breadcrumb: 'Syarat & Ketentuan',
   homeBreadcrumb: 'Beranda',
   heroLabel: 'Hukum',
-  lastUpdated: 'Terakhir diperbarui: Mei 2026',
+  lastUpdated: 'Terakhir diperbarui: Juli 2026',
   intro:
-    'Syarat ini mengatur akses dan penggunaan situs web, produk, dan layanan terkait Bint Saeed. Disusun untuk kejelasan, kepastian komersial, dan kepatuhan terhadap persyaratan hukum UEA yang berlaku.',
+    'Syarat ini mengatur akses dan penggunaan situs web, produk, dan layanan terkait Bint Saeed menurut hukum UEA yang berlaku.',
   summaryTitle: 'Ringkasan',
   summaryBody: [
     'Dengan menggunakan situs web ini atau melakukan pemesanan, Anda menyetujui Syarat ini. Apabila tidak setuju, mohon tidak menggunakan situs. Bahasa asli situs web dan Syarat ini adalah bahasa Inggris; teks bahasa Inggris bersifat mengikat. Terjemahan disediakan hanya untuk kenyamanan.',
@@ -720,7 +727,7 @@ function shipmentEnSections(): PolicySection[] {
           body: [
             'Bint Saeed will not accept an exchange or return where tags, seals or security labels have been removed, cut, damaged or altered, or where photographs submitted in support of a request indicate that removal or tampering has been attempted.',
             'No exchange is processed until approved goods have been physically received and inspected at our atelier.',
-            'Where an approved exchange or return requires goods to be shipped back to Bint Saeed, a flat return shipping fee applies: AED 35 for returns originating within the United Arab Emirates, and EUR 35 (or the clean equivalent in the selected currency) for returns originating internationally. This fee is waived where the return arises from a verified fault of the House — including a manufacturing defect or material non-conformity — or where otherwise required by applicable law.',
+            'Where an approved exchange or return requires goods to be shipped back to Bint Saeed, a flat return shipping fee applies: AED 35 for returns originating within the United Arab Emirates, and EUR 35 (or the clean equivalent in the selected currency) for returns originating internationally. This fee is waived where the return arises from a verified fault of the House, including a manufacturing defect or material non-conformity, or where otherwise required by applicable law.',
             'Personalised pieces, custom specifications, altered garments, and items produced to a client’s specific requirements are not eligible for exchange except where a verified manufacturing defect or material non-conformity exists.',
             'For reasons of health, hygiene and personal safety, earrings are final sale and cannot be exchanged or refunded, except where a verified manufacturing defect or material non-conformity exists.',
           ],
@@ -774,7 +781,7 @@ function shipmentEnSections(): PolicySection[] {
         'Minor variations inherent to handcrafted production.',
         'Colour differences resulting from screen settings or device displays.',
         'Damage resulting from improper care, misuse, alteration, or normal wear.',
-        'Removal, cutting, damage or alteration of original tags, seals or security labels — including where photographs indicate that removal or tampering has been attempted.',
+        'Removal, cutting, damage or alteration of original tags, seals or security labels, including where photographs indicate that removal or tampering has been attempted.',
         'Earrings, which are final sale for health, hygiene and personal safety reasons (except where a verified manufacturing defect or material non-conformity exists).',
       ],
     },
@@ -920,7 +927,7 @@ function shipmentIdSections(): PolicySection[] {
           body: [
             'Bint Saeed tidak akan menerima penukaran atau pengembalian apabila label, segel, atau label keamanan telah dilepas, dipotong, rusak, atau diubah, atau apabila foto yang diajukan menunjukkan adanya upaya pelepasan atau gangguan.',
             'Tidak ada penukaran yang diproses hingga barang yang disetujui diterima secara fisik dan diperiksa di atelier kami.',
-            'Jika penukaran atau pengembalian yang disetujui mengharuskan barang dikirim kembali ke Bint Saeed, berlaku biaya pengiriman pengembalian tetap: AED 35 untuk pengembalian dari dalam Uni Emirat Arab, dan EUR 35 (atau setara bersih dalam mata uang yang dipilih) untuk pengembalian internasional. Biaya ini dibebaskan apabila pengembalian timbul dari kesalahan terverifikasi House — termasuk cacat produksi atau ketidaksesuaian material — atau jika diwajibkan hukum yang berlaku.',
+            'Jika penukaran atau pengembalian yang disetujui mengharuskan barang dikirim kembali ke Bint Saeed, berlaku biaya pengiriman pengembalian tetap: AED 35 untuk pengembalian dari dalam Uni Emirat Arab, dan EUR 35 (atau setara bersih dalam mata uang yang dipilih) untuk pengembalian internasional. Biaya ini dibebaskan apabila pengembalian timbul dari kesalahan terverifikasi House, termasuk cacat produksi atau ketidaksesuaian material, atau jika diwajibkan hukum yang berlaku.',
             'Karya personalisasi, spesifikasi custom, garment yang diubah, dan barang yang diproduksi sesuai kebutuhan spesifik klien tidak memenuhi syarat penukaran kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material.',
           ],
           list: [],
@@ -1183,6 +1190,9 @@ export function buildAnalyticsLine(
   if (lang === 'ar') {
     return policyAr.buildAnalyticsLineAr(trackerTitles)
   }
+  if (lang === 'fr' || lang === 'de' || lang === 'it' || lang === 'es' || lang === 'nl' || lang === 'pt' || lang === 'ru' || lang === 'zh') {
+    return buildLocalizedAnalyticsLine(lang, trackerTitles)
+  }
   return trackerTitles.length > 0
     ? `Analytics services (environment-based): ${trackerTitles.join(', ')}`
     : 'No optional analytics trackers are currently enabled in this environment.'
@@ -1202,7 +1212,10 @@ export function getPrivacyPolicyContent(
   if (lang === 'ar') {
     return { ...policyAr.PRIVACY_AR, sections: policyAr.privacyArSections(line) }
   }
-  const meta = resolvePolicyMeta(lang, PRIVACY_EN, PRIVACY_ID, AR_BREADCRUMBS.privacy)
+  if (lang === 'fr' || lang === 'de' || lang === 'it' || lang === 'es' || lang === 'nl' || lang === 'pt' || lang === 'ru' || lang === 'zh') {
+    return getLocalizedPrivacyContent(lang as EuZhLocale, line)
+  }
+  const meta = resolvePolicyMeta(lang === 'id' ? 'id' : 'en', PRIVACY_EN, PRIVACY_ID, AR_BREADCRUMBS.privacy)
   const sections = lang === 'id' ? privacyIdSections(line) : privacyEnSections(line)
   return { ...meta, sections }
 }
@@ -1212,7 +1225,10 @@ export function getTermsContent(lang: PolicyLang): PolicyContent {
   if (lang === 'ar') {
     return { ...policyAr.TERMS_AR, sections: policyAr.termsArSections() }
   }
-  const meta = resolvePolicyMeta(lang, TERMS_EN, TERMS_ID, AR_BREADCRUMBS.terms)
+  if (lang === 'fr' || lang === 'de' || lang === 'it' || lang === 'es' || lang === 'nl' || lang === 'pt' || lang === 'ru' || lang === 'zh') {
+    return getLocalizedTermsContent(lang as EuZhLocale)
+  }
+  const meta = resolvePolicyMeta(lang === 'id' ? 'id' : 'en', TERMS_EN, TERMS_ID, AR_BREADCRUMBS.terms)
   const sections = lang === 'id' ? TERMS_ID_SECTIONS : TERMS_EN_SECTIONS
   return { ...meta, sections }
 }

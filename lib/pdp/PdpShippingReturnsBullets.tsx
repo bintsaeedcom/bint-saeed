@@ -2,122 +2,120 @@
 
 import LocaleLink from '@/components/LocaleLink'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import type { AppLocale } from '@/lib/i18n/routing'
 import {
   formatAmountForCurrency,
-  getInternationalReturnShippingFee,
-  getInternationalShippingFee,
   getUaeFreeShippingThreshold,
-  getUaeReturnShippingFee,
-  getUaeShippingFee,
   getWorldwideFreeShippingThreshold,
 } from '@/lib/pricing'
-import { PDP_BULLET_ITEM, PDP_BULLET_LIST } from '@/lib/pdp/pdpTypography'
+import { PDP_COPY_RELAXED } from '@/lib/pdp/pdpTypography'
 
-type Lang = 'en' | 'ar'
+/**
+ * PDP Shipping & Returns panel — brief, buy-friendly copy only.
+ * Full conditions live on /shipment-return-policy (Hermès / Loro-style restraint).
+ */
 
-type ShippingAmounts = {
-  uaeThreshold: string
-  worldwideThreshold: string
-  uaeFee: string
-  intlFee: string
-  uaeReturnFee: string
-  intlReturnFee: string
+type Copy = {
+  body: (uae: string, worldwide: string) => string
+  policyLabel: string
 }
 
-const COPY: Record<
-  Lang,
-  {
-    bullets: (a: ShippingAmounts) => string[]
-    earringHygiene: string
-    policyLead: string
-    policyLabel: string
-    policyTail: string
-  }
-> = {
+const COPY: Record<AppLocale, Copy> = {
   en: {
-    bullets: (a) => [
-      `Complimentary UAE shipping on orders above ${a.uaeThreshold}.`,
-      `Complimentary worldwide shipping on orders above ${a.worldwideThreshold}.`,
-      `Below these thresholds: UAE shipping ${a.uaeFee}; international shipping ${a.intlFee}.`,
-      'International orders are fulfilled with DHL Express; UAE orders are operated by Jeebly.',
-      `Approved returns: ${a.uaeReturnFee} within the UAE, or ${a.intlReturnFee} internationally (waived for a verified House fault).`,
-      'Customs duties and import charges at destination remain the recipient’s responsibility.',
-      'In-stock items dispatch within 1–3 business days.',
-      'Made-to-order pieces dispatch according to the timeline shown on the product page.',
-      'As many Bint Saeed pieces are produced on demand, refunds are not available for change of mind.',
-      'Eligible items may be exchanged within 14 days of delivery, subject to approval and return conditions.',
-      'Personalised, discounted, and custom-made pieces are not eligible for exchange or return.',
-    ],
-    earringHygiene:
-      'For reasons of health, hygiene and personal safety, earrings are final sale and cannot be exchanged or refunded, except where a verified manufacturing defect or material non-conformity exists.',
-    policyLead: 'For full details, please review our ',
+    body: (uae, worldwide) =>
+      `Complimentary UAE shipping on orders above ${uae}. Complimentary worldwide shipping on orders above ${worldwide}.`,
     policyLabel: 'Shipment & Return Policy',
-    policyTail: '.',
   },
   ar: {
-    bullets: (a) => [
-      `شحن مجاني داخل الإمارات للطلبات التي تتجاوز ${a.uaeThreshold}.`,
-      `شحن مجاني عالمياً للطلبات التي تتجاوز ${a.worldwideThreshold}.`,
-      `دون هذه العتبات: الشحن داخل الإمارات ${a.uaeFee}؛ والشحن الدولي ${a.intlFee}.`,
-      'تُنفَّذ الطلبات الدولية عبر DHL Express؛ وتُشغَّل شحنات الإمارات عبر Jeebly.',
-      `للإرجاع المعتمد: ${a.uaeReturnFee} داخل الإمارات، أو ${a.intlReturnFee} دولياً (تُعفى عند ثبوت خطأ من الدار).`,
-      'تبقى الرسوم الجمركية ورسوم الاستيراد في بلد الوجهة على مسؤولية المستلم.',
-      'القطع المتوفرة جاهزةً للشحن تُرسَل خلال 1–3 أيام عمل.',
-      'القطع المصنوعة حسب الطلب تُرسَل وفق الجدول الزمني الموضّح على صفحة المنتج.',
-      'بما أن كثيراً من قطع Bint Saeed تُنتَج عند الطلب، لا تُتاح استردادات الأموال في حال تغيير الرأي.',
-      'قد يُقبل استبدال القطع المؤهّلة خلال 14 يوماً من التسليم، وفق الموافقة وشروط الإرجاع.',
-      'القطع المخصّصة والمخفّضة والمصنوعة حسب الطلب غير مؤهّلة للاستبدال أو الإرجاع.',
-    ],
-    earringHygiene:
-      'لأسباب تتعلق بالصحة والنظافة والسلامة الشخصية، تُعد الأقراط بيعاً نهائياً ولا يمكن استبدالها أو استرداد قيمتها، إلا في حال وجود عيب تصنيع مُثبت أو عدم مطابقة مادية.',
-    policyLead: 'للتفاصيل الكاملة، راجعي ',
+    body: (uae, worldwide) =>
+      `شحن مجاني داخل الإمارات للطلبات التي تتجاوز ${uae}. شحن مجاني عالمياً للطلبات التي تتجاوز ${worldwide}.`,
     policyLabel: 'سياسة الشحن والإرجاع',
-    policyTail: '.',
+  },
+  fr: {
+    body: (uae, worldwide) =>
+      `Livraison offerte aux Émirats pour les commandes au-dessus de ${uae}. Livraison mondiale offerte au-dessus de ${worldwide}.`,
+    policyLabel: 'Politique d’expédition et de retour',
+  },
+  de: {
+    body: (uae, worldwide) =>
+      `Kostenloser UAE-Versand ab ${uae}. Kostenloser weltweiter Versand ab ${worldwide}.`,
+    policyLabel: 'Versand- und Rückgaberecht',
+  },
+  it: {
+    body: (uae, worldwide) =>
+      `Spedizione gratuita negli EAU oltre ${uae}. Spedizione mondiale gratuita oltre ${worldwide}.`,
+    policyLabel: 'Politica di spedizione e reso',
+  },
+  es: {
+    body: (uae, worldwide) =>
+      `Envío gratuito en EAU en pedidos superiores a ${uae}. Envío mundial gratuito a partir de ${worldwide}.`,
+    policyLabel: 'Política de envío y devolución',
+  },
+  nl: {
+    body: (uae, worldwide) =>
+      `Gratis VAE-verzending vanaf ${uae}. Gratis wereldwijde verzending vanaf ${worldwide}.`,
+    policyLabel: 'Verzend- en retourbeleid',
+  },
+  pt: {
+    body: (uae, worldwide) =>
+      `Envio gratuito nos EAU acima de ${uae}. Envio mundial gratuito acima de ${worldwide}.`,
+    policyLabel: 'Política de envio e devolução',
+  },
+  ru: {
+    body: (uae, worldwide) =>
+      `Бесплатная доставка по ОАЭ при заказе от ${uae}. Бесплатная международная доставка от ${worldwide}.`,
+    policyLabel: 'Политика доставки и возврата',
+  },
+  zh: {
+    body: (uae, worldwide) =>
+      `阿联酋订单满 ${uae} 免运费。全球订单满 ${worldwide} 免运费。`,
+    policyLabel: '配送与退换政策',
+  },
+  id: {
+    body: (uae, worldwide) =>
+      `Pengiriman gratis di UAE untuk pesanan di atas ${uae}. Pengiriman gratis ke seluruh dunia untuk pesanan di atas ${worldwide}.`,
+    policyLabel: 'Kebijakan Pengiriman & Pengembalian',
+  },
+  ms: {
+    body: (uae, worldwide) =>
+      `Penghantaran percuma di UAE untuk pesanan melebihi ${uae}. Penghantaran percuma seluruh dunia untuk pesanan melebihi ${worldwide}.`,
+    policyLabel: 'Dasar Penghantaran & Pemulangan',
   },
 }
 
 export function PdpShippingReturnsBullets({
   isRTL,
-  productKind = 'default',
+  productKind: _productKind = 'default',
 }: {
   isRTL: boolean
-  /** Earrings: hygiene final-sale notice on the PDP shipping panel. */
+  /** Kept for call-site compatibility; PDP no longer lists product-specific return caveats. */
   productKind?: 'default' | 'earrings'
 }) {
+  void _productKind
   const { currency } = useCurrency()
-  const code = currency.code
-  const copy = COPY[isRTL ? 'ar' : 'en']
-  const amounts: ShippingAmounts = {
-    uaeThreshold: formatAmountForCurrency(getUaeFreeShippingThreshold(code), code),
-    worldwideThreshold: formatAmountForCurrency(getWorldwideFreeShippingThreshold(code), code),
-    uaeFee: formatAmountForCurrency(getUaeShippingFee(code), code),
-    intlFee: formatAmountForCurrency(getInternationalShippingFee(code), code),
-    uaeReturnFee: formatAmountForCurrency(getUaeReturnShippingFee(code), code),
-    intlReturnFee: formatAmountForCurrency(getInternationalReturnShippingFee(code), code),
+  const { language } = useLanguage()
+  const locale = language as AppLocale
+  const copy = COPY[locale]
+  if (!copy) {
+    throw new Error(`Missing PDP shipping copy for locale: ${locale}`)
   }
-  const bullets =
-    productKind === 'earrings'
-      ? [...copy.bullets(amounts), copy.earringHygiene]
-      : copy.bullets(amounts)
+  const code = currency.code
+  const uae = formatAmountForCurrency(getUaeFreeShippingThreshold(code), code)
+  const worldwide = formatAmountForCurrency(getWorldwideFreeShippingThreshold(code), code)
 
   return (
-    <ul className={PDP_BULLET_LIST}>
-      {bullets.map((text) => (
-        <li key={text} className={PDP_BULLET_ITEM}>
-          {text}
-        </li>
-      ))}
-      <li className={PDP_BULLET_ITEM}>
-        {copy.policyLead}
+    <div className={`space-y-3 ${isRTL ? 'text-right' : 'text-left'}`}>
+      <p className={PDP_COPY_RELAXED}>{copy.body(uae, worldwide)}</p>
+      <p className={PDP_COPY_RELAXED}>
         <LocaleLink
           href="/shipment-return-policy"
-          className="underline hover:text-brand-dustyBlue"
+          className="underline underline-offset-4 decoration-brand-darkRed/35 transition-colors hover:text-brand-dustyBlue hover:decoration-brand-dustyBlue"
           data-cursor-hover
         >
           {copy.policyLabel}
         </LocaleLink>
-        {copy.policyTail}
-      </li>
-    </ul>
+      </p>
+    </div>
   )
 }

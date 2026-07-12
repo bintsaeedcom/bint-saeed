@@ -4,7 +4,7 @@ export const PARK_LANE_ABAYA_FAQ_EN: ProductFaqItem[] = [
   {
     question: 'What makes the Park Lane Abaya different from other abayas?',
     answer:
-      'The Park Lane Abaya was designed to stand apart from traditional expectations of an abaya. Rather than relying on embellishment, it achieves its elegance through exceptional tailoring, a graceful A-line silhouette and an integrated shoulder scarf that creates beautiful movement as you walk. The structured shoulders, signature gold-tone Knotted Line buttons and Bint Saeed emblem cufflinks introduce subtle architectural details, resulting in a silhouette that feels equally at home as a contemporary designer outer layer or as a timeless abaya.',
+      'The Park Lane Abaya was designed to stand apart from traditional expectations of an abaya. Rather than relying on embellishment, it achieves its elegance through exceptional tailoring, a graceful A-line silhouette and an integrated shoulder scarf that creates beautiful movement as you walk. The structured shoulders, signature gold-tone Knotted Line buttons and Bint Saeed signature gold-tone Monogram cufflinks introduce subtle architectural details, resulting in a silhouette that feels equally at home as a contemporary designer outer layer or as a timeless abaya.',
   },
   {
     question: 'Where can I wear the Park Lane Abaya?',
@@ -29,6 +29,6 @@ export const PARK_LANE_ABAYA_FAQ_EN: ProductFaqItem[] = [
   {
     question: 'How should I care for the Park Lane Abaya?',
     answer:
-      'To preserve the elegant drape and refined finish of your Park Lane Abaya, gently machine wash at 30°C. Before washing or sending the abaya for professional dry cleaning, always remove the signature gold-tone Bint Saeed emblem cufflinks. This helps protect both the hardware and the garment, ensuring they remain beautiful for years to come.',
+      'To preserve the elegant drape and refined finish of your Park Lane Abaya, gently machine wash at 30°C. Before washing or sending the abaya for professional dry cleaning, always remove the Bint Saeed signature gold-tone Monogram cufflinks. This helps protect both the hardware and the garment, ensuring they remain beautiful for years to come.',
   },
 ]

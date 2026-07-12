@@ -4,6 +4,7 @@ import { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
@@ -163,7 +164,7 @@ export default function ShopClient() {
   return (
     <div className={`min-h-screen overflow-x-hidden bg-brand-pageCanvas text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
       <header className="section-full overflow-hidden border-b border-black/5 bg-stone-50">
-        <div className="mx-auto max-w-[1400px] px-6 pb-10 pt-24 md:px-10 md:pb-14 md:pt-28 lg:px-14">
+        <div className={`mx-auto max-w-[1400px] px-6 pb-10 ${SITE_CONTENT_TOP_PAD} md:px-10 md:pb-14 lg:px-14`}>
           <div className={isRTL ? 'text-right' : ''}>
             <AppPageWayfinding
               rtl={isRTL}

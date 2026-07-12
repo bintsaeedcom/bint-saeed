@@ -584,7 +584,7 @@ export const products: Product[] = [
     name: 'Mayfair Kaftan',
     price: 975,
     description:
-      'Crepe-chiffon V-neck kaftan with fluid drape, inner dress, scarf detail, and signature gold emblem pin.',
+      'Crepe-chiffon V-neck kaftan with fluid drape, inner dress, scarf detail, and signature gold-tone Monogram pin.',
     fabric: 'Crepe Chiffon (100% Polyester), Inner Dress: 100% Polyester',
     measurements: 'Maximum garment length: 165 cm.',
     images: mayfairKaftanGallery(),

@@ -128,6 +128,16 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  // Public launch: root and /coming-soon serve the webshop home (not the teaser shell).
+  if (!COMING_SOON_ONLY) {
+    const { pathname: launchInner, locale: launchLocale } = stripLocaleFromPathname(pathname)
+    if (launchInner === '/' || launchInner === '/coming-soon') {
+      const url = request.nextUrl.clone()
+      url.pathname = launchLocale === 'en' ? '/home' : `/${launchLocale}/home`
+      return NextResponse.redirect(url, 308)
+    }
+  }
+
   if (COMING_SOON_ONLY && !isPathAllowedDuringComingSoonOnly(pathname)) {
     const url = request.nextUrl.clone()
     url.pathname = '/'

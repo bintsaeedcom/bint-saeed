@@ -15,6 +15,7 @@ import { splitLegalEmail } from '@/lib/legal/splitLegalEmail'
 import EnglishPolicyVersionNotice from '@/components/legal/EnglishPolicyVersionNotice'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { policySectionH2Plain } from '@/lib/ui/ctaClasses'
+import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 
 const SECTION_LIST = [
   '1. Opening Statement',
@@ -52,7 +53,7 @@ export default function ShipmentReturnPolicyPage() {
   }
 
   return (
-    <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 pt-4 sm:pt-6 md:pt-8 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 ${SITE_CONTENT_TOP_PAD} ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="relative mx-auto max-w-4xl px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, x: isRTL ? 20 : -20 }}

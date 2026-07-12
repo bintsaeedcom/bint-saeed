@@ -12,7 +12,8 @@ export function resolveAbayaSchemaPack(
   packs: Record<AppLocale, AbayaSchemaLocalePack>,
   locale: AppLocale,
 ): ProductSchemaFacts {
-  const pack = packs[locale] ?? packs.en
+  const pack = packs[locale]
+  if (!pack) throw new Error(`Missing abaya schema pack for locale: ${locale}`)
   return {
     madeIn: LOCALE_GEO[locale]?.madeIn ?? LOCALE_GEO.en.madeIn,
     ...pack.facts,
@@ -24,7 +25,9 @@ export function resolveAbayaFaq(
   packs: Record<AppLocale, AbayaSchemaLocalePack>,
   locale: AppLocale,
 ): ProductFaqItem[] {
-  return (packs[locale] ?? packs.en).faq
+  const pack = packs[locale]
+  if (!pack) throw new Error(`Missing abaya FAQ pack for locale: ${locale}`)
+  return pack.faq
 }
 
 /** Shared audience + per-product extension (extension should start with `, `). */
@@ -33,6 +36,7 @@ export function buildAbayaSchemaAudience(
   extension: Record<AppLocale, string>,
 ): string {
   const base = getSharedAbayaSchemaAudience(locale)
-  const ext = extension[locale] ?? extension.en
+  const ext = extension[locale]
+  if (ext === undefined) throw new Error(`Missing abaya audience extension for locale: ${locale}`)
   return `${base.slice(0, -1)}${ext}.`
 }
