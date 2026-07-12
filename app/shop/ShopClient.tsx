@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
-import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
+import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
@@ -189,7 +189,7 @@ export default function ShopClient() {
         </div>
       </header>
 
-      <div className="sticky top-[50px] z-30 border-b border-brand-stone/30 bg-brand-pageCanvas md:top-16">
+      <div className={`sticky ${SITE_HEADER_STICKY_TOP} z-30 border-b border-brand-stone/30 bg-brand-pageCanvas`}>
         <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-6 py-4 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
           <div className="flex w-full min-w-0 items-center justify-between gap-3 md:w-auto md:justify-start lg:min-w-0 lg:flex-1">
             <button

@@ -2,22 +2,15 @@ import { Resend } from 'resend'
 import type { StoredOrder } from '@/lib/orders/types'
 import { formatAmountForCurrency, normalizeCurrencyCode } from '@/lib/pricing'
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
+import {
+  EMAIL_BRAND,
+  emailCtaButtonHtml,
+  emailDocumentHtml,
+  escapeEmailHtml,
+} from '@/lib/email/brandEmailChrome'
 
-const BRAND_INK = '#1a0210'
-const BRAND_CANVAS = '#faf9f7'
-const BRAND_CARD = '#faf8f5'
-const BRAND_BORDER = '#e8e4df'
-const BRAND_MUTED = '#8a7a7a'
-const BRAND_BODY = '#5c4a4a'
-const BRAND_ACCENT = '#6a8090'
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-}
+const FONT_SERIF = "Georgia,'Times New Roman',serif"
+const FONT_SANS = "'Montserrat',Helvetica,Arial,sans-serif"
 
 function siteOrigin(): string {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim()
@@ -43,28 +36,29 @@ function formatAddress(address?: Record<string, unknown>): string {
   ]
     .map((p) => (typeof p === 'string' ? p.trim() : ''))
     .filter(Boolean)
-  return parts.map(escapeHtml).join('<br/>')
+  return parts.map(escapeEmailHtml).join('<br/>')
 }
 
 function orderConfirmationHtml(order: StoredOrder): string {
   const origin = siteOrigin()
+  const { ink, body, muted, accent, border, stone, signature } = EMAIL_BRAND
   const greeting = order.customerName
-    ? `Dear ${escapeHtml(order.customerName.split(' ')[0])},`
+    ? `Dear ${escapeEmailHtml(order.customerName.split(' ')[0])},`
     : 'Dear guest,'
 
   const itemRows = order.lines
     .map((line) => {
       const lineTotal = money(line.unitPrice * line.quantity, line.currency || order.currency)
-      const detail = line.description ? escapeHtml(line.description) : ''
+      const detail = line.description ? escapeEmailHtml(line.description) : ''
       return `
         <tr>
-          <td style="padding:14px 0;border-bottom:1px solid ${BRAND_BORDER};vertical-align:top;">
-            <p style="margin:0;font-size:14px;color:${BRAND_INK};font-family:Georgia,'Times New Roman',serif;">${escapeHtml(line.name)}</p>
-            ${detail ? `<p style="margin:4px 0 0;font-size:12px;line-height:1.5;color:${BRAND_MUTED};font-family:'Montserrat',Helvetica,Arial,sans-serif;">${detail}</p>` : ''}
-            <p style="margin:4px 0 0;font-size:12px;color:${BRAND_MUTED};font-family:'Montserrat',Helvetica,Arial,sans-serif;">Qty: ${line.quantity}</p>
+          <td style="padding:16px 0;border-bottom:1px solid ${border};vertical-align:top;">
+            <p style="margin:0;font-size:15px;line-height:1.35;color:${ink};font-family:${FONT_SERIF};">${escapeEmailHtml(line.name)}</p>
+            ${detail ? `<p style="margin:6px 0 0;font-size:12px;line-height:1.55;color:${muted};font-family:${FONT_SANS};">${detail}</p>` : ''}
+            <p style="margin:6px 0 0;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:${muted};font-family:${FONT_SANS};">Qty ${line.quantity}</p>
           </td>
-          <td style="padding:14px 0;border-bottom:1px solid ${BRAND_BORDER};text-align:right;vertical-align:top;white-space:nowrap;">
-            <p style="margin:0;font-size:14px;color:${BRAND_INK};font-family:'Montserrat',Helvetica,Arial,sans-serif;">${lineTotal}</p>
+          <td style="padding:16px 0;border-bottom:1px solid ${border};text-align:right;vertical-align:top;white-space:nowrap;padding-left:16px;">
+            <p style="margin:0;font-size:14px;color:${ink};font-family:${FONT_SANS};">${lineTotal}</p>
           </td>
         </tr>`
     })
@@ -73,81 +67,73 @@ function orderConfirmationHtml(order: StoredOrder): string {
   const shippingBlock = formatAddress(order.shippingAddress)
   const totalsRow = (label: string, value: string, bold = false) => `
     <tr>
-      <td style="padding:4px 0;font-size:${bold ? '15px' : '13px'};color:${bold ? BRAND_INK : BRAND_BODY};font-family:'Montserrat',Helvetica,Arial,sans-serif;${bold ? 'font-weight:600;' : ''}">${label}</td>
-      <td style="padding:4px 0;text-align:right;font-size:${bold ? '15px' : '13px'};color:${bold ? BRAND_INK : BRAND_BODY};font-family:'Montserrat',Helvetica,Arial,sans-serif;${bold ? 'font-weight:600;' : ''}">${value}</td>
+      <td style="padding:6px 0;font-size:${bold ? '15px' : '13px'};color:${bold ? ink : body};font-family:${FONT_SANS};${bold ? 'font-weight:600;' : ''}">${label}</td>
+      <td style="padding:6px 0;text-align:right;font-size:${bold ? '15px' : '13px'};color:${bold ? ink : body};font-family:${FONT_SANS};${bold ? 'font-weight:600;' : ''}">${value}</td>
     </tr>`
 
-  return `<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
-<body style="margin:0;background:${BRAND_CANVAS};font-family:Georgia,'Times New Roman',serif;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:${BRAND_CANVAS};padding:32px 16px;">
-    <tr>
-      <td align="center">
-        <table role="presentation" width="100%" style="max-width:560px;background:${BRAND_CARD};border:1px solid ${BRAND_BORDER};">
-          <tr>
-            <td style="padding:40px 36px 20px;text-align:center;">
-              <p style="margin:0;font-size:11px;letter-spacing:0.35em;text-transform:uppercase;color:${BRAND_ACCENT};">Bint Saeed</p>
-              <h1 style="margin:16px 0 0;font-size:26px;font-weight:400;color:${BRAND_INK};">Your order is confirmed</h1>
-              <p style="margin:12px 0 0;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:${BRAND_MUTED};font-family:'Montserrat',Helvetica,Arial,sans-serif;">Order ${escapeHtml(order.id)}</p>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:8px 36px 8px;font-size:15px;line-height:1.65;color:${BRAND_BODY};font-family:'Montserrat',Helvetica,Arial,sans-serif;">
-              <p style="margin:0 0 14px;">${greeting}</p>
-              <p style="margin:0 0 8px;">Thank you for your order. Each piece is prepared with great care by our atelier in Abu Dhabi. You will receive a further note when your order is on its way.</p>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:16px 36px 0;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">${itemRows}</table>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:18px 36px 8px;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                ${totalsRow('Subtotal', money(order.amountSubtotal, order.currency))}
-                ${totalsRow('Shipping', order.amountShipping > 0 ? money(order.amountShipping, order.currency) : 'Complimentary')}
-                ${totalsRow('Total', money(order.amountTotal, order.currency), true)}
-              </table>
-            </td>
-          </tr>
-          ${
-            shippingBlock
-              ? `<tr>
-            <td style="padding:20px 36px 0;">
-              <p style="margin:0 0 6px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:${BRAND_ACCENT};font-family:'Montserrat',Helvetica,Arial,sans-serif;">Shipping to</p>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:${BRAND_BODY};font-family:'Montserrat',Helvetica,Arial,sans-serif;">${shippingBlock}</p>
-            </td>
-          </tr>`
-              : ''
-          }
-          <tr>
-            <td style="padding:28px 36px 8px;text-align:center;">
-              <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto;">
+  const bodyHtml = `
+              <p style="margin:0 0 14px;color:${body};">${greeting}</p>
+              <p style="margin:0 0 28px;color:${body};">Thank you for your order. Each piece is prepared with great care by our atelier in Abu Dhabi. You will receive a further note when your order is on its way.</p>
+
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:0 0 8px;">
                 <tr>
-                  <td style="border-radius:2px;background:${BRAND_INK};">
-                    <a href="${origin}/shop" target="_blank" rel="noopener"
-                      style="display:inline-block;padding:16px 36px;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:${BRAND_CARD};text-decoration:none;font-family:'Montserrat',Helvetica,Arial,sans-serif;">
-                      Continue shopping
-                    </a>
+                  <td style="padding:0 0 10px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:${accent};font-family:${FONT_SANS};">
+                    Your pieces
                   </td>
                 </tr>
               </table>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:24px 36px 32px;border-top:1px solid #f0ebe6;font-size:11px;line-height:1.7;color:${BRAND_MUTED};text-align:center;font-family:'Montserrat',Helvetica,Arial,sans-serif;">
-              Questions about your order? Write to <a href="mailto:${OFFICIAL_EMAILS.orders}" style="color:${BRAND_ACCENT};text-decoration:none;">${OFFICIAL_EMAILS.orders}</a><br/>
-              Personalised or made-to-measure pieces are non-returnable.
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">${itemRows}</table>
+
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:22px 0 0;">
+                <tr>
+                  <td style="padding:18px 18px 14px;background:${stone};">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                      ${totalsRow('Subtotal', money(order.amountSubtotal, order.currency))}
+                      ${totalsRow('Shipping', order.amountShipping > 0 ? money(order.amountShipping, order.currency) : 'Complimentary')}
+                      <tr><td colspan="2" style="padding:10px 0 0;border-top:1px solid ${border};font-size:0;line-height:0;">&nbsp;</td></tr>
+                      ${totalsRow('Total', money(order.amountTotal, order.currency), true)}
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              ${
+                shippingBlock
+                  ? `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:24px 0 0;">
+                <tr>
+                  <td>
+                    <p style="margin:0 0 8px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:${accent};font-family:${FONT_SANS};">Shipping to</p>
+                    <p style="margin:0;font-size:13px;line-height:1.7;color:${body};font-family:${FONT_SANS};">${shippingBlock}</p>
+                  </td>
+                </tr>
+              </table>`
+                  : ''
+              }
+
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:32px 0 0;">
+                <tr>
+                  <td align="center">
+                    ${emailCtaButtonHtml(`${origin}/shop`, 'Continue shopping')}
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:28px 0 0;font-size:12px;line-height:1.7;color:${muted};text-align:center;font-family:${FONT_SANS};">
+                Questions about your order? Write to
+                <a href="mailto:${OFFICIAL_EMAILS.orders}" style="color:${signature};text-decoration:none;">${OFFICIAL_EMAILS.orders}</a>
+              </p>`
+
+  return emailDocumentHtml({
+    origin,
+    title: `Order confirmed — ${order.id}`,
+    preheader: `Your Bint Saeed order ${order.id} is confirmed.`,
+    eyebrow: 'Abu Dhabi',
+    heading: 'Your order is confirmed',
+    subheading: `Order ${escapeEmailHtml(order.id)}`,
+    bodyHtml,
+    noteHtml: 'Personalised or made-to-measure pieces are non-returnable.',
+    footerHtml: undefined,
+  })
 }
 
 export type SendOrderConfirmationResult =

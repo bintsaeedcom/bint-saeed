@@ -14,17 +14,25 @@ export function editorialHeroAlign(rtl: boolean): string {
   return rtl ? 'text-right' : 'text-left'
 }
 
-/** Fixed header clearance when hero is full-bleed under the site header */
-export const SITE_HEADER_OFFSET = 'pt-[8.75rem] sm:pt-[9rem] 2xl:pt-[11rem]'
-
-export const SITE_HEADER_STICKY_TOP = 'top-[8.75rem] sm:top-[9rem] 2xl:top-[11rem]'
+/**
+ * Clears the fixed site header on `<main>` (and flush heroes).
+ * Uses live `--site-header-height` from Header (ResizeObserver) so breadcrumbs sit
+ * consistently under the real bar — never guess with rem stacks that drift per breakpoint.
+ * Fallback matches `:root` in globals.css (safe before hydrate; never clip crumbs).
+ */
+export const SITE_HEADER_OFFSET = 'pt-[var(--site-header-height,6.75rem)]'
 
 /**
- * Breathing room below LayoutWrapper’s main header offset.
- * Use on content pages (FAQ, careers, cart, PDPs, etc.).
- * Do NOT also add pt-24/pt-28 — that double-clears the fixed header.
+ * Sticky bars (About topic nav, FAQ TOC, shop/accessories toolbars) sit flush under the live header.
  */
-export const SITE_CONTENT_TOP_PAD = 'pt-4 sm:pt-6 md:pt-8'
+export const SITE_HEADER_STICKY_TOP = 'top-[var(--site-header-height,6.75rem)]'
+
+/**
+ * Breathing room *below* LayoutWrapper’s header clearance — NOT a second header clear.
+ * Use on content pages (shop, FAQ, cart, PDPs, wayfinding bars, etc.).
+ * Do NOT also add pt-24/pt-28/pt-[8.75rem] — that double-clears and creates jumpy white space.
+ */
+export const SITE_CONTENT_TOP_PAD = 'pt-2 sm:pt-2.5 md:pt-3'
 
 /** One banner height for every About sub-page — visible, never clipped */
 export const EDITORIAL_HERO_HEIGHT = 'h-[min(46dvh,420px)] min-h-[360px] max-h-[420px]'

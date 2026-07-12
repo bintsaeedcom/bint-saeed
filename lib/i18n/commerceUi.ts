@@ -146,6 +146,10 @@ type CommerceUiAccount = {
   signIn: string
   signInDesc: string
   registerDesc: string
+  forgotPassword: string
+  forgotPasswordDesc: string
+  resetPassword: string
+  resetPasswordDesc: string
 }
 
 type CommerceUiNotFound = {
@@ -367,6 +371,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: 'Sign In',
       signInDesc: 'Sign in to access your orders and saved details.',
       registerDesc: 'Create your account for a faster and more personal checkout.',
+      forgotPassword: 'Forgot password',
+      forgotPasswordDesc: 'Enter your email and we will send you a link to reset your password.',
+      resetPassword: 'Reset password',
+      resetPasswordDesc: 'Choose a new password for your Bint Saeed account.',
     },
     notFound: {
       title: 'Page Not Found',
@@ -559,6 +567,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: 'تسجيل الدخول',
       signInDesc: 'سجّلي الدخول للوصول إلى طلباتك وبياناتك المحفوظة.',
       registerDesc: 'أنشئي حسابك لتجربة أسرع وأكثر تخصيصاً عند الدفع.',
+      forgotPassword: 'نسيت كلمة المرور',
+      forgotPasswordDesc: 'أدخلي بريدك وسنرسل لك رابطاً لإعادة تعيين كلمة المرور.',
+      resetPassword: 'إعادة تعيين كلمة المرور',
+      resetPasswordDesc: 'اختاري كلمة مرور جديدة لحسابك في بنت سعيد.',
     },
     notFound: {
       title: 'الصفحة غير موجودة',
@@ -751,6 +763,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: 'Se connecter',
       signInDesc: 'Connectez-vous pour acceder a vos commandes et informations enregistrees.',
       registerDesc: 'Creez votre compte pour un paiement plus rapide et personnalise.',
+      forgotPassword: 'Mot de passe oublié',
+      forgotPasswordDesc: 'Indiquez votre e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.',
+      resetPassword: 'Réinitialiser le mot de passe',
+      resetPasswordDesc: 'Choisissez un nouveau mot de passe pour votre compte Bint Saeed.',
     },
     notFound: {
       title: 'Page introuvable',
@@ -943,6 +959,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: 'Anmelden',
       signInDesc: 'Melden Sie sich an, um auf Bestellungen und gespeicherte Daten zuzugreifen.',
       registerDesc: 'Erstellen Sie ein Konto fur einen schnelleren und personlicheren Checkout.',
+      forgotPassword: 'Passwort vergessen',
+      forgotPasswordDesc: 'Geben Sie Ihre E-Mail-Adresse ein — wir senden Ihnen einen Link zum Zurücksetzen.',
+      resetPassword: 'Passwort zurücksetzen',
+      resetPasswordDesc: 'Wählen Sie ein neues Passwort für Ihr Bint Saeed-Konto.',
     },
     notFound: {
       title: 'Seite nicht gefunden',
@@ -1135,6 +1155,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: 'Accedi',
       signInDesc: 'Accedi per visualizzare ordini e dettagli salvati.',
       registerDesc: 'Crea il tuo account per un checkout piu rapido e personale.',
+      forgotPassword: 'Password dimenticata',
+      forgotPasswordDesc: 'Inserisci la tua e-mail e ti invieremo un link per reimpostare la password.',
+      resetPassword: 'Reimposta password',
+      resetPasswordDesc: 'Scegli una nuova password per il tuo account Bint Saeed.',
     },
     notFound: {
       title: 'Pagina non trovata',
@@ -1327,6 +1351,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: 'Iniciar sesion',
       signInDesc: 'Inicia sesion para ver tus pedidos y datos guardados.',
       registerDesc: 'Crea tu cuenta para un pago mas rapido y personalizado.',
+      forgotPassword: 'Olvidé mi contraseña',
+      forgotPasswordDesc: 'Introduce tu correo y te enviaremos un enlace para restablecer tu contraseña.',
+      resetPassword: 'Restablecer contraseña',
+      resetPasswordDesc: 'Elige una nueva contraseña para tu cuenta Bint Saeed.',
     },
     notFound: {
       title: 'Pagina no encontrada',
@@ -1519,6 +1547,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: 'Войти',
       signInDesc: 'Войдите, чтобы видеть заказы и сохраненные данные.',
       registerDesc: 'Создайте аккаунт для более быстрого и персонального оформления.',
+      forgotPassword: 'Забыли пароль',
+      forgotPasswordDesc: 'Укажите электронную почту — мы пришлём ссылку для сброса пароля.',
+      resetPassword: 'Сбросить пароль',
+      resetPasswordDesc: 'Выберите новый пароль для вашего аккаунта Bint Saeed.',
     },
     notFound: {
       title: 'Страница не найдена',
@@ -1711,6 +1743,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: '登录',
       signInDesc: '登录后可查看订单和已保存信息。',
       registerDesc: '创建账户可享受更快捷、更个性化的结账体验。',
+      forgotPassword: '忘记密码',
+      forgotPasswordDesc: '请输入您的电子邮箱，我们将发送重置密码的链接。',
+      resetPassword: '重置密码',
+      resetPasswordDesc: '为您的 Bint Saeed 账户设置新密码。',
     },
     notFound: {
       title: '页面未找到',
@@ -1903,6 +1939,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: 'Inloggen',
       signInDesc: 'Log in om je bestellingen en opgeslagen gegevens te bekijken.',
       registerDesc: 'Maak een account voor een snellere en persoonlijkere checkout.',
+      forgotPassword: 'Wachtwoord vergeten',
+      forgotPasswordDesc: 'Vul je e-mailadres in en we sturen je een link om je wachtwoord opnieuw in te stellen.',
+      resetPassword: 'Wachtwoord opnieuw instellen',
+      resetPasswordDesc: 'Kies een nieuw wachtwoord voor je Bint Saeed-account.',
     },
     notFound: {
       title: 'Pagina niet gevonden',
@@ -2095,6 +2135,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: 'Iniciar sessao',
       signInDesc: 'Inicie sessao para aceder as suas encomendas e dados guardados.',
       registerDesc: 'Crie a sua conta para um checkout mais rapido e pessoal.',
+      forgotPassword: 'Esqueci a palavra-passe',
+      forgotPasswordDesc: 'Indique o seu e-mail e enviaremos um link para redefinir a palavra-passe.',
+      resetPassword: 'Redefinir palavra-passe',
+      resetPasswordDesc: 'Escolha uma nova palavra-passe para a sua conta Bint Saeed.',
     },
     notFound: {
       title: 'Pagina nao encontrada',
@@ -2287,6 +2331,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: 'Masuk',
       signInDesc: 'Masuk untuk mengakses pesanan dan detail tersimpan Anda.',
       registerDesc: 'Buat akun untuk checkout yang lebih cepat dan personal.',
+      forgotPassword: 'Lupa kata sandi',
+      forgotPasswordDesc: 'Masukkan email Anda dan kami akan mengirimkan tautan untuk mengatur ulang kata sandi.',
+      resetPassword: 'Atur ulang kata sandi',
+      resetPasswordDesc: 'Pilih kata sandi baru untuk akun Bint Saeed Anda.',
     },
     notFound: {
       title: 'Halaman tidak ditemukan',
@@ -2479,6 +2527,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       signIn: 'Log masuk',
       signInDesc: 'Log masuk untuk akses pesanan dan maklumat tersimpan anda.',
       registerDesc: 'Cipta akaun anda untuk checkout yang lebih pantas dan peribadi.',
+      forgotPassword: 'Lupa kata laluan',
+      forgotPasswordDesc: 'Masukkan e-mel anda dan kami akan menghantar pautan untuk menetapkan semula kata laluan.',
+      resetPassword: 'Tetapkan semula kata laluan',
+      resetPasswordDesc: 'Pilih kata laluan baharu untuk akaun Bint Saeed anda.',
     },
     notFound: {
       title: 'Halaman tidak ditemui',

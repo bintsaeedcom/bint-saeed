@@ -138,6 +138,11 @@ export interface AccessoryFilters {
   colors: ColorFilterId[]
 }
 
+/** Catalog list order: lowest AED price first (name as stable tie-break). */
+export function sortAccessoriesByPriceAsc(items: readonly Accessory[]): Accessory[] {
+  return [...items].sort((a, b) => a.price - b.price || a.name.localeCompare(b.name))
+}
+
 export function applyAccessoryFilters(items: Accessory[], f: AccessoryFilters): Accessory[] {
   let list =
     f.categoryId === 'all' ? items : items.filter((a) => a.category === f.categoryId)
@@ -146,5 +151,5 @@ export function applyAccessoryFilters(items: Accessory[], f: AccessoryFilters): 
   list = list.filter((a) => accessoryMatchesStoneSelection(a, f.stones))
   list = list.filter((a) => accessoryMatchesColorSelection(a, f.colors))
 
-  return list
+  return sortAccessoriesByPriceAsc(list)
 }

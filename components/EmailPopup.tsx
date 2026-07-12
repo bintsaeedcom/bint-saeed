@@ -168,7 +168,7 @@ export default function EmailPopup() {
                       placeholder={copy.firstName}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className={`w-full px-4 py-3 bg-white border border-brand-darkRed/20 font-montserrat text-sm tracking-wide focus:border-brand-darkRed focus:outline-none transition-colors ${isRTL ? 'text-right' : ''}`}
+                      className={`w-full px-4 py-3 bg-white border border-brand-darkRed/30 font-montserrat text-sm tracking-wide text-brand-darkRed placeholder:text-brand-muted focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 transition-colors ${isRTL ? 'text-right' : ''}`}
                       dir={isRTL ? 'rtl' : 'ltr'}
                     />
                     <div className="space-y-1">
@@ -187,11 +187,11 @@ export default function EmailPopup() {
                           setEmailError(v.valid ? '' : v.message)
                         }}
                         aria-invalid={emailError ? true : undefined}
-                        className={`w-full px-4 py-3 bg-white border font-montserrat text-sm tracking-wide focus:border-brand-darkRed focus:outline-none transition-colors ${isRTL ? 'text-right' : ''} ${emailError ? 'border-red-500' : 'border-brand-darkRed/20'}`}
+                        className={`w-full px-4 py-3 bg-white border font-montserrat text-sm tracking-wide text-brand-darkRed placeholder:text-brand-muted focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 transition-colors ${isRTL ? 'text-right' : ''} ${emailError ? 'border-brand-clayRed' : 'border-brand-darkRed/30'}`}
                         dir={isRTL ? 'rtl' : 'ltr'}
                       />
                       {emailError ? (
-                        <p className={`font-montserrat text-xs text-red-600 ${isRTL ? 'text-right' : ''}`}>
+                        <p className={`font-montserrat text-xs text-brand-clayRed ${isRTL ? 'text-right' : ''}`}>
                           {emailError}
                         </p>
                       ) : null}

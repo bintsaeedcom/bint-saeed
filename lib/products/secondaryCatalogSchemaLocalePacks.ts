@@ -6,6 +6,12 @@ import { getHampsteadDressPdpFaq } from '@/lib/products/hampsteadDressPdpI18n'
 import { getSohoSetPdpFaq } from '@/lib/products/sohoSetFaqI18n'
 import { getMaryleboneAbayaPdpFaq } from '@/lib/products/maryleboneAbayaPdpI18n'
 import { getParkLaneAbayaPdpFaq } from '@/lib/products/parkLaneAbayaPdpI18n'
+import {
+  HAMPSTEAD_SCHEMA_I18N,
+  MARYLEBONE_SCHEMA_I18N,
+  PARK_LANE_SCHEMA_I18N,
+  SOHO_SCHEMA_I18N,
+} from '@/lib/products/secondaryCatalogSchemaFactsI18n'
 
 const MADE_IN = 'Abu Dhabi, United Arab Emirates'
 
@@ -29,12 +35,16 @@ function facts(
   slug: string,
   locale: AppLocale,
   en: ProductSchemaFacts,
-  overrides?: Partial<Record<AppLocale, Partial<ProductSchemaFacts>>>,
+  localePack: Partial<Record<AppLocale, Partial<ProductSchemaFacts>>>,
 ): ProductSchemaFacts | null {
   if (!SECONDARY_SLUGS.has(slug.toLowerCase())) return null
-  const patch = locale === 'en' ? en : { ...en, ...(overrides?.[locale] ?? {}) }
+  // Always keep English base fields; overlay localized fields without removing EN keys.
+  const patch = locale === 'en' ? en : { ...en, ...(localePack[locale] ?? {}) }
   return { ...patch, madeIn: MADE_IN }
 }
+
+const GCC_WORLD =
+  'Abu Dhabi, Dubai, Sharjah, Riyadh, Jeddah, Doha, Kuwait City, Manama, Muscat, London, Paris, Milan, New York, Toronto, Singapore, Kuala Lumpur, Jakarta, Sydney, and destinations worldwide'
 
 const MARYLEBONE_EN: ProductSchemaFacts = {
   productType:
@@ -48,8 +58,7 @@ const MARYLEBONE_EN: ProductSchemaFacts = {
     'Graceful A-line abaya with wide cuffs for interchangeable Bint Saeed Strands, two removable Onyx Strands with gold-plated hematite beads, and signature Knotted Line finishing.',
   material:
     'Abaya: 80% Polyester, 20% Viscose; Strands: genuine natural Onyx gemstones with gold-plated hematite spacer beads',
-  suitableFor:
-    'Fashion enthusiasts, fashion editors, curators, cultural heritage audiences, diplomats, embassy receptions, gallery openings, luxury travel, city dressing, weddings, formal dinners, and international modest fashion in London, Paris, Riyadh, Doha, Abu Dhabi, and destinations worldwide.',
+  suitableFor: `Fashion enthusiasts, fashion editors, curators, cultural heritage audiences, diplomats, embassy receptions, gallery openings, luxury travel, city dressing, weddings, formal dinners, and international modest fashion in ${GCC_WORLD}.`,
 }
 
 const PARK_LANE_EN: ProductSchemaFacts = {
@@ -64,8 +73,7 @@ const PARK_LANE_EN: ProductSchemaFacts = {
   stylingDetail:
     'Graceful A-line abaya with integrated shoulder scarf, signature gold-tone Knotted Line shoulder buttons, wide cuffs with removable Bint Saeed signature gold-tone Monogram cufflinks, and hidden side seam pockets.',
   material: 'Outer: 75% Polyester, 25% Viscose',
-  suitableFor:
-    'Business meetings, embassy receptions, diplomatic events, official delegations, leadership meetings, cultural engagements, formal dinners, weddings, city movement, work, travel, everyday dressing, Gulf wardrobes, and international modest fashion in Abu Dhabi, Dubai, Riyadh, Doha, London, Paris, and destinations worldwide.',
+  suitableFor: `Business meetings, embassy receptions, diplomatic events, official delegations, leadership meetings, cultural engagements, formal dinners, weddings, city movement, work, travel, everyday dressing, Gulf wardrobes, and international modest fashion in ${GCC_WORLD}.`,
 }
 
 const HAMPSTEAD_EN: ProductSchemaFacts = {
@@ -81,8 +89,7 @@ const HAMPSTEAD_EN: ProductSchemaFacts = {
   stylingDetail:
     'Tailored maxi dress with draped neckline, hidden side seam pockets, softly flared hem, and signature Al Talli waist trim — made in Abu Dhabi.',
   material: 'Outer: 80% Polyester, 20% Viscose; Lining: 70% Polyester, 30% Viscose',
-  suitableFor:
-    'Evening wear, city dressing, weddings, formal dinners, cultural events, layering beneath abayas, Gulf wardrobes, and international occasionwear in Abu Dhabi, Dubai, Riyadh, Doha, Kuwait City, Muscat, London, Paris, Milan, Toronto, and destinations worldwide.',
+  suitableFor: `Evening wear, city dressing, weddings, formal dinners, cultural events, layering beneath abayas, Gulf wardrobes, and international occasionwear in ${GCC_WORLD}.`,
 }
 
 const SOHO_EN: ProductSchemaFacts = {
@@ -93,8 +100,7 @@ const SOHO_EN: ProductSchemaFacts = {
   trim: 'Bint Saeed signature Al Talli trim along trouser side seams — UNESCO-recognised Emirati heritage craftsmanship.',
   stylingDetail:
     'Oversized crepe shirt with wide-leg palazzo trousers, chest pockets, hidden side seam pockets, gold-tone Knotted Line buttons, and Al Talli heritage trim.',
-  suitableFor:
-    'Luxury travelwear, city dressing, lunches, dinners, cultural events, journeys between cities, Gulf wardrobes, and international modest fashion in Abu Dhabi, Dubai, London, Paris, Milan, Toronto, Singapore, and worldwide.',
+  suitableFor: `Luxury travelwear, city dressing, lunches, dinners, cultural events, journeys between cities, Gulf wardrobes, and international modest fashion in ${GCC_WORLD}.`,
 }
 
 export function getLocalizedSecondaryCatalogSchemaFacts(
@@ -105,31 +111,13 @@ export function getLocalizedSecondaryCatalogSchemaFacts(
   let base: ProductSchemaFacts | null = null
 
   if (s === MARYLEBONE_SLUG) {
-    base = facts(s, locale, MARYLEBONE_EN, {
-      ar: {
-        productType:
-          'عباية A-line أنيقة بخيوط عقيق طبيعية قابلة للإزالة على كل كُم، وتفاصيل Knotted Line الذهبية، وخيوط Bint Saeed قابلة للتبديل — من أبوظبي',
-      },
-      fr: {
-        productType:
-          'Abaya A-line gracieuse avec fils Onyx naturels amovibles sur chaque manchette, détails Knotted Line dorés et fils Bint Saeed interchangeables — Abu Dhabi',
-      },
-    })
+    base = facts(s, locale, MARYLEBONE_EN, MARYLEBONE_SCHEMA_I18N)
   } else if (s === PARK_LANE_SLUG) {
-    base = facts(s, locale, PARK_LANE_EN, {
-      ar: { productType: 'عباية يومية راقية بخط نظيف وانسيابية — أزياء محتشمة معاصرة من أبوظبي' },
-      fr: { productType: 'Abaya urbaine raffinée à la ligne épurée — mode modeste contemporaine Abu Dhabi' },
-    })
+    base = facts(s, locale, PARK_LANE_EN, PARK_LANE_SCHEMA_I18N)
   } else if (s === HAMPSTEAD_SLUG) {
-    base = facts(s, locale, HAMPSTEAD_EN, {
-      ar: { productType: 'فستان مصمّم مبطّن من كريب فاخر بخط عنق منسدل — تفاصيل تلي على الخصر من أبوظبي للعالم' },
-      fr: { productType: 'Robe doublée en crêpe premium au col drapé — garniture Al Talli à la taille, Abu Dhabi' },
-    })
+    base = facts(s, locale, HAMPSTEAD_EN, HAMPSTEAD_SCHEMA_I18N)
   } else if (s === SOHO_SLUG) {
-    base = facts(s, locale, SOHO_EN, {
-      ar: { productType: 'طقم منسّق بتفاصيل التلي التراثية — من النهار إلى المساء' },
-      fr: { productType: 'Set coordonné avec détails Al Talli — du jour au soir' },
-    })
+    base = facts(s, locale, SOHO_EN, SOHO_SCHEMA_I18N)
   }
 
   if (!base) return null

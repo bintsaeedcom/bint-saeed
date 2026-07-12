@@ -4,6 +4,7 @@ import { localizedPath, stripLocaleFromPathname } from './routing'
 import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
+import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 import { BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
 
@@ -96,10 +97,10 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
   const isHomeShell = usesHomeMetadata(innerPath)
 
   const title: Metadata['title'] = isHomeShell
-    ? { default: meta.title, template: '%s | Bint Saeed' }
-    : { absolute: meta.title }
+    ? { default: brandDocumentTitle(meta.title), template: 'Bint Saeed | %s' }
+    : { absolute: brandDocumentTitle(meta.title) }
 
-  const ogTitle = meta.ogTitle
+  const ogTitle = brandDocumentTitle(meta.ogTitle)
   const ogDescription =
     locale === 'en' && usesHomeMetadata(innerPath)
       ? 'Crafted to order abayas with natural stone strands. Made in Abu Dhabi, worn worldwide.'

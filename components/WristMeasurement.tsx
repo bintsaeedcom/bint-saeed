@@ -55,7 +55,7 @@ export default function WristMeasurement({ value, onChange }: WristMeasurementPr
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder={isRTL ? 'مثال: 16.5' : 'e.g., 16.5'}
-            className={`flex-1 px-4 py-3 border border-brand-stone/50 font-montserrat text-sm tracking-wide focus:border-brand-darkRed transition-colors ${isRTL ? 'text-right' : ''}`}
+            className={`flex-1 px-4 py-3 border border-brand-darkRed/30 bg-white font-montserrat text-sm tracking-wide text-brand-darkRed placeholder:text-brand-muted focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 transition-colors ${isRTL ? 'text-right' : ''}`}
           />
           <span className="px-4 py-3 bg-brand-stone/10 font-montserrat text-sm text-brand-clayRed border border-brand-stone/50">
             cm

@@ -1,6 +1,7 @@
-import type { VerifiedUserRecord, VerifyPayload } from './types'
+import type { PasswordResetPayload, VerifiedUserRecord, VerifyPayload } from './types'
 
 const TTL_MS = 48 * 60 * 60 * 1000
+const RESET_TTL_MS = 60 * 60 * 1000
 
 type Bucket = {
   users: Map<string, VerifiedUserRecord>
@@ -8,6 +9,8 @@ type Bucket = {
   verify: Map<string, { payload: VerifyPayload; exp: number }>
   /** email -> { token, exp } */
   pend: Map<string, { token: string; exp: number }>
+  reset: Map<string, { payload: PasswordResetPayload; exp: number }>
+  resetPend: Map<string, { token: string; exp: number }>
 }
 
 function getBucket(): Bucket {
@@ -17,7 +20,13 @@ function getBucket(): Bucket {
       users: new Map(),
       verify: new Map(),
       pend: new Map(),
+      reset: new Map(),
+      resetPend: new Map(),
     }
+  } else {
+    // Hot-reload safety for older in-memory buckets
+    if (!g.__bintAuthMemory.reset) g.__bintAuthMemory.reset = new Map()
+    if (!g.__bintAuthMemory.resetPend) g.__bintAuthMemory.resetPend = new Map()
   }
   return g.__bintAuthMemory
 }
@@ -33,6 +42,12 @@ function pruneVerify(bucket: Bucket) {
   }
   for (const [e, v] of bucket.pend) {
     if (v.exp <= now) bucket.pend.delete(e)
+  }
+  for (const [t, v] of bucket.reset) {
+    if (v.exp <= now) bucket.reset.delete(t)
+  }
+  for (const [e, v] of bucket.resetPend) {
+    if (v.exp <= now) bucket.resetPend.delete(e)
   }
 }
 
@@ -101,6 +116,50 @@ export const memoryAuthStore = {
     const payload = row.payload
     bucket.verify.delete(token)
     bucket.pend.delete(normEmail(payload.email))
+    return payload
+  },
+
+  async clearPasswordResetForEmail(email: string): Promise<void> {
+    const bucket = getBucket()
+    const e = normEmail(email)
+    const row = bucket.resetPend.get(e)
+    if (row?.token) bucket.reset.delete(row.token)
+    bucket.resetPend.delete(e)
+  },
+
+  async setPasswordReset(email: string, token: string): Promise<void> {
+    const bucket = getBucket()
+    pruneVerify(bucket)
+    const e = normEmail(email)
+    const existing = bucket.resetPend.get(e)
+    if (existing?.token) bucket.reset.delete(existing.token)
+
+    const exp = Date.now() + RESET_TTL_MS
+    bucket.reset.set(token, { payload: { email: e }, exp })
+    bucket.resetPend.set(e, { token, exp })
+  },
+
+  async peekPasswordResetToken(token: string): Promise<PasswordResetPayload | null> {
+    const bucket = getBucket()
+    pruneVerify(bucket)
+    const row = bucket.reset.get(token)
+    if (!row || row.exp <= Date.now()) {
+      bucket.reset.delete(token)
+      return null
+    }
+    return row.payload
+  },
+
+  async consumePasswordResetToken(token: string): Promise<PasswordResetPayload | null> {
+    const bucket = getBucket()
+    const row = bucket.reset.get(token)
+    if (!row || row.exp <= Date.now()) {
+      bucket.reset.delete(token)
+      return null
+    }
+    const payload = row.payload
+    bucket.reset.delete(token)
+    bucket.resetPend.delete(normEmail(payload.email))
     return payload
   },
 }

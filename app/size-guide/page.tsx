@@ -4,11 +4,21 @@ import { useState } from 'react'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
-import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
+import {
+  EDITORIAL_PAGE_CONTAINER,
+  EDITORIAL_PAGE_SHELL,
+  SITE_CONTENT_TOP_PAD,
+} from '@/lib/ui/editorialPageChrome'
 import { FiCheck } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getSizeGuideCopy } from '@/lib/i18n/sizeGuideCopyI18n'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import {
+  ctaButtonRow,
+  ctaInButtonRow,
+  ctaPrimary,
+  ctaSecondaryOnLight,
+} from '@/lib/ui/ctaClasses'
 
 const SIZE_HEADERS = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL'] as const
 const UK_SIZE = ['6', '8', '10', '12', '14', '16', '18', '20'] as const
@@ -38,172 +48,283 @@ const intlRows = [
   { label: 'RU', values: ['40', '42', '44', '46', '48', '50'] },
 ] as const
 
+type SizeKey = (typeof SIZE_HEADERS)[number]
+type Unit = 'inch' | 'cm'
 
 export default function SizeGuidePage() {
   const { t, isRTL, language } = useLanguage()
   const copy = getSizeGuideCopy(language)
   const ui = commerceUi(language)
   const rowLabelKeys = ['bust', 'waist', 'hips'] as const
-  const inchRows = rowLabelKeys.map((key, i) => ({
+  const [selected, setSelected] = useState<SizeKey | null>(null)
+  const [unit, setUnit] = useState<Unit>('cm')
+
+  const activeRows = rowLabelKeys.map((key, i) => ({
     label: copy.rowLabels[key],
-    values: inchRowValues[i]!,
+    values: (unit === 'cm' ? cmRowValues : inchRowValues)[i]!,
   }))
-  const cmRows = rowLabelKeys.map((key, i) => ({
-    label: copy.rowLabels[key],
-    values: cmRowValues[i]!,
-  }))
-  const [selected, setSelected] = useState<(typeof SIZE_HEADERS)[number] | null>(null)
+
+  const helpTitle = isRTL ? 'تحتاجين مساعدة بالمقاس؟' : 'Need sizing help?'
+  const helpBody = isRTL
+    ? 'فريقنا يساعدك لاختيار المقاس المثالي قبل الطلب.'
+    : 'Our concierge can advise your best size before checkout.'
+  const scrollHint = isRTL ? 'مرري أفقياً لعرض كل المقاسات' : 'Swipe sideways to see all sizes'
+  const selectHint = isRTL ? 'اختاري مقاسك لتمييزه' : 'Select a size to highlight'
+  const unitInch = isRTL ? 'بوصة' : 'Inches'
+  const unitCm = isRTL ? 'سم' : 'CM'
 
   return (
-    <div className={`relative min-h-screen overflow-hidden bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
-      <section className={`relative border-b border-brand-stone/25 pb-14 ${SITE_CONTENT_TOP_PAD} md:pb-16`}>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_70%_at_20%_8%,rgba(146,170,193,0.12)_0%,transparent_56%)]" />
-        <div className="container relative mx-auto px-6 lg:px-12">
-          <AppPageWayfinding
-            rtl={isRTL}
-            className="mb-8"
-            segments={[
-              { label: ui.common.home, href: '/home' },
-              { label: ui.common.shop, href: '/shop' },
-              { label: t.footer.sizeGuide },
-            ]}
-            backLink={{
-              href: '/shop',
-              label: ui.common.backToShop,
-            }}
-          />
+    <div
+      className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-brand-pageCanvas pb-20 ${SITE_CONTENT_TOP_PAD} ${
+        isRTL ? 'rtl' : 'ltr'
+      }`}
+      dir={isRTL ? 'rtl' : 'ltr'}
+    >
+      <div className={`${EDITORIAL_PAGE_CONTAINER} max-w-5xl`}>
+        <AppPageWayfinding
+          rtl={isRTL}
+          variant="muted"
+          className="mb-8"
+          segments={[
+            { label: ui.common.home, href: '/home' },
+            { label: ui.common.shop, href: '/shop' },
+            { label: t.footer.sizeGuide },
+          ]}
+          backLink={{
+            href: '/shop',
+            label: ui.common.backToShop,
+          }}
+        />
 
+        <header className={`mb-10 max-w-2xl ${isRTL ? 'text-right' : 'text-left'}`}>
+          <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
+            Bint Saeed
+          </span>
           <h1
             data-document-h1="true"
-            className="mx-auto mb-6 max-w-5xl text-center font-rozha text-4xl leading-tight tracking-wide text-brand-darkRed md:text-5xl lg:text-6xl"
+            className="font-rozha text-[clamp(1.75rem,4.5vw,2.5rem)] leading-[1.12] tracking-[0.01em] text-brand-darkRed"
           >
             {t.footer.sizeGuide}
           </h1>
-
-          <p className="mx-auto max-w-5xl text-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-darkRed/80 md:text-[13px]">
+          <p className="mt-4 font-montserrat text-[13px] leading-[1.85] tracking-wide text-brand-clayRed/75">
             {copy.intro}
           </p>
+        </header>
+
+        {/* Size chips — thumb-friendly on mobile */}
+        <div className="mb-8">
+          <p
+            className={`mb-3 font-montserrat text-[10px] uppercase tracking-[0.16em] text-brand-clayRed/65 ${
+              isRTL ? 'text-right' : 'text-left'
+            }`}
+          >
+            {selectHint}
+          </p>
+          <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+            {SIZE_HEADERS.map((size) => {
+              const active = selected === size
+              return (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => setSelected(active ? null : size)}
+                  className={`inline-flex min-h-10 min-w-[2.75rem] items-center justify-center gap-1 px-3 font-montserrat text-[11px] uppercase tracking-[0.12em] transition-colors ${
+                    active
+                      ? 'bg-brand-darkRed text-white'
+                      : 'border border-brand-stone/35 bg-white/70 text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
+                  }`}
+                  data-cursor-hover
+                  aria-pressed={active}
+                >
+                  {size}
+                  {active ? <FiCheck className="h-3 w-3" aria-hidden /> : null}
+                </button>
+              )
+            })}
+          </div>
         </div>
-      </section>
 
-      <section className="py-10 md:py-14">
-        <div className="container mx-auto grid gap-10 px-6 lg:grid-cols-12 lg:gap-12 lg:px-12">
-          <div className="lg:col-span-7">
-            <div className="relative border border-brand-stone/25 bg-white/72 p-4 md:p-5">
-              <MeasurementTable
-                title={copy.bodyMeasurementsInch}
-                ukSizeLabel={copy.ukSize}
-                selected={selected}
-                setSelected={setSelected}
-                rows={inchRows}
-              />
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="min-w-0 space-y-8 lg:col-span-7">
+            {/* Unit toggle */}
+            <div className="flex items-center justify-between gap-3 border-b border-brand-stone/25 pb-3">
+              <h2 className="font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed">
+                {unit === 'cm' ? copy.bodyMeasurementsCm : copy.bodyMeasurementsInch}
+              </h2>
+              <div
+                className="inline-flex border border-brand-stone/30 bg-white/80 p-0.5"
+                role="group"
+                aria-label={isRTL ? 'وحدة القياس' : 'Measurement unit'}
+              >
+                {([
+                  ['cm', unitCm],
+                  ['inch', unitInch],
+                ] as const).map(([id, label]) => (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => setUnit(id)}
+                    className={`min-h-9 px-3 font-montserrat text-[10px] uppercase tracking-[0.14em] transition-colors ${
+                      unit === id
+                        ? 'bg-brand-darkRed text-white'
+                        : 'text-brand-clayRed/70 hover:text-brand-darkRed'
+                    }`}
+                    data-cursor-hover
+                    aria-pressed={unit === id}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="relative mt-6 border border-brand-stone/25 bg-white/72 p-4 md:p-5">
-              <MeasurementTable
-                title={copy.bodyMeasurementsCm}
-                ukSizeLabel={copy.ukSize}
-                selected={selected}
-                setSelected={setSelected}
-                rows={cmRows}
-              />
-            </div>
+            <p className="font-montserrat text-[11px] tracking-wide text-brand-clayRed/55 lg:hidden">
+              {scrollHint}
+            </p>
 
-            <h2 className="mt-8 mb-3 font-montserrat text-[28px] uppercase tracking-[0.08em] text-brand-darkRed">
-              {copy.internationalConversions}
-            </h2>
-            <div className="relative overflow-x-auto border border-brand-stone/28 bg-white/78">
-              <table className="min-w-[690px] w-full">
-                <thead>
-                  <tr className="bg-brand-stone/25">
-                    <th className="px-3 py-3 text-left font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
-                      {copy.size}
-                    </th>
-                    {SIZE_HEADERS.slice(0, 6).map((size) => (
-                      <th key={size} className="px-2 py-3 text-center font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
-                        {size}
+            <MeasurementTable
+              title={unit === 'cm' ? copy.bodyMeasurementsCm : copy.bodyMeasurementsInch}
+              ukSizeLabel={copy.ukSize}
+              rows={activeRows}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <div>
+              <h2 className="mb-3 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed">
+                {copy.internationalConversions}
+              </h2>
+              <p className="mb-3 font-montserrat text-[11px] tracking-wide text-brand-clayRed/55 lg:hidden">
+                {scrollHint}
+              </p>
+              <div className="-mx-1 overflow-x-auto overscroll-x-contain px-1 [scrollbar-width:thin]">
+                <table className="w-full min-w-[32rem] border-collapse text-sm">
+                  <thead>
+                    <tr className="border-b border-brand-stone/30 bg-brand-stone/15">
+                      <th
+                        className={`sticky ${isRTL ? 'right-0' : 'left-0'} z-[1] bg-[#f3ece4] px-3 py-2.5 text-left font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed`}
+                      >
+                        {copy.size}
                       </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {intlRows.map((row, idx) => (
-                    <tr key={row.label} className={idx % 2 === 0 ? 'bg-white/80' : 'bg-brand-stone/10'}>
-                      <td className="px-3 py-3 font-montserrat text-[12px] uppercase tracking-[0.08em] text-brand-darkRed">{row.label}</td>
-                      {row.values.map((value) => (
-                        <td key={`${row.label}-${value}`} className="px-2 py-3 text-center font-montserrat text-[12px] text-brand-darkRed/85">
-                          {value}
-                        </td>
+                      {SIZE_HEADERS.slice(0, 6).map((size) => (
+                        <th
+                          key={size}
+                          className={`px-2 py-2.5 text-center font-montserrat text-[10px] uppercase tracking-[0.12em] ${
+                            selected === size ? 'bg-brand-darkRed text-white' : 'text-brand-darkRed'
+                          }`}
+                        >
+                          {size}
+                        </th>
                       ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {intlRows.map((row, idx) => (
+                      <tr
+                        key={row.label}
+                        className={idx % 2 === 0 ? 'bg-white/70' : 'bg-brand-stone/10'}
+                      >
+                        <td
+                          className={`sticky ${isRTL ? 'right-0' : 'left-0'} z-[1] bg-inherit px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] text-brand-darkRed`}
+                        >
+                          {row.label}
+                        </td>
+                        {row.values.map((value, colIdx) => {
+                          const size = SIZE_HEADERS[colIdx]
+                          return (
+                            <td
+                              key={`${row.label}-${value}`}
+                              className={`px-2 py-2.5 text-center font-montserrat text-[11px] tabular-nums ${
+                                selected === size
+                                  ? 'bg-brand-darkRed/8 font-medium text-brand-darkRed'
+                                  : 'text-brand-darkRed/80'
+                              }`}
+                            >
+                              {value}
+                            </td>
+                          )
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
-          <aside className="lg:col-span-5">
-            <div className="sticky top-28 border border-brand-stone/25 bg-white/75 p-5 md:p-6">
-              <h2 className="mb-4 font-montserrat text-xl uppercase tracking-[0.14em] text-brand-darkRed">{copy.howToMeasure}</h2>
-              <div className="mb-6 border border-brand-stone/20 bg-[#f9f6f2] p-3">
+          <aside className="min-w-0 lg:col-span-5">
+            <div className="border border-brand-stone/25 bg-white/70 p-4 sm:p-5 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+0.75rem)]">
+              <h2 className="mb-4 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed">
+                {copy.howToMeasure}
+              </h2>
+              <div className="mb-5 border border-brand-stone/20 bg-[#f9f6f2] p-2.5">
                 <Image
                   src="/size-guide-figure.svg"
                   alt={copy.imageAlt}
                   width={620}
                   height={760}
-                  className="h-auto w-full"
+                  className="mx-auto h-auto w-full max-w-[280px] sm:max-w-[320px]"
                 />
               </div>
-              <div className="space-y-3">
+              <ol className="space-y-0">
                 {copy.measureItems.map((item) => (
-                  <div key={item.id} className="flex gap-3 border-t border-brand-stone/25 pt-3 first:border-t-0 first:pt-0">
-                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-darkRed text-[10px] font-montserrat text-white">
+                  <li
+                    key={item.id}
+                    className="flex gap-3 border-t border-brand-stone/20 py-3 first:border-t-0 first:pt-0"
+                  >
+                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-darkRed font-montserrat text-[10px] text-white">
                       {item.id}
                     </span>
-                    <div>
-                      <p className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">{item.title}</p>
-                      <p className="font-montserrat text-[12px] leading-relaxed text-brand-clayRed/80">{item.copy}</p>
+                    <div className="min-w-0">
+                      <p className="font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed">
+                        {item.title}
+                      </p>
+                      <p className="mt-1 font-montserrat text-[12px] leading-relaxed text-brand-clayRed/75">
+                        {item.copy}
+                      </p>
                     </div>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ol>
             </div>
           </aside>
         </div>
-      </section>
 
-      <section className="border-t border-brand-stone/25 bg-white/80 py-12">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className={`flex flex-col gap-6 md:flex-row md:items-center md:justify-between ${isRTL ? 'md:flex-row-reverse' : ''}`}>
-            <div className={isRTL ? 'text-right' : ''}>
-              <h3 className="font-rozha text-3xl text-brand-darkRed">{isRTL ? 'تحتاجين مساعدة بالمقاس؟' : 'Need Sizing Help?'}</h3>
-              <p className="mt-2 max-w-2xl font-montserrat text-sm text-brand-clayRed/80">
-                {isRTL
-                  ? 'فريقنا يساعدك لاختيار المقاس المثالي قبل الطلب.'
-                  : 'Our concierge can advise your best size before checkout.'}
+        <section className="mt-14 border-t border-brand-stone/25 pt-10">
+          <div
+            className={`flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between ${
+              isRTL ? 'sm:flex-row-reverse' : ''
+            }`}
+          >
+            <div className={`max-w-md ${isRTL ? 'text-right' : 'text-left'}`}>
+              <h3 className="font-rozha text-[clamp(1.25rem,3vw,1.65rem)] leading-snug text-brand-darkRed">
+                {helpTitle}
+              </h3>
+              <p className="mt-2 font-montserrat text-[13px] leading-relaxed text-brand-clayRed/75">
+                {helpBody}
               </p>
             </div>
-            <div className={`flex flex-col gap-3 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+            <div className={`${ctaButtonRow} shrink-0 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
               <a
                 href="https://wa.me/971502299402?text=Hi%20Bint%20Saeed!%20I%20need%20help%20with%20sizing."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center border border-brand-darkRed bg-brand-darkRed px-7 py-3 font-montserrat text-xs uppercase tracking-[0.14em] text-white transition-colors hover:bg-brand-clayRed"
+                className={`${ctaPrimary} ${ctaInButtonRow}`}
                 data-cursor-hover
               >
                 {isRTL ? 'واتساب' : 'WhatsApp'}
               </a>
               <LocaleLink
                 href="/contact"
-                className="inline-flex items-center justify-center border border-brand-stone/40 bg-transparent px-7 py-3 font-montserrat text-xs uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                className={`${ctaSecondaryOnLight} ${ctaInButtonRow}`}
                 data-cursor-hover
               >
                 {isRTL ? 'تواصلي معنا' : 'Contact Us'}
               </LocaleLink>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   )
 }
@@ -218,40 +339,61 @@ function MeasurementTable({
   title: string
   ukSizeLabel: string
   rows: readonly { label: string; values: readonly string[] }[]
-  selected: (typeof SIZE_HEADERS)[number] | null
-  setSelected: (size: (typeof SIZE_HEADERS)[number] | null) => void
+  selected: SizeKey | null
+  setSelected: (size: SizeKey | null) => void
 }) {
+  const { isRTL } = useLanguage()
+
   return (
-    <div className="mb-8 overflow-x-auto border border-brand-stone/25 bg-white/75">
-      <table className="min-w-[760px] w-full">
+    <div className="-mx-1 overflow-x-auto overscroll-x-contain border border-brand-stone/25 bg-white/70 px-1 [scrollbar-width:thin]">
+      <table className="w-full min-w-[36rem] border-collapse">
+        <caption className="sr-only">{title}</caption>
         <thead>
-          <tr className="bg-brand-stone/25">
-            <th className="px-3 py-3 text-left font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
+          <tr className="border-b border-brand-stone/30 bg-brand-stone/15">
+            <th
+              className={`sticky ${isRTL ? 'right-0' : 'left-0'} z-[1] bg-[#f3ece4] px-3 py-2.5 text-left font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-darkRed`}
+            >
               {title}
             </th>
             {SIZE_HEADERS.map((size) => {
               const active = selected === size
               return (
-                <th
-                  key={size}
-                  onClick={() => setSelected(active ? null : size)}
-                  className={`cursor-pointer px-2 py-3 text-center font-montserrat text-[11px] uppercase tracking-[0.14em] transition-colors ${
-                    active ? 'bg-brand-darkRed text-white' : 'text-brand-darkRed hover:bg-brand-dustyBlue/20'
-                  }`}
-                  data-cursor-hover
-                >
-                  <span className="inline-flex items-center gap-1">
-                    {size}
-                    {active && <FiCheck className="h-3 w-3" />}
-                  </span>
+                <th key={size} className="p-0 text-center">
+                  <button
+                    type="button"
+                    onClick={() => setSelected(active ? null : size)}
+                    className={`flex min-h-11 w-full items-center justify-center px-2 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors ${
+                      active
+                        ? 'bg-brand-darkRed text-white'
+                        : 'text-brand-darkRed hover:bg-brand-dustyBlue/15'
+                    }`}
+                    data-cursor-hover
+                    aria-pressed={active}
+                  >
+                    <span className="inline-flex items-center gap-1">
+                      {size}
+                      {active ? <FiCheck className="h-3 w-3" aria-hidden /> : null}
+                    </span>
+                  </button>
                 </th>
               )
             })}
           </tr>
-          <tr className="bg-white/80">
-            <th className="px-3 py-2 text-left font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">{ukSizeLabel}</th>
+          <tr className="border-b border-brand-stone/20 bg-white/80">
+            <th
+              className={`sticky ${isRTL ? 'right-0' : 'left-0'} z-[1] bg-[#faf7f3] px-3 py-2 text-left font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-darkRed`}
+            >
+              {ukSizeLabel}
+            </th>
             {UK_SIZE.map((value, idx) => (
-              <th key={`${title}-uk-${value}`} className={`px-2 py-2 text-center font-montserrat text-[11px] ${selected === SIZE_HEADERS[idx] ? 'text-brand-darkRed font-medium' : 'text-brand-clayRed/85'}`}>
+              <th
+                key={`${title}-uk-${value}`}
+                className={`px-2 py-2 text-center font-montserrat text-[10px] tabular-nums ${
+                  selected === SIZE_HEADERS[idx]
+                    ? 'font-medium text-brand-darkRed'
+                    : 'text-brand-clayRed/80'
+                }`}
+              >
                 {value}
               </th>
             ))}
@@ -259,13 +401,22 @@ function MeasurementTable({
         </thead>
         <tbody>
           {rows.map((row, rowIdx) => (
-            <tr key={`${title}-${row.label}`} className={rowIdx % 2 === 0 ? 'bg-white/80' : 'bg-brand-stone/10'}>
-              <td className="px-3 py-3 font-montserrat text-[12px] uppercase tracking-[0.08em] text-brand-darkRed">{row.label}</td>
+            <tr
+              key={`${title}-${row.label}`}
+              className={rowIdx % 2 === 0 ? 'bg-white/80' : 'bg-brand-stone/10'}
+            >
+              <td
+                className={`sticky ${isRTL ? 'right-0' : 'left-0'} z-[1] bg-inherit px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] text-brand-darkRed`}
+              >
+                {row.label}
+              </td>
               {row.values.map((value, idx) => (
                 <td
                   key={`${title}-${row.label}-${idx}`}
-                  className={`px-2 py-3 text-center font-montserrat text-[12px] ${
-                    selected === SIZE_HEADERS[idx] ? 'bg-brand-darkRed/8 text-brand-darkRed font-medium' : 'text-brand-darkRed/85'
+                  className={`px-2 py-2.5 text-center font-montserrat text-[11px] tabular-nums ${
+                    selected === SIZE_HEADERS[idx]
+                      ? 'bg-brand-darkRed/8 font-medium text-brand-darkRed'
+                      : 'text-brand-darkRed/80'
                   }`}
                 >
                   {value}

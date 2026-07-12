@@ -16,6 +16,11 @@ import {
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getAccessorySku } from '@/lib/accessories/accessorySku'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import { buildLocalizedStrandAltBody } from '@/lib/accessories/strandImageAltI18n'
+import {
+  STONE_VARIANTS_I18N,
+  type StoneVariantId,
+} from '@/lib/accessories/strandPdp/stoneVariantsI18n'
 
 type StrandPairing = {
   necklaceId: string
@@ -311,6 +316,12 @@ export const STRAND_PDP_BY_ID: Record<string, StrandPdpSeoPack> = {
       'natural lapis lazuli beads',
       'evening abaya jewellery UAE',
       'pairs with heritage necklace and hoops',
+      'Al Ain Rosette lapis lazuli strand',
+      'lapis lazuli Al Ain Rosette Signature Strand',
+      'royal blue lapis abaya jewellery',
+      'pyrite fleck lapis garment jewellery',
+      'December birthstone lapis strand',
+      'buy lapis lazuli abaya strand online',
     ),
   },
   'signature-strand-amethyst-hearts': {
@@ -404,7 +415,12 @@ export function getStrandPdpPack(accessoryId: string): StrandPdpSeoPack | undefi
   return STRAND_PDP_BY_ID[resolveAccessoryId(accessoryId)]
 }
 
-/** PDP gallery: strand hero + distinct pairing shots (skips necklace when same file as strand). */
+/**
+ * PDP gallery images.
+ * - Phone charms: primary + detail angles
+ * - Signature Strands: catalog front shot(s) only (never necklace/earring lifestyle)
+ * - Necklaces / earrings / other: catalog `images` (lifestyle only where present on the product)
+ */
 export function getAccessoryPdpImages(accessory: Accessory): string[] {
   if (accessory.category === 'phone-strands') {
     const primary = accessory.images[0]
@@ -416,22 +432,40 @@ export function getAccessoryPdpImages(accessory: Accessory): string[] {
     return gallery
   }
 
-  const pack = getStrandPdpPack(accessory.id)
-  if (!pack) return [...accessory.images]
+  return [...accessory.images]
+}
 
-  const primary = accessory.images[0]
-  if (!primary) return [...accessory.images]
+function strandStoneLabel(accessoryId: string, locale: AppLocale): string {
+  const id = resolveAccessoryId(accessoryId)
+  if (id in STONE_VARIANTS_I18N) {
+    const pack = STONE_VARIANTS_I18N[id as StoneVariantId]
+    return pack[locale]?.stoneLabel ?? pack.en.stoneLabel
+  }
+  return id.replace(/^signature-strand-/, '').replace(/-/g, ' ')
+}
 
-  const images: string[] = [primary]
-  const { necklaceImage, earringsImage } = pack.pairing
-  if (necklaceImage && necklaceImage !== primary) images.push(necklaceImage)
-  images.push(earringsImage)
-  return images
+function localizedStrandAltBody(
+  accessoryId: string,
+  role: 'carousel' | 'strand' | 'necklace' | 'earrings',
+  locale: AppLocale,
+  pack: StrandPdpSeoPack,
+): string {
+  if (locale === 'en') {
+    if (role === 'carousel') return pack.carouselAlt
+    if (role === 'strand') return pack.strandAlt
+    if (role === 'necklace') return pack.necklaceAlt
+    return pack.earringsAlt
+  }
+  return buildLocalizedStrandAltBody(locale, role, {
+    stone: strandStoneLabel(accessoryId, locale),
+    necklace: pack.pairing.necklaceLabel,
+    earrings: pack.pairing.earringsLabel,
+  })
 }
 
 export function getAccessoryImageAlt(
   accessory: Accessory,
-  imageSrc: string,
+  _imageSrc: string,
   imageIndex: number,
   locale: AppLocale = 'en',
 ): string {
@@ -440,33 +474,14 @@ export function getAccessoryImageAlt(
     return withBrandAlt(`${accessory.name} — product image ${imageIndex + 1}`, locale)
   }
 
-  const gallery = getAccessoryPdpImages(accessory)
-  const primary = accessory.images[0]
-
-  if (imageSrc === primary || imageIndex === 0) {
-    return withBrandAlt(pack.strandAlt, locale)
-  }
-  if (imageSrc === pack.pairing.necklaceImage) {
-    return withBrandAlt(pack.necklaceAlt, locale)
-  }
-  if (imageSrc === pack.pairing.earringsImage) {
-    return withBrandAlt(pack.earringsAlt, locale)
-  }
-
-  const role =
-    gallery[imageIndex] === pack.pairing.earringsImage
-      ? pack.earringsAlt
-      : gallery[imageIndex] === pack.pairing.necklaceImage
-        ? pack.necklaceAlt
-        : pack.strandAlt
-
-  return withBrandAlt(role, locale)
+  // Strand gallery is front-only; always use the strand product alt.
+  return withBrandAlt(localizedStrandAltBody(accessory.id, 'strand', locale, pack), locale)
 }
 
 export function getStrandCarouselAlt(accessoryId: string, locale: AppLocale = 'en'): string {
   const pack = getStrandPdpPack(accessoryId)
   if (!pack) return withBrandAlt('Natural stone abaya strand — Emirati heritage house code', locale)
-  return withBrandAlt(pack.carouselAlt, locale)
+  return withBrandAlt(localizedStrandAltBody(accessoryId, 'carousel', locale, pack), locale)
 }
 
 type JsonLdInput = {
@@ -482,6 +497,7 @@ export function buildAccessoryProductJsonLd({
   displayName,
   description,
   pageUrl,
+  locale = 'en',
 }: JsonLdInput): Record<string, unknown> {
   const pack = getStrandPdpPack(accessory.id)
   const gallery = getAccessoryPdpImages(accessory)
@@ -503,7 +519,7 @@ export function buildAccessoryProductJsonLd({
     image: gallery.map((src, index) => ({
       '@type': 'ImageObject',
       contentUrl: src.startsWith('http') ? src : `https://www.bintsaeed.com${src}`,
-      name: getAccessoryImageAlt(accessory, src, index, 'en'),
+      name: getAccessoryImageAlt(accessory, src, index, locale),
     })),
     offers: {
       '@type': 'Offer',
@@ -524,6 +540,7 @@ export function buildAccessoryProductJsonLd({
 
   return {
     ...base,
+    // Preserve existing English discovery keywords and append any locale-shared terms later upstream.
     keywords: pack.keywords.join(', '),
     additionalProperty: [
       {

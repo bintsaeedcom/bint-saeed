@@ -11,8 +11,10 @@ function kw(
   de: string,
   nl: string,
   pt: string,
+  id?: string,
+  ms?: string,
 ): Record<AppLocale, string> {
-  return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: en, ms: en }
+  return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: id ?? en, ms: ms ?? en }
 }
 
 type KwRow = [string, string, string, string, string, string, string, string, string, string]
@@ -69,8 +71,10 @@ const SHARED_STRAND_I18N = SHARED_STRAND_KEYWORD_ROWS.map(([en, ar, fr, it, es, 
 )
 
 function rowsForLocale(rows: KwRow[], locale: AppLocale): string[] {
-  if (locale === 'en') return rows.map((row) => row[0])
-  return SHARED_STRAND_I18N.map((row) => row[locale])
+  const enTerms = rows.map((row) => row[0])
+  if (locale === 'en') return enTerms
+  // Keep English discovery terms and add native translations — never drop EN tags.
+  return [...enTerms, ...SHARED_STRAND_I18N.map((row) => row[locale])]
 }
 
 /** Shared signature-strand schema keywords — garment jewellery, abaya jewellery, worldwide geo. */

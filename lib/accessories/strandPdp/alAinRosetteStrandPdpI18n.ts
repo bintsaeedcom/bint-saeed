@@ -2,6 +2,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import type { StrandPdpContent } from '@/lib/accessories/strandPdp/types'
 import type { AlAinRosetteStrandId } from '@/lib/accessories/strandPdp/alAinRosetteStrandIds'
 import { AL_AIN_ROSETTE_STRAND_PDP_EN } from '@/lib/accessories/strandPdp/alAinRosetteStrandPdpEn'
+import { getAlAinRosetteDisplayNames } from '@/lib/accessories/strandPdp/alAinRosetteDisplayNamesI18n'
 import {
   buildStrandFaqFromTemplates,
   resolveStrandCare,
@@ -83,16 +84,42 @@ function buildRosettePdp(
   }
 }
 
+function withLocalizedDisplayNames(
+  locale: AppLocale,
+  id: AlAinRosetteStrandId,
+  stone: RosetteStoneStrings,
+): RosetteStoneStrings {
+  if (locale === 'en') return stone
+  const names = getAlAinRosetteDisplayNames(id, locale)
+  return { ...stone, ...names }
+}
+
 function buildLocalePack(
   locale: AppLocale,
   shared: RosetteSharedStrings,
   stones: Record<AlAinRosetteStrandId, RosetteStoneStrings>,
 ): Record<AlAinRosetteStrandId, StrandPdpContent> {
   return {
-    'signature-strand-lapis-lazuli': buildRosettePdp(shared, stones['signature-strand-lapis-lazuli'], locale),
-    'signature-strand-sunstone': buildRosettePdp(shared, stones['signature-strand-sunstone'], locale),
-    'signature-strand-rose-quartz': buildRosettePdp(shared, stones['signature-strand-rose-quartz'], locale),
-    'signature-strand-malachite': buildRosettePdp(shared, stones['signature-strand-malachite'], locale),
+    'signature-strand-lapis-lazuli': buildRosettePdp(
+      shared,
+      withLocalizedDisplayNames(locale, 'signature-strand-lapis-lazuli', stones['signature-strand-lapis-lazuli']),
+      locale,
+    ),
+    'signature-strand-sunstone': buildRosettePdp(
+      shared,
+      withLocalizedDisplayNames(locale, 'signature-strand-sunstone', stones['signature-strand-sunstone']),
+      locale,
+    ),
+    'signature-strand-rose-quartz': buildRosettePdp(
+      shared,
+      withLocalizedDisplayNames(locale, 'signature-strand-rose-quartz', stones['signature-strand-rose-quartz']),
+      locale,
+    ),
+    'signature-strand-malachite': buildRosettePdp(
+      shared,
+      withLocalizedDisplayNames(locale, 'signature-strand-malachite', stones['signature-strand-malachite']),
+      locale,
+    ),
   }
 }
 

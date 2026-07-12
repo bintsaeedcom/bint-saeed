@@ -2,6 +2,8 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import type { Accessory } from '@/data/accessories'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
 import { getSignatureStrandFaq } from '@/lib/accessories/signatureStrandFaqI18n'
+import { isAlAinRosetteStrandId } from '@/lib/accessories/strandPdp/alAinRosetteStrandIds'
+import { getAlAinRosetteDisplayNames } from '@/lib/accessories/strandPdp/alAinRosetteDisplayNamesI18n'
 
 export type SignatureStrandSchemaFacts = {
   productType: string
@@ -251,10 +253,46 @@ export function getSignatureStrandSchemaAudience(locale: AppLocale = 'en'): stri
   return AUDIENCE[locale]
 }
 
+const AL_AIN_ROSETTE_PRODUCT_TYPE_SUFFIX: Record<AppLocale, (stone: string) => string> = {
+  en: (stone) =>
+    ` Al Ain Rosette Signature Strand in natural ${stone} with hand-carved Carnelian Al Ain Rosettes.`,
+  ar: (stone) =>
+    ` ستراند التوقيع Al Ain Rosette من ${stone} الطبيعي مع ورود العين المنحوتة يدوياً من العقيق.`,
+  fr: (stone) =>
+    ` Signature Strand Al Ain Rosette en ${stone} naturel avec Rosettes d’Al Ain en cornaline sculptées à la main.`,
+  it: (stone) =>
+    ` Signature Strand Al Ain Rosette in ${stone} naturale con Rosette Al Ain in corniola scolpite a mano.`,
+  es: (stone) =>
+    ` Signature Strand Al Ain Rosette en ${stone} natural con Rosetas Al Ain de cornalina talladas a mano.`,
+  ru: (stone) =>
+    ` Signature Strand Al Ain Rosette из натурального камня ${stone} с вручную вырезанными Al Ain Rosette из сердолика.`,
+  zh: (stone) =>
+    ` Al Ain Rosette Signature Strand，天然${stone}与手工雕刻红玉髓 Al Ain 玫瑰花饰。`,
+  de: (stone) =>
+    ` Al Ain Rosette Signature Strand aus natürlichem ${stone} mit handgeschnitzten Karneol-Al-Ain-Rosetten.`,
+  nl: (stone) =>
+    ` Al Ain Rosette Signature Strand in natuurlijke ${stone} met handgesneden Carneool Al Ain Rozetten.`,
+  pt: (stone) =>
+    ` Signature Strand Al Ain Rosette em ${stone} natural com Rosetas Al Ain de cornalina esculpidas à mão.`,
+  id: (stone) =>
+    ` Signature Strand Al Ain Rosette dari ${stone} alami dengan Al Ain Rosette Carnelian yang diukir tangan.`,
+  ms: (stone) =>
+    ` Signature Strand Al Ain Rosette daripada ${stone} semula jadi dengan Al Ain Rosette Carnelian yang diukir tangan.`,
+}
+
 export function getSignatureStrandSchemaFacts(
   accessory: Accessory,
   locale: AppLocale = 'en',
 ): SignatureStrandSchemaFacts {
   const faq = getSignatureStrandFaq(accessory.id, locale)
-  return { ...FACTS_BY_LOCALE[locale], faq }
+  const base = { ...FACTS_BY_LOCALE[locale], faq }
+  if (!isAlAinRosetteStrandId(accessory.id)) return base
+
+  const { headline, stoneLabel } = getAlAinRosetteDisplayNames(accessory.id, locale)
+  const suffix = AL_AIN_ROSETTE_PRODUCT_TYPE_SUFFIX[locale](stoneLabel)
+  return {
+    ...base,
+    productType: `${base.productType}${suffix}`,
+    productCategory: `${base.productCategory}, ${headline}`,
+  }
 }

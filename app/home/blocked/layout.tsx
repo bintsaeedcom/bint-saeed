@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Access restricted | Bint Saeed',
+  title: 'Bint Saeed | Access restricted',
   robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
 }
 

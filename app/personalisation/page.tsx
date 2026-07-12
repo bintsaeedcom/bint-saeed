@@ -57,7 +57,7 @@ export default function PersonalisationPage() {
   }, [])
 
   return (
-    <main className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`${EDITORIAL_PAGE_SHELL} bg-[#1a0210] pb-0 ${isRTL ? 'rtl' : 'ltr'}`}>
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={HERO_IMAGE}
@@ -72,7 +72,7 @@ export default function PersonalisationPage() {
         description={copy.heroSub}
       />
 
-      <section className="relative z-10 -mt-6 rounded-t-[16px] bg-[#e8ddd4] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
+      <section className="relative z-10 -mt-6 rounded-t-[16px] bg-[#e8ddd4] py-16 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-36 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
         <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-center`}>
           <div>
             <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.secretEyebrow}</p>
@@ -96,7 +96,7 @@ export default function PersonalisationPage() {
         </div>
       </section>
 
-      <section className="relative z-20 -mt-6 rounded-t-[16px] bg-[#1a0210] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
+      <section className="relative z-20 -mt-6 rounded-t-[16px] bg-[#1a0210] py-16 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-36 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.pocketEyebrow}</p>
           <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#e8ddd4]`}>{copy.pocketTitle}</h2>
@@ -121,7 +121,7 @@ export default function PersonalisationPage() {
         </div>
       </section>
 
-      <section className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-20 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-28 md:sticky md:top-0 md:will-change-transform">
+      <section className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-16 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-28 md:sticky md:top-0 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.messageEyebrow}</p>
           <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#1a0210]`}>
@@ -151,7 +151,7 @@ export default function PersonalisationPage() {
 
       <section
         ref={stepsRef}
-        className="relative z-40 -mt-6 rounded-t-[16px] bg-[#1a0210] py-28 md:py-36 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]"
+        className="relative z-40 -mt-6 rounded-t-[16px] bg-[#1a0210] py-16 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-36 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]"
       >
         <div className={`${INNER_CONTAINER_CLASS} text-left`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.stepsEyebrow}</p>
@@ -281,10 +281,10 @@ export default function PersonalisationPage() {
 
         @media (max-width: 767px) {
           .closing-section {
-            padding: 80px 24px 80px;
+            padding: 64px 24px 72px;
           }
         }
       `}</style>
-    </main>
+    </div>
   )
 }

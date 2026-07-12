@@ -8,11 +8,11 @@ import {
 const KHOUS_HERITAGE_IMAGE = absoluteCodesPageImageUrl(CODES_IMAGE_FILES.khous)
 
 export const metadata: Metadata = {
-  title: 'The Codes | Bint Saeed',
+  title: 'Bint Saeed | The Codes',
   description:
     'The house codes — Al Talli, Khous, Al Ain Rosette, Knotted Lines, and the monogram — told in one continuous story.',
   openGraph: {
-    title: 'The Codes | Bint Saeed',
+    title: 'Bint Saeed | The Codes',
     description:
       'Emirati heritage design codes at Bint Saeed Abu Dhabi — Al Talli, Khous weaving, and the house monogram.',
     images: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'The Codes | Bint Saeed',
+    title: 'Bint Saeed | The Codes',
     description:
       'Emirati heritage design codes at Bint Saeed Abu Dhabi — Al Talli, Khous weaving, and the house monogram.',
     images: [KHOUS_HERITAGE_IMAGE],

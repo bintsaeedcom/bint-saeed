@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Error page previews | Bint Saeed',
+  title: 'Bint Saeed | Error page previews',
   robots: { index: false, follow: false },
 }
 

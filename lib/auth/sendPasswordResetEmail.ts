@@ -9,38 +9,38 @@ import {
   escapeEmailHtml,
 } from '@/lib/email/brandEmailChrome'
 
-function confirmationEmailHtml(origin: string, confirmUrl: string, name?: string): string {
+function resetEmailHtml(origin: string, resetUrl: string, name?: string): string {
   const { body } = EMAIL_BRAND
   const greeting = name ? `Hi ${escapeEmailHtml(name)},` : 'Hello,'
 
   const bodyHtml = `
               <p style="margin:0 0 16px;color:${body};">${greeting}</p>
-              <p style="margin:0 0 28px;color:${body};">Thank you for creating your Bint Saeed account. Please confirm your email address to finish setting up your profile.</p>
-              ${emailCtaButtonHtml(confirmUrl, 'Confirm email')}
-              ${emailFallbackLinkHtml(confirmUrl)}`
+              <p style="margin:0 0 28px;color:${body};">We received a request to reset the password for your Bint Saeed account. Choose a new password using the button below.</p>
+              ${emailCtaButtonHtml(resetUrl, 'Reset password')}
+              ${emailFallbackLinkHtml(resetUrl)}`
 
   return emailDocumentHtml({
     origin,
-    title: 'Confirm your email — Bint Saeed',
-    preheader: 'Confirm your email to finish setting up your Bint Saeed account.',
+    title: 'Reset your password — Bint Saeed',
+    preheader: 'Reset your Bint Saeed password. This link expires in one hour.',
     eyebrow: 'Abu Dhabi',
-    heading: 'Confirm your email',
+    heading: 'Reset your password',
     bodyHtml,
     noteHtml:
-      'This link expires in 48 hours. If you didn’t create an account, you can ignore this email.',
+      'This link expires in 1 hour. If you didn’t request a password reset, you can ignore this email — your password will stay the same.',
   })
 }
 
-export type SendVerificationResult =
+export type SendPasswordResetResult =
   | { ok: true; devLink?: string }
   | { ok: false; error: string }
 
-export async function sendVerificationEmail(
+export async function sendPasswordResetEmail(
   request: NextRequest,
   params: { to: string; token: string; name?: string },
-): Promise<SendVerificationResult> {
+): Promise<SendPasswordResetResult> {
   const origin = getSiteOrigin(request)
-  const confirmUrl = `${origin}/api/auth/verify-email?token=${encodeURIComponent(params.token)}`
+  const resetUrl = `${origin}/reset-password?token=${encodeURIComponent(params.token)}`
 
   const apiKey = process.env.RESEND_API_KEY?.trim()
   const from =
@@ -48,8 +48,8 @@ export async function sendVerificationEmail(
 
   if (!apiKey) {
     if (process.env.NODE_ENV === 'development') {
-      console.log('\n[bint-saeed auth] RESEND_API_KEY missing — verification link (dev only):\n', confirmUrl, '\n')
-      return { ok: true, devLink: confirmUrl }
+      console.log('\n[bint-saeed auth] RESEND_API_KEY missing — password reset link (dev only):\n', resetUrl, '\n')
+      return { ok: true, devLink: resetUrl }
     }
     return { ok: false, error: 'Transactional email is not configured.' }
   }
@@ -59,8 +59,8 @@ export async function sendVerificationEmail(
     const { error } = await resend.emails.send({
       from,
       to: params.to,
-      subject: 'Please confirm your email — Bint Saeed',
-      html: confirmationEmailHtml(origin, confirmUrl, params.name),
+      subject: 'Reset your password — Bint Saeed',
+      html: resetEmailHtml(origin, resetUrl, params.name),
     })
     if (error) {
       console.error('Resend error:', error)

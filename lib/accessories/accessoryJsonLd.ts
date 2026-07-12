@@ -1,5 +1,6 @@
 import type { Accessory } from '@/data/accessories'
 import { accessories } from '@/data/accessories'
+import { sortAccessoriesByPriceAsc } from '@/lib/accessories/filterAccessories'
 import { getAccessorySku } from '@/lib/accessories/accessorySku'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
@@ -1012,8 +1013,10 @@ export function buildAccessoriesCollectionJsonLd(
   items: readonly Accessory[],
   locale: AppLocale = 'en',
 ): Record<string, unknown> {
-  const jewellery = items.filter(
-    (a) => a.category === 'necklaces' || a.category === 'earrings' || a.category === 'signature-strands',
+  const jewellery = sortAccessoriesByPriceAsc(
+    items.filter(
+      (a) => a.category === 'necklaces' || a.category === 'earrings' || a.category === 'signature-strands',
+    ),
   )
 
   return {

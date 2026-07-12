@@ -1,21 +1,12 @@
 import { Resend } from 'resend'
 import type { StoredOrder } from '@/lib/orders/types'
 import { formatAmountForCurrency, normalizeCurrencyCode } from '@/lib/pricing'
+import { EMAIL_BRAND, escapeEmailHtml } from '@/lib/email/brandEmailChrome'
 
-const INK = '#1a0210'
-const CANVAS = '#faf9f7'
-const CARD = '#faf8f5'
-const BORDER = '#e8e4df'
-const MUTED = '#8a7a7a'
-const BODY = '#5c4a4a'
-const ACCENT = '#6a8090'
+const { ink: INK, canvas: CANVAS, card: CARD, border: BORDER, muted: MUTED, body: BODY, accent: ACCENT, signature: SIGNATURE, onDark } = EMAIL_BRAND
 
 function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
+  return escapeEmailHtml(value)
 }
 
 function siteOrigin(): string {
@@ -92,13 +83,16 @@ function ownerAlertHtml(order: StoredOrder): string {
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:${CANVAS};padding:28px 16px;">
     <tr>
       <td align="center">
-        <table role="presentation" width="100%" style="max-width:560px;background:${CARD};border:1px solid ${BORDER};">
+        <table role="presentation" width="100%" style="max-width:560px;background:${CARD};border:1px solid ${BORDER};box-shadow:0 12px 36px rgba(26,2,16,0.05);">
+          <tr>
+            <td style="height:3px;line-height:3px;font-size:0;background:${INK};">&nbsp;</td>
+          </tr>
           <tr>
             <td style="padding:28px 32px 12px;">
-              <p style="margin:0;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:${ACCENT};">Bint Saeed · Internal</p>
-              <h1 style="margin:10px 0 0;font-size:22px;font-weight:600;color:${INK};font-family:Georgia,'Times New Roman',serif;">New ${statusBadge === 'PAID' ? 'paid ' : ''}order received</h1>
+              <p style="margin:0;font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:${ACCENT};">Bint Saeed · Internal</p>
+              <h1 style="margin:10px 0 0;font-size:22px;font-weight:400;color:${INK};font-family:Georgia,'Times New Roman',serif;">New ${statusBadge === 'PAID' ? 'paid ' : ''}order received</h1>
               <p style="margin:8px 0 0;font-size:13px;color:${BODY};">
-                <strong>${escapeHtml(order.id)}</strong> · ${statusBadge} · ${provider} · ${money(order.amountTotal, order.currency)}
+                <strong style="color:${SIGNATURE};">${escapeHtml(order.id)}</strong> · ${statusBadge} · ${provider} · ${money(order.amountTotal, order.currency)}
               </p>
               <p style="margin:4px 0 0;font-size:12px;color:${MUTED};">Placed ${escapeHtml(placed)} (UAE)</p>
             </td>
@@ -122,9 +116,9 @@ function ownerAlertHtml(order: StoredOrder): string {
             <td style="padding:22px 32px 28px;text-align:center;">
               <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto;">
                 <tr>
-                  <td style="border-radius:2px;background:${INK};">
+                  <td style="border-radius:1px;background:${INK};">
                     <a href="${origin}/admin/orders" target="_blank" rel="noopener"
-                      style="display:inline-block;padding:14px 32px;font-size:12px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:${CARD};text-decoration:none;">
+                      style="display:inline-block;padding:14px 32px;font-size:11px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:${onDark};text-decoration:none;">
                       Open Orders Hub
                     </a>
                   </td>

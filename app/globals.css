@@ -78,6 +78,11 @@
   /* Primary stacks reference next/font variables applied on <html> (see app/layout.tsx). */
   --font-display: var(--font-rozha), serif;
   --font-body: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  /*
+   * Fixed header clearance — Header overwrites with measured px via ResizeObserver.
+   * Fallbacks stay slightly generous so breadcrumbs never sit under the bar before hydrate.
+   */
+  --site-header-height: 6.75rem;
   --text-hero: clamp(36px, 6vw, 72px);
   --text-h1: clamp(28px, 4vw, 52px);
   --text-h2: clamp(20px, 2.5vw, 32px);
@@ -112,6 +117,25 @@
   --bs-header-bridge: var(--color-sovereign);
   --bs-header-wine: var(--color-signature);
   --bs-page-canvas: var(--color-light);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --site-header-height: 7.5rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    /* Two-row desktop header (logo + topic row) */
+    --site-header-height: 10.5rem;
+  }
+}
+
+html {
+  scroll-padding-top: var(--site-header-height, 6.75rem);
+  /* Match footer so mobile rubber-band never flashes cream below the site */
+  background: #12080b;
 }
 
 /* RTL Support */
@@ -191,7 +215,8 @@ body {
   line-height: 1.8;
   overflow-x: hidden;
   cursor: auto;
-  background: var(--color-light);
+  /* Match footer edge so mobile overscroll never reveals cream “white space” below the site */
+  background: #12080b;
   color: var(--color-ink);
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;

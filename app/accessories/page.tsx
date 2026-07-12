@@ -31,6 +31,7 @@ import { resolveAccessoryCategoryId } from '@/lib/accessories/accessoryRouteAlia
 import { getAccessoryCarouselAlt, buildAccessoriesCollectionJsonLd } from '@/lib/accessories/accessoryJsonLd'
 import { getLocalizedAccessoryDisplayName } from '@/lib/accessories/accessoryCatalogCopyI18n'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
+import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
 
 function parsePriceParam(v: string | null): PriceRangeId {
   if (!v) return 'all'
@@ -211,7 +212,7 @@ export default function AccessoriesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
       />
       {/* Hero Banner */}
-      <section className="relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas pb-5 pt-0 md:pb-6">
+      <section className={`relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas pb-5 md:pb-6 ${SITE_CONTENT_TOP_PAD}`}>
         <div className="container mx-auto px-6 lg:px-12">
           <div className={`relative flex flex-col justify-end text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
             {/* Back Button */}
@@ -255,7 +256,7 @@ export default function AccessoriesPage() {
         <div className="container mx-auto px-6 lg:px-12">
           {/* Mobile toolbar — category strip + refine drawer */}
           <div
-            className={`sticky top-[50px] z-40 border-b border-brand-stone/25 bg-brand-pageCanvas md:top-16 md:hidden ${isRTL ? 'text-right' : ''}`}
+            className={`sticky ${SITE_HEADER_STICKY_TOP} z-40 border-b border-brand-stone/25 bg-brand-pageCanvas md:hidden ${isRTL ? 'text-right' : ''}`}
           >
             <div
               className={`flex items-center justify-between gap-3 py-3 ${isRTL ? 'flex-row-reverse' : ''}`}
@@ -375,7 +376,7 @@ export default function AccessoriesPage() {
                         id="accessories-price-filter"
                         value={priceRange}
                         onChange={(e) => setPriceAndUrl(e.target.value as PriceRangeId)}
-                        className="w-full cursor-pointer border border-brand-stone/40 bg-white px-3 py-2 font-montserrat text-xs tracking-wide text-brand-darkRed focus:border-brand-dustyBlue focus:outline-none"
+                        className="w-full cursor-pointer border border-brand-darkRed/30 bg-white px-3 py-2 font-montserrat text-xs tracking-wide text-brand-darkRed focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25"
                       >
                         {PRICE_RANGE_OPTIONS.map((opt) => (
                           <option key={opt.id} value={opt.id}>
@@ -552,7 +553,7 @@ export default function AccessoriesPage() {
                   <select
                     value={priceRange}
                     onChange={(e) => setPriceAndUrl(e.target.value as PriceRangeId)}
-                    className="w-full cursor-pointer border border-brand-stone/40 bg-white px-3 py-2.5 font-montserrat text-sm text-brand-darkRed"
+                    className="w-full cursor-pointer border border-brand-darkRed/30 bg-white px-3 py-2.5 font-montserrat text-sm text-brand-darkRed focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25"
                     aria-label={ui.accessories.price}
                   >
                     {PRICE_RANGE_OPTIONS.map((opt) => (

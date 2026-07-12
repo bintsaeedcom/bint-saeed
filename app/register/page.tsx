@@ -11,6 +11,18 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { passwordsMatch, validatePassword } from '@/lib/auth/passwordPolicy'
 import { ctaFormSubmitCompact } from '@/lib/ui/ctaClasses'
+import {
+  formCardClass,
+  formDividerLabelClass,
+  formDividerLineClass,
+  formFieldClass,
+  formFooterLinkClass,
+  formFooterTextClass,
+  formHintClass,
+  formIconButtonClass,
+  formIconClass,
+  formLabelClass,
+} from '@/lib/ui/formFieldClasses'
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
@@ -34,9 +46,6 @@ function GoogleIcon({ className }: { className?: string }) {
     </svg>
   )
 }
-
-const fieldClass =
-  'w-full rounded-md border border-brand-stone/70 bg-white py-3.5 font-montserrat text-sm text-brand-darkRed shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] placeholder:text-brand-stone/55 focus:border-brand-darkRed focus:outline-none focus:ring-1 focus:ring-brand-darkRed/25'
 
 export default function RegisterPage() {
   const { isRTL, language } = useLanguage()
@@ -141,11 +150,11 @@ export default function RegisterPage() {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mx-auto w-full max-w-md rounded-2xl border border-brand-stone/55 bg-white p-8 shadow-[0_10px_40px_rgba(26,2,16,0.06)] ring-1 ring-brand-darkRed/5 md:p-10 lg:mx-0 lg:max-w-none"
+            className={`mx-auto max-w-md lg:mx-0 lg:max-w-none ${formCardClass}`}
           >
             <a
               href="/api/auth/google?next=/account"
-              className="mb-6 flex w-full items-center justify-center gap-3 rounded-md border border-[#dadce0] bg-white px-4 py-3.5 font-montserrat text-[13px] font-medium tracking-normal text-[#3c4043] shadow-sm transition-colors hover:bg-[#f8f9fa] hover:shadow"
+              className="mb-6 flex w-full items-center justify-center gap-3 rounded-md border border-brand-darkRed/20 bg-white px-4 py-3.5 font-montserrat text-[13px] font-medium tracking-normal text-brand-darkRed shadow-sm transition-colors hover:border-brand-darkRed/35 hover:bg-brand-pageCanvas"
               data-cursor-hover
             >
               <GoogleIcon className="h-[18px] w-[18px] shrink-0" />
@@ -154,56 +163,48 @@ export default function RegisterPage() {
 
             <div className="relative mb-6">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-brand-stone/40" />
+                <div className={formDividerLineClass} />
               </div>
               <div className="relative flex justify-center">
-                <span className="bg-white px-3 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
-                  {isRTL ? 'أو' : 'or'}
-                </span>
+                <span className={formDividerLabelClass}>{isRTL ? 'أو' : 'or'}</span>
               </div>
             </div>
 
             <form onSubmit={onSubmit} className="space-y-5">
               <div>
-                <label className="mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
-                  {isRTL ? 'الاسم' : 'Name'}
-                </label>
+                <label className={formLabelClass}>{isRTL ? 'الاسم' : 'Name'}</label>
                 <div className="relative">
-                  <FiUser className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-stone/60 rtl:left-auto rtl:right-3" />
+                  <FiUser className={formIconClass} />
                   <input
                     type="text"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     autoComplete="name"
-                    className={`${fieldClass} ps-10 pe-4 rtl:ps-4 rtl:pe-10`}
+                    className={`${formFieldClass} ps-10 pe-4 rtl:ps-4 rtl:pe-10`}
                     placeholder={isRTL ? 'الاسم' : 'Your name'}
                   />
                 </div>
               </div>
               <div>
-                <label className="mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
-                  {isRTL ? 'البريد الإلكتروني' : 'Email'}
-                </label>
+                <label className={formLabelClass}>{isRTL ? 'البريد الإلكتروني' : 'Email'}</label>
                 <div className="relative">
-                  <FiMail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-stone/60 rtl:left-auto rtl:right-3" />
+                  <FiMail className={formIconClass} />
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     autoComplete="email"
-                    className={`${fieldClass} ps-10 pe-4 rtl:ps-4 rtl:pe-10`}
+                    className={`${formFieldClass} ps-10 pe-4 rtl:ps-4 rtl:pe-10`}
                     placeholder="you@example.com"
                   />
                 </div>
               </div>
               <div>
-                <label className="mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
-                  {isRTL ? 'كلمة المرور' : 'Password'}
-                </label>
+                <label className={formLabelClass}>{isRTL ? 'كلمة المرور' : 'Password'}</label>
                 <div className="relative">
-                  <FiLock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-stone/60 rtl:left-auto rtl:right-3" />
+                  <FiLock className={formIconClass} />
                   <input
                     type={showPassword ? 'text' : 'password'}
                     required
@@ -211,13 +212,13 @@ export default function RegisterPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="new-password"
-                    className={`${fieldClass} ps-10 pe-11 rtl:ps-11 rtl:pe-10`}
+                    className={`${formFieldClass} ps-10 pe-11 rtl:ps-11 rtl:pe-10`}
                     placeholder="••••••••"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-stone/70 transition-colors hover:text-brand-darkRed rtl:left-3 rtl:right-auto"
+                    className={formIconButtonClass}
                     aria-label={
                       showPassword
                         ? isRTL
@@ -232,31 +233,31 @@ export default function RegisterPage() {
                     {showPassword ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
                   </button>
                 </div>
-                <p className="mt-1 font-montserrat text-[10px] text-brand-clayRed/50">
+                <p className={formHintClass}>
                   {isRTL
                     ? '٨ أحرف على الأقل، حرف كبير واحد ورقم واحد'
                     : 'At least 8 characters, one capital letter, and one number'}
                 </p>
               </div>
               <div>
-                <label className="mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-darkRed">
+                <label className={formLabelClass}>
                   {isRTL ? 'تأكيد كلمة المرور' : 'Confirm password'}
                 </label>
                 <div className="relative">
-                  <FiLock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-stone/60 rtl:left-auto rtl:right-3" />
+                  <FiLock className={formIconClass} />
                   <input
                     type={showConfirm ? 'text' : 'password'}
                     required
                     value={confirm}
                     onChange={(e) => setConfirm(e.target.value)}
                     autoComplete="new-password"
-                    className={`${fieldClass} ps-10 pe-11 rtl:ps-11 rtl:pe-10`}
+                    className={`${formFieldClass} ps-10 pe-11 rtl:ps-11 rtl:pe-10`}
                     placeholder="••••••••"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirm((v) => !v)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-stone/70 transition-colors hover:text-brand-darkRed rtl:left-3 rtl:right-auto"
+                    className={formIconButtonClass}
                     aria-label={
                       showConfirm
                         ? isRTL
@@ -283,9 +284,9 @@ export default function RegisterPage() {
               </button>
             </form>
 
-            <p className="mt-6 text-center font-montserrat text-xs text-brand-clayRed/60">
+            <p className={formFooterTextClass}>
               {isRTL ? 'لديك حساب بالفعل؟' : 'Already have an account?'}{' '}
-              <LocaleLink href="/sign-in" className="text-brand-dustyBlue underline">
+              <LocaleLink href="/sign-in" className={formFooterLinkClass}>
                 {isRTL ? 'تسجيل الدخول' : 'Sign in'}
               </LocaleLink>
             </p>

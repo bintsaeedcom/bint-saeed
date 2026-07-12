@@ -98,6 +98,7 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<SearchableItem[]>([])
   const searchInputRef = useRef<HTMLInputElement>(null)
+  const headerRef = useRef<HTMLElement>(null)
   const megaMenuLeaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const mobileNavScrollRef = useRef<HTMLDivElement>(null)
   const mobileSectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
@@ -333,6 +334,27 @@ export default function Header() {
     return () => window.removeEventListener(OPEN_MINI_CART_EVENT, openMiniCart as EventListener)
   }, [])
 
+  // Keep sticky topic/library bars flush under the real header (height changes on scroll / breakpoint).
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+
+    const syncHeaderHeight = () => {
+      document.documentElement.style.setProperty('--site-header-height', `${el.offsetHeight}px`)
+    }
+
+    syncHeaderHeight()
+    const ro = new ResizeObserver(syncHeaderHeight)
+    ro.observe(el)
+    window.addEventListener('resize', syncHeaderHeight)
+
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', syncHeaderHeight)
+      document.documentElement.style.removeProperty('--site-header-height')
+    }
+  }, [isScrolled, activeMegaMenu])
+
   // Handle search
   useEffect(() => {
     if (searchQuery.trim()) {
@@ -370,6 +392,7 @@ export default function Header() {
     <>
       {/* Main Header - Elegant Single Row Design */}
       <header
+        ref={headerRef}
         className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isTransparentHomeHeader
             ? 'border-white/10 bg-[linear-gradient(90deg,rgba(18,8,11,0.72)_0%,rgba(28,15,21,0.66)_22%,rgba(45,20,30,0.58)_50%,rgba(28,15,21,0.66)_78%,rgba(18,8,11,0.72)_100%)] shadow-[0_18px_46px_rgba(8,2,8,0.24)] backdrop-blur-md'
@@ -661,7 +684,7 @@ export default function Header() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t.search.placeholder || 'Search for products, collection, pages…'}
-                  className={`flex-1 rounded-sm border border-brand-stone/35 bg-white px-3 py-2 text-lg font-montserrat text-brand-darkRed focus:border-brand-dustyBlue focus:outline-none placeholder:text-brand-stone/75 md:text-xl ${isRTL ? 'text-right' : ''}`}
+                  className={`flex-1 rounded-sm border border-brand-darkRed/30 bg-white px-3 py-2 text-lg font-montserrat text-brand-darkRed focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 placeholder:text-brand-muted md:text-xl ${isRTL ? 'text-right' : ''}`}
                   dir={isRTL ? 'rtl' : 'ltr'}
                 />
                 <button

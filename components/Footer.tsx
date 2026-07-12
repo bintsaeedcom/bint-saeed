@@ -17,6 +17,7 @@ import {
 } from '@/lib/pricing'
 import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
 import { useStableToggleScroll } from '@/lib/ui/useStableToggleScroll'
+import { getAboutTopicNavLinks } from '@/lib/i18n/aboutTopicNavI18n'
 import { useState } from 'react'
 
 const socialLinks = [
@@ -46,11 +47,7 @@ export default function Footer() {
       { label: t.footer.collection, href: '/shop' },
       { label: t.footer.accessories, href: '/accessories' },
     ],
-    about: [
-      { label: t.footer.ourStory, href: '/about' },
-      { label: t.footer.craftsmanship, href: '/craftsmanship' },
-      { label: t.footer.careers, href: '/careers' },
-    ],
+    about: getAboutTopicNavLinks(language),
     help: [
       { label: t.footer.contactUs, href: '/contact' },
       { label: t.footer.shippingReturns, href: '/shipment-return-policy' },
@@ -60,7 +57,12 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative w-full min-w-0 max-w-none overflow-hidden">
+    <footer className="relative w-full min-w-0 max-w-none overflow-x-hidden bg-[#12080b]">
+      {/* Extends dark footing under rubber-band / overscroll so cream never appears below */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-full z-0 h-[max(100vh,100dvh)] bg-[#12080b]"
+      />
       {/* Main Footer Links - Coming Soon Dark Gradient Style */}
       <div className="relative text-white">
         {/* Coming Soon gradient background */}
@@ -184,13 +186,19 @@ export default function Footer() {
               </button>
               <ul className={`space-y-3 ${mobileOpenSection === 'about' ? 'block' : 'hidden'} xl:block`}>
                 {footerLinks.about.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.href}>
                     <LocaleLink
                       href={link.href}
-                    className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
+                      className="font-montserrat text-[12px] tracking-[0.03em] text-white/60 transition-colors hover:text-brand-dustyBlue"
                       data-cursor-hover
-                      data-analytics-event={link.href === '/contact' ? 'click_footer_contact' : undefined}
-                      data-analytics-section="footer-help-links"
+                      data-analytics-event={
+                        link.href === '/contact'
+                          ? 'click_footer_contact'
+                          : link.href === '/about'
+                            ? 'click_footer_our_story'
+                            : undefined
+                      }
+                      data-analytics-section="footer-about-links"
                     >
                       {link.label}
                     </LocaleLink>

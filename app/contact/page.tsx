@@ -12,6 +12,12 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import toast from 'react-hot-toast'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 import { ctaFormSubmit } from '@/lib/ui/ctaClasses'
+import {
+  formFieldClass,
+  formFieldErrorClass,
+  formHintClass,
+  formLabelClass,
+} from '@/lib/ui/formFieldClasses'
 import { showContactSuccessToast } from '@/lib/ui/contactSuccessToast'
 import { validateContactName } from '@/lib/validateContactName'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
@@ -27,29 +33,18 @@ const CONTACT_PHONE_TEL = '+971502299402'
 const CONTACT_LOCATION_EN = 'Abu Dhabi,\u00A0United\u00A0Arab\u00A0Emirates'
 const CONTACT_LOCATION_AR = 'أبو ظبي، الإمارات العربية المتحدة'
 
-const contactFieldClass = [
-  'w-full rounded-[2px] border border-brand-stone/40 bg-white px-4 py-3.5',
-  'font-montserrat text-sm tracking-[0.03em] text-brand-darkRed placeholder:text-brand-clayRed/40',
-  'shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]',
-  'outline-none transition-[border-color,box-shadow,background-color] duration-200',
-  'hover:border-brand-stone/55',
-  'focus:border-brand-darkRed/35 focus:bg-white focus:shadow-[0_0_0_1px_rgba(111,21,36,0.08)]',
-].join(' ')
-
-const contactFieldErrorClass =
-  'border-brand-clayRed/55 hover:border-brand-clayRed/60 focus:border-brand-clayRed/65 focus:shadow-[0_0_0_1px_rgba(193,144,134,0.18)]'
+const contactFieldClass = formFieldClass
+const contactFieldErrorClass = formFieldErrorClass
 
 const contactPanelClass = [
-  'relative overflow-hidden rounded-[2px] border border-brand-stone/30',
-  'bg-[linear-gradient(168deg,rgba(255,255,255,0.96)_0%,rgba(250,248,245,0.9)_48%,rgba(245,240,235,0.88)_100%)]',
+  'relative overflow-hidden rounded-[2px] border border-brand-darkRed/15',
+  'bg-white',
   'p-6 shadow-[0_24px_56px_rgba(26,2,16,0.08)] md:p-9',
 ].join(' ')
 
-const contactLabelClass =
-  'mb-2 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed'
+const contactLabelClass = formLabelClass
 
-const contactErrorClass =
-  'mt-2 font-montserrat text-[11px] leading-relaxed tracking-[0.02em] text-brand-clayRed'
+const contactErrorClass = `${formHintClass} text-brand-clayRed`
 
 function FieldError({ id, message, isRTL }: { id: string; message: string; isRTL: boolean }) {
   return (

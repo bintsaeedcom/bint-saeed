@@ -1,4 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
+import { indonesiaImageAltFromEn } from '@/lib/i18n/indonesiaImageAltFromEn'
+import { malaysiaImageAltFromEn } from '@/lib/i18n/malaysiaImageAltFromEn'
 import { PRODUCT_IMAGE_ALT_LOCALE_ID_MS } from '@/lib/products/imageAltLocaleIdMs'
 import { COVENT_GARDEN_SIGNATURE_SET_IMAGE_ALT_ENTRIES } from '@/lib/products/coventGardenSignatureSetImageAltI18n'
 import { COVENT_GARDEN_LONG_DRESS_IMAGE_ALT_ENTRIES } from '@/lib/products/coventGardenLongDressImageAltI18n'
@@ -566,8 +568,17 @@ export function getLocalizedProductImageAltOverride(
   const row = PRODUCT_IMAGE_ALT_I18N[filename]
   if (!row) return undefined
   const native = PRODUCT_IMAGE_ALT_LOCALE_ID_MS[filename]
-  if (locale === 'id' && native?.id) return native.id
-  if (locale === 'ms' && native?.ms) return native.ms
+  // Prefer curated id/ms entries; otherwise derive from English so alts never stay raw EN.
+  if (locale === 'id') {
+    if (native?.id) return native.id
+    if (row.id && row.id !== row.en) return row.id
+    return indonesiaImageAltFromEn(row.en)
+  }
+  if (locale === 'ms') {
+    if (native?.ms) return native.ms
+    if (row.ms && row.ms !== row.en) return row.ms
+    return malaysiaImageAltFromEn(row.en)
+  }
   return row[locale] ?? row.en
 }
 

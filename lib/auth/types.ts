@@ -6,6 +6,11 @@ export type VerifyPayload = {
   name: string
 }
 
+/** One-shot password reset token payload (email only — hash set on submit). */
+export type PasswordResetPayload = {
+  email: string
+}
+
 export type VerifiedUserRecord = {
   passwordHash?: string
   name: string

@@ -103,6 +103,30 @@ const FR_ACCESSORY_CATALOG: Record<string, AccessoryCatalogCopy> = {
       'Charm sac Al Ain Oasis II assemblé à la main en jade fuchsia naturel, conçu pour sacs à main et pochettes de soirée.',
     materials: 'Jade fuchsia naturel, rosettes d’Al Ain en cornaline sculptées à la main, hématite facettée plaquée or',
   },
+  'signature-strand-lapis-lazuli': {
+    name: 'Fils Al Ain Oasis — Lapis lazuli',
+    description:
+      'Lapis lazuli riche aux reflets de pyrite dorée ; un ton bijou élevé pour les abayas du soir, avec Rosettes d’Al Ain en cornaline.',
+    materials: 'Lapis lazuli naturel, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
+  'signature-strand-sunstone': {
+    name: 'Fils Al Ain Oasis — Pierre de soleil',
+    description:
+      'Pierre de soleil lumineuse aux reflets pêche-orange, assemblée à la main avec Rosettes d’Al Ain en cornaline.',
+    materials: 'Pierre de soleil naturelle, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
+  'signature-strand-rose-quartz': {
+    name: 'Fils Al Ain Oasis — Quartz rose',
+    description:
+      'Quartz rose doux assemblé à la main avec Rosettes d’Al Ain en cornaline pour une ligne romantique sur l’abaya.',
+    materials: 'Quartz rose naturel, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
+  'signature-strand-malachite': {
+    name: 'Fils Al Ain Oasis — Malachite',
+    description:
+      'Malachite naturelle aux bandes vertes profondes, assemblée à la main avec Rosettes d’Al Ain en cornaline.',
+    materials: 'Malachite naturelle, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
 }
 
 function frCopy(id: string): AccessoryCatalogCopy | undefined {

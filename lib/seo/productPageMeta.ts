@@ -11,6 +11,7 @@ import { getShopCatalogPageSeo } from '@/lib/seo/shopCatalogPageSeoI18n'
 import { buildProductSchemaKeywords } from '@/lib/products/productSchemaMeta'
 import { getProductSlug } from '@/lib/products/links'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
+import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
 
 const SITE = new URL('https://www.bintsaeed.com')
 const G = LOCALE_GEO
@@ -34,9 +35,9 @@ export function buildProductPageTitle(
   const slug = body.slug?.toLowerCase()
   if (slug) {
     const dedicated = resolveDedicatedPageSeo(slug, locale)
-    if (dedicated) return dedicated.title
+    if (dedicated) return brandDocumentTitle(dedicated.title)
   }
-  return `${body.name} | Bint Saeed`
+  return brandDocumentTitle(body.name)
 }
 
 /** Intro line per locale — brand, city, country, Emirati brand signal. */
@@ -180,7 +181,7 @@ const NOT_FOUND: Record<AppLocale, { title: string; description: string }> = {
 export function productNotFoundMetadata(locale: AppLocale): Metadata {
   const m = NOT_FOUND[locale]
   return {
-    title: m.title,
+    title: brandDocumentTitle(m.title),
     description: m.description,
     robots: { index: false, follow: false },
   }

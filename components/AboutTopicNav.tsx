@@ -32,7 +32,7 @@ export default function AboutTopicNav() {
   return (
     <nav
       aria-label={getAboutTopicNavAriaLabel(language)}
-      className={`sticky ${SITE_HEADER_STICKY_TOP} z-40 w-full min-w-0 border-b border-brand-stone/30 bg-brand-pageCanvas`}
+      className={`sticky ${SITE_HEADER_STICKY_TOP} z-40 w-full min-w-0 border-b border-brand-stone/30 bg-brand-pageCanvas shadow-none`}
     >
       <div className={`${EDITORIAL_PAGE_CONTAINER} relative`}>
         <div

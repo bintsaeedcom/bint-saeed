@@ -1,6 +1,7 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { localizedPath } from '@/lib/i18n/routing'
 import { accessories } from '@/data/accessories'
+import { sortAccessoriesByPriceAsc } from '@/lib/accessories/filterAccessories'
 import {
   mergeAccessorySchemaKeywords,
   getJewelleryCategoryDiscoveryKeywords,
@@ -312,7 +313,9 @@ export function buildStrandsCollectionJsonLd(locale: AppLocale = 'en'): Record<s
   const lang = schemaInLanguageForLocale(locale)
   const pageUrl = `${SITE_URL}${localizedPath(locale, '/strands')}`
 
-  const strands = accessories.filter((item) => item.category === 'signature-strands')
+  const strands = sortAccessoriesByPriceAsc(
+    accessories.filter((item) => item.category === 'signature-strands'),
+  )
 
   const collectionNode: Record<string, unknown> = {
     '@type': 'CollectionPage',

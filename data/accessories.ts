@@ -560,7 +560,7 @@ export const accessories: Accessory[] = [
   // Abaya strands — natural stone line (10 products; stone-specific PDPs)
   {
     id: 'signature-strand-onyx',
-    name: 'Onyx Strand',
+    name: 'Onyx Strands',
     nameAr: 'أونكس حجر طبيعي',
     category: 'signature-strands',
     price: 629,
@@ -576,7 +576,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-tiger-eye',
-    name: 'Tiger Eye Strand',
+    name: 'Tiger Eye Strands',
     nameAr: 'عين النمر حجر طبيعي',
     category: 'signature-strands',
     price: 629,
@@ -592,8 +592,8 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-sunstone',
-    name: 'Al Ain Oasis Sunstone Strand',
-    nameAr: 'ستراند واحة العين — حجر الشمس',
+    name: 'Al Ain Oasis Sunstone Strands',
+    nameAr: 'ستراندات واحة العين — حجر الشمس',
     category: 'signature-strands',
     price: 899,
     description:
@@ -608,7 +608,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-fuchsia-jade',
-    name: 'Fuchsia Jade Strand',
+    name: 'Fuchsia Jade Strands',
     nameAr: 'اليشم الفوشي حجر طبيعي',
     category: 'signature-strands',
     price: 499,
@@ -624,7 +624,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-orange-jade',
-    name: 'Orange Jade Strand',
+    name: 'Orange Jade Strands',
     nameAr: 'اليشم البرتقالي حجر طبيعي',
     category: 'signature-strands',
     price: 499,
@@ -641,7 +641,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-blue-aventurine',
-    name: 'Blue Aventurine Strand',
+    name: 'Blue Aventurine Strands',
     nameAr: 'أفنتورين أزرق حجر طبيعي',
     category: 'signature-strands',
     price: 629,
@@ -657,8 +657,8 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-rose-quartz',
-    name: 'Al Ain Oasis Rose Quartz Strand',
-    nameAr: 'ستراند واحة العين — كوارتز وردي',
+    name: 'Al Ain Oasis Rose Quartz Strands',
+    nameAr: 'ستراندات واحة العين — كوارتز وردي',
     category: 'signature-strands',
     price: 899,
     description:
@@ -673,8 +673,8 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-malachite',
-    name: 'Al Ain Oasis Malachite Strand',
-    nameAr: 'ستراند واحة العين — ملاكيت',
+    name: 'Al Ain Oasis Malachite Strands',
+    nameAr: 'ستراندات واحة العين — ملاكيت',
     category: 'signature-strands',
     price: 1099,
     description:
@@ -689,8 +689,8 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-lapis-lazuli',
-    name: 'Al Ain Oasis Lapis Lazuli Strand',
-    nameAr: 'ستراند واحة العين — لازورد',
+    name: 'Al Ain Oasis Lapis Lazuli Strands',
+    nameAr: 'ستراندات واحة العين — لازورد',
     category: 'signature-strands',
     price: 899,
     description:
@@ -705,7 +705,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-amethyst-hearts',
-    name: 'Amethyst Hearts Strand',
+    name: 'Amethyst Hearts Strands',
     nameAr: 'قلوب جمشت حجر طبيعي',
     category: 'signature-strands',
     price: 899,
@@ -722,7 +722,7 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-jade-hearts',
-    name: 'Jade Hearts Strand',
+    name: 'Jade Hearts Strands',
     nameAr: 'قلوب اليشم حجر طبيعي',
     category: 'signature-strands',
     price: 799,
@@ -739,8 +739,8 @@ export const accessories: Accessory[] = [
   },
   {
     id: 'signature-strand-jade',
-    name: 'Natural Jade Strand',
-    nameAr: 'ستراند اليشم الطبيعي',
+    name: 'Natural Jade Strands',
+    nameAr: 'ستراندات اليشم الطبيعي',
     category: 'signature-strands',
     price: 799,
     description:

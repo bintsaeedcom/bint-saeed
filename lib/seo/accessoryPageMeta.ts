@@ -30,6 +30,7 @@ import {
   getLocalizedAccessoryMaterials,
 } from '@/lib/accessories/accessoryCatalogCopyI18n'
 import { isSignatureStrandCategory } from '@/lib/accessories/accessoryRouteAliases'
+import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
 
 const G = LOCALE_GEO
 
@@ -77,14 +78,14 @@ function accessoryDisplayName(accessory: Accessory, locale: AppLocale): string {
 
 export function buildAccessoryPageTitle(accessory: Accessory, locale: AppLocale): string {
   const phoneTitle = getPhoneCharmMetaTitle(accessory.id, locale)
-  if (phoneTitle) return phoneTitle
+  if (phoneTitle) return brandDocumentTitle(phoneTitle)
   const bagTitle = getBagCharmMetaTitle(accessory.id, locale)
-  if (bagTitle) return bagTitle
+  if (bagTitle) return brandDocumentTitle(bagTitle)
   const earringTitle = getEarringMetaTitle(accessory.id, locale)
-  if (earringTitle) return earringTitle
+  if (earringTitle) return brandDocumentTitle(earringTitle)
   const necklaceTitle = getNecklaceMetaTitle(accessory.id, locale)
-  if (necklaceTitle) return necklaceTitle
-  return `${accessoryDisplayName(accessory, locale)} | ${BRAND_NAME}`
+  if (necklaceTitle) return brandDocumentTitle(necklaceTitle)
+  return brandDocumentTitle(accessoryDisplayName(accessory, locale))
 }
 
 export function buildAccessoryMetaDescription(accessory: Accessory, locale: AppLocale): string {
@@ -186,7 +187,7 @@ const NOT_FOUND: Record<AppLocale, { title: string; description: string }> = {
 export function accessoryNotFoundMetadata(locale: AppLocale): Metadata {
   const m = NOT_FOUND[locale]
   return {
-    title: m.title,
+    title: brandDocumentTitle(m.title),
     description: m.description,
     robots: { index: false, follow: false },
   }

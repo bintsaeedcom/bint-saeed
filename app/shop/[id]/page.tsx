@@ -990,7 +990,7 @@ export default function ProductPage() {
                       onChange={(e) => setCustomisationMessage(e.target.value.slice(0, CUSTOMISATION_MAX_CHARS))}
                       maxLength={CUSTOMISATION_MAX_CHARS}
                       placeholder={ui.personalisation.placeholder}
-                      className={`w-full border border-brand-stone/50 px-3 py-2.5 font-montserrat text-[11px] tracking-wide transition-colors focus:border-brand-darkRed ${CTA_BUTTON_RADIUS}`}
+                      className={`w-full border border-brand-darkRed/30 bg-white px-3 py-2.5 font-montserrat text-[11px] tracking-wide text-brand-darkRed placeholder:text-brand-muted transition-colors focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 ${CTA_BUTTON_RADIUS}`}
                     />
                     <p className={`font-montserrat text-[11px] text-brand-darkRed/55 ${isRTL ? 'text-right' : ''}`}>
                       {customisationMessage.length}/{CUSTOMISATION_MAX_CHARS}

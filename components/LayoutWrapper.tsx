@@ -39,6 +39,12 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   /** Full-bleed hero under fixed header — no top gap on main */
   const isFlushHeroLayout = isHomeEditorial || isAboutEditorialRoute(inner)
 
+  /** Dark editorial pages — keep wrapper dark so cream never peeks under/around content or past the footer */
+  const isDarkEditorialSurface =
+    isAboutEditorialRoute(inner) ||
+    inner === '/strands' ||
+    inner.startsWith('/strands/')
+
   if (isComingSoon || isHomeAccessShell || isDevErrorPreview || isAdminArea) {
     return <main>{children}</main>
   }
@@ -50,7 +56,11 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
         <main
           className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : SITE_HEADER_OFFSET}`}
         >
-          <div className="relative z-[2] w-full min-w-0 max-w-none bg-brand-pageCanvas">
+          <div
+            className={`relative z-[2] w-full min-w-0 max-w-none ${
+              isDarkEditorialSurface ? 'bg-[#1a0210]' : 'bg-brand-pageCanvas'
+            }`}
+          >
             {children}
           </div>
         </main>

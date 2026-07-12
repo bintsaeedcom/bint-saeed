@@ -1,6 +1,6 @@
 import { memoryAuthStore } from './memoryStore'
 import { isRedisConfigured, redisAuthStore } from './redisStore'
-import type { VerifiedUserRecord, VerifyPayload } from './types'
+import type { PasswordResetPayload, VerifiedUserRecord, VerifyPayload } from './types'
 
 /**
  * Production: set UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN (Upstash Redis).
@@ -35,6 +35,28 @@ export const authStore = {
       return redisAuthStore.consumeVerifyToken(token)
     }
     return memoryAuthStore.consumeVerifyToken(token)
+  },
+
+  async setPasswordReset(email: string, token: string): Promise<void> {
+    if (isRedisConfigured()) {
+      await redisAuthStore.setPasswordReset(email, token)
+      return
+    }
+    await memoryAuthStore.setPasswordReset(email, token)
+  },
+
+  async peekPasswordResetToken(token: string): Promise<PasswordResetPayload | null> {
+    if (isRedisConfigured()) {
+      return redisAuthStore.peekPasswordResetToken(token)
+    }
+    return memoryAuthStore.peekPasswordResetToken(token)
+  },
+
+  async consumePasswordResetToken(token: string): Promise<PasswordResetPayload | null> {
+    if (isRedisConfigured()) {
+      return redisAuthStore.consumePasswordResetToken(token)
+    }
+    return memoryAuthStore.consumePasswordResetToken(token)
   },
 }
 

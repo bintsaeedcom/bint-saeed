@@ -21,10 +21,11 @@ type Props = {
 }
 
 const triggerBase = [
-  'flex w-full items-center justify-between gap-3 rounded-[2px] border bg-white px-4 py-3.5',
-  'font-montserrat text-sm normal-case tracking-[0.03em] transition-[border-color,box-shadow,background-color] duration-200',
-  'outline-none hover:border-brand-stone/55',
-  'focus:border-brand-darkRed/35 focus:shadow-[0_0_0_1px_rgba(111,21,36,0.08)]',
+  'flex w-full items-center justify-between gap-3 rounded-md border bg-white px-4 py-3.5',
+  'font-montserrat text-sm normal-case tracking-[0.02em] text-brand-darkRed',
+  'outline-none transition-[border-color,box-shadow,background-color] duration-200',
+  'hover:border-brand-darkRed/45',
+  'focus:border-brand-clayRed focus:ring-1 focus:ring-brand-clayRed/25',
 ].join(' ')
 
 export default function ContactSubjectSelect({
@@ -64,10 +65,10 @@ export default function ContactSubjectSelect({
   }, [onBlur])
 
   const borderClass = hasError
-    ? 'border-brand-clayRed/55'
+    ? 'border-brand-clayRed'
     : isOpen
-      ? 'border-brand-darkRed/35 shadow-[0_0_0_1px_rgba(111,21,36,0.08)]'
-      : 'border-brand-stone/40'
+      ? 'border-brand-clayRed ring-1 ring-brand-clayRed/25'
+      : 'border-brand-darkRed/30'
 
   return (
     <div ref={rootRef} className="relative">
@@ -83,11 +84,11 @@ export default function ContactSubjectSelect({
         className={`${triggerBase} ${borderClass} ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}
         data-cursor-hover
       >
-        <span className={selected ? 'text-brand-darkRed' : 'text-brand-clayRed/45'}>
+        <span className={selected ? 'text-brand-darkRed' : 'text-brand-muted'}>
           {selected?.label ?? placeholder}
         </span>
         <FiChevronDown
-          className={`h-4 w-4 shrink-0 text-brand-darkRed/45 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          className={`h-4 w-4 shrink-0 text-brand-clayRed/80 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           aria-hidden
         />
       </button>
@@ -102,7 +103,7 @@ export default function ContactSubjectSelect({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.18 }}
-            className={`absolute z-50 mt-1.5 max-h-64 w-full overflow-y-auto rounded-[2px] border border-brand-stone/35 bg-white py-1 shadow-[0_18px_44px_rgba(26,2,16,0.14)] ${isRTL ? 'text-right' : 'text-left'}`}
+            className={`absolute z-50 mt-1.5 max-h-64 w-full overflow-y-auto rounded-md border border-brand-darkRed/20 bg-white py-1 shadow-[0_18px_44px_rgba(26,2,16,0.14)] ${isRTL ? 'text-right' : 'text-left'}`}
           >
             {options.map((option) => {
               const isSelected = option.value === value

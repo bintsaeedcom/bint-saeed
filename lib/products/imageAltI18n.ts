@@ -15,6 +15,8 @@ export const BRAND_GEO_ALT_PHRASE: Record<AppLocale, string> = altLoc(
   'Bint Saeed Abu Dhabi, Vereinigte Arabische Emirate',
   'Bint Saeed Abu Dhabi, Verenigde Arabische Emiraten',
   'Bint Saeed Abu Dhabi, Emirados Árabes Unidos',
+  'Bint Saeed Abu Dhabi, Uni Emirat Arab',
+  'Bint Saeed Abu Dhabi, Emiriah Arab Bersatu',
 )
 
 const ALL_BRAND_GEO_PHRASES = Object.values(BRAND_GEO_ALT_PHRASE)

@@ -32,15 +32,38 @@ const EXACT_ALTS: Record<string, string> = {
     'Abaya Belgravia dalam Navy Blue, tampak belakang. Abaya desainer oleh Bint Saeed Abu Dhabi, Uni Emirat Arab, menonjolkan garis bersih, drape penuh, dan trim tenun tangan terinspirasi tradisi tenun Khous Emirati.',
 }
 
+/** Phrase-level localization for catalogue alts that lack curated id entries. */
 export function indonesiaImageAltFromEn(en: string): string {
   const trimmed = en.trim()
   if (EXACT_ALTS[trimmed]) return EXACT_ALTS[trimmed]
   return trimmed
-    .replace(/, front view\./i, ', tampak depan.')
-    .replace(/, side view\./i, ', tampak samping.')
-    .replace(/, back view\./i, ', tampak belakang.')
-    .replace(/, lifestyle view\./i, ', tampak lifestyle.')
-    .replace(/, close-up view\./i, ', tampak close-up.')
-    .replace(/United Arab Emirates/g, 'Uni Emirat Arab')
-    .replace(/ by Bint Saeed /g, ' oleh Bint Saeed ')
+    .replace(/, front view\b/gi, ', tampak depan')
+    .replace(/, side view\b/gi, ', tampak samping')
+    .replace(/, back view\b/gi, ', tampak belakang')
+    .replace(/, lifestyle view\b/gi, ', tampak gaya hidup')
+    .replace(/, close-up view\b/gi, ', tampak dekat')
+    .replace(/\bfront view\b/gi, 'tampak depan')
+    .replace(/\bside view\b/gi, 'tampak samping')
+    .replace(/\bback view\b/gi, 'tampak belakang')
+    .replace(/\blifestyle view\b/gi, 'tampak gaya hidup')
+    .replace(/\bclose-up view\b/gi, 'tampak dekat')
+    .replace(/\bClose-up of\b/gi, 'Tampak dekat')
+    .replace(/\bSide view of\b/gi, 'Tampak samping')
+    .replace(/\bUnited Arab Emirates\b/g, 'Uni Emirat Arab')
+    .replace(/\bAbu Dhabi\b/g, 'Abu Dhabi')
+    .replace(/\b by Bint Saeed\b/g, ' oleh Bint Saeed')
+    .replace(/\bcreated in\b/gi, 'diciptakan di')
+    .replace(/\bmade in\b/gi, 'dibuat di')
+    .replace(/\bfeaturing\b/gi, 'menampilkan')
+    .replace(/\bshowcasing\b/gi, 'menampilkan')
+    .replace(/\bhighlighting\b/gi, 'menonjolkan')
+    .replace(/\bContemporary designer\b/g, 'Desainer kontemporer')
+    .replace(/\bLuxury\b/g, 'Mewah')
+    .replace(/\bnatural stone bead abaya strand\b/gi, 'strand abaya manik batu alami')
+    .replace(/\bpairs with\b/gi, 'dipadukan dengan')
+    .replace(/\bhand-strung\b/gi, 'dirangkai tangan')
+    .replace(/\bflowing silhouette\b/gi, 'siluet mengalir')
+    .replace(/\btailored\b/gi, 'terstruktur')
+    .replace(/\bmaxi dress\b/gi, 'gaun maxi')
+    .replace(/\btwo-piece\b/gi, 'dua potong')
 }

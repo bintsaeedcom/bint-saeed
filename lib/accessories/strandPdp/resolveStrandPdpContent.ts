@@ -33,7 +33,8 @@ export function getStrandPdpContent(
   const templates = STRAND_PDP_LOCALE_TEMPLATES[locale]
 
   const introP2 =
-    stone.introP2Style === 'mood' ? templates.introP2Mood : templates.introP2Evening
+    stone.introP2 ??
+    (stone.introP2Style === 'mood' ? templates.introP2Mood : templates.introP2Evening)
 
   const strandPairName = stone.stoneLabel
 

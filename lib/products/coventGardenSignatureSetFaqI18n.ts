@@ -255,8 +255,64 @@ const SET_FAQ: Record<AppLocale, ProductFaqItem[]> = {
         'Sim. O Covent Garden Signature Set foi concebido para mulheres cujos dias transitam naturalmente entre diferentes ocasiões. Quer seja usado no trabalho, em reuniões de negócios, almoços elegantes, chá da tarde, jantares, inaugurações de galerias, eventos culturais ou ocasiões formais, a sua alfaiataria contemporânea parece cuidada sem nunca parecer excessivamente formal.',
     },
   ],
-  id: COVENT_GARDEN_SIGNATURE_SET_FAQ_EN,
-  ms: COVENT_GARDEN_SIGNATURE_SET_FAQ_EN,
+  id: [
+    {
+      question:
+        'Apa yang membedakan Covent Garden Signature Set dari set dua potong wanita lainnya?',
+      answer:
+        'Tidak setiap pakaian bercerita. Covent Garden Signature Set bercerita. Diciptakan di Abu Dhabi, set ini memadukan penjahitan kontemporer dengan kode desain signature Bint Saeed yang terinspirasi warisan Emirati. Dirancang sebagai set dua potong yang terkoordinasi, set ini juga memungkinkan gaun dan jaket dikenakan terpisah, sehingga membuka lebih banyak kemungkinan styling dalam lemari Anda.',
+    },
+    {
+      question: 'Apa itu Al Khous dan bagaimana tercermin dalam Covent Garden Signature Set?',
+      answer:
+        'Al Khous adalah salah satu kerajinan artisanal tradisional Emirati tertua di United Arab Emirates, di mana daun pohon kurma dianyam menjadi benda dekoratif dan fungsional. Tutup saku anyaman pada jaket menafsirkan ulang kerajinan berabad-abad ini melalui penjahitan kontemporer, menjaga elemen penting warisan budaya Emirati dalam womenswear modern.',
+    },
+    {
+      question: 'Apa makna tombol emas signature Knotted Line?',
+      answer:
+        'Tombol emas signature Knotted Line adalah salah satu kode desain abadi Bint Saeed. Terinspirasi oleh ikatan yang menghubungkan generasi, tombol ini melambangkan kisah, nilai, dan tradisi yang diteruskan dari waktu ke waktu, mengingatkan bahwa detail yang paling bermakna sering menyimpan arti terdalam.',
+    },
+    {
+      question: 'Bisakah saya mengenakan Covent Garden Dress dan jaket secara terpisah?',
+      answer:
+        'Tentu saja. Meskipun dirancang untuk menciptakan look terkoordinasi yang indah bersama-sama, setiap potongan sama serbagunanya sendiri. Covent Garden Dress menawarkan siluet elegan yang berdiri sendiri, sementara jaket terstruktur mudah dipadukan dengan celana, denim, rok, atau gaun lain di lemari Anda, memperluas kemungkinan styling jauh melampaui set itu sendiri.',
+    },
+    {
+      question:
+        'Apakah Covent Garden Signature Set cocok untuk kerja, pemakaian sehari-hari, dan acara formal?',
+      answer:
+        'Ya. Covent Garden Signature Set dirancang untuk wanita yang harinya bergerak alami antar berbagai kesempatan. Baik dikenakan ke kerja, rapat bisnis, makan siang elegan, afternoon tea, makan malam, pembukaan galeri, acara budaya, maupun kesempatan formal, penjahitan kontemporernya terasa polished tanpa pernah terasa berlebihan.',
+    },
+  ],
+  ms: [
+    {
+      question:
+        'Apakah yang membezakan Covent Garden Signature Set daripada set dua keping wanita yang lain?',
+      answer:
+        'Bukan setiap pakaian menceritakan kisah. Covent Garden Signature Set menceritakannya. Dicipta di Abu Dhabi, set ini menggabungkan jahitan kontemporari dengan kod reka bentuk signature Bint Saeed yang diilhamkan warisan Emirati. Direka sebagai set dua keping yang berkoordinasi, set ini juga membolehkan baju dan jaket dipakai secara berasingan, lalu membuka lebih banyak kemungkinan gaya dalam almari anda.',
+    },
+    {
+      question: 'Apakah Al Khous dan bagaimana ia tercermin dalam Covent Garden Signature Set?',
+      answer:
+        'Al Khous ialah salah satu kraftangan artisanal tradisional Emirati tertua di United Arab Emirates, di mana daun pokok kurma dianyam menjadi objek hiasan dan berfungsi. Kepak poket anyaman pada jaket mentafsir semula kraftangan berabad-abad ini melalui jahitan kontemporari, memelihara unsur penting warisan budaya Emirati dalam pakaian wanita moden.',
+    },
+    {
+      question: 'Apakah makna butang emas signature Knotted Line?',
+      answer:
+        'Butang emas signature Knotted Line ialah salah satu kod reka bentuk abadi Bint Saeed. Diilhamkan oleh ikatan yang menghubungkan generasi, butang ini melambangkan kisah, nilai dan tradisi yang dibawa ke hadapan dari masa ke masa, mengingatkan bahawa perincian paling bermakna sering menyimpan makna terdalam.',
+    },
+    {
+      question: 'Bolehkah saya memakai Covent Garden Dress dan jaket secara berasingan?',
+      answer:
+        'Sudah tentu. Walaupun direka untuk mencipta penampilan berkoordinasi yang indah bersama-sama, setiap kepingan sama serbaguna sendiri. Covent Garden Dress menawarkan siluet anggun yang berdiri sendiri, manakala jaket berstruktur mudah dipadankan dengan seluar, denim, skirt atau baju lain dalam almari anda, meluaskan kemungkinan gaya jauh melampaui set itu sendiri.',
+    },
+    {
+      question:
+        'Adakah Covent Garden Signature Set sesuai untuk kerja, pemakaian harian dan majlis formal?',
+      answer:
+        'Ya. Covent Garden Signature Set direka untuk wanita yang harinya bergerak secara semula jadi antara pelbagai majlis. Sama ada dipakai ke kerja, mesyuarat perniagaan, makan tengah hari yang anggun, afternoon tea, makan malam, pembukaan galeri, acara budaya atau majlis formal, jahitan kontemporarinya kelihatan kemas tanpa pernah kelihatan keterlaluan.',
+    },
+  ],
 }
 
 export function getCoventGardenSignatureSetFaq(locale: AppLocale = 'en'): ProductFaqItem[] {

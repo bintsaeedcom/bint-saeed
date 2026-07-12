@@ -1,0 +1,37 @@
+---
+description: Keep header→breadcrumb clearance consistent across all webshop pages
+globs: app/**/*.{tsx,ts},components/**/*.{tsx,ts},lib/ui/editorialPageChrome.ts
+alwaysApply: false
+---
+
+# Page wayfinding & header clearance (locked)
+
+Breadcrumbs and page headers must sit at the same distance under the fixed site header on every content page — mobile and desktop. No jumpy per-page padding.
+
+## Single source of truth
+
+Use tokens from `lib/ui/editorialPageChrome.ts` only:
+
+| Token | Role |
+|-------|------|
+| `SITE_HEADER_OFFSET` | Clears the fixed header on `<main>` (LayoutWrapper) and flush heroes |
+| `SITE_HEADER_STICKY_TOP` | Sticky toolbars / topic nav / filter bars under the live header |
+| `SITE_CONTENT_TOP_PAD` | Small breathing room *after* header clearance (wayfinding, page titles) |
+
+Live height: Header publishes `--site-header-height` (ResizeObserver). Fallbacks live in `app/globals.css` `:root`.
+
+## Rules
+
+1. **Never invent header clearance.** Do not add `pt-20`, `pt-24`, `pt-28`, `pt-[8.75rem]`, `top-[50px]`, `md:top-16`, or one-off rem stacks to clear the header.
+2. **Never double-clear.** LayoutWrapper already applies `SITE_HEADER_OFFSET` on `<main>` (except flush hero routes). Page content only adds `SITE_CONTENT_TOP_PAD` — not another full header offset.
+3. **Wayfinding:** Prefer `AppPageWayfinding` + `AppBreadcrumb`. Breadcrumbs must stay fully readable: no `overflow-hidden` clipping the crumb row; keep horizontal scroll on the crumb list if needed.
+4. **Sticky bars:** Always `SITE_HEADER_STICKY_TOP`, never hard-coded `top-*` that ignore header height.
+5. **Flush heroes only:** `/home` and About editorial routes use `pt-0` on main and clear via `editorialHeroContentShell` / `SITE_HEADER_OFFSET` inside the hero.
+6. **Do not change** brand copy, visual design direction, or SEO metadata unless the user explicitly asks.
+
+## Quick checklist (new or edited pages)
+
+- [ ] Uses `SITE_CONTENT_TOP_PAD` (or inherits via wayfinding bar) — not custom top padding for the header
+- [ ] Sticky UI uses `SITE_HEADER_STICKY_TOP`
+- [ ] Breadcrumbs visible and not under the fixed header on mobile + desktop
+- [ ] Spacing matches shop / FAQ / cart (same tokens)

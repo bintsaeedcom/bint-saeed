@@ -3,6 +3,8 @@ import type { AppLocale } from '@/lib/i18n/routing'
 export type StoneVariantLocaleContent = {
   headline: string
   introP1: string
+  /** Optional stone-specific P2; falls back to shared mood/evening template. */
+  introP2?: string
   introP4: string
   stoneOrigin: string
   beadDetail: string
@@ -1243,9 +1245,11 @@ const NATURAL_JADE: VariantPack = {
   en: {
     headline: 'Natural Jade Signature Strands',
     introP1:
-      'The Natural Jade Signature Strands introduce quiet depth, muted green-teal calm and refined presence to selected Bint Saeed creations. Hand-assembled in Abu Dhabi from natural jade gemstones — never coloured jade — and finished with Bint Saeed’s signature gold-tone Knotted Line elements, they allow a familiar silhouette to be reimagined through one thoughtful detail.',
+      'The Natural Jade Signature Strands introduce rich green-to-teal tones and natural depth to selected Bint Saeed creations. Hand-assembled in Abu Dhabi from genuine Natural Jade gemstones and finished with Bint Saeed’s signature gold-tone Knotted Line elements, they offer a refined way to transform a familiar silhouette through a single distinctive detail.',
+    introP2:
+      'Created as one of Bint Saeed’s signature House Codes, these detachable strands invite a more personal way of dressing. Rather than purchasing another garment, they allow the same piece to evolve effortlessly according to the occasion, your accessories or simply the colours you feel drawn to that day.',
     introP4:
-      'Natural jade is valued for its soft muted green-to-teal tones and polished surface. Between every gemstone, faceted gold-plated Hematite accents introduce delicate brilliance, creating a beautiful interplay of light throughout the strand. Because every gemstone is naturally formed, each Signature Strand is entirely unique in its colour, markings and character.',
+      'The green-to-teal tones of Natural Jade create a rich contrast against the gold-tone Knotted Line elements, while faceted gold-plated Hematite accents positioned between every gemstone catch and reflect the light. Because every gemstone is naturally formed, each Signature Strand is entirely unique in its colour, markings and natural character.',
     stoneOrigin:
       'Jade has been treasured for millennia across East and Central Asia, with notable sources including Myanmar, Guatemala and China. Natural Jade is valued for soft muted green-to-teal tones and its genuine, undyed colour — never coloured or dyed jade. Every gemstone displays its own natural variations, ensuring every Signature Strand is one of a kind.',
     beadDetail: 'Natural Jade gemstone beads (approximately 7 mm)',
