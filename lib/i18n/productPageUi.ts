@@ -131,7 +131,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
   de: {
     home: 'Startseite',
     shop: 'Shop',
-    backToShop: 'Zuruck zum Shop',
+    backToShop: 'Zurück zum Shop',
     productNotFound: 'Produkt nicht gefunden',
     returnToShop: 'Zuruck zum Shop',
     productDetails: 'Produktdetails',
@@ -317,7 +317,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
   pt: {
     home: 'Inicio',
     shop: 'Loja',
-    backToShop: 'Voltar a loja',
+    backToShop: 'Voltar à loja',
     productNotFound: 'Produto nao encontrado',
     returnToShop: 'Voltar a loja',
     productDetails: 'Detalhes do produto',

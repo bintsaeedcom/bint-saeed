@@ -1,4 +1,6 @@
 import type { Language } from '@/lib/i18n/translations'
+import type { AppLocale } from '@/lib/i18n/routing'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 
 export type CraftsmanshipPhaseCopy = {
   label: string
@@ -158,8 +160,22 @@ const CRAFTSMANSHIP_MS: CraftsmanshipCopy = {
 }
 
 export function getCraftsmanshipCopy(locale: Language | string): CraftsmanshipCopy {
-  if (locale === 'ar') return CRAFTSMANSHIP_AR
-  if (locale === 'id') return CRAFTSMANSHIP_ID
-  if (locale === 'ms') return CRAFTSMANSHIP_MS
-  return CRAFTSMANSHIP_EN
+  const base =
+    locale === 'ar'
+      ? CRAFTSMANSHIP_AR
+      : locale === 'id'
+        ? CRAFTSMANSHIP_ID
+        : locale === 'ms'
+          ? CRAFTSMANSHIP_MS
+          : CRAFTSMANSHIP_EN
+  try {
+    const ui = commerceUi(locale as AppLocale)
+    return {
+      ...base,
+      breadcrumbHome: ui.common.home,
+      backToHome: ui.common.backToHome,
+    }
+  } catch {
+    return base
+  }
 }

@@ -8,10 +8,12 @@ import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { FiCheck, FiAlertCircle, FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams()
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const verified = searchParams?.get('verified') === '1'
   const already = searchParams?.get('already') === '1'
   const error = searchParams?.get('error')
@@ -31,12 +33,12 @@ function VerifyEmailContent() {
           rtl={isRTL}
           className="mb-8"
           segments={[
-            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+            { label: ui.common.home, href: '/home' },
             { label: isRTL ? 'تأكيد البريد' : 'Email Verification' },
           ]}
           backLink={{
             href: '/account',
-            label: isRTL ? 'العودة للحساب' : 'Back to Account',
+            label: ui.common.backToAccount,
           }}
         />
       <motion.div

@@ -1,4 +1,5 @@
 import type { AppLocale } from '@/lib/i18n/routing'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 
 export type GivingForwardCopy = {
   breadcrumbHome: string
@@ -61,6 +62,15 @@ const AR: GivingForwardCopy = {
 }
 
 export function getGivingForwardCopy(locale: AppLocale | string): GivingForwardCopy {
-  if (locale === 'ar') return AR
-  return EN
+  const base = locale === 'ar' ? AR : EN
+  try {
+    const ui = commerceUi(locale as AppLocale)
+    return {
+      ...base,
+      breadcrumbHome: ui.common.home,
+      backToHome: ui.common.backToHome,
+    }
+  } catch {
+    return base
+  }
 }

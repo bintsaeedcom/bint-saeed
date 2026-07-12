@@ -6,8 +6,9 @@ import Image from 'next/image'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import { FiCheck } from 'react-icons/fi'
-import { getSizeGuideCopy } from '@/lib/i18n/sizeGuideCopyI18n'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getSizeGuideCopy } from '@/lib/i18n/sizeGuideCopyI18n'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 
 const SIZE_HEADERS = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL'] as const
 const UK_SIZE = ['6', '8', '10', '12', '14', '16', '18', '20'] as const
@@ -41,6 +42,7 @@ const intlRows = [
 export default function SizeGuidePage() {
   const { t, isRTL, language } = useLanguage()
   const copy = getSizeGuideCopy(language)
+  const ui = commerceUi(language)
   const rowLabelKeys = ['bust', 'waist', 'hips'] as const
   const inchRows = rowLabelKeys.map((key, i) => ({
     label: copy.rowLabels[key],
@@ -61,13 +63,13 @@ export default function SizeGuidePage() {
             rtl={isRTL}
             className="mb-8"
             segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-              { label: isRTL ? 'المتجر' : 'Shop', href: '/shop' },
+              { label: ui.common.home, href: '/home' },
+              { label: ui.common.shop, href: '/shop' },
               { label: t.footer.sizeGuide },
             ]}
             backLink={{
               href: '/shop',
-              label: isRTL ? 'العودة للتسوق' : 'Back to Shop',
+              label: ui.common.backToShop,
             }}
           />
 

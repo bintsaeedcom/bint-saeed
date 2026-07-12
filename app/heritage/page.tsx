@@ -8,6 +8,7 @@ import AboutTopicNav from '@/components/AboutTopicNav'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiArrowRight, FiArrowDown } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 
 const heritageItems = [
   {
@@ -56,7 +57,8 @@ export default function HeritagePage() {
 
 function HeritageHero() {
   const ref = useRef(null)
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '40%'])
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
@@ -75,12 +77,12 @@ function HeritageHero() {
           rtl={isRTL}
           variant="light"
           segments={[
-            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+            { label: ui.common.home, href: '/home' },
             { label: isRTL ? 'التراث' : 'Heritage' },
           ]}
           backLink={{
             href: '/home',
-            label: isRTL ? 'العودة للرئيسية' : 'Back to Home',
+            label: ui.common.backToHome,
           }}
         />
       </div>

@@ -116,7 +116,7 @@ export default function SignInPage() {
           ]}
           backLink={{
             href: '/account',
-            label: isRTL ? 'العودة للحساب' : 'Back to Account',
+            label: ui.common.backToAccount,
           }}
         />
 

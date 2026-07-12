@@ -8,6 +8,7 @@ import AboutTopicNav from '@/components/AboutTopicNav'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 
 export default function KhousPage() {
   const { isRTL } = useLanguage()
@@ -27,7 +28,8 @@ export default function KhousPage() {
 
 function HeroSection() {
   const ref = useRef(null)
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -59,13 +61,13 @@ function HeroSection() {
             rtl={isRTL}
             variant="light"
             segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+              { label: ui.common.home, href: '/home' },
               { label: isRTL ? 'التراث' : 'Heritage', href: '/heritage' },
               { label: isRTL ? 'الخوص' : 'Khous Weaving' },
             ]}
             backLink={{
               href: '/heritage',
-              label: isRTL ? 'العودة للتراث' : 'Back to Heritage',
+              label: ui.common.backToHeritage,
             }}
           />
         </motion.div>

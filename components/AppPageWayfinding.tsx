@@ -29,7 +29,7 @@ type Props = {
 }
 
 const backLinkBase =
-  'inline-flex shrink-0 items-center gap-1.5 font-montserrat text-[10px] uppercase leading-none tracking-[0.12em] transition-colors'
+  'inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap font-montserrat text-[10px] uppercase leading-none tracking-[0.12em] transition-colors'
 
 function segmentsIncludeHome(segments: BreadcrumbSegment[]): boolean {
   return segments.some((s) => s.href === '/home' || s.href === '/')

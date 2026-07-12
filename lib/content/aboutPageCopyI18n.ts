@@ -1,4 +1,6 @@
 import type { Language } from '@/lib/i18n/translations'
+import type { AppLocale } from '@/lib/i18n/routing'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 
 export type AboutWomanStep = {
   numeral: string
@@ -279,6 +281,11 @@ const ABOUT_AR: AboutPageCopy = {
 }
 
 export function getAboutPageCopy(locale: Language | string): AboutPageCopy {
-  if (locale === 'ar') return ABOUT_AR
-  return ABOUT_EN
+  const base = locale === 'ar' ? ABOUT_AR : ABOUT_EN
+  try {
+    const ui = commerceUi(locale as AppLocale)
+    return { ...base, backToHome: ui.common.backToHome }
+  } catch {
+    return base
+  }
 }

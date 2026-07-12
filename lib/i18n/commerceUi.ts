@@ -7,6 +7,10 @@ type CommerceUiCommon = {
   bag: string
   back: string
   backToHome: string
+  backToShop: string
+  backToAccessories: string
+  backToAccount: string
+  backToHeritage: string
   close: string
 }
 
@@ -222,6 +226,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       bag: 'Bag',
       back: 'Back',
       backToHome: 'Back to Home',
+      backToShop: 'Back to Shop',
+      backToAccessories: 'Back to Accessories',
+      backToAccount: 'Back to Account',
+      backToHeritage: 'Back to Heritage',
       close: 'Close',
     },
     shop: {
@@ -411,6 +419,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       bag: 'السلة',
       back: 'رجوع',
       backToHome: 'العودة للرئيسية',
+      backToShop: 'العودة للتسوق',
+      backToAccessories: 'العودة إلى الإكسسوارات',
+      backToAccount: 'العودة للحساب',
+      backToHeritage: 'العودة للتراث',
       close: 'إغلاق',
     },
     shop: {
@@ -598,7 +610,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       accessories: 'Accessoires',
       bag: 'Panier',
       back: 'Retour',
-      backToHome: 'Retour a l accueil',
+      backToHome: "Retour à l'accueil",
+      backToShop: 'Retour à la boutique',
+      backToAccessories: 'Retour aux accessoires',
+      backToAccount: 'Retour au compte',
+      backToHeritage: 'Retour au patrimoine',
       close: 'Fermer',
     },
     shop: {
@@ -689,7 +705,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       collectionIntro:
         'Parcourez les signature strands, colliers, boucles d oreilles, charms sac et charms telephone. Filtrez par categorie, prix, couleur et pierre.',
       collectionEyebrow: 'Collection',
-      backToHome: 'Retour a l accueil',
+      backToHome: "Retour à l'accueil",
       filter: 'Filtrer',
       products: 'Produits',
       price: 'Prix',
@@ -739,7 +755,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     notFound: {
       title: 'Page introuvable',
       description: 'La page recherchee a peut-etre ete deplacee ou n existe plus.',
-      backToHome: 'Retour a l accueil',
+      backToHome: "Retour à l'accueil",
       shopCollection: 'Voir la collection',
       popularPages: 'Pages populaires',
       about: 'A propos',
@@ -785,8 +801,12 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       shop: 'Shop',
       accessories: 'Accessoires',
       bag: 'Tasche',
-      back: 'Zuruck',
+      back: 'Zurück',
       backToHome: 'Zur Startseite',
+      backToShop: 'Zurück zum Shop',
+      backToAccessories: 'Zurück zu Accessoires',
+      backToAccount: 'Zurück zum Konto',
+      backToHeritage: 'Zurück zum Erbe',
       close: 'Schliessen',
     },
     shop: {
@@ -884,7 +904,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       stoneType: 'Steinart',
       clearFilters: 'Filter loschen',
       productNotFound: 'Produkt nicht gefunden',
-      returnToAccessories: 'Zuruck zu Accessoires',
+      returnToAccessories: 'Zurück zu Accessoires',
       materials: 'Materialien',
       careBullets: [
         'Behandeln Sie Ihre Stücke mit Sorgfalt. Natursteine können bei Stößen oder Stürzen absplittern oder brechen.',
@@ -975,6 +995,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       bag: 'Borsa',
       back: 'Indietro',
       backToHome: 'Torna alla home',
+      backToShop: 'Torna allo shop',
+      backToAccessories: 'Torna agli accessori',
+      backToAccount: "Torna all'account",
+      backToHeritage: 'Torna al patrimonio',
       close: 'Chiudi',
     },
     shop: {
@@ -1161,8 +1185,12 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       shop: 'Tienda',
       accessories: 'Accesorios',
       bag: 'Bolsa',
-      back: 'Atras',
+      back: 'Atrás',
       backToHome: 'Volver al inicio',
+      backToShop: 'Volver a la tienda',
+      backToAccessories: 'Volver a accesorios',
+      backToAccount: 'Volver a la cuenta',
+      backToHeritage: 'Volver al patrimonio',
       close: 'Cerrar',
     },
     shop: {
@@ -1351,6 +1379,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       bag: 'Сумка',
       back: 'Назад',
       backToHome: 'Назад на главную',
+      backToShop: 'Назад в магазин',
+      backToAccessories: 'Назад к аксессуарам',
+      backToAccount: 'Назад в аккаунт',
+      backToHeritage: 'Назад к наследию',
       close: 'Закрыть',
     },
     shop: {
@@ -1539,6 +1571,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       bag: '购物袋',
       back: '返回',
       backToHome: '返回首页',
+      backToShop: '返回商店',
+      backToAccessories: '返回配饰',
+      backToAccount: '返回账户',
+      backToHeritage: '返回传承',
       close: '关闭',
     },
     shop: {
@@ -1727,6 +1763,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       bag: 'Tas',
       back: 'Terug',
       backToHome: 'Terug naar home',
+      backToShop: 'Terug naar shop',
+      backToAccessories: 'Terug naar accessoires',
+      backToAccount: 'Terug naar account',
+      backToHeritage: 'Terug naar erfgoed',
       close: 'Sluiten',
     },
     shop: {
@@ -1914,7 +1954,11 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       accessories: 'Acessorios',
       bag: 'Saco',
       back: 'Voltar',
-      backToHome: 'Voltar ao inicio',
+      backToHome: 'Voltar ao início',
+      backToShop: 'Voltar à loja',
+      backToAccessories: 'Voltar aos acessórios',
+      backToAccount: 'Voltar à conta',
+      backToHeritage: 'Voltar ao património',
       close: 'Fechar',
     },
     shop: {
@@ -2005,7 +2049,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       collectionIntro:
         'Explore signature strands, colares, brincos, pulseiras e charms para mala e telemovel. Filtre por categoria, preco, cor e pedra.',
       collectionEyebrow: 'Colecao',
-      backToHome: 'Voltar ao inicio',
+      backToHome: 'Voltar ao início',
       filter: 'Filtrar',
       products: 'Produtos',
       price: 'Preco',
@@ -2055,7 +2099,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     notFound: {
       title: 'Pagina nao encontrada',
       description: 'A pagina que procura pode ter sido movida ou ja nao existe.',
-      backToHome: 'Voltar ao inicio',
+      backToHome: 'Voltar ao início',
       shopCollection: 'Ver colecao',
       popularPages: 'Paginas populares',
       about: 'Sobre',
@@ -2103,6 +2147,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       bag: 'Tas',
       back: 'Kembali',
       backToHome: 'Kembali ke beranda',
+      backToShop: 'Kembali ke shop',
+      backToAccessories: 'Kembali ke aksesori',
+      backToAccount: 'Kembali ke akun',
+      backToHeritage: 'Kembali ke warisan',
       close: 'Tutup',
     },
     shop: {
@@ -2291,6 +2339,10 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       bag: 'Beg',
       back: 'Kembali',
       backToHome: 'Kembali ke laman utama',
+      backToShop: 'Kembali ke shop',
+      backToAccessories: 'Kembali ke aksesori',
+      backToAccount: 'Kembali ke akaun',
+      backToHeritage: 'Kembali ke warisan',
       close: 'Tutup',
     },
     shop: {

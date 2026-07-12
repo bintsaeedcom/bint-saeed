@@ -7,6 +7,7 @@ import { FiMail } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import type { AppLocale } from '@/lib/i18n/routing'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { FAQ_BY_LOCALE } from '@/lib/faq/faqByLocale'
 import { officialMailto } from '@/lib/brand/officialEmails'
 import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
@@ -107,6 +108,7 @@ const POLICY_LINKS: Record<
 
 export default function FAQPage() {
   const { language, t, isRTL } = useLanguage()
+  const ui = commerceUi(language)
   const locale = language as AppLocale
   const data = FAQ_BY_LOCALE[locale] ?? FAQ_BY_LOCALE.en
   const links = POLICY_LINKS[locale] ?? POLICY_LINKS.en
@@ -161,10 +163,10 @@ export default function FAQPage() {
             rtl={isRTL}
             variant="muted"
             segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-              { label: isRTL ? 'الأسئلة الشائعة' : 'FAQ' },
+              { label: ui.common.home, href: '/home' },
+              { label: data.title },
             ]}
-            backLink={{ href: '/home', label: t.shop.backToHome }}
+            backLink={{ href: '/home', label: ui.common.backToHome }}
           />
         </div>
 

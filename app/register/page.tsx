@@ -8,6 +8,7 @@ import { motion } from 'framer-motion'
 import { FiEye, FiEyeOff, FiLock, FiMail, FiUser } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { passwordsMatch, validatePassword } from '@/lib/auth/passwordPolicy'
 import { ctaFormSubmitCompact } from '@/lib/ui/ctaClasses'
 
@@ -38,7 +39,8 @@ const fieldClass =
   'w-full rounded-md border border-brand-stone/70 bg-white py-3.5 font-montserrat text-sm text-brand-darkRed shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] placeholder:text-brand-stone/55 focus:border-brand-darkRed focus:outline-none focus:ring-1 focus:ring-brand-darkRed/25'
 
 export default function RegisterPage() {
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -108,13 +110,13 @@ export default function RegisterPage() {
           rtl={isRTL}
           className="mb-10 lg:mb-12"
           segments={[
-            { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-            { label: isRTL ? 'الحساب' : 'Account', href: '/account' },
-            { label: isRTL ? 'إنشاء حساب' : 'Create Account' },
+            { label: ui.common.home, href: '/home' },
+            { label: ui.account.account, href: '/account' },
+            { label: ui.account.createAccount },
           ]}
           backLink={{
             href: '/account',
-            label: isRTL ? 'العودة للحساب' : 'Back to Account',
+            label: ui.common.backToAccount,
           }}
         />
 
