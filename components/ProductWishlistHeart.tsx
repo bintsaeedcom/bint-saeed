@@ -7,9 +7,15 @@ interface ProductWishlistHeartProps {
   product: Product
   href: string
   className?: string
+  iconClassName?: string
 }
 
-export default function ProductWishlistHeart({ product, href, className = '' }: ProductWishlistHeartProps) {
+export default function ProductWishlistHeart({
+  product,
+  href,
+  className = '',
+  iconClassName = 'h-3.5 w-3.5 sm:h-4 sm:w-4',
+}: ProductWishlistHeartProps) {
   return (
     <FavoriteHeartButton
       id={product.id}
@@ -18,7 +24,8 @@ export default function ProductWishlistHeart({ product, href, className = '' }: 
       image={product.images[0] ?? ''}
       category={product.category}
       href={href}
-      className={`rounded-full border border-stone-200/90 bg-white/95 p-2.5 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue ${className}`}
+      iconClassName={iconClassName}
+      className={`rounded-full border border-stone-200/90 bg-white/95 p-2 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:p-2.5 ${className}`}
     />
   )
 }

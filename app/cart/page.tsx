@@ -18,9 +18,16 @@ import { getCartLineImageAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { getEstimatedShippingFee } from '@/lib/pricing'
 import { resolveCartShippingMessages } from '@/lib/shipping/resolveCartShippingMessages'
+import { getStripeShipToCopy } from '@/lib/shipping/stripeShipToCopy'
+import { useEffect, useRef } from 'react'
+import {
+  clearMobileBottomChrome,
+  publishMobileBottomChrome,
+} from '@/lib/ui/mobileBottomChrome'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity } = useCartStore()
+  const mobileBarRef = useRef<HTMLDivElement | null>(null)
   const productHref = (item: (typeof items)[number]) =>
     item.productUrl ?? getProductHref(staticProducts.find((product) => product.id === item.id) ?? { id: item.id, name: item.name })
   const lineKey = (item: (typeof items)[number]) =>
@@ -37,6 +44,23 @@ export default function CartPage() {
   const shippingFee = shippingMessages.unlocked ? 0 : getEstimatedShippingFee(currency.code)
   const estimatedTotal = subtotal + shippingFee
   const compactButtonRadius = 'rounded-[4px]'
+
+  useEffect(() => {
+    if (items.length === 0) {
+      clearMobileBottomChrome('cart-bar')
+      return
+    }
+    const el = mobileBarRef.current
+    if (!el) return
+    const publish = () => publishMobileBottomChrome('cart-bar', el.getBoundingClientRect().height)
+    publish()
+    const ro = new ResizeObserver(publish)
+    ro.observe(el)
+    return () => {
+      ro.disconnect()
+      clearMobileBottomChrome('cart-bar')
+    }
+  }, [items.length])
 
   if (items.length === 0) {
     return (
@@ -85,7 +109,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
+    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-[calc(var(--mobile-bottom-chrome,5.5rem)+1rem)] lg:pb-0">
       {/* Header */}
       <div className={`border-b border-brand-stone/20 pb-4 ${SITE_CONTENT_TOP_PAD} sm:pb-6`}>
         <div className="container mx-auto min-w-0 px-4 sm:px-6 lg:px-12">
@@ -302,10 +326,10 @@ export default function CartPage() {
 
               <LocaleLink
                 href="/checkout"
-                className={`mt-8 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue py-4 font-montserrat text-sm uppercase tracking-[0.18em] text-[#1a0008] transition-colors hover:bg-white ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`mt-8 hidden min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue py-4 font-montserrat text-sm uppercase tracking-[0.18em] text-[#1a0008] transition-colors hover:bg-white lg:flex ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
                 onClick={() =>
-                  trackEvent('begin_checkout', {
+                  trackEvent('click_checkout', {
                     currency: currency.code,
                     value: Number(cartSubtotal(items).toFixed(2)),
                     item_count: items.length,
@@ -331,12 +355,43 @@ export default function CartPage() {
                   </p>
                 ) : null}
                 <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
-                  {ui.cart.shipWorldwide}
+                  {getStripeShipToCopy(language).cartLine}
                 </p>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Mobile sticky checkout */}
+      <div
+        ref={mobileBarRef}
+        className="fixed inset-x-0 bottom-0 z-[90] border-t border-white/10 bg-[#1F0508]/98 px-3 pt-2.5 pb-[max(0.65rem,env(safe-area-inset-bottom))] backdrop-blur-md lg:hidden"
+      >
+        <div className={`mb-2 flex min-w-0 items-baseline justify-between gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <span className="min-w-0 truncate font-montserrat text-[10px] uppercase tracking-[0.14em] text-white/65">
+            {ui.cart.estimatedTotal}
+          </span>
+          <span className="shrink-0 font-montserrat text-sm tabular-nums text-white">
+            {formatAmount(estimatedTotal)}
+          </span>
+        </div>
+        <LocaleLink
+          href="/checkout"
+          className={`flex min-h-[46px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue px-3 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] ${isRTL ? 'flex-row-reverse' : ''}`}
+          data-cursor-hover
+          onClick={() =>
+            trackEvent('click_checkout', {
+              currency: currency.code,
+              value: Number(cartSubtotal(items).toFixed(2)),
+              item_count: items.length,
+              source: 'cart_mobile_bar',
+            })
+          }
+        >
+          <span className="truncate">{ui.cart.proceedSecurePayment}</span>
+          <FiArrowRight className={`h-4 w-4 shrink-0 ${isRTL ? 'rotate-180' : ''}`} />
+        </LocaleLink>
       </div>
     </div>
   )

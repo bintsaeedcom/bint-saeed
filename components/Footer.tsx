@@ -16,6 +16,7 @@ import {
   getWorldwideFreeShippingThreshold,
 } from '@/lib/pricing'
 import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
+import { getStripeShipToCopy } from '@/lib/shipping/stripeShipToCopy'
 import { useStableToggleScroll } from '@/lib/ui/useStableToggleScroll'
 import { getAboutTopicNavLinks } from '@/lib/i18n/aboutTopicNavI18n'
 import { useState } from 'react'
@@ -263,7 +264,7 @@ export default function Footer() {
               </div>
               <div>
                 <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {ui.footer.worldwideShipping}
+                  {getStripeShipToCopy(language).short}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
                   {withShippingAmount(ui.footer.deliveredGlobally, worldwideAmount)}

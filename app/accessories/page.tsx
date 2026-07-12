@@ -7,6 +7,9 @@ import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import Image from 'next/image'
 import { FiFilter, FiX, FiShoppingBag } from 'react-icons/fi'
+import FavoriteHeartButton from '@/components/FavoriteHeartButton'
+import QuickBuy from '@/components/QuickBuy'
+import { accessoryDisplaySize } from '@/lib/accessories/accessorySizeLabel'
 import {
   accessories,
   isAccessoryShopVisible,
@@ -16,7 +19,7 @@ import {
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi, type CommerceUi } from '@/lib/i18n/commerceUi'
-import { stripLocaleFromPathname, localizedPath, type AppLocale } from '@/lib/i18n/routing'
+import { type AppLocale } from '@/lib/i18n/routing'
 import {
   applyAccessoryFilters,
   buildAccessoryColorOptions,
@@ -59,7 +62,7 @@ export default function AccessoriesPage() {
   const [priceRange, setPriceRange] = useState<PriceRangeId>('all')
   const [selectedStones, setSelectedStones] = useState<StoneFilterId[]>([])
   const [selectedColors, setSelectedColors] = useState<ColorFilterId[]>([])
-  const [hoveredProduct, setHoveredProduct] = useState<string | null>(null)
+  const [quickBuyAccessory, setQuickBuyAccessory] = useState<Accessory | null>(null)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const categoryScrollRef = useRef<HTMLDivElement>(null)
   const { formatPrice } = useCurrency()
@@ -473,12 +476,11 @@ export default function AccessoriesPage() {
                         key={accessory.id}
                         accessory={accessory}
                         index={index}
-                        hoveredProduct={hoveredProduct}
-                        setHoveredProduct={setHoveredProduct}
                         formatPrice={formatPrice}
                         isRTL={isRTL}
                         language={language}
                         ui={ui}
+                        onQuickBuy={setQuickBuyAccessory}
                       />
                     ))}
                   </AnimatePresence>
@@ -488,6 +490,24 @@ export default function AccessoriesPage() {
           </div>
         </div>
       </section>
+
+      {quickBuyAccessory ? (
+        <QuickBuy
+          isOpen
+          onClose={() => setQuickBuyAccessory(null)}
+          product={{
+            id: quickBuyAccessory.id,
+            name: quickBuyAccessory.name,
+            nameAr: quickBuyAccessory.nameAr,
+            price: quickBuyAccessory.price,
+            images: quickBuyAccessory.images,
+            sizes: [accessoryDisplaySize(quickBuyAccessory.category, ui.accessories)],
+            colors: quickBuyAccessory.colors,
+            category: quickBuyAccessory.category,
+            productUrl: `/accessories/${quickBuyAccessory.id}`,
+          }}
+        />
+      ) : null}
 
       {/* Mobile Filter Drawer */}
       <AnimatePresence>
@@ -610,34 +630,23 @@ export default function AccessoriesPage() {
 function AccessoryCard({ 
   accessory, 
   index, 
-  hoveredProduct, 
-  setHoveredProduct, 
   formatPrice,
   isRTL,
   language,
   ui,
+  onQuickBuy,
 }: { 
   accessory: Accessory
   index: number
-  hoveredProduct: string | null
-  setHoveredProduct: (id: string | null) => void
   formatPrice: (price: number) => string
   isRTL: boolean
   language: AppLocale
   ui: CommerceUi
+  onQuickBuy: (accessory: Accessory) => void
 }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-10%' })
-  const pathname = usePathname()
-  const router = useRouter()
   const accessoryName = getLocalizedAccessoryDisplayName(accessory, language)
-
-  const navigateToAccessoryPdp = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    const { locale } = stripLocaleFromPathname(pathname || '/')
-    router.push(localizedPath(locale, `/accessories/${accessory.id}`))
-  }
 
   return (
     <motion.div
@@ -659,13 +668,19 @@ function AccessoryCard({
           })
         }
       >
-        <div
-          className="group relative border-b-2 border-transparent pb-2 transition-colors duration-200 hover:border-[#6f1524]"
-          onMouseEnter={() => setHoveredProduct(accessory.id)}
-          onMouseLeave={() => setHoveredProduct(null)}
-        >
+        <div className="group relative border-b-2 border-transparent pb-2 transition-colors duration-200 hover:border-[#6f1524]">
           {/* Image Container */}
           <div className="relative mb-4 aspect-[3/4] overflow-hidden bg-[#f5f5f5]">
+            <FavoriteHeartButton
+              id={accessory.id}
+              name={accessoryName}
+              price={accessory.price}
+              image={accessory.images[0] ?? ''}
+              category={accessory.category}
+              href={`/accessories/${accessory.id}`}
+              className={`absolute top-2.5 z-30 rounded-full border border-stone-200/90 bg-white/95 p-2 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:p-2.5 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+              iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
+            />
             <Image
               src={productImageSrc(accessory.images[0] ?? '')}
               alt={getAccessoryCarouselAlt(accessory, language, isRTL)}
@@ -677,35 +692,16 @@ function AccessoryCard({
                   : 'object-cover object-top'
               }`}
             />
-            
-            {/* Opens product PDP (same slug as card link) */}
-            <div className="absolute bottom-0 left-0 right-0 z-[15] translate-y-full p-4 transition-transform duration-500 group-hover:translate-y-0">
-              <button
-                type="button"
-                onClick={(e) => {
-                  trackEvent('select_item', {
-                    item_id: accessory.id,
-                    item_name: accessoryName,
-                    item_category: accessory.category,
-                  })
-                  navigateToAccessoryPdp(e)
-                }}
-                className={`flex w-full cursor-pointer items-center justify-center gap-2 bg-brand-darkRed py-3 font-montserrat text-xs uppercase tracking-[0.15em] text-white hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
-              >
-                <FiShoppingBag className="w-4 h-4 shrink-0" aria-hidden />
-                {ui.shop.viewProduct}
-              </button>
-            </div>
           </div>
 
           {/* Product Info */}
           <div className={isRTL ? 'text-right' : ''}>
-            <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue mb-1 block">
+            <span className="mb-1 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
               {isRTL 
                 ? visibleAccessoryCategories.find(c => c.id === accessory.category)?.nameAr 
                 : visibleAccessoryCategories.find(c => c.id === accessory.category)?.name}
             </span>
-            <h3 data-product-name="true" className="font-montserrat text-sm text-brand-darkRed mb-1 tracking-wide group-hover:text-brand-dustyBlue transition-colors">
+            <h3 data-product-name="true" className="mb-1 font-montserrat text-sm tracking-wide text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue">
               {accessoryName}
             </h3>
             <p className="font-montserrat text-sm tracking-wide text-[#6f1524]">
@@ -714,20 +710,39 @@ function AccessoryCard({
           </div>
 
           {/* Color Options */}
-          <div className={`flex gap-1.5 mt-3 ${isRTL ? 'justify-end' : ''}`}>
+          <div className={`mt-3 flex gap-1.5 ${isRTL ? 'justify-end' : ''}`}>
             {accessory.colors.slice(0, 4).map((color) => (
               <div
                 key={color.name}
-                className="w-3 h-3 rounded-full border border-brand-stone/50"
+                className="h-3 w-3 rounded-full border border-brand-stone/50"
                 style={{ backgroundColor: color.hex }}
                 title={isRTL ? color.nameAr : color.name}
               />
             ))}
             {accessory.colors.length > 4 && (
-              <span className="font-montserrat text-[10px] text-brand-clayRed/50 ml-1">
+              <span className="ml-1 font-montserrat text-[10px] text-brand-clayRed/50">
                 +{accessory.colors.length - 4}
               </span>
             )}
+          </div>
+
+          <div className={`mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <span className="inline-flex items-center border-b border-brand-darkRed/40 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed sm:text-[11px] sm:tracking-[0.18em]">
+              {ui.shop.viewProduct}
+            </span>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                onQuickBuy(accessory)
+              }}
+              className="relative z-20 inline-flex items-center gap-1 border-b border-brand-darkRed/40 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:text-[11px] sm:tracking-[0.18em]"
+              data-cursor-hover
+            >
+              <FiShoppingBag className="h-3 w-3 shrink-0" aria-hidden />
+              {ui.quickBuy.buyNow}
+            </button>
           </div>
         </div>
       </LocaleLink>

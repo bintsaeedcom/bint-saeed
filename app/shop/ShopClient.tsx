@@ -7,8 +7,10 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
+import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight, FiShoppingBag } from 'react-icons/fi'
 import { products as staticProducts, categories, isVisibleOnShopGrid } from '@/data/products'
+import ProductWishlistHeart from '@/components/ProductWishlistHeart'
+import QuickBuy from '@/components/QuickBuy'
 import {
   isWebshopPicturePath,
   productImageSrc,
@@ -58,6 +60,7 @@ export default function ShopClient() {
   const [filterOpen, setFilterOpen] = useState(false)
   const [sortOpen, setSortOpen] = useState(false)
   const [sortBy, setSortBy] = useState<SortId>('newest')
+  const [quickBuyProduct, setQuickBuyProduct] = useState<Product | null>(null)
   const sortMenuRef = useRef<HTMLDivElement | null>(null)
   const { formatPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
@@ -341,6 +344,11 @@ export default function ShopClient() {
                   data-cursor-hover
                   onClick={() => trackEvent('select_item', { item_id: product.id, item_name: gridDisplayName, item_category: product.category })}
                 >
+                  <ProductWishlistHeart
+                    product={product}
+                    href={getProductHref(product)}
+                    className={`absolute top-2.5 z-30 !p-2 sm:top-3 sm:!p-2.5 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+                  />
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
                     <Image
                       src={productImageSrc(gridImage)}
@@ -383,13 +391,28 @@ export default function ShopClient() {
                       />
                     ))}
                   </div>
-                  <LocaleLink
-                    href={getProductHref(product)}
-                    className="relative z-20 inline-flex items-center border-b border-brand-darkRed/40 pt-2 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
-                    data-cursor-hover
-                  >
-                    {ui.shop.viewProduct}
-                  </LocaleLink>
+                  <div className={`flex flex-wrap items-center gap-x-3 gap-y-2 pt-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <LocaleLink
+                      href={getProductHref(product)}
+                      className="relative z-20 inline-flex items-center border-b border-brand-darkRed/40 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:text-[11px] sm:tracking-[0.18em]"
+                      data-cursor-hover
+                    >
+                      {ui.shop.viewProduct}
+                    </LocaleLink>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        setQuickBuyProduct(product)
+                      }}
+                      className="relative z-20 inline-flex items-center gap-1 border-b border-brand-darkRed/40 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:text-[11px] sm:tracking-[0.18em]"
+                      data-cursor-hover
+                    >
+                      <FiShoppingBag className="h-3 w-3 shrink-0" aria-hidden />
+                      {ui.quickBuy.buyNow}
+                    </button>
+                  </div>
                 </div>
               </article>
             </li>
@@ -403,6 +426,24 @@ export default function ShopClient() {
           </p>
         )}
       </section>
+
+      {quickBuyProduct ? (
+        <QuickBuy
+          isOpen
+          onClose={() => setQuickBuyProduct(null)}
+          product={{
+            id: quickBuyProduct.id,
+            name: quickBuyProduct.name,
+            slug: quickBuyProduct.slug,
+            price: quickBuyProduct.price,
+            images: quickBuyProduct.images,
+            colorImages: quickBuyProduct.colorImages,
+            sizes: quickBuyProduct.sizes,
+            colors: quickBuyProduct.colors,
+            category: quickBuyProduct.category,
+          }}
+        />
+      ) : null}
 
       {/* Only mount the drawer when open so a hidden fixed layer never intercepts taps (mobile). */}
       <AnimatePresence>

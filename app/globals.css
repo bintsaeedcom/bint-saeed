@@ -83,6 +83,7 @@
    * Fallbacks stay slightly generous so breadcrumbs never sit under the bar before hydrate.
    */
   --site-header-height: 6.75rem;
+  --mobile-bottom-chrome: 0px;
   --text-hero: clamp(36px, 6vw, 72px);
   --text-h1: clamp(28px, 4vw, 52px);
   --text-h2: clamp(20px, 2.5vw, 32px);

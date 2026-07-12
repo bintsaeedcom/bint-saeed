@@ -10,6 +10,8 @@ import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
 import { FiPlus, FiMinus, FiHeart, FiX, FiMaximize2, FiGlobe, FiAward } from 'react-icons/fi'
 import SizeGuideModal from '@/components/SizeGuideModal'
+import StickyAddToCart from '@/components/StickyAddToCart'
+import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import { trackEvent } from '@/lib/analytics/tracking'
 import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
@@ -45,6 +47,7 @@ import {
   productIsOneSizeOnly,
 } from '@/lib/shopProductOptions'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
+import { getStripeShipToCopy } from '@/lib/shipping/stripeShipToCopy'
 import { resolveProductSku } from '@/lib/products/sku'
 import {
   PDP_ACCORDION_SUBTITLE,
@@ -613,7 +616,7 @@ export default function ProductPage() {
   ])
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
+    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-[calc(var(--mobile-bottom-chrome,0px)+1rem)] lg:pb-0">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <AppPageWayfinding
         layout="bar"
@@ -638,6 +641,16 @@ export default function ProductPage() {
             transition={{ duration: 0.6 }}
             className="relative z-0 w-full min-h-0 min-w-0 overflow-x-clip lg:max-w-[42rem]"
           >
+            <FavoriteHeartButton
+              id={product.id}
+              name={displayName}
+              price={product.price}
+              image={activeImages[0] ?? product.images[0] ?? ''}
+              category={product.category}
+              href={getProductHref(product)}
+              className={`absolute top-2.5 z-30 rounded-full border border-stone-200/90 bg-white/95 p-2 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:p-2.5 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+              iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
+            />
             <div className="grid gap-3 lg:grid-cols-[4.75rem_minmax(0,1fr)] lg:items-start">
               <div className="hidden lg:block">
                 <Swiper
@@ -863,7 +876,7 @@ export default function ProductPage() {
             </div>
             {/* Color Selection */}
             {colorOptions.length > 1 && (
-            <div className="mb-1.5 border-b border-brand-stone/20 pb-3">
+            <div id="color-selection" className="mb-1.5 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {t.product.color}
@@ -898,7 +911,7 @@ export default function ProductPage() {
 
             {/* Size Selection */}
             {showSizeSelector ? (
-            <div className="mb-3 border-b border-brand-stone/20 pb-3">
+            <div id="size-selection" className="mb-3 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {t.product.size}
@@ -938,7 +951,7 @@ export default function ProductPage() {
               </p>
             </div>
             ) : (
-              <p className="mb-3 border-b border-brand-stone/20 pb-3 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
+              <p id="size-selection" className="mb-3 border-b border-brand-stone/20 pb-3 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
                 {ui.oneSizeMadeToOrderShips(estimatedShipDate)}
               </p>
             )}
@@ -1059,7 +1072,7 @@ export default function ProductPage() {
               >
                 <FiGlobe className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
-                  {ui.worldwideShipping}
+                  {getStripeShipToCopy(language).short}
                 </span>
               </button>
             </div>
@@ -1137,11 +1150,11 @@ export default function ProductPage() {
                           className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                       </div>
-                      <div className="mt-3 flex items-center justify-between gap-3">
-                        <p data-product-name="true" className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed">
-                          {item.name}
+                      <div className="mt-3 flex min-w-0 items-start justify-between gap-2 sm:gap-3">
+                        <p data-product-name="true" className="min-w-0 flex-1 font-montserrat text-[10px] uppercase leading-snug tracking-[0.12em] text-brand-darkRed sm:text-[11px] sm:tracking-[0.14em]">
+                          <span className="line-clamp-2">{item.name}</span>
                         </p>
-                        <p className="font-montserrat text-[11px] tracking-wide text-brand-darkRed/80">
+                        <p className="shrink-0 pt-0.5 font-montserrat text-[10px] tabular-nums tracking-wide text-brand-darkRed/80 sm:text-[11px]">
                           {formatPrice(item.price, item.id)}
                         </p>
                       </div>
@@ -1188,6 +1201,25 @@ export default function ProductPage() {
       <SizeGuideModal 
         isOpen={isSizeGuideOpen} 
         onClose={() => setIsSizeGuideOpen(false)} 
+      />
+
+      <StickyAddToCart
+        product={{
+          id: product.id,
+          name: displayName,
+          price: product.price,
+          image: activeImages[0] ?? product.images[0] ?? '',
+          productUrl: getProductHref(product),
+          sku: resolveProductSku(product, selectedColor),
+        }}
+        selectedSize={selectedSize}
+        selectedColor={selectedColor}
+        quantity={quantity}
+        customisationMessage={
+          customisationActive && customisationMessage.trim()
+            ? customisationMessage.trim()
+            : undefined
+        }
       />
     </div>
   )

@@ -36,6 +36,7 @@ interface QuickBuyProps {
     sizes: string[]
     colors: { name: string; nameAr?: string; hex: string }[]
     category?: string
+    productUrl?: string
   }
 }
 
@@ -57,7 +58,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
     [product],
   )
 
-  const showSizeSelector = productShowsSizeSelector(
+  const showSizeSelector = product.sizes.length > 1 && productShowsSizeSelector(
     product.category ?? 'Kaftans',
     product.sizes,
     product.slug,
@@ -67,12 +68,23 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
     if (!isOpen) return
     const available = colorOptions.map((color) => color.name)
     setSelectedColor(available[0] ?? '')
-    if (productIsOneSizeOnly({ slug: product.slug, sizes: product.sizes })) {
+    if (product.sizes.length === 1) {
+      setSelectedSize(product.sizes[0] ?? '')
+    } else if (productIsOneSizeOnly({ slug: product.slug, sizes: product.sizes })) {
       setSelectedSize('One Size')
     } else {
       setSelectedSize('')
     }
   }, [isOpen, product.id, product.slug, product.sizes, colorOptions])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [isOpen])
 
   const activeImages = useMemo(
     () => getProductImagesForColor(product, selectedColor),
@@ -99,7 +111,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
     addItem({
       id: product.id,
-      productUrl: getProductHref(product),
+      productUrl: product.productUrl ?? getProductHref(product),
       name: product.name,
       price: product.price,
       image: previewImage,
@@ -127,7 +139,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
     addItem({
       id: product.id,
-      productUrl: getProductHref(product),
+      productUrl: product.productUrl ?? getProductHref(product),
       name: product.name,
       price: product.price,
       image: previewImage,
@@ -136,8 +148,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
       quantity: 1,
     })
 
-    // Redirect to checkout
-    window.location.href = '/cart'
+    window.location.href = '/checkout'
   }
 
   return (
@@ -158,27 +169,26 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
             initial={{ opacity: 0, y: '100%' }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className={`fixed bottom-0 left-0 right-0 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-lg md:w-full bg-white z-[101] rounded-t-2xl md:rounded-2xl max-h-[90vh] overflow-y-auto safe-area-inset ${isRTL ? 'rtl' : 'ltr'}`}
+            transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+            className={`fixed bottom-0 left-0 right-0 z-[101] max-h-[min(92vh,40rem)] overflow-y-auto overscroll-contain rounded-t-2xl bg-white pb-[max(0.75rem,env(safe-area-inset-bottom))] md:bottom-auto md:left-1/2 md:top-1/2 md:max-h-[90vh] md:w-full md:max-w-lg md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-2xl md:pb-0 ${isRTL ? 'rtl' : 'ltr'}`}
           >
-            {/* Handle bar for mobile */}
-            <div className="md:hidden flex justify-center pt-3 pb-2">
-              <div className="w-12 h-1 bg-brand-stone/30 rounded-full" />
+            <div className="flex justify-center pb-1 pt-3 md:hidden">
+              <div className="h-1 w-12 rounded-full bg-brand-stone/30" />
             </div>
 
-            {/* Close button */}
             <button
+              type="button"
               onClick={onClose}
-              className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} p-2 text-brand-clayRed hover:text-brand-dustyBlue transition-colors z-10`}
+              className={`absolute top-3 z-10 rounded-full p-2.5 text-brand-clayRed hover:bg-brand-stone/15 hover:text-brand-dustyBlue ${isRTL ? 'left-3' : 'right-3'}`}
               data-cursor-hover
+              aria-label="Close"
             >
-              <FiX className="w-5 h-5" />
+              <FiX className="h-5 w-5" />
             </button>
 
-            <div className="p-5 sm:p-6">
-              {/* Product Info */}
-              <div className={`flex gap-4 mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <div className="relative aspect-[9/16] w-[4.8rem] flex-shrink-0 overflow-hidden rounded-lg bg-[#f5f5f5] sm:w-[5.6rem]">
+            <div className="px-4 pb-5 pt-2 sm:p-6">
+              <div className={`mb-5 flex min-w-0 gap-3 sm:mb-6 sm:gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className="relative aspect-[3/4] w-[4.25rem] flex-shrink-0 overflow-hidden rounded-lg bg-[#f5f5f5] sm:aspect-[9/16] sm:w-[5.6rem]">
                   <Image
                     key={previewImage}
                     src={productImageSrc(previewImage)}
@@ -192,16 +202,16 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                     unoptimized={isWebshopPicturePath(previewImage)}
                   />
                 </div>
-                <div className={`flex-1 ${isRTL ? 'text-right' : ''}`}>
+                <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
                   {product.category && (
-                    <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue block mb-1">
+                    <span className="mb-1 block truncate font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-dustyBlue">
                       {product.category}
                     </span>
                   )}
-                  <h3 data-product-name="true" className="font-rozha text-xl sm:text-2xl text-brand-darkRed mb-2">
+                  <h3 data-product-name="true" className="mb-1.5 line-clamp-2 font-rozha text-xl leading-tight text-brand-darkRed sm:text-2xl">
                     {isRTL && product.nameAr ? product.nameAr : product.name}
                   </h3>
-                  <p className="font-montserrat text-lg text-brand-darkRed">
+                  <p className="font-montserrat text-base tabular-nums text-brand-darkRed sm:text-lg">
                     {formatPrice(product.price)}
                   </p>
                 </div>
@@ -260,12 +270,12 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               )}
 
               {/* Action Buttons */}
-              <div className="space-y-3">
-                {/* Add to Bag */}
+              <div className="space-y-2.5">
                 <button
+                  type="button"
                   onClick={handleAddToCart}
                   disabled={isAdded}
-                  className={`w-full py-4 font-montserrat text-sm uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-2 ${
+                  className={`flex min-h-[48px] w-full items-center justify-center gap-2 py-3.5 font-montserrat text-xs uppercase tracking-[0.14em] transition-all sm:text-sm sm:tracking-[0.15em] ${
                     isAdded
                       ? 'bg-green-600 text-white'
                       : 'bg-brand-darkRed text-white hover:bg-brand-dustyBlue'
@@ -274,42 +284,38 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                 >
                   {isAdded ? (
                     <>
-                      <FiCheck className="w-5 h-5" />
-                      {ui.quickBuy.added}
+                      <FiCheck className="h-5 w-5 shrink-0" />
+                      <span className="truncate">{ui.quickBuy.added}</span>
                     </>
                   ) : (
                     <>
-                      <FiShoppingBag className="w-4 h-4" />
-                      {ui.quickBuy.addToBag}
+                      <FiShoppingBag className="h-4 w-4 shrink-0" />
+                      <span className="truncate">{ui.quickBuy.addToBag}</span>
                     </>
                   )}
                 </button>
 
-                {/* Buy Now - Skip to checkout */}
                 <button
+                  type="button"
                   onClick={handleBuyNow}
-                  className={`w-full py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-all flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex min-h-[48px] w-full items-center justify-center gap-2 border border-brand-darkRed py-3.5 font-montserrat text-xs uppercase tracking-[0.14em] text-brand-darkRed transition-all hover:bg-brand-dustyBlue hover:text-white sm:text-sm sm:tracking-[0.15em] ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
-                  {ui.quickBuy.buyNow}
-                  <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
+                  <span className="truncate">{ui.quickBuy.buyNow}</span>
+                  <FiArrowRight className={`h-4 w-4 shrink-0 ${isRTL ? 'rotate-180' : ''}`} />
                 </button>
               </div>
 
-              {/* Trust badges */}
-              <div className="mt-4 flex flex-col gap-2.5 border-t border-brand-stone/20 pt-4 sm:flex-row sm:items-center sm:justify-center sm:gap-5">
-                <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <FiPackage className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
-                  <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
+              <div className="mt-4 flex flex-col gap-2 border-t border-brand-stone/20 pt-3.5">
+                <div className={`flex min-w-0 items-start justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <FiPackage className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
+                  <span className="min-w-0 text-center font-montserrat text-[10px] font-medium leading-snug tracking-wide text-brand-darkRed/80">
                     {uaeShippingNote}
                   </span>
                 </div>
-                <span className="hidden text-brand-stone/35 sm:inline" aria-hidden>
-                  •
-                </span>
-                <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <FiRotateCcw className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
-                  <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
+                <div className={`flex min-w-0 items-start justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <FiRotateCcw className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
+                  <span className="min-w-0 text-center font-montserrat text-[10px] font-medium leading-snug tracking-wide text-brand-darkRed/80">
                     {ui.checkout.shipmentPolicy}
                   </span>
                 </div>

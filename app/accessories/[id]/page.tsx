@@ -49,6 +49,12 @@ import {
 import { getPhoneCharmPdpContent } from '@/lib/accessories/phoneCharmPdpContent'
 import { getBagCharmPdpContent } from '@/lib/accessories/bagCharmPdpContent'
 import { accessoryCanonicalUrl } from '@/lib/accessories/accessoryPageUrl'
+import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
+import StickyAddToCart from '@/components/StickyAddToCart'
+import FavoriteHeartButton from '@/components/FavoriteHeartButton'
+import { accessoryDisplaySize } from '@/lib/accessories/accessorySizeLabel'
+import { relatedAccessoriesForPdp } from '@/lib/accessories/relatedAccessoriesForPdp'
+import { getStripeShipToCopy } from '@/lib/shipping/stripeShipToCopy'
 import {
   PDP_BULLET_ITEM,
   PDP_BULLET_LIST,
@@ -56,11 +62,10 @@ import {
   PDP_COPY_RELAXED,
   PDP_FAQ_QUESTION,
   PDP_MTO_NOTE,
+  PDP_RELATED_TITLE,
   formatPdpProductCodeLine,
 } from '@/lib/pdp/pdpTypography'
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
-import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
-import { accessoryDisplaySize } from '@/lib/accessories/accessorySizeLabel'
 import {
   buildStrandPdpAccordionSections,
   getStrandPdpContent,
@@ -158,6 +163,7 @@ export default function AccessoryDetailPage() {
 
   const categoryInfo = accessoryCategories.find(c => c.id === accessory.category)
   const sizeLabel = accessoryDisplaySize(accessory.category, ui.accessories)
+  const relatedAccessories = relatedAccessoriesForPdp(accessory)
   const isStrandPdp = isSignatureStrandCategory(accessory.category)
   const galleryImageClass = isStrandPdp
     ? 'object-contain object-center'
@@ -646,7 +652,7 @@ export default function AccessoryDetailPage() {
       : (isRTL ? categoryInfo?.nameAr : categoryInfo?.name) ?? ''
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
+    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-[calc(var(--mobile-bottom-chrome,0px)+1rem)] lg:pb-0">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <AppPageWayfinding
         layout="bar"
@@ -672,6 +678,16 @@ export default function AccessoryDetailPage() {
             transition={{ duration: 0.6 }}
             className={`relative z-0 w-full min-h-0 min-w-0 overflow-x-clip ${hasAngleColumn ? '' : 'lg:max-w-[42rem]'}`}
           >
+            <FavoriteHeartButton
+              id={accessory.id}
+              name={displayName}
+              price={accessory.price}
+              image={pdpImages[0] ?? accessory.images[0] ?? ''}
+              category={accessory.category}
+              href={`/accessories/${accessory.id}`}
+              className={`absolute top-2.5 z-30 rounded-full border border-stone-200/90 bg-white/95 p-2 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:p-2.5 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+              iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
+            />
             <div className={`grid gap-3 lg:items-start ${galleryGridClass}`}>
               <div className="hidden lg:block">
                 <Swiper
@@ -929,7 +945,7 @@ export default function AccessoryDetailPage() {
             </div>
 
             {/* Colour — shop spacing */}
-            <div className="mb-3 border-b border-brand-stone/20 pb-3">
+            <div id="color-selection" className="mb-3 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {ui.cart.colour}
@@ -962,7 +978,7 @@ export default function AccessoryDetailPage() {
             </div>
 
             {/* Size — jewellery, strands & bag charms use unique size labelling */}
-            <div className="mb-3 border-b border-brand-stone/20 pb-3">
+            <div id="size-selection" className="mb-3 border-b border-brand-stone/20 pb-3">
               <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {ui.cart.size}
@@ -1030,7 +1046,7 @@ export default function AccessoryDetailPage() {
               >
                 <FiGlobe className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
-                  {productUi.worldwideShipping}
+                  {getStripeShipToCopy(language).short}
                 </span>
               </button>
             </div>
@@ -1055,6 +1071,44 @@ export default function AccessoryDetailPage() {
               onOpenChange={setOpenDropdown}
               sections={pdpAccordionSections}
             />
+
+            {relatedAccessories.length > 0 && (
+              <section className="relative z-20 mt-8">
+                <h3 className={PDP_RELATED_TITLE}>
+                  {productUi.pairsWellWith}
+                </h3>
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  {relatedAccessories.map((item) => {
+                    const relatedName = getLocalizedAccessoryDisplayName(item, language)
+                    const relatedImage = item.images[0] ?? ''
+                    return (
+                      <LocaleLink
+                        key={item.id}
+                        href={`/accessories/${item.id}`}
+                        className="group relative z-20 block pointer-events-auto"
+                        data-cursor-hover
+                      >
+                        <div className="relative z-20 aspect-[3/4] overflow-hidden bg-brand-stone/10">
+                          <PdpGalleryImage
+                            src={relatedImage}
+                            alt={getAccessoryImageAlt(item, relatedImage, 0, language)}
+                            className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                          />
+                        </div>
+                        <div className="mt-3 flex min-w-0 items-start justify-between gap-2 sm:gap-3">
+                          <p data-product-name="true" className="min-w-0 flex-1 font-montserrat text-[10px] uppercase leading-snug tracking-[0.12em] text-brand-darkRed sm:text-[11px] sm:tracking-[0.14em]">
+                            <span className="line-clamp-2">{relatedName}</span>
+                          </p>
+                          <p className="shrink-0 pt-0.5 font-montserrat text-[10px] tabular-nums tracking-wide text-brand-darkRed/80 sm:text-[11px]">
+                            {formatPrice(item.price)}
+                          </p>
+                        </div>
+                      </LocaleLink>
+                    )
+                  })}
+                </div>
+              </section>
+            )}
           </motion.div>
         </div>
       </div>
@@ -1088,6 +1142,20 @@ export default function AccessoryDetailPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <StickyAddToCart
+        product={{
+          id: accessory.id,
+          name: displayName,
+          price: accessory.price,
+          image: pdpImages[0] ?? accessory.images[0] ?? '',
+          productUrl: `/accessories/${accessory.id}`,
+          sku: resolveAccessorySkuFromSelection(accessory, selectedColor),
+        }}
+        selectedSize={sizeLabel}
+        selectedColor={selectedColor}
+        quantity={quantity}
+      />
     </div>
   )
 }

@@ -61,6 +61,7 @@ const AR: SearchableItem[] = [
 ]
 
 export function getSearchableContent(locale: AppLocale | string): SearchableItem[] {
-  if (locale === 'ar') return AR
-  return EN
+  const editorial = locale === 'ar' ? AR : EN
+  // Catalog rows are appended at call sites that need product search (Header).
+  return editorial
 }

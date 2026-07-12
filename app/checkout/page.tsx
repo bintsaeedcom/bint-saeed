@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
@@ -18,6 +18,7 @@ import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOpti
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
+import { persistCheckoutSnapshot } from '@/lib/analytics/checkoutSnapshot'
 import { getCartLineImageAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { fetchGeoData } from '@/lib/geo/geoDetection'
@@ -109,13 +110,28 @@ export default function CheckoutPage() {
     }
   }, [availableRails, countryCode, selectedRail])
 
+  const beganCheckout = useRef(false)
+
   useEffect(() => {
-    if (items.length === 0) return
+    if (items.length === 0 || beganCheckout.current) return
+    beganCheckout.current = true
     void import('@/lib/analytics/cartSlack').then((m) => m.markCheckoutStarted())
+    const value = Number(cartSubtotal(items).toFixed(2))
+    persistCheckoutSnapshot({
+      currency: currency.code,
+      value,
+      items,
+    })
     trackEvent('begin_checkout', {
       currency: currency.code,
-      value: Number(cartSubtotal(items).toFixed(2)),
+      value,
       item_count: items.length,
+      items: items.map((item) => ({
+        item_id: item.id,
+        item_name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      })),
     })
   }, [cartSubtotal, currency.code, items])
 
@@ -142,8 +158,17 @@ export default function CheckoutPage() {
     }
 
     setPayBusy(true)
-    trackEvent('add_shipping_info', { checkout_provider: activeRail, currency: currency.code })
-    trackEvent('add_payment_info', { checkout_provider: activeRail, currency: currency.code })
+    persistCheckoutSnapshot({
+      currency: currency.code,
+      value: Number(cartSubtotal(items).toFixed(2)),
+      items,
+    })
+    trackEvent('add_payment_info', {
+      checkout_provider: activeRail,
+      currency: currency.code,
+      value: Number(cartSubtotal(items).toFixed(2)),
+      payment_type: activeRail,
+    })
     try {
       if (activeRail === 'mollie') {
         const response = await fetch('/api/payments/mollie/checkout', {

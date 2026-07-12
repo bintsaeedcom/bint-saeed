@@ -19,7 +19,15 @@ declare global {
   }
 }
 
-type AnalyticsParams = Record<string, string | number | boolean | null | undefined>
+type AnalyticsParamValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | Array<Record<string, string | number | boolean | null | undefined>>
+
+type AnalyticsParams = Record<string, AnalyticsParamValue>
 
 const state = {
   gaReady: false,
@@ -167,7 +175,12 @@ export function updateAnalyticsConsent(consent: ConsentState) {
 }
 
 export function trackEvent(name: string, params?: AnalyticsParams) {
-  mirrorDashboardEngagement(name, params)
+  const scalarParams = params
+    ? (Object.fromEntries(
+        Object.entries(params).filter(([, v]) => v === null || typeof v !== 'object'),
+      ) as Record<string, string | number | boolean | null | undefined>)
+    : undefined
+  mirrorDashboardEngagement(name, scalarParams)
   if (!state.consent.analytics || typeof window === 'undefined') return
   const cleanParams = toCleanParams(params)
 

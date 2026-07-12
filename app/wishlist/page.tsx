@@ -10,14 +10,17 @@ import { useWishlistStore } from '@/store/wishlistStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getWishlistCopy } from '@/lib/i18n/wishlistCopyI18n'
 import { getProductHref } from '@/lib/products/links'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 
 export default function WishlistPage() {
   const { items, removeItem } = useWishlistStore()
   const { formatPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const copy = getWishlistCopy(language)
 
   return (
     <div className={`min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -27,7 +30,7 @@ export default function WishlistPage() {
           className="mb-10"
           segments={[
             { label: ui.common.home, href: '/home' },
-            { label: ui.account.account },
+            { label: copy.title },
           ]}
           backLink={{
             href: '/shop',
@@ -39,22 +42,18 @@ export default function WishlistPage() {
             Bint Saeed
           </p>
           <h1 data-document-h1="true" className="mt-2 font-rozha text-3xl text-brand-darkRed md:text-4xl">
-            {ui.account.account}
+            {copy.title}
           </h1>
           <p className="mt-3 max-w-lg font-montserrat text-sm leading-relaxed text-brand-clayRed/70">
-            {ui.account.registerDesc}
+            {copy.intro}
           </p>
         </div>
 
         {items.length === 0 ? (
           <div className={`rounded-lg border border-brand-stone/30 bg-white py-16 text-center ${isRTL ? 'text-right' : ''}`}>
             <FiHeart className="mx-auto mb-4 h-12 w-12 text-brand-stone/40" aria-hidden />
-            <p className="font-rozha text-xl text-brand-darkRed">
-              {ui.miniCart.yourBagIsEmpty}
-            </p>
-            <p className="mt-2 font-montserrat text-sm text-brand-clayRed/60">
-              {ui.miniCart.discoverCollection}
-            </p>
+            <p className="font-rozha text-xl text-brand-darkRed">{copy.emptyTitle}</p>
+            <p className="mt-2 font-montserrat text-sm text-brand-clayRed/60">{copy.emptyDescription}</p>
             <LocaleLink
               href="/shop"
               className="mt-8 inline-block bg-brand-darkRed px-8 py-3 font-montserrat text-xs uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-dustyBlue"
@@ -78,25 +77,34 @@ export default function WishlistPage() {
                   <div
                     className={`flex gap-4 rounded-lg border border-brand-stone/30 bg-white p-4 ${isRTL ? 'flex-row-reverse' : ''}`}
                   >
-                    <LocaleLink href={href} className="relative h-28 w-20 flex-shrink-0 overflow-hidden bg-brand-stone/10 sm:h-32 sm:w-24" data-cursor-hover>
-                      <Image src={item.image} alt={withBrandAlt(item.name)} fill className="pointer-events-none object-cover" sizes="96px" />
+                    <LocaleLink href={href} className="relative h-28 w-20 shrink-0 overflow-hidden bg-stone-100">
+                      <Image
+                        src={productImageSrc(item.image)}
+                        alt={withBrandAlt(item.name, language)}
+                        fill
+                        unoptimized={isWebshopPicturePath(item.image)}
+                        className="object-cover object-top"
+                        sizes="80px"
+                      />
                     </LocaleLink>
                     <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
                       <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
                         {item.category}
                       </p>
-                      <LocaleLink href={href} className="mt-1 block" data-cursor-hover>
-                        <h2 data-product-name="true" className="font-rozha text-lg text-brand-darkRed transition-colors hover:text-brand-dustyBlue sm:text-xl">
+                      <LocaleLink href={href} data-cursor-hover>
+                        <h2 data-product-name="true" className="mt-1 font-rozha text-xl text-brand-darkRed hover:text-brand-dustyBlue">
                           {item.name}
                         </h2>
                       </LocaleLink>
-                      <p className="mt-2 font-montserrat text-sm tabular-nums text-brand-clayRed">{formatPrice(item.price)}</p>
+                      <p className="mt-1 font-montserrat text-sm text-brand-darkRed">
+                        {formatPrice(item.price)}
+                      </p>
                     </div>
                     <button
                       type="button"
                       onClick={() => removeItem(item.id)}
-                      className="flex h-10 w-10 flex-shrink-0 items-center justify-center self-start border border-brand-stone/40 text-brand-darkRed transition-colors hover:border-brand-darkRed hover:bg-brand-stone/10"
-                      aria-label={ui.common.close}
+                      className="self-start p-2 text-brand-clayRed/50 transition-colors hover:text-brand-darkRed"
+                      aria-label={copy.remove}
                       data-cursor-hover
                     >
                       <FiTrash2 className="h-4 w-4" />

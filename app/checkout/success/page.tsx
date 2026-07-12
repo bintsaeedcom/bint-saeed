@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, Suspense } from 'react'
+import { useEffect, Suspense, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -13,6 +13,7 @@ import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getCheckoutSuccessCopy } from '@/lib/i18n/checkoutSuccessCopyI18n'
 import { useCartStore } from '@/store/cartStore'
 import { trackEvent } from '@/lib/analytics/tracking'
+import { consumeCheckoutSnapshot } from '@/lib/analytics/checkoutSnapshot'
 
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
@@ -23,15 +24,22 @@ function CheckoutSuccessContent() {
   const paymentId = searchParams?.get('payment_id')
   const paypalToken = searchParams?.get('token')
   const clearCart = useCartStore((state) => state.clearCart)
+  const trackedPurchase = useRef(false)
 
   useEffect(() => {
     const referenceId = sessionId || paymentId || paypalToken
-    if (!referenceId) return
+    if (!referenceId || trackedPurchase.current) return
+    trackedPurchase.current = true
 
+    const snapshot = consumeCheckoutSnapshot()
     trackEvent('purchase', {
+      transaction_id: referenceId,
       session_id: sessionId ?? undefined,
       payment_id: paymentId ?? undefined,
       paypal_token: paypalToken ?? undefined,
+      currency: snapshot?.currency,
+      value: snapshot?.value,
+      items: snapshot?.items,
     })
 
     if (sessionId) {

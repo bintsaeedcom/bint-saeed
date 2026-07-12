@@ -284,7 +284,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       personalisation: 'Personalisation',
       note: 'Note',
       proceedSecurePayment: 'Proceed to Secure Payment',
-      shipWorldwide: 'We Ship Worldwide',
+      shipWorldwide: 'Ships to GCC, UK, US & selected Europe',
       freeUaeShipping: 'Complimentary UAE shipping on orders above {amount}',
       freeWorldwideShipping: 'Complimentary worldwide shipping on orders above {amount}',
       shippingComplimentary: 'Complimentary worldwide shipping is included with this selection.',
@@ -352,8 +352,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       subscribe: 'Subscribe',
       language: 'Language',
       countryRegion: 'Country / Region',
-      worldwideShipping: 'Worldwide Shipping',
-      deliveredGlobally: 'Complimentary worldwide shipping above {amount}.',
+      worldwideShipping: 'GCC, UK, US & Europe',
+      deliveredGlobally: 'Complimentary shipping above {amount}.',
       freeUaeShippingTitle: 'Free UAE Shipping',
       freeUaeShippingDesc: 'Complimentary delivery on orders above {amount}.',
       craftedToOrderTitle: 'Crafted to Order',
@@ -390,7 +390,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     trust: {
       ethicallyMade: 'Ethically made',
       weGiveForward: 'We Give Forward',
-      worldwideShipping: 'Worldwide shipping',
+      worldwideShipping: 'GCC, UK, US & Europe',
       secureCheckout: 'Secure checkout',
     },
     deliveryBanner: {

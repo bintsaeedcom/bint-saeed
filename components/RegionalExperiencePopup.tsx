@@ -19,7 +19,8 @@ import { ctaButtonRow, ctaInButtonRow, ctaPopupPrimary, ctaPopupSecondary } from
 import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
 import { localizedPath, stripLocaleFromPathname, type AppLocale } from '@/lib/i18n/routing'
 
-const POPUP_DELAY_MS = 2600
+/** Defer after cookie so first product browse is uninterrupted. */
+const POPUP_DELAY_MS = 9000
 
 const LANGUAGE_OPTIONS: { code: Language; native: string }[] = [
   { code: 'en', native: 'English' },
@@ -140,15 +141,6 @@ export default function RegionalExperiencePopup() {
     }
   }, [applySuggestedCurrencySilently, urlLocale])
 
-  useEffect(() => {
-    if (!isVisible) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = prev
-    }
-  }, [isVisible])
-
   const dismiss = (choice: 'confirmed' | 'changed' | 'dismissed') => {
     persistRegionalExperienceChoice(choice)
     setIsVisible(false)
@@ -194,28 +186,28 @@ export default function RegionalExperiencePopup() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[88] bg-[#1a0a0f]/20 backdrop-blur-[6px]"
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none fixed inset-0 z-[88] bg-[#1a0a0f]/12"
             aria-hidden
           />
           <motion.div
             role="dialog"
-            aria-modal="true"
+            aria-modal="false"
             aria-labelledby="regional-experience-title"
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.99 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[92] flex items-center justify-center p-4 sm:p-6"
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none fixed inset-0 z-[92] flex items-end justify-center p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:items-center sm:p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <div
               dir="ltr"
-              className="relative w-full max-w-[26rem] overflow-hidden rounded-sm border border-brand-stone/30 bg-[#faf8f6] text-left shadow-[0_32px_70px_-18px_rgba(59,0,20,0.28)]"
+              className="pointer-events-auto relative max-h-[min(88vh,36rem)] w-full max-w-[26rem] overflow-y-auto overscroll-contain rounded-sm border border-brand-stone/30 bg-[#faf8f6] text-left shadow-[0_32px_70px_-18px_rgba(59,0,20,0.28)]"
             >
               <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-transparent via-brand-rose/55 to-transparent" aria-hidden />
 
-              <div className="px-7 pb-7 pt-8">
+              <div className="px-5 pb-6 pt-7 sm:px-7 sm:pb-7 sm:pt-8">
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0 space-y-2">
                     <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-clayRed/70">
@@ -223,7 +215,7 @@ export default function RegionalExperiencePopup() {
                     </p>
                     <h2
                       id="regional-experience-title"
-                      className="font-rozha text-[clamp(1.35rem,4.5vw,1.65rem)] leading-[1.1] text-brand-darkRed whitespace-nowrap"
+                      className="font-rozha text-[clamp(1.25rem,5vw,1.65rem)] leading-[1.15] text-brand-darkRed"
                     >
                       {t.title}
                     </h2>

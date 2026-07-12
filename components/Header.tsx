@@ -1,17 +1,19 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { usePathname } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiSearch, FiUser, FiShoppingBag, FiMenu, FiX, FiArrowRight, FiChevronDown } from 'react-icons/fi'
+import { FiSearch, FiUser, FiShoppingBag, FiMenu, FiX, FiArrowRight, FiChevronDown, FiHeart } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
+import { useWishlistStore } from '@/store/wishlistStore'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import MiniCart from './MiniCart'
 import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 import { getSearchableContent, type SearchableItem } from '@/lib/i18n/searchableContentI18n'
+import { getSearchableCatalogItems } from '@/lib/i18n/searchableCatalogI18n'
 import {
   ACCESSORY_IMAGE_PHONE_CHARM,
 } from '@/data/accessories'
@@ -143,8 +145,12 @@ export default function Header() {
     }, 140)
   }
   const cartItems = useCartStore((state) => state.items)
+  const wishlistCount = useWishlistStore((state) => state.items.length)
   const { t, isRTL, language } = useLanguage()
-  const searchableContent = getSearchableContent(language)
+  const searchableContent = useMemo(
+    () => [...getSearchableContent(language), ...getSearchableCatalogItems(language)],
+    [language],
+  )
   const innerPath = stripLocaleFromPathname(pathname ?? '/').pathname
   const disableHomeLogoNavigation = innerPath === '/comingsoon'
   const isHomePage = innerPath === '/home'
@@ -367,7 +373,7 @@ export default function Header() {
     } else {
       setSearchResults([])
     }
-  }, [searchQuery])
+  }, [searchQuery, searchableContent])
 
   // Focus search input when opened
   useEffect(() => {
@@ -544,6 +550,19 @@ export default function Header() {
 
             {/* Right: locale, account and cart */}
             <div className={`pointer-events-auto relative z-[61] flex min-w-0 items-center justify-end gap-2 2xl:gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <LocaleLink
+                href="/wishlist"
+                className="relative rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
+                data-cursor-hover
+                aria-label={t.nav.account ? 'Wishlist' : 'Wishlist'}
+              >
+                <FiHeart className="w-[18px] h-[18px]" />
+                {wishlistCount > 0 ? (
+                  <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-dustyBlue px-1 font-montserrat text-[9px] font-semibold text-[#1a0008]">
+                    {wishlistCount > 9 ? '9+' : wishlistCount}
+                  </span>
+                ) : null}
+              </LocaleLink>
               <button
                 type="button"
                 onClick={() => {
@@ -938,6 +957,20 @@ export default function Header() {
               {/* Footer — safe-area inset above home indicator / browser chrome */}
               <div className="border-t border-white/10 px-6 pb-[max(1.75rem,env(safe-area-inset-bottom,0px))] pt-5">
                 <div className={`flex items-center gap-5 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <LocaleLink
+                    href="/wishlist"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="relative text-white/70 hover:text-white transition-colors"
+                    data-cursor-hover
+                    aria-label="Wishlist"
+                  >
+                    <FiHeart className="w-6 h-6" />
+                    {wishlistCount > 0 ? (
+                      <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-dustyBlue px-1 font-montserrat text-[9px] font-semibold text-[#1a0008]">
+                        {wishlistCount > 9 ? '9+' : wishlistCount}
+                      </span>
+                    ) : null}
+                  </LocaleLink>
                   <LocaleLink
                     href="/cart"
                     onClick={() => setIsMobileMenuOpen(false)}

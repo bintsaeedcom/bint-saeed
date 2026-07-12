@@ -61,7 +61,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     },
     ethicallyMade: 'Ethically made',
     weGiveForward: 'We Give Forward',
-    worldwideShipping: 'Worldwide shipping',
+    worldwideShipping: 'GCC, UK, US & Europe',
     pairsWellWith: 'Pairs well with',
     youMayAlsoLike: 'You may also like',
     addToBag: 'Add to Bag',
