@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import Stripe from 'stripe'
 import { isAllowedCheckoutOrigin, resolvePublicSiteBaseUrl } from '@/lib/security/allowedCheckoutOrigin'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { notifyHealthAlert } from '@/lib/ops/notifications'
@@ -7,8 +8,30 @@ import {
   applyCheckoutDiscountCode,
   buildStripeCheckoutSessionParams,
   resolveStripeCheckoutUiMode,
+  type StripeCheckoutUiMode,
 } from '@/lib/stripe/buildCheckoutSessionOptions'
 import { getStripeClient, isStripeSecretKeyConfigured } from '@/lib/stripe/getStripeClient'
+
+function stripeErrorMessage(error: unknown): string {
+  if (error instanceof Stripe.errors.StripeError) {
+    return error.message || 'Stripe rejected this checkout session.'
+  }
+  if (error instanceof Error && error.message.trim()) return error.message
+  return 'Checkout is temporarily unavailable. Please try again.'
+}
+
+async function createStripeSession(
+  stripe: Stripe,
+  parsed: Exclude<ReturnType<typeof parseCheckoutRequestBody>, { error: string; status: number }>,
+  baseUrl: string,
+  uiMode: StripeCheckoutUiMode,
+) {
+  const sessionOptions = buildStripeCheckoutSessionParams({ parsed, baseUrl, uiMode })
+  if (parsed.discountCode) {
+    await applyCheckoutDiscountCode(stripe, sessionOptions, parsed.discountCode)
+  }
+  return stripe.checkout.sessions.create(sessionOptions)
+}
 
 export async function POST(request: NextRequest) {
   if (!isStripeSecretKeyConfigured()) {
@@ -41,15 +64,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: parsed.error }, { status: parsed.status })
     }
 
-    const uiMode = resolveStripeCheckoutUiMode()
-    const sessionOptions = buildStripeCheckoutSessionParams({ parsed, baseUrl, uiMode })
+    const preferredMode = resolveStripeCheckoutUiMode()
     const stripe = getStripeClient()
 
-    if (parsed.discountCode) {
-      await applyCheckoutDiscountCode(stripe, sessionOptions, parsed.discountCode)
-    }
+    let uiMode = preferredMode
+    let session: Stripe.Checkout.Session
 
-    const session = await stripe.checkout.sessions.create(sessionOptions)
+    try {
+      session = await createStripeSession(stripe, parsed, baseUrl, preferredMode)
+    } catch (primaryError) {
+      // Embedded / elements can fail on account permissions or ship-to config —
+      // fall back to hosted Checkout so card payment stays available.
+      if (preferredMode === 'hosted') throw primaryError
+      console.error('Stripe preferred checkout mode failed; falling back to hosted', primaryError)
+      uiMode = 'hosted'
+      session = await createStripeSession(stripe, parsed, baseUrl, 'hosted')
+    }
 
     if (uiMode === 'embedded' || uiMode === 'elements') {
       if (!session.client_secret) {
@@ -63,6 +93,10 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    if (!session.url) {
+      throw new Error('Stripe hosted checkout URL missing')
+    }
+
     return NextResponse.json({
       mode: 'hosted',
       sessionId: session.id,
@@ -70,13 +104,11 @@ export async function POST(request: NextRequest) {
     })
   } catch (error: unknown) {
     console.error('Stripe checkout error:', error)
+    const message = stripeErrorMessage(error)
     await notifyHealthAlert({
       source: 'api/checkout',
-      message: error instanceof Error ? error.message : 'Unknown checkout error',
+      message,
     })
-    return NextResponse.json(
-      { error: 'Checkout is temporarily unavailable. Please try again.' },
-      { status: 500 },
-    )
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

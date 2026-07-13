@@ -224,11 +224,25 @@ export async function POST(request: NextRequest) {
             .filter(Boolean)
             .join(' ')
         : ''
-      const message =
+      let message =
         raw.message ||
         raw.error ||
         fromErrors ||
         'Failed to create Tamara checkout session.'
+
+      // Auth failures are merchant-config problems, not shopper form mistakes.
+      const lowered = message.toLowerCase()
+      if (
+        session.status === 401 ||
+        session.status === 403 ||
+        lowered.includes('invalid credentials') ||
+        lowered.includes('unauthorized') ||
+        lowered.includes('access token')
+      ) {
+        message =
+          'Tamara payment is temporarily unavailable (merchant connection). Please pay by card or PayPal, or try Tamara again later.'
+      }
+
       console.error('Tamara create-session failed', { status: session.status, data: session.data })
       return NextResponse.json(
         { error: message, details: session.data },

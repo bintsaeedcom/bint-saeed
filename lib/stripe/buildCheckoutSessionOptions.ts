@@ -14,9 +14,12 @@ export { STRIPE_SHIPPING_ALLOWED_COUNTRIES }
 export type StripeCheckoutUiMode = 'hosted' | 'elements' | 'embedded'
 
 export function resolveStripeCheckoutUiMode(): StripeCheckoutUiMode {
-  // Embedded Checkout keeps payment fields on Stripe while allowing destination-accurate shipping.
-  // UAE Stripe accounts still cannot use Stripe-native PayPal — use the direct PayPal rail.
-  return 'embedded'
+  // Prefer hosted Checkout for reliability (UAE accounts + wide ship-to lists).
+  // Opt into embedded with STRIPE_CHECKOUT_UI_MODE=embedded when shipping callback is verified.
+  const raw = process.env.STRIPE_CHECKOUT_UI_MODE?.trim().toLowerCase()
+  if (raw === 'embedded' || raw === 'embedded_page') return 'embedded'
+  if (raw === 'elements') return 'elements'
+  return 'hosted'
 }
 
 type BuildSessionOptions = {
