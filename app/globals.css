@@ -898,6 +898,26 @@ picture img {
   user-select: none;
 }
 
+/* Site-wide copy / selection lock (ContentProtection adds .bs-content-lock in production) */
+html.bs-content-lock,
+html.bs-content-lock body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+html.bs-content-lock input,
+html.bs-content-lock textarea,
+html.bs-content-lock select,
+html.bs-content-lock [contenteditable='true'],
+html.bs-content-lock [data-allow-select],
+html.bs-content-lock [data-allow-copy],
+html.bs-content-lock [data-allow-context-menu] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
+}
+
 /* Responsive tables */
 table {
   display: block;

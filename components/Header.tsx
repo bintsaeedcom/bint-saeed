@@ -18,8 +18,6 @@ import {
   ACCESSORY_IMAGE_PHONE_CHARM,
 } from '@/data/accessories'
 import {
-  glassDrawer,
-  glassDrawerWash,
   glassPanel,
   glassPanelWash,
   glassTextBody,
@@ -52,9 +50,11 @@ function megaMenuFeatureCta(ctaLabel: string | undefined, language: string): str
 const headerBarGradient =
   'bg-[linear-gradient(90deg,#12080b_0%,#1c0f15_22%,#2d141e_50%,#1c0f15_78%,#12080b_100%)]'
 
-/** Light logo on dark header → dark mark on frosted glass mobile nav */
-const mobileNavLogoClass =
-  'h-[clamp(3.2rem,11.2vw,5.5rem)] w-auto max-h-[104px] brightness-0'
+/** Full-screen mobile nav — wine editorial gradient (not light glass) */
+const mobileMenuGradient =
+  'bg-[radial-gradient(ellipse_130%_95%_at_50%_0%,#321922_0%,#2d141e_38%,#1a0f14_72%,#12080b_100%)]'
+
+const mobileNavLogoClass = 'h-[clamp(3.2rem,11.2vw,5.5rem)] w-auto max-h-[104px]'
 
 function CartCountBadge({ count, rtl }: { count: number; rtl: boolean }) {
   if (count <= 0) return null
@@ -791,19 +791,18 @@ export default function Header() {
         )}
       </AnimatePresence>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — dark editorial full-screen (not light glass) */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className={`fixed inset-0 z-[80] border-0 ${glassDrawer}`}
+            className={`fixed inset-0 z-[80] ${mobileMenuGradient}`}
           >
-            <div className={glassDrawerWash} aria-hidden />
-            <div className="relative z-[1] flex h-full flex-col">
+            <div className="flex h-full flex-col">
               {/* Header */}
-              <div className="flex items-center justify-between border-b border-brand-darkRed/10 px-6 py-5">
+              <div className="flex items-center justify-between px-6 py-5">
                 {disableHomeLogoNavigation ? (
                   <div className="block max-w-[min(420px,78vw)]">
                     <Image
@@ -828,7 +827,7 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`p-2 transition-colors hover:text-brand-darkRed ${glassTextMuted}`}
+                  className="p-2 text-white"
                   data-cursor-hover
                 >
                   <FiX className="w-6 h-6" />
@@ -853,7 +852,7 @@ export default function Header() {
                       initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.08 }}
-                      className="border-b border-brand-darkRed/10 py-1 last:border-b-0"
+                      className="border-b border-white/10 py-1 last:border-b-0"
                     >
                       {mega ? (
                         <>
@@ -872,17 +871,17 @@ export default function Header() {
                             aria-expanded={isExpanded}
                             data-cursor-hover
                           >
-                            <span className={`min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] ${glassTextTitle}`}>
+                            <span className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white">
                               {item.label}
                             </span>
                             <span
                               className={`inline-flex shrink-0 items-center ${
-                                isExpanded ? 'text-brand-dustyBlue' : glassTextMuted
+                                isExpanded ? 'text-brand-dustyBlue' : 'text-white/55'
                               }`}
                             >
                               <FiChevronDown
                                 className={`h-5 w-5 transition-transform duration-200 ${
-                                  isExpanded ? 'rotate-180 text-brand-dustyBlue' : ''
+                                  isExpanded ? 'rotate-180 text-brand-dustyBlue' : 'text-white/55'
                                 }`}
                                 aria-hidden
                               />
@@ -905,7 +904,7 @@ export default function Header() {
                                   <LocaleLink
                                     href={item.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className={`mb-3 inline-flex min-h-10 items-center gap-2 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue transition-colors hover:text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+                                    className={`mb-3 inline-flex min-h-10 items-center gap-2 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue transition-colors hover:text-white ${isRTL ? 'flex-row-reverse' : ''}`}
                                     data-cursor-hover
                                     data-analytics-event={getMainNavAnalyticsEvent(item.href)}
                                     data-analytics-section="header-mobile-nav"
@@ -916,7 +915,7 @@ export default function Header() {
 
                                   {mega.columns.map((col) => (
                                     <div key={col.title} className="min-w-0">
-                                      <p className={`mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] ${glassTextMuted}`}>
+                                      <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/50">
                                         {col.title}
                                       </p>
                                       <div className="space-y-0.5">
@@ -925,13 +924,13 @@ export default function Header() {
                                             key={`${col.title}-${link.label}`}
                                             href={link.href}
                                             onClick={() => setIsMobileMenuOpen(false)}
-                                            className={`flex min-h-11 items-center justify-between gap-3 py-2 font-montserrat text-[13px] leading-snug transition-colors hover:text-brand-dustyBlue ${glassTextBody} ${isRTL ? 'flex-row-reverse' : ''}`}
+                                            className={`flex min-h-11 items-center justify-between gap-3 py-2 font-montserrat text-[13px] leading-snug text-white/90 transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
                                             data-cursor-hover
                                             data-analytics-section="header-mobile-nav"
                                           >
                                             <span>{link.label}</span>
                                             <FiArrowRight
-                                              className={`h-3.5 w-3.5 shrink-0 ${glassTextMuted} ${isRTL ? 'rotate-180' : ''}`}
+                                              className={`h-3.5 w-3.5 shrink-0 text-white/35 ${isRTL ? 'rotate-180' : ''}`}
                                               aria-hidden
                                             />
                                           </LocaleLink>
@@ -954,11 +953,11 @@ export default function Header() {
                           data-analytics-event={getMainNavAnalyticsEvent(item.href)}
                           data-analytics-section="header-mobile-nav"
                         >
-                          <span className={`min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] ${glassTextTitle}`}>
+                          <span className="min-w-0 flex-1 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] text-white">
                             {item.label}
                           </span>
                           <FiArrowRight
-                            className={`h-5 w-5 shrink-0 transition-all group-hover:translate-x-1 group-hover:text-brand-dustyBlue ${glassTextMuted} ${isRTL ? 'rotate-180' : ''}`}
+                            className={`h-5 w-5 shrink-0 text-white/50 transition-all group-hover:translate-x-1 group-hover:text-white ${isRTL ? 'rotate-180' : ''}`}
                           />
                         </LocaleLink>
                       )}
@@ -968,12 +967,12 @@ export default function Header() {
               </div>
 
               {/* Footer — safe-area inset above home indicator / browser chrome */}
-              <div className="border-t border-brand-darkRed/10 px-6 pb-[max(1.75rem,env(safe-area-inset-bottom,0px))] pt-5">
+              <div className="border-t border-white/10 px-6 pb-[max(1.75rem,env(safe-area-inset-bottom,0px))] pt-5">
                 <div className={`flex items-center gap-5 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <LocaleLink
                     href="/wishlist"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`relative transition-colors hover:text-brand-darkRed ${glassTextMuted}`}
+                    className="relative text-white/70 transition-colors hover:text-white"
                     data-cursor-hover
                     aria-label="Wishlist"
                   >
@@ -987,7 +986,7 @@ export default function Header() {
                   <LocaleLink
                     href="/cart"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`transition-colors hover:text-brand-darkRed ${glassTextMuted}`}
+                    className="text-white/70 transition-colors hover:text-white"
                     data-cursor-hover
                   >
                     <FiShoppingBag className="w-6 h-6" />
@@ -995,7 +994,7 @@ export default function Header() {
                   <LocaleLink
                     href="/account"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`transition-colors hover:text-brand-darkRed ${glassTextMuted}`}
+                    className="text-white/70 transition-colors hover:text-white"
                     data-cursor-hover
                   >
                     <FiUser className="w-6 h-6" />

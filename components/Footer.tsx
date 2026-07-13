@@ -59,11 +59,6 @@ export default function Footer() {
 
   return (
     <footer className="relative w-full min-w-0 max-w-none overflow-x-hidden bg-[#12080b]">
-      {/* Extends dark footing under rubber-band / overscroll so cream never appears below */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-full z-0 h-[max(100vh,100dvh)] bg-[#12080b]"
-      />
       {/* Main Footer Links - Coming Soon Dark Gradient Style */}
       <div className="relative text-white">
         {/* Coming Soon gradient background */}

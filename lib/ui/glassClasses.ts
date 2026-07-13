@@ -1,16 +1,18 @@
 /**
  * Readable frosted glass — blur for depth, enough opacity that dark hero imagery
  * never washes text out. Prefer light glass + dark type on this site.
+ * Note: do not include `relative` here — overlays often need `fixed`/`absolute`
+ * and a later `relative` in the class string can break viewport positioning.
  */
 export const glassPanel =
-  'relative overflow-hidden border border-white/55 bg-white/78 shadow-[0_18px_48px_-18px_rgba(26,2,16,0.35)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/68'
+  'overflow-hidden border border-white/55 bg-white/78 shadow-[0_18px_48px_-18px_rgba(26,2,16,0.35)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/68'
 
 /** Soft ivory wash under glass so body copy stays crisp on dark photos */
 export const glassPanelWash =
   'pointer-events-none absolute inset-0 bg-gradient-to-b from-[#faf8f5]/92 via-[#faf8f5]/86 to-[#f7f2ec]/90'
 
 export const glassDrawer =
-  'relative overflow-hidden border-white/45 bg-white/80 shadow-[0_24px_60px_-20px_rgba(26,2,16,0.4)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/70'
+  'overflow-hidden border-white/45 bg-white/80 shadow-[0_24px_60px_-20px_rgba(26,2,16,0.4)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/70'
 
 export const glassDrawerWash =
   'pointer-events-none absolute inset-0 bg-gradient-to-br from-[#faf8f5]/94 via-[#faf8f5]/88 to-[#eef6f4]/55'
@@ -24,7 +26,7 @@ export const glassTextLink = 'relative text-brand-darkRed underline decoration-b
  * Overlay glass (cookie / regional) over dark heroes — wine frosted panel + light type.
  */
 export const glassOverlayPanel =
-  'relative overflow-hidden border border-white/20 bg-[#1a0210]/82 shadow-[0_18px_48px_-18px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-[#1a0210]/72'
+  'overflow-hidden border border-white/20 bg-[#1a0210]/82 shadow-[0_18px_48px_-18px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-[#1a0210]/72'
 
 export const glassOverlayWash =
   'pointer-events-none absolute inset-0 bg-gradient-to-b from-[#2d141e]/55 via-[#1a0210]/35 to-[#12080b]/70'

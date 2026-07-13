@@ -94,7 +94,7 @@ export default function CookieConsent() {
           className="pointer-events-none fixed inset-x-0 bottom-0 z-[100] p-2.5 pb-[max(0.65rem,env(safe-area-inset-bottom))] sm:p-4 sm:pb-[max(1rem,env(safe-area-inset-bottom))]"
         >
           <div
-            className={`pointer-events-auto mx-auto flex max-h-[min(70vh,32rem)] w-full max-w-3xl flex-col ${glassOverlayPanel} ${
+            className={`pointer-events-auto relative mx-auto flex max-h-[min(70vh,32rem)] w-full max-w-3xl flex-col ${glassOverlayPanel} ${
               isRTL ? 'text-right' : 'text-left'
             }`}
           >

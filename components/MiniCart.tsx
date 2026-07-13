@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
@@ -38,6 +39,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const { items, removeItem, updateQuantity } = useCartStore()
   const { formatPrice, formatAmount, currency, formatCartSubtotal, cartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
+  const [mounted, setMounted] = useState(false)
   const ui = commerceUi(language)
   const shippingMessages = resolveCartShippingMessages({
     subtotal: cartSubtotal(items),
@@ -67,33 +69,39 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     return ordered.slice(0, 2)
   }, [items])
 
-  // Close on escape key
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Close on escape key; restore prior overflow (don't force unset)
+  useEffect(() => {
+    if (!isOpen) return
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'hidden'
-    }
+    document.addEventListener('keydown', handleEscape)
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'unset'
+      document.body.style.overflow = prevOverflow
     }
   }, [isOpen, onClose])
 
-  return (
+  if (!mounted) return null
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Soft scrim — no heavy blur (avoids “site stuck” feel) */}
           <motion.div
             key="mini-cart-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] bg-[#1a0210]/45"
           />
 
           {/* Drawer */}
@@ -102,8 +110,8 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
             initial={{ x: isRTL ? '-100%' : '100%' }}
             animate={{ x: 0 }}
             exit={{ x: isRTL ? '-100%' : '100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-            className={`fixed top-0 ${isRTL ? 'left-0 border-r' : 'right-0 border-l'} z-[101] flex h-full w-full max-w-md flex-col ${glassDrawer} ${isRTL ? 'rtl' : 'ltr'}`}
+            transition={{ type: 'tween', duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className={`fixed top-0 ${isRTL ? 'left-0 border-r' : 'right-0 border-l'} z-[101] flex h-[100dvh] w-full max-w-md flex-col ${glassDrawer} ${isRTL ? 'rtl' : 'ltr'}`}
           >
             <div className={glassDrawerWash} aria-hidden />
 
@@ -372,6 +380,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }
