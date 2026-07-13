@@ -31,3 +31,14 @@ export function lockBodyScroll(): () => void {
     }
   }
 }
+
+/** Hard reset — use on route changes so a leaked overlay lock never freezes mobile. */
+export function forceUnlockBodyScroll(): void {
+  if (typeof document === 'undefined') return
+  lockCount = 0
+  document.body.style.overflow = previousOverflow || ''
+  document.body.style.touchAction = previousTouchAction || ''
+  document.documentElement.classList.remove('bs-scroll-locked')
+  previousOverflow = ''
+  previousTouchAction = ''
+}

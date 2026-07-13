@@ -8,9 +8,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 function shouldUseLenis(): boolean {
   if (typeof window === 'undefined') return false
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
-  // Touch / coarse pointer: native scroll is more fluent (Lenis often feels “stuck” scrolling up)
+  // Any touch surface: native scroll only. Lenis + syncTouch:false leaves ScrollTrigger
+  // and GSAP reveals stuck (black/blank hero on phones).
+  if (navigator.maxTouchPoints > 0) return false
   if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return false
-  if (navigator.maxTouchPoints > 0 && window.matchMedia('(max-width: 1024px)').matches) return false
   return true
 }
 

@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -10,6 +11,7 @@ import SmoothScrollProvider from '@/components/SmoothScrollProvider'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 import { isAboutEditorialRoute } from '@/lib/about/aboutEditorialRoutes'
 import { SITE_HEADER_OFFSET } from '@/lib/ui/editorialPageChrome'
+import { forceUnlockBodyScroll } from '@/lib/ui/bodyScrollLock'
 
 interface LayoutWrapperProps {
   children: React.ReactNode
@@ -19,6 +21,11 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const pathname = usePathname()
   const safePathname = pathname ?? ''
   const { pathname: inner } = stripLocaleFromPathname(safePathname || '/')
+
+  // Clear leaked overlay scroll locks when navigating (common black-screen cause on mobile)
+  useEffect(() => {
+    forceUnlockBodyScroll()
+  }, [pathname])
 
   // Avoid hydration mismatch: when pathname is temporarily unavailable on client,
   // don't assume "/" and collapse the layout to the coming-soon shell.

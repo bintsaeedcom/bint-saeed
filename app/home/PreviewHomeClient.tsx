@@ -278,8 +278,31 @@ export default function Home() {
     const ctx = gsap.context(() => {
       const sections = gsap.utils.toArray<HTMLElement>('[data-story-section]')
       sections.forEach((section) => {
+        // Hero must never be GSAP-hidden — mobile ScrollTrigger misses can leave a black screen
+        if (section.hasAttribute('data-hero-section')) return
+
         const revealTargets = section.querySelectorAll<HTMLElement>('[data-reveal]')
         if (!revealTargets.length) return
+
+        const rect = section.getBoundingClientRect()
+        const alreadyInView = rect.top < window.innerHeight * 0.92 && rect.bottom > 0
+
+        if (alreadyInView) {
+          gsap.fromTo(
+            revealTargets,
+            { autoAlpha: 0, y: 18 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: HOUSE_REVEAL_DURATION,
+              ease: HOUSE_MOTION_EASE,
+              stagger: 0.08,
+              immediateRender: false,
+            },
+          )
+          return
+        }
+
         gsap.fromTo(
           revealTargets,
           { autoAlpha: 0, y: 24 },
@@ -291,8 +314,9 @@ export default function Home() {
             stagger: 0.11,
             scrollTrigger: {
               trigger: section,
-              start: 'top 88%',
+              start: 'top 92%',
               once: true,
+              invalidateOnRefresh: true,
             },
           },
         )
@@ -310,6 +334,7 @@ export default function Home() {
             scrollTrigger: {
               trigger: collectionMask,
               start: 'top 80%',
+              invalidateOnRefresh: true,
             },
           },
         )
@@ -331,6 +356,7 @@ export default function Home() {
               scrollTrigger: {
                 trigger: curtainSection,
                 start: 'top 78%',
+                invalidateOnRefresh: true,
               },
             },
           )
@@ -338,7 +364,15 @@ export default function Home() {
       }
     })
 
-    return () => ctx.revert()
+    const refresh = () => ScrollTrigger.refresh()
+    window.addEventListener('load', refresh, { once: true })
+    window.addEventListener('orientationchange', refresh)
+    requestAnimationFrame(refresh)
+
+    return () => {
+      window.removeEventListener('orientationchange', refresh)
+      ctx.revert()
+    }
   }, [])
   
   return (
@@ -954,6 +988,7 @@ function HeroSection() {
     <section
       ref={ref}
       data-story-section
+      data-hero-section
       className="section-full relative h-svh min-h-svh w-full overflow-hidden bg-[#1a0210]"
     >
       <SectionStripes variant="hero" />
@@ -978,12 +1013,12 @@ function HeroSection() {
           <div className="pointer-events-none absolute inset-y-0 left-0 w-[min(70vw,760px)] bg-gradient-to-r from-[#1a0210]/58 via-[#1a0210]/24 to-transparent" />
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
             <div className={`min-w-0 lg:col-span-8 xl:col-span-7 ${isRTL ? 'lg:col-start-6' : ''}`}>
-              {/* initial={false}: avoid opacity:0 inline styles before hydration (looked "broken" / blank UI) */}
-              <motion.div style={{ y }} className="pointer-events-none">
-                <motion.h1 data-reveal data-document-h1="true" data-hero-h1="true"
-                  initial={reduceMotion ? false : { opacity: 0, y: 22, filter: 'blur(6px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
+              {/* Never start at opacity 0 — GSAP/framer + iOS blur left phones on a black hero */}
+              <motion.div style={reduceMotion ? undefined : { y }} className="pointer-events-none">
+                <motion.h1
+                  data-document-h1="true"
+                  data-hero-h1="true"
+                  initial={false}
                   style={reduceMotion ? undefined : { y: titleY }}
                   className="mb-8 max-w-[85vw] font-rozha text-[clamp(32px,5vw,64px)] font-normal leading-[1.15] tracking-[-0.01em] !text-[#e8d8c8] md:max-w-[100vw] md:whitespace-nowrap"
                 >
@@ -991,10 +1026,7 @@ function HeroSection() {
                 </motion.h1>
 
                 <motion.p
-                  data-reveal
                   initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                   style={reduceMotion ? undefined : { x: introX }}
                   className="mb-6 max-w-md border-l-[2px] border-[#6f1524] pl-[14px] font-montserrat text-[15px] leading-[1.7] tracking-[0.02em] !text-[#e8d8c8] md:mb-8"
                 >
@@ -1002,13 +1034,7 @@ function HeroSection() {
                 </motion.p>
               </motion.div>
 
-              <motion.div
-                data-reveal
-                initial={false}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="relative z-30 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10"
-              >
+              <div className="relative z-30 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
                 <MagneticWrap className="w-full sm:w-fit">
                   <LocaleLink
                     href="/shop"
@@ -1031,7 +1057,7 @@ function HeroSection() {
                     {copy.heroBrandStoryCta}
                   </LocaleLink>
                 </MagneticWrap>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
