@@ -185,26 +185,39 @@ export async function middleware(request: NextRequest) {
   }
 
   if (isHomeGatedArea(pathname)) {
+    const serveHome = () => {
+      const headers = new Headers(request.headers)
+      headers.set('x-bs-locale', pathLocale)
+      headers.set('x-bs-pathname', innerPath)
+      // Locale-prefixed /ar/home must rewrite to /home (no app/ar tree).
+      if (pathname !== innerPath) {
+        const url = request.nextUrl.clone()
+        url.pathname = innerPath
+        return NextResponse.rewrite(url, { request: { headers } })
+      }
+      return NextResponse.next({ request: { headers } })
+    }
+
     if (isHomeGateExempt(pathname)) {
-      return withLocaleHeaders(request, 'en', pathname)
+      return serveHome()
     }
 
     if (isLinkPreviewBot(request.headers.get('user-agent'))) {
-      return withLocaleHeaders(request, 'en', pathname)
+      return serveHome()
     }
 
     if (process.env.PREVIEW_GATE_DISABLED === 'true') {
-      return withLocaleHeaders(request, 'en', pathname)
+      return serveHome()
     }
 
     const secret = getPreviewSecretBytes()
     if (!secret) {
-      return withLocaleHeaders(request, 'en', pathname)
+      return serveHome()
     }
 
     const token = request.cookies.get(COOKIE_NAME)?.value
     if (token && (await verifyPreviewAccessCookie(token, secret))) {
-      return withLocaleHeaders(request, 'en', pathname)
+      return serveHome()
     }
 
     const returnTo = sanitizePreviewReturnPath(pathname, search)

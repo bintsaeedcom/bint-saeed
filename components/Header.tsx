@@ -1009,6 +1009,44 @@ export default function Header() {
                                       </div>
                                     </div>
                                   ))}
+
+                                  {mega.features.length > 0 ? (
+                                    <div className="mt-4 grid grid-cols-2 gap-2.5">
+                                      {mega.features.slice(0, 2).map((feature) => (
+                                        <LocaleLink
+                                          key={feature.title}
+                                          href={feature.href}
+                                          onClick={() => setIsMobileMenuOpen(false)}
+                                          className="group block min-w-0"
+                                          data-cursor-hover
+                                          data-analytics-section="header-mobile-nav"
+                                        >
+                                          <div className="relative aspect-[4/5] overflow-hidden bg-white/5">
+                                            <Image
+                                              src={feature.image}
+                                              alt=""
+                                              fill
+                                              unoptimized
+                                              sizes="42vw"
+                                              className="object-cover transition-transform duration-700 group-active:scale-[1.03]"
+                                            />
+                                            <div
+                                              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#12080b]/75 via-transparent to-transparent"
+                                              aria-hidden
+                                            />
+                                          </div>
+                                          <div className={`mt-2 ${isRTL ? 'text-right' : 'text-left'}`}>
+                                            <p className="font-montserrat text-[11px] leading-snug text-white/90">
+                                              {feature.title}
+                                            </p>
+                                            <p className="mt-0.5 font-montserrat text-[9px] uppercase tracking-[0.14em] text-brand-dustyBlue/90">
+                                              {megaMenuFeatureCta(feature.ctaLabel, language)}
+                                            </p>
+                                          </div>
+                                        </LocaleLink>
+                                      ))}
+                                    </div>
+                                  ) : null}
                                 </div>
                               </motion.div>
                             ) : null}
