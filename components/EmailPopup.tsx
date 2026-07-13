@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { FiX } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { hasStoredCookieChoice } from '@/lib/analytics/consent'
 import toast from 'react-hot-toast'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import { getEmailPopupCopy } from '@/lib/i18n/emailPopupI18n'
@@ -32,7 +33,7 @@ export default function EmailPopup() {
 
     if (!hasSeenPopup && !hasSubscribed) {
       const timer = setTimeout(() => {
-        if (localStorage.getItem('cookieConsent')) setIsOpen(true)
+        if (hasStoredCookieChoice()) setIsOpen(true)
       }, 45000)
       return () => clearTimeout(timer)
     }

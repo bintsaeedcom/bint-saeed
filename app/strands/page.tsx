@@ -12,6 +12,8 @@ import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getStrandsPageCopy } from '@/lib/i18n/strandsPageCopyI18n'
+import { PRODUCT_LINE_STRANDS } from '@/lib/i18n/strandsBrandLock'
+import NoTranslate from '@/components/NoTranslate'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
 import { buildStrandsCollectionJsonLd } from '@/lib/accessories/strandsCollectionSchemaI18n'
@@ -187,7 +189,7 @@ export default function StrandsPage() {
             className="mb-3"
             segments={[
               { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-              { label: isRTL ? 'الخيوط' : 'Strands' },
+              { label: PRODUCT_LINE_STRANDS },
             ]}
           />
 
@@ -213,14 +215,14 @@ export default function StrandsPage() {
                 className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
                 data-cursor-hover
               >
-                {copy.ctaShopStrands}
+                <NoTranslate>{copy.ctaShopStrands}</NoTranslate>
               </LocaleLink>
               <LocaleLink
                 href={maryleboneHref}
                 className="inline-flex items-center justify-center rounded-[4px] border border-[#e8ddd4]/40 bg-[#1a0210]/35 px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] backdrop-blur-md transition-colors hover:border-[#e8ddd4]/70 hover:bg-[#1a0210]/55"
                 data-cursor-hover
               >
-                {copy.ctaSeeMarylebone}
+                <NoTranslate>{copy.ctaSeeMarylebone}</NoTranslate>
               </LocaleLink>
             </div>
           </div>

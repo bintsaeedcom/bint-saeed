@@ -3,6 +3,7 @@
 import { useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
+import NoTranslate from '@/components/NoTranslate'
 import { FiArrowLeft } from 'react-icons/fi'
 import AppBreadcrumb, { type BreadcrumbSegment } from '@/components/AppBreadcrumb'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
@@ -108,7 +109,9 @@ export default function AppPageWayfinding({
             className={`h-3.5 w-3.5 shrink-0 ${rtl ? 'rotate-180 group-hover:translate-x-0.5' : 'group-hover:-translate-x-0.5'}`}
             aria-hidden
           />
-          <span>{resolvedBack.label}</span>
+          <NoTranslate as="span" lang={language}>
+            {resolvedBack.label}
+          </NoTranslate>
         </button>
       )
     }
@@ -121,7 +124,9 @@ export default function AppPageWayfinding({
           className={`h-3.5 w-3.5 shrink-0 ${rtl ? 'rotate-180 group-hover:translate-x-0.5' : 'group-hover:-translate-x-0.5'}`}
           aria-hidden
         />
-        <span>{resolvedBack.label}</span>
+        <NoTranslate as="span" lang={language}>
+          {resolvedBack.label}
+        </NoTranslate>
       </LocaleLink>
     )
   }

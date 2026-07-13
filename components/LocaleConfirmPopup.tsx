@@ -10,6 +10,7 @@ import {
   shouldShowRegionalExperiencePopup,
   languageLabelsEnglish,
 } from '@/lib/geo/geoDetection'
+import { hasStoredCookieChoice } from '@/lib/analytics/consent'
 import { localizedPath, stripLocaleFromPathname, type AppLocale } from '@/lib/i18n/routing'
 
 /** Legacy fallback — prefer RegionalExperiencePopup in LayoutWrapper. */
@@ -39,7 +40,7 @@ export default function LocaleConfirmPopup() {
       setTimeout(run, 600)
     }
 
-    if (localStorage.getItem('cookieConsent')) {
+    if (hasStoredCookieChoice()) {
       setTimeout(run, 400)
     } else {
       window.addEventListener('cookie-consent-closed', onCookieClosed)

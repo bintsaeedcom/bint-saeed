@@ -1,4 +1,9 @@
 import type { Language } from '@/lib/i18n/translations'
+import {
+  PRODUCT_LINE_STRANDS,
+  shopAllStrandsCta as buildShopAllStrandsCta,
+  shopStrandsCta as buildShopStrandsCta,
+} from '@/lib/i18n/strandsBrandLock'
 
 export type StrandsStep = {
   numeral: string
@@ -126,7 +131,7 @@ const STRANDS_EN: StrandsPageCopy = {
   heroSubline1:
     'The first abaya house to offer interchangeable natural stone strands. Worn on the cuff. Changed by choice.',
   heroSubline2: 'Natural stone. Handcrafted in Abu Dhabi. Made for the Marylebone Abaya.',
-  ctaShopStrands: 'SHOP STRANDS',
+  ctaShopStrands: buildShopStrandsCta('en', 'upper'),
   ctaSeeMarylebone: 'SEE THE MARYLEBONE',
   marquee: 'NATURAL STONE · BINT SAEED · ABAYA STRANDS · ABU DHABI · CRAFTED TO ORDER ·',
   conceptLabel: 'THE CONCEPT',
@@ -163,7 +168,7 @@ const STRANDS_EN: StrandsPageCopy = {
   collectionLabel: 'THE COLLECTION',
   collectionHeading: 'Choose by colour and character.',
   collectionIntro: 'Each stone is natural. No two are identical.',
-  shopAllStrandsCta: 'Shop all strands',
+  shopAllStrandsCta: buildShopAllStrandsCta('en', 'title'),
   stoneVisualNotes: STONE_VISUAL_NOTES_EN,
   stoneVisualFallback: 'Natural stone selected for colour, surface, and visual texture.',
   limitedEdition: 'Limited Edition',
@@ -205,9 +210,9 @@ const STRANDS_AR: StrandsPageCopy = {
   heroSubline1:
     'أول دار عباءات تقدّم خيوط أحجار طبيعية قابلة للتبديل. تُرتدى على الكم. تُغيَّر باختيارك.',
   heroSubline2: 'حجر طبيعي. صُنع يدوياً في أبوظبي. صُمم لعباءة Marylebone.',
-  ctaShopStrands: 'تسوّقي الخيوط',
+  ctaShopStrands: buildShopStrandsCta('ar', 'title'),
   ctaSeeMarylebone: 'شاهدي Marylebone',
-  marquee: 'حجر طبيعي · BINT SAEED · خيوط العباءة · أبوظبي · يُصنع حسب الطلب ·',
+  marquee: `حجر طبيعي · BINT SAEED · ${PRODUCT_LINE_STRANDS.toUpperCase()} · أبوظبي · يُصنع حسب الطلب ·`,
   conceptLabel: 'المفهوم',
   conceptHeadingLine1: 'عباءة واحدة.',
   conceptHeadingLine2: 'لمسات متعددة.',
@@ -242,7 +247,7 @@ const STRANDS_AR: StrandsPageCopy = {
   collectionLabel: 'المجموعة',
   collectionHeading: 'اختاري حسب اللون والطابع.',
   collectionIntro: 'كل حجر طبيعي. لا يوجد اثنان متطابقان.',
-  shopAllStrandsCta: 'تسوّقي كل الخيوط',
+  shopAllStrandsCta: buildShopAllStrandsCta('ar', 'title'),
   stoneVisualNotes: STONE_VISUAL_NOTES_AR,
   stoneVisualFallback: 'حجر طبيعي مُختار للون والسطح والملمس البصري.',
   limitedEdition: 'إصدار محدود',
@@ -278,7 +283,118 @@ const STRANDS_AR: StrandsPageCopy = {
   ],
 }
 
+type StrandsLocaleOverlay = Partial<
+  Pick<
+    StrandsPageCopy,
+    | 'heroEyebrow'
+    | 'heroHeadline'
+    | 'heroSubline1'
+    | 'heroSubline2'
+    | 'ctaShopStrands'
+    | 'ctaSeeMarylebone'
+    | 'shopAllStrandsCta'
+    | 'marquee'
+  >
+>
+
+/**
+ * Hero + CTA overlays so non-EN locales are not left as English (which triggers
+ * browser MT — e.g. Back→Rug, SHOP STRANDS→WINKEL STRANDEN in Dutch).
+ * Full page packs can expand later; CTAs always use the Strands brand lock.
+ */
+const STRANDS_LOCALE_OVERLAY: Partial<Record<Language, StrandsLocaleOverlay>> = {
+  nl: {
+    heroEyebrow: `DE ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
+    heroHeadline: 'Je abaya is nooit af geweest. Tot nu toe.',
+    heroSubline1:
+      'Het eerste abayahuis dat verwisselbare Strands van natuursteen aanbiedt. Deze worden aan de manchet gedragen en naar wens verwisseld.',
+    heroSubline2: 'Natuursteen. Handgemaakt in Abu Dhabi. Gemaakt voor de Marylebone Abaya.',
+    ctaSeeMarylebone: 'ZIE DE MARYLEBONE',
+    marquee: `NATUURSTEEN · BINT SAEED · ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · ABU DHABI · OP BESTELLING GEMAAKT ·`,
+  },
+  de: {
+    heroEyebrow: `DER ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
+    heroHeadline: 'Ihre Abaya war nie fertig. Bis jetzt.',
+    heroSubline1:
+      'Das erste Abaya-Haus mit austauschbaren Naturstein-Strands. Am Manschettenrand getragen. Nach Wunsch gewechselt.',
+    heroSubline2: 'Naturstein. Handgefertigt in Abu Dhabi. Für die Marylebone Abaya.',
+    ctaSeeMarylebone: 'DIE MARYLEBONE ANSEHEN',
+  },
+  fr: {
+    heroEyebrow: `LE ${PRODUCT_LINE_STRANDS.toUpperCase()} ABAYA · BINT SAEED`,
+    heroHeadline: 'Votre abaya n’a jamais été terminée. Jusqu’à présent.',
+    heroSubline1:
+      'La première maison d’abayas à proposer des Strands en pierres naturelles interchangeables. Portés au poignet. Changés à volonté.',
+    heroSubline2: 'Pierre naturelle. Fait main à Abu Dhabi. Conçu pour l’abaya Marylebone.',
+    ctaSeeMarylebone: 'VOIR LA MARYLEBONE',
+  },
+  it: {
+    heroEyebrow: `L’ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
+    heroHeadline: 'La tua abaya non è mai stata completa. Fino ad ora.',
+    heroSubline1:
+      'La prima maison di abaya con Strands in pietre naturali intercambiabili. Indossati sul polsino. Cambiati a piacere.',
+    heroSubline2: 'Pietra naturale. Realizzati a mano ad Abu Dhabi. Per l’abaya Marylebone.',
+    ctaSeeMarylebone: 'SCOPRI LA MARYLEBONE',
+  },
+  es: {
+    heroEyebrow: `EL ${PRODUCT_LINE_STRANDS.toUpperCase()} ABAYA · BINT SAEED`,
+    heroHeadline: 'Tu abaya nunca estuvo terminada. Hasta ahora.',
+    heroSubline1:
+      'La primera casa de abayas con Strands de piedras naturales intercambiables. Se llevan en el puño. Se cambian a voluntad.',
+    heroSubline2: 'Piedra natural. Hecho a mano en Abu Dhabi. Para la abaya Marylebone.',
+    ctaSeeMarylebone: 'VER LA MARYLEBONE',
+  },
+  pt: {
+    heroEyebrow: `O ${PRODUCT_LINE_STRANDS.toUpperCase()} ABAYA · BINT SAEED`,
+    heroHeadline: 'A sua abaya nunca esteve completa. Até agora.',
+    heroSubline1:
+      'A primeira casa de abayas com Strands de pedras naturais intercambiáveis. Usados no punho. Trocados à escolha.',
+    heroSubline2: 'Pedra natural. Feito à mão em Abu Dhabi. Para a abaya Marylebone.',
+    ctaSeeMarylebone: 'VER A MARYLEBONE',
+  },
+  ru: {
+    heroEyebrow: `ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
+    heroHeadline: 'Ваша абайя никогда не была завершена. До сих пор.',
+    heroSubline1:
+      'Первый дом абайи со сменными Strands из натурального камня. На манжете. Меняются по желанию.',
+    heroSubline2: 'Натуральный камень. Ручная работа в Abu Dhabi. Для абайи Marylebone.',
+    ctaSeeMarylebone: 'СМОТРЕТЬ MARYLEBONE',
+  },
+  zh: {
+    heroEyebrow: `ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
+    heroHeadline: '您的长袍从未真正完成。直到现在。',
+    heroSubline1: '首个提供可更换天然石 Strands 的长袍品牌。佩于袖口。随心更换。',
+    heroSubline2: '天然石。阿布扎比手工制作。专为 Marylebone Abaya。',
+    ctaSeeMarylebone: '查看 MARYLEBONE',
+  },
+  id: {
+    heroEyebrow: `ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
+    heroHeadline: 'Abaya Anda belum pernah selesai. Sampai sekarang.',
+    heroSubline1:
+      'Rumah abaya pertama dengan Strands batu alam yang dapat diganti. Dipakai di manset. Diganti sesuai pilihan.',
+    heroSubline2: 'Batu alam. Buatan tangan di Abu Dhabi. Untuk Marylebone Abaya.',
+    ctaSeeMarylebone: 'LIHAT MARYLEBONE',
+  },
+  ms: {
+    heroEyebrow: `ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
+    heroHeadline: 'Abaya anda tidak pernah selesai. Sehingga kini.',
+    heroSubline1:
+      'Rumah abaya pertama dengan Strands batu semula jadi yang boleh ditukar. Dipakai pada manset. Ditukar mengikut pilihan.',
+    heroSubline2: 'Batu semula jadi. Buatan tangan di Abu Dhabi. Untuk Marylebone Abaya.',
+    ctaSeeMarylebone: 'LIHAT MARYLEBONE',
+  },
+}
+
 export function getStrandsPageCopy(locale: Language | string): StrandsPageCopy {
   if (locale === 'ar') return STRANDS_AR
-  return STRANDS_EN
+  const lang = (locale in STRANDS_LOCALE_OVERLAY || locale === 'en' ? locale : 'en') as Language
+  if (lang === 'en') return STRANDS_EN
+
+  const overlay = STRANDS_LOCALE_OVERLAY[lang] ?? {}
+  return {
+    ...STRANDS_EN,
+    ...overlay,
+    ctaShopStrands: buildShopStrandsCta(lang, 'upper'),
+    shopAllStrandsCta: buildShopAllStrandsCta(lang, 'title'),
+  }
 }

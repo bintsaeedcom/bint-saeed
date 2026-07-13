@@ -3,6 +3,9 @@ import type { AppLocale } from '@/lib/i18n/routing'
 /** Brand name — never translated or explained literally. */
 export const BRAND_NAME = 'Bint Saeed'
 
+/** Product-line name — keep Latin in every locale (see `strandsBrandLock`). */
+export { PRODUCT_LINE_STRANDS, PRODUCT_LINE_SIGNATURE_STRANDS } from '@/lib/i18n/strandsBrandLock'
+
 export type LocaleGeo = {
   city: string
   country: string

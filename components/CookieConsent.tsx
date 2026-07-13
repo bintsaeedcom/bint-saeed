@@ -4,7 +4,11 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { setConsentState } from '@/lib/analytics/consent'
+import { hasStoredCookieChoice, setConsentState } from '@/lib/analytics/consent'
+import {
+  markCookieChoiceMade,
+  subscribeCookieAutoPrompt,
+} from '@/lib/analytics/cookieConsentGate'
 import {
   clearMobileBottomChrome,
   publishMobileBottomChrome,
@@ -19,60 +23,34 @@ import {
   glassTextMutedOnDark,
   glassTextTitleOnDark,
 } from '@/lib/ui/glassClasses'
-import { hasRegionalExperienceChoice } from '@/lib/geo/geoDetection'
-
-/** After first browse + regional — avoid stacking two overlays. */
-const COOKIE_DELAY_MS = 60_000
-/** If regional never settles (geo miss / bot skip), still ask for cookies. */
-const COOKIE_FALLBACK_MS = 75_000
 
 export default function CookieConsent() {
   const [showConsent, setShowConsent] = useState(false)
   const [showDetails, setShowDetails] = useState(false)
+  /** Footer "Cookie settings" reopen — allowed even after a prior choice. */
+  const [openedFromSettings, setOpenedFromSettings] = useState(false)
   const barRef = useRef<HTMLDivElement | null>(null)
   const { t, isRTL } = useLanguage()
 
   useEffect(() => {
-    if (localStorage.getItem('cookieConsent')) return
-
-    let cancelled = false
-    let minDelayDone = false
-    let regionalSettled = hasRegionalExperienceChoice()
-
-    const maybeShow = () => {
-      if (cancelled || !minDelayDone || !regionalSettled) return
+    if (hasStoredCookieChoice()) {
+      markCookieChoiceMade()
+      return
+    }
+    return subscribeCookieAutoPrompt(() => {
+      if (hasStoredCookieChoice()) {
+        markCookieChoiceMade()
+        return
+      }
+      setOpenedFromSettings(false)
       setShowConsent(true)
-    }
-
-    const onRegionalClosed = () => {
-      regionalSettled = true
-      maybeShow()
-    }
-
-    window.addEventListener('regional-experience-closed', onRegionalClosed)
-
-    const delayTimer = window.setTimeout(() => {
-      minDelayDone = true
-      maybeShow()
-    }, COOKIE_DELAY_MS)
-
-    const fallbackTimer = window.setTimeout(() => {
-      regionalSettled = true
-      minDelayDone = true
-      maybeShow()
-    }, COOKIE_FALLBACK_MS)
-
-    return () => {
-      cancelled = true
-      window.removeEventListener('regional-experience-closed', onRegionalClosed)
-      window.clearTimeout(delayTimer)
-      window.clearTimeout(fallbackTimer)
-    }
+    })
   }, [])
 
   useEffect(() => {
     const openSettings = () => {
       setShowDetails(true)
+      setOpenedFromSettings(true)
       setShowConsent(true)
     }
     window.addEventListener('open-cookie-settings', openSettings)
@@ -104,13 +82,17 @@ export default function CookieConsent() {
 
   const acceptAll = () => {
     setConsentState({ analytics: true, marketing: true })
+    markCookieChoiceMade()
     setShowConsent(false)
+    setOpenedFromSettings(false)
     closeConsent()
   }
 
   const rejectAll = () => {
     setConsentState({ analytics: false, marketing: false })
+    markCookieChoiceMade()
     setShowConsent(false)
+    setOpenedFromSettings(false)
     closeConsent()
   }
 
@@ -118,7 +100,7 @@ export default function CookieConsent() {
     <AnimatePresence>
       {showConsent && (
         <motion.div
-          key="cookie-consent-bar"
+          key={openedFromSettings ? 'cookie-settings' : 'cookie-consent-bar'}
           ref={barRef}
           role="dialog"
           aria-modal="false"

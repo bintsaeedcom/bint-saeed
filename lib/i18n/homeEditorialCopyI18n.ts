@@ -1,4 +1,5 @@
 import type { Language } from '@/lib/i18n/translations'
+import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
 
 /** Home hero H1 — localized; Latin scripts in uppercase to match English display. */
 const HOME_HERO_HEADLINE: Record<Language, string> = {
@@ -32,19 +33,20 @@ const HOME_STRANDS_EYEBROW: Record<Language, string> = {
   ms: 'BARANG KEMAS ALMARI PAKAIAN',
 }
 
+/** Keep Latin STRANDS as the product-line name in every locale. */
 const HOME_STRANDS_HEADING: Record<Language, string> = {
   en: 'INTERCHANGEABLE NATURAL STONE STRANDS',
-  ar: 'خيوط أحجار طبيعية قابلة للتبديل',
-  fr: 'FILS DE PIERRES NATURELLES INTERCHANGEABLES',
-  it: 'FILI DI PIETRE NATURALI INTERCAMBIABILI',
-  es: 'HILOS DE PIEDRAS NATURALES INTERCAMBIABLES',
-  ru: 'СМЕННЫЕ НИТИ ИЗ НАТУРАЛЬНОГО КАМНЯ',
-  zh: '可更换天然石串饰',
-  de: 'WECHSELBARE NATURSTEIN-STRÄNGE',
+  ar: 'STRANDS — خيوط أحجار طبيعية قابلة للتبديل',
+  fr: 'STRANDS EN PIERRES NATURELLES INTERCHANGEABLES',
+  it: 'STRANDS IN PIETRE NATURALI INTERCAMBIABILI',
+  es: 'STRANDS DE PIEDRAS NATURALES INTERCAMBIABLES',
+  ru: 'STRANDS — СМЕННЫЕ НИТИ ИЗ НАТУРАЛЬНОГО КАМНЯ',
+  zh: 'STRANDS — 可更换天然石串饰',
+  de: 'WECHSELBARE NATURSTEIN-STRANDS',
   nl: 'WISSELBARE NATUURSTEEN STRANDS',
-  pt: 'FIOS DE PEDRAS NATURAIS INTERCAMBIÁVEIS',
-  id: 'RANTAI BATU ALAM YANG DAPAT DIUBAH',
-  ms: 'RANTAI BATU SEMULA JADI BOLEH DITUKAR',
+  pt: 'STRANDS DE PEDRAS NATURAIS INTERCAMBIÁVEIS',
+  id: 'STRANDS — RANTAI BATU ALAM YANG DAPAT DIUBAH',
+  ms: 'STRANDS — RANTAI BATU SEMULA JADI BOLEH DITUKAR',
 }
 
 const HOME_STRANDS_BODY: Record<Language, string> = {
@@ -53,40 +55,30 @@ const HOME_STRANDS_BODY: Record<Language, string> = {
   ar:
     'طريقة جديدة لتخصيص خزانتك. خيوط أحجار طبيعية قابلة للتبديل، صُمّمت لقطع Bint Saeed المختارة، لتتطوّر كل قطعة مع أسلوبك ومزاجك ومناسباتك.',
   fr:
-    'Une nouvelle façon de personnaliser votre garde-robe. Des fils de pierres naturelles interchangeables, conçus pour une sélection de pièces Bint Saeed, afin que chaque pièce évolue avec votre style, votre humeur et l’occasion.',
+    'Une nouvelle façon de personnaliser votre garde-robe. Des Strands en pierres naturelles interchangeables, conçus pour une sélection de pièces Bint Saeed, afin que chaque pièce évolue avec votre style, votre humeur et l’occasion.',
   it:
-    'Un nuovo modo di personalizzare il guardaroba. Fili di pietre naturali intercambiabili, pensati per capi Bint Saeed selezionati, così ogni pezzo evolve con il tuo stile, il tuo umore e l’occasione.',
+    'Un nuovo modo di personalizzare il guardaroba. Strands in pietre naturali intercambiabili, pensati per capi Bint Saeed selezionati, così ogni pezzo evolve con il tuo stile, il tuo umore e l’occasione.',
   es:
-    'Una nueva forma de personalizar tu armario. Hilos de piedras naturales intercambiables, diseñados para prendas Bint Saeed seleccionadas, para que cada pieza evolucione con tu estilo, tu ánimo y la ocasión.',
+    'Una nueva forma de personalizar tu armario. Strands de piedras naturales intercambiables, diseñados para prendas Bint Saeed seleccionadas, para que cada pieza evolucione con tu estilo, tu ánimo y la ocasión.',
   ru:
-    'Новый способ персонализировать гардероб. Сменные нити из натурального камня, созданные для избранных изделий Bint Saeed, чтобы каждая вещь менялась вместе с вашим стилем, настроением и поводом.',
+    'Новый способ персонализировать гардероб. Сменные Strands из натурального камня, созданные для избранных изделий Bint Saeed, чтобы каждая вещь менялась вместе с вашим стилем, настроением и поводом.',
   zh:
-    '以全新方式个性化您的衣橱。可更换天然石串饰，专为精选 Bint Saeed 服饰设计，让每一件作品随您的风格、心情与场合而演变。',
+    '以全新方式个性化您的衣橱。可更换天然石 Strands，专为精选 Bint Saeed 服饰设计，让每一件作品随您的风格、心情与场合而演变。',
   de:
-    'Eine neue Art, die Garderobe zu personalisieren. Wechselbare Naturstein-Stränge für ausgewählte Bint Saeed Stücke — damit sich jedes Teil mit Stil, Stimmung und Anlass weiterentwickelt.',
+    'Eine neue Art, die Garderobe zu personalisieren. Wechselbare Naturstein-Strands für ausgewählte Bint Saeed Stücke — damit sich jedes Teil mit Stil, Stimmung und Anlass weiterentwickelt.',
   nl:
-    'Een nieuwe manier om uw garderobe te personaliseren. Wisselbare natuursteen strands, ontworpen voor geselecteerde Bint Saeed-kledingstukken, zodat elk stuk meegroeit met uw stijl, stemming en gelegenheid.',
+    'Een nieuwe manier om uw garderobe te personaliseren. Wisselbare natuursteen Strands, ontworpen voor geselecteerde Bint Saeed-kledingstukken, zodat elk stuk meegroeit met uw stijl, stemming en gelegenheid.',
   pt:
-    'Uma nova forma de personalizar o seu guarda-roupa. Fios de pedras naturais intercambiáveis, concebidos para peças Bint Saeed selecionadas, para que cada peça evolua com o seu estilo, humor e ocasião.',
+    'Uma nova forma de personalizar o seu guarda-roupa. Strands de pedras naturais intercambiáveis, concebidos para peças Bint Saeed selecionadas, para que cada peça evolua com o seu estilo, humor e ocasião.',
   id:
-    'Cara baru untuk mempersonalisasi gaya Anda. Rantai batu alam yang dapat diubah, dirancang untuk garment Bint Saeed terpilih, agar setiap piece berkembang dengan gaya, suasana, dan kesempatan Anda.',
+    'Cara baru untuk mempersonalisasi gaya Anda. Strands batu alam yang dapat diubah, dirancang untuk garment Bint Saeed terpilih, agar setiap piece berkembang dengan gaya, suasana, dan kesempatan Anda.',
   ms:
-    'Cara baharu untuk memperibadikan almari pakaian anda. Rantai batu semula jadi boleh ditukar, direka untuk pakaian Bint Saeed terpilih, supaya setiap keping berkembang dengan gaya, mood dan majlis anda.',
+    'Cara baharu untuk memperibadikan almari pakaian anda. Strands batu semula jadi boleh ditukar, direka untuk pakaian Bint Saeed terpilih, supaya setiap keping berkembang dengan gaya, mood dan majlis anda.',
 }
 
-const HOME_STRANDS_SHOP_CTA: Record<Language, string> = {
-  en: 'Shop Strands',
-  ar: 'تسوّقي الخيوط',
-  fr: 'Découvrir les fils',
-  it: 'Scopri i fili',
-  es: 'Ver los hilos',
-  ru: 'Смотреть нити',
-  zh: '选购串饰',
-  de: 'Stränge entdecken',
-  nl: 'Bekijk strands',
-  pt: 'Ver os fios',
-  id: 'Belanja strands',
-  ms: 'Beli strands',
+/** Built from brand lock — "Strands" is never localized (avoids NL stranden / DE Stränge). */
+function homeStrandsShopCta(lang: Language): string {
+  return shopStrandsCta(lang, 'title')
 }
 
 const HOME_SHOP_NOW_CTA: Record<Language, string> = {
@@ -286,7 +278,7 @@ const HOME_EN: HomeEditorialCopy = {
   abayaStrandsEyebrow: HOME_STRANDS_EYEBROW.en,
   abayaStrandsHeading: HOME_STRANDS_HEADING.en,
   abayaStrandsBody: HOME_STRANDS_BODY.en,
-  shopStrandsCta: HOME_STRANDS_SHOP_CTA.en,
+  shopStrandsCta: homeStrandsShopCta('en'),
   carriedCloseEyebrow: HOME_PERSONALISATION_EYEBROW.en,
   personalisationHeading: HOME_PERSONALISATION_HEADING.en,
   personalisationBody: HOME_PERSONALISATION_BODY.en,
@@ -356,7 +348,7 @@ const HOME_AR: HomeEditorialCopy = {
   abayaStrandsEyebrow: HOME_STRANDS_EYEBROW.ar,
   abayaStrandsHeading: HOME_STRANDS_HEADING.ar,
   abayaStrandsBody: HOME_STRANDS_BODY.ar,
-  shopStrandsCta: HOME_STRANDS_SHOP_CTA.ar,
+  shopStrandsCta: homeStrandsShopCta('ar'),
   carriedCloseEyebrow: HOME_PERSONALISATION_EYEBROW.ar,
   personalisationHeading: HOME_PERSONALISATION_HEADING.ar,
   personalisationBody: HOME_PERSONALISATION_BODY.ar,
@@ -397,7 +389,7 @@ export function getHomeEditorialCopy(locale: Language | string): HomeEditorialCo
     abayaStrandsEyebrow: HOME_STRANDS_EYEBROW[lang],
     abayaStrandsHeading: HOME_STRANDS_HEADING[lang],
     abayaStrandsBody: HOME_STRANDS_BODY[lang],
-    shopStrandsCta: HOME_STRANDS_SHOP_CTA[lang],
+    shopStrandsCta: homeStrandsShopCta(lang),
     carriedCloseEyebrow: HOME_PERSONALISATION_EYEBROW[lang],
     personalisationHeading: HOME_PERSONALISATION_HEADING[lang],
     personalisationBody: HOME_PERSONALISATION_BODY[lang],

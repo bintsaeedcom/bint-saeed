@@ -13,6 +13,7 @@ import {
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import LocaleLink from '@/components/LocaleLink'
+import NoTranslate from '@/components/NoTranslate'
 import Image from 'next/image'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -426,13 +427,23 @@ const HOME_STRANDS_FEATURE_IMAGES = {
   hero: '/home/strands-feature/bint-saeed-home-strands-feature.webp',
 } as const
 
-const HOME_PERSONALISATION_FEATURE_IMAGE = '/Personalisation Page/secret pocket.JPG'
+/** Home media — structured under /public/home; WebP preferred, originals kept beside + at legacy paths. */
+const HOME_MEDIA = {
+  heroMobile: '/home/hero/mobile/bint-saeed-home-hero-mobile-burgundy-collection.webp',
+  heroDesktop: '/home/hero/desktop/bint-saeed-home-hero-desktop-editorial-abayas.webp',
+  personalisationHiddenPocket: '/home/personalisation/bint-saeed-home-personalisation-hidden-pocket.webp',
+  panelBackground: '/home/backgrounds/bint-saeed-home-panel-background-01.webp',
+  editorialGazelles: '/home/editorial/bint-saeed-home-editorial-abu-dhabi-gazelles.webp',
+  editorialManifestoPortrait: '/home/editorial/bint-saeed-home-editorial-manifesto-portrait.webp',
+} as const
+
+const HOME_PERSONALISATION_FEATURE_IMAGE = HOME_MEDIA.personalisationHiddenPocket
 
 const DARK_PANEL_BG_LAYERS = (
   <>
     <div className="absolute inset-0 opacity-25">
       <Image
-        src="/background1.JPG"
+        src={HOME_MEDIA.panelBackground}
         alt=""
         fill
         sizes="(max-width: 1024px) 100vw, 50vw"
@@ -493,7 +504,7 @@ function CharmHeroFeatureSection() {
                 className="inline-flex min-h-[44px] items-center rounded-[4px] bg-[#6f1524] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[#821b2d]"
                 data-cursor-hover
               >
-                {copy.shopStrandsCta}
+                <NoTranslate>{copy.shopStrandsCta}</NoTranslate>
               </LocaleLink>
             </div>
             </div>
@@ -587,7 +598,7 @@ function CampaignPanoramaSection() {
       <div className="relative w-full">
         <div className="relative aspect-[16/6] min-h-[220px] w-full overflow-hidden bg-brand-stone/15 md:min-h-[280px] lg:min-h-[360px]">
           <Image
-            src="/bint-saeed-abu-dhabi-gazelles-father-of-the-gazelle.jpg"
+            src={HOME_MEDIA.editorialGazelles}
             alt={withBrandAlt('Bint Saeed campaign panorama — Abu Dhabi gazelles')}
             fill
             sizes="100vw"
@@ -662,7 +673,7 @@ const CATEGORY_STRIP = [
     key: 'Personalisation',
     label: 'Personalisation',
     href: '/personalisation',
-    image: '/Personalisation Page/secret pocket.JPG',
+    image: HOME_MEDIA.personalisationHiddenPocket,
   },
 ] as const
 
@@ -997,18 +1008,18 @@ function HeroSection() {
         style={reduceMotion ? undefined : { scale }}
         className="pointer-events-none absolute inset-0 overflow-hidden will-change-transform"
       >
-        {/* Mobile + tablet */}
+        {/* Mobile + tablet — portrait burgundy collection (WebP; JPG kept beside it) */}
         <Image
-          src="/hero-image.JPG"
-          alt={withBrandAlt('Bint Saeed luxury abayas, editorial photograph')}
+          src={HOME_MEDIA.heroMobile}
+          alt={withBrandAlt('Bint Saeed luxury abayas in burgundy and black, editorial group photograph')}
           fill
-          className="object-cover object-[center_42%] scale-[1.02] saturate-[0.9] contrast-[1.03] brightness-[0.98] lg:hidden"
-          sizes="100vw"
+          className="object-cover object-[center_28%] scale-[1.02] saturate-[0.92] contrast-[1.03] brightness-[0.96] lg:hidden"
+          sizes="(max-width: 1023px) 100vw, 1px"
           priority
         />
-        {/* Desktop — keep existing hero */}
+        {/* Desktop — editorial abayas (WebP; JPG + legacy /IMG_2821.JPG kept) */}
         <Image
-          src="/IMG_2821.JPG"
+          src={HOME_MEDIA.heroDesktop}
           alt={withBrandAlt('Bint Saeed luxury abayas, editorial photograph')}
           fill
           className="hidden object-cover object-[center_28%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97] lg:block"
@@ -1108,7 +1119,7 @@ function EditorialIntro() {
             <div className="relative h-full min-h-[26rem] overflow-hidden border-y border-[#2a1e18]/10 border-l-[3px] border-l-[#6f1524] bg-[#120910] shadow-[0_22px_56px_rgba(23,9,14,0.22)] md:min-h-[30rem] lg:min-h-[34rem] lg:border-r lg:border-[#2a1e18]/10">
               <div className="absolute inset-0">
                 <Image
-                  src="/8E4D92A7-497D-44A4-B3DF-C1B775F5CD3A.PNG"
+                  src={HOME_MEDIA.editorialManifestoPortrait}
                   alt={withBrandAlt('Bint Saeed — from Abu Dhabi to the world')}
                   fill
                   className="object-cover object-[center_22%]"
