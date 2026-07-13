@@ -87,6 +87,7 @@ export default function WhatsAppButton() {
   const [mounted, setMounted] = useState(false)
   /** Hide while cart sticky checkout / PDP sticky ATC is up — never cover purchase CTAs. */
   const [commerceChromeUp, setCommerceChromeUp] = useState(false)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const panelId = useId()
   const panelRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
@@ -98,19 +99,22 @@ export default function WhatsAppButton() {
   useEffect(() => {
     const sync = () => {
       setCommerceChromeUp(document.documentElement.dataset.commerceBottomChrome === '1')
+      setMobileNavOpen(document.documentElement.dataset.mobileNavOpen === '1')
     }
     sync()
     const observer = new MutationObserver(sync)
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['data-commerce-bottom-chrome'],
+      attributeFilter: ['data-commerce-bottom-chrome', 'data-mobile-nav-open'],
     })
     return () => observer.disconnect()
   }, [])
 
+  const dockHidden = commerceChromeUp || mobileNavOpen
+
   useEffect(() => {
     if (!open) return
-    if (commerceChromeUp) {
+    if (dockHidden) {
       setOpen(false)
       return
     }
@@ -132,7 +136,7 @@ export default function WhatsAppButton() {
       document.removeEventListener('mousedown', onPointer)
       document.removeEventListener('touchstart', onPointer)
     }
-  }, [open, commerceChromeUp])
+  }, [open, dockHidden])
 
   const bubbleClass = [
     'group relative z-40 flex h-12 w-12 items-center justify-center overflow-hidden rounded-full sm:h-14 sm:w-14',
@@ -238,11 +242,11 @@ export default function WhatsAppButton() {
         position: 'fixed',
         transform: 'translateZ(0)',
         WebkitTransform: 'translateZ(0)',
-        visibility: commerceChromeUp ? 'hidden' : 'visible',
-        pointerEvents: commerceChromeUp ? 'none' : undefined,
+        visibility: dockHidden ? 'hidden' : 'visible',
+        pointerEvents: dockHidden ? 'none' : undefined,
       }}
       data-whatsapp-dock
-      aria-hidden={commerceChromeUp}
+      aria-hidden={dockHidden}
     >
       <div className="pointer-events-auto relative">
         {panel}
@@ -250,18 +254,18 @@ export default function WhatsAppButton() {
           ref={triggerRef}
           type="button"
           initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: commerceChromeUp ? 0.85 : 1, opacity: commerceChromeUp ? 0 : 1 }}
-          transition={{ delay: commerceChromeUp ? 0 : 2, type: 'spring', stiffness: 200 }}
+          animate={{ scale: dockHidden ? 0.85 : 1, opacity: dockHidden ? 0 : 1 }}
+          transition={{ delay: dockHidden ? 0 : 2, type: 'spring', stiffness: 200 }}
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.96 }}
           className={bubbleClass}
           data-cursor-hover
           data-whatsapp-button
-          tabIndex={commerceChromeUp ? -1 : 0}
+          tabIndex={dockHidden ? -1 : 0}
           aria-label={language === 'ar' ? 'تواصل عبر واتساب' : 'Contact us on WhatsApp'}
           aria-expanded={open}
           aria-controls={panelId}
-          aria-hidden={commerceChromeUp}
+          aria-hidden={dockHidden}
           onClick={() => setOpen((v) => !v)}
         >
           {bubbleInner}

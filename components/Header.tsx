@@ -56,6 +56,57 @@ const mobileMenuGradient =
   'bg-[radial-gradient(ellipse_130%_95%_at_50%_0%,#321922_0%,#2d141e_38%,#1a0f14_72%,#12080b_100%)]'
 
 const mobileNavLogoClass = 'h-[clamp(3.2rem,11.2vw,5.5rem)] w-auto max-h-[104px]'
+/** Gold house emblem for mobile nav drawer (square mark, not wordmark). */
+const mobileNavEmblemClass = 'h-11 w-11 object-contain sm:h-12 sm:w-12'
+
+type MegaNavLink = { label: string; href: string }
+type MegaNavColumn = { title: string; links: MegaNavLink[] }
+
+/**
+ * Mobile accordion body — one “View all”, no repeated section titles / All X links.
+ * Desktop mega menus keep their full column data separately.
+ */
+function buildMobileNavColumns(
+  columns: MegaNavColumn[],
+  sectionHref: string,
+  sectionLabel: string,
+): { title: string | null; links: MegaNavLink[] }[] {
+  const sectionNorm = sectionLabel.trim().toLowerCase()
+  const sectionPath = sectionHref.split('?')[0]
+
+  return columns
+    .map((col) => {
+      const links = col.links.filter((link) => {
+        if (link.href === sectionHref) return false
+        const linkPath = link.href.split('?')[0]
+        // Exact section index path (All Strands → /strands) — covered by View all
+        if (linkPath === sectionPath && !link.href.includes('?')) return false
+
+        const labelNorm = link.label.trim().toLowerCase()
+        if (labelNorm === sectionNorm) return false
+        if (labelNorm === `all ${sectionNorm}`) return false
+        if (labelNorm === `shop all`) return false
+        if (labelNorm === `view all`) return false
+        // Already a top-level hamburger item
+        if (sectionPath === '/about' && linkPath === '/personalisation') return false
+        return true
+      })
+      if (links.length === 0) return null
+
+      const titleNorm = col.title.trim().toLowerCase()
+      const hideTitle =
+        titleNorm === sectionNorm ||
+        titleNorm === 'discover' ||
+        // Single leftover column under a matching name already filtered
+        false
+
+      return {
+        title: hideTitle ? null : col.title,
+        links,
+      }
+    })
+    .filter((col): col is { title: string | null; links: MegaNavLink[] } => col != null)
+}
 
 function CartCountBadge({ count, rtl }: { count: number; rtl: boolean }) {
   if (count <= 0) return null
@@ -168,7 +219,7 @@ export default function Header() {
   const isHomePage = innerPath === '/home'
   const isTransparentHomeHeader = isHomePage && !isScrolled
 
-  const shopNavItem = { label: 'Shop Now', href: '/shop' as const }
+  const shopNavItem = { label: 'Shop', href: '/shop' as const }
   const navItems = [
     { label: 'Strands', href: '/strands' },
     { label: t.nav.accessories || 'Accessories', href: '/accessories' },
@@ -310,7 +361,6 @@ export default function Header() {
             { label: 'Our Story', href: '/about' },
             { label: 'The Codes', href: '/the-codes' },
             { label: 'Craftsmanship', href: '/craftsmanship' },
-            { label: 'Personalisation', href: '/personalisation' },
             { label: 'Giving Forward', href: '/giving-forward' },
             { label: 'Contact', href: '/contact' },
           ],
@@ -338,12 +388,19 @@ export default function Header() {
   }, [isHomePage])
 
   useEffect(() => {
+    document.documentElement.dataset.mobileNavOpen = isMobileMenuOpen ? '1' : '0'
     if (!isMobileMenuOpen) {
       setExpandedMobileSection(null)
       return
     }
     return lockBodyScroll()
   }, [isMobileMenuOpen])
+
+  useEffect(() => {
+    return () => {
+      document.documentElement.dataset.mobileNavOpen = '0'
+    }
+  }, [])
 
   useEffect(() => {
     const openMiniCart = () => setIsMiniCartOpen(true)
@@ -811,23 +868,25 @@ export default function Header() {
               {/* Header */}
               <div className="flex items-center justify-between px-6 py-5">
                 {disableHomeLogoNavigation ? (
-                  <div className="block max-w-[min(420px,78vw)]">
+                  <div className="block">
                     <Image
-                      src="/logo-bintsaeed.svg"
+                      src="/gold logo.png"
                       alt="Bint Saeed"
-                      width={520}
-                      height={136}
-                      className={mobileNavLogoClass}
+                      width={120}
+                      height={120}
+                      className={mobileNavEmblemClass}
+                      priority
                     />
                   </div>
                 ) : (
-                  <LocaleLink href="/home" onClick={() => setIsMobileMenuOpen(false)} className="block max-w-[min(420px,78vw)]">
+                  <LocaleLink href="/home" onClick={() => setIsMobileMenuOpen(false)} className="block">
                     <Image
-                      src="/logo-bintsaeed.svg"
+                      src="/gold logo.png"
                       alt="Bint Saeed"
-                      width={520}
-                      height={136}
-                      className={mobileNavLogoClass}
+                      width={120}
+                      height={120}
+                      className={mobileNavEmblemClass}
+                      priority
                     />
                   </LocaleLink>
                 )}
@@ -916,19 +975,24 @@ export default function Header() {
                                     data-analytics-event={getMainNavAnalyticsEvent(item.href)}
                                     data-analytics-section="header-mobile-nav"
                                   >
-                                    {isRTL ? `عرض ${item.label}` : `View all ${item.label}`}
+                                    {isRTL ? 'عرض الكل' : 'View all'}
                                     <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
                                   </LocaleLink>
 
-                                  {mega.columns.map((col) => (
-                                    <div key={col.title} className="min-w-0">
-                                      <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/50">
-                                        {col.title}
-                                      </p>
+                                  {buildMobileNavColumns(mega.columns, item.href, item.label).map((col, colIndex) => (
+                                    <div
+                                      key={`${item.href}-${col.title ?? 'links'}-${colIndex}`}
+                                      className={`min-w-0 ${colIndex > 0 ? 'mt-3' : ''}`}
+                                    >
+                                      {col.title ? (
+                                        <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/50">
+                                          {col.title}
+                                        </p>
+                                      ) : null}
                                       <div className="space-y-0.5">
                                         {col.links.map((link) => (
                                           <LocaleLink
-                                            key={`${col.title}-${link.label}`}
+                                            key={`${col.title ?? 'links'}-${link.label}`}
                                             href={link.href}
                                             onClick={() => setIsMobileMenuOpen(false)}
                                             className={`flex min-h-11 items-center justify-between gap-3 py-2 font-montserrat text-[13px] leading-snug text-white/90 transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
@@ -945,7 +1009,6 @@ export default function Header() {
                                       </div>
                                     </div>
                                   ))}
-
                                 </div>
                               </motion.div>
                             ) : null}
