@@ -125,7 +125,7 @@ export function buildStripeCheckoutSessionParams({
     ...shared,
     ui_mode: 'hosted_page',
     success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${baseUrl}/checkout`,
+    cancel_url: `${baseUrl}/checkout?stripe=cancelled`,
     custom_fields: [
       {
         key: 'delivery_notes',

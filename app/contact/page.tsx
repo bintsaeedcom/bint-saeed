@@ -4,11 +4,15 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import AboutSectionHero from '@/components/AboutSectionHero'
 import ContactSubjectSelect from '@/components/ContactSubjectSelect'
+import LocaleLink from '@/components/LocaleLink'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
-import { FiMail, FiPhone, FiMapPin, FiClock, FiSend } from 'react-icons/fi'
+import { FiMail, FiPhone, FiMapPin, FiClock, FiSend, FiCheck, FiArrowRight } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getCartEmptyDiscoverCopy } from '@/lib/i18n/cartEmptyDiscoverI18n'
+import { getKeepExploringLine } from '@/lib/i18n/keepExploringCopyI18n'
 import toast from 'react-hot-toast'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 import { ctaFormSubmit } from '@/lib/ui/ctaClasses'
@@ -56,7 +60,10 @@ function FieldError({ id, message, isRTL }: { id: string; message: string; isRTL
 
 export default function ContactPage() {
   const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
+  const discover = getCartEmptyDiscoverCopy(language)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
   const [nameError, setNameError] = useState('')
   const [emailError, setEmailError] = useState('')
   const [subjectError, setSubjectError] = useState('')
@@ -111,6 +118,7 @@ export default function ContactPage() {
 
       if (response.ok) {
         showContactSuccessToast(isRTL)
+        setSubmitted(true)
         setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
         setNameError('')
         setEmailError('')
@@ -223,6 +231,51 @@ export default function ContactPage() {
               className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/25 to-transparent"
               aria-hidden
             />
+            {submitted ? (
+              <div className={`relative ${isRTL ? 'text-right' : 'text-left'}`}>
+                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-brand-dustyBlue/35 bg-brand-dustyBlue/10">
+                  <FiCheck className="h-6 w-6 text-brand-dustyBlue" strokeWidth={1.75} aria-hidden />
+                </div>
+                <p className="mt-6 font-montserrat text-[10px] uppercase tracking-[0.24em] text-brand-clayRed">
+                  {isRTL ? 'تم الاستلام' : 'Message received'}
+                </p>
+                <h2 className="mt-3 font-rozha text-3xl text-brand-darkRed">
+                  {isRTL ? 'شكراً لتواصلك معنا' : 'Thank you for writing'}
+                </h2>
+                <p className="mt-3 max-w-md font-montserrat text-sm leading-relaxed text-brand-clayRed/75">
+                  {getKeepExploringLine(language, 'worldOfBintSaeed')}
+                </p>
+                <div className={`mt-8 flex flex-col gap-3 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+                  <LocaleLink
+                    href="/shop"
+                    className={`inline-flex min-h-[48px] items-center justify-center gap-2 bg-brand-darkRed px-6 font-montserrat text-[11px] uppercase tracking-[0.16em] text-white transition-colors hover:bg-brand-dustyBlue ${
+                      isRTL ? 'flex-row-reverse' : ''
+                    }`}
+                    data-cursor-hover
+                  >
+                    {discover.exploreCollection}
+                    <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+                  </LocaleLink>
+                  <LocaleLink
+                    href="/accessories"
+                    className={`inline-flex min-h-[48px] items-center justify-center gap-2 border border-brand-darkRed/25 px-6 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue ${
+                      isRTL ? 'flex-row-reverse' : ''
+                    }`}
+                    data-cursor-hover
+                  >
+                    {discover.discoverAccessories}
+                  </LocaleLink>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSubmitted(false)}
+                  className="mt-6 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue underline-offset-4 hover:underline"
+                  data-cursor-hover
+                >
+                  {isRTL ? 'إرسال رسالة أخرى' : 'Send another message'}
+                </button>
+              </div>
+            ) : (
             <form onSubmit={handleSubmit} className="relative space-y-6" noValidate>
               <div className="grid gap-6 sm:grid-cols-2">
                 <div>
@@ -349,6 +402,7 @@ export default function ContactPage() {
                 )}
               </button>
             </form>
+            )}
           </motion.div>
 
           <motion.div

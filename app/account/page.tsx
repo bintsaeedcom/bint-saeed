@@ -122,6 +122,28 @@ export default function AccountPage() {
             <p className="mt-6 font-montserrat text-sm text-brand-clayRed/70 leading-relaxed">
               {ui.account.signInDesc}
             </p>
+            <div
+              className={`mt-8 grid gap-2 sm:grid-cols-2 ${isRTL ? 'text-right' : 'text-left'}`}
+            >
+              {[
+                { href: '/shop', label: ui.notFound.shopCollection },
+                { href: '/accessories', label: ui.common.accessories },
+                { href: '/wishlist', label: isRTL ? 'المفضلة' : 'Favorites' },
+                { href: '/faq', label: isRTL ? 'الأسئلة الشائعة' : 'FAQ' },
+              ].map((link) => (
+                <LocaleLink
+                  key={link.href}
+                  href={link.href}
+                  className={`inline-flex min-h-[44px] items-center justify-between gap-2 border border-brand-stone/25 px-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue/50 hover:text-brand-dustyBlue ${
+                    isRTL ? 'flex-row-reverse' : ''
+                  }`}
+                  data-cursor-hover
+                >
+                  <span>{link.label}</span>
+                  <FiArrowRight className={`h-3.5 w-3.5 shrink-0 ${isRTL ? 'rotate-180' : ''}`} />
+                </LocaleLink>
+              ))}
+            </div>
             <button
               type="button"
               onClick={onSignOut}

@@ -271,7 +271,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     cart: {
       shoppingBag: 'Shopping Bag',
       empty: 'Your Bag is Empty',
-      emptyDescription: 'Discover our collection and find pieces that speak to you.',
+      emptyDescription: 'Your next Bint Saeed piece may already be waiting.',
       shopNow: 'Shop Now',
       continueShopping: 'Continue Shopping',
       orderSummary: 'Order Summary',
@@ -420,7 +420,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     miniCart: {
       yourBagIsEmpty: 'Your bag is empty',
-      discoverCollection: 'Discover our collection',
+      discoverCollection: 'Continue exploring the world of Bint Saeed',
       reviewYourOrder: 'Review Your Order',
       youMayAlsoLike: 'You may also like',
     },
@@ -472,7 +472,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     cart: {
       shoppingBag: 'سلة التسوق',
       empty: 'السلة فارغة',
-      emptyDescription: 'اكتشفي مجموعتنا واعثري على القطع التي تعبّر عنك.',
+      emptyDescription: 'قطعتك التالية من Bint Saeed قد تكون بانتظارك الآن.',
       shopNow: 'تسوقي الآن',
       continueShopping: 'متابعة التسوق',
       orderSummary: 'ملخص الطلب',
@@ -620,7 +620,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     },
     miniCart: {
       yourBagIsEmpty: 'السلة فارغة',
-      discoverCollection: 'اكتشفي مجموعتنا',
+      discoverCollection: 'واصلي استكشاف عالم Bint Saeed',
       reviewYourOrder: 'راجعي طلبك',
       youMayAlsoLike: 'قد يعجبك أيضاً',
     },

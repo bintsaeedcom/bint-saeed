@@ -26,6 +26,7 @@ import { getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
 import { CODES_IMAGE_FILES, codesPageImagePath } from '@/lib/the-codes/codesPageContent'
 import { HOME_STORY_CODE_HREFS } from '@/lib/the-codes/homeStoryCodeHrefs'
 import { ctaPrimary } from '@/lib/ui/ctaClasses'
+import { PRODUCT_GRID_COLOUR_DOT, softGridColourHex } from '@/lib/ui/productGridColourDot'
 import type { Product } from '@/data/products'
 
 /** Corner brackets / full-bleed grid stripes removed — typography uses border-s + border-b on copy only (see hero). */
@@ -492,7 +493,11 @@ function CharmHeroFeatureSection() {
                   key={stone.name}
                   className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-muted)]/25 bg-[var(--color-light)] px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink)]"
                 >
-                  <span className="h-2.5 w-2.5 rounded-full border border-[var(--color-ink)]/12" style={{ backgroundColor: stone.hex }} />
+                  <span
+                    className={`${PRODUCT_GRID_COLOUR_DOT}`}
+                    style={{ backgroundColor: softGridColourHex(stone.hex) }}
+                    aria-hidden
+                  />
                   {stone.name}
                 </span>
               ))}

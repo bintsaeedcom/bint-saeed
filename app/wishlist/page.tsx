@@ -2,6 +2,7 @@
 
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
 import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
@@ -11,6 +12,7 @@ import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getWishlistCopy } from '@/lib/i18n/wishlistCopyI18n'
+import { getCartEmptyDiscoverCopy } from '@/lib/i18n/cartEmptyDiscoverI18n'
 import { getProductHref } from '@/lib/products/links'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
@@ -21,10 +23,11 @@ export default function WishlistPage() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
   const copy = getWishlistCopy(language)
+  const discover = getCartEmptyDiscoverCopy(language)
 
   return (
     <div className={`min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="container mx-auto max-w-3xl px-6 lg:px-12">
+      <div className={`container mx-auto px-6 lg:px-12 ${items.length === 0 ? 'max-w-5xl' : 'max-w-3xl'}`}>
         <AppPageWayfinding
           rtl={isRTL}
           className="mb-10"
@@ -34,7 +37,7 @@ export default function WishlistPage() {
           ]}
           backLink={{
             href: '/shop',
-            label: ui.cart.continueShopping,
+            label: discover.exploreCollection,
           }}
         />
         <div className={`mb-10 ${isRTL ? 'text-right' : ''}`}>
@@ -50,17 +53,22 @@ export default function WishlistPage() {
         </div>
 
         {items.length === 0 ? (
-          <div className={`rounded-lg border border-brand-stone/30 bg-white py-16 text-center ${isRTL ? 'text-right' : ''}`}>
-            <FiHeart className="mx-auto mb-4 h-12 w-12 text-brand-stone/40" aria-hidden />
-            <p className="font-rozha text-xl text-brand-darkRed">{copy.emptyTitle}</p>
-            <p className="mt-2 font-montserrat text-sm text-brand-clayRed/60">{copy.emptyDescription}</p>
-            <LocaleLink
-              href="/shop"
-              className="mt-8 inline-block bg-brand-darkRed px-8 py-3 font-montserrat text-xs uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-dustyBlue"
-              data-cursor-hover
-            >
-              {ui.common.shop}
-            </LocaleLink>
+          <div className={`${isRTL ? 'text-right' : 'text-center'}`}>
+            <div className="rounded-[2px] border border-brand-stone/25 bg-white/70 px-6 py-14">
+              <FiHeart className="mx-auto mb-4 h-11 w-11 text-brand-stone/40" aria-hidden />
+              <p className="font-rozha text-2xl text-brand-darkRed">{copy.emptyTitle}</p>
+              <p
+                className={`mt-3 max-w-md font-montserrat text-sm leading-relaxed text-brand-clayRed/65 ${
+                  isRTL ? '' : 'mx-auto'
+                }`}
+              >
+                {copy.emptyDescription}
+              </p>
+            </div>
+            <p className="mt-10 font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-brand-dustyBlue">
+              {discover.eyebrow}
+            </p>
+            <DiscoverDestinationGrid source="wishlist_empty" className="mt-6" />
           </div>
         ) : (
           <ul className="space-y-4 p-0">

@@ -211,7 +211,7 @@ export default function StrandsPage() {
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <LocaleLink
-                href="#stone-showcase"
+                href="/accessories?type=signature-strands"
                 className="inline-flex items-center justify-center rounded-[4px] bg-[#7A1C28] px-8 py-[13px] font-montserrat text-[11px] uppercase tracking-[0.08em] text-[#e8d8c8] transition-colors hover:bg-[#821b2d]"
                 data-cursor-hover
               >
@@ -257,7 +257,7 @@ export default function StrandsPage() {
 
             <div className={`mt-8 ${ctaButtonRow} ${isRTL ? 'md:flex-row-reverse' : ''}`}>
               <LocaleLink
-                href="#stone-showcase"
+                href="/accessories?type=signature-strands"
                 className={`${ctaPrimary} ${ctaInButtonRow}`}
                 data-cursor-hover
               >

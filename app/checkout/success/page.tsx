@@ -6,8 +6,10 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
+import SoftEmailCapture from '@/components/SoftEmailCapture'
 import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
-import { FiCheck, FiShoppingBag } from 'react-icons/fi'
+import { FiCheck } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getCheckoutSuccessCopy } from '@/lib/i18n/checkoutSuccessCopyI18n'
@@ -114,7 +116,7 @@ function CheckoutSuccessContent() {
   }, [sessionId, paymentId, paypalToken, tamaraOrderId, tabbyPaymentId, clearCart])
 
   return (
-    <div className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-20 ${SITE_CONTENT_TOP_PAD}`}>
+    <div className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-24 ${SITE_CONTENT_TOP_PAD}`}>
       <div className="absolute top-20 right-0 h-96 w-96 rounded-full bg-brand-stone/10 blur-3xl" />
       <div className="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-brand-dustyBlue/5 blur-3xl" />
 
@@ -186,31 +188,36 @@ function CheckoutSuccessContent() {
             <p className="mx-auto mt-5 max-w-sm text-center font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed">
               {successCopy.subtitle}
             </p>
-
-            <div className="my-8 flex items-center justify-center gap-3" aria-hidden>
-              <div className="h-px w-12 bg-brand-stone/25 sm:w-16" />
-              <span className="font-rozha text-xs text-brand-stone/45">✦</span>
-              <div className="h-px w-12 bg-brand-stone/25 sm:w-16" />
-            </div>
-
-            <div className="space-y-4">
-              <LocaleLink
-                href="/shop"
-                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue transition-colors"
-                data-cursor-hover
-              >
-                <FiShoppingBag className="w-4 h-4" />
-                {ui.cart.continueShopping}
-              </LocaleLink>
-              <LocaleLink
-                href="/"
-                className="inline-flex min-h-[52px] w-full items-center justify-center px-8 py-4 border border-brand-darkRed text-brand-darkRed font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
-                data-cursor-hover
-              >
-                {ui.common.backToHome}
-              </LocaleLink>
-            </div>
           </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.45 }}
+          className="mx-auto mt-12 max-w-5xl"
+        >
+          <p
+            className={`font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-brand-dustyBlue ${
+              isRTL ? 'text-right' : 'text-center'
+            }`}
+          >
+            {successCopy.keepExploring}
+          </p>
+          <p
+            className={`mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/75 ${
+              isRTL ? 'text-right' : 'text-center'
+            }`}
+          >
+            {successCopy.keepExploringBody}
+          </p>
+          <DiscoverDestinationGrid source="checkout_success" className="mt-6" />
+          <SoftEmailCapture
+            source="checkout_success"
+            heading={successCopy.stayCloseHeading}
+            hint={successCopy.stayCloseHint}
+            className="mt-12 border-t border-brand-stone/20 pt-10"
+          />
         </motion.div>
       </div>
     </div>

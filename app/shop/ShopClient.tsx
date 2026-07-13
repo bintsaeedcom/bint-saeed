@@ -8,6 +8,7 @@ import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorial
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight, FiShoppingBag } from 'react-icons/fi'
+import NoTranslate from '@/components/NoTranslate'
 import { products as staticProducts, categories, isVisibleOnShopGrid } from '@/data/products'
 import ProductWishlistHeart from '@/components/ProductWishlistHeart'
 import QuickBuy from '@/components/QuickBuy'
@@ -22,11 +23,18 @@ import type { Product } from '@/data/products'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
+import { getKeepExploringLine } from '@/lib/i18n/keepExploringCopyI18n'
 import { getLocalizedProductDisplayName } from '@/lib/products/productDisplayNameI18n'
 import { getProductHref } from '@/lib/products/links'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { glassDrawer, glassDrawerWash, glassTextMuted, glassTextTitle } from '@/lib/ui/glassClasses'
+import {
+  PRODUCT_GRID_COLOUR_DOT,
+  PRODUCT_GRID_COLOUR_DOT_ROW,
+  softGridColourHex,
+} from '@/lib/ui/productGridColourDot'
 
 const CATEGORY_QUERY_MAP: Record<string, string> = {
   abayas: 'Abayas',
@@ -375,20 +383,25 @@ export default function ShopClient() {
                     {product.category}
                   </p>
                   <LocaleLink href={getProductHref(product)} className="relative z-20 inline-block max-w-full" data-cursor-hover>
-                    <h3 data-product-name="true" className="font-rozha text-[clamp(0.95rem,2.8vw,1.35rem)] font-normal leading-snug tracking-wide text-brand-darkRed transition-colors hover:text-brand-dustyBlue sm:leading-tight">
+                    <h3
+                      data-product-name="true"
+                      data-product-name-size="grid"
+                      className="max-w-full font-montserrat font-normal text-brand-darkRed transition-colors hover:text-brand-dustyBlue"
+                    >
                       {gridDisplayName}
                     </h3>
                   </LocaleLink>
                   <p className="font-montserrat text-sm tabular-nums tracking-wide text-[#6f1524]">
                     {formatPrice(product.price, product.id)}
                   </p>
-                  <div className="flex gap-1.5 pt-1">
+                  <div className={`${PRODUCT_GRID_COLOUR_DOT_ROW} pt-1`}>
                     {product.colors.slice(0, 5).map((c) => (
                       <span
                         key={c.name}
                         title={c.name}
-                        className="h-2.5 w-2.5 rounded-full border border-black/10"
-                        style={{ backgroundColor: c.hex }}
+                        className={PRODUCT_GRID_COLOUR_DOT}
+                        style={{ backgroundColor: softGridColourHex(c.hex) }}
+                        aria-hidden
                       />
                     ))}
                   </div>
@@ -398,7 +411,7 @@ export default function ShopClient() {
                       className="relative z-20 inline-flex items-center border-b border-brand-darkRed/40 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:text-[11px] sm:tracking-[0.18em]"
                       data-cursor-hover
                     >
-                      {ui.shop.viewProduct}
+                      {ui.shop.discover}
                     </LocaleLink>
                     <button
                       type="button"
@@ -422,9 +435,42 @@ export default function ShopClient() {
         </ul>
 
         {sortedProducts.length === 0 && (
-          <p className="py-24 text-center font-montserrat text-sm tracking-wide text-neutral-500">
-            {ui.shop.noPiecesInChapter}
-          </p>
+          <div className={`mx-auto max-w-lg py-20 ${isRTL ? 'text-right' : 'text-center'}`}>
+            <p className="font-montserrat text-sm tracking-wide text-brand-clayRed/70">
+              {ui.shop.noPiecesInChapter}
+            </p>
+            <p className="mx-auto mt-3 max-w-md font-montserrat text-sm leading-relaxed text-brand-clayRed/65">
+              {getKeepExploringLine(language, 'anotherDetail')}
+            </p>
+            <div
+              className={`mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap ${
+                isRTL ? 'sm:justify-end' : 'sm:justify-center'
+              }`}
+            >
+              <button
+                type="button"
+                onClick={() => applyCategory('All')}
+                className="inline-flex min-h-[44px] items-center justify-center border border-brand-darkRed bg-brand-darkRed px-6 font-montserrat text-[11px] uppercase tracking-[0.14em] text-white transition-colors hover:bg-brand-dustyBlue"
+                data-cursor-hover
+              >
+                {ui.shop.categoryAll}
+              </button>
+              <LocaleLink
+                href="/accessories"
+                className="inline-flex min-h-[44px] items-center justify-center border border-brand-darkRed/25 px-6 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                data-cursor-hover
+              >
+                {ui.common.accessories}
+              </LocaleLink>
+              <LocaleLink
+                href="/strands"
+                className="inline-flex min-h-[44px] items-center justify-center px-2 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue underline-offset-4 hover:underline"
+                data-cursor-hover
+              >
+                <NoTranslate>{shopStrandsCta(language, 'title')}</NoTranslate>
+              </LocaleLink>
+            </div>
+          </div>
         )}
       </section>
 

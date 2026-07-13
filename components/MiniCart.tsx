@@ -2,9 +2,11 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
+import NoTranslate from '@/components/NoTranslate'
 import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowRight, FiLock } from 'react-icons/fi'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode } from 'swiper/modules'
@@ -12,6 +14,8 @@ import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
+import { filterOffCurrentPage } from '@/lib/discover/offCurrentPage'
 import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
@@ -38,11 +42,29 @@ interface MiniCartProps {
 }
 
 export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
+  const pathname = usePathname()
   const { items, removeItem, updateQuantity } = useCartStore()
   const { formatPrice, formatAmount, currency, formatCartSubtotal, cartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
   const [mounted, setMounted] = useState(false)
   const ui = commerceUi(language)
+  const emptyExits = useMemo(() => {
+    const candidates = [
+      { href: '/accessories', label: ui.common.accessories, strandsLock: false },
+      { href: '/shop', label: ui.notFound.shopCollection, strandsLock: false },
+      { href: '/strands', label: shopStrandsCta(language, 'title'), strandsLock: true },
+      { href: '/personalisation', label: ui.cart.personalisation, strandsLock: false },
+    ]
+    return filterOffCurrentPage(candidates, pathname)
+      .slice(0, 3)
+      .map((exit, index) => ({
+        ...exit,
+        style: (index === 0 ? 'primary' : index === 1 ? 'secondary' : 'link') as
+          | 'primary'
+          | 'secondary'
+          | 'link',
+      }))
+  }, [language, pathname, ui.cart.personalisation, ui.common.accessories, ui.notFound.shopCollection])
   const shippingMessages = resolveCartShippingMessages({
     subtotal: cartSubtotal(items),
     currency: currency.code,
@@ -136,22 +158,39 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
             {/* Items */}
             <div className="relative z-[1] min-h-0 flex-1 overflow-y-auto overscroll-contain">
               {items.length === 0 ? (
-                <div className="flex h-full flex-col items-center justify-center p-6 text-center">
-                  <FiShoppingBag className={`mb-4 h-12 w-12 ${glassTextMutedOnDark}`} />
+                <div className="flex h-full flex-col items-center justify-center px-4 py-8 text-center">
+                  <FiShoppingBag className={`mb-4 h-10 w-10 ${glassTextMutedOnDark}`} />
                   <p className={`mb-2 font-rozha text-xl ${glassTextTitleOnDark}`}>
                     {ui.miniCart.yourBagIsEmpty}
                   </p>
                   <p className={`mb-6 max-w-xs font-montserrat text-sm leading-relaxed ${glassTextBodyOnDark}`}>
                     {ui.miniCart.discoverCollection}
                   </p>
-                  <LocaleLink
-                    href="/shop"
-                    onClick={onClose}
-                    className={glassPrimaryBtn}
-                    data-cursor-hover
-                  >
-                    {ui.cart.shopNow}
-                  </LocaleLink>
+                  <div className="flex w-full max-w-xs flex-col gap-2">
+                    {emptyExits.map((exit) => {
+                      const className =
+                        exit.style === 'primary'
+                          ? glassPrimaryBtn
+                          : exit.style === 'secondary'
+                            ? glassSecondaryBtnOnDark
+                            : `inline-flex min-h-[40px] items-center justify-center font-montserrat text-[11px] uppercase tracking-[0.14em] underline-offset-4 hover:underline ${glassTextMutedOnDark}`
+                      return (
+                        <LocaleLink
+                          key={exit.href}
+                          href={exit.href}
+                          onClick={onClose}
+                          className={className}
+                          data-cursor-hover
+                        >
+                          {exit.strandsLock ? (
+                            <NoTranslate>{exit.label}</NoTranslate>
+                          ) : (
+                            exit.label
+                          )}
+                        </LocaleLink>
+                      )
+                    })}
+                  </div>
                 </div>
               ) : (
                 <ul className="space-y-0 px-3 py-3 sm:px-4">

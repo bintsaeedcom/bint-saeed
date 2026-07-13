@@ -40,6 +40,12 @@ import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorial
 import { glassDrawer, glassDrawerWash, glassTextMuted, glassTextTitle } from '@/lib/ui/glassClasses'
 import { ctaPrimary, ctaSecondaryOnLight } from '@/lib/ui/ctaClasses'
 import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
+import { getKeepExploringLine } from '@/lib/i18n/keepExploringCopyI18n'
+import {
+  PRODUCT_GRID_COLOUR_DOT,
+  PRODUCT_GRID_COLOUR_DOT_ROW,
+  softGridColourHex,
+} from '@/lib/ui/productGridColourDot'
 
 function parsePriceParam(v: string | null): PriceRangeId {
   if (!v) return 'all'
@@ -207,6 +213,7 @@ export default function AccessoriesPage() {
   )
 
   const activeTab = visibleAccessoryCategories.find(c => c.id === activeCategory)
+  const isViewingAccessoriesStrands = /strand/i.test(activeCategory)
 
   const collectionJsonLd = useMemo(
     () => buildAccessoriesCollectionJsonLd(shopAccessories, language),
@@ -457,18 +464,48 @@ export default function AccessoriesPage() {
               )}
 
               {filteredAccessories.length === 0 ? (
-                <div className={`py-16 text-center ${isRTL ? 'text-right' : ''}`}>
+                <div className={`py-16 ${isRTL ? 'text-right' : 'text-center'}`}>
                   <p className="font-montserrat text-sm tracking-wide text-brand-clayRed/70">
                     {ui.shop.noPiecesInChapter}
                   </p>
-                  <button
-                    type="button"
-                    onClick={resetAllFiltersAndUrl}
-                    className="mt-6 font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue underline-offset-4 hover:underline"
-                    data-cursor-hover
+                  <div
+                    className={`mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap ${
+                      isRTL ? 'sm:justify-end md:justify-center' : 'sm:justify-center'
+                    }`}
                   >
-                    {ui.accessories.clearFilters}
-                  </button>
+                    <button
+                      type="button"
+                      onClick={resetAllFiltersAndUrl}
+                      className={ctaPrimary}
+                      data-cursor-hover
+                    >
+                      {ui.accessories.clearFilters}
+                    </button>
+                    <LocaleLink
+                      href="/shop"
+                      className={ctaSecondaryOnLight}
+                      data-cursor-hover
+                    >
+                      {ui.notFound.shopCollection}
+                    </LocaleLink>
+                    {isViewingAccessoriesStrands ? (
+                      <LocaleLink
+                        href="/personalisation"
+                        className="inline-flex min-h-[44px] items-center justify-center px-2 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-dustyBlue underline-offset-4 transition-colors hover:text-brand-darkRed hover:underline"
+                        data-cursor-hover
+                      >
+                        {ui.cart.personalisation}
+                      </LocaleLink>
+                    ) : (
+                      <LocaleLink
+                        href="/strands"
+                        className="inline-flex min-h-[44px] items-center justify-center px-2 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-dustyBlue underline-offset-4 transition-colors hover:text-brand-darkRed hover:underline"
+                        data-cursor-hover
+                      >
+                        <NoTranslate>{shopStrandsCta(language, 'title')}</NoTranslate>
+                      </LocaleLink>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <>
@@ -509,7 +546,7 @@ export default function AccessoriesPage() {
                       isRTL ? 'mr-0' : 'mx-auto'
                     }`}
                   >
-                    {ui.cart.emptyDescription}
+                    {getKeepExploringLine(language, 'throughTheHouse')}
                   </p>
                   <div
                     className={`mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap ${
@@ -525,15 +562,27 @@ export default function AccessoriesPage() {
                     >
                       {ui.notFound.shopCollection}
                     </LocaleLink>
-                    <LocaleLink
-                      href="/strands"
-                      className={ctaSecondaryOnLight}
-                      data-cursor-hover
-                      data-analytics-event="click_accessories_continue_strands"
-                      data-analytics-section="accessories-keep-exploring"
-                    >
-                      <NoTranslate>{shopStrandsCta(language, 'title')}</NoTranslate>
-                    </LocaleLink>
+                    {isViewingAccessoriesStrands ? (
+                      <LocaleLink
+                        href="/personalisation"
+                        className={ctaSecondaryOnLight}
+                        data-cursor-hover
+                        data-analytics-event="click_accessories_continue_personalisation"
+                        data-analytics-section="accessories-keep-exploring"
+                      >
+                        {ui.cart.personalisation}
+                      </LocaleLink>
+                    ) : (
+                      <LocaleLink
+                        href="/strands"
+                        className={ctaSecondaryOnLight}
+                        data-cursor-hover
+                        data-analytics-event="click_accessories_continue_strands"
+                        data-analytics-section="accessories-keep-exploring"
+                      >
+                        <NoTranslate>{shopStrandsCta(language, 'title')}</NoTranslate>
+                      </LocaleLink>
+                    )}
                     <LocaleLink
                       href="/home"
                       className="inline-flex min-h-[44px] items-center justify-center px-2 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-dustyBlue underline-offset-4 transition-colors hover:text-brand-darkRed hover:underline"
@@ -766,25 +815,27 @@ function AccessoryCard({
             </span>
             <h3
               data-product-name="true"
-              className="mb-1 line-clamp-2 min-h-[2.5rem] font-montserrat text-[12px] leading-snug tracking-wide text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue sm:min-h-[2.625rem] sm:text-sm"
+              data-product-name-size="grid"
+              className="mb-1.5 line-clamp-3 font-montserrat font-normal text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue"
             >
               {accessoryName}
             </h3>
             <p className="font-montserrat text-sm tracking-wide text-[#6f1524]">{formatPrice(accessory.price)}</p>
           </div>
 
-          {/* Color Options — reserved height so CTAs stay aligned */}
-          <div className={`mt-3 flex min-h-3 gap-1.5 ${isRTL ? 'justify-end' : ''}`}>
+          {/* Colour indicators — gemstone references, not selectable swatches */}
+          <div className={`mt-3 ${PRODUCT_GRID_COLOUR_DOT_ROW} ${isRTL ? 'justify-end' : ''}`}>
             {accessory.colors.slice(0, 4).map((color) => (
               <div
                 key={color.name}
-                className="h-3 w-3 rounded-full border border-brand-stone/50"
-                style={{ backgroundColor: color.hex }}
+                className={PRODUCT_GRID_COLOUR_DOT}
+                style={{ backgroundColor: softGridColourHex(color.hex) }}
                 title={isRTL ? color.nameAr : color.name}
+                aria-hidden
               />
             ))}
             {accessory.colors.length > 4 && (
-              <span className="ml-1 font-montserrat text-[10px] text-brand-clayRed/50">
+              <span className="font-montserrat text-[10px] text-brand-clayRed/50">
                 +{accessory.colors.length - 4}
               </span>
             )}
@@ -796,7 +847,7 @@ function AccessoryCard({
             }`}
           >
             <span className="inline-flex items-center border-b border-brand-darkRed/40 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed sm:text-[11px] sm:tracking-[0.18em]">
-              {ui.shop.viewProduct}
+              {ui.shop.discover}
             </span>
             <button
               type="button"

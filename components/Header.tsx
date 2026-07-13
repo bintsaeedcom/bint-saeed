@@ -12,6 +12,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import MiniCart from './MiniCart'
 import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
+import { filterOffCurrentPage } from '@/lib/discover/offCurrentPage'
 import { getSearchableContent, type SearchableItem } from '@/lib/i18n/searchableContentI18n'
 import { getSearchableCatalogItems } from '@/lib/i18n/searchableCatalogI18n'
 import {
@@ -339,13 +340,13 @@ export default function Header() {
       features: [
         {
           title: 'Hidden Pocket',
-          href: '/personalisation',
+          href: '/shop?category=abayas',
           image: MEGA_MENU_HIDDEN_POCKET,
           ctaLabel: 'Discover More',
         },
         {
           title: 'Personalised labels',
-          href: '/personalisation',
+          href: '/contact',
           image: MEGA_MENU_NAME_LABELS,
           ctaLabel: 'Discover More',
         },
@@ -840,13 +841,51 @@ export default function Header() {
                   </div>
                 ) : (
                   // No results
-                  <div className="text-center py-8">
+                  <div className={`${isRTL ? 'text-right' : 'text-center'} py-6`}>
                     <p className={`font-montserrat ${glassTextBody}`}>
-                      No results found for "{searchQuery}"
+                      {isRTL
+                        ? `لا نتائج لـ “${searchQuery}”`
+                        : `No results found for “${searchQuery}”`}
                     </p>
                     <p className={`mt-2 font-montserrat text-sm ${glassTextMuted}`}>
-                      Try searching for the collection, products, or pages
+                      {isRTL
+                        ? 'جرّبي مجموعة، منتجاً، أو صفحة — أو انتقلي مباشرةً:'
+                        : 'Try a collection, product, or page — or go straight to:'}
                     </p>
+                    <p className={`mt-3 font-montserrat text-sm ${glassTextMuted}`}>
+                      {isRTL
+                        ? 'هناك دائماً تفصيل آخر بانتظار أن يُكتشف.'
+                        : 'There is always another detail waiting to be discovered.'}
+                    </p>
+                    <div
+                      className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : 'justify-center'}`}
+                    >
+                      {[
+                        { label: isRTL ? 'العبايات' : 'Abayas', href: '/shop?category=abayas' },
+                        { label: t.nav.accessories || 'Accessories', href: '/accessories' },
+                        { label: 'Strands', href: '/strands' },
+                        { label: isRTL ? 'التخصيص' : 'Personalisation', href: '/personalisation' },
+                        { label: isRTL ? 'المجموعة' : 'Collection', href: '/shop' },
+                      ]
+                        .filter((dest) => {
+                          // Abayas deep-link still counts as "on shop"
+                          const hrefForMatch =
+                            dest.href.startsWith('/shop') ? '/shop' : dest.href.split('?')[0]
+                          return filterOffCurrentPage([{ href: hrefForMatch }], pathname).length > 0
+                        })
+                        .slice(0, 4)
+                        .map((dest) => (
+                        <LocaleLink
+                          key={dest.href}
+                          href={dest.href}
+                          onClick={handleSearchClose}
+                          className="rounded-full border border-brand-darkRed/20 bg-white/70 px-4 py-2 font-montserrat text-sm tracking-wide text-brand-darkRed transition-colors hover:border-brand-darkRed/40 hover:bg-white/90"
+                          data-cursor-hover
+                        >
+                          {dest.label}
+                        </LocaleLink>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>

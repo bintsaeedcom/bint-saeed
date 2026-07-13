@@ -3,11 +3,13 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
-import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
+import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
+import { FiTrash2, FiPlus, FiMinus, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getCartEmptyDiscoverCopy } from '@/lib/i18n/cartEmptyDiscoverI18n'
 import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
@@ -73,9 +75,14 @@ export default function CartPage() {
   }, [items.length])
 
   if (items.length === 0) {
+    const emptyCopy = getCartEmptyDiscoverCopy(language)
     return (
-      <div className={`min-h-screen bg-brand-pageCanvas pb-20 ${SITE_CONTENT_TOP_PAD}`}>
-        <div className="container mx-auto px-6 lg:px-12">
+      <div className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-28 ${SITE_CONTENT_TOP_PAD}`}>
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-[min(52vh,28rem)] bg-[radial-gradient(120%_80%_at_50%_-10%,rgba(26,2,16,0.14),transparent_68%)]"
+          aria-hidden
+        />
+        <div className="relative container mx-auto px-6 lg:px-12">
           <AppPageWayfinding
             rtl={isRTL}
             variant="muted"
@@ -87,31 +94,41 @@ export default function CartPage() {
             ]}
             backLink={{
               href: '/shop',
-              label: ui.cart.continueShopping,
+              label: emptyCopy.exploreCollection,
             }}
           />
+
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-md mx-auto py-20"
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className={`mx-auto max-w-3xl ${isRTL ? 'text-right' : 'text-center'}`}
           >
-            <FiShoppingBag className="w-16 h-16 text-brand-stone mx-auto mb-8" />
-            <h1 data-document-h1="true" className="font-rozha text-3xl md:text-4xl text-brand-darkRed mb-4">
-              {ui.cart.empty}
-            </h1>
-            <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide mb-10">
-              {ui.cart.emptyDescription}
+            <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-brand-dustyBlue">
+              {emptyCopy.eyebrow}
             </p>
-            <LocaleLink
-              href="/shop"
-              className="inline-flex items-center gap-2 rounded-[4px] bg-brand-darkRed px-10 py-4 font-montserrat text-sm uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-dustyBlue"
-              data-cursor-hover
-              data-analytics-event="click_cta_home_to_collection"
-              data-analytics-section="cart-empty-state"
+            <h1
+              data-document-h1="true"
+              className="mt-4 font-rozha text-[clamp(2.15rem,6vw,3.35rem)] leading-[1.05] text-brand-darkRed"
             >
-              {ui.cart.continueShopping}
-              <FiArrowRight className="w-4 h-4" />
-            </LocaleLink>
+              {emptyCopy.title}
+            </h1>
+            <p
+              className={`mt-5 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/75 md:text-[15px] ${
+                isRTL ? 'mr-0' : 'mx-auto'
+              }`}
+            >
+              {emptyCopy.description}
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto mt-12 max-w-5xl"
+          >
+            <DiscoverDestinationGrid source="cart_empty_state" />
           </motion.div>
         </div>
       </div>

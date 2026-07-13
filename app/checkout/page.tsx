@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
@@ -73,11 +73,22 @@ function continueLabel(
 
 export default function CheckoutPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { localize } = useLocaleHref()
   const { items } = useCartStore()
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+
+  const paymentReturnStatus = useMemo(() => {
+    const tabby = searchParams?.get('tabby')
+    const tamara = searchParams?.get('tamara')
+    const stripe = searchParams?.get('stripe')
+    const raw = tabby || tamara || stripe
+    if (raw === 'cancelled' || raw === 'canceled' || raw === 'failed') return raw === 'failed' ? 'failed' : 'cancelled'
+    return null
+  }, [searchParams])
+  const [paymentNoticeDismissed, setPaymentNoticeDismissed] = useState(false)
 
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
@@ -408,6 +419,52 @@ export default function CheckoutPage() {
               {ui.checkout.reviewSubtitle}
             </p>
           </div>
+          {paymentReturnStatus && !paymentNoticeDismissed ? (
+            <div
+              className={`mt-5 rounded-[4px] border border-brand-stone/30 bg-white/80 px-4 py-4 ${
+                isRTL ? 'text-right' : 'text-left'
+              }`}
+              role="status"
+            >
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-dustyBlue">
+                {paymentReturnStatus === 'failed'
+                  ? isRTL
+                    ? 'لم يكتمل الدفع'
+                    : 'Payment not completed'
+                  : isRTL
+                    ? 'تم إلغاء الدفع'
+                    : 'Payment cancelled'}
+              </p>
+              <p className="mt-2 font-montserrat text-sm leading-relaxed text-brand-clayRed/75">
+                {paymentReturnStatus === 'failed'
+                  ? isRTL
+                    ? 'يمكنك المحاولة مرة أخرى من هنا، أو العودة إلى السلة، أو التواصل معنا للتحويل البنكي.'
+                    : 'You can try again here, return to your bag, or message us for bank transfer.'
+                  : isRTL
+                    ? 'طلبك لا يزال في السلة. تابعي الدفع متى شئت، أو تواصلي معنا إذا احتجتِ مساعدة.'
+                    : 'Your selection is still in the bag. Continue when ready, or message us if you need help.'}
+              </p>
+              <div
+                className={`mt-3 flex flex-wrap gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setPaymentNoticeDismissed(true)}
+                  className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed underline-offset-4 hover:underline"
+                  data-cursor-hover
+                >
+                  {isRTL ? 'متابعة الدفع' : 'Continue to payment'}
+                </button>
+                <LocaleLink
+                  href="/cart"
+                  className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue underline-offset-4 hover:underline"
+                  data-cursor-hover
+                >
+                  {ui.checkout.editBag}
+                </LocaleLink>
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
 

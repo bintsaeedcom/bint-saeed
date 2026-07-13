@@ -18,7 +18,7 @@ import {
 const DEFAULT_WHATSAPP = '+971502299402'
 
 type WhatsAppTopic = {
-  id: 'bank-transfer' | 'priority-order' | 'strands' | 'personalisation'
+  id: 'bank-transfer' | 'priority-order' | 'strands' | 'personalisation' | 'other'
   labelEn: string
   labelAr: string
   messageEn: string
@@ -26,8 +26,8 @@ type WhatsAppTopic = {
 }
 
 /**
- * Prefill topics — short, clear openers for the house WhatsApp line.
- * Order: personalisation → strands → priority → bank transfer.
+ * Prefill topics — short, clear openers for the house WhatsApp customer-service line.
+ * Order: personalisation → strands → priority → bank transfer → other.
  */
 const WHATSAPP_TOPICS: WhatsAppTopic[] = [
   {
@@ -65,6 +65,13 @@ const WHATSAPP_TOPICS: WhatsAppTopic[] = [
       'Hello Bint Saeed — I would like to pay by bank transfer. Could you please share the account details for my order?',
     messageAr:
       'مرحباً Bint Saeed — أود الدفع عبر التحويل البنكي. هل يمكنكم تزويدي بتفاصيل الحساب لإتمام طلبي؟',
+  },
+  {
+    id: 'other',
+    labelEn: 'I have another question',
+    labelAr: 'لدي سؤال آخر',
+    messageEn: 'Hello Bint Saeed — I have another question.',
+    messageAr: 'مرحباً Bint Saeed — لدي سؤال آخر.',
   },
 ]
 
@@ -152,7 +159,9 @@ export default function WhatsAppButton() {
 
   const title = language === 'ar' ? 'كيف يمكننا مساعدتك؟' : 'How can we help?'
   const subtitle =
-    language === 'ar' ? 'اختاري موضوعاً لفتح واتساب' : 'Choose a topic to open WhatsApp'
+    language === 'ar'
+      ? 'دردشة مباشرة مع خدمة العملاء عبر واتساب'
+      : 'Live chat with our customer service on WhatsApp'
 
   const openTopic = (topic: WhatsAppTopic) => {
     const message = language === 'ar' ? topic.messageAr : topic.messageEn
@@ -262,7 +271,9 @@ export default function WhatsAppButton() {
           data-cursor-hover
           data-whatsapp-button
           tabIndex={dockHidden ? -1 : 0}
-          aria-label={language === 'ar' ? 'تواصل عبر واتساب' : 'Contact us on WhatsApp'}
+          aria-label={
+            language === 'ar' ? 'خدمة العملاء عبر واتساب' : 'Customer service live chat on WhatsApp'
+          }
           aria-expanded={open}
           aria-controls={panelId}
           aria-hidden={dockHidden}
