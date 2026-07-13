@@ -32,7 +32,7 @@ export default function FavoriteHeartButton({
   return (
     <button
       type="button"
-      className={`inline-flex items-center justify-center leading-none ${className}`}
+      className={`inline-flex aspect-square shrink-0 items-center justify-center rounded-full p-0 leading-none ${className}`}
       data-wishlist-heart="true"
       aria-pressed={favorited}
       aria-label={favorited ? 'Remove from favorites' : 'Save to favorites'}

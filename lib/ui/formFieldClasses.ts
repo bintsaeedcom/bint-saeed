@@ -14,6 +14,20 @@ export const formFieldClass = [
   'focus:border-brand-clayRed focus:ring-1 focus:ring-brand-clayRed/25',
 ].join(' ')
 
+/**
+ * Light fields on dark checkout / overlay panels — high contrast for conversion.
+ * Prefer ivory fill + dark type instead of dark-on-dark.
+ */
+export const formFieldOnDarkClass = [
+  'w-full min-h-[44px] rounded-md border border-[#e8d8c8]/45 bg-[#faf6f1]',
+  'px-3.5 py-2.5 font-montserrat text-sm tracking-[0.02em] text-brand-darkRed',
+  'placeholder:text-brand-darkRed/45',
+  'shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(0,0,0,0.12)]',
+  'outline-none transition-[border-color,box-shadow,background-color] duration-200',
+  'hover:border-[#e8d8c8]/70 hover:bg-white',
+  'focus:border-brand-dustyBlue focus:bg-white focus:ring-2 focus:ring-brand-dustyBlue/30',
+].join(' ')
+
 export const formFieldErrorClass =
   'border-brand-clayRed hover:border-brand-clayRed focus:border-brand-clayRed focus:ring-brand-clayRed/30'
 

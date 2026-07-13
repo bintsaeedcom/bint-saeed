@@ -8,6 +8,8 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import Image from 'next/image'
 import { FiFilter, FiX, FiShoppingBag } from 'react-icons/fi'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
+import { WISHLIST_HEART_GLASS_CLASS } from '@/components/ProductWishlistHeart'
+import NoTranslate from '@/components/NoTranslate'
 import QuickBuy from '@/components/QuickBuy'
 import { accessoryDisplaySize } from '@/lib/accessories/accessorySizeLabel'
 import {
@@ -36,6 +38,8 @@ import { getLocalizedAccessoryDisplayName } from '@/lib/accessories/accessoryCat
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
 import { glassDrawer, glassDrawerWash, glassTextMuted, glassTextTitle } from '@/lib/ui/glassClasses'
+import { ctaPrimary, ctaSecondaryOnLight } from '@/lib/ui/ctaClasses'
+import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
 
 function parsePriceParam(v: string | null): PriceRangeId {
   if (!v) return 'all'
@@ -467,9 +471,10 @@ export default function AccessoriesPage() {
                   </button>
                 </div>
               ) : (
+                <>
                 <motion.div
                   layout
-                  className="grid grid-cols-2 gap-x-3 gap-y-8 md:gap-x-6 md:gap-y-10 xl:grid-cols-3 xl:gap-8"
+                  className="grid grid-cols-2 items-stretch gap-x-3 gap-y-8 md:gap-x-6 md:gap-y-10 xl:grid-cols-3 xl:gap-8"
                 >
                   <AnimatePresence mode="popLayout">
                     {filteredAccessories.map((accessory, index) => (
@@ -486,6 +491,61 @@ export default function AccessoriesPage() {
                     ))}
                   </AnimatePresence>
                 </motion.div>
+
+                <aside
+                  className={`mt-14 border-t border-brand-stone/25 pt-10 md:mt-16 md:pt-12 ${
+                    isRTL ? 'text-right' : 'text-center'
+                  }`}
+                  aria-label={ui.cart.continueShopping}
+                >
+                  <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-brand-dustyBlue">
+                    {ui.accessories.collectionEyebrow}
+                  </p>
+                  <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-brand-darkRed">
+                    {ui.cart.continueShopping}
+                  </h2>
+                  <p
+                    className={`mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/70 ${
+                      isRTL ? 'mr-0' : 'mx-auto'
+                    }`}
+                  >
+                    {ui.cart.emptyDescription}
+                  </p>
+                  <div
+                    className={`mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap ${
+                      isRTL ? 'sm:justify-end md:justify-center' : 'sm:justify-center'
+                    }`}
+                  >
+                    <LocaleLink
+                      href="/shop"
+                      className={ctaPrimary}
+                      data-cursor-hover
+                      data-analytics-event="click_accessories_continue_shop"
+                      data-analytics-section="accessories-keep-exploring"
+                    >
+                      {ui.notFound.shopCollection}
+                    </LocaleLink>
+                    <LocaleLink
+                      href="/strands"
+                      className={ctaSecondaryOnLight}
+                      data-cursor-hover
+                      data-analytics-event="click_accessories_continue_strands"
+                      data-analytics-section="accessories-keep-exploring"
+                    >
+                      <NoTranslate>{shopStrandsCta(language, 'title')}</NoTranslate>
+                    </LocaleLink>
+                    <LocaleLink
+                      href="/home"
+                      className="inline-flex min-h-[44px] items-center justify-center px-2 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-dustyBlue underline-offset-4 transition-colors hover:text-brand-darkRed hover:underline"
+                      data-cursor-hover
+                      data-analytics-event="click_accessories_continue_home"
+                      data-analytics-section="accessories-keep-exploring"
+                    >
+                      {ui.common.backToHome}
+                    </LocaleLink>
+                  </div>
+                </aside>
+                </>
               )}
             </div>
           </div>
@@ -658,10 +718,12 @@ function AccessoryCard({
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
+      className="h-full"
     >
       <LocaleLink
         href={`/accessories/${accessory.id}`}
         data-cursor-hover
+        className="block h-full"
         onClick={() =>
           trackEvent('select_item', {
             item_id: accessory.id,
@@ -670,9 +732,9 @@ function AccessoryCard({
           })
         }
       >
-        <div className="group relative border-b-2 border-transparent pb-2 transition-colors duration-200 hover:border-[#6f1524]">
-          {/* Image Container */}
-          <div className="relative mb-4 aspect-[3/4] overflow-hidden bg-[#f5f5f5]">
+        <div className="group relative flex h-full flex-col border-b-2 border-transparent pb-2 transition-colors duration-200 hover:border-[#6f1524]">
+          {/* Image Container — fixed ratio so every tile matches */}
+          <div className="relative mb-4 aspect-[3/4] w-full shrink-0 overflow-hidden bg-[#f0ebe6]">
             <FavoriteHeartButton
               id={accessory.id}
               name={accessoryName}
@@ -680,7 +742,9 @@ function AccessoryCard({
               image={accessory.images[0] ?? ''}
               category={accessory.category}
               href={`/accessories/${accessory.id}`}
-              className={`absolute top-2.5 z-30 h-9 w-9 rounded-full border border-stone-200/90 bg-white/90 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:h-10 sm:w-10 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+              className={`absolute top-2.5 z-30 ${WISHLIST_HEART_GLASS_CLASS} ${
+                isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'
+              }`}
               iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
             />
             <Image
@@ -689,31 +753,28 @@ function AccessoryCard({
               fill
               sizes="(max-width: 1279px) 50vw, 33vw"
               unoptimized={isWebshopPicturePath(accessory.images[0] ?? '')}
-              className={`pointer-events-none img-zoom transition-all duration-700 group-hover:scale-105 ${
-                accessory.category === 'signature-strands'
-                  ? 'object-contain object-center'
-                  : 'object-cover object-top'
-              }`}
+              className="pointer-events-none img-zoom object-cover object-center transition-all duration-700 group-hover:scale-105"
             />
           </div>
 
           {/* Product Info */}
           <div className={isRTL ? 'text-right' : ''}>
             <span className="mb-1 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
-              {isRTL 
-                ? visibleAccessoryCategories.find(c => c.id === accessory.category)?.nameAr 
-                : visibleAccessoryCategories.find(c => c.id === accessory.category)?.name}
+              {isRTL
+                ? visibleAccessoryCategories.find((c) => c.id === accessory.category)?.nameAr
+                : visibleAccessoryCategories.find((c) => c.id === accessory.category)?.name}
             </span>
-            <h3 data-product-name="true" className="mb-1 font-montserrat text-[12px] leading-snug tracking-wide text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue sm:text-sm">
+            <h3
+              data-product-name="true"
+              className="mb-1 line-clamp-2 min-h-[2.5rem] font-montserrat text-[12px] leading-snug tracking-wide text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue sm:min-h-[2.625rem] sm:text-sm"
+            >
               {accessoryName}
             </h3>
-            <p className="font-montserrat text-sm tracking-wide text-[#6f1524]">
-              {formatPrice(accessory.price)}
-            </p>
+            <p className="font-montserrat text-sm tracking-wide text-[#6f1524]">{formatPrice(accessory.price)}</p>
           </div>
 
-          {/* Color Options */}
-          <div className={`mt-3 flex gap-1.5 ${isRTL ? 'justify-end' : ''}`}>
+          {/* Color Options — reserved height so CTAs stay aligned */}
+          <div className={`mt-3 flex min-h-3 gap-1.5 ${isRTL ? 'justify-end' : ''}`}>
             {accessory.colors.slice(0, 4).map((color) => (
               <div
                 key={color.name}
@@ -729,7 +790,11 @@ function AccessoryCard({
             )}
           </div>
 
-          <div className={`mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <div
+            className={`mt-auto flex flex-wrap items-center gap-x-3 gap-y-2 pt-3 ${
+              isRTL ? 'flex-row-reverse' : ''
+            }`}
+          >
             <span className="inline-flex items-center border-b border-brand-darkRed/40 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed sm:text-[11px] sm:tracking-[0.18em]">
               {ui.shop.viewProduct}
             </span>

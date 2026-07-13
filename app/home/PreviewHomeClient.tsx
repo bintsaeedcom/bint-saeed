@@ -559,7 +559,11 @@ function CharmHeroFeatureSectionMirror() {
           </div>
         </LocaleLink>
 
-        <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
+        <div
+          className={`relative flex items-center bg-[#1a0210] px-6 pt-6 pb-10 md:p-10 lg:p-14 ${
+            isRTL ? 'text-right' : ''
+          }`}
+        >
           {DARK_PANEL_BG_LAYERS}
           <div className="relative z-10 max-w-[640px]">
             <p data-reveal className="font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">

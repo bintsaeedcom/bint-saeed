@@ -286,7 +286,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       personalisation: 'Personalisation',
       note: 'Note',
       proceedSecurePayment: 'Proceed to Secure Payment',
-      shipWorldwide: 'Ships to GCC, UK, US & selected Europe',
+      shipWorldwide: 'Ships worldwide',
       freeUaeShipping: 'Complimentary UAE shipping on orders above {amount}',
       freeWorldwideShipping: 'Complimentary worldwide shipping on orders above {amount}',
       shippingComplimentary: 'Complimentary worldwide shipping is included with this selection.',

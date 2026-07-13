@@ -3,6 +3,10 @@
 import type { Product } from '@/data/products'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 
+/** Round frosted glass control — keep size equal (never oval). */
+export const WISHLIST_HEART_GLASS_CLASS =
+  'h-9 w-9 min-h-9 min-w-9 rounded-full border border-white/55 bg-white/35 text-brand-darkRed shadow-[0_6px_20px_rgba(26,2,16,0.14)] backdrop-blur-md backdrop-saturate-150 transition-[background-color,border-color,color,box-shadow] hover:border-white/80 hover:bg-white/50 hover:text-brand-dustyBlue sm:h-10 sm:w-10 sm:min-h-10 sm:min-w-10'
+
 interface ProductWishlistHeartProps {
   product: Product
   href: string
@@ -25,7 +29,7 @@ export default function ProductWishlistHeart({
       category={product.category}
       href={href}
       iconClassName={iconClassName}
-      className={`h-9 w-9 rounded-full border border-stone-200/90 bg-white/90 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:h-10 sm:w-10 ${className}`}
+      className={`${WISHLIST_HEART_GLASS_CLASS} ${className}`}
     />
   )
 }

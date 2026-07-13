@@ -13,52 +13,52 @@ type ShipToCopy = {
 
 const COPY: Record<string, ShipToCopy> = {
   en: {
-    short: 'GCC, UK, US & Europe',
-    cartLine: 'Ships to GCC, UK, US & selected Europe',
+    short: 'Worldwide Shipping',
+    cartLine: 'Ships worldwide',
   },
   ar: {
-    short: 'الخليج، بريطانيا، أمريكا وأوروبا',
-    cartLine: 'الشحن إلى الخليج وبريطانيا وأمريكا وأوروبا المختارة',
+    short: 'شحن عالمي',
+    cartLine: 'شحن إلى جميع أنحاء العالم',
   },
   fr: {
-    short: 'CCG, RU, US & Europe',
-    cartLine: 'Livraison vers le CCG, le RU, les US et une sélection en Europe',
+    short: 'Livraison mondiale',
+    cartLine: 'Livraison dans le monde entier',
   },
   de: {
-    short: 'GCC, UK, US & Europa',
-    cartLine: 'Versand in den GCC, UK, die USA und ausgewähltes Europa',
+    short: 'Weltweiter Versand',
+    cartLine: 'Weltweiter Versand',
   },
   it: {
-    short: 'GCC, UK, US ed Europa',
-    cartLine: 'Spedizione verso GCC, UK, US ed Europa selezionata',
+    short: 'Spedizione mondiale',
+    cartLine: 'Spedizione in tutto il mondo',
   },
   es: {
-    short: 'CCG, RU, EE. UU. y Europa',
-    cartLine: 'Envíos al CCG, RU, EE. UU. y Europa seleccionada',
+    short: 'Envío mundial',
+    cartLine: 'Envíos a todo el mundo',
   },
   ru: {
-    short: 'GCC, UK, США и Европа',
-    cartLine: 'Доставка в GCC, UK, США и выбранные страны Европы',
+    short: 'Доставка по миру',
+    cartLine: 'Доставка по всему миру',
   },
   zh: {
-    short: '海湾、英、美与欧洲',
-    cartLine: '配送至海湾地区、英国、美国及部分欧洲国家',
+    short: '全球配送',
+    cartLine: '全球配送',
   },
   nl: {
-    short: 'GCC, UK, VS & Europa',
-    cartLine: 'Verzending naar GCC, UK, VS en geselecteerd Europa',
+    short: 'Wereldwijde verzending',
+    cartLine: 'Wereldwijde verzending',
   },
   pt: {
-    short: 'GCC, UK, EUA e Europa',
-    cartLine: 'Envio para GCC, UK, EUA e Europa selecionada',
+    short: 'Envio mundial',
+    cartLine: 'Envio para todo o mundo',
   },
   id: {
-    short: 'GCC, UK, AS & Eropa',
-    cartLine: 'Pengiriman ke GCC, UK, AS, dan Eropa terpilih',
+    short: 'Pengiriman ke seluruh dunia',
+    cartLine: 'Pengiriman ke seluruh dunia',
   },
   ms: {
-    short: 'GCC, UK, AS & Eropah',
-    cartLine: 'Penghantaran ke GCC, UK, AS dan Eropah terpilih',
+    short: 'Penghantaran seluruh dunia',
+    cartLine: 'Penghantaran ke seluruh dunia',
   },
 }
 

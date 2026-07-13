@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
-import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowRight, FiLock, FiPackage } from 'react-icons/fi'
+import { FiX, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowRight, FiLock } from 'react-icons/fi'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode } from 'swiper/modules'
 import { useCartStore } from '@/store/cartStore'
@@ -19,12 +19,13 @@ import { getCartLineImageAlt, getProductImageAlt } from '@/lib/products/imageAlt
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { resolveCartShippingMessages } from '@/lib/shipping/resolveCartShippingMessages'
 import {
-  glassDrawer,
-  glassDrawerWash,
+  glassOverlayPanel,
+  glassOverlayWash,
   glassPrimaryBtn,
-  glassSecondaryBtn,
-  glassTextMuted,
-  glassTextTitle,
+  glassSecondaryBtnOnDark,
+  glassTextBodyOnDark,
+  glassTextMutedOnDark,
+  glassTextTitleOnDark,
 } from '@/lib/ui/glassClasses'
 import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 
@@ -93,51 +94,54 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Soft scrim — no heavy blur (avoids “site stuck” feel) */}
           <motion.div
             key="mini-cart-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[100] bg-[#1a0210]/45"
+            className="fixed inset-0 z-[100] bg-[#1a0210]/55 backdrop-blur-[2px]"
           />
 
-          {/* Drawer */}
           <motion.div
             key="mini-cart-drawer"
             initial={{ x: isRTL ? '-100%' : '100%' }}
             animate={{ x: 0 }}
             exit={{ x: isRTL ? '-100%' : '100%' }}
             transition={{ type: 'tween', duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className={`fixed top-0 ${isRTL ? 'left-0 border-r' : 'right-0 border-l'} z-[101] flex h-[100dvh] w-full max-w-md flex-col ${glassDrawer} ${isRTL ? 'rtl' : 'ltr'}`}
+            className={`fixed top-0 ${isRTL ? 'left-0 border-r' : 'right-0 border-l'} z-[101] flex h-[100dvh] w-full max-w-md flex-col ${glassOverlayPanel} ${isRTL ? 'rtl' : 'ltr'}`}
           >
-            <div className={glassDrawerWash} aria-hidden />
+            <div className={glassOverlayWash} aria-hidden />
 
             {/* Header */}
-            <div className={`relative z-[1] flex items-center justify-between border-b border-brand-darkRed/10 p-4 sm:p-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <h2 className={`font-rozha text-xl sm:text-2xl ${glassTextTitle}`}>
+            <div
+              className={`relative z-[1] flex shrink-0 items-center justify-between border-b border-white/12 px-4 py-4 sm:px-6 sm:py-5 ${
+                isRTL ? 'flex-row-reverse' : ''
+              }`}
+            >
+              <h2 className={`font-rozha text-xl leading-tight sm:text-2xl ${glassTextTitleOnDark}`}>
                 {ui.cart.shoppingBag} ({items.length})
               </h2>
               <button
                 type="button"
                 onClick={onClose}
-                className={`p-2 transition-colors ${glassTextMuted} hover:text-brand-dustyBlue`}
+                className={`rounded-full p-2 transition-colors hover:bg-white/10 ${glassTextMutedOnDark} hover:text-white`}
                 data-cursor-hover
+                aria-label={ui.common.close}
               >
-                <FiX className="w-5 h-5" />
+                <FiX className="h-5 w-5" />
               </button>
             </div>
 
             {/* Items */}
-            <div className="relative z-[1] flex-1 overflow-y-auto">
+            <div className="relative z-[1] min-h-0 flex-1 overflow-y-auto overscroll-contain">
               {items.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full p-6 text-center">
-                  <FiShoppingBag className={`mb-4 h-12 w-12 ${glassTextMuted}`} />
-                  <p className={`mb-2 font-rozha text-xl ${glassTextTitle}`}>
+                <div className="flex h-full flex-col items-center justify-center p-6 text-center">
+                  <FiShoppingBag className={`mb-4 h-12 w-12 ${glassTextMutedOnDark}`} />
+                  <p className={`mb-2 font-rozha text-xl ${glassTextTitleOnDark}`}>
                     {ui.miniCart.yourBagIsEmpty}
                   </p>
-                  <p className={`mb-6 font-montserrat text-sm ${glassTextMuted}`}>
+                  <p className={`mb-6 max-w-xs font-montserrat text-sm leading-relaxed ${glassTextBodyOnDark}`}>
                     {ui.miniCart.discoverCollection}
                   </p>
                   <LocaleLink
@@ -150,12 +154,21 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   </LocaleLink>
                 </div>
               ) : (
-                <div className="divide-y divide-brand-stone/10">
+                <ul className="space-y-0 px-3 py-3 sm:px-4">
                   {items.map((item) => (
-                    <div key={lineKey(item)} className={`p-4 flex gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                      {/* Image */}
-                      <LocaleLink href={productHref(item)} onClick={onClose} className="flex-shrink-0" data-cursor-hover>
-                        <div className="relative h-[4.8rem] w-16 overflow-hidden rounded-lg bg-[#f5f5f5] sm:h-[6.4rem] sm:w-[4.8rem]">
+                    <li
+                      key={lineKey(item)}
+                      className={`mb-2.5 flex gap-3 rounded-[6px] border border-white/10 bg-white/[0.06] p-3 last:mb-0 sm:gap-4 sm:p-3.5 ${
+                        isRTL ? 'flex-row-reverse' : ''
+                      }`}
+                    >
+                      <LocaleLink
+                        href={productHref(item)}
+                        onClick={onClose}
+                        className="shrink-0"
+                        data-cursor-hover
+                      >
+                        <div className="relative h-[4.8rem] w-16 overflow-hidden rounded-[4px] bg-[#12080b] ring-1 ring-white/10 sm:h-[6.4rem] sm:w-[4.8rem]">
                           <Image
                             src={productImageSrc(item.image)}
                             alt={getCartLineImageAlt(
@@ -171,40 +184,46 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                         </div>
                       </LocaleLink>
 
-                      {/* Details */}
-                      <div className={`flex-1 min-w-0 ${isRTL ? 'text-right' : ''}`}>
+                      <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
                         <LocaleLink href={productHref(item)} onClick={onClose} data-cursor-hover>
-                          <h3 data-product-name="true" className="font-montserrat text-sm font-medium text-brand-darkRed truncate hover:text-brand-dustyBlue transition-colors">
+                          <h3
+                            data-product-name="true"
+                            className={`line-clamp-2 font-montserrat text-[12px] font-medium uppercase leading-snug tracking-[0.04em] transition-colors hover:text-white sm:text-[13px] ${glassTextTitleOnDark}`}
+                          >
                             {item.name}
                           </h3>
                         </LocaleLink>
-                        <p className="font-montserrat text-xs text-brand-clayRed/60 mt-0.5">
-                          {item.size} • {item.color}
-                          {item.lengthCm ? ` • ${item.lengthCm} cm` : ''}
+                        <p className={`mt-1 font-montserrat text-[11px] leading-snug ${glassTextMutedOnDark}`}>
+                          {item.size} · {item.color}
+                          {item.lengthCm ? ` · ${item.lengthCm} cm` : ''}
                         </p>
                         {item.customisationMessage && (
-                          <p className="font-montserrat text-[10px] text-brand-darkRed/80 mt-1 line-clamp-2">
+                          <p className={`mt-1 line-clamp-2 font-montserrat text-[10px] ${glassTextBodyOnDark}`}>
                             {ui.cart.personalisation}: “{summarize(item.customisationMessage)}”
                           </p>
                         )}
                         {item.notes && (
-                          <p className="font-montserrat text-[10px] text-brand-clayRed/80 mt-1 line-clamp-2">
+                          <p className={`mt-1 line-clamp-2 font-montserrat text-[10px] ${glassTextMutedOnDark}`}>
                             {ui.cart.note}: {summarize(item.notes)}
                           </p>
                         )}
-                        <p className="font-montserrat text-sm text-brand-darkRed mt-2">
+                        <p className={`mt-2 font-montserrat text-sm tabular-nums ${glassTextTitleOnDark}`}>
                           {formatAmount(lineUnitForCurrency(item, currency.code))}
                           {item.quantity > 1 && (
-                            <span className="block font-montserrat text-[10px] text-brand-clayRed/60">
+                            <span className={`mt-0.5 block font-montserrat text-[10px] ${glassTextMutedOnDark}`}>
                               {formatAmount(lineTotalForCurrency(item, currency.code))} {ui.cart.lineTotal}
                             </span>
                           )}
                         </p>
 
-                        {/* Quantity & Remove */}
-                        <div className={`flex items-center justify-between mt-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                          <div className="flex items-center border border-brand-stone/30 rounded">
+                        <div
+                          className={`mt-3 flex items-center justify-between gap-2 ${
+                            isRTL ? 'flex-row-reverse' : ''
+                          }`}
+                        >
+                          <div className="inline-flex items-center overflow-hidden rounded-[4px] border-2 border-[#e8d8c8]/55 bg-white/[0.08] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]">
                             <button
+                              type="button"
                               onClick={() =>
                                 updateQuantity(
                                   item.id,
@@ -212,16 +231,22 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                                   item.color,
                                   Math.max(1, item.quantity - 1),
                                   item.lengthCm,
-                                  item.customisationMessage
+                                  item.customisationMessage,
                                 )
                               }
-                              className="p-2 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
+                              className={`p-2.5 transition-colors hover:bg-white/12 ${glassTextBodyOnDark}`}
                               data-cursor-hover
+                              aria-label="Decrease quantity"
                             >
-                              <FiMinus className="w-3 h-3" />
+                              <FiMinus className="h-3.5 w-3.5" />
                             </button>
-                            <span className="w-8 text-center font-montserrat text-sm">{item.quantity}</span>
+                            <span
+                              className={`min-w-[2rem] border-x border-[#e8d8c8]/35 px-1 text-center font-montserrat text-sm tabular-nums ${glassTextTitleOnDark}`}
+                            >
+                              {item.quantity}
+                            </span>
                             <button
+                              type="button"
                               onClick={() =>
                                 updateQuantity(
                                   item.id,
@@ -229,34 +254,43 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                                   item.color,
                                   item.quantity + 1,
                                   item.lengthCm,
-                                  item.customisationMessage
+                                  item.customisationMessage,
                                 )
                               }
-                              className="p-2 text-brand-darkRed hover:bg-brand-dustyBlue/10 transition-colors"
+                              className={`p-2.5 transition-colors hover:bg-white/12 ${glassTextBodyOnDark}`}
                               data-cursor-hover
+                              aria-label="Increase quantity"
                             >
-                              <FiPlus className="w-3 h-3" />
+                              <FiPlus className="h-3.5 w-3.5" />
                             </button>
                           </div>
                           <button
+                            type="button"
                             onClick={() =>
-                              removeItem(item.id, item.size, item.color, item.lengthCm, item.customisationMessage)
+                              removeItem(
+                                item.id,
+                                item.size,
+                                item.color,
+                                item.lengthCm,
+                                item.customisationMessage,
+                              )
                             }
-                            className="p-2 text-brand-clayRed/50 hover:text-brand-dustyBlue transition-colors"
+                            className={`rounded-full p-2 transition-colors hover:bg-white/10 ${glassTextMutedOnDark} hover:text-white`}
                             data-cursor-hover
+                            aria-label="Remove item"
                           >
-                            <FiTrash2 className="w-4 h-4" />
+                            <FiTrash2 className="h-4 w-4" />
                           </button>
                         </div>
                       </div>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               )}
 
               {items.length > 0 && youMayAlsoLike.length > 0 && (
-                <div className={`border-t border-brand-stone/15 py-4 ${isRTL ? 'text-right' : ''}`}>
-                  <p className="px-4 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-clayRed/70">
+                <div className={`border-t border-white/10 py-4 ${isRTL ? 'text-right' : ''}`}>
+                  <p className={`px-4 font-montserrat text-[10px] uppercase tracking-[0.18em] ${glassTextMutedOnDark}`}>
                     {ui.miniCart.youMayAlsoLike}
                   </p>
                   <Swiper
@@ -276,7 +310,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                           className="group block"
                           data-cursor-hover
                         >
-                          <div className="relative aspect-[9/16] overflow-hidden rounded-md bg-[#f5f5f5]">
+                          <div className="relative aspect-[9/16] overflow-hidden rounded-[4px] bg-[#12080b] ring-1 ring-white/10">
                             <Image
                               src={p.images[0]}
                               alt={getProductImageAlt(p, p.images[0] ?? '', {
@@ -289,10 +323,14 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                               className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
                             />
                           </div>
-                          <p className="mt-1.5 line-clamp-2 font-montserrat text-[10px] leading-snug text-brand-darkRed group-hover:text-brand-dustyBlue">
+                          <p
+                            className={`mt-1.5 line-clamp-2 font-montserrat text-[10px] leading-snug transition-colors group-hover:text-white ${glassTextBodyOnDark}`}
+                          >
                             {p.name}
                           </p>
-                          <p className="mt-0.5 font-montserrat text-[10px] text-brand-clayRed/80">{formatPrice(p.price)}</p>
+                          <p className={`mt-0.5 font-montserrat text-[10px] tabular-nums ${glassTextMutedOnDark}`}>
+                            {formatPrice(p.price)}
+                          </p>
                         </LocaleLink>
                       </SwiperSlide>
                     ))}
@@ -303,42 +341,42 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className="relative z-[1] space-y-4 border-t border-brand-darkRed/10 bg-white/55 p-4 backdrop-blur-md sm:p-6">
-                {/* Subtotal */}
+              <div className="relative z-[1] shrink-0 space-y-3.5 border-t border-white/12 bg-[#12080b]/45 px-4 py-4 backdrop-blur-md sm:space-y-4 sm:px-6 sm:py-5">
                 <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className={`font-montserrat text-sm uppercase tracking-wider ${glassTextMuted}`}>
+                  <span className={`font-montserrat text-[11px] uppercase tracking-[0.14em] ${glassTextMutedOnDark}`}>
                     {ui.cart.subtotal}
                   </span>
-                  <span className={`font-montserrat text-lg font-medium ${glassTextTitle}`}>
+                  <span className={`font-montserrat text-lg font-medium tabular-nums ${glassTextTitleOnDark}`}>
                     {formatCartSubtotal(items)}
                   </span>
                 </div>
                 <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className={`font-montserrat text-[11px] uppercase tracking-wider ${glassTextMuted}`}>
+                  <span className={`font-montserrat text-[11px] uppercase tracking-[0.14em] ${glassTextMutedOnDark}`}>
                     {shippingMessages.feeLabel}
                   </span>
                   <span
                     className={`font-montserrat text-[11px] tracking-wide ${
-                      shippingMessages.unlocked ? 'text-brand-dustyBlue' : glassTextTitle
+                      shippingMessages.unlocked ? 'text-[#c4b5a0]' : glassTextTitleOnDark
                     }`}
                   >
                     {shippingMessages.feeValue}
                   </span>
                 </div>
-                <p
-                  className={`font-montserrat text-[10px] leading-relaxed ${
-                    shippingMessages.unlocked ? 'text-brand-dustyBlue' : glassTextMuted
-                  } ${isRTL ? 'text-right' : ''}`}
-                >
-                  {shippingMessages.primary}
-                </p>
+                {/* One shipping note only — skip when unlocked (already says Complimentary above) */}
+                {!shippingMessages.unlocked && (
+                  <p className={`font-montserrat text-[10px] leading-relaxed ${glassTextMutedOnDark} ${isRTL ? 'text-right' : ''}`}>
+                    {shippingMessages.primary}
+                    {shippingMessages.secondary ? ` ${shippingMessages.secondary}` : ''}
+                  </p>
+                )}
 
-                {/* Buttons */}
-                <div className="space-y-3">
+                <div className="space-y-2.5 pt-0.5">
                   <LocaleLink
                     href="/checkout"
                     onClick={onClose}
-                    className={`${glassPrimaryBtn} !min-h-[48px] !text-xs inline-flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+                    className={`${glassPrimaryBtn} !min-h-[48px] !text-xs inline-flex items-center justify-center gap-2 ${
+                      isRTL ? 'flex-row-reverse' : ''
+                    }`}
                     data-cursor-hover
                   >
                     {ui.miniCart.reviewYourOrder}
@@ -347,32 +385,22 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <button
                     type="button"
                     onClick={onClose}
-                    className={`${glassSecondaryBtn} !min-h-[44px] !text-[11px]`}
+                    className={`${glassSecondaryBtnOnDark} !min-h-[44px] !text-[11px]`}
                     data-cursor-hover
                   >
                     {ui.cart.continueShopping}
                   </button>
                 </div>
 
-                {/* Trust Badges */}
                 <div
-                  className={`flex flex-col gap-2.5 border-t border-brand-darkRed/10 pt-4 sm:flex-row sm:items-center sm:justify-center sm:gap-5 ${isRTL ? 'sm:flex-row-reverse' : ''}`}
+                  className={`flex items-center justify-center gap-2 border-t border-white/10 pt-3.5 ${
+                    isRTL ? 'flex-row-reverse' : ''
+                  }`}
                 >
-                  <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    <FiLock className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
-                    <span className={`font-montserrat text-[10px] font-medium tracking-wide ${glassTextMuted}`}>
-                      {ui.trust.secureCheckout}
-                    </span>
-                  </div>
-                  <span className="hidden text-brand-stone/35 sm:inline" aria-hidden>
-                    •
+                  <FiLock className="h-3.5 w-3.5 shrink-0 text-[#e8d8c8]/80" aria-hidden />
+                  <span className={`font-montserrat text-[10px] font-medium tracking-wide ${glassTextMutedOnDark}`}>
+                    {ui.trust.secureCheckout}
                   </span>
-                  <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    <FiPackage className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
-                    <span className={`font-montserrat text-[10px] font-medium tracking-wide ${glassTextMuted}`}>
-                      {shippingMessages.primary}
-                    </span>
-                  </div>
                 </div>
               </div>
             )}

@@ -16,11 +16,6 @@ import {
   clearMobileBottomChrome,
   publishMobileBottomChrome,
 } from '@/lib/ui/mobileBottomChrome'
-import {
-  glassPanelWash,
-  glassTextMuted,
-  glassTextTitle,
-} from '@/lib/ui/glassClasses'
 
 interface StickyAddToCartProps {
   product: {
@@ -152,10 +147,10 @@ export default function StickyAddToCart({
     setTimeout(() => setIsAdded(false), 2000)
   }
 
-  const meta =
+  const variantMeta =
     selectedSize && selectedColor
       ? `${selectedSize} · ${selectedColor}`
-      : ui.stickyAddToCart.selectSizeAndColour
+      : selectedSize || selectedColor || ui.stickyAddToCart.selectSizeAndColour
 
   if (!mounted) return null
 
@@ -168,18 +163,24 @@ export default function StickyAddToCart({
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-          className={`pointer-events-auto fixed inset-x-0 bottom-0 z-[96] overflow-hidden border-t border-white/55 bg-white/85 shadow-[0_-12px_40px_-12px_rgba(26,2,16,0.28)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/75 lg:hidden ${isRTL ? 'rtl' : 'ltr'}`}
+          className={`pointer-events-auto fixed inset-x-0 bottom-0 z-[96] overflow-hidden border-t border-white/20 bg-[#1a0210]/82 shadow-[0_-16px_48px_-12px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-[#1a0210]/72 lg:hidden ${isRTL ? 'rtl' : 'ltr'}`}
           style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
         >
-          <div className={glassPanelWash} aria-hidden />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#2d141e]/55 via-[#1a0210]/35 to-[#12080b]/70"
+            aria-hidden
+          />
           <div className="relative z-[1] mx-auto max-w-[1400px] px-3 py-2.5 sm:px-4">
             <div className={`flex min-w-0 items-center gap-2.5 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <div className={`min-w-0 flex-1 overflow-hidden ${isRTL ? 'text-right' : 'text-left'}`}>
-                <p className={`truncate font-montserrat text-[15px] font-medium tabular-nums tracking-wide ${glassTextTitle}`}>
+                <p className="truncate font-montserrat text-[15px] font-medium tabular-nums tracking-wide text-white">
                   {formatPrice(product.price)}
                 </p>
-                <p className={`mt-0.5 truncate font-montserrat text-[9px] uppercase tracking-[0.12em] ${glassTextMuted}`}>
-                  {meta}
+                <p className="mt-0.5 truncate font-montserrat text-[10px] uppercase tracking-[0.1em] text-[#e8d8c8]">
+                  {product.name}
+                </p>
+                <p className="mt-0.5 truncate font-montserrat text-[9px] uppercase tracking-[0.12em] text-[#e8d8c8]/65">
+                  {variantMeta}
                 </p>
               </div>
 
@@ -187,10 +188,10 @@ export default function StickyAddToCart({
                 type="button"
                 onClick={handleAddToCart}
                 disabled={isAdded}
-                className={`relative inline-flex min-h-[46px] min-w-[8.75rem] max-w-[52%] shrink-0 items-center justify-center gap-1.5 border px-3.5 font-montserrat text-[11px] uppercase tracking-[0.12em] transition-colors ${
+                className={`relative inline-flex min-h-[46px] min-w-[8.75rem] max-w-[52%] shrink-0 items-center justify-center gap-1.5 rounded-[4px] border px-3.5 font-montserrat text-[11px] uppercase tracking-[0.12em] transition-colors ${
                   isAdded
                     ? 'border-green-600 bg-green-600 text-white'
-                    : 'border-brand-darkRed bg-brand-darkRed text-white active:bg-brand-clayRed'
+                    : 'border-brand-darkRed bg-brand-darkRed text-white hover:bg-brand-darkMagenta active:bg-brand-clayRed'
                 } ${isRTL ? 'flex-row-reverse' : ''}`}
               >
                 {isAdded ? (

@@ -18,7 +18,6 @@ import { getCartLineImageAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { getEstimatedShippingFee } from '@/lib/pricing'
 import { resolveCartShippingMessages } from '@/lib/shipping/resolveCartShippingMessages'
-import { getStripeShipToCopy } from '@/lib/shipping/stripeShipToCopy'
 import { useEffect, useRef } from 'react'
 import {
   clearMobileBottomChrome,
@@ -358,15 +357,11 @@ export default function CartPage() {
                     shippingMessages.unlocked ? 'text-brand-dustyBlue' : 'text-white/55'
                   }`}
                 >
-                  {shippingMessages.primary}
-                </p>
-                {shippingMessages.secondary ? (
-                  <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
-                    {shippingMessages.secondary}
-                  </p>
-                ) : null}
-                <p className="font-montserrat text-xs leading-relaxed tracking-wide text-white/55">
-                  {getStripeShipToCopy(language).cartLine}
+                  {shippingMessages.unlocked
+                    ? shippingMessages.primary
+                    : `${shippingMessages.primary}${
+                        shippingMessages.secondary ? ` ${shippingMessages.secondary}` : ''
+                      }`}
                 </p>
               </div>
             </div>

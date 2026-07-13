@@ -31,6 +31,7 @@ import {
 } from '@/lib/payments'
 import { getCheckoutAttributionContext } from '@/lib/analytics/checkoutAttribution'
 import CheckoutPaymentRailIcons from '@/components/checkout/CheckoutPaymentRailIcons'
+import { formFieldOnDarkClass } from '@/lib/ui/formFieldClasses'
 import dynamic from 'next/dynamic'
 
 const StripeEmbeddedCheckoutForm = dynamic(
@@ -568,8 +569,8 @@ export default function CheckoutPage() {
                 ) : null}
 
                 {activeRail === 'tamara' || activeRail === 'tabby' ? (
-                  <div className="mt-5 space-y-2.5 rounded-[4px] border border-white/10 bg-white/5 p-3 sm:mt-6">
-                    <p className="font-montserrat text-[10px] uppercase tracking-[0.14em] text-white/55">
+                  <div className="mt-5 space-y-2.5 rounded-[6px] border border-white/15 bg-white/[0.08] p-3.5 sm:mt-6 sm:p-4">
+                    <p className="font-montserrat text-[10px] uppercase tracking-[0.14em] text-[#e8d8c8]/75">
                       {activeRail === 'tabby'
                         ? language === 'ar'
                           ? 'تفاصيل تابي'
@@ -578,19 +579,19 @@ export default function CheckoutPage() {
                           ? 'تفاصيل تمارا'
                           : 'Tamara details'}
                     </p>
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                       <input
                         value={tamaraFirstName}
                         onChange={(e) => setTamaraFirstName(e.target.value)}
                         placeholder={language === 'ar' ? 'الاسم الأول' : 'First name'}
-                        className="min-h-[40px] rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                        className={formFieldOnDarkClass}
                         autoComplete="given-name"
                       />
                       <input
                         value={tamaraLastName}
                         onChange={(e) => setTamaraLastName(e.target.value)}
                         placeholder={language === 'ar' ? 'اسم العائلة' : 'Last name'}
-                        className="min-h-[40px] rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                        className={formFieldOnDarkClass}
                         autoComplete="family-name"
                       />
                     </div>
@@ -599,7 +600,7 @@ export default function CheckoutPage() {
                       onChange={(e) => setTamaraEmail(e.target.value)}
                       placeholder="Email"
                       type="email"
-                      className="min-h-[40px] w-full rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                      className={formFieldOnDarkClass}
                       autoComplete="email"
                     />
                     <input
@@ -607,21 +608,21 @@ export default function CheckoutPage() {
                       onChange={(e) => setTamaraPhone(e.target.value)}
                       placeholder={language === 'ar' ? 'الجوال (مثال 9715…)' : 'Mobile (e.g. 9715…)'}
                       type="tel"
-                      className="min-h-[40px] w-full rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                      className={formFieldOnDarkClass}
                       autoComplete="tel"
                     />
                     <input
                       value={tamaraLine1}
                       onChange={(e) => setTamaraLine1(e.target.value)}
                       placeholder={language === 'ar' ? 'عنوان الشحن' : 'Shipping address'}
-                      className="min-h-[40px] w-full rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                      className={formFieldOnDarkClass}
                       autoComplete="street-address"
                     />
                     <input
                       value={tamaraCity}
                       onChange={(e) => setTamaraCity(e.target.value)}
                       placeholder={language === 'ar' ? 'المدينة' : 'City'}
-                      className="min-h-[40px] w-full rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                      className={formFieldOnDarkClass}
                       autoComplete="address-level2"
                     />
                   </div>

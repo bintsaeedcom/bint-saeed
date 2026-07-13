@@ -956,16 +956,16 @@ export default function AccessoryDetailPage() {
                   </span>
                 )}
               </div>
-              <div className={`flex flex-wrap gap-2.5 ${isRTL ? 'justify-end' : ''}`}>
+              <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
                 {accessory.colors.map((color) => (
                   <button
                     key={color.name}
                     type="button"
                     onClick={() => setSelectedColor(isRTL ? color.nameAr : color.name)}
-                    className={`h-9 w-9 rounded-full border-2 transition-all ${
+                    className={`h-5 w-5 shrink-0 rounded-full border transition-all sm:h-6 sm:w-6 ${
                       selectedColor === (isRTL ? color.nameAr : color.name)
-                        ? 'border-brand-darkRed ring-2 ring-brand-darkRed/20 ring-offset-2 scale-110'
-                        : 'border-brand-stone/30 hover:scale-105 hover:border-brand-dustyBlue'
+                        ? 'border-brand-darkRed ring-1 ring-brand-darkRed/25 ring-offset-1'
+                        : 'border-brand-stone/40 hover:border-brand-dustyBlue'
                     }`}
                     style={{ backgroundColor: color.hex }}
                     title={isRTL ? color.nameAr : color.name}
