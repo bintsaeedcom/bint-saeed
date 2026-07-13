@@ -108,13 +108,11 @@ function buildMobileNavColumns(
     .filter((col): col is { title: string | null; links: MegaNavLink[] } => col != null)
 }
 
-function CartCountBadge({ count, rtl }: { count: number; rtl: boolean }) {
+function CartCountBadge({ count }: { count: number; rtl?: boolean }) {
   if (count <= 0) return null
   return (
     <span
-      className={`pointer-events-none absolute flex h-4 w-4 items-center justify-center rounded-full bg-brand-dustyBlue font-montserrat text-[9px] font-bold leading-none text-white ${
-        rtl ? '-left-1.5 -top-1.5' : '-right-1.5 -top-1.5'
-      }`}
+      className="pointer-events-none absolute -end-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-brand-dustyBlue font-montserrat text-[9px] font-bold leading-none text-white"
     >
       {count > 9 ? '9+' : count}
     </span>
@@ -131,7 +129,7 @@ function HeaderCartTrigger({
 }: {
   onClick: () => void
   label: string
-  rtl: boolean
+  rtl?: boolean
   count: number
   className: string
   iconClassName: string
@@ -496,7 +494,8 @@ export default function Header() {
                 isScrolled ? 'py-0.5 md:py-0.5' : 'py-1 md:py-1.5 lg:py-2 xl:py-2.5'
               }`}
             >
-              <div className={`absolute left-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center 2xl:hidden ${isRTL ? 'flex-row-reverse' : ''}`}>
+              {/* Leading side in RTL = right (menu + search), like Arabic macOS */}
+              <div className="absolute start-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center 2xl:hidden">
                 <button
                   type="button"
                   className="p-2 text-white"
@@ -545,7 +544,8 @@ export default function Header() {
                 </LocaleLink>
               )}
 
-              <div className="absolute right-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center gap-1 2xl:hidden">
+              {/* Trailing side in RTL = left (bag) */}
+              <div className="absolute end-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center gap-1 2xl:hidden">
                 <HeaderCartTrigger
                   onClick={() => setIsMiniCartOpen(true)}
                   label={t.nav.cart}
@@ -566,8 +566,8 @@ export default function Header() {
                 isScrolled ? 'py-0.5' : 'py-1 2xl:py-1.5'
               }`}
             >
-            {/* Left: desktop search */}
-            <div className={`pointer-events-auto relative z-[61] flex min-w-0 items-center justify-start ${isRTL ? 'flex-row-reverse' : ''}`}>
+            {/* Inline-start: desktop search (right side in Arabic) */}
+            <div className="pointer-events-auto relative z-[61] flex min-w-0 items-center justify-start">
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
@@ -584,12 +584,12 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Center: Navigation */}
-            <nav className={`pointer-events-auto relative z-[61] flex min-w-0 items-center justify-center gap-5 min-[1800px]:gap-7 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            {/* Center: Navigation — document dir handles Arabic order */}
+            <nav className="pointer-events-auto relative z-[61] flex min-w-0 items-center justify-center gap-5 min-[1800px]:gap-7">
               <LocaleLink
                 href={shopNavItem.href}
                 onMouseEnter={() => setActiveMegaMenu(shopNavItem.href)}
-                className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:inset-inline-start-0 after:h-px after:w-full after:origin-bottom after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                   activeMegaMenu === shopNavItem.href
                     ? 'text-brand-dustyBlue'
                     : isTransparentHomeHeader
@@ -607,7 +607,7 @@ export default function Header() {
                   key={item.label}
                   href={item.href}
                   onMouseEnter={() => setActiveMegaMenu(item.href)}
-                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:inset-inline-start-0 after:h-px after:w-full after:origin-bottom after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                     activeMegaMenu === item.href
                       ? 'text-brand-dustyBlue'
                       : isTransparentHomeHeader
@@ -623,32 +623,31 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Right: locale, account and cart */}
-            <div className={`pointer-events-auto relative z-[61] flex min-w-0 items-center justify-end gap-2 2xl:gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            {/* Inline-end: wishlist, account, cart (left side in Arabic) */}
+            <div className="pointer-events-auto relative z-[61] flex min-w-0 items-center justify-end gap-2 2xl:gap-3">
               <LocaleLink
                 href="/wishlist"
                 className="relative rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
                 data-cursor-hover
-                aria-label={t.nav.account ? 'Wishlist' : 'Wishlist'}
+                aria-label="Wishlist"
               >
-                <FiHeart className="w-[18px] h-[18px]" />
-                {wishlistCount > 0 ? (
-                  <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-dustyBlue px-1 font-montserrat text-[9px] font-semibold text-[#1a0008]">
-                    {wishlistCount > 9 ? '9+' : wishlistCount}
-                  </span>
-                ) : null}
+                <span className="relative inline-flex leading-none">
+                  <FiHeart className="h-[18px] w-[18px]" />
+                  {wishlistCount > 0 ? (
+                    <span className="pointer-events-none absolute -end-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-dustyBlue px-1 font-montserrat text-[9px] font-semibold text-[#1a0008]">
+                      {wishlistCount > 9 ? '9+' : wishlistCount}
+                    </span>
+                  ) : null}
+                </span>
               </LocaleLink>
-              <button
-                type="button"
-                onClick={() => {
-                  window.location.assign('/account')
-                }}
+              <LocaleLink
+                href="/account"
                 className="rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
                 data-cursor-hover
                 aria-label={t.nav.account}
               >
-                <FiUser className="w-[18px] h-[18px]" />
-              </button>
+                <FiUser className="h-[18px] w-[18px]" />
+              </LocaleLink>
               
               <HeaderCartTrigger
                 onClick={() => setIsMiniCartOpen(true)}
@@ -672,7 +671,7 @@ export default function Header() {
                 transition={{ duration: 0.22, ease: 'easeOut' }}
                 className="pointer-events-auto absolute left-0 right-0 top-full z-[63] hidden -mt-1.5 pt-1.5 2xl:block"
               >
-                <div className="border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)]">
+                <div className={`border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)] ${isRTL ? 'text-right' : 'text-left'}`}>
                   <div className="grid grid-cols-12 gap-6 px-6 py-8 lg:gap-10 lg:px-12">
                     <div
                       className={
@@ -725,7 +724,7 @@ export default function Header() {
                             />
                           </div>
                           <div className="mt-2 flex min-w-0 flex-col items-start gap-1.5 xl:flex-row xl:items-center xl:justify-between xl:gap-3">
-                            <span className="max-w-full break-words font-montserrat text-[12px] leading-snug text-brand-darkRed [hyphens:none]">
+                            <span className="max-w-full break-words text-start font-montserrat text-[12px] leading-snug text-brand-darkRed [hyphens:none]">
                               {feature.title}
                             </span>
                             <span className="whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-darkRed/70 transition-colors group-hover:text-brand-dustyBlue xl:text-[11px]">
@@ -822,18 +821,20 @@ export default function Header() {
                         key={index}
                         href={result.href}
                         onClick={handleSearchClose}
-                        className="group flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-white/55"
+                        className={`group flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-white/55 ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}
                         data-cursor-hover
                       >
                         <div>
                           <span className={`font-montserrat transition-colors group-hover:text-brand-dustyBlue ${glassTextTitle}`}>
                             {result.title}
                           </span>
-                          <span className={`ml-3 font-montserrat text-xs uppercase tracking-wider ${glassTextMuted}`}>
+                          <span className={`ms-3 font-montserrat text-xs uppercase tracking-wider ${glassTextMuted}`}>
                             {result.category}
                           </span>
                         </div>
-                        <FiArrowRight className={`h-4 w-4 transition-colors group-hover:text-brand-dustyBlue ${glassTextMuted}`} />
+                        <FiArrowRight
+                          className={`h-4 w-4 transition-colors group-hover:text-brand-dustyBlue ${glassTextMuted} ${isRTL ? 'rotate-180' : ''}`}
+                        />
                       </LocaleLink>
                     ))}
                   </div>
@@ -1076,7 +1077,7 @@ export default function Header() {
 
               {/* Footer — safe-area inset above home indicator / browser chrome */}
               <div className="border-t border-white/10 px-6 pb-[max(1.75rem,env(safe-area-inset-bottom,0px))] pt-5">
-                <div className={`flex items-center gap-5 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className="flex items-center gap-5">
                   <LocaleLink
                     href="/wishlist"
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -1084,12 +1085,14 @@ export default function Header() {
                     data-cursor-hover
                     aria-label="Wishlist"
                   >
-                    <FiHeart className="w-6 h-6" />
-                    {wishlistCount > 0 ? (
-                      <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-dustyBlue px-1 font-montserrat text-[9px] font-semibold text-[#1a0008]">
-                        {wishlistCount > 9 ? '9+' : wishlistCount}
-                      </span>
-                    ) : null}
+                    <span className="relative inline-flex leading-none">
+                      <FiHeart className="h-6 w-6" />
+                      {wishlistCount > 0 ? (
+                        <span className="absolute -end-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-dustyBlue px-1 font-montserrat text-[9px] font-semibold text-[#1a0008]">
+                          {wishlistCount > 9 ? '9+' : wishlistCount}
+                        </span>
+                      ) : null}
+                    </span>
                   </LocaleLink>
                   <LocaleLink
                     href="/cart"

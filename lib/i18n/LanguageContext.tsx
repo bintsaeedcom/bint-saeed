@@ -43,10 +43,15 @@ export function LanguageProvider({
   useLayoutEffect(() => {
     const langAttr = language === 'zh' ? 'zh-CN' : language
     const dir = language === 'ar' ? 'rtl' : 'ltr'
-    document.documentElement.lang = langAttr
-    document.documentElement.dir = dir
+    const root = document.documentElement
+    root.lang = langAttr
+    root.dir = dir
+    root.setAttribute('dir', dir)
     document.body.dir = dir
+    document.body.setAttribute('dir', dir)
     document.body.dataset.locale = language
+    // Help browser form controls / UA chrome follow Arabic layout
+    root.style.setProperty('direction', dir)
   }, [language])
 
   useEffect(() => {

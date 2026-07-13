@@ -55,7 +55,7 @@ export default function Footer() {
         {/* Coming Soon gradient background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#12080b] via-[#1c0f15] to-[#2d141e]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(146,170,193,0.06)_0%,_transparent_70%)]" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden translate-x-[150%] md:flex items-start justify-end">
+        <div className="pointer-events-none absolute inset-y-0 end-0 hidden translate-x-[150%] items-start justify-end md:flex rtl:-translate-x-[150%]">
           <span
             className="origin-top-right rotate-90 whitespace-nowrap font-rozha text-[56px] leading-none tracking-[0.02em] text-transparent opacity-90 lg:text-[68px]"
             style={{

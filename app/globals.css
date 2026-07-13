@@ -139,11 +139,17 @@ html {
   background: #12080b;
 }
 
-/* RTL Support */
+/* RTL Support — Arabic (and any dir=rtl) mirrors like a system set to Arabic */
 [dir='rtl'] {
   direction: rtl;
   text-align: start;
   --font-montserrat: var(--font-arabic), 'Noto Kufi Arabic', sans-serif;
+}
+
+[dir='rtl'] input,
+[dir='rtl'] textarea,
+[dir='rtl'] select {
+  text-align: start;
 }
 
 [dir="rtl"] body {
@@ -1114,20 +1120,9 @@ input, textarea, select {
   }
 }
 
-/* RTL responsive fixes — mirror common physical Tailwind utilities */
-[dir='rtl'] .text-left {
-  text-align: right;
-}
-
-[dir='rtl'] .text-right {
-  text-align: left;
-}
-
-@media (max-width: 768px) {
-  [dir='rtl'] .flex-row-reverse {
-    flex-direction: row-reverse;
-  }
-}
+/* Prefer logical text alignment under RTL (`text-start` / `text-end`).
+ * Do NOT remap `.text-left` / `.text-right` — many components already pick
+ * `isRTL ? 'text-right' : 'text-left'`, and remapping double-flips Arabic. */
 
 /* Swiper responsive */
 @media (max-width: 640px) {
