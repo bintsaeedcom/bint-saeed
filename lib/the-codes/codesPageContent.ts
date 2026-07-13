@@ -14,7 +14,7 @@ export { absoluteCodesPageImageUrl, CODES_IMAGE_FILES, CODES_PAGE_DIR, codesPage
 
 export const CODES_HERO = {
   file: CODES_IMAGE_FILES.khous,
-  alt: withBrandAlt('Khous palm-frond weaving texture — The Codes editorial hero'),
+  alt: withBrandAlt('Al Khous palm-frond weaving texture — The Codes editorial hero'),
 }
 
 export type CodesSectionContent = {
@@ -54,13 +54,13 @@ export const THE_CODES_SECTIONS: CodesSectionContent[] = [
   {
     id: 'khous',
     eyebrow: 'Weave & structure',
-    title: 'Khous',
+    title: 'Al Khous',
     paragraphs: [
-      'Khous weaving is rooted in the use of palm fronds, shaped through structure and repetition, and recognised as part of the traditional crafts of the region. It reflects a way of making that is both functional and refined. Its logic is carried into the lines and construction of each piece.',
+      'Al Khous weaving is rooted in the use of palm fronds, shaped through structure and repetition, and recognised as part of the traditional crafts of the region. It reflects a way of making that is both functional and refined. Its logic is carried into the lines and construction of each piece.',
     ],
     imageFile: CODES_IMAGE_FILES.khous,
     imageAlt: withBrandAlt(
-      'Khous palm-frond weaving Emirati heritage craft texture — Bint Saeed house code',
+      'Al Khous palm-frond weaving Emirati heritage craft texture — Bint Saeed house code',
     ),
   },
   {

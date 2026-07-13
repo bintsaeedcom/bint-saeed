@@ -36,7 +36,7 @@ export function buildTheCodesJsonLd(locale: AppLocale = 'en') {
     url: pageUrl,
     name: 'The Codes | Bint Saeed',
     description:
-      'The house codes — Al Talli, Khous, Al Ain Rosette, Knotted Lines, and the monogram — told in one continuous story from Abu Dhabi, UAE.',
+      'The house codes — Al Talli, Al Khous, Al Ain Rosette, Knotted Lines, and the monogram — told in one continuous story from Abu Dhabi, UAE.',
     inLanguage: lang,
     isPartOf: {
       '@type': 'WebSite',
@@ -48,7 +48,7 @@ export function buildTheCodesJsonLd(locale: AppLocale = 'en') {
       '@type': 'Thing',
       name: 'Emirati heritage design codes',
       description:
-        'Al Talli embroidery, Khous weaving, Al Ain Rosette, Knotted Lines of Lineage, and the Bint Saeed monogram.',
+        'Al Talli embroidery, Al Khous weaving, Al Ain Rosette, Knotted Lines of Lineage, and the Bint Saeed monogram.',
     },
     primaryImageOfPage: heroImage,
     image: [

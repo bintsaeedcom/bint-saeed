@@ -40,6 +40,7 @@ export type StrandsPageCopy = {
   collectionHeading: string
   collectionIntro: string
   shopAllStrandsCta: string
+  discoverAllStrandsCta: string
   stoneVisualNotes: Record<string, string>
   stoneVisualFallback: string
   limitedEdition: string
@@ -169,6 +170,7 @@ const STRANDS_EN: StrandsPageCopy = {
   collectionHeading: 'Choose by colour and character.',
   collectionIntro: 'Each stone is natural. No two are identical.',
   shopAllStrandsCta: buildShopAllStrandsCta('en', 'title'),
+  discoverAllStrandsCta: 'Discover all Strands',
   stoneVisualNotes: STONE_VISUAL_NOTES_EN,
   stoneVisualFallback: 'Natural stone selected for colour, surface, and visual texture.',
   limitedEdition: 'Limited Edition',
@@ -248,6 +250,7 @@ const STRANDS_AR: StrandsPageCopy = {
   collectionHeading: 'اختاري حسب اللون والطابع.',
   collectionIntro: 'كل حجر طبيعي. لا يوجد اثنان متطابقان.',
   shopAllStrandsCta: buildShopAllStrandsCta('ar', 'title'),
+  discoverAllStrandsCta: 'اكتشفي كل الـ Strands',
   stoneVisualNotes: STONE_VISUAL_NOTES_AR,
   stoneVisualFallback: 'حجر طبيعي مُختار للون والسطح والملمس البصري.',
   limitedEdition: 'إصدار محدود',
@@ -281,6 +284,22 @@ const STRANDS_AR: StrandsPageCopy = {
     { name: 'جمشت', color: CONCEPT_SWATCH_COLORS[8] },
     { name: 'يشم', color: CONCEPT_SWATCH_COLORS[9] },
   ],
+}
+
+/** Discover-all CTA — keep Latin “Strands” brand noun. */
+const DISCOVER_ALL_STRANDS_CTA: Record<Language, string> = {
+  en: 'Discover all Strands',
+  ar: 'اكتشفي كل الـ Strands',
+  fr: 'Découvrir tous les Strands',
+  it: 'Scopri tutti gli Strands',
+  es: 'Descubrir todos los Strands',
+  ru: 'Открыть все Strands',
+  zh: '探索全部 Strands',
+  de: 'Alle Strands entdecken',
+  nl: 'Ontdek alle Strands',
+  pt: 'Descobrir todos os Strands',
+  id: 'Temukan semua Strands',
+  ms: 'Temui semua Strands',
 }
 
 type StrandsLocaleOverlay = Partial<
@@ -396,5 +415,6 @@ export function getStrandsPageCopy(locale: Language | string): StrandsPageCopy {
     ...overlay,
     ctaShopStrands: buildShopStrandsCta(lang, 'upper'),
     shopAllStrandsCta: buildShopAllStrandsCta(lang, 'title'),
+    discoverAllStrandsCta: DISCOVER_ALL_STRANDS_CTA[lang] ?? DISCOVER_ALL_STRANDS_CTA.en,
   }
 }

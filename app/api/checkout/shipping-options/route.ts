@@ -96,12 +96,22 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    if (!shippingDetails.address.city) {
+      return NextResponse.json(
+        {
+          type: 'error',
+          message: 'Please enter your city / emirate so we can calculate shipping.',
+        },
+        { status: 400 },
+      )
+    }
+
     const allowed = STRIPE_SHIPPING_ALLOWED_COUNTRIES as readonly string[]
     if (!allowed.includes(shippingDetails.address.country)) {
       return NextResponse.json(
         {
           type: 'error',
-          message: 'We cannot ship to this destination. Please choose another address.',
+          message: `We cannot ship to ${shippingDetails.address.country}. Please choose another destination.`,
         },
         { status: 400 },
       )

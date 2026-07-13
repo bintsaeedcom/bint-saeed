@@ -1,21 +1,19 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
+import StrandsStoneBento from '@/components/strands/StrandsStoneBento'
 import { accessories } from '@/data/accessories'
 import { sortAccessoriesByPriceAsc } from '@/lib/accessories/filterAccessories'
 import { products } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getStrandsPageCopy } from '@/lib/i18n/strandsPageCopyI18n'
 import { PRODUCT_LINE_STRANDS } from '@/lib/i18n/strandsBrandLock'
 import NoTranslate from '@/components/NoTranslate'
 import { withBrandAlt } from '@/lib/products/imageAlt'
-import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
 import { buildStrandsCollectionJsonLd } from '@/lib/accessories/strandsCollectionSchemaI18n'
 import { editorialSectionH2 } from '@/lib/ui/editorialTypography'
 import { ctaButtonRow, ctaInButtonRow, ctaPrimary, ctaSecondaryOnLight } from '@/lib/ui/ctaClasses'
@@ -37,7 +35,6 @@ const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 export default function StrandsPage() {
   const { isRTL, language } = useLanguage()
   const copy = getStrandsPageCopy(language)
-  const ui = commerceUi(language)
   const collectionJsonLd = useMemo(() => buildStrandsCollectionJsonLd(language), [language])
   const strandProducts = useMemo(
     () => sortAccessoriesByPriceAsc(accessories.filter((item) => item.category === 'signature-strands')),
@@ -46,14 +43,9 @@ export default function StrandsPage() {
   const marylebone = useMemo(() => products.find((product) => product.slug === 'marylebone-abaya'), [])
   const maryleboneHref = marylebone ? getProductHref(marylebone) : '/shop/marylebone-abaya'
   const maryleboneImage = marylebone?.images[0] || '/Webshop pictures/Abayas/Marylebone Abaya/bint-saeed-marylebone-abaya-black-front.webp'
-  const carouselRef = useRef<HTMLDivElement | null>(null)
-  const carouselTrackRef = useRef<HTMLDivElement | null>(null)
+
   const stepsRef = useRef<HTMLElement | null>(null)
-  const dragStateRef = useRef({ active: false, startX: 0, scrollLeft: 0 })
-  const trackDragRef = useRef({ active: false })
   const [stepsVisible, setStepsVisible] = useState(false)
-  const [carouselScroll, setCarouselScroll] = useState({ thumbWidthPct: 100, thumbLeftPct: 0 })
-  const [carouselEdges, setCarouselEdges] = useState({ atStart: true, atEnd: false })
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -68,96 +60,6 @@ export default function StrandsPage() {
     if (steps) observer.observe(steps)
     return () => observer.disconnect()
   }, [])
-
-  const updateCarouselProgress = useCallback(() => {
-    const el = carouselRef.current
-    if (!el) return
-    const { scrollLeft, scrollWidth, clientWidth } = el
-    const max = scrollWidth - clientWidth
-    if (max <= 0) {
-      setCarouselScroll({ thumbWidthPct: 100, thumbLeftPct: 0 })
-      setCarouselEdges({ atStart: true, atEnd: true })
-      return
-    }
-    const thumbWidthPct = Math.max(14, Math.min(100, (clientWidth / scrollWidth) * 100))
-    const thumbLeftPct = (scrollLeft / max) * (100 - thumbWidthPct)
-    setCarouselScroll({
-      thumbWidthPct,
-      thumbLeftPct: Math.min(100 - thumbWidthPct, Math.max(0, thumbLeftPct)),
-    })
-    setCarouselEdges({ atStart: scrollLeft <= 8, atEnd: scrollLeft >= max - 8 })
-  }, [])
-
-  const scrollCarousel = (direction: 'prev' | 'next') => {
-    const el = carouselRef.current
-    if (!el) return
-    const firstCard = el.querySelector('article')
-    const gap = 20
-    const cardStep = firstCard
-      ? firstCard.getBoundingClientRect().width + gap
-      : Math.max(el.clientWidth * 0.82, 280)
-    el.scrollBy({ left: direction === 'next' ? cardStep : -cardStep, behavior: 'smooth' })
-  }
-
-  const startDrag = (clientX: number) => {
-    const el = carouselRef.current
-    if (!el) return
-    dragStateRef.current = { active: true, startX: clientX, scrollLeft: el.scrollLeft }
-  }
-
-  const moveDrag = (clientX: number) => {
-    const el = carouselRef.current
-    const drag = dragStateRef.current
-    if (!el || !drag.active) return
-    el.scrollLeft = drag.scrollLeft - (clientX - drag.startX)
-    updateCarouselProgress()
-  }
-
-  const seekCarouselFromTrack = (clientX: number) => {
-    const el = carouselRef.current
-    const track = carouselTrackRef.current
-    if (!el || !track) return
-    const { left, width } = track.getBoundingClientRect()
-    if (width <= 0) return
-    const ratio = Math.min(1, Math.max(0, (clientX - left) / width))
-    const max = el.scrollWidth - el.clientWidth
-    el.scrollLeft = ratio * max
-    updateCarouselProgress()
-  }
-
-  const startTrackDrag = (clientX: number) => {
-    trackDragRef.current = { active: true }
-    seekCarouselFromTrack(clientX)
-  }
-
-  const moveTrackDrag = (clientX: number) => {
-    if (!trackDragRef.current.active) return
-    seekCarouselFromTrack(clientX)
-  }
-
-  const endTrackDrag = () => {
-    trackDragRef.current.active = false
-  }
-
-  const endDrag = () => {
-    dragStateRef.current.active = false
-  }
-
-  useEffect(() => {
-    const el = carouselRef.current
-    if (!el) return
-    const ro = new ResizeObserver(() => {
-      updateCarouselProgress()
-    })
-    ro.observe(el)
-    const onResize = () => updateCarouselProgress()
-    window.addEventListener('resize', onResize)
-    requestAnimationFrame(() => updateCarouselProgress())
-    return () => {
-      ro.disconnect()
-      window.removeEventListener('resize', onResize)
-    }
-  }, [strandProducts.length, updateCarouselProgress])
 
   return (
     <main className={`min-h-screen overflow-x-clip bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -333,148 +235,16 @@ export default function StrandsPage() {
           </LocaleLink>
         </div>
 
-        <div className="relative mx-auto mt-12 max-w-[1280px]">
-          <div
-            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#faf8f5] via-[#faf8f5]/80 to-transparent md:w-16"
-            aria-hidden
+        <div className="mt-12">
+          <StrandsStoneBento
+            products={strandProducts}
+            isRTL={isRTL}
+            chooseCta={copy.viewStrandCta}
+            discoverCta={copy.discoverAllStrandsCta}
+            limitedLabel={copy.limitedEditionShort}
+            stoneNotes={copy.stoneVisualNotes}
+            stoneNoteFallback={copy.stoneVisualFallback}
           />
-          <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#faf8f5] via-[#faf8f5]/80 to-transparent md:w-16"
-            aria-hidden
-          />
-          <button
-            type="button"
-            onClick={() => scrollCarousel('prev')}
-            disabled={carouselEdges.atStart}
-            aria-label={copy.carouselPrevAria}
-            className="absolute left-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5]/95 text-[#7A1C28] shadow-[0_4px_20px_rgba(26,2,16,0.12)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30 md:flex"
-            data-cursor-hover
-          >
-            <FiChevronLeft className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollCarousel('next')}
-            disabled={carouselEdges.atEnd}
-            aria-label={copy.carouselNextAria}
-            className="absolute right-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5]/95 text-[#7A1C28] shadow-[0_4px_20px_rgba(26,2,16,0.12)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30 md:flex"
-            data-cursor-hover
-          >
-            <FiChevronRight className="h-5 w-5" />
-          </button>
-          <div
-            ref={carouselRef}
-            dir="ltr"
-            onScroll={updateCarouselProgress}
-            onMouseDown={(event) => startDrag(event.clientX)}
-            onMouseMove={(event) => moveDrag(event.clientX)}
-            onMouseUp={endDrag}
-            onMouseLeave={endDrag}
-            onTouchStart={(event) => startDrag(event.touches[0]?.clientX || 0)}
-            onTouchMove={(event) => moveDrag(event.touches[0]?.clientX || 0)}
-            onTouchEnd={endDrag}
-            className="strands-carousel flex cursor-grab snap-x snap-proximity gap-5 overflow-x-auto scroll-smooth px-4 pb-2 active:cursor-grabbing md:px-14 [scrollbar-width:none] [touch-action:pan-x] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
-          >
-          {strandProducts.map((product) => {
-            return (
-              <article
-                key={product.id}
-                className="flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-[6px] border border-[#e8ddd4] bg-[#faf8f5] shadow-[0_8px_32px_rgba(26,2,16,0.08)] md:w-[360px]"
-              >
-                <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden bg-[#f0eeeb]">
-                  {product.images[0] ? (
-                    <Image
-                      src={product.images[0]}
-                      alt={getStrandCarouselAlt(product.id)}
-                      fill
-                      sizes="(max-width: 768px) 280px, 360px"
-                      className="object-contain object-center"
-                    />
-                  ) : null}
-                </div>
-                <div className="flex flex-1 flex-col p-5 text-left">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="font-rozha text-xl leading-tight text-[#2a1e18]">
-                      {product.name}
-                    </h3>
-                  </div>
-                  <p className="mt-3 font-montserrat text-[13px] leading-relaxed text-[#8a7a70]">
-                    {copy.stoneVisualNotes[product.name] || copy.stoneVisualFallback}
-                  </p>
-                  <p className="mt-4 font-montserrat text-sm font-medium text-[#7A1C28]">
-                    AED {product.price.toLocaleString()}
-                  </p>
-                  {product.isLimitedEdition ? (
-                    <span className="mt-3 inline-flex rounded-full border border-[#c9a96b] bg-[#f6f0e4] px-3 py-1 font-montserrat text-[10px] uppercase tracking-[0.08em] text-[#8a6020]">
-                      {copy.limitedEdition}
-                    </span>
-                  ) : null}
-                  <LocaleLink
-                    href={`/accessories/${product.id}`}
-                    className={`mt-auto w-full ${ctaPrimary}`}
-                    data-cursor-hover
-                  >
-                    {copy.viewStrandCta}
-                  </LocaleLink>
-                </div>
-              </article>
-            )
-          })}
-          </div>
-        </div>
-        <div className={`${INNER_CONTAINER_CLASS} mt-8 pb-12 md:hidden`}>
-          <div className="flex items-center justify-center gap-4">
-            <button
-              type="button"
-              onClick={() => scrollCarousel('prev')}
-              disabled={carouselEdges.atStart}
-              aria-label={copy.carouselPrevAria}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5] text-[#7A1C28] shadow-[0_4px_16px_rgba(26,2,16,0.08)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30"
-              data-cursor-hover
-            >
-              <FiChevronLeft className="h-5 w-5" />
-            </button>
-            <div className="min-w-0 flex-1">
-              <p className="mb-4 text-center font-montserrat text-[10px] font-medium uppercase tracking-[0.22em] text-[#8a7a70]">
-                {copy.carouselSwipeHint}
-              </p>
-              <div
-                ref={carouselTrackRef}
-                className="relative h-3 w-full cursor-pointer overflow-hidden rounded-full bg-[#e8ddd4] ring-1 ring-[#7A1C28]/10"
-                role="slider"
-                aria-valuenow={Math.round(carouselScroll.thumbLeftPct)}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-label={copy.carouselPositionAria}
-                onClick={(event) => seekCarouselFromTrack(event.clientX)}
-                onMouseDown={(event) => startTrackDrag(event.clientX)}
-                onMouseMove={(event) => moveTrackDrag(event.clientX)}
-                onMouseUp={endTrackDrag}
-                onMouseLeave={endTrackDrag}
-                onTouchStart={(event) => startTrackDrag(event.touches[0]?.clientX || 0)}
-                onTouchMove={(event) => moveTrackDrag(event.touches[0]?.clientX || 0)}
-                onTouchEnd={endTrackDrag}
-              >
-                <div
-                  className="pointer-events-none absolute top-0 h-3 rounded-full bg-[#7A1C28] shadow-sm transition-[left,width] duration-150 ease-out"
-                  style={{
-                    width: `${carouselScroll.thumbWidthPct}%`,
-                    left: `${carouselScroll.thumbLeftPct}%`,
-                  }}
-                />
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => scrollCarousel('next')}
-              disabled={carouselEdges.atEnd}
-              aria-label={copy.carouselNextAria}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#7A1C28]/25 bg-[#faf8f5] text-[#7A1C28] shadow-[0_4px_16px_rgba(26,2,16,0.08)] transition-opacity hover:border-[#7A1C28]/50 hover:bg-white disabled:pointer-events-none disabled:opacity-30"
-              data-cursor-hover
-            >
-              <FiChevronRight className="h-5 w-5" />
-            </button>
-          </div>
         </div>
 
         <p className={`${INNER_CONTAINER_CLASS} mt-10 text-center font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#8a7a70]`}>

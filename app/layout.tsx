@@ -173,7 +173,7 @@ export default async function RootLayout({
                 '@type': 'ClothingStore',
                 name: 'Bint Saeed',
                 description:
-                  'A contemporary house from Abu Dhabi devoted to evolving lifestyles. Abayas, kaftans, dresses, jewellery and lifestyle pieces — made to order.',
+                  'A contemporary fashion house from Abu Dhabi devoted to evolving lifestyles. Abayas, kaftans, dresses, jewellery and lifestyle pieces — made to order.',
                 url: 'https://www.bintsaeed.com',
                 logo: 'https://www.bintsaeed.com/og-image.png',
                 address: {

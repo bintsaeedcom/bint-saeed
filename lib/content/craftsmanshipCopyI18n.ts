@@ -47,7 +47,7 @@ const CRAFTSMANSHIP_EN: CraftsmanshipCopy = {
     paragraphs: [
       'Each design is developed and carried through to completion under a single direction. The Creative Director oversees the process from initial concept to final execution, ensuring that proportion, construction, and detail remain aligned throughout.',
       'Elements such as Al Talli and Khous are integrated into the structure of the garment rather than applied as surface decoration. Their use is determined during development and resolved within the construction process, ensuring consistency in both appearance and performance.',
-      'The result is a piece that reflects a clear standard of development, controlled production, and considered design. Each abaya is made to hold its form, perform in use, and maintain its quality over time. Bint Saeed operates as a contemporary house, shaped in Abu Dhabi and developed through an international process.',
+      'The result is a piece that reflects a clear standard of development, controlled production, and considered design. Each abaya is made to hold its form, perform in use, and maintain its quality over time. Bint Saeed operates as a contemporary fashion house, shaped in Abu Dhabi and developed through an international process.',
     ],
   },
   ctaHeading: 'Explore the collection',
@@ -82,7 +82,7 @@ const CRAFTSMANSHIP_ID: CraftsmanshipCopy = {
     paragraphs: [
       'Setiap desain dikembangkan dan dibawa hingga selesai di bawah satu arah. Creative Director mengawasi proses dari konsep awal hingga eksekusi akhir, memastikan proporsi, konstruksi, dan detail tetap selaras sepanjang proses.',
       'Elemen seperti Al Talli dan Khous diintegrasikan ke dalam struktur garment, bukan diterapkan sebagai dekorasi permukaan. Penggunaannya ditentukan selama pengembangan dan diselesaikan dalam proses konstruksi, memastikan konsistensi dalam penampilan dan performa.',
-      'Hasilnya adalah karya yang mencerminkan standar pengembangan yang jelas, produksi terkontrol, dan desain yang terpertimbangkan. Setiap abaya dibuat untuk mempertahankan bentuk, berfungsi dalam pemakaian, dan menjaga kualitasnya seiring waktu. Bint Saeed beroperasi sebagai house kontemporer, dibentuk di Abu Dhabi dan dikembangkan melalui proses internasional.',
+      'Hasilnya adalah karya yang mencerminkan standar pengembangan yang jelas, produksi terkontrol, dan desain yang terpertimbangkan. Setiap abaya dibuat untuk mempertahankan bentuk, berfungsi dalam pemakaian, dan menjaga kualitasnya seiring waktu. Bint Saeed beroperasi sebagai rumah mode kontemporer, dibentuk di Abu Dhabi dan dikembangkan melalui proses internasional.',
     ],
   },
   ctaHeading: 'Jelajahi koleksi',
@@ -117,7 +117,7 @@ const CRAFTSMANSHIP_AR: CraftsmanshipCopy = {
     paragraphs: [
       'يُطوَّر كل تصميم ويُنجز تحت توجيه واحد. يشرف المدير الإبداعي على العملية من المفهوم الأولي حتى التنفيذ النهائي، لضمان بقاء النسبة والبناء والتفاصيل متسقة طوال المسار.',
       'تُدمَج عناصر مثل Al Talli وKhous في بنية القطعة بدلاً من إضافتها كزخرفة سطحية. يُحدَّد استخدامها أثناء التطوير ويُحسم ضمن عملية البناء، لضمان الاتساق في المظهر والأداء.',
-      'النتيجة قطعة تعكس معيار تطوير واضحاً وإنتاجاً محكوماً وتصميماً مدروساً. تُصنع كل عباءة لتحافظ على شكلها وتؤدي في الاستخدام وتحافظ على جودتها مع الوقت. تعمل Bint Saeed كدار معاصرة، تشكّلت في أبوظبي وتطورت عبر عملية دولية.',
+      'النتيجة قطعة تعكس معيار تطوير واضحاً وإنتاجاً محكوماً وتصميماً مدروساً. تُصنع كل عباءة لتحافظ على شكلها وتؤدي في الاستخدام وتحافظ على جودتها مع الوقت. تعمل Bint Saeed كدار أزياء معاصرة، تشكّلت في أبوظبي وتطورت عبر عملية دولية.',
     ],
   },
   ctaHeading: 'استكشفي المجموعة',
@@ -152,7 +152,7 @@ const CRAFTSMANSHIP_MS: CraftsmanshipCopy = {
     paragraphs: [
       'Setiap reka bentuk dibangunkan dan dibawa hingga siap di bawah satu hala tuju. Pengarah Kreatif menyelia proses daripada konsep awal hingga pelaksanaan akhir, memastikan proporsi, konstruksi, dan butiran kekal selaras sepanjang proses.',
       'Elemen seperti Al Talli dan Khous disepadukan ke dalam struktur pakaian, bukan ditambah sebagai hiasan permukaan. Penggunaannya ditentukan semasa pembangunan dan diselesaikan dalam proses konstruksi, memastikan konsistensi dalam penampilan dan prestasi.',
-      'Hasilnya ialah karya yang mencerminkan standard pembangunan yang jelas, pengeluaran terkawal, dan reka bentuk yang terancang. Setiap abaya dihasilkan untuk mengekalkan bentuk, berfungsi dalam pemakaian, dan mengekalkan kualitinya dari masa ke masa. Bint Saeed beroperasi sebagai rumah kontemporari, dibentuk di Abu Dhabi dan dibangunkan melalui proses antarabangsa.',
+      'Hasilnya ialah karya yang mencerminkan standard pembangunan yang jelas, pengeluaran terkawal, dan reka bentuk yang terancang. Setiap abaya dihasilkan untuk mengekalkan bentuk, berfungsi dalam pemakaian, dan mengekalkan kualitinya dari masa ke masa. Bint Saeed beroperasi sebagai rumah fesyen kontemporari, dibentuk di Abu Dhabi dan dibangunkan melalui proses antarabangsa.',
     ],
   },
   ctaHeading: 'Terokai koleksi',

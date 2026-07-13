@@ -936,7 +936,7 @@ Body Copy Paragraphs:
 - Phase III
 - Each design is developed and carried through to completion under a single direction. The Creative Director oversees the process from initial concept to final execution, ensuring that proportion, construction, and detail remain aligned throughout.
 - Elements such as Al Talli and Khous are integrated into the structure of the garment rather than applied as surface decoration. Their use is determined during development and resolved within the construction process, ensuring consistency in both appearance and performance.
-- The result is a piece that reflects a clear standard of development, controlled production, and considered design. Each abaya is made to hold its form, perform in use, and maintain its quality over time. Bint Saeed operates as a contemporary house, shaped in Abu Dhabi and developed through an international process.
+- The result is a piece that reflects a clear standard of development, controlled production, and considered design. Each abaya is made to hold its form, perform in use, and maintain its quality over time. Bint Saeed operates as a contemporary fashion house, shaped in Abu Dhabi and developed through an international process.
 - Explore the collection
 
 Product Names and Prices:

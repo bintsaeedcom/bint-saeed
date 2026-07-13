@@ -833,18 +833,18 @@ export function buildLocalizedSchemaDescription(
   baseDescription: string,
 ): string {
   const intro: Record<AppLocale, string> = {
-    en: `${product.name} by ${BRAND_NAME} — a contemporary house from ${G.en.city} devoted to evolving lifestyles.`,
-    ar: `${product.name} من ${BRAND_NAME} — دار معاصرة من ${G.ar.city} مكرّسة لأسلوب حياة يتطوّر.`,
-    fr: `${product.name} par ${BRAND_NAME} — une maison contemporaine d’${G.fr.city} au service de modes de vie en évolution.`,
-    it: `${product.name} di ${BRAND_NAME} — una casa contemporanea di ${G.it.city} dedicata a stili di vita in evoluzione.`,
-    es: `${product.name} de ${BRAND_NAME} — una casa contemporánea de ${G.es.city} dedicada a estilos de vida en evolución.`,
-    ru: `${product.name} от ${BRAND_NAME} — современный дом из ${G.ru.city} для меняющегося образа жизни.`,
-    zh: `${product.name} — ${BRAND_NAME}，源自${G.zh.city}的当代品牌屋，致力于不断演进的生活方式。`,
-    de: `${product.name} von ${BRAND_NAME} — ein zeitgenössisches Haus aus ${G.de.city} für sich wandelnde Lebensstile.`,
-    nl: `${product.name} van ${BRAND_NAME} — een eigentijds huis uit ${G.nl.city} voor veranderende levensstijlen.`,
-    pt: `${product.name} da ${BRAND_NAME} — uma casa contemporânea de ${G.pt.city} dedicada a estilos de vida em evolução.`,
-    id: `${product.name} oleh ${BRAND_NAME} — rumah kontemporer dari ${G.id.city} yang berdedikasi pada gaya hidup yang terus berkembang.`,
-    ms: `${product.name} oleh ${BRAND_NAME} — rumah kontemporari dari ${G.ms.city} yang berdedikasi kepada gaya hidup yang sentiasa berkembang.`,
+    en: `${product.name} by ${BRAND_NAME} — a contemporary fashion house from ${G.en.city} devoted to evolving lifestyles.`,
+    ar: `${product.name} من ${BRAND_NAME} — دار أزياء معاصرة من ${G.ar.city} مكرّسة لأسلوب حياة يتطوّر.`,
+    fr: `${product.name} par ${BRAND_NAME} — une maison de mode contemporaine d’${G.fr.city} au service de modes de vie en évolution.`,
+    it: `${product.name} di ${BRAND_NAME} — una casa di moda contemporanea di ${G.it.city} dedicata a stili di vita in evoluzione.`,
+    es: `${product.name} de ${BRAND_NAME} — una casa de moda contemporánea de ${G.es.city} dedicada a estilos de vida en evolución.`,
+    ru: `${product.name} от ${BRAND_NAME} — современный модный дом из ${G.ru.city} для меняющегося образа жизни.`,
+    zh: `${product.name} — ${BRAND_NAME}，源自${G.zh.city}的当代时装屋，致力于不断演进的生活方式。`,
+    de: `${product.name} von ${BRAND_NAME} — ein zeitgenössisches Modehaus aus ${G.de.city} für sich wandelnde Lebensstile.`,
+    nl: `${product.name} van ${BRAND_NAME} — een eigentijds modehuis uit ${G.nl.city} voor veranderende levensstijlen.`,
+    pt: `${product.name} da ${BRAND_NAME} — uma casa de moda contemporânea de ${G.pt.city} dedicada a estilos de vida em evolução.`,
+    id: `${product.name} oleh ${BRAND_NAME} — rumah mode kontemporer dari ${G.id.city} yang berdedikasi pada gaya hidup yang terus berkembang.`,
+    ms: `${product.name} oleh ${BRAND_NAME} — rumah fesyen kontemporari dari ${G.ms.city} yang berdedikasi kepada gaya hidup yang sentiasa berkembang.`,
   }
 
   return `${intro[locale]} ${baseDescription}`.replace(/\s+/g, ' ').trim()

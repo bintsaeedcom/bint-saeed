@@ -1,66 +1,84 @@
 'use client'
 
-import { useEffect } from 'react'
+import Image from 'next/image'
+import { useMemo } from 'react'
 import { getTamaraPublicKey } from '@/lib/tamara/publicKey'
+import { TAMARA_LOGO } from '@/lib/payments/tamaraBrandAssets'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
-declare global {
-  interface Window {
-    tamaraWidgetConfig?: {
-      lang?: string
-      country?: string
-      publicKey?: string
-    }
-  }
-}
-
 type Props = {
+  /** Already-converted amount in the shopper’s display currency (same input as before). */
   amount: number
   currency?: string
   className?: string
 }
 
+/** Same split Tamara’s summary widget uses: total ÷ 4, two decimal places. */
+function formatTamaraInstallment(total: number, currencyCode: string): string {
+  const part = Math.round((total / 4) * 100) / 100
+  const number = part.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+  const code = currencyCode.toUpperCase() === 'SAR' ? 'SAR' : 'AED'
+  return `${code} ${number}`
+}
+
 /**
- * Official Tamara product widget (sandbox/production public key).
- * Renders nothing when public key is missing.
+ * Tamara product messaging — Bint Saeed typography + layout,
+ * official Tamara gradient logo unchanged.
  */
 export default function TamaraProductWidget({ amount, currency = 'AED', className = '' }: Props) {
-  const { language } = useLanguage()
+  const { language, isRTL } = useLanguage()
   const publicKey = getTamaraPublicKey()
-  const country = currency.toUpperCase() === 'SAR' ? 'SA' : 'AE'
-  const lang = language === 'ar' ? 'ar' : 'en'
-  const enabled = Boolean(publicKey && amount > 0)
+  const code = currency.toUpperCase()
+  const enabled = Boolean(publicKey && amount > 0 && (code === 'AED' || code === 'SAR'))
 
-  useEffect(() => {
-    if (!enabled || !publicKey) return
+  const installmentFormatted = useMemo(
+    () => formatTamaraInstallment(amount, code),
+    [amount, code],
+  )
+  const logoSrc = language === 'ar' ? TAMARA_LOGO.gradientAr : TAMARA_LOGO.gradientEn
 
-    window.tamaraWidgetConfig = {
-      lang,
-      country,
-      publicKey,
+  const copy = useMemo(() => {
+    if (language === 'ar') {
+      return {
+        before: 'ادفعي على 4 دفعات بقيمة ',
+        after: ' مع Tamara. بدون رسوم تأخير.',
+      }
     }
-
-    const existing = document.querySelector('script[data-tamara-widget="1"]')
-    if (existing) {
-      window.dispatchEvent(new Event('tamara:widget:refresh'))
-      return
+    return {
+      before: 'Pay in 4 payments of ',
+      after: ' with Tamara. No late fees.',
     }
-
-    const script = document.createElement('script')
-    script.src =
-      process.env.NEXT_PUBLIC_TAMARA_WIDGET_URL?.trim() ||
-      'https://cdn.tamara.co/widget-v2/tamara-widget.js'
-    script.async = true
-    script.dataset.tamaraWidget = '1'
-    document.body.appendChild(script)
-  }, [country, enabled, lang, publicKey])
+  }, [language])
 
   if (!enabled) return null
 
   return (
-    <div className={className} data-tamara-widget-host>
-      {/* @ts-expect-error Tamara custom element */}
-      <tamara-widget type="tamara-summary" amount={String(amount)} inline-type="2" />
+    <div
+      className={[
+        'mb-0 flex items-center gap-3 rounded-[4px] border border-brand-stone/25 bg-[#f3eee8]/70 px-3.5 py-3',
+        isRTL ? 'flex-row-reverse text-right' : 'text-left',
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      data-tamara-widget-host
+    >
+      <p className="min-w-0 flex-1 font-montserrat text-[12px] leading-[1.55] tracking-[0.02em] text-brand-darkRed sm:text-[13px]">
+        <span>{copy.before}</span>
+        <span className="font-medium tabular-nums tracking-wide">{installmentFormatted}</span>
+        <span>{copy.after}</span>
+      </p>
+      <Image
+        src={logoSrc}
+        alt="Tamara"
+        width={88}
+        height={28}
+        className="h-7 w-auto shrink-0 object-contain sm:h-8"
+        unoptimized
+      />
     </div>
   )
 }

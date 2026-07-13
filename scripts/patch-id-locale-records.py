@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 ID_STRING_MAP = {
-    "A contemporary house from Abu Dhabi devoted to evolving lifestyles.": "Rumah kontemporer dari Abu Dhabi yang berdedikasi pada gaya hidup yang terus berkembang.",
+    "A contemporary fashion house from Abu Dhabi devoted to evolving lifestyles.": "Rumah mode kontemporer dari Abu Dhabi yang berdedikasi pada gaya hidup yang terus berkembang.",
     "Weddings, Eid, celebrations, dinners, travel, gatherings and everyday elegance": "Pernikahan, Id, perayaan, makan malam, perjalanan, pertemuan, dan keanggunan sehari-hari",
     "Contemporary women seeking luxury fashion, refined dressing and evolving lifestyles from Abu Dhabi, UAE": "Wanita kontemporer yang mencari fashion mewah, berpakaian halus, dan gaya hidup berkembang dari Abu Dhabi, UEA",
     "Frequently Asked Questions": "Pertanyaan yang Sering Diajukan",

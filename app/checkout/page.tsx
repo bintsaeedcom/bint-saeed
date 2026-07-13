@@ -31,7 +31,11 @@ import {
 } from '@/lib/payments'
 import { getCheckoutAttributionContext } from '@/lib/analytics/checkoutAttribution'
 import CheckoutPaymentRailIcons from '@/components/checkout/CheckoutPaymentRailIcons'
-import { formFieldOnDarkClass } from '@/lib/ui/formFieldClasses'
+import {
+  validateBnplCheckoutForm,
+  type BnplFormField,
+} from '@/lib/checkout/bnplFormValidation'
+import { formFieldErrorClass, formFieldOnDarkClass } from '@/lib/ui/formFieldClasses'
 import dynamic from 'next/dynamic'
 
 const StripeEmbeddedCheckoutForm = dynamic(
@@ -113,6 +117,44 @@ export default function CheckoutPage() {
   const [tamaraLine1, setTamaraLine1] = useState('')
   const [tamaraCity, setTamaraCity] = useState('')
   const [tamaraEligible, setTamaraEligible] = useState(true)
+  const [bnplFieldError, setBnplFieldError] = useState<{
+    field: BnplFormField
+    message: string
+  } | null>(null)
+
+  const bnplFieldClass = (field: BnplFormField) =>
+    `${formFieldOnDarkClass}${bnplFieldError?.field === field ? ` ${formFieldErrorClass}` : ''}`
+
+  const clearBnplFieldError = (field?: BnplFormField) => {
+    setBnplFieldError((prev) => {
+      if (!prev) return null
+      if (!field || prev.field === field) return null
+      return prev
+    })
+  }
+
+  async function readCheckoutError(response: Response, fallback: string): Promise<string> {
+    try {
+      const data = (await response.json()) as {
+        error?: string
+        message?: string
+        details?: { message?: string; error?: string; errors?: Array<{ message?: string }> }
+      }
+      const fromDetailsList = Array.isArray(data.details?.errors)
+        ? data.details.errors.map((e) => e.message).filter(Boolean).join(' ')
+        : ''
+      return (
+        data.error?.trim() ||
+        data.message?.trim() ||
+        data.details?.message?.trim() ||
+        data.details?.error?.trim() ||
+        fromDetailsList ||
+        fallback
+      )
+    } catch {
+      return fallback
+    }
+  }
 
   const availableRails = useMemo(
     () => getAvailableCheckoutRails(countryCode, currency.code),
@@ -225,20 +267,22 @@ export default function CheckoutPage() {
     })
     try {
       if (activeRail === 'tabby') {
-        if (
-          !tamaraFirstName.trim() ||
-          !tamaraLastName.trim() ||
-          !tamaraEmail.trim() ||
-          !tamaraPhone.trim() ||
-          !tamaraLine1.trim() ||
-          !tamaraCity.trim()
-        ) {
-          throw new Error(
-            language === 'ar'
-              ? 'يرجى إكمال الاسم والبريد والجوال والعنوان لتابي'
-              : 'Please complete your name, email, mobile, and address for Tabby',
-          )
+        const validated = validateBnplCheckoutForm(
+          {
+            firstName: tamaraFirstName,
+            lastName: tamaraLastName,
+            email: tamaraEmail,
+            phone: tamaraPhone,
+            line1: tamaraLine1,
+            city: tamaraCity,
+          },
+          { language, provider: 'tabby', countryCode: countryCode === 'SA' ? 'SA' : 'AE' },
+        )
+        if (!validated.ok) {
+          setBnplFieldError({ field: validated.field, message: validated.message })
+          throw new Error(validated.message)
         }
+        setBnplFieldError(null)
         const response = await fetch('/api/payments/tabby/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -249,7 +293,7 @@ export default function CheckoutPage() {
               firstName: tamaraFirstName.trim(),
               lastName: tamaraLastName.trim(),
               email: tamaraEmail.trim(),
-              phone: tamaraPhone.trim(),
+              phone: validated.phoneNormalized,
             },
             shippingAddress: {
               line1: tamaraLine1.trim(),
@@ -257,8 +301,11 @@ export default function CheckoutPage() {
             },
           }),
         })
-        const { url, error } = await response.json()
-        if (!response.ok) throw new Error(error || 'Checkout is unavailable')
+        if (!response.ok) {
+          throw new Error(await readCheckoutError(response, 'Tabby checkout is unavailable'))
+        }
+        const { url, error } = (await response.json()) as { url?: string; error?: string }
+        if (error) throw new Error(error)
         if (typeof url === 'string' && url.startsWith('https://')) {
           window.location.assign(url)
           return
@@ -268,22 +315,28 @@ export default function CheckoutPage() {
 
       if (activeRail === 'tamara') {
         if (!tamaraEligible) {
-          throw new Error(ui.checkout.payWithTamara)
-        }
-        if (
-          !tamaraFirstName.trim() ||
-          !tamaraLastName.trim() ||
-          !tamaraEmail.trim() ||
-          !tamaraPhone.trim() ||
-          !tamaraLine1.trim() ||
-          !tamaraCity.trim()
-        ) {
           throw new Error(
             language === 'ar'
-              ? 'يرجى إكمال الاسم والبريد والجوال والعنوان لتمارا'
-              : 'Please complete your name, email, mobile, and address for Tamara',
+              ? 'تمارا غير متاحة لهذا الطلب. يرجى اختيار طريقة دفع أخرى.'
+              : 'Tamara is not available for this order. Please choose another payment method.',
           )
         }
+        const validated = validateBnplCheckoutForm(
+          {
+            firstName: tamaraFirstName,
+            lastName: tamaraLastName,
+            email: tamaraEmail,
+            phone: tamaraPhone,
+            line1: tamaraLine1,
+            city: tamaraCity,
+          },
+          { language, provider: 'tamara', countryCode: countryCode === 'SA' ? 'SA' : 'AE' },
+        )
+        if (!validated.ok) {
+          setBnplFieldError({ field: validated.field, message: validated.message })
+          throw new Error(validated.message)
+        }
+        setBnplFieldError(null)
         const response = await fetch('/api/payments/tamara/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -294,7 +347,7 @@ export default function CheckoutPage() {
               firstName: tamaraFirstName.trim(),
               lastName: tamaraLastName.trim(),
               email: tamaraEmail.trim(),
-              phone: tamaraPhone.trim(),
+              phone: validated.phoneNormalized,
             },
             shippingAddress: {
               line1: tamaraLine1.trim(),
@@ -302,8 +355,11 @@ export default function CheckoutPage() {
             },
           }),
         })
-        const { url, error } = await response.json()
-        if (!response.ok) throw new Error(error || 'Checkout is unavailable')
+        if (!response.ok) {
+          throw new Error(await readCheckoutError(response, 'Tamara checkout is unavailable'))
+        }
+        const { url, error } = (await response.json()) as { url?: string; error?: string }
+        if (error) throw new Error(error)
         if (typeof url === 'string' && url.startsWith('https://')) {
           window.location.assign(url)
           return
@@ -317,8 +373,11 @@ export default function CheckoutPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(checkoutPayload),
         })
-        const { url, error } = await response.json()
-        if (!response.ok) throw new Error(error || 'Checkout is unavailable')
+        if (!response.ok) {
+          throw new Error(await readCheckoutError(response, 'Checkout is unavailable'))
+        }
+        const { url, error } = (await response.json()) as { url?: string; error?: string }
+        if (error) throw new Error(error)
         if (typeof url === 'string' && url.startsWith('https://')) {
           window.location.assign(url)
           return
@@ -332,8 +391,11 @@ export default function CheckoutPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(checkoutPayload),
         })
-        const { url, error } = await response.json()
-        if (!response.ok) throw new Error(error || 'Checkout is unavailable')
+        if (!response.ok) {
+          throw new Error(await readCheckoutError(response, 'Checkout is unavailable'))
+        }
+        const { url, error } = (await response.json()) as { url?: string; error?: string }
+        if (error) throw new Error(error)
         if (typeof url === 'string' && url.startsWith('https://')) {
           window.location.assign(url)
           return
@@ -346,6 +408,9 @@ export default function CheckoutPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(checkoutPayload),
       })
+      if (!response.ok) {
+        throw new Error(await readCheckoutError(response, 'Checkout is unavailable'))
+      }
       const data = (await response.json()) as {
         mode?: string
         url?: string
@@ -353,7 +418,6 @@ export default function CheckoutPage() {
         publishableKey?: string
         error?: string
       }
-      if (!response.ok) throw new Error(data.error || 'Checkout is unavailable')
       if (data.error) throw new Error(data.error)
 
       if (data.mode === 'embedded' && data.clientSecret) {
@@ -376,7 +440,33 @@ export default function CheckoutPage() {
       throw new Error('Stripe checkout session missing')
     } catch (e) {
       console.error(e)
-      toast.error(ui.checkout.checkoutError)
+      const message =
+        e instanceof Error && e.message.trim()
+          ? e.message
+          : ui.checkout.checkoutError
+      const lower = message.toLowerCase()
+      if (lower.includes('first name') || message.includes('الاسم الأول')) {
+        setBnplFieldError({ field: 'firstName', message })
+      } else if (lower.includes('last name') || message.includes('اسم العائلة')) {
+        setBnplFieldError({ field: 'lastName', message })
+      } else if (lower.includes('email') || message.includes('بريد')) {
+        setBnplFieldError({ field: 'email', message })
+      } else if (
+        lower.includes('mobile') ||
+        lower.includes('phone') ||
+        message.includes('جوال')
+      ) {
+        setBnplFieldError({ field: 'phone', message })
+      } else if (
+        lower.includes('street') ||
+        (lower.includes('address') && !lower.includes('email')) ||
+        message.includes('عنوان')
+      ) {
+        setBnplFieldError({ field: 'line1', message })
+      } else if (lower.includes('city') || message.includes('مدينة')) {
+        setBnplFieldError({ field: 'city', message })
+      }
+      toast.error(message)
     } finally {
       setPayBusy(false)
     }
@@ -470,14 +560,67 @@ export default function CheckoutPage() {
 
       <div className="container mx-auto min-w-0 px-4 py-8 sm:px-6 sm:py-10 lg:px-12 lg:py-16">
         {stripeEmbedded ? (
-          <div className="mx-auto max-w-3xl">
-            <StripeEmbeddedCheckoutForm
-              clientSecret={stripeEmbedded.clientSecret}
-              publishableKey={stripeEmbedded.publishableKey}
-              backLabel={ui.common.back}
-              rtl={isRTL}
-              onBack={() => setStripeEmbedded(null)}
-            />
+          <div className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-12 lg:items-start lg:gap-10">
+            <aside
+              className={`min-w-0 space-y-4 lg:col-span-4 ${isRTL ? 'text-right' : ''}`}
+            >
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
+                {ui.cart.orderSummary}
+              </p>
+              <ul className="divide-y divide-brand-stone/20 rounded-xl border border-brand-stone/20 bg-white/90">
+                {items.map((item) => {
+                  const catalogProduct = staticProducts.find((product) => product.id === item.id)
+                  const imageSrc = productImageSrc(
+                    item.image?.trim() || catalogProduct?.images[0] || '/placeholders/product-front-F.svg',
+                  )
+                  return (
+                    <li
+                      key={lineKey(item)}
+                      className={`flex items-start gap-3 px-4 py-3.5 ${isRTL ? 'flex-row-reverse' : ''}`}
+                    >
+                      <div className="relative h-16 w-12 shrink-0 overflow-hidden bg-[#f0eeeb]">
+                        <Image
+                          src={imageSrc}
+                          alt={getCartLineImageAlt(item, catalogProduct, language)}
+                          fill
+                          unoptimized={isWebshopPicturePath(imageSrc)}
+                          className="object-cover object-top"
+                          sizes="48px"
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-rozha text-sm leading-snug text-brand-darkRed">{item.name}</p>
+                        <p className="mt-1 font-montserrat text-[11px] text-brand-clayRed/65">
+                          {item.size} · {item.color}
+                          {item.quantity > 1 ? ` · ×${item.quantity}` : ''}
+                        </p>
+                        <p className="mt-1 font-montserrat text-xs text-brand-darkRed">
+                          {formatAmount(lineTotalForCurrency(item, currency.code))}
+                        </p>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+              <div
+                className={`flex items-baseline justify-between gap-3 border-t border-brand-stone/20 pt-3 font-montserrat text-sm ${isRTL ? 'flex-row-reverse' : ''}`}
+              >
+                <span className="text-brand-clayRed/70">{ui.cart.subtotal}</span>
+                <span className="font-medium text-brand-darkRed">{formatCartSubtotal(items)}</span>
+              </div>
+              <p className="font-montserrat text-[11px] leading-relaxed text-brand-clayRed/60">
+                {ui.cart.taxesIncluded}
+              </p>
+            </aside>
+            <div className="min-w-0 lg:col-span-8">
+              <StripeEmbeddedCheckoutForm
+                clientSecret={stripeEmbedded.clientSecret}
+                publishableKey={stripeEmbedded.publishableKey}
+                backLabel={ui.common.back}
+                rtl={isRTL}
+                onBack={() => setStripeEmbedded(null)}
+              />
+            </div>
           </div>
         ) : (
         <div className="grid min-w-0 gap-8 lg:grid-cols-12 lg:gap-12">
@@ -589,12 +732,24 @@ export default function CheckoutPage() {
                           name="checkout-rail"
                           value={rail}
                           checked={activeRail === rail}
-                          onChange={() => setSelectedRail(rail)}
+                          onChange={() => {
+                            setSelectedRail(rail)
+                            setBnplFieldError(null)
+                          }}
                           className="mt-1 h-4 w-4 shrink-0 accent-brand-dustyBlue"
                         />
-                        <span className="min-w-0 flex-1 space-y-2">
+                        <span
+                          className={`min-w-0 flex-1 ${
+                            rail === 'tamara' || rail === 'tabby'
+                              ? 'flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3'
+                              : 'space-y-2'
+                          }`}
+                        >
                           <span className="sr-only">{railLabel(rail, ui, language)}</span>
-                          <CheckoutPaymentRailIcons rail={rail} />
+                          <CheckoutPaymentRailIcons
+                            rail={rail}
+                            className={rail === 'tamara' || rail === 'tabby' ? 'shrink-0' : ''}
+                          />
                           {rail === 'mollie' ? (
                             <span className="block font-montserrat text-[11px] leading-snug tracking-wide text-white/75">
                               {ui.checkout.payWithMollie}
@@ -602,7 +757,7 @@ export default function CheckoutPage() {
                           ) : null}
                           {rail === 'tamara' ? (
                             <span
-                              className={`block font-montserrat text-[11px] leading-snug tracking-wide ${
+                              className={`font-montserrat text-[11px] leading-snug tracking-wide sm:flex-1 ${
                                 tamaraEligible ? 'text-white/75' : 'text-white/35'
                               }`}
                             >
@@ -615,7 +770,7 @@ export default function CheckoutPage() {
                             </span>
                           ) : null}
                           {rail === 'tabby' ? (
-                            <span className="block font-montserrat text-[11px] leading-snug tracking-wide text-white/75">
+                            <span className="font-montserrat text-[11px] leading-snug tracking-wide text-white/75 sm:flex-1">
                               {railLabel('tabby', ui, language)}
                             </span>
                           ) : null}
@@ -636,51 +791,87 @@ export default function CheckoutPage() {
                           ? 'تفاصيل تمارا'
                           : 'Tamara details'}
                     </p>
+                    {bnplFieldError ? (
+                      <p
+                        className="rounded-[4px] border border-brand-clayRed/40 bg-brand-clayRed/15 px-3 py-2 font-montserrat text-[12px] leading-snug text-[#f5e6dc]"
+                        role="alert"
+                      >
+                        {bnplFieldError.message}
+                      </p>
+                    ) : null}
                     <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                       <input
                         value={tamaraFirstName}
-                        onChange={(e) => setTamaraFirstName(e.target.value)}
+                        onChange={(e) => {
+                          setTamaraFirstName(e.target.value)
+                          clearBnplFieldError('firstName')
+                        }}
                         placeholder={language === 'ar' ? 'الاسم الأول' : 'First name'}
-                        className={formFieldOnDarkClass}
+                        className={bnplFieldClass('firstName')}
                         autoComplete="given-name"
+                        aria-invalid={bnplFieldError?.field === 'firstName'}
                       />
                       <input
                         value={tamaraLastName}
-                        onChange={(e) => setTamaraLastName(e.target.value)}
+                        onChange={(e) => {
+                          setTamaraLastName(e.target.value)
+                          clearBnplFieldError('lastName')
+                        }}
                         placeholder={language === 'ar' ? 'اسم العائلة' : 'Last name'}
-                        className={formFieldOnDarkClass}
+                        className={bnplFieldClass('lastName')}
                         autoComplete="family-name"
+                        aria-invalid={bnplFieldError?.field === 'lastName'}
                       />
                     </div>
                     <input
                       value={tamaraEmail}
-                      onChange={(e) => setTamaraEmail(e.target.value)}
+                      onChange={(e) => {
+                        setTamaraEmail(e.target.value)
+                        clearBnplFieldError('email')
+                      }}
                       placeholder="Email"
                       type="email"
-                      className={formFieldOnDarkClass}
+                      className={bnplFieldClass('email')}
                       autoComplete="email"
+                      aria-invalid={bnplFieldError?.field === 'email'}
                     />
                     <input
                       value={tamaraPhone}
-                      onChange={(e) => setTamaraPhone(e.target.value)}
-                      placeholder={language === 'ar' ? 'الجوال (مثال 9715…)' : 'Mobile (e.g. 9715…)'}
+                      onChange={(e) => {
+                        setTamaraPhone(e.target.value)
+                        clearBnplFieldError('phone')
+                      }}
+                      placeholder={
+                        language === 'ar'
+                          ? 'الجوال (05… أو 9715…)'
+                          : 'Mobile (05… or 9715…)'
+                      }
                       type="tel"
-                      className={formFieldOnDarkClass}
+                      className={bnplFieldClass('phone')}
                       autoComplete="tel"
+                      aria-invalid={bnplFieldError?.field === 'phone'}
                     />
                     <input
                       value={tamaraLine1}
-                      onChange={(e) => setTamaraLine1(e.target.value)}
+                      onChange={(e) => {
+                        setTamaraLine1(e.target.value)
+                        clearBnplFieldError('line1')
+                      }}
                       placeholder={language === 'ar' ? 'عنوان الشحن' : 'Shipping address'}
-                      className={formFieldOnDarkClass}
+                      className={bnplFieldClass('line1')}
                       autoComplete="street-address"
+                      aria-invalid={bnplFieldError?.field === 'line1'}
                     />
                     <input
                       value={tamaraCity}
-                      onChange={(e) => setTamaraCity(e.target.value)}
+                      onChange={(e) => {
+                        setTamaraCity(e.target.value)
+                        clearBnplFieldError('city')
+                      }}
                       placeholder={language === 'ar' ? 'المدينة' : 'City'}
-                      className={formFieldOnDarkClass}
+                      className={bnplFieldClass('city')}
                       autoComplete="address-level2"
+                      aria-invalid={bnplFieldError?.field === 'city'}
                     />
                   </div>
                 ) : null}

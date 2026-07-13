@@ -31,18 +31,18 @@ export function absoluteCanonicalForLocaleRoute(locale: AppLocale, pathnameFromH
 }
 
 const OG_HERO_IMAGE_ALT: Record<AppLocale, string> = {
-  en: `${BRAND_NAME} — contemporary house, ${G.en.city}`,
-  ar: `${BRAND_NAME} — دار معاصرة، ${G.ar.city}`,
-  fr: `${BRAND_NAME} — maison contemporaine, ${G.fr.city}`,
-  it: `${BRAND_NAME} — casa contemporanea, ${G.it.city}`,
-  es: `${BRAND_NAME} — casa contemporánea, ${G.es.city}`,
-  ru: `${BRAND_NAME} — современный дом, ${G.ru.city}`,
-  zh: `${BRAND_NAME} — 当代品牌屋，${G.zh.city}`,
-  de: `${BRAND_NAME} — zeitgenössisches Haus, ${G.de.city}`,
-  nl: `${BRAND_NAME} — eigentijds huis, ${G.nl.city}`,
-  pt: `${BRAND_NAME} — casa contemporânea, ${G.pt.city}`,
-  id: `${BRAND_NAME} — rumah kontemporer, ${G.id.city}`,
-  ms: `${BRAND_NAME} — rumah kontemporari, ${G.id.city}`,
+  en: `${BRAND_NAME} — contemporary fashion house, ${G.en.city}`,
+  ar: `${BRAND_NAME} — دار أزياء معاصرة، ${G.ar.city}`,
+  fr: `${BRAND_NAME} — maison de mode contemporaine, ${G.fr.city}`,
+  it: `${BRAND_NAME} — casa di moda contemporanea, ${G.it.city}`,
+  es: `${BRAND_NAME} — casa de moda contemporánea, ${G.es.city}`,
+  ru: `${BRAND_NAME} — современный модный дом, ${G.ru.city}`,
+  zh: `${BRAND_NAME} — 当代时装屋，${G.zh.city}`,
+  de: `${BRAND_NAME} — zeitgenössisches Modehaus, ${G.de.city}`,
+  nl: `${BRAND_NAME} — eigentijds modehuis, ${G.nl.city}`,
+  pt: `${BRAND_NAME} — casa de moda contemporânea, ${G.pt.city}`,
+  id: `${BRAND_NAME} — rumah mode kontemporer, ${G.id.city}`,
+  ms: `${BRAND_NAME} — rumah fesyen kontemporari, ${G.ms.city}`,
 }
 
 const OG_LOCALE: Record<AppLocale, string> = {
@@ -72,7 +72,7 @@ function aiOther(locale: AppLocale): Record<string, string> {
     'ai:materials': 'Natural stones, Khous weaving, Al Talli craftsmanship',
     'ai:offering': 'Abayas, kaftans, dresses, jewellery, and curated lifestyle objects',
     'ai:identity': BRAND_TAGLINE[locale],
-    'ai:positioning': 'Contemporary house carrying heritage forward into modern life',
+    'ai:positioning': 'Contemporary fashion house carrying heritage forward into modern life',
     'ai:audience': 'Contemporary women seeking refined, heritage-informed luxury fashion',
   }
 }

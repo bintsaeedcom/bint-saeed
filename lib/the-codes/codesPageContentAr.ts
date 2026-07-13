@@ -39,7 +39,7 @@ export const THE_CODES_SECTIONS_AR: CodesSectionContent[] = [
   {
     id: 'khous',
     eyebrow: 'النسيج والبنية',
-    title: 'Khous',
+    title: 'Al Khous',
     paragraphs: [
       'نسيج الخوص متجذر في استخدام سعف النخيل، يُشكَّل عبر البنية والتكرار، ومعترف به كجزء من الحرف التقليدية في المنطقة. يعكس أسلوب صنع وظيفي وراقٍ في آنٍ واحد. تُحمل منطقه إلى خطوط وبناء كل قطعة.',
     ],

@@ -26,6 +26,10 @@ export const formFieldOnDarkClass = [
   'outline-none transition-[border-color,box-shadow,background-color] duration-200',
   'hover:border-[#e8d8c8]/70 hover:bg-white',
   'focus:border-brand-dustyBlue focus:bg-white focus:ring-2 focus:ring-brand-dustyBlue/30',
+  // Chrome/Safari autofill paints black — force ivory so fields stay readable on dark checkout
+  '[&:-webkit-autofill]:[-webkit-text-fill-color:#1a0210]',
+  '[&:-webkit-autofill]:[box-shadow:0_0_0_1000px_#faf6f1_inset]',
+  '[&:-webkit-autofill]:[transition:background-color_99999s_ease-out_0s]',
 ].join(' ')
 
 export const formFieldErrorClass =

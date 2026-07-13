@@ -38,13 +38,13 @@ export const THE_CODES_SECTIONS_ID: CodesSectionContent[] = [
   {
     id: 'khous',
     eyebrow: 'Tenun & struktur',
-    title: 'Khous',
+    title: 'Al Khous',
     paragraphs: [
-      'Tenun Khous berakar pada penggunaan pelepah palem, dibentuk melalui struktur dan pengulangan, serta diakui sebagai bagian dari kerajinan tradisional wilayah ini. Ia mencerminkan cara membuat yang fungsional sekaligus halus. Logikanya dibawa ke dalam garis dan konstruksi setiap karya.',
+      'Tenun Al Khous berakar pada penggunaan pelepah palem, dibentuk melalui struktur dan pengulangan, serta diakui sebagai bagian dari kerajinan tradisional wilayah ini. Ia mencerminkan cara membuat yang fungsional sekaligus halus. Logikanya dibawa ke dalam garis dan konstruksi setiap karya.',
     ],
     imageFile: IMG.khous,
     imageAlt: withBrandAlt(
-      'Tekstur kerajinan warisan Emirati tenun pelepah palem Khous — kode rumah Bint Saeed',
+      'Tekstur kerajinan warisan Emirati tenun pelepah palem Al Khous — kode rumah Bint Saeed',
     ),
   },
   {

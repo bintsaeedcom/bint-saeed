@@ -18,8 +18,16 @@ import { savePendingTabbyCheckout } from '@/lib/tabby/pendingCheckoutStore'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-function parseBuyer(raw: unknown, fallbackEmail?: string): TabbyBuyer | null {
-  if (!raw || typeof raw !== 'object') return null
+function parseBuyer(
+  raw: unknown,
+  fallbackEmail?: string,
+): { ok: true; buyer: TabbyBuyer } | { ok: false; error: string } {
+  if (!raw || typeof raw !== 'object') {
+    return {
+      ok: false,
+      error: 'Tabby requires full name, email, and mobile number before checkout.',
+    }
+  }
   const o = raw as Record<string, unknown>
   const email = String(o.email ?? fallbackEmail ?? '').trim()
   const phone = String(o.phone ?? o.phone_number ?? '').replace(/\s/g, '')
@@ -28,20 +36,39 @@ function parseBuyer(raw: unknown, fallbackEmail?: string): TabbyBuyer | null {
   const name =
     String(o.name ?? '').trim() ||
     [first, last].filter(Boolean).join(' ').trim()
-  if (!email.includes('@') || !phone || !name) return null
-  return { email, phone, name }
+  if (!first && !last && !name) {
+    return { ok: false, error: 'Please enter your full name for Tabby checkout.' }
+  }
+  if (!email) return { ok: false, error: 'Please enter your email for Tabby checkout.' }
+  if (!email.includes('@') || !email.includes('.')) {
+    return { ok: false, error: 'Please enter a valid email address for Tabby checkout.' }
+  }
+  if (!phone) return { ok: false, error: 'Please enter your mobile number for Tabby checkout.' }
+  return { ok: true, buyer: { email, phone, name: name || `${first} ${last}`.trim() } }
 }
 
-function parseShipping(raw: unknown): TabbyShippingAddress | null {
-  if (!raw || typeof raw !== 'object') return null
+function parseShipping(
+  raw: unknown,
+): { ok: true; address: TabbyShippingAddress } | { ok: false; error: string } {
+  if (!raw || typeof raw !== 'object') {
+    return { ok: false, error: 'Tabby requires a shipping address (street and city).' }
+  }
   const o = raw as Record<string, unknown>
   const address = String(o.line1 ?? o.address ?? '').trim()
   const city = String(o.city ?? '').trim()
-  if (!address || !city) return null
+  if (!address) {
+    return { ok: false, error: 'Please enter your shipping street address for Tabby.' }
+  }
+  if (!city) {
+    return { ok: false, error: 'Please enter your city for Tabby shipping.' }
+  }
   return {
-    address,
-    city,
-    zip: String(o.zip ?? o.postal_code ?? '').trim() || undefined,
+    ok: true,
+    address: {
+      address,
+      city,
+      zip: String(o.zip ?? o.postal_code ?? '').trim() || undefined,
+    },
   }
 }
 
@@ -117,23 +144,17 @@ export async function POST(request: NextRequest) {
     })
     const orderTotal = cartSubtotal + shippingFee
 
-    const buyer = parseBuyer(body.consumer ?? body.customer ?? body.buyer, customerEmail)
-    if (!buyer) {
-      return NextResponse.json(
-        {
-          error: 'Tabby requires full name, email, and mobile number before checkout.',
-        },
-        { status: 400 },
-      )
+    const buyerParsed = parseBuyer(body.consumer ?? body.customer ?? body.buyer, customerEmail)
+    if (!buyerParsed.ok) {
+      return NextResponse.json({ error: buyerParsed.error }, { status: 400 })
     }
+    const buyer = buyerParsed.buyer
 
-    const shippingAddress = parseShipping(body.shippingAddress ?? body.address)
-    if (!shippingAddress) {
-      return NextResponse.json(
-        { error: 'Tabby requires a shipping address (street and city).' },
-        { status: 400 },
-      )
+    const shippingParsed = parseShipping(body.shippingAddress ?? body.address)
+    if (!shippingParsed.ok) {
+      return NextResponse.json({ error: shippingParsed.error }, { status: 400 })
     }
+    const shippingAddress = shippingParsed.address
 
     const orderRef = `BS-TB-${Date.now().toString(36).toUpperCase()}`
     const lang = String(body.language ?? '').toLowerCase() === 'ar' ? 'ar' : 'en'

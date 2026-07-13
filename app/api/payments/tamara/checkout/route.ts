@@ -15,39 +15,66 @@ import {
 import { checkTamaraEligibility } from '@/lib/tamara/eligibility'
 import { createTamaraCheckoutSession } from '@/lib/tamara/api'
 import { savePendingTamaraCheckout } from '@/lib/tamara/pendingCheckoutStore'
+import { isPlausibleTamaraPhone, normalizeTamaraPhone } from '@/lib/tamara/normalizePhone'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-function parseConsumer(raw: unknown): TamaraConsumer | null {
-  if (!raw || typeof raw !== 'object') return null
+function parseConsumer(raw: unknown):
+  | { ok: true; consumer: TamaraConsumer }
+  | { ok: false; error: string } {
+  if (!raw || typeof raw !== 'object') {
+    return {
+      ok: false,
+      error: 'Tamara requires first name, last name, email, and mobile number before checkout.',
+    }
+  }
   const o = raw as Record<string, unknown>
   const first = String(o.firstName ?? o.first_name ?? '').trim()
   const last = String(o.lastName ?? o.last_name ?? '').trim()
   const phone = String(o.phone ?? o.phone_number ?? '').replace(/\s/g, '')
   const email = String(o.email ?? '').trim()
-  if (!first || !last || !phone || !email || !email.includes('@')) return null
-  return { first_name: first, last_name: last, phone_number: phone, email }
+  if (!first) return { ok: false, error: 'Please enter your first name for Tamara checkout.' }
+  if (!last) return { ok: false, error: 'Please enter your last name for Tamara checkout.' }
+  if (!email) return { ok: false, error: 'Please enter your email for Tamara checkout.' }
+  if (!email.includes('@') || !email.includes('.')) {
+    return { ok: false, error: 'Please enter a valid email address for Tamara checkout.' }
+  }
+  if (!phone) return { ok: false, error: 'Please enter your mobile number for Tamara checkout.' }
+  return {
+    ok: true,
+    consumer: { first_name: first, last_name: last, phone_number: phone, email },
+  }
 }
 
 function parseAddress(
   raw: unknown,
   consumer: TamaraConsumer,
   countryCode: 'AE' | 'SA',
-): TamaraAddress | null {
-  if (!raw || typeof raw !== 'object') return null
+): { ok: true; address: TamaraAddress } | { ok: false; error: string } {
+  if (!raw || typeof raw !== 'object') {
+    return { ok: false, error: 'Tamara requires a shipping address (street and city).' }
+  }
   const o = raw as Record<string, unknown>
   const line1 = String(o.line1 ?? o.address ?? '').trim()
   const city = String(o.city ?? '').trim()
-  if (!line1 || !city) return null
+  if (!line1) {
+    return { ok: false, error: 'Please enter your shipping street address for Tamara.' }
+  }
+  if (!city) {
+    return { ok: false, error: 'Please enter your city for Tamara shipping.' }
+  }
   return {
-    first_name: consumer.first_name,
-    last_name: consumer.last_name,
-    line1,
-    city,
-    country_code: countryCode,
-    phone_number: consumer.phone_number,
-    region: String(o.region ?? o.state ?? '').trim() || undefined,
+    ok: true,
+    address: {
+      first_name: consumer.first_name,
+      last_name: consumer.last_name,
+      line1,
+      city,
+      country_code: countryCode,
+      phone_number: consumer.phone_number,
+      region: String(o.region ?? o.state ?? '').trim() || undefined,
+    },
   }
 }
 
@@ -113,24 +140,32 @@ export async function POST(request: NextRequest) {
     })
     const orderTotal = cartSubtotal + shippingFee
 
-    const consumer = parseConsumer(body.consumer ?? body.customer)
-    if (!consumer) {
+    const consumerParsed = parseConsumer(body.consumer ?? body.customer)
+    if (!consumerParsed.ok) {
+      return NextResponse.json({ error: consumerParsed.error }, { status: 400 })
+    }
+    const consumer = consumerParsed.consumer
+
+    // Local 05… numbers → E.164-style GCC digits Tamara expects
+    consumer.phone_number = normalizeTamaraPhone(consumer.phone_number, countryCode)
+    if (!isPlausibleTamaraPhone(consumer.phone_number, countryCode)) {
       return NextResponse.json(
         {
           error:
-            'Tamara requires first name, last name, email, and mobile number before checkout.',
+            countryCode === 'SA'
+              ? 'Enter a valid Saudi mobile (e.g. 05XXXXXXXX or 9665XXXXXXXX).'
+              : 'Enter a valid UAE mobile (e.g. 05XXXXXXXX or 9715XXXXXXXX).',
         },
         { status: 400 },
       )
     }
 
-    const shippingAddress = parseAddress(body.shippingAddress ?? body.address, consumer, countryCode)
-    if (!shippingAddress) {
-      return NextResponse.json(
-        { error: 'Tamara requires a shipping address (street and city).' },
-        { status: 400 },
-      )
+    const shippingParsed = parseAddress(body.shippingAddress ?? body.address, consumer, countryCode)
+    if (!shippingParsed.ok) {
+      return NextResponse.json({ error: shippingParsed.error }, { status: 400 })
     }
+    const shippingAddress = shippingParsed.address
+    shippingAddress.phone_number = consumer.phone_number
 
     const eligibility = await checkTamaraEligibility({
       amount: orderTotal,
@@ -139,7 +174,11 @@ export async function POST(request: NextRequest) {
     })
     if (!eligibility.eligible) {
       return NextResponse.json(
-        { error: 'Tamara is not available for this customer or order amount.', eligible: false },
+        {
+          error:
+            'Tamara cannot approve this order (amount or mobile may not qualify). Try another payment method, or check your mobile number.',
+          eligible: false,
+        },
         { status: 400 },
       )
     }
@@ -171,9 +210,18 @@ export async function POST(request: NextRequest) {
     })
 
     if (!session.ok || !session.data.checkout_url || !session.data.order_id) {
+      const raw = session.data as {
+        message?: string
+        error?: string
+        errors?: Array<{ error_code?: string; message?: string }>
+      }
+      const fromErrors = Array.isArray(raw.errors)
+        ? raw.errors.map((e) => e.message).filter(Boolean).join(' ')
+        : ''
       const message =
-        session.data.message ||
-        (session.data as { error?: string }).error ||
+        raw.message ||
+        raw.error ||
+        fromErrors ||
         'Failed to create Tamara checkout session.'
       return NextResponse.json({ error: message, details: session.data }, { status: session.status || 502 })
     }

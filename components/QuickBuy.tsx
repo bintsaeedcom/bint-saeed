@@ -30,9 +30,9 @@ import {
 import { formFieldClass } from '@/lib/ui/formFieldClasses'
 import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 
-/** Dense ivory glass — luxury feel without washing out type */
+/** Dense ivory glass — readable over commerce grids */
 const sheetClass =
-  'border border-white/70 bg-[#faf8f5]/94 shadow-[0_-18px_48px_-12px_rgba(26,2,16,0.35)] backdrop-blur-md backdrop-saturate-150 supports-[backdrop-filter]:bg-[#faf8f5]/88'
+  'border border-[#e8ddd4]/80 bg-[#faf8f5]/97 shadow-[0_24px_64px_-16px_rgba(26,2,16,0.45)] backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-[#faf8f5]/92'
 
 interface QuickBuyProps {
   isOpen: boolean
@@ -58,6 +58,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
   const [customisationActive, setCustomisationActive] = useState(false)
   const [customisationMessage, setCustomisationMessage] = useState('')
   const [mounted, setMounted] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
   const { formatPrice, currency } = useCurrency()
   const { isRTL, language } = useLanguage()
@@ -90,6 +91,15 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
   useEffect(() => {
     setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const mq = window.matchMedia('(min-width: 768px)')
+    const sync = () => setIsDesktop(mq.matches)
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
   }, [])
 
   useEffect(() => {
@@ -189,7 +199,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22 }}
             onClick={onClose}
-            className="fixed inset-0 z-[100] bg-[#1a0210]/48"
+            className="fixed inset-0 z-[100] bg-[#1a0210]/55 md:bg-[#1a0210]/40"
             aria-hidden
           />
 
@@ -198,16 +208,39 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
             role="dialog"
             aria-modal="true"
             aria-label={ui.quickBuy.addToBag}
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
+            initial={
+              isDesktop
+                ? isRTL
+                  ? { x: '-100%', opacity: 0.96 }
+                  : { x: '100%', opacity: 0.96 }
+                : { y: '100%' }
+            }
+            animate={isDesktop ? { x: 0, opacity: 1 } : { y: 0 }}
+            exit={
+              isDesktop
+                ? isRTL
+                  ? { x: '-100%', opacity: 0.96 }
+                  : { x: '100%', opacity: 0.96 }
+                : { y: '100%' }
+            }
             transition={{ type: 'tween', duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-            className={`fixed inset-x-0 bottom-0 z-[101] flex max-h-[min(88dvh,40rem)] flex-col overflow-hidden rounded-t-[1.25rem] ${sheetClass} ${isRTL ? 'rtl' : 'ltr'} md:inset-x-auto md:bottom-auto md:left-1/2 md:top-[6vh] md:w-[min(100vw-2rem,28rem)] md:-translate-x-1/2 md:rounded-2xl md:shadow-[0_24px_64px_-16px_rgba(26,2,16,0.4)]`}
+            className={`fixed inset-x-0 bottom-0 z-[101] flex max-h-[min(88dvh,40rem)] flex-col overflow-hidden rounded-t-[1.25rem] ${sheetClass} ${
+              isRTL ? 'rtl' : 'ltr'
+            } md:inset-y-0 md:bottom-0 md:top-0 md:max-h-none md:w-[min(100vw-1.5rem,26.5rem)] md:rounded-none md:shadow-[0_0_80px_-12px_rgba(26,2,16,0.55)] ${
+              isRTL ? 'md:inset-x-auto md:left-0 md:right-auto' : 'md:inset-x-auto md:right-0 md:left-auto'
+            }`}
             style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
           >
             {/* Mobile grabber */}
             <div className="flex shrink-0 justify-center pb-1 pt-2.5 md:hidden">
               <div className="h-1 w-11 rounded-full bg-brand-darkRed/25" />
+            </div>
+
+            {/* Desktop side-panel header bar */}
+            <div className="hidden shrink-0 items-center justify-between border-b border-brand-darkRed/10 px-5 py-4 md:flex">
+              <p className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-dustyBlue">
+                {ui.quickBuy.addToBag}
+              </p>
             </div>
 
             <button
@@ -413,7 +446,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
             </div>
 
             {/* Sticky CTAs — always visible without scrolling */}
-            <div className="shrink-0 space-y-2 border-t border-brand-darkRed/10 bg-[#faf8f5]/96 px-4 py-3 sm:px-5">
+            <div className="shrink-0 space-y-2 border-t border-brand-darkRed/10 bg-[#faf8f5] px-4 py-3 sm:px-5">
               <button
                 type="button"
                 onClick={handleAddToCart}

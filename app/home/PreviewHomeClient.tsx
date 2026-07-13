@@ -487,14 +487,16 @@ function CharmHeroFeatureSection() {
               {copy.abayaStrandsBody}
             </p>
 
-            <div data-reveal className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+            <div data-reveal className={`mt-5 flex flex-wrap items-center gap-x-4 gap-y-3 ${isRTL ? 'justify-end' : ''}`}>
               {copy.strandSwatches.map((stone) => (
                 <span
                   key={stone.name}
-                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-muted)]/25 bg-[var(--color-light)] px-3 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink)]"
+                  className={`inline-flex items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[#e8d8c8]/80 ${
+                    isRTL ? 'flex-row-reverse' : ''
+                  }`}
                 >
                   <span
-                    className={`${PRODUCT_GRID_COLOUR_DOT}`}
+                    className={`${PRODUCT_GRID_COLOUR_DOT} border-white/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]`}
                     style={{ backgroundColor: softGridColourHex(stone.hex) }}
                     aria-hidden
                   />
@@ -1315,7 +1317,7 @@ function EditorialSplit() {
   ] as const
   const storyCodeAlts = [
     withBrandAlt('Bint Saeed luxury house monogram — house code'),
-    withBrandAlt('Khous palm-frond weaving Emirati heritage — house code'),
+    withBrandAlt('Al Khous palm-frond weaving Emirati heritage — house code'),
     withBrandAlt('Knotted Lines of Lineage gold motif — house code'),
     withBrandAlt('Al Ain Rosette carnelian stone motif — house code'),
     withBrandAlt('Traditional Al Talli Emirati heritage embroidery — house code'),

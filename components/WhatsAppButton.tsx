@@ -147,11 +147,13 @@ export default function WhatsAppButton() {
 
   const bubbleClass = [
     'group relative z-40 flex h-12 w-12 items-center justify-center overflow-hidden rounded-full sm:h-14 sm:w-14',
-    'border border-white/25 bg-[#1a0210]',
-    'shadow-[0_14px_40px_-14px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.18)]',
+    'border border-white/30 bg-[#1a0210]',
+    'shadow-[0_14px_40px_-14px_rgba(0,0,0,0.55),0_0_0_1px_rgba(232,216,200,0.12),0_0_22px_-4px_rgba(232,216,200,0.28),inset_0_1px_0_rgba(255,255,255,0.22)]',
     'transition-[box-shadow,background-color,border-color,transform] duration-300',
-    'hover:border-white/40 hover:bg-[#2d141e]',
+    'hover:border-white/45 hover:bg-[#2d141e]',
+    'hover:shadow-[0_16px_44px_-12px_rgba(0,0,0,0.5),0_0_28px_-2px_rgba(232,216,200,0.4),inset_0_1px_0_rgba(255,255,255,0.28)]',
     'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e8d8c8]/55',
+    'animate-wa-soft-glow',
   ].join(' ')
 
   const dockSide = isRTL ? 'left-4 sm:left-6' : 'right-4 sm:right-6'
@@ -184,7 +186,7 @@ export default function WhatsAppButton() {
         className="pointer-events-none absolute inset-[3px] rounded-full border border-white/15 opacity-70"
         aria-hidden
       />
-      <FaWhatsapp className="relative z-[1] h-[1.35rem] w-[1.35rem] text-[#e8d8c8] drop-shadow-[0_1px_2px_rgba(26,2,16,0.35)] sm:h-6 sm:w-6" />
+      <FaWhatsapp className="relative z-[1] h-[1.35rem] w-[1.35rem] text-[#f0e6dc] drop-shadow-[0_0_6px_rgba(232,216,200,0.35)] sm:h-6 sm:w-6" />
     </>
   )
 

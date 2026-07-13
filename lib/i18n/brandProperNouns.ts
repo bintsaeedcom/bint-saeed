@@ -91,18 +91,18 @@ export const LOCALE_GEO: Record<AppLocale, LocaleGeo> = {
 
 /** Heritage craft names — Arabic script in AR; Latin elsewhere. */
 export const CRAFT_NAMES: Record<AppLocale, { khous: string; alTalli: string }> = {
-  en: { khous: 'Khous', alTalli: 'Al Talli' },
+  en: { khous: 'Al Khous', alTalli: 'Al Talli' },
   ar: { khous: 'الخوص', alTalli: 'التلي' },
-  fr: { khous: 'Khous', alTalli: 'Al Talli' },
-  it: { khous: 'Khous', alTalli: 'Al Talli' },
-  es: { khous: 'Khous', alTalli: 'Al Talli' },
-  ru: { khous: 'Khous', alTalli: 'Al Talli' },
-  zh: { khous: 'Khous', alTalli: 'Al Talli' },
-  de: { khous: 'Khous', alTalli: 'Al Talli' },
-  nl: { khous: 'Khous', alTalli: 'Al Talli' },
-  pt: { khous: 'Khous', alTalli: 'Al Talli' },
-  id: { khous: 'Khous', alTalli: 'Al Talli' },
-  ms: { khous: 'Khous', alTalli: 'Al Talli' },
+  fr: { khous: 'Al Khous', alTalli: 'Al Talli' },
+  it: { khous: 'Al Khous', alTalli: 'Al Talli' },
+  es: { khous: 'Al Khous', alTalli: 'Al Talli' },
+  ru: { khous: 'Al Khous', alTalli: 'Al Talli' },
+  zh: { khous: 'Al Khous', alTalli: 'Al Talli' },
+  de: { khous: 'Al Khous', alTalli: 'Al Talli' },
+  nl: { khous: 'Al Khous', alTalli: 'Al Talli' },
+  pt: { khous: 'Al Khous', alTalli: 'Al Talli' },
+  id: { khous: 'Al Khous', alTalli: 'Al Talli' },
+  ms: { khous: 'Al Khous', alTalli: 'Al Talli' },
 }
 
 /** @deprecated Use `geoForLocale(locale).city` */

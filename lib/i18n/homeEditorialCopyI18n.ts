@@ -19,18 +19,18 @@ const HOME_HERO_HEADLINE: Record<Language, string> = {
 
 /** Strands split-panel — localized copy. */
 const HOME_STRANDS_EYEBROW: Record<Language, string> = {
-  en: 'WARDROBE JEWELLERY',
-  ar: 'مجوهرات خزانة الملابس',
-  fr: 'BIJOUX DE GARDE-ROBE',
-  it: 'GIOIELLI GUARDAROBA',
-  es: 'JOYERÍA DE ARMARIO',
-  ru: 'УКРАШЕНИЯ ДЛЯ ГАРДЕРОБА',
-  zh: '衣橱珠宝',
-  de: 'GARDEROBEN-SCHMUCK',
-  nl: 'GARDEROBE-SIERADEN',
-  pt: 'JOIAS DE GUARDA-ROUPA',
-  id: 'PERHIASAN GARDEROBE',
-  ms: 'BARANG KEMAS ALMARI PAKAIAN',
+  en: 'GARMENT JEWELLERY',
+  ar: 'مجوهرات الملابس',
+  fr: 'BIJOUX POUR VÊTEMENTS',
+  it: 'GIOIELLI PER CAPI',
+  es: 'JOYERÍA PARA PRENDAS',
+  ru: 'УКРАШЕНИЯ ДЛЯ ОДЕЖДЫ',
+  zh: '服装珠宝',
+  de: 'KLEIDUNGS-SCHMUCK',
+  nl: 'KLEDING-SIERADEN',
+  pt: 'JOIAS PARA VESTUÁRIO',
+  id: 'PERHIASAN PAKAIAN',
+  ms: 'BARANG KEMAS PAKAIAN',
 }
 
 /** Keep Latin STRANDS as the product-line name in every locale. */
@@ -233,7 +233,7 @@ const STRAND_SWATCHES_HEX = [
 
 const STORY_CODES_TITLES = [
   'The Monogram',
-  'Khous',
+  'Al Khous',
   'Knotted Lines',
   'Al Ain Rosette',
   'Al Talli',

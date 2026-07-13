@@ -73,7 +73,7 @@ export default function StripeEmbeddedCheckoutForm({
   )
 
   return (
-    <div className={`space-y-5 ${rtl ? 'text-right' : ''}`}>
+    <div className={`w-full min-w-0 space-y-4 ${rtl ? 'text-right' : ''}`}>
       <button
         type="button"
         onClick={onBack}
@@ -84,9 +84,13 @@ export default function StripeEmbeddedCheckoutForm({
         {backLabel}
       </button>
 
-      <div className="overflow-hidden rounded-2xl border border-brand-stone/20 bg-white p-2 sm:p-4">
+      {/*
+        Full-bleed stage so Stripe Embedded Checkout can use desktop width.
+        Avoid a narrow phone-sized frame nested inside another card.
+      */}
+      <div className="w-full min-w-0 overflow-hidden rounded-xl border border-brand-stone/25 bg-white shadow-[0_10px_40px_rgba(26,2,16,0.06)] ring-1 ring-brand-darkRed/5">
         <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>
-          <EmbeddedCheckout className="min-h-[480px]" />
+          <EmbeddedCheckout className="w-full min-h-[min(72vh,820px)]" />
         </EmbeddedCheckoutProvider>
       </div>
     </div>

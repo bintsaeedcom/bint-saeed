@@ -19,7 +19,7 @@ const EN: SearchableItem[] = [
   { title: 'Personalisation', href: '/personalisation', category: 'About' },
   { title: 'Giving Forward', href: '/giving-forward', category: 'About' },
   { title: 'Al Talli', href: '/the-codes#al-talli', category: 'Heritage' },
-  { title: 'Khous Weaving', href: '/the-codes#khous', category: 'Heritage' },
+  { title: 'Al Khous Weaving', href: '/the-codes#khous', category: 'Heritage' },
   { title: 'Size Guide', href: '/size-guide', category: 'Help' },
   { title: 'Contact Us', href: '/contact', category: 'Help' },
   { title: 'FAQ', href: '/faq', category: 'Help' },
