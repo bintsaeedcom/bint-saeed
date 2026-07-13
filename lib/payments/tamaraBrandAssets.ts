@@ -1,12 +1,13 @@
 /**
  * Official Tamara brand kit assets (sandbox / merchant kit).
- * Compact payment chip stays at `/payment/tamara.svg`.
- * Wordmarks + banners come from the merchant marketing kit.
+ * Footer uses the pastel pill wordmark; compact SVG remains for tight chips.
  */
 
 export const TAMARA_LOGO = {
-  /** Compact badge for payment-method chips / footer */
-  badge: '/payment/tamara.svg',
+  /** Pastel pill wordmark — footer / primary brand mark */
+  badge: '/payment/tamara-pill.png',
+  /** Compact abstract chip (legacy / dense UI) */
+  badgeCompact: '/payment/tamara.svg',
   wordmarkEn: '/payment/tamara/wordmark-en.svg',
   wordmarkEnWhite: '/payment/tamara/wordmark-en-white.svg',
   wordmarkAr: '/payment/tamara/wordmark-ar.svg',

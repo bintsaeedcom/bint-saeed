@@ -177,9 +177,13 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
     verification: {},
     category: 'Fashion',
     icons: {
-      icon: [{ url: '/flavicon.png', type: 'image/png' }],
-      apple: [{ url: '/flavicon.png', type: 'image/png' }],
-      shortcut: '/flavicon.png',
+      icon: [
+        { url: '/favicon.ico', sizes: 'any' },
+        { url: '/favicon-48.png?v=3', type: 'image/png', sizes: '48x48' },
+        { url: '/favicon.png?v=3', type: 'image/png', sizes: '500x500' },
+      ],
+      apple: [{ url: '/favicon-48.png?v=3', type: 'image/png', sizes: '48x48' }],
+      shortcut: '/favicon.ico',
     },
     other: {
       'p:domain_verify': '7f00ff9ac3718eb1ce00735a6958cc0e',

@@ -2,12 +2,12 @@ import type { MetadataRoute } from 'next'
 
 const baseUrl = 'https://www.bintsaeed.com'
 
-/** Brand marks only — keep product photography indexable. */
+/** Brand marks only — keep product photography indexable.
+ * Favicon MUST stay crawlable by Googlebot-Image or Search shows a generic globe. */
 const BRAND_IMAGE_DISALLOW = [
   '/og-image.png',
   '/gold%20logo.png',
   '/logo-bintsaeed.svg',
-  '/flavicon.png',
   '/opengraph-image.jpg',
   '/twitter-image.jpg',
   '/opengraph-image',

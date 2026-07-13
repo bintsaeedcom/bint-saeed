@@ -76,10 +76,10 @@ export const FOOTER_EXTRA_PAYMENT_ASSETS: PaymentMethodAsset[] = [
   {
     id: 'tamara',
     label: 'Tamara',
-    src: '/payment/tamara.svg',
-    width: 50,
-    height: 22,
-    imageClass: 'h-[26px] w-auto max-w-[52px] object-contain',
+    src: '/payment/tamara-pill.png',
+    width: 191,
+    height: 64,
+    imageClass: 'h-[26px] w-auto max-w-[80px] object-contain',
     chipClass: BADGE_CHIP,
   },
 ]

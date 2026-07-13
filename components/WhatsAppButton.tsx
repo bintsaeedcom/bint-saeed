@@ -23,14 +23,16 @@ export default function WhatsAppButton() {
   const defaultMessage = 'Hello Bint Saeed! I would like to inquire about your collection.'
   const { href, external } = getWhatsAppHref(defaultMessage)
 
-  // Sits clear of sticky ATC / cart / cookie via --mobile-bottom-chrome
+  // Frosted glass bubble — matches overlay glass system (wine + ivory, not WA green)
   const className = [
-    'group fixed z-40 flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14',
-    'border border-[#e8d8c8]/28 bg-[#1a0210]',
-    'shadow-[0_14px_36px_-12px_rgba(26,2,16,0.55),inset_0_1px_0_rgba(232,216,200,0.12)]',
+    'group fixed z-40 flex h-12 w-12 items-center justify-center overflow-hidden rounded-full sm:h-14 sm:w-14',
+    'border border-white/25 bg-[#1a0210]/55',
+    'shadow-[0_14px_40px_-14px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-1px_0_rgba(26,2,16,0.35)]',
+    'backdrop-blur-2xl backdrop-saturate-150',
+    'supports-[backdrop-filter]:bg-[#1a0210]/42',
     'transition-[bottom,box-shadow,background-color,border-color,transform] duration-300',
-    'hover:border-[#e8d8c8]/50 hover:bg-[#2d141e]',
-    'hover:shadow-[0_18px_44px_-14px_rgba(26,2,16,0.62),inset_0_1px_0_rgba(232,216,200,0.18)]',
+    'hover:border-white/40 hover:bg-[#2d141e]/58',
+    'hover:shadow-[0_18px_48px_-12px_rgba(0,0,0,0.58),inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-1px_0_rgba(26,2,16,0.3)]',
     'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e8d8c8]/55',
     isRTL ? 'left-4 sm:left-6' : 'right-4 sm:right-6',
   ].join(' ')
@@ -41,12 +43,16 @@ export default function WhatsAppButton() {
 
   const inner = (
     <>
-      {/* Soft outer halo — wine, not WhatsApp green */}
+      {/* Specular wash — glass bubble highlight */}
       <span
-        className="pointer-events-none absolute -inset-1 rounded-full border border-[#e8d8c8]/10 opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/30 via-white/5 to-[#1a0210]/45"
         aria-hidden
       />
-      <FaWhatsapp className="relative z-[1] h-[1.35rem] w-[1.35rem] text-[#e8d8c8] transition-colors duration-300 group-hover:text-[#f3ebe3] sm:h-6 sm:w-6" />
+      <span
+        className="pointer-events-none absolute inset-[3px] rounded-full border border-white/15 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+        aria-hidden
+      />
+      <FaWhatsapp className="relative z-[1] h-[1.35rem] w-[1.35rem] text-[#e8d8c8] drop-shadow-[0_1px_2px_rgba(26,2,16,0.35)] transition-colors duration-300 group-hover:text-white sm:h-6 sm:w-6" />
     </>
   )
 

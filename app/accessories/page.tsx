@@ -469,7 +469,7 @@ export default function AccessoriesPage() {
               ) : (
                 <motion.div
                   layout
-                  className="grid grid-cols-1 gap-6 min-[480px]:grid-cols-2 md:gap-8 xl:grid-cols-3"
+                  className="grid grid-cols-2 gap-x-3 gap-y-8 md:gap-x-6 md:gap-y-10 xl:grid-cols-3 xl:gap-8"
                 >
                   <AnimatePresence mode="popLayout">
                     {filteredAccessories.map((accessory, index) => (
@@ -687,6 +687,7 @@ function AccessoryCard({
               src={productImageSrc(accessory.images[0] ?? '')}
               alt={getAccessoryCarouselAlt(accessory, language, isRTL)}
               fill
+              sizes="(max-width: 1279px) 50vw, 33vw"
               unoptimized={isWebshopPicturePath(accessory.images[0] ?? '')}
               className={`pointer-events-none img-zoom transition-all duration-700 group-hover:scale-105 ${
                 accessory.category === 'signature-strands'
@@ -703,7 +704,7 @@ function AccessoryCard({
                 ? visibleAccessoryCategories.find(c => c.id === accessory.category)?.nameAr 
                 : visibleAccessoryCategories.find(c => c.id === accessory.category)?.name}
             </span>
-            <h3 data-product-name="true" className="mb-1 font-montserrat text-sm tracking-wide text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue">
+            <h3 data-product-name="true" className="mb-1 font-montserrat text-[12px] leading-snug tracking-wide text-brand-darkRed transition-colors group-hover:text-brand-dustyBlue sm:text-sm">
               {accessoryName}
             </h3>
             <p className="font-montserrat text-sm tracking-wide text-[#6f1524]">

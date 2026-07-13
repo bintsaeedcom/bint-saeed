@@ -98,9 +98,12 @@ export default async function RootLayout({
       className={`${fontMontserrat.variable} ${fontRozha.variable} ${fontNotoKufi.variable}`}
     >
       <head>
-        {/* Favicon - explicit links for better browser support */}
-        <link rel="icon" href="/flavicon.png?v=2" type="image/png" />
-        <link rel="apple-touch-icon" href="/flavicon.png?v=2" />
+        {/* Favicon — stable URLs; must stay crawlable by Googlebot-Image */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon-48.png?v=3" type="image/png" sizes="48x48" />
+        <link rel="icon" href="/favicon.png?v=3" type="image/png" sizes="500x500" />
+        <link rel="apple-touch-icon" href="/favicon-48.png?v=3" />
+        <link rel="shortcut icon" href="/flavicon.png?v=3" />
         <link
           rel="alternate"
           type="text/plain"

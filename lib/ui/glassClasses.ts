@@ -20,8 +20,27 @@ export const glassTextBody = 'relative text-[#2c2426]'
 export const glassTextMuted = 'relative text-[#5c5356]'
 export const glassTextLink = 'relative text-brand-darkRed underline decoration-brand-darkRed/35 underline-offset-2'
 
+/**
+ * Overlay glass (cookie / regional) over dark heroes — wine frosted panel + light type.
+ */
+export const glassOverlayPanel =
+  'relative overflow-hidden border border-white/20 bg-[#1a0210]/82 shadow-[0_18px_48px_-18px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-[#1a0210]/72'
+
+export const glassOverlayWash =
+  'pointer-events-none absolute inset-0 bg-gradient-to-b from-[#2d141e]/55 via-[#1a0210]/35 to-[#12080b]/70'
+
+export const glassTextTitleOnDark = 'relative text-white'
+export const glassTextBodyOnDark = 'relative text-[#e8d8c8]/90'
+export const glassTextMutedOnDark = 'relative text-[#e8d8c8]/65'
+export const glassTextLinkOnDark =
+  'relative text-[#e8d8c8] underline decoration-[#e8d8c8]/40 underline-offset-2'
+
 export const glassPrimaryBtn =
   'relative min-h-[42px] w-full rounded border border-brand-darkRed bg-brand-darkRed px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.12em] text-white transition-colors hover:bg-brand-darkMagenta sm:flex-1'
 
 export const glassSecondaryBtn =
   'relative min-h-[42px] w-full rounded border border-brand-darkRed/35 bg-white/70 px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-darkRed transition-colors hover:border-brand-darkRed/55 hover:bg-white/90 sm:flex-1'
+
+/** Secondary CTA on dark overlay glass */
+export const glassSecondaryBtnOnDark =
+  'relative min-h-[42px] w-full rounded border border-[#e8d8c8]/35 bg-white/12 px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.1em] text-[#e8d8c8] transition-colors hover:border-[#e8d8c8]/55 hover:bg-white/18 sm:flex-1'
