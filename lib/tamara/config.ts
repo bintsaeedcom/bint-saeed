@@ -49,8 +49,31 @@ export function isPublicTamaraCheckoutAvailable(): boolean {
   )
 }
 
+/**
+ * Live: https://api.tamara.co
+ * Sandbox: https://api-sandbox.tamara.co
+ * Token and base URL must match the same environment or Tamara returns "Invalid credentials".
+ */
 export function getTamaraApiBaseUrl(): string {
-  return (process.env.TAMARA_API_BASE_URL?.trim() || 'https://api-sandbox.tamara.co').replace(/\/$/, '')
+  let base = (process.env.TAMARA_API_BASE_URL?.trim() || 'https://api-sandbox.tamara.co').replace(
+    /\/$/,
+    '',
+  )
+  // Common typo from merchant docs: ap.tamara.co → api.tamara.co
+  if (base === 'https://ap.tamara.co' || base === 'http://ap.tamara.co' || base === 'ap.tamara.co') {
+    base = 'https://api.tamara.co'
+  }
+  if (
+    base === 'https://ap-sandbox.tamara.co' ||
+    base === 'http://ap-sandbox.tamara.co' ||
+    base === 'ap-sandbox.tamara.co'
+  ) {
+    base = 'https://api-sandbox.tamara.co'
+  }
+  if (!/^https?:\/\//i.test(base)) {
+    base = `https://${base}`
+  }
+  return base.replace(/\/$/, '')
 }
 
 export function getTamaraApiToken(): string {
