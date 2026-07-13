@@ -2,7 +2,7 @@
 
 import LocaleLink from '@/components/LocaleLink'
 import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter } from 'react-icons/fa6'
-import { FiGlobe, FiTruck, FiClock, FiHeart } from 'react-icons/fi'
+import { FiGlobe, FiClock, FiHeart } from 'react-icons/fi'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
 import SubscribeForm from './SubscribeForm'
@@ -10,13 +10,8 @@ import FooterPaymentMethods from './FooterPaymentMethods'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
-import {
-  formatAmountForCurrency,
-  getUaeFreeShippingThreshold,
-  getWorldwideFreeShippingThreshold,
-} from '@/lib/pricing'
 import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
-import { getStripeShipToCopy } from '@/lib/shipping/stripeShipToCopy'
+import { useVisitorComplimentaryShipping } from '@/lib/shipping/useVisitorComplimentaryShipping'
 import { useStableToggleScroll } from '@/lib/ui/useStableToggleScroll'
 import { getAboutTopicNavLinks } from '@/lib/i18n/aboutTopicNavI18n'
 import { useState } from 'react'
@@ -34,11 +29,7 @@ export default function Footer() {
   const { t, isRTL, language } = useLanguage()
   const ui = commerceUi(language)
   const { currency } = useCurrency()
-  const uaeAmount = formatAmountForCurrency(getUaeFreeShippingThreshold(currency.code), currency.code)
-  const worldwideAmount = formatAmountForCurrency(
-    getWorldwideFreeShippingThreshold(currency.code),
-    currency.code,
-  )
+  const { amountLabel: complimentaryAmount } = useVisitorComplimentaryShipping(currency.code)
   const [mobileOpenSection, setMobileOpenSection] = useState<'shop' | 'about' | 'help' | null>('shop')
   const { prepareToggle: prepareFooterToggle } = useStableToggleScroll(mobileOpenSection)
 
@@ -251,33 +242,18 @@ export default function Footer() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#12070a]/40 via-transparent to-[#12070a]/40" />
         
         <div className="relative container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-8 md:py-9 2xl:py-10">
-          <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4 xl:gap-8 ${isRTL ? 'text-right' : ''}`}>
-            {/* Worldwide Shipping */}
+          <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 xl:gap-8 ${isRTL ? 'text-right' : ''}`}>
+            {/* Worldwide Shipping — UAE IPs see AED 1,000 threshold; others see AED 2,000 equivalent */}
             <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
                 <FiGlobe className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
               </div>
               <div>
                 <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {getStripeShipToCopy(language).short}
+                  {ui.footer.worldwideShipping}
                 </h4>
                 <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {withShippingAmount(ui.footer.deliveredGlobally, worldwideAmount)}
-                </p>
-              </div>
-            </div>
-
-            {/* Free UAE Shipping */}
-            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
-                <FiTruck className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
-              </div>
-              <div>
-                <h4 className="font-montserrat text-[11px] font-medium uppercase tracking-[0.16em] text-white">
-                  {ui.footer.freeUaeShippingTitle}
-                </h4>
-                <p className="font-montserrat text-[12px] tracking-[0.03em] text-white/60">
-                  {withShippingAmount(ui.footer.freeUaeShippingDesc, uaeAmount)}
+                  {withShippingAmount(ui.footer.deliveredGlobally, complimentaryAmount)}
                 </p>
               </div>
             </div>
@@ -328,17 +304,17 @@ export default function Footer() {
             </p>
 
             {/* Legal Links - Center */}
-            <div className="order-2 flex flex-wrap justify-center gap-4 md:gap-6">
+            <div className="order-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 md:gap-x-6">
               <LocaleLink
                 href="/privacy-policy"
-                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
+                className="inline-flex items-center font-montserrat text-[11px] uppercase leading-none tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
                 data-cursor-hover
               >
                 {t.footer.privacy}
               </LocaleLink>
               <LocaleLink
                 href="/cookie-policy"
-                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
+                className="inline-flex items-center font-montserrat text-[11px] uppercase leading-none tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
                 data-cursor-hover
               >
                 {t.footer.cookies}
@@ -346,21 +322,21 @@ export default function Footer() {
               <button
                 type="button"
                 onClick={() => window.dispatchEvent(new Event('open-cookie-settings'))}
-                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
+                className="inline-flex items-center border-0 bg-transparent p-0 font-montserrat text-[11px] uppercase leading-none tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
                 data-cursor-hover
               >
                 {t.footer.cookieSettings}
               </button>
               <LocaleLink
                 href="/terms"
-                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
+                className="inline-flex items-center font-montserrat text-[11px] uppercase leading-none tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
                 data-cursor-hover
               >
                 {t.footer.terms}
               </LocaleLink>
               <LocaleLink
                 href="/shipment-return-policy"
-                className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone"
+                className="inline-flex basis-full items-center justify-center font-montserrat text-[11px] uppercase leading-none tracking-[0.14em] text-white/50 transition-colors hover:text-brand-stone sm:basis-auto"
                 data-cursor-hover
               >
                 {ui.checkout.shipmentPolicy}

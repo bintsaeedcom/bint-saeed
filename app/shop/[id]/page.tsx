@@ -1044,6 +1044,7 @@ export default function ProductPage() {
               <button
                 type="button"
                 onClick={handleAddToCart}
+                data-pdp-primary-atc
                 className={`w-full px-6 py-3 sm:flex-1 ${PDP_PRIMARY_CTA}`}
                 data-cursor-hover
               >

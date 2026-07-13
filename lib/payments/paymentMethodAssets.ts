@@ -85,10 +85,10 @@ export const FOOTER_EXTRA_PAYMENT_ASSETS: PaymentMethodAsset[] = [
   {
     id: 'tabby',
     label: 'Tabby',
-    src: '/payment/tabby.svg',
-    width: 50,
-    height: 22,
-    imageClass: 'h-[26px] w-auto max-w-[52px] object-contain',
+    src: '/payment/tabby-pill.png',
+    width: 254,
+    height: 100,
+    imageClass: 'h-[26px] w-auto max-w-[80px] object-contain',
     chipClass: BADGE_CHIP,
   },
 ]

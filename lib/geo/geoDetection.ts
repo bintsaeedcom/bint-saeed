@@ -97,6 +97,9 @@ export function persistRegionalExperienceChoice(choice: 'confirmed' | 'changed' 
     localStorage.setItem('bint-saeed-tailor-experience', 'accepted')
     localStorage.setItem('bint-saeed-location-consent', 'true')
   }
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('regional-experience-closed'))
+  }
 }
 
 /** English display names for the regional popup (copy is always English). */

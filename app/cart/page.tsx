@@ -52,12 +52,23 @@ export default function CartPage() {
     }
     const el = mobileBarRef.current
     if (!el) return
-    const publish = () => publishMobileBottomChrome('cart-bar', el.getBoundingClientRect().height)
+
+    const publish = () => {
+      // lg:hidden bar — don’t reserve chrome / hide WhatsApp on desktop
+      const visible = window.getComputedStyle(el).display !== 'none'
+      if (!visible) {
+        clearMobileBottomChrome('cart-bar')
+        return
+      }
+      publishMobileBottomChrome('cart-bar', el.getBoundingClientRect().height)
+    }
     publish()
     const ro = new ResizeObserver(publish)
     ro.observe(el)
+    window.addEventListener('resize', publish)
     return () => {
       ro.disconnect()
+      window.removeEventListener('resize', publish)
       clearMobileBottomChrome('cart-bar')
     }
   }, [items.length])
@@ -363,10 +374,10 @@ export default function CartPage() {
         </div>
       </div>
 
-      {/* Mobile sticky checkout */}
+      {/* Mobile sticky checkout — above WhatsApp so purchase CTA is never covered */}
       <div
         ref={mobileBarRef}
-        className="fixed inset-x-0 bottom-0 z-[90] border-t border-white/10 bg-[#1F0508]/98 px-3 pt-2.5 pb-[max(0.65rem,env(safe-area-inset-bottom))] backdrop-blur-md lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-[96] border-t border-white/10 bg-[#1F0508]/98 px-3 pt-2.5 pb-[max(0.65rem,env(safe-area-inset-bottom))] backdrop-blur-md lg:hidden"
       >
         <div className={`mb-2 flex min-w-0 items-baseline justify-between gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <span className="min-w-0 truncate font-montserrat text-[10px] uppercase tracking-[0.14em] text-white/65">

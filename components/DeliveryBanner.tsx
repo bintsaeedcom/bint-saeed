@@ -2,16 +2,12 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiX, FiTruck, FiGift, FiCreditCard } from 'react-icons/fi'
+import { FiX, FiTruck, FiCreditCard } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
-import {
-  formatAmountForCurrency,
-  getUaeFreeShippingThreshold,
-  getWorldwideFreeShippingThreshold,
-} from '@/lib/pricing'
 import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
+import { useVisitorComplimentaryShipping } from '@/lib/shipping/useVisitorComplimentaryShipping'
 
 export default function DeliveryBanner() {
   const [isVisible, setIsVisible] = useState(true)
@@ -19,19 +15,17 @@ export default function DeliveryBanner() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
   const { currency } = useCurrency()
-  const uaeAmount = formatAmountForCurrency(getUaeFreeShippingThreshold(currency.code), currency.code)
-  const worldwideAmount = formatAmountForCurrency(
-    getWorldwideFreeShippingThreshold(currency.code),
-    currency.code,
-  )
+  const { amountLabel } = useVisitorComplimentaryShipping(currency.code)
 
   const messages = useMemo(
     () => [
-      { icon: FiTruck, text: withShippingAmount(ui.deliveryBanner.uaeFree, uaeAmount) },
-      { icon: FiGift, text: withShippingAmount(ui.deliveryBanner.worldwide, worldwideAmount) },
+      {
+        icon: FiTruck,
+        text: withShippingAmount(ui.deliveryBanner.worldwide, amountLabel),
+      },
       { icon: FiCreditCard, text: ui.deliveryBanner.tabby },
     ],
-    [ui.deliveryBanner, uaeAmount, worldwideAmount],
+    [ui.deliveryBanner, amountLabel],
   )
 
   useEffect(() => {
@@ -58,20 +52,19 @@ export default function DeliveryBanner() {
               transition={{ duration: 0.3 }}
               className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
             >
-              <CurrentIcon className="w-4 h-4 text-brand-dustyBlue" />
-              <span className="font-montserrat text-xs tracking-wide">
-                {messages[currentIndex].text}
-              </span>
+              <CurrentIcon className="h-4 w-4 text-brand-dustyBlue" />
+              <span className="font-montserrat text-xs tracking-wide">{messages[currentIndex].text}</span>
             </motion.div>
           </AnimatePresence>
 
-          <div className="hidden md:flex items-center gap-1.5 ml-4">
+          <div className={`hidden items-center gap-1.5 md:flex ${isRTL ? 'mr-4' : 'ml-4'}`}>
             {messages.map((_, index) => (
               <button
                 key={index}
+                type="button"
                 onClick={() => setCurrentIndex(index)}
-                className={`w-1.5 h-1.5 rounded-full transition-all ${
-                  currentIndex === index ? 'bg-brand-darkRed w-4' : 'bg-brand-darkRed/40'
+                className={`h-1.5 rounded-full transition-all ${
+                  currentIndex === index ? 'w-4 bg-brand-darkRed' : 'w-1.5 bg-brand-darkRed/40'
                 }`}
               />
             ))}
@@ -79,12 +72,13 @@ export default function DeliveryBanner() {
         </div>
 
         <button
+          type="button"
           onClick={() => setIsVisible(false)}
-          className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-4' : 'right-4'} text-brand-darkRed/60 hover:text-brand-darkRed transition-colors`}
+          className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-4' : 'right-4'} text-brand-darkRed/60 transition-colors hover:text-brand-darkRed`}
           aria-label={ui.common.close}
           data-cursor-hover
         >
-          <FiX className="w-4 h-4" />
+          <FiX className="h-4 w-4" />
         </button>
       </div>
     </div>

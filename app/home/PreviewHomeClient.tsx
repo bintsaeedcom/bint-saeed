@@ -992,16 +992,26 @@ function HeroSection() {
       className="section-full relative h-svh min-h-svh w-full overflow-hidden bg-[#1a0210]"
     >
       <SectionStripes variant="hero" />
-      {/* Background — pointer-events-none so scaled layer never steals clicks from hero links */}
+      {/* Background — mobile/tablet vs desktop art direction */}
       <motion.div
-        style={{ scale }}
+        style={reduceMotion ? undefined : { scale }}
         className="pointer-events-none absolute inset-0 overflow-hidden will-change-transform"
       >
+        {/* Mobile + tablet */}
+        <Image
+          src="/hero-image.JPG"
+          alt={withBrandAlt('Bint Saeed luxury abayas, editorial photograph')}
+          fill
+          className="object-cover object-[center_42%] scale-[1.02] saturate-[0.9] contrast-[1.03] brightness-[0.98] lg:hidden"
+          sizes="100vw"
+          priority
+        />
+        {/* Desktop — keep existing hero */}
         <Image
           src="/IMG_2821.JPG"
           alt={withBrandAlt('Bint Saeed luxury abayas, editorial photograph')}
           fill
-          className="object-cover object-[center_28%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97]"
+          className="hidden object-cover object-[center_28%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97] lg:block"
           sizes="100vw"
           priority
         />

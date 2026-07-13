@@ -1,103 +1,275 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import LocaleLink from '@/components/LocaleLink'
+import { useEffect, useId, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import { FaWhatsapp } from 'react-icons/fa6'
+import { FiX } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import {
+  glassOverlayPanel,
+  glassOverlayWash,
+  glassTextBodyOnDark,
+  glassTextMutedOnDark,
+  glassTextTitleOnDark,
+} from '@/lib/ui/glassClasses'
 
 /** Default Bint Saeed WhatsApp (+971 50 229 9402). Override with NEXT_PUBLIC_WHATSAPP_NUMBER if needed. */
 const DEFAULT_WHATSAPP = '+971502299402'
 
-function getWhatsAppHref(defaultMessage: string): { href: string; external: boolean } {
+type WhatsAppTopic = {
+  id: 'bank-transfer' | 'priority-order' | 'strands' | 'personalisation'
+  labelEn: string
+  labelAr: string
+  messageEn: string
+  messageAr: string
+}
+
+/**
+ * Prefill topics — short, clear openers for the house WhatsApp line.
+ * Order: personalisation → strands → priority → bank transfer.
+ */
+const WHATSAPP_TOPICS: WhatsAppTopic[] = [
+  {
+    id: 'personalisation',
+    labelEn: 'Personalisation',
+    labelAr: 'التخصيص',
+    messageEn:
+      'Hello Bint Saeed — I would like to ask about personalising a piece (hidden name label or private message).',
+    messageAr:
+      'مرحباً Bint Saeed — أود الاستفسار عن تخصيص قطعة (بطاقة الاسم المخفية أو رسالة خاصة).',
+  },
+  {
+    id: 'strands',
+    labelEn: 'Abaya strands',
+    labelAr: 'خيوط العباءة',
+    messageEn:
+      'Hello Bint Saeed — I would like more information about the interchangeable abaya strands and how to wear or change them.',
+    messageAr:
+      'مرحباً Bint Saeed — أود معرفة المزيد عن خيوط العباءة القابلة للتبديل وكيف يتم ارتداؤها أو تغييرها.',
+  },
+  {
+    id: 'priority-order',
+    labelEn: 'Priority order',
+    labelAr: 'طلب ذو أولوية',
+    messageEn:
+      'Hello Bint Saeed — I need a priority / rush order. Could you advise on the earliest timeline and what is possible?',
+    messageAr:
+      'مرحباً Bint Saeed — أحتاج طلباً عاجلاً / ذا أولوية. هل يمكنكم إرشادي لأقرب موعد ممكن وما هو المتاح؟',
+  },
+  {
+    id: 'bank-transfer',
+    labelEn: 'Bank transfer',
+    labelAr: 'تحويل بنكي',
+    messageEn:
+      'Hello Bint Saeed — I would like to pay by bank transfer. Could you please share the account details for my order?',
+    messageAr:
+      'مرحباً Bint Saeed — أود الدفع عبر التحويل البنكي. هل يمكنكم تزويدي بتفاصيل الحساب لإتمام طلبي؟',
+  },
+]
+
+function getWhatsAppDigits(): string | null {
   const raw = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.trim() || DEFAULT_WHATSAPP
   const digits = raw.replace(/\D/g, '')
-  if (digits.length >= 10 && digits.length <= 15) {
-    const text = encodeURIComponent(defaultMessage)
-    return { href: `https://wa.me/${digits}?text=${text}`, external: true }
-  }
-  return { href: '/contact', external: false }
+  if (digits.length >= 10 && digits.length <= 15) return digits
+  return null
+}
+
+function buildWhatsAppHref(message: string): string | null {
+  const digits = getWhatsAppDigits()
+  if (!digits) return null
+  return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`
 }
 
 export default function WhatsAppButton() {
-  const { isRTL } = useLanguage()
-  const defaultMessage = 'Hello Bint Saeed! I would like to inquire about your collection.'
-  const { href, external } = getWhatsAppHref(defaultMessage)
+  const { isRTL, language } = useLanguage()
+  const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  /** Hide while cart sticky checkout / PDP sticky ATC is up — never cover purchase CTAs. */
+  const [commerceChromeUp, setCommerceChromeUp] = useState(false)
+  const panelId = useId()
+  const panelRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
 
-  // Frosted glass bubble — matches overlay glass system (wine + ivory, not WA green)
-  const className = [
-    'group fixed z-40 flex h-12 w-12 items-center justify-center overflow-hidden rounded-full sm:h-14 sm:w-14',
-    'border border-white/25 bg-[#1a0210]/55',
-    'shadow-[0_14px_40px_-14px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-1px_0_rgba(26,2,16,0.35)]',
-    'backdrop-blur-2xl backdrop-saturate-150',
-    'supports-[backdrop-filter]:bg-[#1a0210]/42',
-    'transition-[bottom,box-shadow,background-color,border-color,transform] duration-300',
-    'hover:border-white/40 hover:bg-[#2d141e]/58',
-    'hover:shadow-[0_18px_48px_-12px_rgba(0,0,0,0.58),inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-1px_0_rgba(26,2,16,0.3)]',
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    const sync = () => {
+      setCommerceChromeUp(document.documentElement.dataset.commerceBottomChrome === '1')
+    }
+    sync()
+    const observer = new MutationObserver(sync)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-commerce-bottom-chrome'],
+    })
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!open) return
+    if (commerceChromeUp) {
+      setOpen(false)
+      return
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    const onPointer = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node | null
+      if (!target) return
+      if (panelRef.current?.contains(target)) return
+      if (triggerRef.current?.contains(target)) return
+      setOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('mousedown', onPointer)
+    document.addEventListener('touchstart', onPointer)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('mousedown', onPointer)
+      document.removeEventListener('touchstart', onPointer)
+    }
+  }, [open, commerceChromeUp])
+
+  const bubbleClass = [
+    'group relative z-40 flex h-12 w-12 items-center justify-center overflow-hidden rounded-full sm:h-14 sm:w-14',
+    'border border-white/25 bg-[#1a0210]',
+    'shadow-[0_14px_40px_-14px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.18)]',
+    'transition-[box-shadow,background-color,border-color,transform] duration-300',
+    'hover:border-white/40 hover:bg-[#2d141e]',
     'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e8d8c8]/55',
-    isRTL ? 'left-4 sm:left-6' : 'right-4 sm:right-6',
   ].join(' ')
 
-  const style = {
-    bottom: 'calc(var(--mobile-bottom-chrome, 0px) + 1.15rem)',
-  } as const
+  const dockSide = isRTL ? 'left-4 sm:left-6' : 'right-4 sm:right-6'
+  const panelSide = isRTL ? 'left-0 origin-bottom-left' : 'right-0 origin-bottom-right'
 
-  const inner = (
+  const title = language === 'ar' ? 'كيف يمكننا مساعدتك؟' : 'How can we help?'
+  const subtitle =
+    language === 'ar' ? 'اختاري موضوعاً لفتح واتساب' : 'Choose a topic to open WhatsApp'
+
+  const openTopic = (topic: WhatsAppTopic) => {
+    const message = language === 'ar' ? topic.messageAr : topic.messageEn
+    const href = buildWhatsAppHref(message)
+    setOpen(false)
+    if (href) {
+      window.open(href, '_blank', 'noopener,noreferrer')
+      return
+    }
+    window.location.href = '/contact'
+  }
+
+  const bubbleInner = (
     <>
-      {/* Specular wash — glass bubble highlight */}
       <span
-        className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/30 via-white/5 to-[#1a0210]/45"
+        className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/25 via-transparent to-black/25"
         aria-hidden
       />
       <span
-        className="pointer-events-none absolute inset-[3px] rounded-full border border-white/15 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-[3px] rounded-full border border-white/15 opacity-70"
         aria-hidden
       />
-      <FaWhatsapp className="relative z-[1] h-[1.35rem] w-[1.35rem] text-[#e8d8c8] drop-shadow-[0_1px_2px_rgba(26,2,16,0.35)] transition-colors duration-300 group-hover:text-white sm:h-6 sm:w-6" />
+      <FaWhatsapp className="relative z-[1] h-[1.35rem] w-[1.35rem] text-[#e8d8c8] drop-shadow-[0_1px_2px_rgba(26,2,16,0.35)] sm:h-6 sm:w-6" />
     </>
   )
 
-  if (external) {
-    return (
-      <motion.a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 2, type: 'spring', stiffness: 200 }}
-        whileHover={{ scale: 1.06 }}
-        whileTap={{ scale: 0.96 }}
-        className={className}
-        style={style}
-        data-cursor-hover
-        data-whatsapp-button
-        aria-label="Contact us on WhatsApp"
-      >
-        {inner}
-      </motion.a>
-    )
-  }
+  const panel = (
+    <AnimatePresence>
+      {open ? (
+        <motion.div
+          ref={panelRef}
+          id={panelId}
+          role="dialog"
+          aria-modal="true"
+          aria-label={title}
+          initial={{ opacity: 0, y: 10, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 8, scale: 0.97 }}
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          className={`absolute bottom-[calc(100%+0.75rem)] ${panelSide} z-50 w-[min(18.5rem,calc(100vw-2rem))] ${glassOverlayPanel} rounded-2xl`}
+        >
+          <div className={glassOverlayWash} aria-hidden />
+          <div className={`relative z-[1] p-4 ${isRTL ? 'text-right' : 'text-left'}`}>
+            <div className={`mb-3 flex items-start gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className="min-w-0 flex-1">
+                <p className={`font-rozha text-lg leading-tight ${glassTextTitleOnDark}`}>{title}</p>
+                <p className={`mt-1 font-montserrat text-[11px] leading-snug tracking-wide ${glassTextMutedOnDark}`}>
+                  {subtitle}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="shrink-0 rounded-full p-1.5 text-[#e8d8c8]/80 transition-colors hover:bg-white/10 hover:text-white"
+                aria-label={language === 'ar' ? 'إغلاق' : 'Close'}
+              >
+                <FiX className="h-4 w-4" />
+              </button>
+            </div>
 
-  return (
-    <motion.div
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ delay: 2, type: 'spring', stiffness: 200 }}
-      whileHover={{ scale: 1.06 }}
-      whileTap={{ scale: 0.96 }}
-      className={className}
-      style={style}
-      data-whatsapp-button
-    >
-      <LocaleLink
-        href={href}
-        className="relative flex h-full w-full items-center justify-center"
-        data-cursor-hover
-        aria-label="Contact us (set NEXT_PUBLIC_WHATSAPP_NUMBER for WhatsApp)"
-        title="Contact — add WhatsApp number in .env.local to open chat"
-      >
-        {inner}
-      </LocaleLink>
-    </motion.div>
+            <ul className="space-y-2">
+              {WHATSAPP_TOPICS.map((topic) => (
+                <li key={topic.id}>
+                  <button
+                    type="button"
+                    onClick={() => openTopic(topic)}
+                    className={`w-full rounded-[4px] border border-white/15 bg-white/[0.07] px-3.5 py-3 font-montserrat text-[12px] uppercase tracking-[0.12em] transition-colors hover:border-[#e8d8c8]/45 hover:bg-white/[0.12] ${glassTextBodyOnDark} ${isRTL ? 'text-right' : 'text-left'}`}
+                    data-cursor-hover
+                  >
+                    {language === 'ar' ? topic.labelAr : topic.labelEn}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
   )
+
+  const dock = (
+    <div
+      className={`pointer-events-none fixed z-[80] ${dockSide}`}
+      style={{
+        top: 'auto',
+        bottom: 'calc(var(--mobile-bottom-chrome, 0px) + max(1.15rem, env(safe-area-inset-bottom, 0px)))',
+        position: 'fixed',
+        transform: 'translateZ(0)',
+        WebkitTransform: 'translateZ(0)',
+        visibility: commerceChromeUp ? 'hidden' : 'visible',
+        pointerEvents: commerceChromeUp ? 'none' : undefined,
+      }}
+      data-whatsapp-dock
+      aria-hidden={commerceChromeUp}
+    >
+      <div className="pointer-events-auto relative">
+        {panel}
+        <motion.button
+          ref={triggerRef}
+          type="button"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: commerceChromeUp ? 0.85 : 1, opacity: commerceChromeUp ? 0 : 1 }}
+          transition={{ delay: commerceChromeUp ? 0 : 2, type: 'spring', stiffness: 200 }}
+          whileHover={{ scale: 1.06 }}
+          whileTap={{ scale: 0.96 }}
+          className={bubbleClass}
+          data-cursor-hover
+          data-whatsapp-button
+          tabIndex={commerceChromeUp ? -1 : 0}
+          aria-label={language === 'ar' ? 'تواصل عبر واتساب' : 'Contact us on WhatsApp'}
+          aria-expanded={open}
+          aria-controls={panelId}
+          aria-hidden={commerceChromeUp}
+          onClick={() => setOpen((v) => !v)}
+        >
+          {bubbleInner}
+        </motion.button>
+      </div>
+    </div>
+  )
+
+  if (!mounted) return null
+  return createPortal(dock, document.body)
 }

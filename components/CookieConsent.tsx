@@ -19,6 +19,12 @@ import {
   glassTextMutedOnDark,
   glassTextTitleOnDark,
 } from '@/lib/ui/glassClasses'
+import { hasRegionalExperienceChoice } from '@/lib/geo/geoDetection'
+
+/** After first browse + regional — avoid stacking two overlays. */
+const COOKIE_DELAY_MS = 60_000
+/** If regional never settles (geo miss / bot skip), still ask for cookies. */
+const COOKIE_FALLBACK_MS = 75_000
 
 export default function CookieConsent() {
   const [showConsent, setShowConsent] = useState(false)
@@ -27,10 +33,40 @@ export default function CookieConsent() {
   const { t, isRTL } = useLanguage()
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookieConsent')
-    if (!consent) {
-      const timer = setTimeout(() => setShowConsent(true), 1500)
-      return () => clearTimeout(timer)
+    if (localStorage.getItem('cookieConsent')) return
+
+    let cancelled = false
+    let minDelayDone = false
+    let regionalSettled = hasRegionalExperienceChoice()
+
+    const maybeShow = () => {
+      if (cancelled || !minDelayDone || !regionalSettled) return
+      setShowConsent(true)
+    }
+
+    const onRegionalClosed = () => {
+      regionalSettled = true
+      maybeShow()
+    }
+
+    window.addEventListener('regional-experience-closed', onRegionalClosed)
+
+    const delayTimer = window.setTimeout(() => {
+      minDelayDone = true
+      maybeShow()
+    }, COOKIE_DELAY_MS)
+
+    const fallbackTimer = window.setTimeout(() => {
+      regionalSettled = true
+      minDelayDone = true
+      maybeShow()
+    }, COOKIE_FALLBACK_MS)
+
+    return () => {
+      cancelled = true
+      window.removeEventListener('regional-experience-closed', onRegionalClosed)
+      window.clearTimeout(delayTimer)
+      window.clearTimeout(fallbackTimer)
     }
   }, [])
 

@@ -1,6 +1,6 @@
 'use client'
 
-import type { ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
@@ -10,8 +10,8 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { EDITORIAL_PAGE_CONTAINER } from '@/lib/ui/editorialPageChrome'
 import { FiArrowRight } from 'react-icons/fi'
 
-/** Full-bleed film assets — same sources, new editorial framing. */
-const CRAFT_VIDEO_BANDS = [
+/** Each film used once — compact atelier strip. */
+const CRAFT_VIDEOS = [
   {
     src: '/craftsmanship/bint-saeed-craftsmanship-process.webm',
     ariaLabel:
@@ -98,21 +98,73 @@ function Film({
   ariaLabel: string
   className?: string
 }) {
+  const ref = useRef<HTMLVideoElement | null>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    el.muted = true
+    el.defaultMuted = true
+    el.playsInline = true
+    el.setAttribute('muted', '')
+    el.setAttribute('playsinline', '')
+    el.setAttribute('webkit-playsinline', '')
+
+    const tryPlay = () => {
+      const playAttempt = el.play()
+      if (playAttempt && typeof playAttempt.catch === 'function') {
+        playAttempt.catch(() => {
+          /* Autoplay can be blocked briefly; retry on visibility. */
+        })
+      }
+    }
+
+    tryPlay()
+    el.addEventListener('loadeddata', tryPlay)
+    el.addEventListener('canplay', tryPlay)
+
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') tryPlay()
+    }
+    document.addEventListener('visibilitychange', onVisible)
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) tryPlay()
+          else el.pause()
+        }
+      },
+      { threshold: 0.25 },
+    )
+    observer.observe(el)
+
+    return () => {
+      el.removeEventListener('loadeddata', tryPlay)
+      el.removeEventListener('canplay', tryPlay)
+      document.removeEventListener('visibilitychange', onVisible)
+      observer.disconnect()
+    }
+  }, [src])
+
   return (
     <video
+      ref={ref}
       src={src}
       aria-label={ariaLabel}
       autoPlay
       muted
       loop
       playsInline
-      preload="metadata"
+      preload="auto"
+      disablePictureInPicture
+      controls={false}
       className={`h-full w-full object-cover ${className}`}
     />
   )
 }
 
-/** Social-post style media tile — sharp editorial crop, no card chrome. */
 function Post({
   children,
   className = '',
@@ -124,11 +176,11 @@ function Post({
 }) {
   return (
     <div
-      className={`group relative isolate overflow-hidden bg-[#120910] shadow-[0_28px_64px_-40px_rgba(18,9,16,0.55)] ${ratio} ${className}`}
+      className={`group relative isolate overflow-hidden bg-brand-stone/25 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)] ${ratio} ${className}`}
     >
       {children}
       <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(18,9,16,0.08)_0%,transparent_34%,rgba(18,9,16,0.12)_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(26,2,16,0.04)_0%,transparent_34%,rgba(26,2,16,0.06)_100%)]"
         aria-hidden
       />
     </div>
@@ -197,45 +249,42 @@ export default function CraftsmanshipClient() {
         description={description || undefined}
       />
 
-      {/* Opening — social collage: large story + stacked posts */}
+      {/* Opening — label + khous once */}
       <section
-        className="bs-full-bleed relative border-b border-brand-stone/15 bg-[#0a0608] pb-4 pt-0 md:pb-6"
+        className="bs-full-bleed relative border-b border-brand-stone/15 bg-brand-pageCanvas pb-4 pt-0 md:pb-6"
         aria-label="Bint Saeed atelier finishing"
       >
         <div className={`${EDITORIAL_PAGE_CONTAINER} py-5 md:py-8`}>
           <div className="grid grid-cols-12 gap-3 md:gap-4 lg:gap-5">
             <div className="col-span-12 md:col-span-7 lg:col-span-8">
-              <Post ratio="aspect-[4/5] md:aspect-[5/6] lg:aspect-auto lg:min-h-[min(78vh,820px)] lg:h-full">
+              <Post ratio="aspect-[4/5] md:aspect-[5/6] lg:aspect-auto lg:min-h-[min(62vh,640px)] lg:h-full">
                 <Still src={MEDIA.label.src} alt={MEDIA.label.alt} priority objectPosition="object-top" />
               </Post>
             </div>
-            <div className="col-span-12 grid grid-cols-2 gap-3 md:col-span-5 md:grid-cols-1 md:gap-4 lg:col-span-4 lg:gap-5">
-              <Post ratio="aspect-[3/4] md:aspect-[4/5]">
+            <div className="col-span-12 md:col-span-5 lg:col-span-4">
+              <Post ratio="aspect-[3/4] md:aspect-auto md:h-full md:min-h-[min(62vh,640px)]">
                 <Still src={MEDIA.khous.src} alt={MEDIA.khous.alt} />
-              </Post>
-              <Post ratio="aspect-[3/4] md:aspect-[4/5]">
-                <Film src={CRAFT_VIDEO_BANDS[2].src} ariaLabel={CRAFT_VIDEO_BANDS[2].ariaLabel} />
               </Post>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Phase I — copy as editorial caption beside / under media */}
-      <section className="relative overflow-hidden py-16 md:py-24 lg:py-28" aria-labelledby="phase-i">
+      {/* Phase I */}
+      <section className="relative overflow-hidden py-14 md:py-20 lg:py-24" aria-labelledby="phase-i">
         <div className={EDITORIAL_PAGE_CONTAINER}>
-          <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-10">
-            <div className={`lg:col-span-5 lg:pb-6 ${isRTL ? 'lg:order-2' : ''}`}>
+          <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-10">
+            <div className={`lg:col-span-5 lg:pb-4 ${isRTL ? 'lg:order-2' : ''}`}>
               <PhaseProse phase={copy.phaseI} headingId="phase-i" />
             </div>
             <div className={`lg:col-span-7 ${isRTL ? 'lg:order-1' : ''}`}>
               <div className="grid grid-cols-12 gap-3 md:gap-4">
-                <div className="col-span-7 md:col-span-6 md:pt-10">
+                <div className="col-span-7 md:col-span-6">
                   <Post ratio="aspect-[3/4]">
                     <Still src={MEDIA.cad.src} alt={MEDIA.cad.alt} />
                   </Post>
                 </div>
-                <div className="col-span-5 flex flex-col gap-3 md:col-span-6 md:gap-4 md:pt-0">
+                <div className="col-span-5 flex flex-col gap-3 md:col-span-6 md:gap-4">
                   <Post ratio="aspect-square md:aspect-[4/5]">
                     <Still src={MEDIA.pattern.src} alt={MEDIA.pattern.alt} />
                   </Post>
@@ -254,19 +303,35 @@ export default function CraftsmanshipClient() {
         </div>
       </section>
 
-      {/* Cinematic story post — process film as a centered editorial frame */}
-      <section className="bs-full-bleed relative bg-[#0a0608] py-8 md:py-12" aria-label={CRAFT_VIDEO_BANDS[0].ariaLabel}>
-        <div className={`${EDITORIAL_PAGE_CONTAINER} max-w-[1100px]`}>
-          <Post ratio="aspect-[9/16] sm:aspect-[4/5] md:aspect-[16/9]">
-            <Film src={CRAFT_VIDEO_BANDS[0].src} ariaLabel={CRAFT_VIDEO_BANDS[0].ariaLabel} />
-          </Post>
+      {/* Atelier films — once each, compact carousel / grid */}
+      <section
+        className="bs-full-bleed relative border-y border-brand-stone/15 bg-brand-pageCanvas py-8 md:py-12"
+        aria-label="Bint Saeed atelier process films"
+      >
+        <div className={EDITORIAL_PAGE_CONTAINER}>
+          <div
+            className={`flex gap-3 overflow-x-auto pb-1 snap-x snap-mandatory scroll-px-4 [-ms-overflow-style:none] [scrollbar-width:none] md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:pb-0 md:snap-none [&::-webkit-scrollbar]:hidden ${
+              isRTL ? 'flex-row-reverse md:flex-row' : ''
+            }`}
+          >
+            {CRAFT_VIDEOS.map((video) => (
+              <div
+                key={video.src}
+                className="w-[72%] max-w-[17.5rem] shrink-0 snap-center sm:w-[58%] sm:max-w-[20rem] md:w-auto md:max-w-none"
+              >
+                <Post ratio="aspect-[4/5] md:aspect-[3/4]">
+                  <Film src={video.src} ariaLabel={video.ariaLabel} />
+                </Post>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Phase II — making, with staggered atelier posts */}
-      <section className="relative overflow-hidden py-16 md:py-24 lg:py-28" aria-labelledby="phase-ii">
+      {/* Phase II */}
+      <section className="relative overflow-hidden py-14 md:py-20 lg:py-24" aria-labelledby="phase-ii">
         <div className={EDITORIAL_PAGE_CONTAINER}>
-          <div className="mb-12 max-w-3xl md:mb-16 lg:mb-20">
+          <div className="mb-10 max-w-3xl md:mb-14">
             <PhaseProse phase={copy.phaseII} headingId="phase-ii" accent="clay" />
           </div>
 
@@ -276,18 +341,13 @@ export default function CraftsmanshipClient() {
                 <Still src={MEDIA.shears.src} alt={MEDIA.shears.alt} objectPosition="object-[center_40%]" />
               </Post>
             </div>
-            <div className="col-span-6 md:col-span-4 md:pt-16 lg:col-span-5 lg:pt-24">
-              <Post ratio="aspect-[3/4]">
+            <div className="col-span-6 md:col-span-4 lg:col-span-5">
+              <Post ratio="aspect-[3/4] md:aspect-auto md:h-full">
                 <Still src={MEDIA.threads.src} alt={MEDIA.threads.alt} />
               </Post>
             </div>
-            <div className="col-span-6 md:col-span-5 lg:col-span-4 lg:-mt-20">
-              <Post ratio="aspect-[3/4] md:aspect-[4/5]">
-                <Film src={CRAFT_VIDEO_BANDS[1].src} ariaLabel={CRAFT_VIDEO_BANDS[1].ariaLabel} />
-              </Post>
-            </div>
-            <div className="col-span-12 md:col-span-7 md:pt-8 lg:col-span-8 lg:pt-4">
-              <Post ratio="aspect-[16/10] md:aspect-[21/9]">
+            <div className="col-span-6 md:col-span-12 lg:col-span-12">
+              <Post ratio="aspect-[4/5] md:aspect-[21/9]">
                 <Still src={MEDIA.cutting.src} alt={MEDIA.cutting.alt} />
               </Post>
             </div>
@@ -295,42 +355,17 @@ export default function CraftsmanshipClient() {
         </div>
       </section>
 
-      {/* Phase III — direction, quiet prose + closing atelier stills */}
+      {/* Phase III — prose only (no repeated stills) */}
       <section
-        className="relative overflow-hidden border-y border-brand-stone/20 bg-[linear-gradient(180deg,#f7f3ec_0%,#efe9df_55%,#e8e2d8_100%)] py-16 md:py-24 lg:py-28"
+        className="relative overflow-hidden border-y border-brand-stone/20 bg-[linear-gradient(180deg,#f7f3ec_0%,#efe9df_55%,#e8e2d8_100%)] py-14 md:py-20 lg:py-24"
         aria-labelledby="phase-iii"
       >
         <div className={EDITORIAL_PAGE_CONTAINER}>
-          <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-14">
-            <div className={`lg:col-span-6 ${isRTL ? 'lg:order-2' : ''}`}>
-              <PhaseProse phase={copy.phaseIII} headingId="phase-iii" />
-            </div>
-            <div className={`grid grid-cols-2 gap-3 md:gap-4 lg:col-span-6 ${isRTL ? 'lg:order-1' : ''}`}>
-              <Post ratio="aspect-[3/4] md:mt-14">
-                <Still src={MEDIA.khous.src} alt={MEDIA.khous.alt} />
-              </Post>
-              <Post ratio="aspect-[3/4]">
-                <Still src={MEDIA.label.src} alt={MEDIA.label.alt} objectPosition="object-top" />
-              </Post>
-            </div>
-          </div>
+          <PhaseProse phase={copy.phaseIII} headingId="phase-iii" />
         </div>
       </section>
 
-      {/* Closing film — full-bleed social story */}
-      <section className="bs-full-bleed relative overflow-hidden bg-[#060304]" aria-label={CRAFT_VIDEO_BANDS[2].ariaLabel}>
-        <div className="relative mx-auto max-w-[1400px]">
-          <div className="relative aspect-[9/16] w-full sm:aspect-[3/4] md:aspect-[21/9]">
-            <Film src={CRAFT_VIDEO_BANDS[2].src} ariaLabel={CRAFT_VIDEO_BANDS[2].ariaLabel} />
-            <div
-              className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(250,248,245,0.12)_0%,transparent_36%,rgba(8,4,6,0.35)_100%)]"
-              aria-hidden
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="relative z-[45] overflow-hidden border-t border-brand-stone/35 bg-brand-pageCanvas px-6 py-24 md:py-32">
+      <section className="relative z-[45] overflow-hidden border-t border-brand-stone/35 bg-brand-pageCanvas px-6 py-20 md:py-28">
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_0%,rgba(146,170,193,0.14)_0%,transparent_58%)]"
           aria-hidden

@@ -29,8 +29,8 @@ import {
   glassTextTitleOnDark,
 } from '@/lib/ui/glassClasses'
 
-/** Defer after cookie so first product browse is uninterrupted. */
-const POPUP_DELAY_MS = 9000
+/** Shortly after first paint — currency/locale before cookie (luxury geo UX). */
+const POPUP_DELAY_MS = 2000
 
 const LANGUAGE_OPTIONS: { code: Language; native: string }[] = [
   { code: 'en', native: 'English' },
@@ -46,24 +46,6 @@ const LANGUAGE_OPTIONS: { code: Language; native: string }[] = [
   { code: 'nl', native: 'Nederlands' },
   { code: 'pt', native: 'Português' },
 ]
-
-function waitForCookieConsent(): Promise<void> {
-  return new Promise((resolve) => {
-    if (typeof window === 'undefined') {
-      resolve()
-      return
-    }
-    if (localStorage.getItem('cookieConsent')) {
-      resolve()
-      return
-    }
-    const onClosed = () => {
-      window.removeEventListener('cookie-consent-closed', onClosed)
-      resolve()
-    }
-    window.addEventListener('cookie-consent-closed', onClosed)
-  })
-}
 
 export default function RegionalExperiencePopup() {
   const [isVisible, setIsVisible] = useState(false)
@@ -119,7 +101,11 @@ export default function RegionalExperiencePopup() {
 
     const run = async () => {
       const data = await fetchGeoData()
-      if (cancelled || !data) return
+      if (cancelled) return
+      if (!data) {
+        window.dispatchEvent(new CustomEvent('regional-experience-closed'))
+        return
+      }
 
       setGeo(data)
       setPendingLang(
@@ -134,9 +120,6 @@ export default function RegionalExperiencePopup() {
         persistRegionalExperienceChoice('confirmed')
         return
       }
-
-      await waitForCookieConsent()
-      if (cancelled) return
 
       popupTimer = window.setTimeout(() => {
         if (!cancelled) setIsVisible(true)

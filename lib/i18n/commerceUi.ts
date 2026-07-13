@@ -358,7 +358,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       subscribe: 'Subscribe',
       language: 'Language',
       countryRegion: 'Country / Region',
-      worldwideShipping: 'GCC, UK, US & Europe',
+      worldwideShipping: 'Worldwide Shipping',
       deliveredGlobally: 'Complimentary shipping above {amount}.',
       freeUaeShippingTitle: 'Free UAE Shipping',
       freeUaeShippingDesc: 'Complimentary delivery on orders above {amount}.',
@@ -396,7 +396,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     trust: {
       ethicallyMade: 'Ethically made',
       weGiveForward: 'We Give Forward',
-      worldwideShipping: 'GCC, UK, US & Europe',
+      worldwideShipping: 'Worldwide Shipping',
       secureCheckout: 'Secure checkout',
     },
     deliveryBanner: {

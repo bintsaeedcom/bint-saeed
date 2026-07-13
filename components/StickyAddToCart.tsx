@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiShoppingBag, FiCheck } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
@@ -36,9 +37,14 @@ interface StickyAddToCartProps {
   customLength?: string
   notes?: string
   customisationMessage?: string
+  /** Fallback scroll distance if the primary ATC node is missing */
   showThreshold?: number
 }
 
+/**
+ * Mobile sticky ATC — pinned to the true viewport bottom (ported to body).
+ * Luxury pattern: only appears after the primary Add to Bag scrolls out of view.
+ */
 export default function StickyAddToCart({
   product,
   selectedSize,
@@ -47,8 +53,9 @@ export default function StickyAddToCart({
   customLength,
   notes,
   customisationMessage,
-  showThreshold = 400,
+  showThreshold = 480,
 }: StickyAddToCartProps) {
+  const [mounted, setMounted] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [isAdded, setIsAdded] = useState(false)
   const barRef = useRef<HTMLDivElement | null>(null)
@@ -58,10 +65,25 @@ export default function StickyAddToCart({
   const ui = commerceUi(language)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY > showThreshold)
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    const primaryAtc = document.querySelector<HTMLElement>('[data-pdp-primary-atc]')
+
+    if (primaryAtc && typeof IntersectionObserver !== 'undefined') {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          // Show sticky bar only once the main CTA has left the viewport
+          setIsVisible(!entry.isIntersecting && entry.boundingClientRect.top < 0)
+        },
+        { threshold: 0, rootMargin: '0px' },
+      )
+      observer.observe(primaryAtc)
+      return () => observer.disconnect()
     }
 
+    const handleScroll = () => setIsVisible(window.scrollY > showThreshold)
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
@@ -135,19 +157,22 @@ export default function StickyAddToCart({
       ? `${selectedSize} · ${selectedColor}`
       : ui.stickyAddToCart.selectSizeAndColour
 
-  return (
+  if (!mounted) return null
+
+  return createPortal(
     <AnimatePresence>
-      {isVisible && (
+      {isVisible ? (
         <motion.div
           ref={barRef}
           initial={{ y: '100%' }}
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-          className={`fixed inset-x-0 bottom-0 z-[96] overflow-hidden border-t border-white/55 bg-white/80 shadow-[0_-12px_40px_-12px_rgba(26,2,16,0.28)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/70 lg:hidden ${isRTL ? 'rtl' : 'ltr'}`}
+          className={`pointer-events-auto fixed inset-x-0 bottom-0 z-[96] overflow-hidden border-t border-white/55 bg-white/85 shadow-[0_-12px_40px_-12px_rgba(26,2,16,0.28)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/75 lg:hidden ${isRTL ? 'rtl' : 'ltr'}`}
+          style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
         >
           <div className={glassPanelWash} aria-hidden />
-          <div className="relative z-[1] mx-auto max-w-[1400px] px-3 pb-[max(0.65rem,env(safe-area-inset-bottom))] pt-2.5 sm:px-4">
+          <div className="relative z-[1] mx-auto max-w-[1400px] px-3 py-2.5 sm:px-4">
             <div className={`flex min-w-0 items-center gap-2.5 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <div className={`min-w-0 flex-1 overflow-hidden ${isRTL ? 'text-right' : 'text-left'}`}>
                 <p className={`truncate font-montserrat text-[15px] font-medium tabular-nums tracking-wide ${glassTextTitle}`}>
@@ -183,7 +208,8 @@ export default function StickyAddToCart({
             </div>
           </div>
         </motion.div>
-      )}
-    </AnimatePresence>
+      ) : null}
+    </AnimatePresence>,
+    document.body,
   )
 }

@@ -410,18 +410,25 @@ export default function Header() {
       {/* Main Header - Elegant Single Row Design */}
       <header
         ref={headerRef}
-        className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none border-b border-transparent transition-[background-color,backdrop-filter,border-color,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isTransparentHomeHeader
-            ? 'border-white/10 bg-[linear-gradient(90deg,rgba(18,8,11,0.72)_0%,rgba(28,15,21,0.66)_22%,rgba(45,20,30,0.58)_50%,rgba(28,15,21,0.66)_78%,rgba(18,8,11,0.72)_100%)] shadow-[0_18px_46px_rgba(8,2,8,0.24)] backdrop-blur-md'
-            : `border-white/10 ${headerBarGradient} ${isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)] backdrop-blur-md' : 'backdrop-blur-[2px]'}`
+            ? 'bg-[linear-gradient(90deg,rgba(18,8,11,0.72)_0%,rgba(28,15,21,0.66)_22%,rgba(45,20,30,0.58)_50%,rgba(28,15,21,0.66)_78%,rgba(18,8,11,0.72)_100%)] shadow-[0_18px_46px_rgba(8,2,8,0.24)] backdrop-blur-md'
+            : `${headerBarGradient} ${isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)] backdrop-blur-md' : 'backdrop-blur-[2px]'}`
         }`}
       >
-        {/* Bottom accent — same as before, full header width */}
-        <div
-          className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/30 to-transparent ${
-            isTransparentHomeHeader ? 'opacity-0' : 'opacity-100'
-          }`}
-        />
+        {/* Soft footer-style edge — faded center line + whisper of bloom */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0" aria-hidden>
+          <div
+            className={`h-px w-full bg-gradient-to-r from-transparent via-white/28 to-transparent transition-opacity duration-700 ${
+              isTransparentHomeHeader ? 'opacity-55' : 'opacity-100'
+            }`}
+          />
+          <div
+            className={`absolute inset-x-[18%] -bottom-px mx-auto h-[2px] max-w-3xl bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent blur-[1.5px] transition-opacity duration-700 ${
+              isTransparentHomeHeader ? 'opacity-35' : 'opacity-70'
+            }`}
+          />
+        </div>
 
         <nav className="container mx-auto px-2 sm:px-3 lg:px-4 2xl:px-8">
           {/* One hover zone for both rows + mega menu */}
