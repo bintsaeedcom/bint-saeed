@@ -7,10 +7,19 @@ import {
   sanitizePreviewReturnPath,
 } from '@/lib/previewAccessCookie'
 import { verifyAdminSessionCookie, ADMIN_COOKIE } from '@/lib/admin/sessionCookie'
-import { isLocalePrefix, stripLocaleFromPathname } from '@/lib/i18n/routing'
+import {
+  isLocalePrefix,
+  stripLocaleFromPathname,
+  LOCALE_PREFIXES,
+  type AppLocale,
+} from '@/lib/i18n/routing'
 import { COMING_SOON_ONLY, isPathAllowedDuringComingSoonOnly } from '@/lib/comingSoon'
 
 const GATE_SUFFIX = '/home/gate'
+
+const LOCALE_PREFIX_RE = new RegExp(
+  `^/(${LOCALE_PREFIXES.join('|')})(/.*)?$`,
+)
 
 /**
  * WhatsApp, Facebook, iMessage, Slack, etc. fetch shared URLs without preview cookies.
@@ -41,7 +50,7 @@ function isLinkPreviewBot(userAgent: string | null): boolean {
 }
 
 function localePrefixFromPathname(pathname: string): string {
-  const m = pathname.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt|id|ms)(\/.*)?$/)
+  const m = pathname.match(LOCALE_PREFIX_RE)
   if (m && isLocalePrefix(m[1])) {
     return `/${m[1]}`
   }
@@ -69,14 +78,26 @@ function withAdminPrivacyHeaders(res: NextResponse): NextResponse {
   return res
 }
 
-function withLocaleHeaders(
+/**
+ * There is no `app/[locale]` tree — public URLs like `/nl/shop` must always
+ * rewrite to `/shop` while preserving locale in request headers.
+ */
+function serveAppPath(
   request: NextRequest,
-  locale: string,
-  pathname: string,
+  locale: AppLocale | string,
+  innerPath: string,
+  publicPathname: string,
 ): NextResponse {
   const headers = new Headers(request.headers)
   headers.set('x-bs-locale', locale)
-  headers.set('x-bs-pathname', pathname)
+  headers.set('x-bs-pathname', innerPath)
+
+  if (publicPathname !== innerPath) {
+    const url = request.nextUrl.clone()
+    url.pathname = innerPath
+    return NextResponse.rewrite(url, { request: { headers } })
+  }
+
   return NextResponse.next({ request: { headers } })
 }
 
@@ -102,148 +123,121 @@ export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl
 
   try {
-  // IndexNow key proof: serve `/{INDEXNOW_KEY}.txt` (body = the key). Handled here so we
-  // don't need a catch-all `[filename]` route that would swallow every unknown single-segment
-  // URL and bypass the branded 404 page.
-  const indexNowMatch = pathname.match(/^\/([A-Za-z0-9-]{8,128})\.txt$/)
-  if (indexNowMatch) {
-    const key = process.env.INDEXNOW_KEY?.trim() ?? ''
-    if (key && indexNowMatch[1] === key) {
-      return new NextResponse(key, {
-        status: 200,
-        headers: {
-          'Content-Type': 'text/plain; charset=utf-8',
-          'Cache-Control': 'public, max-age=86400, s-maxage=86400',
-        },
-      })
-    }
-  }
-
-  if (
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/api') ||
-    pathname.startsWith('/.well-known') ||
-    /\.(ico|png|jpg|jpeg|gif|webp|svg|txt|xml|json|woff2?|map)$/i.test(pathname)
-  ) {
-    return NextResponse.next()
-  }
-
-  // Public launch: root and /coming-soon serve the webshop home (not the teaser shell).
-  if (!COMING_SOON_ONLY) {
-    const { pathname: launchInner, locale: launchLocale } = stripLocaleFromPathname(pathname)
-    if (launchInner === '/' || launchInner === '/coming-soon') {
-      const url = request.nextUrl.clone()
-      url.pathname = launchLocale === 'en' ? '/home' : `/${launchLocale}/home`
-      return NextResponse.redirect(url, 308)
-    }
-  }
-
-  if (COMING_SOON_ONLY && !isPathAllowedDuringComingSoonOnly(pathname)) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/'
-    url.search = request.nextUrl.search
-    return NextResponse.redirect(url, 307)
-  }
-
-  const { pathname: innerPath, locale: pathLocale } = stripLocaleFromPathname(pathname)
-
-  const legacyAdminRedirect = redirectLegacyAdminPath(request, innerPath)
-  if (legacyAdminRedirect) return legacyAdminRedirect
-
-  if (pathname.startsWith('/api/admin')) {
-    const res = withLocaleHeaders(request, 'en', pathname)
-    return withAdminPrivacyHeaders(res)
-  }
-
-  if (innerPath === '/admin' || innerPath.startsWith('/admin/')) {
-    const headers = new Headers(request.headers)
-    headers.set('x-bs-locale', pathLocale)
-    headers.set('x-bs-pathname', innerPath)
-
-    const serveAdmin = () => {
-      if (pathname !== innerPath) {
-        const url = request.nextUrl.clone()
-        url.pathname = innerPath
-        return withAdminPrivacyHeaders(NextResponse.rewrite(url, { request: { headers } }))
+    // IndexNow key proof: serve `/{INDEXNOW_KEY}.txt` (body = the key).
+    const indexNowMatch = pathname.match(/^\/([A-Za-z0-9-]{8,128})\.txt$/)
+    if (indexNowMatch) {
+      const key = process.env.INDEXNOW_KEY?.trim() ?? ''
+      if (key && indexNowMatch[1] === key) {
+        return new NextResponse(key, {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+          },
+        })
       }
-      return withAdminPrivacyHeaders(NextResponse.next({ request: { headers } }))
     }
 
-    if (innerPath === '/admin/login' || innerPath.startsWith('/admin/login/')) {
+    if (
+      pathname.startsWith('/_next') ||
+      pathname.startsWith('/api') ||
+      pathname.startsWith('/.well-known') ||
+      /\.(ico|png|jpg|jpeg|gif|webp|svg|txt|xml|json|woff2?|map)$/i.test(pathname)
+    ) {
+      return NextResponse.next()
+    }
+
+    // Public launch: root and /coming-soon (any locale) → webshop home.
+    if (!COMING_SOON_ONLY) {
+      const { pathname: launchInner, locale: launchLocale } = stripLocaleFromPathname(pathname)
+      if (launchInner === '/' || launchInner === '/coming-soon') {
+        const url = request.nextUrl.clone()
+        url.pathname = launchLocale === 'en' ? '/home' : `/${launchLocale}/home`
+        return NextResponse.redirect(url, 308)
+      }
+    }
+
+    if (COMING_SOON_ONLY && !isPathAllowedDuringComingSoonOnly(pathname)) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/'
+      url.search = request.nextUrl.search
+      return NextResponse.redirect(url, 307)
+    }
+
+    const { pathname: innerPath, locale: pathLocale } = stripLocaleFromPathname(pathname)
+
+    const legacyAdminRedirect = redirectLegacyAdminPath(request, innerPath)
+    if (legacyAdminRedirect) return legacyAdminRedirect
+
+    if (pathname.startsWith('/api/admin')) {
+      return withAdminPrivacyHeaders(serveAppPath(request, 'en', pathname, pathname))
+    }
+
+    if (innerPath === '/admin' || innerPath.startsWith('/admin/')) {
+      const serveAdmin = () =>
+        withAdminPrivacyHeaders(serveAppPath(request, pathLocale, innerPath, pathname))
+
+      if (innerPath === '/admin/login' || innerPath.startsWith('/admin/login/')) {
+        return serveAdmin()
+      }
+
+      const ok = await verifyAdminSessionCookie(request.cookies.get(ADMIN_COOKIE)?.value)
+      if (!ok) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/admin/login'
+        url.searchParams.set('next', innerPath)
+        return withAdminPrivacyHeaders(NextResponse.redirect(url))
+      }
       return serveAdmin()
     }
 
-    const ok = await verifyAdminSessionCookie(request.cookies.get(ADMIN_COOKIE)?.value)
-    if (!ok) {
-      const url = request.nextUrl.clone()
-      url.pathname = '/admin/login'
-      url.searchParams.set('next', innerPath)
-      const res = NextResponse.redirect(url)
-      return withAdminPrivacyHeaders(res)
-    }
-    return serveAdmin()
-  }
+    if (isHomeGatedArea(pathname)) {
+      /**
+       * Public launch (!COMING_SOON_ONLY): every IP reaches /home — no preview gate.
+       * Preview gate only applies while the coming-soon shell is still the public mode.
+       */
+      const publicLaunchOpen = !COMING_SOON_ONLY
+      const previewDisabled = process.env.PREVIEW_GATE_DISABLED === 'true'
+      const secret = getPreviewSecretBytes()
+      const token = request.cookies.get(COOKIE_NAME)?.value
+      const hasValidPreviewCookie =
+        !!secret && !!token && (await verifyPreviewAccessCookie(token, secret))
 
-  if (isHomeGatedArea(pathname)) {
-    const serveHome = () => {
-      const headers = new Headers(request.headers)
-      headers.set('x-bs-locale', pathLocale)
-      headers.set('x-bs-pathname', innerPath)
-      // Locale-prefixed /ar/home must rewrite to /home (no app/ar tree).
-      if (pathname !== innerPath) {
-        const url = request.nextUrl.clone()
-        url.pathname = innerPath
-        return NextResponse.rewrite(url, { request: { headers } })
+      const allowHome =
+        publicLaunchOpen ||
+        previewDisabled ||
+        isHomeGateExempt(pathname) ||
+        isLinkPreviewBot(request.headers.get('user-agent')) ||
+        !secret ||
+        hasValidPreviewCookie
+
+      if (allowHome) {
+        return serveAppPath(request, pathLocale, innerPath, pathname)
       }
-      return NextResponse.next({ request: { headers } })
+
+      const returnTo = sanitizePreviewReturnPath(pathname, search)
+      const url = request.nextUrl.clone()
+      const prefix = localePrefixFromPathname(pathname)
+      url.pathname = `${prefix}${GATE_SUFFIX}`
+      url.searchParams.set('returnTo', returnTo)
+      return NextResponse.redirect(url)
     }
 
-    if (isHomeGateExempt(pathname)) {
-      return serveHome()
+    // Any remaining locale-prefixed URL (/nl/shop, /fr/about, …) → real app route
+    if (pathLocale !== 'en') {
+      return serveAppPath(request, pathLocale, innerPath, pathname)
     }
 
-    if (isLinkPreviewBot(request.headers.get('user-agent'))) {
-      return serveHome()
-    }
-
-    if (process.env.PREVIEW_GATE_DISABLED === 'true') {
-      return serveHome()
-    }
-
-    const secret = getPreviewSecretBytes()
-    if (!secret) {
-      return serveHome()
-    }
-
-    const token = request.cookies.get(COOKIE_NAME)?.value
-    if (token && (await verifyPreviewAccessCookie(token, secret))) {
-      return serveHome()
-    }
-
-    const returnTo = sanitizePreviewReturnPath(pathname, search)
-    const url = request.nextUrl.clone()
-    const prefix = localePrefixFromPathname(pathname)
-    url.pathname = `${prefix}${GATE_SUFFIX}`
-    url.searchParams.set('returnTo', returnTo)
-    return NextResponse.redirect(url)
-  }
-
-  const localeMatch = pathname.match(/^\/(ar|fr|it|es|ru|zh|de|nl|pt|id|ms)(\/.*)?$/)
-  if (localeMatch && isLocalePrefix(localeMatch[1])) {
-    const locale = localeMatch[1]
-    const rest = localeMatch[2] && localeMatch[2].length > 0 ? localeMatch[2] : '/'
-    const url = request.nextUrl.clone()
-    url.pathname = rest
-    const headers = new Headers(request.headers)
-    headers.set('x-bs-locale', locale)
-    headers.set('x-bs-pathname', rest)
-    return NextResponse.rewrite(url, { request: { headers } })
-  }
-
-  return withLocaleHeaders(request, 'en', pathname)
+    return serveAppPath(request, 'en', pathname, pathname)
   } catch (err) {
     console.error('[middleware]', pathname, err)
-    return withLocaleHeaders(request, 'en', pathname)
+    // Last resort: still strip locale so visitors never hard-404 on /nl/...
+    try {
+      const { pathname: innerPath, locale: pathLocale } = stripLocaleFromPathname(pathname)
+      return serveAppPath(request, pathLocale, innerPath, pathname)
+    } catch {
+      return NextResponse.next()
+    }
   }
 }
 
