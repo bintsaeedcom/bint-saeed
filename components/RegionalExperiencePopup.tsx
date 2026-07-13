@@ -15,9 +15,19 @@ import {
   type GeoData,
 } from '@/lib/geo/geoDetection'
 import { getRegionalExperienceCopy, getContinueInLanguageCta } from '@/lib/geo/regionalExperienceCopy'
-import { ctaButtonRow, ctaInButtonRow, ctaPopupPrimary, ctaPopupSecondary } from '@/lib/ui/ctaClasses'
+import { ctaButtonRow, ctaInButtonRow } from '@/lib/ui/ctaClasses'
 import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
 import { localizedPath, stripLocaleFromPathname, type AppLocale } from '@/lib/i18n/routing'
+import { formFieldClass } from '@/lib/ui/formFieldClasses'
+import {
+  glassPanel,
+  glassPanelWash,
+  glassPrimaryBtn,
+  glassSecondaryBtn,
+  glassTextBody,
+  glassTextMuted,
+  glassTextTitle,
+} from '@/lib/ui/glassClasses'
 
 /** Defer after cookie so first product browse is uninterrupted. */
 const POPUP_DELAY_MS = 9000
@@ -203,19 +213,19 @@ export default function RegionalExperiencePopup() {
           >
             <div
               dir="ltr"
-              className="pointer-events-auto relative max-h-[min(88vh,36rem)] w-full max-w-[26rem] overflow-y-auto overscroll-contain rounded-sm border border-brand-stone/30 bg-[#faf8f6] text-left shadow-[0_32px_70px_-18px_rgba(59,0,20,0.28)]"
+              className={`pointer-events-auto relative max-h-[min(88vh,36rem)] w-full max-w-[26rem] overflow-y-auto overscroll-contain rounded-sm text-left ${glassPanel}`}
             >
-              <div className="absolute top-0 bottom-0 left-0 w-px bg-gradient-to-b from-transparent via-brand-rose/55 to-transparent" aria-hidden />
+              <div className={glassPanelWash} aria-hidden />
 
-              <div className="px-5 pb-6 pt-7 sm:px-7 sm:pb-7 sm:pt-8">
+              <div className="relative z-[1] px-5 pb-6 pt-7 sm:px-7 sm:pb-7 sm:pt-8">
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0 space-y-2">
-                    <p className="font-montserrat text-[10px] uppercase tracking-[0.32em] text-brand-clayRed/70">
+                    <p className={`font-montserrat text-[10px] uppercase tracking-[0.32em] ${glassTextMuted}`}>
                       {t.eyebrow}
                     </p>
                     <h2
                       id="regional-experience-title"
-                      className="font-rozha text-[clamp(1.25rem,5vw,1.65rem)] leading-[1.15] text-brand-darkRed"
+                      className={`font-rozha text-[clamp(1.25rem,5vw,1.65rem)] leading-[1.15] ${glassTextTitle}`}
                     >
                       {t.title}
                     </h2>
@@ -223,7 +233,7 @@ export default function RegionalExperiencePopup() {
                   <button
                     type="button"
                     onClick={() => dismiss('dismissed')}
-                    className="shrink-0 rounded-full p-1.5 text-brand-darkRed/35 transition-colors hover:bg-brand-stone/20 hover:text-brand-darkRed"
+                    className={`relative shrink-0 rounded-full p-1.5 transition-colors hover:bg-brand-darkRed/8 ${glassTextMuted} hover:text-brand-darkRed`}
                     aria-label={t.close}
                     data-cursor-hover
                   >
@@ -231,7 +241,7 @@ export default function RegionalExperiencePopup() {
                   </button>
                 </div>
 
-                <p className="mt-5 font-montserrat text-[13px] leading-[1.65] text-neutral-600">
+                <p className={`mt-5 font-montserrat text-[13px] leading-[1.65] ${glassTextBody}`}>
                   {bodyCopy}
                 </p>
 
@@ -243,20 +253,20 @@ export default function RegionalExperiencePopup() {
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="mt-5 space-y-4 border-t border-brand-stone/20 pt-5">
-                        <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-darkRed/70">
+                      <div className="mt-5 space-y-4 border-t border-brand-darkRed/12 pt-5">
+                        <p className={`font-montserrat text-[10px] uppercase tracking-[0.28em] ${glassTextTitle}`}>
                           {t.changeTitle}
                         </p>
 
                         <label className="block space-y-1.5">
-                          <span className="font-montserrat text-[11px] uppercase tracking-[0.18em] text-neutral-500">
+                          <span className={`font-montserrat text-[11px] uppercase tracking-[0.18em] ${glassTextMuted}`}>
                             {t.languageLabel}
                           </span>
                           <div className="relative">
                             <select
                               value={pendingLang}
                               onChange={(e) => setPendingLang(e.target.value as Language)}
-                              className="w-full appearance-none border border-brand-stone/35 bg-white/80 py-3 pl-4 pr-10 font-montserrat text-[13px] text-brand-darkRed outline-none focus:border-brand-darkRed/40"
+                              className={`${formFieldClass} appearance-none pr-10`}
                             >
                               {LANGUAGE_OPTIONS.map((opt) => (
                                 <option key={opt.code} value={opt.code}>
@@ -269,14 +279,14 @@ export default function RegionalExperiencePopup() {
                         </label>
 
                         <label className="block space-y-1.5">
-                          <span className="font-montserrat text-[11px] uppercase tracking-[0.18em] text-neutral-500">
+                          <span className={`font-montserrat text-[11px] uppercase tracking-[0.18em] ${glassTextMuted}`}>
                             {t.currencyLabel}
                           </span>
                           <div className="relative">
                             <select
                               value={pendingCurrency}
                               onChange={(e) => setPendingCurrency(e.target.value)}
-                              className="w-full appearance-none border border-brand-stone/35 bg-white/80 py-3 pl-4 pr-10 font-montserrat text-[13px] text-brand-darkRed outline-none focus:border-brand-darkRed/40"
+                              className={`${formFieldClass} appearance-none pr-10`}
                             >
                               {currencies.map((c) => (
                                 <option key={c.code} value={c.code}>
@@ -291,7 +301,7 @@ export default function RegionalExperiencePopup() {
                         <button
                           type="button"
                           onClick={handleApplyPreferences}
-                          className={`${ctaPopupSecondary} border-brand-darkRed/20 bg-white text-[10px] uppercase tracking-[0.22em] hover:border-brand-darkRed/35 hover:bg-brand-stone/10`}
+                          className={glassSecondaryBtn}
                           data-bs-cta
                           data-cursor-hover
                         >
@@ -306,7 +316,7 @@ export default function RegionalExperiencePopup() {
                   <button
                     type="button"
                     onClick={handleContinueEnglish}
-                    className={`${ctaPopupPrimary} ${ctaInButtonRow}`}
+                    className={`${glassPrimaryBtn} ${ctaInButtonRow}`}
                     data-bs-cta
                     data-cursor-hover
                   >
@@ -316,7 +326,7 @@ export default function RegionalExperiencePopup() {
                     <button
                       type="button"
                       onClick={handleContinueLocal}
-                      className={`${ctaPopupSecondary} ${ctaInButtonRow}`}
+                      className={`${glassSecondaryBtn} ${ctaInButtonRow}`}
                       data-bs-cta
                       data-cursor-hover
                     >
@@ -328,7 +338,7 @@ export default function RegionalExperiencePopup() {
                 <button
                   type="button"
                   onClick={() => setShowPreferences((v) => !v)}
-                  className="mt-4 w-full py-2 font-montserrat text-[11px] tracking-[0.04em] text-brand-darkRed/55 transition-colors hover:text-brand-darkRed/80"
+                  className={`mt-4 w-full py-2 font-montserrat text-[11px] tracking-[0.04em] transition-colors hover:text-brand-darkRed ${glassTextMuted}`}
                   data-cursor-hover
                 >
                   {t.secondary}

@@ -14,7 +14,7 @@ function getRedis(): Redis | null {
   return redis
 }
 
-function keyFor(provider: 'stripe' | 'mollie' | 'paypal', eventId: string) {
+function keyFor(provider: 'stripe' | 'mollie' | 'paypal' | 'tamara' | 'tabby', eventId: string) {
   return `${EVENT_KEY_PREFIX}${provider}:${eventId}`
 }
 
@@ -26,7 +26,7 @@ function pruneMemory() {
 }
 
 export async function wasPaymentEventProcessed(
-  provider: 'stripe' | 'mollie' | 'paypal',
+  provider: 'stripe' | 'mollie' | 'paypal' | 'tamara' | 'tabby',
   eventId: string,
 ): Promise<boolean> {
   const r = getRedis()
@@ -41,7 +41,7 @@ export async function wasPaymentEventProcessed(
 }
 
 export async function markPaymentEventProcessed(
-  provider: 'stripe' | 'mollie' | 'paypal',
+  provider: 'stripe' | 'mollie' | 'paypal' | 'tamara' | 'tabby',
   eventId: string,
   ttlSeconds = DEFAULT_TTL_SECONDS,
 ): Promise<void> {

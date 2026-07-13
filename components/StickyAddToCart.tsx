@@ -15,6 +15,11 @@ import {
   clearMobileBottomChrome,
   publishMobileBottomChrome,
 } from '@/lib/ui/mobileBottomChrome'
+import {
+  glassPanelWash,
+  glassTextMuted,
+  glassTextTitle,
+} from '@/lib/ui/glassClasses'
 
 interface StickyAddToCartProps {
   product: {
@@ -139,15 +144,16 @@ export default function StickyAddToCart({
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-          className={`fixed inset-x-0 bottom-0 z-[96] border-t border-brand-stone/25 bg-white/95 shadow-[0_-8px_28px_-12px_rgba(26,2,16,0.22)] backdrop-blur-md lg:hidden ${isRTL ? 'rtl' : 'ltr'}`}
+          className={`fixed inset-x-0 bottom-0 z-[96] overflow-hidden border-t border-white/55 bg-white/80 shadow-[0_-12px_40px_-12px_rgba(26,2,16,0.28)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/70 lg:hidden ${isRTL ? 'rtl' : 'ltr'}`}
         >
-          <div className="mx-auto max-w-[1400px] px-3 pb-[max(0.65rem,env(safe-area-inset-bottom))] pt-2.5 sm:px-4">
+          <div className={glassPanelWash} aria-hidden />
+          <div className="relative z-[1] mx-auto max-w-[1400px] px-3 pb-[max(0.65rem,env(safe-area-inset-bottom))] pt-2.5 sm:px-4">
             <div className={`flex min-w-0 items-center gap-2.5 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <div className={`min-w-0 flex-1 overflow-hidden ${isRTL ? 'text-right' : 'text-left'}`}>
-                <p className="truncate font-montserrat text-[15px] font-medium tabular-nums tracking-wide text-brand-darkRed">
+                <p className={`truncate font-montserrat text-[15px] font-medium tabular-nums tracking-wide ${glassTextTitle}`}>
                   {formatPrice(product.price)}
                 </p>
-                <p className="mt-0.5 truncate font-montserrat text-[9px] uppercase tracking-[0.12em] text-brand-clayRed/55">
+                <p className={`mt-0.5 truncate font-montserrat text-[9px] uppercase tracking-[0.12em] ${glassTextMuted}`}>
                   {meta}
                 </p>
               </div>
@@ -156,10 +162,10 @@ export default function StickyAddToCart({
                 type="button"
                 onClick={handleAddToCart}
                 disabled={isAdded}
-                className={`inline-flex min-h-[46px] min-w-[8.75rem] max-w-[52%] shrink-0 items-center justify-center gap-1.5 px-3.5 font-montserrat text-[11px] uppercase tracking-[0.12em] transition-colors ${
+                className={`relative inline-flex min-h-[46px] min-w-[8.75rem] max-w-[52%] shrink-0 items-center justify-center gap-1.5 border px-3.5 font-montserrat text-[11px] uppercase tracking-[0.12em] transition-colors ${
                   isAdded
-                    ? 'bg-green-600 text-white'
-                    : 'bg-brand-darkRed text-white active:bg-brand-clayRed'
+                    ? 'border-green-600 bg-green-600 text-white'
+                    : 'border-brand-darkRed bg-brand-darkRed text-white active:bg-brand-clayRed'
                 } ${isRTL ? 'flex-row-reverse' : ''}`}
               >
                 {isAdded ? (

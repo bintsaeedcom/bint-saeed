@@ -17,6 +17,14 @@ import { getProductHref } from '@/lib/products/links'
 import { getCartLineImageAlt, getProductImageAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { resolveCartShippingMessages } from '@/lib/shipping/resolveCartShippingMessages'
+import {
+  glassDrawer,
+  glassDrawerWash,
+  glassPrimaryBtn,
+  glassSecondaryBtn,
+  glassTextMuted,
+  glassTextTitle,
+} from '@/lib/ui/glassClasses'
 
 import 'swiper/css'
 import 'swiper/css/free-mode'
@@ -95,16 +103,19 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
             animate={{ x: 0 }}
             exit={{ x: isRTL ? '-100%' : '100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
-            className={`fixed top-0 ${isRTL ? 'left-0' : 'right-0'} z-[101] flex h-full w-full max-w-md flex-col bg-white ${isRTL ? 'rtl' : 'ltr'}`}
+            className={`fixed top-0 ${isRTL ? 'left-0 border-r' : 'right-0 border-l'} z-[101] flex h-full w-full max-w-md flex-col ${glassDrawer} ${isRTL ? 'rtl' : 'ltr'}`}
           >
+            <div className={glassDrawerWash} aria-hidden />
+
             {/* Header */}
-            <div className={`flex items-center justify-between p-4 sm:p-6 border-b border-brand-stone/20 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <h2 className="font-rozha text-xl sm:text-2xl text-brand-darkRed">
+            <div className={`relative z-[1] flex items-center justify-between border-b border-brand-darkRed/10 p-4 sm:p-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <h2 className={`font-rozha text-xl sm:text-2xl ${glassTextTitle}`}>
                 {ui.cart.shoppingBag} ({items.length})
               </h2>
               <button
+                type="button"
                 onClick={onClose}
-                className="p-2 text-brand-clayRed hover:text-brand-dustyBlue transition-colors"
+                className={`p-2 transition-colors ${glassTextMuted} hover:text-brand-dustyBlue`}
                 data-cursor-hover
               >
                 <FiX className="w-5 h-5" />
@@ -112,20 +123,20 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
             </div>
 
             {/* Items */}
-            <div className="flex-1 overflow-y-auto">
+            <div className="relative z-[1] flex-1 overflow-y-auto">
               {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full p-6 text-center">
-                  <FiShoppingBag className="w-12 h-12 text-brand-stone/50 mb-4" />
-                  <p className="font-rozha text-xl text-brand-darkRed mb-2">
+                  <FiShoppingBag className={`mb-4 h-12 w-12 ${glassTextMuted}`} />
+                  <p className={`mb-2 font-rozha text-xl ${glassTextTitle}`}>
                     {ui.miniCart.yourBagIsEmpty}
                   </p>
-                  <p className="font-montserrat text-sm text-brand-clayRed/60 mb-6">
+                  <p className={`mb-6 font-montserrat text-sm ${glassTextMuted}`}>
                     {ui.miniCart.discoverCollection}
                   </p>
                   <LocaleLink
                     href="/shop"
                     onClick={onClose}
-                    className="px-6 py-3 bg-brand-darkRed text-white font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors"
+                    className={glassPrimaryBtn}
                     data-cursor-hover
                   >
                     {ui.cart.shopNow}
@@ -285,23 +296,23 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className="border-t border-brand-stone/20 p-4 sm:p-6 space-y-4 bg-[#f8f7f5]">
+              <div className="relative z-[1] space-y-4 border-t border-brand-darkRed/10 bg-white/55 p-4 backdrop-blur-md sm:p-6">
                 {/* Subtotal */}
-                <div className={`flex justify-between items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className="font-montserrat text-sm text-brand-clayRed/70 uppercase tracking-wider">
+                <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <span className={`font-montserrat text-sm uppercase tracking-wider ${glassTextMuted}`}>
                     {ui.cart.subtotal}
                   </span>
-                  <span className="font-montserrat text-lg font-medium text-brand-darkRed">
+                  <span className={`font-montserrat text-lg font-medium ${glassTextTitle}`}>
                     {formatCartSubtotal(items)}
                   </span>
                 </div>
-                <div className={`flex justify-between items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className="font-montserrat text-[11px] text-brand-clayRed/70 uppercase tracking-wider">
+                <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <span className={`font-montserrat text-[11px] uppercase tracking-wider ${glassTextMuted}`}>
                     {shippingMessages.feeLabel}
                   </span>
                   <span
                     className={`font-montserrat text-[11px] tracking-wide ${
-                      shippingMessages.unlocked ? 'text-brand-dustyBlue' : 'text-brand-darkRed/80'
+                      shippingMessages.unlocked ? 'text-brand-dustyBlue' : glassTextTitle
                     }`}
                   >
                     {shippingMessages.feeValue}
@@ -309,7 +320,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                 </div>
                 <p
                   className={`font-montserrat text-[10px] leading-relaxed ${
-                    shippingMessages.unlocked ? 'text-brand-dustyBlue' : 'text-brand-clayRed/50'
+                    shippingMessages.unlocked ? 'text-brand-dustyBlue' : glassTextMuted
                   } ${isRTL ? 'text-right' : ''}`}
                 >
                   {shippingMessages.primary}
@@ -320,15 +331,16 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <LocaleLink
                     href="/checkout"
                     onClick={onClose}
-                    className={`w-full py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+                    className={`${glassPrimaryBtn} !min-h-[48px] !text-xs inline-flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                     data-cursor-hover
                   >
                     {ui.miniCart.reviewYourOrder}
-                    <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
+                    <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
                   </LocaleLink>
                   <button
+                    type="button"
                     onClick={onClose}
-                    className="w-full py-3 text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:text-brand-dustyBlue transition-colors"
+                    className={`${glassSecondaryBtn} !min-h-[44px] !text-[11px]`}
                     data-cursor-hover
                   >
                     {ui.cart.continueShopping}
@@ -337,11 +349,11 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
                 {/* Trust Badges */}
                 <div
-                  className={`flex flex-col gap-2.5 border-t border-brand-stone/20 pt-4 sm:flex-row sm:items-center sm:justify-center sm:gap-5 ${isRTL ? 'sm:flex-row-reverse' : ''}`}
+                  className={`flex flex-col gap-2.5 border-t border-brand-darkRed/10 pt-4 sm:flex-row sm:items-center sm:justify-center sm:gap-5 ${isRTL ? 'sm:flex-row-reverse' : ''}`}
                 >
                   <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <FiLock className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
-                    <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
+                    <span className={`font-montserrat text-[10px] font-medium tracking-wide ${glassTextMuted}`}>
                       {ui.trust.secureCheckout}
                     </span>
                   </div>
@@ -350,7 +362,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   </span>
                   <div className={`flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <FiPackage className="h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
-                    <span className="font-montserrat text-[10px] font-medium tracking-wide text-brand-darkRed/80">
+                    <span className={`font-montserrat text-[10px] font-medium tracking-wide ${glassTextMuted}`}>
                       {shippingMessages.primary}
                     </span>
                   </div>

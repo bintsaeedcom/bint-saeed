@@ -23,7 +23,7 @@ export default function FavoriteHeartButton({
   category,
   href,
   className = '',
-  iconClassName = 'h-4 w-4',
+  iconClassName = 'h-3.5 w-3.5',
 }: FavoriteHeartButtonProps) {
   const favorited = useWishlistStore((s) => s.items.some((i) => i.id === id))
   const addItem = useWishlistStore((s) => s.addItem)
@@ -32,7 +32,7 @@ export default function FavoriteHeartButton({
   return (
     <button
       type="button"
-      className={className}
+      className={`inline-flex items-center justify-center leading-none ${className}`}
       data-wishlist-heart="true"
       aria-pressed={favorited}
       aria-label={favorited ? 'Remove from favorites' : 'Save to favorites'}
@@ -49,7 +49,12 @@ export default function FavoriteHeartButton({
         toast.success('Saved to favorites')
       }}
     >
-      <FiHeart className={`${iconClassName} ${favorited ? 'fill-current' : ''}`} aria-hidden />
+      {/* Optical nudge: FiHeart path sits slightly high in its viewBox */}
+      <FiHeart
+        className={`block shrink-0 translate-y-[0.5px] ${iconClassName} ${favorited ? 'fill-current' : ''}`}
+        strokeWidth={1.75}
+        aria-hidden
+      />
     </button>
   )
 }

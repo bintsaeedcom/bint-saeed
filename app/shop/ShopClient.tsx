@@ -26,6 +26,7 @@ import { getLocalizedProductDisplayName } from '@/lib/products/productDisplayNam
 import { getProductHref } from '@/lib/products/links'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 import { trackEvent } from '@/lib/analytics/tracking'
+import { glassDrawer, glassDrawerWash, glassTextMuted, glassTextTitle } from '@/lib/ui/glassClasses'
 
 const CATEGORY_QUERY_MAP: Record<string, string> = {
   abayas: 'Abayas',
@@ -347,7 +348,7 @@ export default function ShopClient() {
                   <ProductWishlistHeart
                     product={product}
                     href={getProductHref(product)}
-                    className={`absolute top-2.5 z-30 !p-2 sm:top-3 sm:!p-2.5 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+                    className={`absolute top-2.5 z-30 sm:top-3 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
                   />
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
                     <Image
@@ -469,63 +470,64 @@ export default function ShopClient() {
             <motion.aside
               role="dialog"
               aria-modal="true"
-              className={`absolute top-0 flex h-full w-[min(100%,20rem)] flex-col bg-stone-50 shadow-2xl ${
-                isRTL ? 'left-0' : 'right-0'
+              className={`absolute top-0 flex h-full w-[min(100%,20rem)] flex-col ${glassDrawer} ${
+                isRTL ? 'left-0 border-r' : 'right-0 border-l'
               }`}
               initial={{ x: isRTL ? '-100%' : '100%' }}
               animate={{ x: 0 }}
               exit={{ x: isRTL ? '-100%' : '100%' }}
               transition={{ type: 'tween', duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             >
-          <div className="flex items-center justify-between border-b border-stone-200 px-6 py-5">
-            <span className="font-rozha text-xl text-brand-darkRed">
-              {ui.shop.refine}
-            </span>
-            <button
-              type="button"
-              onClick={() => setFilterOpen(false)}
-              className="p-2 text-brand-darkRed"
-              data-cursor-hover
-            >
-              <FiX className="h-5 w-5" />
-            </button>
-          </div>
-          <div className="flex-1 overflow-y-auto px-6 py-6">
-            <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] text-neutral-500">
-              {ui.shop.productCategories}
-            </p>
-            <ul className="list-none space-y-3 p-0">
-              {categories.map((cat) => (
-                <li key={cat}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      applyCategory(cat)
-                      setFilterOpen(false)
-                    }}
-                    className={`font-montserrat text-sm tracking-wide ${
-                      activeCategory === cat
-                        ? 'text-brand-darkRed'
-                        : 'text-neutral-500 hover:text-brand-dustyBlue'
-                    }`}
-                    data-cursor-hover
-                  >
-                    {categoryLabel(cat)}
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <LocaleLink
-              href="/size-guide"
-              onClick={() => setFilterOpen(false)}
-              className="mt-10 flex items-center gap-2 border-t border-stone-200 pt-8 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed"
-              data-cursor-hover
-            >
-              <FiMaximize2 className="h-3.5 w-3.5" />
-              {ui.shop.sizeGuide}
-            </LocaleLink>
-          </div>
-        </motion.aside>
+              <div className={glassDrawerWash} aria-hidden />
+              <div className={`relative z-[1] flex items-center justify-between border-b border-brand-darkRed/10 px-6 py-5 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <span className={`font-rozha text-xl ${glassTextTitle}`}>
+                  {ui.shop.refine}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setFilterOpen(false)}
+                  className={`p-2 ${glassTextTitle}`}
+                  data-cursor-hover
+                >
+                  <FiX className="h-5 w-5" />
+                </button>
+              </div>
+              <div className="relative z-[1] flex-1 overflow-y-auto px-6 py-6">
+                <p className={`mb-4 font-montserrat text-[10px] uppercase tracking-[0.28em] ${glassTextMuted}`}>
+                  {ui.shop.productCategories}
+                </p>
+                <ul className="list-none space-y-3 p-0">
+                  {categories.map((cat) => (
+                    <li key={cat}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          applyCategory(cat)
+                          setFilterOpen(false)
+                        }}
+                        className={`font-montserrat text-sm tracking-wide ${
+                          activeCategory === cat
+                            ? glassTextTitle
+                            : `${glassTextMuted} hover:text-brand-dustyBlue`
+                        }`}
+                        data-cursor-hover
+                      >
+                        {categoryLabel(cat)}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <LocaleLink
+                  href="/size-guide"
+                  onClick={() => setFilterOpen(false)}
+                  className={`mt-10 flex items-center gap-2 border-t border-brand-darkRed/10 pt-8 font-montserrat text-xs uppercase tracking-[0.2em] ${glassTextTitle} ${isRTL ? 'flex-row-reverse' : ''}`}
+                  data-cursor-hover
+                >
+                  <FiMaximize2 className="h-3.5 w-3.5" />
+                  {ui.shop.sizeGuide}
+                </LocaleLink>
+              </div>
+            </motion.aside>
           </motion.div>
         )}
       </AnimatePresence>

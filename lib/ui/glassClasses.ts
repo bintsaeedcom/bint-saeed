@@ -1,0 +1,27 @@
+/**
+ * Readable frosted glass — blur for depth, enough opacity that dark hero imagery
+ * never washes text out. Prefer light glass + dark type on this site.
+ */
+export const glassPanel =
+  'relative overflow-hidden border border-white/55 bg-white/78 shadow-[0_18px_48px_-18px_rgba(26,2,16,0.35)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/68'
+
+/** Soft ivory wash under glass so body copy stays crisp on dark photos */
+export const glassPanelWash =
+  'pointer-events-none absolute inset-0 bg-gradient-to-b from-[#faf8f5]/92 via-[#faf8f5]/86 to-[#f7f2ec]/90'
+
+export const glassDrawer =
+  'relative overflow-hidden border-white/45 bg-white/80 shadow-[0_24px_60px_-20px_rgba(26,2,16,0.4)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/70'
+
+export const glassDrawerWash =
+  'pointer-events-none absolute inset-0 bg-gradient-to-br from-[#faf8f5]/94 via-[#faf8f5]/88 to-[#eef6f4]/55'
+
+export const glassTextTitle = 'relative text-brand-darkRed'
+export const glassTextBody = 'relative text-[#2c2426]'
+export const glassTextMuted = 'relative text-[#5c5356]'
+export const glassTextLink = 'relative text-brand-darkRed underline decoration-brand-darkRed/35 underline-offset-2'
+
+export const glassPrimaryBtn =
+  'relative min-h-[42px] w-full rounded border border-brand-darkRed bg-brand-darkRed px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.12em] text-white transition-colors hover:bg-brand-darkMagenta sm:flex-1'
+
+export const glassSecondaryBtn =
+  'relative min-h-[42px] w-full rounded border border-brand-darkRed/35 bg-white/70 px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-darkRed transition-colors hover:border-brand-darkRed/55 hover:bg-white/90 sm:flex-1'

@@ -25,7 +25,7 @@ export default function ProductWishlistHeart({
       category={product.category}
       href={href}
       iconClassName={iconClassName}
-      className={`rounded-full border border-stone-200/90 bg-white/95 p-2 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:p-2.5 ${className}`}
+      className={`h-9 w-9 rounded-full border border-stone-200/90 bg-white/90 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:h-10 sm:w-10 ${className}`}
     />
   )
 }

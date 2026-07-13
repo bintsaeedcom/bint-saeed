@@ -89,6 +89,8 @@ const PROVIDER_LABEL: Record<string, string> = {
   stripe: 'Stripe',
   mollie: 'Mollie',
   paypal: 'PayPal',
+  tamara: 'Tamara',
+  tabby: 'Tabby',
 }
 
 /** Posts a rich "new paid order" message to SLACK_ORDERS_WEBHOOK_URL. Best-effort; never throws. */

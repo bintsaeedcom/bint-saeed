@@ -35,6 +35,7 @@ import { getAccessoryCarouselAlt, buildAccessoriesCollectionJsonLd } from '@/lib
 import { getLocalizedAccessoryDisplayName } from '@/lib/accessories/accessoryCatalogCopyI18n'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
+import { glassDrawer, glassDrawerWash, glassTextMuted, glassTextTitle } from '@/lib/ui/glassClasses'
 
 function parsePriceParam(v: string | null): PriceRangeId {
   if (!v) return 'all'
@@ -517,7 +518,7 @@ export default function AccessoriesPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/50 z-50"
+              className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
               onClick={() => setIsFilterOpen(false)}
             />
             <motion.div
@@ -525,15 +526,16 @@ export default function AccessoriesPage() {
               animate={{ x: 0 }}
               exit={{ x: isRTL ? '100%' : '-100%' }}
               transition={{ type: 'tween', duration: 0.3 }}
-              className={`fixed ${isRTL ? 'right-0' : 'left-0'} top-0 bottom-0 z-50 w-[min(100vw,20rem)] overflow-y-auto bg-white shadow-xl`}
+              className={`fixed ${isRTL ? 'right-0 border-l' : 'left-0 border-r'} top-0 bottom-0 z-50 w-[min(100vw,20rem)] overflow-y-auto ${glassDrawer}`}
             >
-              <div className="p-6">
+              <div className={glassDrawerWash} aria-hidden />
+              <div className="relative z-[1] p-6">
                 <div className={`mb-8 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <p className="font-montserrat text-2xl text-brand-darkRed">{ui.shop.refine}</p>
+                  <p className={`font-montserrat text-2xl ${glassTextTitle}`}>{ui.shop.refine}</p>
                   <button
                     type="button"
                     onClick={() => setIsFilterOpen(false)}
-                    className="text-brand-darkRed"
+                    className={glassTextTitle}
                     data-cursor-hover
                     aria-label={ui.common.close}
                   >
@@ -541,7 +543,7 @@ export default function AccessoriesPage() {
                   </button>
                 </div>
 
-                <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/55">
+                <p className={`mb-3 font-montserrat text-[10px] uppercase tracking-[0.2em] ${glassTextMuted}`}>
                   {ui.shop.productCategories}
                 </p>
                 <div className="mb-8 space-y-1">
@@ -678,7 +680,7 @@ function AccessoryCard({
               image={accessory.images[0] ?? ''}
               category={accessory.category}
               href={`/accessories/${accessory.id}`}
-              className={`absolute top-2.5 z-30 rounded-full border border-stone-200/90 bg-white/95 p-2 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:p-2.5 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+              className={`absolute top-2.5 z-30 h-9 w-9 rounded-full border border-stone-200/90 bg-white/90 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:h-10 sm:w-10 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
               iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
             />
             <Image

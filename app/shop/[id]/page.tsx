@@ -12,6 +12,7 @@ import { FiPlus, FiMinus, FiHeart, FiX, FiMaximize2, FiGlobe, FiAward } from 're
 import SizeGuideModal from '@/components/SizeGuideModal'
 import StickyAddToCart from '@/components/StickyAddToCart'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
+import TamaraProductWidget from '@/components/TamaraProductWidget'
 import { trackEvent } from '@/lib/analytics/tracking'
 import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
@@ -648,7 +649,7 @@ export default function ProductPage() {
               image={activeImages[0] ?? product.images[0] ?? ''}
               category={product.category}
               href={getProductHref(product)}
-              className={`absolute top-2.5 z-30 rounded-full border border-stone-200/90 bg-white/95 p-2 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:p-2.5 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+              className={`absolute top-2.5 z-30 h-9 w-9 rounded-full border border-stone-200/90 bg-white/90 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:h-10 sm:w-10 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
               iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
             />
             <div className="grid gap-3 lg:grid-cols-[4.75rem_minmax(0,1fr)] lg:items-start">
@@ -1050,6 +1051,13 @@ export default function ProductPage() {
               </button>
 
             </div>
+            {(currency.code === 'AED' || currency.code === 'SAR') ? (
+              <TamaraProductWidget
+                amount={convertPrice(product.price, product.id)}
+                currency={currency.code}
+                className="mb-3 mt-1"
+              />
+            ) : null}
             <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 ${isRTL ? 'text-right' : ''}`}>
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiAward className="h-3.5 w-3.5 text-brand-darkRed/75" />

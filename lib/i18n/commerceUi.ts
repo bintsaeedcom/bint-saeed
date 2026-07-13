@@ -93,10 +93,12 @@ type CommerceUiCheckout = {
   payWithCard: string
   payWithPayPal: string
   payWithMollie: string
+  payWithTamara: string
   selectPaymentMethod: string
   continueWithCard: string
   continueWithPayPal: string
   continueWithMollie: string
+  continueWithTamara: string
 }
 
 type CommerceUiAccessories = {
@@ -314,10 +316,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: 'Card — Visa, Mastercard, Apple Pay & Google Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL, Klarna & more (Europe)',
+
+      payWithTamara: 'Tamara — pay in 4',
       selectPaymentMethod: 'Please choose a payment method',
       continueWithCard: 'Pay by card',
       continueWithPayPal: 'Pay with PayPal',
       continueWithMollie: 'Continue',
+
+      continueWithTamara: 'Continue with Tamara',
     },
     accessories: {
       collectionTitle: 'Accessories',
@@ -511,10 +517,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: 'بطاقة — فيزا وماستركارد وApple Pay وGoogle Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL وKlarna والمزيد (أوروبا)',
+
+      payWithTamara: 'تمارا — ادفع على 4 دفعات',
       selectPaymentMethod: 'يرجى اختيار طريقة الدفع',
       continueWithCard: 'الدفع بالبطاقة',
       continueWithPayPal: 'الدفع عبر PayPal',
       continueWithMollie: 'متابعة',
+
+      continueWithTamara: 'المتابعة مع تمارا',
     },
     accessories: {
       collectionTitle: 'الإكسسوارات',
@@ -707,10 +717,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: 'Carte — Visa, Mastercard, Apple Pay et Google Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL, Klarna et plus (Europe)',
+
+      payWithTamara: 'Tamara — payez en 4 fois',
       selectPaymentMethod: 'Veuillez choisir un mode de paiement',
       continueWithCard: 'Payer par carte',
       continueWithPayPal: 'Payer avec PayPal',
       continueWithMollie: 'Continuer',
+
+      continueWithTamara: 'Continuer avec Tamara',
     },
     accessories: {
       collectionTitle: 'Accessoires',
@@ -903,10 +917,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: 'Karte — Visa, Mastercard, Apple Pay & Google Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL, Klarna & mehr (Europa)',
+
+      payWithTamara: 'Tamara — in 4 Raten zahlen',
       selectPaymentMethod: 'Bitte wahlen Sie eine Zahlungsmethode',
       continueWithCard: 'Mit Karte zahlen',
       continueWithPayPal: 'Mit PayPal zahlen',
       continueWithMollie: 'Weiter',
+
+      continueWithTamara: 'Continue with Tamara',
     },
     accessories: {
       collectionTitle: 'Accessoires',
@@ -1099,10 +1117,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: 'Carta — Visa, Mastercard, Apple Pay e Google Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL, Klarna e altro (Europa)',
+
+      payWithTamara: 'Tamara — paga in 4 rate',
       selectPaymentMethod: 'Seleziona un metodo di pagamento',
       continueWithCard: 'Paga con carta',
       continueWithPayPal: 'Paga con PayPal',
       continueWithMollie: 'Continua',
+
+      continueWithTamara: 'Continue with Tamara',
     },
     accessories: {
       collectionTitle: 'Accessori',
@@ -1295,10 +1317,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: 'Tarjeta — Visa, Mastercard, Apple Pay y Google Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL, Klarna y mas (Europa)',
+
+      payWithTamara: 'Tamara — paga en 4 plazos',
       selectPaymentMethod: 'Elige un metodo de pago',
       continueWithCard: 'Pagar con tarjeta',
       continueWithPayPal: 'Pagar con PayPal',
       continueWithMollie: 'Continuar',
+
+      continueWithTamara: 'Continue with Tamara',
     },
     accessories: {
       collectionTitle: 'Accesorios',
@@ -1491,10 +1517,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: 'Карта — Visa, Mastercard, Apple Pay и Google Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL, Klarna и др. (Европа)',
+
+      payWithTamara: 'Tamara — оплата в 4 платежа',
       selectPaymentMethod: 'Выберите способ оплаты',
       continueWithCard: 'Оплатить картой',
       continueWithPayPal: 'Оплатить через PayPal',
       continueWithMollie: 'Продолжить',
+
+      continueWithTamara: 'Продолжить с Tamara',
     },
     accessories: {
       collectionTitle: 'Аксессуары',
@@ -1687,10 +1717,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: '银行卡 — Visa、Mastercard、Apple Pay 和 Google Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL、Klarna 等（欧洲）',
+
+      payWithTamara: 'Tamara — 分4期付款',
       selectPaymentMethod: '请选择付款方式',
       continueWithCard: '银行卡支付',
       continueWithPayPal: 'PayPal 支付',
       continueWithMollie: '继续',
+
+      continueWithTamara: 'Continue with Tamara',
     },
     accessories: {
       collectionTitle: '配饰',
@@ -1883,10 +1917,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: 'Kaart — Visa, Mastercard, Apple Pay en Google Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL, Klarna en meer (Europa)',
+
+      payWithTamara: 'Tamara — betaal in 4 termijnen',
       selectPaymentMethod: 'Kies een betaalmethode',
       continueWithCard: 'Betaal met kaart',
       continueWithPayPal: 'Betaal met PayPal',
       continueWithMollie: 'Doorgaan',
+
+      continueWithTamara: 'Continue with Tamara',
     },
     accessories: {
       collectionTitle: 'Accessoires',
@@ -2079,10 +2117,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: 'Cartao — Visa, Mastercard, Apple Pay e Google Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL, Klarna e mais (Europa)',
+
+      payWithTamara: 'Tamara — pague em 4 prestacoes',
       selectPaymentMethod: 'Escolha um metodo de pagamento',
       continueWithCard: 'Pagar com cartao',
       continueWithPayPal: 'Pagar com PayPal',
       continueWithMollie: 'Continuar',
+
+      continueWithTamara: 'Continue with Tamara',
     },
     accessories: {
       collectionTitle: 'Acessorios',
@@ -2275,10 +2317,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: 'Kartu — Visa, Mastercard, Apple Pay & Google Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL, Klarna & lainnya (Eropa)',
+
+      payWithTamara: 'Tamara — bayar dalam 4 cicilan',
       selectPaymentMethod: 'Pilih metode pembayaran',
       continueWithCard: 'Bayar dengan kartu',
       continueWithPayPal: 'Bayar dengan PayPal',
       continueWithMollie: 'Lanjutkan',
+
+      continueWithTamara: 'Continue with Tamara',
     },
     accessories: {
       collectionTitle: 'Aksesori',
@@ -2471,10 +2517,14 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
       payWithCard: 'Kad — Visa, Mastercard, Apple Pay & Google Pay',
       payWithPayPal: 'PayPal',
       payWithMollie: 'iDEAL, Klarna & lagi (Eropah)',
+
+      payWithTamara: 'Tamara — bayar dalam 4 ansuran',
       selectPaymentMethod: 'Sila pilih kaedah pembayaran',
       continueWithCard: 'Bayar dengan kad',
       continueWithPayPal: 'Bayar dengan PayPal',
       continueWithMollie: 'Teruskan',
+
+      continueWithTamara: 'Continue with Tamara',
     },
     accessories: {
       collectionTitle: 'Aksesori',

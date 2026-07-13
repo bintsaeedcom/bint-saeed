@@ -49,12 +49,14 @@ function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
 function railLabel(rail: CheckoutRail, ui: ReturnType<typeof commerceUi>): string {
   if (rail === 'paypal') return ui.checkout.payWithPayPal
   if (rail === 'mollie') return ui.checkout.payWithMollie
+  if (rail === 'tamara') return ui.checkout.payWithTamara
   return ui.checkout.payWithCard
 }
 
 function continueLabel(rail: CheckoutRail | null, ui: ReturnType<typeof commerceUi>): string {
   if (rail === 'paypal') return ui.checkout.continueWithPayPal
   if (rail === 'mollie') return ui.checkout.continueWithMollie
+  if (rail === 'tamara') return ui.checkout.continueWithTamara
   return ui.checkout.continueWithCard
 }
 
@@ -82,10 +84,17 @@ export default function CheckoutPage() {
     clientSecret: string
     publishableKey: string
   } | null>(null)
+  const [tamaraFirstName, setTamaraFirstName] = useState('')
+  const [tamaraLastName, setTamaraLastName] = useState('')
+  const [tamaraEmail, setTamaraEmail] = useState('')
+  const [tamaraPhone, setTamaraPhone] = useState('')
+  const [tamaraLine1, setTamaraLine1] = useState('')
+  const [tamaraCity, setTamaraCity] = useState('')
+  const [tamaraEligible, setTamaraEligible] = useState(true)
 
   const availableRails = useMemo(
-    () => getAvailableCheckoutRails(countryCode),
-    [countryCode],
+    () => getAvailableCheckoutRails(countryCode, currency.code),
+    [countryCode, currency.code],
   )
   const checkoutEnvReady = availableRails.length > 0
   const activeRail = selectedRail && availableRails.includes(selectedRail)
@@ -106,9 +115,32 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (!selectedRail && availableRails.length > 0) {
-      setSelectedRail(getDefaultCheckoutRail(countryCode))
+      setSelectedRail(getDefaultCheckoutRail(countryCode, currency.code))
     }
-  }, [availableRails, countryCode, selectedRail])
+  }, [availableRails, countryCode, currency.code, selectedRail])
+
+  useEffect(() => {
+    if (activeRail !== 'tamara') return
+    const amount = Number(cartSubtotal(items).toFixed(2))
+    if (amount <= 0) return
+    const timer = window.setTimeout(() => {
+      void fetch('/api/payments/tamara/eligibility', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount,
+          currency: currency.code,
+          phone: tamaraPhone || undefined,
+        }),
+      })
+        .then((r) => r.json())
+        .then((data: { eligible?: boolean }) => {
+          setTamaraEligible(data.eligible !== false)
+        })
+        .catch(() => setTamaraEligible(true))
+    }, 400)
+    return () => window.clearTimeout(timer)
+  }, [activeRail, cartSubtotal, currency.code, items, tamaraPhone])
 
   const beganCheckout = useRef(false)
 
@@ -170,6 +202,51 @@ export default function CheckoutPage() {
       payment_type: activeRail,
     })
     try {
+      if (activeRail === 'tamara') {
+        if (!tamaraEligible) {
+          throw new Error(ui.checkout.payWithTamara)
+        }
+        if (
+          !tamaraFirstName.trim() ||
+          !tamaraLastName.trim() ||
+          !tamaraEmail.trim() ||
+          !tamaraPhone.trim() ||
+          !tamaraLine1.trim() ||
+          !tamaraCity.trim()
+        ) {
+          throw new Error(
+            language === 'ar'
+              ? 'يرجى إكمال الاسم والبريد والجوال والعنوان لتمارا'
+              : 'Please complete your name, email, mobile, and address for Tamara',
+          )
+        }
+        const response = await fetch('/api/payments/tamara/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...checkoutPayload,
+            language,
+            consumer: {
+              firstName: tamaraFirstName.trim(),
+              lastName: tamaraLastName.trim(),
+              email: tamaraEmail.trim(),
+              phone: tamaraPhone.trim(),
+            },
+            shippingAddress: {
+              line1: tamaraLine1.trim(),
+              city: tamaraCity.trim(),
+            },
+          }),
+        })
+        const { url, error } = await response.json()
+        if (!response.ok) throw new Error(error || 'Checkout is unavailable')
+        if (typeof url === 'string' && url.startsWith('https://')) {
+          window.location.assign(url)
+          return
+        }
+        throw new Error('Tamara checkout URL missing')
+      }
+
       if (activeRail === 'mollie') {
         const response = await fetch('/api/payments/mollie/checkout', {
           method: 'POST',
@@ -413,10 +490,78 @@ export default function CheckoutPage() {
                               {ui.checkout.payWithMollie}
                             </span>
                           ) : null}
+                          {rail === 'tamara' ? (
+                            <span
+                              className={`block font-montserrat text-[11px] leading-snug tracking-wide ${
+                                tamaraEligible ? 'text-white/75' : 'text-white/35'
+                              }`}
+                            >
+                              {ui.checkout.payWithTamara}
+                              {!tamaraEligible
+                                ? language === 'ar'
+                                  ? ' (غير متاح لهذا الطلب)'
+                                  : ' (unavailable for this order)'
+                                : ''}
+                            </span>
+                          ) : null}
                         </span>
                       </label>
                     ))}
                   </fieldset>
+                ) : null}
+
+                {activeRail === 'tamara' ? (
+                  <div className="mt-5 space-y-2.5 rounded-[4px] border border-white/10 bg-white/5 p-3 sm:mt-6">
+                    <p className="font-montserrat text-[10px] uppercase tracking-[0.14em] text-white/55">
+                      {language === 'ar' ? 'تفاصيل تمارا' : 'Tamara details'}
+                    </p>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      <input
+                        value={tamaraFirstName}
+                        onChange={(e) => setTamaraFirstName(e.target.value)}
+                        placeholder={language === 'ar' ? 'الاسم الأول' : 'First name'}
+                        className="min-h-[40px] rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                        autoComplete="given-name"
+                      />
+                      <input
+                        value={tamaraLastName}
+                        onChange={(e) => setTamaraLastName(e.target.value)}
+                        placeholder={language === 'ar' ? 'اسم العائلة' : 'Last name'}
+                        className="min-h-[40px] rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                        autoComplete="family-name"
+                      />
+                    </div>
+                    <input
+                      value={tamaraEmail}
+                      onChange={(e) => setTamaraEmail(e.target.value)}
+                      placeholder="Email"
+                      type="email"
+                      className="min-h-[40px] w-full rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                      autoComplete="email"
+                    />
+                    <input
+                      value={tamaraPhone}
+                      onChange={(e) => setTamaraPhone(e.target.value)}
+                      placeholder={language === 'ar' ? 'الجوال (مثال 9715…)' : 'Mobile (e.g. 9715…)'}
+                      type="tel"
+                      className="min-h-[40px] w-full rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                      autoComplete="tel"
+                    />
+                    <input
+                      value={tamaraLine1}
+                      onChange={(e) => setTamaraLine1(e.target.value)}
+                      placeholder={language === 'ar' ? 'عنوان الشحن' : 'Shipping address'}
+                      className="min-h-[40px] w-full rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                      autoComplete="street-address"
+                    />
+                    <input
+                      value={tamaraCity}
+                      onChange={(e) => setTamaraCity(e.target.value)}
+                      placeholder={language === 'ar' ? 'المدينة' : 'City'}
+                      className="min-h-[40px] w-full rounded border border-white/15 bg-black/20 px-3 font-montserrat text-xs text-white placeholder:text-white/35"
+                      autoComplete="address-level2"
+                    />
+                  </div>
                 ) : null}
 
                 <label
@@ -452,9 +597,19 @@ export default function CheckoutPage() {
                 <button
                   type="button"
                   onClick={() => void startCheckout()}
-                  disabled={payBusy || !checkoutEnvReady || !legalAcknowledged || !activeRail}
+                  disabled={
+                    payBusy ||
+                    !checkoutEnvReady ||
+                    !legalAcknowledged ||
+                    !activeRail ||
+                    (activeRail === 'tamara' && !tamaraEligible)
+                  }
                   className={`mt-5 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-[4px] px-4 py-3.5 font-montserrat text-sm font-medium tracking-wide transition-colors sm:mt-6 ${
-                    payBusy || !checkoutEnvReady || !legalAcknowledged || !activeRail
+                    payBusy ||
+                    !checkoutEnvReady ||
+                    !legalAcknowledged ||
+                    !activeRail ||
+                    (activeRail === 'tamara' && !tamaraEligible)
                       ? 'cursor-not-allowed bg-white/15 text-white/45'
                       : 'bg-brand-dustyBlue text-[#1a0008] hover:bg-white hover:text-brand-darkRed'
                   } ${isRTL ? 'flex-row-reverse' : ''}`}

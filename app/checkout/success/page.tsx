@@ -23,11 +23,15 @@ function CheckoutSuccessContent() {
   const sessionId = searchParams?.get('session_id')
   const paymentId = searchParams?.get('payment_id')
   const paypalToken = searchParams?.get('token')
+  const tamaraOrderId =
+    searchParams?.get('tamara_order_id') ||
+    searchParams?.get('orderId') ||
+    searchParams?.get('order_id')
   const clearCart = useCartStore((state) => state.clearCart)
   const trackedPurchase = useRef(false)
 
   useEffect(() => {
-    const referenceId = sessionId || paymentId || paypalToken
+    const referenceId = sessionId || paymentId || paypalToken || tamaraOrderId
     if (!referenceId || trackedPurchase.current) return
     trackedPurchase.current = true
 
@@ -37,6 +41,7 @@ function CheckoutSuccessContent() {
       session_id: sessionId ?? undefined,
       payment_id: paymentId ?? undefined,
       paypal_token: paypalToken ?? undefined,
+      tamara_order_id: tamaraOrderId ?? undefined,
       currency: snapshot?.currency,
       value: snapshot?.value,
       items: snapshot?.items,
@@ -44,6 +49,20 @@ function CheckoutSuccessContent() {
 
     if (sessionId) {
       clearCart()
+      return
+    }
+
+    if (tamaraOrderId) {
+      void fetch(
+        `/api/payments/tamara/status?order_id=${encodeURIComponent(tamaraOrderId)}`,
+      )
+        .then((response) => response.json())
+        .then((data: { paid?: boolean }) => {
+          if (data.paid) clearCart()
+        })
+        .catch(() => {
+          /* webhook may still complete the order */
+        })
       return
     }
 
@@ -73,7 +92,7 @@ function CheckoutSuccessContent() {
           /* webhook may still complete the order */
         })
     }
-  }, [sessionId, paymentId, paypalToken, clearCart])
+  }, [sessionId, paymentId, paypalToken, tamaraOrderId, clearCart])
 
   return (
     <div className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-20 ${SITE_CONTENT_TOP_PAD}`}>

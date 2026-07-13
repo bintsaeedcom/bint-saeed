@@ -24,20 +24,29 @@ export default function WhatsAppButton() {
   const { href, external } = getWhatsAppHref(defaultMessage)
 
   // Sits clear of sticky ATC / cart / cookie via --mobile-bottom-chrome
-  const className = `fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] shadow-lg transition-[bottom,box-shadow] duration-300 hover:shadow-xl sm:h-14 sm:w-14 ${
-    isRTL ? 'left-4 sm:left-6' : 'right-4 sm:right-6'
-  }`
+  const className = [
+    'group fixed z-40 flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14',
+    'border border-[#e8d8c8]/28 bg-[#1a0210]',
+    'shadow-[0_14px_36px_-12px_rgba(26,2,16,0.55),inset_0_1px_0_rgba(232,216,200,0.12)]',
+    'transition-[bottom,box-shadow,background-color,border-color,transform] duration-300',
+    'hover:border-[#e8d8c8]/50 hover:bg-[#2d141e]',
+    'hover:shadow-[0_18px_44px_-14px_rgba(26,2,16,0.62),inset_0_1px_0_rgba(232,216,200,0.18)]',
+    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e8d8c8]/55',
+    isRTL ? 'left-4 sm:left-6' : 'right-4 sm:right-6',
+  ].join(' ')
+
   const style = {
     bottom: 'calc(var(--mobile-bottom-chrome, 0px) + 1.15rem)',
   } as const
 
   const inner = (
     <>
-      <FaWhatsapp className="h-6 w-6 text-white sm:h-7 sm:w-7" />
+      {/* Soft outer halo — wine, not WhatsApp green */}
       <span
-        className="pointer-events-none absolute inset-0 rounded-full bg-[#25D366] opacity-25 animate-ping"
+        className="pointer-events-none absolute -inset-1 rounded-full border border-[#e8d8c8]/10 opacity-80 transition-opacity duration-300 group-hover:opacity-100"
         aria-hidden
       />
+      <FaWhatsapp className="relative z-[1] h-[1.35rem] w-[1.35rem] text-[#e8d8c8] transition-colors duration-300 group-hover:text-[#f3ebe3] sm:h-6 sm:w-6" />
     </>
   )
 
@@ -50,11 +59,12 @@ export default function WhatsAppButton() {
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 2, type: 'spring', stiffness: 200 }}
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.06 }}
+        whileTap={{ scale: 0.96 }}
         className={className}
         style={style}
         data-cursor-hover
+        data-whatsapp-button
         aria-label="Contact us on WhatsApp"
       >
         {inner}
@@ -67,14 +77,15 @@ export default function WhatsAppButton() {
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 2, type: 'spring', stiffness: 200 }}
-      whileHover={{ scale: 1.08 }}
-      whileTap={{ scale: 0.95 }}
+      whileHover={{ scale: 1.06 }}
+      whileTap={{ scale: 0.96 }}
       className={className}
       style={style}
+      data-whatsapp-button
     >
       <LocaleLink
         href={href}
-        className="flex h-full w-full items-center justify-center"
+        className="relative flex h-full w-full items-center justify-center"
         data-cursor-hover
         aria-label="Contact us (set NEXT_PUBLIC_WHATSAPP_NUMBER for WhatsApp)"
         title="Contact — add WhatsApp number in .env.local to open chat"

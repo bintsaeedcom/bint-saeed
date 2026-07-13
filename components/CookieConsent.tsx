@@ -9,6 +9,16 @@ import {
   clearMobileBottomChrome,
   publishMobileBottomChrome,
 } from '@/lib/ui/mobileBottomChrome'
+import {
+  glassPanel,
+  glassPanelWash,
+  glassPrimaryBtn,
+  glassSecondaryBtn,
+  glassTextBody,
+  glassTextLink,
+  glassTextMuted,
+  glassTextTitle,
+} from '@/lib/ui/glassClasses'
 
 export default function CookieConsent() {
   const [showConsent, setShowConsent] = useState(false)
@@ -68,11 +78,6 @@ export default function CookieConsent() {
     closeConsent()
   }
 
-  const primaryButtonClass =
-    'pointer-events-auto min-h-[42px] w-full rounded border border-brand-darkRed bg-brand-darkRed px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.12em] text-white transition-colors hover:bg-brand-darkMagenta sm:min-w-[8rem] sm:flex-1'
-  const secondaryButtonClass =
-    'pointer-events-auto min-h-[42px] w-full rounded border border-brand-darkRed/20 bg-transparent px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-darkRed/60 transition-colors hover:border-brand-darkRed/35 hover:bg-brand-stone/10 hover:text-brand-darkRed/80 sm:min-w-[7.5rem] sm:flex-1'
-
   return (
     <AnimatePresence>
       {showConsent && (
@@ -89,23 +94,27 @@ export default function CookieConsent() {
           className="pointer-events-none fixed inset-x-0 bottom-0 z-[100] p-2.5 pb-[max(0.65rem,env(safe-area-inset-bottom))] sm:p-4 sm:pb-[max(1rem,env(safe-area-inset-bottom))]"
         >
           <div
-            className={`pointer-events-auto mx-auto flex max-h-[min(70vh,32rem)] w-full max-w-3xl flex-col overflow-hidden rounded-sm border border-brand-darkRed/25 bg-[#faf8f5]/98 shadow-[0_18px_40px_-16px_rgba(26,2,16,0.28)] backdrop-blur-md ${
+            className={`pointer-events-auto mx-auto flex max-h-[min(70vh,32rem)] w-full max-w-3xl flex-col ${glassPanel} ${
               isRTL ? 'text-right' : 'text-left'
             }`}
           >
-            <div className="min-h-0 overflow-y-auto overscroll-contain px-3.5 pb-2.5 pt-3.5 sm:px-5 sm:pt-5">
+            <div className={glassPanelWash} aria-hidden />
+
+            <div className="relative z-[1] min-h-0 overflow-y-auto overscroll-contain px-3.5 pb-2.5 pt-3.5 sm:px-5 sm:pt-5">
               <h2
                 id="cookie-consent-title"
-                className="font-rozha text-[1.05rem] leading-snug text-brand-darkRed sm:text-[1.25rem]"
+                className={`font-rozha text-[1.05rem] leading-snug sm:text-[1.25rem] ${glassTextTitle}`}
               >
                 {t.cookie.title}
               </h2>
-              <p className="mt-1.5 font-montserrat text-[12px] leading-[1.55] text-[#4a4a4a] sm:text-[13px] sm:leading-[1.65]">
+              <p
+                className={`mt-1.5 font-montserrat text-[12px] leading-[1.55] sm:text-[13px] sm:leading-[1.65] ${glassTextBody}`}
+              >
                 {t.cookie.message}
               </p>
               <LocaleLink
                 href="/cookie-policy"
-                className="mt-1.5 inline-block font-montserrat text-[11px] text-brand-darkRed/90 underline transition-colors hover:text-brand-darkRed sm:text-xs"
+                className={`mt-1.5 inline-block font-montserrat text-[11px] transition-opacity hover:opacity-80 sm:text-xs ${glassTextLink}`}
               >
                 {t.cookie.learnMore}
               </LocaleLink>
@@ -118,31 +127,35 @@ export default function CookieConsent() {
                     exit={{ height: 0, opacity: 0 }}
                     className="overflow-hidden"
                   >
-                    <div className={`mt-3 space-y-2.5 border-t border-[#e8e2db] pt-3 ${isRTL ? 'text-right' : 'text-left'}`}>
+                    <div
+                      className={`mt-3 space-y-2.5 border-t border-brand-darkRed/15 pt-3 ${
+                        isRTL ? 'text-right' : 'text-left'
+                      }`}
+                    >
                       <div>
-                        <span className="font-montserrat text-xs font-medium text-brand-darkRed">
+                        <span className={`font-montserrat text-xs font-medium ${glassTextTitle}`}>
                           {t.cookie.essential}
                         </span>
-                        <span className="ms-2 text-[10px] text-[#6b6b6b]">({t.cookie.alwaysOn})</span>
-                        <p className="mt-1 font-montserrat text-[11px] leading-relaxed text-[#6b6b6b] sm:text-xs">
+                        <span className={`ms-2 text-[10px] ${glassTextMuted}`}>({t.cookie.alwaysOn})</span>
+                        <p className={`mt-1 font-montserrat text-[11px] leading-relaxed sm:text-xs ${glassTextMuted}`}>
                           {t.cookie.essentialDesc}
                         </p>
                       </div>
                       <div>
-                        <span className="font-montserrat text-xs font-medium text-brand-darkRed">
+                        <span className={`font-montserrat text-xs font-medium ${glassTextTitle}`}>
                           {t.cookie.analytics}
                         </span>
-                        <span className="ms-2 text-[10px] text-[#6b6b6b]">({t.cookie.optional})</span>
-                        <p className="mt-1 font-montserrat text-[11px] leading-relaxed text-[#6b6b6b] sm:text-xs">
+                        <span className={`ms-2 text-[10px] ${glassTextMuted}`}>({t.cookie.optional})</span>
+                        <p className={`mt-1 font-montserrat text-[11px] leading-relaxed sm:text-xs ${glassTextMuted}`}>
                           {t.cookie.analyticsDesc}
                         </p>
                       </div>
                       <div>
-                        <span className="font-montserrat text-xs font-medium text-brand-darkRed">
+                        <span className={`font-montserrat text-xs font-medium ${glassTextTitle}`}>
                           {t.cookie.marketing}
                         </span>
-                        <span className="ms-2 text-[10px] text-[#6b6b6b]">({t.cookie.optional})</span>
-                        <p className="mt-1 font-montserrat text-[11px] leading-relaxed text-[#6b6b6b] sm:text-xs">
+                        <span className={`ms-2 text-[10px] ${glassTextMuted}`}>({t.cookie.optional})</span>
+                        <p className={`mt-1 font-montserrat text-[11px] leading-relaxed sm:text-xs ${glassTextMuted}`}>
                           {t.cookie.marketingDesc}
                         </p>
                       </div>
@@ -153,20 +166,20 @@ export default function CookieConsent() {
             </div>
 
             <div
-              className={`shrink-0 grid grid-cols-1 gap-1.5 border-t border-[#e8e2db]/80 px-3.5 py-2.5 sm:flex sm:gap-2.5 sm:px-5 sm:py-4 ${
+              className={`relative z-[1] shrink-0 grid grid-cols-1 gap-1.5 border-t border-brand-darkRed/12 px-3.5 py-2.5 sm:flex sm:gap-2.5 sm:px-5 sm:py-4 ${
                 isRTL ? 'sm:flex-row-reverse' : ''
               }`}
             >
-              <button type="button" onClick={acceptAll} className={primaryButtonClass} data-cursor-hover>
+              <button type="button" onClick={acceptAll} className={glassPrimaryBtn} data-cursor-hover>
                 {t.cookie.acceptAll}
               </button>
-              <button type="button" onClick={rejectAll} className={secondaryButtonClass} data-cursor-hover>
+              <button type="button" onClick={rejectAll} className={glassSecondaryBtn} data-cursor-hover>
                 {t.cookie.essentialOnly}
               </button>
               <button
                 type="button"
                 onClick={() => setShowDetails(!showDetails)}
-                className={secondaryButtonClass}
+                className={glassSecondaryBtn}
                 data-cursor-hover
               >
                 {t.cookie.cookiesSettings || t.cookie.showDetails}

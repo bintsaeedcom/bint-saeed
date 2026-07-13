@@ -685,7 +685,7 @@ export default function AccessoryDetailPage() {
               image={pdpImages[0] ?? accessory.images[0] ?? ''}
               category={accessory.category}
               href={`/accessories/${accessory.id}`}
-              className={`absolute top-2.5 z-30 rounded-full border border-stone-200/90 bg-white/95 p-2 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:p-2.5 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+              className={`absolute top-2.5 z-30 h-9 w-9 rounded-full border border-stone-200/90 bg-white/90 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:h-10 sm:w-10 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
               iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
             />
             <div className={`grid gap-3 lg:items-start ${galleryGridClass}`}>

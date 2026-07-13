@@ -80,5 +80,7 @@ export function formatOrderPaymentMethodLabel(args: {
   if (args.provider === 'paypal') return 'PayPal'
   if (args.provider === 'mollie') return 'Mollie'
   if (args.provider === 'stripe') return 'Stripe Checkout'
+  if (args.provider === 'tamara') return 'Tamara · Pay in 4'
+  if (args.provider === 'tabby') return 'Tabby · Pay in 4'
   return 'Unknown'
 }
