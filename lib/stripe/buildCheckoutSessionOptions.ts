@@ -7,6 +7,9 @@ import type { ParsedCheckoutRequest } from '@/lib/checkout/types'
 import { buildCheckoutPaymentParams } from '@/lib/stripe/checkoutPaymentMethods'
 import { buildCheckoutLineItems } from '@/lib/stripe/buildCheckoutLineItems'
 import { buildProvisionalStripeShippingOption } from '@/lib/stripe/buildStripeShippingOption'
+import { STRIPE_SHIPPING_ALLOWED_COUNTRIES } from '@/lib/stripe/stripeShippingAllowedCountries'
+
+export { STRIPE_SHIPPING_ALLOWED_COUNTRIES }
 
 export type StripeCheckoutUiMode = 'hosted' | 'elements' | 'embedded'
 
@@ -21,10 +24,6 @@ type BuildSessionOptions = {
   baseUrl: string
   uiMode?: StripeCheckoutUiMode
 }
-
-/** Countries we currently accept for Stripe address collection. */
-export const STRIPE_SHIPPING_ALLOWED_COUNTRIES: Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry[] =
-  ['AE', 'SA', 'KW', 'BH', 'OM', 'QA', 'GB', 'US', 'FR', 'DE', 'IT']
 
 export function buildStripeCheckoutSessionParams({
   parsed,
