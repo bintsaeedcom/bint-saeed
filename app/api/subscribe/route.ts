@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import { validateOptionalPhone } from '@/lib/validateOptionalPhone'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
+import { sendSubscribeThankYouEmail } from '@/lib/email/sendSubscribeThankYouEmail'
 
 const MAILERLITE_API = 'https://connect.mailerlite.com/api/subscribers'
 
@@ -82,6 +83,7 @@ export async function POST(request: NextRequest) {
 
     let mailerliteResult = { success: false, error: '', status: 0 }
     let slackResult = { success: false }
+    let thankYouResult = { success: false, skipped: false as boolean }
 
     const mailerliteApiKey = process.env.MAILERLITE_API_KEY?.trim()
     const mailerliteGroupId = process.env.MAILERLITE_GROUP_ID?.trim() || undefined
@@ -89,6 +91,9 @@ export async function POST(request: NextRequest) {
     // Map name: SubscribeForm sends firstName/lastName, EmailPopup sends name
     const subscriberName = firstName ?? name
     const subscriberLastName = lastName
+    const displayName =
+      [subscriberName, subscriberLastName].filter((p) => typeof p === 'string' && p.trim()).join(' ') ||
+      undefined
 
     if (mailerliteApiKey && normalizedEmail) {
       try {
@@ -126,6 +131,23 @@ export async function POST(request: NextRequest) {
       console.log('❌ MAILERLITE: API key not configured')
     }
 
+    // Site-sent branded welcome (Resend). Soft-fail — MailerLite remains source of truth.
+    if (normalizedEmail) {
+      const welcome = await sendSubscribeThankYouEmail({
+        email: normalizedEmail,
+        name: displayName,
+      })
+      thankYouResult = {
+        success: welcome.ok,
+        skipped: !welcome.ok && Boolean(welcome.skipped),
+      }
+      if (welcome.ok) {
+        console.log('✅ THANK-YOU EMAIL: Sent')
+      } else if (!welcome.skipped) {
+        console.error('❌ THANK-YOU EMAIL:', welcome.error)
+      }
+    }
+
     // Send to Slack with Mailerlite status. Prefer a dedicated subscribers channel so email
     // signups don't get buried under visitor-traffic pings; fall back to the main webhook.
     const slackWebhookUrl =
@@ -153,10 +175,17 @@ export async function POST(request: NextRequest) {
         if (source) {
           slackFields.push({ type: 'mrkdwn', text: `*Source:*\n${String(source)}` })
         }
+        const thankYouStatus = thankYouResult.success
+          ? '✅ Welcome email sent'
+          : thankYouResult.skipped
+            ? '⏭ Welcome email skipped (Resend not configured)'
+            : '❌ Welcome email failed'
+
         slackFields.push(
           { type: 'mrkdwn', text: `*Time:*\n${timestamp}` },
           { type: 'mrkdwn', text: `*IP:*\n${ip}` },
           { type: 'mrkdwn', text: `*Mailerlite:*\n${mailerliteStatus}` },
+          { type: 'mrkdwn', text: `*Welcome email:*\n${thankYouStatus}` },
         )
 
         await fetch(slackWebhookUrl, {
@@ -183,15 +212,18 @@ export async function POST(request: NextRequest) {
 
     console.log('=== SUBSCRIBE RESULT ===')
     console.log('Mailerlite:', mailerliteResult)
+    console.log('Thank-you email:', thankYouResult)
     console.log('Slack:', slackResult)
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       mailerlite: mailerliteResult.success,
+      thankYouEmail: thankYouResult.success,
       debug: {
         mailerliteConfigured: !!mailerliteApiKey,
         mailerliteStatus: mailerliteResult.status,
-      }
+        thankYouSkipped: thankYouResult.skipped,
+      },
     })
   } catch (error: any) {
     console.error('Subscribe error:', error)
