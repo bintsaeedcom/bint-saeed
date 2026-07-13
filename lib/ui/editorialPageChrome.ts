@@ -23,6 +23,13 @@ export function editorialHeroAlign(rtl: boolean): string {
 export const SITE_HEADER_OFFSET = 'pt-[var(--site-header-height,6.75rem)]'
 
 /**
+ * About/editorial banner only — header clear + a whisper of air so breadcrumbs
+ * don’t sit flush under the bar. Keep in sync across every AboutSectionHero page.
+ */
+export const EDITORIAL_HERO_HEADER_CLEARANCE =
+  'pt-[calc(var(--site-header-height,6.75rem)+0.5rem)]'
+
+/**
  * Sticky bars (About topic nav, FAQ TOC, shop/accessories toolbars) sit flush under the live header.
  */
 export const SITE_HEADER_STICKY_TOP = 'top-[var(--site-header-height,6.75rem)]'
@@ -62,7 +69,7 @@ export const editorialIntroStripText =
   'max-w-lg font-montserrat text-[12px] font-normal leading-[1.9] tracking-[0.06em] text-brand-clayRed/72'
 
 /** Inner flex column: clears fixed header, anchors copy block toward banner bottom */
-export const editorialHeroContentShell = `relative z-10 flex h-full min-h-0 flex-col ${SITE_HEADER_OFFSET}`
+export const editorialHeroContentShell = `relative z-10 flex h-full min-h-0 flex-col ${EDITORIAL_HERO_HEADER_CLEARANCE}`
 
 export const editorialHeroCopyBlock = 'mt-auto w-full min-w-0 pb-6 md:pb-7'
 

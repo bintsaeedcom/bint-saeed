@@ -20,8 +20,12 @@ import { ctaButtonRow, ctaInButtonRow, ctaPrimary, ctaSecondaryOnLight } from '@
 
 /** Strands hero banner — `public/strands/charm-fabric-dark.webp` (served under /strands/, not /charms/ redirect) */
 const HERO_CAMPAIGN_IMAGE = '/strands/charm-fabric-dark.webp'
+const CONCEPT_FEATURE_IMAGE = '/collection-section/45.jpg'
 const STRAND_HERO_ALT = withBrandAlt(
   'Natural stone bead abaya strands collection — interchangeable onyx, jade, amethyst, malachite and rose quartz for Marylebone Abaya',
+)
+const CONCEPT_FEATURE_ALT = withBrandAlt(
+  'Marylebone Abaya cuff with interchangeable natural stone strand detail — sage beads and gold clasp',
 )
 const MARYLEBONE_PAIRING_ALT = withBrandAlt(
   'Marylebone Abaya styled with interchangeable natural stone bead strand — pairs with Al Ain necklace and earrings',
@@ -249,10 +253,6 @@ export default function StrandsPage() {
               {copy.conceptP2}
             </p>
 
-            <p className="mt-8 max-w-2xl hyphens-none font-montserrat text-[11px] tracking-[0.06em] text-[#8a7a70] [word-break:keep-all]">
-              {copy.conceptStoneList}
-            </p>
-
             <div className={`mt-8 ${ctaButtonRow} ${isRTL ? 'md:flex-row-reverse' : ''}`}>
               <LocaleLink
                 href="#stone-showcase"
@@ -263,7 +263,7 @@ export default function StrandsPage() {
               </LocaleLink>
               <LocaleLink
                 href={maryleboneHref}
-                className={`${ctaSecondaryOnLight} ${ctaInButtonRow}`}
+                className={`${ctaSecondaryOnLight} ${ctaInButtonRow} !whitespace-nowrap sm:!flex-none sm:!basis-auto`}
                 data-cursor-hover
               >
                 {copy.conceptMaryleboneLink}
@@ -276,10 +276,10 @@ export default function StrandsPage() {
             className="group block overflow-hidden rounded-[4px] bg-[#faf8f5]"
             data-cursor-hover
           >
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[4px] bg-[#e8ddd4]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] bg-[#e8ddd4]">
               <Image
-                src={HERO_CAMPAIGN_IMAGE}
-                alt={STRAND_HERO_ALT}
+                src={CONCEPT_FEATURE_IMAGE}
+                alt={CONCEPT_FEATURE_ALT}
                 fill
                 sizes="(max-width: 768px) 90vw, 42vw"
                 className="object-cover object-center"
@@ -489,8 +489,14 @@ export default function StrandsPage() {
 
       <section className="strands-fabric-light relative z-40 -mt-6 overflow-hidden rounded-t-[16px] bg-[#7A1C28] py-20 pb-28 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:pb-36 md:will-change-transform">
         <div className={`${INNER_CONTAINER_CLASS} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
-          <div className="relative min-h-[52vh] overflow-hidden rounded-[4px] md:min-h-[620px]">
-            <Image src={maryleboneImage} alt={MARYLEBONE_PAIRING_ALT} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-[520px] overflow-hidden rounded-[4px] md:mx-0 md:max-w-none">
+            <Image
+              src={maryleboneImage}
+              alt={MARYLEBONE_PAIRING_ALT}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover object-center"
+            />
           </div>
           <div className="flex items-center">
             <div className="max-w-xl">
