@@ -1,106 +1,211 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { isAllowedCheckoutOrigin, resolvePublicSiteBaseUrl } from '@/lib/security/allowedCheckoutOrigin'
+import { rateLimitResponse } from '@/lib/security/rateLimit'
+import { notifyHealthAlert } from '@/lib/ops/notifications'
+import { cartSubtotalInCurrency, resolveShippingFee } from '@/lib/pricing'
+import type { SupportedCurrency } from '@/lib/pricing/types'
+import { parseCheckoutRequestBody } from '@/lib/checkout/parseCheckoutRequest'
+import {
+  isTabbyConfigured,
+  isTabbyCurrency,
+  resolveTabbyCountryCode,
+  type TabbyBuyer,
+  type TabbyShippingAddress,
+} from '@/lib/tabby/config'
+import { createTabbyCheckoutSession, extractTabbyWebUrl } from '@/lib/tabby/api'
+import { savePendingTabbyCheckout } from '@/lib/tabby/pendingCheckoutStore'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-type TabbyCheckoutBody = {
-  amount: number
-  currency?: string
-  orderRef: string
-  buyer?: {
-    email?: string
-    phone?: string
-    name?: string
-  }
+function parseBuyer(raw: unknown, fallbackEmail?: string): TabbyBuyer | null {
+  if (!raw || typeof raw !== 'object') return null
+  const o = raw as Record<string, unknown>
+  const email = String(o.email ?? fallbackEmail ?? '').trim()
+  const phone = String(o.phone ?? o.phone_number ?? '').replace(/\s/g, '')
+  const first = String(o.firstName ?? o.first_name ?? '').trim()
+  const last = String(o.lastName ?? o.last_name ?? '').trim()
+  const name =
+    String(o.name ?? '').trim() ||
+    [first, last].filter(Boolean).join(' ').trim()
+  if (!email.includes('@') || !phone || !name) return null
+  return { email, phone, name }
 }
 
-function getTabbyConfig() {
-  const secretKey = process.env.TABBY_SECRET_KEY?.trim() ?? ''
-  const merchantCode = process.env.TABBY_MERCHANT_CODE?.trim() ?? ''
-  const baseUrl = (process.env.TABBY_API_BASE_URL?.trim() || 'https://api.tabby.ai').replace(/\/$/, '')
-  return { secretKey, merchantCode, baseUrl }
+function parseShipping(raw: unknown): TabbyShippingAddress | null {
+  if (!raw || typeof raw !== 'object') return null
+  const o = raw as Record<string, unknown>
+  const address = String(o.line1 ?? o.address ?? '').trim()
+  const city = String(o.city ?? '').trim()
+  if (!address || !city) return null
+  return {
+    address,
+    city,
+    zip: String(o.zip ?? o.postal_code ?? '').trim() || undefined,
+  }
 }
 
 export async function POST(request: NextRequest) {
-  const { secretKey, merchantCode, baseUrl } = getTabbyConfig()
-
-  if (!secretKey || !merchantCode) {
+  if (!isTabbyConfigured()) {
     return NextResponse.json(
       {
         error:
-          'Tabby is not configured. Set TABBY_SECRET_KEY and TABBY_MERCHANT_CODE.',
+          'Tabby is not configured. Set TABBY_SECRET_KEY and TABBY_MERCHANT_CODE when Tabby sends your API details.',
       },
-      { status: 503 }
+      { status: 503 },
     )
   }
 
-  let body: TabbyCheckoutBody
+  if (process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED !== 'true') {
+    return NextResponse.json(
+      { error: 'Tabby checkout is prepared but not enabled yet. Set NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED=true after keys are live.' },
+      { status: 503 },
+    )
+  }
+
+  const tooMany = await rateLimitResponse(request, 'checkout', 45, 3600)
+  if (tooMany) return tooMany
+
+  if (!isAllowedCheckoutOrigin(request)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+
+  const baseUrl = resolvePublicSiteBaseUrl(request)
+  if (!baseUrl) {
+    return NextResponse.json({ error: 'Site URL is not configured.' }, { status: 503 })
+  }
+
   try {
-    body = (await request.json()) as TabbyCheckoutBody
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON body.' }, { status: 400 })
-  }
+    const body = (await request.json()) as Record<string, unknown>
+    const parsed = parseCheckoutRequestBody(body, request)
+    if ('error' in parsed) {
+      return NextResponse.json({ error: parsed.error }, { status: parsed.status })
+    }
 
-  const amount = Number(body.amount)
-  if (!Number.isFinite(amount) || amount <= 0) {
-    return NextResponse.json({ error: 'Invalid amount.' }, { status: 400 })
-  }
+    const {
+      items,
+      currency: checkoutCurrency,
+      discountCode,
+      customerEmail,
+      checkoutNotes,
+      clientContext,
+      clientIp,
+    } = parsed
 
-  const orderRef = body.orderRef?.trim()
-  if (!orderRef) {
-    return NextResponse.json({ error: 'orderRef is required.' }, { status: 400 })
-  }
-
-  try {
-    const response = await fetch(`${baseUrl}/api/v2/checkout`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${secretKey}`,
-        'Content-Type': 'application/json',
-        'X-Merchant-Code': merchantCode,
-      },
-      body: JSON.stringify({
-        payment: {
-          amount: amount.toFixed(2),
-          currency: body.currency?.toUpperCase() || 'AED',
-          description: `Bint Saeed order ${orderRef}`,
-          buyer: {
-            email: body.buyer?.email || 'guest@bintsaeed.com',
-            phone: body.buyer?.phone || '+971500000000',
-            name: body.buyer?.name || 'Guest',
-          },
-          order: {
-            reference_id: orderRef,
-          },
-        },
-        lang: 'en',
-      }),
-    })
-
-    const data = (await response.json().catch(() => null)) as
-      | { id?: string; status?: string; configuration?: { available_products?: unknown[] }; web_url?: string; redirect_url?: string; message?: string }
-      | null
-
-    if (!response.ok || !data) {
+    if (!isTabbyCurrency(checkoutCurrency)) {
       return NextResponse.json(
-        { error: data?.message || 'Failed to create Tabby checkout session.' },
-        { status: 502 }
+        { error: 'Tabby is available for AED, SAR, and KWD checkouts.' },
+        { status: 400 },
       )
     }
 
+    const currency = checkoutCurrency as SupportedCurrency
+    const cartSubtotal = cartSubtotalInCurrency(items, currency)
+    if (cartSubtotal <= 0) {
+      return NextResponse.json({ error: 'Invalid cart total.' }, { status: 400 })
+    }
+
+    const countryCode = resolveTabbyCountryCode({
+      currency,
+      visitorCountry: clientContext.country,
+    })
+
+    const shippingFee = resolveShippingFee({
+      subtotal: cartSubtotal,
+      currency,
+      country: countryCode,
+    })
+    const orderTotal = cartSubtotal + shippingFee
+
+    const buyer = parseBuyer(body.consumer ?? body.customer ?? body.buyer, customerEmail)
+    if (!buyer) {
+      return NextResponse.json(
+        {
+          error: 'Tabby requires full name, email, and mobile number before checkout.',
+        },
+        { status: 400 },
+      )
+    }
+
+    const shippingAddress = parseShipping(body.shippingAddress ?? body.address)
+    if (!shippingAddress) {
+      return NextResponse.json(
+        { error: 'Tabby requires a shipping address (street and city).' },
+        { status: 400 },
+      )
+    }
+
+    const orderRef = `BS-TB-${Date.now().toString(36).toUpperCase()}`
+    const lang = String(body.language ?? '').toLowerCase() === 'ar' ? 'ar' : 'en'
+
+    const session = await createTabbyCheckoutSession({
+      orderRef,
+      orderTotal,
+      shippingFee,
+      currency,
+      countryCode,
+      lang,
+      items,
+      buyer,
+      shippingAddress,
+      description: `Bint Saeed order ${orderRef}`,
+      merchantUrls: {
+        success: `${baseUrl}/checkout/success?provider=tabby`,
+        cancel: `${baseUrl}/checkout?tabby=cancelled`,
+        failure: `${baseUrl}/checkout?tabby=failed`,
+      },
+    })
+
+    const webUrl = extractTabbyWebUrl(session.data)
+    const paymentId = session.data.payment?.id
+    const sessionStatus = (session.data.status || '').toLowerCase()
+
+    if (!session.ok || sessionStatus === 'rejected' || !webUrl || !paymentId) {
+      const message =
+        session.data.message ||
+        session.data.error ||
+        (sessionStatus === 'rejected'
+          ? 'Tabby is not available for this order. Please choose another payment method.'
+          : 'Failed to create Tabby checkout session.')
+      return NextResponse.json(
+        { error: message, status: session.data.status, details: session.data },
+        { status: session.status || 502 },
+      )
+    }
+
+    await savePendingTabbyCheckout(paymentId, {
+      items,
+      currency,
+      cartSubtotal,
+      shippingFee,
+      orderTotal,
+      orderRef,
+      countryCode,
+      discountCode: discountCode || undefined,
+      customerEmail: customerEmail || buyer.email,
+      checkoutNotes: checkoutNotes || undefined,
+      buyer,
+      shippingAddress,
+      clientContext,
+      clientIp,
+      createdAt: new Date().toISOString(),
+    })
+
     return NextResponse.json({
-      checkoutId: data.id ?? null,
-      status: data.status ?? null,
-      redirectUrl: data.web_url || data.redirect_url || null,
-      availableProducts: data.configuration?.available_products ?? [],
+      paymentId,
+      checkoutId: session.data.id ?? null,
+      url: webUrl,
+      status: session.data.status,
     })
   } catch (error: unknown) {
+    console.error('Tabby checkout error:', error)
+    await notifyHealthAlert({
+      source: 'api/payments/tabby/checkout',
+      message: error instanceof Error ? error.message : 'Tabby checkout failed',
+    })
     return NextResponse.json(
-      {
-        error:
-          error instanceof Error ? error.message : 'Tabby integration failed.',
-      },
-      { status: 500 }
+      { error: error instanceof Error ? error.message : 'Tabby checkout failed.' },
+      { status: 500 },
     )
   }
 }

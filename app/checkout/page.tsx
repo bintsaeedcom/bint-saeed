@@ -46,17 +46,27 @@ function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   return 'desktop'
 }
 
-function railLabel(rail: CheckoutRail, ui: ReturnType<typeof commerceUi>): string {
+function railLabel(rail: CheckoutRail, ui: ReturnType<typeof commerceUi>, language: string): string {
   if (rail === 'paypal') return ui.checkout.payWithPayPal
   if (rail === 'mollie') return ui.checkout.payWithMollie
   if (rail === 'tamara') return ui.checkout.payWithTamara
+  if (rail === 'tabby') {
+    return language === 'ar' ? 'تابي — ادفع على 4 دفعات' : 'Tabby — pay in 4'
+  }
   return ui.checkout.payWithCard
 }
 
-function continueLabel(rail: CheckoutRail | null, ui: ReturnType<typeof commerceUi>): string {
+function continueLabel(
+  rail: CheckoutRail | null,
+  ui: ReturnType<typeof commerceUi>,
+  language: string,
+): string {
   if (rail === 'paypal') return ui.checkout.continueWithPayPal
   if (rail === 'mollie') return ui.checkout.continueWithMollie
   if (rail === 'tamara') return ui.checkout.continueWithTamara
+  if (rail === 'tabby') {
+    return language === 'ar' ? 'المتابعة مع تابي' : 'Continue with Tabby'
+  }
   return ui.checkout.continueWithCard
 }
 
@@ -202,6 +212,48 @@ export default function CheckoutPage() {
       payment_type: activeRail,
     })
     try {
+      if (activeRail === 'tabby') {
+        if (
+          !tamaraFirstName.trim() ||
+          !tamaraLastName.trim() ||
+          !tamaraEmail.trim() ||
+          !tamaraPhone.trim() ||
+          !tamaraLine1.trim() ||
+          !tamaraCity.trim()
+        ) {
+          throw new Error(
+            language === 'ar'
+              ? 'يرجى إكمال الاسم والبريد والجوال والعنوان لتابي'
+              : 'Please complete your name, email, mobile, and address for Tabby',
+          )
+        }
+        const response = await fetch('/api/payments/tabby/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...checkoutPayload,
+            language,
+            consumer: {
+              firstName: tamaraFirstName.trim(),
+              lastName: tamaraLastName.trim(),
+              email: tamaraEmail.trim(),
+              phone: tamaraPhone.trim(),
+            },
+            shippingAddress: {
+              line1: tamaraLine1.trim(),
+              city: tamaraCity.trim(),
+            },
+          }),
+        })
+        const { url, error } = await response.json()
+        if (!response.ok) throw new Error(error || 'Checkout is unavailable')
+        if (typeof url === 'string' && url.startsWith('https://')) {
+          window.location.assign(url)
+          return
+        }
+        throw new Error('Tabby checkout URL missing')
+      }
+
       if (activeRail === 'tamara') {
         if (!tamaraEligible) {
           throw new Error(ui.checkout.payWithTamara)
@@ -483,7 +535,7 @@ export default function CheckoutPage() {
                           className="mt-1 h-4 w-4 shrink-0 accent-brand-dustyBlue"
                         />
                         <span className="min-w-0 flex-1 space-y-2">
-                          <span className="sr-only">{railLabel(rail, ui)}</span>
+                          <span className="sr-only">{railLabel(rail, ui, language)}</span>
                           <CheckoutPaymentRailIcons rail={rail} />
                           {rail === 'mollie' ? (
                             <span className="block font-montserrat text-[11px] leading-snug tracking-wide text-white/75">
@@ -504,16 +556,27 @@ export default function CheckoutPage() {
                                 : ''}
                             </span>
                           ) : null}
+                          {rail === 'tabby' ? (
+                            <span className="block font-montserrat text-[11px] leading-snug tracking-wide text-white/75">
+                              {railLabel('tabby', ui, language)}
+                            </span>
+                          ) : null}
                         </span>
                       </label>
                     ))}
                   </fieldset>
                 ) : null}
 
-                {activeRail === 'tamara' ? (
+                {activeRail === 'tamara' || activeRail === 'tabby' ? (
                   <div className="mt-5 space-y-2.5 rounded-[4px] border border-white/10 bg-white/5 p-3 sm:mt-6">
                     <p className="font-montserrat text-[10px] uppercase tracking-[0.14em] text-white/55">
-                      {language === 'ar' ? 'تفاصيل تمارا' : 'Tamara details'}
+                      {activeRail === 'tabby'
+                        ? language === 'ar'
+                          ? 'تفاصيل تابي'
+                          : 'Tabby details'
+                        : language === 'ar'
+                          ? 'تفاصيل تمارا'
+                          : 'Tamara details'}
                     </p>
                     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                       <input
@@ -620,7 +683,7 @@ export default function CheckoutPage() {
                   ) : (
                     <>
                       <FiLock className="h-4 w-4 shrink-0 opacity-90" />
-                      <span className="truncate">{continueLabel(activeRail, ui)}</span>
+                      <span className="truncate">{continueLabel(activeRail, ui, language)}</span>
                       <FiArrowRight className={`h-4 w-4 shrink-0 opacity-90 ${isRTL ? 'rotate-180' : ''}`} />
                     </>
                   )}

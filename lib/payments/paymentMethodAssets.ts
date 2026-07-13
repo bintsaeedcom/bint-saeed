@@ -82,6 +82,15 @@ export const FOOTER_EXTRA_PAYMENT_ASSETS: PaymentMethodAsset[] = [
     imageClass: 'h-[26px] w-auto max-w-[80px] object-contain',
     chipClass: BADGE_CHIP,
   },
+  {
+    id: 'tabby',
+    label: 'Tabby',
+    src: '/payment/tabby.svg',
+    width: 50,
+    height: 22,
+    imageClass: 'h-[26px] w-auto max-w-[52px] object-contain',
+    chipClass: BADGE_CHIP,
+  },
 ]
 
 /** Reserved for Mollie EU + GCC BNPL — assets on disk, not shown in UI yet. */
@@ -104,15 +113,6 @@ export const FUTURE_PAYMENT_ASSETS: PaymentMethodAsset[] = [
     imageClass: BADGE_IMAGE,
     chipClass: BADGE_CHIP,
   },
-  {
-    id: 'tabby',
-    label: 'Tabby',
-    src: '/payment/tabby.svg',
-    width: 50,
-    height: 22,
-    imageClass: 'max-h-[16px] max-w-[48px]',
-    chipClass: BADGE_CHIP,
-  },
 ]
 
 const assetById = Object.fromEntries(
@@ -125,9 +125,13 @@ export function getPaymentMethodAsset(id: string): PaymentMethodAsset | undefine
   return assetById[id]
 }
 
-export const CHECKOUT_RAIL_ICON_IDS: Record<'stripe' | 'paypal' | 'mollie' | 'tamara', string[]> = {
+export const CHECKOUT_RAIL_ICON_IDS: Record<
+  'stripe' | 'paypal' | 'mollie' | 'tamara' | 'tabby',
+  string[]
+> = {
   stripe: ['visa', 'mastercard', 'apple-pay', 'google-pay'],
   paypal: ['paypal'],
   mollie: ['ideal', 'klarna'],
   tamara: ['tamara'],
+  tabby: ['tabby'],
 }

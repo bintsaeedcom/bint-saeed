@@ -5,8 +5,13 @@ import {
   isTamaraConfigured,
   isTamaraCurrency,
 } from '@/lib/tamara/config'
+import {
+  isPublicTabbyCheckoutAvailable,
+  isTabbyConfigured,
+  isTabbyCurrency,
+} from '@/lib/tabby/config'
 
-export type CheckoutRail = 'stripe' | 'paypal' | 'mollie' | 'tamara'
+export type CheckoutRail = 'stripe' | 'paypal' | 'mollie' | 'tamara' | 'tabby'
 
 /** EU + UK + CH — markets where Mollie local methods (iDEAL, Klarna, etc.) are offered. */
 const MOLLIE_COUNTRY_CODES = new Set([
@@ -47,12 +52,15 @@ export function getAvailableCheckoutRails(
   const tamaraReady = onServer
     ? isTamaraConfigured() && process.env.NEXT_PUBLIC_TAMARA_CHECKOUT_ENABLED === 'true'
     : isPublicTamaraCheckoutAvailable()
+  const tabbyReady = onServer
+    ? isTabbyConfigured() && process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED === 'true'
+    : isPublicTabbyCheckoutAvailable()
 
   if (stripeReady) rails.push('stripe')
   if (paypalReady) rails.push('paypal')
   if (mollieReady && isMollieCountry(countryCode)) rails.push('mollie')
-  // UAE (AED) + KSA (SAR) — Tamara pays you in both markets
   if (tamaraReady && isTamaraCurrency(currency ?? 'AED')) rails.push('tamara')
+  if (tabbyReady && isTabbyCurrency(currency ?? 'AED')) rails.push('tabby')
   return rails
 }
 
@@ -68,6 +76,11 @@ export function isCheckoutRailConfigured(rail: CheckoutRail): boolean {
     return onServer
       ? isTamaraConfigured() && process.env.NEXT_PUBLIC_TAMARA_CHECKOUT_ENABLED === 'true'
       : isPublicTamaraCheckoutAvailable()
+  }
+  if (rail === 'tabby') {
+    return onServer
+      ? isTabbyConfigured() && process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED === 'true'
+      : isPublicTabbyCheckoutAvailable()
   }
   return onServer ? isMollieConfigured() : isPublicMollieCheckoutAvailable()
 }

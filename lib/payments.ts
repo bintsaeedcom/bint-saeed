@@ -15,8 +15,12 @@ export function getTamaraCheckoutUrl(): string | null {
 
 export function bnplConfigured(): { tabby: boolean; tamara: boolean } {
   return {
-    tabby: Boolean(getTabbyCheckoutUrl()),
-    tamara: Boolean(getTamaraCheckoutUrl()),
+    tabby:
+      process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED === 'true' &&
+      Boolean(process.env.TABBY_SECRET_KEY?.trim() && process.env.TABBY_MERCHANT_CODE?.trim()),
+    tamara:
+      process.env.NEXT_PUBLIC_TAMARA_CHECKOUT_ENABLED === 'true' &&
+      Boolean(process.env.TAMARA_API_TOKEN?.trim()),
   }
 }
 
