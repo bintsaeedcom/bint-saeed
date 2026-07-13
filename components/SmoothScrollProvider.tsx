@@ -5,16 +5,22 @@ import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+function shouldUseLenis(): boolean {
+  if (typeof window === 'undefined') return false
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
+  // Touch / coarse pointer: native scroll is more fluent (Lenis often feels “stuck” scrolling up)
+  if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return false
+  if (navigator.maxTouchPoints > 0 && window.matchMedia('(max-width: 1024px)').matches) return false
+  return true
+}
+
 export default function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduceMotion) return
+    if (!shouldUseLenis()) return
 
     gsap.registerPlugin(ScrollTrigger)
 
     const lenis = new Lenis({
-      // Slightly denser, cinematic glide with calmer acceleration.
       duration: 1.62,
       wheelMultiplier: 0.78,
       touchMultiplier: 0.72,
@@ -28,7 +34,6 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
     lenis.on('scroll', onScroll)
 
     const raf = (time: number) => {
-      // GSAP ticker time is in seconds; Lenis expects milliseconds.
       lenis.raf(time * 1000)
     }
 

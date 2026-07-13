@@ -26,6 +26,7 @@ import {
   glassTextMuted,
   glassTextTitle,
 } from '@/lib/ui/glassClasses'
+import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 
 import 'swiper/css'
 import 'swiper/css/free-mode'
@@ -73,18 +74,16 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     setMounted(true)
   }, [])
 
-  // Close on escape key; restore prior overflow (don't force unset)
   useEffect(() => {
     if (!isOpen) return
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
     document.addEventListener('keydown', handleEscape)
-    const prevOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    const unlock = lockBodyScroll()
     return () => {
       document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = prevOverflow
+      unlock()
     }
   }, [isOpen, onClose])
 

@@ -28,6 +28,7 @@ import {
   productShowsSizeSelector,
 } from '@/lib/shopProductOptions'
 import { formFieldClass } from '@/lib/ui/formFieldClasses'
+import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 
 /** Dense ivory glass — luxury feel without washing out type */
 const sheetClass =
@@ -108,11 +109,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
   useEffect(() => {
     if (!isOpen) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = prev
-    }
+    return lockBodyScroll()
   }, [isOpen])
 
   const activeImages = useMemo(

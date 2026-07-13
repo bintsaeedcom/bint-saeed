@@ -25,6 +25,7 @@ import {
   glassTextTitle,
 } from '@/lib/ui/glassClasses'
 import { formFieldClass } from '@/lib/ui/formFieldClasses'
+import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 
 const MEGA_MENU_SIGNATURE_STRANDS = '/collection-section/bint-saeed-signature-strands-collection-nav.webp'
 const MEGA_MENU_ALL_STRANDS = '/collection-section/bint-saeed-all-strands-collection-nav.webp'
@@ -337,12 +338,11 @@ export default function Header() {
   }, [isHomePage])
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
+    if (!isMobileMenuOpen) {
       setExpandedMobileSection(null)
+      return
     }
+    return lockBodyScroll()
   }, [isMobileMenuOpen])
 
   useEffect(() => {

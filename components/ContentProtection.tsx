@@ -28,21 +28,17 @@ function isAdminPath(pathname: string | null): boolean {
 }
 
 /**
- * Deter casual copying: context menu, selection, copy/cut, image drag, save / view-source.
- * Not a security boundary — determined users can still capture content.
- * Forms, contenteditable, and [data-allow-*] stay usable. Admin is exempt.
- * Search and AI crawlers fetch HTML over HTTP and are unaffected.
+ * Deter casual copying: context menu, image drag, copy/cut shortcuts.
+ * Avoid selectstart / broad drag prevention — those fight mobile scroll on iOS.
+ * Not a security boundary. Admin exempt. Crawlers unaffected.
  */
 export default function ContentProtection() {
   const pathname = usePathname()
 
   useEffect(() => {
-    // Keep local editing friction-free (screenshots, inspect, etc.).
     if (process.env.NODE_ENV !== 'production') return
     if (isAdminPath(pathname)) return
 
-    // Runtime escape hatch for production troubleshooting:
-    // localStorage.setItem('bs_content_protection', 'off')
     try {
       if (localStorage.getItem('bs_content_protection') === 'off') return
     } catch {
@@ -62,22 +58,15 @@ export default function ContentProtection() {
       e.preventDefault()
     }
 
-    const onSelectStart = (e: Event) => {
-      if (isFormField(e.target)) return
-      e.preventDefault()
-    }
-
     const onDragStart = (e: DragEvent) => {
-      if (isImageDragTarget(e.target) || !isFormField(e.target)) {
-        e.preventDefault()
-      }
+      // Images only — blocking all dragstart can stall touch scrolling on some browsers
+      if (isImageDragTarget(e.target)) e.preventDefault()
     }
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (isFormField(e.target)) return
       const key = e.key.toLowerCase()
       const mod = e.ctrlKey || e.metaKey
-      // Block copy / cut / select-all / save / view-source
       if (mod && (key === 'c' || key === 'x' || key === 'a' || key === 's' || key === 'u')) {
         e.preventDefault()
       }
@@ -86,7 +75,6 @@ export default function ContentProtection() {
     document.addEventListener('contextmenu', onContextMenu)
     document.addEventListener('copy', onCopyOrCut, true)
     document.addEventListener('cut', onCopyOrCut, true)
-    document.addEventListener('selectstart', onSelectStart, true)
     document.addEventListener('dragstart', onDragStart, true)
     document.addEventListener('keydown', onKeyDown, true)
 
@@ -95,7 +83,6 @@ export default function ContentProtection() {
       document.removeEventListener('contextmenu', onContextMenu)
       document.removeEventListener('copy', onCopyOrCut, true)
       document.removeEventListener('cut', onCopyOrCut, true)
-      document.removeEventListener('selectstart', onSelectStart, true)
       document.removeEventListener('dragstart', onDragStart, true)
       document.removeEventListener('keydown', onKeyDown, true)
     }

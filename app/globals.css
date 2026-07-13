@@ -904,6 +904,13 @@ html.bs-content-lock body {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+  /* Keep vertical pan free — copy lock must not fight scroll */
+  touch-action: pan-y pinch-zoom;
+}
+
+html.bs-scroll-locked,
+html.bs-scroll-locked body {
+  overscroll-behavior: none;
 }
 
 html.bs-content-lock input,
