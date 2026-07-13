@@ -187,6 +187,8 @@ export default function CheckoutPage() {
     if (activeRail !== 'tamara') return
     const amount = Number(cartSubtotal(items).toFixed(2))
     if (amount <= 0) return
+    // Amount-only while typing — server strips incomplete mobiles so Tamara
+    // does not mark them ineligible mid-entry.
     const timer = window.setTimeout(() => {
       void fetch('/api/payments/tamara/eligibility', {
         method: 'POST',
@@ -194,7 +196,8 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           amount,
           currency: currency.code,
-          phone: tamaraPhone || undefined,
+          country: countryCode || undefined,
+          phone: tamaraPhone.trim() || undefined,
         }),
       })
         .then((r) => r.json())
@@ -202,9 +205,9 @@ export default function CheckoutPage() {
           setTamaraEligible(data.eligible !== false)
         })
         .catch(() => setTamaraEligible(true))
-    }, 400)
+    }, 450)
     return () => window.clearTimeout(timer)
-  }, [activeRail, cartSubtotal, currency.code, items, tamaraPhone])
+  }, [activeRail, cartSubtotal, countryCode, currency.code, items, tamaraPhone])
 
   const beganCheckout = useRef(false)
 
@@ -314,13 +317,6 @@ export default function CheckoutPage() {
       }
 
       if (activeRail === 'tamara') {
-        if (!tamaraEligible) {
-          throw new Error(
-            language === 'ar'
-              ? 'تمارا غير متاحة لهذا الطلب. يرجى اختيار طريقة دفع أخرى.'
-              : 'Tamara is not available for this order. Please choose another payment method.',
-          )
-        }
         const validated = validateBnplCheckoutForm(
           {
             firstName: tamaraFirstName,
@@ -758,14 +754,14 @@ export default function CheckoutPage() {
                           {rail === 'tamara' ? (
                             <span
                               className={`font-montserrat text-[11px] leading-snug tracking-wide sm:flex-1 ${
-                                tamaraEligible ? 'text-white/75' : 'text-white/35'
+                                tamaraEligible ? 'text-white/75' : 'text-amber-200/90'
                               }`}
                             >
                               {ui.checkout.payWithTamara}
                               {!tamaraEligible
                                 ? language === 'ar'
-                                  ? ' (غير متاح لهذا الطلب)'
-                                  : ' (unavailable for this order)'
+                                  ? ' — قد لا تتأهل لهذا الطلب؛ يمكنك المحاولة أو اختيار بطاقة'
+                                  : ' — may not qualify for this order; you can still try, or pay by card'
                                 : ''}
                             </span>
                           ) : null}
@@ -913,15 +909,13 @@ export default function CheckoutPage() {
                     payBusy ||
                     !checkoutEnvReady ||
                     !legalAcknowledged ||
-                    !activeRail ||
-                    (activeRail === 'tamara' && !tamaraEligible)
+                    !activeRail
                   }
                   className={`mt-5 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-[4px] px-4 py-3.5 font-montserrat text-sm font-medium tracking-wide transition-colors sm:mt-6 ${
                     payBusy ||
                     !checkoutEnvReady ||
                     !legalAcknowledged ||
-                    !activeRail ||
-                    (activeRail === 'tamara' && !tamaraEligible)
+                    !activeRail
                       ? 'cursor-not-allowed bg-white/15 text-white/45'
                       : 'bg-brand-dustyBlue text-[#1a0008] hover:bg-white hover:text-brand-darkRed'
                   } ${isRTL ? 'flex-row-reverse' : ''}`}

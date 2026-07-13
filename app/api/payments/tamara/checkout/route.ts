@@ -15,7 +15,7 @@ import {
 import { checkTamaraEligibility } from '@/lib/tamara/eligibility'
 import { createTamaraCheckoutSession } from '@/lib/tamara/api'
 import { savePendingTamaraCheckout } from '@/lib/tamara/pendingCheckoutStore'
-import { isPlausibleTamaraPhone, normalizeTamaraPhone } from '@/lib/tamara/normalizePhone'
+import { isPlausibleTamaraPhone, normalizeTamaraPhone, toTamaraCheckoutPhone } from '@/lib/tamara/normalizePhone'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -146,9 +146,9 @@ export async function POST(request: NextRequest) {
     }
     const consumer = consumerParsed.consumer
 
-    // Local 05… numbers → E.164-style GCC digits Tamara expects
-    consumer.phone_number = normalizeTamaraPhone(consumer.phone_number, countryCode)
-    if (!isPlausibleTamaraPhone(consumer.phone_number, countryCode)) {
+    // Local 05… / +971… → E.164 digits for validation + eligibility
+    const e164Phone = normalizeTamaraPhone(consumer.phone_number, countryCode)
+    if (!isPlausibleTamaraPhone(e164Phone, countryCode)) {
       return NextResponse.json(
         {
           error:
@@ -160,27 +160,30 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Tamara create-session expects national 9-digit (5XXXXXXXX) + country_code
+    const checkoutPhone = toTamaraCheckoutPhone(e164Phone, countryCode)
+    consumer.phone_number = checkoutPhone
+
     const shippingParsed = parseAddress(body.shippingAddress ?? body.address, consumer, countryCode)
     if (!shippingParsed.ok) {
       return NextResponse.json({ error: shippingParsed.error }, { status: 400 })
     }
     const shippingAddress = shippingParsed.address
-    shippingAddress.phone_number = consumer.phone_number
+    shippingAddress.phone_number = checkoutPhone
 
+    // Soft eligibility probe only — never block create-session on this alone.
+    // Tamara's /checkout returns the real denial reason if the order cannot proceed.
     const eligibility = await checkTamaraEligibility({
       amount: orderTotal,
       currency,
-      phone: consumer.phone_number,
+      phone: e164Phone,
     })
     if (!eligibility.eligible) {
-      return NextResponse.json(
-        {
-          error:
-            'Tamara cannot approve this order (amount or mobile may not qualify). Try another payment method, or check your mobile number.',
-          eligible: false,
-        },
-        { status: 400 },
-      )
+      console.warn('Tamara pre-checkout eligibility returned false; still attempting session', {
+        orderTotal,
+        currency,
+        countryCode,
+      })
     }
 
     const orderRef = `BS-T-${Date.now().toString(36).toUpperCase()}`
@@ -216,14 +219,21 @@ export async function POST(request: NextRequest) {
         errors?: Array<{ error_code?: string; message?: string }>
       }
       const fromErrors = Array.isArray(raw.errors)
-        ? raw.errors.map((e) => e.message).filter(Boolean).join(' ')
+        ? raw.errors
+            .map((e) => e.message || e.error_code)
+            .filter(Boolean)
+            .join(' ')
         : ''
       const message =
         raw.message ||
         raw.error ||
         fromErrors ||
         'Failed to create Tamara checkout session.'
-      return NextResponse.json({ error: message, details: session.data }, { status: session.status || 502 })
+      console.error('Tamara create-session failed', { status: session.status, data: session.data })
+      return NextResponse.json(
+        { error: message, details: session.data },
+        { status: session.status || 502 },
+      )
     }
 
     await savePendingTamaraCheckout(session.data.order_id, {

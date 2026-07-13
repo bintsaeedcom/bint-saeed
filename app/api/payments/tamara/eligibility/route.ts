@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { isTamaraConfigured, isTamaraCurrency } from '@/lib/tamara/config'
+import { isTamaraConfigured, isTamaraCurrency, resolveTamaraCountryCode } from '@/lib/tamara/config'
 import { checkTamaraEligibility } from '@/lib/tamara/eligibility'
+import { isPlausibleTamaraPhone, normalizeTamaraPhone } from '@/lib/tamara/normalizePhone'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -16,6 +17,7 @@ export async function POST(request: NextRequest) {
       amount?: number
       currency?: string
       phone?: string
+      country?: string
     }
     const amount = Number(body.amount)
     const currency = String(body.currency || 'AED').toUpperCase()
@@ -23,12 +25,31 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ eligible: false, configured: true })
     }
 
+    const countryCode = resolveTamaraCountryCode({
+      currency,
+      visitorCountry: body.country,
+    })
+
+    // Only send a complete, normalized mobile — partial/raw strings make Tamara
+    // return is_eligible:false and used to disable the pay button incorrectly.
+    let phone: string | undefined
+    if (typeof body.phone === 'string' && body.phone.trim()) {
+      const normalized = normalizeTamaraPhone(body.phone, countryCode)
+      if (isPlausibleTamaraPhone(normalized, countryCode)) {
+        phone = normalized
+      }
+    }
+
     const result = await checkTamaraEligibility({
       amount,
       currency,
-      phone: body.phone,
+      phone,
     })
-    return NextResponse.json({ eligible: result.eligible, configured: true })
+    return NextResponse.json({
+      eligible: result.eligible,
+      configured: true,
+      phoneChecked: Boolean(phone),
+    })
   } catch {
     return NextResponse.json({ eligible: true, configured: true })
   }
