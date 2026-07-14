@@ -52,6 +52,21 @@ const MEDIA = {
   },
 } as const
 
+/**
+ * Phase II Making — 2×2 portrait tiles (`aspect-[3/4]`).
+ * Upload files as 1200×1600 (or 1080×1440) PNG/WebP into `/public/craftsmanship/`.
+ * Slot 1 currently uses the existing cutting still; replace slots 2–4 when ready.
+ */
+const PHASE_II_GRID: Array<{ src: string; alt: string } | null> = [
+  {
+    src: MEDIA.cutting.src,
+    alt: MEDIA.cutting.alt,
+  },
+  null,
+  null,
+  null,
+]
+
 function Still({
   src,
   alt,
@@ -242,12 +257,12 @@ export default function CraftsmanshipClient() {
         className="bs-full-bleed relative border-b border-brand-stone/15 bg-brand-pageCanvas"
         aria-label="Bint Saeed atelier finishing"
       >
-        <div className="group relative isolate h-[min(48vw,200px)] w-full overflow-hidden bg-brand-stone/25 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)] sm:h-[min(36vw,240px)] md:h-[min(24vw,280px)]">
+        <div className="group relative isolate h-[min(72vw,340px)] w-full overflow-hidden bg-brand-stone/25 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)] sm:h-[min(48vw,400px)] md:h-[min(36vw,460px)]">
           <Still
             src={MEDIA.label.src}
             alt={MEDIA.label.alt}
             priority
-            objectPosition="object-[center_68%]"
+            objectPosition="object-[center_58%]"
           />
           <div
             className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(26,2,16,0.04)_0%,transparent_34%,rgba(26,2,16,0.06)_100%)]"
@@ -295,10 +310,37 @@ export default function CraftsmanshipClient() {
             <PhaseProse phase={copy.phaseII} headingId="phase-ii" accent="clay" />
           </div>
 
-          <div className="grid grid-cols-1">
-            <Post ratio="aspect-[4/5] md:aspect-[21/9]">
-              <Still src={MEDIA.cutting.src} alt={MEDIA.cutting.alt} />
-            </Post>
+          <div
+            className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4"
+            aria-label="Making — four atelier stills"
+          >
+            {PHASE_II_GRID.map((slot, index) => (
+              <div key={`phase-ii-${index}`} className="min-w-0">
+                {slot ? (
+                  <Post ratio="aspect-[3/4]">
+                    <Still
+                      src={slot.src}
+                      alt={slot.alt}
+                      objectPosition={index === 0 ? 'object-[center_35%]' : 'object-center'}
+                    />
+                  </Post>
+                ) : (
+                  <Post ratio="aspect-[3/4]">
+                    <div
+                      className="flex h-full w-full flex-col items-center justify-center gap-2 bg-brand-stone/20 px-4 text-center"
+                      aria-label={`Making image placeholder ${index + 1}`}
+                    >
+                      <span className="font-montserrat text-[9px] uppercase tracking-[0.22em] text-brand-dustyBlue/70 sm:text-[10px]">
+                        Image {index + 1}
+                      </span>
+                      <span className="font-montserrat text-[10px] tracking-wide text-brand-clayRed/45 sm:text-[11px]">
+                        1200 × 1600 · 3:4
+                      </span>
+                    </div>
+                  </Post>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>
