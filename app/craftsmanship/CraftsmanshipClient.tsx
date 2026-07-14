@@ -10,6 +10,7 @@ import { getCraftsmanshipCopy, type CraftsmanshipPhaseCopy } from '@/lib/content
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import {
   EDITORIAL_PAGE_CONTAINER,
+  EDITORIAL_PAGE_SHELL,
   EDITORIAL_STACK_CARD,
   EDITORIAL_STACK_CLOSING_PAD,
   EDITORIAL_STACK_CONTENT_PAD,
@@ -17,7 +18,12 @@ import {
 } from '@/lib/ui/editorialPageChrome'
 import { FiArrowRight } from 'react-icons/fi'
 import { withBrandAlt } from '@/lib/products/imageAlt'
-import { motion, useReducedMotion } from 'framer-motion'
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from 'framer-motion'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -37,12 +43,51 @@ function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-12%' }}
-      transition={{ duration: 0.7, delay, ease: EASE }}
+      transition={{ duration: 0.75, delay, ease: EASE }}
     >
       {children}
+    </motion.div>
+  )
+}
+
+/** Soft parallax portrait — same language as Giving Forward hangtag. */
+function ParallaxFrame({
+  children,
+  className = '',
+  invert = false,
+}: {
+  children: ReactNode
+  className?: string
+  invert?: boolean
+}) {
+  const clipRef = useRef<HTMLDivElement>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: clipRef,
+    offset: ['start end', 'end start'],
+  })
+  const y = useTransform(scrollYProgress, [0, 1], invert ? [28, -36] : [-24, 32])
+  const scale = useTransform(scrollYProgress, [0, 1], [1.04, 1.09])
+
+  return (
+    <motion.div
+      initial={reduceMotion ? false : { opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-10%' }}
+      transition={{ duration: 0.7, delay: 0.06, ease: EASE }}
+      className={className}
+    >
+      <div ref={clipRef} className="relative h-full w-full overflow-hidden">
+        <motion.div
+          style={reduceMotion ? undefined : { y, scale }}
+          className="absolute inset-0 will-change-transform"
+        >
+          {children}
+        </motion.div>
+      </div>
     </motion.div>
   )
 }
@@ -241,36 +286,58 @@ function Post({
   )
 }
 
+/** Phase title + paragraphs — Giving Forward chapter cadence, copy unchanged. */
 function PhaseProse({
   phase,
   headingId,
   accent = 'dusty',
+  sticky = false,
+  index = 1,
 }: {
   phase: CraftsmanshipPhaseCopy
   headingId: string
   accent?: 'dusty' | 'clay'
+  sticky?: boolean
+  index?: number
 }) {
   const { isRTL } = useLanguage()
   const labelColor = accent === 'clay' ? 'text-brand-clayRed/90' : 'text-brand-dustyBlue'
+  const stickyClass = sticky
+    ? 'lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]'
+    : ''
 
   return (
-    <div className={`max-w-3xl ${isRTL ? 'ms-auto text-right' : ''}`}>
+    <div className={`max-w-xl ${stickyClass} ${isRTL ? 'ms-auto text-right' : ''}`}>
       <Reveal>
-        <p className={`mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] ${labelColor}`}>{phase.label}</p>
-        <h2
-          id={headingId}
-          className="font-rozha text-[clamp(1.75rem,3.4vw,2.65rem)] leading-[1.05] tracking-[0.03em] text-brand-darkRed"
-        >
-          {phase.title}
-        </h2>
+        <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <span className="shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-dustyBlue">
+            {String(index).padStart(2, '0')}
+          </span>
+          <div className="min-w-0">
+            <p className={`mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] ${labelColor}`}>
+              {phase.label}
+            </p>
+            <h2
+              id={headingId}
+              className="font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] text-brand-darkRed"
+            >
+              {phase.title}
+            </h2>
+          </div>
+        </div>
       </Reveal>
-      <div className="mt-8 space-y-6 font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-brand-darkRed/[0.88] md:mt-10 md:space-y-7 md:text-[16px] md:leading-[2]">
-        {phase.paragraphs.map((paragraph, index) => (
-          <Reveal key={index} delay={0.08 + index * 0.07}>
-            <p className="mb-0">{paragraph}</p>
+
+      <ol className="mt-10 space-y-0 md:mt-12">
+        {phase.paragraphs.map((paragraph, i) => (
+          <Reveal key={i} delay={0.08 + i * 0.07}>
+            <li className="border-t border-brand-darkRed/12 py-6 first:border-t first:pt-6 md:py-7">
+              <p className="font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-brand-darkRed/[0.88] md:text-[16px] md:leading-[2]">
+                {paragraph}
+              </p>
+            </li>
           </Reveal>
         ))}
-      </div>
+      </ol>
     </div>
   )
 }
@@ -285,7 +352,11 @@ export default function CraftsmanshipClient() {
   const craftLabel = language === 'id' ? copy.breadcrumbCraftsmanship : isRTL ? 'الحرفية' : 'Craftsmanship'
 
   return (
-    <div className={`relative isolate min-h-screen w-full min-w-0 bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div
+      className={`${EDITORIAL_PAGE_SHELL} relative isolate min-h-screen w-full min-w-0 bg-[#1a0210] ${
+        isRTL ? 'rtl' : 'ltr'
+      }`}
+    >
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={ABOUT_SECTION_HERO_IMAGES.craftsmanship}
@@ -300,13 +371,16 @@ export default function CraftsmanshipClient() {
         description={description || undefined}
       />
 
-      {/* Opening — label detail as a stacked full-bleed card */}
+      {/* Opening — full-bleed label still with soft reveal */}
       <section
         className={`relative z-10 overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-label="Bint Saeed atelier finishing"
       >
         <div className={`${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className="group relative isolate h-[min(72vw,320px)] w-full overflow-hidden bg-brand-stone/25 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)] sm:h-[min(48vw,380px)] md:h-[min(36vw,440px)]">
+          <ParallaxFrame
+            invert={isRTL}
+            className="relative isolate h-[min(72vw,340px)] w-full overflow-hidden bg-brand-stone/25 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)] sm:h-[min(48vw,400px)] md:h-[min(38vw,460px)]"
+          >
             <Still
               src={MEDIA.label.src}
               alt={MEDIA.label.alt}
@@ -317,38 +391,48 @@ export default function CraftsmanshipClient() {
               className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(26,2,16,0.04)_0%,transparent_34%,rgba(26,2,16,0.06)_100%)]"
               aria-hidden
             />
-          </div>
+          </ParallaxFrame>
         </div>
       </section>
 
-      {/* Phase I */}
+      {/* Phase I — prose left / media right (Giving Forward split) */}
       <section
         className={`relative z-20 overflow-hidden bg-[#f7f3ec] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="phase-i"
       >
         <div className={`${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-10">
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
             <div className={`lg:col-span-5 ${isRTL ? 'lg:order-2' : ''}`}>
-              <PhaseProse phase={copy.phaseI} headingId="phase-i" />
+              <PhaseProse phase={copy.phaseI} headingId="phase-i" sticky index={1} />
             </div>
             <div className={`lg:col-span-7 ${isRTL ? 'lg:order-1' : ''}`}>
               <div className="grid grid-cols-12 gap-3 md:gap-4">
                 <div className="col-span-7 flex flex-col gap-3 md:col-span-6 md:gap-4">
-                  <Post ratio="aspect-[3/4]">
-                    <Still src={MEDIA.cad.src} alt={MEDIA.cad.alt} />
-                  </Post>
-                  <Post ratio="aspect-[5/4] md:aspect-[16/10]">
-                    <Still
-                      src={MEDIA.textile.src}
-                      alt={MEDIA.textile.alt}
-                      objectPosition="object-[center_22%]"
-                    />
-                  </Post>
+                  <Reveal delay={0.06}>
+                    <Post ratio="aspect-[3/4]">
+                      <ParallaxFrame className="absolute inset-0" invert={isRTL}>
+                        <Still src={MEDIA.cad.src} alt={MEDIA.cad.alt} />
+                      </ParallaxFrame>
+                    </Post>
+                  </Reveal>
+                  <Reveal delay={0.14}>
+                    <Post ratio="aspect-[5/4] md:aspect-[16/10]">
+                      <Still
+                        src={MEDIA.textile.src}
+                        alt={MEDIA.textile.alt}
+                        objectPosition="object-[center_22%]"
+                      />
+                    </Post>
+                  </Reveal>
                 </div>
                 <div className="col-span-5 md:col-span-6">
-                  <Post ratio="aspect-[3/4] md:aspect-auto md:h-full">
-                    <Still src={MEDIA.pattern.src} alt={MEDIA.pattern.alt} />
-                  </Post>
+                  <Reveal delay={0.1}>
+                    <Post ratio="aspect-[3/4] md:aspect-auto md:h-full md:min-h-[28rem]">
+                      <ParallaxFrame className="absolute inset-0" invert={!isRTL}>
+                        <Still src={MEDIA.pattern.src} alt={MEDIA.pattern.alt} />
+                      </ParallaxFrame>
+                    </Post>
+                  </Reveal>
                 </div>
               </div>
             </div>
@@ -356,38 +440,41 @@ export default function CraftsmanshipClient() {
         </div>
       </section>
 
-      {/* Phase II */}
+      {/* Phase II — prose left / films right */}
       <section
         className={`relative z-30 overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="phase-ii"
       >
         <div className={`${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className="mb-10 max-w-3xl md:mb-14">
-            <PhaseProse phase={copy.phaseII} headingId="phase-ii" accent="clay" />
-          </div>
-
-          <div
-            className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4"
-            aria-label="Bint Saeed atelier process films"
-          >
-            {CRAFT_VIDEOS.map((video) => (
-              <div key={video.src} className="min-w-0">
-                <Post ratio="aspect-[3/4]">
-                  <Film src={video.src} ariaLabel={video.ariaLabel} />
-                </Post>
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+            <div className={`lg:col-span-5 ${isRTL ? 'lg:order-2' : ''}`}>
+              <PhaseProse phase={copy.phaseII} headingId="phase-ii" accent="clay" sticky index={2} />
+            </div>
+            <div className={`lg:col-span-7 ${isRTL ? 'lg:order-1' : ''}`}>
+              <div
+                className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]"
+                aria-label="Bint Saeed atelier process films"
+              >
+                {CRAFT_VIDEOS.map((video, index) => (
+                  <Reveal key={video.src} delay={0.08 + index * 0.08} className="min-w-0">
+                    <Post ratio="aspect-[3/4]">
+                      <Film src={video.src} ariaLabel={video.ariaLabel} />
+                    </Post>
+                  </Reveal>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Phase III — prose only */}
+      {/* Phase III — chapter stack */}
       <section
         className={`relative z-40 overflow-hidden bg-[linear-gradient(180deg,#f7f3ec_0%,#efe9df_55%,#e8e2d8_100%)] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="phase-iii"
       >
         <div className={`${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <PhaseProse phase={copy.phaseIII} headingId="phase-iii" />
+          <PhaseProse phase={copy.phaseIII} headingId="phase-iii" index={3} />
         </div>
       </section>
 
@@ -421,7 +508,7 @@ export default function CraftsmanshipClient() {
         </div>
       </section>
 
-      {/* Closing atelier still — second-last, zoomed out (full frame) */}
+      {/* Closing atelier still — zoomed out */}
       <section
         className={`relative z-[50] overflow-hidden bg-[#f7f3ec] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-label={MEDIA.shearsMeasure.alt}
@@ -468,17 +555,19 @@ export default function CraftsmanshipClient() {
           aria-hidden
         />
         <div className={`relative mx-auto flex max-w-lg flex-col items-center text-center ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <p className="mb-10 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] tracking-[0.02em] text-[#e8ddd4]">
-            {copy.ctaHeading}
-          </p>
-          <LocaleLink
-            href="/shop?from=craftsmanship"
-            className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-[4px] border border-[#e8ddd4]/45 bg-[#e8ddd4]/10 px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-[#e8ddd4] shadow-[0_18px_48px_-28px_rgba(0,0,0,0.45)] backdrop-blur-[2px] transition-colors hover:border-[#e8ddd4]/80 hover:bg-[#e8ddd4] hover:text-brand-darkRed"
-            data-cursor-hover
-          >
-            {copy.ctaButton}
-            <FiArrowRight className="h-4 w-4" />
-          </LocaleLink>
+          <Reveal>
+            <p className="mb-10 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] tracking-[0.02em] text-[#e8ddd4]">
+              {copy.ctaHeading}
+            </p>
+            <LocaleLink
+              href="/shop?from=craftsmanship"
+              className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-[4px] border border-[#e8ddd4]/45 bg-[#e8ddd4]/10 px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-[#e8ddd4] shadow-[0_18px_48px_-28px_rgba(0,0,0,0.45)] backdrop-blur-[2px] transition-colors hover:border-[#e8ddd4]/80 hover:bg-[#e8ddd4] hover:text-brand-darkRed"
+              data-cursor-hover
+            >
+              {copy.ctaButton}
+              <FiArrowRight className="h-4 w-4" />
+            </LocaleLink>
+          </Reveal>
         </div>
       </section>
     </div>
