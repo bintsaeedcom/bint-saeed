@@ -135,7 +135,7 @@ export default function TheCodesClient() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(codesJsonLd) }} />
       <AboutSectionHero
         rtl={isRTL}
-        imageSrc={ABOUT_SECTION_HERO_IMAGES.givingForward}
+        imageSrc={ABOUT_SECTION_HERO_IMAGES.theCodes}
         imageAlt={hero.alt}
         priority
         segments={[

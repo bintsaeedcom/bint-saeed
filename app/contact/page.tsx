@@ -203,6 +203,14 @@ export default function ContactPage() {
     ? 'سواء كانت هذه زيارتك الأولى لـ Bint Saeed أو أنكِ جزء من مجتمعنا، يسعدنا مساعدتك في كل استفسار.'
     : 'Whether you\u2019re discovering Bint Saeed for the first time or already part of our community, we\u2019re pleased to assist with every enquiry.'
 
+  const contactTitle = isRTL ? 'تواصلي معنا' : 'Contact Us'
+  const contactImage = {
+    src: '/contact/bint-saeed-contact-us-abu-dhabi-house-editorial-portrait.webp',
+    alt: isRTL
+      ? 'Bint Saeed — صورة تحريرية لأبوظبي: امرأة بعباية عنابية أمام نافورة وعمارة معاصرة'
+      : 'Bint Saeed Contact Us — editorial portrait in Abu Dhabi, woman in a burgundy abaya by a fountain against contemporary architecture',
+  } as const
+
   return (
     <div className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-brand-pageCanvas pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
       <AboutSectionHero
@@ -215,12 +223,24 @@ export default function ContactPage() {
           { label: isRTL ? 'تواصلي معنا' : 'Contact' },
         ]}
         eyebrow={getAboutEditorialHeroEyebrow(language)}
-        title={isRTL ? 'تواصلي معنا' : 'Contact Us'}
+        title={contactTitle}
         description={contactHeroDescription}
       />
 
-      <div className={`${EDITORIAL_PAGE_CONTAINER} pt-8`}>
-        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">
+      <div className={`${EDITORIAL_PAGE_CONTAINER} pt-10 lg:pt-14`}>
+        <div className={`mb-10 max-w-2xl md:mb-12 ${isRTL ? 'ms-auto text-right' : ''}`}>
+          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
+            Bint Saeed
+          </p>
+          <h2 className="mt-3 font-rozha text-[clamp(2rem,4vw,2.75rem)] leading-tight text-brand-darkRed">
+            {contactTitle}
+          </h2>
+          <p className="mt-4 font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/80">
+            {contactHeroDescription}
+          </p>
+        </div>
+
+        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
           <motion.div
             initial={{ opacity: 0, x: isRTL ? 40 : -40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -411,6 +431,21 @@ export default function ContactPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="space-y-6"
           >
+            <figure className="overflow-hidden border border-brand-darkRed/10 bg-brand-stone/15 shadow-[0_24px_56px_rgba(26,2,16,0.08)]">
+              <div className="relative aspect-[4/5] w-full">
+                {/* eslint-disable-next-line @next/next/no-img-element -- static editorial still */}
+                <img
+                  src={contactImage.src}
+                  alt={contactImage.alt}
+                  width={1080}
+                  height={1350}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
+              </div>
+            </figure>
+
             <div className={`${contactPanelClass} space-y-3`}>
               {contactInfo.map((item, index) => (
                 <div

@@ -6,7 +6,10 @@ import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getPersonalisationCopy } from '@/lib/content/personalisationCopyI18n'
-import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
+import {
+  ABOUT_EDITORIAL_BANNER_IMAGE,
+  ABOUT_SECTION_HERO_IMAGES,
+} from '@/lib/about/aboutSectionHeroImages'
 import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { editorialSectionH2 } from '@/lib/ui/editorialTypography'
 import {
@@ -23,7 +26,8 @@ import {
 const INNER_CONTAINER_CLASS = EDITORIAL_PAGE_CONTAINER
 const PERSONALISATION_PAGE = encodeURIComponent('Personalisation Page')
 const HERO_IMAGE = ABOUT_SECTION_HERO_IMAGES.personalisation
-const SECRET_POCKET_IMAGE = HERO_IMAGE
+/** Body pocket still uses shared fabric until a dedicated pocket still is supplied. */
+const SECRET_POCKET_IMAGE = ABOUT_EDITORIAL_BANNER_IMAGE
 const LABEL_IMAGES = ['label1.PNG', 'label2.PNG', 'label3.PNG', 'label4.PNG'].map(
   (file) => `/${PERSONALISATION_PAGE}/${encodeURIComponent(file)}`,
 )
