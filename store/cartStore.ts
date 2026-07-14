@@ -24,18 +24,31 @@ export interface CartItem {
   customisationMessage?: string
   /** @deprecated No longer charged — kept for persisted carts. */
   customisationSurcharge?: number
+  /** Digital gift card purchase metadata (AED denomination). */
+  giftCard?: {
+    denominationAed: number
+    sendToRecipient: boolean
+    recipientName?: string
+    recipientEmail?: string
+    personalMessage?: string
+  }
 }
 
 function sameCartLine(
-  a: Pick<CartItem, 'id' | 'size' | 'color' | 'lengthCm' | 'customisationMessage'>,
-  b: Pick<CartItem, 'id' | 'size' | 'color' | 'lengthCm' | 'customisationMessage'>
+  a: Pick<CartItem, 'id' | 'size' | 'color' | 'lengthCm' | 'customisationMessage' | 'giftCard'>,
+  b: Pick<CartItem, 'id' | 'size' | 'color' | 'lengthCm' | 'customisationMessage' | 'giftCard'>
 ): boolean {
+  const giftKey = (g: CartItem['giftCard']) =>
+    g
+      ? `${g.denominationAed}|${g.sendToRecipient ? 1 : 0}|${g.recipientEmail ?? ''}|${g.personalMessage ?? ''}|${g.recipientName ?? ''}`
+      : ''
   return (
     a.id === b.id &&
     a.size === b.size &&
     a.color === b.color &&
     (a.lengthCm ?? '') === (b.lengthCm ?? '') &&
-    (a.customisationMessage ?? '') === (b.customisationMessage ?? '')
+    (a.customisationMessage ?? '') === (b.customisationMessage ?? '') &&
+    giftKey(a.giftCard) === giftKey(b.giftCard)
   )
 }
 

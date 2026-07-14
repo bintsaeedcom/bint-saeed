@@ -38,6 +38,11 @@ import {
 import { formFieldErrorClass, formFieldOnDarkClass } from '@/lib/ui/formFieldClasses'
 import { tabbyMessage, tabbyRejectionMessage } from '@/lib/tabby/messages'
 import { normalizeTabbyPhone } from '@/lib/tabby/normalizePhone'
+import { cartRequiresPhysicalShipping } from '@/lib/giftCards/cartDetection'
+import { getEstimatedShippingFee } from '@/lib/pricing'
+import CheckoutGiftCardApply, {
+  type AppliedGiftCardPreview,
+} from '@/components/CheckoutGiftCardApply'
 import dynamic from 'next/dynamic'
 
 const StripeEmbeddedCheckoutForm = dynamic(
@@ -88,6 +93,16 @@ export default function CheckoutPage() {
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const [appliedGiftCard, setAppliedGiftCard] = useState<AppliedGiftCardPreview | null>(null)
+  const requiresPhysicalShipping = cartRequiresPhysicalShipping(items)
+  const merchandiseSubtotal = Number(cartSubtotal(items).toFixed(2))
+  const estimatedShipping = requiresPhysicalShipping
+    ? getEstimatedShippingFee(currency.code)
+    : 0
+  const amountBeforeGiftCard = Number((merchandiseSubtotal + estimatedShipping).toFixed(2))
+  const giftCredit = appliedGiftCard?.appliedInCurrency ?? 0
+  const amountDueNow = Math.max(0, Number((amountBeforeGiftCard - giftCredit).toFixed(2)))
+  const giftCardCoversFull = Boolean(appliedGiftCard && amountDueNow <= 0)
 
   const paymentReturnStatus = useMemo(() => {
     const tabby = searchParams?.get('tabby')
@@ -182,6 +197,10 @@ export default function CheckoutPage() {
       router.replace(localize('/cart'))
     }
   }, [items.length, localize, router])
+
+  useEffect(() => {
+    setAppliedGiftCard(null)
+  }, [currency.code])
 
   useEffect(() => {
     void fetchGeoData().then((geo) => {
@@ -305,6 +324,8 @@ export default function CheckoutPage() {
   const checkoutPayload = {
     items,
     currency: currency.code,
+    appliedGiftCardCode: appliedGiftCard?.code || undefined,
+    customerEmail: tamaraEmail.trim() || undefined,
     clientContext: {
       localTime: new Date().toString(),
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
@@ -319,7 +340,7 @@ export default function CheckoutPage() {
       toast.error(ui.checkout.legalRequired)
       return
     }
-    if (!activeRail || !isCheckoutRailConfigured(activeRail)) {
+    if (!giftCardCoversFull && (!activeRail || !isCheckoutRailConfigured(activeRail))) {
       toast.error(ui.checkout.selectPaymentMethod)
       return
     }
@@ -331,12 +352,64 @@ export default function CheckoutPage() {
       items,
     })
     trackEvent('add_payment_info', {
-      checkout_provider: activeRail,
+      checkout_provider: giftCardCoversFull ? 'gift_card' : activeRail,
       currency: currency.code,
       value: Number(cartSubtotal(items).toFixed(2)),
-      payment_type: activeRail,
+      payment_type: giftCardCoversFull ? 'gift_card' : activeRail,
     })
     try {
+      if (giftCardCoversFull) {
+        if (!tamaraEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(tamaraEmail.trim())) {
+          throw new Error(
+            language === 'ar'
+              ? 'أدخلي بريداً إلكترونياً صالحاً لتأكيد الطلب.'
+              : 'Enter a valid email for your order confirmation.',
+          )
+        }
+        if (requiresPhysicalShipping && (!tamaraLine1.trim() || !tamaraCity.trim())) {
+          setBnplFieldError({
+            field: !tamaraLine1.trim() ? 'line1' : 'city',
+            message:
+              language === 'ar'
+                ? 'أدخلي عنوان الشحن لهذا الطلب.'
+                : 'Enter a shipping address for this order.',
+          })
+          throw new Error(
+            language === 'ar'
+              ? 'أدخلي عنوان الشحن لهذا الطلب.'
+              : 'Enter a shipping address for this order.',
+          )
+        }
+        const response = await fetch('/api/checkout/gift-card-pay', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...checkoutPayload,
+            customerEmail: tamaraEmail.trim(),
+            consumer: {
+              firstName: tamaraFirstName.trim() || 'Guest',
+              lastName: tamaraLastName.trim() || 'Guest',
+              email: tamaraEmail.trim(),
+              phone: tamaraPhone.trim() || undefined,
+            },
+            shippingAddress: requiresPhysicalShipping
+              ? { line1: tamaraLine1.trim(), city: tamaraCity.trim() }
+              : undefined,
+          }),
+        })
+        if (!response.ok) {
+          throw new Error(await readCheckoutError(response, 'Gift card checkout is unavailable'))
+        }
+        const data = (await response.json()) as { orderId?: string; error?: string }
+        if (data.error) throw new Error(data.error)
+        window.location.assign(
+          localize(
+            `/checkout/success?order_id=${encodeURIComponent(data.orderId || '')}&provider=gift_card`,
+          ),
+        )
+        return
+      }
+
       if (activeRail === 'tabby') {
         if (!tabbyEligible) {
           throw new Error(tabbyRejectMessage || tabbyMessage('generalReject', language))
@@ -354,6 +427,7 @@ export default function CheckoutPage() {
             language,
             provider: 'tabby',
             countryCode: countryCode === 'SA' ? 'SA' : 'AE',
+            requireShippingAddress: requiresPhysicalShipping,
           },
         )
         if (!validated.ok) {
@@ -404,7 +478,12 @@ export default function CheckoutPage() {
             line1: tamaraLine1,
             city: tamaraCity,
           },
-          { language, provider: 'tamara', countryCode: countryCode === 'SA' ? 'SA' : 'AE' },
+          {
+            language,
+            provider: 'tamara',
+            countryCode: countryCode === 'SA' ? 'SA' : 'AE',
+            requireShippingAddress: requiresPhysicalShipping,
+          },
         )
         if (!validated.ok) {
           setBnplFieldError({ field: validated.field, message: validated.message })
@@ -787,11 +866,90 @@ export default function CheckoutPage() {
                   <span className="min-w-0">{ui.cart.subtotal}</span>
                   <span className="shrink-0 whitespace-nowrap text-white">{formatCartSubtotal(items)}</span>
                 </div>
+                {estimatedShipping > 0 ? (
+                  <div
+                    className={`mt-2 flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  >
+                    <span className="min-w-0">{ui.cart.shippingLabel}</span>
+                    <span className="shrink-0 whitespace-nowrap text-white">
+                      {formatAmount(estimatedShipping)}
+                    </span>
+                  </div>
+                ) : (
+                  <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
+                    {requiresPhysicalShipping
+                      ? ui.cart.taxesIncluded
+                      : language === 'ar'
+                        ? 'رقمي — بدون شحن.'
+                        : 'Digital — no shipping.'}
+                  </p>
+                )}
+                <CheckoutGiftCardApply
+                  items={items}
+                  amountDueBeforeGiftCard={amountBeforeGiftCard}
+                  applied={appliedGiftCard}
+                  onApplied={setAppliedGiftCard}
+                />
+                {appliedGiftCard ? (
+                  <div
+                    className={`mt-3 flex items-baseline justify-between gap-4 border-t border-white/10 pt-3 font-montserrat text-sm tracking-wide text-white ${isRTL ? 'flex-row-reverse' : ''}`}
+                  >
+                    <span className="min-w-0">
+                      {language === 'ar' ? 'المستحق الآن' : 'Due now'}
+                    </span>
+                    <span className="shrink-0 whitespace-nowrap font-medium">
+                      {formatAmount(amountDueNow)}
+                    </span>
+                  </div>
+                ) : null}
                 <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
                   {ui.cart.taxesIncluded}
                 </p>
 
-                {availableRails.length > 1 ? (
+                {giftCardCoversFull ? (
+                  <div className="mt-6 space-y-2.5">
+                    <p className="font-montserrat text-[11px] leading-snug tracking-wide text-brand-dustyBlue">
+                      {language === 'ar'
+                        ? 'بطاقة الهدايا تغطي الطلب بالكامل. أدخلي بريدك لإتمام الدفع.'
+                        : 'Your gift card covers this order. Enter your email to complete payment.'}
+                    </p>
+                    <input
+                      value={tamaraEmail}
+                      onChange={(e) => {
+                        setTamaraEmail(e.target.value)
+                        clearBnplFieldError('email')
+                      }}
+                      placeholder="Email"
+                      type="email"
+                      className={bnplFieldClass('email')}
+                      autoComplete="email"
+                    />
+                    {requiresPhysicalShipping ? (
+                      <>
+                        <input
+                          value={tamaraLine1}
+                          onChange={(e) => {
+                            setTamaraLine1(e.target.value)
+                            clearBnplFieldError('line1')
+                          }}
+                          placeholder={language === 'ar' ? 'عنوان الشحن' : 'Shipping address'}
+                          className={bnplFieldClass('line1')}
+                          autoComplete="street-address"
+                        />
+                        <input
+                          value={tamaraCity}
+                          onChange={(e) => {
+                            setTamaraCity(e.target.value)
+                            clearBnplFieldError('city')
+                          }}
+                          placeholder={language === 'ar' ? 'المدينة' : 'City'}
+                          className={bnplFieldClass('city')}
+                          autoComplete="address-level2"
+                        />
+                      </>
+                    ) : null}
+                  </div>
+                ) : availableRails.length > 1 ? (
                   <fieldset className="mt-6 space-y-2.5 sm:mt-8">
                     <legend className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.16em] text-white/55">
                       {ui.checkout.paymentMethod}
@@ -862,7 +1020,7 @@ export default function CheckoutPage() {
                   </fieldset>
                 ) : null}
 
-                {activeRail === 'tamara' || activeRail === 'tabby' ? (
+                {(!giftCardCoversFull && (activeRail === 'tamara' || activeRail === 'tabby')) ? (
                   <div className="mt-5 space-y-2.5 rounded-[6px] border border-white/15 bg-white/[0.08] p-3.5 sm:mt-6 sm:p-4">
                     <p className="font-montserrat text-[10px] uppercase tracking-[0.14em] text-[#e8d8c8]/75">
                       {activeRail === 'tabby'
@@ -949,28 +1107,38 @@ export default function CheckoutPage() {
                       autoComplete="tel"
                       aria-invalid={bnplFieldError?.field === 'phone'}
                     />
-                    <input
-                      value={tamaraLine1}
-                      onChange={(e) => {
-                        setTamaraLine1(e.target.value)
-                        clearBnplFieldError('line1')
-                      }}
-                      placeholder={language === 'ar' ? 'عنوان الشحن' : 'Shipping address'}
-                      className={bnplFieldClass('line1')}
-                      autoComplete="street-address"
-                      aria-invalid={bnplFieldError?.field === 'line1'}
-                    />
-                    <input
-                      value={tamaraCity}
-                      onChange={(e) => {
-                        setTamaraCity(e.target.value)
-                        clearBnplFieldError('city')
-                      }}
-                      placeholder={language === 'ar' ? 'المدينة' : 'City'}
-                      className={bnplFieldClass('city')}
-                      autoComplete="address-level2"
-                      aria-invalid={bnplFieldError?.field === 'city'}
-                    />
+                    {requiresPhysicalShipping ? (
+                      <>
+                        <input
+                          value={tamaraLine1}
+                          onChange={(e) => {
+                            setTamaraLine1(e.target.value)
+                            clearBnplFieldError('line1')
+                          }}
+                          placeholder={language === 'ar' ? 'عنوان الشحن' : 'Shipping address'}
+                          className={bnplFieldClass('line1')}
+                          autoComplete="street-address"
+                          aria-invalid={bnplFieldError?.field === 'line1'}
+                        />
+                        <input
+                          value={tamaraCity}
+                          onChange={(e) => {
+                            setTamaraCity(e.target.value)
+                            clearBnplFieldError('city')
+                          }}
+                          placeholder={language === 'ar' ? 'المدينة' : 'City'}
+                          className={bnplFieldClass('city')}
+                          autoComplete="address-level2"
+                          aria-invalid={bnplFieldError?.field === 'city'}
+                        />
+                      </>
+                    ) : (
+                      <p className="font-montserrat text-[11px] leading-snug tracking-wide text-white/60">
+                        {language === 'ar'
+                          ? 'بطاقة الهدايا رقمية — تُرسل بالبريد الإلكتروني، دون شحن.'
+                          : 'Gift cards are digital — delivered by email, no shipping.'}
+                      </p>
+                    )}
                   </div>
                 ) : null}
 
@@ -1009,17 +1177,19 @@ export default function CheckoutPage() {
                   onClick={() => void startCheckout()}
                   disabled={
                     payBusy ||
-                    !checkoutEnvReady ||
                     !legalAcknowledged ||
-                    !activeRail ||
-                    (activeRail === 'tabby' && !tabbyEligible)
+                    (!giftCardCoversFull &&
+                      (!checkoutEnvReady ||
+                        !activeRail ||
+                        (activeRail === 'tabby' && !tabbyEligible)))
                   }
                   className={`mt-5 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-[4px] px-4 py-3.5 font-montserrat text-sm font-medium tracking-wide transition-colors sm:mt-6 ${
                     payBusy ||
-                    !checkoutEnvReady ||
                     !legalAcknowledged ||
-                    !activeRail ||
-                    (activeRail === 'tabby' && !tabbyEligible)
+                    (!giftCardCoversFull &&
+                      (!checkoutEnvReady ||
+                        !activeRail ||
+                        (activeRail === 'tabby' && !tabbyEligible)))
                       ? 'cursor-not-allowed bg-white/15 text-white/45'
                       : 'bg-brand-dustyBlue text-[#1a0008] hover:bg-white hover:text-brand-darkRed'
                   } ${isRTL ? 'flex-row-reverse' : ''}`}
@@ -1030,12 +1200,18 @@ export default function CheckoutPage() {
                   ) : (
                     <>
                       <FiLock className="h-4 w-4 shrink-0 opacity-90" />
-                      <span className="truncate">{continueLabel(activeRail, ui, language)}</span>
+                      <span className="truncate">
+                        {giftCardCoversFull
+                          ? language === 'ar'
+                            ? 'أكملي الدفع ببطاقة الهدايا'
+                            : 'Complete with gift card'
+                          : continueLabel(activeRail, ui, language)}
+                      </span>
                       <FiArrowRight className={`h-4 w-4 shrink-0 opacity-90 ${isRTL ? 'rotate-180' : ''}`} />
                     </>
                   )}
                 </button>
-                {!checkoutEnvReady ? (
+                {!checkoutEnvReady && !giftCardCoversFull ? (
                   <p className="mt-3 text-center font-montserrat text-[10px] uppercase tracking-[0.15em] text-amber-300/80">
                     {getCheckoutConfigHint('stripe')}
                   </p>

@@ -10,13 +10,15 @@ import { isPayPalConfigured } from '@/lib/paypal/config'
 import { toPayPalAmountValue } from '@/lib/paypal/amount'
 import { resolvePayPalSettlementCurrency } from '@/lib/paypal/settlementCurrency'
 import { savePendingPayPalCheckout } from '@/lib/paypal/pendingCheckoutStore'
+import { cartRequiresPhysicalShipping } from '@/lib/giftCards/cartDetection'
+import { resolveOptionalCheckoutGiftCredit } from '@/lib/giftCards/resolveCheckoutGiftCredit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   if (!isPayPalConfigured()) {
-    return NextResponse.json({ error: 'PayPal is not configured on this environment.' }, { status: 503 })
+    return NextResponse.json({ error: 'PayPal is not configured.' }, { status: 503 })
   }
 
   const tooMany = await rateLimitResponse(request, 'checkout', 45, 3600)
@@ -47,16 +49,36 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid cart total.' }, { status: 400 })
     }
 
-    const shippingFee = resolveShippingFee({
-      subtotal: cartSubtotal,
+    const shippingFee = cartRequiresPhysicalShipping(parsed.items)
+      ? resolveShippingFee({
+          subtotal: cartSubtotal,
+          currency,
+          country: parsed.clientContext.country,
+        })
+      : 0
+    const orderTotalBeforeGiftCard = cartSubtotal + shippingFee
+
+    const gift = await resolveOptionalCheckoutGiftCredit({
+      parsed,
+      orderTotalBeforeGiftCard,
       currency,
-      country: parsed.clientContext.country,
     })
-    const orderTotal = cartSubtotal + shippingFee
+    if (!gift.ok) {
+      return NextResponse.json({ error: gift.error }, { status: 400 })
+    }
+    if (gift.amountDue <= 0) {
+      return NextResponse.json(
+        {
+          error: 'This order is fully covered by your gift card.',
+          giftCardCoversFull: true,
+        },
+        { status: 400 },
+      )
+    }
 
     const orderRef = `BS-${Date.now().toString(36).toUpperCase()}`
     const { orderId, approvalUrl } = await createPayPalOrder({
-      amountValue: toPayPalAmountValue(orderTotal),
+      amountValue: toPayPalAmountValue(gift.amountDue),
       currency,
       description: `Bint Saeed order ${orderRef}`,
       returnUrl: `${baseUrl}/checkout/success`,
@@ -68,12 +90,14 @@ export async function POST(request: NextRequest) {
       items: parsed.items,
       currency,
       cartSubtotal,
+      shippingFee,
       discountCode: parsed.discountCode || undefined,
       customerEmail: parsed.customerEmail || undefined,
       checkoutNotes: parsed.checkoutNotes || undefined,
       clientContext: parsed.clientContext,
       clientIp: parsed.clientIp,
       orderRef,
+      appliedGiftCard: gift.credit ?? undefined,
       createdAt: new Date().toISOString(),
     })
 

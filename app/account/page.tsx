@@ -10,6 +10,7 @@ import { FiArrowRight, FiLock, FiLogOut, FiUser, FiUserPlus } from 'react-icons/
 import toast from 'react-hot-toast'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import GiftCardBalanceCheck from '@/components/GiftCardBalanceCheck'
 
 type SessionUser = {
   email: string
@@ -144,6 +145,7 @@ export default function AccountPage() {
                 </LocaleLink>
               ))}
             </div>
+            <GiftCardBalanceCheck className="mt-10" />
             <button
               type="button"
               onClick={onSignOut}

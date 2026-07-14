@@ -5,6 +5,7 @@ import { toMollieAmountValue } from '@/lib/mollie/amount'
 import type { CheckoutCartItem } from '@/lib/checkout/types'
 import type { OrderLine } from '@/lib/orders/types'
 import type { PendingMollieCheckout } from '@/lib/mollie/pendingCheckoutStore'
+import { isGiftCardLineId } from '@/lib/giftCards/cartDetection'
 
 type MolliePaymentLike = {
   id: string
@@ -78,7 +79,7 @@ export function buildMolliePaymentLines(items: CheckoutCartItem[], currency: Sup
       item.sku || resolveLineItemSku(item.id, item.color ?? '') || undefined
 
     return {
-      type: 'physical' as const,
+      type: (isGiftCardLineId(item.id) ? 'digital' : 'physical') as 'digital' | 'physical',
       name: item.name.slice(0, 120),
       description: buildLineDescription(item) || item.name.slice(0, 120),
       quantity,
@@ -188,6 +189,7 @@ export function serializeMollieOrderItems(items: CheckoutCartItem[]) {
       customisationSurcharge: item.customisationSurcharge,
       sku:
         item.sku || resolveLineItemSku(item.id, item.color ?? '') || undefined,
+      giftCard: item.giftCard,
     })),
   )
 }

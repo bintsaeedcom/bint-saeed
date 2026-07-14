@@ -20,6 +20,7 @@ import { getCartLineImageAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { getEstimatedShippingFee } from '@/lib/pricing'
 import { resolveCartShippingMessages } from '@/lib/shipping/resolveCartShippingMessages'
+import { cartRequiresPhysicalShipping } from '@/lib/giftCards/cartDetection'
 import { useEffect, useRef } from 'react'
 import {
   clearMobileBottomChrome,
@@ -38,13 +39,29 @@ export default function CartPage() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
   const subtotal = cartSubtotal(items)
+  const requiresPhysicalShipping = cartRequiresPhysicalShipping(items)
   const shippingMessages = resolveCartShippingMessages({
     subtotal,
     currency: currency.code,
     copy: ui.cart,
   })
-  const shippingFee = shippingMessages.unlocked ? 0 : getEstimatedShippingFee(currency.code)
+  const shippingFee = !requiresPhysicalShipping
+    ? 0
+    : shippingMessages.unlocked
+      ? 0
+      : getEstimatedShippingFee(currency.code)
   const estimatedTotal = subtotal + shippingFee
+  const shippingFeeValue = !requiresPhysicalShipping
+    ? language === 'ar'
+      ? 'رقمي — بدون شحن'
+      : 'Digital — no shipping'
+    : shippingMessages.feeValue
+  const shippingPrimary = !requiresPhysicalShipping
+    ? language === 'ar'
+      ? 'بطاقة الهدايا رقمية وتُسلَّم بالبريد الإلكتروني.'
+      : 'Gift cards are digital and delivered by email.'
+    : shippingMessages.primary
+  const shippingSecondary = requiresPhysicalShipping ? shippingMessages.secondary : undefined
   const compactButtonRadius = 'rounded-[4px]'
 
   useEffect(() => {
@@ -334,9 +351,13 @@ export default function CartPage() {
               >
                 <span className="min-w-0">{shippingMessages.feeLabel}</span>
                 <span
-                  className={`shrink-0 whitespace-nowrap ${shippingMessages.unlocked ? 'text-brand-dustyBlue' : 'text-white'}`}
+                  className={`shrink-0 whitespace-nowrap ${
+                    !requiresPhysicalShipping || shippingMessages.unlocked
+                      ? 'text-brand-dustyBlue'
+                      : 'text-white'
+                  }`}
                 >
-                  {shippingMessages.feeValue}
+                  {shippingFeeValue}
                 </span>
               </div>
 
@@ -381,14 +402,14 @@ export default function CartPage() {
               <div className="mt-8 space-y-3 border-t border-white/10 pt-6">
                 <p
                   className={`font-montserrat text-xs leading-relaxed tracking-wide ${
-                    shippingMessages.unlocked ? 'text-brand-dustyBlue' : 'text-white/55'
+                    !requiresPhysicalShipping || shippingMessages.unlocked
+                      ? 'text-brand-dustyBlue'
+                      : 'text-white/55'
                   }`}
                 >
-                  {shippingMessages.unlocked
-                    ? shippingMessages.primary
-                    : `${shippingMessages.primary}${
-                        shippingMessages.secondary ? ` ${shippingMessages.secondary}` : ''
-                      }`}
+                  {!requiresPhysicalShipping || shippingMessages.unlocked
+                    ? shippingPrimary
+                    : `${shippingPrimary}${shippingSecondary ? ` ${shippingSecondary}` : ''}`}
                 </p>
               </div>
             </div>

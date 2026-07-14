@@ -6,6 +6,11 @@ import { cartSubtotalInCurrency, resolveShippingFee } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 import { parseCheckoutRequestBody } from '@/lib/checkout/parseCheckoutRequest'
 import {
+  cartRequiresPhysicalShipping,
+  digitalGiftCardShippingPlaceholder,
+} from '@/lib/giftCards/cartDetection'
+import { resolveOptionalCheckoutGiftCredit } from '@/lib/giftCards/resolveCheckoutGiftCredit'
+import {
   isTabbyConfigured,
   isTabbyCurrency,
   resolveTabbyCountryCode,
@@ -139,12 +144,35 @@ export async function POST(request: NextRequest) {
       visitorCountry: clientContext.country,
     })
 
-    const shippingFee = resolveShippingFee({
-      subtotal: cartSubtotal,
+    const shippingFee = cartRequiresPhysicalShipping(items)
+      ? resolveShippingFee({
+          subtotal: cartSubtotal,
+          currency,
+          country: countryCode,
+        })
+      : 0
+    const orderTotalBeforeGiftCard = cartSubtotal + shippingFee
+
+    const gift = await resolveOptionalCheckoutGiftCredit({
+      parsed,
+      orderTotalBeforeGiftCard,
       currency,
-      country: countryCode,
+      language: String(body.language ?? ''),
     })
-    const orderTotal = cartSubtotal + shippingFee
+    if (!gift.ok) {
+      return NextResponse.json({ error: gift.error }, { status: 400 })
+    }
+    if (gift.amountDue <= 0) {
+      return NextResponse.json(
+        {
+          error: 'This order is fully covered by your gift card.',
+          giftCardCoversFull: true,
+        },
+        { status: 400 },
+      )
+    }
+    const orderTotal = gift.amountDue
+    const giftDiscountAmount = gift.credit?.appliedInCurrency ?? 0
 
     const buyerParsed = parseBuyer(body.consumer ?? body.customer ?? body.buyer, customerEmail)
     if (!buyerParsed.ok) {
@@ -166,11 +194,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const shippingParsed = parseShipping(body.shippingAddress ?? body.address)
-    if (!shippingParsed.ok) {
-      return NextResponse.json({ error: shippingParsed.error }, { status: 400 })
+    let shippingAddress: TabbyShippingAddress
+    if (cartRequiresPhysicalShipping(items)) {
+      const shippingParsed = parseShipping(body.shippingAddress ?? body.address)
+      if (!shippingParsed.ok) {
+        return NextResponse.json({ error: shippingParsed.error }, { status: 400 })
+      }
+      shippingAddress = shippingParsed.address
+    } else {
+      const digital = digitalGiftCardShippingPlaceholder(countryCode)
+      shippingAddress = {
+        address: digital.line1,
+        city: digital.city,
+      }
     }
-    const shippingAddress = shippingParsed.address
 
     const orderRef = `BS-TB-${Date.now().toString(36).toUpperCase()}`
     const lang = String(body.language ?? '').toLowerCase() === 'ar' ? 'ar' : 'en'
@@ -179,6 +216,7 @@ export async function POST(request: NextRequest) {
       orderRef,
       orderTotal,
       shippingFee,
+      discountAmount: giftDiscountAmount > 0 ? giftDiscountAmount : undefined,
       currency,
       countryCode,
       lang,
@@ -228,6 +266,7 @@ export async function POST(request: NextRequest) {
       shippingAddress,
       clientContext,
       clientIp,
+      appliedGiftCard: gift.credit ?? undefined,
       createdAt: new Date().toISOString(),
     })
 

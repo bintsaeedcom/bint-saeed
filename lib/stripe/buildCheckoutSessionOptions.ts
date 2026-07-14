@@ -8,6 +8,10 @@ import { buildCheckoutPaymentParams } from '@/lib/stripe/checkoutPaymentMethods'
 import { buildCheckoutLineItems } from '@/lib/stripe/buildCheckoutLineItems'
 import { buildProvisionalStripeShippingOption } from '@/lib/stripe/buildStripeShippingOption'
 import { STRIPE_SHIPPING_ALLOWED_COUNTRIES } from '@/lib/stripe/stripeShippingAllowedCountries'
+import {
+  cartRequiresPhysicalShipping,
+  compactGiftCardMetaForStripe,
+} from '@/lib/giftCards/cartDetection'
 
 export { STRIPE_SHIPPING_ALLOWED_COUNTRIES }
 
@@ -36,6 +40,8 @@ export function buildStripeCheckoutSessionParams({
   const currency = parsed.currency as SupportedCurrency
   const lineItems = buildCheckoutLineItems(parsed.items, currency, baseUrl)
   const cartSubtotal = cartSubtotalInCurrency(parsed.items, currency)
+  const requiresShipping = cartRequiresPhysicalShipping(parsed.items)
+  const giftCardMeta = compactGiftCardMetaForStripe(parsed.items)
 
   const metadata: Stripe.MetadataParam = {
     customerEmail: parsed.customerEmail,
@@ -58,6 +64,17 @@ export function buildStripeCheckoutSessionParams({
           item.sku ||
           resolveLineItemSku(item.id, item.color ?? '') ||
           undefined,
+        ...(item.giftCard
+          ? {
+              giftCard: {
+                denominationAed: item.giftCard.denominationAed,
+                sendToRecipient: item.giftCard.sendToRecipient,
+                recipientName: item.giftCard.recipientName,
+                recipientEmail: item.giftCard.recipientEmail,
+                personalMessage: item.giftCard.personalMessage?.slice(0, 120),
+              },
+            }
+          : {}),
       })),
     ),
     discountCodeUsed: parsed.discountCode,
@@ -69,8 +86,9 @@ export function buildStripeCheckoutSessionParams({
     checkoutNotes: parsed.checkoutNotes,
     cartSubtotal: String(cartSubtotal),
     // Fee is recalculated when the client enters a shipping address (embedded flow).
-    shippingFee: 'pending',
-    shippingScope: 'pending',
+    shippingFee: requiresShipping ? 'pending' : '0',
+    shippingScope: requiresShipping ? 'pending' : 'digital',
+    ...(giftCardMeta ? { giftCardMeta } : {}),
     ...buildCheckoutAttributionMetadata(parsed.clientContext),
   }
 
@@ -78,15 +96,11 @@ export function buildStripeCheckoutSessionParams({
     ...buildCheckoutPaymentParams(),
     line_items: lineItems,
     mode: 'payment',
-    shipping_address_collection: {
-      allowed_countries: STRIPE_SHIPPING_ALLOWED_COUNTRIES,
-    },
     billing_address_collection: 'required',
     allow_promotion_codes: true,
     phone_number_collection: {
       enabled: true,
     },
-    shipping_options: [buildProvisionalStripeShippingOption(currency)],
     metadata,
     customer_creation: 'always',
     invoice_creation: {
@@ -98,6 +112,13 @@ export function buildStripeCheckoutSessionParams({
     },
   }
 
+  if (requiresShipping) {
+    shared.shipping_address_collection = {
+      allowed_countries: STRIPE_SHIPPING_ALLOWED_COUNTRIES,
+    }
+    shared.shipping_options = [buildProvisionalStripeShippingOption(currency)]
+  }
+
   if (parsed.customerEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(parsed.customerEmail)) {
     shared.customer_email = parsed.customerEmail
   }
@@ -107,9 +128,13 @@ export function buildStripeCheckoutSessionParams({
       ...shared,
       ui_mode: 'embedded_page',
       return_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      permissions: {
-        update_shipping_details: 'server_only',
-      },
+      ...(requiresShipping
+        ? {
+            permissions: {
+              update_shipping_details: 'server_only' as const,
+            },
+          }
+        : {}),
     }
   }
 
@@ -118,9 +143,13 @@ export function buildStripeCheckoutSessionParams({
       ...shared,
       ui_mode: 'elements',
       return_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      permissions: {
-        update_shipping_details: 'server_only',
-      },
+      ...(requiresShipping
+        ? {
+            permissions: {
+              update_shipping_details: 'server_only' as const,
+            },
+          }
+        : {}),
     }
   }
 
@@ -129,17 +158,21 @@ export function buildStripeCheckoutSessionParams({
     ui_mode: 'hosted_page',
     success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${baseUrl}/checkout?stripe=cancelled`,
-    custom_fields: [
-      {
-        key: 'delivery_notes',
-        label: {
-          type: 'custom',
-          custom: 'Delivery Instructions (Optional)',
-        },
-        type: 'text',
-        optional: true,
-      },
-    ],
+    ...(requiresShipping
+      ? {
+          custom_fields: [
+            {
+              key: 'delivery_notes',
+              label: {
+                type: 'custom' as const,
+                custom: 'Delivery Instructions (Optional)',
+              },
+              type: 'text' as const,
+              optional: true,
+            },
+          ],
+        }
+      : {}),
   }
 }
 

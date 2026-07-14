@@ -7,7 +7,7 @@ export type OrderFulfillmentStatus =
   | 'cancelled'
   | 'refunded'
 
-export type PaymentProviderName = 'stripe' | 'mollie' | 'paypal' | 'tamara' | 'tabby'
+export type PaymentProviderName = 'stripe' | 'mollie' | 'paypal' | 'tamara' | 'tabby' | 'gift_card'
 
 export interface OrderLine {
   productId?: string
@@ -45,6 +45,10 @@ export interface StoredOrder {
   /** Owner notes (packing, VIP, etc.) */
   internalNotes?: string
   discountCode?: string
+  /** Redeemed Bint Saeed gift card (post-payment). */
+  giftCardCode?: string
+  giftCardAppliedInCurrency?: number
+  giftCardAppliedAed?: number
   createdAt: string
   updatedAt: string
 }

@@ -1,4 +1,5 @@
 import type { CheckoutCartItem, CheckoutClientContext } from '@/lib/checkout/types'
+import type { AppliedGiftCardCredit } from '@/lib/giftCards/applyAtCheckout'
 
 export type TabbyBuyer = {
   email: string
@@ -27,6 +28,7 @@ export type PendingTabbyCheckout = {
   shippingAddress: TabbyShippingAddress
   clientContext?: CheckoutClientContext
   clientIp?: string
+  appliedGiftCard?: AppliedGiftCardCredit
   createdAt: string
 }
 

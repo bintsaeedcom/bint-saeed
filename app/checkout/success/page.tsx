@@ -25,10 +25,17 @@ function CheckoutSuccessContent() {
   const sessionId = searchParams?.get('session_id')
   const paymentId = searchParams?.get('payment_id')
   const paypalToken = searchParams?.get('token')
+  const provider = searchParams?.get('provider')
+  const giftCardOrderId =
+    provider === 'gift_card'
+      ? searchParams?.get('order_id') || searchParams?.get('orderId')
+      : null
   const tamaraOrderId =
-    searchParams?.get('tamara_order_id') ||
-    searchParams?.get('orderId') ||
-    searchParams?.get('order_id')
+    provider === 'gift_card'
+      ? null
+      : searchParams?.get('tamara_order_id') ||
+        searchParams?.get('orderId') ||
+        searchParams?.get('order_id')
   const tabbyPaymentId =
     searchParams?.get('provider') === 'tabby'
       ? searchParams?.get('payment_id') || searchParams?.get('tabby_payment_id')
@@ -37,7 +44,8 @@ function CheckoutSuccessContent() {
   const trackedPurchase = useRef(false)
 
   useEffect(() => {
-    const referenceId = sessionId || paymentId || paypalToken || tamaraOrderId || tabbyPaymentId
+    const referenceId =
+      sessionId || paymentId || paypalToken || giftCardOrderId || tamaraOrderId || tabbyPaymentId
     if (!referenceId || trackedPurchase.current) return
     trackedPurchase.current = true
 
@@ -49,12 +57,13 @@ function CheckoutSuccessContent() {
       paypal_token: paypalToken ?? undefined,
       tamara_order_id: tamaraOrderId ?? undefined,
       tabby_payment_id: tabbyPaymentId ?? undefined,
+      gift_card_order_id: giftCardOrderId ?? undefined,
       currency: snapshot?.currency,
       value: snapshot?.value,
       items: snapshot?.items,
     })
 
-    if (sessionId) {
+    if (sessionId || giftCardOrderId) {
       clearCart()
       return
     }
@@ -113,7 +122,7 @@ function CheckoutSuccessContent() {
           /* webhook may still complete the order */
         })
     }
-  }, [sessionId, paymentId, paypalToken, tamaraOrderId, tabbyPaymentId, clearCart])
+  }, [sessionId, paymentId, paypalToken, giftCardOrderId, tamaraOrderId, tabbyPaymentId, clearCart])
 
   return (
     <div className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-24 ${SITE_CONTENT_TOP_PAD}`}>

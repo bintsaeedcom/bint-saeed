@@ -251,6 +251,7 @@ export default function Header() {
           title: 'Discover',
           links: [
             { label: 'Shop All', href: '/shop' },
+            { label: 'Gift Cards', href: '/gift-cards' },
           ],
         },
         {
@@ -270,9 +271,10 @@ export default function Header() {
           image: MEGA_MENU_LUXURY_ABAYAS,
         },
         {
-          title: 'Sets',
-          href: '/shop?category=sets',
-          image: MEGA_MENU_LUXURY_SETS,
+          title: 'Gift Cards',
+          href: '/gift-cards',
+          image: '/gift-cards/bint-saeed-gift-card-1000-aed-r7.webp',
+          ctaLabel: 'View',
         },
       ],
     },

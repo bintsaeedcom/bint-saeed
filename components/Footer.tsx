@@ -1,7 +1,7 @@
 'use client'
 
 import LocaleLink from '@/components/LocaleLink'
-import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter } from 'react-icons/fa6'
+import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter, FaYoutube } from 'react-icons/fa6'
 import { FiGlobe, FiClock, FiHeart } from 'react-icons/fi'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
@@ -18,6 +18,7 @@ import { useState } from 'react'
 
 const socialLinks = [
   { icon: FaInstagram, href: 'https://www.instagram.com/bintsaeed_brand/', label: 'Instagram' },
+  { icon: FaYoutube, href: 'https://www.youtube.com/@BintSaeed_Brand', label: 'YouTube' },
   { icon: FaTiktok, href: 'https://www.tiktok.com/@bintsaeed_brand', label: 'TikTok' },
   { icon: FaSnapchat, href: 'https://www.snapchat.com/add/bintsaeed_brand', label: 'Snapchat' },
   { icon: FaXTwitter, href: 'https://x.com/bintsaeed_brand', label: 'X' },
@@ -37,6 +38,7 @@ export default function Footer() {
     shop: [
       { label: t.footer.newArrivals, href: '/shop' },
       { label: t.footer.collection, href: '/shop' },
+      { label: language === 'ar' ? 'بطاقات الهدايا' : 'Gift Cards', href: '/gift-cards' },
       { label: t.footer.accessories, href: '/accessories' },
     ],
     about: getAboutTopicNavLinks(language),

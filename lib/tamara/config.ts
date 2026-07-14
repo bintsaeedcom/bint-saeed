@@ -1,4 +1,5 @@
 import type { CheckoutCartItem, CheckoutClientContext } from '@/lib/checkout/types'
+import type { AppliedGiftCardCredit } from '@/lib/giftCards/applyAtCheckout'
 
 /** Tamara sandbox/production money object */
 export type TamaraMoney = { amount: number; currency: string }
@@ -35,6 +36,7 @@ export type PendingTamaraCheckout = {
   shippingAddress: TamaraAddress
   clientContext?: CheckoutClientContext
   clientIp?: string
+  appliedGiftCard?: AppliedGiftCardCredit
   createdAt: string
 }
 

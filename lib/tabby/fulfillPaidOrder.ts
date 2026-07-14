@@ -1,7 +1,9 @@
-import { saveOrder, findOrderIdBySession } from '@/lib/orders/orderStore'
+import { saveOrder, findOrderIdBySession, getOrderById } from '@/lib/orders/orderStore'
 import type { StoredOrder } from '@/lib/orders/types'
 import { createTrelloCardForOrder, notifySlackNewPaidOrder } from '@/lib/ops/notifications'
 import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
+import { fulfillPaidGiftCards } from '@/lib/giftCards/fulfillPaidGiftCards'
+import { commitRedeemForPaidOrder } from '@/lib/giftCards/applyAtCheckout'
 import {
   deletePendingTabbyCheckout,
   getPendingTabbyCheckout,
@@ -21,6 +23,15 @@ export async function fulfillTabbyPaidOrder(args: {
 }): Promise<{ fulfilled: boolean; orderId?: string; reason?: string }> {
   const existingId = await findOrderIdBySession(args.paymentId)
   if (existingId) {
+    const existing = await getOrderById(existingId)
+    if (existing) {
+      const pending = await getPendingTabbyCheckout(args.paymentId)
+      await fulfillPaidGiftCards({ order: existing, items: pending?.items })
+      await commitRedeemForPaidOrder({
+        orderId: existing.id,
+        applied: pending?.appliedGiftCard,
+      })
+    }
     return { fulfilled: true, orderId: existingId, reason: 'already_saved' }
   }
 
@@ -95,7 +106,6 @@ export async function fulfillTabbyPaidOrder(args: {
   }
 
   await saveOrder(order)
-  await deletePendingTabbyCheckout(args.paymentId)
 
   try {
     await notifySlackNewPaidOrder(order)
@@ -112,6 +122,21 @@ export async function fulfillTabbyPaidOrder(args: {
   } catch {
     /* non-blocking */
   }
+  try {
+    await fulfillPaidGiftCards({ order, items: pending.items })
+  } catch {
+    /* non-blocking */
+  }
+  try {
+    await commitRedeemForPaidOrder({
+      orderId: order.id,
+      applied: pending.appliedGiftCard,
+    })
+  } catch {
+    /* non-blocking */
+  }
+
+  await deletePendingTabbyCheckout(args.paymentId)
 
   return { fulfilled: true, orderId: order.id }
 }

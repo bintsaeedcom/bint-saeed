@@ -6,6 +6,8 @@ import { cartSubtotalInCurrency, resolveShippingFee } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 import { parseCheckoutRequestBody } from '@/lib/checkout/parseCheckoutRequest'
 import { buildCheckoutAttributionMetadata } from '@/lib/checkout/attributionMetadata'
+import { cartRequiresPhysicalShipping } from '@/lib/giftCards/cartDetection'
+import { resolveOptionalCheckoutGiftCredit } from '@/lib/giftCards/resolveCheckoutGiftCredit'
 import { getMollieClient } from '@/lib/mollie/client'
 import { getMollieApiKey } from '@/lib/mollie/config'
 import { toMollieAmountValue } from '@/lib/mollie/amount'
@@ -57,12 +59,32 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid cart total.' }, { status: 400 })
     }
 
-    const shippingFee = resolveShippingFee({
-      subtotal: cartSubtotal,
+    const shippingFee = cartRequiresPhysicalShipping(items)
+      ? resolveShippingFee({
+          subtotal: cartSubtotal,
+          currency,
+          country: clientContext.country,
+        })
+      : 0
+    const orderTotalBeforeGiftCard = cartSubtotal + shippingFee
+
+    const gift = await resolveOptionalCheckoutGiftCredit({
+      parsed,
+      orderTotalBeforeGiftCard,
       currency,
-      country: clientContext.country,
     })
-    const orderTotal = cartSubtotal + shippingFee
+    if (!gift.ok) {
+      return NextResponse.json({ error: gift.error }, { status: 400 })
+    }
+    if (gift.amountDue <= 0) {
+      return NextResponse.json(
+        {
+          error: 'This order is fully covered by your gift card.',
+          giftCardCoversFull: true,
+        },
+        { status: 400 },
+      )
+    }
 
     const mollie = getMollieClient()
     const orderRef = `BS-${Date.now().toString(36).toUpperCase()}`
@@ -79,13 +101,20 @@ export async function POST(request: NextRequest) {
       checkoutNotes,
       cartSubtotal: String(cartSubtotal),
       shippingFee: String(shippingFee),
+      ...(gift.credit
+        ? {
+            giftCardCode: gift.credit.code,
+            giftCardApplied: String(gift.credit.appliedInCurrency),
+            giftCardAppliedAed: String(gift.credit.appliedAed),
+          }
+        : {}),
       ...buildCheckoutAttributionMetadata(clientContext),
     }
 
     const payment = await mollie.payments.create({
       amount: {
         currency,
-        value: toMollieAmountValue(orderTotal, currency),
+        value: toMollieAmountValue(gift.amountDue, currency),
       },
       description: `Bint Saeed order ${orderRef}`,
       redirectUrl: `${baseUrl}/checkout/success?payment_id={id}`,
@@ -97,11 +126,13 @@ export async function POST(request: NextRequest) {
       items,
       currency,
       cartSubtotal,
+      shippingFee,
       discountCode: discountCode || undefined,
       customerEmail: customerEmail || undefined,
       checkoutNotes: checkoutNotes || undefined,
       clientContext,
       clientIp,
+      appliedGiftCard: gift.credit ?? undefined,
       createdAt: new Date().toISOString(),
     })
 

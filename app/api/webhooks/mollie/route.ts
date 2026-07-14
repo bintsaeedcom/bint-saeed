@@ -15,6 +15,8 @@ import { orderAttributionFromMetadata } from '@/lib/checkout/attributionMetadata
 import { buildOrderAttributionSlackFields } from '@/lib/ops/orderSlackAttribution'
 import { formatMolliePaymentMethodLabel } from '@/lib/ops/orderPaymentMethodLabel'
 import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
+import { fulfillPaidGiftCards } from '@/lib/giftCards/fulfillPaidGiftCards'
+import { commitRedeemForPaidOrder } from '@/lib/giftCards/applyAtCheckout'
 import type { PendingMollieCheckout } from '@/lib/mollie/pendingCheckoutStore'
 
 export const runtime = 'nodejs'
@@ -217,6 +219,15 @@ export async function POST(request: NextRequest) {
       uaeTimestamp: new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' }),
     })
     await dispatchOrderEmails(order)
+
+    await fulfillPaidGiftCards({
+      order,
+      items: pending.items,
+    })
+    await commitRedeemForPaidOrder({
+      orderId: order.id,
+      applied: pending.appliedGiftCard,
+    })
 
     await markPaymentEventProcessed('mollie', eventId)
     return NextResponse.json({ received: true, orderId: order.id })

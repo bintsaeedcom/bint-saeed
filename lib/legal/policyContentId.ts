@@ -63,6 +63,7 @@ function privacyEnSections(analyticsLine: string): PolicySection[] {
             'Name, email, phone number, shipping and billing details.',
             'Order details, product preferences, and support communications.',
             'Personalisation inputs where provided for order fulfilment.',
+            'Gift Card purchaser and recipient details, gift messages, and redemption records where a Gift Card is purchased or applied.',
           ],
         },
         {
@@ -435,14 +436,27 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
       'Remedies may include repair or replacement first, and refund where required by applicable law.',
     ],
   },
-  {
-    title: '7. Personalisation and Custom Work',
-    body: [
-      'By submitting any personalisation text, you confirm you have the right to use that content and that it does not infringe third-party rights or violate applicable laws. We may reject personalisation requests that are unlawful, offensive, or non-compliant with policy.',
-    ],
-  },
-  {
-    title: '8. Intellectual Property',
+    {
+      title: '7. Personalisation and Custom Work',
+      body: [
+        'By submitting any personalisation text, you confirm you have the right to use that content and that it does not infringe third-party rights or violate applicable laws. We may reject personalisation requests that are unlawful, offensive, or non-compliant with policy.',
+      ],
+    },
+    {
+      title: '8. Gift Cards',
+      body: [
+        'Bint Saeed Gift Cards are denominated in United Arab Emirates Dirhams (AED). Fixed amounts may be presented at checkout in other supported currencies using the House’s locked retail maps; the underlying stored value remains AED.',
+      ],
+      list: [
+        'After successful payment, a unique gift card code is issued automatically and sent by email through our transactional email provider (Resend).',
+        'You may elect to send the code and an optional personal message directly to a recipient. In that case, the recipient receives a gift email with the code and guidance on redemption, and you receive a purchase confirmation that includes a copy of the same gift message and code.',
+        'Gift Cards are valid for one Gregorian year from the date of issue. After expiry, any unused balance is donated to charity through the House’s Giving Forward commitments and is no longer redeemable.',
+        'Codes may be applied at checkout on bintsaeed.com for partial or full payment. Remaining balances stay available until expiry. Gift Cards are non-refundable except where required by applicable law or in the case of a verified issuance error by the House.',
+        'Lost or compromised codes should be reported promptly to orders@bintsaeed.com. We may void and reissue where fraud or error is reasonably verified.',
+      ],
+    },
+    {
+      title: '9. Intellectual Property',
     body: [
       'All website content, creative assets, designs, photography, trademarks, text, and technical materials are owned by or licensed to Bint Saeed and are protected by applicable intellectual property laws.',
     ],
@@ -453,7 +467,7 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
     ],
   },
   {
-    title: '9. Permitted and Prohibited Use',
+    title: '10. Permitted and Prohibited Use',
     body: [],
     list: [
       'You may use this website only for lawful, personal, and legitimate commercial browsing/purchase activity.',
@@ -462,13 +476,14 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
     ],
   },
   {
-    title: '10. Charitable Contribution Statement',
+    title: '11. Charitable Contribution Statement',
     body: [
       'Where charitable contribution statements are communicated on-site or in product communications, such statements describe our intended social-impact allocation model and do not alter your purchase price unless expressly stated.',
+      'Unused Gift Card balances that expire under section 8 are donated to charity through the House’s Giving Forward commitments.',
     ],
   },
   {
-    title: '11. Disclaimers and Limitation of Liability',
+    title: '12. Disclaimers and Limitation of Liability',
     body: [
       'To the extent permitted by applicable law, the website and services are provided on an "as is" and "as available" basis, without a warranty of uninterrupted operation.',
       'Bint Saeed is not liable for indirect, incidental, special, consequential, or punitive damages arising from use of the website, delivery delay, third-party service interruption, or other events beyond reasonable control. Except where liability cannot be limited by law, our liability is limited to the amount paid for the relevant order.',
@@ -476,24 +491,24 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
     ],
   },
   {
-    title: '12. Indemnity',
+    title: '13. Indemnity',
     body: [
       'You agree to indemnify and hold harmless Bint Saeed from claims, liabilities, losses, and costs arising from your breach of these Terms, misuse of the website, or violation of applicable law.',
     ],
   },
   {
-    title: '13. Governing Law and Jurisdiction',
+    title: '14. Governing Law and Jurisdiction',
     body: [
       'These Terms are governed by the laws of the United Arab Emirates. Subject to mandatory consumer protection rights under applicable law, disputes shall fall under the competent courts of the UAE.',
       'For regulatory clarity, this website is operated by a company registered in Abu Dhabi, United Arab Emirates, holding commercial license number CN-6384424 issued by the Abu Dhabi Registration Authority (ADRA).',
     ],
   },
   {
-    title: `14. ${LANGUAGE_CLAUSE_TITLE_EN}`,
+    title: `15. ${LANGUAGE_CLAUSE_TITLE_EN}`,
     body: [...LANGUAGE_CLAUSE_BODY_EN],
   },
   {
-    title: '15. Changes, Severability, and Contact',
+    title: '16. Changes, Severability, and Contact',
     body: [
       'We may revise these Terms from time to time. Updated versions are effective from publication on this page. If any provision is held unenforceable, remaining provisions remain in full force.',
       `Bint Saeed\nLegal Inquiries: ${OFFICIAL_EMAILS.legal}\nGeneral Inquiries: ${OFFICIAL_EMAILS.hello}`,
@@ -653,14 +668,15 @@ const TERMS_EN: Omit<PolicyContent, 'sections'> = {
     '5. Shipping, Delivery, and Risk Transfer',
     '6. Returns, Repairs and Order Finality',
     '7. Personalisation and Custom Work',
-    '8. Intellectual Property',
-    '9. Permitted and Prohibited Use',
-    '10. Charitable Contribution Statement',
-    '11. Disclaimers and Limitation of Liability',
-    '12. Indemnity',
-    '13. Governing Law and Jurisdiction',
-    '14. Language and Translations',
-    '15. Changes, Severability, and Contact',
+    '8. Gift Cards',
+    '9. Intellectual Property',
+    '10. Permitted and Prohibited Use',
+    '11. Charitable Contribution Statement',
+    '12. Disclaimers and Limitation of Liability',
+    '13. Indemnity',
+    '14. Governing Law and Jurisdiction',
+    '15. Language and Translations',
+    '16. Changes, Severability, and Contact',
   ],
 }
 

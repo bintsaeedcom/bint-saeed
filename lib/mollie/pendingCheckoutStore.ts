@@ -1,15 +1,18 @@
 import { Redis } from '@upstash/redis'
 import type { CheckoutCartItem, CheckoutClientContext } from '@/lib/checkout/types'
+import type { AppliedGiftCardCredit } from '@/lib/giftCards/applyAtCheckout'
 
 export type PendingMollieCheckout = {
   items: CheckoutCartItem[]
   currency: string
   cartSubtotal: number
+  shippingFee?: number
   discountCode?: string
   customerEmail?: string
   checkoutNotes?: string
   clientContext?: CheckoutClientContext
   clientIp?: string
+  appliedGiftCard?: AppliedGiftCardCredit
   createdAt: string
 }
 

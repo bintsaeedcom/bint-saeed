@@ -6,6 +6,11 @@ import { cartSubtotalInCurrency, resolveShippingFee } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 import { parseCheckoutRequestBody } from '@/lib/checkout/parseCheckoutRequest'
 import {
+  cartRequiresPhysicalShipping,
+  digitalGiftCardShippingPlaceholder,
+} from '@/lib/giftCards/cartDetection'
+import { resolveOptionalCheckoutGiftCredit } from '@/lib/giftCards/resolveCheckoutGiftCredit'
+import {
   isTamaraConfigured,
   isTamaraCurrency,
   resolveTamaraCountryCode,
@@ -133,12 +138,35 @@ export async function POST(request: NextRequest) {
       visitorCountry: clientContext.country,
     })
 
-    const shippingFee = resolveShippingFee({
-      subtotal: cartSubtotal,
+    const shippingFee = cartRequiresPhysicalShipping(items)
+      ? resolveShippingFee({
+          subtotal: cartSubtotal,
+          currency,
+          country: countryCode,
+        })
+      : 0
+    const orderTotalBeforeGiftCard = cartSubtotal + shippingFee
+
+    const gift = await resolveOptionalCheckoutGiftCredit({
+      parsed,
+      orderTotalBeforeGiftCard,
       currency,
-      country: countryCode,
+      language: String(body.language ?? ''),
     })
-    const orderTotal = cartSubtotal + shippingFee
+    if (!gift.ok) {
+      return NextResponse.json({ error: gift.error }, { status: 400 })
+    }
+    if (gift.amountDue <= 0) {
+      return NextResponse.json(
+        {
+          error: 'This order is fully covered by your gift card.',
+          giftCardCoversFull: true,
+        },
+        { status: 400 },
+      )
+    }
+    const orderTotal = gift.amountDue
+    const giftDiscountAmount = gift.credit?.appliedInCurrency ?? 0
 
     const consumerParsed = parseConsumer(body.consumer ?? body.customer)
     if (!consumerParsed.ok) {
@@ -164,11 +192,24 @@ export async function POST(request: NextRequest) {
     const checkoutPhone = toTamaraCheckoutPhone(e164Phone, countryCode)
     consumer.phone_number = checkoutPhone
 
-    const shippingParsed = parseAddress(body.shippingAddress ?? body.address, consumer, countryCode)
-    if (!shippingParsed.ok) {
-      return NextResponse.json({ error: shippingParsed.error }, { status: 400 })
+    let shippingAddress: TamaraAddress
+    if (cartRequiresPhysicalShipping(items)) {
+      const shippingParsed = parseAddress(body.shippingAddress ?? body.address, consumer, countryCode)
+      if (!shippingParsed.ok) {
+        return NextResponse.json({ error: shippingParsed.error }, { status: 400 })
+      }
+      shippingAddress = shippingParsed.address
+    } else {
+      const digital = digitalGiftCardShippingPlaceholder(countryCode)
+      shippingAddress = {
+        first_name: consumer.first_name,
+        last_name: consumer.last_name,
+        line1: digital.line1,
+        city: digital.city,
+        country_code: countryCode,
+        phone_number: checkoutPhone,
+      }
     }
-    const shippingAddress = shippingParsed.address
     shippingAddress.phone_number = checkoutPhone
 
     // Soft eligibility probe only — never block create-session on this alone.
@@ -202,7 +243,8 @@ export async function POST(request: NextRequest) {
       items,
       consumer,
       shippingAddress,
-      discountCode: discountCode || undefined,
+      discountCode: gift.credit ? gift.credit.code : discountCode || undefined,
+      discountAmount: giftDiscountAmount > 0 ? giftDiscountAmount : undefined,
       description: `Bint Saeed order ${orderRef}`,
       merchantUrl: {
         success: `${baseUrl}/checkout/success`,
@@ -265,6 +307,7 @@ export async function POST(request: NextRequest) {
       shippingAddress,
       clientContext,
       clientIp,
+      appliedGiftCard: gift.credit ?? undefined,
       createdAt: new Date().toISOString(),
     })
 

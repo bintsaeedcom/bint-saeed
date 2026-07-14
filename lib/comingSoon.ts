@@ -38,7 +38,43 @@ function isInnerPathAllowlistedDuringComingSoon(normalizedInner: string): boolea
 
   if (normalizedInner === '/accessories' || normalizedInner.startsWith('/accessories/')) return true
 
+  if (
+    normalizedInner === '/gift-cards' ||
+    normalizedInner.startsWith('/gift-cards/')
+  ) {
+    return true
+  }
+
+  if (normalizedInner === '/account' || normalizedInner.startsWith('/account/')) return true
+
+  if (normalizedInner === '/cart' || normalizedInner.startsWith('/cart/')) return true
+  if (normalizedInner === '/checkout' || normalizedInner.startsWith('/checkout/')) return true
+
+  if (normalizedInner === '/faq' || normalizedInner.startsWith('/faq/')) return true
+  if (normalizedInner === '/terms' || normalizedInner.startsWith('/terms/')) return true
+  if (
+    normalizedInner === '/shipment-return-policy' ||
+    normalizedInner.startsWith('/shipment-return-policy/')
+  ) {
+    return true
+  }
+  if (normalizedInner === '/privacy' || normalizedInner.startsWith('/privacy/')) return true
+  if (normalizedInner === '/cookie-policy' || normalizedInner.startsWith('/cookie-policy/')) return true
+
+  if (normalizedInner === '/sign-in' || normalizedInner.startsWith('/sign-in/')) return true
+  if (normalizedInner === '/register' || normalizedInner.startsWith('/register/')) return true
+  if (normalizedInner === '/forgot-password' || normalizedInner.startsWith('/forgot-password/')) {
+    return true
+  }
+
   if (normalizedInner === '/dev/error-preview' || normalizedInner.startsWith('/dev/error-preview/')) {
+    return true
+  }
+
+  if (
+    normalizedInner === '/dev/gift-card-emails' ||
+    normalizedInner.startsWith('/dev/gift-card-emails/')
+  ) {
     return true
   }
 

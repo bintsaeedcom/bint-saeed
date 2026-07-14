@@ -10,6 +10,7 @@ type CreateSessionArgs = {
   orderRef: string
   orderTotal: number
   shippingFee: number
+  discountAmount?: number
   currency: string
   countryCode: 'AE' | 'SA' | 'KW'
   lang: 'en' | 'ar'
@@ -109,7 +110,7 @@ export async function createTabbyCheckoutSession(
       order: {
         tax_amount: fmt(0),
         shipping_amount: fmt(args.shippingFee),
-        discount_amount: fmt(0),
+        discount_amount: fmt(Math.max(0, args.discountAmount ?? 0)),
         reference_id: args.orderRef,
         items,
       },

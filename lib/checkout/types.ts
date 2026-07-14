@@ -24,12 +24,21 @@ export type CheckoutCartItem = {
   notes?: string
   customisationMessage?: string
   customisationSurcharge?: number
+  giftCard?: {
+    denominationAed: number
+    sendToRecipient: boolean
+    recipientName?: string
+    recipientEmail?: string
+    personalMessage?: string
+  }
 }
 
 export type ParsedCheckoutRequest = {
   items: CheckoutCartItem[]
   currency: string
   discountCode: string
+  /** Shopper-entered gift card code — credit resolved server-side at payment create. */
+  appliedGiftCardCode?: string
   customerEmail: string
   checkoutNotes: string
   clientContext: CheckoutClientContext

@@ -9,6 +9,11 @@ import { buildOrderAttributionSlackFields } from '@/lib/ops/orderSlackAttributio
 import { resolveStripePaymentMethodLabel } from '@/lib/ops/orderPaymentMethodLabel'
 import { sendOrderConfirmationEmail } from '@/lib/orders/sendOrderConfirmationEmail'
 import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
+import { fulfillPaidGiftCards } from '@/lib/giftCards/fulfillPaidGiftCards'
+import { commitRedeemForPaidOrder } from '@/lib/giftCards/applyAtCheckout'
+import { appliedGiftCardFromStripeMetadata } from '@/lib/giftCards/stripeGiftCardMeta'
+import type { CheckoutCartItem } from '@/lib/checkout/types'
+import { isGiftCardLineId } from '@/lib/giftCards/cartDetection'
 
 export const runtime = 'nodejs'
 
@@ -16,6 +21,30 @@ function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY || '', {
     apiVersion: '2026-06-24.dahlia',
   })
+}
+
+function stripeGiftCheckoutItems(session: Stripe.Checkout.Session): CheckoutCartItem[] | undefined {
+  try {
+    const raw = session.metadata?.orderItems
+    if (!raw) return undefined
+    const metaItems = JSON.parse(raw) as Array<
+      CheckoutCartItem & { priceAed?: number; giftCard?: CheckoutCartItem['giftCard'] }
+    >
+    const giftItems = metaItems
+      .filter((item) => item.id && isGiftCardLineId(item.id))
+      .map((item) => ({
+        id: item.id,
+        name: item.name || 'Gift Card',
+        price: Number(item.priceAed ?? item.price) || 0,
+        quantity: item.quantity || 1,
+        notes: item.notes,
+        customisationMessage: item.customisationMessage,
+        giftCard: item.giftCard,
+      }))
+    return giftItems.length ? giftItems : undefined
+  } catch {
+    return undefined
+  }
 }
 
 function buildOrderFromSession(session: Stripe.Checkout.Session): StoredOrder {
@@ -38,7 +67,15 @@ function buildOrderFromSession(session: Stripe.Checkout.Session): StoredOrder {
     }
   }
 
-  let metaItems: { id?: string; name?: string; size?: string; color?: string; quantity?: number; price?: number }[] = []
+  let metaItems: {
+    id?: string
+    name?: string
+    size?: string
+    color?: string
+    quantity?: number
+    price?: number
+    giftCard?: CheckoutCartItem['giftCard']
+  }[] = []
   try {
     const raw = session.metadata?.orderItems
     if (raw) metaItems = JSON.parse(raw) as typeof metaItems
@@ -320,6 +357,17 @@ export async function POST(request: NextRequest) {
         // only sends once payment is captured; delayed methods send it later from
         // checkout.session.async_payment_succeeded.
         await dispatchOrderEmails(order)
+        if (order.fulfillmentStatus === 'paid') {
+          await fulfillPaidGiftCards({
+            order,
+            items: stripeGiftCheckoutItems(full),
+            giftCardMetaJson: full.metadata?.giftCardMeta,
+          })
+          await commitRedeemForPaidOrder({
+            orderId: order.id,
+            applied: appliedGiftCardFromStripeMetadata(full.metadata),
+          })
+        }
         break
       }
       case 'checkout.session.async_payment_succeeded': {
@@ -328,7 +376,19 @@ export async function POST(request: NextRequest) {
         if (orderId) {
           await markOrderWithStripeNote(orderId, `Checkout async payment succeeded (${session.id}).`, 'paid')
           const paidOrder = await getOrderById(orderId)
-          if (paidOrder) await sendOrderConfirmationEmail(paidOrder)
+          if (paidOrder) {
+            await sendOrderConfirmationEmail(paidOrder)
+            const full = await getStripe().checkout.sessions.retrieve(session.id)
+            await fulfillPaidGiftCards({
+              order: { ...paidOrder, fulfillmentStatus: 'paid' },
+              items: stripeGiftCheckoutItems(full),
+              giftCardMetaJson: full.metadata?.giftCardMeta,
+            })
+            await commitRedeemForPaidOrder({
+              orderId: paidOrder.id,
+              applied: appliedGiftCardFromStripeMetadata(full.metadata),
+            })
+          }
         }
         break
       }

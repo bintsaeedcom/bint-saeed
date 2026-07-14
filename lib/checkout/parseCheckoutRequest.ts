@@ -33,6 +33,27 @@ function parseClientContext(raw: unknown): CheckoutClientContext {
   }
 }
 
+function parseGiftCardMeta(raw: unknown): CheckoutCartItem['giftCard'] | undefined {
+  if (!raw || typeof raw !== 'object') return undefined
+  const value = raw as Record<string, unknown>
+  const denominationAed = Number(value.denominationAed)
+  if (![500, 1000, 2500, 5000].includes(denominationAed)) return undefined
+  const sendToRecipient = Boolean(value.sendToRecipient)
+  const recipientEmail =
+    typeof value.recipientEmail === 'string' ? value.recipientEmail.trim().slice(0, 320) : undefined
+  return {
+    denominationAed,
+    sendToRecipient,
+    recipientName:
+      typeof value.recipientName === 'string' ? value.recipientName.trim().slice(0, 120) : undefined,
+    recipientEmail: sendToRecipient && recipientEmail ? recipientEmail : undefined,
+    personalMessage:
+      typeof value.personalMessage === 'string'
+        ? value.personalMessage.trim().slice(0, 500)
+        : undefined,
+  }
+}
+
 function parseCartItem(raw: Record<string, unknown>): CheckoutCartItem | null {
   const id = String(raw.id ?? '').trim()
   const name = String(raw.name ?? 'Item').trim().slice(0, 120)
@@ -41,6 +62,7 @@ function parseCartItem(raw: Record<string, unknown>): CheckoutCartItem | null {
   const quantity = Math.min(99, Math.max(1, Math.floor(Number(raw.quantity)) || 1))
   const customisationMessage =
     typeof raw.customisationMessage === 'string' ? raw.customisationMessage.trim().slice(0, 200) : undefined
+  const giftCard = parseGiftCardMeta(raw.giftCard)
 
   return {
     id,
@@ -57,6 +79,7 @@ function parseCartItem(raw: Record<string, unknown>): CheckoutCartItem | null {
     notes: raw.notes != null ? String(raw.notes).slice(0, 120) : undefined,
     customisationMessage: customisationMessage || undefined,
     customisationSurcharge: Number(raw.customisationSurcharge) || undefined,
+    giftCard,
   }
 }
 
@@ -81,6 +104,12 @@ export function parseCheckoutRequestBody(
 
   const currency = normalizeCurrencyCode(typeof body.currency === 'string' ? body.currency : 'AED')
   const discountCode = typeof body.discountCode === 'string' ? body.discountCode.trim().slice(0, 64) : ''
+  const appliedGiftCardCode =
+    typeof body.appliedGiftCardCode === 'string'
+      ? body.appliedGiftCardCode.trim().slice(0, 40)
+      : typeof (body.appliedGiftCard as { code?: unknown } | undefined)?.code === 'string'
+        ? String((body.appliedGiftCard as { code: string }).code).trim().slice(0, 40)
+        : undefined
   const customerEmail = typeof body.customerEmail === 'string' ? body.customerEmail.trim().slice(0, 320) : ''
   const checkoutNotes = typeof body.checkoutNotes === 'string' ? body.checkoutNotes.trim().slice(0, 300) : ''
   const clientContext = parseClientContext(body.clientContext)
@@ -89,6 +118,7 @@ export function parseCheckoutRequestBody(
     items,
     currency,
     discountCode,
+    appliedGiftCardCode: appliedGiftCardCode || undefined,
     customerEmail,
     checkoutNotes,
     clientContext,

@@ -6,10 +6,12 @@ import {
   deletePendingPayPalCheckout,
   getPendingPayPalCheckout,
 } from '@/lib/paypal/pendingCheckoutStore'
-import { saveOrder, findOrderIdBySession } from '@/lib/orders/orderStore'
+import { saveOrder, findOrderIdBySession, getOrderById } from '@/lib/orders/orderStore'
 import { markPaymentEventProcessed, wasPaymentEventProcessed } from '@/lib/payments/webhookEventStore'
 import { createTrelloCardForOrder, notifyHealthAlert, notifySlackNewPaidOrder } from '@/lib/ops/notifications'
 import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
+import { fulfillPaidGiftCards } from '@/lib/giftCards/fulfillPaidGiftCards'
+import { commitRedeemForPaidOrder } from '@/lib/giftCards/applyAtCheckout'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -17,6 +19,17 @@ export const dynamic = 'force-dynamic'
 async function persistPayPalOrder(orderId: string) {
   if (await wasPaymentEventProcessed('paypal', orderId)) {
     const existingId = await findOrderIdBySession(orderId)
+    if (existingId) {
+      const existing = await getOrderById(existingId)
+      if (existing) {
+        const pending = await getPendingPayPalCheckout(orderId)
+        await fulfillPaidGiftCards({ order: existing, items: pending?.items })
+        await commitRedeemForPaidOrder({
+          orderId: existing.id,
+          applied: pending?.appliedGiftCard,
+        })
+      }
+    }
     return { ok: true as const, orderId: existingId, duplicate: true }
   }
 
@@ -67,6 +80,11 @@ async function persistPayPalOrder(orderId: string) {
     /* optional */
   }
   await dispatchOrderEmails(order)
+  await fulfillPaidGiftCards({ order, items: pending.items })
+  await commitRedeemForPaidOrder({
+    orderId: order.id,
+    applied: pending.appliedGiftCard,
+  })
 
   return { ok: true as const, orderId: order.id, duplicate: false }
 }

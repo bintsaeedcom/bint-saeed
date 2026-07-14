@@ -14,6 +14,11 @@ import {
 import { getListedPriceForAccessory, isAccessoryPricingConfirmed } from './accessoryCatalogPrices'
 import type { SupportedCurrency } from './types'
 import { SUPPORTED_CURRENCIES } from './types'
+import {
+  isGiftCardLineId,
+  parseGiftCardDenominationFromId,
+} from '@/lib/giftCards/cartDetection'
+import { getGiftCardPrice } from '@/lib/giftCards/catalogPrices'
 
 export {
   PRODUCT_CATALOG_PRICES,
@@ -158,6 +163,10 @@ export function lineUnitInCurrency(
   item: Pick<CartLineForPricing, 'id' | 'price' | 'customisationMessage' | 'customisationSurcharge'>,
   currency: SupportedCurrency,
 ): number {
+  if (isGiftCardLineId(item.id)) {
+    const denomination = parseGiftCardDenominationFromId(item.id)
+    if (denomination) return getGiftCardPrice(denomination, currency)
+  }
   const aedMaster = resolveCatalogAedPrice(item.id) ?? item.price
   return getListedPrice(aedMaster, currency, undefined, item.id)
 }

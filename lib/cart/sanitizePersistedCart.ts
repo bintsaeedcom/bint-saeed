@@ -42,6 +42,11 @@ function migrateAccessoryProductUrl(productUrl: string | undefined): string | un
 export function sanitizePersistedCart(items: CartItem[]): CartItem[] {
   return items
     .map((item) => {
+      // Digital gift cards are not RTW catalog SKUs — keep as stored.
+      if (item.id.startsWith('gift-card-')) {
+        return item
+      }
+
       const catalog = resolveCatalogLine(item.id)
       if (!catalog) return null
       const canonicalId = resolveAccessoryId(item.id)

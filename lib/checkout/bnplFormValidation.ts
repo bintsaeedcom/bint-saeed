@@ -32,9 +32,12 @@ export function validateBnplCheckoutForm(
     language: string
     provider: 'tamara' | 'tabby'
     countryCode?: 'AE' | 'SA'
+    /** Gift-card-only carts skip physical address fields. */
+    requireShippingAddress?: boolean
   },
 ): BnplValidationResult {
   const countryCode = options.countryCode ?? 'AE'
+  const requireShippingAddress = options.requireShippingAddress !== false
   const firstName = values.firstName.trim()
   const lastName = values.lastName.trim()
   const email = values.email.trim()
@@ -106,22 +109,24 @@ export function validateBnplCheckoutForm(
     }
   }
 
-  if (!line1) {
-    return {
-      ok: false,
-      field: 'line1',
-      message: msg(
-        options.language,
-        'Please enter your shipping street address.',
-        'يرجى إدخال عنوان الشارع للشحن.',
-      ),
+  if (requireShippingAddress) {
+    if (!line1) {
+      return {
+        ok: false,
+        field: 'line1',
+        message: msg(
+          options.language,
+          'Please enter your shipping street address.',
+          'يرجى إدخال عنوان الشارع للشحن.',
+        ),
+      }
     }
-  }
-  if (!city) {
-    return {
-      ok: false,
-      field: 'city',
-      message: msg(options.language, 'Please enter your city.', 'يرجى إدخال المدينة.'),
+    if (!city) {
+      return {
+        ok: false,
+        field: 'city',
+        message: msg(options.language, 'Please enter your city.', 'يرجى إدخال المدينة.'),
+      }
     }
   }
 

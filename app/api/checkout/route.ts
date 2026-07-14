@@ -4,6 +4,11 @@ import { isAllowedCheckoutOrigin, resolvePublicSiteBaseUrl } from '@/lib/securit
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { notifyHealthAlert } from '@/lib/ops/notifications'
 import { parseCheckoutRequestBody } from '@/lib/checkout/parseCheckoutRequest'
+import { cartSubtotalInCurrency, resolveShippingFee } from '@/lib/pricing'
+import type { SupportedCurrency } from '@/lib/pricing/types'
+import { cartRequiresPhysicalShipping } from '@/lib/giftCards/cartDetection'
+import { resolveOptionalCheckoutGiftCredit } from '@/lib/giftCards/resolveCheckoutGiftCredit'
+import { applyGiftCardCreditToStripeSession } from '@/lib/stripe/applyGiftCardCredit'
 import {
   applyCheckoutDiscountCode,
   buildStripeCheckoutSessionParams,
@@ -25,10 +30,14 @@ async function createStripeSession(
   parsed: Exclude<ReturnType<typeof parseCheckoutRequestBody>, { error: string; status: number }>,
   baseUrl: string,
   uiMode: StripeCheckoutUiMode,
+  giftCredit: Awaited<ReturnType<typeof resolveOptionalCheckoutGiftCredit>>,
 ) {
   const sessionOptions = buildStripeCheckoutSessionParams({ parsed, baseUrl, uiMode })
   if (parsed.discountCode) {
     await applyCheckoutDiscountCode(stripe, sessionOptions, parsed.discountCode)
+  }
+  if (giftCredit.ok && giftCredit.credit) {
+    await applyGiftCardCreditToStripeSession(stripe, sessionOptions, giftCredit.credit)
   }
   return stripe.checkout.sessions.create(sessionOptions)
 }
@@ -64,6 +73,36 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: parsed.error }, { status: parsed.status })
     }
 
+    const currency = parsed.currency as SupportedCurrency
+    const cartSubtotal = cartSubtotalInCurrency(parsed.items, currency)
+    if (cartSubtotal <= 0) {
+      return NextResponse.json({ error: 'Invalid cart total.' }, { status: 400 })
+    }
+    const shippingFee = cartRequiresPhysicalShipping(parsed.items)
+      ? resolveShippingFee({
+          subtotal: cartSubtotal,
+          currency,
+          country: parsed.clientContext.country,
+        })
+      : 0
+    const gift = await resolveOptionalCheckoutGiftCredit({
+      parsed,
+      orderTotalBeforeGiftCard: cartSubtotal + shippingFee,
+      currency,
+    })
+    if (!gift.ok) {
+      return NextResponse.json({ error: gift.error }, { status: 400 })
+    }
+    if (gift.amountDue <= 0) {
+      return NextResponse.json(
+        {
+          error: 'This order is fully covered by your gift card.',
+          giftCardCoversFull: true,
+        },
+        { status: 400 },
+      )
+    }
+
     const preferredMode = resolveStripeCheckoutUiMode()
     const stripe = getStripeClient()
 
@@ -71,14 +110,14 @@ export async function POST(request: NextRequest) {
     let session: Stripe.Checkout.Session
 
     try {
-      session = await createStripeSession(stripe, parsed, baseUrl, preferredMode)
+      session = await createStripeSession(stripe, parsed, baseUrl, preferredMode, gift)
     } catch (primaryError) {
       // Embedded / elements can fail on account permissions or ship-to config —
       // fall back to hosted Checkout so card payment stays available.
       if (preferredMode === 'hosted') throw primaryError
       console.error('Stripe preferred checkout mode failed; falling back to hosted', primaryError)
       uiMode = 'hosted'
-      session = await createStripeSession(stripe, parsed, baseUrl, 'hosted')
+      session = await createStripeSession(stripe, parsed, baseUrl, 'hosted', gift)
     }
 
     if (uiMode === 'embedded' || uiMode === 'elements') {

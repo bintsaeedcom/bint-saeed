@@ -184,6 +184,10 @@ export const faqEn: FaqBundle = {
               q: 'Do you offer payment plans?',
               a: 'Full payment is taken at checkout. Instalment options are not offered at this time.',
             },
+            {
+              q: 'How do Gift Cards work?',
+              a: 'Gift Cards are denominated in AED. You may pay the equivalent in your selected currency at checkout. After payment, a unique code is emailed automatically via Resend. You can send the code and a personal message to a recipient; your confirmation includes a copy of that message. Enter the code at checkout on bintsaeed.com. Cards are valid for one Gregorian year from issue; unused balances after expiry are donated through Giving Forward. Full terms appear in our Terms & Conditions.',
+            },
           ],
         },
       ],

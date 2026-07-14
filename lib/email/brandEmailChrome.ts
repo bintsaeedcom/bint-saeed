@@ -62,6 +62,8 @@ type ShellOpts = {
   noteHtml?: string
   /** Extra footer line(s) */
   footerHtml?: string
+  /** Body text alignment — gift emails use center with the logo lockup */
+  bodyAlign?: 'left' | 'center'
 }
 
 /** Dark sovereign header — matches site header energy. */
@@ -228,7 +230,7 @@ ${emailBrandHeaderHtml(opts.origin, { eyebrow: opts.eyebrow })}
             </td>
           </tr>
           <tr>
-            <td class="bs-email-pad" style="padding:12px 40px 36px;font-size:15px;line-height:1.75;color:${body};font-family:${FONT_SANS};text-align:left;">
+            <td class="bs-email-pad" style="padding:12px 40px 36px;font-size:15px;line-height:1.75;color:${body};font-family:${FONT_SANS};text-align:${opts.bodyAlign === 'center' ? 'center' : 'left'};">
               ${opts.bodyHtml}
             </td>
           </tr>
