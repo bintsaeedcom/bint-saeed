@@ -777,7 +777,7 @@ const CATEGORY_STRIP = [
     key: 'Accessories',
     label: 'Accessories',
     href: '/accessories',
-    image: '/collection-section/bint-saeed-home-category-accessories-malachite-necklace.webp',
+    image: '/home/collection-chapter/bint-saeed-home-collection-accessories-malachite-lifestyle.webp',
   },
   {
     key: 'Personalisation',
@@ -1327,8 +1327,8 @@ function MagazineGrid() {
     },
     {
       images: [
-        collectionChapterImage('bint-saeed-home-collection-accessories-01.webp'),
-        collectionChapterImage('bint-saeed-home-collection-accessories-02.webp'),
+        collectionChapterImage('bint-saeed-home-collection-accessories-malachite-lifestyle.webp'),
+        collectionChapterImage('bint-saeed-home-collection-accessories-malachite-detail.webp'),
       ],
       label: 'Accessories',
       href: '/accessories',
