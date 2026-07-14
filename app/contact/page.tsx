@@ -205,10 +205,10 @@ export default function ContactPage() {
 
   const contactTitle = isRTL ? 'تواصلي معنا' : 'Contact Us'
   const contactImage = {
-    src: '/contact/bint-saeed-contact-us-abu-dhabi-house-editorial-portrait.webp',
+    src: '/contact/bint-saeed-contact-us-abu-dhabi-brand-portrait.webp',
     alt: isRTL
-      ? 'Bint Saeed — صورة تحريرية لأبوظبي: امرأة بعباية عنابية أمام نافورة وعمارة معاصرة'
-      : 'Bint Saeed Contact Us — editorial portrait in Abu Dhabi, woman in a burgundy abaya by a fountain against contemporary architecture',
+      ? 'Bint Saeed أبوظبي — صورة تحريرية مع أعشاب نافورة ونخيل وعمارة معاصرة'
+      : 'Bint Saeed Abu Dhabi — branded editorial portrait with fountain grass, palms, and contemporary architecture at dusk',
   } as const
 
   return (
@@ -241,189 +241,224 @@ export default function ContactPage() {
         </div>
 
         <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
-          <motion.div
-            initial={{ opacity: 0, x: isRTL ? 40 : -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className={contactPanelClass}
-          >
-            <div
-              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/25 to-transparent"
-              aria-hidden
-            />
-            {submitted ? (
-              <div className={`relative ${isRTL ? 'text-right' : 'text-left'}`}>
-                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-brand-dustyBlue/40 bg-brand-dustyBlue/12">
-                  <FiCheck className="h-6 w-6 text-brand-dustyBlue" strokeWidth={2.25} aria-hidden />
-                </div>
-                <p className="mt-6 font-montserrat text-[10px] uppercase tracking-[0.24em] text-brand-clayRed">
-                  {isRTL ? 'تم الاستلام' : 'Message received'}
-                </p>
-                <h2 className="mt-3 font-rozha text-3xl text-brand-darkRed">
-                  {isRTL ? 'شكراً لتواصلك معنا' : 'Thank you for writing'}
-                </h2>
-                <p className="mt-3 max-w-md font-montserrat text-sm leading-relaxed text-brand-clayRed/75">
-                  {getKeepExploringLine(language, 'worldOfBintSaeed')}
-                </p>
-                <div className={`mt-8 flex flex-col gap-3 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
-                  <LocaleLink
-                    href="/shop"
-                    className={`inline-flex min-h-[48px] items-center justify-center gap-2 bg-brand-darkRed px-6 font-montserrat text-[11px] uppercase tracking-[0.16em] text-white transition-colors hover:bg-brand-dustyBlue ${
-                      isRTL ? 'flex-row-reverse' : ''
-                    }`}
+          <div className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: isRTL ? 40 : -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className={contactPanelClass}
+            >
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/25 to-transparent"
+                aria-hidden
+              />
+              {submitted ? (
+                <div className={`relative ${isRTL ? 'text-right' : 'text-left'}`}>
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full border border-brand-dustyBlue/40 bg-brand-dustyBlue/12">
+                    <FiCheck className="h-6 w-6 text-brand-dustyBlue" strokeWidth={2.25} aria-hidden />
+                  </div>
+                  <p className="mt-6 font-montserrat text-[10px] uppercase tracking-[0.24em] text-brand-clayRed">
+                    {isRTL ? 'تم الاستلام' : 'Message received'}
+                  </p>
+                  <h2 className="mt-3 font-rozha text-3xl text-brand-darkRed">
+                    {isRTL ? 'شكراً لتواصلك معنا' : 'Thank you for writing'}
+                  </h2>
+                  <p className="mt-3 max-w-md font-montserrat text-sm leading-relaxed text-brand-clayRed/75">
+                    {getKeepExploringLine(language, 'worldOfBintSaeed')}
+                  </p>
+                  <div className={`mt-8 flex flex-col gap-3 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+                    <LocaleLink
+                      href="/shop"
+                      className={`inline-flex min-h-[48px] items-center justify-center gap-2 bg-brand-darkRed px-6 font-montserrat text-[11px] uppercase tracking-[0.16em] text-white transition-colors hover:bg-brand-dustyBlue ${
+                        isRTL ? 'flex-row-reverse' : ''
+                      }`}
+                      data-cursor-hover
+                    >
+                      {discover.exploreCollection}
+                      <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+                    </LocaleLink>
+                    <LocaleLink
+                      href="/accessories"
+                      className={`inline-flex min-h-[48px] items-center justify-center gap-2 border border-brand-darkRed/25 px-6 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue ${
+                        isRTL ? 'flex-row-reverse' : ''
+                      }`}
+                      data-cursor-hover
+                    >
+                      {discover.discoverAccessories}
+                    </LocaleLink>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setSubmitted(false)}
+                    className="mt-6 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue underline-offset-4 hover:underline"
                     data-cursor-hover
                   >
-                    {discover.exploreCollection}
-                    <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-                  </LocaleLink>
-                  <LocaleLink
-                    href="/accessories"
-                    className={`inline-flex min-h-[48px] items-center justify-center gap-2 border border-brand-darkRed/25 px-6 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue ${
-                      isRTL ? 'flex-row-reverse' : ''
-                    }`}
-                    data-cursor-hover
-                  >
-                    {discover.discoverAccessories}
-                  </LocaleLink>
+                    {isRTL ? 'إرسال رسالة أخرى' : 'Send another message'}
+                  </button>
                 </div>
+              ) : (
+              <form onSubmit={handleSubmit} className="relative space-y-6" noValidate>
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="contact-name" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
+                      {isRTL ? 'الاسم' : 'Name'} *
+                    </label>
+                    <input
+                      id="contact-name"
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => {
+                        setFormData({ ...formData, name: e.target.value })
+                        if (nameError) setNameError('')
+                      }}
+                      onBlur={() => {
+                        if (!formData.name.trim()) return
+                        const check = validateContactName(formData.name, language)
+                        setNameError(check.valid ? '' : check.message)
+                      }}
+                      aria-invalid={nameError ? true : undefined}
+                      aria-describedby={nameError ? 'contact-name-error' : undefined}
+                      className={`${contactFieldClass} ${nameError ? contactFieldErrorClass : ''} ${isRTL ? 'text-right' : ''}`}
+                      dir={isRTL ? 'rtl' : 'ltr'}
+                      autoComplete="name"
+                    />
+                    {nameError ? <FieldError id="contact-name-error" message={nameError} isRTL={isRTL} /> : null}
+                  </div>
+                  <div>
+                    <label htmlFor="contact-email" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
+                      {isRTL ? 'البريد الإلكتروني' : 'Email'} *
+                    </label>
+                    <input
+                      id="contact-email"
+                      type="text"
+                      inputMode="email"
+                      autoComplete="email"
+                      value={formData.email}
+                      onChange={(e) => {
+                        setFormData({ ...formData, email: e.target.value })
+                        if (emailError) setEmailError('')
+                      }}
+                      onBlur={() => {
+                        if (!formData.email.trim()) return
+                        const check = validateSubscriberEmail(formData.email, language)
+                        setEmailError(check.valid ? '' : check.message)
+                      }}
+                      aria-invalid={emailError ? true : undefined}
+                      aria-describedby={emailError ? 'contact-email-error' : undefined}
+                      className={`${contactFieldClass} ${emailError ? contactFieldErrorClass : ''} ${isRTL ? 'text-right' : ''}`}
+                      dir={isRTL ? 'rtl' : 'ltr'}
+                    />
+                    {emailError ? <FieldError id="contact-email-error" message={emailError} isRTL={isRTL} /> : null}
+                  </div>
+                </div>
+
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="contact-phone" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
+                      {isRTL ? 'رقم الهاتف' : 'Phone'}
+                    </label>
+                    <input
+                      id="contact-phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className={`${contactFieldClass} ${isRTL ? 'text-right' : ''}`}
+                      dir="ltr"
+                      autoComplete="tel"
+                    />
+                  </div>
+                  <div>
+                    <label className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
+                      {isRTL ? 'الموضوع' : 'Subject'} *
+                    </label>
+                    <ContactSubjectSelect
+                      value={formData.subject}
+                      onChange={(subject) => {
+                        setFormData({ ...formData, subject })
+                        if (subjectError) setSubjectError('')
+                      }}
+                      options={subjectOptions}
+                      placeholder={isRTL ? 'اختاري موضوعاً' : 'Select a subject'}
+                      isRTL={isRTL}
+                      hasError={Boolean(subjectError)}
+                      aria-describedby={subjectError ? 'contact-subject-error' : undefined}
+                      onBlur={() => {
+                        if (!formData.subject.trim()) return
+                        setSubjectError('')
+                      }}
+                    />
+                    {subjectError ? <FieldError id="contact-subject-error" message={subjectError} isRTL={isRTL} /> : null}
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="contact-message" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
+                    {isRTL ? 'رسالتك' : 'Message'} *
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    required
+                    rows={6}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className={`${contactFieldClass} resize-none ${isRTL ? 'text-right' : ''}`}
+                    dir={isRTL ? 'rtl' : 'ltr'}
+                    placeholder={isRTL ? 'كيف يمكننا مساعدتك؟' : 'How can we help you?'}
+                  />
+                </div>
+
                 <button
-                  type="button"
-                  onClick={() => setSubmitted(false)}
-                  className="mt-6 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue underline-offset-4 hover:underline"
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`${ctaFormSubmit} w-full sm:w-auto ${isRTL ? 'flex-row-reverse' : ''}`}
                   data-cursor-hover
                 >
-                  {isRTL ? 'إرسال رسالة أخرى' : 'Send another message'}
+                  {isSubmitting ? (
+                    <span>{isRTL ? 'جاري الإرسال...' : 'Sending...'}</span>
+                  ) : (
+                    <>
+                      <FiSend className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+                      <span>{isRTL ? 'إرسال الرسالة' : 'Send Message'}</span>
+                    </>
+                  )}
                 </button>
-              </div>
-            ) : (
-            <form onSubmit={handleSubmit} className="relative space-y-6" noValidate>
-              <div className="grid gap-6 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="contact-name" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
-                    {isRTL ? 'الاسم' : 'Name'} *
-                  </label>
-                  <input
-                    id="contact-name"
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => {
-                      setFormData({ ...formData, name: e.target.value })
-                      if (nameError) setNameError('')
-                    }}
-                    onBlur={() => {
-                      if (!formData.name.trim()) return
-                      const check = validateContactName(formData.name, language)
-                      setNameError(check.valid ? '' : check.message)
-                    }}
-                    aria-invalid={nameError ? true : undefined}
-                    aria-describedby={nameError ? 'contact-name-error' : undefined}
-                    className={`${contactFieldClass} ${nameError ? contactFieldErrorClass : ''} ${isRTL ? 'text-right' : ''}`}
-                    dir={isRTL ? 'rtl' : 'ltr'}
-                    autoComplete="name"
-                  />
-                  {nameError ? <FieldError id="contact-name-error" message={nameError} isRTL={isRTL} /> : null}
-                </div>
-                <div>
-                  <label htmlFor="contact-email" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
-                    {isRTL ? 'البريد الإلكتروني' : 'Email'} *
-                  </label>
-                  <input
-                    id="contact-email"
-                    type="text"
-                    inputMode="email"
-                    autoComplete="email"
-                    value={formData.email}
-                    onChange={(e) => {
-                      setFormData({ ...formData, email: e.target.value })
-                      if (emailError) setEmailError('')
-                    }}
-                    onBlur={() => {
-                      if (!formData.email.trim()) return
-                      const check = validateSubscriberEmail(formData.email, language)
-                      setEmailError(check.valid ? '' : check.message)
-                    }}
-                    aria-invalid={emailError ? true : undefined}
-                    aria-describedby={emailError ? 'contact-email-error' : undefined}
-                    className={`${contactFieldClass} ${emailError ? contactFieldErrorClass : ''} ${isRTL ? 'text-right' : ''}`}
-                    dir={isRTL ? 'rtl' : 'ltr'}
-                  />
-                  {emailError ? <FieldError id="contact-email-error" message={emailError} isRTL={isRTL} /> : null}
-                </div>
-              </div>
+              </form>
+              )}
+            </motion.div>
 
-              <div className="grid gap-6 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="contact-phone" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
-                    {isRTL ? 'رقم الهاتف' : 'Phone'}
-                  </label>
-                  <input
-                    id="contact-phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className={`${contactFieldClass} ${isRTL ? 'text-right' : ''}`}
-                    dir="ltr"
-                    autoComplete="tel"
-                  />
-                </div>
-                <div>
-                  <label className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
-                    {isRTL ? 'الموضوع' : 'Subject'} *
-                  </label>
-                  <ContactSubjectSelect
-                    value={formData.subject}
-                    onChange={(subject) => {
-                      setFormData({ ...formData, subject })
-                      if (subjectError) setSubjectError('')
-                    }}
-                    options={subjectOptions}
-                    placeholder={isRTL ? 'اختاري موضوعاً' : 'Select a subject'}
-                    isRTL={isRTL}
-                    hasError={Boolean(subjectError)}
-                    aria-describedby={subjectError ? 'contact-subject-error' : undefined}
-                    onBlur={() => {
-                      if (!formData.subject.trim()) return
-                      setSubjectError('')
-                    }}
-                  />
-                  {subjectError ? <FieldError id="contact-subject-error" message={subjectError} isRTL={isRTL} /> : null}
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="contact-message" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
-                  {isRTL ? 'رسالتك' : 'Message'} *
-                </label>
-                <textarea
-                  id="contact-message"
-                  required
-                  rows={6}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className={`${contactFieldClass} resize-none ${isRTL ? 'text-right' : ''}`}
-                  dir={isRTL ? 'rtl' : 'ltr'}
-                  placeholder={isRTL ? 'كيف يمكننا مساعدتك؟' : 'How can we help you?'}
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`${ctaFormSubmit} w-full sm:w-auto ${isRTL ? 'flex-row-reverse' : ''}`}
-                data-cursor-hover
-              >
-                {isSubmitting ? (
-                  <span>{isRTL ? 'جاري الإرسال...' : 'Sending...'}</span>
-                ) : (
-                  <>
-                    <FiSend className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-                    <span>{isRTL ? 'إرسال الرسالة' : 'Send Message'}</span>
-                  </>
-                )}
-              </button>
-            </form>
-            )}
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.35 }}
+              className={`${contactPanelClass} ${isRTL ? 'text-right' : ''}`}
+            >
+              <h3 className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed">
+                {isRTL ? 'البريد حسب القسم' : 'Department Inboxes'}
+              </h3>
+              <dl className="mt-5 space-y-0">
+                {departmentEmails.map(({ label, email }) => (
+                  <div
+                    key={email + label}
+                    className={`grid gap-1 border-b border-brand-stone/15 py-3.5 last:border-b-0 sm:grid-cols-[minmax(9rem,0.42fr)_minmax(0,1fr)] sm:items-baseline sm:gap-x-6 ${isRTL ? 'sm:[direction:rtl]' : ''}`}
+                  >
+                    <dt className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-clayRed">
+                      {label}
+                    </dt>
+                    <dd className="min-w-0">
+                      <a
+                        href={officialMailto(email)}
+                        className="break-all font-montserrat text-sm tracking-[0.02em] text-brand-darkRed transition-colors hover:text-brand-dustyBlue"
+                        dir="ltr"
+                        data-cursor-hover
+                      >
+                        {OFFICIAL_EMAILS[email]}
+                      </a>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </motion.div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, x: isRTL ? -40 : 40 }}
@@ -475,34 +510,6 @@ export default function ContactPage() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className={`${contactPanelClass} ${isRTL ? 'text-right' : ''}`}>
-              <h3 className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed">
-                {isRTL ? 'البريد حسب القسم' : 'Department Inboxes'}
-              </h3>
-              <dl className="mt-5 space-y-0">
-                {departmentEmails.map(({ label, email }) => (
-                  <div
-                    key={email + label}
-                    className={`grid gap-1 border-b border-brand-stone/15 py-3.5 last:border-b-0 sm:grid-cols-[minmax(9rem,0.42fr)_minmax(0,1fr)] sm:items-baseline sm:gap-x-6 ${isRTL ? 'sm:[direction:rtl]' : ''}`}
-                  >
-                    <dt className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-clayRed">
-                      {label}
-                    </dt>
-                    <dd className="min-w-0">
-                      <a
-                        href={officialMailto(email)}
-                        className="break-all font-montserrat text-sm tracking-[0.02em] text-brand-darkRed transition-colors hover:text-brand-dustyBlue"
-                        dir="ltr"
-                        data-cursor-hover
-                      >
-                        {OFFICIAL_EMAILS[email]}
-                      </a>
-                    </dd>
-                  </div>
-                ))}
-              </dl>
             </div>
           </motion.div>
         </div>

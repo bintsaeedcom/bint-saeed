@@ -15,7 +15,7 @@ import {
   editorialHeroCopyStack,
   editorialHeroCtaReservedSpace,
 } from '@/lib/ui/editorialPageChrome'
-import { ABOUT_EDITORIAL_HERO_IMAGE_OPACITY } from '@/lib/about/aboutEditorialHeroChrome'
+import { ABOUT_EDITORIAL_HERO_GRADIENT, ABOUT_EDITORIAL_HERO_IMAGE_OPACITY } from '@/lib/about/aboutEditorialHeroChrome'
 
 export type AboutSectionHeroProps = {
   rtl: boolean
@@ -63,7 +63,7 @@ export default function AboutSectionHero({
           priority={priority}
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/55 to-brand-darkRed/20" />
+        <div className={`absolute inset-0 ${ABOUT_EDITORIAL_HERO_GRADIENT}`} />
         <div className={editorialHeroContentShell}>
           <div className={editorialHeroCopyBlock}>
             <div className={`${EDITORIAL_PAGE_CONTAINER} ${editorialHeroCopyStack}`}>
