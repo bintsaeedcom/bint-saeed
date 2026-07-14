@@ -28,6 +28,7 @@ import { HOME_STORY_CODE_HREFS } from '@/lib/the-codes/homeStoryCodeHrefs'
 import { ctaPrimary } from '@/lib/ui/ctaClasses'
 import { PRODUCT_GRID_COLOUR_DOT, softGridColourHex } from '@/lib/ui/productGridColourDot'
 import type { Product } from '@/data/products'
+import type { AppLocale } from '@/lib/i18n/routing'
 
 /** Corner brackets / full-bleed grid stripes removed — typography uses border-s + border-b on copy only (see hero). */
 function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
@@ -677,7 +678,7 @@ function QuickShopCardGallery({
   primary: string
   hover: string
   color?: string
-  locale: string
+  locale: AppLocale
   staggerIndex: number
   stripLength: number
   reduceMotion: boolean | null
