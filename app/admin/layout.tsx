@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers } from 'react-icons/fi'
+import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers, FiGift } from 'react-icons/fi'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -46,6 +46,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
           <nav className="flex flex-1 flex-col gap-1 p-4">
             {link('/admin/orders', 'Orders', <FiShoppingBag className="h-4 w-4" />)}
+            {link('/admin/gift-cards', 'Gift cards', <FiGift className="h-4 w-4" />)}
             {link('/admin/customers', 'Customers', <FiUsers className="h-4 w-4" />)}
             {link('/admin/products', 'Catalog', <FiPackage className="h-4 w-4" />)}
             {link('/admin/dashboard', 'Analytics', <FiBarChart2 className="h-4 w-4" />)}
@@ -73,6 +74,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <nav className="flex gap-1 overflow-x-auto px-2 pb-2 [-webkit-overflow-scrolling:touch]">
               {[
                 { href: '/admin/orders', label: 'Orders' },
+                { href: '/admin/gift-cards', label: 'Gift cards' },
                 { href: '/admin/customers', label: 'Customers' },
                 { href: '/admin/products', label: 'Catalog' },
                 { href: '/admin/dashboard', label: 'Analytics' },

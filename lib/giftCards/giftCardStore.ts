@@ -45,6 +45,10 @@ async function indexCardAgainstOrder(card: StoredGiftCard): Promise<void> {
   }
 }
 
+export function usingRedisForGiftCards(): boolean {
+  return Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
+}
+
 export async function saveGiftCard(card: StoredGiftCard): Promise<void> {
   const r = getRedis()
   const norm = normalizeGiftCardCode(card.code)
