@@ -1,9 +1,13 @@
 /**
  * Read-only colour chips on collection grids — gemstone / colour references,
- * not interactive swatches. Keep small, soft-edged, naturally muted.
+ * not interactive swatches. Soft bead depth (highlight + rim) vs flat fills.
  */
 export const PRODUCT_GRID_COLOUR_DOT =
-  'h-[11px] w-[11px] shrink-0 rounded-full border border-black/[0.14] shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] saturate-[0.72] brightness-[0.96]'
+  'h-[11px] w-[11px] shrink-0 rounded-full border border-black/[0.16] shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.55),inset_0_-2px_3px_rgba(0,0,0,0.28),0_0.5px_1px_rgba(0,0,0,0.12)]'
+
+/** On dark panels (home strands feature) — lighter rim for contrast */
+export const PRODUCT_GRID_COLOUR_DOT_ON_DARK =
+  `${PRODUCT_GRID_COLOUR_DOT} border-white/28 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.5),inset_0_-2px_3px_rgba(0,0,0,0.35),0_0_0_0.5px_rgba(255,255,255,0.12)]`
 
 /** Reserved row height so chips of different counts don’t jump CTA alignment. */
 export const PRODUCT_GRID_COLOUR_DOT_ROW = 'flex min-h-[11px] flex-wrap items-center gap-1.5'
@@ -30,4 +34,19 @@ export function softGridColourHex(hex: string): string {
     '#c0c0c0': '#b0b0b0',
   }
   return map[raw] ?? map[raw.toLowerCase()] ?? raw
+}
+
+/** Soft specular bead fill — use instead of flat `backgroundColor`. */
+export function softGridColourBeadStyle(hex: string): {
+  backgroundColor: string
+  backgroundImage: string
+} {
+  const c = softGridColourHex(hex)
+  return {
+    backgroundColor: c,
+    backgroundImage: [
+      'radial-gradient(circle at 32% 26%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.18) 22%, transparent 46%)',
+      `radial-gradient(circle at 70% 78%, rgba(0,0,0,0.22) 0%, transparent 42%)`,
+    ].join(', '),
+  }
 }

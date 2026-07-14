@@ -44,7 +44,7 @@ import { getKeepExploringLine } from '@/lib/i18n/keepExploringCopyI18n'
 import {
   PRODUCT_GRID_COLOUR_DOT,
   PRODUCT_GRID_COLOUR_DOT_ROW,
-  softGridColourHex,
+  softGridColourBeadStyle,
 } from '@/lib/ui/productGridColourDot'
 import {
   PRODUCT_GRID_CTA_LINK,
@@ -834,7 +834,7 @@ function AccessoryCard({
               <div
                 key={color.name}
                 className={PRODUCT_GRID_COLOUR_DOT}
-                style={{ backgroundColor: softGridColourHex(color.hex) }}
+                style={softGridColourBeadStyle(color.hex)}
                 title={isRTL ? color.nameAr : color.name}
                 aria-hidden
               />

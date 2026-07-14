@@ -5,7 +5,7 @@ import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import type { Accessory } from '@/data/accessories'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
-import { PRODUCT_GRID_COLOUR_DOT, softGridColourHex } from '@/lib/ui/productGridColourDot'
+import { PRODUCT_GRID_COLOUR_DOT, softGridColourBeadStyle } from '@/lib/ui/productGridColourDot'
 import { ctaPrimary } from '@/lib/ui/ctaClasses'
 
 /** Featured stone order for the mosaic — first id is the hero tile. */
@@ -109,7 +109,7 @@ export default function StrandsStoneBento({
             {color ? (
               <span
                 className={PRODUCT_GRID_COLOUR_DOT}
-                style={{ backgroundColor: softGridColourHex(color.hex) }}
+                style={softGridColourBeadStyle(color.hex)}
                 aria-hidden
               />
             ) : null}
@@ -173,7 +173,7 @@ export default function StrandsStoneBento({
               {color ? (
                 <span
                   className={`${PRODUCT_GRID_COLOUR_DOT} h-3 w-3`}
-                  style={{ backgroundColor: softGridColourHex(color.hex) }}
+                  style={softGridColourBeadStyle(color.hex)}
                   aria-hidden
                 />
               ) : null}

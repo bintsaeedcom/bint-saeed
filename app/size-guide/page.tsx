@@ -257,35 +257,41 @@ export default function SizeGuidePage() {
               <h2 className="mb-4 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed">
                 {copy.howToMeasure}
               </h2>
-              <div className="mb-5 border border-brand-stone/20 bg-[#f9f6f2] p-2.5">
-                <Image
-                  src="/size-guide-figure.svg"
-                  alt={copy.imageAlt}
-                  width={620}
-                  height={760}
-                  className="mx-auto h-auto w-full max-w-[280px] sm:max-w-[320px]"
-                />
+              <div
+                className={`flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-4 ${
+                  isRTL ? 'sm:flex-row-reverse' : ''
+                }`}
+              >
+                <div className="shrink-0 bg-white sm:w-[44%]">
+                  <Image
+                    src="/size-guide/how-to-measure/bint-saeed-abu-dhabi-how-to-measure-body-figure.webp"
+                    alt={copy.imageAlt}
+                    width={396}
+                    height={927}
+                    className="mx-auto h-auto w-full max-w-[240px] sm:max-w-none"
+                  />
+                </div>
+                <ol className="min-w-0 flex-1 space-y-0">
+                  {copy.measureItems.map((item) => (
+                    <li
+                      key={item.id}
+                      className="flex gap-3 border-t border-brand-stone/20 py-2.5 first:border-t-0 first:pt-0"
+                    >
+                      <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-darkRed font-montserrat text-[10px] text-white">
+                        {item.id}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed">
+                          {item.title}
+                        </p>
+                        <p className="mt-0.5 font-montserrat text-[11px] uppercase leading-snug tracking-[0.04em] text-brand-clayRed/75">
+                          {item.copy}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
               </div>
-              <ol className="space-y-0">
-                {copy.measureItems.map((item) => (
-                  <li
-                    key={item.id}
-                    className="flex gap-3 border-t border-brand-stone/20 py-3 first:border-t-0 first:pt-0"
-                  >
-                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-darkRed font-montserrat text-[10px] text-white">
-                      {item.id}
-                    </span>
-                    <div className="min-w-0">
-                      <p className="font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed">
-                        {item.title}
-                      </p>
-                      <p className="mt-1 font-montserrat text-[12px] leading-relaxed text-brand-clayRed/75">
-                        {item.copy}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
             </div>
           </aside>
         </div>

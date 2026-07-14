@@ -80,5 +80,21 @@ export const editorialHeroCopyStack =
 /** Reserved CTA row height on banners without hero buttons (Our Story reference) */
 export const editorialHeroCtaReservedSpace = 'pointer-events-none mt-5 min-h-[3.25rem] shrink-0'
 
+/**
+ * Stacked editorial cards (About / Personalisation pattern).
+ * Sticky on mobile + desktop; bottom padding keeps copy clear of the next overlapping card.
+ */
+export const EDITORIAL_STACK_CARD =
+  'sticky top-0 -mt-8 will-change-transform rounded-t-[16px] shadow-[0_-14px_42px_rgba(0,0,0,0.28)] sm:-mt-10'
+
+/** Outer vertical rhythm — enough air so the next card covers padding, not prose */
+export const EDITORIAL_STACK_PAD = 'pt-16 pb-36 sm:pt-20 sm:pb-44 md:pt-24 md:pb-52'
+
+/** Extra buffer under the last readable block inside a stacked card */
+export const EDITORIAL_STACK_CONTENT_PAD = 'pb-16 sm:pb-24 md:pb-32'
+
+/** Closing / short CTA card — tall enough to feel intentional, not a tiny stub */
+export const EDITORIAL_STACK_CLOSING_PAD = 'pt-16 pb-28 sm:pt-20 sm:pb-36 md:pt-24 md:pb-44'
+
 /** @deprecated Use editorialHeroContentShell + editorialHeroCopyBlock */
 export const editorialBrandHeroContentShell = editorialHeroContentShell

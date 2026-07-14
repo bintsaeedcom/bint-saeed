@@ -26,7 +26,7 @@ import { getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
 import { CODES_IMAGE_FILES, codesPageImagePath } from '@/lib/the-codes/codesPageContent'
 import { HOME_STORY_CODE_HREFS } from '@/lib/the-codes/homeStoryCodeHrefs'
 import { ctaPrimary } from '@/lib/ui/ctaClasses'
-import { PRODUCT_GRID_COLOUR_DOT, softGridColourHex } from '@/lib/ui/productGridColourDot'
+import { PRODUCT_GRID_COLOUR_DOT, PRODUCT_GRID_COLOUR_DOT_ON_DARK, softGridColourBeadStyle } from '@/lib/ui/productGridColourDot'
 import type { Product } from '@/data/products'
 import type { AppLocale } from '@/lib/i18n/routing'
 
@@ -497,8 +497,8 @@ function CharmHeroFeatureSection() {
                   }`}
                 >
                   <span
-                    className={`${PRODUCT_GRID_COLOUR_DOT} border-white/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]`}
-                    style={{ backgroundColor: softGridColourHex(stone.hex) }}
+                    className={PRODUCT_GRID_COLOUR_DOT_ON_DARK}
+                    style={softGridColourBeadStyle(stone.hex)}
                     aria-hidden
                   />
                   {stone.name}
@@ -1006,8 +1006,9 @@ function QuickShopCarousel() {
                     <span
                       key={c.name}
                       title={localizedColorName(c.name, language)}
-                      className="h-2 w-2 shrink-0 rounded-full border border-black/12 md:h-[9px] md:w-[9px]"
-                      style={{ backgroundColor: c.hex }}
+                      className={`${PRODUCT_GRID_COLOUR_DOT} h-2 w-2 md:h-[9px] md:w-[9px]`}
+                      style={softGridColourBeadStyle(c.hex)}
+                      aria-hidden
                     />
                   ))}
                   {product.colors.length > 6 ? (

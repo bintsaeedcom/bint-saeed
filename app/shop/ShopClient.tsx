@@ -33,7 +33,7 @@ import { glassDrawer, glassDrawerWash, glassTextMuted, glassTextTitle } from '@/
 import {
   PRODUCT_GRID_COLOUR_DOT,
   PRODUCT_GRID_COLOUR_DOT_ROW,
-  softGridColourHex,
+  softGridColourBeadStyle,
 } from '@/lib/ui/productGridColourDot'
 import {
   PRODUCT_GRID_CTA_LINK,
@@ -405,7 +405,7 @@ export default function ShopClient() {
                         key={c.name}
                         title={c.name}
                         className={PRODUCT_GRID_COLOUR_DOT}
-                        style={{ backgroundColor: softGridColourHex(c.hex) }}
+                        style={softGridColourBeadStyle(c.hex)}
                         aria-hidden
                       />
                     ))}

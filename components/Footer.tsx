@@ -1,6 +1,7 @@
 'use client'
 
 import LocaleLink from '@/components/LocaleLink'
+import Image from 'next/image'
 import { FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter, FaYoutube } from 'react-icons/fa6'
 import { FiGlobe, FiClock, FiHeart } from 'react-icons/fi'
 import LanguageSwitcher from './LanguageSwitcher'
@@ -14,6 +15,7 @@ import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
 import { useVisitorComplimentaryShipping } from '@/lib/shipping/useVisitorComplimentaryShipping'
 import { useStableToggleScroll } from '@/lib/ui/useStableToggleScroll'
 import { getAboutTopicNavLinks } from '@/lib/i18n/aboutTopicNavI18n'
+import { withBrandAlt } from '@/lib/products/imageAlt'
 import { useState } from 'react'
 
 const socialLinks = [
@@ -230,11 +232,29 @@ export default function Footer() {
             </div>
           </div>
 
-          <FooterPaymentMethods
-            label={ui.checkout.securePayment}
-            align="center"
-            className="mt-10 border-t border-white/10 pt-8"
-          />
+          <div className="relative mt-10 border-t border-white/10 pt-8">
+            <FooterPaymentMethods
+              label={ui.checkout.securePayment}
+              align="center"
+            />
+            {/* Gold monogram — far right of payment cards row */}
+            <LocaleLink
+              href="/home"
+              className="absolute bottom-0 end-0 flex items-end justify-end"
+              aria-label={withBrandAlt('Bint Saeed gold monogram', language)}
+              title="Bint Saeed Abu Dhabi"
+              data-cursor-hover
+            >
+              <Image
+                src="/brand/bint-saeed-abu-dhabi-gold-monogram.webp"
+                alt={withBrandAlt('Bint Saeed gold monogram', language)}
+                title="Bint Saeed Abu Dhabi"
+                width={48}
+                height={48}
+                className="h-9 w-9 object-contain opacity-90 transition-opacity hover:opacity-100 md:h-10 md:w-10"
+              />
+            </LocaleLink>
+          </div>
         </div>
       </div>
 
