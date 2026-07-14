@@ -17,6 +17,7 @@ export type CraftsmanshipCopy = {
   phaseIII: CraftsmanshipPhaseCopy
   ctaHeading: string
   ctaButton: string
+  discoverMore: string
 }
 
 const CRAFTSMANSHIP_EN: CraftsmanshipCopy = {
@@ -52,6 +53,7 @@ const CRAFTSMANSHIP_EN: CraftsmanshipCopy = {
   },
   ctaHeading: 'Explore the collection',
   ctaButton: 'View Collection',
+  discoverMore: 'Discover More',
 }
 
 const CRAFTSMANSHIP_ID: CraftsmanshipCopy = {
@@ -87,6 +89,7 @@ const CRAFTSMANSHIP_ID: CraftsmanshipCopy = {
   },
   ctaHeading: 'Jelajahi koleksi',
   ctaButton: 'Lihat Koleksi',
+  discoverMore: 'Temukan Lebih Lanjut',
 }
 
 const CRAFTSMANSHIP_AR: CraftsmanshipCopy = {
@@ -122,6 +125,7 @@ const CRAFTSMANSHIP_AR: CraftsmanshipCopy = {
   },
   ctaHeading: 'استكشفي المجموعة',
   ctaButton: 'عرض المجموعة',
+  discoverMore: 'اكتشف المزيد',
 }
 
 const CRAFTSMANSHIP_MS: CraftsmanshipCopy = {
@@ -157,6 +161,7 @@ const CRAFTSMANSHIP_MS: CraftsmanshipCopy = {
   },
   ctaHeading: 'Terokai koleksi',
   ctaButton: 'Lihat Koleksi',
+  discoverMore: 'Temui Lebih Lanjut',
 }
 
 export function getCraftsmanshipCopy(locale: Language | string): CraftsmanshipCopy {
