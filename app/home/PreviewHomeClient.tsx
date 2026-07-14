@@ -557,12 +557,12 @@ function CharmHeroFeatureSectionMirror() {
           <div className="relative z-[1] h-full min-h-[68vh]">
             <Image
               src={HOME_PERSONALISATION_FEATURE_IMAGE}
-              alt={withBrandAlt('Bint Saeed hidden inner label personalisation')}
+              alt={withBrandAlt('Bint Saeed personalised hidden inner label')}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-center opacity-90 mix-blend-multiply transition-transform duration-700 group-hover:scale-[1.02]"
+              className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
             />
-            <div className="pointer-events-none absolute inset-0 bg-[#1a0210]/30" aria-hidden />
+            <div className="pointer-events-none absolute inset-0 bg-[#1a0210]/18" aria-hidden />
           </div>
         </LocaleLink>
 
@@ -638,6 +638,10 @@ function CampaignPanoramaSection() {
 }
 
 const QUICK_SHOP_LOOP_MS = 72_000
+/** How long each framing holds before dissolving to the alternate still */
+const QUICK_SHOP_FRAME_HOLD_MS = 3_600
+/** Full primary↔alt cycle length */
+const QUICK_SHOP_FRAME_CYCLE_MS = QUICK_SHOP_FRAME_HOLD_MS * 2
 
 function quickShopCarouselImages(product: Product): { primary: string; hover: string; color?: string } {
   const slug = getProductSlug(product)
@@ -653,6 +657,100 @@ function quickShopCarouselImages(product: Product): { primary: string; hover: st
     primary: product.images[0] ?? '',
     hover: product.images[1] ?? product.images[0] ?? '',
   }
+}
+
+/**
+ * Staggered still-to-still dissolve — each card flips on its own beat so the
+ * quick-shop strip reads like a slow movie reel rather than a synced hover swap.
+ */
+function QuickShopCardGallery({
+  product,
+  primary,
+  hover,
+  color,
+  locale,
+  staggerIndex,
+  stripLength,
+  reduceMotion,
+}: {
+  product: Product
+  primary: string
+  hover: string
+  color?: string
+  locale: string
+  staggerIndex: number
+  stripLength: number
+  reduceMotion: boolean | null
+}) {
+  const hasAlt = Boolean(hover && hover !== primary)
+  const [showAlt, setShowAlt] = useState(false)
+  const [pointerPreferAlt, setPointerPreferAlt] = useState(false)
+
+  useEffect(() => {
+    if (reduceMotion || !hasAlt) {
+      setShowAlt(false)
+      return
+    }
+    const n = Math.max(stripLength, 1)
+    const staggerOffset = (staggerIndex % n) * (QUICK_SHOP_FRAME_CYCLE_MS / n)
+
+    const sync = () => {
+      const phase = (performance.now() + staggerOffset) % QUICK_SHOP_FRAME_CYCLE_MS
+      setShowAlt(phase >= QUICK_SHOP_FRAME_HOLD_MS)
+    }
+    sync()
+
+    let timeoutId = 0
+    let intervalId = 0
+    const arm = () => {
+      const phase = (performance.now() + staggerOffset) % QUICK_SHOP_FRAME_CYCLE_MS
+      const untilFlip = QUICK_SHOP_FRAME_HOLD_MS - (phase % QUICK_SHOP_FRAME_HOLD_MS)
+      timeoutId = window.setTimeout(() => {
+        sync()
+        intervalId = window.setInterval(sync, QUICK_SHOP_FRAME_HOLD_MS)
+      }, Math.max(untilFlip, 48))
+    }
+    arm()
+
+    return () => {
+      window.clearTimeout(timeoutId)
+      window.clearInterval(intervalId)
+    }
+  }, [reduceMotion, hasAlt, staggerIndex, stripLength])
+
+  const revealAlt = pointerPreferAlt || showAlt
+
+  return (
+    <div
+      className="relative h-[20.95rem] w-full shrink-0 overflow-hidden bg-[#f3f0ea] md:h-[25.85rem] lg:h-[27.15rem]"
+      onMouseEnter={() => setPointerPreferAlt(true)}
+      onMouseLeave={() => setPointerPreferAlt(false)}
+    >
+      <SafeCarouselImage
+        src={primary}
+        alt={getProductImageAlt(product, primary, { color, index: 0, locale })}
+        sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
+        className={`pointer-events-none object-cover object-top transition-all duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          revealAlt ? 'scale-[1.02] opacity-0' : 'scale-100 opacity-100'
+        }`}
+      />
+      {hasAlt ? (
+        <SafeCarouselImage
+          src={hover}
+          alt={getProductImageAlt(product, hover, { color, index: 1, locale })}
+          sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
+          className={`pointer-events-none object-cover object-center transition-all duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            revealAlt ? 'scale-[1.02] opacity-100' : 'scale-100 opacity-0'
+          }`}
+        />
+      ) : null}
+      <div
+        className={`pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#1F0508]/22 to-transparent transition-opacity duration-500 ${
+          revealAlt ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
+    </div>
+  )
 }
 
 const CATEGORY_STRIP = [
@@ -678,7 +776,7 @@ const CATEGORY_STRIP = [
     key: 'Accessories',
     label: 'Accessories',
     href: '/accessories',
-    image: '/collection-section/5.jpg',
+    image: '/collection-section/bint-saeed-home-category-accessories-malachite-necklace.webp',
   },
   {
     key: 'Personalisation',
@@ -871,6 +969,7 @@ function QuickShopCarousel() {
           {[...quickProducts, ...quickProducts].map((product, idx) => {
             const carouselImages = quickShopCarouselImages(product)
             const carouselColor = carouselImages.color ?? product.colors[0]?.name
+            const staggerIndex = idx % Math.max(quickProducts.length, 1)
             return (
             <LocaleLink
               key={`${product.id}-${idx}`}
@@ -879,25 +978,16 @@ function QuickShopCarousel() {
               data-cursor-hover
             >
               {/* Images must not capture hits — stacked fill layers steal taps from the link otherwise */}
-              <div className="relative h-[20.95rem] w-full shrink-0 overflow-hidden bg-[#f3f0ea] md:h-[25.85rem] lg:h-[27.15rem]">
-                <SafeCarouselImage
-                  src={carouselImages.primary}
-                  alt={getProductImageAlt(product, carouselImages.primary, { color: carouselColor, index: 0, locale: language })}
-                  sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
-                  className="pointer-events-none object-cover object-top transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-visible:opacity-0 group-hover:scale-[1.03]"
-                />
-                <SafeCarouselImage
-                  src={carouselImages.hover}
-                  alt={getProductImageAlt(product, carouselImages.hover, {
-                    color: carouselColor,
-                    index: 1,
-                    locale: language,
-                  })}
-                  sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
-                  className="pointer-events-none object-cover object-center opacity-0 transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-visible:opacity-100 group-hover:scale-[1.03]"
-                />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#1F0508]/22 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              </div>
+              <QuickShopCardGallery
+                product={product}
+                primary={carouselImages.primary}
+                hover={carouselImages.hover}
+                color={carouselColor}
+                locale={language}
+                staggerIndex={staggerIndex}
+                stripLength={quickProducts.length}
+                reduceMotion={reduceMotion}
+              />
               <div className="flex min-h-[4.25rem] flex-1 flex-col justify-center gap-1.5 border-t border-brand-stone/20 px-2.5 py-2 md:min-h-[4.5rem] md:gap-2 md:px-3 md:py-2.5">
                 <div className={`flex min-h-0 flex-col gap-1 ${isRTL ? 'items-end text-right' : 'items-start text-left'}`}>
                   <h3 className="min-w-0 max-w-full truncate font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
