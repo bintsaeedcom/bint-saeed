@@ -34,10 +34,6 @@ const MEDIA = {
     src: '/craftsmanship/bint-saeed-label-stitching.png',
     alt: 'Bint Saeed woven label detail and hand finishing on a bespoke abaya—quality-controlled construction at the Bint Saeed atelier in Abu Dhabi',
   },
-  khous: {
-    src: '/craftsmanship/bint-saeed-khous-braid.png',
-    alt: 'Bint Saeed—Khous braid integrated into garment structure; Emirati palm-frond weaving referenced in contemporary luxury abaya design, Abu Dhabi',
-  },
   cad: {
     src: '/craftsmanship/bint-saeed-cad-abaya-pattern.png',
     alt: 'Bint Saeed CAD abaya pattern on screen—technical lines for proportion and construction resolved before cutting; luxury development between Italy and Abu Dhabi',
@@ -53,14 +49,6 @@ const MEDIA = {
   cutting: {
     src: '/craftsmanship/bint-saeed-fabric-cutting.png',
     alt: 'Bint Saeed—precision fabric cutting in the Abu Dhabi atelier; controlled cutting for bespoke luxury abayas produced in the UAE',
-  },
-  shears: {
-    src: '/craftsmanship/bint-saeed-atelier-shears-cutting.jpg',
-    alt: 'Bint Saeed atelier—hand cutting fabric with professional shears during precision construction for luxury abayas in Abu Dhabi',
-  },
-  threads: {
-    src: '/craftsmanship/bint-saeed-thread-spools.png',
-    alt: 'Bint Saeed—premium tailoring threads for luxury abaya construction; materials chosen for durability, consistency, and refined finish',
   },
 } as const
 
@@ -249,81 +237,53 @@ export default function CraftsmanshipClient() {
         description={description || undefined}
       />
 
-      {/* Opening — label + khous once */}
+      {/* Opening — label detail as a compact full-bleed banner */}
       <section
-        className="bs-full-bleed relative border-b border-brand-stone/15 bg-brand-pageCanvas pb-4 pt-0 md:pb-6"
+        className="bs-full-bleed relative border-b border-brand-stone/15 bg-brand-pageCanvas"
         aria-label="Bint Saeed atelier finishing"
       >
-        <div className={`${EDITORIAL_PAGE_CONTAINER} py-5 md:py-8`}>
-          <div className="grid grid-cols-12 gap-3 md:gap-4 lg:gap-5">
-            <div className="col-span-12 md:col-span-7 lg:col-span-8">
-              <Post ratio="aspect-[4/5] md:aspect-[5/6] lg:aspect-auto lg:min-h-[min(62vh,640px)] lg:h-full">
-                <Still src={MEDIA.label.src} alt={MEDIA.label.alt} priority objectPosition="object-top" />
-              </Post>
-            </div>
-            <div className="col-span-12 md:col-span-5 lg:col-span-4">
-              <Post ratio="aspect-[3/4] md:aspect-auto md:h-full md:min-h-[min(62vh,640px)]">
-                <Still src={MEDIA.khous.src} alt={MEDIA.khous.alt} />
-              </Post>
-            </div>
-          </div>
+        <div className="group relative isolate h-[min(48vw,200px)] w-full overflow-hidden bg-brand-stone/25 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)] sm:h-[min(36vw,240px)] md:h-[min(24vw,280px)]">
+          <Still
+            src={MEDIA.label.src}
+            alt={MEDIA.label.alt}
+            priority
+            objectPosition="object-[center_68%]"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(26,2,16,0.04)_0%,transparent_34%,rgba(26,2,16,0.06)_100%)]"
+            aria-hidden
+          />
         </div>
       </section>
 
       {/* Phase I */}
       <section className="relative overflow-hidden py-14 md:py-20 lg:py-24" aria-labelledby="phase-i">
         <div className={EDITORIAL_PAGE_CONTAINER}>
-          <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-10">
-            <div className={`lg:col-span-5 lg:pb-4 ${isRTL ? 'lg:order-2' : ''}`}>
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-10">
+            <div className={`lg:col-span-5 ${isRTL ? 'lg:order-2' : ''}`}>
               <PhaseProse phase={copy.phaseI} headingId="phase-i" />
             </div>
             <div className={`lg:col-span-7 ${isRTL ? 'lg:order-1' : ''}`}>
               <div className="grid grid-cols-12 gap-3 md:gap-4">
-                <div className="col-span-7 md:col-span-6">
+                <div className="col-span-7 flex flex-col gap-3 md:col-span-6 md:gap-4">
                   <Post ratio="aspect-[3/4]">
                     <Still src={MEDIA.cad.src} alt={MEDIA.cad.alt} />
                   </Post>
+                  <Post ratio="aspect-[5/4] md:aspect-[16/10]">
+                    <Still
+                      src={MEDIA.textile.src}
+                      alt={MEDIA.textile.alt}
+                      objectPosition="object-[center_22%]"
+                    />
+                  </Post>
                 </div>
-                <div className="col-span-5 flex flex-col gap-3 md:col-span-6 md:gap-4">
-                  <Post ratio="aspect-square md:aspect-[4/5]">
+                <div className="col-span-5 md:col-span-6">
+                  <Post ratio="aspect-[3/4] md:aspect-auto md:h-full">
                     <Still src={MEDIA.pattern.src} alt={MEDIA.pattern.alt} />
-                  </Post>
-                  <Post ratio="aspect-[4/5] md:aspect-[5/4]" className="hidden md:block">
-                    <Still src={MEDIA.textile.src} alt={MEDIA.textile.alt} />
-                  </Post>
-                </div>
-                <div className="col-span-12 md:hidden">
-                  <Post ratio="aspect-[16/10]">
-                    <Still src={MEDIA.textile.src} alt={MEDIA.textile.alt} />
                   </Post>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Atelier films — once each, compact carousel / grid */}
-      <section
-        className="bs-full-bleed relative border-y border-brand-stone/15 bg-brand-pageCanvas py-8 md:py-12"
-        aria-label="Bint Saeed atelier process films"
-      >
-        <div className={EDITORIAL_PAGE_CONTAINER}>
-          <div
-            className={`flex gap-3 overflow-x-auto pb-1 snap-x snap-mandatory scroll-px-4 [-ms-overflow-style:none] [scrollbar-width:none] md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:pb-0 md:snap-none [&::-webkit-scrollbar]:hidden ${
-              isRTL ? 'flex-row-reverse md:flex-row' : ''
-            }`}
-          >
-            {CRAFT_VIDEOS.map((video) => (
-              <div
-                key={video.src}
-                className="w-[72%] max-w-[17.5rem] shrink-0 snap-center sm:w-[58%] sm:max-w-[20rem] md:w-auto md:max-w-none"
-              >
-                <Post ratio="aspect-[4/5] md:aspect-[3/4]">
-                  <Film src={video.src} ariaLabel={video.ariaLabel} />
-                </Post>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -335,22 +295,10 @@ export default function CraftsmanshipClient() {
             <PhaseProse phase={copy.phaseII} headingId="phase-ii" accent="clay" />
           </div>
 
-          <div className="grid grid-cols-12 gap-3 md:gap-4 lg:gap-5">
-            <div className="col-span-12 md:col-span-8 lg:col-span-7">
-              <Post ratio="aspect-[16/10] md:aspect-[16/9]">
-                <Still src={MEDIA.shears.src} alt={MEDIA.shears.alt} objectPosition="object-[center_40%]" />
-              </Post>
-            </div>
-            <div className="col-span-6 md:col-span-4 lg:col-span-5">
-              <Post ratio="aspect-[3/4] md:aspect-auto md:h-full">
-                <Still src={MEDIA.threads.src} alt={MEDIA.threads.alt} />
-              </Post>
-            </div>
-            <div className="col-span-6 md:col-span-12 lg:col-span-12">
-              <Post ratio="aspect-[4/5] md:aspect-[21/9]">
-                <Still src={MEDIA.cutting.src} alt={MEDIA.cutting.alt} />
-              </Post>
-            </div>
+          <div className="grid grid-cols-1">
+            <Post ratio="aspect-[4/5] md:aspect-[21/9]">
+              <Still src={MEDIA.cutting.src} alt={MEDIA.cutting.alt} />
+            </Post>
           </div>
         </div>
       </section>
@@ -362,6 +310,24 @@ export default function CraftsmanshipClient() {
       >
         <div className={EDITORIAL_PAGE_CONTAINER}>
           <PhaseProse phase={copy.phaseIII} headingId="phase-iii" />
+        </div>
+      </section>
+
+      {/* Atelier films — end of page, always 3-across */}
+      <section
+        className="bs-full-bleed relative border-b border-brand-stone/15 bg-brand-pageCanvas py-8 md:py-12"
+        aria-label="Bint Saeed atelier process films"
+      >
+        <div className={EDITORIAL_PAGE_CONTAINER}>
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4">
+            {CRAFT_VIDEOS.map((video) => (
+              <div key={video.src} className="min-w-0">
+                <Post ratio="aspect-[3/4]">
+                  <Film src={video.src} ariaLabel={video.ariaLabel} />
+                </Post>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -57,7 +57,7 @@ export default function TamaraProductWidget({ amount, currency = 'AED', classNam
   return (
     <div
       className={[
-        'mb-0 flex items-center gap-3 rounded-[4px] border border-[#8fd4d0]/55 bg-gradient-to-r from-[#eef9f8] via-[#f7f4ef] to-[#f3eee8] px-3.5 py-3.5 shadow-[0_6px_20px_-12px_rgba(26,2,16,0.18)]',
+        'mb-0 flex items-center gap-3 rounded-[4px] border border-[#8fd4d0]/55 bg-gradient-to-r from-[#eef9f8] via-[#f7f4ef] to-[#f3eee8] px-3.5 py-2 shadow-[0_6px_20px_-12px_rgba(26,2,16,0.18)]',
         isRTL ? 'flex-row-reverse text-right' : 'text-left',
         className,
       ]
@@ -65,23 +65,21 @@ export default function TamaraProductWidget({ amount, currency = 'AED', classNam
         .join(' ')}
       data-tamara-widget-host
     >
-      <p className="min-w-0 flex-1 font-montserrat text-[12px] leading-[1.55] tracking-[0.02em] text-brand-darkRed sm:text-[13px]">
+      <p className="min-w-0 flex-1 font-montserrat text-[12px] leading-[1.45] tracking-[0.02em] text-brand-darkRed sm:text-[13px]">
         <span>{copy.before}</span>
         <span className="font-semibold tabular-nums tracking-wide text-[#0d6e6a]">
           {installmentFormatted}
         </span>
         <span>{copy.after}</span>
       </p>
-      <span className="flex h-9 shrink-0 items-center justify-center rounded-[4px] bg-white px-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.12)] sm:h-10 sm:px-3">
-        <Image
-          src={TAMARA_LOGO.badge}
-          alt="Tamara"
-          width={191}
-          height={64}
-          className="h-[26px] w-auto max-w-[88px] object-contain sm:h-[28px] sm:max-w-[96px]"
-          unoptimized
-        />
-      </span>
+      <Image
+        src={TAMARA_LOGO.badge}
+        alt="Tamara"
+        width={191}
+        height={64}
+        className="h-[24px] w-auto max-w-[84px] shrink-0 object-contain sm:h-[26px] sm:max-w-[92px]"
+        unoptimized
+      />
     </div>
   )
 }
