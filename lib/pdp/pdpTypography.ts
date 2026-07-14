@@ -26,8 +26,5 @@ export function formatPdpProductCodeLine(sku: string, isRTL: boolean): string {
 export const PDP_FAQ_QUESTION =
   'pdp-copy font-montserrat text-[11px] font-semibold tracking-wide text-brand-darkRed'
 
-export const PDP_MTO_NOTE =
-  'font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-dustyBlue'
-
 export const PDP_RELATED_TITLE =
   'mb-5 font-montserrat text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-darkRed'

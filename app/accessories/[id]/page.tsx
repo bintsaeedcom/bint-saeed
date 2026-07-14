@@ -2,13 +2,13 @@
 
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
-import { FiPlus, FiMinus, FiHeart, FiX, FiGlobe, FiAward } from 'react-icons/fi'
+import { FiPlus, FiMinus, FiHeart, FiGlobe, FiAward } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { accessories, accessoryCategories } from '@/data/accessories'
 import {
@@ -25,7 +25,12 @@ import { productPageUi } from '@/lib/i18n/productPageUi'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import TamaraProductWidget from '@/components/TamaraProductWidget'
 import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
+import {
+  PDP_COLOUR_SWATCH,
+  pdpColourSwatchState,
+} from '@/lib/ui/pdpColourSwatch'
 import {
   buildAccessoryProductJsonLd,
   getAccessoryImageAlt,
@@ -51,6 +56,7 @@ import { getPhoneCharmPdpContent } from '@/lib/accessories/phoneCharmPdpContent'
 import { getBagCharmPdpContent } from '@/lib/accessories/bagCharmPdpContent'
 import { accessoryCanonicalUrl } from '@/lib/accessories/accessoryPageUrl'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
+import PdpLightbox from '@/components/pdp/PdpLightbox'
 import StickyAddToCart from '@/components/StickyAddToCart'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import { accessoryDisplaySize } from '@/lib/accessories/accessorySizeLabel'
@@ -62,7 +68,6 @@ import {
   PDP_COPY_INTRO,
   PDP_COPY_RELAXED,
   PDP_FAQ_QUESTION,
-  PDP_MTO_NOTE,
   PDP_RELATED_TITLE,
   formatPdpProductCodeLine,
 } from '@/lib/pdp/pdpTypography'
@@ -114,6 +119,15 @@ export default function AccessoryDetailPage() {
   const { isRTL, t, language } = useLanguage()
   const ui = commerceUi(language)
   const productUi = productPageUi(language)
+  const estimatedShipDate = useMemo(() => {
+    const d = new Date()
+    d.setDate(d.getDate() + 14)
+    return new Intl.DateTimeFormat(language === 'ar' ? 'ar-AE' : 'en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    }).format(d)
+  }, [language])
   const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
   const mainGalleryModules = useMemo(
     () => (thumbConnected ? [Navigation, Thumbs, Pagination] : [Navigation, Pagination]),
@@ -623,6 +637,23 @@ export default function AccessoryDetailPage() {
             ? accessory.descriptionAr
             : getLocalizedAccessoryDescription(accessory, language)
   const pdpImages = useMemo(() => getAccessoryPdpImages(accessory), [accessory])
+  const imageAltFor = (imageSrc: string, index: number) =>
+    getAccessoryImageAlt(accessory, imageSrc, index, language)
+  const lightboxImages = useMemo(
+    () =>
+      pdpImages.flatMap((src, index) =>
+        isVideoFile(src) ? [] : [{ src, alt: imageAltFor(src, index) }],
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- rebuild when gallery inputs change
+    [pdpImages, language, accessory],
+  )
+  const openLightboxAt = (galleryIndex: number) => {
+    const src = pdpImages[galleryIndex]
+    if (!src || isVideoFile(src)) return
+    const next = lightboxImages.findIndex((item) => item.src === src)
+    setLightboxIndex(next >= 0 ? next : 0)
+    setIsLightboxOpen(true)
+  }
   const productJsonLd = useMemo(
     () =>
       buildAccessoryProductJsonLd({
@@ -634,8 +665,11 @@ export default function AccessoryDetailPage() {
       }),
     [accessory, displayName, language, pdpDescription],
   )
-  const imageAltFor = (imageSrc: string, index: number) =>
-    getAccessoryImageAlt(accessory, imageSrc, index, language)
+
+  useEffect(() => {
+    if (!lightboxImages.length) return
+    setLightboxIndex((current) => Math.min(current, lightboxImages.length - 1))
+  }, [lightboxImages])
 
   useEffect(() => {
     trackEvent('view_item', {
@@ -780,17 +814,12 @@ export default function AccessoryDetailPage() {
                       <SwiperSlide key={index}>
                         <div
                           className={`relative h-full w-full ${isVideoFile(image) ? 'cursor-default' : 'cursor-zoom-in'}`}
-                          onClick={() => {
-                            if (isVideoFile(image)) return
-                            setLightboxIndex(index)
-                            setIsLightboxOpen(true)
-                          }}
+                          onClick={() => openLightboxAt(index)}
                           onKeyDown={(e) => {
                             if (isVideoFile(image)) return
                             if (e.key === 'Enter' || e.key === ' ') {
                               e.preventDefault()
-                              setLightboxIndex(index)
-                              setIsLightboxOpen(true)
+                              openLightboxAt(index)
                             }
                           }}
                           role="button"
@@ -963,11 +992,9 @@ export default function AccessoryDetailPage() {
                     key={color.name}
                     type="button"
                     onClick={() => setSelectedColor(isRTL ? color.nameAr : color.name)}
-                    className={`h-5 w-5 shrink-0 rounded-full border transition-all sm:h-6 sm:w-6 ${
-                      selectedColor === (isRTL ? color.nameAr : color.name)
-                        ? 'border-brand-darkRed ring-1 ring-brand-darkRed/25 ring-offset-1'
-                        : 'border-brand-stone/40 hover:border-brand-dustyBlue'
-                    }`}
+                    className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(
+                      selectedColor === (isRTL ? color.nameAr : color.name),
+                    )}`}
                     style={{ backgroundColor: color.hex }}
                     title={isRTL ? color.nameAr : color.name}
                     aria-pressed={selectedColor === (isRTL ? color.nameAr : color.name)}
@@ -990,6 +1017,9 @@ export default function AccessoryDetailPage() {
                   {sizeLabel}
                 </span>
               </div>
+              <p className="mt-2 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
+                {productUi.madeToOrderShips(estimatedShipDate)}
+              </p>
             </div>
 
             {/* Quantity & Add to Cart */}
@@ -1026,12 +1056,19 @@ export default function AccessoryDetailPage() {
 
             </div>
 
+            {(currency.code === 'AED' || currency.code === 'SAR') ? (
+              <TamaraProductWidget
+                amount={convertPrice(accessory.price * quantity)}
+                currency={currency.code}
+                className="mb-3 mt-1"
+              />
+            ) : null}
             {['AED', 'SAR', 'KWD'].includes(currency.code) ? (
               <TabbyPromoSnippet
                 price={convertPrice(accessory.price * quantity)}
                 currency={currency.code}
                 source="product"
-                className="mb-3 mt-1"
+                className="mb-3"
               />
             ) : null}
 
@@ -1073,9 +1110,6 @@ export default function AccessoryDetailPage() {
                 {isRTL ? accessory.descriptionAr : accessory.description}
               </p>
             )}
-            <p className={`mb-2 ${PDP_MTO_NOTE}`}>
-              {productUi.madeToOrderNote}
-            </p>
 
             <PdpAccordion
               openId={openDropdown}
@@ -1124,35 +1158,14 @@ export default function AccessoryDetailPage() {
         </div>
       </div>
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {isLightboxOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black flex items-center justify-center"
-            onClick={() => setIsLightboxOpen(false)}
-          >
-            <button
-              type="button"
-              className="absolute right-6 top-6 z-10 text-white"
-              onClick={() => setIsLightboxOpen(false)}
-              data-cursor-hover
-            >
-              <FiX className="h-8 w-8" />
-            </button>
-            <div className="relative m-4 h-full max-h-[72vh] w-full max-w-[51.2rem]">
-              <PdpGalleryImage
-                src={pdpImages[lightboxIndex] ?? accessory.images[0]!}
-                alt={imageAltFor(pdpImages[lightboxIndex] ?? accessory.images[0]!, lightboxIndex)}
-                priority
-                className="object-contain object-center"
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <PdpLightbox
+        open={isLightboxOpen}
+        images={lightboxImages}
+        index={lightboxIndex}
+        onIndexChange={setLightboxIndex}
+        onClose={() => setIsLightboxOpen(false)}
+        closeLabel={isRTL ? 'إغلاق المعرض' : 'Close gallery'}
+      />
 
       <StickyAddToCart
         product={{

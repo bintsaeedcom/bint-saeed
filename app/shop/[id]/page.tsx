@@ -2,18 +2,22 @@
 
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
-import { FiPlus, FiMinus, FiHeart, FiX, FiMaximize2, FiGlobe, FiAward } from 'react-icons/fi'
+import { FiPlus, FiMinus, FiHeart, FiMaximize2, FiGlobe, FiAward } from 'react-icons/fi'
 import SizeGuideModal from '@/components/SizeGuideModal'
 import StickyAddToCart from '@/components/StickyAddToCart'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import TamaraProductWidget from '@/components/TamaraProductWidget'
 import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
+import {
+  PDP_COLOUR_SWATCH,
+  pdpColourSwatchState,
+} from '@/lib/ui/pdpColourSwatch'
 import { trackEvent } from '@/lib/analytics/tracking'
 import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
@@ -59,12 +63,12 @@ import {
   PDP_COPY_RELAXED,
   formatPdpProductCodeLine,
   PDP_FAQ_QUESTION,
-  PDP_MTO_NOTE,
   PDP_RELATED_TITLE,
 } from '@/lib/pdp/pdpTypography'
 import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
 import PdpIntroParagraph from '@/components/PdpIntroParagraph'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
+import PdpLightbox from '@/components/pdp/PdpLightbox'
 import PdpAccordion, {
   scrollPdpAccordionSectionIntoView,
   type PdpAccordionSectionConfig,
@@ -232,12 +236,12 @@ export default function ProductPage() {
   const estimatedShipDate = useMemo(() => {
     const d = new Date()
     d.setDate(d.getDate() + 14)
-    return new Intl.DateTimeFormat('en-GB', {
+    return new Intl.DateTimeFormat(language === 'ar' ? 'ar-AE' : 'en-GB', {
       day: '2-digit',
       month: 'short',
       year: 'numeric',
     }).format(d)
-  }, [])
+  }, [language])
   /** Thumbs strip is hidden on small screens; connecting Thumbs module with swiper=null breaks layout on iOS. */
   const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
   const mainGalleryModules = useMemo(
@@ -316,11 +320,28 @@ export default function ProductPage() {
   )
   const activeImageAlt = (image: string, index: number) =>
     getProductImageAlt(product, image, { color: selectedColor, index, locale: language })
+  const isVideoFile = (src: string) => /\.(mp4|mov|webm|ogg)$/i.test(src)
+  const isHeicFile = (src: string) => /\.(heic|heif)$/i.test(src)
+  const lightboxImages = useMemo(
+    () =>
+      activeImages.flatMap((src, index) =>
+        isVideoFile(src) ? [] : [{ src, alt: activeImageAlt(src, index) }],
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- rebuild when gallery inputs change
+    [activeImages, selectedColor, language, product],
+  )
+  const openLightboxAt = (galleryIndex: number) => {
+    const src = activeImages[galleryIndex]
+    if (!src || isVideoFile(src)) return
+    const next = lightboxImages.findIndex((item) => item.src === src)
+    setLightboxIndex(next >= 0 ? next : 0)
+    setIsLightboxOpen(true)
+  }
 
   useEffect(() => {
-    if (!activeImages.length) return
-    setLightboxIndex((current) => Math.min(current, activeImages.length - 1))
-  }, [activeImages])
+    if (!lightboxImages.length) return
+    setLightboxIndex((current) => Math.min(current, lightboxImages.length - 1))
+  }, [lightboxImages])
 
   useEffect(() => {
     mainSwiperRef.current?.slideTo(0, 0)
@@ -350,8 +371,6 @@ export default function ProductPage() {
       : product.measurements?.trim()
         ? [product.measurements]
         : []
-  const isVideoFile = (src: string) => /\.(mp4|mov|webm|ogg)$/i.test(src)
-  const isHeicFile = (src: string) => /\.(heic|heif)$/i.test(src)
   const productJsonLd = useMemo(
     () =>
       buildShopProductJsonLd({
@@ -747,17 +766,12 @@ export default function ProductPage() {
                       <SwiperSlide key={image}>
                         <div
                           className={`relative h-full w-full ${isVideoFile(image) ? 'cursor-default' : 'cursor-zoom-in'}`}
-                          onClick={() => {
-                            if (isVideoFile(image)) return
-                            setLightboxIndex(index)
-                            setIsLightboxOpen(true)
-                          }}
+                          onClick={() => openLightboxAt(index)}
                           onKeyDown={(e) => {
                             if (isVideoFile(image)) return
                             if (e.key === 'Enter' || e.key === ' ') {
                               e.preventDefault()
-                              setLightboxIndex(index)
-                              setIsLightboxOpen(true)
+                              openLightboxAt(index)
                             }
                           }}
                           role="button"
@@ -889,17 +903,13 @@ export default function ProductPage() {
                   </span>
                 )}
               </div>
-              <div className={`flex flex-wrap gap-2.5 ${isRTL ? 'justify-end' : ''}`}>
+              <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
                 {colorOptions.map((color) => (
                   <button
                     key={color.name}
                     type="button"
                     onClick={() => handleColorSelect(color.name)}
-                    className={`h-9 w-9 rounded-full border-2 transition-all duration-200 ${
-                      selectedColor === color.name
-                        ? 'border-brand-darkRed scale-110 ring-2 ring-brand-darkRed/20 ring-offset-2'
-                        : 'border-brand-stone/30 hover:scale-105 hover:border-brand-dustyBlue'
-                    }`}
+                    className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(selectedColor === color.name)}`}
                     style={{ backgroundColor: color.hex }}
                     title={localizedColorName(color.name, language)}
                     aria-pressed={selectedColor === color.name}
@@ -1114,11 +1124,6 @@ export default function ProductPage() {
                 {catalogFields?.description}
               </p>
             )}
-            {!introParagraphParts?.length && !introParagraphs?.length && product.id !== 'bs-002' && (
-              <p className={`mb-2 ${PDP_MTO_NOTE}`}>
-                {ui.madeToOrderNote}
-              </p>
-            )}
 
             <PdpAccordion
               openId={openDropdown}
@@ -1186,34 +1191,14 @@ export default function ProductPage() {
         </div>
       </div>
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {isLightboxOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black flex items-center justify-center"
-            onClick={() => setIsLightboxOpen(false)}
-          >
-            <button
-              className="absolute top-6 right-6 text-white z-10"
-              onClick={() => setIsLightboxOpen(false)}
-              data-cursor-hover
-            >
-              <FiX className="w-8 h-8" />
-            </button>
-            <div className="relative m-4 h-full w-full max-h-[72vh] max-w-[51.2rem]">
-              <PdpGalleryImage
-                src={activeImages[lightboxIndex] ?? product.images[0]}
-                alt={activeImageAlt(activeImages[lightboxIndex] ?? product.images[0], lightboxIndex)}
-                priority
-                className="object-contain object-center"
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <PdpLightbox
+        open={isLightboxOpen}
+        images={lightboxImages}
+        index={lightboxIndex}
+        onIndexChange={setLightboxIndex}
+        onClose={() => setIsLightboxOpen(false)}
+        closeLabel={isRTL ? 'إغلاق المعرض' : 'Close gallery'}
+      />
 
       {/* Size Guide Modal */}
       <SizeGuideModal 

@@ -35,6 +35,11 @@ import {
   PRODUCT_GRID_COLOUR_DOT_ROW,
   softGridColourHex,
 } from '@/lib/ui/productGridColourDot'
+import {
+  PRODUCT_GRID_CTA_LINK,
+  PRODUCT_GRID_CTA_LINK_HOVER,
+  PRODUCT_GRID_CTA_ROW,
+} from '@/lib/ui/productGridCtaRow'
 
 const CATEGORY_QUERY_MAP: Record<string, string> = {
   abayas: 'Abayas',
@@ -343,9 +348,9 @@ export default function ShopClient() {
             return (
             <li
               key={product.id}
-              className="group relative z-10 min-w-0"
+              className="group relative z-10 flex min-w-0"
             >
-              <article className="relative z-0 mx-auto block w-full border-b-2 border-transparent pb-2 transition-colors duration-200 group-hover:border-[#6f1524] lg:w-[82%]">
+              <article className="relative z-0 mx-auto flex h-full w-full flex-col border-b-2 border-transparent pb-2 transition-colors duration-200 group-hover:border-[#6f1524] lg:w-[82%]">
                 <LocaleLink
                   href={getProductHref(product)}
                   className="relative z-20 block aspect-[9/16] overflow-hidden bg-stone-200"
@@ -378,7 +383,7 @@ export default function ShopClient() {
                     {ui.shop.discover}
                   </span>
                 </LocaleLink>
-                <div className="mt-5 space-y-2 border-t border-black/5 pt-4">
+                <div className="mt-auto space-y-2 border-t border-black/5 pt-4">
                   <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
                     {product.category}
                   </p>
@@ -405,10 +410,10 @@ export default function ShopClient() {
                       />
                     ))}
                   </div>
-                  <div className={`flex flex-wrap items-center gap-x-3 gap-y-2 pt-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className={`pt-2 ${PRODUCT_GRID_CTA_ROW} ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <LocaleLink
                       href={getProductHref(product)}
-                      className="relative z-20 inline-flex items-center border-b border-brand-darkRed/40 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:text-[11px] sm:tracking-[0.18em]"
+                      className={`relative z-20 ${PRODUCT_GRID_CTA_LINK} ${PRODUCT_GRID_CTA_LINK_HOVER}`}
                       data-cursor-hover
                     >
                       {ui.shop.discover}
@@ -420,7 +425,7 @@ export default function ShopClient() {
                         e.stopPropagation()
                         setQuickBuyProduct(product)
                       }}
-                      className="relative z-20 inline-flex items-center gap-1 border-b border-brand-darkRed/40 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:text-[11px] sm:tracking-[0.18em]"
+                      className={`relative z-20 gap-1 ${PRODUCT_GRID_CTA_LINK} ${PRODUCT_GRID_CTA_LINK_HOVER}`}
                       data-cursor-hover
                     >
                       <FiShoppingBag className="h-3 w-3 shrink-0" aria-hidden />

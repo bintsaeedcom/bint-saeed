@@ -46,6 +46,11 @@ import {
   PRODUCT_GRID_COLOUR_DOT_ROW,
   softGridColourHex,
 } from '@/lib/ui/productGridColourDot'
+import {
+  PRODUCT_GRID_CTA_LINK,
+  PRODUCT_GRID_CTA_LINK_HOVER,
+  PRODUCT_GRID_CTA_ROW,
+} from '@/lib/ui/productGridCtaRow'
 
 function parsePriceParam(v: string | null): PriceRangeId {
   if (!v) return 'all'
@@ -842,11 +847,9 @@ function AccessoryCard({
           </div>
 
           <div
-            className={`mt-auto flex flex-wrap items-center gap-x-3 gap-y-2 pt-3 ${
-              isRTL ? 'flex-row-reverse' : ''
-            }`}
+            className={`mt-auto pt-3 ${PRODUCT_GRID_CTA_ROW} ${isRTL ? 'flex-row-reverse' : ''}`}
           >
-            <span className="inline-flex items-center border-b border-brand-darkRed/40 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed sm:text-[11px] sm:tracking-[0.18em]">
+            <span className={PRODUCT_GRID_CTA_LINK}>
               {ui.shop.discover}
             </span>
             <button
@@ -856,7 +859,7 @@ function AccessoryCard({
                 e.stopPropagation()
                 onQuickBuy(accessory)
               }}
-              className="relative z-20 inline-flex items-center gap-1 border-b border-brand-darkRed/40 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:text-[11px] sm:tracking-[0.18em]"
+              className={`relative z-20 gap-1 ${PRODUCT_GRID_CTA_LINK} ${PRODUCT_GRID_CTA_LINK_HOVER}`}
               data-cursor-hover
             >
               <FiShoppingBag className="h-3 w-3 shrink-0" aria-hidden />

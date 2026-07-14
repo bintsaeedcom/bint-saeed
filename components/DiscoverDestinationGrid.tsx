@@ -27,11 +27,14 @@ export default function DiscoverDestinationGrid({
   const pathname = usePathname()
   const { isRTL, language } = useLanguage()
   const copy = getCartEmptyDiscoverCopy(language)
-  const minH = compact ? 'min-h-[7.25rem]' : 'min-h-[9.5rem]'
   const destinations = filterOffCurrentPage(DISCOVER_DESTINATIONS, pathname)
 
   return (
-    <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 ${className}`}>
+    <div
+      className={`grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-4 sm:gap-y-7 ${
+        compact ? 'lg:grid-cols-2' : 'lg:grid-cols-4'
+      } ${className}`}
+    >
       {destinations.map((dest, index) => {
         const label = dest.strandsLock
           ? shopStrandsCta(language, 'title')
@@ -41,9 +44,7 @@ export default function DiscoverDestinationGrid({
           <LocaleLink
             key={dest.href}
             href={dest.href}
-            className={`group relative isolate overflow-hidden border border-brand-darkRed/10 bg-[#1a0210] ${minH} ${
-              isRTL ? 'text-right' : 'text-left'
-            }`}
+            className="group flex flex-col items-center text-center"
             data-cursor-hover
             data-analytics-event="click_discover_destination"
             data-analytics-section={`${source}_${dest.analytics}`}
@@ -55,39 +56,45 @@ export default function DiscoverDestinationGrid({
               })
             }
           >
-            <Image
-              src={dest.image}
-              alt=""
-              fill
-              sizes={compact ? '(max-width: 640px) 100vw, 240px' : '(max-width: 640px) 100vw, 50vw'}
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-              priority={index < 2 && !compact}
-            />
             <div
-              className="absolute inset-0 bg-gradient-to-t from-[#1a0210]/92 via-[#1a0210]/45 to-[#1a0210]/15"
-              aria-hidden
-            />
-            <div
-              className={`relative z-[1] flex h-full ${minH} flex-col justify-end ${
-                compact ? 'p-3.5 sm:p-4' : 'p-5 sm:p-6'
+              className={`relative w-full overflow-hidden border border-brand-darkRed/10 bg-[#1a0210] aspect-[3/4] ${
+                compact ? 'max-w-[11rem] mx-auto' : ''
               }`}
             >
-              <span className="font-montserrat text-[9px] uppercase tracking-[0.16em] text-[#e8d8c8]/70 sm:text-[10px] sm:tracking-[0.18em]">
-                {hint}
-              </span>
-              <span
-                className={`mt-1.5 flex items-center gap-2 font-rozha leading-tight text-[#faf7f3] ${
-                  compact ? 'text-[1.1rem]' : 'text-[1.35rem] sm:text-[1.5rem]'
-                } ${isRTL ? 'flex-row-reverse' : ''}`}
-              >
-                {dest.strandsLock ? <NoTranslate>{label}</NoTranslate> : label}
-                <FiArrowRight
-                  className={`h-3.5 w-3.5 shrink-0 text-[#e8d8c8]/80 transition-transform duration-300 sm:h-4 sm:w-4 ${
-                    isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'
-                  }`}
-                />
-              </span>
+              <Image
+                src={dest.image}
+                alt=""
+                fill
+                sizes={
+                  compact
+                    ? '(max-width: 640px) 50vw, 240px'
+                    : '(max-width: 1024px) 50vw, 25vw'
+                }
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                priority={index < 2 && !compact}
+              />
             </div>
+            <span
+              className={`mt-3 font-montserrat uppercase text-brand-dustyBlue/80 ${
+                compact
+                  ? 'text-[8px] tracking-[0.14em]'
+                  : 'text-[9px] tracking-[0.16em] sm:text-[10px] sm:tracking-[0.18em]'
+              }`}
+            >
+              {hint}
+            </span>
+            <span
+              className={`mt-1.5 flex items-center justify-center gap-2 font-rozha leading-tight text-brand-darkRed ${
+                compact ? 'text-[1.05rem]' : 'text-[1.15rem] sm:text-[1.3rem]'
+              } ${isRTL ? 'flex-row-reverse' : ''}`}
+            >
+              {dest.strandsLock ? <NoTranslate>{label}</NoTranslate> : label}
+              <FiArrowRight
+                className={`h-3.5 w-3.5 shrink-0 text-brand-clayRed/70 transition-transform duration-300 sm:h-4 sm:w-4 ${
+                  isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'
+                }`}
+              />
+            </span>
           </LocaleLink>
         )
       })}

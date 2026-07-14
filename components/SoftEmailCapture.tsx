@@ -68,7 +68,7 @@ export default function SoftEmailCapture({
   if (done) {
     return (
       <p
-        className={`font-montserrat text-sm tracking-wide text-brand-dustyBlue ${isRTL ? 'text-right' : 'text-center'} ${className}`}
+        className={`text-center font-montserrat text-sm tracking-wide text-brand-dustyBlue ${className}`}
       >
         {copy.success}
       </p>
@@ -76,7 +76,7 @@ export default function SoftEmailCapture({
   }
 
   return (
-    <div className={`${isRTL ? 'text-right' : 'text-center'} ${className}`}>
+    <div className={`text-center ${className}`}>
       <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
         {heading}
       </p>

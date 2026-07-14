@@ -26,7 +26,7 @@ function formatTamaraInstallment(total: number, currencyCode: string): string {
 
 /**
  * Tamara product messaging — Bint Saeed typography + layout,
- * official Tamara gradient logo unchanged.
+ * footer pastel pill logo for clear brand recognition.
  */
 export default function TamaraProductWidget({ amount, currency = 'AED', className = '' }: Props) {
   const { language, isRTL } = useLanguage()
@@ -38,7 +38,6 @@ export default function TamaraProductWidget({ amount, currency = 'AED', classNam
     () => formatTamaraInstallment(amount, code),
     [amount, code],
   )
-  const logoSrc = language === 'ar' ? TAMARA_LOGO.gradientAr : TAMARA_LOGO.gradientEn
 
   const copy = useMemo(() => {
     if (language === 'ar') {
@@ -58,7 +57,7 @@ export default function TamaraProductWidget({ amount, currency = 'AED', classNam
   return (
     <div
       className={[
-        'mb-0 flex items-center gap-3 rounded-[4px] border border-brand-stone/25 bg-[#f3eee8]/70 px-3.5 py-3',
+        'mb-0 flex items-center gap-3 rounded-[4px] border border-[#8fd4d0]/55 bg-gradient-to-r from-[#eef9f8] via-[#f7f4ef] to-[#f3eee8] px-3.5 py-3.5 shadow-[0_6px_20px_-12px_rgba(26,2,16,0.18)]',
         isRTL ? 'flex-row-reverse text-right' : 'text-left',
         className,
       ]
@@ -68,17 +67,21 @@ export default function TamaraProductWidget({ amount, currency = 'AED', classNam
     >
       <p className="min-w-0 flex-1 font-montserrat text-[12px] leading-[1.55] tracking-[0.02em] text-brand-darkRed sm:text-[13px]">
         <span>{copy.before}</span>
-        <span className="font-medium tabular-nums tracking-wide">{installmentFormatted}</span>
+        <span className="font-semibold tabular-nums tracking-wide text-[#0d6e6a]">
+          {installmentFormatted}
+        </span>
         <span>{copy.after}</span>
       </p>
-      <Image
-        src={logoSrc}
-        alt="Tamara"
-        width={88}
-        height={28}
-        className="h-7 w-auto shrink-0 object-contain sm:h-8"
-        unoptimized
-      />
+      <span className="flex h-9 shrink-0 items-center justify-center rounded-[4px] bg-white px-2.5 shadow-[0_2px_10px_rgba(0,0,0,0.12)] sm:h-10 sm:px-3">
+        <Image
+          src={TAMARA_LOGO.badge}
+          alt="Tamara"
+          width={191}
+          height={64}
+          className="h-[26px] w-auto max-w-[88px] object-contain sm:h-[28px] sm:max-w-[96px]"
+          unoptimized
+        />
+      </span>
     </div>
   )
 }

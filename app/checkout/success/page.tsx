@@ -163,9 +163,9 @@ function CheckoutSuccessContent() {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.25, type: 'spring', stiffness: 200 }}
-              className="mx-auto mt-9 flex h-16 w-16 items-center justify-center rounded-full border border-brand-stone/30 bg-white/70 shadow-[0_10px_30px_-14px_rgba(59,0,20,0.35)]"
+              className="mx-auto mt-9 flex h-16 w-16 items-center justify-center rounded-full border border-brand-dustyBlue/40 bg-brand-dustyBlue/12 shadow-[0_10px_30px_-14px_rgba(59,0,20,0.35)]"
             >
-              <FiCheck className="h-7 w-7 text-brand-darkRed" strokeWidth={1.5} />
+              <FiCheck className="h-7 w-7 text-brand-dustyBlue" strokeWidth={2.25} />
             </motion.div>
 
             <h1 data-document-h1="true" className="mt-7 font-rozha text-[2rem] leading-tight text-brand-darkRed sm:text-4xl">
@@ -197,18 +197,10 @@ function CheckoutSuccessContent() {
           transition={{ delay: 0.2, duration: 0.45 }}
           className="mx-auto mt-12 max-w-5xl"
         >
-          <p
-            className={`font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-brand-dustyBlue ${
-              isRTL ? 'text-right' : 'text-center'
-            }`}
-          >
+          <p className="text-center font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-brand-dustyBlue">
             {successCopy.keepExploring}
           </p>
-          <p
-            className={`mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/75 ${
-              isRTL ? 'text-right' : 'text-center'
-            }`}
-          >
+          <p className="mx-auto mt-3 max-w-lg text-center font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/75">
             {successCopy.keepExploringBody}
           </p>
           <DiscoverDestinationGrid source="checkout_success" className="mt-6" />

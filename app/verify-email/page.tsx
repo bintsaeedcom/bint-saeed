@@ -48,8 +48,8 @@ function VerifyEmailContent() {
       >
         {verified ? (
           <>
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
-              <FiCheck className="h-8 w-8 text-emerald-600" />
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-brand-dustyBlue/40 bg-brand-dustyBlue/12">
+              <FiCheck className="h-8 w-8 text-brand-dustyBlue" strokeWidth={2.25} />
             </div>
             <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed mb-3">
               {isRTL ? 'تم تأكيد بريدك' : 'Email confirmed'}
@@ -79,8 +79,8 @@ function VerifyEmailContent() {
           </>
         ) : already ? (
           <>
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand-dustyBlue/15">
-              <FiCheck className="h-8 w-8 text-brand-dustyBlue" />
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-brand-dustyBlue/40 bg-brand-dustyBlue/12">
+              <FiCheck className="h-8 w-8 text-brand-dustyBlue" strokeWidth={2.25} />
             </div>
             <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed mb-3">
               {isRTL ? 'البريد مؤكد مسبقاً' : 'Already confirmed'}

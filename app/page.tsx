@@ -298,8 +298,8 @@ export default function ComingSoonPage() {
               animate={{ opacity: 1, scale: 1 }}
               className="mx-auto max-w-[48rem] py-6 text-center"
             >
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-brand-dustyBlue/30">
-                <FiCheck className="h-7 w-7 text-brand-dustyBlue" />
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-brand-dustyBlue/40 bg-brand-dustyBlue/12">
+                <FiCheck className="h-7 w-7 text-brand-dustyBlue" strokeWidth={2.25} />
               </div>
               <p className={`mb-2 text-2xl tracking-wide text-white ${isRTL ? '' : 'font-rozha'}`}>
                 {t.comingSoon.thankYou}

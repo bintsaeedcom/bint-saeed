@@ -233,8 +233,8 @@ export default function ContactPage() {
             />
             {submitted ? (
               <div className={`relative ${isRTL ? 'text-right' : 'text-left'}`}>
-                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-brand-dustyBlue/35 bg-brand-dustyBlue/10">
-                  <FiCheck className="h-6 w-6 text-brand-dustyBlue" strokeWidth={1.75} aria-hidden />
+                <div className="flex h-14 w-14 items-center justify-center rounded-full border border-brand-dustyBlue/40 bg-brand-dustyBlue/12">
+                  <FiCheck className="h-6 w-6 text-brand-dustyBlue" strokeWidth={2.25} aria-hidden />
                 </div>
                 <p className="mt-6 font-montserrat text-[10px] uppercase tracking-[0.24em] text-brand-clayRed">
                   {isRTL ? 'تم الاستلام' : 'Message received'}

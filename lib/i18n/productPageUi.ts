@@ -22,7 +22,6 @@ export type ProductPageUi = {
   faq: string
   readMore: string
   readLess: string
-  madeToOrderNote: string
   madeToOrderShips: (date: string) => string
   oneSizeMadeToOrderShips: (date: string) => string
   personalisation: ProductPageUiPersonalisation
@@ -47,9 +46,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Read more',
     readLess: 'Read less',
-    madeToOrderNote: 'Made to order - available within this chapter (availability confirmed when you order).',
-    madeToOrderShips: (date: string) => `Made to order - ships ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `One size - made to order - ships ${date}`,
+    madeToOrderShips: (date: string) => `Made to order — estimated shipment ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `One size · made to order — estimated shipment ${date}`,
     personalisation: {
       title: 'Personalisation',
       desc: 'Add a name, special date or message to the inner label - complimentary.',
@@ -78,9 +76,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'الأسئلة الشائعة',
     readMore: 'اقرأ المزيد',
     readLess: 'عرض أقل',
-    madeToOrderNote: 'صنع حسب الطلب - متاحة ضمن الفصل الحالي (التوفر يؤكد عند الطلب).',
-    madeToOrderShips: (date: string) => `تصنع حسب الطلب - الشحن ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `مقاس واحد - تصنع حسب الطلب - الشحن ${date}`,
+    madeToOrderShips: (date: string) => `تصنع حسب الطلب — الشحن المتوقع ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `مقاس واحد · تصنع حسب الطلب — الشحن المتوقع ${date}`,
     personalisation: {
       title: 'التخصيص',
       desc: 'أضيفي اسما أو تاريخا أو رسالة على البطاقة الداخلية - مجانا.',
@@ -109,9 +106,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Lire plus',
     readLess: 'Lire moins',
-    madeToOrderNote: 'Confection sur commande - disponible dans ce chapitre (disponibilite confirmee a la commande).',
-    madeToOrderShips: (date: string) => `Confection sur commande - expedition ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Taille unique - confection sur commande - expedition ${date}`,
+    madeToOrderShips: (date: string) => `Confection sur commande — expedition estimee ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `Taille unique · confection sur commande — expedition estimee ${date}`,
     personalisation: {
       title: 'Personnalisation',
       desc: 'Ajoutez un prenom, une date speciale ou un message sur l etiquette interieure - offert.',
@@ -140,9 +136,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Mehr lesen',
     readLess: 'Weniger lesen',
-    madeToOrderNote: 'Auf Bestellung gefertigt - innerhalb dieses Chapters verfugbar (Verfugbarkeit wird bei Bestellung bestatigt).',
-    madeToOrderShips: (date: string) => `Auf Bestellung gefertigt - Versand ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Einheitsgroesse - auf Bestellung gefertigt - Versand ${date}`,
+    madeToOrderShips: (date: string) => `Auf Bestellung gefertigt — voraussichtlicher Versand ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `Einheitsgroesse · auf Bestellung gefertigt — voraussichtlicher Versand ${date}`,
     personalisation: {
       title: 'Personalisierung',
       desc: 'Fugen Sie einen Namen, ein besonderes Datum oder eine Nachricht auf dem Innenetikett hinzu - kostenfrei.',
@@ -171,9 +166,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Leggi di piu',
     readLess: 'Leggi meno',
-    madeToOrderNote: 'Su ordinazione - disponibile in questo capitolo (disponibilita confermata al momento dell ordine).',
-    madeToOrderShips: (date: string) => `Su ordinazione - spedizione ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Taglia unica - su ordinazione - spedizione ${date}`,
+    madeToOrderShips: (date: string) => `Su ordinazione — spedizione stimata ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `Taglia unica · su ordinazione — spedizione stimata ${date}`,
     personalisation: {
       title: 'Personalizzazione',
       desc: 'Aggiungi un nome, una data speciale o un messaggio all etichetta interna - in omaggio.',
@@ -202,9 +196,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'Preguntas frecuentes',
     readMore: 'Leer mas',
     readLess: 'Leer menos',
-    madeToOrderNote: 'Hecho por encargo - disponible dentro de este capitulo (disponibilidad confirmada al realizar el pedido).',
-    madeToOrderShips: (date: string) => `Hecho por encargo - envio ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Talla unica - hecho por encargo - envio ${date}`,
+    madeToOrderShips: (date: string) => `Hecho por encargo — envio estimado ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `Talla unica · hecho por encargo — envio estimado ${date}`,
     personalisation: {
       title: 'Personalizacion',
       desc: 'Anade un nombre, una fecha especial o un mensaje en la etiqueta interior - de cortesia.',
@@ -233,9 +226,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Читать далее',
     readLess: 'Свернуть',
-    madeToOrderNote: 'Изготавливается на заказ - доступно в рамках этой главы (наличие подтверждается при заказе).',
-    madeToOrderShips: (date: string) => `Изготавливается на заказ - отправка ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Единый размер - изготавливается на заказ - отправка ${date}`,
+    madeToOrderShips: (date: string) => `Изготавливается на заказ — ориентировочная отправка ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `Единый размер · изготавливается на заказ — ориентировочная отправка ${date}`,
     personalisation: {
       title: 'Персонализация',
       desc: 'Добавьте имя, особую дату или сообщение на внутреннюю бирку - бесплатно.',
@@ -264,9 +256,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: '常见问题',
     readMore: '阅读更多',
     readLess: '收起',
-    madeToOrderNote: '按需定制 - 在本章范围内提供（下单时确认可用性）。',
-    madeToOrderShips: (date: string) => `按需定制 - 预计发货 ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `均码 - 按需定制 - 预计发货 ${date}`,
+    madeToOrderShips: (date: string) => `按需定制 — 预计发货 ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `均码 · 按需定制 — 预计发货 ${date}`,
     personalisation: {
       title: '个性化定制',
       desc: '可在内侧标牌添加姓名、特别日期或寄语 - 免费提供。',
@@ -295,9 +286,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Lees meer',
     readLess: 'Lees minder',
-    madeToOrderNote: 'Op bestelling gemaakt - beschikbaar binnen dit hoofdstuk (beschikbaarheid bevestigd bij bestelling).',
-    madeToOrderShips: (date: string) => `Op bestelling gemaakt - verzending ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `One size - op bestelling gemaakt - verzending ${date}`,
+    madeToOrderShips: (date: string) => `Op bestelling gemaakt — verwachte verzending ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `One size · op bestelling gemaakt — verwachte verzending ${date}`,
     personalisation: {
       title: 'Personalisatie',
       desc: 'Voeg een naam, bijzondere datum of boodschap toe op het binnenlabel - kosteloos.',
@@ -326,9 +316,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Ler mais',
     readLess: 'Ler menos',
-    madeToOrderNote: 'Feito por encomenda - disponivel neste capitulo (disponibilidade confirmada no pedido).',
-    madeToOrderShips: (date: string) => `Feito por encomenda - envio ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Tamanho unico - feito por encomenda - envio ${date}`,
+    madeToOrderShips: (date: string) => `Feito por encomenda — envio estimado ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `Tamanho unico · feito por encomenda — envio estimado ${date}`,
     personalisation: {
       title: 'Personalizacao',
       desc: 'Adicione um nome, data especial ou mensagem na etiqueta interna - cortesia da casa.',
@@ -357,9 +346,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Baca selengkapnya',
     readLess: 'Tampilkan lebih sedikit',
-    madeToOrderNote: 'Dibuat sesuai pesanan - tersedia dalam chapter ini (ketersediaan dikonfirmasi saat pemesanan).',
-    madeToOrderShips: (date: string) => `Dibuat sesuai pesanan - dikirim ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Satu ukuran - dibuat sesuai pesanan - dikirim ${date}`,
+    madeToOrderShips: (date: string) => `Dibuat sesuai pesanan — estimasi pengiriman ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `Satu ukuran · dibuat sesuai pesanan — estimasi pengiriman ${date}`,
     personalisation: {
       title: 'Personalisasi',
       desc: 'Tambahkan nama, tanggal spesial, atau pesan pada label bagian dalam - gratis.',
@@ -388,9 +376,8 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Baca lagi',
     readLess: 'Baca kurang',
-    madeToOrderNote: 'Dibuat mengikut tempahan - tersedia dalam chapter ini (ketersediaan disahkan semasa tempahan).',
-    madeToOrderShips: (date: string) => `Dibuat mengikut tempahan - penghantaran ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Satu saiz - dibuat mengikut tempahan - penghantaran ${date}`,
+    madeToOrderShips: (date: string) => `Dibuat mengikut tempahan — anggaran penghantaran ${date}`,
+    oneSizeMadeToOrderShips: (date: string) => `Satu saiz · dibuat mengikut tempahan — anggaran penghantaran ${date}`,
     personalisation: {
       title: 'Personalisasi',
       desc: 'Tambah nama, tarikh istimewa atau mesej pada label dalam - percuma.',

@@ -28,6 +28,10 @@ import {
   productShowsSizeSelector,
 } from '@/lib/shopProductOptions'
 import { formFieldClass } from '@/lib/ui/formFieldClasses'
+import {
+  PDP_COLOUR_SWATCH,
+  pdpColourSwatchState,
+} from '@/lib/ui/pdpColourSwatch'
 import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 
 /** Dense ivory glass — readable over commerce grids */
@@ -339,17 +343,13 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                       </span>
                     ) : null}
                   </label>
-                  <div className={`flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
+                  <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
                     {colorOptions.map((color) => (
                       <button
                         key={color.name}
                         type="button"
                         onClick={() => setSelectedColor(color.name)}
-                        className={`h-10 w-10 rounded-full border-2 transition-all ${
-                          selectedColor === color.name
-                            ? 'scale-110 border-brand-darkRed ring-2 ring-brand-darkRed/20'
-                            : 'border-white/80 shadow-sm hover:scale-105'
-                        }`}
+                        className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(selectedColor === color.name)}`}
                         style={{ backgroundColor: color.hex }}
                         title={localizedColorName(color.name, language)}
                         data-cursor-hover
