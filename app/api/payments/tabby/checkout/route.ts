@@ -18,6 +18,7 @@ import {
   type TabbyShippingAddress,
 } from '@/lib/tabby/config'
 import { createTabbyCheckoutSession, extractTabbyWebUrl } from '@/lib/tabby/api'
+import { ensureTabbyPaymentWebhookRegistered } from '@/lib/tabby/ensureWebhook'
 import { savePendingTabbyCheckout } from '@/lib/tabby/pendingCheckoutStore'
 import { isPlausibleTabbyPhone, normalizeTabbyPhone } from '@/lib/tabby/normalizePhone'
 import { tabbyMessage, tabbyRejectionMessage } from '@/lib/tabby/messages'
@@ -108,6 +109,9 @@ export async function POST(request: NextRequest) {
   if (!baseUrl) {
     return NextResponse.json({ error: 'Site URL is not configured.' }, { status: 503 })
   }
+
+  // Fire-and-forget: payment capture must not depend on frontend redirect.
+  void ensureTabbyPaymentWebhookRegistered(baseUrl)
 
   try {
     const body = (await request.json()) as Record<string, unknown>

@@ -134,30 +134,49 @@ export async function createTabbyCheckoutSession(
 }
 
 export async function getTabbyPayment(paymentId: string, countryCode?: string | null) {
-  return tabbyFetch<{ id?: string; status?: string; amount?: string; currency?: string }>(
-    `/api/v2/payments/${encodeURIComponent(paymentId)}`,
-    { method: 'GET' },
-    countryCode,
-  )
+  return tabbyFetch<{
+    id?: string
+    status?: string
+    amount?: string
+    currency?: string
+    captures?: Array<{ id?: string; amount?: string; reference_id?: string }>
+    order?: { reference_id?: string }
+  }>(`/api/v2/payments/${encodeURIComponent(paymentId)}`, { method: 'GET' }, countryCode)
 }
 
-export async function captureTabbyPayment(
-  paymentId: string,
-  amount: number,
-  currency: string,
-  countryCode?: string | null,
-) {
-  const decimals = currency.toUpperCase() === 'KWD' ? 3 : 2
-  return tabbyFetch(
-    `/api/v2/payments/${encodeURIComponent(paymentId)}/captures`,
+/**
+ * Full capture for an AUTHORIZED payment.
+ * `referenceId` is required for Tabby idempotency — retries with the same id do not double-capture.
+ */
+export async function captureTabbyPayment(args: {
+  paymentId: string
+  amount: number
+  currency: string
+  referenceId: string
+  countryCode?: string | null
+  taxAmount?: number
+  shippingAmount?: number
+  discountAmount?: number
+}) {
+  const decimals = args.currency.toUpperCase() === 'KWD' ? 3 : 2
+  const fmt = (n: number) => Math.max(0, n).toFixed(decimals)
+  return tabbyFetch<{
+    id?: string
+    status?: string
+    captures?: Array<{ id?: string; amount?: string; reference_id?: string }>
+  }>(
+    `/api/v2/payments/${encodeURIComponent(args.paymentId)}/captures`,
     {
       method: 'POST',
       body: JSON.stringify({
-        amount: amount.toFixed(decimals),
-        currency: currency.toUpperCase(),
+        amount: fmt(args.amount),
+        reference_id: args.referenceId.slice(0, 200),
+        tax_amount: fmt(args.taxAmount ?? 0),
+        shipping_amount: fmt(args.shippingAmount ?? 0),
+        discount_amount: fmt(args.discountAmount ?? 0),
       }),
     },
-    countryCode,
+    args.countryCode,
   )
 }
 

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/admin/apiAuth'
 import { isTabbyConfigured, getTabbyWebhookSecret } from '@/lib/tabby/config'
-import { listTabbyWebhooks, registerTabbyWebhook } from '@/lib/tabby/api'
+import { listTabbyWebhooks } from '@/lib/tabby/api'
+import { ensureTabbyPaymentWebhookRegistered } from '@/lib/tabby/ensureWebhook'
 import { resolvePublicSiteBaseUrl } from '@/lib/security/allowedCheckoutOrigin'
 
 export const runtime = 'nodejs'
@@ -9,7 +10,7 @@ export const dynamic = 'force-dynamic'
 
 /**
  * Register / list Tabby payment webhooks for the current secret-key environment.
- * POST once after sandbox keys land (and again with live keys after QA).
+ * Preferred: called automatically on Tabby checkout; this admin endpoint is for ops verify / repair.
  */
 export async function GET(request: NextRequest) {
   if (!(await requireAdmin(request))) {
@@ -34,28 +35,22 @@ export async function POST(request: NextRequest) {
     resolvePublicSiteBaseUrl(request) ||
     process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, '') ||
     'https://www.bintsaeed.com'
-  const webhookUrl = `${baseUrl}/api/webhooks/tabby`
 
-  const headerValue =
-    getTabbyWebhookSecret() ||
-    process.env.TABBY_WEBHOOK_SECRET?.trim() ||
-    `bs-tabby-${Date.now().toString(36)}`
-
-  const result = await registerTabbyWebhook({
-    url: webhookUrl,
-    headerTitle: 'X-Tabby-Signature',
-    headerValue,
-  })
+  const ensured = await ensureTabbyPaymentWebhookRegistered(baseUrl)
+  const listed = await listTabbyWebhooks()
+  const webhookUrl = `${baseUrl.replace(/\/$/, '')}/api/webhooks/tabby`
+  const headerValue = getTabbyWebhookSecret() || process.env.TABBY_WEBHOOK_SECRET?.trim() || null
 
   return NextResponse.json(
     {
-      ok: result.ok,
-      status: result.status,
+      ok: ensured.ok,
+      registered: ensured.registered,
+      reason: ensured.reason,
       webhookUrl,
       // Persist this value as TABBY_WEBHOOK_SECRET in Vercel if not already set.
       suggestedWebhookSecret: headerValue,
-      data: result.data,
+      webhooks: listed.ok ? listed.data : null,
     },
-    { status: result.ok ? 200 : result.status || 502 },
+    { status: ensured.ok ? 200 : 502 },
   )
 }

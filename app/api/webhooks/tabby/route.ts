@@ -3,15 +3,30 @@ import { fulfillTabbyPaidOrder } from '@/lib/tabby/fulfillPaidOrder'
 import { markPaymentEventProcessed, wasPaymentEventProcessed } from '@/lib/payments/webhookEventStore'
 import { notifyHealthAlert } from '@/lib/ops/notifications'
 import { getTabbyWebhookSecret, isTabbyConfigured } from '@/lib/tabby/config'
+import { getTabbyPaymentIdByOrderRef } from '@/lib/tabby/pendingCheckoutStore'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-const SUCCESS = new Set(['authorized', 'closed', 'captured', 'AUTHORISED', 'AUTHORIZED', 'CLOSED', 'CAPTURED'])
+/**
+ * Tabby webhook statuses that must trigger verify + capture + OMS.
+ * Docs: on `authorized` you capture; later `authorized`+captures and `closed` may also arrive.
+ */
+const SUCCESS = new Set([
+  'authorized',
+  'closed',
+  'captured',
+  'AUTHORISED',
+  'AUTHORIZED',
+  'CLOSED',
+  'CAPTURED',
+])
 
 function verifyTabbyWebhook(request: NextRequest): boolean {
   const secret = getTabbyWebhookSecret()
-  if (!secret) return true // allow until Tabby provides webhook signing details
+  // If secret is not configured, still accept so capture is never blocked in production misconfig —
+  // but require presence once secret is set.
+  if (!secret) return true
   const header =
     request.headers.get('x-tabby-signature') ||
     request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') ||
@@ -20,12 +35,23 @@ function verifyTabbyWebhook(request: NextRequest): boolean {
 }
 
 async function handleNotification(body: Record<string, unknown>) {
-  const paymentId = String(
+  let paymentId = String(
     body.id ||
       body.payment_id ||
       (body.payment as { id?: string } | undefined)?.id ||
       '',
   ).trim()
+
+  const orderRef = String(
+    (body.order as { reference_id?: string } | undefined)?.reference_id ||
+      body.reference_id ||
+      '',
+  ).trim()
+
+  if (!paymentId && orderRef) {
+    paymentId = (await getTabbyPaymentIdByOrderRef(orderRef)) || ''
+  }
+
   if (!paymentId) return { ok: false, reason: 'missing_payment_id' }
 
   const status = String(body.status || body.event_type || '').trim()
@@ -38,9 +64,17 @@ async function handleNotification(body: Record<string, unknown>) {
     const result = await fulfillTabbyPaidOrder({
       paymentId,
       statusHint: status || 'AUTHORIZED',
+      orderRefHint: orderRef || undefined,
     })
-    await markPaymentEventProcessed('tabby', eventKey)
-    return { ok: result.fulfilled, ...result }
+
+    // Only acknowledge permanently when capture+OMS succeeded. Non-success below
+    // returns HTTP 5xx so Tabby retries (docs: up to 4 retries on non-200).
+    if (result.fulfilled) {
+      await markPaymentEventProcessed('tabby', eventKey)
+      return { ok: true, ...result }
+    }
+
+    return { ok: false, ...result }
   }
 
   await markPaymentEventProcessed('tabby', eventKey)
@@ -71,6 +105,16 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await handleNotification(body)
+    if (!result.ok && result.reason !== 'duplicate') {
+      // Signal Tabby to retry — e.g. capture not yet confirmed / pending missing briefly.
+      await notifyHealthAlert({
+        source: 'api/webhooks/tabby',
+        message: `Tabby webhook fulfill pending retry: ${result.reason || 'unknown'}`,
+        context: { paymentId: body.id, status: body.status },
+      })
+      return NextResponse.json({ received: false, ...result }, { status: 500 })
+    }
+
     return NextResponse.json({ received: true, ...result })
   } catch (error) {
     console.error('Tabby webhook error:', error)
@@ -83,5 +127,9 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-  return NextResponse.json({ ok: true, service: 'tabby-webhook' })
+  return NextResponse.json({
+    ok: true,
+    service: 'tabby-webhook',
+    note: 'Payment webhooks must call this URL so AUTHORIZED payments are captured without relying on frontend redirect.',
+  })
 }

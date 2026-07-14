@@ -49,6 +49,25 @@ export async function getPendingTabbyCheckout(
   return memoryPending.get(paymentId) ?? null
 }
 
+export async function getTabbyPaymentIdByOrderRef(orderRef: string): Promise<string | null> {
+  const key = orderRef.trim()
+  if (!key) return null
+  const r = getRedis()
+  if (r) {
+    const id = await r.get<string>(KEY_BY_REF(key))
+    return typeof id === 'string' && id ? id : null
+  }
+  return memoryRefToPayment.get(key) ?? null
+}
+
+export async function getPendingTabbyCheckoutByOrderRef(
+  orderRef: string,
+): Promise<PendingTabbyCheckout | null> {
+  const paymentId = await getTabbyPaymentIdByOrderRef(orderRef)
+  if (!paymentId) return null
+  return getPendingTabbyCheckout(paymentId)
+}
+
 export async function deletePendingTabbyCheckout(paymentId: string): Promise<void> {
   const pending = await getPendingTabbyCheckout(paymentId)
   const r = getRedis()
