@@ -30,7 +30,8 @@ export async function fulfillTabbyPaidOrder(args: {
   }
 
   const remote = await getTabbyPayment(args.paymentId, pending.countryCode)
-  const status = String(args.statusHint || remote.data.status || '').trim()
+  // Always prefer retrieve-payment status (upper-case AUTHORIZED) over webhook hint (authorized).
+  const status = String(remote.data.status || args.statusHint || '').trim()
   const statusUpper = status.toUpperCase()
 
   if (status && !PAID_STATUSES.has(status) && !PAID_STATUSES.has(statusUpper)) {
@@ -40,12 +41,14 @@ export async function fulfillTabbyPaidOrder(args: {
     }
   }
 
-  // Capture when authorized (best-effort — some accounts auto-capture)
-  if (statusUpper === 'AUTHORIZED' || statusUpper === 'authorized'.toUpperCase()) {
+  // Capture full amount when authorized (checklist: getPayment → capture AUTHORIZED).
+  if (statusUpper === 'AUTHORIZED') {
+    const captureAmount =
+      Number(remote.data.amount) > 0 ? Number(remote.data.amount) : pending.orderTotal
     try {
       await captureTabbyPayment(
         args.paymentId,
-        pending.orderTotal,
+        captureAmount,
         pending.currency,
         pending.countryCode,
       )

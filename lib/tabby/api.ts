@@ -35,7 +35,10 @@ export type TabbyCheckoutSessionResponse = {
       monthly_billing?: Array<{ web_url?: string }>
     }
     products?: {
-      installments?: { web_url?: string }
+      installments?: {
+        web_url?: string
+        rejection_reason?: string
+      }
     }
   }
   web_url?: string
@@ -44,7 +47,8 @@ export type TabbyCheckoutSessionResponse = {
   rejection_reason_code?: string
 }
 
-function mapItems(items: CheckoutCartItem[]) {
+function mapItems(items: CheckoutCartItem[], currency: string) {
+  const decimals = currency.toUpperCase() === 'KWD' ? 3 : 2
   return items.map((item) => {
     const unit = Number(item.price) || 0
     const qty = Math.max(1, Number(item.quantity) || 1)
@@ -54,7 +58,7 @@ function mapItems(items: CheckoutCartItem[]) {
         [item.size, item.color, item.customisationMessage].filter(Boolean).join(' · ').slice(0, 255) ||
         undefined,
       quantity: qty,
-      unit_price: unit.toFixed(2),
+      unit_price: unit.toFixed(decimals),
       reference_id: item.id,
       category: 'fashion',
       image_url: item.image?.startsWith('http') ? item.image : undefined,
@@ -81,10 +85,14 @@ export function extractTabbyWebUrl(data: TabbyCheckoutSessionResponse): string |
 export async function createTabbyCheckoutSession(
   args: CreateSessionArgs,
 ): Promise<{ ok: boolean; status: number; data: TabbyCheckoutSessionResponse }> {
-  const items = mapItems(args.items)
+  const items = mapItems(args.items, args.currency)
+  const nowIso = new Date().toISOString()
+  const moneyDecimals = args.currency.toUpperCase() === 'KWD' ? 3 : 2
+  const fmt = (n: number) => n.toFixed(moneyDecimals)
+
   const body = {
     payment: {
-      amount: args.orderTotal.toFixed(2),
+      amount: fmt(args.orderTotal),
       currency: args.currency.toUpperCase(),
       description: args.description.slice(0, 255),
       buyer: {
@@ -95,15 +103,22 @@ export async function createTabbyCheckoutSession(
       shipping_address: {
         city: args.shippingAddress.city,
         address: args.shippingAddress.address,
-        zip: args.shippingAddress.zip || undefined,
+        // Schema requires zip — UAE/KSA often omit; send city fallback when blank.
+        zip: args.shippingAddress.zip?.trim() || args.shippingAddress.city.slice(0, 16) || '00000',
       },
       order: {
-        tax_amount: '0.00',
-        shipping_amount: args.shippingFee.toFixed(2),
-        discount_amount: '0.00',
+        tax_amount: fmt(0),
+        shipping_amount: fmt(args.shippingFee),
+        discount_amount: fmt(0),
         reference_id: args.orderRef,
         items,
       },
+      // Required by Tabby session schema — guests: loyalty 0 + empty history.
+      buyer_history: {
+        registered_since: nowIso,
+        loyalty_level: 0,
+      },
+      order_history: [] as unknown[],
     },
     lang: args.lang,
     merchant_code: getTabbyMerchantCode(),
@@ -131,15 +146,41 @@ export async function captureTabbyPayment(
   currency: string,
   countryCode?: string | null,
 ) {
+  const decimals = currency.toUpperCase() === 'KWD' ? 3 : 2
   return tabbyFetch(
     `/api/v2/payments/${encodeURIComponent(paymentId)}/captures`,
     {
       method: 'POST',
       body: JSON.stringify({
-        amount: amount.toFixed(2),
+        amount: amount.toFixed(decimals),
         currency: currency.toUpperCase(),
       }),
     },
+    countryCode,
+  )
+}
+
+export async function registerTabbyWebhook(args: {
+  url: string
+  headerTitle?: string
+  headerValue?: string
+  countryCode?: string | null
+}) {
+  const body: Record<string, unknown> = { url: args.url }
+  if (args.headerTitle && args.headerValue) {
+    body.header = { title: args.headerTitle, value: args.headerValue }
+  }
+  return tabbyFetch<{ id?: string; url?: string; is_test?: boolean }>(
+    '/api/v1/webhooks',
+    { method: 'POST', body: JSON.stringify(body) },
+    args.countryCode,
+  )
+}
+
+export async function listTabbyWebhooks(countryCode?: string | null) {
+  return tabbyFetch<Array<{ id?: string; url?: string }> | { webhooks?: unknown }>(
+    '/api/v1/webhooks',
+    { method: 'GET' },
     countryCode,
   )
 }
@@ -150,10 +191,48 @@ export async function checkTabbyEligibility(args: {
   currency: string
   phone?: string
   email?: string
+  name?: string
   countryCode?: string | null
-}): Promise<{ eligible: boolean; reason?: string }> {
+}): Promise<{ eligible: boolean; reason?: string; status?: string }> {
   if (args.amount <= 0) return { eligible: false, reason: 'invalid_amount' }
-  // Full pre-scoring needs buyer identity; without phone/email we assume show rail and let checkout decide.
-  if (!args.phone && !args.email) return { eligible: true }
-  return { eligible: true }
+  // Without buyer contact, fail-open (show Tabby; place-order session is the hard gate).
+  if (!args.phone?.trim() || !args.email?.trim()) {
+    return { eligible: true, reason: 'deferred' }
+  }
+
+  const body = {
+    payment: {
+      amount: args.amount.toFixed(2),
+      currency: args.currency.toUpperCase(),
+      buyer: {
+        email: args.email.trim(),
+        phone: args.phone.trim(),
+        ...(args.name?.trim() ? { name: args.name.trim() } : {}),
+      },
+    },
+    merchant_code: getTabbyMerchantCode(),
+  }
+
+  const { ok, data } = await tabbyFetch<TabbyCheckoutSessionResponse>(
+    '/api/v2/checkout',
+    { method: 'POST', body: JSON.stringify(body) },
+    args.countryCode,
+  )
+
+  // Fail-open on transport/API errors so checkout never falsely hides Tabby.
+  if (!ok) return { eligible: true, reason: 'api_error', status: data.status }
+
+  const status = String(data.status || '').toLowerCase()
+  if (status === 'rejected') {
+    const reason =
+      data.configuration?.products?.installments?.rejection_reason ||
+      data.rejection_reason_code ||
+      'not_available'
+    return { eligible: false, reason: String(reason), status: data.status }
+  }
+
+  return {
+    eligible: status === 'created' || !status || Boolean(extractTabbyWebUrl(data)),
+    status: data.status,
+  }
 }

@@ -13,6 +13,7 @@ import SizeGuideModal from '@/components/SizeGuideModal'
 import StickyAddToCart from '@/components/StickyAddToCart'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import TamaraProductWidget from '@/components/TamaraProductWidget'
+import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
 import { trackEvent } from '@/lib/analytics/tracking'
 import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
@@ -1057,6 +1058,14 @@ export default function ProductPage() {
                 amount={convertPrice(product.price, product.id)}
                 currency={currency.code}
                 className="mb-3 mt-1"
+              />
+            ) : null}
+            {['AED', 'SAR', 'KWD'].includes(currency.code) ? (
+              <TabbyPromoSnippet
+                price={convertPrice(product.price, product.id)}
+                currency={currency.code}
+                source="product"
+                className="mb-3"
               />
             ) : null}
             <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 ${isRTL ? 'text-right' : ''}`}>

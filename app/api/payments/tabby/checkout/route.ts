@@ -14,6 +14,8 @@ import {
 } from '@/lib/tabby/config'
 import { createTabbyCheckoutSession, extractTabbyWebUrl } from '@/lib/tabby/api'
 import { savePendingTabbyCheckout } from '@/lib/tabby/pendingCheckoutStore'
+import { isPlausibleTabbyPhone, normalizeTabbyPhone } from '@/lib/tabby/normalizePhone'
+import { tabbyMessage, tabbyRejectionMessage } from '@/lib/tabby/messages'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -149,6 +151,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: buyerParsed.error }, { status: 400 })
     }
     const buyer = buyerParsed.buyer
+    buyer.phone = normalizeTabbyPhone(buyer.phone, countryCode)
+    if (!isPlausibleTabbyPhone(buyer.phone, countryCode)) {
+      return NextResponse.json(
+        {
+          error:
+            countryCode === 'SA'
+              ? 'Enter a valid Saudi mobile (e.g. 05XXXXXXXX or +9665XXXXXXXX).'
+              : countryCode === 'KW'
+                ? 'Enter a valid Kuwait mobile (e.g. +9659XXXXXXX).'
+                : 'Enter a valid UAE mobile (e.g. 05XXXXXXXX or +9715XXXXXXXX).',
+        },
+        { status: 400 },
+      )
+    }
 
     const shippingParsed = parseShipping(body.shippingAddress ?? body.address)
     if (!shippingParsed.ok) {
@@ -182,12 +198,15 @@ export async function POST(request: NextRequest) {
     const sessionStatus = (session.data.status || '').toLowerCase()
 
     if (!session.ok || sessionStatus === 'rejected' || !webUrl || !paymentId) {
+      const rejectReason =
+        session.data.configuration?.products?.installments?.rejection_reason ||
+        session.data.rejection_reason_code
       const message =
-        session.data.message ||
-        session.data.error ||
-        (sessionStatus === 'rejected'
-          ? 'Tabby is not available for this order. Please choose another payment method.'
-          : 'Failed to create Tabby checkout session.')
+        sessionStatus === 'rejected'
+          ? tabbyRejectionMessage(rejectReason, lang)
+          : session.data.message ||
+            session.data.error ||
+            tabbyMessage('generalReject', lang)
       return NextResponse.json(
         { error: message, status: session.data.status, details: session.data },
         { status: session.status || 502 },

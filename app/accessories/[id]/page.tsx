@@ -25,6 +25,7 @@ import { productPageUi } from '@/lib/i18n/productPageUi'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
 import {
   buildAccessoryProductJsonLd,
   getAccessoryImageAlt,
@@ -109,7 +110,7 @@ export default function AccessoryDetailPage() {
   const [lightboxIndex, setLightboxIndex] = useState(0)
 
   const addItem = useCartStore((state) => state.addItem)
-  const { formatPrice } = useCurrency()
+  const { formatPrice, currency, convertPrice } = useCurrency()
   const { isRTL, t, language } = useLanguage()
   const ui = commerceUi(language)
   const productUi = productPageUi(language)
@@ -1024,6 +1025,15 @@ export default function AccessoryDetailPage() {
               </button>
 
             </div>
+
+            {['AED', 'SAR', 'KWD'].includes(currency.code) ? (
+              <TabbyPromoSnippet
+                price={convertPrice(accessory.price * quantity)}
+                currency={currency.code}
+                source="product"
+                className="mb-3 mt-1"
+              />
+            ) : null}
 
             <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 ${isRTL ? 'text-right' : ''}`}>
               <div className="flex flex-col items-center gap-1 text-center">

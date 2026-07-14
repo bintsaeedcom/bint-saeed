@@ -25,6 +25,7 @@ import {
   clearMobileBottomChrome,
   publishMobileBottomChrome,
 } from '@/lib/ui/mobileBottomChrome'
+import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity } = useCartStore()
@@ -349,6 +350,15 @@ export default function CartPage() {
                 <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
                   {ui.cart.taxesIncluded}
                 </p>
+                {['AED', 'SAR', 'KWD'].includes(currency.code) ? (
+                  <div className="mt-4 rounded-[4px] bg-white/95 px-2 py-1">
+                    <TabbyPromoSnippet
+                      price={Number(estimatedTotal.toFixed(2))}
+                      currency={currency.code}
+                      source="cart"
+                    />
+                  </div>
+                ) : null}
               </div>
 
               <LocaleLink

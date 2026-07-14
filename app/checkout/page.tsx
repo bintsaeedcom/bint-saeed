@@ -36,12 +36,17 @@ import {
   type BnplFormField,
 } from '@/lib/checkout/bnplFormValidation'
 import { formFieldErrorClass, formFieldOnDarkClass } from '@/lib/ui/formFieldClasses'
+import { tabbyMessage, tabbyRejectionMessage } from '@/lib/tabby/messages'
+import { normalizeTabbyPhone } from '@/lib/tabby/normalizePhone'
 import dynamic from 'next/dynamic'
 
 const StripeEmbeddedCheckoutForm = dynamic(
   () => import('@/components/checkout/StripeEmbeddedCheckoutForm'),
   { ssr: false },
 )
+const TabbyPromoSnippet = dynamic(() => import('@/components/TabbyPromoSnippet'), {
+  ssr: false,
+})
 
 function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   if (typeof window === 'undefined') return 'desktop'
@@ -56,7 +61,7 @@ function railLabel(rail: CheckoutRail, ui: ReturnType<typeof commerceUi>, langua
   if (rail === 'mollie') return ui.checkout.payWithMollie
   if (rail === 'tamara') return ui.checkout.payWithTamara
   if (rail === 'tabby') {
-    return language === 'ar' ? 'تابي — ادفع على 4 دفعات' : 'Tabby — pay in 4'
+    return language === 'ar' ? 'ادفع لاحقًا مع تابي' : 'Pay later with Tabby'
   }
   return ui.checkout.payWithCard
 }
@@ -89,7 +94,12 @@ export default function CheckoutPage() {
     const tamara = searchParams?.get('tamara')
     const stripe = searchParams?.get('stripe')
     const raw = tabby || tamara || stripe
-    if (raw === 'cancelled' || raw === 'canceled' || raw === 'failed') return raw === 'failed' ? 'failed' : 'cancelled'
+    if (raw === 'cancelled' || raw === 'canceled' || raw === 'failed') {
+      return {
+        kind: (raw === 'failed' ? 'failed' : 'cancelled') as 'failed' | 'cancelled',
+        provider: tabby ? 'tabby' : tamara ? 'tamara' : 'stripe',
+      }
+    }
     return null
   }, [searchParams])
   const [paymentNoticeDismissed, setPaymentNoticeDismissed] = useState(false)
@@ -117,6 +127,8 @@ export default function CheckoutPage() {
   const [tamaraLine1, setTamaraLine1] = useState('')
   const [tamaraCity, setTamaraCity] = useState('')
   const [tamaraEligible, setTamaraEligible] = useState(true)
+  const [tabbyEligible, setTabbyEligible] = useState(true)
+  const [tabbyRejectMessage, setTabbyRejectMessage] = useState<string | null>(null)
   const [bnplFieldError, setBnplFieldError] = useState<{
     field: BnplFormField
     message: string
@@ -209,6 +221,62 @@ export default function CheckoutPage() {
     return () => window.clearTimeout(timer)
   }, [activeRail, cartSubtotal, countryCode, currency.code, items, tamaraPhone])
 
+  useEffect(() => {
+    if (activeRail !== 'tabby') return
+    const amount = Number(cartSubtotal(items).toFixed(2))
+    if (amount <= 0) return
+    const timer = window.setTimeout(() => {
+      void fetch('/api/payments/tabby/eligibility', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount,
+          currency: currency.code,
+          country: countryCode || undefined,
+          language,
+          email: tamaraEmail.trim() || undefined,
+          phone: tamaraPhone.trim() || undefined,
+          name: `${tamaraFirstName} ${tamaraLastName}`.trim() || undefined,
+        }),
+      })
+        .then((r) => r.json())
+        .then(
+          (data: {
+            eligible?: boolean
+            message?: string
+            reason?: string
+            phoneChecked?: boolean
+          }) => {
+            if (data.phoneChecked && data.eligible === false) {
+              setTabbyEligible(false)
+              setTabbyRejectMessage(
+                data.message || tabbyRejectionMessage(data.reason, language),
+              )
+            } else {
+              setTabbyEligible(true)
+              setTabbyRejectMessage(null)
+            }
+          },
+        )
+        .catch(() => {
+          setTabbyEligible(true)
+          setTabbyRejectMessage(null)
+        })
+    }, 500)
+    return () => window.clearTimeout(timer)
+  }, [
+    activeRail,
+    cartSubtotal,
+    countryCode,
+    currency.code,
+    items,
+    language,
+    tamaraEmail,
+    tamaraFirstName,
+    tamaraLastName,
+    tamaraPhone,
+  ])
+
   const beganCheckout = useRef(false)
 
   useEffect(() => {
@@ -270,6 +338,9 @@ export default function CheckoutPage() {
     })
     try {
       if (activeRail === 'tabby') {
+        if (!tabbyEligible) {
+          throw new Error(tabbyRejectMessage || tabbyMessage('generalReject', language))
+        }
         const validated = validateBnplCheckoutForm(
           {
             firstName: tamaraFirstName,
@@ -279,13 +350,20 @@ export default function CheckoutPage() {
             line1: tamaraLine1,
             city: tamaraCity,
           },
-          { language, provider: 'tabby', countryCode: countryCode === 'SA' ? 'SA' : 'AE' },
+          {
+            language,
+            provider: 'tabby',
+            countryCode: countryCode === 'SA' ? 'SA' : 'AE',
+          },
         )
         if (!validated.ok) {
           setBnplFieldError({ field: validated.field, message: validated.message })
           throw new Error(validated.message)
         }
         setBnplFieldError(null)
+        const tabbyCountry =
+          countryCode === 'SA' ? 'SA' : countryCode === 'KW' ? 'KW' : 'AE'
+        const tabbyPhone = normalizeTabbyPhone(tamaraPhone, tabbyCountry)
         const response = await fetch('/api/payments/tabby/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -296,7 +374,7 @@ export default function CheckoutPage() {
               firstName: tamaraFirstName.trim(),
               lastName: tamaraLastName.trim(),
               email: tamaraEmail.trim(),
-              phone: validated.phoneNormalized,
+              phone: tabbyPhone,
             },
             shippingAddress: {
               line1: tamaraLine1.trim(),
@@ -513,7 +591,7 @@ export default function CheckoutPage() {
               role="status"
             >
               <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-dustyBlue">
-                {paymentReturnStatus === 'failed'
+                {paymentReturnStatus.kind === 'failed'
                   ? isRTL
                     ? 'لم يكتمل الدفع'
                     : 'Payment not completed'
@@ -522,13 +600,17 @@ export default function CheckoutPage() {
                     : 'Payment cancelled'}
               </p>
               <p className="mt-2 font-montserrat text-sm leading-relaxed text-brand-clayRed/75">
-                {paymentReturnStatus === 'failed'
-                  ? isRTL
-                    ? 'يمكنك المحاولة مرة أخرى من هنا، أو العودة إلى السلة، أو التواصل معنا للتحويل البنكي.'
-                    : 'You can try again here, return to your bag, or message us for bank transfer.'
-                  : isRTL
-                    ? 'طلبك لا يزال في السلة. تابعي الدفع متى شئت، أو تواصلي معنا إذا احتجتِ مساعدة.'
-                    : 'Your selection is still in the bag. Continue when ready, or message us if you need help.'}
+                {paymentReturnStatus.provider === 'tabby'
+                  ? paymentReturnStatus.kind === 'failed'
+                    ? tabbyMessage('generalReject', language)
+                    : tabbyMessage('cancelled', language)
+                  : paymentReturnStatus.kind === 'failed'
+                    ? isRTL
+                      ? 'يمكنك المحاولة مرة أخرى من هنا، أو العودة إلى السلة، أو التواصل معنا للتحويل البنكي.'
+                      : 'You can try again here, return to your bag, or message us for bank transfer.'
+                    : isRTL
+                      ? 'طلبك لا يزال في السلة. تابعي الدفع متى شئت، أو تواصلي معنا إذا احتجتِ مساعدة.'
+                      : 'Your selection is still in the bag. Continue when ready, or message us if you need help.'}
               </p>
               <div
                 className={`mt-3 flex flex-wrap gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}
@@ -766,7 +848,11 @@ export default function CheckoutPage() {
                             </span>
                           ) : null}
                           {rail === 'tabby' ? (
-                            <span className="font-montserrat text-[11px] leading-snug tracking-wide text-white/75 sm:flex-1">
+                            <span
+                              className={`font-montserrat text-[11px] leading-snug tracking-wide sm:flex-1 ${
+                                tabbyEligible ? 'text-white/75' : 'text-amber-200/90'
+                              }`}
+                            >
                               {railLabel('tabby', ui, language)}
                             </span>
                           ) : null}
@@ -787,6 +873,22 @@ export default function CheckoutPage() {
                           ? 'تفاصيل تمارا'
                           : 'Tamara details'}
                     </p>
+                    {activeRail === 'tabby' ? (
+                      <TabbyPromoSnippet
+                        price={Number(cartSubtotal(items).toFixed(2))}
+                        currency={currency.code}
+                        source="checkout"
+                        className="rounded-[4px] bg-white/95 px-2 py-1"
+                      />
+                    ) : null}
+                    {activeRail === 'tabby' && tabbyRejectMessage ? (
+                      <p
+                        className="rounded-[4px] border border-brand-clayRed/40 bg-brand-clayRed/15 px-3 py-2 font-montserrat text-[12px] leading-snug text-[#f5e6dc]"
+                        role="alert"
+                      >
+                        {tabbyRejectMessage}
+                      </p>
+                    ) : null}
                     {bnplFieldError ? (
                       <p
                         className="rounded-[4px] border border-brand-clayRed/40 bg-brand-clayRed/15 px-3 py-2 font-montserrat text-[12px] leading-snug text-[#f5e6dc]"
@@ -909,13 +1011,15 @@ export default function CheckoutPage() {
                     payBusy ||
                     !checkoutEnvReady ||
                     !legalAcknowledged ||
-                    !activeRail
+                    !activeRail ||
+                    (activeRail === 'tabby' && !tabbyEligible)
                   }
                   className={`mt-5 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-[4px] px-4 py-3.5 font-montserrat text-sm font-medium tracking-wide transition-colors sm:mt-6 ${
                     payBusy ||
                     !checkoutEnvReady ||
                     !legalAcknowledged ||
-                    !activeRail
+                    !activeRail ||
+                    (activeRail === 'tabby' && !tabbyEligible)
                       ? 'cursor-not-allowed bg-white/15 text-white/45'
                       : 'bg-brand-dustyBlue text-[#1a0008] hover:bg-white hover:text-brand-darkRed'
                   } ${isRTL ? 'flex-row-reverse' : ''}`}
