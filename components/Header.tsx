@@ -271,10 +271,9 @@ export default function Header() {
           image: MEGA_MENU_LUXURY_ABAYAS,
         },
         {
-          title: 'Gift Cards',
-          href: '/gift-cards',
-          image: '/gift-cards/bint-saeed-gift-card-1000-aed-r7.webp',
-          ctaLabel: 'View',
+          title: 'Accessories',
+          href: '/accessories',
+          image: '/collection-section/bint-saeed-home-category-accessories-malachite-necklace.webp',
         },
       ],
     },
