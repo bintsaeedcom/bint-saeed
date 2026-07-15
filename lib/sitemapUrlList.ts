@@ -1,6 +1,6 @@
 import { isPrelaunch } from '@/lib/seo'
 import { buildCatalogSitemapEntries } from '@/lib/sitemap/catalogUrls'
-import { localizedPath } from '@/lib/i18n/routing'
+import { LOCALE_PREFIXES, localizedPath, type LocalePrefix } from '@/lib/i18n/routing'
 
 /** Canonical origin for sitemap `<loc>` values (align with `NEXT_PUBLIC_SITE_URL` in production). */
 export const SITEMAP_BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
@@ -13,7 +13,9 @@ export type SitemapUrlEntry = {
 }
 
 function entry(path: string, changefreq: string, priority: string): SitemapUrlEntry {
-  const normalized = path.startsWith('http') ? path : `${SITEMAP_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`
+  const normalized = path.startsWith('http')
+    ? path
+    : `${SITEMAP_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`
   return {
     loc: normalized,
     lastmod: new Date().toISOString(),
@@ -23,8 +25,9 @@ function entry(path: string, changefreq: string, priority: string): SitemapUrlEn
 }
 
 /**
- * Human-facing hubs / editorial that should also appear under `/ar/...`
- * so Arabic storefront discovery is complete (PDPs already come from catalogUrls).
+ * Human-facing hubs / editorial for EN + every prefixed locale
+ * (ar, fr, it, es, ru, zh, de, nl, pt, id, ms).
+ * PDPs already come from catalogUrls for all locales.
  * Machine files (llms.txt, openapi) stay EN-only.
  */
 const INDEXABLE_HUBS: { path: string; changefreq: string; priority: string }[] = [
@@ -62,14 +65,21 @@ function buildEnglishSiteUrls(): SitemapUrlEntry[] {
   ]
 }
 
-/** Arabic storefront hubs — pairs with EN hubs + AR PDPs from catalogUrls. */
-function buildArabicHubUrls(): SitemapUrlEntry[] {
-  return INDEXABLE_HUBS.map((h) => {
-    const pathOnly = h.path.split('?')[0] || h.path
-    const query = h.path.includes('?') ? `?${h.path.split('?')[1]}` : ''
-    const arPath = `${localizedPath('ar', pathOnly)}${query}`
-    return entry(arPath, h.changefreq, h.priority)
-  })
+function hubPathForLocale(locale: LocalePrefix, hubPath: string): string {
+  const pathOnly = hubPath.split('?')[0] || hubPath
+  const query = hubPath.includes('?') ? `?${hubPath.split('?')[1]}` : ''
+  return `${localizedPath(locale, pathOnly)}${query}`
+}
+
+/** Prefixed-locale hubs (ar/fr/it/…) — pairs with EN hubs + multilang PDPs from catalogUrls. */
+function buildLocalizedHubUrls(): SitemapUrlEntry[] {
+  const out: SitemapUrlEntry[] = []
+  for (const locale of LOCALE_PREFIXES) {
+    for (const h of INDEXABLE_HUBS) {
+      out.push(entry(hubPathForLocale(locale, h.path), h.changefreq, h.priority))
+    }
+  }
+  return out
 }
 
 /** Prelaunch tease only — do not feed unfinished shop URLs to crawlers. */
@@ -84,7 +94,7 @@ export function getSitemapUrlEntries(): SitemapUrlEntry[] {
     return prelaunchUrls
   }
   const catalogUrls = buildCatalogSitemapEntries(SITEMAP_BASE_URL)
-  return [...buildEnglishSiteUrls(), ...buildArabicHubUrls(), ...catalogUrls]
+  return [...buildEnglishSiteUrls(), ...buildLocalizedHubUrls(), ...catalogUrls]
 }
 
 /** Absolute URLs only — for IndexNow and similar tooling. */
