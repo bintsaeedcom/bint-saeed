@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
@@ -10,6 +9,9 @@ import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import {
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
+  EDITORIAL_STACK_CARD,
+  EDITORIAL_STACK_CONTENT_PAD,
+  EDITORIAL_STACK_PAD,
 } from '@/lib/ui/editorialPageChrome'
 import {
   ctaPrimary,
@@ -18,44 +20,85 @@ import {
   ctaButtonRow,
   ctaInButtonRow,
 } from '@/lib/ui/ctaClasses'
-import {
-  editorialBodyOnLight,
-  editorialSectionH2,
-} from '@/lib/ui/editorialTypography'
 
 const HERO_IMAGE = ABOUT_SECTION_HERO_IMAGES.about
 const HERO_IMAGE_2 = '/about/campaign-seated.PNG'
-const INNER_CONTAINER_CLASS = EDITORIAL_PAGE_CONTAINER
 
-/** Sticky card-stack scroll — identical overlap/stack on mobile and desktop */
-const ABOUT_STACK_SECTION =
-  'sticky top-0 -mt-10 min-h-[100vh] will-change-transform rounded-t-[16px] shadow-[0_-12px_40px_rgba(0,0,0,0.3)]'
+/** Matches Craftsmanship PhaseProse chapter text treatment. */
+function ChapterProse({
+  index,
+  label,
+  title,
+  headingId,
+  paragraphs,
+  tone = 'light',
+  sticky = false,
+}: {
+  index: number
+  label: string
+  title: string
+  headingId: string
+  paragraphs: string[]
+  tone?: 'light' | 'onDark' | 'onBurgundy'
+  sticky?: boolean
+}) {
+  const { isRTL } = useLanguage()
+  const onDark = tone === 'onDark' || tone === 'onBurgundy'
+  const indexColor = onDark ? 'text-[#e8d8c8]/70' : 'text-brand-dustyBlue'
+  const labelColor = onDark ? 'text-[#e8d8c8]' : 'text-brand-dustyBlue'
+  const titleColor = onDark ? 'text-[#e8ddd4]' : 'text-brand-darkRed'
+  const bodyColor = onDark ? 'text-[#e8ddd4]/78' : 'text-brand-darkRed/[0.88]'
+  const ruleColor = onDark ? 'border-[#e8ddd4]/18' : 'border-[#6f1524]/35'
+  const stickyClass = sticky
+    ? 'lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]'
+    : ''
 
-/** Extra bottom space so the next stacked card does not cover copy while reading */
-const ABOUT_STACK_PAD = 'pt-28 pb-48 md:pt-36 md:pb-64'
-const ABOUT_STACK_CONTENT_PAD = 'pb-28 md:pb-40'
+  return (
+    <div className={`max-w-xl ${stickyClass} ${isRTL ? 'ms-auto text-right' : ''}`}>
+      <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <span className={`shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] ${indexColor}`}>
+          {String(index).padStart(2, '0')}
+        </span>
+        <div className="min-w-0">
+          <p className={`mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] ${labelColor}`}>
+            {label}
+          </p>
+          <h2
+            id={headingId}
+            className={`font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] ${titleColor}`}
+          >
+            {title}
+          </h2>
+        </div>
+      </div>
+
+      <ol className="mt-10 space-y-0 md:mt-12">
+        {paragraphs.map((paragraph) => (
+          <li
+            key={paragraph.slice(0, 40)}
+            className={`border-t ${ruleColor} py-6 first:border-t first:pt-6 md:py-7`}
+          >
+            <p
+              className={`font-montserrat text-[15px] font-normal leading-[1.95] tracking-[0.02em] md:text-[16px] md:leading-[2] ${bodyColor}`}
+            >
+              {paragraph}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+}
 
 export default function AboutPage() {
   const { language, isRTL } = useLanguage()
   const copy = getAboutPageCopy(language)
-  const quoteRef = useRef<HTMLElement | null>(null)
-  const [quoteVisible, setQuoteVisible] = useState(false)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return
-          if (entry.target === quoteRef.current) setQuoteVisible(true)
-        })
-      },
-      { threshold: 0.32, rootMargin: '0px 0px -6% 0px' },
-    )
-
-    const quote = quoteRef.current
-    if (quote) observer.observe(quote)
-    return () => observer.disconnect()
-  }, [])
+  const originParagraphs = [
+    `${copy.originP1BeforeBint}${copy.originP1Bint}${copy.originP1AfterBint}${copy.originP1Strong}`,
+    `${copy.originP2Strong}${copy.originP2Rest}`,
+    copy.originP3,
+  ]
 
   return (
     <main className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -76,84 +119,91 @@ export default function AboutPage() {
       <section
         id="about-manifesto"
         aria-labelledby="about-manifesto-heading"
-        className={`about-manifesto relative z-10 overflow-hidden ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}
+        className={`about-manifesto relative z-10 overflow-hidden ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
       >
-        <div className={`${INNER_CONTAINER_CLASS} ${ABOUT_STACK_CONTENT_PAD} relative z-20 text-left`}>
-          <h2
-            id="about-manifesto-heading"
-            className={`${isRTL ? '' : 'font-rozha'} text-[clamp(1.45rem,4.6vw,2rem)] leading-tight tracking-[0.12em] text-white`}
-          >
-            {copy.manifestoTitle}
-          </h2>
-          <div
-            className="mt-4 h-px w-full max-w-3xl bg-gradient-to-r from-transparent via-white/35 to-transparent sm:mt-5"
-            aria-hidden
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+          <ChapterProse
+            index={1}
+            label={copy.manifestoTitle}
+            title={copy.manifestoSubtitle}
+            headingId="about-manifesto-heading"
+            paragraphs={[copy.manifestoP1, copy.manifestoP2, copy.manifestoP3]}
+            tone="onDark"
           />
-          <h3
-            className={`${isRTL ? '' : 'font-rozha'} mt-6 max-w-3xl text-[clamp(1rem,3.4vw,1.35rem)] font-normal leading-snug tracking-wide text-white/95 sm:mt-8`}
-          >
-            {copy.manifestoSubtitle}
-          </h3>
-          <div className="mt-6 max-w-3xl space-y-5 font-montserrat text-[15px] font-normal leading-[1.65] text-white/85 sm:mt-8 sm:space-y-6 sm:text-[0.95rem]">
-            <p>{copy.manifestoP1}</p>
-            <p>{copy.manifestoP2}</p>
-            <p className="text-white/80">{copy.manifestoP3}</p>
-          </div>
         </div>
       </section>
 
       <section
         id="about-origin"
-        className={`relative z-20 bg-[#e8ddd4] ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}
+        className={`relative z-20 overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
       >
-        <div className={`${INNER_CONTAINER_CLASS} ${ABOUT_STACK_CONTENT_PAD} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-start`}>
-          <div>
-            <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.originLabel}</p>
-            <h2 className={`mt-4 ${editorialSectionH2} text-[#1a0210]`}>
-              {copy.originHeading}
-            </h2>
-            <div className={`mt-6 space-y-6 ${editorialBodyOnLight}`}>
-              <p>
-                {copy.originP1BeforeBint}
-                <em>{copy.originP1Bint}</em>
-                {copy.originP1AfterBint}
-                {copy.originP1Strong}
-              </p>
-              <p>
-                {copy.originP2Strong}
-                {copy.originP2Rest}
-              </p>
-              <p>{copy.originP3}</p>
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+            <div className={`lg:col-span-5 ${isRTL ? 'lg:order-2' : ''}`}>
+              <ChapterProse
+                index={2}
+                label={copy.originLabel}
+                title={copy.originHeading}
+                headingId="about-origin-heading"
+                paragraphs={originParagraphs}
+                sticky
+              />
             </div>
-          </div>
-          <div className="overflow-hidden rounded-[4px] bg-[#faf8f5]">
-            <Image
-              src={HERO_IMAGE_2}
-              alt={copy.imageAlt}
-              width={480}
-              height={600}
-              sizes="(max-width: 768px) 90vw, 42vw"
-              className="h-auto w-full object-cover object-top"
-            />
+            <div
+              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
+                isRTL ? 'lg:order-1' : ''
+              }`}
+            >
+              <div className="overflow-hidden border border-[#6f1524]/18 bg-brand-pageCanvas/85">
+                <Image
+                  src={HERO_IMAGE_2}
+                  alt={copy.imageAlt}
+                  width={960}
+                  height={1200}
+                  sizes="(max-width: 1024px) 92vw, 44vw"
+                  className="aspect-[4/5] h-auto w-full object-cover object-top"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className={`about-fabric-light relative z-30 overflow-hidden bg-[#7A1C28] ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}>
-        <div className={`${INNER_CONTAINER_CLASS} ${ABOUT_STACK_CONTENT_PAD} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
-          <div className="relative min-h-[52vh] overflow-hidden rounded-[4px] md:min-h-[620px]">
-            <Image src={HERO_IMAGE} alt={copy.imageAlt} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
-          </div>
-          <div className="flex items-center">
-            <div className="max-w-xl">
-              <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">{copy.houseLabel}</p>
-              <h2 className={`mt-5 ${editorialSectionH2} text-[#e8ddd4]`}>{copy.houseHeading}</h2>
-              <div className="mt-5 space-y-5 font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
-                {copy.houseParagraphs.map((paragraph) => (
-                  <p key={paragraph.slice(0, 48)}>{paragraph}</p>
-                ))}
+      <section
+        className={`about-fabric-light relative z-30 overflow-hidden bg-[#7A1C28] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+      >
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+            <div
+              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
+                isRTL ? 'lg:order-2' : ''
+              }`}
+            >
+              <div className="relative aspect-[4/5] w-full overflow-hidden border border-[#e8ddd4]/18">
+                <Image
+                  src={HERO_IMAGE}
+                  alt={copy.imageAlt}
+                  fill
+                  sizes="(max-width: 1024px) 92vw, 44vw"
+                  className="object-cover object-top"
+                />
               </div>
-              <LocaleLink href="/the-codes" className={`mt-8 ${ctaPrimarySoft}`} data-cursor-hover>
+            </div>
+            <div className={`lg:col-span-5 ${isRTL ? 'lg:order-1' : ''}`}>
+              <ChapterProse
+                index={3}
+                label={copy.houseLabel}
+                title={copy.houseHeading}
+                headingId="about-heritage-heading"
+                paragraphs={copy.houseParagraphs}
+                tone="onBurgundy"
+                sticky
+              />
+              <LocaleLink
+                href="/the-codes"
+                className={`mt-8 inline-flex ${ctaPrimarySoft}`}
+                data-cursor-hover
+              >
                 {copy.ctaOurStoryInCodes}
               </LocaleLink>
             </div>
@@ -162,25 +212,19 @@ export default function AboutPage() {
       </section>
 
       <section
-        ref={quoteRef}
         className="closing-section relative z-40 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10"
+        aria-label={copy.closingBrand}
       >
-        <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
-          <div className="mx-auto max-w-[min(94vw,860px)]">
-            <p
-              className={`text-center font-rozha text-[clamp(20px,3.2vw,40px)] italic leading-[1.22] tracking-[-0.01em] text-[#e8d8c8] transition-opacity duration-700 ${
-                quoteVisible ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              {copy.closingQuote.split('\n').map((line, index) => (
-                <span key={index} className="block">
-                  {line}
-                </span>
-              ))}
-            </p>
-          </div>
-          <div className="mx-auto my-6 h-px w-[60px] bg-[#e8ddd4]" />
-          <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-[#6a8090]">
+        <div className={`${EDITORIAL_PAGE_CONTAINER} relative z-20`}>
+          <p className="mx-auto max-w-[min(94vw,860px)] text-center font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.15] tracking-[0.02em] text-[#e8ddd4]">
+            {copy.closingQuote.split('\n').map((line, index) => (
+              <span key={index} className="block">
+                {line}
+              </span>
+            ))}
+          </p>
+          <div className="mx-auto my-6 h-px w-[60px] bg-[#e8ddd4]/35" />
+          <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.22em] text-[#e8d8c8]/70">
             {copy.closingBrand}
           </p>
           <div className={`mt-8 ${ctaButtonRow} justify-center`} data-bs-cta-row data-bs-cta-row-layout="wrap">

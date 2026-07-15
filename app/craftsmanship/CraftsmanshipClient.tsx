@@ -139,24 +139,32 @@ const CRAFT_VIDEOS = [
 
 const MEDIA = {
   cad: {
-    src: '/craftsmanship/bint-saeed-cad-abaya-pattern.png',
-    alt: 'Bint Saeed CAD abaya pattern on screen—technical lines for proportion and construction resolved before cutting; luxury development between Italy and Abu Dhabi',
-  },
-  pattern: {
-    src: '/craftsmanship/bint-saeed-pattern-drawing.png',
-    alt: 'Bint Saeed—abaya pattern drawing during development; proportion, balance, and construction studied before sampling and production',
-  },
-  textile: {
-    src: '/craftsmanship/bint-saeed-textile-selection-process.png',
-    alt: 'Bint Saeed luxury textile and fabric selection for bespoke abayas—evaluating drape, weight, and performance during development in Abu Dhabi',
-  },
-  shearsMeasure: {
-    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-atelier-shears-measure.webp',
+    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-i-cad-pattern.webp',
     alt: withBrandAlt(
-      'Atelier close-up of shears and measuring tape cutting fabric for a luxury abaya',
+      'CAD abaya pattern on screen during Phase I development — technical construction resolved before cutting',
       'en',
     ),
-    title: 'Bint Saeed Abu Dhabi craftsmanship — atelier shears and measure',
+  },
+  pattern: {
+    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-i-pattern-drawing.webp',
+    alt: withBrandAlt(
+      'Hands drafting an abaya pattern with pencil and ruler during Phase I development',
+      'en',
+    ),
+  },
+  textile: {
+    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-iii-textile-thread.webp',
+    alt: withBrandAlt(
+      'Hands guiding thread at the atelier machine during Phase III direction and finishing',
+      'en',
+    ),
+  },
+  shearsMeasure: {
+    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-iii-shears-measure.webp',
+    alt: withBrandAlt(
+      'Atelier shears and measuring tape cutting fabric during Phase III direction',
+      'en',
+    ),
   },
   goldKnotFinishing: {
     src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-atelier-gold-knot-strand-finishing.png',
@@ -181,7 +189,7 @@ const MEDIA = {
   },
 } as const
 
-/** Phase II photo wall — video / still alternating; row 2 starts with label still. */
+/** Phase II photo wall — video / still alternating; row 3 = video left, chain right. */
 const PHASE_II_MEDIA = [
   { kind: 'video' as const, src: CRAFT_VIDEOS[0].src, ariaLabel: CRAFT_VIDEOS[0].ariaLabel },
   {
@@ -195,12 +203,12 @@ const PHASE_II_MEDIA = [
     alt: MEDIA.wovenLabelStitching.alt,
   },
   { kind: 'video' as const, src: CRAFT_VIDEOS[1].src, ariaLabel: CRAFT_VIDEOS[1].ariaLabel },
+  { kind: 'video' as const, src: CRAFT_VIDEOS[2].src, ariaLabel: CRAFT_VIDEOS[2].ariaLabel },
   {
     kind: 'image' as const,
     src: MEDIA.goldKnottedChain.src,
     alt: MEDIA.goldKnottedChain.alt,
   },
-  { kind: 'video' as const, src: CRAFT_VIDEOS[2].src, ariaLabel: CRAFT_VIDEOS[2].ariaLabel },
 ] as const
 
 /** Portrait craft finishes — label centered between embroidery + stitch details. */
@@ -348,12 +356,16 @@ function Post({
 }) {
   const frame =
     tone === 'onDark'
-      ? 'border border-[#6f1524]/45 bg-[rgba(111,21,36,0.18)] shadow-[0_28px_64px_-36px_rgba(0,0,0,0.55)]'
-      : 'border border-[#6f1524]/18 bg-brand-stone/25 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)]'
+      ? 'border border-white/25 bg-white/[0.08] shadow-[0_28px_70px_-34px_rgba(0,0,0,0.62),inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-xl'
+      : 'border border-white/60 bg-white/30 shadow-[0_28px_70px_-36px_rgba(42,0,18,0.2),inset_0_1px_0_rgba(255,255,255,0.75)] backdrop-blur-2xl'
   const veil =
     tone === 'onDark'
-      ? 'bg-[linear-gradient(180deg,rgba(26,2,16,0.08)_0%,transparent_40%,rgba(26,2,16,0.18)_100%)]'
-      : 'bg-[linear-gradient(180deg,rgba(26,2,16,0.04)_0%,transparent_34%,rgba(26,2,16,0.06)_100%)]'
+      ? 'bg-[linear-gradient(160deg,rgba(255,255,255,0.14)_0%,transparent_38%,rgba(26,2,16,0.22)_100%)]'
+      : 'bg-[linear-gradient(160deg,rgba(255,255,255,0.28)_0%,transparent_42%,rgba(255,255,255,0.1)_100%)]'
+  const rim =
+    tone === 'onDark'
+      ? 'ring-1 ring-inset ring-white/25 shadow-[inset_0_0_48px_rgba(255,255,255,0.08)]'
+      : 'ring-1 ring-inset ring-white/55 shadow-[inset_0_0_56px_rgba(255,255,255,0.18)]'
 
   return (
     <div className={`group relative isolate overflow-hidden ${frame} ${ratio} ${className}`}>
@@ -365,6 +377,7 @@ function Post({
         children
       )}
       <div className={`pointer-events-none absolute inset-0 z-[1] ${veil}`} aria-hidden />
+      <div className={`pointer-events-none absolute inset-0 z-[2] ${rim}`} aria-hidden />
     </div>
   )
 }
@@ -488,21 +501,13 @@ export default function CraftsmanshipClient() {
                 aria-label="Bint Saeed design development stills"
               >
                 <Reveal delay={0.05} className="min-w-0">
-                  <Post ratio="aspect-[4/5]" parallax={false} className="bg-brand-stone/30">
-                    <Still
-                      src={MEDIA.pattern.src}
-                      alt={MEDIA.pattern.alt}
-                      className="!object-contain object-center p-1.5 sm:p-2"
-                    />
+                  <Post ratio="aspect-[4/5]" parallax={false}>
+                    <Still src={MEDIA.pattern.src} alt={MEDIA.pattern.alt} />
                   </Post>
                 </Reveal>
                 <Reveal delay={0.1} className="min-w-0">
-                  <Post ratio="aspect-[4/5]" parallax={false} className="bg-brand-stone/30">
-                    <Still
-                      src={MEDIA.cad.src}
-                      alt={MEDIA.cad.alt}
-                      className="!object-contain object-center p-1.5 sm:p-2"
-                    />
+                  <Post ratio="aspect-[4/5]" parallax={false}>
+                    <Still src={MEDIA.cad.src} alt={MEDIA.cad.alt} />
                   </Post>
                 </Reveal>
               </div>
@@ -585,21 +590,13 @@ export default function CraftsmanshipClient() {
             >
               <div className="grid grid-cols-2 gap-2 sm:gap-3" aria-label="Bint Saeed finishing stills">
                 <Reveal delay={0.05} className="min-w-0">
-                  <Post ratio="aspect-[4/5]" parallax={false} className="bg-brand-pageCanvas/85">
-                    <Still
-                      src={MEDIA.shearsMeasure.src}
-                      alt={MEDIA.shearsMeasure.alt}
-                      className="!object-contain object-center p-2 sm:p-3"
-                    />
+                  <Post ratio="aspect-[4/5]" parallax={false}>
+                    <Still src={MEDIA.shearsMeasure.src} alt={MEDIA.shearsMeasure.alt} />
                   </Post>
                 </Reveal>
                 <Reveal delay={0.1} className="min-w-0">
-                  <Post ratio="aspect-[4/5]" parallax={false} className="bg-brand-pageCanvas/85">
-                    <Still
-                      src={MEDIA.textile.src}
-                      alt={MEDIA.textile.alt}
-                      className="!object-contain object-center p-2 sm:p-3"
-                    />
+                  <Post ratio="aspect-[4/5]" parallax={false}>
+                    <Still src={MEDIA.textile.src} alt={MEDIA.textile.alt} />
                   </Post>
                 </Reveal>
               </div>
