@@ -1,71 +1,174 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, type ReactNode } from 'react'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
-import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { getPersonalisationCopy } from '@/lib/content/personalisationCopyI18n'
+import ExploreCollectionClosing from '@/components/ExploreCollectionClosing'
+import { FiArrowRight } from 'react-icons/fi'
 import {
-  ABOUT_EDITORIAL_BANNER_IMAGE,
-  ABOUT_SECTION_HERO_IMAGES,
-} from '@/lib/about/aboutSectionHeroImages'
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'framer-motion'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
-import { editorialSectionH2 } from '@/lib/ui/editorialTypography'
+import { getPersonalisationCopy } from '@/lib/content/personalisationCopyI18n'
+import { withBrandAlt } from '@/lib/products/imageAlt'
 import {
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
+  EDITORIAL_STACK_CARD,
+  EDITORIAL_STACK_CONTENT_PAD,
+  EDITORIAL_STACK_PAD,
 } from '@/lib/ui/editorialPageChrome'
-import {
-  ctaButtonRow,
-  ctaInButtonRow,
-  ctaPrimary,
-  ctaSecondaryOutlineOnDark,
-} from '@/lib/ui/ctaClasses'
 
-const INNER_CONTAINER_CLASS = EDITORIAL_PAGE_CONTAINER
 const PERSONALISATION_PAGE = encodeURIComponent('Personalisation Page')
 const HERO_IMAGE = ABOUT_SECTION_HERO_IMAGES.personalisation
-/** Body pocket still uses shared fabric until a dedicated pocket still is supplied. */
-const SECRET_POCKET_IMAGE = ABOUT_EDITORIAL_BANNER_IMAGE
+const POCKET_DETAIL_IMAGE =
+  '/personalisation/bint-saeed-abu-dhabi-personalisation-hidden-pocket-fabric-detail.webp'
 const LABEL_IMAGES = ['label1.PNG', 'label2.PNG', 'label3.PNG', 'label4.PNG'].map(
   (file) => `/${PERSONALISATION_PAGE}/${encodeURIComponent(file)}`,
 )
 
-/** TODO: replace src with pocket location video once filmed */
-const POCKET_VIDEO_SRC = ''
+/** Scroll-scrubbed reveal — rise + fade, no blur. */
+function Reveal({
+  children,
+  className = '',
+  delay = 0,
+}: {
+  children: ReactNode
+  className?: string
+  delay?: number
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start 0.94', 'start 0.52'],
+  })
+  const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 28, restDelta: 0.001 })
+  const gated = useTransform(progress, (latest) => {
+    const start = Math.min(0.45, Math.max(0, delay) * 0.55)
+    if (latest <= start) return 0
+    return Math.min(1, (latest - start) / (1 - start))
+  })
+  const opacity = useTransform(gated, [0, 1], [0, 1])
+  const y = useTransform(gated, [0, 1], [42, 0])
+
+  if (reduceMotion) {
+    return <div className={className}>{children}</div>
+  }
+
+  return (
+    <motion.div ref={ref} className={className} style={{ opacity, y }}>
+      {children}
+    </motion.div>
+  )
+}
+
+function SectionDrift({ className = '' }: { className?: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const y = useTransform(scrollYProgress, [0, 1], [-40, 40])
+
+  return (
+    <motion.div
+      ref={ref}
+      aria-hidden
+      className={`pointer-events-none absolute inset-0 ${className}`}
+      style={reduceMotion ? undefined : { y }}
+    />
+  )
+}
+
+function ChapterProse({
+  index,
+  label,
+  title,
+  titleId,
+  paragraphs,
+  tone = 'light',
+  sticky = false,
+}: {
+  index: number
+  label: string
+  title: string
+  titleId: string
+  paragraphs: string[]
+  tone?: 'light' | 'onDark'
+  sticky?: boolean
+}) {
+  const { isRTL } = useLanguage()
+  const onDark = tone === 'onDark'
+  const indexColor = onDark ? 'text-[#e8d8c8]/70' : 'text-brand-dustyBlue'
+  const labelColor = onDark ? 'text-[#e8d8c8]' : 'text-brand-dustyBlue'
+  const titleColor = onDark ? 'text-[#e8ddd4]' : 'text-brand-darkRed'
+  const bodyColor = onDark ? 'text-[#e8ddd4]/78' : 'text-brand-darkRed/[0.88]'
+  const ruleColor = onDark ? 'border-[#e8ddd4]/18' : 'border-[#6f1524]/35'
+  const stickyClass = sticky
+    ? 'lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]'
+    : ''
+
+  return (
+    <div className={`max-w-xl ${stickyClass} ${isRTL ? 'ms-auto text-right' : ''}`}>
+      <Reveal>
+        <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <span className={`shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] ${indexColor}`}>
+            {String(index).padStart(2, '0')}
+          </span>
+          <div className="min-w-0">
+            <p className={`mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] ${labelColor}`}>
+              {label}
+            </p>
+            <h2
+              id={titleId}
+              className={`font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] ${titleColor}`}
+            >
+              {title}
+            </h2>
+          </div>
+        </div>
+      </Reveal>
+
+      <ol className="mt-10 space-y-0 md:mt-12">
+        {paragraphs.map((paragraph, i) => (
+          <Reveal key={paragraph.slice(0, 28)} delay={0.08 + i * 0.07}>
+            <li className={`border-t ${ruleColor} py-6 first:border-t first:pt-6 md:py-7`}>
+              <p
+                className={`font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] md:text-[16px] md:leading-[2] ${bodyColor}`}
+              >
+                {paragraph}
+              </p>
+            </li>
+          </Reveal>
+        ))}
+      </ol>
+    </div>
+  )
+}
 
 export default function PersonalisationPage() {
   const { isRTL, language } = useLanguage()
   const copy = getPersonalisationCopy(language)
-  const stepsRef = useRef<HTMLElement | null>(null)
-  const quoteRef = useRef<HTMLElement | null>(null)
-  const [stepsVisible, setStepsVisible] = useState(false)
-  const [quoteVisible, setQuoteVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.target === stepsRef.current && entry.isIntersecting) setStepsVisible(true)
-          if (entry.target === quoteRef.current && entry.isIntersecting) setQuoteVisible(true)
-        })
-      },
-      { threshold: 0.28 },
-    )
-    const steps = stepsRef.current
-    const quote = quoteRef.current
-    if (steps) observer.observe(steps)
-    if (quote) observer.observe(quote)
-    return () => observer.disconnect()
-  }, [])
+  const pocketAlt = withBrandAlt(
+    'Bint Saeed Abu Dhabi personalisation hidden pocket fabric detail',
+    language === 'ar' ? 'ar' : 'en',
+  )
 
   return (
-    <div className={`${EDITORIAL_PAGE_SHELL} bg-[#1a0210] pb-0 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={HERO_IMAGE}
-        imageAlt={copy.hiddenPocketAlt}
+        imageAlt={withBrandAlt('Personalisation editorial banner', language === 'ar' ? 'ar' : 'en')}
         priority
         segments={[
           { label: copy.breadcrumbHome, href: '/home' },
@@ -76,219 +179,167 @@ export default function PersonalisationPage() {
         description={copy.heroSub}
       />
 
-      <section className="relative z-10 -mt-6 rounded-t-[16px] bg-[#e8ddd4] py-16 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-36 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
-        <div className={`${INNER_CONTAINER_CLASS} grid gap-12 text-left md:grid-cols-[1.1fr_0.9fr] md:items-center`}>
-          <div>
-            <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.secretEyebrow}</p>
-            <h2 className={`mt-4 ${editorialSectionH2} text-[#1a0210]`}>
-              {copy.secretTitle}
-            </h2>
-            <p className="mt-6 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72">
-              {copy.secretBody}
-            </p>
-          </div>
-          <div className="overflow-hidden rounded-[4px] bg-[#faf8f5]">
-            <Image
-              src={SECRET_POCKET_IMAGE}
-              alt={copy.hiddenPocketAlt}
-              width={480}
-              height={600}
-              sizes="(max-width: 768px) 90vw, 42vw"
-              className="h-auto w-full object-cover"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="relative z-20 -mt-6 rounded-t-[16px] bg-[#1a0210] py-16 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-36 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]">
-        <div className={`${INNER_CONTAINER_CLASS} text-left`}>
-          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.pocketEyebrow}</p>
-          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#e8ddd4]`}>{copy.pocketTitle}</h2>
-          <p className="mt-5 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#e8ddd4]/72">
-            {copy.pocketBody}
-          </p>
-          <div className="relative mx-auto mt-10 aspect-video w-full max-w-[640px] overflow-hidden rounded-[4px] bg-[#2a0a14]">
-            {POCKET_VIDEO_SRC ? (
-              <video src={POCKET_VIDEO_SRC} autoPlay loop muted playsInline className="h-full w-full object-cover" />
-            ) : (
-              <>
-                {/* TODO: replace src with pocket location video once filmed */}
-                <video src="" autoPlay loop muted playsInline className="sr-only" aria-hidden />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#e8ddd4]/40">
-                    {copy.videoComingSoon}
-                  </p>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative z-30 -mt-6 rounded-t-[16px] bg-[#faf8f5] py-16 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-28 md:sticky md:top-0 md:will-change-transform">
-        <div className={`${INNER_CONTAINER_CLASS} text-left`}>
-          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.messageEyebrow}</p>
-          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#1a0210]`}>
-            {copy.messageTitle}
-          </h2>
-          <p className="mt-5 max-w-2xl font-montserrat text-[15px] leading-[1.9] tracking-wide text-[#1a0210]/72">
-            {copy.messageBody}
-          </p>
-        </div>
-        <div className="mx-auto mt-10 grid max-w-[min(100%,1080px)] grid-cols-2 justify-items-center gap-3 px-4 sm:grid-cols-4 md:gap-4 lg:gap-5">
-          {LABEL_IMAGES.map((src, index) => (
-            <div
-              key={src}
-              className="relative aspect-[3/4] w-full max-w-[11.5rem] overflow-hidden rounded-[4px] sm:max-w-[12.5rem]"
-            >
-              <Image
-                src={src}
-                alt={`${copy.labelAlt} — ${index + 1}`}
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 640px) 44vw, 200px"
+      {/* 01 — The Secret + pocket fabric detail (88.webp). The Pocket / video section removed. */}
+      <section
+        className={`relative z-10 overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        aria-labelledby="personalisation-secret"
+      >
+        <SectionDrift className="bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(111,21,36,0.08)_0%,transparent_60%)]" />
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+            <div className={`lg:col-span-6 ${isRTL ? 'lg:order-2' : ''}`}>
+              <ChapterProse
+                index={1}
+                label={copy.secretEyebrow}
+                title={copy.secretTitle}
+                titleId="personalisation-secret"
+                paragraphs={[copy.secretBody, copy.pocketBody]}
+                sticky
               />
             </div>
-          ))}
+            <div className={`lg:col-span-6 ${isRTL ? 'lg:order-1' : ''}`}>
+              <Reveal className="min-w-0">
+                <div className="relative isolate aspect-[4/5] w-full overflow-hidden border border-[#6f1524]/18 bg-[#faf8f5] shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)] lg:aspect-[3/4]">
+                  <Image
+                    src={POCKET_DETAIL_IMAGE}
+                    alt={pocketAlt}
+                    fill
+                    sizes="(min-width: 1024px) 40vw, 92vw"
+                    className="object-cover object-center"
+                    priority={false}
+                  />
+                </div>
+              </Reveal>
+            </div>
+          </div>
         </div>
       </section>
 
+      {/* 02 — The Message + label stills */}
       <section
-        ref={stepsRef}
-        className="relative z-40 -mt-6 rounded-t-[16px] bg-[#1a0210] py-16 shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:py-36 md:sticky md:top-0 md:will-change-transform md:min-h-[100vh]"
+        className={`relative z-20 overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        aria-labelledby="personalisation-message"
       >
-        <div className={`${INNER_CONTAINER_CLASS} text-left`}>
-          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.stepsEyebrow}</p>
-          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#e8ddd4]`}>{copy.stepsTitle}</h2>
-          <div className="mt-12 grid gap-px bg-[rgba(232,216,200,0.1)] md:grid-cols-3">
-            {copy.steps.map((step, index) => (
-              <article
-                key={step.numeral}
-                className={`bg-[#1a0210] p-8 text-left transition-all duration-700 ${
-                  stepsVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <p className="mb-6 font-rozha text-[48px] leading-none text-[rgba(122,28,40,0.35)]">{step.numeral}</p>
-                <h3 className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#e8d8c8]">
-                  {step.title}
-                </h3>
-                <p className="font-montserrat text-[13px] font-normal leading-[1.7] text-[rgba(232,216,200,0.6)]">{step.body}</p>
-              </article>
+        <SectionDrift className="bg-[radial-gradient(ellipse_60%_50%_at_20%_80%,rgba(111,21,36,0.1)_0%,transparent_55%)]" />
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+          <ChapterProse
+            index={2}
+            label={copy.messageEyebrow}
+            title={copy.messageTitle}
+            titleId="personalisation-message"
+            paragraphs={[copy.messageBody]}
+          />
+
+          <div className="mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3 md:mt-14 md:gap-4">
+            {LABEL_IMAGES.map((src, index) => (
+              <Reveal key={src} delay={0.05 + index * 0.06} className="min-w-0">
+                <div className="relative isolate aspect-[3/4] overflow-hidden border border-[#6f1524]/18 bg-[#faf8f5] shadow-[0_22px_48px_-36px_rgba(42,0,18,0.16)]">
+                  <Image
+                    src={src}
+                    alt={`${copy.labelAlt} — ${index + 1}`}
+                    fill
+                    className="object-cover object-center"
+                    sizes="(max-width: 640px) 44vw, 200px"
+                  />
+                </div>
+              </Reveal>
             ))}
           </div>
-          <div className="mt-10 flex justify-center" data-bs-cta-row>
-            <LocaleLink
-              href="/shop?category=abayas"
-              className={`${ctaPrimary} inline-flex w-auto max-w-[min(100%,22rem)] px-5 sm:max-w-md sm:px-6`}
-              data-bs-cta
-              data-cursor-hover
-              data-analytics-event="click_shop_abayas_from_personalisation"
-              data-analytics-section="personalisation-steps"
-            >
-              {copy.pickAbayaCta}
-            </LocaleLink>
-          </div>
-          <div className="mx-auto mt-10 max-w-xl text-center">
-            <p className="font-montserrat text-[13px] leading-[1.75] text-[#e8ddd4]/60">{copy.complimentaryNote}</p>
-            <p className="mt-3 font-montserrat text-[13px] leading-[1.75] text-[#e8ddd4]/60">
-              {copy.complimentaryOtherNote}
-            </p>
-            <LocaleLink
-              href="/contact"
-              className={`${ctaSecondaryOutlineOnDark} mt-6 ${ctaInButtonRow} mx-auto inline-flex w-full max-w-xs sm:w-auto`}
-              data-bs-cta
-              data-cursor-hover
-            >
-              {copy.contactServiceCta}
-            </LocaleLink>
-          </div>
         </div>
       </section>
 
+      {/* 03 — How it works */}
       <section
-        ref={quoteRef}
-        className="closing-section relative z-50 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10 md:sticky md:top-0 md:will-change-transform"
+        className={`relative z-30 overflow-hidden bg-[#1a0210] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        aria-labelledby="personalisation-steps"
       >
-        <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
-          <div className="mx-auto max-w-[min(94vw,860px)]">
-            <p
-              className={`text-center font-rozha text-[clamp(20px,3.2vw,40px)] italic leading-[1.22] tracking-[-0.01em] text-[#e8d8c8] transition-opacity duration-700 ${
-                quoteVisible ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              {copy.closingQuote.split('\n').map((line, index, lines) => (
-                <span key={index} className="block">
-                  {line}
-                </span>
-              ))}
-            </p>
-          </div>
-          <div className="mx-auto my-6 h-px w-[60px] bg-[#e8ddd4]" />
-          <p className="text-center font-montserrat text-[10px] uppercase tracking-[0.2em] text-[#6a8090]">
-            BINT SAEED · ABU DHABI
-          </p>
-          <div className={`mt-8 ${ctaButtonRow} justify-center`} data-bs-cta-row data-bs-cta-row-layout="wrap">
-            <LocaleLink
-              href="/shop"
-              className={`${ctaPrimary} ${ctaInButtonRow}`}
-              data-bs-cta
-              data-cursor-hover
-              data-analytics-event="click_collection_from_personalisation"
-              data-analytics-section="personalisation-cta"
-            >
-              {copy.shopCta}
-            </LocaleLink>
-            <LocaleLink
-              href="/strands"
-              className={`${ctaSecondaryOutlineOnDark} ${ctaInButtonRow}`}
-              data-bs-cta
-              data-cursor-hover
-            >
-              {copy.strandsCta}
-            </LocaleLink>
-          </div>
+        <SectionDrift className="bg-[radial-gradient(ellipse_70%_55%_at_70%_30%,rgba(111,21,36,0.32)_0%,transparent_65%)]" />
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+          <Reveal>
+            <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
+              <span className="shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] text-[#e8d8c8]/70">
+                03
+              </span>
+              <div className="min-w-0">
+                <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] text-[#e8d8c8]">
+                  {copy.stepsEyebrow}
+                </p>
+                <h2
+                  id="personalisation-steps"
+                  className="font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] text-[#e8ddd4]"
+                >
+                  {copy.stepsTitle}
+                </h2>
+              </div>
+            </div>
+          </Reveal>
+
+          <ol className="mt-12 space-y-0 border-t border-[#e8ddd4]/18 md:mt-14">
+            {copy.steps.map((step, index) => (
+              <Reveal key={step.numeral} delay={0.06 + index * 0.07}>
+                <li
+                  className={`grid gap-4 border-b border-[#e8ddd4]/18 py-8 md:grid-cols-[4rem_1fr] md:gap-8 md:py-10 ${
+                    isRTL ? 'md:text-right' : ''
+                  }`}
+                >
+                  <p className="font-rozha text-[2.5rem] leading-none text-[#e8ddd4]/35 md:text-[2.75rem]">
+                    {step.numeral}
+                  </p>
+                  <div>
+                    <h3 className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.18em] text-[#e8d8c8]">
+                      {step.title}
+                    </h3>
+                    <p className="max-w-2xl font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78">
+                      {step.body}
+                    </p>
+                  </div>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+
+          <Reveal delay={0.18}>
+            <div className={`mt-12 flex flex-col items-start gap-5 md:mt-14 ${isRTL ? 'items-end' : ''}`}>
+              <LocaleLink
+                href="/shop?category=abayas"
+                className="inline-flex min-h-[48px] items-center justify-center gap-3 rounded-[4px] border border-[#e8ddd4]/45 bg-[#e8ddd4]/10 px-9 py-3.5 font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#e8ddd4] transition-colors hover:border-[#e8ddd4]/80 hover:bg-[#e8ddd4] hover:text-brand-darkRed"
+                data-bs-cta
+                data-cursor-hover
+                data-analytics-event="click_shop_abayas_from_personalisation"
+                data-analytics-section="personalisation-steps"
+              >
+                {copy.pickAbayaCta}
+                <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+              </LocaleLink>
+              <div className={`max-w-xl space-y-3 ${isRTL ? 'text-right' : 'text-left'}`}>
+                <p className="font-montserrat text-[13px] leading-[1.75] text-[#e8ddd4]/60">
+                  {copy.complimentaryNote}
+                </p>
+                <p className="font-montserrat text-[13px] leading-[1.75] text-[#e8ddd4]/60">
+                  {copy.complimentaryOtherNote}
+                </p>
+              </div>
+              <LocaleLink
+                href="/contact"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-[4px] border border-[#e8ddd4]/25 px-7 py-3 font-montserrat text-[11px] uppercase tracking-[0.18em] text-[#e8ddd4]/75 transition-colors hover:border-[#e8ddd4]/55 hover:text-[#e8ddd4]"
+                data-bs-cta
+                data-cursor-hover
+              >
+                {copy.contactServiceCta}
+              </LocaleLink>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <style jsx global>{`
-        .closing-section {
-          position: relative;
-        }
-
-        .closing-section::before,
-        .closing-section::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-        }
-
-        .closing-section {
-          min-height: auto;
-          height: auto;
-          padding: 120px 40px 100px;
-          background-image: url('/strands/charm-fabric-dark.webp');
-          background-size: cover;
-          background-position: center;
-        }
-
-        .closing-section::before {
-          z-index: 0;
-          background: rgba(15, 8, 10, 0.82);
-        }
-
-        .closing-section::after {
-          z-index: 1;
-          background: transparent;
-        }
-
-        @media (max-width: 767px) {
-          .closing-section {
-            padding: 64px 24px 72px;
-          }
-        }
-      `}</style>
+      <ExploreCollectionClosing
+        from="personalisation"
+        ctaAnalytics={{
+          'data-bs-cta': true,
+          'data-analytics-event': 'click_collection_from_personalisation',
+          'data-analytics-section': 'personalisation-footer-cta',
+        }}
+      />
     </div>
   )
 }
