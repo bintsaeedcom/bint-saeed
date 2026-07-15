@@ -78,12 +78,16 @@ function buildMobileNavColumns(
   return columns
     .map((col) => {
       const links = col.links.filter((link) => {
-        if (link.href === sectionHref) return false
         const linkPath = link.href.split('?')[0]
-        // Exact section index path (All Strands → /strands) — covered by View all
-        if (linkPath === sectionPath && !link.href.includes('?')) return false
-
         const labelNorm = link.label.trim().toLowerCase()
+        // Our Story shares /about with “View all” but stays in the list (desktop parity)
+        const keepAboutOurStory =
+          sectionPath === '/about' && linkPath === '/about' && labelNorm === 'our story'
+
+        if (link.href === sectionHref && !keepAboutOurStory) return false
+        // Exact section index path (All Strands → /strands) — covered by View all
+        if (linkPath === sectionPath && !link.href.includes('?') && !keepAboutOurStory) return false
+
         if (labelNorm === sectionNorm) return false
         if (labelNorm === `all ${sectionNorm}`) return false
         if (labelNorm === `shop all`) return false

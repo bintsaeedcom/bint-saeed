@@ -1,9 +1,8 @@
 'use client'
 
 import { useEffect, useRef, type ReactNode } from 'react'
-import Image from 'next/image'
-import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
+import ExploreCollectionClosing from '@/components/ExploreCollectionClosing'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { getCraftsmanshipCopy, type CraftsmanshipPhaseCopy } from '@/lib/content/craftsmanshipCopyI18n'
@@ -15,7 +14,6 @@ import {
   EDITORIAL_STACK_CONTENT_PAD,
   EDITORIAL_STACK_PAD,
 } from '@/lib/ui/editorialPageChrome'
-import { FiArrowRight } from 'react-icons/fi'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import {
   motion,
@@ -208,31 +206,6 @@ const PHASE_II_MEDIA = [
     kind: 'image' as const,
     src: MEDIA.goldKnottedChain.src,
     alt: MEDIA.goldKnottedChain.alt,
-  },
-] as const
-
-/** Portrait craft finishes — label centered between embroidery + stitch details. */
-const DETAIL_TRIO = [
-  {
-    src: '/craftsmanship/details/bint-saeed-abu-dhabi-luxury-abaya-gold-embroidery-jewel-cuff-detail.webp',
-    alt: withBrandAlt(
-      'Luxury abaya gold embroidery and jewel cuff detail on black fabric',
-      'en',
-    ),
-  },
-  {
-    src: '/craftsmanship/details/bint-saeed-abu-dhabi-hampstead-dress-woven-label-abu-dhabi-detail.webp',
-    alt: withBrandAlt(
-      'Bint Saeed woven brand label Abu Dhabi on black Hampstead dress interior',
-      'en',
-    ),
-  },
-  {
-    src: '/craftsmanship/details/bint-saeed-abu-dhabi-hampstead-dress-gold-al-talli-stitch-detail.webp',
-    alt: withBrandAlt(
-      'Gold Al Talli stitch detail on black Hampstead dress fabric',
-      'en',
-    ),
   },
 ] as const
 
@@ -524,25 +497,25 @@ export default function CraftsmanshipClient() {
         <SectionDrift className="bg-[radial-gradient(ellipse_70%_55%_at_70%_30%,rgba(111,21,36,0.32)_0%,transparent_65%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
           <div className="relative grid items-start gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-14">
-            {/* Photo wall — fills prose height on desktop, never taller */}
+            {/* Photo wall — full-width 2×3 on mobile; fills prose height on desktop */}
             <div
-              className={`lg:absolute lg:inset-y-0 lg:w-[calc(58.333%-1.75rem)] xl:w-[calc(58.333%-2rem)] ${
+              className={`w-full min-w-0 lg:absolute lg:inset-y-0 lg:w-[calc(58.333%-1.75rem)] xl:w-[calc(58.333%-2rem)] ${
                 isRTL ? 'lg:end-0' : 'lg:start-0'
               }`}
             >
               <div
-                className="grid grid-cols-2 grid-rows-3 gap-1.5 sm:gap-2 lg:h-full lg:min-h-0"
+                className="mx-auto grid w-full max-w-md grid-cols-2 gap-2 sm:max-w-lg sm:gap-2.5 lg:mx-0 lg:h-full lg:max-w-none lg:min-h-0 lg:gap-2"
                 aria-label="Bint Saeed atelier making process"
               >
                 {PHASE_II_MEDIA.map((item, index) => (
                   <Reveal
                     key={item.src}
                     delay={0.04 + index * 0.05}
-                    className="h-full min-h-0 min-w-0"
+                    className="min-h-0 min-w-0 w-full lg:h-full"
                   >
                     <Post
-                      ratio=""
-                      className="aspect-[4/5] h-full max-h-[9.75rem] sm:max-h-[11rem] lg:aspect-auto lg:max-h-none"
+                      ratio="aspect-[4/5]"
+                      className="h-auto w-full lg:aspect-auto lg:h-full"
                       tone="onDark"
                       invertParallax={index % 2 === 1}
                       intensity={18 + (index % 3) * 6}
@@ -605,70 +578,7 @@ export default function CraftsmanshipClient() {
         </div>
       </section>
 
-      <section
-        className={`relative z-[50] overflow-hidden pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-14 md:pb-24 ${EDITORIAL_STACK_CARD}`}
-        aria-label="Bint Saeed garment finishing details"
-      >
-        <Image
-          src="/craftsmanship/bint-saeed-abu-dhabi-explore-collection-organic-texture.png"
-          alt={withBrandAlt(
-            'Explore the Bint Saeed collection — editorial fabric texture background for luxury abayas',
-            language === 'ar' ? 'ar' : 'en',
-          )}
-          title="Explore the collection — Bint Saeed Abu Dhabi"
-          fill
-          sizes="100vw"
-          className="pointer-events-none object-cover object-center"
-          priority={false}
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(26,2,16,0.72)_0%,rgba(42,8,22,0.55)_42%,rgba(26,2,16,0.82)_100%)]"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(111,21,36,0.22)_0%,transparent_70%)]"
-          aria-hidden
-        />
-        <div className="relative mx-auto w-full min-w-0 max-w-[1280px] px-4 pb-8 sm:px-6 sm:pb-10 lg:px-12 md:pb-12">
-          <Reveal>
-            <p className="mb-7 text-center font-rozha text-[clamp(1.75rem,4vw,2.5rem)] tracking-[0.02em] text-[#e8ddd4] md:mb-8">
-              {copy.ctaHeading}
-            </p>
-          </Reveal>
-
-          <div className="mx-auto grid max-w-5xl grid-cols-3 gap-2 sm:gap-3 md:gap-4">
-            {DETAIL_TRIO.map((item, index) => (
-              <Reveal key={item.src} delay={index * 0.08} className="min-w-0">
-                <Post
-                  ratio="aspect-[3/4]"
-                  tone="onDark"
-                  parallax={false}
-                  className="bg-[#2a0a14]"
-                >
-                  <Still
-                    src={item.src}
-                    alt={item.alt}
-                    className="!object-contain object-center p-1 sm:p-1.5"
-                  />
-                </Post>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal delay={0.2}>
-            <div className={`mt-8 flex justify-center md:mt-10 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <LocaleLink
-                href="/shop?from=craftsmanship"
-                className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-[4px] border border-[#e8ddd4]/45 bg-[#e8ddd4]/10 px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-[#e8ddd4] shadow-[0_18px_48px_-28px_rgba(0,0,0,0.45)] backdrop-blur-[2px] transition-colors hover:border-[#e8ddd4]/80 hover:bg-[#e8ddd4] hover:text-brand-darkRed"
-                data-cursor-hover
-              >
-                {copy.discoverMore}
-                <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-              </LocaleLink>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <ExploreCollectionClosing from="craftsmanship" />
     </div>
   )
 }

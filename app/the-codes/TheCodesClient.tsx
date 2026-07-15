@@ -4,11 +4,10 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
-import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
+import ExploreCollectionClosing from '@/components/ExploreCollectionClosing'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
-import { getCraftsmanshipCopy } from '@/lib/content/craftsmanshipCopyI18n'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { buildTheCodesJsonLd } from '@/lib/seo/theCodesJsonLd'
@@ -21,10 +20,7 @@ import {
 import {
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
-  EDITORIAL_STACK_CARD,
 } from '@/lib/ui/editorialPageChrome'
-import { withBrandAlt } from '@/lib/products/imageAlt'
-import { FiArrowRight } from 'react-icons/fi'
 
 /** Editorial grid / corner brackets disabled site-wide — use border-s + border-b on copy only. */
 function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
@@ -34,31 +30,6 @@ function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' 
 function SectionStripes(_props?: { variant?: 'default' | 'hero' | 'soft' | 'bold' }) {
   return null
 }
-
-/** Same finishing trio as craftsmanship closing section. */
-const DETAIL_TRIO = [
-  {
-    src: '/craftsmanship/details/bint-saeed-abu-dhabi-luxury-abaya-gold-embroidery-jewel-cuff-detail.webp',
-    alt: withBrandAlt(
-      'Luxury abaya gold embroidery and jewel cuff detail on black fabric',
-      'en',
-    ),
-  },
-  {
-    src: '/craftsmanship/details/bint-saeed-abu-dhabi-hampstead-dress-woven-label-abu-dhabi-detail.webp',
-    alt: withBrandAlt(
-      'Bint Saeed woven brand label Abu Dhabi on black Hampstead dress interior',
-      'en',
-    ),
-  },
-  {
-    src: '/craftsmanship/details/bint-saeed-abu-dhabi-hampstead-dress-gold-al-talli-stitch-detail.webp',
-    alt: withBrandAlt(
-      'Gold Al Talli stitch detail on black Hampstead dress fabric',
-      'en',
-    ),
-  },
-] as const
 
 type CodeSection = CodesSectionContent
 
@@ -123,7 +94,6 @@ function scrollToHash(hash: string) {
 
 export default function TheCodesClient() {
   const { isRTL, language, t } = useLanguage()
-  const craftCopy = getCraftsmanshipCopy(language)
   const pathname = usePathname()
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
   const codesJsonLd = useMemo(() => buildTheCodesJsonLd(language), [language])
@@ -278,68 +248,14 @@ export default function TheCodesClient() {
         })}
       </div>
 
-      <section
-        className={`relative z-[50] overflow-hidden pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-14 md:pb-24 ${EDITORIAL_STACK_CARD}`}
-        aria-label="Bint Saeed garment finishing details"
-      >
-        <Image
-          src="/craftsmanship/bint-saeed-abu-dhabi-explore-collection-organic-texture.png"
-          alt={withBrandAlt(
-            'Explore the Bint Saeed collection — editorial fabric texture background for luxury abayas',
-            language === 'ar' ? 'ar' : 'en',
-          )}
-          title="Explore the collection — Bint Saeed Abu Dhabi"
-          fill
-          sizes="100vw"
-          className="pointer-events-none object-cover object-center"
-          priority={false}
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(26,2,16,0.72)_0%,rgba(42,8,22,0.55)_42%,rgba(26,2,16,0.82)_100%)]"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(111,21,36,0.22)_0%,transparent_70%)]"
-          aria-hidden
-        />
-        <div className="relative mx-auto w-full min-w-0 max-w-[1280px] px-4 pb-8 sm:px-6 sm:pb-10 md:pb-12 lg:px-12">
-          <p className="mb-7 text-center font-rozha text-[clamp(1.75rem,4vw,2.5rem)] tracking-[0.02em] text-[#e8ddd4] md:mb-8">
-            {craftCopy.ctaHeading}
-          </p>
-
-          <div className="mx-auto grid max-w-5xl grid-cols-3 gap-2 sm:gap-3 md:gap-4">
-            {DETAIL_TRIO.map((item) => (
-              <div
-                key={item.src}
-                className="group relative isolate aspect-[3/4] min-w-0 overflow-hidden border border-[#6f1524]/45 bg-[#2a0a14] shadow-[0_28px_64px_-36px_rgba(0,0,0,0.55)]"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-contain object-center p-1 brightness-[1.02] contrast-[1.03] sm:p-1.5"
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className={`mt-8 flex justify-center md:mt-10 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <LocaleLink
-              href="/shop?from=the-codes"
-              className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-[4px] border border-[#e8ddd4]/45 bg-[#e8ddd4]/10 px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-[#e8ddd4] shadow-[0_18px_48px_-28px_rgba(0,0,0,0.45)] backdrop-blur-[2px] transition-colors hover:border-[#e8ddd4]/80 hover:bg-[#e8ddd4] hover:text-brand-darkRed"
-              data-bs-cta
-              data-cursor-hover
-              data-analytics-event="click_view_collection_codes_page"
-              data-analytics-section="the-codes-footer-cta"
-            >
-              {craftCopy.discoverMore}
-              <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-            </LocaleLink>
-          </div>
-        </div>
-      </section>
+      <ExploreCollectionClosing
+        from="the-codes"
+        ctaAnalytics={{
+          'data-bs-cta': true,
+          'data-analytics-event': 'click_view_collection_codes_page',
+          'data-analytics-section': 'the-codes-footer-cta',
+        }}
+      />
     </main>
   )
 }

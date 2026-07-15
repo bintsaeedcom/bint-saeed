@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -103,8 +103,30 @@ function EditorialFilm({ src, poster, ariaLabel }: { src: string; poster: string
       preload="auto"
       disablePictureInPicture
       controls={false}
-      className="h-full w-full object-cover outline-none"
+      className="absolute inset-0 h-full w-full object-contain object-center outline-none"
     />
+  )
+}
+
+/** Instagram Reel frame — true 9:16 for all three About films; full frame visible (no crop). */
+function ReelFrame({
+  children,
+  tone = 'dark',
+}: {
+  children: ReactNode
+  tone?: 'dark' | 'light'
+}) {
+  const shell =
+    tone === 'dark'
+      ? 'border border-[#e8ddd4]/22 bg-[#12010c]'
+      : 'border border-[#6f1524]/18 bg-[#12010c]'
+
+  return (
+    <div className={`relative mx-auto w-full max-w-[min(100%,22.5rem)] sm:max-w-[26rem] lg:max-w-[28rem]`}>
+      <div className={`relative aspect-[9/16] w-full overflow-hidden ${shell} shadow-[0_24px_56px_-32px_rgba(0,0,0,0.55)]`}>
+        {children}
+      </div>
+    </div>
   )
 }
 
@@ -128,17 +150,17 @@ function ChapterProse({
 }) {
   const { isRTL } = useLanguage()
   const onDark = tone === 'onDark' || tone === 'onBurgundy'
-  const indexColor = onDark ? 'text-[#e8d8c8]/70' : 'text-brand-dustyBlue'
-  const labelColor = onDark ? 'text-[#e8d8c8]' : 'text-brand-dustyBlue'
-  const titleColor = onDark ? 'text-[#e8ddd4]' : 'text-brand-darkRed'
-  const bodyColor = onDark ? 'text-[#e8ddd4]/78' : 'text-brand-darkRed/[0.88]'
-  const ruleColor = onDark ? 'border-[#e8ddd4]/18' : 'border-[#6f1524]/35'
+  const indexColor = onDark ? 'text-[#e8d8c8]/85' : 'text-brand-dustyBlue'
+  const labelColor = onDark ? 'text-[#f0e6dc]' : 'text-brand-dustyBlue'
+  const titleColor = onDark ? 'text-[#f7f1ea]' : 'text-brand-darkRed'
+  const bodyColor = onDark ? 'text-[#f0e6dc]/92' : 'text-brand-darkRed/[0.88]'
+  const ruleColor = onDark ? 'border-[#e8ddd4]/28' : 'border-[#6f1524]/35'
   const stickyClass = sticky
     ? 'lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]'
     : ''
 
   return (
-    <div className={`max-w-xl ${stickyClass} ${isRTL ? 'ms-auto text-right' : ''}`}>
+    <div className={`relative z-10 max-w-xl ${stickyClass} ${isRTL ? 'ms-auto text-right' : ''}`}>
       <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
         <span className={`shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] ${indexColor}`}>
           {String(index).padStart(2, '0')}
@@ -223,7 +245,7 @@ export default function AboutPage() {
                 isRTL ? 'lg:order-1' : ''
               }`}
             >
-              <div className="relative isolate aspect-[9/16] max-h-[min(78vh,860px)] w-full overflow-hidden border border-white/25 bg-white/[0.08] shadow-[0_28px_70px_-34px_rgba(0,0,0,0.62),inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-xl sm:aspect-[4/5]">
+              <ReelFrame tone="dark">
                 <EditorialFilm
                   src={MANIFESTO_VIDEO}
                   poster={MANIFESTO_VIDEO_POSTER}
@@ -232,15 +254,7 @@ export default function AboutPage() {
                     language === 'ar' ? 'ar' : 'en',
                   )}
                 />
-                <div
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(255,255,255,0.12)_0%,transparent_38%,rgba(26,2,16,0.18)_100%)]"
-                  aria-hidden
-                />
-                <div
-                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/25 shadow-[inset_0_0_48px_rgba(255,255,255,0.08)]"
-                  aria-hidden
-                />
-              </div>
+              </ReelFrame>
             </div>
           </div>
         </div>
@@ -267,7 +281,7 @@ export default function AboutPage() {
                 isRTL ? 'lg:order-1' : ''
               }`}
             >
-              <div className="relative isolate aspect-[9/16] max-h-[min(78vh,860px)] w-full overflow-hidden border border-white/60 bg-white/30 shadow-[0_28px_70px_-36px_rgba(42,0,18,0.2),inset_0_1px_0_rgba(255,255,255,0.75)] backdrop-blur-2xl sm:aspect-[4/5]">
+              <ReelFrame tone="light">
                 <EditorialFilm
                   src={ORIGIN_VIDEO}
                   poster={ORIGIN_VIDEO_POSTER}
@@ -276,15 +290,7 @@ export default function AboutPage() {
                     language === 'ar' ? 'ar' : 'en',
                   )}
                 />
-                <div
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(255,255,255,0.28)_0%,transparent_42%,rgba(255,255,255,0.1)_100%)]"
-                  aria-hidden
-                />
-                <div
-                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/55 shadow-[inset_0_0_56px_rgba(255,255,255,0.18)]"
-                  aria-hidden
-                />
-              </div>
+              </ReelFrame>
             </div>
           </div>
         </div>
@@ -300,7 +306,7 @@ export default function AboutPage() {
                 isRTL ? 'lg:order-2' : ''
               }`}
             >
-              <div className="relative isolate aspect-[9/16] max-h-[min(78vh,860px)] w-full overflow-hidden border border-white/25 bg-white/[0.08] shadow-[0_28px_70px_-34px_rgba(0,0,0,0.62),inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-xl sm:aspect-[4/5]">
+              <ReelFrame tone="dark">
                 <EditorialFilm
                   src={HERITAGE_VIDEO}
                   poster={HERITAGE_VIDEO_POSTER}
@@ -309,15 +315,7 @@ export default function AboutPage() {
                     language === 'ar' ? 'ar' : 'en',
                   )}
                 />
-                <div
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(255,255,255,0.12)_0%,transparent_38%,rgba(26,2,16,0.18)_100%)]"
-                  aria-hidden
-                />
-                <div
-                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/25 shadow-[inset_0_0_48px_rgba(255,255,255,0.08)]"
-                  aria-hidden
-                />
-              </div>
+              </ReelFrame>
             </div>
             <div className={`lg:col-span-5 ${isRTL ? 'lg:order-1' : ''}`}>
               <ChapterProse
@@ -398,11 +396,12 @@ export default function AboutPage() {
           background-image: url('/strands/charm-fabric-dark.webp');
           background-position: center;
           background-size: cover;
+          opacity: 0.22;
         }
 
         .about-manifesto::after {
           z-index: 1;
-          background: rgba(26, 2, 16, 0.72);
+          background: rgba(26, 2, 16, 0.55);
         }
 
         .about-fabric-light::before,
@@ -418,11 +417,12 @@ export default function AboutPage() {
           background-image: url('/strands/charm-fabric-light.webp');
           background-position: center;
           background-size: cover;
+          opacity: 0.18;
         }
 
         .about-fabric-light::after {
           z-index: 1;
-          background: rgba(26, 2, 16, 0.75);
+          background: rgba(26, 2, 16, 0.58);
         }
 
         .closing-section {
