@@ -919,7 +919,7 @@ export default function CheckoutPage() {
                         setTamaraEmail(e.target.value)
                         clearBnplFieldError('email')
                       }}
-                      placeholder="Email"
+                      placeholder={language === 'ar' ? 'البريد الإلكتروني' : 'Email'}
                       type="email"
                       className={bnplFieldClass('email')}
                       autoComplete="email"
@@ -1085,7 +1085,7 @@ export default function CheckoutPage() {
                         setTamaraEmail(e.target.value)
                         clearBnplFieldError('email')
                       }}
-                      placeholder="Email"
+                      placeholder={language === 'ar' ? 'البريد الإلكتروني' : 'Email'}
                       type="email"
                       className={bnplFieldClass('email')}
                       autoComplete="email"

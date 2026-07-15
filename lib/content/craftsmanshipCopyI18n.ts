@@ -124,8 +124,8 @@ const CRAFTSMANSHIP_AR: CraftsmanshipCopy = {
     ],
   },
   ctaHeading: 'استكشفي المجموعة',
-  ctaButton: 'عرض المجموعة',
-  discoverMore: 'اكتشف المزيد',
+  ctaButton: 'استكشفي المجموعة',
+  discoverMore: 'اكتشفي المزيد',
 }
 
 const CRAFTSMANSHIP_MS: CraftsmanshipCopy = {

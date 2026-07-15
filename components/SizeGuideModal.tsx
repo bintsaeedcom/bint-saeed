@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import { FiX, FiExternalLink, FiCheck } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getSizeGuideModalCopy } from '@/lib/i18n/sizeGuideModalCopyI18n'
 import { sizeGuideTable as sizeData } from '@/lib/sizeGuideData'
 
 interface SizeGuideModalProps {
@@ -13,7 +14,8 @@ interface SizeGuideModalProps {
 }
 
 export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps) {
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const copy = getSizeGuideModalCopy(language)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
 
   return (
@@ -41,16 +43,17 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
             <div className={`sticky top-0 z-10 flex items-center justify-between border-b border-brand-stone/25 bg-[#f7f2ec] px-6 py-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <div>
                 <h2 className="font-rozha text-2xl text-brand-darkRed">
-                  {isRTL ? 'دليل المقاسات' : 'Size Guide'}
+                  {copy.title}
                 </h2>
                 <p className="font-montserrat text-xs tracking-[0.14em] text-brand-clayRed/65">
-                  {isRTL ? 'قياسات العباءة - قصة A' : 'A-Cut Abaya Measurements'}
+                  {copy.subtitle}
                 </p>
               </div>
               <button
                 onClick={onClose}
                 className="p-2 text-brand-clayRed/70 transition-colors hover:text-brand-darkRed"
                 data-cursor-hover
+                aria-label={copy.close}
               >
                 <FiX className="w-6 h-6" />
               </button>
@@ -61,7 +64,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
               {/* Size Selector */}
               <div className="mb-6">
                 <p className={`font-montserrat text-xs text-brand-clayRed/70 tracking-wide mb-3 ${isRTL ? 'text-right' : ''}`}>
-                  {isRTL ? 'اختاري مقاسك لتمييزه:' : 'Select your size to highlight:'}
+                  {copy.selectSizeHint}
                 </p>
                 <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
                   {[...sizeData.headers].map((size) => (
@@ -88,7 +91,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                   <thead>
                     <tr>
                       <th className={`bg-brand-stone/10 px-3 py-3.5 font-montserrat text-xs uppercase tracking-[0.12em] text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}>
-                        {isRTL ? 'القياس' : 'Measurement'}
+                        {copy.measurement}
                       </th>
                       {[...sizeData.headers].map((size) => (
                         <th
@@ -111,7 +114,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                       className={rowIndex % 2 === 0 ? 'bg-white/70' : 'bg-brand-stone/5'}
                       >
                         <td className={`py-3 px-3 font-montserrat text-sm text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
-                          {isRTL ? row.label.ar : row.label.en}
+                          {language === 'ar' ? row.label.ar : row.label.en}
                         </td>
                         {row.values.map((value, colIndex) => (
                           <td
@@ -134,10 +137,10 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
               {/* Notes */}
               <div className={`space-y-3 mb-6 ${isRTL ? 'text-right' : ''}`}>
                 <p className="font-montserrat text-xs text-brand-clayRed/70 tracking-wide">
-                  {isRTL ? '• جميع القياسات بالبوصة' : '• All measurements are in inches'}
+                  {copy.notesInches}
                 </p>
                 <p className="font-montserrat text-xs text-brand-clayRed/70 tracking-wide">
-                  {isRTL ? '• الطول حسب الطلب - أضيفي طولك المفضل في ملاحظات الطلب' : '• Length per request - Add your preferred length in order notes'}
+                  {copy.notesLength}
                 </p>
               </div>
 
@@ -148,7 +151,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                 className={`inline-flex items-center gap-2 px-6 py-3 bg-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] text-white transition-colors hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
                 data-cursor-hover
               >
-                {isRTL ? 'الدليل الكامل' : 'View Full Size Guide'}
+                {copy.viewFullGuide}
                 <FiExternalLink className="w-4 h-4" />
               </LocaleLink>
             </div>

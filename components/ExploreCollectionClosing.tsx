@@ -17,29 +17,37 @@ import { withBrandAlt } from '@/lib/products/imageAlt'
 import { EDITORIAL_STACK_CARD } from '@/lib/ui/editorialPageChrome'
 
 /** Portrait craft finishes — same trio as Craftsmanship closing. */
-const DETAIL_TRIO = [
-  {
-    src: '/craftsmanship/details/bint-saeed-abu-dhabi-luxury-abaya-gold-embroidery-jewel-cuff-detail.webp',
-    alt: withBrandAlt(
-      'Luxury abaya gold embroidery and jewel cuff detail on black fabric',
-      'en',
-    ),
-  },
-  {
-    src: '/craftsmanship/details/bint-saeed-abu-dhabi-hampstead-dress-woven-label-abu-dhabi-detail.webp',
-    alt: withBrandAlt(
-      'Bint Saeed woven brand label Abu Dhabi on black Hampstead dress interior',
-      'en',
-    ),
-  },
-  {
-    src: '/craftsmanship/details/bint-saeed-abu-dhabi-hampstead-dress-gold-al-talli-stitch-detail.webp',
-    alt: withBrandAlt(
-      'Gold Al Talli stitch detail on black Hampstead dress fabric',
-      'en',
-    ),
-  },
-] as const
+function detailTrio(locale: 'en' | 'ar') {
+  return [
+    {
+      src: '/craftsmanship/details/bint-saeed-abu-dhabi-luxury-abaya-gold-embroidery-jewel-cuff-detail.webp',
+      alt: withBrandAlt(
+        locale === 'ar'
+          ? 'تطريز ذهبي وتفصيل كم مرصّع على قماش عباءة فاخرة سوداء'
+          : 'Luxury abaya gold embroidery and jewel cuff detail on black fabric',
+        locale,
+      ),
+    },
+    {
+      src: '/craftsmanship/details/bint-saeed-abu-dhabi-hampstead-dress-woven-label-abu-dhabi-detail.webp',
+      alt: withBrandAlt(
+        locale === 'ar'
+          ? 'ملصق Bint Saeed المنسوج — أبوظبي داخل فستان Hampstead الأسود'
+          : 'Bint Saeed woven brand label Abu Dhabi on black Hampstead dress interior',
+        locale,
+      ),
+    },
+    {
+      src: '/craftsmanship/details/bint-saeed-abu-dhabi-hampstead-dress-gold-al-talli-stitch-detail.webp',
+      alt: withBrandAlt(
+        locale === 'ar'
+          ? 'تفصيل تطريز Al Talli الذهبي على قماش فستان Hampstead الأسود'
+          : 'Gold Al Talli stitch detail on black Hampstead dress fabric',
+        locale,
+      ),
+    },
+  ] as const
+}
 
 function Reveal({
   children,
@@ -137,11 +145,16 @@ export default function ExploreCollectionClosing({
 }: ExploreCollectionClosingProps) {
   const { language, isRTL } = useLanguage()
   const copy = getCraftsmanshipCopy(language)
+  const details = detailTrio(language === 'ar' ? 'ar' : 'en')
 
   return (
     <section
       className={`relative z-[50] overflow-hidden pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-14 md:pb-24 ${EDITORIAL_STACK_CARD}`}
-      aria-label="Bint Saeed garment finishing details"
+      aria-label={
+        language === 'ar'
+          ? 'تفاصيل إنهاء قطع Bint Saeed'
+          : 'Bint Saeed garment finishing details'
+      }
     >
       <Image
         src="/craftsmanship/bint-saeed-abu-dhabi-explore-collection-organic-texture.webp"
@@ -171,7 +184,7 @@ export default function ExploreCollectionClosing({
         </Reveal>
 
         <div className="mx-auto grid max-w-5xl grid-cols-3 gap-2 sm:gap-3 md:gap-4">
-          {DETAIL_TRIO.map((item, index) => (
+          {details.map((item, index) => (
             <Reveal key={item.src} delay={index * 0.08} className="min-w-0">
               <Post className="bg-[#2a0a14]">
                 <Still

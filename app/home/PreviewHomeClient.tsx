@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect, useLayoutEffect } from 'react'
+import { useRef, useState, useEffect, useLayoutEffect, useMemo } from 'react'
 import {
   motion,
   useScroll,
@@ -18,6 +18,7 @@ import Image from 'next/image'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getHeaderNavCopy } from '@/lib/i18n/headerNavI18n'
 import { getHomeEditorialCopy } from '@/lib/i18n/homeEditorialCopyI18n'
 import { localizedColorName } from '@/lib/products/imageAltI18n'
 import { products as staticProducts } from '@/data/products'
@@ -166,6 +167,7 @@ function CollectionCardVisual({
   images: readonly string[]
   label: string
 }) {
+  const { language } = useLanguage()
   const [isHovered, setIsHovered] = useState(false)
   const activeIndex = isHovered && images.length > 1 ? 1 : 0
 
@@ -180,7 +182,7 @@ function CollectionCardVisual({
           <Image
             key={src}
             src={collectionImageSrc(src)}
-            alt={withBrandAlt(`Bint Saeed ${label}`)}
+            alt={withBrandAlt(`Bint Saeed ${label}`, language)}
             fill
             sizes="(max-width: 768px) 50vw, 25vw"
             unoptimized={isWebshopPicture(src)}
@@ -469,7 +471,7 @@ function CharmHeroFeatureSection() {
             <div className="absolute inset-0 opacity-25">
               <Image
                 src={HOME_STRANDS_FEATURE_IMAGES.panelBg}
-                alt={withBrandAlt('Bint Saeed strand collection')}
+                alt={withBrandAlt(copy.mediaAlts.strandsCollection, language)}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover object-center"
@@ -528,7 +530,7 @@ function CharmHeroFeatureSection() {
               <div className="absolute -inset-[14%]">
                 <Image
                   src={HOME_STRANDS_FEATURE_IMAGES.hero}
-                  alt={withBrandAlt('Bint Saeed strand collection')}
+                  alt={withBrandAlt(copy.mediaAlts.strandsCollection, language)}
                   fill
                   sizes="(max-width: 1024px) 100vw, 58vw"
                   className="object-cover object-[50%_42%] transition-transform duration-700 group-hover:scale-[1.02]"
@@ -558,7 +560,7 @@ function CharmHeroFeatureSectionMirror() {
           <div className="relative z-[1] h-full min-h-[68vh]">
             <Image
               src={HOME_PERSONALISATION_FEATURE_IMAGE}
-              alt={withBrandAlt('Bint Saeed personalised hidden inner label')}
+              alt={withBrandAlt(copy.mediaAlts.personalisationLabel, language)}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
@@ -611,7 +613,7 @@ function CampaignPanoramaSection() {
         <div className="relative aspect-[16/6] min-h-[220px] w-full overflow-hidden bg-brand-stone/15 md:min-h-[280px] lg:min-h-[360px]">
           <Image
             src={HOME_MEDIA.editorialGazelles}
-            alt={withBrandAlt('Bint Saeed campaign panorama — Abu Dhabi gazelles')}
+            alt={withBrandAlt(copy.mediaAlts.campaignGazelles, language)}
             fill
             sizes="100vw"
             className="object-cover object-center"
@@ -754,34 +756,29 @@ function QuickShopCardGallery({
   )
 }
 
-const CATEGORY_STRIP = [
+const CATEGORY_STRIP_KEYS = [
   {
     key: 'Abayas',
-    label: 'Abayas',
     href: '/shop?category=abayas',
     image: '/collection-section/bint-saeed-collection-editorial-still-01.webp',
   },
   {
     key: 'Kaftans',
-    label: 'Kaftans',
     href: '/shop?category=kaftans',
     image: '/collection-section/bint-saeed-collection-editorial-still-01.webp',
   },
   {
     key: 'Sets',
-    label: 'Sets',
     href: '/shop?category=sets',
     image: '/collection-section/bint-saeed-collection-editorial-still-02.webp',
   },
   {
     key: 'Accessories',
-    label: 'Accessories',
     href: '/accessories',
     image: '/home/collection-chapter/bint-saeed-home-collection-accessories-malachite-lifestyle.webp',
   },
   {
     key: 'Personalisation',
-    label: 'Personalisation',
     href: '/personalisation',
     image: HOME_MEDIA.personalisationHiddenPocket,
   },
@@ -790,7 +787,27 @@ const CATEGORY_STRIP = [
 function CategoryNavigationStrip() {
   const { language, isRTL } = useLanguage()
   const copy = getHomeEditorialCopy(language)
+  const hn = useMemo(() => getHeaderNavCopy(language), [language])
+  const ui = commerceUi(language)
   const [active, setActive] = useState(0)
+
+  const categoryStrip = useMemo(
+    () =>
+      CATEGORY_STRIP_KEYS.map((item) => {
+        const label =
+          item.key === 'Abayas'
+            ? ui.shop.categories.Abayas
+            : item.key === 'Kaftans'
+              ? ui.shop.categories.Kaftans
+              : item.key === 'Sets'
+                ? ui.shop.categories.Sets
+                : item.key === 'Accessories'
+                  ? hn.accessories
+                  : hn.personalisation
+        return { ...item, label }
+      }),
+    [hn.accessories, hn.personalisation, ui.shop.categories],
+  )
 
   const pricesByCategory = staticProducts.reduce<Record<string, number[]>>((acc, product) => {
     const key = product.category
@@ -820,7 +837,7 @@ function CategoryNavigationStrip() {
     },
   }
 
-  const activeItem = CATEGORY_STRIP[active]!
+  const activeItem = categoryStrip[active]!
 
   return (
     <section className="relative bg-white pb-10 md:pb-12">
@@ -829,7 +846,7 @@ function CategoryNavigationStrip() {
           <div className="relative h-[12.5rem] w-full sm:h-[15rem] md:h-[17rem]">
             <Image
               src={activeItem.image}
-              alt={withBrandAlt(`${activeItem.label} preview`)}
+              alt={withBrandAlt(copy.mediaAlts.categoryPreview(activeItem.label), language)}
               fill
               sizes="(max-width: 1024px) 100vw, 1200px"
               className="object-cover object-center transition-all duration-500"
@@ -843,7 +860,7 @@ function CategoryNavigationStrip() {
         </div>
 
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
-          {CATEGORY_STRIP.map((item, idx) => {
+          {categoryStrip.map((item, idx) => {
             const meta = categoryMeta[item.key] ?? { priceLabel: '' }
             const selected = idx === active
             return (
@@ -1114,7 +1131,7 @@ function HeroSection() {
         {/* Mobile + tablet — portrait burgundy collection (WebP; JPG kept beside it) */}
         <Image
           src={HOME_MEDIA.heroMobile}
-          alt={withBrandAlt('Bint Saeed luxury abayas in burgundy and black, editorial group photograph')}
+          alt={withBrandAlt(copy.mediaAlts.heroMobile, language)}
           fill
           className="object-cover object-[center_28%] scale-[1.02] saturate-[0.92] contrast-[1.03] brightness-[0.96] lg:hidden"
           sizes="(max-width: 1023px) 100vw, 1px"
@@ -1123,7 +1140,7 @@ function HeroSection() {
         {/* Desktop — editorial abayas (WebP; JPG + legacy /IMG_2821.JPG kept) */}
         <Image
           src={HOME_MEDIA.heroDesktop}
-          alt={withBrandAlt('Bint Saeed luxury abayas, editorial photograph')}
+          alt={withBrandAlt(copy.mediaAlts.heroDesktop, language)}
           fill
           className="hidden object-cover object-[center_28%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97] lg:block"
           sizes="100vw"
@@ -1223,7 +1240,7 @@ function EditorialIntro() {
               <div className="absolute inset-0">
                 <Image
                   src={HOME_MEDIA.editorialManifestoPortrait}
-                  alt={withBrandAlt('Bint Saeed — from Abu Dhabi to the world')}
+                  alt={withBrandAlt(copy.mediaAlts.manifestoPortrait, language)}
                   fill
                   className="object-cover object-[center_22%]"
                   sizes="(max-width: 1024px) 100vw, 560px"
@@ -1298,44 +1315,50 @@ function MagazineGrid() {
   const isInView = useInView(ref, { margin: '-10%', once: true })
   const { t, language, isRTL } = useLanguage()
   const copy = getHomeEditorialCopy(language)
-  const collectionCards = [
-    {
-      images: [
-        collectionChapterImage('bint-saeed-home-collection-abayas-01.webp'),
-        collectionChapterImage('bint-saeed-home-collection-abayas-02.webp'),
-      ],
-      label: 'Abayas',
-      href: '/shop?category=abayas',
-      section: 'home-collection-card-abayas',
-    },
-    {
-      images: [
-        collectionChapterImage('bint-saeed-home-collection-kaftans-01.webp'),
-        collectionChapterImage('bint-saeed-home-collection-kaftans-02.webp'),
-      ],
-      label: 'Kaftans',
-      href: '/shop?category=kaftans',
-      section: 'home-collection-card-kaftans',
-    },
-    {
-      images: [
-        collectionChapterImage('bint-saeed-home-collection-sets-01.webp'),
-        collectionChapterImage('bint-saeed-home-collection-sets-02.webp'),
-      ],
-      label: 'Sets',
-      href: '/shop?category=sets',
-      section: 'home-collection-card-sets',
-    },
-    {
-      images: [
-        collectionChapterImage('bint-saeed-home-collection-accessories-malachite-lifestyle.webp'),
-        collectionChapterImage('bint-saeed-home-collection-accessories-malachite-detail.webp'),
-      ],
-      label: 'Accessories',
-      href: '/accessories',
-      section: 'home-collection-card-accessories',
-    },
-  ] as const
+  const hn = useMemo(() => getHeaderNavCopy(language), [language])
+  const ui = commerceUi(language)
+  const collectionCards = useMemo(
+    () =>
+      [
+        {
+          images: [
+            collectionChapterImage('bint-saeed-home-collection-abayas-01.webp'),
+            collectionChapterImage('bint-saeed-home-collection-abayas-02.webp'),
+          ],
+          label: ui.shop.categories.Abayas,
+          href: '/shop?category=abayas',
+          section: 'home-collection-card-abayas',
+        },
+        {
+          images: [
+            collectionChapterImage('bint-saeed-home-collection-kaftans-01.webp'),
+            collectionChapterImage('bint-saeed-home-collection-kaftans-02.webp'),
+          ],
+          label: ui.shop.categories.Kaftans,
+          href: '/shop?category=kaftans',
+          section: 'home-collection-card-kaftans',
+        },
+        {
+          images: [
+            collectionChapterImage('bint-saeed-home-collection-sets-01.webp'),
+            collectionChapterImage('bint-saeed-home-collection-sets-02.webp'),
+          ],
+          label: ui.shop.categories.Sets,
+          href: '/shop?category=sets',
+          section: 'home-collection-card-sets',
+        },
+        {
+          images: [
+            collectionChapterImage('bint-saeed-home-collection-accessories-malachite-lifestyle.webp'),
+            collectionChapterImage('bint-saeed-home-collection-accessories-malachite-detail.webp'),
+          ],
+          label: hn.accessories,
+          href: '/accessories',
+          section: 'home-collection-card-accessories',
+        },
+      ] as const,
+    [hn.accessories, ui.shop.categories.Abayas, ui.shop.categories.Kaftans, ui.shop.categories.Sets],
+  )
 
   return (
     <section
@@ -1407,18 +1430,10 @@ function EditorialSplit() {
     homeCodesImage(CODES_IMAGE_FILES.alTalli),
     homeCodesImage(CODES_IMAGE_FILES.naturalStoneBeads),
   ] as const
-  const storyCodeAlts = [
-    withBrandAlt('Bint Saeed luxury house monogram — house code'),
-    withBrandAlt('Al Khous palm-frond weaving Emirati heritage — house code'),
-    withBrandAlt('Knotted Lines of Lineage gold motif — house code'),
-    withBrandAlt('Al Ain Rosette carnelian stone motif — house code'),
-    withBrandAlt('Traditional Al Talli Emirati heritage embroidery — house code'),
-    withBrandAlt('Natural stone abaya strands — Emirati heritage house code'),
-  ] as const
   const storyCodes = copy.storyCodes.map((code, index) => ({
     ...code,
     image: storyCodeImages[index]!,
-    alt: storyCodeAlts[index]!,
+    alt: withBrandAlt(code.imageAlt, language),
     href: HOME_STORY_CODE_HREFS[index] ?? '/the-codes',
   }))
 

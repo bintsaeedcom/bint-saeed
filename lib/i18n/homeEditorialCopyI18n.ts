@@ -181,6 +181,18 @@ export type HomeStrandSwatch = {
 export type HomeStoryCode = {
   title: string
   subtitle: string
+  /** Base image alt (without brand-geo suffix); pass through withBrandAlt(locale). */
+  imageAlt: string
+}
+
+export type HomeMediaAlts = {
+  strandsCollection: string
+  personalisationLabel: string
+  campaignGazelles: string
+  heroMobile: string
+  heroDesktop: string
+  manifestoPortrait: string
+  categoryPreview: (label: string) => string
 }
 
 export type HomeEditorialCopy = {
@@ -216,6 +228,7 @@ export type HomeEditorialCopy = {
   houseCodesHeading: string
   discoverCodesCta: string
   storyCodes: HomeStoryCode[]
+  mediaAlts: HomeMediaAlts
   createdForYouEyebrow: string
   createdForYouHeading: string
   createdForYouBody: string
@@ -294,13 +307,46 @@ const HOME_EN: HomeEditorialCopy = {
   houseCodesHeading: 'THE HOUSE CODES',
   discoverCodesCta: 'Discover the Codes',
   storyCodes: [
-    { title: STORY_CODES_TITLES[0], subtitle: 'Signature mark' },
-    { title: STORY_CODES_TITLES[1], subtitle: 'Palm craftsmanship' },
-    { title: STORY_CODES_TITLES[2], subtitle: 'Line & continuity' },
-    { title: STORY_CODES_TITLES[3], subtitle: 'Regional motif' },
-    { title: STORY_CODES_TITLES[4], subtitle: 'Gold threadwork' },
-    { title: STORY_CODES_TITLES[5], subtitle: 'Beaded lines' },
+    {
+      title: STORY_CODES_TITLES[0],
+      subtitle: 'Signature mark',
+      imageAlt: 'Bint Saeed luxury house monogram — house code',
+    },
+    {
+      title: STORY_CODES_TITLES[1],
+      subtitle: 'Palm craftsmanship',
+      imageAlt: 'Al Khous palm-frond weaving Emirati heritage — house code',
+    },
+    {
+      title: STORY_CODES_TITLES[2],
+      subtitle: 'Line & continuity',
+      imageAlt: 'Knotted Lines of Lineage gold motif — house code',
+    },
+    {
+      title: STORY_CODES_TITLES[3],
+      subtitle: 'Regional motif',
+      imageAlt: 'Al Ain Rosette carnelian stone motif — house code',
+    },
+    {
+      title: STORY_CODES_TITLES[4],
+      subtitle: 'Gold threadwork',
+      imageAlt: 'Traditional Al Talli Emirati heritage embroidery — house code',
+    },
+    {
+      title: STORY_CODES_TITLES[5],
+      subtitle: 'Beaded lines',
+      imageAlt: 'Natural stone abaya strands — Emirati heritage house code',
+    },
   ],
+  mediaAlts: {
+    strandsCollection: 'Bint Saeed strand collection',
+    personalisationLabel: 'Bint Saeed personalised hidden inner label',
+    campaignGazelles: 'Bint Saeed campaign panorama — Abu Dhabi gazelles',
+    heroMobile: 'Bint Saeed luxury abayas in burgundy and black, editorial group photograph',
+    heroDesktop: 'Bint Saeed luxury abayas, editorial photograph',
+    manifestoPortrait: 'Bint Saeed — from Abu Dhabi to the world',
+    categoryPreview: (label) => `${label} preview`,
+  },
   createdForYouEyebrow: 'Carried Close',
   createdForYouHeading: 'PERSONALISATION',
   createdForYouBody:
@@ -364,13 +410,46 @@ const HOME_AR: HomeEditorialCopy = {
   houseCodesHeading: 'رموز الدار',
   discoverCodesCta: 'اكتشفي الرموز',
   storyCodes: [
-    { title: STORY_CODES_TITLES[0], subtitle: 'العلامة المميزة' },
-    { title: STORY_CODES_TITLES[1], subtitle: 'حرفة النخيل' },
-    { title: STORY_CODES_TITLES[2], subtitle: 'الخط والاستمرارية' },
-    { title: STORY_CODES_TITLES[3], subtitle: 'زخرفة إقليمية' },
-    { title: STORY_CODES_TITLES[4], subtitle: 'تطريز بالخيوط الذهبية' },
-    { title: STORY_CODES_TITLES[5], subtitle: 'خطوط مُرصّعة' },
+    {
+      title: 'الشعار',
+      subtitle: 'العلامة المميزة',
+      imageAlt: 'شعار دار Bint Saeed الفاخرة — علامة هوية متشابكة ورمز تصميم من أبوظبي',
+    },
+    {
+      title: STORY_CODES_TITLES[1],
+      subtitle: 'حرفة النخيل',
+      imageAlt: 'نسيج الخوص من سعف النخيل — حرفة تراثية إماراتية ورمز من رموز دار Bint Saeed',
+    },
+    {
+      title: STORY_CODES_TITLES[2],
+      subtitle: 'الخط والاستمرارية',
+      imageAlt: 'زخرفة Knotted Lines الذهبية على القماش — رمز الاستمرارية في دار Bint Saeed',
+    },
+    {
+      title: STORY_CODES_TITLES[3],
+      subtitle: 'زخرفة إقليمية',
+      imageAlt: 'زخرفة Al Ain Rosette من العقيق — رمز تراثي إماراتي من أبوظبي',
+    },
+    {
+      title: STORY_CODES_TITLES[4],
+      subtitle: 'تطريز بالخيوط الذهبية',
+      imageAlt: 'تطريز تراثي إماراتي Al Talli بخيوط ذهبية — رمز من رموز دار Bint Saeed',
+    },
+    {
+      title: STORY_CODES_TITLES[5],
+      subtitle: 'خطوط مُرصّعة',
+      imageAlt: 'خيوط عباءة من أحجار طبيعية — رمز دار قابل للارتداء من الخيط والتوازن، Bint Saeed أبوظبي',
+    },
   ],
+  mediaAlts: {
+    strandsCollection: 'مجموعة خيوط Bint Saeed',
+    personalisationLabel: 'ملصق داخلي مخفي ومخصّص من Bint Saeed',
+    campaignGazelles: 'بانوراما حملة Bint Saeed — غزلان أبوظبي',
+    heroMobile: 'عباءات Bint Saeed الفاخرة بالعنابي والأسود، صورة تحريرية جماعية',
+    heroDesktop: 'عباءات Bint Saeed الفاخرة، صورة تحريرية',
+    manifestoPortrait: 'Bint Saeed — من أبوظبي إلى العالم',
+    categoryPreview: (label) => `معاينة ${label}`,
+  },
   createdForYouEyebrow: 'تُحمل قريباً',
   createdForYouHeading: 'التخصيص',
   createdForYouBody:

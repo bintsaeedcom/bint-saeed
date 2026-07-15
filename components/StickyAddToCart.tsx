@@ -8,6 +8,7 @@ import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { localizedColorName } from '@/lib/products/imageAltI18n'
 import { getProductHref } from '@/lib/products/links'
 import toast from 'react-hot-toast'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
@@ -147,10 +148,17 @@ export default function StickyAddToCart({
     setTimeout(() => setIsAdded(false), 2000)
   }
 
+  const localizedColour = selectedColor
+    ? selectedColor === 'One Size'
+      ? ui.accessories.oneSize
+      : localizedColorName(selectedColor, language)
+    : ''
+  const sizeLabel =
+    selectedSize === 'One Size' ? ui.accessories.oneSize : selectedSize
   const variantMeta =
-    selectedSize && selectedColor
-      ? `${selectedSize} · ${selectedColor}`
-      : selectedSize || selectedColor || ui.stickyAddToCart.selectSizeAndColour
+    sizeLabel && localizedColour
+      ? `${sizeLabel} · ${localizedColour}`
+      : sizeLabel || localizedColour || ui.stickyAddToCart.selectSizeAndColour
 
   if (!mounted) return null
 

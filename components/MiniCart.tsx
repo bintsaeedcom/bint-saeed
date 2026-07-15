@@ -14,6 +14,7 @@ import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getCartAriaCopy } from '@/lib/i18n/cartAriaI18n'
 import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
 import { filterOffCurrentPage } from '@/lib/discover/offCurrentPage'
 import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
@@ -77,6 +78,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const [recommendationSeed, setRecommendationSeed] = useState(1)
   const wasOpenRef = useRef(false)
   const ui = commerceUi(language)
+  const cartAria = getCartAriaCopy(language)
   const emptyExits = useMemo(() => {
     const candidates = [
       { href: '/accessories', label: ui.common.accessories, strandsLock: false },
@@ -355,7 +357,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                               }
                               className={`p-2.5 transition-colors hover:bg-white/12 ${glassTextBodyOnDark}`}
                               data-cursor-hover
-                              aria-label="Decrease quantity"
+                              aria-label={cartAria.decreaseQuantity}
                             >
                               <FiMinus className="h-3.5 w-3.5" />
                             </button>
@@ -378,7 +380,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                               }
                               className={`p-2.5 transition-colors hover:bg-white/12 ${glassTextBodyOnDark}`}
                               data-cursor-hover
-                              aria-label="Increase quantity"
+                              aria-label={cartAria.increaseQuantity}
                             >
                               <FiPlus className="h-3.5 w-3.5" />
                             </button>
@@ -396,7 +398,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                             }
                             className={`rounded-full p-2 transition-colors hover:bg-white/10 ${glassTextMutedOnDark} hover:text-white`}
                             data-cursor-hover
-                            aria-label="Remove item"
+                            aria-label={cartAria.removeItem}
                           >
                             <FiTrash2 className="h-4 w-4" />
                           </button>

@@ -252,7 +252,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               onClick={onClose}
               className={`absolute top-3 z-20 rounded-full bg-white/70 p-2.5 text-[#5c5356] shadow-sm transition-colors hover:bg-white hover:text-brand-darkRed ${isRTL ? 'left-3' : 'right-3'}`}
               data-cursor-hover
-              aria-label="Close"
+              aria-label={ui.common.close}
             >
               <FiX className="h-5 w-5" />
             </button>
@@ -277,7 +277,8 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                 <div className={`min-w-0 flex-1 pe-8 ${isRTL ? 'text-right' : ''}`}>
                   {product.category && (
                     <span className="mb-1 block truncate font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
-                      {product.category}
+                      {ui.shop.categories[product.category as keyof typeof ui.shop.categories] ??
+                        product.category}
                     </span>
                   )}
                   <h3

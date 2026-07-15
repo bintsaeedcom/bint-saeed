@@ -44,6 +44,7 @@ import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { productPageUi } from '@/lib/i18n/productPageUi'
+import { getPdpGalleryAriaCopy } from '@/lib/i18n/pdpGalleryAriaI18n'
 import { getProductHref, getProductSlug, resolveProductIdentifier } from '@/lib/products/links'
 import {
   getPdpSizeOptions,
@@ -176,6 +177,7 @@ export default function ProductPage() {
   const addItem = useCartStore((state) => state.addItem)
   const { isRTL, language, t } = useLanguage()
   const ui = productPageUi(language)
+  const galleryAria = getPdpGalleryAriaCopy(language)
   const { formatPrice, formatAmount, convertPrice, currency } = useCurrency()
 
   const relatedStyles = useMemo(
@@ -706,7 +708,7 @@ export default function ProductPage() {
                             image_index: index,
                           })
                         }}
-                        aria-label={`Show image ${index + 1}`}
+                        aria-label={galleryAria.showImage(index + 1)}
                         data-cursor-hover
                       >
                         {isVideoFile(image) ? (
@@ -783,8 +785,8 @@ export default function ProductPage() {
                           tabIndex={isVideoFile(image) ? -1 : 0}
                           aria-label={
                             isVideoFile(image)
-                              ? `${displayName} — video ${index + 1}`
-                              : `${displayName} — open image ${index + 1} in lightbox`
+                              ? galleryAria.videoSlide(displayName, index + 1)
+                              : galleryAria.openImageLightbox(displayName, index + 1)
                           }
                         >
                           {isVideoFile(image) ? (
@@ -839,7 +841,7 @@ export default function ProductPage() {
                           type="button"
                           className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                           onClick={() => mainSwiperRef.current?.slideTo(index)}
-                          aria-label={`Show image ${index + 1}`}
+                          aria-label={galleryAria.showImage(index + 1)}
                           data-cursor-hover
                         >
                           {isVideoFile(image) ? (
@@ -1204,7 +1206,7 @@ export default function ProductPage() {
         index={lightboxIndex}
         onIndexChange={setLightboxIndex}
         onClose={() => setIsLightboxOpen(false)}
-        closeLabel={isRTL ? 'إغلاق المعرض' : 'Close gallery'}
+        closeLabel={galleryAria.closeGallery}
       />
 
       {/* Size Guide Modal */}

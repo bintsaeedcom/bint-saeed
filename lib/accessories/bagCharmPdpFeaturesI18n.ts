@@ -60,7 +60,7 @@ const FEATURES_BY_LOCALE: Record<AppLocale, FeatureTemplate> = {
   },
   ar: {
     stoneLabel: 'يشم فوشي',
-    houseCode: 'Bint Saeed Signature House Codes: Al Ain Rosette',
+    houseCode: 'رموز الدار التوقيعية من Bint Saeed: روزيت العين',
     craftedIn: 'مصنوعة يدوياً في أبوظبي، الإمارات العربية المتحدة',
     handAssembled: 'تعليقة حقيبة من الأحجار الطبيعية مجمّعة يدوياً',
     length: 'الطول التقريبي: 15 سم / 5.9 إنش',

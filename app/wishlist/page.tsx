@@ -97,7 +97,7 @@ export default function WishlistPage() {
                     </LocaleLink>
                     <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
                       <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
-                        {item.category}
+                        {ui.shop.categories[item.category as keyof typeof ui.shop.categories] ?? item.category}
                       </p>
                       <LocaleLink href={href} data-cursor-hover>
                         <h2 data-product-name="true" className="mt-1 font-rozha text-xl text-brand-darkRed hover:text-brand-dustyBlue">

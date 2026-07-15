@@ -24,6 +24,7 @@ import {
   EDITORIAL_STACK_CONTENT_PAD,
   EDITORIAL_STACK_PAD,
 } from '@/lib/ui/editorialPageChrome'
+import { ctaPrimaryWithGap } from '@/lib/ui/ctaClasses'
 
 const HERO_IMAGE = ABOUT_SECTION_HERO_IMAGES.personalisation
 const POCKET_DETAIL_IMAGE =
@@ -304,12 +305,12 @@ export default function PersonalisationPage() {
             className="object-cover object-center"
             priority={false}
           />
-          <div className="absolute inset-0 bg-[#1a0210]/58" />
+          <div className="absolute inset-0 bg-[#1a0210]/72" />
         </div>
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
           <Reveal>
             <div className={isRTL ? 'text-right' : 'text-left'}>
-              <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] text-[#e8d8c8]">
+              <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
                 {copy.stepsEyebrow}
               </p>
               <h2
@@ -352,7 +353,7 @@ export default function PersonalisationPage() {
               </p>
               <LocaleLink
                 href="/shop?category=abayas"
-                className="inline-flex min-h-[48px] items-center justify-center gap-3 rounded-[4px] border border-[#e8ddd4]/45 bg-[#e8ddd4]/10 px-9 py-3.5 font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#e8ddd4] transition-colors hover:border-[#e8ddd4]/80 hover:bg-[#e8ddd4] hover:text-brand-darkRed"
+                className={ctaPrimaryWithGap}
                 data-bs-cta
                 data-cursor-hover
                 data-analytics-event="click_shop_abayas_from_personalisation"
@@ -384,7 +385,7 @@ export default function PersonalisationPage() {
             <div className={`mt-10 ${isRTL ? 'flex justify-end' : ''}`}>
               <LocaleLink
                 href="/shop?category=abayas"
-                className="inline-flex min-h-[48px] items-center justify-center gap-3 rounded-[4px] border border-brand-darkRed/25 bg-transparent px-9 py-3.5 font-montserrat text-[11px] uppercase tracking-[0.2em] text-brand-darkRed transition-colors hover:border-brand-darkRed hover:bg-brand-darkRed hover:text-[#e8ddd4]"
+                className={ctaPrimaryWithGap}
                 data-bs-cta
                 data-cursor-hover
                 data-analytics-event="click_gift_abaya_from_personalisation"

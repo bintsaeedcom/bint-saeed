@@ -146,8 +146,11 @@ export default function ShopClient() {
   }, [sortOpen])
 
   const categoryLabel = useCallback(
-    (cat: string) => (cat === 'All' ? ui.shop.categoryAll : cat),
-    [ui.shop.categoryAll],
+    (cat: string) => {
+      const mapped = ui.shop.categories[cat as keyof typeof ui.shop.categories]
+      return mapped ?? (cat === 'All' ? ui.shop.categoryAll : cat)
+    },
+    [ui.shop.categories, ui.shop.categoryAll],
   )
 
   const handleBack = useCallback(() => {
@@ -385,7 +388,7 @@ export default function ShopClient() {
                 </LocaleLink>
                 <div className="mt-auto space-y-2 border-t border-black/5 pt-4">
                   <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
-                    {product.category}
+                    {categoryLabel(product.category)}
                   </p>
                   <LocaleLink href={getProductHref(product)} className="relative z-20 inline-block max-w-full" data-cursor-hover>
                     <h3

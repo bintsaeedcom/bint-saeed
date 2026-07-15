@@ -15,6 +15,8 @@ import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
 import { useVisitorComplimentaryShipping } from '@/lib/shipping/useVisitorComplimentaryShipping'
 import { useStableToggleScroll } from '@/lib/ui/useStableToggleScroll'
 import { getAboutTopicNavLinks } from '@/lib/i18n/aboutTopicNavI18n'
+import { getHeaderNavCopy } from '@/lib/i18n/headerNavI18n'
+import { LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { useState } from 'react'
 
@@ -36,6 +38,8 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
   const { t, isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const hn = getHeaderNavCopy(language)
+  const geo = LOCALE_GEO[language in LOCALE_GEO ? (language as keyof typeof LOCALE_GEO) : 'en']
   const { currency } = useCurrency()
   const { amountLabel: complimentaryAmount } = useVisitorComplimentaryShipping(currency.code)
   const [mobileOpenSection, setMobileOpenSection] = useState<'shop' | 'about' | 'help' | null>('shop')
@@ -45,7 +49,7 @@ export default function Footer() {
     shop: [
       { label: t.footer.newArrivals, href: '/shop' },
       { label: t.footer.collection, href: '/shop' },
-      { label: language === 'ar' ? 'بطاقات الهدايا' : 'Gift Cards', href: '/gift-cards' },
+      { label: hn.giftCards, href: '/gift-cards' },
       { label: t.footer.accessories, href: '/accessories' },
     ],
     about: getAboutTopicNavLinks(language),
@@ -121,7 +125,7 @@ export default function Footer() {
                 {t.footer.brandDescription}
               </p>
               <p className="mt-3 font-montserrat text-[12px] tracking-[0.03em] text-white/40">
-                Abu&nbsp;Dhabi,&nbsp;United&nbsp;Arab&nbsp;Emirates
+                {geo.madeIn}
               </p>
 
               <div className={`mt-6 space-y-4 ${isRTL ? 'items-end' : 'items-start'} flex flex-col`}>

@@ -27,6 +27,7 @@ import {
 } from '@/lib/ui/glassClasses'
 import { formFieldClass } from '@/lib/ui/formFieldClasses'
 import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
+import { getHeaderNavCopy } from '@/lib/i18n/headerNavI18n'
 
 const MEGA_MENU_SIGNATURE_STRANDS = '/collection-section/bint-saeed-signature-strands-collection-nav.webp'
 const MEGA_MENU_ALL_STRANDS = '/collection-section/bint-saeed-all-strands-collection-nav.webp'
@@ -37,16 +38,6 @@ const MEGA_MENU_OUR_STORY = '/collection-section/bint-saeed-our-story-collection
 const MEGA_MENU_THE_CODES = '/collection-section/bint-saeed-the-codes-collection-nav.webp'
 const MEGA_MENU_HIDDEN_POCKET = '/collection-section/bint-saeed-hidden-pocket-collection-nav.webp'
 const MEGA_MENU_NAME_LABELS = '/collection-section/bint-saeed-name-labels-collection-nav.webp'
-
-function megaMenuFeatureCta(ctaLabel: string | undefined, language: string): string {
-  if (!ctaLabel) return language === 'ar' ? 'تسوقي الآن' : 'Shop Now'
-  if (language === 'ar') {
-    if (ctaLabel === 'Explore') return 'استكشفي'
-    if (ctaLabel === 'Discover Now') return 'اكتشفي الآن'
-    if (ctaLabel === 'Discover More') return 'اكتشفي المزيد'
-  }
-  return ctaLabel
-}
 
 /** Edges #12080b → wine center #2d141e (matches editorial About gradient) */
 const headerBarGradient =
@@ -213,6 +204,7 @@ export default function Header() {
   const cartItems = useCartStore((state) => state.items)
   const wishlistCount = useWishlistStore((state) => state.items.length)
   const { t, isRTL, language } = useLanguage()
+  const hn = useMemo(() => getHeaderNavCopy(language), [language])
   const searchableContent = useMemo(
     () => [...getSearchableContent(language), ...getSearchableCatalogItems(language)],
     [language],
@@ -222,11 +214,11 @@ export default function Header() {
   const isHomePage = innerPath === '/home'
   const isTransparentHomeHeader = isHomePage && !isScrolled
 
-  const shopNavItem = { label: 'Shop', href: '/shop' as const }
+  const shopNavItem = { label: hn.shop, href: '/shop' as const }
   const navItems = [
-    { label: 'Strands', href: '/strands' },
-    { label: t.nav.accessories || 'Accessories', href: '/accessories' },
-    { label: 'Personalisation', href: '/personalisation' },
+    { label: hn.strands, href: '/strands' },
+    { label: hn.accessories, href: '/accessories' },
+    { label: hn.personalisation, href: '/personalisation' },
     { label: t.about.title, href: '/about' },
   ]
   const getMainNavAnalyticsEvent = (href: string) =>
@@ -248,34 +240,35 @@ export default function Header() {
       columns: { title: string; links: { label: string; href: string }[] }[]
       features: { title: string; href: string; image: string; ctaLabel?: string }[]
     }
-  > = {
+  > = useMemo(
+    () => ({
     '/shop': {
       columns: [
         {
-          title: 'Discover',
+          title: hn.discover,
           links: [
-            { label: 'Shop All', href: '/shop' },
-            { label: 'Gift Cards', href: '/gift-cards' },
+            { label: hn.shopAll, href: '/shop' },
+            { label: hn.giftCards, href: '/gift-cards' },
           ],
         },
         {
-          title: 'Ready to Wear',
+          title: hn.readyToWear,
           links: [
-            { label: 'Abayas', href: '/shop?category=abayas' },
-            { label: 'Sets', href: '/shop?category=sets' },
-            { label: 'Dresses', href: '/shop?category=dresses' },
-            { label: 'Kaftans', href: '/shop?category=kaftans' },
+            { label: hn.abayas, href: '/shop?category=abayas' },
+            { label: hn.sets, href: '/shop?category=sets' },
+            { label: hn.dresses, href: '/shop?category=dresses' },
+            { label: hn.kaftans, href: '/shop?category=kaftans' },
           ],
         },
       ],
       features: [
         {
-          title: 'Abayas',
+          title: hn.abayas,
           href: '/shop?category=abayas',
           image: MEGA_MENU_LUXURY_ABAYAS,
         },
         {
-          title: 'Accessories',
+          title: hn.accessories,
           href: '/accessories',
           image: '/collection-section/bint-saeed-home-category-accessories-malachite-necklace.webp',
         },
@@ -284,22 +277,22 @@ export default function Header() {
     '/strands': {
       columns: [
         {
-          title: 'Strands',
+          title: hn.strands,
           links: [
-            { label: 'All Strands', href: '/strands' },
-            { label: 'Signature Strands', href: '/accessories?type=signature-strands' },
-            { label: 'Marylebone Abaya', href: '/shop/marylebone-abaya' },
+            { label: hn.allStrands, href: '/strands' },
+            { label: hn.signatureStrands, href: '/accessories?type=signature-strands' },
+            { label: hn.maryleboneAbaya, href: '/shop/marylebone-abaya' },
           ],
         },
       ],
       features: [
         {
-          title: 'Signature Strands',
+          title: hn.signatureStrands,
           href: '/accessories?type=signature-strands',
           image: MEGA_MENU_SIGNATURE_STRANDS,
         },
         {
-          title: 'Shop All Strands',
+          title: hn.shopAllStrands,
           href: '/strands',
           image: MEGA_MENU_ALL_STRANDS,
         },
@@ -308,25 +301,25 @@ export default function Header() {
     '/accessories': {
       columns: [
         {
-          title: 'Accessories',
+          title: hn.accessories,
           links: [
-            { label: 'All Accessories', href: '/accessories' },
-            { label: 'Signature Strands', href: '/accessories?type=signature-strands' },
-            { label: 'Necklaces', href: '/accessories?type=necklaces' },
-            { label: 'Earrings', href: '/accessories?type=earrings' },
-            { label: 'Bag Charms', href: '/accessories?type=bag-strands' },
-            { label: 'Phone Charms', href: '/accessories?type=phone-strands' },
+            { label: hn.allAccessories, href: '/accessories' },
+            { label: hn.signatureStrands, href: '/accessories?type=signature-strands' },
+            { label: hn.necklaces, href: '/accessories?type=necklaces' },
+            { label: hn.earrings, href: '/accessories?type=earrings' },
+            { label: hn.bagCharms, href: '/accessories?type=bag-strands' },
+            { label: hn.phoneCharms, href: '/accessories?type=phone-strands' },
           ],
         },
       ],
       features: [
         {
-          title: 'Necklaces',
+          title: hn.necklaces,
           href: '/accessories?type=necklaces',
           image: MEGA_MENU_NECKLACES,
         },
         {
-          title: 'Phone Charms',
+          title: hn.phoneCharms,
           href: '/accessories?type=phone-strands',
           image: ACCESSORY_IMAGE_PHONE_CHARM,
         },
@@ -335,47 +328,49 @@ export default function Header() {
     '/personalisation': {
       columns: [
         {
-          title: 'Personalisation',
+          title: hn.personalisation,
           links: [
-            { label: 'Personalisation', href: '/personalisation' },
-            { label: 'Contact', href: '/contact' },
+            { label: hn.personalisation, href: '/personalisation' },
+            { label: hn.contact, href: '/contact' },
           ],
         },
       ],
       features: [
         {
-          title: 'Hidden Pocket',
+          title: hn.hiddenPocket,
           href: '/shop?category=abayas',
           image: MEGA_MENU_HIDDEN_POCKET,
-          ctaLabel: 'Discover More',
+          ctaLabel: hn.discoverMore,
         },
         {
-          title: 'Personalised labels',
+          title: hn.personalisedLabels,
           href: '/contact',
           image: MEGA_MENU_NAME_LABELS,
-          ctaLabel: 'Discover More',
+          ctaLabel: hn.discoverMore,
         },
       ],
     },
     '/about': {
       columns: [
         {
-          title: 'About Us',
+          title: hn.aboutUs,
           links: [
-            { label: 'Our Story', href: '/about' },
-            { label: 'The Codes', href: '/the-codes' },
-            { label: 'Craftsmanship', href: '/craftsmanship' },
-            { label: 'Giving Forward', href: '/giving-forward' },
-            { label: 'Contact', href: '/contact' },
+            { label: hn.ourStory, href: '/about' },
+            { label: hn.theCodes, href: '/the-codes' },
+            { label: hn.craftsmanship, href: '/craftsmanship' },
+            { label: hn.givingForward, href: '/giving-forward' },
+            { label: hn.contact, href: '/contact' },
           ],
         },
       ],
       features: [
-        { title: 'Our Story', href: '/about', image: MEGA_MENU_OUR_STORY, ctaLabel: 'Discover Now' },
-        { title: 'The Codes', href: '/the-codes', image: MEGA_MENU_THE_CODES, ctaLabel: 'Explore' },
+        { title: hn.ourStory, href: '/about', image: MEGA_MENU_OUR_STORY, ctaLabel: hn.discoverNow },
+        { title: hn.theCodes, href: '/the-codes', image: MEGA_MENU_THE_CODES, ctaLabel: hn.explore },
       ],
     },
-  }
+  }),
+    [hn],
+  )
 
   useEffect(() => {
     return () => clearMegaMenuLeaveTimer()
@@ -507,7 +502,7 @@ export default function Header() {
                   className="p-2 text-white"
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   data-cursor-hover
-                  aria-label="Toggle menu"
+                  aria-label={hn.toggleMenu}
                 >
                   <FiMenu className="h-5 w-5" />
                 </button>
@@ -635,7 +630,7 @@ export default function Header() {
                 href="/wishlist"
                 className="relative rounded-full border border-transparent p-1.5 text-white/70 transition-colors duration-300 hover:border-white/20 hover:bg-white/5 hover:text-white"
                 data-cursor-hover
-                aria-label="Wishlist"
+                aria-label={hn.wishlist}
               >
                 <span className="relative inline-flex leading-none">
                   <FiHeart className="h-[18px] w-[18px]" />
@@ -734,7 +729,7 @@ export default function Header() {
                               {feature.title}
                             </span>
                             <span className="whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.1em] text-brand-darkRed/70 transition-colors group-hover:text-brand-dustyBlue xl:text-[11px]">
-                              {megaMenuFeatureCta(feature.ctaLabel, language)}
+                              {feature.ctaLabel ?? hn.shopNow}
                             </span>
                           </div>
                         </LocaleLink>
@@ -806,7 +801,7 @@ export default function Header() {
                       {t.search.popularSearches || 'Popular Searches'}
                     </span>
                     <div className="flex flex-wrap gap-2">
-                      {['Abayas', 'Kaftans', 'Dresses', 'Accessories', 'New Arrivals', 'Heritage'].map((term) => (
+                      {hn.searchSuggestions.map((term) => (
                         <button
                           key={term}
                           type="button"
@@ -866,11 +861,11 @@ export default function Header() {
                       className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : 'justify-center'}`}
                     >
                       {[
-                        { label: isRTL ? 'العبايات' : 'Abayas', href: '/shop?category=abayas' },
-                        { label: t.nav.accessories || 'Accessories', href: '/accessories' },
-                        { label: 'Strands', href: '/strands' },
-                        { label: isRTL ? 'التخصيص' : 'Personalisation', href: '/personalisation' },
-                        { label: isRTL ? 'المجموعة' : 'Collection', href: '/shop' },
+                        { label: hn.abayas, href: '/shop?category=abayas' },
+                        { label: hn.accessories, href: '/accessories' },
+                        { label: hn.strands, href: '/strands' },
+                        { label: hn.personalisation, href: '/personalisation' },
+                        { label: hn.collection, href: '/shop' },
                       ]
                         .filter((dest) => {
                           // Abayas deep-link still counts as "on shop"
@@ -1020,7 +1015,7 @@ export default function Header() {
                                     data-analytics-event={getMainNavAnalyticsEvent(item.href)}
                                     data-analytics-section="header-mobile-nav"
                                   >
-                                    {isRTL ? 'عرض الكل' : 'View all'}
+                                    {hn.viewAll}
                                     <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
                                   </LocaleLink>
 
@@ -1085,7 +1080,7 @@ export default function Header() {
                                               {feature.title}
                                             </p>
                                             <p className="mt-0.5 font-montserrat text-[9px] uppercase tracking-[0.14em] text-brand-dustyBlue/90">
-                                              {megaMenuFeatureCta(feature.ctaLabel, language)}
+                                              {feature.ctaLabel ?? hn.shopNow}
                                             </p>
                                           </div>
                                         </LocaleLink>
@@ -1127,7 +1122,7 @@ export default function Header() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="relative text-white/70 transition-colors hover:text-white"
                     data-cursor-hover
-                    aria-label="Wishlist"
+                    aria-label={hn.wishlist}
                   >
                     <span className="relative inline-flex leading-none">
                       <FiHeart className="h-6 w-6" />

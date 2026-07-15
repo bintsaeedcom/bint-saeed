@@ -13,7 +13,7 @@ export type HouseCodesVariant =
 /** Clearer than “House Codes” alone — used on every PDP that shows this block. */
 export const PDP_HOUSE_CODES_TITLE: Record<AppLocale, string> = {
   en: 'Bint Saeed Signature House Codes',
-  ar: 'Bint Saeed Signature House Codes',
+  ar: 'رموز الدار التوقيعية من Bint Saeed',
   fr: 'Bint Saeed Signature House Codes',
   it: 'Bint Saeed Signature House Codes',
   es: 'Bint Saeed Signature House Codes',
