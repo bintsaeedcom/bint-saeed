@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -18,8 +18,9 @@ import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
 import { filterOffCurrentPage } from '@/lib/discover/offCurrentPage'
 import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
 import { products as staticProducts } from '@/data/products'
+import { accessories } from '@/data/accessories'
 import { getProductHref } from '@/lib/products/links'
-import { getCartLineImageAlt, getProductImageAlt } from '@/lib/products/imageAlt'
+import { getCartLineImageAlt, getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { resolveCartShippingMessages } from '@/lib/shipping/resolveCartShippingMessages'
 import {
@@ -36,9 +37,35 @@ import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 import 'swiper/css'
 import 'swiper/css/free-mode'
 
+/** Deterministic shuffle so each bag open rotates recommendations. */
+function seededShuffle<T>(items: T[], seed: number): T[] {
+  const out = [...items]
+  let s = seed >>> 0 || 1
+  const next = () => {
+    s = (Math.imul(s, 1664525) + 1013904223) >>> 0
+    return s / 0x100000000
+  }
+  for (let i = out.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(next() * (i + 1))
+    const tmp = out[i]!
+    out[i] = out[j]!
+    out[j] = tmp
+  }
+  return out
+}
+
 interface MiniCartProps {
   isOpen: boolean
   onClose: () => void
+}
+
+type MiniCartRecommendCard = {
+  id: string
+  name: string
+  href: string
+  image: string
+  price: number
+  imageAlt: string
 }
 
 export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
@@ -47,6 +74,8 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const { formatPrice, formatAmount, currency, formatCartSubtotal, cartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
   const [mounted, setMounted] = useState(false)
+  const [recommendationSeed, setRecommendationSeed] = useState(1)
+  const wasOpenRef = useRef(false)
   const ui = commerceUi(language)
   const emptyExits = useMemo(() => {
     const candidates = [
@@ -77,7 +106,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
 
-  const youMayAlsoLike = useMemo(() => {
+  const youMayAlsoLike = useMemo((): MiniCartRecommendCard[] => {
     if (items.length === 0) return []
     const cartIds = new Set(items.map((i) => i.id))
     const categoriesInCart = new Set<string>()
@@ -89,13 +118,64 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     const pool = staticProducts.filter((p) => !cartIds.has(p.id))
     const same = primary ? pool.filter((p) => p.category === primary) : []
     const rest = primary ? pool.filter((p) => p.category !== primary) : pool
-    const ordered = [...same, ...rest]
-    return ordered.slice(0, 2)
-  }, [items])
+    const sameShuffled = seededShuffle(same, recommendationSeed * 17 + 3)
+    const restShuffled = seededShuffle(rest, recommendationSeed * 31 + 11)
+    const apparel = [...sameShuffled, ...restShuffled]
+
+    const toApparelCard = (p: (typeof staticProducts)[number]): MiniCartRecommendCard => ({
+      id: p.id,
+      name: p.name,
+      href: getProductHref(p),
+      image: p.images[0] ?? '',
+      price: p.price,
+      imageAlt: getProductImageAlt(p, p.images[0] ?? '', {
+        color: p.colors[0]?.name,
+        index: 0,
+        locale: language,
+      }),
+    })
+
+    // Slot 3: always cross-sell a necklace (or rotate if all necklaces are already in bag)
+    const necklacePool = accessories.filter(
+      (a) => a.category === 'necklaces' && a.inStock && !cartIds.has(a.id),
+    )
+    const necklacePick = seededShuffle(necklacePool, recommendationSeed * 41 + 7)[0]
+    const necklaceCard: MiniCartRecommendCard | null = necklacePick
+      ? {
+          id: necklacePick.id,
+          name: language === 'ar' ? necklacePick.nameAr : necklacePick.name,
+          href: `/accessories/${necklacePick.id}`,
+          image: necklacePick.images[0] ?? '',
+          price: necklacePick.price,
+          imageAlt: withBrandAlt(
+            `${necklacePick.name} — luxury necklace Abu Dhabi`,
+            language === 'ar' ? 'ar' : 'en',
+          ),
+        }
+      : null
+
+    const lead = apparel.slice(0, 2).map(toApparelCard)
+    const tail = apparel.slice(2).map(toApparelCard)
+    const merged = necklaceCard ? [...lead, necklaceCard, ...tail] : [...lead, ...tail]
+    // Dedupe by id and cap row length
+    const seen = new Set<string>()
+    return merged.filter((card) => {
+      if (seen.has(card.id)) return false
+      seen.add(card.id)
+      return true
+    }).slice(0, 6)
+  }, [items, recommendationSeed, language])
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  useEffect(() => {
+    if (isOpen && !wasOpenRef.current) {
+      setRecommendationSeed((n) => n + 1)
+    }
+    wasOpenRef.current = isOpen
+  }, [isOpen])
 
   useEffect(() => {
     if (!isOpen) return
@@ -344,19 +424,15 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                     {youMayAlsoLike.map((p) => (
                       <SwiperSlide key={p.id} className="!w-[7.25rem] sm:!w-[7.75rem]">
                         <LocaleLink
-                          href={getProductHref(p)}
+                          href={p.href}
                           onClick={onClose}
                           className="group block"
                           data-cursor-hover
                         >
                           <div className="relative aspect-[9/16] overflow-hidden rounded-[4px] bg-[#12080b] ring-1 ring-white/10">
                             <Image
-                              src={p.images[0]}
-                              alt={getProductImageAlt(p, p.images[0] ?? '', {
-                                color: p.colors[0]?.name,
-                                index: 0,
-                                locale: language,
-                              })}
+                              src={p.image}
+                              alt={p.imageAlt}
                               fill
                               sizes="124px"
                               className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
@@ -413,7 +489,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                   <LocaleLink
                     href="/checkout"
                     onClick={onClose}
-                    className={`${glassPrimaryBtn} !min-h-[48px] !text-xs inline-flex items-center justify-center gap-2 ${
+                    className={`inline-flex !min-h-[48px] w-full items-center justify-center gap-2 rounded border border-[#e8ddd4] bg-[#e8ddd4] px-3 py-2.5 font-montserrat text-xs uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:border-white hover:bg-white ${
                       isRTL ? 'flex-row-reverse' : ''
                     }`}
                     data-cursor-hover

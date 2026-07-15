@@ -421,7 +421,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: 'Your bag is empty',
       discoverCollection: 'Continue exploring the world of Bint Saeed',
-      reviewYourOrder: 'Review Your Order',
+      reviewYourOrder: 'Continue to Checkout',
       youMayAlsoLike: 'You may also like',
     },
   },
@@ -621,7 +621,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: 'السلة فارغة',
       discoverCollection: 'واصلي استكشاف عالم Bint Saeed',
-      reviewYourOrder: 'راجعي طلبك',
+      reviewYourOrder: 'أكملي الدفع',
       youMayAlsoLike: 'قد يعجبك أيضاً',
     },
   },
@@ -821,7 +821,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: 'Votre panier est vide',
       discoverCollection: 'Decouvrez notre collection',
-      reviewYourOrder: 'Verifiez votre commande',
+      reviewYourOrder: 'Continuer vers le paiement',
       youMayAlsoLike: 'Vous pourriez aussi aimer',
     },
   },
@@ -1021,7 +1021,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: 'Ihre Tasche ist leer',
       discoverCollection: 'Entdecken Sie unsere Kollektion',
-      reviewYourOrder: 'Bestellung prufen',
+      reviewYourOrder: 'Weiter zur Kasse',
       youMayAlsoLike: 'Das konnte Ihnen auch gefallen',
     },
   },
@@ -1221,7 +1221,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: 'La tua borsa e vuota',
       discoverCollection: 'Scopri la nostra collezione',
-      reviewYourOrder: 'Rivedi il tuo ordine',
+      reviewYourOrder: 'Continua al checkout',
       youMayAlsoLike: 'Potrebbe piacerti anche',
     },
   },
@@ -1421,7 +1421,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: 'Tu bolsa esta vacia',
       discoverCollection: 'Descubre nuestra coleccion',
-      reviewYourOrder: 'Revisa tu pedido',
+      reviewYourOrder: 'Continuar al pago',
       youMayAlsoLike: 'Tambien te puede gustar',
     },
   },
@@ -1621,7 +1621,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: 'Ваша корзина пуста',
       discoverCollection: 'Откройте нашу коллекцию',
-      reviewYourOrder: 'Проверьте заказ',
+      reviewYourOrder: 'Перейти к оформлению',
       youMayAlsoLike: 'Вам также может понравиться',
     },
   },
@@ -1821,7 +1821,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: '您的购物袋为空',
       discoverCollection: '探索我们的系列',
-      reviewYourOrder: '确认您的订单',
+      reviewYourOrder: '继续结账',
       youMayAlsoLike: '您可能也喜欢',
     },
   },
@@ -2021,7 +2021,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: 'Je tas is leeg',
       discoverCollection: 'Ontdek onze collectie',
-      reviewYourOrder: 'Controleer je bestelling',
+      reviewYourOrder: 'Verder naar afrekenen',
       youMayAlsoLike: 'Misschien vind je dit ook mooi',
     },
   },
@@ -2221,7 +2221,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: 'O seu saco esta vazio',
       discoverCollection: 'Descubra a nossa colecao',
-      reviewYourOrder: 'Reveja a sua encomenda',
+      reviewYourOrder: 'Continuar para o pagamento',
       youMayAlsoLike: 'Tambem pode gostar',
     },
   },
@@ -2421,7 +2421,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: 'Tas Anda kosong',
       discoverCollection: 'Temukan koleksi kami',
-      reviewYourOrder: 'Tinjau pesanan Anda',
+      reviewYourOrder: 'Lanjut ke checkout',
       youMayAlsoLike: 'Anda mungkin juga suka',
     },
   },
@@ -2621,7 +2621,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     miniCart: {
       yourBagIsEmpty: 'Beg anda kosong',
       discoverCollection: 'Terokai koleksi kami',
-      reviewYourOrder: 'Semak pesanan anda',
+      reviewYourOrder: 'Teruskan ke pembayaran',
       youMayAlsoLike: 'Anda mungkin juga suka',
     },
   },
@@ -2832,7 +2832,7 @@ const EN: CommerceUi = {
   youMayAlsoLike: 'You may also like',
   subtotal: 'Subtotal',
   deliveryRatesAtPayment: 'Delivery rates are calculated at payment',
-  reviewYourOrder: 'Review Your Order',
+  reviewYourOrder: 'Continue to Checkout',
   secureCheckout: 'Secure checkout',
   freeUaeDeliveryOver: 'Free UAE delivery on orders over 1,000 AED',
   size: 'Size',
@@ -2982,7 +2982,7 @@ const AR: CommerceUi = {
   youMayAlsoLike: 'قد يعجبك أيضاً',
   subtotal: 'المجموع الفرعي',
   deliveryRatesAtPayment: 'تُحسب أسعار التوصيل عند الدفع',
-  reviewYourOrder: 'راجعي طلبك',
+  reviewYourOrder: 'أكملي الدفع',
   secureCheckout: 'دفع آمن',
   freeUaeDeliveryOver: 'توصيل مجاني داخل الإمارات للطلبات فوق ١٬٠٠٠ درهم',
   size: 'المقاس',
