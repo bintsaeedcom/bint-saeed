@@ -1,5 +1,6 @@
 import { isPrelaunch } from '@/lib/seo'
 import { buildCatalogSitemapEntries } from '@/lib/sitemap/catalogUrls'
+import { localizedPath } from '@/lib/i18n/routing'
 
 /** Canonical origin for sitemap `<loc>` values (align with `NEXT_PUBLIC_SITE_URL` in production). */
 export const SITEMAP_BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
@@ -11,58 +12,70 @@ export type SitemapUrlEntry = {
   priority: string
 }
 
-const homePageUrl: SitemapUrlEntry = {
-  loc: `${SITEMAP_BASE_URL}/home`,
-  lastmod: new Date().toISOString(),
-  changefreq: 'weekly',
-  priority: '1.0',
+function entry(path: string, changefreq: string, priority: string): SitemapUrlEntry {
+  const normalized = path.startsWith('http') ? path : `${SITEMAP_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`
+  return {
+    loc: normalized,
+    lastmod: new Date().toISOString(),
+    changefreq,
+    priority,
+  }
 }
 
-const allUrls: SitemapUrlEntry[] = [
-  { loc: SITEMAP_BASE_URL, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '1.0' },
-  {
-    loc: `${SITEMAP_BASE_URL}/llms.txt`,
-    lastmod: new Date().toISOString(),
-    changefreq: 'monthly',
-    priority: '0.6',
-  },
-  {
-    loc: `${SITEMAP_BASE_URL}/openapi.json`,
-    lastmod: new Date().toISOString(),
-    changefreq: 'monthly',
-    priority: '0.5',
-  },
-  homePageUrl,
-  { loc: `${SITEMAP_BASE_URL}/shop`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
-  { loc: `${SITEMAP_BASE_URL}/accessories`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
-  {
-    loc: `${SITEMAP_BASE_URL}/accessories?type=signature-strands`,
-    lastmod: new Date().toISOString(),
-    changefreq: 'weekly',
-    priority: '0.88',
-  },
-  { loc: `${SITEMAP_BASE_URL}/strands`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
-  { loc: `${SITEMAP_BASE_URL}/personalisation`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
-  { loc: `${SITEMAP_BASE_URL}/about`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
-  { loc: `${SITEMAP_BASE_URL}/the-codes`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
-  { loc: `${SITEMAP_BASE_URL}/heritage`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.8' },
-  { loc: `${SITEMAP_BASE_URL}/heritage/al-talli`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.95' },
-  { loc: `${SITEMAP_BASE_URL}/heritage/khous`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
-  { loc: `${SITEMAP_BASE_URL}/craftsmanship`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.7' },
-  { loc: `${SITEMAP_BASE_URL}/contact`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.5' },
-  { loc: `${SITEMAP_BASE_URL}/faq`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.5' },
-  { loc: `${SITEMAP_BASE_URL}/size-guide`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.5' },
-  { loc: `${SITEMAP_BASE_URL}/shipment-return-policy`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.5' },
-  { loc: `${SITEMAP_BASE_URL}/careers`, lastmod: new Date().toISOString(), changefreq: 'monthly', priority: '0.5' },
-  { loc: `${SITEMAP_BASE_URL}/privacy-policy`, lastmod: new Date().toISOString(), changefreq: 'yearly', priority: '0.3' },
-  { loc: `${SITEMAP_BASE_URL}/cookie-policy`, lastmod: new Date().toISOString(), changefreq: 'yearly', priority: '0.3' },
-  { loc: `${SITEMAP_BASE_URL}/terms`, lastmod: new Date().toISOString(), changefreq: 'yearly', priority: '0.3' },
+/**
+ * Human-facing hubs / editorial that should also appear under `/ar/...`
+ * so Arabic storefront discovery is complete (PDPs already come from catalogUrls).
+ * Machine files (llms.txt, openapi) stay EN-only.
+ */
+const INDEXABLE_HUBS: { path: string; changefreq: string; priority: string }[] = [
+  { path: '/home', changefreq: 'weekly', priority: '1.0' },
+  { path: '/shop', changefreq: 'weekly', priority: '0.9' },
+  { path: '/accessories', changefreq: 'weekly', priority: '0.9' },
+  { path: '/accessories?type=signature-strands', changefreq: 'weekly', priority: '0.88' },
+  { path: '/strands', changefreq: 'weekly', priority: '0.9' },
+  { path: '/personalisation', changefreq: 'weekly', priority: '0.9' },
+  { path: '/about', changefreq: 'monthly', priority: '0.7' },
+  { path: '/the-codes', changefreq: 'monthly', priority: '0.7' },
+  { path: '/heritage', changefreq: 'monthly', priority: '0.8' },
+  { path: '/heritage/al-talli', changefreq: 'weekly', priority: '0.95' },
+  { path: '/heritage/khous', changefreq: 'monthly', priority: '0.7' },
+  { path: '/heritage/sadu', changefreq: 'monthly', priority: '0.7' },
+  { path: '/craftsmanship', changefreq: 'monthly', priority: '0.7' },
+  { path: '/giving-forward', changefreq: 'monthly', priority: '0.6' },
+  { path: '/contact', changefreq: 'monthly', priority: '0.5' },
+  { path: '/faq', changefreq: 'monthly', priority: '0.5' },
+  { path: '/size-guide', changefreq: 'monthly', priority: '0.5' },
+  { path: '/shipment-return-policy', changefreq: 'monthly', priority: '0.5' },
+  { path: '/careers', changefreq: 'monthly', priority: '0.5' },
+  { path: '/gift-cards', changefreq: 'monthly', priority: '0.6' },
+  { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
+  { path: '/cookie-policy', changefreq: 'yearly', priority: '0.3' },
+  { path: '/terms', changefreq: 'yearly', priority: '0.3' },
 ]
+
+function buildEnglishSiteUrls(): SitemapUrlEntry[] {
+  return [
+    entry('/', 'weekly', '1.0'),
+    entry('/llms.txt', 'monthly', '0.6'),
+    entry('/openapi.json', 'monthly', '0.5'),
+    ...INDEXABLE_HUBS.map((h) => entry(h.path, h.changefreq, h.priority)),
+  ]
+}
+
+/** Arabic storefront hubs — pairs with EN hubs + AR PDPs from catalogUrls. */
+function buildArabicHubUrls(): SitemapUrlEntry[] {
+  return INDEXABLE_HUBS.map((h) => {
+    const pathOnly = h.path.split('?')[0] || h.path
+    const query = h.path.includes('?') ? `?${h.path.split('?')[1]}` : ''
+    const arPath = `${localizedPath('ar', pathOnly)}${query}`
+    return entry(arPath, h.changefreq, h.priority)
+  })
+}
 
 /** Prelaunch tease only — do not feed unfinished shop URLs to crawlers. */
 const prelaunchUrls: SitemapUrlEntry[] = [
-  { loc: SITEMAP_BASE_URL, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '1.0' },
-  homePageUrl,
+  entry('/', 'weekly', '1.0'),
+  entry('/home', 'weekly', '1.0'),
 ]
 
 /** URLs included in `/sitemap` / `/sitemap.xml` for the current index mode. */
@@ -71,7 +84,7 @@ export function getSitemapUrlEntries(): SitemapUrlEntry[] {
     return prelaunchUrls
   }
   const catalogUrls = buildCatalogSitemapEntries(SITEMAP_BASE_URL)
-  return [...allUrls, ...catalogUrls]
+  return [...buildEnglishSiteUrls(), ...buildArabicHubUrls(), ...catalogUrls]
 }
 
 /** Absolute URLs only — for IndexNow and similar tooling. */
