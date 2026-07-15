@@ -12,7 +12,6 @@ import {
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
   EDITORIAL_STACK_CARD,
-  EDITORIAL_STACK_CLOSING_PAD,
   EDITORIAL_STACK_CONTENT_PAD,
   EDITORIAL_STACK_PAD,
 } from '@/lib/ui/editorialPageChrome'
@@ -112,10 +111,6 @@ const CRAFT_VIDEOS = [
 ] as const
 
 const MEDIA = {
-  label: {
-    src: '/craftsmanship/bint-saeed-label-stitching.png',
-    alt: 'Bint Saeed woven label detail and hand finishing on a bespoke abaya—quality-controlled construction at the Bint Saeed atelier in Abu Dhabi',
-  },
   cad: {
     src: '/craftsmanship/bint-saeed-cad-abaya-pattern.png',
     alt: 'Bint Saeed CAD abaya pattern on screen—technical lines for proportion and construction resolved before cutting; luxury development between Italy and Abu Dhabi',
@@ -136,7 +131,38 @@ const MEDIA = {
     ),
     title: 'Bint Saeed Abu Dhabi craftsmanship — atelier shears and measure',
   },
+  goldKnotFinishing: {
+    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-atelier-gold-knot-strand-finishing.png',
+    alt: withBrandAlt(
+      'Atelier finishing of a gold knot charm on a black beaded strand with gloved hands',
+      'en',
+    ),
+  },
+  wovenLabelStitching: {
+    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-woven-label-hand-stitching.png',
+    alt: withBrandAlt(
+      'Hand sewing a Bint Saeed Abu Dhabi woven label into a luxury garment',
+      'en',
+    ),
+  },
 } as const
+
+/** Phase II media rhythm — video, still, video, still, video. */
+const PHASE_II_MEDIA = [
+  { kind: 'video' as const, src: CRAFT_VIDEOS[0].src, ariaLabel: CRAFT_VIDEOS[0].ariaLabel },
+  {
+    kind: 'image' as const,
+    src: MEDIA.goldKnotFinishing.src,
+    alt: MEDIA.goldKnotFinishing.alt,
+  },
+  { kind: 'video' as const, src: CRAFT_VIDEOS[1].src, ariaLabel: CRAFT_VIDEOS[1].ariaLabel },
+  {
+    kind: 'image' as const,
+    src: MEDIA.wovenLabelStitching.src,
+    alt: MEDIA.wovenLabelStitching.alt,
+  },
+  { kind: 'video' as const, src: CRAFT_VIDEOS[2].src, ariaLabel: CRAFT_VIDEOS[2].ariaLabel },
+] as const
 
 /** Portrait craft finishes — label centered between embroidery + stitch details. */
 const DETAIL_TRIO = [
@@ -318,7 +344,7 @@ function PhaseProse({
       : 'text-brand-dustyBlue'
   const titleColor = onDark ? 'text-[#e8ddd4]' : 'text-brand-darkRed'
   const bodyColor = onDark ? 'text-[#e8ddd4]/78' : 'text-brand-darkRed/[0.88]'
-  const ruleColor = onDark ? 'border-[#e8ddd4]/14' : 'border-brand-darkRed/12'
+  const ruleColor = onDark ? 'border-[#e8ddd4]/18' : 'border-[#6f1524]/35'
   const stickyClass = sticky
     ? 'lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]'
     : ''
@@ -390,31 +416,7 @@ export default function CraftsmanshipClient() {
         description={description || undefined}
       />
 
-      {/* Opening — clay beat from hero */}
-      <section
-        className={`relative z-10 overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
-        aria-label="Bint Saeed atelier finishing"
-      >
-        <div className={`${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <ParallaxFrame
-            invert={isRTL}
-            className="relative isolate h-[min(72vw,340px)] w-full overflow-hidden bg-brand-darkRed/10 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.22)] sm:h-[min(48vw,400px)] md:h-[min(38vw,460px)]"
-          >
-            <Still
-              src={MEDIA.label.src}
-              alt={MEDIA.label.alt}
-              priority
-              objectPosition="object-[center_58%]"
-            />
-            <div
-              className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(26,2,16,0.04)_0%,transparent_34%,rgba(26,2,16,0.08)_100%)]"
-              aria-hidden
-            />
-          </ParallaxFrame>
-        </div>
-      </section>
-
-      {/* Phase I — bone canvas + magazine collage */}
+      {/* Phase I — bone canvas + two-image collage */}
       <section
         className={`relative z-20 overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="phase-i"
@@ -425,11 +427,11 @@ export default function CraftsmanshipClient() {
               <PhaseProse phase={copy.phaseI} headingId="phase-i" sticky index={1} />
             </div>
             <div className={`lg:col-span-7 ${isRTL ? 'lg:order-1' : ''}`}>
-              <div className="relative mx-auto max-w-2xl pb-4 lg:max-w-none lg:pb-6">
+              <div className="relative mx-auto max-w-2xl pb-6 lg:max-w-none lg:pb-8">
                 <Reveal delay={0.05}>
                   <Post
                     ratio="aspect-[4/5] sm:aspect-[3/4]"
-                    className={`w-[72%] sm:w-[68%] ${isRTL ? 'ms-auto' : ''}`}
+                    className={`w-[78%] sm:w-[74%] ${isRTL ? 'ms-auto' : ''}`}
                   >
                     <ParallaxFrame className="absolute inset-0" invert={isRTL}>
                       <Still src={MEDIA.pattern.src} alt={MEDIA.pattern.alt} />
@@ -440,28 +442,13 @@ export default function CraftsmanshipClient() {
                 <Reveal delay={0.12} className="contents">
                   <Post
                     ratio="aspect-[3/4]"
-                    className={`absolute top-[8%] z-10 w-[48%] max-w-[240px] shadow-[0_32px_70px_-36px_rgba(42,0,18,0.35)] sm:w-[42%] sm:max-w-none ${
+                    className={`absolute bottom-0 z-10 w-[46%] max-w-[260px] shadow-[0_32px_70px_-36px_rgba(42,0,18,0.35)] sm:w-[42%] sm:max-w-none ${
                       isRTL ? 'start-0' : 'end-0'
                     }`}
                   >
                     <ParallaxFrame className="absolute inset-0" invert={!isRTL}>
                       <Still src={MEDIA.cad.src} alt={MEDIA.cad.alt} />
                     </ParallaxFrame>
-                  </Post>
-                </Reveal>
-
-                <Reveal delay={0.18}>
-                  <Post
-                    ratio="aspect-[16/10]"
-                    className={`relative z-[5] mt-[-12%] w-[90%] sm:mt-[-10%] sm:w-[84%] ${
-                      isRTL ? 'ms-0 me-auto' : 'ms-[6%] sm:ms-auto'
-                    }`}
-                  >
-                    <Still
-                      src={MEDIA.textile.src}
-                      alt={MEDIA.textile.alt}
-                      objectPosition="object-[center_22%]"
-                    />
                   </Post>
                 </Reveal>
               </div>
@@ -493,33 +480,41 @@ export default function CraftsmanshipClient() {
             </div>
             <div className={`lg:col-span-7 ${isRTL ? 'lg:order-2' : 'lg:order-1'}`}>
               <div
-                className="grid grid-cols-12 gap-3 sm:gap-4 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]"
-                aria-label="Bint Saeed atelier process films"
+                className="flex flex-col gap-3 sm:gap-4"
+                aria-label="Bint Saeed atelier making process"
               >
-                <Reveal delay={0.06} className="col-span-12 min-w-0 sm:col-span-7">
-                  <Post ratio="aspect-[3/4] sm:aspect-[4/5]" tone="onDark">
-                    <Film src={CRAFT_VIDEOS[0].src} ariaLabel={CRAFT_VIDEOS[0].ariaLabel} />
-                  </Post>
-                </Reveal>
-                <div className="col-span-12 flex flex-col gap-3 sm:col-span-5 sm:gap-4">
-                  <Reveal delay={0.12} className="min-w-0">
-                    <Post ratio="aspect-[4/5]" tone="onDark">
-                      <Film src={CRAFT_VIDEOS[1].src} ariaLabel={CRAFT_VIDEOS[1].ariaLabel} />
-                    </Post>
-                  </Reveal>
-                  <Reveal delay={0.18} className="min-w-0">
-                    <Post ratio="aspect-[4/5]" tone="onDark">
-                      <Film src={CRAFT_VIDEOS[2].src} ariaLabel={CRAFT_VIDEOS[2].ariaLabel} />
-                    </Post>
-                  </Reveal>
-                </div>
+                {PHASE_II_MEDIA.map((item, index) => {
+                  const offset =
+                    item.kind === 'image'
+                      ? isRTL
+                        ? 'sm:ms-0 sm:me-[8%] sm:w-[92%]'
+                        : 'sm:ms-[8%] sm:w-[92%]'
+                      : isRTL
+                        ? 'sm:ms-[8%] sm:w-[92%]'
+                        : 'sm:me-[8%] sm:w-[92%]'
+                  return (
+                    <Reveal
+                      key={item.kind === 'video' ? item.src : item.src}
+                      delay={0.05 + index * 0.06}
+                      className={`min-w-0 ${offset}`}
+                    >
+                      <Post ratio="aspect-[4/5] sm:aspect-[3/4]" tone="onDark">
+                        {item.kind === 'video' ? (
+                          <Film src={item.src} ariaLabel={item.ariaLabel} />
+                        ) : (
+                          <Still src={item.src} alt={item.alt} />
+                        )}
+                      </Post>
+                    </Reveal>
+                  )
+                })}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Phase III — clay chapter + shears hero */}
+      {/* Phase III — clay chapter + textile + shears */}
       <section
         className={`relative z-40 overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="phase-iii"
@@ -530,27 +525,38 @@ export default function CraftsmanshipClient() {
               <PhaseProse phase={copy.phaseIII} headingId="phase-iii" sticky index={3} />
             </div>
             <div className={`lg:col-span-7 ${isRTL ? 'lg:order-1' : ''}`}>
-              <Reveal>
-                <div className="relative flex min-h-[52vw] w-full items-center justify-center overflow-hidden bg-brand-pageCanvas/70 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.2)] sm:min-h-[40vw] lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] lg:min-h-[480px]">
-                  <Image
-                    src={MEDIA.shearsMeasure.src}
-                    alt={MEDIA.shearsMeasure.alt}
-                    title={MEDIA.shearsMeasure.title}
-                    width={1024}
-                    height={1146}
-                    sizes="(min-width: 1024px) 48vw, 92vw"
-                    className="h-auto max-h-[min(68vh,520px)] w-full object-contain object-center p-5 sm:p-8 md:p-10"
-                    priority={false}
-                  />
-                </div>
-              </Reveal>
+              <div className="grid grid-cols-12 gap-3 sm:gap-4 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]">
+                <Reveal delay={0.06} className="col-span-7 min-w-0">
+                  <div className="relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden bg-brand-pageCanvas/70 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.2)]">
+                    <Image
+                      src={MEDIA.shearsMeasure.src}
+                      alt={MEDIA.shearsMeasure.alt}
+                      title={MEDIA.shearsMeasure.title}
+                      width={1024}
+                      height={1146}
+                      sizes="(min-width: 1024px) 28vw, 55vw"
+                      className="h-auto max-h-full w-full object-contain object-center p-4 sm:p-6"
+                      priority={false}
+                    />
+                  </div>
+                </Reveal>
+                <Reveal delay={0.14} className="col-span-5 min-w-0 self-end">
+                  <Post ratio="aspect-[3/4]">
+                    <Still
+                      src={MEDIA.textile.src}
+                      alt={MEDIA.textile.alt}
+                      objectPosition="object-[center_22%]"
+                    />
+                  </Post>
+                </Reveal>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <section
-        className={`relative z-[50] overflow-hidden ${EDITORIAL_STACK_CLOSING_PAD} ${EDITORIAL_STACK_CARD}`}
+        className={`relative z-[50] overflow-hidden pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-14 md:pb-24 ${EDITORIAL_STACK_CARD}`}
         aria-label="Bint Saeed garment finishing details"
       >
         <Image
@@ -573,9 +579,9 @@ export default function CraftsmanshipClient() {
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(111,21,36,0.22)_0%,transparent_70%)]"
           aria-hidden
         />
-        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+        <div className="relative mx-auto w-full min-w-0 max-w-[1280px] px-4 pb-8 sm:px-6 sm:pb-10 lg:px-12 md:pb-12">
           <Reveal>
-            <p className="mb-10 text-center font-rozha text-[clamp(1.75rem,4vw,2.5rem)] tracking-[0.02em] text-[#e8ddd4] md:mb-12">
+            <p className="mb-7 text-center font-rozha text-[clamp(1.75rem,4vw,2.5rem)] tracking-[0.02em] text-[#e8ddd4] md:mb-8">
               {copy.ctaHeading}
             </p>
           </Reveal>
@@ -591,7 +597,7 @@ export default function CraftsmanshipClient() {
           </div>
 
           <Reveal delay={0.2}>
-            <div className={`mt-10 flex justify-center md:mt-12 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`mt-8 flex justify-center md:mt-10 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <LocaleLink
                 href="/shop?from=craftsmanship"
                 className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-[4px] border border-[#e8ddd4]/45 bg-[#e8ddd4]/10 px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-[#e8ddd4] shadow-[0_18px_48px_-28px_rgba(0,0,0,0.45)] backdrop-blur-[2px] transition-colors hover:border-[#e8ddd4]/80 hover:bg-[#e8ddd4] hover:text-brand-darkRed"
