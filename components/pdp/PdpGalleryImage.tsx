@@ -5,6 +5,7 @@ import { productImageSrc } from '@/lib/products/shopImage'
 type PdpGalleryImageProps = {
   src: string
   alt: string
+  title?: string
   className?: string
   priority?: boolean
 }
@@ -16,6 +17,7 @@ type PdpGalleryImageProps = {
 export default function PdpGalleryImage({
   src,
   alt,
+  title,
   className = 'object-cover object-top',
   priority = false,
 }: PdpGalleryImageProps) {
@@ -24,6 +26,7 @@ export default function PdpGalleryImage({
     <img
       src={productImageSrc(src)}
       alt={alt}
+      title={title}
       loading={priority ? 'eager' : 'lazy'}
       decoding="async"
       fetchPriority={priority ? 'high' : 'auto'}

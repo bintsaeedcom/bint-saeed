@@ -186,10 +186,17 @@ html {
  * Native document scrolling stays on `auto`. Global `scroll-behavior: smooth` on `html`
  * often feels glitchy with trackpads/wheel because it fights inertial scrolling.
  * Use `scrollIntoView({ behavior: 'smooth' })` only where intentional (e.g. hash nav).
+ * Lenis (desktop SmoothScrollProvider) adds `html.lenis` — keep height auto so wheel
+ * inertia stays smooth on long pages like `/home`.
  */
 [data-stable-toggle-root],
 [data-stable-toggle-root] * {
   overflow-anchor: none;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
 }
 
 html {
@@ -330,6 +337,12 @@ h6 {
   max-width: none;
   text-wrap: nowrap;
   white-space: nowrap;
+}
+
+/* Personalisation + multi-line editorial titles keep white while wrapping */
+.bs-editorial-hero-title[data-document-h1="true"].whitespace-pre-line {
+  white-space: pre-line;
+  text-wrap: wrap;
 }
 
 /* Admin owner console sits on a dark shell — keep page titles readable. */

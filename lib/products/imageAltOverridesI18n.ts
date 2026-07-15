@@ -29,7 +29,11 @@ export function altLoc(
   return { en, ar, fr, it, es, ru, zh, de, nl, pt, id: id ?? en, ms: ms ?? en }
 }
 
-type AltEntry = { filename: string; alts: Record<AppLocale, string> }
+type AltEntry = {
+  filename: string
+  alts: Record<AppLocale, string>
+  titles?: Record<AppLocale, string>
+}
 
 /**
  * Curated per-file product image alts — add new shoots here with all 10 locales.
@@ -561,14 +565,16 @@ export const PRODUCT_IMAGE_ALT_I18N: Record<string, Record<AppLocale, string>> =
   ALT_ENTRIES.map(({ filename, alts }) => [filename, alts]),
 )
 
-export function getLocalizedProductImageAltOverride(
+export const PRODUCT_IMAGE_TITLE_I18N: Record<string, Record<AppLocale, string>> = Object.fromEntries(
+  ALT_ENTRIES.flatMap(({ filename, titles }) => (titles ? [[filename, titles] as const] : [])),
+)
+
+function localizeOverrideRow(
+  row: Record<AppLocale, string>,
   filename: string,
-  locale: AppLocale = 'en',
-): string | undefined {
-  const row = PRODUCT_IMAGE_ALT_I18N[filename]
-  if (!row) return undefined
+  locale: AppLocale,
+): string {
   const native = PRODUCT_IMAGE_ALT_LOCALE_ID_MS[filename]
-  // Prefer curated id/ms entries; otherwise derive from English so alts never stay raw EN.
   if (locale === 'id') {
     if (native?.id) return native.id
     if (row.id && row.id !== row.en) return row.id
@@ -579,6 +585,24 @@ export function getLocalizedProductImageAltOverride(
     if (row.ms && row.ms !== row.en) return row.ms
     return malaysiaImageAltFromEn(row.en)
   }
+  return row[locale] ?? row.en
+}
+
+export function getLocalizedProductImageAltOverride(
+  filename: string,
+  locale: AppLocale = 'en',
+): string | undefined {
+  const row = PRODUCT_IMAGE_ALT_I18N[filename]
+  if (!row) return undefined
+  return localizeOverrideRow(row, filename, locale)
+}
+
+export function getLocalizedProductImageTitleOverride(
+  filename: string,
+  locale: AppLocale = 'en',
+): string | undefined {
+  const row = PRODUCT_IMAGE_TITLE_I18N[filename]
+  if (!row) return undefined
   return row[locale] ?? row.en
 }
 

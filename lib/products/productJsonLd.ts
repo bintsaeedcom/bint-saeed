@@ -1,7 +1,11 @@
 import type { Product } from '@/data/products'
 import { getLocalizedProductDisplayName } from '@/lib/products/productDisplayNameI18n'
 import { getProductSlug } from '@/lib/products/links'
-import { getProductImageAlt, PRODUCT_IMAGE_DIMENSIONS } from '@/lib/products/imageAlt'
+import {
+  getProductImageAlt,
+  getProductImageTitle,
+  PRODUCT_IMAGE_DIMENSIONS,
+} from '@/lib/products/imageAlt'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { resolveProductSku } from '@/lib/products/sku'
@@ -94,6 +98,7 @@ function buildImageObjects(
 ): Array<Record<string, unknown>> {
   return images.map((src, index) => {
     const caption = getProductImageAlt(product, src, { color, index, locale })
+    const title = getProductImageTitle(src, { locale })
     const url = absoluteCatalogImageUrl(src)
     const isWebp = src.toLowerCase().endsWith('.webp')
     const filename = src.split('/').pop() ?? ''
@@ -103,7 +108,7 @@ function buildImageObjects(
       '@id': `${url}#image`,
       url,
       contentUrl: url,
-      name: caption,
+      name: title ?? caption,
       caption,
       description: caption,
       ...(isWebp ? { encodingFormat: 'image/webp' } : {}),

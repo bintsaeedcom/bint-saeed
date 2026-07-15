@@ -1498,12 +1498,14 @@ function EditorialSplit() {
           <div className="mt-6 flex justify-center border-t border-[#e8ddd4] pt-6">
             <LocaleLink
               href="/the-codes"
-              className="inline-flex min-h-[40px] items-center font-montserrat text-[11px] uppercase tracking-[0.12em] text-brand-dustyBlue transition-colors hover:text-[#2a1e18]"
+              className={`${ctaPrimary} gap-2`}
+              data-bs-cta
               data-cursor-hover
               data-analytics-event="click_view_collection_codes_page"
               data-analytics-section="home-codes-section"
             >
               {copy.discoverCodesCta}
+              <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
             </LocaleLink>
           </div>
         </motion.div>

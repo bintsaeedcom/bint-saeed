@@ -295,9 +295,16 @@ function knightsbridgeDressGallery(color: 'dark-brown' | 'navy-grey'): string[] 
 
 const MARYLEBONE_ABAYA_DIR = '/Webshop pictures/Abayas/Marylebone Abaya'
 
+const MARYLEBONE_ABAYA_LIFESTYLE = [
+  `${MARYLEBONE_ABAYA_DIR}/bint-saeed-marylebone-abaya-lifestyle-jade-heart-strand-on-arm.webp`,
+  `${MARYLEBONE_ABAYA_DIR}/bint-saeed-marylebone-abaya-jade-heart-strand-lifestyle.webp`,
+  `${MARYLEBONE_ABAYA_DIR}/bint-saeed-marylebone-abaya-signature-strands-gift-box-carnelian-lifestyle.webp`,
+  `${MARYLEBONE_ABAYA_DIR}/bint-saeed-marylebone-abaya-signature-strands-gift-box-malachite-carnelian-lifestyle.webp`,
+] as const
+
 function maryleboneAbayaGallery(color: 'black' | 'navy-blue'): string[] {
   const base = `${MARYLEBONE_ABAYA_DIR}/bint-saeed-marylebone-abaya-${color}`
-  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`, ...MARYLEBONE_ABAYA_LIFESTYLE]
 }
 
 const PARK_LANE_ABAYA_DIR = '/Webshop pictures/Abayas/Park Lane Abaya'

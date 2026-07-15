@@ -241,7 +241,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'Collection',
       chapterTitle: 'Chapter I',
-      chapterIntro: 'Wherever life is lived, from Abu Dhabi to London...',
+      chapterIntro:
+        'Contemporary silhouettes shaped by Emirati heritage, created for women whose lives move between cultures, cities and worlds.',
       refine: 'Refine',
       productCategories: 'Product categories',
       sizing: 'Sizing',
@@ -328,7 +329,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     accessories: {
       collectionTitle: 'Accessories',
       collectionIntro:
-        'Browse signature strands, necklaces, earrings, bag charms, and phone charms. Filter by category, price, colour, and stone.',
+        "Discover signature strands, natural stone jewellery and accessories shaped by Bint Saeed's House Codes.",
       collectionEyebrow: 'Collection',
       backToHome: 'Back to Home',
       filter: 'Filter',
@@ -442,7 +443,8 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'التشكيلة',
       chapterTitle: 'الفصل ١',
-      chapterIntro: 'أينما تُعاش الحياة، من أبوظبي إلى لندن...',
+      chapterIntro:
+        'قصّات معاصرة مستوحاة من التراث الإماراتي، صُنعت لنساء تتحرك حياتهن بين الثقافات والمدن والعوالم.',
       refine: 'تصفية',
       productCategories: 'فئات المنتجات',
       sizing: 'المقاسات',
@@ -529,7 +531,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     accessories: {
       collectionTitle: 'الإكسسوارات',
       collectionIntro:
-        'تصفّحي سلاسل التوقيع والقلادات والأقراط وتعليقات الحقائب والهاتف. صفّي حسب الفئة والسعر واللون ونوع الحجر.',
+        'اكتشفي سلاسل التوقيع ومجوهرات الأحجار الطبيعية والإكسسوارات المستوحاة من رموز دار Bint Saeed.',
       collectionEyebrow: 'التشكيلة',
       backToHome: 'العودة للرئيسية',
       filter: 'تصفية',

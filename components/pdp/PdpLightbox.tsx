@@ -15,6 +15,7 @@ import 'swiper/css/pagination'
 export type PdpLightboxItem = {
   src: string
   alt: string
+  title?: string
 }
 
 type PdpLightboxProps = {
@@ -158,6 +159,7 @@ export default function PdpLightbox({
                       <PdpGalleryImage
                         src={image.src}
                         alt={image.alt}
+                        title={image.title}
                         priority={i === safeIndex}
                         className="object-contain object-center"
                       />

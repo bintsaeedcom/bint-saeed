@@ -175,31 +175,42 @@ export default function PersonalisationPage() {
         eyebrow={copy.heroEyebrow}
         title={copy.heroTitle}
         description={copy.heroLead}
-        titleClassName="mb-2 max-w-none whitespace-pre-line font-rozha text-[clamp(1.125rem,calc(0.5rem+3.6vw),2.875rem)] leading-[1.05] tracking-[0.01em] text-white"
+        titleClassName="bs-editorial-hero-title mb-2 max-w-none whitespace-pre-line font-rozha text-[clamp(1.125rem,calc(0.5rem+3.6vw),2.875rem)] leading-[1.05] tracking-[0.01em] !text-white"
+        descriptionClassName="max-w-xl font-montserrat text-[11px] font-normal leading-[1.85] tracking-[0.05em] text-white/70 sm:text-xs"
       />
 
-      {/* Hero body — dark (About manifesto tone) */}
+      {/* Main story — dark (About manifesto tone) */}
       <section
         className={`relative z-10 overflow-hidden bg-[#1a0210] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
-        aria-label={copy.heroEyebrow}
+        aria-labelledby="personalisation-main-story"
       >
         <SectionDrift className="bg-[radial-gradient(ellipse_70%_55%_at_70%_30%,rgba(111,21,36,0.32)_0%,transparent_65%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <ol className="mx-auto max-w-2xl space-y-0">
-            {copy.heroParagraphs.map((paragraph, i) => (
-              <Reveal key={`hero-body-${i}`} delay={0.05 + i * 0.06}>
-                <li className="border-t border-[#e8ddd4]/18 py-6 first:border-t first:pt-6 md:py-7">
+          <div className="mx-auto max-w-2xl">
+            <Reveal delay={0.02}>
+              <h2
+                id="personalisation-main-story"
+                className={`font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] text-[#e8ddd4] ${
+                  isRTL ? 'text-right' : 'text-left'
+                }`}
+              >
+                {copy.heroStoryTitle}
+              </h2>
+            </Reveal>
+            <div className="mt-8 space-y-0 md:mt-10">
+              {copy.heroParagraphs.map((paragraph, i) => (
+                <Reveal key={`hero-body-${i}`} delay={0.05 + i * 0.06}>
                   <p
-                    className={`font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78 md:text-[16px] md:leading-[2] ${
+                    className={`border-t border-[#e8ddd4]/18 py-6 font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78 first:border-t first:pt-6 md:py-7 md:text-[16px] md:leading-[2] ${
                       isRTL ? 'text-right' : 'text-left'
                     }`}
                   >
                     {paragraph}
                   </p>
-                </li>
-              </Reveal>
-            ))}
-          </ol>
+                </Reveal>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

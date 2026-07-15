@@ -11,13 +11,18 @@ import {
   buildCartLineFallbackAlt,
   withLocalizedBrandAlt,
 } from '@/lib/products/imageAltI18n'
-import { getLocalizedProductImageAltOverride } from '@/lib/products/imageAltOverridesI18n'
+import {
+  getLocalizedProductImageAltOverride,
+  getLocalizedProductImageTitleOverride,
+} from '@/lib/products/imageAltOverridesI18n'
 
 export {
   altLoc,
   getLocalizedProductImageAltOverride,
+  getLocalizedProductImageTitleOverride,
   hasProductImageAltOverride,
   PRODUCT_IMAGE_ALT_I18N,
+  PRODUCT_IMAGE_TITLE_I18N,
 } from '@/lib/products/imageAltOverridesI18n'
 
 export { BRAND_GEO_PHRASE }
@@ -33,6 +38,22 @@ export const PRODUCT_IMAGE_DIMENSIONS: Record<string, { width: number; height: n
   'bint-saeed-nothing-hill-kaftan-gold-tone-signature-emblem-close-up.webp': {
     width: 2160,
     height: 2700,
+  },
+  'bint-saeed-marylebone-abaya-jade-heart-strand-lifestyle.webp': {
+    width: 2160,
+    height: 2700,
+  },
+  'bint-saeed-marylebone-abaya-lifestyle-jade-heart-strand-on-arm.webp': {
+    width: 1080,
+    height: 1350,
+  },
+  'bint-saeed-marylebone-abaya-signature-strands-gift-box-carnelian-lifestyle.webp': {
+    width: 768,
+    height: 1024,
+  },
+  'bint-saeed-marylebone-abaya-signature-strands-gift-box-malachite-carnelian-lifestyle.webp': {
+    width: 768,
+    height: 1024,
   },
 }
 
@@ -144,6 +165,16 @@ export function getProductImageAlt(
     locale,
     heritageCraft: craft,
   })
+}
+
+/** Curated SEO image titles (HTML title + schema ImageObject name when present). */
+export function getProductImageTitle(
+  imageSrc: string,
+  opts?: { locale?: AppLocale },
+): string | undefined {
+  const locale = opts?.locale ?? 'en'
+  const filename = imageSrc.split('/').pop() ?? ''
+  return getLocalizedProductImageTitleOverride(filename, locale)
 }
 
 /** Cart / checkout thumbnails — full product alt when catalog match exists. */

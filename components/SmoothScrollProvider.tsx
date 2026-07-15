@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Lenis from 'lenis'
+import 'lenis/dist/lenis.css'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -15,20 +17,27 @@ function shouldUseLenis(): boolean {
   return true
 }
 
+/**
+ * Site-wide smooth scrolling (desktop). Home GSAP/Framer scroll work rides Lenis via
+ * ScrollTrigger.update on the shared GSAP ticker — missing Lenis CSS previously caused jank.
+ */
 export default function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+
   useEffect(() => {
     if (!shouldUseLenis()) return
 
     gsap.registerPlugin(ScrollTrigger)
 
+    // Prefer lerp over a long fixed duration — tracks the wheel more naturally on long pages like /home
     const lenis = new Lenis({
-      duration: 1.62,
-      wheelMultiplier: 0.78,
-      touchMultiplier: 0.72,
+      autoRaf: false,
+      lerp: 0.085,
       smoothWheel: true,
       syncTouch: false,
-      autoRaf: false,
-      easing: (t) => 1 - Math.pow(1 - t, 4),
+      wheelMultiplier: 0.95,
+      touchMultiplier: 1,
+      overscroll: true,
     })
 
     const onScroll = () => ScrollTrigger.update()
@@ -41,12 +50,19 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
     gsap.ticker.add(raf)
     gsap.ticker.lagSmoothing(0)
 
+    // Recalculate after fonts/images settle and on route change (home → manifesto stack)
+    const refresh = () => ScrollTrigger.refresh()
+    requestAnimationFrame(refresh)
+    window.addEventListener('load', refresh, { once: true })
+    window.addEventListener('resize', refresh)
+
     return () => {
+      window.removeEventListener('resize', refresh)
       gsap.ticker.remove(raf)
       lenis.off('scroll', onScroll)
       lenis.destroy()
     }
-  }, [])
+  }, [pathname])
 
   return <>{children}</>
 }

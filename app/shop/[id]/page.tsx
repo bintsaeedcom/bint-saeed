@@ -24,7 +24,7 @@ import { products as staticProducts, type Product } from '@/data/products'
 import { getProductPdpContent } from '@/data/productPdpContent'
 import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
 import { getLocalizedProductDisplayName } from '@/lib/products/productDisplayNameI18n'
-import { getProductImageAlt } from '@/lib/products/imageAlt'
+import { getProductImageAlt, getProductImageTitle } from '@/lib/products/imageAlt'
 import { localizedColorName } from '@/lib/products/imageAltI18n'
 import { getProductColorOptions, getProductImagesForColor } from '@/lib/products/productColorAvailability'
 import {
@@ -320,12 +320,16 @@ export default function ProductPage() {
   )
   const activeImageAlt = (image: string, index: number) =>
     getProductImageAlt(product, image, { color: selectedColor, index, locale: language })
+  const activeImageTitle = (image: string) =>
+    getProductImageTitle(image, { locale: language })
   const isVideoFile = (src: string) => /\.(mp4|mov|webm|ogg)$/i.test(src)
   const isHeicFile = (src: string) => /\.(heic|heif)$/i.test(src)
   const lightboxImages = useMemo(
     () =>
       activeImages.flatMap((src, index) =>
-        isVideoFile(src) ? [] : [{ src, alt: activeImageAlt(src, index) }],
+        isVideoFile(src)
+          ? []
+          : [{ src, alt: activeImageAlt(src, index), title: activeImageTitle(src) }],
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- rebuild when gallery inputs change
     [activeImages, selectedColor, language, product],
@@ -724,6 +728,7 @@ export default function ProductPage() {
                           <PdpGalleryImage
                             src={image}
                             alt={activeImageAlt(image, index)}
+                            title={activeImageTitle(image)}
                             className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                           />
                         )}
@@ -801,6 +806,7 @@ export default function ProductPage() {
                             <PdpGalleryImage
                               src={image}
                               alt={activeImageAlt(image, index)}
+                              title={activeImageTitle(image)}
                               priority={index === 0}
                               className="img-zoom object-cover object-top"
                             />
@@ -855,6 +861,7 @@ export default function ProductPage() {
                             <PdpGalleryImage
                               src={image}
                               alt={activeImageAlt(image, index)}
+                              title={activeImageTitle(image)}
                               className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             />
                           )}

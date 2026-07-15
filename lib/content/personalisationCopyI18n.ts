@@ -8,6 +8,7 @@ export type PersonalisationCopy = {
   heroEyebrow: string
   heroTitle: string
   heroLead: string
+  heroStoryTitle: string
   heroParagraphs: string[]
   secretEyebrow: string
   secretTitle: string
@@ -38,11 +39,13 @@ const EN: PersonalisationCopy = {
   backToHome: 'Back to Home',
   heroEyebrow: 'PERSONALISATION · BINT SAEED',
   heroTitle: 'A piece you wear.\nA message you carry.',
-  heroLead: 'Every Bint Saeed abaya can carry something known only to you.',
+  heroLead: 'A private message, placed inside your Bint Saeed garment and made to be carried with you.',
+  heroStoryTitle: 'Something only you know is there.',
   heroParagraphs: [
-    'A name. A meaningful date. A few words written for yourself, or by someone who chose the piece for you.',
-    'Your message is placed on the inner Bint Saeed label and concealed beneath a small pocket within the lining.',
-    'Invisible from the outside. Yours on the inside.',
+    'Every Bint Saeed abaya can hold something deeply personal. Hidden inside the lining is a small pocket, invisible from the outside, created to cover a personalised inner label made especially for the woman who will wear the piece.',
+    'The label may carry your name, a meaningful date or a message written for yourself. When an abaya is chosen as a gift, it can carry words from the person who chose it for you, turning their message into something you keep close each time you wear the piece.',
+    'Your words are printed on the Bint Saeed inner label before the abaya is completed. The label is then placed beneath its hidden pocket inside the lining, where no one else can see it. It remains private, shared only with yourself or with the person who placed those words there for you.',
+    'This is what personalisation means at Bint Saeed. A beautiful piece may become part of your wardrobe, but a personal message gives it a story that belongs to you.',
   ],
   secretEyebrow: 'THE SECRET',
   secretTitle: 'Some words belong close to you.',
@@ -118,11 +121,13 @@ const AR: PersonalisationCopy = {
   backToHome: 'العودة للرئيسية',
   heroEyebrow: 'التخصيص · BINT SAEED',
   heroTitle: 'قطعة ترتدينها.\nرسالة تحملينها.',
-  heroLead: 'كل عباءة من Bint Saeed يمكن أن تحمل شيئاً لا يعرفه سواك.',
+  heroLead: 'رسالة خاصة تُوضع داخل قطعتك من Bint Saeed وتُصنع لتحملها معك.',
+  heroStoryTitle: 'شيء لا تعرفين بوجوده إلا أنتِ.',
   heroParagraphs: [
-    'اسماً. تاريخاً ذا معنى. كلمات قليلة كتبتها لنفسك، أو كتبها من اختار القطعة لك.',
-    'تُوضع رسالتك على الملصق الداخلي من Bint Saeed وتُخفى تحت جيب صغير داخل البطانة.',
-    'غير مرئية من الخارج. لكِ من الداخل.',
+    'كل عباءة من Bint Saeed قادرة على أن تحمل شيئاً شخصياً بعمق. داخل البطانة جيب صغير، غير مرئي من الخارج، صُنع ليغطي ملصقاً داخلياً مخصّصاً للمرأة التي سترتدي القطعة.',
+    'قد يحمل الملصق اسمك، أو تاريخاً ذا معنى، أو رسالة كتبتها لنفسك. وعندما تُختار العباءة هدية، يمكنها أن تحمل كلمات ممن اختارها لك، فتصبح رسالته شيئاً تبقيها قريبة في كل مرة ترتدين فيها القطعة.',
+    'تُطبع كلماتك على الملصق الداخلي من Bint Saeed قبل إكمال العباءة. ثم يُوضع الملصق تحت جيبه المخفي داخل البطانة، حيث لا يراه أحد سواك. يبقى خصوصياً، بينك وبين نفسك، أو بينك وبين من وضع تلك الكلمات لك.',
+    'هذا معنى التخصيص في Bint Saeed. قد تصبح القطعة الجميلة جزءاً من خزانتك، أما الرسالة الشخصية فتمنحها قصة تخصّك وحدك.',
   ],
   secretEyebrow: 'السر',
   secretTitle: 'بعض الكلمات أقرب إليك.',
