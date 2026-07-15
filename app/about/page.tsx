@@ -1,17 +1,14 @@
 'use client'
 
-import Image from 'next/image'
+import { useEffect, useRef } from 'react'
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getAboutPageCopy } from '@/lib/content/aboutPageCopyI18n'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
+import { withBrandAlt } from '@/lib/products/imageAlt'
 import {
   EDITORIAL_PAGE_CONTAINER,
-  EDITORIAL_PAGE_SHELL,
-  EDITORIAL_STACK_CARD,
-  EDITORIAL_STACK_CONTENT_PAD,
-  EDITORIAL_STACK_PAD,
 } from '@/lib/ui/editorialPageChrome'
 import {
   ctaPrimary,
@@ -22,7 +19,94 @@ import {
 } from '@/lib/ui/ctaClasses'
 
 const HERO_IMAGE = ABOUT_SECTION_HERO_IMAGES.about
-const HERO_IMAGE_2 = '/about/campaign-seated.PNG'
+const MANIFESTO_VIDEO = '/about/bint-saeed-abu-dhabi-about-editorial-portrait.webm'
+const MANIFESTO_VIDEO_POSTER = '/about/bint-saeed-abu-dhabi-about-editorial-portrait-poster.webp'
+const ORIGIN_VIDEO = '/about/bint-saeed-abu-dhabi-about-origin-editorial.webm'
+const ORIGIN_VIDEO_POSTER = '/about/bint-saeed-abu-dhabi-about-origin-editorial-poster.webp'
+const HERITAGE_VIDEO = '/about/bint-saeed-abu-dhabi-about-heritage-editorial.webm'
+const HERITAGE_VIDEO_POSTER = '/about/bint-saeed-abu-dhabi-about-heritage-editorial-poster.webp'
+
+/**
+ * Sticky card stack — each section sits full-viewport-tall so the next panel can
+ * clearly slide over it while scrolling (desktop overlap feel).
+ * Avoid overflow-x-clip on the page shell: it breaks position:sticky.
+ */
+const ABOUT_STACK_CARD =
+  'sticky top-0 -mt-12 min-h-[100dvh] will-change-transform rounded-t-[20px] shadow-[0_-28px_64px_rgba(0,0,0,0.42)] sm:-mt-14 md:-mt-16'
+const ABOUT_STACK_PAD = 'pt-20 pb-52 sm:pt-24 sm:pb-60 md:pt-28 md:pb-72'
+const ABOUT_STACK_CONTENT_PAD = 'pb-24 sm:pb-32 md:pb-40'
+
+function EditorialFilm({ src, poster, ariaLabel }: { src: string; poster: string; ariaLabel: string }) {
+  const ref = useRef<HTMLVideoElement | null>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    el.muted = true
+    el.defaultMuted = true
+    el.volume = 0
+    el.playsInline = true
+    el.setAttribute('muted', '')
+    el.setAttribute('playsinline', '')
+    el.setAttribute('webkit-playsinline', '')
+
+    const tryPlay = () => {
+      el.muted = true
+      el.volume = 0
+      const playAttempt = el.play()
+      if (playAttempt && typeof playAttempt.catch === 'function') {
+        playAttempt.catch(() => {
+          /* Autoplay can be blocked briefly; retry on visibility. */
+        })
+      }
+    }
+
+    tryPlay()
+    el.addEventListener('loadeddata', tryPlay)
+    el.addEventListener('canplay', tryPlay)
+
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') tryPlay()
+    }
+    document.addEventListener('visibilitychange', onVisible)
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) tryPlay()
+          else el.pause()
+        }
+      },
+      { threshold: 0.25 },
+    )
+    observer.observe(el)
+
+    return () => {
+      el.removeEventListener('loadeddata', tryPlay)
+      el.removeEventListener('canplay', tryPlay)
+      document.removeEventListener('visibilitychange', onVisible)
+      observer.disconnect()
+    }
+  }, [src])
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      poster={poster}
+      aria-label={ariaLabel}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      disablePictureInPicture
+      controls={false}
+      className="h-full w-full object-cover outline-none"
+    />
+  )
+}
 
 /** Matches Craftsmanship PhaseProse chapter text treatment. */
 function ChapterProse({
@@ -101,7 +185,7 @@ export default function AboutPage() {
   ]
 
   return (
-    <main className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
+    <main className={`w-full min-w-0 max-w-full min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={HERO_IMAGE}
@@ -119,25 +203,54 @@ export default function AboutPage() {
       <section
         id="about-manifesto"
         aria-labelledby="about-manifesto-heading"
-        className={`about-manifesto relative z-10 overflow-hidden ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        className={`about-manifesto z-10 overflow-hidden ${ABOUT_STACK_PAD} ${ABOUT_STACK_CARD}`}
       >
-        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <ChapterProse
-            index={1}
-            label={copy.manifestoTitle}
-            title={copy.manifestoSubtitle}
-            headingId="about-manifesto-heading"
-            paragraphs={[copy.manifestoP1, copy.manifestoP2, copy.manifestoP3]}
-            tone="onDark"
-          />
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${ABOUT_STACK_CONTENT_PAD}`}>
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+            <div className={`lg:col-span-5 ${isRTL ? 'lg:order-2' : ''}`}>
+              <ChapterProse
+                index={1}
+                label={copy.manifestoTitle}
+                title={copy.manifestoSubtitle}
+                headingId="about-manifesto-heading"
+                paragraphs={[copy.manifestoP1, copy.manifestoP2, copy.manifestoP3]}
+                tone="onDark"
+                sticky
+              />
+            </div>
+            <div
+              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
+                isRTL ? 'lg:order-1' : ''
+              }`}
+            >
+              <div className="relative isolate aspect-[9/16] max-h-[min(78vh,860px)] w-full overflow-hidden border border-white/25 bg-white/[0.08] shadow-[0_28px_70px_-34px_rgba(0,0,0,0.62),inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-xl sm:aspect-[4/5]">
+                <EditorialFilm
+                  src={MANIFESTO_VIDEO}
+                  poster={MANIFESTO_VIDEO_POSTER}
+                  ariaLabel={withBrandAlt(
+                    'Editorial portrait film — Bint Saeed Abu Dhabi About story',
+                    language === 'ar' ? 'ar' : 'en',
+                  )}
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(255,255,255,0.12)_0%,transparent_38%,rgba(26,2,16,0.18)_100%)]"
+                  aria-hidden
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/25 shadow-[inset_0_0_48px_rgba(255,255,255,0.08)]"
+                  aria-hidden
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section
         id="about-origin"
-        className={`relative z-20 overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        className={`z-20 overflow-hidden bg-[#e8ddd4] ${ABOUT_STACK_PAD} ${ABOUT_STACK_CARD}`}
       >
-        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${ABOUT_STACK_CONTENT_PAD}`}>
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
             <div className={`lg:col-span-5 ${isRTL ? 'lg:order-2' : ''}`}>
               <ChapterProse
@@ -154,14 +267,22 @@ export default function AboutPage() {
                 isRTL ? 'lg:order-1' : ''
               }`}
             >
-              <div className="overflow-hidden border border-[#6f1524]/18 bg-brand-pageCanvas/85">
-                <Image
-                  src={HERO_IMAGE_2}
-                  alt={copy.imageAlt}
-                  width={960}
-                  height={1200}
-                  sizes="(max-width: 1024px) 92vw, 44vw"
-                  className="aspect-[4/5] h-auto w-full object-cover object-top"
+              <div className="relative isolate aspect-[9/16] max-h-[min(78vh,860px)] w-full overflow-hidden border border-white/60 bg-white/30 shadow-[0_28px_70px_-36px_rgba(42,0,18,0.2),inset_0_1px_0_rgba(255,255,255,0.75)] backdrop-blur-2xl sm:aspect-[4/5]">
+                <EditorialFilm
+                  src={ORIGIN_VIDEO}
+                  poster={ORIGIN_VIDEO_POSTER}
+                  ariaLabel={withBrandAlt(
+                    'Editorial origin film — Bint Saeed Abu Dhabi house story',
+                    language === 'ar' ? 'ar' : 'en',
+                  )}
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(255,255,255,0.28)_0%,transparent_42%,rgba(255,255,255,0.1)_100%)]"
+                  aria-hidden
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/55 shadow-[inset_0_0_56px_rgba(255,255,255,0.18)]"
+                  aria-hidden
                 />
               </div>
             </div>
@@ -170,22 +291,31 @@ export default function AboutPage() {
       </section>
 
       <section
-        className={`about-fabric-light relative z-30 overflow-hidden bg-[#7A1C28] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        className={`about-fabric-light z-30 overflow-hidden bg-[#7A1C28] ${ABOUT_STACK_PAD} ${ABOUT_STACK_CARD}`}
       >
-        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${ABOUT_STACK_CONTENT_PAD}`}>
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
             <div
               className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
                 isRTL ? 'lg:order-2' : ''
               }`}
             >
-              <div className="relative aspect-[4/5] w-full overflow-hidden border border-[#e8ddd4]/18">
-                <Image
-                  src={HERO_IMAGE}
-                  alt={copy.imageAlt}
-                  fill
-                  sizes="(max-width: 1024px) 92vw, 44vw"
-                  className="object-cover object-top"
+              <div className="relative isolate aspect-[9/16] max-h-[min(78vh,860px)] w-full overflow-hidden border border-white/25 bg-white/[0.08] shadow-[0_28px_70px_-34px_rgba(0,0,0,0.62),inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-xl sm:aspect-[4/5]">
+                <EditorialFilm
+                  src={HERITAGE_VIDEO}
+                  poster={HERITAGE_VIDEO_POSTER}
+                  ariaLabel={withBrandAlt(
+                    'Editorial heritage film — Bint Saeed Abu Dhabi carrying heritage forward',
+                    language === 'ar' ? 'ar' : 'en',
+                  )}
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(255,255,255,0.12)_0%,transparent_38%,rgba(26,2,16,0.18)_100%)]"
+                  aria-hidden
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/25 shadow-[inset_0_0_48px_rgba(255,255,255,0.08)]"
+                  aria-hidden
                 />
               </div>
             </div>
@@ -212,7 +342,7 @@ export default function AboutPage() {
       </section>
 
       <section
-        className="closing-section relative z-40 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10"
+        className={`closing-section z-40 ${ABOUT_STACK_CARD} flex min-h-[85dvh] items-center overflow-hidden text-center`}
         aria-label={copy.closingBrand}
       >
         <div className={`${EDITORIAL_PAGE_CONTAINER} relative z-20`}>
@@ -296,9 +426,6 @@ export default function AboutPage() {
         }
 
         .closing-section {
-          position: relative;
-          min-height: auto;
-          height: auto;
           padding: 120px 40px 100px;
           background-image: url('/strands/charm-fabric-dark.webp');
           background-size: cover;
