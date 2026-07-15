@@ -29,6 +29,7 @@ const PERSONALISATION_PAGE = encodeURIComponent('Personalisation Page')
 const HERO_IMAGE = ABOUT_SECTION_HERO_IMAGES.personalisation
 const POCKET_DETAIL_IMAGE =
   '/personalisation/bint-saeed-abu-dhabi-personalisation-hidden-pocket-fabric-detail.webp'
+const STEPS_FABRIC_BG = '/strands/charm-fabric-light.webp'
 const LABEL_IMAGES = ['label1.PNG', 'label2.PNG', 'label3.PNG', 'label4.PNG'].map(
   (file) => `/${PERSONALISATION_PAGE}/${encodeURIComponent(file)}`,
 )
@@ -194,103 +195,98 @@ export default function PersonalisationPage() {
         descriptionClassName="max-w-xl font-montserrat text-[11px] font-normal leading-[1.85] tracking-[0.05em] text-white/70 sm:text-xs"
       />
 
-      {/* Main story — dark (About manifesto tone) */}
+      {/* Main story — text left, pocket image right */}
       <section
         className={`relative z-10 overflow-hidden bg-[#1a0210] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="personalisation-main-story"
       >
         <SectionDrift className="bg-[radial-gradient(ellipse_70%_55%_at_70%_30%,rgba(111,21,36,0.32)_0%,transparent_65%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className="mx-auto max-w-2xl">
-            <Reveal delay={0.02}>
-              <h2
-                id="personalisation-main-story"
-                className={`font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] text-[#e8ddd4] ${
-                  isRTL ? 'text-right' : 'text-left'
-                }`}
-              >
-                {copy.heroStoryTitle}
-              </h2>
-            </Reveal>
-            <div className="mt-8 space-y-5 md:mt-10 md:space-y-6">
-              {copy.heroParagraphs.map((paragraph, i) => (
-                <Reveal key={`hero-body-${i}`} delay={0.05 + i * 0.06}>
-                  <p
-                    className={`font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78 md:text-[16px] md:leading-[2] ${
-                      isRTL ? 'text-right' : 'text-left'
-                    }`}
-                  >
-                    {paragraph}
-                  </p>
-                </Reveal>
-              ))}
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+            <div className={`lg:col-span-6 ${isRTL ? 'lg:order-2' : ''}`}>
+              <Reveal delay={0.02}>
+                <h2
+                  id="personalisation-main-story"
+                  className={`font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] text-[#e8ddd4] ${
+                    isRTL ? 'text-right' : 'text-left'
+                  }`}
+                >
+                  {copy.heroStoryTitle}
+                </h2>
+              </Reveal>
+              <div className="mt-8 space-y-5 md:mt-10 md:space-y-6">
+                {copy.heroParagraphs.map((paragraph, i) => (
+                  <Reveal key={`hero-body-${i}`} delay={0.05 + i * 0.06}>
+                    <p
+                      className={`font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78 md:text-[16px] md:leading-[2] ${
+                        isRTL ? 'text-right' : 'text-left'
+                      }`}
+                    >
+                      {paragraph}
+                    </p>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+            <div className={`lg:col-span-6 ${isRTL ? 'lg:order-1' : ''}`}>
+              <Reveal className="min-w-0" delay={0.08}>
+                <div className="relative isolate aspect-[4/5] w-full overflow-hidden border border-[#e8ddd4]/18 bg-[#1a0210] shadow-[0_28px_64px_-40px_rgba(0,0,0,0.45)] lg:aspect-[3/4] lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]">
+                  <Image
+                    src={POCKET_DETAIL_IMAGE}
+                    alt={pocketAlt}
+                    fill
+                    sizes="(min-width: 1024px) 40vw, 92vw"
+                    className="object-cover object-center"
+                    priority={false}
+                  />
+                </div>
+              </Reveal>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pocket still — visual beat after main story */}
-      <section
-        className={`relative z-20 overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
-        aria-label={copy.hiddenPocketAlt}
-      >
-        <SectionDrift className="bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(111,21,36,0.08)_0%,transparent_60%)]" />
-        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <Reveal className="mx-auto min-w-0 max-w-3xl">
-            <div className="relative isolate aspect-[4/5] w-full overflow-hidden border border-[#6f1524]/18 bg-[#faf8f5] shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)] sm:aspect-[3/4]">
-              <Image
-                src={POCKET_DETAIL_IMAGE}
-                alt={pocketAlt}
-                fill
-                sizes="(min-width: 1024px) 48vw, 92vw"
-                className="object-cover object-center"
-                priority={false}
-              />
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 02 — Personalise yours + label stills */}
+      {/* 02 — Personalise yours + label stills (text left, 2×2 images right) */}
       <section
         className={`relative z-30 overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="personalisation-words"
       >
         <SectionDrift className="bg-[radial-gradient(ellipse_60%_50%_at_20%_80%,rgba(111,21,36,0.1)_0%,transparent_55%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className={`${isRTL ? 'ms-auto' : ''} max-w-xl`}>
-            <ChapterProse
-              label={copy.wordsEyebrow}
-              title={copy.wordsTitle}
-              titleId="personalisation-words"
-              paragraphs={copy.wordsParagraphs}
-              continuous
-            />
-            <Reveal delay={0.14}>
-              <p
-                className={`mt-5 font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-brand-darkRed/[0.88] md:mt-6 md:text-[16px] md:leading-[2] ${
-                  isRTL ? 'text-right' : 'text-left'
-                }`}
-              >
-                {copy.wordsComplimentary}
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3 md:mt-14 md:gap-4">
-            {LABEL_IMAGES.map((src, index) => (
-              <Reveal key={src} delay={0.05 + index * 0.06} className="min-w-0">
-                <div className="relative isolate aspect-[3/4] overflow-hidden border border-[#6f1524]/18 bg-[#faf8f5] shadow-[0_22px_48px_-36px_rgba(42,0,18,0.16)]">
-                  <Image
-                    src={src}
-                    alt={`${copy.labelAlt} — ${index + 1}`}
-                    fill
-                    className="object-cover object-center"
-                    sizes="(max-width: 640px) 44vw, 200px"
-                  />
-                </div>
-              </Reveal>
-            ))}
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+            <div className={`lg:col-span-6 ${isRTL ? 'lg:order-2' : ''}`}>
+              <div className={isRTL ? 'ms-auto text-right' : ''}>
+                <ChapterProse
+                  label={copy.wordsEyebrow}
+                  title={copy.wordsTitle}
+                  titleId="personalisation-words"
+                  paragraphs={copy.wordsParagraphs}
+                  continuous
+                />
+                <Reveal delay={0.14}>
+                  <p className="mt-5 font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-brand-darkRed/[0.88] md:mt-6 md:text-[16px] md:leading-[2]">
+                    {copy.wordsComplimentary}
+                  </p>
+                </Reveal>
+              </div>
+            </div>
+            <div className={`lg:col-span-6 ${isRTL ? 'lg:order-1' : ''}`}>
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]">
+                {LABEL_IMAGES.map((src, index) => (
+                  <Reveal key={src} delay={0.05 + index * 0.06} className="min-w-0">
+                    <div className="relative isolate aspect-square overflow-hidden border border-[#6f1524]/18 bg-[#faf8f5] shadow-[0_22px_48px_-36px_rgba(42,0,18,0.16)]">
+                      <Image
+                        src={src}
+                        alt={`${copy.labelAlt} — ${index + 1}`}
+                        fill
+                        className="object-cover object-center"
+                        sizes="(min-width: 1024px) 20vw, 44vw"
+                      />
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -300,7 +296,17 @@ export default function PersonalisationPage() {
         className={`relative z-40 overflow-hidden bg-[#1a0210] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="personalisation-steps"
       >
-        <SectionDrift className="bg-[radial-gradient(ellipse_70%_55%_at_70%_30%,rgba(111,21,36,0.32)_0%,transparent_65%)]" />
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <Image
+            src={STEPS_FABRIC_BG}
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            priority={false}
+          />
+          <div className="absolute inset-0 bg-[#1a0210]/58" />
+        </div>
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
           <Reveal>
             <div className={isRTL ? 'text-right' : 'text-left'}>
@@ -390,40 +396,6 @@ export default function PersonalisationPage() {
               </LocaleLink>
             </div>
           </Reveal>
-        </div>
-      </section>
-
-      {/* Final — clay chapter + echo */}
-      <section
-        className={`relative z-[55] overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
-        aria-labelledby="personalisation-closing"
-      >
-        <SectionDrift className="bg-[radial-gradient(ellipse_60%_50%_at_20%_80%,rgba(111,21,36,0.1)_0%,transparent_55%)]" />
-        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className={`mx-auto max-w-2xl ${isRTL ? 'text-right' : 'text-left'}`}>
-            <Reveal>
-              <h2
-                id="personalisation-closing"
-                className="font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] text-brand-darkRed"
-              >
-                {copy.closingTitle}
-              </h2>
-            </Reveal>
-            <div className="mt-10 space-y-5 md:mt-12 md:space-y-6">
-              {copy.closingParagraphs.map((paragraph, i) => (
-                <Reveal key={`closing-${i}`} delay={0.06 + i * 0.06}>
-                  <p className="font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-brand-darkRed/[0.88] md:text-[16px] md:leading-[2]">
-                    {paragraph}
-                  </p>
-                </Reveal>
-              ))}
-            </div>
-            <Reveal delay={0.2}>
-              <p className="mt-10 whitespace-pre-line font-rozha text-[clamp(1.35rem,2.8vw,1.85rem)] leading-[1.2] tracking-[0.02em] text-brand-darkRed md:mt-12">
-                {copy.closingEcho}
-              </p>
-            </Reveal>
-          </div>
         </div>
       </section>
 
