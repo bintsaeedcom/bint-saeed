@@ -90,7 +90,7 @@ function SafeCarouselImage({
   className: string
   sizes: string
 }) {
-  const fallbackSrc = '/collection-section/1.png'
+  const fallbackSrc = '/collection-section/bint-saeed-collection-editorial-still-01.webp'
   const [resolvedSrc, setResolvedSrc] = useState(src || fallbackSrc)
 
   useEffect(() => {
@@ -204,14 +204,14 @@ function CollectionCardVisual({
 /** Preview manifesto (EditorialIntro) — copy from homeEditorialCopyI18n */
 /** Magazine grid — collection assets in public/collection-section/ (no spaces in path) */
 const SUMMER_ELEGANCE_SLIDES = [
-  '/collection-section/67.png',
-  '/collection-section/68.png',
+  '/collection-section/bint-saeed-collection-editorial-still-01.webp',
+  '/collection-section/bint-saeed-collection-editorial-still-02.webp',
 ] as const
 
 const ESSENTIALS_SLIDES = [
-  '/collection-section/2.PNG',
-  '/collection-section/3.JPG',
-  '/collection-section/5.jpg',
+  '/collection-section/bint-saeed-collection-editorial-still-02.webp',
+  '/collection-section/bint-saeed-collection-editorial-still-03.webp',
+  '/collection-section/bint-saeed-collection-editorial-still-05.webp',
 ] as const
 
 const SLIDE_INTERVAL_MS = 6500
@@ -759,19 +759,19 @@ const CATEGORY_STRIP = [
     key: 'Abayas',
     label: 'Abayas',
     href: '/shop?category=abayas',
-    image: '/collection-section/1.png',
+    image: '/collection-section/bint-saeed-collection-editorial-still-01.webp',
   },
   {
     key: 'Kaftans',
     label: 'Kaftans',
     href: '/shop?category=kaftans',
-    image: '/collection-section/67.png',
+    image: '/collection-section/bint-saeed-collection-editorial-still-01.webp',
   },
   {
     key: 'Sets',
     label: 'Sets',
     href: '/shop?category=sets',
-    image: '/collection-section/68.png',
+    image: '/collection-section/bint-saeed-collection-editorial-still-02.webp',
   },
   {
     key: 'Accessories',

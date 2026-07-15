@@ -95,7 +95,7 @@ export const COVENT_GARDEN_ABAYA_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('burgundy', 'side'),
   entry('burgundy', 'back'),
   {
-    filename: 'bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.jpg',
+    filename: 'bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.webp',
     alts: EMBLEM_CLOSE_UP_ALTS,
   },
   entry('black', 'front'),

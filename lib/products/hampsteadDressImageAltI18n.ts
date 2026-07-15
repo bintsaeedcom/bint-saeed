@@ -164,11 +164,11 @@ export const HAMPSTEAD_DRESS_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('black', 'side'),
   entry('black', 'back'),
   {
-    filename: 'bint-saeed-hampstead-dress-black-front-al-talli-detail-shot.png',
+    filename: 'bint-saeed-hampstead-dress-black-front-al-talli-detail-shot.webp',
     alts: AL_TALLI_DETAIL_ALTS,
   },
   {
-    filename: 'bint-saeed-hampstead-dress-black-bint-saeed-label-detail-shot.png',
+    filename: 'bint-saeed-hampstead-dress-black-bint-saeed-label-detail-shot.webp',
     alts: LABEL_DETAIL_ALTS,
   },
   entry('burgundy', 'front'),

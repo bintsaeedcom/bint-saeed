@@ -167,7 +167,7 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     side: '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-side.webp',
     back: '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-back.webp',
     detail:
-      '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.jpg',
+      '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.webp',
   },
   'kensington-abaya': {
     front: '/Webshop pictures/Abayas/Kensington Abaya/bint-saeed-kensington-abaya-black-front.webp',
@@ -346,7 +346,7 @@ function coventGardenAbayaGallery(color: 'burgundy' | 'black' | 'navy-blue'): st
   const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
   if (color === 'burgundy') {
     images.push(
-      `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.jpg`,
+      `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.webp`,
     )
   }
   return images
@@ -385,8 +385,8 @@ function hampsteadDressGallery(color: 'black' | 'burgundy' | 'navy-blue'): strin
   const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
   if (color === 'black') {
     images.push(
-      `${base}-front-al-talli-detail-shot.png`,
-      `${base}-bint-saeed-label-detail-shot.png`,
+      `${base}-front-al-talli-detail-shot.webp`,
+      `${base}-bint-saeed-label-detail-shot.webp`,
     )
   }
   return images

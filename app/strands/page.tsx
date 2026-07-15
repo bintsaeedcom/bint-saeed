@@ -20,7 +20,7 @@ import { ctaButtonRow, ctaInButtonRow, ctaPrimary, ctaSecondaryOnLight } from '@
 
 /** Strands hero banner — `public/strands/charm-fabric-dark.webp` (served under /strands/, not /charms/ redirect) */
 const HERO_CAMPAIGN_IMAGE = '/strands/charm-fabric-dark.webp'
-const CONCEPT_FEATURE_IMAGE = '/collection-section/45.jpg'
+const CONCEPT_FEATURE_IMAGE = '/collection-section/bint-saeed-marylebone-abaya-jade-heart-strand-arm-lifestyle.webp'
 const STRAND_HERO_ALT = withBrandAlt(
   'Natural stone bead abaya strands collection — interchangeable onyx, jade, amethyst, malachite and rose quartz for Marylebone Abaya',
 )

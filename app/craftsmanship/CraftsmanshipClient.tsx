@@ -165,21 +165,21 @@ const MEDIA = {
     ),
   },
   goldKnotFinishing: {
-    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-atelier-gold-knot-strand-finishing.png',
+    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-atelier-gold-knot-strand-finishing.webp',
     alt: withBrandAlt(
       'Atelier finishing of a gold knot charm on a black beaded strand with gloved hands',
       'en',
     ),
   },
   wovenLabelStitching: {
-    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-woven-label-hand-stitching.png',
+    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-woven-label-hand-stitching.webp',
     alt: withBrandAlt(
       'Hand sewing a Bint Saeed Abu Dhabi woven label into a luxury garment',
       'en',
     ),
   },
   goldKnottedChain: {
-    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-gold-knotted-chain-detail.png',
+    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-gold-knotted-chain-detail.webp',
     alt: withBrandAlt(
       'Polished gold knotted chain links — atelier jewellery craftsmanship detail',
       'en',

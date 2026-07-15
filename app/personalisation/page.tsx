@@ -25,13 +25,12 @@ import {
   EDITORIAL_STACK_PAD,
 } from '@/lib/ui/editorialPageChrome'
 
-const PERSONALISATION_PAGE = encodeURIComponent('Personalisation Page')
 const HERO_IMAGE = ABOUT_SECTION_HERO_IMAGES.personalisation
 const POCKET_DETAIL_IMAGE =
   '/personalisation/bint-saeed-abu-dhabi-personalisation-hidden-pocket-fabric-detail.webp'
 const STEPS_FABRIC_BG = '/strands/charm-fabric-light.webp'
-const LABEL_IMAGES = ['label1.PNG', 'label2.PNG', 'label3.PNG', 'label4.PNG'].map(
-  (file) => `/${PERSONALISATION_PAGE}/${encodeURIComponent(file)}`,
+const LABEL_IMAGES = [1, 2, 3, 4].map(
+  (n) => `/personalisation/bint-saeed-personalisation-inner-label-${String(n).padStart(2, '0')}.webp`,
 )
 
 /** Scroll-scrubbed reveal — rise + fade, no blur. */

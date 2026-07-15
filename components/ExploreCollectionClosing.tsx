@@ -144,7 +144,7 @@ export default function ExploreCollectionClosing({
       aria-label="Bint Saeed garment finishing details"
     >
       <Image
-        src="/craftsmanship/bint-saeed-abu-dhabi-explore-collection-organic-texture.png"
+        src="/craftsmanship/bint-saeed-abu-dhabi-explore-collection-organic-texture.webp"
         alt={withBrandAlt(
           'Explore the Bint Saeed collection — editorial fabric texture background for luxury abayas',
           language === 'ar' ? 'ar' : 'en',
