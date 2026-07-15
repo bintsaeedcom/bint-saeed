@@ -212,11 +212,11 @@ export default function PersonalisationPage() {
                 {copy.heroStoryTitle}
               </h2>
             </Reveal>
-            <div className="mt-8 space-y-0 md:mt-10">
+            <div className="mt-8 space-y-5 md:mt-10 md:space-y-6">
               {copy.heroParagraphs.map((paragraph, i) => (
                 <Reveal key={`hero-body-${i}`} delay={0.05 + i * 0.06}>
                   <p
-                    className={`border-t border-[#e8ddd4]/18 py-6 font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78 first:border-t first:pt-6 md:py-7 md:text-[16px] md:leading-[2] ${
+                    className={`font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78 md:text-[16px] md:leading-[2] ${
                       isRTL ? 'text-right' : 'text-left'
                     }`}
                   >
@@ -229,43 +229,29 @@ export default function PersonalisationPage() {
         </div>
       </section>
 
-      {/* 01 — The Secret + pocket fabric still */}
+      {/* Pocket still — visual beat after main story */}
       <section
         className={`relative z-20 overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
-        aria-labelledby="personalisation-secret"
+        aria-label={copy.hiddenPocketAlt}
       >
         <SectionDrift className="bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(111,21,36,0.08)_0%,transparent_60%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
-            <div className={`lg:col-span-6 ${isRTL ? 'lg:order-2' : ''}`}>
-              <ChapterProse
-                index={1}
-                label={copy.secretEyebrow}
-                title={copy.secretTitle}
-                titleId="personalisation-secret"
-                paragraphs={copy.secretParagraphs}
-                sticky
+          <Reveal className="mx-auto min-w-0 max-w-3xl">
+            <div className="relative isolate aspect-[4/5] w-full overflow-hidden border border-[#6f1524]/18 bg-[#faf8f5] shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)] sm:aspect-[3/4]">
+              <Image
+                src={POCKET_DETAIL_IMAGE}
+                alt={pocketAlt}
+                fill
+                sizes="(min-width: 1024px) 48vw, 92vw"
+                className="object-cover object-center"
+                priority={false}
               />
             </div>
-            <div className={`lg:col-span-6 ${isRTL ? 'lg:order-1' : ''}`}>
-              <Reveal className="min-w-0">
-                <div className="relative isolate aspect-[4/5] w-full overflow-hidden border border-[#6f1524]/18 bg-[#faf8f5] shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)] lg:aspect-[3/4]">
-                  <Image
-                    src={POCKET_DETAIL_IMAGE}
-                    alt={pocketAlt}
-                    fill
-                    sizes="(min-width: 1024px) 40vw, 92vw"
-                    className="object-cover object-center"
-                    priority={false}
-                  />
-                </div>
-              </Reveal>
-            </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* 02 — Your Words + label stills */}
+      {/* 02 — Personalise yours + label stills */}
       <section
         className={`relative z-30 overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="personalisation-words"
@@ -330,11 +316,11 @@ export default function PersonalisationPage() {
             </div>
           </Reveal>
 
-          <ol className="mt-12 space-y-0 border-t border-[#e8ddd4]/18 md:mt-14">
+          <ol className="mt-12 space-y-8 md:mt-14 md:space-y-10">
             {copy.steps.map((step, index) => (
               <Reveal key={step.numeral} delay={0.05 + index * 0.06}>
                 <li
-                  className={`grid gap-4 border-b border-[#e8ddd4]/18 py-8 md:grid-cols-[4.5rem_1fr] md:gap-8 md:py-10 ${
+                  className={`grid gap-4 md:grid-cols-[4.5rem_1fr] md:gap-8 ${
                     isRTL ? 'md:text-right' : ''
                   }`}
                 >
@@ -423,17 +409,15 @@ export default function PersonalisationPage() {
                 {copy.closingTitle}
               </h2>
             </Reveal>
-            <ol className="mt-10 space-y-0 border-t border-[#6f1524]/35 md:mt-12">
+            <div className="mt-10 space-y-5 md:mt-12 md:space-y-6">
               {copy.closingParagraphs.map((paragraph, i) => (
                 <Reveal key={`closing-${i}`} delay={0.06 + i * 0.06}>
-                  <li className="border-b border-[#6f1524]/35 py-6 md:py-7">
-                    <p className="font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-brand-darkRed/[0.88] md:text-[16px] md:leading-[2]">
-                      {paragraph}
-                    </p>
-                  </li>
+                  <p className="font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-brand-darkRed/[0.88] md:text-[16px] md:leading-[2]">
+                    {paragraph}
+                  </p>
                 </Reveal>
               ))}
-            </ol>
+            </div>
             <Reveal delay={0.2}>
               <p className="mt-10 whitespace-pre-line font-rozha text-[clamp(1.35rem,2.8vw,1.85rem)] leading-[1.2] tracking-[0.02em] text-brand-darkRed md:mt-12">
                 {copy.closingEcho}
