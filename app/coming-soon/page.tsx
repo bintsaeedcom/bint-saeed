@@ -1,13 +1,17 @@
 import { redirect } from 'next/navigation'
 import ComingSoonPage from '@/app/page'
+import { COMING_SOON_ONLY } from '@/lib/comingSoon'
 
 /**
- * Keep `/coming-soon` permanently available as a URL.
- * When `COMING_SOON_REDIRECT_TO_ROOT=true` (launch), send visitors to `/home`.
- * Canonical + robots: `app/coming-soon/layout.tsx`
+ * Legacy `/coming-soon` URL.
+ * Public storefront: always send humans + crawlers to `/home` (www.bintsaeed.com primary).
+ * Coming-soon-only mode: keep the tease shell for prelaunch.
  */
 export default function ComingSoonAliasPage() {
-  if (process.env.COMING_SOON_REDIRECT_TO_ROOT === 'true') {
+  const forceRedirect =
+    process.env.COMING_SOON_REDIRECT_TO_ROOT === 'true' || !COMING_SOON_ONLY
+
+  if (forceRedirect) {
     redirect('/home')
   }
 

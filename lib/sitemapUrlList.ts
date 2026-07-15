@@ -20,7 +20,6 @@ const homePageUrl: SitemapUrlEntry = {
 
 const allUrls: SitemapUrlEntry[] = [
   { loc: SITEMAP_BASE_URL, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '1.0' },
-  { loc: `${SITEMAP_BASE_URL}/coming-soon`, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '0.9' },
   {
     loc: `${SITEMAP_BASE_URL}/llms.txt`,
     lastmod: new Date().toISOString(),
@@ -60,10 +59,16 @@ const allUrls: SitemapUrlEntry[] = [
   { loc: `${SITEMAP_BASE_URL}/terms`, lastmod: new Date().toISOString(), changefreq: 'yearly', priority: '0.3' },
 ]
 
+/** Prelaunch tease only — do not feed unfinished shop URLs to crawlers. */
+const prelaunchUrls: SitemapUrlEntry[] = [
+  { loc: SITEMAP_BASE_URL, lastmod: new Date().toISOString(), changefreq: 'weekly', priority: '1.0' },
+  homePageUrl,
+]
+
 /** URLs included in `/sitemap` / `/sitemap.xml` for the current index mode. */
 export function getSitemapUrlEntries(): SitemapUrlEntry[] {
   if (isPrelaunch) {
-    return [allUrls[0], allUrls[1]]
+    return prelaunchUrls
   }
   const catalogUrls = buildCatalogSitemapEntries(SITEMAP_BASE_URL)
   return [...allUrls, ...catalogUrls]

@@ -2,18 +2,18 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 /**
- * Explicit crawl directives for `/coming-soon` so merged metadata never surfaces noindex
- * (root layout already sends index,follow; this segment reinforces for crawlers / GSC).
+ * Legacy `/coming-soon` consolidates on the live storefront.
+ * Canonical + noindex so SERP equity moves to www.bintsaeed.com/home (middleware 308 when public).
  */
 export const metadata: Metadata = {
   alternates: {
-    canonical: 'https://www.bintsaeed.com/coming-soon',
+    canonical: 'https://www.bintsaeed.com/home',
   },
   robots: {
-    index: true,
+    index: false,
     follow: true,
     googleBot: {
-      index: true,
+      index: false,
       follow: true,
       noimageindex: false,
       'max-video-preview': -1,

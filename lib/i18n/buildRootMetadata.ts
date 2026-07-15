@@ -160,7 +160,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       creator: '@bintsaeed_brand',
       site: '@bintsaeed_brand',
     },
-    /* `/` and `/coming-soon`: index,follow (nested segment layouts may add noindex for /shop etc. during prelaunch). */
+    /* Public pages index,follow by default; segment layouts may noindex (prelaunch / utility). */
     robots: {
       index: true,
       follow: true,
