@@ -15,7 +15,6 @@ import {
 } from 'framer-motion'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
-import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { getPersonalisationCopy } from '@/lib/content/personalisationCopyI18n'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import {
@@ -98,12 +97,12 @@ function ChapterProse({
   tone = 'light',
   sticky = false,
 }: {
-  index: number
+  index?: number
   label: string
   title: string
   titleId: string
   paragraphs: string[]
-  tone?: 'light' | 'onDark'
+  tone?: 'light' | 'onDark' | 'onClay'
   sticky?: boolean
 }) {
   const { isRTL } = useLanguage()
@@ -121,16 +120,18 @@ function ChapterProse({
     <div className={`max-w-xl ${stickyClass} ${isRTL ? 'ms-auto text-right' : ''}`}>
       <Reveal>
         <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-          <span className={`shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] ${indexColor}`}>
-            {String(index).padStart(2, '0')}
-          </span>
+          {typeof index === 'number' ? (
+            <span className={`shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] ${indexColor}`}>
+              {String(index).padStart(2, '0')}
+            </span>
+          ) : null}
           <div className="min-w-0">
             <p className={`mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] ${labelColor}`}>
               {label}
             </p>
             <h2
               id={titleId}
-              className={`font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] ${titleColor}`}
+              className={`whitespace-pre-line font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] ${titleColor}`}
             >
               {title}
             </h2>
@@ -140,7 +141,7 @@ function ChapterProse({
 
       <ol className="mt-10 space-y-0 md:mt-12">
         {paragraphs.map((paragraph, i) => (
-          <Reveal key={paragraph.slice(0, 28)} delay={0.08 + i * 0.07}>
+          <Reveal key={`${titleId}-${i}`} delay={0.06 + i * 0.05}>
             <li className={`border-t ${ruleColor} py-6 first:border-t first:pt-6 md:py-7`}>
               <p
                 className={`font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] md:text-[16px] md:leading-[2] ${bodyColor}`}
@@ -158,10 +159,7 @@ function ChapterProse({
 export default function PersonalisationPage() {
   const { isRTL, language } = useLanguage()
   const copy = getPersonalisationCopy(language)
-  const pocketAlt = withBrandAlt(
-    'Bint Saeed Abu Dhabi personalisation hidden pocket fabric detail',
-    language === 'ar' ? 'ar' : 'en',
-  )
+  const pocketAlt = withBrandAlt(copy.hiddenPocketAlt, language === 'ar' ? 'ar' : 'en')
 
   return (
     <div className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -174,14 +172,40 @@ export default function PersonalisationPage() {
           { label: copy.breadcrumbHome, href: '/home' },
           { label: copy.breadcrumb },
         ]}
-        eyebrow={getAboutEditorialHeroEyebrow(language)}
+        eyebrow={copy.heroEyebrow}
         title={copy.heroTitle}
-        description={copy.heroSub}
+        description={copy.heroLead}
+        titleClassName="mb-2 max-w-none whitespace-pre-line font-rozha text-[clamp(1.125rem,calc(0.5rem+3.6vw),2.875rem)] leading-[1.05] tracking-[0.01em] text-white"
       />
 
-      {/* 01 — The Secret + pocket fabric detail (88.webp). The Pocket / video section removed. */}
+      {/* Hero body — dark (About manifesto tone) */}
       <section
-        className={`relative z-10 overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        className={`relative z-10 overflow-hidden bg-[#1a0210] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        aria-label={copy.heroEyebrow}
+      >
+        <SectionDrift className="bg-[radial-gradient(ellipse_70%_55%_at_70%_30%,rgba(111,21,36,0.32)_0%,transparent_65%)]" />
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+          <ol className="mx-auto max-w-2xl space-y-0">
+            {copy.heroParagraphs.map((paragraph, i) => (
+              <Reveal key={`hero-body-${i}`} delay={0.05 + i * 0.06}>
+                <li className="border-t border-[#e8ddd4]/18 py-6 first:border-t first:pt-6 md:py-7">
+                  <p
+                    className={`font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78 md:text-[16px] md:leading-[2] ${
+                      isRTL ? 'text-right' : 'text-left'
+                    }`}
+                  >
+                    {paragraph}
+                  </p>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* 01 — The Secret + pocket fabric still */}
+      <section
+        className={`relative z-20 overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="personalisation-secret"
       >
         <SectionDrift className="bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(111,21,36,0.08)_0%,transparent_60%)]" />
@@ -193,7 +217,7 @@ export default function PersonalisationPage() {
                 label={copy.secretEyebrow}
                 title={copy.secretTitle}
                 titleId="personalisation-secret"
-                paragraphs={[copy.secretBody, copy.pocketBody]}
+                paragraphs={copy.secretParagraphs}
                 sticky
               />
             </div>
@@ -215,20 +239,29 @@ export default function PersonalisationPage() {
         </div>
       </section>
 
-      {/* 02 — The Message + label stills */}
+      {/* 02 — Your Words + label stills */}
       <section
-        className={`relative z-20 overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
-        aria-labelledby="personalisation-message"
+        className={`relative z-30 overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        aria-labelledby="personalisation-words"
       >
         <SectionDrift className="bg-[radial-gradient(ellipse_60%_50%_at_20%_80%,rgba(111,21,36,0.1)_0%,transparent_55%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
           <ChapterProse
             index={2}
-            label={copy.messageEyebrow}
-            title={copy.messageTitle}
-            titleId="personalisation-message"
-            paragraphs={[copy.messageBody]}
+            label={copy.wordsEyebrow}
+            title={copy.wordsTitle}
+            titleId="personalisation-words"
+            paragraphs={copy.wordsParagraphs}
           />
+          <Reveal delay={0.12}>
+            <p
+              className={`mt-8 max-w-xl font-montserrat text-[13px] uppercase tracking-[0.16em] text-brand-darkRed/65 md:mt-10 ${
+                isRTL ? 'ms-auto text-right' : ''
+              }`}
+            >
+              {copy.wordsComplimentary}
+            </p>
+          </Reveal>
 
           <div className="mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3 md:mt-14 md:gap-4">
             {LABEL_IMAGES.map((src, index) => (
@@ -250,7 +283,7 @@ export default function PersonalisationPage() {
 
       {/* 03 — How it works */}
       <section
-        className={`relative z-30 overflow-hidden bg-[#1a0210] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        className={`relative z-40 overflow-hidden bg-[#1a0210] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="personalisation-steps"
       >
         <SectionDrift className="bg-[radial-gradient(ellipse_70%_55%_at_70%_30%,rgba(111,21,36,0.32)_0%,transparent_65%)]" />
@@ -276,13 +309,13 @@ export default function PersonalisationPage() {
 
           <ol className="mt-12 space-y-0 border-t border-[#e8ddd4]/18 md:mt-14">
             {copy.steps.map((step, index) => (
-              <Reveal key={step.numeral} delay={0.06 + index * 0.07}>
+              <Reveal key={step.numeral} delay={0.05 + index * 0.06}>
                 <li
-                  className={`grid gap-4 border-b border-[#e8ddd4]/18 py-8 md:grid-cols-[4rem_1fr] md:gap-8 md:py-10 ${
+                  className={`grid gap-4 border-b border-[#e8ddd4]/18 py-8 md:grid-cols-[4.5rem_1fr] md:gap-8 md:py-10 ${
                     isRTL ? 'md:text-right' : ''
                   }`}
                 >
-                  <p className="font-rozha text-[2.5rem] leading-none text-[#e8ddd4]/35 md:text-[2.75rem]">
+                  <p className="font-montserrat text-[11px] uppercase tracking-[0.22em] text-[#e8ddd4]/45 md:pt-1">
                     {step.numeral}
                   </p>
                   <div>
@@ -300,6 +333,9 @@ export default function PersonalisationPage() {
 
           <Reveal delay={0.18}>
             <div className={`mt-12 flex flex-col items-start gap-5 md:mt-14 ${isRTL ? 'items-end' : ''}`}>
+              <p className="font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#e8ddd4]/55">
+                {copy.complimentaryBanner}
+              </p>
               <LocaleLink
                 href="/shop?category=abayas"
                 className="inline-flex min-h-[48px] items-center justify-center gap-3 rounded-[4px] border border-[#e8ddd4]/45 bg-[#e8ddd4]/10 px-9 py-3.5 font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#e8ddd4] transition-colors hover:border-[#e8ddd4]/80 hover:bg-[#e8ddd4] hover:text-brand-darkRed"
@@ -308,27 +344,79 @@ export default function PersonalisationPage() {
                 data-analytics-event="click_shop_abayas_from_personalisation"
                 data-analytics-section="personalisation-steps"
               >
-                {copy.pickAbayaCta}
+                {copy.discoverAbayasCta}
                 <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-              </LocaleLink>
-              <div className={`max-w-xl space-y-3 ${isRTL ? 'text-right' : 'text-left'}`}>
-                <p className="font-montserrat text-[13px] leading-[1.75] text-[#e8ddd4]/60">
-                  {copy.complimentaryNote}
-                </p>
-                <p className="font-montserrat text-[13px] leading-[1.75] text-[#e8ddd4]/60">
-                  {copy.complimentaryOtherNote}
-                </p>
-              </div>
-              <LocaleLink
-                href="/contact"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-[4px] border border-[#e8ddd4]/25 px-7 py-3 font-montserrat text-[11px] uppercase tracking-[0.18em] text-[#e8ddd4]/75 transition-colors hover:border-[#e8ddd4]/55 hover:text-[#e8ddd4]"
-                data-bs-cta
-                data-cursor-hover
-              >
-                {copy.contactServiceCta}
               </LocaleLink>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* 04 — For someone else */}
+      <section
+        className={`relative z-50 overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        aria-labelledby="personalisation-gift"
+      >
+        <SectionDrift className="bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(111,21,36,0.08)_0%,transparent_60%)]" />
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+          <ChapterProse
+            index={4}
+            label={copy.giftEyebrow}
+            title={copy.giftTitle}
+            titleId="personalisation-gift"
+            paragraphs={copy.giftParagraphs}
+          />
+          <Reveal delay={0.15}>
+            <div className={`mt-10 ${isRTL ? 'flex justify-end' : ''}`}>
+              <LocaleLink
+                href="/shop?category=abayas"
+                className="inline-flex min-h-[48px] items-center justify-center gap-3 rounded-[4px] border border-brand-darkRed/25 bg-transparent px-9 py-3.5 font-montserrat text-[11px] uppercase tracking-[0.2em] text-brand-darkRed transition-colors hover:border-brand-darkRed hover:bg-brand-darkRed hover:text-[#e8ddd4]"
+                data-bs-cta
+                data-cursor-hover
+                data-analytics-event="click_gift_abaya_from_personalisation"
+                data-analytics-section="personalisation-gift"
+              >
+                {copy.giftCta}
+                <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+              </LocaleLink>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Final — clay chapter + echo */}
+      <section
+        className={`relative z-[55] overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
+        aria-labelledby="personalisation-closing"
+      >
+        <SectionDrift className="bg-[radial-gradient(ellipse_60%_50%_at_20%_80%,rgba(111,21,36,0.1)_0%,transparent_55%)]" />
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+          <div className={`mx-auto max-w-2xl ${isRTL ? 'text-right' : 'text-left'}`}>
+            <Reveal>
+              <h2
+                id="personalisation-closing"
+                className="font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] text-brand-darkRed"
+              >
+                {copy.closingTitle}
+              </h2>
+            </Reveal>
+            <ol className="mt-10 space-y-0 border-t border-[#6f1524]/35 md:mt-12">
+              {copy.closingParagraphs.map((paragraph, i) => (
+                <Reveal key={`closing-${i}`} delay={0.06 + i * 0.06}>
+                  <li className="border-b border-[#6f1524]/35 py-6 md:py-7">
+                    <p className="font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-brand-darkRed/[0.88] md:text-[16px] md:leading-[2]">
+                      {paragraph}
+                    </p>
+                  </li>
+                </Reveal>
+              ))}
+            </ol>
+            <Reveal delay={0.2}>
+              <p className="mt-10 whitespace-pre-line font-rozha text-[clamp(1.35rem,2.8vw,1.85rem)] leading-[1.2] tracking-[0.02em] text-brand-darkRed md:mt-12">
+                {copy.closingEcho}
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
