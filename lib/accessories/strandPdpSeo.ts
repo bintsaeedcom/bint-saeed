@@ -18,6 +18,11 @@ import { getAccessorySku } from '@/lib/accessories/accessorySku'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { buildLocalizedStrandAltBody } from '@/lib/accessories/strandImageAltI18n'
 import {
+  appendAccessoryPackagingImage,
+  getAccessoryPackagingImageAlt,
+  isAccessoryPackagingImage,
+} from '@/lib/accessories/accessoryPackagingImage'
+import {
   STONE_VARIANTS_I18N,
   type StoneVariantId,
 } from '@/lib/accessories/strandPdp/stoneVariantsI18n'
@@ -420,19 +425,25 @@ export function getStrandPdpPack(accessoryId: string): StrandPdpSeoPack | undefi
  * - Phone charms: primary + detail angles
  * - Signature Strands: catalog front shot(s) only (never necklace/earring lifestyle)
  * - Necklaces / earrings / other: catalog `images` (lifestyle only where present on the product)
+ * - Shop jewellery: append signature packaging lifestyle shot (never replaces existing)
  */
 export function getAccessoryPdpImages(accessory: Accessory): string[] {
+  let gallery: string[]
   if (accessory.category === 'phone-strands') {
     const primary = accessory.images[0]
-    if (!primary) return [...accessory.images]
-    const gallery = [primary]
-    for (const src of accessory.detailAngles ?? []) {
-      if (!gallery.includes(src)) gallery.push(src)
+    if (!primary) {
+      gallery = [...accessory.images]
+    } else {
+      gallery = [primary]
+      for (const src of accessory.detailAngles ?? []) {
+        if (!gallery.includes(src)) gallery.push(src)
+      }
     }
-    return gallery
+  } else {
+    gallery = [...accessory.images]
   }
 
-  return [...accessory.images]
+  return appendAccessoryPackagingImage(gallery, accessory)
 }
 
 function strandStoneLabel(accessoryId: string, locale: AppLocale): string {
@@ -465,10 +476,14 @@ function localizedStrandAltBody(
 
 export function getAccessoryImageAlt(
   accessory: Accessory,
-  _imageSrc: string,
+  imageSrc: string,
   imageIndex: number,
   locale: AppLocale = 'en',
 ): string {
+  if (isAccessoryPackagingImage(imageSrc)) {
+    return getAccessoryPackagingImageAlt(locale)
+  }
+
   const pack = getStrandPdpPack(accessory.id)
   if (!pack) {
     return withBrandAlt(`${accessory.name} — product image ${imageIndex + 1}`, locale)

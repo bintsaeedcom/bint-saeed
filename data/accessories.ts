@@ -66,6 +66,9 @@ export const ACCESSORY_IMAGE_BAG_CHARM_II = `${A}/bag%20charm/bint-saeed-al-ain-
 /** Category / nav hero — Al Ain Oasis I */
 export const ACCESSORY_IMAGE_BAG_CHARM = ACCESSORY_IMAGE_BAG_CHARM_I
 
+/** Shared PDP lifestyle shot — signature jewellery packaging (all strands, charms, necklaces, earrings). */
+export const ACCESSORY_IMAGE_SIGNATURE_JEWELLERY_PACKAGING = `${A}/packaging/bint-saeed-abu-dhabi-signature-jewellery-packaging.webp`
+
 const AL_AIN_OASIS_NECKLACE_BASE_NAME = 'Al Ain Oasis Necklace'
 function alAinOasisNecklaceName(variant: string): string {
   return `${AL_AIN_OASIS_NECKLACE_BASE_NAME} - ${variant}`

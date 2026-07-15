@@ -102,7 +102,7 @@ export async function generateMetadata({ params }: AccessoryLayoutProps): Promis
       : null
 
   return {
-    title: pageTitle,
+    title: { absolute: pageTitle },
     description,
     ...(keywords?.length ? { keywords } : {}),
     alternates: {

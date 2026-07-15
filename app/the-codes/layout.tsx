@@ -8,7 +8,7 @@ import {
 const KHOUS_HERITAGE_IMAGE = absoluteCodesPageImageUrl(CODES_IMAGE_FILES.khous)
 
 export const metadata: Metadata = {
-  title: 'Bint Saeed | The Codes',
+  title: { absolute: 'Bint Saeed | The Codes' },
   description:
     'The house codes — Al Talli, Al Khous, Al Ain Rosette, Knotted Lines, and the monogram — told in one continuous story.',
   openGraph: {

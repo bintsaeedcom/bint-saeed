@@ -19,7 +19,6 @@ import { FiArrowRight } from 'react-icons/fi'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import {
   motion,
-  useMotionTemplate,
   useReducedMotion,
   useScroll,
   useSpring,
@@ -50,15 +49,13 @@ function Reveal({
   })
   const opacity = useTransform(gated, [0, 1], [0, 1])
   const y = useTransform(gated, [0, 1], [42, 0])
-  const blur = useTransform(gated, [0, 1], [8, 0])
-  const filter = useMotionTemplate`blur(${blur}px)`
 
   if (reduceMotion) {
     return <div className={className}>{children}</div>
   }
 
   return (
-    <motion.div ref={ref} className={className} style={{ opacity, y, filter }}>
+    <motion.div ref={ref} className={className} style={{ opacity, y }}>
       {children}
     </motion.div>
   )
@@ -175,9 +172,16 @@ const MEDIA = {
       'en',
     ),
   },
+  goldKnottedChain: {
+    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-gold-knotted-chain-detail.png',
+    alt: withBrandAlt(
+      'Polished gold knotted chain links — atelier jewellery craftsmanship detail',
+      'en',
+    ),
+  },
 } as const
 
-/** Phase II media rhythm — video, still, video, still, video. */
+/** Phase II photo wall — video / still alternating; row 2 starts with label still. */
 const PHASE_II_MEDIA = [
   { kind: 'video' as const, src: CRAFT_VIDEOS[0].src, ariaLabel: CRAFT_VIDEOS[0].ariaLabel },
   {
@@ -185,11 +189,16 @@ const PHASE_II_MEDIA = [
     src: MEDIA.goldKnotFinishing.src,
     alt: MEDIA.goldKnotFinishing.alt,
   },
-  { kind: 'video' as const, src: CRAFT_VIDEOS[1].src, ariaLabel: CRAFT_VIDEOS[1].ariaLabel },
   {
     kind: 'image' as const,
     src: MEDIA.wovenLabelStitching.src,
     alt: MEDIA.wovenLabelStitching.alt,
+  },
+  { kind: 'video' as const, src: CRAFT_VIDEOS[1].src, ariaLabel: CRAFT_VIDEOS[1].ariaLabel },
+  {
+    kind: 'image' as const,
+    src: MEDIA.goldKnottedChain.src,
+    alt: MEDIA.goldKnottedChain.alt,
   },
   { kind: 'video' as const, src: CRAFT_VIDEOS[2].src, ariaLabel: CRAFT_VIDEOS[2].ariaLabel },
 ] as const
@@ -458,47 +467,45 @@ export default function CraftsmanshipClient() {
         description={description || undefined}
       />
 
-      {/* Phase I — bone canvas + equal photo-wall pair sized to prose */}
+      {/* Phase I — prose + two equal frames at natural proportions (full image) */}
       <section
         className={`relative z-20 overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="phase-i"
       >
         <SectionDrift className="bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(111,21,36,0.08)_0%,transparent_60%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className="relative grid items-start gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+            <div className={`lg:col-span-5 ${isRTL ? 'lg:order-2' : ''}`}>
+              <PhaseProse phase={copy.phaseI} headingId="phase-i" sticky index={1} />
+            </div>
             <div
-              className={`order-2 lg:absolute lg:inset-y-0 lg:order-none lg:w-[calc(58.333%-1.75rem)] xl:w-[calc(58.333%-2rem)] ${
-                isRTL ? 'lg:start-0' : 'lg:end-0'
+              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
+                isRTL ? 'lg:order-1' : ''
               }`}
             >
               <div
-                className="grid grid-cols-2 gap-1.5 sm:gap-2 lg:h-full lg:min-h-0"
+                className="grid grid-cols-2 gap-2 sm:gap-3"
                 aria-label="Bint Saeed design development stills"
               >
-                <Reveal delay={0.05} className="h-full min-h-0 min-w-0">
-                  <Post
-                    ratio=""
-                    className="aspect-[3/4] h-full max-h-[14rem] sm:max-h-[16rem] lg:aspect-auto lg:max-h-none"
-                    intensity={32}
-                  >
-                    <Still src={MEDIA.pattern.src} alt={MEDIA.pattern.alt} />
+                <Reveal delay={0.05} className="min-w-0">
+                  <Post ratio="aspect-[4/5]" parallax={false} className="bg-brand-stone/30">
+                    <Still
+                      src={MEDIA.pattern.src}
+                      alt={MEDIA.pattern.alt}
+                      className="!object-contain object-center p-1.5 sm:p-2"
+                    />
                   </Post>
                 </Reveal>
-                <Reveal delay={0.12} className="h-full min-h-0 min-w-0">
-                  <Post
-                    ratio=""
-                    className="aspect-[3/4] h-full max-h-[14rem] sm:max-h-[16rem] lg:aspect-auto lg:max-h-none"
-                    invertParallax
-                    intensity={22}
-                  >
-                    <Still src={MEDIA.cad.src} alt={MEDIA.cad.alt} />
+                <Reveal delay={0.1} className="min-w-0">
+                  <Post ratio="aspect-[4/5]" parallax={false} className="bg-brand-stone/30">
+                    <Still
+                      src={MEDIA.cad.src}
+                      alt={MEDIA.cad.alt}
+                      className="!object-contain object-center p-1.5 sm:p-2"
+                    />
                   </Post>
                 </Reveal>
               </div>
-            </div>
-
-            <div className={`order-1 lg:col-span-5 lg:order-none ${isRTL ? 'lg:col-start-8' : 'lg:col-start-1'}`}>
-              <PhaseProse phase={copy.phaseI} headingId="phase-i" index={1} />
             </div>
           </div>
         </div>
@@ -560,55 +567,42 @@ export default function CraftsmanshipClient() {
         </div>
       </section>
 
-      {/* Phase III — clay chapter + equal photo-wall pair sized to prose */}
+      {/* Phase III — prose + two equal frames at natural proportions (full image) */}
       <section
         className={`relative z-40 overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="phase-iii"
       >
         <SectionDrift className="bg-[radial-gradient(ellipse_60%_50%_at_20%_80%,rgba(111,21,36,0.1)_0%,transparent_55%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className="relative grid items-start gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+            <div className={`lg:col-span-5 ${isRTL ? 'lg:order-2' : ''}`}>
+              <PhaseProse phase={copy.phaseIII} headingId="phase-iii" sticky index={3} />
+            </div>
             <div
-              className={`order-2 lg:absolute lg:inset-y-0 lg:order-none lg:w-[calc(58.333%-1.75rem)] xl:w-[calc(58.333%-2rem)] ${
-                isRTL ? 'lg:start-0' : 'lg:end-0'
+              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
+                isRTL ? 'lg:order-1' : ''
               }`}
             >
-              <div
-                className="grid grid-cols-2 gap-1.5 sm:gap-2 lg:h-full lg:min-h-0"
-                aria-label="Bint Saeed finishing stills"
-              >
-                <Reveal delay={0.05} className="h-full min-h-0 min-w-0">
-                  <Post
-                    ratio=""
-                    className="aspect-[3/4] h-full max-h-[14rem] sm:max-h-[16rem] lg:aspect-auto lg:max-h-none"
-                    intensity={28}
-                  >
+              <div className="grid grid-cols-2 gap-2 sm:gap-3" aria-label="Bint Saeed finishing stills">
+                <Reveal delay={0.05} className="min-w-0">
+                  <Post ratio="aspect-[4/5]" parallax={false} className="bg-brand-pageCanvas/85">
                     <Still
                       src={MEDIA.shearsMeasure.src}
                       alt={MEDIA.shearsMeasure.alt}
-                      className="!object-contain bg-brand-pageCanvas/80 p-3 sm:p-4"
+                      className="!object-contain object-center p-2 sm:p-3"
                     />
                   </Post>
                 </Reveal>
-                <Reveal delay={0.12} className="h-full min-h-0 min-w-0">
-                  <Post
-                    ratio=""
-                    className="aspect-[3/4] h-full max-h-[14rem] sm:max-h-[16rem] lg:aspect-auto lg:max-h-none"
-                    invertParallax
-                    intensity={20}
-                  >
+                <Reveal delay={0.1} className="min-w-0">
+                  <Post ratio="aspect-[4/5]" parallax={false} className="bg-brand-pageCanvas/85">
                     <Still
                       src={MEDIA.textile.src}
                       alt={MEDIA.textile.alt}
-                      objectPosition="object-[center_22%]"
+                      className="!object-contain object-center p-2 sm:p-3"
                     />
                   </Post>
                 </Reveal>
               </div>
-            </div>
-
-            <div className={`order-1 lg:col-span-5 lg:order-none ${isRTL ? 'lg:col-start-8' : 'lg:col-start-1'}`}>
-              <PhaseProse phase={copy.phaseIII} headingId="phase-iii" index={3} />
             </div>
           </div>
         </div>
@@ -650,10 +644,15 @@ export default function CraftsmanshipClient() {
               <Reveal key={item.src} delay={index * 0.08} className="min-w-0">
                 <Post
                   ratio="aspect-[3/4]"
-                  invertParallax={index % 2 === 1}
-                  intensity={20 + index * 4}
+                  tone="onDark"
+                  parallax={false}
+                  className="bg-[#2a0a14]"
                 >
-                  <Still src={item.src} alt={item.alt} />
+                  <Still
+                    src={item.src}
+                    alt={item.alt}
+                    className="!object-contain object-center p-1 sm:p-1.5"
+                  />
                 </Post>
               </Reveal>
             ))}

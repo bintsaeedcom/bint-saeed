@@ -637,6 +637,72 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
     pt:
       'Carreiras — oportunidades na Bint Saeed em Abu Dhabi: oficina, experiência do cliente e operações entre legado e inovação.',
   },
+  gift_cards: {
+    en:
+      'Bint Saeed gift cards — send an Abu Dhabi luxury fashion house gift for abayas, jewellery and lifestyle, redeemable on bintsaeed.com.',
+    ar:
+      'بطاقات هدايا بِنت سعيد — أهدي دار أزياء فاخرة في أبوظبي لعبايات ومجوهرات وأسلوب حياة، قابلة للاستبدال عبر bintsaeed.com.',
+    fr:
+      'Cartes cadeaux Bint Saeed — offrez la maison de mode d’Abu Dhabi : abayas, bijoux et lifestyle, à utiliser sur bintsaeed.com.',
+    it:
+      'Carte regalo Bint Saeed — regala la casa di moda di Abu Dhabi: abaya, gioielli e lifestyle, utilizzabili su bintsaeed.com.',
+    es:
+      'Tarjetas regalo Bint Saeed — regala la casa de moda de Abu Dhabi: abayas, joyería y lifestyle, canjeables en bintsaeed.com.',
+    ru:
+      'Подарочные карты Bint Saeed — подарок от дома моды в Абу‑Даби: абайи, украшения и lifestyle на bintsaeed.com.',
+    zh:
+      'Bint Saeed 礼品卡：赠送阿布扎比奢华时装屋的阿巴亚、珠宝与生活方式，可在 bintsaeed.com 兑换。',
+    de:
+      'Geschenkkarten von Bint Saeed — Luxusmodehaus Abu Dhabi: Abayas, Schmuck und Lifestyle, einlösbar auf bintsaeed.com.',
+    nl:
+      'Cadeaubonnen van Bint Saeed — modehuis Abu Dhabi: abayas, sieraden en lifestyle, inwisselbaar op bintsaeed.com.',
+    pt:
+      'Cartões-presente Bint Saeed — presente da casa de moda de Abu Dhabi: abayas, joias e lifestyle em bintsaeed.com.',
+  },
+  wishlist: {
+    en:
+      'Your Bint Saeed wishlist — save abayas, strands and jewellery from the Abu Dhabi fashion house to revisit later.',
+    ar:
+      'قائمة أمنياتك في بِنت سعيد — احفظي العبايات والخيوط والمجوهرات من دار الأزياء في أبوظبي للعودة لاحقاً.',
+    fr:
+      'Votre liste d’envies Bint Saeed — enregistrez abayas, strands et bijoux de la maison d’Abu Dhabi.',
+    it:
+      'La tua wishlist Bint Saeed — salva abaya, strands e gioielli della casa di Abu Dhabi.',
+    es:
+      'Tu lista de deseos Bint Saeed — guarda abayas, strands y joyería de la casa de Abu Dhabi.',
+    ru:
+      'Избранное Bint Saeed — сохраняйте абайи, strands и украшения дома моды из Абу‑Даби.',
+    zh:
+      'Bint Saeed 心愿单：收藏阿布扎比时装屋的阿巴亚、饰带与珠宝。',
+    de:
+      'Ihre Wunschliste bei Bint Saeed — speichern Sie Abayas, Strands und Schmuck aus Abu Dhabi.',
+    nl:
+      'Je verlanglijst bij Bint Saeed — bewaar abayas, strands en sieraden uit Abu Dhabi.',
+    pt:
+      'A sua lista de desejos Bint Saeed — guarde abayas, strands e joias da casa de Abu Dhabi.',
+  },
+  login: {
+    en:
+      'Sign in to your Bint Saeed account — orders, wishlist and personal details for the Abu Dhabi fashion house.',
+    ar:
+      'سجّلي الدخول إلى حساب بِنت سعيد — الطلبات وقائمة الأمنيات وتفاصيلك لدى دار الأزياء في أبوظبي.',
+    fr:
+      'Connectez-vous à votre compte Bint Saeed — commandes, wishlist et informations personnelles.',
+    it:
+      'Accedi al tuo account Bint Saeed — ordini, wishlist e dati personali.',
+    es:
+      'Inicia sesión en tu cuenta Bint Saeed — pedidos, wishlist y datos personales.',
+    ru:
+      'Вход в аккаунт Bint Saeed — заказы, избранное и личные данные.',
+    zh:
+      '登录 Bint Saeed 账户：订单、心愿单与个人资料。',
+    de:
+      'Melden Sie sich bei Bint Saeed an — Bestellungen, Wunschliste und Persönliches.',
+    nl:
+      'Log in op je Bint Saeed-account — bestellingen, verlanglijst en gegevens.',
+    pt:
+      'Entre na sua conta Bint Saeed — encomendas, wishlist e dados pessoais.',
+  },
   preview_gate: {
     en:
       'Preview access — verify entry to explore Bint Saeed editorial experiences from Abu Dhabi before public launch when invited.',

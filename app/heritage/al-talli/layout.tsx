@@ -7,7 +7,7 @@ const meta = getResolvedRoutePageMeta('en', '/heritage/al-talli')
 const ogImage = alTalliPrimaryImageUrl()
 
 export const metadata: Metadata = {
-  title: meta.title,
+  title: { absolute: meta.title },
   description: meta.description,
   keywords: AL_TALLI_DISCOVERY_KEYWORDS_EN.join(', '),
   openGraph: {

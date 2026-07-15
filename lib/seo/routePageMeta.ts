@@ -7,6 +7,7 @@ import {
   getHomeOgTitle,
 } from '@/lib/i18n/homePageCopy'
 import { META_DESCRIPTION } from '@/lib/seo/routePageMetaDescriptions'
+import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
 
 export type { RouteMetaKey }
 
@@ -49,6 +50,9 @@ export function classifyRouteMetaKey(pathname: string): RouteMetaKey {
   if (p.startsWith('/product-care')) return 'product_care'
   if (p.startsWith('/giving-forward')) return 'giving_forward'
   if (p.startsWith('/careers')) return 'careers'
+  if (p.startsWith('/gift-cards')) return 'gift_cards'
+  if (p.startsWith('/wishlist')) return 'wishlist'
+  if (p.startsWith('/login') || p.startsWith('/sign-in') || p.startsWith('/signin')) return 'login'
   if (
     p.startsWith('/tiktok') ||
     p.startsWith('/instagram') ||
@@ -444,6 +448,48 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     id: 'Karier | Bint Saeed',
     ms: 'Kerjaya | Bint Saeed',
   },
+  gift_cards: {
+    en: 'Gift Cards',
+    ar: 'بطاقات الهدايا',
+    fr: 'Cartes cadeaux',
+    it: 'Carte regalo',
+    es: 'Tarjetas regalo',
+    ru: 'Подарочные карты',
+    zh: '礼品卡',
+    de: 'Geschenkkarten',
+    nl: 'Cadeaubonnen',
+    pt: 'Cartões-presente',
+    id: 'Kartu Hadiah',
+    ms: 'Kad Hadiah',
+  },
+  wishlist: {
+    en: 'Wishlist',
+    ar: 'قائمة الأمنيات',
+    fr: 'Liste d’envies',
+    it: 'Lista desideri',
+    es: 'Lista de deseos',
+    ru: 'Избранное',
+    zh: '心愿单',
+    de: 'Wunschliste',
+    nl: 'Verlanglijst',
+    pt: 'Lista de desejos',
+    id: 'Daftar Keinginan',
+    ms: 'Senarai Hajat',
+  },
+  login: {
+    en: 'Sign In',
+    ar: 'تسجيل الدخول',
+    fr: 'Connexion',
+    it: 'Accedi',
+    es: 'Iniciar sesión',
+    ru: 'Вход',
+    zh: '登录',
+    de: 'Anmelden',
+    nl: 'Inloggen',
+    pt: 'Entrar',
+    id: 'Masuk',
+    ms: 'Log Masuk',
+  },
   preview_gate: {
     en: 'Preview access | Bint Saeed',
     ar: 'الدخول للمعاينة | Bint Saeed',
@@ -525,15 +571,15 @@ export function getResolvedRoutePageMeta(locale: AppLocale, pathname: string): {
   const key = classifyRouteMetaKey(pathname)
   if (key === 'home') {
     return {
-      title: getHomeDefaultTitle(locale),
+      title: brandDocumentTitle(getHomeDefaultTitle(locale)),
       description: getHomeMetaDescription(locale),
-      ogTitle: getHomeOgTitle(locale),
+      ogTitle: brandDocumentTitle(getHomeOgTitle(locale)),
     }
   }
 
   const titleRow = TITLE[key]
   const descRow = META_DESCRIPTION[key]
-  const title = titleRow[locale]
+  const title = brandDocumentTitle(titleRow[locale])
   const ogTitle = title
 
   return {

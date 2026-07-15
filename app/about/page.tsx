@@ -19,24 +19,9 @@ import {
   ctaInButtonRow,
 } from '@/lib/ui/ctaClasses'
 import {
-  editorialBodyOnDark,
   editorialBodyOnLight,
-  editorialReflectiveLeadOnDark,
-  editorialReflectiveLeadOnLight,
   editorialSectionH2,
 } from '@/lib/ui/editorialTypography'
-
-const WOMAN_STEP_REVEAL_HIDDEN = [
-  'opacity-0 translate-y-10 md:translate-y-0 md:-translate-x-8',
-  'opacity-0 translate-y-10',
-  'opacity-0 translate-y-10 md:translate-y-0 md:translate-x-8',
-] as const
-
-const WOMAN_STEP_REVEAL_HIDDEN_RTL = [
-  'opacity-0 translate-y-10 md:translate-y-0 md:translate-x-8',
-  'opacity-0 translate-y-10',
-  'opacity-0 translate-y-10 md:translate-y-0 md:-translate-x-8',
-] as const
 
 const HERO_IMAGE = ABOUT_SECTION_HERO_IMAGES.about
 const HERO_IMAGE_2 = '/about/campaign-seated.PNG'
@@ -53,15 +38,7 @@ const ABOUT_STACK_CONTENT_PAD = 'pb-28 md:pb-40'
 export default function AboutPage() {
   const { language, isRTL } = useLanguage()
   const copy = getAboutPageCopy(language)
-  const womanStepRefs = useRef<(HTMLElement | null)[]>([])
-  const womanClosingRef = useRef<HTMLDivElement | null>(null)
-  const designCodeRefs = useRef<(HTMLElement | null)[]>([])
-  const codesClosingRef = useRef<HTMLDivElement | null>(null)
   const quoteRef = useRef<HTMLElement | null>(null)
-  const [visibleWomanSteps, setVisibleWomanSteps] = useState<boolean[]>([false, false, false])
-  const [womanClosingVisible, setWomanClosingVisible] = useState(false)
-  const [visibleDesignCodes, setVisibleDesignCodes] = useState<boolean[]>([false, false, false, false, false, false])
-  const [codesClosingVisible, setCodesClosingVisible] = useState(false)
   const [quoteVisible, setQuoteVisible] = useState(false)
 
   useEffect(() => {
@@ -70,45 +47,15 @@ export default function AboutPage() {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return
           if (entry.target === quoteRef.current) setQuoteVisible(true)
-          if (entry.target === womanClosingRef.current) setWomanClosingVisible(true)
-          if (entry.target === codesClosingRef.current) setCodesClosingVisible(true)
-
-          const stepIndex = womanStepRefs.current.findIndex((el) => el === entry.target)
-          if (stepIndex !== -1) {
-            setVisibleWomanSteps((prev) => {
-              if (prev[stepIndex]) return prev
-              const next = [...prev]
-              next[stepIndex] = true
-              return next
-            })
-          }
-
-          const codeIndex = designCodeRefs.current.findIndex((el) => el === entry.target)
-          if (codeIndex !== -1) {
-            setVisibleDesignCodes((prev) => {
-              if (prev[codeIndex]) return prev
-              const next = [...prev]
-              next[codeIndex] = true
-              return next
-            })
-          }
         })
       },
       { threshold: 0.32, rootMargin: '0px 0px -6% 0px' },
     )
 
     const quote = quoteRef.current
-    const womanClosing = womanClosingRef.current
-    const codesClosing = codesClosingRef.current
-    const steps = womanStepRefs.current.filter(Boolean) as HTMLElement[]
-    const codes = designCodeRefs.current.filter(Boolean) as HTMLElement[]
     if (quote) observer.observe(quote)
-    if (womanClosing) observer.observe(womanClosing)
-    if (codesClosing) observer.observe(codesClosing)
-    steps.forEach((step) => observer.observe(step))
-    codes.forEach((code) => observer.observe(code))
     return () => observer.disconnect()
-  }, [copy.womanSteps.length, copy.designCodes.length])
+  }, [])
 
   return (
     <main className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -192,128 +139,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section
-        className={`relative z-30 bg-[#1a0210] ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}
-      >
-        <div className={`${INNER_CONTAINER_CLASS} ${ABOUT_STACK_CONTENT_PAD} text-left`}>
-          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#6a8090]">{copy.womanLabel}</p>
-          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#e8ddd4]`}>
-            {copy.womanHeading}
-          </h2>
-          <div className="mt-12 grid gap-px bg-[rgba(232,216,200,0.1)] md:grid-cols-3">
-            {copy.womanSteps.map((step, index) => {
-              const hiddenOffset = (isRTL ? WOMAN_STEP_REVEAL_HIDDEN_RTL : WOMAN_STEP_REVEAL_HIDDEN)[index]
-              const isVisible = visibleWomanSteps[index]
-
-              return (
-                <article
-                  key={step.numeral}
-                  ref={(el) => {
-                    womanStepRefs.current[index] = el
-                  }}
-                  className={`bg-[#1a0210] p-8 text-left transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform ${
-                    isVisible ? 'translate-x-0 translate-y-0 opacity-100' : hiddenOffset
-                  }`}
-                  style={{ transitionDelay: `${index * 180}ms` }}
-                >
-                  <p className="mb-6 font-rozha text-[48px] leading-none text-[rgba(122,28,40,0.35)]">{step.numeral}</p>
-                  <h3 className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-[#e8d8c8]">
-                    {step.title}
-                  </h3>
-                  <p className="font-montserrat text-[13px] font-normal leading-[1.7] text-[rgba(232,216,200,0.6)]">{step.body}</p>
-                </article>
-              )
-            })}
-          </div>
-          <div
-            ref={womanClosingRef}
-            className={`mt-12 space-y-6 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              womanClosingVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-            } ${editorialBodyOnDark}`}
-          >
-            <p className={`max-w-3xl ${editorialReflectiveLeadOnDark}`}>
-              {copy.womanClosingH3Strong}
-              {copy.womanClosingH3Rest}
-            </p>
-            <p>
-              {copy.womanClosingP1Strong1}
-              {copy.womanClosingP1Middle}
-              {copy.womanClosingP1Strong2}
-              {copy.womanClosingP1Rest}
-            </p>
-            <p>
-              {copy.womanClosingP2Strong1}
-              {copy.womanClosingP2Middle}
-              {copy.womanClosingP2Strong2}
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className={`relative z-40 bg-[#faf8f5] ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}>
-        <div className={`${INNER_CONTAINER_CLASS} ${ABOUT_STACK_CONTENT_PAD} text-left`}>
-          <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#7A1C28]">{copy.codesLabel}</p>
-          <h2 className={`mt-4 max-w-3xl ${editorialSectionH2} text-[#1a0210]`}>
-            <span className="block">{copy.codesHeadingLine1}</span>
-            <span className="block">{copy.codesHeadingLine2}</span>
-          </h2>
-          <p className={`mt-5 max-w-2xl ${editorialBodyOnLight}`}>
-            {copy.codesIntro}
-          </p>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
-            {copy.designCodes.map((code, index) => {
-              const isVisible = visibleDesignCodes[index]
-
-              return (
-                <article
-                  key={code.numeral}
-                  ref={(el) => {
-                    designCodeRefs.current[index] = el
-                  }}
-                  className={`group relative overflow-hidden rounded-[6px] border border-[#e8ddd4] bg-[#faf8f5] p-7 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:border-[#7A1C28]/20 hover:bg-white hover:shadow-[0_10px_36px_rgba(26,2,16,0.07)] md:p-8 ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                  }`}
-                  style={{ transitionDelay: `${(index % 3) * 120}ms` }}
-                >
-                  <p className="font-rozha text-[40px] leading-none text-[rgba(122,28,40,0.28)] transition-colors duration-500 group-hover:text-[rgba(122,28,40,0.42)]">
-                    {code.numeral}
-                  </p>
-                  <div className="mt-4 h-px w-8 bg-[#7A1C28]/25 transition-all duration-500 group-hover:w-12 group-hover:bg-[#7A1C28]/40" aria-hidden />
-                  <p className="mt-4 font-montserrat text-[11px] uppercase tracking-[0.22em] text-[#1a0210]">
-                    {code.name}
-                  </p>
-                  <p className="mt-3 font-montserrat text-[13px] leading-[1.75] text-[#1a0210]/58">
-                    {code.description}
-                  </p>
-                </article>
-              )
-            })}
-          </div>
-          <LocaleLink href="/the-codes" className="mt-10 block font-montserrat text-[13px] font-medium text-[#7A1C28] transition-opacity hover:opacity-75" data-cursor-hover>
-            {copy.codesLink}
-          </LocaleLink>
-          <div
-            ref={codesClosingRef}
-            className={`mt-14 space-y-6 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              codesClosingVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-            } ${editorialBodyOnLight}`}
-          >
-            <p className={`max-w-3xl ${editorialReflectiveLeadOnLight}`}>
-              {copy.codesClosingH3}
-              {copy.codesClosingH3Strong}
-            </p>
-            <p>
-              {copy.codesClosingP1Strong}
-              {copy.codesClosingP1Rest}
-            </p>
-            <p>
-              {copy.codesClosingP2Strong}
-              {copy.codesClosingP2Rest}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className={`about-fabric-light relative z-50 overflow-hidden bg-[#7A1C28] ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}>
+      <section className={`about-fabric-light relative z-30 overflow-hidden bg-[#7A1C28] ${ABOUT_STACK_PAD} ${ABOUT_STACK_SECTION}`}>
         <div className={`${INNER_CONTAINER_CLASS} ${ABOUT_STACK_CONTENT_PAD} relative z-20 grid gap-10 text-left md:grid-cols-2 md:items-center`}>
           <div className="relative min-h-[52vh] overflow-hidden rounded-[4px] md:min-h-[620px]">
             <Image src={HERO_IMAGE} alt={copy.imageAlt} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
@@ -323,21 +149,21 @@ export default function AboutPage() {
               <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">{copy.houseLabel}</p>
               <h2 className={`mt-5 ${editorialSectionH2} text-[#e8ddd4]`}>{copy.houseHeading}</h2>
               <div className="mt-5 space-y-5 font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
-                <p>{copy.houseP1}</p>
-                <p>{copy.houseP2}</p>
+                {copy.houseParagraphs.map((paragraph) => (
+                  <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                ))}
               </div>
-              <LocaleLink href="/giving-forward" className={`mt-8 ${ctaPrimarySoft}`} data-cursor-hover>
-                {copy.ctaGivingForward}
+              <LocaleLink href="/the-codes" className={`mt-8 ${ctaPrimarySoft}`} data-cursor-hover>
+                {copy.ctaOurStoryInCodes}
               </LocaleLink>
             </div>
           </div>
         </div>
       </section>
 
-
       <section
         ref={quoteRef}
-        className="closing-section relative z-[60] -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10"
+        className="closing-section relative z-40 -mt-6 flex h-auto min-h-0 items-center overflow-hidden rounded-t-[16px] text-center shadow-[0_-12px_40px_rgba(0,0,0,0.3)] md:-mt-10"
       >
         <div className={`${INNER_CONTAINER_CLASS} relative z-20`}>
           <div className="mx-auto max-w-[min(94vw,860px)]">

@@ -311,7 +311,7 @@ export default function TheCodesClient() {
             {DETAIL_TRIO.map((item) => (
               <div
                 key={item.src}
-                className="group relative isolate aspect-[3/4] min-w-0 overflow-hidden border border-[#6f1524]/45 bg-[rgba(111,21,36,0.18)] shadow-[0_28px_64px_-36px_rgba(0,0,0,0.55)]"
+                className="group relative isolate aspect-[3/4] min-w-0 overflow-hidden border border-[#6f1524]/45 bg-[#2a0a14] shadow-[0_28px_64px_-36px_rgba(0,0,0,0.55)]"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -319,11 +319,7 @@ export default function TheCodesClient() {
                   alt={item.alt}
                   loading="lazy"
                   decoding="async"
-                  className="h-full w-full object-cover brightness-[1.02] contrast-[1.03]"
-                />
-                <div
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(26,2,16,0.08)_0%,transparent_40%,rgba(26,2,16,0.18)_100%)]"
-                  aria-hidden
+                  className="h-full w-full object-contain object-center p-1 brightness-[1.02] contrast-[1.03] sm:p-1.5"
                 />
               </div>
             ))}

@@ -67,8 +67,7 @@ export type AboutPageCopy = {
   codesClosingP2Rest: string
   houseLabel: string
   houseHeading: string
-  houseP1: string
-  houseP2: string
+  houseParagraphs: string[]
   ctaGivingForward: string
   closingQuote: string
   closingBrand: string
@@ -175,12 +174,16 @@ const ABOUT_EN: AboutPageCopy = {
   codesClosingP2Strong:
     'Bint Saeed stands as a house devoted to the daughter in every woman. A reminder that no matter where you go, you do not begin again, you continue.',
   codesClosingP2Rest: '',
-  houseLabel: 'THE HOUSE',
-  houseHeading: 'Giving Forward.',
-  houseP1:
-    'Bint Saeed emerged from a place within the heart where the desire exists to create something that leaves a mark beyond what is visible, something that continues in meaning, in impact, and in the lives it reaches.',
-  houseP2:
-    'With every Bint Saeed piece, a gesture of giving continues, extending beyond what is created. Not every daughter or son grows up with a sense of belonging, support, or continuity. Some are left to find their way without the foundations others are given. For this reason, 20 AED from each piece is dedicated, inshallah, to charitable initiatives under the Mother of the Nation Endowment for Orphans, under the patronage of His Highness Sheikh Mohamed bin Zayed Al Nahyan, through the Endowments and Minors\' Funds Authority, as well as to initiatives by the Emirates Red Crescent. In this way, what is carried forward is not only a story of origin, but a contribution that continues, reaching beyond the garment into the lives it is able to touch.',
+  houseLabel: 'HERITAGE',
+  houseHeading: 'Heritage is not left behind when life moves forward.',
+  houseParagraphs: [
+    'Rooted in Abu Dhabi, United Arab Emirates, Bint Saeed holds deep respect for the cultural heritage of the country from which the House creates. We believe the craftsmanship, symbols and stories carried through generations deserve to be cherished, recognised and given a place in the lives of women today.',
+    'Emirati heritage enters our designs through detail, material and form. Traditional crafts such as Al Talli and Al Khous, the colours and landscapes of the Emirates, natural stones and ideas of lineage and connection have helped shape the visual language of Bint Saeed.',
+    'We do not seek to reproduce the past exactly as it was. We allow its references to find new expression in womenswear, jewellery and objects created for the present.',
+    'This is what Carrying Heritage Forward means to us.',
+    'To create from Abu Dhabi with pride. To allow Emirati cultural references to continue through contemporary design. And to carry them beyond the borders of the United Arab Emirates, into new wardrobes and new places, while remaining connected to where they began.',
+    'Because heritage continues when a new generation finds a place for it in their own lives.',
+  ],
   ctaGivingForward: 'READ ABOUT GIVING FORWARD',
   closingQuote: 'A sense of self that does not\nshift with setting.',
   closingBrand: 'BINT SAEED · ABU DHABI',
@@ -268,12 +271,16 @@ const ABOUT_AR: AboutPageCopy = {
   codesClosingP2Strong:
     'تقف Bint Saeed كدار مكرّسة للابنة في كل امرأة. تذكيراً بأنه مهما ذهبتِ، لا تبدئين من جديد، بل تستمرين.',
   codesClosingP2Rest: '',
-  houseLabel: 'الدار',
-  houseHeading: 'العطاء إلى الأمام.',
-  houseP1:
-    'نشأت Bint Saeed من مكان في القلب حيث يوجد الرغبة في خلق شيء يترك أثراً يتجاوز ما هو مرئي، شيء يستمر في المعنى والأثر والحياة التي يصل إليها.',
-  houseP2:
-    'مع كل قطعة من Bint Saeed، يستمر إيماء العطاء، ممتداً إلى ما يُخلق. ليس كل ابنة أو ابن ينشأ بإحساس بالانتماء والدعم والاستمرارية. يُترك البعض ليجدوا طريقهم دون الأسس التي يُمنحها الآخرون. لهذا السبب، يُخصَّص 20 درهماً من كل قطعة، إن شاء الله، لمبادرات خيرية ضمن وقف أم الإمارات لرعاية الأيتام، برعاية صاحب السمو الشيخ محمد بن زايد آل نهيان، عبر هيئة الأوقاف وإدارة أموال القُصَّر، وكذلك لمبادرات الهلال الأحمر الإماراتي. بهذه الطريقة، ما يُحمل إلى الأمام ليس قصة أصل فحسب، بل مساهمة تستمر، تتجاوز القطعة إلى الحياة التي تستطيع لمسها.',
+  houseLabel: 'التراث',
+  houseHeading: 'التراث لا يُترك خلفنا حين تمضي الحياة إلى الأمام.',
+  houseParagraphs: [
+    'متجذّرة في أبوظبي، الإمارات العربية المتحدة، تحمل Bint Saeed احتراماً عميقاً للتراث الثقافي للبلاد التي تُبدع منها الدار. نؤمن بأن الحرفية والرموز والقصص المحمولة عبر الأجيال تستحق أن تُصان وتُقدَّر وأن تجد مكاناً في حياة النساء اليوم.',
+    'يدخل التراث الإماراتي إلى تصاميمنا عبر التفاصيل والمادة والشكل. حرف تقليدية مثل التلي والخوص، وألوان الإمارات ومناظرها، والأحجار الطبيعية، وأفكار النسب والصلة، ساعدت في تشكيل اللغة البصرية لـ Bint Saeed.',
+    'لا نسعى إلى إعادة إنتاج الماضي كما كان تماماً. نسمح لمراجعه أن تجد تعبيراً جديداً في أزياء النساء والمجوهرات والأشياء المصنوعة للحاضر.',
+    'هذا ما يعنيه لنا حمل التراث إلى الأمام.',
+    'أن نُبدع من أبوظبي بفخر. أن نسمح للمراجع الثقافية الإماراتية أن تستمر عبر التصميم المعاصر. وأن نحملها إلى ما وراء حدود الإمارات العربية المتحدة، إلى خزائن وأماكن جديدة، مع البقاء متصلين بمكان بدئها.',
+    'لأن التراث يستمر حين تجد أجيال جديدة مكاناً له في حياتها.',
+  ],
   ctaGivingForward: 'اقرأي عن العطاء إلى الأمام',
   closingQuote: 'إحساس بالذات لا يتبدّل مع المكان.',
   closingBrand: 'BINT SAEED · ABU DHABI',

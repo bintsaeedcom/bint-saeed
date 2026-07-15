@@ -86,6 +86,10 @@ import {
   getStrandPdpPack,
   isStrandAccessory,
 } from '@/lib/accessories/strandPdpSeo'
+import {
+  getAccessoryPackagingImageAlt,
+  isAccessoryPackagingImage,
+} from '@/lib/accessories/accessoryPackagingImage'
 
 export {
   getAccessoryPdpImages,
@@ -156,6 +160,9 @@ export function getAccessoryImageAlt(
   imageIndex: number,
   locale: AppLocale = 'en',
 ): string {
+  if (isAccessoryPackagingImage(imageSrc)) {
+    return getAccessoryPackagingImageAlt(locale)
+  }
   if (isStrandAccessory(accessory)) {
     return getStrandImageAlt(accessory, imageSrc, imageIndex, locale)
   }

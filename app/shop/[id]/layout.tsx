@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
   const aiOther = getProductPageAiOther(product, locale)
 
   return {
-    title: pageTitle,
+    title: { absolute: pageTitle },
     description,
     ...(keywords ? { keywords } : {}),
     alternates: {

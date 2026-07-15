@@ -3,7 +3,8 @@ export const DOCUMENT_TITLE_BRAND = 'Bint Saeed'
 
 /**
  * Formats any page title as `Bint Saeed | …`.
- * Strips a trailing `| Bint Saeed` (or `| Bint Saeed Abu Dhabi`) so we never double the brand.
+ * Strips a trailing brand suffix (`| Bint Saeed`, `| Bint Saeed Abu Dhabi`, Arabic/local geo variants)
+ * so we never double the brand.
  */
 export function brandDocumentTitle(pageTitle: string): string {
   const brand = DOCUMENT_TITLE_BRAND
@@ -14,7 +15,13 @@ export function brandDocumentTitle(pageTitle: string): string {
     return t
   }
 
-  t = t.replace(/\s*[|—–]\s*Bint Saeed(?:\s+Abu Dhabi)?\s*$/i, '').trim()
+  // Trailing brand / brand + geo in any order commonly used in legacy titles.
+  t = t
+    .replace(
+      /\s*[|—–]\s*Bint Saeed(?:\s+(?:Abu Dhabi|أبوظبي|阿布扎比|Абу-Даби|Abou Dabi|Abu Dabi))?\s*$/i,
+      '',
+    )
+    .trim()
   if (!t || t === brand) return brand
   return `${brand} | ${t}`
 }

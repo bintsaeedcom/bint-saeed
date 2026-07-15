@@ -187,7 +187,7 @@ const NOT_FOUND: Record<AppLocale, { title: string; description: string }> = {
 export function accessoryNotFoundMetadata(locale: AppLocale): Metadata {
   const m = NOT_FOUND[locale]
   return {
-    title: brandDocumentTitle(m.title),
+    title: { absolute: brandDocumentTitle(m.title) },
     description: m.description,
     robots: { index: false, follow: false },
   }
