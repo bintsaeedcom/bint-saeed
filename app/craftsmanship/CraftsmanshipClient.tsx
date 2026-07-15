@@ -19,13 +19,14 @@ import { FiArrowRight } from 'react-icons/fi'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import {
   motion,
+  useMotionTemplate,
   useReducedMotion,
   useScroll,
+  useSpring,
   useTransform,
 } from 'framer-motion'
 
-const EASE = [0.22, 1, 0.36, 1] as const
-
+/** Scroll-scrubbed editorial reveal — text arrives with the scroll, not as a one-shot fade. */
 function Reveal({
   children,
   className = '',
@@ -35,59 +36,88 @@ function Reveal({
   className?: string
   delay?: number
 }) {
+  const ref = useRef<HTMLDivElement>(null)
   const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start 0.94', 'start 0.52'],
+  })
+  const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 28, restDelta: 0.001 })
+  const gated = useTransform(progress, (latest) => {
+    const start = Math.min(0.45, Math.max(0, delay) * 0.55)
+    if (latest <= start) return 0
+    return Math.min(1, (latest - start) / (1 - start))
+  })
+  const opacity = useTransform(gated, [0, 1], [0, 1])
+  const y = useTransform(gated, [0, 1], [42, 0])
+  const blur = useTransform(gated, [0, 1], [8, 0])
+  const filter = useMotionTemplate`blur(${blur}px)`
+
   if (reduceMotion) {
     return <div className={className}>{children}</div>
   }
+
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 22 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-12%' }}
-      transition={{ duration: 0.75, delay, ease: EASE }}
-    >
+    <motion.div ref={ref} className={className} style={{ opacity, y, filter }}>
       {children}
     </motion.div>
   )
 }
 
-/** Soft parallax portrait — same language as Giving Forward hangtag. */
-function ParallaxFrame({
+/** Parallax fill inside clipped media frames — ken-burns drift as the section scrolls. */
+function ParallaxMedia({
   children,
-  className = '',
+  intensity = 26,
   invert = false,
 }: {
   children: ReactNode
-  className?: string
+  intensity?: number
   invert?: boolean
 }) {
-  const clipRef = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
   const reduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
-    target: clipRef,
+    target: ref,
     offset: ['start end', 'end start'],
   })
-  const y = useTransform(scrollYProgress, [0, 1], invert ? [28, -36] : [-24, 32])
-  const scale = useTransform(scrollYProgress, [0, 1], [1.04, 1.09])
+  const rawY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    invert ? [intensity, -intensity * 1.2] : [-intensity, intensity * 1.2],
+  )
+  const rawScale = useTransform(scrollYProgress, [0, 1], [1.14, 1.04])
+  const y = useSpring(rawY, { stiffness: 55, damping: 22, restDelta: 0.001 })
+  const scale = useSpring(rawScale, { stiffness: 55, damping: 22, restDelta: 0.001 })
+
+  return (
+    <div ref={ref} className="absolute inset-0 overflow-hidden">
+      <motion.div
+        className="absolute inset-[-14%] will-change-transform"
+        style={reduceMotion ? undefined : { y, scale }}
+      >
+        {children}
+      </motion.div>
+    </div>
+  )
+}
+
+/** Soft atmospheric drift for section backgrounds. */
+function SectionDrift({ className = '' }: { className?: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const y = useTransform(scrollYProgress, [0, 1], [-40, 40])
 
   return (
     <motion.div
-      initial={reduceMotion ? false : { opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: '-10%' }}
-      transition={{ duration: 0.7, delay: 0.06, ease: EASE }}
-      className={className}
-    >
-      <div ref={clipRef} className="relative h-full w-full overflow-hidden">
-        <motion.div
-          style={reduceMotion ? undefined : { y, scale }}
-          className="absolute inset-0 will-change-transform"
-        >
-          {children}
-        </motion.div>
-      </div>
-    </motion.div>
+      ref={ref}
+      aria-hidden
+      className={`pointer-events-none absolute inset-0 ${className}`}
+      style={reduceMotion ? undefined : { y }}
+    />
   )
 }
 
@@ -209,7 +239,7 @@ function Still({
       loading={priority ? 'eager' : 'lazy'}
       decoding={priority ? 'sync' : 'async'}
       fetchPriority={priority ? 'high' : 'auto'}
-      className={`h-full w-full object-cover brightness-[1.02] contrast-[1.03] transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.035] ${objectPosition} ${className}`}
+      className={`h-full w-full object-cover brightness-[1.02] contrast-[1.03] ${objectPosition} ${className}`}
     />
   )
 }
@@ -285,7 +315,7 @@ function Film({
       preload="auto"
       disablePictureInPicture
       controls={false}
-      className={`h-full w-full object-cover ${className}`}
+      className={`h-full w-full object-cover outline-none ${className}`}
     />
   )
 }
@@ -295,16 +325,22 @@ function Post({
   className = '',
   ratio = 'aspect-[4/5]',
   tone = 'light',
+  parallax = true,
+  invertParallax = false,
+  intensity = 26,
 }: {
   children: ReactNode
   className?: string
   ratio?: string
   tone?: 'light' | 'onDark'
+  parallax?: boolean
+  invertParallax?: boolean
+  intensity?: number
 }) {
   const frame =
     tone === 'onDark'
-      ? 'bg-[rgba(232,221,212,0.08)] shadow-[0_28px_64px_-36px_rgba(0,0,0,0.55)] ring-1 ring-[#e8ddd4]/12'
-      : 'bg-brand-stone/25 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)]'
+      ? 'border border-[#6f1524]/45 bg-[rgba(111,21,36,0.18)] shadow-[0_28px_64px_-36px_rgba(0,0,0,0.55)]'
+      : 'border border-[#6f1524]/18 bg-brand-stone/25 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.18)]'
   const veil =
     tone === 'onDark'
       ? 'bg-[linear-gradient(180deg,rgba(26,2,16,0.08)_0%,transparent_40%,rgba(26,2,16,0.18)_100%)]'
@@ -312,8 +348,14 @@ function Post({
 
   return (
     <div className={`group relative isolate overflow-hidden ${frame} ${ratio} ${className}`}>
-      {children}
-      <div className={`pointer-events-none absolute inset-0 ${veil}`} aria-hidden />
+      {parallax ? (
+        <ParallaxMedia intensity={intensity} invert={invertParallax}>
+          {children}
+        </ParallaxMedia>
+      ) : (
+        children
+      )}
+      <div className={`pointer-events-none absolute inset-0 z-[1] ${veil}`} aria-hidden />
     </div>
   )
 }
@@ -416,132 +458,145 @@ export default function CraftsmanshipClient() {
         description={description || undefined}
       />
 
-      {/* Phase I — bone canvas + two-image collage */}
+      {/* Phase I — bone canvas + equal photo-wall pair sized to prose */}
       <section
         className={`relative z-20 overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="phase-i"
       >
-        <div className={`${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-16">
-            <div className={`lg:col-span-5 ${isRTL ? 'lg:order-2' : ''}`}>
-              <PhaseProse phase={copy.phaseI} headingId="phase-i" sticky index={1} />
-            </div>
-            <div className={`lg:col-span-7 ${isRTL ? 'lg:order-1' : ''}`}>
-              <div className="relative mx-auto max-w-2xl pb-6 lg:max-w-none lg:pb-8">
-                <Reveal delay={0.05}>
+        <SectionDrift className="bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(111,21,36,0.08)_0%,transparent_60%)]" />
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+          <div className="relative grid items-start gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+            <div
+              className={`order-2 lg:absolute lg:inset-y-0 lg:order-none lg:w-[calc(58.333%-1.75rem)] xl:w-[calc(58.333%-2rem)] ${
+                isRTL ? 'lg:start-0' : 'lg:end-0'
+              }`}
+            >
+              <div
+                className="grid grid-cols-2 gap-1.5 sm:gap-2 lg:h-full lg:min-h-0"
+                aria-label="Bint Saeed design development stills"
+              >
+                <Reveal delay={0.05} className="h-full min-h-0 min-w-0">
                   <Post
-                    ratio="aspect-[4/5] sm:aspect-[3/4]"
-                    className={`w-[78%] sm:w-[74%] ${isRTL ? 'ms-auto' : ''}`}
+                    ratio=""
+                    className="aspect-[3/4] h-full max-h-[14rem] sm:max-h-[16rem] lg:aspect-auto lg:max-h-none"
+                    intensity={32}
                   >
-                    <ParallaxFrame className="absolute inset-0" invert={isRTL}>
-                      <Still src={MEDIA.pattern.src} alt={MEDIA.pattern.alt} />
-                    </ParallaxFrame>
+                    <Still src={MEDIA.pattern.src} alt={MEDIA.pattern.alt} />
                   </Post>
                 </Reveal>
-
-                <Reveal delay={0.12} className="contents">
+                <Reveal delay={0.12} className="h-full min-h-0 min-w-0">
                   <Post
-                    ratio="aspect-[3/4]"
-                    className={`absolute bottom-0 z-10 w-[46%] max-w-[260px] shadow-[0_32px_70px_-36px_rgba(42,0,18,0.35)] sm:w-[42%] sm:max-w-none ${
-                      isRTL ? 'start-0' : 'end-0'
-                    }`}
+                    ratio=""
+                    className="aspect-[3/4] h-full max-h-[14rem] sm:max-h-[16rem] lg:aspect-auto lg:max-h-none"
+                    invertParallax
+                    intensity={22}
                   >
-                    <ParallaxFrame className="absolute inset-0" invert={!isRTL}>
-                      <Still src={MEDIA.cad.src} alt={MEDIA.cad.alt} />
-                    </ParallaxFrame>
+                    <Still src={MEDIA.cad.src} alt={MEDIA.cad.alt} />
                   </Post>
                 </Reveal>
               </div>
+            </div>
+
+            <div className={`order-1 lg:col-span-5 lg:order-none ${isRTL ? 'lg:col-start-8' : 'lg:col-start-1'}`}>
+              <PhaseProse phase={copy.phaseI} headingId="phase-i" index={1} />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Phase II — dark atelier pulse + hierarchical films */}
+      {/* Phase II — dark atelier + compact photo wall sized to prose */}
       <section
         className={`relative z-30 overflow-hidden bg-[#1a0210] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="phase-ii"
       >
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_70%_30%,rgba(111,21,36,0.28)_0%,transparent_65%)]"
-          aria-hidden
-        />
+        <SectionDrift className="bg-[radial-gradient(ellipse_70%_55%_at_70%_30%,rgba(111,21,36,0.32)_0%,transparent_65%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-16">
-            <div className={`lg:col-span-5 ${isRTL ? 'lg:order-1' : 'lg:order-2'}`}>
+          <div className="relative grid items-start gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+            {/* Photo wall — fills prose height on desktop, never taller */}
+            <div
+              className={`lg:absolute lg:inset-y-0 lg:w-[calc(58.333%-1.75rem)] xl:w-[calc(58.333%-2rem)] ${
+                isRTL ? 'lg:end-0' : 'lg:start-0'
+              }`}
+            >
+              <div
+                className="grid grid-cols-2 grid-rows-3 gap-1.5 sm:gap-2 lg:h-full lg:min-h-0"
+                aria-label="Bint Saeed atelier making process"
+              >
+                {PHASE_II_MEDIA.map((item, index) => (
+                  <Reveal
+                    key={item.src}
+                    delay={0.04 + index * 0.05}
+                    className="h-full min-h-0 min-w-0"
+                  >
+                    <Post
+                      ratio=""
+                      className="aspect-[4/5] h-full max-h-[9.75rem] sm:max-h-[11rem] lg:aspect-auto lg:max-h-none"
+                      tone="onDark"
+                      invertParallax={index % 2 === 1}
+                      intensity={18 + (index % 3) * 6}
+                    >
+                      {item.kind === 'video' ? (
+                        <Film src={item.src} ariaLabel={item.ariaLabel} />
+                      ) : (
+                        <Still src={item.src} alt={item.alt} />
+                      )}
+                    </Post>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+
+            {/* Prose sets section height on desktop */}
+            <div className={`lg:col-span-5 ${isRTL ? 'lg:col-start-1' : 'lg:col-start-8'}`}>
               <PhaseProse
                 phase={copy.phaseII}
                 headingId="phase-ii"
                 accent="clay"
-                sticky
                 index={2}
                 tone="onDark"
               />
-            </div>
-            <div className={`lg:col-span-7 ${isRTL ? 'lg:order-2' : 'lg:order-1'}`}>
-              <div
-                className="flex flex-col gap-3 sm:gap-4"
-                aria-label="Bint Saeed atelier making process"
-              >
-                {PHASE_II_MEDIA.map((item, index) => {
-                  const offset =
-                    item.kind === 'image'
-                      ? isRTL
-                        ? 'sm:ms-0 sm:me-[8%] sm:w-[92%]'
-                        : 'sm:ms-[8%] sm:w-[92%]'
-                      : isRTL
-                        ? 'sm:ms-[8%] sm:w-[92%]'
-                        : 'sm:me-[8%] sm:w-[92%]'
-                  return (
-                    <Reveal
-                      key={item.kind === 'video' ? item.src : item.src}
-                      delay={0.05 + index * 0.06}
-                      className={`min-w-0 ${offset}`}
-                    >
-                      <Post ratio="aspect-[4/5] sm:aspect-[3/4]" tone="onDark">
-                        {item.kind === 'video' ? (
-                          <Film src={item.src} ariaLabel={item.ariaLabel} />
-                        ) : (
-                          <Still src={item.src} alt={item.alt} />
-                        )}
-                      </Post>
-                    </Reveal>
-                  )
-                })}
-              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Phase III — clay chapter + textile + shears */}
+      {/* Phase III — clay chapter + equal photo-wall pair sized to prose */}
       <section
         className={`relative z-40 overflow-hidden bg-[#e8ddd4] ${EDITORIAL_STACK_PAD} ${EDITORIAL_STACK_CARD}`}
         aria-labelledby="phase-iii"
       >
-        <div className={`${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-14 xl:gap-16">
-            <div className={`lg:col-span-5 ${isRTL ? 'lg:order-2' : ''}`}>
-              <PhaseProse phase={copy.phaseIII} headingId="phase-iii" sticky index={3} />
-            </div>
-            <div className={`lg:col-span-7 ${isRTL ? 'lg:order-1' : ''}`}>
-              <div className="grid grid-cols-12 gap-3 sm:gap-4 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]">
-                <Reveal delay={0.06} className="col-span-7 min-w-0">
-                  <div className="relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden bg-brand-pageCanvas/70 shadow-[0_28px_64px_-40px_rgba(42,0,18,0.2)]">
-                    <Image
+        <SectionDrift className="bg-[radial-gradient(ellipse_60%_50%_at_20%_80%,rgba(111,21,36,0.1)_0%,transparent_55%)]" />
+        <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
+          <div className="relative grid items-start gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-14">
+            <div
+              className={`order-2 lg:absolute lg:inset-y-0 lg:order-none lg:w-[calc(58.333%-1.75rem)] xl:w-[calc(58.333%-2rem)] ${
+                isRTL ? 'lg:start-0' : 'lg:end-0'
+              }`}
+            >
+              <div
+                className="grid grid-cols-2 gap-1.5 sm:gap-2 lg:h-full lg:min-h-0"
+                aria-label="Bint Saeed finishing stills"
+              >
+                <Reveal delay={0.05} className="h-full min-h-0 min-w-0">
+                  <Post
+                    ratio=""
+                    className="aspect-[3/4] h-full max-h-[14rem] sm:max-h-[16rem] lg:aspect-auto lg:max-h-none"
+                    intensity={28}
+                  >
+                    <Still
                       src={MEDIA.shearsMeasure.src}
                       alt={MEDIA.shearsMeasure.alt}
-                      title={MEDIA.shearsMeasure.title}
-                      width={1024}
-                      height={1146}
-                      sizes="(min-width: 1024px) 28vw, 55vw"
-                      className="h-auto max-h-full w-full object-contain object-center p-4 sm:p-6"
-                      priority={false}
+                      className="!object-contain bg-brand-pageCanvas/80 p-3 sm:p-4"
                     />
-                  </div>
+                  </Post>
                 </Reveal>
-                <Reveal delay={0.14} className="col-span-5 min-w-0 self-end">
-                  <Post ratio="aspect-[3/4]">
+                <Reveal delay={0.12} className="h-full min-h-0 min-w-0">
+                  <Post
+                    ratio=""
+                    className="aspect-[3/4] h-full max-h-[14rem] sm:max-h-[16rem] lg:aspect-auto lg:max-h-none"
+                    invertParallax
+                    intensity={20}
+                  >
                     <Still
                       src={MEDIA.textile.src}
                       alt={MEDIA.textile.alt}
@@ -550,6 +605,10 @@ export default function CraftsmanshipClient() {
                   </Post>
                 </Reveal>
               </div>
+            </div>
+
+            <div className={`order-1 lg:col-span-5 lg:order-none ${isRTL ? 'lg:col-start-8' : 'lg:col-start-1'}`}>
+              <PhaseProse phase={copy.phaseIII} headingId="phase-iii" index={3} />
             </div>
           </div>
         </div>
@@ -560,7 +619,7 @@ export default function CraftsmanshipClient() {
         aria-label="Bint Saeed garment finishing details"
       >
         <Image
-          src="/craftsmanship/bint-saeed-abu-dhabi-explore-collection-editorial-texture.webp"
+          src="/craftsmanship/bint-saeed-abu-dhabi-explore-collection-organic-texture.png"
           alt={withBrandAlt(
             'Explore the Bint Saeed collection — editorial fabric texture background for luxury abayas',
             language === 'ar' ? 'ar' : 'en',
@@ -589,7 +648,11 @@ export default function CraftsmanshipClient() {
           <div className="mx-auto grid max-w-5xl grid-cols-3 gap-2 sm:gap-3 md:gap-4">
             {DETAIL_TRIO.map((item, index) => (
               <Reveal key={item.src} delay={index * 0.08} className="min-w-0">
-                <Post ratio="aspect-[3/4]">
+                <Post
+                  ratio="aspect-[3/4]"
+                  invertParallax={index % 2 === 1}
+                  intensity={20 + index * 4}
+                >
                   <Still src={item.src} alt={item.alt} />
                 </Post>
               </Reveal>
