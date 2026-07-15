@@ -127,10 +127,10 @@ export default function ComingSoonPage() {
       {/* Language: outside overflow scroll root so dropdown matches `/home` (same pill + panel; not clipped) */}
       <div
         className={`pointer-events-none fixed top-[max(0.5rem,env(safe-area-inset-top))] z-[100] ${
-          isRTL
-            ? 'left-[max(0.5rem,env(safe-area-inset-left))]'
-            : 'right-[max(0.5rem,env(safe-area-inset-right))]'
-        }`}
+ isRTL
+ ? 'left-[max(0.5rem,env(safe-area-inset-left))]'
+ : 'right-[max(0.5rem,env(safe-area-inset-right))]'
+ }`}
       >
         <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-white/25 bg-white/[0.02] px-2.5 py-1">
           <LanguageSwitcher variant="light" />
@@ -329,10 +329,10 @@ export default function ComingSoonPage() {
                       inputMode="email"
                       enterKeyHint="done"
                       className={`font-montserrat min-h-[48px] w-full rounded-xl border bg-white/[0.07] px-4 py-3 text-base tracking-wide text-white/90 placeholder:text-white/55 focus:outline-none transition-all duration-300 sm:text-sm ${
-                        emailError
-                          ? 'border-red-400/30'
-                          : 'border-white/[0.22] focus:border-brand-dustyBlue/60 focus:bg-white/[0.12]'
-                      }`}
+ emailError
+ ? 'border-red-400/30'
+ : 'border-white/[0.22] focus:border-brand-dustyBlue/60 focus:bg-white/[0.12]'
+ }`}
                     />
                   </div>
                   {emailError && (

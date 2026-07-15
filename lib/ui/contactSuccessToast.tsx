@@ -17,8 +17,8 @@ export function showContactSuccessToast(isRTL: boolean) {
         role="status"
         aria-live="polite"
         className={`pointer-events-auto flex max-w-[min(100vw-2rem,22rem)] items-start gap-4 rounded-[4px] border border-brand-stone/35 bg-gradient-to-br from-[#faf8f5] via-[#f7f2ec] to-[#f0e9e1] px-5 py-4 shadow-[0_24px_56px_rgba(26,2,16,0.14)] transition-all duration-500 ${
-          t.visible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
-        } ${isRTL ? 'flex-row-reverse text-right' : ''}`}
+ t.visible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
+ } text-start`}
       >
         <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-brand-dustyBlue/40 bg-brand-dustyBlue/12 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]">
           <FiCheck className="h-5 w-5 text-brand-dustyBlue" strokeWidth={2.25} aria-hidden />

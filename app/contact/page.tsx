@@ -52,7 +52,7 @@ const contactErrorClass = `${formHintClass} text-brand-clayRed`
 
 function FieldError({ id, message, isRTL }: { id: string; message: string; isRTL: boolean }) {
   return (
-    <p id={id} role="alert" className={`${contactErrorClass} ${isRTL ? 'text-right' : ''}`}>
+    <p id={id} role="alert" className={`${contactErrorClass} text-start`}>
       {message}
     </p>
   )
@@ -212,7 +212,7 @@ export default function ContactPage() {
   } as const
 
   return (
-    <div className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-brand-pageCanvas pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-brand-pageCanvas pb-20 `}>
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={ABOUT_SECTION_HERO_IMAGES.contact}
@@ -228,7 +228,7 @@ export default function ContactPage() {
       />
 
       <div className={`${EDITORIAL_PAGE_CONTAINER} pt-10 lg:pt-14`}>
-        <div className={`mb-10 max-w-2xl md:mb-12 ${isRTL ? 'ms-auto text-right' : ''}`}>
+        <div className={`mb-10 max-w-2xl md:mb-12 text-start`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
             Bint Saeed
           </p>
@@ -253,7 +253,7 @@ export default function ContactPage() {
                 aria-hidden
               />
               {submitted ? (
-                <div className={`relative ${isRTL ? 'text-right' : 'text-left'}`}>
+                <div className={`relative text-start`}>
                   <div className="flex h-14 w-14 items-center justify-center rounded-full border border-brand-dustyBlue/40 bg-brand-dustyBlue/12">
                     <FiCheck className="h-6 w-6 text-brand-dustyBlue" strokeWidth={2.25} aria-hidden />
                   </div>
@@ -266,12 +266,10 @@ export default function ContactPage() {
                   <p className="mt-3 max-w-md font-montserrat text-sm leading-relaxed text-brand-clayRed/75">
                     {getKeepExploringLine(language, 'worldOfBintSaeed')}
                   </p>
-                  <div className={`mt-8 flex flex-col gap-3 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+                  <div className={`mt-8 flex flex-col gap-3 sm:flex-row `}>
                     <LocaleLink
                       href="/shop"
-                      className={`inline-flex min-h-[48px] items-center justify-center gap-2 bg-brand-darkRed px-6 font-montserrat text-[11px] uppercase tracking-[0.16em] text-white transition-colors hover:bg-brand-dustyBlue ${
-                        isRTL ? 'flex-row-reverse' : ''
-                      }`}
+                      className={`inline-flex min-h-[48px] items-center justify-center gap-2 bg-brand-darkRed px-6 font-montserrat text-[11px] uppercase tracking-[0.16em] text-white transition-colors hover:bg-brand-dustyBlue `}
                       data-cursor-hover
                     >
                       {discover.exploreCollection}
@@ -279,9 +277,7 @@ export default function ContactPage() {
                     </LocaleLink>
                     <LocaleLink
                       href="/accessories"
-                      className={`inline-flex min-h-[48px] items-center justify-center gap-2 border border-brand-darkRed/25 px-6 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue ${
-                        isRTL ? 'flex-row-reverse' : ''
-                      }`}
+                      className={`inline-flex min-h-[48px] items-center justify-center gap-2 border border-brand-darkRed/25 px-6 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue `}
                       data-cursor-hover
                     >
                       {discover.discoverAccessories}
@@ -300,7 +296,7 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="relative space-y-6" noValidate>
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="contact-name" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
+                    <label htmlFor="contact-name" className={`${contactLabelClass} text-start`}>
                       {isRTL ? 'الاسم' : 'Name'} *
                     </label>
                     <input
@@ -318,14 +314,14 @@ export default function ContactPage() {
                       }}
                       aria-invalid={nameError ? true : undefined}
                       aria-describedby={nameError ? 'contact-name-error' : undefined}
-                      className={`${contactFieldClass} ${nameError ? contactFieldErrorClass : ''} ${isRTL ? 'text-right' : ''}`}
+                      className={`${contactFieldClass} ${nameError ? contactFieldErrorClass : ''} text-start`}
                       dir={isRTL ? 'rtl' : 'ltr'}
                       autoComplete="name"
                     />
                     {nameError ? <FieldError id="contact-name-error" message={nameError} isRTL={isRTL} /> : null}
                   </div>
                   <div>
-                    <label htmlFor="contact-email" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
+                    <label htmlFor="contact-email" className={`${contactLabelClass} text-start`}>
                       {isRTL ? 'البريد الإلكتروني' : 'Email'} *
                     </label>
                     <input
@@ -345,7 +341,7 @@ export default function ContactPage() {
                       }}
                       aria-invalid={emailError ? true : undefined}
                       aria-describedby={emailError ? 'contact-email-error' : undefined}
-                      className={`${contactFieldClass} ${emailError ? contactFieldErrorClass : ''} ${isRTL ? 'text-right' : ''}`}
+                      className={`${contactFieldClass} ${emailError ? contactFieldErrorClass : ''} text-start`}
                       dir={isRTL ? 'rtl' : 'ltr'}
                     />
                     {emailError ? <FieldError id="contact-email-error" message={emailError} isRTL={isRTL} /> : null}
@@ -354,7 +350,7 @@ export default function ContactPage() {
 
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="contact-phone" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
+                    <label htmlFor="contact-phone" className={`${contactLabelClass} text-start`}>
                       {isRTL ? 'رقم الهاتف' : 'Phone'}
                     </label>
                     <input
@@ -362,13 +358,13 @@ export default function ContactPage() {
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className={`${contactFieldClass} ${isRTL ? 'text-right' : ''}`}
+                      className={`${contactFieldClass} text-start`}
                       dir="ltr"
                       autoComplete="tel"
                     />
                   </div>
                   <div>
-                    <label className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
+                    <label className={`${contactLabelClass} text-start`}>
                       {isRTL ? 'الموضوع' : 'Subject'} *
                     </label>
                     <ContactSubjectSelect
@@ -392,7 +388,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="contact-message" className={`${contactLabelClass} ${isRTL ? 'text-right' : ''}`}>
+                  <label htmlFor="contact-message" className={`${contactLabelClass} text-start`}>
                     {isRTL ? 'رسالتك' : 'Message'} *
                   </label>
                   <textarea
@@ -401,7 +397,7 @@ export default function ContactPage() {
                     rows={6}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className={`${contactFieldClass} resize-none ${isRTL ? 'text-right' : ''}`}
+                    className={`${contactFieldClass} resize-none text-start`}
                     dir={isRTL ? 'rtl' : 'ltr'}
                     placeholder={isRTL ? 'كيف يمكننا مساعدتك؟' : 'How can we help you?'}
                   />
@@ -410,7 +406,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`${ctaFormSubmit} w-full sm:w-auto ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`${ctaFormSubmit} w-full sm:w-auto `}
                   data-cursor-hover
                 >
                   {isSubmitting ? (
@@ -430,7 +426,7 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.35 }}
-              className={`${contactPanelClass} ${isRTL ? 'text-right' : ''}`}
+              className={`${contactPanelClass} text-start`}
             >
               <h3 className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed">
                 {isRTL ? 'البريد حسب القسم' : 'Department Inboxes'}
@@ -485,7 +481,7 @@ export default function ContactPage() {
               {contactInfo.map((item, index) => (
                 <div
                   key={index}
-                  className={`flex items-start gap-4 border-b border-brand-stone/15 py-4 last:border-b-0 last:pb-0 first:pt-0 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
+                  className={`flex items-start gap-4 border-b border-brand-stone/15 py-4 last:border-b-0 last:pb-0 first:pt-0 text-start`}
                 >
                   <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-brand-darkRed/10 bg-brand-darkRed/[0.04]">
                     <item.icon className="h-[18px] w-[18px] text-brand-darkRed" />

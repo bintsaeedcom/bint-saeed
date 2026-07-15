@@ -48,7 +48,7 @@ function ElementsPayButton({ label, processingLabel, rtl }: PayButtonProps) {
       type="button"
       onClick={() => void handlePay()}
       disabled={disabled}
-      className={`mt-6 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue px-3 py-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 sm:gap-3 sm:text-sm sm:tracking-[0.18em] ${rtl ? 'flex-row-reverse' : ''}`}
+      className={`mt-6 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue px-3 py-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] transition-colors hover:bg-white disabled:opacity-50 sm:gap-3 sm:text-sm sm:tracking-[0.18em] `}
       data-cursor-hover
     >
       {paying ? (
@@ -107,11 +107,11 @@ export default function StripeElementsCheckoutForm({
   }, [paypalOption])
 
   return (
-    <div className={`space-y-5 ${rtl ? 'text-right' : ''}`}>
+    <div className={`space-y-5 text-start`}>
       <button
         type="button"
         onClick={onBack}
-        className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.14em] text-brand-clayRed/70 transition-colors hover:text-brand-darkRed ${rtl ? 'flex-row-reverse' : ''}`}
+        className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.14em] text-brand-clayRed/70 transition-colors hover:text-brand-darkRed `}
         data-cursor-hover
       >
         <FiArrowLeft className={`h-3.5 w-3.5 ${rtl ? 'rotate-180' : ''}`} />

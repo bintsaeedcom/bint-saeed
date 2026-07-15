@@ -14,7 +14,7 @@ export default function KhousPage() {
   const { isRTL } = useLanguage()
   
   return (
-    <div className={`min-h-screen bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen bg-brand-pageCanvas `}>
       <HeroSection />
       <AboutTopicNav />
       <StorySection />
@@ -51,7 +51,7 @@ function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-t from-brand-clayRed via-brand-clayRed/60 to-transparent" />
       </motion.div>
 
-      <div className={`absolute top-28 ${isRTL ? 'right-6 lg:right-12' : 'left-6 lg:left-12'} z-20`}>
+      <div className={`absolute top-28 start-6 lg:start-12 z-20`}>
         <motion.div
           initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -113,7 +113,7 @@ function StorySection() {
             initial={{ opacity: 0, x: isRTL ? 40 : -40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className={isRTL ? 'text-right' : ''}
+            className="text-start"
           >
             <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
               {isRTL ? 'شجرة الحياة' : 'Tree of Life'}
@@ -207,7 +207,7 @@ function ProcessSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`p-8 bg-white border border-brand-stone/30 ${isRTL ? 'text-right' : ''}`}
+              className={`p-8 bg-white border border-brand-stone/30 text-start`}
             >
               <span className="font-rozha text-6xl text-brand-clayRed/20 block mb-4">
                 0{index + 1}
@@ -262,7 +262,7 @@ function ProductsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`p-6 bg-white/10 backdrop-blur-sm text-center ${isRTL ? 'text-right' : ''}`}
+              className={`p-6 bg-white/10 backdrop-blur-sm text-center text-start`}
             >
               <h3 className="font-rozha text-xl mb-2">
                 {isRTL ? product.name.ar : product.name.en}
@@ -305,7 +305,7 @@ function BintSaeedSection() {
             initial={{ opacity: 0, x: isRTL ? -40 : 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className={`order-1 lg:order-2 ${isRTL ? 'text-right' : ''}`}
+            className={`order-1 lg:order-2 text-start`}
           >
             <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
               {isRTL ? 'بنت سعيد × الخوص' : 'Bint Saeed × Khous'}
@@ -327,7 +327,7 @@ function BintSaeedSection() {
             </div>
             <LocaleLink
               href="/shop?from=heritage-khous"
-              className={`mt-8 inline-flex min-h-[52px] items-center justify-center gap-3 px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`mt-8 inline-flex min-h-[52px] items-center justify-center gap-3 px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors `}
               data-cursor-hover
             >
               {isRTL ? 'تسوقي المجموعة' : 'Shop the Collection'}
@@ -346,8 +346,8 @@ function CTASection() {
   return (
     <section className="py-16 bg-brand-stone/20">
       <div className="container mx-auto px-6 lg:px-12">
-        <div className={`flex flex-col md:flex-row items-center justify-between gap-8 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
-          <div className={isRTL ? 'text-right' : ''}>
+        <div className={`flex flex-col md:flex-row items-center justify-between gap-8 `}>
+          <div className="text-start">
             <h3 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-2">
               {isRTL ? 'اكتشفي المزيد من تراثنا' : 'Explore More of Our Heritage'}
             </h3>
@@ -355,7 +355,7 @@ function CTASection() {
               {isRTL ? 'تعرفي على حرف إماراتية تقليدية أخرى' : 'Learn about other traditional Emirati crafts'}
             </p>
           </div>
-          <div className={`flex gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <div className={`flex gap-4 `}>
             <LocaleLink
               href="/heritage/al-talli"
               className="inline-flex min-h-[48px] items-center justify-center px-6 py-3 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"

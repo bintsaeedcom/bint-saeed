@@ -121,18 +121,18 @@ export default function TestimonialsSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className={`text-center ${isRTL ? 'text-right' : ''}`}
+              className={`text-center text-start`}
             >
               {/* Stars */}
-              <div className={`flex items-center justify-center gap-1 mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`flex items-center justify-center gap-1 mb-8 `}>
                 {[...Array(5)].map((_, i) => (
                   <FiStar
                     key={i}
                     className={`w-5 h-5 ${
-                      i < data[currentIndex].rating
-                        ? 'fill-brand-darkRed text-brand-darkRed'
-                        : 'text-brand-stone'
-                    }`}
+ i < data[currentIndex].rating
+ ? 'fill-brand-darkRed text-brand-darkRed'
+ : 'text-brand-stone'
+ }`}
                   />
                 ))}
               </div>
@@ -158,7 +158,7 @@ export default function TestimonialsSection() {
           </AnimatePresence>
 
           {/* Navigation */}
-          <div className={`flex items-center justify-center gap-6 mt-12 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <div className={`flex items-center justify-center gap-6 mt-12 `}>
             <button
               onClick={handlePrev}
               className="w-12 h-12 border border-brand-darkRed/20 rounded-full flex items-center justify-center text-brand-darkRed hover:bg-brand-dustyBlue hover:text-white transition-all"
@@ -177,10 +177,10 @@ export default function TestimonialsSection() {
                     setCurrentIndex(index)
                   }}
                   className={`w-2 h-2 rounded-full transition-all ${
-                    currentIndex === index
-                      ? 'bg-brand-darkRed w-8'
-                      : 'bg-brand-darkRed/20'
-                  }`}
+ currentIndex === index
+ ? 'bg-brand-darkRed w-8'
+ : 'bg-brand-darkRed/20'
+ }`}
                 />
               ))}
             </div>

@@ -143,7 +143,7 @@ export default function GivingForwardPage() {
   const hangtagCaption = language === 'ar' ? 'تراث يُحمل إلى الأمام' : 'Heritage Carried Forward'
 
   return (
-    <div className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-[#1a0210] `}>
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={ABOUT_SECTION_HERO_IMAGES.givingForward}
@@ -168,11 +168,11 @@ export default function GivingForwardPage() {
             <div className={`lg:col-span-6 ${isRTL ? 'lg:order-2' : ''}`}>
               <div
                 className={`max-w-xl lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
-                  isRTL ? 'ms-auto text-right' : ''
-                }`}
+ isRTL ? 'ms-auto text-right' : ''
+ }`}
               >
                 <Reveal>
-                  <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className={`flex items-baseline gap-4 `}>
                     <span className="shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-dustyBlue">
                       01
                     </span>
@@ -218,7 +218,7 @@ export default function GivingForwardPage() {
         <SectionDrift className="bg-[radial-gradient(ellipse_60%_50%_at_20%_80%,rgba(111,21,36,0.1)_0%,transparent_55%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
           <Reveal>
-            <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
+            <div className={`flex items-baseline gap-4 text-start`}>
               <span className="shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-dustyBlue">
                 02
               </span>
@@ -235,7 +235,7 @@ export default function GivingForwardPage() {
             {copy.pillars.map((pillar, index) => (
               <Reveal key={pillar.title} delay={0.06 + index * 0.05}>
                 <li className="border-t border-[#6f1524]/35 py-7 first:border-t first:pt-7 md:py-8">
-                  <div className={`flex gap-5 md:gap-8 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
+                  <div className={`flex gap-5 md:gap-8 text-start`}>
                     <span className="mt-0.5 shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-dustyBlue">
                       {String(index + 1).padStart(2, '0')}
                     </span>
@@ -254,7 +254,7 @@ export default function GivingForwardPage() {
           </ol>
 
           <Reveal delay={0.15}>
-            <div className={`mt-12 flex flex-wrap gap-4 md:mt-14 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`mt-12 flex flex-wrap gap-4 md:mt-14 `}>
               <LocaleLink
                 href="/shop?from=giving-forward"
                 className="inline-flex min-h-[48px] items-center justify-center gap-3 rounded-[4px] border border-brand-darkRed/25 bg-transparent px-9 py-3.5 font-montserrat text-[11px] uppercase tracking-[0.2em] text-brand-darkRed transition-colors hover:border-brand-darkRed hover:bg-brand-darkRed hover:text-[#e8ddd4]"

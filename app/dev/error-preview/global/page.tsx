@@ -17,7 +17,7 @@ export default function DevErrorPreviewGlobalPage() {
   const copy = getErrorPageCopy('en')
 
   return (
-    <div className={`relative min-h-screen overflow-hidden bg-[#faf8f6] ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`relative min-h-screen overflow-hidden bg-[#faf8f6] `}>
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(193,144,134,0.12),transparent_55%)]"
         aria-hidden

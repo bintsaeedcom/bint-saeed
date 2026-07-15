@@ -13,7 +13,7 @@ export default function CareersPage() {
   const copy = getCareersCopy(language)
 
   return (
-    <div className={`relative min-h-screen overflow-x-clip bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`relative min-h-screen overflow-x-clip bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} `}>
       <section className="relative container mx-auto px-6 pb-20 lg:px-16 lg:pb-28">
         <AppPageWayfinding
           rtl={isRTL}

@@ -26,7 +26,7 @@ export default function WishlistPage() {
   const discover = getCartEmptyDiscoverCopy(language)
 
   return (
-    <div className={`min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} pb-20 `}>
       <div className={`container mx-auto px-6 lg:px-12 ${items.length === 0 ? 'max-w-5xl' : 'max-w-3xl'}`}>
         <AppPageWayfinding
           rtl={isRTL}
@@ -40,7 +40,7 @@ export default function WishlistPage() {
             label: discover.exploreCollection,
           }}
         />
-        <div className={`mb-10 ${isRTL ? 'text-right' : ''}`}>
+        <div className={`mb-10 text-start`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
             Bint Saeed
           </p>
@@ -53,14 +53,14 @@ export default function WishlistPage() {
         </div>
 
         {items.length === 0 ? (
-          <div className={`${isRTL ? 'text-right' : 'text-center'}`}>
+          <div className={`text-start`}>
             <div className="rounded-[2px] border border-brand-stone/25 bg-white/70 px-6 py-14">
               <FiHeart className="mx-auto mb-4 h-11 w-11 text-brand-stone/40" aria-hidden />
               <p className="font-rozha text-2xl text-brand-darkRed">{copy.emptyTitle}</p>
               <p
                 className={`mt-3 max-w-md font-montserrat text-sm leading-relaxed text-brand-clayRed/65 ${
-                  isRTL ? '' : 'mx-auto'
-                }`}
+ isRTL ? '' : 'mx-auto'
+ }`}
               >
                 {copy.emptyDescription}
               </p>
@@ -83,7 +83,7 @@ export default function WishlistPage() {
                   className="list-none"
                 >
                   <div
-                    className={`flex gap-4 rounded-lg border border-brand-stone/30 bg-white p-4 ${isRTL ? 'flex-row-reverse' : ''}`}
+                    className={`flex gap-4 rounded-lg border border-brand-stone/30 bg-white p-4 `}
                   >
                     <LocaleLink href={href} className="relative h-28 w-20 shrink-0 overflow-hidden bg-stone-100">
                       <Image
@@ -95,7 +95,7 @@ export default function WishlistPage() {
                         sizes="80px"
                       />
                     </LocaleLink>
-                    <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
+                    <div className={`min-w-0 flex-1 text-start`}>
                       <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
                         {ui.shop.categories[item.category as keyof typeof ui.shop.categories] ?? item.category}
                       </p>

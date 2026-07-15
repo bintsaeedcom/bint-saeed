@@ -229,10 +229,10 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
             }
             transition={{ type: 'tween', duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
             className={`fixed inset-x-0 bottom-0 z-[101] flex max-h-[min(88dvh,40rem)] flex-col overflow-hidden rounded-t-[1.25rem] ${sheetClass} ${
-              isRTL ? 'rtl' : 'ltr'
-            } md:inset-y-0 md:bottom-0 md:top-0 md:max-h-none md:w-[min(100vw-1.5rem,26.5rem)] md:rounded-none md:shadow-[0_0_80px_-12px_rgba(26,2,16,0.55)] ${
-              isRTL ? 'md:inset-x-auto md:left-0 md:right-auto' : 'md:inset-x-auto md:right-0 md:left-auto'
-            }`}
+ isRTL ? 'rtl' : 'ltr'
+ } md:inset-y-0 md:bottom-0 md:top-0 md:max-h-none md:w-[min(100vw-1.5rem,26.5rem)] md:rounded-none md:shadow-[0_0_80px_-12px_rgba(26,2,16,0.55)] ${
+ isRTL ? 'md:inset-x-auto md:left-0 md:right-auto' : 'md:inset-x-auto md:right-0 md:left-auto'
+ }`}
             style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
           >
             {/* Mobile grabber */}
@@ -250,7 +250,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
             <button
               type="button"
               onClick={onClose}
-              className={`absolute top-3 z-20 rounded-full bg-white/70 p-2.5 text-[#5c5356] shadow-sm transition-colors hover:bg-white hover:text-brand-darkRed ${isRTL ? 'left-3' : 'right-3'}`}
+              className={`absolute top-3 z-20 rounded-full bg-white/70 p-2.5 text-[#5c5356] shadow-sm transition-colors hover:bg-white hover:text-brand-darkRed end-3`}
               data-cursor-hover
               aria-label={ui.common.close}
             >
@@ -259,7 +259,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
             {/* Scrollable options — size/colour first */}
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-1 sm:px-5">
-              <div className={`mb-4 flex min-w-0 gap-3 sm:mb-5 sm:gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`mb-4 flex min-w-0 gap-3 sm:mb-5 sm:gap-4 `}>
                 <div className="relative aspect-[3/4] w-[4.5rem] flex-shrink-0 overflow-hidden rounded-md bg-[#efe8e1] sm:w-20">
                   <Image
                     key={previewImage}
@@ -274,7 +274,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                     unoptimized={isWebshopPicturePath(previewImage)}
                   />
                 </div>
-                <div className={`min-w-0 flex-1 pe-8 ${isRTL ? 'text-right' : ''}`}>
+                <div className={`min-w-0 flex-1 pe-8 text-start`}>
                   {product.category && (
                     <span className="mb-1 block truncate font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
                       {ui.shop.categories[product.category as keyof typeof ui.shop.categories] ??
@@ -296,7 +296,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               {showSizeSelector && (
                 <div className="mb-3.5">
                   <label
-                    className={`mb-2 block font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed ${isRTL ? 'text-right' : ''}`}
+                    className={`mb-2 block font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed text-start`}
                   >
                     {ui.quickBuy.size}
                     {selectedSize ? (
@@ -305,17 +305,17 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                       </span>
                     ) : null}
                   </label>
-                  <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+                  <div className={`flex flex-wrap gap-2 `}>
                     {product.sizes.map((size) => (
                       <button
                         key={size}
                         type="button"
                         onClick={() => setSelectedSize(size)}
                         className={`min-w-[48px] border px-3 py-2.5 font-montserrat text-xs uppercase tracking-[0.1em] transition-all ${
-                          selectedSize === size
-                            ? 'border-brand-darkRed bg-brand-darkRed text-white'
-                            : 'border-brand-darkRed/25 bg-white text-brand-darkRed hover:border-brand-dustyBlue'
-                        }`}
+ selectedSize === size
+ ? 'border-brand-darkRed bg-brand-darkRed text-white'
+ : 'border-brand-darkRed/25 bg-white text-brand-darkRed hover:border-brand-dustyBlue'
+ }`}
                         data-cursor-hover
                       >
                         {size}
@@ -326,7 +326,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               )}
 
               <p
-                className={`mb-3.5 flex items-start gap-2 font-montserrat text-[11px] leading-snug tracking-wide text-[#4a3a36] ${isRTL ? 'flex-row-reverse text-right' : ''}`}
+                className={`mb-3.5 flex items-start gap-2 font-montserrat text-[11px] leading-snug tracking-wide text-[#4a3a36] text-start`}
               >
                 <FiClock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-darkRed/75" aria-hidden />
                 <span>{shipNote}</span>
@@ -335,7 +335,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               {colorOptions.length > 1 && (
                 <div className="mb-3.5">
                   <label
-                    className={`mb-2 block font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed ${isRTL ? 'text-right' : ''}`}
+                    className={`mb-2 block font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed text-start`}
                   >
                     {ui.quickBuy.color}
                     {selectedColor ? (
@@ -344,7 +344,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                       </span>
                     ) : null}
                   </label>
-                  <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+                  <div className={`flex flex-wrap gap-2 `}>
                     {colorOptions.map((color) => (
                       <button
                         key={color.name}
@@ -363,16 +363,16 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               {showPersonalisation && (
                 <div className="mb-2 border-t border-brand-darkRed/10 pt-3.5">
                   <p
-                    className={`mb-1.5 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed ${isRTL ? 'text-right' : ''}`}
+                    className={`mb-1.5 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed text-start`}
                   >
                     {pdpUi.personalisation.title}
                   </p>
                   <p
-                    className={`mb-2.5 font-montserrat text-[11px] leading-relaxed text-[#4a3a36] ${isRTL ? 'text-right' : ''}`}
+                    className={`mb-2.5 font-montserrat text-[11px] leading-relaxed text-[#4a3a36] text-start`}
                   >
                     {pdpUi.personalisation.desc}
                   </p>
-                  <div className={`flex flex-col gap-2 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+                  <div className={`flex flex-col gap-2 sm:flex-row `}>
                     <button
                       type="button"
                       onClick={() => {
@@ -380,10 +380,10 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                         setCustomisationMessage('')
                       }}
                       className={`min-h-[40px] flex-1 border px-3 py-2 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors ${
-                        !customisationActive
-                          ? 'border-brand-darkRed bg-brand-darkRed text-white'
-                          : 'border-brand-darkRed/25 bg-white text-brand-darkRed'
-                      }`}
+ !customisationActive
+ ? 'border-brand-darkRed bg-brand-darkRed text-white'
+ : 'border-brand-darkRed/25 bg-white text-brand-darkRed'
+ }`}
                       aria-pressed={!customisationActive}
                       data-cursor-hover
                     >
@@ -393,10 +393,10 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                       type="button"
                       onClick={() => setCustomisationActive(true)}
                       className={`min-h-[40px] flex-1 border px-3 py-2 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors ${
-                        customisationActive
-                          ? 'border-brand-darkRed bg-brand-darkRed text-white'
-                          : 'border-brand-darkRed/25 bg-white text-brand-darkRed'
-                      }`}
+ customisationActive
+ ? 'border-brand-darkRed bg-brand-darkRed text-white'
+ : 'border-brand-darkRed/25 bg-white text-brand-darkRed'
+ }`}
                       aria-pressed={customisationActive}
                       data-cursor-hover
                     >
@@ -417,11 +417,11 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                         autoComplete="off"
                         data-allow-select
                       />
-                      <p className={`font-montserrat text-[10px] text-[#5c5356] ${isRTL ? 'text-right' : ''}`}>
+                      <p className={`font-montserrat text-[10px] text-[#5c5356] text-start`}>
                         {customisationMessage.length}/{CUSTOMISATION_MAX_CHARS}
                       </p>
                       <p
-                        className={`border border-brand-darkRed/12 bg-white/80 p-2.5 font-montserrat text-[10px] leading-relaxed text-[#2c2426] ${isRTL ? 'text-right' : ''}`}
+                        className={`border border-brand-darkRed/12 bg-white/80 p-2.5 font-montserrat text-[10px] leading-relaxed text-[#2c2426] text-start`}
                       >
                         {pdpUi.personalisation.customisedNoReturn}
                       </p>
@@ -431,13 +431,13 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               )}
 
               <div className="mt-3 flex flex-col gap-2 border-t border-brand-darkRed/10 pb-3 pt-3 md:pb-4">
-                <div className={`flex min-w-0 items-start justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex min-w-0 items-start justify-center gap-2 `}>
                   <FiPackage className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
                   <span className="min-w-0 text-center font-montserrat text-[10px] font-medium leading-snug tracking-wide text-[#5c5356]">
                     {uaeShippingNote}
                   </span>
                 </div>
-                <div className={`flex min-w-0 items-start justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex min-w-0 items-start justify-center gap-2 `}>
                   <FiRotateCcw className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
                   <span className="min-w-0 text-center font-montserrat text-[10px] font-medium leading-snug tracking-wide text-[#5c5356]">
                     {ui.checkout.shipmentPolicy}
@@ -451,7 +451,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className={`inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded border border-brand-darkRed bg-brand-darkRed px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.12em] text-white transition-colors hover:bg-brand-darkMagenta sm:text-xs ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded border border-brand-darkRed bg-brand-darkRed px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.12em] text-white transition-colors hover:bg-brand-darkMagenta sm:text-xs `}
                 data-cursor-hover
               >
                 <FiShoppingBag className="h-4 w-4 shrink-0" />
@@ -461,7 +461,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
               <button
                 type="button"
                 onClick={handleBuyNow}
-                className={`inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded border border-brand-darkRed/35 bg-white px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.1em] text-brand-darkRed transition-colors hover:border-brand-darkRed/55 hover:bg-[#f3eee8] sm:text-xs ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded border border-brand-darkRed/35 bg-white px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.1em] text-brand-darkRed transition-colors hover:border-brand-darkRed/55 hover:bg-[#f3eee8] sm:text-xs `}
                 data-cursor-hover
               >
                 <span className="truncate">{ui.quickBuy.buyNow}</span>

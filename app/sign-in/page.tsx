@@ -129,7 +129,7 @@ export default function SignInPage() {
         />
 
         <div className="lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,30rem)] lg:items-start lg:gap-14 xl:gap-20">
-          <header className={`mb-8 lg:mb-0 lg:pt-4 ${isRTL ? 'text-right' : ''}`}>
+          <header className={`mb-8 lg:mb-0 lg:pt-4 text-start`}>
             <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue lg:mb-4">
               Bint Saeed
             </p>
@@ -184,7 +184,7 @@ export default function SignInPage() {
                 </div>
               </div>
               <div>
-                <div className={`mb-2 flex items-center justify-between gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className={`mb-2 flex items-center justify-between gap-3 `}>
                   <label className="font-montserrat text-[10px] font-medium uppercase tracking-[0.18em] text-brand-darkRed">
                     {isRTL ? 'كلمة المرور' : 'Password'}
                   </label>

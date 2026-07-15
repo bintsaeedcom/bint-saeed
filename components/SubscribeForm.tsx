@@ -126,8 +126,8 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className={`space-y-2 ${isRTL ? 'text-right' : ''}`}>
-        <div className={`flex flex-col gap-2 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+      <div className={`space-y-2 text-start`}>
+        <div className={`flex flex-col gap-2 sm:flex-row `}>
           <button
             type="button"
             onClick={() => {
@@ -157,7 +157,7 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
       </div>
 
       {notifyChannel === 'email' ? (
-        <div className={`space-y-1 ${isRTL ? 'text-right' : ''}`}>
+        <div className={`space-y-1 text-start`}>
           <input
             type="email"
             placeholder={copy.email}
@@ -183,7 +183,7 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
           ) : null}
         </div>
       ) : (
-        <div className={`space-y-1 ${isRTL ? 'text-right' : ''}`}>
+        <div className={`space-y-1 text-start`}>
           <label
             htmlFor="subscribe-phone"
             className={`block text-[10px] uppercase tracking-[0.18em] font-montserrat ${variant === 'dark' ? 'text-white/45' : 'text-white/60'}`}
@@ -214,7 +214,7 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
         </div>
       )}
 
-      <div className={`flex flex-col gap-3 md:flex-row md:items-stretch ${isRTL ? 'md:flex-row-reverse' : ''}`}>
+      <div className={`flex flex-col gap-3 md:flex-row md:items-stretch `}>
         <motion.button
           type="submit"
           disabled={isSubmitting}

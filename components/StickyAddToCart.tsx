@@ -171,7 +171,7 @@ export default function StickyAddToCart({
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-          className={`pointer-events-auto fixed inset-x-0 bottom-0 z-[96] overflow-hidden border-t border-white/20 bg-[#1a0210]/82 shadow-[0_-16px_48px_-12px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-[#1a0210]/72 lg:hidden ${isRTL ? 'rtl' : 'ltr'}`}
+          className={`pointer-events-auto fixed inset-x-0 bottom-0 z-[96] overflow-hidden border-t border-white/20 bg-[#1a0210]/82 shadow-[0_-16px_48px_-12px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-[#1a0210]/72 lg:hidden `}
           style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
         >
           <div
@@ -179,8 +179,8 @@ export default function StickyAddToCart({
             aria-hidden
           />
           <div className="relative z-[1] mx-auto max-w-[1400px] px-3 py-2.5 sm:px-4">
-            <div className={`flex min-w-0 items-center gap-2.5 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className={`min-w-0 flex-1 overflow-hidden ${isRTL ? 'text-right' : 'text-left'}`}>
+            <div className={`flex min-w-0 items-center gap-2.5 `}>
+              <div className={`min-w-0 flex-1 overflow-hidden text-start`}>
                 <p className="truncate font-montserrat text-[15px] font-medium tabular-nums tracking-wide text-white">
                   {formatPrice(product.price)}
                 </p>
@@ -197,10 +197,10 @@ export default function StickyAddToCart({
                 onClick={handleAddToCart}
                 disabled={isAdded}
                 className={`relative inline-flex min-h-[46px] min-w-[8.75rem] max-w-[52%] shrink-0 items-center justify-center gap-1.5 rounded-[4px] border px-3.5 font-montserrat text-[11px] uppercase tracking-[0.12em] transition-colors ${
-                  isAdded
-                    ? 'border-green-600 bg-green-600 text-white'
-                    : 'border-brand-darkRed bg-brand-darkRed text-white hover:bg-brand-darkMagenta active:bg-brand-clayRed'
-                } ${isRTL ? 'flex-row-reverse' : ''}`}
+ isAdded
+ ? 'border-green-600 bg-green-600 text-white'
+ : 'border-brand-darkRed bg-brand-darkRed text-white hover:bg-brand-darkMagenta active:bg-brand-clayRed'
+ } `}
               >
                 {isAdded ? (
                   <>

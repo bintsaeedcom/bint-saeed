@@ -387,9 +387,10 @@ function PhaseProse({
     : ''
 
   return (
-    <div className={`max-w-xl ${stickyClass} ${isRTL ? 'ms-auto text-right' : ''}`}>
+    <div className={`max-w-xl ${stickyClass} text-start`}>
       <Reveal>
-        <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        {/* Document dir=rtl already mirrors flex row — do not flex-row-reverse (double-flips). */}
+        <div className="flex items-baseline gap-4">
           <span className={`shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] ${indexColor}`}>
             {String(index).padStart(2, '0')}
           </span>
@@ -436,8 +437,8 @@ export default function CraftsmanshipClient() {
   return (
     <div
       className={`${EDITORIAL_PAGE_SHELL} relative isolate min-h-screen w-full min-w-0 bg-[#1a0210] ${
-        isRTL ? 'rtl' : 'ltr'
-      }`}
+ isRTL ? 'rtl' : 'ltr'
+ }`}
     >
       <AboutSectionHero
         rtl={isRTL}
@@ -466,8 +467,8 @@ export default function CraftsmanshipClient() {
             </div>
             <div
               className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
-                isRTL ? 'lg:order-1' : ''
-              }`}
+ isRTL ? 'lg:order-1' : ''
+ }`}
             >
               <div
                 className="grid grid-cols-2 gap-2 sm:gap-3"
@@ -500,8 +501,8 @@ export default function CraftsmanshipClient() {
             {/* Photo wall — full-width 2×3 on mobile; fills prose height on desktop */}
             <div
               className={`w-full min-w-0 lg:absolute lg:inset-y-0 lg:w-[calc(58.333%-1.75rem)] xl:w-[calc(58.333%-2rem)] ${
-                isRTL ? 'lg:end-0' : 'lg:start-0'
-              }`}
+ isRTL ? 'lg:end-0' : 'lg:start-0'
+ }`}
             >
               <div
                 className="mx-auto grid w-full max-w-md grid-cols-2 gap-2 sm:max-w-lg sm:gap-2.5 lg:mx-0 lg:h-full lg:max-w-none lg:min-h-0 lg:gap-2"
@@ -558,8 +559,8 @@ export default function CraftsmanshipClient() {
             </div>
             <div
               className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
-                isRTL ? 'lg:order-1' : ''
-              }`}
+ isRTL ? 'lg:order-1' : ''
+ }`}
             >
               <div className="grid grid-cols-2 gap-2 sm:gap-3" aria-label="Bint Saeed finishing stills">
                 <Reveal delay={0.05} className="min-w-0">

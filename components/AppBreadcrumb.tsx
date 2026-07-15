@@ -91,9 +91,7 @@ export default function AppBreadcrumb({ segments, variant = 'default', className
       className={`bs-editorial-breadcrumb w-full min-w-0 max-w-full ${className}`}
     >
       <ol
-        className={`m-0 flex min-h-[1.125rem] w-full min-w-0 max-w-full list-none flex-nowrap items-center gap-x-1 overflow-x-auto p-0 [-webkit-overflow-scrolling:touch] sm:gap-x-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
-          rtl ? 'flex-row-reverse justify-end' : ''
-        }`}
+        className={`m-0 flex min-h-[1.125rem] w-full min-w-0 max-w-full list-none flex-nowrap items-center gap-x-1 overflow-x-auto p-0 [-webkit-overflow-scrolling:touch] sm:gap-x-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden `}
       >
         {nodes}
       </ol>

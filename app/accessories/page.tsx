@@ -226,7 +226,7 @@ export default function AccessoriesPage() {
   )
 
   return (
-    <div className={`min-h-screen bg-brand-pageCanvas ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen bg-brand-pageCanvas `}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
@@ -234,7 +234,7 @@ export default function AccessoriesPage() {
       {/* Hero Banner */}
       <section className={`relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas pb-5 md:pb-6 ${SITE_CONTENT_TOP_PAD}`}>
         <div className="container mx-auto px-6 lg:px-12">
-          <div className={`relative flex flex-col justify-end text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
+          <div className={`relative flex flex-col justify-end text-brand-darkRed text-start`}>
             {/* Back Button */}
             <motion.div
               initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
@@ -255,7 +255,7 @@ export default function AccessoriesPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className={isRTL ? 'text-right' : ''}
+              className="text-start"
             >
               <span className="mb-4 block font-montserrat text-[10px] font-medium uppercase tracking-[0.28em] text-[#6f1524] sm:tracking-[0.34em]">
                 {ui.accessories.collectionEyebrow}
@@ -276,10 +276,10 @@ export default function AccessoriesPage() {
         <div className="container mx-auto px-6 lg:px-12">
           {/* Mobile toolbar — category strip + refine drawer */}
           <div
-            className={`sticky ${SITE_HEADER_STICKY_TOP} z-40 border-b border-brand-stone/25 bg-brand-pageCanvas md:hidden ${isRTL ? 'text-right' : ''}`}
+            className={`sticky ${SITE_HEADER_STICKY_TOP} z-40 border-b border-brand-stone/25 bg-brand-pageCanvas md:hidden text-start`}
           >
             <div
-              className={`flex items-center justify-between gap-3 py-3 ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`flex items-center justify-between gap-3 py-3 `}
             >
               <p className="min-w-0 truncate font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-darkRed">
                 {activeTab ? categoryLabel(activeTab) : ui.shop.productCategories}
@@ -287,7 +287,7 @@ export default function AccessoriesPage() {
               <button
                 type="button"
                 onClick={() => setIsFilterOpen(true)}
-                className={`flex shrink-0 items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`flex shrink-0 items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.15em] text-brand-darkRed `}
                 data-cursor-hover
                 aria-expanded={isFilterOpen}
                 aria-haspopup="dialog"
@@ -297,13 +297,11 @@ export default function AccessoriesPage() {
               </button>
             </div>
             <div
-              className={`relative pb-3 ${isRTL ? 'text-right' : ''}`}
+              className={`relative pb-3 text-start`}
             >
               <div
                 ref={categoryScrollRef}
-                className={`flex snap-x snap-mandatory gap-1 overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
-                  isRTL ? 'flex-row-reverse' : ''
-                }`}
+                className={`flex snap-x snap-mandatory gap-1 overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden `}
                 role="tablist"
                 aria-label={ui.shop.productCategories}
               >
@@ -317,10 +315,10 @@ export default function AccessoriesPage() {
                       aria-selected={active}
                       onClick={() => setCategoryAndUrl(category.id)}
                       className={`snap-start shrink-0 whitespace-nowrap px-3 py-2 font-montserrat text-[10px] uppercase tracking-[0.1em] transition-all duration-300 ${
-                        active
-                          ? 'bg-brand-darkRed text-brand-ivory'
-                          : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
-                      }`}
+ active
+ ? 'bg-brand-darkRed text-brand-ivory'
+ : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
+ }`}
                       data-cursor-hover
                     >
                       {categoryLabel(category)}
@@ -329,22 +327,22 @@ export default function AccessoriesPage() {
                 })}
               </div>
               <div
-                className={`pointer-events-none absolute inset-y-0 w-5 bg-gradient-to-r from-brand-pageCanvas to-transparent ${isRTL ? 'right-0 bg-gradient-to-l' : 'left-0'}`}
+                className={`pointer-events-none absolute inset-y-0 w-5 bg-gradient-to-r from-brand-pageCanvas to-transparent start-0 rtl:bg-gradient-to-l`}
                 aria-hidden
               />
               <div
-                className={`pointer-events-none absolute inset-y-0 w-5 bg-gradient-to-l from-brand-pageCanvas to-transparent ${isRTL ? 'left-0 bg-gradient-to-r' : 'right-0'}`}
+                className={`pointer-events-none absolute inset-y-0 w-5 bg-gradient-to-l from-brand-pageCanvas to-transparent end-0 rtl:bg-gradient-to-r`}
                 aria-hidden
               />
             </div>
           </div>
 
           <div
-            className={`flex gap-10 pt-3 pb-8 md:py-8 lg:gap-12 lg:pt-4 lg:pb-10 ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`flex gap-10 pt-3 pb-8 md:py-8 lg:gap-12 lg:pt-4 lg:pb-10 `}
           >
             {/* Category + refine sidebar */}
             <aside
-              className={`hidden w-52 shrink-0 md:block lg:w-56 xl:w-64 ${isRTL ? 'text-right' : ''}`}
+              className={`hidden w-52 shrink-0 md:block lg:w-56 xl:w-64 text-start`}
               aria-label={ui.shop.productCategories}
             >
               <div className="sticky top-24 space-y-8">
@@ -361,12 +359,12 @@ export default function AccessoriesPage() {
                             type="button"
                             onClick={() => setCategoryAndUrl(category.id)}
                             className={`flex w-full items-center gap-2.5 px-3 py-2.5 font-montserrat text-sm tracking-wide transition-colors ${
-                              isRTL ? 'flex-row-reverse text-right' : 'text-left'
-                            } ${
-                              active
-                                ? 'bg-brand-darkRed text-brand-ivory'
-                                : 'text-brand-clayRed/80 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
-                            }`}
+ 'text-start'
+ } ${
+ active
+ ? 'bg-brand-darkRed text-brand-ivory'
+ : 'text-brand-clayRed/80 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
+ }`}
                             data-cursor-hover
                           >
                             <span className="text-base leading-none" aria-hidden>
@@ -419,10 +417,10 @@ export default function AccessoriesPage() {
                               type="button"
                               onClick={() => toggleStoneAndUrl(st.id)}
                               className={`rounded-sm border px-2 py-1 font-montserrat text-[10px] uppercase tracking-[0.06em] transition-colors ${
-                                on
-                                  ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
-                                  : 'border-brand-stone/40 text-brand-clayRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
-                              }`}
+ on
+ ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
+ : 'border-brand-stone/40 text-brand-clayRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
+ }`}
                               data-cursor-hover
                             >
                               {isRTL ? st.labelAr : st.labelEn}
@@ -452,7 +450,7 @@ export default function AccessoriesPage() {
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`mb-8 flex items-start gap-4 border-y border-brand-stone/25 py-5 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
+                  className={`mb-8 flex items-start gap-4 border-y border-brand-stone/25 py-5 text-start`}
                 >
                   <span className="text-3xl" aria-hidden>
                     {activeTab.icon}
@@ -469,14 +467,14 @@ export default function AccessoriesPage() {
               )}
 
               {filteredAccessories.length === 0 ? (
-                <div className={`py-16 ${isRTL ? 'text-right' : 'text-center'}`}>
+                <div className={`py-16 text-start`}>
                   <p className="font-montserrat text-sm tracking-wide text-brand-clayRed/70">
                     {ui.shop.noPiecesInChapter}
                   </p>
                   <div
                     className={`mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap ${
-                      isRTL ? 'sm:justify-end md:justify-center' : 'sm:justify-center'
-                    }`}
+ isRTL ? 'sm:justify-end md:justify-center' : 'sm:justify-center'
+ }`}
                   >
                     <button
                       type="button"
@@ -536,8 +534,8 @@ export default function AccessoriesPage() {
 
                 <aside
                   className={`mt-14 border-t border-brand-stone/25 pt-10 md:mt-16 md:pt-12 ${
-                    isRTL ? 'text-right' : 'text-center'
-                  }`}
+ 'text-start'
+ }`}
                   aria-label={ui.cart.continueShopping}
                 >
                   <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-brand-dustyBlue">
@@ -548,15 +546,15 @@ export default function AccessoriesPage() {
                   </h2>
                   <p
                     className={`mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/70 ${
-                      isRTL ? 'mr-0' : 'mx-auto'
-                    }`}
+ isRTL ? 'mr-0' : 'mx-auto'
+ }`}
                   >
                     {getKeepExploringLine(language, 'throughTheHouse')}
                   </p>
                   <div
                     className={`mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap ${
-                      isRTL ? 'sm:justify-end md:justify-center' : 'sm:justify-center'
-                    }`}
+ isRTL ? 'sm:justify-end md:justify-center' : 'sm:justify-center'
+ }`}
                   >
                     <LocaleLink
                       href="/shop"
@@ -644,7 +642,7 @@ export default function AccessoriesPage() {
             >
               <div className={glassDrawerWash} aria-hidden />
               <div className="relative z-[1] p-6">
-                <div className={`mb-8 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className={`mb-8 flex items-center justify-between `}>
                   <p className={`font-montserrat text-2xl ${glassTextTitle}`}>{ui.shop.refine}</p>
                   <button
                     type="button"
@@ -669,11 +667,11 @@ export default function AccessoriesPage() {
                         setCategoryAndUrl(category.id)
                         setIsFilterOpen(false)
                       }}
-                      className={`flex w-full items-center gap-3 px-4 py-3 font-montserrat text-sm tracking-wide transition-colors ${isRTL ? 'flex-row-reverse text-right' : ''} ${
-                        activeCategory === category.id
-                          ? 'bg-brand-darkRed text-brand-ivory'
-                          : 'text-brand-clayRed hover:bg-brand-dustyBlue/10'
-                      }`}
+                      className={`flex w-full items-center gap-3 px-4 py-3 font-montserrat text-sm tracking-wide transition-colors text-start ${
+ activeCategory === category.id
+ ? 'bg-brand-darkRed text-brand-ivory'
+ : 'text-brand-clayRed hover:bg-brand-dustyBlue/10'
+ }`}
                       data-cursor-hover
                     >
                       <span aria-hidden>{category.icon}</span>
@@ -711,10 +709,10 @@ export default function AccessoriesPage() {
                           type="button"
                           onClick={() => toggleStoneAndUrl(st.id)}
                           className={`rounded-sm border px-2 py-1.5 font-montserrat text-[10px] uppercase tracking-[0.06em] ${
-                            on
-                              ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
-                              : 'border-brand-stone/40 text-brand-clayRed'
-                          }`}
+ on
+ ? 'border-brand-darkRed bg-brand-darkRed text-brand-ivory'
+ : 'border-brand-stone/40 text-brand-clayRed'
+ }`}
                         >
                           {isRTL ? st.labelAr : st.labelEn}
                         </button>
@@ -797,8 +795,8 @@ function AccessoryCard({
               category={accessory.category}
               href={`/accessories/${accessory.id}`}
               className={`absolute top-2.5 z-30 ${WISHLIST_HEART_GLASS_CLASS} ${
-                isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'
-              }`}
+ 'end-2.5 sm:end-3'
+ }`}
               iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
             />
             <Image
@@ -812,7 +810,7 @@ function AccessoryCard({
           </div>
 
           {/* Product Info */}
-          <div className={isRTL ? 'text-right' : ''}>
+          <div className="text-start">
             <span className="mb-1 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
               {isRTL
                 ? visibleAccessoryCategories.find((c) => c.id === accessory.category)?.nameAr
@@ -829,7 +827,7 @@ function AccessoryCard({
           </div>
 
           {/* Colour indicators — gemstone references, not selectable swatches */}
-          <div className={`mt-3 ${PRODUCT_GRID_COLOUR_DOT_ROW} ${isRTL ? 'justify-end' : ''}`}>
+          <div className={`mt-3 ${PRODUCT_GRID_COLOUR_DOT_ROW} `}>
             {accessory.colors.slice(0, 4).map((color) => (
               <div
                 key={color.name}
@@ -847,7 +845,7 @@ function AccessoryCard({
           </div>
 
           <div
-            className={`mt-auto pt-3 ${PRODUCT_GRID_CTA_ROW} ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`mt-auto pt-3 ${PRODUCT_GRID_CTA_ROW} `}
           >
             <span className={PRODUCT_GRID_CTA_LINK}>
               {ui.shop.discover}

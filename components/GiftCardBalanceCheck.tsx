@@ -61,7 +61,7 @@ export default function GiftCardBalanceCheck({ className = '' }: { className?: s
   }
 
   return (
-    <section className={`border-t border-brand-stone/30 pt-8 ${isRTL ? 'text-right' : 'text-left'} ${className}`}>
+    <section className={`border-t border-brand-stone/30 pt-8 text-start ${className}`}>
       <h2 className="font-rozha text-2xl text-brand-darkRed">{balanceTitle}</h2>
       <p className="mt-3 font-montserrat text-sm leading-relaxed text-brand-clayRed/75">{balanceHint}</p>
       <form onSubmit={onCheckBalance} className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-stretch">

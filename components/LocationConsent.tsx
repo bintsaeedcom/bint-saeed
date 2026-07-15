@@ -173,24 +173,18 @@ export default function LocationConsent() {
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className={`fixed bottom-6 md:bottom-10 z-[90] max-w-[min(24rem,calc(100vw-2rem))] ${
-              isRTL ? 'left-4 md:left-10' : 'right-4 md:right-10'
-            }`}
+            className={`fixed bottom-6 md:bottom-10 z-[90] max-w-[min(24rem,calc(100vw-2rem))] end-4 md:end-10`}
             onClick={(e) => e.stopPropagation()}
           >
             <div
-              className={`relative overflow-hidden rounded-sm border border-brand-stone/25 bg-[#faf8f6] shadow-[0_28px_60px_-15px_rgba(59,0,20,0.22)] ${
-                isRTL ? 'text-right' : 'text-left'
-              }`}
+              className="relative overflow-hidden rounded-sm border border-brand-stone/25 bg-[#faf8f6] shadow-[0_28px_60px_-15px_rgba(59,0,20,0.22)] text-start"
             >
               <div
-                className={`absolute top-0 bottom-0 w-px bg-gradient-to-b from-brand-stone via-brand-rose/50 to-brand-stone ${
-                  isRTL ? 'right-0' : 'left-0'
-                }`}
+                className="absolute top-0 bottom-0 start-0 w-px bg-gradient-to-b from-brand-stone via-brand-rose/50 to-brand-stone"
                 aria-hidden
               />
-              <div className={`px-7 pt-8 pb-7 ${isRTL ? 'pr-8 pl-6' : 'pl-8 pr-6'}`}>
-                <div className={`flex items-start justify-between gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className="px-7 pt-8 pb-7 ps-8 pe-6">
+                <div className="flex items-start justify-between gap-4">
                   <div className="space-y-3 min-w-0">
                     <p className="font-montserrat text-[10px] uppercase tracking-[0.38em] text-brand-clayRed/65">
                       {t.eyebrow}
@@ -231,7 +225,7 @@ export default function LocationConsent() {
                 )}
 
                 <div
-                  className={`mt-8 ${ctaButtonRow} ${isRTL ? 'sm:flex-row-reverse' : ''}`}
+                  className={`mt-8 ${ctaButtonRow} `}
                   data-bs-cta-row
                   data-bs-cta-row-layout="wrap"
                 >

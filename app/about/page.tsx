@@ -160,8 +160,8 @@ function ChapterProse({
     : ''
 
   return (
-    <div className={`relative z-10 max-w-xl ${stickyClass} ${isRTL ? 'ms-auto text-right' : ''}`}>
-      <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+    <div className={`relative z-10 max-w-xl ${stickyClass} text-start`}>
+      <div className={`flex items-baseline gap-4 `}>
         <span className={`shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] ${indexColor}`}>
           {String(index).padStart(2, '0')}
         </span>
@@ -207,7 +207,7 @@ export default function AboutPage() {
   ]
 
   return (
-    <main className={`w-full min-w-0 max-w-full min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
+    <main className={`w-full min-w-0 max-w-full min-h-screen bg-[#1a0210] `}>
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={HERO_IMAGE}
@@ -242,8 +242,8 @@ export default function AboutPage() {
             </div>
             <div
               className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
-                isRTL ? 'lg:order-1' : ''
-              }`}
+ isRTL ? 'lg:order-1' : ''
+ }`}
             >
               <ReelFrame tone="dark">
                 <EditorialFilm
@@ -278,8 +278,8 @@ export default function AboutPage() {
             </div>
             <div
               className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
-                isRTL ? 'lg:order-1' : ''
-              }`}
+ isRTL ? 'lg:order-1' : ''
+ }`}
             >
               <ReelFrame tone="light">
                 <EditorialFilm
@@ -303,8 +303,8 @@ export default function AboutPage() {
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
             <div
               className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
-                isRTL ? 'lg:order-2' : ''
-              }`}
+ isRTL ? 'lg:order-2' : ''
+ }`}
             >
               <ReelFrame tone="dark">
                 <EditorialFilm

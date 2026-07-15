@@ -121,9 +121,9 @@ function ChapterProse({
     : ''
 
   return (
-    <div className={`${continuous ? 'w-full' : 'max-w-xl'} ${stickyClass} ${isRTL ? 'ms-auto text-right' : ''}`}>
+    <div className={`${continuous ? 'w-full' : 'max-w-xl'} ${stickyClass} text-start`}>
       <Reveal>
-        <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <div className={`flex items-baseline gap-4 `}>
           {typeof index === 'number' ? (
             <span className={`shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] ${indexColor}`}>
               {String(index).padStart(2, '0')}
@@ -178,7 +178,7 @@ export default function PersonalisationPage() {
   const pocketAlt = withBrandAlt(copy.hiddenPocketAlt, language === 'ar' ? 'ar' : 'en')
 
   return (
-    <div className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-[#1a0210] `}>
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={HERO_IMAGE}
@@ -208,8 +208,8 @@ export default function PersonalisationPage() {
                 <h2
                   id="personalisation-main-story"
                   className={`font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] text-[#e8ddd4] ${
-                    isRTL ? 'text-right' : 'text-left'
-                  }`}
+ 'text-start'
+ }`}
                 >
                   {copy.heroStoryTitle}
                 </h2>
@@ -219,8 +219,8 @@ export default function PersonalisationPage() {
                   <Reveal key={`hero-body-${i}`} delay={0.05 + i * 0.06}>
                     <p
                       className={`font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78 md:text-[16px] md:leading-[2] ${
-                        isRTL ? 'text-right' : 'text-left'
-                      }`}
+ 'text-start'
+ }`}
                     >
                       {paragraph}
                     </p>
@@ -309,7 +309,7 @@ export default function PersonalisationPage() {
         </div>
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
           <Reveal>
-            <div className={isRTL ? 'text-right' : 'text-left'}>
+            <div className={'text-start'}>
               <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
                 {copy.stepsEyebrow}
               </p>
@@ -327,8 +327,8 @@ export default function PersonalisationPage() {
               <Reveal key={step.numeral} delay={0.05 + index * 0.06}>
                 <li
                   className={`grid gap-4 md:grid-cols-[4.5rem_1fr] md:gap-8 ${
-                    isRTL ? 'md:text-right' : ''
-                  }`}
+ isRTL ? 'md:text-right' : ''
+ }`}
                 >
                   <p className="font-montserrat text-[11px] uppercase tracking-[0.22em] text-[#e8ddd4]/45 md:pt-1">
                     {step.numeral}
@@ -347,7 +347,7 @@ export default function PersonalisationPage() {
           </ol>
 
           <Reveal delay={0.18}>
-            <div className={`mt-12 flex flex-col items-start gap-5 md:mt-14 ${isRTL ? 'items-end' : ''}`}>
+            <div className={`mt-12 flex flex-col items-start gap-5 md:mt-14 `}>
               <p className="max-w-2xl font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78 md:text-[16px] md:leading-[2]">
                 {copy.complimentaryBanner}
               </p>
@@ -382,7 +382,7 @@ export default function PersonalisationPage() {
             continuous
           />
           <Reveal delay={0.15}>
-            <div className={`mt-10 ${isRTL ? 'flex justify-end' : ''}`}>
+            <div className={`mt-10 `}>
               <LocaleLink
                 href="/shop?category=abayas"
                 className={ctaPrimaryWithGap}

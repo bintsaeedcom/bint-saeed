@@ -182,10 +182,10 @@ export default function ShopClient() {
 
   const sortLabel = sortOptions.find((o) => o.id === sortBy)?.label ?? ui.shop.sortNewest
   return (
-    <div className={`min-h-screen overflow-x-hidden bg-brand-pageCanvas text-neutral-900 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen overflow-x-hidden bg-brand-pageCanvas text-neutral-900 `}>
       <header className="section-full overflow-hidden border-b border-black/5 bg-stone-50">
         <div className={`mx-auto max-w-[1400px] px-6 pb-10 ${SITE_CONTENT_TOP_PAD} md:px-10 md:pb-14 lg:px-14`}>
-          <div className={isRTL ? 'text-right' : ''}>
+          <div className="text-start">
             <AppPageWayfinding
               rtl={isRTL}
               variant="muted"
@@ -227,17 +227,17 @@ export default function ShopClient() {
               {ui.common.back}
             </button>
 
-            <div className={`hidden min-w-0 items-center gap-1 overflow-x-auto [scrollbar-width:none] md:flex [&::-webkit-scrollbar]:hidden ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`hidden min-w-0 items-center gap-1 overflow-x-auto [scrollbar-width:none] md:flex [&::-webkit-scrollbar]:hidden `}>
               {categories.map((cat) => (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => applyCategory(cat)}
                   className={`shrink-0 whitespace-nowrap px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.1em] transition-all duration-300 ${
-                    activeCategory === cat
-                      ? 'bg-brand-darkRed text-brand-ivory'
-                      : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
-                  }`}
+ activeCategory === cat
+ ? 'bg-brand-darkRed text-brand-ivory'
+ : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
+ }`}
                   data-cursor-hover
                 >
                   {categoryLabel(cat)}
@@ -261,9 +261,7 @@ export default function ShopClient() {
           {/* Mobile: always-visible category overview (desktop unchanged above) */}
           <div className="md:hidden">
             <div
-              className={`flex snap-x snap-mandatory gap-1 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
-                isRTL ? 'flex-row-reverse' : ''
-              }`}
+              className={`flex snap-x snap-mandatory gap-1 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden `}
               role="tablist"
               aria-label={ui.shop.productCategories}
             >
@@ -277,10 +275,10 @@ export default function ShopClient() {
                     aria-selected={active}
                     onClick={() => applyCategory(cat)}
                     className={`snap-start shrink-0 whitespace-nowrap px-4 py-2 font-montserrat text-[10px] uppercase tracking-[0.1em] transition-all duration-300 ${
-                      active
-                        ? 'bg-brand-darkRed text-brand-ivory'
-                        : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
-                    }`}
+ active
+ ? 'bg-brand-darkRed text-brand-ivory'
+ : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
+ }`}
                     data-cursor-hover
                   >
                     {categoryLabel(cat)}
@@ -326,10 +324,10 @@ export default function ShopClient() {
                         trackEvent('sort_usage', { sort_by: opt.id, page: 'collection' })
                       }}
                       className={`block w-full px-4 py-2.5 text-left font-montserrat text-xs tracking-wide transition-colors ${
-                        sortBy === opt.id
-                          ? 'bg-stone-100 text-brand-darkRed'
-                          : 'text-neutral-600 hover:bg-stone-50'
-                      }`}
+ sortBy === opt.id
+ ? 'bg-stone-100 text-brand-darkRed'
+ : 'text-neutral-600 hover:bg-stone-50'
+ }`}
                       data-cursor-hover
                     >
                       {opt.label}
@@ -364,7 +362,7 @@ export default function ShopClient() {
                   <ProductWishlistHeart
                     product={product}
                     href={getProductHref(product)}
-                    className={`absolute top-2.5 z-30 sm:top-3 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+                    className={`absolute top-2.5 z-30 sm:top-3 end-2.5 sm:end-3`}
                   />
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.015]">
                     <Image
@@ -413,7 +411,7 @@ export default function ShopClient() {
                       />
                     ))}
                   </div>
-                  <div className={`pt-2 ${PRODUCT_GRID_CTA_ROW} ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className={`pt-2 ${PRODUCT_GRID_CTA_ROW} `}>
                     <LocaleLink
                       href={getProductHref(product)}
                       className={`relative z-20 ${PRODUCT_GRID_CTA_LINK} ${PRODUCT_GRID_CTA_LINK_HOVER}`}
@@ -443,7 +441,7 @@ export default function ShopClient() {
         </ul>
 
         {sortedProducts.length === 0 && (
-          <div className={`mx-auto max-w-lg py-20 ${isRTL ? 'text-right' : 'text-center'}`}>
+          <div className={`mx-auto max-w-lg py-20 text-start`}>
             <p className="font-montserrat text-sm tracking-wide text-brand-clayRed/70">
               {ui.shop.noPiecesInChapter}
             </p>
@@ -452,8 +450,8 @@ export default function ShopClient() {
             </p>
             <div
               className={`mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap ${
-                isRTL ? 'sm:justify-end' : 'sm:justify-center'
-              }`}
+ isRTL ? 'sm:justify-end' : 'sm:justify-center'
+ }`}
             >
               <button
                 type="button"
@@ -525,15 +523,15 @@ export default function ShopClient() {
               role="dialog"
               aria-modal="true"
               className={`absolute top-0 flex h-full w-[min(100%,20rem)] flex-col ${glassDrawer} ${
-                isRTL ? 'left-0 border-r' : 'right-0 border-l'
-              }`}
+ isRTL ? 'left-0 border-r' : 'right-0 border-l'
+ }`}
               initial={{ x: isRTL ? '-100%' : '100%' }}
               animate={{ x: 0 }}
               exit={{ x: isRTL ? '-100%' : '100%' }}
               transition={{ type: 'tween', duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className={glassDrawerWash} aria-hidden />
-              <div className={`relative z-[1] flex items-center justify-between border-b border-brand-darkRed/10 px-6 py-5 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`relative z-[1] flex items-center justify-between border-b border-brand-darkRed/10 px-6 py-5 `}>
                 <span className={`font-rozha text-xl ${glassTextTitle}`}>
                   {ui.shop.refine}
                 </span>
@@ -560,10 +558,10 @@ export default function ShopClient() {
                           setFilterOpen(false)
                         }}
                         className={`font-montserrat text-sm tracking-wide ${
-                          activeCategory === cat
-                            ? glassTextTitle
-                            : `${glassTextMuted} hover:text-brand-dustyBlue`
-                        }`}
+ activeCategory === cat
+ ? glassTextTitle
+ : `${glassTextMuted} hover:text-brand-dustyBlue`
+ }`}
                         data-cursor-hover
                       >
                         {categoryLabel(cat)}
@@ -574,7 +572,7 @@ export default function ShopClient() {
                 <LocaleLink
                   href="/size-guide"
                   onClick={() => setFilterOpen(false)}
-                  className={`mt-10 flex items-center gap-2 border-t border-brand-darkRed/10 pt-8 font-montserrat text-xs uppercase tracking-[0.2em] ${glassTextTitle} ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`mt-10 flex items-center gap-2 border-t border-brand-darkRed/10 pt-8 font-montserrat text-xs uppercase tracking-[0.2em] ${glassTextTitle} `}
                   data-cursor-hover
                 >
                   <FiMaximize2 className="h-3.5 w-3.5" />

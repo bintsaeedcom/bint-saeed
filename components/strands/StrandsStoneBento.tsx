@@ -104,8 +104,8 @@ export default function StrandsStoneBento({
             </span>
           ) : null}
         </div>
-        <div className={`flex flex-1 flex-col p-4 ${isRTL ? 'text-right' : 'text-left'}`}>
-          <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <div className={`flex flex-1 flex-col p-4 text-start`}>
+          <div className={`flex items-center gap-2 `}>
             {color ? (
               <span
                 className={PRODUCT_GRID_COLOUR_DOT}
@@ -117,8 +117,8 @@ export default function StrandsStoneBento({
           </div>
           <p
             className={`mt-2 line-clamp-2 font-montserrat text-[12px] leading-relaxed text-[#8a7a70] transition-opacity duration-300 ${
-              selected ? 'opacity-100' : 'opacity-60 md:line-clamp-1'
-            }`}
+ selected ? 'opacity-100' : 'opacity-60 md:line-clamp-1'
+ }`}
           >
             {note}
           </p>
@@ -127,8 +127,8 @@ export default function StrandsStoneBento({
           </p>
           <span
             className={`mt-auto inline-flex w-full pt-3 transition-opacity duration-300 ${
-              selected ? 'opacity-100' : 'opacity-70'
-            } ${ctaPrimary}`}
+ selected ? 'opacity-100' : 'opacity-70'
+ } ${ctaPrimary}`}
           >
             {chooseCta}
           </span>
@@ -142,9 +142,7 @@ export default function StrandsStoneBento({
       <div
         role="listbox"
         aria-label="Stone colours"
-        className={`mb-8 flex gap-1 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
-          isRTL ? 'flex-row-reverse' : ''
-        }`}
+        className={`mb-8 flex gap-1 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden `}
       >
         {featured.map((product) => {
           const color = product.colors[0]
@@ -164,10 +162,10 @@ export default function StrandsStoneBento({
                 })
               }}
               className={`inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-[4px] px-3 py-2 font-montserrat text-[10px] uppercase tracking-[0.14em] transition-colors ${
-                selected
-                  ? 'bg-[#7A1C28]/10 text-[#7A1C28]'
-                  : 'text-[#8a7a70] hover:bg-[#7A1C28]/05 hover:text-[#1a0210]'
-              } ${isRTL ? 'flex-row-reverse' : ''}`}
+ selected
+ ? 'bg-[#7A1C28]/10 text-[#7A1C28]'
+ : 'text-[#8a7a70] hover:bg-[#7A1C28]/05 hover:text-[#1a0210]'
+ } `}
               data-cursor-hover
             >
               {color ? (

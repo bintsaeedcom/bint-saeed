@@ -65,8 +65,8 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
         >
           <div
             className={`relative z-[2] w-full min-w-0 max-w-none ${
-              isDarkEditorialSurface ? 'bg-[#1a0210]' : 'bg-brand-pageCanvas'
-            }`}
+ isDarkEditorialSurface ? 'bg-[#1a0210]' : 'bg-brand-pageCanvas'
+ }`}
           >
             {children}
           </div>

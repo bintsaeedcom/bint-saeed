@@ -50,10 +50,10 @@ export default function AboutTopicNav() {
                 href={item.href}
                 data-topic-active={isActive ? 'true' : undefined}
                 className={`snap-start shrink-0 whitespace-nowrap px-3 py-2 font-montserrat text-[10px] uppercase tracking-[0.1em] transition-all duration-300 sm:px-4 sm:text-xs ${
-                  isActive
-                    ? 'bg-brand-darkRed text-brand-ivory'
-                    : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
-                }`}
+ isActive
+ ? 'bg-brand-darkRed text-brand-ivory'
+ : 'text-brand-clayRed/70 hover:bg-brand-dustyBlue/10 hover:text-brand-dustyBlue'
+ }`}
                 data-cursor-hover
               >
                 {item.label}

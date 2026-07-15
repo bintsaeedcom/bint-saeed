@@ -53,7 +53,7 @@ export default function ShipmentReturnPolicyPage() {
   }
 
   return (
-    <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 ${SITE_CONTENT_TOP_PAD} ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`relative min-h-screen bg-[#f6f4f1] pb-20 ${SITE_CONTENT_TOP_PAD} `}>
       <div className="relative mx-auto max-w-4xl px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
@@ -76,7 +76,7 @@ export default function ShipmentReturnPolicyPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className={`mb-10 ${isRTL ? 'text-right' : 'text-left'}`}
+          className={`mb-10 text-start`}
         >
           <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-neutral-500">
             Legal
@@ -97,7 +97,7 @@ export default function ShipmentReturnPolicyPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="rounded-sm border border-neutral-200 bg-white p-8 shadow-sm md:p-10"
         >
-          <div className={`policy-prose flex flex-col gap-4 font-montserrat text-[13px] leading-[1.55] tracking-wide text-neutral-800 ${isRTL ? 'text-right' : 'text-left'}`}>
+          <div className={`policy-prose flex flex-col gap-4 font-montserrat text-[13px] leading-[1.55] tracking-wide text-neutral-800 text-start`}>
             <section className="rounded-sm border border-neutral-200 bg-neutral-50 p-4 md:p-5">
               <h2 className="mb-1.5 font-rozha text-xl text-neutral-900">Summary Notice</h2>
               <p className="text-sm text-neutral-600">

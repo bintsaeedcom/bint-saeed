@@ -25,8 +25,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <Link
         href={href}
         className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-montserrat tracking-wide transition-colors ${
-          active ? 'bg-white/15 text-white' : 'text-white/70 hover:bg-white/10 hover:text-white'
-        }`}
+ active ? 'bg-white/15 text-white' : 'text-white/70 hover:bg-white/10 hover:text-white'
+ }`}
       >
         {icon}
         {label}
@@ -85,8 +85,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     key={item.href}
                     href={item.href}
                     className={`shrink-0 rounded-lg px-3 py-1.5 font-montserrat text-xs transition-colors ${
-                      active ? 'bg-white/15 text-white' : 'text-white/70 hover:bg-white/10'
-                    }`}
+ active ? 'bg-white/15 text-white' : 'text-white/70 hover:bg-white/10'
+ }`}
                   >
                     {item.label}
                   </Link>

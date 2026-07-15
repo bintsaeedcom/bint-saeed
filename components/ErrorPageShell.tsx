@@ -54,7 +54,7 @@ export default function ErrorPageShell({
 
   const shell = (
     <div
-      className={`fixed inset-0 z-[250] overflow-y-auto bg-[#faf8f6] safe-area-inset ${isRTL ? 'rtl' : 'ltr'}`}
+      className={`fixed inset-0 z-[250] overflow-y-auto bg-[#faf8f6] safe-area-inset `}
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div
@@ -114,8 +114,8 @@ export default function ErrorPageShell({
 
             <p
               className={`mx-auto mt-4 text-center font-montserrat text-[11px] font-light leading-[1.75] tracking-wide text-neutral-600 sm:text-[12px] ${
-                descriptionSingleLine ? 'max-w-[22rem]' : 'max-w-[21rem]'
-              }`}
+ descriptionSingleLine ? 'max-w-[22rem]' : 'max-w-[21rem]'
+ }`}
             >
               {description}
             </p>

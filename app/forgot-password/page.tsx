@@ -82,7 +82,7 @@ export default function ForgotPasswordPage() {
         />
 
         <div className="lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,30rem)] lg:items-start lg:gap-14 xl:gap-20">
-          <header className={`mb-8 lg:mb-0 lg:pt-4 ${isRTL ? 'text-right' : ''}`}>
+          <header className={`mb-8 lg:mb-0 lg:pt-4 text-start`}>
             <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue lg:mb-4">
               Bint Saeed
             </p>
@@ -103,7 +103,7 @@ export default function ForgotPasswordPage() {
             className={`mx-auto max-w-md lg:mx-0 lg:max-w-none ${formCardClass}`}
           >
             {sent ? (
-              <div className={isRTL ? 'text-right' : ''}>
+              <div className="text-start">
                 <p className="font-montserrat text-sm leading-relaxed text-brand-darkRed/85">
                   {isRTL
                     ? 'إذا كان هناك حساب مرتبط بهذا البريد، ستصلك رسالة تحتوي على رابط إعادة التعيين. تحققي من صندوق الوارد والمجلد غير المرغوب فيه.'

@@ -76,8 +76,8 @@ export default function SizeGuidePage() {
   return (
     <div
       className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-brand-pageCanvas pb-20 ${SITE_CONTENT_TOP_PAD} ${
-        isRTL ? 'rtl' : 'ltr'
-      }`}
+ isRTL ? 'rtl' : 'ltr'
+ }`}
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className={`${EDITORIAL_PAGE_CONTAINER} max-w-5xl`}>
@@ -96,7 +96,7 @@ export default function SizeGuidePage() {
           }}
         />
 
-        <header className={`mb-10 max-w-2xl ${isRTL ? 'text-right' : 'text-left'}`}>
+        <header className={`mb-10 max-w-2xl text-start`}>
           <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">
             Bint Saeed
           </span>
@@ -115,12 +115,12 @@ export default function SizeGuidePage() {
         <div className="mb-8">
           <p
             className={`mb-3 font-montserrat text-[10px] uppercase tracking-[0.16em] text-brand-clayRed/65 ${
-              isRTL ? 'text-right' : 'text-left'
-            }`}
+ 'text-start'
+ }`}
           >
             {selectHint}
           </p>
-          <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+          <div className={`flex flex-wrap gap-2 `}>
             {SIZE_HEADERS.map((size) => {
               const active = selected === size
               return (
@@ -129,10 +129,10 @@ export default function SizeGuidePage() {
                   type="button"
                   onClick={() => setSelected(active ? null : size)}
                   className={`inline-flex min-h-10 min-w-[2.75rem] items-center justify-center gap-1 px-3 font-montserrat text-[11px] uppercase tracking-[0.12em] transition-colors ${
-                    active
-                      ? 'bg-brand-darkRed text-white'
-                      : 'border border-brand-stone/35 bg-white/70 text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
-                  }`}
+ active
+ ? 'bg-brand-darkRed text-white'
+ : 'border border-brand-stone/35 bg-white/70 text-brand-darkRed hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
+ }`}
                   data-cursor-hover
                   aria-pressed={active}
                 >
@@ -165,10 +165,10 @@ export default function SizeGuidePage() {
                     type="button"
                     onClick={() => setUnit(id)}
                     className={`min-h-9 px-3 font-montserrat text-[10px] uppercase tracking-[0.14em] transition-colors ${
-                      unit === id
-                        ? 'bg-brand-darkRed text-white'
-                        : 'text-brand-clayRed/70 hover:text-brand-darkRed'
-                    }`}
+ unit === id
+ ? 'bg-brand-darkRed text-white'
+ : 'text-brand-clayRed/70 hover:text-brand-darkRed'
+ }`}
                     data-cursor-hover
                     aria-pressed={unit === id}
                   >
@@ -202,7 +202,7 @@ export default function SizeGuidePage() {
                   <thead>
                     <tr className="border-b border-brand-stone/30 bg-brand-stone/15">
                       <th
-                        className={`sticky ${isRTL ? 'right-0' : 'left-0'} z-[1] bg-[#f3ece4] px-3 py-2.5 text-left font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed`}
+                        className={`sticky start-0 z-[1] bg-[#f3ece4] px-3 py-2.5 text-start font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed`}
                       >
                         {copy.size}
                       </th>
@@ -210,8 +210,8 @@ export default function SizeGuidePage() {
                         <th
                           key={size}
                           className={`px-2 py-2.5 text-center font-montserrat text-[10px] uppercase tracking-[0.12em] ${
-                            selected === size ? 'bg-brand-darkRed text-white' : 'text-brand-darkRed'
-                          }`}
+ selected === size ? 'bg-brand-darkRed text-white' : 'text-brand-darkRed'
+ }`}
                         >
                           {size}
                         </th>
@@ -225,7 +225,7 @@ export default function SizeGuidePage() {
                         className={idx % 2 === 0 ? 'bg-white/70' : 'bg-brand-stone/10'}
                       >
                         <td
-                          className={`sticky ${isRTL ? 'right-0' : 'left-0'} z-[1] bg-inherit px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] text-brand-darkRed`}
+                          className={`sticky start-0 z-[1] bg-inherit px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] text-brand-darkRed`}
                         >
                           {row.label}
                         </td>
@@ -235,10 +235,10 @@ export default function SizeGuidePage() {
                             <td
                               key={`${row.label}-${value}`}
                               className={`px-2 py-2.5 text-center font-montserrat text-[11px] tabular-nums ${
-                                selected === size
-                                  ? 'bg-brand-darkRed/8 font-medium text-brand-darkRed'
-                                  : 'text-brand-darkRed/80'
-                              }`}
+ selected === size
+ ? 'bg-brand-darkRed/8 font-medium text-brand-darkRed'
+ : 'text-brand-darkRed/80'
+ }`}
                             >
                               {value}
                             </td>
@@ -258,9 +258,7 @@ export default function SizeGuidePage() {
                 {copy.howToMeasure}
               </h2>
               <div
-                className={`flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-4 ${
-                  isRTL ? 'sm:flex-row-reverse' : ''
-                }`}
+                className={`flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-4 `}
               >
                 <div className="shrink-0 bg-white sm:w-[44%]">
                   <Image
@@ -298,11 +296,9 @@ export default function SizeGuidePage() {
 
         <section className="mt-14 border-t border-brand-stone/25 pt-10">
           <div
-            className={`flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between ${
-              isRTL ? 'sm:flex-row-reverse' : ''
-            }`}
+            className={`flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between `}
           >
-            <div className={`max-w-md ${isRTL ? 'text-right' : 'text-left'}`}>
+            <div className={`max-w-md text-start`}>
               <h3 className="font-rozha text-[clamp(1.25rem,3vw,1.65rem)] leading-snug text-brand-darkRed">
                 {helpTitle}
               </h3>
@@ -310,7 +306,7 @@ export default function SizeGuidePage() {
                 {helpBody}
               </p>
             </div>
-            <div className={`${ctaButtonRow} shrink-0 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+            <div className={`${ctaButtonRow} shrink-0 `}>
               <a
                 href="https://wa.me/971502299402?text=Hi%20Bint%20Saeed!%20I%20need%20help%20with%20sizing."
                 target="_blank"
@@ -357,7 +353,7 @@ function MeasurementTable({
         <thead>
           <tr className="border-b border-brand-stone/30 bg-brand-stone/15">
             <th
-              className={`sticky ${isRTL ? 'right-0' : 'left-0'} z-[1] bg-[#f3ece4] px-3 py-2.5 text-left font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-darkRed`}
+              className={`sticky start-0 z-[1] bg-[#f3ece4] px-3 py-2.5 text-start font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-darkRed`}
             >
               {title}
             </th>
@@ -369,10 +365,10 @@ function MeasurementTable({
                     type="button"
                     onClick={() => setSelected(active ? null : size)}
                     className={`flex min-h-11 w-full items-center justify-center px-2 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors ${
-                      active
-                        ? 'bg-brand-darkRed text-white'
-                        : 'text-brand-darkRed hover:bg-brand-dustyBlue/15'
-                    }`}
+ active
+ ? 'bg-brand-darkRed text-white'
+ : 'text-brand-darkRed hover:bg-brand-dustyBlue/15'
+ }`}
                     data-cursor-hover
                     aria-pressed={active}
                   >
@@ -387,7 +383,7 @@ function MeasurementTable({
           </tr>
           <tr className="border-b border-brand-stone/20 bg-white/80">
             <th
-              className={`sticky ${isRTL ? 'right-0' : 'left-0'} z-[1] bg-[#faf7f3] px-3 py-2 text-left font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-darkRed`}
+              className={`sticky start-0 z-[1] bg-[#faf7f3] px-3 py-2 text-start font-montserrat text-[10px] uppercase tracking-[0.12em] text-brand-darkRed`}
             >
               {ukSizeLabel}
             </th>
@@ -395,10 +391,10 @@ function MeasurementTable({
               <th
                 key={`${title}-uk-${value}`}
                 className={`px-2 py-2 text-center font-montserrat text-[10px] tabular-nums ${
-                  selected === SIZE_HEADERS[idx]
-                    ? 'font-medium text-brand-darkRed'
-                    : 'text-brand-clayRed/80'
-                }`}
+ selected === SIZE_HEADERS[idx]
+ ? 'font-medium text-brand-darkRed'
+ : 'text-brand-clayRed/80'
+ }`}
               >
                 {value}
               </th>
@@ -412,7 +408,7 @@ function MeasurementTable({
               className={rowIdx % 2 === 0 ? 'bg-white/80' : 'bg-brand-stone/10'}
             >
               <td
-                className={`sticky ${isRTL ? 'right-0' : 'left-0'} z-[1] bg-inherit px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] text-brand-darkRed`}
+                className={`sticky start-0 z-[1] bg-inherit px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] text-brand-darkRed`}
               >
                 {row.label}
               </td>
@@ -420,10 +416,10 @@ function MeasurementTable({
                 <td
                   key={`${title}-${row.label}-${idx}`}
                   className={`px-2 py-2.5 text-center font-montserrat text-[11px] tabular-nums ${
-                    selected === SIZE_HEADERS[idx]
-                      ? 'bg-brand-darkRed/8 font-medium text-brand-darkRed'
-                      : 'text-brand-darkRed/80'
-                  }`}
+ selected === SIZE_HEADERS[idx]
+ ? 'bg-brand-darkRed/8 font-medium text-brand-darkRed'
+ : 'text-brand-darkRed/80'
+ }`}
                 >
                   {value}
                 </td>

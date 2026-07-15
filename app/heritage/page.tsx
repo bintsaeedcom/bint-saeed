@@ -44,7 +44,7 @@ function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' 
 export default function HeritagePage() {
   const { isRTL } = useLanguage()
   return (
-    <div className={`relative overflow-hidden bg-white ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`relative overflow-hidden bg-white `}>
       <HeritageHero />
       <AboutTopicNav />
       <HeritageIntro />
@@ -72,7 +72,7 @@ function HeritageHero() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,_rgba(146,170,193,0.14)_0%,_transparent_55%)]" />
       </motion.div>
       <DecorativeCorners color="dustyBlue" />
-      <div className={`absolute top-28 z-20 ${isRTL ? 'right-6 lg:right-16' : 'left-6 lg:left-16'}`}>
+      <div className={`absolute top-28 z-20 start-6 lg:start-16`}>
         <AppPageWayfinding
           rtl={isRTL}
           variant="light"
@@ -128,7 +128,7 @@ function HeritageIntro() {
         <span className="font-rozha text-[25vw] text-brand-darkRed whitespace-nowrap select-none">{isRTL ? 'تراث' : 'Heritage'}</span>
       </motion.div>
       <div className="relative container mx-auto px-6 lg:px-16">
-        <motion.div style={{ y: floatY, opacity: floatOpacity }} className={`max-w-4xl mx-auto ${isRTL ? 'text-right' : 'text-center'}`}>
+        <motion.div style={{ y: floatY, opacity: floatOpacity }} className={`max-w-4xl mx-auto text-start`}>
           <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-6 block">{isRTL ? 'حرف عريقة' : 'Ancient Crafts'}</span>
           <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed mb-10 leading-[1.1]">
             {isRTL ? 'فن توارثته الأجيال' : 'Art Passed Through Generations'}
@@ -168,13 +168,13 @@ function HeritageGrid() {
                   <div className={`relative aspect-[4/3] overflow-hidden rounded-2xl ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                     <Image src={item.image} alt={isRTL ? item.title.ar : item.title.en} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className={`absolute top-6 ${isRTL ? 'right-6' : 'left-6'}`}>
+                    <div className={`absolute top-6 start-6`}>
                       <span className="px-5 py-2.5 backdrop-blur-md bg-white/20 border border-white/30 rounded-xl text-white font-montserrat text-[10px] uppercase tracking-[0.2em]">
                         {isRTL ? item.tag.ar : item.tag.en}
                       </span>
                     </div>
                   </div>
-                  <div className={`${index % 2 === 1 ? 'lg:order-1' : ''} ${isRTL ? 'text-right' : ''}`}>
+                  <div className={`${index % 2 === 1 ? 'lg:order-1' : ''} text-start`}>
                     <span className="font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue mb-4 block">{isRTL ? item.subtitle.ar : item.subtitle.en}</span>
                     <h3 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed mb-8 group-hover:text-brand-dustyBlue transition-colors duration-300">
                       {isRTL ? item.title.ar : item.title.en}
@@ -182,7 +182,7 @@ function HeritageGrid() {
                     <p className="font-montserrat text-base text-brand-clayRed/80 tracking-wide leading-[1.85] mb-10 max-w-lg">
                       {isRTL ? item.description.ar : item.description.en}
                     </p>
-                    <span className={`inline-flex items-center gap-3 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-darkRed group-hover:text-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <span className={`inline-flex items-center gap-3 font-montserrat text-sm uppercase tracking-[0.15em] text-brand-darkRed group-hover:text-brand-dustyBlue transition-colors `}>
                       {isRTL ? 'اكتشفي المزيد' : 'Discover More'}
                       <FiArrowRight className={`w-5 h-5 group-hover:translate-x-2 transition-transform duration-300 ${isRTL ? 'rotate-180 group-hover:-translate-x-2' : ''}`} />
                     </span>
@@ -211,7 +211,7 @@ function BrandConnectionSection() {
       <DecorativeCorners color="dustyBlue" />
       <div className="relative container mx-auto px-6 lg:px-16 py-32">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div style={{ opacity }} className={`text-white ${isRTL ? 'text-right lg:order-2' : ''}`}>
+          <motion.div style={{ opacity }} className={`text-white lg:order-2 text-start`}>
             <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-dustyBlue mb-6 block">{isRTL ? 'فلسفتنا' : 'Our Philosophy'}</span>
             <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl mb-10 leading-[1.05]">
               {isRTL ? 'التراث في كل غرزة' : 'Heritage in'}
@@ -279,7 +279,7 @@ function HeritageCTA() {
           </p>
           <LocaleLink
             href="/shop?from=heritage"
-            className={`inline-flex min-h-[52px] items-center justify-center gap-3 px-12 py-5 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white transition-all duration-500 rounded-[4px] ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`inline-flex min-h-[52px] items-center justify-center gap-3 px-12 py-5 bg-brand-dustyBlue text-[#1a0008] font-montserrat text-sm uppercase tracking-[0.2em] hover:bg-brand-darkRed hover:text-white transition-all duration-500 rounded-[4px] `}
             data-cursor-hover
           >
             {isRTL ? 'تسوقي الآن' : 'Shop Now'}

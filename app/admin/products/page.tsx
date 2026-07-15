@@ -131,10 +131,10 @@ export default function AdminProductsPage() {
             type="button"
             onClick={() => setFilter(id)}
             className={`rounded-full px-3 py-1.5 text-xs uppercase tracking-wider ${
-              filter === id
-                ? 'bg-brand-dustyBlue text-[#1a0008]'
-                : 'border border-white/15 text-white/60 hover:bg-white/5'
-            }`}
+ filter === id
+ ? 'bg-brand-dustyBlue text-[#1a0008]'
+ : 'border border-white/15 text-white/60 hover:bg-white/5'
+ }`}
           >
             {label} ({counts[id]})
           </button>

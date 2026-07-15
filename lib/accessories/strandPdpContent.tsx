@@ -51,7 +51,7 @@ type BuildStrandPdpAccordionOptions = {
 }
 
 function proseBlock(text: string, isRTL: boolean): ReactNode {
-  return <p className={`${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>{text}</p>
+  return <p className={`${PDP_COPY_RELAXED} text-start`}>{text}</p>
 }
 
 export function buildStrandPdpAccordionSections({
@@ -65,7 +65,7 @@ export function buildStrandPdpAccordionSections({
   naturalStoneTitle,
   isRTL,
 }: BuildStrandPdpAccordionOptions): PdpAccordionSectionConfig[] {
-  const textAlign = isRTL ? 'text-right' : ''
+  const textAlign = 'text-start'
 
   return [
     {
@@ -143,7 +143,7 @@ export function strandPdpIntroBlock(
   isRTL: boolean,
 ): ReactNode {
   return (
-    <div className={isRTL ? 'text-right' : ''}>
+    <div className="text-start">
       <p className="mb-3 font-rozha text-[1.35rem] leading-snug text-brand-darkRed md:text-[1.5rem]">
         {content.headline}
       </p>

@@ -29,7 +29,7 @@ export default function NotFound() {
               <p className={`${errorPageFooterLabel} mb-3`}>
                 {ui.notFound.popularPages}
               </p>
-              <div className={`flex flex-wrap justify-center gap-x-5 gap-y-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`flex flex-wrap justify-center gap-x-5 gap-y-2 `}>
                 {[
                   { href: '/about', label: ui.notFound.about },
                   { href: '/accessories', label: ui.common.accessories },
@@ -54,7 +54,7 @@ export default function NotFound() {
             </p>
             <a
               href={officialMailto('support')}
-              className={`mt-2 inline-flex items-center justify-center gap-2 font-montserrat text-[12px] text-brand-darkRed transition-colors hover:text-brand-darkMagenta ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`mt-2 inline-flex items-center justify-center gap-2 font-montserrat text-[12px] text-brand-darkRed transition-colors hover:text-brand-darkMagenta `}
               data-cursor-hover
             >
               <FiMail className="h-4 w-4 shrink-0" strokeWidth={1.25} />

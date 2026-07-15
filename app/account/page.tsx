@@ -97,7 +97,7 @@ export default function AccountPage() {
             animate={{ opacity: 1, y: 0 }}
             className="rounded-2xl border border-brand-stone/20 bg-white p-8 shadow-sm text-center sm:text-start sm:rtl:text-end"
           >
-            <div className={`flex flex-col items-center gap-4 sm:flex-row sm:items-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+            <div className={`flex flex-col items-center gap-4 sm:flex-row sm:items-center `}>
               {user.picture ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -124,7 +124,7 @@ export default function AccountPage() {
               {ui.account.signInDesc}
             </p>
             <div
-              className={`mt-8 grid gap-2 sm:grid-cols-2 ${isRTL ? 'text-right' : 'text-left'}`}
+              className={`mt-8 grid gap-2 sm:grid-cols-2 text-start`}
             >
               {[
                 { href: '/shop', label: ui.notFound.shopCollection },
@@ -135,9 +135,7 @@ export default function AccountPage() {
                 <LocaleLink
                   key={link.href}
                   href={link.href}
-                  className={`inline-flex min-h-[44px] items-center justify-between gap-2 border border-brand-stone/25 px-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue/50 hover:text-brand-dustyBlue ${
-                    isRTL ? 'flex-row-reverse' : ''
-                  }`}
+                  className={`inline-flex min-h-[44px] items-center justify-between gap-2 border border-brand-stone/25 px-4 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue/50 hover:text-brand-dustyBlue `}
                   data-cursor-hover
                 >
                   <span>{link.label}</span>
@@ -150,7 +148,7 @@ export default function AccountPage() {
               type="button"
               onClick={onSignOut}
               disabled={signingOut}
-              className={`mt-8 inline-flex items-center justify-center gap-2 border border-brand-stone/35 px-6 py-3 font-montserrat text-xs uppercase tracking-[0.18em] text-brand-darkRed hover:border-brand-dustyBlue/50 disabled:opacity-50 ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`mt-8 inline-flex items-center justify-center gap-2 border border-brand-stone/35 px-6 py-3 font-montserrat text-xs uppercase tracking-[0.18em] text-brand-darkRed hover:border-brand-dustyBlue/50 disabled:opacity-50 `}
               data-cursor-hover
             >
               <FiLogOut className="h-4 w-4" />
@@ -207,7 +205,7 @@ export default function AccountPage() {
             </p>
             <LocaleLink
               href="/register"
-              className={`mt-auto inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-montserrat text-xs uppercase tracking-[0.18em] text-white hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`mt-auto inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-montserrat text-xs uppercase tracking-[0.18em] text-white hover:bg-brand-dustyBlue `}
               data-cursor-hover
             >
               {ui.account.getStarted}
@@ -230,7 +228,7 @@ export default function AccountPage() {
             </p>
             <LocaleLink
               href="/sign-in"
-              className={`mt-auto inline-flex items-center justify-center gap-2 border border-brand-darkRed py-3.5 font-montserrat text-xs uppercase tracking-[0.18em] text-brand-darkRed hover:bg-brand-pageCanvas ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`mt-auto inline-flex items-center justify-center gap-2 border border-brand-darkRed py-3.5 font-montserrat text-xs uppercase tracking-[0.18em] text-brand-darkRed hover:bg-brand-pageCanvas `}
               data-cursor-hover
             >
               {ui.account.signIn}

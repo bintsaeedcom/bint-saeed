@@ -35,7 +35,7 @@ export default function ErrorPageNavLinks({
     <div className="space-y-3">
       {leading ? <div className="flex justify-center">{leading}</div> : null}
       <div
-        className={`flex flex-col items-stretch justify-center gap-2.5 sm:flex-row sm:items-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}
+        className={`flex flex-col items-stretch justify-center gap-2.5 sm:flex-row sm:items-center `}
       >
         <LocaleLink href={homeHref} className={errorPageNavBtn} data-cursor-hover>
           <FiHome className="h-3.5 w-3.5 shrink-0" strokeWidth={1.25} />

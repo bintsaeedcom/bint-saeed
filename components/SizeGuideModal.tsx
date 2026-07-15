@@ -40,7 +40,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
               className="w-full max-w-4xl max-h-[88vh] overflow-hidden rounded-xl border border-brand-stone/25 bg-[#f9f6f2] shadow-2xl"
             >
             {/* Header */}
-            <div className={`sticky top-0 z-10 flex items-center justify-between border-b border-brand-stone/25 bg-[#f7f2ec] px-6 py-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`sticky top-0 z-10 flex items-center justify-between border-b border-brand-stone/25 bg-[#f7f2ec] px-6 py-4 `}>
               <div>
                 <h2 className="font-rozha text-2xl text-brand-darkRed">
                   {copy.title}
@@ -63,19 +63,19 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
             <div className="max-h-[calc(88vh-96px)] overflow-y-auto p-6 md:p-7">
               {/* Size Selector */}
               <div className="mb-6">
-                <p className={`font-montserrat text-xs text-brand-clayRed/70 tracking-wide mb-3 ${isRTL ? 'text-right' : ''}`}>
+                <p className={`font-montserrat text-xs text-brand-clayRed/70 tracking-wide mb-3 text-start`}>
                   {copy.selectSizeHint}
                 </p>
-                <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+                <div className={`flex flex-wrap gap-2 `}>
                   {[...sizeData.headers].map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(selectedSize === size ? null : size)}
                       className={`px-4 py-2 font-montserrat text-xs uppercase tracking-wider transition-all ${
-                        selectedSize === size
-                          ? 'bg-brand-darkRed text-white'
-                          : 'bg-brand-stone/10 text-brand-darkRed hover:bg-brand-dustyBlue/20'
-                      }`}
+ selectedSize === size
+ ? 'bg-brand-darkRed text-white'
+ : 'bg-brand-stone/10 text-brand-darkRed hover:bg-brand-dustyBlue/20'
+ }`}
                       data-cursor-hover
                     >
                       {size}
@@ -90,17 +90,17 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                 <table className="w-full min-w-[600px]">
                   <thead>
                     <tr>
-                      <th className={`bg-brand-stone/10 px-3 py-3.5 font-montserrat text-xs uppercase tracking-[0.12em] text-brand-darkRed ${isRTL ? 'text-right' : 'text-left'}`}>
+                      <th className={`bg-brand-stone/10 px-3 py-3.5 font-montserrat text-xs uppercase tracking-[0.12em] text-brand-darkRed text-start`}>
                         {copy.measurement}
                       </th>
                       {[...sizeData.headers].map((size) => (
                         <th
                           key={size}
                           className={`px-3 py-3.5 text-center font-montserrat text-xs uppercase tracking-[0.12em] transition-all ${
-                            selectedSize === size
-                              ? 'bg-brand-darkRed text-white'
-                              : 'bg-brand-stone/10 text-brand-darkRed'
-                          }`}
+ selectedSize === size
+ ? 'bg-brand-darkRed text-white'
+ : 'bg-brand-stone/10 text-brand-darkRed'
+ }`}
                         >
                           {size}
                         </th>
@@ -113,17 +113,17 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                         key={row.label.en}
                       className={rowIndex % 2 === 0 ? 'bg-white/70' : 'bg-brand-stone/5'}
                       >
-                        <td className={`py-3 px-3 font-montserrat text-sm text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
+                        <td className={`py-3 px-3 font-montserrat text-sm text-brand-darkRed text-start`}>
                           {language === 'ar' ? row.label.ar : row.label.en}
                         </td>
                         {row.values.map((value, colIndex) => (
                           <td
                             key={colIndex}
                             className={`py-3 px-3 text-center font-montserrat text-sm transition-all ${
-                              selectedSize === sizeData.headers[colIndex]
-                                ? 'bg-brand-darkRed/10 text-brand-darkRed font-medium'
-                                : 'text-brand-clayRed'
-                            }`}
+ selectedSize === sizeData.headers[colIndex]
+ ? 'bg-brand-darkRed/10 text-brand-darkRed font-medium'
+ : 'text-brand-clayRed'
+ }`}
                           >
                             {value}
                           </td>
@@ -135,7 +135,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
               </div>
 
               {/* Notes */}
-              <div className={`space-y-3 mb-6 ${isRTL ? 'text-right' : ''}`}>
+              <div className={`space-y-3 mb-6 text-start`}>
                 <p className="font-montserrat text-xs text-brand-clayRed/70 tracking-wide">
                   {copy.notesInches}
                 </p>
@@ -148,7 +148,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
               <LocaleLink
                 href="/size-guide"
                 onClick={onClose}
-                className={`inline-flex items-center gap-2 px-6 py-3 bg-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] text-white transition-colors hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`inline-flex items-center gap-2 px-6 py-3 bg-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] text-white transition-colors hover:bg-brand-dustyBlue `}
                 data-cursor-hover
               >
                 {copy.viewFullGuide}

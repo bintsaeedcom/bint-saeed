@@ -467,22 +467,22 @@ export default function Header() {
       <header
         ref={headerRef}
         className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none border-b border-transparent transition-[background-color,backdrop-filter,border-color,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          isTransparentHomeHeader
-            ? 'bg-[linear-gradient(90deg,rgba(18,8,11,0.72)_0%,rgba(28,15,21,0.66)_22%,rgba(45,20,30,0.58)_50%,rgba(28,15,21,0.66)_78%,rgba(18,8,11,0.72)_100%)] shadow-[0_18px_46px_rgba(8,2,8,0.24)] backdrop-blur-md'
-            : `${headerBarGradient} ${isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)] backdrop-blur-md' : 'backdrop-blur-[2px]'}`
-        }`}
+ isTransparentHomeHeader
+ ? 'bg-[linear-gradient(90deg,rgba(18,8,11,0.72)_0%,rgba(28,15,21,0.66)_22%,rgba(45,20,30,0.58)_50%,rgba(28,15,21,0.66)_78%,rgba(18,8,11,0.72)_100%)] shadow-[0_18px_46px_rgba(8,2,8,0.24)] backdrop-blur-md'
+ : `${headerBarGradient} ${isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)] backdrop-blur-md' : 'backdrop-blur-[2px]'}`
+ }`}
       >
         {/* Soft footer-style edge — faded center line + whisper of bloom */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0" aria-hidden>
           <div
             className={`h-px w-full bg-gradient-to-r from-transparent via-white/28 to-transparent transition-opacity duration-700 ${
-              isTransparentHomeHeader ? 'opacity-55' : 'opacity-100'
-            }`}
+ isTransparentHomeHeader ? 'opacity-55' : 'opacity-100'
+ }`}
           />
           <div
             className={`absolute inset-x-[18%] -bottom-px mx-auto h-[2px] max-w-3xl bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent blur-[1.5px] transition-opacity duration-700 ${
-              isTransparentHomeHeader ? 'opacity-35' : 'opacity-70'
-            }`}
+ isTransparentHomeHeader ? 'opacity-35' : 'opacity-70'
+ }`}
           />
         </div>
 
@@ -492,8 +492,8 @@ export default function Header() {
             {/* Row 1 — brand above nav */}
             <div
               className={`relative flex items-center justify-center transition-[padding] duration-500 ${
-                isScrolled ? 'py-0.5 md:py-0.5' : 'py-1 md:py-1.5 lg:py-2 xl:py-2.5'
-              }`}
+ isScrolled ? 'py-0.5 md:py-0.5' : 'py-1 md:py-1.5 lg:py-2 xl:py-2.5'
+ }`}
             >
               {/* Leading side in RTL = right (menu + search), like Arabic macOS */}
               <div className="absolute start-0.5 top-1/2 z-[62] flex -translate-y-1/2 items-center 2xl:hidden">
@@ -564,8 +564,8 @@ export default function Header() {
             {/* Row 2 — topics + utilities (wide desktop only; grid prevents overlap) */}
             <div
               className={`relative hidden transition-[padding] duration-500 2xl:grid 2xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] 2xl:items-center 2xl:gap-8 ${
-                isScrolled ? 'py-0.5' : 'py-1 2xl:py-1.5'
-              }`}
+ isScrolled ? 'py-0.5' : 'py-1 2xl:py-1.5'
+ }`}
             >
             {/* Inline-start: desktop search (right side in Arabic) */}
             <div className="pointer-events-auto relative z-[61] flex min-w-0 items-center justify-start">
@@ -573,10 +573,10 @@ export default function Header() {
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
                 className={`inline-flex items-center gap-2 border-b px-0 py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.14em] transition-colors duration-300 ${
-                  isTransparentHomeHeader
-                    ? 'border-white/45 text-white/90 hover:border-white hover:text-white'
-                    : 'border-brand-dustyBlue/55 text-brand-dustyBlue hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
-                }`}
+ isTransparentHomeHeader
+ ? 'border-white/45 text-white/90 hover:border-white hover:text-white'
+ : 'border-brand-dustyBlue/55 text-brand-dustyBlue hover:border-brand-dustyBlue hover:text-brand-dustyBlue'
+ }`}
                 data-cursor-hover
                 aria-label={t.nav.search}
               >
@@ -591,12 +591,12 @@ export default function Header() {
                 href={shopNavItem.href}
                 onMouseEnter={() => setActiveMegaMenu(shopNavItem.href)}
                 className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:inset-inline-start-0 after:h-px after:w-full after:origin-bottom after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                  activeMegaMenu === shopNavItem.href
-                    ? 'text-brand-dustyBlue'
-                    : isTransparentHomeHeader
-                      ? 'text-white hover:text-brand-dustyBlue'
-                      : 'text-white/90 hover:text-brand-dustyBlue'
-                }`}
+ activeMegaMenu === shopNavItem.href
+ ? 'text-brand-dustyBlue'
+ : isTransparentHomeHeader
+ ? 'text-white hover:text-brand-dustyBlue'
+ : 'text-white/90 hover:text-brand-dustyBlue'
+ }`}
                 data-cursor-hover
                 data-analytics-event="click_cta_home_to_collection"
                 data-analytics-section="header-main-nav"
@@ -609,12 +609,12 @@ export default function Header() {
                   href={item.href}
                   onMouseEnter={() => setActiveMegaMenu(item.href)}
                   className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:inset-inline-start-0 after:h-px after:w-full after:origin-bottom after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                    activeMegaMenu === item.href
-                      ? 'text-brand-dustyBlue'
-                      : isTransparentHomeHeader
-                        ? 'text-white hover:text-brand-dustyBlue'
-                        : 'text-white/90 hover:text-brand-dustyBlue'
-                  }`}
+ activeMegaMenu === item.href
+ ? 'text-brand-dustyBlue'
+ : isTransparentHomeHeader
+ ? 'text-white hover:text-brand-dustyBlue'
+ : 'text-white/90 hover:text-brand-dustyBlue'
+ }`}
                   data-cursor-hover
                   data-analytics-event={getMainNavAnalyticsEvent(item.href)}
                   data-analytics-section="header-main-nav"
@@ -672,7 +672,7 @@ export default function Header() {
                 transition={{ duration: 0.22, ease: 'easeOut' }}
                 className="pointer-events-auto absolute left-0 right-0 top-full z-[63] hidden -mt-1.5 pt-1.5 2xl:block"
               >
-                <div className={`border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)] ${isRTL ? 'text-right' : 'text-left'}`}>
+                <div className={`border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)] text-start`}>
                   <div className="grid grid-cols-12 gap-6 px-6 py-8 lg:gap-10 lg:px-12">
                     <div
                       className={
@@ -779,7 +779,7 @@ export default function Header() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t.search.placeholder || 'Search for products, collection, pages…'}
-                  className={`${formFieldClass} flex-1 !py-2.5 text-lg md:text-xl ${isRTL ? 'text-right' : ''}`}
+                  className={`${formFieldClass} flex-1 !py-2.5 text-lg md:text-xl text-start`}
                   dir={isRTL ? 'rtl' : 'ltr'}
                 />
                 <button
@@ -822,7 +822,7 @@ export default function Header() {
                         key={index}
                         href={result.href}
                         onClick={handleSearchClose}
-                        className={`group flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-white/55 ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}
+                        className={`group flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-white/55 text-start`}
                         data-cursor-hover
                       >
                         <div>
@@ -841,7 +841,7 @@ export default function Header() {
                   </div>
                 ) : (
                   // No results
-                  <div className={`${isRTL ? 'text-right' : 'text-center'} py-6`}>
+                  <div className={`text-start py-6`}>
                     <p className={`font-montserrat ${glassTextBody}`}>
                       {isRTL
                         ? `لا نتائج لـ “${searchQuery}”`
@@ -858,7 +858,7 @@ export default function Header() {
                         : 'There is always another detail waiting to be discovered.'}
                     </p>
                     <div
-                      className={`mt-5 flex flex-wrap gap-2 ${isRTL ? 'justify-end' : 'justify-center'}`}
+                      className={`mt-5 flex flex-wrap gap-2 justify-center`}
                     >
                       {[
                         { label: hn.abayas, href: '/shop?category=abayas' },
@@ -973,7 +973,7 @@ export default function Header() {
                                 return next
                               })
                             }}
-                            className={`flex w-full min-w-0 items-center justify-between gap-3 py-3.5 ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}
+                            className={`flex w-full min-w-0 items-center justify-between gap-3 py-3.5 text-start`}
                             aria-expanded={isExpanded}
                             data-cursor-hover
                           >
@@ -982,13 +982,13 @@ export default function Header() {
                             </span>
                             <span
                               className={`inline-flex shrink-0 items-center ${
-                                isExpanded ? 'text-brand-dustyBlue' : 'text-white/55'
-                              }`}
+ isExpanded ? 'text-brand-dustyBlue' : 'text-white/55'
+ }`}
                             >
                               <FiChevronDown
                                 className={`h-5 w-5 transition-transform duration-200 ${
-                                  isExpanded ? 'rotate-180 text-brand-dustyBlue' : 'text-white/55'
-                                }`}
+ isExpanded ? 'rotate-180 text-brand-dustyBlue' : 'text-white/55'
+ }`}
                                 aria-hidden
                               />
                             </span>
@@ -1005,12 +1005,12 @@ export default function Header() {
                                 className="overflow-hidden"
                               >
                                 <div
-                                  className={`mb-3 px-1 pb-2 ${isRTL ? 'text-right' : 'text-left'}`}
+                                  className={`mb-3 px-1 pb-2 text-start`}
                                 >
                                   <LocaleLink
                                     href={item.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className={`mb-3 inline-flex min-h-10 items-center gap-2 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue transition-colors hover:text-white ${isRTL ? 'flex-row-reverse' : ''}`}
+                                    className={`mb-3 inline-flex min-h-10 items-center gap-2 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue transition-colors hover:text-white `}
                                     data-cursor-hover
                                     data-analytics-event={getMainNavAnalyticsEvent(item.href)}
                                     data-analytics-section="header-mobile-nav"
@@ -1035,7 +1035,7 @@ export default function Header() {
                                             key={`${col.title ?? 'links'}-${link.label}`}
                                             href={link.href}
                                             onClick={() => setIsMobileMenuOpen(false)}
-                                            className={`flex min-h-11 items-center justify-between gap-3 py-2 font-montserrat text-[13px] leading-snug text-white/90 transition-colors hover:text-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+                                            className={`flex min-h-11 items-center justify-between gap-3 py-2 font-montserrat text-[13px] leading-snug text-white/90 transition-colors hover:text-brand-dustyBlue `}
                                             data-cursor-hover
                                             data-analytics-section="header-mobile-nav"
                                           >
@@ -1075,7 +1075,7 @@ export default function Header() {
                                               aria-hidden
                                             />
                                           </div>
-                                          <div className={`mt-2 ${isRTL ? 'text-right' : 'text-left'}`}>
+                                          <div className={`mt-2 text-start`}>
                                             <p className="font-montserrat text-[11px] leading-snug text-white/90">
                                               {feature.title}
                                             </p>
@@ -1096,7 +1096,7 @@ export default function Header() {
                         <LocaleLink
                           href={item.href}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className={`group flex min-h-11 min-w-0 items-center justify-between gap-3 py-3 ${isRTL ? 'flex-row-reverse' : ''}`}
+                          className={`group flex min-h-11 min-w-0 items-center justify-between gap-3 py-3 `}
                           data-cursor-hover
                           data-analytics-event={getMainNavAnalyticsEvent(item.href)}
                           data-analytics-section="header-mobile-nav"

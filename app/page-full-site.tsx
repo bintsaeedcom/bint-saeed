@@ -11,7 +11,7 @@ export default function Home() {
   const { isRTL } = useLanguage()
   
   return (
-    <div className={`relative overflow-hidden ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`relative overflow-hidden `}>
       <HeroSection />
       <EditorialIntro />
       <MagazineGrid />
@@ -158,7 +158,7 @@ function EditorialIntro() {
               </p>
               <LocaleLink
                 href="/about"
-                className={`group inline-flex items-center gap-4 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`group inline-flex items-center gap-4 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed `}
                 data-cursor-hover
               >
                 <span className="relative">
@@ -207,7 +207,7 @@ function MagazineGrid() {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className={`flex items-end justify-between mb-16 ${isRTL ? 'flex-row-reverse' : ''}`}
+          className={`flex items-end justify-between mb-16 `}
         >
           <div>
             <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-clayRed mb-3 block">
@@ -352,7 +352,7 @@ function ColorBlockSection() {
           </motion.div>
 
           {/* Right - Content */}
-          <div className={`text-brand-darkRed ${isRTL ? 'text-right' : ''}`}>
+          <div className={`text-brand-darkRed text-start`}>
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -429,7 +429,7 @@ function EditorialSplit() {
             initial={{ opacity: 0, x: 60 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, delay: 0.2 }}
-            className={`p-12 lg:p-20 ${isRTL ? 'text-right' : ''}`}
+            className={`p-12 lg:p-20 text-start`}
           >
             <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
               {t.lifestyle.subtitle}
@@ -452,7 +452,7 @@ function EditorialSplit() {
                 isRTL ? 'أقمشة فاخرة مستدامة' : 'Sustainable Luxury Fabrics',
                 isRTL ? 'تصميم معاصر وتراثي' : 'Contemporary Heritage Design',
               ].map((item, i) => (
-                <div key={i} className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div key={i} className={`flex items-center gap-4 `}>
                   <div className="w-8 h-px bg-brand-dustyBlue" />
                   <span className="font-montserrat text-sm text-brand-darkRed/80 tracking-wide">{item}</span>
                 </div>
@@ -461,7 +461,7 @@ function EditorialSplit() {
 
             <LocaleLink
               href="/about"
-              className={`group inline-flex items-center gap-3 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`group inline-flex items-center gap-3 font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed `}
               data-cursor-hover
             >
               {t.lifestyle.discoverStory}
@@ -525,12 +525,12 @@ function AsymmetricShowcase() {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className={`mb-20 ${isRTL ? 'text-right' : ''}`}
+          className={`mb-20 text-start`}
         >
           <span className="font-montserrat text-[10px] uppercase tracking-[0.4em] text-brand-clayRed mb-3 block">
             {t.featured.subtitle}
           </span>
-          <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-6 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
+          <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-6 `}>
             <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl text-brand-darkRed max-w-xl leading-[1.1]">
               {t.featured.title}
             </h2>

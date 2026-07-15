@@ -120,7 +120,7 @@ export default function TabbyPromoSnippet({
       id={hostId}
       className={[
         'tabby-snippet min-h-[28px] w-full max-w-full',
-        isRTL ? 'text-right' : 'text-left',
+        'text-start',
         className,
       ]
         .filter(Boolean)

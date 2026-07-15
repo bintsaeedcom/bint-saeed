@@ -370,7 +370,8 @@ p {
   letter-spacing: 0.02em;
   line-height: 1.8;
   color: var(--color-muted);
-  text-align: left;
+  /* Logical: left in LTR, right in Arabic — never force physical left under dir=rtl */
+  text-align: start;
 }
 
 /* Grid / list product titles — size owned by components so PDP H1s stay editorial. */
@@ -448,7 +449,7 @@ footer li {
   font-size: 13px;
   font-weight: 400;
   letter-spacing: 0.04em;
-  text-align: left;
+  text-align: start;
 }
 
 /* Brand accent pass: ensure primary hero/banner CTAs use #6f1524 across pages. */

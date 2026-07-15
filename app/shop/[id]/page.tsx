@@ -487,7 +487,7 @@ export default function ProductPage() {
               <div className="space-y-4">
                 {productDetailGroups.map((group) => (
                   <div key={group.title} className="space-y-2">
-                    <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{group.title}</p>
+                    <p className={`${PDP_ACCORDION_SUBTITLE} text-start`}>{group.title}</p>
                     <ul className={PDP_BULLET_LIST}>
                       {group.items.map((item, idx) => (
                         <li key={`pdg-${group.title}-${idx}`} className={PDP_BULLET_ITEM}>
@@ -518,10 +518,10 @@ export default function ProductPage() {
             )}
             {compositionGroups && compositionGroups.length > 0 ? (
               <div className="space-y-4 pt-3">
-                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{ui.composition}</p>
+                <p className={`${PDP_ACCORDION_SUBTITLE} text-start`}>{ui.composition}</p>
                 {compositionGroups.map((group) => (
                   <div key={group.title} className="space-y-2">
-                    <p className={`font-montserrat text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed/80 ${isRTL ? 'text-right' : ''}`}>
+                    <p className={`font-montserrat text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed/80 text-start`}>
                       {group.title}
                     </p>
                     <ul className={PDP_BULLET_LIST}>
@@ -538,7 +538,7 @@ export default function ProductPage() {
               compositionDetails &&
               compositionDetails.length > 0 && (
                 <div className="space-y-2 pt-3">
-                  <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{ui.composition}</p>
+                  <p className={`${PDP_ACCORDION_SUBTITLE} text-start`}>{ui.composition}</p>
                   <ul className={PDP_BULLET_LIST}>
                     {compositionDetails.map((item, idx) => (
                       <li key={`comp-${idx}`} className={PDP_BULLET_ITEM}>
@@ -551,7 +551,7 @@ export default function ProductPage() {
             )}
             {careDetails && careDetails.length > 0 && (
               <div className="space-y-2 pt-3">
-                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{ui.care}</p>
+                <p className={`${PDP_ACCORDION_SUBTITLE} text-start`}>{ui.care}</p>
                 <ul className={PDP_BULLET_LIST}>
                   {careDetails.map((item, idx) => (
                     <li key={`care-${idx}`} className={PDP_BULLET_ITEM}>
@@ -563,7 +563,7 @@ export default function ProductPage() {
             )}
             {originDetails && originDetails.length > 0 && (
               <div className="space-y-2 pt-3">
-                <p className={`${PDP_ACCORDION_SUBTITLE} ${isRTL ? 'text-right' : ''}`}>{t.product.origin}</p>
+                <p className={`${PDP_ACCORDION_SUBTITLE} text-start`}>{t.product.origin}</p>
                 <ul className={PDP_BULLET_LIST}>
                   {originDetails.map((item, idx) => (
                     <li key={`origin-${idx}`} className={PDP_BULLET_ITEM}>
@@ -574,12 +574,12 @@ export default function ProductPage() {
               </div>
             )}
             {productReferenceLine && (
-              <p className={`pt-3 ${PDP_COPY_RELAXED} ${isRTL ? 'text-right' : ''}`}>
+              <p className={`pt-3 ${PDP_COPY_RELAXED} text-start`}>
                 {productReferenceLine}
               </p>
             )}
             {brandStory && (
-              <p className={`pt-3 ${PDP_COPY_INTRO} pdp-copy--intro ${isRTL ? 'text-right' : ''}`}>
+              <p className={`pt-3 ${PDP_COPY_INTRO} pdp-copy--intro text-start`}>
                 {brandStory}
               </p>
             )}
@@ -614,7 +614,7 @@ export default function ProductPage() {
         bordered: false,
         panelClassName: 'space-y-4 pb-5',
         children: faqItems.map((item, idx) => (
-          <div key={`faq-${idx}`} className={isRTL ? 'text-right' : ''}>
+          <div key={`faq-${idx}`} className="text-start">
             <p className={PDP_FAQ_QUESTION}>{item.question}</p>
             <p className={`mt-1 ${PDP_COPY_RELAXED}`}>{item.answer}</p>
           </div>
@@ -675,7 +675,7 @@ export default function ProductPage() {
               image={activeImages[0] ?? product.images[0] ?? ''}
               category={product.category}
               href={getProductHref(product)}
-              className={`absolute top-2.5 z-30 h-9 w-9 rounded-full border border-stone-200/90 bg-white/90 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:h-10 sm:w-10 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+              className={`absolute top-2.5 z-30 h-9 w-9 rounded-full border border-stone-200/90 bg-white/90 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:h-10 sm:w-10 end-2.5 sm:end-3`}
               iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
             />
             <div className="grid gap-3 lg:grid-cols-[4.75rem_minmax(0,1fr)] lg:items-start">
@@ -881,7 +881,7 @@ export default function ProductPage() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white px-3.5 pb-3.5 pt-0 lg:sticky lg:top-28 lg:self-start lg:px-4 lg:pb-4 lg:pt-0 ${isRTL ? 'text-right' : ''}`}
+            className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white px-3.5 pb-3.5 pt-0 lg:sticky lg:top-28 lg:self-start lg:px-4 lg:pb-4 lg:pt-0 text-start`}
           >
             {/* Title */}
             <h1 data-document-h1="true" data-product-name="true" className="mb-1 font-rozha text-[1.75rem] md:text-[1.95rem] lg:text-[2.05rem] text-black leading-[1.15]">
@@ -902,7 +902,7 @@ export default function ProductPage() {
             {/* Color Selection */}
             {colorOptions.length > 1 && (
             <div id="color-selection" className="mb-1.5 border-b border-brand-stone/20 pb-3">
-              <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`mb-2 flex items-center justify-between `}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {t.product.color}
                 </span>
@@ -912,7 +912,7 @@ export default function ProductPage() {
                   </span>
                 )}
               </div>
-              <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+              <div className={`flex flex-wrap gap-2 `}>
                 {colorOptions.map((color) => (
                   <button
                     key={color.name}
@@ -933,7 +933,7 @@ export default function ProductPage() {
             {/* Size Selection */}
             {showSizeSelector ? (
             <div id="size-selection" className="mb-3 border-b border-brand-stone/20 pb-3">
-              <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`mb-2 flex items-center justify-between `}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {t.product.size}
                 </span>
@@ -950,17 +950,17 @@ export default function ProductPage() {
                   {t.product.sizeGuide}
                 </button>
               </div>
-              <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+              <div className={`flex flex-wrap gap-2 `}>
                 {sizeOptions.map((size) => (
                   <button
                     key={size}
                     type="button"
                     onClick={() => setSelectedSize(size)}
                     className={`min-w-[52px] px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] border transition-all ${CTA_BUTTON_RADIUS} ${
-                      selectedSize === size
-                        ? PDP_FILLED_PLUM
-                        : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
-                    }`}
+ selectedSize === size
+ ? PDP_FILLED_PLUM
+ : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
+ }`}
                     data-cursor-hover
                   >
                     {size}
@@ -982,10 +982,10 @@ export default function ProductPage() {
                 <h2 className="mb-2 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
                   {ui.personalisation.title}
                 </h2>
-                <p className={`mb-2 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 ${isRTL ? 'text-right' : ''}`}>
+                <p className={`mb-2 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 text-start`}>
                   {ui.personalisation.desc}
                 </p>
-                <div className={`flex flex-col gap-2 sm:flex-row sm:flex-wrap ${isRTL ? 'sm:justify-end' : ''}`}>
+                <div className={`flex flex-col gap-2 sm:flex-row sm:flex-wrap `}>
                   <button
                     type="button"
                     onClick={() => {
@@ -993,10 +993,10 @@ export default function ProductPage() {
                       setCustomisationMessage('')
                     }}
                     className={`w-full sm:w-auto ${PDP_CONTROL_BUTTON_BASE} ${
-                      !customisationActive
-                        ? PDP_FILLED_PLUM
-                        : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
-                    }`}
+ !customisationActive
+ ? PDP_FILLED_PLUM
+ : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
+ }`}
                     aria-pressed={!customisationActive}
                     data-cursor-hover
                   >
@@ -1006,10 +1006,10 @@ export default function ProductPage() {
                     type="button"
                     onClick={() => setCustomisationActive(true)}
                     className={`w-full sm:w-auto ${PDP_CONTROL_BUTTON_BASE} ${
-                      customisationActive
-                        ? PDP_FILLED_PLUM
-                        : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
-                    }`}
+ customisationActive
+ ? PDP_FILLED_PLUM
+ : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
+ }`}
                     aria-pressed={customisationActive}
                     data-cursor-hover
                   >
@@ -1026,10 +1026,10 @@ export default function ProductPage() {
                       placeholder={ui.personalisation.placeholder}
                       className={`w-full border border-brand-darkRed/30 bg-white px-3 py-2.5 font-montserrat text-[11px] tracking-wide text-brand-darkRed placeholder:text-brand-muted transition-colors focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 ${CTA_BUTTON_RADIUS}`}
                     />
-                    <p className={`font-montserrat text-[11px] text-brand-darkRed/55 ${isRTL ? 'text-right' : ''}`}>
+                    <p className={`font-montserrat text-[11px] text-brand-darkRed/55 text-start`}>
                       {customisationMessage.length}/{CUSTOMISATION_MAX_CHARS}
                     </p>
-                    <p className={`font-montserrat text-[11px] text-brand-darkRed/80 leading-relaxed border border-brand-stone/20 bg-white p-2.5 ${isRTL ? 'text-right' : ''}`}>
+                    <p className={`font-montserrat text-[11px] text-brand-darkRed/80 leading-relaxed border border-brand-stone/20 bg-white p-2.5 text-start`}>
                       {ui.personalisation.customisedNoReturn}
                     </p>
                   </div>
@@ -1087,7 +1087,7 @@ export default function ProductPage() {
                 className="mb-3"
               />
             ) : null}
-            <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 ${isRTL ? 'text-right' : ''}`}>
+            <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 text-start`}>
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiAward className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">
@@ -1116,14 +1116,14 @@ export default function ProductPage() {
 
             {/* Intro / short description */}
             {introParagraphParts && introParagraphParts.length > 0 ? (
-              <div className={`mb-2 ${isRTL ? 'text-right' : ''}`}>
+              <div className={`mb-2 text-start`}>
                 <PdpIntroParagraph
                   parts={introParagraphParts[0]}
                   className={`mb-2 ${PDP_COPY_INTRO} pdp-copy--intro`}
                 />
               </div>
             ) : introParagraphs && introParagraphs.length > 0 ? (
-              <div className={`mb-2 ${isRTL ? 'text-right' : ''}`}>
+              <div className={`mb-2 text-start`}>
                 <p className={`mb-2 ${PDP_COPY_INTRO} pdp-copy--intro`}>
                   {introParagraphs[0]}
                 </p>
@@ -1142,7 +1142,7 @@ export default function ProductPage() {
             />
 
             {stylePairingNote && (
-              <p className={`mt-6 font-montserrat text-[12px] leading-relaxed text-brand-darkRed/75 ${isRTL ? 'text-right' : ''}`}>
+              <p className={`mt-6 font-montserrat text-[12px] leading-relaxed text-brand-darkRed/75 text-start`}>
                 {stylePairingNote}
               </p>
             )}

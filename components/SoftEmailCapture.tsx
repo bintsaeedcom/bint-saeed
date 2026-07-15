@@ -85,7 +85,7 @@ export default function SoftEmailCapture({
       </p>
       <form
         onSubmit={onSubmit}
-        className={`mx-auto mt-4 flex max-w-md flex-col gap-2 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}
+        className={`mx-auto mt-4 flex max-w-md flex-col gap-2 sm:flex-row `}
       >
         <input
           type="email"

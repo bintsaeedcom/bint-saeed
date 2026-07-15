@@ -127,8 +127,8 @@ export default function LanguageSwitcher({
                     type="button"
                     onClick={() => navigateToLanguage(lang.code)}
                     className={`flex w-full items-center gap-2 px-4 py-2.5 text-left font-montserrat text-sm tracking-wide transition-colors ${
-                      language === lang.code ? 'bg-white/18 text-white' : itemHover
-                    }`}
+ language === lang.code ? 'bg-white/18 text-white' : itemHover
+ }`}
                     data-cursor-hover
                   >
                     <span>{lang.flag}</span>

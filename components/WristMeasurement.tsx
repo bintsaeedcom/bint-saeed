@@ -28,17 +28,17 @@ export default function WristMeasurement({ value, onChange }: WristMeasurementPr
   const recommendation = getSizeRecommendation()
 
   return (
-    <div className={`space-y-4 ${isRTL ? 'text-right' : ''}`}>
+    <div className={`space-y-4 text-start`}>
       {/* Input Section */}
       <div>
-        <div className={`flex items-center justify-between mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <div className={`flex items-center justify-between mb-2 `}>
           <label className="font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed">
             {isRTL ? 'مقاس المعصم (سم)' : 'Wrist Size (cm)'}
           </label>
           <button
             type="button"
             onClick={() => setShowGuide(!showGuide)}
-            className={`flex items-center gap-1 font-montserrat text-xs text-brand-clayRed hover:text-brand-dustyBlue transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`flex items-center gap-1 font-montserrat text-xs text-brand-clayRed hover:text-brand-dustyBlue transition-colors `}
             data-cursor-hover
           >
             <FiInfo className="w-3 h-3" />
@@ -46,7 +46,7 @@ export default function WristMeasurement({ value, onChange }: WristMeasurementPr
           </button>
         </div>
         
-        <div className={`flex gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <div className={`flex gap-3 `}>
           <input
             type="number"
             step="0.1"
@@ -55,7 +55,7 @@ export default function WristMeasurement({ value, onChange }: WristMeasurementPr
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder={isRTL ? 'مثال: 16.5' : 'e.g., 16.5'}
-            className={`flex-1 px-4 py-3 border border-brand-darkRed/30 bg-white font-montserrat text-sm tracking-wide text-brand-darkRed placeholder:text-brand-muted focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 transition-colors ${isRTL ? 'text-right' : ''}`}
+            className={`flex-1 px-4 py-3 border border-brand-darkRed/30 bg-white font-montserrat text-sm tracking-wide text-brand-darkRed placeholder:text-brand-muted focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 transition-colors text-start`}
           />
           <span className="px-4 py-3 bg-brand-stone/10 font-montserrat text-sm text-brand-clayRed border border-brand-stone/50">
             cm
@@ -70,15 +70,15 @@ export default function WristMeasurement({ value, onChange }: WristMeasurementPr
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className={`p-4 bg-green-50 border border-green-200 rounded-lg ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`p-4 bg-green-50 border border-green-200 rounded-lg `}
           >
-            <div className={`flex items-center gap-2 mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`flex items-center gap-2 mb-2 `}>
               <FiCheck className="w-4 h-4 text-green-600" />
               <span className="font-montserrat text-sm font-medium text-green-800">
                 {isRTL ? 'المقاس الموصى به' : 'Recommended Size'}
               </span>
             </div>
-            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`flex items-center gap-4 `}>
               <span className="font-rozha text-2xl text-green-700">{recommendation.size}</span>
               <div>
                 <p className="font-montserrat text-sm text-green-700">{recommendation.fit}</p>
@@ -125,7 +125,7 @@ export default function WristMeasurement({ value, onChange }: WristMeasurementPr
 
               {/* Steps */}
               <ol className={`space-y-4 ${isRTL ? 'pr-0' : 'pl-0'}`}>
-                <li className={`flex gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <li className={`flex gap-3 `}>
                   <span className="flex-shrink-0 w-6 h-6 bg-brand-darkRed text-white rounded-full flex items-center justify-center font-montserrat text-xs">
                     1
                   </span>
@@ -140,7 +140,7 @@ export default function WristMeasurement({ value, onChange }: WristMeasurementPr
                     </p>
                   </div>
                 </li>
-                <li className={`flex gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <li className={`flex gap-3 `}>
                   <span className="flex-shrink-0 w-6 h-6 bg-brand-darkRed text-white rounded-full flex items-center justify-center font-montserrat text-xs">
                     2
                   </span>
@@ -155,7 +155,7 @@ export default function WristMeasurement({ value, onChange }: WristMeasurementPr
                     </p>
                   </div>
                 </li>
-                <li className={`flex gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <li className={`flex gap-3 `}>
                   <span className="flex-shrink-0 w-6 h-6 bg-brand-darkRed text-white rounded-full flex items-center justify-center font-montserrat text-xs">
                     3
                   </span>
@@ -194,7 +194,7 @@ export default function WristMeasurement({ value, onChange }: WristMeasurementPr
               </div>
 
               {/* Tip */}
-              <div className={`mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg flex gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg flex gap-2 `}>
                 <FiAlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
                 <p className="font-montserrat text-xs text-amber-800">
                   {isRTL 

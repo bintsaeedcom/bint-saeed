@@ -154,7 +154,7 @@ export default function FAQPage() {
 
   return (
     <div
-      className={`min-h-screen bg-brand-pageCanvas pb-24 ${SITE_CONTENT_TOP_PAD} ${isRTL ? 'rtl' : 'ltr'}`}
+      className={`min-h-screen bg-brand-pageCanvas pb-24 ${SITE_CONTENT_TOP_PAD} `}
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className="mx-auto w-full max-w-5xl px-5 sm:px-8 lg:px-12">
@@ -170,7 +170,7 @@ export default function FAQPage() {
           />
         </div>
 
-        <header className={`mb-12 max-w-3xl ${isRTL ? 'text-right' : 'text-left'}`}>
+        <header className={`mb-12 max-w-3xl text-start`}>
           <span className="mb-4 block font-montserrat text-[10px] uppercase tracking-[0.35em] text-brand-dustyBlue">
             Bint Saeed
           </span>
@@ -182,7 +182,7 @@ export default function FAQPage() {
           </p>
           <nav
             aria-label={isRTL ? 'روابط السياسات' : 'Related policies'}
-            className={`mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-brand-stone/30 pt-5 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-clayRed ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-brand-stone/30 pt-5 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-clayRed `}
           >
             <LocaleLink href="/shipment-return-policy" className="hover:text-brand-dustyBlue" data-cursor-hover>
               {links.shipment}
@@ -205,7 +205,7 @@ export default function FAQPage() {
           className={`sticky ${SITE_HEADER_STICKY_TOP} z-30 -mx-5 mb-12 border-y border-brand-stone/30 bg-brand-pageCanvas/95 px-5 backdrop-blur-sm sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0`}
         >
           <ul
-            className={`flex gap-1 overflow-x-auto py-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`flex gap-1 overflow-x-auto py-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden `}
           >
             {data.topics.map((topic) => {
               const isActive = activeTopic === topic.id
@@ -215,10 +215,10 @@ export default function FAQPage() {
                     type="button"
                     onClick={() => scrollToTopic(topic.id)}
                     className={`whitespace-nowrap px-3 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] transition-colors sm:px-4 sm:text-[11px] ${
-                      isActive
-                        ? 'border-b-2 border-brand-darkRed text-brand-darkRed'
-                        : 'border-b-2 border-transparent text-brand-clayRed/70 hover:text-brand-darkRed'
-                    }`}
+ isActive
+ ? 'border-b-2 border-brand-darkRed text-brand-darkRed'
+ : 'border-b-2 border-transparent text-brand-clayRed/70 hover:text-brand-darkRed'
+ }`}
                     aria-current={isActive ? 'true' : undefined}
                     data-cursor-hover
                   >
@@ -238,7 +238,7 @@ export default function FAQPage() {
               className="scroll-mt-[12rem] sm:scroll-mt-[13rem] 2xl:scroll-mt-[15rem]"
               aria-labelledby={`faq-heading-${topic.id}`}
             >
-              <div className={`mb-8 border-b border-brand-stone/35 pb-4 ${isRTL ? 'text-right' : ''}`}>
+              <div className={`mb-8 border-b border-brand-stone/35 pb-4 text-start`}>
                 <h2
                   id={`faq-heading-${topic.id}`}
                   className="font-rozha text-3xl leading-tight text-brand-darkRed md:text-[2.75rem]"
@@ -251,7 +251,7 @@ export default function FAQPage() {
                 {topic.subtopics.map((subtopic) => (
                   <div key={`${topic.id}-${subtopic.name}`}>
                     <h3
-                      className={`mb-4 border-l-2 border-brand-dustyBlue/50 pl-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-brand-dustyBlue ${isRTL ? 'border-l-0 border-r-2 pr-3 pl-0 text-right' : ''}`}
+                      className="mb-4 border-s-2 border-brand-dustyBlue/50 ps-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-brand-dustyBlue text-start"
                     >
                       {subtopic.name}
                     </h3>
@@ -263,10 +263,10 @@ export default function FAQPage() {
                           className="group [overflow-anchor:none] open:bg-brand-stone/[0.04]"
                         >
                           <summary
-                            className={`cursor-pointer list-none py-5 outline-none marker:content-none [&::-webkit-details-marker]:hidden ${isRTL ? 'text-right' : 'text-left'}`}
+                            className={`cursor-pointer list-none py-5 outline-none marker:content-none [&::-webkit-details-marker]:hidden text-start`}
                             data-cursor-hover
                           >
-                            <span className={`flex items-start gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                            <span className={`flex items-start gap-4 `}>
                               <span className="min-w-0 flex-1 font-montserrat text-[15px] font-medium leading-snug tracking-wide text-brand-darkRed sm:text-base md:text-[1.05rem] md:leading-relaxed">
                                 {item.q}
                               </span>
@@ -279,7 +279,7 @@ export default function FAQPage() {
                             </span>
                           </summary>
                           <div
-                            className={`pb-6 ${isRTL ? 'text-right' : 'text-left'} ${isRTL ? 'pl-8' : 'pr-8'}`}
+                            className={`pb-6 text-start ${isRTL ? 'pl-8' : 'pr-8'}`}
                           >
                             <p className="max-w-3xl font-montserrat text-sm leading-[1.9] tracking-wide text-brand-darkRed/75 whitespace-pre-wrap break-words [overflow-wrap:anywhere]">
                               {item.a}
@@ -300,10 +300,10 @@ export default function FAQPage() {
           <p className="mx-auto mt-3 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-white/65">
             {data.contact.description}
           </p>
-          <div className={`mt-8 flex flex-col justify-center gap-3 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+          <div className={`mt-8 flex flex-col justify-center gap-3 sm:flex-row `}>
             <a
               href={officialMailto('support')}
-              className={`inline-flex items-center justify-center gap-2 bg-[#e8ddd4] px-8 py-3.5 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:bg-white ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`inline-flex items-center justify-center gap-2 bg-[#e8ddd4] px-8 py-3.5 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:bg-white `}
               data-cursor-hover
             >
               <FiMail className="h-4 w-4" />
@@ -313,7 +313,7 @@ export default function FAQPage() {
               href="https://wa.me/971502299402"
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center justify-center gap-2 border border-white/25 px-8 py-3.5 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white transition-colors hover:border-white/50 ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`inline-flex items-center justify-center gap-2 border border-white/25 px-8 py-3.5 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white transition-colors hover:border-white/50 `}
               data-cursor-hover
             >
               <FaWhatsapp className="h-4 w-4" />

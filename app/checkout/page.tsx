@@ -651,7 +651,7 @@ export default function CheckoutPage() {
               label: ui.checkout.editBag,
             }}
           />
-          <div className={`${isRTL ? 'text-right' : ''} mt-3 sm:mt-4`}>
+          <div className={`text-start mt-3 sm:mt-4`}>
             <h1
               data-document-h1="true"
               className="font-rozha text-[1.75rem] leading-tight text-brand-darkRed sm:text-3xl md:text-4xl"
@@ -665,8 +665,8 @@ export default function CheckoutPage() {
           {paymentReturnStatus && !paymentNoticeDismissed ? (
             <div
               className={`mt-5 rounded-[4px] border border-brand-stone/30 bg-white/80 px-4 py-4 ${
-                isRTL ? 'text-right' : 'text-left'
-              }`}
+ 'text-start'
+ }`}
               role="status"
             >
               <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-dustyBlue">
@@ -692,7 +692,7 @@ export default function CheckoutPage() {
                       : 'Your selection is still in the bag. Continue when ready, or message us if you need help.'}
               </p>
               <div
-                className={`mt-3 flex flex-wrap gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`mt-3 flex flex-wrap gap-3 `}
               >
                 <button
                   type="button"
@@ -719,7 +719,7 @@ export default function CheckoutPage() {
         {stripeEmbedded ? (
           <div className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-12 lg:items-start lg:gap-10">
             <aside
-              className={`min-w-0 space-y-4 lg:col-span-4 ${isRTL ? 'text-right' : ''}`}
+              className={`min-w-0 space-y-4 lg:col-span-4 text-start`}
             >
               <p className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
                 {ui.cart.orderSummary}
@@ -733,7 +733,7 @@ export default function CheckoutPage() {
                   return (
                     <li
                       key={lineKey(item)}
-                      className={`flex items-start gap-3 px-4 py-3.5 ${isRTL ? 'flex-row-reverse' : ''}`}
+                      className={`flex items-start gap-3 px-4 py-3.5 `}
                     >
                       <div className="relative h-16 w-12 shrink-0 overflow-hidden bg-[#f0eeeb]">
                         <Image
@@ -760,7 +760,7 @@ export default function CheckoutPage() {
                 })}
               </ul>
               <div
-                className={`flex items-baseline justify-between gap-3 border-t border-brand-stone/20 pt-3 font-montserrat text-sm ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`flex items-baseline justify-between gap-3 border-t border-brand-stone/20 pt-3 font-montserrat text-sm `}
               >
                 <span className="text-brand-clayRed/70">{ui.cart.subtotal}</span>
                 <span className="font-medium text-brand-darkRed">{formatCartSubtotal(items)}</span>
@@ -809,7 +809,7 @@ export default function CheckoutPage() {
                         sizes="(max-width: 640px) 64px, 80px"
                       />
                     </LocaleLink>
-                    <div className={`min-w-0 flex-1 ${isRTL ? 'text-right' : ''}`}>
+                    <div className={`min-w-0 flex-1 text-start`}>
                       <LocaleLink
                         href={productHref(item)}
                         className="block break-words font-rozha text-base text-brand-darkRed hover:text-brand-dustyBlue sm:text-lg"
@@ -851,7 +851,7 @@ export default function CheckoutPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08 }}
-                className={`relative overflow-hidden rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-6 text-brand-ivory shadow-xl sm:p-8 ${isRTL ? 'text-right' : ''}`}
+                className={`relative overflow-hidden rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-6 text-brand-ivory shadow-xl sm:p-8 text-start`}
               >
                 <div
                   className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent"
@@ -861,14 +861,14 @@ export default function CheckoutPage() {
                   {ui.cart.orderSummary}
                 </h2>
                 <div
-                  className={`flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 `}
                 >
                   <span className="min-w-0">{ui.cart.subtotal}</span>
                   <span className="shrink-0 whitespace-nowrap text-white">{formatCartSubtotal(items)}</span>
                 </div>
                 {estimatedShipping > 0 ? (
                   <div
-                    className={`mt-2 flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
+                    className={`mt-2 flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 `}
                   >
                     <span className="min-w-0">{ui.cart.shippingLabel}</span>
                     <span className="shrink-0 whitespace-nowrap text-white">
@@ -892,7 +892,7 @@ export default function CheckoutPage() {
                 />
                 {appliedGiftCard ? (
                   <div
-                    className={`mt-3 flex items-baseline justify-between gap-4 border-t border-white/10 pt-3 font-montserrat text-sm tracking-wide text-white ${isRTL ? 'flex-row-reverse' : ''}`}
+                    className={`mt-3 flex items-baseline justify-between gap-4 border-t border-white/10 pt-3 font-montserrat text-sm tracking-wide text-white `}
                   >
                     <span className="min-w-0">
                       {language === 'ar' ? 'المستحق الآن' : 'Due now'}
@@ -958,10 +958,10 @@ export default function CheckoutPage() {
                       <label
                         key={rail}
                         className={`flex cursor-pointer items-start gap-3 rounded-[4px] border px-3 py-3 transition-colors ${
-                          activeRail === rail
-                            ? 'border-brand-dustyBlue/70 bg-white/10'
-                            : 'border-white/10 bg-white/5 hover:border-white/20'
-                        } ${isRTL ? 'flex-row-reverse text-right' : ''}`}
+ activeRail === rail
+ ? 'border-brand-dustyBlue/70 bg-white/10'
+ : 'border-white/10 bg-white/5 hover:border-white/20'
+ } text-start`}
                       >
                         <input
                           type="radio"
@@ -976,10 +976,10 @@ export default function CheckoutPage() {
                         />
                         <span
                           className={`min-w-0 flex-1 ${
-                            rail === 'tamara' || rail === 'tabby'
-                              ? 'flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3'
-                              : 'space-y-2'
-                          }`}
+ rail === 'tamara' || rail === 'tabby'
+ ? 'flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3'
+ : 'space-y-2'
+ }`}
                         >
                           <span className="sr-only">{railLabel(rail, ui, language)}</span>
                           <CheckoutPaymentRailIcons
@@ -994,8 +994,8 @@ export default function CheckoutPage() {
                           {rail === 'tamara' ? (
                             <span
                               className={`font-montserrat text-[11px] leading-snug tracking-wide sm:flex-1 ${
-                                tamaraEligible ? 'text-white/75' : 'text-amber-200/90'
-                              }`}
+ tamaraEligible ? 'text-white/75' : 'text-amber-200/90'
+ }`}
                             >
                               {ui.checkout.payWithTamara}
                               {!tamaraEligible
@@ -1008,8 +1008,8 @@ export default function CheckoutPage() {
                           {rail === 'tabby' ? (
                             <span
                               className={`font-montserrat text-[11px] leading-snug tracking-wide sm:flex-1 ${
-                                tabbyEligible ? 'text-white/75' : 'text-amber-200/90'
-                              }`}
+ tabbyEligible ? 'text-white/75' : 'text-amber-200/90'
+ }`}
                             >
                               {railLabel('tabby', ui, language)}
                             </span>
@@ -1143,7 +1143,7 @@ export default function CheckoutPage() {
                 ) : null}
 
                 <label
-                  className={`mt-6 flex items-start gap-2.5 sm:mt-8 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
+                  className={`mt-6 flex items-start gap-2.5 sm:mt-8 text-start`}
                 >
                   <input
                     type="checkbox"
@@ -1184,15 +1184,15 @@ export default function CheckoutPage() {
                         (activeRail === 'tabby' && !tabbyEligible)))
                   }
                   className={`mt-5 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-[4px] px-4 py-3.5 font-montserrat text-sm font-medium tracking-wide transition-colors sm:mt-6 ${
-                    payBusy ||
-                    !legalAcknowledged ||
-                    (!giftCardCoversFull &&
-                      (!checkoutEnvReady ||
-                        !activeRail ||
-                        (activeRail === 'tabby' && !tabbyEligible)))
-                      ? 'cursor-not-allowed bg-white/15 text-white/45'
-                      : 'bg-brand-dustyBlue text-[#1a0008] hover:bg-white hover:text-brand-darkRed'
-                  } ${isRTL ? 'flex-row-reverse' : ''}`}
+ payBusy ||
+ !legalAcknowledged ||
+ (!giftCardCoversFull &&
+ (!checkoutEnvReady ||
+ !activeRail ||
+ (activeRail === 'tabby' && !tabbyEligible)))
+ ? 'cursor-not-allowed bg-white/15 text-white/45'
+ : 'bg-brand-dustyBlue text-[#1a0008] hover:bg-white hover:text-brand-darkRed'
+ } `}
                   data-cursor-hover
                 >
                   {payBusy ? (

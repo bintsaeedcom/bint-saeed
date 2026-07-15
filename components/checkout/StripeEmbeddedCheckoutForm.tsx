@@ -73,11 +73,11 @@ export default function StripeEmbeddedCheckoutForm({
   )
 
   return (
-    <div className={`w-full min-w-0 space-y-4 ${rtl ? 'text-right' : ''}`}>
+    <div className={`w-full min-w-0 space-y-4 text-start`}>
       <button
         type="button"
         onClick={onBack}
-        className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.14em] text-brand-clayRed/70 transition-colors hover:text-brand-darkRed ${rtl ? 'flex-row-reverse' : ''}`}
+        className={`inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.14em] text-brand-clayRed/70 transition-colors hover:text-brand-darkRed `}
         data-cursor-hover
       >
         <FiArrowLeft className={`h-3.5 w-3.5 ${rtl ? 'rotate-180' : ''}`} />

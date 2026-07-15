@@ -39,8 +39,8 @@ export default function EnglishPolicyVersionNotice({
   return (
     <aside
       className={`rounded-sm border border-neutral-200 bg-neutral-50 ${
-        compact ? 'p-4 md:p-5' : 'p-5 md:p-6'
-      } ${isRTL ? 'text-right' : ''} ${className}`}
+ compact ? 'p-4 md:p-5' : 'p-5 md:p-6'
+ } text-start ${className}`}
       role="note"
       dir={isRTL ? 'rtl' : 'ltr'}
     >

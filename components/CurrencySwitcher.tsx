@@ -90,7 +90,7 @@ export default function CurrencySwitcher({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-1 font-montserrat text-xs uppercase tracking-[0.1em] transition-colors ${textColor} ${isRTL ? 'flex-row-reverse' : ''}`}
+        className={`flex items-center gap-1 font-montserrat text-xs uppercase tracking-[0.1em] transition-colors ${textColor} `}
         data-cursor-hover
       >
         <span aria-hidden>{currencyFlags[currency.code] ?? '💱'}</span>
@@ -117,12 +117,12 @@ export default function CurrencySwitcher({
                     setCurrency(c.code)
                     setIsOpen(false)
                   }}
-                  className={`w-full flex items-center justify-between rounded-lg px-3.5 py-2.5 transition-colors ${itemHover} ${isRTL ? 'flex-row-reverse' : ''} ${
-                    currency.code === c.code ? 'bg-white/14 ring-1 ring-white/16' : ''
-                  }`}
+                  className={`w-full flex items-center justify-between rounded-lg px-3.5 py-2.5 transition-colors ${itemHover} ${
+ currency.code === c.code ? 'bg-white/14 ring-1 ring-white/16' : ''
+ }`}
                   data-cursor-hover
                 >
-                  <div className={`flex items-center gap-2.5 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className={`flex items-center gap-2.5 `}>
                     <span aria-hidden>{currencyFlags[c.code] ?? '💱'}</span>
                     <span className="font-montserrat text-xs font-semibold tracking-[0.08em] text-white">
                       {c.code}

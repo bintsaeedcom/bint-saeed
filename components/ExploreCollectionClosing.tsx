@@ -198,7 +198,7 @@ export default function ExploreCollectionClosing({
         </div>
 
         <Reveal delay={0.2}>
-          <div className={`mt-8 flex justify-center md:mt-10 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <div className={`mt-8 flex justify-center md:mt-10 `}>
             <LocaleLink
               href={`/shop?from=${from}`}
               className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-[4px] border border-[#e8ddd4]/45 bg-[#e8ddd4]/10 px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-[#e8ddd4] shadow-[0_18px_48px_-28px_rgba(0,0,0,0.45)] backdrop-blur-[2px] transition-colors hover:border-[#e8ddd4]/80 hover:bg-[#e8ddd4] hover:text-brand-darkRed"

@@ -188,8 +188,8 @@ function CollectionCardVisual({
             unoptimized={isWebshopPicture(src)}
             loading="eager"
             className={`pointer-events-none object-cover object-center ${
-              index === activeIndex ? 'opacity-100' : 'opacity-0'
-            }`}
+ index === activeIndex ? 'opacity-100' : 'opacity-0'
+ }`}
           />
         ))}
       </div>
@@ -247,8 +247,8 @@ function CollectionCrossfadeSlideshow({ slides, altForIndex }: CollectionCrossfa
         <div
           key={src}
           className={`absolute inset-0 transition-opacity duration-[1450ms] ease-[cubic-bezier(0.33,0,0.2,1)] ${
-            i === index ? 'z-[2] opacity-100' : 'z-[1] opacity-0'
-          }`}
+ i === index ? 'z-[2] opacity-100' : 'z-[1] opacity-0'
+ }`}
           style={{ pointerEvents: 'none' }}
           aria-hidden={i !== index}
         >
@@ -381,7 +381,7 @@ export default function Home() {
   }, [])
   
   return (
-    <div className={`relative min-h-0 overflow-x-clip ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`relative min-h-0 overflow-x-clip `}>
       <HeroSection />
       <MagazineGrid />
       <CharmHeroFeatureSection />
@@ -401,16 +401,16 @@ function ThreePillarsBar() {
   return (
     <section data-story-section className="section-full relative bg-[#e8ddd4] py-5 md:py-6">
       <div className="section-inner">
-        <div className={`grid gap-3 md:grid-cols-3 ${isRTL ? 'text-right' : ''}`}>
+        <div className={`grid gap-3 md:grid-cols-3 text-start`}>
           {copy.pillars.map((pillar, idx) => (
             <div
               key={pillar.title}
               data-reveal
               className={`rounded-xl border px-4 py-4 md:px-5 ${
-                idx === 1
-                  ? 'border-[#6f1524] bg-[#6f1524] text-[#e8d8c8]'
-                  : 'border-[color:var(--color-muted)]/20 bg-[#e8ddd4]'
-              }`}
+ idx === 1
+ ? 'border-[#6f1524] bg-[#6f1524] text-[#e8d8c8]'
+ : 'border-[color:var(--color-muted)]/20 bg-[#e8ddd4]'
+ }`}
             >
               <p className={`font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] ${idx === 1 ? 'text-[#e8d8c8]' : 'text-brand-dustyBlue'}`}>
                 {pillar.title}
@@ -467,7 +467,7 @@ function CharmHeroFeatureSection() {
   return (
     <section data-story-section className={`${OVERLAP_PANEL_CLASS} w-full overflow-hidden bg-transparent px-0 py-0`}>
       <div className="grid min-h-[68vh] w-full max-w-none items-stretch lg:grid-cols-2">
-          <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 ${isRTL ? 'text-right' : ''}`}>
+          <div className={`relative flex items-center bg-[#1a0210] p-6 md:p-10 lg:p-14 text-start`}>
             <div className="absolute inset-0 opacity-25">
               <Image
                 src={HOME_STRANDS_FEATURE_IMAGES.panelBg}
@@ -490,13 +490,11 @@ function CharmHeroFeatureSection() {
               {copy.abayaStrandsBody}
             </p>
 
-            <div data-reveal className={`mt-5 flex flex-wrap items-center gap-x-4 gap-y-3 ${isRTL ? 'justify-end' : ''}`}>
+            <div data-reveal className={`mt-5 flex flex-wrap items-center gap-x-4 gap-y-3 `}>
               {copy.strandSwatches.map((stone) => (
                 <span
                   key={stone.name}
-                  className={`inline-flex items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[#e8d8c8]/80 ${
-                    isRTL ? 'flex-row-reverse' : ''
-                  }`}
+                  className={`inline-flex items-center gap-2 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[#e8d8c8]/80 `}
                 >
                   <span
                     className={PRODUCT_GRID_COLOUR_DOT_ON_DARK}
@@ -508,7 +506,7 @@ function CharmHeroFeatureSection() {
               ))}
             </div>
 
-            <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
+            <div data-reveal className={`mt-6 flex flex-wrap gap-3 `}>
               <LocaleLink
                 href="/strands"
                 className="inline-flex min-h-[44px] items-center rounded-[4px] bg-[#6f1524] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[#821b2d]"
@@ -571,8 +569,8 @@ function CharmHeroFeatureSectionMirror() {
 
         <div
           className={`relative flex items-center bg-[#1a0210] px-6 pt-6 pb-10 md:p-10 lg:p-14 ${
-            isRTL ? 'text-right' : ''
-          }`}
+ 'text-start'
+ }`}
         >
           {DARK_PANEL_BG_LAYERS}
           <div className="relative z-10 max-w-[640px]">
@@ -586,7 +584,7 @@ function CharmHeroFeatureSectionMirror() {
               {copy.personalisationBody}
             </p>
 
-            <div data-reveal className={`mt-6 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
+            <div data-reveal className={`mt-6 flex flex-wrap gap-3 `}>
               <LocaleLink
                 href="/personalisation"
                 className="inline-flex min-h-[44px] items-center rounded-[4px] bg-[var(--color-signature)] px-5 font-montserrat text-[11px] uppercase tracking-[0.16em] text-[var(--color-on-dark)] transition-colors hover:bg-[var(--color-sovereign)]"
@@ -620,7 +618,7 @@ function CampaignPanoramaSection() {
             priority={false}
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#1F0508]/22 via-transparent to-[#1F0508]/16" />
-          <div className={`absolute top-1/2 z-[2] -translate-y-1/2 ${isRTL ? 'right-6 md:right-10 lg:right-14' : 'left-6 md:left-10 lg:left-14'}`}>
+          <div className={`absolute top-1/2 z-[2] -translate-y-1/2 start-6 md:start-10 lg:start-14`}>
             <MagneticWrap>
               <LocaleLink
                 href="/shop"
@@ -734,8 +732,8 @@ function QuickShopCardGallery({
         alt={getProductImageAlt(product, primary, { color, index: 0, locale })}
         sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
         className={`pointer-events-none object-cover object-top transition-all duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          revealAlt ? 'scale-[1.02] opacity-0' : 'scale-100 opacity-100'
-        }`}
+ revealAlt ? 'scale-[1.02] opacity-0' : 'scale-100 opacity-100'
+ }`}
       />
       {hasAlt ? (
         <SafeCarouselImage
@@ -743,14 +741,14 @@ function QuickShopCardGallery({
           alt={getProductImageAlt(product, hover, { color, index: 1, locale })}
           sizes="(max-width: 768px) 210px, (max-width: 1200px) 256px, 270px"
           className={`pointer-events-none object-cover object-center transition-all duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            revealAlt ? 'scale-[1.02] opacity-100' : 'scale-100 opacity-0'
-          }`}
+ revealAlt ? 'scale-[1.02] opacity-100' : 'scale-100 opacity-0'
+ }`}
         />
       ) : null}
       <div
         className={`pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#1F0508]/22 to-transparent transition-opacity duration-500 ${
-          revealAlt ? 'opacity-100' : 'opacity-0'
-        }`}
+ revealAlt ? 'opacity-100' : 'opacity-0'
+ }`}
       />
     </div>
   )
@@ -852,7 +850,7 @@ function CategoryNavigationStrip() {
               className="object-cover object-center transition-all duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#1f0508]/60 via-[#1f0508]/10 to-transparent" />
-            <div className={`absolute bottom-4 ${isRTL ? 'left-4 text-right' : 'right-4 text-left'}`}>
+            <div className={`absolute bottom-4 end-4 text-start`}>
               <p className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-dustyBlue/95">{copy.categoryFocus}</p>
               <p className="mt-1 font-rozha text-2xl text-brand-ivory">{activeItem.label}</p>
             </div>
@@ -870,10 +868,10 @@ function CategoryNavigationStrip() {
                 onMouseEnter={() => setActive(idx)}
                 onFocus={() => setActive(idx)}
                 className={`group rounded-xl border p-4 transition-all duration-300 ${
-                  selected
-                    ? 'border-brand-dustyBlue/45 bg-white shadow-[0_10px_24px_rgba(20,8,11,0.1)]'
-                    : 'border-brand-stone/30 bg-[#f6f3ef] hover:border-brand-dustyBlue/35 hover:bg-white'
-                }`}
+ selected
+ ? 'border-brand-dustyBlue/45 bg-white shadow-[0_10px_24px_rgba(20,8,11,0.1)]'
+ : 'border-brand-stone/30 bg-[#f6f3ef] hover:border-brand-dustyBlue/35 hover:bg-white'
+ }`}
                 data-cursor-hover
               >
                 <p className="font-montserrat text-[11px] uppercase tracking-[0.08em] text-brand-darkRed">{item.label}</p>
@@ -1007,7 +1005,7 @@ function QuickShopCarousel() {
                 reduceMotion={reduceMotion}
               />
               <div className="flex min-h-[4.25rem] flex-1 flex-col justify-center gap-1.5 border-t border-brand-stone/20 px-2.5 py-2 md:min-h-[4.5rem] md:gap-2 md:px-3 md:py-2.5">
-                <div className={`flex min-h-0 flex-col gap-1 ${isRTL ? 'items-end text-right' : 'items-start text-left'}`}>
+                <div className={`flex min-h-0 flex-col gap-1 items-start text-start`}>
                   <h3 className="min-w-0 max-w-full truncate font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
                     {product.name}
                   </h3>
@@ -1016,7 +1014,7 @@ function QuickShopCarousel() {
                   </p>
                 </div>
                 <div
-                  className={`flex flex-wrap items-center gap-1 ${isRTL ? 'justify-end' : ''}`}
+                  className={`flex flex-wrap items-center gap-1 `}
                   aria-label={ui.shopExtras.availableColours}
                 >
                   {product.colors.slice(0, 6).map((c) => (
@@ -1257,8 +1255,8 @@ function EditorialIntro() {
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_68%_at_50%_0%,rgba(106,128,144,0.14)_0%,transparent_62%)]" />
               <div
                 className={`relative z-10 flex h-full min-h-[26rem] flex-col justify-end p-[52px] md:min-h-[30rem] md:p-[62px] lg:min-h-[34rem] ${
-                  isRTL ? 'items-start text-left' : 'items-end text-right'
-                }`}
+ isRTL ? 'items-start text-left' : 'items-end text-right'
+ }`}
               >
                 <span className="mb-5 block font-montserrat text-[11px] uppercase tracking-[0.3em] text-brand-dustyBlue">
                   {copy.manifestoImageEyebrow}
@@ -1372,7 +1370,7 @@ function MagazineGrid() {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.75 }}
-          className={`mb-8 flex items-end justify-between md:mb-10 ${isRTL ? 'flex-row-reverse' : ''}`}
+          className={`mb-8 flex items-end justify-between md:mb-10 `}
         >
           <div data-reveal>
             <span className="mb-3 block font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
@@ -1445,7 +1443,7 @@ function EditorialSplit() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className={`mb-5 ${isRTL ? 'text-right' : ''}`}>
+          <div className={`mb-5 text-start`}>
             <p className="mb-2 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">
               {copy.houseCodesEyebrow}
             </p>
@@ -1488,10 +1486,10 @@ function EditorialSplit() {
                 key={code.title}
                 href={code.href}
                 className={`group p-4 text-left transition-colors hover:bg-[#f5f0ea] ${
-                  index !== storyCodes.length - 1
-                    ? 'border-b border-[#e8ddd4] lg:border-b-0 lg:border-r lg:border-[#e8ddd4]'
-                    : 'border-b border-[#e8ddd4] lg:border-b-0'
-                }`}
+ index !== storyCodes.length - 1
+ ? 'border-b border-[#e8ddd4] lg:border-b-0 lg:border-r lg:border-[#e8ddd4]'
+ : 'border-b border-[#e8ddd4] lg:border-b-0'
+ }`}
                 data-cursor-hover
               >
                 <div className="relative mb-3 aspect-[3/4] w-full overflow-hidden rounded-lg border border-[#e8ddd4] bg-[#f7f3ee]">
@@ -1575,16 +1573,16 @@ function CreatedForYouSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className={`overflow-hidden rounded-2xl border border-[rgba(232,216,200,0.25)] bg-[#6f1524] px-6 py-8 shadow-[0_16px_42px_rgba(46,25,14,0.12)] md:px-10 md:py-10 ${isRTL ? 'text-right' : 'text-center'}`}
+          className={`overflow-hidden rounded-2xl border border-[rgba(232,216,200,0.25)] bg-[#6f1524] px-6 py-8 shadow-[0_16px_42px_rgba(46,25,14,0.12)] md:px-10 md:py-10 text-start`}
         >
           <p className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.15em] text-brand-dustyBlue">{copy.createdForYouEyebrow}</p>
           <h2 className="mx-auto max-w-3xl font-rozha text-4xl leading-tight text-[#e8d8c8] md:text-5xl">
             {copy.createdForYouHeading}
           </h2>
-          <p className={`mx-auto mt-4 max-w-4xl font-montserrat text-lg leading-[1.6] tracking-[0.01em] text-[rgba(232,216,200,0.7)] ${isRTL ? 'text-right' : 'text-center'}`}>
+          <p className={`mx-auto mt-4 max-w-4xl font-montserrat text-lg leading-[1.6] tracking-[0.01em] text-[rgba(232,216,200,0.7)] text-start`}>
             {copy.createdForYouBody}
           </p>
-          <div className={`mt-7 flex flex-wrap gap-3 ${isRTL ? 'justify-end' : 'justify-center'}`}>
+          <div className={`mt-7 flex flex-wrap gap-3 justify-center`}>
             <LocaleLink
               href="/shop"
               className="inline-flex min-h-[46px] items-center rounded-[4px] bg-[#e8d8c8] px-6 font-montserrat text-[12px] uppercase tracking-[0.16em] text-[#6f1524] transition-colors hover:bg-[#f2e5d8]"

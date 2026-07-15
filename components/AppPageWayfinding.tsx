@@ -100,7 +100,7 @@ export default function AppPageWayfinding({
   const renderBackControl = () => {
     if (!resolvedBack) return null
 
-    const className = `${backLinkClass} ${rtl ? 'flex-row-reverse' : ''}`
+    const className = `${backLinkClass} `
 
     if (resolvedBack.useHistory) {
       return (
@@ -132,7 +132,7 @@ export default function AppPageWayfinding({
   }
 
   const stack = (
-    <div className={`flex w-full min-w-0 flex-col gap-1 ${rtl ? 'items-end' : 'items-start'}`}>
+    <div className={`flex w-full min-w-0 flex-col gap-1 items-start`}>
       <AppBreadcrumb
         rtl={rtl}
         variant={variant}

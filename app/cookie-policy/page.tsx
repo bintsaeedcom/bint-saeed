@@ -23,7 +23,7 @@ export default function CookiePolicyPage() {
 
   return (
     <div
-      className={`relative min-h-screen bg-[#f6f4f1] pb-20 ${SITE_CONTENT_TOP_PAD} ${isRTL ? 'rtl' : 'ltr'}`}
+      className={`relative min-h-screen bg-[#f6f4f1] pb-20 ${SITE_CONTENT_TOP_PAD} `}
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className="relative mx-auto max-w-4xl px-6 lg:px-12">
@@ -48,7 +48,7 @@ export default function CookiePolicyPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className={`mb-12 ${isRTL ? 'text-right' : 'text-center'}`}
+          className={`mb-12 text-start`}
         >
           <span className="mb-3 block font-montserrat text-[10px] uppercase tracking-[0.32em] text-neutral-500">
             {c.heroLabel}
@@ -59,8 +59,8 @@ export default function CookiePolicyPage() {
           <p className="font-montserrat tracking-wide text-neutral-700">{c.lastUpdated}</p>
           <p
             className={`mt-4 max-w-2xl font-montserrat text-sm leading-relaxed tracking-wide text-neutral-600 ${
-              isRTL ? 'mr-0 ml-auto' : 'mx-auto'
-            }`}
+ isRTL ? 'mr-0 ml-auto' : 'mx-auto'
+ }`}
           >
             {c.intro}
           </p>
@@ -74,8 +74,8 @@ export default function CookiePolicyPage() {
         >
           <div
             className={`space-y-9 font-montserrat text-[13px] leading-relaxed tracking-wide text-neutral-800 ${
-              isRTL ? 'text-right' : ''
-            }`}
+ 'text-start'
+ }`}
           >
             <section className="rounded-sm border border-neutral-200 bg-neutral-50 p-5 md:p-6">
               <h2 className="mb-2 font-rozha text-xl text-neutral-900">{c.summaryTitle}</h2>
@@ -103,7 +103,7 @@ export default function CookiePolicyPage() {
               <div className="overflow-x-auto rounded-sm border border-neutral-200">
                 <table className="w-full min-w-[640px] border-collapse">
                   <thead>
-                    <tr className={`bg-neutral-50 ${isRTL ? 'text-right' : 'text-left'}`}>
+                    <tr className={`bg-neutral-50 text-start`}>
                       <th className="border-b border-neutral-200 px-4 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-neutral-900">
                         {c.essentialCookies.tableHeaders.cookie}
                       </th>

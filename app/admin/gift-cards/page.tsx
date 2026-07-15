@@ -218,12 +218,12 @@ export default function AdminGiftCardsPage() {
                     <td className="px-4 py-3">
                       <span
                         className={`inline-flex rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] ${
-                          card.status === 'active'
-                            ? 'bg-emerald-500/15 text-emerald-200'
-                            : card.status === 'depleted'
-                              ? 'bg-white/10 text-white/60'
-                              : 'bg-amber-500/15 text-amber-100'
-                        }`}
+ card.status === 'active'
+ ? 'bg-emerald-500/15 text-emerald-200'
+ : card.status === 'depleted'
+ ? 'bg-white/10 text-white/60'
+ : 'bg-amber-500/15 text-amber-100'
+ }`}
                       >
                         {STATUS_LABELS[card.status]}
                       </span>
@@ -282,10 +282,10 @@ export default function AdminGiftCardsPage() {
                   </button>
                   <span
                     className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] ${
-                      selected.status === 'active'
-                        ? 'bg-emerald-500/15 text-emerald-200'
-                        : 'bg-white/10 text-white/60'
-                    }`}
+ selected.status === 'active'
+ ? 'bg-emerald-500/15 text-emerald-200'
+ : 'bg-white/10 text-white/60'
+ }`}
                   >
                     {STATUS_LABELS[selected.status]}
                   </span>

@@ -152,7 +152,7 @@ export default function EmailPopup() {
               </div>
             </div>
 
-            <div className={`flex-1 p-8 md:p-10 flex flex-col justify-center bg-brand-stone ${isRTL ? 'text-right' : ''}`}>
+            <div className={`flex-1 p-8 md:p-10 flex flex-col justify-center bg-brand-stone text-start`}>
               {!showSuccess ? (
                 <>
                   <h2 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-3">
@@ -169,7 +169,7 @@ export default function EmailPopup() {
                       placeholder={copy.firstName}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className={`w-full px-4 py-3 bg-white border border-brand-darkRed/30 font-montserrat text-sm tracking-wide text-brand-darkRed placeholder:text-brand-muted focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 transition-colors ${isRTL ? 'text-right' : ''}`}
+                      className={`w-full px-4 py-3 bg-white border border-brand-darkRed/30 font-montserrat text-sm tracking-wide text-brand-darkRed placeholder:text-brand-muted focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 transition-colors text-start`}
                       dir={isRTL ? 'rtl' : 'ltr'}
                     />
                     <div className="space-y-1">
@@ -188,11 +188,11 @@ export default function EmailPopup() {
                           setEmailError(v.valid ? '' : v.message)
                         }}
                         aria-invalid={emailError ? true : undefined}
-                        className={`w-full px-4 py-3 bg-white border font-montserrat text-sm tracking-wide text-brand-darkRed placeholder:text-brand-muted focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 transition-colors ${isRTL ? 'text-right' : ''} ${emailError ? 'border-brand-clayRed' : 'border-brand-darkRed/30'}`}
+                        className={`w-full px-4 py-3 bg-white border font-montserrat text-sm tracking-wide text-brand-darkRed placeholder:text-brand-muted focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 transition-colors text-start ${emailError ? 'border-brand-clayRed' : 'border-brand-darkRed/30'}`}
                         dir={isRTL ? 'rtl' : 'ltr'}
                       />
                       {emailError ? (
-                        <p className={`font-montserrat text-xs text-brand-clayRed ${isRTL ? 'text-right' : ''}`}>
+                        <p className={`font-montserrat text-xs text-brand-clayRed text-start`}>
                           {emailError}
                         </p>
                       ) : null}

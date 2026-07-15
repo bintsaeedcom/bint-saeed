@@ -120,7 +120,7 @@ export default function CartPage() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className={`mx-auto max-w-3xl ${isRTL ? 'text-right' : 'text-center'}`}
+            className={`mx-auto max-w-3xl text-start`}
           >
             <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-brand-dustyBlue">
               {emptyCopy.eyebrow}
@@ -133,8 +133,8 @@ export default function CartPage() {
             </h1>
             <p
               className={`mt-5 max-w-xl font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/75 md:text-[15px] ${
-                isRTL ? 'mr-0' : 'mx-auto'
-              }`}
+ isRTL ? 'mr-0' : 'mx-auto'
+ }`}
             >
               {emptyCopy.description}
             </p>
@@ -330,7 +330,7 @@ export default function CartPage() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className={`relative sticky top-32 overflow-hidden rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-6 text-brand-ivory shadow-xl sm:p-8 ${isRTL ? 'text-right' : ''}`}>
+            <div className={`relative sticky top-32 overflow-hidden rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-6 text-brand-ivory shadow-xl sm:p-8 text-start`}>
               <div
                 className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent"
                 aria-hidden
@@ -340,22 +340,22 @@ export default function CartPage() {
               </h2>
 
               <div
-                className={`flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 `}
               >
                 <span className="min-w-0">{ui.cart.subtotal}</span>
                 <span className="shrink-0 whitespace-nowrap text-white">{formatCartSubtotal(items)}</span>
               </div>
 
               <div
-                className={`mt-3 flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`mt-3 flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 `}
               >
                 <span className="min-w-0">{shippingMessages.feeLabel}</span>
                 <span
                   className={`shrink-0 whitespace-nowrap ${
-                    !requiresPhysicalShipping || shippingMessages.unlocked
-                      ? 'text-brand-dustyBlue'
-                      : 'text-white'
-                  }`}
+ !requiresPhysicalShipping || shippingMessages.unlocked
+ ? 'text-brand-dustyBlue'
+ : 'text-white'
+ }`}
                 >
                   {shippingFeeValue}
                 </span>
@@ -363,7 +363,7 @@ export default function CartPage() {
 
               <div className="mt-8 border-t border-white/10 pt-6">
                 <div
-                  className={`flex items-baseline justify-between gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}
+                  className={`flex items-baseline justify-between gap-4 `}
                 >
                   <span className="min-w-0 font-montserrat text-[13px] uppercase tracking-[0.16em] text-white/80">{ui.cart.estimatedTotal}</span>
                   <span className="shrink-0 whitespace-nowrap font-rozha text-xl text-white">{formatAmount(estimatedTotal)}</span>
@@ -384,7 +384,7 @@ export default function CartPage() {
 
               <LocaleLink
                 href="/checkout"
-                className={`mt-8 hidden min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue py-4 font-montserrat text-sm uppercase tracking-[0.18em] text-[#1a0008] transition-colors hover:bg-white lg:flex ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`mt-8 hidden min-h-[52px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue py-4 font-montserrat text-sm uppercase tracking-[0.18em] text-[#1a0008] transition-colors hover:bg-white lg:flex `}
                 data-cursor-hover
                 onClick={() =>
                   trackEvent('click_checkout', {
@@ -402,10 +402,10 @@ export default function CartPage() {
               <div className="mt-8 space-y-3 border-t border-white/10 pt-6">
                 <p
                   className={`font-montserrat text-xs leading-relaxed tracking-wide ${
-                    !requiresPhysicalShipping || shippingMessages.unlocked
-                      ? 'text-brand-dustyBlue'
-                      : 'text-white/55'
-                  }`}
+ !requiresPhysicalShipping || shippingMessages.unlocked
+ ? 'text-brand-dustyBlue'
+ : 'text-white/55'
+ }`}
                 >
                   {!requiresPhysicalShipping || shippingMessages.unlocked
                     ? shippingPrimary
@@ -432,7 +432,7 @@ export default function CartPage() {
           aria-hidden
         />
         <div className="relative z-[1] px-3 pt-2.5 pb-[max(0.65rem,env(safe-area-inset-bottom))]">
-          <div className={`mb-2 flex min-w-0 items-baseline justify-between gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <div className={`mb-2 flex min-w-0 items-baseline justify-between gap-3 `}>
             <span className="min-w-0 truncate font-montserrat text-[10px] uppercase tracking-[0.14em] text-[#e8d8c8]/80">
               {ui.cart.estimatedTotal}
             </span>
@@ -442,7 +442,7 @@ export default function CartPage() {
           </div>
           <LocaleLink
             href="/checkout"
-            className={`flex min-h-[46px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue px-3 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] ${isRTL ? 'flex-row-reverse' : ''}`}
+            className={`flex min-h-[46px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand-dustyBlue px-3 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] text-[#1a0008] `}
             data-cursor-hover
             onClick={() =>
               trackEvent('click_checkout', {

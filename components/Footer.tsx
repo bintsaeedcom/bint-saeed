@@ -100,10 +100,10 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className={`grid grid-cols-1 gap-5 xl:grid-cols-4 xl:gap-12 ${isRTL ? 'text-right' : ''}`}>
+          <div className={`grid grid-cols-1 gap-5 xl:grid-cols-4 xl:gap-12 text-start`}>
             {/* Brand Column with Logo */}
             <div className="xl:col-span-1">
-              <div className={`mb-4 flex ${isRTL ? 'justify-end' : 'justify-start'}`}>
+              <div className={`mb-4 flex justify-start`}>
                 <LocaleLink
                   href="/home"
                   className="inline-flex"
@@ -128,8 +128,8 @@ export default function Footer() {
                 {geo.madeIn}
               </p>
 
-              <div className={`mt-6 space-y-4 ${isRTL ? 'items-end' : 'items-start'} flex flex-col`}>
-                <div className={`${isRTL ? 'text-right' : 'text-left'}`}>
+              <div className={`mt-6 space-y-4 items-start flex flex-col`}>
+                <div className={`text-start`}>
                   <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/45">
                     {ui.footer.language}
                   </p>
@@ -138,7 +138,7 @@ export default function Footer() {
                   </div>
                 </div>
 
-                <div className={`${isRTL ? 'text-right' : 'text-left'}`}>
+                <div className={`text-start`}>
                   <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/45">
                     {ui.footer.countryRegion}
                   </p>
@@ -274,9 +274,9 @@ export default function Footer() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#12070a]/40 via-transparent to-[#12070a]/40" />
         
         <div className="relative container mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-8 md:py-9 2xl:py-10">
-          <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 xl:gap-8 ${isRTL ? 'text-right' : ''}`}>
+          <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 xl:gap-8 text-start`}>
             {/* Worldwide Shipping — UAE IPs see AED 1,000 threshold; others see AED 2,000 equivalent */}
-            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`flex items-center gap-4 `}>
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
                 <FiGlobe className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
               </div>
@@ -291,7 +291,7 @@ export default function Footer() {
             </div>
 
             {/* Carefully Considered */}
-            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`flex items-center gap-4 `}>
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
                 <FiClock className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
               </div>
@@ -306,7 +306,7 @@ export default function Footer() {
             </div>
 
             {/* Giving Forward */}
-            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`flex items-center gap-4 `}>
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 2xl:h-14 2xl:w-14">
                 <FiHeart className="h-5 w-5 text-white 2xl:h-6 2xl:w-6" />
               </div>

@@ -62,7 +62,7 @@ export default function StrandsPage() {
   }, [])
 
   return (
-    <main className={`min-h-screen overflow-x-clip bg-[#1a0210] ${isRTL ? 'rtl' : 'ltr'}`}>
+    <main className={`min-h-screen overflow-x-clip bg-[#1a0210] `}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
@@ -82,7 +82,7 @@ export default function StrandsPage() {
         </div>
 
         <div
-          className={`relative z-10 flex min-h-[min(58vh,560px)] flex-col justify-between px-6 pb-[4.75rem] pt-[5.25rem] md:min-h-[min(62vh,640px)] md:px-[60px] md:pb-[4.5rem] md:pt-[6.5rem] ${isRTL ? 'text-right' : 'text-left'}`}
+          className={`relative z-10 flex min-h-[min(58vh,560px)] flex-col justify-between px-6 pb-[4.75rem] pt-[5.25rem] md:min-h-[min(62vh,640px)] md:px-[60px] md:pb-[4.5rem] md:pt-[6.5rem] text-start`}
         >
           <div className="max-w-[600px]">
           <AppPageWayfinding
@@ -157,7 +157,7 @@ export default function StrandsPage() {
               {copy.conceptP2}
             </p>
 
-            <div className={`mt-8 ${ctaButtonRow} ${isRTL ? 'md:flex-row-reverse' : ''}`}>
+            <div className={`mt-8 ${ctaButtonRow} `}>
               <LocaleLink
                 href="/accessories?type=signature-strands"
                 className={`${ctaPrimary} ${ctaInButtonRow}`}
@@ -202,8 +202,8 @@ export default function StrandsPage() {
               <article
                 key={step.numeral}
                 className={`bg-[#1a0210] p-8 text-left transition-all duration-700 ${
-                  stepsVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
-                }`}
+ stepsVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+ }`}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <p className="mb-6 font-rozha text-[48px] leading-none text-[rgba(122,28,40,0.35)]">{step.numeral}</p>

@@ -81,7 +81,7 @@ export default function ContactSubjectSelect({
         aria-invalid={hasError || undefined}
         aria-describedby={ariaDescribedBy}
         onClick={() => setIsOpen((open) => !open)}
-        className={`${triggerBase} ${borderClass} ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}
+        className={`${triggerBase} ${borderClass} text-start`}
         data-cursor-hover
       >
         <span className={selected ? 'text-brand-darkRed' : 'text-brand-muted'}>
@@ -103,7 +103,7 @@ export default function ContactSubjectSelect({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.18 }}
-            className={`absolute z-50 mt-1.5 max-h-64 w-full overflow-y-auto rounded-md border border-brand-darkRed/20 bg-white py-1 shadow-[0_18px_44px_rgba(26,2,16,0.14)] ${isRTL ? 'text-right' : 'text-left'}`}
+            className={`absolute z-50 mt-1.5 max-h-64 w-full overflow-y-auto rounded-md border border-brand-darkRed/20 bg-white py-1 shadow-[0_18px_44px_rgba(26,2,16,0.14)] text-start`}
           >
             {options.map((option) => {
               const isSelected = option.value === value
@@ -118,9 +118,7 @@ export default function ContactSubjectSelect({
                       setIsOpen(false)
                       onBlur?.()
                     }}
-                    className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 font-montserrat text-sm normal-case tracking-[0.02em] transition-colors hover:bg-brand-dustyBlue/[0.08] ${
-                      isRTL ? 'flex-row-reverse' : ''
-                    } ${isSelected ? 'bg-brand-dustyBlue/[0.06] text-brand-darkRed' : 'text-brand-darkRed/85'}`}
+                    className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 font-montserrat text-sm normal-case tracking-[0.02em] transition-colors hover:bg-brand-dustyBlue/[0.08] ${isSelected ? 'bg-brand-dustyBlue/[0.06] text-brand-darkRed' : 'text-brand-darkRed/85'}`}
                     data-cursor-hover
                   >
                     <span>{option.label}</span>

@@ -105,7 +105,7 @@ export function PdpShippingReturnsBullets({
   const worldwide = formatAmountForCurrency(getWorldwideFreeShippingThreshold(code), code)
 
   return (
-    <div className={`space-y-3 ${isRTL ? 'text-right' : 'text-left'}`}>
+    <div className={`space-y-3 text-start`}>
       <p className={PDP_COPY_RELAXED}>{copy.body(uae, worldwide)}</p>
       <p className={PDP_COPY_RELAXED}>
         <LocaleLink

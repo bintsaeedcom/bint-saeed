@@ -82,8 +82,8 @@ export default function PdpAccordion({
               <TitleTag className={PDP_ACCORDION_TITLE}>{section.title}</TitleTag>
               <FiChevronDown
                 className={`h-4 w-4 shrink-0 text-brand-darkRed transition-transform duration-250 ${
-                  isOpen ? 'rotate-180' : ''
-                }`}
+ isOpen ? 'rotate-180' : ''
+ }`}
                 aria-hidden
               />
             </button>

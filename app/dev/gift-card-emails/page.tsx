@@ -54,20 +54,20 @@ export default function GiftCardEmailPreviewPage({
           <a
             href="/dev/gift-card-emails?view=buyer"
             className={`font-montserrat text-[10px] uppercase tracking-[0.18em] px-3 py-2 border ${
-              view === 'buyer'
-                ? 'border-[#1a0210] text-[#1a0210]'
-                : 'border-[#e4d9cf] text-[#8a7a70]'
-            }`}
+ view === 'buyer'
+ ? 'border-[#1a0210] text-[#1a0210]'
+ : 'border-[#e4d9cf] text-[#8a7a70]'
+ }`}
           >
             Buyer confirmation
           </a>
           <a
             href="/dev/gift-card-emails?view=recipient"
             className={`font-montserrat text-[10px] uppercase tracking-[0.18em] px-3 py-2 border ${
-              view === 'recipient'
-                ? 'border-[#1a0210] text-[#1a0210]'
-                : 'border-[#e4d9cf] text-[#8a7a70]'
-            }`}
+ view === 'recipient'
+ ? 'border-[#1a0210] text-[#1a0210]'
+ : 'border-[#e4d9cf] text-[#8a7a70]'
+ }`}
           >
             Recipient gift
           </a>

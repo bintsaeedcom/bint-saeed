@@ -39,7 +39,7 @@ export default function Error({
           <p className={`${errorPageFooterLabel} mb-3`}>
             {copy.needAssistance}
           </p>
-          <div className={`flex flex-col items-center justify-center gap-3 text-[13px] sm:flex-row sm:gap-5 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+          <div className={`flex flex-col items-center justify-center gap-3 text-[13px] sm:flex-row sm:gap-5 `}>
             <a
               href={officialMailto('support')}
               className="font-montserrat text-brand-darkRed transition-colors hover:text-brand-darkMagenta"

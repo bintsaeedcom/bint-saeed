@@ -45,7 +45,7 @@ export default function GlobalError({
       </head>
       <body className="min-h-screen bg-[#faf8f6] font-montserrat antialiased">
         <div
-          className={`relative min-h-screen overflow-hidden ${isRTL ? 'rtl' : 'ltr'}`}
+          className={`relative min-h-screen overflow-hidden `}
           dir={isRTL ? 'rtl' : 'ltr'}
         >
           <div

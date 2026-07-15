@@ -10,8 +10,8 @@ export const EDITORIAL_PAGE_SHELL = 'w-full min-w-0 max-w-full overflow-x-clip'
 export const EDITORIAL_PAGE_CONTAINER =
   'mx-auto w-full min-w-0 max-w-[1280px] px-4 sm:px-6 lg:px-12'
 
-export function editorialHeroAlign(rtl: boolean): string {
-  return rtl ? 'text-right' : 'text-left'
+export function editorialHeroAlign(_rtl?: boolean): string {
+  return 'text-start'
 }
 
 /**

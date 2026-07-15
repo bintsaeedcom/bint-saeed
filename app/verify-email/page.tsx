@@ -62,7 +62,7 @@ function VerifyEmailContent() {
             <div className="flex flex-col gap-3">
               <LocaleLink
                 href="/shop"
-                className={`inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-montserrat text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue ${isRTL ? 'flex-row-reverse' : ''}`}
+                className={`inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-montserrat text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue `}
                 data-cursor-hover
               >
                 {isRTL ? 'تسوقي الآن' : 'Shop the collection'}

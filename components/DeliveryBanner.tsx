@@ -12,7 +12,7 @@ import { useVisitorComplimentaryShipping } from '@/lib/shipping/useVisitorCompli
 export default function DeliveryBanner() {
   const [isVisible, setIsVisible] = useState(true)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const { isRTL, language } = useLanguage()
+  const { language } = useLanguage()
   const ui = commerceUi(language)
   const { currency } = useCurrency()
   const { amountLabel } = useVisitorComplimentaryShipping(currency.code)
@@ -42,7 +42,7 @@ export default function DeliveryBanner() {
   return (
     <div className="fixed top-0 left-0 right-0 z-[70] bg-brand-stone text-brand-darkRed py-2.5">
       <div className="container mx-auto px-6">
-        <div className={`flex items-center justify-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <div className={`flex items-center justify-center gap-3 `}>
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -50,22 +50,22 @@ export default function DeliveryBanner() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`flex items-center gap-2 `}
             >
               <CurrentIcon className="h-4 w-4 text-brand-dustyBlue" />
               <span className="font-montserrat text-xs tracking-wide">{messages[currentIndex].text}</span>
             </motion.div>
           </AnimatePresence>
 
-          <div className={`hidden items-center gap-1.5 md:flex ${isRTL ? 'mr-4' : 'ml-4'}`}>
+          <div className="ms-4 hidden items-center gap-1.5 md:flex">
             {messages.map((_, index) => (
               <button
                 key={index}
                 type="button"
                 onClick={() => setCurrentIndex(index)}
                 className={`h-1.5 rounded-full transition-all ${
-                  currentIndex === index ? 'w-4 bg-brand-darkRed' : 'w-1.5 bg-brand-darkRed/40'
-                }`}
+ currentIndex === index ? 'w-4 bg-brand-darkRed' : 'w-1.5 bg-brand-darkRed/40'
+ }`}
               />
             ))}
           </div>
@@ -74,7 +74,7 @@ export default function DeliveryBanner() {
         <button
           type="button"
           onClick={() => setIsVisible(false)}
-          className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-4' : 'right-4'} text-brand-darkRed/60 transition-colors hover:text-brand-darkRed`}
+          className={`absolute top-1/2 -translate-y-1/2 end-4 text-brand-darkRed/60 transition-colors hover:text-brand-darkRed`}
           aria-label={ui.common.close}
           data-cursor-hover
         >

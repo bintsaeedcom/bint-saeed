@@ -58,7 +58,7 @@ export default function TamaraProductWidget({ amount, currency = 'AED', classNam
     <div
       className={[
         'mb-0 flex items-center gap-3 rounded-[4px] border border-[#8fd4d0]/55 bg-gradient-to-r from-[#eef9f8] via-[#f7f4ef] to-[#f3eee8] px-3.5 py-2 shadow-[0_6px_20px_-12px_rgba(26,2,16,0.18)]',
-        isRTL ? 'flex-row-reverse text-right' : 'text-left',
+        'text-start',
         className,
       ]
         .filter(Boolean)

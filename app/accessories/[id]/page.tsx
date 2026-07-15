@@ -269,7 +269,7 @@ export default function AccessoryDetailPage() {
           title: productUi.productDetails,
           titleTag: 'h2',
           children: (
-            <div className={`space-y-4 ${isRTL ? 'text-right' : ''}`}>
+            <div className={`space-y-4 text-start`}>
               {phoneCharmPdpContent.introParagraphs.map((paragraph, idx) => (
                 <p key={`phone-intro-${idx}`} className={PDP_COPY_RELAXED}>
                   {paragraph}
@@ -299,7 +299,7 @@ export default function AccessoryDetailPage() {
           id: 'care',
           title: productUi.care,
           children: (
-            <div className={`space-y-3 ${isRTL ? 'text-right' : ''}`}>
+            <div className={`space-y-3 text-start`}>
               {phoneCharmPdpContent.careLead ? (
                 <p className={PDP_COPY_RELAXED}>{phoneCharmPdpContent.careLead}</p>
               ) : null}
@@ -320,7 +320,7 @@ export default function AccessoryDetailPage() {
                 title: productUi.faq,
                 panelClassName: 'space-y-4 pb-5',
                 children: phoneCharmPdpContent.faq.map((item) => (
-                  <div key={item.question} className={isRTL ? 'text-right' : ''}>
+                  <div key={item.question} className="text-start">
                     <p className={PDP_FAQ_QUESTION}>{item.question}</p>
                     <div className="mt-1 space-y-2">
                       {faqAnswerParagraphs(item.answer).map((paragraph, idx) => (
@@ -355,7 +355,7 @@ export default function AccessoryDetailPage() {
           title: productUi.productDetails,
           titleTag: 'h2',
           children: (
-            <div className={`space-y-4 ${isRTL ? 'text-right' : ''}`}>
+            <div className={`space-y-4 text-start`}>
               {necklaceEarringPdpContent.introParagraphs.map((paragraph, idx) => (
                 <p key={`necklace-intro-${idx}`} className={PDP_COPY_RELAXED}>
                   {paragraph}
@@ -394,7 +394,7 @@ export default function AccessoryDetailPage() {
           id: 'care',
           title: productUi.care,
           children: (
-            <div className={`space-y-3 ${isRTL ? 'text-right' : ''}`}>
+            <div className={`space-y-3 text-start`}>
               <p className={PDP_COPY_RELAXED}>{necklaceEarringPdpContent.careLead}</p>
               <ul className={PDP_BULLET_LIST}>
                 {necklaceEarringPdpContent.care.map((item, idx) => (
@@ -413,7 +413,7 @@ export default function AccessoryDetailPage() {
                 title: productUi.faq,
                 panelClassName: 'space-y-4 pb-5',
                 children: necklaceEarringPdpContent.faq.map((item) => (
-                  <div key={item.question} className={isRTL ? 'text-right' : ''}>
+                  <div key={item.question} className="text-start">
                     <p className={PDP_FAQ_QUESTION}>{item.question}</p>
                     <div className="mt-1 space-y-2">
                       {faqAnswerParagraphs(item.answer).map((paragraph, idx) => (
@@ -448,7 +448,7 @@ export default function AccessoryDetailPage() {
           title: productUi.productDetails,
           titleTag: 'h2',
           children: (
-            <div className={`space-y-4 ${isRTL ? 'text-right' : ''}`}>
+            <div className={`space-y-4 text-start`}>
               {bagCharmPdpContent.introParagraphs.map((paragraph, idx) => (
                 <p key={`bag-intro-${idx}`} className={PDP_COPY_RELAXED}>
                   {paragraph}
@@ -478,7 +478,7 @@ export default function AccessoryDetailPage() {
           id: 'care',
           title: productUi.care,
           children: (
-            <div className={`space-y-3 ${isRTL ? 'text-right' : ''}`}>
+            <div className={`space-y-3 text-start`}>
               {bagCharmPdpContent.careLead ? (
                 <p className={PDP_COPY_RELAXED}>{bagCharmPdpContent.careLead}</p>
               ) : null}
@@ -499,7 +499,7 @@ export default function AccessoryDetailPage() {
                 title: productUi.faq,
                 panelClassName: 'space-y-4 pb-5',
                 children: bagCharmPdpContent.faq.map((item) => (
-                  <div key={item.question} className={isRTL ? 'text-right' : ''}>
+                  <div key={item.question} className="text-start">
                     <p className={PDP_FAQ_QUESTION}>{item.question}</p>
                     <div className="mt-1 space-y-2">
                       {faqAnswerParagraphs(item.answer).map((paragraph, idx) => (
@@ -554,7 +554,7 @@ export default function AccessoryDetailPage() {
         id: 'care',
         title: productUi.care,
         children: isBagCharm ? (
-          <div className={`space-y-3 ${isRTL ? 'text-right' : ''}`}>
+          <div className={`space-y-3 text-start`}>
             <p className={PDP_COPY_RELAXED}>{jewelleryCare.lead}</p>
             <ul className={PDP_BULLET_LIST}>
               {jewelleryCare.bullets.map((item, idx) => (
@@ -720,7 +720,7 @@ export default function AccessoryDetailPage() {
               image={pdpImages[0] ?? accessory.images[0] ?? ''}
               category={accessory.category}
               href={`/accessories/${accessory.id}`}
-              className={`absolute top-2.5 z-30 h-9 w-9 rounded-full border border-stone-200/90 bg-white/90 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:h-10 sm:w-10 ${isRTL ? 'left-2.5 sm:left-3' : 'right-2.5 sm:right-3'}`}
+              className={`absolute top-2.5 z-30 h-9 w-9 rounded-full border border-stone-200/90 bg-white/90 text-brand-darkRed shadow-sm backdrop-blur-sm transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue sm:top-3 sm:h-10 sm:w-10 end-2.5 sm:end-3`}
               iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
             />
             <div className={`grid gap-3 lg:items-start ${galleryGridClass}`}>
@@ -953,7 +953,7 @@ export default function AccessoryDetailPage() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white px-3.5 pb-3.5 pt-0 lg:sticky lg:top-28 lg:self-start lg:px-4 lg:pb-4 lg:pt-0 ${isRTL ? 'text-right' : ''}`}
+            className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white px-3.5 pb-3.5 pt-0 lg:sticky lg:top-28 lg:self-start lg:px-4 lg:pb-4 lg:pt-0 text-start`}
           >
             <h1
               data-document-h1="true"
@@ -976,7 +976,7 @@ export default function AccessoryDetailPage() {
 
             {/* Colour — shop spacing */}
             <div id="color-selection" className="mb-3 border-b border-brand-stone/20 pb-3">
-              <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`mb-2 flex items-center justify-between `}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {ui.cart.colour}
                 </span>
@@ -986,15 +986,15 @@ export default function AccessoryDetailPage() {
                   </span>
                 )}
               </div>
-              <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+              <div className={`flex flex-wrap gap-2 `}>
                 {accessory.colors.map((color) => (
                   <button
                     key={color.name}
                     type="button"
                     onClick={() => setSelectedColor(isRTL ? color.nameAr : color.name)}
                     className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(
-                      selectedColor === (isRTL ? color.nameAr : color.name),
-                    )}`}
+ selectedColor === (isRTL ? color.nameAr : color.name),
+ )}`}
                     style={{ backgroundColor: color.hex }}
                     title={isRTL ? color.nameAr : color.name}
                     aria-pressed={selectedColor === (isRTL ? color.nameAr : color.name)}
@@ -1007,12 +1007,12 @@ export default function AccessoryDetailPage() {
 
             {/* Size — jewellery, strands & bag charms use unique size labelling */}
             <div id="size-selection" className="mb-3 border-b border-brand-stone/20 pb-3">
-              <div className={`mb-2 flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`mb-2 flex items-center justify-between `}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {ui.cart.size}
                 </span>
               </div>
-              <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+              <div className={`flex flex-wrap gap-2 `}>
                 <span className={`min-w-[52px] border px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] ${CTA_BUTTON_RADIUS} ${PDP_FILLED_PLUM}`}>
                   {sizeLabel}
                 </span>
@@ -1072,7 +1072,7 @@ export default function AccessoryDetailPage() {
               />
             ) : null}
 
-            <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 ${isRTL ? 'text-right' : ''}`}>
+            <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 text-start`}>
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiAward className="h-3.5 w-3.5 text-brand-darkRed/75" />
                 <span className="font-montserrat text-[9px] uppercase tracking-[0.13em] text-brand-darkRed">

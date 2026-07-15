@@ -40,8 +40,8 @@ export default function CheckoutGiftCardApply({
     return (
       <p
         className={`mt-4 font-montserrat text-[11px] leading-snug tracking-wide ${
-          onDark ? 'text-white/55' : 'text-brand-clayRed/70'
-        } ${isRTL ? 'text-right' : 'text-left'}`}
+ onDark ? 'text-white/55' : 'text-brand-clayRed/70'
+ } text-start`}
       >
         {language === 'ar'
           ? 'بطاقات الهدايا لا تُستخدم لشراء بطاقات هدايا أخرى.'
@@ -118,14 +118,14 @@ export default function CheckoutGiftCardApply({
     : 'shrink-0 border border-brand-darkRed/30 px-4 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue disabled:opacity-50'
 
   return (
-    <div className={`mt-5 ${isRTL ? 'text-right' : 'text-left'}`}>
+    <div className={`mt-5 text-start`}>
       <p className={labelClass}>{language === 'ar' ? 'بطاقة هدايا' : 'Gift card'}</p>
       {applied ? (
         <div className="mt-2 space-y-2">
           <div
             className={`flex items-baseline justify-between gap-3 font-montserrat text-sm ${
-              onDark ? 'text-white/80' : 'text-brand-darkRed'
-            } ${isRTL ? 'flex-row-reverse' : ''}`}
+ onDark ? 'text-white/80' : 'text-brand-darkRed'
+ } `}
           >
             <span className="min-w-0 tracking-[0.08em]">{applied.code}</span>
             <span className="shrink-0 text-brand-dustyBlue">
@@ -169,8 +169,8 @@ export default function CheckoutGiftCardApply({
       {message ? (
         <p
           className={`mt-2 font-montserrat text-[11px] leading-snug ${
-            onDark ? 'text-amber-200/90' : 'text-brand-clayRed'
-          }`}
+ onDark ? 'text-amber-200/90' : 'text-brand-clayRed'
+ }`}
         >
           {message}
         </p>

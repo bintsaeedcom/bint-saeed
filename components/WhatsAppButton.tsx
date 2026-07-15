@@ -206,8 +206,8 @@ export default function WhatsAppButton() {
           className={`absolute bottom-[calc(100%+0.75rem)] ${panelSide} z-50 w-[min(18.5rem,calc(100vw-2rem))] ${glassOverlayPanel} rounded-2xl`}
         >
           <div className={glassOverlayWash} aria-hidden />
-          <div className={`relative z-[1] p-4 ${isRTL ? 'text-right' : 'text-left'}`}>
-            <div className={`mb-3 flex items-start gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <div className={`relative z-[1] p-4 text-start`}>
+            <div className={`mb-3 flex items-start gap-2 `}>
               <div className="min-w-0 flex-1">
                 <p className={`font-rozha text-lg leading-tight ${glassTextTitleOnDark}`}>{title}</p>
                 <p className={`mt-1 font-montserrat text-[11px] leading-snug tracking-wide ${glassTextMutedOnDark}`}>
@@ -230,7 +230,7 @@ export default function WhatsAppButton() {
                   <button
                     type="button"
                     onClick={() => openTopic(topic)}
-                    className={`w-full rounded-[4px] border border-white/15 bg-white/[0.07] px-3.5 py-3 font-montserrat text-[12px] uppercase tracking-[0.12em] transition-colors hover:border-[#e8d8c8]/45 hover:bg-white/[0.12] ${glassTextBodyOnDark} ${isRTL ? 'text-right' : 'text-left'}`}
+                    className={`w-full rounded-[4px] border border-white/15 bg-white/[0.07] px-3.5 py-3 font-montserrat text-[12px] uppercase tracking-[0.12em] transition-colors hover:border-[#e8d8c8]/45 hover:bg-white/[0.12] ${glassTextBodyOnDark} text-start`}
                     data-cursor-hover
                   >
                     {language === 'ar' ? topic.labelAr : topic.labelEn}

@@ -121,7 +121,7 @@ export default function GiftCardsPage() {
   }
 
   return (
-    <div className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} `}>
       <div className={`${EDITORIAL_PAGE_CONTAINER} pb-20 md:pb-28`}>
         <AppPageWayfinding
           rtl={isRTL}
@@ -133,7 +133,7 @@ export default function GiftCardsPage() {
           ]}
         />
 
-        <header className={`mt-6 max-w-2xl md:mt-8 ${isRTL ? 'ms-auto text-right' : ''}`}>
+        <header className={`mt-6 max-w-2xl md:mt-8 text-start`}>
           <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue">{eyebrow}</p>
           <h1 className="mt-3 font-rozha text-[clamp(2rem,4vw,3rem)] leading-tight text-brand-darkRed">{title}</h1>
           <p className="mt-4 font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/80">{intro}</p>
@@ -142,7 +142,7 @@ export default function GiftCardsPage() {
         <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-start lg:gap-14">
           <div className="mx-auto w-full max-w-xl lg:mx-0">
             <GiftCardFace amountAed={selected} priority className="shadow-[0_28px_64px_-28px_rgba(26,2,16,0.55)]" />
-            <p className={`mt-5 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-clayRed/70 ${isRTL ? 'text-right' : ''}`}>
+            <p className={`mt-5 font-montserrat text-[11px] uppercase tracking-[0.18em] text-brand-clayRed/70 text-start`}>
               {selectedLabel}:{' '}
               <span className="text-brand-darkRed">
                 {formatGiftCardAmountAed(selected)}
@@ -151,7 +151,7 @@ export default function GiftCardsPage() {
             </p>
           </div>
 
-          <div className={isRTL ? 'text-right' : ''}>
+          <div className="text-start">
             <p className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-dustyBlue">
               {chooseLabel}
             </p>
@@ -165,10 +165,10 @@ export default function GiftCardsPage() {
                     type="button"
                     onClick={() => setSelected(amount)}
                     className={`overflow-hidden rounded-[8px] border text-left transition-all duration-300 ${
-                      active
-                        ? 'border-brand-darkRed/50 shadow-[0_16px_40px_-24px_rgba(26,2,16,0.45)] ring-1 ring-brand-darkRed/25'
-                        : 'border-brand-stone/40 opacity-90 hover:border-brand-darkRed/30 hover:opacity-100'
-                    } ${isRTL ? 'text-right' : ''}`}
+ active
+ ? 'border-brand-darkRed/50 shadow-[0_16px_40px_-24px_rgba(26,2,16,0.45)] ring-1 ring-brand-darkRed/25'
+ : 'border-brand-stone/40 opacity-90 hover:border-brand-darkRed/30 hover:opacity-100'
+ } text-start`}
                     data-cursor-hover
                     aria-pressed={active}
                   >
@@ -203,7 +203,7 @@ export default function GiftCardsPage() {
 
               {sendToRecipient ? (
                 <div className="space-y-3">
-                  <label className={`block font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-dustyBlue ${isRTL ? 'text-right' : ''}`}>
+                  <label className={`block font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-dustyBlue text-start`}>
                     {recipientNameLabel}
                     <input
                       type="text"
@@ -213,7 +213,7 @@ export default function GiftCardsPage() {
                       autoComplete="name"
                     />
                   </label>
-                  <label className={`block font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-dustyBlue ${isRTL ? 'text-right' : ''}`}>
+                  <label className={`block font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-dustyBlue text-start`}>
                     {recipientEmailLabel}
                     <input
                       type="email"
@@ -224,7 +224,7 @@ export default function GiftCardsPage() {
                       required={sendToRecipient}
                     />
                   </label>
-                  <label className={`block font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-dustyBlue ${isRTL ? 'text-right' : ''}`}>
+                  <label className={`block font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-dustyBlue text-start`}>
                     {messageLabel}
                     <textarea
                       value={personalMessage}
@@ -246,7 +246,7 @@ export default function GiftCardsPage() {
               ) : null}
             </div>
 
-            <div className={`mt-6 ${isRTL ? 'flex justify-end' : ''}`}>
+            <div className={`mt-6 `}>
               <button
                 type="button"
                 onClick={onAddToBag}

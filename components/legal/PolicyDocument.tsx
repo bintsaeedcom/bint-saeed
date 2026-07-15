@@ -171,7 +171,7 @@ export default function PolicyDocument({
   englishPolicy,
   language = 'en',
 }: PolicyDocumentProps) {
-  const heroAlign = isRTL ? 'text-right' : variant === 'shipment' ? 'text-left' : 'text-center'
+  const heroAlign = 'text-start'
   const bodyGap = variant === 'shipment' ? 'policy-prose flex flex-col gap-4' : 'space-y-9'
   const cardPad = variant === 'shipment' ? 'p-8 md:p-10' : 'p-8 md:p-12'
   const heroMargin = variant === 'shipment' ? 'mb-10' : 'mb-12'
@@ -186,11 +186,11 @@ export default function PolicyDocument({
   const summaryTitleMb = variant === 'shipment' ? 'mb-1.5' : 'mb-2'
   const gridGap = variant === 'shipment' ? 'gap-1.5' : 'gap-2'
   const gridPad = variant === 'shipment' ? 'p-4 md:grid-cols-2 md:gap-2 md:p-5' : 'p-5 md:grid-cols-2 md:gap-3 md:p-6'
-  const textAlign = isRTL ? 'text-right' : variant === 'shipment' ? 'text-left' : ''
+  const textAlign = 'text-start'
 
   return (
     <div
-      className={`relative min-h-screen bg-[#f6f4f1] pb-20 ${SITE_CONTENT_TOP_PAD} ${isRTL ? 'rtl' : 'ltr'}`}
+      className={`relative min-h-screen bg-[#f6f4f1] pb-20 ${SITE_CONTENT_TOP_PAD} `}
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className="relative mx-auto max-w-4xl px-6 lg:px-12">

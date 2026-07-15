@@ -132,7 +132,7 @@ export default function TheCodesClient() {
 
   return (
     <main
-      className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-brand-pageCanvas pb-8 md:pb-16 ${isRTL ? 'rtl' : 'ltr'}`}
+      className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-brand-pageCanvas pb-8 md:pb-16 `}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(codesJsonLd) }} />
       <AboutSectionHero
