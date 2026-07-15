@@ -96,6 +96,7 @@ function ChapterProse({
   paragraphs,
   tone = 'light',
   sticky = false,
+  continuous = false,
 }: {
   index?: number
   label: string
@@ -104,6 +105,8 @@ function ChapterProse({
   paragraphs: string[]
   tone?: 'light' | 'onDark' | 'onClay'
   sticky?: boolean
+  /** Continuous editorial measure — paragraph spacing only, no horizontal rules. */
+  continuous?: boolean
 }) {
   const { isRTL } = useLanguage()
   const onDark = tone === 'onDark'
@@ -117,7 +120,7 @@ function ChapterProse({
     : ''
 
   return (
-    <div className={`max-w-xl ${stickyClass} ${isRTL ? 'ms-auto text-right' : ''}`}>
+    <div className={`${continuous ? 'w-full' : 'max-w-xl'} ${stickyClass} ${isRTL ? 'ms-auto text-right' : ''}`}>
       <Reveal>
         <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
           {typeof index === 'number' ? (
@@ -139,19 +142,31 @@ function ChapterProse({
         </div>
       </Reveal>
 
-      <ol className="mt-10 space-y-0 md:mt-12">
-        {paragraphs.map((paragraph, i) => (
-          <Reveal key={`${titleId}-${i}`} delay={0.06 + i * 0.05}>
-            <li className={`border-t ${ruleColor} py-6 first:border-t first:pt-6 md:py-7`}>
-              <p
-                className={`font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] md:text-[16px] md:leading-[2] ${bodyColor}`}
-              >
+      {continuous ? (
+        <div className={`mt-10 space-y-5 md:mt-12 md:space-y-6 ${bodyColor}`}>
+          {paragraphs.map((paragraph, i) => (
+            <Reveal key={`${titleId}-${i}`} delay={0.06 + i * 0.05}>
+              <p className="font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] md:text-[16px] md:leading-[2]">
                 {paragraph}
               </p>
-            </li>
-          </Reveal>
-        ))}
-      </ol>
+            </Reveal>
+          ))}
+        </div>
+      ) : (
+        <ol className="mt-10 space-y-0 md:mt-12">
+          {paragraphs.map((paragraph, i) => (
+            <Reveal key={`${titleId}-${i}`} delay={0.06 + i * 0.05}>
+              <li className={`border-t ${ruleColor} py-6 first:border-t first:pt-6 md:py-7`}>
+                <p
+                  className={`font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] md:text-[16px] md:leading-[2] ${bodyColor}`}
+                >
+                  {paragraph}
+                </p>
+              </li>
+            </Reveal>
+          ))}
+        </ol>
+      )}
     </div>
   )
 }
@@ -257,22 +272,24 @@ export default function PersonalisationPage() {
       >
         <SectionDrift className="bg-[radial-gradient(ellipse_60%_50%_at_20%_80%,rgba(111,21,36,0.1)_0%,transparent_55%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
-          <ChapterProse
-            index={2}
-            label={copy.wordsEyebrow}
-            title={copy.wordsTitle}
-            titleId="personalisation-words"
-            paragraphs={copy.wordsParagraphs}
-          />
-          <Reveal delay={0.12}>
-            <p
-              className={`mt-8 max-w-xl font-montserrat text-[13px] uppercase tracking-[0.16em] text-brand-darkRed/65 md:mt-10 ${
-                isRTL ? 'ms-auto text-right' : ''
-              }`}
-            >
-              {copy.wordsComplimentary}
-            </p>
-          </Reveal>
+          <div className={`${isRTL ? 'ms-auto' : ''} max-w-xl`}>
+            <ChapterProse
+              label={copy.wordsEyebrow}
+              title={copy.wordsTitle}
+              titleId="personalisation-words"
+              paragraphs={copy.wordsParagraphs}
+              continuous
+            />
+            <Reveal delay={0.14}>
+              <p
+                className={`mt-5 font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-brand-darkRed/[0.88] md:mt-6 md:text-[16px] md:leading-[2] ${
+                  isRTL ? 'text-right' : 'text-left'
+                }`}
+              >
+                {copy.wordsComplimentary}
+              </p>
+            </Reveal>
+          </div>
 
           <div className="mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3 md:mt-14 md:gap-4">
             {LABEL_IMAGES.map((src, index) => (
@@ -300,21 +317,16 @@ export default function PersonalisationPage() {
         <SectionDrift className="bg-[radial-gradient(ellipse_70%_55%_at_70%_30%,rgba(111,21,36,0.32)_0%,transparent_65%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
           <Reveal>
-            <div className={`flex items-baseline gap-4 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
-              <span className="shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] text-[#e8d8c8]/70">
-                03
-              </span>
-              <div className="min-w-0">
-                <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] text-[#e8d8c8]">
-                  {copy.stepsEyebrow}
-                </p>
-                <h2
-                  id="personalisation-steps"
-                  className="font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] text-[#e8ddd4]"
-                >
-                  {copy.stepsTitle}
-                </h2>
-              </div>
+            <div className={isRTL ? 'text-right' : 'text-left'}>
+              <p className="mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] text-[#e8d8c8]">
+                {copy.stepsEyebrow}
+              </p>
+              <h2
+                id="personalisation-steps"
+                className="whitespace-nowrap font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] text-[#e8ddd4]"
+              >
+                {copy.stepsTitle}
+              </h2>
             </div>
           </Reveal>
 
@@ -333,7 +345,7 @@ export default function PersonalisationPage() {
                     <h3 className="mb-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.18em] text-[#e8d8c8]">
                       {step.title}
                     </h3>
-                    <p className="max-w-2xl font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78">
+                    <p className="font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78 md:text-[16px] md:leading-[2]">
                       {step.body}
                     </p>
                   </div>
@@ -344,7 +356,7 @@ export default function PersonalisationPage() {
 
           <Reveal delay={0.18}>
             <div className={`mt-12 flex flex-col items-start gap-5 md:mt-14 ${isRTL ? 'items-end' : ''}`}>
-              <p className="font-montserrat text-[11px] uppercase tracking-[0.2em] text-[#e8ddd4]/55">
+              <p className="max-w-2xl font-montserrat text-[15px] leading-[1.95] tracking-[0.02em] text-[#e8ddd4]/78 md:text-[16px] md:leading-[2]">
                 {copy.complimentaryBanner}
               </p>
               <LocaleLink
@@ -371,11 +383,11 @@ export default function PersonalisationPage() {
         <SectionDrift className="bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(111,21,36,0.08)_0%,transparent_60%)]" />
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${EDITORIAL_STACK_CONTENT_PAD}`}>
           <ChapterProse
-            index={4}
             label={copy.giftEyebrow}
             title={copy.giftTitle}
             titleId="personalisation-gift"
             paragraphs={copy.giftParagraphs}
+            continuous
           />
           <Reveal delay={0.15}>
             <div className={`mt-10 ${isRTL ? 'flex justify-end' : ''}`}>
