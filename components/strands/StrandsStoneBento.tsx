@@ -8,6 +8,7 @@ import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
 import { PRODUCT_GRID_COLOUR_DOT, softGridColourBeadStyle } from '@/lib/ui/productGridColourDot'
 import { ctaPrimary } from '@/lib/ui/ctaClasses'
+import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
 
 /** Featured stone order for the mosaic — first id is the hero tile. */
 export const STRANDS_BENTO_FEATURED_IDS = [
@@ -124,7 +125,10 @@ export default function StrandsStoneBento({
           >
             {note}
           </p>
-          <p className="mt-3 font-montserrat text-sm font-medium text-[#7A1C28]">
+          <p
+            className="mt-3 font-montserrat text-sm font-medium text-[#7A1C28]"
+            {...clarityUnmaskPriceProps}
+          >
             {formatPrice(product.price, product.id)}
           </p>
           <span

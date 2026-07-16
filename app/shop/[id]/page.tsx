@@ -19,6 +19,7 @@ import {
   pdpColourSwatchState,
 } from '@/lib/ui/pdpColourSwatch'
 import { trackEvent } from '@/lib/analytics/tracking'
+import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
 import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
 import { getProductPdpContent } from '@/data/productPdpContent'
@@ -890,7 +891,10 @@ export default function ProductPage() {
 
             {/* Price */}
             <div className="mb-3 space-y-0.5">
-              <p className="font-montserrat text-lg text-brand-darkRed tracking-wide">
+              <p
+                className="font-montserrat text-lg text-brand-darkRed tracking-wide"
+                {...clarityUnmaskPriceProps}
+              >
                 {formatAmount(displayUnitPrice * quantity)}
                 {quantity > 1 && (
                   <span className="ml-2 font-montserrat text-[11px] font-normal text-brand-darkRed/65">

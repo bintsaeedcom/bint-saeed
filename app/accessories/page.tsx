@@ -37,6 +37,7 @@ import { getAccessoryCarouselAlt, buildAccessoriesCollectionJsonLd } from '@/lib
 import { getLocalizedAccessoryDisplayName } from '@/lib/accessories/accessoryCatalogCopyI18n'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
+import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
 import { glassDrawer, glassDrawerWash, glassTextMuted, glassTextTitle } from '@/lib/ui/glassClasses'
 import { ctaPrimary, ctaSecondaryOnLight } from '@/lib/ui/ctaClasses'
 import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
@@ -823,7 +824,12 @@ function AccessoryCard({
             >
               {accessoryName}
             </h3>
-            <p className="font-montserrat text-sm tracking-wide text-[#6f1524]">{formatPrice(accessory.price, accessory.id)}</p>
+            <p
+              className="font-montserrat text-sm tracking-wide text-[#6f1524]"
+              {...clarityUnmaskPriceProps}
+            >
+              {formatPrice(accessory.price, accessory.id)}
+            </p>
           </div>
 
           {/* Colour indicators — gemstone references, not selectable swatches */}

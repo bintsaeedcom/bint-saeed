@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
+import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronDown, FiFilter, FiMaximize2, FiX, FiArrowLeft, FiArrowRight, FiShoppingBag } from 'react-icons/fi'
@@ -397,7 +398,10 @@ export default function ShopClient() {
                       {gridDisplayName}
                     </h3>
                   </LocaleLink>
-                  <p className="font-montserrat text-sm tabular-nums tracking-wide text-[#6f1524]">
+                  <p
+                    className="font-montserrat text-sm tabular-nums tracking-wide text-[#6f1524]"
+                    {...clarityUnmaskPriceProps}
+                  >
                     {formatPrice(product.price, product.id)}
                   </p>
                   <div className={`${PRODUCT_GRID_COLOUR_DOT_ROW} pt-1`}>

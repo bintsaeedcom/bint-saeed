@@ -29,6 +29,7 @@ import { CODES_IMAGE_FILES, codesPageImagePath } from '@/lib/the-codes/codesPage
 import { HOME_STORY_CODE_HREFS } from '@/lib/the-codes/homeStoryCodeHrefs'
 import { ctaPrimary } from '@/lib/ui/ctaClasses'
 import { PRODUCT_GRID_COLOUR_DOT, PRODUCT_GRID_COLOUR_DOT_ON_DARK, softGridColourBeadStyle } from '@/lib/ui/productGridColourDot'
+import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
 import type { Product } from '@/data/products'
 import type { AppLocale } from '@/lib/i18n/routing'
 
@@ -1045,7 +1046,10 @@ function QuickShopCarousel() {
                   <h3 className="min-w-0 max-w-full truncate font-montserrat text-[10.5px] uppercase tracking-[0.06em] text-brand-darkRed/88 leading-snug">
                     {product.name}
                   </h3>
-                  <p className="font-montserrat text-[10.5px] uppercase leading-snug tracking-[0.06em] text-[#6f1524]">
+                  <p
+                    className="font-montserrat text-[10.5px] uppercase leading-snug tracking-[0.06em] text-[#6f1524]"
+                    {...clarityUnmaskPriceProps}
+                  >
                     {formatPrice(product.price, product.id)}
                   </p>
                 </div>
