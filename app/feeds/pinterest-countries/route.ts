@@ -8,7 +8,7 @@ export const revalidate = 0
  * Prefer https://www.bintsaeed.com/feeds/pinterest-countries.csv
  */
 export async function GET() {
-  const csv = await buildPinterestCountrySupplementalCsv(['AE'])
+  const csv = await buildPinterestCountrySupplementalCsv()
 
   return new Response(csv, {
     status: 200,

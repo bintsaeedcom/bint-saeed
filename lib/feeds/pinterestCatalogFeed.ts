@@ -1,6 +1,10 @@
 /**
  * Pinterest retail catalog feed (CSV).
  * Spec: https://help.pinterest.com/en/business/article/before-you-get-started-with-catalogs
+ *
+ * Primary data source is locked to United States in Pinterest Business — prices in the
+ * primary feed MUST be USD or Pinterest hides prices. UAE/GCC/GBP localisation is handled
+ * by the country supplemental feed (`/feeds/pinterest-countries.csv`).
  */
 
 import { accessories, type Accessory } from '@/data/accessories'
@@ -14,8 +18,25 @@ import {
   getProductImagesForColor,
 } from '@/lib/products/productColorAvailability'
 import { resolveProductSku } from '@/lib/products/sku'
+import { getListedPrice } from '@/lib/pricing'
+import type { SupportedCurrency } from '@/lib/pricing/types'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
+
+/** Primary feed currency — must match Pinterest data-source country (United States). */
+export const PINTEREST_PRIMARY_CURRENCY: SupportedCurrency = 'USD'
+
+/** Country override → retail currency for supplemental feed. */
+export const PINTEREST_COUNTRY_CURRENCY: Record<string, SupportedCurrency> = {
+  AE: 'AED',
+  SA: 'SAR',
+  QA: 'QAR',
+  KW: 'KWD',
+  BH: 'BHD',
+  OM: 'OMR',
+  GB: 'GBP',
+  US: 'USD',
+}
 
 /** Absolute HTTPS image URL — normalizes paths that already contain %20. */
 function absoluteFeedImageUrl(src: string): string {
@@ -50,6 +71,26 @@ const FEED_COLUMNS = [
 type FeedColumn = (typeof FEED_COLUMNS)[number]
 type FeedRow = Record<FeedColumn, string>
 
+/** Internal row before currency formatting. */
+type CatalogItem = {
+  id: string
+  item_group_id: string
+  title: string
+  description: string
+  link: string
+  image_link: string
+  additional_image_link: string
+  availability: string
+  condition: string
+  brand: string
+  mpn: string
+  product_type: string
+  google_product_category: string
+  color: string
+  productId: string
+  aedMaster: number
+}
+
 function csvEscape(value: string): string {
   const normalized = value.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim()
   return `"${normalized.replace(/"/g, '""')}"`
@@ -63,8 +104,30 @@ function sanitizeText(value: string, maxLen: number): string {
     .slice(0, maxLen)
 }
 
-function formatPriceAed(price: number): string {
-  return `${price.toFixed(2)} AED`
+function formatFeedPrice(aedMaster: number, currency: SupportedCurrency, productId: string): string {
+  const amount = getListedPrice(aedMaster, currency, undefined, productId)
+  const threeDecimal = currency === 'BHD' || currency === 'KWD' || currency === 'OMR'
+  return `${amount.toFixed(threeDecimal ? 3 : 2)} ${currency}`
+}
+
+function toFeedRow(item: CatalogItem, currency: SupportedCurrency): FeedRow {
+  return {
+    id: item.id,
+    item_group_id: item.item_group_id,
+    title: item.title,
+    description: item.description,
+    link: item.link,
+    image_link: item.image_link,
+    additional_image_link: item.additional_image_link,
+    price: formatFeedPrice(item.aedMaster, currency, item.productId),
+    availability: item.availability,
+    condition: item.condition,
+    brand: item.brand,
+    mpn: item.mpn,
+    product_type: item.product_type,
+    google_product_category: item.google_product_category,
+    color: item.color,
+  }
 }
 
 /** Prefer 3+ taxonomy levels so Pinterest Alert 126 stays clear. */
@@ -79,24 +142,24 @@ function googleProductCategory(category: string): string {
     case 'Sets':
       return 'Apparel & Accessories > Clothing > Outfit Sets'
     case 'necklaces':
-      return 'Apparel & Accessories > Jewelry > Necklaces'
+      return 'Jewellery > Necklaces'
     case 'earrings':
-      return 'Apparel & Accessories > Jewelry > Earrings'
-    case 'bracelets':
-      return 'Apparel & Accessories > Jewelry > Bracelets'
+      return 'Jewellery > Earrings'
     case 'signature-strands':
-      return 'Apparel & Accessories > Jewelry > Charms & Pendants'
+      return 'Jewellery > Signature Strands'
     case 'bag-strands':
-      return 'Apparel & Accessories > Jewelry > Charms & Pendants'
+      return 'Jewellery > Bag Charms'
     case 'phone-strands':
-      return 'Apparel & Accessories > Jewelry > Charms & Pendants'
+      return 'Jewellery > Phone Charms'
+    case 'bracelets':
+      return 'Jewellery > Bracelets'
     default:
-      return 'Apparel & Accessories > Clothing > Traditional & Ceremonial Clothing'
+      return 'Jewellery > Accessories'
   }
 }
 
-function accessoryProductType(accessory: Accessory): string {
-  switch (accessory.category) {
+function accessoryProductType(item: Accessory): string {
+  switch (item.category) {
     case 'necklaces':
       return 'Jewellery > Necklaces'
     case 'earrings':
@@ -126,8 +189,8 @@ function additionalImageLinks(images: string[], toAbsolute: (src: string) => str
     .join(',')
 }
 
-function buildShopRows(products: Product[]): FeedRow[] {
-  const rows: FeedRow[] = []
+function buildShopItems(products: Product[]): CatalogItem[] {
+  const rows: CatalogItem[] = []
 
   for (const product of products) {
     const slug = getProductSlug(product)
@@ -156,7 +219,6 @@ function buildShopRows(products: Product[]): FeedRow[] {
         link,
         image_link: absoluteFeedImageUrl(primary),
         additional_image_link: additionalImageLinks(images, absoluteFeedImageUrl),
-        price: formatPriceAed(product.price),
         availability: 'in stock',
         condition: 'new',
         brand: 'Bint Saeed',
@@ -164,6 +226,8 @@ function buildShopRows(products: Product[]): FeedRow[] {
         product_type: shopProductType(product.category),
         google_product_category: googleProductCategory(product.category),
         color: colorName ?? '',
+        productId: product.id,
+        aedMaster: product.price,
       })
     }
   }
@@ -171,7 +235,7 @@ function buildShopRows(products: Product[]): FeedRow[] {
   return rows
 }
 
-function buildAccessoryRows(items: readonly Accessory[]): FeedRow[] {
+function buildAccessoryItems(items: readonly Accessory[]): CatalogItem[] {
   return items
     .filter((item) => item.images[0])
     .map((item) => {
@@ -185,7 +249,6 @@ function buildAccessoryRows(items: readonly Accessory[]): FeedRow[] {
         link: accessoryCanonicalUrl('en', item.id),
         image_link: absoluteFeedImageUrl(images[0]),
         additional_image_link: additionalImageLinks(images, absoluteFeedImageUrl),
-        price: formatPriceAed(item.price),
         availability: item.inStock ? 'in stock' : 'out of stock',
         condition: 'new',
         brand: 'Bint Saeed',
@@ -193,7 +256,9 @@ function buildAccessoryRows(items: readonly Accessory[]): FeedRow[] {
         product_type: accessoryProductType(item),
         google_product_category: googleProductCategory(item.category),
         color: item.colors[0]?.name ?? '',
-      } satisfies FeedRow
+        productId: item.id,
+        aedMaster: item.price,
+      } satisfies CatalogItem
     })
 }
 
@@ -203,22 +268,21 @@ export function rowsToPinterestCsv(rows: FeedRow[]): string {
   return `${header}\n${body.join('\n')}\n`
 }
 
-async function buildAllFeedRows(): Promise<FeedRow[]> {
+async function buildAllCatalogItems(): Promise<CatalogItem[]> {
   const products = await getMergedProducts()
-  return [...buildShopRows(products), ...buildAccessoryRows(accessories)]
+  return [...buildShopItems(products), ...buildAccessoryItems(accessories)]
 }
 
-/** Full shop + accessories catalog for Pinterest daily URL ingestion. */
+/** Full shop + accessories catalog for Pinterest daily URL ingestion (USD — US primary). */
 export async function buildPinterestCatalogCsv(): Promise<string> {
-  return rowsToPinterestCsv(await buildAllFeedRows())
+  const items = await buildAllCatalogItems()
+  return rowsToPinterestCsv(items.map((item) => toFeedRow(item, PINTEREST_PRIMARY_CURRENCY)))
 }
 
 /**
  * Country supplemental feed (Countries and languages).
  * Overrides price/availability/link per ISO country while reusing primary `id`s.
- * Use this when the primary data source is locked to United States.
  * Headers must match Pinterest's template: id,override,price,sale_price,availability,link
- * (`override` = two-letter country code, e.g. AE).
  */
 const COUNTRY_SUPPLEMENTAL_COLUMNS = [
   'id',
@@ -229,26 +293,30 @@ const COUNTRY_SUPPLEMENTAL_COLUMNS = [
   'link',
 ] as const
 
+const DEFAULT_SUPPLEMENTAL_COUNTRIES = ['AE', 'SA', 'QA', 'KW', 'BH', 'OM', 'GB'] as const
+
 export async function buildPinterestCountrySupplementalCsv(
-  countries: readonly string[] = ['AE'],
+  countries: readonly string[] = DEFAULT_SUPPLEMENTAL_COUNTRIES,
 ): Promise<string> {
-  const baseRows = await buildAllFeedRows()
+  const items = await buildAllCatalogItems()
   const header = COUNTRY_SUPPLEMENTAL_COLUMNS.join(',')
   const body: string[] = []
 
   for (const country of countries) {
     const code = country.trim().toUpperCase()
     if (!/^[A-Z]{2}$/.test(code)) continue
+    const currency = PINTEREST_COUNTRY_CURRENCY[code]
+    if (!currency) continue
 
-    for (const row of baseRows) {
+    for (const item of items) {
       body.push(
         [
-          csvEscape(row.id),
+          csvEscape(item.id),
           csvEscape(code),
-          csvEscape(row.price),
+          csvEscape(formatFeedPrice(item.aedMaster, currency, item.productId)),
           '', // sale_price — leave empty when not on sale
-          csvEscape(row.availability),
-          csvEscape(row.link),
+          csvEscape(item.availability),
+          csvEscape(item.link),
         ].join(','),
       )
     }
