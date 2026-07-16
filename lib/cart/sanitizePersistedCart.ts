@@ -30,6 +30,22 @@ function resolveCatalogLine(id: string): CatalogLine | undefined {
   return CATALOG_BY_ID.get(resolveAccessoryId(id))
 }
 
+function resolveCatalogLineFromUrl(productUrl: string | undefined): CatalogLine | undefined {
+  const slug = productUrl?.match(/\/(?:shop|accessories)\/([^/?#]+)/)?.[1]
+  if (!slug) return undefined
+  const decoded = decodeURIComponent(slug)
+  const item =
+    products.find((item) => item.slug === decoded) ??
+    accessories.find((item) => item.id === resolveAccessoryId(decoded))
+  if (!item) return undefined
+  return {
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    image: productPrimaryImage(item),
+  }
+}
+
 function migrateAccessoryProductUrl(productUrl: string | undefined): string | undefined {
   if (!productUrl?.includes('/accessories/')) return productUrl
   const legacyMatch = productUrl.match(/\/accessories\/([^/?#]+)/)
@@ -47,7 +63,7 @@ export function sanitizePersistedCart(items: CartItem[]): CartItem[] {
         return item
       }
 
-      const catalog = resolveCatalogLine(item.id)
+      const catalog = resolveCatalogLine(item.id) ?? resolveCatalogLineFromUrl(item.productUrl)
       if (!catalog) return null
       const canonicalId = resolveAccessoryId(item.id)
 

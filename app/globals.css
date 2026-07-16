@@ -79,10 +79,12 @@
   --font-display: var(--font-rozha), serif;
   --font-body: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   /*
-   * Fixed header clearance — Header overwrites with measured px via ResizeObserver.
-   * Fallbacks stay slightly generous so breadcrumbs never sit under the bar before hydrate.
+   * `--site-header-clearance` reserves the expanded header before hydration and
+   * never changes while scrolling. `--site-header-height` is the live measured
+   * height used by sticky controls as the header compacts.
    */
-  --site-header-height: 6.75rem;
+  --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.5625rem);
+  --site-header-height: var(--site-header-clearance);
   --mobile-bottom-chrome: 0px;
   --text-hero: clamp(36px, 6vw, 72px);
   --text-h1: clamp(28px, 4vw, 52px);
@@ -122,14 +124,37 @@
 
 @media (min-width: 640px) {
   :root {
-    --site-header-height: 7.5rem;
+    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.5625rem);
+    --site-header-height: var(--site-header-clearance);
+  }
+}
+
+@media (min-width: 769px) {
+  :root {
+    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 0.8125rem);
+    --site-header-height: var(--site-header-clearance);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.0625rem);
+    --site-header-height: var(--site-header-clearance);
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.3125rem);
+    --site-header-height: var(--site-header-clearance);
   }
 }
 
 @media (min-width: 1536px) {
   :root {
     /* Two-row desktop header (logo + topic row) */
-    --site-header-height: 10.5rem;
+    --site-header-clearance: 10.5rem;
+    --site-header-height: var(--site-header-clearance);
   }
 }
 
@@ -374,14 +399,14 @@ p {
   text-align: start;
 }
 
-/* Grid / list product titles — size owned by components so PDP H1s stay editorial. */
+/* Grid / list product titles — size owned by components so PDP H1s stay editorial.
+   Colour is owned by each surface (light pages vs dark overlays) — do not force ink here. */
 [data-product-name="true"] {
   font-family: var(--font-body);
   font-weight: 400;
   letter-spacing: 0.06em;
   line-height: 1.45;
   text-transform: uppercase;
-  color: var(--color-ink);
 }
 
 /* Collection grids / compact surfaces */

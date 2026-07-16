@@ -383,7 +383,7 @@ function PhaseProse({
   const bodyColor = onDark ? 'text-[#e8ddd4]/78' : 'text-brand-darkRed/[0.88]'
   const ruleColor = onDark ? 'border-[#e8ddd4]/18' : 'border-[#6f1524]/35'
   const stickyClass = sticky
-    ? 'lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]'
+    ? 'lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)]'
     : ''
 
   return (
@@ -466,7 +466,7 @@ export default function CraftsmanshipClient() {
               <PhaseProse phase={copy.phaseI} headingId="phase-i" sticky index={1} />
             </div>
             <div
-              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
+              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)] ${
  isRTL ? 'lg:order-1' : ''
  }`}
             >
@@ -558,7 +558,7 @@ export default function CraftsmanshipClient() {
               <PhaseProse phase={copy.phaseIII} headingId="phase-iii" sticky index={3} />
             </div>
             <div
-              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
+              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)] ${
  isRTL ? 'lg:order-1' : ''
  }`}
             >

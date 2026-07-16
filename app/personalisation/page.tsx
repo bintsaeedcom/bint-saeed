@@ -117,7 +117,7 @@ function ChapterProse({
   const bodyColor = onDark ? 'text-[#e8ddd4]/78' : 'text-brand-darkRed/[0.88]'
   const ruleColor = onDark ? 'border-[#e8ddd4]/18' : 'border-[#6f1524]/35'
   const stickyClass = sticky
-    ? 'lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]'
+    ? 'lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)]'
     : ''
 
   return (
@@ -230,7 +230,7 @@ export default function PersonalisationPage() {
             </div>
             <div className={`lg:col-span-6 ${isRTL ? 'lg:order-1' : ''}`}>
               <Reveal className="min-w-0" delay={0.08}>
-                <div className="relative isolate aspect-[4/5] w-full overflow-hidden border border-[#e8ddd4]/18 bg-[#1a0210] shadow-[0_28px_64px_-40px_rgba(0,0,0,0.45)] lg:aspect-[3/4] lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]">
+                <div className="relative isolate aspect-[4/5] w-full overflow-hidden border border-[#e8ddd4]/18 bg-[#1a0210] shadow-[0_28px_64px_-40px_rgba(0,0,0,0.45)] lg:aspect-[3/4] lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)]">
                   <Image
                     src={POCKET_DETAIL_IMAGE}
                     alt={pocketAlt}
@@ -271,7 +271,7 @@ export default function PersonalisationPage() {
               </div>
             </div>
             <div className={`lg:col-span-6 ${isRTL ? 'lg:order-1' : ''}`}>
-              <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)]">
                 {LABEL_IMAGES.map((src, index) => (
                   <Reveal key={src} delay={0.05 + index * 0.06} className="min-w-0">
                     <div className="relative isolate aspect-square overflow-hidden border border-[#6f1524]/18 bg-[#faf8f5] shadow-[0_22px_48px_-36px_rgba(42,0,18,0.16)]">

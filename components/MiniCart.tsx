@@ -103,8 +103,28 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   })
   const summarize = (value: string, max = 46) =>
     value.length > max ? `${value.slice(0, max).trimEnd()}…` : value
+  const resolveCartProduct = (item: (typeof items)[number]) => {
+    const hrefSlug = item.productUrl?.match(/\/(?:shop|accessories)\/([^/?#]+)/)?.[1]
+    return (
+      staticProducts.find((product) => product.id === item.id || product.slug === hrefSlug) ??
+      accessories.find((accessory) => accessory.id === item.id || accessory.id === hrefSlug)
+    )
+  }
+  const cartItemTitle = (item: (typeof items)[number]) => {
+    const storedName = item.name?.trim()
+    const variantOnly =
+      !storedName ||
+      storedName === item.size ||
+      storedName === item.color ||
+      storedName === `${item.size} · ${item.color}` ||
+      storedName === `${item.size} - ${item.color}`
+
+    if (!variantOnly) return storedName
+    const catalogItem = resolveCartProduct(item)
+    return catalogItem?.name ?? storedName ?? item.id
+  }
   const productHref = (item: (typeof items)[number]) =>
-    item.productUrl ?? getProductHref(staticProducts.find((product) => product.id === item.id) ?? { id: item.id, name: item.name })
+    item.productUrl ?? getProductHref(resolveCartProduct(item) ?? { id: item.id, name: cartItemTitle(item) })
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
 
@@ -307,7 +327,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                             data-product-name="true"
                             className={`line-clamp-2 font-montserrat text-[12px] font-medium uppercase leading-snug tracking-[0.04em] transition-colors hover:text-white sm:text-[13px] ${glassTextTitleOnDark}`}
                           >
-                            {item.name}
+                            {cartItemTitle(item)}
                           </h3>
                         </LocaleLink>
                         <p className={`mt-1 font-montserrat text-[11px] leading-snug ${glassTextMutedOnDark}`}>

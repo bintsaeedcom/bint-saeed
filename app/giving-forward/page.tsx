@@ -167,7 +167,7 @@ export default function GivingForwardPage() {
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
             <div className={`lg:col-span-6 ${isRTL ? 'lg:order-2' : ''}`}>
               <div
-                className={`max-w-xl lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
+                className={`max-w-xl lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)] ${
  isRTL ? 'ms-auto text-right' : ''
  }`}
               >

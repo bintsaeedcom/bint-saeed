@@ -965,7 +965,10 @@ export default function AccessoryDetailPage() {
             </h1>
 
             <div className="mb-3 space-y-0.5">
-              <p className="font-montserrat text-lg tracking-wide text-brand-darkRed">
+              <p
+                className="font-montserrat text-lg tracking-wide text-brand-darkRed"
+                {...clarityUnmaskPriceProps}
+              >
                 {formatAmount(convertPrice(accessory.price, accessory.id) * quantity)}
                 {quantity > 1 && (
                   <span className="ml-2 font-montserrat text-[11px] font-normal text-brand-darkRed/65">

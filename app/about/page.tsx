@@ -156,7 +156,7 @@ function ChapterProse({
   const bodyColor = onDark ? 'text-[#f0e6dc]/92' : 'text-brand-darkRed/[0.88]'
   const ruleColor = onDark ? 'border-[#e8ddd4]/28' : 'border-[#6f1524]/35'
   const stickyClass = sticky
-    ? 'lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)]'
+    ? 'lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)]'
     : ''
 
   return (
@@ -241,7 +241,7 @@ export default function AboutPage() {
               />
             </div>
             <div
-              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
+              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)] ${
  isRTL ? 'lg:order-1' : ''
  }`}
             >
@@ -277,7 +277,7 @@ export default function AboutPage() {
               />
             </div>
             <div
-              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
+              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)] ${
  isRTL ? 'lg:order-1' : ''
  }`}
             >
@@ -302,7 +302,7 @@ export default function AboutPage() {
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${ABOUT_STACK_CONTENT_PAD}`}>
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
             <div
-              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+1rem)] ${
+              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)] ${
  isRTL ? 'lg:order-2' : ''
  }`}
             >

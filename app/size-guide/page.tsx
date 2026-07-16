@@ -253,7 +253,7 @@ export default function SizeGuidePage() {
           </div>
 
           <aside className="min-w-0 lg:col-span-5">
-            <div className="border border-brand-stone/25 bg-white/70 p-4 sm:p-5 lg:sticky lg:top-[calc(var(--site-header-height,8.75rem)+0.75rem)]">
+            <div className="border border-brand-stone/25 bg-white/70 p-4 sm:p-5 lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+0.75rem)]">
               <h2 className="mb-4 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-darkRed">
                 {copy.howToMeasure}
               </h2>

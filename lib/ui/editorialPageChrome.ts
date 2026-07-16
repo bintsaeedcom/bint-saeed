@@ -16,23 +16,22 @@ export function editorialHeroAlign(_rtl?: boolean): string {
 
 /**
  * Clears the fixed site header on `<main>` (and flush heroes).
- * Uses live `--site-header-height` from Header (ResizeObserver) so breadcrumbs sit
- * consistently under the real bar — never guess with rem stacks that drift per breakpoint.
- * Fallback matches `:root` in globals.css (safe before hydrate; never clip crumbs).
+ * Uses the expanded, CSS-reserved clearance so the document never shifts when
+ * the live header compacts on scroll.
  */
-export const SITE_HEADER_OFFSET = 'pt-[var(--site-header-height,6.75rem)]'
+export const SITE_HEADER_OFFSET = 'pt-[var(--site-header-clearance,5.0625rem)]'
 
 /**
  * About/editorial banner only — header clear + a whisper of air so breadcrumbs
  * don’t sit flush under the bar. Keep in sync across every AboutSectionHero page.
  */
 export const EDITORIAL_HERO_HEADER_CLEARANCE =
-  'pt-[calc(var(--site-header-height,6.75rem)+0.5rem)]'
+  'pt-[calc(var(--site-header-clearance,5.0625rem)+0.5rem)]'
 
 /**
  * Sticky bars (About topic nav, FAQ TOC, shop/accessories toolbars) sit flush under the live header.
  */
-export const SITE_HEADER_STICKY_TOP = 'top-[var(--site-header-height,6.75rem)]'
+export const SITE_HEADER_STICKY_TOP = 'top-[var(--site-header-height,var(--site-header-clearance,5.0625rem))]'
 
 /**
  * Breathing room *below* LayoutWrapper’s header clearance — NOT a second header clear.

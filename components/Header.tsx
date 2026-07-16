@@ -382,7 +382,7 @@ export default function Header() {
       setIsScrolled(window.scrollY > threshold)
     }
     handleScroll()
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isHomePage])
 
@@ -407,7 +407,9 @@ export default function Header() {
     return () => window.removeEventListener(OPEN_MINI_CART_EVENT, openMiniCart as EventListener)
   }, [])
 
-  // Keep sticky topic/library bars flush under the real header (height changes on scroll / breakpoint).
+  // Live header height for sticky chrome. Do not clear the CSS var on cleanup —
+  // that snaps layout back to rem fallbacks and causes CLS. ResizeObserver alone
+  // tracks scroll/breakpoint size changes; avoid rebinding on isScrolled.
   useEffect(() => {
     const el = headerRef.current
     if (!el) return
@@ -424,9 +426,8 @@ export default function Header() {
     return () => {
       ro.disconnect()
       window.removeEventListener('resize', syncHeaderHeight)
-      document.documentElement.style.removeProperty('--site-header-height')
     }
-  }, [isScrolled, activeMegaMenu])
+  }, [])
 
   // Handle search
   useEffect(() => {

@@ -33,6 +33,8 @@ const state = {
   gaReady: false,
   clarityReady: false,
   posthogReady: false,
+  trackerInitComplete: false,
+  trackerInitScheduled: false,
   consent: { analytics: false, marketing: false } as ConsentState,
   scrollMilestonesByPath: new Map<string, Set<number>>(),
   /** Last page path seen before analytics consent — flushed on Accept. */
@@ -163,25 +165,55 @@ function applyConsentToTrackers() {
   }
 }
 
+function flushPendingPageView() {
+  const path = state.pendingPagePath
+  if (!path || !state.consent.analytics || !state.trackerInitComplete) return
+  state.pendingPagePath = null
+  trackPageView(path)
+}
+
+function scheduleTrackerInit() {
+  if (typeof window === 'undefined' || !state.consent.analytics) return
+  if (state.trackerInitComplete) {
+    applyConsentToTrackers()
+    flushPendingPageView()
+    return
+  }
+  if (state.trackerInitScheduled) return
+
+  state.trackerInitScheduled = true
+  const run = () => {
+    state.trackerInitScheduled = false
+    if (!state.consent.analytics || state.trackerInitComplete) return
+    initGa4()
+    initClarity()
+    initPosthog()
+    state.trackerInitComplete = true
+    applyConsentToTrackers()
+    flushPendingPageView()
+  }
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(run, { timeout: 2_000 })
+  } else {
+    globalThis.setTimeout(run, 1_000)
+  }
+}
+
 export function initializeAnalytics(consent: ConsentState) {
   state.consent = consent
-  initGa4()
-  initClarity()
-  initPosthog()
-  applyConsentToTrackers()
+  if (consent.analytics) scheduleTrackerInit()
+  else applyConsentToTrackers()
 }
 
 export function updateAnalyticsConsent(consent: ConsentState) {
-  const wasGranted = state.consent.analytics
   state.consent = consent
   applyConsentToTrackers()
-  // First Accept often happens after the initial page_view was dropped — send it now.
-  if (!wasGranted && consent.analytics) {
-    const path =
-      state.pendingPagePath ||
-      (typeof window !== 'undefined' ? window.location.pathname : null)
-    state.pendingPagePath = null
-    if (path) trackPageView(path)
+  if (consent.analytics) {
+    if (!state.pendingPagePath && typeof window !== 'undefined') {
+      state.pendingPagePath = window.location.pathname
+    }
+    scheduleTrackerInit()
   }
 }
 
@@ -207,7 +239,7 @@ export function trackEvent(name: string, params?: AnalyticsParams) {
 }
 
 export function trackPageView(path: string, params?: AnalyticsParams) {
-  if (!state.consent.analytics) {
+  if (!state.consent.analytics || !state.trackerInitComplete) {
     state.pendingPagePath = path
     // Keep internal dashboard mirror even before opt-in.
     const cleanParams = toCleanParams(params)
