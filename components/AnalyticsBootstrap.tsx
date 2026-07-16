@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { CONSENT_EVENT_NAME, getConsentState } from '@/lib/analytics/consent'
+import { notifyClarityLiveSlack } from '@/lib/analytics/clarityLiveSlack'
 import {
   initializeAnalytics,
   trackEvent,
@@ -17,16 +18,26 @@ export default function AnalyticsBootstrap() {
   useEffect(() => {
     const initialConsent = getConsentState()
     initializeAnalytics(initialConsent)
+    if (initialConsent.analytics) {
+      void notifyClarityLiveSlack()
+    }
 
     const onConsentChanged = (event: Event) => {
       const detail = (event as CustomEvent).detail
       const consent = detail ?? getConsentState()
       updateAnalyticsConsent(consent)
+      if (consent.analytics) {
+        void notifyClarityLiveSlack()
+      }
     }
 
     const onStorage = (event: StorageEvent) => {
       if (!event.key || ['analyticsConsent', 'marketingConsent', 'cookieConsent'].includes(event.key)) {
-        updateAnalyticsConsent(getConsentState())
+        const consent = getConsentState()
+        updateAnalyticsConsent(consent)
+        if (consent.analytics) {
+          void notifyClarityLiveSlack()
+        }
       }
     }
 
