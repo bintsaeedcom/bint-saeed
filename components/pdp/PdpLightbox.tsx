@@ -66,7 +66,11 @@ export default function PdpLightbox({
 
   useEffect(() => {
     if (!open || !swiper || swiper.destroyed) return
-    if (swiper.activeIndex !== safeIndex) {
+    // With loop enabled, `activeIndex` is the duplicated-slide index — sync on `realIndex`.
+    if (swiper.realIndex === safeIndex) return
+    if (typeof swiper.slideToLoop === 'function' && swiper.params.loop) {
+      swiper.slideToLoop(safeIndex, 0)
+    } else {
       swiper.slideTo(safeIndex, 0)
     }
   }, [open, safeIndex, swiper])
