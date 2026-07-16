@@ -288,7 +288,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                     {isRTL && product.nameAr ? product.nameAr : product.name}
                   </h3>
                   <p className="font-montserrat text-base tabular-nums text-brand-darkRed sm:text-lg">
-                    {formatPrice(product.price)}
+                    {formatPrice(product.price, product.id)}
                   </p>
                 </div>
               </div>

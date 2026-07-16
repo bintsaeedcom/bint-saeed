@@ -57,7 +57,27 @@ const AR: EmailPopupCopy = {
   codeCopied: 'تم نسخ الكود!',
 }
 
+const NL: EmailPopupCopy = {
+  imageAlt: 'Bint Saeed collectie',
+  exclusiveOffer: 'Exclusief aanbod',
+  headline: '10% korting',
+  body: 'Schrijf u in voor de nieuwsbrief en ontvang een exclusieve korting op uw eerste bestelling, plus de nieuwste ontwerpen en aanbiedingen.',
+  firstName: 'Voornaam',
+  email: 'E-mail',
+  signingUp: 'Bezig met inschrijven...',
+  signUp: 'Schrijf mij in',
+  privacyLine: 'Door u in te schrijven, gaat u akkoord met ons privacybeleid en met het ontvangen van marketingberichten.',
+  welcome: 'Welkom!',
+  discountIntro: 'Hier is uw exclusieve kortingscode:',
+  copyHint: 'Klik om te kopiëren • 30 dagen geldig',
+  startShopping: 'Begin met shoppen',
+  emailCheckError: 'Controleer uw e-mailadres.',
+  genericError: 'Er is iets misgegaan. Probeer het opnieuw.',
+  codeCopied: 'Code gekopieerd!',
+}
+
 export function getEmailPopupCopy(locale: AppLocale | string): EmailPopupCopy {
   if (locale === 'ar') return AR
+  if (locale === 'nl') return NL
   return EN
 }

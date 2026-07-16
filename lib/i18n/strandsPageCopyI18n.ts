@@ -190,7 +190,7 @@ const STRANDS_EN: StrandsPageCopy = {
   anchorLabel: 'THE ANCHOR PIECE',
   anchorHeading: 'The Marylebone Abaya.',
   anchorBody: (price) =>
-    `The strand drapes from a specially constructed cuff — a detail found only on the Marylebone. Made to order in Abu Dhabi, from AED ${price}.`,
+    `The strand drapes from a specially constructed cuff — a detail found only on the Marylebone. Made to order in Abu Dhabi, from ${price}.`,
   anchorCta: 'VIEW THE MARYLEBONE',
   conceptStoneSwatches: [
     { name: 'Onyx', color: CONCEPT_SWATCH_COLORS[0] },
@@ -270,7 +270,7 @@ const STRANDS_AR: StrandsPageCopy = {
   anchorLabel: 'القطعة الأساسية',
   anchorHeading: 'عباءة Marylebone.',
   anchorBody: (price) =>
-    `يتدلّى الخيط من كم مُصمَّم خصيصاً — تفصيل يوجد فقط على Marylebone. يُصنع حسب الطلب في أبوظبي، من ${price} درهماً.`,
+    `يتدلّى الخيط من كم مُصمَّم خصيصاً — تفصيل يوجد فقط على Marylebone. يُصنع حسب الطلب في أبوظبي، من ${price}.`,
   anchorCta: 'شاهدي Marylebone',
   conceptStoneSwatches: [
     { name: 'عقيق يماني', color: CONCEPT_SWATCH_COLORS[0] },
@@ -283,6 +283,111 @@ const STRANDS_AR: StrandsPageCopy = {
     { name: 'لازورد', color: CONCEPT_SWATCH_COLORS[7] },
     { name: 'جمشت', color: CONCEPT_SWATCH_COLORS[8] },
     { name: 'يشم', color: CONCEPT_SWATCH_COLORS[9] },
+  ],
+}
+
+const STONE_VISUAL_NOTES_NL: Record<string, string> = {
+  'Onyx Strands':
+    'Diepzwart met een hoogglanzend oppervlak. Een klassieke steen, te vinden in Brazilië en India. De steen waarmee elke Marylebone Abaya aankomt.',
+  'Tiger Eye Strands':
+    'Warm goudbruin met een natuurlijk, bewegend schijnsel dat met het licht verschuift. Afkomstig uit Zuid-Afrika. Geen twee stukken vangen het licht hetzelfde.',
+  'Al Ain Oasis Sunstone Strands':
+    'Warme perzik-oranje zonnesteen met een zachte, lichtgevende finish. Een levendige natuurlijke toon met subtiele warmte in het licht.',
+  'Fuchsia Jade Strands':
+    'Natuurlijke jade in een diep verzadigd roze. Een ongebruikelijke kleur — zelden in deze intensiteit te vinden.',
+  'Blue Aventurine Strands':
+    'Een koel, stoffig blauw met een subtiele innerlijke schittering. Afkomstig uit India en Chili. Terughoudend van afstand, gedetailleerd van dichtbij.',
+  'Al Ain Oasis Rose Quartz Strands':
+    'Zacht blush, halfdoorschijnend. Het licht gaat erdoorheen in plaats van erop te reflecteren. Te vinden in Brazilië en Madagaskar.',
+  'Al Ain Oasis Malachite Strands':
+    'Diepgroen met natuurlijke banderingen — geen twee stukken delen hetzelfde patroon. Afkomstig uit Centraal-Afrika.',
+  'Al Ain Oasis Lapis Lazuli Strands':
+    'Een diepblauw met natuurlijke gouden spikkels, afkomstig uit Afghanistan. Al duizenden jaren gebruikt in sieraden en kunst.',
+  'Amethyst Hearts Strands':
+    'Violet kwarts, gevormd tot harten en gepolijst tot een gefacetteerd oppervlak. Te vinden in Brazilië en Zambia.',
+  'Jade Hearts Strands':
+    'Koelgroene jade, met de hand tot hartvormen gevormd. Elk stuk iets anders. Elk stuk eenmaal gemaakt.',
+  'Natural Jade Strands':
+    'Echte, ongeverfde natuurlijke jade in zacht gedempt groen. Ronde gepolijste kralen met een stille, minerale kalmte.',
+}
+
+const STRANDS_NL: StrandsPageCopy = {
+  heroEyebrow: `DE ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
+  heroHeadline: 'Uw abaya was nooit voltooid. Tot nu toe.',
+  heroSubline1:
+    'Het eerste huis voor abaya’s met verwisselbare Strands van natuursteen. Gedragen aan de manchet. Verwisseld naar keuze.',
+  heroSubline2: 'Natuursteen. Handgemaakt in Abu Dhabi. Voor de Marylebone Abaya.',
+  ctaShopStrands: buildShopStrandsCta('nl', 'upper'),
+  ctaSeeMarylebone: 'BEKIJK DE MARYLEBONE',
+  marquee: `NATUURSTEEN · BINT SAEED · ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · ABU DHABI · OP BESTELLING GEMAAKT ·`,
+  conceptLabel: 'HET CONCEPT',
+  conceptHeadingLine1: 'Eén abaya.',
+  conceptHeadingLine2: 'Veel accenten.',
+  conceptP1:
+    'De Bint Saeed abaya Strand is een detail van natuursteen, gedragen aan de manchet van de Marylebone Abaya. Handgemaakt in Abu Dhabi. Gemaakt om te verwisselen.',
+  conceptP2:
+    'Elke Marylebone Abaya komt standaard met een onyx Strand. Kies een andere steen voor een andere dag. Stem af op uw tas, uw outfit, uw gelegenheid. De abaya blijft dezelfde. U bepaalt wat zij uitdrukt.',
+  conceptStoneList:
+    'Onyx · Tijgeroog · Zonnesteen · Fuchsia jade · Blauwe aventurijn · Rozenkwarts · Malachiet · Lapis lazuli · Amethist · Jade',
+  conceptExploreStones: 'Verken alle stenen →',
+  conceptMarylebonePrompt: 'Heeft u de Marylebone Abaya nog niet?',
+  conceptMaryleboneLink: 'Bekijk de Marylebone Abaya →',
+  howItWorksLabel: 'HOE HET WERKT',
+  howItWorksHeading: 'Drie stappen.',
+  steps: [
+    {
+      numeral: 'I',
+      title: 'KIES DE STEEN',
+      body: 'Kies een Strand van natuursteen op kleur, oppervlak en karakter.',
+    },
+    {
+      numeral: 'II',
+      title: 'DRAAG HEM NAAR WENS',
+      body: 'De Marylebone Abaya is ontworpen om hem te houden. Meer is niet nodig.',
+    },
+    {
+      numeral: 'III',
+      title: 'WISSEL WANNEER U WILT',
+      body: 'Wissel stenen tussen gelegenheden. De abaya blijft dezelfde.',
+    },
+  ],
+  collectionLabel: 'DE COLLECTIE',
+  collectionHeading: 'Kies op kleur en karakter.',
+  collectionIntro: 'Elke steen is natuurlijk. Geen twee zijn identiek.',
+  shopAllStrandsCta: buildShopAllStrandsCta('nl', 'title'),
+  discoverAllStrandsCta: 'Ontdek alle Strands',
+  stoneVisualNotes: STONE_VISUAL_NOTES_NL,
+  stoneVisualFallback: 'Natuursteen gekozen om kleur, oppervlak en visuele textuur.',
+  limitedEdition: 'Limited edition',
+  limitedEditionShort: 'Limited',
+  viewStrandCta: 'Kies deze steen',
+  viewStrandGridCta: 'Bekijk Strand',
+  carouselPrevAria: 'Vorige stenen',
+  carouselNextAria: 'Volgende stenen',
+  carouselSwipeHint: 'Veeg over de stenen hierboven of sleep deze balk',
+  carouselPositionAria: 'Positie van de steencarrousel',
+  shopCollectionLabel: 'SHOP DE COLLECTIE',
+  shopCollectionHeading: 'Alle Strands van natuursteen',
+  shopCollectionIntro:
+    'Tien verwisselbare steen-Strands voor de Marylebone Abaya — kies op kleur, oppervlak en karakter. Elke Strand heeft een eigen productpagina met alle details.',
+  alsoInPrefix: 'Ook in',
+  alsoInLink: 'Accessoires — Abaya Strands',
+  anchorLabel: 'HET ANKERSTUK',
+  anchorHeading: 'De Marylebone Abaya.',
+  anchorBody: (price) =>
+    `De Strand hangt vanaf een speciaal geconstrueerde manchet — een detail dat alleen op de Marylebone voorkomt. Op bestelling gemaakt in Abu Dhabi, vanaf ${price}.`,
+  anchorCta: 'BEKIJK DE MARYLEBONE',
+  conceptStoneSwatches: [
+    { name: 'Onyx', color: CONCEPT_SWATCH_COLORS[0] },
+    { name: 'Tijgeroog', color: CONCEPT_SWATCH_COLORS[1] },
+    { name: 'Zonnesteen', color: CONCEPT_SWATCH_COLORS[2] },
+    { name: 'Fuchsia jade', color: CONCEPT_SWATCH_COLORS[3] },
+    { name: 'Blauwe aventurijn', color: CONCEPT_SWATCH_COLORS[4] },
+    { name: 'Rozenkwarts', color: CONCEPT_SWATCH_COLORS[5] },
+    { name: 'Malachiet', color: CONCEPT_SWATCH_COLORS[6] },
+    { name: 'Lapis lazuli', color: CONCEPT_SWATCH_COLORS[7] },
+    { name: 'Amethist', color: CONCEPT_SWATCH_COLORS[8] },
+    { name: 'Jade', color: CONCEPT_SWATCH_COLORS[9] },
   ],
 }
 
@@ -322,15 +427,6 @@ type StrandsLocaleOverlay = Partial<
  * Full page packs can expand later; CTAs always use the Strands brand lock.
  */
 const STRANDS_LOCALE_OVERLAY: Partial<Record<Language, StrandsLocaleOverlay>> = {
-  nl: {
-    heroEyebrow: `DE ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
-    heroHeadline: 'Je abaya is nooit af geweest. Tot nu toe.',
-    heroSubline1:
-      'Het eerste abayahuis dat verwisselbare Strands van natuursteen aanbiedt. Deze worden aan de manchet gedragen en naar wens verwisseld.',
-    heroSubline2: 'Natuursteen. Handgemaakt in Abu Dhabi. Gemaakt voor de Marylebone Abaya.',
-    ctaSeeMarylebone: 'ZIE DE MARYLEBONE',
-    marquee: `NATUURSTEEN · BINT SAEED · ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · ABU DHABI · OP BESTELLING GEMAAKT ·`,
-  },
   de: {
     heroEyebrow: `DER ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
     heroHeadline: 'Ihre Abaya war nie fertig. Bis jetzt.',
@@ -406,6 +502,7 @@ const STRANDS_LOCALE_OVERLAY: Partial<Record<Language, StrandsLocaleOverlay>> = 
 
 export function getStrandsPageCopy(locale: Language | string): StrandsPageCopy {
   if (locale === 'ar') return STRANDS_AR
+  if (locale === 'nl') return STRANDS_NL
   const lang = (locale in STRANDS_LOCALE_OVERLAY || locale === 'en' ? locale : 'en') as Language
   if (lang === 'en') return STRANDS_EN
 

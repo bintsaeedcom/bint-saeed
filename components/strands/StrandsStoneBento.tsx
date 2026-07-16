@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import type { Accessory } from '@/data/accessories'
+import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { getStrandCarouselAlt } from '@/lib/accessories/accessoryJsonLd'
 import { PRODUCT_GRID_COLOUR_DOT, softGridColourBeadStyle } from '@/lib/ui/productGridColourDot'
 import { ctaPrimary } from '@/lib/ui/ctaClasses'
@@ -44,6 +45,7 @@ export default function StrandsStoneBento({
   stoneNotes,
   stoneNoteFallback,
 }: StrandsStoneBentoProps) {
+  const { formatPrice } = useCurrency()
   const featured = useMemo(() => {
     const byId = new Map(products.map((p) => [p.id, p]))
     return STRANDS_BENTO_FEATURED_IDS.map((id) => byId.get(id)).filter(
@@ -123,7 +125,7 @@ export default function StrandsStoneBento({
             {note}
           </p>
           <p className="mt-3 font-montserrat text-sm font-medium text-[#7A1C28]">
-            AED {product.price.toLocaleString()}
+            {formatPrice(product.price, product.id)}
           </p>
           <span
             className={`mt-auto inline-flex w-full pt-3 transition-opacity duration-300 ${

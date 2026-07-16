@@ -105,7 +105,7 @@ export default function WishlistPage() {
                         </h2>
                       </LocaleLink>
                       <p className="mt-1 font-montserrat text-sm text-brand-darkRed">
-                        {formatPrice(item.price)}
+                        {formatPrice(item.price, item.id)}
                       </p>
                     </div>
                     <button

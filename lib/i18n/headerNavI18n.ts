@@ -124,7 +124,49 @@ const AR: HeaderNavCopy = {
   searchSuggestions: ['العبايات', 'القفاطين', 'الفساتين', 'الإكسسوارات', 'وصل حديثاً', 'التراث'],
 }
 
+const NL: HeaderNavCopy = {
+  shop: 'Shop',
+  strands: 'Strands',
+  accessories: 'Accessoires',
+  personalisation: 'Personalisatie',
+  aboutUs: 'Over ons',
+  discover: 'Ontdek',
+  shopAll: 'Alles bekijken',
+  giftCards: 'Cadeaubonnen',
+  readyToWear: 'Ready-to-wear',
+  abayas: "Abaya's",
+  sets: 'Sets',
+  dresses: 'Jurken',
+  kaftans: 'Kaftans',
+  allStrands: 'Alle Strands',
+  signatureStrands: 'Signature Strands',
+  shopAllStrands: 'Alle Strands bekijken',
+  allAccessories: 'Alle accessoires',
+  necklaces: 'Kettingen',
+  earrings: 'Oorbellen',
+  bagCharms: 'Tashangers',
+  phoneCharms: 'Telefoonhangers',
+  contact: 'Contact',
+  hiddenPocket: 'Verborgen zak',
+  personalisedLabels: 'Gepersonaliseerd binnenlabel',
+  ourStory: 'Ons verhaal',
+  theCodes: 'The Codes',
+  craftsmanship: 'Vakmanschap',
+  givingForward: 'Giving Forward',
+  maryleboneAbaya: 'Marylebone Abaya',
+  shopNow: 'Shop nu',
+  discoverNow: 'Ontdek nu',
+  discoverMore: 'Ontdek meer',
+  explore: 'Verken',
+  toggleMenu: 'Menu openen',
+  wishlist: 'Favorieten',
+  viewAll: 'Alles bekijken',
+  collection: 'Collectie',
+  searchSuggestions: ["Abaya's", 'Kaftans', 'Jurken', 'Accessoires', 'Nieuw binnen', 'Erfgoed'],
+}
+
 export function getHeaderNavCopy(locale: AppLocale | string): HeaderNavCopy {
   if (locale === 'ar') return AR
+  if (locale === 'nl') return NL
   return EN
 }

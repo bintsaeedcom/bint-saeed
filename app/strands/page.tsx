@@ -10,6 +10,7 @@ import { sortAccessoriesByPriceAsc } from '@/lib/accessories/filterAccessories'
 import { products } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { getStrandsPageCopy } from '@/lib/i18n/strandsPageCopyI18n'
 import { PRODUCT_LINE_STRANDS } from '@/lib/i18n/strandsBrandLock'
 import NoTranslate from '@/components/NoTranslate'
@@ -34,6 +35,7 @@ const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 
 export default function StrandsPage() {
   const { isRTL, language } = useLanguage()
+  const { formatPrice } = useCurrency()
   const copy = getStrandsPageCopy(language)
   const collectionJsonLd = useMemo(() => buildStrandsCollectionJsonLd(language), [language])
   const strandProducts = useMemo(
@@ -275,7 +277,11 @@ export default function StrandsPage() {
               <p className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-[#e8d8c8]/55">{copy.anchorLabel}</p>
               <h2 className={`mt-5 ${editorialSectionH2} text-[#e8ddd4]`}>{copy.anchorHeading}</h2>
               <p className="mt-5 max-w-xl font-montserrat text-sm leading-[1.85] tracking-wide text-[#e8ddd4]/72">
-                {copy.anchorBody(marylebone ? marylebone.price.toLocaleString() : '500')}
+                {copy.anchorBody(
+                  marylebone
+                    ? formatPrice(marylebone.price, marylebone.id)
+                    : formatPrice(2499),
+                )}
               </p>
               <LocaleLink
                 href={maryleboneHref}

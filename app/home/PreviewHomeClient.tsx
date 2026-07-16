@@ -17,6 +17,7 @@ import NoTranslate from '@/components/NoTranslate'
 import Image from 'next/image'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getHeaderNavCopy } from '@/lib/i18n/headerNavI18n'
 import { getHomeEditorialCopy } from '@/lib/i18n/homeEditorialCopyI18n'
@@ -784,6 +785,7 @@ const CATEGORY_STRIP_KEYS = [
 
 function CategoryNavigationStrip() {
   const { language, isRTL } = useLanguage()
+  const { formatPrice, formatAmount, convertPrice } = useCurrency()
   const copy = getHomeEditorialCopy(language)
   const hn = useMemo(() => getHeaderNavCopy(language), [language])
   const ui = commerceUi(language)
@@ -807,33 +809,66 @@ function CategoryNavigationStrip() {
     [hn.accessories, hn.personalisation, ui.shop.categories],
   )
 
-  const pricesByCategory = staticProducts.reduce<Record<string, number[]>>((acc, product) => {
-    const key = product.category
-    if (!acc[key]) acc[key] = []
-    acc[key].push(product.price)
-    return acc
-  }, {})
+  const productsByCategory = useMemo(() => {
+    return staticProducts.reduce<Record<string, Product[]>>((acc, product) => {
+      const key = product.category
+      if (!acc[key]) acc[key] = []
+      acc[key].push(product)
+      return acc
+    }, {})
+  }, [])
 
-  const categoryMeta: Record<string, { priceLabel: string; subline?: string }> = {
-    Abayas: {
-      priceLabel: copy.formatPriceRange(
-        Math.min(...(pricesByCategory.Abayas ?? [0])),
-        Math.max(...(pricesByCategory.Abayas ?? [0])),
-      ),
-    },
-    Kaftans: {
-      priceLabel: copy.formatPriceFrom(Math.min(...(pricesByCategory.Kaftans ?? [0]))),
-    },
-    Sets: {
-      priceLabel: copy.formatPriceFrom(Math.min(...(pricesByCategory.Sets ?? [0]))),
-    },
-    Accessories: {
-      priceLabel: copy.categoryNewIn,
-    },
-    Personalisation: {
-      priceLabel: copy.categoryHiddenPocketGift,
-    },
-  }
+  const categoryMeta = useMemo(() => {
+    const abayas = productsByCategory.Abayas ?? []
+    const kaftans = productsByCategory.Kaftans ?? []
+    const sets = productsByCategory.Sets ?? []
+
+    const sortedByListed = (list: Product[]) =>
+      [...list].sort(
+        (a, b) => convertPrice(a.price, a.id) - convertPrice(b.price, b.id),
+      )
+
+    const abayaSorted = sortedByListed(abayas)
+    const kaftanSorted = sortedByListed(kaftans)
+    const setSorted = sortedByListed(sets)
+
+    const abayaMin = abayaSorted[0]
+    const abayaMax = abayaSorted[abayaSorted.length - 1]
+    const kaftanMin = kaftanSorted[0]
+    const setMin = setSorted[0]
+
+    return {
+      Abayas: {
+        priceLabel:
+          abayaMin && abayaMax
+            ? `${formatPrice(abayaMin.price, abayaMin.id)}–${formatPrice(abayaMax.price, abayaMax.id)}`
+            : '',
+      },
+      Kaftans: {
+        priceLabel: kaftanMin
+          ? `${formatPrice(kaftanMin.price, kaftanMin.id)}+`
+          : formatAmount(0),
+      },
+      Sets: {
+        priceLabel: setMin
+          ? `${formatPrice(setMin.price, setMin.id)}+`
+          : formatAmount(0),
+      },
+      Accessories: {
+        priceLabel: copy.categoryNewIn,
+      },
+      Personalisation: {
+        priceLabel: copy.categoryHiddenPocketGift,
+      },
+    } as Record<string, { priceLabel: string; subline?: string }>
+  }, [
+    convertPrice,
+    copy.categoryHiddenPocketGift,
+    copy.categoryNewIn,
+    formatAmount,
+    formatPrice,
+    productsByCategory,
+  ])
 
   const activeItem = categoryStrip[active]!
 
@@ -887,6 +922,7 @@ function CategoryNavigationStrip() {
 
 function QuickShopCarousel() {
   const { isRTL, language } = useLanguage()
+  const { formatPrice } = useCurrency()
   const ui = commerceUi(language)
   const copy = getHomeEditorialCopy(language)
   const reduceMotion = useReducedMotion()
@@ -1010,7 +1046,7 @@ function QuickShopCarousel() {
                     {product.name}
                   </h3>
                   <p className="font-montserrat text-[10.5px] uppercase leading-snug tracking-[0.06em] text-[#6f1524]">
-                    {copy.formatProductPrice(product.price)}
+                    {formatPrice(product.price, product.id)}
                   </p>
                 </div>
                 <div

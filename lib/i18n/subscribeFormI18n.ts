@@ -53,7 +53,25 @@ const AR: SubscribeFormCopy = {
   privacyLine: 'بالاشتراك، توافقين على سياسة الخصوصية وتوافقين على استلام التحديثات.',
 }
 
+const NL: SubscribeFormCopy = {
+  email: 'E-mailadres',
+  phoneOptional: 'Mobiel nummer',
+  phoneOptionalNote: '(optioneel)',
+  phoneRequired: 'Mobiel nummer',
+  notifyEmail: 'Updates per e-mail',
+  notifyWhatsApp: 'WhatsApp-meldingen',
+  notifyHintEmail: 'Schrijf u in voor nieuwe collecties en previews van het Huis per e-mail.',
+  notifyHintWhatsApp: 'Ontvang een melding via WhatsApp wanneer nieuwe hoofdstukken verschijnen. Vul hieronder uw mobiele nummer in.',
+  phoneRequiredWhatsApp: 'Voeg uw mobiele nummer toe voor WhatsApp-meldingen.',
+  subscribe: 'Inschrijven',
+  subscribing: 'Bezig met inschrijven...',
+  success: 'Welkom bij Bint Saeed!',
+  errorGeneric: 'Er is iets misgegaan. Probeer het opnieuw.',
+  privacyLine: 'Door u in te schrijven, gaat u akkoord met ons privacybeleid en met het ontvangen van updates.',
+}
+
 export function getSubscribeFormCopy(locale: AppLocale | string): SubscribeFormCopy {
   if (locale === 'ar') return AR
+  if (locale === 'nl') return NL
   return EN
 }

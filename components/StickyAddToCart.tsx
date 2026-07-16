@@ -182,7 +182,7 @@ export default function StickyAddToCart({
             <div className={`flex min-w-0 items-center gap-2.5 `}>
               <div className={`min-w-0 flex-1 overflow-hidden text-start`}>
                 <p className="truncate font-montserrat text-[15px] font-medium tabular-nums tracking-wide text-white">
-                  {formatPrice(product.price)}
+                  {formatPrice(product.price, product.id)}
                 </p>
                 <p className="mt-0.5 truncate font-montserrat text-[10px] uppercase tracking-[0.1em] text-[#e8d8c8]">
                   {product.name}

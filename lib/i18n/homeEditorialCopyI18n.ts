@@ -11,7 +11,7 @@ const HOME_HERO_HEADLINE: Record<Language, string> = {
   ru: 'ДЛЯ ЖЕНЩИН С МЕНЯЮЩИМСЯ ОБРАЗОМ ЖИЗНИ',
   zh: '为生活方式不断演进的女性',
   de: 'FÜR FRAUEN MIT SICH WANDELNDEN LEBENSSTILEN',
-  nl: 'VOOR VROUWEN MET VERANDERENDE LEVENSSTIJLEN',
+  nl: 'VOOR VROUWEN WIER LEVEN BLIJFT BEWEGEN',
   pt: 'PARA MULHERES COM ESTILOS DE VIDA EM EVOLUÇÃO',
   id: 'UNTUK WANITA DENGAN GAYA HIDUP YANG TERUS BERKEMBANG',
   ms: 'UNTUK WANITA DENGAN GAYA HIDUP YANG SENTIASA BERKEMBANG',
@@ -27,7 +27,7 @@ const HOME_STRANDS_EYEBROW: Record<Language, string> = {
   ru: 'УКРАШЕНИЯ ДЛЯ ОДЕЖДЫ',
   zh: '服装珠宝',
   de: 'KLEIDUNGS-SCHMUCK',
-  nl: 'KLEDING-SIERADEN',
+  nl: 'SIERADEN VOOR HET KLEDINGSTUK',
   pt: 'JOIAS PARA VESTUÁRIO',
   id: 'PERHIASAN PAKAIAN',
   ms: 'BARANG KEMAS PAKAIAN',
@@ -43,7 +43,7 @@ const HOME_STRANDS_HEADING: Record<Language, string> = {
   ru: 'STRANDS — СМЕННЫЕ НИТИ ИЗ НАТУРАЛЬНОГО КАМНЯ',
   zh: 'STRANDS — 可更换天然石串饰',
   de: 'WECHSELBARE NATURSTEIN-STRANDS',
-  nl: 'WISSELBARE NATUURSTEEN STRANDS',
+  nl: 'VERWISSELBARE STRANDS VAN NATUURSTEEN',
   pt: 'STRANDS DE PEDRAS NATURAIS INTERCAMBIÁVEIS',
   id: 'STRANDS — RANTAI BATU ALAM YANG DAPAT DIUBAH',
   ms: 'STRANDS — RANTAI BATU SEMULA JADI BOLEH DITUKAR',
@@ -67,7 +67,7 @@ const HOME_STRANDS_BODY: Record<Language, string> = {
   de:
     'Eine neue Art, die Garderobe zu personalisieren. Wechselbare Naturstein-Strands für ausgewählte Bint Saeed Stücke — damit sich jedes Teil mit Stil, Stimmung und Anlass weiterentwickelt.',
   nl:
-    'Een nieuwe manier om uw garderobe te personaliseren. Wisselbare natuursteen Strands, ontworpen voor geselecteerde Bint Saeed-kledingstukken, zodat elk stuk meegroeit met uw stijl, stemming en gelegenheid.',
+    'Een nieuwe manier om uw garderobe te personaliseren. Verwisselbare Strands van natuursteen, ontworpen voor geselecteerde Bint Saeed-stukken — zodat elk stuk meebeweegt met uw stijl, stemming en gelegenheid.',
   pt:
     'Uma nova forma de personalizar o seu guarda-roupa. Strands de pedras naturais intercambiáveis, concebidos para peças Bint Saeed selecionadas, para que cada peça evolua com o seu estilo, humor e ocasião.',
   id:
@@ -144,7 +144,7 @@ const HOME_PERSONALISATION_BODY: Record<Language, string> = {
   de:
     'Exklusiv bei Bint Saeed Abayas kann unser verstecktes Innenetikett mit einem Namen, einem bedeutungsvollen Datum oder einer privaten Botschaft personalisiert werden. Ein Detail, das nur Sie kennen — und das Sie bei jedem Tragen nah bei sich tragen.',
   nl:
-    'Uitsluitend beschikbaar op Bint Saeed abaya’s: ons verborgen binnenlabel kan worden gepersonaliseerd met een naam, een betekenisvolle datum of een privébericht. Een detail dat alleen u kent, en dat u draagt telkens wanneer u het draagt.',
+    'Uitsluitend op Bint Saeed abaya’s: ons verborgen binnenlabel kan worden gepersonaliseerd met een naam, een betekenisvolle datum of een privébericht. Een detail dat alleen u kent — dichtbij, telkens wanneer u het draagt.',
   pt:
     'Disponível exclusivamente nas abayas Bint Saeed, a nossa etiqueta interior oculta pode ser personalizada com um nome, uma data significativa ou uma mensagem privada. Um detalhe conhecido apenas por si, levado perto de si sempre que o usa.',
   id:
@@ -459,9 +459,112 @@ const HOME_AR: HomeEditorialCopy = {
   formatProductPrice: (price) => `د.إ ${price.toLocaleString()}`,
 }
 
+const HOME_NL: HomeEditorialCopy = {
+  heroHeadline: HOME_HERO_HEADLINE.nl,
+  heroSubline: 'Erfgoed dat verder reikt.',
+  heroBrandStoryCta: 'Ons verhaal',
+  manifestoLead: 'Bint Saeed',
+  manifestoQuote: 'Een gevoel van zelf dat niet verandert met de setting.',
+  manifestoSnippets: [
+    'Waar het leven ook wordt geleefd — van Abu Dhabi tot Londen, van Riyad tot Parijs, van Doha tot Marbella — hoeft u uw manier van aanwezig zijn niet te wijzigen. Elk stuk draagt uw elegantie, uw houding, met dezelfde rust, waar u ook bent.',
+    'Bint Saeed bestaat op het snijvlak van erfgoed en een hedendaags leven — gedragen over grenzen, herkend aan zijn consistentie.',
+  ],
+  manifestoImageEyebrow: 'Van Abu Dhabi naar de wereld',
+  manifestoLabel: 'MANIFEST',
+  manifestoReadStory: 'Lees ons verhaal',
+  chapterLabel: 'HOOFDSTUK I',
+  collectionHeading: 'DE COLLECTIE',
+  pillars: [
+    {
+      title: 'Gemaakt in Abu Dhabi',
+      copy: 'Elk stuk wordt in beperkte oplage afgewerkt, met aandacht voor snit, drapering en duurzaamheid.',
+    },
+    {
+      title: 'Natuursteen als handtekening',
+      copy: 'Strands en details worden gekozen om hun verhaal, symboliek en tijdloze draagbaarheid.',
+    },
+    {
+      title: 'Personalisatie inbegrepen',
+      copy: 'Een verborgen zakbericht kan worden toegevoegd — voor giften, mijlpalen en een privébetekenis.',
+    },
+  ],
+  strandSwatches: [
+    { name: 'Onyx', hex: STRAND_SWATCHES_HEX[0].hex },
+    { name: 'Tijgeroog', hex: STRAND_SWATCHES_HEX[1].hex },
+    { name: 'Rozenkwarts', hex: STRAND_SWATCHES_HEX[2].hex },
+    { name: 'Malachiet', hex: STRAND_SWATCHES_HEX[3].hex },
+  ],
+  abayaStrandsEyebrow: HOME_STRANDS_EYEBROW.nl,
+  abayaStrandsHeading: HOME_STRANDS_HEADING.nl,
+  abayaStrandsBody: HOME_STRANDS_BODY.nl,
+  shopStrandsCta: homeStrandsShopCta('nl'),
+  carriedCloseEyebrow: HOME_PERSONALISATION_EYEBROW.nl,
+  personalisationHeading: HOME_PERSONALISATION_HEADING.nl,
+  personalisationBody: HOME_PERSONALISATION_BODY.nl,
+  personalisationCta: HOME_PERSONALISATION_CTA.nl,
+  shopCta: 'SHOP',
+  shopNowCta: HOME_SHOP_NOW_CTA.nl,
+  returnToShopCta: 'Terug naar de shop',
+  categoryFocus: 'Categorie in beeld',
+  categoryNewIn: 'Nieuw binnen',
+  categoryHiddenPocketGift: 'Verborgen zak als geschenk',
+  pricePrefix: 'AED',
+  houseCodesEyebrow: 'House Codes',
+  houseCodesHeading: 'THE HOUSE CODES',
+  discoverCodesCta: 'Ontdek The Codes',
+  storyCodes: [
+    {
+      title: STORY_CODES_TITLES[0],
+      subtitle: 'Handtekening van het huis',
+      imageAlt: 'Bint Saeed luxe huis-monogram — house code',
+    },
+    {
+      title: STORY_CODES_TITLES[1],
+      subtitle: 'Palm vakmanschap',
+      imageAlt: 'Al Khous palmbladweefsel Emiratisch erfgoed — house code',
+    },
+    {
+      title: STORY_CODES_TITLES[2],
+      subtitle: 'Lijn en continuïteit',
+      imageAlt: 'Knotted Lines of Lineage gouden motief — house code',
+    },
+    {
+      title: STORY_CODES_TITLES[3],
+      subtitle: 'Regionaal motief',
+      imageAlt: 'Al Ain Rosette carneool-motief — house code',
+    },
+    {
+      title: STORY_CODES_TITLES[4],
+      subtitle: 'Gouddraadwerk',
+      imageAlt: 'Traditioneel Al Talli Emiratisch borduurwerk — house code',
+    },
+    {
+      title: STORY_CODES_TITLES[5],
+      subtitle: 'Gekralde lijnen',
+      imageAlt: 'Natuursteen abaya Strands — Emiratisch erfgoed house code',
+    },
+  ],
+  mediaAlts: {
+    strandsCollection: 'Bint Saeed Strands-collectie',
+    personalisationLabel: 'Bint Saeed gepersonaliseerd verborgen binnenlabel',
+    campaignGazelles: 'Bint Saeed campagnepanorama — gazellen van Abu Dhabi',
+    heroMobile: 'Bint Saeed luxe abaya’s in bordeaux en zwart, editoriale groepsfotografie',
+    heroDesktop: 'Bint Saeed luxe abaya’s, editoriale fotografie',
+    manifestoPortrait: 'Bint Saeed — van Abu Dhabi naar de wereld',
+    categoryPreview: (label) => `Voorbeeld ${label}`,
+  },
+  createdForYouEyebrow: 'Dichtbij gedragen',
+  createdForYouHeading: 'PERSONALISATIE',
+  createdForYouBody:
+    'Elk stuk heeft een verborgen zak, te personaliseren met een naam, datum of privébericht. Passend voor Eid, bruiloften en mijlpalen.',
+  formatPriceRange: (min, max) => `AED ${min.toLocaleString('nl-NL')}-${max.toLocaleString('nl-NL')}`,
+  formatPriceFrom: (min) => `AED ${min.toLocaleString('nl-NL')}+`,
+  formatProductPrice: (price) => `AED ${price.toLocaleString('nl-NL')}`,
+}
+
 export function getHomeEditorialCopy(locale: Language | string): HomeEditorialCopy {
   const lang: Language = locale in HOME_HERO_HEADLINE ? (locale as Language) : 'en'
-  const base = lang === 'ar' ? HOME_AR : HOME_EN
+  const base = lang === 'ar' ? HOME_AR : lang === 'nl' ? HOME_NL : HOME_EN
   return {
     ...base,
     heroHeadline: HOME_HERO_HEADLINE[lang],

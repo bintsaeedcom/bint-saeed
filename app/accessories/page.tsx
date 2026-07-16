@@ -752,7 +752,7 @@ function AccessoryCard({
 }: { 
   accessory: Accessory
   index: number
-  formatPrice: (price: number) => string
+  formatPrice: (price: number, productId?: string) => string
   isRTL: boolean
   language: AppLocale
   ui: CommerceUi
@@ -823,7 +823,7 @@ function AccessoryCard({
             >
               {accessoryName}
             </h3>
-            <p className="font-montserrat text-sm tracking-wide text-[#6f1524]">{formatPrice(accessory.price)}</p>
+            <p className="font-montserrat text-sm tracking-wide text-[#6f1524]">{formatPrice(accessory.price, accessory.id)}</p>
           </div>
 
           {/* Colour indicators — gemstone references, not selectable swatches */}

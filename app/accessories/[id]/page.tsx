@@ -115,7 +115,7 @@ export default function AccessoryDetailPage() {
   const [lightboxIndex, setLightboxIndex] = useState(0)
 
   const addItem = useCartStore((state) => state.addItem)
-  const { formatPrice, currency, convertPrice } = useCurrency()
+  const { formatPrice, formatAmount, currency, convertPrice } = useCurrency()
   const { isRTL, t, language } = useLanguage()
   const ui = commerceUi(language)
   const productUi = productPageUi(language)
@@ -965,10 +965,10 @@ export default function AccessoryDetailPage() {
 
             <div className="mb-3 space-y-0.5">
               <p className="font-montserrat text-lg tracking-wide text-brand-darkRed">
-                {formatPrice(accessory.price * quantity)}
+                {formatAmount(convertPrice(accessory.price, accessory.id) * quantity)}
                 {quantity > 1 && (
                   <span className="ml-2 font-montserrat text-[11px] font-normal text-brand-darkRed/65">
-                    ({quantity} × {formatPrice(accessory.price)})
+                    ({quantity} × {formatPrice(accessory.price, accessory.id)})
                   </span>
                 )}
               </p>
@@ -1058,14 +1058,14 @@ export default function AccessoryDetailPage() {
 
             {(currency.code === 'AED' || currency.code === 'SAR') ? (
               <TamaraProductWidget
-                amount={convertPrice(accessory.price * quantity)}
+                amount={convertPrice(accessory.price, accessory.id) * quantity}
                 currency={currency.code}
                 className="mb-3 mt-1"
               />
             ) : null}
             {['AED', 'SAR', 'KWD'].includes(currency.code) ? (
               <TabbyPromoSnippet
-                price={convertPrice(accessory.price * quantity)}
+                price={convertPrice(accessory.price, accessory.id) * quantity}
                 currency={currency.code}
                 source="product"
                 className="mb-3"
@@ -1145,7 +1145,7 @@ export default function AccessoryDetailPage() {
                             <span className="line-clamp-2">{relatedName}</span>
                           </p>
                           <p className="shrink-0 pt-0.5 font-montserrat text-[10px] tabular-nums tracking-wide text-brand-darkRed/80 sm:text-[11px]">
-                            {formatPrice(item.price)}
+                            {formatPrice(item.price, item.id)}
                           </p>
                         </div>
                       </LocaleLink>

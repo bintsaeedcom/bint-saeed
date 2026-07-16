@@ -440,7 +440,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                             {p.name}
                           </p>
                           <p className={`mt-0.5 font-montserrat text-[10px] tabular-nums ${glassTextMutedOnDark}`}>
-                            {formatPrice(p.price)}
+                            {formatPrice(p.price, p.id)}
                           </p>
                         </LocaleLink>
                       </SwiperSlide>
