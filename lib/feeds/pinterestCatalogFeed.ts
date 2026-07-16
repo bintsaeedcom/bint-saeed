@@ -67,24 +67,31 @@ function formatPriceAed(price: number): string {
   return `${price.toFixed(2)} AED`
 }
 
+/** Prefer 3+ taxonomy levels so Pinterest Alert 126 stays clear. */
 function googleProductCategory(category: string): string {
   switch (category) {
     case 'Abayas':
+      return 'Apparel & Accessories > Clothing > Traditional & Ceremonial Clothing'
     case 'Kaftans':
+      return 'Apparel & Accessories > Clothing > Traditional & Ceremonial Clothing'
     case 'Dresses':
+      return 'Apparel & Accessories > Clothing > Dresses'
     case 'Sets':
-      return 'Apparel & Accessories > Clothing'
+      return 'Apparel & Accessories > Clothing > Outfit Sets'
     case 'necklaces':
       return 'Apparel & Accessories > Jewelry > Necklaces'
     case 'earrings':
       return 'Apparel & Accessories > Jewelry > Earrings'
-    case 'signature-strands':
-    case 'bag-strands':
-    case 'phone-strands':
     case 'bracelets':
-      return 'Apparel & Accessories > Jewelry'
+      return 'Apparel & Accessories > Jewelry > Bracelets'
+    case 'signature-strands':
+      return 'Apparel & Accessories > Jewelry > Charms & Pendants'
+    case 'bag-strands':
+      return 'Apparel & Accessories > Jewelry > Charms & Pendants'
+    case 'phone-strands':
+      return 'Apparel & Accessories > Jewelry > Charms & Pendants'
     default:
-      return 'Apparel & Accessories'
+      return 'Apparel & Accessories > Clothing > Traditional & Ceremonial Clothing'
   }
 }
 
