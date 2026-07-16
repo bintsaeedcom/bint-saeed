@@ -26,6 +26,7 @@ import {
   STONE_VARIANTS_I18N,
   type StoneVariantId,
 } from '@/lib/accessories/strandPdp/stoneVariantsI18n'
+import { withMerchantListingOfferFields } from '@/lib/seo/merchantOfferSchema'
 
 type StrandPairing = {
   necklaceId: string
@@ -531,24 +532,31 @@ export function buildAccessoryProductJsonLd({
       name: 'Bint Saeed',
     },
     material: accessory.materials,
-    image: gallery.map((src, index) => ({
-      '@type': 'ImageObject',
-      contentUrl: src.startsWith('http') ? src : `https://www.bintsaeed.com${src}`,
-      name: getAccessoryImageAlt(accessory, src, index, locale),
-    })),
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'AED',
-      price: String(accessory.price),
-      availability: accessory.inStock
-        ? 'https://schema.org/InStock'
-        : 'https://schema.org/OutOfStock',
-      seller: {
-        '@type': 'Organization',
-        name: 'Bint Saeed',
+    image: gallery.map((src, index) => {
+      const absolute = src.startsWith('http') ? src : `https://www.bintsaeed.com${src}`
+      return {
+        '@type': 'ImageObject',
+        url: absolute,
+        contentUrl: absolute,
+        name: getAccessoryImageAlt(accessory, src, index, locale),
+      }
+    }),
+    offers: withMerchantListingOfferFields(
+      {
+        '@type': 'Offer',
+        priceCurrency: 'AED',
+        price: String(accessory.price),
+        availability: accessory.inStock
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
+        seller: {
+          '@type': 'Organization',
+          name: 'Bint Saeed',
+        },
+        url: pageUrl,
       },
-      url: pageUrl,
-    },
+      { price: accessory.price, currency: 'AED' },
+    ),
   }
 
   if (!pack) return base

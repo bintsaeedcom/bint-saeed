@@ -63,6 +63,7 @@ import { getFallbackSchemaAudience } from '@/lib/products/categorySchemaAudience
 import { appendGlobalPdpSchemaAudienceExtension } from '@/lib/products/globalPdpSchemaAudienceI18n'
 import { buildProductSemanticJsonLdFields } from '@/lib/products/productSemanticJsonLd'
 import { getSharedAbayaSchemaAudience, SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
+import { withMerchantListingOfferFields } from '@/lib/seo/merchantOfferSchema'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
@@ -221,22 +222,25 @@ function schemaSharedFields(
 }
 
 function buildOffer(product: Product, pageUrl: string) {
-  return {
-    '@type': 'Offer' as const,
-    priceCurrency: 'AED',
-    price: String(product.price),
-    availability: 'https://schema.org/InStock',
-    url: pageUrl,
-    itemCondition: 'https://schema.org/NewCondition',
-    seller: {
-      '@type': 'Organization',
-      name: 'Bint Saeed',
+  return withMerchantListingOfferFields(
+    {
+      '@type': 'Offer' as const,
+      priceCurrency: 'AED',
+      price: String(product.price),
+      availability: 'https://schema.org/InStock',
+      url: pageUrl,
+      itemCondition: 'https://schema.org/NewCondition',
+      seller: {
+        '@type': 'Organization',
+        name: 'Bint Saeed',
+      },
+      areaServed: [
+        ...OFFER_AREA_SERVED_COUNTRIES.map((name) => ({ '@type': 'Country' as const, name })),
+        { '@type': 'Place' as const, name: 'Worldwide' },
+      ],
     },
-    areaServed: [
-      ...OFFER_AREA_SERVED_COUNTRIES.map((name) => ({ '@type': 'Country' as const, name })),
-      { '@type': 'Place' as const, name: 'Worldwide' },
-    ],
-  }
+    { price: product.price, currency: 'AED' },
+  )
 }
 
 function buildProductNode(

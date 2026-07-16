@@ -13,6 +13,11 @@ import { buildFaqPageJsonLd } from '@/lib/products/productSchemaMeta'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { accessoryCanonicalUrl } from '@/lib/accessories/accessoryPageUrl'
 import { getStrandSchemaSemanticLabels } from '@/lib/accessories/signatureStrandSchemaSemanticI18n'
+import { getAccessorySku } from '@/lib/accessories/accessorySku'
+import {
+  absoluteSchemaAssetUrl,
+  withMerchantListingOfferFields,
+} from '@/lib/seo/merchantOfferSchema'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
@@ -346,8 +351,8 @@ export function buildStrandsCollectionJsonLd(locale: AppLocale = 'en'): Record<s
     },
     offers: {
       '@type': 'AggregateOffer',
-      lowPrice: '400',
-      highPrice: '750',
+      lowPrice: String(Math.min(...strands.map((s) => s.price))),
+      highPrice: String(Math.max(...strands.map((s) => s.price))),
       priceCurrency: 'AED',
       offerCount: String(strands.length),
       availability: 'https://schema.org/InStock',
@@ -356,25 +361,48 @@ export function buildStrandsCollectionJsonLd(locale: AppLocale = 'en'): Record<s
       '@type': 'ItemList',
       name: copy.itemListName,
       numberOfItems: strands.length,
-      itemListElement: strands.map((product, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        url: accessoryCanonicalUrl(locale, product.id),
-        item: {
-          '@type': 'Product',
-          name: strandDisplayName(product.id, locale),
-          url: accessoryCanonicalUrl(locale, product.id),
-          category: 'Signature Strands',
-          offers: {
-            '@type': 'Offer',
-            priceCurrency: 'AED',
-            price: String(product.price),
-            availability: product.inStock
-              ? 'https://schema.org/InStock'
-              : 'https://schema.org/OutOfStock',
+      itemListElement: strands.map((product, index) => {
+        const pageUrl = accessoryCanonicalUrl(locale, product.id)
+        const sku = getAccessorySku(product) ?? product.id
+        const primaryImage = product.images[0]
+        return {
+          '@type': 'ListItem',
+          position: index + 1,
+          url: pageUrl,
+          item: {
+            '@type': 'Product',
+            name: strandDisplayName(product.id, locale),
+            description: product.description,
+            url: pageUrl,
+            sku,
+            mpn: sku,
+            image: primaryImage ? absoluteSchemaAssetUrl(primaryImage, SITE_URL) : undefined,
+            brand: {
+              '@type': 'Brand',
+              name: 'Bint Saeed',
+              url: SITE_URL,
+            },
+            category: 'Signature Strands',
+            offers: withMerchantListingOfferFields(
+              {
+                '@type': 'Offer',
+                priceCurrency: 'AED',
+                price: String(product.price),
+                availability: product.inStock
+                  ? 'https://schema.org/InStock'
+                  : 'https://schema.org/OutOfStock',
+                url: pageUrl,
+                itemCondition: 'https://schema.org/NewCondition',
+                seller: {
+                  '@type': 'Organization',
+                  name: 'Bint Saeed',
+                },
+              },
+              { price: product.price, currency: 'AED' },
+            ),
           },
-        },
-      })),
+        }
+      }),
     },
   }
 

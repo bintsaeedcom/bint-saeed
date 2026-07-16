@@ -90,6 +90,10 @@ import {
   getAccessoryPackagingImageAlt,
   isAccessoryPackagingImage,
 } from '@/lib/accessories/accessoryPackagingImage'
+import {
+  absoluteSchemaAssetUrl,
+  withMerchantListingOfferFields,
+} from '@/lib/seo/merchantOfferSchema'
 
 export {
   getAccessoryPdpImages,
@@ -245,24 +249,31 @@ function additionalPropertiesForAccessory(
 }
 
 function buildOffer(accessory: Accessory, pageUrl: string) {
-  return {
-    '@type': 'Offer' as const,
-    priceCurrency: 'AED',
-    price: String(accessory.price),
-    availability: accessory.inStock
-      ? 'https://schema.org/InStock'
-      : 'https://schema.org/OutOfStock',
-    url: pageUrl,
-    itemCondition: 'https://schema.org/NewCondition',
-    seller: {
-      '@type': 'Organization' as const,
-      name: 'Bint Saeed',
+  return withMerchantListingOfferFields(
+    {
+      '@type': 'Offer' as const,
+      priceCurrency: 'AED',
+      price: String(accessory.price),
+      availability: accessory.inStock
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
+      url: pageUrl,
+      itemCondition: 'https://schema.org/NewCondition',
+      seller: {
+        '@type': 'Organization' as const,
+        name: 'Bint Saeed',
+      },
+      areaServed: [
+        ...OFFER_AREA_SERVED_COUNTRIES.map((name) => ({ '@type': 'Country' as const, name })),
+        { '@type': 'Place' as const, name: 'Worldwide' },
+      ],
     },
-    areaServed: [
-      ...OFFER_AREA_SERVED_COUNTRIES.map((name) => ({ '@type': 'Country' as const, name })),
-      { '@type': 'Place' as const, name: 'Worldwide' },
-    ],
-  }
+    {
+      price: accessory.price,
+      currency: 'AED',
+      finalSale: accessory.category === 'earrings',
+    },
+  )
 }
 
 /** One Offer per listed currency for AI crawlers + international SEO. */
@@ -282,16 +293,25 @@ function buildMultiCurrencyOffers(accessory: Accessory, pageUrl: string): Record
 
   if (!priceMap) return [buildOffer(accessory, pageUrl)]
 
-  return SUPPORTED_CURRENCIES.map((currency) => ({
-    '@type': 'Offer' as const,
-    priceCurrency: currency,
-    price: String(priceMap[currency]),
-    availability,
-    url: pageUrl,
-    itemCondition: 'https://schema.org/NewCondition',
-    seller,
-    areaServed,
-  }))
+  return SUPPORTED_CURRENCIES.map((currency) =>
+    withMerchantListingOfferFields(
+      {
+        '@type': 'Offer' as const,
+        priceCurrency: currency,
+        price: String(priceMap[currency]),
+        availability,
+        url: pageUrl,
+        itemCondition: 'https://schema.org/NewCondition',
+        seller,
+        areaServed,
+      },
+      {
+        price: priceMap[currency],
+        currency,
+        finalSale: accessory.category === 'earrings',
+      },
+    ),
+  )
 }
 
 function buildCatalogPriceAdditionalProperties(
@@ -459,6 +479,7 @@ function buildPhoneCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown>
     ],
     image: gallery.map((src, index) => ({
       '@type': 'ImageObject',
+      url: src.startsWith('http') ? src : `${SITE_URL}${src}`,
       contentUrl: src.startsWith('http') ? src : `${SITE_URL}${src}`,
       name: getAccessoryImageAlt(accessory, src, index, locale),
       ...(lang ? { inLanguage: lang } : {}),
@@ -628,6 +649,7 @@ function buildBagCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown> {
     ],
     image: gallery.map((src, index) => ({
       '@type': 'ImageObject',
+      url: src.startsWith('http') ? src : `${SITE_URL}${src}`,
       contentUrl: src.startsWith('http') ? src : `${SITE_URL}${src}`,
       name: getAccessoryImageAlt(accessory, src, index, locale),
       ...(lang ? { inLanguage: lang } : {}),
@@ -756,6 +778,7 @@ function buildSignatureStrandJsonLdGraph(input: JsonLdInput): Record<string, unk
     additionalProperty: buildSignatureStrandAdditionalProperties(accessory, displayName, locale),
     image: gallery.map((src, index) => ({
       '@type': 'ImageObject',
+      url: src.startsWith('http') ? src : `${SITE_URL}${src}`,
       contentUrl: src.startsWith('http') ? src : `${SITE_URL}${src}`,
       name: getAccessoryImageAlt(accessory, src, index, locale),
       ...(lang ? { inLanguage: lang } : {}),
@@ -893,6 +916,7 @@ function buildNecklaceEarringJsonLdGraph(input: JsonLdInput): Record<string, unk
     additionalProperty,
     image: gallery.map((src, index) => ({
       '@type': 'ImageObject',
+      url: src.startsWith('http') ? src : `${SITE_URL}${src}`,
       contentUrl: src.startsWith('http') ? src : `${SITE_URL}${src}`,
       name: getAccessoryImageAlt(accessory, src, index, locale),
       ...(lang ? { inLanguage: lang } : {}),
@@ -1010,6 +1034,7 @@ export function buildAccessoryProductJsonLd({
     },
     image: gallery.map((src, index) => ({
       '@type': 'ImageObject',
+      url: src.startsWith('http') ? src : `https://www.bintsaeed.com${src}`,
       contentUrl: src.startsWith('http') ? src : `https://www.bintsaeed.com${src}`,
       name: getAccessoryImageAlt(accessory, src, index, locale),
     })),
@@ -1050,29 +1075,56 @@ export function buildAccessoriesCollectionJsonLd(
     mainEntity: {
       '@type': 'ItemList',
       numberOfItems: jewellery.length,
-      itemListElement: jewellery.map((a, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        item: {
-          '@type': 'Product',
-          name: a.name,
-          url: `https://www.bintsaeed.com/accessories/${a.id}`,
-          category:
-            a.category === 'signature-strands'
-              ? 'Signature Strands'
-              : a.category === 'necklaces'
-                ? 'Necklaces'
-                : 'Earrings',
-          offers: {
-            '@type': 'Offer',
-            priceCurrency: 'AED',
-            price: String(a.price),
-            availability: a.inStock
-              ? 'https://schema.org/InStock'
-              : 'https://schema.org/OutOfStock',
+      itemListElement: jewellery.map((a, index) => {
+        const pageUrl = `${SITE_URL}/accessories/${a.id}`
+        const primaryImage = a.images[0]
+        const sku = getAccessorySku(a) ?? a.id
+        return {
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'Product',
+            name: a.name,
+            description: a.description,
+            url: pageUrl,
+            sku,
+            mpn: sku,
+            image: primaryImage ? absoluteSchemaAssetUrl(primaryImage, SITE_URL) : undefined,
+            brand: {
+              '@type': 'Brand',
+              name: 'Bint Saeed',
+              url: SITE_URL,
+            },
+            category:
+              a.category === 'signature-strands'
+                ? 'Signature Strands'
+                : a.category === 'necklaces'
+                  ? 'Necklaces'
+                  : 'Earrings',
+            offers: withMerchantListingOfferFields(
+              {
+                '@type': 'Offer',
+                priceCurrency: 'AED',
+                price: String(a.price),
+                availability: a.inStock
+                  ? 'https://schema.org/InStock'
+                  : 'https://schema.org/OutOfStock',
+                url: pageUrl,
+                itemCondition: 'https://schema.org/NewCondition',
+                seller: {
+                  '@type': 'Organization',
+                  name: 'Bint Saeed',
+                },
+              },
+              {
+                price: a.price,
+                currency: 'AED',
+                finalSale: a.category === 'earrings',
+              },
+            ),
           },
-        },
-      })),
+        }
+      }),
     },
   }
 }
