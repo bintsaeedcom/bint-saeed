@@ -37,10 +37,29 @@ export function isTabbyConfigured(): boolean {
   return Boolean(process.env.TABBY_SECRET_KEY?.trim() && process.env.TABBY_MERCHANT_CODE?.trim())
 }
 
+/** Tabby sandbox credentials use pk_test_ / sk_test_ prefixes. */
+export function isTabbyTestCredential(key: string | null | undefined): boolean {
+  const value = key?.trim() ?? ''
+  return value.startsWith('pk_test_') || value.startsWith('sk_test_')
+}
+
+/**
+ * In Vercel Production, refuse sandbox Tabby keys so shoppers never hit a test checkout.
+ * Preview/local may still use test keys.
+ */
+export function isTabbyProductionSafe(): boolean {
+  if (process.env.VERCEL_ENV !== 'production') return true
+  const secret = process.env.TABBY_SECRET_KEY?.trim() ?? ''
+  const publicKey = process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY?.trim() ?? ''
+  if (isTabbyTestCredential(secret) || isTabbyTestCredential(publicKey)) return false
+  return true
+}
+
 /** Public checkout rail — stays off until you flip the flag after keys land. */
 export function isPublicTabbyCheckoutAvailable(): boolean {
   return (
     process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED === 'true' &&
+    isTabbyProductionSafe() &&
     Boolean(
       process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY?.trim() ||
         (process.env.TABBY_SECRET_KEY?.trim() && process.env.TABBY_MERCHANT_CODE?.trim()),

@@ -13,6 +13,7 @@ import { resolveOptionalCheckoutGiftCredit } from '@/lib/giftCards/resolveChecko
 import {
   isTabbyConfigured,
   isTabbyCurrency,
+  isTabbyProductionSafe,
   resolveTabbyCountryCode,
   type TabbyBuyer,
   type TabbyShippingAddress,
@@ -94,6 +95,16 @@ export async function POST(request: NextRequest) {
   if (process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED !== 'true') {
     return NextResponse.json(
       { error: 'Tabby checkout is prepared but not enabled yet. Set NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED=true after keys are live.' },
+      { status: 503 },
+    )
+  }
+
+  if (!isTabbyProductionSafe()) {
+    return NextResponse.json(
+      {
+        error:
+          'Tabby sandbox keys cannot be used in production. Replace sk_test_/pk_test_ with live Tabby credentials.',
+      },
       { status: 503 },
     )
   }

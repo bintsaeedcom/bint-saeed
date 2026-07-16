@@ -9,6 +9,7 @@ import {
   isPublicTabbyCheckoutAvailable,
   isTabbyConfigured,
   isTabbyCurrency,
+  isTabbyProductionSafe,
 } from '@/lib/tabby/config'
 
 export type CheckoutRail = 'stripe' | 'paypal' | 'mollie' | 'tamara' | 'tabby'
@@ -53,7 +54,9 @@ export function getAvailableCheckoutRails(
     ? isTamaraConfigured() && process.env.NEXT_PUBLIC_TAMARA_CHECKOUT_ENABLED === 'true'
     : isPublicTamaraCheckoutAvailable()
   const tabbyReady = onServer
-    ? isTabbyConfigured() && process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED === 'true'
+    ? isTabbyConfigured() &&
+      process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED === 'true' &&
+      isTabbyProductionSafe()
     : isPublicTabbyCheckoutAvailable()
 
   if (stripeReady) rails.push('stripe')
@@ -79,7 +82,9 @@ export function isCheckoutRailConfigured(rail: CheckoutRail): boolean {
   }
   if (rail === 'tabby') {
     return onServer
-      ? isTabbyConfigured() && process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED === 'true'
+      ? isTabbyConfigured() &&
+          process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED === 'true' &&
+          isTabbyProductionSafe()
       : isPublicTabbyCheckoutAvailable()
   }
   return onServer ? isMollieConfigured() : isPublicMollieCheckoutAvailable()

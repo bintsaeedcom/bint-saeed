@@ -57,10 +57,11 @@ export function isPublicTamaraCheckoutAvailable(): boolean {
  * Token and base URL must match the same environment or Tamara returns "Invalid credentials".
  */
 export function getTamaraApiBaseUrl(): string {
-  let base = (process.env.TAMARA_API_BASE_URL?.trim() || 'https://api-sandbox.tamara.co').replace(
-    /\/$/,
-    '',
-  )
+  const fallback =
+    process.env.VERCEL_ENV === 'production'
+      ? 'https://api.tamara.co'
+      : 'https://api-sandbox.tamara.co'
+  let base = (process.env.TAMARA_API_BASE_URL?.trim() || fallback).replace(/\/$/, '')
   // Common typo from merchant docs: ap.tamara.co → api.tamara.co
   if (base === 'https://ap.tamara.co' || base === 'http://ap.tamara.co' || base === 'ap.tamara.co') {
     base = 'https://api.tamara.co'

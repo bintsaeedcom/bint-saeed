@@ -12,6 +12,8 @@ import { getMollieApiKey } from '@/lib/mollie/config'
 import { getMollieClient } from '@/lib/mollie/client'
 import { getStripePayPalReadiness } from '@/lib/stripe/stripePayPalConfig'
 import { isPayPalConfigured } from '@/lib/paypal/config'
+import { isTabbyConfigured, isTabbyProductionSafe, isTabbyTestCredential } from '@/lib/tabby/config'
+import { getTamaraApiBaseUrl, isTamaraConfigured } from '@/lib/tamara/config'
 
 export const dynamic = 'force-dynamic'
 
@@ -146,6 +148,34 @@ export async function GET(request: NextRequest) {
     warnings.push('Set NEXT_PUBLIC_MOLLIE_CHECKOUT_ENABLED=true to show Mollie for EU customers at checkout.')
   }
 
+  const tabbyEnabled = process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED === 'true'
+  const tamaraEnabled = process.env.NEXT_PUBLIC_TAMARA_CHECKOUT_ENABLED === 'true'
+  const tabbySecret = process.env.TABBY_SECRET_KEY?.trim() ?? ''
+  const tabbyPublic = process.env.NEXT_PUBLIC_TABBY_PUBLIC_KEY?.trim() ?? ''
+  const tamaraBase = getTamaraApiBaseUrl()
+
+  if (tabbyEnabled && !isTabbyConfigured()) {
+    warnings.push('Tabby is enabled but TABBY_SECRET_KEY / TABBY_MERCHANT_CODE are incomplete.')
+  }
+  if (tabbyEnabled && !isTabbyProductionSafe()) {
+    warnings.push('Tabby sandbox keys (sk_test_/pk_test_) are set in Production — replace with live keys.')
+  }
+  if (tabbyEnabled && !tabbyPublic) {
+    warnings.push('Set NEXT_PUBLIC_TABBY_PUBLIC_KEY so PDP/cart Tabby snippets can load.')
+  }
+  if (tamaraEnabled && !isTamaraConfigured()) {
+    warnings.push('Tamara is enabled but TAMARA_API_TOKEN is missing.')
+  }
+  if (tamaraEnabled && process.env.VERCEL_ENV === 'production' && tamaraBase.includes('sandbox')) {
+    warnings.push('Tamara API base is sandbox in Production — set TAMARA_API_BASE_URL=https://api.tamara.co')
+  }
+  if (tamaraEnabled && !process.env.NEXT_PUBLIC_TAMARA_PUBLIC_KEY?.trim()) {
+    warnings.push('Set NEXT_PUBLIC_TAMARA_PUBLIC_KEY so PDP Tamara messaging can load.')
+  }
+  if (process.env.VERCEL_ENV === 'production' && isTabbyTestCredential(tabbySecret)) {
+    warnings.push(`Tabby secret looks like sandbox (${tabbySecret.slice(0, 8)}…).`)
+  }
+
   return NextResponse.json({
     ok: checkoutReady,
     checkedAt: new Date().toISOString(),
@@ -163,6 +193,8 @@ export async function GET(request: NextRequest) {
         stripe: '/api/webhooks/stripe',
         mollie: '/api/webhooks/mollie',
         paypal: '/api/payments/paypal/capture',
+        tamara: '/api/webhooks/tamara',
+        tabby: '/api/webhooks/tabby',
       },
     },
     stripe: {
@@ -182,6 +214,18 @@ export async function GET(request: NextRequest) {
       publicClientConfigured: publicPayPalConfigured,
       mode: process.env.PAYPAL_MODE?.trim() || 'sandbox',
       stripeCpmtLegacy: stripePayPalCpmt,
+    },
+    tamara: {
+      enabled: tamaraEnabled,
+      configured: isTamaraConfigured(),
+      apiBase: tamaraBase,
+      publicKeyConfigured: Boolean(process.env.NEXT_PUBLIC_TAMARA_PUBLIC_KEY?.trim()),
+    },
+    tabby: {
+      enabled: tabbyEnabled,
+      configured: isTabbyConfigured(),
+      productionSafe: isTabbyProductionSafe(),
+      publicKeyConfigured: Boolean(tabbyPublic),
     },
     warnings,
   })

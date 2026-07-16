@@ -53,7 +53,7 @@ export async function notifyClarityLiveSlack(): Promise<void> {
   }
 
   try {
-    await fetch('/api/analytics/clarity-live', {
+    const res = await fetch('/api/analytics/clarity-live', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -65,6 +65,13 @@ export async function notifyClarityLiveSlack(): Promise<void> {
       }),
       keepalive: true,
     })
+    if (!res.ok) {
+      try {
+        sessionStorage.removeItem(NOTIFIED_KEY)
+      } catch {
+        /* ignore */
+      }
+    }
   } catch {
     try {
       sessionStorage.removeItem(NOTIFIED_KEY)

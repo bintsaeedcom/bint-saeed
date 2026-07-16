@@ -14,16 +14,35 @@ function parseBoolean(value: string | null): boolean {
   return value === 'true'
 }
 
+function consentFromSummary(summary: string | null): ConsentState | null {
+  if (summary === 'all') return { analytics: true, marketing: true }
+  if (summary === 'essential') return { analytics: false, marketing: false }
+  return null
+}
+
 export function getConsentState(): ConsentState {
   if (typeof window === 'undefined') return { analytics: false, marketing: false }
   try {
-    return {
-      analytics: parseBoolean(localStorage.getItem('analyticsConsent')),
-      marketing: parseBoolean(localStorage.getItem('marketingConsent')),
+    const analyticsRaw = localStorage.getItem('analyticsConsent')
+    const marketingRaw = localStorage.getItem('marketingConsent')
+    if (analyticsRaw != null || marketingRaw != null) {
+      return {
+        analytics: parseBoolean(analyticsRaw),
+        marketing: parseBoolean(marketingRaw),
+      }
     }
+    // localStorage write may have failed (private mode) while session backup succeeded.
+    const fromSession = consentFromSummary(sessionStorage.getItem(COOKIE_CONSENT_SESSION_KEY))
+    if (fromSession) return fromSession
   } catch {
-    return { analytics: false, marketing: false }
+    try {
+      const fromSession = consentFromSummary(sessionStorage.getItem(COOKIE_CONSENT_SESSION_KEY))
+      if (fromSession) return fromSession
+    } catch {
+      /* ignore */
+    }
   }
+  return { analytics: false, marketing: false }
 }
 
 /** True when the user already made a cookie choice (Accept / Essential only). */

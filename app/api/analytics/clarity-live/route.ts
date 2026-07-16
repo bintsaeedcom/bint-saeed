@@ -30,7 +30,10 @@ function isHooksUrl(url: string): boolean {
  */
 export async function POST(request: NextRequest) {
   const limited = await rateLimitResponse(request, 'clarity-live-slack', 20, 60)
-  if (limited) return limited
+  if (limited) {
+    // Soft-skip so the client keeps its session dedupe key and does not retry-spam.
+    return NextResponse.json({ ok: true, skipped: 'rate_limited' })
+  }
 
   const webhook = process.env.SLACK_CLARITY_WEBHOOK_URL?.trim()
   if (!webhook || !isHooksUrl(webhook)) {

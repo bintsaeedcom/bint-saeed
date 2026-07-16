@@ -3,6 +3,7 @@ import {
   getTabbyPublicKey,
   isTabbyConfigured,
   isTabbyCurrency,
+  isTabbyProductionSafe,
 } from '@/lib/tabby/config'
 
 export type TabbyWidgetConfig = {
@@ -26,6 +27,7 @@ export function getTabbyWidgetConfig(currency?: string | null): TabbyWidgetConfi
     enabled:
       checkoutEnabled &&
       isTabbyConfigured() &&
+      isTabbyProductionSafe() &&
       Boolean(publicKey) &&
       Boolean(merchantCode) &&
       currencyOk,

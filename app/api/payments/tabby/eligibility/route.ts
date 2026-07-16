@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import {
   isTabbyConfigured,
   isTabbyCurrency,
+  isTabbyProductionSafe,
   resolveTabbyCountryCode,
 } from '@/lib/tabby/config'
 import { checkTabbyEligibility } from '@/lib/tabby/api'
@@ -13,7 +14,11 @@ export const dynamic = 'force-dynamic'
 
 /** Background pre-scoring for checkout UI (buyer email + phone required for a real decision). */
 export async function POST(request: NextRequest) {
-  if (!isTabbyConfigured() || process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED !== 'true') {
+  if (
+    !isTabbyConfigured() ||
+    process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED !== 'true' ||
+    !isTabbyProductionSafe()
+  ) {
     return NextResponse.json({ eligible: false, configured: false })
   }
 

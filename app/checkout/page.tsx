@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
@@ -86,6 +86,22 @@ function continueLabel(
 }
 
 export default function CheckoutPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className={`flex min-h-screen items-center justify-center ${SITE_CONTENT_TOP_PAD}`}>
+          <div className="animate-pulse font-montserrat text-sm uppercase tracking-[0.16em] text-brand-darkRed/70">
+            Loading checkout…
+          </div>
+        </div>
+      }
+    >
+      <CheckoutPageContent />
+    </Suspense>
+  )
+}
+
+function CheckoutPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { localize } = useLocaleHref()
