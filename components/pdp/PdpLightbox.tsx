@@ -99,22 +99,10 @@ export default function PdpLightbox({
             aria-hidden
           />
 
-          <div className="relative z-10 flex items-center justify-between px-4 pb-2 pt-[max(1rem,env(safe-area-inset-top))] sm:px-6">
+          <div className="relative z-10 flex items-center px-4 pb-2 pt-[max(1rem,env(safe-area-inset-top))] sm:px-6">
             <p className="font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/70">
               {safeIndex + 1} / {count}
             </p>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                onClose()
-              }}
-              className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-              aria-label={closeLabel}
-              data-cursor-hover
-            >
-              <FiX className="h-6 w-6" strokeWidth={1.75} />
-            </button>
           </div>
 
           <div
@@ -144,7 +132,21 @@ export default function PdpLightbox({
               </>
             ) : null}
 
-            <Swiper
+            <div className="relative h-full w-full max-w-[min(100%,42rem)]">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onClose()
+                }}
+                className="absolute right-2 top-2 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-[#1a0210]/55 text-white backdrop-blur-sm transition-colors hover:bg-[#1a0210]/75 sm:right-3 sm:top-3 sm:h-11 sm:w-11"
+                aria-label={closeLabel}
+                data-cursor-hover
+              >
+                <FiX className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.75} />
+              </button>
+
+              <Swiper
               key={`lightbox-${images.map((i) => i.src).join('|')}`}
               modules={[Pagination, Keyboard]}
               initialSlide={safeIndex}
@@ -162,11 +164,11 @@ export default function PdpLightbox({
                   onIndexChange(instance.activeIndex)
                 }
               }}
-              className="pdp-lightbox-swiper h-full w-full max-w-5xl [&_.swiper-pagination-bullet]:bg-white/40 [&_.swiper-pagination-bullet-active]:bg-white"
+              className="pdp-lightbox-swiper h-full w-full [&_.swiper-pagination-bullet]:bg-white/40 [&_.swiper-pagination-bullet-active]:bg-white"
             >
               {images.map((image, i) => (
                 <SwiperSlide key={`${image.src}-${i}`}>
-                  <div className="relative mx-auto flex h-[min(82dvh,880px)] w-full max-w-[min(100%,42rem)] items-center justify-center">
+                  <div className="relative mx-auto flex h-[min(82dvh,880px)] w-full items-center justify-center">
                     <div className="relative h-full w-full">
                       <PdpGalleryImage
                         src={image.src}
@@ -180,6 +182,7 @@ export default function PdpLightbox({
                 </SwiperSlide>
               ))}
             </Swiper>
+            </div>
           </div>
 
           {count > 1 ? (

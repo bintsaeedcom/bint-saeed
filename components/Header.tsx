@@ -338,13 +338,13 @@ export default function Header() {
       features: [
         {
           title: hn.hiddenPocket,
-          href: '/shop?category=abayas',
+          href: '/personalisation',
           image: MEGA_MENU_HIDDEN_POCKET,
           ctaLabel: hn.discoverMore,
         },
         {
           title: hn.personalisedLabels,
-          href: '/contact',
+          href: '/personalisation',
           image: MEGA_MENU_NAME_LABELS,
           ctaLabel: hn.discoverMore,
         },
@@ -590,7 +590,7 @@ export default function Header() {
               <LocaleLink
                 href={shopNavItem.href}
                 onMouseEnter={() => setActiveMegaMenu(shopNavItem.href)}
-                className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:inset-inline-start-0 after:h-px after:w-full after:origin-bottom after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:start-0 after:h-px after:w-full after:origin-bottom after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
  activeMegaMenu === shopNavItem.href
  ? 'text-brand-dustyBlue'
  : isTransparentHomeHeader
@@ -608,7 +608,7 @@ export default function Header() {
                   key={item.label}
                   href={item.href}
                   onMouseEnter={() => setActiveMegaMenu(item.href)}
-                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:inset-inline-start-0 after:h-px after:w-full after:origin-bottom after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                  className={`relative z-[61] flex-shrink-0 whitespace-nowrap py-1.5 font-montserrat text-[12px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 after:absolute after:bottom-0 after:start-0 after:h-px after:w-full after:origin-bottom after:scale-x-0 after:bg-brand-dustyBlue after:transition-transform after:duration-300 hover:after:scale-x-100 ${
  activeMegaMenu === item.href
  ? 'text-brand-dustyBlue'
  : isTransparentHomeHeader

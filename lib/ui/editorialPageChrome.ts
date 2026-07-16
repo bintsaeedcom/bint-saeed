@@ -39,7 +39,7 @@ export const SITE_HEADER_STICKY_TOP = 'top-[var(--site-header-height,6.75rem)]'
  * Use on content pages (shop, FAQ, cart, PDPs, wayfinding bars, etc.).
  * Do NOT also add pt-24/pt-28/pt-[8.75rem] — that double-clears and creates jumpy white space.
  */
-export const SITE_CONTENT_TOP_PAD = 'pt-2 sm:pt-2.5 md:pt-3'
+export const SITE_CONTENT_TOP_PAD = 'pt-3.5 sm:pt-4 md:pt-5'
 
 /** One banner height for every About sub-page — visible, never clipped */
 export const EDITORIAL_HERO_HEIGHT = 'h-[min(46dvh,420px)] min-h-[360px] max-h-[420px]'
