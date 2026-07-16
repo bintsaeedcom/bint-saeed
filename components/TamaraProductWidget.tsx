@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { getTamaraPublicKey } from '@/lib/tamara/publicKey'
-import { tamaraWordmarkSrc } from '@/lib/payments/tamaraBrandAssets'
+import { TAMARA_LOGO } from '@/lib/payments/tamaraBrandAssets'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 type Props = {
@@ -73,11 +73,11 @@ export default function TamaraProductWidget({ amount, currency = 'AED', classNam
         <span>{copy.after}</span>
       </p>
       <Image
-        src={tamaraWordmarkSrc(language, false)}
+        src={TAMARA_LOGO.badge}
         alt="Tamara"
-        width={1354}
-        height={687}
-        className="h-[18px] w-auto max-w-[92px] shrink-0 object-contain sm:h-[20px] sm:max-w-[110px]"
+        width={191}
+        height={64}
+        className="h-[24px] w-auto max-w-[84px] shrink-0 object-contain sm:h-[26px] sm:max-w-[92px]"
         unoptimized
       />
     </div>
