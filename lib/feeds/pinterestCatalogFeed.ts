@@ -203,9 +203,56 @@ export function rowsToPinterestCsv(rows: FeedRow[]): string {
   return `${header}\n${body.join('\n')}\n`
 }
 
+async function buildAllFeedRows(): Promise<FeedRow[]> {
+  const products = await getMergedProducts()
+  return [...buildShopRows(products), ...buildAccessoryRows(accessories)]
+}
+
 /** Full shop + accessories catalog for Pinterest daily URL ingestion. */
 export async function buildPinterestCatalogCsv(): Promise<string> {
-  const products = await getMergedProducts()
-  const rows = [...buildShopRows(products), ...buildAccessoryRows(accessories)]
-  return rowsToPinterestCsv(rows)
+  return rowsToPinterestCsv(await buildAllFeedRows())
+}
+
+/**
+ * Country supplemental feed (Countries and languages).
+ * Overrides price/availability/link per ISO country while reusing primary `id`s.
+ * Use this when the primary data source is locked to United States.
+ * Headers must match Pinterest's template: id,override,price,sale_price,availability,link
+ * (`override` = two-letter country code, e.g. AE).
+ */
+const COUNTRY_SUPPLEMENTAL_COLUMNS = [
+  'id',
+  'override',
+  'price',
+  'sale_price',
+  'availability',
+  'link',
+] as const
+
+export async function buildPinterestCountrySupplementalCsv(
+  countries: readonly string[] = ['AE'],
+): Promise<string> {
+  const baseRows = await buildAllFeedRows()
+  const header = COUNTRY_SUPPLEMENTAL_COLUMNS.join(',')
+  const body: string[] = []
+
+  for (const country of countries) {
+    const code = country.trim().toUpperCase()
+    if (!/^[A-Z]{2}$/.test(code)) continue
+
+    for (const row of baseRows) {
+      body.push(
+        [
+          csvEscape(row.id),
+          csvEscape(code),
+          csvEscape(row.price),
+          '', // sale_price — leave empty when not on sale
+          csvEscape(row.availability),
+          csvEscape(row.link),
+        ].join(','),
+      )
+    }
+  }
+
+  return `${header}\n${body.join('\n')}\n`
 }

@@ -73,6 +73,10 @@ const nextConfig = {
       { source: '/sitemap.xml', destination: '/sitemap' },
       // Pinterest data-source URL validator prefers an explicit .csv filename.
       { source: '/feeds/pinterest.csv', destination: '/feeds/pinterest' },
+      {
+        source: '/feeds/pinterest-countries.csv',
+        destination: '/feeds/pinterest-countries',
+      },
     ]
   },
   async redirects() {
