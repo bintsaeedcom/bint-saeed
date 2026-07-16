@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { getTamaraPublicKey } from '@/lib/tamara/publicKey'
-import { TAMARA_LOGO } from '@/lib/payments/tamaraBrandAssets'
+import { tamaraWordmarkSrc } from '@/lib/payments/tamaraBrandAssets'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 type Props = {
@@ -29,7 +29,7 @@ function formatTamaraInstallment(total: number, currencyCode: string): string {
  * footer pastel pill logo for clear brand recognition.
  */
 export default function TamaraProductWidget({ amount, currency = 'AED', className = '' }: Props) {
-  const { language, isRTL } = useLanguage()
+  const { language } = useLanguage()
   const publicKey = getTamaraPublicKey()
   const code = currency.toUpperCase()
   const enabled = Boolean(publicKey && amount > 0 && (code === 'AED' || code === 'SAR'))
@@ -73,11 +73,11 @@ export default function TamaraProductWidget({ amount, currency = 'AED', classNam
         <span>{copy.after}</span>
       </p>
       <Image
-        src={TAMARA_LOGO.badge}
+        src={tamaraWordmarkSrc(language, false)}
         alt="Tamara"
-        width={191}
-        height={64}
-        className="h-[24px] w-auto max-w-[84px] shrink-0 object-contain sm:h-[26px] sm:max-w-[92px]"
+        width={1354}
+        height={687}
+        className="h-[18px] w-auto max-w-[92px] shrink-0 object-contain sm:h-[20px] sm:max-w-[110px]"
         unoptimized
       />
     </div>
