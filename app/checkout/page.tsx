@@ -144,6 +144,7 @@ export default function CheckoutPage() {
   const [tamaraEligible, setTamaraEligible] = useState(true)
   const [tabbyEligible, setTabbyEligible] = useState(true)
   const [tabbyRejectMessage, setTabbyRejectMessage] = useState<string | null>(null)
+  const [tabbyRailFromApi, setTabbyRailFromApi] = useState(false)
   const [bnplFieldError, setBnplFieldError] = useState<{
     field: BnplFormField
     message: string
@@ -183,10 +184,25 @@ export default function CheckoutPage() {
     }
   }
 
-  const availableRails = useMemo(
-    () => getAvailableCheckoutRails(countryCode, currency.code),
-    [countryCode, currency.code],
-  )
+  const availableRails = useMemo(() => {
+    const rails = getAvailableCheckoutRails(countryCode, currency.code)
+    if (
+      tabbyRailFromApi &&
+      !rails.includes('tabby') &&
+      ['AED', 'SAR', 'KWD'].includes(currency.code)
+    ) {
+      const tamaraIndex = rails.indexOf('tamara')
+      if (tamaraIndex >= 0) {
+        return [
+          ...rails.slice(0, tamaraIndex + 1),
+          'tabby',
+          ...rails.slice(tamaraIndex + 1),
+        ] as CheckoutRail[]
+      }
+      return [...rails, 'tabby'] as CheckoutRail[]
+    }
+    return rails
+  }, [countryCode, currency.code, tabbyRailFromApi])
   const checkoutEnvReady = availableRails.length > 0
   const activeRail = selectedRail && availableRails.includes(selectedRail)
     ? selectedRail
@@ -207,6 +223,30 @@ export default function CheckoutPage() {
       setCountryCode(geo?.countryCode ?? null)
     })
   }, [])
+
+  useEffect(() => {
+    if (!['AED', 'SAR', 'KWD'].includes(currency.code)) {
+      setTabbyRailFromApi(false)
+      return
+    }
+    const rails = getAvailableCheckoutRails(countryCode, currency.code)
+    if (rails.includes('tabby')) {
+      setTabbyRailFromApi(false)
+      return
+    }
+    let cancelled = false
+    void fetch(`/api/payments/tabby/widget-config?currency=${encodeURIComponent(currency.code)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { enabled?: boolean } | null) => {
+        if (!cancelled) setTabbyRailFromApi(Boolean(data?.enabled))
+      })
+      .catch(() => {
+        if (!cancelled) setTabbyRailFromApi(false)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [countryCode, currency.code])
 
   useEffect(() => {
     if (!selectedRail && availableRails.length > 0) {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getTabbyPublicKey, getTabbyPublicMerchantCode } from '@/lib/tabby/publicKey'
 
@@ -11,6 +11,12 @@ type Props = {
   /** product | cart | checkout */
   source?: 'product' | 'cart' | 'checkout'
   className?: string
+}
+
+type WidgetConfig = {
+  enabled: boolean
+  publicKey: string
+  merchantCode: string
 }
 
 declare global {
@@ -36,6 +42,20 @@ function loadScript(src: string): Promise<void> {
   })
 }
 
+function readEnvWidgetConfig(currency: string, price: number): WidgetConfig | null {
+  const publicKey = getTabbyPublicKey()
+  const merchantCode = getTabbyPublicMerchantCode()
+  const enabled =
+    process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED === 'true' &&
+    Boolean(publicKey) &&
+    Boolean(merchantCode) &&
+    price > 0 &&
+    ['AED', 'SAR', 'KWD'].includes(currency.toUpperCase())
+
+  if (!enabled || !publicKey || !merchantCode) return null
+  return { enabled: true, publicKey, merchantCode }
+}
+
 /**
  * Official Tabby on-site messaging (required for Custom API QA).
  * Uses public key + merchant code only — never the secret key.
@@ -46,29 +66,53 @@ export default function TabbyPromoSnippet({
   source = 'product',
   className = '',
 }: Props) {
-  const { language, isRTL } = useLanguage()
+  const { language } = useLanguage()
   const reactId = useId()
   const hostId = `tabby-${source}-${reactId.replace(/:/g, '')}`
+  const currencySupported =
+    price > 0 && ['AED', 'SAR', 'KWD'].includes(currency.toUpperCase())
 
-  const publicKey = getTabbyPublicKey()
-  const merchantCode = getTabbyPublicMerchantCode() || ''
-  const enabled =
-    process.env.NEXT_PUBLIC_TABBY_CHECKOUT_ENABLED === 'true' &&
-    Boolean(publicKey) &&
-    Boolean(merchantCode) &&
-    price > 0 &&
-    ['AED', 'SAR', 'KWD'].includes(currency.toUpperCase())
+  const [widgetConfig, setWidgetConfig] = useState<WidgetConfig | null>(() =>
+    currencySupported ? readEnvWidgetConfig(currency, price) : null,
+  )
 
   useEffect(() => {
-    if (!enabled || typeof window === 'undefined') return
+    if (!currencySupported) {
+      setWidgetConfig(null)
+      return
+    }
+
+    const fromEnv = readEnvWidgetConfig(currency, price)
+    if (fromEnv) {
+      setWidgetConfig(fromEnv)
+      return
+    }
 
     let cancelled = false
     const code = currency.toUpperCase()
-    const priceStr =
-      code === 'KWD'
-        ? price.toFixed(3)
-        : price.toFixed(2)
+    void fetch(`/api/payments/tabby/widget-config?currency=${encodeURIComponent(code)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: WidgetConfig | null) => {
+        if (cancelled || !data?.enabled || !data.publicKey || !data.merchantCode) return
+        setWidgetConfig(data)
+      })
+      .catch(() => {
+        /* keep hidden */
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [currency, price, currencySupported])
+
+  useEffect(() => {
+    if (!widgetConfig?.enabled || typeof window === 'undefined') return
+
+    let cancelled = false
+    const code = currency.toUpperCase()
+    const priceStr = code === 'KWD' ? price.toFixed(3) : price.toFixed(2)
     const lang = language === 'ar' ? 'ar' : 'en'
+    const { publicKey, merchantCode } = widgetConfig
 
     const run = async () => {
       try {
@@ -111,9 +155,9 @@ export default function TabbyPromoSnippet({
       const el = document.getElementById(hostId)
       if (el) el.innerHTML = ''
     }
-  }, [enabled, currency, price, language, source, hostId, publicKey, merchantCode])
+  }, [widgetConfig, currency, price, language, source, hostId])
 
-  if (!enabled) return null
+  if (!currencySupported || !widgetConfig?.enabled) return null
 
   return (
     <div
