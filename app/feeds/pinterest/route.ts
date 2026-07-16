@@ -6,8 +6,9 @@ export const revalidate = 3600
 
 /**
  * Hosted Pinterest retail catalog data source.
- * Paste this URL in Pinterest Business → Catalogs → Provide a URL link:
- *   https://www.bintsaeed.com/feeds/pinterest
+ * Prefer the `.csv` URL in Pinterest Business → Catalogs → Provide a URL link:
+ *   https://www.bintsaeed.com/feeds/pinterest.csv
+ * ( `/feeds/pinterest` also works after rewrite. )
  */
 export async function GET() {
   try {
@@ -16,7 +17,7 @@ export async function GET() {
       status: 200,
       headers: {
         'Content-Type': 'text/csv; charset=utf-8',
-        'Content-Disposition': 'inline; filename="bint-saeed-pinterest-catalog.csv"',
+        'Content-Disposition': 'attachment; filename="pinterest.csv"',
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
         'X-Content-Type-Options': 'nosniff',
       },

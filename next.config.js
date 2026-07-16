@@ -69,7 +69,11 @@ const nextConfig = {
     ]
   },
   async rewrites() {
-    return [{ source: '/sitemap.xml', destination: '/sitemap' }]
+    return [
+      { source: '/sitemap.xml', destination: '/sitemap' },
+      // Pinterest data-source URL validator prefers an explicit .csv filename.
+      { source: '/feeds/pinterest.csv', destination: '/feeds/pinterest' },
+    ]
   },
   async redirects() {
     return [
