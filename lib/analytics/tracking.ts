@@ -35,6 +35,8 @@ const state = {
   posthogReady: false,
   consent: { analytics: false, marketing: false } as ConsentState,
   scrollMilestonesByPath: new Map<string, Set<number>>(),
+  /** Last page path seen before analytics consent — flushed on Accept. */
+  pendingPagePath: null as string | null,
 }
 
 function loadScript(id: string, src: string) {
@@ -170,8 +172,17 @@ export function initializeAnalytics(consent: ConsentState) {
 }
 
 export function updateAnalyticsConsent(consent: ConsentState) {
+  const wasGranted = state.consent.analytics
   state.consent = consent
   applyConsentToTrackers()
+  // First Accept often happens after the initial page_view was dropped — send it now.
+  if (!wasGranted && consent.analytics) {
+    const path =
+      state.pendingPagePath ||
+      (typeof window !== 'undefined' ? window.location.pathname : null)
+    state.pendingPagePath = null
+    if (path) trackPageView(path)
+  }
 }
 
 export function trackEvent(name: string, params?: AnalyticsParams) {
@@ -196,6 +207,21 @@ export function trackEvent(name: string, params?: AnalyticsParams) {
 }
 
 export function trackPageView(path: string, params?: AnalyticsParams) {
+  if (!state.consent.analytics) {
+    state.pendingPagePath = path
+    // Keep internal dashboard mirror even before opt-in.
+    const cleanParams = toCleanParams(params)
+    const scalarParams = cleanParams
+      ? (Object.fromEntries(
+          Object.entries({ page_path: path, ...cleanParams }).filter(
+            ([, v]) => v === null || typeof v !== 'object',
+          ),
+        ) as Record<string, string | number | boolean | null | undefined>)
+      : { page_path: path }
+    mirrorDashboardEngagement('page_view', scalarParams)
+    return
+  }
+  state.pendingPagePath = null
   const cleanParams = toCleanParams(params)
   trackEvent('page_view', { page_path: path, ...cleanParams })
 }
