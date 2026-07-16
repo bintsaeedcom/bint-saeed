@@ -29,6 +29,8 @@ type PdpLightboxProps = {
 
 /**
  * Full-viewport PDP gallery — swipe / arrows / keyboard, with a clear close control.
+ * Shared by apparel + accessories PDPs. Loop is intentionally off — loop + index
+ * sync caused endless slide cycling when images were enlarged.
  */
 export default function PdpLightbox({
   open,
@@ -65,12 +67,12 @@ export default function PdpLightbox({
   }, [open, handleKey])
 
   useEffect(() => {
-    if (!open || !swiper || swiper.destroyed) return
-    // With loop enabled, `activeIndex` is the duplicated-slide index — sync on `realIndex`.
-    if (swiper.realIndex === safeIndex) return
-    if (typeof swiper.slideToLoop === 'function' && swiper.params.loop) {
-      swiper.slideToLoop(safeIndex, 0)
-    } else {
+    if (!open) {
+      setSwiper(null)
+      return
+    }
+    if (!swiper || swiper.destroyed) return
+    if (swiper.activeIndex !== safeIndex) {
       swiper.slideTo(safeIndex, 0)
     }
   }, [open, safeIndex, swiper])
@@ -148,12 +150,18 @@ export default function PdpLightbox({
               initialSlide={safeIndex}
               spaceBetween={16}
               slidesPerView={1}
-              loop={count > 1}
+              loop={false}
+              allowTouchMove
+              speed={320}
               resistanceRatio={0.65}
               keyboard={{ enabled: true }}
               pagination={count > 1 ? { clickable: true, dynamicBullets: true } : false}
               onSwiper={setSwiper}
-              onSlideChange={(instance) => onIndexChange(instance.realIndex)}
+              onSlideChange={(instance) => {
+                if (instance.activeIndex !== index) {
+                  onIndexChange(instance.activeIndex)
+                }
+              }}
               className="pdp-lightbox-swiper h-full w-full max-w-5xl [&_.swiper-pagination-bullet]:bg-white/40 [&_.swiper-pagination-bullet-active]:bg-white"
             >
               {images.map((image, i) => (
