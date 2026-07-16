@@ -1305,3 +1305,46 @@ input, textarea, select {
     image-rendering: crisp-edges;
   }
 }
+
+/* Tabby promo "Learn more" dialog — official widget class hashes change; match by prefix. */
+.tabby-snippet {
+  overflow: visible;
+}
+
+[class*='styles__dialog--'] {
+  align-items: flex-start !important;
+  padding-top: max(16px, env(safe-area-inset-top, 0px)) !important;
+  padding-bottom: max(16px, env(safe-area-inset-bottom, 0px)) !important;
+  overscroll-behavior: contain;
+}
+
+[class*='styles__dialogContent--'] {
+  flex-shrink: 0;
+  width: min(100%, 480px);
+  max-height: calc(
+    100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)
+  );
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-block: auto;
+}
+
+html.tabby-dialog-open,
+html.tabby-dialog-open body {
+  overflow: hidden;
+}
+
+@media (max-width: 440px) {
+  [class*='styles__dialog--'] {
+    padding: 0 !important;
+    align-items: stretch !important;
+  }
+
+  [class*='styles__dialogContent--'] {
+    width: 100%;
+    max-height: 100dvh;
+    min-height: 100dvh;
+    margin: 0;
+    border-radius: 0 !important;
+  }
+}

@@ -157,6 +157,30 @@ export default function TabbyPromoSnippet({
     }
   }, [widgetConfig, currency, price, language, source, hostId])
 
+  useEffect(() => {
+    if (!widgetConfig?.enabled || typeof window === 'undefined') return
+
+    const syncTabbyDialog = () => {
+      const dialogs = document.querySelectorAll('[class*="styles__dialog--"]')
+      const open = dialogs.length > 0
+      document.documentElement.classList.toggle('tabby-dialog-open', open)
+      dialogs.forEach((dialog) => {
+        dialog.setAttribute('data-lenis-prevent', '')
+        dialog.setAttribute('data-lenis-prevent-wheel', '')
+        dialog.setAttribute('data-lenis-prevent-touch', '')
+      })
+    }
+
+    const observer = new MutationObserver(syncTabbyDialog)
+    observer.observe(document.body, { childList: true, subtree: true })
+    syncTabbyDialog()
+
+    return () => {
+      observer.disconnect()
+      document.documentElement.classList.remove('tabby-dialog-open')
+    }
+  }, [widgetConfig?.enabled])
+
   if (!currencySupported || !widgetConfig?.enabled) return null
 
   return (
