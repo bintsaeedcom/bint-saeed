@@ -374,6 +374,46 @@ export function buildBagCharmAllCurrencyPriceLine(accessoryId: string): string {
   return parts.join(', ')
 }
 
+export function getBagCharmLocalizedDisplayName(
+  id: string,
+  locale: AppLocale = 'en',
+): string | undefined {
+  const charmId = resolveBagCharmId(id)
+  if (!charmId) return undefined
+  const oasis = ID_TO_OASIS[charmId]
+  const label = OASIS_LABEL[locale][oasis] ?? OASIS_LABEL.en[oasis]
+  const stone: Record<AppLocale, string> = {
+    en: 'Fuchsia Jade',
+    ar: 'يشم فوشي',
+    fr: 'Jade fuchsia',
+    it: 'Giada fucsia',
+    es: 'Jade fucsia',
+    ru: 'фуксиевый нефрит',
+    zh: '紫红玉',
+    de: 'Fuchsia-Jade',
+    nl: 'Fuchsia-jade',
+    pt: 'Jade fúcsia',
+    id: 'Jade fuchsia',
+    ms: 'Jed fuchsia',
+  }
+  const stoneLabel = stone[locale] ?? stone.en
+  const titles: Record<AppLocale, string> = {
+    en: `${label} Bag Charm — ${stoneLabel}`,
+    ar: `تعليقة حقيبة ${label} — ${stoneLabel}`,
+    fr: `Charm sac ${label} — ${stoneLabel}`,
+    it: `Charm per borsa ${label} — ${stoneLabel}`,
+    es: `Charm para bolso ${label} — ${stoneLabel}`,
+    ru: `Шарм для сумки ${label} — ${stoneLabel}`,
+    zh: `${label}包饰 — ${stoneLabel}`,
+    de: `${label} Taschenanhänger — ${stoneLabel}`,
+    nl: `${label} tashanger — ${stoneLabel}`,
+    pt: `Charm para mala ${label} — ${stoneLabel}`,
+    id: `Charm tas ${label} — ${stoneLabel}`,
+    ms: `Charm beg ${label} — ${stoneLabel}`,
+  }
+  return titles[locale] ?? titles.en
+}
+
 export function getBagCharmSchemaAudience(locale: AppLocale = 'en'): string {
   return AUDIENCE[locale] ?? AUDIENCE.en
 }

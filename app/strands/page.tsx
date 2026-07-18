@@ -10,6 +10,7 @@ import { sortAccessoriesByPriceAsc } from '@/lib/accessories/filterAccessories'
 import { products } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { getStrandsPageCopy } from '@/lib/i18n/strandsPageCopyI18n'
 import { PRODUCT_LINE_STRANDS } from '@/lib/i18n/strandsBrandLock'
@@ -35,6 +36,7 @@ const INNER_CONTAINER_CLASS = 'mx-auto max-w-[1280px] px-4 md:px-10'
 
 export default function StrandsPage() {
   const { isRTL, language } = useLanguage()
+  const ui = commerceUi(language)
   const { formatPrice } = useCurrency()
   const copy = getStrandsPageCopy(language)
   const collectionJsonLd = useMemo(() => buildStrandsCollectionJsonLd(language), [language])
@@ -92,7 +94,7 @@ export default function StrandsPage() {
             variant="light"
             className="mb-3"
             segments={[
-              { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
+              { label: ui.common.home, href: '/home' },
               { label: PRODUCT_LINE_STRANDS },
             ]}
           />

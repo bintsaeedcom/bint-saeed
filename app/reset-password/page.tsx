@@ -10,6 +10,7 @@ import { FiEye, FiEyeOff, FiLock } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getAuthFormCopy } from '@/lib/i18n/authFormCopyI18n'
 import { passwordsMatch, validatePassword } from '@/lib/auth/passwordPolicy'
 import { ctaFormSubmitCompact } from '@/lib/ui/ctaClasses'
 import {
@@ -26,6 +27,7 @@ import {
 function ResetPasswordContent() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const auth = getAuthFormCopy(language)
   const router = useRouter()
   const searchParams = useSearchParams()
   const token = useMemo(() => searchParams?.get('token')?.trim() || '', [searchParams])
@@ -61,11 +63,7 @@ function ResetPasswordContent() {
     e.preventDefault()
 
     if (!token) {
-      toast.error(
-        isRTL
-          ? 'رابط إعادة التعيين غير صالح أو منتهٍ'
-          : 'Reset link is invalid or has expired',
-      )
+      toast.error(auth.resetLinkInvalid)
       return
     }
 
@@ -76,7 +74,7 @@ function ResetPasswordContent() {
     }
 
     if (!passwordsMatch(password, confirm)) {
-      toast.error(isRTL ? 'كلمتا المرور غير متطابقتين' : 'Passwords do not match')
+      toast.error(auth.passwordsDoNotMatch)
       return
     }
 
@@ -93,14 +91,14 @@ function ResetPasswordContent() {
       })
       const data = (await res.json()) as { ok?: boolean; error?: string; message?: string }
       if (!res.ok) {
-        toast.error(data.error || (isRTL ? 'تعذّر تحديث كلمة المرور' : 'Could not update password'))
+        toast.error(data.error || auth.couldNotUpdatePassword)
         return
       }
-      toast.success(data.message || (isRTL ? 'تم تحديث كلمة المرور' : 'Password updated'))
+      toast.success(data.message || auth.passwordUpdated)
       router.push('/sign-in')
       router.refresh()
     } catch {
-      toast.error(isRTL ? 'حدث خطأ' : 'Something went wrong')
+      toast.error(auth.genericError)
     } finally {
       setBusy(false)
     }
@@ -148,15 +146,11 @@ function ResetPasswordContent() {
             className={`mx-auto max-w-md lg:mx-0 lg:max-w-none ${formCardClass}`}
           >
             {tokenValid === null ? (
-              <p className="font-montserrat text-sm text-brand-clayRed/60">
-                {isRTL ? 'جاري التحقق…' : 'Checking link…'}
-              </p>
+              <p className="font-montserrat text-sm text-brand-clayRed/60">{auth.checkingLink}</p>
             ) : showExpired ? (
               <div className="text-start">
                 <p className="font-montserrat text-sm leading-relaxed text-brand-darkRed/85">
-                  {isRTL
-                    ? 'رابط إعادة التعيين غير صالح أو منتهٍ. اطلبي رابطاً جديداً.'
-                    : 'This reset link is invalid or has expired. Request a new one.'}
+                  {auth.resetLinkExpiredBody}
                 </p>
                 <p className={formFooterTextClass}>
                   <LocaleLink href="/forgot-password" className={formFooterLinkClass}>
@@ -168,9 +162,7 @@ function ResetPasswordContent() {
               <>
                 <form onSubmit={onSubmit} className="space-y-5">
                   <div>
-                    <label className={formLabelClass}>
-                      {isRTL ? 'كلمة المرور الجديدة' : 'New password'}
-                    </label>
+                    <label className={formLabelClass}>{auth.newPassword}</label>
                     <div className="relative">
                       <FiLock className={formIconClass} />
                       <input
@@ -186,31 +178,17 @@ function ResetPasswordContent() {
                         type="button"
                         onClick={() => setShowPassword((v) => !v)}
                         className={formIconButtonClass}
-                        aria-label={
-                          showPassword
-                            ? isRTL
-                              ? 'إخفاء كلمة المرور'
-                              : 'Hide password'
-                            : isRTL
-                              ? 'إظهار كلمة المرور'
-                              : 'Show password'
-                        }
+                        aria-label={showPassword ? auth.hidePassword : auth.showPassword}
                         data-cursor-hover
                       >
                         {showPassword ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
                       </button>
                     </div>
-                    <p className={formHintClass}>
-                      {isRTL
-                        ? '٨ أحرف على الأقل، حرف كبير ورقم'
-                        : 'At least 8 characters, one capital letter and one number'}
-                    </p>
+                    <p className={formHintClass}>{auth.passwordHint}</p>
                   </div>
 
                   <div>
-                    <label className={formLabelClass}>
-                      {isRTL ? 'تأكيد كلمة المرور' : 'Confirm password'}
-                    </label>
+                    <label className={formLabelClass}>{auth.confirmPassword}</label>
                     <div className="relative">
                       <FiLock className={formIconClass} />
                       <input
@@ -226,15 +204,7 @@ function ResetPasswordContent() {
                         type="button"
                         onClick={() => setShowConfirm((v) => !v)}
                         className={formIconButtonClass}
-                        aria-label={
-                          showConfirm
-                            ? isRTL
-                              ? 'إخفاء كلمة المرور'
-                              : 'Hide password'
-                            : isRTL
-                              ? 'إظهار كلمة المرور'
-                              : 'Show password'
-                        }
+                        aria-label={showConfirm ? auth.hidePassword : auth.showPassword}
                         data-cursor-hover
                       >
                         {showConfirm ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
@@ -248,11 +218,7 @@ function ResetPasswordContent() {
                     className={ctaFormSubmitCompact}
                     data-cursor-hover
                   >
-                    {busy
-                      ? isRTL
-                        ? 'جاري الحفظ…'
-                        : 'Saving…'
-                      : ui.account.resetPassword}
+                    {busy ? auth.saving : ui.account.resetPassword}
                   </button>
                 </form>
 

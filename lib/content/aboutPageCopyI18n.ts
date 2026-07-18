@@ -1,6 +1,20 @@
 import type { Language } from '@/lib/i18n/translations'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import {
+  ABOUT_DE,
+  ABOUT_FR,
+  ABOUT_IT,
+  ABOUT_NL,
+  ABOUT_PT,
+} from '@/lib/i18n/editorialLocales/aboutFrItDeNlPt'
+import {
+  ABOUT_ES,
+  ABOUT_ID,
+  ABOUT_MS,
+  ABOUT_RU,
+  ABOUT_ZH,
+} from '@/lib/i18n/editorialLocales/aboutEsRuZhIdMs'
 
 export type AboutWomanStep = {
   numeral: string
@@ -288,10 +302,33 @@ const ABOUT_AR: AboutPageCopy = {
 }
 
 export function getAboutPageCopy(locale: Language | string): AboutPageCopy {
-  const base = locale === 'ar' ? ABOUT_AR : ABOUT_EN
+  const base =
+    locale === 'ar'
+      ? ABOUT_AR
+      : locale === 'fr'
+        ? ABOUT_FR
+        : locale === 'it'
+          ? ABOUT_IT
+          : locale === 'de'
+            ? ABOUT_DE
+            : locale === 'nl'
+              ? ABOUT_NL
+              : locale === 'pt'
+                ? ABOUT_PT
+                : locale === 'es'
+                  ? ABOUT_ES
+                  : locale === 'ru'
+                    ? ABOUT_RU
+                    : locale === 'zh'
+                      ? ABOUT_ZH
+                      : locale === 'id'
+                        ? ABOUT_ID
+                        : locale === 'ms'
+                          ? ABOUT_MS
+                          : ABOUT_EN
   try {
     const ui = commerceUi(locale as AppLocale)
-    return { ...base, backToHome: ui.common.backToHome }
+    return { ...base, backToHome: ui.common.backToHome, breadcrumbHome: ui.common.home }
   } catch {
     return base
   }

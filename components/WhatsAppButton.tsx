@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { FiX } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getWhatsAppChrome, getWhatsAppTopics } from '@/lib/i18n/whatsappChromeI18n'
 import {
   glassOverlayPanel,
   glassOverlayWash,
@@ -16,64 +17,6 @@ import {
 
 /** Default Bint Saeed WhatsApp (+971 50 229 9402). Override with NEXT_PUBLIC_WHATSAPP_NUMBER if needed. */
 const DEFAULT_WHATSAPP = '+971502299402'
-
-type WhatsAppTopic = {
-  id: 'bank-transfer' | 'priority-order' | 'strands' | 'personalisation' | 'other'
-  labelEn: string
-  labelAr: string
-  messageEn: string
-  messageAr: string
-}
-
-/**
- * Prefill topics — short, clear openers for the house WhatsApp customer-service line.
- * Order: personalisation → strands → priority → bank transfer → other.
- */
-const WHATSAPP_TOPICS: WhatsAppTopic[] = [
-  {
-    id: 'personalisation',
-    labelEn: 'Personalisation',
-    labelAr: 'التخصيص',
-    messageEn:
-      'Hello Bint Saeed — I would like to ask about personalising a piece (hidden name label or private message).',
-    messageAr:
-      'مرحباً Bint Saeed — أود الاستفسار عن تخصيص قطعة (بطاقة الاسم المخفية أو رسالة خاصة).',
-  },
-  {
-    id: 'strands',
-    labelEn: 'Abaya strands',
-    labelAr: 'خيوط العباءة',
-    messageEn:
-      'Hello Bint Saeed — I would like more information about the interchangeable abaya strands and how to wear or change them.',
-    messageAr:
-      'مرحباً Bint Saeed — أود معرفة المزيد عن خيوط العباءة القابلة للتبديل وكيف يتم ارتداؤها أو تغييرها.',
-  },
-  {
-    id: 'priority-order',
-    labelEn: 'Priority order',
-    labelAr: 'طلب ذو أولوية',
-    messageEn:
-      'Hello Bint Saeed — I need a priority / rush order. Could you advise on the earliest timeline and what is possible?',
-    messageAr:
-      'مرحباً Bint Saeed — أحتاج طلباً عاجلاً / ذا أولوية. هل يمكنكم إرشادي لأقرب موعد ممكن وما هو المتاح؟',
-  },
-  {
-    id: 'bank-transfer',
-    labelEn: 'Bank transfer',
-    labelAr: 'تحويل بنكي',
-    messageEn:
-      'Hello Bint Saeed — I would like to pay by bank transfer. Could you please share the account details for my order?',
-    messageAr:
-      'مرحباً Bint Saeed — أود الدفع عبر التحويل البنكي. هل يمكنكم تزويدي بتفاصيل الحساب لإتمام طلبي؟',
-  },
-  {
-    id: 'other',
-    labelEn: 'I have another question',
-    labelAr: 'لدي سؤال آخر',
-    messageEn: 'Hello Bint Saeed — I have another question.',
-    messageAr: 'مرحباً Bint Saeed — لدي سؤال آخر.',
-  },
-]
 
 function getWhatsAppDigits(): string | null {
   const raw = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.trim() || DEFAULT_WHATSAPP
@@ -159,15 +102,13 @@ export default function WhatsAppButton() {
   const dockSide = isRTL ? 'left-4 sm:left-6' : 'right-4 sm:right-6'
   const panelSide = isRTL ? 'left-0 origin-bottom-left' : 'right-0 origin-bottom-right'
 
-  const title = language === 'ar' ? 'كيف يمكننا مساعدتك؟' : 'How can we help?'
-  const subtitle =
-    language === 'ar'
-      ? 'دردشة مباشرة مع خدمة العملاء عبر واتساب'
-      : 'Live chat with our customer service on WhatsApp'
+  const chrome = getWhatsAppChrome(language)
+  const topics = getWhatsAppTopics(language)
+  const title = chrome.title
+  const subtitle = chrome.subtitle
 
-  const openTopic = (topic: WhatsAppTopic) => {
-    const message = language === 'ar' ? topic.messageAr : topic.messageEn
-    const href = buildWhatsAppHref(message)
+  const openTopic = (topic: (typeof topics)[number]) => {
+    const href = buildWhatsAppHref(topic.message)
     setOpen(false)
     if (href) {
       window.open(href, '_blank', 'noopener,noreferrer')
@@ -218,14 +159,14 @@ export default function WhatsAppButton() {
                 type="button"
                 onClick={() => setOpen(false)}
                 className="shrink-0 rounded-full p-1.5 text-[#e8d8c8]/80 transition-colors hover:bg-white/10 hover:text-white"
-                aria-label={language === 'ar' ? 'إغلاق' : 'Close'}
+                aria-label={chrome.close}
               >
                 <FiX className="h-4 w-4" />
               </button>
             </div>
 
             <ul className="space-y-2">
-              {WHATSAPP_TOPICS.map((topic) => (
+              {topics.map((topic) => (
                 <li key={topic.id}>
                   <button
                     type="button"
@@ -233,7 +174,7 @@ export default function WhatsAppButton() {
                     className={`w-full rounded-[4px] border border-white/15 bg-white/[0.07] px-3.5 py-3 font-montserrat text-[12px] uppercase tracking-[0.12em] transition-colors hover:border-[#e8d8c8]/45 hover:bg-white/[0.12] ${glassTextBodyOnDark} text-start`}
                     data-cursor-hover
                   >
-                    {language === 'ar' ? topic.labelAr : topic.labelEn}
+                    {topic.label}
                   </button>
                 </li>
               ))}
@@ -273,9 +214,7 @@ export default function WhatsAppButton() {
           data-cursor-hover
           data-whatsapp-button
           tabIndex={dockHidden ? -1 : 0}
-          aria-label={
-            language === 'ar' ? 'خدمة العملاء عبر واتساب' : 'Customer service live chat on WhatsApp'
-          }
+          aria-label={chrome.ariaLive}
           aria-expanded={open}
           aria-controls={panelId}
           aria-hidden={dockHidden}

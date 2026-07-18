@@ -1,5 +1,19 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import {
+  PERSONALI_DE,
+  PERSONALI_FR,
+  PERSONALI_IT,
+  PERSONALI_NL,
+  PERSONALI_PT,
+} from '@/lib/i18n/editorialLocales/personalisationFrItDeNlPt'
+import {
+  PERSONALI_ES,
+  PERSONALI_ID,
+  PERSONALI_MS,
+  PERSONALI_RU,
+  PERSONALI_ZH,
+} from '@/lib/i18n/editorialLocales/personalisationEsRuZhIdMs'
 
 export type PersonalisationCopy = {
   breadcrumbHome: string
@@ -179,7 +193,30 @@ const AR: PersonalisationCopy = {
 }
 
 export function getPersonalisationCopy(locale: AppLocale | string): PersonalisationCopy {
-  const base = locale === 'ar' ? AR : EN
+  const base =
+    locale === 'ar'
+      ? AR
+      : locale === 'fr'
+        ? PERSONALI_FR
+        : locale === 'it'
+          ? PERSONALI_IT
+          : locale === 'de'
+            ? PERSONALI_DE
+            : locale === 'nl'
+              ? PERSONALI_NL
+              : locale === 'pt'
+                ? PERSONALI_PT
+                : locale === 'es'
+                  ? PERSONALI_ES
+                  : locale === 'ru'
+                    ? PERSONALI_RU
+                    : locale === 'zh'
+                      ? PERSONALI_ZH
+                      : locale === 'id'
+                        ? PERSONALI_ID
+                        : locale === 'ms'
+                          ? PERSONALI_MS
+                          : EN
   try {
     const ui = commerceUi(locale as AppLocale)
     return {

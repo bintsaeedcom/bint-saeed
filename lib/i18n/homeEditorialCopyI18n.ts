@@ -1,5 +1,13 @@
 import type { Language } from '@/lib/i18n/translations'
 import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
+import { HOME_DE, HOME_FR, HOME_IT, HOME_PT } from '@/lib/i18n/editorialLocales/homeFrItDePt'
+import {
+  HOME_ES,
+  HOME_ID,
+  HOME_MS,
+  HOME_RU,
+  HOME_ZH,
+} from '@/lib/i18n/editorialLocales/homeEsRuZhIdMs'
 
 /** Home hero H1 — localized; Latin scripts in uppercase to match English display. */
 const HOME_HERO_HEADLINE: Record<Language, string> = {
@@ -564,7 +572,30 @@ const HOME_NL: HomeEditorialCopy = {
 
 export function getHomeEditorialCopy(locale: Language | string): HomeEditorialCopy {
   const lang: Language = locale in HOME_HERO_HEADLINE ? (locale as Language) : 'en'
-  const base = lang === 'ar' ? HOME_AR : lang === 'nl' ? HOME_NL : HOME_EN
+  const base =
+    lang === 'ar'
+      ? HOME_AR
+      : lang === 'nl'
+        ? HOME_NL
+        : lang === 'fr'
+          ? HOME_FR
+          : lang === 'it'
+            ? HOME_IT
+            : lang === 'de'
+              ? HOME_DE
+              : lang === 'pt'
+                ? HOME_PT
+                : lang === 'es'
+                  ? HOME_ES
+                  : lang === 'ru'
+                    ? HOME_RU
+                    : lang === 'zh'
+                      ? HOME_ZH
+                      : lang === 'id'
+                        ? HOME_ID
+                        : lang === 'ms'
+                          ? HOME_MS
+                          : HOME_EN
   return {
     ...base,
     heroHeadline: HOME_HERO_HEADLINE[lang],

@@ -8,6 +8,7 @@ import {
   getLocalizedTermsContent,
   type EuZhLocale,
 } from '@/lib/legal/policyContentLocales'
+import { getLocalizedShipmentContent } from '@/lib/legal/shipmentPolicyLocales'
 import {
   LANGUAGE_CLAUSE_BODY_EN,
   LANGUAGE_CLAUSE_BODY_ID,
@@ -1257,6 +1258,22 @@ export function getShipmentReturnContent(lang: PolicyLang): PolicyContent {
   if (lang === 'ms') return policyMs.getShipmentReturnContent('ms')
   if (lang === 'ar') {
     return { ...policyAr.SHIPMENT_AR, sections: policyAr.shipmentArSections() }
+  }
+  if (
+    lang === 'fr' ||
+    lang === 'de' ||
+    lang === 'it' ||
+    lang === 'es' ||
+    lang === 'nl' ||
+    lang === 'pt' ||
+    lang === 'ru' ||
+    lang === 'zh'
+  ) {
+    return getLocalizedShipmentContent(
+      lang as EuZhLocale,
+      shipmentEnSections(),
+      SHIPMENT_EN.sectionList,
+    )
   }
   const meta = resolvePolicyMeta(lang, SHIPMENT_EN, SHIPMENT_ID, AR_BREADCRUMBS.shipment)
   const sections = lang === 'id' ? shipmentIdSections() : shipmentEnSections()

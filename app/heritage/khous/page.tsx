@@ -9,10 +9,9 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getKhousPageCopy } from '@/lib/content/heritageKhousCopyI18n'
 
 export default function KhousPage() {
-  const { isRTL } = useLanguage()
-  
   return (
     <div className={`min-h-screen bg-brand-pageCanvas `}>
       <HeroSection />
@@ -30,11 +29,12 @@ function HeroSection() {
   const ref = useRef(null)
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const copy = getKhousPageCopy(language)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
   })
-  
+
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
@@ -62,8 +62,8 @@ function HeroSection() {
             variant="light"
             segments={[
               { label: ui.common.home, href: '/home' },
-              { label: isRTL ? 'التراث' : 'Heritage', href: '/heritage' },
-              { label: isRTL ? 'الخوص' : 'Khous Weaving' },
+              { label: copy.heritage, href: '/heritage' },
+              { label: copy.khousFull },
             ]}
             backLink={{
               href: '/heritage',
@@ -85,13 +85,13 @@ function HeroSection() {
             className="text-white max-w-4xl mx-auto"
           >
             <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm font-montserrat text-xs uppercase tracking-[0.3em] text-white/80 mb-8">
-              {isRTL ? 'حرفة تقليدية' : 'Traditional Craft'}
+              {copy.heroTag}
             </span>
             <h1 data-document-h1="true" className="font-rozha text-5xl md:text-7xl lg:text-8xl mb-6">
-              {isRTL ? 'الخوص' : 'Khous Weaving'}
+              {copy.heroTitle}
             </h1>
             <p className="font-montserrat text-lg md:text-xl text-white/70 tracking-wide">
-              {isRTL ? 'فن نسج سعف النخيل' : 'The Art of Palm Frond Weaving'}
+              {copy.heroSubtitle}
             </p>
           </motion.div>
         </div>
@@ -103,7 +103,8 @@ function HeroSection() {
 function StorySection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: '-20%' })
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const copy = getKhousPageCopy(language)
 
   return (
     <section ref={ref} className="py-24 md:py-32">
@@ -116,22 +117,12 @@ function StorySection() {
             className="text-start"
           >
             <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
-              {isRTL ? 'شجرة الحياة' : 'Tree of Life'}
+              {copy.storyEyebrow}
             </span>
-            <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed mb-8">
-              {isRTL ? 'هدية النخلة' : 'Gift of the Palm'}
-            </h2>
+            <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed mb-8">{copy.storyTitle}</h2>
             <div className="space-y-6 font-montserrat text-base text-brand-clayRed/80 tracking-wide leading-relaxed">
-              <p>
-                {isRTL 
-                  ? 'النخلة في الثقافة الإماراتية ليست مجرد شجرة - إنها شجرة الحياة. لقرون، اعتمد أهل الإمارات على النخلة في كل شيء: من التمر للغذاء، إلى الجذع للبناء، وسعف النخيل للحرف اليدوية.'
-                  : 'In Emirati culture, the palm tree is not just a tree - it\'s the tree of life. For centuries, Emiratis relied on the palm for everything: from dates for food, to trunks for building, and palm fronds for handicrafts.'}
-              </p>
-              <p>
-                {isRTL 
-                  ? 'الخوص، أو "السفيفة" كما يُسمى أيضاً، هو فن نسج سعف النخيل المجففة والمعالجة لصنع السلال والحصير والمراوح وغيرها من المنتجات اليومية التي كانت ضرورية لحياة الصحراء.'
-                  : 'Khous, also known as "Al Safeefah", is the art of weaving dried and treated palm fronds to create baskets, mats, fans, and other everyday items that were essential for desert life.'}
-              </p>
+              <p>{copy.storyP1}</p>
+              <p>{copy.storyP2}</p>
             </div>
           </motion.div>
 
@@ -155,31 +146,8 @@ function StorySection() {
 }
 
 function ProcessSection() {
-  const { isRTL } = useLanguage()
-
-  const steps = [
-    {
-      title: { en: 'Harvesting', ar: 'الحصاد' },
-      description: { 
-        en: 'Fresh palm fronds are carefully selected and cut from the tree, choosing the young, flexible leaves ideal for weaving.',
-        ar: 'تُختار سعف النخيل الطازجة بعناية وتُقطع من الشجرة، مع اختيار الأوراق الصغيرة المرنة المثالية للنسج.'
-      },
-    },
-    {
-      title: { en: 'Preparation', ar: 'التحضير' },
-      description: { 
-        en: 'The fronds are dried in the sun, then soaked in water to make them pliable. Some are dyed with natural colors from saffron or pomegranate.',
-        ar: 'تُجفف السعف في الشمس، ثم تُنقع في الماء لجعلها مرنة. يُصبغ بعضها بألوان طبيعية من الزعفران أو الرمان.'
-      },
-    },
-    {
-      title: { en: 'Weaving', ar: 'النسج' },
-      description: { 
-        en: 'Using ancient patterns passed through generations, artisans interlace the fronds to create functional and beautiful items.',
-        ar: 'باستخدام أنماط قديمة توارثتها الأجيال، تنسج الحرفيات السعف لإنشاء منتجات وظيفية وجميلة.'
-      },
-    },
-  ]
+  const { language } = useLanguage()
+  const copy = getKhousPageCopy(language)
 
   return (
     <section className="py-24 md:py-32 bg-brand-stone/20">
@@ -192,31 +160,25 @@ function ProcessSection() {
           className="text-center mb-16"
         >
           <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
-            {isRTL ? 'العملية' : 'The Process'}
+            {copy.processEyebrow}
           </span>
-          <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed">
-            {isRTL ? 'من السعف إلى الفن' : 'From Frond to Art'}
-          </h2>
+          <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed">{copy.processTitle}</h2>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {steps.map((step, index) => (
+          {copy.steps.map((step, index) => (
             <motion.div
-              key={index}
+              key={step.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className={`p-8 bg-white border border-brand-stone/30 text-start`}
             >
-              <span className="font-rozha text-6xl text-brand-clayRed/20 block mb-4">
-                0{index + 1}
-              </span>
-              <h3 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                {isRTL ? step.title.ar : step.title.en}
-              </h3>
+              <span className="font-rozha text-6xl text-brand-clayRed/20 block mb-4">0{index + 1}</span>
+              <h3 className="font-rozha text-2xl text-brand-darkRed mb-4">{step.title}</h3>
               <p className="font-montserrat text-sm text-brand-clayRed/80 tracking-wide leading-relaxed">
-                {isRTL ? step.description.ar : step.description.en}
+                {step.description}
               </p>
             </motion.div>
           ))}
@@ -227,14 +189,8 @@ function ProcessSection() {
 }
 
 function ProductsSection() {
-  const { isRTL } = useLanguage()
-
-  const products = [
-    { name: { en: 'Baskets', ar: 'السلال' }, use: { en: 'Storage & decoration', ar: 'للتخزين والديكور' } },
-    { name: { en: 'Mats', ar: 'الحصير' }, use: { en: 'Floor coverings', ar: 'لتغطية الأرضيات' } },
-    { name: { en: 'Fans', ar: 'المهفات' }, use: { en: 'Cooling in the heat', ar: 'للتبريد في الحر' } },
-    { name: { en: 'Food Covers', ar: 'أغطية الطعام' }, use: { en: 'Protecting food', ar: 'لحماية الطعام' } },
-  ]
+  const { language } = useLanguage()
+  const copy = getKhousPageCopy(language)
 
   return (
     <section className="py-24 md:py-32 bg-brand-clayRed text-white">
@@ -247,29 +203,23 @@ function ProductsSection() {
           className="text-center mb-16"
         >
           <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-stone mb-6 block">
-            {isRTL ? 'المنتجات' : 'Products'}
+            {copy.productsEyebrow}
           </span>
-          <h2 className="font-rozha text-4xl md:text-5xl">
-            {isRTL ? 'ما يُصنع من الخوص' : 'What Khous Creates'}
-          </h2>
+          <h2 className="font-rozha text-4xl md:text-5xl">{copy.productsTitle}</h2>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {products.map((product, index) => (
+          {copy.products.map((product, index) => (
             <motion.div
-              key={index}
+              key={product.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className={`p-6 bg-white/10 backdrop-blur-sm text-center text-start`}
             >
-              <h3 className="font-rozha text-xl mb-2">
-                {isRTL ? product.name.ar : product.name.en}
-              </h3>
-              <p className="font-montserrat text-xs text-white/60 tracking-wide">
-                {isRTL ? product.use.ar : product.use.en}
-              </p>
+              <h3 className="font-rozha text-xl mb-2">{product.name}</h3>
+              <p className="font-montserrat text-xs text-white/60 tracking-wide">{product.use}</p>
             </motion.div>
           ))}
         </div>
@@ -281,7 +231,8 @@ function ProductsSection() {
 function BintSaeedSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: '-20%' })
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const copy = getKhousPageCopy(language)
 
   return (
     <section ref={ref} className="py-24 md:py-32">
@@ -308,29 +259,19 @@ function BintSaeedSection() {
             className={`order-1 lg:order-2 text-start`}
           >
             <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
-              {isRTL ? 'بنت سعيد × الخوص' : 'Bint Saeed × Khous'}
+              {copy.brandEyebrow}
             </span>
-            <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed mb-8">
-              {isRTL ? 'أنماط النخيل في تصاميمنا' : 'Palm Patterns in Our Designs'}
-            </h2>
+            <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed mb-8">{copy.brandTitle}</h2>
             <div className="space-y-6 font-montserrat text-base text-brand-clayRed/80 tracking-wide leading-relaxed">
-              <p>
-                {isRTL 
-                  ? 'نستلهم من أنماط الخوص الهندسية في تطريزاتنا وتفاصيل تصاميمنا. النسيج المتشابك الذي يميز الخوص يظهر في بطانات عباءاتنا وإكسسواراتنا.'
-                  : 'We draw inspiration from the geometric patterns of Khous in our embroidery and design details. The interlaced weaving that characterizes Khous appears in our abaya linings and accessories.'}
-              </p>
-              <p>
-                {isRTL 
-                  ? 'كما نتعاون مع حرفيات محليات لإنتاج إكسسوارات مصنوعة يدوياً من سعف النخيل، تُكمل مجموعاتنا وتحمل روح التراث الإماراتي.'
-                  : 'We also collaborate with local artisans to produce handcrafted accessories made from palm fronds, complementing our collections and carrying the spirit of Emirati heritage.'}
-              </p>
+              <p>{copy.brandP1}</p>
+              <p>{copy.brandP2}</p>
             </div>
             <LocaleLink
               href="/shop?from=heritage-khous"
               className={`mt-8 inline-flex min-h-[52px] items-center justify-center gap-3 px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors `}
               data-cursor-hover
             >
-              {isRTL ? 'تسوقي المجموعة' : 'Shop the Collection'}
+              {copy.shopCollection}
               <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
             </LocaleLink>
           </motion.div>
@@ -341,19 +282,16 @@ function BintSaeedSection() {
 }
 
 function CTASection() {
-  const { isRTL } = useLanguage()
+  const { language } = useLanguage()
+  const copy = getKhousPageCopy(language)
 
   return (
     <section className="py-16 bg-brand-stone/20">
       <div className="container mx-auto px-6 lg:px-12">
         <div className={`flex flex-col md:flex-row items-center justify-between gap-8 `}>
           <div className="text-start">
-            <h3 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-2">
-              {isRTL ? 'اكتشفي المزيد من تراثنا' : 'Explore More of Our Heritage'}
-            </h3>
-            <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide">
-              {isRTL ? 'تعرفي على حرف إماراتية تقليدية أخرى' : 'Learn about other traditional Emirati crafts'}
-            </p>
+            <h3 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-2">{copy.exploreMore}</h3>
+            <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide">{copy.exploreMoreLead}</p>
           </div>
           <div className={`flex gap-4 `}>
             <LocaleLink
@@ -361,14 +299,14 @@ function CTASection() {
               className="inline-flex min-h-[48px] items-center justify-center px-6 py-3 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
-              {isRTL ? 'التلي' : 'Al Talli'}
+              {copy.alTalli}
             </LocaleLink>
             <LocaleLink
               href="/heritage"
               className="inline-flex min-h-[48px] items-center justify-center px-6 py-3 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
-              {isRTL ? 'التراث' : 'Heritage'}
+              {copy.heritage}
             </LocaleLink>
           </div>
         </div>

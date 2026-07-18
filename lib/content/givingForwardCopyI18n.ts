@@ -1,5 +1,19 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import {
+  GF_DE,
+  GF_FR,
+  GF_IT,
+  GF_NL,
+  GF_PT,
+} from '@/lib/i18n/editorialLocales/givingForwardFrItDeNlPt'
+import {
+  GF_ES,
+  GF_ID,
+  GF_MS,
+  GF_RU,
+  GF_ZH,
+} from '@/lib/i18n/editorialLocales/givingForwardEsRuZhIdMs'
 
 export type GivingForwardCopy = {
   breadcrumbHome: string
@@ -11,6 +25,7 @@ export type GivingForwardCopy = {
   pillars: { title: string; body: string }[]
   shopCta: string
   contactCta: string
+  hangtagCaption: string
 }
 
 const EN: GivingForwardCopy = {
@@ -47,6 +62,7 @@ const EN: GivingForwardCopy = {
   ],
   shopCta: 'Shop Pieces',
   contactCta: 'Contact Us',
+  hangtagCaption: 'Heritage Carried Forward',
 }
 
 const AR: GivingForwardCopy = {
@@ -71,10 +87,34 @@ const AR: GivingForwardCopy = {
   ],
   shopCta: 'تسوقي القطع',
   contactCta: 'تواصلي معنا',
+  hangtagCaption: 'تراث يُحمل إلى الأمام',
 }
 
 export function getGivingForwardCopy(locale: AppLocale | string): GivingForwardCopy {
-  const base = locale === 'ar' ? AR : EN
+  const base =
+    locale === 'ar'
+      ? AR
+      : locale === 'fr'
+        ? GF_FR
+        : locale === 'it'
+          ? GF_IT
+          : locale === 'de'
+            ? GF_DE
+            : locale === 'nl'
+              ? GF_NL
+              : locale === 'pt'
+                ? GF_PT
+                : locale === 'es'
+                  ? GF_ES
+                  : locale === 'ru'
+                    ? GF_RU
+                    : locale === 'zh'
+                      ? GF_ZH
+                      : locale === 'id'
+                        ? GF_ID
+                        : locale === 'ms'
+                          ? GF_MS
+                          : EN
   try {
     const ui = commerceUi(locale as AppLocale)
     return {

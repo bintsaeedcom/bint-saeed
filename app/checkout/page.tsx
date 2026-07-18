@@ -13,6 +13,7 @@ import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getCheckoutFormCopy } from '@/lib/i18n/checkoutFormCopyI18n'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
 import { products as staticProducts } from '@/data/products'
@@ -61,27 +62,27 @@ function detectDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   return 'desktop'
 }
 
-function railLabel(rail: CheckoutRail, ui: ReturnType<typeof commerceUi>, language: string): string {
+function railLabel(
+  rail: CheckoutRail,
+  ui: ReturnType<typeof commerceUi>,
+  form: ReturnType<typeof getCheckoutFormCopy>,
+): string {
   if (rail === 'paypal') return ui.checkout.payWithPayPal
   if (rail === 'mollie') return ui.checkout.payWithMollie
   if (rail === 'tamara') return ui.checkout.payWithTamara
-  if (rail === 'tabby') {
-    return language === 'ar' ? 'ادفع لاحقًا مع تابي' : 'Pay later with Tabby'
-  }
+  if (rail === 'tabby') return form.payLaterTabby
   return ui.checkout.payWithCard
 }
 
 function continueLabel(
   rail: CheckoutRail | null,
   ui: ReturnType<typeof commerceUi>,
-  language: string,
+  form: ReturnType<typeof getCheckoutFormCopy>,
 ): string {
   if (rail === 'paypal') return ui.checkout.continueWithPayPal
   if (rail === 'mollie') return ui.checkout.continueWithMollie
   if (rail === 'tamara') return ui.checkout.continueWithTamara
-  if (rail === 'tabby') {
-    return language === 'ar' ? 'المتابعة مع تابي' : 'Continue with Tabby'
-  }
+  if (rail === 'tabby') return form.continueTabby
   return ui.checkout.continueWithCard
 }
 
@@ -91,7 +92,7 @@ export default function CheckoutPage() {
       fallback={
         <div className={`flex min-h-screen items-center justify-center ${SITE_CONTENT_TOP_PAD}`}>
           <div className="animate-pulse font-montserrat text-sm uppercase tracking-[0.16em] text-brand-darkRed/70">
-            Loading checkout…
+            {getCheckoutFormCopy('en').loadingCheckout}
           </div>
         </div>
       }
@@ -109,6 +110,7 @@ function CheckoutPageContent() {
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const form = getCheckoutFormCopy(language)
   const [appliedGiftCard, setAppliedGiftCard] = useState<AppliedGiftCardPreview | null>(null)
   const requiresPhysicalShipping = cartRequiresPhysicalShipping(items)
   const merchandiseSubtotal = Number(cartSubtotal(items).toFixed(2))
@@ -416,25 +418,14 @@ function CheckoutPageContent() {
     try {
       if (giftCardCoversFull) {
         if (!tamaraEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(tamaraEmail.trim())) {
-          throw new Error(
-            language === 'ar'
-              ? 'أدخلي بريداً إلكترونياً صالحاً لتأكيد الطلب.'
-              : 'Enter a valid email for your order confirmation.',
-          )
+          throw new Error(form.validEmailRequired)
         }
         if (requiresPhysicalShipping && (!tamaraLine1.trim() || !tamaraCity.trim())) {
           setBnplFieldError({
             field: !tamaraLine1.trim() ? 'line1' : 'city',
-            message:
-              language === 'ar'
-                ? 'أدخلي عنوان الشحن لهذا الطلب.'
-                : 'Enter a shipping address for this order.',
+            message: form.shippingAddressRequired,
           })
-          throw new Error(
-            language === 'ar'
-              ? 'أدخلي عنوان الشحن لهذا الطلب.'
-              : 'Enter a shipping address for this order.',
-          )
+          throw new Error(form.shippingAddressRequired)
         }
         const response = await fetch('/api/checkout/gift-card-pay', {
           method: 'POST',
@@ -756,7 +747,7 @@ function CheckoutPageContent() {
                   className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed underline-offset-4 hover:underline"
                   data-cursor-hover
                 >
-                  {isRTL ? 'متابعة الدفع' : 'Continue to payment'}
+                  {form.continueToPayment}
                 </button>
                 <LocaleLink
                   href="/cart"
@@ -935,9 +926,7 @@ function CheckoutPageContent() {
                   <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
                     {requiresPhysicalShipping
                       ? ui.cart.taxesIncluded
-                      : language === 'ar'
-                        ? 'رقمي — بدون شحن.'
-                        : 'Digital — no shipping.'}
+                      : form.digitalNoShipping}
                   </p>
                 )}
                 <CheckoutGiftCardApply
@@ -951,7 +940,7 @@ function CheckoutPageContent() {
                     className={`mt-3 flex items-baseline justify-between gap-4 border-t border-white/10 pt-3 font-montserrat text-sm tracking-wide text-white `}
                   >
                     <span className="min-w-0">
-                      {language === 'ar' ? 'المستحق الآن' : 'Due now'}
+                      {form.dueNow}
                     </span>
                     <span className="shrink-0 whitespace-nowrap font-medium">
                       {formatAmount(amountDueNow)}
@@ -965,9 +954,7 @@ function CheckoutPageContent() {
                 {giftCardCoversFull ? (
                   <div className="mt-6 space-y-2.5">
                     <p className="font-montserrat text-[11px] leading-snug tracking-wide text-brand-dustyBlue">
-                      {language === 'ar'
-                        ? 'بطاقة الهدايا تغطي الطلب بالكامل. أدخلي بريدك لإتمام الدفع.'
-                        : 'Your gift card covers this order. Enter your email to complete payment.'}
+                      {form.giftCardCoversOrder}
                     </p>
                     <input
                       value={tamaraEmail}
@@ -975,7 +962,7 @@ function CheckoutPageContent() {
                         setTamaraEmail(e.target.value)
                         clearBnplFieldError('email')
                       }}
-                      placeholder={language === 'ar' ? 'البريد الإلكتروني' : 'Email'}
+                      placeholder={form.email}
                       type="email"
                       className={bnplFieldClass('email')}
                       autoComplete="email"
@@ -988,7 +975,7 @@ function CheckoutPageContent() {
                             setTamaraLine1(e.target.value)
                             clearBnplFieldError('line1')
                           }}
-                          placeholder={language === 'ar' ? 'عنوان الشحن' : 'Shipping address'}
+                          placeholder={form.shippingAddress}
                           className={bnplFieldClass('line1')}
                           autoComplete="street-address"
                         />
@@ -998,7 +985,7 @@ function CheckoutPageContent() {
                             setTamaraCity(e.target.value)
                             clearBnplFieldError('city')
                           }}
-                          placeholder={language === 'ar' ? 'المدينة' : 'City'}
+                          placeholder={form.city}
                           className={bnplFieldClass('city')}
                           autoComplete="address-level2"
                         />
@@ -1037,7 +1024,7 @@ function CheckoutPageContent() {
  : 'space-y-2'
  }`}
                         >
-                          <span className="sr-only">{railLabel(rail, ui, language)}</span>
+                          <span className="sr-only">{railLabel(rail, ui, form)}</span>
                           <CheckoutPaymentRailIcons
                             rail={rail}
                             className={rail === 'tamara' || rail === 'tabby' ? 'shrink-0' : ''}
@@ -1054,11 +1041,7 @@ function CheckoutPageContent() {
  }`}
                             >
                               {ui.checkout.payWithTamara}
-                              {!tamaraEligible
-                                ? language === 'ar'
-                                  ? ' — قد لا تتأهل لهذا الطلب؛ يمكنك المحاولة أو اختيار بطاقة'
-                                  : ' — may not qualify for this order; you can still try, or pay by card'
-                                : ''}
+                              {!tamaraEligible ? form.tamaraMayNotQualify : ''}
                             </span>
                           ) : null}
                           {rail === 'tabby' ? (
@@ -1067,7 +1050,7 @@ function CheckoutPageContent() {
  tabbyEligible ? 'text-white/75' : 'text-amber-200/90'
  }`}
                             >
-                              {railLabel('tabby', ui, language)}
+                              {railLabel('tabby', ui, form)}
                             </span>
                           ) : null}
                         </span>
@@ -1079,13 +1062,7 @@ function CheckoutPageContent() {
                 {(!giftCardCoversFull && (activeRail === 'tamara' || activeRail === 'tabby')) ? (
                   <div className="mt-5 space-y-2.5 rounded-[6px] border border-white/15 bg-white/[0.08] p-3.5 sm:mt-6 sm:p-4">
                     <p className="font-montserrat text-[10px] uppercase tracking-[0.14em] text-[#e8d8c8]/75">
-                      {activeRail === 'tabby'
-                        ? language === 'ar'
-                          ? 'تفاصيل تابي'
-                          : 'Tabby details'
-                        : language === 'ar'
-                          ? 'تفاصيل تمارا'
-                          : 'Tamara details'}
+                      {activeRail === 'tabby' ? form.tabbyDetails : form.tamaraDetails}
                     </p>
                     {activeRail === 'tabby' ? (
                       <TabbyPromoSnippet
@@ -1118,7 +1095,7 @@ function CheckoutPageContent() {
                           setTamaraFirstName(e.target.value)
                           clearBnplFieldError('firstName')
                         }}
-                        placeholder={language === 'ar' ? 'الاسم الأول' : 'First name'}
+                        placeholder={form.firstName}
                         className={bnplFieldClass('firstName')}
                         autoComplete="given-name"
                         aria-invalid={bnplFieldError?.field === 'firstName'}
@@ -1129,7 +1106,7 @@ function CheckoutPageContent() {
                           setTamaraLastName(e.target.value)
                           clearBnplFieldError('lastName')
                         }}
-                        placeholder={language === 'ar' ? 'اسم العائلة' : 'Last name'}
+                        placeholder={form.lastName}
                         className={bnplFieldClass('lastName')}
                         autoComplete="family-name"
                         aria-invalid={bnplFieldError?.field === 'lastName'}
@@ -1141,7 +1118,7 @@ function CheckoutPageContent() {
                         setTamaraEmail(e.target.value)
                         clearBnplFieldError('email')
                       }}
-                      placeholder={language === 'ar' ? 'البريد الإلكتروني' : 'Email'}
+                      placeholder={form.email}
                       type="email"
                       className={bnplFieldClass('email')}
                       autoComplete="email"
@@ -1153,11 +1130,7 @@ function CheckoutPageContent() {
                         setTamaraPhone(e.target.value)
                         clearBnplFieldError('phone')
                       }}
-                      placeholder={
-                        language === 'ar'
-                          ? 'الجوال (05… أو 9715…)'
-                          : 'Mobile (05… or 9715…)'
-                      }
+                      placeholder={form.mobilePlaceholder}
                       type="tel"
                       className={bnplFieldClass('phone')}
                       autoComplete="tel"
@@ -1171,7 +1144,7 @@ function CheckoutPageContent() {
                             setTamaraLine1(e.target.value)
                             clearBnplFieldError('line1')
                           }}
-                          placeholder={language === 'ar' ? 'عنوان الشحن' : 'Shipping address'}
+                          placeholder={form.shippingAddress}
                           className={bnplFieldClass('line1')}
                           autoComplete="street-address"
                           aria-invalid={bnplFieldError?.field === 'line1'}
@@ -1182,7 +1155,7 @@ function CheckoutPageContent() {
                             setTamaraCity(e.target.value)
                             clearBnplFieldError('city')
                           }}
-                          placeholder={language === 'ar' ? 'المدينة' : 'City'}
+                          placeholder={form.city}
                           className={bnplFieldClass('city')}
                           autoComplete="address-level2"
                           aria-invalid={bnplFieldError?.field === 'city'}
@@ -1190,9 +1163,7 @@ function CheckoutPageContent() {
                       </>
                     ) : (
                       <p className="font-montserrat text-[11px] leading-snug tracking-wide text-white/60">
-                        {language === 'ar'
-                          ? 'بطاقة الهدايا رقمية — تُرسل بالبريد الإلكتروني، دون شحن.'
-                          : 'Gift cards are digital — delivered by email, no shipping.'}
+                        {form.giftCardDigitalNote}
                       </p>
                     )}
                   </div>
@@ -1258,10 +1229,8 @@ function CheckoutPageContent() {
                       <FiLock className="h-4 w-4 shrink-0 opacity-90" />
                       <span className="truncate">
                         {giftCardCoversFull
-                          ? language === 'ar'
-                            ? 'أكملي الدفع ببطاقة الهدايا'
-                            : 'Complete with gift card'
-                          : continueLabel(activeRail, ui, language)}
+                          ? form.completeWithGiftCard
+                          : continueLabel(activeRail, ui, form)}
                       </span>
                       <FiArrowRight className={`h-4 w-4 shrink-0 opacity-90 ${isRTL ? 'rotate-180' : ''}`} />
                     </>

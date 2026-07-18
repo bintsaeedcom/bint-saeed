@@ -10,9 +10,12 @@ import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChro
 import { FiMail, FiPhone, FiMapPin, FiClock, FiSend, FiCheck, FiArrowRight } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getCartEmptyDiscoverCopy } from '@/lib/i18n/cartEmptyDiscoverI18n'
 import { getKeepExploringLine } from '@/lib/i18n/keepExploringCopyI18n'
+import {
+  CONTACT_SUBJECT_VALUES,
+  getContactPageCopy,
+} from '@/lib/content/contactPageCopyI18n'
 import toast from 'react-hot-toast'
 import { OFFICIAL_EMAILS, officialMailto } from '@/lib/brand/officialEmails'
 import { ctaFormSubmit } from '@/lib/ui/ctaClasses'
@@ -34,8 +37,6 @@ import {
 const CONTACT_PHONE_DISPLAY = '+971 50 2299402'
 const CONTACT_PHONE_WA_ME = '971502299402'
 const CONTACT_PHONE_TEL = '+971502299402'
-const CONTACT_LOCATION_EN = 'Abu Dhabi,\u00A0United\u00A0Arab\u00A0Emirates'
-const CONTACT_LOCATION_AR = 'أبو ظبي، الإمارات العربية المتحدة'
 
 const contactFieldClass = formFieldClass
 const contactFieldErrorClass = formFieldErrorClass
@@ -50,7 +51,7 @@ const contactLabelClass = formLabelClass
 
 const contactErrorClass = `${formHintClass} text-brand-clayRed`
 
-function FieldError({ id, message, isRTL }: { id: string; message: string; isRTL: boolean }) {
+function FieldError({ id, message }: { id: string; message: string }) {
   return (
     <p id={id} role="alert" className={`${contactErrorClass} text-start`}>
       {message}
@@ -60,7 +61,7 @@ function FieldError({ id, message, isRTL }: { id: string; message: string; isRTL
 
 export default function ContactPage() {
   const { isRTL, language } = useLanguage()
-  const ui = commerceUi(language)
+  const copy = getContactPageCopy(language)
   const discover = getCartEmptyDiscoverCopy(language)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -74,8 +75,6 @@ export default function ContactPage() {
     subject: '',
     message: '',
   })
-
-  const subjectRequiredMessage = isRTL ? 'يرجى اختيار موضوع' : 'Please select a subject'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -97,8 +96,8 @@ export default function ContactPage() {
     setEmailError('')
 
     if (!formData.subject.trim()) {
-      setSubjectError(subjectRequiredMessage)
-      toast.error(subjectRequiredMessage)
+      setSubjectError(copy.subjectRequired)
+      toast.error(copy.subjectRequired)
       return
     }
     setSubjectError('')
@@ -117,7 +116,7 @@ export default function ContactPage() {
       })
 
       if (response.ok) {
-        showContactSuccessToast(isRTL)
+        showContactSuccessToast(language)
         setSubmitted(true)
         setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
         setNameError('')
@@ -126,15 +125,11 @@ export default function ContactPage() {
       } else {
         const data = (await response.json().catch(() => ({}))) as { error?: string }
         const message =
-          typeof data.error === 'string'
-            ? data.error
-            : isRTL
-              ? 'حدث خطأ. حاولي مرة أخرى.'
-              : 'Something went wrong. Please try again.'
+          typeof data.error === 'string' ? data.error : copy.genericError
         toast.error(message)
       }
     } catch {
-      toast.error(isRTL ? 'حدث خطأ. حاولي مرة أخرى.' : 'Something went wrong. Please try again.')
+      toast.error(copy.genericError)
     } finally {
       setIsSubmitting(false)
     }
@@ -143,7 +138,7 @@ export default function ContactPage() {
   const contactInfo = [
     {
       icon: FiMail,
-      label: isRTL ? 'البريد الإلكتروني' : 'General Inquiries',
+      label: copy.generalInquiries,
       value: OFFICIAL_EMAILS.hello,
       href: officialMailto('hello'),
     },
@@ -155,76 +150,54 @@ export default function ContactPage() {
     },
     {
       icon: FiPhone,
-      label: isRTL ? 'الهاتف' : 'Phone',
+      label: copy.phone,
       value: CONTACT_PHONE_DISPLAY,
       href: `tel:${CONTACT_PHONE_TEL}`,
     },
     {
       icon: FiMapPin,
-      label: isRTL ? 'الموقع' : 'Location',
-      value: isRTL ? CONTACT_LOCATION_AR : CONTACT_LOCATION_EN,
+      label: copy.location,
+      value: copy.locationValue,
       href: null,
     },
     {
       icon: FiClock,
-      label: isRTL ? 'ساعات العمل' : 'Business Hours',
-      value: isRTL ? 'الأحد - الخميس: 9 ص - 6 م' : 'Sun - Thu: 9 AM - 6 PM',
+      label: copy.businessHours,
+      value: copy.businessHoursValue,
       href: null,
     },
   ]
 
   const departmentEmails: { label: string; email: keyof typeof OFFICIAL_EMAILS }[] = [
-    { label: isRTL ? 'دعم العملاء' : 'Customer Support', email: 'support' },
-    { label: isRTL ? 'الطلبات' : 'Orders', email: 'orders' },
-    { label: isRTL ? 'الإرجاع والاستبدال' : 'Returns & Exchanges', email: 'returns' },
-    { label: isRTL ? 'التخصيص' : 'Personalisation', email: 'hello' },
-    { label: isRTL ? 'الجملة' : 'Wholesale', email: 'wholesale' },
-    { label: isRTL ? 'الشراكات' : 'Partnerships', email: 'partnerships' },
-    { label: isRTL ? 'الصحافة والإعلام' : 'Press & Media', email: 'press' },
-    { label: isRTL ? 'الشؤون القانونية' : 'Legal', email: 'legal' },
+    { label: copy.departments.support, email: 'support' },
+    { label: copy.departments.orders, email: 'orders' },
+    { label: copy.departments.returns, email: 'returns' },
+    { label: copy.departments.personalisation, email: 'hello' },
+    { label: copy.departments.wholesale, email: 'wholesale' },
+    { label: copy.departments.partnerships, email: 'partnerships' },
+    { label: copy.departments.press, email: 'press' },
+    { label: copy.departments.legal, email: 'legal' },
   ]
 
-  const subjectOptions = [
-    { value: 'support', labelEn: 'Customer Support', labelAr: 'دعم العملاء' },
-    { value: 'orders', labelEn: 'Orders', labelAr: 'الطلبات' },
-    { value: 'returns', labelEn: 'Returns & Exchanges', labelAr: 'الإرجاع والاستبدال' },
-    { value: 'personalisation', labelEn: 'Personalisation', labelAr: 'التخصيص' },
-    { value: 'wholesale', labelEn: 'Wholesale', labelAr: 'الجملة' },
-    { value: 'partnerships', labelEn: 'Partnerships', labelAr: 'الشراكات' },
-    { value: 'press', labelEn: 'Press & Media', labelAr: 'الصحافة والإعلام' },
-    { value: 'legal', labelEn: 'Legal', labelAr: 'الشؤون القانونية' },
-    { value: 'general', labelEn: 'General Inquiry', labelAr: 'استفسار عام' },
-  ].map((option) => ({
-    value: option.value,
-    label: isRTL ? option.labelAr : option.labelEn,
+  const subjectOptions = CONTACT_SUBJECT_VALUES.map((value) => ({
+    value,
+    label: copy.departments[value],
   }))
-
-  const contactHeroDescription = isRTL
-    ? 'سواء كانت هذه زيارتك الأولى لـ Bint Saeed أو أنكِ جزء من مجتمعنا، يسعدنا مساعدتك في كل استفسار.'
-    : 'Whether you\u2019re discovering Bint Saeed for the first time or already part of our community, we\u2019re pleased to assist with every enquiry.'
-
-  const contactTitle = isRTL ? 'تواصلي معنا' : 'Contact Us'
-  const contactImage = {
-    src: '/contact/bint-saeed-contact-us-abu-dhabi-brand-portrait.webp',
-    alt: isRTL
-      ? 'Bint Saeed أبوظبي — صورة تحريرية مع أعشاب نافورة ونخيل وعمارة معاصرة'
-      : 'Bint Saeed Abu Dhabi — branded editorial portrait with fountain grass, palms, and contemporary architecture at dusk',
-  } as const
 
   return (
     <div className={`${EDITORIAL_PAGE_SHELL} min-h-screen bg-brand-pageCanvas pb-20 `}>
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={ABOUT_SECTION_HERO_IMAGES.contact}
-        imageAlt={isRTL ? 'بانر تواصل Bint Saeed' : 'Bint Saeed contact editorial banner'}
+        imageAlt={copy.heroBannerAlt}
         priority
         segments={[
-          { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-          { label: isRTL ? 'تواصلي معنا' : 'Contact' },
+          { label: copy.breadcrumbHome, href: '/home' },
+          { label: copy.breadcrumbContact },
         ]}
         eyebrow={getAboutEditorialHeroEyebrow(language)}
-        title={contactTitle}
-        description={contactHeroDescription}
+        title={copy.pageTitle}
+        description={copy.heroDescription}
       />
 
       <div className={`${EDITORIAL_PAGE_CONTAINER} pt-10 lg:pt-14`}>
@@ -233,10 +206,10 @@ export default function ContactPage() {
             Bint Saeed
           </p>
           <h2 className="mt-3 font-rozha text-[clamp(2rem,4vw,2.75rem)] leading-tight text-brand-darkRed">
-            {contactTitle}
+            {copy.pageTitle}
           </h2>
           <p className="mt-4 font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/80">
-            {contactHeroDescription}
+            {copy.heroDescription}
           </p>
         </div>
 
@@ -258,10 +231,10 @@ export default function ContactPage() {
                     <FiCheck className="h-6 w-6 text-brand-dustyBlue" strokeWidth={2.25} aria-hidden />
                   </div>
                   <p className="mt-6 font-montserrat text-[10px] uppercase tracking-[0.24em] text-brand-clayRed">
-                    {isRTL ? 'تم الاستلام' : 'Message received'}
+                    {copy.messageReceived}
                   </p>
                   <h2 className="mt-3 font-rozha text-3xl text-brand-darkRed">
-                    {isRTL ? 'شكراً لتواصلك معنا' : 'Thank you for writing'}
+                    {copy.thankYou}
                   </h2>
                   <p className="mt-3 max-w-md font-montserrat text-sm leading-relaxed text-brand-clayRed/75">
                     {getKeepExploringLine(language, 'worldOfBintSaeed')}
@@ -289,7 +262,7 @@ export default function ContactPage() {
                     className="mt-6 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue underline-offset-4 hover:underline"
                     data-cursor-hover
                   >
-                    {isRTL ? 'إرسال رسالة أخرى' : 'Send another message'}
+                    {copy.sendAnother}
                   </button>
                 </div>
               ) : (
@@ -297,7 +270,7 @@ export default function ContactPage() {
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div>
                     <label htmlFor="contact-name" className={`${contactLabelClass} text-start`}>
-                      {isRTL ? 'الاسم' : 'Name'} *
+                      {copy.nameLabel} *
                     </label>
                     <input
                       id="contact-name"
@@ -318,11 +291,11 @@ export default function ContactPage() {
                       dir={isRTL ? 'rtl' : 'ltr'}
                       autoComplete="name"
                     />
-                    {nameError ? <FieldError id="contact-name-error" message={nameError} isRTL={isRTL} /> : null}
+                    {nameError ? <FieldError id="contact-name-error" message={nameError} /> : null}
                   </div>
                   <div>
                     <label htmlFor="contact-email" className={`${contactLabelClass} text-start`}>
-                      {isRTL ? 'البريد الإلكتروني' : 'Email'} *
+                      {copy.emailLabel} *
                     </label>
                     <input
                       id="contact-email"
@@ -344,14 +317,14 @@ export default function ContactPage() {
                       className={`${contactFieldClass} ${emailError ? contactFieldErrorClass : ''} text-start`}
                       dir={isRTL ? 'rtl' : 'ltr'}
                     />
-                    {emailError ? <FieldError id="contact-email-error" message={emailError} isRTL={isRTL} /> : null}
+                    {emailError ? <FieldError id="contact-email-error" message={emailError} /> : null}
                   </div>
                 </div>
 
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div>
                     <label htmlFor="contact-phone" className={`${contactLabelClass} text-start`}>
-                      {isRTL ? 'رقم الهاتف' : 'Phone'}
+                      {copy.phoneLabel}
                     </label>
                     <input
                       id="contact-phone"
@@ -365,7 +338,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <label className={`${contactLabelClass} text-start`}>
-                      {isRTL ? 'الموضوع' : 'Subject'} *
+                      {copy.subjectLabel} *
                     </label>
                     <ContactSubjectSelect
                       value={formData.subject}
@@ -374,7 +347,7 @@ export default function ContactPage() {
                         if (subjectError) setSubjectError('')
                       }}
                       options={subjectOptions}
-                      placeholder={isRTL ? 'اختاري موضوعاً' : 'Select a subject'}
+                      placeholder={copy.subjectPlaceholder}
                       isRTL={isRTL}
                       hasError={Boolean(subjectError)}
                       aria-describedby={subjectError ? 'contact-subject-error' : undefined}
@@ -383,13 +356,15 @@ export default function ContactPage() {
                         setSubjectError('')
                       }}
                     />
-                    {subjectError ? <FieldError id="contact-subject-error" message={subjectError} isRTL={isRTL} /> : null}
+                    {subjectError ? (
+                      <FieldError id="contact-subject-error" message={subjectError} />
+                    ) : null}
                   </div>
                 </div>
 
                 <div>
                   <label htmlFor="contact-message" className={`${contactLabelClass} text-start`}>
-                    {isRTL ? 'رسالتك' : 'Message'} *
+                    {copy.messageLabel} *
                   </label>
                   <textarea
                     id="contact-message"
@@ -399,7 +374,7 @@ export default function ContactPage() {
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className={`${contactFieldClass} resize-none text-start`}
                     dir={isRTL ? 'rtl' : 'ltr'}
-                    placeholder={isRTL ? 'كيف يمكننا مساعدتك؟' : 'How can we help you?'}
+                    placeholder={copy.messagePlaceholder}
                   />
                 </div>
 
@@ -410,11 +385,11 @@ export default function ContactPage() {
                   data-cursor-hover
                 >
                   {isSubmitting ? (
-                    <span>{isRTL ? 'جاري الإرسال...' : 'Sending...'}</span>
+                    <span>{copy.sending}</span>
                   ) : (
                     <>
                       <FiSend className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-                      <span>{isRTL ? 'إرسال الرسالة' : 'Send Message'}</span>
+                      <span>{copy.sendMessage}</span>
                     </>
                   )}
                 </button>
@@ -429,7 +404,7 @@ export default function ContactPage() {
               className={`${contactPanelClass} text-start`}
             >
               <h3 className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed">
-                {isRTL ? 'البريد حسب القسم' : 'Department Inboxes'}
+                {copy.departmentInboxes}
               </h3>
               <dl className="mt-5 space-y-0">
                 {departmentEmails.map(({ label, email }) => (
@@ -466,8 +441,8 @@ export default function ContactPage() {
               <div className="relative aspect-[4/5] w-full">
                 {/* eslint-disable-next-line @next/next/no-img-element -- static editorial still */}
                 <img
-                  src={contactImage.src}
-                  alt={contactImage.alt}
+                  src="/contact/bint-saeed-contact-us-abu-dhabi-brand-portrait.webp"
+                  alt={copy.portraitAlt}
                   width={1080}
                   height={1350}
                   loading="lazy"

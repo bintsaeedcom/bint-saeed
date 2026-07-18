@@ -542,6 +542,31 @@ export function buildPhoneCharmAllCurrencyPriceLine(accessoryId: string): string
   return parts.join(', ')
 }
 
+export function getPhoneCharmLocalizedDisplayName(
+  id: string,
+  locale: AppLocale = 'en',
+): string | undefined {
+  const charmId = resolvePhoneCharmId(id)
+  if (!charmId) return undefined
+  const stone = ID_TO_STONE[charmId]
+  const label = STONE_LABEL[locale][stone] ?? STONE_LABEL.en[stone]
+  const titles: Record<AppLocale, string> = {
+    en: `Al Quaa Phone Charm — ${label}`,
+    ar: `تعليقة هاتف القوع — ${label}`,
+    fr: `Breloque téléphone Al Quaa — ${label}`,
+    it: `Ciondolo telefono Al Quaa — ${label}`,
+    es: `Colgante móvil Al Quaa — ${label}`,
+    ru: `Подвеска для телефона Al Quaa — ${label}`,
+    zh: `Al Quaa 手机挂饰 — ${label}`,
+    de: `Al Quaa Telefonanhänger — ${label}`,
+    nl: `Al Quaa telefoonhanger — ${label}`,
+    pt: `Pingente telemóvel Al Quaa — ${label}`,
+    id: `Liontin ponsel Al Quaa — ${label}`,
+    ms: `Liontin telefon Al Quaa — ${label}`,
+  }
+  return titles[locale] ?? titles.en
+}
+
 export function getPhoneCharmSchemaAudience(locale: AppLocale = 'en'): string {
   return AUDIENCE[locale] ?? AUDIENCE.en
 }

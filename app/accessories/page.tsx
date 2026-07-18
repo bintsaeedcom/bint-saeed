@@ -31,6 +31,15 @@ import {
   PRICE_RANGE_OPTIONS,
   STONE_OPTIONS,
 } from '@/lib/accessories/filterAccessories'
+import {
+  getAccessoryPriceRangeLabel,
+  getAccessoryStoneFilterLabel,
+} from '@/lib/accessories/accessoryFilterLabelsI18n'
+import {
+  getAccessoryCategoryDescription,
+  getAccessoryCategoryName,
+  getAccessoryColorName,
+} from '@/lib/accessories/accessoryUiLabelsI18n'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { resolveAccessoryCategoryId } from '@/lib/accessories/accessoryRouteAliases'
 import { getAccessoryCarouselAlt, buildAccessoriesCollectionJsonLd } from '@/lib/accessories/accessoryJsonLd'
@@ -214,8 +223,8 @@ export default function AccessoriesPage() {
 
   const categoryLabel = useCallback(
     (category: (typeof visibleAccessoryCategories)[number]) =>
-      isRTL ? category.nameAr : category.name,
-    [isRTL],
+      getAccessoryCategoryName(language, category.id, category.name, category.nameAr),
+    [language],
   )
 
   const activeTab = visibleAccessoryCategories.find(c => c.id === activeCategory)
@@ -399,7 +408,7 @@ export default function AccessoriesPage() {
                       >
                         {PRICE_RANGE_OPTIONS.map((opt) => (
                           <option key={opt.id} value={opt.id}>
-                            {isRTL ? opt.labelAr : opt.labelEn}
+                            {getAccessoryPriceRangeLabel(language, opt.id)}
                           </option>
                         ))}
                       </select>
@@ -424,7 +433,7 @@ export default function AccessoriesPage() {
  }`}
                               data-cursor-hover
                             >
-                              {isRTL ? st.labelAr : st.labelEn}
+                              {getAccessoryStoneFilterLabel(language, st.id)}
                             </button>
                           )
                         })}
@@ -458,10 +467,15 @@ export default function AccessoriesPage() {
                   </span>
                   <div>
                     <h2 className="font-rozha text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.08] text-brand-darkRed">
-                      {isRTL ? activeTab.nameAr : activeTab.name}
+                      {getAccessoryCategoryName(language, activeTab.id, activeTab.name, activeTab.nameAr)}
                     </h2>
                     <p className="mt-1 font-montserrat text-sm tracking-wide text-brand-clayRed/70">
-                      {isRTL ? activeTab.descriptionAr : activeTab.description}
+                      {getAccessoryCategoryDescription(
+                        language,
+                        activeTab.id,
+                        activeTab.description,
+                        activeTab.descriptionAr,
+                      )}
                     </p>
                   </div>
                 </motion.div>
@@ -693,7 +707,7 @@ export default function AccessoriesPage() {
                   >
                     {PRICE_RANGE_OPTIONS.map((opt) => (
                       <option key={opt.id} value={opt.id}>
-                        {isRTL ? opt.labelAr : opt.labelEn}
+                        {getAccessoryPriceRangeLabel(language, opt.id)}
                       </option>
                     ))}
                   </select>
@@ -715,7 +729,7 @@ export default function AccessoriesPage() {
  : 'border-brand-stone/40 text-brand-clayRed'
  }`}
                         >
-                          {isRTL ? st.labelAr : st.labelEn}
+                          {getAccessoryStoneFilterLabel(language, st.id)}
                         </button>
                       )
                     })}
@@ -813,9 +827,12 @@ function AccessoryCard({
           {/* Product Info */}
           <div className="text-start">
             <span className="mb-1 block font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
-              {isRTL
-                ? visibleAccessoryCategories.find((c) => c.id === accessory.category)?.nameAr
-                : visibleAccessoryCategories.find((c) => c.id === accessory.category)?.name}
+              {(() => {
+                const cat = visibleAccessoryCategories.find((c) => c.id === accessory.category)
+                return cat
+                  ? getAccessoryCategoryName(language, cat.id, cat.name, cat.nameAr)
+                  : null
+              })()}
             </span>
             <h3
               data-product-name="true"
@@ -839,7 +856,7 @@ function AccessoryCard({
                 key={color.name}
                 className={PRODUCT_GRID_COLOUR_DOT}
                 style={softGridColourBeadStyle(color.hex)}
-                title={isRTL ? color.nameAr : color.name}
+                title={getAccessoryColorName(language, color.name, color.nameAr)}
                 aria-hidden
               />
             ))}

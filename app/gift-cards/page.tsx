@@ -23,6 +23,7 @@ import { getGiftCardPrice } from '@/lib/giftCards/catalogPrices'
 import { formatAmountForCurrency } from '@/lib/pricing'
 import { pdpCtaPrimary } from '@/lib/ui/ctaClasses'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { formatGiftCardLineName, getGiftCardsPageCopy } from '@/lib/i18n/giftCardsPageCopyI18n'
 
 export default function GiftCardsPage() {
   const { isRTL, language } = useLanguage()
@@ -36,43 +37,29 @@ export default function GiftCardsPage() {
   const [personalMessage, setPersonalMessage] = useState('')
   const [adding, setAdding] = useState(false)
 
-  const homeLabel = language === 'ar' ? 'الرئيسية' : 'Home'
-  const shopLabel = language === 'ar' ? 'تسوقي' : 'Shop'
-  const title = language === 'ar' ? 'بطاقات الهدايا' : 'Gift Cards'
-  const eyebrow = language === 'ar' ? 'الإهداء' : 'Gifting'
-  const intro =
-    language === 'ar'
-      ? 'للمرأة التي تعرفينها، بحرية أن تختار لنفسها. اختاري بطاقة هدايا من بنت سعيد واتركي لها اكتشاف القطعة التي تشعرها بأنها لها.'
-      : 'For the woman you know, with the freedom to choose for herself. Select a Bint Saeed Gift Card and let her discover the piece that feels like hers.'
-  const selectedLabel = language === 'ar' ? 'القيمة المختارة' : 'Selected value'
-  const tagline =
-    language === 'ar'
-      ? 'هدية اختيرت لأجلها. والخيار الأخير بين يديها.'
-      : 'A gift chosen for her. The final choice left to her.'
-  const chooseLabel = language === 'ar' ? 'اختاري القيمة' : 'Choose a value'
-  const aedNote =
-    language === 'ar'
-      ? 'البطاقات مقوّمة بالدرهم الإماراتي. يظهر السعر بعملتك المختارة عند الدفع.'
-      : 'Cards are denominated in AED. Prices follow your selected currency at checkout.'
-  const validityNote =
-    language === 'ar'
-      ? 'صالحة لسنة ميلادية واحدة من تاريخ الشراء. أي رصيد غير مستخدم بعد انتهاء الصلاحية يُوجَّه للأعمال الخيرية عبر Giving Forward.'
-      : 'Valid for one Gregorian year from purchase. Any unused balance after expiry is donated to charity through Giving Forward.'
-  const sendLabel =
-    language === 'ar' ? 'أرسلي الرمز مباشرة إلى المستلمة' : 'Send the code directly to the recipient'
-  const recipientNameLabel = language === 'ar' ? 'اسم المستلمة' : 'Recipient name'
-  const recipientEmailLabel = language === 'ar' ? 'بريد المستلمة' : 'Recipient email'
-  const messageLabel = language === 'ar' ? 'رسالة شخصية' : 'Personal message'
-  const messageHint =
-    language === 'ar'
-      ? 'تصل للمستلمة مع الرمز، وتظهر نسخة منها في تأكيد شرائك.'
-      : 'Delivered with her code. A copy appears on your purchase confirmation.'
+  const copy = getGiftCardsPageCopy(language)
+  const homeLabel = ui.common.home
+  const shopLabel = ui.common.shop
+  const {
+    title,
+    eyebrow,
+    intro,
+    selectedLabel,
+    tagline,
+    chooseLabel,
+    aedNote,
+    validityNote,
+    sendLabel,
+    recipientNameLabel,
+    recipientEmailLabel,
+    messageLabel,
+    messageHint,
+    recipientRequiredNote,
+    terms,
+    messagePlaceholder,
+  } = copy
   const fieldClass =
     'mt-1.5 w-full border border-brand-stone/40 bg-brand-pageCanvas px-4 py-3 font-montserrat text-sm text-brand-darkRed outline-none placeholder:text-brand-clayRed/35 focus:border-brand-darkRed/40'
-  const recipientRequiredNote =
-    language === 'ar'
-      ? 'أدخلي بريد المستلمة لإرسال الرمز.'
-      : 'Enter the recipient email to send the code.'
 
   const selectedDisplay = useMemo(() => {
     const amount = getGiftCardPrice(selected, currency.code)
@@ -87,10 +74,7 @@ export default function GiftCardsPage() {
     setAdding(true)
     try {
       const priceAed = selected
-      const name =
-        language === 'ar'
-          ? `بطاقة هدايا بنت سعيد · ${formatGiftCardAmountAed(selected)}`
-          : `Bint Saeed Gift Card · ${formatGiftCardAmountAed(selected)}`
+      const name = formatGiftCardLineName(language, formatGiftCardAmountAed(selected))
 
       addItem({
         id: `gift-card-${selected}`,
@@ -186,7 +170,7 @@ export default function GiftCardsPage() {
             <p className="mt-2 max-w-md font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-clayRed/55">
               {validityNote}{' '}
               <LocaleLink href="/terms" className="underline underline-offset-2 hover:text-brand-darkRed">
-                {language === 'ar' ? 'الشروط' : 'Terms'}
+                {terms}
               </LocaleLink>
             </p>
 
@@ -232,11 +216,7 @@ export default function GiftCardsPage() {
                       rows={4}
                       maxLength={500}
                       className={`${fieldClass} resize-y`}
-                      placeholder={
-                        language === 'ar'
-                          ? 'اكتبي رسالتك إليها…'
-                          : 'Write a few words for her…'
-                      }
+                      placeholder={messagePlaceholder}
                     />
                     <span className="mt-1.5 block font-montserrat text-[11px] normal-case tracking-normal text-brand-clayRed/55">
                       {messageHint}

@@ -9,6 +9,28 @@ import {
 import { CODES_HERO_AR, THE_CODES_SECTIONS_AR } from '@/lib/the-codes/codesPageContentAr'
 import { THE_CODES_SECTIONS_ID } from '@/lib/the-codes/codesPageContentId'
 import { THE_CODES_SECTIONS_MS } from '@/lib/the-codes/codesPageContentMs'
+import {
+  THE_CODES_SECTIONS_DE,
+  THE_CODES_SECTIONS_FR,
+  THE_CODES_SECTIONS_IT,
+  THE_CODES_SECTIONS_NL,
+  THE_CODES_SECTIONS_PT,
+} from '@/lib/the-codes/codesPageContentFrItDeNlPt'
+import {
+  CODES_HERO_DE,
+  CODES_HERO_ES,
+  CODES_HERO_FR,
+  CODES_HERO_ID,
+  CODES_HERO_IT,
+  CODES_HERO_MS,
+  CODES_HERO_NL,
+  CODES_HERO_PT,
+  CODES_HERO_RU,
+  CODES_HERO_ZH,
+  THE_CODES_SECTIONS_ES,
+  THE_CODES_SECTIONS_RU,
+  THE_CODES_SECTIONS_ZH,
+} from '@/lib/the-codes/codesPageContentEsRuZh'
 
 export { absoluteCodesPageImageUrl, CODES_IMAGE_FILES, CODES_PAGE_DIR, codesPageImagePath }
 
@@ -103,6 +125,16 @@ export const THE_CODES_SECTIONS: CodesSectionContent[] = [
 
 export function getTheCodesHero(locale: AppLocale) {
   if (locale === 'ar') return CODES_HERO_AR
+  if (locale === 'fr') return CODES_HERO_FR
+  if (locale === 'it') return CODES_HERO_IT
+  if (locale === 'es') return CODES_HERO_ES
+  if (locale === 'ru') return CODES_HERO_RU
+  if (locale === 'zh') return CODES_HERO_ZH
+  if (locale === 'de') return CODES_HERO_DE
+  if (locale === 'nl') return CODES_HERO_NL
+  if (locale === 'pt') return CODES_HERO_PT
+  if (locale === 'id') return CODES_HERO_ID
+  if (locale === 'ms') return CODES_HERO_MS
   return CODES_HERO
 }
 
@@ -110,5 +142,13 @@ export function getTheCodesSections(locale: AppLocale): CodesSectionContent[] {
   if (locale === 'ar') return THE_CODES_SECTIONS_AR
   if (locale === 'id') return THE_CODES_SECTIONS_ID
   if (locale === 'ms') return THE_CODES_SECTIONS_MS
+  if (locale === 'fr') return THE_CODES_SECTIONS_FR
+  if (locale === 'it') return THE_CODES_SECTIONS_IT
+  if (locale === 'de') return THE_CODES_SECTIONS_DE
+  if (locale === 'nl') return THE_CODES_SECTIONS_NL
+  if (locale === 'pt') return THE_CODES_SECTIONS_PT
+  if (locale === 'es') return THE_CODES_SECTIONS_ES
+  if (locale === 'ru') return THE_CODES_SECTIONS_RU
+  if (locale === 'zh') return THE_CODES_SECTIONS_ZH
   return THE_CODES_SECTIONS
 }

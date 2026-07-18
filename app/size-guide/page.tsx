@@ -64,14 +64,17 @@ export default function SizeGuidePage() {
     values: (unit === 'cm' ? cmRowValues : inchRowValues)[i]!,
   }))
 
-  const helpTitle = isRTL ? 'تحتاجين مساعدة بالمقاس؟' : 'Need sizing help?'
-  const helpBody = isRTL
-    ? 'فريقنا يساعدك لاختيار المقاس المثالي قبل الطلب.'
-    : 'Our concierge can advise your best size before checkout.'
-  const scrollHint = isRTL ? 'مرري أفقياً لعرض كل المقاسات' : 'Swipe sideways to see all sizes'
-  const selectHint = isRTL ? 'اختاري مقاسك لتمييزه' : 'Select a size to highlight'
-  const unitInch = isRTL ? 'بوصة' : 'Inches'
-  const unitCm = isRTL ? 'سم' : 'CM'
+  const {
+    helpTitle,
+    helpBody,
+    scrollHint,
+    selectHint,
+    unitInch,
+    unitCm,
+    unitAriaLabel,
+    whatsapp,
+    contactUs,
+  } = copy
 
   return (
     <div
@@ -154,7 +157,7 @@ export default function SizeGuidePage() {
               <div
                 className="inline-flex border border-brand-stone/30 bg-white/80 p-0.5"
                 role="group"
-                aria-label={isRTL ? 'وحدة القياس' : 'Measurement unit'}
+                aria-label={unitAriaLabel}
               >
                 {([
                   ['cm', unitCm],
@@ -314,14 +317,14 @@ export default function SizeGuidePage() {
                 className={`${ctaPrimary} ${ctaInButtonRow}`}
                 data-cursor-hover
               >
-                {isRTL ? 'واتساب' : 'WhatsApp'}
+                {whatsapp}
               </a>
               <LocaleLink
                 href="/contact"
                 className={`${ctaSecondaryOnLight} ${ctaInButtonRow}`}
                 data-cursor-hover
               >
-                {isRTL ? 'تواصلي معنا' : 'Contact Us'}
+                {contactUs}
               </LocaleLink>
             </div>
           </div>

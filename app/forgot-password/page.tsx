@@ -9,6 +9,7 @@ import { FiMail } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getAuthFormCopy } from '@/lib/i18n/authFormCopyI18n'
 import { ctaFormSubmitCompact } from '@/lib/ui/ctaClasses'
 import {
   formCardClass,
@@ -23,6 +24,7 @@ import {
 export default function ForgotPasswordPage() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const auth = getAuthFormCopy(language)
   const [email, setEmail] = useState('')
   const [busy, setBusy] = useState(false)
   const [sent, setSent] = useState(false)
@@ -45,19 +47,14 @@ export default function ForgotPasswordPage() {
         devLink?: string
       }
       if (!res.ok) {
-        toast.error(data.error || (isRTL ? 'تعذّر الإرسال' : 'Could not send reset email'))
+        toast.error(data.error || auth.couldNotSendReset)
         return
       }
       setSent(true)
-      toast.success(
-        data.message ||
-          (isRTL
-            ? 'إذا كان الحساب موجوداً، أرسلنا رابط إعادة التعيين'
-            : 'If an account exists, we sent a reset link'),
-      )
+      toast.success(data.message || auth.resetLinkSent)
       if (data.devLink) setDevLink(data.devLink)
     } catch {
-      toast.error(isRTL ? 'حدث خطأ' : 'Something went wrong')
+      toast.error(auth.genericError)
     } finally {
       setBusy(false)
     }
@@ -105,9 +102,7 @@ export default function ForgotPasswordPage() {
             {sent ? (
               <div className="text-start">
                 <p className="font-montserrat text-sm leading-relaxed text-brand-darkRed/85">
-                  {isRTL
-                    ? 'إذا كان هناك حساب مرتبط بهذا البريد، ستصلك رسالة تحتوي على رابط إعادة التعيين. تحققي من صندوق الوارد والمجلد غير المرغوب فيه.'
-                    : 'If an account exists for that email, you will receive a message with a reset link. Check your inbox and spam folder.'}
+                  {auth.forgotSentBody}
                 </p>
                 {devLink ? (
                   <p className={`mt-4 ${formHintClass}`}>
@@ -127,7 +122,7 @@ export default function ForgotPasswordPage() {
               <>
                 <form onSubmit={onSubmit} className="space-y-5">
                   <div>
-                    <label className={formLabelClass}>{isRTL ? 'البريد الإلكتروني' : 'Email'}</label>
+                    <label className={formLabelClass}>{auth.email}</label>
                     <div className="relative">
                       <FiMail className={formIconClass} />
                       <input
@@ -148,13 +143,7 @@ export default function ForgotPasswordPage() {
                     className={ctaFormSubmitCompact}
                     data-cursor-hover
                   >
-                    {busy
-                      ? isRTL
-                        ? 'جاري الإرسال…'
-                        : 'Sending…'
-                      : isRTL
-                        ? 'إرسال رابط إعادة التعيين'
-                        : 'Send reset link'}
+                    {busy ? auth.sending : auth.sendResetLink}
                   </button>
                 </form>
 

@@ -140,7 +140,7 @@ export default function GivingForwardPage() {
   )
   const hangtagSrc =
     '/giving-forward/bint-saeed-giving-forward-heritage-carried-forward-charity-hangtag-portrait.webp'
-  const hangtagCaption = language === 'ar' ? 'تراث يُحمل إلى الأمام' : 'Heritage Carried Forward'
+  const hangtagCaption = copy.hangtagCaption
 
   return (
     <div className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-[#1a0210] `}>

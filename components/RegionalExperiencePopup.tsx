@@ -55,10 +55,10 @@ export default function RegionalExperiencePopup() {
   const [pendingCurrency, setPendingCurrency] = useState('AED')
 
   const { currency, setCurrency } = useCurrency()
-  const { setLanguage } = useLanguage()
+  const { setLanguage, language } = useLanguage()
   const router = useRouter()
   const pathname = usePathname() || '/'
-  const t = getRegionalExperienceCopy()
+  const t = getRegionalExperienceCopy(language)
 
   const { locale: urlLocale, pathname: innerPath } = stripLocaleFromPathname(pathname)
 

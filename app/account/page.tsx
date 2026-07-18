@@ -10,6 +10,7 @@ import { FiArrowRight, FiLock, FiLogOut, FiUser, FiUserPlus } from 'react-icons/
 import toast from 'react-hot-toast'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getAccountPageCopy } from '@/lib/i18n/accountPageCopyI18n'
 import GiftCardBalanceCheck from '@/components/GiftCardBalanceCheck'
 
 type SessionUser = {
@@ -22,6 +23,7 @@ type SessionUser = {
 export default function AccountPage() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const accountCopy = getAccountPageCopy(language)
   const router = useRouter()
   const searchParams = useSearchParams()
   const [user, setUser] = useState<SessionUser | null>(null)
@@ -48,19 +50,19 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (searchParams?.get('signed_in') === '1') {
-      toast.success(isRTL ? 'تم تسجيل الدخول' : 'Signed in')
+      toast.success(accountCopy.signedIn)
     }
-  }, [searchParams, isRTL])
+  }, [searchParams, accountCopy.signedIn])
 
   const onSignOut = async () => {
     setSigningOut(true)
     try {
       await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
       setUser(null)
-      toast.success(isRTL ? 'تم تسجيل الخروج' : 'Signed out')
+      toast.success(accountCopy.signedOut)
       router.refresh()
     } catch {
-      toast.error(isRTL ? 'حدث خطأ' : 'Something went wrong')
+      toast.error(accountCopy.somethingWentWrong)
     } finally {
       setSigningOut(false)
     }
@@ -70,7 +72,7 @@ export default function AccountPage() {
     return (
       <div className={`min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} pb-24 flex items-center justify-center`}>
         <p className="font-montserrat text-sm text-brand-clayRed/50">
-          {isRTL ? 'جاري التحميل…' : 'Loading…'}
+          {accountCopy.loading}
         </p>
       </div>
     )
@@ -129,8 +131,8 @@ export default function AccountPage() {
               {[
                 { href: '/shop', label: ui.notFound.shopCollection },
                 { href: '/accessories', label: ui.common.accessories },
-                { href: '/wishlist', label: isRTL ? 'المفضلة' : 'Favorites' },
-                { href: '/faq', label: isRTL ? 'الأسئلة الشائعة' : 'FAQ' },
+                { href: '/wishlist', label: accountCopy.favorites },
+                { href: '/faq', label: accountCopy.faq },
               ].map((link) => (
                 <LocaleLink
                   key={link.href}
@@ -152,7 +154,7 @@ export default function AccountPage() {
               data-cursor-hover
             >
               <FiLogOut className="h-4 w-4" />
-              {signingOut ? (isRTL ? 'جاري الخروج…' : 'Signing out…') : isRTL ? 'تسجيل الخروج' : 'Sign out'}
+              {signingOut ? accountCopy.signingOut : accountCopy.signOut}
             </button>
           </motion.div>
         </div>

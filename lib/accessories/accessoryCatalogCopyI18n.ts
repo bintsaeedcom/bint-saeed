@@ -1,6 +1,17 @@
 import type { Accessory } from '@/data/accessories'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getEarringLocalizedDisplayName } from '@/lib/accessories/earringPdpMetaI18n'
+import {
+  getNecklaceLocalizedDisplayName,
+  isNecklacePdpId,
+} from '@/lib/accessories/necklacePdpMetaI18n'
+import { getPhoneCharmLocalizedDisplayName } from '@/lib/accessories/phoneCharmPdpMetaI18n'
+import { getBagCharmLocalizedDisplayName } from '@/lib/accessories/bagCharmPdpMetaI18n'
+import {
+  STONE_VARIANTS_I18N,
+  type StoneVariantId,
+} from '@/lib/accessories/strandPdp/stoneVariantsI18n'
+import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 
 type AccessoryCatalogCopy = {
   name: string
@@ -127,6 +138,96 @@ const FR_ACCESSORY_CATALOG: Record<string, AccessoryCatalogCopy> = {
       'Malachite naturelle aux bandes vertes profondes, assemblée à la main avec Rosettes d’Al Ain en cornaline.',
     materials: 'Malachite naturelle, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
   },
+  'signature-strand-onyx': {
+    name: 'Fils Al Ain Oasis — Onyx',
+    description:
+      'Onyx noir poli, assemblé à la main avec Rosettes d’Al Ain en cornaline pour une ligne nocturne sur l’abaya.',
+    materials: 'Onyx naturel, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
+  'signature-strand-tiger-eye': {
+    name: 'Fils Al Ain Oasis — Œil de tigre',
+    description:
+      'Œil de tigre chatoyant aux tons dorés, assemblé à la main avec Rosettes d’Al Ain en cornaline.',
+    materials: 'Œil de tigre naturel, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
+  'signature-strand-fuchsia-jade': {
+    name: 'Fils Al Ain Oasis — Jade fuchsia',
+    description:
+      'Jade fuchsia vif, assemblé à la main avec Rosettes d’Al Ain en cornaline.',
+    materials: 'Jade fuchsia naturel, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
+  'signature-strand-orange-jade': {
+    name: 'Fils Al Ain Oasis — Jade orange',
+    description:
+      'Jade orange lumineux, assemblé à la main avec Rosettes d’Al Ain en cornaline.',
+    materials: 'Jade orange naturel, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
+  'signature-strand-blue-aventurine': {
+    name: 'Fils Al Ain Oasis — Aventurine bleue',
+    description:
+      'Aventurine bleue douce, assemblée à la main avec Rosettes d’Al Ain en cornaline.',
+    materials: 'Aventurine bleue naturelle, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
+  'signature-strand-amethyst-hearts': {
+    name: 'Fils Al Ain Oasis — Cœurs d’améthyste',
+    description:
+      'Cœurs d’améthyste, assemblés à la main avec Rosettes d’Al Ain en cornaline — édition limitée.',
+    materials: 'Améthyste naturelle en forme de cœur, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
+  'signature-strand-jade-hearts': {
+    name: 'Fils Al Ain Oasis — Cœurs de jade',
+    description:
+      'Cœurs de jade, assemblés à la main avec Rosettes d’Al Ain en cornaline — édition limitée.',
+    materials: 'Jade naturel en forme de cœur, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
+  'signature-strand-jade': {
+    name: 'Fils Al Ain Oasis — Jade',
+    description:
+      'Jade naturel, assemblé à la main avec Rosettes d’Al Ain en cornaline.',
+    materials: 'Jade naturel, Rosettes d’Al Ain en cornaline, finitions plaquées or 18 carats',
+  },
+  'al-quaa-phone-charm-fuchsia-jade': {
+    name: 'Breloque téléphone Al Quaa — Jade fuchsia',
+    description:
+      'Breloque téléphone assemblée à la main en jade fuchsia naturel, avec rosette d’Al Ain en cornaline.',
+    materials: 'Jade fuchsia naturel, rosette d’Al Ain en cornaline, hématite facettée plaquée or',
+  },
+  'al-quaa-phone-charm-lapis-lazuli': {
+    name: 'Breloque téléphone Al Quaa — Lapis lazuli',
+    description:
+      'Breloque téléphone assemblée à la main en lapis lazuli naturel, avec rosette d’Al Ain en cornaline.',
+    materials: 'Lapis lazuli naturel, rosette d’Al Ain en cornaline, hématite facettée plaquée or',
+  },
+  'al-quaa-phone-charm-malachite': {
+    name: 'Breloque téléphone Al Quaa — Malachite',
+    description:
+      'Breloque téléphone assemblée à la main en malachite naturelle, avec rosette d’Al Ain en cornaline.',
+    materials: 'Malachite naturelle, rosette d’Al Ain en cornaline, hématite facettée plaquée or',
+  },
+  'al-quaa-phone-charm-onyx': {
+    name: 'Breloque téléphone Al Quaa — Onyx',
+    description:
+      'Breloque téléphone assemblée à la main en onyx naturel, avec rosette d’Al Ain en cornaline.',
+    materials: 'Onyx naturel, rosette d’Al Ain en cornaline, hématite facettée plaquée or',
+  },
+  'al-quaa-phone-charm-orange-jade': {
+    name: 'Breloque téléphone Al Quaa — Jade orange',
+    description:
+      'Breloque téléphone assemblée à la main en jade orange naturel, avec rosette d’Al Ain en cornaline.',
+    materials: 'Jade orange naturel, rosette d’Al Ain en cornaline, hématite facettée plaquée or',
+  },
+  'al-quaa-phone-charm-rose-quartz': {
+    name: 'Breloque téléphone Al Quaa — Quartz rose',
+    description:
+      'Breloque téléphone assemblée à la main en quartz rose naturel, avec rosette d’Al Ain en cornaline.',
+    materials: 'Quartz rose naturel, rosette d’Al Ain en cornaline, hématite facettée plaquée or',
+  },
+  'al-quaa-phone-charm-tiger-eye': {
+    name: 'Breloque téléphone Al Quaa — Œil de tigre',
+    description:
+      'Breloque téléphone assemblée à la main en œil de tigre naturel, avec rosette d’Al Ain en cornaline.',
+    materials: 'Œil de tigre naturel, rosette d’Al Ain en cornaline, hématite facettée plaquée or',
+  },
 }
 
 function frCopy(id: string): AccessoryCatalogCopy | undefined {
@@ -140,15 +241,51 @@ function withoutColouredJadeQualifier(label: string): string {
     .trim()
 }
 
+function isStoneVariantId(id: string): id is StoneVariantId {
+  return Object.prototype.hasOwnProperty.call(STONE_VARIANTS_I18N, id)
+}
+
+function strandCopy(
+  id: string,
+  locale: AppLocale,
+): { name: string; description?: string; materials?: string } | undefined {
+  const canonical = resolveAccessoryId(id)
+  if (!isStoneVariantId(canonical)) return undefined
+  const pack = STONE_VARIANTS_I18N[canonical][locale] ?? STONE_VARIANTS_I18N[canonical].en
+  return {
+    name: pack.strandLabel,
+    description: pack.introP1,
+    materials: `${pack.materialStone}, Al Ain Rosette, 18K gold-plated finish`,
+  }
+}
+
 export function getLocalizedAccessoryDisplayName(
   accessory: Pick<Accessory, 'id' | 'name' | 'nameAr'>,
   locale: AppLocale = 'en',
 ): string {
-  const earringName = getEarringLocalizedDisplayName(accessory.id, locale)
+  const canonical = resolveAccessoryId(accessory.id)
+
+  const earringName = getEarringLocalizedDisplayName(canonical, locale)
   if (earringName) return withoutColouredJadeQualifier(earringName)
+
+  if (isNecklacePdpId(canonical)) {
+    return withoutColouredJadeQualifier(
+      getNecklaceLocalizedDisplayName(canonical, locale) ?? accessory.name,
+    )
+  }
+
+  const phoneName = getPhoneCharmLocalizedDisplayName(canonical, locale)
+  if (phoneName) return withoutColouredJadeQualifier(phoneName)
+
+  const bagName = getBagCharmLocalizedDisplayName(canonical, locale)
+  if (bagName) return withoutColouredJadeQualifier(bagName)
+
+  const strand = strandCopy(canonical, locale)
+  if (strand?.name) return withoutColouredJadeQualifier(strand.name)
+
   if (locale === 'ar') return withoutColouredJadeQualifier(accessory.nameAr)
   if (locale === 'fr') {
-    return withoutColouredJadeQualifier(frCopy(accessory.id)?.name ?? accessory.name)
+    return withoutColouredJadeQualifier(frCopy(canonical)?.name ?? accessory.name)
   }
   return withoutColouredJadeQualifier(accessory.name)
 }
@@ -157,8 +294,13 @@ export function getLocalizedAccessoryDescription(
   accessory: Pick<Accessory, 'id' | 'description' | 'descriptionAr'>,
   locale: AppLocale = 'en',
 ): string {
+  const canonical = resolveAccessoryId(accessory.id)
   if (locale === 'ar') return accessory.descriptionAr
-  if (locale === 'fr') return frCopy(accessory.id)?.description ?? accessory.description
+  if (locale === 'fr') return frCopy(canonical)?.description ?? accessory.description
+
+  const strand = strandCopy(canonical, locale)
+  if (strand?.description && locale !== 'en') return strand.description
+
   return accessory.description
 }
 
@@ -166,7 +308,28 @@ export function getLocalizedAccessoryMaterials(
   accessory: Pick<Accessory, 'id' | 'materials' | 'materialsAr'>,
   locale: AppLocale = 'en',
 ): string {
+  const canonical = resolveAccessoryId(accessory.id)
   if (locale === 'ar') return accessory.materialsAr
-  if (locale === 'fr') return frCopy(accessory.id)?.materials ?? accessory.materials
+  if (locale === 'fr') return frCopy(canonical)?.materials ?? accessory.materials
+
+  if (isStoneVariantId(canonical) && locale !== 'en') {
+    const pack = STONE_VARIANTS_I18N[canonical][locale] ?? STONE_VARIANTS_I18N[canonical].en
+    const finish: Record<AppLocale, string> = {
+      en: 'Al Ain Rosette, 18K gold-plated finish',
+      ar: 'روزيت العين، تشطيب مطلي ذهب 18 قيراط',
+      fr: 'Rosette d’Al Ain, finitions plaquées or 18 carats',
+      it: 'Al Ain Rosette, finiture placcate oro 18K',
+      es: 'Al Ain Rosette, acabados bañados en oro 18K',
+      de: 'Al Ain Rosette, 18K goldplattierte Verarbeitung',
+      nl: 'Al Ain Rosette, 18K goud verguld afwerking',
+      pt: 'Al Ain Rosette, acabamentos banhados a ouro 18K',
+      ru: 'Al Ain Rosette, отделка с покрытием золотом 18K',
+      zh: 'Al Ain Rosette，18K 镀金饰面',
+      id: 'Al Ain Rosette, finishing berlapis emas 18K',
+      ms: 'Al Ain Rosette, kemasan bersalut emas 18K',
+    }
+    return `${pack.materialStone}, ${finish[locale] ?? finish.en}`
+  }
+
   return accessory.materials
 }

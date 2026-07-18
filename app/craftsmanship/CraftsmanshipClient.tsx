@@ -428,11 +428,11 @@ function PhaseProse({
 export default function CraftsmanshipClient() {
   const { t, isRTL, language } = useLanguage()
   const copy = getCraftsmanshipCopy(language)
-  const title = language === 'id' ? copy.breadcrumbCraftsmanship : (t.footer?.craftsmanship ?? 'Craftsmanship')
+  const title = copy.breadcrumbCraftsmanship
   const eyebrow = getAboutEditorialHeroEyebrow(language)
   const description = t.about?.craftsmanshipDesc ?? ''
-  const homeLabel = language === 'id' ? copy.breadcrumbHome : isRTL ? 'الرئيسية' : 'Home'
-  const craftLabel = language === 'id' ? copy.breadcrumbCraftsmanship : isRTL ? 'الحرفية' : 'Craftsmanship'
+  const homeLabel = copy.breadcrumbHome
+  const craftLabel = copy.breadcrumbCraftsmanship
 
   return (
     <div

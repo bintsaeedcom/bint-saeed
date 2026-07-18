@@ -9,6 +9,7 @@ import { FiEye, FiEyeOff, FiLock, FiMail, FiUser } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getAuthFormCopy } from '@/lib/i18n/authFormCopyI18n'
 import { passwordsMatch, validatePassword } from '@/lib/auth/passwordPolicy'
 import { ctaFormSubmitCompact } from '@/lib/ui/ctaClasses'
 import {
@@ -50,6 +51,7 @@ function GoogleIcon({ className }: { className?: string }) {
 export default function RegisterPage() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const auth = getAuthFormCopy(language)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -64,7 +66,7 @@ export default function RegisterPage() {
     setDevLink(null)
 
     if (!name.trim()) {
-      toast.error(isRTL ? 'الاسم مطلوب' : 'Name is required')
+      toast.error(auth.nameRequired)
       return
     }
 
@@ -75,7 +77,7 @@ export default function RegisterPage() {
     }
 
     if (!passwordsMatch(password, confirm)) {
-      toast.error(isRTL ? 'كلمتا المرور غير متطابقتين' : 'Passwords do not match')
+      toast.error(auth.passwordsDoNotMatch)
       return
     }
 
@@ -98,15 +100,15 @@ export default function RegisterPage() {
         message?: string
       }
       if (!res.ok) {
-        toast.error(data.error || (isRTL ? 'فشل التسجيل' : 'Registration failed'))
+        toast.error(data.error || auth.registrationFailed)
         return
       }
-      toast.success(data.message || (isRTL ? 'تحققي من بريدك' : 'Check your email'))
+      toast.success(data.message || auth.checkYourEmail)
       if (data.devLink) setDevLink(data.devLink)
       setPassword('')
       setConfirm('')
     } catch {
-      toast.error(isRTL ? 'حدث خطأ' : 'Something went wrong')
+      toast.error(auth.genericError)
     } finally {
       setBusy(false)
     }
@@ -138,12 +140,10 @@ export default function RegisterPage() {
               data-document-h1="true"
               className="font-rozha text-3xl text-brand-darkRed whitespace-nowrap md:text-4xl lg:text-[2.65rem] lg:leading-tight"
             >
-              {isRTL ? 'إنشاء حساب' : 'Create an account'}
+              {auth.createAnAccount}
             </h1>
             <p className="mt-3 max-w-md font-montserrat text-sm leading-relaxed text-brand-clayRed/70 lg:mt-5 lg:text-base">
-              {isRTL
-                ? 'سنرسل لك رسالة لتأكيد بريدك الإلكتروني قبل تفعيل الحساب.'
-                : 'We’ll email you a confirmation link — your account is activated only after you verify your email.'}
+              {auth.registerIntro}
             </p>
           </header>
 
@@ -158,7 +158,7 @@ export default function RegisterPage() {
               data-cursor-hover
             >
               <GoogleIcon className="h-[18px] w-[18px] shrink-0" />
-              <span>{isRTL ? 'المتابعة مع Google' : 'Continue with Google'}</span>
+              <span>{auth.continueWithGoogle}</span>
             </a>
 
             <div className="relative mb-6">
@@ -166,13 +166,13 @@ export default function RegisterPage() {
                 <div className={formDividerLineClass} />
               </div>
               <div className="relative flex justify-center">
-                <span className={formDividerLabelClass}>{isRTL ? 'أو' : 'or'}</span>
+                <span className={formDividerLabelClass}>{auth.or}</span>
               </div>
             </div>
 
             <form onSubmit={onSubmit} className="space-y-5">
               <div>
-                <label className={formLabelClass}>{isRTL ? 'الاسم' : 'Name'}</label>
+                <label className={formLabelClass}>{auth.name}</label>
                 <div className="relative">
                   <FiUser className={formIconClass} />
                   <input
@@ -182,12 +182,12 @@ export default function RegisterPage() {
                     onChange={(e) => setName(e.target.value)}
                     autoComplete="name"
                     className={`${formFieldClass} ps-10 pe-4 rtl:ps-4 rtl:pe-10`}
-                    placeholder={isRTL ? 'الاسم' : 'Your name'}
+                    placeholder={auth.namePlaceholder}
                   />
                 </div>
               </div>
               <div>
-                <label className={formLabelClass}>{isRTL ? 'البريد الإلكتروني' : 'Email'}</label>
+                <label className={formLabelClass}>{auth.email}</label>
                 <div className="relative">
                   <FiMail className={formIconClass} />
                   <input
@@ -202,7 +202,7 @@ export default function RegisterPage() {
                 </div>
               </div>
               <div>
-                <label className={formLabelClass}>{isRTL ? 'كلمة المرور' : 'Password'}</label>
+                <label className={formLabelClass}>{auth.password}</label>
                 <div className="relative">
                   <FiLock className={formIconClass} />
                   <input
@@ -219,30 +219,16 @@ export default function RegisterPage() {
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
                     className={formIconButtonClass}
-                    aria-label={
-                      showPassword
-                        ? isRTL
-                          ? 'إخفاء كلمة المرور'
-                          : 'Hide password'
-                        : isRTL
-                          ? 'إظهار كلمة المرور'
-                          : 'Show password'
-                    }
+                    aria-label={showPassword ? auth.hidePassword : auth.showPassword}
                     data-cursor-hover
                   >
                     {showPassword ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
                   </button>
                 </div>
-                <p className={formHintClass}>
-                  {isRTL
-                    ? '٨ أحرف على الأقل، حرف كبير واحد ورقم واحد'
-                    : 'At least 8 characters, one capital letter, and one number'}
-                </p>
+                <p className={formHintClass}>{auth.passwordHint}</p>
               </div>
               <div>
-                <label className={formLabelClass}>
-                  {isRTL ? 'تأكيد كلمة المرور' : 'Confirm password'}
-                </label>
+                <label className={formLabelClass}>{auth.confirmPassword}</label>
                 <div className="relative">
                   <FiLock className={formIconClass} />
                   <input
@@ -258,15 +244,7 @@ export default function RegisterPage() {
                     type="button"
                     onClick={() => setShowConfirm((v) => !v)}
                     className={formIconButtonClass}
-                    aria-label={
-                      showConfirm
-                        ? isRTL
-                          ? 'إخفاء كلمة المرور'
-                          : 'Hide password'
-                        : isRTL
-                          ? 'إظهار كلمة المرور'
-                          : 'Show password'
-                    }
+                    aria-label={showConfirm ? auth.hidePassword : auth.showPassword}
                     data-cursor-hover
                   >
                     {showConfirm ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
@@ -280,14 +258,14 @@ export default function RegisterPage() {
                 className={ctaFormSubmitCompact}
                 data-cursor-hover
               >
-                {busy ? (isRTL ? 'جاري الإرسال…' : 'Sending…') : isRTL ? 'إنشاء الحساب' : 'Create account'}
+                {busy ? auth.sending : auth.createAccountCta}
               </button>
             </form>
 
             <p className={formFooterTextClass}>
-              {isRTL ? 'لديك حساب بالفعل؟' : 'Already have an account?'}{' '}
+              {auth.alreadyHaveAccount}{' '}
               <LocaleLink href="/sign-in" className={formFooterLinkClass}>
-                {isRTL ? 'تسجيل الدخول' : 'Sign in'}
+                {auth.signInCta}
               </LocaleLink>
             </p>
 

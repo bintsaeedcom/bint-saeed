@@ -20,6 +20,7 @@ import { filterOffCurrentPage } from '@/lib/discover/offCurrentPage'
 import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
 import { products as staticProducts } from '@/data/products'
 import { accessories } from '@/data/accessories'
+import { getLocalizedAccessoryDisplayName } from '@/lib/accessories/accessoryCatalogCopyI18n'
 import { getProductHref } from '@/lib/products/links'
 import { getCartLineImageAlt, getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
@@ -165,12 +166,12 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     const necklaceCard: MiniCartRecommendCard | null = necklacePick
       ? {
           id: necklacePick.id,
-          name: language === 'ar' ? necklacePick.nameAr : necklacePick.name,
+          name: getLocalizedAccessoryDisplayName(necklacePick, language),
           href: `/accessories/${necklacePick.id}`,
           image: necklacePick.images[0] ?? '',
           price: necklacePick.price,
           imageAlt: withBrandAlt(
-            `${necklacePick.name} — luxury necklace Abu Dhabi`,
+            `${getLocalizedAccessoryDisplayName(necklacePick, language)} — luxury necklace Abu Dhabi`,
             language === 'ar' ? 'ar' : 'en',
           ),
         }

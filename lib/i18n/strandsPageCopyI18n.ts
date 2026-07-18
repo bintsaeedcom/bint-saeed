@@ -4,6 +4,19 @@ import {
   shopAllStrandsCta as buildShopAllStrandsCta,
   shopStrandsCta as buildShopStrandsCta,
 } from '@/lib/i18n/strandsBrandLock'
+import {
+  STRANDS_DE,
+  STRANDS_FR,
+  STRANDS_IT,
+  STRANDS_PT,
+} from '@/lib/i18n/editorialLocales/strandsFrItDePt'
+import {
+  STRANDS_ES,
+  STRANDS_ID,
+  STRANDS_MS,
+  STRANDS_RU,
+  STRANDS_ZH,
+} from '@/lib/i18n/editorialLocales/strandsEsRuZhIdMs'
 
 export type StrandsStep = {
   numeral: string
@@ -391,127 +404,17 @@ const STRANDS_NL: StrandsPageCopy = {
   ],
 }
 
-/** Discover-all CTA — keep Latin “Strands” brand noun. */
-const DISCOVER_ALL_STRANDS_CTA: Record<Language, string> = {
-  en: 'Discover all Strands',
-  ar: 'اكتشفي كل الـ Strands',
-  fr: 'Découvrir tous les Strands',
-  it: 'Scopri tutti gli Strands',
-  es: 'Descubrir todos los Strands',
-  ru: 'Открыть все Strands',
-  zh: '探索全部 Strands',
-  de: 'Alle Strands entdecken',
-  nl: 'Ontdek alle Strands',
-  pt: 'Descobrir todos os Strands',
-  id: 'Temukan semua Strands',
-  ms: 'Temui semua Strands',
-}
-
-type StrandsLocaleOverlay = Partial<
-  Pick<
-    StrandsPageCopy,
-    | 'heroEyebrow'
-    | 'heroHeadline'
-    | 'heroSubline1'
-    | 'heroSubline2'
-    | 'ctaShopStrands'
-    | 'ctaSeeMarylebone'
-    | 'shopAllStrandsCta'
-    | 'marquee'
-  >
->
-
-/**
- * Hero + CTA overlays so non-EN locales are not left as English (which triggers
- * browser MT — e.g. Back→Rug, SHOP STRANDS→WINKEL STRANDEN in Dutch).
- * Full page packs can expand later; CTAs always use the Strands brand lock.
- */
-const STRANDS_LOCALE_OVERLAY: Partial<Record<Language, StrandsLocaleOverlay>> = {
-  de: {
-    heroEyebrow: `DER ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
-    heroHeadline: 'Ihre Abaya war nie fertig. Bis jetzt.',
-    heroSubline1:
-      'Das erste Abaya-Haus mit austauschbaren Naturstein-Strands. Am Manschettenrand getragen. Nach Wunsch gewechselt.',
-    heroSubline2: 'Naturstein. Handgefertigt in Abu Dhabi. Für die Marylebone Abaya.',
-    ctaSeeMarylebone: 'DIE MARYLEBONE ANSEHEN',
-  },
-  fr: {
-    heroEyebrow: `LE ${PRODUCT_LINE_STRANDS.toUpperCase()} ABAYA · BINT SAEED`,
-    heroHeadline: 'Votre abaya n’a jamais été terminée. Jusqu’à présent.',
-    heroSubline1:
-      'La première maison d’abayas à proposer des Strands en pierres naturelles interchangeables. Portés au poignet. Changés à volonté.',
-    heroSubline2: 'Pierre naturelle. Fait main à Abu Dhabi. Conçu pour l’abaya Marylebone.',
-    ctaSeeMarylebone: 'VOIR LA MARYLEBONE',
-  },
-  it: {
-    heroEyebrow: `L’ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
-    heroHeadline: 'La tua abaya non è mai stata completa. Fino ad ora.',
-    heroSubline1:
-      'La prima maison di abaya con Strands in pietre naturali intercambiabili. Indossati sul polsino. Cambiati a piacere.',
-    heroSubline2: 'Pietra naturale. Realizzati a mano ad Abu Dhabi. Per l’abaya Marylebone.',
-    ctaSeeMarylebone: 'SCOPRI LA MARYLEBONE',
-  },
-  es: {
-    heroEyebrow: `EL ${PRODUCT_LINE_STRANDS.toUpperCase()} ABAYA · BINT SAEED`,
-    heroHeadline: 'Tu abaya nunca estuvo terminada. Hasta ahora.',
-    heroSubline1:
-      'La primera casa de abayas con Strands de piedras naturales intercambiables. Se llevan en el puño. Se cambian a voluntad.',
-    heroSubline2: 'Piedra natural. Hecho a mano en Abu Dhabi. Para la abaya Marylebone.',
-    ctaSeeMarylebone: 'VER LA MARYLEBONE',
-  },
-  pt: {
-    heroEyebrow: `O ${PRODUCT_LINE_STRANDS.toUpperCase()} ABAYA · BINT SAEED`,
-    heroHeadline: 'A sua abaya nunca esteve completa. Até agora.',
-    heroSubline1:
-      'A primeira casa de abayas com Strands de pedras naturais intercambiáveis. Usados no punho. Trocados à escolha.',
-    heroSubline2: 'Pedra natural. Feito à mão em Abu Dhabi. Para a abaya Marylebone.',
-    ctaSeeMarylebone: 'VER A MARYLEBONE',
-  },
-  ru: {
-    heroEyebrow: `ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
-    heroHeadline: 'Ваша абайя никогда не была завершена. До сих пор.',
-    heroSubline1:
-      'Первый дом абайи со сменными Strands из натурального камня. На манжете. Меняются по желанию.',
-    heroSubline2: 'Натуральный камень. Ручная работа в Abu Dhabi. Для абайи Marylebone.',
-    ctaSeeMarylebone: 'СМОТРЕТЬ MARYLEBONE',
-  },
-  zh: {
-    heroEyebrow: `ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
-    heroHeadline: '您的长袍从未真正完成。直到现在。',
-    heroSubline1: '首个提供可更换天然石 Strands 的长袍品牌。佩于袖口。随心更换。',
-    heroSubline2: '天然石。阿布扎比手工制作。专为 Marylebone Abaya。',
-    ctaSeeMarylebone: '查看 MARYLEBONE',
-  },
-  id: {
-    heroEyebrow: `ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
-    heroHeadline: 'Abaya Anda belum pernah selesai. Sampai sekarang.',
-    heroSubline1:
-      'Rumah abaya pertama dengan Strands batu alam yang dapat diganti. Dipakai di manset. Diganti sesuai pilihan.',
-    heroSubline2: 'Batu alam. Buatan tangan di Abu Dhabi. Untuk Marylebone Abaya.',
-    ctaSeeMarylebone: 'LIHAT MARYLEBONE',
-  },
-  ms: {
-    heroEyebrow: `ABAYA ${PRODUCT_LINE_STRANDS.toUpperCase()} · BINT SAEED`,
-    heroHeadline: 'Abaya anda tidak pernah selesai. Sehingga kini.',
-    heroSubline1:
-      'Rumah abaya pertama dengan Strands batu semula jadi yang boleh ditukar. Dipakai pada manset. Ditukar mengikut pilihan.',
-    heroSubline2: 'Batu semula jadi. Buatan tangan di Abu Dhabi. Untuk Marylebone Abaya.',
-    ctaSeeMarylebone: 'LIHAT MARYLEBONE',
-  },
-}
-
 export function getStrandsPageCopy(locale: Language | string): StrandsPageCopy {
   if (locale === 'ar') return STRANDS_AR
   if (locale === 'nl') return STRANDS_NL
-  const lang = (locale in STRANDS_LOCALE_OVERLAY || locale === 'en' ? locale : 'en') as Language
-  if (lang === 'en') return STRANDS_EN
-
-  const overlay = STRANDS_LOCALE_OVERLAY[lang] ?? {}
-  return {
-    ...STRANDS_EN,
-    ...overlay,
-    ctaShopStrands: buildShopStrandsCta(lang, 'upper'),
-    shopAllStrandsCta: buildShopAllStrandsCta(lang, 'title'),
-    discoverAllStrandsCta: DISCOVER_ALL_STRANDS_CTA[lang] ?? DISCOVER_ALL_STRANDS_CTA.en,
-  }
+  if (locale === 'fr') return STRANDS_FR
+  if (locale === 'it') return STRANDS_IT
+  if (locale === 'de') return STRANDS_DE
+  if (locale === 'pt') return STRANDS_PT
+  if (locale === 'es') return STRANDS_ES
+  if (locale === 'ru') return STRANDS_RU
+  if (locale === 'zh') return STRANDS_ZH
+  if (locale === 'id') return STRANDS_ID
+  if (locale === 'ms') return STRANDS_MS
+  return STRANDS_EN
 }

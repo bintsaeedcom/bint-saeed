@@ -9,11 +9,12 @@ import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getAlTalliPageCopy } from '@/lib/content/heritageAlTalliCopyI18n'
 import { buildAlTalliHeritageJsonLd } from '@/lib/seo/alTalliHeritageJsonLd'
 import { AL_TALLI_FEATURED_PRODUCTS } from '@/lib/seo/alTalliDiscovery'
 
 export default function AlTalliPage() {
-  const { isRTL, language } = useLanguage()
+  const { language } = useLanguage()
   const jsonLd = useMemo(() => buildAlTalliHeritageJsonLd(language), [language])
 
   return (
@@ -34,11 +35,12 @@ function HeroSection() {
   const ref = useRef(null)
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const copy = getAlTalliPageCopy(language)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
   })
-  
+
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
@@ -66,8 +68,8 @@ function HeroSection() {
             variant="light"
             segments={[
               { label: ui.common.home, href: '/home' },
-              { label: isRTL ? 'التراث' : 'Heritage', href: '/heritage' },
-              { label: isRTL ? 'التلي' : 'Al Talli' },
+              { label: copy.heritage, href: '/heritage' },
+              { label: copy.alTalli },
             ]}
             backLink={{
               href: '/heritage',
@@ -89,13 +91,13 @@ function HeroSection() {
             className="text-white max-w-4xl mx-auto"
           >
             <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm font-montserrat text-xs uppercase tracking-[0.3em] text-white/80 mb-8">
-              {isRTL ? 'تراث اليونسكو' : 'UNESCO Heritage'}
+              {copy.heroTag}
             </span>
             <h1 data-document-h1="true" className="font-rozha text-5xl md:text-7xl lg:text-8xl mb-6">
-              {isRTL ? 'التلي' : 'Al Talli'}
+              {copy.heroTitle}
             </h1>
             <p className="font-montserrat text-lg md:text-xl text-white/70 tracking-wide">
-              {isRTL ? 'فن التطريز الإماراتي التقليدي' : 'The Traditional Emirati Embroidery Art'}
+              {copy.heroSubtitle}
             </p>
           </motion.div>
         </div>
@@ -107,7 +109,8 @@ function HeroSection() {
 function StorySection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: '-20%' })
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const copy = getAlTalliPageCopy(language)
 
   return (
     <section ref={ref} className="py-24 md:py-32">
@@ -120,22 +123,14 @@ function StorySection() {
             className="text-start"
           >
             <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
-              {isRTL ? 'القصة' : 'The Story'}
+              {copy.storyEyebrow}
             </span>
             <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed mb-8">
-              {isRTL ? 'إرث الجدات' : 'Legacy of Grandmothers'}
+              {copy.storyTitle}
             </h2>
             <div className="space-y-6 font-montserrat text-base text-brand-clayRed/80 tracking-wide leading-relaxed">
-              <p>
-                {isRTL 
-                  ? 'التلي هو فن تطريز إماراتي عريق يعود إلى قرون من الزمن. كانت النساء الإماراتيات يجتمعن في المجالس لنسج خيوط الفضة والذهب على وسادة صغيرة، محولات الخيوط البسيطة إلى أعمال فنية خالدة.'
-                  : 'Al Talli is an ancient Emirati embroidery art dating back centuries. Emirati women would gather in majlis to weave silver and gold threads on a small cushion, transforming simple threads into timeless works of art.'}
-              </p>
-              <p>
-                {isRTL 
-                  ? 'يُستخدم التلي لتزيين أطراف الثياب التقليدية، من الكندورة الرجالية إلى ملابس النساء الفاخرة. كل نمط يحمل معنى، وكل غرزة تروي قصة من قصص الصحراء.'
-                  : 'Al Talli is used to adorn the edges of traditional garments, from men\'s kandura to women\'s luxurious attire. Each pattern holds meaning, and each stitch tells a story from the desert.'}
-              </p>
+              <p>{copy.storyP1}</p>
+              <p>{copy.storyP2}</p>
             </div>
           </motion.div>
 
@@ -159,31 +154,8 @@ function StorySection() {
 }
 
 function TechniqueSection() {
-  const { isRTL } = useLanguage()
-
-  const techniques = [
-    {
-      title: { en: 'The Cushion', ar: 'الوسادة' },
-      description: { 
-        en: 'Artisans use a small stuffed cushion called "kajooja" as their base, where bobbins of thread are arranged in intricate patterns.',
-        ar: 'تستخدم الحرفيات وسادة صغيرة محشوة تسمى "الكجوجة" كقاعدة، حيث تُرتب بكرات الخيوط في أنماط معقدة.'
-      },
-    },
-    {
-      title: { en: 'The Threads', ar: 'الخيوط' },
-      description: { 
-        en: 'Silver and gold metallic threads are woven alongside cotton threads, creating patterns that shimmer in the light.',
-        ar: 'تُنسج الخيوط الفضية والذهبية المعدنية جنباً إلى جنب مع خيوط القطن، مما يخلق أنماطاً تتلألأ في الضوء.'
-      },
-    },
-    {
-      title: { en: 'The Patterns', ar: 'الأنماط' },
-      description: { 
-        en: 'Geometric patterns like triangles, diamonds, and zigzags each carry symbolic meanings, from protection to prosperity.',
-        ar: 'الأنماط الهندسية كالمثلثات والمعينات والتعرجات تحمل معانٍ رمزية، من الحماية إلى الازدهار.'
-      },
-    },
-  ]
+  const { language } = useLanguage()
+  const copy = getAlTalliPageCopy(language)
 
   return (
     <section className="py-24 md:py-32 bg-brand-stone/20">
@@ -196,17 +168,17 @@ function TechniqueSection() {
           className="text-center mb-16"
         >
           <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
-            {isRTL ? 'الحرفة' : 'The Craft'}
+            {copy.craftEyebrow}
           </span>
           <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed">
-            {isRTL ? 'تقنية التلي' : 'Al Talli Technique'}
+            {copy.craftTitle}
           </h2>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {techniques.map((item, index) => (
+          {copy.techniques.map((item, index) => (
             <motion.div
-              key={index}
+              key={item.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -216,11 +188,9 @@ function TechniqueSection() {
               <span className="font-rozha text-6xl text-brand-darkRed/10 block mb-4">
                 0{index + 1}
               </span>
-              <h3 className="font-rozha text-2xl text-brand-darkRed mb-4">
-                {isRTL ? item.title.ar : item.title.en}
-              </h3>
+              <h3 className="font-rozha text-2xl text-brand-darkRed mb-4">{item.title}</h3>
               <p className="font-montserrat text-sm text-brand-clayRed/80 tracking-wide leading-relaxed">
-                {isRTL ? item.description.ar : item.description.en}
+                {item.description}
               </p>
             </motion.div>
           ))}
@@ -233,7 +203,8 @@ function TechniqueSection() {
 function UNESCOSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: '-20%' })
-  const { isRTL } = useLanguage()
+  const { language } = useLanguage()
+  const copy = getAlTalliPageCopy(language)
 
   return (
     <section ref={ref} className="py-24 md:py-32 bg-brand-darkRed text-white">
@@ -245,22 +216,18 @@ function UNESCOSection() {
           className="max-w-4xl mx-auto text-center"
         >
           <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-stone mb-6 block">
-            {isRTL ? 'اعتراف عالمي' : 'Global Recognition'}
+            {copy.unescoEyebrow}
           </span>
-          <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl mb-8">
-            {isRTL ? 'تراث اليونسكو الثقافي غير المادي' : 'UNESCO Intangible Cultural Heritage'}
-          </h2>
+          <h2 className="font-rozha text-4xl md:text-5xl lg:text-6xl mb-8">{copy.unescoTitle}</h2>
           <p className="font-montserrat text-base md:text-lg text-white/80 tracking-wide leading-relaxed mb-8">
-            {isRTL 
-              ? 'في عام 2022، أُدرج التلي على قائمة اليونسكو للتراث الثقافي غير المادي، اعترافاً بأهميته كرمز للهوية الثقافية الإماراتية وإرث الأجداد الذي يستحق الحفاظ عليه للأجيال القادمة.'
-              : 'In 2022, Al Talli was inscribed on UNESCO\'s Representative List of the Intangible Cultural Heritage of Humanity, recognizing its significance as a symbol of Emirati cultural identity and ancestral heritage worth preserving for future generations.'}
+            {copy.unescoBody}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <span className="px-6 py-3 bg-white/10 backdrop-blur-sm font-montserrat text-xs uppercase tracking-[0.15em]">
-              {isRTL ? 'مُدرج 2022' : 'Inscribed 2022'}
+              {copy.unescoBadge1}
             </span>
             <span className="px-6 py-3 bg-white/10 backdrop-blur-sm font-montserrat text-xs uppercase tracking-[0.15em]">
-              {isRTL ? 'الإمارات العربية المتحدة' : 'United\u00A0Arab\u00A0Emirates'}
+              {copy.unescoBadge2}
             </span>
           </div>
         </motion.div>
@@ -272,7 +239,8 @@ function UNESCOSection() {
 function BintSaeedSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: '-20%' })
-  const { isRTL } = useLanguage()
+  const { isRTL, language } = useLanguage()
+  const copy = getAlTalliPageCopy(language)
 
   return (
     <section ref={ref} className="py-24 md:py-32">
@@ -299,29 +267,19 @@ function BintSaeedSection() {
             className={`order-1 lg:order-2 text-start`}
           >
             <span className="font-montserrat text-xs uppercase tracking-[0.4em] text-brand-clayRed mb-6 block">
-              {isRTL ? 'بنت سعيد × التلي' : 'Bint Saeed × Al Talli'}
+              {copy.brandEyebrow}
             </span>
-            <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed mb-8">
-              {isRTL ? 'التراث في تصاميمنا' : 'Heritage in Our Designs'}
-            </h2>
+            <h2 className="font-rozha text-4xl md:text-5xl text-brand-darkRed mb-8">{copy.brandTitle}</h2>
             <div className="space-y-6 font-montserrat text-base text-brand-clayRed/80 tracking-wide leading-relaxed">
-              <p>
-                {isRTL 
-                  ? 'في بنت سعيد، نحيي فن التلي من خلال دمج تطريزاته الرائعة في تصاميمنا المعاصرة. نتعاون مع حرفيات إماراتيات ماهرات للحفاظ على أصالة الحرفة.'
-                  : 'At Bint Saeed, we revive the art of Al Talli by incorporating its exquisite embroidery into our contemporary designs. We collaborate with skilled Emirati artisans to preserve the authenticity of the craft.'}
-              </p>
-              <p>
-                {isRTL 
-                  ? 'تجدين تفاصيل التلي في أطراف عباءاتنا، وأكمام قفاطيننا، وتفاصيل فساتيننا - لمسة من التراث في كل قطعة.'
-                  : 'You\'ll find Al Talli details on the edges of our abayas, the sleeves of our kaftans, and the details of our dresses - a touch of heritage in every piece.'}
-              </p>
+              <p>{copy.brandP1}</p>
+              <p>{copy.brandP2}</p>
             </div>
             <LocaleLink
               href="/shop/covent-garden-abaya"
               className={`mt-8 inline-flex min-h-[52px] items-center justify-center gap-3 px-8 py-4 bg-brand-darkRed text-white font-montserrat text-sm uppercase tracking-[0.15em] hover:bg-brand-dustyBlue transition-colors `}
               data-cursor-hover
             >
-              {isRTL ? 'تسوقي عباية Covent Garden' : 'Shop Covent Garden Abaya'}
+              {copy.shopCta}
               <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
             </LocaleLink>
             <div className={`mt-10 grid gap-3 sm:grid-cols-3 text-start`}>
@@ -333,7 +291,7 @@ function BintSaeedSection() {
                   data-cursor-hover
                 >
                   <span className="font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-clayRed/70">
-                    {isRTL ? 'تسوقي' : 'Shop'}
+                    {copy.shop}
                   </span>
                   <span className="mt-2 block font-rozha text-lg text-brand-darkRed group-hover:text-brand-dustyBlue">
                     {item.name}
@@ -349,19 +307,16 @@ function BintSaeedSection() {
 }
 
 function CTASection() {
-  const { isRTL } = useLanguage()
+  const { language } = useLanguage()
+  const copy = getAlTalliPageCopy(language)
 
   return (
     <section className="py-16 bg-brand-stone/20">
       <div className="container mx-auto px-6 lg:px-12">
         <div className={`flex flex-col md:flex-row items-center justify-between gap-8 `}>
           <div className="text-start">
-            <h3 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-2">
-              {isRTL ? 'اكتشفي المزيد من تراثنا' : 'Explore More of Our Heritage'}
-            </h3>
-            <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide">
-              {isRTL ? 'تعرفي على حرف إماراتية تقليدية أخرى' : 'Learn about other traditional Emirati crafts'}
-            </p>
+            <h3 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-2">{copy.exploreMore}</h3>
+            <p className="font-montserrat text-sm text-brand-clayRed/70 tracking-wide">{copy.exploreMoreLead}</p>
           </div>
           <div className={`flex gap-4 `}>
             <LocaleLink
@@ -369,14 +324,14 @@ function CTASection() {
               className="inline-flex min-h-[48px] items-center justify-center px-6 py-3 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
-              {isRTL ? 'الخوص' : 'Khous'}
+              {copy.khous}
             </LocaleLink>
             <LocaleLink
               href="/heritage"
               className="inline-flex min-h-[48px] items-center justify-center px-6 py-3 border border-brand-darkRed text-brand-darkRed font-montserrat text-xs uppercase tracking-[0.15em] hover:bg-brand-dustyBlue hover:text-white transition-colors"
               data-cursor-hover
             >
-              {isRTL ? 'التراث' : 'Heritage'}
+              {copy.heritage}
             </LocaleLink>
           </div>
         </div>

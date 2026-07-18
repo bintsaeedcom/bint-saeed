@@ -6,6 +6,7 @@ import LocaleLink from '@/components/LocaleLink'
 import { FiMail } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { getFaqPageChrome } from '@/lib/i18n/faqPageChromeI18n'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { FAQ_BY_LOCALE } from '@/lib/faq/faqByLocale'
@@ -108,6 +109,7 @@ const POLICY_LINKS: Record<
 
 export default function FAQPage() {
   const { language, t, isRTL } = useLanguage()
+  const faqChrome = getFaqPageChrome(language)
   const ui = commerceUi(language)
   const locale = language as AppLocale
   const data = FAQ_BY_LOCALE[locale] ?? FAQ_BY_LOCALE.en
@@ -181,7 +183,7 @@ export default function FAQPage() {
             {data.subtitle}
           </p>
           <nav
-            aria-label={isRTL ? 'روابط السياسات' : 'Related policies'}
+            aria-label={faqChrome.relatedPoliciesAria}
             className={`mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-brand-stone/30 pt-5 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-clayRed `}
           >
             <LocaleLink href="/shipment-return-policy" className="hover:text-brand-dustyBlue" data-cursor-hover>
@@ -201,7 +203,7 @@ export default function FAQPage() {
 
         {/* Main topic index — sticky, clearly distinct from questions */}
         <nav
-          aria-label={isRTL ? 'مواضيع الأسئلة' : 'FAQ topics'}
+          aria-label={faqChrome.topicsAria}
           className={`sticky ${SITE_HEADER_STICKY_TOP} z-30 -mx-5 mb-12 border-y border-brand-stone/30 bg-brand-pageCanvas/95 px-5 backdrop-blur-sm sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0`}
         >
           <ul

@@ -9,6 +9,7 @@ import ExploreCollectionClosing from '@/components/ExploreCollectionClosing'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { buildTheCodesJsonLd } from '@/lib/seo/theCodesJsonLd'
 import {
@@ -17,6 +18,8 @@ import {
   getTheCodesSections,
   type CodesSectionContent,
 } from '@/lib/the-codes/codesPageContent'
+import { getCodesPageChrome } from '@/lib/the-codes/codesPageChromeI18n'
+import { getCodesExpandedText } from '@/lib/the-codes/codesExpandedCopyI18n'
 import {
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
@@ -94,26 +97,18 @@ function scrollToHash(hash: string) {
 
 export default function TheCodesClient() {
   const { isRTL, language, t } = useLanguage()
+  const ui = commerceUi(language)
+  const chrome = useMemo(() => getCodesPageChrome(language), [language])
   const pathname = usePathname()
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
   const codesJsonLd = useMemo(() => buildTheCodesJsonLd(language), [language])
   const sections = useMemo(() => getTheCodesSections(language), [language])
   const hero = useMemo(() => getTheCodesHero(language), [language])
 
-  const expandedTextBySection: Record<string, string> = {
-    'the-monogram':
-      'The monogram is built on the idea of connection and return. Its form draws from interlocking lines, reflecting continuity between past and present. It is applied across garments, jewellery, and objects with precision, either as a quiet detail or as a defining element. As a visual signature, it anchors each piece within the language of the house while remaining adaptable across contexts.',
-    'al-talli':
-      'Al Talli is a heritage craft practiced across the United Arab Emirates, traditionally handwoven using cotton and metallic threads. It forms part of the broader textile traditions of the region, closely tied to techniques recognised on UNESCO’s Representative List of the Intangible Cultural Heritage of Humanity. Historically used to embellish garments, it carries both technical mastery and cultural meaning. Within Bint Saeed, this craft is reinterpreted through placement, structure, and material, allowing it to exist within a contemporary wardrobe while maintaining its origin.',
-    khous:
-      'Al Khous is a traditional craft of the United Arab Emirates, using dried palm fronds to create woven forms. It belongs to a wider body of heritage practices connected to palm cultivation and craft traditions across the region, which are recognised within UNESCO-listed cultural expressions. Historically used in everyday objects, its strength lies in its structure, built through interlacing patterns that create durability and form. At Bint Saeed, this logic is translated into garment construction and detailing, where lines, folds, and layering reflect the same principles in a modern context.',
-    'al-ain-rosette':
-      'The Al Ain Rosette is developed as a house motif, carved in carnelian stone. Its colour is chosen for its natural warmth, reflecting the desert tones of Al Ain in the United Arab Emirates. Its form draws from desert flora, recalling both the desert hyacinth and the soft five-petalled bloom of Tribulus omanense, the national flower of the UAE. At present, it appears in jewellery, phone strands, and small objects, where it introduces a recognisable element that can extend across the house over time.',
-    'knotted-lines-of-lineage':
-      'Knotted Lines are developed as a defining element within the house. Each line is shaped in relation to another, forming knots that reflect connection across time, experience, and generation. What is inherited and what is lived become intertwined, creating a continuous thread rather than separate moments.\n\nWithin Bint Saeed, these knots take form as buttons on abayas and as strands across garments. The strands, often composed of natural stones, are placed with care, frequently along the shoulder, where they bring balance to the silhouette while remaining close to the wearer.\n\nTheir placement is considered. Each knot serves as a reminder of the story you carry, shaped by where you come from and what you move through. A story that is interconnected, personal, and ongoing, one you recognise, stand within, and carry forward with pride.',
-    'the-strands':
-      'The Strands belong to a longer lineage of adornment in the region, where thread, stone, and gesture have long marked continuity across generations. At Bint Saeed, each strand is assembled from natural stones chosen for tone, grain, and proportion. They are positioned with care — most often at the shoulder — where they introduce equilibrium to the abaya without disturbing its line.\n\nAs a house code, The Strands translate an abstract principle into something worn: that what is carried from where you come from remains present, yet restrained. They appear across abayas and objects as a recognisable signature of the house — a quiet thread that persists from piece to piece, and from one chapter of the story to the next.',
-  }
+  const expandedTextBySection = useMemo(
+    () => getCodesExpandedText(language) as Record<string, string>,
+    [language],
+  )
 
   useEffect(() => {
     const run = () => scrollToHash(window.location.hash)
@@ -141,16 +136,12 @@ export default function TheCodesClient() {
         imageAlt={hero.alt}
         priority
         segments={[
-          { label: isRTL ? 'الرئيسية' : 'Home', href: '/home' },
-          { label: isRTL ? 'الرموز' : 'The Codes' },
+          { label: ui.common.home, href: '/home' },
+          { label: chrome.navTitle },
         ]}
         eyebrow={getAboutEditorialHeroEyebrow(language)}
-        title={isRTL ? 'الرموز' : 'The Codes'}
-        description={
-          isRTL
-            ? 'العناصر التي تحمل إرث الدار. متجذرة في الأصل. محددة بدقة.'
-            : 'The elements that carry the legacy of the house. Rooted in origin. Defined with precision.'
-        }
+        title={chrome.navTitle}
+        description={chrome.description}
       />
 
       <div className="relative space-y-0 md:space-y-2 lg:space-y-4">

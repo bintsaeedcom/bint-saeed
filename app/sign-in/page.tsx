@@ -10,6 +10,7 @@ import { FiEye, FiEyeOff, FiLock, FiMail } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getAuthFormCopy } from '@/lib/i18n/authFormCopyI18n'
 import { ctaFormSubmitCompact } from '@/lib/ui/ctaClasses'
 import {
   formCardClass,
@@ -46,32 +47,10 @@ function GoogleIcon({ className }: { className?: string }) {
   )
 }
 
-const ERROR_MESSAGES: Record<string, { en: string; ar: string }> = {
-  google_not_configured: {
-    en: 'Google sign-in is not set up yet. Use email and password, or ask the site owner to add a valid Google OAuth Client ID in Vercel.',
-    ar: 'تسجيل الدخول عبر Google غير مُعدّ بعد. استخدمي البريد وكلمة المرور، أو أضيفي معرّف Google OAuth صالحاً في Vercel.',
-  },
-  google_denied: {
-    en: 'Google sign-in was cancelled.',
-    ar: 'تم إلغاء تسجيل الدخول عبر Google.',
-  },
-  google_state: {
-    en: 'Sign-in session expired. Please try again.',
-    ar: 'انتهت جلسة تسجيل الدخول. حاولي مرة أخرى.',
-  },
-  google_failed: {
-    en: 'Google sign-in failed. Please try again, or use email and password.',
-    ar: 'فشل تسجيل الدخول عبر Google. حاولي مرة أخرى أو استخدمي البريد وكلمة المرور.',
-  },
-  session: {
-    en: 'Could not create your session. Please try again.',
-    ar: 'تعذّر إنشاء الجلسة. حاولي مرة أخرى.',
-  },
-}
-
 export default function SignInPage() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const auth = getAuthFormCopy(language)
   const router = useRouter()
   const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
@@ -82,9 +61,9 @@ export default function SignInPage() {
   useEffect(() => {
     const error = searchParams?.get('error')
     if (!error) return
-    const msg = ERROR_MESSAGES[error]
-    toast.error(msg ? (isRTL ? msg.ar : msg.en) : isRTL ? 'فشل تسجيل الدخول' : 'Sign-in failed')
-  }, [searchParams, isRTL])
+    const msg = auth.googleErrors[error]
+    toast.error(msg ?? auth.signInFailed)
+  }, [searchParams, auth])
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -98,14 +77,14 @@ export default function SignInPage() {
       })
       const data = (await res.json()) as { ok?: boolean; error?: string }
       if (!res.ok) {
-        toast.error(data.error || (isRTL ? 'بيانات الدخول غير صحيحة' : 'Invalid email or password'))
+        toast.error(data.error || auth.invalidCredentials)
         return
       }
-      toast.success(isRTL ? 'تم تسجيل الدخول' : 'Signed in')
+      toast.success(auth.signedIn)
       router.push('/account')
       router.refresh()
     } catch {
-      toast.error(isRTL ? 'حدث خطأ' : 'Something went wrong')
+      toast.error(auth.genericError)
     } finally {
       setBusy(false)
     }
@@ -155,7 +134,7 @@ export default function SignInPage() {
               data-cursor-hover
             >
               <GoogleIcon className="h-[18px] w-[18px] shrink-0" />
-              <span>{isRTL ? 'المتابعة مع Google' : 'Continue with Google'}</span>
+              <span>{auth.continueWithGoogle}</span>
             </a>
 
             <div className="relative mb-6">
@@ -163,13 +142,13 @@ export default function SignInPage() {
                 <div className={formDividerLineClass} />
               </div>
               <div className="relative flex justify-center">
-                <span className={formDividerLabelClass}>{isRTL ? 'أو' : 'or'}</span>
+                <span className={formDividerLabelClass}>{auth.or}</span>
               </div>
             </div>
 
             <form onSubmit={onSubmit} className="space-y-5">
               <div>
-                <label className={formLabelClass}>{isRTL ? 'البريد الإلكتروني' : 'Email'}</label>
+                <label className={formLabelClass}>{auth.email}</label>
                 <div className="relative">
                   <FiMail className={formIconClass} />
                   <input
@@ -186,7 +165,7 @@ export default function SignInPage() {
               <div>
                 <div className={`mb-2 flex items-center justify-between gap-3 `}>
                   <label className="font-montserrat text-[10px] font-medium uppercase tracking-[0.18em] text-brand-darkRed">
-                    {isRTL ? 'كلمة المرور' : 'Password'}
+                    {auth.password}
                   </label>
                   <LocaleLink
                     href="/forgot-password"
@@ -211,15 +190,7 @@ export default function SignInPage() {
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
                     className={formIconButtonClass}
-                    aria-label={
-                      showPassword
-                        ? isRTL
-                          ? 'إخفاء كلمة المرور'
-                          : 'Hide password'
-                        : isRTL
-                          ? 'إظهار كلمة المرور'
-                          : 'Show password'
-                    }
+                    aria-label={showPassword ? auth.hidePassword : auth.showPassword}
                     data-cursor-hover
                   >
                     {showPassword ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
@@ -233,12 +204,12 @@ export default function SignInPage() {
                 className={ctaFormSubmitCompact}
                 data-cursor-hover
               >
-                {busy ? (isRTL ? 'جاري الدخول…' : 'Signing in…') : ui.account.signIn}
+                {busy ? auth.signingIn : ui.account.signIn}
               </button>
             </form>
 
             <p className={formFooterTextClass}>
-              {isRTL ? 'ليس لديك حساب؟' : "Don't have an account?"}{' '}
+              {auth.noAccount}{' '}
               <LocaleLink href="/register" className={formFooterLinkClass}>
                 {ui.account.createAccount}
               </LocaleLink>

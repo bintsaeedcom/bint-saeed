@@ -9,21 +9,21 @@ import { motion } from 'framer-motion'
 import { FiCheck, FiAlertCircle, FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { getAuthFormCopy } from '@/lib/i18n/authFormCopyI18n'
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const auth = getAuthFormCopy(language)
   const verified = searchParams?.get('verified') === '1'
   const already = searchParams?.get('already') === '1'
   const error = searchParams?.get('error')
 
   const errorCopy: Record<string, string> = {
-    missing_token: isRTL ? 'رابط غير صالح.' : 'Invalid confirmation link.',
-    invalid_or_expired: isRTL
-      ? 'انتهت صلاحية الرابط أو أنه غير صالح. سجّلي من جديد أو اطلبي رسالة جديدة من صفحة التسجيل.'
-      : 'This link has expired or is invalid. Register again to receive a new email.',
-    server: isRTL ? 'حدث خطأ في الخادم.' : 'Something went wrong on our side.',
+    missing_token: auth.invalidConfirmationLink,
+    invalid_or_expired: auth.linkExpiredOrInvalid,
+    server: auth.serverError,
   }
 
   return (
@@ -34,7 +34,7 @@ function VerifyEmailContent() {
           className="mb-8"
           segments={[
             { label: ui.common.home, href: '/home' },
-            { label: isRTL ? 'تأكيد البريد' : 'Email Verification' },
+            { label: auth.emailVerification },
           ]}
           backLink={{
             href: '/account',
@@ -52,12 +52,10 @@ function VerifyEmailContent() {
               <FiCheck className="h-8 w-8 text-brand-dustyBlue" strokeWidth={2.25} />
             </div>
             <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed mb-3">
-              {isRTL ? 'تم تأكيد بريدك' : 'Email confirmed'}
+              {auth.emailConfirmed}
             </h1>
             <p className="font-montserrat text-sm text-brand-clayRed/75 leading-relaxed mb-8">
-              {isRTL
-                ? 'حسابك جاهز. يمكنك العودة للتسوق أو لصفحة الحساب.'
-                : 'Your account is verified. You can continue shopping or go to your account.'}
+              {auth.verifySuccessBody}
             </p>
             <div className="flex flex-col gap-3">
               <LocaleLink
@@ -65,7 +63,7 @@ function VerifyEmailContent() {
                 className={`inline-flex items-center justify-center gap-2 bg-brand-darkRed py-3.5 font-montserrat text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue `}
                 data-cursor-hover
               >
-                {isRTL ? 'تسوقي الآن' : 'Shop the collection'}
+                {auth.shopCollection}
                 <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
               </LocaleLink>
               <LocaleLink
@@ -73,7 +71,7 @@ function VerifyEmailContent() {
                 className="font-montserrat text-xs uppercase tracking-[0.2em] text-brand-clayRed hover:text-brand-dustyBlue"
                 data-cursor-hover
               >
-                {isRTL ? 'الحساب' : 'Account'}
+                {auth.account}
               </LocaleLink>
             </div>
           </>
@@ -83,17 +81,17 @@ function VerifyEmailContent() {
               <FiCheck className="h-8 w-8 text-brand-dustyBlue" strokeWidth={2.25} />
             </div>
             <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed mb-3">
-              {isRTL ? 'البريد مؤكد مسبقاً' : 'Already confirmed'}
+              {auth.alreadyConfirmed}
             </h1>
             <p className="font-montserrat text-sm text-brand-clayRed/75 mb-8">
-              {isRTL ? 'هذا البريد مفعّل بالفعل.' : 'This email is already verified.'}
+              {auth.alreadyVerifiedBody}
             </p>
             <LocaleLink
               href="/account"
               className="inline-block font-montserrat text-xs uppercase tracking-[0.2em] text-brand-darkRed underline hover:text-brand-dustyBlue"
               data-cursor-hover
             >
-              {isRTL ? 'الحساب' : 'Account'}
+              {auth.account}
             </LocaleLink>
           </>
         ) : (
@@ -102,7 +100,7 @@ function VerifyEmailContent() {
               <FiAlertCircle className="h-8 w-8 text-red-600/90" />
             </div>
             <h1 data-document-h1="true" className="font-rozha text-2xl text-brand-darkRed mb-3">
-              {isRTL ? 'تعذر التأكيد' : 'Could not confirm'}
+              {auth.couldNotConfirm}
             </h1>
             <p className="font-montserrat text-sm text-brand-clayRed/75 leading-relaxed mb-8">
               {error ? errorCopy[error] || errorCopy.server : errorCopy.missing_token}
@@ -112,7 +110,7 @@ function VerifyEmailContent() {
               className="inline-flex items-center justify-center bg-brand-darkRed px-8 py-3.5 font-montserrat text-xs uppercase tracking-[0.2em] text-white hover:bg-brand-dustyBlue"
               data-cursor-hover
             >
-              {isRTL ? 'إنشاء حساب' : 'Register again'}
+              {auth.registerAgain}
             </LocaleLink>
           </>
         )}

@@ -38,6 +38,11 @@ import {
   getAccessoryPdpImages,
 } from '@/lib/accessories/accessoryJsonLd'
 import { resolveAccessorySkuFromSelection } from '@/lib/accessories/accessorySku'
+import {
+  getAccessoryCategoryName,
+  getAccessoryColorName,
+} from '@/lib/accessories/accessoryUiLabelsI18n'
+import { getCheckoutFormCopy } from '@/lib/i18n/checkoutFormCopyI18n'
 import { getNecklaceEarringPdpContent, faqAnswerParagraphs } from '@/lib/accessories/necklaceEarringPdpContent'
 import {
   JEWELLERY_CARE_AR,
@@ -148,11 +153,11 @@ export default function AccessoryDetailPage() {
     }
     if (a.colors.length === 1) {
       const c = a.colors[0]!
-      setSelectedColor(isRTL ? c.nameAr : c.name)
+      setSelectedColor(getAccessoryColorName(language, c.name, c.nameAr))
     } else {
       setSelectedColor('')
     }
-  }, [aid, isRTL])
+  }, [aid, language])
 
   useEffect(() => {
     setOpenDropdown(null)
@@ -208,9 +213,7 @@ export default function AccessoryDetailPage() {
     const colorLabel =
       selectedColor ||
       (accessory.colors[0]
-        ? isRTL
-          ? accessory.colors[0].nameAr
-          : accessory.colors[0].name
+        ? getAccessoryColorName(language, accessory.colors[0].name, accessory.colors[0].nameAr)
         : '')
 
     addItem({
@@ -685,7 +688,9 @@ export default function AccessoryDetailPage() {
   const categoryBreadcrumbLabel =
     isSignatureStrandCategory(accessory.category)
       ? signatureStrandsCategoryLabel(language)
-      : (isRTL ? categoryInfo?.nameAr : categoryInfo?.name) ?? ''
+      : categoryInfo
+        ? getAccessoryCategoryName(language, categoryInfo.id, categoryInfo.name, categoryInfo.nameAr)
+        : ''
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-[calc(var(--mobile-bottom-chrome,0px)+1rem)] lg:pb-0">
@@ -991,21 +996,24 @@ export default function AccessoryDetailPage() {
                 )}
               </div>
               <div className={`flex flex-wrap gap-2 `}>
-                {accessory.colors.map((color) => (
+                {accessory.colors.map((color) => {
+                  const colorLabel = getAccessoryColorName(language, color.name, color.nameAr)
+                  return (
                   <button
                     key={color.name}
                     type="button"
-                    onClick={() => setSelectedColor(isRTL ? color.nameAr : color.name)}
+                    onClick={() => setSelectedColor(colorLabel)}
                     className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(
- selectedColor === (isRTL ? color.nameAr : color.name),
+ selectedColor === colorLabel,
  )}`}
                     style={{ backgroundColor: color.hex }}
-                    title={isRTL ? color.nameAr : color.name}
-                    aria-pressed={selectedColor === (isRTL ? color.nameAr : color.name)}
-                    aria-label={`Colour ${isRTL ? color.nameAr : color.name}`}
+                    title={colorLabel}
+                    aria-pressed={selectedColor === colorLabel}
+                    aria-label={`${ui.cart.colour} ${colorLabel}`}
                     data-cursor-hover
                   />
-                ))}
+                  )
+                })}
               </div>
             </div>
 
@@ -1168,7 +1176,7 @@ export default function AccessoryDetailPage() {
         index={lightboxIndex}
         onIndexChange={setLightboxIndex}
         onClose={() => setIsLightboxOpen(false)}
-        closeLabel={isRTL ? 'إغلاق المعرض' : 'Close gallery'}
+        closeLabel={getCheckoutFormCopy(language).closeGallery}
       />
 
       <StickyAddToCart
