@@ -7,6 +7,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getAboutPageCopy } from '@/lib/content/aboutPageCopyI18n'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import type { AppLocale } from '@/lib/i18n/routing'
 import {
   EDITORIAL_PAGE_CONTAINER,
 } from '@/lib/ui/editorialPageChrome'
@@ -251,7 +252,7 @@ export default function AboutPage() {
                   poster={MANIFESTO_VIDEO_POSTER}
                   ariaLabel={withBrandAlt(
                     'Editorial portrait film — Bint Saeed Abu Dhabi About story',
-                    language === 'ar' ? 'ar' : 'en',
+                    language as AppLocale,
                   )}
                 />
               </ReelFrame>
@@ -287,7 +288,7 @@ export default function AboutPage() {
                   poster={ORIGIN_VIDEO_POSTER}
                   ariaLabel={withBrandAlt(
                     'Editorial origin film — Bint Saeed Abu Dhabi house story',
-                    language === 'ar' ? 'ar' : 'en',
+                    language as AppLocale,
                   )}
                 />
               </ReelFrame>
@@ -312,7 +313,7 @@ export default function AboutPage() {
                   poster={HERITAGE_VIDEO_POSTER}
                   ariaLabel={withBrandAlt(
                     'Editorial heritage film — Bint Saeed Abu Dhabi carrying heritage forward',
-                    language === 'ar' ? 'ar' : 'en',
+                    language as AppLocale,
                   )}
                 />
               </ReelFrame>

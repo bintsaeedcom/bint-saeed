@@ -1,41 +1,41 @@
 import type { AboutDesignCode, AboutPageCopy } from '@/lib/content/aboutPageCopyI18n'
 
 const CODES_FR: AboutDesignCode[] = [
-  { numeral: 'I', name: 'AL TALLI', description: 'Fil d’héritage' },
-  { numeral: 'II', name: 'THE MONOGRAM', description: 'Signature de la maison' },
-  { numeral: 'III', name: 'AL KHOUS', description: 'Tissage & structure' },
+  { numeral: 'I', name: 'THE MONOGRAM', description: 'Signature de la maison' },
+  { numeral: 'II', name: 'AL TALLI', description: 'Fil d’héritage' },
+  { numeral: 'III', name: 'KHOUS', description: 'Tissage & structure' },
   { numeral: 'IV', name: 'AL AIN ROSETTE', description: 'Fleur du désert' },
   { numeral: 'V', name: 'KNOTTED LINES', description: 'Lien à travers le temps' },
   { numeral: 'VI', name: 'THE STRANDS', description: 'Tirés de la terre' },
 ]
 const CODES_IT: AboutDesignCode[] = [
-  { numeral: 'I', name: 'AL TALLI', description: 'Filo di heritage' },
-  { numeral: 'II', name: 'THE MONOGRAM', description: 'Marchio della maison' },
-  { numeral: 'III', name: 'AL KHOUS', description: 'Tessitura e struttura' },
+  { numeral: 'I', name: 'THE MONOGRAM', description: 'Marchio della maison' },
+  { numeral: 'II', name: 'AL TALLI', description: 'Filo di patrimonio' },
+  { numeral: 'III', name: 'KHOUS', description: 'Tessitura e struttura' },
   { numeral: 'IV', name: 'AL AIN ROSETTE', description: 'Fiore del deserto' },
   { numeral: 'V', name: 'KNOTTED LINES', description: 'Legame nel tempo' },
   { numeral: 'VI', name: 'THE STRANDS', description: 'Dalla terra' },
 ]
 const CODES_DE: AboutDesignCode[] = [
-  { numeral: 'I', name: 'AL TALLI', description: 'Erbfaden' },
-  { numeral: 'II', name: 'THE MONOGRAM', description: 'Zeichen des Hauses' },
-  { numeral: 'III', name: 'AL KHOUS', description: 'Weben & Struktur' },
+  { numeral: 'I', name: 'THE MONOGRAM', description: 'Zeichen des Hauses' },
+  { numeral: 'II', name: 'AL TALLI', description: 'Erbfaden' },
+  { numeral: 'III', name: 'KHOUS', description: 'Weben & Struktur' },
   { numeral: 'IV', name: 'AL AIN ROSETTE', description: 'Wüstenblüte' },
   { numeral: 'V', name: 'KNOTTED LINES', description: 'Verbindung über die Zeit' },
   { numeral: 'VI', name: 'THE STRANDS', description: 'Aus der Erde' },
 ]
 const CODES_NL: AboutDesignCode[] = [
-  { numeral: 'I', name: 'AL TALLI', description: 'Erfgoed draad' },
-  { numeral: 'II', name: 'THE MONOGRAM', description: 'Handtekening van het huis' },
-  { numeral: 'III', name: 'AL KHOUS', description: 'Weefsel & structuur' },
+  { numeral: 'I', name: 'THE MONOGRAM', description: 'Handtekening van het huis' },
+  { numeral: 'II', name: 'AL TALLI', description: 'Erfgoed draad' },
+  { numeral: 'III', name: 'KHOUS', description: 'Weefsel & structuur' },
   { numeral: 'IV', name: 'AL AIN ROSETTE', description: 'Woestijnbloem' },
   { numeral: 'V', name: 'KNOTTED LINES', description: 'Verbinding door de tijd' },
   { numeral: 'VI', name: 'THE STRANDS', description: 'Uit de aarde' },
 ]
 const CODES_PT: AboutDesignCode[] = [
-  { numeral: 'I', name: 'AL TALLI', description: 'Fio de herança' },
-  { numeral: 'II', name: 'THE MONOGRAM', description: 'Marca da maison' },
-  { numeral: 'III', name: 'AL KHOUS', description: 'Tecelagem e estrutura' },
+  { numeral: 'I', name: 'THE MONOGRAM', description: 'Marca da maison' },
+  { numeral: 'II', name: 'AL TALLI', description: 'Fio de herança' },
+  { numeral: 'III', name: 'KHOUS', description: 'Tecelagem e estrutura' },
   { numeral: 'IV', name: 'AL AIN ROSETTE', description: 'Flor do deserto' },
   { numeral: 'V', name: 'KNOTTED LINES', description: 'Ligação através do tempo' },
   { numeral: 'VI', name: 'THE STRANDS', description: 'Da terra' },

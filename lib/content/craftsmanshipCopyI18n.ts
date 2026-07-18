@@ -72,8 +72,8 @@ const CRAFTSMANSHIP_ID: CraftsmanshipCopy = {
     label: 'Fase I',
     title: 'Pengembangan',
     paragraphs: [
-      'Di Bint Saeed, setiap karya dimulai dengan proses pengembangan yang terdefinisi. Sebagai house yang berbasis di Abu Dhabi, pekerjaan bergerak antar lokasi dengan struktur yang jelas. Pola dibuat di Italia, di mana proporsi, keseimbangan, dan konstruksi diselesaikan sebelum material dipotong. Tahap ini menentukan bagaimana setiap abaya akan jatuh, bergerak, dan mempertahankan bentuknya seiring waktu.',
-      'Proses kemudian berlanjut di Abu Dhabi, di mana prototipe diproduksi untuk menguji konstruksi dan proporsi. Setelah disetujui, sample dibuat untuk mengonfirmasi bentuk akhir, perilaku material, dan fit. Hanya setelah tahapan ini selesai dan ditinjau, karya bergerak ke produksi. Urutan ini memastikan setiap garment secara teknis telah diselesaikan sebelum dibuat dalam bentuk finalnya.',
+      'Di Bint Saeed, setiap karya dimulai dengan proses pengembangan yang terdefinisi. Sebagai maison yang berpusat di Abu Dhabi, pekerjaan bergerak antar lokasi dengan struktur yang jelas. Pola dibuat di Italia, di mana proporsi, keseimbangan, dan konstruksi diselesaikan sebelum bahan dipotong. Tahap ini menentukan bagaimana setiap abaya akan jatuh, bergerak, dan mempertahankan bentuknya seiring waktu.',
+      'Proses kemudian berlanjut di Abu Dhabi, di mana prototipe diproduksi untuk menguji konstruksi dan proporsi. Setelah disetujui, sampel dibuat untuk mengonfirmasi bentuk akhir, perilaku bahan, dan kesesuaian. Hanya setelah tahapan ini selesai dan ditinjau, karya bergerak ke produksi. Urutan ini memastikan setiap pakaian secara teknis telah diselesaikan sebelum dibuat dalam bentuk akhirnya.',
     ],
   },
   phaseII: {
@@ -81,17 +81,17 @@ const CRAFTSMANSHIP_ID: CraftsmanshipCopy = {
     title: 'Pembuatan',
     paragraphs: [
       'Produksi berlangsung di Abu Dhabi, Uni Emirat Arab, di bawah arahan pengrajin dengan pengalaman lebih dari 25 tahun. Peran mereka adalah memastikan setiap karya dikonstruksi dengan konsistensi, presisi, dan kontrol di setiap tahap.',
-      'Material bersumber dari Eropa dan Asia. Komponen seperti kancing dipilih dari pemasok Eropa, sementara batu alam bersumber, dipotong, dan dipoles di Asia. Setiap elemen dipilih berdasarkan performanya, memastikan kontribusi pada struktur, daya tahan, dan keseimbangan keseluruhan garment.',
-      'Produksi dijaga dalam volume terkontrol, memungkinkan setiap karya menerima waktu dan perhatian yang diperlukan. Pendekatan ini memastikan konstruksi, finishing, dan kualitas keseluruhan tetap konsisten dari satu karya ke karya berikutnya.',
-      'Selaras dengan pendekatan ini, karya diproduksi terutama berdasarkan pesanan, dengan setiap garment dibuat khusus untuk klien. Ini memungkinkan produksi tetap fokus dan menghindari inventaris berlebih, mempertahankan cara kerja yang lebih terpertimbangkan dan bertanggung jawab.',
+      'Bahan bersumber dari Eropa dan Asia. Komponen seperti kancing dipilih dari pemasok Eropa, sementara batu alam bersumber, dipotong, dan dipoles di Asia. Setiap elemen dipilih berdasarkan kinerjanya, memastikan kontribusi pada struktur, daya tahan, dan keseimbangan keseluruhan pakaian.',
+      'Produksi dijaga dalam volume terkontrol, memungkinkan setiap karya menerima waktu dan perhatian yang diperlukan. Pendekatan ini memastikan konstruksi, penyelesaian, dan kualitas keseluruhan tetap konsisten dari satu karya ke karya berikutnya.',
+      'Selaras dengan pendekatan ini, karya diproduksi terutama berdasarkan pesanan, dengan setiap pakaian dibuat khusus untuk klien. Ini memungkinkan produksi tetap fokus dan menghindari inventaris berlebih, mempertahankan cara kerja yang lebih terpertimbangkan dan bertanggung jawab.',
     ],
   },
   phaseIII: {
     label: 'Fase III',
     title: 'Arah',
     paragraphs: [
-      'Setiap desain dikembangkan dan dibawa hingga selesai di bawah satu arah. Creative Director mengawasi proses dari konsep awal hingga eksekusi akhir, memastikan proporsi, konstruksi, dan detail tetap selaras sepanjang proses.',
-      'Elemen seperti Al Talli dan Khous diintegrasikan ke dalam struktur garment, bukan diterapkan sebagai dekorasi permukaan. Penggunaannya ditentukan selama pengembangan dan diselesaikan dalam proses konstruksi, memastikan konsistensi dalam penampilan dan performa.',
+      'Setiap desain dikembangkan dan dibawa hingga selesai di bawah satu arah. Direktur Kreatif mengawasi proses dari konsep awal hingga eksekusi akhir, memastikan proporsi, konstruksi, dan detail tetap selaras sepanjang proses.',
+      'Elemen seperti Al Talli dan Khous diintegrasikan ke dalam struktur pakaian, bukan diterapkan sebagai dekorasi permukaan. Penggunaannya ditentukan selama pengembangan dan diselesaikan dalam proses konstruksi, memastikan konsistensi dalam penampilan dan kinerja.',
       'Hasilnya adalah karya yang mencerminkan standar pengembangan yang jelas, produksi terkontrol, dan desain yang terpertimbangkan. Setiap abaya dibuat untuk mempertahankan bentuk, berfungsi dalam pemakaian, dan menjaga kualitasnya seiring waktu. Bint Saeed beroperasi sebagai rumah mode kontemporer, dibentuk di Abu Dhabi dan dikembangkan melalui proses internasional.',
     ],
   },

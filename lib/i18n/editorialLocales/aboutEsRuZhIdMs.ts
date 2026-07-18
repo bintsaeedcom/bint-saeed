@@ -1,41 +1,41 @@
 import type { AboutDesignCode, AboutPageCopy } from '@/lib/content/aboutPageCopyI18n'
 
 const CODES_ES: AboutDesignCode[] = [
-  { numeral: 'I', name: 'AL TALLI', description: 'Hilo de herencia' },
-  { numeral: 'II', name: 'THE MONOGRAM', description: 'Marca de la maison' },
-  { numeral: 'III', name: 'AL KHOUS', description: 'Tejido y estructura' },
+  { numeral: 'I', name: 'THE MONOGRAM', description: 'Marca de la maison' },
+  { numeral: 'II', name: 'AL TALLI', description: 'Hilo de herencia' },
+  { numeral: 'III', name: 'KHOUS', description: 'Tejido y estructura' },
   { numeral: 'IV', name: 'AL AIN ROSETTE', description: 'Flor del desierto' },
   { numeral: 'V', name: 'KNOTTED LINES', description: 'Vínculo a través del tiempo' },
   { numeral: 'VI', name: 'THE STRANDS', description: 'Extraídos de la tierra' },
 ]
 const CODES_RU: AboutDesignCode[] = [
-  { numeral: 'I', name: 'AL TALLI', description: 'Нить наследия' },
-  { numeral: 'II', name: 'THE MONOGRAM', description: 'Знак дома' },
-  { numeral: 'III', name: 'AL KHOUS', description: 'Плетение и структура' },
+  { numeral: 'I', name: 'THE MONOGRAM', description: 'Знак дома' },
+  { numeral: 'II', name: 'AL TALLI', description: 'Нить наследия' },
+  { numeral: 'III', name: 'KHOUS', description: 'Плетение и структура' },
   { numeral: 'IV', name: 'AL AIN ROSETTE', description: 'Цветок пустыни' },
   { numeral: 'V', name: 'KNOTTED LINES', description: 'Связь через время' },
   { numeral: 'VI', name: 'THE STRANDS', description: 'Из земли' },
 ]
 const CODES_ZH: AboutDesignCode[] = [
-  { numeral: 'I', name: 'AL TALLI', description: '传承之线' },
-  { numeral: 'II', name: 'THE MONOGRAM', description: '品牌印记' },
-  { numeral: 'III', name: 'AL KHOUS', description: '编织与结构' },
+  { numeral: 'I', name: 'THE MONOGRAM', description: '品牌印记' },
+  { numeral: 'II', name: 'AL TALLI', description: '传承之线' },
+  { numeral: 'III', name: 'KHOUS', description: '编织与结构' },
   { numeral: 'IV', name: 'AL AIN ROSETTE', description: '沙漠之花' },
   { numeral: 'V', name: 'KNOTTED LINES', description: '跨越时间的连接' },
   { numeral: 'VI', name: 'THE STRANDS', description: '取自大地' },
 ]
 const CODES_ID: AboutDesignCode[] = [
-  { numeral: 'I', name: 'AL TALLI', description: 'Benang warisan' },
-  { numeral: 'II', name: 'THE MONOGRAM', description: 'Tanda maison' },
-  { numeral: 'III', name: 'AL KHOUS', description: 'Tenun & struktur' },
+  { numeral: 'I', name: 'THE MONOGRAM', description: 'Tanda maison' },
+  { numeral: 'II', name: 'AL TALLI', description: 'Benang warisan' },
+  { numeral: 'III', name: 'KHOUS', description: 'Tenun & struktur' },
   { numeral: 'IV', name: 'AL AIN ROSETTE', description: 'Bunga gurun' },
   { numeral: 'V', name: 'KNOTTED LINES', description: 'Ikatan lintas waktu' },
   { numeral: 'VI', name: 'THE STRANDS', description: 'Dari bumi' },
 ]
 const CODES_MS: AboutDesignCode[] = [
-  { numeral: 'I', name: 'AL TALLI', description: 'Benang warisan' },
-  { numeral: 'II', name: 'THE MONOGRAM', description: 'Tanda maison' },
-  { numeral: 'III', name: 'AL KHOUS', description: 'Tenunan & struktur' },
+  { numeral: 'I', name: 'THE MONOGRAM', description: 'Tanda maison' },
+  { numeral: 'II', name: 'AL TALLI', description: 'Benang warisan' },
+  { numeral: 'III', name: 'KHOUS', description: 'Tenunan & struktur' },
   { numeral: 'IV', name: 'AL AIN ROSETTE', description: 'Bunga padang pasir' },
   { numeral: 'V', name: 'KNOTTED LINES', description: 'Ikatan merentas masa' },
   { numeral: 'VI', name: 'THE STRANDS', description: 'Dari bumi' },

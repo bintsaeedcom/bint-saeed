@@ -1,4 +1,5 @@
 import type { AppLocale } from '@/lib/i18n/routing'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import type { Language } from '@/lib/i18n/translations'
 
 export type ContactDepartmentKey =
@@ -46,6 +47,15 @@ export type ContactPageCopy = {
 
 const LOCATION_EN = 'Abu Dhabi,\u00A0United\u00A0Arab\u00A0Emirates'
 const LOCATION_AR = 'أبو ظبي، الإمارات العربية المتحدة'
+const LOCATION_FR = 'Abou Dhabi,\u00A0Émirats\u00A0arabes\u00A0unis'
+const LOCATION_IT = 'Abu Dhabi,\u00A0Emirati\u00A0Arabi\u00A0Uniti'
+const LOCATION_ES = 'Abu Dhabi,\u00A0Emiratos\u00A0Árabes\u00A0Unidos'
+const LOCATION_DE = 'Abu Dhabi,\u00A0Vereinigte\u00A0Arabische\u00A0Emirate'
+const LOCATION_NL = 'Abu Dhabi,\u00A0Verenigde\u00A0Arabische\u00A0Emiraten'
+const LOCATION_PT = 'Abu Dhabi,\u00A0Emirados\u00A0Árabes\u00A0Unidos'
+const LOCATION_RU = 'Абу-Даби,\u00A0Объединённые\u00A0Арабские\u00A0Эмираты'
+const LOCATION_ID = 'Abu Dhabi,\u00A0Uni\u00A0Emirat\u00A0Arab'
+const LOCATION_MS = 'Abu Dhabi,\u00A0Emiriah\u00A0Arab\u00A0Bersatu'
 const HOURS_EN = 'Sun - Thu: 9 AM - 6 PM'
 const HOURS_AR = 'الأحد - الخميس: 9 ص - 6 م'
 
@@ -164,7 +174,7 @@ const FR: ContactPageCopy = {
   generalInquiries: 'Demandes générales',
   phone: 'Téléphone',
   location: 'Lieu',
-  locationValue: LOCATION_EN,
+  locationValue: LOCATION_FR,
   businessHours: 'Horaires',
   businessHoursValue: 'Dim. – jeu. : 9 h – 18 h',
   departmentInboxes: 'Boîtes par service',
@@ -208,7 +218,7 @@ const IT: ContactPageCopy = {
   generalInquiries: 'Richieste generali',
   phone: 'Telefono',
   location: 'Sede',
-  locationValue: LOCATION_EN,
+  locationValue: LOCATION_IT,
   businessHours: 'Orari',
   businessHoursValue: 'Dom – gio: 9:00 – 18:00',
   departmentInboxes: 'Caselle per reparto',
@@ -252,7 +262,7 @@ const ES: ContactPageCopy = {
   generalInquiries: 'Consultas generales',
   phone: 'Teléfono',
   location: 'Ubicación',
-  locationValue: LOCATION_EN,
+  locationValue: LOCATION_ES,
   businessHours: 'Horario',
   businessHoursValue: 'Dom – jue: 9:00 – 18:00',
   departmentInboxes: 'Bandejas por departamento',
@@ -296,7 +306,7 @@ const RU: ContactPageCopy = {
   generalInquiries: 'Общие вопросы',
   phone: 'Телефон',
   location: 'Местоположение',
-  locationValue: LOCATION_EN,
+  locationValue: LOCATION_RU,
   businessHours: 'Часы работы',
   businessHoursValue: 'Вс – чт: 9:00 – 18:00',
   departmentInboxes: 'Почта по отделам',
@@ -384,7 +394,7 @@ const DE: ContactPageCopy = {
   generalInquiries: 'Allgemeine Anfragen',
   phone: 'Telefon',
   location: 'Standort',
-  locationValue: LOCATION_EN,
+  locationValue: LOCATION_DE,
   businessHours: 'Öffnungszeiten',
   businessHoursValue: 'So – Do: 9:00 – 18:00',
   departmentInboxes: 'Postfächer nach Bereich',
@@ -428,7 +438,7 @@ const NL: ContactPageCopy = {
   generalInquiries: 'Algemene vragen',
   phone: 'Telefoon',
   location: 'Locatie',
-  locationValue: LOCATION_EN,
+  locationValue: LOCATION_NL,
   businessHours: 'Openingstijden',
   businessHoursValue: 'Zo – do: 9:00 – 18:00',
   departmentInboxes: 'Postvakken per afdeling',
@@ -472,7 +482,7 @@ const PT: ContactPageCopy = {
   generalInquiries: 'Pedidos gerais',
   phone: 'Telefone',
   location: 'Localização',
-  locationValue: LOCATION_EN,
+  locationValue: LOCATION_PT,
   businessHours: 'Horário',
   businessHoursValue: 'Dom – qui: 9:00 – 18:00',
   departmentInboxes: 'Caixas por departamento',
@@ -516,7 +526,7 @@ const ID: ContactPageCopy = {
   generalInquiries: 'Pertanyaan umum',
   phone: 'Telepon',
   location: 'Lokasi',
-  locationValue: LOCATION_EN,
+  locationValue: LOCATION_ID,
   businessHours: 'Jam kerja',
   businessHoursValue: 'Min – Kam: 09.00 – 18.00',
   departmentInboxes: 'Kotak masuk per departemen',
@@ -560,7 +570,7 @@ const MS: ContactPageCopy = {
   generalInquiries: 'Pertanyaan umum',
   phone: 'Telefon',
   location: 'Lokasi',
-  locationValue: LOCATION_EN,
+  locationValue: LOCATION_MS,
   businessHours: 'Waktu perniagaan',
   businessHoursValue: 'Ahd – Kha: 9 pagi – 6 petang',
   departmentInboxes: 'Peti masuk mengikut jabatan',
@@ -594,7 +604,16 @@ const BY_LOCALE: Record<AppLocale, ContactPageCopy> = {
 
 export function getContactPageCopy(locale: AppLocale | Language | string): ContactPageCopy {
   const key = (locale in BY_LOCALE ? locale : 'en') as AppLocale
-  return BY_LOCALE[key]
+  const base = BY_LOCALE[key]
+  try {
+    const ui = commerceUi(key)
+    return {
+      ...base,
+      breadcrumbHome: ui.common.home,
+    }
+  } catch {
+    return base
+  }
 }
 
 export const CONTACT_SUBJECT_VALUES = [

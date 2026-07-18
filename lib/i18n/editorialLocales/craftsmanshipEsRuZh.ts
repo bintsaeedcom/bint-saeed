@@ -16,7 +16,7 @@ export const CRAFT_ES: CraftsmanshipCopy = {
     label: 'Fase II',
     title: 'Elaboración',
     paragraphs: [
-      'La producción tiene lugar en Abu Dhabi, United Arab Emirates, bajo la dirección de artesanos con más de 25 años de experiencia. Su papel es asegurar que cada pieza se construya con constancia, precisión y control en cada etapa.',
+      'La producción tiene lugar en Abu Dhabi, Emiratos Árabes Unidos, bajo la dirección de artesanos con más de 25 años de experiencia. Su papel es asegurar que cada pieza se construya con constancia, precisión y control en cada etapa.',
       'Los materiales se obtienen en Europa y Asia. Componentes como los botones se seleccionan de proveedores europeos, mientras que las piedras naturales se obtienen, tallan y pulen en Asia. Cada elemento se elige por su rendimiento, contribuyendo a la estructura, la durabilidad y el equilibrio general de la prenda.',
       'La producción se mantiene controlada en volumen, permitiendo que cada pieza reciba el tiempo y la atención necesarios. Este enfoque asegura que construcción, acabados y calidad general se mantengan de una pieza a la siguiente.',
       'Conforme a este enfoque, las piezas se producen principalmente bajo pedido, cada prenda hecha específicamente para la clienta. Así la producción permanece centrada, se evita el exceso de inventario y se preserva una forma de trabajar más reflexiva y responsable.',
@@ -52,7 +52,7 @@ export const CRAFT_RU: CraftsmanshipCopy = {
     label: 'Фаза II',
     title: 'Изготовление',
     paragraphs: [
-      'Производство проходит в Abu Dhabi, United Arab Emirates, под руководством мастеров с опытом более 25 лет. Их роль — обеспечить, чтобы каждая вещь создавалась с постоянством, точностью и контролем на каждом этапе.',
+      'Производство проходит в Abu Dhabi, Объединённых Арабских Эмиратах, под руководством мастеров с опытом более 25 лет. Их роль — обеспечить, чтобы каждая вещь создавалась с постоянством, точностью и контролем на каждом этапе.',
       'Материалы поступают из Европы и Азии. Такие компоненты, как пуговицы, выбираются у европейских поставщиков, а натуральные камни добываются, режутся и полируются в Азии. Каждый элемент выбирается за свои качества, внося вклад в структуру, долговечность и общий баланс изделия.',
       'Объём производства остаётся контролируемым, позволяя каждой вещи получить необходимое время и внимание. Такой подход обеспечивает постоянство конструкции, отделки и общего качества от одной вещи к другой.',
       'В соответствии с этим подходом вещи производятся преимущественно на заказ — каждое изделие специально для клиентки. Это сохраняет фокус производства, избегает избыточных запасов и поддерживает более осмысленный и ответственный способ работы.',

@@ -18,6 +18,7 @@ import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { getGivingForwardCopy } from '@/lib/content/givingForwardCopyI18n'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import type { AppLocale } from '@/lib/i18n/routing'
 import {
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
@@ -136,7 +137,7 @@ export default function GivingForwardPage() {
   const copy = getGivingForwardCopy(language)
   const hangtagAlt = withBrandAlt(
     'Giving Forward hangtag — Heritage Carried Forward charity swing tag on luxury fabric, with 20 AED from each garment donated to charity',
-    language === 'ar' ? 'ar' : 'en',
+    language as AppLocale,
   )
   const hangtagSrc =
     '/giving-forward/bint-saeed-giving-forward-heritage-carried-forward-charity-hangtag-portrait.webp'
@@ -147,7 +148,7 @@ export default function GivingForwardPage() {
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={ABOUT_SECTION_HERO_IMAGES.givingForward}
-        imageAlt={withBrandAlt('Giving Forward editorial banner', language === 'ar' ? 'ar' : 'en')}
+        imageAlt={withBrandAlt('Giving Forward editorial banner', language as AppLocale)}
         segments={[
           { label: copy.breadcrumbHome, href: '/home' },
           { label: copy.breadcrumb },

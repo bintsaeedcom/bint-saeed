@@ -17,6 +17,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { getPersonalisationCopy } from '@/lib/content/personalisationCopyI18n'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import type { AppLocale } from '@/lib/i18n/routing'
 import {
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
@@ -175,14 +176,14 @@ function ChapterProse({
 export default function PersonalisationPage() {
   const { isRTL, language } = useLanguage()
   const copy = getPersonalisationCopy(language)
-  const pocketAlt = withBrandAlt(copy.hiddenPocketAlt, language === 'ar' ? 'ar' : 'en')
+  const pocketAlt = withBrandAlt(copy.hiddenPocketAlt, language as AppLocale)
 
   return (
     <div className={`${EDITORIAL_PAGE_SHELL} relative min-h-screen bg-[#1a0210] `}>
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={HERO_IMAGE}
-        imageAlt={withBrandAlt('Personalisation editorial banner', language === 'ar' ? 'ar' : 'en')}
+        imageAlt={withBrandAlt('Personalisation editorial banner', language as AppLocale)}
         priority
         segments={[
           { label: copy.breadcrumbHome, href: '/home' },

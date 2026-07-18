@@ -25,7 +25,7 @@ const FR: AboutTopicLink[] = [
   { href: '/the-codes', label: 'The Codes' },
   { href: '/craftsmanship', label: 'Savoir-faire' },
   { href: '/personalisation', label: 'Personnalisation' },
-  { href: '/giving-forward', label: 'Giving Forward' },
+  { href: '/giving-forward', label: 'Transmission' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -34,7 +34,7 @@ const IT: AboutTopicLink[] = [
   { href: '/the-codes', label: 'The Codes' },
   { href: '/craftsmanship', label: 'Artigianalità' },
   { href: '/personalisation', label: 'Personalizzazione' },
-  { href: '/giving-forward', label: 'Giving Forward' },
+  { href: '/giving-forward', label: 'Trasmissione' },
   { href: '/contact', label: 'Contatti' },
 ]
 
@@ -43,7 +43,7 @@ const DE: AboutTopicLink[] = [
   { href: '/the-codes', label: 'The Codes' },
   { href: '/craftsmanship', label: 'Handwerkskunst' },
   { href: '/personalisation', label: 'Personalisierung' },
-  { href: '/giving-forward', label: 'Giving Forward' },
+  { href: '/giving-forward', label: 'Weitergeben' },
   { href: '/contact', label: 'Kontakt' },
 ]
 
@@ -52,7 +52,7 @@ const NL: AboutTopicLink[] = [
   { href: '/the-codes', label: 'The Codes' },
   { href: '/craftsmanship', label: 'Vakmanschap' },
   { href: '/personalisation', label: 'Personalisatie' },
-  { href: '/giving-forward', label: 'Giving Forward' },
+  { href: '/giving-forward', label: 'Doorgeven' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -61,7 +61,7 @@ const PT: AboutTopicLink[] = [
   { href: '/the-codes', label: 'The Codes' },
   { href: '/craftsmanship', label: 'Saber-fazer' },
   { href: '/personalisation', label: 'Personalização' },
-  { href: '/giving-forward', label: 'Giving Forward' },
+  { href: '/giving-forward', label: 'Dar adiante' },
   { href: '/contact', label: 'Contacto' },
 ]
 
@@ -70,7 +70,7 @@ const ES: AboutTopicLink[] = [
   { href: '/the-codes', label: 'The Codes' },
   { href: '/craftsmanship', label: 'Artesanía' },
   { href: '/personalisation', label: 'Personalización' },
-  { href: '/giving-forward', label: 'Giving Forward' },
+  { href: '/giving-forward', label: 'Dar adelante' },
   { href: '/contact', label: 'Contacto' },
 ]
 
@@ -79,7 +79,7 @@ const RU: AboutTopicLink[] = [
   { href: '/the-codes', label: 'The Codes' },
   { href: '/craftsmanship', label: 'Мастерство' },
   { href: '/personalisation', label: 'Персонализация' },
-  { href: '/giving-forward', label: 'Giving Forward' },
+  { href: '/giving-forward', label: 'Передача дальше' },
   { href: '/contact', label: 'Контакты' },
 ]
 
@@ -88,7 +88,7 @@ const ZH: AboutTopicLink[] = [
   { href: '/the-codes', label: 'The Codes' },
   { href: '/craftsmanship', label: '工艺' },
   { href: '/personalisation', label: '个性化定制' },
-  { href: '/giving-forward', label: 'Giving Forward' },
+  { href: '/giving-forward', label: '传递向前' },
   { href: '/contact', label: '联系我们' },
 ]
 
@@ -97,7 +97,7 @@ const ID: AboutTopicLink[] = [
   { href: '/the-codes', label: 'The Codes' },
   { href: '/craftsmanship', label: 'Kriya' },
   { href: '/personalisation', label: 'Personalisasi' },
-  { href: '/giving-forward', label: 'Giving Forward' },
+  { href: '/giving-forward', label: 'Meneruskan' },
   { href: '/contact', label: 'Kontak' },
 ]
 
@@ -106,7 +106,7 @@ const MS: AboutTopicLink[] = [
   { href: '/the-codes', label: 'The Codes' },
   { href: '/craftsmanship', label: 'Ketukangan' },
   { href: '/personalisation', label: 'Pemperibadian' },
-  { href: '/giving-forward', label: 'Giving Forward' },
+  { href: '/giving-forward', label: 'Meneruskan' },
   { href: '/contact', label: 'Hubungi' },
 ]
 

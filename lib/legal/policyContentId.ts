@@ -1269,11 +1269,7 @@ export function getShipmentReturnContent(lang: PolicyLang): PolicyContent {
     lang === 'ru' ||
     lang === 'zh'
   ) {
-    return getLocalizedShipmentContent(
-      lang as EuZhLocale,
-      shipmentEnSections(),
-      SHIPMENT_EN.sectionList,
-    )
+    return getLocalizedShipmentContent(lang as EuZhLocale)
   }
   const meta = resolvePolicyMeta(lang, SHIPMENT_EN, SHIPMENT_ID, AR_BREADCRUMBS.shipment)
   const sections = lang === 'id' ? shipmentIdSections() : shipmentEnSections()

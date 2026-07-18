@@ -13,38 +13,26 @@ import {
 } from 'framer-motion'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getCraftsmanshipCopy } from '@/lib/content/craftsmanshipCopyI18n'
+import { getCraftsmanshipMediaCopy } from '@/lib/content/craftsmanshipMediaI18n'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import type { AppLocale } from '@/lib/i18n/routing'
 import { EDITORIAL_STACK_CARD } from '@/lib/ui/editorialPageChrome'
 
 /** Portrait craft finishes — same trio as Craftsmanship closing. */
-function detailTrio(locale: 'en' | 'ar') {
+function detailTrio(locale: AppLocale) {
+  const media = getCraftsmanshipMediaCopy(locale)
   return [
     {
       src: '/craftsmanship/details/bint-saeed-abu-dhabi-luxury-abaya-gold-embroidery-jewel-cuff-detail.webp',
-      alt: withBrandAlt(
-        locale === 'ar'
-          ? 'تطريز ذهبي وتفصيل كم مرصّع على قماش عباءة فاخرة سوداء'
-          : 'Luxury abaya gold embroidery and jewel cuff detail on black fabric',
-        locale,
-      ),
+      alt: withBrandAlt(media.detailGoldEmbroideryAlt, locale),
     },
     {
       src: '/craftsmanship/details/bint-saeed-abu-dhabi-hampstead-dress-woven-label-abu-dhabi-detail.webp',
-      alt: withBrandAlt(
-        locale === 'ar'
-          ? 'ملصق Bint Saeed المنسوج — أبوظبي داخل فستان Hampstead الأسود'
-          : 'Bint Saeed woven brand label Abu Dhabi on black Hampstead dress interior',
-        locale,
-      ),
+      alt: withBrandAlt(media.detailWovenLabelAlt, locale),
     },
     {
       src: '/craftsmanship/details/bint-saeed-abu-dhabi-hampstead-dress-gold-al-talli-stitch-detail.webp',
-      alt: withBrandAlt(
-        locale === 'ar'
-          ? 'تفصيل تطريز Al Talli الذهبي على قماش فستان Hampstead الأسود'
-          : 'Gold Al Talli stitch detail on black Hampstead dress fabric',
-        locale,
-      ),
+      alt: withBrandAlt(media.detailAlTalliAlt, locale),
     },
   ] as const
 }
@@ -144,24 +132,19 @@ export default function ExploreCollectionClosing({
   ctaAnalytics,
 }: ExploreCollectionClosingProps) {
   const { language, isRTL } = useLanguage()
+  const locale = language as AppLocale
   const copy = getCraftsmanshipCopy(language)
-  const details = detailTrio(language === 'ar' ? 'ar' : 'en')
+  const media = getCraftsmanshipMediaCopy(language)
+  const details = detailTrio(locale)
 
   return (
     <section
       className={`relative z-[50] overflow-hidden pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-14 md:pb-24 ${EDITORIAL_STACK_CARD}`}
-      aria-label={
-        language === 'ar'
-          ? 'تفاصيل إنهاء قطع Bint Saeed'
-          : 'Bint Saeed garment finishing details'
-      }
+      aria-label={media.closingSectionAria}
     >
       <Image
         src="/craftsmanship/bint-saeed-abu-dhabi-explore-collection-organic-texture.webp"
-        alt={withBrandAlt(
-          'Explore the Bint Saeed collection — editorial fabric texture background for luxury abayas',
-          language === 'ar' ? 'ar' : 'en',
-        )}
+        alt={withBrandAlt(media.closingBgAlt, locale)}
         title="Explore the collection — Bint Saeed Abu Dhabi"
         fill
         sizes="100vw"

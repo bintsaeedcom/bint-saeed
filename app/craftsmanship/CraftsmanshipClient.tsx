@@ -6,6 +6,7 @@ import ExploreCollectionClosing from '@/components/ExploreCollectionClosing'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { getCraftsmanshipCopy, type CraftsmanshipPhaseCopy } from '@/lib/content/craftsmanshipCopyI18n'
+import { getCraftsmanshipMediaCopy } from '@/lib/content/craftsmanshipMediaI18n'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import {
   EDITORIAL_PAGE_CONTAINER,
@@ -15,6 +16,7 @@ import {
   EDITORIAL_STACK_PAD,
 } from '@/lib/ui/editorialPageChrome'
 import { withBrandAlt } from '@/lib/products/imageAlt'
+import type { AppLocale } from '@/lib/i18n/routing'
 import {
   motion,
   useReducedMotion,
@@ -116,98 +118,82 @@ function SectionDrift({ className = '' }: { className?: string }) {
   )
 }
 
-/** Each film used once — compact atelier strip. */
-const CRAFT_VIDEOS = [
-  {
-    src: '/craftsmanship/bint-saeed-craftsmanship-process.webm',
-    ariaLabel:
-      'Video: Bint Saeed luxury abaya craftsmanship—Italian pattern development, prototyping in Abu Dhabi, and controlled atelier production in the UAE',
-  },
-  {
-    src: '/craftsmanship/bint-saeed-fabric-cutting-atelier.webm',
-    ariaLabel:
-      'Video: Bint Saeed—precision fabric cutting and atelier work for bespoke luxury abayas in Abu Dhabi, United Arab Emirates',
-  },
-  {
-    src: '/craftsmanship/bint-saeed-stitching-process.webm',
-    ariaLabel:
-      'Video: hand stitching and garment finishing by experienced craftspeople—tailored construction for Bint Saeed luxury abayas in Abu Dhabi',
-  },
-] as const
+function craftVideos(media: ReturnType<typeof getCraftsmanshipMediaCopy>) {
+  return [
+    {
+      src: '/craftsmanship/bint-saeed-craftsmanship-process.webm',
+      ariaLabel: media.videoProcessAria,
+    },
+    {
+      src: '/craftsmanship/bint-saeed-fabric-cutting-atelier.webm',
+      ariaLabel: media.videoCuttingAria,
+    },
+    {
+      src: '/craftsmanship/bint-saeed-stitching-process.webm',
+      ariaLabel: media.videoStitchingAria,
+    },
+  ] as const
+}
 
-const MEDIA = {
-  cad: {
-    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-i-cad-pattern.webp',
-    alt: withBrandAlt(
-      'CAD abaya pattern on screen during Phase I development — technical construction resolved before cutting',
-      'en',
-    ),
-  },
-  pattern: {
-    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-i-pattern-drawing.webp',
-    alt: withBrandAlt(
-      'Hands drafting an abaya pattern with pencil and ruler during Phase I development',
-      'en',
-    ),
-  },
-  textile: {
-    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-iii-textile-thread.webp',
-    alt: withBrandAlt(
-      'Hands guiding thread at the atelier machine during Phase III direction and finishing',
-      'en',
-    ),
-  },
-  shearsMeasure: {
-    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-iii-shears-measure.webp',
-    alt: withBrandAlt(
-      'Atelier shears and measuring tape cutting fabric during Phase III direction',
-      'en',
-    ),
-  },
-  goldKnotFinishing: {
-    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-atelier-gold-knot-strand-finishing.webp',
-    alt: withBrandAlt(
-      'Atelier finishing of a gold knot charm on a black beaded strand with gloved hands',
-      'en',
-    ),
-  },
-  wovenLabelStitching: {
-    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-woven-label-hand-stitching.webp',
-    alt: withBrandAlt(
-      'Hand sewing a Bint Saeed Abu Dhabi woven label into a luxury garment',
-      'en',
-    ),
-  },
-  goldKnottedChain: {
-    src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-gold-knotted-chain-detail.webp',
-    alt: withBrandAlt(
-      'Polished gold knotted chain links — atelier jewellery craftsmanship detail',
-      'en',
-    ),
-  },
-} as const
+function craftMedia(media: ReturnType<typeof getCraftsmanshipMediaCopy>, locale: AppLocale) {
+  return {
+    cad: {
+      src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-i-cad-pattern.webp',
+      alt: withBrandAlt(media.altCad, locale),
+    },
+    pattern: {
+      src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-i-pattern-drawing.webp',
+      alt: withBrandAlt(media.altPattern, locale),
+    },
+    textile: {
+      src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-iii-textile-thread.webp',
+      alt: withBrandAlt(media.altTextile, locale),
+    },
+    shearsMeasure: {
+      src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-phase-iii-shears-measure.webp',
+      alt: withBrandAlt(media.altShears, locale),
+    },
+    goldKnotFinishing: {
+      src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-atelier-gold-knot-strand-finishing.webp',
+      alt: withBrandAlt(media.altGoldKnotFinishing, locale),
+    },
+    wovenLabelStitching: {
+      src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-woven-label-hand-stitching.webp',
+      alt: withBrandAlt(media.altWovenLabel, locale),
+    },
+    goldKnottedChain: {
+      src: '/craftsmanship/bint-saeed-abu-dhabi-craftsmanship-gold-knotted-chain-detail.webp',
+      alt: withBrandAlt(media.altGoldKnottedChain, locale),
+    },
+  }
+}
 
-/** Phase II photo wall — video / still alternating; row 3 = video left, chain right. */
-const PHASE_II_MEDIA = [
-  { kind: 'video' as const, src: CRAFT_VIDEOS[0].src, ariaLabel: CRAFT_VIDEOS[0].ariaLabel },
-  {
-    kind: 'image' as const,
-    src: MEDIA.goldKnotFinishing.src,
-    alt: MEDIA.goldKnotFinishing.alt,
-  },
-  {
-    kind: 'image' as const,
-    src: MEDIA.wovenLabelStitching.src,
-    alt: MEDIA.wovenLabelStitching.alt,
-  },
-  { kind: 'video' as const, src: CRAFT_VIDEOS[1].src, ariaLabel: CRAFT_VIDEOS[1].ariaLabel },
-  { kind: 'video' as const, src: CRAFT_VIDEOS[2].src, ariaLabel: CRAFT_VIDEOS[2].ariaLabel },
-  {
-    kind: 'image' as const,
-    src: MEDIA.goldKnottedChain.src,
-    alt: MEDIA.goldKnottedChain.alt,
-  },
-] as const
+function phaseIiMedia(
+  videos: ReturnType<typeof craftVideos>,
+  media: ReturnType<typeof craftMedia>,
+) {
+  return [
+    { kind: 'video' as const, src: videos[0].src, ariaLabel: videos[0].ariaLabel },
+    {
+      kind: 'image' as const,
+      src: media.goldKnotFinishing.src,
+      alt: media.goldKnotFinishing.alt,
+    },
+    {
+      kind: 'image' as const,
+      src: media.wovenLabelStitching.src,
+      alt: media.wovenLabelStitching.alt,
+    },
+    { kind: 'video' as const, src: videos[1].src, ariaLabel: videos[1].ariaLabel },
+    { kind: 'video' as const, src: videos[2].src, ariaLabel: videos[2].ariaLabel },
+    {
+      kind: 'image' as const,
+      src: media.goldKnottedChain.src,
+      alt: media.goldKnottedChain.alt,
+    },
+  ]
+}
+
 
 function Still({
   src,
@@ -428,6 +414,10 @@ function PhaseProse({
 export default function CraftsmanshipClient() {
   const { t, isRTL, language } = useLanguage()
   const copy = getCraftsmanshipCopy(language)
+  const mediaCopy = getCraftsmanshipMediaCopy(language)
+  const MEDIA = craftMedia(mediaCopy, language as AppLocale)
+  const CRAFT_VIDEOS = craftVideos(mediaCopy)
+  const PHASE_II_MEDIA = phaseIiMedia(CRAFT_VIDEOS, MEDIA)
   const title = copy.breadcrumbCraftsmanship
   const eyebrow = getAboutEditorialHeroEyebrow(language)
   const description = t.about?.craftsmanshipDesc ?? ''
@@ -443,7 +433,7 @@ export default function CraftsmanshipClient() {
       <AboutSectionHero
         rtl={isRTL}
         imageSrc={ABOUT_SECTION_HERO_IMAGES.craftsmanship}
-        imageAlt={withBrandAlt('Craftsmanship editorial banner', language === 'ar' ? 'ar' : 'en')}
+        imageAlt={withBrandAlt(mediaCopy.heroBannerAlt, language as AppLocale)}
         priority
         segments={[
           { label: homeLabel, href: '/home' },
