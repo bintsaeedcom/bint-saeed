@@ -25,7 +25,7 @@ import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { fetchGeoData } from '@/lib/geo/geoDetection'
 import {
   getAvailableCheckoutRails,
-  getCheckoutConfigHint,
+  getCheckoutNotConfiguredMessage,
   getDefaultCheckoutRail,
   isCheckoutRailConfigured,
   type CheckoutRail,
@@ -40,7 +40,11 @@ import { formFieldErrorClass, formFieldOnDarkClass } from '@/lib/ui/formFieldCla
 import { tabbyMessage, tabbyRejectionMessage } from '@/lib/tabby/messages'
 import { normalizeTabbyPhone } from '@/lib/tabby/normalizePhone'
 import { cartRequiresPhysicalShipping } from '@/lib/giftCards/cartDetection'
-import { getEstimatedShippingFee } from '@/lib/pricing'
+import { resolveShippingEligibility } from '@/lib/pricing'
+import {
+  clearMobileBottomChrome,
+  publishMobileBottomChrome,
+} from '@/lib/ui/mobileBottomChrome'
 import CheckoutGiftCardApply, {
   type AppliedGiftCardPreview,
 } from '@/components/CheckoutGiftCardApply'
@@ -114,9 +118,28 @@ function CheckoutPageContent() {
   const [appliedGiftCard, setAppliedGiftCard] = useState<AppliedGiftCardPreview | null>(null)
   const requiresPhysicalShipping = cartRequiresPhysicalShipping(items)
   const merchandiseSubtotal = Number(cartSubtotal(items).toFixed(2))
-  const estimatedShipping = requiresPhysicalShipping
-    ? getEstimatedShippingFee(currency.code)
-    : 0
+  const [countryCode, setCountryCode] = useState<string | null>(null)
+  const shippingEligibility = useMemo(
+    () =>
+      resolveShippingEligibility({
+        subtotal: merchandiseSubtotal,
+        currency: currency.code,
+        country: countryCode,
+      }),
+    [merchandiseSubtotal, currency.code, countryCode],
+  )
+  const estimatedShipping = requiresPhysicalShipping ? shippingEligibility.fee : 0
+  const shippingFeeValue = !requiresPhysicalShipping
+    ? form.digitalNoShipping
+    : shippingEligibility.complimentary
+      ? ui.cart.shippingComplimentaryShort
+      : formatAmount(estimatedShipping)
+  const shippingPrimaryNote =
+    requiresPhysicalShipping && shippingEligibility.complimentary
+      ? shippingEligibility.scope === 'uae'
+        ? ui.cart.shippingComplimentaryUae
+        : ui.cart.shippingComplimentary
+      : null
   const amountBeforeGiftCard = Number((merchandiseSubtotal + estimatedShipping).toFixed(2))
   const giftCredit = appliedGiftCard?.appliedInCurrency ?? 0
   const amountDueNow = Math.max(0, Number((amountBeforeGiftCard - giftCredit).toFixed(2)))
@@ -145,9 +168,11 @@ function CheckoutPageContent() {
       staticProducts.find((product) => product.id === item.id) ?? { id: item.id, name: item.name },
     )
 
-  const [countryCode, setCountryCode] = useState<string | null>(null)
   const [payBusy, setPayBusy] = useState(false)
   const [legalAcknowledged, setLegalAcknowledged] = useState(false)
+  const [legalHighlight, setLegalHighlight] = useState(false)
+  const legalAckRef = useRef<HTMLLabelElement>(null)
+  const mobileBarRef = useRef<HTMLDivElement>(null)
   const [selectedRail, setSelectedRail] = useState<CheckoutRail | null>(null)
   const [stripeEmbedded, setStripeEmbedded] = useState<{
     clientSecret: string
@@ -241,6 +266,38 @@ function CheckoutPageContent() {
       setCountryCode(geo?.countryCode ?? null)
     })
   }, [])
+
+  useEffect(() => {
+    if (stripeEmbedded || items.length === 0) {
+      clearMobileBottomChrome('checkout-bar')
+      return
+    }
+    const el = mobileBarRef.current
+    if (!el) return
+
+    const publish = () => {
+      const visible = window.getComputedStyle(el).display !== 'none'
+      if (!visible) {
+        clearMobileBottomChrome('checkout-bar')
+        return
+      }
+      publishMobileBottomChrome('checkout-bar', el.getBoundingClientRect().height)
+    }
+    publish()
+    const ro = new ResizeObserver(publish)
+    ro.observe(el)
+    window.addEventListener('resize', publish)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', publish)
+      clearMobileBottomChrome('checkout-bar')
+    }
+  }, [stripeEmbedded, items.length, amountDueNow, payBusy, giftCardCoversFull, activeRail, checkoutEnvReady, tabbyEligible, language])
+
+  const payCtaDisabled =
+    payBusy ||
+    (!giftCardCoversFull &&
+      (!checkoutEnvReady || !activeRail || (activeRail === 'tabby' && !tabbyEligible)))
 
   useEffect(() => {
     if (!['AED', 'SAR', 'KWD'].includes(currency.code)) {
@@ -396,6 +453,11 @@ function CheckoutPageContent() {
     if (items.length === 0) return
     if (!legalAcknowledged) {
       toast.error(ui.checkout.legalRequired)
+      setLegalHighlight(true)
+      window.setTimeout(() => setLegalHighlight(false), 2600)
+      legalAckRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      const checkbox = legalAckRef.current?.querySelector('input')
+      checkbox?.focus({ preventScroll: true })
       return
     }
     if (!giftCardCoversFull && (!activeRail || !isCheckoutRailConfigured(activeRail))) {
@@ -913,20 +975,32 @@ function CheckoutPageContent() {
                   <span className="min-w-0">{ui.cart.subtotal}</span>
                   <span className="shrink-0 whitespace-nowrap text-white">{formatCartSubtotal(items)}</span>
                 </div>
-                {estimatedShipping > 0 ? (
-                  <div
-                    className={`mt-2 flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 `}
-                  >
-                    <span className="min-w-0">{ui.cart.shippingLabel}</span>
-                    <span className="shrink-0 whitespace-nowrap text-white">
-                      {formatAmount(estimatedShipping)}
-                    </span>
-                  </div>
+                {requiresPhysicalShipping ? (
+                  <>
+                    <div
+                      className={`mt-2 flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 `}
+                    >
+                      <span className="min-w-0">{ui.cart.shippingLabel}</span>
+                      <span
+                        className={`shrink-0 whitespace-nowrap ${
+                          shippingEligibility.complimentary ? 'text-brand-dustyBlue' : 'text-white'
+                        }`}
+                      >
+                        {shippingFeeValue}
+                      </span>
+                    </div>
+                    {shippingPrimaryNote ? (
+                      <p className="mt-2 font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-dustyBlue/90">
+                        {shippingPrimaryNote}
+                      </p>
+                    ) : null}
+                    <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
+                      {ui.cart.taxesIncluded}
+                    </p>
+                  </>
                 ) : (
                   <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
-                    {requiresPhysicalShipping
-                      ? ui.cart.taxesIncluded
-                      : form.digitalNoShipping}
+                    {form.digitalNoShipping}
                   </p>
                 )}
                 <CheckoutGiftCardApply
@@ -1170,12 +1244,20 @@ function CheckoutPageContent() {
                 ) : null}
 
                 <label
-                  className={`mt-6 flex items-start gap-2.5 sm:mt-8 text-start`}
+                  ref={legalAckRef}
+                  className={`mt-6 flex items-start gap-2.5 rounded-[4px] sm:mt-8 text-start ${
+                    legalHighlight
+                      ? 'bg-brand-clayRed/20 ring-1 ring-brand-clayRed/50 p-2.5 -mx-1'
+                      : ''
+                  }`}
                 >
                   <input
                     type="checkbox"
                     checked={legalAcknowledged}
-                    onChange={(e) => setLegalAcknowledged(e.target.checked)}
+                    onChange={(e) => {
+                      setLegalAcknowledged(e.target.checked)
+                      if (e.target.checked) setLegalHighlight(false)
+                    }}
                     className="mt-0.5 h-4 w-4 border border-white/40 bg-transparent accent-brand-dustyBlue"
                   />
                   <span className="font-montserrat text-[11px] leading-relaxed tracking-wide text-white/70">
@@ -1184,6 +1266,8 @@ function CheckoutPageContent() {
                       href="/shipment-return-policy"
                       className="underline hover:text-brand-dustyBlue"
                       data-cursor-hover
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {ui.checkout.shipmentPolicy}
                     </LocaleLink>{' '}
@@ -1192,6 +1276,8 @@ function CheckoutPageContent() {
                       href="/terms"
                       className="underline hover:text-brand-dustyBlue"
                       data-cursor-hover
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {ui.checkout.termsConditions}
                     </LocaleLink>
@@ -1202,24 +1288,12 @@ function CheckoutPageContent() {
                 <button
                   type="button"
                   onClick={() => void startCheckout()}
-                  disabled={
-                    payBusy ||
-                    !legalAcknowledged ||
-                    (!giftCardCoversFull &&
-                      (!checkoutEnvReady ||
-                        !activeRail ||
-                        (activeRail === 'tabby' && !tabbyEligible)))
-                  }
+                  disabled={payCtaDisabled}
                   className={`mt-5 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-[4px] px-4 py-3.5 font-montserrat text-sm font-medium tracking-wide transition-colors sm:mt-6 ${
- payBusy ||
- !legalAcknowledged ||
- (!giftCardCoversFull &&
- (!checkoutEnvReady ||
- !activeRail ||
- (activeRail === 'tabby' && !tabbyEligible)))
- ? 'cursor-not-allowed bg-white/15 text-white/45'
- : 'bg-brand-dustyBlue text-[#1a0008] hover:bg-white hover:text-brand-darkRed'
- } `}
+                    payCtaDisabled
+                      ? 'cursor-not-allowed bg-white/15 text-white/45'
+                      : 'bg-brand-dustyBlue text-[#1a0008] hover:bg-white hover:text-brand-darkRed'
+                  } `}
                   data-cursor-hover
                 >
                   {payBusy ? (
@@ -1238,7 +1312,7 @@ function CheckoutPageContent() {
                 </button>
                 {!checkoutEnvReady && !giftCardCoversFull ? (
                   <p className="mt-3 text-center font-montserrat text-[10px] uppercase tracking-[0.15em] text-amber-300/80">
-                    {getCheckoutConfigHint('stripe')}
+                    {getCheckoutNotConfiguredMessage('stripe')}
                   </p>
                 ) : null}
               </motion.div>
@@ -1247,6 +1321,58 @@ function CheckoutPageContent() {
         </div>
         )}
       </div>
+
+      {!stripeEmbedded && items.length > 0 ? (
+        <div
+          ref={mobileBarRef}
+          className="fixed inset-x-0 bottom-0 z-[96] overflow-hidden border-t border-white/15 shadow-[0_-16px_48px_-12px_rgba(0,0,0,0.55)] lg:hidden"
+        >
+          <div className="pointer-events-none absolute inset-0 bg-[#1a0210]" aria-hidden />
+          <div
+            className="pointer-events-none absolute inset-0 bg-[#1a0210]/88 backdrop-blur-xl backdrop-saturate-150"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#2d141e]/50 via-transparent to-[#12080b]/80"
+            aria-hidden
+          />
+          <div className="relative z-[1] px-3 pt-2.5 pb-[max(0.65rem,env(safe-area-inset-bottom))]">
+            <div className="mb-2 flex min-w-0 items-baseline justify-between gap-3">
+              <span className="min-w-0 truncate font-montserrat text-[10px] uppercase tracking-[0.14em] text-[#e8d8c8]/80">
+                {form.dueNow}
+              </span>
+              <span className="shrink-0 font-montserrat text-sm tabular-nums text-[#faf7f3]">
+                {formatAmount(amountDueNow)}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => void startCheckout()}
+              disabled={payCtaDisabled}
+              className={`flex min-h-[46px] w-full items-center justify-center gap-2 rounded-[4px] px-3 py-3 font-montserrat text-[11px] uppercase tracking-[0.14em] ${
+                payCtaDisabled
+                  ? 'cursor-not-allowed bg-white/15 text-white/45'
+                  : 'bg-brand-dustyBlue text-[#1a0008]'
+              }`}
+              data-cursor-hover
+            >
+              {payBusy ? (
+                ui.checkout.processingPayment
+              ) : (
+                <>
+                  <FiLock className="h-3.5 w-3.5 shrink-0 opacity-90" />
+                  <span className="truncate">
+                    {giftCardCoversFull
+                      ? form.completeWithGiftCard
+                      : continueLabel(activeRail, ui, form)}
+                  </span>
+                  <FiArrowRight className={`h-4 w-4 shrink-0 ${isRTL ? 'rotate-180' : ''}`} />
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }
