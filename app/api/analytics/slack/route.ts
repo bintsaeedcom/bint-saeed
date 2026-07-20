@@ -280,7 +280,7 @@ function resolveSlackWebhookForType(type: string): string | undefined {
     'cart_recovery_started',
     'cart_recovered',
   ])
-  const cartTypes = new Set(['cart_add', 'cart_event'])
+  const cartTypes = new Set(['cart_add', 'cart_event', 'wishlist_add'])
   if (abandonedTypes.has(type) && SLACK_ABANDONED_CART_WEBHOOK_URL) {
     return SLACK_ABANDONED_CART_WEBHOOK_URL
   }
@@ -288,7 +288,11 @@ function resolveSlackWebhookForType(type: string): string | undefined {
     return SLACK_RECOVERY_WEBHOOK_URL
   }
   if (cartTypes.has(type)) {
-    return SLACK_WEBHOOK_URL || undefined
+    return (
+      normalizedWebhook(process.env.SLACK_CART_WEBHOOK_URL) ||
+      SLACK_WEBHOOK_URL ||
+      undefined
+    )
   }
   return SLACK_WEBHOOK_URL || undefined
 }
@@ -638,6 +642,44 @@ function formatSlackMessage(type: string, data: any) {
             fields: [
               { type: 'mrkdwn', text: `*Bag total:*\nAED ${data.cartValueAed ?? '—'}` },
               { type: 'mrkdwn', text: `*Items in bag:*\n${data.cartItems ?? '—'}` },
+              { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
+              { type: 'mrkdwn', text: `*Device:*\n${device}` },
+            ],
+          },
+          {
+            type: 'context',
+            elements: [
+              {
+                type: 'mrkdwn',
+                text: `Visitor \`${data.visitorId || 'Unknown'}\` · ${timestamp} GST`,
+              },
+            ],
+          },
+        ],
+      }
+    }
+
+    case 'wishlist_add': {
+      const wish = data.wishlistEvent || {}
+      const lines = [
+        wish.productName ? `*${wish.productName}*` : null,
+        wish.category ? `Category: ${wish.category}` : null,
+        wish.linePriceAed ? `Price: AED ${wish.linePriceAed}` : null,
+        wish.productUrl ? `Product: ${wish.productUrl}` : null,
+      ].filter(Boolean)
+      return {
+        blocks: [
+          {
+            type: 'header',
+            text: { type: 'plain_text', text: '♡ Added to wishlist', emoji: true },
+          },
+          {
+            type: 'section',
+            text: { type: 'mrkdwn', text: lines.join('\n') || 'Item saved to wishlist' },
+          },
+          {
+            type: 'section',
+            fields: [
               { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ],

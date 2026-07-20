@@ -39,6 +39,9 @@ import {
 import { formFieldErrorClass, formFieldOnDarkClass } from '@/lib/ui/formFieldClasses'
 import { tabbyMessage, tabbyRejectionMessage } from '@/lib/tabby/messages'
 import { normalizeTabbyPhone } from '@/lib/tabby/normalizePhone'
+import CheckoutPaymentRecoveryBanner, {
+  parsePaymentRecoveryFromSearchParams,
+} from '@/components/checkout/CheckoutPaymentRecoveryBanner'
 import { cartRequiresPhysicalShipping } from '@/lib/giftCards/cartDetection'
 import { resolveShippingEligibility } from '@/lib/pricing'
 import {
@@ -145,20 +148,10 @@ function CheckoutPageContent() {
   const amountDueNow = Math.max(0, Number((amountBeforeGiftCard - giftCredit).toFixed(2)))
   const giftCardCoversFull = Boolean(appliedGiftCard && amountDueNow <= 0)
 
-  const paymentReturnStatus = useMemo(() => {
-    const tabby = searchParams?.get('tabby')
-    const tamara = searchParams?.get('tamara')
-    const stripe = searchParams?.get('stripe')
-    const raw = tabby || tamara || stripe
-    if (raw === 'cancelled' || raw === 'canceled' || raw === 'failed') {
-      return {
-        kind: (raw === 'failed' ? 'failed' : 'cancelled') as 'failed' | 'cancelled',
-        provider: tabby ? 'tabby' : tamara ? 'tamara' : 'stripe',
-      }
-    }
-    return null
-  }, [searchParams])
-  const [paymentNoticeDismissed, setPaymentNoticeDismissed] = useState(false)
+  const paymentReturnStatus = useMemo(
+    () => parsePaymentRecoveryFromSearchParams(searchParams),
+    [searchParams],
+  )
 
   const lineKey = (item: (typeof items)[number]) =>
     `${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${item.customisationMessage ?? ''}`
@@ -771,55 +764,14 @@ function CheckoutPageContent() {
               {ui.checkout.reviewSubtitle}
             </p>
           </div>
-          {paymentReturnStatus && !paymentNoticeDismissed ? (
-            <div
-              className={`mt-5 rounded-[4px] border border-brand-stone/30 bg-white/80 px-4 py-4 ${
- 'text-start'
- }`}
-              role="status"
-            >
-              <p className="font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-dustyBlue">
-                {paymentReturnStatus.kind === 'failed'
-                  ? isRTL
-                    ? 'لم يكتمل الدفع'
-                    : 'Payment not completed'
-                  : isRTL
-                    ? 'تم إلغاء الدفع'
-                    : 'Payment cancelled'}
-              </p>
-              <p className="mt-2 font-montserrat text-sm leading-relaxed text-brand-clayRed/75">
-                {paymentReturnStatus.provider === 'tabby'
-                  ? paymentReturnStatus.kind === 'failed'
-                    ? tabbyMessage('generalReject', language)
-                    : tabbyMessage('cancelled', language)
-                  : paymentReturnStatus.kind === 'failed'
-                    ? isRTL
-                      ? 'يمكنك المحاولة مرة أخرى من هنا، أو العودة إلى السلة، أو التواصل معنا للتحويل البنكي.'
-                      : 'You can try again here, return to your bag, or message us for bank transfer.'
-                    : isRTL
-                      ? 'طلبك لا يزال في السلة. تابعي الدفع متى شئت، أو تواصلي معنا إذا احتجتِ مساعدة.'
-                      : 'Your selection is still in the bag. Continue when ready, or message us if you need help.'}
-              </p>
-              <div
-                className={`mt-3 flex flex-wrap gap-3 `}
-              >
-                <button
-                  type="button"
-                  onClick={() => setPaymentNoticeDismissed(true)}
-                  className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed underline-offset-4 hover:underline"
-                  data-cursor-hover
-                >
-                  {form.continueToPayment}
-                </button>
-                <LocaleLink
-                  href="/cart"
-                  className="font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue underline-offset-4 hover:underline"
-                  data-cursor-hover
-                >
-                  {ui.checkout.editBag}
-                </LocaleLink>
-              </div>
-            </div>
+          {paymentReturnStatus ? (
+            <CheckoutPaymentRecoveryBanner
+              status={paymentReturnStatus}
+              language={language}
+              continueLabel={form.continueToPayment}
+              editBagLabel={ui.checkout.editBag}
+              paymentSectionId="checkout-payment"
+            />
           ) : null}
         </div>
       </div>
@@ -960,7 +912,8 @@ function CheckoutPageContent() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08 }}
-                className={`relative overflow-hidden rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-6 text-brand-ivory shadow-xl sm:p-8 text-start`}
+                id="checkout-payment"
+                className={`relative scroll-mt-28 overflow-hidden rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-6 text-brand-ivory shadow-xl sm:p-8 text-start`}
               >
                 <div
                   className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent"

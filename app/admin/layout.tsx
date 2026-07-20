@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers, FiGift } from 'react-icons/fi'
+import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers, FiGift, FiSend } from 'react-icons/fi'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -49,6 +49,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {link('/admin/gift-cards', 'Gift cards', <FiGift className="h-4 w-4" />)}
             {link('/admin/customers', 'Customers', <FiUsers className="h-4 w-4" />)}
             {link('/admin/products', 'Catalog', <FiPackage className="h-4 w-4" />)}
+            {link('/admin/pr', 'PR', <FiSend className="h-4 w-4" />)}
             {link('/admin/dashboard', 'Analytics', <FiBarChart2 className="h-4 w-4" />)}
           </nav>
           <div className="border-t border-white/10 p-4">
@@ -77,6 +78,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 { href: '/admin/gift-cards', label: 'Gift cards' },
                 { href: '/admin/customers', label: 'Customers' },
                 { href: '/admin/products', label: 'Catalog' },
+                { href: '/admin/pr', label: 'PR' },
                 { href: '/admin/dashboard', label: 'Analytics' },
               ].map((item) => {
                 const active = path === item.href || path.startsWith(`${item.href}/`)

@@ -84,6 +84,27 @@ export async function notifyCartAddSlack(item: CartItem, quantityAdded: number):
   })
 }
 
+export async function notifyWishlistAddSlack(item: {
+  id: string
+  name: string
+  price: number
+  category?: string
+  href?: string
+}): Promise<void> {
+  if (typeof window === 'undefined') return
+  await postSlack('wishlist_add', {
+    ...visitorPayload(),
+    wishlistEvent: {
+      action: 'add',
+      productId: item.id,
+      productName: item.name,
+      linePriceAed: item.price,
+      category: item.category,
+      productUrl: item.href,
+    },
+  })
+}
+
 export function notifyAbandonedCartSlack(): void {
   if (typeof window === 'undefined') return
   if (sessionStorage.getItem(CHECKOUT_STARTED_KEY) === '1') return

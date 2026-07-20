@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
       currency,
       description: `Bint Saeed order ${orderRef}`,
       returnUrl: `${baseUrl}/checkout/success`,
-      cancelUrl: `${baseUrl}/checkout`,
+      cancelUrl: `${baseUrl}/checkout?paypal=cancelled`,
       customId: orderRef,
     })
 

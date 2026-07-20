@@ -25,11 +25,14 @@ export const useWishlistStore = create<WishlistStore>()(
       items: [],
       
       addItem: (item) => {
-        set((state) => {
-          const exists = state.items.some((i) => i.id === item.id)
-          if (exists) return state
-          return { items: [...state.items, item] }
-        })
+        const exists = get().items.some((i) => i.id === item.id)
+        if (exists) return
+        set((state) => ({ items: [...state.items, item] }))
+        if (typeof window !== 'undefined') {
+          queueMicrotask(() => {
+            void import('@/lib/analytics/cartSlack').then((m) => m.notifyWishlistAddSlack(item))
+          })
+        }
       },
       
       removeItem: (id) => {
