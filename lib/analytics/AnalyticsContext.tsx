@@ -14,6 +14,7 @@ import {
   persistFirstTouchAttribution,
   persistSessionStart,
 } from '@/lib/analytics/attributionStorage'
+import { shouldSuppressVisitorNoise } from '@/lib/analytics/staffOptics'
 
 interface VisitorData {
   visitorId: string
@@ -489,12 +490,21 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
   const sendSessionSummary = useCallback((reason: 'hidden' | 'pagehide') => {
     const current = visitorRef.current
     if (!current) return
+    if (shouldSuppressVisitorNoise({ visitorId: current.visitorId })) return
     const now = Date.now()
     if (current.totalTimeOnSite < 5) return
     if (now - lastSessionSummarySentAtRef.current < 30_000) return
     lastSessionSummarySentAtRef.current = now
 
     const latestPageView = current.pageViews[current.pageViews.length - 1]
+    if (
+      shouldSuppressVisitorNoise({
+        visitorId: current.visitorId,
+        currentPagePath: latestPageView?.path,
+      })
+    ) {
+      return
+    }
     sendSlackNotificationBeacon('session_summary', {
       ...current,
       browser: getBrowserContext(),

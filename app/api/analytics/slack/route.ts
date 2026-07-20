@@ -12,6 +12,7 @@ import {
   getGeoTrend,
 } from '@/lib/analytics/analyticsStore'
 import { getClientIpFromRequest, lookupGeoFromIp } from '@/lib/geo/ipGeoServer'
+import { shouldSuppressVisitorNoise, STAFF_VISITOR_IDS } from '@/lib/analytics/staffOptics'
 
 function normalizedWebhook(...values: Array<string | undefined>): string | undefined {
   for (const value of values) {
@@ -43,7 +44,7 @@ const VIP_VISITORS: { name: string; visitorIds: string[]; ipPatterns: string[] }
 
 // Exclude these from VIP - site owner, team, test devices (never trigger "Saeed is back")
 const EXCLUDE_FROM_VIP: { visitorIds: string[]; ipPatterns: string[] } = {
-  visitorIds: ['yyuaarsvulmmlwoi940'], // Your visitor ID from Slack
+  visitorIds: [...STAFF_VISITOR_IDS],
   ipPatterns: [], // Add your IP prefix here if needed, e.g. '2001:8f8:1621:695d'
 }
 
@@ -246,7 +247,13 @@ export async function POST(request: NextRequest) {
 
     // Slack delivery is best-effort: analytics is already persisted above, so a missing or
     // failing webhook must not drop the event or return an error to the client tracker.
-    const webhookUrl = resolveSlackWebhookForType(type)
+    const suppressSlack = shouldSuppressVisitorNoise({
+      visitorId: payload?.visitorId,
+      browserPath: payload?.browser?.path,
+      currentPagePath: payload?.currentPage?.path,
+      staffOptics: payload?.staffOptics,
+    })
+    const webhookUrl = suppressSlack ? undefined : resolveSlackWebhookForType(type)
     if (webhookUrl) {
       try {
         const message = formatSlackMessage(type, data)

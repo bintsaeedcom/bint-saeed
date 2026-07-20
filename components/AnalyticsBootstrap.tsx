@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { CONSENT_EVENT_NAME, getConsentState } from '@/lib/analytics/consent'
 import { notifyClarityLiveSlack } from '@/lib/analytics/clarityLiveSlack'
+import { isAdminBrowserPath, isStaffOpticsActive } from '@/lib/analytics/staffOptics'
 import {
   initializeAnalytics,
   trackEvent,
@@ -18,7 +19,7 @@ export default function AnalyticsBootstrap() {
   useEffect(() => {
     const initialConsent = getConsentState()
     initializeAnalytics(initialConsent)
-    if (initialConsent.analytics) {
+    if (initialConsent.analytics && !isStaffOpticsActive() && !isAdminBrowserPath()) {
       void notifyClarityLiveSlack()
     }
 
@@ -26,7 +27,7 @@ export default function AnalyticsBootstrap() {
       const detail = (event as CustomEvent).detail
       const consent = detail ?? getConsentState()
       updateAnalyticsConsent(consent)
-      if (consent.analytics) {
+      if (consent.analytics && !isStaffOpticsActive() && !isAdminBrowserPath()) {
         void notifyClarityLiveSlack()
       }
     }
@@ -35,7 +36,7 @@ export default function AnalyticsBootstrap() {
       if (!event.key || ['analyticsConsent', 'marketingConsent', 'cookieConsent'].includes(event.key)) {
         const consent = getConsentState()
         updateAnalyticsConsent(consent)
-        if (consent.analytics) {
+        if (consent.analytics && !isStaffOpticsActive() && !isAdminBrowserPath()) {
           void notifyClarityLiveSlack()
         }
       }
@@ -51,6 +52,7 @@ export default function AnalyticsBootstrap() {
 
   useEffect(() => {
     if (!pathname) return
+    if (isAdminBrowserPath(pathname) || isStaffOpticsActive()) return
     trackPageView(pathname)
   }, [pathname])
 

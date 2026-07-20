@@ -29,8 +29,7 @@ house voice only. Content and claims must come from the website / this repo
 5. `ops/pr/PITCH_TEMPLATES.md`
 6. `ops/pr/APPROVAL_PROTOCOL.md`
 7. `ops/pr/ledger/prospects.jsonl` (dedupe)
-8. `ops/pr/queue/REJECTED.md` (learn taste)
-9. `ops/pr/SOURCES_AND_SEEDS.md` + `ops/pr/seeds/public_desks.json` (starter desks — verify contacts live; never trust GitHub email dumps)
+8. `ops/pr/SOURCES_AND_SEEDS.md` + `ops/pr/seeds/public_desks.json` (starter desks — verify contacts live; never trust GitHub email dumps)
 
 ## Daily run procedure
 

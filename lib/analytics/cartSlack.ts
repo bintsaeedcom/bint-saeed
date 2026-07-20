@@ -1,9 +1,14 @@
 import type { CartItem } from '@/store/cartStore'
 import { lineTotalAed } from '@/lib/shopProductOptions'
+import { isStaffOpticsActive, shouldSuppressVisitorNoise } from '@/lib/analytics/staffOptics'
 
 const CART_STORAGE_KEY = 'bint-saeed-cart'
 const CHECKOUT_STARTED_KEY = 'bs_checkout_started'
 const ABANDON_NOTIFIED_KEY = 'bs_abandon_cart_notified'
+
+function suppressCartSlack(): boolean {
+  return shouldSuppressVisitorNoise() || isStaffOpticsActive()
+}
 
 export function markCheckoutStarted(): void {
   if (typeof window === 'undefined') return
@@ -65,6 +70,7 @@ async function postSlack(type: string, data: Record<string, unknown>, beacon = f
 
 export async function notifyCartAddSlack(item: CartItem, quantityAdded: number): Promise<void> {
   if (typeof window === 'undefined') return
+  if (suppressCartSlack()) return
   const { itemCount, cartValueAed } = cartSummary(readPersistedCartItems())
   await postSlack('cart_add', {
     ...visitorPayload(),
@@ -92,6 +98,7 @@ export async function notifyWishlistAddSlack(item: {
   href?: string
 }): Promise<void> {
   if (typeof window === 'undefined') return
+  if (suppressCartSlack()) return
   await postSlack('wishlist_add', {
     ...visitorPayload(),
     wishlistEvent: {
@@ -107,6 +114,7 @@ export async function notifyWishlistAddSlack(item: {
 
 export function notifyAbandonedCartSlack(): void {
   if (typeof window === 'undefined') return
+  if (suppressCartSlack()) return
   if (sessionStorage.getItem(CHECKOUT_STARTED_KEY) === '1') return
   if (sessionStorage.getItem(ABANDON_NOTIFIED_KEY) === '1') return
 

@@ -1,19 +1,30 @@
 'use client'
 
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers, FiGift, FiSend } from 'react-icons/fi'
+import { clearStaffOptics, markStaffOptics } from '@/lib/analytics/staffOptics'
+import { resumeExternalTrackersAfterStaff, suppressExternalTrackersForStaff } from '@/lib/analytics/tracking'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
   const path = pathname ?? ''
 
+  useEffect(() => {
+    if (path === '/admin/login' || path.startsWith('/admin/login/')) return
+    markStaffOptics()
+    suppressExternalTrackersForStaff()
+  }, [path])
+
   if (path === '/admin/login') {
     return <>{children}</>
   }
 
   const logout = async () => {
+    clearStaffOptics()
+    resumeExternalTrackersAfterStaff()
     await fetch('/api/admin/logout', { method: 'POST' })
     router.push('/admin/login')
     router.refresh()

@@ -2,6 +2,8 @@
 
 import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { markStaffOptics } from '@/lib/analytics/staffOptics'
+import { suppressExternalTrackersForStaff } from '@/lib/analytics/tracking'
 
 function AdminLoginForm() {
   const [password, setPassword] = useState('')
@@ -27,6 +29,8 @@ function AdminLoginForm() {
         setLoading(false)
         return
       }
+      markStaffOptics()
+      suppressExternalTrackersForStaff()
       router.push(next.startsWith('/admin') ? next : '/admin/orders')
       router.refresh()
     } catch {

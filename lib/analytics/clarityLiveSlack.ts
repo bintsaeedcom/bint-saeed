@@ -2,6 +2,8 @@
 
 import { getConsentState } from '@/lib/analytics/consent'
 
+import { isStaffOpticsActive } from '@/lib/analytics/staffOptics'
+
 const NOTIFIED_KEY = 'bs_clarity_slack_session'
 
 type ClarityMetadata = {
@@ -32,6 +34,7 @@ function readClarityMetadata(): Promise<ClarityMetadata | null> {
  */
 export async function notifyClarityLiveSlack(): Promise<void> {
   if (typeof window === 'undefined') return
+  if (isStaffOpticsActive()) return
   if (!getConsentState().analytics) return
   if (!process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID?.trim()) return
 

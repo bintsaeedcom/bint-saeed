@@ -2,6 +2,7 @@
 
 import { ConsentState } from '@/lib/analytics/consent'
 import { mirrorDashboardEngagement } from '@/lib/analytics/dashboardEngagement'
+import { isAdminBrowserPath, isStaffOpticsActive } from '@/lib/analytics/staffOptics'
 
 declare global {
   interface Window {
@@ -75,8 +76,21 @@ function initGa4() {
   state.gaReady = true
 }
 
+function applyClarityConsent(granted: boolean) {
+  if (typeof window === 'undefined' || !window.clarity) return
+  const storage = granted ? 'granted' : 'denied'
+  // Consent V2 is required when Clarity Consent Mode is on (and for EEA/UK/CH).
+  window.clarity('consentv2', {
+    ad_Storage: storage,
+    analytics_Storage: storage,
+  })
+  // Legacy fallback while older projects still accept the boolean API.
+  window.clarity('consent', granted)
+}
+
 function initClarity() {
   if (typeof window === 'undefined' || state.clarityReady) return
+  if (isStaffOpticsActive() || isAdminBrowserPath()) return
   const projectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID?.trim()
   if (!projectId) return
   ;(function init(c: Window, l: Document, a: string, r: string, i: string, t?: HTMLScriptElement) {
@@ -151,7 +165,7 @@ function applyConsentToTrackers() {
   }
 
   if (state.clarityReady && window.clarity) {
-    window.clarity('consent', granted)
+    applyClarityConsent(granted)
   }
 
   if (state.posthogReady && window.posthog) {
@@ -163,6 +177,27 @@ function applyConsentToTrackers() {
       window.posthog.opt_out_capturing()
     }
   }
+}
+
+/** Call after owner login so Clarity / PostHog stop recording house sessions. */
+export function suppressExternalTrackersForStaff() {
+  if (typeof window === 'undefined') return
+  if (state.clarityReady && window.clarity) {
+    applyClarityConsent(false)
+  }
+  if (state.posthogReady && window.posthog) {
+    window.posthog.set_config?.({ disable_session_recording: true })
+    window.posthog.opt_out_capturing()
+  }
+}
+
+/** After owner logout, allow Clarity again if analytics consent is already granted. */
+export function resumeExternalTrackersAfterStaff() {
+  if (typeof window === 'undefined' || !state.consent.analytics) return
+  if (isStaffOpticsActive() || isAdminBrowserPath()) return
+  initClarity()
+  initPosthog()
+  applyConsentToTrackers()
 }
 
 function flushPendingPageView() {
@@ -186,8 +221,10 @@ function scheduleTrackerInit() {
     state.trackerInitScheduled = false
     if (!state.consent.analytics || state.trackerInitComplete) return
     initGa4()
-    initClarity()
-    initPosthog()
+    if (!isStaffOpticsActive() && !isAdminBrowserPath()) {
+      initClarity()
+      initPosthog()
+    }
     state.trackerInitComplete = true
     applyConsentToTrackers()
     flushPendingPageView()
