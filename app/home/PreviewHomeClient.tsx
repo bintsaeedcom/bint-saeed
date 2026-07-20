@@ -1213,7 +1213,7 @@ function HeroSection() {
                 </motion.p>
               </motion.div>
 
-              <div className="relative z-30 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
+              <div className="relative z-30">
                 <MagneticWrap className="w-full sm:w-fit">
                   <LocaleLink
                     href="/shop"
@@ -1223,17 +1223,6 @@ function HeroSection() {
                     data-analytics-section="home-hero"
                   >
                     {t.hero.discoverCollection}
-                  </LocaleLink>
-                </MagneticWrap>
-                <MagneticWrap className="w-full sm:w-fit">
-                  <LocaleLink
-                    href="/about"
-                    className="inline-flex min-h-[46px] w-full items-center justify-center rounded-[4px] border border-[#e8d8c8]/45 bg-[#1a0810]/35 px-8 text-center font-montserrat text-[12px] font-medium uppercase tracking-[0.1em] !text-[#f2e5d8] no-underline shadow-[0_14px_34px_rgba(0,0,0,0.22)] backdrop-blur-md transition-colors duration-200 hover:border-[#f2e5d8]/70 hover:bg-[#1a0810]/50 hover:!text-[#fff4e6] sm:w-auto"
-                    data-cursor-hover
-                    data-analytics-event="click_nav_about"
-                    data-analytics-section="home-hero"
-                  >
-                    {copy.heroBrandStoryCta}
                   </LocaleLink>
                 </MagneticWrap>
               </div>

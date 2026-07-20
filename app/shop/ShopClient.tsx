@@ -41,6 +41,7 @@ import {
   PRODUCT_GRID_CTA_LINK_HOVER,
   PRODUCT_GRID_CTA_ROW,
 } from '@/lib/ui/productGridCtaRow'
+import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
 
 const CATEGORY_QUERY_MAP: Record<string, string> = {
   abayas: 'Abayas',
@@ -482,6 +483,27 @@ export default function ShopClient() {
             </div>
           </div>
         )}
+
+        {sortedProducts.length > 0 ? (
+          <aside
+            className="mt-16 border-t border-brand-stone/25 pt-12 text-center md:mt-20 md:pt-14"
+            aria-label={ui.cart.continueShopping}
+          >
+            <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-brand-dustyBlue">
+              {ui.shop.collectionEyebrow}
+            </p>
+            <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-brand-darkRed">
+              {ui.cart.continueShopping}
+            </h2>
+            <p className="mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/70">
+              {getKeepExploringLine(language, 'throughTheHouse')}
+            </p>
+            <DiscoverDestinationGrid
+              source="shop_keep_exploring"
+              className="mx-auto mt-8 max-w-4xl lg:!grid-cols-3"
+            />
+          </aside>
+        ) : null}
       </section>
 
       {quickBuyProduct ? (
