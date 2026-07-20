@@ -484,27 +484,31 @@ export default function ShopClient() {
           </div>
         )}
 
-        {sortedProducts.length > 0 ? (
-          <aside
-            className="mt-16 border-t border-brand-stone/25 pt-12 text-center md:mt-20 md:pt-14"
-            aria-label={ui.cart.continueShopping}
-          >
-            <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-brand-dustyBlue">
+      </section>
+
+      {sortedProducts.length > 0 ? (
+        <aside
+          className="border-t border-[#e8ddd4]/12 bg-[#1a0210] py-16 text-center md:py-20"
+          aria-label={ui.cart.continueShopping}
+        >
+          <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-14">
+            <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70">
               {ui.shop.collectionEyebrow}
             </p>
-            <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-brand-darkRed">
+            <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-[#e8ddd4]">
               {ui.cart.continueShopping}
             </h2>
-            <p className="mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/70">
+            <p className="mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-[#e8d8c8]/65">
               {getKeepExploringLine(language, 'throughTheHouse')}
             </p>
             <DiscoverDestinationGrid
               source="shop_keep_exploring"
+              tone="onDark"
               className="mx-auto mt-8 max-w-4xl lg:!grid-cols-3"
             />
-          </aside>
-        ) : null}
-      </section>
+          </div>
+        </aside>
+      ) : null}
 
       {quickBuyProduct ? (
         <QuickBuy

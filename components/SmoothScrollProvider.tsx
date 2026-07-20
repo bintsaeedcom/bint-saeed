@@ -48,6 +48,20 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
         overscroll: true,
       })
 
+      const syncOverlayPause = () => {
+        const navOpen = document.documentElement.dataset.mobileNavOpen === '1'
+        const scrollLocked = document.documentElement.classList.contains('bs-scroll-locked')
+        if (navOpen || scrollLocked) lenis.stop()
+        else lenis.start()
+      }
+      syncOverlayPause()
+
+      const overlayObserver = new MutationObserver(syncOverlayPause)
+      overlayObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-mobile-nav-open', 'class'],
+      })
+
       const onScroll = () => ScrollTrigger.update()
       lenis.on('scroll', onScroll)
 
@@ -65,6 +79,7 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
       window.addEventListener('resize', refresh)
 
       dispose = () => {
+        overlayObserver.disconnect()
         window.removeEventListener('resize', refresh)
         gsap.ticker.remove(raf)
         lenis.off('scroll', onScroll)

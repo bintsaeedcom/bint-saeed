@@ -17,17 +17,21 @@ type DiscoverDestinationGridProps = {
   className?: string
   /** Compact tiles for drawers / narrow columns */
   compact?: boolean
+  /** Match About / editorial dark surfaces (`#1a0210`) */
+  tone?: 'light' | 'onDark'
 }
 
 export default function DiscoverDestinationGrid({
   source,
   className = '',
   compact = false,
+  tone = 'light',
 }: DiscoverDestinationGridProps) {
   const pathname = usePathname()
   const { isRTL, language } = useLanguage()
   const copy = getCartEmptyDiscoverCopy(language)
   const destinations = filterOffCurrentPage(DISCOVER_DESTINATIONS, pathname)
+  const onDark = tone === 'onDark'
 
   return (
     <div
@@ -57,9 +61,9 @@ export default function DiscoverDestinationGrid({
             }
           >
             <div
-              className={`relative w-full overflow-hidden border border-brand-darkRed/10 bg-[#1a0210] aspect-[3/4] ${
- compact ? 'max-w-[11rem] mx-auto' : ''
- }`}
+              className={`relative w-full overflow-hidden bg-[#1a0210] aspect-[3/4] ${
+                onDark ? 'border border-[#e8ddd4]/18' : 'border border-brand-darkRed/10'
+              } ${compact ? 'max-w-[11rem] mx-auto' : ''}`}
             >
               <Image
                 src={dest.image}
@@ -75,7 +79,9 @@ export default function DiscoverDestinationGrid({
               />
             </div>
             <span
-              className={`mt-3 font-montserrat uppercase text-brand-dustyBlue/80 ${
+              className={`mt-3 font-montserrat uppercase ${
+                onDark ? 'text-[#e8d8c8]/70' : 'text-brand-dustyBlue/80'
+              } ${
  compact
  ? 'text-[8px] tracking-[0.14em]'
  : 'text-[9px] tracking-[0.16em] sm:text-[10px] sm:tracking-[0.18em]'
@@ -84,15 +90,15 @@ export default function DiscoverDestinationGrid({
               {hint}
             </span>
             <span
-              className={`mt-1.5 flex items-center justify-center gap-2 font-rozha leading-tight text-brand-darkRed ${
- compact ? 'text-[1.05rem]' : 'text-[1.15rem] sm:text-[1.3rem]'
- } `}
+              className={`mt-1.5 flex items-center justify-center gap-2 font-rozha leading-tight ${
+                onDark ? 'text-[#e8ddd4]' : 'text-brand-darkRed'
+              } ${compact ? 'text-[1.05rem]' : 'text-[1.15rem] sm:text-[1.3rem]'}`}
             >
               {dest.strandsLock ? <NoTranslate>{label}</NoTranslate> : label}
               <FiArrowRight
-                className={`h-3.5 w-3.5 shrink-0 text-brand-clayRed/70 transition-transform duration-300 sm:h-4 sm:w-4 ${
- isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'
- }`}
+                className={`h-3.5 w-3.5 shrink-0 transition-transform duration-300 sm:h-4 sm:w-4 ${
+                  onDark ? 'text-[#e8ddd4]/70' : 'text-brand-clayRed/70'
+                } ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`}
               />
             </span>
           </LocaleLink>

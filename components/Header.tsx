@@ -903,11 +903,14 @@ export default function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className={`fixed inset-0 z-[80] ${mobileMenuGradient}`}
+            className={`fixed inset-0 z-[80] flex flex-col ${mobileMenuGradient}`}
+            data-lenis-prevent
+            data-lenis-prevent-wheel
+            data-lenis-prevent-touch
           >
-            <div className="flex h-full flex-col">
+            <div className="flex min-h-0 flex-1 flex-col">
               {/* Header */}
-              <div className="flex items-center justify-between px-6 py-5">
+              <div className="flex shrink-0 items-center justify-between px-6 py-5">
                 {disableHomeLogoNavigation ? (
                   <div className="block">
                     <Image
@@ -944,7 +947,10 @@ export default function Header() {
               {/* Navigation + same destinations as desktop mega menu */}
               <div
                 ref={mobileNavScrollRef}
-                className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-8 [-webkit-overflow-scrolling:touch]"
+                className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 pb-8 [-webkit-overflow-scrolling:touch]"
+                data-lenis-prevent
+                data-lenis-prevent-wheel
+                data-lenis-prevent-touch
               >
                 {[shopNavItem, ...navItems].map((item, index) => {
                   const mega = megaMenus[item.href]
@@ -1004,6 +1010,9 @@ export default function Header() {
                                 exit={{ height: 0, opacity: 0 }}
                                 transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
                                 className="overflow-hidden"
+                                onAnimationComplete={() => {
+                                  scrollMobileSectionIntoView(item.href)
+                                }}
                               >
                                 <div
                                   className={`mb-3 px-1 pb-2 text-start`}
@@ -1062,7 +1071,7 @@ export default function Header() {
                                           data-cursor-hover
                                           data-analytics-section="header-mobile-nav"
                                         >
-                                          <div className="relative aspect-[4/5] overflow-hidden bg-white/5">
+                                          <div className="relative h-[min(32vh,180px)] overflow-hidden bg-white/5 sm:h-[min(36vh,220px)]">
                                             <Image
                                               src={feature.image}
                                               alt=""
@@ -1116,39 +1125,39 @@ export default function Header() {
               </div>
 
               {/* Footer — safe-area inset above home indicator / browser chrome */}
-              <div className="border-t border-white/10 px-6 pb-[max(1.75rem,env(safe-area-inset-bottom,0px))] pt-5">
-                <div className="flex items-center gap-5">
+              <div className="shrink-0 border-t border-white/10 px-6 pb-[max(1.75rem,env(safe-area-inset-bottom,0px))] pt-5">
+                <div className="flex items-center gap-1">
                   <LocaleLink
                     href="/wishlist"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="relative text-white/70 transition-colors hover:text-white"
+                    className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center text-white/70 transition-colors hover:text-white"
                     data-cursor-hover
                     aria-label={hn.wishlist}
                   >
-                    <span className="relative inline-flex leading-none">
-                      <FiHeart className="h-6 w-6" />
-                      {wishlistCount > 0 ? (
-                        <span className="absolute -end-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-dustyBlue px-1 font-montserrat text-[9px] font-semibold text-[#1a0008]">
-                          {wishlistCount > 9 ? '9+' : wishlistCount}
-                        </span>
-                      ) : null}
-                    </span>
+                    <FiHeart className="h-6 w-6 shrink-0" aria-hidden />
+                    {wishlistCount > 0 ? (
+                      <span className="pointer-events-none absolute end-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-dustyBlue px-1 font-montserrat text-[9px] font-semibold leading-none text-[#1a0008]">
+                        {wishlistCount > 9 ? '9+' : wishlistCount}
+                      </span>
+                    ) : null}
                   </LocaleLink>
                   <LocaleLink
                     href="/cart"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-white/70 transition-colors hover:text-white"
+                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center text-white/70 transition-colors hover:text-white"
                     data-cursor-hover
+                    aria-label={t.nav.cart}
                   >
-                    <FiShoppingBag className="w-6 h-6" />
+                    <FiShoppingBag className="h-6 w-6 shrink-0" aria-hidden />
                   </LocaleLink>
                   <LocaleLink
                     href="/account"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-white/70 transition-colors hover:text-white"
+                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center text-white/70 transition-colors hover:text-white"
                     data-cursor-hover
+                    aria-label={t.nav.account}
                   >
-                    <FiUser className="w-6 h-6" />
+                    <FiUser className="h-6 w-6 shrink-0" aria-hidden />
                   </LocaleLink>
                 </div>
               </div>

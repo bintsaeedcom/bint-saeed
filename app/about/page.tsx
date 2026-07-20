@@ -131,7 +131,7 @@ function ReelFrame({
   )
 }
 
-/** Matches Craftsmanship PhaseProse chapter text treatment. */
+/** Continuous chapter prose — index + eyebrow, title, and copy share one left edge. */
 function ChapterProse({
   index,
   label,
@@ -140,6 +140,7 @@ function ChapterProse({
   paragraphs,
   tone = 'light',
   sticky = false,
+  children,
 }: {
   index: number
   label: string
@@ -148,51 +149,41 @@ function ChapterProse({
   paragraphs: string[]
   tone?: 'light' | 'onDark' | 'onBurgundy'
   sticky?: boolean
+  children?: ReactNode
 }) {
-  const { isRTL } = useLanguage()
   const onDark = tone === 'onDark' || tone === 'onBurgundy'
   const indexColor = onDark ? 'text-[#e8d8c8]/85' : 'text-brand-dustyBlue'
   const labelColor = onDark ? 'text-[#f0e6dc]' : 'text-brand-dustyBlue'
   const titleColor = onDark ? 'text-[#f7f1ea]' : 'text-brand-darkRed'
   const bodyColor = onDark ? 'text-[#f0e6dc]/92' : 'text-brand-darkRed/[0.88]'
-  const ruleColor = onDark ? 'border-[#e8ddd4]/28' : 'border-[#6f1524]/35'
   const stickyClass = sticky
     ? 'lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)]'
     : ''
 
   return (
     <div className={`relative z-10 max-w-xl ${stickyClass} text-start`}>
-      <div className={`flex items-baseline gap-4 `}>
-        <span className={`shrink-0 font-montserrat text-[10px] uppercase tracking-[0.22em] ${indexColor}`}>
-          {String(index).padStart(2, '0')}
-        </span>
-        <div className="min-w-0">
-          <p className={`mb-3 font-montserrat text-[10px] uppercase tracking-[0.42em] ${labelColor}`}>
-            {label}
-          </p>
-          <h2
-            id={headingId}
-            className={`font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] ${titleColor}`}
-          >
-            {title}
-          </h2>
-        </div>
-      </div>
+      <p className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1 font-montserrat text-[10px] uppercase">
+        <span className={`tracking-[0.22em] ${indexColor}`}>{String(index).padStart(2, '0')}</span>
+        <span className={`tracking-[0.42em] ${labelColor}`}>{label}</span>
+      </p>
+      <h2
+        id={headingId}
+        className={`font-rozha text-[clamp(1.85rem,3.6vw,2.65rem)] leading-[1.05] tracking-[0.02em] ${titleColor}`}
+      >
+        {title}
+      </h2>
 
-      <ol className="mt-10 space-y-0 md:mt-12">
-        {paragraphs.map((paragraph) => (
-          <li
-            key={paragraph.slice(0, 40)}
-            className={`border-t ${ruleColor} py-6 first:border-t first:pt-6 md:py-7`}
+      <div className={`mt-10 space-y-5 md:mt-12 md:space-y-6 ${bodyColor}`}>
+        {paragraphs.map((paragraph, i) => (
+          <p
+            key={`${headingId}-${i}`}
+            className="font-montserrat text-[15px] font-normal leading-[1.95] tracking-[0.02em] md:text-[16px] md:leading-[2]"
           >
-            <p
-              className={`font-montserrat text-[15px] font-normal leading-[1.95] tracking-[0.02em] md:text-[16px] md:leading-[2] ${bodyColor}`}
-            >
-              {paragraph}
-            </p>
-          </li>
+            {paragraph}
+          </p>
         ))}
-      </ol>
+      </div>
+      {children ? <div className="mt-8">{children}</div> : null}
     </div>
   )
 }
@@ -298,7 +289,7 @@ export default function AboutPage() {
       </section>
 
       <section
-        className={`about-fabric-light z-30 overflow-hidden bg-[#7A1C28] ${ABOUT_STACK_PAD} ${ABOUT_STACK_CARD}`}
+        className={`relative z-30 overflow-hidden bg-[#7A1C28] ${ABOUT_STACK_PAD} ${ABOUT_STACK_CARD}`}
       >
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${ABOUT_STACK_CONTENT_PAD}`}>
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
@@ -327,14 +318,15 @@ export default function AboutPage() {
                 paragraphs={copy.houseParagraphs}
                 tone="onBurgundy"
                 sticky
-              />
-              <LocaleLink
-                href="/the-codes"
-                className={`mt-8 inline-flex ${ctaPrimarySoft}`}
-                data-cursor-hover
               >
-                {copy.ctaOurStoryInCodes}
-              </LocaleLink>
+                <LocaleLink
+                  href="/the-codes"
+                  className={`inline-flex ${ctaPrimarySoft}`}
+                  data-cursor-hover
+                >
+                  {copy.ctaOurStoryInCodes}
+                </LocaleLink>
+              </ChapterProse>
             </div>
           </div>
         </div>
@@ -403,27 +395,6 @@ export default function AboutPage() {
         .about-manifesto::after {
           z-index: 1;
           background: rgba(26, 2, 16, 0.55);
-        }
-
-        .about-fabric-light::before,
-        .about-fabric-light::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-        }
-
-        .about-fabric-light::before {
-          z-index: 0;
-          background-image: url('/strands/charm-fabric-light.webp');
-          background-position: center;
-          background-size: cover;
-          opacity: 0.18;
-        }
-
-        .about-fabric-light::after {
-          z-index: 1;
-          background: rgba(26, 2, 16, 0.58);
         }
 
         .closing-section {
