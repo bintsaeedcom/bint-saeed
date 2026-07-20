@@ -982,7 +982,7 @@ export default function ProductPage() {
             )}
 
             {showPersonalisation && (
-              <div className="mb-3 border-b border-brand-stone/20 pb-3">
+              <div id="personalisation-section" className="mb-3 border-b border-brand-stone/20 pb-3">
                 <h2 className="mb-2 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
                   {ui.personalisation.title}
                 </h2>
@@ -1236,6 +1236,7 @@ export default function ProductPage() {
             ? customisationMessage.trim()
             : undefined
         }
+        customisationRequired={Boolean(showPersonalisation && customisationActive)}
       />
     </div>
   )

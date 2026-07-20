@@ -8,6 +8,7 @@ import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
+import { productPageUi } from '@/lib/i18n/productPageUi'
 import { localizedColorName } from '@/lib/products/imageAltI18n'
 import { getProductHref } from '@/lib/products/links'
 import toast from 'react-hot-toast'
@@ -33,6 +34,8 @@ interface StickyAddToCartProps {
   customLength?: string
   notes?: string
   customisationMessage?: string
+  /** When personalisation is toggled on, sticky ATC must require text (matches PDP). */
+  customisationRequired?: boolean
   /** Fallback scroll distance if the primary ATC node is missing */
   showThreshold?: number
 }
@@ -49,6 +52,7 @@ export default function StickyAddToCart({
   customLength,
   notes,
   customisationMessage,
+  customisationRequired = false,
   showThreshold = 480,
 }: StickyAddToCartProps) {
   const [mounted, setMounted] = useState(false)
@@ -59,6 +63,7 @@ export default function StickyAddToCart({
   const { formatPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
+  const pdpUi = productPageUi(language)
 
   useEffect(() => {
     setMounted(true)
@@ -120,6 +125,11 @@ export default function StickyAddToCart({
       document.getElementById('color-selection')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
+    if (customisationRequired && !customisationMessage?.trim()) {
+      toast.error(pdpUi.personalisation.emptyError)
+      document.getElementById('personalisation-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
 
     addItem({
       id: product.id,
@@ -132,7 +142,7 @@ export default function StickyAddToCart({
       quantity,
       customLength,
       notes,
-      customisationMessage: customisationMessage || undefined,
+      customisationMessage: customisationMessage?.trim() || undefined,
       sku: product.sku,
     })
 

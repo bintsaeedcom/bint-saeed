@@ -54,29 +54,41 @@ function migrateAccessoryProductUrl(productUrl: string | undefined): string | un
   return resolved === legacyMatch[1] ? productUrl : productUrl.replace(legacyMatch[1]!, resolved)
 }
 
+export type SanitizePersistedCartResult = {
+  items: CartItem[]
+  removedCount: number
+}
+
 /** Drop stale test-cart lines and refresh name/image/price from the live catalog. */
-export function sanitizePersistedCart(items: CartItem[]): CartItem[] {
-  return items
-    .map((item) => {
-      // Digital gift cards are not RTW catalog SKUs — keep as stored.
-      if (item.id.startsWith('gift-card-')) {
-        return item
-      }
+export function sanitizePersistedCartWithMeta(items: CartItem[]): SanitizePersistedCartResult {
+  const next: CartItem[] = []
+  let removedCount = 0
+  for (const item of items) {
+    if (item.id.startsWith('gift-card-')) {
+      next.push(item)
+      continue
+    }
 
-      const catalog = resolveCatalogLine(item.id) ?? resolveCatalogLineFromUrl(item.productUrl)
-      if (!catalog) return null
-      const canonicalId = resolveAccessoryId(item.id)
+    const catalog = resolveCatalogLine(item.id) ?? resolveCatalogLineFromUrl(item.productUrl)
+    if (!catalog) {
+      removedCount += 1
+      continue
+    }
+    const canonicalId = resolveAccessoryId(item.id)
+    const migratedUrl = migrateAccessoryProductUrl(item.productUrl)
 
-      const migratedUrl = migrateAccessoryProductUrl(item.productUrl)
-
-      return {
-        ...item,
-        id: canonicalId,
-        name: catalog.name,
-        price: catalog.price,
-        image: item.image?.trim() ? item.image : catalog.image,
-        ...(migratedUrl !== item.productUrl ? { productUrl: migratedUrl } : {}),
-      }
+    next.push({
+      ...item,
+      id: canonicalId,
+      name: catalog.name,
+      price: catalog.price,
+      image: item.image?.trim() ? item.image : catalog.image,
+      ...(migratedUrl !== item.productUrl ? { productUrl: migratedUrl } : {}),
     })
-    .filter((item): item is CartItem => item !== null)
+  }
+  return { items: next, removedCount }
+}
+
+export function sanitizePersistedCart(items: CartItem[]): CartItem[] {
+  return sanitizePersistedCartWithMeta(items).items
 }

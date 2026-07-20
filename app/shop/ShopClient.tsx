@@ -159,9 +159,9 @@ export default function ShopClient() {
     if (typeof window !== 'undefined' && window.history.length > 1) {
       router.back()
     } else {
-      router.push('/shop')
+      router.push(localize('/shop'))
     }
-  }, [router])
+  }, [localize, router])
 
   const filteredProducts = useMemo(() => {
     if (activeCategory === 'All') return [...catalog]

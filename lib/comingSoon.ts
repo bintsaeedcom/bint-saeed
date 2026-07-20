@@ -49,6 +49,15 @@ function isInnerPathAllowlistedDuringComingSoon(normalizedInner: string): boolea
 
   if (normalizedInner === '/cart' || normalizedInner.startsWith('/cart/')) return true
   if (normalizedInner === '/checkout' || normalizedInner.startsWith('/checkout/')) return true
+  if (normalizedInner === '/wishlist' || normalizedInner.startsWith('/wishlist/')) return true
+  if (normalizedInner === '/personalisation' || normalizedInner.startsWith('/personalisation/')) {
+    return true
+  }
+  if (normalizedInner === '/giving-forward' || normalizedInner.startsWith('/giving-forward/')) {
+    return true
+  }
+  if (normalizedInner === '/size-guide' || normalizedInner.startsWith('/size-guide/')) return true
+  if (normalizedInner === '/heritage' || normalizedInner.startsWith('/heritage/')) return true
 
   if (normalizedInner === '/faq' || normalizedInner.startsWith('/faq/')) return true
   if (normalizedInner === '/terms' || normalizedInner.startsWith('/terms/')) return true

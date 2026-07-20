@@ -113,7 +113,7 @@ function CheckoutPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { localize } = useLocaleHref()
-  const { items } = useCartStore()
+  const { items, hasHydrated } = useCartStore()
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
@@ -245,10 +245,11 @@ function CheckoutPageContent() {
     : availableRails[0] ?? null
 
   useEffect(() => {
+    if (!hasHydrated) return
     if (items.length === 0) {
       router.replace(localize('/cart'))
     }
-  }, [items.length, localize, router])
+  }, [hasHydrated, items.length, localize, router])
 
   useEffect(() => {
     setAppliedGiftCard(null)
@@ -285,12 +286,15 @@ function CheckoutPageContent() {
       window.removeEventListener('resize', publish)
       clearMobileBottomChrome('checkout-bar')
     }
-  }, [stripeEmbedded, items.length, amountDueNow, payBusy, giftCardCoversFull, activeRail, checkoutEnvReady, tabbyEligible, language])
+  }, [stripeEmbedded, items.length, amountDueNow, payBusy, giftCardCoversFull, activeRail, checkoutEnvReady, tabbyEligible, tamaraEligible, language])
 
   const payCtaDisabled =
     payBusy ||
     (!giftCardCoversFull &&
-      (!checkoutEnvReady || !activeRail || (activeRail === 'tabby' && !tabbyEligible)))
+      (!checkoutEnvReady ||
+        !activeRail ||
+        (activeRail === 'tabby' && !tabbyEligible) ||
+        (activeRail === 'tamara' && !tamaraEligible)))
 
   useEffect(() => {
     if (!['AED', 'SAR', 'KWD'].includes(currency.code)) {
@@ -727,6 +731,14 @@ function CheckoutPageContent() {
     }
   }
 
+  if (!hasHydrated) {
+    return (
+      <div className={`flex min-h-screen items-center justify-center bg-brand-pageCanvas font-montserrat text-brand-clayRed ${SITE_CONTENT_TOP_PAD}`}>
+        {form.loadingCheckout}
+      </div>
+    )
+  }
+
   if (items.length === 0) {
     return (
       <div className={`flex min-h-screen items-center justify-center bg-brand-pageCanvas font-montserrat text-brand-clayRed ${SITE_CONTENT_TOP_PAD}`}>
@@ -736,7 +748,7 @@ function CheckoutPageContent() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas">
+    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-[calc(var(--mobile-bottom-chrome,0px)+1.5rem)] lg:pb-0">
       <div className="border-b border-brand-stone/20 bg-brand-pageCanvas">
         <div className={`container mx-auto min-w-0 px-4 pb-4 ${SITE_CONTENT_TOP_PAD} sm:px-6 sm:pb-6 lg:px-12`}>
           <AppPageWayfinding

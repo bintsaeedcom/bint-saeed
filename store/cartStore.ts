@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { sanitizePersistedCart } from '@/lib/cart/sanitizePersistedCart'
+import { sanitizePersistedCartWithMeta } from '@/lib/cart/sanitizePersistedCart'
 import { lineTotalAed } from '@/lib/shopProductOptions'
 
 export interface CartItem {
@@ -54,6 +54,8 @@ function sameCartLine(
 
 interface CartStore {
   items: CartItem[]
+  /** False until persist has finished reading localStorage (avoids empty-cart checkout bounce). */
+  hasHydrated: boolean
   addItem: (item: CartItem) => void
   removeItem: (id: string, size: string, color: string, lengthCm?: string, customisationMessage?: string) => void
   updateQuantity: (
@@ -72,6 +74,7 @@ export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
+      hasHydrated: false,
 
       addItem: (item) => {
         const quantityAdded = item.quantity
@@ -128,9 +131,33 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'bint-saeed-cart',
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ items: state.items }),
       onRehydrateStorage: () => (state) => {
-        if (!state) return
-        state.items = sanitizePersistedCart(state.items)
+        const finish = (items: CartItem[] | undefined, removedCount: number) => {
+          useCartStore.setState({
+            items: items ?? [],
+            hasHydrated: true,
+          })
+          if (removedCount > 0 && typeof window !== 'undefined') {
+            queueMicrotask(() => {
+              void import('react-hot-toast').then(({ default: toast }) => {
+                toast(
+                  removedCount === 1
+                    ? 'One piece in your bag is no longer available and was removed.'
+                    : `${removedCount} pieces in your bag are no longer available and were removed.`,
+                  { id: 'cart-sanitize-removed', duration: 4200 },
+                )
+              })
+            })
+          }
+        }
+
+        if (!state) {
+          finish([], 0)
+          return
+        }
+        const { items, removedCount } = sanitizePersistedCartWithMeta(state.items)
+        finish(items, removedCount)
       },
     }
   )

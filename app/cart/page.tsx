@@ -29,7 +29,7 @@ import {
 import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
 
 export default function CartPage() {
-  const { items, removeItem, updateQuantity } = useCartStore()
+  const { items, removeItem, updateQuantity, hasHydrated } = useCartStore()
   const mobileBarRef = useRef<HTMLDivElement | null>(null)
   const productHref = (item: (typeof items)[number]) =>
     item.productUrl ?? getProductHref(staticProducts.find((product) => product.id === item.id) ?? { id: item.id, name: item.name })
@@ -91,6 +91,14 @@ export default function CartPage() {
       clearMobileBottomChrome('cart-bar')
     }
   }, [items.length])
+
+  if (!hasHydrated) {
+    return (
+      <div className={`flex min-h-screen items-center justify-center bg-brand-pageCanvas font-montserrat text-brand-clayRed/70 ${SITE_CONTENT_TOP_PAD}`}>
+        {ui.checkout.redirecting}
+      </div>
+    )
+  }
 
   if (items.length === 0) {
     const emptyCopy = getCartEmptyDiscoverCopy(language)

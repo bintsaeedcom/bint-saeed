@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { FiX } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { localizedPath, type AppLocale } from '@/lib/i18n/routing'
 import { getWhatsAppChrome, getWhatsAppTopics } from '@/lib/i18n/whatsappChromeI18n'
 import {
   glassOverlayPanel,
@@ -114,7 +115,7 @@ export default function WhatsAppButton() {
       window.open(href, '_blank', 'noopener,noreferrer')
       return
     }
-    window.location.href = '/contact'
+    window.location.assign(localizedPath(language as AppLocale, '/contact'))
   }
 
   const bubbleInner = (

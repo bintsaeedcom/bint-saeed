@@ -240,7 +240,7 @@ export async function POST(request: NextRequest) {
       shippingAddress,
       description: `Bint Saeed order ${orderRef}`,
       merchantUrls: {
-        success: `${baseUrl}/checkout/success?provider=tabby`,
+        success: `${baseUrl}/checkout/success?provider=tabby&order_ref=${encodeURIComponent(orderRef)}`,
         cancel: `${baseUrl}/checkout?tabby=cancelled`,
         failure: `${baseUrl}/checkout?tabby=failed`,
       },

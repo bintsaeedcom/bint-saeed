@@ -33,6 +33,8 @@ import {
   pdpColourSwatchState,
 } from '@/lib/ui/pdpColourSwatch'
 import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
+import { localizedPath } from '@/lib/i18n/routing'
+import type { AppLocale } from '@/lib/i18n/routing'
 
 /** Dense ivory glass — readable over commerce grids */
 const sheetClass =
@@ -186,7 +188,8 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
   const handleBuyNow = () => {
     if (!validate()) return
     addItem(buildLine())
-    window.location.href = '/checkout'
+    onClose()
+    window.location.assign(localizedPath(language as AppLocale, '/checkout'))
   }
 
   if (!mounted) return null

@@ -17,7 +17,11 @@ export type PaymentRecoveryStatus = {
   provider: PaymentRecoveryProvider
 }
 
-const SESSION_DISMISS_KEY = 'bs_checkout_payment_recovery_dismissed'
+const SESSION_DISMISS_PREFIX = 'bs_checkout_payment_recovery_dismissed:'
+
+function dismissKeyFor(status: PaymentRecoveryStatus): string {
+  return `${SESSION_DISMISS_PREFIX}${status.provider}:${status.kind}`
+}
 
 const PROVIDER_DISPLAY: Record<PaymentRecoveryProvider, string> = {
   tabby: 'Tabby',
@@ -57,13 +61,17 @@ export default function CheckoutPaymentRecoveryBanner({
   useEffect(() => {
     setMounted(true)
     try {
-      if (sessionStorage.getItem(SESSION_DISMISS_KEY) === '1') {
+      if (sessionStorage.getItem(dismissKeyFor(status)) === '1') {
         setDismissed(true)
+      } else {
+        setDismissed(false)
       }
     } catch {
       /* private mode */
     }
-  }, [])
+    trackedRef.current = false
+    scrolledRef.current = false
+  }, [status.kind, status.provider])
 
   useEffect(() => {
     if (!mounted || dismissed || trackedRef.current) return
@@ -107,7 +115,7 @@ export default function CheckoutPaymentRecoveryBanner({
   const dismiss = () => {
     setDismissed(true)
     try {
-      sessionStorage.setItem(SESSION_DISMISS_KEY, '1')
+      sessionStorage.setItem(dismissKeyFor(status), '1')
     } catch {
       /* private mode */
     }

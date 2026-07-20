@@ -5,7 +5,7 @@
 const heights = new Map<string, number>()
 
 /** Commerce CTAs that must never sit under WhatsApp. */
-const COMMERCE_CHROME_IDS = new Set(['cart-bar', 'sticky-atc'])
+const COMMERCE_CHROME_IDS = new Set(['cart-bar', 'sticky-atc', 'checkout-bar'])
 
 function syncCssVar() {
   if (typeof document === 'undefined') return

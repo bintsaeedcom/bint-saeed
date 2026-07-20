@@ -4,6 +4,10 @@ export type CheckoutSuccessCopy = {
   breadcrumb: string
   title: string
   subtitle: string
+  confirmingTitle?: string
+  confirmingSubtitle?: string
+  pendingTitle?: string
+  pendingSubtitle?: string
   sessionReference: string
   keepExploring: string
   keepExploringBody: string
@@ -11,10 +15,17 @@ export type CheckoutSuccessCopy = {
   stayCloseHint: string
 }
 
+export type CheckoutSuccessCopyResolved = Required<CheckoutSuccessCopy>
+
 const EN: CheckoutSuccessCopy = {
   breadcrumb: 'Order confirmed',
   title: 'Order Confirmed',
   subtitle: 'Thank you for your order. You will receive a confirmation email shortly.',
+  confirmingTitle: 'Confirming your order',
+  confirmingSubtitle: 'Please wait a moment while we verify your payment.',
+  pendingTitle: 'Payment received',
+  pendingSubtitle:
+    'If you completed payment, a confirmation email is on its way. Keep this page open briefly, or check your inbox.',
   sessionReference: 'Order reference',
   keepExploring: 'While you wait',
   keepExploringBody: 'Explore the pieces that carry the Bint Saeed story forward.',
@@ -143,17 +154,37 @@ const MS: CheckoutSuccessCopy = {
   stayCloseHint: 'Keluaran peribadi, nota penjagaan dan bab baharu — melalui e-mel, hanya apabila penting.',
 }
 
-export function getCheckoutSuccessCopy(locale: AppLocale | string): CheckoutSuccessCopy {
-  if (locale === 'ar') return AR
-  if (locale === 'fr') return FR
-  if (locale === 'it') return IT
-  if (locale === 'de') return DE
-  if (locale === 'nl') return NL
-  if (locale === 'pt') return PT
-  if (locale === 'es') return ES
-  if (locale === 'ru') return RU
-  if (locale === 'zh') return ZH
-  if (locale === 'id') return ID
-  if (locale === 'ms') return MS
-  return EN
+export function getCheckoutSuccessCopy(locale: AppLocale | string): CheckoutSuccessCopyResolved {
+  const pack =
+    locale === 'ar'
+      ? AR
+      : locale === 'fr'
+        ? FR
+        : locale === 'it'
+          ? IT
+          : locale === 'de'
+            ? DE
+            : locale === 'nl'
+              ? NL
+              : locale === 'pt'
+                ? PT
+                : locale === 'es'
+                  ? ES
+                  : locale === 'ru'
+                    ? RU
+                    : locale === 'zh'
+                      ? ZH
+                      : locale === 'id'
+                        ? ID
+                        : locale === 'ms'
+                          ? MS
+                          : EN
+  return {
+    ...EN,
+    ...pack,
+    confirmingTitle: pack.confirmingTitle ?? EN.confirmingTitle!,
+    confirmingSubtitle: pack.confirmingSubtitle ?? EN.confirmingSubtitle!,
+    pendingTitle: pack.pendingTitle ?? EN.pendingTitle!,
+    pendingSubtitle: pack.pendingSubtitle ?? EN.pendingSubtitle!,
+  }
 }

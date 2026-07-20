@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, Suspense, useRef } from 'react'
+import { useEffect, Suspense, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -17,6 +17,8 @@ import { useCartStore } from '@/store/cartStore'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { consumeCheckoutSnapshot } from '@/lib/analytics/checkoutSnapshot'
 
+type ConfirmState = 'confirming' | 'confirmed' | 'pending'
+
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
   const { isRTL, language } = useLanguage()
@@ -26,6 +28,7 @@ function CheckoutSuccessContent() {
   const paymentId = searchParams?.get('payment_id')
   const paypalToken = searchParams?.get('token')
   const provider = searchParams?.get('provider')
+  const orderRef = searchParams?.get('order_ref')
   const giftCardOrderId =
     provider === 'gift_card'
       ? searchParams?.get('order_id') || searchParams?.get('orderId')
@@ -42,31 +45,54 @@ function CheckoutSuccessContent() {
       : searchParams?.get('tabby_payment_id')
   const clearCart = useCartStore((state) => state.clearCart)
   const trackedPurchase = useRef(false)
+  const [confirmState, setConfirmState] = useState<ConfirmState>(() =>
+    sessionId || giftCardOrderId ? 'confirmed' : 'confirming',
+  )
+
+  const referenceId =
+    sessionId ||
+    paymentId ||
+    paypalToken ||
+    giftCardOrderId ||
+    tamaraOrderId ||
+    tabbyPaymentId ||
+    orderRef
 
   useEffect(() => {
-    const referenceId =
-      sessionId || paymentId || paypalToken || giftCardOrderId || tamaraOrderId || tabbyPaymentId
-    if (!referenceId || trackedPurchase.current) return
-    trackedPurchase.current = true
+    if (!referenceId) {
+      setConfirmState('pending')
+      return
+    }
 
-    const snapshot = consumeCheckoutSnapshot()
-    trackEvent('purchase', {
-      transaction_id: referenceId,
-      session_id: sessionId ?? undefined,
-      payment_id: paymentId ?? undefined,
-      paypal_token: paypalToken ?? undefined,
-      tamara_order_id: tamaraOrderId ?? undefined,
-      tabby_payment_id: tabbyPaymentId ?? undefined,
-      gift_card_order_id: giftCardOrderId ?? undefined,
-      currency: snapshot?.currency,
-      value: snapshot?.value,
-      items: snapshot?.items,
-    })
+    if (!trackedPurchase.current) {
+      trackedPurchase.current = true
+      const snapshot = consumeCheckoutSnapshot()
+      trackEvent('purchase', {
+        transaction_id: referenceId,
+        session_id: sessionId ?? undefined,
+        payment_id: paymentId ?? undefined,
+        paypal_token: paypalToken ?? undefined,
+        tamara_order_id: tamaraOrderId ?? undefined,
+        tabby_payment_id: tabbyPaymentId ?? undefined,
+        gift_card_order_id: giftCardOrderId ?? undefined,
+        order_ref: orderRef ?? undefined,
+        currency: snapshot?.currency,
+        value: snapshot?.value,
+        items: snapshot?.items,
+      })
+    }
 
     if (sessionId || giftCardOrderId) {
       clearCart()
+      setConfirmState('confirmed')
       return
     }
+
+    const markPaid = () => {
+      clearCart()
+      setConfirmState('confirmed')
+    }
+    const markPending = () => setConfirmState('pending')
 
     if (tamaraOrderId) {
       void fetch(
@@ -74,11 +100,10 @@ function CheckoutSuccessContent() {
       )
         .then((response) => response.json())
         .then((data: { paid?: boolean }) => {
-          if (data.paid) clearCart()
+          if (data.paid) markPaid()
+          else markPending()
         })
-        .catch(() => {
-          /* webhook may still complete the order */
-        })
+        .catch(markPending)
       return
     }
 
@@ -88,11 +113,10 @@ function CheckoutSuccessContent() {
       )
         .then((response) => response.json())
         .then((data: { paid?: boolean }) => {
-          if (data.paid) clearCart()
+          if (data.paid) markPaid()
+          else markPending()
         })
-        .catch(() => {
-          /* webhook may still complete the order */
-        })
+        .catch(markPending)
       return
     }
 
@@ -104,11 +128,10 @@ function CheckoutSuccessContent() {
       })
         .then((response) => response.json())
         .then((data: { paid?: boolean }) => {
-          if (data.paid) clearCart()
+          if (data.paid) markPaid()
+          else markPending()
         })
-        .catch(() => {
-          /* webhook may still complete the order */
-        })
+        .catch(markPending)
       return
     }
 
@@ -116,13 +139,44 @@ function CheckoutSuccessContent() {
       void fetch(`/api/payments/mollie/status?payment_id=${encodeURIComponent(paymentId)}`)
         .then((response) => response.json())
         .then((data: { paid?: boolean }) => {
-          if (data.paid) clearCart()
+          if (data.paid) markPaid()
+          else markPending()
         })
-        .catch(() => {
-          /* webhook may still complete the order */
-        })
+        .catch(markPending)
+      return
     }
-  }, [sessionId, paymentId, paypalToken, giftCardOrderId, tamaraOrderId, tabbyPaymentId, clearCart])
+
+    // Tabby return with order_ref only (payment_id not yet on URL) — soft pending.
+    if (orderRef) {
+      markPending()
+      return
+    }
+
+    markPending()
+  }, [
+    referenceId,
+    sessionId,
+    paymentId,
+    paypalToken,
+    giftCardOrderId,
+    tamaraOrderId,
+    tabbyPaymentId,
+    orderRef,
+    clearCart,
+  ])
+
+  const heading =
+    confirmState === 'confirmed'
+      ? successCopy.title
+      : confirmState === 'confirming'
+        ? successCopy.confirmingTitle
+        : successCopy.pendingTitle
+  const body =
+    confirmState === 'confirmed'
+      ? successCopy.subtitle
+      : confirmState === 'confirming'
+        ? successCopy.confirmingSubtitle
+        : successCopy.pendingSubtitle
 
   return (
     <div className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-24 ${SITE_CONTENT_TOP_PAD}`}>
@@ -172,30 +226,39 @@ function CheckoutSuccessContent() {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.25, type: 'spring', stiffness: 200 }}
-              className="mx-auto mt-9 flex h-16 w-16 items-center justify-center rounded-full border border-brand-dustyBlue/40 bg-brand-dustyBlue/12 shadow-[0_10px_30px_-14px_rgba(59,0,20,0.35)]"
+              className={`mx-auto mt-9 flex h-16 w-16 items-center justify-center rounded-full border shadow-[0_10px_30px_-14px_rgba(59,0,20,0.35)] ${
+                confirmState === 'confirmed'
+                  ? 'border-brand-dustyBlue/40 bg-brand-dustyBlue/12'
+                  : 'border-brand-stone/35 bg-brand-stone/15'
+              }`}
             >
-              <FiCheck className="h-7 w-7 text-brand-dustyBlue" strokeWidth={2.25} />
+              <FiCheck
+                className={`h-7 w-7 ${
+                  confirmState === 'confirmed' ? 'text-brand-dustyBlue' : 'text-brand-clayRed/70'
+                }`}
+                strokeWidth={2.25}
+              />
             </motion.div>
 
             <h1 data-document-h1="true" className="mt-7 font-rozha text-[2rem] leading-tight text-brand-darkRed sm:text-4xl">
-              {successCopy.title}
+              {heading}
             </h1>
 
-            {(sessionId || paymentId || paypalToken) && (
+            {referenceId ? (
               <div className="mt-4 flex w-full justify-center">
                 <div className="inline-flex flex-col items-center gap-1 rounded-full border border-brand-stone/25 bg-white/60 px-5 py-2.5 text-center">
                   <span className="font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-clayRed">
                     {successCopy.sessionReference}
                   </span>
                   <span className="font-montserrat text-sm font-semibold tracking-[0.18em] text-brand-darkRed">
-                    {(sessionId || paymentId || paypalToken || '').slice(-8).toUpperCase()}
+                    {referenceId.slice(-8).toUpperCase()}
                   </span>
                 </div>
               </div>
-            )}
+            ) : null}
 
             <p className="mx-auto mt-5 max-w-sm text-center font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed">
-              {successCopy.subtitle}
+              {body}
             </p>
           </div>
         </motion.div>
@@ -226,15 +289,14 @@ function CheckoutSuccessContent() {
 }
 
 export default function CheckoutSuccessPage() {
-  const { language } = useLanguage()
-  const ui = commerceUi(language)
-
   return (
-    <Suspense fallback={
-      <div className={`flex min-h-screen items-center justify-center pb-20 ${SITE_CONTENT_TOP_PAD}`}>
-        <div className="animate-pulse text-brand-clayRed">{ui.checkout.redirecting}</div>
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className={`flex min-h-screen items-center justify-center bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD}`}>
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-dustyBlue border-t-transparent" />
+        </div>
+      }
+    >
       <CheckoutSuccessContent />
     </Suspense>
   )
