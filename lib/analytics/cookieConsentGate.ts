@@ -3,10 +3,10 @@
 import { hasStoredCookieChoice } from '@/lib/analytics/consent'
 import { hasRegionalExperienceChoice } from '@/lib/geo/geoDetection'
 
-/** After first browse + regional — avoid stacking two overlays. */
-export const COOKIE_DELAY_MS = 8_000
+/** Short pause so the first paint settles; regional may still close first. */
+export const COOKIE_DELAY_MS = 2_500
 /** If regional never settles (geo miss / bot skip), still ask for cookies. */
-export const COOKIE_FALLBACK_MS = 20_000
+export const COOKIE_FALLBACK_MS = 8_000
 
 type ShowListener = () => void
 
