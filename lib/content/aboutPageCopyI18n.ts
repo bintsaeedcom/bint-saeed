@@ -127,7 +127,7 @@ const ABOUT_EN: AboutPageCopy = {
   manifestoP3:
     'Rooted in Abu Dhabi, Bint Saeed builds its design language through enduring codes like the woven memory of Khous, the delicacy of Talli, the warmth of natural gemstones, and signature details carried into modern silhouettes made for a life in motion.',
   originLabel: 'THE ORIGIN',
-  originHeading: 'A house shaped by origin, carried across the world.',
+  originHeading: 'A name rooted in lineage, memory, and belonging.',
   originP1BeforeBint: 'In Arabic, ',
   originP1Bint: 'Bint',
   originP1AfterBint:
@@ -225,7 +225,7 @@ const ABOUT_AR: AboutPageCopy = {
   manifestoP3:
     'من أبوظبي، تبني بنت سعيد لغتها التصميمية من رموز راسخة، ذاكرة الخوص ورقة التلي ودفء الأحجار الطبيعية، وتفاصيل تُصاغ في قطع عصرية لامرأة لا تتوقف.',
   originLabel: 'الأصل',
-  originHeading: 'دار تشكّلها الأصل، تُحمل عبر العالم.',
+  originHeading: 'اسمٌ متجذّر في النسب، والذاكرة، والانتماء.',
   originP1BeforeBint: 'بالعربية، ',
   originP1Bint: 'Bint',
   originP1AfterBint:

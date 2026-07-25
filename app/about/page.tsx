@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, type ReactNode } from 'react'
+import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -26,6 +27,8 @@ const ORIGIN_VIDEO = '/about/bint-saeed-abu-dhabi-about-origin-editorial.webm'
 const ORIGIN_VIDEO_POSTER = '/about/bint-saeed-abu-dhabi-about-origin-editorial-poster.webp'
 const HERITAGE_VIDEO = '/about/bint-saeed-abu-dhabi-about-heritage-editorial.webm'
 const HERITAGE_VIDEO_POSTER = '/about/bint-saeed-abu-dhabi-about-heritage-editorial-poster.webp'
+/** Heritage chapter — full fabric, no tint (matches Codes/strands light weave). */
+const HERITAGE_FABRIC_BG = '/strands/charm-fabric-light.webp' as const
 
 /**
  * Sticky card stack — each section sits full-viewport-tall so the next panel can
@@ -152,10 +155,16 @@ function ChapterProse({
   children?: ReactNode
 }) {
   const onDark = tone === 'onDark' || tone === 'onBurgundy'
-  const indexColor = onDark ? 'text-[#e8d8c8]/85' : 'text-brand-dustyBlue'
-  const labelColor = onDark ? 'text-[#f0e6dc]' : 'text-brand-dustyBlue'
-  const titleColor = onDark ? 'text-[#f7f1ea]' : 'text-brand-darkRed'
-  const bodyColor = onDark ? 'text-[#f0e6dc]/92' : 'text-brand-darkRed/[0.88]'
+  const indexColor = onDark ? 'text-[#e8d8c8]' : 'text-brand-dustyBlue'
+  const labelColor = onDark ? 'text-[#e8ddd4]' : 'text-brand-dustyBlue'
+  const titleColor = onDark ? 'text-white' : 'text-brand-darkRed'
+  // Burgundy fabric needs full cream body — muted dark-red looked unreadable on #7A1C28.
+  const bodyColor =
+    tone === 'onBurgundy'
+      ? 'text-[#e8ddd4]'
+      : tone === 'onDark'
+        ? 'text-[#f0e6dc]/92'
+        : 'text-brand-darkRed/[0.88]'
   const stickyClass = sticky
     ? 'lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)]'
     : ''
@@ -233,7 +242,7 @@ export default function AboutPage() {
               />
             </div>
             <div
-              className={`lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)] ${
+              className={`relative z-10 lg:col-span-7 lg:sticky lg:top-[calc(var(--site-header-height,var(--site-header-clearance,5.0625rem))+1rem)] ${
  isRTL ? 'lg:order-1' : ''
  }`}
             >
@@ -289,8 +298,20 @@ export default function AboutPage() {
       </section>
 
       <section
-        className={`relative z-30 overflow-hidden bg-[#7A1C28] ${ABOUT_STACK_PAD} ${ABOUT_STACK_CARD}`}
+        id="about-heritage"
+        aria-labelledby="about-heritage-heading"
+        className={`relative z-30 overflow-hidden bg-[#1a0210] ${ABOUT_STACK_PAD} ${ABOUT_STACK_CARD}`}
       >
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <Image
+            src={HERITAGE_FABRIC_BG}
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            priority={false}
+          />
+        </div>
         <div className={`relative ${EDITORIAL_PAGE_CONTAINER} ${ABOUT_STACK_CONTENT_PAD}`}>
           <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-14">
             <div

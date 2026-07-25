@@ -62,7 +62,7 @@ export const ABOUT_FR: AboutPageCopy = {
   manifestoP3:
     'Ancrée à Abu Dhabi, Bint Saeed construit son langage de design à travers des codes durables — la mémoire tissée du Khous, la délicatesse du Talli, la chaleur des gemmes naturelles et des détails signature portés dans des silhouettes contemporaines faites pour une vie en mouvement.',
   originLabel: 'L’ORIGINE',
-  originHeading: 'Une maison façonnée par l’origine, portée à travers le monde.',
+  originHeading: 'Un nom enraciné dans la lignée, la mémoire et l’appartenance.',
   originP1BeforeBint: 'En arabe, ',
   originP1Bint: 'Bint',
   originP1AfterBint:
@@ -160,7 +160,7 @@ export const ABOUT_IT: AboutPageCopy = {
   manifestoP3:
     'Radicata ad Abu Dhabi, Bint Saeed costruisce il proprio linguaggio di design attraverso codici duraturi — la memoria tessuta del Khous, la delicatezza del Talli, il calore delle gemme naturali e dettagli signature portati in silhouette contemporanee fatte per una vita in movimento.',
   originLabel: 'L’ORIGINE',
-  originHeading: 'Una maison plasmata dall’origine, portata attraverso il mondo.',
+  originHeading: 'Un nome radicato nella stirpe, nella memoria e nell’appartenenza.',
   originP1BeforeBint: 'In arabo, ',
   originP1Bint: 'Bint',
   originP1AfterBint:
@@ -258,7 +258,7 @@ export const ABOUT_DE: AboutPageCopy = {
   manifestoP3:
     'Verwurzelt in Abu Dhabi baut Bint Saeed seine Designsprache auf dauerhaften Codes auf — der gewebten Erinnerung des Khous, der Feinheit des Talli, der Wärme natürlicher Edelsteine und Signaturdetails, getragen in zeitgenössische Silhouetten für ein Leben in Bewegung.',
   originLabel: 'DER URSPRUNG',
-  originHeading: 'Ein Haus, geformt von Herkunft, getragen in die Welt.',
+  originHeading: 'Ein Name, verwurzelt in Herkunft, Erinnerung und Zugehörigkeit.',
   originP1BeforeBint: 'Im Arabischen bedeutet ',
   originP1Bint: 'Bint',
   originP1AfterBint:
@@ -356,7 +356,7 @@ export const ABOUT_NL: AboutPageCopy = {
   manifestoP3:
     'Geworteld in Abu Dhabi bouwt Bint Saeed haar design taal op blijvende codes — de geweven herinnering van Khous, de fijnheid van Talli, de warmte van natuurlijke edelstenen en signature details, gedragen in hedendaagse silhouetten voor een leven in beweging.',
   originLabel: 'DE OORSPRONG',
-  originHeading: 'Een huis gevormd door herkomst, gedragen door de wereld.',
+  originHeading: 'Een naam geworteld in afkomst, herinnering en verbondenheid.',
   originP1BeforeBint: 'In het Arabisch betekent ',
   originP1Bint: 'Bint',
   originP1AfterBint:
@@ -454,7 +454,7 @@ export const ABOUT_PT: AboutPageCopy = {
   manifestoP3:
     'Enraizada em Abu Dhabi, Bint Saeed constrói a sua linguagem de design através de códigos duradouros — a memória tecida do Khous, a delicadeza do Talli, o calor das gemas naturais e detalhes signature levados a silhuetas contemporâneas feitas para uma vida em movimento.',
   originLabel: 'A ORIGEM',
-  originHeading: 'Uma maison moldada pela origem, levada pelo mundo.',
+  originHeading: 'Um nome enraizado na linhagem, na memória e no pertencer.',
   originP1BeforeBint: 'Em árabe, ',
   originP1Bint: 'Bint',
   originP1AfterBint:

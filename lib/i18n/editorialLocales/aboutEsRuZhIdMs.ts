@@ -62,7 +62,7 @@ export const ABOUT_ES: AboutPageCopy = {
   manifestoP3:
     'Arraigada en Abu Dhabi, Bint Saeed construye su lenguaje de diseño a través de códigos duraderos — la memoria tejida del Khous, la delicadeza del Talli, la calidez de las gemas naturales y detalles signature llevados a siluetas contemporáneas hechas para una vida en movimiento.',
   originLabel: 'EL ORIGEN',
-  originHeading: 'Una maison formada por el origen, llevada a través del mundo.',
+  originHeading: 'Un nombre arraigado en el linaje, la memoria y la pertenencia.',
   originP1BeforeBint: 'En árabe, ',
   originP1Bint: 'Bint',
   originP1AfterBint:
@@ -161,7 +161,7 @@ export const ABOUT_RU: AboutPageCopy = {
   manifestoP3:
     'Укоренённый в Abu Dhabi, Bint Saeed строит язык дизайна через устойчивые коды — плетёную память Khous, тонкость Talli, тепло натуральных камней и signature-детали, перенесённые в современные силуэты для жизни в движении.',
   originLabel: 'ПРОИСХОЖДЕНИЕ',
-  originHeading: 'Дом, сформированный происхождением, несомый через мир.',
+  originHeading: 'Имя, укоренённое в роде, памяти и принадлежности.',
   originP1BeforeBint: 'По-арабски ',
   originP1Bint: 'Bint',
   originP1AfterBint:
@@ -260,7 +260,7 @@ export const ABOUT_ZH: AboutPageCopy = {
   manifestoP3:
     '植根于阿布扎比，Bint Saeed 以持久的代码建立设计语言——Khous 的编织记忆、Talli 的细腻、天然宝石的暖意，以及被带入为流动生活而做的当代廓形的标志性细节。',
   originLabel: '起源',
-  originHeading: '由起源塑造的品牌，被带往世界。',
+  originHeading: '一个植根于血脉、记忆与归属的名字。',
   originP1BeforeBint: '在阿拉伯语中，',
   originP1Bint: 'Bint',
   originP1AfterBint:
@@ -356,7 +356,7 @@ export const ABOUT_ID: AboutPageCopy = {
   manifestoP3:
     'Berakar di Abu Dhabi, Bint Saeed membangun bahasa desainnya melalui kode yang bertahan — memori tenun Khous, kehalusan Talli, kehangatan batu alam, dan detail signature yang dibawa ke siluet kontemporer untuk kehidupan yang bergerak.',
   originLabel: 'ASAL',
-  originHeading: 'Sebuah maison dibentuk oleh asal, dibawa melintasi dunia.',
+  originHeading: 'Sebuah nama yang berakar pada garis keturunan, ingatan, dan rasa memiliki.',
   originP1BeforeBint: 'Dalam bahasa Arab, ',
   originP1Bint: 'Bint',
   originP1AfterBint:
@@ -455,7 +455,7 @@ export const ABOUT_MS: AboutPageCopy = {
   manifestoP3:
     'Berakar di Abu Dhabi, Bint Saeed membina bahasa reka bentuknya melalui kod yang kekal — memori tenunan Khous, kehalusan Talli, kehangatan batu semula jadi, dan perincian signature yang dibawa ke siluet kontemporari untuk kehidupan yang bergerak.',
   originLabel: 'ASAL',
-  originHeading: 'Sebuah maison dibentuk oleh asal, dibawa merentas dunia.',
+  originHeading: 'Sebuah nama yang berakar pada garis keturunan, ingatan, dan rasa milik.',
   originP1BeforeBint: 'Dalam bahasa Arab, ',
   originP1Bint: 'Bint',
   originP1AfterBint:
