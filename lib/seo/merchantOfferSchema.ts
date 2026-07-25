@@ -30,12 +30,17 @@ function shippingDestination(countryCode: string) {
   }
 }
 
-function deliveryTime(handlingMax: number, transitMin: number, transitMax: number) {
+function deliveryTime(
+  handlingMin: number,
+  handlingMax: number,
+  transitMin: number,
+  transitMax: number,
+) {
   return {
     '@type': 'ShippingDeliveryTime' as const,
     handlingTime: {
       '@type': 'QuantitativeValue' as const,
-      minValue: 1,
+      minValue: handlingMin,
       maxValue: handlingMax,
       unitCode: 'd',
     },
@@ -73,7 +78,7 @@ export function buildOfferShippingDetails(input: {
         currency,
       },
       shippingDestination: shippingDestination('AE'),
-      deliveryTime: deliveryTime(3, 1, 5),
+      deliveryTime: deliveryTime(0, 12, 1, 3),
     },
     {
       '@type': 'OfferShippingDetails',
@@ -86,7 +91,7 @@ export function buildOfferShippingDetails(input: {
         '@type': 'DefinedRegion',
         name: 'Worldwide',
       },
-      deliveryTime: deliveryTime(3, 2, 7),
+      deliveryTime: deliveryTime(0, 12, 3, 10),
     },
   ]
 }

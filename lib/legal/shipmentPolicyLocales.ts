@@ -13,7 +13,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     breadcrumb: 'Politique d’expédition et de retours',
     homeBreadcrumb: 'Accueil',
     heroLabel: 'Juridique',
-    lastUpdated: 'Dernière mise à jour : juillet 2026',
+    lastUpdated: 'Dernière mise à jour : 25 juillet 2026',
     intro: 'La présente politique définit les délais d’expédition, l’éligibilité aux échanges, les procédures de retour et les voies de remède pour les achats effectués auprès de Bint Saeed.',
     summaryTitle: 'Avis résumé',
     summaryBody: [
@@ -27,7 +27,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     breadcrumb: 'Versand- und Rückgaberichtlinie',
     homeBreadcrumb: 'Startseite',
     heroLabel: 'Rechtliches',
-    lastUpdated: 'Zuletzt aktualisiert: Juli 2026',
+    lastUpdated: 'Zuletzt aktualisiert: 25. Juli 2026',
     intro: 'Diese Richtlinie legt Versandzeiten, Umtauschberechtigung, Rückgabeverfahren und Abhilfewege für Käufe bei Bint Saeed fest.',
     summaryTitle: 'Kurzhinweis',
     summaryBody: [
@@ -41,7 +41,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     breadcrumb: 'Politica di spedizione e resi',
     homeBreadcrumb: 'Home',
     heroLabel: 'Legale',
-    lastUpdated: 'Ultimo aggiornamento: luglio 2026',
+    lastUpdated: 'Ultimo aggiornamento: 25 luglio 2026',
     intro: 'Questa policy definisce tempi di spedizione, idoneità allo scambio, procedure di reso e percorsi di rimedio per gli acquisti effettuati presso Bint Saeed.',
     summaryTitle: 'Avviso di sintesi',
     summaryBody: [
@@ -55,7 +55,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     breadcrumb: 'Política de envío y devoluciones',
     homeBreadcrumb: 'Inicio',
     heroLabel: 'Legal',
-    lastUpdated: 'Última actualización: julio de 2026',
+    lastUpdated: 'Última actualización: 25 de julio de 2026',
     intro: 'Esta política establece plazos de envío, elegibilidad de cambios, procedimientos de devolución y vías de remedio para las compras realizadas en Bint Saeed.',
     summaryTitle: 'Aviso resumido',
     summaryBody: [
@@ -69,7 +69,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     breadcrumb: 'Verzend- en retourbeleid',
     homeBreadcrumb: 'Home',
     heroLabel: 'Juridisch',
-    lastUpdated: 'Laatst bijgewerkt: juli 2026',
+    lastUpdated: 'Laatst bijgewerkt: 25 juli 2026',
     intro: 'Dit beleid beschrijft verzendtijden, ruilgeschiktheid, retourprocedures en herstelpaden voor aankopen bij Bint Saeed.',
     summaryTitle: 'Samenvattend bericht',
     summaryBody: [
@@ -83,7 +83,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     breadcrumb: 'Política de envio e devoluções',
     homeBreadcrumb: 'Início',
     heroLabel: 'Legal',
-    lastUpdated: 'Última atualização: julho de 2026',
+    lastUpdated: 'Última atualização: 25 de julho de 2026',
     intro: 'Esta política define prazos de envio, elegibilidade de troca, procedimentos de devolução e vias de remédio para compras efetuadas na Bint Saeed.',
     summaryTitle: 'Aviso resumido',
     summaryBody: [
@@ -97,7 +97,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     breadcrumb: 'Политика доставки и возврата',
     homeBreadcrumb: 'Главная',
     heroLabel: 'Правовая информация',
-    lastUpdated: 'Последнее обновление: июль 2026',
+    lastUpdated: 'Последнее обновление: 25 июля 2026',
     intro: 'Настоящая политика определяет сроки доставки, условия обмена, процедуры возврата и пути урегулирования для покупок в Bint Saeed.',
     summaryTitle: 'Краткое уведомление',
     summaryBody: [
@@ -111,7 +111,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     breadcrumb: '配送与退货政策',
     homeBreadcrumb: '首页',
     heroLabel: '法律',
-    lastUpdated: '最近更新：2026 年 7 月',
+    lastUpdated: '最近更新：2026 年 7 月 25 日',
     intro: '本政策规定通过 Bint Saeed 购买商品的配送时效、换货资格、退货程序及救济途径。',
     summaryTitle: '摘要提示',
     summaryBody: [
