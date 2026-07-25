@@ -3,6 +3,7 @@
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
+import CodesOrganicBand from '@/components/CodesOrganicBand'
 import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
@@ -26,8 +27,8 @@ export default function WishlistPage() {
   const discover = getCartEmptyDiscoverCopy(language)
 
   return (
-    <div className={`min-h-screen bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} pb-20 `}>
-      <div className={`container mx-auto px-6 lg:px-12 ${items.length === 0 ? 'max-w-5xl' : 'max-w-3xl'}`}>
+    <div className={`flex min-h-screen flex-col bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD} ${items.length > 0 ? 'pb-20' : ''} `}>
+      <div className={`container mx-auto flex-1 px-6 lg:px-12 ${items.length === 0 ? 'max-w-5xl' : 'max-w-3xl'}`}>
         <AppPageWayfinding
           rtl={isRTL}
           className="mb-10"
@@ -65,10 +66,6 @@ export default function WishlistPage() {
                 {copy.emptyDescription}
               </p>
             </div>
-            <p className="mt-10 font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-brand-dustyBlue">
-              {discover.eyebrow}
-            </p>
-            <DiscoverDestinationGrid source="wishlist_empty" className="mt-6" />
           </div>
         ) : (
           <ul className="space-y-4 p-0">
@@ -124,6 +121,15 @@ export default function WishlistPage() {
           </ul>
         )}
       </div>
+
+      {items.length === 0 ? (
+        <CodesOrganicBand className="mt-auto py-14 md:py-16" contentClassName="max-w-5xl text-center">
+          <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-[#e8d8c8]/70">
+            {discover.eyebrow}
+          </p>
+          <DiscoverDestinationGrid source="wishlist_empty" tone="onDark" className="mt-6" />
+        </CodesOrganicBand>
+      ) : null}
     </div>
   )
 }

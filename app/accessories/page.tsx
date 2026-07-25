@@ -48,9 +48,10 @@ import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
 import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
 import { glassDrawer, glassDrawerWash, glassTextMuted, glassTextTitle } from '@/lib/ui/glassClasses'
-import { ctaPrimary, ctaSecondaryOnLight } from '@/lib/ui/ctaClasses'
+import { ctaPrimary, ctaPrimarySoft, ctaSecondaryOnLight, ctaSecondaryOutlineOnDark } from '@/lib/ui/ctaClasses'
 import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
 import { getKeepExploringLine } from '@/lib/i18n/keepExploringCopyI18n'
+import CodesOrganicBand from '@/components/CodesOrganicBand'
 import {
   PRODUCT_GRID_COLOUR_DOT,
   PRODUCT_GRID_COLOUR_DOT_ROW,
@@ -236,11 +237,12 @@ export default function AccessoriesPage() {
   )
 
   return (
-    <div className={`min-h-screen bg-brand-pageCanvas `}>
+    <div className={`flex min-h-screen flex-col bg-brand-pageCanvas `}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
       />
+      <div className="flex-1">
       {/* Hero Banner */}
       <section className={`relative overflow-hidden border-b border-brand-stone/30 bg-brand-pageCanvas pb-5 md:pb-6 ${SITE_CONTENT_TOP_PAD}`}>
         <div className="container mx-auto px-6 lg:px-12">
@@ -546,79 +548,63 @@ export default function AccessoriesPage() {
                     ))}
                   </AnimatePresence>
                 </motion.div>
-
-                <aside
-                  className={`mt-14 border-t border-brand-stone/25 pt-10 md:mt-16 md:pt-12 ${
- 'text-start'
- }`}
-                  aria-label={ui.cart.continueShopping}
-                >
-                  <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-brand-dustyBlue">
-                    {ui.accessories.collectionEyebrow}
-                  </p>
-                  <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-brand-darkRed">
-                    {ui.cart.continueShopping}
-                  </h2>
-                  <p
-                    className={`mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/70 ${
- isRTL ? 'mr-0' : 'mx-auto'
- }`}
-                  >
-                    {getKeepExploringLine(language, 'throughTheHouse')}
-                  </p>
-                  <div
-                    className={`mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap ${
- isRTL ? 'sm:justify-end md:justify-center' : 'sm:justify-center'
- }`}
-                  >
-                    <LocaleLink
-                      href="/shop"
-                      className={ctaPrimary}
-                      data-cursor-hover
-                      data-analytics-event="click_accessories_continue_shop"
-                      data-analytics-section="accessories-keep-exploring"
-                    >
-                      {ui.notFound.shopCollection}
-                    </LocaleLink>
-                    {isViewingAccessoriesStrands ? (
-                      <LocaleLink
-                        href="/personalisation"
-                        className={ctaSecondaryOnLight}
-                        data-cursor-hover
-                        data-analytics-event="click_accessories_continue_personalisation"
-                        data-analytics-section="accessories-keep-exploring"
-                      >
-                        {ui.cart.personalisation}
-                      </LocaleLink>
-                    ) : (
-                      <LocaleLink
-                        href="/strands"
-                        className={ctaSecondaryOnLight}
-                        data-cursor-hover
-                        data-analytics-event="click_accessories_continue_strands"
-                        data-analytics-section="accessories-keep-exploring"
-                      >
-                        <NoTranslate>{shopStrandsCta(language, 'title')}</NoTranslate>
-                      </LocaleLink>
-                    )}
-                    <LocaleLink
-                      href="/home"
-                      className="inline-flex min-h-[44px] items-center justify-center px-2 font-montserrat text-[11px] uppercase tracking-[0.16em] text-brand-dustyBlue underline-offset-4 transition-colors hover:text-brand-darkRed hover:underline"
-                      data-cursor-hover
-                      data-analytics-event="click_accessories_continue_home"
-                      data-analytics-section="accessories-keep-exploring"
-                    >
-                      {ui.common.backToHome}
-                    </LocaleLink>
-                  </div>
-                </aside>
                 </>
               )}
             </div>
           </div>
         </div>
       </section>
+      </div>
 
+      {filteredAccessories.length > 0 ? (
+        <CodesOrganicBand
+          className="mt-auto py-16 text-center md:py-20"
+          contentClassName="max-w-[1400px]"
+          ariaLabel={ui.cart.continueShopping}
+        >
+          <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70">
+            {ui.accessories.collectionEyebrow}
+          </p>
+          <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-[#e8ddd4]">
+            {ui.cart.continueShopping}
+          </h2>
+          <p className="mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-[#e8d8c8]/65">
+            {getKeepExploringLine(language, 'throughTheHouse')}
+          </p>
+          <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+            <LocaleLink
+              href="/shop"
+              className={ctaPrimarySoft}
+              data-cursor-hover
+              data-analytics-event="click_accessories_continue_shop"
+              data-analytics-section="accessories-keep-exploring"
+            >
+              {ui.notFound.shopCollection}
+            </LocaleLink>
+            {isViewingAccessoriesStrands ? (
+              <LocaleLink
+                href="/personalisation"
+                className={ctaSecondaryOutlineOnDark}
+                data-cursor-hover
+                data-analytics-event="click_accessories_continue_personalisation"
+                data-analytics-section="accessories-keep-exploring"
+              >
+                {ui.cart.personalisation}
+              </LocaleLink>
+            ) : (
+              <LocaleLink
+                href="/strands"
+                className={ctaSecondaryOutlineOnDark}
+                data-cursor-hover
+                data-analytics-event="click_accessories_continue_strands"
+                data-analytics-section="accessories-keep-exploring"
+              >
+                <NoTranslate>{shopStrandsCta(language, 'title')}</NoTranslate>
+              </LocaleLink>
+            )}
+          </div>
+        </CodesOrganicBand>
+      ) : null}
       {quickBuyAccessory ? (
         <QuickBuy
           isOpen

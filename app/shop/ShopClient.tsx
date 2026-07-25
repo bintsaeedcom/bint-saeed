@@ -42,6 +42,7 @@ import {
   PRODUCT_GRID_CTA_ROW,
 } from '@/lib/ui/productGridCtaRow'
 import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
+import CodesOrganicBand from '@/components/CodesOrganicBand'
 
 const CATEGORY_QUERY_MAP: Record<string, string> = {
   abayas: 'Abayas',
@@ -184,7 +185,8 @@ export default function ShopClient() {
 
   const sortLabel = sortOptions.find((o) => o.id === sortBy)?.label ?? ui.shop.sortNewest
   return (
-    <div className={`min-h-screen overflow-x-hidden bg-brand-pageCanvas text-neutral-900 `}>
+    <div className={`flex min-h-screen flex-col overflow-x-hidden bg-brand-pageCanvas text-neutral-900 `}>
+      <div className="flex-1">
       <header className="section-full overflow-hidden border-b border-black/5 bg-stone-50">
         <div className={`mx-auto max-w-[1400px] px-6 pb-10 ${SITE_CONTENT_TOP_PAD} md:px-10 md:pb-14 lg:px-14`}>
           <div className="text-start">
@@ -485,29 +487,29 @@ export default function ShopClient() {
         )}
 
       </section>
+      </div>
 
       {sortedProducts.length > 0 ? (
-        <aside
-          className="border-t border-[#e8ddd4]/12 bg-[#1a0210] py-16 text-center md:py-20"
-          aria-label={ui.cart.continueShopping}
+        <CodesOrganicBand
+          className="mt-auto py-16 text-center md:py-20"
+          contentClassName="max-w-[1400px]"
+          ariaLabel={ui.cart.continueShopping}
         >
-          <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-14">
-            <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70">
-              {ui.shop.collectionEyebrow}
-            </p>
-            <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-[#e8ddd4]">
-              {ui.cart.continueShopping}
-            </h2>
-            <p className="mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-[#e8d8c8]/65">
-              {getKeepExploringLine(language, 'throughTheHouse')}
-            </p>
-            <DiscoverDestinationGrid
-              source="shop_keep_exploring"
-              tone="onDark"
-              className="mx-auto mt-8 max-w-4xl lg:!grid-cols-3"
-            />
-          </div>
-        </aside>
+          <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70">
+            {ui.shop.collectionEyebrow}
+          </p>
+          <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-[#e8ddd4]">
+            {ui.cart.continueShopping}
+          </h2>
+          <p className="mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-[#e8d8c8]/65">
+            {getKeepExploringLine(language, 'throughTheHouse')}
+          </p>
+          <DiscoverDestinationGrid
+            source="shop_keep_exploring"
+            tone="onDark"
+            className="mx-auto mt-8 max-w-4xl lg:!grid-cols-3"
+          />
+        </CodesOrganicBand>
       ) : null}
 
       {quickBuyProduct ? (

@@ -1,8 +1,8 @@
 'use client'
 
 import { useRef, type ReactNode } from 'react'
-import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
+import CodesOrganicBand from '@/components/CodesOrganicBand'
 import { FiArrowRight } from 'react-icons/fi'
 import {
   motion,
@@ -16,7 +16,6 @@ import { getCraftsmanshipCopy } from '@/lib/content/craftsmanshipCopyI18n'
 import { getCraftsmanshipMediaCopy } from '@/lib/content/craftsmanshipMediaI18n'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import type { AppLocale } from '@/lib/i18n/routing'
-import { EDITORIAL_STACK_CARD } from '@/lib/ui/editorialPageChrome'
 
 /** Portrait craft finishes — same trio as Craftsmanship closing. */
 function detailTrio(locale: AppLocale) {
@@ -138,62 +137,46 @@ export default function ExploreCollectionClosing({
   const details = detailTrio(locale)
 
   return (
-    <section
-      className={`relative z-[50] overflow-hidden pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-14 md:pb-24 ${EDITORIAL_STACK_CARD}`}
-      aria-label={media.closingSectionAria}
+    <CodesOrganicBand
+      stacked
+      className="pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-14 md:pb-24"
+      contentClassName="max-w-[1280px] pb-8 sm:pb-10 md:pb-12"
+      ariaLabel={media.closingSectionAria}
+      bgAlt={media.closingBgAlt}
     >
-      <Image
-        src="/craftsmanship/bint-saeed-abu-dhabi-explore-collection-organic-texture.webp"
-        alt={withBrandAlt(media.closingBgAlt, locale)}
-        title="Explore the collection — Bint Saeed Abu Dhabi"
-        fill
-        sizes="100vw"
-        className="pointer-events-none object-cover object-center"
-        priority={false}
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(26,2,16,0.72)_0%,rgba(42,8,22,0.55)_42%,rgba(26,2,16,0.82)_100%)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(111,21,36,0.22)_0%,transparent_70%)]"
-        aria-hidden
-      />
-      <div className="relative mx-auto w-full min-w-0 max-w-[1280px] px-4 pb-8 sm:px-6 sm:pb-10 lg:px-12 md:pb-12">
-        <Reveal>
-          <p className="mb-7 text-center font-rozha text-[clamp(1.75rem,4vw,2.5rem)] tracking-[0.02em] text-[#e8ddd4] md:mb-8">
-            {copy.ctaHeading}
-          </p>
-        </Reveal>
+      <Reveal>
+        <p className="mb-7 text-center font-rozha text-[clamp(1.75rem,4vw,2.5rem)] tracking-[0.02em] text-[#e8ddd4] md:mb-8">
+          {copy.ctaHeading}
+        </p>
+      </Reveal>
 
-        <div className="mx-auto grid max-w-5xl grid-cols-3 gap-2 sm:gap-3 md:gap-4">
-          {details.map((item, index) => (
-            <Reveal key={item.src} delay={index * 0.08} className="min-w-0">
-              <Post className="bg-[#2a0a14]">
-                <Still
-                  src={item.src}
-                  alt={item.alt}
-                  className="!object-contain object-center p-1 sm:p-1.5"
-                />
-              </Post>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal delay={0.2}>
-          <div className={`mt-8 flex justify-center md:mt-10 `}>
-            <LocaleLink
-              href={`/shop?from=${from}`}
-              className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-[4px] border border-[#e8ddd4]/45 bg-[#e8ddd4]/10 px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-[#e8ddd4] shadow-[0_18px_48px_-28px_rgba(0,0,0,0.45)] backdrop-blur-[2px] transition-colors hover:border-[#e8ddd4]/80 hover:bg-[#e8ddd4] hover:text-brand-darkRed"
-              data-cursor-hover
-              {...ctaAnalytics}
-            >
-              {copy.discoverMore}
-              <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
-            </LocaleLink>
-          </div>
-        </Reveal>
+      <div className="mx-auto grid max-w-5xl grid-cols-3 gap-2 sm:gap-3 md:gap-4">
+        {details.map((item, index) => (
+          <Reveal key={item.src} delay={index * 0.08} className="min-w-0">
+            <Post className="bg-[#2a0a14]">
+              <Still
+                src={item.src}
+                alt={item.alt}
+                className="!object-contain object-center p-1 sm:p-1.5"
+              />
+            </Post>
+          </Reveal>
+        ))}
       </div>
-    </section>
+
+      <Reveal delay={0.2}>
+        <div className={`mt-8 flex justify-center md:mt-10 `}>
+          <LocaleLink
+            href={`/shop?from=${from}`}
+            className="inline-flex min-h-[52px] items-center justify-center gap-3 rounded-[4px] border border-[#e8ddd4]/45 bg-[#e8ddd4]/10 px-10 py-4 font-montserrat text-xs uppercase tracking-[0.22em] text-[#e8ddd4] shadow-[0_18px_48px_-28px_rgba(0,0,0,0.45)] backdrop-blur-[2px] transition-colors hover:border-[#e8ddd4]/80 hover:bg-[#e8ddd4] hover:text-brand-darkRed"
+            data-cursor-hover
+            {...ctaAnalytics}
+          >
+            {copy.discoverMore}
+            <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+          </LocaleLink>
+        </div>
+      </Reveal>
+    </CodesOrganicBand>
   )
 }

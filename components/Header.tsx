@@ -1071,19 +1071,22 @@ export default function Header() {
                                           data-cursor-hover
                                           data-analytics-section="header-mobile-nav"
                                         >
-                                          <div className="relative h-[min(32vh,180px)] overflow-hidden bg-white/5 sm:h-[min(36vh,220px)]">
-                                            <Image
-                                              src={feature.image}
-                                              alt=""
-                                              fill
-                                              unoptimized
-                                              sizes="42vw"
-                                              className="object-cover transition-transform duration-700 group-active:scale-[1.03]"
-                                            />
-                                            <div
-                                              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#12080b]/75 via-transparent to-transparent"
-                                              aria-hidden
-                                            />
+                                          {/* Height-capped portrait so full image stays visible on short / minimized desktops */}
+                                          <div className="flex justify-center">
+                                            <div className="relative aspect-[3/4] h-[min(26dvh,9.5rem)] w-auto max-w-full overflow-hidden bg-white/5 sm:h-[min(28dvh,10.5rem)]">
+                                              <Image
+                                                src={feature.image}
+                                                alt=""
+                                                fill
+                                                unoptimized
+                                                sizes="120px"
+                                                className="object-cover object-center transition-transform duration-700 group-active:scale-[1.03]"
+                                              />
+                                              <div
+                                                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#12080b]/75 via-transparent to-transparent"
+                                                aria-hidden
+                                              />
+                                            </div>
                                           </div>
                                           <div className={`mt-2 text-start`}>
                                             <p className="font-montserrat text-[11px] leading-snug text-white/90">

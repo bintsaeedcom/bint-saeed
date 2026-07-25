@@ -7,6 +7,7 @@ import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
+import CodesOrganicBand from '@/components/CodesOrganicBand'
 import SoftEmailCapture from '@/components/SoftEmailCapture'
 import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import { FiCheck } from 'react-icons/fi'
@@ -179,11 +180,11 @@ function CheckoutSuccessContent() {
         : successCopy.pendingSubtitle
 
   return (
-    <div className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-24 ${SITE_CONTENT_TOP_PAD}`}>
+    <div className={`relative flex min-h-screen flex-col overflow-x-hidden bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD}`}>
       <div className="absolute top-20 right-0 h-96 w-96 rounded-full bg-brand-stone/10 blur-3xl" />
       <div className="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-brand-dustyBlue/5 blur-3xl" />
 
-      <div className="container relative mx-auto min-w-0 px-6 lg:px-12">
+      <div className="container relative mx-auto min-w-0 flex-1 px-6 pb-10 lg:px-12">
         <AppPageWayfinding
           rtl={isRTL}
           className="mb-10"
@@ -263,27 +264,25 @@ function CheckoutSuccessContent() {
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.45 }}
-          className="mx-auto mt-12 max-w-5xl"
-        >
-          <p className="text-center font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-brand-dustyBlue">
-            {successCopy.keepExploring}
-          </p>
-          <p className="mx-auto mt-3 max-w-lg text-center font-montserrat text-sm leading-relaxed tracking-wide text-brand-clayRed/75">
-            {successCopy.keepExploringBody}
-          </p>
-          <DiscoverDestinationGrid source="checkout_success" className="mt-6" />
+        <div className="mx-auto mt-10 max-w-5xl">
           <SoftEmailCapture
             source="checkout_success"
             heading={successCopy.stayCloseHeading}
             hint={successCopy.stayCloseHint}
-            className="mt-12 border-t border-brand-stone/20 pt-10"
+            className="border-t border-brand-stone/20 pt-10"
           />
-        </motion.div>
+        </div>
       </div>
+
+      <CodesOrganicBand className="mt-auto py-14 md:py-16" contentClassName="max-w-5xl text-center">
+        <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.22em] text-[#e8d8c8]/70">
+          {successCopy.keepExploring}
+        </p>
+        <p className="mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-[#e8d8c8]/65">
+          {successCopy.keepExploringBody}
+        </p>
+        <DiscoverDestinationGrid source="checkout_success" tone="onDark" className="mt-6" />
+      </CodesOrganicBand>
     </div>
   )
 }

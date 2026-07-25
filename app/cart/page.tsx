@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
+import CodesOrganicBand from '@/components/CodesOrganicBand'
 import { FiTrash2, FiPlus, FiMinus, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
@@ -103,12 +104,12 @@ export default function CartPage() {
   if (items.length === 0) {
     const emptyCopy = getCartEmptyDiscoverCopy(language)
     return (
-      <div className={`relative min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-28 ${SITE_CONTENT_TOP_PAD}`}>
+      <div className={`relative flex min-h-screen flex-col overflow-x-hidden bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD}`}>
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-[min(52vh,28rem)] bg-[radial-gradient(120%_80%_at_50%_-10%,rgba(26,2,16,0.14),transparent_68%)]"
           aria-hidden
         />
-        <div className="relative container mx-auto px-6 lg:px-12">
+        <div className="relative container mx-auto flex-1 px-6 lg:px-12">
           <AppPageWayfinding
             rtl={isRTL}
             variant="muted"
@@ -147,16 +148,11 @@ export default function CartPage() {
               {emptyCopy.description}
             </p>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto mt-12 max-w-5xl"
-          >
-            <DiscoverDestinationGrid source="cart_empty_state" />
-          </motion.div>
         </div>
+
+        <CodesOrganicBand className="mt-auto py-14 md:py-16" contentClassName="max-w-5xl">
+          <DiscoverDestinationGrid source="cart_empty_state" tone="onDark" />
+        </CodesOrganicBand>
       </div>
     )
   }
