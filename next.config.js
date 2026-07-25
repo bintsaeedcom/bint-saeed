@@ -77,6 +77,9 @@ const nextConfig = {
         source: '/feeds/pinterest-countries.csv',
         destination: '/feeds/pinterest-countries',
       },
+      // Google Merchant scheduled fetch prefers .txt; Meta prefers .csv.
+      { source: '/feeds/google.txt', destination: '/feeds/google' },
+      { source: '/feeds/meta.csv', destination: '/feeds/meta' },
     ]
   },
   async redirects() {
