@@ -52,12 +52,14 @@ export default function AnalyticsBootstrap() {
 
   useEffect(() => {
     if (!pathname) return
-    if (isAdminBrowserPath(pathname) || isStaffOpticsActive()) return
+    // Admin stays out of GA; staff optics only blocks Clarity/Slack, not GA page views.
+    if (isAdminBrowserPath(pathname)) return
     trackPageView(pathname)
   }, [pathname])
 
   useEffect(() => {
     if (!pathname) return
+    if (isAdminBrowserPath(pathname) || isStaffOpticsActive()) return
     const shouldTrackMilestones = pathname === '/home' || pathname === '/personalisation'
     if (!shouldTrackMilestones) return
 

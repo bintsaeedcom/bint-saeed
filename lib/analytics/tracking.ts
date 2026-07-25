@@ -57,23 +57,76 @@ function toCleanParams(params?: AnalyticsParams) {
   return Object.fromEntries(Object.entries(params).filter(([, v]) => v !== undefined))
 }
 
+function ensureGtagStub() {
+  if (typeof window === 'undefined') return
+  window.dataLayer = window.dataLayer || []
+  if (window.gtag) return
+  // Official stub pushes `arguments` (not a rest-array). Array pushes break Consent Mode.
+  window.gtag = function gtag() {
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer!.push(arguments as unknown as never)
+  }
+}
+
 function initGa4() {
   if (typeof window === 'undefined' || state.gaReady) return
   const id = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID?.trim()
   if (!id) return
 
-  loadScript('bs-ga4-script', `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`)
-  window.dataLayer = window.dataLayer || []
-  window.gtag = window.gtag || function gtag(...args: unknown[]) { window.dataLayer?.push(args) }
-  window.gtag('js', new Date())
-  window.gtag('consent', 'default', {
+  ensureGtagStub()
+
+  // Consent default must land before gtag.js loads / before `js` + `config`.
+  window.gtag!('consent', 'default', {
     analytics_storage: 'denied',
     ad_storage: 'denied',
     ad_user_data: 'denied',
     ad_personalization: 'denied',
+    wait_for_update: 500,
   })
-  window.gtag('config', id, { anonymize_ip: true, send_page_view: false })
+
+  loadScript('bs-ga4-script', `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`)
+  window.gtag!('js', new Date())
+  window.gtag!('config', id, {
+    anonymize_ip: true,
+    send_page_view: false,
+  })
+
+  // We only init after analytics opt-in — grant storage immediately so Realtime hits fire.
+  if (state.consent.analytics) {
+    window.gtag!('consent', 'update', {
+      analytics_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+    })
+  }
+
   state.gaReady = true
+}
+
+function sendGa4PageView(path: string, params?: AnalyticsParams) {
+  if (!state.gaReady || !window.gtag) return
+  const id = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID?.trim()
+  if (!id) return
+  const pagePath = path.startsWith('/') ? path : `/${path}`
+  const pageLocation =
+    typeof window !== 'undefined' ? `${window.location.origin}${pagePath}` : pagePath
+  const pageTitle = typeof document !== 'undefined' ? document.title : undefined
+  const cleanParams = toCleanParams(params)
+
+  // SPA page views: update config path, then send the standard page_view event.
+  window.gtag('config', id, {
+    page_path: pagePath,
+    page_location: pageLocation,
+    page_title: pageTitle,
+    send_page_view: false,
+  })
+  window.gtag('event', 'page_view', {
+    page_path: pagePath,
+    page_location: pageLocation,
+    page_title: pageTitle,
+    ...cleanParams,
+  })
 }
 
 function applyClarityConsent(granted: boolean) {
@@ -264,7 +317,13 @@ export function trackEvent(name: string, params?: AnalyticsParams) {
   if (!state.consent.analytics || typeof window === 'undefined') return
   const cleanParams = toCleanParams(params)
 
-  if (state.gaReady && window.gtag) {
+  if (name === 'page_view') {
+    const path =
+      (typeof cleanParams?.page_path === 'string' && cleanParams.page_path) ||
+      window.location.pathname
+    const { page_path: _pagePath, ...rest } = cleanParams || {}
+    sendGa4PageView(path, rest)
+  } else if (state.gaReady && window.gtag) {
     window.gtag('event', name, cleanParams || {})
   }
   if (state.clarityReady && window.clarity) {

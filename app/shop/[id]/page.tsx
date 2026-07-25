@@ -236,15 +236,6 @@ export default function ProductPage() {
     if (!sku) return null
     return formatPdpProductCodeLine(sku, isRTL)
   }, [product, selectedColor, isRTL])
-  const estimatedShipDate = useMemo(() => {
-    const d = new Date()
-    d.setDate(d.getDate() + 14)
-    return new Intl.DateTimeFormat(language === 'ar' ? 'ar-AE' : 'en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    }).format(d)
-  }, [language])
   /** Thumbs strip is hidden on small screens; connecting Thumbs module with swiper=null breaks layout on iOS. */
   const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
   const mainGalleryModules = useMemo(
@@ -971,15 +962,8 @@ export default function ProductPage() {
                   </button>
                 ))}
               </div>
-              <p className="mt-2 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
-                {ui.madeToOrderShips(estimatedShipDate)}
-              </p>
             </div>
-            ) : (
-              <p id="size-selection" className="mb-3 border-b border-brand-stone/20 pb-3 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
-                {ui.oneSizeMadeToOrderShips(estimatedShipDate)}
-              </p>
-            )}
+            ) : null}
 
             {showPersonalisation && (
               <div id="personalisation-section" className="mb-3 border-b border-brand-stone/20 pb-3">

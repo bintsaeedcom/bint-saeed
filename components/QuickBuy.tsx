@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { FiX, FiShoppingBag, FiArrowRight, FiPackage, FiRotateCcw, FiClock } from 'react-icons/fi'
+import { FiX, FiShoppingBag, FiArrowRight, FiPackage, FiRotateCcw } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -80,20 +80,6 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
   const showSizeSelector =
     product.sizes.length > 1 &&
     productShowsSizeSelector(product.category ?? 'Kaftans', product.sizes, product.slug)
-
-  const estimatedShipDate = useMemo(() => {
-    const d = new Date()
-    d.setDate(d.getDate() + 14)
-    return new Intl.DateTimeFormat(language === 'ar' ? 'ar-AE' : 'en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    }).format(d)
-  }, [language])
-
-  const shipNote = productIsOneSizeOnly({ slug: product.slug, sizes: product.sizes })
-    ? pdpUi.oneSizeMadeToOrderShips(estimatedShipDate)
-    : pdpUi.madeToOrderShips(estimatedShipDate)
 
   useEffect(() => {
     setMounted(true)
@@ -327,13 +313,6 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
                   </div>
                 </div>
               )}
-
-              <p
-                className={`mb-3.5 flex items-start gap-2 font-montserrat text-[11px] leading-snug tracking-wide text-[#4a3a36] text-start`}
-              >
-                <FiClock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-darkRed/75" aria-hidden />
-                <span>{shipNote}</span>
-              </p>
 
               {colorOptions.length > 1 && (
                 <div className="mb-3.5">

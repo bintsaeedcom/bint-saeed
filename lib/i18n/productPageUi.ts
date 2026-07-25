@@ -22,8 +22,8 @@ export type ProductPageUi = {
   faq: string
   readMore: string
   readLess: string
-  madeToOrderShips: (date: string) => string
-  oneSizeMadeToOrderShips: (date: string) => string
+  /** Jewellery / accessories PDP only — garments show lead time on checkout. */
+  jewelleryLeadTime: string
   personalisation: ProductPageUiPersonalisation
   ethicallyMade: string
   weGiveForward: string
@@ -46,8 +46,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Read more',
     readLess: 'Read less',
-    madeToOrderShips: (date: string) => `Made to order — estimated shipment ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `One size · made to order — estimated shipment ${date}`,
+    jewelleryLeadTime: 'Crafted after your order · ships in 4–7 days',
     personalisation: {
       title: 'Personalisation',
       desc: 'Add a name, special date or message to the inner label - complimentary.',
@@ -76,8 +75,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'الأسئلة الشائعة',
     readMore: 'اقرأي المزيد',
     readLess: 'عرض أقل',
-    madeToOrderShips: (date: string) => `تصنع حسب الطلب — الشحن المتوقع ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `مقاس واحد · تصنع حسب الطلب — الشحن المتوقع ${date}`,
+    jewelleryLeadTime: 'تُصنع بعد طلبكِ · تُشحن خلال 4–7 أيام',
     personalisation: {
       title: 'التخصيص',
       desc: 'أضيفي اسما أو تاريخا أو رسالة على البطاقة الداخلية - مجانا.',
@@ -106,8 +104,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Lire plus',
     readLess: 'Lire moins',
-    madeToOrderShips: (date: string) => `Confection sur commande — expédition estimée ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Taille unique · confection sur commande — expédition estimée ${date}`,
+    jewelleryLeadTime: 'Confectionnée après votre commande · expédiée sous 4 à 7 jours',
     personalisation: {
       title: 'Personnalisation',
       desc: 'Ajoutez un prénom, une date spéciale ou un message sur l’étiquette intérieure — offert.',
@@ -136,8 +133,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Mehr lesen',
     readLess: 'Weniger lesen',
-    madeToOrderShips: (date: string) => `Auf Bestellung gefertigt — voraussichtlicher Versand ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Einheitsgröße · auf Bestellung gefertigt — voraussichtlicher Versand ${date}`,
+    jewelleryLeadTime: 'Nach Ihrer Bestellung gefertigt · Versand in 4–7 Tagen',
     personalisation: {
       title: 'Personalisierung',
       desc: 'Fügen Sie einen Namen, ein besonderes Datum oder eine Nachricht auf dem Innenetikett hinzu — kostenfrei.',
@@ -166,8 +162,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Leggi di più',
     readLess: 'Leggi meno',
-    madeToOrderShips: (date: string) => `Su ordinazione — spedizione stimata ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Taglia unica · su ordinazione — spedizione stimata ${date}`,
+    jewelleryLeadTime: 'Realizzata dopo il vostro ordine · spedizione in 4–7 giorni',
     personalisation: {
       title: 'Personalizzazione',
       desc: 'Aggiungi un nome, una data speciale o un messaggio all’etichetta interna — in omaggio.',
@@ -196,8 +191,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'Preguntas frecuentes',
     readMore: 'Leer mas',
     readLess: 'Leer menos',
-    madeToOrderShips: (date: string) => `Hecho por encargo — envio estimado ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Talla unica · hecho por encargo — envio estimado ${date}`,
+    jewelleryLeadTime: 'Hecho a pedido · envío en 4–7 días',
     personalisation: {
       title: 'Personalizacion',
       desc: 'Anade un nombre, una fecha especial o un mensaje en la etiqueta interior - de cortesia.',
@@ -226,8 +220,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Читать далее',
     readLess: 'Свернуть',
-    madeToOrderShips: (date: string) => `Изготавливается на заказ — ориентировочная отправка ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Единый размер · изготавливается на заказ — ориентировочная отправка ${date}`,
+    jewelleryLeadTime: 'Изготавливается после заказа · отправка за 4–7 дней',
     personalisation: {
       title: 'Персонализация',
       desc: 'Добавьте имя, особую дату или сообщение на внутреннюю бирку - бесплатно.',
@@ -256,8 +249,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: '常见问题',
     readMore: '阅读更多',
     readLess: '收起',
-    madeToOrderShips: (date: string) => `按需定制 — 预计发货 ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `均码 · 按需定制 — 预计发货 ${date}`,
+    jewelleryLeadTime: '下单后制作 · 4–7 天内发货',
     personalisation: {
       title: '个性化定制',
       desc: '可在内侧标牌添加姓名、特别日期或寄语 - 免费提供。',
@@ -286,8 +278,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Lees meer',
     readLess: 'Lees minder',
-    madeToOrderShips: (date: string) => `Op bestelling gemaakt — verwachte verzending ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `One size · op bestelling gemaakt — verwachte verzending ${date}`,
+    jewelleryLeadTime: 'Gemaakt na uw bestelling · verzending binnen 4–7 dagen',
     personalisation: {
       title: 'Personalisatie',
       desc: 'Voeg een naam, betekenisvolle datum of privébericht toe op het binnenlabel — kosteloos.',
@@ -316,8 +307,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Ler mais',
     readLess: 'Ler menos',
-    madeToOrderShips: (date: string) => `Feito por encomenda — envio estimado ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Tamanho único · feito por encomenda — envio estimado ${date}`,
+    jewelleryLeadTime: 'Feito após a sua encomenda · envio em 4–7 dias',
     personalisation: {
       title: 'Personalização',
       desc: 'Adicione um nome, data especial ou mensagem na etiqueta interna — cortesia da maison.',
@@ -346,8 +336,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Baca selengkapnya',
     readLess: 'Tampilkan lebih sedikit',
-    madeToOrderShips: (date: string) => `Dibuat sesuai pesanan — estimasi pengiriman ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Satu ukuran · dibuat sesuai pesanan — estimasi pengiriman ${date}`,
+    jewelleryLeadTime: 'Dibuat setelah pesanan Anda · dikirim dalam 4–7 hari',
     personalisation: {
       title: 'Personalisasi',
       desc: 'Tambahkan nama, tanggal spesial, atau pesan pada label bagian dalam - gratis.',
@@ -376,8 +365,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Baca lagi',
     readLess: 'Baca kurang',
-    madeToOrderShips: (date: string) => `Dibuat mengikut tempahan — anggaran penghantaran ${date}`,
-    oneSizeMadeToOrderShips: (date: string) => `Satu saiz · dibuat mengikut tempahan — anggaran penghantaran ${date}`,
+    jewelleryLeadTime: 'Dibuat selepas tempahan anda · dihantar dalam 4–7 hari',
     personalisation: {
       title: 'Personalisasi',
       desc: 'Tambah nama, tarikh istimewa atau mesej pada label dalam - percuma.',

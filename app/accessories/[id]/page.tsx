@@ -125,15 +125,6 @@ export default function AccessoryDetailPage() {
   const { isRTL, t, language } = useLanguage()
   const ui = commerceUi(language)
   const productUi = productPageUi(language)
-  const estimatedShipDate = useMemo(() => {
-    const d = new Date()
-    d.setDate(d.getDate() + 14)
-    return new Intl.DateTimeFormat(language === 'ar' ? 'ar-AE' : 'en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    }).format(d)
-  }, [language])
   const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
   const mainGalleryModules = useMemo(
     () => (thumbConnected ? [Navigation, Thumbs, Pagination] : [Navigation, Pagination]),
@@ -1030,7 +1021,7 @@ export default function AccessoryDetailPage() {
                 </span>
               </div>
               <p className="mt-2 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
-                {productUi.madeToOrderShips(estimatedShipDate)}
+                {productUi.jewelleryLeadTime}
               </p>
             </div>
 

@@ -44,6 +44,7 @@ import CheckoutPaymentRecoveryBanner, {
 } from '@/components/checkout/CheckoutPaymentRecoveryBanner'
 import { cartRequiresPhysicalShipping } from '@/lib/giftCards/cartDetection'
 import { resolveShippingEligibility } from '@/lib/pricing'
+import { resolveOrderLeadTimeNote } from '@/lib/shipping/resolveOrderLeadTime'
 import {
   clearMobileBottomChrome,
   publishMobileBottomChrome,
@@ -143,6 +144,23 @@ function CheckoutPageContent() {
         ? ui.cart.shippingComplimentaryUae
         : ui.cart.shippingComplimentary
       : null
+  const orderLeadTimeNote = useMemo(
+    () =>
+      requiresPhysicalShipping
+        ? resolveOrderLeadTimeNote(items, {
+            leadTimeFashion: ui.checkout.leadTimeFashion,
+            leadTimeJewellery: ui.checkout.leadTimeJewellery,
+            leadTimeMixed: ui.checkout.leadTimeMixed,
+          })
+        : null,
+    [
+      requiresPhysicalShipping,
+      items,
+      ui.checkout.leadTimeFashion,
+      ui.checkout.leadTimeJewellery,
+      ui.checkout.leadTimeMixed,
+    ],
+  )
   const amountBeforeGiftCard = Number((merchandiseSubtotal + estimatedShipping).toFixed(2))
   const giftCredit = appliedGiftCard?.appliedInCurrency ?? 0
   const amountDueNow = Math.max(0, Number((amountBeforeGiftCard - giftCredit).toFixed(2)))
@@ -838,6 +856,11 @@ function CheckoutPageContent() {
                 <span className="text-brand-clayRed/70">{ui.cart.subtotal}</span>
                 <span className="font-medium text-brand-darkRed">{formatCartSubtotal(items)}</span>
               </div>
+              {orderLeadTimeNote ? (
+                <p className="font-montserrat text-[11px] leading-relaxed text-brand-clayRed/65">
+                  {orderLeadTimeNote}
+                </p>
+              ) : null}
               <p className="font-montserrat text-[11px] leading-relaxed text-brand-clayRed/60">
                 {ui.cart.taxesIncluded}
               </p>
@@ -957,6 +980,11 @@ function CheckoutPageContent() {
                     {shippingPrimaryNote ? (
                       <p className="mt-2 font-montserrat text-[11px] leading-relaxed tracking-wide text-brand-dustyBlue/90">
                         {shippingPrimaryNote}
+                      </p>
+                    ) : null}
+                    {orderLeadTimeNote ? (
+                      <p className="mt-2 font-montserrat text-[11px] leading-relaxed tracking-wide text-white/65">
+                        {orderLeadTimeNote}
                       </p>
                     ) : null}
                     <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">
