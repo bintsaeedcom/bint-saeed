@@ -9,6 +9,8 @@ declare global {
     dataLayer?: unknown[]
     gtag?: (...args: unknown[]) => void
     clarity?: (...args: unknown[]) => void
+    fbq?: (...args: unknown[]) => void
+    _fbq?: (...args: unknown[]) => void
     posthog?: {
       init: (key: string, config?: Record<string, unknown>) => void
       capture: (event: string, properties?: Record<string, unknown>) => void
@@ -34,8 +36,10 @@ const state = {
   gaReady: false,
   clarityReady: false,
   posthogReady: false,
+  metaPixelReady: false,
   trackerInitComplete: false,
   trackerInitScheduled: false,
+  marketingInitScheduled: false,
   consent: { analytics: false, marketing: false } as ConsentState,
   scrollMilestonesByPath: new Map<string, Set<number>>(),
   /** Last page path seen before analytics consent — flushed on Accept. */
@@ -95,9 +99,9 @@ function initGa4() {
   if (state.consent.analytics) {
     window.gtag!('consent', 'update', {
       analytics_storage: 'granted',
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
+      ad_storage: state.consent.marketing ? 'granted' : 'denied',
+      ad_user_data: state.consent.marketing ? 'granted' : 'denied',
+      ad_personalization: state.consent.marketing ? 'granted' : 'denied',
     })
   }
 
@@ -204,31 +208,132 @@ function initPosthog() {
   state.posthogReady = true
 }
 
+/** Meta Pixel — loads only after marketing consent (catalog ads / Instagram Shopping). */
+function initMetaPixel() {
+  if (typeof window === 'undefined' || state.metaPixelReady) return
+  if (isStaffOpticsActive() || isAdminBrowserPath()) return
+  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim()
+  if (!pixelId) return
+  if (!state.consent.marketing) return
+
+  if (!window.fbq) {
+    const n: any = function (...args: unknown[]) {
+      // eslint-disable-next-line prefer-rest-params
+      ;(n.callMethod ? n.callMethod(...args) : n.queue.push(args))
+    }
+    n.queue = []
+    n.loaded = true
+    n.version = '2.0'
+    n.push = n
+    window.fbq = n
+    window._fbq = n
+    loadScript('bs-meta-pixel', 'https://connect.facebook.net/en_US/fbevents.js')
+  }
+
+  window.fbq!('init', pixelId)
+  window.fbq!('track', 'PageView')
+  state.metaPixelReady = true
+}
+
+function scheduleMarketingInit() {
+  if (typeof window === 'undefined' || !state.consent.marketing) return
+  if (state.metaPixelReady || state.marketingInitScheduled) return
+  if (isStaffOpticsActive() || isAdminBrowserPath()) return
+
+  state.marketingInitScheduled = true
+  const run = () => {
+    state.marketingInitScheduled = false
+    if (!state.consent.marketing || state.metaPixelReady) return
+    initMetaPixel()
+  }
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(run, { timeout: 2_000 })
+  } else {
+    globalThis.setTimeout(run, 800)
+  }
+}
+
+function metaPixelFromSiteEvent(name: string, params?: AnalyticsParams) {
+  if (!state.metaPixelReady || !window.fbq || !state.consent.marketing) return
+
+  const value =
+    typeof params?.value === 'number'
+      ? params.value
+      : typeof params?.value === 'string'
+        ? Number(params.value)
+        : undefined
+  const currency = typeof params?.currency === 'string' ? params.currency : 'AED'
+  const contentIds = (() => {
+    if (typeof params?.item_id === 'string') return [params.item_id]
+    if (typeof params?.transaction_id === 'string') return undefined
+    return undefined
+  })()
+
+  const payload: Record<string, unknown> = {}
+  if (Number.isFinite(value)) payload.value = value
+  if (currency) payload.currency = currency
+  if (contentIds) payload.content_ids = contentIds
+  if (typeof params?.item_name === 'string') payload.content_name = params.item_name
+  payload.content_type = 'product'
+
+  switch (name) {
+    case 'page_view':
+      window.fbq('track', 'PageView')
+      break
+    case 'view_item':
+      window.fbq('track', 'ViewContent', payload)
+      break
+    case 'add_to_cart':
+      window.fbq('track', 'AddToCart', payload)
+      break
+    case 'begin_checkout':
+    case 'click_checkout':
+      window.fbq('track', 'InitiateCheckout', payload)
+      break
+    case 'purchase':
+      window.fbq('track', 'Purchase', {
+        ...payload,
+        ...(typeof params?.transaction_id === 'string'
+          ? { order_id: params.transaction_id }
+          : {}),
+      })
+      break
+    default:
+      break
+  }
+}
+
 function applyConsentToTrackers() {
   if (typeof window === 'undefined') return
-  const granted = state.consent.analytics
+  const analyticsGranted = state.consent.analytics
+  const marketingGranted = state.consent.marketing
 
   if (state.gaReady && window.gtag) {
     window.gtag('consent', 'update', {
-      analytics_storage: granted ? 'granted' : 'denied',
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
+      analytics_storage: analyticsGranted ? 'granted' : 'denied',
+      ad_storage: marketingGranted ? 'granted' : 'denied',
+      ad_user_data: marketingGranted ? 'granted' : 'denied',
+      ad_personalization: marketingGranted ? 'granted' : 'denied',
     })
   }
 
   if (state.clarityReady && window.clarity) {
-    applyClarityConsent(granted)
+    applyClarityConsent(analyticsGranted)
   }
 
   if (state.posthogReady && window.posthog) {
-    if (granted) {
+    if (analyticsGranted) {
       window.posthog.opt_in_capturing()
       window.posthog.set_config?.({ disable_session_recording: false })
     } else {
       window.posthog.set_config?.({ disable_session_recording: true })
       window.posthog.opt_out_capturing()
     }
+  }
+
+  if (marketingGranted) {
+    scheduleMarketingInit()
   }
 }
 
@@ -294,6 +399,7 @@ export function initializeAnalytics(consent: ConsentState) {
   state.consent = consent
   if (consent.analytics) scheduleTrackerInit()
   else applyConsentToTrackers()
+  if (consent.marketing) scheduleMarketingInit()
 }
 
 export function updateAnalyticsConsent(consent: ConsentState) {
@@ -305,6 +411,7 @@ export function updateAnalyticsConsent(consent: ConsentState) {
     }
     scheduleTrackerInit()
   }
+  if (consent.marketing) scheduleMarketingInit()
 }
 
 export function trackEvent(name: string, params?: AnalyticsParams) {
@@ -314,7 +421,11 @@ export function trackEvent(name: string, params?: AnalyticsParams) {
       ) as Record<string, string | number | boolean | null | undefined>)
     : undefined
   mirrorDashboardEngagement(name, scalarParams)
-  if (!state.consent.analytics || typeof window === 'undefined') return
+  if (typeof window === 'undefined') return
+
+  metaPixelFromSiteEvent(name, params)
+
+  if (!state.consent.analytics) return
   const cleanParams = toCleanParams(params)
 
   if (name === 'page_view') {

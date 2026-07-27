@@ -232,7 +232,7 @@ export const translations = {
     // Cookie Consent
     cookie: {
       title: 'We value your privacy',
-      message: 'We use cookies, including third-party cookies, for essential site functions, optional analytics (when you consent), and a better browsing experience. Marketing preference is recorded for future advertising tools and does not currently load ad pixels unless separately enabled. Click "Accept all cookies" to allow optional cookies, "Cookies settings" to review categories, or "Reject all cookies" to keep only essential cookies. You can change preferences anytime via Cookie settings in the website footer.',
+      message: 'We use cookies, including third-party cookies, for essential site functions, optional analytics (when you consent), and a better browsing experience. Marketing cookies (when you consent) may load the Meta Pixel for catalog ads and Instagram Shopping. Click "Accept all cookies" to allow optional cookies, "Cookies settings" to review categories, or "Reject all cookies" to keep only essential cookies. You can change preferences anytime via Cookie settings in the website footer.',
       learnMore: 'More Information',
       acceptAll: 'Accept all cookies',
       essentialOnly: 'Reject all cookies',
@@ -246,7 +246,7 @@ export const translations = {
       optional: 'Optional',
       essentialDesc: 'Required for the website to function properly. Cannot be disabled.',
       analyticsDesc: 'Help us understand how visitors interact with our website.',
-      marketingDesc: 'Reserved for future advertising tools. Not currently used to load ad pixels on this site.',
+      marketingDesc: 'Loads the Meta Pixel when you opt in, so we can measure catalog ads and Instagram Shopping (views, bag, checkout, purchase).',
     },
     
     // Search

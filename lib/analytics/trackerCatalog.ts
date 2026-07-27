@@ -1,4 +1,4 @@
-export type TrackerKey = 'ga4' | 'clarity' | 'posthog'
+export type TrackerKey = 'ga4' | 'clarity' | 'posthog' | 'meta_pixel'
 
 export type TrackerCookieInfo = {
   name: string
@@ -9,7 +9,7 @@ export type TrackerCookieInfo = {
 export type TrackerInfo = {
   key: TrackerKey
   title: string
-  category: 'analytics' | 'behavioral'
+  category: 'analytics' | 'behavioral' | 'marketing'
   envVar: string
   description: string
   cookies: TrackerCookieInfo[]
@@ -53,6 +53,18 @@ export const TRACKER_CATALOG: TrackerInfo[] = [
       { name: 'ph_*', purpose: 'Stores pseudonymous analytics identifiers and session state', retention: 'up to 1 year' },
     ],
   },
+  {
+    key: 'meta_pixel',
+    title: 'Meta Pixel',
+    category: 'marketing',
+    envVar: 'NEXT_PUBLIC_META_PIXEL_ID',
+    description:
+      'Measures catalog ads and Instagram Shopping performance (PageView, ViewContent, AddToCart, InitiateCheckout, Purchase) when marketing cookies are accepted.',
+    cookies: [
+      { name: '_fbp', purpose: 'Browser identifier for Meta advertising', retention: 'up to 3 months' },
+      { name: '_fbc', purpose: 'Click identifier when arriving from Meta ads', retention: 'up to 3 months' },
+    ],
+  },
 ]
 
 export function getEnabledTrackersFromEnv() {
@@ -60,11 +72,13 @@ export function getEnabledTrackersFromEnv() {
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID?.trim()
   const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY?.trim()
   const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST?.trim()
+  const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim()
 
   return TRACKER_CATALOG.filter((tracker) => {
     if (tracker.key === 'ga4') return Boolean(ga4Id)
     if (tracker.key === 'clarity') return Boolean(clarityId)
     if (tracker.key === 'posthog') return Boolean(posthogKey && posthogHost)
+    if (tracker.key === 'meta_pixel') return Boolean(metaPixelId)
     return false
   })
 }
