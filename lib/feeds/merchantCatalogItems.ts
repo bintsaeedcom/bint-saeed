@@ -4,6 +4,8 @@
  * No GTIN — identifier_exists=false; MPN = house SKU.
  */
 
+import fs from 'fs'
+import path from 'path'
 import { accessories, isAccessoryShopVisible, type Accessory } from '@/data/accessories'
 import type { Product } from '@/data/products'
 import { getAccessorySku } from '@/lib/accessories/accessorySku'
@@ -18,6 +20,19 @@ import { resolveProductSku } from '@/lib/products/sku'
 import { getPdpSizeOptions } from '@/lib/shopProductOptions'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
+
+/** Skip feed rows whose primary asset is missing from `/public` (prevents GMC image 404s). */
+function publicAssetExists(src: string): boolean {
+  if (!src || src.startsWith('http://') || src.startsWith('https://')) return Boolean(src)
+  const rel = (src.startsWith('/') ? src.slice(1) : src).replace(/^\/+/, '')
+  let decoded = rel
+  try {
+    decoded = decodeURIComponent(rel)
+  } catch {
+    /* keep rel */
+  }
+  return fs.existsSync(path.join(process.cwd(), 'public', decoded))
+}
 
 export type MerchantCatalogItem = {
   id: string
@@ -144,7 +159,7 @@ function buildShopItems(products: Product[]): MerchantCatalogItem[] {
 
     for (const color of colorsToEmit) {
       const colorName = color.name || undefined
-      const images = getProductImagesForColor(product, colorName)
+      const images = getProductImagesForColor(product, colorName).filter((src) => publicAssetExists(src))
       const primary = images[0]
       if (!primary) continue
 
@@ -197,10 +212,10 @@ function buildShopItems(products: Product[]): MerchantCatalogItem[] {
 
 function buildAccessoryItems(items: readonly Accessory[]): MerchantCatalogItem[] {
   return items
-    .filter((item) => isAccessoryShopVisible(item) && item.images[0])
+    .filter((item) => isAccessoryShopVisible(item) && item.images[0] && publicAssetExists(item.images[0]))
     .map((item) => {
       const sku = (getAccessorySku(item) ?? item.id).slice(0, 50)
-      const images = item.images
+      const images = item.images.filter((src) => publicAssetExists(src))
       return {
         id: sku,
         item_group_id: sku,

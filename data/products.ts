@@ -422,7 +422,7 @@ function sohoSetGallery(color: 'black' | 'navy-blue'): string[] {
 
 const HYDE_PARK_SET_DIR = '/Webshop pictures/Sets/Hyde Park Set'
 
-function hydeParkSetGallery(color: 'black' | 'navy-blue'): string[] {
+function hydeParkSetGallery(color: 'black'): string[] {
   const base = `${HYDE_PARK_SET_DIR}/bint-saeed-hyde-park-set-${color}`
   return [
     `${base}-front.webp`,
@@ -576,12 +576,8 @@ export const products: Product[] = [
     images: hydeParkSetGallery('black'),
     colorImages: {
       'Deep Black': hydeParkSetGallery('black'),
-      'Navy Blue': hydeParkSetGallery('navy-blue'),
     },
-    colors: [
-      { name: 'Deep Black', hex: '#1a1a1a' },
-      { name: 'Navy Blue', hex: '#1f3a5f' },
-    ],
+    colors: [{ name: 'Deep Black', hex: '#1a1a1a' }],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Sets',
   },
