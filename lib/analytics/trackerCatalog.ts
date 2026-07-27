@@ -59,7 +59,7 @@ export const TRACKER_CATALOG: TrackerInfo[] = [
     category: 'marketing',
     envVar: 'NEXT_PUBLIC_META_PIXEL_ID',
     description:
-      'Measures catalog ads and Instagram Shopping performance (PageView, ViewContent, AddToCart, InitiateCheckout, Purchase) when marketing cookies are accepted.',
+      'Measures catalog ads and Instagram Shopping (browser Pixel + server Conversions API with shared event IDs) when marketing cookies are accepted.',
     cookies: [
       { name: '_fbp', purpose: 'Browser identifier for Meta advertising', retention: 'up to 3 months' },
       { name: '_fbc', purpose: 'Click identifier when arriving from Meta ads', retention: 'up to 3 months' },

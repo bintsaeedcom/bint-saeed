@@ -14,6 +14,7 @@ import { commitRedeemForPaidOrder } from '@/lib/giftCards/applyAtCheckout'
 import { appliedGiftCardFromStripeMetadata } from '@/lib/giftCards/stripeGiftCardMeta'
 import type { CheckoutCartItem } from '@/lib/checkout/types'
 import { isGiftCardLineId } from '@/lib/giftCards/cartDetection'
+import { sendMetaCapiPurchaseFromOrder } from '@/lib/analytics/metaCapi'
 
 export const runtime = 'nodejs'
 
@@ -344,6 +345,18 @@ export async function POST(request: NextRequest) {
 
         const order = buildOrderFromSession(full)
         await saveOrder(order)
+        void sendMetaCapiPurchaseFromOrder({
+          eventIdSuffix: full.id,
+          value: order.amountTotal,
+          currency: order.currency,
+          contentIds: order.lines
+            .map((line) => line.productId)
+            .filter((id): id is string => Boolean(id)),
+          orderId: order.id,
+          email: order.customerEmail,
+          phone: order.customerPhone,
+          clientIpAddress: full.metadata?.clientIp || undefined,
+        })
         await notifyOrderChannel(full)
         await createTrelloCardForOrder(order, {
           sessionId: full.id,

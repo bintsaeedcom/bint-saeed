@@ -231,8 +231,9 @@ function initMetaPixel() {
   }
 
   window.fbq!('init', pixelId)
-  window.fbq!('track', 'PageView')
   state.metaPixelReady = true
+  // Initial PageView (SPA navigations use trackEvent('page_view') with the same dedupe pattern).
+  metaPixelFromSiteEvent('page_view')
 }
 
 function scheduleMarketingInit() {
@@ -254,8 +255,69 @@ function scheduleMarketingInit() {
   }
 }
 
+function readMetaBrowserCookies(): { fbp?: string; fbc?: string } {
+  if (typeof document === 'undefined') return {}
+  const out: { fbp?: string; fbc?: string } = {}
+  for (const part of document.cookie.split(';')) {
+    const [rawKey, ...rest] = part.trim().split('=')
+    const key = rawKey?.trim()
+    const value = rest.join('=').trim()
+    if (!key || !value) continue
+    if (key === '_fbp') out.fbp = decodeURIComponent(value).slice(0, 200)
+    if (key === '_fbc') out.fbc = decodeURIComponent(value).slice(0, 500)
+  }
+  return out
+}
+
+function newMetaEventId(prefix: string): string {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return `${prefix}_${crypto.randomUUID()}`
+  }
+  return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`
+}
+
+function sendMetaCapiBeacon(input: {
+  eventName: string
+  eventId: string
+  value?: number
+  currency?: string
+  contentIds?: string[]
+  contentName?: string
+  orderId?: string
+}) {
+  if (typeof window === 'undefined' || !state.consent.marketing) return
+  const cookies = readMetaBrowserCookies()
+  const body = JSON.stringify({
+    eventName: input.eventName,
+    eventId: input.eventId,
+    eventSourceUrl: window.location.href,
+    value: input.value,
+    currency: input.currency,
+    contentIds: input.contentIds,
+    contentName: input.contentName,
+    orderId: input.orderId,
+    fbp: cookies.fbp,
+    fbc: cookies.fbc,
+    marketingConsent: true,
+  })
+  try {
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon('/api/analytics/meta-capi', new Blob([body], { type: 'application/json' }))
+      return
+    }
+  } catch {
+    /* fall through */
+  }
+  void fetch('/api/analytics/meta-capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body,
+    keepalive: true,
+  }).catch(() => {})
+}
+
 function metaPixelFromSiteEvent(name: string, params?: AnalyticsParams) {
-  if (!state.metaPixelReady || !window.fbq || !state.consent.marketing) return
+  if (!state.consent.marketing) return
 
   const value =
     typeof params?.value === 'number'
@@ -264,44 +326,50 @@ function metaPixelFromSiteEvent(name: string, params?: AnalyticsParams) {
         ? Number(params.value)
         : undefined
   const currency = typeof params?.currency === 'string' ? params.currency : 'AED'
-  const contentIds = (() => {
-    if (typeof params?.item_id === 'string') return [params.item_id]
-    if (typeof params?.transaction_id === 'string') return undefined
-    return undefined
-  })()
+  const contentIds =
+    typeof params?.item_id === 'string' ? [params.item_id] : undefined
+  const contentName = typeof params?.item_name === 'string' ? params.item_name : undefined
+  const orderId =
+    typeof params?.transaction_id === 'string' ? params.transaction_id : undefined
 
-  const payload: Record<string, unknown> = {}
+  const payload: Record<string, unknown> = { content_type: 'product' }
   if (Number.isFinite(value)) payload.value = value
   if (currency) payload.currency = currency
   if (contentIds) payload.content_ids = contentIds
-  if (typeof params?.item_name === 'string') payload.content_name = params.item_name
-  payload.content_type = 'product'
+  if (contentName) payload.content_name = contentName
+  if (orderId) payload.order_id = orderId
 
-  switch (name) {
-    case 'page_view':
-      window.fbq('track', 'PageView')
-      break
-    case 'view_item':
-      window.fbq('track', 'ViewContent', payload)
-      break
-    case 'add_to_cart':
-      window.fbq('track', 'AddToCart', payload)
-      break
-    case 'begin_checkout':
-    case 'click_checkout':
-      window.fbq('track', 'InitiateCheckout', payload)
-      break
-    case 'purchase':
-      window.fbq('track', 'Purchase', {
-        ...payload,
-        ...(typeof params?.transaction_id === 'string'
-          ? { order_id: params.transaction_id }
-          : {}),
-      })
-      break
-    default:
-      break
+  const map: Record<string, string> = {
+    page_view: 'PageView',
+    view_item: 'ViewContent',
+    add_to_cart: 'AddToCart',
+    begin_checkout: 'InitiateCheckout',
+    click_checkout: 'InitiateCheckout',
+    purchase: 'Purchase',
   }
+  const metaName = map[name]
+  if (!metaName) return
+
+  const eventId =
+    orderId && metaName === 'Purchase' ? `purchase_${orderId}` : newMetaEventId(metaName)
+
+  if (state.metaPixelReady && window.fbq) {
+    if (metaName === 'PageView') {
+      window.fbq('track', 'PageView', undefined, { eventID: eventId })
+    } else {
+      window.fbq('track', metaName, payload, { eventID: eventId })
+    }
+  }
+
+  sendMetaCapiBeacon({
+    eventName: metaName,
+    eventId,
+    value: Number.isFinite(value) ? value : undefined,
+    currency,
+    contentIds,
+    contentName,
+    orderId,
+  })
 }
 
 function applyConsentToTrackers() {
