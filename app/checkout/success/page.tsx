@@ -60,6 +60,8 @@ function CheckoutSuccessContent() {
     orderRef
 
   useEffect(() => {
+    void import('@/lib/analytics/cartSlack').then((m) => m.clearCheckoutStarted())
+
     if (!referenceId) {
       setConfirmState('pending')
       return

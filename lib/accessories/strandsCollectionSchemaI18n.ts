@@ -349,14 +349,20 @@ export function buildStrandsCollectionJsonLd(locale: AppLocale = 'en'): Record<s
       name: semantic.alAinCollectionName,
       url: `${SITE_URL}${localizedPath(locale, '/accessories')}`,
     },
-    offers: {
-      '@type': 'AggregateOffer',
-      lowPrice: String(Math.min(...strands.map((s) => s.price))),
-      highPrice: String(Math.max(...strands.map((s) => s.price))),
-      priceCurrency: 'AED',
-      offerCount: String(strands.length),
-      availability: 'https://schema.org/InStock',
-    },
+    offers: withMerchantListingOfferFields(
+      {
+        '@type': 'AggregateOffer',
+        lowPrice: String(Math.min(...strands.map((s) => s.price))),
+        highPrice: String(Math.max(...strands.map((s) => s.price))),
+        priceCurrency: 'AED',
+        offerCount: String(strands.length),
+        availability: 'https://schema.org/InStock',
+      },
+      {
+        price: Math.min(...strands.map((s) => s.price)),
+        currency: 'AED',
+      },
+    ),
     mainEntity: {
       '@type': 'ItemList',
       name: copy.itemListName,

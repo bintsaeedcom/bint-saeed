@@ -10,6 +10,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { resolveProductSku } from '@/lib/products/sku'
 import { getProductColorOptions } from '@/lib/products/productColorAvailability'
+import { getPdpSizeOptions } from '@/lib/shopProductOptions'
 import { getProductPdpContent } from '@/data/productPdpContent'
 import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
 import { buildLocalizedSchemaDescription } from '@/lib/products/productSchemaI18n'
@@ -192,6 +193,7 @@ function schemaAudience(locale: AppLocale, slug: string, product: Product) {
   return {
     '@type': 'PeopleAudience' as const,
     suggestedGender: 'female' as const,
+    suggestedMinAge: 13,
     audienceType: appendGlobalPdpSchemaAudienceExtension(audienceType, locale),
   }
 }
@@ -261,6 +263,7 @@ function buildProductNode(
   const color = input.variantColor ?? input.selectedColor
   const images = input.variantImages ?? input.activeImages
   const sku = resolveProductSku(product, color) ?? product.id
+  const sizes = getPdpSizeOptions(product.category, product.sizes ?? [], slug)
 
   return {
     '@type': 'Product' as const,
@@ -271,6 +274,7 @@ function buildProductNode(
     brand: { '@type': 'Brand' as const, name: 'Bint Saeed' },
     category: product.category,
     color: color || product.colors[0]?.name,
+    size: sizes.join('/'),
     image: buildImageObjects(product, images, color, input.lang, input.locale),
     offers: buildOffer(product, input.pageUrl),
     ...schemaSharedFields(product, slug, input.locale, color, input.lang),
@@ -298,6 +302,7 @@ export function buildShopProductJsonLd(input: {
   let productNode: Record<string, unknown>
 
   if (product.colorImages && Object.keys(product.colorImages).length > 0) {
+    const groupSizes = getPdpSizeOptions(product.category, product.sizes ?? [], slug)
     productNode = {
       '@type': 'ProductGroup',
       '@id': `${pageUrl}#product`,
@@ -305,6 +310,7 @@ export function buildShopProductJsonLd(input: {
       productGroupID: product.id,
       variesBy: 'https://schema.org/color',
       category: product.category,
+      size: groupSizes.join('/'),
       brand: { '@type': 'Brand', name: 'Bint Saeed' },
       image: buildImageObjects(product, activeImages, selectedColor, lang, locale),
       ...schemaSharedFields(product, slug, locale, selectedColor, lang),

@@ -1491,10 +1491,13 @@ function notifDetail(n: Notification): string {
           ? `Cart: ${d.productName}`
           : 'Cart activity'
     case 'abandoned_cart':
+      return d.cartValueAed
+        ? `Abandoned bag — ${formatAed(Number(d.cartValueAed))} at risk`
+        : 'Left with items in bag'
     case 'checkout_abandoned':
       return d.cartValueAed
-        ? `Left checkout — ${formatAed(Number(d.cartValueAed))} at risk`
-        : 'Left without completing payment'
+        ? `Left checkout unpaid — ${formatAed(Number(d.cartValueAed))} at risk`
+        : 'Left checkout without paying'
     case 'checkout_started':
       return 'Started checkout'
     case 'contact_captured':

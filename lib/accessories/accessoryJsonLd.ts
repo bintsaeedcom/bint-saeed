@@ -453,6 +453,7 @@ function buildPhoneCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown>
     audience: {
       '@type': 'PeopleAudience',
       suggestedGender: 'female',
+      suggestedMinAge: 13,
       audienceType: appendGlobalPdpSchemaAudienceExtension(
         getPhoneCharmSchemaAudience(locale),
         locale,
@@ -485,18 +486,21 @@ function buildPhoneCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown>
       ...(lang ? { inLanguage: lang } : {}),
       representativeOfPage: index === 0,
     })),
-    offers: {
-      '@type': 'AggregateOffer',
-      priceCurrency: 'AED',
-      lowPrice: String(aedPrice),
-      highPrice: String(aedPrice),
-      offerCount: String(multiOffers.length),
-      availability: accessory.inStock
-        ? 'https://schema.org/InStock'
-        : 'https://schema.org/OutOfStock',
-      url: pageUrl,
-      offers: multiOffers,
-    },
+    offers: withMerchantListingOfferFields(
+      {
+        '@type': 'AggregateOffer',
+        priceCurrency: 'AED',
+        lowPrice: String(aedPrice),
+        highPrice: String(aedPrice),
+        offerCount: String(multiOffers.length),
+        availability: accessory.inStock
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
+        url: pageUrl,
+        offers: multiOffers,
+      },
+      { price: aedPrice, currency: 'AED' },
+    ),
     ...phoneCharmSemanticLinks(accessory, displayName, pageUrl, locale),
   }
 
@@ -613,6 +617,7 @@ function buildBagCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown> {
     audience: {
       '@type': 'PeopleAudience',
       suggestedGender: 'female',
+      suggestedMinAge: 13,
       audienceType: appendGlobalPdpSchemaAudienceExtension(
         getBagCharmSchemaAudience(locale),
         locale,
@@ -655,18 +660,21 @@ function buildBagCharmJsonLdGraph(input: JsonLdInput): Record<string, unknown> {
       ...(lang ? { inLanguage: lang } : {}),
       representativeOfPage: index === 0,
     })),
-    offers: {
-      '@type': 'AggregateOffer',
-      priceCurrency: 'AED',
-      lowPrice: String(aedPrice),
-      highPrice: String(aedPrice),
-      offerCount: String(multiOffers.length),
-      availability: accessory.inStock
-        ? 'https://schema.org/InStock'
-        : 'https://schema.org/OutOfStock',
-      url: pageUrl,
-      offers: multiOffers,
-    },
+    offers: withMerchantListingOfferFields(
+      {
+        '@type': 'AggregateOffer',
+        priceCurrency: 'AED',
+        lowPrice: String(aedPrice),
+        highPrice: String(aedPrice),
+        offerCount: String(multiOffers.length),
+        availability: accessory.inStock
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
+        url: pageUrl,
+        offers: multiOffers,
+      },
+      { price: aedPrice, currency: 'AED' },
+    ),
     ...bagCharmSemanticLinks(accessory, displayName, pageUrl, locale),
   }
 
@@ -770,6 +778,7 @@ function buildSignatureStrandJsonLdGraph(input: JsonLdInput): Record<string, unk
     audience: {
       '@type': 'PeopleAudience',
       suggestedGender: 'female',
+      suggestedMinAge: 13,
       audienceType: appendGlobalPdpSchemaAudienceExtension(
         getSignatureStrandSchemaAudience(locale),
         locale,
@@ -908,6 +917,7 @@ function buildNecklaceEarringJsonLdGraph(input: JsonLdInput): Record<string, unk
     audience: {
       '@type': 'PeopleAudience',
       suggestedGender: 'female',
+      suggestedMinAge: 13,
       audienceType: appendGlobalPdpSchemaAudienceExtension(
         getNecklaceEarringSchemaAudience(audienceCategory, locale),
         locale,
@@ -992,6 +1002,7 @@ export function buildAccessoryProductJsonLd({
       ? {
           '@type': 'PeopleAudience',
           suggestedGender: 'female',
+          suggestedMinAge: 13,
           audienceType: appendGlobalPdpSchemaAudienceExtension(
             getNecklaceEarringSchemaAudience(accessory.category, locale),
             locale,
@@ -1000,6 +1011,7 @@ export function buildAccessoryProductJsonLd({
       : {
           '@type': 'PeopleAudience',
           suggestedGender: 'female',
+          suggestedMinAge: 13,
           audienceType: appendGlobalPdpSchemaAudienceExtension(
             'Women styling Marylebone Abaya with interchangeable natural stone bead strands and matching jewellery',
             locale,

@@ -16,6 +16,34 @@ const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com
 
 const RETURN_POLICY_URL = `${SITE_URL}/shipment-return-policy`
 
+/**
+ * ISO countries covered by international flat shipping (excludes AE — separate rate).
+ * Keep aligned with PDP areaServed + markets Google already surfaces (FR/DE/NL/PT/ES/IT).
+ */
+export const MERCHANT_INTL_SHIP_TO_COUNTRIES = [
+  'SA',
+  'QA',
+  'KW',
+  'BH',
+  'OM',
+  'GB',
+  'FR',
+  'DE',
+  'IT',
+  'ES',
+  'NL',
+  'PT',
+  'BE',
+  'CH',
+  'US',
+  'CA',
+  'AU',
+  'SG',
+  'MY',
+  'ID',
+  'BN',
+] as const
+
 /** Absolute asset URL for schema `image` fields. */
 export function absoluteSchemaAssetUrl(src: string, siteUrl: string = SITE_URL): string {
   if (!src) return siteUrl
@@ -23,7 +51,7 @@ export function absoluteSchemaAssetUrl(src: string, siteUrl: string = SITE_URL):
   return `${siteUrl}${src.startsWith('/') ? src : `/${src}`}`
 }
 
-function shippingDestination(countryCode: string) {
+function shippingDestination(countryCode: string | readonly string[]) {
   return {
     '@type': 'DefinedRegion' as const,
     addressCountry: countryCode,
@@ -54,8 +82,8 @@ function deliveryTime(
 }
 
 /**
- * UAE + worldwide OfferShippingDetails for the listed offer currency.
- * Uses under-threshold flat fees; free when merchandise price meets published thresholds.
+ * UAE + international OfferShippingDetails for the listed offer currency.
+ * International destinations always include `addressCountry` (GSC requirement).
  */
 export function buildOfferShippingDetails(input: {
   price: number
@@ -87,10 +115,7 @@ export function buildOfferShippingDetails(input: {
         value: String(intlFee),
         currency,
       },
-      shippingDestination: {
-        '@type': 'DefinedRegion',
-        name: 'Worldwide',
-      },
+      shippingDestination: shippingDestination(MERCHANT_INTL_SHIP_TO_COUNTRIES),
       deliveryTime: deliveryTime(0, 12, 3, 10),
     },
   ]

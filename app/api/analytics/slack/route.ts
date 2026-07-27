@@ -704,7 +704,9 @@ function formatSlackMessage(type: string, data: any) {
       }
     }
 
-    case 'abandoned_cart': {
+    case 'abandoned_cart':
+    case 'checkout_abandoned': {
+      const leftCheckout = type === 'checkout_abandoned'
       const itemLines =
         Array.isArray(data.items) && data.items.length > 0
           ? data.items
@@ -718,7 +720,11 @@ function formatSlackMessage(type: string, data: any) {
         blocks: [
           {
             type: 'header',
-            text: { type: 'plain_text', text: '🛍️ Abandoned bag', emoji: true },
+            text: {
+              type: 'plain_text',
+              text: leftCheckout ? '💳 Left checkout unpaid' : '🛍️ Abandoned bag',
+              emoji: true,
+            },
           },
           {
             type: 'section',
