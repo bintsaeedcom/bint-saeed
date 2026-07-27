@@ -215,12 +215,30 @@ const nextConfig = {
       { source: '/accessoiries/:path*', destination: '/accessories/:path*', permanent: true },
       { source: '/collections', destination: '/shop', permanent: true },
       { source: '/collections/:path*', destination: '/shop/:path*', permanent: true },
-      ...LEGACY_SHOP_SLUG_REDIRECTS.map(([from, to]) => ({
-        source: `/shop/${from}`,
-        destination: `/shop/${to}`,
+      ...LEGACY_SHOP_SLUG_REDIRECTS.flatMap(([from, to]) => [
+        {
+          source: `/shop/${from}`,
+          destination: `/shop/${to}`,
+          permanent: true,
+        },
+        ...['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms'].map((locale) => ({
+          source: `/${locale}/shop/${from}`,
+          destination: `/${locale}/shop/${to}`,
+          permanent: true,
+        })),
+      ]),
+      { source: '/heritage/sadu', destination: '/heritage/khous', permanent: true },
+      ...['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms'].map((locale) => ({
+        source: `/${locale}/heritage/sadu`,
+        destination: `/${locale}/heritage/khous`,
         permanent: true,
       })),
-      { source: '/heritage/sadu', destination: '/heritage/khous', permanent: true },
+      { source: '/product-care', destination: '/personalisation', permanent: true },
+      ...['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms'].map((locale) => ({
+        source: `/${locale}/product-care`,
+        destination: `/${locale}/personalisation`,
+        permanent: true,
+      })),
       // Mega menu collection nav — legacy PNG paths → webp
       ...[
         'bint-saeed-all-strands-collection-nav',

@@ -1,6 +1,6 @@
-import { noIndexMetadata } from '@/lib/seo'
+import { sectionRobotsMetadata } from '@/lib/seo'
 
-export const metadata = noIndexMetadata
+export const metadata = sectionRobotsMetadata
 
 /** Ensures shop always gets a fresh render with search params (avoids stale static shell without styles/JS). */
 export const dynamic = 'force-dynamic'

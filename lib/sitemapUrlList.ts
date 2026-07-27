@@ -25,16 +25,15 @@ function entry(path: string, changefreq: string, priority: string): SitemapUrlEn
 }
 
 /**
- * Human-facing hubs / editorial for EN + every prefixed locale
- * (ar, fr, it, es, ru, zh, de, nl, pt, id, ms).
- * PDPs already come from catalogUrls for all locales.
- * Machine files (llms.txt, openapi) stay EN-only.
+ * Human-facing hubs / editorial for EN + every prefixed locale.
+ * No query-string URLs (Google treats them as weak / duplicate).
+ * No `/` — public launch 308-redirects `/` → `/home` (would show as "Page with redirect").
+ * Machine files (llms.txt, openapi) stay off the HTML sitemap.
  */
 const INDEXABLE_HUBS: { path: string; changefreq: string; priority: string }[] = [
   { path: '/home', changefreq: 'weekly', priority: '1.0' },
   { path: '/shop', changefreq: 'weekly', priority: '0.9' },
   { path: '/accessories', changefreq: 'weekly', priority: '0.9' },
-  { path: '/accessories?type=signature-strands', changefreq: 'weekly', priority: '0.88' },
   { path: '/strands', changefreq: 'weekly', priority: '0.9' },
   { path: '/personalisation', changefreq: 'weekly', priority: '0.9' },
   { path: '/about', changefreq: 'monthly', priority: '0.7' },
@@ -56,18 +55,11 @@ const INDEXABLE_HUBS: { path: string; changefreq: string; priority: string }[] =
 ]
 
 function buildEnglishSiteUrls(): SitemapUrlEntry[] {
-  return [
-    entry('/', 'weekly', '1.0'),
-    entry('/llms.txt', 'monthly', '0.6'),
-    entry('/openapi.json', 'monthly', '0.5'),
-    ...INDEXABLE_HUBS.map((h) => entry(h.path, h.changefreq, h.priority)),
-  ]
+  return INDEXABLE_HUBS.map((h) => entry(h.path, h.changefreq, h.priority))
 }
 
 function hubPathForLocale(locale: LocalePrefix, hubPath: string): string {
-  const pathOnly = hubPath.split('?')[0] || hubPath
-  const query = hubPath.includes('?') ? `?${hubPath.split('?')[1]}` : ''
-  return `${localizedPath(locale, pathOnly)}${query}`
+  return localizedPath(locale, hubPath)
 }
 
 /** Prefixed-locale hubs (ar/fr/it/…) — pairs with EN hubs + multilang PDPs from catalogUrls. */
@@ -83,7 +75,6 @@ function buildLocalizedHubUrls(): SitemapUrlEntry[] {
 
 /** Prelaunch tease only — do not feed unfinished shop URLs to crawlers. */
 const prelaunchUrls: SitemapUrlEntry[] = [
-  entry('/', 'weekly', '1.0'),
   entry('/home', 'weekly', '1.0'),
 ]
 

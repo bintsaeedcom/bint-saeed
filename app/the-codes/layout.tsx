@@ -4,10 +4,12 @@ import {
   CODES_HERO,
   CODES_IMAGE_FILES,
 } from '@/lib/the-codes/codesPageContent'
+import { sectionRobotsMetadata } from '@/lib/seo'
 
 const KHOUS_HERITAGE_IMAGE = absoluteCodesPageImageUrl(CODES_IMAGE_FILES.khous)
 
 export const metadata: Metadata = {
+  ...sectionRobotsMetadata,
   title: { absolute: 'Bint Saeed | The Codes' },
   description:
     'The house codes — Al Talli, Al Khous, Al Ain Rosette, Knotted Lines, and the monogram — told in one continuous story.',
