@@ -24,6 +24,9 @@ const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com
 /** Skip feed rows whose primary asset is missing from `/public` (prevents GMC image 404s). */
 function publicAssetExists(src: string): boolean {
   if (!src || src.startsWith('http://') || src.startsWith('https://')) return Boolean(src)
+  // On Vercel serverless, `/public` assets are not always on the function filesystem.
+  // Rely on catalog data there; local/CI still catch missing files before ship.
+  if (process.env.VERCEL) return true
   const rel = (src.startsWith('/') ? src.slice(1) : src).replace(/^\/+/, '')
   let decoded = rel
   try {

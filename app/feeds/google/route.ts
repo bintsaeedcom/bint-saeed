@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
       headers: {
         'Content-Type': 'text/tab-separated-values; charset=utf-8',
         'Content-Disposition': 'attachment; filename="google-merchant.txt"',
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=3600',
         'X-Content-Type-Options': 'nosniff',
       },
     })
