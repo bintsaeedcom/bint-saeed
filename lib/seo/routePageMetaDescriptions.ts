@@ -45,25 +45,25 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   shop_index: {
     en:
-      'Shop Bint Saeed online — luxury abayas from Abu Dhabi, UAE. Heritage-led design, jewellery and lifestyle pieces; delivery across the UAE and GCC.',
+      'Bint Saeed — shop luxury abayas from Abu Dhabi, UAE. Heritage-led design, jewellery and lifestyle pieces; delivery across the UAE and GCC.',
     ar:
-      'تسوّقي أونلاين من بِنت سعيد: دار عبايات فاخرة في أبوظبي، مجوهرات وقطع أسلوب حياة، تصميم مستند إلى التراث الإماراتي مع توصيل في الإمارات والخليج.',
+      'بِنت سعيد — تسوّقي أونلاين عبايات فاخرة من أبوظبي، مجوهرات وقطع أسلوب حياة، تصميم مستند إلى التراث الإماراتي مع توصيل في الإمارات والخليج.',
     fr:
-      'Boutique en ligne Bint Saeed — abayas de luxe depuis Abu Dhabi : pièces inspirées du patrimoine émirati, bijoux et lifestyle ; livraison EAU & GCC.',
+      'Bint Saeed — boutique en ligne : abayas de luxe depuis Abu Dhabi, pièces inspirées du patrimoine émirati, bijoux et lifestyle ; livraison EAU & GCC.',
     it:
-      'Shop online Bint Saeed — abaya di lusso da Abu Dhabi: design legato al patrimonio emiratino, gioielli e lifestyle; spedizioni UAE e GCC.',
+      'Bint Saeed — shop online: abaya di lusso da Abu Dhabi, design legato al patrimonio emiratino, gioielli e lifestyle; spedizioni UAE e GCC.',
     es:
-      'Tienda oficial Bint Saeed — abayas de lujo desde Abu Dhabi: diseño ligado al patrimonio emiratí, joyas y lifestyle; envíos EAU y Golfo.',
+      'Bint Saeed — tienda oficial: abayas de lujo desde Abu Dhabi, diseño ligado al patrimonio emiratí, joyas y lifestyle; envíos EAU y Golfo.',
     ru:
-      'Интернет‑магазин Bint Saeed — роскошные абайи из Абу‑Даби: эмиратские коды дизайна, украшения и lifestyle; доставка по ОАЭ и странам GCC.',
+      'Bint Saeed — интернет‑магазин роскошных абай из Абу‑Даби: эмиратские коды дизайна, украшения и lifestyle; доставка по ОАЭ и странам GCC.',
     zh:
-      '在 Bint Saeed 官方网店选购阿布扎比奢华阿巴亚：融合阿联酋传统工艺与珠宝、生活方式单品；阿联酋与海合会地区配送。',
+      'Bint Saeed — 官方网店选购阿布扎比奢华阿巴亚：融合阿联酋传统工艺与珠宝、生活方式单品；阿联酋与海合会地区配送。',
     de:
-      'Bint Saeed Online‑Shop — Luxus‑Abayas aus Abu Dhabi: erbegeprägte Designs, Schmuck und Lifestyle; Lieferung in die VAE und GCC.',
+      'Bint Saeed — Online‑Shop für Luxus‑Abayas aus Abu Dhabi: erbegeprägte Designs, Schmuck und Lifestyle; Lieferung in die VAE und GCC.',
     nl:
-      'Shop Bint Saeed — luxe abaya’s uit Abu Dhabi: erfgoedrijke patronen, sieraden en lifestyle; levering in VAE en GCC‑landen.',
+      'Bint Saeed — shop luxe abaya’s uit Abu Dhabi: erfgoedrijke patronen, sieraden en lifestyle; levering in VAE en GCC‑landen.',
     pt:
-      'Loja online Bint Saeed — abayas de luxo de Abu Dhabi: silhuetas ligadas ao património emiradense, joalharia e lifestyle; envios EAU e Golfo.',
+      'Bint Saeed — loja online de abayas de luxo de Abu Dhabi: silhuetas ligadas ao património emiradense, joalharia e lifestyle; envios EAU e Golfo.',
   },
   product: {
     en:
@@ -111,25 +111,25 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   contact: {
     en:
-      'Contact Bint Saeed in Abu Dhabi — customer care for orders, sizing and delivery across the UAE, GCC and international destinations where available.',
+      'Bint Saeed — contact the Abu Dhabi house for orders, sizing and delivery across the UAE, GCC and international destinations where available.',
     ar:
-      'تواصلي مع بِنت سعيد في أبوظبي، خدمة عملاء للطلبات والمقاسات والتوصيل داخل الإمارات ودول الخليج والوجهات الدولية عند توفرها.',
+      'بِنت سعيد — تواصلي معنا في أبوظبي لخدمة العملاء للطلبات والمقاسات والتوصيل داخل الإمارات ودول الخليج والوجهات الدولية عند توفرها.',
     fr:
-      'Contacter Bint Saeed à Abu Dhabi : service client pour commandes, tailles et livraison aux Émirats, GCC et destinations internationales disponibles.',
+      'Bint Saeed — contactez la maison à Abu Dhabi : service client pour commandes, tailles et livraison aux Émirats, GCC et destinations internationales disponibles.',
     it:
-      'Contatta Bint Saeed ad Abu Dhabi: assistenza su ordini, taglie e consegna negli Emirati, GCC e dove il servizio è attivo.',
+      'Bint Saeed — contatti ad Abu Dhabi: assistenza su ordini, taglie e consegna negli Emirati, GCC e dove il servizio è attivo.',
     es:
-      'Contacto Bint Saeed en Abu Dhabi: atención para pedidos, tallas y envíos en EAU, Golfo y destinos internacionales disponibles.',
+      'Bint Saeed — contacto en Abu Dhabi: atención para pedidos, tallas y envíos en EAU, Golfo y destinos internacionales disponibles.',
     ru:
-      'Контакты Bint Saeed (Абу‑Даби): поддержка по заказам, размерам и доставке в ОАЭ, страны GCC и на международные направления по условиям сайта.',
+      'Bint Saeed — контакты в Абу‑Даби: поддержка по заказам, размерам и доставке в ОАЭ, страны GCC и на международные направления по условиям сайта.',
     zh:
-      '联系阿布扎比的 Bint Saeed：订单、尺码与阿联酋、海合会及适用国际地区的配送与客服咨询。',
+      'Bint Saeed — 联系阿布扎比品牌：订单、尺码与阿联酋、海合会及适用国际地区的配送与客服咨询。',
     de:
-      'Kontakt Bint Saeed Abu Dhabi — Kundenservice zu Bestellungen, Größen und Lieferung in VAE, GCC und internationale Märkte je nach Verfügbarkeit.',
+      'Bint Saeed — Kontakt in Abu Dhabi: Kundenservice zu Bestellungen, Größen und Lieferung in VAE, GCC und internationale Märkte je nach Verfügbarkeit.',
     nl:
-      'Contact Bint Saeed Abu Dhabi — klantenservice voor orders, maten en levering in VAE, GCC en internationale bestemmingen waar mogelijk.',
+      'Bint Saeed — contact in Abu Dhabi: klantenservice voor orders, maten en levering in VAE, GCC en internationale bestemmingen waar mogelijk.',
     pt:
-      'Contacte a Bint Saeed em Abu Dhabi — apoio a encomendas, medidas e envios nos EAU, Golfo e destinos internacionais quando disponível.',
+      'Bint Saeed — contacto em Abu Dhabi: apoio a encomendas, medidas e envios nos EAU, Golfo e destinos internacionais quando disponível.',
   },
   heritage: {
     en:
@@ -485,25 +485,25 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   the_codes: {
     en:
-      'The Codes — design principles behind Bint Saeed luxury abayas in Abu Dhabi: heritage references, silhouette discipline and contemporary modest dressing.',
+      'Bint Saeed | The Codes — design principles behind luxury abayas in Abu Dhabi: heritage references, silhouette discipline and contemporary dressing.',
     ar:
-      'الرموز، مبادئ التصميم في بِنت سعيد، دار عبايات فاخرة في أبوظبي: الإحالة إلى التراث، وضبط القصّة، واللباس المحتشم المعاصر.',
+      'بِنت سعيد | الرموز — مبادئ التصميم لعباءات فاخرة في أبوظبي: الإحالة إلى التراث، وضبط القصّة، واللباس المعاصر.',
     fr:
-      'The Codes — principes de création des abayas Bint Saeed à Abu Dhabi : référence au patrimoine, coupe précise et modestie contemporaine.',
+      'Bint Saeed | The Codes — principes de création des abayas de luxe à Abu Dhabi : patrimoine, coupe précise et silhouette contemporaine.',
     it:
-      'The Codes — principi progettuali delle abaya Bint Saeed ad Abu Dhabi: citazioni heritage, silhouette rigorosa, modest wear attuale.',
+      'Bint Saeed | The Codes — principi progettuali delle abaya luxury ad Abu Dhabi: heritage, silhouette rigorosa e vestire contemporaneo.',
     es:
-      'The Codes — principios de diseño de las abayas Bint Saeed en Abu Dhabi: legado, silueta y modestia contemporánea.',
+      'Bint Saeed | The Codes — principios de diseño de abayas de lujo en Abu Dhabi: legado, silueta y vestir contemporáneo.',
     ru:
-      'The Codes — принципы дизайна абай Bint Saeed в Абу‑Даби: наследие, дисциплина кроя и современная скромная эстетика.',
+      'Bint Saeed | The Codes — принципы дизайна роскошных абай в Абу‑Даби: наследие, дисциплина кроя и современная эстетика.',
     zh:
-      '设计准则：阿布扎比 Bint Saeed 奢华阿巴亚的创作原则——传承参照、剪裁克制与当代端庄着装。',
+      'Bint Saeed | 设计准则 — 阿布扎比奢华阿巴亚的创作原则：传承参照、剪裁克制与当代着装。',
     de:
-      'The Codes — Designprinzipien der Bint Saeed‑Abayas in Abu Dhabi: Erbe, Schnittführung und zeitgemäße Modest‑Mode.',
+      'Bint Saeed | The Codes — Designprinzipien der Luxus‑Abayas in Abu Dhabi: Erbe, Schnittführung und zeitgemäße Silhouette.',
     nl:
-      'The Codes — ontwerpprincipes van Bint Saeed abaya’s in Abu Dhabi: erfgoed, silhouetdiscipline en hedendaagse modesty.',
+      'Bint Saeed | The Codes — ontwerpprincipes van luxe abaya’s in Abu Dhabi: erfgoed, silhouetdiscipline en hedendaagse stijl.',
     pt:
-      'The Codes — princípios de design das abayas Bint Saeed em Abu Dhabi: legado, silhueta e modéstia contemporânea.',
+      'Bint Saeed | The Codes — princípios de design das abayas de luxo em Abu Dhabi: legado, silhueta e vestir contemporâneo.',
   },
   craftsmanship: {
     en:

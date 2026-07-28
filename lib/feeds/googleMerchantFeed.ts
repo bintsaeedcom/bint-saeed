@@ -176,11 +176,14 @@ function buildShippingAttribute(
   const listed = getListedPrice(aedMaster, currency, undefined, productId)
   const threeDecimal = currency === 'BHD' || currency === 'KWD' || currency === 'OMR'
   const fmt = (n: number) => n.toFixed(threeDecimal ? 3 : 2)
+  const targets = countries.length > 0 ? countries : [GOOGLE_PRIMARY_COUNTRY]
 
-  return countries
+  return targets
     .map((country) => {
-      const fee = shippingFeeForCountry(country, listed, currency)
-      return `${country}:::${fmt(fee)} ${currency}`
+      const code = country.trim().toUpperCase() || GOOGLE_PRIMARY_COUNTRY
+      const fee = shippingFeeForCountry(code, listed, currency)
+      // Always emit `XX:::0.00 CUR` — empty currency triggers GMC “mismatched currency”.
+      return `${code}:::${fmt(Number.isFinite(fee) ? fee : 0)} ${currency}`
     })
     .join(',')
 }

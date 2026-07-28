@@ -34,9 +34,9 @@ export function buildTheCodesJsonLd(locale: AppLocale = 'en') {
     '@type': 'WebPage',
     '@id': `${pageUrl}#webpage`,
     url: pageUrl,
-    name: 'The Codes | Bint Saeed',
+    name: 'Bint Saeed | The Codes',
     description:
-      'The house codes — Al Talli, Al Khous, Al Ain Rosette, Knotted Lines, and the monogram — told in one continuous story from Abu Dhabi, UAE.',
+      'Bint Saeed house codes — Al Talli, Al Khous, Al Ain Rosette, Knotted Lines, and the monogram — told in one continuous story from Abu Dhabi, UAE.',
     inLanguage: lang,
     isPartOf: {
       '@type': 'WebSite',
