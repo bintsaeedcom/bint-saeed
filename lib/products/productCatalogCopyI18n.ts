@@ -90,9 +90,9 @@ const ID_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      'Set atasan dan rok koordinat dengan trim Al Talli tradisional — tampilan siang hingga malam yang halus merayakan warisan Emirati.',
+      'Set kemeja oversized dan celana palazzo kaki lebar yang selaras dengan trim Al Talli tradisional — tampilan siang hingga malam yang halus merayakan warisan Emirati.',
     fabric: 'Komposisi kain — akan difinalisasi bersama produksi.',
-    measurements: 'Pas chapter; panjang atasan dan rok dikonfirmasi sesuai size chart.',
+    measurements: 'Pas chapter; panjang kemeja dan celana dikonfirmasi sesuai size chart.',
   },
 }
 
@@ -178,9 +178,9 @@ const MS_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      'Set atasan dan rok koordinat dengan hiasan Al Talli tradisional — penampilan siang hingga malam yang halus meraikan warisan Emirati.',
+      'Set kemeja oversized dan seluar palazzo kaki lebar yang selaras dengan hiasan Al Talli tradisional — penampilan siang hingga malam yang halus meraikan warisan Emirati.',
     fabric: 'Komposisi kain — akan dimuktamadkan bersama pengeluaran.',
-    measurements: 'Potongan mengikut bab; panjang atasan dan rok disahkan mengikut carta saiz.',
+    measurements: 'Potongan mengikut bab; panjang kemeja dan seluar disahkan mengikut carta saiz.',
   },
 }
 

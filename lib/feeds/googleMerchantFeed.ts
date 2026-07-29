@@ -193,6 +193,18 @@ function tsvCell(value: string): string {
   return value.replace(/\t/g, ' ').replace(/\r\n/g, ' ').replace(/\n/g, ' ').replace(/\r/g, ' ').trim()
 }
 
+/** Google-accepted size_system values only (INT is rejected — e.g. Portugal). */
+function sizeSystemForFeedCountries(countries: string[]): string {
+  if (countries.length === 1) {
+    const code = countries[0]
+    if (code === 'US' || code === 'CA') return 'US'
+    if (code === 'GB') return 'UK'
+    if (code === 'AU') return 'AU'
+  }
+  // Letter sizes (XS–XXL) and EU/GCC targets — Portugal requires a listed value such as EU.
+  return 'EU'
+}
+
 function itemToRow(
   item: MerchantCatalogItem,
   currency: SupportedCurrency,
@@ -218,7 +230,7 @@ function itemToRow(
     gender: item.gender,
     age_group: item.age_group,
     item_group_id: item.item_group_id,
-    size_system: item.size_system,
+    size_system: sizeSystemForFeedCountries(countries),
     size_type: item.size_type,
     custom_label_0: item.custom_label_0,
     shipping: buildShippingAttribute(item.aedMaster, currency, item.productId, countries),

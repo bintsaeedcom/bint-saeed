@@ -707,9 +707,9 @@ export const products: Product[] = [
     name: 'Soho Set',
     price: 1499,
     description:
-      'Coordinate top and skirt set with traditional Al Talli trim — polished day-to-evening looks celebrating Emirati heritage.',
+      'Coordinate oversized shirt and wide-leg palazzo trousers with traditional Al Talli trim — polished day-to-evening looks celebrating Emirati heritage.',
     fabric: 'Fabric composition — to be finalized with production.',
-    measurements: 'Chapter fit; top and skirt lengths confirmed against size chart.',
+    measurements: 'Chapter fit; shirt and trouser lengths confirmed against size chart.',
     images: sohoSetGallery('black'),
     colorImages: {
       'Black': sohoSetGallery('black'),

@@ -28,31 +28,31 @@ const HOME_HERO_HEADLINE: Record<Language, string> = {
 /** Strands split-panel — localized copy. */
 const HOME_STRANDS_EYEBROW: Record<Language, string> = {
   en: 'GARMENT JEWELLERY',
-  ar: 'مجوهرات الملابس',
+  ar: 'مجوهرات للملابس',
   fr: 'BIJOUX POUR VÊTEMENTS',
-  it: 'GIOIELLI PER CAPI',
-  es: 'JOYERÍA PARA PRENDAS',
+  it: 'GIOIELLI PER L’ABITO',
+  es: 'JOYERÍA PARA LA ROPA',
   ru: 'УКРАШЕНИЯ ДЛЯ ОДЕЖДЫ',
   zh: '服装珠宝',
-  de: 'KLEIDUNGS-SCHMUCK',
-  nl: 'SIERADEN VOOR HET KLEDINGSTUK',
-  pt: 'JOIAS PARA VESTUÁRIO',
-  id: 'PERHIASAN PAKAIAN',
-  ms: 'BARANG KEMAS PAKAIAN',
+  de: 'SCHMUCK FÜR KLEIDUNG',
+  nl: 'SIERADEN VOOR KLEDING',
+  pt: 'JOIAS PARA O VESTUÁRIO',
+  id: 'PERHIASAN UNTUK PAKAIAN',
+  ms: 'BARANG KEMAS UNTUK PAKAIAN',
 }
 
 /** Keep Latin Signature Strands as the product-line name in every locale. */
 const HOME_STRANDS_HEADING: Record<Language, string> = {
   en: 'A MODULAR JEWELLERY CONCEPT FOR CLOTHING',
-  ar: 'مفهوم مجوهرات معياري للملابس',
-  fr: 'UN CONCEPT DE BIJOUX MODULAIRE POUR LE VÊTEMENT',
-  it: 'UN CONCETTO DI GIOIELLERIA MODULARE PER L’ABBIGLIAMENTO',
-  es: 'UN CONCEPTO DE JOYERÍA MODULAR PARA LA ROPA',
+  ar: 'مفهوم مجوهرات مرن للملابس',
+  fr: 'UN CONCEPT MODULAIRE DE BIJOUX POUR LE VÊTEMENT',
+  it: 'UN CONCETTO MODULARE DI GIOIELLERIA PER L’ABITO',
+  es: 'UN CONCEPTO MODULAR DE JOYERÍA PARA LA ROPA',
   ru: 'МОДУЛЬНАЯ ЮВЕЛИРНАЯ КОНЦЕПЦИЯ ДЛЯ ОДЕЖДЫ',
   zh: '专为服饰而生的模块化珠宝概念',
   de: 'EIN MODULARES SCHMUCKKONZEPT FÜR KLEIDUNG',
   nl: 'EEN MODULAIR SIERADENCONCEPT VOOR KLEDING',
-  pt: 'UM CONCEITO DE JOALHARIA MODULAR PARA O VESTUÁRIO',
+  pt: 'UM CONCEITO MODULAR DE JOALHARIA PARA O VESTUÁRIO',
   id: 'KONSEP PERHIASAN MODULAR UNTUK PAKAIAN',
   ms: 'KONSEP BARANG KEMAS MODULAR UNTUK PAKAIAN',
 }
@@ -61,27 +61,27 @@ const HOME_STRANDS_BODY: Record<Language, string> = {
   en:
     'Bint Saeed introduces Signature Strands, a modular jewellery concept designed specifically for clothing. The natural stone strands attach to the cuffs of selected garments and can be exchanged to complement different occasions or personal styles, allowing a single garment to evolve over time.',
   ar:
-    'تقدّم Bint Saeed Signature Strands، مفهوم مجوهرات معياري صُمّم خصيصاً للملابس. تُثبَّت خيوط الأحجار الطبيعية على أساور قطع مختارة، ويمكن تبديلها لتتواءم مع المناسبات المختلفة أو الأساليب الشخصية، فتبقى القطعة واحدة وتتطوّر مع الزمن.',
+    'تقدّم Bint Saeed Signature Strands، مفهوم مجوهرات مرن صُمّم خصيصاً للملابس. تُثبَّت خيوط الأحجار الطبيعية على أساور أكمام قطع مختارة، ويمكن تبديلها لتتواءم مع المناسبات المختلفة أو الأساليب الشخصية، فتبقى القطعة واحدة وتتطوّر مع الزمن.',
   fr:
-    'Bint Saeed présente Signature Strands, un concept de bijoux modulaires conçu spécifiquement pour le vêtement. Les fils de pierres naturelles se fixent aux poignets de pièces sélectionnées et peuvent s’échanger pour accompagner différentes occasions ou styles personnels, permettant à un même vêtement d’évoluer dans le temps.',
+    'Bint Saeed présente Signature Strands, un concept de bijoux modulaires conçu pour le vêtement. Les fils de pierres naturelles se fixent aux poignets de pièces sélectionnées et peuvent être échangés pour accompagner différentes occasions ou styles personnels, permettant à un même vêtement d’évoluer dans le temps.',
   it:
-    'Bint Saeed presenta Signature Strands, un concetto di gioielleria modulare pensato specificamente per l’abbigliamento. I fili di pietre naturali si fissano ai polsini di capi selezionati e possono essere scambiati per accompagnare diverse occasioni o stili personali, permettendo a un medesimo capo di evolvere nel tempo.',
+    'Bint Saeed presenta Signature Strands, un concetto di gioielleria modulare concepito per l’abito. I fili di pietre naturali si agganciano ai polsini di capi selezionati e possono essere scambiati per accompagnare diverse occasioni o stili personali, permettendo a un medesimo capo di evolvere nel tempo.',
   es:
-    'Bint Saeed presenta Signature Strands, un concepto de joyería modular diseñado específicamente para la ropa. Los hilos de piedras naturales se fijan a los puños de prendas seleccionadas y pueden intercambiarse para acompañar distintas ocasiones o estilos personales, permitiendo que una misma prenda evolucione con el tiempo.',
+    'Bint Saeed presenta Signature Strands, un concepto de joyería modular concebido expresamente para la ropa. Los hilos de piedras naturales se fijan a los puños de prendas seleccionadas y pueden intercambiarse para acompañar distintas ocasiones o estilos personales, permitiendo que una misma prenda evolucione con el tiempo.',
   ru:
-    'Bint Saeed представляет Signature Strands — модульную ювелирную концепцию, созданную специально для одежды. Нити из натурального камня крепятся к манжетам избранных изделий и могут меняться в соответствии с разными поводами или личным стилем, позволяя одной вещи развиваться со временем.',
+    'Bint Saeed представляет Signature Strands — модульную ювелирную концепцию, созданную специально для одежды. Нити из натурального камня крепятся к манжетам избранных изделий и могут заменяться, чтобы соответствовать разным поводам или личному стилю, — так одно изделие может меняться со временем.',
   zh:
-    'Bint Saeed 推出 Signature Strands：专为服饰设计的模块化珠宝概念。天然石串饰附着于精选服饰的袖口，并可随场合与个人风格更换，使同一件服饰随时间而演变。',
+    'Bint Saeed 推出 Signature Strands：专为服饰而设的模块化珠宝概念。天然石串饰附着于精选服饰的袖口，并可随场合与个人风格更换，使同一件服饰得以随时间而演变。',
   de:
-    'Bint Saeed stellt Signature Strands vor — ein modulares Schmuckkonzept, eigens für Kleidung entworfen. Die Naturstein-Stränge werden an den Manschetten ausgewählter Stücke befestigt und lassen sich austauschen, um verschiedene Anlässe oder persönliche Stile zu begleiten — so kann ein einzelnes Kleidungsstück über die Zeit hinweg weiterwachsen.',
+    'Bint Saeed stellt Signature Strands vor — ein modulares Schmuckkonzept, eigens für Kleidung entworfen. Die Strands aus Naturstein werden an den Manschetten ausgewählter Stücke befestigt und lassen sich austauschen, um verschiedene Anlässe oder persönliche Stile zu begleiten — so kann ein einzelnes Kleidungsstück über die Zeit hinweg weiterwachsen.',
   nl:
-    'Bint Saeed introduceert Signature Strands, een modulair sieradenconcept specifiek ontworpen voor kleding. De strengen van natuursteen bevestigen zich aan de manchetten van geselecteerde stukken en kunnen worden verwisseld om verschillende gelegenheden of persoonlijke stijlen te complementeren, zodat één kledingstuk in de loop van de tijd kan evolueren.',
+    'Bint Saeed introduceert Signature Strands, een modulair sieradenconcept ontworpen voor kleding. De Signature Strands van natuursteen worden bevestigd aan de manchetten van geselecteerde stukken en kunnen worden verwisseld om verschillende gelegenheden of persoonlijke stijlen te complementeren, zodat één kledingstuk in de loop van de tijd kan evolueren.',
   pt:
-    'A Bint Saeed apresenta Signature Strands, um conceito de joalharia modular concebido especificamente para o vestuário. Os fios de pedras naturais fixam-se aos punhos de peças selecionadas e podem ser trocados para acompanhar diferentes ocasiões ou estilos pessoais, permitindo que uma mesma peça evolua ao longo do tempo.',
+    'A Bint Saeed apresenta Signature Strands, um conceito de joalharia modular concebido expressamente para o vestuário. Os fios de pedras naturais fixam-se aos punhos de peças selecionadas e podem ser trocados para acompanhar diferentes ocasiões ou estilos pessoais, permitindo que uma mesma peça evolua ao longo do tempo.',
   id:
-    'Bint Saeed memperkenalkan Signature Strands, konsep perhiasan modular yang dirancang khusus untuk pakaian. Rantai batu alam dipasang pada manset pakaian terpilih dan dapat diganti untuk menyesuaikan berbagai kesempatan atau gaya pribadi, sehingga satu pakaian dapat berkembang seiring waktu.',
+    'Bint Saeed memperkenalkan Signature Strands, konsep perhiasan modular yang dirancang khusus untuk pakaian. Untaian batu alam dipasang pada manset pakaian terpilih dan dapat diganti untuk menyesuaikan berbagai kesempatan atau gaya pribadi, sehingga satu pakaian dapat berubah seiring waktu.',
   ms:
-    'Bint Saeed memperkenalkan Signature Strands, konsep barang kemas modular yang direka khusus untuk pakaian. Rantai batu semula jadi dipasang pada manset pakaian terpilih dan boleh ditukar untuk melengkapi majlis atau gaya peribadi yang berbeza, membolehkan satu pakaian berkembang dari masa ke masa.',
+    'Bint Saeed memperkenalkan Signature Strands, konsep barang kemas modular yang direka khusus untuk pakaian. Untaian batu semula jadi dipasang pada manset pakaian terpilih dan boleh ditukar untuk melengkapi majlis atau gaya peribadi yang berbeza, membolehkan satu pakaian berubah dari masa ke masa.',
 }
 
 /** Built from brand lock — "Signature Strands" is never localized. */

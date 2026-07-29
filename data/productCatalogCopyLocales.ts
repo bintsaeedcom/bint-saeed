@@ -77,9 +77,9 @@ const AR_CATALOG_COPY: Record<string, CatalogFields> = {
     measurements: 'طول البلوزة: 70 سم، طول التنورة: 95 سم (مقاس M). قصة مريحة.',
   },
   'soho-set': {
-    description: 'طقم منسق من بلوزة وتنورة مع حواف تقليدية من التلي — إطلالة نهارية إلى مسائية راقية تحتفي بالتراث الإماراتي.',
+    description: 'طقم منسّق من قميص واسع وبنطلون بالازو بأرجل عريضة مع حواف تقليدية من التلي — إطلالة نهارية إلى مسائية راقية تحتفي بالتراث الإماراتي.',
     fabric: 'تركيبة القماش — سيتم اعتمادها نهائيًا مع الإنتاج.',
-    measurements: 'قصة متوازنة؛ يتم تأكيد أطوال البلوزة والتنورة وفق جدول المقاسات.',
+    measurements: 'قصة متوازنة؛ يتم تأكيد أطوال القميص والبنطلون وفق جدول المقاسات.',
   },
 }
 
@@ -160,9 +160,9 @@ const FR_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      'Ensemble coordonne haut et jupe avec finition Al Talli traditionnelle — silhouette jour-soir raffinee celebrant le patrimoine emirati.',
+      'Ensemble coordonne chemise oversize et pantalon palazzo a jambes larges avec finition Al Talli traditionnelle — silhouette jour-soir raffinee celebrant le patrimoine emirati.',
     fabric: 'Composition du tissu - finalisation avec la production.',
-    measurements: 'Coupe equilibree; longueurs haut et jupe confirmees selon le guide des tailles.',
+    measurements: 'Coupe equilibree; longueurs chemise et pantalon confirmees selon le guide des tailles.',
   },
 }
 
@@ -242,9 +242,9 @@ const DE_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      'Koordiniertes Top-und-Rock-Set mit traditioneller Al-Talli-Borte - gepflegter Day-to-Evening-Look mit emiratischer Heritage-Note.',
+      'Koordiniertes Set aus Oversize-Hemd und weiter Palazzo-Hose mit traditioneller Al-Talli-Borte - gepflegter Day-to-Evening-Look mit emiratischer Heritage-Note.',
     fabric: 'Materialzusammensetzung - wird mit der Produktion finalisiert.',
-    measurements: 'Ausgewogene Passform; Top- und Rocklaengen gemaess Groessentabelle bestaetigt.',
+    measurements: 'Ausgewogene Passform; Hemd- und Hosenlaengen gemaess Groessentabelle bestaetigt.',
   },
 }
 
@@ -324,9 +324,9 @@ const IT_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      'Set coordinato top e gonna con finitura tradizionale Al Talli - look raffinato giorno-sera che celebra l eredita emiratina.',
+      'Set coordinato camicia oversize e pantaloni palazzo a gamba larga con finitura tradizionale Al Talli - look raffinato giorno-sera che celebra l eredita emiratina.',
     fabric: 'Composizione tessuto - da finalizzare con la produzione.',
-    measurements: 'Vestibilita bilanciata; lunghezze top e gonna confermate secondo tabella taglie.',
+    measurements: 'Vestibilita bilanciata; lunghezze camicia e pantaloni confermate secondo tabella taglie.',
   },
 }
 
@@ -406,9 +406,9 @@ const ES_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      'Set coordinado de top y falda con ribete tradicional Al Talli - look dia-noche pulido que celebra la herencia emirati.',
+      'Set coordinado de camisa oversize y pantalones palazzo de pierna ancha con ribete tradicional Al Talli - look dia-noche pulido que celebra la herencia emirati.',
     fabric: 'Composicion del tejido - por finalizar con produccion.',
-    measurements: 'Corte equilibrado; largos de top y falda confirmados segun tabla de tallas.',
+    measurements: 'Corte equilibrado; largos de camisa y pantalon confirmados segun tabla de tallas.',
   },
 }
 
@@ -488,9 +488,9 @@ const RU_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      'Координированный комплект топ и юбка с традиционной отделкой Al Talli — утонченный образ day-to-evening, отражающий эмиратское наследие.',
+      'Координированный комплект из оверсайз-рубашки и широких брюк-palazzo с традиционной отделкой Al Talli — утонченный образ day-to-evening, отражающий эмиратское наследие.',
     fabric: 'Состав ткани — будет финализирован с производством.',
-    measurements: 'Сбалансированная посадка; длины топа и юбки подтверждаются по размерной сетке.',
+    measurements: 'Сбалансированная посадка; длины рубашки и брюк подтверждаются по размерной сетке.',
   },
 }
 
@@ -566,9 +566,9 @@ const ZH_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      '上衣与半裙协调套装，配传统 Al Talli 饰边——从日间到夜间的精致造型，礼赞阿联酋传承。',
+      '宽松衬衫与阔腿 palazzo 长裤协调套装，配传统 Al Talli 饰边——从日间到夜间的精致造型，礼赞阿联酋传承。',
     fabric: '面料成分——将与生产环节最终确认。',
-    measurements: '平衡版型；上衣与半裙长度将按尺码表确认。',
+    measurements: '平衡版型；衬衫与长裤长度将按尺码表确认。',
   },
 }
 
@@ -648,9 +648,9 @@ const NL_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      'Gecoordineerde top-en-rokset met traditionele Al Talli-afwerking - verzorgde dag-tot-avond looks die Emirati erfgoed vieren.',
+      'Gecoordineerde set met oversized overhemd en wide-leg palazzo-broek met traditionele Al Talli-afwerking - verzorgde dag-tot-avond looks die Emirati erfgoed vieren.',
     fabric: 'Stofsamenstelling - wordt met productie afgerond.',
-    measurements: 'Gebalanceerde pasvorm; top- en roklengtes bevestigd volgens maattabel.',
+    measurements: 'Gebalanceerde pasvorm; overhemd- en broeklengtes bevestigd volgens maattabel.',
   },
 }
 
@@ -730,9 +730,9 @@ const PT_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      'Conjunto coordenado de top e saia com acabamento tradicional Al Talli - look polido de dia para noite que celebra a heranca Emirati.',
+      'Conjunto coordenado de camisa oversized e calcas palazzo de perna larga com acabamento tradicional Al Talli - look polido de dia para noite que celebra a heranca Emirati.',
     fabric: 'Composicao do tecido - a finalizar com a producao.',
-    measurements: 'Caimento equilibrado; comprimentos de top e saia confirmados com a tabela de tamanhos.',
+    measurements: 'Caimento equilibrado; comprimentos de camisa e calcas confirmados com a tabela de tamanhos.',
   },
 }
 
@@ -817,9 +817,9 @@ const ID_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      'Set atasan dan rok koordinat dengan trim Al Talli tradisional — tampilan siang hingga malam yang halus merayakan warisan Emirati.',
+      'Set kemeja oversized dan celana palazzo kaki lebar yang selaras dengan trim Al Talli tradisional — tampilan siang hingga malam yang halus merayakan warisan Emirati.',
     fabric: 'Komposisi kain — akan difinalisasi bersama produksi.',
-    measurements: 'Pas chapter; panjang atasan dan rok dikonfirmasi sesuai size chart.',
+    measurements: 'Pas chapter; panjang kemeja dan celana dikonfirmasi sesuai size chart.',
   },
 }
 
@@ -905,9 +905,9 @@ const MS_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'soho-set': {
     description:
-      'Set atasan dan rok koordinat dengan hiasan Al Talli tradisional — penampilan siang hingga malam yang halus meraikan warisan Emirati.',
+      'Set kemeja oversized dan seluar palazzo kaki lebar yang selaras dengan hiasan Al Talli tradisional — penampilan siang hingga malam yang halus meraikan warisan Emirati.',
     fabric: 'Komposisi kain — akan dimuktamadkan bersama pengeluaran.',
-    measurements: 'Potongan mengikut bab; panjang atasan dan rok disahkan mengikut carta saiz.',
+    measurements: 'Potongan mengikut bab; panjang kemeja dan seluar disahkan mengikut carta saiz.',
   },
 }
 
