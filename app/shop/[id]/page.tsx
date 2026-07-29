@@ -595,7 +595,7 @@ export default function ProductPage() {
         id: 'shipping',
         title: t.product.shippingReturns,
         bordered: faqItems.length > 0,
-        children: <PdpShippingReturnsBullets isRTL={isRTL} />,
+        children: <PdpShippingReturnsBullets isRTL={isRTL} productKind="garment" />,
       },
     )
 

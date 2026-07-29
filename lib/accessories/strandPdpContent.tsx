@@ -133,7 +133,7 @@ export function buildStrandPdpAccordionSections({
       id: 'shipping',
       title: shippingTitle,
       bordered: false,
-      children: <PdpShippingReturnsBullets isRTL={isRTL} />,
+      children: <PdpShippingReturnsBullets isRTL={isRTL} productKind="jewellery" />,
     },
   ]
 }

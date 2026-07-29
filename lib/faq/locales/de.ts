@@ -54,7 +54,7 @@ export const faqDe: FaqBundle = {
           questions: [
             {
               q: 'Wie lange dauert die Lieferung?',
-              a: 'Lagerartikel, einschließlich ausgewähltem Schmuck und ready-to-ship Styles, werden in der Regel innerhalb von 1 bis 3 Werktagen versandt. Made-to-order Stücke werden in der Regel innerhalb von etwa zwei Wochen nach Bestellbestätigung versandt. Nach dem Versand treffen Lieferungen in den VAE typischerweise innerhalb von etwa 1 bis 3 Werktagen ein. Internationale Lieferungen treffen typischerweise innerhalb von etwa 3 bis 10 Werktagen ein, abhängig von Destination und Zollabfertigung. Versand- und Laufzeiten sind nur Schätzungen und können nicht garantiert werden. Alle Details stehen in unserer Shipment & Return Policy.',
+              a: 'Lagerartikel, einschließlich ausgewähltem Schmuck und ready-to-ship Styles, werden in der Regel innerhalb von 1 bis 3 Werktagen versandt. Bespoke-Kleidungsstücke werden in der Regel innerhalb von etwa zwei Wochen nach Bestellbestätigung versandt. Nach dem Versand treffen Lieferungen in den VAE typischerweise innerhalb von etwa 1 bis 3 Werktagen ein. Internationale Lieferungen treffen typischerweise innerhalb von etwa 3 bis 10 Werktagen ein, abhängig von Destination und Zollabfertigung. Wenn Sie Ihre Bestellung früher benötigen, kontaktieren Sie Client Services per WhatsApp unter +971 50 229 9402 oder unter support@bintsaeed.com (Sonntag–Donnerstag, 9:00–18:00 Uhr Abu-Dhabi-Zeit). Versand- und Laufzeiten sind nur Schätzungen und können nicht garantiert werden. Alle Details stehen in unserer Versand- und Rückgaberichtlinie.',
             },
             {
               q: 'Welche Versanddienstleister nutzen Sie?',

@@ -54,7 +54,7 @@ export const faqEs: FaqBundle = {
           questions: [
             {
               q: '¿Cuánto tarda la entrega?',
-              a: 'Los artículos en stock, incluida joyería seleccionada y estilos listos para enviar, suelen expedirse en un plazo de 1 a 3 días hábiles. Las piezas hechas a pedido suelen enviarse en aproximadamente dos semanas tras la confirmación del pedido. Una vez expedidos, los envíos a los Emiratos suelen llegar en aproximadamente 1 a 3 días hábiles. Las entregas internacionales suelen llegar en aproximadamente 3 a 10 días hábiles, según del destino y del despacho aduanero. Los plazos de expedición y tránsito son solo estimaciones y no pueden garantizarse. El detalle completo figura en nuestra Shipment & Return Policy.',
+              a: 'Los artículos en stock, incluida joyería seleccionada y estilos listos para enviar, suelen expedirse en un plazo de 1 a 3 días hábiles. Las prendas bespoke suelen enviarse en aproximadamente dos semanas tras la confirmación del pedido. Una vez expedidos, los envíos a los Emiratos suelen llegar en aproximadamente 1 a 3 días hábiles. Las entregas internacionales suelen llegar en aproximadamente 3 a 10 días hábiles, según del destino y del despacho aduanero. Si necesita su pedido antes, contacte con Client Services por WhatsApp en +971 50 229 9402 o en support@bintsaeed.com (domingo–jueves, 9:00–18:00, hora de Abu Dabi). Los plazos de expedición y tránsito son solo estimaciones y no pueden garantizarse. El detalle completo figura en nuestra Política de envío y devoluciones.',
             },
             {
               q: '¿Qué transportistas utilizan?',

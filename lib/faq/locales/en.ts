@@ -60,7 +60,7 @@ export const faqEn: FaqBundle = {
           questions: [
             {
               q: 'How long does delivery take?',
-              a: 'In-stock items, including selected jewellery and ready-to-ship styles, are usually dispatched within 1 to 3 business days. Made-to-order pieces are usually shipped within approximately two weeks after order confirmation. Once dispatched, UAE deliveries typically arrive within approximately 1 to 3 business days. International deliveries typically arrive within approximately 3 to 10 business days, depending on destination and customs clearance. Dispatch and transit times are estimates only and cannot be guaranteed. Full detail appears in our Shipment & Return Policy.',
+              a: 'In-stock items, including selected jewellery and ready-to-ship styles, are usually dispatched within 1 to 3 business days. Bespoke garments are usually shipped within approximately two weeks after order confirmation. Once dispatched, UAE deliveries typically arrive within approximately 1 to 3 business days. International deliveries typically arrive within approximately 3 to 10 business days, depending on destination and customs clearance. If you need your order sooner, contact Client Services on WhatsApp at +971 50 229 9402 or at support@bintsaeed.com (Sunday–Thursday, 9:00–18:00 Abu Dhabi time). Dispatch and transit times are estimates only and cannot be guaranteed. Full detail appears in our Shipment & Return Policy.',
             },
             {
               q: 'Which carriers do you use?',

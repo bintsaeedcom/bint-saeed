@@ -54,7 +54,7 @@ export const faqId: FaqBundle = {
           questions: [
             {
               q: 'Berapa lama pengiriman berlangsung?',
-              a: 'Barang yang tersedia, termasuk perhiasan terpilih dan gaya siap kirim, biasanya dikirim dalam 1 hingga 3 hari kerja. Karya dibuat-sesuai-pesanan biasanya dikirim dalam sekitar dua minggu setelah konfirmasi pesanan. Setelah dikirim, pengiriman UAE biasanya tiba dalam sekitar 1 hingga 3 hari kerja. Pengiriman internasional biasanya tiba dalam sekitar 3 hingga 10 hari kerja, bergantung pada destinasi dan izin bea cukai. Waktu pengiriman dan transit hanyalah perkiraan dan tidak dapat dijamin. Rincian lengkap terdapat dalam Shipment & Return Policy kami.',
+              a: 'Barang yang tersedia, termasuk perhiasan terpilih dan gaya siap kirim, biasanya dikirim dalam 1 hingga 3 hari kerja. Pakaian bespoke biasanya dikirim dalam sekitar dua minggu setelah konfirmasi pesanan. Setelah dikirim, pengiriman UAE biasanya tiba dalam sekitar 1 hingga 3 hari kerja. Pengiriman internasional biasanya tiba dalam sekitar 3 hingga 10 hari kerja, bergantung pada destinasi dan izin bea cukai. Jika Anda memerlukan pesanan lebih cepat, hubungi Client Services melalui WhatsApp di +971 50 229 9402 atau di support@bintsaeed.com (Minggu–Kamis, 09.00–18.00 waktu Abu Dhabi). Waktu pengiriman dan transit hanyalah perkiraan dan tidak dapat dijamin. Rincian lengkap terdapat dalam Kebijakan Pengiriman & Pengembalian kami.',
             },
             {
               q: 'Kurir apa yang Anda gunakan?',

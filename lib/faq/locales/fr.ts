@@ -54,7 +54,7 @@ export const faqFr: FaqBundle = {
           questions: [
             {
               q: 'Combien de temps dure la livraison ?',
-              a: 'Les articles en stock, y compris certains bijoux et styles prêts à expédier, sont généralement expédiés sous 1 à 3 jours ouvrables. Les pièces sur commande sont généralement expédiées dans un délai d’environ deux semaines après confirmation de la commande. Une fois expédiées, les livraisons aux Émirats arrivent généralement sous environ 1 à 3 jours ouvrables. Les livraisons internationales arrivent généralement sous environ 3 à 10 jours ouvrables, selon la destination et le dédouanement. Les délais d’expédition et de transit sont des estimations uniquement et ne peuvent être garantis. Le détail complet figure dans notre Shipment & Return Policy.',
+              a: 'Les articles en stock, y compris certains bijoux et styles prêts à expédier, sont généralement expédiés sous 1 à 3 jours ouvrables. Les vêtements bespoke sont généralement expédiés sous environ deux semaines après confirmation de la commande. Une fois expédiées, les livraisons aux Émirats arrivent généralement sous environ 1 à 3 jours ouvrables. Les livraisons internationales arrivent généralement sous environ 3 à 10 jours ouvrables, selon la destination et le dédouanement. Si vous souhaitez recevoir votre commande plus tôt, contactez Client Services sur WhatsApp au +971 50 229 9402 ou à support@bintsaeed.com (dimanche–jeudi, 9 h–18 h, heure d’Abou Dabi). Les délais d’expédition et de transit sont des estimations uniquement et ne peuvent être garantis. Le détail complet figure dans notre Politique d’expédition et de retour.',
             },
             {
               q: 'Quels transporteurs utilisez-vous ?',

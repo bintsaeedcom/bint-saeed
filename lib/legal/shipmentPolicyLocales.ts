@@ -18,7 +18,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     summaryTitle: 'Avis résumé',
     summaryBody: [
       'Chez Bint Saeed, chaque pièce est créée avec soin et inspectée avant expédition. Nous encourageons les clients à examiner attentivement les descriptions, les informations de taille et les détails produits avant de commander.',
-      'Si la majorité des pièces Bint Saeed sont produites sur commande, certains articles peuvent être disponibles pour une expédition immédiate.',
+      'Si la majorité des vêtements Bint Saeed sont réalisés sur commande bespoke, certains bijoux et accessoires lifestyle peuvent être disponibles pour une expédition immédiate.',
     ],
     sectionList: [],
   },
@@ -32,7 +32,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     summaryTitle: 'Kurzhinweis',
     summaryBody: [
       'Bei Bint Saeed wird jedes Stück mit Sorgfalt gefertigt und vor dem Versand geprüft. Wir bitten Kunden, Produktbeschreibungen, Größeninformationen und Produktdetails vor der Bestellung sorgfältig zu prüfen.',
-      'Während die Mehrzahl der Bint-Saeed-Stücke auf Bestellung gefertigt wird, können ausgewählte Artikel sofort versandbereit sein.',
+      'Während die Mehrzahl der Bint-Saeed-Kleidungsstücke auf Bespoke-Bestellung gefertigt wird, können ausgewählter Schmuck und Lifestyle-Accessoires sofort versandbereit sein.',
     ],
     sectionList: [],
   },
@@ -46,7 +46,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     summaryTitle: 'Avviso di sintesi',
     summaryBody: [
       'Da Bint Saeed ogni pezzo è creato con cura e ispezionato prima della spedizione. Incoraggiamo i clienti a esaminare attentamente descrizioni, informazioni sulla taglia e dettagli prodotto prima di ordinare.',
-      'Mentre la maggioranza dei pezzi Bint Saeed è prodotta su ordinazione, articoli selezionati possono essere disponibili per spedizione immediata.',
+      'Mentre la maggioranza degli abiti Bint Saeed è realizzata su ordinazione bespoke, gioielli e accessori lifestyle selezionati possono essere disponibili per spedizione immediata.',
     ],
     sectionList: [],
   },
@@ -60,7 +60,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     summaryTitle: 'Aviso resumido',
     summaryBody: [
       'En Bint Saeed, cada pieza se crea con cuidado y se inspecciona antes del envío. Animamos a los clientes a revisar con atención descripciones, información de talla y detalles del producto antes de pedir.',
-      'Aunque la mayoría de las piezas Bint Saeed se producen bajo pedido, artículos seleccionados pueden estar disponibles para envío inmediato.',
+      'Aunque la mayoría de las prendas Bint Saeed se confeccionan a medida (bespoke), joyería y accesorios lifestyle seleccionados pueden estar disponibles para envío inmediato.',
     ],
     sectionList: [],
   },
@@ -74,7 +74,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     summaryTitle: 'Samenvattend bericht',
     summaryBody: [
       'Bij Bint Saeed wordt elk stuk met zorg gemaakt en vóór verzending gecontroleerd. Wij moedigen klanten aan productbeschrijvingen, maatinformatie en productdetails zorgvuldig te bekijken vóór bestelling.',
-      'Hoewel de meerderheid van de Bint Saeed-stukken op bestelling wordt geproduceerd, kunnen geselecteerde artikelen beschikbaar zijn voor directe verzending.',
+      'Hoewel de meerderheid van de Bint Saeed-kledingstukken op bespoke-bestelling wordt vervaardigd, kunnen geselecteerde sieraden en lifestyle-accessoires beschikbaar zijn voor directe verzending.',
     ],
     sectionList: [],
   },
@@ -88,7 +88,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     summaryTitle: 'Aviso resumido',
     summaryBody: [
       'Na Bint Saeed, cada peça é criada com cuidado e inspecionada antes do envio. Incentivamos os clientes a rever cuidadosamente descrições, informação de tamanho e detalhes do produto antes de encomendar.',
-      'Embora a maioria das peças Bint Saeed seja produzida sob encomenda, artigos selecionados podem estar disponíveis para envio imediato.',
+      'Embora a maioria das peças de vestuário Bint Saeed seja confeccionada sob encomenda bespoke, joalharia e acessórios lifestyle selecionados podem estar disponíveis para envio imediato.',
     ],
     sectionList: [],
   },
@@ -102,7 +102,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     summaryTitle: 'Краткое уведомление',
     summaryBody: [
       'В Bint Saeed каждое изделие создаётся с заботой и проверяется перед отправкой. Мы рекомендуем внимательно изучать описания, информацию о размере и детали товара перед заказом.',
-      'Хотя большинство изделий Bint Saeed производится на заказ, отдельные позиции могут быть доступны для немедленной отправки.',
+      'Хотя большинство предметов одежды Bint Saeed создаётся на заказ (bespoke), избранные украшения и lifestyle-аксессуары могут быть доступны для немедленной отправки.',
     ],
     sectionList: [],
   },
@@ -116,7 +116,7 @@ const META: Record<EuZhLocale, ShipmentChrome> = {
     summaryTitle: '摘要提示',
     summaryBody: [
       '在 Bint Saeed，每一件作品均经悉心制作并在发货前检验。我们鼓励客户在下单前仔细查阅产品说明、尺码信息与详情。',
-      '尽管多数 Bint Saeed 作品按订单生产，部分单品或可立即发货。',
+      '尽管多数 Bint Saeed 服装按定制订单制作，精选珠宝与生活方式配饰或可立即发货。',
     ],
     sectionList: [],
   },

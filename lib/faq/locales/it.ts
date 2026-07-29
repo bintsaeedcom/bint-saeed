@@ -54,7 +54,7 @@ export const faqIt: FaqBundle = {
           questions: [
             {
               q: 'Quanto tempo richiede la consegna?',
-              a: 'Gli articoli in stock, inclusi gioielli selezionati e stili ready-to-ship, sono generalmente spediti entro 1-3 giorni lavorativi. I pezzi made-to-order sono generalmente spediti entro circa due settimane dalla conferma dell’ordine. Una volta spedite, le consegne negli Emirati arrivano tipicamente entro circa 1-3 giorni lavorativi. Le consegne internazionali arrivano tipicamente entro circa 3-10 giorni lavorativi, a seconda della destinazione e dello sdoganamento. I tempi di spedizione e di transito sono solo stime e non possono essere garantiti. I dettagli completi compaiono nella nostra Shipment & Return Policy.',
+              a: 'Gli articoli in stock, inclusi gioielli selezionati e stili ready-to-ship, sono generalmente spediti entro 1-3 giorni lavorativi. Gli abiti bespoke sono generalmente spediti entro circa due settimane dalla conferma dell’ordine. Una volta spedite, le consegne negli Emirati arrivano tipicamente entro circa 1-3 giorni lavorativi. Le consegne internazionali arrivano tipicamente entro circa 3-10 giorni lavorativi, a seconda della destinazione e dello sdoganamento. Se desidera ricevere l’ordine prima, contatti Client Services su WhatsApp al +971 50 229 9402 o all’indirizzo support@bintsaeed.com (domenica–giovedì, 9:00–18:00, ora di Abu Dhabi). I tempi di spedizione e di transito sono solo stime e non possono essere garantiti. I dettagli completi compaiono nella nostra Politica di spedizione e resi.',
             },
             {
               q: 'Quali corrieri utilizzate?',

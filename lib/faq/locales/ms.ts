@@ -54,7 +54,7 @@ export const faqMs: FaqBundle = {
           questions: [
             {
               q: 'Berapa lama penghantaran mengambil masa?',
-              a: 'Item dalam stok, termasuk perhiasan terpilih dan gaya sedia dihantar, biasanya dihantar dalam tempoh 1 hingga 3 hari perniagaan. Karya dibuat-ikut-pesanan biasanya dihantar dalam kira-kira dua minggu selepas pengesahan pesanan. Setelah dihantar, penghantaran UAE biasanya tiba dalam kira-kira 1 hingga 3 hari perniagaan. Penghantaran antarabangsa biasanya tiba dalam kira-kira 3 hingga 10 hari perniagaan, bergantung pada destinasi dan pelepasan kastam. Masa penghantaran dan transit hanyalah anggaran dan tidak boleh dijamin. Butiran lengkap terdapat dalam Shipment & Return Policy kami.',
+              a: 'Item dalam stok, termasuk barang kemas terpilih dan gaya sedia dihantar, biasanya dihantar dalam tempoh 1 hingga 3 hari perniagaan. Pakaian bespoke biasanya dihantar dalam kira-kira dua minggu selepas pengesahan pesanan. Setelah dihantar, penghantaran UAE biasanya tiba dalam kira-kira 1 hingga 3 hari perniagaan. Penghantaran antarabangsa biasanya tiba dalam kira-kira 3 hingga 10 hari perniagaan, bergantung pada destinasi dan pelepasan kastam. Jika anda memerlukan pesanan lebih awal, hubungi Client Services melalui WhatsApp di +971 50 229 9402 atau di support@bintsaeed.com (Ahad–Khamis, 09.00–18.00 waktu Abu Dhabi). Masa penghantaran dan transit hanyalah anggaran dan tidak boleh dijamin. Butiran lengkap terdapat dalam Dasar Penghantaran & Pemulangan kami.',
             },
             {
               q: 'Kurier manakah yang anda gunakan?',

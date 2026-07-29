@@ -789,7 +789,7 @@ function shipmentEnSections(): PolicySection[] {
       title: '7. Final Acknowledgment',
       body: [
         'By placing an order with Bint Saeed, the client confirms that they have reviewed and accepted the product description, sizing information, production timeline, and the terms outlined within this policy.',
-        'The client further acknowledges the made-to-order nature of many Bint Saeed pieces and understands the applicable limitations relating to refunds, exchanges, and cancellations.',
+        'The client further acknowledges the bespoke nature of many Bint Saeed garments and understands the applicable limitations relating to refunds, exchanges, and cancellations.',
       ],
     },
     {
@@ -797,7 +797,7 @@ function shipmentEnSections(): PolicySection[] {
       body: [
         'We aim to dispatch every order as efficiently as possible while maintaining the quality standards of Bint Saeed.',
         'International orders are fulfilled with DHL Express. Within the United Arab Emirates, orders are operated by Jeebly. Additional carriers may be introduced as our logistics network expands.',
-        'If you require delivery for a particular occasion or by a fixed date, please contact Client Services before placing your order. Dispatch and transit times are estimates only and cannot be guaranteed.',
+        'If you require delivery for a particular occasion or by a fixed date, or if you need your order sooner, please contact Client Services before placing your order on WhatsApp at +971 50 229 9402 or at support@bintsaeed.com. Client Services is available Sunday–Thursday, 9:00–18:00 (Abu Dhabi time). Dispatch and transit times are estimates only and cannot be guaranteed.',
         'While we make every effort to meet estimated timelines, delivery dates are not guaranteed and may be affected by circumstances outside our reasonable control.',
         'Once an order has been transferred to the courier, delivery timelines are subject to the courier’s network, local delivery infrastructure, customs procedures, and destination country regulations. While we will always assist clients in tracking and resolving shipping issues where possible, we cannot guarantee delivery timelines after handover to the carrier.',
       ],
@@ -806,8 +806,8 @@ function shipmentEnSections(): PolicySection[] {
         'Complimentary worldwide shipping applies to orders with a merchandise subtotal of EUR 500 or more (or the clean equivalent shown in the selected currency).',
         'Below these thresholds, a flat shipping fee applies: AED 35 within the UAE, and EUR 30 (or the clean equivalent in the selected currency) for international destinations, confirmed at payment.',
         'Order cutoff for same-day handling consideration is 2:00 PM Gulf Standard Time (Dubai, GMT+4). Handling and dispatch days are Monday–Saturday.',
-        'Selected in-stock items may be dispatched on the same day when ordered before the 2:00 PM cutoff, but dispatch can take up to 3 business days.',
-        'Made-to-order pieces are dispatched within a maximum of approximately 14 calendar days after order confirmation, equivalent to up to 12 Monday–Saturday handling days (handling time: 0–12 business days).',
+        'Jewellery, lifestyle accessories, and selected in-stock items may be dispatched on the same day when ordered before the 2:00 PM cutoff, but dispatch can take up to 3 business days.',
+        'Bespoke garments are usually dispatched within approximately two weeks of order confirmation, and within a maximum of approximately 14 calendar days after order confirmation (equivalent to up to 12 Monday–Saturday handling days; handling time: 0–12 business days).',
         'Once dispatched, UAE courier transit usually takes 1–3 business days. Estimated total UAE delivery time is typically 1–15 business days from order confirmation.',
         'International transit usually takes approximately 3–10 business days after dispatch, depending on destination and customs clearance.',
         'Delivery estimates exclude Sundays, public holidays, courier delays, and circumstances outside Bint Saeed’s control.',
@@ -865,6 +865,8 @@ function shipmentEnSections(): PolicySection[] {
         OFFICIAL_EMAILS.returns,
         'For general customer support:',
         OFFICIAL_EMAILS.support,
+        'WhatsApp: +971 50 229 9402',
+        'Client Services is available Sunday–Thursday, 9:00–18:00 (Abu Dhabi time).',
         'Please include your order number or invoice number, contact details, and any supporting photographs where applicable. Our team will review your request and provide guidance on the next steps.',
         'At Bint Saeed, we are committed to handling every enquiry with fairness, professionalism, and care.',
       ],
@@ -994,7 +996,7 @@ function shipmentMsSections(): PolicySection[] {
       title: '7. Pengakuan Akhir',
       body: [
         'Dengan melakukan pesanan kepada Bint Saeed, pelanggan menyatakan telah meninjau dan menerima penerangan produk, maklumat saiz, timeline produksi, serta terma yang diuraikan dalam dasar ini.',
-        'Klien selanjutnya mengakui sifat made-to-order dari banyak karya Bint Saeed dan memahami batasan yang berlaku terkait pemulangan dana, pertukaran, dan pembatalan.',
+        'Klien selanjutnya mengakui sifat bespoke dari banyak pakaian Bint Saeed dan memahami batasan yang berlaku terkait pemulangan dana, pertukaran, dan pembatalan.',
       ],
     },
     {
@@ -1002,7 +1004,7 @@ function shipmentMsSections(): PolicySection[] {
       body: [
         'Kami berupaya mengirim setiap pesanan seefisien mungkin dengan menjaga standar kualitas Bint Saeed.',
         'Pesanan internasional dipenuhi melalui DHL Express. Di dalam Uni Emirat Arab, pesanan dioperasikan oleh Jeebly. Kurir tambahan dapat ditambahkan seiring perluasan jaringan logistik kami.',
-        'Jika Anda membutuhkan penghantaran untuk acara tertentu atau pada tanggal tetap, harap hubungi Client Services sebelum memesan. Waktu penghantaran dan transit hanya perkiraan dan tidak dapat dijamin.',
+        'Jika anda memerlukan penghantaran untuk majlis tertentu atau pada tarikh tetap, atau jika anda memerlukan pesanan lebih awal, sila hubungi Client Services sebelum memesan melalui WhatsApp di +971 50 229 9402 atau di support@bintsaeed.com. Client Services tersedia Ahad–Khamis, 09.00–18.00 (waktu Abu Dhabi). Waktu penghantaran dan transit hanya anggaran dan tidak dapat dijamin.',
         'Meskipun kami berupaya memenuhi jadwal perkiraan, tanggal penghantaran tidak dijamin dan dapat terpengaruh keadaan di luar kendali wajar kami.',
         'Setelah pesanan diserahkan kepada kurir, jadwal penghantaran tunduk pada jaringan kurir, infrastruktur lokal, prosedur kastam, dan regulasi negara tujuan. Kami akan membantu pelacakan sejauh memungkinkan, namun tidak dapat menjamin jadwal setelah serah terima kepada kurir.',
       ],
@@ -1011,8 +1013,8 @@ function shipmentMsSections(): PolicySection[] {
         'Penghantaran percuma di seluruh dunia berlaku untuk pesanan dengan subtotal barang EUR 500 atau lebih (atau setara bersih dalam mata uang yang dipilih).',
         'Di bawah ambang tersebut, biaya penghantaran tetap berlaku: AED 35 di dalam UAE, dan EUR 30 (atau setara bersih dalam mata uang yang dipilih) untuk destinasi internasional, dikonfirmasi saat pembayaran.',
         'Had masa pesanan untuk pertimbangan pengendalian hari yang sama ialah 2:00 petang Waktu Piawai Teluk (Dubai, GMT+4). Hari pengendalian dan penghantaran ialah Isnin–Sabtu.',
-        'Barang sedia stok terpilih mungkin dihantar pada hari yang sama jika dipesan sebelum 2:00 petang, namun penghantaran boleh mengambil masa sehingga 3 hari bekerja.',
-        'Karya made-to-order dihantar dalam maksimum kira-kira 14 hari kalendar selepas pengesahan pesanan, bersamaan sehingga 12 hari pengendalian Isnin–Sabtu (masa pengendalian: 0–12 hari bekerja).',
+        'Barang kemas, aksesori gaya hidup, dan barang sedia stok terpilih mungkin dihantar pada hari yang sama jika dipesan sebelum 2:00 petang, namun penghantaran boleh mengambil masa sehingga 3 hari bekerja.',
+        'Pakaian bespoke biasanya dihantar dalam kira-kira dua minggu selepas pengesahan pesanan, dan dalam maksimum kira-kira 14 hari kalendar selepas pengesahan pesanan (bersamaan sehingga 12 hari pengendalian Isnin–Sabtu; masa pengendalian: 0–12 hari bekerja).',
         'Selepas dihantar, transit kurier UAE biasanya mengambil masa 1–3 hari bekerja. Anggaran jumlah masa penghantaran UAE biasanya 1–15 hari bekerja dari pengesahan pesanan.',
         'Transit antarabangsa biasanya mengambil masa kira-kira 3–10 hari bekerja selepas penghantaran, bergantung pada destinasi dan kastam.',
         'Anggaran penghantaran tidak termasuk Ahad, cuti umum, kelewatan kurier, dan keadaan di luar kawalan Bint Saeed.',
@@ -1074,6 +1076,8 @@ function shipmentMsSections(): PolicySection[] {
         OFFICIAL_EMAILS.returns,
         'Untuk dukungan pelanggan umum:',
         OFFICIAL_EMAILS.support,
+        'WhatsApp: +971 50 229 9402',
+        'Client Services tersedia Ahad–Khamis, 09.00–18.00 (waktu Abu Dhabi).',
         'Mohon sertakan nombor pesanan atau nombor invois, detail kontak, dan foto pendukung jika berlaku. Tim kami akan meninjau permintaan Anda dan memberikan panduan langkah selanjutnya.',
         'Di Bint Saeed, kami berkomitmen menangani setiap pertanyaan dengan keadilan, profesionalisme, dan perhatian.',
       ],
@@ -1093,7 +1097,7 @@ const SHIPMENT_EN: Omit<PolicyContent, 'sections'> = {
   summaryTitle: 'Summary Notice',
   summaryBody: [
     'At Bint Saeed, every piece is created with care and inspected prior to shipment. We encourage clients to review product descriptions, sizing information, and product details carefully before placing an order.',
-    'While the majority of Bint Saeed pieces are produced on demand, selected items may be available for immediate shipment.',
+    'While the majority of Bint Saeed garments are crafted to bespoke order, selected jewellery and lifestyle accessories may be available for immediate shipment.',
   ],
   sectionList: [
     '1. Opening Statement',
@@ -1123,7 +1127,7 @@ const SHIPMENT_MS: Omit<PolicyContent, 'sections'> = {
   summaryTitle: 'Ringkasan',
   summaryBody: [
     'Di Bint Saeed, setiap karya dihasilkan dengan perhatian dan diperiksa sebelum penghantaran. Kami mengesyorkan pelanggan meninjau penerangan produk, maklumat saiz, dan butiran produk dengan saksama sebelum memesan.',
-    'Meskipun mayoritas karya Bint Saeed diproduksi berdasarkan permintaan, item terpilih dapat tersedia untuk penghantaran segera.',
+    'Walaupun majoriti pakaian Bint Saeed dibuat secara bespoke mengikut pesanan, barang kemas dan aksesori gaya hidup terpilih mungkin tersedia untuk penghantaran segera.',
   ],
   sectionList: [
     '1. Pernyataan Pembukaan',

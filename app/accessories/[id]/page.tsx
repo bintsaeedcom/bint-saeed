@@ -336,7 +336,7 @@ export default function AccessoryDetailPage() {
           children: (
             <PdpShippingReturnsBullets
               isRTL={isRTL}
-              productKind={accessory.category === 'earrings' ? 'earrings' : 'default'}
+              productKind="jewellery"
             />
           ),
         },
@@ -429,7 +429,7 @@ export default function AccessoryDetailPage() {
           children: (
             <PdpShippingReturnsBullets
               isRTL={isRTL}
-              productKind={accessory.category === 'earrings' ? 'earrings' : 'default'}
+              productKind="jewellery"
             />
           ),
         },
@@ -513,7 +513,7 @@ export default function AccessoryDetailPage() {
           title: t.product.shippingReturns,
           bordered: false,
           children: (
-            <PdpShippingReturnsBullets isRTL={isRTL} productKind="default" />
+            <PdpShippingReturnsBullets isRTL={isRTL} productKind="jewellery" />
           ),
         },
       ]
@@ -583,7 +583,7 @@ export default function AccessoryDetailPage() {
         children: (
           <PdpShippingReturnsBullets
             isRTL={isRTL}
-            productKind={accessory.category === 'earrings' ? 'earrings' : 'default'}
+            productKind="jewellery"
           />
         ),
       },

@@ -54,7 +54,7 @@ export const faqNl: FaqBundle = {
           questions: [
             {
               q: 'Hoe lang duurt de levering?',
-              a: 'Artikelen op voorraad, inclusief geselecteerde juwelen en klaar-voor-verzending stijlen, worden doorgaans binnen 1 tot 3 werkdagen verzonden. Made-to-order stukken worden doorgaans binnen ongeveer twee weken na orderbevestiging verzonden. Eenmaal verzonden arriveren leveringen in de VAE doorgaans binnen ongeveer 1 tot 3 werkdagen. Internationale leveringen arriveren doorgaans binnen ongeveer 3 tot 10 werkdagen, afhankelijk van bestemming en douaneafhandeling. Verzend- en transittijden zijn slechts schattingen en kunnen niet worden gegarandeerd. Volledige details staan in onze Shipment & Return Policy.',
+              a: 'Artikelen op voorraad, inclusief geselecteerde juwelen en klaar-voor-verzending stijlen, worden doorgaans binnen 1 tot 3 werkdagen verzonden. Bespoke-kledingstukken worden doorgaans binnen ongeveer twee weken na orderbevestiging verzonden. Eenmaal verzonden arriveren leveringen in de VAE doorgaans binnen ongeveer 1 tot 3 werkdagen. Internationale leveringen arriveren doorgaans binnen ongeveer 3 tot 10 werkdagen, afhankelijk van bestemming en douaneafhandeling. Als u uw bestelling eerder nodig heeft, neem contact op met Client Services via WhatsApp op +971 50 229 9402 of via support@bintsaeed.com (zondag–donderdag, 9:00–18:00 Abu Dhabi-tijd). Verzend- en transittijden zijn slechts schattingen en kunnen niet worden gegarandeerd. Volledige details staan in ons Verzend- en retourbeleid.',
             },
             {
               q: 'Welke vervoerders gebruiken jullie?',
