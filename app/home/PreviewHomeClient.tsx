@@ -470,7 +470,7 @@ function StrandsFeatureCarousel({
         {slides.map((src, i) => (
           <div
             key={src}
-            className={`absolute -inset-[14%] transition-opacity duration-[1200ms] ease-[cubic-bezier(0.33,0,0.2,1)] ${
+            className={`absolute inset-0 transition-opacity duration-[1200ms] ease-[cubic-bezier(0.33,0,0.2,1)] ${
               i === index ? 'z-[2] opacity-100' : 'z-[1] opacity-0'
             }`}
             aria-hidden={i !== index}
@@ -480,7 +480,7 @@ function StrandsFeatureCarousel({
               alt={withBrandAlt(alts[i], language)}
               fill
               sizes="(max-width: 1024px) 100vw, 58vw"
-              className="object-cover object-[50%_42%] transition-transform duration-700 group-hover:scale-[1.02]"
+              className="object-cover object-[50%_45%] transition-transform duration-700 group-hover:scale-[1.02]"
               priority={i === 0}
             />
           </div>
