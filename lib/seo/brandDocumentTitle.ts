@@ -15,10 +15,10 @@ export function brandDocumentTitle(pageTitle: string): string {
     return t
   }
 
-  // Trailing brand / brand + geo in any order commonly used in legacy titles.
+  // Trailing brand / brand + geo (pipe, em/en dash, or hyphen — Google often shows "- Brand").
   t = t
     .replace(
-      /\s*[|—–]\s*Bint Saeed(?:\s+(?:Abu Dhabi|أبوظبي|阿布扎比|Абу-Даби|Abou Dabi|Abu Dabi))?\s*$/i,
+      /\s*[|—–-]\s*Bint Saeed(?:\s+(?:Abu Dhabi|أبوظبي|阿布扎比|Абу-Даби|Abou Dabi|Abu Dabi))?\s*$/i,
       '',
     )
     .trim()

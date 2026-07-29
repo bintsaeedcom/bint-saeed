@@ -5,32 +5,40 @@ import {
   CODES_IMAGE_FILES,
 } from '@/lib/the-codes/codesPageContent'
 import { sectionRobotsMetadata } from '@/lib/seo'
+import { getServerLocale } from '@/lib/i18n/serverLocale'
+import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
+import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
+import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 
 const KHOUS_HERITAGE_IMAGE = absoluteCodesPageImageUrl(CODES_IMAGE_FILES.khous)
 
-export const metadata: Metadata = {
-  ...sectionRobotsMetadata,
-  title: { absolute: 'Bint Saeed | The Codes' },
-  description:
-    'The house codes — Al Talli, Al Khous, Al Ain Rosette, Knotted Lines, and the monogram — told in one continuous story.',
-  openGraph: {
-    title: 'Bint Saeed | The Codes',
-    description:
-      'Emirati heritage design codes at Bint Saeed Abu Dhabi — Al Talli, Al Khous weaving, and the house monogram.',
-    images: [
-      {
-        url: KHOUS_HERITAGE_IMAGE,
-        alt: CODES_HERO.alt,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Bint Saeed | The Codes',
-    description:
-      'Emirati heritage design codes at Bint Saeed Abu Dhabi — Al Talli, Al Khous weaving, and the house monogram.',
-    images: [KHOUS_HERITAGE_IMAGE],
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getServerLocale()
+  const meta = getResolvedRoutePageMeta(locale, '/the-codes')
+  const title = brandDocumentTitle(meta.title)
+  const description = clipMetaDescription(meta.description, 200)
+
+  return {
+    ...sectionRobotsMetadata,
+    title: { absolute: title },
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [
+        {
+          url: KHOUS_HERITAGE_IMAGE,
+          alt: CODES_HERO.alt,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [KHOUS_HERITAGE_IMAGE],
+    },
+  }
 }
 
 export default function TheCodesLayout({ children }: { children: React.ReactNode }) {

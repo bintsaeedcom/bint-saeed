@@ -153,7 +153,10 @@ function buildShopItems(products: Product[]): MerchantCatalogItem[] {
 
       const sku = resolveProductSku(product, colorName) ?? product.id
       const baseTitle = colorName ? `${product.name} — ${colorName}` : product.name
-      const description = sanitizeFeedText(product.description || product.name, 5000)
+      const description = sanitizeFeedText(
+        [product.description || product.name, product.fabric?.trim()].filter(Boolean).join(' '),
+        5000,
+      )
       const image_link = absoluteFeedImageUrl(primary)
       const additional_image_link = additionalImageLinks(images)
       const colorLabel = colorName ?? ''
@@ -208,7 +211,16 @@ function buildAccessoryItems(items: readonly Accessory[]): MerchantCatalogItem[]
         id: sku,
         item_group_id: sku,
         title: sanitizeFeedText(item.name, 150),
-        description: sanitizeFeedText(item.description || item.name, 5000),
+        description: sanitizeFeedText(
+          [
+            item.description?.trim() || item.name,
+            item.materials?.trim(),
+            'Created in Abu Dhabi by Bint Saeed. Ships worldwide.',
+          ]
+            .filter(Boolean)
+            .join(' '),
+          5000,
+        ),
         link: accessoryCanonicalUrl('en', item.id),
         image_link: absoluteFeedImageUrl(images[0]),
         additional_image_link: additionalImageLinks(images),

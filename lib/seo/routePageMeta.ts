@@ -42,6 +42,7 @@ export function classifyRouteMetaKey(pathname: string): RouteMetaKey {
   if (p.startsWith('/privacy-policy')) return 'privacy'
   if (p.startsWith('/terms')) return 'terms'
   if (p.startsWith('/cookie-policy')) return 'cookies'
+  if (p.startsWith('/shipment-return-policy')) return 'shipment_return'
   if (p.startsWith('/size-guide')) return 'size_guide'
   if (p.startsWith('/verify-email')) return 'verify_email'
   if (p.startsWith('/the-codes')) return 'the_codes'
@@ -322,6 +323,20 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     id: 'Kebijakan Cookie | Bint Saeed',
     ms: 'Dasar Kuki | Bint Saeed',
   },
+  shipment_return: {
+    en: 'Bint Saeed | Shipping & Returns',
+    ar: 'Bint Saeed | الشحن والإرجاع',
+    fr: 'Bint Saeed | Livraison et retours',
+    it: 'Bint Saeed | Spedizioni e resi',
+    es: 'Bint Saeed | Envíos y devoluciones',
+    ru: 'Bint Saeed | Доставка и возврат',
+    zh: 'Bint Saeed | 配送与退货',
+    de: 'Bint Saeed | Versand & Rückgabe',
+    nl: 'Bint Saeed | Verzending & retour',
+    pt: 'Bint Saeed | Envios e devoluções',
+    id: 'Bint Saeed | Pengiriman & Pengembalian',
+    ms: 'Bint Saeed | Penghantaran & Pemulangan',
+  },
   size_guide: {
     en: 'Size guide | Bint Saeed',
     ar: 'دليل المقاسات | Bint Saeed',
@@ -356,7 +371,7 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     fr: 'Bint Saeed | The Codes',
     it: 'Bint Saeed | The Codes',
     es: 'Bint Saeed | The Codes',
-    ru: 'Bint Saeed | The Codes',
+    ru: 'Bint Saeed | Коды дома',
     zh: 'Bint Saeed | 设计准则',
     de: 'Bint Saeed | The Codes',
     nl: 'Bint Saeed | The Codes',

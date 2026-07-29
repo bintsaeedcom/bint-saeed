@@ -24,9 +24,16 @@ export function innerPathForMetadata(pathname: string): string {
   return inner.replace(/\/+$/, '') || '/'
 }
 
+/** Editorial home lives at `/home`; `/` 308s there — never emit `/` or bare `/ar` in canonical/hreflang. */
+function canonicalInnerPath(innerPath: string): string {
+  const p = innerPath.replace(/\/+$/, '') || '/'
+  if (p === '/' || p === '') return '/home'
+  return p
+}
+
 /** Absolute canonical URL for the current locale + pathname from headers (used by root metadata). */
 export function absoluteCanonicalForLocaleRoute(locale: AppLocale, pathnameFromHeaders: string): string {
-  const inner = innerPathForMetadata(pathnameFromHeaders)
+  const inner = canonicalInnerPath(innerPathForMetadata(pathnameFromHeaders))
   return new URL(localizedPath(locale, inner), metadataBaseUrl()).toString()
 }
 
@@ -91,7 +98,7 @@ function usesHomeMetadata(pathname: string): boolean {
 }
 
 export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata {
-  const innerPath = innerPathForMetadata(pathname)
+  const innerPath = canonicalInnerPath(innerPathForMetadata(pathname))
   const meta = getResolvedRoutePageMeta(locale, innerPath)
   const desc = meta.description
   const isHomeShell = usesHomeMetadata(innerPath)
@@ -112,8 +119,8 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
   const canonicalUrl = new URL(localizedPath(locale, innerPath), base).toString()
 
   const languages: Record<string, string> = {
-    'x-default': new URL(innerPath === '/' ? '/' : innerPath, base).toString(),
-    en: new URL(innerPath === '/' ? '/' : innerPath, base).toString(),
+    'x-default': new URL(innerPath, base).toString(),
+    en: new URL(innerPath, base).toString(),
   }
   for (const L of ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms'] as const) {
     languages[L] = new URL(localizedPath(L, innerPath), base).toString()

@@ -561,16 +561,9 @@ export function buildWebsiteJsonLd(locale: AppLocale) {
     publisher: {
       '@id': `${BASE}/#organization`,
     },
-    potentialAction: [
-      {
-        '@type': 'SearchAction',
-        target: {
-          '@type': 'EntryPoint',
-          urlTemplate: `${BASE}${localizedPath(locale, '/shop')}?category={search_term_string}`,
-        },
-        'query-input': 'required name=search_term_string',
-      },
-    ],
+    // No SearchAction: header search is client-side only. A fake
+    // `?category={search_term_string}` template caused GSC to crawl the
+    // literal placeholder URL (Alternate page with proper canonical → /shop).
   }
 }
 

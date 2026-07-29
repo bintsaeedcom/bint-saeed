@@ -7,20 +7,16 @@ import { getStrandPdpContent } from '@/lib/accessories/strandPdp/resolveStrandPd
 import { getPhoneCharmPdpContent } from '@/lib/accessories/phoneCharmPdpContent'
 import {
   getPhoneCharmMetaDescription,
-  getPhoneCharmMetaTitle,
 } from '@/lib/accessories/phoneCharmPdpMetaI18n'
 import {
   getBagCharmMetaDescription,
-  getBagCharmMetaTitle,
 } from '@/lib/accessories/bagCharmPdpMetaI18n'
 import {
   getEarringMetaDescription,
-  getEarringMetaTitle,
   getEarringLocalizedDisplayName,
 } from '@/lib/accessories/earringPdpMetaI18n'
 import {
   getNecklaceMetaDescription,
-  getNecklaceMetaTitle,
   getNecklaceLocalizedDisplayName,
 } from '@/lib/accessories/necklacePdpMetaI18n'
 import { getNecklaceEarringPdpContent } from '@/lib/accessories/necklaceEarringPdpContent'
@@ -77,14 +73,7 @@ function accessoryDisplayName(accessory: Accessory, locale: AppLocale): string {
 }
 
 export function buildAccessoryPageTitle(accessory: Accessory, locale: AppLocale): string {
-  const phoneTitle = getPhoneCharmMetaTitle(accessory.id, locale)
-  if (phoneTitle) return brandDocumentTitle(phoneTitle)
-  const bagTitle = getBagCharmMetaTitle(accessory.id, locale)
-  if (bagTitle) return brandDocumentTitle(bagTitle)
-  const earringTitle = getEarringMetaTitle(accessory.id, locale)
-  if (earringTitle) return brandDocumentTitle(earringTitle)
-  const necklaceTitle = getNecklaceMetaTitle(accessory.id, locale)
-  if (necklaceTitle) return brandDocumentTitle(necklaceTitle)
+  // Always brand-first short titles: `Bint Saeed | …` (keywords live in meta description).
   return brandDocumentTitle(accessoryDisplayName(accessory, locale))
 }
 

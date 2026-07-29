@@ -8,76 +8,73 @@ type CatalogFields = {
 
 const AR_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
-    description:
-      'عباية جاكيت خوص تجمع بين اللباس التقليدي والملابس الخارجية المعاصرة — بقصة مريحة، وتفاصيل مستوحاة من الخوص، وأكتاف مهيكلة، وأزرار Knotted Lines of Lineage المميزة. صُنعت في أبوظبي.',
+    description: 'للنساء اللواتي يرسمن الخط لا يتبعنه — عباية جاكيت بتفاصيل مستوحاة من الخوص، وأكتاف مهيكلة، وأزرار Knotted Lines of Lineage. تُرتدى كملابس خارجية راقية فوق الفساتين أو وحدها كلباس إماراتي معاصر. صُنعت في أبوظبي؛ شحن عالمي.',
     fabric: 'الخارجي: 60% بوليستر، 40% قطن؛ الفستان الداخلي: 100% بوليستر',
     measurements:
       'طول العارضة: 160 سم / 63 بوصة. العارضة ترتدي مقاس XS. الطول: 143 سم / 56.3 بوصة. تتوفر أطوال مخصصة عند الطلب.',
   },
   'covent-garden-abaya': {
-    description: 'عباية كتان خفيفة مع حواف تقليدية من التلي، وإغلاق أمامي مخفي أنيق، وتفاصيل مستوحاة من التراث الإماراتي.',
+    description: 'عباية الكتان الخفيفة التي تلجئين إليها حين يطلب اليوم سهولة دون أن تفقدي أناقتك — حواف تلي تقليدية، وإغلاق أمامي مخفي نظيف، وتفصيل تراثي إماراتي يُقرأ بهدوء عن قرب. صُنعت في أبوظبي؛ شحن عالمي.',
     fabric: 'مزيج كتان أوروبي، بطانة قطنية',
     measurements: 'الطول: 138 سم (مقاس M). قصة مريحة عبر الجسم.',
   },
   'kensington-abaya': {
-    description: 'عباية بليزر مهيكلة بأكتاف مفصلة وحواف مستوحاة من نسج الخوص التقليدي والتراث الإماراتي.',
+    description: 'ثقة مفصّلة في عباية بليزر مهيكلة — أكتاف نظيفة، وضفيرة مستوحاة من الخوص، وبساطة معمارية بالأسود العميق. صُممت للنساء اللواتي يردن حضوراً بلا ضجيج. صُنعت في أبوظبي؛ شحن عالمي.',
     fabric: 'كريب ياباني، خيوط تطريز بدرجة لونية متناسقة',
     measurements: 'الطول: 138 سم (مقاس M).',
   },
   'marylebone-abaya': {
-    description: 'عباية مميزة مفتوحة من الأمام بأكمام واسعة للارتداء فوق الفساتين أو الأطقم.',
+    description: 'عباية بقصة A-line صُممت لتحمل المجوهرات — تفصيل أنيق مع خيوط أونكس قابلة للإزالة وتفاصيل Knotted Line المميزة التي تعيدين تنسيقها عبر الموسم. صُنعت في أبوظبي؛ شحن عالمي.',
     fabric: 'مزيج صوف-حرير، حواف ساتان مطفي',
     measurements: 'الطول: 135 سم (مقاس M).',
   },
   'belgravia-abaya': {
-    description:
-      'عباية مستوحاة من البِشت مع حواف منسوجة يدويًا مستوحاة من الخوص — تعبير معاصر عن التراث الإماراتي، صُنعت في أبوظبي.',
+    description: 'عباية مستوحاة من البِشت بحواف منسوجة يدوياً من نسج الخوص — تراث في نسب معاصرة. صُنعت في أبوظبي للنساء اللواتي يلبسن بوضوح وأصالة؛ شحن عالمي.',
     fabric: 'الخارجي: مزيج كريب خفيف (80% بوليستر، 20% فيسكوز)؛ البطانة الداخلية: (70% بوليستر، 30% فيسكوز)',
     measurements: 'الطول: 138 سم (مقاس M). تتوفر أطوال مخصصة عند الطلب.',
   },
   'park-lane-abaya': {
-    description: 'عباية يومية راقية بخطوط نظيفة وانسيابية ناعمة مصممة لحركة المدينة.',
+    description: 'العباءة التي تهدّئ المكان قبل أن تتحدثي — قصة A-line أنيقة، ووشاح كتف مدمج، وتفاصيل Knotted Line ذهبية. من دبلوماسية النهار إلى راحة المساء، صُنعت في أبوظبي؛ شحن عالمي.',
     fabric: 'تركيبة القماش — سيتم اعتمادها نهائيًا مع الإنتاج.',
     measurements: 'الطول: 138 سم (مقاس M). تتوفر أطوال مخصصة عند الطلب.',
   },
   'hyde-park-set': {
-    description: 'تصميم تمهيدي بانتظار تفاصيل المنتج الكاملة والصور.',
+    description: 'لباس السفر كما ينبغي — قميص كريب فاخر واسع مع بنطلون بالازو بأرجل عريضة وأزرار Knotted Line، بالأسود العميق حصراً. احزمي مرة؛ ارتديه من المغادرة إلى العشاء. شحن عالمي من أبوظبي.',
     fabric: 'تركيبة القماش — سيتم اعتمادها نهائيًا مع الإنتاج.',
     measurements: 'المقاسات — سيتم تأكيدها.',
   },
   'mayfair-kaftan': {
-    description:
-      'كفتان كريب شيفون بياقة V مع انسيابية ناعمة، وفستان داخلي، وتفصيل وشاح، ودبوس شعار ذهبي مميز.',
+    description: 'كفتان كريب شيفون بياقة V وانسيابية ناعمة، مع فستان داخلي وتفصيل وشاح ودبوس المونوغرام الذهبي — سهولة مناسبة للمناسبات بذوق محسوب. صُنع في أبوظبي؛ شحن عالمي.',
     fabric: 'كريب شيفون (100% بوليستر)، الفستان الداخلي: 100% بوليستر',
     measurements: 'الطول الأقصى للقطعة: 165 سم.',
   },
   'nothing-hill-kaftan': {
-    description: 'كفتان شيفون بلون خوخي وردي ناعم بياقة bateau راقية، وانسيابية متدفقة، وشعار Bint Saeed الذهبي المميز.',
+    description: 'شيفون خوخي وردي ناعم بياقة bateau راقية وخط متدفق — يُختتم بشعار Bint Saeed الذهبي. الكفتان لأمسيات تطلب خفة. شحن عالمي من أبوظبي.',
     fabric: 'شيفون (100% بوليستر)، الفستان الداخلي: 100% بوليستر',
     measurements: 'الطول الأقصى للقطعة: 165 سم.',
   },
     'knightsbridge-dress': {
-    description: 'فستان ماكسي أنثوي من مزيج قطن مع تفاصيل halter منسوجة مستوحاة من الخوص — أناقة بلا جهد لحياة تتجاوز موسماً واحداً، صُنع في أبوظبي.',
+    description: 'فستان ماكسي أنثوي من مزيج قطن بتفاصيل halter منسوجة مستوحاة من الخوص — أناقة ترافقك عبر الأسبوع دون أن تطلب منكِ أن تكوني غير نفسك. صُنع في أبوظبي؛ شحن عالمي.',
     fabric: 'الخارجي: 60% قطن، 40% بوليستر',
     measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'covent-garden-long-dress': {
-    description: 'فستان عمودي انسيابي من كريب مطاطي مع فتحة خلفية عالية لسهولة الحركة.',
+    description: 'فستان تحت العباءة الذي يرافقك من العمل إلى الأمسيات الثقافية — قصة ناعمة، وجيوب جانبية مخفية، وبطانة كريب ناعمة تحافظ على الخط طوال اليوم. صُنع في أبوظبي؛ شحن عالمي.',
     fabric: 'كريب مطاطي، بطانة باور مش',
     measurements: 'طول حتى الأرض 148 سم (مقاس M).',
   },
   'hampstead-dress': {
-    description: 'فستان بأكتاف مهيكلة وحواف تقليدية من التلي — للمساء أو المدينة بجذور من التراث الإماراتي.',
+    description: 'فستان الماكسي من الكريب الفاخر المبطّن بالكامل الذي كنتِ تبحثين عنه — خط عنق متدلٍّ، وانسيابية منحوتة بلطف، وحواف التلي عند الخصر المعترف بها من اليونسكو. ارتديه وحدكِ أو تحت العباءة؛ صُنع في أبوظبي ويُشحن عالمياً.',
     fabric: 'مزيج صوف بكر، بطانة حرير، أزرار أم اللؤلؤ',
     measurements: 'قصة مهيكلة. الطول: 118 سم (مقاس M). عرض الكتف: 42 سم.',
   },
   'covent-garden-signature-set': {
-    description: 'طقم خوص مميز من قطعتين — بلوزة وتنورة لإطلالة كاملة أو تنسيق منفصل.',
+    description: 'ثقة التنسيق الكامل — فستان Covent Garden وجاكيت مفصّل بتفاصيل مستوحاة من الخوص، قُطعا ليكونا معاً أو كلّاً على حدة. صُنعا في أبوظبي؛ شحن عالمي.',
     fabric: 'مزيج قطن عضوي، لمسات كتان، أصباغ طبيعية',
     measurements: 'طول البلوزة: 70 سم، طول التنورة: 95 سم (مقاس M). قصة مريحة.',
   },
   'soho-set': {
-    description: 'طقم منسّق من قميص واسع وبنطلون بالازو بأرجل عريضة مع حواف تقليدية من التلي — إطلالة نهارية إلى مسائية راقية تحتفي بالتراث الإماراتي.',
+    description: 'طقم منسّق من قميص واسع وبنطلون بالازو بأرجل عريضة بحواف التلي التقليدية — من النهار إلى المساء بأناقة تحتفي بالتراث الإماراتي بلا مبالغة. صُنع في أبوظبي؛ شحن عالمي.',
     fabric: 'تركيبة القماش — سيتم اعتمادها نهائيًا مع الإنتاج.',
     measurements: 'قصة متوازنة؛ يتم تأكيد أطوال القميص والبنطلون وفق جدول المقاسات.',
   },
@@ -85,82 +82,73 @@ const AR_CATALOG_COPY: Record<string, CatalogFields> = {
 
 const FR_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
-    description:
-      "Abaya veste Khous entre tenue traditionnelle et outerwear contemporain — silhouette decontractee, details inspires d'Al Khous, epaules structurees et boutons signature Knotted Lines of Lineage. Creee a Abu Dhabi.",
+    description: "Pour celles qui tracent la ligne plutôt que de la suivre — une abaya veste aux détails inspirés d’Al Khous, épaules structurées et boutons Knotted Lines of Lineage. À porter en outerwear raffiné sur une robe ou seule, en tenue émiratie contemporaine. Créée à Abou Dabi ; livraison mondiale.",
     fabric: 'Exterieur: 60% polyester, 40% coton; robe interieure: 100% polyester',
     measurements:
       'Taille du mannequin: 160 cm / 63 pouces. Le mannequin porte la taille XS. Longueur: 143 cm / 56.3 pouces. Longueurs sur mesure disponibles sur demande.',
   },
   'covent-garden-abaya': {
-    description:
-      'Abaya en lin leger avec bordure traditionnelle Al Talli, patte de boutonnage dissimulee et details inspires du patrimoine emirati.',
+    description: 'L’abaya en lin léger que vous choisissez quand la journée demande de la fluidité sans perdre le soin — bordure Al Talli traditionnelle, patte dissimulée et détail patrimonial émirati qui se lit de près. Créée à Abou Dabi ; livraison mondiale.',
     fabric: 'Melange de lin europeen, doublure coton',
     measurements: 'Longueur: 138 cm (taille M). Coupe decontractee sur le corps.',
   },
   'kensington-abaya': {
-    description:
-      'Abaya blazer structuree avec epaules tailleur et finitions inspirees du tressage Khous traditionnel et du patrimoine emirati.',
+    description: 'La confiance taillée d’une abaya blazer structurée — épaules nettes, tresse inspirée d’Al Khous et simplicité architecturale en noir profond. Pour celles qui veulent de la présence sans bruit. Créée à Abou Dabi ; livraison mondiale.',
     fabric: 'Crepe japonais, fils de broderie ton sur ton',
     measurements: 'Longueur: 138 cm (taille M).',
   },
   'marylebone-abaya': {
-    description: 'Abaya signature ouverte sur le devant avec manches larges a superposer sur robes ou ensembles.',
+    description: 'Une abaya A-line conçue pour porter la joaillerie — coupe gracieuse, fils Onyx amovibles et détails Knotted Line à recomposer au fil de la saison. Créée à Abou Dabi ; livraison mondiale.',
     fabric: 'Melange laine-soie, bordure satin mat',
     measurements: 'Longueur: 135 cm (taille M).',
   },
   'belgravia-abaya': {
-    description:
-      "Abaya inspiree du Bisht avec bordure tissee main inspiree d'Al Khous — expression contemporaine du patrimoine emirati, creee a Abu Dhabi.",
+    description: "Une abaya inspirée du bisht, finie d’une bordure tissée à la main issue du tissage Al Khous — le patrimoine dans une proportion contemporaine. Créée à Abou Dabi pour celles qui s’habillent avec lignée et clarté ; livraison mondiale.",
     fabric: 'Exterieur: melange crepe leger (80% polyester, 20% viscose); doublure interieure: (70% polyester, 30% viscose)',
     measurements: 'Longueur: 138 cm (taille M). Longueurs sur mesure disponibles sur demande.',
   },
   'park-lane-abaya': {
-    description: 'Abaya quotidienne raffinee avec ligne epuree et drape fluide pense pour les mouvements en ville.',
+    description: 'L’abaya qui pose la pièce avant que vous ne parliez — coupe A-line gracieuse, écharpe d’épaule intégrée et détails Knotted Line dorés. De la journée au soir, créée à Abou Dabi ; livraison mondiale.',
     fabric: 'Composition du tissu - finalisation avec la production.',
     measurements: 'Longueur: 138 cm (taille M). Longueurs sur mesure disponibles sur demande.',
   },
   'hyde-park-set': {
-    description: 'Style provisoire en attente des details produit complets et des visuels.',
+    description: 'Le dressing de voyage comme il faut — chemise oversize en crêpe premium et pantalon palazzo à jambes larges, boutons Knotted Line, exclusivement en Deep Black. Une valise ; du départ au dîner. Livraison mondiale depuis Abou Dabi.',
     fabric: 'Composition du tissu - finalisation avec la production.',
     measurements: 'Mesures - a confirmer.',
   },
   'mayfair-kaftan': {
-    description:
-      'Kaftan crepe-chiffon a encolure V avec drape fluide, robe interieure, detail echarpe et epingle embleme doree signature.',
+    description: 'Un caftan fluide en crêpe-chiffon à encolure V, robe intérieure, détail d’écharpe et épingle Monogram dorée — l’aisance d’une occasion encore soignée. Créé à Abou Dabi ; livraison mondiale.',
     fabric: 'Crepe Chiffon (100% polyester), robe interieure: 100% polyester',
     measurements: 'Longueur maximale du vetement: 165 cm.',
   },
   'nothing-hill-kaftan': {
-    description:
-      'Kaftan en chiffon rose peche doux avec encolure bateau raffinee, silhouette fluide et embleme dore signature Bint Saeed.',
+    description: 'Chiffon rose pêche doux, encolure bateau raffinée et ligne fluide — terminé de l’emblème doré Bint Saeed. Le caftan des soirées qui demandent de la légèreté. Livraison mondiale depuis Abou Dabi.',
     fabric: 'Chiffon (100% polyester), robe interieure: 100% polyester',
     measurements: 'Longueur maximale du vetement: 165 cm.',
   },
     'knightsbridge-dress': {
-    description:
-      "Robe maxi feminine en melange de coton avec finitions halter tissees inspirees du Khous — elegance naturelle pour une vie au-dela d'une seule saison, creee a Abu Dhabi.",
+    description: "Une maxi féminine en mélange coton, détail halter tissé inspiré d’Al Khous — une élégance qui traverse la semaine sans vous demander de changer qui vous êtes. Créée à Abou Dabi ; livraison mondiale.",
     fabric: 'Exterieur : 60 % coton, 40 % polyester',
     measurements: 'Longueur : 143 cm / 56,3 pouces. Taille du mannequin : 160 cm / 63 pouces. Le mannequin porte la taille XS. Longueurs sur mesure disponibles sur demande.',
   },
   'covent-garden-long-dress': {
-    description: 'Colonne epuree en crepe stretch avec fente dos haute pour faciliter le mouvement.',
+    description: 'La robe sous-abaya qui vous accompagne du travail aux soirées culturelles — silhouette doucement ajustée, poches latérales dissimulées et doublure crêpe qui tient la ligne toute la journée. Créée à Abou Dabi ; livraison mondiale.',
     fabric: 'Crepe stretch, doublure power mesh',
     measurements: 'Longueur au sol 148 cm (taille M).',
   },
   'hampstead-dress': {
-    description:
-      'Robe a epaules structurees avec finition Al Talli traditionnelle — pour la soiree ou la ville, ancree dans le patrimoine emirati.',
+    description: 'La maxi en crêpe premium entièrement doublée que vous cherchiez — encolure drapée, évasement sculpté en douceur et garniture Al Talli à la taille reconnue par l’UNESCO. Seule ou sous une abaya ; créée à Abou Dabi, EAU, livraison mondiale.',
     fabric: 'Melange laine vierge, doublure soie, boutons nacre',
     measurements: 'Coupe structuree. Longueur: 118 cm (taille M). Largeur d epaule: 42 cm.',
   },
   'covent-garden-signature-set': {
-    description: 'Ensemble signature Khous deux pieces — haut et jupe pour un total look ou un styling separe.',
+    description: 'La confiance d’un dressing coordonné — robe Covent Garden et veste taillée aux détails inspirés d’Al Khous, coupées pour aller ensemble ou se porter à part. Créées à Abou Dabi ; livraison mondiale.',
     fabric: 'Melange coton biologique, accents lin, teintures naturelles',
     measurements: 'Longueur haut: 70 cm, longueur jupe: 95 cm (taille M). Coupe decontractee.',
   },
   'soho-set': {
-    description:
-      'Ensemble coordonne chemise oversize et pantalon palazzo a jambes larges avec finition Al Talli traditionnelle — silhouette jour-soir raffinee celebrant le patrimoine emirati.',
+    description: 'Ensemble coordonné — chemise oversize et pantalon palazzo à jambes larges, finition Al Talli traditionnelle — du jour au soir, un hommage au patrimoine émirati sans costume. Créé à Abou Dabi ; livraison mondiale.',
     fabric: 'Composition du tissu - finalisation avec la production.',
     measurements: 'Coupe equilibree; longueurs chemise et pantalon confirmees selon le guide des tailles.',
   },
@@ -168,81 +156,73 @@ const FR_CATALOG_COPY: Record<string, CatalogFields> = {
 
 const DE_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
-    description:
-      'Khous Jacket-Abaya zwischen traditioneller Kleidung und zeitgenoessischer Outerwear - relaxte Silhouette mit Al-Khous-inspirierten Details, strukturierten Schultern und Signature-Knoepfen Knotted Lines of Lineage. Entstanden in Abu Dhabi.',
+    description: 'Für Frauen, die die Linie setzen statt ihr zu folgen — eine Jackenabaya mit Al-Khous-inspirierten Details, strukturierten Schultern und Knotted-Lines-of-Lineage-Knöpfen. Als raffiniertes Outerwear über Kleider oder allein als zeitgenössische emiratische Garderobe. Geschaffen in Abu Dhabi; weltweiter Versand.',
     fabric: 'Aussen: 60% Polyester, 40% Baumwolle; Innenkleid: 100% Polyester',
     measurements:
       'Modelgroesse: 160 cm / 63 Zoll. Model traegt Groesse XS. Laenge: 143 cm / 56.3 Zoll. Individuelle Laengen auf Anfrage verfuegbar.',
   },
   'covent-garden-abaya': {
-    description:
-      'Leichte Leinen-Abaya mit traditioneller Al-Talli-Borte, verdeckter Knopfleiste und Details aus dem emiratischen Erbe.',
+    description: 'Die leichte Leinenabaya, nach der Sie greifen, wenn der Tag Leichtigkeit ohne Verlust an Haltung verlangt — traditioneller Al-Talli-Besatz, verdeckte Knopfleiste und emiratisches Erbe, das aus der Nähe spricht. Geschaffen in Abu Dhabi; weltweiter Versand.',
     fabric: 'Europaeischer Leinenmix, Baumwollfutter',
     measurements: 'Laenge: 138 cm (Groesse M). Relaxte Passform am Koerper.',
   },
   'kensington-abaya': {
-    description:
-      'Strukturierte Blazer-Abaya mit Tailoring-Schultern und Besatz inspiriert von traditionellem Khous-Geflecht und emiratischem Erbe.',
+    description: 'Tailliertes Selbstbewusstsein in einer strukturierten Blazer-Abaya — klare Schultern, Al-Khous-inspirierte Borte und architektonische Schlichtheit in tiefem Schwarz. Für Frauen, die Präsenz ohne Lärm wollen. Geschaffen in Abu Dhabi; weltweiter Versand.',
     fabric: 'Japanischer Krepp, tonale Stickgarne',
     measurements: 'Laenge: 138 cm (Groesse M).',
   },
   'marylebone-abaya': {
-    description: 'Offene Signature-Abaya mit weiten Aermeln zum Layern ueber Kleider oder Sets.',
+    description: 'Eine A-Linien-Abaya für Schmuck — anmutige Schneiderkunst mit abnehmbaren Onyx Strands und Knotted-Line-Details, die Sie über die Saison neu stylen. Geschaffen in Abu Dhabi; weltweiter Versand.',
     fabric: 'Woll-Seiden-Mix, matter Satin-Besatz',
     measurements: 'Laenge: 135 cm (Groesse M).',
   },
   'belgravia-abaya': {
-    description:
-      'Vom Bisht inspirierte Abaya mit handgewebtem, Al-Khous-inspiriertem Besatz - zeitgenoessischer Ausdruck emiratischen Erbes, gefertigt in Abu Dhabi.',
+    description: 'Eine Bisht-inspirierte Abaya mit handgewebtem Besatz aus dem Al-Khous-Palmblattweben — Erbe in zeitgenössischer Proportion. Geschaffen in Abu Dhabi für Frauen, die mit Herkunft und Klarheit kleiden; weltweiter Versand.',
     fabric: 'Aussen: leichter Kreppmix (80% Polyester, 20% Viskose); Innenfutter: (70% Polyester, 30% Viskose)',
     measurements: 'Laenge: 138 cm (Groesse M). Individuelle Laengen auf Anfrage verfuegbar.',
   },
   'park-lane-abaya': {
-    description: 'Raffinierte Alltags-Abaya mit klarer Linie und fliessendem Fall, entworfen fuer Bewegung in der Stadt.',
+    description: 'Die Abaya, die den Raum beruhigt, bevor Sie sprechen — anmutige A-Linie, integrierter Schulterschal und goldfarbene Knotted-Line-Details. Von Tagesdiplomatie bis Abendruhe, geschaffen in Abu Dhabi; weltweiter Versand.',
     fabric: 'Materialzusammensetzung - wird mit der Produktion finalisiert.',
     measurements: 'Laenge: 138 cm (Groesse M). Individuelle Laengen auf Anfrage verfuegbar.',
   },
   'hyde-park-set': {
-    description: 'Platzhalter-Style, bis vollstaendige Produktdetails und Bildmaterial vorliegen.',
+    description: 'Reisegarderobe, wie sie sein soll — oversized Premium-Krepp-Hemd mit weiten Palazzo-Hosen und Knotted-Line-Knöpfen, ausschließlich in Deep Black. Einmal packen; vom Abflug bis zum Dinner. Weltweiter Versand aus Abu Dhabi.',
     fabric: 'Materialzusammensetzung - wird mit der Produktion finalisiert.',
     measurements: 'Masse - werden bestaetigt.',
   },
   'mayfair-kaftan': {
-    description:
-      'Crepe-Chiffon-Kaftan mit V-Ausschnitt, fliessendem Fall, Innenkleid, Schal-Detail und Signature-Emblemnadel in Goldoptik.',
+    description: 'Ein fließender Crêpe-Chiffon-Kaftan mit V-Ausschnitt, Innenkleid, Schaldetail und goldfarbener Monogram-Nadel — Anlassleichtigkeit mit Haltung. Geschaffen in Abu Dhabi; weltweiter Versand.',
     fabric: 'Crepe Chiffon (100% Polyester), Innenkleid: 100% Polyester',
     measurements: 'Maximale Kleidungslaenge: 165 cm.',
   },
   'nothing-hill-kaftan': {
-    description:
-      'Weicher pfirsichrosa Chiffon-Kaftan mit raffiniertem Bateau-Ausschnitt, fliessender Silhouette und goldfarbenem Signature-Emblem von Bint Saeed.',
+    description: 'Weicher Pfirsichrosa-Chiffon mit raffiniertem Bateau-Ausschnitt und fließender Linie — abgeschlossen mit dem goldfarbenen Bint-Saeed-Emblem. Der Kaftan für Abende, die Leichtigkeit verlangen. Weltweiter Versand aus Abu Dhabi.',
     fabric: 'Chiffon (100% Polyester), Innenkleid: 100% Polyester',
     measurements: 'Maximale Kleidungslaenge: 165 cm.',
   },
     'knightsbridge-dress': {
-    description: 'Feminines Maxikleid aus Baumwollmischung mit Khous-inspirierten Webdetails am Halter-Ausschnitt — mühelose Eleganz für ein Leben jenseits einer Saison, gefertigt in Abu Dhabi.',
+    description: 'Ein feminines Baumwollmisch-Maxi mit Khous-inspiriertem gewebtem Halter-Detail — Eleganz, die durch die Woche trägt, ohne dass Sie jemand anderes sein müssen. Geschaffen in Abu Dhabi; weltweiter Versand.',
     fabric: 'Aussenmaterial: 60 % Baumwolle, 40 % Polyester',
     measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'covent-garden-long-dress': {
-    description: 'Schmale Saeule aus Stretch-Krepp mit hohem Rueckenschlitz fuer leichte Bewegung.',
+    description: 'Das Under-Abaya-Kleid für Arbeit und kulturelle Abende — weich sitzende Silhouette, versteckte Seitentaschen und weiche Kreppfutter, das die Linie den ganzen Tag hält. Geschaffen in Abu Dhabi; weltweiter Versand.',
     fabric: 'Stretch-Krepp, Power-Mesh-Futter',
     measurements: 'Bodenlaenge 148 cm (Groesse M).',
   },
   'hampstead-dress': {
-    description:
-      'Kleid mit strukturierten Schultern und traditioneller Al-Talli-Borte - fuer Abend oder Stadt, verwurzelt im emiratischen Erbe.',
+    description: 'Das vollgefütterte Premium-Krepp-Maxi, das Sie gesucht haben — drapierter Ausschnitt, sanft skulptierter Saum und UNESCO-anerkannter Al-Talli-Taillenbesatz. Allein oder unter einer Abaya; geschaffen in Abu Dhabi, VAE, weltweiter Versand.',
     fabric: 'Virgin-Wool-Mix, Seidenfutter, Perlmuttknoepfe',
     measurements: 'Strukturierte Passform. Laenge: 118 cm (Groesse M). Schulterbreite: 42 cm.',
   },
   'covent-garden-signature-set': {
-    description: 'Khous-Signature-Set aus zwei Teilen - Oberteil und Rock fuer Gesamtlook oder separates Styling.',
+    description: 'Die Sicherheit koordinierter Garderobe — Covent-Garden-Kleid und taillierte Jacke mit Al-Khous-Details, geschnitten, um zusammen oder einzeln zu wirken. Geschaffen in Abu Dhabi; weltweiter Versand.',
     fabric: 'Bio-Baumwollmix, Leinen-Akzente, natuerliche Faerbung',
     measurements: 'Oberteillaenge: 70 cm, Rocklaenge: 95 cm (Groesse M). Relaxte Passform.',
   },
   'soho-set': {
-    description:
-      'Koordiniertes Set aus Oversize-Hemd und weiter Palazzo-Hose mit traditioneller Al-Talli-Borte - gepflegter Day-to-Evening-Look mit emiratischer Heritage-Note.',
+    description: 'Koordiniertes oversized Hemd und weite Palazzo-Hose mit traditionellem Al-Talli-Besatz — vom Tag in den Abend, emiratisches Erbe ohne Kostüm. Geschaffen in Abu Dhabi; weltweiter Versand.',
     fabric: 'Materialzusammensetzung - wird mit der Produktion finalisiert.',
     measurements: 'Ausgewogene Passform; Hemd- und Hosenlaengen gemaess Groessentabelle bestaetigt.',
   },
@@ -250,81 +230,73 @@ const DE_CATALOG_COPY: Record<string, CatalogFields> = {
 
 const IT_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
-    description:
-      "Abaya giacca Khous tra vestizione tradizionale e outerwear contemporaneo - silhouette rilassata con dettagli ispirati ad Al Khous, spalle strutturate e bottoni signature Knotted Lines of Lineage. Creata ad Abu Dhabi.",
+    description: "Per chi traccia la linea invece di seguirla — abaya giacca con dettagli ispirati ad Al Khous, spalle strutturate e bottoni Knotted Lines of Lineage. Da indossare come outerwear raffinato sopra abiti o da sola, in un vestire emiratino contemporaneo. Creata ad Abu Dhabi; spedizione mondiale.",
     fabric: 'Esterno: 60% poliestere, 40% cotone; abito interno: 100% poliestere',
     measurements:
       'Altezza modella: 160 cm / 63 pollici. La modella indossa la taglia XS. Lunghezza: 143 cm / 56.3 pollici. Lunghezze personalizzate disponibili su richiesta.',
   },
   'covent-garden-abaya': {
-    description:
-      'Abaya in lino leggero con bordatura tradizionale Al Talli, patta frontale nascosta pulita e dettagli di eredita emiratina.',
+    description: 'L’abaya in lino leggero a cui ricorrete quando la giornata chiede facilità senza perdere cura — bordo Al Talli tradizionale, patta nascosta e dettaglio patrimoniale emiratino che si legge da vicino. Creata ad Abu Dhabi; spedizione mondiale.',
     fabric: 'Misto lino europeo, fodera in cotone',
     measurements: 'Lunghezza: 138 cm (taglia M). Vestibilita rilassata sul corpo.',
   },
   'kensington-abaya': {
-    description:
-      'Abaya blazer strutturata con spalle sartoriali e finiture ispirate all intreccio Khous tradizionale e all eredita emiratina.',
+    description: 'Fiducia sartoriale in un’abaya blazer strutturata — spalle nette, treccia ispirata ad Al Khous e semplicità architettonica in nero intenso. Per chi vuole presenza senza rumore. Creata ad Abu Dhabi; spedizione mondiale.',
     fabric: 'Crepe giapponese, filati da ricamo tono su tono',
     measurements: 'Lunghezza: 138 cm (taglia M).',
   },
   'marylebone-abaya': {
-    description: 'Abaya signature aperta sul davanti con maniche ampie da sovrapporre ad abiti o set.',
+    description: 'Un’abaya A-line pensata per portare gioielli — taglio aggraziato, fili Onyx removibili e dettagli Knotted Line da restilizzare nella stagione. Creata ad Abu Dhabi; spedizione mondiale.',
     fabric: 'Misto lana-seta, bordatura in raso opaco',
     measurements: 'Lunghezza: 135 cm (taglia M).',
   },
   'belgravia-abaya': {
-    description:
-      "Abaya ispirata al Bisht con finitura intrecciata a mano ispirata ad Al Khous - espressione contemporanea dell eredita emiratina, creata ad Abu Dhabi.",
+    description: "Un’abaya ispirata al bisht, finita con bordo tessuto a mano dal telaio Al Khous — patrimonio in proporzione contemporanea. Creata ad Abu Dhabi per chi veste con lignaggio e chiarezza; spedizione mondiale.",
     fabric: 'Esterno: misto crepe leggero (80% poliestere, 20% viscosa); fodera interna: (70% poliestere, 30% viscosa)',
     measurements: 'Lunghezza: 138 cm (taglia M). Lunghezze personalizzate disponibili su richiesta.',
   },
   'park-lane-abaya': {
-    description: 'Abaya quotidiana raffinata con linea pulita e drappeggio fluido pensato per il movimento urbano.',
+    description: 'L’abaya che assesta la stanza prima che parliate — taglio A-line aggraziato, sciarpa spalla integrata e dettagli Knotted Line dorati. Dalla diplomazia diurna alla sera, creata ad Abu Dhabi; spedizione mondiale.',
     fabric: 'Composizione tessuto - da finalizzare con la produzione.',
     measurements: 'Lunghezza: 138 cm (taglia M). Lunghezze personalizzate disponibili su richiesta.',
   },
   'hyde-park-set': {
-    description: 'Stile placeholder in attesa di dettagli prodotto completi e immagini.',
+    description: 'Il travel dressing come si deve — camicia oversize in crepe premium e pantaloni palazzo a gamba ampia con bottoni Knotted Line, esclusivamente in Deep Black. Una valigia; dalla partenza alla cena. Spedizione mondiale da Abu Dhabi.',
     fabric: 'Composizione tessuto - da finalizzare con la produzione.',
     measurements: 'Misure - da confermare.',
   },
   'mayfair-kaftan': {
-    description:
-      'Kaftan in crepe-chiffon con scollo a V, drappeggio fluido, abito interno, dettaglio foulard e spilla emblema dorata signature.',
+    description: 'Un caftano fluido in crepe-chiffon scollo a V, abito interno, dettaglio foulard e spilla Monogram dorata — facilità da occasione ancora ponderata. Creato ad Abu Dhabi; spedizione mondiale.',
     fabric: 'Crepe Chiffon (100% poliestere), abito interno: 100% poliestere',
     measurements: 'Lunghezza massima capo: 165 cm.',
   },
   'nothing-hill-kaftan': {
-    description:
-      'Kaftan in chiffon peach pink morbido con raffinato scollo bateau, silhouette fluida ed emblema dorato signature Bint Saeed.',
+    description: 'Chiffon rosa pesca morbido, scollo bateau raffinato e linea fluida — chiuso dall’emblema dorato Bint Saeed. Il caftano per le sere che chiedono leggerezza. Spedizione mondiale da Abu Dhabi.',
     fabric: 'Chiffon (100% poliestere), abito interno: 100% poliestere',
     measurements: 'Lunghezza massima capo: 165 cm.',
   },
     'knightsbridge-dress': {
-    description: 'Abito maxi femminile in misto cotone con dettagli tessuti halter ispirati al Khous — eleganza naturale per una vita oltre una singola stagione, creato ad Abu Dhabi.',
+    description: 'Un maxi femminile in misto cotone con dettaglio halter tessuto ispirato ad Al Khous — eleganza che accompagna la settimana senza chiedervi di essere altre. Creato ad Abu Dhabi; spedizione mondiale.',
     fabric: 'Esterno: 60% cotone, 40% poliestere',
     measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'covent-garden-long-dress': {
-    description: 'Colonna slanciata in crepe stretch con spaccco posteriore alto per facilita di movimento.',
+    description: 'L’abito sotto-abaya che vi porta dal lavoro alle serate culturali — silhouette morbida, tasche laterali nascoste e fodera crepe che tiene la linea tutto il giorno. Creato ad Abu Dhabi; spedizione mondiale.',
     fabric: 'Crepe stretch, fodera power mesh',
     measurements: 'Lunghezza a terra 148 cm (taglia M).',
   },
   'hampstead-dress': {
-    description:
-      'Abito con spalle strutturate e finitura tradizionale Al Talli - per sera o citta con radici nell eredita emiratina.',
+    description: 'Il maxi in crepe premium completamente foderato che stavate cercando — scollo drappeggiato, svasatura scolpita con delicatezza e trim Al Talli in vita riconosciuto dall’UNESCO. Solo o sotto un’abaya; creato ad Abu Dhabi, EAU, spedizione mondiale.',
     fabric: 'Misto lana vergine, fodera in seta, bottoni in madreperla',
     measurements: 'Vestibilita strutturata. Lunghezza: 118 cm (taglia M). Larghezza spalle: 42 cm.',
   },
   'covent-garden-signature-set': {
-    description: 'Set signature Khous in due pezzi - top e gonna per look completo o styling separato.',
+    description: 'La fiducia del dressing coordinato — abito Covent Garden e giacca sartoriale con dettagli ispirati ad Al Khous, tagliati per stare insieme o separati. Creati ad Abu Dhabi; spedizione mondiale.',
     fabric: 'Misto cotone biologico, accenti in lino, tinture naturali',
     measurements: 'Lunghezza top: 70 cm, lunghezza gonna: 95 cm (taglia M). Vestibilita rilassata.',
   },
   'soho-set': {
-    description:
-      'Set coordinato camicia oversize e pantaloni palazzo a gamba larga con finitura tradizionale Al Talli - look raffinato giorno-sera che celebra l eredita emiratina.',
+    description: 'Set coordinato — camicia oversize e pantaloni palazzo a gamba ampia con trim Al Talli tradizionale — dal giorno alla sera, patrimonio emiratino senza costume. Creato ad Abu Dhabi; spedizione mondiale.',
     fabric: 'Composizione tessuto - da finalizzare con la produzione.',
     measurements: 'Vestibilita bilanciata; lunghezze camicia e pantaloni confermate secondo tabella taglie.',
   },
@@ -332,81 +304,73 @@ const IT_CATALOG_COPY: Record<string, CatalogFields> = {
 
 const ES_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
-    description:
-      'Abaya chaqueta Khous entre vestimenta tradicional y outerwear contemporaneo - silueta relajada con detalles inspirados en Al Khous, hombros estructurados y botones signature Knotted Lines of Lineage. Creada en Abu Dhabi.',
+    description: 'Para quienes marcan la línea en lugar de seguirla — abaya chaqueta con detalles inspirados en Al Khous, hombros estructurados y botones Knotted Lines of Lineage. Como outerwear refinado sobre vestidos o sola, en un vestir emiratí contemporáneo. Creada en Abu Dabi; envío mundial.',
     fabric: 'Exterior: 60% poliester, 40% algodon; vestido interior: 100% poliester',
     measurements:
       'Altura de la modelo: 160 cm / 63 pulgadas. La modelo lleva talla XS. Largo: 143 cm / 56.3 pulgadas. Largo personalizado disponible bajo solicitud.',
   },
   'covent-garden-abaya': {
-    description:
-      'Abaya de lino ligero con ribete tradicional Al Talli, tapeta oculta limpia y detalles de herencia emirati.',
+    description: 'La abaya de lino ligero a la que acudes cuando el día pide facilidad sin perder pulcritud — ribete Al Talli tradicional, plaqueta oculta y detalle patrimonial emiratí que se lee de cerca. Creada en Abu Dabi; envío mundial.',
     fabric: 'Mezcla de lino europeo, forro de algodon',
     measurements: 'Largo: 138 cm (talla M). Corte relajado en el cuerpo.',
   },
   'kensington-abaya': {
-    description:
-      'Abaya blazer estructurada con hombros de sastreria y acabado inspirado en el trenzado Khous tradicional y la herencia emirati.',
+    description: 'Confianza de sastrería en una abaya blazer estructurada — hombros limpios, trenza inspirada en Al Khous y simplicidad arquitectónica en negro profundo. Para quien quiere presencia sin ruido. Creada en Abu Dabi; envío mundial.',
     fabric: 'Crepe japones, hilos de bordado tonales',
     measurements: 'Largo: 138 cm (talla M).',
   },
   'marylebone-abaya': {
-    description: 'Abaya signature abierta al frente con mangas amplias para llevar sobre vestidos o sets.',
+    description: 'Una abaya A-line pensada para llevar joyería — talla graciosa, hebras Onyx extraíbles y detalles Knotted Line que reestilas a lo largo de la temporada. Creada en Abu Dabi; envío mundial.',
     fabric: 'Mezcla de lana y seda, ribete de satin mate',
     measurements: 'Largo: 135 cm (talla M).',
   },
   'belgravia-abaya': {
-    description:
-      'Abaya inspirada en el Bisht con ribete tejido a mano inspirado en Al Khous - expresion contemporanea de la herencia emirati, creada en Abu Dhabi.',
+    description: 'Una abaya inspirada en el bisht, terminada con ribete tejido a mano del tejido Al Khous — patrimonio en proporción contemporánea. Creada en Abu Dabi para quien viste con linaje y claridad; envío mundial.',
     fabric: 'Exterior: mezcla ligera de crepe (80% poliester, 20% viscosa); forro interior: (70% poliester, 30% viscosa)',
     measurements: 'Largo: 138 cm (talla M). Largo personalizado disponible bajo solicitud.',
   },
   'park-lane-abaya': {
-    description: 'Abaya diaria refinada con linea limpia y caida fluida disenada para el movimiento urbano.',
+    description: 'La abaya que asienta la sala antes de que hables — talla A-line graciosa, bufanda de hombro integrada y detalles Knotted Line dorados. De la diplomacia diurna al reposo nocturno, creada en Abu Dabi; envío mundial.',
     fabric: 'Composicion del tejido - por finalizar con produccion.',
     measurements: 'Largo: 138 cm (talla M). Largo personalizado disponible bajo solicitud.',
   },
   'hyde-park-set': {
-    description: 'Estilo placeholder en espera de detalles completos de producto e imagenes.',
+    description: 'El vestir de viaje bien hecho — camisa oversized de crepé premium y pantalón palazzo de pierna ancha con botones Knotted Line, exclusivamente en Deep Black. Empaca una vez; del embarque a la cena. Envío mundial desde Abu Dabi.',
     fabric: 'Composicion del tejido - por finalizar con produccion.',
     measurements: 'Medidas - por confirmar.',
   },
   'mayfair-kaftan': {
-    description:
-      'Kaftan de crepe chiffon con escote en V, caida fluida, vestido interior, detalle de panuelo y alfiler emblema dorado signature.',
+    description: 'Un caftán fluido de crepé-chiffon con escote en V, vestido interior, detalle de pañuelo y alfiler Monogram dorado — facilidad de ocasión aún considerada. Creado en Abu Dabi; envío mundial.',
     fabric: 'Crepe Chiffon (100% poliester), vestido interior: 100% poliester',
     measurements: 'Largo maximo de la prenda: 165 cm.',
   },
   'nothing-hill-kaftan': {
-    description:
-      'Kaftan de chiffon peach pink suave con refinado escote bateau, silueta fluida y emblema dorado signature de Bint Saeed.',
+    description: 'Chiffon rosa melocotón suave, escote bateau refinado y línea fluida — rematado con el emblema dorado Bint Saeed. El caftán para noches que piden ligereza. Envío mundial desde Abu Dabi.',
     fabric: 'Chiffon (100% poliester), vestido interior: 100% poliester',
     measurements: 'Largo maximo de la prenda: 165 cm.',
   },
     'knightsbridge-dress': {
-    description: 'Vestido maxi femenino en mezcla de algodon con detalles tejidos halter inspirados en Khous — elegancia natural para una vida mas alla de una temporada, creado en Abu Dhabi.',
+    description: 'Un maxi femenino de mezcla de algodón con detalle halter tejido inspirado en Al Khous — elegancia que acompaña la semana sin pedirte ser otra. Creado en Abu Dabi; envío mundial.',
     fabric: 'Exterior: 60% algodon, 40% poliester',
     measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'covent-garden-long-dress': {
-    description: 'Columna estilizada en crepe elastico con abertura trasera alta para mayor libertad de movimiento.',
+    description: 'El vestido bajo-abaya que te lleva del trabajo a las veladas culturales — silueta suave, bolsillos laterales ocultos y forro de crepé que mantiene la línea todo el día. Creado en Abu Dabi; envío mundial.',
     fabric: 'Crepe elastico, forro power mesh',
     measurements: 'Largo al suelo 148 cm (talla M).',
   },
   'hampstead-dress': {
-    description:
-      'Vestido con hombros estructurados y ribete tradicional Al Talli - para noche o ciudad con raices de herencia emirati.',
+    description: 'El maxi de crepé premium totalmente forrado que has estado buscando — escote drapeado, evasé suavemente esculpido y ribete Al Talli en la cintura reconocido por la UNESCO. Solo o bajo una abaya; creado en Abu Dabi, EAU, envío mundial.',
     fabric: 'Mezcla de lana virgen, forro de seda, botones de nacar',
     measurements: 'Corte estructurado. Largo: 118 cm (talla M). Ancho de hombros: 42 cm.',
   },
   'covent-garden-signature-set': {
-    description: 'Set signature Khous de dos piezas - top y falda para look completo o estilizado por separado.',
+    description: 'La confianza del vestir coordinado — vestido Covent Garden y chaqueta de sastrería con detalles inspirados en Al Khous, cortados para ir juntos o por separado. Creados en Abu Dabi; envío mundial.',
     fabric: 'Mezcla de algodon organico, acentos de lino, tintes naturales',
     measurements: 'Largo del top: 70 cm, largo de la falda: 95 cm (talla M). Corte relajado.',
   },
   'soho-set': {
-    description:
-      'Set coordinado de camisa oversize y pantalones palazzo de pierna ancha con ribete tradicional Al Talli - look dia-noche pulido que celebra la herencia emirati.',
+    description: 'Conjunto coordinado — camisa oversized y pantalón palazzo de pierna ancha con ribete Al Talli tradicional — del día a la noche, patrimonio emiratí sin disfraz. Creado en Abu Dabi; envío mundial.',
     fabric: 'Composicion del tejido - por finalizar con produccion.',
     measurements: 'Corte equilibrado; largos de camisa y pantalon confirmados segun tabla de tallas.',
   },
@@ -414,81 +378,73 @@ const ES_CATALOG_COPY: Record<string, CatalogFields> = {
 
 const RU_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
-    description:
-      'Жакет-абайя Khous между традиционным образом и современным outerwear — свободный силуэт, детали в духе Al Khous, структурные плечи и фирменные пуговицы Knotted Lines of Lineage. Создана в Абу-Даби.',
+    description: 'Для тех, кто задаёт линию, а не следует ей — абайя-жакет с деталями в духе Al Khous, структурированными плечами и пуговицами Knotted Lines of Lineage. Как изысканный outerwear поверх платьев или сама по себе — современный эмиратский гардероб. Создана в Абу-Даби; доставка по миру.',
     fabric: 'Верх: 60% полиэстер, 40% хлопок; внутреннее платье: 100% полиэстер',
     measurements:
       'Рост модели: 160 см / 63 дюйма. Модель носит размер XS. Длина: 143 см / 56.3 дюйма. Индивидуальная длина доступна по запросу.',
   },
   'covent-garden-abaya': {
-    description:
-      'Легкая льняная абайя с традиционной отделкой Al Talli, аккуратной скрытой планкой и деталями эмиратского наследия.',
+    description: 'Лёгкая льняная абайя, к которой вы тянетесь, когда день просит лёгкости без потери ухоженности — традиционная отделка Al Talli, скрытая планка и эмиратское наследие, читаемое вблизи. Создана в Абу-Даби; доставка по миру.',
     fabric: 'Европейский льняной микс, хлопковая подкладка',
     measurements: 'Длина: 138 см (размер M). Свободная посадка по фигуре.',
   },
   'kensington-abaya': {
-    description:
-      'Структурная абайя-блейзер с портновскими плечами и отделкой, вдохновленной традиционным плетением Khous и эмиратским наследием.',
+    description: 'Уверенность кроя в структурированной абайе-блейзере — чистые плечи, плетёнка в духе Al Khous и архитектурная простота глубокого чёрного. Для тех, кто хочет присутствия без шума. Создана в Абу-Даби; доставка по миру.',
     fabric: 'Японский креп, тональные нити вышивки',
     measurements: 'Длина: 138 см (размер M).',
   },
   'marylebone-abaya': {
-    description: 'Фирменная абайя с открытым передом и широкими рукавами для многослойных образов с платьями или комплектами.',
+    description: 'Абайя A-line, созданная носить украшения — изящный крой, съёмные нити Onyx и детали Knotted Line, которые вы пересобираете в течение сезона. Создана в Абу-Даби; доставка по миру.',
     fabric: 'Смесь шерсти и шелка, матовая атласная окантовка',
     measurements: 'Длина: 135 см (размер M).',
   },
   'belgravia-abaya': {
-    description:
-      'Абайя в стиле Bisht с ручной отделкой, вдохновленной Al Khous — современное прочтение эмиратского наследия, создано в Абу-Даби.',
+    description: 'Абайя в духе бишта с ручным тканым кантом из плетения Al Khous — наследие в современной пропорции. Создана в Абу-Даби для тех, кто одевается с родословием и ясностью; доставка по миру.',
     fabric: 'Верх: легкий креповый микс (80% полиэстер, 20% вискоза); внутренняя подкладка: (70% полиэстер, 30% вискоза)',
     measurements: 'Длина: 138 см (размер M). Индивидуальная длина доступна по запросу.',
   },
   'park-lane-abaya': {
-    description: 'Утонченная повседневная абайя с чистой линией и плавным драпированием для городского ритма.',
+    description: 'Абайя, которая успокаивает зал до ваших слов — изящный A-line, встроенный плечевой шарф и золотистые детали Knotted Line. От дневной дипломатии к вечерней лёгкости, создана в Абу-Даби; доставка по миру.',
     fabric: 'Состав ткани — будет финализирован с производством.',
     measurements: 'Длина: 138 см (размер M). Индивидуальная длина доступна по запросу.',
   },
   'hyde-park-set': {
-    description: 'Временный стиль до появления полных деталей продукта и изображений.',
+    description: 'Дорожный гардероб как следует — oversized рубашка из премиального крепа и широкие палаццо с пуговицами Knotted Line, только Deep Black. Упаковать раз; от вылета до ужина. Доставка по миру из Абу-Даби.',
     fabric: 'Состав ткани — будет финализирован с производством.',
     measurements: 'Параметры — будут подтверждены.',
   },
   'mayfair-kaftan': {
-    description:
-      'Кафтан из креп-шифона с V-образным вырезом, струящимся драпированием, внутренним платьем, деталью шарфа и фирменной золотистой булавкой-эмблемой.',
+    description: 'Текучий кафтан из креп-шифона с V-вырезом, внутренним платьем, деталью шарфа и золотистой булавкой Monogram — лёгкость случая, всё ещё продуманная. Создан в Абу-Даби; доставка по миру.',
     fabric: 'Crepe Chiffon (100% полиэстер), внутреннее платье: 100% полиэстер',
     measurements: 'Максимальная длина изделия: 165 см.',
   },
   'nothing-hill-kaftan': {
-    description:
-      'Мягкий персиково-розовый шифоновый кафтан с утонченным вырезом bateau, струящимся силуэтом и фирменной золотистой эмблемой Bint Saeed.',
+    description: 'Мягкий персиково-розовый шифон, изысканный вырез bateau и текучая линия — с золотистым эмблемой Bint Saeed. Кафтан для вечеров, просящих лёгкости. Доставка по миру из Абу-Даби.',
     fabric: 'Chiffon (100% полиэстер), внутреннее платье: 100% полиэстер',
     measurements: 'Максимальная длина изделия: 165 см.',
   },
     'knightsbridge-dress': {
-    description: 'Женственное платье макси из хлопковой смеси с отделкой halter, вдохновлённой Khous — естественная элегантность для жизни за пределами одного сезона, создано в Абу-Даби.',
+    description: 'Женственное макси из хлопковой смеси с плетёной halter-деталью в духе Khous — элегантность, которая ведёт неделю, не требуя быть кем-то иным. Создано в Абу-Даби; доставка по миру.',
     fabric: 'Верх: 60% хлопок, 40% полиэстер',
     measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'covent-garden-long-dress': {
-    description: 'Стройный силуэт-колонна из эластичного крепа с высоким задним разрезом для легкости движений.',
+    description: 'Платье под абайю от работы к культурным вечерам — мягко облегающий силуэт, скрытые боковые карманы и креповая подкладка, держащая линию весь день. Создано в Абу-Даби; доставка по миру.',
     fabric: 'Эластичный креп, подкладка power mesh',
     measurements: 'Длина в пол 148 см (размер M).',
   },
   'hampstead-dress': {
-    description:
-      'Платье со структурными плечами и традиционной отделкой Al Talli — для вечера или города с корнями в эмиратском наследии.',
+    description: 'Полностью подбитое премиальное креповое макси, которое вы искали — драпированный вырез, мягко скульптурный клёш и отделка Al Talli на талии, признанная ЮНЕСКО. Само по себе или под абайю; создано в Абу-Даби, ОАЭ, доставка по миру.',
     fabric: 'Смесь virgin wool, шелковая подкладка, перламутровые пуговицы',
     measurements: 'Структурная посадка. Длина: 118 см (размер M). Ширина плеч: 42 см.',
   },
   'covent-garden-signature-set': {
-    description: 'Фирменный комплект Khous из двух частей — топ и юбка для цельного образа или раздельной стилизации.',
+    description: 'Уверенность согласованного гардероба — платье Covent Garden и приталенный жакет с деталями Al Khous, кроенные вместе или порознь. Созданы в Абу-Даби; доставка по миру.',
     fabric: 'Смесь organic cotton, акценты льна, натуральные красители',
     measurements: 'Длина топа: 70 см, длина юбки: 95 см (размер M). Свободная посадка.',
   },
   'soho-set': {
-    description:
-      'Координированный комплект из оверсайз-рубашки и широких брюк-palazzo с традиционной отделкой Al Talli — утонченный образ day-to-evening, отражающий эмиратское наследие.',
+    description: 'Согласованный комплект — oversized рубашка и широкие палаццо с традиционной отделкой Al Talli — от дня к вечеру, эмиратское наследие без костюма. Создан в Абу-Даби; доставка по миру.',
     fabric: 'Состав ткани — будет финализирован с производством.',
     measurements: 'Сбалансированная посадка; длины рубашки и брюк подтверждаются по размерной сетке.',
   },
@@ -496,77 +452,73 @@ const RU_CATALOG_COPY: Record<string, CatalogFields> = {
 
 const ZH_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
-    description:
-      'Khous 夹克式 abaya 融合传统着装与当代外套风格——宽松廓形、Al Khous 灵感细节、结构肩线，以及标志性 Knotted Lines of Lineage 纽扣。创作于阿布扎比。',
+    description: '为引领而非追随的女性而作——以 Al Khous 为灵感的夹克长袍，结构肩线与 Knotted Lines of Lineage 纽扣。可作精致外套覆于裙装之上，亦可单独作为当代阿联酋着装。阿布扎比创作；全球配送。',
     fabric: '外层：60% 聚酯纤维，40% 棉；内搭连衣裙：100% 聚酯纤维',
     measurements:
       '模特身高：160 厘米 / 63 英寸。模特穿着 XS。衣长：143 厘米 / 56.3 英寸。支持按需定制长度。',
   },
   'covent-garden-abaya': {
-    description: '轻盈亚麻 abaya，配传统 Al Talli 饰边、利落隐藏式门襟，以及阿联酋传承细节。',
+    description: '当一日需要从容又不失考究时，你会伸手取用的轻盈亚麻长袍——传统 Al Talli 饰边、干净的暗门襟，以及近看才读得见的阿联酋遗产细节。阿布扎比创作；全球配送。',
     fabric: '欧洲亚麻混纺，棉质里衬',
     measurements: '衣长：138 厘米（M 码）。身体部位为宽松版型。',
   },
   'kensington-abaya': {
-    description: '结构感 blazer abaya，配精裁肩部与受传统 Khous 编织及阿联酋传承启发的饰边。',
+    description: '结构西装式长袍中的剪裁自信——利落肩线、Al Khous 灵感编织饰边，深黑色的建筑式简约。为希望静默有力的女性而作。阿布扎比创作；全球配送。',
     fabric: '日本绉纱，同色系刺绣线',
     measurements: '衣长：138 厘米（M 码）。',
   },
   'marylebone-abaya': {
-    description: '标志性前开式 abaya，宽袖设计，可叠穿于连衣裙或套装外。',
+    description: '为佩戴珠宝而设计的 A 字长袍——优雅剪裁，可拆卸玛瑙串与可随季节重配的 Knotted Line 细节。阿布扎比创作；全球配送。',
     fabric: '羊毛真丝混纺，哑光缎面包边',
     measurements: '衣长：135 厘米（M 码）。',
   },
   'belgravia-abaya': {
-    description:
-      '受 Bisht 启发的 abaya，配手工编织 Al Khous 灵感饰边——当代演绎阿联酋传统，于阿布扎比打造。',
+    description: '灵感取自 Bisht 的长袍，饰以源自 Al Khous 棕榈叶编织的手工织边——当代比例中的遗产。为以脉络与清晰着装的女性，于阿布扎比创作；全球配送。',
     fabric: '外层：轻盈绉纱混纺（80% 聚酯纤维，20% 粘胶纤维）；内里： （70% 聚酯纤维，30% 粘胶纤维）',
     measurements: '衣长：138 厘米（M 码）。支持按需定制长度。',
   },
   'park-lane-abaya': {
-    description: '日常精致 abaya，线条利落、垂坠流畅，为都市行动而设计。',
+    description: '在你开口之前便安定全场的长袍——优雅 A 字剪裁、一体式肩巾与金色 Knotted Line 细节。自日间礼仪至晚间从容，阿布扎比创作；全球配送。',
     fabric: '面料成分——将与生产环节最终确认。',
     measurements: '衣长：138 厘米（M 码）。支持按需定制长度。',
   },
   'hyde-park-set': {
-    description: '占位款式，待补充完整产品信息与图像。',
+    description: '妥善的旅行着装——宽松高端绉纱衬衫搭配阔腿 Palazzo 裤与 Knotted Line 纽扣，仅限 Deep Black。一次收纳，自出发到晚宴。自阿布扎比全球配送。',
     fabric: '面料成分——将与生产环节最终确认。',
     measurements: '尺码信息——待确认。',
   },
   'mayfair-kaftan': {
-    description: 'V 领绉纱雪纺 kaftan，流动垂感，含内搭连衣裙、围巾细节与标志性金色徽章别针。',
+    description: '流畅绉纱雪纺 V 领长袍，内裙、围巾细节与金色 Monogram 别针——场合的轻松仍显考究。阿布扎比创作；全球配送。',
     fabric: 'Crepe Chiffon（100% 聚酯纤维），内搭连衣裙：100% 聚酯纤维',
     measurements: '成衣最大长度：165 厘米。',
   },
   'nothing-hill-kaftan': {
-    description:
-      '柔和蜜桃粉雪纺 kaftan，精致 bateau 领口，流动廓形，搭配 Bint Saeed 标志性金色徽章。',
+    description: '柔和桃粉色雪纺，精致船领与流畅线条——收以金色 Bint Saeed 徽记。适合需要轻盈的夜晚。自阿布扎比全球配送。',
     fabric: 'Chiffon（100% 聚酯纤维），内搭连衣裙：100% 聚酯纤维',
     measurements: '成衣最大长度：165 厘米。',
   },
     'knightsbridge-dress': {
-    description: '棉混纺女性长款连衣裙，配 Khous 灵感 halter 编织细节——为超越单一季节的生活而打造的毫不费力优雅，于阿布扎比制作。',
+    description: '女性气质棉混纺长裙，Khous 灵感编织挂脖细节——贯穿一周的优雅，无需你成为别人。阿布扎比创作；全球配送。',
     fabric: '外层：60% 棉，40% 聚酯纤维',
     measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'covent-garden-long-dress': {
-    description: '修长弹力绉纱柱形长裙，配高位后开衩，行动更自如。',
+    description: '自工作到文化场合皆可相伴的袍内裙——柔和贴身轮廓、隐藏侧袋与全日保持线条的柔软绉纱里衬。阿布扎比创作；全球配送。',
     fabric: '弹力绉纱，power mesh 里衬',
     measurements: '及地长度 148 厘米（M 码）。',
   },
   'hampstead-dress': {
-    description: '结构肩连衣裙配传统 Al Talli 饰边——适合晚间与都市场景，并植根于阿联酋传承。',
+    description: '你一直在寻找的全里衬高端绉绸长裙——垂坠领口、轻柔雕琢的裙摆，以及联合国教科文组织认可的 Al Talli 腰饰。可独穿或衬于长袍之下；阿联酋阿布扎比创作，全球配送。',
     fabric: '初剪羊毛混纺，真丝里衬，珍珠母纽扣',
     measurements: '结构化版型。衣长：118 厘米（M 码）。肩宽：42 厘米。',
   },
   'covent-garden-signature-set': {
-    description: '标志性 Khous 双件套——上衣与半裙，可成套穿着或拆分搭配。',
+    description: '协调着装的从容——Covent Garden 裙装与剪裁外套，Al Khous 灵感细节，可成套亦可分穿。阿布扎比创作；全球配送。',
     fabric: '有机棉混纺，亚麻点缀，天然染料',
     measurements: '上衣长度：70 厘米，半裙长度：95 厘米（M 码）。宽松版型。',
   },
   'soho-set': {
-    description:
-      '宽松衬衫与阔腿 palazzo 长裤协调套装，配传统 Al Talli 饰边——从日间到夜间的精致造型，礼赞阿联酋传承。',
+    description: '宽松衬衫与阔腿 Palazzo 裤的协调套装，传统 Al Talli 饰边——自日到夜，致敬阿联酋遗产而无戏服感。阿布扎比创作；全球配送。',
     fabric: '面料成分——将与生产环节最终确认。',
     measurements: '平衡版型；衬衫与长裤长度将按尺码表确认。',
   },
@@ -574,81 +526,73 @@ const ZH_CATALOG_COPY: Record<string, CatalogFields> = {
 
 const NL_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
-    description:
-      'Khous jacket-abaya tussen traditionele kleding en eigentijdse outerwear - relaxed silhouet met Al Khous-geinspireerde details, gestructureerde schouders en signature Knotted Lines of Lineage-knopen. Gemaakt in Abu Dhabi.',
+    description: 'Voor wie de lijn zet in plaats van volgt — een jas-abaya met Al Khous-geïnspireerde details, gestructureerde schouders en Knotted Lines of Lineage knopen. Als verfijnd outerwear over jurken of alleen, als hedendaagse Emiratische kleding. Gemaakt in Abu Dhabi; wereldwijde verzending.',
     fabric: 'Buitenkant: 60% polyester, 40% katoen; binnenjurk: 100% polyester',
     measurements:
       'Lengte model: 160 cm / 63 inch. Model draagt maat XS. Lengte: 143 cm / 56.3 inch. Maatwerk lengtes beschikbaar op aanvraag.',
   },
   'covent-garden-abaya': {
-    description:
-      'Lichte linnen abaya met traditionele Al Talli-afwerking, een strakke verborgen sluiting en details uit Emirati erfgoed.',
+    description: 'De lichte linnen abaya waar u naar grijpt wanneer de dag gemak vraagt zonder polish te verliezen — traditionele Al Talli afwerking, verborgen placket en Emiratisch erfgoeddetail dat van dichtbij spreekt. Gemaakt in Abu Dhabi; wereldwijde verzending.',
     fabric: 'Europese linnenmix, katoenen voering',
     measurements: 'Lengte: 138 cm (maat M). Relaxte pasvorm over het lichaam.',
   },
   'kensington-abaya': {
-    description:
-      'Gestructureerde blazer-abaya met getailleerde schouders en afwerking geinspireerd op traditioneel Khous-vlechtwerk en Emirati erfgoed.',
+    description: 'Getailleerd zelfvertrouwen in een gestructureerde blazer-abaya — strakke schouders, Al Khous-geïnspireerde vlecht en architecturale eenvoud in diep zwart. Voor wie aanwezigheid zonder lawaai wil. Gemaakt in Abu Dhabi; wereldwijde verzending.',
     fabric: 'Japanse crêpe, tonale borduurgarens',
     measurements: 'Lengte: 138 cm (maat M).',
   },
   'marylebone-abaya': {
-    description: 'Openvallende signature-abaya met wijde mouwen om over jurken of sets te layeren.',
+    description: 'Een A-line abaya ontworpen om sieraden te dragen — sierlijke snit, verwijderbare Onyx Strands en Knotted Line details die u door het seizoen opnieuw stijlt. Gemaakt in Abu Dhabi; wereldwijde verzending.',
     fabric: 'Wol-zijde mix, matte satijnen afwerking',
     measurements: 'Lengte: 135 cm (maat M).',
   },
   'belgravia-abaya': {
-    description:
-      'Op de Bisht geinspireerde abaya met handgeweven Al Khous-geinspireerde afwerking - een eigentijdse expressie van Emirati erfgoed, gemaakt in Abu Dhabi.',
+    description: 'Een bisht-geïnspireerde abaya met handgeweven afwerking uit Al Khous-palmbladweven — erfgoed in hedendaagse proportie. Gemaakt in Abu Dhabi voor wie kleedt met afkomst en helderheid; wereldwijde verzending.',
     fabric: 'Buitenkant: lichte crêpemix (80% polyester, 20% viscose); binnenvoering: (70% polyester, 30% viscose)',
     measurements: 'Lengte: 138 cm (maat M). Maatwerk lengtes beschikbaar op aanvraag.',
   },
   'park-lane-abaya': {
-    description: 'Verfijnde dagelijkse abaya met een strakke lijn en vloeiende drape voor beweging in de stad.',
+    description: 'De abaya die de ruimte tot rust brengt voordat u spreekt — sierlijke A-line, geïntegreerde schoudersjaal en goudkleurige Knotted Line details. Van dagdiplomatie tot avondrust, gemaakt in Abu Dhabi; wereldwijde verzending.',
     fabric: 'Stofsamenstelling - wordt met productie afgerond.',
     measurements: 'Lengte: 138 cm (maat M). Maatwerk lengtes beschikbaar op aanvraag.',
   },
   'hyde-park-set': {
-    description: 'Placeholder-stijl in afwachting van volledige productdetails en beeldmateriaal.',
+    description: 'Reisgarderobe zoals het hoort — oversized premium crêpe overhemd met wijde palazzo-broek en Knotted Line knopen, uitsluitend in Deep Black. Eén keer inpakken; van vertrek tot diner. Wereldwijde verzending vanuit Abu Dhabi.',
     fabric: 'Stofsamenstelling - wordt met productie afgerond.',
     measurements: 'Maten - worden bevestigd.',
   },
   'mayfair-kaftan': {
-    description:
-      'Crêpe-chiffon V-hals kaftan met vloeiende drape, binnenjurk, sjaaldetail en signature goudkleurige embleemspeld.',
+    description: 'Een vloeiende crêpe-chiffon V-hals kaftan met binnenjurk, sjaaldetail en goudkleurige Monogram-speld — gelegenheidsgemak dat nog doordacht voelt. Gemaakt in Abu Dhabi; wereldwijde verzending.',
     fabric: 'Crepe Chiffon (100% polyester), binnenjurk: 100% polyester',
     measurements: 'Maximale kledinglengte: 165 cm.',
   },
   'nothing-hill-kaftan': {
-    description:
-      'Zachte peach-pink chiffon kaftan met verfijnde bateau-hals, vloeiend silhouet en signature goudkleurig Bint Saeed-embleem.',
+    description: 'Zachte perzikroze chiffon met verfijnde bateau-hals en vloeiende lijn — afgesloten met het goudkleurige Bint Saeed-embleem. De kaftan voor avonden die lichtheid vragen. Wereldwijde verzending vanuit Abu Dhabi.',
     fabric: 'Chiffon (100% polyester), binnenjurk: 100% polyester',
     measurements: 'Maximale kledinglengte: 165 cm.',
   },
     'knightsbridge-dress': {
-    description: 'Feminine maxi-jurk in katoenmix met Khous-geinspireerde geweven halterdetails — moeiteloze elegantie voor een leven voorbij een enkel seizoen, gemaakt in Abu Dhabi.',
+    description: 'Een feminien katoenmix maxi met Khous-geïnspireerd geweven halterdetail — elegantie die de week meedraagt zonder te vragen dat u iemand anders bent. Gemaakt in Abu Dhabi; wereldwijde verzending.',
     fabric: 'Buitenkant: 60% katoen, 40% polyester',
     measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'covent-garden-long-dress': {
-    description: 'Slank kolomsilhouet in stretchcrêpe met hoge rugsplit voor bewegingsgemak.',
+    description: 'De under-abaya jurk die u van werk naar culturele avonden draagt — zacht zittende silhouette, verborgen zijzakken en zachte crêpe voering die de lijn de hele dag houdt. Gemaakt in Abu Dhabi; wereldwijde verzending.',
     fabric: 'Stretchcrêpe, power mesh voering',
     measurements: 'Vloerlengte 148 cm (maat M).',
   },
   'hampstead-dress': {
-    description:
-      'Jurk met gestructureerde schouders en traditionele Al Talli-afwerking - voor avond of stad, met wortels in Emirati erfgoed.',
+    description: 'Het volledig gevoerde premium crêpe maxi dat u zocht — gedrapeerde halslijn, zacht gesculpteerd uitwaarts model en UNESCO-erkende Al Talli tailleafwerking. Alleen of onder een abaya; gemaakt in Abu Dhabi, VAE, wereldwijde verzending.',
     fabric: 'Virgin-wolmix, zijden voering, parelmoer knopen',
     measurements: 'Gestructureerde pasvorm. Lengte: 118 cm (maat M). Schouderbreedte: 42 cm.',
   },
   'covent-garden-signature-set': {
-    description: 'Khous signature tweedelige set - top en rok voor een complete look of los te stylen.',
+    description: 'Het zelfvertrouwen van gecoördineerd aankleden — Covent Garden jurk en getailleerd jasje met Al Khous-details, gesneden om samen of apart te dragen. Gemaakt in Abu Dhabi; wereldwijde verzending.',
     fabric: 'Organic cotton mix, linnen accenten, natuurlijke kleurstoffen',
     measurements: 'Toplengte: 70 cm, roklengte: 95 cm (maat M). Relaxte pasvorm.',
   },
   'soho-set': {
-    description:
-      'Gecoordineerde set met oversized overhemd en wide-leg palazzo-broek met traditionele Al Talli-afwerking - verzorgde dag-tot-avond looks die Emirati erfgoed vieren.',
+    description: 'Gecoördineerd oversized overhemd en wijde palazzo-broek met traditionele Al Talli afwerking — van dag naar avond, Emiratisch erfgoed zonder kostuum. Gemaakt in Abu Dhabi; wereldwijde verzending.',
     fabric: 'Stofsamenstelling - wordt met productie afgerond.',
     measurements: 'Gebalanceerde pasvorm; overhemd- en broeklengtes bevestigd volgens maattabel.',
   },
@@ -656,81 +600,73 @@ const NL_CATALOG_COPY: Record<string, CatalogFields> = {
 
 const PT_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
-    description:
-      'Abaya casaco Khous entre o vestir tradicional e a outerwear contemporanea - silhueta descontraida com detalhes inspirados em Al Khous, ombros estruturados e botoes signature Knotted Lines of Lineage. Criada em Abu Dhabi.',
+    description: 'Para quem traça a linha em vez de a seguir — abaya casaco com detalhes inspirados em Al Khous, ombros estruturados e botões Knotted Lines of Lineage. Como outerwear refinado sobre vestidos ou sozinha, num vestir emirati contemporâneo. Criada em Abu Dhabi; envio mundial.',
     fabric: 'Exterior: 60% poliester, 40% algodao; vestido interior: 100% poliester',
     measurements:
       'Altura da modelo: 160 cm / 63 polegadas. A modelo veste tamanho XS. Comprimento: 143 cm / 56.3 polegadas. Comprimentos personalizados disponiveis sob pedido.',
   },
   'covent-garden-abaya': {
-    description:
-      'Abaya de linho leve com acabamento tradicional Al Talli, carcela oculta limpa e detalhes de heranca Emirati.',
+    description: 'A abaya de linho leve a que recorre quando o dia pede facilidade sem perder cuidado — acabamento Al Talli tradicional, patilha oculta e detalhe patrimonial emirati que se lê de perto. Criada em Abu Dhabi; envio mundial.',
     fabric: 'Mistura de linho europeu, forro de algodao',
     measurements: 'Comprimento: 138 cm (tamanho M). Caimento descontraido no corpo.',
   },
   'kensington-abaya': {
-    description:
-      'Abaya blazer estruturada com ombros de alfaiataria e acabamento inspirado na tecelagem tradicional Khous e na heranca Emirati.',
+    description: 'Confiança de alfaiataria numa abaya blazer estruturada — ombros limpos, trança inspirada em Al Khous e simplicidade arquitectónica em preto profundo. Para quem quer presença sem ruído. Criada em Abu Dhabi; envio mundial.',
     fabric: 'Crepe japones, fios de bordado tonais',
     measurements: 'Comprimento: 138 cm (tamanho M).',
   },
   'marylebone-abaya': {
-    description: 'Abaya signature aberta na frente com mangas amplas para sobrepor a vestidos ou conjuntos.',
+    description: 'Uma abaya A-line pensada para levar joalharia — corte gracioso, fios Onyx removíveis e detalhes Knotted Line que reestiliza ao longo da estação. Criada em Abu Dhabi; envio mundial.',
     fabric: 'Mistura de la e seda, acabamento em cetim mate',
     measurements: 'Comprimento: 135 cm (tamanho M).',
   },
   'belgravia-abaya': {
-    description:
-      'Abaya inspirada no Bisht com acabamento tecido a mao inspirado em Al Khous - expressao contemporanea da heranca Emirati, criada em Abu Dhabi.',
+    description: 'Uma abaya inspirada no bisht, acabada com bordo tecido à mão do tear Al Khous — património em proporção contemporânea. Criada em Abu Dhabi para quem veste com linhagem e clareza; envio mundial.',
     fabric: 'Exterior: mistura leve de crepe (80% poliester, 20% viscose); forro interior: (70% poliester, 30% viscose)',
     measurements: 'Comprimento: 138 cm (tamanho M). Comprimentos personalizados disponiveis sob pedido.',
   },
   'park-lane-abaya': {
-    description: 'Abaya diaria refinada com linha limpa e drapeado fluido desenhado para movimento urbano.',
+    description: 'A abaya que assenta a sala antes de falar — corte A-line gracioso, lenço de ombro integrado e detalhes Knotted Line dourados. Da diplomacia diurna ao descanso nocturno, criada em Abu Dhabi; envio mundial.',
     fabric: 'Composicao do tecido - a finalizar com a producao.',
     measurements: 'Comprimento: 138 cm (tamanho M). Comprimentos personalizados disponiveis sob pedido.',
   },
   'hyde-park-set': {
-    description: 'Estilo placeholder aguardando detalhes completos do produto e imagem.',
+    description: 'O vestir de viagem como deve ser — camisa oversized em crepe premium e calças palazzo de perna larga com botões Knotted Line, exclusivamente em Deep Black. Empacote uma vez; da partida ao jantar. Envio mundial a partir de Abu Dhabi.',
     fabric: 'Composicao do tecido - a finalizar com a producao.',
     measurements: 'Medidas - por confirmar.',
   },
   'mayfair-kaftan': {
-    description:
-      'Kaftan de crepe-chiffon com decote em V, drapeado fluido, vestido interior, detalhe de echarpe e alfinete emblema dourado signature.',
+    description: 'Um caftan fluido em crepe-chiffon com decote em V, vestido interior, detalhe de cachecol e alfinete Monogram dourado — facilidade de ocasião ainda ponderada. Criado em Abu Dhabi; envio mundial.',
     fabric: 'Crepe Chiffon (100% poliester), vestido interior: 100% poliester',
     measurements: 'Comprimento maximo da peca: 165 cm.',
   },
   'nothing-hill-kaftan': {
-    description:
-      'Kaftan em chiffon peach pink suave com refinado decote bateau, silhueta fluida e emblema dourado signature Bint Saeed.',
+    description: 'Chiffon rosa pêssego suave, decote bateau refinado e linha fluida — rematado com o emblema dourado Bint Saeed. O caftan para noites que pedem leveza. Envio mundial a partir de Abu Dhabi.',
     fabric: 'Chiffon (100% poliester), vestido interior: 100% poliester',
     measurements: 'Comprimento maximo da peca: 165 cm.',
   },
     'knightsbridge-dress': {
-    description: 'Vestido maxi feminino em mistura de algodao com detalhes tecidos halter inspirados no Khous — elegancia natural para uma vida alem de uma estacao, criado em Abu Dhabi.',
+    description: 'Um maxi feminino em mistura de algodão com detalhe halter tecido inspirado em Al Khous — elegância que acompanha a semana sem pedir que seja outra. Criado em Abu Dhabi; envio mundial.',
     fabric: 'Exterior: 60% algodao, 40% poliester',
     measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'covent-garden-long-dress': {
-    description: 'Coluna esguia em crepe elastico com abertura alta nas costas para facilitar o movimento.',
+    description: 'O vestido sob-abaya que a acompanha do trabalho às noites culturais — silhueta suave, bolsos laterais ocultos e forro de crepe que mantém a linha todo o dia. Criado em Abu Dhabi; envio mundial.',
     fabric: 'Crepe elastico, forro power mesh',
     measurements: 'Comprimento ate ao chao 148 cm (tamanho M).',
   },
   'hampstead-dress': {
-    description:
-      'Vestido com ombros estruturados e acabamento tradicional Al Talli - para noite ou cidade com raizes na heranca Emirati.',
+    description: 'O maxi em crepe premium totalmente forrado que você procurava — decote drapeado, evasé suavemente esculpido e acabamento Al Talli na cintura reconhecido pela UNESCO. Sozinho ou sob uma abaya; criado em Abu Dhabi, EAU, envio mundial.',
     fabric: 'Mistura de la virgem, forro de seda, botoes mother-of-pearl',
     measurements: 'Caimento estruturado. Comprimento: 118 cm (tamanho M). Largura dos ombros: 42 cm.',
   },
   'covent-garden-signature-set': {
-    description: 'Conjunto signature Khous de duas pecas - top e saia para look completo ou styling separado.',
+    description: 'A confiança do vestir coordenado — vestido Covent Garden e casaco de alfaiataria com detalhes inspirados em Al Khous, cortados para ir juntos ou separados. Criados em Abu Dhabi; envio mundial.',
     fabric: 'Mistura de algodao organico, acentos de linho, tingimentos naturais',
     measurements: 'Comprimento do top: 70 cm, comprimento da saia: 95 cm (tamanho M). Caimento descontraido.',
   },
   'soho-set': {
-    description:
-      'Conjunto coordenado de camisa oversized e calcas palazzo de perna larga com acabamento tradicional Al Talli - look polido de dia para noite que celebra a heranca Emirati.',
+    description: 'Conjunto coordenado — camisa oversized e calças palazzo de perna larga com acabamento Al Talli tradicional — do dia à noite, património emirati sem fantasia. Criado em Abu Dhabi; envio mundial.',
     fabric: 'Composicao do tecido - a finalizar com a producao.',
     measurements: 'Caimento equilibrado; comprimentos de camisa e calcas confirmados com a tabela de tamanhos.',
   },
@@ -738,86 +674,75 @@ const PT_CATALOG_COPY: Record<string, CatalogFields> = {
 
 const ID_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
-    description:
-      'Abaya jaket Khous antara berpakaian tradisional dan pakaian luar kontemporer — siluet santai dengan detail terinspirasi Al Khous, bahu terstruktur, dan kancing Knotted Lines of Lineage khas. Dibuat di Abu Dhabi.',
+    description: 'Bagi perempuan yang menetapkan garis, bukan mengikutinya — abaya jaket dengan detail inspirasi Al Khous, bahu terstruktur, dan kancing Knotted Lines of Lineage. Sebagai outerwear halus di atas gaun atau sendiri sebagai busana Emirati kontemporer. Dibuat di Abu Dhabi; pengiriman dunia.',
     fabric: 'Luar: 60% Polyester, 40% Katun; gaun dalam: 100% Polyester',
     measurements:
       'Tinggi model: 160 cm / 63 inci. Model mengenakan ukuran XS. Panjang: 143 cm / 56,3 inci. Panjang kustom tersedia atas permintaan.',
   },
   'covent-garden-abaya': {
-    description:
-      'Abaya linen ringan dengan trim Al Talli tradisional, placket tersembunyi yang bersih, dan detail warisan Emirati.',
+    description: 'Abaya linen ringan yang Anda ambil saat hari meminta kemudahan tanpa kehilangan ketelitian — trim Al Talli tradisional, placket tersembunyi, dan detail warisan Emirati yang terbaca dari dekat. Dibuat di Abu Dhabi; pengiriman dunia.',
     fabric: 'Campuran linen Eropa, lapisan katun',
     measurements: 'Panjang: 138 cm (ukuran M). Pas santai di bagian tubuh.',
   },
   'kensington-abaya': {
-    description:
-      'Abaya blazer terstruktur dengan bahu tailored dan trim terinspirasi anyaman Khous tradisional serta warisan Emirati.',
+    description: 'Kepercayaan tailored dalam abaya blazer terstruktur — bahu bersih, kepang inspirasi Al Khous, dan kesederhanaan arsitektural hitam dalam. Untuk yang menginginkan kehadiran tanpa kebisingan. Dibuat di Abu Dhabi; pengiriman dunia.',
     fabric: 'Crepe Jepang, benang bordir tonal',
     measurements: 'Panjang: 138 cm (ukuran M).',
   },
   'marylebone-abaya': {
-    description: 'Abaya signature depan terbuka dengan lengan lebar untuk dilapisi di atas gaun atau set.',
+    description: 'Abaya A-line dirancang membawa perhiasan — potongan anggun, Onyx Strands lepas, dan detail Knotted Line yang Anda restyle sepanjang musim. Dibuat di Abu Dhabi; pengiriman dunia.',
     fabric: 'Campuran wool-sutra, binding satin matte',
     measurements: 'Panjang: 135 cm (ukuran M).',
   },
   'belgravia-abaya': {
-    description:
-      'Abaya terinspirasi Bisht dengan trim anyaman tangan terinspirasi Al Khous — ekspresi kontemporer warisan Emirati, dibuat di Abu Dhabi.',
+    description: 'Abaya inspirasi bisht dengan trim tenun tangan dari anyaman Al Khous — warisan dalam proporsi kontemporer. Dibuat di Abu Dhabi bagi yang berbusana dengan garis keturunan dan kejelasan; pengiriman dunia.',
     fabric: 'Luar: Campuran crepe ringan (80% polyester, 20% viscose); lapisan dalam (70% polyester, 30% viscose)',
     measurements: 'Panjang: 138 cm (ukuran M). Panjang kustom tersedia atas permintaan.',
   },
   'park-lane-abaya': {
-    description:
-      'Abaya sehari-hari yang halus dengan garis bersih dan drape fluid yang dirancang untuk pergerakan di kota.',
+    description: 'Abaya yang menenangkan ruangan sebelum Anda berbicara — potongan A-line anggun, scarf bahu terintegrasi, dan detail Knotted Line bernada emas. Dari diplomasi siang ke kelembutan malam, dibuat di Abu Dhabi; pengiriman dunia.',
     fabric: 'Komposisi kain — akan difinalisasi bersama produksi.',
     measurements: 'Panjang: 138 cm (ukuran M). Panjang kustom tersedia atas permintaan.',
   },
   'hyde-park-set': {
-    description: 'Gaya placeholder menunggu detail produk dan citra lengkap.',
+    description: 'Busana perjalanan yang semestinya — kemeja crêpe premium oversized dengan celana palazzo kaki lebar dan kancing Knotted Line, khusus Deep Black. Kemas sekali; dari keberangkatan hingga makan malam. Pengiriman dunia dari Abu Dhabi.',
     fabric: 'Komposisi kain — akan difinalisasi bersama produksi.',
     measurements: 'Ukuran — akan dikonfirmasi.',
   },
   'mayfair-kaftan': {
-    description:
-      'Kaftan crepe-chiffon garis leher V dengan drape mengalir, gaun dalam, detail scarf, dan pin emblem emas khas.',
+    description: 'Kaftan crêpe-chiffon V-neck yang mengalir dengan inner dress, detail scarf, dan pin Monogram bernada emas — kemudahan acara yang tetap dipertimbangkan. Dibuat di Abu Dhabi; pengiriman dunia.',
     fabric: 'Crepe Chiffon (100% Polyester), Gaun dalam: 100% Polyester',
     measurements: 'Panjang maksimum garment: 165 cm.',
   },
   'nothing-hill-kaftan': {
-    description:
-      'Kaftan chiffon peach pink lembut dengan garis leher bateau halus, siluet mengalir, dan emblem emas khas Bint Saeed.',
+    description: 'Chiffon peach pink lembut, leher bateau halus, dan garis mengalir — ditutup emblem emas Bint Saeed. Kaftan untuk malam yang meminta keringanan. Pengiriman dunia dari Abu Dhabi.',
     fabric: 'Chiffon (100% Polyester), Gaun dalam: 100% Polyester',
     measurements: 'Panjang maksimum garment: 165 cm.',
   },
   'knightsbridge-dress': {
-    description:
-      'Gaun maxi feminin dari campuran katun dengan detail anyaman halter terinspirasi Khous — keanggunan effortless untuk kehidupan di luar satu musim, dibuat di Abu Dhabi.',
+    description: 'Maxi feminin campuran katun dengan detail halter tenun inspirasi Khous — elegan sepanjang minggu tanpa meminta Anda menjadi orang lain. Dibuat di Abu Dhabi; pengiriman dunia.',
     fabric: 'Luar: 60% Katun, 40% Polyester',
     measurements:
       'Siluet maxi feminin dengan lipatan kotak lembut terstruktur. Panjang kustom tersedia atas permintaan.',
   },
   'covent-garden-long-dress': {
-    description: 'Kolom ramping dari stretch crepe dengan vent belakang tinggi untuk kemudahan bergerak.',
+    description: 'Gaun under-abaya yang membawa Anda dari kerja ke malam budaya — siluet lembut, saku samping tersembunyi, dan lining crêpe yang menjaga garis sepanjang hari. Dibuat di Abu Dhabi; pengiriman dunia.',
     fabric: 'Stretch crepe, lapisan power mesh',
     measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'hampstead-dress': {
-    description:
-      'Gaun dengan bahu terstruktur dan trim Al Talli tradisional — untuk malam atau kota dengan akar warisan Emirati.',
+    description: 'Maxi crêpe premium berlapis penuh yang Anda cari — leher drapery, flare yang diukir lembut, dan trim Al Talli di pinggang yang diakui UNESCO. Dipakai sendiri atau di bawah abaya; dibuat di Abu Dhabi, UEA, pengiriman dunia.',
     fabric: 'Campuran Virgin Wool, lapisan sutra, kancing mother-of-pearl',
     measurements:
       'Pas terstruktur. Panjang: 118 cm (ukuran M). Lebar bahu: 42 cm.',
   },
   'covent-garden-signature-set': {
-    description:
-      'Set dua bagian signature Khous — atasan dan rok untuk tampilan lengkap atau styling terpisah.',
+    description: 'Kepercayaan berbusana terkoordinasi — gaun Covent Garden dan jaket tailored dengan detail Al Khous, dipotong untuk bersama atau terpisah. Dibuat di Abu Dhabi; pengiriman dunia.',
     fabric: 'Campuran Organic Cotton, aksen linen, pewarna alami',
     measurements: 'Panjang atasan: 70 cm, panjang rok: 95 cm (ukuran M). Pas santai.',
   },
   'soho-set': {
-    description:
-      'Set kemeja oversized dan celana palazzo kaki lebar yang selaras dengan trim Al Talli tradisional — tampilan siang hingga malam yang halus merayakan warisan Emirati.',
+    description: 'Set terkoordinasi — kemeja oversized dan celana palazzo kaki lebar dengan trim Al Talli tradisional — dari siang ke malam, warisan Emirati tanpa kostum. Dibuat di Abu Dhabi; pengiriman dunia.',
     fabric: 'Komposisi kain — akan difinalisasi bersama produksi.',
     measurements: 'Pas chapter; panjang kemeja dan celana dikonfirmasi sesuai size chart.',
   },
@@ -825,87 +750,76 @@ const ID_CATALOG_COPY: Record<string, CatalogFields> = {
 
 const MS_CATALOG_COPY: Record<string, CatalogFields> = {
   'knightsbridge-abaya-jacket': {
-    description:
-      'Abaya jaket Khous antara pemakaian tradisional dan pakaian luar kontemporari — siluet santai dengan perincian terinspirasi Al Khous, bahu berstruktur, dan butang Knotted Lines of Lineage khas. Dihasilkan di Abu Dhabi.',
+    description: 'Untuk wanita yang menetapkan garis, bukan mengikutinya — abaya jaket dengan butiran inspirasi Al Khous, bahu berstruktur, dan butang Knotted Lines of Lineage. Sebagai outerwear halus atas gaun atau sendiri sebagai busana Emirati kontemporari. Dihasilkan di Abu Dhabi; penghantaran seluruh dunia.',
     fabric: 'Luar: 60% Polyester, 40% Kapas; gaun dalaman: 100% Polyester',
     measurements:
       'Tinggi model: 160 cm / 63 inci. Model memakai saiz XS. Panjang: 143 cm / 56.3 inci. Panjang tersuai tersedia atas permintaan.',
   },
   'covent-garden-abaya': {
-    description:
-      'Abaya linen ringan dengan hiasan Al Talli tradisional, placket tersembunyi yang kemas, dan butiran warisan Emirati.',
+    description: 'Abaya linen ringan yang anda ambil apabila hari meminta kemudahan tanpa hilang ketelitian — trim Al Talli tradisional, placket tersembunyi, dan butiran warisan Emirati yang terbaca dekat. Dihasilkan di Abu Dhabi; penghantaran seluruh dunia.',
     fabric: 'Campuran linen Eropah, lapisan kapas',
     measurements: 'Panjang: 138 cm (saiz M). Potongan santai di bahagian badan.',
   },
   'kensington-abaya': {
-    description:
-      'Abaya blazer berstruktur dalam hitam pekat dengan bahu tailored dan hiasan simpai terinspirasi Al Khous — keyakinan melalui kesederhanaan, dihasilkan di Abu Dhabi.',
+    description: 'Keyakinan terjahit dalam abaya blazer berstruktur — bahu bersih, kepang inspirasi Al Khous, dan kesederhanaan seni bina hitam dalam. Untuk yang mahukan kehadiran tanpa hingar. Dihasilkan di Abu Dhabi; penghantaran seluruh dunia.',
     fabric:
       'Luar: 80% polyester, 20% viscose; lapisan: 70% polyester, 30% viscose; simpai tenunan organza glitter hitam',
     measurements: 'Panjang: 138 cm (saiz M).',
   },
   'marylebone-abaya': {
-    description: 'Abaya signature depan terbuka dengan lengan lebar untuk dilapisi di atas gaun atau set.',
+    description: 'Abaya A-line direka untuk membawa barang kemas — potongan anggun, Onyx Strands boleh tanggal, dan butiran Knotted Line yang anda restyle sepanjang musim. Dihasilkan di Abu Dhabi; penghantaran seluruh dunia.',
     fabric: 'Campuran wool-sutera, binding satin matte',
     measurements: 'Panjang: 135 cm (saiz M).',
   },
   'belgravia-abaya': {
-    description:
-      'Abaya berinspirasikan Bisht dengan hiasan tenunan tangan terinspirasi Al Khous — ekspresi kontemporari warisan Emirati, dihasilkan di Abu Dhabi.',
+    description: 'Abaya inspirasi bisht dengan trim tenunan tangan daripada anyaman Al Khous — warisan dalam proporsi kontemporari. Dihasilkan di Abu Dhabi untuk yang berbusana dengan keturunan dan kejelasan; penghantaran seluruh dunia.',
     fabric: 'Luar: Campuran crepe ringan (80% polyester, 20% viscose); lapisan dalam (70% polyester, 30% viscose)',
     measurements: 'Panjang: 138 cm (saiz M). Panjang tersuai tersedia atas permintaan.',
   },
   'park-lane-abaya': {
-    description:
-      'Abaya harian yang halus dengan garisan bersih dan jatuh mengalir, direka untuk pergerakan bandar.',
+    description: 'Abaya yang menenangkan bilik sebelum anda bercakap — potongan A-line anggun, skarf bahu bersepadu, dan butiran Knotted Line bernada emas. Dari diplomasi siang ke ketenangan malam, dihasilkan di Abu Dhabi; penghantaran seluruh dunia.',
     fabric: 'Komposisi kain — akan dimuktamadkan bersama pengeluaran.',
     measurements: 'Panjang: 138 cm (saiz M). Panjang tersuai tersedia atas permintaan.',
   },
   'hyde-park-set': {
-    description: 'Gaya placeholder menunggu butiran produk dan imej lengkap.',
+    description: 'Busana perjalanan yang sepatutnya — baju crêpe premium oversized dengan seluar palazzo kaki lebar dan butang Knotted Line, khas Deep Black. Kemas sekali; dari berlepas hingga makan malam. Penghantaran seluruh dunia dari Abu Dhabi.',
     fabric: 'Komposisi kain — akan dimuktamadkan bersama pengeluaran.',
     measurements: 'Saiz — akan disahkan.',
   },
   'mayfair-kaftan': {
-    description:
-      'Kaftan crepe-chiffon garis leher V dengan jatuh mengalir, gaun dalam, butiran scarf, dan pin emblem emas khas.',
+    description: 'Kaftan crêpe-chiffon leher V yang mengalir dengan inner dress, butiran skarf, dan pin Monogram bernada emas — kemudahan majlis yang masih dipertimbangkan. Dihasilkan di Abu Dhabi; penghantaran seluruh dunia.',
     fabric: 'Crepe Chiffon (100% Polyester), Gaun dalam: 100% Polyester',
     measurements: 'Panjang maksimum pakaian: 165 cm.',
   },
   'nothing-hill-kaftan': {
-    description:
-      'Kaftan chiffon peach pink lembut dengan garis leher bateau halus, siluet mengalir, dan emblem emas khas Bint Saeed.',
+    description: 'Chiffon peach pink lembut, leher bateau halus, dan garis mengalir — ditutup emblem emas Bint Saeed. Kaftan untuk malam yang meminta keringanan. Penghantaran seluruh dunia dari Abu Dhabi.',
     fabric: 'Chiffon (100% Polyester), Gaun dalam: 100% Polyester',
     measurements: 'Panjang maksimum pakaian: 165 cm.',
   },
   'knightsbridge-dress': {
-    description:
-      'Gaun maxi feminin daripada campuran kapas dengan perincian tenunan halter terinspirasi Khous — keanggunan effortless untuk kehidupan melangkaui satu musim, dihasilkan di Abu Dhabi.',
+    description: 'Maxi feminin campuran kapas dengan butiran halter tenunan inspirasi Khous — keanggunan sepanjang minggu tanpa meminta anda menjadi orang lain. Dihasilkan di Abu Dhabi; penghantaran seluruh dunia.',
     fabric: 'Luar: 60% Kapas, 40% Poliester',
     measurements:
       'Siluet maxi feminin dengan lipatan kotak lembut berstruktur. Panjang tersuai tersedia atas permintaan.',
   },
   'covent-garden-long-dress': {
-    description: 'Kolum ramping daripada stretch crepe dengan vent belakang tinggi untuk kemudahan bergerak.',
+    description: 'Gaun under-abaya yang membawa anda dari kerja ke malam budaya — siluet lembut, poket sisi tersembunyi, dan lining crêpe yang mengekalkan garis sepanjang hari. Dihasilkan di Abu Dhabi; penghantaran seluruh dunia.',
     fabric: 'Stretch crepe, lapisan power mesh',
     measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
   },
   'hampstead-dress': {
-    description:
-      'Gaun dengan bahu berstruktur dan hiasan Al Talli tradisional — untuk malam atau bandar dengan akar warisan Emirati.',
+    description: 'Maxi crêpe premium berlapik penuh yang anda cari — leher draperi, flare diukir lembut, dan trim Al Talli di pinggang yang diiktiraf UNESCO. Dipakai sendiri atau di bawah abaya; dihasilkan di Abu Dhabi, UAE, penghantaran seluruh dunia.',
     fabric: 'Campuran Virgin Wool, lapisan sutera, butang mother-of-pearl',
     measurements:
       'Potongan berstruktur. Panjang: 118 cm (saiz M). Lebar bahu: 42 cm.',
   },
   'covent-garden-signature-set': {
-    description:
-      'Set dua bahagian signature Khous — atasan dan rok untuk penampilan lengkap atau gaya berasingan.',
+    description: 'Keyakinan berbusana terselaras — gaun Covent Garden dan jaket terjahit dengan butiran Al Khous, dipotong untuk bersama atau berasingan. Dihasilkan di Abu Dhabi; penghantaran seluruh dunia.',
     fabric: 'Campuran Organic Cotton, aksen linen, pewarna semula jadi',
     measurements: 'Panjang atasan: 70 cm, panjang rok: 95 cm (saiz M). Potongan santai.',
   },
   'soho-set': {
-    description:
-      'Set kemeja oversized dan seluar palazzo kaki lebar yang selaras dengan hiasan Al Talli tradisional — penampilan siang hingga malam yang halus meraikan warisan Emirati.',
+    description: 'Set terselaras — baju oversized dan seluar palazzo kaki lebar dengan trim Al Talli tradisional — dari siang ke malam, warisan Emirati tanpa kostum. Dihasilkan di Abu Dhabi; penghantaran seluruh dunia.',
     fabric: 'Komposisi kain — akan dimuktamadkan bersama pengeluaran.',
     measurements: 'Potongan mengikut bab; panjang kemeja dan seluar disahkan mengikut carta saiz.',
   },

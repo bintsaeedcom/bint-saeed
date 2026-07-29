@@ -29,14 +29,10 @@ function resolveDedicatedPageSeo(
 }
 
 export function buildProductPageTitle(
-  locale: AppLocale,
+  _locale: AppLocale,
   body: { name: string; slug?: string },
 ): string {
-  const slug = body.slug?.toLowerCase()
-  if (slug) {
-    const dedicated = resolveDedicatedPageSeo(slug, locale)
-    if (dedicated) return brandDocumentTitle(dedicated.title)
-  }
+  // Always brand-first short titles: `Bint Saeed | Hampstead Dress` (keywords live in meta description).
   return brandDocumentTitle(body.name)
 }
 

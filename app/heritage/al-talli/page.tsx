@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useRef } from 'react'
+import { useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
@@ -10,16 +10,11 @@ import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getAlTalliPageCopy } from '@/lib/content/heritageAlTalliCopyI18n'
-import { buildAlTalliHeritageJsonLd } from '@/lib/seo/alTalliHeritageJsonLd'
 import { AL_TALLI_FEATURED_PRODUCTS } from '@/lib/seo/alTalliDiscovery'
 
 export default function AlTalliPage() {
-  const { language } = useLanguage()
-  const jsonLd = useMemo(() => buildAlTalliHeritageJsonLd(language), [language])
-
   return (
     <div className={`min-h-screen bg-brand-pageCanvas `}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <HeroSection />
       <AboutTopicNav />
       <StorySection />

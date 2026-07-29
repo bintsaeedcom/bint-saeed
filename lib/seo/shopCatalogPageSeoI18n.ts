@@ -519,62 +519,62 @@ const PAGE_SEO: Record<ShopCatalogSeoSlug, Record<AppLocale, PageSeoPack>> = {
     en: {
       pageTitle: 'Hampstead Dress | Al Talli Crepe Maxi Dress Abu Dhabi | Bint Saeed',
       metaDescription:
-        'Hampstead Dress — fully lined premium crepe maxi with draped neckline and UNESCO-recognised Al Talli waist trim. Created in Abu Dhabi, UAE. Ships worldwide.',
+        'Hampstead Dress — the fully lined premium crepe maxi you’ve been looking for, with draped neckline and UNESCO-recognised Al Talli waist trim. Created in Abu Dhabi, UAE. Ships worldwide.',
     },
     ar: {
       pageTitle: 'فستان Hampstead | فستان ماكسي كريب بالتلي أبوظبي | Bint Saeed',
       metaDescription:
-        'فستان Hampstead — ماكسي كريب فاخر مبطّن بالكامل بخط عنق متدلٍّ وتفاصيل التلي المعترف بها من اليونسكو عند الخصر. صُنع في أبوظبي. شحن عالمي.',
+        'فستان Hampstead — ماكسي الكريب الفاخر المبطّن الذي كنتِ تبحثين عنه، بخط عنق متدلٍّ وتفاصيل التلي المعترف بها من اليونسكو. صُنع في أبوظبي. شحن عالمي.',
     },
     fr: {
       pageTitle: 'Robe Hampstead | Robe maxi crêpe Al Talli Abou Dabi | Bint Saeed',
       metaDescription:
-        'Robe Hampstead — maxi en crêpe premium entièrement doublée, encolure drapée et garniture Al Talli reconnue par l’UNESCO. Créée à Abou Dabi. Livraison mondiale.',
+        'Robe Hampstead — la maxi en crêpe premium entièrement doublée que vous cherchiez, encolure drapée et garniture Al Talli reconnue par l’UNESCO. Créée à Abou Dabi. Livraison mondiale.',
     },
     it: {
       pageTitle: 'Hampstead Dress | Abito maxi crepe Al Talli Abu Dhabi | Bint Saeed',
       metaDescription:
-        'Hampstead Dress — maxi in crepe premium completamente foderato, scollo drappeggiato e trim Al Talli riconosciuto dall’UNESCO. Creato ad Abu Dhabi. Spedizione mondiale.',
+        'Hampstead Dress — il maxi in crepe premium completamente foderato che stavate cercando, scollo drappeggiato e trim Al Talli UNESCO. Creato ad Abu Dhabi. Spedizione mondiale.',
     },
     es: {
       pageTitle: 'Hampstead Dress | Vestido maxi crepé Al Talli Abu Dabi | Bint Saeed',
       metaDescription:
-        'Hampstead Dress — maxi de crepé premium totalmente forrado, escote drapeado y ribete Al Talli reconocido por la UNESCO. Creado en Abu Dabi. Envío mundial.',
+        'Hampstead Dress — el maxi de crepé premium totalmente forrado que has estado buscando, escote drapeado y ribete Al Talli UNESCO. Creado en Abu Dabi. Envío mundial.',
     },
     ru: {
       pageTitle: 'Платье Hampstead | Макси из крепа Al Talli Абу-Даби | Bint Saeed',
       metaDescription:
-        'Платье Hampstead — макси из премиального крепа на полной подкладке, драпированный вырез и отделка Al Talli (ЮНЕСКО). Создано в Абу-Даби. Доставка по миру.',
+        'Платье Hampstead — полностью подбитое премиальное креповое макси, которое вы искали, с драпированным вырезом и отделкой Al Talli (ЮНЕСКО). Создано в Абу-Даби. Доставка по миру.',
     },
     zh: {
       pageTitle: 'Hampstead 连衣裙 | Al Talli 绉绸长裙 阿布扎比 | Bint Saeed',
       metaDescription:
-        'Hampstead 连衣裙 — 全里衬高端绉绸长裙，垂坠领口与联合国教科文组织认可的 Al Talli 腰饰。阿布扎比创作。全球配送。',
+        'Hampstead 连衣裙 — 你一直在寻找的全里衬高端绉绸长裙，垂坠领口与联合国教科文组织认可的 Al Talli 腰饰。阿布扎比创作。全球配送。',
     },
     de: {
       pageTitle: 'Hampstead Dress | Al-Talli-Krepp-Maxikleid Abu Dhabi | Bint Saeed',
       metaDescription:
-        'Hampstead Dress — vollgefüttertes Premium-Krepp-Maxi mit drapiertem Ausschnitt und UNESCO-anerkanntem Al-Talli-Taillenbesatz. Geschaffen in Abu Dhabi. Weltweiter Versand.',
+        'Hampstead Dress — das vollgefütterte Premium-Krepp-Maxi, das Sie gesucht haben, mit drapiertem Ausschnitt und UNESCO-Al-Talli-Taillenbesatz. Geschaffen in Abu Dhabi. Weltweiter Versand.',
     },
     nl: {
       pageTitle: 'Hampstead Dress | Al Talli crêpe maxi-jurk Abu Dhabi | Bint Saeed',
       metaDescription:
-        'Hampstead Dress — volledig gevoerde premium crêpe maxi met gedrapeerde halslijn en door UNESCO erkende Al Talli tailletrim. Gemaakt in Abu Dhabi. Wereldwijde verzending.',
+        'Hampstead Dress — het volledig gevoerde premium crêpe maxi dat u zocht, met gedrapeerde halslijn en UNESCO Al Talli-taille. Gemaakt in Abu Dhabi. Wereldwijde verzending.',
     },
     pt: {
       pageTitle: 'Hampstead Dress | Vestido maxi crepe Al Talli Abu Dhabi | Bint Saeed',
       metaDescription:
-        'Hampstead Dress — maxi em crepe premium totalmente forrado, decote drapeado e acabamento Al Talli reconhecido pela UNESCO. Criado em Abu Dhabi. Envio mundial.',
+        'Hampstead Dress — o maxi em crepe premium totalmente forrado que você procurava, decote drapeado e acabamento Al Talli UNESCO. Criado em Abu Dhabi. Envio mundial.',
     },
     id: {
       pageTitle: 'Hampstead Dress | Gaun Maxi Krepe Al Talli Abu Dhabi | Bint Saeed',
       metaDescription:
-        'Hampstead Dress — maxi krepe premium berlapis penuh, leher drape, dan trim Al Talli diakui UNESCO. Dibuat di Abu Dhabi. Pengiriman dunia.',
+        'Hampstead Dress — maxi krepe premium berlapis penuh yang Anda cari, leher drape dan trim Al Talli UNESCO. Dibuat di Abu Dhabi. Pengiriman dunia.',
     },
     ms: {
       pageTitle: 'Hampstead Dress | Gaun Maxi Krepe Al Talli Abu Dhabi | Bint Saeed',
       metaDescription:
-        'Hampstead Dress — maxi krepe premium berlapik penuh, leher drape, dan hiasan Al Talli diiktiraf UNESCO. Dihasilkan di Abu Dhabi. Penghantaran seluruh dunia.',
+        'Hampstead Dress — maxi krepe premium berlapik penuh yang anda cari, leher drape dan hiasan Al Talli UNESCO. Dihasilkan di Abu Dhabi. Penghantaran seluruh dunia.',
     },
   },
   'covent-garden-signature-set': {

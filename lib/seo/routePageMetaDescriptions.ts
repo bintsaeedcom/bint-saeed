@@ -439,6 +439,28 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
     pt:
       'Cookies — como a Bint Saeed utiliza tecnologias para uma experiência luxury segura desde Abu Dhabi.',
   },
+  shipment_return: {
+    en:
+      'Shipping & returns — Bint Saeed made-to-order timelines, worldwide delivery, exchanges and how to reach support from Abu Dhabi.',
+    ar:
+      'الشحن والإرجاع — جداول الطلب حسب التصنيع في بِنت سعيد، والتوصيل العالمي، والاستبدال، وكيفية التواصل مع الدعم من أبوظبي.',
+    fr:
+      'Livraison et retours — délais sur mesure Bint Saeed, envoi mondial, échanges et contact support depuis Abu Dhabi.',
+    it:
+      'Spedizioni e resi — tempi made-to-order Bint Saeed, consegna mondiale, cambi e contatti di supporto da Abu Dhabi.',
+    es:
+      'Envíos y devoluciones — plazos made-to-order Bint Saeed, entrega mundial, cambios y contacto de soporte desde Abu Dhabi.',
+    ru:
+      'Доставка и возврат — сроки made-to-order Bint Saeed, мировая доставка, обмен и поддержка из Абу‑Даби.',
+    zh:
+      '配送与退货：Bint Saeed 按单制作时效、全球配送、换货，以及如何联系阿布扎比客服。',
+    de:
+      'Versand & Rückgabe — Made-to-order-Fristen bei Bint Saeed, weltweiter Versand, Umtausch und Support aus Abu Dhabi.',
+    nl:
+      'Verzending & retour — made-to-order termijnen bij Bint Saeed, wereldwijde levering, ruilen en support vanuit Abu Dhabi.',
+    pt:
+      'Envios e devoluções — prazos made-to-order Bint Saeed, envio mundial, trocas e contacto de suporte desde Abu Dhabi.',
+  },
   size_guide: {
     en:
       'Size guide — measure for Bint Saeed luxury abayas from Abu Dhabi. Fit tips for UAE online shoppers ordering dresses, separates and layered looks.',

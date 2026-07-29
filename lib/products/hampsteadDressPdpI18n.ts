@@ -66,7 +66,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   },
   ar: {
     introParagraphParts: [
-      [{ type: 'text', value: '«هذا بالضبط نوع الفستان الذي كنت أبحث عنه.»' }],
+      [{ type: 'text', value: '«هذا بالضبط نوع الفستان الذي كنتِ تبحثين عنه.»' }],
       [
         {
           type: 'text',
@@ -144,7 +144,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   },
   fr: {
     introParagraphParts: [
-      [{ type: 'text', value: '« C’est exactement le genre de robe que je cherchais. »' }],
+      [{ type: 'text', value: '« C’est exactement le genre de robe que vous cherchiez. »' }],
       [
         {
           type: 'text',
@@ -222,7 +222,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   },
   it: {
     introParagraphParts: [
-      [{ type: 'text', value: '«È esattamente il tipo di abito che stavo cercando.»' }],
+      [{ type: 'text', value: '«È esattamente il tipo di abito che stavi cercando.»' }],
       [
         {
           type: 'text',
@@ -299,7 +299,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   },
   es: {
     introParagraphParts: [
-      [{ type: 'text', value: '«Este es exactamente el tipo de vestido que estaba buscando.»' }],
+      [{ type: 'text', value: '«Este es exactamente el tipo de vestido que estabas buscando.»' }],
       [
         {
           type: 'text',
@@ -373,7 +373,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   },
   ru: {
     introParagraphParts: [
-      [{ type: 'text', value: '«Это именно то платье, которое я искала.»' }],
+      [{ type: 'text', value: '«Это именно то платье, которое вы искали.»' }],
       [
         {
           type: 'text',
@@ -446,7 +446,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   },
   zh: {
     introParagraphParts: [
-      [{ type: 'text', value: '「这正是我一直在寻找的那类连衣裙。」' }],
+      [{ type: 'text', value: '「这正是你一直在寻找的那类连衣裙。」' }],
       [
         {
           type: 'text',
@@ -509,7 +509,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   },
   de: {
     introParagraphParts: [
-      [{ type: 'text', value: '„Genau diese Art von Kleid habe ich gesucht.“' }],
+      [{ type: 'text', value: '„Genau diese Art von Kleid haben Sie gesucht.“' }],
       [
         {
           type: 'text',
@@ -582,7 +582,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   },
   nl: {
     introParagraphParts: [
-      [{ type: 'text', value: '“Dit is precies het soort jurk dat ik zocht.”' }],
+      [{ type: 'text', value: '“Dit is precies het soort jurk dat u zocht.”' }],
       [
         {
           type: 'text',
@@ -655,7 +655,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   },
   pt: {
     introParagraphParts: [
-      [{ type: 'text', value: '«Este é exatamente o tipo de vestido que eu procurava.»' }],
+      [{ type: 'text', value: '«Este é exatamente o tipo de vestido que você procurava.»' }],
       [
         {
           type: 'text',
@@ -728,7 +728,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   },
   id: {
     introParagraphParts: [
-      [{ type: 'text', value: '"Ini persis gaun yang selama ini saya cari."' }],
+      [{ type: 'text', value: '"Ini persis gaun yang selama ini Anda cari."' }],
       [
         {
           type: 'text',
@@ -801,7 +801,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   },
   ms: {
     introParagraphParts: [
-      [{ type: 'text', value: '"Inilah jenis gaun yang selama ini saya cari."' }],
+      [{ type: 'text', value: '"Inilah jenis gaun yang selama ini anda cari."' }],
       [
         {
           type: 'text',

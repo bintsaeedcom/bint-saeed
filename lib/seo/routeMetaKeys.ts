@@ -20,6 +20,7 @@ export type RouteMetaKey =
   | 'privacy'
   | 'terms'
   | 'cookies'
+  | 'shipment_return'
   | 'size_guide'
   | 'verify_email'
   | 'the_codes'

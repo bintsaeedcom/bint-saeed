@@ -445,7 +445,7 @@ export const products: Product[] = [
     name: 'Knightsbridge Abaya Jacket',
     price: 3299,
     description:
-      'Khous Jacket Abaya between traditional dressing and contemporary outerwear — relaxed silhouette with Al Khous-inspired detailing, structured shoulders, and signature Knotted Lines of Lineage buttons. Created in Abu Dhabi.',
+      'For women who set the line rather than follow it — a jacket abaya with Al Khous–inspired detailing, structured shoulders, and Knotted Lines of Lineage buttons. Wear it as refined outerwear over dresses or alone as contemporary Emirati dressing. Created in Abu Dhabi; ships worldwide.',
     fabric: '60% Polyester, 40% Cotton outer; 100% Polyester inner dress',
     measurements:
       'Model height: 160 cm / 63 inches. Model wears size XS. Length: 143 cm / 56.3 inches. Available in custom lengths upon request.',
@@ -467,7 +467,7 @@ export const products: Product[] = [
     name: 'Covent Garden Abaya',
     price: 2799,
     description:
-      'Light linen abaya with traditional Al Talli trim, a clean concealed placket, and Emirati heritage detailing.',
+      'The light linen abaya you reach for when the day asks for ease without losing polish — traditional Al Talli trim, a clean concealed placket, and Emirati heritage detail that reads quietly up close. Created in Abu Dhabi; ships worldwide.',
     fabric: 'European linen blend, cotton lining',
     measurements: 'Length: 138cm (size M). Relaxed fit through the body.',
     images: coventGardenAbayaGallery('burgundy'),
@@ -490,7 +490,7 @@ export const products: Product[] = [
     name: 'Kensington Abaya',
     price: 2899,
     description:
-      'Structured blazer abaya in deep black with tailored shoulders and Al Khous–inspired braid detailing — confidence through simplicity, made in Abu Dhabi.',
+      'Tailored confidence in a structured blazer abaya — clean shoulders, Al Khous–inspired braid, and architectural simplicity in deep black. Built for women who want presence without noise. Made in Abu Dhabi; ships worldwide.',
     fabric:
       'Outer: 80% polyester, 20% viscose; lining: 70% polyester, 30% viscose; signature woven braid in black glitter organza',
     measurements: 'Length: 138cm (size M). Available in custom lengths upon request.',
@@ -505,7 +505,7 @@ export const products: Product[] = [
     name: 'Marylebone Abaya',
     price: 2499,
     description:
-      'The abaya with natural stone jewellery for your wardrobe — graceful A-line tailoring with removable Onyx Strands and signature Knotted Line details.',
+      'An A-line abaya designed to carry jewellery — graceful tailoring with removable Onyx Strands and signature Knotted Line details you can restyle through the season. Created in Abu Dhabi; ships worldwide.',
     fabric: 'Wool-silk blend, matte satin binding',
     measurements: 'Length: 135cm (size M).',
     images: maryleboneAbayaGallery('black'),
@@ -526,7 +526,7 @@ export const products: Product[] = [
     name: 'Belgravia Abaya',
     price: 3199,
     description:
-      'Bisht-inspired abaya with handwoven trim inspired by Al Khous palm frond weaving — a contemporary expression of Emirati heritage, made in Abu Dhabi.',
+      'A bisht-inspired abaya finished with handwoven trim drawn from Al Khous palm-frond weaving — heritage held in contemporary proportion. Made in Abu Dhabi for women who dress with lineage and clarity; ships worldwide.',
     fabric: BELGRAVIA_MATERIAL,
     measurements: 'Length: 138cm (size M). Available in custom lengths upon request.',
     images: belgraviaAbayaGallery('black'),
@@ -547,7 +547,7 @@ export const products: Product[] = [
     name: 'Park Lane Abaya',
     price: 2199,
     description:
-      'The abaya that speaks before you do. Graceful A-line tailoring with integrated shoulder scarf and signature gold-tone Knotted Line details.',
+      'The abaya that settles the room before you speak — graceful A-line tailoring, an integrated shoulder scarf, and gold-tone Knotted Line details. Day diplomacy to evening ease, created in Abu Dhabi; ships worldwide.',
     fabric: 'Outer: 75% Polyester, 25% Viscose',
     measurements: 'Length: 138cm (size M). Available in custom lengths upon request.',
     images: parkLaneAbayaGallery('black'),
@@ -570,7 +570,7 @@ export const products: Product[] = [
     name: 'Hyde Park Set',
     price: 1399,
     description:
-      'Oversized premium crepe shirt and wide-leg palazzo trouser set with Knotted Line buttons — exclusively in Deep Black.',
+      'Travel dressing done properly — an oversized premium crepe shirt with wide-leg palazzo trousers and Knotted Line buttons, exclusively in Deep Black. Pack once; wear from departure to dinner. Ships worldwide from Abu Dhabi.',
     fabric: 'Fabric composition — to be finalized with production.',
     measurements: 'Measurements — to be confirmed.',
     images: hydeParkSetGallery('black'),
@@ -587,7 +587,7 @@ export const products: Product[] = [
     name: 'Mayfair Kaftan',
     price: 975,
     description:
-      'Crepe-chiffon V-neck kaftan with fluid drape, inner dress, scarf detail, and signature gold-tone Monogram pin.',
+      'A fluid crepe-chiffon V-neck kaftan with inner dress, scarf detail, and the gold-tone Monogram pin — occasion ease that still feels considered. Created in Abu Dhabi; ships worldwide.',
     fabric: 'Crepe Chiffon (100% Polyester), Inner Dress: 100% Polyester',
     measurements: 'Maximum garment length: 165 cm.',
     images: mayfairKaftanGallery(),
@@ -601,7 +601,7 @@ export const products: Product[] = [
     name: 'Nothing Hill Kaftan',
     price: 975,
     description:
-      'Soft peach pink chiffon kaftan with refined bateau neckline, flowing silhouette, and signature gold-tone Bint Saeed emblem.',
+      'Soft peach-pink chiffon with a refined bateau neckline and an easy flowing line — finished with the gold-tone Bint Saeed emblem. The kaftan for evenings that ask for lightness. Ships worldwide from Abu Dhabi.',
     fabric: 'Chiffon (100% Polyester), Inner Dress: 100% Polyester',
     measurements: 'Maximum garment length: 165 cm.',
     images: nothingHillKaftanGallery(),
@@ -615,7 +615,7 @@ export const products: Product[] = [
     name: 'Knightsbridge Dress',
     price: 2199,
     description:
-      'Feminine cotton-blend maxi dress with Khous-inspired woven halter detailing — effortless elegance for life beyond a single season, made in Abu Dhabi.',
+      'A feminine cotton-blend maxi with Khous-inspired woven halter detailing — elegance that moves through the week without asking you to change who you are. Made in Abu Dhabi; ships worldwide.',
     fabric: 'Outer: 60% Cotton, 40% Polyester',
     measurements:
       'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
@@ -637,7 +637,7 @@ export const products: Product[] = [
     name: 'Covent Garden Long Dress',
     price: 1699,
     description:
-      'Timeless under-abaya dress with a softly fitted silhouette, hidden side pockets, and soft crepe lining — polished from work to cultural events.',
+      'The under-abaya dress that carries you from work to cultural evenings — softly fitted silhouette, hidden side pockets, and soft crepe lining that keeps the line polished all day. Created in Abu Dhabi; ships worldwide.',
     fabric: 'Outer: 80% Polyester, 20% Viscose; Lining: 70% Polyester, 30% Viscose',
     measurements:
       'Dress length: 138 cm / 54.5 inches (size XS). Model height: 155 cm / 61 inches. Length adjustable upon request.',
@@ -661,7 +661,7 @@ export const products: Product[] = [
     name: 'Hampstead Dress',
     price: 1799,
     description:
-      'Dress with structured shoulders and traditional Al Talli trim — evening or city wear rooted in Emirati heritage.',
+      'The fully lined premium crepe maxi you’ve been looking for — draped neckline, softly sculpted flare, and UNESCO-recognised Al Talli waist trim. Wear it alone or under an abaya; created in Abu Dhabi, UAE, and ships worldwide.',
     fabric: 'Virgin Wool blend, Silk lining, Mother-of-pearl buttons',
     measurements: 'Structured fit. Length: 118cm (size M). Shoulder width: 42cm.',
     images: hampsteadDressGallery('black'),
@@ -683,7 +683,7 @@ export const products: Product[] = [
     slug: 'covent-garden-signature-set',
     name: 'Covent Garden Signature Set',
     price: 3199,
-    description: 'Covent Garden dress and tailored jacket set — coordinated two-piece dressing with Al Khous-inspired detailing.',
+    description: 'The confidence of coordinated dressing — Covent Garden dress and tailored jacket with Al Khous–inspired detailing, cut to belong together or be worn apart. Created in Abu Dhabi; ships worldwide.',
     fabric: 'Outer: 80% Polyester, 20% Viscose; Lining: 70% Polyester, 30% Viscose',
     measurements:
       'Jacket length: 69 cm / 27.2 inches; Dress length: 138 cm / 54.5 inches (size XS). Model height: 155 cm / 61 inches.',
@@ -707,7 +707,7 @@ export const products: Product[] = [
     name: 'Soho Set',
     price: 1499,
     description:
-      'Coordinate oversized shirt and wide-leg palazzo trousers with traditional Al Talli trim — polished day-to-evening looks celebrating Emirati heritage.',
+      'A coordinate oversized shirt and wide-leg palazzo trousers finished with traditional Al Talli trim — polished from day into evening, celebrating Emirati heritage without costume. Created in Abu Dhabi; ships worldwide.',
     fabric: 'Fabric composition — to be finalized with production.',
     measurements: 'Chapter fit; shirt and trouser lengths confirmed against size chart.',
     images: sohoSetGallery('black'),

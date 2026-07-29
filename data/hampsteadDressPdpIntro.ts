@@ -6,7 +6,7 @@ export const HAMPSTEAD_DRESS_INTRO_EN: PdpIntroParagraph[] = [
   [
     {
       type: 'text',
-      value: '“This is exactly the kind of dress I’ve been looking for.”',
+      value: '“This is exactly the kind of dress you’ve been looking for.”',
     },
   ],
   [

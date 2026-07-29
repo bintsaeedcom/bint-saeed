@@ -91,6 +91,10 @@ const nextConfig = {
         destination: 'https://www.bintsaeed.com/:path*',
         permanent: true,
       },
+      // English is unprefixed (`/` / `/home`). `/en` is not a locale in routing — soft-404 in GSC.
+      { source: '/en', destination: '/home', permanent: true },
+      { source: '/en/', destination: '/home', permanent: true },
+      { source: '/en/:path*', destination: '/:path*', permanent: true },
       { source: '/charms', destination: '/strands', permanent: true },
       { source: '/charms/:path*', destination: '/strands/:path*', permanent: true },
       { source: '/strands/shop', destination: '/accessories?type=signature-strands', permanent: true },

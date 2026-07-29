@@ -38,9 +38,7 @@ const INDEXABLE_HUBS: { path: string; changefreq: string; priority: string }[] =
   { path: '/personalisation', changefreq: 'weekly', priority: '0.9' },
   { path: '/about', changefreq: 'monthly', priority: '0.7' },
   { path: '/the-codes', changefreq: 'monthly', priority: '0.7' },
-  { path: '/heritage', changefreq: 'monthly', priority: '0.8' },
-  { path: '/heritage/al-talli', changefreq: 'weekly', priority: '0.95' },
-  { path: '/heritage/khous', changefreq: 'monthly', priority: '0.7' },
+  // /heritage* unfinished — omitted until the chapter is approved for index.
   { path: '/craftsmanship', changefreq: 'monthly', priority: '0.7' },
   { path: '/giving-forward', changefreq: 'monthly', priority: '0.6' },
   { path: '/contact', changefreq: 'monthly', priority: '0.5' },
