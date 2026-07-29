@@ -430,8 +430,94 @@ function ThreePillarsBar() {
 
 const HOME_STRANDS_FEATURE_IMAGES = {
   panelBg: '/home/strands-feature/bint-saeed-home-strands-panel-bg.webp',
-  hero: '/home/strands-feature/bint-saeed-home-strands-feature.webp',
+  slides: [
+    '/home/strands-feature/bint-saeed-home-strands-feature.webp',
+    '/home/strands-feature/bint-saeed-home-strands-lapis-carnelian-cuff.webp',
+    '/home/strands-feature/bint-saeed-home-strands-amethyst-hearts-cuff.webp',
+    '/home/strands-feature/bint-saeed-home-strands-onyx-cuff.webp',
+  ],
 } as const
+
+const STRANDS_CAROUSEL_INTERVAL_MS = 5500
+
+function StrandsFeatureCarousel({
+  alts,
+  language,
+}: {
+  alts: readonly [string, string, string, string]
+  language: AppLocale
+}) {
+  const slides = HOME_STRANDS_FEATURE_IMAGES.slides
+  const reduceMotion = useReducedMotion()
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    if (reduceMotion || slides.length < 2) return
+    const id = window.setInterval(() => {
+      setIndex((i) => (i + 1) % slides.length)
+    }, STRANDS_CAROUSEL_INTERVAL_MS)
+    return () => window.clearInterval(id)
+  }, [reduceMotion, slides.length, index])
+
+  return (
+    <div className="relative h-full min-h-[68vh] overflow-hidden bg-[var(--color-sovereign)]">
+      <LocaleLink
+        href="/strands"
+        className="group absolute inset-0 block"
+        data-cursor-hover
+        aria-label={withBrandAlt(alts[index], language)}
+      >
+        {slides.map((src, i) => (
+          <div
+            key={src}
+            className={`absolute -inset-[14%] transition-opacity duration-[1200ms] ease-[cubic-bezier(0.33,0,0.2,1)] ${
+              i === index ? 'z-[2] opacity-100' : 'z-[1] opacity-0'
+            }`}
+            aria-hidden={i !== index}
+          >
+            <Image
+              src={src}
+              alt={withBrandAlt(alts[i], language)}
+              fill
+              sizes="(max-width: 1024px) 100vw, 58vw"
+              className="object-cover object-[50%_42%] transition-transform duration-700 group-hover:scale-[1.02]"
+              priority={i === 0}
+            />
+          </div>
+        ))}
+      </LocaleLink>
+
+      <div
+        className="absolute inset-x-0 bottom-5 z-10 flex items-center justify-center gap-2.5"
+        role="tablist"
+        aria-label="Signature Strands"
+      >
+        {slides.map((src, i) => {
+          const active = i === index
+          return (
+            <button
+              key={src}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              aria-label={`${i + 1} / ${slides.length}`}
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                setIndex(i)
+              }}
+              className={`h-2.5 w-2.5 rounded-full border shadow-[0_1px_6px_rgba(0,0,0,0.45)] transition-all duration-300 ${
+                active
+                  ? 'scale-110 border-[#e8d8c8] bg-[#e8d8c8]'
+                  : 'border-[#e8d8c8]/70 bg-[#e8d8c8]/30 hover:bg-[#e8d8c8]/60'
+              }`}
+            />
+          )
+        })}
+      </div>
+    </div>
+  )
+}
 
 /** Home media — structured under /public/home; WebP preferred, originals kept beside + at legacy paths. */
 const HOME_MEDIA = {
@@ -520,24 +606,12 @@ function CharmHeroFeatureSection() {
             </div>
           </div>
 
-          <LocaleLink
-            data-reveal
-            href="/strands"
-            className="group relative overflow-hidden bg-[var(--color-sovereign)]"
-            data-cursor-hover
-          >
-            <div className="relative h-full min-h-[68vh] overflow-hidden">
-              <div className="absolute -inset-[14%]">
-                <Image
-                  src={HOME_STRANDS_FEATURE_IMAGES.hero}
-                  alt={withBrandAlt(copy.mediaAlts.strandsCollection, language)}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 58vw"
-                  className="object-cover object-[50%_42%] transition-transform duration-700 group-hover:scale-[1.02]"
-                />
-              </div>
-            </div>
-          </LocaleLink>
+          <div data-reveal className="relative isolate">
+            <StrandsFeatureCarousel
+              alts={copy.mediaAlts.strandsCarouselAlts}
+              language={language}
+            />
+          </div>
       </div>
     </section>
   )

@@ -1,5 +1,5 @@
 import type { Language } from '@/lib/i18n/translations'
-import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
+import { shopSignatureStrandsCta } from '@/lib/i18n/strandsBrandLock'
 import { HOME_DE, HOME_FR, HOME_IT, HOME_PT } from '@/lib/i18n/editorialLocales/homeFrItDePt'
 import {
   HOME_ES,
@@ -41,52 +41,52 @@ const HOME_STRANDS_EYEBROW: Record<Language, string> = {
   ms: 'BARANG KEMAS PAKAIAN',
 }
 
-/** Keep Latin STRANDS as the product-line name in every locale. */
+/** Keep Latin Signature Strands as the product-line name in every locale. */
 const HOME_STRANDS_HEADING: Record<Language, string> = {
-  en: 'INTERCHANGEABLE NATURAL STONE STRANDS',
-  ar: 'STRANDS — خيوط أحجار طبيعية قابلة للتبديل',
-  fr: 'STRANDS EN PIERRES NATURELLES INTERCHANGEABLES',
-  it: 'STRANDS IN PIETRE NATURALI INTERCAMBIABILI',
-  es: 'STRANDS DE PIEDRAS NATURALES INTERCAMBIABLES',
-  ru: 'STRANDS — СМЕННЫЕ НИТИ ИЗ НАТУРАЛЬНОГО КАМНЯ',
-  zh: 'STRANDS — 可更换天然石串饰',
-  de: 'WECHSELBARE NATURSTEIN-STRANDS',
-  nl: 'VERWISSELBARE STRANDS VAN NATUURSTEEN',
-  pt: 'STRANDS DE PEDRAS NATURAIS INTERCAMBIÁVEIS',
-  id: 'STRANDS — RANTAI BATU ALAM YANG DAPAT DIUBAH',
-  ms: 'STRANDS — RANTAI BATU SEMULA JADI BOLEH DITUKAR',
+  en: 'A MODULAR JEWELLERY CONCEPT FOR CLOTHING',
+  ar: 'مفهوم مجوهرات معياري للملابس',
+  fr: 'UN CONCEPT DE BIJOUX MODULAIRE POUR LE VÊTEMENT',
+  it: 'UN CONCETTO DI GIOIELLERIA MODULARE PER L’ABBIGLIAMENTO',
+  es: 'UN CONCEPTO DE JOYERÍA MODULAR PARA LA ROPA',
+  ru: 'МОДУЛЬНАЯ ЮВЕЛИРНАЯ КОНЦЕПЦИЯ ДЛЯ ОДЕЖДЫ',
+  zh: '专为服饰而生的模块化珠宝概念',
+  de: 'EIN MODULARES SCHMUCKKONZEPT FÜR KLEIDUNG',
+  nl: 'EEN MODULAIR SIERADENCONCEPT VOOR KLEDING',
+  pt: 'UM CONCEITO DE JOALHARIA MODULAR PARA O VESTUÁRIO',
+  id: 'KONSEP PERHIASAN MODULAR UNTUK PAKAIAN',
+  ms: 'KONSEP BARANG KEMAS MODULAR UNTUK PAKAIAN',
 }
 
 const HOME_STRANDS_BODY: Record<Language, string> = {
   en:
-    'A new way to personalise your wardrobe. Interchangeable natural stone strands designed for selected Bint Saeed garments, allowing every piece to evolve with your style, mood and occasion.',
+    'Bint Saeed introduces Signature Strands, a modular jewellery concept designed specifically for clothing. The natural stone strands attach to the cuffs of selected garments and can be exchanged to complement different occasions or personal styles, allowing a single garment to evolve over time.',
   ar:
-    'طريقة جديدة لتخصيص خزانتك. خيوط أحجار طبيعية قابلة للتبديل، صُمّمت لقطع Bint Saeed المختارة، لتتطوّر كل قطعة مع أسلوبك ومزاجك ومناسباتك.',
+    'تقدّم Bint Saeed Signature Strands، مفهوم مجوهرات معياري صُمّم خصيصاً للملابس. تُثبَّت خيوط الأحجار الطبيعية على أساور قطع مختارة، ويمكن تبديلها لتتواءم مع المناسبات المختلفة أو الأساليب الشخصية، فتبقى القطعة واحدة وتتطوّر مع الزمن.',
   fr:
-    'Une nouvelle façon de personnaliser votre garde-robe. Des Strands en pierres naturelles interchangeables, conçus pour une sélection de pièces Bint Saeed, afin que chaque pièce évolue avec votre style, votre humeur et l’occasion.',
+    'Bint Saeed présente Signature Strands, un concept de bijoux modulaires conçu spécifiquement pour le vêtement. Les fils de pierres naturelles se fixent aux poignets de pièces sélectionnées et peuvent s’échanger pour accompagner différentes occasions ou styles personnels, permettant à un même vêtement d’évoluer dans le temps.',
   it:
-    'Un nuovo modo di personalizzare il guardaroba. Strands in pietre naturali intercambiabili, pensati per capi Bint Saeed selezionati, così ogni pezzo evolve con il tuo stile, il tuo umore e l’occasione.',
+    'Bint Saeed presenta Signature Strands, un concetto di gioielleria modulare pensato specificamente per l’abbigliamento. I fili di pietre naturali si fissano ai polsini di capi selezionati e possono essere scambiati per accompagnare diverse occasioni o stili personali, permettendo a un medesimo capo di evolvere nel tempo.',
   es:
-    'Una nueva forma de personalizar tu armario. Strands de piedras naturales intercambiables, diseñados para prendas Bint Saeed seleccionadas, para que cada pieza evolucione con tu estilo, tu ánimo y la ocasión.',
+    'Bint Saeed presenta Signature Strands, un concepto de joyería modular diseñado específicamente para la ropa. Los hilos de piedras naturales se fijan a los puños de prendas seleccionadas y pueden intercambiarse para acompañar distintas ocasiones o estilos personales, permitiendo que una misma prenda evolucione con el tiempo.',
   ru:
-    'Новый способ персонализировать гардероб. Сменные Strands из натурального камня, созданные для избранных изделий Bint Saeed, чтобы каждая вещь менялась вместе с вашим стилем, настроением и поводом.',
+    'Bint Saeed представляет Signature Strands — модульную ювелирную концепцию, созданную специально для одежды. Нити из натурального камня крепятся к манжетам избранных изделий и могут меняться в соответствии с разными поводами или личным стилем, позволяя одной вещи развиваться со временем.',
   zh:
-    '以全新方式个性化您的衣橱。可更换天然石 Strands，专为精选 Bint Saeed 服饰设计，让每一件作品随您的风格、心情与场合而演变。',
+    'Bint Saeed 推出 Signature Strands：专为服饰设计的模块化珠宝概念。天然石串饰附着于精选服饰的袖口，并可随场合与个人风格更换，使同一件服饰随时间而演变。',
   de:
-    'Eine neue Art, die Garderobe zu personalisieren. Wechselbare Naturstein-Strands für ausgewählte Bint Saeed Stücke — damit sich jedes Teil mit Stil, Stimmung und Anlass weiterentwickelt.',
+    'Bint Saeed stellt Signature Strands vor — ein modulares Schmuckkonzept, eigens für Kleidung entworfen. Die Naturstein-Stränge werden an den Manschetten ausgewählter Stücke befestigt und lassen sich austauschen, um verschiedene Anlässe oder persönliche Stile zu begleiten — so kann ein einzelnes Kleidungsstück über die Zeit hinweg weiterwachsen.',
   nl:
-    'Een nieuwe manier om uw garderobe te personaliseren. Verwisselbare Strands van natuursteen, ontworpen voor geselecteerde Bint Saeed-stukken — zodat elk stuk meebeweegt met uw stijl, stemming en gelegenheid.',
+    'Bint Saeed introduceert Signature Strands, een modulair sieradenconcept specifiek ontworpen voor kleding. De strengen van natuursteen bevestigen zich aan de manchetten van geselecteerde stukken en kunnen worden verwisseld om verschillende gelegenheden of persoonlijke stijlen te complementeren, zodat één kledingstuk in de loop van de tijd kan evolueren.',
   pt:
-    'Uma nova forma de personalizar o seu guarda-roupa. Strands de pedras naturais intercambiáveis, concebidos para peças Bint Saeed selecionadas, para que cada peça evolua com o seu estilo, humor e ocasião.',
+    'A Bint Saeed apresenta Signature Strands, um conceito de joalharia modular concebido especificamente para o vestuário. Os fios de pedras naturais fixam-se aos punhos de peças selecionadas e podem ser trocados para acompanhar diferentes ocasiões ou estilos pessoais, permitindo que uma mesma peça evolua ao longo do tempo.',
   id:
-    'Cara baru untuk mempersonalisasi gaya Anda. Strands batu alam yang dapat diubah, dirancang untuk garment Bint Saeed terpilih, agar setiap piece berkembang dengan gaya, suasana, dan kesempatan Anda.',
+    'Bint Saeed memperkenalkan Signature Strands, konsep perhiasan modular yang dirancang khusus untuk pakaian. Rantai batu alam dipasang pada manset pakaian terpilih dan dapat diganti untuk menyesuaikan berbagai kesempatan atau gaya pribadi, sehingga satu pakaian dapat berkembang seiring waktu.',
   ms:
-    'Cara baharu untuk memperibadikan almari pakaian anda. Strands batu semula jadi boleh ditukar, direka untuk pakaian Bint Saeed terpilih, supaya setiap keping berkembang dengan gaya, mood dan majlis anda.',
+    'Bint Saeed memperkenalkan Signature Strands, konsep barang kemas modular yang direka khusus untuk pakaian. Rantai batu semula jadi dipasang pada manset pakaian terpilih dan boleh ditukar untuk melengkapi majlis atau gaya peribadi yang berbeza, membolehkan satu pakaian berkembang dari masa ke masa.',
 }
 
-/** Built from brand lock — "Strands" is never localized (avoids NL stranden / DE Stränge). */
+/** Built from brand lock — "Signature Strands" is never localized. */
 function homeStrandsShopCta(lang: Language): string {
-  return shopStrandsCta(lang, 'title')
+  return shopSignatureStrandsCta(lang, 'upper')
 }
 
 const HOME_SHOP_NOW_CTA: Record<Language, string> = {
@@ -195,6 +195,8 @@ export type HomeStoryCode = {
 
 export type HomeMediaAlts = {
   strandsCollection: string
+  /** Four home strands carousel slides — base alts; pass through withBrandAlt(locale). */
+  strandsCarouselAlts: readonly [string, string, string, string]
   personalisationLabel: string
   campaignGazelles: string
   heroMobile: string
@@ -243,6 +245,81 @@ export type HomeEditorialCopy = {
   formatPriceRange: (min: number, max: number) => string
   formatPriceFrom: (min: number) => string
   formatProductPrice: (price: number) => string
+}
+
+const HOME_STRANDS_CAROUSEL_ALTS: Record<Language, readonly [string, string, string, string]> = {
+  en: [
+    'Bint Saeed Signature Strands flatlay — interchangeable natural stone strands with Al Ain Rosette carnelian and gold-tone clasps',
+    'Bint Saeed Signature Strand with lapis lazuli beads and Al Ain Rosette carnelian, attached to the cuff of a champagne silk blouse',
+    'Bint Saeed Signature Strand with heart-shaped amethyst stones and gold accents, attached to the cuff of a champagne silk blouse',
+    'Bint Saeed Signature Strand with onyx beads and gold-tone clasp, attached to the cuff of a champagne silk blouse',
+  ],
+  ar: [
+    'عرض Signature Strands من Bint Saeed — خيوط أحجار طبيعية قابلة للتبديل مع روزيت العين من العقيق ومشابك بلون الذهب',
+    'Signature Strand من Bint Saeed بخرز لازورد وروزيت العين من العقيق، مثبّت على أسورة بلوزة حريرية بلون الشامبانيا',
+    'Signature Strand من Bint Saeed بأحجار أميثيست على شكل قلب وتفاصيل ذهبية، مثبّت على أسورة بلوزة حريرية بلون الشامبانيا',
+    'Signature Strand من Bint Saeed بخرز عقيق يماني ومشبك بلون الذهب، مثبّت على أسورة بلوزة حريرية بلون الشامبانيا',
+  ],
+  fr: [
+    'Composition Signature Strands Bint Saeed — fils de pierres naturelles interchangeables avec Rosette d’Al Ain en cornaline et fermoirs dorés',
+    'Signature Strand Bint Saeed en perles de lapis-lazuli et Rosette d’Al Ain en cornaline, fixé au poignet d’un chemisier de soie champagne',
+    'Signature Strand Bint Saeed en améthystes en forme de cœur et accents dorés, fixé au poignet d’un chemisier de soie champagne',
+    'Signature Strand Bint Saeed en perles d’onyx et fermoir doré, fixé au poignet d’un chemisier de soie champagne',
+  ],
+  it: [
+    'Flatlay Signature Strands Bint Saeed — fili di pietre naturali intercambiabili con Rosette d’Al Ain in corniola e chiusure dorate',
+    'Signature Strand Bint Saeed con perle di lapislazzuli e Rosette d’Al Ain in corniola, fissato al polsino di una blusa in seta champagne',
+    'Signature Strand Bint Saeed con ametiste a cuore e dettagli dorati, fissato al polsino di una blusa in seta champagne',
+    'Signature Strand Bint Saeed con perle di onice e chiusura dorata, fissato al polsino di una blusa in seta champagne',
+  ],
+  es: [
+    'Composición Signature Strands Bint Saeed — hilos intercambiables de piedras naturales con Rosette d’Al Ain en cornalina y cierres dorados',
+    'Signature Strand Bint Saeed con cuentas de lapislázuli y Rosette d’Al Ain en cornalina, sujeto al puño de una blusa de seda champán',
+    'Signature Strand Bint Saeed con amatistas en forma de corazón y acentos dorados, sujeto al puño de una blusa de seda champán',
+    'Signature Strand Bint Saeed con cuentas de ónix y cierre dorado, sujeto al puño de una blusa de seda champán',
+  ],
+  de: [
+    'Signature Strands Bint Saeed Flatlay — austauschbare Naturstein-Stränge mit Al Ain Rosette aus Karneol und goldfarbenen Verschlüssen',
+    'Signature Strand Bint Saeed mit Lapislazuli-Perlen und Al Ain Rosette aus Karneol, am Manschettenabschluss einer Champagner-Seidenbluse',
+    'Signature Strand Bint Saeed mit herzförmigem Amethyst und goldfarbenen Akzenten, am Manschettenabschluss einer Champagner-Seidenbluse',
+    'Signature Strand Bint Saeed mit Onyx-Perlen und goldfarbenem Verschluss, am Manschettenabschluss einer Champagner-Seidenbluse',
+  ],
+  nl: [
+    'Signature Strands Bint Saeed flatlay — verwisselbare natuursteenstrengen met Al Ain Rosette van carneool en goudkleurige sluitingen',
+    'Signature Strand Bint Saeed met lapis lazuli-kralen en Al Ain Rosette van carneool, bevestigd aan de manchet van een champagne zijden blouse',
+    'Signature Strand Bint Saeed met hartvormige amethist en gouden accenten, bevestigd aan de manchet van een champagne zijden blouse',
+    'Signature Strand Bint Saeed met onyxkralen en goudkleurige sluiting, bevestigd aan de manchet van een champagne zijden blouse',
+  ],
+  pt: [
+    'Composição Signature Strands Bint Saeed — fios intercambiáveis de pedras naturais com Rosette d’Al Ain em cornalina e fechos dourados',
+    'Signature Strand Bint Saeed com contas de lápis-lazúli e Rosette d’Al Ain em cornalina, preso ao punho de uma blusa de seda champagne',
+    'Signature Strand Bint Saeed com ametistas em forma de coração e detalhes dourados, preso ao punho de uma blusa de seda champagne',
+    'Signature Strand Bint Saeed com contas de ónix e fecho dourado, preso ao punho de uma blusa de seda champagne',
+  ],
+  ru: [
+    'Композиция Signature Strands Bint Saeed — сменные нити из натурального камня с розеткой Al Ain из сердолика и золотистыми застёжками',
+    'Signature Strand Bint Saeed с бусинами лазурита и розеткой Al Ain из сердолика на манжете шёлковой блузы цвета шампань',
+    'Signature Strand Bint Saeed с аметистами в форме сердца и золотистыми акцентами на манжете шёлковой блузы цвета шампань',
+    'Signature Strand Bint Saeed с бусинами оникса и золотистой застёжкой на манжете шёлковой блузы цвета шампань',
+  ],
+  zh: [
+    'Bint Saeed Signature Strands 平铺展示——可更换天然石串饰，配以 Al Ain Rosette 红玉髓与金色扣件',
+    'Bint Saeed Signature Strand：青金石串珠与 Al Ain Rosette 红玉髓，附着于香槟丝绸衬衫袖口',
+    'Bint Saeed Signature Strand：心形紫水晶与金色细节，附着于香槟丝绸衬衫袖口',
+    'Bint Saeed Signature Strand：黑玛瑙串珠与金色扣件，附着于香槟丝绸衬衫袖口',
+  ],
+  id: [
+    'Flatlay Signature Strands Bint Saeed — rantai batu alam yang dapat diganti dengan Al Ain Rosette karnelian dan kait berwarna emas',
+    'Signature Strand Bint Saeed dengan manik lapis lazuli dan Al Ain Rosette karnelian, terpasang pada manset blus sutra champagne',
+    'Signature Strand Bint Saeed dengan amethyst berbentuk hati dan aksen emas, terpasang pada manset blus sutra champagne',
+    'Signature Strand Bint Saeed dengan manik onyx dan kait berwarna emas, terpasang pada manset blus sutra champagne',
+  ],
+  ms: [
+    'Flatlay Signature Strands Bint Saeed — rantai batu semula jadi boleh ditukar dengan Al Ain Rosette karnelian dan pengunci berwarna emas',
+    'Signature Strand Bint Saeed dengan manik lapis lazuli dan Al Ain Rosette karnelian, dipasang pada manset blaus sutera champagne',
+    'Signature Strand Bint Saeed dengan amethyst berbentuk hati dan aksen emas, dipasang pada manset blaus sutera champagne',
+    'Signature Strand Bint Saeed dengan manik onyx dan pengunci berwarna emas, dipasang pada manset blaus sutera champagne',
+  ],
 }
 
 const STRAND_SWATCHES_HEX = [
@@ -348,6 +425,7 @@ const HOME_EN: HomeEditorialCopy = {
   ],
   mediaAlts: {
     strandsCollection: 'Bint Saeed strand collection',
+    strandsCarouselAlts: HOME_STRANDS_CAROUSEL_ALTS.en,
     personalisationLabel: 'Bint Saeed personalised hidden inner label',
     campaignGazelles: 'Bint Saeed campaign panorama — Abu Dhabi gazelles',
     heroMobile: 'Bint Saeed luxury abayas in burgundy and black, editorial group photograph',
@@ -451,6 +529,7 @@ const HOME_AR: HomeEditorialCopy = {
   ],
   mediaAlts: {
     strandsCollection: 'مجموعة خيوط Bint Saeed',
+    strandsCarouselAlts: HOME_STRANDS_CAROUSEL_ALTS.ar,
     personalisationLabel: 'ملصق داخلي مخفي ومخصّص من Bint Saeed',
     campaignGazelles: 'بانوراما حملة Bint Saeed — غزلان أبوظبي',
     heroMobile: 'عباءات Bint Saeed الفاخرة بالعنابي والأسود، صورة تحريرية جماعية',
@@ -554,6 +633,7 @@ const HOME_NL: HomeEditorialCopy = {
   ],
   mediaAlts: {
     strandsCollection: 'Bint Saeed Strands-collectie',
+    strandsCarouselAlts: HOME_STRANDS_CAROUSEL_ALTS.nl,
     personalisationLabel: 'Bint Saeed gepersonaliseerd verborgen binnenlabel',
     campaignGazelles: 'Bint Saeed campagnepanorama — gazellen van Abu Dhabi',
     heroMobile: 'Bint Saeed luxe abaya’s in bordeaux en zwart, editoriale groepsfotografie',
@@ -608,5 +688,9 @@ export function getHomeEditorialCopy(locale: Language | string): HomeEditorialCo
     personalisationBody: HOME_PERSONALISATION_BODY[lang],
     personalisationCta: HOME_PERSONALISATION_CTA[lang],
     shopNowCta: HOME_SHOP_NOW_CTA[lang],
+    mediaAlts: {
+      ...base.mediaAlts,
+      strandsCarouselAlts: HOME_STRANDS_CAROUSEL_ALTS[lang],
+    },
   }
 }

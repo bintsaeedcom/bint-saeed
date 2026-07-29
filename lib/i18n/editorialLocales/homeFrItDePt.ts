@@ -115,6 +115,7 @@ export const HOME_FR = pack({
   ],
   mediaAlts: {
     strandsCollection: 'Collection Strands Bint Saeed',
+    strandsCarouselAlts: ['', '', '', ''] as const,
     personalisationLabel: 'Étiquette intérieure personnalisée Bint Saeed',
     campaignGazelles: 'Panorama de campagne Bint Saeed — gazelles d’Abu Dhabi',
     heroMobile: 'Abayas Bint Saeed bordeaux et noir, photographie éditoriale de groupe',
@@ -184,6 +185,7 @@ export const HOME_IT = pack({
   ],
   mediaAlts: {
     strandsCollection: 'Collezione Strands Bint Saeed',
+    strandsCarouselAlts: ['', '', '', ''] as const,
     personalisationLabel: 'Etichetta interna personalizzata Bint Saeed',
     campaignGazelles: 'Panorama campagna Bint Saeed — gazzelle di Abu Dhabi',
     heroMobile: 'Abaya Bint Saeed bordeaux e nero, fotografia editoriale di gruppo',
@@ -253,6 +255,7 @@ export const HOME_DE = pack({
   ],
   mediaAlts: {
     strandsCollection: 'Bint Saeed Strands-Kollektion',
+    strandsCarouselAlts: ['', '', '', ''] as const,
     personalisationLabel: 'Personalisiertes verstecktes Innenetikett Bint Saeed',
     campaignGazelles: 'Bint Saeed Kampagnenpanorama — Gazellen von Abu Dhabi',
     heroMobile: 'Bint Saeed Luxus-Abayas in Bordeaux und Schwarz, editoriale Gruppenfotografie',
@@ -322,6 +325,7 @@ export const HOME_PT = pack({
   ],
   mediaAlts: {
     strandsCollection: 'Coleção Strands Bint Saeed',
+    strandsCarouselAlts: ['', '', '', ''] as const,
     personalisationLabel: 'Etiqueta interior personalizada Bint Saeed',
     campaignGazelles: 'Panorama de campanha Bint Saeed — gazelas de Abu Dhabi',
     heroMobile: 'Abayas Bint Saeed bordeaux e preto, fotografia editorial de grupo',

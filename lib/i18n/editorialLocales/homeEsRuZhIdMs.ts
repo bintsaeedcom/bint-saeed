@@ -114,6 +114,7 @@ export const HOME_ES = pack({
   ],
   mediaAlts: {
     strandsCollection: 'Colección Strands Bint Saeed',
+    strandsCarouselAlts: ['', '', '', ''] as const,
     personalisationLabel: 'Etiqueta interior personalizada Bint Saeed',
     campaignGazelles: 'Panorama de campaña Bint Saeed — gacelas de Abu Dhabi',
     heroMobile: 'Abayas Bint Saeed burdeos y negro, fotografía editorial de grupo',
@@ -183,6 +184,7 @@ export const HOME_RU = pack({
   ],
   mediaAlts: {
     strandsCollection: 'Коллекция Strands Bint Saeed',
+    strandsCarouselAlts: ['', '', '', ''] as const,
     personalisationLabel: 'Персонализированная внутренняя этикетка Bint Saeed',
     campaignGazelles: 'Кампанийная панорама Bint Saeed — газели Abu Dhabi',
     heroMobile: 'Абайи Bint Saeed бордо и чёрный, редакционная групповая съёмка',
@@ -252,6 +254,7 @@ export const HOME_ZH = pack({
   ],
   mediaAlts: {
     strandsCollection: 'Bint Saeed Strands 系列',
+    strandsCarouselAlts: ['', '', '', ''] as const,
     personalisationLabel: 'Bint Saeed 个性化内标',
     campaignGazelles: 'Bint Saeed 广告全景 — 阿布扎比瞪羚',
     heroMobile: 'Bint Saeed 酒红与黑色长袍，编辑群像摄影',
@@ -321,6 +324,7 @@ export const HOME_ID = pack({
   ],
   mediaAlts: {
     strandsCollection: 'Koleksi Strands Bint Saeed',
+    strandsCarouselAlts: ['', '', '', ''] as const,
     personalisationLabel: 'Label dalam personalisasi Bint Saeed',
     campaignGazelles: 'Panorama kampanye Bint Saeed — gazelle Abu Dhabi',
     heroMobile: 'Abaya Bint Saeed maroon dan hitam, fotografi editorial kelompok',
@@ -390,6 +394,7 @@ export const HOME_MS = pack({
   ],
   mediaAlts: {
     strandsCollection: 'Koleksi Strands Bint Saeed',
+    strandsCarouselAlts: ['', '', '', ''] as const,
     personalisationLabel: 'Label dalam diperibadikan Bint Saeed',
     campaignGazelles: 'Panorama kempen Bint Saeed — gazelle Abu Dhabi',
     heroMobile: 'Abaya Bint Saeed maroon dan hitam, fotografi editorial kumpulan',

@@ -59,6 +59,22 @@ export function shopStrandsCta(locale: Language | string, form: 'title' | 'upper
   return `${verb} ${PRODUCT_LINE_STRANDS}`
 }
 
+/** e.g. "Shop Signature Strands" — full product-line name, never localized. */
+export function shopSignatureStrandsCta(
+  locale: Language | string,
+  form: 'title' | 'upper' = 'title',
+): string {
+  const lang = asLanguage(locale)
+  if (lang === 'de') {
+    return form === 'upper' ? 'SIGNATURE STRANDS ENTDECKEN' : 'Signature Strands entdecken'
+  }
+  const verb = SHOP_STRANDS_VERB[lang]
+  if (form === 'upper') {
+    return `${verb.toLocaleUpperCase(lang === 'zh' ? 'en' : lang)} ${PRODUCT_LINE_SIGNATURE_STRANDS.toUpperCase()}`
+  }
+  return `${verb} ${PRODUCT_LINE_SIGNATURE_STRANDS}`
+}
+
 /** e.g. "Shop all Strands" / "Bekijk alle Strands". */
 export function shopAllStrandsCta(locale: Language | string, form: 'title' | 'upper' = 'title'): string {
   const lang = asLanguage(locale)
