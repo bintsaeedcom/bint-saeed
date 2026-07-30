@@ -226,7 +226,13 @@ export default function ContactPage() {
                 aria-hidden
               />
               {submitted ? (
-                <div className={`relative text-start`}>
+                <div
+                  className={`relative text-start`}
+                  data-contact-success="true"
+                  data-analytics-event="contact_form_success"
+                  role="status"
+                  aria-live="polite"
+                >
                   <div className="flex h-14 w-14 items-center justify-center rounded-full border border-brand-dustyBlue/40 bg-brand-dustyBlue/12">
                     <FiCheck className="h-6 w-6 text-brand-dustyBlue" strokeWidth={2.25} aria-hidden />
                   </div>
@@ -266,7 +272,12 @@ export default function ContactPage() {
                   </button>
                 </div>
               ) : (
-              <form onSubmit={handleSubmit} className="relative space-y-6" noValidate>
+              <form
+                onSubmit={handleSubmit}
+                className="relative space-y-6"
+                noValidate
+                data-contact-form="true"
+              >
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div>
                     <label htmlFor="contact-name" className={`${contactLabelClass} text-start`}>
