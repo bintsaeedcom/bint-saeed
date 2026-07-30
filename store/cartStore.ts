@@ -132,12 +132,28 @@ export const useCartStore = create<CartStore>()(
       name: 'bint-saeed-cart',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ items: state.items }),
-      onRehydrateStorage: () => (state) => {
-        const finish = (items: CartItem[] | undefined, removedCount: number) => {
+      onRehydrateStorage: () => (state, error) => {
+        // Must never throw — zustand only marks hydration finished after this callback.
+        // A throw leaves hasHydrated=false forever while items may already be restored
+        // (bag badge shows 1, checkout stuck on "Loading checkout…").
+        try {
+          if (error) {
+            console.error('Cart rehydrate storage error', error)
+            useCartStore.setState({ hasHydrated: true })
+            return
+          }
+
+          if (!state) {
+            useCartStore.setState({ items: [], hasHydrated: true })
+            return
+          }
+
+          const { items, removedCount } = sanitizePersistedCartWithMeta(state.items)
           useCartStore.setState({
-            items: items ?? [],
+            items,
             hasHydrated: true,
           })
+
           if (removedCount > 0 && typeof window !== 'undefined') {
             queueMicrotask(() => {
               void import('react-hot-toast').then(({ default: toast }) => {
@@ -150,15 +166,24 @@ export const useCartStore = create<CartStore>()(
               })
             })
           }
+        } catch (rehydrateError) {
+          console.error('Cart rehydrate failed', rehydrateError)
+          useCartStore.setState({ hasHydrated: true })
         }
-
-        if (!state) {
-          finish([], 0)
-          return
-        }
-        const { items, removedCount } = sanitizePersistedCartWithMeta(state.items)
-        finish(items, removedCount)
       },
     }
   )
 )
+
+/**
+ * Sync our `hasHydrated` flag after zustand persist finishes.
+ * Pass `force: true` only from a timed failsafe — never on first paint,
+ * or an empty cart flash can redirect checkout → bag before restore.
+ */
+export function ensureCartHydrated(opts?: { force?: boolean }) {
+  if (typeof window === 'undefined') return
+  if (useCartStore.getState().hasHydrated) return
+  if (useCartStore.persist.hasHydrated() || opts?.force) {
+    useCartStore.setState({ hasHydrated: true })
+  }
+}

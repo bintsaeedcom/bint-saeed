@@ -9,7 +9,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FiArrowRight, FiLock } from 'react-icons/fi'
 import toast from 'react-hot-toast'
-import { useCartStore } from '@/store/cartStore'
+import { useCartStore, ensureCartHydrated } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
@@ -261,6 +261,19 @@ function CheckoutPageContent() {
   const activeRail = selectedRail && availableRails.includes(selectedRail)
     ? selectedRail
     : availableRails[0] ?? null
+
+  useEffect(() => {
+    if (hasHydrated) return
+    const unsub = useCartStore.persist.onFinishHydration(() => {
+      ensureCartHydrated()
+    })
+    ensureCartHydrated()
+    const failsafe = window.setTimeout(() => ensureCartHydrated({ force: true }), 2000)
+    return () => {
+      unsub()
+      window.clearTimeout(failsafe)
+    }
+  }, [hasHydrated])
 
   useEffect(() => {
     if (!hasHydrated) return
@@ -684,6 +697,7 @@ function CheckoutPageContent() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(checkoutPayload),
+        signal: AbortSignal.timeout(45_000),
       })
       if (!response.ok) {
         throw new Error(await readCheckoutError(response, 'Checkout is unavailable'))
@@ -717,8 +731,11 @@ function CheckoutPageContent() {
       throw new Error('Stripe checkout session missing')
     } catch (e) {
       console.error(e)
-      const message =
-        e instanceof Error && e.message.trim()
+      const timedOut =
+        e instanceof Error && (e.name === 'TimeoutError' || e.name === 'AbortError')
+      const message = timedOut
+        ? ui.checkout.checkoutError
+        : e instanceof Error && e.message.trim()
           ? e.message
           : ui.checkout.checkoutError
       const lower = message.toLowerCase()

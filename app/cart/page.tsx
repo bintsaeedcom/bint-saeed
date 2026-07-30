@@ -6,7 +6,7 @@ import LocaleLink from '@/components/LocaleLink'
 import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
 import CodesOrganicBand from '@/components/CodesOrganicBand'
 import { FiTrash2, FiPlus, FiMinus, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
-import { useCartStore } from '@/store/cartStore'
+import { useCartStore, ensureCartHydrated } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
@@ -92,6 +92,19 @@ export default function CartPage() {
       clearMobileBottomChrome('cart-bar')
     }
   }, [items.length])
+
+  useEffect(() => {
+    if (hasHydrated) return
+    const unsub = useCartStore.persist.onFinishHydration(() => {
+      ensureCartHydrated()
+    })
+    ensureCartHydrated()
+    const failsafe = window.setTimeout(() => ensureCartHydrated({ force: true }), 2000)
+    return () => {
+      unsub()
+      window.clearTimeout(failsafe)
+    }
+  }, [hasHydrated])
 
   if (!hasHydrated) {
     return (
