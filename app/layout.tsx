@@ -27,6 +27,11 @@ import {
 import { buildFaqPageJsonLd } from '@/lib/seo/faqPageJsonLd'
 import { buildSupplementalJsonLdGraphScriptJson } from '@/lib/seo/seo'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
+import {
+  buildGtmHeadBootstrapScript,
+  GTM_CONTAINER_ID,
+  isGtmConfigured,
+} from '@/lib/analytics/gtm'
 
 /** Locale + pathname come from middleware headers — avoid serving one cached HTML canonical for all URLs. */
 export const dynamic = 'force-dynamic'
@@ -90,6 +95,7 @@ export default async function RootLayout({
 
   const langAttr = locale === 'zh' ? 'zh-CN' : locale === 'en' ? 'en' : locale
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
+  const gtmEnabled = isGtmConfigured()
 
   return (
     <html
@@ -98,6 +104,14 @@ export default async function RootLayout({
       className={`${fontMontserrat.variable} ${fontRozha.variable} ${fontNotoKufi.variable}`}
     >
       <head>
+        {gtmEnabled ? (
+          <script
+            id="gtm-bootstrap"
+            dangerouslySetInnerHTML={{
+              __html: buildGtmHeadBootstrapScript(GTM_CONTAINER_ID),
+            }}
+          />
+        ) : null}
         {/* Favicon — stable URLs; must stay crawlable by Googlebot-Image */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon-48.png?v=3" type="image/png" sizes="48x48" />
@@ -211,6 +225,17 @@ export default async function RootLayout({
         <meta name="rating" content="General" />
       </head>
       <body className="min-h-screen font-sans antialiased" dir={dir} data-locale={locale}>
+        {gtmEnabled ? (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${GTM_CONTAINER_ID}`}
+              height={0}
+              width={0}
+              style={{ display: 'none', visibility: 'hidden' }}
+              title="Google Tag Manager"
+            />
+          </noscript>
+        ) : null}
         <LanguageProvider initialLocale={locale}>
           <AnalyticsProvider>
             <CurrencyProvider>

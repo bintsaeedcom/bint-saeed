@@ -15,6 +15,7 @@ import {
   faqPairsToQuestionNodes,
 } from '@/lib/translations/seo/builders'
 import { getSeoSupplementalBundle } from '@/lib/translations/seo'
+import { buildPressCoverageNewsArticleJsonLd } from '@/lib/seo/pressCoverage'
 
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
@@ -142,6 +143,7 @@ export function buildSupplementalJsonLdList(options: SupplementalJsonLdOptions):
   nodes.push(buildGccGovernmentBrandJsonLd(siteUrl, bundle))
   nodes.push(buildPressBrandJsonLd(siteUrl, bundle))
   nodes.push(buildMediaKitJsonLd(siteUrl, bundle))
+  nodes.push(buildPressCoverageNewsArticleJsonLd())
 
   if (!options.isFaqRoute) {
     nodes.push(buildMergedSupplementalFaqJsonLd(options.locale))

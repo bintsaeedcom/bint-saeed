@@ -1,4 +1,4 @@
-export type TrackerKey = 'ga4' | 'clarity' | 'posthog' | 'meta_pixel'
+export type TrackerKey = 'gtm' | 'ga4' | 'clarity' | 'posthog' | 'meta_pixel'
 
 export type TrackerCookieInfo = {
   name: string
@@ -16,6 +16,18 @@ export type TrackerInfo = {
 }
 
 export const TRACKER_CATALOG: TrackerInfo[] = [
+  {
+    key: 'gtm',
+    title: 'Google Tag Manager',
+    category: 'analytics',
+    envVar: 'NEXT_PUBLIC_GTM_CONTAINER_ID',
+    description:
+      'Tag container that loads configured marketing and analytics tags. Storage remains denied until cookie consent is granted (Consent Mode).',
+    cookies: [
+      { name: '_ga', purpose: 'May be set by tags fired via GTM (e.g. GA4)', retention: 'up to 2 years' },
+      { name: '_gid', purpose: 'May be set by tags fired via GTM', retention: 'up to 24 hours' },
+    ],
+  },
   {
     key: 'ga4',
     title: 'Google Analytics 4',
@@ -68,6 +80,7 @@ export const TRACKER_CATALOG: TrackerInfo[] = [
 ]
 
 export function getEnabledTrackersFromEnv() {
+  const gtmId = process.env.NEXT_PUBLIC_GTM_CONTAINER_ID?.trim() || 'GTM-PS953D4R'
   const ga4Id = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID?.trim()
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID?.trim()
   const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY?.trim()
@@ -75,6 +88,7 @@ export function getEnabledTrackersFromEnv() {
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim()
 
   return TRACKER_CATALOG.filter((tracker) => {
+    if (tracker.key === 'gtm') return /^GTM-[A-Z0-9]+$/i.test(gtmId)
     if (tracker.key === 'ga4') return Boolean(ga4Id)
     if (tracker.key === 'clarity') return Boolean(clarityId)
     if (tracker.key === 'posthog') return Boolean(posthogKey && posthogHost)

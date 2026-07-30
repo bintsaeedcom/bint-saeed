@@ -5,6 +5,7 @@ import { getHomeDefaultTitle, getHomeMetaDescription } from '@/lib/i18n/homePage
 import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
+import { ORGANIZATION_SAME_AS } from '@/lib/seo/pressCoverage'
 
 /** Canonical site origin (must match live host / Search Console property). */
 const BASE = 'https://www.bintsaeed.com'
@@ -538,6 +539,7 @@ export function buildBrandJsonLd(locale: AppLocale) {
     description: desc,
     url: BASE,
     logo: `${BASE}/og-image.png`,
+    sameAs: [...ORGANIZATION_SAME_AS],
     foundingLocation: {
       '@type': 'Place',
       name: FOUNDING_PLACE_NAME[locale],

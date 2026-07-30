@@ -397,6 +397,9 @@ function normalizeDashboardOrder(raw: unknown): StoredOrder | null {
 export default function AdminDashboard() {
   const gaMeasurementId = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID?.trim() ?? ''
   const gaConfigured = gaMeasurementId.startsWith('G-')
+  const gtmConfigured = /^GTM-[A-Z0-9]+$/i.test(
+    process.env.NEXT_PUBLIC_GTM_CONTAINER_ID?.trim() || 'GTM-PS953D4R',
+  )
   const [activeVisitors, setActiveVisitors] = useState<Visitor[]>([])
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [stats, setStats] = useState({ liveVisitors: 0, totalVisitors: 0, todayVisitors: 0, newVisitors: 0, returningVisitors: 0 })
@@ -1126,6 +1129,7 @@ export default function AdminDashboard() {
                   <Pill label="Upstash Redis" ok={opsHealth.auth.redisConfigured} />
                   <Pill label="Resend email" ok={opsHealth.auth.resendConfigured} />
                   <Pill label="MailerLite" ok={opsHealth.newsletter.apiReachable} />
+                  <Pill label="GTM" ok={gtmConfigured} />
                   <Pill label="GA4 tracking" ok={gaConfigured} />
                 </div>
               ) : (

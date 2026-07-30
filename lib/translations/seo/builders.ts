@@ -1,6 +1,7 @@
 import type { FaqPair, SeoSupplementalBundle } from './types'
 import { GCC_STORE_ADDRESS_BY_ID } from './gccStoreAddresses'
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
+import { ORGANIZATION_SAME_AS, PRESS_COVERAGE_NLR } from '@/lib/seo/pressCoverage'
 
 const BRAND_NAME = 'Bint Saeed'
 
@@ -74,6 +75,18 @@ export function buildPressBrandJsonLd(siteUrl: string, bundle: SeoSupplementalBu
     url: siteUrl,
     logo: `${siteUrl}/og-image.png`,
     slogan: b.slogan,
+    sameAs: [...ORGANIZATION_SAME_AS],
+    subjectOf: {
+      '@type': 'NewsArticle',
+      url: PRESS_COVERAGE_NLR.url,
+      headline: PRESS_COVERAGE_NLR.headline,
+      datePublished: PRESS_COVERAGE_NLR.datePublished,
+      publisher: {
+        '@type': 'Organization',
+        name: PRESS_COVERAGE_NLR.publisherName,
+        url: PRESS_COVERAGE_NLR.publisherUrl,
+      },
+    },
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: b.contactType,

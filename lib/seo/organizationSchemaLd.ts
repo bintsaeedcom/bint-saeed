@@ -2,6 +2,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { getBrandTagline } from '@/lib/brand/brandPositioning'
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
+import { ORGANIZATION_SAME_AS, PRESS_COVERAGE_NLR } from '@/lib/seo/pressCoverage'
 
 /** Long-form Organization description for JSON-LD (per locale). */
 const ORGANIZATION_DESCRIPTION: Record<AppLocale, string> = {
@@ -40,13 +41,7 @@ const ORGANIZATION_DESCRIPTION: Record<AppLocale, string> = {
     'Bint Saeed ialah rumah fesyen kontemporari dari Abu Dhabi, Emiriah Arab Bersatu, yang berdedikasi kepada gaya hidup yang sentiasa berkembang. Ditubuhkan pada 2026, rumah ini mencipta abaya, kaftan, gaun, perhiasan, dan karya gaya hidup yang dibentuk oleh kod reka bentuk Emirati termasuk kraftangan Al Talli dan tenunan Khous. Direka untuk wanita kontemporari yang bergerak antara budaya dan persekitaran sambil kekal berhubung dengan asal usul mereka. Bint Saeed mewakili ekspresi kontemporari reka bentuk Abu Dhabi, menggabungkan kedalaman budaya, bahan halus, dan konstruksi moden.',
 }
 
-const SAME_AS = [
-  'https://www.instagram.com/bintsaeed_brand/',
-  'https://www.tiktok.com/@bintsaeed_brand',
-  'https://www.snapchat.com/add/bintsaeed_brand',
-  'https://x.com/bintsaeed_brand',
-  'https://www.pinterest.com/bintsaeed_brand/',
-] as const
+const SAME_AS = ORGANIZATION_SAME_AS
 
 /** Organization JSON-LD aligned with homepage locale for description disambiguation. */
 export function buildOrganizationJsonLd(locale: AppLocale) {
@@ -182,6 +177,15 @@ export function buildOrganizationJsonLd(locale: AppLocale) {
       },
     ],
     sameAs: [...SAME_AS],
+    subjectOf: [
+      {
+        '@type': 'NewsArticle',
+        '@id': 'https://www.bintsaeed.com/#press-nlr-2026-07-29',
+        url: PRESS_COVERAGE_NLR.url,
+        headline: PRESS_COVERAGE_NLR.headline,
+        datePublished: PRESS_COVERAGE_NLR.datePublished,
+      },
+    ],
     brand: {
       '@type': 'Brand',
       name: 'Bint Saeed',

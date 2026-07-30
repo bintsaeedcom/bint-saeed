@@ -2,6 +2,7 @@
 
 import { ConsentState } from '@/lib/analytics/consent'
 import { mirrorDashboardEngagement } from '@/lib/analytics/dashboardEngagement'
+import { isGtmConfigured } from '@/lib/analytics/gtm'
 import { isAdminBrowserPath, isStaffOpticsActive } from '@/lib/analytics/staffOptics'
 
 declare global {
@@ -72,6 +73,18 @@ function ensureGtagStub() {
   }
 }
 
+function pushGtagConsentUpdate() {
+  if (typeof window === 'undefined') return
+  ensureGtagStub()
+  if (!window.gtag) return
+  window.gtag('consent', 'update', {
+    analytics_storage: state.consent.analytics ? 'granted' : 'denied',
+    ad_storage: state.consent.marketing ? 'granted' : 'denied',
+    ad_user_data: state.consent.marketing ? 'granted' : 'denied',
+    ad_personalization: state.consent.marketing ? 'granted' : 'denied',
+  })
+}
+
 function initGa4() {
   if (typeof window === 'undefined' || state.gaReady) return
   const id = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID?.trim()
@@ -79,14 +92,17 @@ function initGa4() {
 
   ensureGtagStub()
 
-  // Consent default must land before gtag.js loads / before `js` + `config`.
-  window.gtag!('consent', 'default', {
-    analytics_storage: 'denied',
-    ad_storage: 'denied',
-    ad_user_data: 'denied',
-    ad_personalization: 'denied',
-    wait_for_update: 500,
-  })
+  // When GTM boots in <head>, Consent Mode default is already set there.
+  // Only set default here when GA4 loads without GTM.
+  if (!isGtmConfigured()) {
+    window.gtag!('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      wait_for_update: 500,
+    })
+  }
 
   loadScript('bs-ga4-script', `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`)
   window.gtag!('js', new Date())
@@ -97,12 +113,7 @@ function initGa4() {
 
   // We only init after analytics opt-in — grant storage immediately so Realtime hits fire.
   if (state.consent.analytics) {
-    window.gtag!('consent', 'update', {
-      analytics_storage: 'granted',
-      ad_storage: state.consent.marketing ? 'granted' : 'denied',
-      ad_user_data: state.consent.marketing ? 'granted' : 'denied',
-      ad_personalization: state.consent.marketing ? 'granted' : 'denied',
-    })
+    pushGtagConsentUpdate()
   }
 
   state.gaReady = true
@@ -377,13 +388,9 @@ function applyConsentToTrackers() {
   const analyticsGranted = state.consent.analytics
   const marketingGranted = state.consent.marketing
 
-  if (state.gaReady && window.gtag) {
-    window.gtag('consent', 'update', {
-      analytics_storage: analyticsGranted ? 'granted' : 'denied',
-      ad_storage: marketingGranted ? 'granted' : 'denied',
-      ad_user_data: marketingGranted ? 'granted' : 'denied',
-      ad_personalization: marketingGranted ? 'granted' : 'denied',
-    })
+  // Always push Consent Mode updates so GTM (and GA4) pick up cookie choices.
+  if (state.gaReady || isGtmConfigured()) {
+    pushGtagConsentUpdate()
   }
 
   if (state.clarityReady && window.clarity) {

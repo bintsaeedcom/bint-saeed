@@ -503,6 +503,15 @@ export const pressKeywords = [
   'bint saeed pr contact',
   'bint saeed public relations',
 
+  // Verified coverage (National Law Review / EIN Presswire — Jul 2026)
+  'bint saeed national law review',
+  'bint saeed ein presswire',
+  'bint saeed contemporary fashion house abu dhabi',
+  'bint saeed emirati heritage fashion press',
+  'bint saeed al talli press',
+  'bint saeed signature strands press',
+  'abu dhabi fashion house emirati heritage press release',
+
   // Industry discovery (generic; does not claim wins)
   'luxury fashion award',
   'luxury fashion award abaya',
