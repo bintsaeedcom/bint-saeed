@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { isSafePublicIpForLookup } from '@/lib/security/isSafePublicIp'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { sanitizeUserText } from '@/lib/security/sanitizeUserText'
+import {
+  assessContactSubmission,
+  isAllowedContactSubject,
+} from '@/lib/security/contactSubmissionGuard'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import { validateContactName } from '@/lib/validateContactName'
 
@@ -12,11 +16,24 @@ const MAX_SUBJECT = 200
 const MAX_MESSAGE = 8000
 
 export async function POST(request: NextRequest) {
-  const rl = await rateLimitResponse(request, 'contact', 12, 3600)
+  // Tighter than before — bots hammer this endpoint.
+  const rl = await rateLimitResponse(request, 'contact', 6, 3600)
   if (rl) return rl
 
   try {
     const body = await request.json()
+
+    // Honeypot / timing: fake success so scrapers stop retrying without Slack noise.
+    const honeypot = typeof body.companyWebsite === 'string' ? body.companyWebsite : ''
+    const preCheck = assessContactSubmission({
+      honeypot,
+      message: typeof body.message === 'string' ? body.message : '',
+      formStartedAt: body.formStartedAt,
+    })
+    if (!preCheck.ok && preCheck.silent) {
+      return NextResponse.json({ success: true })
+    }
+
     const nameRaw = sanitizeUserText(body.name, MAX_NAME)
     const nameCheck = validateContactName(nameRaw)
     if (!nameCheck.valid) {
@@ -33,8 +50,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: emailCheck.message }, { status: 400 })
     }
     const email = emailCheck.email
-    if (!message) {
-      return NextResponse.json({ error: 'Message is required.' }, { status: 400 })
+
+    if (!isAllowedContactSubject(subject)) {
+      return NextResponse.json({ error: 'Please select a subject.' }, { status: 400 })
+    }
+
+    const quality = assessContactSubmission({
+      honeypot: '',
+      message,
+      formStartedAt: body.formStartedAt,
+    })
+    if (!quality.ok) {
+      if (quality.silent) return NextResponse.json({ success: true })
+      return NextResponse.json({ error: quality.error }, { status: 400 })
     }
 
     const forwardedFor = request.headers.get('x-forwarded-for')

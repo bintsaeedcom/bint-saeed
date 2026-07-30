@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import AboutSectionHero from '@/components/AboutSectionHero'
 import ContactSubjectSelect from '@/components/ContactSubjectSelect'
@@ -28,6 +28,7 @@ import {
 import { showContactSuccessToast } from '@/lib/ui/contactSuccessToast'
 import { validateContactName } from '@/lib/validateContactName'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
+import { CONTACT_MESSAGE_MIN_CHARS } from '@/lib/security/contactSubmissionGuard'
 import {
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
@@ -68,6 +69,9 @@ export default function ContactPage() {
   const [nameError, setNameError] = useState('')
   const [emailError, setEmailError] = useState('')
   const [subjectError, setSubjectError] = useState('')
+  const [messageError, setMessageError] = useState('')
+  const formStartedAtRef = useRef<number>(Date.now())
+  const [honeypot, setHoneypot] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -75,6 +79,10 @@ export default function ContactPage() {
     subject: '',
     message: '',
   })
+
+  useEffect(() => {
+    formStartedAtRef.current = Date.now()
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -102,6 +110,19 @@ export default function ContactPage() {
     }
     setSubjectError('')
 
+    const messageTrimmed = formData.message.trim()
+    if (!messageTrimmed) {
+      setMessageError(copy.messageRequired)
+      toast.error(copy.messageRequired)
+      return
+    }
+    if (messageTrimmed.length < CONTACT_MESSAGE_MIN_CHARS) {
+      setMessageError(copy.messageTooShort)
+      toast.error(copy.messageTooShort)
+      return
+    }
+    setMessageError('')
+
     setIsSubmitting(true)
 
     try {
@@ -109,9 +130,13 @@ export default function ContactPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
           name: nameCheck.name,
           email: emailCheck.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: messageTrimmed,
+          companyWebsite: honeypot,
+          formStartedAt: formStartedAtRef.current,
         }),
       })
 
@@ -119,9 +144,11 @@ export default function ContactPage() {
         showContactSuccessToast(language)
         setSubmitted(true)
         setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
+        setHoneypot('')
         setNameError('')
         setEmailError('')
         setSubjectError('')
+        setMessageError('')
       } else {
         const data = (await response.json().catch(() => ({}))) as { error?: string }
         const message =
@@ -262,14 +289,6 @@ export default function ContactPage() {
                       {discover.discoverAccessories}
                     </LocaleLink>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setSubmitted(false)}
-                    className="mt-6 font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-dustyBlue underline-offset-4 hover:underline"
-                    data-cursor-hover
-                  >
-                    {copy.sendAnother}
-                  </button>
                 </div>
               ) : (
               <form
@@ -278,6 +297,22 @@ export default function ContactPage() {
                 noValidate
                 data-contact-form="true"
               >
+                {/* Honeypot — hidden from people; bots that fill it are ignored server-side. */}
+                <div
+                  className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
+                  aria-hidden="true"
+                >
+                  <label htmlFor="contact-company-website">Company website</label>
+                  <input
+                    id="contact-company-website"
+                    name="companyWebsite"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </div>
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div>
                     <label htmlFor="contact-name" className={`${contactLabelClass} text-start`}>
@@ -382,11 +417,19 @@ export default function ContactPage() {
                     required
                     rows={6}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className={`${contactFieldClass} resize-none text-start`}
+                    onChange={(e) => {
+                      setFormData({ ...formData, message: e.target.value })
+                      if (messageError) setMessageError('')
+                    }}
+                    aria-invalid={messageError ? true : undefined}
+                    aria-describedby={messageError ? 'contact-message-error' : undefined}
+                    className={`${contactFieldClass} resize-none text-start ${messageError ? contactFieldErrorClass : ''}`}
                     dir={isRTL ? 'rtl' : 'ltr'}
                     placeholder={copy.messagePlaceholder}
                   />
+                  {messageError ? (
+                    <FieldError id="contact-message-error" message={messageError} />
+                  ) : null}
                 </div>
 
                 <button

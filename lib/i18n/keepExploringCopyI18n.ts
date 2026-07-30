@@ -40,7 +40,7 @@ const IT: Record<KeepExploringLineId, string> = {
   anotherDetail: 'C’è sempre un altro dettaglio in attesa di essere scoperto.',
   storyForward: 'Esplora i pezzi che portano avanti la storia di Bint Saeed.',
   nextPieceWaiting: 'Il tuo prossimo pezzo Bint Saeed potrebbe già attenderti.',
-  worldOfBintSaeed: 'Continua a esplorare il mondo di Bint Saeed.',
+  worldOfBintSaeed: 'Continui a esplorare il mondo di Bint Saeed.',
 }
 
 const DE: Record<KeepExploringLineId, string> = {

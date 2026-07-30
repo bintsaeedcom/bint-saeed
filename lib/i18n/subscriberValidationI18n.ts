@@ -27,10 +27,10 @@ const MESSAGES: Record<AppLocale, ValidationMessages> = {
     typo: (local, domain) => `Vouliez-vous dire ${local}@${domain} ?`,
   },
   it: {
-    empty: 'Inserisci il tuo indirizzo e-mail',
+    empty: 'La preghiamo di inserire il suo indirizzo e-mail',
     tooLong: 'L’indirizzo e-mail è troppo lungo',
-    invalid: 'Inserisci un indirizzo e-mail valido',
-    typo: (local, domain) => `Intendevi ${local}@${domain}?`,
+    invalid: 'La preghiamo di inserire un indirizzo e-mail valido',
+    typo: (local, domain) => `Intendeva ${local}@${domain}?`,
   },
   es: {
     empty: 'Introduce tu correo electrónico',
