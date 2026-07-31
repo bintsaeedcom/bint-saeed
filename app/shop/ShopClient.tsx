@@ -109,11 +109,17 @@ export default function ShopClient() {
   useEffect(() => {
     if (!searchParams) return
     const q = searchParams.get('category')?.toLowerCase().replace(/_/g, '-')
-    if (!q) return
+    // Bare /shop (Shop All) must clear any previous category filter.
+    if (!q) {
+      setActiveCategory('All')
+      return
+    }
     const mapped = CATEGORY_QUERY_MAP[q]
     if (mapped && categories.includes(mapped as (typeof categories)[number])) {
       setActiveCategory(mapped)
+      return
     }
+    setActiveCategory('All')
   }, [searchParams])
 
   useEffect(() => {
