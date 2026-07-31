@@ -222,6 +222,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
  } md:inset-y-0 md:bottom-0 md:top-0 md:max-h-none md:w-[min(100vw-1.5rem,26.5rem)] md:rounded-none md:shadow-[0_0_80px_-12px_rgba(26,2,16,0.55)] ${
  isRTL ? 'md:inset-x-auto md:left-0 md:right-auto' : 'md:inset-x-auto md:right-0 md:left-auto'
  }`}
+            data-scroll-lock-owner="true"
             style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
           >
             {/* Mobile grabber */}

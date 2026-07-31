@@ -8,6 +8,7 @@ import type { Swiper as SwiperType } from 'swiper'
 import { Pagination, Keyboard } from 'swiper/modules'
 import { FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
+import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
@@ -57,13 +58,13 @@ export default function PdpLightbox({
 
   useEffect(() => {
     if (!open) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    return lockBodyScroll()
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
     window.addEventListener('keydown', handleKey)
-    return () => {
-      document.body.style.overflow = prev
-      window.removeEventListener('keydown', handleKey)
-    }
+    return () => window.removeEventListener('keydown', handleKey)
   }, [open, handleKey])
 
   useEffect(() => {
@@ -92,6 +93,7 @@ export default function PdpLightbox({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-[80] flex flex-col bg-[#1a0210]/96"
+          data-scroll-lock-owner="true"
           onClick={onClose}
         >
           <div

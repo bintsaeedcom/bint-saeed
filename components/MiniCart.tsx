@@ -235,6 +235,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
             exit={{ x: isRTL ? '-100%' : '100%' }}
             transition={{ type: 'tween', duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className={`fixed top-0 ${isRTL ? 'left-0 border-r' : 'right-0 border-l'} z-[101] flex h-[100dvh] w-full max-w-md flex-col ${glassOverlayPanel} `}
+            data-scroll-lock-owner="true"
           >
             <div className={glassOverlayWash} aria-hidden />
 

@@ -228,7 +228,8 @@ html {
   scroll-behavior: auto;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  /* `clip` avoids iOS scroll freezes that `overflow-x: hidden` on both html+body can cause */
+  overflow-x: clip;
   overflow-anchor: none;
   font-family: var(--font-body);
   background-color: var(--bs-header-edge);
@@ -252,7 +253,7 @@ body {
   font-size: var(--text-body);
   letter-spacing: 0.02em;
   line-height: 1.8;
-  overflow-x: hidden;
+  overflow-x: clip;
   cursor: auto;
   /* Match footer edge so mobile overscroll never reveals cream “white space” below the site */
   background: #12080b;
@@ -971,6 +972,12 @@ html.bs-content-lock body {
 html.bs-scroll-locked,
 html.bs-scroll-locked body {
   overscroll-behavior: none;
+  /* position:fixed + top offset applied inline by lockBodyScroll (iOS-safe) */
+  touch-action: pan-y pinch-zoom;
+}
+
+html.bs-scroll-locked body {
+  width: 100%;
 }
 
 html.bs-content-lock input,

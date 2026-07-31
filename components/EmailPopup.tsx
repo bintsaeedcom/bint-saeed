@@ -12,6 +12,7 @@ import toast from 'react-hot-toast'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import { getEmailPopupCopy } from '@/lib/i18n/emailPopupI18n'
 import { ctaFormSubmit, ctaFormSubmitInline } from '@/lib/ui/ctaClasses'
+import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 
 export default function EmailPopup() {
   const pathname = usePathname()
@@ -23,6 +24,11 @@ export default function EmailPopup() {
   const [emailError, setEmailError] = useState('')
   const { isRTL, language } = useLanguage()
   const copy = getEmailPopupCopy(language)
+
+  useEffect(() => {
+    if (!isOpen) return
+    return lockBodyScroll()
+  }, [isOpen])
 
   useEffect(() => {
     const inner = pathname ? stripLocaleFromPathname(pathname).pathname : '/'
@@ -127,6 +133,7 @@ export default function EmailPopup() {
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-3xl md:w-full z-[201] overflow-hidden flex flex-col md:flex-row max-h-[90vh] md:max-h-[500px] shadow-2xl"
+            data-scroll-lock-owner="true"
             data-cursor-hover
           >
             <button
