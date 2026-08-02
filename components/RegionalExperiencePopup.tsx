@@ -20,13 +20,13 @@ import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
 import { localizedPath, stripLocaleFromPathname, type AppLocale } from '@/lib/i18n/routing'
 import { formFieldClass } from '@/lib/ui/formFieldClasses'
 import {
-  glassOverlayPanel,
-  glassOverlayWash,
+  glassPanel,
+  glassPanelWash,
   glassPrimaryBtn,
-  glassSecondaryBtnOnDark,
-  glassTextBodyOnDark,
-  glassTextMutedOnDark,
-  glassTextTitleOnDark,
+  glassSecondaryBtn,
+  glassTextBody,
+  glassTextMuted,
+  glassTextTitle,
 } from '@/lib/ui/glassClasses'
 
 /** Shortly after first paint — currency/locale before cookie (luxury geo UX). */
@@ -179,36 +179,40 @@ export default function RegionalExperiencePopup() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none fixed inset-0 z-[88] bg-[#1a0a0f]/12"
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none fixed inset-0 z-[88] bg-[#1a0a0f]/[0.14] backdrop-blur-[2px]"
             aria-hidden
           />
           <motion.div
             role="dialog"
             aria-modal="false"
             aria-labelledby="regional-experience-title"
-            initial={{ opacity: 0, y: 24, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.99 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none fixed inset-0 z-[92] flex items-end justify-center p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:items-center sm:p-6"
+            initial={{ opacity: 0, y: 28, filter: 'blur(6px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-[92] mx-auto w-auto max-w-[min(26rem,calc(100vw-1.5rem))] sm:inset-x-auto sm:end-6 sm:bottom-8 sm:mx-0 md:end-10 md:bottom-10"
             onClick={(e) => e.stopPropagation()}
           >
             <div
               dir="ltr"
-              className={`pointer-events-auto relative max-h-[min(88vh,36rem)] w-full max-w-[26rem] overflow-y-auto overscroll-contain rounded-sm text-left ${glassOverlayPanel}`}
+              className={`pointer-events-auto relative max-h-[min(88vh,36rem)] overflow-y-auto overscroll-contain rounded-sm text-left shadow-[0_28px_60px_-15px_rgba(59,0,20,0.22)] ${glassPanel}`}
             >
-              <div className={glassOverlayWash} aria-hidden />
+              <div className={glassPanelWash} aria-hidden />
+              <div
+                className="pointer-events-none absolute inset-y-0 start-0 w-px bg-gradient-to-b from-transparent via-brand-rose/55 to-transparent"
+                aria-hidden
+              />
 
               <div className="relative z-[1] px-5 pb-6 pt-7 sm:px-7 sm:pb-7 sm:pt-8">
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0 space-y-2">
-                    <p className={`font-montserrat text-[10px] uppercase tracking-[0.32em] ${glassTextMutedOnDark}`}>
+                    <p className={`font-montserrat text-[10px] uppercase tracking-[0.32em] ${glassTextMuted}`}>
                       {t.eyebrow}
                     </p>
                     <h2
                       id="regional-experience-title"
-                      className={`font-rozha text-[clamp(1.25rem,5vw,1.65rem)] leading-[1.15] ${glassTextTitleOnDark}`}
+                      className={`font-rozha text-[clamp(1.25rem,5vw,1.65rem)] leading-[1.15] ${glassTextTitle}`}
                     >
                       {t.title}
                     </h2>
@@ -216,7 +220,7 @@ export default function RegionalExperiencePopup() {
                   <button
                     type="button"
                     onClick={() => dismiss('dismissed')}
-                    className={`relative shrink-0 rounded-full p-1.5 transition-colors hover:bg-white/10 ${glassTextMutedOnDark} hover:text-white`}
+                    className={`relative shrink-0 rounded-full p-1.5 transition-colors hover:bg-brand-stone/25 ${glassTextMuted} hover:text-brand-darkRed`}
                     aria-label={t.close}
                     data-cursor-hover
                   >
@@ -224,7 +228,7 @@ export default function RegionalExperiencePopup() {
                   </button>
                 </div>
 
-                <p className={`mt-5 font-montserrat text-[13px] leading-[1.65] ${glassTextBodyOnDark}`}>
+                <p className={`mt-5 font-montserrat text-[13px] leading-[1.65] ${glassTextBody}`}>
                   {bodyCopy}
                 </p>
 
@@ -236,13 +240,13 @@ export default function RegionalExperiencePopup() {
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="mt-5 space-y-4 border-t border-white/12 pt-5">
-                        <p className={`font-montserrat text-[10px] uppercase tracking-[0.28em] ${glassTextTitleOnDark}`}>
+                      <div className="mt-5 space-y-4 border-t border-brand-darkRed/10 pt-5">
+                        <p className={`font-montserrat text-[10px] uppercase tracking-[0.28em] ${glassTextTitle}`}>
                           {t.changeTitle}
                         </p>
 
                         <label className="block space-y-1.5">
-                          <span className={`font-montserrat text-[11px] uppercase tracking-[0.18em] ${glassTextMutedOnDark}`}>
+                          <span className={`font-montserrat text-[11px] uppercase tracking-[0.18em] ${glassTextMuted}`}>
                             {t.languageLabel}
                           </span>
                           <div className="relative">
@@ -262,7 +266,7 @@ export default function RegionalExperiencePopup() {
                         </label>
 
                         <label className="block space-y-1.5">
-                          <span className={`font-montserrat text-[11px] uppercase tracking-[0.18em] ${glassTextMutedOnDark}`}>
+                          <span className={`font-montserrat text-[11px] uppercase tracking-[0.18em] ${glassTextMuted}`}>
                             {t.currencyLabel}
                           </span>
                           <div className="relative">
@@ -284,7 +288,7 @@ export default function RegionalExperiencePopup() {
                         <button
                           type="button"
                           onClick={handleApplyPreferences}
-                          className={glassSecondaryBtnOnDark}
+                          className={glassSecondaryBtn}
                           data-bs-cta
                           data-cursor-hover
                         >
@@ -309,7 +313,7 @@ export default function RegionalExperiencePopup() {
                     <button
                       type="button"
                       onClick={handleContinueLocal}
-                      className={`${glassSecondaryBtnOnDark} ${ctaInButtonRow}`}
+                      className={`${glassSecondaryBtn} ${ctaInButtonRow}`}
                       data-bs-cta
                       data-cursor-hover
                     >
@@ -321,7 +325,7 @@ export default function RegionalExperiencePopup() {
                 <button
                   type="button"
                   onClick={() => setShowPreferences((v) => !v)}
-                  className={`mt-4 w-full py-2 font-montserrat text-[11px] tracking-[0.04em] transition-colors hover:text-white ${glassTextMutedOnDark}`}
+                  className={`mt-4 w-full py-2 font-montserrat text-[11px] tracking-[0.04em] transition-colors hover:text-brand-darkRed ${glassTextMuted}`}
                   data-cursor-hover
                 >
                   {t.secondary}
