@@ -10,6 +10,10 @@ import {
 } from '@/lib/legal/policyContentLocales'
 import { getLocalizedShipmentContent } from '@/lib/legal/shipmentPolicyLocales'
 import {
+  HOUSE_COMMUNITY_TERMS_TITLE_EN,
+  houseCommunityTermsSection,
+} from '@/lib/legal/houseCommunityTermsSection'
+import {
   LANGUAGE_CLAUSE_BODY_EN,
   LANGUAGE_CLAUSE_BODY_ID,
   LANGUAGE_CLAUSE_SHORT_EN,
@@ -441,6 +445,9 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
       title: '7. Personalisation and Custom Work',
       body: [
         'By submitting any personalisation text, you confirm you have the right to use that content and that it does not infringe third-party rights or violate applicable laws. We may reject personalisation requests that are unlawful, offensive, or non-compliant with policy.',
+        'Please check spelling and wording carefully before you submit. We are not responsible for customer-entered errors.',
+        'Any item produced with a personalised inner label (including a complimentary House label) is final sale and cannot be exchanged or returned for change of mind, size preference, or similar reasons, except where a verified manufacturing defect or material non-conformity exists, or where mandatory law requires otherwise.',
+        'A complimentary personalised inner label does not exclude an eligible order from HOUSE15 or the House Privilege, subject to the Community terms below — but personalisation still makes the item final sale for exchange purposes.',
       ],
     },
     {
@@ -453,6 +460,7 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
         'You may elect to send the code and an optional personal message directly to a recipient. In that case, the recipient receives a gift email with the code and guidance on redemption, and you receive a purchase confirmation that includes a copy of the same gift message and code.',
         'Gift Cards are valid for one Gregorian year from the date of issue. After expiry, any unused balance is donated to charity through the House’s Giving Forward commitments and is no longer redeemable.',
         'Codes may be applied at checkout on bintsaeed.com for partial or full payment. Remaining balances stay available until expiry. Gift Cards are non-refundable except where required by applicable law or in the case of a verified issuance error by the House.',
+        'HOUSE15 and the 10% House Privilege cannot be used to purchase Gift Cards, and neither applies to discounted, sale, markdown or already-reduced items — only eligible full-price clothing and jewellery. Gift-card-only purchases do not count as a qualifying first purchase for Community privileges.',
         'Lost or compromised codes should be reported promptly to orders@bintsaeed.com. We may void and reissue where fraud or error is reasonably verified.',
       ],
     },
@@ -587,6 +595,9 @@ const TERMS_ID_SECTIONS: PolicySection[] = [
     title: '7. Personalisasi dan Pekerjaan Custom',
     body: [
       'Dengan mengirimkan teks personalisasi, Anda menyatakan memiliki hak untuk menggunakan konten tersebut dan bahwa konten tidak melanggar hak pihak ketiga atau hukum yang berlaku. Kami dapat menolak permintaan personalisasi yang melanggar hukum, menyinggung, atau tidak patuh kebijakan.',
+      'Harap periksa ejaan dan kata dengan cermat sebelum mengirim. Kami tidak bertanggung jawab atas kesalahan yang dimasukkan pelanggan.',
+      'Setiap item yang diproduksi dengan label dalam yang dipersonalisasi (termasuk label House gratis) bersifat final sale dan tidak dapat ditukar atau dikembalikan karena perubahan pikiran, preferensi ukuran, atau alasan serupa, kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material, atau jika hukum wajib menentukan lain.',
+      'Label dalam personalisasi gratis tidak mengecualikan pesanan yang memenuhi syarat dari HOUSE15 atau House Privilege, tunduk pada ketentuan Community di bawah — namun personalisasi tetap menjadikan item final sale untuk tujuan penukaran.',
     ],
   },
   {
@@ -654,7 +665,7 @@ const TERMS_EN: Omit<PolicyContent, 'sections'> = {
   breadcrumb: 'Terms & Conditions',
   homeBreadcrumb: 'Home',
   heroLabel: 'Legal',
-  lastUpdated: 'Last updated: July 2026',
+  lastUpdated: 'Last updated: August 2026',
   intro:
     'These Terms govern access to and use of the Bint Saeed website, products, and related services under applicable UAE law.',
   summaryTitle: 'Summary Notice',
@@ -670,6 +681,7 @@ const TERMS_EN: Omit<PolicyContent, 'sections'> = {
     '6. Returns, Repairs and Order Finality',
     '7. Personalisation and Custom Work',
     '8. Gift Cards',
+    'Bint Saeed Community and House Privileges',
     '9. Intellectual Property',
     '10. Permitted and Prohibited Use',
     '11. Charitable Contribution Statement',
@@ -747,7 +759,7 @@ function shipmentEnSections(): PolicySection[] {
             'Bint Saeed will not accept an exchange or return where tags, seals or security labels have been removed, cut, damaged or altered, or where photographs submitted in support of a request indicate that removal or tampering has been attempted.',
             'No exchange is processed until approved goods have been physically received and inspected at our atelier.',
             'Where an approved exchange or return requires goods to be shipped back to Bint Saeed, a flat return shipping fee applies: AED 35 for returns originating within the United Arab Emirates, and EUR 35 (or the clean equivalent in the selected currency) for returns originating internationally. This fee is waived where the return arises from a verified fault of the House, including a manufacturing defect or material non-conformity, or where otherwise required by applicable law.',
-            'Personalised pieces, custom specifications, altered garments, and items produced to a client’s specific requirements are not eligible for exchange except where a verified manufacturing defect or material non-conformity exists.',
+            'Personalised pieces — including any garment or product with a personalised inner label (complimentary or paid), custom specifications, altered garments, and items produced to a client’s specific requirements — are final sale and are not eligible for exchange or change-of-mind return, except where a verified manufacturing defect or material non-conformity exists, or where mandatory law requires otherwise.',
             'For reasons of health, hygiene and personal safety, earrings are final sale and cannot be exchanged or refunded, except where a verified manufacturing defect or material non-conformity exists.',
           ],
           list: [],
@@ -815,7 +827,7 @@ function shipmentEnSections(): PolicySection[] {
       ],
       list: [
         'Goods made to the consumer’s specifications.',
-        'Clearly personalised or custom-made items.',
+        'Clearly personalised or custom-made items, including any item with a personalised inner label.',
         'Sealed goods which are not suitable for return due to health protection or hygiene reasons, including earrings.',
       ],
     },
@@ -956,7 +968,7 @@ function shipmentIdSections(): PolicySection[] {
             'Bint Saeed tidak akan menerima penukaran atau pengembalian apabila label, segel, atau label keamanan telah dilepas, dipotong, rusak, atau diubah, atau apabila foto yang diajukan menunjukkan adanya upaya pelepasan atau gangguan.',
             'Tidak ada penukaran yang diproses hingga barang yang disetujui diterima secara fisik dan diperiksa di atelier kami.',
             'Jika penukaran atau pengembalian yang disetujui mengharuskan barang dikirim kembali ke Bint Saeed, berlaku biaya pengiriman pengembalian tetap: AED 35 untuk pengembalian dari dalam Uni Emirat Arab, dan EUR 35 (atau setara bersih dalam mata uang yang dipilih) untuk pengembalian internasional. Biaya ini dibebaskan apabila pengembalian timbul dari kesalahan terverifikasi House, termasuk cacat produksi atau ketidaksesuaian material, atau jika diwajibkan hukum yang berlaku.',
-            'Karya personalisasi, spesifikasi custom, garment yang diubah, dan barang yang diproduksi sesuai kebutuhan spesifik klien tidak memenuhi syarat penukaran kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material.',
+            'Karya personalisasi — termasuk setiap garment atau produk dengan label dalam yang dipersonalisasi (gratis atau berbayar), spesifikasi custom, garment yang diubah, dan barang yang diproduksi sesuai kebutuhan spesifik klien — bersifat final sale dan tidak memenuhi syarat penukaran atau pengembalian karena perubahan pikiran, kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material, atau jika hukum wajib menentukan lain.',
           ],
           list: [],
         },
@@ -1013,6 +1025,7 @@ function shipmentIdSections(): PolicySection[] {
         'Variasi minor yang melekat pada produksi buatan tangan.',
         'Perbedaan warna akibat pengaturan layar atau tampilan perangkat.',
         'Kerusakan akibat perawatan tidak tepat, penyalahgunaan, alterasi, atau pemakaian normal.',
+        'Barang yang jelas dipersonalisasi atau dibuat custom, termasuk item dengan label dalam yang dipersonalisasi.',
       ],
     },
     {
@@ -1022,7 +1035,10 @@ function shipmentIdSections(): PolicySection[] {
         'Namun, hak ini umumnya tidak berlaku untuk:',
         'Karena banyak karya Bint Saeed diproduksi berdasarkan permintaan setelah pesanan dikonfirmasi, karya tersebut umumnya termasuk dalam pengecualian ini. Pengembalian dan pembatalan oleh karena itu tidak diterima setelah produksi dimulai.',
       ],
-      list: ['Barang dibuat sesuai spesifikasi konsumen.', 'Barang yang jelas dipersonalisasi atau dibuat custom.'],
+      list: [
+        'Barang dibuat sesuai spesifikasi konsumen.',
+        'Barang yang jelas dipersonalisasi atau dibuat custom, termasuk item dengan label dalam yang dipersonalisasi.',
+      ],
     },
     {
       title: '6. Pengecualian UE (Hanya Barang Cacat)',
@@ -1256,16 +1272,77 @@ export function getPrivacyPolicyContent(
 }
 
 export function getTermsContent(lang: PolicyLang): PolicyContent {
-  if (lang === 'ms') return policyMs.getTermsContent('ms')
+  if (lang === 'ms') return withHouseCommunityTerms(policyMs.getTermsContent('ms'), 'ms')
   if (lang === 'ar') {
-    return { ...policyAr.TERMS_AR, sections: policyAr.termsArSections() }
+    return withHouseCommunityTerms(
+      { ...policyAr.TERMS_AR, sections: policyAr.termsArSections() },
+      'ar',
+    )
   }
   if (lang === 'fr' || lang === 'de' || lang === 'it' || lang === 'es' || lang === 'nl' || lang === 'pt' || lang === 'ru' || lang === 'zh') {
-    return getLocalizedTermsContent(lang as EuZhLocale)
+    return withHouseCommunityTerms(getLocalizedTermsContent(lang as EuZhLocale), lang)
   }
   const meta = resolvePolicyMeta(lang === 'id' ? 'id' : 'en', TERMS_EN, TERMS_ID, AR_BREADCRUMBS.terms)
   const sections = lang === 'id' ? TERMS_ID_SECTIONS : TERMS_EN_SECTIONS
-  return { ...meta, sections }
+  return withHouseCommunityTerms({ ...meta, sections }, lang === 'id' ? 'id' : 'en')
+}
+
+function withHouseCommunityTerms(content: PolicyContent, lang: PolicyLang | string): PolicyContent {
+  const section = houseCommunityTermsSection(lang)
+  if (content.sections.some((s) => s.title === section.title || s.title === HOUSE_COMMUNITY_TERMS_TITLE_EN)) {
+    return content
+  }
+
+  const sections = [...content.sections]
+  const giftIdx = sections.findIndex((s) =>
+    /gift card|بطاقات الهدايا|cartes?\s*cadeaux|geschenkkarte|carta\s*regalo|tarjeta\s*regalo|cadeaukaart|gift\s*card|kartu\s*hadiah|kad\s*hadiah|подарочн|礼品卡/i.test(
+      s.title,
+    ),
+  )
+  const personalisationIdx = sections.findIndex((s) =>
+    /personalisation|personalisierung|personalizzazione|personalizaci|personalisatie|personalis|个性化|персонализ/i.test(
+      s.title,
+    ),
+  )
+  const insertAt =
+    giftIdx >= 0 ? giftIdx + 1 : personalisationIdx >= 0 ? personalisationIdx + 1 : Math.max(sections.length - 2, 0)
+
+  sections.splice(insertAt, 0, section)
+
+  const sectionList = [...(content.sectionList ?? [])]
+  if (!sectionList.includes(section.title)) {
+    const listGiftIdx = sectionList.findIndex((t) =>
+      /gift card|بطاقات الهدايا|cadeaux|Geschenkkarte|regalo|cadeaukaart|hadiah|подарочн|礼品卡/i.test(t),
+    )
+    const listPersIdx = sectionList.findIndex((t) =>
+      /personalisation|Personalisierung|Personalizzazione|Personalizaci|Personalisatie|Personalis|个性化|Персонализ/i.test(
+        t,
+      ),
+    )
+    const listInsert =
+      listGiftIdx >= 0 ? listGiftIdx + 1 : listPersIdx >= 0 ? listPersIdx + 1 : Math.max(sectionList.length - 2, 0)
+    sectionList.splice(listInsert, 0, section.title)
+  }
+
+  return {
+    ...content,
+    lastUpdated:
+      lang === 'ar'
+        ? 'آخر تحديث: أغسطس 2026'
+        : lang === 'fr'
+          ? 'Dernière mise à jour : août 2026'
+          : lang === 'de'
+            ? 'Zuletzt aktualisiert: August 2026'
+            : lang === 'id'
+              ? 'Terakhir diperbarui: Agustus 2026'
+              : lang === 'ms'
+                ? 'Kemas kini terakhir: Ogos 2026'
+                : lang === 'zh'
+                  ? '最后更新：2026 年 8 月'
+                  : 'Last updated: August 2026',
+    sectionList,
+    sections,
+  }
 }
 
 export function getShipmentReturnContent(lang: PolicyLang): PolicyContent {

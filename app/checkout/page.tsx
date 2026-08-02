@@ -52,6 +52,7 @@ import {
 import CheckoutGiftCardApply, {
   type AppliedGiftCardPreview,
 } from '@/components/CheckoutGiftCardApply'
+import CheckoutPromoCodeApply from '@/components/CheckoutPromoCodeApply'
 import dynamic from 'next/dynamic'
 
 const StripeEmbeddedCheckoutForm = dynamic(
@@ -120,6 +121,7 @@ function CheckoutPageContent() {
   const ui = commerceUi(language)
   const form = getCheckoutFormCopy(language)
   const [appliedGiftCard, setAppliedGiftCard] = useState<AppliedGiftCardPreview | null>(null)
+  const [appliedPromoCode, setAppliedPromoCode] = useState<string | null>(null)
   const requiresPhysicalShipping = cartRequiresPhysicalShipping(items)
   const merchandiseSubtotal = Number(cartSubtotal(items).toFixed(2))
   const [countryCode, setCountryCode] = useState<string | null>(null)
@@ -467,6 +469,7 @@ function CheckoutPageContent() {
   const checkoutPayload = {
     items,
     currency: currency.code,
+    discountCode: appliedPromoCode || undefined,
     appliedGiftCardCode: appliedGiftCard?.code || undefined,
     customerEmail: tamaraEmail.trim() || undefined,
     clientContext: {
@@ -1013,6 +1016,10 @@ function CheckoutPageContent() {
                     {form.digitalNoShipping}
                   </p>
                 )}
+                <CheckoutPromoCodeApply
+                  appliedCode={appliedPromoCode}
+                  onApplied={setAppliedPromoCode}
+                />
                 <CheckoutGiftCardApply
                   items={items}
                   amountDueBeforeGiftCard={amountBeforeGiftCard}

@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers, FiGift, FiSend } from 'react-icons/fi'
+import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers, FiGift, FiSend, FiHeart } from 'react-icons/fi'
 import { clearStaffOptics, markStaffOptics } from '@/lib/analytics/staffOptics'
 import { resumeExternalTrackersAfterStaff, suppressExternalTrackersForStaff } from '@/lib/analytics/tracking'
 
@@ -58,6 +58,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <nav className="flex flex-1 flex-col gap-1 p-4">
             {link('/admin/orders', 'Orders', <FiShoppingBag className="h-4 w-4" />)}
             {link('/admin/gift-cards', 'Gift cards', <FiGift className="h-4 w-4" />)}
+            {link('/admin/community', 'Community', <FiHeart className="h-4 w-4" />)}
             {link('/admin/customers', 'Customers', <FiUsers className="h-4 w-4" />)}
             {link('/admin/products', 'Catalog', <FiPackage className="h-4 w-4" />)}
             {link('/admin/pr', 'PR', <FiSend className="h-4 w-4" />)}
@@ -87,6 +88,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               {[
                 { href: '/admin/orders', label: 'Orders' },
                 { href: '/admin/gift-cards', label: 'Gift cards' },
+                { href: '/admin/community', label: 'Community' },
                 { href: '/admin/customers', label: 'Customers' },
                 { href: '/admin/products', label: 'Catalog' },
                 { href: '/admin/pr', label: 'PR' },

@@ -114,6 +114,66 @@ function entry(color: ColorSlug, view: 'front' | 'side' | 'back'): AltEntry {
   }
 }
 
+const SUNSTONE_PORTRAIT_ALTS = altLoc(
+  `Lifestyle portrait of the Bint Saeed Marylebone Abaya in Navy Blue with the Sunstone Natural Stone Strand draped across the wide sleeves — warm peach sunstone beads with clover-cut stones and gold-tone Signature Strand hardware on a graceful A-line designer abaya with interchangeable natural stone jewellery. ${DISCOVERY_TAIL.en}`,
+  `صورة حياتية لعباية Bint Saeed Marylebone بالكحلي مع خيط حجر الشمس الطبيعي عبر الأكمام الواسعة — خرز حجر شمس خوخي دافئ مع أحجار على شكل برسيم وتفاصيل ذهبية لخيط التوقيع على عباية مصمّمة A-line بمجوهرات أحجار طبيعية قابلة للتبديل. ${DISCOVERY_TAIL.ar}`,
+  `Portrait lifestyle de l’abaya Bint Saeed Marylebone en bleu marine avec le Sunstone Natural Stone Strand drapé sur les larges manches — perles de pierre de soleil pêche chaude, pierres en trèfle et finitions dorées Signature Strand sur une abaya de créateur A-line aux bijoux en pierres naturelles interchangeables. ${DISCOVERY_TAIL.fr}`,
+  `Ritratto lifestyle della Bint Saeed Marylebone Abaya in blu navy con il Sunstone Natural Stone Strand drappeggiato sulle maniche ampie — perle di pietra di sole pesca calda, pietre a trifoglio e hardware dorato Signature Strand su un’abaya designer A-line con gioielli in pietre naturali intercambiabili. ${DISCOVERY_TAIL.it}`,
+  `Retrato lifestyle de la abaya Bint Saeed Marylebone en azul marino con el Sunstone Natural Stone Strand sobre las mangas anchas — cuentas de piedra de sol melocotón cálido, piedras en trébol y herrajes dorados Signature Strand en una abaya de diseñador A-line con joyería de piedras naturales intercambiable. ${DISCOVERY_TAIL.es}`,
+  `Lifestyle-портрет абайи Bint Saeed Marylebone тёмно-синего цвета с Sunstone Natural Stone Strand на широких рукавах — тёплые персиковые бусины солнечного камня, клеверные камни и золотистая фурнитура Signature Strand на изящной дизайнерской абайе A-line со сменными украшениями из натурального камня. ${DISCOVERY_TAIL.ru}`,
+  `Bint Saeed Marylebone海军蓝长袍生活方式肖像，宽袖佩戴Sunstone Natural Stone Strand——暖桃色日光石珠、四叶草切石与金色Signature Strand件，优雅A字设计师长袍配可互换天然宝石珠宝。${DISCOVERY_TAIL.zh}`,
+  `Lifestyle-Porträt der Bint Saeed Marylebone Abaya in Marineblau mit dem Sunstone Natural Stone Strand über den weiten Ärmeln — warme pfirsichfarbene Sonnenstein-Perlen, Kleeblattsteine und goldfarbene Signature-Strand-Beschläge an einer anmutigen A-Linien-Designer-Abaya mit austauschbarem Naturstein-Schmuck. ${DISCOVERY_TAIL.de}`,
+  `Lifestyle-portret van de Bint Saeed Marylebone abaya in marineblauw met de Sunstone Natural Stone Strand over de wijde mouwen — warme perzikkleurige zonnesteenparels, klavertjesstenen en goudkleurig Signature Strand beslag op een sierlijke A-line designer abaya met verwisselbare natuursteen sieraden. ${DISCOVERY_TAIL.nl}`,
+  `Retrato lifestyle da abaya Bint Saeed Marylebone em azul-marinho com o Sunstone Natural Stone Strand sobre as mangas largas — contas de pedra do sol pêssego quente, pedras em trevo e ferragens douradas Signature Strand numa abaya de designer A-line com joias de pedras naturais intercambiáveis. ${DISCOVERY_TAIL.pt}`,
+  `Potret lifestyle Bint Saeed Marylebone Abaya navy blue dengan Sunstone Natural Stone Strand di atas lengan lebar — manik batu matahari peach hangat, batu clover, dan perangkat Signature Strand emas pada abaya desainer A-line dengan perhiasan batu alam yang dapat dipertukarkan. ${DISCOVERY_TAIL.id}`,
+  `Potret gaya hidup Bint Saeed Marylebone Abaya navy blue dengan Sunstone Natural Stone Strand di atas lengan lebar — manik batu matahari peach hangat, batu clover, dan perkakasan Signature Strand emas pada abaya pereka A-line dengan barang kemas batu semula jadi boleh ditukar. ${DISCOVERY_TAIL.ms}`,
+)
+
+const SUNSTONE_PORTRAIT_TITLES = altLoc(
+  'Marylebone Abaya Navy Blue with Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+  'عباية Marylebone كحلي مع خيط حجر الشمس | Bint Saeed أبوظبي',
+  'Abaya Marylebone bleu marine et Sunstone Natural Stone Strand | Bint Saeed Abou Dabi',
+  'Marylebone Abaya blu navy con Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+  'Abaya Marylebone azul marino con Sunstone Natural Stone Strand | Bint Saeed Abu Dabi',
+  'Абайя Marylebone тёмно-синяя с Sunstone Natural Stone Strand | Bint Saeed Абу-Даби',
+  'Marylebone海军蓝长袍配日光石天然石串 | Bint Saeed阿布扎比',
+  'Marylebone Abaya Marineblau mit Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+  'Marylebone abaya marineblauw met Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+  'Abaya Marylebone azul-marinho com Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+  'Marylebone Abaya navy blue dengan Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+  'Marylebone Abaya navy blue dengan Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+)
+
+const SUNSTONE_SLEEVE_ALTS = altLoc(
+  `Lifestyle sleeve detail of the Bint Saeed Marylebone Abaya in Deep Black with the Sunstone Natural Stone Strand — peach sunstone beads and clover-cut stones clipped with gold-tone Signature Strand roses on the wide interchangeable cuff, styled over navy crepe. Detachable natural stone jewellery for designer abayas. ${DISCOVERY_TAIL.en}`,
+  `تفاصيل كم حياتية لعباية Bint Saeed Marylebone بالأسود العميق مع خيط حجر الشمس الطبيعي — خرز حجر شمس خوخي وأحجار برسيم مع مشابك ورود ذهبية لخيط التوقيع على الكم الواسع القابل للتبديل فوق كريب كحلي. مجوهرات أحجار طبيعية قابلة للإزالة للعبايات المصمّمة. ${DISCOVERY_TAIL.ar}`,
+  `Détail lifestyle de manche de l’abaya Bint Saeed Marylebone en noir profond avec le Sunstone Natural Stone Strand — perles de pierre de soleil pêche et pierres en trèfle fixées par des roses dorées Signature Strand sur le large poignet interchangeable, sur crepe marine. Bijoux en pierres naturelles amovibles pour abayas de créateur. ${DISCOVERY_TAIL.fr}`,
+  `Dettaglio lifestyle della manica della Bint Saeed Marylebone Abaya in nero profondo con il Sunstone Natural Stone Strand — perle di pietra di sole pesca e pietre a trifoglio fissate con rose dorate Signature Strand sul polsino ampio intercambiabile, su crepe navy. Gioielli in pietre naturali rimovibili per abaya designer. ${DISCOVERY_TAIL.it}`,
+  `Detalle lifestyle de manga de la abaya Bint Saeed Marylebone en negro profundo con el Sunstone Natural Stone Strand — cuentas de piedra de sol melocotón y piedras en trébol sujetas con rosas doradas Signature Strand en el puño ancho intercambiable, sobre crepe marino. Joyería de piedras naturales extraíble para abayas de diseñador. ${DISCOVERY_TAIL.es}`,
+  `Lifestyle-деталь рукава абайи Bint Saeed Marylebone глубокого чёрного с Sunstone Natural Stone Strand — персиковые бусины солнечного камня и клеверные камни на золотистых розах Signature Strand на широком сменном манжете поверх тёмно-синего крепа. Съёмные украшения из натурального камня для дизайнерских абай. ${DISCOVERY_TAIL.ru}`,
+  `Bint Saeed Marylebone深黑长袍袖部生活方式细节，佩戴Sunstone Natural Stone Strand——桃色日光石珠与四叶草切石，金色Signature Strand玫瑰扣于宽可互换袖口，内搭海军绉绸。设计师长袍可拆卸天然宝石珠宝。${DISCOVERY_TAIL.zh}`,
+  `Lifestyle-Ärmeldetail der Bint Saeed Marylebone Abaya in Tiefschwarz mit dem Sunstone Natural Stone Strand — pfirsichfarbene Sonnenstein-Perlen und Kleeblattsteine mit goldfarbenen Signature-Strand-Rosen an der weiten austauschbaren Manschette über marinefarbenem Krepp. Abnehmbarer Naturstein-Schmuck für Designer-Abayas. ${DISCOVERY_TAIL.de}`,
+  `Lifestyle-mouwdetail van de Bint Saeed Marylebone abaya in diepzwart met de Sunstone Natural Stone Strand — perzikkleurige zonnesteenparels en klavertjesstenen met goudkleurige Signature Strand-rozen op de wijde verwisselbare manchet over marineblauw crepe. Verwijderbare natuursteen sieraden voor designer abayas. ${DISCOVERY_TAIL.nl}`,
+  `Detalhe lifestyle da manga da abaya Bint Saeed Marylebone em preto profundo com o Sunstone Natural Stone Strand — contas de pedra do sol pêssego e pedras em trevo com rosas douradas Signature Strand no punho largo intercambiável sobre crepe navy. Joias de pedras naturais removíveis para abayas de designer. ${DISCOVERY_TAIL.pt}`,
+  `Detail lifestyle lengan Bint Saeed Marylebone Abaya deep black dengan Sunstone Natural Stone Strand — manik batu matahari peach dan batu clover dengan mawar Signature Strand emas pada cuff lebar yang dapat ditukar di atas crepe navy. Perhiasan batu alam lepas untuk abaya desainer. ${DISCOVERY_TAIL.id}`,
+  `Butiran gaya hidup lengan Bint Saeed Marylebone Abaya deep black dengan Sunstone Natural Stone Strand — manik batu matahari peach dan batu clover dengan mawar Signature Strand emas pada cuff lebar boleh ditukar di atas crepe navy. Barang kemas batu semula jadi boleh tanggal untuk abaya pereka. ${DISCOVERY_TAIL.ms}`,
+)
+
+const SUNSTONE_SLEEVE_TITLES = altLoc(
+  'Marylebone Abaya Sunstone Natural Stone Strand Sleeve Detail | Bint Saeed Abu Dhabi',
+  'عباية Marylebone — تفاصيل كم خيط حجر الشمس | Bint Saeed أبوظبي',
+  'Abaya Marylebone — détail manche Sunstone Natural Stone Strand | Bint Saeed Abou Dabi',
+  'Marylebone Abaya — dettaglio manica Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+  'Abaya Marylebone — detalle de manga Sunstone Natural Stone Strand | Bint Saeed Abu Dabi',
+  'Абайя Marylebone — деталь рукава Sunstone Natural Stone Strand | Bint Saeed Абу-Даби',
+  'Marylebone长袍日光石天然石串袖部细节 | Bint Saeed阿布扎比',
+  'Marylebone Abaya — Ärmeldetail Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+  'Marylebone abaya — mouwdetail Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+  'Abaya Marylebone — detalhe de manga Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+  'Marylebone Abaya — detail lengan Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+  'Marylebone Abaya — butiran lengan Sunstone Natural Stone Strand | Bint Saeed Abu Dhabi',
+)
+
 const ARM_STRAND_ALTS = altLoc(
   `Lifestyle detail of the Bint Saeed Marylebone Abaya with Jade Hearts Signature Strand draped over the wide sleeve and sage green handbag — detachable natural jade stone jewellery styled as an arm and bag accent on a designer abaya with natural stone jewellery. ${DISCOVERY_TAIL.en}`,
   `تفاصيل حياتية لعباية Bint Saeed Marylebone مع خيط Jade Hearts Signature Strand على الكم الواسع وحقيبة خضراء — مجوهرات يشم طبيعية قابلة للإزالة كزينة ذراع وحقيبة على عباية مصمّمة بمجوهرات الأحجار الطبيعية. ${DISCOVERY_TAIL.ar}`,
@@ -242,6 +302,16 @@ export const MARYLEBONE_ABAYA_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('navy-blue', 'front'),
   entry('navy-blue', 'side'),
   entry('navy-blue', 'back'),
+  {
+    filename: 'bint-saeed-marylebone-abaya-navy-blue-sunstone-natural-stone-strand-lifestyle.webp',
+    alts: SUNSTONE_PORTRAIT_ALTS,
+    titles: SUNSTONE_PORTRAIT_TITLES,
+  },
+  {
+    filename: 'bint-saeed-marylebone-abaya-lifestyle-sunstone-natural-stone-strand-on-sleeve.webp',
+    alts: SUNSTONE_SLEEVE_ALTS,
+    titles: SUNSTONE_SLEEVE_TITLES,
+  },
   {
     filename: 'bint-saeed-marylebone-abaya-lifestyle-jade-heart-strand-on-arm.webp',
     alts: ARM_STRAND_ALTS,

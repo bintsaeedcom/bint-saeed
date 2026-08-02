@@ -26,7 +26,7 @@ export const glassTextLink = 'relative text-brand-darkRed underline decoration-b
  * Overlay glass (cookie / regional) over dark heroes — wine frosted panel + light type.
  */
 export const glassOverlayPanel =
-  'overflow-hidden border border-white/20 bg-[#1a0210]/82 shadow-[0_18px_48px_-18px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-[#1a0210]/72'
+  'overflow-hidden border border-white/20 bg-black/80 shadow-[0_18px_48px_-18px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-black/75'
 
 export const glassOverlayWash =
   'pointer-events-none absolute inset-0 bg-gradient-to-b from-[#2d141e]/55 via-[#1a0210]/35 to-[#12080b]/70'

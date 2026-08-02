@@ -296,6 +296,8 @@ function knightsbridgeDressGallery(color: 'dark-brown' | 'navy-grey'): string[] 
 const MARYLEBONE_ABAYA_DIR = '/Webshop pictures/Abayas/Marylebone Abaya'
 
 const MARYLEBONE_ABAYA_LIFESTYLE = [
+  `${MARYLEBONE_ABAYA_DIR}/bint-saeed-marylebone-abaya-navy-blue-sunstone-natural-stone-strand-lifestyle.webp`,
+  `${MARYLEBONE_ABAYA_DIR}/bint-saeed-marylebone-abaya-lifestyle-sunstone-natural-stone-strand-on-sleeve.webp`,
   `${MARYLEBONE_ABAYA_DIR}/bint-saeed-marylebone-abaya-lifestyle-jade-heart-strand-on-arm.webp`,
   `${MARYLEBONE_ABAYA_DIR}/bint-saeed-marylebone-abaya-jade-heart-strand-lifestyle.webp`,
   `${MARYLEBONE_ABAYA_DIR}/bint-saeed-marylebone-abaya-signature-strands-gift-box-carnelian-lifestyle.webp`,

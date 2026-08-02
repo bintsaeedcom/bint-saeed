@@ -9,6 +9,7 @@ import { FiSearch, FiUser, FiShoppingBag, FiMenu, FiX, FiArrowRight, FiChevronDo
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
+import HouseOfferBanner from './HouseOfferBanner'
 import MiniCart from './MiniCart'
 import { OPEN_MINI_CART_EVENT } from '@/lib/cart/addedToBagToast'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
@@ -473,6 +474,7 @@ export default function Header() {
  : `${headerBarGradient} ${isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)] backdrop-blur-md' : 'backdrop-blur-[2px]'}`
  }`}
       >
+        <HouseOfferBanner />
         {/* Soft footer-style edge — faded center line + whisper of bloom */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0" aria-hidden>
           <div

@@ -57,7 +57,12 @@ const TERMS_FR_SECTIONS: PolicySection[] = [
     },
     {
       title: "7. Personnalisation et travaux sur mesure",
-      body: ["En soumettant un texte de personnalisation, vous confirmez disposer des droits nécessaires et que ce contenu ne porte pas atteinte à des tiers ni à la loi. Nous pouvons refuser une personnalisation illicite, offensante ou non conforme."],
+      body: [
+        "En soumettant un texte de personnalisation, vous confirmez disposer des droits nécessaires et que ce contenu ne porte pas atteinte à des tiers ni à la loi. Nous pouvons refuser une personnalisation illicite, offensante ou non conforme.",
+        "Vérifiez soigneusement l’orthographe avant envoi. Nous ne sommes pas responsables des erreurs saisies par la cliente.",
+        "Tout article produit avec une étiquette intérieure personnalisée (y compris une étiquette offerte de la Maison) est en vente ferme et ne peut être échangé ni retourné pour un changement d’avis, une préférence de taille ou un motif similaire, sauf défaut de fabrication avéré ou non-conformité matérielle, ou lorsque la loi impérative l’exige.",
+        "Une étiquette intérieure personnalisée offerte n’exclut pas une commande éligible de HOUSE15 ou du House Privilege, sous réserve des conditions Communauté ci-dessous — la personnalisation demeure toutefois une vente ferme aux fins d’échange.",
+      ],
     },
     {
       title: "8. Propriété intellectuelle",
@@ -139,7 +144,12 @@ const TERMS_DE_SECTIONS: PolicySection[] = [
     },
     {
       title: "7. Personalisierung und Maßanfertigungen",
-      body: ["Mit Übermittlung eines Personalisierungstextes bestätigen Sie die Nutzungsrechte und dass der Inhalt keine Rechte Dritter oder geltendes Recht verletzt. Wir können unzulässige, beleidigende oder richtlinienwidrige Personalisierungen ablehnen."],
+      body: [
+        "Mit Übermittlung eines Personalisierungstextes bestätigen Sie die Nutzungsrechte und dass der Inhalt keine Rechte Dritter oder geltendes Recht verletzt. Wir können unzulässige, beleidigende oder richtlinienwidrige Personalisierungen ablehnen.",
+        "Bitte prüfen Sie Schreibweise und Wortlaut vor dem Absenden. Für kundenseitige Eingabefehler übernehmen wir keine Verantwortung.",
+        "Jeder Artikel mit personalisiertem Innenetikett (einschließlich eines kostenlosen House-Etiketts) ist endgültig verkauft und kann nicht wegen Meinungsänderung, Größenpräferenz oder ähnlicher Gründe umgetauscht oder zurückgegeben werden, außer bei nachgewiesenem Herstellungsfehler oder wesentlicher Abweichung oder soweit zwingendes Recht etwas anderes verlangt.",
+        "Ein kostenloses personalisiertes Innenetikett schließt eine berechtigte Bestellung nicht von HOUSE15 oder dem House Privilege aus — vorbehaltlich der Community-Bedingungen unten —, die Personalisierung macht den Artikel jedoch für Umtauschzwecke zum Endverkauf.",
+      ],
     },
     {
       title: "8. Geistiges Eigentum",
@@ -221,7 +231,12 @@ const TERMS_IT_SECTIONS: PolicySection[] = [
     },
     {
       title: "7. Personalizzazione e lavori su misura",
-      body: ["Inviando un testo di personalizzazione, confermi di avere i diritti necessari e che il contenuto non viola diritti di terzi né la legge. Possiamo rifiutare personalizzazioni illecite, offensive o non conformi."],
+      body: [
+        "Inviando un testo di personalizzazione, confermi di avere i diritti necessari e che il contenuto non viola diritti di terzi né la legge. Possiamo rifiutare personalizzazioni illecite, offensive o non conformi.",
+        "Verifica attentamente ortografia e testo prima dell’invio. Non siamo responsabili di errori inseriti dal cliente.",
+        "Ogni articolo prodotto con etichetta interna personalizzata (inclusa un’etichetta gratuita della Maison) è vendita definitiva e non può essere cambiato o reso per ripensamento, preferenza di taglia o motivi simili, salvo difetto di fabbricazione verificato o non conformità materiale, o ove la legge imperativa richieda altrimenti.",
+        "Un’etichetta interna personalizzata gratuita non esclude un ordine idoneo da HOUSE15 o dal House Privilege, fatte salve le condizioni Community sotto — ma la personalizzazione resta vendita definitiva ai fini del cambio.",
+      ],
     },
     {
       title: "8. Proprietà intellettuale",
@@ -303,7 +318,12 @@ const TERMS_ES_SECTIONS: PolicySection[] = [
     },
     {
       title: "7. Personalización y trabajos a medida",
-      body: ["Al enviar un texto de personalización, confirma que tiene derecho a usarlo y que no infringe derechos de terceros ni la ley. Podemos rechazar personalizaciones ilícitas, ofensivas o no conformes."],
+      body: [
+        "Al enviar un texto de personalización, confirma que tiene derecho a usarlo y que no infringe derechos de terceros ni la ley. Podemos rechazar personalizaciones ilícitas, ofensivas o no conformes.",
+        "Revise con cuidado la ortografía antes de enviar. No somos responsables de errores introducidos por la clienta.",
+        "Cualquier artículo producido con etiqueta interior personalizada (incluida una etiqueta gratuita de la Maison) es venta definitiva y no puede canjearse ni devolverse por cambio de opinión, preferencia de talla o motivos similares, salvo defecto de fabricación verificado o no conformidad material, o cuando la ley imperativa exija otra cosa.",
+        "Una etiqueta interior personalizada gratuita no excluye un pedido elegible de HOUSE15 o del House Privilege, con sujeción a los términos de Comunidad más abajo — pero la personalización sigue siendo venta definitiva a efectos de cambio.",
+      ],
     },
     {
       title: "8. Propiedad intelectual",
@@ -385,7 +405,12 @@ const TERMS_NL_SECTIONS: PolicySection[] = [
     },
     {
       title: "7. Personalisatie en maatwerk",
-      body: ["Door personalisatietekst in te dienen bevestigt u de rechten daarop en dat de inhoud geen rechten van derden of de wet schendt. Wij kunnen onrechtmatige, beledigende of niet-conforme personalisatie weigeren."],
+      body: [
+        "Door personalisatietekst in te dienen bevestigt u de rechten daarop en dat de inhoud geen rechten van derden of de wet schendt. Wij kunnen onrechtmatige, beledigende of niet-conforme personalisatie weigeren.",
+        "Controleer spelling en tekst zorgvuldig vóór verzending. Wij zijn niet verantwoordelijk voor door de klant ingevoerde fouten.",
+        "Elk artikel met een gepersonaliseerd binnenlabel (inclusief een gratis House-label) is definitieve verkoop en kan niet worden geruild of geretourneerd wegens bedenktijd, maalvoorkeur of vergelijkbare redenen, behalve bij een geverifieerd fabricagefout of materiële non-conformiteit, of waar dwingend recht anders vereist.",
+        "Een gratis gepersonaliseerd binnenlabel sluit een in aanmerking komende bestelling niet uit van HOUSE15 of House Privilege, onder voorbehoud van de Community-voorwaarden hieronder — personalisatie blijft echter definitieve verkoop voor ruil.",
+      ],
     },
     {
       title: "8. Intellectuele eigendom",
@@ -467,7 +492,12 @@ const TERMS_PT_SECTIONS: PolicySection[] = [
     },
     {
       title: "7. Personalização e trabalhos sob medida",
-      body: ["Ao enviar texto de personalização, confirma ter o direito de o utilizar e que o conteúdo não infringe direitos de terceiros nem a lei. Podemos recusar personalizações ilícitas, ofensivas ou não conformes."],
+      body: [
+        "Ao enviar texto de personalização, confirma ter o direito de o utilizar e que o conteúdo não infringe direitos de terceiros nem a lei. Podemos recusar personalizações ilícitas, ofensivas ou não conformes.",
+        "Verifique cuidadosamente a ortografia antes de enviar. Não somos responsáveis por erros introduzidos pela cliente.",
+        "Qualquer artigo produzido com etiqueta interior personalizada (incluindo uma etiqueta gratuita da Maison) é venda definitiva e não pode ser trocado nem devolvido por mudança de ideia, preferência de tamanho ou motivos semelhantes, salvo defeito de fabrico verificado ou não conformidade material, ou quando a lei imperativa o exija.",
+        "Uma etiqueta interior personalizada gratuita não exclui uma encomenda elegível de HOUSE15 ou do House Privilege, sob reserva dos termos da Comunidade abaixo — mas a personalização permanece venda definitiva para efeitos de troca.",
+      ],
     },
     {
       title: "8. Propriedade intelectual",
@@ -549,7 +579,12 @@ const TERMS_RU_SECTIONS: PolicySection[] = [
     },
     {
       title: "7. Персонализация и индивидуальные заказы",
-      body: ["Отправляя текст персонализации, вы подтверждаете право на его использование и отсутствие нарушения прав третьих лиц или закона. Мы можем отклонить незаконную, оскорбительную или несоответствующую персонализацию."],
+      body: [
+        "Отправляя текст персонализации, вы подтверждаете право на его использование и отсутствие нарушения прав третьих лиц или закона. Мы можем отклонить незаконную, оскорбительную или несоответствующую персонализацию.",
+        "Перед отправкой внимательно проверьте написание. Мы не несём ответственности за ошибки, введённые клиентом.",
+        "Любое изделие с персонализированной внутренней этикеткой (включая бесплатную этикетку Дома) является окончательной продажей и не подлежит обмену или возврату из‑за изменения решения, предпочтения размера или аналогичных причин, за исключением подтверждённого производственного дефекта или существенного несоответствия, либо если иное требует императивный закон.",
+        "Бесплатная персонализированная внутренняя этикетка не исключает подходящий заказ из HOUSE15 или House Privilege — с учётом условий Сообщества ниже, — однако персонализация делает изделие окончательной продажей для целей обмена.",
+      ],
     },
     {
       title: "8. Интеллектуальная собственность",
@@ -631,7 +666,12 @@ const TERMS_ZH_SECTIONS: PolicySection[] = [
     },
     {
       title: "7. 个性化与定制",
-      body: ["提交个性化文本即确认您有权使用该内容，且不侵犯第三方权利或违反法律。我们可拒绝违法、冒犯或不符政策的个性化请求。"],
+      body: [
+        "提交个性化文本即确认您有权使用该内容，且不侵犯第三方权利或违反法律。我们可拒绝违法、冒犯或不符政策的个性化请求。",
+        "提交前请仔细核对拼写与用词。客户自行输入的错误，本店概不负责。",
+        "凡带有个性化内标的商品（含免费 House 内标）均为最终售出，除经核实的生产缺陷或实质性不符，或强制性法律另有规定外，不得因改变主意、尺码偏好或类似理由换货或退货。",
+        "免费个性化内标不排除符合条件的订单使用 HOUSE15 或 House Privilege（以社群条款为准），但个性化商品就换货而言仍属最终售出。",
+      ],
     },
     {
       title: "8. 知识产权",

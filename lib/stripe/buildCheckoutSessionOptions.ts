@@ -191,7 +191,11 @@ export async function applyCheckoutDiscountCode(
     })
 
     if (promotionCodes.data.length > 0) {
-      sessionOptions.discounts = [{ promotion_code: promotionCodes.data[0].id }]
+      const existing = Array.isArray(sessionOptions.discounts) ? [...sessionOptions.discounts] : []
+      sessionOptions.discounts = [
+        ...existing,
+        { promotion_code: promotionCodes.data[0].id },
+      ]
       delete sessionOptions.allow_promotion_codes
     }
   } catch {

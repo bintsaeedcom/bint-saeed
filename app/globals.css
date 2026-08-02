@@ -83,7 +83,8 @@
    * never changes while scrolling. `--site-header-height` is the live measured
    * height used by sticky controls as the header compacts.
    */
-  --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.5625rem);
+  --house-offer-banner: 2.125rem;
+  --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.5625rem + var(--house-offer-banner));
   --site-header-height: var(--site-header-clearance);
   --mobile-bottom-chrome: 0px;
   --text-hero: clamp(36px, 6vw, 72px);
@@ -124,28 +125,28 @@
 
 @media (min-width: 640px) {
   :root {
-    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.5625rem);
+    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.5625rem + var(--house-offer-banner));
     --site-header-height: var(--site-header-clearance);
   }
 }
 
 @media (min-width: 769px) {
   :root {
-    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 0.8125rem);
+    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 0.8125rem + var(--house-offer-banner));
     --site-header-height: var(--site-header-clearance);
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.0625rem);
+    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.0625rem + var(--house-offer-banner));
     --site-header-height: var(--site-header-clearance);
   }
 }
 
 @media (min-width: 1280px) {
   :root {
-    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.3125rem);
+    --site-header-clearance: calc(clamp(3.5rem, 10vw, 6rem) + 1.3125rem + var(--house-offer-banner));
     --site-header-height: var(--site-header-clearance);
   }
 }
@@ -153,7 +154,7 @@
 @media (min-width: 1536px) {
   :root {
     /* Two-row desktop header (logo + topic row) */
-    --site-header-clearance: 10.5rem;
+    --site-header-clearance: calc(10.5rem + var(--house-offer-banner));
     --site-header-height: var(--site-header-clearance);
   }
 }

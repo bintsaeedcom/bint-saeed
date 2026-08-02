@@ -1,5 +1,7 @@
 import { Redis } from '@upstash/redis'
 import { upsertCustomerFromOrder } from '@/lib/customers/customerStore'
+import { activateHousePrivilegeForPaidOrder } from '@/lib/membership/activateHousePrivilege'
+import { recordHousePromoUsage } from '@/lib/membership/memberStore'
 import type { StoredOrder, OrderFulfillmentStatus } from './types'
 
 const KEY_ORDER = (id: string) => `bs:ord:${id}`
@@ -40,6 +42,27 @@ export async function saveOrder(order: StoredOrder): Promise<void> {
     sortMemoryIndex()
   }
   await upsertCustomerFromOrder(order)
+  if (order.fulfillmentStatus === 'paid') {
+    try {
+      await activateHousePrivilegeForPaidOrder(order)
+    } catch (e) {
+      console.error('House privilege activation error', e)
+    }
+    if (order.discountCode?.trim()) {
+      try {
+        await recordHousePromoUsage({
+          email: order.customerEmail,
+          code: order.discountCode,
+          orderId: order.id,
+          amountTotal: order.amountTotal,
+          currency: order.currency,
+          at: order.updatedAt || order.createdAt,
+        })
+      } catch (e) {
+        console.error('House promo usage record error', e)
+      }
+    }
+  }
 }
 
 export async function findOrderIdBySession(sessionId: string): Promise<string | null> {

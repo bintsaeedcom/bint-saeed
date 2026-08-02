@@ -3,6 +3,12 @@ import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import { validateOptionalPhone } from '@/lib/validateOptionalPhone'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { sendSubscribeThankYouEmail } from '@/lib/email/sendSubscribeThankYouEmail'
+import { upsertHouseMemberOnSubscribe } from '@/lib/membership/memberStore'
+import { ensureHouse15PromotionCode } from '@/lib/membership/stripeHousePromos'
+import {
+  HOUSE_FIRST_PURCHASE_CODE,
+  housePrivilegeExpiresLabel,
+} from '@/lib/membership/constants'
 
 const MAILERLITE_API = 'https://connect.mailerlite.com/api/subscribers'
 
@@ -132,10 +138,28 @@ export async function POST(request: NextRequest) {
     }
 
     // Site-sent branded welcome (Resend). Soft-fail — MailerLite remains source of truth.
+    let firstPurchaseCode = HOUSE_FIRST_PURCHASE_CODE
     if (normalizedEmail) {
+      try {
+        const member = await upsertHouseMemberOnSubscribe({
+          email: normalizedEmail,
+          name: displayName,
+          source: typeof source === 'string' ? source : undefined,
+        })
+        firstPurchaseCode = member.firstPurchaseCode || HOUSE_FIRST_PURCHASE_CODE
+      } catch (e) {
+        console.error('House member upsert failed', e)
+      }
+
+      void ensureHouse15PromotionCode().then((r) => {
+        if (!r.ok) console.error('HOUSE15 ensure failed:', r.error)
+      })
+
       const welcome = await sendSubscribeThankYouEmail({
         email: normalizedEmail,
         name: displayName,
+        firstPurchaseCode,
+        privilegeExpiresLabel: housePrivilegeExpiresLabel(),
       })
       thankYouResult = {
         success: welcome.ok,
@@ -219,6 +243,8 @@ export async function POST(request: NextRequest) {
       success: true,
       mailerlite: mailerliteResult.success,
       thankYouEmail: thankYouResult.success,
+      firstPurchaseCode,
+      privilegeExpiresLabel: housePrivilegeExpiresLabel(),
       debug: {
         mailerliteConfigured: !!mailerliteApiKey,
         mailerliteStatus: mailerliteResult.status,

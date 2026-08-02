@@ -11,15 +11,25 @@ import { hasStoredCookieChoice } from '@/lib/analytics/consent'
 import toast from 'react-hot-toast'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import { getEmailPopupCopy } from '@/lib/i18n/emailPopupI18n'
-import { ctaFormSubmit, ctaFormSubmitInline } from '@/lib/ui/ctaClasses'
 import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
+import { HOUSE_FIRST_PURCHASE_CODE } from '@/lib/membership/constants'
+import {
+  glassOverlayPanel,
+  glassOverlayWash,
+  glassSecondaryBtnOnDark,
+  glassTextBodyOnDark,
+  glassTextMutedOnDark,
+  glassTextTitleOnDark,
+} from '@/lib/ui/glassClasses'
+
+const HOUSE_MONOGRAM_SRC = '/brand/house-monogram-burgundy.webp'
 
 export default function EmailPopup() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
-  const [discountCode, setDiscountCode] = useState('')
+  const [discountCode, setDiscountCode] = useState(HOUSE_FIRST_PURCHASE_CODE)
   const [formData, setFormData] = useState({ name: '', email: '' })
   const [emailError, setEmailError] = useState('')
   const { isRTL, language } = useLanguage()
@@ -31,8 +41,21 @@ export default function EmailPopup() {
   }, [isOpen])
 
   useEffect(() => {
+    const forcePreview =
+      typeof window !== 'undefined' &&
+      new URLSearchParams(window.location.search).get('preview') === 'house-popup'
+    if (forcePreview) {
+      setIsOpen(true)
+      return
+    }
+
     const inner = pathname ? stripLocaleFromPathname(pathname).pathname : '/'
-    if (!inner.startsWith('/shop')) return
+    const onInviteSurface =
+      inner === '/home' ||
+      inner.startsWith('/home/') ||
+      inner === '/shop' ||
+      inner.startsWith('/shop/')
+    if (!onInviteSurface) return
 
     const hasSeenPopup = localStorage.getItem('bint-saeed-popup-seen')
     const hasSubscribed = localStorage.getItem('bint-saeed-subscribed')
@@ -44,15 +67,6 @@ export default function EmailPopup() {
       return () => clearTimeout(timer)
     }
   }, [pathname])
-
-  const generateDiscountCode = () => {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    let code = 'WELCOME'
-    for (let i = 0; i < 6; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length))
-    }
-    return code
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -66,22 +80,23 @@ export default function EmailPopup() {
     setIsSubmitting(true)
 
     try {
-      const code = generateDiscountCode()
-
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
           email: check.email,
-          discountCode: code,
-          source: 'popup',
+          source: 'house_community_popup',
         }),
       })
 
       const data = await response.json().catch(() => ({}))
 
       if (response.ok) {
+        const code =
+          typeof data.firstPurchaseCode === 'string' && data.firstPurchaseCode.trim()
+            ? data.firstPurchaseCode.trim().toUpperCase()
+            : HOUSE_FIRST_PURCHASE_CODE
         setDiscountCode(code)
         setShowSuccess(true)
         localStorage.setItem('bint-saeed-subscribed', 'true')
@@ -112,6 +127,9 @@ export default function EmailPopup() {
     toast.success(copy.codeCopied)
   }
 
+  const fieldClass =
+    'w-full border border-white/25 bg-white/10 px-4 py-3 font-montserrat text-sm tracking-wide text-[#faf8f5] placeholder:text-[#e8d8c8]/45 backdrop-blur-sm transition-colors focus:border-brand-dustyBlue/70 focus:outline-none focus:ring-1 focus:ring-brand-dustyBlue/35'
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -122,61 +140,113 @@ export default function EmailPopup() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200]"
+            className="fixed inset-0 z-[200] bg-[#12080b]/70 backdrop-blur-sm"
             data-cursor-hover
           />
 
           <motion.div
-            key="email-popup-modal"
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-3xl md:w-full z-[201] overflow-hidden flex flex-col md:flex-row max-h-[90vh] md:max-h-[500px] shadow-2xl"
-            data-scroll-lock-owner="true"
-            data-cursor-hover
+            key="email-popup-shell"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="pointer-events-none fixed inset-0 z-[201] flex items-end justify-center p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-[max(0.5rem,env(safe-area-inset-top))] sm:items-center sm:p-6 lg:p-8"
           >
-            <button
-              onClick={handleClose}
-              className="absolute top-4 right-4 z-10 p-2 text-white hover:text-brand-dustyBlue transition-colors bg-brand-darkRed/80 rounded-full"
+            <motion.div
+              key="email-popup-modal"
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98, y: 8 }}
+              transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+              className={`pointer-events-auto relative flex h-auto max-h-full min-h-0 w-full max-w-lg flex-col overflow-hidden border border-white/25 bg-[#1a0210] shadow-[0_28px_80px_-24px_rgba(0,0,0,0.65)] ring-1 ring-inset ring-white/10 md:max-w-4xl md:ring-0 ${
+                isRTL ? 'md:flex-row-reverse' : 'md:flex-row'
+              }`}
+              data-scroll-lock-owner="true"
               data-cursor-hover
+              role="dialog"
+              aria-modal="true"
+              aria-label={copy.headline}
             >
-              <FiX className="w-5 h-5" />
+            {/* Mobile double frame — invitation-card edge */}
+            <div
+              className="pointer-events-none absolute inset-2 z-[1] border border-[#e8d8c8]/20 md:hidden"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute inset-[11px] z-[1] border border-brand-dustyBlue/25 md:hidden"
+              aria-hidden
+            />
+
+            <button
+              type="button"
+              onClick={handleClose}
+              className="absolute end-2.5 top-2.5 z-20 border border-white/25 bg-[#1a0210]/80 p-2 text-[#e8d8c8]/90 backdrop-blur-md transition-colors hover:border-brand-dustyBlue/50 hover:text-white sm:end-3 sm:top-3 md:end-3 md:top-3"
+              data-cursor-hover
+              aria-label="Close"
+            >
+              <FiX className="h-5 w-5" />
             </button>
 
-            <div className="relative w-full md:w-1/2 h-48 md:h-auto flex-shrink-0 bg-brand-darkRed">
+            {/* Desktop only — full square monogram (never cropped) */}
+            <div className="relative hidden aspect-square w-[min(50%,28rem)] shrink-0 self-center bg-[#1a0210] md:block">
               <Image
-                src="https://images.unsplash.com/photo-1590003511523-9c5e5e60a3b1?w=800&q=90"
+                src={HOUSE_MONOGRAM_SRC}
                 alt={copy.imageAlt}
                 fill
-                className="object-cover opacity-80"
+                priority
+                sizes="448px"
+                className="object-contain object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-brand-darkRed/40 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10">
-                <span className="font-rozha text-3xl md:text-4xl text-white/90 leading-tight">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#1a0210]/20" />
+              <div className="absolute bottom-8 left-8 right-10">
+                <p className="font-rozha text-3xl leading-tight text-[#faf8f5] drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]">
                   {copy.exclusiveOffer}
-                </span>
+                </p>
               </div>
             </div>
 
-            <div className={`flex-1 p-8 md:p-10 flex flex-col justify-center bg-brand-stone text-start`}>
+            <div
+              className={`relative z-[2] flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-6 pe-12 pt-11 text-start sm:p-7 sm:pe-14 sm:pt-12 md:justify-center md:p-9 md:pe-14 md:pt-10 ${glassOverlayPanel}`}
+            >
+              <div className={glassOverlayWash} aria-hidden />
+
               {!showSuccess ? (
-                <>
-                  <h2 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-3">
+                <div className="relative">
+                  {/* Mobile seal — small monogram, not a cropped banner */}
+                  <div className="mb-5 flex flex-col items-center md:hidden">
+                    <div className="relative mb-3 h-14 w-14 overflow-hidden">
+                      <Image
+                        src={HOUSE_MONOGRAM_SRC}
+                        alt=""
+                        fill
+                        sizes="56px"
+                        className="object-contain object-center"
+                        aria-hidden
+                      />
+                    </div>
+                    <p className="font-rozha text-base leading-snug text-[#faf8f5]/95">
+                      {copy.exclusiveOffer}
+                    </p>
+                    <div className="mt-3 h-px w-10 bg-brand-dustyBlue/55" aria-hidden />
+                  </div>
+
+                  <p className="mb-1.5 font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue sm:mb-2">
+                    {copy.eyebrow}
+                  </p>
+                  <h2 className={`mb-2 font-rozha text-xl sm:mb-3 sm:text-2xl md:text-3xl ${glassTextTitleOnDark}`}>
                     {copy.headline}
                   </h2>
-                  <p className="font-montserrat text-sm text-brand-darkRed/70 tracking-wide mb-6">
+                  <p className={`mb-4 font-montserrat text-[13px] leading-relaxed tracking-wide sm:mb-6 sm:text-sm ${glassTextBodyOnDark}`}>
                     {copy.body}
                   </p>
 
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-3.5">
                     <input
                       type="text"
                       required
                       placeholder={copy.firstName}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className={`w-full px-4 py-3 bg-white border border-brand-darkRed/30 font-montserrat text-sm tracking-wide text-brand-darkRed placeholder:text-brand-muted focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 transition-colors text-start`}
+                      className={`${fieldClass} text-start`}
                       dir={isRTL ? 'rtl' : 'ltr'}
                     />
                     <div className="space-y-1">
@@ -195,58 +265,57 @@ export default function EmailPopup() {
                           setEmailError(v.valid ? '' : v.message)
                         }}
                         aria-invalid={emailError ? true : undefined}
-                        className={`w-full px-4 py-3 bg-white border font-montserrat text-sm tracking-wide text-brand-darkRed placeholder:text-brand-muted focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 transition-colors text-start ${emailError ? 'border-brand-clayRed' : 'border-brand-darkRed/30'}`}
+                        className={`${fieldClass} text-start ${
+                          emailError ? 'border-[#c47878]' : ''
+                        }`}
                         dir={isRTL ? 'rtl' : 'ltr'}
                       />
                       {emailError ? (
-                        <p className={`font-montserrat text-xs text-brand-clayRed text-start`}>
-                          {emailError}
-                        </p>
+                        <p className="font-montserrat text-xs text-[#e8b4b4] text-start">{emailError}</p>
                       ) : null}
                     </div>
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className={`${ctaFormSubmit} disabled:opacity-50`}
+                      className="relative min-h-[42px] w-full border border-brand-dustyBlue bg-brand-dustyBlue px-3 py-2.5 font-montserrat text-[10px] uppercase tracking-[0.14em] text-[#1a0008] transition-colors hover:bg-white hover:border-white disabled:opacity-50"
                       data-cursor-hover
                     >
                       {isSubmitting ? copy.signingUp : copy.signUp}
                     </button>
                   </form>
 
-                  <p className="font-montserrat text-xs text-brand-darkRed/50 mt-4">
+                  <p className={`mt-3 font-montserrat text-[11px] leading-relaxed sm:mt-4 ${glassTextMutedOnDark}`}>
                     {copy.privacyLine}
                   </p>
-                </>
+                </div>
               ) : (
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-brand-darkRed/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span className="text-3xl">🎉</span>
-                  </div>
-                  <h2 className="font-rozha text-2xl md:text-3xl text-brand-darkRed mb-3">
+                <div className="relative text-center">
+                  <h2 className={`mb-2 font-rozha text-xl sm:mb-3 sm:text-2xl md:text-3xl ${glassTextTitleOnDark}`}>
                     {copy.welcome}
                   </h2>
-                  <p className="font-montserrat text-sm text-brand-darkRed/70 tracking-wide mb-6">
+                  <p className={`mb-4 font-montserrat text-[13px] tracking-wide sm:mb-6 sm:text-sm ${glassTextBodyOnDark}`}>
                     {copy.discountIntro}
                   </p>
 
                   <div
                     onClick={copyCode}
-                    className="bg-white border-2 border-dashed border-brand-darkRed px-6 py-4 mb-4 cursor-pointer hover:bg-brand-dustyBlue/20 transition-colors"
+                    className="mb-3 cursor-pointer border border-dashed border-brand-dustyBlue/55 bg-white/10 px-4 py-3.5 backdrop-blur-sm transition-colors hover:bg-white/15 sm:mb-4 sm:px-6 sm:py-4"
                     data-cursor-hover
                   >
-                    <span className="font-montserrat font-bold text-2xl text-brand-darkRed tracking-[0.2em]">
+                    <span className="font-montserrat text-xl font-semibold tracking-[0.22em] text-brand-dustyBlue sm:text-2xl">
                       {discountCode}
                     </span>
                   </div>
 
-                  <p className="font-montserrat text-xs text-brand-darkRed/60 mb-6">
-                    {copy.copyHint}
+                  <p className={`mb-2 font-montserrat text-xs ${glassTextMutedOnDark}`}>{copy.copyHint}</p>
+                  <p className={`mb-5 font-montserrat text-xs leading-relaxed sm:mb-6 ${glassTextMutedOnDark}`}>
+                    {copy.privilegeNote}
                   </p>
 
                   <button
+                    type="button"
                     onClick={handleClose}
-                    className={ctaFormSubmitInline}
+                    className={`${glassSecondaryBtnOnDark} mx-auto max-w-xs`}
                     data-cursor-hover
                   >
                     {copy.startShopping}
@@ -254,6 +323,7 @@ export default function EmailPopup() {
                 </div>
               )}
             </div>
+            </motion.div>
           </motion.div>
         </>
       )}

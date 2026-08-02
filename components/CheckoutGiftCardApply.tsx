@@ -120,6 +120,15 @@ export default function CheckoutGiftCardApply({
   return (
     <div className={`mt-5 text-start`}>
       <p className={labelClass}>{language === 'ar' ? 'بطاقة هدايا' : 'Gift card'}</p>
+      <p
+        className={`mt-1 font-montserrat text-[11px] leading-snug tracking-wide ${
+          onDark ? 'text-white/45' : 'text-brand-clayRed/55'
+        }`}
+      >
+        {language === 'ar'
+          ? 'لرصيد بطاقة هدايا Bint Saeed فقط — ليس للرموز الترويجية.'
+          : 'For a Bint Saeed gift card balance only — not for promo codes.'}
+      </p>
       {applied ? (
         <div className="mt-2 space-y-2">
           <div

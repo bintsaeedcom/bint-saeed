@@ -419,6 +419,9 @@ const TERMS_EN_SECTIONS: PolicySection[] = [
     title: '7. Personalisation and Custom Work',
     body: [
       'By submitting any personalisation text, you confirm you have the right to use that content and that it does not infringe third-party rights or violate applicable laws. We may reject personalisation requests that are unlawful, offensive, or non-compliant with policy.',
+      'Please check spelling and wording carefully before you submit. We are not responsible for customer-entered errors.',
+      'Any item produced with a personalised inner label (including a complimentary House label) is final sale and cannot be exchanged or returned for change of mind, size preference, or similar reasons, except where a verified manufacturing defect or material non-conformity exists, or where mandatory law requires otherwise.',
+      'A complimentary personalised inner label does not exclude an eligible order from HOUSE15 or the House Privilege, subject to the Community terms below — but personalisation still makes the item final sale for exchange purposes.',
     ],
   },
   {
@@ -547,6 +550,9 @@ const TERMS_MS_SECTIONS: PolicySection[] = [
     title: '7. Personalisasi dan Pekerjaan Custom',
     body: [
       'Dengan menghantar teks personalisasi, anda menyatakan memiliki hak untuk menggunakan konten tersebut dan bahwa konten tidak melanggar hak pihak ketiga atau hukum yang berlaku. Kami dapat menolak permintaan personalisasi yang melanggar hukum, menyinggung, atau tidak patuh dasar.',
+      'Sila semak ejaan dan kata dengan teliti sebelum menghantar. Kami tidak bertanggung jawab atas kesilapan yang dimasukkan pelanggan.',
+      'Setiap item yang dihasilkan dengan label dalam yang diperibadikan (termasuk label House percuma) bersifat final sale dan tidak boleh ditukar atau dipulangkan kerana perubahan fikiran, pilihan saiz, atau sebab serupa, kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material, atau jika hukum wajib menentukan lain.',
+      'Label dalam personalisasi percuma tidak mengecualikan pesanan yang layak dari HOUSE15 atau House Privilege, tunduk pada terma Community di bawah — namun personalisasi tetap menjadikan item final sale bagi tujuan pertukaran.',
     ],
   },
   {
@@ -705,7 +711,7 @@ function shipmentEnSections(): PolicySection[] {
             'Bint Saeed will not accept an exchange or return where tags, seals or security labels have been removed, cut, damaged or altered, or where photographs submitted in support of a request indicate that removal or tampering has been attempted.',
             'No exchange is processed until approved goods have been physically received and inspected at our atelier.',
             'Where an approved exchange or return requires goods to be shipped back to Bint Saeed, a flat return shipping fee applies: AED 35 for returns originating within the United Arab Emirates, and EUR 35 (or the clean equivalent in the selected currency) for returns originating internationally. This fee is waived where the return arises from a verified fault of the House, including a manufacturing defect or material non-conformity, or where otherwise required by applicable law.',
-            'Personalised pieces, custom specifications, altered garments, and items produced to a client’s specific requirements are not eligible for exchange except where a verified manufacturing defect or material non-conformity exists.',
+            'Personalised pieces — including any garment or product with a personalised inner label (complimentary or paid), custom specifications, altered garments, and items produced to a client’s specific requirements — are final sale and are not eligible for exchange or change-of-mind return, except where a verified manufacturing defect or material non-conformity exists, or where mandatory law requires otherwise.',
             'For reasons of health, hygiene and personal safety, earrings are final sale and cannot be exchanged or refunded, except where a verified manufacturing defect or material non-conformity exists.',
           ],
           list: [],
@@ -773,7 +779,7 @@ function shipmentEnSections(): PolicySection[] {
       ],
       list: [
         'Goods made to the consumer’s specifications.',
-        'Clearly personalised or custom-made items.',
+        'Clearly personalised or custom-made items, including any item with a personalised inner label.',
         'Sealed goods which are not suitable for return due to health protection or hygiene reasons, including earrings.',
       ],
     },
@@ -907,7 +913,7 @@ function shipmentMsSections(): PolicySection[] {
           title: '',
           body: [
             'Biaya penghantaran pemulangan menjadi tanggung jawab pelanggan kecuali diwajibkan lain oleh hukum yang berlaku.',
-            'Karya personalisasi, spesifikasi tersuai, pakaian yang diubah, dan barang yang diproduksi sesuai kebutuhan spesifik pelanggan tidak memenuhi terma pertukaran kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material.',
+            'Karya personalisasi — termasuk setiap pakaian atau produk dengan label dalam yang diperibadikan (percuma atau berbayar), spesifikasi tersuai, pakaian yang diubah, dan barang yang diproduksi sesuai kebutuhan spesifik pelanggan — bersifat final sale dan tidak memenuhi terma pertukaran atau pemulangan kerana perubahan fikiran, kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material, atau jika hukum wajib menentukan lain.',
             'Demi alasan kesihatan, kebersihan, dan keselamatan peribadi, anting bersifat final sale dan tidak boleh ditukar atau dipulangkan wang, kecuali terdapat cacat produksi terverifikasi atau ketidaksesuaian material.',
           ],
           list: [],
@@ -977,7 +983,7 @@ function shipmentMsSections(): PolicySection[] {
       ],
       list: [
         'Barang dihasilkan sesuai spesifikasi konsumen.',
-        'Barang yang jelas dipersonalisasi atau dihasilkan tersuai.',
+        'Barang yang jelas dipersonalisasi atau dihasilkan tersuai, termasuk item dengan label dalam yang diperibadikan.',
         'Barang yang dimeterai yang tidak sesuai untuk dipulangkan kerana alasan perlindungan kesihatan atau kebersihan, termasuk anting.',
       ],
     },

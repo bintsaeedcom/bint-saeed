@@ -15,6 +15,7 @@ import { appliedGiftCardFromStripeMetadata } from '@/lib/giftCards/stripeGiftCar
 import type { CheckoutCartItem } from '@/lib/checkout/types'
 import { isGiftCardLineId } from '@/lib/giftCards/cartDetection'
 import { sendMetaCapiPurchaseFromOrder } from '@/lib/analytics/metaCapi'
+import { resolveDiscountCodeFromCheckoutSession } from '@/lib/stripe/resolveCheckoutPromotionCode'
 
 export const runtime = 'nodejs'
 
@@ -158,7 +159,7 @@ function buildOrderFromSession(session: Stripe.Checkout.Session): StoredOrder {
     currency: (session.currency || 'aed').toUpperCase(),
     fulfillmentStatus,
     deliveryNotes,
-    discountCode: session.metadata?.discountCodeUsed || undefined,
+    discountCode: resolveDiscountCodeFromCheckoutSession(session),
     createdAt: now,
     updatedAt: now,
   }
@@ -340,7 +341,7 @@ export async function POST(request: NextRequest) {
 
         const stripe = getStripe()
         const full = await stripe.checkout.sessions.retrieve(session.id, {
-          expand: ['line_items'],
+          expand: ['line_items', 'discounts.promotion_code'],
         })
 
         const order = buildOrderFromSession(full)

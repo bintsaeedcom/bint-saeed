@@ -15,6 +15,7 @@ import {
   resolveStripeCheckoutUiMode,
   type StripeCheckoutUiMode,
 } from '@/lib/stripe/buildCheckoutSessionOptions'
+import { attachStripeCustomerToCheckoutSession } from '@/lib/stripe/attachStripeCustomerToCheckoutSession'
 import { getStripeClient, isStripeSecretKeyConfigured } from '@/lib/stripe/getStripeClient'
 
 function stripeErrorMessage(error: unknown): string {
@@ -33,6 +34,7 @@ async function createStripeSession(
   giftCredit: Awaited<ReturnType<typeof resolveOptionalCheckoutGiftCredit>>,
 ) {
   const sessionOptions = buildStripeCheckoutSessionParams({ parsed, baseUrl, uiMode })
+  await attachStripeCustomerToCheckoutSession(stripe, sessionOptions, parsed.customerEmail)
   if (parsed.discountCode) {
     await applyCheckoutDiscountCode(stripe, sessionOptions, parsed.discountCode)
   }
