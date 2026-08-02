@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
+import { validateSubscriberName } from '@/lib/validateSubscriberName'
 import { validateOptionalPhone } from '@/lib/validateOptionalPhone'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
 import { sendSubscribeThankYouEmail } from '@/lib/email/sendSubscribeThankYouEmail'
@@ -94,9 +95,24 @@ export async function POST(request: NextRequest) {
     const mailerliteApiKey = process.env.MAILERLITE_API_KEY?.trim()
     const mailerliteGroupId = process.env.MAILERLITE_GROUP_ID?.trim() || undefined
 
-    // Map name: SubscribeForm sends firstName/lastName, EmailPopup sends name
-    const subscriberName = firstName ?? name
-    const subscriberLastName = lastName
+    // Map name: SubscribeForm/SoftEmailCapture are email-only; EmailPopup sends name.
+    const rawFirst =
+      typeof firstName === 'string' ? firstName : typeof name === 'string' ? name : ''
+    const nameProvided = rawFirst.trim().length > 0
+    const requiresName =
+      source === 'house_community_popup' || source === 'footer' || nameProvided
+
+    let subscriberName: string | undefined
+    if (requiresName) {
+      const nameCheck = validateSubscriberName(rawFirst)
+      if (!nameCheck.valid) {
+        return NextResponse.json({ error: nameCheck.message }, { status: 400 })
+      }
+      subscriberName = nameCheck.name
+    }
+
+    const subscriberLastName =
+      typeof lastName === 'string' && lastName.trim() ? lastName.trim() : undefined
     const displayName =
       [subscriberName, subscriberLastName].filter((p) => typeof p === 'string' && p.trim()).join(' ') ||
       undefined

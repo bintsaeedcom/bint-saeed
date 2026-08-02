@@ -181,13 +181,10 @@ export default function StickyAddToCart({
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-          className={`pointer-events-auto fixed inset-x-0 bottom-0 z-[96] overflow-hidden border-t border-white/20 bg-black/80 shadow-[0_-16px_48px_-12px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-black/75 lg:hidden `}
+          className="pointer-events-auto fixed inset-x-0 bottom-0 z-[96] bs-glass-overlay border-x-0 border-b-0 rounded-none lg:hidden"
           style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
         >
-          <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#2d141e]/55 via-[#1a0210]/35 to-[#12080b]/70"
-            aria-hidden
-          />
+          <div className="bs-glass-overlay-wash" aria-hidden />
           <div className="relative z-[1] mx-auto max-w-[1400px] px-3 py-2.5 sm:px-4">
             <div className={`flex min-w-0 items-center gap-2.5 `}>
               <div className={`min-w-0 flex-1 overflow-hidden text-start`}>

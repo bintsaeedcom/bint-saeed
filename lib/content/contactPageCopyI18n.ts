@@ -70,7 +70,7 @@ const EN: ContactPageCopy = {
   heroBannerAlt: 'Bint Saeed contact editorial banner',
   portraitAlt:
     'Bint Saeed Abu Dhabi — branded editorial portrait with fountain grass, palms, and contemporary architecture at dusk',
-  nameLabel: 'Name',
+  nameLabel: 'Full name',
   emailLabel: 'Email',
   phoneLabel: 'Phone',
   subjectLabel: 'Subject',
@@ -116,7 +116,7 @@ const AR: ContactPageCopy = {
   heroBannerAlt: 'بانر تواصل Bint Saeed',
   portraitAlt:
     'Bint Saeed أبوظبي — صورة تحريرية مع أعشاب نافورة ونخيل وعمارة معاصرة',
-  nameLabel: 'الاسم',
+  nameLabel: 'الاسم الكامل',
   emailLabel: 'البريد الإلكتروني',
   phoneLabel: 'رقم الهاتف',
   subjectLabel: 'الموضوع',
@@ -162,7 +162,7 @@ const FR: ContactPageCopy = {
   heroBannerAlt: 'Bannière éditoriale contact Bint Saeed',
   portraitAlt:
     'Bint Saeed Abu Dhabi — portrait éditorial de marque avec herbes de fontaine, palmiers et architecture contemporaine au crépuscule',
-  nameLabel: 'Nom',
+  nameLabel: 'Nom complet',
   emailLabel: 'E-mail',
   phoneLabel: 'Téléphone',
   subjectLabel: 'Objet',
@@ -208,7 +208,7 @@ const IT: ContactPageCopy = {
   heroBannerAlt: 'Banner editoriale contatti Bint Saeed',
   portraitAlt:
     'Bint Saeed Abu Dhabi — ritratto editoriale con erbe da fontana, palme e architettura contemporanea al crepuscolo',
-  nameLabel: 'Nome',
+  nameLabel: 'Nome completo',
   emailLabel: 'E-mail',
   phoneLabel: 'Telefono',
   subjectLabel: 'Oggetto',
@@ -254,7 +254,7 @@ const ES: ContactPageCopy = {
   heroBannerAlt: 'Banner editorial de contacto Bint Saeed',
   portraitAlt:
     'Bint Saeed Abu Dhabi — retrato editorial de marca con hierbas de fuente, palmeras y arquitectura contemporánea al atardecer',
-  nameLabel: 'Nombre',
+  nameLabel: 'Nombre completo',
   emailLabel: 'Correo electrónico',
   phoneLabel: 'Teléfono',
   subjectLabel: 'Asunto',
@@ -300,7 +300,7 @@ const RU: ContactPageCopy = {
   heroBannerAlt: 'Редакционный баннер контактов Bint Saeed',
   portraitAlt:
     'Bint Saeed Abu Dhabi — редакционный портрет с фонтанной травой, пальмами и современной архитектурой на закате',
-  nameLabel: 'Имя',
+  nameLabel: 'Полное имя',
   emailLabel: 'Эл. почта',
   phoneLabel: 'Телефон',
   subjectLabel: 'Тема',
@@ -346,7 +346,7 @@ const ZH: ContactPageCopy = {
   heroBannerAlt: 'Bint Saeed 联系页编辑横幅',
   portraitAlt:
     'Bint Saeed 阿布扎比 — 品牌编辑肖像，喷泉草、棕榈与当代建筑，暮色之中',
-  nameLabel: '姓名',
+  nameLabel: '全名',
   emailLabel: '电子邮箱',
   phoneLabel: '电话',
   subjectLabel: '主题',
@@ -392,7 +392,7 @@ const DE: ContactPageCopy = {
   heroBannerAlt: 'Editorielles Kontaktbanner Bint Saeed',
   portraitAlt:
     'Bint Saeed Abu Dhabi — editorielles Markenporträt mit Springbrunnengras, Palmen und zeitgenössischer Architektur in der Dämmerung',
-  nameLabel: 'Name',
+  nameLabel: 'Vollständiger Name',
   emailLabel: 'E-Mail',
   phoneLabel: 'Telefon',
   subjectLabel: 'Betreff',
@@ -438,7 +438,7 @@ const NL: ContactPageCopy = {
   heroBannerAlt: 'Editoriaal contactbanner Bint Saeed',
   portraitAlt:
     'Bint Saeed Abu Dhabi — editoriaal merkportret met fonteingras, palmen en hedendaagse architectuur in de schemering',
-  nameLabel: 'Naam',
+  nameLabel: 'Volledige naam',
   emailLabel: 'E-mail',
   phoneLabel: 'Telefoon',
   subjectLabel: 'Onderwerp',
@@ -484,7 +484,7 @@ const PT: ContactPageCopy = {
   heroBannerAlt: 'Banner editorial de contacto Bint Saeed',
   portraitAlt:
     'Bint Saeed Abu Dhabi — retrato editorial de marca com ervas de fonte, palmeiras e arquitetura contemporânea ao crepúsculo',
-  nameLabel: 'Nome',
+  nameLabel: 'Nome completo',
   emailLabel: 'E-mail',
   phoneLabel: 'Telefone',
   subjectLabel: 'Assunto',
@@ -530,7 +530,7 @@ const ID: ContactPageCopy = {
   heroBannerAlt: 'Spanduk editorial kontak Bint Saeed',
   portraitAlt:
     'Bint Saeed Abu Dhabi — potret editorial merek dengan rumput air mancur, palem, dan arsitektur kontemporer saat senja',
-  nameLabel: 'Nama',
+  nameLabel: 'Nama lengkap',
   emailLabel: 'Email',
   phoneLabel: 'Telepon',
   subjectLabel: 'Subjek',
@@ -576,7 +576,7 @@ const MS: ContactPageCopy = {
   heroBannerAlt: 'Sepanduk editorial hubungan Bint Saeed',
   portraitAlt:
     'Bint Saeed Abu Dhabi — potret editorial jenama dengan rumput air pancut, palma dan seni bina kontemporari pada senja',
-  nameLabel: 'Nama',
+  nameLabel: 'Nama lengkap',
   emailLabel: 'E-mel',
   phoneLabel: 'Telefon',
   subjectLabel: 'Subjek',

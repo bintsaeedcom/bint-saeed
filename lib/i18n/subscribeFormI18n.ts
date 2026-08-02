@@ -3,6 +3,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 export type SubscribeNotifyChannel = 'email' | 'whatsapp'
 
 export type SubscribeFormCopy = {
+  fullName: string
   email: string
   phoneOptional: string
   phoneOptionalNote: string
@@ -20,6 +21,7 @@ export type SubscribeFormCopy = {
 }
 
 const EN: SubscribeFormCopy = {
+  fullName: 'Full name',
   email: 'Email Address',
   phoneOptional: 'Mobile number',
   phoneOptionalNote: '(optional)',
@@ -37,6 +39,7 @@ const EN: SubscribeFormCopy = {
 }
 
 const AR: SubscribeFormCopy = {
+  fullName: 'الاسم الكامل',
   email: 'البريد الإلكتروني',
   phoneOptional: 'رقم الجوال',
   phoneOptionalNote: '(اختياري)',
@@ -54,6 +57,7 @@ const AR: SubscribeFormCopy = {
 }
 
 const FR: SubscribeFormCopy = {
+  fullName: 'Nom complet',
   email: 'Adresse e-mail',
   phoneOptional: 'Numéro de mobile',
   phoneOptionalNote: '(facultatif)',
@@ -71,6 +75,7 @@ const FR: SubscribeFormCopy = {
 }
 
 const IT: SubscribeFormCopy = {
+  fullName: 'Nome completo',
   email: 'Indirizzo e-mail',
   phoneOptional: 'Numero di cellulare',
   phoneOptionalNote: '(facoltativo)',
@@ -88,6 +93,7 @@ const IT: SubscribeFormCopy = {
 }
 
 const DE: SubscribeFormCopy = {
+  fullName: 'Vollständiger Name',
   email: 'E-Mail-Adresse',
   phoneOptional: 'Handynummer',
   phoneOptionalNote: '(optional)',
@@ -105,6 +111,7 @@ const DE: SubscribeFormCopy = {
 }
 
 const NL: SubscribeFormCopy = {
+  fullName: 'Volledige naam',
   email: 'E-mailadres',
   phoneOptional: 'Mobiel nummer',
   phoneOptionalNote: '(optioneel)',
@@ -122,6 +129,7 @@ const NL: SubscribeFormCopy = {
 }
 
 const PT: SubscribeFormCopy = {
+  fullName: 'Nome completo',
   email: 'Endereço de e-mail',
   phoneOptional: 'Número de telemóvel',
   phoneOptionalNote: '(opcional)',
@@ -139,6 +147,7 @@ const PT: SubscribeFormCopy = {
 }
 
 const ES: SubscribeFormCopy = {
+  fullName: 'Nombre completo',
   email: 'Correo electrónico',
   phoneOptional: 'Número de móvil',
   phoneOptionalNote: '(opcional)',
@@ -156,6 +165,7 @@ const ES: SubscribeFormCopy = {
 }
 
 const RU: SubscribeFormCopy = {
+  fullName: 'Полное имя',
   email: 'Адрес эл. почты',
   phoneOptional: 'Мобильный номер',
   phoneOptionalNote: '(необязательно)',
@@ -173,6 +183,7 @@ const RU: SubscribeFormCopy = {
 }
 
 const ZH: SubscribeFormCopy = {
+  fullName: '全名',
   email: '电子邮箱',
   phoneOptional: '手机号码',
   phoneOptionalNote: '（选填）',
@@ -190,6 +201,7 @@ const ZH: SubscribeFormCopy = {
 }
 
 const ID: SubscribeFormCopy = {
+  fullName: 'Nama lengkap',
   email: 'Alamat email',
   phoneOptional: 'Nomor ponsel',
   phoneOptionalNote: '(opsional)',
@@ -207,6 +219,7 @@ const ID: SubscribeFormCopy = {
 }
 
 const MS: SubscribeFormCopy = {
+  fullName: 'Nama penuh',
   email: 'Alamat e-mel',
   phoneOptional: 'Nombor telefon bimbit',
   phoneOptionalNote: '(pilihan)',

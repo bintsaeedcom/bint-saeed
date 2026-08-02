@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
 import type { E164Number } from 'libphonenumber-js'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
+import { validateSubscriberName } from '@/lib/validateSubscriberName'
 import { validateOptionalPhone } from '@/lib/validateOptionalPhone'
 import PhoneWithCountry from '@/components/PhoneWithCountry'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -21,10 +22,12 @@ interface SubscribeFormProps {
 export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps) {
   const { isRTL, language } = useLanguage()
   const copy = getSubscribeFormCopy(language)
+  const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState<E164Number | undefined>()
   const [notifyChannel, setNotifyChannel] = useState<SubscribeNotifyChannel>('email')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [nameError, setNameError] = useState('')
   const [emailError, setEmailError] = useState('')
   const [phoneError, setPhoneError] = useState('')
 
@@ -51,10 +54,22 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
             : 'border-white/25 text-white/70 hover:border-white/40'
         }`
 
+  const errorTextClass =
+    variant === 'dark' ? 'text-red-300' : 'text-red-200'
+  const errorBorderClass = variant === 'dark' ? 'border-red-400/50' : 'border-red-300'
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setNameError('')
     setEmailError('')
     setPhoneError('')
+
+    const nameCheck = validateSubscriberName(fullName, language)
+    if (!nameCheck.valid) {
+      setNameError(nameCheck.message)
+      toast.error(nameCheck.message)
+      return
+    }
 
     if (notifyChannel === 'email') {
       const check = validateSubscriberEmail(email, language)
@@ -82,6 +97,7 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
 
     try {
       const payload: Record<string, string | undefined> = {
+        name: nameCheck.name,
         notifyChannel,
         source: 'footer',
       }
@@ -106,6 +122,7 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
 
       if (response.ok) {
         toast.success(copy.success)
+        setFullName('')
         setEmail('')
         setPhone(undefined)
         setNotifyChannel('email')
@@ -113,8 +130,19 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
         const msg = typeof data.error === 'string' ? data.error : copy.errorGeneric
         toast.error(msg)
         if (response.status === 400 && msg) {
-          if (msg.toLowerCase().includes('phone')) setPhoneError(msg)
-          else setEmailError(msg)
+          const lower = msg.toLowerCase()
+          if (lower.includes('phone') || lower.includes('mobile') || lower.includes('جوال')) {
+            setPhoneError(msg)
+          } else if (
+            lower.includes('name') ||
+            lower.includes('nom') ||
+            lower.includes('اسم') ||
+            lower.includes('letters')
+          ) {
+            setNameError(msg)
+          } else {
+            setEmailError(msg)
+          }
         }
       }
     } catch {
@@ -156,6 +184,32 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
         </p>
       </div>
 
+      <div className={`space-y-1 text-start`}>
+        <input
+          type="text"
+          required
+          minLength={5}
+          autoComplete="name"
+          placeholder={copy.fullName}
+          value={fullName}
+          onChange={(e) => {
+            setFullName(e.target.value)
+            if (nameError) setNameError('')
+          }}
+          onBlur={() => {
+            if (!fullName.trim()) return
+            const check = validateSubscriberName(fullName, language)
+            setNameError(check.valid ? '' : check.message)
+          }}
+          aria-invalid={nameError ? true : undefined}
+          className={`${inputClass} ${nameError ? errorBorderClass : ''}`}
+          dir={isRTL ? 'rtl' : 'ltr'}
+        />
+        {nameError ? (
+          <p className={`text-xs font-montserrat tracking-wide ${errorTextClass}`}>{nameError}</p>
+        ) : null}
+      </div>
+
       {notifyChannel === 'email' ? (
         <div className={`space-y-1 text-start`}>
           <input
@@ -173,13 +227,11 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
             }}
             required
             aria-invalid={emailError ? true : undefined}
-            className={`${inputClass} ${emailError ? (variant === 'dark' ? 'border-red-400/50' : 'border-red-300') : ''}`}
+            className={`${inputClass} ${emailError ? errorBorderClass : ''}`}
             dir={isRTL ? 'rtl' : 'ltr'}
           />
           {emailError ? (
-            <p className={`text-xs font-montserrat tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
-              {emailError}
-            </p>
+            <p className={`text-xs font-montserrat tracking-wide ${errorTextClass}`}>{emailError}</p>
           ) : null}
         </div>
       ) : (
@@ -207,9 +259,7 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
             error={!!phoneError}
           />
           {phoneError ? (
-            <p className={`text-xs font-montserrat tracking-wide ${variant === 'dark' ? 'text-red-300' : 'text-red-200'}`}>
-              {phoneError}
-            </p>
+            <p className={`text-xs font-montserrat tracking-wide ${errorTextClass}`}>{phoneError}</p>
           ) : null}
         </div>
       )}
@@ -227,7 +277,7 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
         </motion.button>
       </div>
 
-      <p className={`text-xs tracking-wide ${variant === 'dark' ? 'text-white/35' : 'text-brand-stone/70'}`}>
+      <p className={`text-[11px] font-montserrat leading-relaxed tracking-wide ${variant === 'dark' ? 'text-white/40' : 'text-white/55'} text-start`}>
         {copy.privacyLine}
       </p>
     </form>

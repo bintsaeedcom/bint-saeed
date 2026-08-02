@@ -321,6 +321,8 @@ export default function ContactPage() {
                     <input
                       id="contact-name"
                       type="text"
+                      required
+                      minLength={5}
                       value={formData.name}
                       onChange={(e) => {
                         setFormData({ ...formData, name: e.target.value })

@@ -10,6 +10,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { hasStoredCookieChoice } from '@/lib/analytics/consent'
 import toast from 'react-hot-toast'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
+import { validateSubscriberName } from '@/lib/validateSubscriberName'
 import { getEmailPopupCopy } from '@/lib/i18n/emailPopupI18n'
 import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 import { HOUSE_FIRST_PURCHASE_CODE } from '@/lib/membership/constants'
@@ -31,6 +32,7 @@ export default function EmailPopup() {
   const [showSuccess, setShowSuccess] = useState(false)
   const [discountCode, setDiscountCode] = useState(HOUSE_FIRST_PURCHASE_CODE)
   const [formData, setFormData] = useState({ name: '', email: '' })
+  const [nameError, setNameError] = useState('')
   const [emailError, setEmailError] = useState('')
   const { isRTL, language } = useLanguage()
   const copy = getEmailPopupCopy(language)
@@ -70,12 +72,19 @@ export default function EmailPopup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const nameCheck = validateSubscriberName(formData.name, language)
+    if (!nameCheck.valid) {
+      setNameError(nameCheck.message)
+      toast.error(nameCheck.message)
+      return
+    }
     const check = validateSubscriberEmail(formData.email, language)
     if (!check.valid) {
       setEmailError(check.message)
       toast.error(check.message)
       return
     }
+    setNameError('')
     setEmailError('')
     setIsSubmitting(true)
 
@@ -85,6 +94,7 @@ export default function EmailPopup() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
+          name: nameCheck.name,
           email: check.email,
           source: 'house_community_popup',
         }),
@@ -105,7 +115,7 @@ export default function EmailPopup() {
         const msg = typeof data.error === 'string' ? data.error : ''
         if (msg) {
           setEmailError(msg)
-          toast.error(copy.emailCheckError)
+          toast.error(msg)
         } else {
           toast.error(copy.genericError)
         }
@@ -140,7 +150,7 @@ export default function EmailPopup() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 z-[200] bg-[#12080b]/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[200] bg-[#12080b]/50 backdrop-blur-md"
             data-cursor-hover
           />
 
@@ -157,7 +167,7 @@ export default function EmailPopup() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: 8 }}
               transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-              className={`pointer-events-auto relative flex h-auto max-h-full min-h-0 w-full max-w-lg flex-col overflow-hidden border border-white/25 bg-[#1a0210] shadow-[0_28px_80px_-24px_rgba(0,0,0,0.65)] ring-1 ring-inset ring-white/10 md:max-w-4xl md:ring-0 ${
+              className={`pointer-events-auto relative flex h-auto max-h-full min-h-0 w-full max-w-lg flex-col ${glassOverlayPanel} md:max-w-4xl ${
                 isRTL ? 'md:flex-row-reverse' : 'md:flex-row'
               }`}
               data-scroll-lock-owner="true"
@@ -166,20 +176,22 @@ export default function EmailPopup() {
               aria-modal="true"
               aria-label={copy.headline}
             >
+            <div className={glassOverlayWash} aria-hidden />
+
             {/* Mobile double frame — invitation-card edge */}
             <div
-              className="pointer-events-none absolute inset-2 z-[1] border border-[#e8d8c8]/20 md:hidden"
+              className="pointer-events-none absolute inset-2 z-[1] border border-white/20 md:hidden"
               aria-hidden
             />
             <div
-              className="pointer-events-none absolute inset-[11px] z-[1] border border-brand-dustyBlue/25 md:hidden"
+              className="pointer-events-none absolute inset-[11px] z-[1] border border-brand-dustyBlue/30 md:hidden"
               aria-hidden
             />
 
             <button
               type="button"
               onClick={handleClose}
-              className="absolute end-2.5 top-2.5 z-20 border border-white/25 bg-[#1a0210]/80 p-2 text-[#e8d8c8]/90 backdrop-blur-md transition-colors hover:border-brand-dustyBlue/50 hover:text-white sm:end-3 sm:top-3 md:end-3 md:top-3"
+              className="absolute end-2.5 top-2.5 z-20 border border-white/25 bg-black/35 p-2 text-[#e8d8c8]/90 backdrop-blur-md transition-colors hover:border-brand-dustyBlue/50 hover:text-white sm:end-3 sm:top-3"
               data-cursor-hover
               aria-label="Close"
             >
@@ -187,7 +199,7 @@ export default function EmailPopup() {
             </button>
 
             {/* Desktop only — full square monogram (never cropped) */}
-            <div className="relative hidden aspect-square w-[min(50%,28rem)] shrink-0 self-center bg-[#1a0210] md:block">
+            <div className="relative z-[2] hidden aspect-square w-[min(50%,28rem)] shrink-0 self-center md:block">
               <Image
                 src={HOUSE_MONOGRAM_SRC}
                 alt={copy.imageAlt}
@@ -196,7 +208,7 @@ export default function EmailPopup() {
                 sizes="448px"
                 className="object-contain object-center"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#1a0210]/20" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/25" />
               <div className="absolute bottom-8 left-8 right-10">
                 <p className="font-rozha text-3xl leading-tight text-[#faf8f5] drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]">
                   {copy.exclusiveOffer}
@@ -204,10 +216,7 @@ export default function EmailPopup() {
               </div>
             </div>
 
-            <div
-              className={`relative z-[2] flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-6 pe-12 pt-11 text-start sm:p-7 sm:pe-14 sm:pt-12 md:justify-center md:p-9 md:pe-14 md:pt-10 ${glassOverlayPanel}`}
-            >
-              <div className={glassOverlayWash} aria-hidden />
+            <div className="relative z-[2] flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-6 pe-12 pt-11 text-start sm:p-7 sm:pe-14 sm:pt-12 md:justify-center md:p-9 md:pe-14 md:pt-10">
 
               {!showSuccess ? (
                 <div className="relative">
@@ -240,15 +249,31 @@ export default function EmailPopup() {
                   </p>
 
                   <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-3.5">
-                    <input
-                      type="text"
-                      required
-                      placeholder={copy.firstName}
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className={`${fieldClass} text-start`}
-                      dir={isRTL ? 'rtl' : 'ltr'}
-                    />
+                    <div className="space-y-1">
+                      <input
+                        type="text"
+                        required
+                        minLength={5}
+                        autoComplete="name"
+                        placeholder={copy.fullName}
+                        value={formData.name}
+                        onChange={(e) => {
+                          setFormData({ ...formData, name: e.target.value })
+                          if (nameError) setNameError('')
+                        }}
+                        onBlur={() => {
+                          if (!formData.name.trim()) return
+                          const v = validateSubscriberName(formData.name, language)
+                          setNameError(v.valid ? '' : v.message)
+                        }}
+                        aria-invalid={nameError ? true : undefined}
+                        className={`${fieldClass} text-start ${nameError ? 'border-[#c47878]' : ''}`}
+                        dir={isRTL ? 'rtl' : 'ltr'}
+                      />
+                      {nameError ? (
+                        <p className="font-montserrat text-xs text-[#e8b4b4] text-start">{nameError}</p>
+                      ) : null}
+                    </div>
                     <div className="space-y-1">
                       <input
                         type="email"

@@ -23,13 +23,12 @@ export const glassTextMuted = 'relative text-[#5c5356]'
 export const glassTextLink = 'relative text-brand-darkRed underline decoration-brand-darkRed/35 underline-offset-2'
 
 /**
- * Overlay glass (cookie / regional) over dark heroes — wine frosted panel + light type.
+ * Overlay glass (cookie / regional / subscribe) over dark heroes — frosted wine + light type.
+ * Uses `.bs-glass-overlay` in globals.css so translucency is reliable (Tailwind /hex opacity often drops).
  */
-export const glassOverlayPanel =
-  'overflow-hidden border border-white/20 bg-black/80 shadow-[0_18px_48px_-18px_rgba(0,0,0,0.55)] backdrop-blur-2xl backdrop-saturate-150 supports-[backdrop-filter]:bg-black/75'
+export const glassOverlayPanel = 'bs-glass-overlay'
 
-export const glassOverlayWash =
-  'pointer-events-none absolute inset-0 bg-gradient-to-b from-[#2d141e]/55 via-[#1a0210]/35 to-[#12080b]/70'
+export const glassOverlayWash = 'bs-glass-overlay-wash'
 
 export const glassTextTitleOnDark = 'relative text-white'
 export const glassTextBodyOnDark = 'relative text-[#e8d8c8]/90'
