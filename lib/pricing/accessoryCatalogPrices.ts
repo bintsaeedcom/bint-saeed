@@ -127,70 +127,70 @@ export const ACCESSORY_CATALOG_PRICES: Record<string, CurrencyPriceMap> = {
     USD: 649, CHF: 499, RUB: 46900, CNY: 4298, CAD: 899, SGD: 799, BND: 799, MYR: 2495,
     MAD: 5690, NGN: 829000, IDR: 10895000, KZT: 289000, AZN: 1029, UZS: 7195000, HKD: 4798,
   },
-  /** Signature Strand — Fuchsia Jade & Orange Jade share the AED 499 retail map. */
+  /** Signature Strand — Fuchsia Jade & Orange Jade share the AED 399 retail map (−100 AED). */
   'signature-strand-fuchsia-jade': {
-    AED: 499, SAR: 525, QAR: 499, OMR: 55, BHD: 55, KWD: 45, GBP: 105, EUR: 125,
-    USD: 145, CHF: 125, RUB: 10900, CNY: 998, CAD: 199, SGD: 179, BND: 179, MYR: 595,
-    MAD: 1350, NGN: 195000, IDR: 2495000, KZT: 65000, AZN: 239, UZS: 1695000, HKD: 1098,
+    AED: 399, SAR: 425, QAR: 399, OMR: 44, BHD: 45, KWD: 37, GBP: 80, EUR: 100,
+    USD: 115, CHF: 100, RUB: 8400, CNY: 798, CAD: 161, SGD: 142, BND: 142, MYR: 472,
+    MAD: 1070, NGN: 155000, IDR: 1995000, KZT: 50000, AZN: 193, UZS: 1295000, HKD: 883,
   },
   'signature-strand-orange-jade': {
-    AED: 499, SAR: 525, QAR: 499, OMR: 55, BHD: 55, KWD: 45, GBP: 105, EUR: 125,
-    USD: 145, CHF: 125, RUB: 10900, CNY: 998, CAD: 199, SGD: 179, BND: 179, MYR: 595,
-    MAD: 1350, NGN: 195000, IDR: 2495000, KZT: 65000, AZN: 239, UZS: 1695000, HKD: 1098,
+    AED: 399, SAR: 425, QAR: 399, OMR: 44, BHD: 45, KWD: 37, GBP: 80, EUR: 100,
+    USD: 115, CHF: 100, RUB: 8400, CNY: 798, CAD: 161, SGD: 142, BND: 142, MYR: 472,
+    MAD: 1070, NGN: 155000, IDR: 1995000, KZT: 50000, AZN: 193, UZS: 1295000, HKD: 883,
   },
-  /** Signature Strand — Tiger Eye, Onyx & Blue Aventurine share the AED 629 retail map. */
+  /** Signature Strand — Tiger Eye, Onyx & Blue Aventurine share the AED 529 retail map (−100 AED). */
   'signature-strand-tiger-eye': {
-    AED: 629, SAR: 665, QAR: 629, OMR: 69, BHD: 69, KWD: 55, GBP: 135, EUR: 155,
-    USD: 179, CHF: 155, RUB: 13900, CNY: 1268, CAD: 249, SGD: 229, BND: 229, MYR: 739,
-    MAD: 1690, NGN: 239000, IDR: 3145000, KZT: 83500, AZN: 299, UZS: 2125000, HKD: 1398,
+    AED: 529, SAR: 565, QAR: 529, OMR: 58, BHD: 59, KWD: 47, GBP: 110, EUR: 130,
+    USD: 149, CHF: 130, RUB: 11400, CNY: 1068, CAD: 211, SGD: 192, BND: 192, MYR: 616,
+    MAD: 1410, NGN: 199000, IDR: 2645000, KZT: 68500, AZN: 253, UZS: 1725000, HKD: 1183,
   },
   'signature-strand-onyx': {
-    AED: 629, SAR: 665, QAR: 629, OMR: 69, BHD: 69, KWD: 55, GBP: 135, EUR: 155,
-    USD: 179, CHF: 155, RUB: 13900, CNY: 1268, CAD: 249, SGD: 229, BND: 229, MYR: 739,
-    MAD: 1690, NGN: 239000, IDR: 3145000, KZT: 83500, AZN: 299, UZS: 2125000, HKD: 1398,
+    AED: 529, SAR: 565, QAR: 529, OMR: 58, BHD: 59, KWD: 47, GBP: 110, EUR: 130,
+    USD: 149, CHF: 130, RUB: 11400, CNY: 1068, CAD: 211, SGD: 192, BND: 192, MYR: 616,
+    MAD: 1410, NGN: 199000, IDR: 2645000, KZT: 68500, AZN: 253, UZS: 1725000, HKD: 1183,
   },
   'signature-strand-blue-aventurine': {
-    AED: 629, SAR: 665, QAR: 629, OMR: 69, BHD: 69, KWD: 55, GBP: 135, EUR: 155,
-    USD: 179, CHF: 155, RUB: 13900, CNY: 1268, CAD: 249, SGD: 229, BND: 229, MYR: 739,
-    MAD: 1690, NGN: 239000, IDR: 3145000, KZT: 83500, AZN: 299, UZS: 2125000, HKD: 1398,
+    AED: 529, SAR: 565, QAR: 529, OMR: 58, BHD: 59, KWD: 47, GBP: 110, EUR: 130,
+    USD: 149, CHF: 130, RUB: 11400, CNY: 1068, CAD: 211, SGD: 192, BND: 192, MYR: 616,
+    MAD: 1410, NGN: 199000, IDR: 2645000, KZT: 68500, AZN: 253, UZS: 1725000, HKD: 1183,
   },
-  /** Signature Strand — Jade Hearts & Natural Jade share the AED 799 retail map. */
+  /** Signature Strand — Jade Hearts & Natural Jade share the AED 699 retail map (−100 AED). */
   'signature-strand-jade-hearts': {
-    AED: 799, SAR: 845, QAR: 799, OMR: 89, BHD: 85, KWD: 69, GBP: 169, EUR: 195,
-    USD: 229, CHF: 195, RUB: 17500, CNY: 1598, CAD: 319, SGD: 289, BND: 289, MYR: 945,
-    MAD: 2150, NGN: 309000, IDR: 3995000, KZT: 105000, AZN: 379, UZS: 2695000, HKD: 1798,
+    AED: 699, SAR: 745, QAR: 699, OMR: 78, BHD: 75, KWD: 61, GBP: 144, EUR: 170,
+    USD: 199, CHF: 170, RUB: 15000, CNY: 1398, CAD: 281, SGD: 252, BND: 252, MYR: 822,
+    MAD: 1870, NGN: 269000, IDR: 3495000, KZT: 90000, AZN: 333, UZS: 2295000, HKD: 1583,
   },
   'signature-strand-jade': {
-    AED: 799, SAR: 845, QAR: 799, OMR: 89, BHD: 85, KWD: 69, GBP: 169, EUR: 195,
-    USD: 229, CHF: 195, RUB: 17500, CNY: 1598, CAD: 319, SGD: 289, BND: 289, MYR: 945,
-    MAD: 2150, NGN: 309000, IDR: 3995000, KZT: 105000, AZN: 379, UZS: 2695000, HKD: 1798,
+    AED: 699, SAR: 745, QAR: 699, OMR: 78, BHD: 75, KWD: 61, GBP: 144, EUR: 170,
+    USD: 199, CHF: 170, RUB: 15000, CNY: 1398, CAD: 281, SGD: 252, BND: 252, MYR: 822,
+    MAD: 1870, NGN: 269000, IDR: 3495000, KZT: 90000, AZN: 333, UZS: 2295000, HKD: 1583,
   },
-  /** Signature Strand — Amethyst Hearts, Al Ain Oasis Rose Quartz, Sunstone & Lapis Lazuli share the AED 899 retail map. */
+  /** Signature Strand — Amethyst Hearts, Al Ain Oasis Rose Quartz, Sunstone & Lapis Lazuli share the AED 799 retail map (−100 AED). */
   'signature-strand-amethyst-hearts': {
-    AED: 899, SAR: 949, QAR: 899, OMR: 99, BHD: 95, KWD: 79, GBP: 189, EUR: 225,
-    USD: 259, CHF: 219, RUB: 19900, CNY: 1798, CAD: 359, SGD: 329, BND: 329, MYR: 1069,
-    MAD: 2390, NGN: 349000, IDR: 4495000, KZT: 119000, AZN: 429, UZS: 3050000, HKD: 1998,
+    AED: 799, SAR: 849, QAR: 799, OMR: 88, BHD: 85, KWD: 71, GBP: 164, EUR: 200,
+    USD: 229, CHF: 194, RUB: 17400, CNY: 1598, CAD: 321, SGD: 292, BND: 292, MYR: 946,
+    MAD: 2110, NGN: 309000, IDR: 3995000, KZT: 104000, AZN: 383, UZS: 2650000, HKD: 1783,
   },
   'signature-strand-rose-quartz': {
-    AED: 899, SAR: 949, QAR: 899, OMR: 99, BHD: 95, KWD: 79, GBP: 189, EUR: 225,
-    USD: 259, CHF: 219, RUB: 19900, CNY: 1798, CAD: 359, SGD: 329, BND: 329, MYR: 1069,
-    MAD: 2390, NGN: 349000, IDR: 4495000, KZT: 119000, AZN: 429, UZS: 3050000, HKD: 1998,
+    AED: 799, SAR: 849, QAR: 799, OMR: 88, BHD: 85, KWD: 71, GBP: 164, EUR: 200,
+    USD: 229, CHF: 194, RUB: 17400, CNY: 1598, CAD: 321, SGD: 292, BND: 292, MYR: 946,
+    MAD: 2110, NGN: 309000, IDR: 3995000, KZT: 104000, AZN: 383, UZS: 2650000, HKD: 1783,
   },
   'signature-strand-sunstone': {
-    AED: 899, SAR: 949, QAR: 899, OMR: 99, BHD: 95, KWD: 79, GBP: 189, EUR: 225,
-    USD: 259, CHF: 219, RUB: 19900, CNY: 1798, CAD: 359, SGD: 329, BND: 329, MYR: 1069,
-    MAD: 2390, NGN: 349000, IDR: 4495000, KZT: 119000, AZN: 429, UZS: 3050000, HKD: 1998,
+    AED: 799, SAR: 849, QAR: 799, OMR: 88, BHD: 85, KWD: 71, GBP: 164, EUR: 200,
+    USD: 229, CHF: 194, RUB: 17400, CNY: 1598, CAD: 321, SGD: 292, BND: 292, MYR: 946,
+    MAD: 2110, NGN: 309000, IDR: 3995000, KZT: 104000, AZN: 383, UZS: 2650000, HKD: 1783,
   },
   'signature-strand-lapis-lazuli': {
-    AED: 899, SAR: 949, QAR: 899, OMR: 99, BHD: 95, KWD: 79, GBP: 189, EUR: 225,
-    USD: 259, CHF: 219, RUB: 19900, CNY: 1798, CAD: 359, SGD: 329, BND: 329, MYR: 1069,
-    MAD: 2390, NGN: 349000, IDR: 4495000, KZT: 119000, AZN: 429, UZS: 3050000, HKD: 1998,
+    AED: 799, SAR: 849, QAR: 799, OMR: 88, BHD: 85, KWD: 71, GBP: 164, EUR: 200,
+    USD: 229, CHF: 194, RUB: 17400, CNY: 1598, CAD: 321, SGD: 292, BND: 292, MYR: 946,
+    MAD: 2110, NGN: 309000, IDR: 3995000, KZT: 104000, AZN: 383, UZS: 2650000, HKD: 1783,
   },
-  /** Signature Strand — Al Ain Oasis Malachite (AED 1,099). */
+  /** Signature Strand — Al Ain Oasis Malachite (AED 999, −100 AED). */
   'signature-strand-malachite': {
-    AED: 1099, SAR: 1165, QAR: 1099, OMR: 119, BHD: 119, KWD: 95, GBP: 235, EUR: 269,
-    USD: 319, CHF: 269, RUB: 23900, CNY: 2198, CAD: 439, SGD: 399, BND: 399, MYR: 1295,
-    MAD: 2950, NGN: 429000, IDR: 5495000, KZT: 145000, AZN: 529, UZS: 3750000, HKD: 2498,
+    AED: 999, SAR: 1065, QAR: 999, OMR: 108, BHD: 109, KWD: 87, GBP: 210, EUR: 244,
+    USD: 289, CHF: 244, RUB: 21400, CNY: 1998, CAD: 401, SGD: 362, BND: 362, MYR: 1172,
+    MAD: 2670, NGN: 389000, IDR: 4995000, KZT: 130000, AZN: 483, UZS: 3350000, HKD: 2283,
   },
 }
 

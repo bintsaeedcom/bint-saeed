@@ -566,7 +566,7 @@ export const accessories: Accessory[] = [
     name: 'Onyx Strands',
     nameAr: 'أونكس حجر طبيعي',
     category: 'signature-strands',
-    price: 629,
+    price: 529,
     description:
       'Natural black onyx abaya strand with secure clip attachment for draping along the edge or sleeve.',
     descriptionAr:
@@ -582,7 +582,7 @@ export const accessories: Accessory[] = [
     name: 'Tiger Eye Strands',
     nameAr: 'عين النمر حجر طبيعي',
     category: 'signature-strands',
-    price: 629,
+    price: 529,
     description:
       'Warm tiger eye beads with subtle chatoyancy; designed for movement when styled on the abaya.',
     descriptionAr:
@@ -598,7 +598,7 @@ export const accessories: Accessory[] = [
     name: 'Al Ain Oasis Sunstone Strands',
     nameAr: 'ستراندات واحة العين — حجر الشمس',
     category: 'signature-strands',
-    price: 899,
+    price: 799,
     description:
       'Warm sunstone beads with a peach-orange glow — a luminous accent along the abaya silhouette.',
     descriptionAr:
@@ -614,7 +614,7 @@ export const accessories: Accessory[] = [
     name: 'Fuchsia Jade Strands',
     nameAr: 'اليشم الفوشي حجر طبيعي',
     category: 'signature-strands',
-    price: 499,
+    price: 399,
     description:
       'Fuchsia jade strand for a bold jewel-toned highlight on neutral abayas.',
     descriptionAr:
@@ -630,7 +630,7 @@ export const accessories: Accessory[] = [
     name: 'Orange Jade Strands',
     nameAr: 'اليشم البرتقالي حجر طبيعي',
     category: 'signature-strands',
-    price: 499,
+    price: 399,
     description:
       'Orange jade strand for a warm, luminous highlight on neutral abayas.',
     descriptionAr:
@@ -647,7 +647,7 @@ export const accessories: Accessory[] = [
     name: 'Blue Aventurine Strands',
     nameAr: 'أفنتورين أزرق حجر طبيعي',
     category: 'signature-strands',
-    price: 629,
+    price: 529,
     description:
       'Blue aventurine beads with gentle sparkle — a cool contrast on deep or black fabric.',
     descriptionAr:
@@ -663,7 +663,7 @@ export const accessories: Accessory[] = [
     name: 'Al Ain Oasis Rose Quartz Strands',
     nameAr: 'ستراندات واحة العين — كوارتز وردي',
     category: 'signature-strands',
-    price: 899,
+    price: 799,
     description:
       'Soft rose quartz with a luminous, romantic line along the abaya edge.',
     descriptionAr:
@@ -679,7 +679,7 @@ export const accessories: Accessory[] = [
     name: 'Al Ain Oasis Malachite Strands',
     nameAr: 'ستراندات واحة العين — ملاكيت',
     category: 'signature-strands',
-    price: 1099,
+    price: 999,
     description:
       'Deep malachite green with natural banding — a striking signature accent.',
     descriptionAr:
@@ -695,7 +695,7 @@ export const accessories: Accessory[] = [
     name: 'Al Ain Oasis Lapis Lazuli Strands',
     nameAr: 'ستراندات واحة العين — لازورد',
     category: 'signature-strands',
-    price: 899,
+    price: 799,
     description:
       'Rich lapis lazuli with golden pyrite flecks; an elevated jewel tone for evening abayas.',
     descriptionAr:
@@ -711,7 +711,7 @@ export const accessories: Accessory[] = [
     name: 'Amethyst Hearts Strands',
     nameAr: 'قلوب جمشت حجر طبيعي',
     category: 'signature-strands',
-    price: 899,
+    price: 799,
     description:
       'Heart-cut amethyst beads — limited edition release with clip attachment.',
     descriptionAr:
@@ -728,7 +728,7 @@ export const accessories: Accessory[] = [
     name: 'Jade Hearts Strands',
     nameAr: 'قلوب اليشم حجر طبيعي',
     category: 'signature-strands',
-    price: 799,
+    price: 699,
     description:
       'Heart-shaped jade beads — limited edition; serene green movement on the abaya line.',
     descriptionAr:
@@ -745,7 +745,7 @@ export const accessories: Accessory[] = [
     name: 'Natural Jade Strands',
     nameAr: 'ستراندات اليشم الطبيعي',
     category: 'signature-strands',
-    price: 799,
+    price: 699,
     description:
       'Round natural jade beads in soft muted green — genuine undyed jade with gold-tone Knotted Line finishes.',
     descriptionAr:
