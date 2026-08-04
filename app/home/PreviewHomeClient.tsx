@@ -488,7 +488,7 @@ function StrandsFeatureCarousel({
       </LocaleLink>
 
       <div
-        className="absolute inset-x-0 bottom-5 z-10 flex items-center justify-center gap-2.5"
+        className="absolute inset-x-0 bottom-5 z-10 flex items-center justify-center gap-1"
         role="tablist"
         aria-label="Signature Strands"
       >
@@ -506,12 +506,17 @@ function StrandsFeatureCarousel({
                 e.stopPropagation()
                 setIndex(i)
               }}
-              className={`h-2.5 w-2.5 rounded-full border shadow-[0_1px_6px_rgba(0,0,0,0.45)] transition-all duration-300 ${
-                active
-                  ? 'scale-110 border-[#e8d8c8] bg-[#e8d8c8]'
-                  : 'border-[#e8d8c8]/70 bg-[#e8d8c8]/30 hover:bg-[#e8d8c8]/60'
-              }`}
-            />
+              className="bs-carousel-dot flex h-7 w-7 items-center justify-center"
+            >
+              <span
+                className={`block h-1.5 w-1.5 rounded-full border shadow-[0_1px_4px_rgba(0,0,0,0.4)] transition-all duration-300 ${
+                  active
+                    ? 'scale-110 border-[#e8d8c8] bg-[#e8d8c8]'
+                    : 'border-[#e8d8c8]/70 bg-[#e8d8c8]/30'
+                }`}
+                aria-hidden
+              />
+            </button>
           )
         })}
       </div>

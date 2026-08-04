@@ -10,9 +10,11 @@ import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
 
 const STORAGE_KEY = 'bint-saeed-house-banner-dismissed'
 const BANNER_HEIGHT_FALLBACK = '2.125rem'
+const ROTATE_MS = 4200
 
 /**
  * Waed-style top offer strip — quiet commerce cue (15% + privilege + free shipping).
+ * Rotates one message at a time so the strip stays calm on mobile.
  */
 export default function HouseOfferBanner() {
   const { language, isRTL } = useLanguage()
@@ -20,13 +22,25 @@ export default function HouseOfferBanner() {
   const { currency } = useCurrency()
   const { isUaeVisitor, amountLabel } = useVisitorComplimentaryShipping(currency.code)
   const [visible, setVisible] = useState(true)
+  const [lineIndex, setLineIndex] = useState(0)
   const rootRef = useRef<HTMLDivElement>(null)
 
-  const line = useMemo(
-    () =>
-      withShippingAmount(isUaeVisitor ? copy.lineUae : copy.lineWorldwide, amountLabel),
-    [amountLabel, copy.lineUae, copy.lineWorldwide, isUaeVisitor],
-  )
+  const lines = useMemo(() => {
+    const shipping = withShippingAmount(
+      isUaeVisitor ? copy.shippingUae : copy.shippingWorldwide,
+      amountLabel,
+    )
+    return [copy.firstPurchase, copy.housePrivilege, shipping]
+  }, [
+    amountLabel,
+    copy.firstPurchase,
+    copy.housePrivilege,
+    copy.shippingUae,
+    copy.shippingWorldwide,
+    isUaeVisitor,
+  ])
+
+  const line = lines[lineIndex % lines.length] ?? lines[0]
 
   useEffect(() => {
     try {
@@ -35,6 +49,23 @@ export default function HouseOfferBanner() {
       /* ignore */
     }
   }, [])
+
+  useEffect(() => {
+    if (!visible || lines.length < 2) return
+    const reduceMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion) return
+
+    const id = window.setInterval(() => {
+      setLineIndex((i) => (i + 1) % lines.length)
+    }, ROTATE_MS)
+    return () => window.clearInterval(id)
+  }, [visible, lines.length])
+
+  useEffect(() => {
+    setLineIndex(0)
+  }, [language, isUaeVisitor])
 
   useEffect(() => {
     const root = document.documentElement
@@ -84,14 +115,18 @@ export default function HouseOfferBanner() {
       className="relative z-[61] w-full min-w-0 border-b border-white/10 bg-[#12080b] text-[#e8d8c8]"
       data-house-offer-banner="true"
       role="region"
-      aria-label={line}
+      aria-label={lines.join(' · ')}
+      aria-live="polite"
     >
       <div
         className={`flex items-center justify-center gap-x-3 gap-y-1 px-9 py-1.5 sm:px-10 sm:py-2 ${
           isRTL ? 'flex-row-reverse' : ''
         }`}
       >
-        <p className="min-w-0 max-w-[min(100%,52rem)] text-center font-montserrat text-[9px] font-medium uppercase leading-snug tracking-[0.12em] text-[#e8d8c8]/90 sm:text-[10px] sm:tracking-[0.16em]">
+        <p
+          key={line}
+          className="min-w-0 max-w-[min(100%,52rem)] animate-[houseOfferFade_0.45s_ease] text-center font-montserrat text-[9px] font-medium uppercase leading-snug tracking-[0.12em] text-[#e8d8c8]/90 sm:text-[10px] sm:tracking-[0.16em]"
+        >
           {line}
         </p>
         <button
