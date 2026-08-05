@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(
         {
           feeds: listGoogleMerchantFeedUrls(),
-          hint: 'In Merchant Center, add one scheduled fetch per country. Feed label = country code. Target country = that country. Add matching shipping in MC (or rely on the feed shipping column).',
+          hint: 'In Merchant Center, add one scheduled fetch per country from this list (Feed label = country code, target country = that country). Each feed row includes a matching shipping column from our house rates. Account-level Shipping policies can stay as a backup, but feed shipping covers the destinations once those feeds are registered.',
         },
         {
           headers: {

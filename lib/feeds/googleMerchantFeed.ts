@@ -42,16 +42,18 @@ export type GoogleMerchantCountryFeed = {
 /**
  * Country → currency map for Merchant Center feeds.
  * Register one scheduled fetch per country using ?country=XX.
+ * Currencies must exist in SupportedCurrency (fixed retail maps), so markets
+ * without a local checkout currency use the nearest supported one (e.g. SE→EUR).
  */
 export const GOOGLE_MERCHANT_COUNTRY_FEEDS: Record<string, GoogleMerchantCountryFeed> = {
+  // GCC
   AE: { currency: 'AED', feedLabel: 'AE', name: 'United Arab Emirates' },
   SA: { currency: 'SAR', feedLabel: 'SA', name: 'Saudi Arabia' },
   QA: { currency: 'QAR', feedLabel: 'QA', name: 'Qatar' },
   KW: { currency: 'KWD', feedLabel: 'KW', name: 'Kuwait' },
   BH: { currency: 'BHD', feedLabel: 'BH', name: 'Bahrain' },
   OM: { currency: 'OMR', feedLabel: 'OM', name: 'Oman' },
-  GB: { currency: 'GBP', feedLabel: 'GB', name: 'United Kingdom' },
-  US: { currency: 'USD', feedLabel: 'US', name: 'United States' },
+  // Europe (EUR)
   FR: { currency: 'EUR', feedLabel: 'FR', name: 'France' },
   DE: { currency: 'EUR', feedLabel: 'DE', name: 'Germany' },
   NL: { currency: 'EUR', feedLabel: 'NL', name: 'Netherlands' },
@@ -59,13 +61,27 @@ export const GOOGLE_MERCHANT_COUNTRY_FEEDS: Record<string, GoogleMerchantCountry
   ES: { currency: 'EUR', feedLabel: 'ES', name: 'Spain' },
   IT: { currency: 'EUR', feedLabel: 'IT', name: 'Italy' },
   BE: { currency: 'EUR', feedLabel: 'BE', name: 'Belgium' },
+  AT: { currency: 'EUR', feedLabel: 'AT', name: 'Austria' },
+  DK: { currency: 'EUR', feedLabel: 'DK', name: 'Denmark' },
+  SE: { currency: 'EUR', feedLabel: 'SE', name: 'Sweden' },
+  LI: { currency: 'CHF', feedLabel: 'LI', name: 'Liechtenstein' },
   CH: { currency: 'CHF', feedLabel: 'CH', name: 'Switzerland' },
+  GB: { currency: 'GBP', feedLabel: 'GB', name: 'United Kingdom' },
+  // Americas / Oceania
+  US: { currency: 'USD', feedLabel: 'US', name: 'United States' },
   CA: { currency: 'CAD', feedLabel: 'CA', name: 'Canada' },
+  MX: { currency: 'USD', feedLabel: 'MX', name: 'Mexico' },
   AU: { currency: 'USD', feedLabel: 'AU', name: 'Australia' },
+  // Asia / Africa / CIS
   SG: { currency: 'SGD', feedLabel: 'SG', name: 'Singapore' },
   MY: { currency: 'MYR', feedLabel: 'MY', name: 'Malaysia' },
   ID: { currency: 'IDR', feedLabel: 'ID', name: 'Indonesia' },
   BN: { currency: 'BND', feedLabel: 'BN', name: 'Brunei' },
+  MA: { currency: 'MAD', feedLabel: 'MA', name: 'Morocco' },
+  NG: { currency: 'NGN', feedLabel: 'NG', name: 'Nigeria' },
+  GE: { currency: 'USD', feedLabel: 'GE', name: 'Georgia' },
+  RU: { currency: 'RUB', feedLabel: 'RU', name: 'Russia' },
+  UZ: { currency: 'UZS', feedLabel: 'UZ', name: 'Uzbekistan' },
 }
 
 /** @deprecated Prefer GOOGLE_MERCHANT_COUNTRY_FEEDS */
@@ -89,6 +105,10 @@ const FEED_CURRENCIES: SupportedCurrency[] = [
   'MYR',
   'IDR',
   'BND',
+  'MAD',
+  'NGN',
+  'RUB',
+  'UZS',
 ]
 
 const FEED_COLUMNS = [
