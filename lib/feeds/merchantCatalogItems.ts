@@ -19,6 +19,7 @@ import {
 } from '@/lib/products/productColorAvailability'
 import { resolveProductSku } from '@/lib/products/sku'
 import { getPdpSizeOptions } from '@/lib/shopProductOptions'
+import { buildMerchantAccessoryDescription, buildMerchantProductDescription } from '@/lib/feeds/merchantProductDescription'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
@@ -153,10 +154,6 @@ function buildShopItems(products: Product[]): MerchantCatalogItem[] {
 
       const sku = resolveProductSku(product, colorName) ?? product.id
       const baseTitle = colorName ? `${product.name} — ${colorName}` : product.name
-      const description = sanitizeFeedText(
-        [product.description || product.name, product.fabric?.trim()].filter(Boolean).join(' '),
-        5000,
-      )
       const image_link = absoluteFeedImageUrl(primary)
       const additional_image_link = additionalImageLinks(images)
       const colorLabel = colorName ?? ''
@@ -168,6 +165,7 @@ function buildShopItems(products: Product[]): MerchantCatalogItem[] {
           sizes.length === 1 && /one\s*size/i.test(size)
             ? sanitizeFeedText(baseTitle, 150)
             : sanitizeFeedText(`${baseTitle} — ${size}`, 150)
+        const description = buildMerchantProductDescription(product, colorName, size)
 
         rows.push({
           id,
@@ -211,16 +209,7 @@ function buildAccessoryItems(items: readonly Accessory[]): MerchantCatalogItem[]
         id: sku,
         item_group_id: sku,
         title: sanitizeFeedText(item.name, 150),
-        description: sanitizeFeedText(
-          [
-            item.description?.trim() || item.name,
-            item.materials?.trim(),
-            'Created in Abu Dhabi by Bint Saeed. Ships worldwide.',
-          ]
-            .filter(Boolean)
-            .join(' '),
-          5000,
-        ),
+        description: buildMerchantAccessoryDescription(item),
         link: accessoryCanonicalUrl('en', item.id),
         image_link: absoluteFeedImageUrl(images[0]),
         additional_image_link: additionalImageLinks(images),
