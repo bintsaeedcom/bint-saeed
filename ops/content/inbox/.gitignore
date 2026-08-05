@@ -2,3 +2,6 @@
 !.gitignore
 !README.md
 !**/.gitkeep
+!_gsc/
+!_gsc/.gitignore
+!_gsc/README.md
