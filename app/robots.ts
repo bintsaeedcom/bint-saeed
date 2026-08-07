@@ -51,6 +51,22 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: 'Bingbot',
         allow: '/',
       },
+      {
+        userAgent: 'Yandex',
+        allow: '/',
+      },
+      {
+        userAgent: 'YandexBot',
+        allow: '/',
+      },
+      {
+        userAgent: 'DuckDuckBot',
+        allow: '/',
+      },
+      {
+        userAgent: 'Applebot',
+        allow: '/',
+      },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,

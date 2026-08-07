@@ -39,6 +39,7 @@ Distribution priority: `DISTRIBUTION_MATRIX.md`
 | `ASSET_NAMING.md` | `bint-saeed-…` rename rules + script |
 | `KEYWORD_TRENDS_AUDIT.md` | Free Google + Pinterest/TikTok/IG discovery audit |
 | `DISTRIBUTION_MATRIX.md` | High-value channel priority + Stage 1–3 automation |
+| `growth/` | Weekly social scorecard + trends (native Insights) |
 | `CHANNEL_MATRIX.md` | What to post where (weekly mix) |
 | `WEEKLY_CALENDAR.md` | Blank + example week |
 | `PACK_TEMPLATE.md` | Expected draft shape |

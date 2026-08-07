@@ -39,6 +39,11 @@ export type ContentDashboardPayload = {
     topPageCount: number
     previewMarkdown: string
   }
+  growth: {
+    weeksLogged: number
+    previewMarkdown: string
+    csvRelativePath: string
+  }
   instructions: {
     uploadWhere: string
     afterUpload: string
@@ -187,6 +192,21 @@ export async function readContentDashboard(): Promise<ContentDashboardPayload> {
   const { loadGscAuditSnapshot } = await import('@/lib/content/gscCsv')
   const gsc = await loadGscAuditSnapshot()
 
+  const growthMdPath = path.join(root, 'growth', 'LATEST_GROWTH.md')
+  const growthCsvPath = path.join(root, 'growth', 'weekly.csv')
+  let growthPreview = await readText(growthMdPath)
+  let weeksLogged = 0
+  try {
+    const csv = await fs.readFile(growthCsvPath, 'utf8')
+    weeksLogged = Math.max(0, csv.split(/\r?\n/).filter((l) => l.trim() && !l.startsWith('week_start')).length)
+  } catch {
+    weeksLogged = 0
+  }
+  if (!growthPreview) {
+    growthPreview =
+      '_No growth summary yet. Fill ops/content/growth/weekly.csv from native Insights, then run: node ops/content/scripts/refresh-growth.mjs_'
+  }
+
   const dates = (await listDirs(batchesRoot)).sort().reverse()
   const packs: ContentPack[] = []
   for (const date of dates.slice(0, 30)) {
@@ -211,6 +231,11 @@ export async function readContentDashboard(): Promise<ContentDashboardPayload> {
       topQueryCount: gsc.topQueries.length,
       topPageCount: gsc.topPages.length,
       previewMarkdown: gsc.markdown.slice(0, 4000),
+    },
+    growth: {
+      weeksLogged,
+      previewMarkdown: growthPreview.slice(0, 6000),
+      csvRelativePath: 'ops/content/growth/weekly.csv',
     },
     instructions: {
       uploadWhere:

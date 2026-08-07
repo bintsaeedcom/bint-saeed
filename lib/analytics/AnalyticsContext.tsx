@@ -80,6 +80,7 @@ interface BrowserContext {
   hostname: string
   referrer: string
   language: string
+  timezone: string
   screen: string
   userAgent: string
 }
@@ -130,6 +131,12 @@ function getDeviceInfo() {
 
 function getBrowserContext(): BrowserContext | null {
   if (typeof window === 'undefined') return null
+  let timezone = ''
+  try {
+    timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''
+  } catch {
+    timezone = ''
+  }
   return {
     title: document.title || '',
     url: window.location.href,
@@ -137,6 +144,7 @@ function getBrowserContext(): BrowserContext | null {
     hostname: window.location.hostname,
     referrer: document.referrer || 'Direct',
     language: navigator.language || '',
+    timezone,
     screen: `${window.screen?.width || 0}x${window.screen?.height || 0}`,
     userAgent: navigator.userAgent,
   }
@@ -359,11 +367,24 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
 
       setVisitor(visitorData)
 
+      const shopCurrency =
+        typeof localStorage !== 'undefined' ? localStorage.getItem('bint-saeed-currency') || 'AED' : 'AED'
+      const shopLanguage =
+        typeof localStorage !== 'undefined' ? localStorage.getItem('language') || 'en' : 'en'
+
       // Send visitor notifications to Slack (admin-only; user never sees these)
+      const slackPayload = {
+        ...visitorData,
+        browser: getBrowserContext(),
+        currency: shopCurrency,
+        language: shopLanguage,
+        shopCurrency,
+        shopLanguage,
+      }
       if (isNewVisitor || visitCount === 1) {
-        await sendSlackNotification('new_visitor', visitorData)
+        await sendSlackNotification('new_visitor', slackPayload)
       } else {
-        await sendSlackNotification('returning_visitor', visitorData)
+        await sendSlackNotification('returning_visitor', slackPayload)
       }
     }
 

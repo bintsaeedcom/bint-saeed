@@ -11,7 +11,11 @@ import {
   getContentPopularity,
   getGeoTrend,
 } from '@/lib/analytics/analyticsStore'
-import { getClientIpFromRequest, lookupGeoFromIp } from '@/lib/geo/ipGeoServer'
+import { getClientIpFromRequest, resolveRequestGeo } from '@/lib/geo/ipGeoServer'
+import {
+  assessLocationSignals,
+  formatShopPreferenceLine,
+} from '@/lib/geo/locationSignals'
 import { shouldSuppressVisitorNoise, STAFF_VISITOR_IDS } from '@/lib/analytics/staffOptics'
 
 function normalizedWebhook(...values: Array<string | undefined>): string | undefined {
@@ -105,8 +109,26 @@ function formatAccuracy(location: any): string {
     const meters = typeof location.accuracyMeters === 'number' ? ` ±${Math.round(location.accuracyMeters)}m` : ''
     return `Browser GPS${meters}`
   }
-  if (location.accuracyLevel === 'ip') return 'IP-derived approximate location'
+  if (location.accuracyLevel === 'ip') {
+    const src = location.geoSource ? ` (${location.geoSource})` : ''
+    return `IP / edge estimate only${src} — not a street address`
+  }
   return 'Unknown'
+}
+
+function formatVpnLine(data: any): string {
+  const signals = data.locationSignals
+  if (!signals) return 'Not assessed'
+  const flag = signals.vpnLikely ? '⚠️ Likely VPN/proxy' : 'No strong VPN signal'
+  const why = Array.isArray(signals.reasons) && signals.reasons.length
+    ? `\n_${signals.reasons.slice(0, 3).join('; ')}_`
+    : ''
+  return `${flag} · confidence ${signals.confidence}${why}`
+}
+
+function formatIspLine(location: any): string {
+  const parts = [location?.isp, location?.org].filter(Boolean)
+  return parts.length ? parts.join(' · ') : 'Unknown'
 }
 
 function formatCoordinates(location: any): string {
@@ -213,29 +235,44 @@ export async function POST(request: NextRequest) {
 
     let payload = data
     if (data?.visitorId) {
-      const loc = data.location as Record<string, string> | undefined
-      const needsGeo =
-        !loc?.city || loc.city === 'Unknown' || !loc?.country || loc.country === 'Unknown'
-      if (needsGeo) {
-        const ip = getClientIpFromRequest(request)
-        if (ip) {
-          const geo = await lookupGeoFromIp(ip)
-          if (geo) {
-            payload = {
-              ...data,
-              location: {
-                ...(loc || {}),
-                city: geo.city || loc?.city || 'Unknown',
-                region: geo.region || loc?.region,
-                country: geo.country || loc?.country || 'Unknown',
-                countryCode: geo.countryCode || loc?.countryCode,
-                ip,
-                accuracyLevel: 'ip',
-              },
-            }
-          }
+      const loc = (data.location || {}) as Record<string, unknown>
+      const serverGeo = await resolveRequestGeo(request)
+      const ip = serverGeo?.ip || getClientIpFromRequest(request) || (typeof loc.ip === 'string' ? loc.ip : null)
+
+      if (serverGeo || ip) {
+        payload = {
+          ...data,
+          location: {
+            ...loc,
+            city: serverGeo?.city || loc.city || 'Unknown',
+            region: serverGeo?.region || loc.region || '',
+            country: serverGeo?.country || loc.country || 'Unknown',
+            countryCode: serverGeo?.countryCode || loc.countryCode || 'XX',
+            ip: ip || loc.ip || 'Unknown',
+            latitude: serverGeo?.latitude ?? loc.latitude ?? null,
+            longitude: serverGeo?.longitude ?? loc.longitude ?? null,
+            timezone: serverGeo?.timezone || loc.timezone || '',
+            isp: serverGeo?.isp || loc.isp,
+            org: serverGeo?.org || loc.org,
+            as: serverGeo?.as || loc.as,
+            geoSource: serverGeo?.source || loc.geoSource,
+            accuracyLevel: loc.accuracyLevel === 'gps' ? 'gps' : 'ip',
+          },
         }
       }
+
+      const locationSignals = assessLocationSignals({
+        ipCountryCode: payload.location?.countryCode,
+        ipTimezone: payload.location?.timezone,
+        ipIsp: payload.location?.isp,
+        ipOrg: payload.location?.org,
+        ipAs: payload.location?.as,
+        browserTimezone: data.browser?.timezone || data.timezone,
+        browserLanguage: data.browser?.language,
+        shopCurrency: data.currency || data.shopCurrency,
+        shopLanguage: data.language || data.shopLanguage,
+      })
+      payload = { ...payload, locationSignals }
 
       activeVisitors.set(payload.visitorId, {
         ...payload,
@@ -256,7 +293,7 @@ export async function POST(request: NextRequest) {
     const webhookUrl = suppressSlack ? undefined : resolveSlackWebhookForType(type)
     if (webhookUrl) {
       try {
-        const message = formatSlackMessage(type, data)
+        const message = formatSlackMessage(type, payload)
         const slackResponse = await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -330,6 +367,19 @@ function formatSlackMessage(type: string, data: any) {
   const coordinatesText = formatCoordinates(data.location)
   const previousWebsite = formatPreviousWebsite(data)
   const utmText = formatUtm(data)
+  const vpnText = formatVpnLine(data)
+  const ispText = formatIspLine(data.location)
+  const shopPref = formatShopPreferenceLine(data.currency || data.shopCurrency, data.language || data.shopLanguage)
+  const browserTz = data.browser?.timezone || data.location?.browserTimezone || '—'
+
+  const geoExtraFields = [
+    { type: 'mrkdwn' as const, text: `*Approx area:*\n📬 ${addressText}` },
+    { type: 'mrkdwn' as const, text: `*Location trust:*\n🎯 ${accuracyText}` },
+    { type: 'mrkdwn' as const, text: `*VPN / proxy:*\n${vpnText}` },
+    { type: 'mrkdwn' as const, text: `*Network:*\n🛰️ ${ispText}` },
+    { type: 'mrkdwn' as const, text: `*Shop preference:*\n🛍️ ${shopPref}` },
+    { type: 'mrkdwn' as const, text: `*Browser clock:*\n🕒 ${browserTz}` },
+  ]
 
   switch (type) {
     case 'new_visitor':
@@ -397,11 +447,10 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Date & Time:*\n🕐 ${timestamp}` },
-              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `*IP location:*\n${locationWithMap}${accuracyBadge}` },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
-              { type: 'mrkdwn', text: `*Address:*\n📬 ${addressText}` },
-              { type: 'mrkdwn', text: `*Accuracy:*\n🎯 ${accuracyText}` },
+              ...geoExtraFields,
             ]
           },
           {
@@ -420,7 +469,7 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\`` }
+              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\` · IP city ≠ home if VPN` }
             ]
           }
         ]
@@ -491,11 +540,10 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Date & Time:*\n🕐 ${timestamp}` },
-              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `*IP location:*\n${locationWithMap}${accuracyBadge}` },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
-              { type: 'mrkdwn', text: `*Address:*\n📬 ${addressText}` },
-              { type: 'mrkdwn', text: `*Accuracy:*\n🎯 ${accuracyText}` },
+              ...geoExtraFields,
             ]
           },
           {
@@ -514,7 +562,7 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\`` }
+              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\` · IP city ≠ home if VPN` }
             ]
           }
         ]

@@ -36,6 +36,11 @@ type ContentDashboardPayload = {
     topPageCount: number
     previewMarkdown: string
   }
+  growth: {
+    weeksLogged: number
+    previewMarkdown: string
+    csvRelativePath: string
+  }
   instructions: {
     uploadWhere: string
     afterUpload: string
@@ -63,7 +68,9 @@ export default function AdminContentPage() {
   const [data, setData] = useState<ContentDashboardPayload | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [tab, setTab] = useState<'how' | 'inbox' | 'gsc' | 'packs' | 'pending' | 'approved' | 'posted'>('how')
+  const [tab, setTab] = useState<
+    'how' | 'inbox' | 'gsc' | 'growth' | 'packs' | 'pending' | 'approved' | 'posted'
+  >('how')
   const [selectedPack, setSelectedPack] = useState<ContentPack | null>(null)
   const [filePreview, setFilePreview] = useState<{ name: string; text: string } | null>(null)
   const [previewLoading, setPreviewLoading] = useState(false)
@@ -133,6 +140,7 @@ export default function AdminContentPage() {
     { id: 'how', label: 'How to use' },
     { id: 'inbox', label: 'Inbox' },
     { id: 'gsc', label: 'Google Search' },
+    { id: 'growth', label: 'Growth' },
     { id: 'packs', label: 'Packs' },
     { id: 'pending', label: 'Pending' },
     { id: 'approved', label: 'Approved' },
@@ -173,8 +181,12 @@ export default function AdminContentPage() {
           value={loading ? '—' : (data?.gsc.topQueryCount ?? 0)}
           hint={data?.gsc.sourceFiles?.length ? data.gsc.sourceFiles.join(', ') : 'Drop CSVs in inbox/_gsc'}
         />
+        <StatCard
+          label="Growth weeks"
+          value={loading ? '—' : (data?.growth.weeksLogged ?? 0)}
+          hint="Native Insights → weekly.csv"
+        />
         <StatCard label="Packs" value={loading ? '—' : (data?.packs.length ?? 0)} hint={data?.batchesRoot} />
-        <StatCard label="Cost" value="$0" hint="Folder + Cursor + this overview" />
       </div>
 
       <div className="mt-8 flex flex-wrap gap-2">
@@ -268,6 +280,20 @@ export default function AdminContentPage() {
             </p>
             <pre className="max-h-[640px] overflow-auto whitespace-pre-wrap rounded-[4px] border border-white/10 bg-white/[0.03] p-4 font-montserrat text-[12px] leading-relaxed text-white/75">
               {data?.gsc.previewMarkdown || 'No GSC CSVs found yet.'}
+            </pre>
+          </div>
+        ) : null}
+
+        {tab === 'growth' ? (
+          <div className="space-y-3">
+            <p className="font-montserrat text-sm text-white/55">
+              Once a week, copy numbers from Instagram / TikTok / Pinterest Insights into{' '}
+              <span className="text-white/80">{data?.growth.csvRelativePath || 'ops/content/growth/weekly.csv'}</span>,
+              then run{' '}
+              <code className="text-brand-stone">node ops/content/scripts/refresh-growth.mjs</code> and Refresh.
+            </p>
+            <pre className="max-h-[640px] overflow-auto whitespace-pre-wrap rounded-[4px] border border-white/10 bg-white/[0.03] p-4 font-montserrat text-[12px] leading-relaxed text-white/75">
+              {data?.growth.previewMarkdown || 'No growth data yet.'}
             </pre>
           </div>
         ) : null}
