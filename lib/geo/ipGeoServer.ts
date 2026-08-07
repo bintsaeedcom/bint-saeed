@@ -122,8 +122,8 @@ export async function resolveRequestGeo(request: Request): Promise<IpGeoResult |
     return {
       city: fromIp.city || vercel.city || '',
       region: fromIp.region || vercel.region || '',
-      country: fromIp.country || vercel.countryCode,
-      countryCode: fromIp.countryCode || vercel.countryCode,
+      country: fromIp.country || vercel.countryCode || vercel.country || '',
+      countryCode: fromIp.countryCode || vercel.countryCode || '',
       ip: fromIp.ip || ip || undefined,
       latitude: fromIp.latitude ?? vercel.latitude ?? null,
       longitude: fromIp.longitude ?? vercel.longitude ?? null,
@@ -140,8 +140,8 @@ export async function resolveRequestGeo(request: Request): Promise<IpGeoResult |
   return {
     city: vercel!.city || '',
     region: vercel!.region || '',
-    country: vercel!.countryCode,
-    countryCode: vercel!.countryCode,
+    country: vercel!.country || vercel!.countryCode || '',
+    countryCode: vercel!.countryCode || '',
     ip: ip || undefined,
     latitude: vercel!.latitude ?? null,
     longitude: vercel!.longitude ?? null,
