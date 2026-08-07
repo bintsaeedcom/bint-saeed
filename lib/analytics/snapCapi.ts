@@ -156,13 +156,17 @@ export async function sendSnapCapiEvents(
     const url = `https://tr.snapchat.com/v3/${encodeURIComponent(pixelId)}/events?access_token=${encodeURIComponent(token)}`
     const res = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(payload),
     })
     if (!res.ok) {
       const text = await res.text().catch(() => '')
       console.error('[snap-capi]', res.status, text.slice(0, 400))
-      return { ok: false, error: `Snap CAPI ${res.status}` }
+      const hint = text.replace(/\s+/g, ' ').trim().slice(0, 180)
+      return { ok: false, error: hint ? `Snap CAPI ${res.status}: ${hint}` : `Snap CAPI ${res.status}` }
     }
     return { ok: true }
   } catch (error) {
