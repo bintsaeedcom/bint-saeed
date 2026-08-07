@@ -1,4 +1,4 @@
-export type TrackerKey = 'gtm' | 'ga4' | 'clarity' | 'posthog' | 'meta_pixel'
+export type TrackerKey = 'gtm' | 'ga4' | 'clarity' | 'posthog' | 'meta_pixel' | 'snap_pixel'
 
 export type TrackerCookieInfo = {
   name: string
@@ -77,6 +77,18 @@ export const TRACKER_CATALOG: TrackerInfo[] = [
       { name: '_fbc', purpose: 'Click identifier when arriving from Meta ads', retention: 'up to 3 months' },
     ],
   },
+  {
+    key: 'snap_pixel',
+    title: 'Snap Pixel',
+    category: 'marketing',
+    envVar: 'NEXT_PUBLIC_SNAP_PIXEL_ID',
+    description:
+      'Measures Snapchat ads conversions (PageView, ViewContent, AddCart, StartCheckout, Purchase) when marketing cookies are accepted.',
+    cookies: [
+      { name: '_scid', purpose: 'Browser identifier for Snap advertising', retention: 'up to 13 months' },
+      { name: '_sctr', purpose: 'Attribution / conversion timing for Snap', retention: 'up to 1 year' },
+    ],
+  },
 ]
 
 export function getEnabledTrackersFromEnv() {
@@ -86,6 +98,7 @@ export function getEnabledTrackersFromEnv() {
   const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY?.trim()
   const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST?.trim()
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim()
+  const snapPixelId = process.env.NEXT_PUBLIC_SNAP_PIXEL_ID?.trim()
 
   return TRACKER_CATALOG.filter((tracker) => {
     if (tracker.key === 'gtm') return /^GTM-[A-Z0-9]+$/i.test(gtmId)
@@ -93,6 +106,7 @@ export function getEnabledTrackersFromEnv() {
     if (tracker.key === 'clarity') return Boolean(clarityId)
     if (tracker.key === 'posthog') return Boolean(posthogKey && posthogHost)
     if (tracker.key === 'meta_pixel') return Boolean(metaPixelId)
+    if (tracker.key === 'snap_pixel') return Boolean(snapPixelId)
     return false
   })
 }

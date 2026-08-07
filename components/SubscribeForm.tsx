@@ -14,6 +14,7 @@ import {
   type SubscribeNotifyChannel,
 } from '@/lib/i18n/subscribeFormI18n'
 import { CTA_BUTTON_RADIUS, CTA_FORM_TRACKING } from '@/lib/ui/ctaClasses'
+import { trackEvent } from '@/lib/analytics/tracking'
 
 interface SubscribeFormProps {
   variant?: 'light' | 'dark'
@@ -126,6 +127,7 @@ export default function SubscribeForm({ variant = 'light' }: SubscribeFormProps)
         setEmail('')
         setPhone(undefined)
         setNotifyChannel('email')
+        trackEvent('subscribe', { method: 'subscribe_form' })
       } else {
         const msg = typeof data.error === 'string' ? data.error : copy.errorGeneric
         toast.error(msg)

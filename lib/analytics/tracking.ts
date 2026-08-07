@@ -12,6 +12,7 @@ declare global {
     clarity?: (...args: unknown[]) => void
     fbq?: (...args: unknown[]) => void
     _fbq?: (...args: unknown[]) => void
+    snaptr?: (...args: unknown[]) => void
     posthog?: {
       init: (key: string, config?: Record<string, unknown>) => void
       capture: (event: string, properties?: Record<string, unknown>) => void
@@ -38,6 +39,7 @@ const state = {
   clarityReady: false,
   posthogReady: false,
   metaPixelReady: false,
+  snapPixelReady: false,
   trackerInitComplete: false,
   trackerInitScheduled: false,
   marketingInitScheduled: false,
@@ -247,16 +249,54 @@ function initMetaPixel() {
   metaPixelFromSiteEvent('page_view')
 }
 
+/** Snap Pixel — loads only after marketing consent. No placeholder email in init. */
+function initSnapPixel() {
+  if (typeof window === 'undefined' || state.snapPixelReady) return
+  if (isStaffOpticsActive() || isAdminBrowserPath()) return
+  const pixelId = process.env.NEXT_PUBLIC_SNAP_PIXEL_ID?.trim()
+  if (!pixelId) return
+  if (!state.consent.marketing) return
+
+  if (!window.snaptr) {
+    const a: any = function (...args: unknown[]) {
+      // eslint-disable-next-line prefer-rest-params
+      ;(a.handleRequest ? a.handleRequest(...args) : a.queue.push(args))
+    }
+    a.queue = []
+    window.snaptr = a
+    loadScript('bs-snap-pixel', 'https://sc-static.net/scevent.min.js')
+  }
+
+  window.snaptr!('init', pixelId)
+  state.snapPixelReady = true
+  snapPixelFromSiteEvent('page_view')
+}
+
+function marketingPixelsConfigured() {
+  return Boolean(
+    process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() || process.env.NEXT_PUBLIC_SNAP_PIXEL_ID?.trim(),
+  )
+}
+
+function marketingPixelsReady() {
+  const metaId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim()
+  const snapId = process.env.NEXT_PUBLIC_SNAP_PIXEL_ID?.trim()
+  const metaOk = !metaId || state.metaPixelReady
+  const snapOk = !snapId || state.snapPixelReady
+  return metaOk && snapOk
+}
+
 function scheduleMarketingInit() {
   if (typeof window === 'undefined' || !state.consent.marketing) return
-  if (state.metaPixelReady || state.marketingInitScheduled) return
+  if (!marketingPixelsConfigured() || marketingPixelsReady() || state.marketingInitScheduled) return
   if (isStaffOpticsActive() || isAdminBrowserPath()) return
 
   state.marketingInitScheduled = true
   const run = () => {
     state.marketingInitScheduled = false
-    if (!state.consent.marketing || state.metaPixelReady) return
+    if (!state.consent.marketing || marketingPixelsReady()) return
     initMetaPixel()
+    initSnapPixel()
   }
 
   if ('requestIdleCallback' in window) {
@@ -264,6 +304,86 @@ function scheduleMarketingInit() {
   } else {
     globalThis.setTimeout(run, 800)
   }
+}
+
+function extractCommerceFields(params?: AnalyticsParams) {
+  const value =
+    typeof params?.value === 'number'
+      ? params.value
+      : typeof params?.value === 'string'
+        ? Number(params.value)
+        : typeof params?.price === 'number'
+          ? params.price
+          : undefined
+  const currency = typeof params?.currency === 'string' ? params.currency : undefined
+  const itemCategory =
+    typeof params?.item_category === 'string' ? params.item_category : undefined
+  const orderId =
+    typeof params?.transaction_id === 'string' ? params.transaction_id : undefined
+
+  let itemIds: string[] | undefined
+  if (typeof params?.item_id === 'string') {
+    itemIds = [params.item_id]
+  } else if (Array.isArray(params?.items)) {
+    const ids = params.items
+      .map((row) => {
+        if (!row || typeof row !== 'object') return null
+        const id = row.item_id ?? row.id
+        return typeof id === 'string' ? id : null
+      })
+      .filter((id): id is string => Boolean(id))
+    if (ids.length) itemIds = ids
+  }
+
+  const numberItems =
+    typeof params?.quantity === 'number'
+      ? params.quantity
+      : typeof params?.number_items === 'number'
+        ? params.number_items
+        : itemIds?.length
+
+  return {
+    value: Number.isFinite(value) ? value : undefined,
+    currency,
+    itemIds,
+    itemCategory,
+    orderId,
+    numberItems: typeof numberItems === 'number' && Number.isFinite(numberItems) ? numberItems : undefined,
+  }
+}
+
+function snapPixelFromSiteEvent(name: string, params?: AnalyticsParams) {
+  if (!state.consent.marketing || !state.snapPixelReady || !window.snaptr) return
+
+  const map: Record<string, string> = {
+    page_view: 'PAGE_VIEW',
+    view_item: 'VIEW_CONTENT',
+    add_to_cart: 'ADD_CART',
+    begin_checkout: 'START_CHECKOUT',
+    click_checkout: 'START_CHECKOUT',
+    purchase: 'PURCHASE',
+    sign_up: 'SIGN_UP',
+    subscribe: 'SUBSCRIBE',
+  }
+  const snapName = map[name]
+  if (!snapName) return
+
+  if (snapName === 'PAGE_VIEW') {
+    window.snaptr('track', 'PAGE_VIEW')
+    return
+  }
+
+  const { value, currency, itemIds, itemCategory, orderId, numberItems } = extractCommerceFields(params)
+  const payload: Record<string, unknown> = {}
+  if (value !== undefined) payload.price = value
+  if (currency) payload.currency = currency
+  if (itemIds?.length) payload.item_ids = itemIds
+  if (itemCategory) payload.item_category = itemCategory
+  if (numberItems !== undefined) payload.number_items = numberItems
+  if (orderId) payload.transaction_id = orderId
+  if (orderId && snapName === 'PURCHASE') payload.client_dedup_id = `purchase_${orderId}`
+
+  window.snaptr('track', snapName, payload)
 }
 
 function readMetaBrowserCookies(): { fbp?: string; fbc?: string } {
@@ -499,6 +619,7 @@ export function trackEvent(name: string, params?: AnalyticsParams) {
   if (typeof window === 'undefined') return
 
   metaPixelFromSiteEvent(name, params)
+  snapPixelFromSiteEvent(name, params)
 
   if (!state.consent.analytics) return
   const cleanParams = toCleanParams(params)

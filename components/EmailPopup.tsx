@@ -22,6 +22,7 @@ import {
   glassTextMutedOnDark,
   glassTextTitleOnDark,
 } from '@/lib/ui/glassClasses'
+import { trackEvent } from '@/lib/analytics/tracking'
 
 const HOUSE_MONOGRAM_SRC = '/brand/house-monogram-burgundy.webp'
 
@@ -111,6 +112,7 @@ export default function EmailPopup() {
         setShowSuccess(true)
         localStorage.setItem('bint-saeed-subscribed', 'true')
         localStorage.setItem('bint-saeed-discount-code', code)
+        trackEvent('subscribe', { method: 'house_community_popup' })
       } else {
         const msg = typeof data.error === 'string' ? data.error : ''
         if (msg) {

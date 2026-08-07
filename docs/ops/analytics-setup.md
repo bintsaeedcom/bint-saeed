@@ -7,6 +7,8 @@ This project uses a privacy-aware analytics layer that only tracks after user co
 - `NEXT_PUBLIC_GA4_MEASUREMENT_ID`: enables Google Analytics 4.
 - `NEXT_PUBLIC_CLARITY_PROJECT_ID`: enables Microsoft Clarity.
 - `NEXT_PUBLIC_POSTHOG_KEY` + `NEXT_PUBLIC_POSTHOG_HOST`: enables PostHog (both required).
+- `NEXT_PUBLIC_META_PIXEL_ID`: enables Meta Pixel (marketing consent only).
+- `NEXT_PUBLIC_SNAP_PIXEL_ID`: enables Snap Pixel (marketing consent only).
 
 If an ID/key is missing, that tracker is not initialized.
 
@@ -15,6 +17,8 @@ If an ID/key is missing, that tracker is not initialized.
 - **GA4**: page views, ecommerce funnel events, CTA and navigation events.
 - **Clarity**: behavioral analytics (heatmaps/session behavior) after consent.
 - **PostHog (optional)**: autocapture + custom event pipeline, with masking defaults.
+- **Meta Pixel**: catalog / Instagram Shopping events after marketing consent (+ optional CAPI).
+- **Snap Pixel**: Snapchat web events after marketing consent (CAPI when token is added).
 
 ## Consent and Privacy Notes
 

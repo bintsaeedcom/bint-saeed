@@ -6,6 +6,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import { getSubscribeFormCopy } from '@/lib/i18n/subscribeFormI18n'
 import { CTA_BUTTON_RADIUS, CTA_FORM_TRACKING } from '@/lib/ui/ctaClasses'
+import { trackEvent } from '@/lib/analytics/tracking'
 
 type SoftEmailCaptureProps = {
   source: string
@@ -53,6 +54,7 @@ export default function SoftEmailCapture({
         toast.success(copy.success)
         setDone(true)
         setEmail('')
+        trackEvent('subscribe', { method: source })
       } else {
         const msg = typeof data.error === 'string' ? data.error : copy.errorGeneric
         setError(msg)
