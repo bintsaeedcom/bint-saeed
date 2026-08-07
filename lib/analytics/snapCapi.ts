@@ -60,9 +60,19 @@ function hashPhone(phone: string): string {
 }
 
 export function isSnapCapiConfigured(): boolean {
-  return Boolean(
-    process.env.NEXT_PUBLIC_SNAP_PIXEL_ID?.trim() && process.env.SNAP_CAPI_ACCESS_TOKEN?.trim(),
-  )
+  return Boolean(getSnapPixelId() && getSnapCapiToken())
+}
+
+function getSnapPixelId(): string | undefined {
+  const id = process.env.NEXT_PUBLIC_SNAP_PIXEL_ID?.trim()
+  return id || undefined
+}
+
+/** Strip accidental wrapping quotes from Vercel paste. */
+function getSnapCapiToken(): string | undefined {
+  const raw = process.env.SNAP_CAPI_ACCESS_TOKEN?.trim()
+  if (!raw) return undefined
+  return raw.replace(/^['"]+|['"]+$/g, '').trim() || undefined
 }
 
 function buildUserData(input?: SnapCapiUserData): Record<string, unknown> {
@@ -123,8 +133,8 @@ export async function sendSnapCapiPurchaseFromOrder(input: {
 export async function sendSnapCapiEvents(
   events: SnapCapiEventInput[],
 ): Promise<{ ok: boolean; error?: string }> {
-  const pixelId = process.env.NEXT_PUBLIC_SNAP_PIXEL_ID?.trim()
-  const token = process.env.SNAP_CAPI_ACCESS_TOKEN?.trim()
+  const pixelId = getSnapPixelId()
+  const token = getSnapCapiToken()
   if (!pixelId || !token || events.length === 0) {
     return { ok: false, error: 'Snap CAPI not configured' }
   }
@@ -152,23 +162,44 @@ export async function sendSnapCapiEvents(
   }
   if (testCode) payload.test_event_code = testCode
 
-  try {
-    const url = `https://tr.snapchat.com/v3/${encodeURIComponent(pixelId)}/events?access_token=${encodeURIComponent(token)}`
-    const res = await fetch(url, {
-      method: 'POST',
+  // Prefer Bearer (Business Details / Snap FAQ). Fall back to query access_token.
+  const attempts: Array<{ label: string; url: string; headers: Record<string, string> }> = [
+    {
+      label: 'bearer',
+      url: `https://tr.snapchat.com/v3/${encodeURIComponent(pixelId)}/events`,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(payload),
-    })
-    if (!res.ok) {
+    },
+    {
+      label: 'query',
+      url: `https://tr.snapchat.com/v3/${encodeURIComponent(pixelId)}/events?access_token=${encodeURIComponent(token)}`,
+      headers: { 'Content-Type': 'application/json' },
+    },
+  ]
+
+  try {
+    let lastError = 'Snap CAPI request failed'
+    for (const attempt of attempts) {
+      const res = await fetch(attempt.url, {
+        method: 'POST',
+        headers: attempt.headers,
+        body: JSON.stringify(payload),
+      })
+      if (res.ok) return { ok: true }
       const text = await res.text().catch(() => '')
-      console.error('[snap-capi]', res.status, text.slice(0, 400))
+      console.error('[snap-capi]', attempt.label, res.status, text.slice(0, 400), 'pixel', pixelId.slice(-8))
       const hint = text.replace(/\s+/g, ' ').trim().slice(0, 180)
-      return { ok: false, error: hint ? `Snap CAPI ${res.status}: ${hint}` : `Snap CAPI ${res.status}` }
+      lastError = hint
+        ? `Snap CAPI ${res.status} (${attempt.label}): ${hint}`
+        : `Snap CAPI ${res.status} (${attempt.label})`
+      // Only fall through on auth failures; other errors stop early.
+      if (res.status !== 401 && res.status !== 403) {
+        return { ok: false, error: lastError }
+      }
     }
-    return { ok: true }
+    return { ok: false, error: lastError }
   } catch (error) {
     console.error('[snap-capi]', error)
     return { ok: false, error: 'Snap CAPI network error' }
