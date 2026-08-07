@@ -9,6 +9,7 @@ This project uses a privacy-aware analytics layer that only tracks after user co
 - `NEXT_PUBLIC_POSTHOG_KEY` + `NEXT_PUBLIC_POSTHOG_HOST`: enables PostHog (both required).
 - `NEXT_PUBLIC_META_PIXEL_ID`: enables Meta Pixel (marketing consent only).
 - `NEXT_PUBLIC_SNAP_PIXEL_ID`: enables Snap Pixel (marketing consent only).
+- `SNAP_CAPI_ACCESS_TOKEN`: enables Snap Conversions API (server; pairs with Pixel via shared event IDs).
 
 If an ID/key is missing, that tracker is not initialized.
 
@@ -18,7 +19,7 @@ If an ID/key is missing, that tracker is not initialized.
 - **Clarity**: behavioral analytics (heatmaps/session behavior) after consent.
 - **PostHog (optional)**: autocapture + custom event pipeline, with masking defaults.
 - **Meta Pixel**: catalog / Instagram Shopping events after marketing consent (+ optional CAPI).
-- **Snap Pixel**: Snapchat web events after marketing consent (CAPI when token is added).
+- **Snap Pixel + CAPI**: Snapchat web events after marketing consent; browser + server with `ScCid` / `_scid` when present.
 
 ## Consent and Privacy Notes
 

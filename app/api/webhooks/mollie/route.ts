@@ -19,6 +19,7 @@ import { fulfillPaidGiftCards } from '@/lib/giftCards/fulfillPaidGiftCards'
 import { commitRedeemForPaidOrder } from '@/lib/giftCards/applyAtCheckout'
 import type { PendingMollieCheckout } from '@/lib/mollie/pendingCheckoutStore'
 import { sendMetaCapiPurchaseFromOrder } from '@/lib/analytics/metaCapi'
+import { sendSnapCapiPurchaseFromOrder } from '@/lib/analytics/snapCapi'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -206,6 +207,18 @@ export async function POST(request: NextRequest) {
     const order = buildOrderFromMolliePayment(payment, pending)
     await saveOrder(order)
     void sendMetaCapiPurchaseFromOrder({
+      eventIdSuffix: payment.id,
+      value: order.amountTotal,
+      currency: order.currency,
+      contentIds: order.lines
+        .map((line) => line.productId)
+        .filter((id): id is string => Boolean(id)),
+      orderId: order.id,
+      email: order.customerEmail,
+      phone: order.customerPhone,
+      clientIpAddress: pending.clientIp,
+    })
+    void sendSnapCapiPurchaseFromOrder({
       eventIdSuffix: payment.id,
       value: order.amountTotal,
       currency: order.currency,

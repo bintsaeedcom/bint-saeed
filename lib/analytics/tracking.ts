@@ -257,6 +257,8 @@ function initSnapPixel() {
   if (!pixelId) return
   if (!state.consent.marketing) return
 
+  captureSnapClickIdFromUrl()
+
   if (!window.snaptr) {
     const a: any = function (...args: unknown[]) {
       // eslint-disable-next-line prefer-rest-params
@@ -352,8 +354,95 @@ function extractCommerceFields(params?: AnalyticsParams) {
   }
 }
 
+function captureSnapClickIdFromUrl() {
+  if (typeof window === 'undefined') return
+  try {
+    const params = new URLSearchParams(window.location.search)
+    const scCid = params.get('ScCid') || params.get('sccid') || params.get('sc_cid')
+    if (scCid?.trim()) {
+      window.sessionStorage.setItem('bs_snap_sccid', scCid.trim().slice(0, 200))
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+function readSnapClickId(): string | undefined {
+  if (typeof window === 'undefined') return undefined
+  try {
+    const fromUrl = new URLSearchParams(window.location.search).get('ScCid')
+    if (fromUrl?.trim()) return fromUrl.trim().slice(0, 200)
+    return window.sessionStorage.getItem('bs_snap_sccid')?.trim().slice(0, 200) || undefined
+  } catch {
+    return undefined
+  }
+}
+
+function readSnapCookie1(): string | undefined {
+  if (typeof document === 'undefined') return undefined
+  for (const part of document.cookie.split(';')) {
+    const [rawKey, ...rest] = part.trim().split('=')
+    if (rawKey?.trim() === '_scid') {
+      const value = rest.join('=').trim()
+      return value ? decodeURIComponent(value).slice(0, 200) : undefined
+    }
+  }
+  return undefined
+}
+
+function newSnapEventId(prefix: string, orderId?: string): string {
+  if (orderId && prefix === 'PURCHASE') return `purchase_${orderId}`
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return `${prefix}_${crypto.randomUUID()}`
+  }
+  return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`
+}
+
+function sendSnapCapiBeacon(input: {
+  eventName: string
+  eventId: string
+  value?: number
+  currency?: string
+  contentIds?: string[]
+  contentCategory?: string
+  contentName?: string
+  orderId?: string
+  numItems?: number
+}) {
+  if (typeof window === 'undefined' || !state.consent.marketing) return
+  const body = JSON.stringify({
+    eventName: input.eventName,
+    eventId: input.eventId,
+    eventSourceUrl: window.location.href,
+    value: input.value,
+    currency: input.currency,
+    contentIds: input.contentIds,
+    contentCategory: input.contentCategory,
+    contentName: input.contentName,
+    orderId: input.orderId,
+    numItems: input.numItems,
+    scClickId: readSnapClickId(),
+    scCookie1: readSnapCookie1(),
+    marketingConsent: true,
+  })
+  try {
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon('/api/analytics/snap-capi', new Blob([body], { type: 'application/json' }))
+      return
+    }
+  } catch {
+    /* fall through */
+  }
+  void fetch('/api/analytics/snap-capi', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body,
+    keepalive: true,
+  }).catch(() => {})
+}
+
 function snapPixelFromSiteEvent(name: string, params?: AnalyticsParams) {
-  if (!state.consent.marketing || !state.snapPixelReady || !window.snaptr) return
+  if (!state.consent.marketing) return
 
   const map: Record<string, string> = {
     page_view: 'PAGE_VIEW',
@@ -368,22 +457,34 @@ function snapPixelFromSiteEvent(name: string, params?: AnalyticsParams) {
   const snapName = map[name]
   if (!snapName) return
 
-  if (snapName === 'PAGE_VIEW') {
-    window.snaptr('track', 'PAGE_VIEW')
-    return
+  const { value, currency, itemIds, itemCategory, orderId, numberItems } = extractCommerceFields(params)
+  const eventId = newSnapEventId(snapName, orderId)
+
+  if (state.snapPixelReady && window.snaptr) {
+    if (snapName === 'PAGE_VIEW') {
+      window.snaptr('track', 'PAGE_VIEW', { client_dedup_id: eventId })
+    } else {
+      const payload: Record<string, unknown> = { client_dedup_id: eventId }
+      if (value !== undefined) payload.price = value
+      if (currency) payload.currency = currency
+      if (itemIds?.length) payload.item_ids = itemIds
+      if (itemCategory) payload.item_category = itemCategory
+      if (numberItems !== undefined) payload.number_items = numberItems
+      if (orderId) payload.transaction_id = orderId
+      window.snaptr('track', snapName, payload)
+    }
   }
 
-  const { value, currency, itemIds, itemCategory, orderId, numberItems } = extractCommerceFields(params)
-  const payload: Record<string, unknown> = {}
-  if (value !== undefined) payload.price = value
-  if (currency) payload.currency = currency
-  if (itemIds?.length) payload.item_ids = itemIds
-  if (itemCategory) payload.item_category = itemCategory
-  if (numberItems !== undefined) payload.number_items = numberItems
-  if (orderId) payload.transaction_id = orderId
-  if (orderId && snapName === 'PURCHASE') payload.client_dedup_id = `purchase_${orderId}`
-
-  window.snaptr('track', snapName, payload)
+  sendSnapCapiBeacon({
+    eventName: snapName,
+    eventId,
+    value,
+    currency,
+    contentIds: itemIds,
+    contentCategory: itemCategory,
+    orderId,
+    numItems: numberItems,
+  })
 }
 
 function readMetaBrowserCookies(): { fbp?: string; fbc?: string } {
@@ -592,6 +693,7 @@ function scheduleTrackerInit() {
 
 export function initializeAnalytics(consent: ConsentState) {
   state.consent = consent
+  captureSnapClickIdFromUrl()
   if (consent.analytics) scheduleTrackerInit()
   else applyConsentToTrackers()
   if (consent.marketing) scheduleMarketingInit()
@@ -599,6 +701,7 @@ export function initializeAnalytics(consent: ConsentState) {
 
 export function updateAnalyticsConsent(consent: ConsentState) {
   state.consent = consent
+  captureSnapClickIdFromUrl()
   applyConsentToTrackers()
   if (consent.analytics) {
     if (!state.pendingPagePath && typeof window !== 'undefined') {

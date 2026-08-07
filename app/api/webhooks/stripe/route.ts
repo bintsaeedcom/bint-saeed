@@ -15,6 +15,7 @@ import { appliedGiftCardFromStripeMetadata } from '@/lib/giftCards/stripeGiftCar
 import type { CheckoutCartItem } from '@/lib/checkout/types'
 import { isGiftCardLineId } from '@/lib/giftCards/cartDetection'
 import { sendMetaCapiPurchaseFromOrder } from '@/lib/analytics/metaCapi'
+import { sendSnapCapiPurchaseFromOrder } from '@/lib/analytics/snapCapi'
 import { resolveDiscountCodeFromCheckoutSession } from '@/lib/stripe/resolveCheckoutPromotionCode'
 
 export const runtime = 'nodejs'
@@ -347,6 +348,18 @@ export async function POST(request: NextRequest) {
         const order = buildOrderFromSession(full)
         await saveOrder(order)
         void sendMetaCapiPurchaseFromOrder({
+          eventIdSuffix: full.id,
+          value: order.amountTotal,
+          currency: order.currency,
+          contentIds: order.lines
+            .map((line) => line.productId)
+            .filter((id): id is string => Boolean(id)),
+          orderId: order.id,
+          email: order.customerEmail,
+          phone: order.customerPhone,
+          clientIpAddress: full.metadata?.clientIp || undefined,
+        })
+        void sendSnapCapiPurchaseFromOrder({
           eventIdSuffix: full.id,
           value: order.amountTotal,
           currency: order.currency,

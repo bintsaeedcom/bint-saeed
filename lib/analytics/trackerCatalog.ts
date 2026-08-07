@@ -83,7 +83,7 @@ export const TRACKER_CATALOG: TrackerInfo[] = [
     category: 'marketing',
     envVar: 'NEXT_PUBLIC_SNAP_PIXEL_ID',
     description:
-      'Measures Snapchat ads conversions (PageView, ViewContent, AddCart, StartCheckout, Purchase) when marketing cookies are accepted.',
+      'Measures Snapchat ads conversions (browser Pixel + server Conversions API with shared event IDs, ScCid, and _scid) when marketing cookies are accepted.',
     cookies: [
       { name: '_scid', purpose: 'Browser identifier for Snap advertising', retention: 'up to 13 months' },
       { name: '_sctr', purpose: 'Attribution / conversion timing for Snap', retention: 'up to 1 year' },
