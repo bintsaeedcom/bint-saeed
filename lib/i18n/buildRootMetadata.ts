@@ -7,6 +7,7 @@ import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 import { BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
+import { isUtilitySeoPath } from '@/lib/seo/utilityPaths'
 
 const G = LOCALE_GEO
 
@@ -118,13 +119,23 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
   const base = metadataBaseUrl()
   const canonicalUrl = new URL(localizedPath(locale, innerPath), base).toString()
 
-  const languages: Record<string, string> = {
-    'x-default': new URL(innerPath, base).toString(),
-    en: new URL(innerPath, base).toString(),
-  }
-  for (const L of ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms'] as const) {
-    languages[L] = new URL(localizedPath(L, innerPath), base).toString()
-  }
+  /**
+   * Never advertise hreflang for noindex utilities (cart/checkout/wishlist/auth/heritage).
+   * That was recreating ~12× clones Google reported as “Excluded by noindex”.
+   */
+  const utilityPath = isUtilitySeoPath(innerPath)
+  const languages: Record<string, string> | undefined = utilityPath
+    ? undefined
+    : (() => {
+        const map: Record<string, string> = {
+          'x-default': new URL(innerPath, base).toString(),
+          en: new URL(innerPath, base).toString(),
+        }
+        for (const L of ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms'] as const) {
+          map[L] = new URL(localizedPath(L, innerPath), base).toString()
+        }
+        return map
+      })()
 
   const ogImageOrigin = base.origin
 
@@ -137,10 +148,12 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
     description: desc,
     authors: [{ name: 'Bint Saeed' }],
     keywords: keywordsFor(locale),
-    alternates: {
-      canonical: canonicalUrl,
-      languages,
-    },
+    alternates: utilityPath
+      ? { canonical: canonicalUrl }
+      : {
+          canonical: canonicalUrl,
+          languages: languages!,
+        },
     openGraph: {
       title: ogTitle,
       description: ogDescription,

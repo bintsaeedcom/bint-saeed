@@ -97,7 +97,8 @@ const nextConfig = {
       { source: '/en/:path*', destination: '/:path*', permanent: true },
       { source: '/charms', destination: '/strands', permanent: true },
       { source: '/charms/:path*', destination: '/strands/:path*', permanent: true },
-      { source: '/strands/shop', destination: '/accessories?type=signature-strands', permanent: true },
+      // Prefer a path hub (not a query URL) so GSC does not treat this as a weak alternate.
+      { source: '/strands/shop', destination: '/strands', permanent: true },
       ...productRedirects.map(([from, to]) => ({
         source: `/accessories/${from}`,
         destination: `/accessories/${to}`,

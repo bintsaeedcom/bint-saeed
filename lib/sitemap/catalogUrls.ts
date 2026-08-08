@@ -1,10 +1,12 @@
 import { accessories, isAccessoryShopVisible } from '@/data/accessories'
 import { isVisibleOnShopGrid, products } from '@/data/products'
 import { getProductSlug } from '@/lib/products/links'
-import { LOCALE_PREFIXES, localizedPath, type AppLocale } from '@/lib/i18n/routing'
+import { localizedPath } from '@/lib/i18n/routing'
+import { SITEMAP_PDP_LOCALES } from '@/lib/sitemap/locales'
 import type { SitemapUrlEntry } from '@/lib/sitemapUrlList'
 
-const PDP_LOCALES: AppLocale[] = ['en', ...LOCALE_PREFIXES]
+/** Keep sitemap PDPs to EN + priority prefixes; other locales via on-page hreflang. */
+const PDP_LOCALES = SITEMAP_PDP_LOCALES
 
 function catalogEntry(loc: string, priority: string): SitemapUrlEntry {
   return {

@@ -52,7 +52,10 @@ export const sectionRobotsMetadata: Metadata = isPrelaunch
       },
     }
 
-/** Always keep transactional / account chrome out of Google — independent of INDEX_MODE. */
+/**
+ * Always keep transactional / account chrome out of Google — independent of INDEX_MODE.
+ * Do not attach hreflang here; root metadata skips languages for utility paths via `isUtilitySeoPath`.
+ */
 export const utilityNoIndexMetadata: Metadata = {
   robots: {
     index: false,

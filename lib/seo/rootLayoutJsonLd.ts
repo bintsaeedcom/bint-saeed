@@ -552,11 +552,13 @@ export function buildBrandJsonLd(locale: AppLocale) {
 export function buildWebsiteJsonLd(locale: AppLocale) {
   const lang = schemaInLanguageForLocale(locale)
   const desc = getHomeMetaDescription(locale)
+  // Match storefront canonical (`/` 308s → `/home`) to reduce GSC “chose different canonical”.
+  const siteUrl = absoluteUrl(locale, '/home')
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     '@id': `${BASE}/#website`,
-    url: BASE,
+    url: siteUrl,
     name: 'Bint Saeed',
     inLanguage: lang,
     description: desc,

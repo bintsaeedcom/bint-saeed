@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { ROBOTS_UTILITY_DISALLOWS } from '@/lib/seo/utilityPaths'
 
 const baseUrl = 'https://www.bintsaeed.com'
 
@@ -20,7 +21,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin', '/admin/', '/api/', '/home/gate', '/home/blocked'],
+        disallow: ROBOTS_UTILITY_DISALLOWS,
       },
       {
         userAgent: 'Googlebot-Image',
@@ -46,10 +47,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: 'Googlebot',
         allow: '/',
+        disallow: ROBOTS_UTILITY_DISALLOWS,
       },
       {
         userAgent: 'Bingbot',
         allow: '/',
+        disallow: ROBOTS_UTILITY_DISALLOWS,
       },
       {
         userAgent: 'Yandex',

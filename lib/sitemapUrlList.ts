@@ -1,9 +1,17 @@
 import { isPrelaunch } from '@/lib/seo'
 import { buildCatalogSitemapEntries } from '@/lib/sitemap/catalogUrls'
-import { LOCALE_PREFIXES, localizedPath, type LocalePrefix } from '@/lib/i18n/routing'
+import { SITEMAP_PREFIX_LOCALES } from '@/lib/sitemap/locales'
+import { localizedPath, type LocalePrefix } from '@/lib/i18n/routing'
 
 /** Canonical origin for sitemap `<loc>` values (align with `NEXT_PUBLIC_SITE_URL` in production). */
 export const SITEMAP_BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
+
+/**
+ * Locales listed in the XML sitemap. Remaining AppLocales stay reachable via on-page hreflang
+ * once Google crawls the EN/AR hubs — avoids flooding GSC with ~750 “Discovered – not indexed” URLs.
+ * Source of truth: `lib/sitemap/locales.ts`.
+ */
+export { SITEMAP_PREFIX_LOCALES } from '@/lib/sitemap/locales'
 
 export type SitemapUrlEntry = {
   loc: string
@@ -25,12 +33,10 @@ function entry(path: string, changefreq: string, priority: string): SitemapUrlEn
 }
 
 /**
- * Human-facing hubs / editorial for EN + every prefixed locale.
- * No query-string URLs (Google treats them as weak / duplicate).
- * No `/` — public launch 308-redirects `/` → `/home` (would show as "Page with redirect").
- * Machine files (llms.txt, openapi) stay off the HTML sitemap.
+ * Primary money / brand hubs — EN + SITEMAP_PREFIX_LOCALES.
+ * No query-string URLs. No `/` (308 → `/home`). Heritage omitted until approved.
  */
-const INDEXABLE_HUBS: { path: string; changefreq: string; priority: string }[] = [
+const PRIMARY_HUBS: { path: string; changefreq: string; priority: string }[] = [
   { path: '/home', changefreq: 'weekly', priority: '1.0' },
   { path: '/shop', changefreq: 'weekly', priority: '0.9' },
   { path: '/accessories', changefreq: 'weekly', priority: '0.9' },
@@ -38,33 +44,36 @@ const INDEXABLE_HUBS: { path: string; changefreq: string; priority: string }[] =
   { path: '/personalisation', changefreq: 'weekly', priority: '0.9' },
   { path: '/about', changefreq: 'monthly', priority: '0.7' },
   { path: '/the-codes', changefreq: 'monthly', priority: '0.7' },
-  // /heritage* unfinished — omitted until the chapter is approved for index.
   { path: '/craftsmanship', changefreq: 'monthly', priority: '0.7' },
   { path: '/giving-forward', changefreq: 'monthly', priority: '0.6' },
   { path: '/contact', changefreq: 'monthly', priority: '0.5' },
   { path: '/faq', changefreq: 'monthly', priority: '0.5' },
   { path: '/size-guide', changefreq: 'monthly', priority: '0.5' },
+  { path: '/gift-cards', changefreq: 'monthly', priority: '0.6' },
+]
+
+/** Legal / thin hubs — English only in the sitemap (still available in all locales on-site). */
+const EN_ONLY_HUBS: { path: string; changefreq: string; priority: string }[] = [
   { path: '/shipment-return-policy', changefreq: 'monthly', priority: '0.5' },
   { path: '/careers', changefreq: 'monthly', priority: '0.5' },
-  { path: '/gift-cards', changefreq: 'monthly', priority: '0.6' },
   { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
   { path: '/cookie-policy', changefreq: 'yearly', priority: '0.3' },
   { path: '/terms', changefreq: 'yearly', priority: '0.3' },
 ]
 
 function buildEnglishSiteUrls(): SitemapUrlEntry[] {
-  return INDEXABLE_HUBS.map((h) => entry(h.path, h.changefreq, h.priority))
+  return [...PRIMARY_HUBS, ...EN_ONLY_HUBS].map((h) => entry(h.path, h.changefreq, h.priority))
 }
 
 function hubPathForLocale(locale: LocalePrefix, hubPath: string): string {
   return localizedPath(locale, hubPath)
 }
 
-/** Prefixed-locale hubs (ar/fr/it/…) — pairs with EN hubs + multilang PDPs from catalogUrls. */
+/** Prefixed-locale primary hubs only (currently AR) — pairs with EN hubs + EN/AR PDPs. */
 function buildLocalizedHubUrls(): SitemapUrlEntry[] {
   const out: SitemapUrlEntry[] = []
-  for (const locale of LOCALE_PREFIXES) {
-    for (const h of INDEXABLE_HUBS) {
+  for (const locale of SITEMAP_PREFIX_LOCALES) {
+    for (const h of PRIMARY_HUBS) {
       out.push(entry(hubPathForLocale(locale, h.path), h.changefreq, h.priority))
     }
   }
