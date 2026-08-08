@@ -8,7 +8,7 @@ export const SITEMAP_BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ww
 
 /**
  * Locales listed in the XML sitemap. Remaining AppLocales stay reachable via on-page hreflang
- * once Google crawls the EN/AR hubs — avoids flooding GSC with ~750 “Discovered – not indexed” URLs.
+ * once Google crawls EN + priority locales — avoids flooding GSC with a full 12-locale matrix.
  * Source of truth: `lib/sitemap/locales.ts`.
  */
 export { SITEMAP_PREFIX_LOCALES } from '@/lib/sitemap/locales'
@@ -69,7 +69,7 @@ function hubPathForLocale(locale: LocalePrefix, hubPath: string): string {
   return localizedPath(locale, hubPath)
 }
 
-/** Prefixed-locale primary hubs only (currently AR) — pairs with EN hubs + EN/AR PDPs. */
+/** Prefixed-locale primary hubs (see SITEMAP_PREFIX_LOCALES) — pairs with EN hubs + multilang PDPs. */
 function buildLocalizedHubUrls(): SitemapUrlEntry[] {
   const out: SitemapUrlEntry[] = []
   for (const locale of SITEMAP_PREFIX_LOCALES) {
