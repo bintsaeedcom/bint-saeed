@@ -78,6 +78,53 @@ function withAdminPrivacyHeaders(res: NextResponse): NextResponse {
   return res
 }
 
+/** Facet / tracking query keys that must not become indexed URL variants of /shop or /accessories. */
+const FACET_QUERY_KEYS = ['category', 'type', 'from', 'stones', 'colors', 'price', 'color', 'style'] as const
+
+function hasFacetQuery(searchParams: URLSearchParams): boolean {
+  return FACET_QUERY_KEYS.some((key) => searchParams.has(key))
+}
+
+function decodeQueryValue(value: string): string {
+  try {
+    return decodeURIComponent(value)
+  } catch {
+    return value
+  }
+}
+
+/**
+ * Legacy fake SearchAction placeholders (`?category={search_term_string}`) and soft tracking
+ * (`?from=the-codes`) create GSC duplicate / alternate-canonical noise. Collapse them.
+ */
+function redirectSeoJunkQuery(request: NextRequest): NextResponse | null {
+  const url = request.nextUrl.clone()
+  let changed = false
+
+  for (const [key, value] of [...url.searchParams.entries()]) {
+    const decoded = decodeQueryValue(value)
+    if (decoded.includes('{search_term_string}') || value.includes('%7Bsearch_term_string%7D')) {
+      url.searchParams.delete(key)
+      changed = true
+    }
+  }
+
+  // Tracking-only; never worth a separate indexed URL.
+  if (url.searchParams.has('from')) {
+    url.searchParams.delete('from')
+    changed = true
+  }
+
+  if (!changed) return null
+  return NextResponse.redirect(url, 308)
+}
+
+function withFacetNoIndex(res: NextResponse): NextResponse {
+  // Keep follow so equity can pass to the clean canonical path declared in HTML.
+  res.headers.set('X-Robots-Tag', 'noindex, follow')
+  return res
+}
+
 /**
  * There is no `app/[locale]` tree — public URLs like `/nl/shop` must always
  * rewrite to `/shop` while preserving locale in request headers.
@@ -92,13 +139,24 @@ function serveAppPath(
   headers.set('x-bs-locale', locale)
   headers.set('x-bs-pathname', innerPath)
 
+  let res: NextResponse
   if (publicPathname !== innerPath) {
     const url = request.nextUrl.clone()
     url.pathname = innerPath
-    return NextResponse.rewrite(url, { request: { headers } })
+    res = NextResponse.rewrite(url, { request: { headers } })
+  } else {
+    res = NextResponse.next({ request: { headers } })
   }
 
-  return NextResponse.next({ request: { headers } })
+  // Collection facet URLs keep working for shoppers, but must not be indexed as
+  // separate pages (GSC: Alternate / Duplicate without user-selected canonical).
+  const isCollectionHub =
+    innerPath === '/shop' || innerPath === '/accessories' || innerPath === '/strands'
+  if (isCollectionHub && hasFacetQuery(request.nextUrl.searchParams)) {
+    return withFacetNoIndex(res)
+  }
+
+  return res
 }
 
 /** Legacy owner URLs (and locale-prefixed variants) → current /admin/* routes. */
@@ -147,7 +205,11 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next()
     }
 
+    const junkQueryRedirect = redirectSeoJunkQuery(request)
+    if (junkQueryRedirect) return junkQueryRedirect
+
     // Public launch: root and /coming-soon (any locale) → webshop home.
+    // Also covers bare locale roots like `/ar` → `/ar/home` (fixes GSC canonical clashes).
     if (!COMING_SOON_ONLY) {
       const { pathname: launchInner, locale: launchLocale } = stripLocaleFromPathname(pathname)
       if (launchInner === '/' || launchInner === '/coming-soon') {
