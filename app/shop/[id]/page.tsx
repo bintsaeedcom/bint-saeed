@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Thumbs, Pagination, FreeMode } from 'swiper/modules'
+import { Navigation, Thumbs, Pagination, FreeMode, Mousewheel } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
 import { FiPlus, FiMinus, FiHeart, FiMaximize2, FiGlobe, FiAward } from 'react-icons/fi'
 import SizeGuideModal from '@/components/SizeGuideModal'
@@ -671,10 +671,10 @@ export default function ProductPage() {
               iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
             />
             <div className="grid gap-3 lg:grid-cols-[4.75rem_minmax(0,1fr)] lg:items-start">
-              <div className="hidden lg:block">
+              <div className="hidden min-h-0 lg:block">
                 <Swiper
                   key={`thumbs-vertical-${selectedColor}`}
-                  modules={[FreeMode, Thumbs]}
+                  modules={[FreeMode, Thumbs, Mousewheel]}
                   direction="vertical"
                   onSwiper={setThumbsSwiper}
                   spaceBetween={10}
@@ -682,10 +682,17 @@ export default function ProductPage() {
                   freeMode
                   watchSlidesProgress
                   slideToClickedSlide
+                  nested
+                  touchReleaseOnEdges
+                  mousewheel={{
+                    forceToAxis: true,
+                    releaseOnEdges: true,
+                    sensitivity: 0.85,
+                  }}
                   preventClicks={false}
                   preventClicksPropagation={false}
                   touchStartPreventDefault={false}
-                  className="product-gallery-thumbs !overflow-visible"
+                  className="product-gallery-thumbs product-gallery-thumbs--vertical"
                 >
                   {activeImages.map((image, index) => (
                     <SwiperSlide key={image} className="!h-auto">
@@ -825,7 +832,7 @@ export default function ProductPage() {
                     preventClicks={false}
                     preventClicksPropagation={false}
                     touchStartPreventDefault={false}
-                    className="product-gallery-thumbs !overflow-visible"
+                    className="product-gallery-thumbs !overflow-hidden"
                   >
                     {activeImages.map((image, index) => (
                       <SwiperSlide key={image} className="!h-auto">

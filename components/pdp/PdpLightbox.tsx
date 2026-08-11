@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useCallback, useState } from 'react'
+import { useEffect, useCallback, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -8,7 +8,7 @@ import type { Swiper as SwiperType } from 'swiper'
 import { Pagination, Keyboard } from 'swiper/modules'
 import { FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
-import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
+import { lockBodyScroll, recoverStuckBodyScroll } from '@/lib/ui/bodyScrollLock'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
@@ -42,6 +42,7 @@ export default function PdpLightbox({
   closeLabel = 'Close gallery',
 }: PdpLightboxProps) {
   const [swiper, setSwiper] = useState<SwiperType | null>(null)
+  const wasOpenRef = useRef(false)
   const count = images.length
   const safeIndex = count === 0 ? 0 : Math.min(Math.max(index, 0), count - 1)
 
@@ -57,8 +58,20 @@ export default function PdpLightbox({
   )
 
   useEffect(() => {
-    if (!open) return
-    return lockBodyScroll()
+    if (open) {
+      wasOpenRef.current = true
+      return lockBodyScroll()
+    }
+    // Only after a real close — not on first mount — resync page / Lenis scroll.
+    if (!wasOpenRef.current) return
+    wasOpenRef.current = false
+    const t = window.setTimeout(() => {
+      recoverStuckBodyScroll()
+      window.dispatchEvent(
+        new CustomEvent('bs:body-scroll-unlocked', { detail: { scrollY: window.scrollY } }),
+      )
+    }, 40)
+    return () => window.clearTimeout(t)
   }, [open])
 
   useEffect(() => {

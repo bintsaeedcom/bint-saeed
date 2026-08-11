@@ -112,6 +112,11 @@ function restoreBodyScroll(): void {
   // Restore scroll after layout reflow — critical on iOS Safari.
   window.requestAnimationFrame(() => {
     window.scrollTo(0, y)
+    // Notify Lenis (desktop smooth scroll) to resync — otherwise wheel can feel stuck
+    // after lightbox / sheet unlock when animatedScroll desyncs from window.scrollY.
+    window.dispatchEvent(
+      new CustomEvent('bs:body-scroll-unlocked', { detail: { scrollY: y } }),
+    )
   })
 }
 

@@ -56,6 +56,17 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
       }
       syncOverlayPause()
 
+      const resyncAfterUnlock = (event: Event) => {
+        const detailY =
+          event instanceof CustomEvent && typeof event.detail?.scrollY === 'number'
+            ? event.detail.scrollY
+            : window.scrollY
+        lenis.resize()
+        lenis.scrollTo(detailY, { immediate: true })
+        syncOverlayPause()
+      }
+      window.addEventListener('bs:body-scroll-unlocked', resyncAfterUnlock)
+
       const overlayObserver = new MutationObserver(syncOverlayPause)
       overlayObserver.observe(document.documentElement, {
         attributes: true,
@@ -80,6 +91,7 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
 
       dispose = () => {
         overlayObserver.disconnect()
+        window.removeEventListener('bs:body-scroll-unlocked', resyncAfterUnlock)
         window.removeEventListener('resize', refresh)
         gsap.ticker.remove(raf)
         lenis.off('scroll', onScroll)

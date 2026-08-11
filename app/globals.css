@@ -1028,6 +1028,18 @@ html.bs-scroll-locked body {
   width: 100%;
 }
 
+/*
+ * PDP thumbnail rails — clip overflow so long galleries cannot grow a tall
+ * FreeMode strip that traps wheel/touch and blocks page scroll (esp. scroll-up).
+ */
+.product-gallery-thumbs.swiper {
+  overflow: hidden;
+}
+.product-gallery-thumbs--vertical.swiper {
+  height: min(42rem, 75vh);
+  max-height: min(42rem, 75vh);
+}
+
 html.bs-content-lock input,
 html.bs-content-lock textarea,
 html.bs-content-lock select,
