@@ -31,6 +31,11 @@ export type AboutSectionHeroProps = {
   imageClassName?: string
   /** Override default editorial banner height classes. */
   heightClassName?: string
+  /**
+   * Keep the photo below the fixed site header (flush editorial routes).
+   * Stops wide subjects (e.g. gift boxes) from being covered at the top.
+   */
+  imageBelowHeader?: boolean
   imageOpacity?: number
   priority?: boolean
   showTopicNav?: boolean
@@ -49,6 +54,7 @@ export default function AboutSectionHero({
   descriptionClassName,
   imageClassName = 'object-cover object-center',
   heightClassName = EDITORIAL_HERO_HEIGHT,
+  imageBelowHeader = false,
   imageOpacity = ABOUT_EDITORIAL_HERO_IMAGE_OPACITY,
   priority = false,
   showTopicNav = true,
@@ -57,15 +63,23 @@ export default function AboutSectionHero({
   return (
     <>
       <header className={`relative ${heightClassName} overflow-hidden bg-brand-darkRed`}>
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          fill
-          className={imageClassName}
-          style={{ opacity: imageOpacity / 100 }}
-          priority={priority}
-          sizes="100vw"
-        />
+        <div
+          className={
+            imageBelowHeader
+              ? 'absolute inset-x-0 bottom-0 top-[var(--site-header-clearance,5.0625rem)]'
+              : 'absolute inset-0'
+          }
+        >
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            className={imageClassName}
+            style={{ opacity: imageOpacity / 100 }}
+            priority={priority}
+            sizes="100vw"
+          />
+        </div>
         <div className={`absolute inset-0 ${ABOUT_EDITORIAL_HERO_GRADIENT}`} />
         <div className={editorialHeroContentShell}>
           <div className={editorialHeroCopyBlock}>

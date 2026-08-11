@@ -220,6 +220,7 @@ export default function ContactPage() {
         imageSrc={ABOUT_SECTION_HERO_IMAGES.contact}
         imageAlt={copy.heroBannerAlt}
         priority
+        imageBelowHeader
         heightClassName={CONTACT_EDITORIAL_HERO_HEIGHT}
         imageClassName={CONTACT_EDITORIAL_HERO_IMAGE_CLASS}
         segments={[

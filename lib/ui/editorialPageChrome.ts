@@ -44,15 +44,19 @@ export const SITE_CONTENT_TOP_PAD = 'pt-3.5 sm:pt-4 md:pt-5'
 export const EDITORIAL_HERO_HEIGHT = 'h-[min(46dvh,420px)] min-h-[360px] max-h-[420px]'
 
 /**
- * Contact Us — wide gift-box banner. Shorter on small screens so object-contain
- * can show both boxes without an overly tall letterbox / cover crop.
+ * Contact Us — flush hero under the site header. Total height includes
+ * header clearance + a landscape band tall enough to show both gift boxes.
  */
-export const CONTACT_EDITORIAL_HERO_HEIGHT =
-  'h-[min(34dvh,300px)] min-h-[240px] max-h-[300px] sm:h-[min(40dvh,360px)] sm:min-h-[300px] sm:max-h-[360px] md:h-[min(46dvh,420px)] md:min-h-[360px] md:max-h-[420px]'
+export const CONTACT_EDITORIAL_HERO_HEIGHT = [
+  'min-h-[calc(var(--site-header-clearance,5.0625rem)+13.5rem)]',
+  'h-[min(58dvh,calc(var(--site-header-clearance,5.0625rem)+17rem))]',
+  'max-h-[calc(var(--site-header-clearance,5.0625rem)+19rem)]',
+  'md:min-h-[360px] md:h-[min(46dvh,420px)] md:max-h-[420px]',
+].join(' ')
 
-/** Contact hero image fit — show full boxes on phones; cover on larger viewports */
+/** Show full boxes in the band below the header; cover on larger screens */
 export const CONTACT_EDITORIAL_HERO_IMAGE_CLASS =
-  'object-contain object-center md:object-cover'
+  'object-contain object-center md:object-cover md:object-center'
 
 /** @deprecated Use EDITORIAL_HERO_HEIGHT — kept for any legacy imports */
 export const EDITORIAL_BRAND_HERO_HEIGHT = EDITORIAL_HERO_HEIGHT
