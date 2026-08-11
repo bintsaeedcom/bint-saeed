@@ -32,6 +32,8 @@ import { CONTACT_MESSAGE_MIN_CHARS } from '@/lib/security/contactSubmissionGuard
 import {
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
+  CONTACT_EDITORIAL_HERO_HEIGHT,
+  CONTACT_EDITORIAL_HERO_IMAGE_CLASS,
 } from '@/lib/ui/editorialPageChrome'
 
 /** Display + deep links */
@@ -218,6 +220,8 @@ export default function ContactPage() {
         imageSrc={ABOUT_SECTION_HERO_IMAGES.contact}
         imageAlt={copy.heroBannerAlt}
         priority
+        heightClassName={CONTACT_EDITORIAL_HERO_HEIGHT}
+        imageClassName={CONTACT_EDITORIAL_HERO_IMAGE_CLASS}
         segments={[
           { label: copy.breadcrumbHome, href: '/home' },
           { label: copy.breadcrumbContact },

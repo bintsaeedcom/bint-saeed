@@ -27,6 +27,10 @@ export type AboutSectionHeroProps = {
   description?: string
   titleClassName?: string
   descriptionClassName?: string
+  /** Extra classes on the Next/Image (e.g. mobile object-fit / position). */
+  imageClassName?: string
+  /** Override default editorial banner height classes. */
+  heightClassName?: string
   imageOpacity?: number
   priority?: boolean
   showTopicNav?: boolean
@@ -43,6 +47,8 @@ export default function AboutSectionHero({
   description,
   titleClassName,
   descriptionClassName,
+  imageClassName = 'object-cover object-center',
+  heightClassName = EDITORIAL_HERO_HEIGHT,
   imageOpacity = ABOUT_EDITORIAL_HERO_IMAGE_OPACITY,
   priority = false,
   showTopicNav = true,
@@ -50,15 +56,12 @@ export default function AboutSectionHero({
 }: AboutSectionHeroProps) {
   return (
     <>
-      <header
-        className={`relative ${EDITORIAL_HERO_HEIGHT} overflow-hidden bg-brand-darkRed`}
-        style={{ minHeight: '360px', maxHeight: '420px' }}
-      >
+      <header className={`relative ${heightClassName} overflow-hidden bg-brand-darkRed`}>
         <Image
           src={imageSrc}
           alt={imageAlt}
           fill
-          className="object-cover"
+          className={imageClassName}
           style={{ opacity: imageOpacity / 100 }}
           priority={priority}
           sizes="100vw"

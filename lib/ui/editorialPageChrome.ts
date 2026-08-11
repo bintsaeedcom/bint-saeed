@@ -43,6 +43,17 @@ export const SITE_CONTENT_TOP_PAD = 'pt-3.5 sm:pt-4 md:pt-5'
 /** One banner height for every About sub-page — visible, never clipped */
 export const EDITORIAL_HERO_HEIGHT = 'h-[min(46dvh,420px)] min-h-[360px] max-h-[420px]'
 
+/**
+ * Contact Us — wide gift-box banner. Shorter on small screens so object-contain
+ * can show both boxes without an overly tall letterbox / cover crop.
+ */
+export const CONTACT_EDITORIAL_HERO_HEIGHT =
+  'h-[min(34dvh,300px)] min-h-[240px] max-h-[300px] sm:h-[min(40dvh,360px)] sm:min-h-[300px] sm:max-h-[360px] md:h-[min(46dvh,420px)] md:min-h-[360px] md:max-h-[420px]'
+
+/** Contact hero image fit — show full boxes on phones; cover on larger viewports */
+export const CONTACT_EDITORIAL_HERO_IMAGE_CLASS =
+  'object-contain object-center md:object-cover'
+
 /** @deprecated Use EDITORIAL_HERO_HEIGHT — kept for any legacy imports */
 export const EDITORIAL_BRAND_HERO_HEIGHT = EDITORIAL_HERO_HEIGHT
 
