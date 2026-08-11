@@ -35,6 +35,10 @@ const VIEW_SUFFIXES = ['three-quarter', 'cuff-close-up', 'close-up', 'lifestyle-
 
 /** Pixel dimensions for schema ImageObject enrichment (keyed by filename). */
 export const PRODUCT_IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
+  'bint-saeed-covent-garden-abaya-burgundy-lifestyle-sleeve-detail.webp': {
+    width: 819,
+    height: 1024,
+  },
   'bint-saeed-nothing-hill-kaftan-gold-tone-signature-emblem-close-up.webp': {
     width: 2160,
     height: 2700,

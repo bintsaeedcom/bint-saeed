@@ -349,6 +349,7 @@ function coventGardenAbayaGallery(color: 'burgundy' | 'black' | 'navy-blue'): st
   if (color === 'burgundy') {
     images.push(
       `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.webp`,
+      `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-burgundy-lifestyle-sleeve-detail.webp`,
     )
   }
   return images
