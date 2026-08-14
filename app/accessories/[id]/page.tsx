@@ -63,6 +63,8 @@ import { getBagCharmPdpContent } from '@/lib/accessories/bagCharmPdpContent'
 import { accessoryCanonicalUrl } from '@/lib/accessories/accessoryPageUrl'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
 import PdpLightbox from '@/components/pdp/PdpLightbox'
+import PdpThumbRailArrows from '@/components/pdp/PdpThumbRailArrows'
+import { getPdpGalleryAriaCopy } from '@/lib/i18n/pdpGalleryAriaI18n'
 import StickyAddToCart from '@/components/StickyAddToCart'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import { accessoryDisplaySize } from '@/lib/accessories/accessorySizeLabel'
@@ -113,6 +115,7 @@ export default function AccessoryDetailPage() {
   const accessory = findShopAccessoryById(aid)
 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
+  const [verticalThumbsSwiper, setVerticalThumbsSwiper] = useState<SwiperType | null>(null)
   const mainSwiperRef = useRef<SwiperType | null>(null)
   const [selectedColor, setSelectedColor] = useState('')
   const [quantity, setQuantity] = useState(1)
@@ -125,6 +128,7 @@ export default function AccessoryDetailPage() {
   const { isRTL, t, language } = useLanguage()
   const ui = commerceUi(language)
   const productUi = productPageUi(language)
+  const galleryAria = getPdpGalleryAriaCopy(language)
   const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
   const mainGalleryModules = useMemo(
     () => (thumbConnected ? [Navigation, Thumbs, Pagination] : [Navigation, Pagination]),
@@ -721,11 +725,14 @@ export default function AccessoryDetailPage() {
               iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
             />
             <div className={`grid gap-3 lg:items-start ${galleryGridClass}`}>
-              <div className="hidden min-h-0 lg:block">
+              <div className="relative hidden min-h-0 lg:block">
                 <Swiper
                   modules={[FreeMode, Thumbs, Mousewheel]}
                   direction="vertical"
-                  onSwiper={setThumbsSwiper}
+                  onSwiper={(swiper) => {
+                    setThumbsSwiper(swiper)
+                    setVerticalThumbsSwiper(swiper)
+                  }}
                   spaceBetween={10}
                   slidesPerView={5}
                   freeMode
@@ -785,6 +792,11 @@ export default function AccessoryDetailPage() {
                     </SwiperSlide>
                   ))}
                 </Swiper>
+                <PdpThumbRailArrows
+                  swiper={verticalThumbsSwiper}
+                  labelUp={galleryAria.scrollThumbsUp}
+                  labelDown={galleryAria.scrollThumbsDown}
+                />
               </div>
 
               <div className="space-y-3">

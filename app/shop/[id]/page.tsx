@@ -71,6 +71,7 @@ import { PdpShippingReturnsBullets } from '@/lib/pdp/PdpShippingReturnsBullets'
 import PdpIntroParagraph from '@/components/PdpIntroParagraph'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
 import PdpLightbox from '@/components/pdp/PdpLightbox'
+import PdpThumbRailArrows from '@/components/pdp/PdpThumbRailArrows'
 import PdpAccordion, {
   scrollPdpAccordionSectionIntoView,
   type PdpAccordionSectionConfig,
@@ -165,6 +166,7 @@ export default function ProductPage() {
   }, [product, routeIdentifier, router])
 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
+  const [verticalThumbsSwiper, setVerticalThumbsSwiper] = useState<SwiperType | null>(null)
   const mainSwiperRef = useRef<SwiperType | null>(null)
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
@@ -345,6 +347,7 @@ export default function ProductPage() {
     mainSwiperRef.current?.slideTo(0, 0)
     setLightboxIndex(0)
     setThumbsSwiper(null)
+    setVerticalThumbsSwiper(null)
   }, [selectedColor])
 
   useEffect(() => {
@@ -671,12 +674,15 @@ export default function ProductPage() {
               iconClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
             />
             <div className="grid gap-3 lg:grid-cols-[4.75rem_minmax(0,1fr)] lg:items-start">
-              <div className="hidden min-h-0 lg:block">
+              <div className="relative hidden min-h-0 lg:block">
                 <Swiper
                   key={`thumbs-vertical-${selectedColor}`}
                   modules={[FreeMode, Thumbs, Mousewheel]}
                   direction="vertical"
-                  onSwiper={setThumbsSwiper}
+                  onSwiper={(swiper) => {
+                    setThumbsSwiper(swiper)
+                    setVerticalThumbsSwiper(swiper)
+                  }}
                   spaceBetween={10}
                   slidesPerView={5}
                   freeMode
@@ -737,6 +743,11 @@ export default function ProductPage() {
                     </SwiperSlide>
                   ))}
                 </Swiper>
+                <PdpThumbRailArrows
+                  swiper={verticalThumbsSwiper}
+                  labelUp={galleryAria.scrollThumbsUp}
+                  labelDown={galleryAria.scrollThumbsDown}
+                />
               </div>
 
               {/* Main Image */}
