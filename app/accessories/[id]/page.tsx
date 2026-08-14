@@ -115,7 +115,7 @@ export default function AccessoryDetailPage() {
   const accessory = findShopAccessoryById(aid)
 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
-  const [verticalThumbsSwiper, setVerticalThumbsSwiper] = useState<SwiperType | null>(null)
+  const verticalThumbsSwiperRef = useRef<SwiperType | null>(null)
   const mainSwiperRef = useRef<SwiperType | null>(null)
   const [selectedColor, setSelectedColor] = useState('')
   const [quantity, setQuantity] = useState(1)
@@ -731,7 +731,7 @@ export default function AccessoryDetailPage() {
                   direction="vertical"
                   onSwiper={(swiper) => {
                     setThumbsSwiper(swiper)
-                    setVerticalThumbsSwiper(swiper)
+                    verticalThumbsSwiperRef.current = swiper
                   }}
                   spaceBetween={10}
                   slidesPerView={5}
@@ -793,7 +793,8 @@ export default function AccessoryDetailPage() {
                   ))}
                 </Swiper>
                 <PdpThumbRailArrows
-                  swiper={verticalThumbsSwiper}
+                  swiperRef={verticalThumbsSwiperRef}
+                  slideCount={pdpImages.length}
                   labelUp={galleryAria.scrollThumbsUp}
                   labelDown={galleryAria.scrollThumbsDown}
                 />

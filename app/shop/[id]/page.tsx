@@ -166,7 +166,7 @@ export default function ProductPage() {
   }, [product, routeIdentifier, router])
 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
-  const [verticalThumbsSwiper, setVerticalThumbsSwiper] = useState<SwiperType | null>(null)
+  const verticalThumbsSwiperRef = useRef<SwiperType | null>(null)
   const mainSwiperRef = useRef<SwiperType | null>(null)
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
@@ -347,7 +347,7 @@ export default function ProductPage() {
     mainSwiperRef.current?.slideTo(0, 0)
     setLightboxIndex(0)
     setThumbsSwiper(null)
-    setVerticalThumbsSwiper(null)
+    verticalThumbsSwiperRef.current = null
   }, [selectedColor])
 
   useEffect(() => {
@@ -681,7 +681,7 @@ export default function ProductPage() {
                   direction="vertical"
                   onSwiper={(swiper) => {
                     setThumbsSwiper(swiper)
-                    setVerticalThumbsSwiper(swiper)
+                    verticalThumbsSwiperRef.current = swiper
                   }}
                   spaceBetween={10}
                   slidesPerView={5}
@@ -744,7 +744,8 @@ export default function ProductPage() {
                   ))}
                 </Swiper>
                 <PdpThumbRailArrows
-                  swiper={verticalThumbsSwiper}
+                  swiperRef={verticalThumbsSwiperRef}
+                  slideCount={activeImages.length}
                   labelUp={galleryAria.scrollThumbsUp}
                   labelDown={galleryAria.scrollThumbsDown}
                 />
