@@ -5,13 +5,14 @@ import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import type { Swiper as SwiperType } from 'swiper'
-import { Pagination, Keyboard } from 'swiper/modules'
-import { FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi'
+import { Pagination, Keyboard, Zoom } from 'swiper/modules'
+import { FiChevronLeft, FiChevronRight, FiX, FiZoomIn, FiZoomOut } from 'react-icons/fi'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
 import { lockBodyScroll, recoverStuckBodyScroll } from '@/lib/ui/bodyScrollLock'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
+import 'swiper/css/zoom'
 
 export type PdpLightboxItem = {
   src: string
@@ -26,6 +27,8 @@ type PdpLightboxProps = {
   onIndexChange: (index: number) => void
   onClose: () => void
   closeLabel?: string
+  zoomInLabel?: string
+  zoomOutLabel?: string
 }
 
 /**
@@ -40,11 +43,28 @@ export default function PdpLightbox({
   onIndexChange,
   onClose,
   closeLabel = 'Close gallery',
+  zoomInLabel = 'Zoom in',
+  zoomOutLabel = 'Zoom out',
 }: PdpLightboxProps) {
   const [swiper, setSwiper] = useState<SwiperType | null>(null)
+  const [zoomed, setZoomed] = useState(false)
+  // Mirrored in a ref so the scroll-dismiss listeners can read zoom state
+  // without being torn down and re-armed on every zoom change.
+  const zoomedRef = useRef(false)
   const wasOpenRef = useRef(false)
   const count = images.length
   const safeIndex = count === 0 ? 0 : Math.min(Math.max(index, 0), count - 1)
+
+  const applyZoomState = useCallback((next: boolean) => {
+    zoomedRef.current = next
+    setZoomed(next)
+  }, [])
+
+  const toggleZoom = useCallback(() => {
+    if (!swiper || swiper.destroyed) return
+    if (zoomedRef.current) swiper.zoom.out()
+    else swiper.zoom.in()
+  }, [swiper])
 
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
@@ -83,7 +103,8 @@ export default function PdpLightbox({
   /**
    * Scrolling dismisses the enlarged image and hands the page back.
    * Body scroll is locked while open, so intent is read from wheel / touch
-   * rather than a scroll event. Horizontal touch stays with Swiper.
+   * rather than a scroll event. Horizontal touch stays with Swiper, and while
+   * zoomed every gesture belongs to panning instead.
    */
   useEffect(() => {
     if (!open) return
@@ -100,6 +121,10 @@ export default function PdpLightbox({
 
     const onWheel = (e: WheelEvent) => {
       if (!armed) return
+      if (zoomedRef.current) {
+        wheelTravel = 0
+        return
+      }
       wheelTravel += Math.abs(e.deltaY)
       if (wheelTravel > 40) onClose()
     }
@@ -113,6 +138,7 @@ export default function PdpLightbox({
 
     const onTouchMove = (e: TouchEvent) => {
       if (!armed) return
+      if (zoomedRef.current || e.touches.length > 1) return
       const touch = e.touches[0]
       if (!touch) return
       const dy = touch.clientY - touchStartY
@@ -135,13 +161,14 @@ export default function PdpLightbox({
   useEffect(() => {
     if (!open) {
       setSwiper(null)
+      applyZoomState(false)
       return
     }
     if (!swiper || swiper.destroyed) return
     if (swiper.activeIndex !== safeIndex) {
       swiper.slideTo(safeIndex, 0)
     }
-  }, [open, safeIndex, swiper])
+  }, [open, safeIndex, swiper, applyZoomState])
 
   if (typeof document === 'undefined') return null
 
@@ -213,9 +240,27 @@ export default function PdpLightbox({
                 <FiX className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.75} />
               </button>
 
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  toggleZoom()
+                }}
+                className="absolute right-16 top-2 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-[#1a0210]/55 text-white backdrop-blur-sm transition-colors hover:bg-[#1a0210]/75 sm:right-[4.5rem] sm:top-3 sm:h-11 sm:w-11"
+                aria-label={zoomed ? zoomOutLabel : zoomInLabel}
+                aria-pressed={zoomed}
+                data-cursor-hover
+              >
+                {zoomed ? (
+                  <FiZoomOut className="h-5 w-5 sm:h-[1.35rem] sm:w-[1.35rem]" strokeWidth={1.75} />
+                ) : (
+                  <FiZoomIn className="h-5 w-5 sm:h-[1.35rem] sm:w-[1.35rem]" strokeWidth={1.75} />
+                )}
+              </button>
+
               <Swiper
               key={`lightbox-${images.map((i) => i.src).join('|')}`}
-              modules={[Pagination, Keyboard]}
+              modules={[Pagination, Keyboard, Zoom]}
               initialSlide={safeIndex}
               spaceBetween={16}
               slidesPerView={1}
@@ -225,7 +270,9 @@ export default function PdpLightbox({
               resistanceRatio={0.65}
               keyboard={{ enabled: true }}
               pagination={count > 1 ? { clickable: true, dynamicBullets: true } : false}
+              zoom={{ maxRatio: 3, minRatio: 1, toggle: true }}
               onSwiper={setSwiper}
+              onZoomChange={(_instance, scale) => applyZoomState(scale > 1.01)}
               onSlideChange={(instance) => {
                 if (instance.activeIndex !== index) {
                   onIndexChange(instance.activeIndex)
@@ -236,13 +283,15 @@ export default function PdpLightbox({
               {images.map((image, i) => (
                 <SwiperSlide key={`${image.src}-${i}`}>
                   <div className="relative mx-auto flex h-[min(82dvh,880px)] w-full items-center justify-center">
-                    <div className="relative h-full w-full">
+                    {/* Swiper zoom needs the image in normal flow to measure pan bounds. */}
+                    <div className="swiper-zoom-container h-full w-full">
                       <PdpGalleryImage
                         src={image.src}
                         alt={image.alt}
                         title={image.title}
                         priority={i === safeIndex}
-                        className="object-contain object-center"
+                        fill={false}
+                        className="max-h-full max-w-full object-contain"
                       />
                     </div>
                   </div>

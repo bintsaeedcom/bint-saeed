@@ -8,6 +8,8 @@ type PdpGalleryImageProps = {
   title?: string
   className?: string
   priority?: boolean
+  /** Set false to flow in normal layout — required inside a Swiper zoom container. */
+  fill?: boolean
 }
 
 /**
@@ -20,6 +22,7 @@ export default function PdpGalleryImage({
   title,
   className = 'object-cover object-top',
   priority = false,
+  fill = true,
 }: PdpGalleryImageProps) {
   return (
     // eslint-disable-next-line @next/next/no-img-element -- intentional for iOS Swiper reliability
@@ -30,7 +33,7 @@ export default function PdpGalleryImage({
       loading={priority ? 'eager' : 'lazy'}
       decoding="async"
       fetchPriority={priority ? 'high' : 'auto'}
-      className={`absolute inset-0 h-full w-full ${className}`}
+      className={fill ? `absolute inset-0 h-full w-full ${className}` : className}
     />
   )
 }
