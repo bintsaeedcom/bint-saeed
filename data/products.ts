@@ -251,8 +251,6 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     front: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-front.webp',
     side: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-side.webp',
     back: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-back.webp',
-    detail: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-lifestyle-1.webp',
-    extra: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-lifestyle-2.webp',
   },
 }
 
@@ -268,9 +266,14 @@ const KNIGHTSBRIDGE_ABAYA_JACKET_DIR = '/Webshop pictures/Abayas/Knightsbridge A
 
 function knightsbridgeAbayaJacketGallery(color: 'dark-brown' | 'navy-grey'): string[] {
   const base = `${KNIGHTSBRIDGE_ABAYA_JACKET_DIR}/bint-saeed-knightsbridge-abaya-jacket-${color}`
-  const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
-  if (color === 'navy-grey') {
-    images.push(`${base}-lifestyle-1.webp`)
+  const images = [
+    `${base}-front.webp`,
+    `${base}-side.webp`,
+    `${base}-back.webp`,
+    `${base}-cuff-close-up.webp`,
+  ]
+  if (color === 'dark-brown' || color === 'navy-grey') {
+    images.push(`${base}-lifestyle-1.webp`, `${base}-lifestyle-2.webp`)
   }
   return images
 }
@@ -313,7 +316,8 @@ const PARK_LANE_ABAYA_DIR = '/Webshop pictures/Abayas/Park Lane Abaya'
 
 function parkLaneAbayaGallery(color: 'black' | 'dark-marroon' | 'navy-blue'): string[] {
   const base = `${PARK_LANE_ABAYA_DIR}/bint-saeed-parklane-abaya-${color}`
-  const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  // Side first — clearer silhouette / scarf drape on shop + PDP for every colour.
+  const images = [`${base}-side.webp`, `${base}-front.webp`, `${base}-back.webp`]
   if (color === 'black') {
     images.push(`${base}-extra.webp`, `${base}-lifestyle-extra.webp`)
   }
@@ -352,18 +356,20 @@ function coventGardenAbayaGallery(color: 'burgundy' | 'black' | 'navy-blue'): st
   const images = [`${base}-side.webp`, `${base}-front.webp`, `${base}-back.webp`]
   if (color === 'burgundy') {
     images.push(
-      `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.webp`,
       `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-burgundy-lifestyle-sleeve-detail.webp`,
+      `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.webp`,
     )
   }
   if (color === 'black') {
     images.push(
       `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-black-lifestyle-sleeve-detail.webp`,
+      `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-black-close-up-signature-emblem.webp`,
     )
   }
   if (color === 'navy-blue') {
     images.push(
       `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-navy-blue-lifestyle-sleeve-detail.webp`,
+      `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-navy-blue-close-up-signature-emblem.webp`,
     )
   }
   return images
@@ -432,7 +438,10 @@ function sohoSetGallery(color: 'black' | 'navy-blue'): string[] {
     `${base}-lifestyle-2.webp`,
   ]
   if (color === 'navy-blue') {
-    images.push(`${base}-lifestyle-3.webp`)
+    images.push(
+      `${base}-lifestyle-3.webp`,
+      `${SOHO_SET_DIR}/bint-saeed-soho-set-navy-blue-lifestyle-gold-trim-detail.webp`,
+    )
   }
   return images
 }
@@ -441,13 +450,8 @@ const HYDE_PARK_SET_DIR = '/Webshop pictures/Sets/Hyde Park Set'
 
 function hydeParkSetGallery(color: 'black'): string[] {
   const base = `${HYDE_PARK_SET_DIR}/bint-saeed-hyde-park-set-${color}`
-  return [
-    `${base}-front.webp`,
-    `${base}-side.webp`,
-    `${base}-back.webp`,
-    `${base}-lifestyle-1.webp`,
-    `${base}-lifestyle-2.webp`,
-  ]
+  // Studio views only — lifestyle-1/2 assets are not on disk yet.
+  return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
 }
 
 /** Hidden from `/shop` grid when no gallery images are wired. */

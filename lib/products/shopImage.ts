@@ -16,7 +16,7 @@ export function shopGridPrimaryImage(
 ): string {
   if (product.slug === 'park-lane-abaya') {
     const maroonGallery = product.colorImages?.['Dark Maroon'] ?? product.images
-    return maroonGallery[1] ?? maroonGallery[0] ?? FRONT_PLACEHOLDER
+    return maroonGallery[0] ?? FRONT_PLACEHOLDER
   }
   return productPrimaryImage(product)
 }

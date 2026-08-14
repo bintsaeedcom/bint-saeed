@@ -90,56 +90,9 @@ function backAlts(color: ColorSlug): Record<AppLocale, string> {
   )
 }
 
-function lifestyle1Alts(color: ColorSlug): Record<AppLocale, string> {
-  const c = COLOR_LABEL[color]
-  return altLoc(
-    `Bint Saeed Hyde Park Set in ${c.en}, lifestyle view styled for luxury travel, morning coffee on the Corniche, and effortless city days in Abu Dhabi, London, or Singapore. Oversized premium crepe shirt and flowing palazzo trousers with Knotted Line buttons — understated coordinate travel outfit for GCC, Europe, and worldwide wardrobes. Made in Abu Dhabi, United Arab Emirates. Worldwide shipping.`,
-    `طقم Bint Saeed Hyde Park باللون ${c.ar}، إطلالة حياتية مناسبة للسفر الفاخر وقهوة الصباح على الكورنيش وأيام المدينة بسهولة في أبوظبي أو لندن أو سنغافورة. قميص كريب فاخر واسع وبنطال بالازو انسيابي مع أزرار Knotted Line — إطلالة سفر منسّقة رصينة لخزائن الخليج وأوروبا والعالم. صُنع في أبوظبي، الإمارات العربية المتحدة. شحن عالمي.`,
-    `Set Bint Saeed Hyde Park en ${c.fr}, vue lifestyle pour voyage de luxe, café du matin sur la Corniche et journées citadines sans effort à Abou Dabi, Londres ou Singapour. Chemise crêpe premium oversize et pantalon palazzo fluide avec boutons Knotted Line — tenue voyage coordonnée discrète pour garde-robes Golfe, Europe et monde. Fabriqué à Abou Dabi, Émirats arabes unis. Livraison mondiale.`,
-    `Bint Saeed Hyde Park Set in ${c.it}, vista lifestyle per viaggi di lusso, caffè mattutino sulla Corniche e giornate in città senza sforzo ad Abu Dhabi, Londra o Singapore. Camicia crepe premium oversize e pantaloni palazzo fluidi con bottoni Knotted Line — outfit viaggio coordinato sobrio per guardaroba Golfo, Europa e mondo. Realizzato ad Abu Dhabi, Emirati Arabi Uniti. Spedizione mondiale.`,
-    `Set Bint Saeed Hyde Park en ${c.es}, vista lifestyle para viaje de lujo, café matutino en la Corniche y días urbanos sin esfuerzo en Abu Dabi, Londres o Singapur. Camisa crepe premium oversize y pantalones palazzo fluidos con botones Knotted Line — outfit viaje coordinado discreto para armarios del Golfo, Europa y el mundo. Hecho en Abu Dabi, Emiratos Árabes Unidos. Envío mundial.`,
-    `Комплект Bint Saeed Hyde Park цвета ${c.ru}, lifestyle-образ для люксовых путешествий, утреннего кофе на Корнише и лёгких городских дней в Абу-Даби, Лондоне или Сингапуре. Оверсайз рубашка из премиального крепа и струящиеся брюки palazzo с пуговицами Knotted Line — сдержанный координированный travel outfit для гардеробов Залива, Европы и мира. Сделано в Абу-Даби, ОАЭ. Доставка по всему миру.`,
-    `Bint Saeed Hyde Park Set${c.zh}生活方式造型，适合奢华旅行、滨海大道晨间咖啡及阿布扎比、伦敦或新加坡轻松都市日常。宽松高级绉绸衬衫与流畅阔腿palazzo长裤，Knotted Line纽扣——含蓄协调旅行穿搭，面向海湾、欧洲及全球衣橱。阿布扎比制造。全球配送。`,
-    `Bint Saeed Hyde Park Set in ${c.de}, Lifestyle-Ansicht für Luxusreisen, Morgenkaffee an der Corniche und mühelose Stadttage in Abu Dhabi, London oder Singapur. Oversize-Premium-Krepp-Hemd und fließende Palazzo-Hose mit Knotted-Line-Knöpfen — zurückhaltendes Koordinaten-Reise-Outfit für Golf-, Europa- und weltweite Garderoben. Hergestellt in Abu Dhabi, VAE. Weltweiter Versand.`,
-    `Bint Saeed Hyde Park Set in ${c.nl}, lifestyle-beeld voor luxe reizen, ochtendkoffie aan de Corniche en moeiteloze stadsdagen in Abu Dhabi, Londen of Singapore. Oversized premium crêpe overhemd en vloeiende palazzo-broek met Knotted Line knopen — ingetogen gecoördineerd reis-outfit voor Golf-, Europa- en wereldwijde garderobes. Gemaakt in Abu Dhabi, VAE. Wereldwijde verzending.`,
-    `Set Bint Saeed Hyde Park em ${c.pt}, vista lifestyle para viagem de luxo, café da manhã na Corniche e dias urbanos sem esforço em Abu Dhabi, Londres ou Singapura. Camisa crepe premium oversize e calças palazzo fluidas com botões Knotted Line — outfit viagem coordenado discreto para guarda-roupa do Golfo, Europa e mundo. Feito em Abu Dhabi, Emirados Árabes Unidos. Envio mundial.`,
-    `Bint Saeed Hyde Park Set ${c.id}, tampak gaya hidup untuk perjalanan mewah, kopi pagi di Corniche, dan hari kota santai di Abu Dhabi, London, atau Singapore. Kemeja krepe premium oversized dan celana palazzo mengalir dengan kancing Knotted Line — outfit perjalanan koordinat understated untuk garderobe GCC, Eropa, dan dunia. Dibuat di Abu Dhabi, UEA. Pengiriman dunia.`,
-    `Bint Saeed Hyde Park Set ${c.ms}, pandangan gaya hidup untuk perjalanan mewah, kopi pagi di Corniche, dan hari bandar santai di Abu Dhabi, London, atau Singapore. Kemeja krepe premium oversized dan seluar palazzo mengalir dengan butang Knotted Line — outfit perjalanan koordinat understated untuk almari GCC, Eropah, dan dunia. Dihasilkan di Abu Dhabi, UAE. Penghantaran seluruh dunia.`,
-  )
-}
-
-function lifestyle2Alts(color: ColorSlug): Record<AppLocale, string> {
-  const c = COLOR_LABEL[color]
-  return altLoc(
-    `Bint Saeed Hyde Park Set in ${c.en}, lifestyle view styled for elegant lunches, evening dinners, and refined travel moments in Portofino, Rabat, Miami, Los Angeles, or Brunei. Coordinate oversized shirt and palazzo trousers with signature Knotted Line buttons — versatile day-to-evening modest fashion and contemporary Emirati designer travelwear worn together or styled separately. Made in Abu Dhabi, United Arab Emirates. Worldwide shipping.`,
-    `طقم Bint Saeed Hyde Park باللون ${c.ar}، إطلالة حياتية مناسبة للغداءات الأنيقة والعشاءات المسائية ولحظات السفر الراقية في بورتوفينو أو الرباط أو ميامي أو لوس أنجلوس أو بروناي. قميص واسع وبنطال بالازو منسّقان مع أزرار Knotted Line المميزة — أزياء محتشمة متعددة الاستخدام من النهار إلى المساء وملابس سفر مصمّمة إماراتية معاصرة تُرتدى معاً أو منفصلة. صُنع في أبوظبي، الإمارات العربية المتحدة. شحن عالمي.`,
-    `Set Bint Saeed Hyde Park en ${c.fr}, vue lifestyle pour déjeuners élégants, dîners du soir et moments de voyage raffinés à Portofino, Rabat, Miami, Los Angeles ou Brunei. Chemise oversize et pantalon palazzo coordonnés avec boutons Knotted Line signature — mode modeste polyvalente jour-soir et travelwear de créateur émirati contemporain porté ensemble ou séparément. Fabriqué à Abou Dabi, Émirats arabes unis. Livraison mondiale.`,
-    `Bint Saeed Hyde Park Set in ${c.it}, vista lifestyle per pranzi eleganti, cene serali e momenti di viaggio raffinati a Portofino, Rabat, Miami, Los Angeles o Brunei. Camicia oversize e pantaloni palazzo coordinati con bottoni Knotted Line signature — modest fashion versatile giorno-sera e travelwear designer emiratino contemporaneo indossato insieme o separatamente. Realizzato ad Abu Dhabi, Emirati Arabi Uniti. Spedizione mondiale.`,
-    `Set Bint Saeed Hyde Park en ${c.es}, vista lifestyle para almuerzos elegantes, cenas nocturnas y momentos de viaje refinados en Portofino, Rabat, Miami, Los Ángeles o Brunéi. Camisa oversize y pantalones palazzo coordinados con botones Knotted Line signature — moda modesta versátil de día a noche y travelwear de diseñador emiratí contemporáneo usado junto o por separado. Hecho en Abu Dabi, Emiratos Árabes Unidos. Envío mundial.`,
-    `Комплект Bint Saeed Hyde Park цвета ${c.ru}, lifestyle-образ для элегантных обедов, вечерних ужинов и изысканных travel-моментов в Портофино, Рабате, Майами, Лос-Анджелесе или Брунее. Согласованные оверсайз рубашка и брюки palazzo с фирменными пуговицами Knotted Line — универсальная скромная мода день-вечер и современный эмиратский дизайнерский travelwear в комплекте или по отдельности. Сделано в Абу-Даби, ОАЭ. Доставка по всему миру.`,
-    `Bint Saeed Hyde Park Set${c.zh}生活方式造型，适合优雅午餐、晚间晚宴及波托菲诺、拉巴特、迈阿密、洛杉矶或文莱精致旅行时刻。协调宽松衬衫与阔腿palazzo长裤，Knotted Line标志性纽扣——可成套或分开穿着的多用途日晩端庄时尚与当代阿联酋设计师旅行装。阿布扎比制造。全球配送。`,
-    `Bint Saeed Hyde Park Set in ${c.de}, Lifestyle-Ansicht für elegante Mittagessen, Abendessen und raffinierte Reisemomente in Portofino, Rabat, Miami, Los Angeles oder Brunei. Koordiniertes Oversize-Hemd und Palazzo-Hose mit charakteristischen Knotted-Line-Knöpfen — vielseitige bescheidene Mode Tag-zu-Abend und zeitgenössischer emiratischer Designer-Travelwear zusammen oder separat getragen. Hergestellt in Abu Dhabi, VAE. Weltweiter Versand.`,
-    `Bint Saeed Hyde Park Set in ${c.nl}, lifestyle-beeld voor elegante lunches, avonddiners en verfijnde reismomenten in Portofino, Rabat, Miami, Los Angeles of Brunei. Gecoördineerd oversized overhemd en palazzo-broek met kenmerkende Knotted Line knopen — veelzijdige bescheiden mode dag-tot-avond en eigentijds Emiratisch designer travelwear samen of apart gedragen. Gemaakt in Abu Dhabi, VAE. Wereldwijde verzending.`,
-    `Set Bint Saeed Hyde Park em ${c.pt}, vista lifestyle para almoços elegantes, jantares noturnos e momentos de viagem refinados em Portofino, Rabat, Miami, Los Angeles ou Brunei. Camisa oversize e calças palazzo coordenadas com botões Knotted Line signature — moda modesta versátil dia-noite e travelwear de designer emirati contemporâneo usado junto ou separadamente. Feito em Abu Dhabi, Emirados Árabes Unidos. Envio mundial.`,
-    `Bint Saeed Hyde Park Set ${c.id}, tampak gaya hidup untuk makan siang elegan, makan malam malam, dan momen perjalanan halus di Portofino, Rabat, Miami, Los Angeles, atau Brunei. Kemeja oversized dan celana palazzo koordinat dengan kancing Knotted Line signature — busana modest serbaguna siang-malam dan travelwear desainer Emirati kontemporer dipakai bersama atau terpisah. Dibuat di Abu Dhabi, UEA. Pengiriman dunia.`,
-    `Bint Saeed Hyde Park Set ${c.ms}, pandangan gaya hidup untuk makan tengah hari anggun, makan malam, dan detik perjalanan halus di Portofino, Rabat, Miami, Los Angeles, atau Brunei. Kemeja oversized dan seluar palazzo koordinat dengan butang Knotted Line signature — fesyen sopan serba guna siang-malam dan travelwear pereka Emirati kontemporari dipakai bersama atau berasingan. Dihasilkan di Abu Dhabi, UAE. Penghantaran seluruh dunia.`,
-  )
-}
-
-function entry(
-  color: ColorSlug,
-  view: 'front' | 'side' | 'back' | 'lifestyle-1' | 'lifestyle-2',
-): AltEntry {
+function entry(color: ColorSlug, view: 'front' | 'side' | 'back'): AltEntry {
   const alts =
-    view === 'front'
-      ? frontAlts(color)
-      : view === 'side'
-        ? sideAlts(color)
-        : view === 'back'
-          ? backAlts(color)
-          : view === 'lifestyle-1'
-            ? lifestyle1Alts(color)
-            : lifestyle2Alts(color)
+    view === 'front' ? frontAlts(color) : view === 'side' ? sideAlts(color) : backAlts(color)
   return {
     filename: `bint-saeed-hyde-park-set-${color}-${view}.webp`,
     alts,
@@ -151,11 +104,7 @@ export const HYDE_PARK_SET_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('black', 'front'),
   entry('black', 'side'),
   entry('black', 'back'),
-  entry('black', 'lifestyle-1'),
-  entry('black', 'lifestyle-2'),
   entry('navy-blue', 'front'),
   entry('navy-blue', 'side'),
   entry('navy-blue', 'back'),
-  entry('navy-blue', 'lifestyle-1'),
-  entry('navy-blue', 'lifestyle-2'),
 ]

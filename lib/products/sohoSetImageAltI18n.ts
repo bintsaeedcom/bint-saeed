@@ -1,7 +1,11 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { altLoc } from '@/lib/products/imageAltOverridesI18n'
 
-type AltEntry = { filename: string; alts: Record<AppLocale, string> }
+type AltEntry = {
+  filename: string
+  alts: Record<AppLocale, string>
+  titles?: Record<AppLocale, string>
+}
 
 type ColorSlug = 'black' | 'navy-blue'
 
@@ -161,6 +165,36 @@ const NAVY_BLUE_LIFESTYLE_3_ALTS = altLoc(
   `Perincian Bint Saeed Soho Set Navy Blue — close-up hiasan Al Talli tradisional Emirati diiktiraf UNESCO berwarna emas pada krepe premium, dengan tanda rumah Bint Saeed Abu Dhabi. Set perjalanan koordinat pereka mewah untuk UAE, GCC, London, Paris, dan almari dunia. Dihasilkan di Abu Dhabi, UAE. Penghantaran seluruh dunia.`,
 )
 
+const NAVY_BLUE_GOLD_TRIM_DETAIL_ALTS = altLoc(
+  'Lifestyle detail of the Bint Saeed Soho Set in Navy Blue — draped crepe with gold-tone Al Talli chain trim along the edge. UNESCO-recognised Emirati heritage craftsmanship on a contemporary luxury travel coordinate set from Abu Dhabi, United Arab Emirates. Made in Abu Dhabi. Worldwide shipping.',
+  'تفصيل lifestyle لطقم Bint Saeed Soho بالكحلي — كريب متدلّ مع شريط تلي ذهبي بطول الحافة. حرفية تراثية إماراتية معترف بها من اليونسكو على طقم سفر منسّق فاخر معاصر من أبوظبي، الإمارات العربية المتحدة. صُنع في أبوظبي. شحن عالمي.',
+  'Détail lifestyle du set Bint Saeed Soho en Bleu marine — crêpe drapé avec bordure chaîne Al Talli dorée. Artisanat patrimonial émirati reconnu par l’UNESCO sur un ensemble voyage coordonné de luxe contemporain d’Abou Dabi, Émirats arabes unis. Fabriqué à Abou Dabi. Livraison mondiale.',
+  'Dettaglio lifestyle del Bint Saeed Soho Set in Blu navy — crepe drappeggiato con bordo a catena Al Talli dorata. Artigianato patrimoniale emiratino riconosciuto dall’UNESCO su un set viaggio coordinato di lusso contemporaneo da Abu Dhabi, Emirati Arabi Uniti. Realizzato ad Abu Dhabi. Spedizione mondiale.',
+  'Detalle lifestyle del set Bint Saeed Soho en Azul marino — crepé drapeado con ribete de cadena Al Talli dorada. Artesanía patrimonial emiratí reconocida por la UNESCO en un set de viaje coordinado de lujo contemporáneo de Abu Dabi, EAU. Hecho en Abu Dabi. Envío mundial.',
+  'Lifestyle-деталь комплекта Bint Saeed Soho цвета тёмно-синий — драпированный креп с золотистой цепочной отделкой Al Talli по краю. Эмиратское наследие ЮНЕСКО на современном люксовом travel set из Абу-Даби, ОАЭ. Сделано в Абу-Даби. Доставка по всему миру.',
+  'Bint Saeed Soho Set海军蓝生活方式细节——垂坠绉绸边缘金色Al Talli链饰。阿布扎比当代奢华旅行协调套装上的联合国教科文组织阿联酋传承工艺。阿布扎比制造。全球配送。',
+  'Lifestyle-Detail des Bint Saeed Soho Set in Marineblau — drapierter Krepp mit goldfarbenem Al-Talli-Kettenbesatz am Saum. UNESCO-emiratisches Erbehandwerk an einem zeitgenössischen Luxus-Reise-Koordinaten-Set aus Abu Dhabi, VAE. Hergestellt in Abu Dhabi. Weltweiter Versand.',
+  'Lifestyle-detail van de Bint Saeed Soho Set in Marineblauw — gedrapeerd crêpe met goudkleurige Al Talli-kettingafwerking langs de rand. UNESCO Emiratisch erfgoedvakmanschap op een eigentijdse luxe reis-coördinatieset uit Abu Dhabi, VAE. Gemaakt in Abu Dhabi. Wereldwijde verzending.',
+  'Detalhe lifestyle do set Bint Saeed Soho em Azul-marinho — crepe drapado com acabamento em corrente Al Talli dourada na orla. Artesanato patrimonial emirati UNESCO num set viagem coordenado de luxo contemporâneo de Abu Dhabi, EAU. Feito em Abu Dhabi. Envio mundial.',
+  'Detail lifestyle Bint Saeed Soho Set Navy Blue — crepe terjatuh dengan trim rantai Al Talli emas di tepi. Kerajinan warisan Emirati UNESCO pada set perjalanan koordinat mewah kontemporer dari Abu Dhabi, UEA. Dibuat di Abu Dhabi. Pengiriman dunia.',
+  'Butiran gaya hidup Bint Saeed Soho Set Navy Blue — crepe terjatuh dengan hiasan rantai Al Talli emas di tepi. Kraf warisan Emirati UNESCO pada set perjalanan koordinat mewah kontemporari dari Abu Dhabi, UAE. Dihasilkan di Abu Dhabi. Penghantaran seluruh dunia.',
+)
+
+const NAVY_BLUE_GOLD_TRIM_DETAIL_TITLES = altLoc(
+  'Soho Set Navy Blue Gold Trim Detail | Al Talli | Bint Saeed Abu Dhabi',
+  'طقم Soho كحلي | تفصيل التلي الذهبي | Bint Saeed أبوظبي',
+  'Set Soho Bleu marine — détail bordure dorée | Al Talli | Bint Saeed Abou Dabi',
+  'Soho Set Blu navy — dettaglio bordo dorato | Al Talli | Bint Saeed Abu Dhabi',
+  'Set Soho Azul marino — detalle ribete dorado | Al Talli | Bint Saeed Abu Dabi',
+  'Комплект Soho тёмно-синий — золотая отделка | Al Talli | Bint Saeed Абу-Даби',
+  'Soho Set海军蓝金饰细节 | Al Talli | Bint Saeed 阿布扎比',
+  'Soho Set Marineblau — Goldbesatz-Detail | Al Talli | Bint Saeed Abu Dhabi',
+  'Soho Set Marineblauw — gouden trimdetail | Al Talli | Bint Saeed Abu Dhabi',
+  'Set Soho Azul-marinho — detalhe de acabamento dourado | Al Talli | Bint Saeed Abu Dhabi',
+  'Soho Set Navy Blue — detail trim emas | Al Talli | Bint Saeed Abu Dhabi',
+  'Soho Set Navy Blue — butiran hiasan emas | Al Talli | Bint Saeed Abu Dhabi',
+)
+
 /** Curated PDP image alts — Soho Set (Deep Black & Navy Blue). Travel set + Al Talli discovery optimised. */
 export const SOHO_SET_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('black', 'front'),
@@ -176,5 +210,10 @@ export const SOHO_SET_IMAGE_ALT_ENTRIES: AltEntry[] = [
   {
     filename: 'bint-saeed-soho-set-navy-blue-lifestyle-3.webp',
     alts: NAVY_BLUE_LIFESTYLE_3_ALTS,
+  },
+  {
+    filename: 'bint-saeed-soho-set-navy-blue-lifestyle-gold-trim-detail.webp',
+    alts: NAVY_BLUE_GOLD_TRIM_DETAIL_ALTS,
+    titles: NAVY_BLUE_GOLD_TRIM_DETAIL_TITLES,
   },
 ]

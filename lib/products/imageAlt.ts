@@ -39,7 +39,15 @@ export const PRODUCT_IMAGE_DIMENSIONS: Record<string, { width: number; height: n
     width: 819,
     height: 1024,
   },
+  'bint-saeed-covent-garden-abaya-black-close-up-signature-emblem.webp': {
+    width: 819,
+    height: 1024,
+  },
   'bint-saeed-covent-garden-abaya-black-lifestyle-sleeve-detail.webp': {
+    width: 819,
+    height: 1024,
+  },
+  'bint-saeed-covent-garden-abaya-navy-blue-close-up-signature-emblem.webp': {
     width: 819,
     height: 1024,
   },
@@ -49,6 +57,30 @@ export const PRODUCT_IMAGE_DIMENSIONS: Record<string, { width: number; height: n
   },
   'bint-saeed-parklane-abaya-navy-blue-lifestyle-monogram-detail.webp': {
     width: 819,
+    height: 1024,
+  },
+  'bint-saeed-knightsbridge-abaya-jacket-navy-grey-lifestyle-2.webp': {
+    width: 819,
+    height: 1024,
+  },
+  'bint-saeed-knightsbridge-abaya-jacket-dark-brown-lifestyle-1.webp': {
+    width: 819,
+    height: 1024,
+  },
+  'bint-saeed-knightsbridge-abaya-jacket-dark-brown-lifestyle-2.webp': {
+    width: 819,
+    height: 1024,
+  },
+  'bint-saeed-knightsbridge-abaya-jacket-dark-brown-cuff-close-up.webp': {
+    width: 792,
+    height: 1024,
+  },
+  'bint-saeed-soho-set-navy-blue-lifestyle-gold-trim-detail.webp': {
+    width: 819,
+    height: 1024,
+  },
+  'bint-saeed-knightsbridge-abaya-jacket-navy-grey-cuff-close-up.webp': {
+    width: 792,
     height: 1024,
   },
   'bint-saeed-nothing-hill-kaftan-gold-tone-signature-emblem-close-up.webp': {

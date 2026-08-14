@@ -166,6 +166,36 @@ const SLEEVE_LIFESTYLE_TITLES = withAlTalliImageTitle(altLoc(
   'Covent Garden Abaya Burgundy — butiran lengan gaya hidup | Bint Saeed Abu Dhabi',
 ))
 
+const BLACK_EMBLEM_CLOSE_UP_ALTS = withAlTalliImageDiscovery(altLoc(
+  'Close-up of the Bint Saeed gold-tone Monogram pin and square-link chain trim on the Deep Black Covent Garden Abaya — polished signature emblem against rich black crepe drapery on the detachable statement sash. Luxury Emirati designer abaya hardware and heritage craft detailing from Abu Dhabi, United Arab Emirates; modest fashion for the UAE, GCC, and worldwide. Made in Abu Dhabi. Worldwide shipping.',
+  'لقطة مقرّبة لدبوس الشعار الذهبي Bint Saeed وسلسلة الروابط المربعة على عباية Covent Garden بالأسود العميق — شعار مميز مصقول على كريب أسود غني في الوشاح القابل للفصل. حرفية عباية مصمّمة إماراتية فاخرة وتفاصيل تراثية من أبوظبي، الإمارات العربية المتحدة؛ أزياء محتشمة للإمارات والخليج والعالم. صُنعت في أبوظبي. شحن عالمي.',
+  'Gros plan de l’épingle Monogram dorée Bint Saeed et de la chaîne à maillons carrés sur l’abaya Covent Garden Noir profond — emblème signature poli sur un riche crêpe noir de l’écharpe statement amovible. Quincaillerie d’abaya de créateur émiratie de luxe et détail patrimonial d’Abou Dabi, Émirats arabes unis ; mode modeste pour les EAU, le Golfe et le monde. Fabriquée à Abou Dabi. Livraison mondiale.',
+  'Primo piano della spilla Monogram dorata Bint Saeed e della catena a maglie quadrate sulla Covent Garden Abaya Nero profondo — emblema signature lucidato su ricco crepe nero della fascia statement removibile. Hardware di abaya designer emiratina di lusso e dettaglio patrimoniale da Abu Dhabi, Emirati Arabi Uniti; modest fashion per EAU, Golfo e mondo. Realizzata ad Abu Dhabi. Spedizione mondiale.',
+  'Primer plano del pin Monogram dorado Bint Saeed y de la cadena de eslabones cuadrados en la abaya Covent Garden Negro profundo — emblema signature pulido sobre crepé negro rico del fajín statement desmontable. Herrajes de abaya de diseñador emiratí de lujo y detalle patrimonial desde Abu Dabi, EAU; moda modesta para EAU, Golfo y el mundo. Hecha en Abu Dabi. Envío mundial.',
+  'Крупный план золотистой булавки-монограммы Bint Saeed и цепочки с квадратными звеньями на абайе Covent Garden глубокого чёрного — полированная фирменная эмблема на насыщенном чёрном крепе съёмной statement-ленты. Люксовая фурнитура эмиратской дизайнерской абайи и наследственный декор из Абу-Даби, ОАЭ; скромная мода для ОАЭ, Залива и мира. Сделано в Абу-Даби. Доставка по всему миру.',
+  'Bint Saeed Covent Garden深黑色长袍金色Monogram徽章胸针与方链饰边特写——可拆卸statement饰带上浓郁黑色绉绸衬托的抛光标志性徽章。阿布扎比奢华阿联酋设计师长袍五金与传承细节；面向阿联酋、海湾与全球的端庄时尚。阿布扎比制造。全球配送。',
+  'Nahaufnahme der goldfarbenen Bint Saeed-Monogram-Nadel und der Vierkettenglieder an der Covent Garden Abaya in Tiefschwarz — poliertes Signature-Emblem auf reichem schwarzem Krepp des abnehmbaren Statement-Schals. Luxus-Hardware einer emiratischen Designer-Abaya und Erbedetail aus Abu Dhabi, VAE; bescheidene Mode für VAE, Golf und die Welt. Hergestellt in Abu Dhabi. Weltweiter Versand.',
+  'Close-up van de goudkleurige Bint Saeed-Monogramspeld en vierkante schakelketting op de Covent Garden abaya in Diepzwart — gepolijst signature-embleem op rijk zwart crepe van de afneembare statement-sjaal. Luxe Emiratische designer-abaya hardware en erfgoeddetail uit Abu Dhabi, VAE; bescheiden mode voor VAE, Golf en wereldwijd. Gemaakt in Abu Dhabi. Wereldwijde verzending.',
+  'Close-up do alfinete Monogram dourado Bint Saeed e da corrente de elos quadrados na abaya Covent Garden Preto profundo — emblema signature polido sobre crepe preto rico da faixa statement destacável. Ferragens de abaya de designer emirati de luxo e detalhe patrimonial de Abu Dhabi, EAU; moda modesta para EAU, Golfo e o mundo. Feita em Abu Dhabi. Envio mundial.',
+  'Close-up pin Monogram emas Bint Saeed dan rantai mata rantai persegi pada Covent Garden Abaya Deep Black — emblem signature mengkilap di atas crepe hitam kaya pada sash statement lepas. Hardware abaya desainer Emirati mewah dan detail warisan dari Abu Dhabi, UEA; busana modest untuk UEA, GCC, dan dunia. Dibuat di Abu Dhabi. Pengiriman dunia.',
+  'Close-up pin Monogram emas Bint Saeed dan rantai pautan segi empat pada Covent Garden Abaya Deep Black — lambang signature digilap pada crepe hitam kaya sash statement boleh tanggal. Perkakasan abaya pereka Emirati mewah dan butiran warisan dari Abu Dhabi, UAE; fesyen sopan untuk UAE, GCC, dan seluruh dunia. Dihasilkan di Abu Dhabi. Penghantaran seluruh dunia.',
+))
+
+const BLACK_EMBLEM_CLOSE_UP_TITLES = withAlTalliImageTitle(altLoc(
+  'Covent Garden Abaya Deep Black Monogram Close-Up | Bint Saeed Abu Dhabi',
+  'عباية Covent Garden أسود عميق | لقطة مقرّبة للشعار | Bint Saeed أبوظبي',
+  'Abaya Covent Garden Noir profond — gros plan Monogram | Bint Saeed Abou Dabi',
+  'Covent Garden Abaya Nero profondo — close-up Monogram | Bint Saeed Abu Dhabi',
+  'Abaya Covent Garden Negro profundo — primer plano Monogram | Bint Saeed Abu Dabi',
+  'Абайя Covent Garden глубокий чёрный — крупный план монограммы | Bint Saeed Абу-Даби',
+  'Covent Garden深黑色长袍 Monogram 特写 | Bint Saeed 阿布扎比',
+  'Covent Garden Abaya Tiefschwarz — Monogram-Nahaufnahme | Bint Saeed Abu Dhabi',
+  'Covent Garden abaya Diepzwart — Monogram close-up | Bint Saeed Abu Dhabi',
+  'Abaya Covent Garden Preto profundo — close-up Monogram | Bint Saeed Abu Dhabi',
+  'Covent Garden Abaya Deep Black — close-up Monogram | Bint Saeed Abu Dhabi',
+  'Covent Garden Abaya Deep Black — close-up Monogram | Bint Saeed Abu Dhabi',
+))
+
 const BLACK_SLEEVE_LIFESTYLE_ALTS = withAlTalliImageDiscovery(altLoc(
   'Lifestyle sleeve detail of the Bint Saeed Covent Garden Abaya in Deep Black — architectural lattice cutout above a flared cuff, finished with gold-tone chain detailing on rich crepe. Contemporary Emirati designer abaya craftsmanship from Abu Dhabi, United Arab Emirates; heritage-informed modest fashion for the UAE, GCC, and worldwide. Made in Abu Dhabi. Worldwide shipping.',
   'تفصيل أكمام lifestyle لعباية Bint Saeed Covent Garden بالأسود العميق — قصّة شبكية معمارية فوق كف متّسع، بلمسات سلاسل ذهبية على كريب غني. حرفية عباية مصمّمة إماراتية معاصرة من أبوظبي؛ أزياء محتشمة مستلهمة من التراث للإمارات والخليج والعالم. صُنعت في أبوظبي. شحن عالمي.',
@@ -194,6 +224,36 @@ const BLACK_SLEEVE_LIFESTYLE_TITLES = withAlTalliImageTitle(altLoc(
   'Abaya Covent Garden Preto profundo — detalhe de manga lifestyle | Bint Saeed Abu Dhabi',
   'Covent Garden Abaya Deep Black — detail lengan lifestyle | Bint Saeed Abu Dhabi',
   'Covent Garden Abaya Deep Black — butiran lengan gaya hidup | Bint Saeed Abu Dhabi',
+))
+
+const NAVY_EMBLEM_CLOSE_UP_ALTS = withAlTalliImageDiscovery(altLoc(
+  'Close-up of the Bint Saeed gold-tone Monogram pin and square-link chain trim on the Navy Blue Covent Garden Abaya — polished signature emblem against rich navy crepe drapery on the detachable statement sash. Luxury Emirati designer abaya hardware and heritage craft detailing from Abu Dhabi, United Arab Emirates; modest fashion for the UAE, GCC, and worldwide. Made in Abu Dhabi. Worldwide shipping.',
+  'لقطة مقرّبة لدبوس الشعار الذهبي Bint Saeed وسلسلة الروابط المربعة على عباية Covent Garden بالكحلي — شعار مميز مصقول على كريب كحلي غني في الوشاح القابل للفصل. حرفية عباية مصمّمة إماراتية فاخرة وتفاصيل تراثية من أبوظبي، الإمارات العربية المتحدة؛ أزياء محتشمة للإمارات والخليج والعالم. صُنعت في أبوظبي. شحن عالمي.',
+  'Gros plan de l’épingle Monogram dorée Bint Saeed et de la chaîne à maillons carrés sur l’abaya Covent Garden Bleu marine — emblème signature poli sur un riche crêpe marine de l’écharpe statement amovible. Quincaillerie d’abaya de créateur émiratie de luxe et détail patrimonial d’Abou Dabi, Émirats arabes unis ; mode modeste pour les EAU, le Golfe et le monde. Fabriquée à Abou Dabi. Livraison mondiale.',
+  'Primo piano della spilla Monogram dorata Bint Saeed e della catena a maglie quadrate sulla Covent Garden Abaya Blu navy — emblema signature lucidato su ricco crepe navy della fascia statement removibile. Hardware di abaya designer emiratina di lusso e dettaglio patrimoniale da Abu Dhabi, Emirati Arabi Uniti; modest fashion per EAU, Golfo e mondo. Realizzata ad Abu Dhabi. Spedizione mondiale.',
+  'Primer plano del pin Monogram dorado Bint Saeed y de la cadena de eslabones cuadrados en la abaya Covent Garden Azul marino — emblema signature pulido sobre crepé marino rico del fajín statement desmontable. Herrajes de abaya de diseñador emiratí de lujo y detalle patrimonial desde Abu Dabi, EAU; moda modesta para EAU, Golfo y el mundo. Hecha en Abu Dabi. Envío mundial.',
+  'Крупный план золотистой булавки-монограммы Bint Saeed и цепочки с квадратными звеньями на абайе Covent Garden тёмно-синего — полированная фирменная эмблема на насыщенном тёмно-синем крепе съёмной statement-ленты. Люксовая фурнитура эмиратской дизайнерской абайи и наследственный декор из Абу-Даби, ОАЭ; скромная мода для ОАЭ, Залива и мира. Сделано в Абу-Даби. Доставка по всему миру.',
+  'Bint Saeed Covent Garden海军蓝长袍金色Monogram徽章胸针与方链饰边特写——可拆卸statement饰带上浓郁海军蓝绉绸衬托的抛光标志性徽章。阿布扎比奢华阿联酋设计师长袍五金与传承细节；面向阿联酋、海湾与全球的端庄时尚。阿布扎比制造。全球配送。',
+  'Nahaufnahme der goldfarbenen Bint Saeed-Monogram-Nadel und der Vierkettenglieder an der Covent Garden Abaya in Marineblau — poliertes Signature-Emblem auf reichem marineblauem Krepp des abnehmbaren Statement-Schals. Luxus-Hardware einer emiratischen Designer-Abaya und Erbedetail aus Abu Dhabi, VAE; bescheidene Mode für VAE, Golf und die Welt. Hergestellt in Abu Dhabi. Weltweiter Versand.',
+  'Close-up van de goudkleurige Bint Saeed-Monogramspeld en vierkante schakelketting op de Covent Garden abaya in Marineblauw — gepolijst signature-embleem op rijk marineblauw crepe van de afneembare statement-sjaal. Luxe Emiratische designer-abaya hardware en erfgoeddetail uit Abu Dhabi, VAE; bescheiden mode voor VAE, Golf en wereldwijd. Gemaakt in Abu Dhabi. Wereldwijde verzending.',
+  'Close-up do alfinete Monogram dourado Bint Saeed e da corrente de elos quadrados na abaya Covent Garden Azul-marinho — emblema signature polido sobre crepe azul-marinho rico da faixa statement destacável. Ferragens de abaya de designer emirati de luxo e detalhe patrimonial de Abu Dhabi, EAU; moda modesta para EAU, Golfo e o mundo. Feita em Abu Dhabi. Envio mundial.',
+  'Close-up pin Monogram emas Bint Saeed dan rantai mata rantai persegi pada Covent Garden Abaya Navy Blue — emblem signature mengkilap di atas crepe biru navy kaya pada sash statement lepas. Hardware abaya desainer Emirati mewah dan detail warisan dari Abu Dhabi, UEA; busana modest untuk UEA, GCC, dan dunia. Dibuat di Abu Dhabi. Pengiriman dunia.',
+  'Close-up pin Monogram emas Bint Saeed dan rantai pautan segi empat pada Covent Garden Abaya Navy Blue — lambang signature digilap pada crepe biru laut kaya sash statement boleh tanggal. Perkakasan abaya pereka Emirati mewah dan butiran warisan dari Abu Dhabi, UAE; fesyen sopan untuk UAE, GCC, dan seluruh dunia. Dihasilkan di Abu Dhabi. Penghantaran seluruh dunia.',
+))
+
+const NAVY_EMBLEM_CLOSE_UP_TITLES = withAlTalliImageTitle(altLoc(
+  'Covent Garden Abaya Navy Blue Monogram Close-Up | Bint Saeed Abu Dhabi',
+  'عباية Covent Garden كحلي | لقطة مقرّبة للشعار | Bint Saeed أبوظبي',
+  'Abaya Covent Garden Bleu marine — gros plan Monogram | Bint Saeed Abou Dabi',
+  'Covent Garden Abaya Blu navy — close-up Monogram | Bint Saeed Abu Dhabi',
+  'Abaya Covent Garden Azul marino — primer plano Monogram | Bint Saeed Abu Dabi',
+  'Абайя Covent Garden тёмно-синяя — крупный план монограммы | Bint Saeed Абу-Даби',
+  'Covent Garden海军蓝长袍 Monogram 特写 | Bint Saeed 阿布扎比',
+  'Covent Garden Abaya Marineblau — Monogram-Nahaufnahme | Bint Saeed Abu Dhabi',
+  'Covent Garden abaya Marineblauw — Monogram close-up | Bint Saeed Abu Dhabi',
+  'Abaya Covent Garden Azul-marinho — close-up Monogram | Bint Saeed Abu Dhabi',
+  'Covent Garden Abaya Navy Blue — close-up Monogram | Bint Saeed Abu Dhabi',
+  'Covent Garden Abaya Navy Blue — close-up Monogram | Bint Saeed Abu Dhabi',
 ))
 
 const NAVY_SLEEVE_LIFESTYLE_ALTS = withAlTalliImageDiscovery(altLoc(
@@ -253,6 +313,11 @@ export const COVENT_GARDEN_ABAYA_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('black', 'side'),
   entry('black', 'back'),
   {
+    filename: 'bint-saeed-covent-garden-abaya-black-close-up-signature-emblem.webp',
+    alts: BLACK_EMBLEM_CLOSE_UP_ALTS,
+    titles: BLACK_EMBLEM_CLOSE_UP_TITLES,
+  },
+  {
     filename: 'bint-saeed-covent-garden-abaya-black-lifestyle-sleeve-detail.webp',
     alts: BLACK_SLEEVE_LIFESTYLE_ALTS,
     titles: BLACK_SLEEVE_LIFESTYLE_TITLES,
@@ -260,6 +325,11 @@ export const COVENT_GARDEN_ABAYA_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('navy-blue', 'front'),
   entry('navy-blue', 'side'),
   entry('navy-blue', 'back'),
+  {
+    filename: 'bint-saeed-covent-garden-abaya-navy-blue-close-up-signature-emblem.webp',
+    alts: NAVY_EMBLEM_CLOSE_UP_ALTS,
+    titles: NAVY_EMBLEM_CLOSE_UP_TITLES,
+  },
   {
     filename: 'bint-saeed-covent-garden-abaya-navy-blue-lifestyle-sleeve-detail.webp',
     alts: NAVY_SLEEVE_LIFESTYLE_ALTS,

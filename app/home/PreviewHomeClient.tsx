@@ -730,7 +730,7 @@ function quickShopCarouselImages(product: Product): { primary: string; hover: st
   if (slug === 'park-lane-abaya') {
     const maroonGallery = product.colorImages?.['Dark Maroon'] ?? product.images
     return {
-      primary: maroonGallery[1] ?? maroonGallery[0] ?? '',
+      primary: maroonGallery[0] ?? '',
       hover: maroonGallery[2] ?? maroonGallery[1] ?? maroonGallery[0] ?? '',
       color: 'Dark Maroon',
     }

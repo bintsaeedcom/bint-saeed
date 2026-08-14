@@ -129,6 +129,21 @@ export const PRODUCT_IMAGE_ALT_LOCALE_ID_MS: Record<string, { id: string; ms: st
     ms: 'Abaya Jaket Khous, abaya mewah dari Bint Saeed dalam Dark Brown, pandangan belakang menonjolkan jahitan bersih, perkadaran santai, dan siluet panjang berinspirasi jaket. Abaya pereka fesyen kontemporari dibuat di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
   },
 
+  'bint-saeed-knightsbridge-abaya-jacket-dark-brown-cuff-close-up.webp': {
+    id: 'Close-up manset Knightsbridge Khous Jacket Abaya Bint Saeed dalam Dark Brown — pita manset tenun lebar terinspirasi Khous dengan kancing emas Knotted Line signature pada flap lengan. Detail kerajinan warisan Al Khous pada outerwear modest Emirati kontemporer dari Abu Dhabi, Uni Emirat Arab. Dibuat di Abu Dhabi. Pengiriman ke seluruh dunia.',
+    ms: 'Close-up cuff Knightsbridge Khous Jacket Abaya Bint Saeed dalam Dark Brown — jalur cuff tenunan lebar terinspirasi Khous dengan butang emas Knotted Line signature pada flap lengan. Butiran kraf warisan Al Khous pada outerwear sopan Emirati kontemporari dari Abu Dhabi, Emiriah Arab Bersatu. Dihasilkan di Abu Dhabi. Penghantaran ke seluruh dunia.',
+  },
+
+  'bint-saeed-knightsbridge-abaya-jacket-dark-brown-lifestyle-1.webp': {
+    id: 'Gambar lifestyle full-length Knightsbridge Khous Jacket Abaya Bint Saeed dalam Dark Brown — siluet jaket terbuka di interior batu, menampilkan detail tenun terinspirasi Khous pada saku dada dan manset dengan kancing emas Knotted Line signature. Outerwear modest Emirati kontemporer dan kerajinan warisan Al Khous dari Abu Dhabi, Uni Emirat Arab. Dibuat di Abu Dhabi. Pengiriman ke seluruh dunia.',
+    ms: 'Imej gaya hidup sepanjang badan Knightsbridge Khous Jacket Abaya Bint Saeed dalam Dark Brown — siluet jaket terbuka di pedalaman batu, mempamerkan butiran tenunan terinspirasi Khous pada poket dada dan cuff dengan butang emas Knotted Line signature. Outerwear sopan Emirati kontemporari dan kraf warisan Al Khous dari Abu Dhabi, Emiriah Arab Bersatu. Dihasilkan di Abu Dhabi. Penghantaran ke seluruh dunia.',
+  },
+
+  'bint-saeed-knightsbridge-abaya-jacket-dark-brown-lifestyle-2.webp': {
+    id: 'Potret lifestyle Knightsbridge Khous Jacket Abaya Bint Saeed dalam Dark Brown — setengah badan di depan dinding batu, tangan tersilang, menampilkan detail tenun terinspirasi Khous pada saku dada dan manset dengan kancing emas Knotted Line signature. Outerwear modest Emirati kontemporer dan kerajinan warisan Al Khous dari Abu Dhabi, Uni Emirat Arab. Dibuat di Abu Dhabi. Pengiriman ke seluruh dunia.',
+    ms: 'Potret gaya hidup Knightsbridge Khous Jacket Abaya Bint Saeed dalam Dark Brown — separuh badan di hadapan dinding batu, tangan bersilang, mempamerkan butiran tenunan terinspirasi Khous pada poket dada dan cuff dengan butang emas Knotted Line signature. Outerwear sopan Emirati kontemporari dan kraf warisan Al Khous dari Abu Dhabi, Emiriah Arab Bersatu. Dihasilkan di Abu Dhabi. Penghantaran ke seluruh dunia.',
+  },
+
   'bint-saeed-knightsbridge-abaya-jacket-navy-grey-front.webp': {
     id: 'Abaya Jaket Khous, abaya jaket mewah dari Bint Saeed dalam Navy Grey, tampak depan menampilkan siluet santai, kerah runcing, saku dada, detail tenun terinspirasi Khous, dan kancing emas khas. Dirancang untuk wanita yang menginginkan penampilan sehari-hari yang lebih berkelas, perjalanan, dan pakaian luar sopan kontemporer. Dibuat di Abu Dhabi, Uni Emirat Arab. Pengiriman ke seluruh dunia.',
     ms: 'Abaya Jaket Khous, abaya jaket mewah dari Bint Saeed dalam Navy Grey, pandangan hadapan menampilkan siluet santai, kolar runcing, poket dada, perincian tenunan terinspirasi Khous, dan butang emas khas. Direka untuk wanita yang mendambakan pemakaian harian yang lebih berkelas, perjalanan, dan pakaian luar sopan kontemporari. Dibuat di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
@@ -144,8 +159,18 @@ export const PRODUCT_IMAGE_ALT_LOCALE_ID_MS: Record<string, { id: string; ms: st
     ms: 'Abaya Jaket Khous, abaya mewah dari Bint Saeed dalam Navy Grey, pandangan belakang menonjolkan jahitan bersih, perkadaran santai, dan siluet panjang berinspirasi jaket. Abaya pereka fesyen kontemporari dibuat di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
   },
 
+  'bint-saeed-knightsbridge-abaya-jacket-navy-grey-cuff-close-up.webp': {
+    id: 'Close-up manset Knightsbridge Khous Jacket Abaya Bint Saeed dalam Navy Grey — pita manset tenun lebar terinspirasi Khous dengan kancing emas Knotted Line signature pada flap lengan. Detail kerajinan warisan Al Khous pada outerwear modest Emirati kontemporer dari Abu Dhabi, Uni Emirat Arab. Dibuat di Abu Dhabi. Pengiriman ke seluruh dunia.',
+    ms: 'Close-up cuff Knightsbridge Khous Jacket Abaya Bint Saeed dalam Navy Grey — jalur cuff tenunan lebar terinspirasi Khous dengan butang emas Knotted Line signature pada flap lengan. Butiran kraf warisan Al Khous pada outerwear sopan Emirati kontemporari dari Abu Dhabi, Emiriah Arab Bersatu. Dihasilkan di Abu Dhabi. Penghantaran ke seluruh dunia.',
+  },
+
   'bint-saeed-knightsbridge-abaya-jacket-navy-grey-lifestyle-1.webp': {
     id: 'Abaya Jaket Khous, abaya jaket mewah dari Bint Saeed dalam Navy Grey, digaya sebagai pakaian luar sopan kontemporer untuk keanggunan sehari-hari, perjalanan, pertemuan kopi, dan kehidupan kota. Siluet santai dengan detail tenun terinspirasi Khous, dirancang di Abu Dhabi, Uni Emirat Arab. Pengiriman ke seluruh dunia.',
     ms: 'Abaya Jaket Khous, abaya jaket mewah dari Bint Saeed dalam Navy Grey, digayakan sebagai pakaian luar sopan kontemporari untuk keanggunan harian, perjalanan, pertemuan kopi, dan kehidupan bandar. Siluet santai dengan perincian tenunan terinspirasi Khous, direka di Abu Dhabi, Emiriah Arab Bersatu. Penghantaran ke seluruh dunia.',
+  },
+
+  'bint-saeed-knightsbridge-abaya-jacket-navy-grey-lifestyle-2.webp': {
+    id: 'Potret lifestyle Knightsbridge Khous Jacket Abaya Bint Saeed dalam Navy Grey — setengah badan di depan dinding batu, tangan di pinggang, menampilkan detail tenun terinspirasi Khous pada saku dada, manset, dan sabuk dengan kancing emas Knotted Line signature. Outerwear modest Emirati kontemporer dan kerajinan warisan Al Khous dari Abu Dhabi, Uni Emirat Arab. Dibuat di Abu Dhabi. Pengiriman ke seluruh dunia.',
+    ms: 'Potret gaya hidup Knightsbridge Khous Jacket Abaya Bint Saeed dalam Navy Grey — separuh badan di hadapan dinding batu, tangan di pinggang, mempamerkan butiran tenunan terinspirasi Khous pada poket dada, cuff, dan tali pinggang dengan butang emas Knotted Line signature. Outerwear sopan Emirati kontemporari dan kraf warisan Al Khous dari Abu Dhabi, Emiriah Arab Bersatu. Dihasilkan di Abu Dhabi. Penghantaran ke seluruh dunia.',
   },
 }
