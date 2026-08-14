@@ -4,37 +4,38 @@ import {
   THE_CODES_KNOTTED_LINES_HREF,
 } from '@/lib/products/pdpIntroRich'
 
-/** English PDP intro — Covent Garden Abaya. */
+/** English PDP intro — Covent Garden Abaya (approved copy). */
 export const COVENT_GARDEN_ABAYA_INTRO_EN: PdpIntroParagraph[] = [
   [
     {
       type: 'text',
       value:
-        'Every fashion house has the piece that defines it. For Bint Saeed, the Covent Garden Abaya is one of those creations.',
+        'Born from the visual language of Abu Dhabi, the Covent Garden Abaya brings together contemporary tailoring, architecture and one of the United Arab Emirates’ most treasured traditional crafts.',
     },
   ],
   [
     {
       type: 'text',
       value:
-        'Bringing together contemporary tailoring, art, and one of the United Arab Emirates’ most treasured traditional crafts, the Covent Garden Abaya was created for women who appreciate timeless elegance expressed through exceptional design. Fully lined with a soft crepe lining, its elegant A-line silhouette moves beautifully with every step, creating a refined presence for weddings, official occasions, elegant gatherings, and moments where making a lasting impression matters. The moment it is worn, the silhouette encourages a slower step, a straighter posture, and a confidence that naturally draws attention.',
-    },
-  ],
-  [
-    {
-      type: 'text',
-      value:
-        'Available in Burgundy, Deep Black, and Navy Blue, every detail has been carefully considered. The shoulder epaulettes are finished with Bint Saeed’s signature gold-tone ',
+        'The Covent Garden Abaya draws part of its design language from ',
     },
     {
       type: 'codeLink',
-      label: 'Knotted Line',
-      href: THE_CODES_KNOTTED_LINES_HREF,
+      label: 'Wahat Al Karama',
+      href: '#',
       bold: true,
     },
     {
       type: 'text',
-      value: ' buttons, while the wide cuffs feature ',
+      value:
+        ', one of Abu Dhabi’s most distinctive architectural landmarks. Its monumental forms, composed of structures that lean into and support one another, provided the inspiration for the intersecting geometry found within the abaya’s statement cuffs.',
+    },
+  ],
+  [
+    {
+      type: 'text',
+      value:
+        'Bint Saeed translates this architectural reference into textile through alternating bands of black and gold-tone ',
     },
     {
       type: 'codeLink',
@@ -45,27 +46,84 @@ export const COVENT_GARDEN_ABAYA_INTRO_EN: PdpIntroParagraph[] = [
     {
       type: 'text',
       value:
-        ' woven trim. Recognised by UNESCO as Intangible Cultural Heritage, Al Talli is one of the United Arab Emirates’ most treasured traditional Emirati artisanal crafts. At Bint Saeed, we reimagine the use of Al Talli through contemporary design, allowing this remarkable element of Emirati cultural heritage to be worn and appreciated by women around the world.',
+        ', creating a graphic composition across the sleeves. Recognised by UNESCO as Intangible Cultural Heritage, ',
+    },
+    {
+      type: 'codeLink',
+      label: 'Al Talli',
+      href: THE_CODES_AL_TALLI_HREF,
+      bold: true,
+    },
+    {
+      type: 'text',
+      value:
+        ' is a traditional Emirati weaving craft passed through generations of women in the UAE. Here, its application creates a dialogue between two expressions of the Emirates: contemporary Abu Dhabi architecture and inherited craftsmanship.',
     },
   ],
   [
     {
       type: 'text',
       value:
-        'Completing the design is a detachable statement sash, finished with Al Talli trim and Bint Saeed signature gold-tone Monogram pin. Worn draped naturally from the shoulder or styled diagonally across the body, it transforms the silhouette with a sense of ceremony, distinction, and timeless elegance.',
+        'The result is a detail that carries the landscape of the city into the garment. Architecture becomes line, line becomes textile, and textile becomes something that can be worn.',
     },
   ],
   [
     {
       type: 'text',
       value:
-        'Like every Bint Saeed abaya, the Covent Garden Abaya can be personalised with the house’s signature hidden inner label, allowing you to add a name, date, or meaningful message that remains close to you every time you wear it.',
+        'Cut in an elegant A-line silhouette and fully lined with soft crepe, the Covent Garden Abaya falls fluidly from the shoulders and moves beautifully with every step. It is designed for weddings, official occasions, elegant gatherings and evenings that call for something distinctive.',
     },
   ],
   [
     {
       type: 'text',
-      value: 'The Covent Garden Abaya pairs beautifully with the ',
+      value:
+        'The shoulders are finished with epaulettes and Bint Saeed’s signature gold-tone ',
+    },
+    {
+      type: 'codeLink',
+      label: 'Knotted Line',
+      href: THE_CODES_KNOTTED_LINES_HREF,
+      bold: true,
+    },
+    {
+      type: 'text',
+      value:
+        ' buttons, another house code inspired by connection, lineage and the paths that bind one generation to the next.',
+    },
+  ],
+  [
+    {
+      type: 'text',
+      value: 'A detachable statement sash completes the design. Finished with ',
+    },
+    {
+      type: 'codeLink',
+      label: 'Al Talli',
+      href: THE_CODES_AL_TALLI_HREF,
+      bold: true,
+    },
+    {
+      type: 'text',
+      value: ' detailing and the ',
+    },
+    {
+      type: 'codeLink',
+      label: 'Bint Saeed gold-tone Monogram pin',
+      href: '/the-codes#the-monogram',
+      bold: true,
+    },
+    {
+      type: 'text',
+      value:
+        ', it can be draped from the shoulder or styled diagonally across the body, allowing the silhouette to take on a more ceremonial character.',
+    },
+  ],
+  [
+    {
+      type: 'text',
+      value:
+        'Available in Deep Black, Burgundy and Navy Blue, the Covent Garden Abaya can be worn over the ',
     },
     {
       type: 'codeLink',
@@ -73,7 +131,7 @@ export const COVENT_GARDEN_ABAYA_INTRO_EN: PdpIntroParagraph[] = [
       href: '/shop/covent-garden-long-dress',
       bold: true,
     },
-    { type: 'text', value: ' or the ' },
+    { type: 'text', value: ' or ' },
     {
       type: 'codeLink',
       label: 'Hampstead Dress',
@@ -82,8 +140,21 @@ export const COVENT_GARDEN_ABAYA_INTRO_EN: PdpIntroParagraph[] = [
     },
     {
       type: 'text',
+      value: ' to create a complete layered look.',
+    },
+  ],
+  [
+    {
+      type: 'text',
       value:
-        ', creating refined layered silhouettes where every detail has been thoughtfully considered from the inside out.',
+        'Like every Bint Saeed abaya, it can also be personalised with the house’s signature hidden inner label. Add a name, date or meaningful message to create a detail known only to its wearer.',
+    },
+  ],
+  [
+    {
+      type: 'text',
+      value:
+        'From the architecture of Abu Dhabi to the hands and traditions that have shaped Emirati craft, the Covent Garden Abaya expresses what lies at the heart of Bint Saeed: carrying the visual culture of the UAE forward through contemporary design.',
     },
   ],
 ]

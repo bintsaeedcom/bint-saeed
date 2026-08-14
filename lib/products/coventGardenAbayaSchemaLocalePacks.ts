@@ -11,7 +11,7 @@ const MADE_IN = 'Abu Dhabi, United Arab Emirates'
 
 const FACTS_EN: ProductSchemaFacts = {
   productType:
-    'Contemporary A-line designer abaya — one of Bint Saeed’s defining creations, uniting contemporary tailoring, Al Talli heritage craftsmanship, and signature house design codes for women who appreciate timeless elegance and meaningful design.',
+    'Contemporary A-line designer abaya inspired by Wahat Al Karama, an architectural landmark in Abu Dhabi, uniting its intersecting geometry with UNESCO-recognised Emirati Al Talli weaving and Bint Saeed house codes.',
   productCategory:
     'Abaya, A-Line Abaya, Designer Abaya, Luxury Abaya, Premium Abaya, Contemporary Abaya, Formal Abaya, Wedding Abaya, Occasion Abaya, Open-Front Abaya, Al Talli Abaya, Heritage Abaya, Emirati Abaya, UNESCO Heritage Craft Abaya, Modest Fashion, Premium Modest Fashion, Designer Modest Fashion, Contemporary Womenswear, Gulf Wardrobe Abaya, International Occasion Abaya, Statement Abaya',
   fit: 'Elegant A-line silhouette with flowing drape and refined contemporary structure.',
@@ -28,7 +28,7 @@ const FACTS_EN: ProductSchemaFacts = {
   styling:
     'Pairs beautifully with the Covent Garden Dress and Hampstead Dress. Created for women in the GCC, UAE, and international wardrobes who value Emirati heritage reimagined through contemporary design.',
   stylingDetail:
-    'Contemporary A-line abaya with open front, detachable statement sash, Knotted Line shoulder epaulettes, Al Talli woven cuffs, hidden side seam pockets, soft crepe lining, and optional concealed snap-button closure.',
+    'Wahat Al Karama-inspired intersecting cuff geometry expressed through alternating black and gold-tone Al Talli bands; contemporary A-line abaya with open front, detachable statement sash, Knotted Line shoulder epaulettes, hidden pockets, and soft crepe lining.',
   care: 'Professional dry clean recommended. Gentle machine wash at 30°C if needed.',
   material: COVENT_GARDEN_ABAYA_MATERIAL,
   madeIn: MADE_IN,
@@ -44,67 +44,67 @@ function localizedFacts(locale: AppLocale): ProductSchemaFacts {
   const typeLabels: Partial<Record<AppLocale, Partial<ProductSchemaFacts>>> = {
     ar: {
       productType:
-        'عباية مصمّمة معاصرة بقصة A-line — من إبداعات Bint Saeed المُعرِّفة، تجمع التفصيل المعاصر وحرفية التلي التراثية ورموز الدار المميزة',
+        'عباية مصمّمة معاصرة بقصة A-line مستوحاة من واحة الكرامة، المعلم المعماري في أبوظبي، تجمع هندستها المتقاطعة مع نسيج التلي الإماراتي المعترف به من اليونسكو ورموز Bint Saeed',
       material: 'الخارجي: 80% بوليستر، 20% فيسكوز؛ البطانة: 70% بوليستر، 30% فيسكوز',
       care: 'يُنصح بالتنظيف الجاف الاحترافي. غسل لطيف عند 30°م عند الحاجة.',
       trim: 'أساور بتفاصيل التلي المنسوج المعترف بها من اليونسكو؛ كتفان بأزرار Knotted Line الذهبية؛ وشاح قابل للفصل بتفاصيل التلي ودبوس الشعار الذهبي.',
     },
     fr: {
       productType:
-        'Abaya de créateur contemporaine A-line — l’une des créations définissantes de Bint Saeed, alliant tailleur contemporain, artisanat patrimonial Al Talli et codes signature de la maison',
+        'Abaya de créateur contemporaine A-line inspirée de Wahat Al Karama, monument architectural d’Abou Dabi, unissant sa géométrie entrecroisée au tissage émirati Al Talli reconnu par l’UNESCO',
       material: 'Extérieur : 80 % polyester, 20 % viscose ; Doublure : 70 % polyester, 30 % viscose',
       care: 'Nettoyage à sec professionnel recommandé. Lavage délicat à 30 °C si nécessaire.',
     },
     de: {
       productType:
-        'Zeitgenössische Designer-Abaya mit A-Linien-Silhouette — eine der prägenden Kreationen von Bint Saeed mit Al-Talli-Erbe und Signature-Designcodes',
+        'Zeitgenössische A-Linien-Designer-Abaya, inspiriert von Wahat Al Karama, einem Wahrzeichen Abu Dhabis, mit sich kreuzender Geometrie und emiratischer UNESCO-Al-Talli-Webkunst',
       material: 'Außenmaterial: 80 % Polyester, 20 % Viskose; Futter: 70 % Polyester, 30 % Viskose',
       care: 'Professionelle chemische Reinigung empfohlen. Schonwaschgang 30 °C bei Bedarf.',
     },
     it: {
       productType:
-        'Abaya designer contemporanea A-line — una delle creazioni definitorie di Bint Saeed che unisce sartoria contemporanea, artigianato Al Talli e codici signature',
+        'Abaya designer contemporanea A-line ispirata a Wahat Al Karama, monumento architettonico di Abu Dhabi, che unisce geometria intersecata e tessitura emiratina Al Talli UNESCO',
       material: 'Esterno: 80% poliestere, 20% viscosa; Fodera: 70% poliestere, 30% viscosa',
       care: 'Lavaggio a secco professionale consigliato. Lavaggio delicato a 30 °C se necessario.',
     },
     es: {
       productType:
-        'Abaya de diseñador contemporánea A-line — una de las creaciones definitorias de Bint Saeed que une sastrería contemporánea, artesanía Al Talli y códigos signature',
+        'Abaya de diseñador contemporánea A-line inspirada en Wahat Al Karama, monumento arquitectónico de Abu Dabi, que une geometría entrecruzada y tejido emiratí Al Talli UNESCO',
       material: 'Exterior: 80% poliéster, 20% viscosa; Forro: 70% poliéster, 30% viscosa',
       care: 'Limpieza en seco profesional recomendada. Lavado suave a 30 °C si es necesario.',
     },
     ru: {
       productType:
-        'Современная дизайнерская абайя A-line — одно из определяющих творений Bint Saeed с наследием Al Talli и фирменными кодами дома',
+        'Современная дизайнерская абайя A-line, вдохновлённая Wahat Al Karama — архитектурной достопримечательностью Абу-Даби, с пересекающейся геометрией и эмиратским ткачеством Al Talli ЮНЕСКО',
       material: 'Верх: 80% полиэстер, 20% вискоза; Подкладка: 70% полиэстер, 30% вискоза',
       care: 'Рекомендуется профессиональная химчистка. Деликатная стирка при 30 °C при необходимости.',
     },
     zh: {
-      productType: '当代A字设计师长袍 — Bint Saeed标志性创作之一，融合当代剪裁、Al Talli传承工艺与品牌设计代码',
+      productType: '当代A字设计师长袍，灵感源自阿布扎比建筑地标 Wahat Al Karama，将交错几何与联合国教科文组织认可的阿联酋 Al Talli 编织工艺相融合',
       material: '外层：80% 聚酯纤维，20% 粘胶纤维；里料：70% 聚酯纤维，30% 粘胶纤维',
       care: '建议专业干洗。必要时可温和 30°C 机洗。',
     },
     nl: {
       productType:
-        'Eigentijdse designer abaya met A-line silhouet — een van de bepalende creaties van Bint Saeed met Al Talli-erfenis en signature huis codes',
+        'Eigentijdse A-line designer abaya geïnspireerd door Wahat Al Karama, een monument van Abu Dhabi, met kruisende geometrie en Emiratisch UNESCO Al Talli-weefwerk',
       material: 'Buitenkant: 80% polyester, 20% viscose; Voering: 70% polyester, 30% viscose',
       care: 'Professionele stomerij aanbevolen. Zachte was 30 °C indien nodig.',
     },
     pt: {
       productType:
-        'Abaya de designer contemporânea A-line — uma das criações definidoras da Bint Saeed com património Al Talli e códigos signature',
+        'Abaya de designer contemporânea A-line inspirada em Wahat Al Karama, monumento arquitetónico de Abu Dhabi, unindo geometria cruzada e tecelagem emirati Al Talli UNESCO',
       material: 'Exterior: 80% poliéster, 20% viscose; Forro: 70% poliéster, 30% viscose',
       care: 'Limpeza a seco profissional recomendada. Lavagem suave a 30 °C se necessário.',
     },
     id: {
       productType:
-        'Abaya desainer kontemporer A-line — salah satu kreasi penentu Bint Saeed yang menyatukan tailoring kontemporer, kerajinan warisan Al Talli, dan kode signature rumah',
+        'Abaya desainer kontemporer A-line terinspirasi Wahat Al Karama, landmark arsitektur Abu Dhabi, memadukan geometri bersilang dan tenun Emirati Al Talli UNESCO',
       material: 'Luar: 80% Polyester, 20% Viscose; Lining: 70% Polyester, 30% Viscose',
       care: 'Dry clean profesional direkomendasikan. Cuci lembut 30°C jika diperlukan.',
     },
     ms: {
       productType:
-        'Abaya pereka kontemporari A-line — salah satu ciptaan penentu Bint Saeed yang menyatukan jahitan kontemporari, kraf warisan Al Talli, dan kod signature rumah',
+        'Abaya pereka kontemporari A-line diilhamkan oleh Wahat Al Karama, mercu tanda seni bina Abu Dhabi, menggabungkan geometri bersilang dan tenunan Emirati Al Talli UNESCO',
       material: 'Luar: 80% Polyester, 20% Viscose; Pelapik: 70% Polyester, 30% Viscose',
       care: 'Dry clean profesional disyorkan. Basuhan lembut 30°C jika perlu.',
     },

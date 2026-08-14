@@ -1,7 +1,11 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { altLoc } from '@/lib/products/imageAltOverridesI18n'
 
-type AltEntry = { filename: string; alts: Record<AppLocale, string> }
+type AltEntry = {
+  filename: string
+  alts: Record<AppLocale, string>
+  titles?: Record<AppLocale, string>
+}
 
 type ColorSlug = 'black' | 'dark-marroon' | 'navy-blue'
 
@@ -197,6 +201,36 @@ const DARK_MAROON_LIFESTYLE_02_ALTS = altLoc(
   `Bint Saeed Park Lane Abaya Dark Maroon, pandangan gaya hidup panjang penuh dengan jatuhan A-line anggun, skarf bahu bersepadu, dan kancing manset emblem Bint Saeed emas dalam cahaya seni bina hangat. ${DISCOVERY_TAIL.ms}`,
 )
 
+const NAVY_LIFESTYLE_MONOGRAM_ALTS = altLoc(
+  `Lifestyle detail of the Bint Saeed Park Lane Abaya in Navy Blue — a pair of removable gold-tone Bint Saeed signature Monogram cufflinks set on wide crepe cuffs, with the layered drape falling softly behind. ${DISCOVERY_TAIL.en}`,
+  `تفصيل حياتي لعباية Bint Saeed Park Lane باللون الكحلي — زوج من أزرار شعار Bint Saeed الذهبية القابلة للإزالة على أكمام الكريب الواسعة، مع انسياب الطبقات بنعومة في الخلف. ${DISCOVERY_TAIL.ar}`,
+  `Détail lifestyle de l’abaya Bint Saeed Park Lane en Bleu marine — une paire de boutons de manchette emblème Bint Saeed dorés amovibles posés sur de larges poignets en crêpe, la tombée en superpositions s’ouvrant doucement derrière. ${DISCOVERY_TAIL.fr}`,
+  `Dettaglio lifestyle della Bint Saeed Park Lane Abaya in Blu navy — una coppia di gemelli Monogram Bint Saeed dorati rimovibili sui polsini ampi in crepe, con il drappeggio a strati che scende morbido dietro. ${DISCOVERY_TAIL.it}`,
+  `Detalle lifestyle de la abaya Bint Saeed Park Lane en Azul marino — un par de gemelos Monogram Bint Saeed dorados extraíbles sobre puños anchos de crepé, con la caída en capas descendiendo con suavidad detrás. ${DISCOVERY_TAIL.es}`,
+  `Lifestyle-деталь абайи Bint Saeed Park Lane тёмно-синего цвета — пара съёмных золотистых запонок-эмблем Bint Saeed на широких манжетах из крепа, за ними мягко ниспадают слои драпировки. ${DISCOVERY_TAIL.ru}`,
+  `Bint Saeed Park Lane 长袍海军蓝生活方式细节——宽幅绉绸袖口上一对可拆卸Bint Saeed金色徽标袖扣，层叠垂坠在后方柔和铺展。${DISCOVERY_TAIL.zh}`,
+  `Lifestyle-Detail der Bint Saeed Park Lane Abaya in Marineblau — ein Paar abnehmbare goldfarbene Bint Saeed-Emblem-Manschettenknöpfe auf weiten Krepp-Manschetten, dahinter der weich fallende, gestufte Faltenwurf. ${DISCOVERY_TAIL.de}`,
+  `Lifestyle-detail van de Bint Saeed Park Lane abaya in Marineblauw — een paar verwijderbare goudkleurige Bint Saeed embleem manchetknopen op brede crepe manchetten, met de gelaagde drapering die zacht daarachter valt. ${DISCOVERY_TAIL.nl}`,
+  `Detalhe lifestyle da abaya Bint Saeed Park Lane em Azul-marinho — um par de abotoaduras Monogram Bint Saeed douradas removíveis em punhos largos de crepe, com o caimento em camadas a descer suavemente atrás. ${DISCOVERY_TAIL.pt}`,
+  `Detail lifestyle Bint Saeed Park Lane Abaya Navy Blue — sepasang kancing manset emblem Bint Saeed emas yang dapat dilepas pada cuff crepe lebar, dengan drape berlapis jatuh lembut di belakangnya. ${DISCOVERY_TAIL.id}`,
+  `Butiran gaya hidup Bint Saeed Park Lane Abaya Navy Blue — sepasang kancing manset emblem Bint Saeed emas boleh tanggal pada cuff crepe lebar, dengan jatuhan berlapis mengalir lembut di belakangnya. ${DISCOVERY_TAIL.ms}`,
+)
+
+const NAVY_LIFESTYLE_MONOGRAM_TITLES = altLoc(
+  'Park Lane Abaya Navy Blue Monogram Cufflink Detail | Bint Saeed Abu Dhabi',
+  'عباية Park Lane كحلي | تفصيل أزرار الشعار | Bint Saeed أبوظبي',
+  'Abaya Park Lane Bleu marine — détail boutons de manchette emblème | Bint Saeed Abou Dabi',
+  'Park Lane Abaya Blu navy — dettaglio gemelli Monogram | Bint Saeed Abu Dhabi',
+  'Abaya Park Lane Azul marino — detalle de gemelos Monogram | Bint Saeed Abu Dabi',
+  'Абайя Park Lane тёмно-синяя — деталь запонок-эмблемы | Bint Saeed Абу-Даби',
+  'Park Lane 海军蓝长袍徽标袖扣细节 | Bint Saeed 阿布扎比',
+  'Park Lane Abaya Marineblau — Emblem-Manschettenknopf-Detail | Bint Saeed Abu Dhabi',
+  'Park Lane abaya Marineblauw — embleem manchetknoopdetail | Bint Saeed Abu Dhabi',
+  'Abaya Park Lane Azul-marinho — detalhe de abotoaduras Monogram | Bint Saeed Abu Dhabi',
+  'Park Lane Abaya Navy Blue — detail kancing manset emblem | Bint Saeed Abu Dhabi',
+  'Park Lane Abaya Navy Blue — butiran kancing manset emblem | Bint Saeed Abu Dhabi',
+)
+
 /** Curated PDP image alts — Park Lane Abaya (Deep Black, Dark Maroon, Navy Blue). */
 export const PARK_LANE_ABAYA_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('black', 'front'),
@@ -225,4 +259,9 @@ export const PARK_LANE_ABAYA_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('navy-blue', 'front'),
   entry('navy-blue', 'side'),
   entry('navy-blue', 'back'),
+  {
+    filename: 'bint-saeed-parklane-abaya-navy-blue-lifestyle-monogram-detail.webp',
+    alts: NAVY_LIFESTYLE_MONOGRAM_ALTS,
+    titles: NAVY_LIFESTYLE_MONOGRAM_TITLES,
+  },
 ]

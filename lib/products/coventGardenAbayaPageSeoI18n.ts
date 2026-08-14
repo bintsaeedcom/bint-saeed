@@ -9,75 +9,75 @@ type PageSeoPack = { pageTitle: string; metaDescription: string }
 const PAGE_SEO: Record<AppLocale, PageSeoPack> = {
   en: {
     pageTitle:
-      'Covent Garden Abaya | Al Talli A-Line Designer Abaya UAE & GCC | Bint Saeed',
+      'Covent Garden Abaya | Wahat Al Karama | Bint Saeed',
     metaDescription:
-      'Covent Garden Abaya — contemporary A-line designer abaya with UNESCO-recognised Al Talli trim, Knotted Line epaulettes and detachable sash. Emirati luxury abaya designed in Abu Dhabi, UAE. Ships to Dubai, GCC, London, Paris and worldwide.',
+      'Covent Garden Abaya, inspired by Abu Dhabi landmark Wahat Al Karama. Contemporary architecture meets UNESCO-recognised Emirati Al Talli craft in a distinctive A-line abaya.',
   },
   ar: {
     pageTitle:
-      'عباية Covent Garden | عباية مصمّمة A-line بتفاصيل التلي | الإمارات والخليج | Bint Saeed',
+      'عباية Covent Garden | واحة الكرامة | Bint Saeed',
     metaDescription:
-      'عباية Covent Garden — عباية مصمّمة معاصرة بقصة A-line وتفاصيل التلي المعترف بها من اليونسكو، وكتفان Knotted Line، ووشاح قابل للفصل. عباية فاخرة إماراتية صُممت في أبوظبي، الإمارات. شحن إلى دبي والخليج ولندن وباريس والعالم.',
+      'عباية Covent Garden مستوحاة من واحة الكرامة، معلم أبوظبي المعماري. تلتقي العمارة المعاصرة بحرفة التلي الإماراتية المسجلة لدى اليونسكو في قصة A-line مميزة.',
   },
   fr: {
     pageTitle:
-      'Abaya Covent Garden | Abaya de créateur A-line Al Talli EAU & Golfe | Bint Saeed',
+      'Abaya Covent Garden | Wahat Al Karama | Bint Saeed',
     metaDescription:
-      'Abaya Covent Garden — abaya de créateur A-line contemporaine avec garniture Al Talli reconnue par l’UNESCO, épaulettes Knotted Line et écharpe amovible. Abaya de luxe émiratie conçue à Abou Dabi, EAU. Livraison Dubaï, Golfe, Londres, Paris et monde entier.',
+      'L’abaya Covent Garden s’inspire de Wahat Al Karama, monument d’Abou Dabi. Architecture contemporaine et Al Talli émirati reconnu par l’UNESCO se rencontrent dans une silhouette A singulière.',
   },
   it: {
     pageTitle:
-      'Covent Garden Abaya | Abaya designer A-line Al Talli EAU e Golfo | Bint Saeed',
+      'Covent Garden Abaya | Wahat Al Karama | Bint Saeed',
     metaDescription:
-      'Covent Garden Abaya — abaya designer A-line contemporanea con finitura Al Talli riconosciuta dall’UNESCO, spalline Knotted Line e fascia removibile. Abaya di lusso emiratina progettata ad Abu Dhabi, EAU. Spedizione Dubai, Golfo, Londra, Parigi e mondo.',
+      'L’abaya Covent Garden si ispira a Wahat Al Karama, monumento di Abu Dhabi. Architettura contemporanea e Al Talli emiratino UNESCO si incontrano in una distintiva silhouette A-line.',
   },
   es: {
     pageTitle:
-      'Abaya Covent Garden | Abaya de diseñador A-line Al Talli EAU y Golfo | Bint Saeed',
+      'Abaya Covent Garden | Wahat Al Karama | Bint Saeed',
     metaDescription:
-      'Abaya Covent Garden — abaya de diseñador A-line contemporánea con ribete Al Talli reconocido por la UNESCO, hombreras Knotted Line y fajín desmontable. Abaya de lujo emiratí diseñada en Abu Dabi, EAU. Envío a Dubái, Golfo, Londres, París y todo el mundo.',
+      'La abaya Covent Garden se inspira en Wahat Al Karama, monumento de Abu Dabi. Arquitectura contemporánea y Al Talli emiratí UNESCO convergen en una distintiva silueta A-line.',
   },
   ru: {
     pageTitle:
-      'Covent Garden Abaya | Дизайнерская абайя A-line Al Talli ОАЭ и Залив | Bint Saeed',
+      'Абайя Covent Garden | Wahat Al Karama | Bint Saeed',
     metaDescription:
-      'Covent Garden Abaya — современная дизайнерская абайя A-line с отделкой Al Talli (наследие ЮНЕСКО), погонами Knotted Line и съёмной лентой. Люксовая эмиратская абайя из Абу-Даби, ОАЭ. Доставка в Дубай, страны Залива, Лондон, Париж и по всему миру.',
+      'Абайя Covent Garden вдохновлена Wahat Al Karama — архитектурной достопримечательностью Абу-Даби. Современная архитектура и эмиратское ремесло Al Talli ЮНЕСКО в силуэте A-line.',
   },
   zh: {
     pageTitle:
-      'Covent Garden 长袍 | Al Talli A字设计师长袍 阿联酋与海湾 | Bint Saeed',
+      'Covent Garden 长袍 | Wahat Al Karama | Bint Saeed',
     metaDescription:
-      'Covent Garden 长袍 — 当代A字设计师长袍，联合国教科文组织认可的Al Talli饰边、Knotted Line肩章与可拆卸饰带。阿联酋阿布扎比设计的奢华长袍。配送迪拜、海湾、伦敦、巴黎及全球。',
+      'Covent Garden 长袍灵感源自阿布扎比建筑地标 Wahat Al Karama，将当代建筑语言与联合国教科文组织认可的阿联酋 Al Talli 编织工艺融入鲜明 A 字廓形。',
   },
   de: {
     pageTitle:
-      'Covent Garden Abaya | Al-Talli A-Linien-Designer-Abaya VAE & Golf | Bint Saeed',
+      'Covent Garden Abaya | Wahat Al Karama | Bint Saeed',
     metaDescription:
-      'Covent Garden Abaya — zeitgenössische A-Linien-Designer-Abaya mit UNESCO-anerkanntem Al-Talli-Besatz, Knotted-Line-Schulterklappen und abnehmbarem Schal. Emiratische Luxus-Abaya aus Abu Dhabi, VAE. Versand nach Dubai, Golf, London, Paris und weltweit.',
+      'Die Covent Garden Abaya ist von Wahat Al Karama, einem Wahrzeichen Abu Dhabis, inspiriert. Zeitgenössische Architektur trifft auf emiratische UNESCO-Al-Talli-Webkunst.',
   },
   nl: {
     pageTitle:
-      'Covent Garden Abaya | Al Talli A-line designer abaya VAE & Golf | Bint Saeed',
+      'Covent Garden abaya | Wahat Al Karama | Bint Saeed',
     metaDescription:
-      'Covent Garden Abaya — eigentijdse A-line designer abaya met door UNESCO erkende Al Talli-afwerking, Knotted Line epauletten en afneembare sjerp. Emiratische luxe abaya ontworpen in Abu Dhabi, VAE. Verzending naar Dubai, Golf, Londen, Parijs en wereldwijd.',
+      'De Covent Garden Abaya is geïnspireerd door Wahat Al Karama, een monument van Abu Dhabi. Hedendaagse architectuur ontmoet Emiratisch UNESCO Al Talli-weefwerk.',
   },
   pt: {
     pageTitle:
-      'Abaya Covent Garden | Abaya de designer A-line Al Talli EAU e Golfo | Bint Saeed',
+      'Abaya Covent Garden | Wahat Al Karama | Bint Saeed',
     metaDescription:
-      'Abaya Covent Garden — abaya de designer A-line contemporânea com acabamento Al Talli reconhecido pela UNESCO, ombreiras Knotted Line e faixa destacável. Abaya de luxo emirati desenhada em Abu Dhabi, EAU. Envio para Dubai, Golfo, Londres, Paris e mundo.',
+      'A abaya Covent Garden inspira-se em Wahat Al Karama, monumento de Abu Dhabi. Arquitetura contemporânea e Al Talli emirati UNESCO encontram-se numa silhueta A-line distinta.',
   },
   id: {
     pageTitle:
-      'Covent Garden Abaya | Abaya Desainer A-line Al Talli UEA & GCC | Bint Saeed',
+      'Covent Garden Abaya | Wahat Al Karama | Bint Saeed',
     metaDescription:
-      'Covent Garden Abaya — abaya desainer A-line kontemporer dengan trim Al Talli yang diakui UNESCO, epaulet Knotted Line, dan sash lepas. Abaya mewah Emirati dirancang di Abu Dhabi, UEA. Pengiriman ke Dubai, GCC, London, Paris, dan seluruh dunia.',
+      'Abaya Covent Garden terinspirasi Wahat Al Karama, landmark Abu Dhabi. Arsitektur kontemporer bertemu tenun Emirati Al Talli UNESCO dalam siluet A-line yang khas.',
   },
   ms: {
     pageTitle:
-      'Covent Garden Abaya | Abaya Pereka A-line Al Talli UAE & GCC | Bint Saeed',
+      'Covent Garden Abaya | Wahat Al Karama | Bint Saeed',
     metaDescription:
-      'Covent Garden Abaya — abaya pereka A-line kontemporari dengan hiasan Al Talli diiktiraf UNESCO, epaulet Knotted Line, dan sash boleh tanggal. Abaya mewah Emirati direka di Abu Dhabi, UAE. Penghantaran ke Dubai, GCC, London, Paris, dan seluruh dunia.',
+      'Abaya Covent Garden diilhamkan oleh Wahat Al Karama, mercu tanda Abu Dhabi. Seni bina kontemporari bertemu tenunan Emirati Al Talli UNESCO dalam siluet A-line tersendiri.',
   },
 }
 
@@ -1059,6 +1059,110 @@ const EXTRA_META_KEYWORDS: Record<AppLocale, readonly string[]> = {
   ],
 }
 
+/** Landmark-design discovery terms, kept factual and separate from commercial intent. */
+const WAHAT_AL_KARAMA_KEYWORDS: Record<AppLocale, readonly string[]> = {
+  en: [
+    'Wahat Al Karama',
+    'Wahat Al Karama inspired fashion',
+    'Wahat Al Karama architecture',
+    'Abu Dhabi landmarks',
+    'Abu Dhabi architecture inspired fashion',
+    'UAE landmarks inspired design',
+    'Emirati architecture fashion',
+    'Covent Garden Abaya Wahat Al Karama',
+  ],
+  ar: [
+    'واحة الكرامة',
+    'أزياء مستوحاة من واحة الكرامة',
+    'عمارة واحة الكرامة',
+    'معالم أبوظبي',
+    'أزياء مستوحاة من عمارة أبوظبي',
+    'تصميم مستوحى من معالم الإمارات',
+    'الأزياء والعمارة الإماراتية',
+    'عباية Covent Garden واحة الكرامة',
+  ],
+  fr: [
+    'Wahat Al Karama',
+    'mode inspirée de Wahat Al Karama',
+    'architecture Wahat Al Karama',
+    'monuments d’Abou Dabi',
+    'mode inspirée de l’architecture d’Abou Dabi',
+    'design inspiré des Émirats',
+  ],
+  it: [
+    'Wahat Al Karama',
+    'moda ispirata a Wahat Al Karama',
+    'architettura Wahat Al Karama',
+    'monumenti di Abu Dhabi',
+    'moda ispirata all’architettura di Abu Dhabi',
+    'design ispirato agli Emirati',
+  ],
+  es: [
+    'Wahat Al Karama',
+    'moda inspirada en Wahat Al Karama',
+    'arquitectura Wahat Al Karama',
+    'monumentos de Abu Dabi',
+    'moda inspirada en la arquitectura de Abu Dabi',
+    'diseño inspirado en Emiratos',
+  ],
+  ru: [
+    'Wahat Al Karama',
+    'мода по мотивам Wahat Al Karama',
+    'архитектура Wahat Al Karama',
+    'достопримечательности Абу-Даби',
+    'мода по мотивам архитектуры Абу-Даби',
+    'эмиратский архитектурный дизайн',
+  ],
+  zh: [
+    'Wahat Al Karama',
+    'Wahat Al Karama 灵感时装',
+    'Wahat Al Karama 建筑',
+    '阿布扎比地标',
+    '阿布扎比建筑灵感时装',
+    '阿联酋地标灵感设计',
+  ],
+  de: [
+    'Wahat Al Karama',
+    'von Wahat Al Karama inspirierte Mode',
+    'Wahat Al Karama Architektur',
+    'Wahrzeichen Abu Dhabi',
+    'von Abu Dhabis Architektur inspirierte Mode',
+    'emiratisches Architekturdesign',
+  ],
+  nl: [
+    'Wahat Al Karama',
+    'mode geïnspireerd door Wahat Al Karama',
+    'architectuur Wahat Al Karama',
+    'monumenten Abu Dhabi',
+    'mode geïnspireerd door architectuur Abu Dhabi',
+    'Emiratisch architectuurdesign',
+  ],
+  pt: [
+    'Wahat Al Karama',
+    'moda inspirada em Wahat Al Karama',
+    'arquitetura Wahat Al Karama',
+    'monumentos de Abu Dhabi',
+    'moda inspirada na arquitetura de Abu Dhabi',
+    'design arquitetónico emirati',
+  ],
+  id: [
+    'Wahat Al Karama',
+    'fashion terinspirasi Wahat Al Karama',
+    'arsitektur Wahat Al Karama',
+    'landmark Abu Dhabi',
+    'fashion terinspirasi arsitektur Abu Dhabi',
+    'desain arsitektur Emirati',
+  ],
+  ms: [
+    'Wahat Al Karama',
+    'fesyen inspirasi Wahat Al Karama',
+    'seni bina Wahat Al Karama',
+    'mercu tanda Abu Dhabi',
+    'fesyen inspirasi seni bina Abu Dhabi',
+    'reka bentuk seni bina Emirati',
+  ],
+}
+
 const ABAYA_TYPE: Record<AppLocale, string> = {
   en: 'abaya',
   ar: 'عباية',
@@ -1095,6 +1199,7 @@ export function getCoventGardenAbayaMetaKeywordTerms(
   const terms = new Set<string>([
     ...(META_KEYWORDS[locale] ?? META_KEYWORDS.en),
     ...(EXTRA_META_KEYWORDS[locale] ?? []),
+    ...(WAHAT_AL_KARAMA_KEYWORDS[locale] ?? WAHAT_AL_KARAMA_KEYWORDS.en),
   ])
   const color = colorName?.trim()
   if (color) {

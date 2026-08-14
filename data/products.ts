@@ -324,6 +324,9 @@ function parkLaneAbayaGallery(color: 'black' | 'dark-marroon' | 'navy-blue'): st
       `${base}-lifestyle-extra.webp`,
     )
   }
+  if (color === 'navy-blue') {
+    images.push(`${base}-lifestyle-monogram-detail.webp`)
+  }
   return images
 }
 
@@ -350,6 +353,16 @@ function coventGardenAbayaGallery(color: 'burgundy' | 'black' | 'navy-blue'): st
     images.push(
       `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.webp`,
       `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-burgundy-lifestyle-sleeve-detail.webp`,
+    )
+  }
+  if (color === 'black') {
+    images.push(
+      `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-black-lifestyle-sleeve-detail.webp`,
+    )
+  }
+  if (color === 'navy-blue') {
+    images.push(
+      `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-navy-blue-lifestyle-sleeve-detail.webp`,
     )
   }
   return images

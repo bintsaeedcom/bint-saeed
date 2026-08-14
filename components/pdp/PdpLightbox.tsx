@@ -80,6 +80,58 @@ export default function PdpLightbox({
     return () => window.removeEventListener('keydown', handleKey)
   }, [open, handleKey])
 
+  /**
+   * Scrolling dismisses the enlarged image and hands the page back.
+   * Body scroll is locked while open, so intent is read from wheel / touch
+   * rather than a scroll event. Horizontal touch stays with Swiper.
+   */
+  useEffect(() => {
+    if (!open) return
+
+    let armed = false
+    let wheelTravel = 0
+    let touchStartX = 0
+    let touchStartY = 0
+
+    // Ignore inertia carried over from the scroll that preceded opening.
+    const armTimer = window.setTimeout(() => {
+      armed = true
+    }, 260)
+
+    const onWheel = (e: WheelEvent) => {
+      if (!armed) return
+      wheelTravel += Math.abs(e.deltaY)
+      if (wheelTravel > 40) onClose()
+    }
+
+    const onTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0]
+      if (!touch) return
+      touchStartX = touch.clientX
+      touchStartY = touch.clientY
+    }
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!armed) return
+      const touch = e.touches[0]
+      if (!touch) return
+      const dy = touch.clientY - touchStartY
+      const dx = touch.clientX - touchStartX
+      if (Math.abs(dy) > 64 && Math.abs(dy) > Math.abs(dx) * 1.5) onClose()
+    }
+
+    window.addEventListener('wheel', onWheel, { passive: true })
+    window.addEventListener('touchstart', onTouchStart, { passive: true })
+    window.addEventListener('touchmove', onTouchMove, { passive: true })
+
+    return () => {
+      window.clearTimeout(armTimer)
+      window.removeEventListener('wheel', onWheel)
+      window.removeEventListener('touchstart', onTouchStart)
+      window.removeEventListener('touchmove', onTouchMove)
+    }
+  }, [open, onClose])
+
   useEffect(() => {
     if (!open) {
       setSwiper(null)
@@ -105,7 +157,7 @@ export default function PdpLightbox({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[80] flex flex-col bg-[#1a0210]/96"
+          className="fixed inset-0 z-[80] flex flex-col bg-[#1a0210]/90 backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-[#1a0210]/70"
           data-scroll-lock-owner="true"
           onClick={onClose}
         >

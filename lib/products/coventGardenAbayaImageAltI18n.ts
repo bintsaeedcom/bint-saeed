@@ -15,6 +15,58 @@ const COLOR_LABEL: Record<ColorSlug, Record<AppLocale, string>> = {
   'navy-blue': altLoc('Navy Blue', 'كحلي', 'Bleu marine', 'Blu navy', 'Azul marino', 'тёмно-синий', '海军蓝', 'Marineblau', 'Marineblauw', 'Azul-marinho', 'Biru navy', 'Biru laut'),
 }
 
+const AL_TALLI_IMAGE_DISCOVERY_TAIL = altLoc(
+  'From the Covent Garden Al Talli Abaya: contemporary UAE heritage fashion by Bint Saeed Abu Dhabi, United Arab Emirates.',
+  'من عباية Covent Garden بالتلي: أزياء تراثية إماراتية معاصرة من Bint Saeed أبوظبي، الإمارات العربية المتحدة.',
+  'Issue de l’abaya Covent Garden Al Talli : mode patrimoniale émiratie contemporaine par Bint Saeed Abou Dabi, Émirats arabes unis.',
+  'Dalla Covent Garden Abaya Al Talli: moda contemporanea del patrimonio emiratino di Bint Saeed Abu Dhabi, Emirati Arabi Uniti.',
+  'De la abaya Covent Garden Al Talli: moda contemporánea del patrimonio emiratí de Bint Saeed Abu Dabi, Emiratos Árabes Unidos.',
+  'Деталь абайи Covent Garden Al Talli — современная мода эмиратского наследия от Bint Saeed, Абу-Даби, ОАЭ.',
+  '来自 Covent Garden Al Talli 长袍：Bint Saeed 阿布扎比呈现的当代阿联酋传承时尚。',
+  'Von der Covent Garden Al-Talli-Abaya: zeitgenössische emiratische Heritage-Mode von Bint Saeed Abu Dhabi, VAE.',
+  'Van de Covent Garden Al Talli abaya: eigentijdse Emiratische erfgoedmode van Bint Saeed Abu Dhabi, VAE.',
+  'Da abaya Covent Garden Al Talli: moda contemporânea do património emirati por Bint Saeed Abu Dhabi, EAU.',
+  'Dari Covent Garden Al Talli Abaya: busana warisan Emirati kontemporer oleh Bint Saeed Abu Dhabi, UEA.',
+  'Daripada Covent Garden Al Talli Abaya: fesyen warisan Emirati kontemporari oleh Bint Saeed Abu Dhabi, UAE.',
+)
+
+const AL_TALLI_IMAGE_TITLE_LABEL = altLoc(
+  'Al Talli Abaya · UAE Heritage',
+  'عباية التلي · التراث الإماراتي',
+  'Abaya Al Talli · Patrimoine émirati',
+  'Abaya Al Talli · Patrimonio emiratino',
+  'Abaya Al Talli · Patrimonio emiratí',
+  'Абайя Al Talli · Наследие ОАЭ',
+  'Al Talli 长袍 · 阿联酋传承',
+  'Al-Talli-Abaya · Emiratisches Erbe',
+  'Al Talli abaya · Emiratisch erfgoed',
+  'Abaya Al Talli · Património emirati',
+  'Al Talli Abaya · Warisan Emirati',
+  'Al Talli Abaya · Warisan Emirati',
+)
+
+function withAlTalliImageDiscovery(
+  values: Record<AppLocale, string>,
+): Record<AppLocale, string> {
+  return Object.fromEntries(
+    (Object.keys(values) as AppLocale[]).map((locale) => [
+      locale,
+      `${values[locale]} ${AL_TALLI_IMAGE_DISCOVERY_TAIL[locale]}`,
+    ]),
+  ) as Record<AppLocale, string>
+}
+
+function withAlTalliImageTitle(
+  values: Record<AppLocale, string>,
+): Record<AppLocale, string> {
+  return Object.fromEntries(
+    (Object.keys(values) as AppLocale[]).map((locale) => [
+      locale,
+      `${values[locale]} · ${AL_TALLI_IMAGE_TITLE_LABEL[locale]}`,
+    ]),
+  ) as Record<AppLocale, string>
+}
+
 function frontAlts(color: ColorSlug): Record<AppLocale, string> {
   const c = COLOR_LABEL[color]
   return altLoc(
@@ -84,7 +136,7 @@ const EMBLEM_CLOSE_UP_ALTS = altLoc(
   'Close-up hiasan Al Talli tenunan tradisional Emirati dan sash statement boleh tanggal pada Bint Saeed Covent Garden Abaya — sulaman warisan budaya tidak ketara UNESCO dengan benang logam, kain crepe kaya, dan pin lambang emas signature Bint Saeed. Apakah Al Talli? Kraf abaya Al Talli mewah direka di Abu Dhabi, UAE untuk UAE, GCC, dan penemuan dunia. Penghantaran seluruh dunia.',
 )
 
-const SLEEVE_LIFESTYLE_ALTS = altLoc(
+const SLEEVE_LIFESTYLE_ALTS = withAlTalliImageDiscovery(altLoc(
   'Lifestyle sleeve detail of the Bint Saeed Covent Garden Abaya in Burgundy — architectural lattice cutout above a flared cuff, finished with gold-tone chain detailing on rich crepe. Contemporary Emirati designer abaya craftsmanship from Abu Dhabi, United Arab Emirates; heritage-informed modest fashion for the UAE, GCC, and worldwide. Made in Abu Dhabi. Worldwide shipping.',
   'تفصيل أكمام lifestyle لعباية Bint Saeed Covent Garden بالبرغندي — قصّة شبكية معمارية فوق كف متّسع، بلمسات سلاسل ذهبية على كريب غني. حرفية عباية مصمّمة إماراتية معاصرة من أبوظبي؛ أزياء محتشمة مستلهمة من التراث للإمارات والخليج والعالم. صُنعت في أبوظبي. شحن عالمي.',
   'Détail lifestyle de manche de l’abaya Bint Saeed Covent Garden en Burgundy — découpe en treillis architecturale au-dessus d’un poignet évasé, finitions en chaînes dorées sur crêpe riche. Artisanat d’abaya de créateur émiratie contemporaine d’Abou Dabi, Émirats arabes unis ; mode modeste héritage pour les EAU, le Golfe et le monde. Fabriquée à Abou Dabi. Livraison mondiale.',
@@ -97,9 +149,9 @@ const SLEEVE_LIFESTYLE_ALTS = altLoc(
   'Detalhe lifestyle da manga da abaya Bint Saeed Covent Garden em Burgundy — recorte em treliça arquitetónica sobre punho alargado, com correntes douradas sobre crepe rico. Artesanato de abaya de designer emirati contemporâneo de Abu Dhabi, EAU; moda modesta com património para EAU, Golfo e o mundo. Feita em Abu Dhabi. Envio mundial.',
   'Detail lifestyle lengan Bint Saeed Covent Garden Abaya Burgundy — potongan kisi arsitektural di atas cuff melebar, dengan detail rantai emas pada crepe kaya. Kerajinan abaya desainer Emirati kontemporer dari Abu Dhabi, UEA; busana modest berwarisan untuk UEA, GCC, dan dunia. Dibuat di Abu Dhabi. Pengiriman dunia.',
   'Butiran gaya hidup lengan Bint Saeed Covent Garden Abaya Burgundy — potongan lattice seni bina di atas cuff terkembang, dengan butiran rantai emas pada crepe kaya. Kraf abaya pereka Emirati kontemporari dari Abu Dhabi, UAE; fesyen sopan berwarisan untuk UAE, GCC, dan seluruh dunia. Dihasilkan di Abu Dhabi. Penghantaran seluruh dunia.',
-)
+))
 
-const SLEEVE_LIFESTYLE_TITLES = altLoc(
+const SLEEVE_LIFESTYLE_TITLES = withAlTalliImageTitle(altLoc(
   'Covent Garden Abaya Burgundy Sleeve Lifestyle | Bint Saeed Abu Dhabi',
   'عباية Covent Garden برغندي | تفصيل أكمام lifestyle | Bint Saeed أبوظبي',
   'Abaya Covent Garden Burgundy — détail manche lifestyle | Bint Saeed Abou Dabi',
@@ -112,7 +164,67 @@ const SLEEVE_LIFESTYLE_TITLES = altLoc(
   'Abaya Covent Garden Burgundy — detalhe de manga lifestyle | Bint Saeed Abu Dhabi',
   'Covent Garden Abaya Burgundy — detail lengan lifestyle | Bint Saeed Abu Dhabi',
   'Covent Garden Abaya Burgundy — butiran lengan gaya hidup | Bint Saeed Abu Dhabi',
-)
+))
+
+const BLACK_SLEEVE_LIFESTYLE_ALTS = withAlTalliImageDiscovery(altLoc(
+  'Lifestyle sleeve detail of the Bint Saeed Covent Garden Abaya in Deep Black — architectural lattice cutout above a flared cuff, finished with gold-tone chain detailing on rich crepe. Contemporary Emirati designer abaya craftsmanship from Abu Dhabi, United Arab Emirates; heritage-informed modest fashion for the UAE, GCC, and worldwide. Made in Abu Dhabi. Worldwide shipping.',
+  'تفصيل أكمام lifestyle لعباية Bint Saeed Covent Garden بالأسود العميق — قصّة شبكية معمارية فوق كف متّسع، بلمسات سلاسل ذهبية على كريب غني. حرفية عباية مصمّمة إماراتية معاصرة من أبوظبي؛ أزياء محتشمة مستلهمة من التراث للإمارات والخليج والعالم. صُنعت في أبوظبي. شحن عالمي.',
+  'Détail lifestyle de manche de l’abaya Bint Saeed Covent Garden en Noir profond — découpe en treillis architecturale au-dessus d’un poignet évasé, finitions en chaînes dorées sur crêpe riche. Artisanat d’abaya de créateur émiratie contemporaine d’Abou Dabi, Émirats arabes unis ; mode modeste héritage pour les EAU, le Golfe et le monde. Fabriquée à Abou Dabi. Livraison mondiale.',
+  'Dettaglio lifestyle della manica della Bint Saeed Covent Garden Abaya in Nero profondo — intaglio a trellis architettonico sopra un polsino svasato, finiture a catena dorata su crepe ricco. Artigianato abaya designer emiratino contemporaneo da Abu Dhabi, Emirati Arabi Uniti; modest fashion ispirata al patrimonio per EAU, Golfo e mondo. Realizzata ad Abu Dhabi. Spedizione mondiale.',
+  'Detalle lifestyle de manga de la abaya Bint Saeed Covent Garden en Negro profundo — abertura en celosía arquitectónica sobre un puño acampanado, con cadenas doradas sobre crepé rico. Artesanía de abaya de diseñador emiratí contemporánea desde Abu Dabi, EAU; moda modesta con herencia para EAU, Golfo y el mundo. Hecha en Abu Dabi. Envío mundial.',
+  'Lifestyle-деталь рукава абайи Bint Saeed Covent Garden цвета глубокий чёрный — архитектурный решётчатый вырез над расклешённым манжетом, с золотистыми цепочками на насыщенном крепе. Современное эмиратское дизайнерское мастерство из Абу-Даби, ОАЭ; скромная мода с наследием для ОАЭ, Залива и мира. Сделано в Абу-Даби. Доставка по всему миру.',
+  'Bint Saeed Covent Garden深黑色长袍生活方式袖部细节——喇叭袖口上方的建筑感镂空网格，搭配浓郁绉绸上的金色链条细节。阿布扎比当代阿联酋设计师长袍工艺；面向阿联酋、海湾与全球的传承启示端庄时尚。阿布扎比制造。全球配送。',
+  'Lifestyle-Ärmeldetail der Bint Saeed Covent Garden Abaya in Tiefschwarz — architektonischer Gitterausschnitt über einer ausgestellten Manschette, mit goldfarbenen Ketten auf reichem Krepp. Zeitgenössisches emiratisches Designer-Handwerk aus Abu Dhabi, VAE; bescheidene Mode mit Erbe für VAE, Golf und die Welt. Hergestellt in Abu Dhabi. Weltweiter Versand.',
+  'Lifestyle-mouwdetail van de Bint Saeed Covent Garden abaya in Diepzwart — architecturale lattice-uitsnijding boven een uitlopende manchet, met goudkleurige kettingdetails op rijk crepe. Eigentijds Emiratisch designer vakmanschap uit Abu Dhabi, VAE; bescheiden mode met erfgoed voor VAE, Golf en wereldwijd. Gemaakt in Abu Dhabi. Wereldwijde verzending.',
+  'Detalhe lifestyle da manga da abaya Bint Saeed Covent Garden em Preto profundo — recorte em treliça arquitetónica sobre punho alargado, com correntes douradas sobre crepe rico. Artesanato de abaya de designer emirati contemporâneo de Abu Dhabi, EAU; moda modesta com património para EAU, Golfo e o mundo. Feita em Abu Dhabi. Envio mundial.',
+  'Detail lifestyle lengan Bint Saeed Covent Garden Abaya Deep Black — potongan kisi arsitektural di atas cuff melebar, dengan detail rantai emas pada crepe kaya. Kerajinan abaya desainer Emirati kontemporer dari Abu Dhabi, UEA; busana modest berwarisan untuk UEA, GCC, dan dunia. Dibuat di Abu Dhabi. Pengiriman dunia.',
+  'Butiran gaya hidup lengan Bint Saeed Covent Garden Abaya Deep Black — potongan lattice seni bina di atas cuff terkembang, dengan butiran rantai emas pada crepe kaya. Kraf abaya pereka Emirati kontemporari dari Abu Dhabi, UAE; fesyen sopan berwarisan untuk UAE, GCC, dan seluruh dunia. Dihasilkan di Abu Dhabi. Penghantaran seluruh dunia.',
+))
+
+const BLACK_SLEEVE_LIFESTYLE_TITLES = withAlTalliImageTitle(altLoc(
+  'Covent Garden Abaya Deep Black Sleeve Lifestyle | Bint Saeed Abu Dhabi',
+  'عباية Covent Garden أسود عميق | تفصيل أكمام lifestyle | Bint Saeed أبوظبي',
+  'Abaya Covent Garden Noir profond — détail manche lifestyle | Bint Saeed Abou Dabi',
+  'Covent Garden Abaya Nero profondo — dettaglio manica lifestyle | Bint Saeed Abu Dhabi',
+  'Abaya Covent Garden Negro profundo — detalle de manga lifestyle | Bint Saeed Abu Dabi',
+  'Абайя Covent Garden глубокий чёрный — lifestyle-деталь рукава | Bint Saeed Абу-Даби',
+  'Covent Garden深黑色长袍袖部生活方式细节 | Bint Saeed 阿布扎比',
+  'Covent Garden Abaya Tiefschwarz — Lifestyle-Ärmeldetail | Bint Saeed Abu Dhabi',
+  'Covent Garden abaya Diepzwart — lifestyle-mouwdetail | Bint Saeed Abu Dhabi',
+  'Abaya Covent Garden Preto profundo — detalhe de manga lifestyle | Bint Saeed Abu Dhabi',
+  'Covent Garden Abaya Deep Black — detail lengan lifestyle | Bint Saeed Abu Dhabi',
+  'Covent Garden Abaya Deep Black — butiran lengan gaya hidup | Bint Saeed Abu Dhabi',
+))
+
+const NAVY_SLEEVE_LIFESTYLE_ALTS = withAlTalliImageDiscovery(altLoc(
+  'Lifestyle sleeve detail of the Bint Saeed Covent Garden Abaya in Navy Blue — architectural lattice cutout above a flared cuff, finished with gold-tone chain detailing on rich crepe. Contemporary Emirati designer abaya craftsmanship from Abu Dhabi, United Arab Emirates; heritage-informed modest fashion for the UAE, GCC, and worldwide. Made in Abu Dhabi. Worldwide shipping.',
+  'تفصيل أكمام lifestyle لعباية Bint Saeed Covent Garden بالكحلي — قصّة شبكية معمارية فوق كف متّسع، بلمسات سلاسل ذهبية على كريب غني. حرفية عباية مصمّمة إماراتية معاصرة من أبوظبي؛ أزياء محتشمة مستلهمة من التراث للإمارات والخليج والعالم. صُنعت في أبوظبي. شحن عالمي.',
+  'Détail lifestyle de manche de l’abaya Bint Saeed Covent Garden en Bleu marine — découpe en treillis architecturale au-dessus d’un poignet évasé, finitions en chaînes dorées sur crêpe riche. Artisanat d’abaya de créateur émiratie contemporaine d’Abou Dabi, Émirats arabes unis ; mode modeste héritage pour les EAU, le Golfe et le monde. Fabriquée à Abou Dabi. Livraison mondiale.',
+  'Dettaglio lifestyle della manica della Bint Saeed Covent Garden Abaya in Blu navy — intaglio a trellis architettonico sopra un polsino svasato, finiture a catena dorata su crepe ricco. Artigianato abaya designer emiratino contemporaneo da Abu Dhabi, Emirati Arabi Uniti; modest fashion ispirata al patrimonio per EAU, Golfo e mondo. Realizzata ad Abu Dhabi. Spedizione mondiale.',
+  'Detalle lifestyle de manga de la abaya Bint Saeed Covent Garden en Azul marino — abertura en celosía arquitectónica sobre un puño acampanado, con cadenas doradas sobre crepé rico. Artesanía de abaya de diseñador emiratí contemporánea desde Abu Dabi, EAU; moda modesta con herencia para EAU, Golfo y el mundo. Hecha en Abu Dabi. Envío mundial.',
+  'Lifestyle-деталь рукава абайи Bint Saeed Covent Garden цвета тёмно-синий — архитектурный решётчатый вырез над расклешённым манжетом, с золотистыми цепочками на насыщенном крепе. Современное эмиратское дизайнерское мастерство из Абу-Даби, ОАЭ; скромная мода с наследием для ОАЭ, Залива и мира. Сделано в Абу-Даби. Доставка по всему миру.',
+  'Bint Saeed Covent Garden海军蓝长袍生活方式袖部细节——喇叭袖口上方的建筑感镂空网格，搭配浓郁绉绸上的金色链条细节。阿布扎比当代阿联酋设计师长袍工艺；面向阿联酋、海湾与全球的传承启示端庄时尚。阿布扎比制造。全球配送。',
+  'Lifestyle-Ärmeldetail der Bint Saeed Covent Garden Abaya in Marineblau — architektonischer Gitterausschnitt über einer ausgestellten Manschette, mit goldfarbenen Ketten auf reichem Krepp. Zeitgenössisches emiratisches Designer-Handwerk aus Abu Dhabi, VAE; bescheidene Mode mit Erbe für VAE, Golf und die Welt. Hergestellt in Abu Dhabi. Weltweiter Versand.',
+  'Lifestyle-mouwdetail van de Bint Saeed Covent Garden abaya in Marineblauw — architecturale lattice-uitsnijding boven een uitlopende manchet, met goudkleurige kettingdetails op rijk crepe. Eigentijds Emiratisch designer vakmanschap uit Abu Dhabi, VAE; bescheiden mode met erfgoed voor VAE, Golf en wereldwijd. Gemaakt in Abu Dhabi. Wereldwijde verzending.',
+  'Detalhe lifestyle da manga da abaya Bint Saeed Covent Garden em Azul-marinho — recorte em treliça arquitetónica sobre punho alargado, com correntes douradas sobre crepe rico. Artesanato de abaya de designer emirati contemporâneo de Abu Dhabi, EAU; moda modesta com património para EAU, Golfo e o mundo. Feita em Abu Dhabi. Envio mundial.',
+  'Detail lifestyle lengan Bint Saeed Covent Garden Abaya Navy Blue — potongan kisi arsitektural di atas cuff melebar, dengan detail rantai emas pada crepe kaya. Kerajinan abaya desainer Emirati kontemporer dari Abu Dhabi, UEA; busana modest berwarisan untuk UEA, GCC, dan dunia. Dibuat di Abu Dhabi. Pengiriman dunia.',
+  'Butiran gaya hidup lengan Bint Saeed Covent Garden Abaya Navy Blue — potongan lattice seni bina di atas cuff terkembang, dengan butiran rantai emas pada crepe kaya. Kraf abaya pereka Emirati kontemporari dari Abu Dhabi, UAE; fesyen sopan berwarisan untuk UAE, GCC, dan seluruh dunia. Dihasilkan di Abu Dhabi. Penghantaran seluruh dunia.',
+))
+
+const NAVY_SLEEVE_LIFESTYLE_TITLES = withAlTalliImageTitle(altLoc(
+  'Covent Garden Abaya Navy Blue Sleeve Lifestyle | Bint Saeed Abu Dhabi',
+  'عباية Covent Garden كحلي | تفصيل أكمام lifestyle | Bint Saeed أبوظبي',
+  'Abaya Covent Garden Bleu marine — détail manche lifestyle | Bint Saeed Abou Dabi',
+  'Covent Garden Abaya Blu navy — dettaglio manica lifestyle | Bint Saeed Abu Dhabi',
+  'Abaya Covent Garden Azul marino — detalle de manga lifestyle | Bint Saeed Abu Dabi',
+  'Абайя Covent Garden тёмно-синяя — lifestyle-деталь рукава | Bint Saeed Абу-Даби',
+  'Covent Garden海军蓝长袍袖部生活方式细节 | Bint Saeed 阿布扎比',
+  'Covent Garden Abaya Marineblau — Lifestyle-Ärmeldetail | Bint Saeed Abu Dhabi',
+  'Covent Garden abaya Marineblauw — lifestyle-mouwdetail | Bint Saeed Abu Dhabi',
+  'Abaya Covent Garden Azul-marinho — detalhe de manga lifestyle | Bint Saeed Abu Dhabi',
+  'Covent Garden Abaya Navy Blue — detail lengan lifestyle | Bint Saeed Abu Dhabi',
+  'Covent Garden Abaya Navy Blue — butiran lengan gaya hidup | Bint Saeed Abu Dhabi',
+))
 
 function entry(color: ColorSlug, view: 'front' | 'side' | 'back'): AltEntry {
   const alts =
@@ -140,7 +252,17 @@ export const COVENT_GARDEN_ABAYA_IMAGE_ALT_ENTRIES: AltEntry[] = [
   entry('black', 'front'),
   entry('black', 'side'),
   entry('black', 'back'),
+  {
+    filename: 'bint-saeed-covent-garden-abaya-black-lifestyle-sleeve-detail.webp',
+    alts: BLACK_SLEEVE_LIFESTYLE_ALTS,
+    titles: BLACK_SLEEVE_LIFESTYLE_TITLES,
+  },
   entry('navy-blue', 'front'),
   entry('navy-blue', 'side'),
   entry('navy-blue', 'back'),
+  {
+    filename: 'bint-saeed-covent-garden-abaya-navy-blue-lifestyle-sleeve-detail.webp',
+    alts: NAVY_SLEEVE_LIFESTYLE_ALTS,
+    titles: NAVY_SLEEVE_LIFESTYLE_TITLES,
+  },
 ]

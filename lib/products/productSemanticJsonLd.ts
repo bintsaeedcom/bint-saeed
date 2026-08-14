@@ -14,6 +14,21 @@ const KHOUS_HERITAGE_PATH = '/heritage/khous'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
+const WAHAT_AL_KARAMA_DESCRIPTION: Record<AppLocale, string> = {
+  en: 'A monumental memorial and architectural landmark in Abu Dhabi whose interdependent forms inspired the intersecting cuff geometry of the Covent Garden Abaya.',
+  ar: 'صرح تذكاري ومعلم معماري بارز في أبوظبي، ألهمت أشكاله المتساندة الهندسة المتقاطعة في أساور عباية Covent Garden.',
+  fr: 'Mémorial monumental et repère architectural d’Abou Dabi dont les formes interdépendantes ont inspiré la géométrie entrecroisée des poignets de l’abaya Covent Garden.',
+  it: 'Memoriale monumentale e riferimento architettonico di Abu Dhabi, le cui forme interdipendenti hanno ispirato la geometria incrociata dei polsini dell’abaya Covent Garden.',
+  es: 'Monumento conmemorativo y referente arquitectónico de Abu Dabi cuyas formas interdependientes inspiraron la geometría entrecruzada de los puños de la abaya Covent Garden.',
+  ru: 'Монументальный мемориал и архитектурная достопримечательность Абу-Даби, чьи взаимосвязанные формы вдохновили геометрию манжет абайи Covent Garden.',
+  zh: '阿布扎比纪念性建筑地标，其彼此支撑的形态启发了 Covent Garden Abaya 袖口的交错几何。',
+  de: 'Monumentale Gedenkstätte und architektonisches Wahrzeichen Abu Dhabis, dessen sich stützende Formen die Geometrie der Manschetten der Covent Garden Abaya inspirierten.',
+  nl: 'Monumentaal gedenkteken en architectonisch herkenningspunt van Abu Dhabi, waarvan de onderling steunende vormen de geometrie van de manchetten van de Covent Garden Abaya inspireerden.',
+  pt: 'Memorial monumental e referência arquitetónica de Abu Dhabi, cujas formas interdependentes inspiraram a geometria cruzada dos punhos da abaya Covent Garden.',
+  id: 'Monumen memorial dan landmark arsitektur Abu Dhabi, dengan bentuk-bentuk saling menopang yang menginspirasi geometri manset abaya Covent Garden.',
+  ms: 'Tugu peringatan monumental dan mercu tanda seni bina Abu Dhabi, dengan bentuk saling menyokong yang mengilhamkan geometri manset abaya Covent Garden.',
+}
+
 type SemanticProductRef = {
   name: string
   path: string
@@ -140,6 +155,25 @@ export function buildProductSemanticJsonLdFields(
   }
 
   if (isCoventGardenAbayaSlug(normalized)) {
+    const abuDhabi = {
+      '@type': 'City',
+      name: 'Abu Dhabi',
+      containedInPlace: {
+        '@type': 'Country',
+        name: 'United Arab Emirates',
+      },
+    }
+    const wahatAlKarama = {
+      '@type': 'LandmarksOrHistoricalBuildings',
+      name: 'Wahat Al Karama',
+      alternateName: locale === 'ar' ? 'واحة الكرامة' : 'Wahat Al Karama Memorial',
+      description: WAHAT_AL_KARAMA_DESCRIPTION[locale],
+      containedInPlace: abuDhabi,
+    }
+    about.push(wahatAlKarama, abuDhabi)
+    fields.mentions = fields.mentions
+      ? [fields.mentions, wahatAlKarama]
+      : wahatAlKarama
     related.push(
       relatedProductNode(
         productRef('Covent Garden Long Dress', '/shop/covent-garden-long-dress'),

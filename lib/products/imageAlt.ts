@@ -39,6 +39,18 @@ export const PRODUCT_IMAGE_DIMENSIONS: Record<string, { width: number; height: n
     width: 819,
     height: 1024,
   },
+  'bint-saeed-covent-garden-abaya-black-lifestyle-sleeve-detail.webp': {
+    width: 819,
+    height: 1024,
+  },
+  'bint-saeed-covent-garden-abaya-navy-blue-lifestyle-sleeve-detail.webp': {
+    width: 819,
+    height: 1024,
+  },
+  'bint-saeed-parklane-abaya-navy-blue-lifestyle-monogram-detail.webp': {
+    width: 819,
+    height: 1024,
+  },
   'bint-saeed-nothing-hill-kaftan-gold-tone-signature-emblem-close-up.webp': {
     width: 2160,
     height: 2700,

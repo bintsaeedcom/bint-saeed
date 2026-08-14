@@ -29,10 +29,16 @@ function resolveDedicatedPageSeo(
 }
 
 export function buildProductPageTitle(
-  _locale: AppLocale,
+  locale: AppLocale,
   body: { name: string; slug?: string },
 ): string {
-  // Always brand-first short titles: `Bint Saeed | Hampstead Dress` (keywords live in meta description).
+  // Covent Garden has a dedicated native SEO pack targeting Al Talli / UAE heritage intent.
+  // Use it in the document, Open Graph, and Twitter title rather than leaving it dormant.
+  if (body.slug) {
+    const coventGarden = getCoventGardenAbayaPageSeo(body.slug, locale)
+    if (coventGarden) return coventGarden.title
+  }
+
   return brandDocumentTitle(body.name)
 }
 

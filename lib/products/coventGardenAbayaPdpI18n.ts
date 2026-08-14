@@ -16,28 +16,33 @@ export const COVENT_GARDEN_ABAYA_SLUG = 'covent-garden-abaya'
 
 const COLOURS = ['Burgundy', 'Deep Black', 'Navy Blue'] as const
 
-function knottedLineAlTalliParagraph(
-  before: string,
-  midKnotted: string,
-  midAlTalli: string,
-  after: string,
-): PdpIntroParagraph {
-  return [
-    { type: 'text', value: before },
-    { type: 'codeLink', label: 'Knotted Line', href: THE_CODES_KNOTTED_LINES_HREF, bold: true },
-    { type: 'text', value: midKnotted },
-    { type: 'codeLink', label: 'Al Talli', href: THE_CODES_AL_TALLI_HREF, bold: true },
-    { type: 'text', value: after },
-  ]
+function t(value: string): PdpIntroParagraph[number] {
+  return { type: 'text', value }
+}
+
+function boldAlTalli(label = 'Al Talli'): PdpIntroParagraph[number] {
+  return { type: 'codeLink', label, href: THE_CODES_AL_TALLI_HREF, bold: true }
+}
+
+function boldKnottedLine(label = 'Knotted Line'): PdpIntroParagraph[number] {
+  return { type: 'codeLink', label, href: THE_CODES_KNOTTED_LINES_HREF, bold: true }
+}
+
+function boldMonogramPin(label = 'Bint Saeed gold-tone Monogram pin'): PdpIntroParagraph[number] {
+  return { type: 'codeLink', label, href: '/the-codes#the-monogram', bold: true }
+}
+
+function boldWahatAlKarama(label = 'Wahat Al Karama'): PdpIntroParagraph[number] {
+  return { type: 'codeLink', label, href: '#', bold: true }
 }
 
 function pairingParagraph(before: string, orWord: string, after: string): PdpIntroParagraph {
   return [
-    { type: 'text', value: before },
+    t(before),
     { type: 'codeLink', label: 'Covent Garden Dress', href: '/shop/covent-garden-long-dress', bold: true },
-    { type: 'text', value: ` ${orWord} ` },
+    t(` ${orWord} `),
     { type: 'codeLink', label: 'Hampstead Dress', href: '/shop/hampstead-dress', bold: true },
-    { type: 'text', value: after },
+    t(after),
   ]
 }
 
@@ -45,452 +50,745 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
   en: COVENT_GARDEN_ABAYA_INTRO_EN,
   ar: [
     [
-      {
-        type: 'text',
-        value: 'لكل دار أزياء القطعة التي تُعرّفها. بالنسبة إلى Bint Saeed، عباية Covent Garden إحدى تلك الإبداعات.',
-      },
+      t(
+        'وُلدت عباية Covent Garden من اللغة البصرية لأبوظبي، فجمعت بين التفصيل المعاصر والعمارة وإحدى أعز الحرف التقليدية في دولة الإمارات العربية المتحدة.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'تجمع بين التفصيل المعاصر والفن وإحدى أعز الحرف التقليدية في دولة الإمارات العربية المتحدة، وصُنعت عباية Covent Garden للنساء اللواتي يقدّرن الأناقة الخالدة المعبّرة عبر تصميم استثنائي. مبطّنة بالكامل ببطانة كريب ناعمة، تتحرك قصتها الأنيقة A-line بجمال مع كل خطوة، لتمنح حضوراً راقياً للأعراس والمناسبات الرسمية والتجمعات الأنيقة واللحظات التي يهم فيها ترك انطباع دائم.',
-      },
-    ],
-    knottedLineAlTalliParagraph(
-      'تتوفر بالألوان العنابي والأسود العميق والأزرق الكحلي، وقد وُضعت كل تفصيلة بعناية. تُنهى كتفا العباءة بأزرار ',
-      ' الذهبية المميزة لـ Bint Saeed، بينما تزيّن الأساور الواسعة تفاصيل ',
-      ' المنسوجة. يُعترف بـ Al Talli من قِبل اليونسكو كتراث ثقافي غير مادي، وهو من أعز الحرف الإماراتية التقليدية. في Bint Saeed، نُعيد تخييل استخدام Al Talli عبر التصميم المعاصر، ليُرتدى ويُقدَّر من نساء حول العالم.',
-      '',
-    ),
-    [
-      {
-        type: 'text',
-        value:
-          'يكمل التصميم وشاحاً قابلاً للفصل، منتهياً بتفاصيل Al Talli ودبوس الشعار الذهبي المميز لـ Bint Saeed. يُرتدى منسدلاً من الكتف أو بشكل قطري عبر الجسم، فيحوّل القصة بحضور وتميّز وأناقة خالدة.',
-      },
+      t('تستلهم عباية Covent Garden جزءاً من لغتها التصميمية من '),
+      boldWahatAlKarama('واحة الكرامة'),
+      t(
+        '، أحد أبرز المعالم المعمارية في أبوظبي. أشكالها النحتية الضخمة، المكوّنة من هياكل تميل بعضها إلى بعض وتتساند، كانت مصدر الإلهام للهندسة المتقاطعة التي تظهر في أساور العباءة ذات الحضور الخاص.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'مثل كل عباءة Bint Saeed، يمكن تخصيص عباية Covent Garden عبر الملصق الداخلي المخفي المميز للدار، لإضافة اسم أو تاريخ أو رسالة ذات معنى تبقى قريبة منكِ في كل مرة ترتدينها.',
-      },
+      t('تُترجم Bint Saeed هذه الإشارة المعمارية إلى نسيج عبر أشرطة متناوبة من '),
+      boldAlTalli(),
+      t(' الأسود والذهبي، فتكوّن تركيباً بيانياً على الأكمام. وبوصفه تراثاً ثقافياً غير مادي تعترف به اليونسكو، يُعدّ '),
+      boldAlTalli(),
+      t(
+        ' حرفة نسيج إماراتية تقليدية تناقلتها أجيال من النساء في الإمارات. وهنا يخلق استخدامه حواراً بين تعبيرين عن الإمارات: عمارة أبوظبي المعاصرة والحرفة الموروثة.',
+      ),
+    ],
+    [
+      t(
+        'والنتيجة تفصيلة تحمل مشهد المدينة إلى الثوب. تصبح العمارة خطاً، والخط نسيجاً، والنسيج شيئاً يمكن ارتداؤه.',
+      ),
+    ],
+    [
+      t(
+        'بقصة A-line أنيقة وبطانة كريب ناعمة كاملة، تنساب عباية Covent Garden من الكتفين وتتحرك بجمال مع كل خطوة. صُممت للأعراس والمناسبات الرسمية والتجمعات الأنيقة والأمسيات التي تستدعي حضوراً مميزاً.',
+      ),
+    ],
+    [
+      t('تُنهى الكتفان بكتاف وزرّات '),
+      boldKnottedLine(),
+      t(
+        ' الذهبية المميزة لـ Bint Saeed، وهو رمز آخر من رموز الدار مستوحى من الصلة والنسب والمسارات التي تربط جيلاً بجيل.',
+      ),
+    ],
+    [
+      t('يكمل التصميم وشاحاً قابلاً للفصل. منتهياً بتفاصيل '),
+      boldAlTalli(),
+      t(' و'),
+      boldMonogramPin('دبوس الشعار الذهبي لـ Bint Saeed'),
+      t(
+        '، يمكن ارتداؤه منسدلاً من الكتف أو بشكل قطري عبر الجسم، ليمنح القصة طابعاً أكثر احتفالية.',
+      ),
     ],
     pairingParagraph(
-      'تنسجم عباية Covent Garden بجمال مع ',
+      'تتوفر بالأسود العميق والعنابي والأزرق الكحلي، ويمكن ارتداء عباية Covent Garden فوق ',
       'أو',
-      '، لتكوين إطلالات طبقات راقية حيث وُضع كل تفصيل بعناية من الداخل إلى الخارج.',
+      ' لإطلالة طبقات مكتملة.',
     ),
+    [
+      t(
+        'ومثل كل عباءة Bint Saeed، يمكن تخصيصها عبر الملصق الداخلي المخفي المميز للدار. أضيفي اسماً أو تاريخاً أو رسالة ذات معنى لتفصيلة لا تعرفها إلا مرتديتها.',
+      ),
+    ],
+    [
+      t(
+        'من عمارة أبوظبي إلى الأيدي والتقاليد التي شكّلت الحرفة الإماراتية، تعبّر عباية Covent Garden عما يقع في قلب Bint Saeed: حمل الثقافة البصرية لدولة الإمارات إلى الأمام عبر التصميم المعاصر.',
+      ),
+    ],
   ],
   fr: [
     [
-      {
-        type: 'text',
-        value:
-          'Chaque maison de mode a la pièce qui la définit. Pour Bint Saeed, l’abaya Covent Garden en est une.',
-      },
+      t(
+        'Née du langage visuel d’Abou Dabi, l’abaya Covent Garden réunit tailleur contemporain, architecture et l’un des savoir-faire traditionnels les plus précieux des Émirats arabes unis.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Réunissant tailleur contemporain, art et l’un des savoir-faire traditionnels les plus précieux des Émirats arabes unis, l’abaya Covent Garden a été créée pour les femmes qui apprécient une élégance intemporelle exprimée par un design exceptionnel. Entièrement doublée d’un crêpe doux, sa silhouette A-line élégante accompagne chaque pas avec grâce, créant une présence raffinée pour les mariages, occasions officielles, réceptions élégantes et moments où l’on souhaite marquer les esprits durablement.',
-      },
-    ],
-    knottedLineAlTalliParagraph(
-      'Disponible en Bourgogne, Noir profond et Bleu marine, chaque détail a été soigneusement pensé. Les épaulettes sont finies avec les boutons dorés signature ',
-      ' de Bint Saeed, tandis que les poignets larges présentent la ',
-      ' tissée. Reconnue par l’UNESCO comme patrimoine culturel immatériel, l’Al Talli est l’un des plus précieux artisanats traditionnels émiratis. Chez Bint Saeed, nous réinventons l’usage de l’Al Talli par un design contemporain, pour que cet élément remarquable du patrimoine culturel émirati soit porté et apprécié par des femmes du monde entier.',
-      '',
-    ),
-    [
-      {
-        type: 'text',
-        value:
-          'La pièce se complète par une écharpe statement amovible, finie avec une bordure Al Talli et l’épingle emblème dorée signature de Bint Saeed. Portée drapée naturellement depuis l’épaule ou en diagonale sur le corps, elle transforme la silhouette avec cérémonie, distinction et élégance intemporelle.',
-      },
+      t('L’abaya Covent Garden emprunte une part de son langage formel à '),
+      boldWahatAlKarama(),
+      t(
+        ', l’un des monuments architecturaux les plus distinctifs d’Abou Dabi. Ses volumes monumentaux, composés de structures qui s’inclinent les unes vers les autres et se soutiennent, ont inspiré la géométrie entrecroisée des poignets statement de l’abaya.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Comme chaque abaya Bint Saeed, l’abaya Covent Garden peut être personnalisée avec l’étiquette intérieure cachée signature de la maison, pour y ajouter un nom, une date ou un message personnel qui vous reste proche à chaque port.',
-      },
+      t(
+        'Bint Saeed traduit cette référence architecturale en textile par des bandes alternées de ',
+      ),
+      boldAlTalli(),
+      t(
+        ' noir et doré, dessinant une composition graphique sur les manches. Reconnue par l’UNESCO comme patrimoine culturel immatériel, ',
+      ),
+      boldAlTalli(),
+      t(
+        ' est un art du tissage émirati transmis de génération en génération par les femmes des Émirats. Ici, son usage crée un dialogue entre deux expressions des Émirats : l’architecture contemporaine d’Abou Dabi et le savoir-faire hérité.',
+      ),
+    ],
+    [
+      t(
+        'Il en résulte un détail qui porte le paysage de la ville dans le vêtement. L’architecture devient ligne, la ligne devient textile, et le textile devient ce que l’on peut porter.',
+      ),
+    ],
+    [
+      t(
+        'Coupée dans une silhouette A-line élégante et entièrement doublée d’un crêpe doux, l’abaya Covent Garden tombe fluide depuis les épaules et accompagne chaque pas avec grâce. Elle est conçue pour les mariages, les occasions officielles, les réceptions élégantes et les soirées qui appellent une présence distinctive.',
+      ),
+    ],
+    [
+      t('Les épaules sont finies d’épaulettes et de boutons dorés signature '),
+      boldKnottedLine(),
+      t(
+        ' de Bint Saeed — un autre code de la maison inspiré du lien, de la lignée et des chemins qui unissent une génération à la suivante.',
+      ),
+    ],
+    [
+      t('Une écharpe statement amovible complète le dessin. Finie de '),
+      boldAlTalli(),
+      t(' et de l’'),
+      boldMonogramPin('épingle Monogram dorée Bint Saeed'),
+      t(
+        ', elle peut se draper depuis l’épaule ou se croiser en diagonale sur le corps, conférant à la silhouette un caractère plus cérémoniel.',
+      ),
     ],
     pairingParagraph(
-      'L’abaya Covent Garden s’associe magnifiquement à la ',
-      'ou à la ',
-      ', créant des silhouettes superposées raffinées où chaque détail a été pensé de l’intérieur vers l’extérieur.',
+      'Disponible en Noir profond, Bourgogne et Bleu marine, l’abaya Covent Garden se porte sur la ',
+      'ou la ',
+      ' pour une superposition complète.',
     ),
+    [
+      t(
+        'Comme chaque abaya Bint Saeed, elle peut aussi être personnalisée avec l’étiquette intérieure cachée signature de la maison. Ajoutez un nom, une date ou un message personnel — un détail connu de celle qui la porte seule.',
+      ),
+    ],
+    [
+      t(
+        'De l’architecture d’Abou Dabi aux mains et aux traditions qui ont façonné l’artisanat émirati, l’abaya Covent Garden exprime ce qui est au cœur de Bint Saeed : porter la culture visuelle des Émirats vers l’avenir par le design contemporain.',
+      ),
+    ],
   ],
   it: [
     [
-      {
-        type: 'text',
-        value:
-          'Ogni maison di moda ha il capo che la definisce. Per Bint Saeed, l’abaya Covent Garden è una di quelle creazioni.',
-      },
+      t(
+        'Nata dal linguaggio visivo di Abu Dhabi, l’abaya Covent Garden unisce sartoria contemporanea, architettura e uno dei mestieri tradizionali più preziosi degli Emirati Arabi Uniti.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Unendo sartoria contemporanea, arte e uno dei mestieri tradizionali più preziosi degli Emirati Arabi Uniti, l’abaya Covent Garden è stata creata per donne che apprezzano un’eleganza senza tempo espressa attraverso un design eccezionale. Completamente foderata in crepe morbido, la sua elegante silhouette A-line si muove con grazia a ogni passo, creando una presenza raffinata per matrimoni, occasioni ufficiali, ricevimenti eleganti e momenti in cui conta lasciare un’impressione duratura.',
-      },
-    ],
-    knottedLineAlTalliParagraph(
-      'Disponibile in Borgogna, Nero profondo e Blu navy, ogni dettaglio è stato considerato con cura. Le spalline sono finite con i bottoni dorati signature ',
-      ' di Bint Saeed, mentre i polsini ampi presentano il bordo ',
-      ' tessuto. Riconosciuto dall’UNESCO come patrimonio culturale immateriale, l’Al Talli è uno dei mestieri artigianali tradizionali emiratini più preziosi. In Bint Saeed reinventiamo l’uso dell’Al Talli attraverso il design contemporaneo, affinché questo straordinario elemento del patrimonio culturale emiratino possa essere indossato e apprezzato da donne in tutto il mondo.',
-      '',
-    ),
-    [
-      {
-        type: 'text',
-        value:
-          'A completare il design una fascia statement removibile, finita con bordo Al Talli e la spilla Monogram dorata signature di Bint Saeed. Indossata drappeggiata naturalmente dalla spalla o in diagonale sul corpo, trasforma la silhouette con cerimonia, distinzione ed eleganza senza tempo.',
-      },
+      t('L’abaya Covent Garden trae parte del suo linguaggio formale da '),
+      boldWahatAlKarama(),
+      t(
+        ', uno dei monumenti architettonici più distintivi di Abu Dhabi. Le sue forme monumentali, composte da strutture che si inclinano e si sostengono a vicenda, hanno ispirato la geometria intersecata dei polsini statement dell’abaya.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Come ogni abaya Bint Saeed, l’abaya Covent Garden può essere personalizzata con l’etichetta interna nascosta signature della maison, per aggiungere un nome, una data o un messaggio personale che resta vicino a voi ogni volta che la indossate.',
-      },
+      t(
+        'Bint Saeed traduce questo riferimento architettonico in tessuto attraverso fasce alternate di ',
+      ),
+      boldAlTalli(),
+      t(
+        ' nero e dorato, creando una composizione grafica sulle maniche. Riconosciuto dall’UNESCO come patrimonio culturale immateriale, ',
+      ),
+      boldAlTalli(),
+      t(
+        ' è un’arte della tessitura emiratina tramandata di generazione in generazione dalle donne degli Emirati. Qui la sua applicazione crea un dialogo tra due espressioni degli Emirati: l’architettura contemporanea di Abu Dhabi e l’artigianato ereditato.',
+      ),
+    ],
+    [
+      t(
+        'Il risultato è un dettaglio che porta il paesaggio della città nel capo. L’architettura diventa linea, la linea tessuto, e il tessuto qualcosa che si può indossare.',
+      ),
+    ],
+    [
+      t(
+        'Tagliata in un’elegante silhouette A-line e completamente foderata in crepe morbido, l’abaya Covent Garden cade fluida dalle spalle e si muove con grazia a ogni passo. È pensata per matrimoni, occasioni ufficiali, ricevimenti eleganti e serate che chiedono una presenza distintiva.',
+      ),
+    ],
+    [
+      t('Le spalle sono finite con spalline e bottoni dorati signature '),
+      boldKnottedLine(),
+      t(
+        ' di Bint Saeed — un altro codice della maison ispirato al legame, alla discendenza e ai sentieri che uniscono una generazione alla successiva.',
+      ),
+    ],
+    [
+      t('Una fascia statement removibile completa il disegno. Finita con '),
+      boldAlTalli(),
+      t(' e la '),
+      boldMonogramPin('spilla Monogram dorata Bint Saeed'),
+      t(
+        ', può essere drappeggiata dalla spalla o stilizzata in diagonale sul corpo, conferendo alla silhouette un carattere più cerimoniale.',
+      ),
     ],
     pairingParagraph(
-      'L’abaya Covent Garden si abbina magnificamente al ',
-      'o al ',
-      ', creando silhouette stratificate raffinate in cui ogni dettaglio è stato pensato dall’interno verso l’esterno.',
+      'Disponibile in Nero profondo, Borgogna e Blu navy, l’abaya Covent Garden si indossa sopra il ',
+      'o il ',
+      ' per un look stratificato completo.',
     ),
+    [
+      t(
+        'Come ogni abaya Bint Saeed, può anche essere personalizzata con l’etichetta interna nascosta signature della maison. Aggiungete un nome, una data o un messaggio personale — un dettaglio noto soltanto a chi la indossa.',
+      ),
+    ],
+    [
+      t(
+        'Dall’architettura di Abu Dhabi alle mani e alle tradizioni che hanno plasmato l’artigianato emiratino, l’abaya Covent Garden esprime ciò che sta al cuore di Bint Saeed: portare avanti la cultura visiva degli Emirati attraverso il design contemporaneo.',
+      ),
+    ],
   ],
   es: [
     [
-      {
-        type: 'text',
-        value:
-          'Toda casa de moda tiene la pieza que la define. Para Bint Saeed, la abaya Covent Garden es una de esas creaciones.',
-      },
+      t(
+        'Nacida del lenguaje visual de Abu Dabi, la abaya Covent Garden reúne sastrería contemporánea, arquitectura y uno de los oficios tradicionales más preciados de los Emiratos Árabes Unidos.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Reuniendo sastrería contemporánea, arte y uno de los oficios tradicionales más preciados de los Emiratos Árabes Unidos, la abaya Covent Garden fue creada para mujeres que aprecian la elegancia atemporal expresada a través de un diseño excepcional. Completamente forrada con un forro de crepé suave, su elegante silueta A-line se mueve con gracia en cada paso, creando una presencia refinada para bodas, ocasiones oficiales, reuniones elegantes y momentos en los que importa dejar una impresión duradera.',
-      },
-    ],
-    knottedLineAlTalliParagraph(
-      'Disponible en Burdeos, Negro profundo y Azul marino, cada detalle ha sido cuidadosamente considerado. Las hombreras están acabadas con los botones dorados signature ',
-      ' de Bint Saeed, mientras que los puños amplios presentan el ribete ',
-      ' tejido. Reconocido por la UNESCO como Patrimonio Cultural Inmaterial, el Al Talli es uno de los oficios artesanales tradicionales emiratíes más preciados. En Bint Saeed reimaginamos el uso del Al Talli a través del diseño contemporáneo, para que este notable elemento del patrimonio cultural emiratí sea llevado y apreciado por mujeres de todo el mundo.',
-      '',
-    ),
-    [
-      {
-        type: 'text',
-        value:
-          'Completando el diseño, una faja statement desmontable acabada con ribete Al Talli y el pin Monogram dorado signature de Bint Saeed. Llevada drapeada naturalmente desde el hombro o en diagonal sobre el cuerpo, transforma la silueta con ceremonia, distinción y elegancia atemporal.',
-      },
+      t('La abaya Covent Garden toma parte de su lenguaje formal de '),
+      boldWahatAlKarama(),
+      t(
+        ', uno de los monumentos arquitectónicos más distintivos de Abu Dabi. Sus formas monumentales, compuestas de estructuras que se inclinan y se sostienen mutuamente, inspiraron la geometría entrecruzada de los puños statement de la abaya.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Como toda abaya Bint Saeed, la abaya Covent Garden puede personalizarse con la etiqueta interior oculta signature de la casa, permitiendo añadir un nombre, una fecha o un mensaje personal que permanece cerca cada vez que la llevas.',
-      },
+      t(
+        'Bint Saeed traduce esta referencia arquitectónica en textil mediante bandas alternadas de ',
+      ),
+      boldAlTalli(),
+      t(
+        ' negro y dorado, creando una composición gráfica en las mangas. Reconocido por la UNESCO como Patrimonio Cultural Inmaterial, ',
+      ),
+      boldAlTalli(),
+      t(
+        ' es un arte del tejido emiratí transmitido de generación en generación por las mujeres de los Emiratos. Aquí su aplicación crea un diálogo entre dos expresiones de los Emiratos: la arquitectura contemporánea de Abu Dabi y la artesanía heredada.',
+      ),
+    ],
+    [
+      t(
+        'El resultado es un detalle que lleva el paisaje de la ciudad a la prenda. La arquitectura se hace línea, la línea textil, y el textil algo que se puede llevar.',
+      ),
+    ],
+    [
+      t(
+        'Cortada en una elegante silueta A-line y totalmente forrada en crepé suave, la abaya Covent Garden cae fluida desde los hombros y se mueve con gracia en cada paso. Está pensada para bodas, ocasiones oficiales, reuniones elegantes y veladas que piden una presencia distintiva.',
+      ),
+    ],
+    [
+      t('Los hombros se rematan con hombreras y botones dorados signature '),
+      boldKnottedLine(),
+      t(
+        ' de Bint Saeed — otro código de la casa inspirado en el vínculo, el linaje y los caminos que unen una generación a la siguiente.',
+      ),
+    ],
+    [
+      t('Una faja statement desmontable completa el diseño. Acabada con '),
+      boldAlTalli(),
+      t(' y el '),
+      boldMonogramPin('pin Monogram dorado Bint Saeed'),
+      t(
+        ', puede drapearse desde el hombro o cruzarse en diagonal sobre el cuerpo, otorgando a la silueta un carácter más ceremonial.',
+      ),
     ],
     pairingParagraph(
-      'La abaya Covent Garden combina maravillosamente con el ',
+      'Disponible en Negro profundo, Burdeos y Azul marino, la abaya Covent Garden puede llevarse sobre el ',
       'o el ',
-      ', creando siluetas en capas refinadas donde cada detalle ha sido considerado desde el interior hacia el exterior.',
+      ' para un look en capas completo.',
     ),
+    [
+      t(
+        'Como toda abaya Bint Saeed, también puede personalizarse con la etiqueta interior oculta signature de la casa. Añade un nombre, una fecha o un mensaje personal — un detalle conocido sólo por quien la lleva.',
+      ),
+    ],
+    [
+      t(
+        'De la arquitectura de Abu Dabi a las manos y tradiciones que han forjado la artesanía emiratí, la abaya Covent Garden expresa lo que late en el corazón de Bint Saeed: llevar adelante la cultura visual de los Emiratos a través del diseño contemporáneo.',
+      ),
+    ],
   ],
   ru: [
     [
-      {
-        type: 'text',
-        value:
-          'У каждого модного дома есть изделие, которое его определяет. Для Bint Saeed абайя Covent Garden — одно из таких творений.',
-      },
+      t(
+        'Рождённая визуальным языком Абу-Даби, абайя Covent Garden соединяет современный крой, архитектуру и одно из самых ценных традиционных ремёсел Объединённых Арабских Эмиратов.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Объединяя современный крой, искусство и одно из самых ценных традиционных ремёсел Объединённых Арабских Эмиратов, абайя Covent Garden создана для женщин, ценящих вневременную элегантность, выраженную через исключительный дизайн. Полностью на подкладке из мягкого крепа, её элегантный силуэт A-line красиво движется с каждым шагом, создавая утончённое присутствие для свадеб, официальных мероприятий, изысканных приёмов и моментов, когда важно произвести неизгладимое впечатление.',
-      },
-    ],
-    knottedLineAlTalliParagraph(
-      'Доступна в цветах Burgundy, Deep Black и Navy Blue — каждая деталь продумана с заботой. Погоны на плечах отделаны фирменными золотистыми пуговицами ',
-      ' Bint Saeed, а широкие манжеты украшены тканым бордюром ',
-      '. Признанный ЮНЕСКО нематериальным культурным наследием, Al Talli — одно из самых ценных традиционных эмиратских ремёсел. В Bint Saeed мы переосмысливаем использование Al Talli через современный дизайн, чтобы этот замечательный элемент эмиратского культурного наследия носили и ценили женщины по всему миру.',
-      '',
-    ),
-    [
-      {
-        type: 'text',
-        value:
-          'Завершает образ съёмная statement-палантин, отделанная бордюром Al Talli и фирменной золотистой эмблемой Bint Saeed. Носимый естественно с плеча или по диагонали через тело, он преображает силуэт, придавая торжественность, отличие и вневременную элегантность.',
-      },
+      t('Абайя Covent Garden черпает часть своего формального языка у '),
+      boldWahatAlKarama(),
+      t(
+        ' — одного из самых выразительных архитектурных памятников Абу-Даби. Её монументальные формы, сложенные из конструкций, которые наклоняются друг к другу и поддерживают одна другую, вдохновили пересекающуюся геометрию statement-манжет абайи.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Как и каждая абайя Bint Saeed, абайя Covent Garden может быть персонализирована с помощью фирменной скрытой внутренней этикетки, куда можно добавить имя, дату или личное послание, которое остаётся близким при каждом ношении.',
-      },
+      t(
+        'Bint Saeed переводит эту архитектурную отсылку в текстиль чередующимися полосами чёрного и золотистого ',
+      ),
+      boldAlTalli(),
+      t(
+        ', создавая графическую композицию на рукавах. Признанный ЮНЕСКО нематериальным культурным наследием, ',
+      ),
+      boldAlTalli(),
+      t(
+        ' — традиционное эмиратское ткачество, передаваемое поколениями женщин ОАЭ. Здесь его применение создаёт диалог между двумя выражениями Эмиратов: современной архитектурой Абу-Даби и унаследованным мастерством.',
+      ),
+    ],
+    [
+      t(
+        'В итоге — деталь, которая переносит пейзаж города в одежду. Архитектура становится линией, линия — текстилем, а текстиль — тем, что можно носить.',
+      ),
+    ],
+    [
+      t(
+        'Скроенная в элегантном силуэте A-line и полностью на мягкой креповой подкладке, абайя Covent Garden свободно ниспадает с плеч и красиво движется с каждым шагом. Она создана для свадеб, официальных мероприятий, изысканных приёмов и вечеров, требующих особого присутствия.',
+      ),
+    ],
+    [
+      t('Плечи отделаны погонами и фирменными золотистыми пуговицами '),
+      boldKnottedLine(),
+      t(
+        ' Bint Saeed — ещё один код дома, вдохновлённый связью, преемственностью и путями, что связывают одно поколение со следующим.',
+      ),
+    ],
+    [
+      t('Съёмная statement-палантин завершает образ. Отделанная '),
+      boldAlTalli(),
+      t(' и '),
+      boldMonogramPin('золотистой эмблемой Monogram Bint Saeed'),
+      t(
+        ', она может ниспадать с плеча или лежать по диагонали через тело, придавая силуэту более торжественный характер.',
+      ),
     ],
     pairingParagraph(
-      'Абайя Covent Garden прекрасно сочетается с ',
+      'В цветах Deep Black, Burgundy и Navy Blue абайю Covent Garden можно носить поверх ',
       'или ',
-      ', создавая изысканные многослойные силуэты, где каждая деталь продумана изнутри наружу.',
+      ', создавая завершённый многослойный образ.',
     ),
+    [
+      t(
+        'Как и каждая абайя Bint Saeed, её можно персонализировать с помощью фирменной скрытой внутренней этикетки. Добавьте имя, дату или личное послание — деталь, известную только той, кто её носит.',
+      ),
+    ],
+    [
+      t(
+        'От архитектуры Абу-Даби к рукам и традициям, сформировавшим эмиратское ремесло, абайя Covent Garden выражает то, что лежит в сердце Bint Saeed: нести визуальную культуру ОАЭ вперёд через современный дизайн.',
+      ),
+    ],
   ],
   zh: [
     [
-      {
-        type: 'text',
-        value: '每个时装屋都有定义品牌的标志性作品。对 Bint Saeed 而言，Covent Garden Abaya 正是其中之一。',
-      },
+      t(
+        '源自阿布扎比的视觉语言，Covent Garden Abaya 将当代剪裁、建筑，与阿联酋最珍贵的传统工艺之一融为一体。',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          '融合当代剪裁、艺术与阿联酋最珍贵的传统工艺之一，Covent Garden Abaya 为欣赏以卓越设计表达永恒优雅的女性而创作。全里衬柔软绉绸，优雅的 A 字廓形随每一步轻盈流动，为婚礼、正式场合、雅集聚会与需要留下持久印象的时刻，呈现精致气场。',
-      },
-    ],
-    knottedLineAlTalliParagraph(
-      '提供酒红、深黑与海军蓝三色，每一处细节皆经悉心考量。肩章以 Bint Saeed 标志性金色 ',
-      ' 纽扣收束，宽袖口饰以 ',
-      ' 编织镶边。Al Talli 被联合国教科文组织认定为非物质文化遗产，是阿联酋最珍贵的传统手工艺之一。在 Bint Saeed，我们以当代设计重新诠释 Al Talli 的运用，让这一阿联酋文化遗产的重要元素被世界各地的女性穿着与欣赏。',
-      '',
-    ),
-    [
-      {
-        type: 'text',
-        value:
-          '可拆卸 statement 披肩以 Al Talli 镶边与 Bint Saeed 标志性金色徽章胸针收尾。自然披于肩头或斜跨身前，为廓形注入仪式感、辨识度与永恒优雅。',
-      },
+      t('Covent Garden Abaya 的部分设计语言取自 '),
+      boldWahatAlKarama(),
+      t(
+        '——阿布扎比最具辨识度的建筑地标之一。其纪念碑式体量由彼此倾斜、相互支撑的结构组成，正是长袍 statement 袖口交错几何的灵感来源。',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          '与每件 Bint Saeed 长袍一样，Covent Garden Abaya 可通过品牌标志性隐藏内标个性化，添加姓名、日期或意义深远的寄语，在每次穿着时与你相伴。',
-      },
+      t('Bint Saeed 将这一建筑参照转译为织物：以黑与金色 '),
+      boldAlTalli(),
+      t(
+        ' 交替条带，在袖口形成图形构成。作为联合国教科文组织认定的非物质文化遗产，',
+      ),
+      boldAlTalli(),
+      t(
+        ' 是由阿联酋女性世代相传的传统编织工艺。在此，它的运用在两种阿联酋表达之间建立对话：当代阿布扎比建筑与被传承的手艺。',
+      ),
+    ],
+    [
+      t(
+        '最终，这一细节将城市的地貌带入衣身。建筑成为线条，线条成为织物，织物成为可穿之物。',
+      ),
+    ],
+    [
+      t(
+        '优雅 A 字廓形，全里衬柔软绉绸，Covent Garden Abaya 自肩部垂落，随步履轻盈流动。它为婚礼、正式场合、雅集聚会，以及需要独特气场的夜晚而设计。',
+      ),
+    ],
+    [
+      t('肩部以肩章与 Bint Saeed 标志性金色 '),
+      boldKnottedLine(),
+      t(
+        ' 纽扣收束——又一个源自连结、血脉与代际路径的品牌符号。',
+      ),
+    ],
+    [
+      t('可拆卸 statement 披肩完成整体。饰以 '),
+      boldAlTalli(),
+      t(' 细节与 '),
+      boldMonogramPin('Bint Saeed 金色徽章胸针'),
+      t(
+        '，可自肩披落或斜跨身前，令廓形更添仪式感。',
+      ),
     ],
     pairingParagraph(
-      'Covent Garden Abaya 与 ',
+      '提供深黑、酒红与海军蓝，Covent Garden Abaya 可叠穿于 ',
       '或 ',
-      ' 搭配相得益彰，打造由内而外每一处细节皆经深思的精致叠穿廓形。',
+      ' 之上，构成完整的层次造型。',
     ),
+    [
+      t(
+        '与每件 Bint Saeed 长袍一样，亦可透过品牌标志性隐藏内标个性化。加入姓名、日期或深意寄语——只有穿着者本人知晓的细节。',
+      ),
+    ],
+    [
+      t(
+        '从阿布扎比的建筑，到塑造阿联酋工艺的双手与传统，Covent Garden Abaya 表达着 Bint Saeed 的核心：以当代设计，将阿联酋的视觉文化向前延续。',
+      ),
+    ],
   ],
   de: [
     [
-      {
-        type: 'text',
-        value:
-          'Jedes Modehaus hat das Stück, das es definiert. Für Bint Saeed ist die Covent Garden Abaya eine dieser Kreationen.',
-      },
+      t(
+        'Aus der Bildsprache Abu Dhabis geboren, vereint die Covent Garden Abaya zeitgenössisches Schneiderhandwerk, Architektur und eines der wertvollsten traditionellen Handwerke der Vereinigten Arabischen Emirate.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Die Covent Garden Abaya vereint zeitgenössisches Schneiderhandwerk, Kunst und eines der wertvollsten traditionellen Handwerke der Vereinigten Arabischen Emirate — geschaffen für Frauen, die zeitlose Eleganz durch außergewöhnliches Design schätzen. Vollständig mit weichem Krepe gefüttert, bewegt sich ihre elegante A-Linien-Silhouette mit jedem Schritt anmutig und schafft eine raffinierte Präsenz für Hochzeiten, offizielle Anlässe, elegante Empfänge und Momente, in denen ein bleibender Eindruck zählt.',
-      },
-    ],
-    knottedLineAlTalliParagraph(
-      'Erhältlich in Burgund, Tief Schwarz und Marineblau — jedes Detail wurde sorgfältig bedacht. Die Schulterklappen sind mit den charakteristischen goldfarbenen ',
-      '-Knöpfen von Bint Saeed veredelt, während die weiten Manschetten die gewebte ',
-      '-Verzierung tragen. Als immaterielles Kulturerbe von der UNESCO anerkannt, ist Al Talli eines der wertvollsten traditionellen emiratischen Handwerke. Bei Bint Saeed stellen wir die Verwendung von Al Talli durch zeitgenössisches Design neu vor, damit dieses bemerkenswerte Element des emiratischen Kulturerbes von Frauen weltweit getragen und geschätzt wird.',
-      '',
-    ),
-    [
-      {
-        type: 'text',
-        value:
-          'Den Abschluss bildet ein abnehmbarer Statement-Schal mit Al-Talli-Verzierung und der charakteristischen goldfarbenen Emblem-Nadel von Bint Saeed. Natürlich von der Schulter drapiert oder diagonal über den Körper getragen, verwandelt er die Silhouette mit Feierlichkeit, Distinktion und zeitloser Eleganz.',
-      },
+      t('Die Covent Garden Abaya bezieht einen Teil ihrer Formensprache von '),
+      boldWahatAlKarama(),
+      t(
+        ', einem der prägendsten Architekturdenkmäler Abu Dhabis. Ihre monumentalen Formen — Strukturen, die sich zueinander neigen und einander stützen — inspirierten die sich kreuzende Geometrie der Statement-Manschetten der Abaya.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Wie jede Bint-Saeed-Abaya kann die Covent Garden Abaya mit dem charakteristischen versteckten Innenetikett personalisiert werden — für einen Namen, ein Datum oder eine persönliche Botschaft, die Ihnen bei jedem Tragen nahe bleibt.',
-      },
+      t(
+        'Bint Saeed übersetzt diesen architektonischen Bezug in Textil durch wechselnde Bänder aus schwarzem und goldfarbenem ',
+      ),
+      boldAlTalli(),
+      t(
+        ' und schafft so eine grafische Komposition über die Ärmel. Als immaterielles Kulturerbe von der UNESCO anerkannt, ist ',
+      ),
+      boldAlTalli(),
+      t(
+        ' eine traditionelle emiratische Webkunst, die von Generation zu Generation von Frauen in den Emiraten weitergegeben wird. Hier entsteht im Einsatz ein Dialog zwischen zwei Ausdrucksformen der Emirate: der zeitgenössischen Architektur Abu Dhabis und dem ererbten Handwerk.',
+      ),
+    ],
+    [
+      t(
+        'Das Ergebnis ist ein Detail, das die Landschaft der Stadt in das Kleidungsstück trägt. Architektur wird Linie, Linie wird Textil, und Textil wird etwas, das man tragen kann.',
+      ),
+    ],
+    [
+      t(
+        'In einer eleganten A-Linien-Silhouette geschnitten und vollständig mit weichem Krepe gefüttert, fällt die Covent Garden Abaya fließend von den Schultern und bewegt sich anmutig mit jedem Schritt. Sie ist für Hochzeiten, offizielle Anlässe, elegante Empfänge und Abende gedacht, die eine unverwechselbare Präsenz verlangen.',
+      ),
+    ],
+    [
+      t('Die Schultern sind mit Epauletten und den charakteristischen goldfarbenen '),
+      boldKnottedLine(),
+      t(
+        '-Knöpfen von Bint Saeed veredelt — ein weiterer Hauscode, inspiriert von Verbindung, Abstammung und den Pfaden, die eine Generation mit der nächsten verbinden.',
+      ),
+    ],
+    [
+      t('Ein abnehmbarer Statement-Schal vollendet den Entwurf. Mit '),
+      boldAlTalli(),
+      t('-Details und der '),
+      boldMonogramPin('goldfarbenen Monogram-Nadel von Bint Saeed'),
+      t(
+        ' versehen, lässt er sich von der Schulter drapieren oder diagonal über den Körper führen und verleiht der Silhouette einen feierlicheren Charakter.',
+      ),
     ],
     pairingParagraph(
-      'Die Covent Garden Abaya harmoniert wunderbar mit dem ',
+      'Erhältlich in Tief Schwarz, Burgund und Marineblau, kann die Covent Garden Abaya über dem ',
       'oder dem ',
-      ' und schafft raffinierte Layering-Silhouetten, in denen jedes Detail von innen nach außen durchdacht ist.',
+      ' getragen werden — für ein vollständiges Layering.',
     ),
+    [
+      t(
+        'Wie jede Bint-Saeed-Abaya kann sie zudem mit dem charakteristischen versteckten Innenetikett personalisiert werden. Fügen Sie einen Namen, ein Datum oder eine persönliche Botschaft hinzu — ein Detail, das nur der Trägerin bekannt ist.',
+      ),
+    ],
+    [
+      t(
+        'Von der Architektur Abu Dhabis zu den Händen und Traditionen, die das emiratische Handwerk geformt haben, bringt die Covent Garden Abaya zum Ausdruck, was im Herzen von Bint Saeed liegt: die visuelle Kultur der Emirate durch zeitgenössisches Design weiterzutragen.',
+      ),
+    ],
   ],
   nl: [
     [
-      {
-        type: 'text',
-        value:
-          'Elk modehuis heeft het stuk dat het definieert. Voor Bint Saeed is de Covent Garden Abaya een van die creaties.',
-      },
+      t(
+        'Geboren uit de beeldtaal van Abu Dhabi, brengt de Covent Garden Abaya eigentijdse kleermakerskunst, architectuur en een van de meest gekoesterde traditionele ambachten van de Verenigde Arabische Emiraten samen.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'De Covent Garden Abaya brengt eigentijdse kleermakerskunst, kunst en een van de meest gekoesterde traditionele ambachten van de Verenigde Arabische Emiraten samen — gecreëerd voor vrouwen die tijdloze elegantie waarderen, uitgedrukt door uitzonderlijk design. Volledig gevoerd met zacht crêpe, beweegt de elegante A-line silhouet sierlijk bij elke stap en creëert een verfijnde aanwezigheid voor bruiloften, officiële gelegenheden, elegante bijeenkomsten en momenten waarop een blijvende indruk telt.',
-      },
-    ],
-    knottedLineAlTalliParagraph(
-      'Verkrijgbaar in Bourgondisch, Diep Zwart en Marineblauw — elk detail is zorgvuldig overwogen. De schouderflappen zijn afgewerkt met de kenmerkende gouden ',
-      '-knopen van Bint Saeed, terwijl de brede manchetten de geweven ',
-      '-afwerking dragen. Erkend door UNESCO als immaterieel cultureel erfgoed is Al Talli een van de meest gekoesterde traditionele Emirati ambachten. Bij Bint Saeed herontwerpen we het gebruik van Al Talli door eigentijds design, zodat dit opmerkelijke element van Emirati cultureel erfgoed door vrouwen over de hele wereld gedragen en gewaardeerd wordt.',
-      '',
-    ),
-    [
-      {
-        type: 'text',
-        value:
-          'Het ontwerp wordt voltooid met een afneembare statement-sjaal, afgewerkt met Al Talli-trim en de kenmerkende gouden embleemspeld van Bint Saeed. Gedragen natuurlijk vanaf de schouder of diagonaal over het lichaam, transformeert zij de silhouet met ceremonie, onderscheid en tijdloze elegantie.',
-      },
+      t('De Covent Garden Abaya ontleent een deel van haar vormtaal aan '),
+      boldWahatAlKarama(),
+      t(
+        ', een van Abu Dhabi’s meest kenmerkende architectonische monumenten. Haar monumentale vormen — structuren die naar elkaar hellen en elkaar steunen — inspireerden de kruisende geometrie van de statement-manchetten van de abaya.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Zoals elke Bint Saeed abaya kan de Covent Garden Abaya gepersonaliseerd worden met het kenmerkende verborgen binnenlabel, waar u een naam, datum of persoonlijke boodschap kunt toevoegen die dicht bij u blijft bij elk dragen.',
-      },
+      t(
+        'Bint Saeed vertaalt deze architectonische verwijzing naar textiel via afwisselende banen van zwart en goudkleurig ',
+      ),
+      boldAlTalli(),
+      t(
+        ', en creëert zo een grafische compositie over de mouwen. Erkend door UNESCO als immaterieel cultureel erfgoed, is ',
+      ),
+      boldAlTalli(),
+      t(
+        ' een traditioneel Emirati weefambacht, van generatie op generatie doorgegeven door vrouwen in de Emiraten. Hier ontstaat in de toepassing een dialoog tussen twee uitdrukkingen van de Emiraten: de hedendaagse architectuur van Abu Dhabi en het geërfde vakmanschap.',
+      ),
+    ],
+    [
+      t(
+        'Het resultaat is een detail dat het landschap van de stad in het kledingstuk draagt. Architectuur wordt lijn, lijn wordt textiel, en textiel wordt iets dat gedragen kan worden.',
+      ),
+    ],
+    [
+      t(
+        'Gesneden in een elegante A-line silhouet en volledig gevoerd met zacht crêpe, valt de Covent Garden Abaya vloeiend van de schouders en beweegt sierlijk bij elke stap. Zij is ontworpen voor bruiloften, officiële gelegenheden, elegante bijeenkomsten en avonden die om een onderscheidende aanwezigheid vragen.',
+      ),
+    ],
+    [
+      t('De schouders zijn afgewerkt met epauletten en de kenmerkende gouden '),
+      boldKnottedLine(),
+      t(
+        '-knopen van Bint Saeed — een andere huiscode, geïnspireerd door verbinding, afstamming en de paden die de ene generatie aan de volgende binden.',
+      ),
+    ],
+    [
+      t('Een afneembare statement-sjaal voltooit het ontwerp. Afgewerkt met '),
+      boldAlTalli(),
+      t('-details en de '),
+      boldMonogramPin('gouden Monogram-speld van Bint Saeed'),
+      t(
+        ', kan zij van de schouder worden gedrapeerd of diagonaal over het lichaam gestyled, zodat de silhouet een meer ceremonieel karakter krijgt.',
+      ),
     ],
     pairingParagraph(
-      'De Covent Garden Abaya combineert prachtig met de ',
+      'Verkrijgbaar in Diep Zwart, Bourgondisch en Marineblauw, kan de Covent Garden Abaya over de ',
       'of de ',
-      ', en creëert verfijnde gelaagde silhouetten waarin elk detail van binnen naar buiten is doordacht.',
+      ' worden gedragen voor een volledig gelaagd look.',
     ),
+    [
+      t(
+        'Zoals elke Bint Saeed abaya kan zij ook worden gepersonaliseerd met het kenmerkende verborgen binnenlabel. Voeg een naam, datum of persoonlijke boodschap toe — een detail dat alleen de draagster kent.',
+      ),
+    ],
+    [
+      t(
+        'Van de architectuur van Abu Dhabi tot de handen en tradities die het Emirati ambacht hebben gevormd, brengt de Covent Garden Abaya tot uitdrukking wat in het hart van Bint Saeed ligt: de visuele cultuur van de Emiraten voortzetten door eigentijds design.',
+      ),
+    ],
   ],
   pt: [
     [
-      {
-        type: 'text',
-        value:
-          'Toda casa de moda tem a peça que a define. Para a Bint Saeed, a abaya Covent Garden é uma dessas criações.',
-      },
+      t(
+        'Nascida da linguagem visual de Abu Dhabi, a abaya Covent Garden reúne alfaiataria contemporânea, arquitetura e um dos ofícios tradicionais mais preciosos dos Emirados Árabes Unidos.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Reunindo alfaiataria contemporânea, arte e um dos ofícios tradicionais mais preciosos dos Emirados Árabes Unidos, a abaya Covent Garden foi criada para mulheres que apreciam elegância intemporal expressa através de design excecional. Totalmente forrada com crepe macio, a sua elegante silhueta A-line move-se com graça a cada passo, criando uma presença refinada para casamentos, ocasiões oficiais, encontros elegantes e momentos em que importa deixar uma impressão duradoura.',
-      },
-    ],
-    knottedLineAlTalliParagraph(
-      'Disponível em Borgonha, Preto Profundo e Azul-Marinho — cada detalhe foi cuidadosamente considerado. As almofadas de ombro são acabadas com os botões dourados signature ',
-      ' da Bint Saeed, enquanto as punhos largas apresentam o acabamento ',
-      ' tecido. Reconhecido pela UNESCO como Património Cultural Imaterial, o Al Talli é um dos ofícios artesanais tradicionais emiratis mais preciosos. Na Bint Saeed, reimaginamos o uso do Al Talli através de design contemporâneo, para que este notável elemento do património cultural emirati seja usado e apreciado por mulheres em todo o mundo.',
-      '',
-    ),
-    [
-      {
-        type: 'text',
-        value:
-          'Completando o design, uma echarpe statement destacável acabada com acabamento Al Talli e o alfinete Monogram dourado signature da Bint Saeed. Usada drapeada naturalmente do ombro ou em diagonal pelo corpo, transforma a silhueta com cerimónia, distinção e elegância intemporal.',
-      },
+      t('A abaya Covent Garden retira parte da sua linguagem formal de '),
+      boldWahatAlKarama(),
+      t(
+        ', um dos monumentos arquitectónicos mais distintivos de Abu Dhabi. As suas formas monumentais — estruturas que se inclinam umas para as outras e se sustentam — inspiraram a geometria entrecruzada dos punhos statement da abaya.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Como cada abaya Bint Saeed, a abaya Covent Garden pode ser personalizada com a etiqueta interior oculta signature da casa, permitindo adicionar um nome, data ou mensagem pessoal que permanece próxima sempre que a usa.',
-      },
+      t(
+        'A Bint Saeed traduz esta referência arquitectónica em têxtil através de faixas alternadas de ',
+      ),
+      boldAlTalli(),
+      t(
+        ' preto e dourado, criando uma composição gráfica nas mangas. Reconhecido pela UNESCO como Património Cultural Imaterial, ',
+      ),
+      boldAlTalli(),
+      t(
+        ' é uma arte de tecelagem emirati transmitida de geração em geração pelas mulheres dos Emirados. Aqui, a sua aplicação cria um diálogo entre duas expressões dos Emirados: a arquitetura contemporânea de Abu Dhabi e o mestrado herdado.',
+      ),
+    ],
+    [
+      t(
+        'O resultado é um detalhe que leva a paisagem da cidade para a peça. A arquitetura torna-se linha, a linha têxtil, e o têxtil algo que se pode usar.',
+      ),
+    ],
+    [
+      t(
+        'Cortada numa elegante silhueta A-line e totalmente forrada em crepe macio, a abaya Covent Garden cai fluida dos ombros e move-se com graça a cada passo. Foi concebida para casamentos, ocasiões oficiais, encontros elegantes e noites que pedem uma presença distintiva.',
+      ),
+    ],
+    [
+      t('Os ombros são acabados com epaulettes e botões dourados signature '),
+      boldKnottedLine(),
+      t(
+        ' da Bint Saeed — outro código da casa inspirado na ligação, na linhagem e nos caminhos que unem uma geração à seguinte.',
+      ),
+    ],
+    [
+      t('Uma echarpe statement destacável completa o desenho. Acabada com '),
+      boldAlTalli(),
+      t(' e o '),
+      boldMonogramPin('alfinete Monogram dourado Bint Saeed'),
+      t(
+        ', pode drapear-se do ombro ou cruzar-se em diagonal pelo corpo, conferindo à silhueta um carácter mais cerimonial.',
+      ),
     ],
     pairingParagraph(
-      'A abaya Covent Garden combina lindamente com o ',
+      'Disponível em Preto Profundo, Borgonha e Azul-Marinho, a abaya Covent Garden pode usar-se sobre o ',
       'ou o ',
-      ', criando silhuetas em camadas refinadas onde cada detalhe foi pensado de dentro para fora.',
+      ' para um look em camadas completo.',
     ),
+    [
+      t(
+        'Como cada abaya Bint Saeed, também pode ser personalizada com a etiqueta interior oculta signature da casa. Adicione um nome, uma data ou uma mensagem pessoal — um detalhe conhecido apenas por quem a usa.',
+      ),
+    ],
+    [
+      t(
+        'Da arquitetura de Abu Dhabi às mãos e tradições que moldaram o ofício emirati, a abaya Covent Garden expressa o que está no coração da Bint Saeed: levar a cultura visual dos Emirados adiante através do design contemporâneo.',
+      ),
+    ],
   ],
   id: [
     [
-      {
-        type: 'text',
-        value:
-          'Setiap rumah mode memiliki potongan yang mendefinisikannya. Bagi Bint Saeed, abaya Covent Garden adalah salah satu kreasi tersebut.',
-      },
+      t(
+        'Lahir dari bahasa visual Abu Dhabi, abaya Covent Garden menyatukan tailoring kontemporer, arsitektur, dan salah satu kerajinan tradisional paling berharga di Uni Emirat Arab.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Menggabungkan tailoring kontemporer, seni, dan salah satu kerajinan tradisional paling berharga di Uni Emirat Arab, abaya Covent Garden diciptakan untuk wanita yang menghargai elegansi abadi yang diungkapkan melalui desain luar biasa. Sepenuhnya berlapis krepe lembut, siluet A-line elegannya bergerak indah di setiap langkah, menciptakan kehadiran halus untuk pernikahan, acara resmi, pertemuan elegan, dan momen ketika kesan abadi penting.',
-      },
-    ],
-    knottedLineAlTalliParagraph(
-      'Tersedia dalam Burgundy, Deep Black, dan Navy Blue — setiap detail dipertimbangkan dengan saksama. Bahu epaulet dihiasi kancing emas signature ',
-      ' Bint Saeed, sementara manset lebar menampilkan trim ',
-      ' tenun. Diakui UNESCO sebagai Warisan Budaya Takbenda, Al Talli adalah salah satu kerajinan tradisional Emirati paling berharga. Di Bint Saeed, kami membayangkan kembali penggunaan Al Talli melalui desain kontemporer, agar elemen warisan budaya Emirati yang luar biasa ini dikenakan dan dihargai wanita di seluruh dunia.',
-      '',
-    ),
-    [
-      {
-        type: 'text',
-        value:
-          'Melengkapi desain, selempang statement yang dapat dilepas dihiasi trim Al Talli dan pin Monogram emas signature Bint Saeed. Dikenakan terurai alami dari bahu atau secara diagonal di tubuh, ia mengubah siluet dengan upacara, keistimewaan, dan elegansi abadi.',
-      },
+      t('Abaya Covent Garden mengambil sebagian bahasa bentuknya dari '),
+      boldWahatAlKarama(),
+      t(
+        ', salah satu landmark arsitektur paling khas di Abu Dhabi. Bentuk-bentuk monumentalnya — struktur yang condong saling menyangga — menjadi inspirasi geometri bersilang pada manset statement abaya.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Seperti setiap abaya Bint Saeed, abaya Covent Garden dapat dipersonalisasi dengan label dalam tersembunyi signature rumah, memungkinkan Anda menambahkan nama, tanggal, atau pesan bermakna yang tetap dekat setiap kali dikenakan.',
-      },
+      t(
+        'Bint Saeed menerjemahkan rujukan arsitektur ini ke dalam tekstil melalui pita bergantian ',
+      ),
+      boldAlTalli(),
+      t(
+        ' hitam dan emas, membentuk komposisi grafis di sepanjang lengan. Diakui UNESCO sebagai Warisan Budaya Takbenda, ',
+      ),
+      boldAlTalli(),
+      t(
+        ' adalah seni tenun Emirati tradisional yang diwariskan lintas generasi perempuan di UAE. Di sini, penerapannya menciptakan dialog antara dua ekspresi Emirat: arsitektur kontemporer Abu Dhabi dan keterampilan yang diwarisi.',
+      ),
+    ],
+    [
+      t(
+        'Hasilnya adalah detail yang membawa lanskap kota ke dalam busana. Arsitektur menjadi garis, garis menjadi tekstil, dan tekstil menjadi sesuatu yang dapat dikenakan.',
+      ),
+    ],
+    [
+      t(
+        'Dipotong dalam siluet A-line yang elegan dan sepenuhnya berlapis krepe lembut, abaya Covent Garden jatuh mengalir dari bahu dan bergerak indah di setiap langkah. Dirancang untuk pernikahan, acara resmi, pertemuan elegan, dan malam yang meminta kehadiran yang khas.',
+      ),
+    ],
+    [
+      t('Bahu diselesaikan dengan epaulet dan kancing emas signature '),
+      boldKnottedLine(),
+      t(
+        ' Bint Saeed — kode rumah lainnya yang terinspirasi oleh hubungan, garis keturunan, dan jalur yang mengikat satu generasi ke generasi berikutnya.',
+      ),
+    ],
+    [
+      t('Selempang statement yang dapat dilepas melengkapi desain. Diselesaikan dengan '),
+      boldAlTalli(),
+      t(' dan '),
+      boldMonogramPin('pin Monogram emas Bint Saeed'),
+      t(
+        ', dapat digantung dari bahu atau distyle diagonal di tubuh, memberi siluet karakter yang lebih seremonial.',
+      ),
     ],
     pairingParagraph(
-      'Abaya Covent Garden berpasangan indah dengan ',
+      'Tersedia dalam Deep Black, Burgundy, dan Navy Blue, abaya Covent Garden dapat dikenakan di atas ',
       'atau ',
-      ', menciptakan siluet berlapis halus di mana setiap detail dipertimbangkan dari dalam ke luar.',
+      ' untuk tampilan berlapis yang lengkap.',
     ),
+    [
+      t(
+        'Seperti setiap abaya Bint Saeed, abaya ini juga dapat dipersonalisasi dengan label dalam tersembunyi signature rumah. Tambahkan nama, tanggal, atau pesan bermakna — detail yang hanya diketahui oleh pemakainya.',
+      ),
+    ],
+    [
+      t(
+        'Dari arsitektur Abu Dhabi hingga tangan dan tradisi yang membentuk kerajinan Emirati, abaya Covent Garden mengungkapkan apa yang ada di jantung Bint Saeed: membawa budaya visual UAE maju melalui desain kontemporer.',
+      ),
+    ],
   ],
   ms: [
     [
-      {
-        type: 'text',
-        value:
-          'Setiap rumah fesyen mempunyai kepingan yang mentakrifkannya. Bagi Bint Saeed, abaya Covent Garden ialah salah satu ciptaan tersebut.',
-      },
+      t(
+        'Lahir dari bahasa visual Abu Dhabi, abaya Covent Garden menyatukan jahitan kontemporari, seni bina, dan salah satu kraf tradisional paling berharga di Emiriah Arab Bersatu.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Menggabungkan jahitan kontemporari, seni, dan salah satu kraf tradisional paling berharga di Emiriah Arab Bersatu, abaya Covent Garden dicipta untuk wanita yang menghargai keanggunan abadi yang diungkapkan melalui reka bentuk luar biasa. Berlapis krepe lembut sepenuhnya, siluet A-line elegannya bergerak dengan anggun pada setiap langkah, mencipta kehadiran halus untuk perkahwinan, majlis rasmi, perhimpunan elegan, dan detik ketika kesan kekal penting.',
-      },
-    ],
-    knottedLineAlTalliParagraph(
-      'Tersedia dalam Burgundy, Deep Black, dan Navy Blue — setiap butiran dipertimbangkan dengan teliti. Bahu epaulet disiapkan dengan butang emas signature ',
-      ' Bint Saeed, manakala manset lebar menampilkan hiasan ',
-      ' tenunan. Diiktiraf UNESCO sebagai Warisan Budaya Tidak Ketara, Al Talli ialah salah satu kraf tradisional Emirati paling berharga. Di Bint Saeed, kami membayangkan semula penggunaan Al Talli melalui reka bentuk kontemporari, agar elemen warisan budaya Emirati yang luar biasa ini dipakai dan dihargai wanita di seluruh dunia.',
-      '',
-    ),
-    [
-      {
-        type: 'text',
-        value:
-          'Melengkapi reka bentuk, selendang statement boleh tanggal disiapkan dengan hiasan Al Talli dan pin lambang emas signature Bint Saeed. Dipakai terurai secara semula jadi dari bahu atau secara pepenjuru merentasi badan, ia mengubah siluet dengan upacara, keistimewaan, dan keanggunan abadi.',
-      },
+      t('Abaya Covent Garden mengambil sebahagian bahasa bentuknya dari '),
+      boldWahatAlKarama(),
+      t(
+        ', salah sebuah mercu tanda seni bina paling tersendiri di Abu Dhabi. Bentuk monumentalnya — struktur yang condong saling menyokong — menjadi inspirasi geometri bersilang pada manset statement abaya.',
+      ),
     ],
     [
-      {
-        type: 'text',
-        value:
-          'Seperti setiap abaya Bint Saeed, abaya Covent Garden boleh diperibadikan dengan label dalaman tersembunyi signature rumah, membolehkan anda menambah nama, tarikh, atau mesej bermakna yang kekal dekat setiap kali dipakai.',
-      },
+      t(
+        'Bint Saeed menterjemah rujukan seni bina ini kepada tekstil melalui jalur berganti ',
+      ),
+      boldAlTalli(),
+      t(
+        ' hitam dan emas, membentuk komposisi grafik di sepanjang lengan. Diiktiraf UNESCO sebagai Warisan Budaya Tidak Ketara, ',
+      ),
+      boldAlTalli(),
+      t(
+        ' ialah seni tenunan Emirati tradisional yang diwarisi merentas generasi wanita di UAE. Di sini, penggunaannya mewujudkan dialog antara dua ungkapan Emiriah: seni bina kontemporari Abu Dhabi dan kemahiran yang diwarisi.',
+      ),
+    ],
+    [
+      t(
+        'Hasilnya ialah butiran yang membawa landskap bandar ke dalam pakaian. Seni bina menjadi garisan, garisan menjadi tekstil, dan tekstil menjadi sesuatu yang boleh dipakai.',
+      ),
+    ],
+    [
+      t(
+        'Dipotong dalam siluet A-line yang elegan dan sepenuhnya berlapis krepe lembut, abaya Covent Garden jatuh mengalir dari bahu dan bergerak anggun pada setiap langkah. Direka untuk perkahwinan, majlis rasmi, perhimpunan elegan, dan malam yang memerlukan kehadiran tersendiri.',
+      ),
+    ],
+    [
+      t('Bahu disiapkan dengan epaulet dan butang emas signature '),
+      boldKnottedLine(),
+      t(
+        ' Bint Saeed — satu lagi kod rumah yang diilhamkan oleh hubungan, keturunan, dan laluan yang mengikat satu generasi kepada generasi seterusnya.',
+      ),
+    ],
+    [
+      t('Selendang statement boleh tanggal melengkapkan reka bentuk. Disiapkan dengan '),
+      boldAlTalli(),
+      t(' dan '),
+      boldMonogramPin('pin Monogram emas Bint Saeed'),
+      t(
+        ', ia boleh digantung dari bahu atau distyle secara pepenjuru merentasi badan, memberikan siluet watak yang lebih istiadat.',
+      ),
     ],
     pairingParagraph(
-      'Abaya Covent Garden dipadankan dengan indah bersama ',
+      'Tersedia dalam Deep Black, Burgundy, dan Navy Blue, abaya Covent Garden boleh dipakai di atas ',
       'atau ',
-      ', mencipta siluet berlapis halus di mana setiap butiran dipertimbangkan dari dalam ke luar.',
+      ' untuk rupa berlapis yang lengkap.',
     ),
+    [
+      t(
+        'Seperti setiap abaya Bint Saeed, ia juga boleh diperibadikan dengan label dalaman tersembunyi signature rumah. Tambah nama, tarikh, atau mesej bermakna — butiran yang hanya diketahui oleh pemakainya.',
+      ),
+    ],
+    [
+      t(
+        'Dari seni bina Abu Dhabi kepada tangan dan tradisi yang membentuk kraf Emirati, abaya Covent Garden mengungkapkan apa yang terletak di jantung Bint Saeed: membawa budaya visual UAE ke hadapan melalui reka bentuk kontemporari.',
+      ),
+    ],
   ],
 }
 
