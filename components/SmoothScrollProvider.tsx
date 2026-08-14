@@ -48,6 +48,60 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
         overscroll: true,
       })
 
+      // Lenis VirtualScroll treats empty TouchList as truthy
+      // (`targetTouches ? targetTouches[0]`) and then destructures clientX from
+      // undefined. Rebind guarded handlers so empty/synthetic touches cannot crash.
+      type LenisVirtualScroll = {
+        element: {
+          addEventListener: (
+            type: string,
+            listener: EventListenerOrEventListenerObject,
+            options?: boolean | AddEventListenerOptions,
+          ) => void
+          removeEventListener: (
+            type: string,
+            listener: EventListenerOrEventListenerObject,
+            options?: boolean | EventListenerOptions,
+          ) => void
+        }
+        onTouchStart: (event: TouchEvent) => void
+        onTouchMove: (event: TouchEvent) => void
+      }
+      const virtualScroll = (lenis as unknown as { virtualScroll: LenisVirtualScroll }).virtualScroll
+      const touchListenerOptions: AddEventListenerOptions = { passive: false }
+      const hasTouchPoint = (event: TouchEvent) =>
+        Boolean(event.targetTouches?.[0] ?? event.touches?.[0])
+      const originalTouchStart = virtualScroll.onTouchStart
+      const originalTouchMove = virtualScroll.onTouchMove
+      virtualScroll.element.removeEventListener(
+        'touchstart',
+        originalTouchStart as EventListener,
+        touchListenerOptions,
+      )
+      virtualScroll.element.removeEventListener(
+        'touchmove',
+        originalTouchMove as EventListener,
+        touchListenerOptions,
+      )
+      virtualScroll.onTouchStart = (event) => {
+        if (!hasTouchPoint(event)) return
+        originalTouchStart.call(virtualScroll, event)
+      }
+      virtualScroll.onTouchMove = (event) => {
+        if (!hasTouchPoint(event)) return
+        originalTouchMove.call(virtualScroll, event)
+      }
+      virtualScroll.element.addEventListener(
+        'touchstart',
+        virtualScroll.onTouchStart as EventListener,
+        touchListenerOptions,
+      )
+      virtualScroll.element.addEventListener(
+        'touchmove',
+        virtualScroll.onTouchMove as EventListener,
+        touchListenerOptions,
+      )
+
       const syncOverlayPause = () => {
         const navOpen = document.documentElement.dataset.mobileNavOpen === '1'
         const scrollLocked = document.documentElement.classList.contains('bs-scroll-locked')

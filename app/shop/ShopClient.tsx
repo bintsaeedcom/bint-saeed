@@ -379,7 +379,7 @@ export default function ShopClient() {
                       src={productImageSrc(gridImage)}
                       alt={getProductImageAlt(product, gridImage, {
                         color: gridColor,
-                        index: 1,
+                        index: product.slug === 'park-lane-abaya' ? 1 : 0,
                         locale: language,
                       })}
                       fill

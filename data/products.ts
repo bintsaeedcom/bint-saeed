@@ -348,7 +348,8 @@ const COVENT_GARDEN_ABAYA_DIR = '/Webshop pictures/Abayas/Covent Garden Abaya '
 
 function coventGardenAbayaGallery(color: 'burgundy' | 'black' | 'navy-blue'): string[] {
   const base = `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-${color}`
-  const images = [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+  // Side first — clearer silhouette / cuff detail on shop + PDP for every colour.
+  const images = [`${base}-side.webp`, `${base}-front.webp`, `${base}-back.webp`]
   if (color === 'burgundy') {
     images.push(
       `${COVENT_GARDEN_ABAYA_DIR}/bint-saeed-covent-garden-abaya-burgundy-close-up-signature-emblem.webp`,
