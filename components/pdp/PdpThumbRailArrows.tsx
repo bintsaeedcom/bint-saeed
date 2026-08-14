@@ -7,6 +7,8 @@ import { FiChevronDown, FiChevronUp } from 'react-icons/fi'
 type PdpThumbRailArrowsProps = {
   swiperRef: RefObject<SwiperType | null>
   slideCount: number
+  /** Remount key (color / product) so arrow state resets when the rail swaps. */
+  resetKey?: string
   labelUp: string
   labelDown: string
 }
@@ -21,6 +23,7 @@ const BUTTON_CLASS =
 export default function PdpThumbRailArrows({
   swiperRef,
   slideCount,
+  resetKey = '',
   labelUp,
   labelDown,
 }: PdpThumbRailArrowsProps) {
@@ -29,20 +32,26 @@ export default function PdpThumbRailArrows({
   // keeps the affordance visible when Swiper initializes inside a hidden mobile layout.
   const [canScrollDown, setCanScrollDown] = useState(slideCount > 5)
   const resolveSwiper = useCallback(() => {
-    if (swiperRef.current) return swiperRef.current
+    if (swiperRef.current && !swiperRef.current.destroyed) return swiperRef.current
     const rail = document.querySelector('.product-gallery-thumbs--vertical') as
       | (HTMLElement & { swiper?: SwiperType })
       | null
-    return rail?.swiper ?? null
+    const fromDom = rail?.swiper ?? null
+    return fromDom && !fromDom.destroyed ? fromDom : null
   }, [swiperRef])
 
   useEffect(() => {
+    setCanScrollUp(false)
     setCanScrollDown(slideCount > 5)
-    const swiper = resolveSwiper()
-    if (!swiper || swiper.destroyed) return
+
+    let cancelled = false
+    let attached: SwiperType | null = null
+    let raf = 0
+    let tries = 0
 
     const sync = () => {
-      if (swiper.destroyed) return
+      const swiper = attached && !attached.destroyed ? attached : resolveSwiper()
+      if (!swiper || swiper.destroyed) return
       if (swiper.el.clientHeight === 0) {
         setCanScrollUp(false)
         setCanScrollDown(slideCount > 5)
@@ -52,9 +61,7 @@ export default function PdpThumbRailArrows({
       setCanScrollUp(scrollable && !swiper.isBeginning)
       setCanScrollDown(scrollable && !swiper.isEnd)
     }
-    const syncAfterResize = () => window.requestAnimationFrame(sync)
 
-    sync()
     const events = [
       'progress',
       'setTranslate',
@@ -65,15 +72,33 @@ export default function PdpThumbRailArrows({
       'slidesLengthChange',
       'observerUpdate',
     ] as const
-    events.forEach((event) => swiper.on(event, sync))
+
+    const attach = () => {
+      if (cancelled) return
+      const swiper = resolveSwiper()
+      if (!swiper || swiper.destroyed) {
+        if (tries++ < 40) {
+          raf = window.requestAnimationFrame(attach)
+        }
+        return
+      }
+      attached = swiper
+      sync()
+      events.forEach((event) => swiper.on(event, sync))
+    }
+
+    const syncAfterResize = () => window.requestAnimationFrame(sync)
+    attach()
     window.addEventListener('resize', syncAfterResize)
 
     return () => {
+      cancelled = true
+      window.cancelAnimationFrame(raf)
       window.removeEventListener('resize', syncAfterResize)
-      if (swiper.destroyed) return
-      events.forEach((event) => swiper.off(event, sync))
+      if (!attached || attached.destroyed) return
+      events.forEach((event) => attached!.off(event, sync))
     }
-  }, [resolveSwiper, slideCount])
+  }, [resolveSwiper, slideCount, resetKey])
 
   // freeMode leaves the rail between snap points, so step by viewport rather than by slide.
   const scrollBy = useCallback(

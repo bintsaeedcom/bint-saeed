@@ -746,6 +746,7 @@ export default function ProductPage() {
                 <PdpThumbRailArrows
                   swiperRef={verticalThumbsSwiperRef}
                   slideCount={activeImages.length}
+                  resetKey={`${product?.id ?? ''}:${selectedColor}`}
                   labelUp={galleryAria.scrollThumbsUp}
                   labelDown={galleryAria.scrollThumbsDown}
                 />

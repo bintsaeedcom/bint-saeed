@@ -795,6 +795,7 @@ export default function AccessoryDetailPage() {
                 <PdpThumbRailArrows
                   swiperRef={verticalThumbsSwiperRef}
                   slideCount={pdpImages.length}
+                  resetKey={`${accessory.id}:${selectedColor}`}
                   labelUp={galleryAria.scrollThumbsUp}
                   labelDown={galleryAria.scrollThumbsDown}
                 />
