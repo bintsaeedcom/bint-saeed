@@ -207,7 +207,7 @@ export const translationsPt = {
   },
   cookie: {
     title: 'Valorizamos a Sua Privacidade',
-    message: 'Usamos cookies, incluindo de terceiros, para funções essenciais, analytics opcional (com consentimento) e uma melhor navegação. A preferência de marketing é registada para ferramentas publicitárias futuras e não carrega pixels publicitários neste site salvo ativação separada. Clique em "Aceitar tudo", "Definições de cookies" ou "Recusar tudo". Pode alterar preferências em Cookie settings no rodapé.',
+    message: 'Utilizamos cookies para o funcionamento do site e para melhorar a sua experiência. Pode alterar a sua escolha em qualquer momento nas definições de cookies.',
     learnMore: 'Mais Informacoes',
     acceptAll: 'Aceitar todos os cookies',
     essentialOnly: 'Rejeitar todos os cookies',
@@ -221,7 +221,7 @@ export const translationsPt = {
     optional: 'Opcional',
     essentialDesc: 'Necessarios para o correto funcionamento do website. Nao podem ser desativados.',
     analyticsDesc: 'Ajudam-nos a compreender como os visitantes interagem com o nosso website.',
-    marketingDesc: 'Reservado para futuras ferramentas publicitárias. Atualmente não carrega pixels publicitários neste site.',
+    marketingDesc: 'Servem para medir as nossas campanhas e mostrar conteúdos mais pertinentes.',
   },
   search: {
     title: 'Pesquisar',

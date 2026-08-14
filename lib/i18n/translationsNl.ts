@@ -207,7 +207,7 @@ export const translationsNl = {
   },
   cookie: {
     title: 'Wij Waarderen Je Privacy',
-    message: 'We gebruiken cookies, inclusief cookies van derden, voor essentiële functies, optionele analytics (met toestemming) en een betere browse-ervaring. Marketingvoorkeur wordt bewaard voor toekomstige advertentietools en laadt momenteel geen advertentiepixels tenzij apart ingeschakeld. Klik op "Alles accepteren", "Cookie-instellingen" of "Alles weigeren". U kunt voorkeuren altijd wijzigen via Cookie settings in de footer.',
+    message: 'We gebruiken cookies om de website te laten werken en uw bezoek aangenamer te maken. U kunt uw keuze altijd aanpassen in de cookie-instellingen.',
     learnMore: 'Meer Informatie',
     acceptAll: 'Alle cookies accepteren',
     essentialOnly: 'Alle cookies weigeren',
@@ -221,7 +221,7 @@ export const translationsNl = {
     optional: 'Optioneel',
     essentialDesc: 'Noodzakelijk voor een correcte werking van de website. Kan niet worden uitgeschakeld.',
     analyticsDesc: 'Helpt ons begrijpen hoe bezoekers met onze website omgaan.',
-    marketingDesc: 'Gereserveerd voor toekomstige advertentietools. Wordt momenteel niet gebruikt om advertentiepixels te laden.',
+    marketingDesc: 'Helpen ons onze campagnes te meten en passendere content te tonen.',
   },
   search: {
     title: 'Zoeken',

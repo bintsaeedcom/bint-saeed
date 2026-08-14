@@ -205,7 +205,7 @@ export const translationsMs = {
   },
   cookie: {
     title: 'Kami Menghargai Privasi Anda',
-    message: 'Kami menggunakan kuki, termasuk kuki pihak ketiga, untuk fungsi penting, analitik pilihan (dengan kebenaran), dan pengalaman melayari yang lebih baik. Keutamaan pemasaran direkodkan untuk alat pengiklanan akan datang dan tidak memuatkan piksel iklan pada masa ini kecuali diaktifkan secara berasingan. Klik "Terima semua", "Tetapan kuki", atau "Tolak semua". Anda boleh ubah keutamaan pada bila-bila masa melalui Cookie settings di footer.',
+    message: 'Kami menggunakan kuki agar laman berfungsi dan pengalaman anda lebih baik. Anda boleh menukar pilihan pada bila-bila masa dalam tetapan kuki.',
     learnMore: 'Maklumat Lanjut',
     acceptAll: 'Terima semua kuki',
     essentialOnly: 'Tolak semua kuki',
@@ -219,7 +219,7 @@ export const translationsMs = {
     optional: 'Pilihan',
     essentialDesc: 'Diperlukan agar laman berfungsi dengan baik.',
     analyticsDesc: 'Membantu kami memahami interaksi pelawat.',
-    marketingDesc: 'Diperuntukkan untuk alat pengiklanan akan datang. Tidak digunakan buat masa ini untuk memuatkan piksel iklan di laman ini.',
+    marketingDesc: 'Membantu kami mengukur pengiklanan dan menunjukkan kandungan yang lebih relevan.',
   },
   search: {
     title: 'Cari',

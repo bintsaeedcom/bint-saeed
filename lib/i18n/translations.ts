@@ -232,7 +232,7 @@ export const translations = {
     // Cookie Consent
     cookie: {
       title: 'We value your privacy',
-      message: 'We use cookies, including third-party cookies, for essential site functions, optional analytics (when you consent), and a better browsing experience. Marketing cookies (when you consent) may load the Meta Pixel for catalog ads and Instagram Shopping. Click "Accept all cookies" to allow optional cookies, "Cookies settings" to review categories, or "Reject all cookies" to keep only essential cookies. You can change preferences anytime via Cookie settings in the website footer.',
+      message: 'We use cookies to keep the site working and to improve your experience. You can change your choice at any time in Cookie settings.',
       learnMore: 'More Information',
       acceptAll: 'Accept all cookies',
       essentialOnly: 'Reject all cookies',
@@ -246,7 +246,7 @@ export const translations = {
       optional: 'Optional',
       essentialDesc: 'Required for the website to function properly. Cannot be disabled.',
       analyticsDesc: 'Help us understand how visitors interact with our website.',
-      marketingDesc: 'Loads the Meta Pixel when you opt in, so we can measure catalog ads and Instagram Shopping (views, bag, checkout, purchase).',
+      marketingDesc: 'Used to measure our advertising and show more relevant content.',
     },
     
     // Search
@@ -520,7 +520,7 @@ export const translations = {
     // Cookie Consent
     cookie: {
       title: 'نحن نقدر خصوصيتك',
-      message: 'نستخدم الكوكيز، بما فيها كوكيز الطرف الثالث، للوظائف الأساسية وتحليلات اختيارية (عند الموافقة) وتحسين تجربة التصفح. تُسجَّل تفضيلات التسويق لأدوات إعلانية مستقبلية ولا تُحمِّل حالياً بكسلات إعلانية ما لم تُفعَّل بشكل منفصل. يمكنك القبول عبر "قبول الكل" أو ضبط الفئات عبر "إعدادات الكوكيز" أو الرفض للإبقاء على الكوكيز الضرورية فقط. يمكنك تغيير التفضيلات في أي وقت عبر إعدادات الكوكيز في تذييل الموقع.',
+      message: 'نستخدم ملفات تعريف الارتباط لتشغيل الموقع وتحسين تجربتك. يمكنك تغيير اختيارك في أي وقت من إعدادات الكوكيز.',
       learnMore: 'مزيد من المعلومات',
       acceptAll: 'قبول الكل',
       essentialOnly: 'رفض الكل',
@@ -534,7 +534,7 @@ export const translations = {
       optional: 'اختيارية',
       essentialDesc: 'مطلوبة لعمل الموقع بشكل صحيح. لا يمكن تعطيلها.',
       analyticsDesc: 'تساعدنا على فهم كيفية تفاعل الزوار مع موقعنا.',
-      marketingDesc: 'مخصّصة لأدوات إعلانية مستقبلية. لا تُستخدم حالياً لتحميل بكسلات إعلانية على هذا الموقع.',
+      marketingDesc: 'تُستخدم لقياس إعلاناتنا وتقديم محتوى أكثر ملاءمة لك.',
     },
     
     // Search
@@ -779,7 +779,7 @@ export const translations = {
     },
     cookie: {
       title: 'Nous Respectons Votre Vie Privée',
-      message: 'Nous utilisons des cookies, y compris des cookies tiers, pour le fonctionnement essentiel, des analyses optionnelles (avec votre consentement) et une meilleure expérience de navigation. La préférence marketing est enregistrée pour de futurs outils publicitaires et ne charge actuellement aucun pixel publicitaire sauf activation séparée. Cliquez sur « Tout accepter », « Paramètres des cookies » ou « Refuser tout ». Vous pouvez modifier vos préférences à tout moment via Cookie settings dans le pied de page.',
+      message: 'Nous utilisons des cookies pour le bon fonctionnement du site et pour améliorer votre expérience. Vous pouvez modifier votre choix à tout moment dans les paramètres des cookies.',
       learnMore: 'Plus d\'informations',
       acceptAll: 'Tout accepter',
       essentialOnly: 'Tout refuser',
@@ -793,7 +793,7 @@ export const translations = {
       optional: 'Optionnel',
       essentialDesc: 'Requis pour le fonctionnement du site.',
       analyticsDesc: 'Nous aident à comprendre l\'utilisation du site.',
-      marketingDesc: 'Réservé à de futurs outils publicitaires. Ne charge actuellement aucun pixel publicitaire sur ce site.',
+      marketingDesc: 'Servent à mesurer nos campagnes et à vous proposer un contenu plus pertinent.',
     },
     search: {
       title: 'Rechercher',
@@ -1033,7 +1033,7 @@ export const translations = {
     },
     cookie: {
       title: 'Rispettiamo la Tua Privacy',
-      message: 'Utilizziamo cookie, anche di terze parti, per funzioni essenziali, analytics opzionali (con consenso) e una migliore navigazione. La preferenza marketing è registrata per futuri strumenti pubblicitari e non carica attualmente pixel pubblicitari salvo attivazione separata. Clicca "Accetta tutto", "Impostazioni cookie" o "Rifiuta tutto". Puoi modificare le preferenze in qualsiasi momento tramite Cookie settings nel footer.',
+      message: 'Utilizziamo i cookie per il funzionamento del sito e per migliorare la tua esperienza. Puoi modificare la tua scelta in qualsiasi momento nelle impostazioni cookie.',
       learnMore: 'Maggiori informazioni',
       acceptAll: 'Accetta tutto',
       essentialOnly: 'Rifiuta tutto',
@@ -1047,7 +1047,7 @@ export const translations = {
       optional: 'Opzionale',
       essentialDesc: 'Necessari per il funzionamento del sito.',
       analyticsDesc: 'Ci aiutano a capire l\'uso del sito.',
-      marketingDesc: 'Riservato a futuri strumenti pubblicitari. Attualmente non carica pixel pubblicitari su questo sito.',
+      marketingDesc: 'Servono a misurare le nostre campagne e a proporti contenuti più pertinenti.',
     },
     search: {
       title: 'Cerca',
@@ -1287,7 +1287,7 @@ export const translations = {
     },
     cookie: {
       title: 'Valoramos Tu Privacidad',
-      message: 'Usamos cookies, incluidas de terceros, para funciones esenciales, analítica opcional (con tu consentimiento) y una mejor experiencia. La preferencia de marketing se registra para herramientas publicitarias futuras y no carga píxeles publicitarios actualmente salvo activación separada. Haz clic en "Aceptar todo", "Configuración de cookies" o "Rechazar todo". Puedes cambiar preferencias en Cookie settings del pie de página.',
+      message: 'Utilizamos cookies para el funcionamiento del sitio y para mejorar tu experiencia. Puedes cambiar tu elección en cualquier momento en la configuración de cookies.',
       learnMore: 'Más información',
       acceptAll: 'Aceptar todo',
       essentialOnly: 'Rechazar todo',
@@ -1301,7 +1301,7 @@ export const translations = {
       optional: 'Opcional',
       essentialDesc: 'Necesarios para el funcionamiento del sitio.',
       analyticsDesc: 'Nos ayudan a entender el uso del sitio.',
-      marketingDesc: 'Reservado para futuras herramientas publicitarias. Actualmente no carga píxeles publicitarios en este sitio.',
+      marketingDesc: 'Sirven para medir nuestras campañas y mostrarte contenido más relevante.',
     },
     search: {
       title: 'Buscar',
@@ -1541,7 +1541,7 @@ export const translations = {
     },
     cookie: {
       title: 'Мы Ценим Вашу Приватность',
-      message: 'Мы используем cookies, включая сторонние, для основных функций, опциональной аналитики (с согласия) и удобства просмотра. Маркетинговое предпочтение сохраняется для будущих рекламных инструментов и сейчас не загружает рекламные пиксели, если они не включены отдельно. Нажмите «Принять все», «Настройки cookies» или «Отклонить все». Изменить предпочтения можно через Cookie settings в подвале сайта.',
+      message: 'Мы используем cookies для работы сайта и для удобства просмотра. Изменить свой выбор можно в любое время в настройках cookies.',
       learnMore: 'Подробнее',
       acceptAll: 'Принять все',
       essentialOnly: 'Отклонить все',
@@ -1555,7 +1555,7 @@ export const translations = {
       optional: 'Опционально',
       essentialDesc: 'Необходимы для работы сайта.',
       analyticsDesc: 'Помогают понять использование сайта.',
-      marketingDesc: 'Зарезервировано для будущих рекламных инструментов. Сейчас не загружает рекламные пиксели на сайте.',
+      marketingDesc: 'Помогают оценивать нашу рекламу и подбирать более уместные материалы.',
     },
     search: {
       title: 'Поиск',
@@ -1795,7 +1795,7 @@ export const translations = {
     },
     cookie: {
       title: '我们重视您的隐私',
-      message: '我们使用 cookies（含第三方）用于网站必要功能、可选分析（经您同意）以及更好的浏览体验。营销偏好会记录以供未来广告工具使用，目前不会加载广告像素，除非另行启用。请点击“全部接受”、“Cookie 设置”或“拒绝全部”。您可随时通过页脚的 Cookie settings 更改偏好。',
+      message: '我们使用 cookies 以保障网站正常运行并提升您的浏览体验。您可随时在 Cookie 设置中更改选择。',
       learnMore: '更多信息',
       acceptAll: '全部接受',
       essentialOnly: '拒绝全部',
@@ -1809,7 +1809,7 @@ export const translations = {
       optional: '可选',
       essentialDesc: '网站运行所必需。',
       analyticsDesc: '帮助我们了解网站使用情况。',
-      marketingDesc: '预留给未来广告工具。目前不会在本站加载广告像素。',
+      marketingDesc: '用于衡量我们的广告，并呈现更贴合您的内容。',
     },
     search: {
       title: '搜索',
@@ -2049,7 +2049,7 @@ export const translations = {
     },
     cookie: {
       title: 'Wir Schätzen Ihre Privatsphäre',
-      message: 'Wir verwenden Cookies, einschließlich Drittanbieter-Cookies, für wesentliche Funktionen, optionale Analysen (mit Einwilligung) und ein besseres Surferlebnis. Die Marketing-Präferenz wird für künftige Werbemittel gespeichert und lädt derzeit keine Werbe-Pixel, sofern nicht separat aktiviert. Klicken Sie auf „Alle akzeptieren“, „Cookie-Einstellungen“ oder „Alle ablehnen“. Präferenzen können Sie jederzeit über Cookie settings in der Fußzeile ändern.',
+      message: 'Wir verwenden Cookies, damit die Website funktioniert und Ihr Besuch angenehmer wird. Ihre Auswahl können Sie jederzeit in den Cookie-Einstellungen ändern.',
       learnMore: 'Weitere Informationen',
       acceptAll: 'Alle akzeptieren',
       essentialOnly: 'Alle ablehnen',
@@ -2063,7 +2063,7 @@ export const translations = {
       optional: 'Optional',
       essentialDesc: 'Erforderlich für die Website.',
       analyticsDesc: 'Hilft uns, die Nutzung zu verstehen.',
-      marketingDesc: 'Für künftige Werbemittel vorgesehen. Lädt derzeit keine Werbe-Pixel auf dieser Website.',
+      marketingDesc: 'Dienen dazu, unsere Werbung zu messen und passendere Inhalte zu zeigen.',
     },
     search: {
       title: 'Suchen',

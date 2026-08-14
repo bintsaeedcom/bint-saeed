@@ -205,7 +205,7 @@ export const translationsId = {
   },
   cookie: {
     title: 'Kami Menghargai Privasi Anda',
-    message: 'Kami menggunakan cookie, termasuk cookie pihak ketiga, untuk fungsi penting, analitik opsional (jika Anda setuju), dan pengalaman menjelajah yang lebih baik. Preferensi pemasaran dicatat untuk alat iklan di masa depan dan saat ini tidak memuat piksel iklan kecuali diaktifkan secara terpisah. Klik "Terima semua", "Pengaturan cookie", atau "Tolak semua". Anda dapat mengubah preferensi kapan saja melalui Cookie settings di footer.',
+    message: 'Kami menggunakan cookie agar situs berfungsi dan pengalaman Anda lebih baik. Anda dapat mengubah pilihan kapan saja di pengaturan cookie.',
     learnMore: 'Informasi Lebih Lanjut',
     acceptAll: 'Terima semua cookie',
     essentialOnly: 'Tolak semua cookie',
@@ -219,7 +219,7 @@ export const translationsId = {
     optional: 'Opsional',
     essentialDesc: 'Diperlukan agar situs berfungsi dengan baik.',
     analyticsDesc: 'Membantu kami memahami interaksi pengunjung.',
-    marketingDesc: 'Disimpan untuk alat iklan di masa depan. Saat ini tidak digunakan untuk memuat piksel iklan di situs ini.',
+    marketingDesc: 'Membantu kami mengukur iklan dan menampilkan konten yang lebih relevan.',
   },
   search: {
     title: 'Cari',
