@@ -30,6 +30,7 @@ export type AnalyticsParamValue =
   | boolean
   | null
   | undefined
+  | string[]
   | Array<Record<string, string | number | boolean | null | undefined>>
 
 export type AnalyticsParams = Record<string, AnalyticsParamValue>
@@ -514,8 +515,10 @@ function sendMetaCapiBeacon(input: {
   value?: number
   currency?: string
   contentIds?: string[]
+  contents?: Array<{ id: string; quantity: number; item_price?: number }>
   contentName?: string
   orderId?: string
+  numItems?: number
 }) {
   if (typeof window === 'undefined' || !state.consent.marketing) return
   const cookies = readMetaBrowserCookies()
@@ -526,8 +529,10 @@ function sendMetaCapiBeacon(input: {
     value: input.value,
     currency: input.currency,
     contentIds: input.contentIds,
+    contents: input.contents,
     contentName: input.contentName,
     orderId: input.orderId,
+    numItems: input.numItems,
     fbp: cookies.fbp,
     fbc: cookies.fbc,
     marketingConsent: true,
@@ -548,6 +553,69 @@ function sendMetaCapiBeacon(input: {
   }).catch(() => {})
 }
 
+function extractMetaCatalogPayload(params?: AnalyticsParams): {
+  contentIds?: string[]
+  contents?: Array<{ id: string; quantity: number; item_price?: number }>
+  numItems?: number
+} {
+  const topLevelIds = Array.isArray(params?.meta_content_ids)
+    ? params.meta_content_ids.filter(
+        (id): id is string => typeof id === 'string' && id.trim().length > 0,
+      )
+    : []
+
+  const itemRows = Array.isArray(params?.items) ? params.items : []
+  const fromItems: Array<{ id: string; quantity: number; item_price?: number }> = []
+  for (const row of itemRows) {
+    if (!row || typeof row !== 'object' || Array.isArray(row)) continue
+    const record = row as Record<string, unknown>
+    const id =
+      typeof record.meta_content_id === 'string' && record.meta_content_id.trim()
+        ? record.meta_content_id.trim()
+        : undefined
+    if (!id) continue
+    const quantityRaw = record.quantity
+    const quantity =
+      typeof quantityRaw === 'number' && Number.isFinite(quantityRaw)
+        ? Math.max(1, Math.floor(quantityRaw))
+        : 1
+    const priceRaw = record.meta_item_price ?? record.price
+    const item_price =
+      typeof priceRaw === 'number' && Number.isFinite(priceRaw) ? priceRaw : undefined
+    fromItems.push(item_price != null ? { id, quantity, item_price } : { id, quantity })
+  }
+
+  const contentIds = Array.from(
+    new Set([...topLevelIds.map((id) => id.trim()), ...fromItems.map((item) => item.id)]),
+  ).slice(0, 20)
+
+  const contents = fromItems.length
+    ? fromItems.slice(0, 20)
+    : contentIds.map((id) => ({
+        id,
+        quantity:
+          typeof params?.quantity === 'number' && Number.isFinite(params.quantity)
+            ? Math.max(1, Math.floor(params.quantity))
+            : 1,
+      }))
+
+  const numItemsFromParams =
+    typeof params?.num_items === 'number' && Number.isFinite(params.num_items)
+      ? Math.max(1, Math.floor(params.num_items))
+      : undefined
+  const numItems =
+    numItemsFromParams ??
+    (contents.length
+      ? contents.reduce((sum, item) => sum + item.quantity, 0)
+      : undefined)
+
+  return {
+    contentIds: contentIds.length ? contentIds : undefined,
+    contents: contents.length ? contents : undefined,
+    numItems,
+  }
+}
+
 function metaPixelFromSiteEvent(name: string, params?: AnalyticsParams) {
   if (!state.consent.marketing) return
 
@@ -558,8 +626,7 @@ function metaPixelFromSiteEvent(name: string, params?: AnalyticsParams) {
         ? Number(params.value)
         : undefined
   const currency = typeof params?.currency === 'string' ? params.currency : 'AED'
-  const contentIds =
-    typeof params?.item_id === 'string' ? [params.item_id] : undefined
+  const { contentIds, contents, numItems } = extractMetaCatalogPayload(params)
   const contentName = typeof params?.item_name === 'string' ? params.item_name : undefined
   const orderId =
     typeof params?.transaction_id === 'string' ? params.transaction_id : undefined
@@ -568,15 +635,18 @@ function metaPixelFromSiteEvent(name: string, params?: AnalyticsParams) {
   if (Number.isFinite(value)) payload.value = value
   if (currency) payload.currency = currency
   if (contentIds) payload.content_ids = contentIds
+  if (contents) payload.contents = contents
+  if (typeof numItems === 'number') payload.num_items = numItems
   if (contentName) payload.content_name = contentName
   if (orderId) payload.order_id = orderId
 
+  // begin_checkout already maps to InitiateCheckout — do not also map click_checkout
+  // or Meta receives duplicate InitiateCheckout with different event_ids.
   const map: Record<string, string> = {
     page_view: 'PageView',
     view_item: 'ViewContent',
     add_to_cart: 'AddToCart',
     begin_checkout: 'InitiateCheckout',
-    click_checkout: 'InitiateCheckout',
     purchase: 'Purchase',
   }
   const metaName = map[name]
@@ -599,9 +669,17 @@ function metaPixelFromSiteEvent(name: string, params?: AnalyticsParams) {
     value: Number.isFinite(value) ? value : undefined,
     currency,
     contentIds,
+    contents,
     contentName,
     orderId,
+    numItems,
   })
+}
+
+/** Meta-only commerce event for surfaces that did not previously emit shared analytics. */
+export function trackMetaEvent(name: string, params?: AnalyticsParams) {
+  if (typeof window === 'undefined') return
+  metaPixelFromSiteEvent(name, params)
 }
 
 function applyConsentToTrackers() {

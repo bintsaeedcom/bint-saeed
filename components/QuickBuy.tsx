@@ -13,6 +13,9 @@ import { productPageUi } from '@/lib/i18n/productPageUi'
 import { formatAmountForCurrency, getUaeFreeShippingThreshold } from '@/lib/pricing'
 import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
 import { getProductHref } from '@/lib/products/links'
+import { resolveProductSku } from '@/lib/products/sku'
+import { metaCatalogIdForCartLine } from '@/lib/analytics/metaCatalogIds'
+import { trackMetaEvent } from '@/lib/analytics/tracking'
 import toast from 'react-hot-toast'
 import { getProductImageAlt } from '@/lib/products/imageAlt'
 import { localizedColorName } from '@/lib/products/imageAltI18n'
@@ -43,6 +46,8 @@ const sheetClass =
 interface QuickBuyProps {
   isOpen: boolean
   onClose: () => void
+  /** Size already chosen on the collection card, so only colour is left to pick. */
+  initialSize?: string
   product: {
     id: string
     name: string
@@ -58,7 +63,7 @@ interface QuickBuyProps {
   }
 }
 
-export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
+export default function QuickBuy({ isOpen, onClose, initialSize, product }: QuickBuyProps) {
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
   const [customisationActive, setCustomisationActive] = useState(false)
@@ -66,7 +71,7 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
   const [mounted, setMounted] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
-  const { formatPrice, currency } = useCurrency()
+  const { formatPrice, convertPrice, currency } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
   const pdpUi = productPageUi(language)
@@ -100,14 +105,16 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
     setSelectedColor(available[0] ?? '')
     setCustomisationActive(false)
     setCustomisationMessage('')
-    if (product.sizes.length === 1) {
+    if (initialSize && product.sizes.includes(initialSize)) {
+      setSelectedSize(initialSize)
+    } else if (product.sizes.length === 1) {
       setSelectedSize(product.sizes[0] ?? '')
     } else if (productIsOneSizeOnly({ slug: product.slug, sizes: product.sizes })) {
       setSelectedSize('One Size')
     } else {
       setSelectedSize(product.sizes[0] ?? '')
     }
-  }, [isOpen, product.id, product.slug, product.sizes, colorOptions])
+  }, [isOpen, initialSize, product.id, product.slug, product.sizes, colorOptions])
 
   useEffect(() => {
     if (!isOpen) return
@@ -140,6 +147,10 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
       color: selectedColor,
       quantity: 1,
       customisationMessage: trimmed || undefined,
+      sku: resolveProductSku(
+        { slug: product.slug ?? '', category: catalogProduct.category },
+        selectedColor,
+      ),
     }
   }
 
@@ -159,10 +170,33 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
     return true
   }
 
+  const trackSuccessfulAdd = (line: ReturnType<typeof buildLine>) => {
+    const value = convertPrice(line.price, line.id)
+    trackMetaEvent('add_to_cart', {
+      currency: currency.code,
+      value,
+      quantity: line.quantity,
+      atc_source: 'quick_buy',
+      items: [
+        {
+          item_id: line.id,
+          item_name: line.name,
+          item_category: product.category,
+          item_variant: line.color,
+          price: value,
+          quantity: line.quantity,
+          meta_content_id: metaCatalogIdForCartLine(line),
+        },
+      ],
+    })
+  }
+
   const handleAddToCart = () => {
     if (!validate()) return
 
-    addItem(buildLine())
+    const line = buildLine()
+    addItem(line)
+    trackSuccessfulAdd(line)
     // Close immediately so shop stays usable — no mini-cart takeover / stuck scrim
     onClose()
     toast.success(ui.quickBuy.added, {
@@ -173,7 +207,9 @@ export default function QuickBuy({ isOpen, onClose, product }: QuickBuyProps) {
 
   const handleBuyNow = () => {
     if (!validate()) return
-    addItem(buildLine())
+    const line = buildLine()
+    addItem(line)
+    trackSuccessfulAdd(line)
     onClose()
     window.location.assign(localizedPath(language as AppLocale, '/checkout'))
   }

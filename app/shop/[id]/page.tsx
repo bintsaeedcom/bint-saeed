@@ -57,6 +57,7 @@ import {
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { getStripeShipToCopy } from '@/lib/shipping/stripeShipToCopy'
 import { resolveProductSku } from '@/lib/products/sku'
+import { buildMetaApparelCatalogId } from '@/lib/analytics/metaCatalogIds'
 import {
   PDP_ACCORDION_SUBTITLE,
   PDP_BULLET_ITEM,
@@ -348,6 +349,13 @@ export default function ProductPage() {
   }, [product?.id, selectedColor])
 
   const displayUnitPrice = convertPrice(product.price, product.id)
+  const selectedMetaCatalogId =
+    selectedColor && selectedSize
+      ? buildMetaApparelCatalogId(
+          resolveProductSku(product, selectedColor) ?? '',
+          selectedSize,
+        )
+      : undefined
   const pdpAnalytics = usePdpAnalytics({
     productId: product.id,
     productName: displayName,
@@ -357,6 +365,8 @@ export default function ProductPage() {
     color: selectedColor,
     size: selectedSize,
     quantity,
+    // Exact Meta feed id only — never invent a size/colour variant.
+    metaContentIds: selectedMetaCatalogId ? [selectedMetaCatalogId] : undefined,
     surface: 'shop',
   })
 

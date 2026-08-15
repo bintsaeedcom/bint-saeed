@@ -111,16 +111,22 @@ export async function POST(request: NextRequest) {
       ...buildCheckoutAttributionMetadata(clientContext),
     }
 
+    // Mollie does not substitute `{id}` in redirectUrl. Create the payment first,
+    // then patch redirectUrl with the real payment id so browser Purchase and
+    // webhook CAPI share `purchase_<payment.id>`.
     const payment = await mollie.payments.create({
       amount: {
         currency,
         value: toMollieAmountValue(gift.amountDue, currency),
       },
       description: `Bint Saeed order ${orderRef}`,
-      redirectUrl: `${baseUrl}/checkout/success?payment_id={id}`,
+      redirectUrl: `${baseUrl}/checkout/success`,
       webhookUrl: `${baseUrl}/api/webhooks/mollie`,
       metadata,
     })
+
+    const redirectUrl = `${baseUrl}/checkout/success?payment_id=${encodeURIComponent(payment.id)}`
+    const updated = await mollie.payments.update(payment.id, { redirectUrl })
 
     await savePendingMollieCheckout(payment.id, {
       items,
@@ -136,7 +142,12 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString(),
     })
 
-    const checkoutUrl = payment.getCheckoutUrl?.() ?? payment._links?.checkout?.href ?? null
+    const checkoutUrl =
+      updated.getCheckoutUrl?.() ??
+      updated._links?.checkout?.href ??
+      payment.getCheckoutUrl?.() ??
+      payment._links?.checkout?.href ??
+      null
     if (!checkoutUrl) {
       throw new Error('Mollie did not return a checkout URL')
     }

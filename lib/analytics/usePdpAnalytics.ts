@@ -27,6 +27,7 @@ export type UsePdpAnalyticsArgs = {
   color?: string
   size?: string
   quantity?: number
+  metaContentIds?: string[]
   surface: PdpAnalyticsSurface
   /** When false, skip view_item / scroll / engagement (e.g. product not found). */
   enabled?: boolean
@@ -78,6 +79,7 @@ export function usePdpAnalytics(args: UsePdpAnalyticsArgs): PdpAnalyticsApi {
         color: args.color,
         size: args.size,
         quantity: args.quantity,
+        metaContentIds: args.metaContentIds,
         surface: args.surface,
       }),
     [
@@ -89,6 +91,7 @@ export function usePdpAnalytics(args: UsePdpAnalyticsArgs): PdpAnalyticsApi {
       args.color,
       args.size,
       args.quantity,
+      args.metaContentIds,
       args.surface,
     ],
   )

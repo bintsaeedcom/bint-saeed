@@ -20,6 +20,10 @@ import {
 import { resolveProductSku } from '@/lib/products/sku'
 import { getPdpSizeOptions } from '@/lib/shopProductOptions'
 import { buildMerchantAccessoryDescription, buildMerchantProductDescription } from '@/lib/feeds/merchantProductDescription'
+import {
+  buildMetaAccessoryCatalogId,
+  buildMetaApparelCatalogId,
+} from '@/lib/analytics/metaCatalogIds'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
@@ -126,15 +130,6 @@ function shopProductType(category: string): string {
   return `Ready to Wear > ${category}`
 }
 
-function sizeIdSuffix(size: string): string {
-  return size
-    .trim()
-    .toUpperCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^A-Z0-9-]/g, '')
-    .slice(0, 12)
-}
-
 function buildShopItems(products: Product[]): MerchantCatalogItem[] {
   const rows: MerchantCatalogItem[] = []
 
@@ -159,8 +154,8 @@ function buildShopItems(products: Product[]): MerchantCatalogItem[] {
       const colorLabel = colorName ?? ''
 
       for (const size of sizes) {
-        const sizeSuffix = sizeIdSuffix(size)
-        const id = `${sku}-${sizeSuffix}`.slice(0, 50)
+        const id = buildMetaApparelCatalogId(sku, size)
+        if (!id) continue
         const title =
           sizes.length === 1 && /one\s*size/i.test(size)
             ? sanitizeFeedText(baseTitle, 150)
@@ -204,9 +199,10 @@ function buildAccessoryItems(items: readonly Accessory[]): MerchantCatalogItem[]
     .filter((item) => isAccessoryShopVisible(item) && item.images[0])
     .map((item) => {
       const sku = (getAccessorySku(item) ?? item.id).slice(0, 50)
+      const catalogId = buildMetaAccessoryCatalogId(sku) ?? sku
       const images = item.images
       return {
-        id: sku,
+        id: catalogId,
         item_group_id: sku,
         title: sanitizeFeedText(item.name, 150),
         description: buildMerchantAccessoryDescription(item),

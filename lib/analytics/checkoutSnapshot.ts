@@ -1,4 +1,5 @@
 import type { CartItem } from '@/store/cartStore'
+import { metaCatalogIdForCartLine } from '@/lib/analytics/metaCatalogIds'
 
 const STORAGE_KEY = 'bs_checkout_snapshot'
 
@@ -9,6 +10,8 @@ export type CheckoutSnapshot = {
     item_id: string
     item_name: string
     item_category?: string
+    meta_content_id?: string
+    meta_item_price?: number
     price: number
     quantity: number
   }>
@@ -19,6 +22,7 @@ export function persistCheckoutSnapshot(params: {
   currency: string
   value: number
   items: CartItem[]
+  metaItemPrice?: (item: CartItem) => number
 }): void {
   if (typeof window === 'undefined') return
   const snapshot: CheckoutSnapshot = {
@@ -27,6 +31,8 @@ export function persistCheckoutSnapshot(params: {
     items: params.items.map((item) => ({
       item_id: item.id,
       item_name: item.name,
+      meta_content_id: metaCatalogIdForCartLine(item),
+      meta_item_price: params.metaItemPrice?.(item),
       price: Number(item.price),
       quantity: item.quantity,
     })),

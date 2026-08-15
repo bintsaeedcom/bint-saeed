@@ -4,6 +4,7 @@ import { getClientIp } from '@/lib/security/clientIp'
 import {
   isMetaCapiConfigured,
   sendMetaCapiEvents,
+  type MetaCapiContent,
   type MetaCapiEventName,
 } from '@/lib/analytics/metaCapi'
 
@@ -24,6 +25,7 @@ type Body = {
   value?: unknown
   currency?: unknown
   contentIds?: unknown
+  contents?: unknown
   contentName?: unknown
   orderId?: unknown
   numItems?: unknown
@@ -47,6 +49,23 @@ function asNumber(value: unknown): number | undefined {
     return Number.isFinite(n) ? n : undefined
   }
   return undefined
+}
+
+function parseContents(value: unknown): MetaCapiContent[] | undefined {
+  if (!Array.isArray(value)) return undefined
+  const rows: MetaCapiContent[] = []
+  for (const row of value.slice(0, 20)) {
+    if (!row || typeof row !== 'object') continue
+    const record = row as Record<string, unknown>
+    const id = asString(record.id, 50)
+    if (!id) continue
+    const quantity = Math.max(1, Math.floor(asNumber(record.quantity) ?? 1))
+    const itemPrice = asNumber(record.item_price)
+    rows.push(
+      itemPrice != null ? { id, quantity, item_price: itemPrice } : { id, quantity },
+    )
+  }
+  return rows.length ? rows : undefined
 }
 
 /**
@@ -81,6 +100,7 @@ export async function POST(request: NextRequest) {
   const contentIds = Array.isArray(body.contentIds)
     ? body.contentIds.filter((id): id is string => typeof id === 'string' && id.trim().length > 0).slice(0, 20)
     : undefined
+  const contents = parseContents(body.contents)
 
   const result = await sendMetaCapiEvents([
     {
@@ -98,7 +118,8 @@ export async function POST(request: NextRequest) {
       customData: {
         value: asNumber(body.value),
         currency: asString(body.currency, 8)?.toUpperCase(),
-        content_ids: contentIds,
+        content_ids: contentIds?.length ? contentIds : contents?.map((row) => row.id),
+        contents,
         content_name: asString(body.contentName, 200),
         content_type: 'product',
         order_id: asString(body.orderId, 128),

@@ -15,6 +15,7 @@ import { appliedGiftCardFromStripeMetadata } from '@/lib/giftCards/stripeGiftCar
 import type { CheckoutCartItem } from '@/lib/checkout/types'
 import { isGiftCardLineId } from '@/lib/giftCards/cartDetection'
 import { sendMetaCapiPurchaseFromOrder } from '@/lib/analytics/metaCapi'
+import { metaCatalogContentsFromOrderMeta } from '@/lib/analytics/metaCatalogIds'
 import { sendSnapCapiPurchaseFromOrder } from '@/lib/analytics/snapCapi'
 import { resolveDiscountCodeFromCheckoutSession } from '@/lib/stripe/resolveCheckoutPromotionCode'
 
@@ -347,13 +348,36 @@ export async function POST(request: NextRequest) {
 
         const order = buildOrderFromSession(full)
         await saveOrder(order)
+        const metaContents = (() => {
+          try {
+            const raw = full.metadata?.orderItems
+            if (!raw) return []
+            const items = JSON.parse(raw) as Array<{
+                sku?: string
+                size?: string
+                quantity?: number
+                price?: number
+                priceAed?: number
+                giftCard?: unknown
+              }>
+            return metaCatalogContentsFromOrderMeta(
+              items.map((item, index) => ({
+                ...item,
+                // Meta item_price must use the same currency as Purchase.
+                priceAed: undefined,
+                price: order.lines[index]?.unitPrice,
+              })),
+            )
+          } catch {
+            return []
+          }
+        })()
         void sendMetaCapiPurchaseFromOrder({
           eventIdSuffix: full.id,
           value: order.amountTotal,
           currency: order.currency,
-          contentIds: order.lines
-            .map((line) => line.productId)
-            .filter((id): id is string => Boolean(id)),
+          contentIds: metaContents.map((row) => row.id),
+          contents: metaContents,
           orderId: order.id,
           email: order.customerEmail,
           phone: order.customerPhone,

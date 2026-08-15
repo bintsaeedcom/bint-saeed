@@ -37,7 +37,8 @@ import {
   getAccessoryImageAlt,
   getAccessoryPdpImages,
 } from '@/lib/accessories/accessoryJsonLd'
-import { resolveAccessorySkuFromSelection } from '@/lib/accessories/accessorySku'
+import { getAccessorySku, resolveAccessorySkuFromSelection } from '@/lib/accessories/accessorySku'
+import { buildMetaAccessoryCatalogId } from '@/lib/analytics/metaCatalogIds'
 import {
   getAccessoryCategoryName,
   getAccessoryColorName,
@@ -212,6 +213,8 @@ export default function AccessoryDetailPage() {
     (accessory.colors[0]
       ? getAccessoryColorName(language, accessory.colors[0].name, accessory.colors[0].nameAr)
       : '')
+  // Meta feed uses style SKU only (no bag-charm colour suffix).
+  const metaCatalogId = buildMetaAccessoryCatalogId(getAccessorySku(accessory) ?? '')
   const pdpAnalytics = usePdpAnalytics({
     productId: accessory.id,
     productName: displayName,
@@ -221,6 +224,7 @@ export default function AccessoryDetailPage() {
     color: colorLabelForAnalytics || undefined,
     size: sizeLabel,
     quantity,
+    metaContentIds: metaCatalogId ? [metaCatalogId] : undefined,
     surface: 'accessories',
   })
 

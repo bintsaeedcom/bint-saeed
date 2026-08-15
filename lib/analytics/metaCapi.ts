@@ -23,10 +23,17 @@ export type MetaCapiUserData = {
   fbc?: string
 }
 
+export type MetaCapiContent = {
+  id: string
+  quantity: number
+  item_price?: number
+}
+
 export type MetaCapiCustomData = {
   value?: number
   currency?: string
   content_ids?: string[]
+  contents?: MetaCapiContent[]
   content_name?: string
   content_type?: string
   order_id?: string
@@ -57,10 +64,17 @@ function hashPhone(phone: string): string {
   return createHash('sha256').update(digits).digest('hex')
 }
 
-export function isMetaCapiConfigured(): boolean {
-  return Boolean(
-    process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() && process.env.META_CAPI_ACCESS_TOKEN?.trim(),
+/** Server Pixel ID — prefer dedicated server env, fall back to public Pixel ID. */
+export function resolveMetaPixelId(): string | undefined {
+  return (
+    process.env.META_PIXEL_ID?.trim() ||
+    process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim() ||
+    undefined
   )
+}
+
+export function isMetaCapiConfigured(): boolean {
+  return Boolean(resolveMetaPixelId() && process.env.META_CAPI_ACCESS_TOKEN?.trim())
 }
 
 function buildUserData(input?: MetaCapiUserData): Record<string, unknown> {
@@ -83,16 +97,28 @@ export async function sendMetaCapiPurchaseFromOrder(input: {
   value: number
   currency: string
   contentIds?: string[]
+  contents?: MetaCapiContent[]
+  numItems?: number
   orderId?: string
   email?: string
   phone?: string
   eventSourceUrl?: string
   clientIpAddress?: string
   clientUserAgent?: string
+  fbp?: string
+  fbc?: string
 }): Promise<void> {
   if (!isMetaCapiConfigured()) return
   const suffix = input.eventIdSuffix.trim()
   if (!suffix) return
+  const contentIds =
+    input.contentIds?.filter((id) => typeof id === 'string' && id.trim().length > 0).slice(0, 20) ||
+    input.contents?.map((row) => row.id).slice(0, 20)
+  const numItems =
+    input.numItems ??
+    (input.contents?.length
+      ? input.contents.reduce((sum, row) => sum + Math.max(1, row.quantity || 1), 0)
+      : undefined)
   await sendMetaCapiEvents([
     {
       eventName: 'Purchase',
@@ -103,13 +129,17 @@ export async function sendMetaCapiPurchaseFromOrder(input: {
         phone: input.phone,
         clientIpAddress: input.clientIpAddress,
         clientUserAgent: input.clientUserAgent,
+        fbp: input.fbp,
+        fbc: input.fbc,
       },
       customData: {
         value: input.value,
         currency: input.currency.toUpperCase(),
-        content_ids: input.contentIds,
+        content_ids: contentIds,
+        contents: input.contents,
         content_type: 'product',
         order_id: input.orderId || suffix,
+        num_items: numItems,
       },
     },
   ])
@@ -117,7 +147,7 @@ export async function sendMetaCapiPurchaseFromOrder(input: {
 
 /** Send one or more events to Meta Conversions API. Never throws. */
 export async function sendMetaCapiEvents(events: MetaCapiEventInput[]): Promise<{ ok: boolean; error?: string }> {
-  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim()
+  const pixelId = resolveMetaPixelId()
   const token = process.env.META_CAPI_ACCESS_TOKEN?.trim()
   if (!pixelId || !token || events.length === 0) {
     return { ok: false, error: 'Meta CAPI not configured' }

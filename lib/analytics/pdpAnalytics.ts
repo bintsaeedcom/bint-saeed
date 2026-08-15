@@ -28,6 +28,8 @@ export type PdpEventContextInput = {
   color?: string
   size?: string
   quantity?: number
+  /** Exact sellable IDs from the Meta catalogue feed. */
+  metaContentIds?: string[]
   surface: PdpAnalyticsSurface
   pagePath?: string
 }
@@ -91,6 +93,7 @@ export function buildPdpEventContext(input: PdpEventContextInput): AnalyticsPara
     price: input.price,
     currency: input.currency,
     quantity: input.quantity ?? 1,
+    meta_content_ids: input.metaContentIds?.length ? input.metaContentIds : undefined,
     page_path: pagePath,
     pdp_surface: input.surface,
     device_type: detectDeviceType(),

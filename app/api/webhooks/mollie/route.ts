@@ -19,6 +19,7 @@ import { fulfillPaidGiftCards } from '@/lib/giftCards/fulfillPaidGiftCards'
 import { commitRedeemForPaidOrder } from '@/lib/giftCards/applyAtCheckout'
 import type { PendingMollieCheckout } from '@/lib/mollie/pendingCheckoutStore'
 import { sendMetaCapiPurchaseFromOrder } from '@/lib/analytics/metaCapi'
+import { metaCatalogContentsFromOrderMeta } from '@/lib/analytics/metaCatalogIds'
 import { sendSnapCapiPurchaseFromOrder } from '@/lib/analytics/snapCapi'
 
 export const runtime = 'nodejs'
@@ -206,13 +207,19 @@ export async function POST(request: NextRequest) {
 
     const order = buildOrderFromMolliePayment(payment, pending)
     await saveOrder(order)
+    const metaContents = metaCatalogContentsFromOrderMeta(
+      pending.items.map((item, index) => ({
+        ...item,
+        // Meta item_price must use the same currency as Purchase.
+        price: order.lines[index]?.unitPrice,
+      })),
+    )
     void sendMetaCapiPurchaseFromOrder({
       eventIdSuffix: payment.id,
       value: order.amountTotal,
       currency: order.currency,
-      contentIds: order.lines
-        .map((line) => line.productId)
-        .filter((id): id is string => Boolean(id)),
+      contentIds: metaContents.map((row) => row.id),
+      contents: metaContents,
       orderId: order.id,
       email: order.customerEmail,
       phone: order.customerPhone,

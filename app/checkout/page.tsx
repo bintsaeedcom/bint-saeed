@@ -20,6 +20,7 @@ import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { persistCheckoutSnapshot } from '@/lib/analytics/checkoutSnapshot'
+import { metaCatalogIdForCartLine } from '@/lib/analytics/metaCatalogIds'
 import { getCartLineImageAlt } from '@/lib/products/imageAlt'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { fetchGeoData } from '@/lib/geo/geoDetection'
@@ -116,7 +117,7 @@ function CheckoutPageContent() {
   const searchParams = useSearchParams()
   const { localize } = useLocaleHref()
   const { items, hasHydrated } = useCartStore()
-  const { formatAmount, currency, cartSubtotal, formatCartSubtotal } = useCurrency()
+  const { formatAmount, currency, cartSubtotal, formatCartSubtotal, convertPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
   const form = getCheckoutFormCopy(language)
@@ -452,6 +453,7 @@ function CheckoutPageContent() {
       currency: currency.code,
       value,
       items,
+      metaItemPrice: (item) => convertPrice(item.price, item.id),
     })
     trackEvent('begin_checkout', {
       currency: currency.code,
@@ -460,11 +462,13 @@ function CheckoutPageContent() {
       items: items.map((item) => ({
         item_id: item.id,
         item_name: item.name,
+        meta_content_id: metaCatalogIdForCartLine(item),
+        meta_item_price: convertPrice(item.price, item.id),
         price: item.price,
         quantity: item.quantity,
       })),
     })
-  }, [cartSubtotal, currency.code, items])
+  }, [cartSubtotal, convertPrice, currency.code, items])
 
   const checkoutPayload = {
     items,
@@ -501,6 +505,7 @@ function CheckoutPageContent() {
       currency: currency.code,
       value: Number(cartSubtotal(items).toFixed(2)),
       items,
+      metaItemPrice: (item) => convertPrice(item.price, item.id),
     })
     trackEvent('add_payment_info', {
       checkout_provider: giftCardCoversFull ? 'gift_card' : activeRail,

@@ -43,6 +43,20 @@ import {
   PRODUCT_GRID_CTA_LINK_HOVER,
   PRODUCT_GRID_CTA_ROW,
 } from '@/lib/ui/productGridCtaRow'
+import {
+  PRODUCT_GRID_SIZE_ROW,
+  productGridAddToBagClass,
+  productGridSizeChipClass,
+} from '@/lib/ui/productGridSizeChip'
+import { useCartStore } from '@/store/cartStore'
+import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
+import {
+  getProductColorOptions,
+  getProductImagesForColor,
+} from '@/lib/products/productColorAvailability'
+import { getPdpSizeOptions, productShowsSizeSelector } from '@/lib/shopProductOptions'
+import { resolveProductSku } from '@/lib/products/sku'
+import { buildMetaApparelCatalogId } from '@/lib/analytics/metaCatalogIds'
 import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
 import CodesOrganicBand from '@/components/CodesOrganicBand'
 
@@ -80,7 +94,9 @@ export default function ShopClient() {
   const [sortOpen, setSortOpen] = useState(false)
   const [sortBy, setSortBy] = useState<SortId>('newest')
   const [quickBuyProduct, setQuickBuyProduct] = useState<Product | null>(null)
+  const [cardSizes, setCardSizes] = useState<Record<string, string>>({})
   const [mounted, setMounted] = useState(false)
+  const addItem = useCartStore((state) => state.addItem)
   const sortMenuRef = useRef<HTMLDivElement | null>(null)
   const { formatPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
@@ -107,6 +123,68 @@ export default function ShopClient() {
       router.replace(url, { scroll: false })
     },
     [localize, router],
+  )
+
+  const selectCardSize = useCallback((product: Product, size: string) => {
+    setCardSizes((prev) => ({ ...prev, [product.id]: prev[product.id] === size ? '' : size }))
+    trackEvent('size_selected', {
+      item_id: product.id,
+      item_category: product.category,
+      selected_size: size,
+      location: 'shop_grid',
+    })
+  }, [])
+
+  /**
+   * One tap from an armed card to the bag. Colour is only safe to assume when the
+   * product has a single gallery, so multi-colour pieces hand off to QuickBuy with
+   * the chosen size already applied rather than guessing a colourway.
+   */
+  const addCardToBag = useCallback(
+    (product: Product) => {
+      const showsSizes = productShowsSizeSelector(product.category, product.sizes, product.slug)
+      const size = showsSizes ? (cardSizes[product.id] ?? '') : 'One Size'
+      const colorOptions = getProductColorOptions(product)
+
+      if (!size || colorOptions.length !== 1) {
+        setQuickBuyProduct(product)
+        return
+      }
+
+      const color = colorOptions[0]?.name ?? ''
+      const image = getProductImagesForColor(product, color)[0] ?? product.images[0]
+      const sku = resolveProductSku(product, color)
+      const metaContentId = buildMetaApparelCatalogId(sku ?? '', size)
+      addItem({
+        id: product.id,
+        productUrl: getProductHref(product),
+        name: product.name,
+        price: product.price,
+        image,
+        size,
+        color,
+        quantity: 1,
+        sku,
+      })
+      trackEvent('add_to_cart', {
+        currency: 'AED',
+        value: product.price,
+        atc_source: 'shop_grid',
+        items: [
+          {
+            item_id: product.id,
+            meta_content_id: metaContentId,
+            item_name: product.name,
+            item_category: product.category,
+            price: product.price,
+            quantity: 1,
+            item_variant: color,
+          },
+        ],
+      })
+      showAddedToBagToast(isRTL)
+    },
+    [addItem, cardSizes, isRTL],
   )
 
   useEffect(() => setMounted(true), [])
@@ -366,6 +444,15 @@ export default function ShopClient() {
             const gridImage = shopGridPrimaryImage(product)
             const gridColor = shopGridPrimaryColor(product)
             const gridDisplayName = getLocalizedProductDisplayName(product, language)
+            const cardSizeOptions = productShowsSizeSelector(
+              product.category,
+              product.sizes,
+              product.slug,
+            )
+              ? getPdpSizeOptions(product.category, product.sizes, product.slug)
+              : []
+            const selectedCardSize = cardSizes[product.id] ?? ''
+            const cardArmed = cardSizeOptions.length === 0 || Boolean(selectedCardSize)
             return (
             <li
               key={product.id}
@@ -434,6 +521,30 @@ export default function ShopClient() {
                       />
                     ))}
                   </div>
+                  {cardSizeOptions.length > 0 && (
+                    <div
+                      role="group"
+                      aria-label={`${ui.quickBuy.size} — ${gridDisplayName}`}
+                      className={`relative z-20 pt-1 ${PRODUCT_GRID_SIZE_ROW}`}
+                    >
+                      {cardSizeOptions.map((size) => (
+                        <button
+                          key={size}
+                          type="button"
+                          aria-pressed={selectedCardSize === size}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            selectCardSize(product, size)
+                          }}
+                          className={productGridSizeChipClass(selectedCardSize === size)}
+                          data-cursor-hover
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   <div className={`pt-2 ${PRODUCT_GRID_CTA_ROW} `}>
                     <LocaleLink
                       href={getProductHref(product)}
@@ -442,20 +553,22 @@ export default function ShopClient() {
                     >
                       {ui.shop.discover}
                     </LocaleLink>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        setQuickBuyProduct(product)
-                      }}
-                      className={`relative z-20 gap-1 ${PRODUCT_GRID_CTA_LINK} ${PRODUCT_GRID_CTA_LINK_HOVER}`}
-                      data-cursor-hover
-                    >
-                      <FiShoppingBag className="h-3 w-3 shrink-0" aria-hidden />
-                      {ui.quickBuy.buyNow}
-                    </button>
                   </div>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      addCardToBag(product)
+                    }}
+                    className={`relative z-20 ${productGridAddToBagClass(cardArmed)}`}
+                    data-cursor-hover
+                  >
+                    <FiShoppingBag className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                    <span className="truncate">
+                      {cardArmed ? ui.quickBuy.addToBag : ui.quickBuy.buyNow}
+                    </span>
+                  </button>
                 </div>
               </article>
             </li>
@@ -532,6 +645,7 @@ export default function ShopClient() {
         <QuickBuy
           isOpen
           onClose={() => setQuickBuyProduct(null)}
+          initialSize={cardSizes[quickBuyProduct.id] || undefined}
           product={{
             id: quickBuyProduct.id,
             name: quickBuyProduct.name,
