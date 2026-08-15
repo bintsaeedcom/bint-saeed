@@ -16,7 +16,7 @@ import {
   isSignatureStrandCategory,
   resolveAccessoryId,
 } from '@/lib/accessories/accessoryRouteAliases'
-import { localizedPath } from '@/lib/i18n/routing'
+import { localizedPath, type AppLocale } from '@/lib/i18n/routing'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -67,6 +67,14 @@ import PdpThumbRailArrows from '@/components/pdp/PdpThumbRailArrows'
 import { getPdpGalleryAriaCopy } from '@/lib/i18n/pdpGalleryAriaI18n'
 import StickyAddToCart from '@/components/StickyAddToCart'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
+import NoTranslate from '@/components/NoTranslate'
+import CodesOrganicBand, {
+  ACCESSORIES_DESERT_NIGHT_BG,
+} from '@/components/CodesOrganicBand'
+import { getKeepExploringLine } from '@/lib/i18n/keepExploringCopyI18n'
+import { getAccessoriesDesertNightAlt } from '@/lib/i18n/accessoriesMediaAltI18n'
+import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
+import { CTA_BUTTON_RADIUS, PDP_FILLED_PLUM, pdpCtaPrimary, ctaPrimarySoft, ctaSecondaryOutlineOnDark } from '@/lib/ui/ctaClasses'
 import { accessoryDisplaySize } from '@/lib/accessories/accessorySizeLabel'
 import { relatedAccessoriesForPdp } from '@/lib/accessories/relatedAccessoriesForPdp'
 import { getStripeShipToCopy } from '@/lib/shipping/stripeShipToCopy'
@@ -91,7 +99,6 @@ import PdpAccordion, {
   scrollPdpAccordionSectionIntoView,
   type PdpAccordionSectionConfig,
 } from '@/components/pdp/PdpAccordion'
-import { CTA_BUTTON_RADIUS, PDP_FILLED_PLUM, pdpCtaPrimary } from '@/lib/ui/ctaClasses'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -1181,6 +1188,57 @@ export default function AccessoryDetailPage() {
           </motion.div>
         </div>
       </div>
+
+      <CodesOrganicBand
+        className="mt-12 py-16 text-center md:mt-16 md:py-20"
+        contentClassName="max-w-[1400px]"
+        ariaLabel={ui.cart.continueShopping}
+        bgSrc={ACCESSORIES_DESERT_NIGHT_BG}
+        overlay="photo"
+        bgAlt={getAccessoriesDesertNightAlt(language as AppLocale)}
+      >
+        <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70">
+          {ui.accessories.collectionEyebrow}
+        </p>
+        <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-[#e8ddd4]">
+          {ui.cart.continueShopping}
+        </h2>
+        <p className="mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-[#e8d8c8]/65">
+          {getKeepExploringLine(language, 'throughTheHouse')}
+        </p>
+        <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+          <LocaleLink
+            href="/shop"
+            className={ctaPrimarySoft}
+            data-cursor-hover
+            data-analytics-event="click_accessories_continue_shop"
+            data-analytics-section="accessories-pdp-keep-exploring"
+          >
+            {ui.notFound.shopCollection}
+          </LocaleLink>
+          {isStrandPdp ? (
+            <LocaleLink
+              href="/personalisation"
+              className={ctaSecondaryOutlineOnDark}
+              data-cursor-hover
+              data-analytics-event="click_accessories_continue_personalisation"
+              data-analytics-section="accessories-pdp-keep-exploring"
+            >
+              {ui.cart.personalisation}
+            </LocaleLink>
+          ) : (
+            <LocaleLink
+              href="/strands"
+              className={ctaSecondaryOutlineOnDark}
+              data-cursor-hover
+              data-analytics-event="click_accessories_continue_strands"
+              data-analytics-section="accessories-pdp-keep-exploring"
+            >
+              <NoTranslate>{shopStrandsCta(language, 'title')}</NoTranslate>
+            </LocaleLink>
+          )}
+        </div>
+      </CodesOrganicBand>
 
       <PdpLightbox
         open={isLightboxOpen}

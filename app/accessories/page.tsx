@@ -53,7 +53,10 @@ import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 import { ctaPrimary, ctaPrimarySoft, ctaSecondaryOnLight, ctaSecondaryOutlineOnDark } from '@/lib/ui/ctaClasses'
 import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
 import { getKeepExploringLine } from '@/lib/i18n/keepExploringCopyI18n'
-import CodesOrganicBand from '@/components/CodesOrganicBand'
+import { getAccessoriesDesertNightAlt } from '@/lib/i18n/accessoriesMediaAltI18n'
+import CodesOrganicBand, {
+  ACCESSORIES_DESERT_NIGHT_BG,
+} from '@/components/CodesOrganicBand'
 import {
   PRODUCT_GRID_COLOUR_DOT,
   PRODUCT_GRID_COLOUR_DOT_ROW,
@@ -571,6 +574,9 @@ export default function AccessoriesPage() {
           className="mt-auto py-16 text-center md:py-20"
           contentClassName="max-w-[1400px]"
           ariaLabel={ui.cart.continueShopping}
+          bgSrc={ACCESSORIES_DESERT_NIGHT_BG}
+          overlay="photo"
+          bgAlt={getAccessoriesDesertNightAlt(language as AppLocale)}
         >
           <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70">
             {ui.accessories.collectionEyebrow}

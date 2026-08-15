@@ -10,6 +10,10 @@ import { EDITORIAL_STACK_CARD } from '@/lib/ui/editorialPageChrome'
 const ORGANIC_BG =
   '/craftsmanship/bint-saeed-abu-dhabi-explore-collection-organic-texture.webp'
 
+/** Desert-night accessories still — used on /accessories listing + PDPs. */
+export const ACCESSORIES_DESERT_NIGHT_BG =
+  '/accessories/bint-saeed-al-ain-rosette-natural-gemstone-jewellery-desert-night.webp'
+
 type CodesOrganicBandProps = {
   children: ReactNode
   className?: string
@@ -17,6 +21,13 @@ type CodesOrganicBandProps = {
   ariaLabel?: string
   /** Decorative only — omit when the band is purely ambient */
   bgAlt?: string
+  /** Override the default organic burgundy texture. */
+  bgSrc?: string
+  /**
+   * `texture` — heavy burgundy wash for the fabric surface.
+   * `photo` — lighter veil so a photographic still (e.g. desert night) stays readable.
+   */
+  overlay?: 'texture' | 'photo'
   /** Editorial stack overlap (Codes / Craftsmanship closing). Off for shop commerce bands. */
   stacked?: boolean
 }
@@ -31,13 +42,20 @@ export default function CodesOrganicBand({
   contentClassName = '',
   ariaLabel,
   bgAlt,
+  bgSrc = ORGANIC_BG,
+  overlay = 'texture',
   stacked = false,
 }: CodesOrganicBandProps) {
   const { language } = useLanguage()
   const locale = language as AppLocale
   const alt = bgAlt
     ? withBrandAlt(bgAlt, locale)
-    : withBrandAlt('Bint Saeed Abu Dhabi — organic burgundy fabric texture', locale)
+    : withBrandAlt(
+        overlay === 'photo'
+          ? 'Natural gemstone jewellery beneath a desert night sky'
+          : 'Bint Saeed Abu Dhabi — organic burgundy fabric texture',
+        locale,
+      )
 
   return (
     <section
@@ -45,21 +63,36 @@ export default function CodesOrganicBand({
       aria-label={ariaLabel}
     >
       <Image
-        src={ORGANIC_BG}
+        src={bgSrc}
         alt={alt}
         fill
         sizes="100vw"
         className="pointer-events-none object-cover object-center"
         priority={false}
       />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(26,2,16,0.72)_0%,rgba(42,8,22,0.55)_42%,rgba(26,2,16,0.82)_100%)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(111,21,36,0.22)_0%,transparent_70%)]"
-        aria-hidden
-      />
+      {overlay === 'photo' ? (
+        <>
+          <div
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(10,4,8,0.55)_0%,rgba(18,8,12,0.42)_45%,rgba(10,4,8,0.72)_100%)]"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_45%,rgba(26,2,16,0.28)_0%,transparent_72%)]"
+            aria-hidden
+          />
+        </>
+      ) : (
+        <>
+          <div
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(26,2,16,0.72)_0%,rgba(42,8,22,0.55)_42%,rgba(26,2,16,0.82)_100%)]"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(111,21,36,0.22)_0%,transparent_70%)]"
+            aria-hidden
+          />
+        </>
+      )}
       <div
         className={`relative mx-auto w-full min-w-0 max-w-[1400px] px-4 sm:px-6 lg:px-12 ${contentClassName}`}
       >
