@@ -651,6 +651,9 @@ function metaPixelFromSiteEvent(name: string, params?: AnalyticsParams) {
   }
   const metaName = map[name]
   if (!metaName) return
+  // A catalogue ViewContent must identify a real sellable catalogue row.
+  // GA4 still receives the initial view_item; Meta waits for PDP variant state.
+  if (metaName === 'ViewContent' && !contentIds?.length) return
 
   const eventId =
     orderId && metaName === 'Purchase' ? `purchase_${orderId}` : newMetaEventId(metaName)

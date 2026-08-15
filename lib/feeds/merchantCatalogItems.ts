@@ -20,12 +20,9 @@ import {
 import { resolveProductSku } from '@/lib/products/sku'
 import { getPdpSizeOptions } from '@/lib/shopProductOptions'
 import { buildMerchantAccessoryDescription, buildMerchantProductDescription } from '@/lib/feeds/merchantProductDescription'
-import {
-  buildMetaAccessoryCatalogId,
-  buildMetaApparelCatalogId,
-} from '@/lib/analytics/metaCatalogIds'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
+const APPAREL_FEED_SKU = /^BS-(?:AB|DR|KF|ST)-\d{3}(?:-[A-Z0-9]{3})?$/
 
 export type MerchantCatalogItem = {
   id: string
@@ -130,6 +127,31 @@ function shopProductType(category: string): string {
   return `Ready to Wear > ${category}`
 }
 
+function feedSizeIdSuffix(size: string): string {
+  return size
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^A-Z0-9-]/g, '')
+    .slice(0, 12)
+}
+
+function buildApparelFeedId(sku: string, size: string): string | undefined {
+  const normalizedSku = sku.trim().toUpperCase()
+  const sizeSuffix = feedSizeIdSuffix(size)
+  if (!APPAREL_FEED_SKU.test(normalizedSku) || !sizeSuffix) return undefined
+  return `${normalizedSku}-${sizeSuffix}`.slice(0, 50)
+}
+
+function buildAccessoryFeedId(sku: string): string | undefined {
+  const normalizedSku = sku.trim().toUpperCase()
+  if (!normalizedSku || APPAREL_FEED_SKU.test(normalizedSku)) return undefined
+  if (normalizedSku.startsWith('BS-GC-')) return undefined
+  const bagCharmParent = normalizedSku.match(/^(BS-BG-\d{3})(?:-[A-Z0-9]{3})?$/)
+  if (bagCharmParent) return bagCharmParent[1].slice(0, 50)
+  return normalizedSku.slice(0, 50)
+}
+
 function buildShopItems(products: Product[]): MerchantCatalogItem[] {
   const rows: MerchantCatalogItem[] = []
 
@@ -154,7 +176,7 @@ function buildShopItems(products: Product[]): MerchantCatalogItem[] {
       const colorLabel = colorName ?? ''
 
       for (const size of sizes) {
-        const id = buildMetaApparelCatalogId(sku, size)
+        const id = buildApparelFeedId(sku, size)
         if (!id) continue
         const title =
           sizes.length === 1 && /one\s*size/i.test(size)
@@ -199,7 +221,7 @@ function buildAccessoryItems(items: readonly Accessory[]): MerchantCatalogItem[]
     .filter((item) => isAccessoryShopVisible(item) && item.images[0])
     .map((item) => {
       const sku = (getAccessorySku(item) ?? item.id).slice(0, 50)
-      const catalogId = buildMetaAccessoryCatalogId(sku) ?? sku
+      const catalogId = buildAccessoryFeedId(sku) ?? sku
       const images = item.images
       return {
         id: catalogId,

@@ -15,7 +15,7 @@ import {
   type PdpAtcErrorCode,
   type PdpScrollMilestone,
 } from '@/lib/analytics/pdpAnalytics'
-import type { AnalyticsParams } from '@/lib/analytics/tracking'
+import { trackMetaEvent, type AnalyticsParams } from '@/lib/analytics/tracking'
 
 export type UsePdpAnalyticsArgs = {
   productId: string
@@ -104,6 +104,7 @@ export function usePdpAnalytics(args: UsePdpAnalyticsArgs): PdpAnalyticsApi {
   const engagementEmittedRef = useRef(false)
   const startedAtRef = useRef(0)
   const visitKeyRef = useRef('')
+  const metaViewContentVisitKeyRef = useRef('')
 
   const emitEngagement = useCallback(() => {
     if (!enabled || engagementEmittedRef.current) return
@@ -133,6 +134,9 @@ export function usePdpAnalytics(args: UsePdpAnalyticsArgs): PdpAnalyticsApi {
 
     setActivePdpAnalyticsContext(contextRef.current)
     trackPdpViewItem(contextRef.current)
+    const initialMetaIds = contextRef.current.meta_content_ids
+    metaViewContentVisitKeyRef.current =
+      Array.isArray(initialMetaIds) && initialMetaIds.length > 0 ? visitKey : ''
 
     const onScroll = () => {
       const percent = readScrollPercent()
@@ -167,6 +171,29 @@ export function usePdpAnalytics(args: UsePdpAnalyticsArgs): PdpAnalyticsApi {
     if (!enabled) return
     setActivePdpAnalyticsContext(context)
   }, [enabled, context])
+
+  // Apparel defaults are selected by PDP state effects after the initial render.
+  // Preserve the initial GA4 view_item, then send Meta ViewContent once the real
+  // selected colour + size resolves to an existing catalogue variant ID.
+  useEffect(() => {
+    if (!enabled || !args.productId) return
+    const contentIds = context.meta_content_ids
+    if (!Array.isArray(contentIds) || contentIds.length === 0) return
+
+    const visitKey = `${productKey}:${typeof window !== 'undefined' ? window.location.pathname : ''}`
+    if (metaViewContentVisitKeyRef.current === visitKey) return
+
+    const price = typeof context.price === 'number' ? context.price : 0
+    const quantity = typeof context.quantity === 'number' ? context.quantity : 1
+    const currency = typeof context.currency === 'string' ? context.currency : 'AED'
+
+    trackMetaEvent('view_item', {
+      ...context,
+      currency,
+      value: price * quantity,
+    })
+    metaViewContentVisitKeyRef.current = visitKey
+  }, [enabled, args.productId, productKey, context])
 
   const trackGalleryChange = useCallback((imageIndex: number, interactionType = 'slide_change') => {
     trackPdpEvent('product_gallery_change', contextRef.current, {
