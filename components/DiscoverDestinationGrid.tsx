@@ -48,7 +48,7 @@ export default function DiscoverDestinationGrid({
           <LocaleLink
             key={dest.href}
             href={dest.href}
-            className="group flex flex-col items-center text-center"
+            className="group flex h-full flex-col items-center text-center"
             data-cursor-hover
             data-analytics-event="click_discover_destination"
             data-analytics-section={`${source}_${dest.analytics}`}
@@ -79,7 +79,7 @@ export default function DiscoverDestinationGrid({
               />
             </div>
             <span
-              className={`mt-3 font-montserrat uppercase ${
+              className={`mt-3 min-h-[2.6em] font-montserrat uppercase leading-snug ${
                 onDark ? 'text-[#e8d8c8]/70' : 'text-brand-dustyBlue/80'
               } ${
  compact
@@ -89,8 +89,9 @@ export default function DiscoverDestinationGrid({
             >
               {hint}
             </span>
+            {/* `mt-auto` keeps CTAs on one baseline when hints wrap to different line counts. */}
             <span
-              className={`mt-1.5 flex items-center justify-center gap-2 font-rozha leading-tight ${
+              className={`mt-auto flex items-center justify-center gap-2 pt-1.5 font-rozha leading-tight ${
                 onDark ? 'text-[#e8ddd4]' : 'text-brand-darkRed'
               } ${compact ? 'text-[1.05rem]' : 'text-[1.15rem] sm:text-[1.3rem]'}`}
             >
