@@ -15,6 +15,8 @@ import {
   glassTextMutedOnDark,
   glassTextTitleOnDark,
 } from '@/lib/ui/glassClasses'
+import { getActivePdpAnalyticsContext } from '@/lib/analytics/pdpAnalytics'
+import { trackEvent } from '@/lib/analytics/tracking'
 
 /** Default Bint Saeed WhatsApp (+971 50 229 9402). Override with NEXT_PUBLIC_WHATSAPP_NUMBER if needed. */
 const DEFAULT_WHATSAPP = '+971502299402'
@@ -109,6 +111,14 @@ export default function WhatsAppButton() {
   const subtitle = chrome.subtitle
 
   const openTopic = (topic: (typeof topics)[number]) => {
+    const pdpContext = getActivePdpAnalyticsContext()
+    trackEvent('whatsapp_click', {
+      ...(pdpContext || {}),
+      source: 'global_dock',
+      topic_id: topic.id,
+      page_path:
+        typeof window !== 'undefined' ? window.location.pathname : pdpContext?.page_path,
+    })
     const href = buildWhatsAppHref(topic.message)
     setOpen(false)
     if (href) {

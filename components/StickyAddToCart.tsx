@@ -13,7 +13,7 @@ import { localizedColorName } from '@/lib/products/imageAltI18n'
 import { getProductHref } from '@/lib/products/links'
 import toast from 'react-hot-toast'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
-import { trackEvent } from '@/lib/analytics/tracking'
+import type { PdpAtcErrorCode } from '@/lib/analytics/pdpAnalytics'
 import {
   clearMobileBottomChrome,
   publishMobileBottomChrome,
@@ -38,6 +38,9 @@ interface StickyAddToCartProps {
   customisationRequired?: boolean
   /** Fallback scroll distance if the primary ATC node is missing */
   showThreshold?: number
+  onAtcAttempt?: () => void
+  onAtcSuccess?: (quantity: number) => void
+  onAtcError?: (errorCode: PdpAtcErrorCode) => void
 }
 
 /**
@@ -54,6 +57,9 @@ export default function StickyAddToCart({
   customisationMessage,
   customisationRequired = false,
   showThreshold = 480,
+  onAtcAttempt,
+  onAtcSuccess,
+  onAtcError,
 }: StickyAddToCartProps) {
   const [mounted, setMounted] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
@@ -115,17 +121,21 @@ export default function StickyAddToCart({
   }, [isVisible])
 
   const handleAddToCart = () => {
+    onAtcAttempt?.()
     if (!selectedSize) {
+      onAtcError?.('size_required')
       toast.error(ui.quickBuy.chooseSizeError)
       document.getElementById('size-selection')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
     if (!selectedColor) {
+      onAtcError?.('colour_required')
       toast.error(ui.quickBuy.chooseColourError)
       document.getElementById('color-selection')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
     if (customisationRequired && !customisationMessage?.trim()) {
+      onAtcError?.('personalisation_required')
       toast.error(pdpUi.personalisation.emptyError)
       document.getElementById('personalisation-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
@@ -146,12 +156,7 @@ export default function StickyAddToCart({
       sku: product.sku,
     })
 
-    trackEvent('add_to_cart', {
-      item_id: product.id,
-      item_name: product.name,
-      item_variant: `${selectedSize}-${selectedColor}`,
-      quantity,
-    })
+    onAtcSuccess?.(quantity)
 
     setIsAdded(true)
     showAddedToBagToast(isRTL)

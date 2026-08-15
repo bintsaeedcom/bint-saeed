@@ -11,6 +11,8 @@ type Props = {
   amount: number
   currency?: string
   className?: string
+  /** Fired on real clicks in the Tamara promo region when present. */
+  onPromoClick?: () => void
 }
 
 /** Same split Tamara’s summary widget uses: total ÷ 4, two decimal places. */
@@ -28,7 +30,12 @@ function formatTamaraInstallment(total: number, currencyCode: string): string {
  * Tamara product messaging — Bint Saeed typography + layout,
  * footer pastel pill logo for clear brand recognition.
  */
-export default function TamaraProductWidget({ amount, currency = 'AED', className = '' }: Props) {
+export default function TamaraProductWidget({
+  amount,
+  currency = 'AED',
+  className = '',
+  onPromoClick,
+}: Props) {
   const { language } = useLanguage()
   const publicKey = getTamaraPublicKey()
   const code = currency.toUpperCase()
@@ -64,6 +71,7 @@ export default function TamaraProductWidget({ amount, currency = 'AED', classNam
         .filter(Boolean)
         .join(' ')}
       data-tamara-widget-host
+      onClick={() => onPromoClick?.()}
     >
       <p className="min-w-0 flex-1 font-montserrat text-[12px] leading-[1.45] tracking-[0.02em] text-brand-darkRed sm:text-[13px]">
         <span>{copy.before}</span>

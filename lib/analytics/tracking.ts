@@ -24,7 +24,7 @@ declare global {
   }
 }
 
-type AnalyticsParamValue =
+export type AnalyticsParamValue =
   | string
   | number
   | boolean
@@ -32,7 +32,7 @@ type AnalyticsParamValue =
   | undefined
   | Array<Record<string, string | number | boolean | null | undefined>>
 
-type AnalyticsParams = Record<string, AnalyticsParamValue>
+export type AnalyticsParams = Record<string, AnalyticsParamValue>
 
 const state = {
   gaReady: false,

@@ -11,6 +11,8 @@ type Props = {
   /** product | cart | checkout */
   source?: 'product' | 'cart' | 'checkout'
   className?: string
+  /** Fired when shopper clicks the Tabby promo region (installment info). */
+  onPromoClick?: () => void
 }
 
 type WidgetConfig = {
@@ -65,6 +67,7 @@ export default function TabbyPromoSnippet({
   currency,
   source = 'product',
   className = '',
+  onPromoClick,
 }: Props) {
   const { language } = useLanguage()
   const reactId = useId()
@@ -194,6 +197,7 @@ export default function TabbyPromoSnippet({
         .filter(Boolean)
         .join(' ')}
       data-tabby-snippet={source}
+      onClick={() => onPromoClick?.()}
     />
   )
 }

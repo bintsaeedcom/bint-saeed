@@ -1,6 +1,8 @@
 'use client'
 
 import LocaleLink from '@/components/LocaleLink'
+import { getActivePdpAnalyticsContext } from '@/lib/analytics/pdpAnalytics'
+import { trackEvent } from '@/lib/analytics/tracking'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import type { AppLocale } from '@/lib/i18n/routing'
@@ -223,6 +225,17 @@ export function PdpShippingReturnsBullets({
           className={linkClassName}
           target="_blank"
           rel="noreferrer"
+          onClick={() => {
+            const pdpContext = getActivePdpAnalyticsContext()
+            trackEvent('whatsapp_click', {
+              ...(pdpContext || {}),
+              source: 'pdp_shipping_returns',
+              page_path:
+                typeof window !== 'undefined'
+                  ? window.location.pathname
+                  : pdpContext?.page_path,
+            })
+          }}
         >
           {WHATSAPP_DISPLAY}
         </a>{' '}

@@ -29,6 +29,8 @@ type PdpLightboxProps = {
   closeLabel?: string
   zoomInLabel?: string
   zoomOutLabel?: string
+  /** Fired when zoom scale crosses in/out of zoomed state (no visual change). */
+  onZoomChange?: (zoomed: boolean, imageIndex: number) => void
 }
 
 /**
@@ -45,6 +47,7 @@ export default function PdpLightbox({
   closeLabel = 'Close gallery',
   zoomInLabel = 'Zoom in',
   zoomOutLabel = 'Zoom out',
+  onZoomChange,
 }: PdpLightboxProps) {
   const [swiper, setSwiper] = useState<SwiperType | null>(null)
   const [zoomed, setZoomed] = useState(false)
@@ -52,13 +55,19 @@ export default function PdpLightbox({
   // without being torn down and re-armed on every zoom change.
   const zoomedRef = useRef(false)
   const wasOpenRef = useRef(false)
+  const onZoomChangeRef = useRef(onZoomChange)
+  onZoomChangeRef.current = onZoomChange
   const count = images.length
   const safeIndex = count === 0 ? 0 : Math.min(Math.max(index, 0), count - 1)
 
   const applyZoomState = useCallback((next: boolean) => {
+    const changed = zoomedRef.current !== next
     zoomedRef.current = next
     setZoomed(next)
-  }, [])
+    if (changed) {
+      onZoomChangeRef.current?.(next, safeIndex)
+    }
+  }, [safeIndex])
 
   const toggleZoom = useCallback(() => {
     if (!swiper || swiper.destroyed) return

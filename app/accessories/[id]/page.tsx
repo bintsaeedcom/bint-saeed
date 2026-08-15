@@ -23,8 +23,8 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { productPageUi } from '@/lib/i18n/productPageUi'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
-import { trackEvent } from '@/lib/analytics/tracking'
 import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
+import { usePdpAnalytics } from '@/lib/analytics/usePdpAnalytics'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import TamaraProductWidget from '@/components/TamaraProductWidget'
 import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
@@ -199,8 +199,28 @@ export default function AccessoryDetailPage() {
   /** Catalog title for crumbs — not the long PDP headline. */
   const breadcrumbProductLabel = getLocalizedAccessoryDisplayName(accessory, language)
 
+  const displayUnitPrice = convertPrice(accessory.price, accessory.id)
+  const colorLabelForAnalytics =
+    selectedColor ||
+    (accessory.colors[0]
+      ? getAccessoryColorName(language, accessory.colors[0].name, accessory.colors[0].nameAr)
+      : '')
+  const pdpAnalytics = usePdpAnalytics({
+    productId: accessory.id,
+    productName: displayName,
+    category: accessory.category,
+    currency: currency.code,
+    price: displayUnitPrice,
+    color: colorLabelForAnalytics || undefined,
+    size: sizeLabel,
+    quantity,
+    surface: 'accessories',
+  })
+
   const handleAddToCart = () => {
+    pdpAnalytics.trackAtcAttempt('primary')
     if (!selectedColor && accessory.colors.length > 1) {
+      pdpAnalytics.trackAtcError('primary', 'colour_required')
       toast.error(ui.accessories.selectColour)
       return
     }
@@ -223,18 +243,13 @@ export default function AccessoryDetailPage() {
       sku: resolveAccessorySkuFromSelection(accessory, colorLabel),
     })
 
-    trackEvent('add_to_cart', {
-      item_id: accessory.id,
-      item_name: displayName,
-      item_category: accessory.category,
-      item_variant: selectedColor || 'default',
-      quantity,
-    })
+    pdpAnalytics.trackAtcSuccess('primary', quantity)
     showAddedToBagToast(isRTL)
   }
 
   const openShippingInfo = () => {
     setOpenDropdown('shipping')
+    pdpAnalytics.trackAccordionOpen('shipping')
     window.setTimeout(() => scrollPdpAccordionSectionIntoView('shipping'), 280)
   }
 
@@ -652,6 +667,7 @@ export default function AccessoryDetailPage() {
     const next = lightboxImages.findIndex((item) => item.src === src)
     setLightboxIndex(next >= 0 ? next : 0)
     setIsLightboxOpen(true)
+    pdpAnalytics.trackImageClick(galleryIndex)
   }
   const productJsonLd = useMemo(
     () =>
@@ -669,16 +685,6 @@ export default function AccessoryDetailPage() {
     if (!lightboxImages.length) return
     setLightboxIndex((current) => Math.min(current, lightboxImages.length - 1))
   }, [lightboxImages])
-
-  useEffect(() => {
-    trackEvent('view_item', {
-      item_id: accessory.id,
-      item_name: displayName,
-      item_category: accessory.category,
-      currency: 'AED',
-      value: accessory.price,
-    })
-  }, [accessory.category, accessory.id, accessory.price, displayName])
 
   const categoryBreadcrumbLabel =
     isSignatureStrandCategory(accessory.category)
@@ -757,11 +763,7 @@ export default function AccessoryDetailPage() {
                         className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                         onClick={() => {
                           mainSwiperRef.current?.slideTo(index)
-                          trackEvent('gallery_interaction', {
-                            interaction_type: 'thumbnail_click',
-                            item_id: accessory.id,
-                            image_index: index,
-                          })
+                          pdpAnalytics.trackGalleryChange(index, 'thumbnail_click')
                         }}
                         aria-label={ui.shop.openProduct.replace('{name}', `${displayName} ${index + 1}`)}
                         data-cursor-hover
@@ -819,11 +821,7 @@ export default function AccessoryDetailPage() {
                       mainSwiperRef.current = swiper
                     }}
                     onSlideChange={(swiper) =>
-                      trackEvent('gallery_interaction', {
-                        interaction_type: 'slide_change',
-                        item_id: accessory.id,
-                        image_index: swiper.activeIndex,
-                      })
+                      pdpAnalytics.trackGalleryChange(swiper.activeIndex, 'slide_change')
                     }
                     {...(thumbConnected ? { thumbs: { swiper: thumbsSwiper } } : {})}
                     className="h-full w-full min-h-0 product-gallery-swiper"
@@ -899,11 +897,7 @@ export default function AccessoryDetailPage() {
                           className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                           onClick={() => {
                             mainSwiperRef.current?.slideTo(index)
-                            trackEvent('gallery_interaction', {
-                              interaction_type: 'thumbnail_click',
-                              item_id: accessory.id,
-                              image_index: index,
-                            })
+                            pdpAnalytics.trackGalleryChange(index, 'thumbnail_click')
                           }}
                           aria-label={`Show image ${index + 1}`}
                           data-cursor-hover
@@ -1085,6 +1079,7 @@ export default function AccessoryDetailPage() {
                 amount={convertPrice(accessory.price, accessory.id) * quantity}
                 currency={currency.code}
                 className="mb-3 mt-1"
+                onPromoClick={() => pdpAnalytics.trackInstallmentClick('tamara')}
               />
             ) : null}
             {['AED', 'SAR', 'KWD'].includes(currency.code) ? (
@@ -1093,6 +1088,7 @@ export default function AccessoryDetailPage() {
                 currency={currency.code}
                 source="product"
                 className="mb-3"
+                onPromoClick={() => pdpAnalytics.trackInstallmentClick('tabby')}
               />
             ) : null}
 
@@ -1138,6 +1134,7 @@ export default function AccessoryDetailPage() {
             <PdpAccordion
               openId={openDropdown}
               onOpenChange={setOpenDropdown}
+              onSectionOpen={(id) => pdpAnalytics.trackAccordionOpen(id)}
               sections={pdpAccordionSections}
             />
 
@@ -1156,6 +1153,9 @@ export default function AccessoryDetailPage() {
                         href={`/accessories/${item.id}`}
                         className="group relative z-20 block pointer-events-auto"
                         data-cursor-hover
+                        onClick={() =>
+                          pdpAnalytics.trackRelatedProductClick(item.id, relatedName)
+                        }
                       >
                         <div className="relative z-20 aspect-[3/4] overflow-hidden bg-brand-stone/10">
                           <PdpGalleryImage
@@ -1186,9 +1186,15 @@ export default function AccessoryDetailPage() {
         open={isLightboxOpen}
         images={lightboxImages}
         index={lightboxIndex}
-        onIndexChange={setLightboxIndex}
+        onIndexChange={(next) => {
+          setLightboxIndex(next)
+          pdpAnalytics.trackGalleryChange(next, 'lightbox_slide')
+        }}
         onClose={() => setIsLightboxOpen(false)}
         closeLabel={getCheckoutFormCopy(language).closeGallery}
+        onZoomChange={(zoomed, imageIndex) =>
+          pdpAnalytics.trackImageZoom(zoomed, imageIndex)
+        }
       />
 
       <StickyAddToCart
@@ -1201,8 +1207,20 @@ export default function AccessoryDetailPage() {
           sku: resolveAccessorySkuFromSelection(accessory, selectedColor),
         }}
         selectedSize={sizeLabel}
-        selectedColor={selectedColor}
+        selectedColor={
+          selectedColor ||
+          (accessory.colors.length === 1
+            ? getAccessoryColorName(
+                language,
+                accessory.colors[0]!.name,
+                accessory.colors[0]!.nameAr,
+              )
+            : selectedColor)
+        }
         quantity={quantity}
+        onAtcAttempt={() => pdpAnalytics.trackAtcAttempt('sticky')}
+        onAtcSuccess={(qty) => pdpAnalytics.trackAtcSuccess('sticky', qty)}
+        onAtcError={(code) => pdpAnalytics.trackAtcError('sticky', code)}
       />
     </div>
   )

@@ -18,8 +18,8 @@ import {
   PDP_COLOUR_SWATCH,
   pdpColourSwatchState,
 } from '@/lib/ui/pdpColourSwatch'
-import { trackEvent } from '@/lib/analytics/tracking'
 import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
+import { usePdpAnalytics } from '@/lib/analytics/usePdpAnalytics'
 import toast from 'react-hot-toast'
 import { products as staticProducts, type Product } from '@/data/products'
 import { getProductPdpContent } from '@/data/productPdpContent'
@@ -330,13 +330,6 @@ export default function ProductPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- rebuild when gallery inputs change
     [activeImages, selectedColor, language, product],
   )
-  const openLightboxAt = (galleryIndex: number) => {
-    const src = activeImages[galleryIndex]
-    if (!src || isVideoFile(src)) return
-    const next = lightboxImages.findIndex((item) => item.src === src)
-    setLightboxIndex(next >= 0 ? next : 0)
-    setIsLightboxOpen(true)
-  }
 
   useEffect(() => {
     if (!lightboxImages.length) return
@@ -354,18 +347,19 @@ export default function ProductPage() {
     setOpenDropdown(null)
   }, [product?.id, selectedColor])
 
-  useEffect(() => {
-    if (!product) return
-    trackEvent('view_item', {
-      item_id: product.id,
-      item_name: displayName,
-      item_category: product.category,
-      currency: currency.code,
-      value: convertPrice(product.price, product.id),
-    })
-  }, [product, product?.id, currency.code, convertPrice])
+  const displayUnitPrice = convertPrice(product.price, product.id)
+  const pdpAnalytics = usePdpAnalytics({
+    productId: product.id,
+    productName: displayName,
+    category: product.category,
+    currency: currency.code,
+    price: displayUnitPrice,
+    color: selectedColor,
+    size: selectedSize,
+    quantity,
+    surface: 'shop',
+  })
 
-  const displayUnitPrice = convertPrice(product?.price ?? 0, product?.id)
   const sizeAndFitDetails =
     fitAndSizeDetails.length > 0
       ? fitAndSizeDetails
@@ -385,15 +379,19 @@ export default function ProductPage() {
   )
 
   const handleAddToCart = () => {
+    pdpAnalytics.trackAtcAttempt('primary')
     if (!selectedSize) {
+      pdpAnalytics.trackAtcError('primary', 'size_required')
       toast.error(t.product.selectSize)
       return
     }
     if (!selectedColor) {
+      pdpAnalytics.trackAtcError('primary', 'colour_required')
       toast.error(t.product.selectColor)
       return
     }
     if (showPersonalisation && customisationActive && !customisationMessage.trim()) {
+      pdpAnalytics.trackAtcError('primary', 'personalisation_required')
       toast.error(ui.personalisation.emptyError)
       return
     }
@@ -414,24 +412,27 @@ export default function ProductPage() {
       sku: resolveProductSku(product, selectedColor),
     })
 
-    trackEvent('add_to_cart', {
-      item_id: product.id,
-      item_name: displayName,
-      item_category: product.category,
-      item_variant: `${selectedSize}-${selectedColor}`,
-      quantity,
-    })
+    pdpAnalytics.trackAtcSuccess('primary', quantity)
     showAddedToBagToast(isRTL)
   }
 
   const openShippingInfo = () => {
     setOpenDropdown('shipping')
+    pdpAnalytics.trackAccordionOpen('shipping')
     window.setTimeout(() => scrollPdpAccordionSectionIntoView('shipping'), 280)
   }
 
   const handleAccordionOpen = (key: string) => {
-    if (key === 'size') trackEvent('open_size_guide', { page: 'product', item_id: product.id })
-    if (key === 'description') trackEvent('open_personalisation_info', { page: 'product', item_id: product.id })
+    pdpAnalytics.trackAccordionOpen(key)
+  }
+
+  const openLightboxAt = (galleryIndex: number) => {
+    const src = activeImages[galleryIndex]
+    if (!src || isVideoFile(src)) return
+    const next = lightboxImages.findIndex((item) => item.src === src)
+    setLightboxIndex(next >= 0 ? next : 0)
+    setIsLightboxOpen(true)
+    pdpAnalytics.trackImageClick(galleryIndex)
   }
 
   const pdpAccordionSections = useMemo((): PdpAccordionSectionConfig[] => {
@@ -707,11 +708,7 @@ export default function ProductPage() {
                         className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
                         onClick={() => {
                           mainSwiperRef.current?.slideTo(index)
-                          trackEvent('gallery_interaction', {
-                            interaction_type: 'thumbnail_click',
-                            item_id: product.id,
-                            image_index: index,
-                          })
+                          pdpAnalytics.trackGalleryChange(index, 'thumbnail_click')
                         }}
                         aria-label={galleryAria.showImage(index + 1)}
                         data-cursor-hover
@@ -772,11 +769,7 @@ export default function ProductPage() {
                       mainSwiperRef.current = swiper
                     }}
                     onSlideChange={(swiper) =>
-                      trackEvent('gallery_interaction', {
-                        interaction_type: 'slide_change',
-                        item_id: product.id,
-                        image_index: swiper.activeIndex,
-                      })
+                      pdpAnalytics.trackGalleryChange(swiper.activeIndex, 'slide_change')
                     }
                     {...(thumbConnected ? { thumbs: { swiper: thumbsSwiper } } : {})}
                     className="h-full w-full min-h-0 product-gallery-swiper"
@@ -852,7 +845,10 @@ export default function ProductPage() {
                         <button
                           type="button"
                           className="group relative block aspect-[3/4] w-full overflow-hidden border border-brand-stone/25 bg-[#f5f5f5] p-0 text-left outline-none ring-brand-darkRed focus-visible:ring-2"
-                          onClick={() => mainSwiperRef.current?.slideTo(index)}
+                          onClick={() => {
+                            mainSwiperRef.current?.slideTo(index)
+                            pdpAnalytics.trackGalleryChange(index, 'thumbnail_click')
+                          }}
                           aria-label={galleryAria.showImage(index + 1)}
                           data-cursor-hover
                         >
@@ -947,7 +943,12 @@ export default function ProductPage() {
 
             {/* Size Selection */}
             {showSizeSelector ? (
-            <div id="size-selection" className="mb-3 border-b border-brand-stone/20 pb-3">
+            <div
+              id="size-selection"
+              className="mb-3 border-b border-brand-stone/20 pb-3"
+              onFocusCapture={() => pdpAnalytics.trackSizeSelectorOpen()}
+              onClickCapture={() => pdpAnalytics.trackSizeSelectorOpen()}
+            >
               <div className={`mb-2 flex items-center justify-between `}>
                 <span className="font-montserrat text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-darkRed">
                   {t.product.size}
@@ -956,7 +957,7 @@ export default function ProductPage() {
                   type="button"
                   onClick={() => {
                     setIsSizeGuideOpen(true)
-                    trackEvent('open_size_guide', { page: 'product', item_id: product.id })
+                    pdpAnalytics.trackSizeGuideOpen('button')
                   }}
                   className="flex items-center gap-1.5 font-montserrat text-[11px] font-semibold text-brand-darkRed hover:text-brand-dustyBlue tracking-wide underline transition-colors"
                   data-cursor-hover
@@ -970,7 +971,10 @@ export default function ProductPage() {
                   <button
                     key={size}
                     type="button"
-                    onClick={() => setSelectedSize(size)}
+                    onClick={() => {
+                      setSelectedSize(size)
+                      pdpAnalytics.trackSizeSelected(size)
+                    }}
                     className={`min-w-[52px] px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] border transition-all ${CTA_BUTTON_RADIUS} ${
  selectedSize === size
  ? PDP_FILLED_PLUM
@@ -1012,7 +1016,10 @@ export default function ProductPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setCustomisationActive(true)}
+                    onClick={() => {
+                      setCustomisationActive(true)
+                      pdpAnalytics.trackPersonalizationClick('enable')
+                    }}
                     className={`w-full sm:w-auto ${PDP_CONTROL_BUTTON_BASE} ${
  customisationActive
  ? PDP_FILLED_PLUM
@@ -1085,6 +1092,7 @@ export default function ProductPage() {
                 amount={convertPrice(product.price, product.id)}
                 currency={currency.code}
                 className="mb-3 mt-1"
+                onPromoClick={() => pdpAnalytics.trackInstallmentClick('tamara')}
               />
             ) : null}
             {['AED', 'SAR', 'KWD'].includes(currency.code) ? (
@@ -1093,6 +1101,7 @@ export default function ProductPage() {
                 currency={currency.code}
                 source="product"
                 className="mb-3"
+                onPromoClick={() => pdpAnalytics.trackInstallmentClick('tabby')}
               />
             ) : null}
             <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 text-start`}>
@@ -1182,6 +1191,9 @@ export default function ProductPage() {
                       }
                       className="group relative z-20 block pointer-events-auto"
                       data-cursor-hover
+                      onClick={() =>
+                        pdpAnalytics.trackRelatedProductClick(item.id, item.name)
+                      }
                     >
                       <div className="relative z-20 aspect-[9/16] overflow-hidden bg-brand-stone/10">
                         <PdpGalleryImage
@@ -1212,9 +1224,15 @@ export default function ProductPage() {
         open={isLightboxOpen}
         images={lightboxImages}
         index={lightboxIndex}
-        onIndexChange={setLightboxIndex}
+        onIndexChange={(next) => {
+          setLightboxIndex(next)
+          pdpAnalytics.trackGalleryChange(next, 'lightbox_slide')
+        }}
         onClose={() => setIsLightboxOpen(false)}
         closeLabel={galleryAria.closeGallery}
+        onZoomChange={(zoomed, imageIndex) =>
+          pdpAnalytics.trackImageZoom(zoomed, imageIndex)
+        }
       />
 
       {/* Size Guide Modal */}
@@ -1241,6 +1259,9 @@ export default function ProductPage() {
             : undefined
         }
         customisationRequired={Boolean(showPersonalisation && customisationActive)}
+        onAtcAttempt={() => pdpAnalytics.trackAtcAttempt('sticky')}
+        onAtcSuccess={(qty) => pdpAnalytics.trackAtcSuccess('sticky', qty)}
+        onAtcError={(code) => pdpAnalytics.trackAtcError('sticky', code)}
       />
     </div>
   )
