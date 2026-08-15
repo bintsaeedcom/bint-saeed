@@ -58,6 +58,30 @@ function readEnvWidgetConfig(currency: string, price: number): WidgetConfig | nu
   return { enabled: true, publicKey, merchantCode }
 }
 
+function stackCheckoutCard(host: HTMLElement): boolean {
+  const portal = host.firstElementChild as HTMLElement | null
+  const root = portal?.shadowRoot
+  if (!root) return false
+
+  const summary = root.querySelector<HTMLElement>(
+    '[class*="PaymentOptionSummary__PaymentOptionSummary--"]',
+  )
+  const options = root.querySelector<HTMLElement>('[class*="OptionList__OptionList--"]')
+  const container = summary?.parentElement
+  if (!container || !summary || !options) return false
+
+  Object.assign(container.style, {
+    boxSizing: 'border-box',
+    flexDirection: 'column',
+    gap: '16px',
+    height: 'auto',
+    width: '100%',
+  })
+  summary.style.width = '100%'
+  options.style.width = '100%'
+  return true
+}
+
 /**
  * Official Tabby on-site messaging (required for Custom API QA).
  * Uses public key + merchant code only — never the secret key.
@@ -112,10 +136,20 @@ export default function TabbyPromoSnippet({
     if (!widgetConfig?.enabled || typeof window === 'undefined') return
 
     let cancelled = false
+    let checkoutLayoutTimer: number | undefined
     const code = currency.toUpperCase()
     const priceStr = code === 'KWD' ? price.toFixed(3) : price.toFixed(2)
     const lang = language === 'ar' ? 'ar' : 'en'
     const { publicKey, merchantCode } = widgetConfig
+
+    const applyCheckoutLayout = (attempt = 0) => {
+      if (cancelled || source !== 'checkout') return
+      const host = document.getElementById(hostId)
+      if (host && stackCheckoutCard(host)) return
+      if (attempt < 40) {
+        checkoutLayoutTimer = window.setTimeout(() => applyCheckoutLayout(attempt + 1), 50)
+      }
+    }
 
     const run = async () => {
       try {
@@ -132,6 +166,7 @@ export default function TabbyPromoSnippet({
             publicKey,
             merchantCode,
           })
+          applyCheckoutLayout()
         } else {
           await loadScript('https://checkout.tabby.ai/tabby-promo.js')
           if (cancelled || !window.TabbyPromo) return
@@ -155,6 +190,7 @@ export default function TabbyPromoSnippet({
     void run()
     return () => {
       cancelled = true
+      if (checkoutLayoutTimer != null) window.clearTimeout(checkoutLayoutTimer)
       const el = document.getElementById(hostId)
       if (el) el.innerHTML = ''
     }

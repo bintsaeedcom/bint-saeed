@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { FiX } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { hasStoredCookieChoice } from '@/lib/analytics/consent'
+import { hasRegionalExperienceChoice } from '@/lib/geo/geoDetection'
 import toast from 'react-hot-toast'
 import { validateSubscriberEmail } from '@/lib/validateSubscriberEmail'
 import { validateSubscriberName } from '@/lib/validateSubscriberName'
@@ -25,6 +26,8 @@ import {
 import { trackEvent } from '@/lib/analytics/tracking'
 
 const HOUSE_MONOGRAM_SRC = '/brand/house-monogram-burgundy.webp'
+const EMAIL_POPUP_DELAY_MS = 150_000
+const SESSION_STARTED_AT_KEY = 'bint-saeed-session-started-at'
 
 export default function EmailPopup() {
   const pathname = usePathname()
@@ -52,6 +55,15 @@ export default function EmailPopup() {
       return
     }
 
+    const storedSessionStart = Number(sessionStorage.getItem(SESSION_STARTED_AT_KEY))
+    const sessionStartedAt =
+      Number.isFinite(storedSessionStart) && storedSessionStart > 0
+        ? storedSessionStart
+        : Date.now()
+    if (sessionStartedAt !== storedSessionStart) {
+      sessionStorage.setItem(SESSION_STARTED_AT_KEY, String(sessionStartedAt))
+    }
+
     const inner = pathname ? stripLocaleFromPathname(pathname).pathname : '/'
     const onInviteSurface =
       inner === '/home' ||
@@ -64,10 +76,42 @@ export default function EmailPopup() {
     const hasSubscribed = localStorage.getItem('bint-saeed-subscribed')
 
     if (!hasSeenPopup && !hasSubscribed) {
-      const timer = setTimeout(() => {
-        if (hasStoredCookieChoice()) setIsOpen(true)
-      }, 45000)
-      return () => clearTimeout(timer)
+      let timer: number | undefined
+      let regionalSettled = hasRegionalExperienceChoice()
+
+      const tryOpen = () => {
+        if (timer != null) {
+          window.clearTimeout(timer)
+          timer = undefined
+        }
+        const remaining = sessionStartedAt + EMAIL_POPUP_DELAY_MS - Date.now()
+        if (remaining > 0) {
+          timer = window.setTimeout(tryOpen, remaining)
+          return
+        }
+        if (regionalSettled && hasStoredCookieChoice()) setIsOpen(true)
+      }
+
+      const onRegionalOpened = () => {
+        regionalSettled = false
+      }
+      const onRegionalClosed = () => {
+        regionalSettled = true
+        tryOpen()
+      }
+      const onCookieClosed = () => tryOpen()
+
+      window.addEventListener('regional-experience-opened', onRegionalOpened)
+      window.addEventListener('regional-experience-closed', onRegionalClosed)
+      window.addEventListener('cookie-consent-closed', onCookieClosed)
+      tryOpen()
+
+      return () => {
+        if (timer != null) window.clearTimeout(timer)
+        window.removeEventListener('regional-experience-opened', onRegionalOpened)
+        window.removeEventListener('regional-experience-closed', onRegionalClosed)
+        window.removeEventListener('cookie-consent-closed', onCookieClosed)
+      }
     }
   }, [pathname])
 

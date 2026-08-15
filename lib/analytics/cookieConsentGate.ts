@@ -3,9 +3,11 @@
 import { hasStoredCookieChoice } from '@/lib/analytics/consent'
 import { hasRegionalExperienceChoice } from '@/lib/geo/geoDetection'
 
-/** Short pause so the first paint settles; regional may still close first. */
+/** Short pause on returning visits where regional preferences are already known. */
 export const COOKIE_DELAY_MS = 2_500
-/** If regional never settles (geo miss / bot skip), still ask for cookies. */
+/** Breathing room between closing regional preferences and showing cookies. */
+export const COOKIE_AFTER_REGIONAL_MS = 1_800
+/** If regional detection never responds, still ask for cookies. */
 export const COOKIE_FALLBACK_MS = 8_000
 
 type ShowListener = () => void
@@ -24,13 +26,19 @@ let fallbackTimer: number | undefined
 let regionalListenerAttached = false
 let minDelayDone = false
 let regionalSettled = false
+let regionalOpen = false
 const showListeners = new Set<ShowListener>()
+
+function clearDelayTimer() {
+  if (typeof window === 'undefined') return
+  if (delayTimer != null) window.clearTimeout(delayTimer)
+  delayTimer = undefined
+}
 
 function clearTimers() {
   if (typeof window === 'undefined') return
-  if (delayTimer != null) window.clearTimeout(delayTimer)
+  clearDelayTimer()
   if (fallbackTimer != null) window.clearTimeout(fallbackTimer)
-  delayTimer = undefined
   fallbackTimer = undefined
 }
 
@@ -78,12 +86,25 @@ function ensureScheduled() {
   autoPromptScheduled = true
   minDelayDone = false
   regionalSettled = hasRegionalExperienceChoice()
+  regionalOpen = false
 
   if (!regionalListenerAttached) {
     regionalListenerAttached = true
+    window.addEventListener('regional-experience-opened', () => {
+      regionalOpen = true
+      regionalSettled = false
+      minDelayDone = false
+      clearDelayTimer()
+    })
     window.addEventListener('regional-experience-closed', () => {
+      regionalOpen = false
       regionalSettled = true
-      maybeShow()
+      minDelayDone = false
+      clearDelayTimer()
+      delayTimer = window.setTimeout(() => {
+        minDelayDone = true
+        maybeShow()
+      }, COOKIE_AFTER_REGIONAL_MS)
     })
   }
 
@@ -93,6 +114,7 @@ function ensureScheduled() {
   }, COOKIE_DELAY_MS)
 
   fallbackTimer = window.setTimeout(() => {
+    if (regionalOpen) return
     regionalSettled = true
     minDelayDone = true
     maybeShow()

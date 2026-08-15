@@ -122,7 +122,10 @@ export default function RegionalExperiencePopup() {
       }
 
       popupTimer = window.setTimeout(() => {
-        if (!cancelled) setIsVisible(true)
+        if (!cancelled) {
+          window.dispatchEvent(new CustomEvent('regional-experience-opened'))
+          setIsVisible(true)
+        }
       }, POPUP_DELAY_MS)
     }
 
