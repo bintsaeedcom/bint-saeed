@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
@@ -48,6 +49,7 @@ import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
 import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
 import { glassDrawer, glassDrawerWash, glassTextMuted, glassTextTitle } from '@/lib/ui/glassClasses'
+import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 import { ctaPrimary, ctaPrimarySoft, ctaSecondaryOnLight, ctaSecondaryOutlineOnDark } from '@/lib/ui/ctaClasses'
 import { shopStrandsCta } from '@/lib/i18n/strandsBrandLock'
 import { getKeepExploringLine } from '@/lib/i18n/keepExploringCopyI18n'
@@ -91,6 +93,7 @@ export default function AccessoriesPage() {
   const [selectedColors, setSelectedColors] = useState<ColorFilterId[]>([])
   const [quickBuyAccessory, setQuickBuyAccessory] = useState<Accessory | null>(null)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const categoryScrollRef = useRef<HTMLDivElement>(null)
   const { formatPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
@@ -133,6 +136,13 @@ export default function AccessoriesPage() {
     const active = scroller.querySelector<HTMLElement>('[aria-selected="true"]')
     active?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' })
   }, [activeCategory])
+
+  useEffect(() => setMounted(true), [])
+
+  useEffect(() => {
+    if (!isFilterOpen) return
+    return lockBodyScroll()
+  }, [isFilterOpen])
 
   const replaceAccessoryQuery = useCallback(
     (patch: Partial<{
@@ -623,7 +633,12 @@ export default function AccessoriesPage() {
         />
       ) : null}
 
-      {/* Mobile Filter Drawer */}
+      {/*
+       * Mobile Filter Drawer — portalled to body because `<main>` in LayoutWrapper is
+       * `z-40`, which caps descendant stacking contexts below the `z-60` fixed header.
+       */}
+      {mounted
+        ? createPortal(
       <AnimatePresence>
         {isFilterOpen && (
           <>
@@ -639,6 +654,7 @@ export default function AccessoriesPage() {
               animate={{ x: 0 }}
               exit={{ x: isRTL ? '100%' : '-100%' }}
               transition={{ type: 'tween', duration: 0.3 }}
+              data-scroll-lock-owner="true"
               className={`fixed ${isRTL ? 'right-0 border-l' : 'left-0 border-r'} top-0 bottom-0 z-50 w-[min(100vw,20rem)] overflow-y-auto ${glassDrawer}`}
             >
               <div className={glassDrawerWash} aria-hidden />
@@ -737,7 +753,10 @@ export default function AccessoriesPage() {
             </motion.div>
           </>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+            document.body,
+          )
+        : null}
     </div>
   )
 }

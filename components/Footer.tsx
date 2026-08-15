@@ -62,7 +62,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative w-full min-w-0 max-w-none overflow-x-hidden bg-[#12080b]">
+    <footer className="relative w-full min-w-0 max-w-none overflow-x-clip bg-[#12080b]">
       {/* Main Footer Links - Coming Soon Dark Gradient Style */}
       <div className="relative text-white">
         {/* Coming Soon gradient background */}

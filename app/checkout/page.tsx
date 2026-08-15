@@ -786,7 +786,7 @@ function CheckoutPageContent() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-[calc(var(--mobile-bottom-chrome,0px)+1.5rem)] lg:pb-0">
+    <div className="min-h-screen overflow-x-clip bg-brand-pageCanvas pb-[calc(var(--mobile-bottom-chrome,0px)+1.5rem)] lg:pb-0">
       <div className="border-b border-brand-stone/20 bg-brand-pageCanvas">
         <div className={`container mx-auto min-w-0 px-4 pb-4 ${SITE_CONTENT_TOP_PAD} sm:px-6 sm:pb-6 lg:px-12`}>
           <AppPageWayfinding
@@ -896,8 +896,11 @@ function CheckoutPageContent() {
             </div>
           </div>
         ) : (
-        <div className="grid min-w-0 gap-8 lg:grid-cols-12 lg:gap-12">
-          <div className="min-w-0 lg:col-span-7">
+        /* Fixed summary width rather than a 12-col fraction: the payment panel
+           nests two more padding levels inside it, so a fractional column left
+           the Tabby card too narrow to render without cramping at `lg`. */
+        <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-12">
+          <div className="min-w-0">
             <motion.section
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -961,7 +964,7 @@ function CheckoutPageContent() {
             </motion.section>
           </div>
 
-          <div className="min-w-0 lg:col-span-5">
+          <div className="min-w-0">
             <div className="lg:sticky lg:top-28">
               <motion.div
                 initial={{ opacity: 0, y: 12 }}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { useSearchParams, useRouter } from 'next/navigation'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
@@ -31,6 +32,7 @@ import { getProductHref } from '@/lib/products/links'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
 import { trackEvent } from '@/lib/analytics/tracking'
 import { glassDrawer, glassDrawerWash, glassTextMuted, glassTextTitle } from '@/lib/ui/glassClasses'
+import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 import {
   PRODUCT_GRID_COLOUR_DOT,
   PRODUCT_GRID_COLOUR_DOT_ROW,
@@ -78,6 +80,7 @@ export default function ShopClient() {
   const [sortOpen, setSortOpen] = useState(false)
   const [sortBy, setSortBy] = useState<SortId>('newest')
   const [quickBuyProduct, setQuickBuyProduct] = useState<Product | null>(null)
+  const [mounted, setMounted] = useState(false)
   const sortMenuRef = useRef<HTMLDivElement | null>(null)
   const { formatPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
@@ -105,6 +108,13 @@ export default function ShopClient() {
     },
     [localize, router],
   )
+
+  useEffect(() => setMounted(true), [])
+
+  useEffect(() => {
+    if (!filterOpen) return
+    return lockBodyScroll()
+  }, [filterOpen])
 
   useEffect(() => {
     if (!searchParams) return
@@ -191,7 +201,7 @@ export default function ShopClient() {
 
   const sortLabel = sortOptions.find((o) => o.id === sortBy)?.label ?? ui.shop.sortNewest
   return (
-    <div className={`flex min-h-screen flex-col overflow-x-hidden bg-brand-pageCanvas text-neutral-900 `}>
+    <div className={`flex min-h-screen flex-col overflow-x-clip bg-brand-pageCanvas text-neutral-900 `}>
       <div className="flex-1">
       <header className="section-full overflow-hidden border-b border-black/5 bg-stone-50">
         <div className={`mx-auto max-w-[1400px] px-6 pb-10 ${SITE_CONTENT_TOP_PAD} md:px-10 md:pb-14 lg:px-14`}>
@@ -536,11 +546,19 @@ export default function ShopClient() {
         />
       ) : null}
 
-      {/* Only mount the drawer when open so a hidden fixed layer never intercepts taps (mobile). */}
+      {/*
+       * Portalled to body: `<main>` in LayoutWrapper is `z-40`, so it caps every
+       * descendant stacking context below the `z-60` fixed header. Rendered in place,
+       * the drawer's close button sits under the header and taps hit the header instead.
+       * Only mounted when open so a hidden fixed layer never intercepts taps (mobile).
+       */}
+      {mounted
+        ? createPortal(
       <AnimatePresence>
         {filterOpen && (
           <motion.div
             key="shop-filter-overlay"
+            data-scroll-lock-owner="true"
             className="fixed inset-0 z-[85] md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -620,7 +638,10 @@ export default function ShopClient() {
             </motion.aside>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+            document.body,
+          )
+        : null}
     </div>
   )
 }

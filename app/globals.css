@@ -874,10 +874,15 @@ html {
   }
 }
 
-/* Prevent horizontal overflow on all devices */
+/*
+ * Prevent horizontal overflow on all devices.
+ * Must stay `clip`, never `hidden`: `overflow-x: hidden` coerces the computed
+ * `overflow-y` from `visible` to `auto`, turning html/body into nested scroll
+ * containers that freeze touch scrolling on iOS Safari.
+ */
 html, body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Safe area for notched phones (iPhone X+) */
@@ -1403,6 +1408,28 @@ input, textarea, select {
   overflow: visible;
 }
 
+/*
+ * Tabby injects third-party markup with hashed class names and desktop-first
+ * widths. In the narrow checkout payment panel its benefits column pushes past
+ * the host box and gets silently cut by the page wrapper's `overflow-x: clip`.
+ * Neutralising the intrinsic minimums lets the widget's own flex rows compress
+ * and wrap instead of overflowing. Safe for the "Learn more" dialog: that layer
+ * is fixed-position, so percentages resolve against the viewport, not the host.
+ */
+.tabby-snippet *,
+[data-tamara-widget-host] * {
+  /* `!important` because the vendor sets these inline on its own nodes. */
+  min-width: 0 !important;
+  max-width: 100% !important;
+  /* Vendor rows are `flex: 0 0 auto`, so they overflow rather than compress.
+     Wrapping only engages when a row genuinely runs out of room, so wide
+     viewports keep the original single-row card. */
+  flex-wrap: wrap;
+  /* `break-word`, not `anywhere` — long tokens still wrap, but ordinary retail
+     copy keeps its natural line breaks instead of splitting mid-word. */
+  overflow-wrap: break-word;
+}
+
 [class*='styles__dialog--'] {
   align-items: flex-start !important;
   padding-top: max(16px, env(safe-area-inset-top, 0px)) !important;
@@ -1413,6 +1440,9 @@ input, textarea, select {
 [class*='styles__dialogContent--'] {
   flex-shrink: 0;
   width: min(100%, 480px);
+  /* Exempt from the containment guard above — the dialog is its own fixed layer
+     and must keep its full width even when opened from a narrow promo host. */
+  max-width: none !important;
   max-height: calc(
     100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)
   );

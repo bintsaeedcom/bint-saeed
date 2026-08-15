@@ -182,7 +182,7 @@ function CheckoutSuccessContent() {
         : successCopy.pendingSubtitle
 
   return (
-    <div className={`relative flex min-h-screen flex-col overflow-x-hidden bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD}`}>
+    <div className={`relative flex min-h-screen flex-col overflow-x-clip bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD}`}>
       <div className="absolute top-20 right-0 h-96 w-96 rounded-full bg-brand-stone/10 blur-3xl" />
       <div className="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-brand-dustyBlue/5 blur-3xl" />
 

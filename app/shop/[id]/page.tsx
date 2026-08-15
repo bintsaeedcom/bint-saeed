@@ -639,7 +639,7 @@ export default function ProductPage() {
   ])
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-[calc(var(--mobile-bottom-chrome,0px)+1rem)] lg:pb-0">
+    <div className="min-h-screen overflow-x-clip bg-brand-pageCanvas pb-[calc(var(--mobile-bottom-chrome,0px)+1rem)] lg:pb-0">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <AppPageWayfinding
         layout="bar"

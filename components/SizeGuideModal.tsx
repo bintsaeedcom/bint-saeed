@@ -1,12 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import { FiX, FiExternalLink, FiCheck } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getSizeGuideModalCopy } from '@/lib/i18n/sizeGuideModalCopyI18n'
 import { sizeGuideTable as sizeData } from '@/lib/sizeGuideData'
+import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 
 interface SizeGuideModalProps {
   isOpen: boolean
@@ -17,8 +19,19 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
   const { isRTL, language } = useLanguage()
   const copy = getSizeGuideModalCopy(language)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
+  const [mounted, setMounted] = useState(false)
 
-  return (
+  useEffect(() => setMounted(true), [])
+
+  useEffect(() => {
+    if (!isOpen) return
+    return lockBodyScroll()
+  }, [isOpen])
+
+  if (!mounted) return null
+
+  // Portal keeps the modal out of PDP transform/clip ancestors that can hide a fixed layer.
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -32,7 +45,10 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
           />
 
           {/* Modal */}
-          <div className="fixed inset-0 z-[101] flex items-center justify-center p-4 md:p-6">
+          <div
+            data-scroll-lock-owner="true"
+            className="fixed inset-0 z-[101] flex items-center justify-center p-4 md:p-6"
+          >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -159,6 +175,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
           </div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }

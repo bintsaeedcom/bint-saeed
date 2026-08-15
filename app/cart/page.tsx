@@ -117,7 +117,7 @@ export default function CartPage() {
   if (items.length === 0) {
     const emptyCopy = getCartEmptyDiscoverCopy(language)
     return (
-      <div className={`relative flex min-h-screen flex-col overflow-x-hidden bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD}`}>
+      <div className={`relative flex min-h-screen flex-col overflow-x-clip bg-brand-pageCanvas ${SITE_CONTENT_TOP_PAD}`}>
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-[min(52vh,28rem)] bg-[radial-gradient(120%_80%_at_50%_-10%,rgba(26,2,16,0.14),transparent_68%)]"
           aria-hidden
@@ -171,7 +171,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-brand-pageCanvas pb-[calc(var(--mobile-bottom-chrome,5.5rem)+1rem)] lg:pb-0">
+    <div className="min-h-screen overflow-x-clip bg-brand-pageCanvas pb-[calc(var(--mobile-bottom-chrome,5.5rem)+1rem)] lg:pb-0">
       {/* Header */}
       <div className={`border-b border-brand-stone/20 pb-4 ${SITE_CONTENT_TOP_PAD} sm:pb-6`}>
         <div className="container mx-auto min-w-0 px-4 sm:px-6 lg:px-12">
@@ -196,9 +196,12 @@ export default function CartPage() {
       </div>
 
       <div className="container mx-auto min-w-0 px-4 py-8 sm:px-6 sm:py-12 lg:px-12">
-        <div className="grid min-w-0 gap-8 lg:grid-cols-3 lg:gap-16">
+        {/* A thirds grid starved the summary to ~245px at `lg`, breaking the total
+            label mid-word and clipping the Tabby promo. Give the summary a fixed
+            comfortable width and let the line items absorb the remainder. */}
+        <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-10 xl:gap-16">
           {/* Cart Items */}
-          <div className="lg:col-span-2">
+          <div className="min-w-0">
             <div className="space-y-8">
               {items.map((item, index) => (
                 <motion.div
@@ -346,7 +349,7 @@ export default function CartPage() {
           </div>
 
           {/* Order Summary */}
-          <div className="lg:col-span-1">
+          <div className="min-w-0">
             <div className={`relative sticky top-32 overflow-hidden rounded-2xl border border-brand-darkRed/10 bg-gradient-to-b from-[#3B0A12] to-[#1F0508] p-6 text-brand-ivory shadow-xl sm:p-8 text-start`}>
               <div
                 className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-dustyBlue/40 to-transparent"
@@ -357,16 +360,16 @@ export default function CartPage() {
               </h2>
 
               <div
-                className={`flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 `}
+                className={`flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-montserrat text-sm tracking-wide text-white/75 `}
               >
-                <span className="min-w-0">{ui.cart.subtotal}</span>
+                <span>{ui.cart.subtotal}</span>
                 <span className="shrink-0 whitespace-nowrap text-white">{formatCartSubtotal(items)}</span>
               </div>
 
               <div
-                className={`mt-3 flex items-baseline justify-between gap-4 font-montserrat text-sm tracking-wide text-white/75 `}
+                className={`mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-montserrat text-sm tracking-wide text-white/75 `}
               >
-                <span className="min-w-0">{shippingMessages.feeLabel}</span>
+                <span>{shippingMessages.feeLabel}</span>
                 <span
                   className={`shrink-0 whitespace-nowrap ${
  !requiresPhysicalShipping || shippingMessages.unlocked
@@ -380,9 +383,9 @@ export default function CartPage() {
 
               <div className="mt-8 border-t border-white/10 pt-6">
                 <div
-                  className={`flex items-baseline justify-between gap-4 `}
+                  className={`flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 `}
                 >
-                  <span className="min-w-0 font-montserrat text-[13px] uppercase tracking-[0.16em] text-white/80">{ui.cart.estimatedTotal}</span>
+                  <span className="font-montserrat text-[13px] uppercase tracking-[0.16em] text-white/80">{ui.cart.estimatedTotal}</span>
                   <span className="shrink-0 whitespace-nowrap font-rozha text-xl text-white">{formatAmount(estimatedTotal)}</span>
                 </div>
                 <p className="mt-2 font-montserrat text-[11px] tracking-wide text-white/55">

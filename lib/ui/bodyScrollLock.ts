@@ -136,12 +136,27 @@ export function forceUnlockBodyScroll(): void {
   }
 }
 
-/** True when a known overlay owns the scroll lock. */
+/**
+ * True when a known overlay owns the scroll lock.
+ *
+ * Owner elements must still be rendered and visible. A detached-but-present or
+ * `display: none` owner left behind by an interrupted exit animation would
+ * otherwise keep the page locked forever with nothing on screen to close.
+ */
 export function hasActiveScrollLockOwner(): boolean {
   if (typeof document === 'undefined') return false
   if (document.documentElement.dataset.mobileNavOpen === '1') return true
   if (document.documentElement.classList.contains('tabby-dialog-open')) return true
-  if (document.querySelector('[data-scroll-lock-owner="true"]')) return true
+  const owners = document.querySelectorAll<HTMLElement>('[data-scroll-lock-owner="true"]')
+  for (const owner of Array.from(owners)) {
+    if (!owner.isConnected) continue
+    // offsetParent is null for display:none (and for fixed layers, hence the rect check).
+    const rect = owner.getBoundingClientRect()
+    if (rect.width < 1 || rect.height < 1) continue
+    const style = window.getComputedStyle(owner)
+    if (style.display === 'none' || style.visibility === 'hidden') continue
+    return true
+  }
   return false
 }
 
