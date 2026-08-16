@@ -5,18 +5,20 @@
  */
 
 /**
- * A grid, not a wrapping flex row: two-column cards are too narrow for six chips
- * on one line, and free wrapping leaves a lone XXL orphaned under a full row.
+ * Sizes stay closed until the card's CTA asks for them, so they read as one quiet
+ * line of type on a single row. Bordered boxes wrapped onto two rows in a
+ * two-column grid and dominated the card.
  */
-export const PRODUCT_GRID_SIZE_ROW = 'grid grid-cols-3 gap-1 sm:grid-cols-6 sm:gap-1.5'
+export const PRODUCT_GRID_SIZE_ROW =
+  'flex flex-nowrap items-center gap-x-2.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-x-3.5'
 
 const BASE =
-  'inline-flex min-h-[30px] w-full items-center justify-center border px-1 font-montserrat text-[10px] uppercase leading-none tracking-[0.08em] transition-colors sm:text-[11px]'
+  'inline-flex min-h-[32px] min-w-[24px] shrink-0 items-center justify-center border-b px-0.5 font-montserrat text-[11px] uppercase leading-none tracking-[0.1em] transition-colors'
 
 export function productGridSizeChipClass(selected: boolean): string {
   return selected
-    ? `${BASE} border-brand-darkRed bg-brand-darkRed text-white`
-    : `${BASE} border-brand-darkRed/20 bg-transparent text-brand-darkRed/70 hover:border-brand-darkRed/55 hover:text-brand-darkRed`
+    ? `${BASE} border-brand-darkRed text-brand-darkRed`
+    : `${BASE} border-transparent text-brand-darkRed/50 hover:border-brand-darkRed/40 hover:text-brand-darkRed`
 }
 
 /** Full-width card CTA — fills in once a size is chosen so the card reads as ready. */
