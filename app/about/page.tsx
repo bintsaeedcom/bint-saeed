@@ -31,14 +31,14 @@ const HERITAGE_VIDEO_POSTER = '/about/bint-saeed-abu-dhabi-about-heritage-editor
 const HERITAGE_FABRIC_BG = '/strands/charm-fabric-light.webp' as const
 
 /**
- * Sticky card stack — each section sits full-viewport-tall so the next panel can
- * clearly slide over it while scrolling (desktop overlap feel).
- * Avoid overflow-x-clip on the page shell: it breaks position:sticky.
+ * Layered card stack — each chapter overlaps the previous one with a rounded top
+ * edge and lifted shadow, but scrolls with the page so no film or paragraph is
+ * ever frozen out of view. Card padding must stay larger than the overlap.
  */
 const ABOUT_STACK_CARD =
-  'sticky top-0 -mt-12 min-h-[100dvh] will-change-transform rounded-t-[20px] shadow-[0_-28px_64px_rgba(0,0,0,0.42)] sm:-mt-14 md:-mt-16'
-const ABOUT_STACK_PAD = 'pt-20 pb-52 sm:pt-24 sm:pb-60 md:pt-28 md:pb-72'
-const ABOUT_STACK_CONTENT_PAD = 'pb-24 sm:pb-32 md:pb-40'
+  'relative -mt-12 rounded-t-[20px] shadow-[0_-28px_64px_rgba(0,0,0,0.42)] sm:-mt-14 md:-mt-16'
+const ABOUT_STACK_PAD = 'pt-16 pb-24 sm:pt-20 sm:pb-28 md:pt-24 md:pb-32'
+const ABOUT_STACK_CONTENT_PAD = 'pb-8 sm:pb-10 md:pb-12'
 
 function EditorialFilm({ src, poster, ariaLabel }: { src: string; poster: string; ariaLabel: string }) {
   const ref = useRef<HTMLVideoElement | null>(null)
@@ -126,7 +126,9 @@ function ReelFrame({
       : 'border border-[#6f1524]/18 bg-[#12010c]'
 
   return (
-    <div className={`relative mx-auto w-full max-w-[min(100%,22.5rem)] sm:max-w-[26rem] lg:max-w-[28rem]`}>
+    // On desktop the film holds still while the prose scrolls, so its 9:16 frame is
+    // capped through the width to whatever height is left under the fixed header.
+    <div className="relative mx-auto w-full max-w-[min(100%,22.5rem)] sm:max-w-[26rem] lg:max-w-[min(28rem,calc((100dvh-9rem)*0.5625))]">
       <div className={`relative aspect-[9/16] w-full overflow-hidden ${shell} shadow-[0_24px_56px_-32px_rgba(0,0,0,0.55)]`}>
         {children}
       </div>
