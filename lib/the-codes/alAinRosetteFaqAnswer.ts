@@ -1,12 +1,16 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getTheCodesSections } from '@/lib/the-codes/codesPageContent'
 
-/** Primary Al Ain Rosette paragraph from /the-codes — single source of truth sitewide. */
+/** Full Al Ain Rosette copy from /the-codes — single source of truth sitewide. */
 export function getAlAinRosetteFaqAnswer(locale: AppLocale = 'en'): string {
   const section = getTheCodesSections(locale).find((s) => s.id === 'al-ain-rosette')
-  const paragraph = section?.paragraphs[0]?.trim()
-  if (paragraph) return paragraph
-  return getTheCodesSections('en').find((s) => s.id === 'al-ain-rosette')!.paragraphs[0]!
+  const joined = section?.paragraphs.map((p) => p.trim()).filter(Boolean).join(' ')
+  if (joined) return joined
+  return getTheCodesSections('en')
+    .find((s) => s.id === 'al-ain-rosette')!
+    .paragraphs.map((p) => p.trim())
+    .filter(Boolean)
+    .join(' ')
 }
 
 const ROSETTE_FAQ_QUESTION: Record<AppLocale, string> = {

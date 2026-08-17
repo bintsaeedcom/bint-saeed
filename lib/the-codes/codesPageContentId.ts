@@ -52,7 +52,10 @@ export const THE_CODES_SECTIONS_ID: CodesSectionContent[] = [
     eyebrow: 'Motif',
     title: 'Al Ain Rosette',
     paragraphs: [
-      'Al Ain Rosette muncul sebagai batu karnelian ukir dalam rumah. Warna hangatnya mencerminkan lanskap gurun Al Ain di Uni Emirat Arab, sementara bentuknya mengingatkan pada bentuk bulat hyacinth gurun dan bunga kuning Tribulus omanense. Saat ini, ia muncul dalam perhiasan dan objek kecil sebagai titik pengenalan yang khas.',
+      'Al Ain Rosette adalah batu karnelian ukir, dikembangkan sebagai motif khas rumah Bint Saeed.',
+      'Warna hangatnya diambil dari lanskap Uni Emirat Arab yang berubah. Dari pasir pucat di sepanjang pantai Abu Dhabi hingga nada merah yang lebih dalam di sekitar Al Ain, gurun bergeser warnanya. Karnelian menangkap spektrum itu secara alami — dari amber hangat hingga terracotta yang kaya.',
+      'Bentuk bulatnya merujuk flora gurun Al Ain, mengingatkan pada hyacinth gurun dan bunga berkelopak lembut Tribulus omanense, bunga nasional UEA.',
+      'Al Ain Rosette kini ditemukan pada perhiasan terpilih, strand ponsel, dan objek kecil, di mana ia mulai menetapkan House Code yang dikenali dan dapat berkembang di Bint Saeed seiring waktu.',
     ],
     imageFile: IMG.alAinRosette,
     imageAlt: withBrandAlt(

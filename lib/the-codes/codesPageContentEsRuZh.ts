@@ -79,7 +79,10 @@ export const THE_CODES_SECTIONS_ES: CodesSectionContent[] = [
     eyebrow: 'Motivo',
     title: 'Al Ain Rosette',
     paragraphs: [
-      'La Al Ain Rosette aparece como una piedra de cornalina tallada dentro de la maison. Su tono cálido refleja el paisaje desértico de Al Ain en los United Arab Emirates, mientras su forma evoca las siluetas redondeadas del jacinto del desierto y la flor amarilla de Tribulus omanense. Por ahora, aparece en joyería y objetos pequeños como un punto distinto de reconocimiento.',
+      'La Al Ain Rosette es una piedra de cornalina tallada, desarrollada como motivo distintivo de la maison Bint Saeed.',
+      'Su color cálido bebe del paisaje cambiante de los Emiratos Árabes Unidos. De las arenas pálidas a lo largo de la costa de Abu Dhabi a los rojos más profundos en torno a Al Ain, el desierto se desplaza en color. La cornalina captura este espectro de forma natural, del ámbar cálido a la terracota rica.',
+      'Su forma redondeada remite a la flora desértica de Al Ain, evocando el jacinto del desierto y la suave flor de pétalos delicados de Tribulus omanense, flor nacional de los Emiratos.',
+      'La Al Ain Rosette se encuentra hoy en una selección de joyería, strands de teléfono y objetos pequeños, donde empieza a establecer un house code reconocible, destinado a evolucionar dentro de Bint Saeed.',
     ],
     imageFile: IMG.alAinRosette,
     imageAlt: withBrandAlt(
@@ -154,7 +157,10 @@ export const THE_CODES_SECTIONS_RU: CodesSectionContent[] = [
     eyebrow: 'Мотив',
     title: 'Al Ain Rosette',
     paragraphs: [
-      'Al Ain Rosette появляется в доме как резной сердолик. Его тёплый тон отражает пустынный ландшафт Al Ain в United Arab Emirates, а форма напоминает округлые очертания пустынного гиацинта и жёлтый цветок Tribulus omanense. Пока он появляется в ювелирных изделиях и малых объектах как особая точка узнавания.',
+      'Al Ain Rosette — резной сердолик, разработанный как отличительный мотив дома Bint Saeed.',
+      'Его тёплый цвет черпает из меняющегося ландшафта Объединённых Арабских Эмиратов. От бледных песков вдоль побережья Абу-Даби до более глубоких красных тонов вокруг Аль-Айна пустыня смещается в цвете. Сердолик естественно удерживает этот спектр — от тёплого янтаря до насыщенной терракоты.',
+      'Округлые очертания обращаются к флоре пустыни Аль-Айна, напоминая пустынный гиацинт и мягкий лепестковый цветок Tribulus omanense — национальный цветок ОАЭ.',
+      'Сегодня Al Ain Rosette встречается в избранных украшениях, телефонных стрендах и малых предметах, где начинает устанавливать узнаваемый код дома, способный развиваться в Bint Saeed со временем.',
     ],
     imageFile: IMG.alAinRosette,
     imageAlt: withBrandAlt(
@@ -223,7 +229,10 @@ export const THE_CODES_SECTIONS_ZH: CodesSectionContent[] = [
     eyebrow: '纹样',
     title: 'Al Ain Rosette',
     paragraphs: [
-      'Al Ain Rosette 以雕琢的红玉髓出现在品牌之中。其暖色映现阿拉伯联合酋长国 Al Ain 的沙漠地貌，形态则唤起沙漠风信子的圆润轮廓与 Tribulus omanense 的黄花。眼下，它出现在珠宝与小物件中，作为清晰的辨识点。',
+      'Al Ain Rosette 是一枚雕琢的红玉髓，作为 Bint Saeed 品牌的鲜明纹样而立。',
+      '其暖色取自阿拉伯联合酋长国变幻的地貌。从阿布扎比沿岸的浅沙，到阿尔艾因一带更深的红调，沙漠在色彩中推移。红玉髓天然容纳这一谱系——从温暖琥珀到浓郁赤陶。',
+      '圆润形态汲取阿尔艾因的沙漠植物，唤起沙漠风信子与柔瓣之花 Tribulus omanense——阿联酋国花。',
+      'Al Ain Rosette 目前见于精选珠宝、手机挂链与小件器物，开始确立可辨的 House Code，并将随 Bint Saeed 持续延展。',
     ],
     imageFile: IMG.alAinRosette,
     imageAlt: withBrandAlt('Al Ain Rosette 红玉髓纹样 — 来自阿布扎比的阿联酋传承代码'),

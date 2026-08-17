@@ -14,7 +14,9 @@ type Row = {
   id: string
   eyebrow: string
   title: string
-  paragraph: string
+  /** Prefer `paragraphs` when a code needs more than one block. */
+  paragraph?: string
+  paragraphs?: string[]
   imageFile: string
   imageAlt: string
 }
@@ -24,7 +26,7 @@ function pack(rows: Row[]): CodesSectionContent[] {
     id: r.id,
     eyebrow: r.eyebrow,
     title: r.title,
-    paragraphs: [r.paragraph],
+    paragraphs: r.paragraphs ?? [r.paragraph!],
     imageFile: r.imageFile,
     imageAlt: withBrandAlt(r.imageAlt),
   }))
@@ -63,8 +65,12 @@ export const THE_CODES_SECTIONS_FR = pack([
     id: 'al-ain-rosette',
     eyebrow: 'Motif',
     title: 'Al Ain Rosette',
-    paragraph:
-      'L’Al Ain Rosette apparaît comme une pierre de cornaline sculptée au sein de la maison. Sa teinte chaude évoque le paysage désertique d’Al Ain aux Émirats arabes unis, tandis que sa forme rappelle les contours arrondis de la jacinthe du désert et la fleur jaune de Tribulus omanense. Pour l’heure, elle figure en joaillerie et petits objets comme point de reconnaissance distinct.',
+    paragraphs: [
+      'La Rosette d’Al Ain est une pierre de cornaline sculptée, développée comme motif distinctif de la maison Bint Saeed.',
+      'Sa teinte chaude puise dans le paysage changeant des Émirats arabes unis. Des sables pâles le long de la côte d’Abou Dabi aux rouges plus profonds autour d’Al Ain, le désert se déplace en couleur. La cornaline retient naturellement ce spectre, de l’ambre chaud à la terre cuite riche.',
+      'Sa forme arrondie s’inspire de la flore désertique d’Al Ain, rappelant la jacinthe du désert et la douce fleur aux pétales souples de Tribulus omanense, fleur nationale des Émirats.',
+      'La Rosette d’Al Ain apparaît aujourd’hui dans une sélection de bijoux, de strands téléphone et de petits objets, où elle commence à établir un house code reconnaissable, destiné à évoluer au sein de Bint Saeed.',
+    ],
     imageFile: IMG.alAinRosette,
     imageAlt: 'Motif Al Ain Rosette en cornaline — house code d’héritage émirati d’Abu Dhabi',
   },
@@ -122,8 +128,12 @@ export const THE_CODES_SECTIONS_IT = pack([
     id: 'al-ain-rosette',
     eyebrow: 'Motivo',
     title: 'Al Ain Rosette',
-    paragraph:
-      'L’Al Ain Rosette appare come una pietra di corniola scolpita all’interno della maison. Il suo tono caldo evoca il paesaggio desertico di Al Ain negli Emirati Arabi Uniti, mentre la forma richiama i contorni arrotondati del giacinto del deserto e il fiore giallo di Tribulus omanense. Per ora compare in gioielleria e piccoli oggetti come punto di riconoscimento distinto.',
+    paragraphs: [
+      'L’Al Ain Rosette è una pietra di corniola scolpita, sviluppata come motivo distintivo della maison Bint Saeed.',
+      'Il suo colore caldo attinge al paesaggio mutevole degli Emirati Arabi Uniti. Dalle sabbie chiare lungo la costa di Abu Dhabi ai rossi più profondi intorno ad Al Ain, il deserto cambia tono. La corniola cattura naturalmente questo spettro, dall’ambra calda alla terracotta ricca.',
+      'La forma arrotondata richiama la flora desertica di Al Ain — il giacinto del deserto e il soffice fiore dai petali morbidi di Tribulus omanense, fiore nazionale degli Emirati.',
+      'L’Al Ain Rosette compare oggi in una selezione di gioielli, strand per telefono e piccoli oggetti, dove inizia a stabilire un house code riconoscibile, destinato a evolversi entro Bint Saeed.',
+    ],
     imageFile: IMG.alAinRosette,
     imageAlt: 'Motivo Al Ain Rosette in corniola — house code di heritage emiratino da Abu Dhabi',
   },
@@ -180,8 +190,12 @@ export const THE_CODES_SECTIONS_DE = pack([
     id: 'al-ain-rosette',
     eyebrow: 'Motiv',
     title: 'Al Ain Rosette',
-    paragraph:
-      'Die Al Ain Rosette erscheint als geschnittener Karneolstein im Haus. Ihr warmer Ton spiegelt die Wüstenlandschaft von Al Ain in den Vereinigten Arabischen Emiraten, während ihre Form an die gerundeten Konturen der Wüstenhyazinthe und die gelbe Blüte von Tribulus omanense erinnert. Derzeit erscheint sie in Schmuck und kleinen Objekten als klarer Wiedererkennungspunkt.',
+    paragraphs: [
+      'Die Al Ain Rosette ist ein geschnittener Karneolstein, entwickelt als charakteristisches Hausmotiv von Bint Saeed.',
+      'Ihre warme Farbe schöpft aus der wechselnden Landschaft der Vereinigten Arabischen Emirate. Von den hellen Sanden an der Küste Abu Dhabis bis zu den tieferen Rottönen um Al Ain verschiebt sich die Wüste in der Farbe. Karneol hält dieses Spektrum natürlich fest — von warmem Bernstein bis zu reichem Terrakotta.',
+      'Ihre gerundete Form greift die Wüstenflora Al Ains auf und erinnert an die Wüstenhyazinthe und die weichblättrige Blüte von Tribulus omanense, der Nationalblume der VAE.',
+      'Die Al Ain Rosette findet sich derzeit in ausgewähltem Schmuck, Telefon-Strands und kleinen Objekten, wo sie beginnt, einen erkennbaren House Code zu setzen — der sich über Bint Saeed hinweg weiterentwickeln kann.',
+    ],
     imageFile: IMG.alAinRosette,
     imageAlt: 'Al Ain Rosette Karneolmotiv — emiratisches Erbe house code aus Abu Dhabi',
   },
@@ -238,8 +252,12 @@ export const THE_CODES_SECTIONS_NL = pack([
     id: 'al-ain-rosette',
     eyebrow: 'Motief',
     title: 'Al Ain Rosette',
-    paragraph:
-      'De Al Ain Rosette verschijnt als gesneden carneoolsteen binnen het huis. Haar warme toon weerspiegelt het woestijnlandschap van Al Ain in de Verenigde Arabische Emiraten, terwijl de vorm herinnert aan de ronde contouren van de woestijnhyacint en de gele bloem van Tribulus omanense. Voorlopig verschijnt zij in sieraden en kleine objecten als duidelijk herkenningspunt.',
+    paragraphs: [
+      'De Al Ain Rosette is een gesneden carneoolsteen, ontwikkeld als kenmerkend huis-motief van Bint Saeed.',
+      'Haar warme kleur put uit het wisselende landschap van de Verenigde Arabische Emiraten. Van de bleke zanden langs de kust van Abu Dhabi tot de diepere rode tonen rond Al Ain verschuift de woestijn in kleur. Carneool vangt dit spectrum van nature — van warme amber tot rijke terracotta.',
+      'Haar ronde vorm grijpt naar de woestijnflora van Al Ain en herinnert aan de woestijnhyacint en de zachtgebladerde bloem van Tribulus omanense, de nationale bloem van de VAE.',
+      'De Al Ain Rosette verschijnt momenteel in geselecteerde sieraden, telefoonstrands en kleine objecten, waar zij begint een herkenbare House Code te vestigen die zich binnen Bint Saeed kan ontwikkelen.',
+    ],
     imageFile: IMG.alAinRosette,
     imageAlt: 'Al Ain Rosette carneoolmotief — Emiratisch erfgoed house code uit Abu Dhabi',
   },
@@ -297,8 +315,12 @@ export const THE_CODES_SECTIONS_PT = pack([
     id: 'al-ain-rosette',
     eyebrow: 'Motivo',
     title: 'Al Ain Rosette',
-    paragraph:
-      'A Al Ain Rosette aparece como pedra de cornalina esculpida dentro da maison. O seu tom quente reflecte a paisagem desértica de Al Ain nos Emirados Árabes Unidos, enquanto a forma recorda os contornos arredondados do jacinto do deserto e a flor amarela de Tribulus omanense. Por agora, aparece em joalharia e pequenos objectos como ponto de reconhecimento distinto.',
+    paragraphs: [
+      'A Al Ain Rosette é uma pedra de cornalina esculpida, desenvolvida como motivo distintivo da maison Bint Saeed.',
+      'A sua cor quente bebe da paisagem em mudança dos Emirados Árabes Unidos. Das areias pálidas ao longo da costa de Abu Dhabi aos vermelhos mais profundos em torno de Al Ain, o deserto desloca-se em cor. A cornalina captura naturalmente este espectro — do âmbar quente ao terracota rico.',
+      'A forma arredondada remete à flora desértica de Al Ain, evocando o jacinto do deserto e a suave flor de pétalas macias de Tribulus omanense, flor nacional dos Emirados.',
+      'A Al Ain Rosette encontra-se actualmente numa selecção de joalharia, strands de telemóvel e pequenos objectos, onde começa a estabelecer um house code reconhecível, destinado a evoluir no seio de Bint Saeed.',
+    ],
     imageFile: IMG.alAinRosette,
     imageAlt: 'Motivo Al Ain Rosette em cornalina — house code de herança emiradense de Abu Dhabi',
   },

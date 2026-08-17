@@ -90,7 +90,10 @@ export const THE_CODES_SECTIONS: CodesSectionContent[] = [
     eyebrow: 'Motif',
     title: 'Al Ain Rosette',
     paragraphs: [
-      'The Al Ain Rosette appears as a carved carnelian stone within the house. Its warm tone reflects the desert landscape of Al Ain in the United Arab Emirates, while its form recalls the rounded shapes of the desert hyacinth and the yellow bloom of Tribulus omanense. For now, it appears in jewellery and small objects as a distinct point of recognition.',
+      'The Al Ain Rosette is a carved Carnelian stone developed as a distinctive Bint Saeed House motif.',
+      'Its warm colour draws from the changing landscape of the United Arab Emirates. From the pale sands along Abu Dhabi’s coast to the deeper red tones found around Al Ain, the desert shifts in colour across the landscape. Carnelian captures this spectrum naturally, from warm amber to rich terracotta.',
+      'Its rounded form draws from the desert flora of Al Ain, recalling the desert hyacinth and the soft petalled bloom of Tribulus omanense, the national flower of the UAE.',
+      'The Al Ain Rosette is currently found across selected jewellery, phone strands and small objects, where it begins to establish a recognisable House code that can evolve across Bint Saeed over time.',
     ],
     imageFile: CODES_IMAGE_FILES.alAinRosette,
     imageAlt: withBrandAlt(
