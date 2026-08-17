@@ -554,13 +554,13 @@ export default function ShopClient() {
                         addCardToBag(product)
                         setSizeRowProductId(null)
                       }}
-                      className={`relative z-20 ${productGridAddToBagClass(cardArmed)}`}
+                      className={`relative z-20 ${productGridAddToBagClass(Boolean(selectedCardSize))}`}
                       data-cursor-hover
                     >
                       <FiShoppingBag className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                      <span className="truncate">
-                        {cardArmed || sizeRowOpen ? ui.quickBuy.addToBag : ui.quickBuy.buyNow}
-                      </span>
+                      {/* One label across the grid: a row of cards reading Buy Now beside
+                          Add to Bag looked like a fault rather than two states. */}
+                      <span className="truncate">{ui.quickBuy.addToBag}</span>
                     </button>
                     {/* Floats under the CTA so revealing sizes never resizes the card
                         or drags the neighbouring card's copy down the row. */}

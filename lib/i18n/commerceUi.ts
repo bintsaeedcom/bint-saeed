@@ -247,8 +247,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'Collection',
       chapterTitle: 'Chapter I',
-      chapterIntro:
-        'Contemporary silhouettes shaped by Emirati heritage, created for women whose lives move between cultures, cities and worlds.',
+      chapterIntro: 'Contemporary silhouettes for a life lived across cities.',
       refine: 'Refine',
       productCategories: 'Product categories',
       sizing: 'Sizing',
@@ -452,8 +451,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'التشكيلة',
       chapterTitle: 'الفصل ١',
-      chapterIntro:
-        'قصّات معاصرة مستوحاة من التراث الإماراتي، صُنعت لنساء تتحرك حياتهن بين الثقافات والمدن والعوالم.',
+      chapterIntro: 'قصّات معاصرة لحياة تُعاش عبر المدن.',
       refine: 'تصفية',
       productCategories: 'فئات المنتجات',
       sizing: 'المقاسات',
@@ -656,8 +654,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'Collection',
       chapterTitle: 'Chapitre I',
-      chapterIntro:
-        'Silhouettes contemporaines façonnées par le patrimoine émirati, créées pour des femmes dont la vie circule entre cultures, villes et mondes.',
+      chapterIntro: 'Silhouettes contemporaines pour une vie vécue d’une ville à l’autre.',
       refine: 'Affiner',
       productCategories: 'Catégories de produits',
       sizing: 'Tailles',
@@ -860,8 +857,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'Kollektion',
       chapterTitle: 'Kapitel I',
-      chapterIntro:
-        'Zeitgenössische Silhouetten, geprägt vom emiratischen Erbe — für Frauen, deren Leben zwischen Kulturen, Städten und Welten verläuft.',
+      chapterIntro: 'Zeitgenössische Silhouetten für ein Leben zwischen den Städten.',
       refine: 'Verfeinern',
       productCategories: 'Produktkategorien',
       sizing: 'Größen',
@@ -1064,8 +1060,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'Collezione',
       chapterTitle: 'Capitolo I',
-      chapterIntro:
-        'Silhouette contemporanee plasmate dal patrimonio emiratino, create per donne la cui vita si muove tra culture, città e mondi.',
+      chapterIntro: 'Silhouette contemporanee per una vita vissuta tra le città.',
       refine: 'Filtra',
       productCategories: 'Categorie prodotto',
       sizing: 'Taglie',
@@ -1268,7 +1263,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'Coleccion',
       chapterTitle: 'Capitulo I',
-      chapterIntro: 'Dondequiera que se viva la vida, de Abu Dhabi a Londres...',
+      chapterIntro: 'Siluetas contemporáneas para una vida vivida entre ciudades.',
       refine: 'Refinar',
       productCategories: 'Categorias de producto',
       sizing: 'Tallas',
@@ -1471,7 +1466,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'Коллекция',
       chapterTitle: 'Глава I',
-      chapterIntro: 'Где бы ни проходила жизнь, от Абу-Даби до Лондона...',
+      chapterIntro: 'Современные силуэты для жизни между городами.',
       refine: 'Фильтры',
       productCategories: 'Категории товаров',
       sizing: 'Размеры',
@@ -1674,7 +1669,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: '系列',
       chapterTitle: '第一章',
-      chapterIntro: '无论生活发生在何处，从阿布扎比到伦敦...',
+      chapterIntro: '当代廓形，为往来于都市之间的生活而作。',
       refine: '筛选',
       productCategories: '产品分类',
       sizing: '尺码',
@@ -1877,8 +1872,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'Collectie',
       chapterTitle: 'Hoofdstuk I',
-      chapterIntro:
-        'Eigentijdse silhouetten, gevormd door Emiratisch erfgoed — voor vrouwen wier leven zich beweegt tussen culturen, steden en werelden.',
+      chapterIntro: 'Eigentijdse silhouetten voor een leven tussen steden.',
       refine: 'Verfijnen',
       productCategories: 'Productcategorieën',
       sizing: 'Maten',
@@ -2081,8 +2075,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'Coleção',
       chapterTitle: 'Capítulo I',
-      chapterIntro:
-        'Silhuetas contemporâneas moldadas pelo património emiradense, criadas para mulheres cuja vida se move entre culturas, cidades e mundos.',
+      chapterIntro: 'Silhuetas contemporâneas para uma vida vivida entre cidades.',
       refine: 'Refinar',
       productCategories: 'Categorias de produto',
       sizing: 'Tamanhos',
@@ -2285,7 +2278,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'Koleksi',
       chapterTitle: 'Bab I',
-      chapterIntro: 'Di mana pun kehidupan dijalani, dari Abu Dhabi hingga London...',
+      chapterIntro: 'Siluet kontemporer untuk kehidupan yang dilalui antar kota.',
       refine: 'Saring',
       productCategories: 'Kategori produk',
       sizing: 'Ukuran',
@@ -2488,7 +2481,7 @@ const COMMERCE_UI: Record<AppLocale, CommerceUi> = {
     shop: {
       collectionEyebrow: 'Koleksi',
       chapterTitle: 'Bab I',
-      chapterIntro: 'Di mana sahaja kehidupan dijalani, dari Abu Dhabi hingga London...',
+      chapterIntro: 'Siluet kontemporari untuk kehidupan yang dilalui merentasi bandar.',
       refine: 'Tapis',
       productCategories: 'Kategori produk',
       sizing: 'Saiz',
