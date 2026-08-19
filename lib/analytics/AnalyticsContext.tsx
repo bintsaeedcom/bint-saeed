@@ -8,6 +8,7 @@ import {
   markGpsPromptHandled,
 } from '@/lib/geo/locationEvents'
 import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
+import { parseClientDevice } from '@/lib/analytics/parseClientDevice'
 import { languageLabels } from '@/lib/geo/geoDetection'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 import {
@@ -102,31 +103,11 @@ function generateId() {
   return Math.random().toString(36).substring(2) + Date.now().toString(36)
 }
 
-function getDeviceInfo() {
+function getDeviceInfo(): ReturnType<typeof parseClientDevice> {
   if (typeof window === 'undefined') {
-    return { type: 'desktop' as const, browser: 'Unknown', os: 'Unknown' }
+    return { type: 'desktop', browser: 'Unknown', os: 'Unknown' }
   }
-
-  const ua = navigator.userAgent
-  let type: 'mobile' | 'tablet' | 'desktop' = 'desktop'
-  
-  if (/Mobi|Android/i.test(ua)) type = 'mobile'
-  else if (/Tablet|iPad/i.test(ua)) type = 'tablet'
-
-  let browser = 'Unknown'
-  if (ua.includes('Chrome')) browser = 'Chrome'
-  else if (ua.includes('Safari')) browser = 'Safari'
-  else if (ua.includes('Firefox')) browser = 'Firefox'
-  else if (ua.includes('Edge')) browser = 'Edge'
-
-  let os = 'Unknown'
-  if (ua.includes('Windows')) os = 'Windows'
-  else if (ua.includes('Mac')) os = 'macOS'
-  else if (ua.includes('Linux')) os = 'Linux'
-  else if (ua.includes('Android')) os = 'Android'
-  else if (ua.includes('iOS') || ua.includes('iPhone')) os = 'iOS'
-
-  return { type, browser, os }
+  return parseClientDevice(navigator.userAgent)
 }
 
 function getBrowserContext(): BrowserContext | null {

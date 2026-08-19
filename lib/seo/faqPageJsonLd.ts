@@ -20,6 +20,8 @@ export function buildFaqPageJsonLd(locale: AppLocale) {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     inLanguage: schemaInLanguageForLocale(locale),
+    datePublished: '2026-04-22',
+    dateModified: new Date().toISOString().slice(0, 10),
     mainEntity: flattenFaqMainEntity(locale),
   }
 }

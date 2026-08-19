@@ -278,6 +278,8 @@ function buildProductNode(
     image: buildImageObjects(product, images, color, input.lang, input.locale),
     offers: buildOffer(product, input.pageUrl),
     ...schemaSharedFields(product, slug, input.locale, color, input.lang),
+    datePublished: '2026-04-22',
+    dateModified: new Date().toISOString().slice(0, 10),
   }
 }
 

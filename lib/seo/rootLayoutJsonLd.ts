@@ -837,6 +837,8 @@ export function buildWebPageJsonLd(locale: AppLocale, innerPath: string) {
       '@type': 'SpeakableSpecification',
       cssSelector: ['.font-rozha', 'h1', 'h2'],
     },
+    datePublished: '2026-04-22',
+    dateModified: new Date().toISOString().slice(0, 10),
     keywords: kw,
   }
 }

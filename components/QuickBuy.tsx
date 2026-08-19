@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { FiX, FiShoppingBag, FiArrowRight, FiPackage, FiRotateCcw } from 'react-icons/fi'
+import { FiX, FiShoppingBag, FiArrowRight, FiPackage, FiRotateCcw, FiClock } from 'react-icons/fi'
 import { useCartStore } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -12,6 +12,8 @@ import { commerceUi } from '@/lib/i18n/commerceUi'
 import { productPageUi } from '@/lib/i18n/productPageUi'
 import { formatAmountForCurrency, getUaeFreeShippingThreshold } from '@/lib/pricing'
 import { withShippingAmount } from '@/lib/shipping/withShippingAmount'
+import { formatGarmentEstimatedShipWindow } from '@/lib/shipping/formatGarmentEstimatedShipWindow'
+import { PdpFasterDeliveryContact } from '@/components/pdp/PdpFasterDeliveryContact'
 import { getProductHref } from '@/lib/products/links'
 import { resolveProductSku } from '@/lib/products/sku'
 import { metaCatalogIdForCartLine } from '@/lib/analytics/metaCatalogIds'
@@ -36,6 +38,7 @@ import {
   pdpColourSwatchState,
 } from '@/lib/ui/pdpColourSwatch'
 import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
+import { useFocusTrap } from '@/lib/ui/useFocusTrap'
 import { localizedPath } from '@/lib/i18n/routing'
 import type { AppLocale } from '@/lib/i18n/routing'
 
@@ -64,6 +67,8 @@ interface QuickBuyProps {
 }
 
 export default function QuickBuy({ isOpen, onClose, initialSize, product }: QuickBuyProps) {
+  const sheetRef = useRef<HTMLDivElement>(null)
+  useFocusTrap(sheetRef, isOpen)
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
   const [customisationActive, setCustomisationActive] = useState(false)
@@ -85,6 +90,14 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
   const showSizeSelector =
     product.sizes.length > 1 &&
     productShowsSizeSelector(product.category ?? 'Kaftans', product.sizes, product.slug)
+
+  const estimatedShipWindow = useMemo(
+    () => formatGarmentEstimatedShipWindow(language),
+    [language],
+  )
+  const shipNote = productIsOneSizeOnly({ slug: product.slug, sizes: product.sizes })
+    ? pdpUi.oneSizeMadeToOrderShips(estimatedShipWindow)
+    : pdpUi.madeToOrderShips(estimatedShipWindow)
 
   useEffect(() => {
     setMounted(true)
@@ -233,6 +246,7 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
           />
 
           <motion.div
+            ref={sheetRef}
             key="quickbuy-sheet"
             role="dialog"
             aria-modal="true"
@@ -318,6 +332,17 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
                   </p>
                 </div>
               </div>
+
+              <p
+                className={`mb-1 flex items-start gap-2 font-montserrat text-[11px] leading-snug tracking-wide text-[#4a3a36] text-start`}
+              >
+                <FiClock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-darkRed/75" aria-hidden />
+                <span>{shipNote}</span>
+              </p>
+              <PdpFasterDeliveryContact
+                className="mb-3.5 font-montserrat text-[11px] leading-snug tracking-wide text-[#4a3a36]"
+                analyticsSource="quick_buy_faster_delivery"
+              />
 
               {showSizeSelector && (
                 <div className="mb-3.5">

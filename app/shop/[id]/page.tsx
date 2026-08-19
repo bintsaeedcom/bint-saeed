@@ -11,6 +11,7 @@ import type { Swiper as SwiperType } from 'swiper'
 import { FiPlus, FiMinus, FiHeart, FiMaximize2, FiGlobe, FiAward } from 'react-icons/fi'
 import SizeGuideModal from '@/components/SizeGuideModal'
 import StickyAddToCart from '@/components/StickyAddToCart'
+import { PdpFasterDeliveryContact } from '@/components/pdp/PdpFasterDeliveryContact'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import TamaraProductWidget from '@/components/TamaraProductWidget'
 import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
@@ -56,6 +57,7 @@ import {
 } from '@/lib/shopProductOptions'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { getStripeShipToCopy } from '@/lib/shipping/stripeShipToCopy'
+import { formatGarmentEstimatedShipWindow } from '@/lib/shipping/formatGarmentEstimatedShipWindow'
 import { resolveProductSku } from '@/lib/products/sku'
 import { buildMetaApparelCatalogId } from '@/lib/analytics/metaCatalogIds'
 import {
@@ -239,6 +241,10 @@ export default function ProductPage() {
     if (!sku) return null
     return formatPdpProductCodeLine(sku, isRTL)
   }, [product, selectedColor, isRTL])
+  const estimatedShipWindow = useMemo(
+    () => formatGarmentEstimatedShipWindow(language),
+    [language],
+  )
   /** Thumbs strip is hidden on small screens; connecting Thumbs module with swiper=null breaks layout on iOS. */
   const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
   const mainGalleryModules = useMemo(
@@ -996,8 +1002,22 @@ export default function ProductPage() {
                   </button>
                 ))}
               </div>
+              <p className="mt-2 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
+                {ui.madeToOrderShips(estimatedShipWindow)}
+              </p>
+              <PdpFasterDeliveryContact />
             </div>
-            ) : null}
+            ) : (
+              <div
+                id="size-selection"
+                className="mb-3 border-b border-brand-stone/20 pb-3"
+              >
+                <p className="font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
+                  {ui.oneSizeMadeToOrderShips(estimatedShipWindow)}
+                </p>
+                <PdpFasterDeliveryContact />
+              </div>
+            )}
 
             {showPersonalisation && (
               <div id="personalisation-section" className="mb-3 border-b border-brand-stone/20 pb-3">

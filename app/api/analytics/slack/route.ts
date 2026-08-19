@@ -99,8 +99,38 @@ function formatLocationText(location: any): string {
 function formatAddress(location: any): string {
   if (!location) return 'Not available'
   if (location.address) return location.address
-  const fallback = [location.city, location.region, location.postalCode, location.country].filter(Boolean).join(', ')
+  const fallback = [location.neighborhood, location.city, location.region, location.postalCode, location.country]
+    .filter(Boolean)
+    .join(', ')
   return fallback || 'Not available'
+}
+
+function formatNeighborhood(location: any): string {
+  if (!location) return 'Unknown'
+  const value =
+    location.neighborhood ||
+    location.suburb ||
+    location.cityDistrict ||
+    location.district ||
+    location.borough ||
+    ''
+  if (!value) return 'Unknown'
+  return String(value).trim()
+}
+
+function formatDistrict(location: any): string {
+  if (!location) return 'Unknown'
+  const value = location.cityDistrict || location.district || location.borough || location.county || ''
+  return typeof value === 'string' && value.trim() ? value.trim() : 'Unknown'
+}
+
+function formatGeoSource(location: any): string {
+  const source = String(location?.geoSource || '').trim()
+  if (!source) return 'Unknown'
+  if (source === 'merged') return 'Vercel + ip-api'
+  if (source === 'ip-api') return 'ip-api'
+  if (source === 'vercel') return 'Vercel edge'
+  return source
 }
 
 function formatAccuracy(location: any): string {
@@ -234,6 +264,7 @@ export async function POST(request: NextRequest) {
     const { type, data } = await request.json()
 
     let payload = data
+    const neighborhoodTypes = new Set(['new_visitor', 'returning_visitor', 'location_update', 'page_view'])
     if (data?.visitorId) {
       const loc = (data.location || {}) as Record<string, unknown>
       const serverGeo = await resolveRequestGeo(request)
@@ -257,7 +288,48 @@ export async function POST(request: NextRequest) {
             as: serverGeo?.as || loc.as,
             geoSource: serverGeo?.source || loc.geoSource,
             accuracyLevel: loc.accuracyLevel === 'gps' ? 'gps' : 'ip',
+            neighborhood:
+              (typeof loc.neighborhood === 'string' && loc.neighborhood.trim()) ||
+              (typeof loc.suburb === 'string' && loc.suburb.trim()) ||
+              '',
+            cityDistrict:
+              (typeof loc.cityDistrict === 'string' && loc.cityDistrict.trim()) ||
+              (typeof loc.district === 'string' && loc.district.trim()) ||
+              '',
           },
+        }
+      }
+
+      const lat = Number(payload?.location?.latitude)
+      const lng = Number(payload?.location?.longitude)
+      const hasNeighborhood = Boolean(
+        payload?.location?.neighborhood ||
+          payload?.location?.suburb ||
+          payload?.location?.cityDistrict ||
+          payload?.location?.district,
+      )
+      if (
+        neighborhoodTypes.has(type) &&
+        !hasNeighborhood &&
+        Number.isFinite(lat) &&
+        Number.isFinite(lng)
+      ) {
+        const geocoded = await reverseGeocodeApproxNeighborhood(lat, lng)
+        if (geocoded.neighborhood || geocoded.cityDistrict || geocoded.address) {
+          payload = {
+            ...payload,
+            location: {
+              ...payload.location,
+              neighborhood: geocoded.neighborhood || payload.location?.neighborhood || '',
+              cityDistrict: geocoded.cityDistrict || payload.location?.cityDistrict || '',
+              postalCode: geocoded.postalCode || payload.location?.postalCode || '',
+              address:
+                geocoded.address ||
+                payload.location?.address ||
+                payload.location?.display_name ||
+                '',
+            },
+          }
         }
       }
 
@@ -371,8 +443,18 @@ function formatSlackMessage(type: string, data: any) {
   const ispText = formatIspLine(data.location)
   const shopPref = formatShopPreferenceLine(data.currency || data.shopCurrency, data.language || data.shopLanguage)
   const browserTz = data.browser?.timezone || data.location?.browserTimezone || '—'
+  const neighborhood = formatNeighborhood(data.location)
+  const district = formatDistrict(data.location)
+  const postcode = data.location?.postalCode || 'Unknown'
+  const geoSource = formatGeoSource(data.location)
+  const locationConfidence = data.locationSignals?.confidence || 'unknown'
 
   const geoExtraFields = [
+    { type: 'mrkdwn' as const, text: `*Approx neighborhood:*\n🏘️ ${neighborhood}` },
+    { type: 'mrkdwn' as const, text: `*Approx district:*\n🧭 ${district}` },
+    { type: 'mrkdwn' as const, text: `*Approx postcode:*\n🔢 ${postcode}` },
+    { type: 'mrkdwn' as const, text: `*Geo source:*\n🛰️ ${geoSource}` },
+    { type: 'mrkdwn' as const, text: `*Confidence:*\n${locationConfidence}` },
     { type: 'mrkdwn' as const, text: `*Approx area:*\n📬 ${addressText}` },
     { type: 'mrkdwn' as const, text: `*Location trust:*\n🎯 ${accuracyText}` },
     { type: 'mrkdwn' as const, text: `*VPN / proxy:*\n${vpnText}` },
@@ -913,6 +995,59 @@ function formatTime(seconds: number): string {
   if (mins < 60) return `${mins}m ${secs}s`
   const hours = Math.floor(mins / 60)
   return `${hours}h ${mins % 60}m`
+}
+
+function readNeighborhoodFromAddress(address: Record<string, unknown> | undefined): string {
+  if (!address) return ''
+  const candidates = [
+    address.neighbourhood,
+    address.neighborhood,
+    address.suburb,
+    address.city_district,
+    address.district,
+    address.quarter,
+    address.borough,
+  ]
+  for (const value of candidates) {
+    if (typeof value === 'string' && value.trim()) return value.trim()
+  }
+  return ''
+}
+
+async function reverseGeocodeApproxNeighborhood(
+  latitude: number,
+  longitude: number,
+): Promise<Partial<Record<string, string>>> {
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${encodeURIComponent(latitude)}&lon=${encodeURIComponent(longitude)}&zoom=14&addressdetails=1`,
+      { signal: AbortSignal.timeout(2500), next: { revalidate: 0 } },
+    )
+    if (!res.ok) return {}
+    const data = (await res.json()) as {
+      address?: Record<string, unknown>
+      display_name?: string
+    }
+    const address = data.address || {}
+    const neighborhood = readNeighborhoodFromAddress(address)
+    const cityDistrict =
+      (typeof address.city_district === 'string' && address.city_district.trim()) ||
+      (typeof address.district === 'string' && address.district.trim()) ||
+      ''
+    const postalCode =
+      (typeof address.postcode === 'string' && address.postcode.trim()) || ''
+    return {
+      neighborhood: neighborhood || undefined,
+      cityDistrict: cityDistrict || undefined,
+      postalCode: postalCode || undefined,
+      address:
+        typeof data.display_name === 'string' && data.display_name.trim()
+          ? data.display_name.trim()
+          : undefined,
+    }
+  } catch {
+    return {}
+  }
 }
 
 // GET endpoint for admin dashboard

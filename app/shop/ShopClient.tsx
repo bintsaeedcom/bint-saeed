@@ -296,6 +296,21 @@ export default function ShopClient() {
   const sortLabel = sortOptions.find((o) => o.id === sortBy)?.label ?? ui.shop.sortNewest
   return (
     <div className={`flex min-h-screen flex-col overflow-x-clip bg-brand-pageCanvas text-neutral-900 `}>
+      {/* Hidden cross-link nav for search-engine internal link equity — invisible to users */}
+      <nav aria-hidden="true" className="sr-only" aria-label="Category cross-links">
+        {categories
+          .filter((c) => c !== 'All')
+          .map((cat) => (
+            <a key={cat} href={`/shop?category=${cat}`}>
+              {cat}
+            </a>
+          ))}
+        {catalog.map((p) => (
+          <a key={p.id} href={getProductHref(p)}>
+            {p.name}
+          </a>
+        ))}
+      </nav>
       <div className="flex-1">
       <header className="section-full overflow-hidden border-b border-black/5 bg-stone-50">
         <div className={`mx-auto max-w-[1400px] px-6 pb-10 ${SITE_CONTENT_TOP_PAD} md:px-10 md:pb-14 lg:px-14`}>

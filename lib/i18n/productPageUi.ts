@@ -22,8 +22,14 @@ export type ProductPageUi = {
   faq: string
   readMore: string
   readLess: string
-  /** Jewellery / accessories PDP only — garments show lead time on checkout. */
+  /** Garment PDP — estimated shipment window (10–14 days from page view). */
+  madeToOrderShips: (dateRange: string) => string
+  oneSizeMadeToOrderShips: (dateRange: string) => string
+  /** Jewellery / accessories PDP only. */
   jewelleryLeadTime: string
+  fasterDeliveryPrompt: string
+  fasterDeliveryCta: string
+  fasterDeliveryWhatsAppMessage: string
   personalisation: ProductPageUiPersonalisation
   ethicallyMade: string
   weGiveForward: string
@@ -46,7 +52,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Read more',
     readLess: 'Read less',
+    madeToOrderShips: (dateRange: string) =>
+      `Made to order — estimated shipment ${dateRange} (10–14 days)`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `One size · made to order — estimated shipment ${dateRange} (10–14 days)`,
     jewelleryLeadTime: 'Crafted after your order · ships in 4–7 days',
+    fasterDeliveryPrompt: 'Need it faster?',
+    fasterDeliveryCta: 'Contact us now',
+    fasterDeliveryWhatsAppMessage:
+      "I'm interested in one of your styles but I need a faster delivery. What are the options?",
     personalisation: {
       title: 'Personalisation',
       desc: 'Add a name, special date or message to the inner label - complimentary.',
@@ -75,7 +89,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'الأسئلة الشائعة',
     readMore: 'اقرأي المزيد',
     readLess: 'عرض أقل',
+    madeToOrderShips: (dateRange: string) =>
+      `تُصنع حسب الطلب — الشحن المتوقع ${dateRange} (10–14 يوماً)`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `مقاس واحد · تُصنع حسب الطلب — الشحن المتوقع ${dateRange} (10–14 يوماً)`,
     jewelleryLeadTime: 'تُصنع بعد طلبكِ · تُشحن خلال 4–7 أيام',
+    fasterDeliveryPrompt: 'تحتاجينها أسرع؟',
+    fasterDeliveryCta: 'تواصلي معنا الآن',
+    fasterDeliveryWhatsAppMessage:
+      'أنا مهتمة بأحد طرازاتكم وأحتاج إلى توصيل أسرع. ما الخيارات المتاحة؟',
     personalisation: {
       title: 'التخصيص',
       desc: 'أضيفي اسما أو تاريخا أو رسالة على البطاقة الداخلية - مجانا.',
@@ -104,7 +126,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Lire plus',
     readLess: 'Lire moins',
+    madeToOrderShips: (dateRange: string) =>
+      `Confection sur commande — expédition estimée ${dateRange} (10 à 14 jours)`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `Taille unique · confection sur commande — expédition estimée ${dateRange} (10 à 14 jours)`,
     jewelleryLeadTime: 'Confectionnée après votre commande · expédiée sous 4 à 7 jours',
+    fasterDeliveryPrompt: 'Besoin d’une livraison plus rapide ?',
+    fasterDeliveryCta: 'Contactez-nous',
+    fasterDeliveryWhatsAppMessage:
+      'Je suis intéressée par l’une de vos pièces et j’aurais besoin d’une livraison plus rapide. Quelles sont les options ?',
     personalisation: {
       title: 'Personnalisation',
       desc: 'Ajoutez un prénom, une date spéciale ou un message sur l’étiquette intérieure — offert.',
@@ -133,7 +163,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Mehr lesen',
     readLess: 'Weniger lesen',
+    madeToOrderShips: (dateRange: string) =>
+      `Auf Bestellung gefertigt — voraussichtlicher Versand ${dateRange} (10–14 Tage)`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `Einheitsgröße · auf Bestellung gefertigt — voraussichtlicher Versand ${dateRange} (10–14 Tage)`,
     jewelleryLeadTime: 'Nach Ihrer Bestellung gefertigt · Versand in 4–7 Tagen',
+    fasterDeliveryPrompt: 'Benötigen Sie es schneller?',
+    fasterDeliveryCta: 'Kontaktieren Sie uns',
+    fasterDeliveryWhatsAppMessage:
+      'Ich interessiere mich für einen Ihrer Styles und benötige eine schnellere Lieferung. Welche Optionen gibt es?',
     personalisation: {
       title: 'Personalisierung',
       desc: 'Fügen Sie einen Namen, ein besonderes Datum oder eine Nachricht auf dem Innenetikett hinzu — kostenfrei.',
@@ -162,7 +200,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Leggi di più',
     readLess: 'Leggi meno',
+    madeToOrderShips: (dateRange: string) =>
+      `Su ordinazione — spedizione stimata ${dateRange} (10–14 giorni)`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `Taglia unica · su ordinazione — spedizione stimata ${dateRange} (10–14 giorni)`,
     jewelleryLeadTime: 'Realizzata dopo il vostro ordine · spedizione in 4–7 giorni',
+    fasterDeliveryPrompt: 'Vi serve prima?',
+    fasterDeliveryCta: 'Contattateci',
+    fasterDeliveryWhatsAppMessage:
+      'Sono interessata a uno dei vostri modelli e avrei bisogno di una consegna più rapida. Quali sono le opzioni?',
     personalisation: {
       title: 'Personalizzazione',
       desc: 'Aggiungi un nome, una data speciale o un messaggio all’etichetta interna — in omaggio.',
@@ -191,7 +237,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'Preguntas frecuentes',
     readMore: 'Leer mas',
     readLess: 'Leer menos',
+    madeToOrderShips: (dateRange: string) =>
+      `Hecho por encargo — envío estimado ${dateRange} (10–14 días)`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `Talla única · hecho por encargo — envío estimado ${dateRange} (10–14 días)`,
     jewelleryLeadTime: 'Hecho a pedido · envío en 4–7 días',
+    fasterDeliveryPrompt: '¿Lo necesita antes?',
+    fasterDeliveryCta: 'Contáctenos',
+    fasterDeliveryWhatsAppMessage:
+      'Me interesa uno de sus estilos y necesito una entrega más rápida. ¿Qué opciones hay?',
     personalisation: {
       title: 'Personalizacion',
       desc: 'Anade un nombre, una fecha especial o un mensaje en la etiqueta interior - de cortesia.',
@@ -220,7 +274,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Читать далее',
     readLess: 'Свернуть',
+    madeToOrderShips: (dateRange: string) =>
+      `Изготавливается на заказ — ориентировочная отправка ${dateRange} (10–14 дней)`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `Единый размер · изготавливается на заказ — ориентировочная отправка ${dateRange} (10–14 дней)`,
     jewelleryLeadTime: 'Изготавливается после заказа · отправка за 4–7 дней',
+    fasterDeliveryPrompt: 'Нужна более быстрая доставка?',
+    fasterDeliveryCta: 'Свяжитесь с нами',
+    fasterDeliveryWhatsAppMessage:
+      'Меня интересует одна из ваших моделей, и мне нужна более быстрая доставка. Какие есть варианты?',
     personalisation: {
       title: 'Персонализация',
       desc: 'Добавьте имя, особую дату или сообщение на внутреннюю бирку - бесплатно.',
@@ -249,7 +311,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: '常见问题',
     readMore: '阅读更多',
     readLess: '收起',
+    madeToOrderShips: (dateRange: string) =>
+      `按需定制 — 预计发货 ${dateRange}（10–14 天）`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `均码 · 按需定制 — 预计发货 ${dateRange}（10–14 天）`,
     jewelleryLeadTime: '下单后制作 · 4–7 天内发货',
+    fasterDeliveryPrompt: '希望更快收到？',
+    fasterDeliveryCta: '立即联系我们',
+    fasterDeliveryWhatsAppMessage:
+      '我对其中一款款式感兴趣，但需要更快的配送。请问有哪些选择？',
     personalisation: {
       title: '个性化定制',
       desc: '可在内侧标牌添加姓名、特别日期或寄语 - 免费提供。',
@@ -278,7 +348,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Lees meer',
     readLess: 'Lees minder',
+    madeToOrderShips: (dateRange: string) =>
+      `Op bestelling gemaakt — verwachte verzending ${dateRange} (10–14 dagen)`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `One size · op bestelling gemaakt — verwachte verzending ${dateRange} (10–14 dagen)`,
     jewelleryLeadTime: 'Gemaakt na uw bestelling · verzending binnen 4–7 dagen',
+    fasterDeliveryPrompt: 'Sneller nodig?',
+    fasterDeliveryCta: 'Neem contact op',
+    fasterDeliveryWhatsAppMessage:
+      'Ik heb interesse in een van uw stijlen en heb een snellere levering nodig. Wat zijn de mogelijkheden?',
     personalisation: {
       title: 'Personalisatie',
       desc: 'Voeg een naam, betekenisvolle datum of privébericht toe op het binnenlabel — kosteloos.',
@@ -307,7 +385,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Ler mais',
     readLess: 'Ler menos',
+    madeToOrderShips: (dateRange: string) =>
+      `Feito por encomenda — envio estimado ${dateRange} (10–14 dias)`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `Tamanho único · feito por encomenda — envio estimado ${dateRange} (10–14 dias)`,
     jewelleryLeadTime: 'Feito após a sua encomenda · envio em 4–7 dias',
+    fasterDeliveryPrompt: 'Precisa mais depressa?',
+    fasterDeliveryCta: 'Contacte-nos',
+    fasterDeliveryWhatsAppMessage:
+      'Tenho interesse num dos vossos modelos e preciso de uma entrega mais rápida. Quais são as opções?',
     personalisation: {
       title: 'Personalização',
       desc: 'Adicione um nome, data especial ou mensagem na etiqueta interna — cortesia da maison.',
@@ -336,7 +422,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Baca selengkapnya',
     readLess: 'Tampilkan lebih sedikit',
+    madeToOrderShips: (dateRange: string) =>
+      `Dibuat sesuai pesanan — estimasi pengiriman ${dateRange} (10–14 hari)`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `Satu ukuran · dibuat sesuai pesanan — estimasi pengiriman ${dateRange} (10–14 hari)`,
     jewelleryLeadTime: 'Dibuat setelah pesanan Anda · dikirim dalam 4–7 hari',
+    fasterDeliveryPrompt: 'Butuh lebih cepat?',
+    fasterDeliveryCta: 'Hubungi kami',
+    fasterDeliveryWhatsAppMessage:
+      'Saya tertarik dengan salah satu gaya Anda dan membutuhkan pengiriman lebih cepat. Apa opsi yang tersedia?',
     personalisation: {
       title: 'Personalisasi',
       desc: 'Tambahkan nama, tanggal spesial, atau pesan pada label bagian dalam - gratis.',
@@ -365,7 +459,15 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     faq: 'FAQ',
     readMore: 'Baca lagi',
     readLess: 'Baca kurang',
+    madeToOrderShips: (dateRange: string) =>
+      `Dibuat mengikut tempahan — anggaran penghantaran ${dateRange} (10–14 hari)`,
+    oneSizeMadeToOrderShips: (dateRange: string) =>
+      `Satu saiz · dibuat mengikut tempahan — anggaran penghantaran ${dateRange} (10–14 hari)`,
     jewelleryLeadTime: 'Dibuat selepas tempahan anda · dihantar dalam 4–7 hari',
+    fasterDeliveryPrompt: 'Perlukan lebih cepat?',
+    fasterDeliveryCta: 'Hubungi kami',
+    fasterDeliveryWhatsAppMessage:
+      'Saya berminat dengan salah satu gaya anda dan memerlukan penghantaran lebih cepat. Apakah pilihan yang tersedia?',
     personalisation: {
       title: 'Personalisasi',
       desc: 'Tambah nama, tarikh istimewa atau mesej pada label dalam - percuma.',

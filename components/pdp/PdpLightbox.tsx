@@ -9,6 +9,7 @@ import { Pagination, Keyboard, Zoom } from 'swiper/modules'
 import { FiChevronLeft, FiChevronRight, FiX, FiZoomIn, FiZoomOut } from 'react-icons/fi'
 import PdpGalleryImage from '@/components/pdp/PdpGalleryImage'
 import { lockBodyScroll, recoverStuckBodyScroll } from '@/lib/ui/bodyScrollLock'
+import { useFocusTrap } from '@/lib/ui/useFocusTrap'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
@@ -49,6 +50,8 @@ export default function PdpLightbox({
   zoomOutLabel = 'Zoom out',
   onZoomChange,
 }: PdpLightboxProps) {
+  const lightboxRef = useRef<HTMLDivElement>(null)
+  useFocusTrap(lightboxRef, open)
   const [swiper, setSwiper] = useState<SwiperType | null>(null)
   const [zoomed, setZoomed] = useState(false)
   // Mirrored in a ref so the scroll-dismiss listeners can read zoom state
@@ -185,6 +188,7 @@ export default function PdpLightbox({
     <AnimatePresence>
       {open && count > 0 ? (
         <motion.div
+          ref={lightboxRef}
           key="pdp-lightbox"
           role="dialog"
           aria-modal="true"

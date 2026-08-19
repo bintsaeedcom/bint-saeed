@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
@@ -9,6 +9,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getSizeGuideModalCopy } from '@/lib/i18n/sizeGuideModalCopyI18n'
 import { sizeGuideTable as sizeData } from '@/lib/sizeGuideData'
 import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
+import { useFocusTrap } from '@/lib/ui/useFocusTrap'
 
 interface SizeGuideModalProps {
   isOpen: boolean
@@ -20,6 +21,8 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
   const copy = getSizeGuideModalCopy(language)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  useFocusTrap(containerRef, isOpen)
 
   useEffect(() => setMounted(true), [])
 
@@ -46,6 +49,7 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
 
           {/* Modal */}
           <div
+            ref={containerRef}
             data-scroll-lock-owner="true"
             className="fixed inset-0 z-[101] flex items-center justify-center p-4 md:p-6"
           >

@@ -51,7 +51,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
     return (
       <>
         <MobileScrollRecovery />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
       </>
     )
   }
@@ -62,6 +62,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
       <SmoothScrollProvider>
         <Header />
         <main
+          id="main-content"
           className={`relative z-40 w-full min-w-0 max-w-none pointer-events-auto ${isFlushHeroLayout ? 'pt-0' : SITE_HEADER_OFFSET}`}
         >
           <div

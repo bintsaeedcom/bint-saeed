@@ -13,6 +13,50 @@ function toLocalTime(iso: string) {
   return new Date(iso).toLocaleString()
 }
 
+type LooseAddress = Record<string, unknown> | undefined
+
+function takeFirstString(obj: LooseAddress, keys: readonly string[]): string | null {
+  if (!obj) return null
+  for (const key of keys) {
+    const value = obj[key]
+    if (typeof value === 'string' && value.trim()) return value.trim()
+  }
+  return null
+}
+
+function compactAddressLine(parts: Array<string | null | undefined>): string | null {
+  const clean = parts
+    .map((p) => (typeof p === 'string' ? p.trim() : ''))
+    .filter(Boolean)
+  return clean.length ? clean.join(', ') : null
+}
+
+function extractShippingAddress(address: LooseAddress) {
+  const street = compactAddressLine([
+    takeFirstString(address, ['line1', 'street', 'address', 'address1']),
+    takeFirstString(address, ['line2', 'address2', 'unit', 'building', 'apartment', 'flat']),
+  ])
+  const district = takeFirstString(address, ['district', 'area', 'neighborhood', 'neighbourhood'])
+  const city = takeFirstString(address, ['city', 'town'])
+  const state = takeFirstString(address, ['state', 'province', 'region'])
+  const postalCode = takeFirstString(address, ['postal_code', 'postalCode', 'zip', 'zipCode'])
+  const country = takeFirstString(address, ['country', 'countryCode'])
+
+  const summary = compactAddressLine([city, state, country]) || 'Unknown'
+  const full = compactAddressLine([street, district, city, state, postalCode, country]) || summary
+
+  return {
+    street,
+    district,
+    city,
+    state,
+    postalCode,
+    country,
+    summary,
+    full,
+  }
+}
+
 async function postToWebhook(url: string | undefined, payload: Record<string, unknown>) {
   if (!url) return
   try {
@@ -126,11 +170,8 @@ export async function notifySlackNewPaidOrder(
     paymentMethod: context?.paymentMethod,
   })
 
-  const shipping = order.shippingAddress as
-    | { city?: string; state?: string; country?: string }
-    | undefined
-  const shipTo =
-    [shipping?.city, shipping?.state, shipping?.country].filter(Boolean).join(', ') || 'Unknown'
+  const shipping = extractShippingAddress(order.shippingAddress as LooseAddress)
+  const shipTo = shipping.summary
 
   const attr = orderAttributionFromMetadata(context?.attributionMetadata ?? null, {
     deviceType: context?.clientDeviceType,
@@ -173,6 +214,21 @@ export async function notifySlackNewPaidOrder(
       {
         type: 'section',
         fields: attributionFields,
+      },
+      {
+        type: 'section',
+        fields: [
+          { type: 'mrkdwn', text: `*Ship to:*\n${shipping.full}` },
+          {
+            type: 'mrkdwn',
+            text: `*Street / Area:*\n${compactAddressLine([shipping.street, shipping.district]) || 'Unknown'}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*City / Region:*\n${compactAddressLine([shipping.city, shipping.state]) || 'Unknown'}`,
+          },
+          { type: 'mrkdwn', text: `*Postal / Country:*\n${compactAddressLine([shipping.postalCode, shipping.country]) || 'Unknown'}` },
+        ],
       },
       {
         type: 'section',
