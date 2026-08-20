@@ -66,6 +66,14 @@ interface CartStore {
     lengthCm?: string,
     customisationMessage?: string
   ) => void
+  updateCustomisationMessage: (
+    id: string,
+    size: string,
+    color: string,
+    lengthCm: string | undefined,
+    previousMessage: string | undefined,
+    nextMessage: string | undefined,
+  ) => void
   clearCart: () => void
   getTotal: () => number
 }
@@ -120,6 +128,38 @@ export const useCartStore = create<CartStore>()(
               : item
           ),
         }))
+      },
+
+      updateCustomisationMessage: (id, size, color, lengthCm, previousMessage, nextMessage) => {
+        set((state) => {
+          const index = state.items.findIndex((item) =>
+            sameCartLine(item, {
+              id,
+              size,
+              color,
+              lengthCm,
+              customisationMessage: previousMessage,
+            }),
+          )
+          if (index < 0) return state
+
+          const trimmed = nextMessage?.trim() || undefined
+          const updated: CartItem = { ...state.items[index], customisationMessage: trimmed }
+          const remainder = state.items.filter((_, i) => i !== index)
+          const mergeIndex = remainder.findIndex((item) => sameCartLine(item, updated))
+          if (mergeIndex > -1) {
+            const merged = [...remainder]
+            merged[mergeIndex] = {
+              ...merged[mergeIndex],
+              quantity: merged[mergeIndex].quantity + updated.quantity,
+            }
+            return { items: merged }
+          }
+
+          const next = [...state.items]
+          next[index] = updated
+          return { items: next }
+        })
       },
 
       clearCart: () => set({ items: [] }),

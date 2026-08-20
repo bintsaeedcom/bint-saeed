@@ -36,7 +36,7 @@ export const PERSONALI_ES: PersonalisationCopy = {
   stepsEyebrow: '03 · CÓMO FUNCIONA',
   stepsTitle: 'Hecha personal por usted.',
   steps: [
-    { numeral: '01', title: 'ELIJA PERSONALIZAR', body: 'En la página de cualquier abaya Bint Saeed, seleccione Personalizar antes de añadir la pieza a su bolsa.' },
+    { numeral: '01', title: 'EN EL PAGO', body: 'Elija su abaya y añádala a su bolsa. La personalización se añade en el pago — no en la página de producto.' },
     { numeral: '02', title: 'ESCRIBA SU MENSAJE', body: 'Introduzca un nombre, una fecha significativa o las palabras que desea que lleve su etiqueta interior.' },
     { numeral: '03', title: 'LO COLOCAMOS DENTRO', body: 'Su mensaje se imprime en su etiqueta interior Bint Saeed y se coloca bajo el pequeño bolsillo del forro antes de completar su abaya.' },
   ],
@@ -96,7 +96,7 @@ export const PERSONALI_RU: PersonalisationCopy = {
   stepsEyebrow: '03 · КАК ЭТО РАБОТАЕТ',
   stepsTitle: 'Сделано личным вами.',
   steps: [
-    { numeral: '01', title: 'ВЫБЕРИТЕ ПЕРСОНАЛИЗАЦИЮ', body: 'На странице любой абайи Bint Saeed выберите «Персонализировать» перед добавлением вещи в сумку.' },
+    { numeral: '01', title: 'ПРИ ОФОРМЛЕНИИ', body: 'Выберите абаю и добавьте её в сумку. Персонализация добавляется при оформлении заказа — не на странице изделия.' },
     { numeral: '02', title: 'НАПИШИТЕ СООБЩЕНИЕ', body: 'Введите имя, значимую дату или слова, которые должна нести ваша внутренняя этикетка.' },
     { numeral: '03', title: 'МЫ ПОМЕЩАЕМ ЕГО ВНУТРЬ', body: 'Ваше сообщение печатается на внутренней этикетке Bint Saeed и помещается под маленький карман в подкладке до завершения вашей абайи.' },
   ],
@@ -156,7 +156,7 @@ export const PERSONALI_ZH: PersonalisationCopy = {
   stepsEyebrow: '03 · 如何进行',
   stepsTitle: '由您使之私密。',
   steps: [
-    { numeral: '01', title: '选择个性化', body: '在任何 Bint Saeed 长袍产品页，于加入购物袋前选择「个性化」。' },
+    { numeral: '01', title: '在结账时添加', body: '选好长袍并加入购物袋。个性化在结账时添加，而非在产品页。' },
     { numeral: '02', title: '写下您的话语', body: '输入姓名、有意义的日期，或希望内标承载的文字。' },
     { numeral: '03', title: '我们置于内里', body: '您的留言印于 Bint Saeed 内标，并在长袍完成前置于衬里小袋之下。' },
   ],
@@ -216,7 +216,7 @@ export const PERSONALI_ID: PersonalisationCopy = {
   stepsEyebrow: '03 · CARA KERJANYA',
   stepsTitle: 'Dibuat pribadi oleh Anda.',
   steps: [
-    { numeral: '01', title: 'PILIH PERSONALISASI', body: 'Di halaman produk abaya Bint Saeed mana pun, pilih Personalisasi sebelum menambahkan potongan ke tas Anda.' },
+    { numeral: '01', title: 'DI CHECKOUT', body: 'Pilih abaya Anda dan tambahkan ke tas. Personalisasi ditambahkan saat checkout — bukan di halaman produk.' },
     { numeral: '02', title: 'TULIS PESAN ANDA', body: 'Masukkan nama, tanggal bermakna, atau kata-kata yang ingin dibawa label dalam Anda.' },
     { numeral: '03', title: 'KAMI TEMPATKAN DI DALAM', body: 'Pesan Anda dicetak pada label dalam Bint Saeed dan ditempatkan di bawah saku kecil di lining sebelum abaya Anda selesai.' },
   ],
@@ -276,7 +276,7 @@ export const PERSONALI_MS: PersonalisationCopy = {
   stepsEyebrow: '03 · CARA IA BERFUNGSI',
   stepsTitle: 'Dibuat peribadi oleh anda.',
   steps: [
-    { numeral: '01', title: 'PILIH PEMPERIBADIAN', body: 'Pada halaman produk abaya Bint Saeed mana-mana, pilih Pemperibadian sebelum menambah potongan ke beg anda.' },
+    { numeral: '01', title: 'DI BAYARAN', body: 'Pilih abaya anda dan tambahkannya ke beg. Pemperibadian ditambah semasa pembayaran — bukan pada halaman produk.' },
     { numeral: '02', title: 'TULIS MESEJ ANDA', body: 'Masukkan nama, tarikh bermakna, atau kata-kata yang ingin dibawa label dalam anda.' },
     { numeral: '03', title: 'KAMI LETAKKAN DI DALAM', body: 'Mesej anda dicetak pada label dalam Bint Saeed dan diletakkan di bawah poket kecil dalam lining sebelum abaya anda selesai.' },
   ],

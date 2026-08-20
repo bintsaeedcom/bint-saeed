@@ -50,8 +50,6 @@ import { getPdpGalleryAriaCopy } from '@/lib/i18n/pdpGalleryAriaI18n'
 import { getProductHref, getProductSlug, resolveProductIdentifier } from '@/lib/products/links'
 import {
   getPdpSizeOptions,
-  CUSTOMISATION_MAX_CHARS,
-  productOffersPersonalisation,
   productShowsSizeSelector,
   productIsOneSizeOnly,
 } from '@/lib/shopProductOptions'
@@ -83,7 +81,6 @@ import {
   CTA_BUTTON_RADIUS,
   PDP_FILLED_PLUM,
   pdpCtaPrimary,
-  pdpSizeButtonBase,
 } from '@/lib/ui/ctaClasses'
 
 import 'swiper/css'
@@ -92,7 +89,6 @@ import 'swiper/css/thumbs'
 import 'swiper/css/pagination'
 
 const PDP_OUTLINED_PLUM = 'bg-white text-brand-darkRed border-brand-darkRed'
-const PDP_CONTROL_BUTTON_BASE = pdpSizeButtonBase
 const PDP_PRIMARY_CTA = pdpCtaPrimary
 
 const MANUAL_PAIRINGS: Record<string, string[]> = {
@@ -174,8 +170,6 @@ export default function ProductPage() {
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
   const [quantity, setQuantity] = useState(1)
-  const [customisationActive, setCustomisationActive] = useState(false)
-  const [customisationMessage, setCustomisationMessage] = useState('')
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
@@ -271,7 +265,6 @@ export default function ProductPage() {
 
   const sizeOptions = getPdpSizeOptions(product.category, product.sizes, getProductSlug(product))
   const showSizeSelector = productShowsSizeSelector(product.category, product.sizes, getProductSlug(product))
-  const showPersonalisation = productOffersPersonalisation(product.category)
   const colorOptions = useMemo(() => getProductColorOptions(product), [product])
 
   useEffect(() => {
@@ -309,13 +302,6 @@ export default function ProductPage() {
       window.history.replaceState({}, '', url.toString())
     }
   }
-
-  useEffect(() => {
-    if (!showPersonalisation) {
-      setCustomisationActive(false)
-      setCustomisationMessage('')
-    }
-  }, [product.id, showPersonalisation])
 
   const activeImages = useMemo(
     () => getProductImagesForColor(product, selectedColor),
@@ -406,14 +392,6 @@ export default function ProductPage() {
       toast.error(t.product.selectColor)
       return
     }
-    if (showPersonalisation && customisationActive && !customisationMessage.trim()) {
-      pdpAnalytics.trackAtcError('primary', 'personalisation_required')
-      toast.error(ui.personalisation.emptyError)
-      return
-    }
-
-    const trimmedCustom =
-      showPersonalisation && customisationActive ? customisationMessage.trim() : ''
 
     addItem({
       id: product.id,
@@ -424,7 +402,6 @@ export default function ProductPage() {
       size: selectedSize,
       color: selectedColor,
       quantity,
-      customisationMessage: trimmedCustom || undefined,
       sku: resolveProductSku(product, selectedColor),
     })
 
@@ -1015,71 +992,8 @@ export default function ProductPage() {
                 <p className="font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
                   {ui.oneSizeMadeToOrderShips(estimatedShipWindow)}
                 </p>
-                <PdpFasterDeliveryContact />
-              </div>
-            )}
-
-            {showPersonalisation && (
-              <div id="personalisation-section" className="mb-3 border-b border-brand-stone/20 pb-3">
-                <h2 className="mb-2 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-darkRed">
-                  {ui.personalisation.title}
-                </h2>
-                <p className={`mb-2 font-montserrat text-[11px] leading-relaxed text-brand-darkRed/65 text-start`}>
-                  {ui.personalisation.desc}
-                </p>
-                <div className={`flex flex-col gap-2 sm:flex-row sm:flex-wrap `}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setCustomisationActive(false)
-                      setCustomisationMessage('')
-                    }}
-                    className={`w-full sm:w-auto ${PDP_CONTROL_BUTTON_BASE} ${
- !customisationActive
- ? PDP_FILLED_PLUM
- : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
- }`}
-                    aria-pressed={!customisationActive}
-                    data-cursor-hover
-                  >
-                    {ui.personalisation.noPersonalisation}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setCustomisationActive(true)
-                      pdpAnalytics.trackPersonalizationClick('enable')
-                    }}
-                    className={`w-full sm:w-auto ${PDP_CONTROL_BUTTON_BASE} ${
- customisationActive
- ? PDP_FILLED_PLUM
- : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
- }`}
-                    aria-pressed={customisationActive}
-                    data-cursor-hover
-                  >
-                    {ui.personalisation.personalise}
-                  </button>
-                </div>
-                {customisationActive && (
-                  <div className="mt-3 space-y-2">
-                    <input
-                      type="text"
-                      value={customisationMessage}
-                      onChange={(e) => setCustomisationMessage(e.target.value.slice(0, CUSTOMISATION_MAX_CHARS))}
-                      maxLength={CUSTOMISATION_MAX_CHARS}
-                      placeholder={ui.personalisation.placeholder}
-                      className={`w-full border border-brand-darkRed/30 bg-white px-3 py-2.5 font-montserrat text-[11px] tracking-wide text-brand-darkRed placeholder:text-brand-muted transition-colors focus:border-brand-clayRed focus:outline-none focus:ring-1 focus:ring-brand-clayRed/25 ${CTA_BUTTON_RADIUS}`}
-                    />
-                    <p className={`font-montserrat text-[11px] text-brand-darkRed/55 text-start`}>
-                      {customisationMessage.length}/{CUSTOMISATION_MAX_CHARS}
-                    </p>
-                    <p className={`font-montserrat text-[11px] text-brand-darkRed/80 leading-relaxed border border-brand-stone/20 bg-white p-2.5 text-start`}>
-                      {ui.personalisation.customisedNoReturn}
-                    </p>
-                  </div>
-                )}
-              </div>
+              <PdpFasterDeliveryContact />
+            </div>
             )}
 
             {/* Quantity & Add to Cart */}
@@ -1283,12 +1197,6 @@ export default function ProductPage() {
         selectedSize={selectedSize}
         selectedColor={selectedColor}
         quantity={quantity}
-        customisationMessage={
-          customisationActive && customisationMessage.trim()
-            ? customisationMessage.trim()
-            : undefined
-        }
-        customisationRequired={Boolean(showPersonalisation && customisationActive)}
         onAtcAttempt={() => pdpAnalytics.trackAtcAttempt('sticky')}
         onAtcSuccess={(qty) => pdpAnalytics.trackAtcSuccess('sticky', qty)}
         onAtcError={(code) => pdpAnalytics.trackAtcError('sticky', code)}

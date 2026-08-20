@@ -149,7 +149,7 @@ export const faqPt: FaqBundle = {
           questions: [
             {
               q: 'Que personalização oferecem?',
-              a: 'Cada abaya Bint Saeed inclui um bolso oculto. Na página da peça, selecione Personalise para inscrever um nome, uma data significativa ou algumas palavras. A sua mensagem é impressa numa etiqueta de seda Bint Saeed e cosida dentro do bolso oculto, discretamente no forro interior antes de a peça ser concluída.',
+              a: 'Cada abaya Bint Saeed inclui um bolso oculto. No pagamento, pode acrescentar um nome, uma data significativa ou algumas palavras — a personalização não se escolhe na página do produto. A sua mensagem é impressa numa etiqueta de seda Bint Saeed e cosida dentro do bolso oculto, discretamente no forro interior antes de a peça ser concluída.',
             },
             {
               q: 'A personalização é gratuita?',

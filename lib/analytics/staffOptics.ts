@@ -4,12 +4,34 @@ import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 export const STAFF_OPTICS_KEY = 'bs_staff_optics'
 
 /**
- * Known house browser visitor IDs (from Slack / localStorage `bs_visitor_id`).
- * Keep in sync with owner devices — suppress cart / abandon Slack noise.
+ * Named house people — still post to Slack, labelled (not hidden).
+ * IDs are `bs_visitor_id` from Slack / localStorage. Add each device/browser.
  */
-export const STAFF_VISITOR_IDS = [
-  'yyuaarsvulmmlwoi940',
-] as const
+export const NAMED_HOUSE_VISITORS: { name: string; visitorIds: readonly string[] }[] = [
+  {
+    name: 'Sunain',
+    visitorIds: [
+      '5iakr0vsbd7mnnk165v', // mobile Safari
+      'yyuaarsvulmmlwoi940', // earlier house browser
+    ],
+  },
+]
+
+/** Suppress-only IDs (test devices). Named house visitors must not be listed here. */
+export const STAFF_VISITOR_IDS: readonly string[] = []
+
+export function namedHouseVisitor(visitorId?: string | null): string | null {
+  const vid = (visitorId || '').trim()
+  if (!vid) return null
+  for (const person of NAMED_HOUSE_VISITORS) {
+    if (person.visitorIds.some((id) => vid === id || vid.endsWith(id))) return person.name
+  }
+  return null
+}
+
+export function isNamedHouseVisitor(visitorId?: string | null): boolean {
+  return namedHouseVisitor(visitorId) !== null
+}
 
 export function isAdminBrowserPath(pathname?: string | null): boolean {
   const raw =
@@ -61,7 +83,7 @@ export function isStaffOpticsActive(): boolean {
   return isAdminBrowserPath()
 }
 
-/** Server or client: suppress Slack noise for house traffic. */
+/** Server or client: suppress Slack noise for QA traffic. Named house visitors still post. */
 export function shouldSuppressVisitorNoise(data?: {
   visitorId?: string | null
   path?: string | null
@@ -69,6 +91,7 @@ export function shouldSuppressVisitorNoise(data?: {
   currentPagePath?: string | null
   staffOptics?: boolean | null
 }): boolean {
+  if (isNamedHouseVisitor(data?.visitorId)) return false
   if (data?.staffOptics === true) return true
   if (isStaffVisitorId(data?.visitorId)) return true
   const path = data?.path || data?.browserPath || data?.currentPagePath || ''

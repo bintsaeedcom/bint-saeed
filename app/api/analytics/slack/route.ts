@@ -16,7 +16,7 @@ import {
   assessLocationSignals,
   formatShopPreferenceLine,
 } from '@/lib/geo/locationSignals'
-import { shouldSuppressVisitorNoise, STAFF_VISITOR_IDS } from '@/lib/analytics/staffOptics'
+import { namedHouseVisitor, shouldSuppressVisitorNoise, STAFF_VISITOR_IDS } from '@/lib/analytics/staffOptics'
 
 function normalizedWebhook(...values: Array<string | undefined>): string | undefined {
   for (const value of values) {
@@ -172,30 +172,45 @@ function formatBrowserContext(browser: any): string {
   if (!browser) return 'Not available'
   return [
     browser.url ? `*URL:* ${browser.url}` : '',
-    browser.referrer ? `*Referrer:* ${browser.referrer}` : '',
+    browser.referrer ? `*Referrer:* ${browser.referrer}` : `*Referrer:* Direct`,
     browser.hostname ? `*Hostname:* ${browser.hostname}` : '',
     browser.screen ? `*Screen:* ${browser.screen}` : '',
     browser.language ? `*Language:* ${browser.language}` : '',
   ].filter(Boolean).join('\n') || 'Not available'
 }
 
-function formatPreviousWebsite(data: any): string {
-  const referrer = data.referrer || data.browser?.referrer || 'Direct'
-  if (!referrer || referrer === 'Direct') return 'Direct'
+function formatReferrerLink(raw: unknown): string {
+  const value = typeof raw === 'string' ? raw.trim() : ''
+  if (!value || /^direct$/i.test(value)) return 'Direct'
   try {
-    const url = new URL(referrer)
-    return `<${referrer}|${url.hostname}>`
+    const url = new URL(value)
+    const path = url.pathname && url.pathname !== '/' ? url.pathname : ''
+    const label = `${url.hostname}${path}`.slice(0, 80)
+    return `<${value}|${label}>`
   } catch {
-    return referrer
+    return value.slice(0, 120)
   }
+}
+
+/** Always a visible referrer line — landing first-touch, then this-page document.referrer. */
+function formatPreviousWebsite(data: any): string {
+  const landing = formatReferrerLink(data.referrer || data.firstTouch?.referrer)
+  const current = formatReferrerLink(data.browser?.referrer)
+  const utm = formatUtm(data)
+  let line = landing
+  if (landing === 'Direct' && current !== 'Direct') line = current
+  else if (current !== 'Direct' && current !== landing) line = `${landing}\n_This page:_ ${current}`
+  if (line === 'Direct' && utm !== 'None') line = `Direct · ${utm}`
+  return line || 'Direct'
 }
 
 function formatUtm(data: any): string {
   const utm = data.utmParams || {}
+  const first = data.firstTouch || {}
   const parts = [
-    utm.source ? `source=${utm.source}` : '',
-    utm.medium ? `medium=${utm.medium}` : '',
-    utm.campaign ? `campaign=${utm.campaign}` : '',
+    (utm.source || first.utmSource) ? `source=${utm.source || first.utmSource}` : '',
+    (utm.medium || first.utmMedium) ? `medium=${utm.medium || first.utmMedium}` : '',
+    (utm.campaign || first.utmCampaign) ? `campaign=${utm.campaign || first.utmCampaign}` : '',
   ].filter(Boolean)
   return parts.length > 0 ? parts.join(' • ') : 'None'
 }
@@ -424,6 +439,7 @@ function formatSlackMessage(type: string, data: any) {
   const vipCheck = checkVIP(data.visitorId || '', ip)
   const vipFlag = vipCheck.isVIP ? `🚨 *VIP: ${vipCheck.name}* 🚨\n` : ''
   const vipEmoji = vipCheck.isVIP ? '⭐' : ''
+  const houseName = vipCheck.isVIP ? null : namedHouseVisitor(data.visitorId)
   
   // Generate map link
   const mapLink = getMapLink(
@@ -496,9 +512,8 @@ function formatSlackMessage(type: string, data: any) {
             {
               type: 'section',
               fields: [
-                { type: 'mrkdwn', text: `*🔗 Referrer:*\n${data.referrer || 'Direct'}` },
+                { type: 'mrkdwn', text: `*🔗 Referrer:*\n${previousWebsite}` },
                 { type: 'mrkdwn', text: `*✨ Status:*\nFirst-time visitor` },
-                { type: 'mrkdwn', text: `*🌐 Previous Website:*\n${previousWebsite}` },
                 { type: 'mrkdwn', text: `*🏷️ UTM:*\n${utmText}` },
               ]
             },
@@ -523,7 +538,7 @@ function formatSlackMessage(type: string, data: any) {
         blocks: [
           {
             type: 'header',
-            text: { type: 'plain_text', text: '🆕 New Visitor on bintsaeed.com', emoji: true }
+            text: { type: 'plain_text', text: houseName ? `🆕 New Visitor — ${houseName}` : '🆕 New Visitor on bintsaeed.com', emoji: true }
           },
           {
             type: 'section',
@@ -538,9 +553,8 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'section',
             fields: [
-              { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${data.referrer || 'Direct'}` },
+              { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Status:*\n✨ First-time visitor` },
-              { type: 'mrkdwn', text: `*Previous Website:*\n🌐 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*UTM:*\n🏷️ ${utmText}` },
             ]
           },
@@ -551,7 +565,7 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\` · IP city ≠ home if VPN` }
+              { type: 'mrkdwn', text: houseName ? `Visitor ID: \`${data.visitorId}\` | 👤 *${houseName}*` : `Visitor ID: \`${data.visitorId}\` · IP city ≠ home if VPN` }
             ]
           }
         ]
@@ -591,7 +605,7 @@ function formatSlackMessage(type: string, data: any) {
               fields: [
                 { type: 'mrkdwn', text: `*🔢 Visit Count:*\nVisit #${data.visitCount}` },
                 { type: 'mrkdwn', text: `*📅 First Visit:*\n${new Date(data.firstVisit).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}` },
-              { type: 'mrkdwn', text: `*🌐 Previous Website:*\n${previousWebsite}` },
+              { type: 'mrkdwn', text: `*🌐 Referrer:*\n${previousWebsite}` },
               { type: 'mrkdwn', text: `*⏱️ Time on Site:*\n${timeOnSite}` },
               ]
             },
@@ -616,7 +630,7 @@ function formatSlackMessage(type: string, data: any) {
         blocks: [
           {
             type: 'header',
-            text: { type: 'plain_text', text: '🔄 Returning Visitor on bintsaeed.com', emoji: true }
+            text: { type: 'plain_text', text: houseName ? `🔄 Returning Visitor — ${houseName}` : '🔄 Returning Visitor on bintsaeed.com', emoji: true }
           },
           {
             type: 'section',
@@ -633,7 +647,7 @@ function formatSlackMessage(type: string, data: any) {
             fields: [
               { type: 'mrkdwn', text: `*Visit Count:*\n🔢 Visit #${data.visitCount}` },
               { type: 'mrkdwn', text: `*First Visit:*\n📅 ${new Date(data.firstVisit).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}` },
-              { type: 'mrkdwn', text: `*Previous Website:*\n🌐 ${previousWebsite}` },
+              { type: 'mrkdwn', text: `*Referrer:*\n🌐 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Time on Site:*\n⏱️ ${timeOnSite}` },
             ]
           },
@@ -644,7 +658,7 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\` · IP city ≠ home if VPN` }
+              { type: 'mrkdwn', text: houseName ? `Visitor ID: \`${data.visitorId}\` | 👤 *${houseName}*` : `Visitor ID: \`${data.visitorId}\` · IP city ≠ home if VPN` }
             ]
           }
         ]
@@ -662,7 +676,7 @@ function formatSlackMessage(type: string, data: any) {
             fields: [
               { type: 'mrkdwn', text: `*Page Information:*\n${data.browser?.title ? `*Title:* ${data.browser.title}\n` : ''}${formatBrowserContext(data.browser)}` },
               { type: 'mrkdwn', text: `*Device & Browser:*\n${device}${data.browser?.userAgent ? `\n*User agent:* ${data.browser.userAgent}` : ''}` },
-              { type: 'mrkdwn', text: `*Previous Website:*\n${previousWebsite}` },
+              { type: 'mrkdwn', text: `*Referrer:*\n${previousWebsite}` },
               { type: 'mrkdwn', text: `*Time on Site:*\n${timeOnSite}` },
             ]
           },
@@ -680,7 +694,7 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\`${data.location?.locationCapturedAt ? ` | Captured: ${data.location.locationCapturedAt}` : ''}${vipCheck.isVIP ? ` | 🚨 VIP: ${vipCheck.name}` : ''}` }
+              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\`${data.location?.locationCapturedAt ? ` | Captured: ${data.location.locationCapturedAt}` : ''}${vipCheck.isVIP ? ` | 🚨 VIP: ${vipCheck.name}` : houseName ? ` | 👤 *${houseName}*` : ''}` }
             ]
           }
         ]
@@ -697,7 +711,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Time on Site:*\n${timeOnSite}` },
-              { type: 'mrkdwn', text: `*Previous Website:*\n${previousWebsite}` },
+              { type: 'mrkdwn', text: `*Referrer:*\n${previousWebsite}` },
               { type: 'mrkdwn', text: `*Pages Viewed:*\n${data.pageViews?.length || 0}` },
               { type: 'mrkdwn', text: `*Last Page:*\n${data.currentPage?.title || data.currentPage?.path || data.browser?.path || 'Unknown'}` },
               { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
@@ -707,7 +721,7 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `Visitor ID: \`${data.visitorId}\` | Session ID: \`${data.sessionId || 'Unknown'}\` | UTM: ${utmText}` }
+              { type: 'mrkdwn', text: `${houseName ? `👤 *${houseName}* | ` : ''}Visitor ID: \`${data.visitorId}\` | Session ID: \`${data.sessionId || 'Unknown'}\` | UTM: ${utmText}` }
             ]
           }
         ]
@@ -724,7 +738,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             text: {
               type: 'mrkdwn',
-              text: `👁️ *Page view*\n*${pageTitle}*\n\`${pagePath}\``,
+              text: `👁️ *Page view*${houseName ? ` — ${houseName}` : ''}\n*${pageTitle}*\n\`${pagePath}\``,
             },
           },
           {
@@ -732,6 +746,7 @@ function formatSlackMessage(type: string, data: any) {
             fields: [
               { type: 'mrkdwn', text: `*Language:*\n🌐 ${lang} (\`${data.language || 'en'}\`)` },
               { type: 'mrkdwn', text: `*Currency:*\n💱 ${curr}` },
+              { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ],
@@ -741,7 +756,7 @@ function formatSlackMessage(type: string, data: any) {
             elements: [
               {
                 type: 'mrkdwn',
-                text: `Visitor \`${data.visitorId || 'Unknown'}\` · ${timeOnSite} on site · ${timestamp} GST`,
+                text: `${houseName ? `👤 *${houseName}* · ` : ''}Visitor \`${data.visitorId || 'Unknown'}\` · ${timeOnSite} on site · ${timestamp} GST`,
               },
             ],
           },
@@ -779,6 +794,7 @@ function formatSlackMessage(type: string, data: any) {
             fields: [
               { type: 'mrkdwn', text: `*Bag total:*\nAED ${data.cartValueAed ?? '—'}` },
               { type: 'mrkdwn', text: `*Items in bag:*\n${data.cartItems ?? '—'}` },
+              { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ],
@@ -817,6 +833,7 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'section',
             fields: [
+              { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ],
@@ -861,6 +878,7 @@ function formatSlackMessage(type: string, data: any) {
             fields: [
               { type: 'mrkdwn', text: `*Bag value:*\nAED ${data.cartValueAed ?? '—'}` },
               { type: 'mrkdwn', text: `*Items:*\n${data.cartItems ?? '—'}` },
+              { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ],
@@ -896,6 +914,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Product:*\n${data.cartEvent?.productName}` },
+              { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
               { type: 'mrkdwn', text: `*Time on Site:*\n${timeOnSite}` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
@@ -926,7 +945,7 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Visit #:*\n${data.visitCount}` },
               { type: 'mrkdwn', text: `*Time on Site:*\n${timeOnSite}` },
               { type: 'mrkdwn', text: `*Pages Viewed:*\n${data.pageViews?.length || 0}` },
-              { type: 'mrkdwn', text: `*Cart Items:*\n${data.cartEvents?.filter((e: any) => e.action === 'add').length || 0}` },
+              { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
             ]
           }
         ]
@@ -943,6 +962,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Email:*\n${data.contactInfo?.email || 'Unknown'}` },
+              { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
               { type: 'mrkdwn', text: `*Cart Value:*\n${data.cartValue || 'Unknown'}` },
               { type: 'mrkdwn', text: `*Items:*\n${data.cartItems || 0}` },
@@ -975,6 +995,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Shipping:*\n🚚 ${data.shippingAddress || 'N/A'}` },
+              { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Location:*\n🌍 ${locationText}` },
             ]
           }

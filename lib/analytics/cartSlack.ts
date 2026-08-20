@@ -1,6 +1,7 @@
 import type { CartItem } from '@/store/cartStore'
 import { lineTotalAed } from '@/lib/shopProductOptions'
 import { isStaffOpticsActive, shouldSuppressVisitorNoise } from '@/lib/analytics/staffOptics'
+import { readFirstTouchAttribution } from '@/lib/analytics/attributionStorage'
 
 const CART_STORAGE_KEY = 'bint-saeed-cart'
 const CHECKOUT_STARTED_KEY = 'bs_checkout_started'
@@ -48,13 +49,16 @@ function visitorPayload() {
   } catch {
     location = null
   }
+  const firstTouch = readFirstTouchAttribution()
   return {
     visitorId: localStorage.getItem('bs_visitor_id') || undefined,
-    referrer: document.referrer || 'Direct',
+    referrer: firstTouch?.referrer || document.referrer || 'Direct',
+    firstTouch: firstTouch || undefined,
     browser: {
       url: window.location.href,
       path: window.location.pathname + window.location.search,
       title: document.title,
+      referrer: document.referrer || 'Direct',
     },
     location,
   }

@@ -149,7 +149,7 @@ export const faqNl: FaqBundle = {
           questions: [
             {
               q: 'Welke personalisatie bieden jullie?',
-              a: 'Elke Bint Saeed-abaya heeft een verborgen zak. Selecteer op de kledingpagina Personalise om een naam, een betekenisvolle datum of enkele woorden te laten inschrijven. Uw bericht wordt gedrukt op een Bint Saeed-zijden label en genaaid in de verborgen zak, discreet aan de binnenvoering vóór het kledingstuk wordt voltooid.',
+              a: 'Elke Bint Saeed-abaya heeft een verborgen zak. Bij het afrekenen kunt u een naam, een betekenisvolle datum of enkele woorden toevoegen — personalisatie kiest u niet op de productpagina. Uw bericht wordt gedrukt op een Bint Saeed-zijden label en genaaid in de verborgen zak, discreet aan de binnenvoering vóór het kledingstuk wordt voltooid.',
             },
             {
               q: 'Is personalisatie gratis?',

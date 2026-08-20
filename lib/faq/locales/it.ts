@@ -149,7 +149,7 @@ export const faqIt: FaqBundle = {
           questions: [
             {
               q: 'Quale personalizzazione offrite?',
-              a: 'Ogni abaya Bint Saeed include una tasca nascosta. Sulla pagina del capo, seleziona Personalise per iscrivere un nome, una data significativa o poche parole. Il tuo messaggio è stampato su un’etichetta in seta Bint Saeed e cucito nella tasca nascosta, discretamente sulla fodera interna prima che il capo sia completato.',
+              a: 'Ogni abaya Bint Saeed include una tasca nascosta. Al checkout potete aggiungere un nome, una data significativa o poche parole — la personalizzazione non si sceglie sulla pagina prodotto. Il vostro messaggio è stampato su un’etichetta in seta Bint Saeed e cucito nella tasca nascosta, discretamente sulla fodera interna prima che il capo sia completato.',
             },
             {
               q: 'La personalizzazione è gratuita?',

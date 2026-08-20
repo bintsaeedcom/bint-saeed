@@ -155,7 +155,7 @@ export const faqEn: FaqBundle = {
           questions: [
             {
               q: 'What personalisation do you offer?',
-              a: 'Every Bint Saeed abaya includes a hidden pocket. On the garment page, select Personalise to inscribe a name, a meaningful date, or a few words. Your message is printed on a Bint Saeed silk label and stitched within the hidden pocket, sewn discreetly to the inner lining before the garment is completed.',
+              a: 'Every Bint Saeed abaya includes a hidden pocket. At checkout, you may add a name, a meaningful date, or a few words — personalisation is not selected on the product page. Your message is printed on a Bint Saeed silk label and stitched within the hidden pocket, sewn discreetly to the inner lining before the garment is completed.',
             },
             {
               q: 'Is personalisation complimentary?',

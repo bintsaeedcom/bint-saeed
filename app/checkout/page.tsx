@@ -15,7 +15,7 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getCheckoutFormCopy } from '@/lib/i18n/checkoutFormCopyI18n'
 import { useLocaleHref } from '@/lib/i18n/useLocaleHref'
-import { lineUnitForCurrency, lineTotalForCurrency } from '@/lib/shopProductOptions'
+import { lineUnitForCurrency, lineTotalForCurrency, productOffersPersonalisation } from '@/lib/shopProductOptions'
 import { products as staticProducts } from '@/data/products'
 import { getProductHref } from '@/lib/products/links'
 import { trackEvent } from '@/lib/analytics/tracking'
@@ -53,6 +53,7 @@ import CheckoutGiftCardApply, {
   type AppliedGiftCardPreview,
 } from '@/components/CheckoutGiftCardApply'
 import CheckoutPromoCodeApply from '@/components/CheckoutPromoCodeApply'
+import CheckoutLinePersonalisation from '@/components/checkout/CheckoutLinePersonalisation'
 import dynamic from 'next/dynamic'
 
 const StripeEmbeddedCheckoutForm = dynamic(
@@ -889,13 +890,16 @@ function CheckoutPageContent() {
               className="rounded-2xl border border-brand-stone/20 bg-white p-5 shadow-sm sm:p-6 md:p-8"
             >
               <ul className="divide-y divide-brand-stone/15">
-                {items.map((item) => {
+                {items.map((item, index) => {
                   const catalogProduct = staticProducts.find((product) => product.id === item.id)
                   const imageSrc = productImageSrc(
                     item.image?.trim() || catalogProduct?.images[0] || '/placeholders/product-front-F.svg',
                   )
                   return (
-                  <li key={lineKey(item)} className="flex items-start gap-3 py-5 first:pt-0 sm:gap-4">
+                  <li
+                    key={`${item.id}-${item.size}-${item.color}-${item.lengthCm ?? ''}-${index}`}
+                    className="flex items-start gap-3 py-5 first:pt-0 sm:gap-4"
+                  >
                     <LocaleLink
                       href={productHref(item)}
                       className="relative h-20 w-16 shrink-0 overflow-hidden bg-[#f0eeeb] sm:h-24 sm:w-20"
@@ -922,10 +926,14 @@ function CheckoutPageContent() {
                       <p className="mt-1 break-words font-montserrat text-xs tracking-wide text-brand-clayRed/65">
                         {item.size} · {item.color}
                         {item.lengthCm ? ` · ${item.lengthCm} cm` : ''}
-                        {item.customisationMessage
-                          ? ` · "${item.customisationMessage.slice(0, 20)}${item.customisationMessage.length > 20 ? '…' : ''}"`
-                          : ''}
                       </p>
+                      {catalogProduct && productOffersPersonalisation(catalogProduct.category) ? (
+                        <CheckoutLinePersonalisation item={item} />
+                      ) : item.customisationMessage ? (
+                        <p className="mt-2 font-montserrat text-xs tracking-wide text-brand-clayRed/65">
+                          {ui.cart.personalisation}: {item.customisationMessage}
+                        </p>
+                      ) : null}
                       <p className="mt-2 font-montserrat text-sm text-brand-darkRed">
                         {formatAmount(lineUnitForCurrency(item, currency.code))}
                         {item.quantity > 1 ? (

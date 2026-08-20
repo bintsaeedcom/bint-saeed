@@ -27,12 +27,9 @@ import {
 } from '@/lib/products/productColorAvailability'
 import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
 import {
-  CUSTOMISATION_MAX_CHARS,
   productIsOneSizeOnly,
-  productOffersPersonalisation,
   productShowsSizeSelector,
 } from '@/lib/shopProductOptions'
-import { formFieldClass } from '@/lib/ui/formFieldClasses'
 import {
   PDP_COLOUR_SWATCH,
   pdpColourSwatchState,
@@ -71,8 +68,6 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
   useFocusTrap(sheetRef, isOpen)
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
-  const [customisationActive, setCustomisationActive] = useState(false)
-  const [customisationMessage, setCustomisationMessage] = useState('')
   const [mounted, setMounted] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
@@ -86,7 +81,6 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
   )
 
   const colorOptions = useMemo(() => getProductColorOptions(product), [product])
-  const showPersonalisation = productOffersPersonalisation(product.category ?? '')
   const showSizeSelector =
     product.sizes.length > 1 &&
     productShowsSizeSelector(product.category ?? 'Kaftans', product.sizes, product.slug)
@@ -116,8 +110,6 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
     if (!isOpen) return
     const available = colorOptions.map((color) => color.name)
     setSelectedColor(available[0] ?? '')
-    setCustomisationActive(false)
-    setCustomisationMessage('')
     if (initialSize && product.sizes.includes(initialSize)) {
       setSelectedSize(initialSize)
     } else if (product.sizes.length === 1) {
@@ -148,8 +140,6 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
   }
 
   const buildLine = () => {
-    const trimmed =
-      showPersonalisation && customisationActive ? customisationMessage.trim() : ''
     return {
       id: product.id,
       productUrl: product.productUrl ?? getProductHref(product),
@@ -159,7 +149,6 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
       size: selectedSize,
       color: selectedColor,
       quantity: 1,
-      customisationMessage: trimmed || undefined,
       sku: resolveProductSku(
         { slug: product.slug ?? '', category: catalogProduct.category },
         selectedColor,
@@ -174,10 +163,6 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
     }
     if (!selectedColor) {
       toast.error(ui.quickBuy.chooseColourError)
-      return false
-    }
-    if (showPersonalisation && customisationActive && !customisationMessage.trim()) {
-      toast.error(pdpUi.personalisation.emptyError)
       return false
     }
     return true
@@ -401,76 +386,6 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
                       />
                     ))}
                   </div>
-                </div>
-              )}
-
-              {showPersonalisation && (
-                <div className="mb-2 border-t border-brand-darkRed/10 pt-3.5">
-                  <p
-                    className={`mb-1.5 font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-darkRed text-start`}
-                  >
-                    {pdpUi.personalisation.title}
-                  </p>
-                  <p
-                    className={`mb-2.5 font-montserrat text-[11px] leading-relaxed text-[#4a3a36] text-start`}
-                  >
-                    {pdpUi.personalisation.desc}
-                  </p>
-                  <div className={`flex flex-col gap-2 sm:flex-row `}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCustomisationActive(false)
-                        setCustomisationMessage('')
-                      }}
-                      className={`min-h-[40px] flex-1 border px-3 py-2 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors ${
- !customisationActive
- ? 'border-brand-darkRed bg-brand-darkRed text-white'
- : 'border-brand-darkRed/25 bg-white text-brand-darkRed'
- }`}
-                      aria-pressed={!customisationActive}
-                      data-cursor-hover
-                    >
-                      {pdpUi.personalisation.noPersonalisation}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setCustomisationActive(true)}
-                      className={`min-h-[40px] flex-1 border px-3 py-2 font-montserrat text-[10px] uppercase tracking-[0.12em] transition-colors ${
- customisationActive
- ? 'border-brand-darkRed bg-brand-darkRed text-white'
- : 'border-brand-darkRed/25 bg-white text-brand-darkRed'
- }`}
-                      aria-pressed={customisationActive}
-                      data-cursor-hover
-                    >
-                      {pdpUi.personalisation.personalise}
-                    </button>
-                  </div>
-                  {customisationActive && (
-                    <div className="mt-3 space-y-2">
-                      <input
-                        type="text"
-                        value={customisationMessage}
-                        onChange={(e) =>
-                          setCustomisationMessage(e.target.value.slice(0, CUSTOMISATION_MAX_CHARS))
-                        }
-                        maxLength={CUSTOMISATION_MAX_CHARS}
-                        placeholder={pdpUi.personalisation.placeholder}
-                        className={`${formFieldClass} !py-2.5 !text-[12px]`}
-                        autoComplete="off"
-                        data-allow-select
-                      />
-                      <p className={`font-montserrat text-[10px] text-[#5c5356] text-start`}>
-                        {customisationMessage.length}/{CUSTOMISATION_MAX_CHARS}
-                      </p>
-                      <p
-                        className={`border border-brand-darkRed/12 bg-white/80 p-2.5 font-montserrat text-[10px] leading-relaxed text-[#2c2426] text-start`}
-                      >
-                        {pdpUi.personalisation.customisedNoReturn}
-                      </p>
-                    </div>
-                  )}
                 </div>
               )}
 

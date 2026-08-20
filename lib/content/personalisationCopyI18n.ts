@@ -85,8 +85,8 @@ const EN: PersonalisationCopy = {
   steps: [
     {
       numeral: '01',
-      title: 'CHOOSE PERSONALISE',
-      body: 'On any Bint Saeed abaya product page, select Personalise before adding your piece to your bag.',
+      title: 'ADD AT CHECKOUT',
+      body: 'Choose your abaya and add it to your bag. Personalisation is added at checkout — not on the product page.',
     },
     {
       numeral: '02',
@@ -158,8 +158,8 @@ const AR: PersonalisationCopy = {
   steps: [
     {
       numeral: '01',
-      title: 'اختاري التخصيص',
-      body: 'في صفحة أي عباءة من Bint Saeed، اختاري «تخصيص» قبل إضافة القطعة إلى حقيبتك.',
+      title: 'أضيفيه عند الدفع',
+      body: 'اختاري عباءتكِ وأضيفيها إلى حقيبتك. التخصيص يُضاف عند إتمام الطلب — وليس في صفحة المنتج.',
     },
     {
       numeral: '02',

@@ -149,7 +149,7 @@ export const faqFr: FaqBundle = {
           questions: [
             {
               q: 'Quelle personnalisation proposez-vous ?',
-              a: 'Chaque abaya Bint Saeed comprend une poche cachée. Sur la page du vêtement, sélectionnez Personalise pour inscrire un nom, une date significative ou quelques mots. Votre message est imprimé sur une étiquette en soie Bint Saeed et cousu dans la poche cachée, discrètement sur la doublure intérieure avant l’achèvement du vêtement.',
+              a: 'Chaque abaya Bint Saeed comprend une poche cachée. Au règlement, vous pouvez ajouter un prénom, une date significative ou quelques mots — la personnalisation ne se choisit pas sur la page produit. Votre message est imprimé sur une étiquette en soie Bint Saeed et cousu dans la poche cachée, discrètement sur la doublure intérieure avant l’achèvement du vêtement.',
             },
             {
               q: 'La personnalisation est-elle offerte ?',

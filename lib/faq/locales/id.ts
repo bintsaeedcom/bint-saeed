@@ -149,7 +149,7 @@ export const faqId: FaqBundle = {
           questions: [
             {
               q: 'Personalisasi apa yang Anda tawarkan?',
-              a: 'Setiap abaya Bint Saeed menyertakan saku tersembunyi. Di halaman busana, pilih Personalise untuk menuliskan nama, tanggal bermakna, atau beberapa kata. Pesan Anda dicetak pada label sutra Bint Saeed dan dijahit di dalam saku tersembunyi, secara tersembunyi pada lining dalam sebelum busana diselesaikan.',
+              a: 'Setiap abaya Bint Saeed menyertakan saku tersembunyi. Saat checkout, Anda dapat menambahkan nama, tanggal bermakna, atau beberapa kata — personalisasi tidak dipilih di halaman produk. Pesan Anda dicetak pada label sutra Bint Saeed dan dijahit di dalam saku tersembunyi, secara tersembunyi pada lining dalam sebelum busana diselesaikan.',
             },
             {
               q: 'Apakah personalisasi gratis?',

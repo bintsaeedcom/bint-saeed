@@ -14,6 +14,7 @@ import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 import {
   persistFirstTouchAttribution,
   persistSessionStart,
+  readFirstTouchAttribution,
 } from '@/lib/analytics/attributionStorage'
 import { shouldSuppressVisitorNoise } from '@/lib/analytics/staffOptics'
 
@@ -673,10 +674,18 @@ export function useAnalytics() {
 // Send notification to Slack
 async function sendSlackNotification(type: string, data: any) {
   try {
+    const firstTouch = readFirstTouchAttribution()
     await fetch('/api/analytics/slack', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type, data }),
+      body: JSON.stringify({
+        type,
+        data: {
+          ...data,
+          referrer: data.referrer || firstTouch?.referrer || (typeof document !== 'undefined' ? document.referrer : '') || 'Direct',
+          firstTouch: data.firstTouch || firstTouch || undefined,
+        },
+      }),
     })
   } catch (e) {
     console.log('Failed to send Slack notification')
@@ -685,7 +694,15 @@ async function sendSlackNotification(type: string, data: any) {
 
 function sendSlackNotificationBeacon(type: string, data: any) {
   try {
-    const body = JSON.stringify({ type, data })
+    const firstTouch = readFirstTouchAttribution()
+    const body = JSON.stringify({
+      type,
+      data: {
+        ...data,
+        referrer: data.referrer || firstTouch?.referrer || (typeof document !== 'undefined' ? document.referrer : '') || 'Direct',
+        firstTouch: data.firstTouch || firstTouch || undefined,
+      },
+    })
     if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
       const blob = new Blob([body], { type: 'application/json' })
       navigator.sendBeacon('/api/analytics/slack', blob)

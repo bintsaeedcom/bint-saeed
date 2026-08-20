@@ -5,6 +5,8 @@ type ProductPageUiPersonalisation = {
   desc: string
   noPersonalisation: string
   personalise: string
+  /** Quiet checkout CTA — collapsed until the shopper opens it. */
+  checkoutOptional: string
   placeholder: string
   customisedNoReturn: string
   emptyError: string
@@ -22,7 +24,7 @@ export type ProductPageUi = {
   faq: string
   readMore: string
   readLess: string
-  /** Garment PDP — estimated shipment window (10–14 days from page view). */
+  /** Garment PDP — estimated shipment window (dates from page view). */
   madeToOrderShips: (dateRange: string) => string
   oneSizeMadeToOrderShips: (dateRange: string) => string
   /** Jewellery / accessories PDP only. */
@@ -53,9 +55,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Read more',
     readLess: 'Read less',
     madeToOrderShips: (dateRange: string) =>
-      `Made to order — estimated shipment ${dateRange} (10–14 days)`,
+      `Made individually after your order — estimated shipment ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `One size · made to order — estimated shipment ${dateRange} (10–14 days)`,
+      `One size · made individually after your order — estimated shipment ${dateRange}`,
     jewelleryLeadTime: 'Crafted after your order · ships in 4–7 days',
     fasterDeliveryPrompt: 'Need it faster?',
     fasterDeliveryCta: 'Contact us now',
@@ -66,6 +68,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: 'Add a name, special date or message to the inner label - complimentary.',
       noPersonalisation: 'No personalisation',
       personalise: 'Personalise',
+      checkoutOptional: 'Add personalisation (optional)',
       placeholder: 'Your message (max 35 characters)',
       customisedNoReturn: 'Customised pieces are made to your request and cannot be returned or exchanged.',
       emptyError: 'Please enter your personalisation text, or turn personalisation off',
@@ -90,9 +93,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'اقرأي المزيد',
     readLess: 'عرض أقل',
     madeToOrderShips: (dateRange: string) =>
-      `تُصنع حسب الطلب — الشحن المتوقع ${dateRange} (10–14 يوماً)`,
+      `تُصنع فردياً بعد طلبكِ — الشحن المتوقع ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `مقاس واحد · تُصنع حسب الطلب — الشحن المتوقع ${dateRange} (10–14 يوماً)`,
+      `مقاس واحد · تُصنع فردياً بعد طلبكِ — الشحن المتوقع ${dateRange}`,
     jewelleryLeadTime: 'تُصنع بعد طلبكِ · تُشحن خلال 4–7 أيام',
     fasterDeliveryPrompt: 'تحتاجينها أسرع؟',
     fasterDeliveryCta: 'تواصلي معنا الآن',
@@ -103,6 +106,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: 'أضيفي اسما أو تاريخا أو رسالة على البطاقة الداخلية - مجانا.',
       noPersonalisation: 'بدون تخصيص',
       personalise: 'تخصيص',
+      checkoutOptional: 'أضيفي التخصيص (اختياري)',
       placeholder: 'النص (35 حرفا كحد أقصى)',
       customisedNoReturn: 'القطع المخصصة تنفذ حسب طلبك ولا يمكن إرجاعها أو استبدالها.',
       emptyError: 'يرجى إدخال نص التخصيص أو إيقاف خيار التخصيص',
@@ -127,9 +131,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Lire plus',
     readLess: 'Lire moins',
     madeToOrderShips: (dateRange: string) =>
-      `Confection sur commande — expédition estimée ${dateRange} (10 à 14 jours)`,
+      `Confectionnée individuellement après votre commande — expédition estimée ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Taille unique · confection sur commande — expédition estimée ${dateRange} (10 à 14 jours)`,
+      `Taille unique · confectionnée individuellement après votre commande — expédition estimée ${dateRange}`,
     jewelleryLeadTime: 'Confectionnée après votre commande · expédiée sous 4 à 7 jours',
     fasterDeliveryPrompt: 'Besoin d’une livraison plus rapide ?',
     fasterDeliveryCta: 'Contactez-nous',
@@ -140,6 +144,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: 'Ajoutez un prénom, une date spéciale ou un message sur l’étiquette intérieure — offert.',
       noPersonalisation: 'Sans personnalisation',
       personalise: 'Personnaliser',
+      checkoutOptional: 'Ajouter une personnalisation (facultatif)',
       placeholder: 'Votre message (max. 35 caractères)',
       customisedNoReturn: 'Les pièces personnalisées sont réalisées sur demande et ne peuvent pas être retournées ni échangées.',
       emptyError: 'Veuillez saisir votre texte de personnalisation ou désactiver la personnalisation',
@@ -164,9 +169,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Mehr lesen',
     readLess: 'Weniger lesen',
     madeToOrderShips: (dateRange: string) =>
-      `Auf Bestellung gefertigt — voraussichtlicher Versand ${dateRange} (10–14 Tage)`,
+      `Nach Ihrer Bestellung einzeln gefertigt — voraussichtlicher Versand ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Einheitsgröße · auf Bestellung gefertigt — voraussichtlicher Versand ${dateRange} (10–14 Tage)`,
+      `Einheitsgröße · nach Ihrer Bestellung einzeln gefertigt — voraussichtlicher Versand ${dateRange}`,
     jewelleryLeadTime: 'Nach Ihrer Bestellung gefertigt · Versand in 4–7 Tagen',
     fasterDeliveryPrompt: 'Benötigen Sie es schneller?',
     fasterDeliveryCta: 'Kontaktieren Sie uns',
@@ -177,6 +182,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: 'Fügen Sie einen Namen, ein besonderes Datum oder eine Nachricht auf dem Innenetikett hinzu — kostenfrei.',
       noPersonalisation: 'Ohne Personalisierung',
       personalise: 'Personalisieren',
+      checkoutOptional: 'Personalisierung hinzufügen (optional)',
       placeholder: 'Ihre Nachricht (max. 35 Zeichen)',
       customisedNoReturn: 'Personalisierte Teile werden auf Wunsch gefertigt und können nicht zurückgegeben oder umgetauscht werden.',
       emptyError: 'Bitte geben Sie einen Personalisierungstext ein oder deaktivieren Sie die Personalisierung',
@@ -201,9 +207,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Leggi di più',
     readLess: 'Leggi meno',
     madeToOrderShips: (dateRange: string) =>
-      `Su ordinazione — spedizione stimata ${dateRange} (10–14 giorni)`,
+      `Realizzata individualmente dopo il vostro ordine — spedizione stimata ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Taglia unica · su ordinazione — spedizione stimata ${dateRange} (10–14 giorni)`,
+      `Taglia unica · realizzata individualmente dopo il vostro ordine — spedizione stimata ${dateRange}`,
     jewelleryLeadTime: 'Realizzata dopo il vostro ordine · spedizione in 4–7 giorni',
     fasterDeliveryPrompt: 'Vi serve prima?',
     fasterDeliveryCta: 'Contattateci',
@@ -214,6 +220,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: 'Aggiungi un nome, una data speciale o un messaggio all’etichetta interna — in omaggio.',
       noPersonalisation: 'Nessuna personalizzazione',
       personalise: 'Personalizza',
+      checkoutOptional: 'Aggiungere una personalizzazione (facoltativo)',
       placeholder: 'Il tuo messaggio (max. 35 caratteri)',
       customisedNoReturn: 'I capi personalizzati sono realizzati su richiesta e non possono essere restituiti o cambiati.',
       emptyError: 'Inserisci il testo di personalizzazione oppure disattiva la personalizzazione',
@@ -238,9 +245,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Leer mas',
     readLess: 'Leer menos',
     madeToOrderShips: (dateRange: string) =>
-      `Hecho por encargo — envío estimado ${dateRange} (10–14 días)`,
+      `Confeccionada individualmente después de su pedido — envío estimado ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Talla única · hecho por encargo — envío estimado ${dateRange} (10–14 días)`,
+      `Talla única · confeccionada individualmente después de su pedido — envío estimado ${dateRange}`,
     jewelleryLeadTime: 'Hecho a pedido · envío en 4–7 días',
     fasterDeliveryPrompt: '¿Lo necesita antes?',
     fasterDeliveryCta: 'Contáctenos',
@@ -251,6 +258,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: 'Anade un nombre, una fecha especial o un mensaje en la etiqueta interior - de cortesia.',
       noPersonalisation: 'Sin personalizacion',
       personalise: 'Personalizar',
+      checkoutOptional: 'Añadir personalización (opcional)',
       placeholder: 'Tu mensaje (maximo 35 caracteres)',
       customisedNoReturn: 'Las piezas personalizadas se confeccionan bajo pedido y no pueden devolverse ni cambiarse.',
       emptyError: 'Introduce tu texto de personalizacion o desactiva la personalizacion',
@@ -275,9 +283,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Читать далее',
     readLess: 'Свернуть',
     madeToOrderShips: (dateRange: string) =>
-      `Изготавливается на заказ — ориентировочная отправка ${dateRange} (10–14 дней)`,
+      `Изготавливается индивидуально после вашего заказа — ориентировочная отправка ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Единый размер · изготавливается на заказ — ориентировочная отправка ${dateRange} (10–14 дней)`,
+      `Единый размер · изготавливается индивидуально после вашего заказа — ориентировочная отправка ${dateRange}`,
     jewelleryLeadTime: 'Изготавливается после заказа · отправка за 4–7 дней',
     fasterDeliveryPrompt: 'Нужна более быстрая доставка?',
     fasterDeliveryCta: 'Свяжитесь с нами',
@@ -288,6 +296,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: 'Добавьте имя, особую дату или сообщение на внутреннюю бирку - бесплатно.',
       noPersonalisation: 'Без персонализации',
       personalise: 'Персонализировать',
+      checkoutOptional: 'Добавить персонализацию (необязательно)',
       placeholder: 'Ваше сообщение (макс. 35 символов)',
       customisedNoReturn: 'Персонализированные изделия изготавливаются по вашему запросу и не подлежат возврату или обмену.',
       emptyError: 'Введите текст персонализации или отключите персонализацию',
@@ -312,9 +321,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: '阅读更多',
     readLess: '收起',
     madeToOrderShips: (dateRange: string) =>
-      `按需定制 — 预计发货 ${dateRange}（10–14 天）`,
+      `下单后单独制作 — 预计发货 ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `均码 · 按需定制 — 预计发货 ${dateRange}（10–14 天）`,
+      `均码 · 下单后单独制作 — 预计发货 ${dateRange}`,
     jewelleryLeadTime: '下单后制作 · 4–7 天内发货',
     fasterDeliveryPrompt: '希望更快收到？',
     fasterDeliveryCta: '立即联系我们',
@@ -325,6 +334,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: '可在内侧标牌添加姓名、特别日期或寄语 - 免费提供。',
       noPersonalisation: '不需要定制',
       personalise: '进行定制',
+      checkoutOptional: '添加个性化（可选）',
       placeholder: '您的信息（最多 35 个字符）',
       customisedNoReturn: '定制款按您的要求制作，无法退货或换货。',
       emptyError: '请输入定制内容，或关闭定制选项',
@@ -349,9 +359,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Lees meer',
     readLess: 'Lees minder',
     madeToOrderShips: (dateRange: string) =>
-      `Op bestelling gemaakt — verwachte verzending ${dateRange} (10–14 dagen)`,
+      `Individueel gemaakt na uw bestelling — verwachte verzending ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `One size · op bestelling gemaakt — verwachte verzending ${dateRange} (10–14 dagen)`,
+      `One size · individueel gemaakt na uw bestelling — verwachte verzending ${dateRange}`,
     jewelleryLeadTime: 'Gemaakt na uw bestelling · verzending binnen 4–7 dagen',
     fasterDeliveryPrompt: 'Sneller nodig?',
     fasterDeliveryCta: 'Neem contact op',
@@ -362,6 +372,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: 'Voeg een naam, betekenisvolle datum of privébericht toe op het binnenlabel — kosteloos.',
       noPersonalisation: 'Geen personalisatie',
       personalise: 'Personaliseren',
+      checkoutOptional: 'Personalisatie toevoegen (optioneel)',
       placeholder: 'Uw bericht (max. 35 tekens)',
       customisedNoReturn: 'Gepersonaliseerde stukken worden op verzoek gemaakt en kunnen niet worden geretourneerd of geruild.',
       emptyError: 'Voer uw personalisatietekst in of schakel personalisatie uit',
@@ -386,9 +397,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Ler mais',
     readLess: 'Ler menos',
     madeToOrderShips: (dateRange: string) =>
-      `Feito por encomenda — envio estimado ${dateRange} (10–14 dias)`,
+      `Feita individualmente após a sua encomenda — envio estimado ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Tamanho único · feito por encomenda — envio estimado ${dateRange} (10–14 dias)`,
+      `Tamanho único · feita individualmente após a sua encomenda — envio estimado ${dateRange}`,
     jewelleryLeadTime: 'Feito após a sua encomenda · envio em 4–7 dias',
     fasterDeliveryPrompt: 'Precisa mais depressa?',
     fasterDeliveryCta: 'Contacte-nos',
@@ -399,6 +410,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: 'Adicione um nome, data especial ou mensagem na etiqueta interna — cortesia da maison.',
       noPersonalisation: 'Sem personalização',
       personalise: 'Personalizar',
+      checkoutOptional: 'Adicionar personalização (opcional)',
       placeholder: 'A sua mensagem (máx. 35 caracteres)',
       customisedNoReturn: 'Peças personalizadas são feitas ao seu pedido e não podem ser devolvidas ou trocadas.',
       emptyError: 'Introduza o texto de personalização ou desative a personalização',
@@ -423,9 +435,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Baca selengkapnya',
     readLess: 'Tampilkan lebih sedikit',
     madeToOrderShips: (dateRange: string) =>
-      `Dibuat sesuai pesanan — estimasi pengiriman ${dateRange} (10–14 hari)`,
+      `Dibuat secara individual setelah pesanan Anda — estimasi pengiriman ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Satu ukuran · dibuat sesuai pesanan — estimasi pengiriman ${dateRange} (10–14 hari)`,
+      `Satu ukuran · dibuat secara individual setelah pesanan Anda — estimasi pengiriman ${dateRange}`,
     jewelleryLeadTime: 'Dibuat setelah pesanan Anda · dikirim dalam 4–7 hari',
     fasterDeliveryPrompt: 'Butuh lebih cepat?',
     fasterDeliveryCta: 'Hubungi kami',
@@ -436,6 +448,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: 'Tambahkan nama, tanggal spesial, atau pesan pada label bagian dalam - gratis.',
       noPersonalisation: 'Tanpa personalisasi',
       personalise: 'Personalisasi',
+      checkoutOptional: 'Tambahkan personalisasi (opsional)',
       placeholder: 'Pesan Anda (maks. 35 karakter)',
       customisedNoReturn: 'Produk yang dipersonalisasi dibuat sesuai permintaan Anda dan tidak dapat dikembalikan atau ditukar.',
       emptyError: 'Masukkan teks personalisasi Anda atau nonaktifkan personalisasi',
@@ -460,9 +473,9 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Baca lagi',
     readLess: 'Baca kurang',
     madeToOrderShips: (dateRange: string) =>
-      `Dibuat mengikut tempahan — anggaran penghantaran ${dateRange} (10–14 hari)`,
+      `Dibuat secara individu selepas tempahan anda — anggaran penghantaran ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Satu saiz · dibuat mengikut tempahan — anggaran penghantaran ${dateRange} (10–14 hari)`,
+      `Satu saiz · dibuat secara individu selepas tempahan anda — anggaran penghantaran ${dateRange}`,
     jewelleryLeadTime: 'Dibuat selepas tempahan anda · dihantar dalam 4–7 hari',
     fasterDeliveryPrompt: 'Perlukan lebih cepat?',
     fasterDeliveryCta: 'Hubungi kami',
@@ -473,6 +486,7 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
       desc: 'Tambah nama, tarikh istimewa atau mesej pada label dalam - percuma.',
       noPersonalisation: 'Tanpa personalisasi',
       personalise: 'Personalisasi',
+      checkoutOptional: 'Tambah pemperibadian (pilihan)',
       placeholder: 'Mesej anda (maksimum 35 aksara)',
       customisedNoReturn: 'Item yang dipersonalisasi dibuat mengikut permintaan anda dan tidak boleh dipulangkan atau ditukar.',
       emptyError: 'Sila masukkan teks personalisasi anda atau matikan personalisasi',

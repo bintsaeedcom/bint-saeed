@@ -149,7 +149,7 @@ export const faqMs: FaqBundle = {
           questions: [
             {
               q: 'Apakah penyesuaian yang anda tawarkan?',
-              a: 'Setiap abaya Bint Saeed termasuk poket tersembunyi. Di halaman pakaian, pilih Personalise untuk mengukir nama, tarikh bermakna atau beberapa perkataan. Mesej anda dicetak pada label sutera Bint Saeed dan dijahit di dalam poket tersembunyi, secara tersembunyi pada lapisan dalam sebelum pakaian diselesaikan.',
+              a: 'Setiap abaya Bint Saeed termasuk poket tersembunyi. Semasa pembayaran, anda boleh menambah nama, tarikh bermakna atau beberapa perkataan — pemperibadian tidak dipilih pada halaman produk. Mesej anda dicetak pada label sutera Bint Saeed dan dijahit di dalam poket tersembunyi, secara tersembunyi pada lapisan dalam sebelum pakaian diselesaikan.',
             },
             {
               q: 'Adakah penyesuaian percuma?',

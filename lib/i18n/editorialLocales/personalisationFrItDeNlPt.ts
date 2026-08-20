@@ -36,7 +36,7 @@ export const PERSONALI_FR: PersonalisationCopy = {
   stepsEyebrow: '03 · COMMENT ÇA FONCTIONNE',
   stepsTitle: 'Rendu personnel par vous.',
   steps: [
-    { numeral: '01', title: 'CHOISISSEZ PERSONNALISER', body: 'Sur la page de toute abaya Bint Saeed, sélectionnez Personnaliser avant d’ajouter la pièce à votre panier.' },
+    { numeral: '01', title: 'AU RÈGLEMENT', body: 'Choisissez votre abaya et ajoutez-la à votre panier. La personnalisation s’ajoute au règlement — non sur la page produit.' },
     { numeral: '02', title: 'ÉCRIVEZ VOTRE MESSAGE', body: 'Saisissez un prénom, une date significative ou les mots que vous souhaitez voir sur votre étiquette intérieure.' },
     { numeral: '03', title: 'NOUS LE PLAÇONS À L’INTÉRIEUR', body: 'Votre message est imprimé sur votre étiquette intérieure Bint Saeed et placé sous la petite poche de la doublure avant l’achèvement de votre abaya.' },
   ],
@@ -96,7 +96,7 @@ export const PERSONALI_IT: PersonalisationCopy = {
   stepsEyebrow: '03 · COME FUNZIONA',
   stepsTitle: 'Reso personale da voi.',
   steps: [
-    { numeral: '01', title: 'SCEGLIETE PERSONALIZZA', body: 'Nella pagina di qualsiasi abaya Bint Saeed, selezionate Personalizza prima di aggiungere il pezzo alla shopping bag.' },
+    { numeral: '01', title: 'AL CHECKOUT', body: 'Scegliete la vostra abaya e aggiungetela alla shopping bag. La personalizzazione si aggiunge al checkout — non sulla pagina prodotto.' },
     { numeral: '02', title: 'SCRIVETE IL MESSAGGIO', body: 'Inserite un nome, una data significativa o le parole che desiderate sull’etichetta interna.' },
     { numeral: '03', title: 'LO COLLOCHIAMO ALL’INTERNO', body: 'Il vostro messaggio viene stampato sull’etichetta interna Bint Saeed e posto sotto la piccola tasca nella fodera prima che l’abaya sia completata.' },
   ],
@@ -156,7 +156,7 @@ export const PERSONALI_DE: PersonalisationCopy = {
   stepsEyebrow: '03 · SO FUNKTIONIERT ES',
   stepsTitle: 'Von Ihnen persönlich gemacht.',
   steps: [
-    { numeral: '01', title: 'PERSONALISIEREN WÄHLEN', body: 'Auf der Produktseite jeder Bint Saeed Abaya wählen Sie Personalisieren, bevor Sie das Stück in die Tasche legen.' },
+    { numeral: '01', title: 'AN DER KASSE', body: 'Wählen Sie Ihre Abaya und legen Sie sie in die Tasche. Die Personalisierung erfolgt an der Kasse — nicht auf der Produktseite.' },
     { numeral: '02', title: 'IHRE BOTSCHAFT SCHREIBEN', body: 'Geben Sie einen Namen, ein bedeutungsvolles Datum oder die Worte ein, die Ihr Innenetikett tragen soll.' },
     { numeral: '03', title: 'WIR PLATZIEREN ES INNEN', body: 'Ihre Botschaft wird auf Ihrem Bint Saeed Innenetikett gedruckt und unter der kleinen Tasche im Futter platziert, bevor Ihre Abaya fertiggestellt wird.' },
   ],
@@ -216,7 +216,7 @@ export const PERSONALI_NL: PersonalisationCopy = {
   stepsEyebrow: '03 · HOE HET WERKT',
   stepsTitle: 'Persoonlijk gemaakt door u.',
   steps: [
-    { numeral: '01', title: 'KIES PERSONALISEREN', body: 'Op de productpagina van elke Bint Saeed-abaya selecteert u Personaliseren voordat u het stuk aan uw tas toevoegt.' },
+    { numeral: '01', title: 'BIJ AFREKENEN', body: 'Kies uw abaya en voeg haar toe aan uw tas. Personalisatie voegt u toe bij het afrekenen — niet op de productpagina.' },
     { numeral: '02', title: 'SCHRIJF UW BOODSCHAP', body: 'Voer een naam, betekenisvolle datum of de woorden in die u op uw binnenlabel wilt.' },
     { numeral: '03', title: 'WIJ PLAATSEN HET BINNENIN', body: 'Uw boodschap wordt gedrukt op uw Bint Saeed-binnenlabel en onder het kleine zakje in de voering geplaatst voordat uw abaya voltooid is.' },
   ],
@@ -276,7 +276,7 @@ export const PERSONALI_PT: PersonalisationCopy = {
   stepsEyebrow: '03 · COMO FUNCIONA',
   stepsTitle: 'Tornado pessoal por si.',
   steps: [
-    { numeral: '01', title: 'ESCOLHA PERSONALIZAR', body: 'Na página de qualquer abaya Bint Saeed, seleccione Personalizar antes de adicionar a peça ao saco.' },
+    { numeral: '01', title: 'NO PAGAMENTO', body: 'Escolha a sua abaya e adicione-a ao saco. A personalização acrescenta-se no pagamento — não na página do produto.' },
     { numeral: '02', title: 'ESCREVA A SUA MENSAGEM', body: 'Introduza um nome, uma data significativa ou as palavras que deseja na etiqueta interior.' },
     { numeral: '03', title: 'COLOCAMOS NO INTERIOR', body: 'A sua mensagem é impressa na etiqueta interior Bint Saeed e colocada sob o pequeno bolso no forro antes de a sua abaya estar concluída.' },
   ],
