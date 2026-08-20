@@ -119,14 +119,21 @@ export async function resolveRequestGeo(request: Request): Promise<IpGeoResult |
   if (!vercel && !fromIp) return null
 
   if (vercel && fromIp) {
+    // Prefer city + coords from the same provider. Mixing ip-api city with Vercel lat/lng
+    // often opens Maps on a CDN hub (e.g. Amsterdam) while Slack shows another Dutch town.
+    const cityFromIp = Boolean(fromIp.city)
     return {
       city: fromIp.city || vercel.city || '',
       region: fromIp.region || vercel.region || '',
       country: fromIp.country || vercel.countryCode || vercel.country || '',
       countryCode: fromIp.countryCode || vercel.countryCode || '',
       ip: fromIp.ip || ip || undefined,
-      latitude: fromIp.latitude ?? vercel.latitude ?? null,
-      longitude: fromIp.longitude ?? vercel.longitude ?? null,
+      latitude: cityFromIp
+        ? fromIp.latitude ?? null
+        : fromIp.latitude ?? vercel.latitude ?? null,
+      longitude: cityFromIp
+        ? fromIp.longitude ?? null
+        : fromIp.longitude ?? vercel.longitude ?? null,
       timezone: fromIp.timezone || '',
       isp: fromIp.isp,
       org: fromIp.org,

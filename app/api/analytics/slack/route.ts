@@ -80,20 +80,94 @@ function checkVIP(visitorId: string, ip: string): { isVIP: boolean; name: string
   return { isVIP: false, name: '' }
 }
 
-// Generate Google Maps link
-function getMapLink(lat: number | null, lng: number | null, city?: string, country?: string): string {
-  if (lat && lng) {
+/**
+ * Map link for Slack.
+ * IP geo lat/lng is often an ISP/CDN hub (e.g. Amsterdam) while the named city is elsewhere
+ * (e.g. Nijkerk) — so for IP accuracy we open the place name we display, not the crude pin.
+ * GPS accuracy may use exact coordinates.
+ */
+function getMapLink(location: {
+  latitude?: number | null
+  longitude?: number | null
+  city?: string
+  region?: string
+  country?: string
+  countryCode?: string
+  accuracyLevel?: string
+} | null | undefined): string {
+  if (!location) return ''
+  const city = String(location.city || '').trim()
+  const region = expandRegionName(location.region, location.countryCode || location.country)
+  const country = expandCountryName(location.country || location.countryCode || '')
+  const placeQuery = [city, region, country]
+    .filter((part) => part && !/^unknown(\s+city)?$/i.test(part))
+    .join(', ')
+
+  const isGps = location.accuracyLevel === 'gps'
+  const lat = Number(location.latitude)
+  const lng = Number(location.longitude)
+  if (isGps && Number.isFinite(lat) && Number.isFinite(lng)) {
     return `https://www.google.com/maps?q=${lat},${lng}`
   }
-  if (city && country) {
-    return `https://www.google.com/maps/search/${encodeURIComponent(city + ', ' + country)}`
+  if (placeQuery) {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(placeQuery)}`
+  }
+  if (Number.isFinite(lat) && Number.isFinite(lng)) {
+    return `https://www.google.com/maps?q=${lat},${lng}`
   }
   return ''
 }
 
+const US_STATE_NAMES: Record<string, string> = {
+  AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California', CO: 'Colorado',
+  CT: 'Connecticut', DE: 'Delaware', FL: 'Florida', GA: 'Georgia', HI: 'Hawaii', ID: 'Idaho',
+  IL: 'Illinois', IN: 'Indiana', IA: 'Iowa', KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana',
+  ME: 'Maine', MD: 'Maryland', MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota',
+  MS: 'Mississippi', MO: 'Missouri', MT: 'Montana', NE: 'Nebraska', NV: 'Nevada',
+  NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico', NY: 'New York',
+  NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio', OK: 'Oklahoma', OR: 'Oregon',
+  PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina', SD: 'South Dakota',
+  TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont', VA: 'Virginia', WA: 'Washington',
+  WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming',
+}
+
+const INDIA_STATE_NAMES: Record<string, string> = {
+  AP: 'Andhra Pradesh', AR: 'Arunachal Pradesh', AS: 'Assam', BR: 'Bihar', CG: 'Chhattisgarh',
+  GA: 'Goa', GJ: 'Gujarat', HR: 'Haryana', HP: 'Himachal Pradesh', JH: 'Jharkhand',
+  KA: 'Karnataka', KL: 'Kerala', MP: 'Madhya Pradesh', MH: 'Maharashtra', MN: 'Manipur',
+  ML: 'Meghalaya', MZ: 'Mizoram', NL: 'Nagaland', OD: 'Odisha', PB: 'Punjab',
+  RJ: 'Rajasthan', SK: 'Sikkim', TN: 'Tamil Nadu', TG: 'Telangana', TR: 'Tripura',
+  UP: 'Uttar Pradesh', UK: 'Uttarakhand', WB: 'West Bengal', AN: 'Andaman and Nicobar Islands',
+  CH: 'Chandigarh', DN: 'Dadra and Nagar Haveli and Daman and Diu', DL: 'Delhi',
+  JK: 'Jammu and Kashmir', LA: 'Ladakh', LD: 'Lakshadweep', PY: 'Puducherry',
+}
+
+function expandCountryName(value: string): string {
+  const raw = String(value || '').trim()
+  if (!raw) return ''
+  if (!/^[A-Z]{2}$/.test(raw)) return raw
+  if (raw === 'US') return 'United States'
+  if (raw === 'IN') return 'India'
+  if (raw === 'AE') return 'United Arab Emirates'
+  return raw
+}
+
+function expandRegionName(region: unknown, country: unknown): string {
+  const rawRegion = String(region || '').trim()
+  if (!rawRegion) return ''
+  const code = rawRegion.toUpperCase()
+  const countryCode = String(country || '').trim().toUpperCase()
+  if (countryCode === 'US' && US_STATE_NAMES[code]) return US_STATE_NAMES[code]
+  if (countryCode === 'IN' && INDIA_STATE_NAMES[code]) return INDIA_STATE_NAMES[code]
+  return rawRegion
+}
+
 function formatLocationText(location: any): string {
   if (!location) return 'Unknown'
-  return [location.city, location.region, location.country].filter(Boolean).join(', ') || 'Unknown'
+  const country = expandCountryName(location.country || location.countryCode || '')
+  const region = expandRegionName(location.region, location.countryCode || location.country)
+  const city = String(location.city || '').trim() || 'Unknown city'
+  return [city, region, country].filter(Boolean).join(', ') || 'Unknown'
 }
 
 function formatAddress(location: any): string {
@@ -441,13 +515,8 @@ function formatSlackMessage(type: string, data: any) {
   const vipEmoji = vipCheck.isVIP ? '⭐' : ''
   const houseName = vipCheck.isVIP ? null : namedHouseVisitor(data.visitorId)
   
-  // Generate map link
-  const mapLink = getMapLink(
-    data.location?.latitude, 
-    data.location?.longitude,
-    data.location?.city,
-    data.location?.country
-  )
+  // Generate map link — matches the location text we show (not a mismatched IP pin)
+  const mapLink = getMapLink(data.location)
   const locationWithMap = mapLink ? `<${mapLink}|📍 ${locationText}>` : `🌍 ${locationText}`
   const accuracyBadge = data.location?.accuracyLevel === 'gps' ? ' 🎯' : data.location?.accuracyLevel === 'ip' ? ' 📡' : ''
   const addressText = formatAddress(data.location)
@@ -715,13 +784,14 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Pages Viewed:*\n${data.pageViews?.length || 0}` },
               { type: 'mrkdwn', text: `*Last Page:*\n${data.currentPage?.title || data.currentPage?.path || data.browser?.path || 'Unknown'}` },
               { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ]
           },
           {
             type: 'context',
             elements: [
-              { type: 'mrkdwn', text: `${houseName ? `👤 *${houseName}* | ` : ''}Visitor ID: \`${data.visitorId}\` | Session ID: \`${data.sessionId || 'Unknown'}\` | UTM: ${utmText}` }
+              { type: 'mrkdwn', text: `${houseName ? `👤 *${houseName}* | ` : ''}Visitor ID: \`${data.visitorId}\` | IP: \`${ip}\` | Session ID: \`${data.sessionId || 'Unknown'}\` | UTM: ${utmText}` }
             ]
           }
         ]
@@ -748,6 +818,7 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Currency:*\n💱 ${curr}` },
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ],
           },
@@ -756,7 +827,7 @@ function formatSlackMessage(type: string, data: any) {
             elements: [
               {
                 type: 'mrkdwn',
-                text: `${houseName ? `👤 *${houseName}* · ` : ''}Visitor \`${data.visitorId || 'Unknown'}\` · ${timeOnSite} on site · ${timestamp} GST`,
+                text: `${houseName ? `👤 *${houseName}* · ` : ''}Visitor \`${data.visitorId || 'Unknown'}\` · IP \`${ip}\` · ${timeOnSite} on site · ${timestamp} GST`,
               },
             ],
           },
