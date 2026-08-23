@@ -1,5 +1,16 @@
 # Bint Saeed
 
+## Primary site navigation (canonical order)
+Shop is the primary destination after Home — editorial pages follow commerce.
+1. Shop: https://www.bintsaeed.com/shop
+2. Strands: https://www.bintsaeed.com/strands
+3. Accessories: https://www.bintsaeed.com/accessories
+4. Personalisation: https://www.bintsaeed.com/personalisation
+5. The Codes: https://www.bintsaeed.com/the-codes
+6. About / Our Story: https://www.bintsaeed.com/about
+7. Craftsmanship: https://www.bintsaeed.com/craftsmanship
+8. Contact: https://www.bintsaeed.com/contact
+
 Bint Saeed is a luxury abaya house based in Abu Dhabi, UAE.
 Founded with the belief that an abaya should be a living,
 customisable object — not a finished garment.

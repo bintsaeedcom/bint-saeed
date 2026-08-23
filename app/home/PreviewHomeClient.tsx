@@ -392,7 +392,27 @@ export default function Home() {
       <EditorialIntro />
       <EditorialSplit />
       <CampaignPanoramaSection />
+      <HomePrimarySiteNav />
     </div>
+  )
+}
+
+/** Crawler-facing primary nav order — Shop before editorial pages (sitelink signal). */
+function HomePrimarySiteNav() {
+  const { language } = useLanguage()
+  const hn = getHeaderNavCopy(language)
+
+  return (
+    <nav aria-hidden="true" className="sr-only" aria-label="Primary site navigation">
+      <LocaleLink href="/shop">{hn.shop} — Bint Saeed collection</LocaleLink>
+      <LocaleLink href="/strands">{hn.strands}</LocaleLink>
+      <LocaleLink href="/accessories">{hn.accessories}</LocaleLink>
+      <LocaleLink href="/personalisation">{hn.personalisation}</LocaleLink>
+      <LocaleLink href="/the-codes">{hn.theCodes}</LocaleLink>
+      <LocaleLink href="/about">{hn.ourStory}</LocaleLink>
+      <LocaleLink href="/craftsmanship">{hn.craftsmanship}</LocaleLink>
+      <LocaleLink href="/contact">{hn.contact}</LocaleLink>
+    </nav>
   )
 }
 

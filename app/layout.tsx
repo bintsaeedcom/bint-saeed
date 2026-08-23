@@ -20,6 +20,7 @@ import {
   buildBreadcrumbJsonLd,
   buildItemListJsonLd,
   buildLocalBusinessJsonLd,
+  buildPrimarySiteNavigationJsonLd,
   buildProductJsonLd,
   buildWebPageJsonLd,
   buildWebsiteJsonLd,
@@ -81,6 +82,7 @@ export default async function RootLayout({
   const organizationSchema = buildOrganizationJsonLd(locale)
   const brandSchemaLd = buildBrandJsonLd(locale)
   const websiteSchema = buildWebsiteJsonLd(locale)
+  const primaryNavigationSchema = buildPrimarySiteNavigationJsonLd(locale)
   const localBusinessSchema = buildLocalBusinessJsonLd(locale, {
     omitOfferCatalog: hideCommerceProductSchema,
   })
@@ -143,6 +145,10 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(primaryNavigationSchema) }}
         />
         <script
           type="application/ld+json"

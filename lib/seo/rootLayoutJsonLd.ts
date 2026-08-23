@@ -6,6 +6,7 @@ import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
 import { ORGANIZATION_SAME_AS } from '@/lib/seo/pressCoverage'
+import { getHeaderNavCopy } from '@/lib/i18n/headerNavI18n'
 
 /** Canonical site origin (must match live host / Search Console property). */
 const BASE = 'https://www.bintsaeed.com'
@@ -549,11 +550,47 @@ export function buildBrandJsonLd(locale: AppLocale) {
   }
 }
 
+/** Primary nav order for Google sitelinks + AI — commerce first, editorial after. */
+export function buildPrimarySiteNavigationJsonLd(locale: AppLocale) {
+  const hn = getHeaderNavCopy(locale)
+  const items: { path: string; name: string }[] = [
+    { path: '/shop', name: hn.shop },
+    { path: '/strands', name: hn.strands },
+    { path: '/accessories', name: hn.accessories },
+    { path: '/personalisation', name: hn.personalisation },
+    { path: '/the-codes', name: hn.theCodes },
+    { path: '/about', name: hn.ourStory },
+    { path: '/craftsmanship', name: hn.craftsmanship },
+    { path: '/contact', name: hn.contact },
+  ]
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${BASE}/#primary-navigation`,
+    inLanguage: schemaInLanguageForLocale(locale),
+    name: 'Primary site navigation',
+    description: 'Canonical navigation order for Bint Saeed — Shop first, editorial pages after.',
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: {
+        '@type': 'SiteNavigationElement',
+        name: item.name,
+        url: absoluteUrl(locale, item.path),
+      },
+    })),
+  }
+}
+
 export function buildWebsiteJsonLd(locale: AppLocale) {
   const lang = schemaInLanguageForLocale(locale)
   const desc = getHomeMetaDescription(locale)
   // Match storefront canonical (`/` 308s → `/home`) to reduce GSC “chose different canonical”.
   const siteUrl = absoluteUrl(locale, '/home')
+  const shopUrl = absoluteUrl(locale, '/shop')
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -565,6 +602,11 @@ export function buildWebsiteJsonLd(locale: AppLocale) {
     publisher: {
       '@id': `${BASE}/#organization`,
     },
+    hasPart: {
+      '@id': `${BASE}/#primary-navigation`,
+    },
+    /** Signals the primary commercial destination ahead of editorial hubs in sitelinks. */
+    relatedLink: shopUrl,
     // No SearchAction: header search is client-side only. A fake
     // `?category={search_term_string}` template caused GSC to crawl the
     // literal placeholder URL (Alternate page with proper canonical → /shop).

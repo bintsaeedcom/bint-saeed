@@ -3,6 +3,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 export type SearchableItem = { title: string; href: string; category: string }
 
 const EN: SearchableItem[] = [
+  { title: 'Shop', href: '/shop', category: 'Collection' },
   { title: 'New Arrivals', href: '/shop', category: 'Collection' },
   { title: 'Dresses', href: '/shop?category=dresses', category: 'Collection' },
   { title: 'Ready to Wear', href: '/shop?category=ready-to-wear', category: 'Collection' },
@@ -32,6 +33,7 @@ const EN: SearchableItem[] = [
 ]
 
 const AR: SearchableItem[] = [
+  { title: 'تسوّقي', href: '/shop', category: 'المجموعة' },
   { title: 'وصل حديثاً', href: '/shop', category: 'المجموعة' },
   { title: 'فساتين', href: '/shop?category=dresses', category: 'المجموعة' },
   { title: 'جاهز للارتداء', href: '/shop?category=ready-to-wear', category: 'المجموعة' },
