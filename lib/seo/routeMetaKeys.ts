@@ -25,6 +25,7 @@ export type RouteMetaKey =
   | 'verify_email'
   | 'the_codes'
   | 'craftsmanship'
+  | 'regional_dressing'
   | 'personalisation'
   | 'strands'
   | 'product_care'

@@ -13,7 +13,7 @@ import { getLocalizedAlTalliDiscoveryKeywords } from '@/lib/products/alTalliDisc
 const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 
 const PAGE_DESCRIPTION: Record<AppLocale, string> = {
-  en: 'What is Al Talli? Discover UNESCO-listed Emirati embroidery — its history, technique, and how Bint Saeed brings Al Talli to contemporary abayas and dresses made in Abu Dhabi. Shop designer Al Talli fashion.',
+  en: 'Discover Al Talli, the traditional Emirati craft woven with metallic threads by generations of women, and how its heritage continues in contemporary fashion.',
   ar: 'ما هو التلي؟ اكتشفي تطريز التلي الإماراتي المدرج في اليونسكو — تاريخه وتقنيته وكيف تعيد Bint Saeed إحياء التلي في عبايات وفساتين معاصرة من أبوظبي.',
   fr: 'Qu’est-ce que l’Al Talli ? Découvrez la broderie émiratie inscrite à l’UNESCO et les abayas contemporaines Bint Saeed à Abu Dhabi.',
   it: 'Che cos’è Al Talli? Scopri il ricamo emiratino UNESCO e le abaya contemporanee Bint Saeed ad Abu Dhabi.',
@@ -75,6 +75,57 @@ const FAQ_COMMERCE: Record<AppLocale, { q: string; a: string }> = {
   ms: {
     q: 'Di mana membeli fesyen dan abaya Al Talli?',
     a: 'Reka bentuk Al Talli Bint Saeed Abu Dhabi — Covent Garden Abaya, Hampstead Dress, dan Soho Set.',
+  },
+}
+
+const FAQ_DEFINITION: Record<AppLocale, { q: string; a: string }> = {
+  en: {
+    q: 'What is Al Talli?',
+    a: 'Al Talli is a traditional Emirati decorative craft of hand-worked bands in metallic and coloured thread, historically used to adorn women’s clothing in the United Arab Emirates. Passed between generations of women, it remains a recognisable expression of Emirati craftsmanship and was inscribed on UNESCO’s Representative List of the Intangible Cultural Heritage of Humanity in 2022.',
+  },
+  ar: {
+    q: 'ما هو التلي؟',
+    a: 'التلي حرفة زخرفية إماراتية تقليدية من أشرطة دقيقة بخيوط معدنية وملونة، استُخدمت تاريخياً لتزيين ملابس النساء في الإمارات. توارثتها أجيال من النساء، وفي عام 2022 أُدرجت مهاراته على قائمة اليونسكو للتراث الثقافي غير المادي.',
+  },
+  fr: {
+    q: 'Qu’est-ce que l’Al Talli ?',
+    a: 'L’Al Talli est un artisanat décoratif émirati traditionnel de bandes de fils métalliques et colorés, historiquement utilisé pour orner les vêtements féminins aux Émirats arabes unis. Inscrit en 2022 sur la Liste représentative du patrimoine culturel immatériel de l’humanité de l’UNESCO.',
+  },
+  it: {
+    q: 'Che cos’è Al Talli?',
+    a: 'Al Talli è un artigianato decorativo emiratino tradizionale di bande in filo metallico e colorato, storicamente usato per adornare gli abiti femminili negli Emirati Arabi Uniti. Iscritto nel 2022 nella Lista rappresentativa del patrimonio culturale immateriale dell’UNESCO.',
+  },
+  es: {
+    q: '¿Qué es Al Talli?',
+    a: 'Al Talli es un oficio decorativo emiratí tradicional de bandas de hilo metálico y de color, históricamente usado para adornar la ropa femenina en los Emiratos Árabes Unidos. Inscrito en 2022 en la Lista Representativa del Patrimonio Cultural Inmaterial de la UNESCO.',
+  },
+  ru: {
+    q: 'Что такое Al Talli?',
+    a: 'Al Talli — традиционное эмиратское декоративное ремесло: ручные ленты из металлических и цветных нитей, исторически украшавшие женскую одежду в ОАЭ. В 2022 году внесено в Репрезентативный список нематериального культурного наследия ЮНЕСКО.',
+  },
+  zh: {
+    q: '什么是 Al Talli？',
+    a: 'Al Talli 是阿联酋传统装饰工艺，以金属线与彩色线手工织成饰带，历史上用于点缀女性服饰。2022年列入联合国教科文组织人类非物质文化遗产代表作名录。',
+  },
+  de: {
+    q: 'Was ist Al Talli?',
+    a: 'Al Talli ist ein traditionelles emiratisches Dekorhandwerk aus handgearbeiteten Bändern aus metallischen und farbigen Fäden, historisch zur Verzierung von Frauenkleidung in den VAE. 2022 in die Repräsentative Liste des immateriellen Kulturerbes der UNESCO aufgenommen.',
+  },
+  nl: {
+    q: 'Wat is Al Talli?',
+    a: 'Al Talli is een traditioneel Emiratisch decoratief ambacht van handgewerkte banden in metallische en gekleurde draad, historisch gebruikt om dameskleding in de VAE te sieren. In 2022 opgenomen op de representatieve lijst van immaterieel erfgoed van UNESCO.',
+  },
+  pt: {
+    q: 'O que é Al Talli?',
+    a: 'Al Talli é um ofício decorativo emirati tradicional de faixas em fio metálico e colorido, historicamente usadas para adornar o vestuário feminino nos Emirados Árabes Unidos. Inscrito em 2022 na Lista Representativa do Património Cultural Imaterial da UNESCO.',
+  },
+  id: {
+    q: 'Apa itu Al Talli?',
+    a: 'Al Talli adalah kerajinan dekoratif tradisional Emirat berupa pita benang metalik dan berwarna, historis digunakan untuk menghias pakaian wanita di UEA. Pada 2022 masuk Daftar Representatif Warisan Budaya Takbenda UNESCO.',
+  },
+  ms: {
+    q: 'Apakah Al Talli?',
+    a: 'Al Talli ialah kraf hiasan tradisional Emirati berupa jalur benang logam dan berwarna, historinya digunakan untuk menghias pakaian wanita di UAE. Pada 2022 disenaraikan dalam Senarai Wakil Warisan Budaya Tidak Ketara UNESCO.',
   },
 }
 
@@ -141,6 +192,10 @@ export function buildAlTalliHeritageJsonLd(locale: AppLocale = 'en') {
   const definedTerm = buildAlTalliDefinedTermNode(locale)
   const keywords = getLocalizedAlTalliDiscoveryKeywords(locale).join(', ')
   const faqItems = [
+    {
+      question: (FAQ_DEFINITION[locale] ?? FAQ_DEFINITION.en).q,
+      answer: (FAQ_DEFINITION[locale] ?? FAQ_DEFINITION.en).a,
+    },
     getAlTalliHeritageFaqItem(locale),
     {
       question: (FAQ_UNESCO[locale] ?? FAQ_UNESCO.en).q,
@@ -152,13 +207,16 @@ export function buildAlTalliHeritageJsonLd(locale: AppLocale = 'en') {
     },
   ]
 
+  const today = new Date().toISOString().slice(0, 10)
+
   const heroImage = {
     '@type': 'ImageObject' as const,
     '@id': `${imageUrl}#image`,
     url: imageUrl,
     contentUrl: imageUrl,
-    name: 'Al Talli — Emirati heritage embroidery by Bint Saeed Abu Dhabi',
-    caption: 'Traditional Al Talli trim celebrating Emirati UNESCO heritage craftsmanship',
+    name: 'Al Talli embroidery abaya detail — Emirati UNESCO heritage craft | Bint Saeed Abu Dhabi',
+    caption:
+      'Navy Bint Saeed abaya detail with gold Al Talli metallic embroidery — Emirati heritage craft, Abu Dhabi',
     representativeOfPage: true,
   }
 
@@ -183,13 +241,19 @@ export function buildAlTalliHeritageJsonLd(locale: AppLocale = 'en') {
   }
 
   const webpage = {
-    '@type': 'WebPage' as const,
+    '@type': ['WebPage', 'Article'] as const,
     '@id': `${pageUrl}#webpage`,
     url: pageUrl,
     name: locale === 'ar' ? 'التلي | Bint Saeed' : 'Al Talli Embroidery | UNESCO Emirati Heritage | Bint Saeed',
+    headline: locale === 'ar' ? 'التلي: حرفة إماراتية نسجتها الأجيال' : 'Al Talli: The Emirati Craft Woven Through Generations',
+    alternativeHeadline: locale === 'ar' ? 'ما هو التلي؟' : 'What is Al Talli?',
     description: PAGE_DESCRIPTION[locale] ?? PAGE_DESCRIPTION.en,
+    abstract: PAGE_DESCRIPTION[locale] ?? PAGE_DESCRIPTION.en,
     keywords,
     inLanguage: lang,
+    datePublished: '2026-08-23',
+    dateModified: today,
+    isAccessibleForFree: true,
     isPartOf: {
       '@type': 'WebSite',
       '@id': `${SITE}/#website`,
@@ -197,9 +261,64 @@ export function buildAlTalliHeritageJsonLd(locale: AppLocale = 'en') {
       url: SITE,
     },
     about: definedTerm,
+    mentions: [
+      definedTerm,
+      {
+        '@type': 'TouristDestination',
+        name: 'Abu Dhabi',
+        description:
+          'Capital of the United Arab Emirates and a destination for Emirati heritage crafts, including living Al Talli practice at cultural sites such as Qasr Al Hosn and the House of Artisans.',
+        containedInPlace: { '@type': 'Country', name: 'United Arab Emirates' },
+        touristType: ['Cultural tourism', 'Heritage travellers'],
+      },
+      {
+        '@type': 'TouristAttraction',
+        name: 'Qasr Al Hosn',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Abu Dhabi',
+          addressCountry: 'AE',
+        },
+      },
+      {
+        '@type': 'TouristAttraction',
+        name: 'House of Artisans',
+        description: 'Abu Dhabi cultural institution sharing traditional Emirati crafts including Al Talli.',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Abu Dhabi',
+          addressCountry: 'AE',
+        },
+      },
+      {
+        '@type': 'DefinedTerm',
+        name: 'Middle Eastern crafts',
+        alternateName: ['Middle Eastern heritage', 'Middle East crafts', 'Gulf heritage crafts'],
+        description:
+          'Traditional craft practices of the Middle East, including Emirati Al Talli embroidery from the United Arab Emirates.',
+        url: pageUrl,
+      },
+      {
+        '@type': 'Organization',
+        name: 'UNESCO',
+        sameAs: 'https://www.unesco.org/',
+      },
+    ],
     mainEntity: definedTerm,
     primaryImageOfPage: heroImage,
     image: heroImage,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: [
+        '#al-talli-definition',
+        '#al-talli-unesco',
+        '#al-talli-abu-dhabi',
+        '[data-ai-summary] h2',
+        '[data-ai-summary] p',
+        'h1',
+      ],
+    },
+    citation: `${SITE}/llms/al-talli.txt`,
     publisher: {
       '@type': 'Organization',
       name: 'Bint Saeed',
@@ -209,6 +328,11 @@ export function buildAlTalliHeritageJsonLd(locale: AppLocale = 'en') {
         addressLocality: 'Abu Dhabi',
         addressCountry: 'AE',
       },
+    },
+    author: {
+      '@type': 'Organization',
+      name: 'Bint Saeed',
+      url: SITE,
     },
     hasPart: featuredItemList,
     potentialAction: [
@@ -221,6 +345,11 @@ export function buildAlTalliHeritageJsonLd(locale: AppLocale = 'en') {
         '@type': 'ReadAction',
         name: 'Explore The Codes — Al Talli House Code',
         target: productUrl(locale, '/the-codes'),
+      },
+      {
+        '@type': 'ReadAction',
+        name: 'Al Talli AI citation brief',
+        target: `${SITE}/llms/al-talli.txt`,
       },
     ],
   }

@@ -47,6 +47,7 @@ export function classifyRouteMetaKey(pathname: string): RouteMetaKey {
   if (p.startsWith('/verify-email')) return 'verify_email'
   if (p.startsWith('/the-codes')) return 'the_codes'
   if (p.startsWith('/craftsmanship')) return 'craftsmanship'
+  if (p.startsWith('/dressing-for-the-middle-east')) return 'regional_dressing'
   if (p.startsWith('/personalisation')) return 'personalisation'
   if (p.startsWith('/product-care')) return 'product_care'
   if (p.startsWith('/giving-forward')) return 'giving_forward'
@@ -142,18 +143,18 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     ms: 'Warisan | Bint Saeed',
   },
   heritage_al_talli: {
-    en: 'Al Talli Embroidery | UNESCO Heritage | Bint Saeed Abu Dhabi',
-    ar: 'التلي | تراث اليونسكو | Bint Saeed أبوظبي',
-    fr: 'Broderie Al Talli | Patrimoine UNESCO | Bint Saeed Abu Dhabi',
-    it: 'Ricamo Al Talli | Patrimonio UNESCO | Bint Saeed Abu Dhabi',
-    es: 'Bordado Al Talli | Patrimonio UNESCO | Bint Saeed Abu Dhabi',
-    ru: 'Вышивка Al Talli | Наследие ЮНЕСКО | Bint Saeed Абу-Даби',
-    zh: 'Al Talli 刺绣 | 联合国教科文组织遗产 | Bint Saeed 阿布扎比',
-    de: 'Al Talli Stickerei | UNESCO-Erbe | Bint Saeed Abu Dhabi',
-    nl: 'Al Talli Borduurwerk | UNESCO Erfgoed | Bint Saeed Abu Dhabi',
-    pt: 'Bordado Al Talli | Património UNESCO | Bint Saeed Abu Dhabi',
-    id: 'Sulaman Al Talli | Warisan UNESCO | Bint Saeed Abu Dhabi',
-    ms: 'Sulaman Al Talli | Warisan UNESCO | Bint Saeed Abu Dhabi',
+    en: 'What Is Al Talli? Emirati Heritage & Craft | Bint Saeed',
+    ar: 'ما هو التلي؟ تراث وحرفة إماراتية | Bint Saeed',
+    fr: 'Qu’est-ce que l’Al Talli ? Patrimoine et artisanat émiratis | Bint Saeed',
+    it: 'Cos’è Al Talli? Patrimonio e artigianato emiratino | Bint Saeed',
+    es: '¿Qué es Al Talli? Patrimonio y oficio emiratí | Bint Saeed',
+    ru: 'Что такое Al Talli? Эмиратское наследие и ремесло | Bint Saeed',
+    zh: '什么是 Al Talli？阿联酋传承与工艺 | Bint Saeed',
+    de: 'Was ist Al Talli? Emiratisches Erbe & Handwerk | Bint Saeed',
+    nl: 'Wat is Al Talli? Emiratisch erfgoed & ambacht | Bint Saeed',
+    pt: 'O que é Al Talli? Património e ofício emirati | Bint Saeed',
+    id: 'Apa Itu Al Talli? Warisan & Kerajinan Emirati | Bint Saeed',
+    ms: 'Apakah Al Talli? Warisan & Kraf Emirati | Bint Saeed',
   },
   heritage_khous: {
     en: 'Khous | Bint Saeed',
@@ -392,6 +393,20 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     pt: 'Artesanato | Bint Saeed',
     id: 'Kerajinan | Bint Saeed',
     ms: 'Kraftangan | Bint Saeed',
+  },
+  regional_dressing: {
+    en: 'Dressing for the Middle East | Bint Saeed',
+    ar: 'اللباس في الشرق الأوسط | Bint Saeed',
+    fr: 'S’habiller au Moyen-Orient | Bint Saeed',
+    it: 'Come vestirsi in Medio Oriente | Bint Saeed',
+    es: 'Cómo vestir en Oriente Medio | Bint Saeed',
+    ru: 'Как одеваться на Ближнем Востоке | Bint Saeed',
+    zh: '中东着装指引 | Bint Saeed',
+    de: 'Anziehen im Nahen Osten | Bint Saeed',
+    nl: 'Kleden voor het Midden-Oosten | Bint Saeed',
+    pt: 'Como vestir no Médio Oriente | Bint Saeed',
+    id: 'Berpakaian di Timur Tengah | Bint Saeed',
+    ms: 'Berpakaian di Timur Tengah | Bint Saeed',
   },
   personalisation: {
     en: 'Personalise Your Abaya — Hidden Pocket | Bint Saeed',

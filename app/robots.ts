@@ -33,6 +33,10 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
       {
+        userAgent: 'ChatGPT-User',
+        allow: '/',
+      },
+      {
         userAgent: 'ClaudeBot',
         allow: '/',
       },
@@ -42,6 +46,34 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: 'PerplexityBot',
+        allow: '/',
+      },
+      {
+        userAgent: 'Google-Extended',
+        allow: '/',
+      },
+      {
+        userAgent: 'Amazonbot',
+        allow: '/',
+      },
+      {
+        userAgent: 'Bytespider',
+        allow: '/',
+      },
+      {
+        userAgent: 'meta-externalagent',
+        allow: '/',
+      },
+      {
+        userAgent: 'cohere-ai',
+        allow: '/',
+      },
+      {
+        userAgent: 'Diffbot',
+        allow: '/',
+      },
+      {
+        userAgent: 'Applebot-Extended',
         allow: '/',
       },
       {

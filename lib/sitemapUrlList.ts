@@ -45,6 +45,8 @@ const PRIMARY_HUBS: { path: string; changefreq: string; priority: string }[] = [
   { path: '/about', changefreq: 'monthly', priority: '0.7' },
   { path: '/the-codes', changefreq: 'monthly', priority: '0.7' },
   { path: '/craftsmanship', changefreq: 'monthly', priority: '0.7' },
+  { path: '/dressing-for-the-middle-east', changefreq: 'monthly', priority: '0.6' },
+  { path: '/heritage/al-talli', changefreq: 'monthly', priority: '0.7' },
   { path: '/giving-forward', changefreq: 'monthly', priority: '0.6' },
   { path: '/contact', changefreq: 'monthly', priority: '0.5' },
   { path: '/faq', changefreq: 'monthly', priority: '0.5' },

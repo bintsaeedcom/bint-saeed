@@ -310,6 +310,12 @@ export default function ShopClient() {
             {p.name}
           </a>
         ))}
+        <a href="/dressing-for-the-middle-east">
+          What to wear in the Middle East — Middle Eastern styles
+        </a>
+        <a href="/heritage/al-talli">
+          What is Al Talli — Emirati heritage craft UNESCO
+        </a>
       </nav>
       <div className="flex-1">
       <header className="section-full overflow-hidden border-b border-black/5 bg-stone-50">

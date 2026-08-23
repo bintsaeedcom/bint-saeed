@@ -155,25 +155,25 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   heritage_al_talli: {
     en:
-      'What is Al Talli? UNESCO-listed Emirati embroidery from Abu Dhabi. Discover the craft and shop designer abayas and dresses with authentic Al Talli trim by Bint Saeed — made in the UAE.',
+      'Discover Al Talli, the traditional Emirati craft woven with metallic threads by generations of women, and how its heritage continues in contemporary fashion.',
     ar:
-      'ما هو التلي؟ تطريز إماراتي مدرج في اليونسكو من أبوظبي. اكتشفي الحرفة وتسوقي عبايات وفساتين بتفاصيل التلي الأصيلة من Bint Saeed — صُنعت في الإمارات.',
+      'اكتشفي التلي، الحرفة الإماراتية التقليدية المنسوجة بخيوط معدنية عبر أجيال من النساء، وكيف يستمر تراثها في الأزياء المعاصرة.',
     fr:
-      'Qu’est-ce que l’Al Talli ? Broderie émiratie UNESCO à Abu Dhabi. Découvrez l’artisanat et achetez des abayas et robes Al Talli par Bint Saeed — fabriquées aux EAU.',
+      'Découvrez l’Al Talli, artisanat émirati traditionnel tissé de fils métalliques par des générations de femmes, et la continuité de cet héritage dans la mode contemporaine.',
     it:
-      'Che cos’è Al Talli? Ricamo emiratino UNESCO da Abu Dhabi. Scopri l’artigianato e acquista abaya e abiti Al Talli Bint Saeed — made in UAE.',
+      'Scopri Al Talli, l’artigianato emiratino tradizionale intessuto con fili metallici da generazioni di donne, e come questo patrimonio continua nella moda contemporanea.',
     es:
-      '¿Qué es Al Talli? Bordado emiratí UNESCO desde Abu Dabi. Descubre el oficio y compra abayas y vestidos Al Talli de Bint Saeed — hechos en EAU.',
+      'Descubre Al Talli, el oficio emiratí tradicional tejido con hilos metálicos por generaciones de mujeres, y cómo su patrimonio continúa en la moda contemporánea.',
     ru:
-      'Что такое Al Talli? Эмиратская вышивка ЮНЕСКО из Абу-Даби. Узнайте о ремесле и купите абайи и платья с Al Talli от Bint Saeed — сделано в ОАЭ.',
+      'Узнайте об Al Talli — традиционном эмиратском ремесле с металлическими нитями, передаваемом поколениями женщин, и о том, как это наследие живёт в современной моде.',
     zh:
-      '什么是 Al Talli？联合国教科文组织阿联酋刺绣，源自阿布扎比。了解工艺并选购 Bint Saeed 正宗 Al Talli 饰边长袍与连衣裙——阿联酋制造。',
+      '了解 Al Talli：由一代代女性用金属线织就的阿联酋传统工艺，以及这一传承如何延续于当代时装。',
     de:
-      'Was ist Al Talli? UNESCO-emiratische Stickerei aus Abu Dhabi. Entdecken Sie das Handwerk und shoppen Sie Al-Talli-Abayas und Kleider von Bint Saeed — made in UAE.',
+      'Entdecken Sie Al Talli, das traditionelle emiratische Handwerk mit Metallfäden, weitergegeben von Generationen von Frauen — und wie dieses Erbe in zeitgenössischer Mode weiterlebt.',
     nl:
-      'Wat is Al Talli? UNESCO Emiratisch borduurwerk uit Abu Dhabi. Ontdek het ambacht en shop designer abaya’s en jurken met Al Talli van Bint Saeed — gemaakt in de VAE.',
+      'Ontdek Al Talli, het traditionele Emiratische ambacht met metallic draden, doorgegeven door generaties vrouwen, en hoe dit erfgoed doorleeft in hedendaagse mode.',
     pt:
-      'O que é Al Talli? Bordado emirati UNESCO de Abu Dhabi. Descubra o ofício e compre abayas e vestidos Al Talli da Bint Saeed — feitos nos EAU.',
+      'Descubra Al Talli, o ofício emirati tradicional tecido com fios metálicos por gerações de mulheres, e como este património continua na moda contemporânea.',
   },
   heritage_khous: {
     en:
@@ -548,6 +548,28 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
       'Vakmanschap — atelierstandaarden van Bint Saeed in Abu Dhabi voor luxe abaya’s met erfgoedtechnieken en precieze afwerking.',
     pt:
       'Artesanato — padrões de atelier da Bint Saeed em Abu Dhabi para abayas de luxo com técnicas tradicionais e acabamentos finos.',
+  },
+  regional_dressing: {
+    en:
+      'What to wear in the Middle East — calm notes on Middle Eastern styles, UAE dress etiquette, and contemporary abayas from Bint Saeed Abu Dhabi.',
+    ar:
+      'ماذا ترتدين في الشرق الأوسط — إرشادات هادئة حول الأساليب الشرق أوسطية وآداب اللباس في الإمارات والعباءات المعاصرة من بِنت سعيد في أبوظبي.',
+    fr:
+      'Que porter au Moyen-Orient — notes sobres sur les styles moyen-orientaux, l’étiquette vestimentaire aux Émirats et les abayas contemporaines Bint Saeed à Abu Dhabi.',
+    it:
+      'Cosa indossare in Medio Oriente — note misurate su stili mediorientali, etichetta negli Emirati e abaya contemporanee Bint Saeed ad Abu Dhabi.',
+    es:
+      'Qué llevar en Oriente Medio — notas serenas sobre estilos de Oriente Medio, etiqueta en Emiratos y abayas contemporáneas Bint Saeed en Abu Dhabi.',
+    ru:
+      'Что носить на Ближнем Востоке — спокойные заметки о ближневосточном стиле, этикете ОАЭ и современных абаях Bint Saeed из Абу‑Даби.',
+    zh:
+      '中东该如何穿着——关于中东风格、阿联酋着装礼仪，以及阿布扎比 Bint Saeed 当代阿巴亚的从容指引。',
+    de:
+      'Was man im Nahen Osten trägt — ruhige Hinweise zu nahöstlichen Stilen, Etikette in den VAE und zeitgemäßen Abayas von Bint Saeed Abu Dhabi.',
+    nl:
+      'Wat te dragen in het Midden-Oosten — serene notities over Midden-Oosterse stijlen, etiquette in de VAE en hedendaagse abaya’s van Bint Saeed Abu Dhabi.',
+    pt:
+      'O que vestir no Médio Oriente — notas serenas sobre estilos do Médio Oriente, etiqueta nos Emirados e abayas contemporâneas Bint Saeed em Abu Dhabi.',
   },
   personalisation: {
     en:
