@@ -17,6 +17,7 @@ import {
   formatShopPreferenceLine,
 } from '@/lib/geo/locationSignals'
 import { namedHouseVisitor, shouldSuppressVisitorNoise, STAFF_VISITOR_IDS } from '@/lib/analytics/staffOptics'
+import { assessVisitorBotRisk, shouldSuppressBotSlack } from '@/lib/bots/assessVisitorBotRisk'
 
 function normalizedWebhook(...values: Array<string | undefined>): string | undefined {
   for (const value of values) {
@@ -445,16 +446,18 @@ export async function POST(request: NextRequest) {
 
     // Slack delivery is best-effort: analytics is already persisted above, so a missing or
     // failing webhook must not drop the event or return an error to the client tracker.
-    const suppressSlack = shouldSuppressVisitorNoise({
-      visitorId: payload?.visitorId,
-      browserPath: payload?.browser?.path,
-      currentPagePath: payload?.currentPage?.path,
-      staffOptics: payload?.staffOptics,
-    })
+    const botRisk = assessVisitorBotRisk(payload || {})
+    const suppressSlack =
+      shouldSuppressVisitorNoise({
+        visitorId: payload?.visitorId,
+        browserPath: payload?.browser?.path,
+        currentPagePath: payload?.currentPage?.path,
+        staffOptics: payload?.staffOptics,
+      }) || shouldSuppressBotSlack(botRisk)
     const webhookUrl = suppressSlack ? undefined : resolveSlackWebhookForType(type)
     if (webhookUrl) {
       try {
-        const message = formatSlackMessage(type, payload)
+        const message = formatSlackMessage(type, { ...payload, botRisk })
         const slackResponse = await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -514,6 +517,22 @@ function formatSlackMessage(type: string, data: any) {
   const vipFlag = vipCheck.isVIP ? `🚨 *VIP: ${vipCheck.name}* 🚨\n` : ''
   const vipEmoji = vipCheck.isVIP ? '⭐' : ''
   const houseName = vipCheck.isVIP ? null : namedHouseVisitor(data.visitorId)
+  const botRisk = data.botRisk || assessVisitorBotRisk(data)
+  const botBanner =
+    botRisk?.label && botRisk.level !== 'none'
+      ? {
+          type: 'section' as const,
+          text: {
+            type: 'mrkdwn' as const,
+            text:
+              `*${botRisk.label}*\n` +
+              (Array.isArray(botRisk.reasons) && botRisk.reasons.length
+                ? `_${botRisk.reasons.join(' · ')}_`
+                : '_Automated / datacenter traffic pattern_'),
+          },
+        }
+      : null
+  const withBot = (blocks: any[]) => (botBanner ? [botBanner, ...blocks] : blocks)
   
   // Generate map link — matches the location text we show (not a mismatched IP pin)
   const mapLink = getMapLink(data.location)
@@ -604,7 +623,7 @@ function formatSlackMessage(type: string, data: any) {
       }
       // Regular visitor
       return {
-        blocks: [
+        blocks: withBot([
           {
             type: 'header',
             text: { type: 'plain_text', text: houseName ? `🆕 New Visitor — ${houseName}` : '🆕 New Visitor on bintsaeed.com', emoji: true }
@@ -637,14 +656,14 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: houseName ? `Visitor ID: \`${data.visitorId}\` | 👤 *${houseName}*` : `Visitor ID: \`${data.visitorId}\` · IP city ≠ home if VPN` }
             ]
           }
-        ]
+        ])
       }
 
     case 'returning_visitor':
       // VIP gets a completely different, prominent message
       if (vipCheck.isVIP) {
         return {
-          blocks: [
+          blocks: withBot([
             {
               type: 'header',
               text: { type: 'plain_text', text: `🔴🔴🔴 ${vipCheck.name.toUpperCase()} IS BACK! 🔴🔴🔴`, emoji: true }
@@ -691,12 +710,12 @@ function formatSlackMessage(type: string, data: any) {
                 { type: 'mrkdwn', text: `🏷️ Visitor ID: \`${data.visitorId}\` | 👤 VIP: *${vipCheck.name}*` }
               ]
             }
-          ]
+          ])
         }
       }
       // Regular visitor
       return {
-        blocks: [
+        blocks: withBot([
           {
             type: 'header',
             text: { type: 'plain_text', text: houseName ? `🔄 Returning Visitor — ${houseName}` : '🔄 Returning Visitor on bintsaeed.com', emoji: true }
@@ -730,7 +749,7 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: houseName ? `Visitor ID: \`${data.visitorId}\` | 👤 *${houseName}*` : `Visitor ID: \`${data.visitorId}\` · IP city ≠ home if VPN` }
             ]
           }
-        ]
+        ])
       }
     
     case 'location_update':
@@ -771,7 +790,7 @@ function formatSlackMessage(type: string, data: any) {
 
     case 'session_summary':
       return {
-        blocks: [
+        blocks: withBot([
           {
             type: 'header',
             text: { type: 'plain_text', text: '⏱️ Visitor Session Summary', emoji: true }
@@ -794,7 +813,7 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `${houseName ? `👤 *${houseName}* | ` : ''}Visitor ID: \`${data.visitorId}\` | IP: \`${ip}\` | Session ID: \`${data.sessionId || 'Unknown'}\` | UTM: ${utmText}` }
             ]
           }
-        ]
+        ])
       }
 
     case 'page_view': {
@@ -803,7 +822,7 @@ function formatSlackMessage(type: string, data: any) {
       const pagePath = data.currentPage?.path || data.browser?.path || 'Unknown'
       const pageTitle = data.currentPage?.title || data.browser?.title || pagePath
       return {
-        blocks: [
+        blocks: withBot([
           {
             type: 'section',
             text: {
@@ -831,7 +850,7 @@ function formatSlackMessage(type: string, data: any) {
               },
             ],
           },
-        ],
+        ]),
       }
     }
 
@@ -851,7 +870,7 @@ function formatSlackMessage(type: string, data: any) {
             : null,
       ].filter(Boolean)
       return {
-        blocks: [
+        blocks: withBot([
           {
             type: 'header',
             text: { type: 'plain_text', text: '🛒 Added to bag', emoji: true },
@@ -879,7 +898,7 @@ function formatSlackMessage(type: string, data: any) {
               },
             ],
           },
-        ],
+        ]),
       }
     }
 
@@ -892,7 +911,7 @@ function formatSlackMessage(type: string, data: any) {
         wish.productUrl ? `Product: ${wish.productUrl}` : null,
       ].filter(Boolean)
       return {
-        blocks: [
+        blocks: withBot([
           {
             type: 'header',
             text: { type: 'plain_text', text: '♡ Added to wishlist', emoji: true },
@@ -918,7 +937,7 @@ function formatSlackMessage(type: string, data: any) {
               },
             ],
           },
-        ],
+        ]),
       }
     }
 
@@ -935,7 +954,7 @@ function formatSlackMessage(type: string, data: any) {
               .join('\n')
           : 'Items in bag'
       return {
-        blocks: [
+        blocks: withBot([
           {
             type: 'header',
             text: {
@@ -951,6 +970,7 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Items:*\n${data.cartItems ?? '—'}` },
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
               { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ],
           },
@@ -963,11 +983,11 @@ function formatSlackMessage(type: string, data: any) {
             elements: [
               {
                 type: 'mrkdwn',
-                text: `Visitor \`${data.visitorId || 'Unknown'}\` · ${timestamp} GST · ${data.browser?.path || 'Unknown page'}`,
+                text: `Visitor \`${data.visitorId || 'Unknown'}\` · IP \`${ip}\` · ${timestamp} GST · ${data.browser?.path || 'Unknown page'}`,
               },
             ],
           },
-        ],
+        ]),
       }
     }
 
