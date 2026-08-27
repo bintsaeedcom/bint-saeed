@@ -32,16 +32,32 @@ import {
 } from '@/lib/shopProductOptions'
 import {
   PDP_COLOUR_SWATCH,
+  PDP_COLOUR_SWATCH_HIT,
+  pdpColourSwatchBeadStyle,
   pdpColourSwatchState,
 } from '@/lib/ui/pdpColourSwatch'
 import { lockBodyScroll } from '@/lib/ui/bodyScrollLock'
 import { useFocusTrap } from '@/lib/ui/useFocusTrap'
 import { localizedPath } from '@/lib/i18n/routing'
 import type { AppLocale } from '@/lib/i18n/routing'
+import ExpressWalletButtons from '@/components/checkout/ExpressWalletButtons'
 
-/** Dense ivory glass — readable over commerce grids */
+/** Solid house ivory panel — never glass over the shop (keeps type readable). */
 const sheetClass =
-  'border border-[#e8ddd4]/80 bg-[#faf8f5]/97 shadow-[0_24px_64px_-16px_rgba(26,2,16,0.45)] backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-[#faf8f5]/92'
+  'isolate border border-[#e8ddd4] bg-[#faf8f5] text-[#2a1e18] shadow-[0_24px_64px_-16px_rgba(26,2,16,0.55)]'
+
+const labelClass =
+  'mb-2 block font-montserrat text-[11px] font-semibold uppercase tracking-[0.14em] text-[#3B0A12] text-start'
+
+const mutedBodyClass =
+  'font-montserrat text-[12px] font-medium leading-relaxed tracking-wide text-[#2a1e18]'
+
+const policyNoteClass =
+  'min-w-0 text-center font-montserrat text-[11px] font-medium leading-snug tracking-wide text-[#3B0A12]'
+
+const secondaryLabelClass =
+  'ms-2 font-medium normal-case tracking-normal text-[#5c4a46]'
+
 
 interface QuickBuyProps {
   isOpen: boolean
@@ -218,7 +234,7 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Soft scrim — no heavy blur (avoids “site stuck” feel) */}
+          {/* Dim shop behind sheet — keeps focus on options */}
           <motion.div
             key="quickbuy-backdrop"
             initial={{ opacity: 0 }}
@@ -226,7 +242,7 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22 }}
             onClick={onClose}
-            className="fixed inset-0 z-[100] bg-[#1a0210]/55 md:bg-[#1a0210]/40"
+            className="fixed inset-0 z-[100] bg-[#1a0210]/70 md:bg-[#1a0210]/55"
             aria-hidden
           />
 
@@ -258,7 +274,11 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
  isRTL ? 'md:inset-x-auto md:left-0 md:right-auto' : 'md:inset-x-auto md:right-0 md:left-auto'
  }`}
             data-scroll-lock-owner="true"
-            style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
+            style={{
+              paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))',
+              backgroundColor: '#faf8f5',
+              color: '#2a1e18',
+            }}
           >
             {/* Mobile grabber */}
             <div className="flex shrink-0 justify-center pb-1 pt-2.5 md:hidden">
@@ -275,7 +295,7 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
             <button
               type="button"
               onClick={onClose}
-              className={`absolute top-3 z-20 rounded-full bg-white/70 p-2.5 text-[#5c5356] shadow-sm transition-colors hover:bg-white hover:text-brand-darkRed end-3`}
+              className={`absolute top-3 z-20 rounded-full border border-brand-darkRed/10 bg-white p-2.5 text-brand-darkRed/70 shadow-sm transition-colors hover:border-brand-darkRed/25 hover:text-brand-darkRed end-3`}
               data-cursor-hover
               aria-label={ui.common.close}
             >
@@ -285,7 +305,7 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
             {/* Scrollable options — size/colour first */}
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-1 sm:px-5">
               <div className={`mb-4 flex min-w-0 gap-3 sm:mb-5 sm:gap-4 `}>
-                <div className="relative aspect-[3/4] w-[4.5rem] flex-shrink-0 overflow-hidden rounded-md bg-[#efe8e1] sm:w-20">
+                <div className="relative aspect-[3/4] w-[4.5rem] flex-shrink-0 overflow-hidden rounded-md border border-brand-darkRed/8 bg-[#efe8e1] sm:w-20">
                   <Image
                     key={previewImage}
                     src={productImageSrc(previewImage)}
@@ -301,44 +321,40 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
                 </div>
                 <div className={`min-w-0 flex-1 pe-8 text-start`}>
                   {product.category && (
-                    <span className="mb-1 block truncate font-montserrat text-[10px] uppercase tracking-[0.2em] text-brand-dustyBlue">
+                    <span className="mb-1 block truncate font-montserrat text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6a8090]">
                       {ui.shop.categories[product.category as keyof typeof ui.shop.categories] ??
                         product.category}
                     </span>
                   )}
                   <h3
                     data-product-name="true"
-                    className="mb-1 line-clamp-2 font-rozha text-[1.35rem] leading-[1.15] text-brand-darkRed sm:text-2xl"
+                    className="mb-1 line-clamp-2 font-rozha text-[1.35rem] leading-[1.15] text-[#3B0A12] sm:text-2xl"
                   >
                     {isRTL && product.nameAr ? product.nameAr : product.name}
                   </h3>
-                  <p className="font-montserrat text-base tabular-nums text-brand-darkRed sm:text-lg">
+                  <p className="font-montserrat text-base font-medium tabular-nums text-[#3B0A12] sm:text-lg">
                     {formatPrice(product.price, product.id)}
                   </p>
                 </div>
               </div>
 
-              <p
-                className={`mb-1 flex items-start gap-2 font-montserrat text-[11px] leading-snug tracking-wide text-[#4a3a36] text-start`}
-              >
-                <FiClock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-darkRed/75" aria-hidden />
-                <span>{shipNote}</span>
-              </p>
-              <PdpFasterDeliveryContact
-                className="mb-3.5 font-montserrat text-[11px] leading-snug tracking-wide text-[#4a3a36]"
-                analyticsSource="quick_buy_faster_delivery"
-              />
+              <div className="mb-4 rounded-md border border-[#3B0A12]/12 bg-white px-3 py-3 shadow-sm">
+                <p className={`flex items-start gap-2 ${mutedBodyClass} text-start`}>
+                  <FiClock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#3B0A12]" aria-hidden />
+                  <span>{shipNote}</span>
+                </p>
+                <PdpFasterDeliveryContact
+                  className={`mt-2 ps-5 ${mutedBodyClass}`}
+                  analyticsSource="quick_buy_faster_delivery"
+                />
+              </div>
 
               {showSizeSelector && (
-                <div className="mb-3.5">
-                  <label
-                    className={`mb-2 block font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed text-start`}
-                  >
+                <div className="mb-4">
+                  <label className={labelClass}>
                     {ui.quickBuy.size}
                     {selectedSize ? (
-                      <span className="ms-2 font-normal normal-case tracking-normal text-[#5c5356]">
-                        ({selectedSize})
-                      </span>
+                      <span className={secondaryLabelClass}>({selectedSize})</span>
                     ) : null}
                   </label>
                   <div className={`flex flex-wrap gap-2 `}>
@@ -347,10 +363,10 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
                         key={size}
                         type="button"
                         onClick={() => setSelectedSize(size)}
-                        className={`min-w-[48px] border px-3 py-2.5 font-montserrat text-xs uppercase tracking-[0.1em] transition-all ${
+                        className={`min-w-[48px] border px-3 py-2.5 font-montserrat text-xs font-medium uppercase tracking-[0.1em] transition-all ${
  selectedSize === size
- ? 'border-brand-darkRed bg-brand-darkRed text-white'
- : 'border-brand-darkRed/25 bg-white text-brand-darkRed hover:border-brand-dustyBlue'
+ ? 'border-[#3B0A12] bg-[#3B0A12] text-white'
+ : 'border-[#3B0A12]/30 bg-white text-[#3B0A12] hover:border-[#6a8090]'
  }`}
                         data-cursor-hover
                       >
@@ -362,55 +378,57 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
               )}
 
               {colorOptions.length > 1 && (
-                <div className="mb-3.5">
-                  <label
-                    className={`mb-2 block font-montserrat text-[11px] uppercase tracking-[0.14em] text-brand-darkRed text-start`}
-                  >
+                <div className="mb-4">
+                  <label className={labelClass}>
                     {ui.quickBuy.color}
                     {selectedColor ? (
-                      <span className="ms-2 font-normal normal-case tracking-normal text-[#5c5356]">
+                      <span className={secondaryLabelClass}>
                         ({localizedColorName(selectedColor, language)})
                       </span>
                     ) : null}
                   </label>
-                  <div className={`flex flex-wrap gap-2 `}>
+                  <div className={`flex flex-wrap items-center gap-0.5 `}>
                     {colorOptions.map((color) => (
                       <button
                         key={color.name}
                         type="button"
                         onClick={() => setSelectedColor(color.name)}
-                        className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(selectedColor === color.name)}`}
-                        style={{ backgroundColor: color.hex }}
+                        className={PDP_COLOUR_SWATCH_HIT}
                         title={localizedColorName(color.name, language)}
                         data-cursor-hover
-                      />
+                      >
+                        <span
+                          className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(selectedColor === color.name)}`}
+                          style={pdpColourSwatchBeadStyle(color.hex)}
+                          aria-hidden
+                        />
+                      </button>
                     ))}
                   </div>
                 </div>
               )}
 
-              <div className="mt-3 flex flex-col gap-2 border-t border-brand-darkRed/10 pb-3 pt-3 md:pb-4">
+              <div className="mt-2 flex flex-col gap-2.5 rounded-md border border-[#3B0A12]/10 bg-white px-3 py-3 md:mb-1">
                 <div className={`flex min-w-0 items-start justify-center gap-2 `}>
-                  <FiPackage className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
-                  <span className="min-w-0 text-center font-montserrat text-[10px] font-medium leading-snug tracking-wide text-[#5c5356]">
-                    {uaeShippingNote}
-                  </span>
+                  <FiPackage className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#3B0A12]" aria-hidden />
+                  <span className={policyNoteClass}>{uaeShippingNote}</span>
                 </div>
                 <div className={`flex min-w-0 items-start justify-center gap-2 `}>
-                  <FiRotateCcw className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-darkRed/80" aria-hidden />
-                  <span className="min-w-0 text-center font-montserrat text-[10px] font-medium leading-snug tracking-wide text-[#5c5356]">
-                    {ui.checkout.shipmentPolicy}
-                  </span>
+                  <FiRotateCcw className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#3B0A12]" aria-hidden />
+                  <span className={policyNoteClass}>{ui.checkout.shipmentPolicy}</span>
                 </div>
               </div>
             </div>
 
             {/* Sticky CTAs — always visible without scrolling */}
-            <div className="shrink-0 space-y-2 border-t border-brand-darkRed/10 bg-[#faf8f5] px-4 py-3 sm:px-5">
+            <div
+              className="shrink-0 space-y-2 border-t border-[#3B0A12]/12 bg-[#f3eee8] px-4 py-3.5 sm:px-5"
+              style={{ backgroundColor: '#f3eee8' }}
+            >
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className={`inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded border border-brand-darkRed bg-brand-darkRed px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.12em] text-white transition-colors hover:bg-brand-darkMagenta sm:text-xs `}
+                className={`inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded border border-[#3B0A12] bg-[#3B0A12] px-3 py-2.5 font-montserrat text-[11px] font-medium uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#5c0f1c] sm:text-xs `}
                 data-cursor-hover
               >
                 <FiShoppingBag className="h-4 w-4 shrink-0" />
@@ -420,12 +438,39 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
               <button
                 type="button"
                 onClick={handleBuyNow}
-                className={`inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded border border-brand-darkRed/35 bg-white px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.1em] text-brand-darkRed transition-colors hover:border-brand-darkRed/55 hover:bg-[#f3eee8] sm:text-xs `}
+                className={`inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded border border-[#3B0A12]/45 bg-white px-3 py-2.5 font-montserrat text-[11px] font-medium uppercase tracking-[0.1em] text-[#3B0A12] transition-colors hover:border-[#3B0A12]/70 hover:bg-[#faf8f5] sm:text-xs `}
                 data-cursor-hover
               >
                 <span className="truncate">{ui.quickBuy.buyNow}</span>
                 <FiArrowRight className={`h-4 w-4 shrink-0 ${isRTL ? 'rotate-180' : ''}`} />
               </button>
+
+              <ExpressWalletButtons
+                ready={Boolean(selectedSize && selectedColor)}
+                currency={currency.code}
+                orLabel={ui.quickBuy.expressOr}
+                onBeforePay={validate}
+                items={
+                  selectedSize && selectedColor
+                    ? [
+                        {
+                          id: product.id,
+                          name: product.name,
+                          price: product.price,
+                          quantity: 1,
+                          size: selectedSize,
+                          color: selectedColor,
+                          image: previewImage,
+                          productUrl: product.productUrl ?? getProductHref(product),
+                          sku: resolveProductSku(
+                            { slug: product.slug ?? '', category: catalogProduct.category },
+                            selectedColor,
+                          ),
+                        },
+                      ]
+                    : []
+                }
+              />
             </div>
           </motion.div>
         </>

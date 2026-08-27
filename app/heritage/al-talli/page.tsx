@@ -15,7 +15,7 @@ import {
   type AlTalliPageCopyBody,
 } from '@/lib/content/heritageAlTalliPageCopyBodies'
 import { AL_TALLI_PAGE_MEDIA } from '@/lib/content/alTalliPageMedia'
-import { AL_TALLI_FEATURED_PRODUCTS } from '@/lib/seo/alTalliDiscovery'
+import { AL_TALLI_FEATURED_PRODUCTS, AL_TALLI_JOURNAL_URL } from '@/lib/seo/alTalliDiscovery'
 import type { AppLocale } from '@/lib/i18n/routing'
 
 type PageCopy = AlTalliPageCopyBody & ReturnType<typeof getHeritageSharedChrome>
@@ -172,7 +172,7 @@ function CraftSection() {
   const gallery = [
     { media: AL_TALLI_PAGE_MEDIA.loom, alt: copy.imageAltLoom, title: copy.imageTitleLoom },
     { media: AL_TALLI_PAGE_MEDIA.strands, alt: copy.imageAltStrands, title: copy.imageTitleStrands },
-    { media: AL_TALLI_PAGE_MEDIA.bobbins, alt: copy.imageAltBobbins, title: copy.imageTitleBobbins },
+    { media: AL_TALLI_PAGE_MEDIA.story, alt: copy.imageAltStory, title: copy.imageTitleStory },
   ] as const
 
   return (
@@ -346,7 +346,18 @@ function BrandSection() {
               <p>{copy.brandP2}</p>
               <p>{copy.brandP3}</p>
               <p>{copy.brandP4}</p>
-              <p className="text-sm text-brand-clayRed/70">{copy.journalNote}</p>
+              <p className="text-sm text-brand-clayRed/70">
+                {copy.journalNote}{' '}
+                <a
+                  href={AL_TALLI_JOURNAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline decoration-brand-dustyBlue/50 underline-offset-4 transition-colors hover:text-brand-dustyBlue hover:decoration-brand-dustyBlue"
+                  data-cursor-hover
+                >
+                  {copy.journalCta}
+                </a>
+              </p>
             </div>
             <LocaleLink
               href="/shop/covent-garden-abaya"

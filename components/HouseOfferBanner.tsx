@@ -30,11 +30,12 @@ export default function HouseOfferBanner() {
       isUaeVisitor ? copy.shippingUae : copy.shippingWorldwide,
       amountLabel,
     )
-    return [copy.firstPurchase, copy.housePrivilege, shipping]
+    return [copy.firstPurchase, copy.housePrivilege, copy.worldwideShipping, shipping]
   }, [
     amountLabel,
     copy.firstPurchase,
     copy.housePrivilege,
+    copy.worldwideShipping,
     copy.shippingUae,
     copy.shippingWorldwide,
     isUaeVisitor,

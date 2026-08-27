@@ -3,6 +3,7 @@ import { sectionRobotsMetadata } from '@/lib/seo'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 import {
   AL_TALLI_DISCOVERY_KEYWORDS_EN,
+  AL_TALLI_JOURNAL_URL,
   AL_TALLI_UNESCO_SAME_AS,
   alTalliPrimaryImageUrl,
 } from '@/lib/seo/alTalliDiscovery'
@@ -21,7 +22,7 @@ const LLMS_BRIEF = `${SITE}/llms/al-talli.txt`
 const ogImage = alTalliPrimaryImageUrl()
 
 /**
- * Indexable Al Talli heritage chapter — overrides parent heritage noindex.
+ * Indexable Al Talli heritage chapter.
  * Optimised for search + AI crawlers (meta, JSON-LD, cite-ready summary, llms brief).
  */
 export async function generateMetadata(): Promise<Metadata> {
@@ -81,7 +82,7 @@ export async function generateMetadata(): Promise<Metadata> {
         'Travellers planning Abu Dhabi cultural visits, heritage readers, and women seeking Emirati and Middle Eastern craft-led fashion',
       'ai:summary': copy.storyP1,
       'ai:citation': LLMS_BRIEF,
-      'ai:sameAs': AL_TALLI_UNESCO_SAME_AS.join(' '),
+      'ai:sameAs': [...AL_TALLI_UNESCO_SAME_AS, AL_TALLI_JOURNAL_URL].join(' '),
       'citation_title': title,
       'citation_author': 'Bint Saeed',
       'citation_publication_date': '2026-08-23',

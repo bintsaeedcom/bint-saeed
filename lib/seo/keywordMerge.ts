@@ -2,6 +2,7 @@ import { ENGLISH_ROOT_KEYWORDS } from '@/lib/i18n/englishRootKeywords'
 import { seoKeywords } from '@/lib/i18n/translations'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getGlobalSchemaKeywordExpansion } from '@/lib/seo/schemaKeywordExpansion'
+import { getAbayaProductDiscoveryKeywords } from '@/lib/products/abayaProductDiscoveryI18n'
 
 function dedupeKeywords(list: readonly string[]): string[] {
   const seen = new Set<string>()
@@ -48,13 +49,14 @@ function arabicKeywordsFromRoot(): string[] {
 export function mergedMetaKeywordsForLocale(locale: AppLocale): string[] {
   const pack = seoKeywords[locale as keyof typeof seoKeywords]
   const expansion = getGlobalSchemaKeywordExpansion(locale)
+  const abayaDiscovery = getAbayaProductDiscoveryKeywords(locale)
 
   if (locale === 'en') {
-    return dedupeKeywords([...ENGLISH_ROOT_KEYWORDS, ...(pack ?? []), ...expansion])
+    return dedupeKeywords([...ENGLISH_ROOT_KEYWORDS, ...(pack ?? []), ...expansion, ...abayaDiscovery])
   }
 
   if (locale === 'ar') {
-    return dedupeKeywords([...(pack ?? []), ...arabicKeywordsFromRoot(), ...expansion])
+    return dedupeKeywords([...(pack ?? []), ...arabicKeywordsFromRoot(), ...expansion, ...abayaDiscovery])
   }
 
   if (locale === 'ru') {
@@ -62,12 +64,23 @@ export function mergedMetaKeywordsForLocale(locale: AppLocale): string[] {
       ...(pack ?? []),
       ...ENGLISH_ROOT_KEYWORDS.filter((k) => isCyrillicScript(k)),
       ...expansion,
+      ...abayaDiscovery,
     ])
   }
 
   if (locale === 'zh') {
-    return dedupeKeywords([...(pack ?? []), ...ENGLISH_ROOT_KEYWORDS.filter((k) => isCjkScript(k)), ...expansion])
+    return dedupeKeywords([
+      ...(pack ?? []),
+      ...ENGLISH_ROOT_KEYWORDS.filter((k) => isCjkScript(k)),
+      ...expansion,
+      ...abayaDiscovery,
+    ])
   }
 
-  return dedupeKeywords([...(pack ?? []), ...latinScriptKeywordsFromRoot(), ...expansion])
+  return dedupeKeywords([
+    ...(pack ?? []),
+    ...latinScriptKeywordsFromRoot(),
+    ...expansion,
+    ...abayaDiscovery,
+  ])
 }

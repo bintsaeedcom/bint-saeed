@@ -6,7 +6,10 @@ import { buildCheckoutAttributionMetadata } from '@/lib/checkout/attributionMeta
 import type { ParsedCheckoutRequest } from '@/lib/checkout/types'
 import { buildCheckoutPaymentParams } from '@/lib/stripe/checkoutPaymentMethods'
 import { buildCheckoutLineItems } from '@/lib/stripe/buildCheckoutLineItems'
-import { buildProvisionalStripeShippingOption } from '@/lib/stripe/buildStripeShippingOption'
+import {
+  buildExpressCheckoutShippingOptions,
+  buildProvisionalStripeShippingOption,
+} from '@/lib/stripe/buildStripeShippingOption'
 import { STRIPE_SHIPPING_ALLOWED_COUNTRIES } from '@/lib/stripe/stripeShippingAllowedCountries'
 import {
   cartRequiresPhysicalShipping,
@@ -30,12 +33,15 @@ type BuildSessionOptions = {
   parsed: ParsedCheckoutRequest
   baseUrl: string
   uiMode?: StripeCheckoutUiMode
+  /** Apple Pay / Google Pay on PDP & Quick Buy — Elements session without server_only shipping. */
+  expressCheckout?: boolean
 }
 
 export function buildStripeCheckoutSessionParams({
   parsed,
   baseUrl,
   uiMode = resolveStripeCheckoutUiMode(),
+  expressCheckout = false,
 }: BuildSessionOptions): Stripe.Checkout.SessionCreateParams {
   const currency = parsed.currency as SupportedCurrency
   const lineItems = buildCheckoutLineItems(parsed.items, currency, baseUrl)
@@ -85,9 +91,10 @@ export function buildStripeCheckoutSessionParams({
     clientDeviceType: parsed.clientContext.deviceType ?? '',
     checkoutNotes: parsed.checkoutNotes,
     cartSubtotal: String(cartSubtotal),
-    // Fee is recalculated when the client enters a shipping address (embedded flow).
-    shippingFee: requiresShipping ? 'pending' : '0',
-    shippingScope: requiresShipping ? 'pending' : 'digital',
+    // Embedded: recalculated on address. Express: shopper picks a flat rate in the wallet.
+    shippingFee: expressCheckout && requiresShipping ? 'flat_rate_options' : requiresShipping ? 'pending' : '0',
+    shippingScope: expressCheckout && requiresShipping ? 'express' : requiresShipping ? 'pending' : 'digital',
+    ...(expressCheckout ? { expressCheckout: '1' } : {}),
     ...(giftCardMeta ? { giftCardMeta } : {}),
     ...buildCheckoutAttributionMetadata(parsed.clientContext),
   }
@@ -116,7 +123,14 @@ export function buildStripeCheckoutSessionParams({
     shared.shipping_address_collection = {
       allowed_countries: STRIPE_SHIPPING_ALLOWED_COUNTRIES,
     }
-    shared.shipping_options = [buildProvisionalStripeShippingOption(currency)]
+    if (expressCheckout) {
+      shared.shipping_options = buildExpressCheckoutShippingOptions({
+        subtotal: cartSubtotal,
+        currency,
+      })
+    } else {
+      shared.shipping_options = [buildProvisionalStripeShippingOption(currency)]
+    }
   }
 
   if (parsed.customerEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(parsed.customerEmail)) {
@@ -143,7 +157,8 @@ export function buildStripeCheckoutSessionParams({
       ...shared,
       ui_mode: 'elements',
       return_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      ...(requiresShipping
+      // Express wallet collects address in-sheet; do not require server_only shipping updates.
+      ...(requiresShipping && !expressCheckout
         ? {
             permissions: {
               update_shipping_details: 'server_only' as const,

@@ -28,6 +28,7 @@ export type AlTalliPageCopyBody = {
   brandP3: string
   brandP4: string
   journalNote: string
+  journalCta: string
   shopCta: string
   imageAltHero: string
   imageAltStory: string
@@ -51,11 +52,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: 'The craft',
     storyTitle: 'Woven through generations',
     storyP1:
-      "Al Talli is a traditional Emirati decorative craft distinguished by intricate bands of metallic and coloured thread, created by hand and historically used to adorn women's clothing in the United Arab Emirates. Passed between generations of women, the craft forms part of the UAE's living cultural heritage and remains one of the most recognisable expressions of traditional Emirati craftsmanship.",
+      'Al Talli is a traditional Emirati decorative craft of intricate metallic and coloured thread bands, worked by hand and historically used to adorn women’s clothing in the United Arab Emirates. Its lines can feel familiar even before the craft is named — gold and silver tracing necklines and sleeves with the quiet certainty of a practice women have passed from hand to hand across generations.',
     storyP2:
-      'Traditionally, Al Talli is created by intertwining cotton or silk threads with metallic threads in gold or silver tones. The strands are worked together to form decorative bands that can be applied to the neckline, sleeves and other parts of traditional garments. Depending on the pattern, the result can range from slender linear details to elaborate compositions in which the metallic thread catches and reflects the light.',
+      'Traditionally, Al Talli is created by intertwining cotton or silk with metallic threads in gold or silver tones. From a distance the bands look delicate; close to the work, wooden spools, cushions and individual strands reveal how slowly the intricate edging gathers — knowledge preserved not only in pattern, but in the rhythm of making.',
     storyP3:
-      "The importance of Al Talli extends beyond its appearance. Its making preserves knowledge carried through the hands of women, with techniques, patterns and ways of working shared across generations. In 2022, the traditional skills of Al Talli embroidery in the UAE were inscribed on UNESCO's Representative List of the Intangible Cultural Heritage of Humanity.",
+      'In 2022, the traditional skills of Al Talli embroidery in the UAE were inscribed on UNESCO’s Representative List of the Intangible Cultural Heritage of Humanity. Yet what makes the story especially vivid in Abu Dhabi is that preservation is not confined to an archive: at places such as the House of Artisans, the craft remains practised, documented and shared.',
     craftEyebrow: 'The making',
     craftTitle: 'Thread, light, and rhythm',
     techniques: [
@@ -66,63 +67,64 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
       {
         title: 'The bands',
         description:
-          'Decorative bands for neckline, sleeves, and garment edges — from slender lines to denser compositions.',
+          'Decorative bands for neckline, sleeves, and garment edges — from slender lines to denser compositions that can read almost like jewellery.',
       },
       {
         title: 'Light and presence',
         description:
-          'Delicate individually; together, the metallic lines gain presence through repetition and light.',
+          'Delicate alone; together, slender metallic lines gain presence through repetition and light — the visual cue Bint Saeed kept returning to.',
       },
     ],
     unescoEyebrow: 'UNESCO',
     unescoTitle: 'Living cultural heritage',
     unescoBody:
-      "In 2022, the traditional skills of Al Talli embroidery in the United Arab Emirates were inscribed on UNESCO's Representative List of the Intangible Cultural Heritage of Humanity — recognising a craft carried by women, generation to generation.",
+      'In 2022, the traditional skills of Al Talli embroidery in the United Arab Emirates were inscribed on UNESCO’s Representative List of the Intangible Cultural Heritage of Humanity — recognising a craft carried by women, generation to generation.',
     unescoBadge1: 'Inscribed 2022',
     unescoBadge2: 'United Arab Emirates',
     abuDhabiEyebrow: 'Abu Dhabi',
     abuDhabiTitle: 'Al Talli in Abu Dhabi today',
     abuDhabiP1:
-      'In Abu Dhabi, Al Talli can still be encountered as a living practice. Cultural institutions including the House of Artisans at Qasr Al Hosn help document, preserve and share traditional Emirati crafts, allowing new generations and visitors from around the world to understand not only the finished pieces, but also the skill and time behind their creation.',
+      'In Abu Dhabi, Al Talli can still be encountered as a living practice. At the House of Artisans at Qasr Al Hosn — and through related cultural work across the emirate — traditional Emirati crafts are documented, practised and shared, so visitors meet not only finished pieces but the women, materials and time behind them.',
     abuDhabiP2:
-      'For Bint Saeed, this relationship between heritage and contemporary life is particularly meaningful. Abu Dhabi is a city where the past remains present within a rapidly evolving international capital, and Al Talli offers a beautiful example of how cultural knowledge can continue without remaining fixed in another time.',
+      'In a capital known for looking forward, there is quiet power in keeping earlier knowledge part of cultural life. For Bint Saeed, that continuity between heritage and contemporary dressing is the ground from which design begins.',
     brandEyebrow: 'Bint Saeed',
     brandTitle: 'From Al Talli to contemporary fashion',
     brandP1:
-      'When Bint Saeed began exploring Al Talli, the challenge was not simply how to place a traditional decoration onto a contemporary garment. A craft with such cultural richness deserves greater consideration than that.',
+      'Translating Al Talli into Bint Saeed was more demanding than it first appeared. The traditional work is already extraordinarily rich; simply reproducing that richness on a contemporary garment would have felt too literal, while reducing it too far risked losing the character that made us look closer.',
     brandP2:
-      'Instead, we looked closely at its visual language: slender metallic lines sitting beside one another, the rhythm created through repetition, the relationship between textile and light, and the way something remarkably delicate gains presence when many individual strands come together.',
+      'We kept returning to the lines themselves: slender metallic threads sitting beside one another, presence through repetition, light catching as a woman moved. Rather than recreating a traditional garment, the House could allow something of that visual language to continue in another form.',
     brandP3:
-      'Those observations became part of the developing design language of Bint Saeed. Across selected Bint Saeed garments, linear metallic details reference the character of Al Talli in different ways. Sometimes the relationship is immediately recognisable; elsewhere, only a trace remains. The aim is not to recreate traditional Emirati clothing, but to allow elements encountered within the cultural landscape of Abu Dhabi to find thoughtful contemporary expressions.',
+      'Over time those lines became one of the codes of the house — appearing across contemporary silhouettes in ways that sometimes reveal their relationship with Al Talli immediately, and sometimes offer only a trace. The aim was never to make the past look modern, but to let something culturally rich enter the present while its origin can still be felt.',
     brandP4:
-      'In this way, Al Talli becomes more than a reference from the past. It becomes part of an ongoing conversation between women, clothing, craftsmanship and place.',
+      'In this way, Al Talli becomes more than a reference from the past. It becomes part of an ongoing conversation between women, clothing, craftsmanship and place — a golden thread that can travel beyond Abu Dhabi without remaining exactly as it was.',
     journalNote:
-      'For those who would like to discover the story behind the craft, The Bint Saeed Journal visits the House of Artisans in Abu Dhabi in The Golden Thread Between Women, exploring Al Talli through the women who make it and the question of how heritage can travel into contemporary fashion.',
+      'The fuller essay from the House of Artisans — The Golden Thread Between Women — appears in The Bint Saeed Journal.',
+    journalCta: 'Read the Journal essay',
     shopCta: 'Shop Al Talli pieces',
     imageAltHero:
-      'Navy Bint Saeed abaya detail with gold Al Talli metallic embroidery — Emirati heritage craft, Abu Dhabi',
+      'Cream thobe with gold Al Talli embroidery at the neckline — Emirati heritage craft, Abu Dhabi',
     imageAltStory:
-      'Close-up of handwoven Al Talli embroidery in powder-blue cotton and gold metallic thread — Middle Eastern craft, UAE',
+      'Gold bead Al Talli motif on cream fabric — close embroidery detail, Emirati craft UAE',
     imageAltLoom:
-      'Traditional Emirati Al Talli kajujah with gold metallic threads and wooden bobbins — living craft in Abu Dhabi',
+      'Kajujah cushion with gold Al Talli braid and wooden bobbins on exhibition stand — Abu Dhabi',
     imageAltStrands:
-      'Gold Al Talli metallic embroidery strands on display — UNESCO-recognised UAE cultural heritage',
+      'Orange and gold metallic Al Talli ribbon strands — Emirati heritage craft, United Arab Emirates',
     imageAltBobbins:
-      'Wooden bobbins wound with silver metallic thread for traditional Al Talli embroidery — Emirati heritage craft',
+      'Wooden bobbins with gold metallic thread hanging from an Al Talli kajujah — Emirati heritage craft',
     imageAltAbuDhabi:
-      'Emirati woman practising Al Talli embroidery at the House of Artisans, Qasr Al Hosn, Abu Dhabi',
+      'Al Talli kajujah exhibition display with gold braid and bobbins — Abu Dhabi cultural heritage',
     imageTitleHero:
-      'Al Talli embroidery abaya detail — Emirati heritage craft | Bint Saeed Abu Dhabi',
+      'Al Talli gold embroidery on thobe — Emirati heritage craft | Bint Saeed Abu Dhabi',
     imageTitleStory:
-      'Al Talli metallic thread embroidery — Middle Eastern craft UAE',
+      'Al Talli gold bead motif — Emirati embroidery detail UAE',
     imageTitleLoom:
-      'Al Talli kajujah loom — traditional Emirati heritage craft Abu Dhabi',
+      'Al Talli kajujah with gold bobbins — Emirati heritage craft Abu Dhabi',
     imageTitleStrands:
-      'Gold Al Talli metallic strands — UNESCO UAE cultural heritage',
+      'Orange-gold Al Talli metallic ribbons — UAE cultural heritage',
     imageTitleBobbins:
-      'Al Talli metallic bobbins — traditional Emirati embroidery',
+      'Al Talli kajujah bobbins — traditional Emirati embroidery',
     imageTitleAbuDhabi:
-      'Al Talli artisan at House of Artisans Qasr Al Hosn — Abu Dhabi culture',
+      'Al Talli kajujah exhibition — Abu Dhabi cultural heritage',
   },
 
   ar: {
@@ -132,11 +134,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: 'الحرفة',
     storyTitle: 'منسوجة عبر الأجيال',
     storyP1:
-      'التلي حرفة زخرفية إماراتية تقليدية تتميز بأشرطة دقيقة من خيوط معدنية وملونة، تُصنع يدوياً واستُخدمت تاريخياً لتزيين ملابس النساء في الإمارات العربية المتحدة. توارثتها أجيال من النساء، فغدت جزءاً من التراث الثقافي الحي للدولة، وتظل من أوضح تعبيرات الحرفة الإماراتية الأصيلة.',
+      'التلي حرفة زخرفية إماراتية تقليدية من أشرطة خيوط معدنية وملونة تُعمل باليد، واستُخدمت تاريخياً لتزيين ملابس النساء في الإمارات. قد تبدو خطوطه مألوفة حتى قبل أن يُعرَف اسمه — ذهب وفضة يرسمان الياقات والأكمام بثقة هادئة لممارسة تناقلتها النساء يداً بيد عبر الأجيال.',
     storyP2:
-      'يُصنع التلي تقليدياً بتداخل خيوط القطن أو الحرير مع خيوط معدنية بدرجات الذهب أو الفضة. تُعمل الخيوط معاً لتكوّن أشرطة زخرفية تُوضع على الياقة والأكمام وسائر مواضع الثياب التقليدية. بحسب النمط، قد تكون النتيجة تفاصيل خطية رفيعة أو تراكيب أوسع يلتقط فيها الخيط المعدني الضوء ويعكسه.',
+      'يُصنع التلي تقليدياً بتشابك القطن أو الحرير مع خيوط معدنية ذهبية أو فضية. من بعيد تبدو الأشرطة رقيقة؛ وعن قرب تكشف البكرات الخشبية والوسائد والخيوط المفردة كيف يتجمّع الإطار المعقّد ببطء — معرفة محفوظة في النمط وفي إيقاع الصنع معاً.',
     storyP3:
-      'أهمية التلي تتجاوز مظهره. فصناعته تحفظ معرفةً حملتها أيدي النساء، بتقنيات وأنماط وطرائق عمل انتقلت عبر الأجيال. وفي عام 2022، أُدرجت المهارات التقليدية لتطريز التلي في دولة الإمارات على القائمة التمثيلية للتراث الثقافي غير المادي للبشرية لدى اليونسكو.',
+      'في عام ٢٠٢٢ أُدرجت مهارات تطريز التلي التقليدية في الإمارات على القائمة التمثيلية لليونسكو للتراث الثقافي غير المادي. وما يجعل القصة حية في أبوظبي أن الحفظ لا يقتصر على الأرشيف: في أماكن مثل بيت الحرفيين تبقى الحرفة ممارسةً موثّقةً ومشتركة.',
     craftEyebrow: 'الصنعة',
     craftTitle: 'خيط، ضوء، وإيقاع',
     techniques: [
@@ -164,35 +166,36 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     abuDhabiEyebrow: 'أبوظبي',
     abuDhabiTitle: 'التلي في أبوظبي اليوم',
     abuDhabiP1:
-      'في أبوظبي، ما يزال التلي يُمارس كحرفة حية. مؤسسات ثقافية منها بيت الحرفيين في قصر الحصن توثّق الحرف الإماراتية التقليدية وتحفظها وتنقلها، ليتعرّف الجيل الجديد وزوار العالم لا على القطعة المكتملة فحسب، بل على المهارة والوقت اللذين وراء صنعها.',
+      'في أبوظبي ما يزال التلي يُلتقى ممارسةً حية. في بيت الحرفيين بقصر الحصن — وعبر عمل ثقافي أوسع في الإمارة — تُوثَّق الحرف الإماراتية التقليدية وتُمارَس وتُشارَك، فيلتقي الزائرون القطعَ والنساءَ والموادَ والوقتَ وراءها.',
     abuDhabiP2:
-      'بالنسبة لبنت سعيد، لهذه العلاقة بين التراث والحياة المعاصرة معنى خاص. أبوظبي مدينة يبقى فيها الماضي حاضراً داخل عاصمة دولية سريعة التحوّل، والتلي مثال جميل على كيف تستمر المعرفة الثقافية دون أن تتجمّد في زمنٍ آخر.',
+      'في عاصمة تُعرَف بالنظر إلى الأمام، ثمة قوة هادئة في إبقاء معرفة الأجيال السابقة جزءاً من الحياة الثقافية. ولبنت سعيد، هذه الاستمرارية بين التراث واللبس المعاصر هي الأرض التي ينطلق منها التصميم.',
     brandEyebrow: 'بنت سعيد',
     brandTitle: 'من التلي إلى الأزياء المعاصرة',
     brandP1:
-      'حين بدأت بنت سعيد استكشاف التلي، لم يكن السؤال كيف نضع زخرفة تقليدية على ثوب معاصر فحسب. حرفة بهذا الثراء الثقافي تستحق تأملاً أعمق من ذلك.',
+      'نقل التلي إلى بنت سعيد كان أكثر تطلباً مما بدا أولاً. العمل التقليدي غنيّ أصلاً؛ فمحاكاة ذلك الغنى حرفياً على قطعة معاصرة كانت لتبدو سطحية، بينما الإفراط في الاختزال كان ليُفقد السمة التي جعلتنا ننظر عن قرب.',
     brandP2:
-      'بل نظرنا عن كثب إلى لغتها البصرية: خطوط معدنية رفيعة تتجاور، والإيقاع الذي ينشأ بالتكرار، والعلاقة بين النسيج والضوء، وكيف يكتسب ما هو في غاية الرقة حضوراً حين تجتمع خيوط كثيرة.',
+      'عدنا إلى الخطوط ذاتها: خيوط معدنية رفيعة جنباً إلى جنب، حضور بالتكرار، ضوء يلتقط الحركة. بدل إعادة صنع ثوب تقليدي، أمكن للدار أن تُبقي شيئاً من لغته البصرية في شكل آخر.',
     brandP3:
-      'صارت تلك الملاحظات جزءاً من لغة التصميم الناشئة لدى بنت سعيد. عبر قطع مختارة، تشير تفاصيل معدنية خطية إلى طابع التلي بطرائق مختلفة. أحياناً تكون الصلة جليّة؛ وأحياناً لا يبقى سوى أثر. الهدف ليس إعادة صنع اللباس الإماراتي التقليدي، بل أن تجد عناصرٌ من المشهد الثقافي في أبوظبي تعبيرات معاصرة مدروسة.',
+      'مع الوقت أصبحت تلك الخطوط أحد رموز الدار — تظهر على قصّات معاصرة بطريقة تكشف أحياناً صلتها بالتلي فوراً، وأحياناً لا تُبقي سوى أثر. لم يكن الهدف أن يبدو الماضي حديثاً، بل أن يدخل شيء غني ثقافياً الحاضرَ ويظل أصله محسوساً.',
     brandP4:
-      'بهذا يصبح التلي أكثر من إشارة إلى الماضي. يصبح جزءاً من حوارٍ مستمر بين النساء والثياب والحرفة والمكان.',
+      'هكذا يصبح التلي أكثر من مرجع من الماضي: محادثة مستمرة بين النساء والثياب والحرفة والمكان — خيطاً ذهبياً يمكنه أن يسافر أبعد من أبوظبي دون أن يبقى كما كان تماماً.',
     journalNote:
-      'لمن تودّ اكتشاف قصة الحرفة، يزور مجلة بنت سعيد بيت الحرفيين في أبوظبي في The Golden Thread Between Women، مستكشفاً التلي من خلال النساء اللواتي يصنعنه، وسؤال كيف ينتقل التراث إلى الأزياء المعاصرة.',
+      'المقال الأوفى من بيت الحرفيين — The Golden Thread Between Women — منشور في مجلة بنت سعيد.',
+    journalCta: 'اقرئي مقال المجلة',
     shopCta: 'تسوّقي قطع التلي',
     imageAltHero:
-      'تفاصيل عباية Bint Saeed الكحلية بتطريز التلي المعدني الذهبي — حرفة تراثية إماراتية، أبوظبي',
-    imageAltStory: 'لقطة مقرّبة لتطريز التلي اليدوي بخيوط قطن أزرق فاتح وخيوط معدنية ذهبية — حرفة من الشرق الأوسط، الإمارات',
-    imageAltLoom: 'كجوجة التلي الإماراتية التقليدية بخيوط معدنية ذهبية وبكرات خشبية — حرفة حيّة في أبوظبي',
-    imageAltStrands: 'خيوط تطريز التلي المعدنية الذهبية معروضة — تراث ثقافي إماراتي معترف به من اليونسكو',
-    imageAltBobbins: 'بكرات خشبية ملفوف عليها خيط معدني فضي يُستخدم في تطريز التلي التقليدي — حرفة تراثية إماراتية',
-    imageAltAbuDhabi: 'امرأة إماراتية تمارس تطريز التلي في بيت الحرفيين، قصر الحصن، أبوظبي',
-    imageTitleHero: 'تطريز التلي على العباية — حرفة تراثية إماراتية | Bint Saeed أبوظبي',
-    imageTitleStory: 'تطريز التلي بخيوط معدنية — حرفة الشرق الأوسط، الإمارات',
-    imageTitleLoom: 'كجوجة التلي — حرفة تراثية إماراتية تقليدية في أبوظبي',
-    imageTitleStrands: 'خيوط التلي الذهبية المعدنية — تراث ثقافي إماراتي معترف به من اليونسكو',
-    imageTitleBobbins: 'بكرات التلي المعدنية — تطريز إماراتي تقليدي',
-    imageTitleAbuDhabi: 'حرفية التلي في بيت الحرفيين بقصر الحصن — ثقافة أبوظبي',
+      'ثوب كريمي بتطريز التلي الذهبي عند الياقة — حرفة تراثية إماراتية، أبوظبي',
+    imageAltStory: 'زخرفة تلي ذهبية بالخرز على قماش كريمي — تفصيل تطريز إماراتي',
+    imageAltLoom: 'كجوجة التلي بشريط ذهبي وبكرات خشبية في عرض تراثي — أبوظبي',
+    imageAltStrands: 'شرائط التلي البرتقالية والذهبية المعدنية — حرفة تراثية إماراتية',
+    imageAltBobbins: 'بكرات خشبية بخيوط معدنية ذهبية معلّقة من كجوجة التلي — حرفة تراثية إماراتية',
+    imageAltAbuDhabi: 'عرض كجوجة التلي بشريط ذهبي وبكرات — تراث ثقافي في أبوظبي',
+    imageTitleHero: 'تطريز التلي الذهبي على الثوب — حرفة تراثية إماراتية | Bint Saeed أبوظبي',
+    imageTitleStory: 'زخرفة التلي الذهبية — تفصيل تطريز إماراتي',
+    imageTitleLoom: 'كجوجة التلي بالبكرات الذهبية — حرفة تراثية إماراتية في أبوظبي',
+    imageTitleStrands: 'شرائط التلي البرتقالية الذهبية — تراث ثقافي إماراتي',
+    imageTitleBobbins: 'بكرات كجوجة التلي — تطريز إماراتي تقليدي',
+    imageTitleAbuDhabi: 'عرض كجوجة التلي — تراث ثقافي في أبوظبي',
   },
 
   fr: {
@@ -202,11 +205,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: 'Le métier',
     storyTitle: 'Tissé à travers les générations',
     storyP1:
-      'Al Talli est un art décoratif émirati traditionnel, marqué par d’étroites bandes de fils métalliques et colorés, réalisées à la main et historiquement destinées à orner les vêtements féminins aux Émirats arabes unis. Transmis de génération en génération de femmes, ce savoir-faire appartient au patrimoine culturel vivant du pays et demeure l’une des expressions les plus reconnaissables de l’artisanat émirati.',
+      'L’Al Talli est un artisanat décoratif émirati traditionnel de bandes de fils métalliques et colorés, travaillées à la main et historiquement destinées à orner les vêtements féminins aux Émirats arabes unis. Ses lignes peuvent sembler familières avant même que l’on connaisse son nom — or et argent traçant encolures et manches avec la certitude calme d’une pratique transmise de main en main entre femmes, de génération en génération.',
     storyP2:
-      'Traditionnellement, Al Talli naît de l’entrelacs de fils de coton ou de soie avec des fils métalliques aux tons or ou argent. Les brins s’assemblent en bandes décoratives que l’on applique au décolleté, aux manches et à d’autres parties des vêtements traditionnels. Selon le motif, le résultat va du détail linéaire le plus fin à des compositions plus élaborées où le fil métallique capte et renvoie la lumière.',
+      'Traditionnellement, l’Al Talli naît de l’entrelacs du coton ou de la soie avec des fils métalliques dorés ou argentés. De loin, les bandes paraissent délicates ; de près, bobines de bois, coussins et brins isolés révèlent combien lentement s’assemble la bordure — un savoir conservé dans le motif autant que dans le rythme du geste.',
     storyP3:
-      'L’importance d’Al Talli dépasse l’apparence. Sa pratique conserve un savoir porté par les mains des femmes — techniques, motifs et gestes transmis d’une génération à l’autre. En 2022, les savoir-faire traditionnels de la broderie Al Talli aux Émirats arabes unis ont été inscrits sur la Liste représentative du patrimoine culturel immatériel de l’humanité de l’UNESCO.',
+      'En 2022, les savoir-faire traditionnels de la broderie Al Talli aux EAU ont été inscrits sur la Liste représentative du patrimoine culturel immatériel de l’humanité de l’UNESCO. Ce qui rend l’histoire particulièrement vivante à Abu Dhabi, c’est que la préservation ne se limite pas à une archive : à la House of Artisans, notamment, le métier reste pratiqué, documenté et partagé.',
     craftEyebrow: 'La fabrique',
     craftTitle: 'Fil, lumière et rythme',
     techniques: [
@@ -235,46 +238,47 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     abuDhabiEyebrow: 'Abou Dabi',
     abuDhabiTitle: 'Al Talli à Abou Dabi aujourd’hui',
     abuDhabiP1:
-      'À Abou Dabi, Al Talli se rencontre encore comme une pratique vivante. Des institutions culturelles, dont la House of Artisans à Qasr Al Hosn, documentent, préservent et partagent les métiers traditionnels émiratis, permettant aux nouvelles générations et aux visiteurs du monde entier de comprendre non seulement les pièces achevées, mais aussi le savoir et le temps qu’elles portent.',
+      'À Abu Dhabi, l’Al Talli se rencontre encore comme une pratique vivante. À la House of Artisans de Qasr Al Hosn — et à travers un travail culturel plus large dans l’émirat — les métiers traditionnels émiratis sont documentés, pratiqués et partagés, pour que les visiteurs rencontrent non seulement les pièces achevées, mais les femmes, les matières et le temps qui les portent.',
     abuDhabiP2:
-      'Pour Bint Saeed, ce lien entre héritage et vie contemporaine a une résonance particulière. Abou Dabi est une ville où le passé demeure présent au sein d’une capitale internationale en pleine mutation, et Al Talli offre un bel exemple de la façon dont un savoir culturel peut se poursuivre sans se figer dans un autre temps.',
+      'Dans une capitale connue pour regarder vers l’avant, il y a une force discrète à garder le savoir des générations précédentes dans la vie culturelle. Pour Bint Saeed, cette continuité entre patrimoine et toilette contemporaine est le sol d’où naît le design.',
     brandEyebrow: 'Bint Saeed',
     brandTitle: "D'Al Talli à la mode contemporaine",
     brandP1:
-      'Lorsque Bint Saeed a commencé à explorer Al Talli, la question n’était pas seulement comment poser un ornement traditionnel sur un vêtement contemporain. Un métier d’une telle richesse culturelle mérite une attention plus profonde.',
+      'Traduire l’Al Talli chez Bint Saeed s’est révélé plus exigeant qu’il n’y paraissait. Le travail traditionnel est déjà d’une richesse extraordinaire ; le reproduire littéralement sur une pièce contemporaine aurait paru trop littéral, tandis que le réduire trop loin aurait risqué d’effacer le caractère qui nous avait fait regarder de plus près.',
     brandP2:
-      'Nous avons plutôt observé de près son langage visuel : de fines lignes métalliques côte à côte, le rythme né de la répétition, le rapport entre textile et lumière, et la manière dont quelque chose de remarquablement délicat gagne en présence lorsque de nombreux brins se rejoignent.',
+      'Nous sommes revenues aux lignes elles-mêmes : fils métalliques minces côte à côte, présence par la répétition, lumière qui saisit le mouvement. Plutôt que de recréer un vêtement traditionnel, la Maison pouvait laisser quelque chose de ce langage visuel continuer sous une autre forme.',
     brandP3:
-      'Ces observations sont entrées dans le langage de design en formation de Bint Saeed. Sur certaines pièces, des détails métalliques linéaires évoquent le caractère d’Al Talli de façons diverses. Parfois le rapport est immédiatement lisible ; ailleurs, il ne reste qu’une trace. L’intention n’est pas de reconstituer le vêtement émirati traditionnel, mais de laisser des éléments rencontrés dans le paysage culturel d’Abou Dabi trouver des expressions contemporaines attentives.',
+      'Avec le temps, ces lignes sont devenues l’un des codes de la maison — apparaissant sur des silhouettes contemporaines de façon tantôt immédiatement lisible, tantôt à peine un tracé. L’enjeu n’était jamais de rendre le passé moderne, mais de laisser quelque chose de culturellement riche entrer dans le présent tout en laissant sentir son origine.',
     brandP4:
-      'Ainsi Al Talli devient plus qu’une référence au passé. Il s’inscrit dans une conversation continue entre les femmes, le vêtement, le savoir-faire et le lieu.',
+      'Ainsi l’Al Talli devient plus qu’une référence du passé : une conversation continue entre femmes, vêtement, savoir-faire et lieu — un fil d’or qui peut voyager au-delà d’Abu Dhabi sans rester exactement ce qu’il était.',
     journalNote:
-      'Pour celles qui souhaitent découvrir l’histoire du métier, The Bint Saeed Journal se rend à la House of Artisans à Abou Dabi dans The Golden Thread Between Women, explorant Al Talli à travers les femmes qui le font et la question de savoir comment l’héritage peut voyager vers la mode contemporaine.',
+      'L’essai plus ample depuis la House of Artisans — The Golden Thread Between Women — paraît dans The Bint Saeed Journal.',
+    journalCta: 'Lire l’essai du Journal',
     shopCta: 'Découvrir les pièces Al Talli',
     imageAltHero:
-      'Détail d’abaya Bint Saeed marine brodée d’Al Talli métallique doré — artisanat patrimonial émirati, Abu Dhabi',
+      'Thobe crème à broderie Al Talli dorée au décolleté — artisanat patrimonial émirati, Abu Dhabi',
     imageAltStory:
-      'Gros plan d’Al Talli tissé à la main, coton bleu poudre et fil métallique doré — artisanat du Moyen-Orient, ÉAU',
+      'Motif Al Talli en perles dorées sur tissu crème — détail de broderie émiratie',
     imageAltLoom:
-      'Kajujah traditionnelle émiratie pour l’Al Talli, fils métalliques dorés et bobines de bois — artisanat vivant à Abu Dhabi',
+      'Kajujah avec tresse Al Talli dorée et bobines de bois en exposition — Abu Dhabi',
     imageAltStrands:
-      'Brins d’Al Talli métalliques dorés exposés — patrimoine culturel des ÉAU reconnu par l’UNESCO',
+      'Rubans Al Talli orange et or métallique — artisanat patrimonial émirati',
     imageAltBobbins:
-      'Bobines de bois enroulées de fil métallique argenté pour la broderie traditionnelle Al Talli',
+      'Bobines de bois à fil métallique doré suspendues à une kajujah Al Talli — artisanat émirati',
     imageAltAbuDhabi:
-      'Femme émiratie pratiquant l’Al Talli à la House of Artisans, Qasr Al Hosn, Abu Dhabi',
+      'Exposition de kajujah Al Talli avec tresse dorée et bobines — patrimoine culturel à Abu Dhabi',
     imageTitleHero:
-      'Broderie Al Talli sur abaya — artisanat patrimonial émirati | Bint Saeed Abu Dhabi',
+      'Broderie Al Talli dorée sur thobe — artisanat patrimonial émirati | Bint Saeed Abu Dhabi',
     imageTitleStory:
-      'Broderie Al Talli au fil métallique — artisanat du Moyen-Orient, ÉAU',
+      'Motif Al Talli en perles dorées — détail de broderie émiratie',
     imageTitleLoom:
-      'Kajujah Al Talli — artisanat patrimonial émirati traditionnel à Abu Dhabi',
+      'Kajujah Al Talli aux bobines dorées — artisanat patrimonial à Abu Dhabi',
     imageTitleStrands:
-      'Brins métalliques dorés Al Talli — patrimoine culturel UNESCO des ÉAU',
+      'Rubans Al Talli orange-or — patrimoine culturel des EAU',
     imageTitleBobbins:
-      'Bobines métalliques Al Talli — broderie émiratie traditionnelle',
+      'Bobines de kajujah Al Talli — broderie émiratie traditionnelle',
     imageTitleAbuDhabi:
-      'Artisane Al Talli à la House of Artisans, Qasr Al Hosn — culture d’Abu Dhabi',
+      'Exposition kajujah Al Talli — patrimoine culturel à Abu Dhabi',
   },
 
   it: {
@@ -284,11 +288,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: 'Il mestiere',
     storyTitle: 'Tessuto attraverso le generazioni',
     storyP1:
-      'Al Talli è un’arte decorativa tradizionale emiratina, distinta da bande intricate di filo metallico e colorato, realizzate a mano e storicamente impiegate per ornare gli abiti femminili negli Emirati Arabi Uniti. Trasmesse di generazione in generazione di donne, queste competenze fanno parte del patrimonio culturale vivo del Paese e restano una delle espressioni più riconoscibili dell’artigianato emiratino.',
+      'Al Talli è un artigianato decorativo emiratino tradizionale di bande intricate in filo metallico e colorato, lavorate a mano e storicamente usate per adornare gli abiti femminili negli Emirati Arabi Uniti. Le sue linee possono sembrare familiari ancora prima di conoscerne il nome — oro e argento che tracciano scolli e maniche con la quieta certezza di una pratica che le donne hanno trasmesso di mano in mano, generazione dopo generazione.',
     storyP2:
-      'Tradizionalmente, Al Talli nasce dall’intreccio di fili di cotone o seta con fili metallici in toni oro o argento. I filamenti si lavorano insieme fino a formare bande decorative applicabili allo scollo, alle maniche e ad altre parti degli abiti tradizionali. A seconda del motivo, il risultato va dal dettaglio lineare più sottile a composizioni più elaborate in cui il filo metallico cattura e riflette la luce.',
+      'Tradizionalmente, Al Talli nasce intrecciando cotone o seta con fili metallici dorati o argentati. Da lontano le bande appaiono delicate; da vicino rocchetti di legno, cuscini e singoli fili rivelano quanto lentamente si raccolga il bordo — sapere conservato nel motivo e nel ritmo del fare.',
     storyP3:
-      'L’importanza di Al Talli va oltre l’aspetto. La sua realizzazione conserva un sapere portato dalle mani delle donne — tecniche, motivi e modi di lavorare condivisi tra le generazioni. Nel 2022, le competenze tradizionali del ricamo Al Talli negli Emirati Arabi Uniti sono state iscritte nella Lista rappresentativa del patrimonio culturale immateriale dell’umanità dell’UNESCO.',
+      'Nel 2022 le abilità tradizionali del ricamo Al Talli negli EAU sono state iscritte nella Lista rappresentativa del patrimonio culturale immateriale dell’UNESCO. Ciò che rende la storia particolarmente viva ad Abu Dhabi è che la conservazione non si limita a un archivio: in luoghi come la House of Artisans il mestiere resta praticato, documentato e condiviso.',
     craftEyebrow: 'Il fare',
     craftTitle: 'Filo, luce e ritmo',
     techniques: [
@@ -317,46 +321,47 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     abuDhabiEyebrow: 'Abu Dhabi',
     abuDhabiTitle: 'Al Talli ad Abu Dhabi oggi',
     abuDhabiP1:
-      'Ad Abu Dhabi, Al Talli si incontra ancora come pratica viva. Istituzioni culturali, tra cui la House of Artisans a Qasr Al Hosn, documentano, preservano e condividono i mestieri tradizionali emiratini, permettendo alle nuove generazioni e ai visitatori di tutto il mondo di comprendere non solo i pezzi finiti, ma anche la maestria e il tempo che li hanno generati.',
+      'Ad Abu Dhabi Al Talli si incontra ancora come pratica viva. Alla House of Artisans di Qasr Al Hosn — e attraverso un lavoro culturale più ampio nell’emirato — i mestieri tradizionali emiratini sono documentati, praticati e condivisi, così i visitatori incontrano non solo i pezzi finiti ma le donne, i materiali e il tempo che li portano.',
     abuDhabiP2:
-      'Per Bint Saeed, questo rapporto tra heritage e vita contemporanea ha un significato particolare. Abu Dhabi è una città in cui il passato resta presente entro una capitale internazionale in rapida evoluzione, e Al Talli offre un bel esempio di come il sapere culturale possa continuare senza restare fissato in un altro tempo.',
+      'In una capitale nota per guardare avanti, c’è una forza quieta nel tenere il sapere delle generazioni precedenti parte della vita culturale. Per Bint Saeed, quella continuità tra heritage e vestire contemporaneo è il suolo da cui nasce il design.',
     brandEyebrow: 'Bint Saeed',
     brandTitle: 'Da Al Talli alla moda contemporanea',
     brandP1:
-      'Quando Bint Saeed ha iniziato a esplorare Al Talli, la sfida non era semplicemente come collocare un ornamento tradizionale su un capo contemporaneo. Un mestiere di tale ricchezza culturale merita una considerazione più ampia.',
+      'Tradurre Al Talli in Bint Saeed è stato più esigente di quanto apparisse. Il lavoro tradizionale è già straordinariamente ricco; riprodurre letteralmente quella ricchezza su un capo contemporaneo sarebbe sembrato troppo letterale, mentre ridurla troppo avrebbe rischiato di perdere il carattere che ci aveva fatto guardare più da vicino.',
     brandP2:
-      'Abbiamo piuttosto osservato da vicino il suo linguaggio visivo: linee metalliche sottili affiancate, il ritmo creato dalla ripetizione, il rapporto tra tessuto e luce, e il modo in cui qualcosa di straordinariamente delicato acquista presenza quando molti filamenti si riuniscono.',
+      'Siamo tornate alle linee stesse: fili metallici sottili uno accanto all’altro, presenza attraverso la ripetizione, luce che coglie il movimento. Piuttosto che ricreare un capo tradizionale, la Maison poteva lasciare che qualcosa di quel linguaggio visivo continuasse in un’altra forma.',
     brandP3:
-      'Quelle osservazioni sono entrate nel linguaggio di design in formazione di Bint Saeed. Su capi selezionati, dettagli metallici lineari richiamano il carattere di Al Talli in modi diversi. A volte il legame è immediatamente riconoscibile; altrove resta solo una traccia. L’intento non è ricreare l’abbigliamento tradizionale emiratino, ma lasciare che elementi incontrati nel paesaggio culturale di Abu Dhabi trovino espressioni contemporanee ponderate.',
+      'Nel tempo quelle linee sono diventate uno dei codici della maison — apparendo su silhouette contemporanee in modi a volte immediatamente riconoscibili, a volte solo una traccia. L’intento non era rendere moderno il passato, ma lasciare che qualcosa di culturalmente ricco entrasse nel presente lasciando ancora sentire la sua origine.',
     brandP4:
-      'Così Al Talli diventa più di un riferimento al passato. Entra in una conversazione continua tra donne, abito, artigianato e luogo.',
+      'Così Al Talli diventa più di un riferimento dal passato: una conversazione continua tra donne, abiti, artigianato e luogo — un filo d’oro che può viaggiare oltre Abu Dhabi senza restare esattamente com’era.',
     journalNote:
-      'Per chi desidera scoprire la storia dietro il mestiere, The Bint Saeed Journal visita la House of Artisans ad Abu Dhabi in The Golden Thread Between Women, esplorando Al Talli attraverso le donne che lo realizzano e la domanda di come l’heritage possa viaggiare verso la moda contemporanea.',
+      'Il saggio più ampio dalla House of Artisans — The Golden Thread Between Women — è su The Bint Saeed Journal.',
+    journalCta: 'Leggi il saggio del Journal',
     shopCta: 'Scopri i pezzi Al Talli',
     imageAltHero:
-      'Dettaglio di abaya Bint Saeed blu navy con ricamo Al Talli metallico dorato — artigianato patrimoniale emiratino, Abu Dhabi',
+      'Thobe crema con ricamo Al Talli dorato allo scollo — artigianato patrimoniale emiratino, Abu Dhabi',
     imageAltStory:
-      'Primo piano di ricamo Al Talli fatto a mano in cotone azzurro e filo metallico dorato — mestiere del Medio Oriente, EAU',
+      'Motivo Al Talli in perline dorate su tessuto crema — dettaglio di ricamo emiratino',
     imageAltLoom:
-      'Kajujah tradizionale emiratina per Al Talli con fili metallici dorati e rocchetti di legno — mestiere vivo ad Abu Dhabi',
+      'Kajujah con treccia Al Talli dorata e rocchetti di legno in esposizione — Abu Dhabi',
     imageAltStrands:
-      'Fili metallici dorati Al Talli in esposizione — patrimonio culturale degli EAU riconosciuto dall’UNESCO',
+      'Nastri Al Talli arancio e oro metallico — artigianato patrimoniale emiratino',
     imageAltBobbins:
-      'Rocchetti di legno avvolti di filo metallico argentato per il ricamo tradizionale Al Talli',
+      'Rocchetti di legno con filo metallico dorato appesi a una kajujah Al Talli — artigianato emiratino',
     imageAltAbuDhabi:
-      'Donna emiratina che pratica Al Talli alla House of Artisans, Qasr Al Hosn, Abu Dhabi',
+      'Esposizione di kajujah Al Talli con treccia dorata e rocchetti — patrimonio culturale ad Abu Dhabi',
     imageTitleHero:
-      'Ricamo Al Talli su abaya — artigianato patrimoniale emiratino | Bint Saeed Abu Dhabi',
+      'Ricamo Al Talli dorato su thobe — patrimonio emiratino | Bint Saeed Abu Dhabi',
     imageTitleStory:
-      'Ricamo Al Talli a filo metallico — mestiere del Medio Oriente, EAU',
+      'Motivo Al Talli in perline dorate — dettaglio ricamo emiratino',
     imageTitleLoom:
-      'Kajujah Al Talli — artigianato patrimoniale emiratino tradizionale ad Abu Dhabi',
+      'Kajujah Al Talli con rocchetti dorati — artigianato ad Abu Dhabi',
     imageTitleStrands:
-      'Fili metallici dorati Al Talli — patrimonio culturale UNESCO degli EAU',
+      'Nastri Al Talli arancio-oro — patrimonio culturale EAU',
     imageTitleBobbins:
-      'Rocchetti metallici Al Talli — ricamo emiratino tradizionale',
+      'Rocchetti kajujah Al Talli — ricamo emiratino tradizionale',
     imageTitleAbuDhabi:
-      'Artigiana Al Talli alla House of Artisans, Qasr Al Hosn — cultura di Abu Dhabi',
+      'Esposizione kajujah Al Talli — patrimonio culturale Abu Dhabi',
   },
 
   es: {
@@ -366,11 +371,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: 'El oficio',
     storyTitle: 'Tejido a través de las generaciones',
     storyP1:
-      'Al Talli es un arte decorativo tradicional emiratí, distinguido por bandas intrincadas de hilo metálico y de color, elaboradas a mano y empleadas históricamente para adornar la ropa de las mujeres en los Emiratos Árabes Unidos. Transmitido entre generaciones de mujeres, forma parte del patrimonio cultural vivo del país y sigue siendo una de las expresiones más reconocibles de la artesanía emiratí.',
+      'Al Talli es un oficio decorativo emiratí tradicional de bandas intrincadas de hilo metálico y de color, trabajadas a mano e históricamente usadas para adornar la ropa femenina en los Emiratos Árabes Unidos. Sus líneas pueden sentirse familiares incluso antes de conocer el nombre — oro y plata trazando escotes y mangas con la quieta certeza de una práctica que las mujeres han pasado de mano en mano, generación tras generación.',
     storyP2:
-      'Tradicionalmente, Al Talli se crea entrelazando hilos de algodón o seda con hilos metálicos en tonos oro o plata. Los filamentos se trabajan juntos hasta formar bandas decorativas que se aplican al escote, las mangas y otras partes de las prendas tradicionales. Según el motivo, el resultado va desde el detalle lineal más fino hasta composiciones más elaboradas en las que el hilo metálico capta y refleja la luz.',
+      'Tradicionalmente, Al Talli se crea entrelazando algodón o seda con hilos metálicos dorados o plateados. De lejos las bandas parecen delicadas; de cerca, bobinas de madera, cojines e hilos sueltos revelan cuán despacio se reúne el borde — saber conservado en el motivo y en el ritmo del hacer.',
     storyP3:
-      'La importancia de Al Talli va más allá de su apariencia. Su elaboración preserva un saber llevado por las manos de las mujeres — técnicas, motivos y modos de trabajar compartidos entre generaciones. En 2022, las destrezas tradicionales del bordado Al Talli en los Emiratos Árabes Unidos fueron inscritas en la Lista Representativa del Patrimonio Cultural Inmaterial de la Humanidad de la UNESCO.',
+      'En 2022, las habilidades tradicionales del bordado Al Talli en EAU se inscribieron en la Lista Representativa del Patrimonio Cultural Inmaterial de la UNESCO. Lo que hace la historia especialmente viva en Abu Dabi es que la preservación no se limita a un archivo: en lugares como la House of Artisans el oficio sigue practicándose, documentándose y compartiéndose.',
     craftEyebrow: 'El hacer',
     craftTitle: 'Hilo, luz y ritmo',
     techniques: [
@@ -399,46 +404,47 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     abuDhabiEyebrow: 'Abu Dabi',
     abuDhabiTitle: 'Al Talli en Abu Dabi hoy',
     abuDhabiP1:
-      'En Abu Dabi, Al Talli se encuentra aún como práctica viva. Instituciones culturales como la House of Artisans en Qasr Al Hosn documentan, preservan y comparten los oficios tradicionales emiratíes, permitiendo a las nuevas generaciones y a visitantes de todo el mundo comprender no solo las piezas terminadas, sino también la maestría y el tiempo que las han hecho posibles.',
+      'En Abu Dabi, Al Talli aún se encuentra como práctica viva. En la House of Artisans de Qasr Al Hosn — y a través de un trabajo cultural más amplio en el emirato — los oficios tradicionales emiratíes se documentan, practican y comparten, para que los visitantes encuentren no solo las piezas terminadas sino las mujeres, los materiales y el tiempo detrás de ellas.',
     abuDhabiP2:
-      'Para Bint Saeed, esta relación entre heritage y vida contemporánea tiene un sentido particular. Abu Dabi es una ciudad donde el pasado permanece presente dentro de una capital internacional en rápida evolución, y Al Talli ofrece un bello ejemplo de cómo el saber cultural puede continuar sin quedar fijado en otro tiempo.',
+      'En una capital conocida por mirar hacia delante, hay una fuerza quieta en mantener el saber de generaciones anteriores parte de la vida cultural. Para Bint Saeed, esa continuidad entre patrimonio y vestir contemporáneo es el suelo desde el que nace el diseño.',
     brandEyebrow: 'Bint Saeed',
     brandTitle: 'De Al Talli a la moda contemporánea',
     brandP1:
-      'Cuando Bint Saeed comenzó a explorar Al Talli, el desafío no era simplemente cómo colocar un adorno tradicional sobre una prenda contemporánea. Un oficio de tal riqueza cultural merece una consideración más profunda.',
+      'Traducir Al Talli a Bint Saeed fue más exigente de lo que parecía. El trabajo tradicional ya es extraordinariamente rico; reproducir literalmente esa riqueza en una prenda contemporánea habría parecido demasiado literal, mientras que reducirla demasiado habría arriesgado perder el carácter que nos hizo mirar de cerca.',
     brandP2:
-      'En su lugar, observamos de cerca su lenguaje visual: líneas metálicas esbeltas unas junto a otras, el ritmo creado por la repetición, la relación entre textil y luz, y el modo en que algo notablemente delicado gana presencia cuando muchos filamentos se reúnen.',
+      'Volvimos a las líneas mismas: hilos metálicos delgados uno junto a otro, presencia por repetición, luz que capta el movimiento. En lugar de recrear una prenda tradicional, la Maison podía dejar que algo de ese lenguaje visual continuara en otra forma.',
     brandP3:
-      'Esas observaciones pasaron a formar parte del lenguaje de diseño en desarrollo de Bint Saeed. En prendas seleccionadas, detalles metálicos lineales evocan el carácter de Al Talli de distintas maneras. A veces la relación es inmediatamente reconocible; en otros casos solo queda un rastro. La intención no es recrear la indumentaria tradicional emiratí, sino permitir que elementos hallados en el paisaje cultural de Abu Dabi encuentren expresiones contemporáneas meditadas.',
+      'Con el tiempo esas líneas se convirtieron en uno de los códigos de la maison — apareciendo en siluetas contemporáneas de modos a veces reconocibles de inmediato, a veces solo un rastro. El objetivo nunca fue hacer moderno el pasado, sino dejar que algo culturalmente rico entre en el presente mientras su origen aún se siente.',
     brandP4:
-      'Así Al Talli se vuelve más que una referencia al pasado. Forma parte de una conversación continua entre mujeres, vestimenta, artesanía y lugar.',
+      'Así Al Talli se vuelve más que una referencia del pasado: una conversación continua entre mujeres, ropa, oficio y lugar — un hilo de oro que puede viajar más allá de Abu Dabi sin permanecer exactamente como era.',
     journalNote:
-      'Para quienes deseen descubrir la historia detrás del oficio, The Bint Saeed Journal visita la House of Artisans en Abu Dabi en The Golden Thread Between Women, explorando Al Talli a través de las mujeres que lo realizan y la cuestión de cómo el heritage puede viajar hacia la moda contemporánea.',
+      'El ensayo más amplio desde la House of Artisans — The Golden Thread Between Women — aparece en The Bint Saeed Journal.',
+    journalCta: 'Leer el ensayo del Journal',
     shopCta: 'Comprar piezas Al Talli',
     imageAltHero:
-      'Detalle de abaya Bint Saeed azul marino con bordado Al Talli metálico dorado — oficio patrimonial emiratí, Abu Dabi',
+      'Thobe crema con bordado Al Talli dorado en el escote — oficio patrimonial emiratí, Abu Dabi',
     imageAltStory:
-      'Primer plano de bordado Al Talli hecho a mano en algodón azul polvo e hilo metálico dorado — oficio de Oriente Medio, EAU',
+      'Motivo Al Talli de cuentas doradas sobre tela crema — detalle de bordado emiratí',
     imageAltLoom:
-      'Kajujah tradicional emiratí para Al Talli con hilos metálicos dorados y bobinas de madera — oficio vivo en Abu Dabi',
+      'Kajujah con trenza Al Talli dorada y bobinas de madera en exposición — Abu Dabi',
     imageAltStrands:
-      'Hebras metálicas doradas Al Talli en exposición — patrimonio cultural de los EAU reconocido por la UNESCO',
+      'Cintas Al Talli naranja y oro metálico — oficio patrimonial emiratí',
     imageAltBobbins:
-      'Bobinas de madera enrolladas con hilo metálico plateado para el bordado tradicional Al Talli',
+      'Bobinas de madera con hilo metálico dorado colgando de una kajujah Al Talli — oficio emiratí',
     imageAltAbuDhabi:
-      'Mujer emiratí practicando Al Talli en la House of Artisans, Qasr Al Hosn, Abu Dabi',
+      'Exposición de kajujah Al Talli con trenza dorada y bobinas — patrimonio cultural en Abu Dabi',
     imageTitleHero:
-      'Bordado Al Talli en abaya — oficio patrimonial emiratí | Bint Saeed Abu Dabi',
+      'Bordado Al Talli dorado en thobe — patrimonio emiratí | Bint Saeed Abu Dabi',
     imageTitleStory:
-      'Bordado Al Talli con hilo metálico — oficio de Oriente Medio, EAU',
+      'Motivo Al Talli de cuentas doradas — detalle de bordado emiratí',
     imageTitleLoom:
-      'Kajujah Al Talli — oficio patrimonial emiratí tradicional en Abu Dabi',
+      'Kajujah Al Talli con bobinas doradas — oficio en Abu Dabi',
     imageTitleStrands:
-      'Hebras metálicas doradas Al Talli — patrimonio cultural UNESCO de los EAU',
+      'Cintas Al Talli naranja-oro — patrimonio cultural de EAU',
     imageTitleBobbins:
-      'Bobinas metálicas Al Talli — bordado emiratí tradicional',
+      'Bobinas kajujah Al Talli — bordado emiratí tradicional',
     imageTitleAbuDhabi:
-      'Artesana Al Talli en la House of Artisans, Qasr Al Hosn — cultura de Abu Dabi',
+      'Exposición kajujah Al Talli — patrimonio cultural Abu Dabi',
   },
 
   ru: {
@@ -448,11 +454,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: 'Ремесло',
     storyTitle: 'Соткано поколениями',
     storyP1:
-      'Al Talli — традиционное эмиратское декоративное ремесло, отличающееся изысканными лентами из металлической и цветной нити, создаваемыми вручную и исторически служившими украшением женской одежды в Объединённых Арабских Эмиратах. Передаваясь от поколения к поколению женщин, оно входит в живое культурное наследие страны и остаётся одним из самых узнаваемых выражений традиционного эмиратского мастерства.',
+      'Al Talli — традиционное эмиратское декоративное ремесло изысканных металлических и цветных нитяных лент, выполненных вручную и исторически использовавшихся для украшения женской одежды в Объединённых Арабских Эмиратах. Его линии могут казаться знакомыми ещё до того, как известно имя — золото и серебро чертят вырезы и рукава с тихой уверенностью практики, которую женщины передавали из рук в руки через поколения.',
     storyP2:
-      'Традиционно Al Talli создаётся переплетением хлопковых или шёлковых нитей с металлическими — золотистыми или серебристыми. Нити сходятся в декоративные ленты, которые накладывают на вырез, рукава и другие части традиционной одежды. В зависимости от узора результат может быть тонкой линейной деталью или более сложной композицией, где металлическая нить ловит и отражает свет.',
+      'Традиционно Al Talli создаётся переплетением хлопка или шёлка с металлическими нитями золотого или серебряного тона. Издали ленты кажутся тонкими; вблизи деревянные шпульки, подушки и отдельные нити показывают, как медленно собирается сложный край — знание, сохранённое и в узоре, и в ритме делания.',
     storyP3:
-      'Значение Al Talli выходит за пределы внешнего облика. Его создание сохраняет знание, несомое руками женщин, — техники, узоры и способы работы, передаваемые через поколения. В 2022 году традиционные навыки вышивки Al Talli в ОАЭ были внесены в Репрезентативный список нематериального культурного наследия человечества ЮНЕСКО.',
+      'В 2022 году традиционные навыки вышивки Al Talli в ОАЭ были внесены в Репрезентативный список нематериального культурного наследия человечества ЮНЕСКО. Что делает историю особенно живой в Абу-Даби: сохранение не ограничивается архивом — в местах вроде House of Artisans ремесло по-прежнему практикуется, документируется и передаётся.',
     craftEyebrow: 'Создание',
     craftTitle: 'Нить, свет и ритм',
     techniques: [
@@ -481,34 +487,35 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     abuDhabiEyebrow: 'Абу-Даби',
     abuDhabiTitle: 'Al Talli в Абу-Даби сегодня',
     abuDhabiP1:
-      'В Абу-Даби Al Talli по-прежнему встречается как живая практика. Культурные институции, в том числе House of Artisans при Qasr Al Hosn, помогают документировать, сохранять и передавать традиционные эмиратские ремёсла, позволяя новым поколениям и гостям со всего мира понять не только готовые изделия, но и мастерство и время, вложенные в их создание.',
+      'В Абу-Даби Al Talli всё ещё встречается как живая практика. В House of Artisans при Qasr Al Hosn — и через более широкую культурную работу в эмирате — традиционные эмиратские ремёсла документируются, практикуются и разделяются, чтобы гости встречали не только готовые изделия, но женщин, материалы и время за ними.',
     abuDhabiP2:
-      'Для Bint Saeed эта связь между наследием и современной жизнью особенно значима. Абу-Даби — город, где прошлое остаётся присутствующим внутри стремительно меняющейся международной столицы, а Al Talli — прекрасный пример того, как культурное знание может продолжаться, не застывая в другом времени.',
+      'В столице, известной взглядом вперёд, есть тихая сила в том, чтобы удерживать знание прежних поколений частью культурной жизни. Для Bint Saeed эта непрерывность между наследием и современным костюмом — почва, из которой начинается дизайн.',
     brandEyebrow: 'Bint Saeed',
     brandTitle: 'От Al Talli к современной моде',
     brandP1:
-      'Когда Bint Saeed начала изучать Al Talli, задача состояла не просто в том, как перенести традиционный декор на современную одежду. Ремесло такой культурной глубины заслуживает более внимательного отношения.',
+      'Перевести Al Talli в Bint Saeed оказалось требовательнее, чем казалось сначала. Традиционная работа уже необычайно богата; буквально воспроизвести это богатство на современном изделии было бы слишком буквально, а слишком сильно упростить — риск потерять характер, из-за которого мы присмотрелись ближе.',
     brandP2:
-      'Вместо этого мы пристально смотрели на его визуальный язык: тонкие металлические линии рядом друг с другом, ритм, рождаемый повторением, связь ткани и света, и то, как нечто необычайно хрупкое обретает присутствие, когда множество отдельных нитей сходятся вместе.',
+      'Мы возвращались к самим линиям: тонкие металлические нити рядом друг с другом, присутствие через повторение, свет, ловящий движение. Вместо воссоздания традиционного наряда Дом мог позволить чему-то из этого визуального языка продолжиться в иной форме.',
     brandP3:
-      'Эти наблюдения вошли в формирующийся язык дизайна Bint Saeed. На избранных изделиях линейные металлические детали отсылают к характеру Al Talli по-разному. Иногда связь узнаётся сразу; в других случаях остаётся лишь след. Цель — не воссоздать традиционную эмиратскую одежду, а дать элементам культурного ландшафта Абу-Даби найти продуманные современные выражения.',
+      'Со временем эти линии стали одним из кодов дома — появляясь на современных силуэтах то сразу узнаваемо, то лишь следом. Цель никогда не состояла в том, чтобы сделать прошлое современным, а в том, чтобы нечто культурно богатое вошло в настоящее, пока его исток ещё ощутим.',
     brandP4:
-      'Так Al Talli становится больше, чем отсылкой к прошлому. Оно входит в продолжающийся разговор между женщинами, одеждой, мастерством и местом.',
+      'Так Al Talli становится больше, чем отсылкой из прошлого: продолжающимся разговором между женщинами, одеждой, ремеслом и местом — золотой нитью, которая может уйти дальше Абу-Даби, не оставаясь в точности прежней.',
     journalNote:
-      'Тем, кто хочет узнать историю ремесла, The Bint Saeed Journal посещает House of Artisans в Абу-Даби в материале The Golden Thread Between Women — исследуя Al Talli через женщин, которые его создают, и вопрос о том, как наследие может перейти в современную моду.',
+      'Более полный очерк из House of Artisans — The Golden Thread Between Women — опубликован в The Bint Saeed Journal.',
+    journalCta: 'Читать эссе в Journal',
     shopCta: 'Смотреть изделия Al Talli',
     imageAltHero:
-      'Деталь тёмно-синей абайи Bint Saeed с золотой металлической вышивкой Al Talli — эмиратское наследие, Абу-Даби',
+      'Кремовый тоб с золотой вышивкой Al Talli у горловины — эмиратское наследие, Абу-Даби',
     imageAltStory:
-      'Крупный план ручной вышивки Al Talli голубым хлопком и золотой металлической нитью — ремесло Ближнего Востока, ОАЭ',
+      'Золотой бисерный мотив Al Talli на кремовой ткани — деталь эмиратской вышивки',
     imageAltLoom:
-      'Традиционная эмиратская каджуджа Al Talli с золотыми металлическими нитями и деревянными бобинами — живое ремесло в Абу-Даби',
+      'Каюджа с золотой тесьмой Al Talli и деревянными шпульками на выставке — Абу-Даби',
     imageAltStrands:
-      'Золотые металлические пряди вышивки Al Talli на витрине — культурное наследие ОАЭ, признанное ЮНЕСКО',
+      'Оранжево-золотые металлические ленты Al Talli — эмиратское ремесло',
     imageAltBobbins:
-      'Деревянные бобины с серебристой металлической нитью для традиционной вышивки Al Talli',
+      'Деревянные шпульки с золотой металлической нитью на каюдже Al Talli — эмиратское ремесло',
     imageAltAbuDhabi:
-      'Эмиратская женщина за вышивкой Al Talli в House of Artisans, Qasr Al Hosn, Абу-Даби',
+      'Выставка каюджи Al Talli с золотой тесьмой и шпульками — культурное наследие Абу-Даби',
     imageTitleHero:
       'Вышивка Al Talli на абайе — эмиратское наследие | Bint Saeed Абу-Даби',
     imageTitleStory:
@@ -530,11 +537,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: '工艺',
     storyTitle: '代代织就',
     storyP1:
-      'Al Talli 是阿联酋传统装饰工艺，以金属与彩色细线织成的精致饰带为特征，纯手工制成，历史上用于装点阿拉伯联合酋长国的女装。它在女性之间世代相承，构成阿联酋活态文化遗产的一部分，亦是最易辨识的传统阿联酋工艺表达之一。',
+      'Al Talli 是阿联酋传统装饰工艺，以手工金属与彩色线带构成精致饰带，历史上用于装点女性服饰。它的线条甚至在知其名之前便可能显得熟悉——金银在领口与袖缘游走，带着一代代女性手口相传的从容确信。',
     storyP2:
-      '传统上，Al Talli 以棉线或丝线与金、银色调的金属线交织而成。线缕共同织成装饰饰带，可施于领口、袖口及传统服饰的其他部位。依纹样不同，成品可自纤细的线条细节，延展为金属线捕捉并反射光线的繁复构图。',
+      '传统上，Al Talli 以棉或丝与金、银色金属线交织而成。远看饰带轻盈；近观木线轴、垫枕与单根线缕，才见边缘如何缓慢汇聚——知识既存于纹样，也存于制作的节奏。',
     storyP3:
-      'Al Talli 的意义不止于外观。其制作保存着由女性之手承载的知识——技法、纹样与工作方式在代际间相传。2022 年，阿联酋 Al Talli 刺绣的传统技艺被列入联合国教科文组织人类非物质文化遗产代表作名录。',
+      '2022 年，阿联酋传统 Al Talli 刺绣技艺列入联合国教科文组织人类非物质文化遗产代表作名录。在阿布扎比，故事之所以尤为鲜活，是因为保存并不止于档案：在 House of Artisans 等地，这项工艺仍被实践、记录与分享。',
     craftEyebrow: '制作',
     craftTitle: '线、光与节奏',
     techniques: [
@@ -560,34 +567,35 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     abuDhabiEyebrow: '阿布扎比',
     abuDhabiTitle: '今日阿布扎比的 Al Talli',
     abuDhabiP1:
-      '在阿布扎比，Al Talli 仍可见为活态实践。包括 Qasr Al Hosn 内 House of Artisans 在内的文化机构协助记录、保存并分享传统阿联酋工艺，使新一代与来自世界各地的访客不仅理解成品，也理解其背后的技艺与时间。',
+      '在阿布扎比，Al Talli 仍可作为活态实践遇见。在 Qasr Al Hosn 的 House of Artisans——以及酋长国更广泛的文化工作中——传统阿联酋工艺被记录、实践与共享，访客遇见的不仅是成品，还有背后的女性、材料与时间。',
     abuDhabiP2:
-      '对 Bint Saeed 而言，遗产与当代生活的这一关系尤为重要。阿布扎比是一座在迅速演变的国际都市中仍让过去保持在场的城市，而 Al Talli 正是文化知识得以延续、又不至于凝固于另一时代的美好例证。',
+      '在一座以向前看著称的首都，让前代知识仍留在文化生活中，有一种安静的力量。对 Bint Saeed 而言，传承与当代着装之间的连续性，正是设计的起点。',
     brandEyebrow: 'Bint Saeed',
     brandTitle: '从 Al Talli 到当代时装',
     brandP1:
-      '当 Bint Saeed 开始探索 Al Talli 时，挑战并不只是如何把传统装饰放到当代服装上。如此富有文化厚度的工艺，值得更深一层的考量。',
+      '将 Al Talli 转译进 Bint Saeed，比初看起来更费心力。传统工艺本身已极为丰厚；若在当代成衣上原样复刻那份丰厚，会显得过于字面；而削减过甚，又可能失去最初让我们细看的特质。',
     brandP2:
-      '我们转而细察其视觉语言：并置的纤细金属线条、重复所形成的节奏、织物与光线的关系，以及极度纤巧之物在众多线缕汇聚时如何获得存在感。',
+      '我们一再回到线条本身：细长金属线并置、以重复建立存在、随动作捕捉光泽。与其复刻传统服装，品牌可以让这一视觉语言以另一种形式延续。',
     brandP3:
-      '这些观察进入了 Bint Saeed 正在成形的设计语言。在部分服装上，线性金属细节以不同方式呼应 Al Talli 的气质。有时关系一目了然；有时仅余痕迹。意图并非复刻传统阿联酋服饰，而是让阿布扎比文化景观中相遇的元素，找到审慎的当代表达。',
+      '渐渐地，这些线条成为品牌密码之一——出现在当代廓形上，有时一目了然，有时只留痕迹。目标从来不是让过去显得现代，而是让文化上丰厚之物进入当下，同时仍能感知其源头。',
     brandP4:
-      '如此，Al Talli 不止是对过去的引用。它成为女性、服装、工艺与地方之间持续对话的一部分。',
+      '于是 Al Talli 不再只是过去的参照：它成为女性、衣饰、工艺与地方之间持续的对话——一条可走出阿布扎比、却不必原样不变的金线。',
     journalNote:
-      '若想了解工艺背后的故事，The Bint Saeed Journal 在 The Golden Thread Between Women 一文中造访阿布扎比 House of Artisans，经由制作 Al Talli 的女性，探问遗产如何进入当代时装。',
+      '来自 House of Artisans 的完整随笔 The Golden Thread Between Women 刊于 The Bint Saeed Journal。',
+    journalCta: '阅读 Journal 专文',
     shopCta: '选购 Al Talli 单品',
-    imageAltHero: 'Bint Saeed 藏青色阿巴亚局部，金色 Al Talli 金属线刺绣——阿联酋传承工艺，阿布扎比',
-    imageAltStory: '手工 Al Talli 刺绣特写：粉蓝棉线与金色金属线——中东工艺，阿联酋',
-    imageAltLoom: '传统阿联酋 Al Talli 用 kajujah，金色金属线与木质线轴——阿布扎比活态工艺',
-    imageAltStrands: '展陈中的金色 Al Talli 金属刺绣线缕——获联合国教科文组织认可的阿联酋文化遗产',
-    imageAltBobbins: '缠绕银色金属线的木质线轴，用于传统 Al Talli 刺绣——阿联酋传承工艺',
-    imageAltAbuDhabi: '阿联酋女性在阿布扎比 Qasr Al Hosn 的 House of Artisans 练习 Al Talli 刺绣',
-    imageTitleHero: '阿巴亚上的 Al Talli 刺绣——阿联酋传承工艺 | Bint Saeed 阿布扎比',
-    imageTitleStory: 'Al Talli 金属线刺绣——中东工艺，阿联酋',
-    imageTitleLoom: 'Al Talli kajujah 织架——阿布扎比传统阿联酋传承工艺',
-    imageTitleStrands: '金色 Al Talli 金属线缕——教科文组织阿联酋文化遗产',
-    imageTitleBobbins: 'Al Talli 金属线轴——传统阿联酋刺绣',
-    imageTitleAbuDhabi: 'House of Artisans、Qasr Al Hosn 的 Al Talli 匠人——阿布扎比文化',
+    imageAltHero: '奶油色长袍领口金色 Al Talli 刺绣 — 阿联酋传承工艺，阿布扎比',
+    imageAltStory: '奶油色面料上的金色珠绣 Al Talli 纹样 — 阿联酋刺绣细节',
+    imageAltLoom: '展示中的 Al Talli kajujah 金饰带与木线轴 — 阿布扎比',
+    imageAltStrands: '橙金金属 Al Talli 织带 — 阿联酋传承工艺',
+    imageAltBobbins: '挂在 Al Talli kajujah 上的金色金属线木轴 — 阿联酋工艺',
+    imageAltAbuDhabi: 'Al Talli kajujah 金饰带与线轴展览 — 阿布扎比文化遗产',
+    imageTitleHero: '长袍上的金色 Al Talli 刺绣 — 阿联酋传承 | Bint Saeed 阿布扎比',
+    imageTitleStory: '金色 Al Talli 珠绣纹样 — 阿联酋刺绣细节',
+    imageTitleLoom: '带金线轴的 Al Talli kajujah — 阿布扎比传承工艺',
+    imageTitleStrands: '橙金 Al Talli 织带 — 阿联酋文化遗产',
+    imageTitleBobbins: 'Al Talli kajujah 线轴 — 传统阿联酋刺绣',
+    imageTitleAbuDhabi: 'Al Talli kajujah 展览 — 阿布扎比文化遗产',
   },
 
   de: {
@@ -597,11 +605,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: 'Das Handwerk',
     storyTitle: 'Über Generationen gewoben',
     storyP1:
-      'Al Talli ist ein traditionelles emiratisches Dekorhandwerk, geprägt von filigranen Bändern aus metallischem und farbigem Faden, von Hand gefertigt und historisch zur Verzierung der Frauenkleidung in den Vereinigten Arabischen Emiraten verwendet. Von Generation zu Generation von Frauen weitergegeben, gehört es zum lebendigen Kulturerbe des Landes und zählt zu den unverkennbarsten Ausdrucksformen traditionellen emiratischen Könnens.',
+      'Al Talli ist ein traditionelles emiratisches Dekorationshandwerk aus filigranen Bändern metallischer und farbiger Fäden, von Hand gearbeitet und historisch zur Verzierung der Frauenkleidung in den Vereinigten Arabischen Emiraten verwendet. Seine Linien können vertraut wirken, noch bevor der Name bekannt ist — Gold und Silber zeichnen Ausschnitte und Ärmel mit der ruhigen Gewissheit einer Praxis, die Frauen von Hand zu Hand über Generationen weitergegeben haben.',
     storyP2:
-      'Traditionell entsteht Al Talli durch das Verflechten von Baumwoll- oder Seidenfäden mit metallischen Fäden in Gold- oder Silbertönen. Die Stränge werden zu dekorativen Bändern gearbeitet, die an Ausschnitt, Ärmeln und anderen Teilen traditioneller Gewänder angebracht werden können. Je nach Muster reicht das Ergebnis von schlanken linearen Details bis zu reicheren Kompositionen, in denen der Metallfaden das Licht fängt und zurückwirft.',
+      'Traditionell entsteht Al Talli durch das Verflechten von Baumwolle oder Seide mit goldenen oder silbernen Metallfäden. Aus der Ferne wirken die Bänder zart; aus der Nähe zeigen Holzspulen, Kissen und einzelne Fäden, wie langsam sich der aufwendige Saum sammelt — Wissen, das im Muster und im Rhythmus des Machens bewahrt wird.',
     storyP3:
-      'Die Bedeutung von Al Talli geht über das Erscheinungsbild hinaus. Seine Herstellung bewahrt Wissen, das durch die Hände von Frauen getragen wird — Techniken, Muster und Arbeitsweisen, die über Generationen geteilt werden. 2022 wurden die traditionellen Fertigkeiten der Al-Talli-Stickerei in den VAE in die Repräsentative Liste des immateriellen Kulturerbes der Menschheit der UNESCO aufgenommen.',
+      '2022 wurden die traditionellen Fähigkeiten der Al-Talli-Stickerei in den VAE in die Repräsentative Liste des immateriellen Kulturerbes der Menschheit der UNESCO aufgenommen. Was die Geschichte in Abu Dhabi besonders lebendig macht: Bewahrung beschränkt sich nicht auf ein Archiv — an Orten wie dem House of Artisans bleibt das Handwerk praktiziert, dokumentiert und geteilt.',
     craftEyebrow: 'Das Machen',
     craftTitle: 'Faden, Licht und Rhythmus',
     techniques: [
@@ -630,46 +638,47 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     abuDhabiEyebrow: 'Abu Dhabi',
     abuDhabiTitle: 'Al Talli in Abu Dhabi heute',
     abuDhabiP1:
-      'In Abu Dhabi begegnet man Al Talli noch als lebendiger Praxis. Kulturelle Institutionen, darunter die House of Artisans in Qasr Al Hosn, dokumentieren, bewahren und vermitteln traditionelle emiratische Handwerke — und lassen neue Generationen sowie Besucher aus aller Welt nicht nur die fertigen Stücke verstehen, sondern auch Können und Zeit, die sie tragen.',
+      'In Abu Dhabi begegnet man Al Talli noch als lebendiger Praxis. Im House of Artisans am Qasr Al Hosn — und durch weitere kulturelle Arbeit im Emirat — werden traditionelle emiratische Handwerke dokumentiert, praktiziert und geteilt, sodass Besucher nicht nur fertige Stücke treffen, sondern die Frauen, Materialien und Zeit dahinter.',
     abuDhabiP2:
-      'Für Bint Saeed hat diese Beziehung zwischen Erbe und zeitgenössischem Leben besondere Bedeutung. Abu Dhabi ist eine Stadt, in der die Vergangenheit in einer rasch wandelnden internationalen Hauptstadt gegenwärtig bleibt, und Al Talli zeigt eindrucksvoll, wie kulturelles Wissen fortbestehen kann, ohne in einer anderen Zeit festgeschrieben zu sein.',
+      'In einer Hauptstadt, die für den Blick nach vorn bekannt ist, liegt stille Kraft darin, früheres Wissen Teil des kulturellen Lebens zu halten. Für Bint Saeed ist diese Kontinuität zwischen Erbe und zeitgenössischem Kleiden der Boden, aus dem Design beginnt.',
     brandEyebrow: 'Bint Saeed',
     brandTitle: 'Von Al Talli zur zeitgenössischen Mode',
     brandP1:
-      'Als Bint Saeed begann, Al Talli zu erkunden, ging es nicht allein darum, einen traditionellen Schmuck auf ein zeitgenössisches Kleidungsstück zu setzen. Ein Handwerk von solcher kultureller Tiefe verdient eine sorgfältigere Betrachtung.',
+      'Al Talli in Bint Saeed zu übersetzen war anspruchsvoller, als es zunächst schien. Die traditionelle Arbeit ist bereits außerordentlich reich; diese Fülle wörtlich auf ein zeitgenössisches Stück zu reproduzieren hätte zu wörtlich gewirkt, während ein zu starkes Reduzieren den Charakter zu verlieren drohte, der uns genauer hinsehen ließ.',
     brandP2:
-      'Stattdessen betrachteten wir genau seine Bildsprache: schlanke metallische Linien nebeneinander, den Rhythmus der Wiederholung, das Verhältnis von Textil und Licht, und die Art, wie etwas bemerkenswert Zartes an Präsenz gewinnt, wenn viele einzelne Stränge zusammenfinden.',
+      'Wir kehrten zu den Linien selbst zurück: schlanke Metallfäden nebeneinander, Präsenz durch Wiederholung, Licht, das Bewegung einfängt. Statt ein traditionelles Gewand nachzubilden, konnte das Haus etwas dieser Bildsprache in anderer Form fortsetzen lassen.',
     brandP3:
-      'Diese Beobachtungen gingen in die sich entwickelnde Designsprache von Bint Saeed ein. An ausgewählten Stücken verweisen lineare metallische Details auf unterschiedliche Weise auf den Charakter von Al Talli. Manchmal ist die Beziehung sofort erkennbar; anderswo bleibt nur eine Spur. Ziel ist nicht, traditionelle emiratische Kleidung nachzubilden, sondern Elementen aus der kulturellen Landschaft Abu Dhabis durchdachte zeitgenössische Ausdrucksformen zu geben.',
+      'Mit der Zeit wurden diese Linien einer der Codes des Hauses — auf zeitgenössischen Silhouetten manchmal sofort erkennbar, manchmal nur eine Spur. Ziel war nie, die Vergangenheit modern wirken zu lassen, sondern etwas kulturell Reiches in die Gegenwart eintreten zu lassen, während sein Ursprung noch spürbar bleibt.',
     brandP4:
-      'So wird Al Talli mehr als ein Verweis auf die Vergangenheit. Es wird Teil eines fortlaufenden Gesprächs zwischen Frauen, Kleidung, Handwerk und Ort.',
+      'So wird Al Talli mehr als ein Bezug aus der Vergangenheit: ein fortlaufendes Gespräch zwischen Frauen, Kleidung, Handwerk und Ort — ein goldener Faden, der über Abu Dhabi hinaus reisen kann, ohne genau so zu bleiben, wie er war.',
     journalNote:
-      'Wer die Geschichte hinter dem Handwerk entdecken möchte, besucht The Bint Saeed Journal die House of Artisans in Abu Dhabi in The Golden Thread Between Women — und erkundet Al Talli durch die Frauen, die es machen, sowie die Frage, wie Erbe in die zeitgenössische Mode wandern kann.',
+      'Der ausführlichere Essay aus der House of Artisans — The Golden Thread Between Women — erscheint in The Bint Saeed Journal.',
+    journalCta: 'Journal-Essay lesen',
     shopCta: 'Al-Talli-Stücke entdecken',
     imageAltHero:
-      'Detail einer marineblauen Bint-Saeed-Abaya mit goldener Al-Talli-Metallstickerei — emiratisches Kulturerbe, Abu Dhabi',
+      'Creme-Thobe mit goldener Al-Talli-Stickerei am Ausschnitt — emiratisches Erbe, Abu Dhabi',
     imageAltStory:
-      'Nahaufnahme handgewebter Al-Talli-Stickerei in puderblauem Baumwoll- und goldenem Metallfaden — Handwerk des Nahen Ostens, VAE',
+      'Goldenes Al-Talli-Perlenmotiv auf Creme-Stoff — Stickdetail, Emirati-Handwerk',
     imageAltLoom:
-      'Traditionelle emiratische Al-Talli-Kajujah mit goldenen Metallfäden und Holzspulen — lebendiges Handwerk in Abu Dhabi',
+      'Kajujah mit goldener Al-Talli-Borte und Holzspulen in Ausstellung — Abu Dhabi',
     imageAltStrands:
-      'Goldene metallische Al-Talli-Stickerei-Stränge ausgestellt — von der UNESCO anerkanntes Kulturerbe der VAE',
+      'Orange-goldene metallische Al-Talli-Bänder — emiratisches Erbe',
     imageAltBobbins:
-      'Holzspulen mit silbernem Metallfaden für traditionelle Al-Talli-Stickerei',
+      'Holzspulen mit goldener Metallfaser an einer Al-Talli-Kajujah — emiratisches Handwerk',
     imageAltAbuDhabi:
-      'Emiratische Frau bei Al-Talli-Stickerei im House of Artisans, Qasr Al Hosn, Abu Dhabi',
+      'Al-Talli-Kajujah-Ausstellung mit goldener Borte und Spulen — Kulturerbe Abu Dhabi',
     imageTitleHero:
-      'Al-Talli-Stickerei an der Abaya — emiratisches Kulturerbe | Bint Saeed Abu Dhabi',
+      'Goldene Al-Talli-Stickerei auf Thobe — emiratisches Erbe | Bint Saeed Abu Dhabi',
     imageTitleStory:
-      'Al-Talli-Stickerei mit Metallfaden — Handwerk des Nahen Ostens, VAE',
+      'Goldenes Al-Talli-Perlenmotiv — Emirati-Stickdetail',
     imageTitleLoom:
-      'Al-Talli-Kajujah — traditionelles emiratisches Kulturerbe in Abu Dhabi',
+      'Al-Talli-Kajujah mit goldenen Spulen — Erbe Abu Dhabi',
     imageTitleStrands:
-      'Goldene metallische Al-Talli-Stränge — UNESCO-Kulturerbe der VAE',
+      'Orange-goldene Al-Talli-Bänder — Kulturerbe der VAE',
     imageTitleBobbins:
-      'Metallische Al-Talli-Spulen — traditionelle emiratische Stickerei',
+      'Al-Talli-Kajujah-Spulen — traditionelle Emirati-Stickerei',
     imageTitleAbuDhabi:
-      'Al-Talli-Handwerkerin im House of Artisans, Qasr Al Hosn — Kultur Abu Dhabis',
+      'Al-Talli-Kajujah-Ausstellung — Kulturerbe Abu Dhabi',
   },
 
   nl: {
@@ -679,11 +688,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: 'Het ambacht',
     storyTitle: 'Door generaties geweven',
     storyP1:
-      'Al Talli is een traditioneel Emiratisch decoratief ambacht, gekenmerkt door fijne banden van metallische en gekleurde draad, met de hand gemaakt en historisch gebruikt om dameskleding in de Verenigde Arabische Emiraten te sieren. Overgedragen tussen generaties vrouwen, maakt het deel uit van het levende culturele erfgoed van het land en blijft het een van de meest herkenbare uitdrukkingen van traditioneel Emiratisch vakmanschap.',
+      'Al Talli is een traditioneel Emiratisch decoratief ambacht van fijne metallieke en gekleurde draadbanden, met de hand gewerkt en historisch gebruikt om vrouwenkleding in de Verenigde Arabische Emiraten te sieren. De lijnen kunnen vertrouwd aanvoelen nog vóór de naam bekend is — goud en zilver die halslijnen en mouwen trekken met de stille zekerheid van een praktijk die vrouwen van hand tot hand over generaties hebben doorgegeven.',
     storyP2:
-      'Traditioneel ontstaat Al Talli door katoen- of zijdedraden te verweven met metallische draden in goud- of zilvertonen. De strengen worden tot decoratieve banden gewerkt die op halslijn, mouwen en andere delen van traditionele kledingstukken kunnen worden aangebracht. Afhankelijk van het patroon loopt het resultaat van slanke lineaire details tot rijkere composities waarin de metallische draad het licht vangt en weerkaatst.',
+      'Traditioneel ontstaat Al Talli door katoen of zijde te verweven met gouden of zilveren metallieke draden. Van ver lijken de banden delicaat; van dichtbij tonen houten spoelen, kussens en aparte draden hoe traag de complexe zoom zich verzamelt — kennis bewaard in motief én in het ritme van maken.',
     storyP3:
-      'Het belang van Al Talli reikt verder dan het uiterlijk. Het maken ervan bewaart kennis die door de handen van vrouwen wordt gedragen — technieken, patronen en werkwijzen die over generaties worden gedeeld. In 2022 werden de traditionele vaardigheden van Al Talli-borduurwerk in de VAE opgenomen op de Representatieve Lijst van het Immaterieel Cultureel Erfgoed van de Mensheid van UNESCO.',
+      'In 2022 werden de traditionele vaardigheden van Al Talli-borduurwerk in de VAE opgenomen op de Representatieve Lijst van het immaterieel cultureel erfgoed van de mensheid van UNESCO. Wat het verhaal in Abu Dhabi bijzonder levend maakt: behoud beperkt zich niet tot een archief — op plekken als de House of Artisans blijft het ambacht beoefend, gedocumenteerd en gedeeld.',
     craftEyebrow: 'Het maken',
     craftTitle: 'Draad, licht en ritme',
     techniques: [
@@ -712,34 +721,35 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     abuDhabiEyebrow: 'Abu Dhabi',
     abuDhabiTitle: 'Al Talli in Abu Dhabi vandaag',
     abuDhabiP1:
-      'In Abu Dhabi komt Al Talli nog voor als levende praktijk. Culturele instellingen, waaronder de House of Artisans bij Qasr Al Hosn, helpen traditionele Emiratische ambachten te documenteren, te bewaren en te delen, zodat nieuwe generaties en bezoekers van over de hele wereld niet alleen de voltooide stukken begrijpen, maar ook de vaardigheid en tijd erachter.',
+      'In Abu Dhabi komt Al Talli nog voor als levende praktijk. In de House of Artisans bij Qasr Al Hosn — en via breder cultureel werk in het emiraat — worden traditionele Emiratische ambachten gedocumenteerd, beoefend en gedeeld, zodat bezoekers niet alleen voltooide stukken ontmoeten maar de vrouwen, materialen en tijd erachter.',
     abuDhabiP2:
-      'Voor Bint Saeed heeft deze verhouding tussen erfgoed en hedendaags leven bijzondere betekenis. Abu Dhabi is een stad waar het verleden aanwezig blijft binnen een snel veranderende internationale hoofdstad, en Al Talli biedt een mooi voorbeeld van hoe culturele kennis kan voortgaan zonder vast te zitten in een andere tijd.',
+      'In een hoofdstad die bekendstaat om vooruitkijken, ligt stille kracht in het houden van eerdere kennis als deel van het culturele leven. Voor Bint Saeed is die continuïteit tussen erfgoed en hedendaags kleden de grond waaruit design begint.',
     brandEyebrow: 'Bint Saeed',
     brandTitle: 'Van Al Talli naar hedendaagse mode',
     brandP1:
-      'Toen Bint Saeed Al Talli begon te verkennen, was de uitdaging niet alleen hoe een traditionele versiering op een hedendaags kledingstuk te plaatsen. Een ambacht met zo’n culturele rijkdom verdient een diepere overweging.',
+      'Al Talli vertalen naar Bint Saeed was veeleisender dan het eerst leek. Het traditionele werk is al buitengewoon rijk; die rijkdom letterlijk reproduceren op een hedendaags stuk zou te letterlijk hebben gevoeld, terwijl te ver reduceren het karakter dreigde te verliezen dat ons dichterbij liet kijken.',
     brandP2:
-      'In plaats daarvan keken we nauwkeurig naar zijn beeldtaal: slanke metallische lijnen naast elkaar, het ritme van herhaling, de verhouding tussen textiel en licht, en de manier waarop iets opmerkelijk delicats aanwezigheid wint wanneer vele afzonderlijke strengen samenkomen.',
+      'We keerden terug naar de lijnen zelf: slanke metallieke draden naast elkaar, aanwezigheid door herhaling, licht dat beweging vangt. In plaats van een traditioneel kledingstuk te herscheppen, kon het Huis iets van die beeldtaal in een andere vorm laten voortbestaan.',
     brandP3:
-      'Die waarnemingen werden deel van de zich ontwikkelende designtaal van Bint Saeed. Op geselecteerde stukken verwijzen lineaire metallische details op verschillende manieren naar het karakter van Al Talli. Soms is de relatie onmiddellijk herkenbaar; elders blijft slechts een spoor. Het doel is niet traditionele Emiratische kleding te herscheppen, maar elementen uit het culturele landschap van Abu Dhabi doordachte hedendaagse uitdrukkingen te laten vinden.',
+      'Na verloop van tijd werden die lijnen een van de codes van het huis — op hedendaagse silhouetten soms meteen herkenbaar, soms slechts een spoor. Het doel was nooit het verleden modern te laten lijken, maar iets cultureel rijks in het heden te laten binnenkomen terwijl de oorsprong nog voelbaar blijft.',
     brandP4:
-      'Zo wordt Al Talli meer dan een verwijzing naar het verleden. Het wordt deel van een voortdurend gesprek tussen vrouwen, kleding, vakmanschap en plek.',
+      'Zo wordt Al Talli meer dan een referentie uit het verleden: een voortdurend gesprek tussen vrouwen, kleding, ambacht en plaats — een gouden draad die voorbij Abu Dhabi kan reizen zonder precies te blijven wat hij was.',
     journalNote:
-      'Voor wie het verhaal achter het ambacht wil ontdekken, bezoekt The Bint Saeed Journal de House of Artisans in Abu Dhabi in The Golden Thread Between Women — en verkent Al Talli via de vrouwen die het maken, en de vraag hoe erfgoed kan overgaan naar hedendaagse mode.',
+      'Het bredere essay vanuit de House of Artisans — The Golden Thread Between Women — verschijnt in The Bint Saeed Journal.',
+    journalCta: 'Lees het Journal-essay',
     shopCta: 'Shop Al Talli-stukken',
     imageAltHero:
-      'Detail van marineblauwe Bint Saeed-abaya met gouden Al Talli-metalliekborduursel — Emiratisch erfgoedambacht, Abu Dhabi',
+      'Creme thobe met gouden Al Talli-borduursel bij de hals — Emiratisch erfgoed, Abu Dhabi',
     imageAltStory:
-      'Close-up van handgeweven Al Talli-borduurwerk in poederblauw katoen en gouden metallic draad — ambacht uit het Midden-Oosten, VAE',
+      'Gouden Al Talli-kralenmotief op cremestof — Emiratisch borduurdetail',
     imageAltLoom:
-      'Traditionele Emiratische Al Talli-kajujah met gouden metallic draden en houten spoelen — levend ambacht in Abu Dhabi',
+      'Kajujah met gouden Al Talli-band en houten spoelen in tentoonstelling — Abu Dhabi',
     imageAltStrands:
-      'Gouden metallic Al Talli-borduurstrengen tentoongesteld — door UNESCO erkend cultureel erfgoed van de VAE',
+      'Oranje-gouden metallieke Al Talli-linten — Emiratisch erfgoedambacht',
     imageAltBobbins:
-      'Houten spoelen met zilveren metallic draad voor traditioneel Al Talli-borduurwerk',
+      'Houten spoelen met gouden metaaldraad aan een Al Talli-kajujah — Emiratisch ambacht',
     imageAltAbuDhabi:
-      'Emiratische vrouw die Al Talli beoefent in de House of Artisans, Qasr Al Hosn, Abu Dhabi',
+      'Al Talli-kajujah tentoonstelling met gouden band en spoelen — cultureel erfgoed Abu Dhabi',
     imageTitleHero:
       'Al Talli-borduurwerk op abaya — Emiratisch erfgoedambacht | Bint Saeed Abu Dhabi',
     imageTitleStory:
@@ -761,11 +771,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: 'O ofício',
     storyTitle: 'Tecido através das gerações',
     storyP1:
-      'Al Talli é um ofício decorativo tradicional emirati, marcado por faixas intrincadas de fio metálico e colorido, feitas à mão e historicamente usadas para adornar a roupa feminina nos Emirados Árabes Unidos. Transmitido entre gerações de mulheres, integra o património cultural vivo do país e permanece uma das expressões mais reconhecíveis do artesanato emirati tradicional.',
+      'Al Talli é um ofício decorativo emirati tradicional de faixas intricadas de fio metálico e colorido, trabalhadas à mão e historicamente usadas para adornar a roupa feminina nos Emirados Árabes Unidos. As suas linhas podem sentir-se familiares ainda antes de se conhecer o nome — ouro e prata a traçar decotes e mangas com a quieta certeza de uma prática que as mulheres passaram de mão em mão, geração após geração.',
     storyP2:
-      'Tradicionalmente, Al Talli nasce do entrelaçar de fios de algodão ou seda com fios metálicos em tons de ouro ou prata. Os fios trabalham-se em conjunto até formar faixas decorativas aplicáveis à gola, às mangas e a outras partes das peças tradicionais. Consoante o padrão, o resultado vai do detalhe linear mais fino a composições mais elaboradas em que o fio metálico capta e reflecte a luz.',
+      'Tradicionalmente, Al Talli nasce do entrelaçar de algodão ou seda com fios metálicos dourados ou prateados. De longe as faixas parecem delicadas; de perto, bobinas de madeira, almofadas e fios soltos revelam quão lentamente se reúne o acabamento — saber conservado no motivo e no ritmo do fazer.',
     storyP3:
-      'A importância de Al Talli ultrapassa a aparência. A sua feitura preserva um saber levado pelas mãos das mulheres — técnicas, padrões e modos de trabalhar partilhados entre gerações. Em 2022, as competências tradicionais do bordado Al Talli nos Emirados Árabes Unidos foram inscritas na Lista Representativa do Património Cultural Imaterial da Humanidade da UNESCO.',
+      'Em 2022, as competências tradicionais do bordado Al Talli nos EAU foram inscritas na Lista Representativa do Património Cultural Imaterial da UNESCO. O que torna a história especialmente viva em Abu Dhabi é que a preservação não se limita a um arquivo: em lugares como a House of Artisans o ofício continua praticado, documentado e partilhado.',
     craftEyebrow: 'O fazer',
     craftTitle: 'Fio, luz e ritmo',
     techniques: [
@@ -794,34 +804,35 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     abuDhabiEyebrow: 'Abu Dhabi',
     abuDhabiTitle: 'Al Talli em Abu Dhabi hoje',
     abuDhabiP1:
-      'Em Abu Dhabi, Al Talli ainda se encontra como prática viva. Instituições culturais, incluindo a House of Artisans em Qasr Al Hosn, ajudam a documentar, preservar e partilhar ofícios tradicionais emiratis, permitindo que novas gerações e visitantes de todo o mundo compreendam não só as peças acabadas, mas também a mestria e o tempo da sua criação.',
+      'Em Abu Dhabi, Al Talli ainda se encontra como prática viva. Na House of Artisans em Qasr Al Hosn — e através de trabalho cultural mais amplo no emirado — os ofícios tradicionais emiratis são documentados, praticados e partilhados, para que os visitantes encontrem não só as peças acabadas mas as mulheres, os materiais e o tempo atrás delas.',
     abuDhabiP2:
-      'Para a Bint Saeed, esta relação entre património e vida contemporânea tem um sentido particular. Abu Dhabi é uma cidade onde o passado permanece presente dentro de uma capital internacional em rápida evolução, e Al Talli oferece um belo exemplo de como o saber cultural pode continuar sem ficar fixo noutro tempo.',
+      'Numa capital conhecida por olhar para a frente, há uma força quieta em manter o saber de gerações anteriores como parte da vida cultural. Para a Bint Saeed, essa continuidade entre património e vestir contemporâneo é o solo de onde nasce o design.',
     brandEyebrow: 'Bint Saeed',
     brandTitle: 'De Al Talli à moda contemporânea',
     brandP1:
-      'Quando a Bint Saeed começou a explorar Al Talli, o desafio não era simplesmente como colocar um ornamento tradicional numa peça contemporânea. Um ofício de tal riqueza cultural merece uma consideração mais profunda.',
+      'Traduzir Al Talli para a Bint Saeed foi mais exigente do que parecia. O trabalho tradicional já é extraordinariamente rico; reproduzir literalmente essa riqueza numa peça contemporânea teria soado demasiado literal, enquanto reduzi-la demais teria arriscado perder o carácter que nos fez olhar de perto.',
     brandP2:
-      'Em vez disso, observámos de perto a sua linguagem visual: linhas metálicas esbeltas lado a lado, o ritmo criado pela repetição, a relação entre têxtil e luz, e o modo como algo notavelmente delicado ganha presença quando muitos fios individuais se reúnem.',
+      'Voltámos às linhas em si: fios metálicos delgados lado a lado, presença pela repetição, luz que capta o movimento. Em vez de recriar uma peça tradicional, a Maison podia deixar que algo dessa linguagem visual continuasse noutra forma.',
     brandP3:
-      'Essas observações passaram a integrar a linguagem de design em formação da Bint Saeed. Em peças selecionadas, detalhes metálicos lineares evocam o carácter de Al Talli de formas distintas. Por vezes a relação é imediatamente reconhecível; noutros casos resta apenas um vestígio. O intuito não é recriar o vestuário tradicional emirati, mas permitir que elementos encontrados no panorama cultural de Abu Dhabi encontrem expressões contemporâneas ponderadas.',
+      'Com o tempo essas linhas tornaram-se um dos códigos da maison — aparecendo em silhuetas contemporâneas de modos por vezes imediatamente reconhecíveis, por vezes só um rasto. O objectivo nunca foi tornar o passado moderno, mas deixar que algo culturalmente rico entre no presente enquanto a sua origem ainda se sente.',
     brandP4:
-      'Assim Al Talli torna-se mais do que uma referência ao passado. Torna-se parte de uma conversa contínua entre mulheres, vestuário, artesanato e lugar.',
+      'Assim Al Talli torna-se mais do que uma referência do passado: uma conversa contínua entre mulheres, roupa, ofício e lugar — um fio de ouro que pode viajar para além de Abu Dhabi sem permanecer exactamente como era.',
     journalNote:
-      'Para quem desejar descobrir a história por detrás do ofício, The Bint Saeed Journal visita a House of Artisans em Abu Dhabi em The Golden Thread Between Women, explorando Al Talli através das mulheres que o fazem e a questão de como o património pode viajar para a moda contemporânea.',
+      'O ensaio mais amplo da House of Artisans — The Golden Thread Between Women — surge no The Bint Saeed Journal.',
+    journalCta: 'Ler o ensaio do Journal',
     shopCta: 'Comprar peças Al Talli',
     imageAltHero:
-      'Detalhe de abaya Bint Saeed azul-marinho com bordado Al Talli metálico dourado — ofício patrimonial emirati, Abu Dhabi',
+      'Thobe creme com bordado Al Talli dourado no decote — ofício patrimonial emirati, Abu Dhabi',
     imageAltStory:
-      'Close-up de bordado Al Talli feito à mão em algodão azul-pó e fio metálico dourado — ofício do Médio Oriente, EAU',
+      'Motivo Al Talli em missangas douradas sobre tecido creme — detalhe de bordado emirati',
     imageAltLoom:
-      'Kajujah tradicional emirati para Al Talli com fios metálicos dourados e bobinas de madeira — ofício vivo em Abu Dhabi',
+      'Kajujah com trança Al Talli dourada e bobinas de madeira em exposição — Abu Dhabi',
     imageAltStrands:
-      'Fios metálicos dourados Al Talli em exposição — património cultural dos EAU reconhecido pela UNESCO',
+      'Fitas Al Talli laranja e ouro metálico — ofício patrimonial emirati',
     imageAltBobbins:
-      'Bobinas de madeira enroladas com fio metálico prateado para o bordado tradicional Al Talli',
+      'Bobinas de madeira com fio metálico dourado pendentes de uma kajujah Al Talli — ofício emirati',
     imageAltAbuDhabi:
-      'Mulher emirati a praticar Al Talli na House of Artisans, Qasr Al Hosn, Abu Dhabi',
+      'Exposição de kajujah Al Talli com trança dourada e bobinas — património cultural em Abu Dhabi',
     imageTitleHero:
       'Bordado Al Talli em abaya — ofício patrimonial emirati | Bint Saeed Abu Dhabi',
     imageTitleStory:
@@ -843,11 +854,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: 'Kerajinan',
     storyTitle: 'Terjalin lintas generasi',
     storyP1:
-      'Al Talli adalah kerajinan dekoratif tradisional Emirat yang ditandai oleh pita-pita rumit dari benang metalik dan berwarna, dibuat dengan tangan dan secara historis digunakan untuk menghias pakaian perempuan di Uni Emirat Arab. Diwariskan antar generasi perempuan, kerajinan ini menjadi bagian dari warisan budaya hidup negara itu dan tetap menjadi salah satu ungkapan paling dikenali dari keahlian Emirat tradisional.',
+      'Al Talli adalah kerajinan dekoratif Emirati tradisional berupa pita benang logam dan berwarna yang rumit, dikerjakan dengan tangan dan secara historis digunakan untuk menghias pakaian perempuan di Uni Emirat Arab. Garis-garisnya dapat terasa akrab bahkan sebelum namanya dikenal — emas dan perak menelusuri leher dan lengan dengan kepastian tenang dari praktik yang diwariskan perempuan dari tangan ke tangan lintas generasi.',
     storyP2:
-      'Secara tradisional, Al Talli dibuat dengan menjalin benang kapas atau sutra bersama benang metalik bernuansa emas atau perak. Helai-helai itu dikerjakan bersama hingga membentuk pita dekoratif yang dapat dipasang pada leher, lengan, dan bagian lain pakaian tradisional. Tergantung polanya, hasilnya dapat berupa detail linear yang ramping hingga komposisi yang lebih kaya, di mana benang metalik menangkap dan memantulkan cahaya.',
+      'Secara tradisional, Al Talli dibuat dengan menjalin kapas atau sutra bersama benang logam emas atau perak. Dari jauh pita tampak lembut; dari dekat kumparan kayu, bantal, dan helai tunggal memperlihatkan betapa lambat tepian rumit itu terkumpul — pengetahuan yang tersimpan dalam motif maupun ritme membuat.',
     storyP3:
-      'Pentingnya Al Talli melampaui penampilannya. Pembuatannya menjaga pengetahuan yang dibawa melalui tangan perempuan — teknik, pola, dan cara kerja yang diwariskan lintas generasi. Pada 2022, keterampilan tradisional sulaman Al Talli di UAE dimasukkan ke dalam Daftar Representatif Warisan Budaya Takbenda Umat Manusia UNESCO.',
+      'Pada 2022, keterampilan tradisional sulaman Al Talli di UEA dimasukkan ke dalam Daftar Representatif Warisan Budaya Takbenda UNESCO. Yang membuat kisah ini khususnya hidup di Abu Dhabi adalah pelestarian tidak terbatas pada arsip: di tempat seperti House of Artisans, kerajinan tetap dipraktikkan, didokumentasikan, dan dibagikan.',
     craftEyebrow: 'Pembuatan',
     craftTitle: 'Benang, cahaya, dan ritme',
     techniques: [
@@ -876,34 +887,35 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     abuDhabiEyebrow: 'Abu Dhabi',
     abuDhabiTitle: 'Al Talli di Abu Dhabi hari ini',
     abuDhabiP1:
-      'Di Abu Dhabi, Al Talli masih dapat dijumpai sebagai praktik yang hidup. Lembaga budaya termasuk House of Artisans di Qasr Al Hosn membantu mendokumentasikan, melestarikan, dan membagikan kerajinan tradisional Emirat, sehingga generasi baru dan pengunjung dari seluruh dunia memahami bukan hanya karya jadi, tetapi juga keahlian dan waktu di balik penciptaannya.',
+      'Di Abu Dhabi, Al Talli masih dapat dijumpai sebagai praktik yang hidup. Di House of Artisans di Qasr Al Hosn — dan melalui kerja budaya yang lebih luas di emirat — kerajinan tradisional Emirati didokumentasikan, dipraktikkan, dan dibagikan, sehingga pengunjung menemui bukan hanya karya jadi tetapi perempuan, bahan, dan waktu di baliknya.',
     abuDhabiP2:
-      'Bagi Bint Saeed, hubungan antara warisan dan kehidupan kontemporer ini sangat bermakna. Abu Dhabi adalah kota di mana masa lalu tetap hadir di dalam ibu kota internasional yang berkembang pesat, dan Al Talli menawarkan contoh indah tentang bagaimana pengetahuan budaya dapat berlanjut tanpa terkunci di waktu lain.',
+      'Di ibu kota yang dikenal menatap ke depan, ada kekuatan tenang dalam menjaga pengetahuan generasi sebelumnya sebagai bagian dari kehidupan budaya. Bagi Bint Saeed, kesinambungan antara warisan dan berpakaian kontemporer adalah tanah tempat desain bermula.',
     brandEyebrow: 'Bint Saeed',
     brandTitle: 'Dari Al Talli ke mode kontemporer',
     brandP1:
-      'Ketika Bint Saeed mulai menelusuri Al Talli, tantangannya bukan sekadar bagaimana menempatkan hiasan tradisional pada pakaian kontemporer. Kerajinan dengan kekayaan budaya sedemikian layak mendapat pertimbangan yang lebih dalam.',
+      'Menerjemahkan Al Talli ke Bint Saeed lebih menuntut daripada yang semula tampak. Karya tradisional sudah luar biasa kaya; mereproduksi kekayaan itu secara harfiah pada busana kontemporer akan terasa terlalu harfiah, sementara menguranginya terlalu jauh berisiko kehilangan karakter yang membuat kami menatap lebih dekat.',
     brandP2:
-      'Sebaliknya, kami mencermati bahasa visualnya: garis metalik ramping berdampingan, ritme yang lahir dari pengulangan, hubungan antara tekstil dan cahaya, serta cara sesuatu yang luar biasa halus memperoleh kehadiran ketika banyak helai berkumpul.',
+      'Kami kembali ke garis itu sendiri: benang logam ramping berdampingan, kehadiran melalui pengulangan, cahaya yang menangkap gerak. Alih-alih menciptakan ulang busana tradisional, Maison dapat membiarkan sesuatu dari bahasa visual itu berlanjut dalam bentuk lain.',
     brandP3:
-      'Pengamatan itu menjadi bagian dari bahasa desain Bint Saeed yang sedang terbentuk. Pada pakaian terpilih, detail metalik linear merujuk karakter Al Talli dengan cara yang berbeda. Kadang hubungannya langsung dikenali; di tempat lain, hanya jejak yang tersisa. Tujuannya bukan menciptakan kembali pakaian tradisional Emirat, melainkan memungkinkan unsur-unsur dalam lanskap budaya Abu Dhabi menemukan ekspresi kontemporer yang penuh pertimbangan.',
+      'Seiring waktu garis-garis itu menjadi salah satu kode rumah — muncul pada siluet kontemporer dengan cara yang terkadang langsung dikenali, terkadang hanya jejak. Tujuannya bukan membuat masa lalu tampak modern, melainkan membiarkan sesuatu yang kaya secara budaya masuk ke masa kini sementara asal-usulnya masih terasa.',
     brandP4:
-      'Dengan demikian Al Talli menjadi lebih dari sekadar rujukan ke masa lalu. Ia menjadi bagian dari percakapan yang berkelanjutan antara perempuan, pakaian, keahlian, dan tempat.',
+      'Dengan demikian Al Talli menjadi lebih dari rujukan masa lalu: percakapan yang berkelanjutan antara perempuan, pakaian, kerajinan, dan tempat — benang emas yang dapat pergi melampaui Abu Dhabi tanpa tetap persis seperti dulu.',
     journalNote:
-      'Bagi yang ingin menemukan kisah di balik kerajinan ini, The Bint Saeed Journal mengunjungi House of Artisans di Abu Dhabi dalam The Golden Thread Between Women, menelusuri Al Talli melalui perempuan yang membuatnya dan pertanyaan bagaimana warisan dapat berpindah ke mode kontemporer.',
+      'Esai yang lebih lengkap dari House of Artisans — The Golden Thread Between Women — terbit di The Bint Saeed Journal.',
+    journalCta: 'Baca esai Journal',
     shopCta: 'Belanja potongan Al Talli',
     imageAltHero:
-      'Detail abaya Bint Saeed biru laut dengan sulaman Al Talli metalik emas — kerajinan warisan Emirati, Abu Dhabi',
+      'Thobe krem dengan sulaman Al Talli emas di leher — kerajinan warisan Emirati, Abu Dhabi',
     imageAltStory:
-      'Close-up sulaman Al Talli buatan tangan dari katun biru pucat dan benang metalik emas — kerajinan Timur Tengah, UEA',
+      'Motif manik emas Al Talli pada kain krem — detail sulaman Emirati',
     imageAltLoom:
-      'Kajujah tradisional Emirati untuk Al Talli dengan benang metalik emas dan kumparan kayu — kerajinan hidup di Abu Dhabi',
+      'Kajujah dengan kepang Al Talli emas dan kumparan kayu dalam pameran — Abu Dhabi',
     imageAltStrands:
-      'Helai sulaman Al Talli metalik emas dipamerkan — warisan budaya UEA yang diakui UNESCO',
+      'Pita Al Talli oranye-emas metalik — kerajinan warisan Emirati',
     imageAltBobbins:
-      'Kumparan kayu dililit benang metalik perak untuk sulaman tradisional Al Talli',
+      'Kumparan kayu dengan benang metalik emas tergantung di kajujah Al Talli — kerajinan Emirati',
     imageAltAbuDhabi:
-      'Perempuan Emirati mempraktikkan Al Talli di House of Artisans, Qasr Al Hosn, Abu Dhabi',
+      'Pameran kajujah Al Talli dengan kepang emas dan kumparan — warisan budaya Abu Dhabi',
     imageTitleHero:
       'Sulaman Al Talli pada abaya — kerajinan warisan Emirati | Bint Saeed Abu Dhabi',
     imageTitleStory:
@@ -925,11 +937,11 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     storyEyebrow: 'Kraftangan',
     storyTitle: 'Dijalin merentas generasi',
     storyP1:
-      'Al Talli ialah kraftangan hiasan tradisional Emirati yang dicirikan oleh jalur-jalur rumit daripada benang metalik dan berwarna, dibuat dengan tangan dan secara sejarah digunakan untuk menghias pakaian wanita di Emiriah Arab Bersatu. Diwarisi antara generasi wanita, kraftangan ini menjadi sebahagian daripada warisan budaya hidup negara itu dan kekal sebagai salah satu ungkapan paling dikenali bagi keahlian Emirati tradisional.',
+      'Al Talli ialah kraf hiasan Emirati tradisional jalur benang logam dan berwarna yang rumit, dikerjakan dengan tangan dan secara sejarah digunakan untuk menghias pakaian wanita di Emiriah Arab Bersatu. Garisannya boleh terasa akrab bahkan sebelum namanya diketahui — emas dan perak menjejak leher dan lengan dengan kepastian tenang amalan yang diwarisi wanita dari tangan ke tangan merentas generasi.',
     storyP2:
-      'Secara tradisional, Al Talli dihasilkan dengan menjalin benang kapas atau sutera bersama benang metalik bernada emas atau perak. Helai-helai itu dikerjakan bersama hingga membentuk jalur hiasan yang boleh dipasang pada leher, lengan, dan bahagian lain pakaian tradisional. Mengikut corak, hasilnya boleh berupa butiran linear yang langsing hingga komposisi yang lebih kaya, di mana benang metalik menangkap dan memantulkan cahaya.',
+      'Secara tradisional, Al Talli dicipta dengan menjalin kapas atau sutera bersama benang logam emas atau perak. Dari jauh jalur kelihatan lembut; dari dekat kekili kayu, bantal, dan helai tunggal mendedahkan betapa perlahan tepi rumit itu terkumpul — pengetahuan yang dipelihara dalam motif dan irama membuat.',
     storyP3:
-      'Kepentingan Al Talli melangkaui penampilannya. Pembuatannya memelihara pengetahuan yang dibawa melalui tangan wanita — teknik, corak, dan cara kerja yang dikongsi merentas generasi. Pada 2022, kemahiran tradisional sulaman Al Talli di UAE dimasukkan ke dalam Senarai Representatif Warisan Budaya Tidak Ketara Manusia UNESCO.',
+      'Pada 2022, kemahiran tradisional sulaman Al Talli di UAE disenaraikan dalam Senarai Representatif Warisan Budaya Tidak Ketara UNESCO. Apa yang menjadikan kisah ini khususnya hidup di Abu Dhabi ialah pemeliharaan tidak terhad kepada arkib: di tempat seperti House of Artisans, kraf kekal diamalkan, didokumentasikan, dan dikongsi.',
     craftEyebrow: 'Pembuatan',
     craftTitle: 'Benang, cahaya, dan irama',
     techniques: [
@@ -958,34 +970,35 @@ export const AL_TALLI_PAGE_COPY_BODIES: Record<AppLocale, AlTalliPageCopyBody> =
     abuDhabiEyebrow: 'Abu Dhabi',
     abuDhabiTitle: 'Al Talli di Abu Dhabi hari ini',
     abuDhabiP1:
-      'Di Abu Dhabi, Al Talli masih boleh dijumpai sebagai amalan yang hidup. Institusi budaya termasuk House of Artisans di Qasr Al Hosn membantu mendokumentasikan, memelihara, dan berkongsi kraftangan tradisional Emirati, membolehkan generasi baharu dan pengunjung dari seluruh dunia memahami bukan sahaja karya siap, tetapi juga kemahiran dan masa di sebalik penciptaannya.',
+      'Di Abu Dhabi, Al Talli masih boleh dijumpai sebagai amalan yang hidup. Di House of Artisans di Qasr Al Hosn — dan melalui kerja budaya yang lebih luas di emiriah — kraf tradisional Emirati didokumentasikan, diamalkan, dan dikongsi, supaya pengunjung menemui bukan sahaja karya siap tetapi wanita, bahan, dan masa di belakangnya.',
     abuDhabiP2:
-      'Bagi Bint Saeed, hubungan antara warisan dan kehidupan kontemporari ini amat bermakna. Abu Dhabi ialah sebuah bandar di mana masa lalu kekal hadir dalam ibu kota antarabangsa yang berkembang pesat, dan Al Talli menawarkan contoh indah bagaimana pengetahuan budaya boleh berterusan tanpa terkunci dalam masa lain.',
+      'Dalam ibu kota yang dikenali kerana memandang ke hadapan, ada kekuatan tenang dalam mengekalkan pengetahuan generasi terdahulu sebagai sebahagian daripada kehidupan budaya. Bagi Bint Saeed, kesinambungan antara warisan dan berpakaian kontemporari ialah tanah tempat reka bentuk bermula.',
     brandEyebrow: 'Bint Saeed',
     brandTitle: 'Dari Al Talli ke fesyen kontemporari',
     brandP1:
-      'Apabila Bint Saeed mula meneliti Al Talli, cabarannya bukan sekadar bagaimana meletakkan hiasan tradisional pada pakaian kontemporari. Kraftangan dengan kekayaan budaya sedemikian layak mendapat pertimbangan yang lebih mendalam.',
+      'Menterjemah Al Talli ke Bint Saeed lebih menuntut daripada yang mula-mula kelihatan. Kerja tradisional sudah luar biasa kaya; menghasilkan semula kekayaan itu secara harfiah pada busana kontemporari akan terasa terlalu harfiah, manakala mengurangkannya terlalu jauh berisiko kehilangan watak yang membuat kami menatap lebih dekat.',
     brandP2:
-      'Sebaliknya, kami meneliti bahasa visualnya: garis metalik langsing bersebelahan, irama yang lahir daripada pengulangan, hubungan antara tekstil dan cahaya, serta cara sesuatu yang amat halus memperoleh kehadiran apabila banyak helai individu berkumpul.',
+      'Kami kembali kepada garis itu sendiri: benang logam langsing berdampingan, kehadiran melalui pengulangan, cahaya yang menangkap gerak. Daripada mencipta semula pakaian tradisional, Maison boleh membiarkan sesuatu daripada bahasa visual itu berterusan dalam bentuk lain.',
     brandP3:
-      'Pemerhatian itu menjadi sebahagian daripada bahasa reka bentuk Bint Saeed yang sedang terbentuk. Pada pakaian terpilih, butiran metalik linear merujuk watak Al Talli dengan cara yang berbeza. Kadangkala hubungannya terus dikenali; di tempat lain, hanya jejak yang tinggal. Matlamatnya bukan mencipta semula pakaian tradisional Emirati, tetapi membenarkan unsur-unsur dalam landskap budaya Abu Dhabi mencari ungkapan kontemporari yang teliti.',
+      'Dari masa ke masa garis-garis itu menjadi salah satu kod rumah — muncul pada siluet kontemporari dengan cara yang kadang-kadang terus dikenali, kadang-kadang hanya kesan. Matlamatnya bukan membuat masa lalu kelihatan moden, tetapi membiarkan sesuatu yang kaya secara budaya masuk ke masa kini sementara asal-usulnya masih terasa.',
     brandP4:
-      'Dengan demikian Al Talli menjadi lebih daripada rujukan kepada masa lalu. Ia menjadi sebahagian daripada perbualan berterusan antara wanita, pakaian, keahlian, dan tempat.',
+      'Demikian Al Talli menjadi lebih daripada rujukan masa lalu: perbualan berterusan antara wanita, pakaian, kraf, dan tempat — benang emas yang boleh pergi melampaui Abu Dhabi tanpa kekal tepat seperti dulu.',
     journalNote:
-      'Bagi yang ingin menemui kisah di sebalik kraftangan ini, The Bint Saeed Journal melawat House of Artisans di Abu Dhabi dalam The Golden Thread Between Women, meneliti Al Talli melalui wanita yang membuatnya dan persoalan bagaimana warisan boleh berpindah ke fesyen kontemporari.',
+      'Esei yang lebih penuh dari House of Artisans — The Golden Thread Between Women — terbit dalam The Bint Saeed Journal.',
+    journalCta: 'Baca esei Journal',
     shopCta: 'Beli potongan Al Talli',
     imageAltHero:
-      'Perincian abaya Bint Saeed biru laut dengan sulaman Al Talli metalik emas — kraf warisan Emirati, Abu Dhabi',
+      'Thobe krim dengan sulaman Al Talli emas di leher — kraf warisan Emirati, Abu Dhabi',
     imageAltStory:
-      'Close-up sulaman Al Talli buatan tangan dalam kapas biru pucat dan benang metalik emas — kraf Timur Tengah, UAE',
+      'Motif manik emas Al Talli pada fabrik krim — perincian sulaman Emirati',
     imageAltLoom:
-      'Kajujah tradisional Emirati untuk Al Talli dengan benang metalik emas dan gelendong kayu — kraf hidup di Abu Dhabi',
+      'Kajujah dengan jalinan Al Talli emas dan kekili kayu dalam pameran — Abu Dhabi',
     imageAltStrands:
-      'Helai sulaman Al Talli metalik emas dipamerkan — warisan budaya UAE diiktiraf UNESCO',
+      'Reben Al Talli oren-emas metalik — kraf warisan Emirati',
     imageAltBobbins:
-      'Gelendong kayu dililit benang metalik perak untuk sulaman tradisional Al Talli',
+      'Kekili kayu dengan benang metalik emas tergantung pada kajujah Al Talli — kraf Emirati',
     imageAltAbuDhabi:
-      'Wanita Emirati mengamalkan Al Talli di House of Artisans, Qasr Al Hosn, Abu Dhabi',
+      'Pameran kajujah Al Talli dengan jalinan emas dan kekili — warisan budaya Abu Dhabi',
     imageTitleHero:
       'Sulaman Al Talli pada abaya — kraf warisan Emirati | Bint Saeed Abu Dhabi',
     imageTitleStory:

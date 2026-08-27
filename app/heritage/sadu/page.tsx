@@ -10,6 +10,9 @@ import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getSaduPageCopy } from '@/lib/content/heritageSaduCopyI18n'
+import { HERITAGE_SADU_IMAGES } from '@/lib/content/heritagePageMedia'
+import { withBrandAlt } from '@/lib/products/imageAlt'
+import type { AppLocale } from '@/lib/i18n/routing'
 
 export default function SaduPage() {
   return (
@@ -31,6 +34,7 @@ function HeroSection() {
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
   const copy = getSaduPageCopy(language)
+  const locale = language as AppLocale
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -43,10 +47,14 @@ function HeroSection() {
     <section ref={ref} className="relative h-[80vh] overflow-hidden bg-brand-darkRed">
       <motion.div style={{ y }} className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1596568959257-5e730de5c6a3?w=1920&q=90"
-          alt="Sadu Weaving"
+          src={HERITAGE_SADU_IMAGES.hero}
+          alt={withBrandAlt(
+            'Al Sadu weaving with green geometric triangles — Emirati Bedouin heritage, Bint Saeed Abu Dhabi',
+            locale,
+          )}
           fill
-          className="object-cover opacity-50"
+          className="object-cover object-center opacity-55"
+          sizes="100vw"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-darkRed via-brand-darkRed/60 to-transparent" />
@@ -106,6 +114,7 @@ function StorySection() {
   const isInView = useInView(ref, { margin: '-20%' })
   const { isRTL, language } = useLanguage()
   const copy = getSaduPageCopy(language)
+  const locale = language as AppLocale
 
   return (
     <section ref={ref} className="py-24 md:py-32">
@@ -134,10 +143,14 @@ function StorySection() {
             className="relative aspect-[4/5] overflow-hidden"
           >
             <Image
-              src="https://images.unsplash.com/photo-1596568959257-5e730de5c6a3?w=800&q=90"
-              alt="Sadu Weaving Detail"
+              src={HERITAGE_SADU_IMAGES.detail}
+              alt={withBrandAlt(
+                'Al Sadu woven band with fringe — Emirati heritage craft, Bint Saeed Abu Dhabi',
+                locale,
+              )}
               fill
-              className="object-cover"
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </motion.div>
         </div>
@@ -277,6 +290,7 @@ function BintSaeedSection() {
   const isInView = useInView(ref, { margin: '-20%' })
   const { isRTL, language } = useLanguage()
   const copy = getSaduPageCopy(language)
+  const locale = language as AppLocale
 
   return (
     <section ref={ref} className="py-24 md:py-32 bg-brand-stone/10">
@@ -286,13 +300,17 @@ function BintSaeedSection() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8 }}
-            className="relative aspect-square overflow-hidden order-2 lg:order-1"
+            className="relative aspect-[4/5] overflow-hidden order-2 lg:order-1"
           >
             <Image
-              src="https://images.unsplash.com/photo-1590003511523-9c5e5e60a3b1?w=800&q=90"
-              alt="Bint Saeed Sadu Inspired Design"
+              src={HERITAGE_SADU_IMAGES.hero}
+              alt={withBrandAlt(
+                'Al Sadu geometric triangle weave on wood — Emirati Bedouin craft, Bint Saeed Abu Dhabi',
+                locale,
+              )}
               fill
-              className="object-cover"
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </motion.div>
 

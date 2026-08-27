@@ -15,8 +15,12 @@ import { PdpFasterDeliveryContact } from '@/components/pdp/PdpFasterDeliveryCont
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import TamaraProductWidget from '@/components/TamaraProductWidget'
 import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
+import ExpressWalletButtons from '@/components/checkout/ExpressWalletButtons'
+import { commerceUi } from '@/lib/i18n/commerceUi'
 import {
   PDP_COLOUR_SWATCH,
+  PDP_COLOUR_SWATCH_HIT,
+  pdpColourSwatchBeadStyle,
   pdpColourSwatchState,
 } from '@/lib/ui/pdpColourSwatch'
 import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
@@ -177,6 +181,7 @@ export default function ProductPage() {
   const addItem = useCartStore((state) => state.addItem)
   const { isRTL, language, t } = useLanguage()
   const ui = productPageUi(language)
+  const bagUi = commerceUi(language)
   const galleryAria = getPdpGalleryAriaCopy(language)
   const { formatPrice, formatAmount, convertPrice, currency } = useCurrency()
 
@@ -916,19 +921,24 @@ export default function ProductPage() {
                   </span>
                 )}
               </div>
-              <div className={`flex flex-wrap gap-2 `}>
+              <div className={`flex flex-wrap items-center gap-0.5 `}>
                 {colorOptions.map((color) => (
                   <button
                     key={color.name}
                     type="button"
                     onClick={() => handleColorSelect(color.name)}
-                    className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(selectedColor === color.name)}`}
-                    style={{ backgroundColor: color.hex }}
+                    className={PDP_COLOUR_SWATCH_HIT}
                     title={localizedColorName(color.name, language)}
                     aria-pressed={selectedColor === color.name}
                     aria-label={`${t.product.color} ${localizedColorName(color.name, language)}`}
                     data-cursor-hover
-                  />
+                  >
+                    <span
+                      className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(selectedColor === color.name)}`}
+                      style={pdpColourSwatchBeadStyle(color.hex)}
+                      aria-hidden
+                    />
+                  </button>
                 ))}
               </div>
             </div>
@@ -1031,6 +1041,40 @@ export default function ProductPage() {
               </button>
 
             </div>
+            <ExpressWalletButtons
+              className="mb-3 mt-1"
+              ready={Boolean(selectedSize && selectedColor)}
+              currency={currency.code}
+              orLabel={bagUi.quickBuy.expressOr}
+              onBeforePay={() => {
+                if (!selectedSize) {
+                  toast.error(t.product.selectSize)
+                  return false
+                }
+                if (!selectedColor) {
+                  toast.error(t.product.selectColor)
+                  return false
+                }
+                return true
+              }}
+              items={
+                selectedSize && selectedColor
+                  ? [
+                      {
+                        id: product.id,
+                        name: displayName,
+                        price: product.price,
+                        quantity,
+                        size: selectedSize,
+                        color: selectedColor,
+                        image: activeImages[0] ?? product.images[0],
+                        productUrl: getProductHref(product),
+                        sku: resolveProductSku(product, selectedColor),
+                      },
+                    ]
+                  : []
+              }
+            />
             {(currency.code === 'AED' || currency.code === 'SAR') ? (
               <TamaraProductWidget
                 amount={convertPrice(product.price, product.id)}

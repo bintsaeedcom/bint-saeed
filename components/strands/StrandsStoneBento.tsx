@@ -176,7 +176,7 @@ export default function StrandsStoneBento({
             >
               {color ? (
                 <span
-                  className={`${PRODUCT_GRID_COLOUR_DOT} h-3 w-3`}
+                  className={PRODUCT_GRID_COLOUR_DOT}
                   style={softGridColourBeadStyle(color.hex)}
                   aria-hidden
                 />

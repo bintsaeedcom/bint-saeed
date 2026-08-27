@@ -1,4 +1,5 @@
 import type { Accessory } from '@/data/accessories'
+import { getNaturalStoneProductDiscoveryKeywords } from '@/lib/accessories/naturalStoneProductDiscoveryI18n'
 import type { AppLocale } from '@/lib/i18n/routing'
 
 function kw(
@@ -135,22 +136,23 @@ export function getJewelleryCategoryDiscoveryKeywords(
   locale: AppLocale = 'en',
 ): string[] {
   const global = getGlobalJewelleryDiscoveryKeywords(locale)
+  const stoneProduct = getNaturalStoneProductDiscoveryKeywords(category, locale)
   if (category === 'necklaces') {
-    return [...global, ...rowsForLocale(NECKLACE_CATEGORY_ROWS, locale)]
+    return [...global, ...rowsForLocale(NECKLACE_CATEGORY_ROWS, locale), ...stoneProduct]
   }
   if (category === 'earrings') {
-    return [...global, ...rowsForLocale(EARRING_CATEGORY_ROWS, locale)]
+    return [...global, ...rowsForLocale(EARRING_CATEGORY_ROWS, locale), ...stoneProduct]
   }
   if (category === 'signature-strands') {
-    return [...global, ...rowsForLocale(STRAND_CATEGORY_ROWS, locale)]
+    return [...global, ...rowsForLocale(STRAND_CATEGORY_ROWS, locale), ...stoneProduct]
   }
   if (category === 'phone-strands') {
-    return [...global, ...rowsForLocale(PHONE_CHARM_CATEGORY_ROWS, locale)]
+    return [...global, ...rowsForLocale(PHONE_CHARM_CATEGORY_ROWS, locale), ...stoneProduct]
   }
   if (category === 'bag-strands') {
-    return [...global, ...rowsForLocale(BAG_CHARM_CATEGORY_ROWS, locale)]
+    return [...global, ...rowsForLocale(BAG_CHARM_CATEGORY_ROWS, locale), ...stoneProduct]
   }
-  return global
+  return [...global, ...stoneProduct]
 }
 
 /** Deduped merged keyword string for schema `keywords` property. */

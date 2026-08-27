@@ -2,6 +2,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import type { AlQuaaPhoneCharmId } from '@/lib/accessories/phoneCharmPdpContent'
 import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 import { isAlQuaaPhoneCharmId } from '@/lib/accessories/phoneCharmPdpContent'
+import { getNaturalStoneProductDiscoveryKeywords } from '@/lib/accessories/naturalStoneProductDiscoveryI18n'
 import { getListedPriceForAccessory } from '@/lib/pricing/accessoryCatalogPrices'
 import { SUPPORTED_CURRENCIES, type SupportedCurrency } from '@/lib/pricing/types'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
@@ -619,7 +620,10 @@ export function getPhoneCharmMetaDescription(id: string, locale: AppLocale = 'en
 
 export function getPhoneCharmMetaKeywords(id: string, locale: AppLocale = 'en'): string[] {
   const charmId = resolvePhoneCharmId(id)
-  if (!charmId) return SHARED_DISCOVERY[locale] ?? SHARED_DISCOVERY.en
+  const expanded = getNaturalStoneProductDiscoveryKeywords('phone-strands', locale)
+  if (!charmId) {
+    return [...(SHARED_DISCOVERY[locale] ?? SHARED_DISCOVERY.en), ...expanded]
+  }
   const stone = ID_TO_STONE[charmId]
   const label = STONE_LABEL[locale][stone]
   const shared = SHARED_DISCOVERY[locale] ?? SHARED_DISCOVERY.en
@@ -631,9 +635,15 @@ export function getPhoneCharmMetaKeywords(id: string, locale: AppLocale = 'en'):
     `buy ${label} phone charm`,
   ]
   if (locale === 'ar') {
-    return [...shared, `تعليقة هاتف ${label}`, `${label} حجر طبيعي`, `القوع ${label}`]
+    return [
+      ...shared,
+      ...expanded,
+      `تعليقة هاتف ${label}`,
+      `${label} حجر طبيعي`,
+      `القوع ${label}`,
+    ]
   }
-  return [...shared, ...stoneSpecific]
+  return [...shared, ...expanded, ...stoneSpecific]
 }
 
 export function getPhoneCharmAiOther(

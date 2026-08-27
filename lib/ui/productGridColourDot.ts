@@ -3,14 +3,14 @@
  * not interactive swatches. Soft bead depth (highlight + rim) vs flat fills.
  */
 export const PRODUCT_GRID_COLOUR_DOT =
-  'h-[11px] w-[11px] shrink-0 rounded-full border border-black/[0.16] shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.55),inset_0_-2px_3px_rgba(0,0,0,0.28),0_0.5px_1px_rgba(0,0,0,0.12)]'
+  'h-[10px] w-[10px] shrink-0 rounded-full border border-black/20 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.7),inset_0_-1.5px_2.5px_rgba(0,0,0,0.4),0_0.5px_1.5px_rgba(0,0,0,0.18)]'
 
 /** On dark panels (home strands feature) — lighter rim for contrast */
 export const PRODUCT_GRID_COLOUR_DOT_ON_DARK =
-  `${PRODUCT_GRID_COLOUR_DOT} border-white/28 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.5),inset_0_-2px_3px_rgba(0,0,0,0.35),0_0_0_0.5px_rgba(255,255,255,0.12)]`
+  `${PRODUCT_GRID_COLOUR_DOT} border-white/30 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.65),inset_0_-1.5px_2.5px_rgba(0,0,0,0.45),0_0_0_0.5px_rgba(255,255,255,0.14)]`
 
 /** Reserved row height so chips of different counts don’t jump CTA alignment. */
-export const PRODUCT_GRID_COLOUR_DOT_ROW = 'flex min-h-[11px] flex-wrap items-center gap-1.5'
+export const PRODUCT_GRID_COLOUR_DOT_ROW = 'flex min-h-[10px] flex-wrap items-center gap-1.5'
 
 /**
  * Soften neon catalog hexes toward natural stone / fabric references for grid chips only.
@@ -45,8 +45,9 @@ export function softGridColourBeadStyle(hex: string): {
   return {
     backgroundColor: c,
     backgroundImage: [
-      'radial-gradient(circle at 32% 26%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.18) 22%, transparent 46%)',
-      `radial-gradient(circle at 70% 78%, rgba(0,0,0,0.22) 0%, transparent 42%)`,
+      'radial-gradient(circle at 30% 24%, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.28) 18%, transparent 44%)',
+      'radial-gradient(circle at 72% 80%, rgba(0,0,0,0.38) 0%, transparent 48%)',
+      'linear-gradient(145deg, rgba(255,255,255,0.14) 0%, transparent 42%, rgba(0,0,0,0.12) 100%)',
     ].join(', '),
   }
 }

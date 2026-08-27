@@ -32,8 +32,14 @@ async function createStripeSession(
   baseUrl: string,
   uiMode: StripeCheckoutUiMode,
   giftCredit: Awaited<ReturnType<typeof resolveOptionalCheckoutGiftCredit>>,
+  expressCheckout = false,
 ) {
-  const sessionOptions = buildStripeCheckoutSessionParams({ parsed, baseUrl, uiMode })
+  const sessionOptions = buildStripeCheckoutSessionParams({
+    parsed,
+    baseUrl,
+    uiMode,
+    expressCheckout,
+  })
   await attachStripeCustomerToCheckoutSession(stripe, sessionOptions, parsed.customerEmail)
   if (parsed.discountCode) {
     await applyCheckoutDiscountCode(stripe, sessionOptions, parsed.discountCode)
@@ -70,6 +76,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid request.' }, { status: 400 })
     }
 
+    const expressCheckout = Boolean((body as { expressCheckout?: unknown }).expressCheckout)
     const parsed = parseCheckoutRequestBody(body as Record<string, unknown>, request)
     if ('error' in parsed) {
       return NextResponse.json({ error: parsed.error }, { status: parsed.status })
@@ -105,21 +112,32 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const preferredMode = resolveStripeCheckoutUiMode()
+    const preferredMode: StripeCheckoutUiMode = expressCheckout
+      ? 'elements'
+      : resolveStripeCheckoutUiMode()
     const stripe = getStripeClient()
 
     let uiMode = preferredMode
     let session: Stripe.Checkout.Session
 
     try {
-      session = await createStripeSession(stripe, parsed, baseUrl, preferredMode, gift)
+      session = await createStripeSession(
+        stripe,
+        parsed,
+        baseUrl,
+        preferredMode,
+        gift,
+        expressCheckout,
+      )
     } catch (primaryError) {
+      // Express wallets need Elements — do not silently fall back to hosted.
+      if (expressCheckout) throw primaryError
       // Embedded / elements can fail on account permissions or ship-to config —
       // fall back to hosted Checkout so card payment stays available.
       if (preferredMode === 'hosted') throw primaryError
       console.error('Stripe preferred checkout mode failed; falling back to hosted', primaryError)
       uiMode = 'hosted'
-      session = await createStripeSession(stripe, parsed, baseUrl, 'hosted', gift)
+      session = await createStripeSession(stripe, parsed, baseUrl, 'hosted', gift, false)
     }
 
     if (uiMode === 'embedded' || uiMode === 'elements') {

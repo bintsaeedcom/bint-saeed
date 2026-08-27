@@ -9,6 +9,10 @@ export const AL_TALLI_UNESCO_SAME_AS = [
   'https://www.unesco.org/en/articles/uae-al-talli-embroidery-tradition',
 ] as const
 
+/** The Bint Saeed Journal — House of Artisans essay (approved source for Al Talli narrative). */
+export const AL_TALLI_JOURNAL_URL =
+  'https://substack.com/home/post/p-212370383' as const
+
 export const AL_TALLI_FEATURED_PRODUCTS = [
   {
     name: 'Covent Garden Abaya',
@@ -116,7 +120,7 @@ export function alTalliHeritagePageUrl(locale: AppLocale = 'en'): string {
 
 export function alTalliPrimaryImageUrl(): string {
   // Prefer the dedicated Al Talli heritage photography on this chapter.
-  return `${SITE}/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-embroidery-abaya-detail-emirati-heritage.webp`
+  return `${SITE}/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-gold-embroidery-thobe-emirati-heritage.webp`
 }
 
 const ABOUT_DESCRIPTION: Record<AppLocale, string> = {

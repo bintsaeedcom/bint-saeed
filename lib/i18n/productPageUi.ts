@@ -55,10 +55,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Read more',
     readLess: 'Read less',
     madeToOrderShips: (dateRange: string) =>
-      `Made individually after your order — estimated shipment ${dateRange}`,
+      `Ordered, crafted for you then delivered — estimated shipment ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `One size · made individually after your order — estimated shipment ${dateRange}`,
-    jewelleryLeadTime: 'Crafted after your order · ships in 4–7 days',
+      `One size · Ordered, crafted for you then delivered — estimated shipment ${dateRange}`,
+    jewelleryLeadTime: 'Ordered, crafted for you then delivered · ships in 4–7 days',
     fasterDeliveryPrompt: 'Need it faster?',
     fasterDeliveryCta: 'Contact us now',
     fasterDeliveryWhatsAppMessage:
@@ -93,10 +93,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'اقرأي المزيد',
     readLess: 'عرض أقل',
     madeToOrderShips: (dateRange: string) =>
-      `تُصنع فردياً بعد طلبكِ — الشحن المتوقع ${dateRange}`,
+      `تُطلب، تُصنع لأجلكِ، ثم تُسلَّم — الشحن المتوقع ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `مقاس واحد · تُصنع فردياً بعد طلبكِ — الشحن المتوقع ${dateRange}`,
-    jewelleryLeadTime: 'تُصنع بعد طلبكِ · تُشحن خلال 4–7 أيام',
+      `مقاس واحد · تُطلب، تُصنع لأجلكِ، ثم تُسلَّم — الشحن المتوقع ${dateRange}`,
+    jewelleryLeadTime: 'تُطلب، تُصنع لأجلكِ، ثم تُسلَّم · تُشحن خلال 4–7 أيام',
     fasterDeliveryPrompt: 'تحتاجينها أسرع؟',
     fasterDeliveryCta: 'تواصلي معنا الآن',
     fasterDeliveryWhatsAppMessage:
@@ -131,10 +131,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Lire plus',
     readLess: 'Lire moins',
     madeToOrderShips: (dateRange: string) =>
-      `Confectionnée individuellement après votre commande — expédition estimée ${dateRange}`,
+      `Commandée, confectionnée pour vous, puis livrée — expédition estimée ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Taille unique · confectionnée individuellement après votre commande — expédition estimée ${dateRange}`,
-    jewelleryLeadTime: 'Confectionnée après votre commande · expédiée sous 4 à 7 jours',
+      `Taille unique · commandée, confectionnée pour vous, puis livrée — expédition estimée ${dateRange}`,
+    jewelleryLeadTime: 'Commandée, confectionnée pour vous, puis livrée · expédiée sous 4 à 7 jours',
     fasterDeliveryPrompt: 'Besoin d’une livraison plus rapide ?',
     fasterDeliveryCta: 'Contactez-nous',
     fasterDeliveryWhatsAppMessage:
@@ -169,10 +169,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Mehr lesen',
     readLess: 'Weniger lesen',
     madeToOrderShips: (dateRange: string) =>
-      `Nach Ihrer Bestellung einzeln gefertigt — voraussichtlicher Versand ${dateRange}`,
+      `Bestellt, für Sie gefertigt, dann geliefert — voraussichtlicher Versand ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Einheitsgröße · nach Ihrer Bestellung einzeln gefertigt — voraussichtlicher Versand ${dateRange}`,
-    jewelleryLeadTime: 'Nach Ihrer Bestellung gefertigt · Versand in 4–7 Tagen',
+      `Einheitsgröße · bestellt, für Sie gefertigt, dann geliefert — voraussichtlicher Versand ${dateRange}`,
+    jewelleryLeadTime: 'Bestellt, für Sie gefertigt, dann geliefert · Versand in 4–7 Tagen',
     fasterDeliveryPrompt: 'Benötigen Sie es schneller?',
     fasterDeliveryCta: 'Kontaktieren Sie uns',
     fasterDeliveryWhatsAppMessage:
@@ -207,10 +207,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Leggi di più',
     readLess: 'Leggi meno',
     madeToOrderShips: (dateRange: string) =>
-      `Realizzata individualmente dopo il vostro ordine — spedizione stimata ${dateRange}`,
+      `Ordinata, realizzata per voi, poi consegnata — spedizione stimata ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Taglia unica · realizzata individualmente dopo il vostro ordine — spedizione stimata ${dateRange}`,
-    jewelleryLeadTime: 'Realizzata dopo il vostro ordine · spedizione in 4–7 giorni',
+      `Taglia unica · ordinata, realizzata per voi, poi consegnata — spedizione stimata ${dateRange}`,
+    jewelleryLeadTime: 'Ordinata, realizzata per voi, poi consegnata · spedizione in 4–7 giorni',
     fasterDeliveryPrompt: 'Vi serve prima?',
     fasterDeliveryCta: 'Contattateci',
     fasterDeliveryWhatsAppMessage:
@@ -245,10 +245,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Leer mas',
     readLess: 'Leer menos',
     madeToOrderShips: (dateRange: string) =>
-      `Confeccionada individualmente después de su pedido — envío estimado ${dateRange}`,
+      `Pedida, confeccionada para usted, luego entregada — envío estimado ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Talla única · confeccionada individualmente después de su pedido — envío estimado ${dateRange}`,
-    jewelleryLeadTime: 'Hecho a pedido · envío en 4–7 días',
+      `Talla única · pedida, confeccionada para usted, luego entregada — envío estimado ${dateRange}`,
+    jewelleryLeadTime: 'Pedida, confeccionada para usted, luego entregada · envío en 4–7 días',
     fasterDeliveryPrompt: '¿Lo necesita antes?',
     fasterDeliveryCta: 'Contáctenos',
     fasterDeliveryWhatsAppMessage:
@@ -283,10 +283,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Читать далее',
     readLess: 'Свернуть',
     madeToOrderShips: (dateRange: string) =>
-      `Изготавливается индивидуально после вашего заказа — ориентировочная отправка ${dateRange}`,
+      `Заказано, создано для вас, затем доставлено — ориентировочная отправка ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Единый размер · изготавливается индивидуально после вашего заказа — ориентировочная отправка ${dateRange}`,
-    jewelleryLeadTime: 'Изготавливается после заказа · отправка за 4–7 дней',
+      `Единый размер · заказано, создано для вас, затем доставлено — ориентировочная отправка ${dateRange}`,
+    jewelleryLeadTime: 'Заказано, создано для вас, затем доставлено · отправка за 4–7 дней',
     fasterDeliveryPrompt: 'Нужна более быстрая доставка?',
     fasterDeliveryCta: 'Свяжитесь с нами',
     fasterDeliveryWhatsAppMessage:
@@ -321,10 +321,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: '阅读更多',
     readLess: '收起',
     madeToOrderShips: (dateRange: string) =>
-      `下单后单独制作 — 预计发货 ${dateRange}`,
+      `下单后专为您制作，再行送达 — 预计发货 ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `均码 · 下单后单独制作 — 预计发货 ${dateRange}`,
-    jewelleryLeadTime: '下单后制作 · 4–7 天内发货',
+      `均码 · 下单后专为您制作，再行送达 — 预计发货 ${dateRange}`,
+    jewelleryLeadTime: '下单后专为您制作，再行送达 · 4–7 天内发货',
     fasterDeliveryPrompt: '希望更快收到？',
     fasterDeliveryCta: '立即联系我们',
     fasterDeliveryWhatsAppMessage:
@@ -359,10 +359,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Lees meer',
     readLess: 'Lees minder',
     madeToOrderShips: (dateRange: string) =>
-      `Individueel gemaakt na uw bestelling — verwachte verzending ${dateRange}`,
+      `Besteld, voor u gemaakt, daarna geleverd — verwachte verzending ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `One size · individueel gemaakt na uw bestelling — verwachte verzending ${dateRange}`,
-    jewelleryLeadTime: 'Gemaakt na uw bestelling · verzending binnen 4–7 dagen',
+      `One size · besteld, voor u gemaakt, daarna geleverd — verwachte verzending ${dateRange}`,
+    jewelleryLeadTime: 'Besteld, voor u gemaakt, daarna geleverd · verzending binnen 4–7 dagen',
     fasterDeliveryPrompt: 'Sneller nodig?',
     fasterDeliveryCta: 'Neem contact op',
     fasterDeliveryWhatsAppMessage:
@@ -397,10 +397,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Ler mais',
     readLess: 'Ler menos',
     madeToOrderShips: (dateRange: string) =>
-      `Feita individualmente após a sua encomenda — envio estimado ${dateRange}`,
+      `Encomendada, feita para si, depois entregue — envio estimado ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Tamanho único · feita individualmente após a sua encomenda — envio estimado ${dateRange}`,
-    jewelleryLeadTime: 'Feito após a sua encomenda · envio em 4–7 dias',
+      `Tamanho único · encomendada, feita para si, depois entregue — envio estimado ${dateRange}`,
+    jewelleryLeadTime: 'Encomendada, feita para si, depois entregue · envio em 4–7 dias',
     fasterDeliveryPrompt: 'Precisa mais depressa?',
     fasterDeliveryCta: 'Contacte-nos',
     fasterDeliveryWhatsAppMessage:
@@ -435,10 +435,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Baca selengkapnya',
     readLess: 'Tampilkan lebih sedikit',
     madeToOrderShips: (dateRange: string) =>
-      `Dibuat secara individual setelah pesanan Anda — estimasi pengiriman ${dateRange}`,
+      `Dipesan, dibuat untuk Anda, lalu dikirim — estimasi pengiriman ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Satu ukuran · dibuat secara individual setelah pesanan Anda — estimasi pengiriman ${dateRange}`,
-    jewelleryLeadTime: 'Dibuat setelah pesanan Anda · dikirim dalam 4–7 hari',
+      `Satu ukuran · dipesan, dibuat untuk Anda, lalu dikirim — estimasi pengiriman ${dateRange}`,
+    jewelleryLeadTime: 'Dipesan, dibuat untuk Anda, lalu dikirim · dikirim dalam 4–7 hari',
     fasterDeliveryPrompt: 'Butuh lebih cepat?',
     fasterDeliveryCta: 'Hubungi kami',
     fasterDeliveryWhatsAppMessage:
@@ -473,10 +473,10 @@ const PRODUCT_PAGE_UI: Record<AppLocale, ProductPageUi> = {
     readMore: 'Baca lagi',
     readLess: 'Baca kurang',
     madeToOrderShips: (dateRange: string) =>
-      `Dibuat secara individu selepas tempahan anda — anggaran penghantaran ${dateRange}`,
+      `Ditempah, dibuat untuk anda, kemudian dihantar — anggaran penghantaran ${dateRange}`,
     oneSizeMadeToOrderShips: (dateRange: string) =>
-      `Satu saiz · dibuat secara individu selepas tempahan anda — anggaran penghantaran ${dateRange}`,
-    jewelleryLeadTime: 'Dibuat selepas tempahan anda · dihantar dalam 4–7 hari',
+      `Satu saiz · ditempah, dibuat untuk anda, kemudian dihantar — anggaran penghantaran ${dateRange}`,
+    jewelleryLeadTime: 'Ditempah, dibuat untuk anda, kemudian dihantar · dihantar dalam 4–7 hari',
     fasterDeliveryPrompt: 'Perlukan lebih cepat?',
     fasterDeliveryCta: 'Hubungi kami',
     fasterDeliveryWhatsAppMessage:

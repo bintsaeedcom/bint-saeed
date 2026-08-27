@@ -90,6 +90,7 @@ import {
   buildAbayaProductKeywordVariants,
   getLocalizedAbayaSchemaKeywordTerms,
 } from '@/lib/products/abayaSchemaKeywordsI18n'
+import { getAbayaProductDiscoveryKeywords } from '@/lib/products/abayaProductDiscoveryI18n'
 import { SCHEMA_MANUFACTURER } from '@/lib/products/abayaSchemaShared'
 import { getLocalizedBelgraviaExclusiveKeywords } from '@/lib/products/belgraviaSchemaKeywordsI18n'
 import { getLocalizedKensingtonExclusiveKeywords } from '@/lib/products/kensingtonSchemaKeywordsI18n'
@@ -229,6 +230,7 @@ export function buildProductSchemaKeywords(
   if (product.category === 'Abayas') {
     for (const t of getLocalizedAbayaSchemaKeywordTerms(locale)) terms.add(t)
     for (const t of buildAbayaProductKeywordVariants(product, colorName, locale)) terms.add(t)
+    for (const t of getAbayaProductDiscoveryKeywords(locale)) terms.add(t)
   }
 
   if (isBelgraviaSlug(slug)) {

@@ -232,12 +232,6 @@ const nextConfig = {
           permanent: true,
         })),
       ]),
-      { source: '/heritage/sadu', destination: '/heritage/khous', permanent: true },
-      ...['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms'].map((locale) => ({
-        source: `/${locale}/heritage/sadu`,
-        destination: `/${locale}/heritage/khous`,
-        permanent: true,
-      })),
       { source: '/product-care', destination: '/personalisation', permanent: true },
       ...['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms'].map((locale) => ({
         source: `/${locale}/product-care`,

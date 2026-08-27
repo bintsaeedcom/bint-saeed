@@ -1,8 +1,4 @@
-import { utilityNoIndexMetadata } from '@/lib/seo'
-
-/** Heritage hub + child pages are unfinished — keep out of Google until approved. */
-export const metadata = utilityNoIndexMetadata
-
-export default function Layout({ children }: { children: React.ReactNode }) {
+/** Soft-hidden heritage section shell — indexing decided per segment (hub, al-talli, khous, sadu). */
+export default function HeritageSectionLayout({ children }: { children: React.ReactNode }) {
   return children
 }

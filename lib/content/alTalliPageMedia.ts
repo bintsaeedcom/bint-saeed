@@ -1,4 +1,4 @@
-/** Local photography for `/heritage/al-talli` — House of Artisans / craft documentation. */
+/** Local photography for `/heritage/al-talli` — House craft documentation. */
 
 /**
  * Filenames are SEO/AI discovery slugs (brand + place + craft + subject).
@@ -6,33 +6,34 @@
  */
 export const AL_TALLI_PAGE_MEDIA = {
   hero: {
-    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-embroidery-abaya-detail-emirati-heritage.webp',
-    width: 819,
+    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-gold-embroidery-thobe-emirati-heritage.webp',
+    width: 768,
     height: 1024,
   },
   story: {
-    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-metallic-thread-embroidery-middle-eastern-craft.webp',
+    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-gold-bead-motif-embroidery-detail.webp',
     width: 768,
     height: 1024,
   },
   loom: {
-    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-loom-emirati-heritage-craft.webp',
+    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-cushion-gold-bobbins-exhibition.webp',
     width: 768,
     height: 1024,
   },
   strands: {
-    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-gold-metallic-strands-unesco-heritage.webp',
+    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-orange-gold-metallic-ribbon-strands.webp',
     width: 768,
     height: 1024,
   },
+  /** Exhibition kajujah also shows hanging metallic bobbins. */
   bobbins: {
-    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-metallic-bobbins-traditional-embroidery.webp',
-    width: 1024,
-    height: 768,
+    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-cushion-gold-bobbins-exhibition.webp',
+    width: 768,
+    height: 1024,
   },
   abuDhabi: {
-    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-artisan-house-of-artisans-qasr-al-hosn.webp',
-    width: 658,
+    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-cushion-gold-bobbins-exhibition.webp',
+    width: 768,
     height: 1024,
   },
 } as const

@@ -1,5 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
+import { getNaturalStoneProductDiscoveryKeywords } from '@/lib/accessories/naturalStoneProductDiscoveryI18n'
 import { getListedPriceForAccessory } from '@/lib/pricing/accessoryCatalogPrices'
 import { SUPPORTED_CURRENCIES, type SupportedCurrency } from '@/lib/pricing/types'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
@@ -780,13 +781,15 @@ export function getNecklaceMetaKeywords(
   const stone = ID_META[necklaceId].stone
   const label = STONE_LABEL[locale][stone]
   const shared = SHARED_DISCOVERY[locale] ?? SHARED_DISCOVERY.en
+  const expanded = getNaturalStoneProductDiscoveryKeywords('necklaces', locale)
   const collectionKw =
     locale === 'ar' ? 'قلادة واحة العين' : 'Al Ain Oasis necklace'
   if (locale === 'ar') {
-    return [...shared, `قلادة ${label}`, `${label} حجر طبيعي`, collectionKw]
+    return [...shared, ...expanded, `قلادة ${label}`, `${label} حجر طبيعي`, collectionKw]
   }
   return [
     ...shared,
+    ...expanded,
     `${label} necklace`,
     `${label} natural stone`,
     collectionKw,

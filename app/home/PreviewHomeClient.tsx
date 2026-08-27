@@ -1160,7 +1160,7 @@ function QuickShopCarousel() {
                     <span
                       key={c.name}
                       title={localizedColorName(c.name, language)}
-                      className={`${PRODUCT_GRID_COLOUR_DOT} h-2 w-2 md:h-[9px] md:w-[9px]`}
+                      className={PRODUCT_GRID_COLOUR_DOT}
                       style={softGridColourBeadStyle(c.hex)}
                       aria-hidden
                     />

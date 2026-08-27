@@ -2,6 +2,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import type { AlAinOasisBagCharmId } from '@/lib/accessories/bagCharmPdpContent'
 import { resolveAccessoryId } from '@/lib/accessories/accessoryRouteAliases'
 import { isAlAinOasisBagCharmId } from '@/lib/accessories/bagCharmPdpContent'
+import { getNaturalStoneProductDiscoveryKeywords } from '@/lib/accessories/naturalStoneProductDiscoveryI18n'
 import { getListedPriceForAccessory } from '@/lib/pricing/accessoryCatalogPrices'
 import { SUPPORTED_CURRENCIES, type SupportedCurrency } from '@/lib/pricing/types'
 import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
@@ -466,12 +467,22 @@ export function getBagCharmMetaDescription(id: string, locale: AppLocale = 'en')
 
 export function getBagCharmMetaKeywords(id: string, locale: AppLocale = 'en'): string[] {
   const charmId = resolveBagCharmId(id)
-  if (!charmId) return SHARED_DISCOVERY[locale] ?? SHARED_DISCOVERY.en
+  const expanded = getNaturalStoneProductDiscoveryKeywords('bag-strands', locale)
+  if (!charmId) {
+    return [...(SHARED_DISCOVERY[locale] ?? SHARED_DISCOVERY.en), ...expanded]
+  }
   const oasis = ID_TO_OASIS[charmId]
   const label = OASIS_LABEL[locale][oasis]
   const shared = SHARED_DISCOVERY[locale] ?? SHARED_DISCOVERY.en
   const strandHint = oasis === 'oasis-i' ? 'two strand bag charm' : 'three strand bag charm'
-  return [...shared, `${label} bag charm`, `${label} Fuchsia Jade`, strandHint, `buy ${label}`]
+  return [
+    ...shared,
+    ...expanded,
+    `${label} bag charm`,
+    `${label} Fuchsia Jade`,
+    strandHint,
+    `buy ${label}`,
+  ]
 }
 
 export function getBagCharmAiOther(

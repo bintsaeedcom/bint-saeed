@@ -34,7 +34,7 @@ function entry(path: string, changefreq: string, priority: string): SitemapUrlEn
 
 /**
  * Primary money / brand hubs — EN + SITEMAP_PREFIX_LOCALES.
- * No query-string URLs. No `/` (308 → `/home`). Heritage omitted until approved.
+ * No query-string URLs. No `/` (308 → `/home`). Heritage hub + craft chapters indexable.
  */
 const PRIMARY_HUBS: { path: string; changefreq: string; priority: string }[] = [
   { path: '/home', changefreq: 'weekly', priority: '1.0' },
@@ -46,7 +46,10 @@ const PRIMARY_HUBS: { path: string; changefreq: string; priority: string }[] = [
   { path: '/the-codes', changefreq: 'monthly', priority: '0.7' },
   { path: '/craftsmanship', changefreq: 'monthly', priority: '0.7' },
   { path: '/dressing-for-the-middle-east', changefreq: 'monthly', priority: '0.6' },
+  { path: '/heritage', changefreq: 'monthly', priority: '0.7' },
   { path: '/heritage/al-talli', changefreq: 'monthly', priority: '0.7' },
+  { path: '/heritage/khous', changefreq: 'monthly', priority: '0.65' },
+  { path: '/heritage/sadu', changefreq: 'monthly', priority: '0.65' },
   { path: '/giving-forward', changefreq: 'monthly', priority: '0.6' },
   { path: '/contact', changefreq: 'monthly', priority: '0.5' },
   { path: '/faq', changefreq: 'monthly', priority: '0.5' },

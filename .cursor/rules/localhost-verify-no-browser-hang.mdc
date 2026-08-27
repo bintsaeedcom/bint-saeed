@@ -1,0 +1,32 @@
+---
+description: Prefer curl/code checks for localhost; avoid browser MCP hangs that queue chats
+alwaysApply: true
+---
+
+# Localhost Verify — No Browser Hang
+
+Cursor’s built-in browser MCP often hangs on `localhost` / `127.0.0.1`. A hung turn keeps the chat “busy,” so later prompts pile up in the queue.
+
+## Default verification (use these)
+
+- Confirm the route/component in code (read + lint).
+- Hit the page with a short-timeout HTTP check, e.g. `curl -sS -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:3000/...`
+- Check the Next.js terminal / process is already running before any localhost request.
+- Prefer compile/typecheck over opening the IDE browser.
+
+## Browser MCP — only when explicitly requested
+
+Use `cursor-ide-browser` (navigate / snapshot / screenshot) **only if** the user asks for visual QA, layout screenshots, click-through UI, or “open in browser.”
+
+When browser is required:
+
+1. Confirm the server is up with `curl` first (≤5s timeout). If it fails, stop and report — do not navigate.
+2. Prefer background automation (omit browser reveal/`position` unless the user asks to show the browser).
+3. Lock → minimal checks → unlock in the same turn. Never leave the browser locked.
+4. If navigate/snapshot stalls or returns nothing useful after one attempt, **stop retrying**, unlock if locked, and report the blocker. Do not loop wait-navigate-wait.
+
+## Do not
+
+- Open localhost in the browser “just to verify” after a code change.
+- Start long browser sessions while the user is sending follow-up prompts.
+- Queue more browser calls after a hang; stop and unblock instead.

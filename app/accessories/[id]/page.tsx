@@ -30,6 +30,8 @@ import TamaraProductWidget from '@/components/TamaraProductWidget'
 import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
 import {
   PDP_COLOUR_SWATCH,
+  PDP_COLOUR_SWATCH_HIT,
+  pdpColourSwatchBeadStyle,
   pdpColourSwatchState,
 } from '@/lib/ui/pdpColourSwatch'
 import {
@@ -1012,7 +1014,7 @@ export default function AccessoryDetailPage() {
                   </span>
                 )}
               </div>
-              <div className={`flex flex-wrap gap-2 `}>
+              <div className={`flex flex-wrap items-center gap-0.5 `}>
                 {accessory.colors.map((color) => {
                   const colorLabel = getAccessoryColorName(language, color.name, color.nameAr)
                   return (
@@ -1020,15 +1022,18 @@ export default function AccessoryDetailPage() {
                     key={color.name}
                     type="button"
                     onClick={() => setSelectedColor(colorLabel)}
-                    className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(
- selectedColor === colorLabel,
- )}`}
-                    style={{ backgroundColor: color.hex }}
+                    className={PDP_COLOUR_SWATCH_HIT}
                     title={colorLabel}
                     aria-pressed={selectedColor === colorLabel}
                     aria-label={`${ui.cart.colour} ${colorLabel}`}
                     data-cursor-hover
-                  />
+                  >
+                    <span
+                      className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(selectedColor === colorLabel)}`}
+                      style={pdpColourSwatchBeadStyle(color.hex)}
+                      aria-hidden
+                    />
+                  </button>
                   )
                 })}
               </div>

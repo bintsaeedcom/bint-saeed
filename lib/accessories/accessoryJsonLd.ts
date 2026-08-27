@@ -1076,6 +1076,8 @@ export function buildAccessoriesCollectionJsonLd(
       getJewelleryCategoryDiscoveryKeywords('necklaces', locale),
       getJewelleryCategoryDiscoveryKeywords('earrings', locale),
       getJewelleryCategoryDiscoveryKeywords('signature-strands', locale),
+      getJewelleryCategoryDiscoveryKeywords('phone-strands', locale),
+      getJewelleryCategoryDiscoveryKeywords('bag-strands', locale),
       getNecklaceEarringSharedSchemaKeywords(locale),
       getSignatureStrandSharedKeywords(locale),
     ),

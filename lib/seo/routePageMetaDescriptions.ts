@@ -133,25 +133,25 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   heritage: {
     en:
-      'Heritage at Bint Saeed — Abu Dhabi luxury abaya house rooted in Emirati craft. Explore stories behind Al Talli, Khous weaving and regional design codes.',
+      'UAE cultural heritage from Abu Dhabi: Al Talli embroidery, Al Khous palm weaving, Sadu Bedouin textiles, and the battoulah gold burqa mask — Emirati crafts explored by Bint Saeed.',
     ar:
-      'التراث في بِنت سعيد، دار عبايات فاخرة في أبوظبي تنطلق من الحرف الإماراتية. اطّلعي على قصص التلي ونسيج الخوص ورموز التصميم المحلية.',
+      'تراث الإمارات الثقافي من أبوظبي: تطريز التلي، نسيج الخوص، السدو، والبرقع الذهبي — حرف إماراتية تستكشفها بنت سعيد.',
     fr:
-      'Patrimoine chez Bint Saeed — maison d’abayas à Abu Dhabi ancrée dans le savoir‑faire émirati : Al Talli, Khous et codes de design régionaux.',
+      'Patrimoine culturel des EAU depuis Abu Dhabi : Al Talli, Al Khous, Sadu et le masque d’or battoulah — artisanats émiratis explorés par Bint Saeed.',
     it:
-      'Patrimonio Bint Saeed — casa di abaya ad Abu Dhabi legata all’artigianato emiratino: Al Talli, Khous e linee progettuali locali.',
+      'Patrimonio culturale degli EAU da Abu Dhabi: Al Talli, Al Khous, Sadu e la maschera d’oro battoulah — mestieri emiratini esplorati da Bint Saeed.',
     es:
-      'Patrimonio en Bint Saeed — casa de abayas en Abu Dhabi inspirada en el oficio emiratí: Al Talli, Khous y códigos de diseño locales.',
+      'Patrimonio cultural de EAU desde Abu Dabi: Al Talli, Al Khous, Sadu y la máscara de oro battoulah — oficios emiratíes explorados por Bint Saeed.',
     ru:
-      'Наследие Bint Saeed — дом абай в Абу‑Даби на базе эмиратских ремёсел: Аль‑Талли, Хаус и локальные принципы дизайна.',
+      'Культурное наследие ОАЭ из Абу-Даби: Al Talli, Al Khous, Sadu и золотая маска баттула — эмиратские ремёсла в контексте Bint Saeed.',
     zh:
-      'Bint Saeed 传承故事：根植阿布扎比的奢华阿巴亚品牌，呈现阿勒塔利、赫乌斯编织与阿联酋设计渊源。',
+      '阿布扎比视角下的阿联酋文化遗产：Al Talli 刺绣、Al Khous 棕榈编织、Sadu 与金面罩 battoulah — Bint Saeed 探索的阿联酋工艺。',
     de:
-      'Heritage bei Bint Saeed — Luxus‑Abaya‑Haus in Abu Dhabi mit Fokus auf Emirati‑Craft, Al‑Talli, Khous und regionale Designcodes.',
+      'Kulturerbe der VAE aus Abu Dhabi: Al Talli, Al Khous, Sadu und die goldene Battoulah-Maske — emiratische Handwerke bei Bint Saeed.',
     nl:
-      'Erfgoed bij Bint Saeed — luxe abayahuis in Abu Dhabi met Emirati‑vakmanschap: Al Talli, Khous en lokale ontwerpcodes.',
+      'Cultureel erfgoed van de VAE vanuit Abu Dhabi: Al Talli, Al Khous, Sadu en het gouden battoulah-masker — Emiratische ambachten bij Bint Saeed.',
     pt:
-      'Património na Bint Saeed — casa de abayas em Abu Dhabi ligada ao ofício emiradense: Al Talli, Khous e códigos de design locais.',
+      'Património cultural dos EAU a partir de Abu Dhabi: Al Talli, Al Khous, Sadu e a máscara de ouro battoulah — ofícios emirati explorados pela Bint Saeed.',
   },
   heritage_al_talli: {
     en:
@@ -177,47 +177,47 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   heritage_khous: {
     en:
-      'Khous palm‑frond weaving — structural heritage referenced by Bint Saeed in Abu Dhabi. Discover how craft logic shapes contemporary luxury abayas.',
+      'Al Khous palm-frond weaving — Emirati craft of the date palm, from Abu Dhabi heritage to contemporary design reading at Bint Saeed.',
     ar:
-      'نسيج الخوص، تراث بنيوي يستوحى منه تصميم بِنت سعيد في أبوظبي؛ منطق الحرفية الإماراتية يضفي حضوراً معاصراً على العباءات الفاخرة.',
+      'نسيج الخوص من سعف نخيل التمر — حرفة إماراتية من تراث أبوظبي إلى قراءة تصميمية معاصرة في بنت سعيد.',
     fr:
-      'Tissage Khous en palmier — référence structurelle pour Bint Saeed à Abu Dhabi : logique artisanale au service d’abayas de luxe contemporaines.',
+      'Tissage Al Khous en palmes de dattier — artisanat émirati d’Abu Dhabi, lu dans le design contemporain Bint Saeed.',
     it:
-      'Khous — intreccio tradizionale citato da Bint Saeed ad Abu Dhabi per dare struttura e ritmo alle collezioni di abaya di lusso.',
+      'Al Khous — intreccio di foglie di palma da dattero, mestiere emiratino di Abu Dhabi nella lettura contemporanea Bint Saeed.',
     es:
-      'Khous — tejido en palma que inspira la silueta en Bint Saeed (Abu Dhabi), conectando oficio local y abayas de lujo actuales.',
+      'Al Khous — tejido de hojas de palmera datilera, oficio emiratí de Abu Dabi en la lectura contemporánea Bint Saeed.',
     ru:
-      'Хаус — плетение из пальмовых листьев как конструктивный код наследия в коллекциях Bint Saeed в Абу‑Даби.',
+      'Al Khous — плетение листьев финиковой пальмы, эмиратское ремесло Абу-Даби в современном прочтении Bint Saeed.',
     zh:
-      '赫乌斯棕榈编织工艺：阿布扎比 Bint Saeed 汲取的结构灵感，用以塑造当代奢华阿巴亚轮廓。',
+      'Al Khous 椰枣棕榈叶编织——阿布扎比阿联酋工艺，在 Bint Saeed 当代设计中的解读。',
     de:
-      'Khous — Palmblatt‑Geflecht als strukturelles Erbe, das Bint Saeed in Abu Dhabi in moderne Luxus‑Abayas übersetzt.',
+      'Al Khous — Palmblattflechten der Dattelpalme, emiratisches Handwerk aus Abu Dhabi in der zeitgenössischen Lesart von Bint Saeed.',
     nl:
-      'Khous — palmweefwerk als structureel erfgoed voor Bint Saeed in Abu Dhabi en hedendaagse luxe abaya’s.',
+      'Al Khous — vlechten van dadelpalmbladeren, Emiratisch ambacht uit Abu Dhabi in de hedendaagse lezing van Bint Saeed.',
     pt:
-      'Khous — entrelaçamento de palma como referência estrutural na Bint Saeed em Abu Dhabi para abayas de luxo contemporâneas.',
+      'Al Khous — entrelaçamento de folhas de palmeira-datileira, ofício emirati de Abu Dhabi na leitura contemporânea Bint Saeed.',
   },
   heritage_sadu: {
     en:
-      'Sadu weaving heritage — contextual craft narrative explored by Bint Saeed, Abu Dhabi luxury abaya house connecting textile tradition with modern silhouettes.',
+      'Sadu (Al Sadu) Bedouin weaving of the UAE — UNESCO Representative List heritage, geometric desert language explored by Bint Saeed in Abu Dhabi.',
     ar:
-      'إرث نسيج السدو، حكاية حرفية يعرضها سياقُ بِنت سعيد في أبوظبي؛ ربطٌ بين تقاليد النسيج المحلي والقصّات المعاصرة للعباءات الفاخرة.',
+      'السدو — نسيج بدوي إماراتي مدرج في القائمة التمثيلية لليونسكو؛ لغة هندسية صحراوية تستكشفها بنت سعيد في أبوظبي.',
     fr:
-      'Tissage Sadu — lecture patrimoniale proposée par Bint Saeed à Abu Dhabi, entre tradition textile régionale et silhouettes luxury actuelles.',
+      'Sadu (Al Sadu) — tissage bédouin des EAU sur la Liste représentative de l’UNESCO ; géométrie du désert explorée par Bint Saeed à Abu Dhabi.',
     it:
-      'Sadu — narrazione tessile nel percorso Bint Saeed ad Abu Dhabi tra tradizione locale e abaya contemporanee.',
+      'Sadu (Al Sadu) — tessitura beduina degli EAU nella Lista rappresentativa UNESCO; geometria del deserto esplorata da Bint Saeed ad Abu Dhabi.',
     es:
-      'Sadu — narrativa textil dentro del relato de Bint Saeed en Abu Dhabi: tradición regional y siluetas luxury actuales.',
+      'Sadu (Al Sadu) — tejido beduino de EAU en la Lista Representativa de la UNESCO; geometría del desierto explorada por Bint Saeed en Abu Dabi.',
     ru:
-      'Саду — традиционное ткачество в контексте наследия Bint Saeed в Абу‑Даби и современных абай люкса.',
+      'Sadu (Al Sadu) — бедуинское ткачество ОАЭ в Репрезентативном списке ЮНЕСКО; геометрия пустыни в прочтении Bint Saeed в Абу-Даби.',
     zh:
-      '萨杜编织：在阿布扎比 Bint Saeed 叙事中串联纺织传统与现代奢华阿巴亚廓形。',
+      'Sadu（Al Sadu）——列入教科文组织代表作名录的阿联酋贝都因织造；阿布扎比 Bint Saeed 探索的沙漠几何语言。',
     de:
-      'Sadu‑Webkunst — textile Tradition, die Bint Saeed in Abu Dhabi mit aktuellen Luxus‑Silhouetten verbindet.',
+      'Sadu (Al Sadu) — beduinische Webkunst der VAE auf der Repräsentativen Liste der UNESCO; Wüstengeometrie bei Bint Saeed in Abu Dhabi.',
     nl:
-      'Sadu‑weeftraditie — verhaal bij Bint Saeed in Abu Dhabi tussen regionaal textielerfgoed en hedendaagse luxe silhouetten.',
+      'Sadu (Al Sadu) — Bedoeïense weefkunst van de VAE op de Representatieve Lijst van UNESCO; woestijngeometrie bij Bint Saeed in Abu Dhabi.',
     pt:
-      'Tecelagem Sadu — narrativa patrimonial na Bint Saeed em Abu Dhabi entre tradição têxtil e silhuetas luxury atuais.',
+      'Sadu (Al Sadu) — tecelagem beduína dos EAU na Lista Representativa da UNESCO; geometria do deserto explorada pela Bint Saeed em Abu Dhabi.',
   },
   accessories: {
     en:
