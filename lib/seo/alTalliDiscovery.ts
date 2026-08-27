@@ -120,7 +120,7 @@ export function alTalliHeritagePageUrl(locale: AppLocale = 'en'): string {
 
 export function alTalliPrimaryImageUrl(): string {
   // Prefer the dedicated Al Talli heritage photography on this chapter.
-  return `${SITE}/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-gold-embroidery-thobe-emirati-heritage.webp`
+  return `${SITE}/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-mousadah-gold-metallic-thread-craft.webp`
 }
 
 const ABOUT_DESCRIPTION: Record<AppLocale, string> = {

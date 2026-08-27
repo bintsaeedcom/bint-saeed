@@ -31,7 +31,7 @@ const KEYWORDS_EN = [
 ].join(', ')
 
 /**
- * Indexable Sadu heritage chapter — soft discovery (not primary nav).
+ * Indexable Sadu heritage chapter, soft discovery (not primary nav).
  */
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale()
@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const copy = getSaduPageCopy(locale)
 
   return {
-    ...sectionRobotsMetadata,
+...sectionRobotsMetadata,
     title: { absolute: title },
     description,
     keywords: KEYWORDS_EN,
@@ -59,7 +59,7 @@ export async function generateMetadata(): Promise<Metadata> {
       authors: ['Bint Saeed'],
       section: 'Heritage',
       tags: ['Sadu', 'Al Sadu', 'UNESCO', 'Emirati heritage', 'Abu Dhabi', 'UAE'],
-      images: [{ url: ogImage, alt: `${copy.heroTitle} — Emirati Bedouin weaving` }],
+      images: [{ url: ogImage, alt: `${copy.heroTitle}, Emirati Bedouin weaving` }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -68,7 +68,7 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [ogImage],
     },
     other: {
-      'ai:topic': 'Sadu / Al Sadu — Bedouin weaving, UAE UNESCO heritage, Abu Dhabi',
+      'ai:topic': 'Sadu / Al Sadu, Bedouin weaving, UAE UNESCO heritage, Abu Dhabi',
       'ai:entity': 'Sadu; Al Sadu; السدو; Bedouin weaving; UNESCO; Emirati craft; Abu Dhabi; UAE; Bint Saeed',
       'ai:place': 'Abu Dhabi, United Arab Emirates',
       'ai:sameAs': SADU_UNESCO,

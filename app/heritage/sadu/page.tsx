@@ -49,7 +49,7 @@ function HeroSection() {
         <Image
           src={HERITAGE_SADU_IMAGES.hero}
           alt={withBrandAlt(
-            'Al Sadu weaving with green geometric triangles — Emirati Bedouin heritage, Bint Saeed Abu Dhabi',
+            'Al Sadu weaving with green geometric triangles, Emirati Bedouin heritage, Bint Saeed Abu Dhabi',
             locale,
           )}
           fill
@@ -62,7 +62,7 @@ function HeroSection() {
 
       <div className={`absolute top-28 start-6 lg:start-12 z-20`}>
         <motion.div
-          initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
+          initial={{ opacity: 0, x: isRTL ? 20: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
@@ -121,8 +121,8 @@ function StorySection() {
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? 40 : -40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, x: isRTL ? 40: -40 }}
+            animate={isInView ? { opacity: 1, x: 0 }: {}}
             transition={{ duration: 0.8 }}
             className="text-start"
           >
@@ -137,15 +137,15 @@ function StorySection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? -40 : 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, x: isRTL ? -40: 40 }}
+            animate={isInView ? { opacity: 1, x: 0 }: {}}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative aspect-[4/5] overflow-hidden"
           >
             <Image
               src={HERITAGE_SADU_IMAGES.detail}
               alt={withBrandAlt(
-                'Al Sadu woven band with fringe — Emirati heritage craft, Bint Saeed Abu Dhabi',
+                'Al Sadu woven band with fringe, Emirati heritage craft, Bint Saeed Abu Dhabi',
                 locale,
               )}
               fill
@@ -213,7 +213,7 @@ function UNESCOSection() {
       <div className="container mx-auto px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={isInView ? { opacity: 1, y: 0 }: {}}
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto text-center"
         >
@@ -298,14 +298,14 @@ function BintSaeedSection() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            animate={isInView ? { opacity: 1, scale: 1 }: {}}
             transition={{ duration: 0.8 }}
             className="relative aspect-[4/5] overflow-hidden order-2 lg:order-1"
           >
             <Image
               src={HERITAGE_SADU_IMAGES.hero}
               alt={withBrandAlt(
-                'Al Sadu geometric triangle weave on wood — Emirati Bedouin craft, Bint Saeed Abu Dhabi',
+                'Al Sadu geometric triangle weave on wood, Emirati Bedouin craft, Bint Saeed Abu Dhabi',
                 locale,
               )}
               fill
@@ -315,8 +315,8 @@ function BintSaeedSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? -40 : 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, x: isRTL ? -40: 40 }}
+            animate={isInView ? { opacity: 1, x: 0 }: {}}
             transition={{ duration: 0.8, delay: 0.2 }}
             className={`order-1 lg:order-2 text-start`}
           >
@@ -334,7 +334,7 @@ function BintSaeedSection() {
               data-cursor-hover
             >
               {copy.shopCollection}
-              <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
+              <FiArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180': ''}`} />
             </LocaleLink>
           </motion.div>
         </div>

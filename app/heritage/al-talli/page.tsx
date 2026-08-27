@@ -21,7 +21,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 type PageCopy = AlTalliPageCopyBody & ReturnType<typeof getHeritageSharedChrome>
 
 function getCopy(locale: string): PageCopy {
-  const key = (locale in AL_TALLI_PAGE_COPY_BODIES ? locale : 'en') as AppLocale
+  const key = (locale in AL_TALLI_PAGE_COPY_BODIES ? locale: 'en') as AppLocale
   return { ...getHeritageSharedChrome(key), ...AL_TALLI_PAGE_COPY_BODIES[key] }
 }
 
@@ -71,7 +71,7 @@ function HeroSection() {
 
       <div className="absolute top-28 start-6 z-20 lg:start-12">
         <motion.div
-          initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
+          initial={{ opacity: 0, x: isRTL ? 20: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
@@ -126,8 +126,8 @@ function StorySection() {
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid items-center gap-16 lg:grid-cols-2">
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? 40 : -40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, x: isRTL ? 40: -40 }}
+            animate={isInView ? { opacity: 1, x: 0 }: {}}
             transition={{ duration: 0.8 }}
             className="text-start"
           >
@@ -146,8 +146,8 @@ function StorySection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? -40 : 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, x: isRTL ? -40: 40 }}
+            animate={isInView ? { opacity: 1, x: 0 }: {}}
             transition={{ duration: 0.8, delay: 0.15 }}
             className="relative aspect-[4/5] overflow-hidden"
           >
@@ -247,7 +247,7 @@ function UnescoSection() {
       <div className="container mx-auto px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={isInView ? { opacity: 1, y: 0 }: {}}
           transition={{ duration: 0.8 }}
           className="mx-auto max-w-4xl text-center"
         >
@@ -284,7 +284,7 @@ function AbuDhabiSection() {
         <div className="grid items-center gap-16 lg:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            animate={isInView ? { opacity: 1, scale: 1 }: {}}
             transition={{ duration: 0.8 }}
             className="relative aspect-[3/4] overflow-hidden"
           >
@@ -299,8 +299,8 @@ function AbuDhabiSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? -40 : 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, x: isRTL ? -40: 40 }}
+            animate={isInView ? { opacity: 1, x: 0 }: {}}
             transition={{ duration: 0.8, delay: 0.12 }}
             className="text-start"
           >
@@ -332,8 +332,8 @@ function BrandSection() {
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid items-center gap-16 lg:grid-cols-2">
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? 40 : -40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, x: isRTL ? 40: -40 }}
+            animate={isInView ? { opacity: 1, x: 0 }: {}}
             transition={{ duration: 0.8 }}
             className="order-2 text-start lg:order-1"
           >
@@ -365,7 +365,7 @@ function BrandSection() {
               data-cursor-hover
             >
               {copy.shopCta}
-              <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+              <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180': ''}`} />
             </LocaleLink>
             <div className="mt-10 grid gap-3 text-start sm:grid-cols-3">
               {AL_TALLI_FEATURED_PRODUCTS.map((item) => (
@@ -388,7 +388,7 @@ function BrandSection() {
 
           <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            animate={isInView ? { opacity: 1, scale: 1 }: {}}
             transition={{ duration: 0.8, delay: 0.1 }}
             className="relative order-1 aspect-square overflow-hidden lg:order-2"
           >
@@ -443,22 +443,22 @@ function CtaSection() {
   )
 }
 
-/** Crawl-facing internal links — visually hidden; no on-page keyword stuffing. */
+/** Crawl-facing internal links, visually hidden; no on-page keyword stuffing. */
 function DiscoveryNav() {
   return (
     <nav aria-hidden="true" className="sr-only" aria-label="Al Talli discovery">
-      <LocaleLink href="/heritage/al-talli">What is Al Talli — Emirati heritage craft</LocaleLink>
+      <LocaleLink href="/heritage/al-talli">What is Al Talli, Emirati heritage craft</LocaleLink>
       <LocaleLink href="/heritage/al-talli">Middle Eastern crafts and Middle Eastern heritage</LocaleLink>
       <LocaleLink href="/heritage/al-talli">UAE cultural heritage Al Talli UNESCO</LocaleLink>
-      <LocaleLink href="/heritage/al-talli">Visit Abu Dhabi culture — traditional Emirati crafts</LocaleLink>
-      <LocaleLink href="/heritage/al-talli">Things to do in Abu Dhabi — House of Artisans Qasr Al Hosn</LocaleLink>
+      <LocaleLink href="/heritage/al-talli">Visit Abu Dhabi culture, traditional Emirati crafts</LocaleLink>
+      <LocaleLink href="/heritage/al-talli">Things to do in Abu Dhabi, House of Artisans Qasr Al Hosn</LocaleLink>
       <LocaleLink href="/heritage/al-talli">Abu Dhabi heritage embroidery and cultural attractions</LocaleLink>
       <LocaleLink href="/heritage/al-talli">Middle Eastern fashion Emirati craft</LocaleLink>
       <LocaleLink href="/the-codes">Bint Saeed house codes Al Talli</LocaleLink>
       <LocaleLink href="/shop/covent-garden-abaya">Al Talli abaya Covent Garden</LocaleLink>
       <LocaleLink href="/shop/hampstead-dress">Al Talli dress Hampstead</LocaleLink>
       <LocaleLink href="/shop/soho-set">Al Talli Soho Set</LocaleLink>
-      <a href="/llms/al-talli.txt">Al Talli AI citation brief — Abu Dhabi heritage crafts</a>
+      <a href="/llms/al-talli.txt">Al Talli AI citation brief, Abu Dhabi heritage crafts</a>
       <a href="/llms.txt">Bint Saeed llms.txt for AI systems</a>
     </nav>
   )

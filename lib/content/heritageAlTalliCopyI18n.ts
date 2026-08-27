@@ -253,7 +253,7 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
     storyEyebrow: 'L’histoire',
     storyTitle: 'L’héritage des grand-mères',
     storyP1: 'Al Talli est un art de broderie émirati ancestral, vieux de plusieurs siècles. Les femmes se réunissaient en majlis pour tisser des fils d’argent et d’or sur un petit coussin, transformant de simples fils en œuvres intemporelles.',
-    storyP2: 'Al Talli orne les bords des vêtements traditionnels, de la kandura masculine aux tenues féminines d’apparat. Chaque motif porte un sens ; chaque point raconte une histoire du désert.',
+    storyP2: 'Al Talli orne les bords des vêtements traditionnels, de la kandura masculine aux tenues féminines d’apparat. Chaque motif porte un sens; chaque point raconte une histoire du désert.',
     craftEyebrow: 'Le savoir-faire',
     craftTitle: 'La technique Al Talli',
     techniques: [
@@ -267,7 +267,7 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
       },
       {
         title: 'Les motifs',
-        description: 'Triangles, losanges et zigzags géométriques portent chacun une symbolique — de la protection à la prospérité.'
+        description: 'Triangles, losanges et zigzags géométriques portent chacun une symbolique, de la protection à la prospérité.'
       }
     ],
     unescoEyebrow: 'Reconnaissance mondiale',
@@ -357,8 +357,8 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
     heroSubtitle: 'Традиционное эмиратское искусство вышивки',
     storyEyebrow: 'История',
     storyTitle: 'Наследие бабушек',
-    storyP1: 'Al Talli — древнее эмиратское искусство вышивки, уходящее корнями в века. Женщины собирались в маджлисе, чтобы ткать серебряные и золотые нити на маленькой подушке, превращая простые нити в вневременные произведения.',
-    storyP2: 'Al Talli украшает края традиционной одежды — от мужской кандуры до роскошного женского наряда. Каждый узор несёт смысл; каждый стежок рассказывает историю пустыни.',
+    storyP1: 'Al Talli, древнее эмиратское искусство вышивки, уходящее корнями в века. Женщины собирались в маджлисе, чтобы ткать серебряные и золотые нити на маленькой подушке, превращая простые нити в вневременные произведения.',
+    storyP2: 'Al Talli украшает края традиционной одежды, от мужской кандуры до роскошного женского наряда. Каждый узор несёт смысл; каждый стежок рассказывает историю пустыни.',
     craftEyebrow: 'Ремесло',
     craftTitle: 'Техника Al Talli',
     techniques: [
@@ -372,12 +372,12 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
       },
       {
         title: 'Узоры',
-        description: 'Геометрические формы — треугольники, ромбы, зигзаги — несут символические значения: от защиты до процветания.'
+        description: 'Геометрические формы, треугольники, ромбы, зигзаги, несут символические значения: от защиты до процветания.'
       }
     ],
     unescoEyebrow: 'Мировое признание',
     unescoTitle: 'Нематериальное культурное наследие ЮНЕСКО',
-    unescoBody: 'В 2022 году Al Talli был внесён в Репрезентативный список нематериального культурного наследия человечества ЮНЕСКО — как символ эмиратской культурной идентичности и наследие предков, достойное сохранения.',
+    unescoBody: 'В 2022 году Al Talli был внесён в Репрезентативный список нематериального культурного наследия человечества ЮНЕСКО, как символ эмиратской культурной идентичности и наследие предков, достойное сохранения.',
     unescoBadge1: 'Внесён 2022',
     unescoBadge2: 'Объединённые Арабские Эмираты',
     brandEyebrow: 'Bint Saeed × Al Talli',
@@ -393,7 +393,7 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
     storyEyebrow: '故事',
     storyTitle: '祖母的传承',
     storyP1: 'Al Talli 是一项可追溯数百年的古老阿联酋刺绣艺术。女性在 majlis 聚会，在小垫上编织金银线，将简单的线缕化为永恒之作。',
-    storyP2: 'Al Talli 用于装饰传统服饰的边缘——从男士 kandura 到华美女装。每一纹样皆有深意；每一针都讲述沙漠的故事。',
+    storyP2: 'Al Talli 用于装饰传统服饰的边缘：从男士 kandura 到华美女装。每一纹样皆有深意；每一针都讲述沙漠的故事。',
     craftEyebrow: '工艺',
     craftTitle: 'Al Talli 技法',
     techniques: [
@@ -407,7 +407,7 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
       },
       {
         title: '纹样',
-        description: '三角、菱形与锯齿等几何纹样各具象征——从守护到繁盛。'
+        description: '三角、菱形与锯齿等几何纹样各具象征：从守护到繁盛。'
       }
     ],
     unescoEyebrow: '全球认可',
@@ -428,7 +428,7 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
     storyEyebrow: 'Die Geschichte',
     storyTitle: 'Vermächtnis der Großmütter',
     storyP1: 'Al Talli ist eine jahrhundertealte emiratische Stickkunst. Frauen versammelten sich im Majlis, um Silber- und Goldfäden auf einem kleinen Kissen zu weben und schlichte Fäden in zeitlose Kunstwerke zu verwandeln.',
-    storyP2: 'Al Talli schmückt die Ränder traditioneller Gewänder — von der männlichen Kandura bis zur luxuriösen Frauenkleidung. Jedes Muster trägt Sinn; jeder Stich erzählt eine Geschichte der Wüste.',
+    storyP2: 'Al Talli schmückt die Ränder traditioneller Gewänder, von der männlichen Kandura bis zur luxuriösen Frauenkleidung. Jedes Muster trägt Sinn; jeder Stich erzählt eine Geschichte der Wüste.',
     craftEyebrow: 'Das Handwerk',
     craftTitle: 'Die Al-Talli-Technik',
     techniques: [
@@ -442,12 +442,12 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
       },
       {
         title: 'Die Muster',
-        description: 'Geometrische Formen wie Dreiecke, Rauten und Zickzack tragen jeweils symbolische Bedeutungen — von Schutz bis Wohlstand.'
+        description: 'Geometrische Formen wie Dreiecke, Rauten und Zickzack tragen jeweils symbolische Bedeutungen, von Schutz bis Wohlstand.'
       }
     ],
     unescoEyebrow: 'Weltweite Anerkennung',
     unescoTitle: 'UNESCO-Immaterielles Kulturerbe',
-    unescoBody: '2022 wurde Al Talli in die Repräsentative Liste des immateriellen Kulturerbes der Menschheit der UNESCO aufgenommen — als Symbol emiratischer kultureller Identität und ancestrales Erbe, das für kommende Generationen bewahrt werden soll.',
+    unescoBody: '2022 wurde Al Talli in die Repräsentative Liste des immateriellen Kulturerbes der Menschheit der UNESCO aufgenommen, als Symbol emiratischer kultureller Identität und ancestrales Erbe, das für kommende Generationen bewahrt werden soll.',
     unescoBadge1: 'Eingetragen 2022',
     unescoBadge2: 'Vereinigte Arabische Emirate',
     brandEyebrow: 'Bint Saeed × Al Talli',
@@ -463,7 +463,7 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
     storyEyebrow: 'Het verhaal',
     storyTitle: 'Erfenis van grootmoeders',
     storyP1: 'Al Talli is een eeuwenoude Emiratische borduurkunst. Vrouwen verzamelden zich in de majlis om zilveren en gouden draden op een klein kussen te weven, en eenvoudige draden om te zetten in tijdloze kunstwerken.',
-    storyP2: 'Al Talli siert de randen van traditionele kleding — van de mannenkandura tot luxueuze vrouwenkleding. Elk patroon draagt betekenis; elke steek vertelt een verhaal van de woestijn.',
+    storyP2: 'Al Talli siert de randen van traditionele kleding, van de mannenkandura tot luxueuze vrouwenkleding. Elk patroon draagt betekenis; elke steek vertelt een verhaal van de woestijn.',
     craftEyebrow: 'Het ambacht',
     craftTitle: 'De Al Talli-techniek',
     techniques: [
@@ -477,12 +477,12 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
       },
       {
         title: 'De patronen',
-        description: 'Geometrische vormen zoals driehoeken, ruiten en zigzag dragen elk symbolische betekenissen — van bescherming tot voorspoed.'
+        description: 'Geometrische vormen zoals driehoeken, ruiten en zigzag dragen elk symbolische betekenissen, van bescherming tot voorspoed.'
       }
     ],
     unescoEyebrow: 'Wereldwijde erkenning',
     unescoTitle: 'UNESCO immaterieel cultureel erfgoed',
-    unescoBody: 'In 2022 werd Al Talli opgenomen op de Representatieve lijst van het immaterieel cultureel erfgoed van de mensheid van UNESCO — als symbool van Emiratische culturele identiteit en voorouderlijk erfgoed dat bewaard moet blijven.',
+    unescoBody: 'In 2022 werd Al Talli opgenomen op de Representatieve lijst van het immaterieel cultureel erfgoed van de mensheid van UNESCO, als symbool van Emiratische culturele identiteit en voorouderlijk erfgoed dat bewaard moet blijven.',
     unescoBadge1: 'Ingeschreven 2022',
     unescoBadge2: 'Verenigde Arabische Emiraten',
     brandEyebrow: 'Bint Saeed × Al Talli',
@@ -512,7 +512,7 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
       },
       {
         title: 'Os motivos',
-        description: 'Triângulos, losangos e ziguezagues geométricos carregam cada um significados simbólicos — da proteção à prosperidade.'
+        description: 'Triângulos, losangos e ziguezagues geométricos carregam cada um significados simbólicos, da proteção à prosperidade.'
       }
     ],
     unescoEyebrow: 'Reconhecimento mundial',
@@ -533,7 +533,7 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
     storyEyebrow: 'Kisah',
     storyTitle: 'Warisan nenek',
     storyP1: 'Al Talli adalah seni sulaman Emirat kuno yang berusia berabad-abad. Perempuan berkumpul di majlis untuk menenun benang perak dan emas pada bantal kecil, mengubah benang sederhana menjadi karya abadi.',
-    storyP2: 'Al Talli menghiasi tepi pakaian tradisional — dari kandura pria hingga busana wanita yang mewah. Setiap pola punya makna; setiap jahitan menceritakan kisah gurun.',
+    storyP2: 'Al Talli menghiasi tepi pakaian tradisional, dari kandura pria hingga busana wanita yang mewah. Setiap pola punya makna; setiap jahitan menceritakan kisah gurun.',
     craftEyebrow: 'Kerajinan',
     craftTitle: 'Teknik Al Talli',
     techniques: [
@@ -547,7 +547,7 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
       },
       {
         title: 'Pola',
-        description: 'Pola geometris seperti segitiga, belah ketupat, dan zigzag masing-masing membawa makna simbolis — dari perlindungan hingga kemakmuran.'
+        description: 'Pola geometris seperti segitiga, belah ketupat, dan zigzag masing-masing membawa makna simbolis, dari perlindungan hingga kemakmuran.'
       }
     ],
     unescoEyebrow: 'Pengakuan global',
@@ -568,7 +568,7 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
     storyEyebrow: 'Kisah',
     storyTitle: 'Warisan nenek',
     storyP1: 'Al Talli ialah seni sulaman Emiriah kuno yang berusia berabad-abad. Wanita berkumpul di majlis untuk menenun benang perak dan emas pada bantal kecil, mengubah benang mudah menjadi karya abadi.',
-    storyP2: 'Al Talli menghiasi tepi pakaian tradisional — dari kandura lelaki hingga pakaian wanita yang mewah. Setiap corak punya makna; setiap jahitan menceritakan kisah gurun.',
+    storyP2: 'Al Talli menghiasi tepi pakaian tradisional, dari kandura lelaki hingga pakaian wanita yang mewah. Setiap corak punya makna; setiap jahitan menceritakan kisah gurun.',
     craftEyebrow: 'Kraf',
     craftTitle: 'Teknik Al Talli',
     techniques: [
@@ -582,7 +582,7 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
       },
       {
         title: 'Corak',
-        description: 'Corak geometri seperti segitiga, berlian dan zigzag masing-masing membawa makna simbolik — dari perlindungan hingga kemakmuran.'
+        description: 'Corak geometri seperti segitiga, berlian dan zigzag masing-masing membawa makna simbolik, dari perlindungan hingga kemakmuran.'
       }
     ],
     unescoEyebrow: 'Pengiktirafan global',
@@ -599,11 +599,11 @@ const AL_TALLI: Record<AppLocale, Omit<AlTalliPageCopy, keyof HeritageSharedChro
 }
 
 export function getHeritageSharedChrome(locale: AppLocale | string): HeritageSharedChrome {
-  const key = (locale in SHARED ? locale : 'en') as AppLocale
+  const key = (locale in SHARED ? locale: 'en') as AppLocale
   return SHARED[key]
 }
 
 export function getAlTalliPageCopy(locale: AppLocale | string): AlTalliPageCopy {
-  const key = (locale in AL_TALLI ? locale : 'en') as AppLocale
+  const key = (locale in AL_TALLI ? locale: 'en') as AppLocale
   return { ...SHARED[key], ...AL_TALLI[key] }
 }

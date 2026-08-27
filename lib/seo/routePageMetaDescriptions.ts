@@ -45,15 +45,15 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   shop_index: {
     en:
-      'Bint Saeed — shop luxury abayas from Abu Dhabi, UAE. Heritage-led design, jewellery and lifestyle pieces; delivery across the UAE and GCC.',
+      'Bint Saeed, shop luxury abayas from Abu Dhabi, UAE. Heritage-led design, jewellery and lifestyle pieces; delivery across the UAE and GCC.',
     ar:
-      'بِنت سعيد — تسوّقي أونلاين عبايات فاخرة من أبوظبي، مجوهرات وقطع أسلوب حياة، تصميم مستند إلى التراث الإماراتي مع توصيل في الإمارات والخليج.',
+      'بِنت سعيد, تسوّقي أونلاين عبايات فاخرة من أبوظبي، مجوهرات وقطع أسلوب حياة، تصميم مستند إلى التراث الإماراتي مع توصيل في الإمارات والخليج.',
     fr:
-      'Bint Saeed — boutique en ligne : abayas de luxe depuis Abu Dhabi, pièces inspirées du patrimoine émirati, bijoux et lifestyle ; livraison EAU & GCC.',
+      'Bint Saeed, boutique en ligne : abayas de luxe depuis Abu Dhabi, pièces inspirées du patrimoine émirati, bijoux et lifestyle ; livraison EAU & GCC.',
     it:
-      'Bint Saeed — shop online: abaya di lusso da Abu Dhabi, design legato al patrimonio emiratino, gioielli e lifestyle; spedizioni UAE e GCC.',
+      'Bint Saeed, shop online: abaya di lusso da Abu Dhabi, design legato al patrimonio emiratino, gioielli e lifestyle; spedizioni UAE e GCC.',
     es:
-      'Bint Saeed — tienda oficial: abayas de lujo desde Abu Dhabi, diseño ligado al patrimonio emiratí, joyas y lifestyle; envíos EAU y Golfo.',
+      'Bint Saeed, tienda oficial: abayas de lujo desde Abu Dhabi, diseño ligado al patrimonio emiratí, joyas y lifestyle; envíos EAU y Golfo.',
     ru:
       'Bint Saeed — интернет‑магазин роскошных абай из Абу‑Даби: эмиратские коды дизайна, украшения и lifestyle; доставка по ОАЭ и странам GCC.',
     zh:
@@ -61,7 +61,7 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
     de:
       'Bint Saeed — Online‑Shop für Luxus‑Abayas aus Abu Dhabi: erbegeprägte Designs, Schmuck und Lifestyle; Lieferung in die VAE und GCC.',
     nl:
-      'Bint Saeed — shop luxe abaya’s uit Abu Dhabi: erfgoedrijke patronen, sieraden en lifestyle; levering in VAE en GCC‑landen.',
+      'Bint Saeed, shop luxe abaya’s uit Abu Dhabi: erfgoedrijke patronen, sieraden en lifestyle; levering in VAE en GCC‑landen.',
     pt:
       'Bint Saeed — loja online de abayas de luxo de Abu Dhabi: silhuetas ligadas ao património emiradense, joalharia e lifestyle; envios EAU e Golfo.',
   },
@@ -89,25 +89,25 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   about: {
     en:
-      'About Bint Saeed — luxury abaya house founded in Abu Dhabi. Heritage-led design, Al Talli and Khous craft, jewellery and lifestyle for women worldwide.',
+      'About Bint Saeed, luxury abaya house founded in Abu Dhabi. Heritage-led design, Al Talli and Khous craft, jewellery and lifestyle for women worldwide.',
     ar:
       'عن بِنت سعيد، دار عبايات فاخرة تأسست في أبوظبي، تركّز على رموز التصميم الإماراتية وحرفية التلي والخوص، ومجوهرات وقطع أسلوب حياة للمرأة المعاصرة.',
     fr:
-      'À propos de Bint Saeed — maison d’abayas de luxe à Abu Dhabi : design ancré dans le patrimoine émirati, savoir‑faire Al Talli & Khous, bijoux et lifestyle.',
+      'À propos de Bint Saeed, maison d’abayas de luxe à Abu Dhabi : design ancré dans le patrimoine émirati, savoir‑faire Al Talli & Khous, bijoux et lifestyle.',
     it:
-      'Chi è Bint Saeed — casa di abaya di lusso con radici ad Abu Dhabi: codici di design emiratini, artigianato Al Talli e Khous, gioielli e lifestyle.',
+      'Chi è Bint Saeed, casa di abaya di lusso con radici ad Abu Dhabi: codici di design emiratini, artigianato Al Talli e Khous, gioielli e lifestyle.',
     es:
-      'Sobre Bint Saeed — casa de abayas de lujo con base en Abu Dhabi: diseño ligado al patrimonio emiratí, artesanía Al Talli y Khous, joyas y lifestyle.',
+      'Sobre Bint Saeed, casa de abayas de lujo con base en Abu Dhabi: diseño ligado al patrimonio emiratí, artesanía Al Talli y Khous, joyas y lifestyle.',
     ru:
       'О бренде Bint Saeed — дом роскошных абай в Абу‑Даби: эмиратские дизайн‑коды, ремесло Аль‑Талли и Хаус, украшения и предметы lifestyle.',
     zh:
       '关于 Bint Saeed：创立于阿布扎比的奢华阿巴亚品牌，延续阿联酋美学与阿勒塔利、赫乌斯工艺，并提供珠宝与生活方式单品。',
     de:
-      'Über Bint Saeed — Luxus‑Abaya‑Haus in Abu Dhabi: erbegeprägte Silhouetten, Al‑Talli & Khous, Schmuck und Lifestyle‑Stücke.',
+      'Über Bint Saeed, Luxus‑Abaya‑Haus in Abu Dhabi: erbegeprägte Silhouetten, Al‑Talli & Khous, Schmuck und Lifestyle‑Stücke.',
     nl:
-      'Over Bint Saeed — luxe abayahuis in Abu Dhabi: emiratisch design, vakmanschap Al Talli & Khous, sieraden en lifestyle‑objecten.',
+      'Over Bint Saeed, luxe abayahuis in Abu Dhabi: emiratisch design, vakmanschap Al Talli & Khous, sieraden en lifestyle‑objecten.',
     pt:
-      'Sobre a Bint Saeed — casa de abayas de luxo em Abu Dhabi: design ligado ao património emiradense, ofício Al Talli e Khous, joalharia e lifestyle.',
+      'Sobre a Bint Saeed, casa de abayas de luxo em Abu Dhabi: design ligado ao património emiradense, ofício Al Talli e Khous, joalharia e lifestyle.',
   },
   contact: {
     en:
@@ -133,25 +133,25 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   heritage: {
     en:
-      'UAE cultural heritage from Abu Dhabi: Al Talli embroidery, Al Khous palm weaving, Sadu Bedouin textiles, and the battoulah gold burqa mask — Emirati crafts explored by Bint Saeed.',
+      'UAE cultural heritage and Abu Dhabi culture: Al Talli, Al Khous, Sadu, battoulah gold mask, and Emirati crafts from an Abu Dhabi fashion house, Bint Saeed.',
     ar:
-      'تراث الإمارات الثقافي من أبوظبي: تطريز التلي، نسيج الخوص، السدو، والبرقع الذهبي — حرف إماراتية تستكشفها بنت سعيد.',
+      'تراث الإمارات الثقافي من أبوظبي: تطريز التلي، نسيج الخوص، السدو، والبرقع الذهبي, حرف إماراتية تستكشفها بنت سعيد.',
     fr:
-      'Patrimoine culturel des EAU depuis Abu Dhabi : Al Talli, Al Khous, Sadu et le masque d’or battoulah — artisanats émiratis explorés par Bint Saeed.',
+      'Patrimoine culturel des EAU depuis Abu Dhabi : Al Talli, Al Khous, Sadu et le masque d’or battoulah, artisanats émiratis explorés par Bint Saeed.',
     it:
-      'Patrimonio culturale degli EAU da Abu Dhabi: Al Talli, Al Khous, Sadu e la maschera d’oro battoulah — mestieri emiratini esplorati da Bint Saeed.',
+      'Patrimonio culturale degli EAU da Abu Dhabi: Al Talli, Al Khous, Sadu e la maschera d’oro battoulah, mestieri emiratini esplorati da Bint Saeed.',
     es:
-      'Patrimonio cultural de EAU desde Abu Dabi: Al Talli, Al Khous, Sadu y la máscara de oro battoulah — oficios emiratíes explorados por Bint Saeed.',
+      'Patrimonio cultural de EAU desde Abu Dabi: Al Talli, Al Khous, Sadu y la máscara de oro battoulah, oficios emiratíes explorados por Bint Saeed.',
     ru:
-      'Культурное наследие ОАЭ из Абу-Даби: Al Talli, Al Khous, Sadu и золотая маска баттула — эмиратские ремёсла в контексте Bint Saeed.',
+      'Культурное наследие ОАЭ из Абу-Даби: Al Talli, Al Khous, Sadu и золотая маска баттула, эмиратские ремёсла в контексте Bint Saeed.',
     zh:
-      '阿布扎比视角下的阿联酋文化遗产：Al Talli 刺绣、Al Khous 棕榈编织、Sadu 与金面罩 battoulah — Bint Saeed 探索的阿联酋工艺。',
+      '阿布扎比视角下的阿联酋文化遗产：Al Talli 刺绣、Al Khous 棕榈编织、Sadu 与金面罩 battoulah, Bint Saeed 探索的阿联酋工艺。',
     de:
-      'Kulturerbe der VAE aus Abu Dhabi: Al Talli, Al Khous, Sadu und die goldene Battoulah-Maske — emiratische Handwerke bei Bint Saeed.',
+      'Kulturerbe der VAE aus Abu Dhabi: Al Talli, Al Khous, Sadu und die goldene Battoulah-Maske, emiratische Handwerke bei Bint Saeed.',
     nl:
-      'Cultureel erfgoed van de VAE vanuit Abu Dhabi: Al Talli, Al Khous, Sadu en het gouden battoulah-masker — Emiratische ambachten bij Bint Saeed.',
+      'Cultureel erfgoed van de VAE vanuit Abu Dhabi: Al Talli, Al Khous, Sadu en het gouden battoulah-masker, Emiratische ambachten bij Bint Saeed.',
     pt:
-      'Património cultural dos EAU a partir de Abu Dhabi: Al Talli, Al Khous, Sadu e a máscara de ouro battoulah — ofícios emirati explorados pela Bint Saeed.',
+      'Património cultural dos EAU a partir de Abu Dhabi: Al Talli, Al Khous, Sadu e a máscara de ouro battoulah, ofícios emirati explorados pela Bint Saeed.',
   },
   heritage_al_talli: {
     en:
@@ -165,11 +165,11 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
     es:
       'Descubre Al Talli, el oficio emiratí tradicional tejido con hilos metálicos por generaciones de mujeres, y cómo su patrimonio continúa en la moda contemporánea.',
     ru:
-      'Узнайте об Al Talli — традиционном эмиратском ремесле с металлическими нитями, передаваемом поколениями женщин, и о том, как это наследие живёт в современной моде.',
+      'Узнайте об Al Talli, традиционном эмиратском ремесле с металлическими нитями, передаваемом поколениями женщин, и о том, как это наследие живёт в современной моде.',
     zh:
       '了解 Al Talli：由一代代女性用金属线织就的阿联酋传统工艺，以及这一传承如何延续于当代时装。',
     de:
-      'Entdecken Sie Al Talli, das traditionelle emiratische Handwerk mit Metallfäden, weitergegeben von Generationen von Frauen — und wie dieses Erbe in zeitgenössischer Mode weiterlebt.',
+      'Entdecken Sie Al Talli, das traditionelle emiratische Handwerk mit Metallfäden, weitergegeben von Generationen von Frauen, und wie dieses Erbe in zeitgenössischer Mode weiterlebt.',
     nl:
       'Ontdek Al Talli, het traditionele Emiratische ambacht met metallic draden, doorgegeven door generaties vrouwen, en hoe dit erfgoed doorleeft in hedendaagse mode.',
     pt:
@@ -177,47 +177,47 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   heritage_khous: {
     en:
-      'Al Khous palm-frond weaving — Emirati craft of the date palm, from Abu Dhabi heritage to contemporary design reading at Bint Saeed.',
+      'Al Khous palm-frond weaving, Emirati craft of the date palm, from Abu Dhabi heritage to contemporary design reading at Bint Saeed.',
     ar:
-      'نسيج الخوص من سعف نخيل التمر — حرفة إماراتية من تراث أبوظبي إلى قراءة تصميمية معاصرة في بنت سعيد.',
+      'نسيج الخوص من سعف نخيل التمر, حرفة إماراتية من تراث أبوظبي إلى قراءة تصميمية معاصرة في بنت سعيد.',
     fr:
-      'Tissage Al Khous en palmes de dattier — artisanat émirati d’Abu Dhabi, lu dans le design contemporain Bint Saeed.',
+      'Tissage Al Khous en palmes de dattier, artisanat émirati d’Abu Dhabi, lu dans le design contemporain Bint Saeed.',
     it:
-      'Al Khous — intreccio di foglie di palma da dattero, mestiere emiratino di Abu Dhabi nella lettura contemporanea Bint Saeed.',
+      'Al Khous, intreccio di foglie di palma da dattero, mestiere emiratino di Abu Dhabi nella lettura contemporanea Bint Saeed.',
     es:
-      'Al Khous — tejido de hojas de palmera datilera, oficio emiratí de Abu Dabi en la lectura contemporánea Bint Saeed.',
+      'Al Khous, tejido de hojas de palmera datilera, oficio emiratí de Abu Dabi en la lectura contemporánea Bint Saeed.',
     ru:
-      'Al Khous — плетение листьев финиковой пальмы, эмиратское ремесло Абу-Даби в современном прочтении Bint Saeed.',
+      'Al Khous, плетение листьев финиковой пальмы, эмиратское ремесло Абу-Даби в современном прочтении Bint Saeed.',
     zh:
-      'Al Khous 椰枣棕榈叶编织——阿布扎比阿联酋工艺，在 Bint Saeed 当代设计中的解读。',
+      'Al Khous 椰枣棕榈叶编织：阿布扎比阿联酋工艺，在 Bint Saeed 当代设计中的解读。',
     de:
-      'Al Khous — Palmblattflechten der Dattelpalme, emiratisches Handwerk aus Abu Dhabi in der zeitgenössischen Lesart von Bint Saeed.',
+      'Al Khous, Palmblattflechten der Dattelpalme, emiratisches Handwerk aus Abu Dhabi in der zeitgenössischen Lesart von Bint Saeed.',
     nl:
-      'Al Khous — vlechten van dadelpalmbladeren, Emiratisch ambacht uit Abu Dhabi in de hedendaagse lezing van Bint Saeed.',
+      'Al Khous, vlechten van dadelpalmbladeren, Emiratisch ambacht uit Abu Dhabi in de hedendaagse lezing van Bint Saeed.',
     pt:
-      'Al Khous — entrelaçamento de folhas de palmeira-datileira, ofício emirati de Abu Dhabi na leitura contemporânea Bint Saeed.',
+      'Al Khous, entrelaçamento de folhas de palmeira-datileira, ofício emirati de Abu Dhabi na leitura contemporânea Bint Saeed.',
   },
   heritage_sadu: {
     en:
-      'Sadu (Al Sadu) Bedouin weaving of the UAE — UNESCO Representative List heritage, geometric desert language explored by Bint Saeed in Abu Dhabi.',
+      'Sadu (Al Sadu) Bedouin weaving of the UAE, UNESCO Representative List heritage, geometric desert language explored by Bint Saeed in Abu Dhabi.',
     ar:
-      'السدو — نسيج بدوي إماراتي مدرج في القائمة التمثيلية لليونسكو؛ لغة هندسية صحراوية تستكشفها بنت سعيد في أبوظبي.',
+      'السدو, نسيج بدوي إماراتي مدرج في القائمة التمثيلية لليونسكو؛ لغة هندسية صحراوية تستكشفها بنت سعيد في أبوظبي.',
     fr:
-      'Sadu (Al Sadu) — tissage bédouin des EAU sur la Liste représentative de l’UNESCO ; géométrie du désert explorée par Bint Saeed à Abu Dhabi.',
+      'Sadu (Al Sadu), tissage bédouin des EAU sur la Liste représentative de l’UNESCO ; géométrie du désert explorée par Bint Saeed à Abu Dhabi.',
     it:
-      'Sadu (Al Sadu) — tessitura beduina degli EAU nella Lista rappresentativa UNESCO; geometria del deserto esplorata da Bint Saeed ad Abu Dhabi.',
+      'Sadu (Al Sadu), tessitura beduina degli EAU nella Lista rappresentativa UNESCO; geometria del deserto esplorata da Bint Saeed ad Abu Dhabi.',
     es:
-      'Sadu (Al Sadu) — tejido beduino de EAU en la Lista Representativa de la UNESCO; geometría del desierto explorada por Bint Saeed en Abu Dabi.',
+      'Sadu (Al Sadu), tejido beduino de EAU en la Lista Representativa de la UNESCO; geometría del desierto explorada por Bint Saeed en Abu Dabi.',
     ru:
-      'Sadu (Al Sadu) — бедуинское ткачество ОАЭ в Репрезентативном списке ЮНЕСКО; геометрия пустыни в прочтении Bint Saeed в Абу-Даби.',
+      'Sadu (Al Sadu), бедуинское ткачество ОАЭ в Репрезентативном списке ЮНЕСКО; геометрия пустыни в прочтении Bint Saeed в Абу-Даби.',
     zh:
-      'Sadu（Al Sadu）——列入教科文组织代表作名录的阿联酋贝都因织造；阿布扎比 Bint Saeed 探索的沙漠几何语言。',
+      'Sadu（Al Sadu）：列入教科文组织代表作名录的阿联酋贝都因织造；阿布扎比 Bint Saeed 探索的沙漠几何语言。',
     de:
-      'Sadu (Al Sadu) — beduinische Webkunst der VAE auf der Repräsentativen Liste der UNESCO; Wüstengeometrie bei Bint Saeed in Abu Dhabi.',
+      'Sadu (Al Sadu), beduinische Webkunst der VAE auf der Repräsentativen Liste der UNESCO; Wüstengeometrie bei Bint Saeed in Abu Dhabi.',
     nl:
-      'Sadu (Al Sadu) — Bedoeïense weefkunst van de VAE op de Representatieve Lijst van UNESCO; woestijngeometrie bij Bint Saeed in Abu Dhabi.',
+      'Sadu (Al Sadu), Bedoeïense weefkunst van de VAE op de Representatieve Lijst van UNESCO; woestijngeometrie bij Bint Saeed in Abu Dhabi.',
     pt:
-      'Sadu (Al Sadu) — tecelagem beduína dos EAU na Lista Representativa da UNESCO; geometria do deserto explorada pela Bint Saeed em Abu Dhabi.',
+      'Sadu (Al Sadu), tecelagem beduína dos EAU na Lista Representativa da UNESCO; geometria do deserto explorada pela Bint Saeed em Abu Dhabi.',
   },
   accessories: {
     en:
@@ -507,35 +507,35 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   the_codes: {
     en:
-      'Bint Saeed | The Codes — design principles behind luxury abayas in Abu Dhabi: heritage references, silhouette discipline and contemporary dressing.',
+      'Bint Saeed | The Codes, design principles behind luxury abayas in Abu Dhabi: heritage references, silhouette discipline and contemporary dressing.',
     ar:
-      'بِنت سعيد | الرموز — مبادئ التصميم لعباءات فاخرة في أبوظبي: الإحالة إلى التراث، وضبط القصّة، واللباس المعاصر.',
+      'بِنت سعيد | الرموز, مبادئ التصميم لعباءات فاخرة في أبوظبي: الإحالة إلى التراث، وضبط القصّة، واللباس المعاصر.',
     fr:
-      'Bint Saeed | The Codes — principes de création des abayas de luxe à Abu Dhabi : patrimoine, coupe précise et silhouette contemporaine.',
+      'Bint Saeed | The Codes, principes de création des abayas de luxe à Abu Dhabi : patrimoine, coupe précise et silhouette contemporaine.',
     it:
-      'Bint Saeed | The Codes — principi progettuali delle abaya luxury ad Abu Dhabi: heritage, silhouette rigorosa e vestire contemporaneo.',
+      'Bint Saeed | The Codes, principi progettuali delle abaya luxury ad Abu Dhabi: heritage, silhouette rigorosa e vestire contemporaneo.',
     es:
       'Bint Saeed | The Codes — principios de diseño de abayas de lujo en Abu Dhabi: legado, silueta y vestir contemporáneo.',
     ru:
-      'Bint Saeed | The Codes — принципы дизайна роскошных абай в Абу‑Даби: наследие, дисциплина кроя и современная эстетика.',
+      'Bint Saeed | The Codes, принципы дизайна роскошных абай в Абу‑Даби: наследие, дисциплина кроя и современная эстетика.',
     zh:
       'Bint Saeed | 设计准则 — 阿布扎比奢华阿巴亚的创作原则：传承参照、剪裁克制与当代着装。',
     de:
       'Bint Saeed | The Codes — Designprinzipien der Luxus‑Abayas in Abu Dhabi: Erbe, Schnittführung und zeitgemäße Silhouette.',
     nl:
-      'Bint Saeed | The Codes — ontwerpprincipes van luxe abaya’s in Abu Dhabi: erfgoed, silhouetdiscipline en hedendaagse stijl.',
+      'Bint Saeed | The Codes, ontwerpprincipes van luxe abaya’s in Abu Dhabi: erfgoed, silhouetdiscipline en hedendaagse stijl.',
     pt:
       'Bint Saeed | The Codes — princípios de design das abayas de luxo em Abu Dhabi: legado, silhueta e vestir contemporâneo.',
   },
   craftsmanship: {
     en:
-      'Craftsmanship — how Bint Saeed atelier standards in Abu Dhabi elevate luxury abayas through heritage techniques and meticulous finishing.',
+      'Craftsmanship, how Bint Saeed atelier standards in Abu Dhabi elevate luxury abayas through heritage techniques and meticulous finishing.',
     ar:
       'الحرفية، معايير ورشة بِنت سعيد في أبوظبي لرفع جودة العباءات الفاخرة عبر تقنيات تراثية وتشطيبات دقيقة.',
     fr:
       'Artisanat — standards d’atelier Bint Saeed à Abu Dhabi pour sublimer les abayas de luxe via savoir‑faire et finitions précises.',
     it:
-      'Artigianato — standard di laboratorio Bint Saeed ad Abu Dhabi per abaya luxury con tecniche heritage e finiture curate.',
+      'Artigianato, standard di laboratorio Bint Saeed ad Abu Dhabi per abaya luxury con tecniche heritage e finiture curate.',
     es:
       'Artesanía — estándares de taller Bint Saeed en Abu Dhabi para abayas de lujo con técnicas tradicionales y acabados finos.',
     ru:
@@ -543,9 +543,9 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
     zh:
       '工艺：阿布扎比 Bint Saeed 工坊标准，传统技法与精工细节打造奢华阿巴亚。',
     de:
-      'Handwerk — Atelier‑Standards von Bint Saeed in Abu Dhabi für Luxus‑Abayas mit Heritage‑Techniken und feinen Finishings.',
+      'Handwerk, Atelier‑Standards von Bint Saeed in Abu Dhabi für Luxus‑Abayas mit Heritage‑Techniken und feinen Finishings.',
     nl:
-      'Vakmanschap — atelierstandaarden van Bint Saeed in Abu Dhabi voor luxe abaya’s met erfgoedtechnieken en precieze afwerking.',
+      'Vakmanschap, atelierstandaarden van Bint Saeed in Abu Dhabi voor luxe abaya’s met erfgoedtechnieken en precieze afwerking.',
     pt:
       'Artesanato — padrões de atelier da Bint Saeed em Abu Dhabi para abayas de luxo com técnicas tradicionais e acabamentos finos.',
   },
@@ -639,15 +639,15 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
   },
   giving_forward: {
     en:
-      'Giving Forward — community initiatives aligned with Bint Saeed values in Abu Dhabi: heritage stewardship and purposeful luxury beyond product.',
+      'Giving Forward, community initiatives aligned with Bint Saeed values in Abu Dhabi: heritage stewardship and purposeful luxury beyond product.',
     ar:
       'المبادرة الإنسانية، مبادرات مجتمعية تتوافق مع قيم بِنت سعيد في أبوظبي؛ الحفاظ على التراث وفخامة ذات غرض يتجاوز المنتج.',
     fr:
-      'Giving Forward — initiatives portées par Bint Saeed à Abu Dhabi autour du patrimoine et d’un luxe engagé.',
+      'Giving Forward, initiatives portées par Bint Saeed à Abu Dhabi autour du patrimoine et d’un luxe engagé.',
     it:
-      'Giving Forward — progetti community legati ai valori Bint Saeed ad Abu Dhabi tra patrimonio e lusso consapevole.',
+      'Giving Forward, progetti community legati ai valori Bint Saeed ad Abu Dhabi tra patrimonio e lusso consapevole.',
     es:
-      'Giving Forward — iniciativas comunitarias de Bint Saeed en Abu Dhabi ligadas al patrimonio y al lujo con propósito.',
+      'Giving Forward, iniciativas comunitarias de Bint Saeed en Abu Dhabi ligadas al patrimonio y al lujo con propósito.',
     ru:
       'Giving Forward — инициативы Bint Saeed в Абу‑Даби о наследии и осмысленном люксе.',
     zh:
@@ -655,19 +655,19 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
     de:
       'Giving Forward — Gemeinschaftsprojekte von Bint Saeed in Abu Dhabi zu Erbe und Luxus mit Verantwortung.',
     nl:
-      'Giving Forward — community‑initiatieven van Bint Saeed in Abu Dhabi rond erfgoed en luxe met betekenis.',
+      'Giving Forward, community‑initiatieven van Bint Saeed in Abu Dhabi rond erfgoed en luxe met betekenis.',
     pt:
       'Giving Forward — iniciativas da Bint Saeed em Abu Dhabi sobre património e luxo com propósito.',
   },
   careers: {
     en:
-      'Careers — discover roles at Bint Saeed, Abu Dhabi luxury abaya house. Craft, client experience and operations opportunities where heritage meets innovation.',
+      'Careers, discover roles at Bint Saeed, Abu Dhabi luxury abaya house. Craft, client experience and operations opportunities where heritage meets innovation.',
     ar:
       'الوظائف، استكشفي فرص العمل في بِنت سعيد، دار عبايات فاخرة في أبوظبي؛ حرفية وتجربة عميل وعمليات تجمع بين التراث والابتكار.',
     fr:
-      'Carrières — opportunités chez Bint Saeed à Abu Dhabi : atelier, expérience client et opérations entre patrimoine et innovation.',
+      'Carrières, opportunités chez Bint Saeed à Abu Dhabi : atelier, expérience client et opérations entre patrimoine et innovation.',
     it:
-      'Carriere — opportunità in Bint Saeed ad Abu Dhabi: laboratorio, retail e operations tra heritage e innovazione.',
+      'Carriere, opportunità in Bint Saeed ad Abu Dhabi: laboratorio, retail e operations tra heritage e innovazione.',
     es:
       'Empleo — oportunidades en Bint Saeed Abu Dhabi: taller, experiencia de cliente y operaciones entre legado e innovación.',
     ru:
@@ -677,7 +677,7 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
     de:
       'Karriere — Jobs bei Bint Saeed in Abu Dhabi: Atelier, Client Experience und Operations zwischen Erbe und Innovation.',
     nl:
-      'Vacatures — werken bij Bint Saeed Abu Dhabi: atelier, klantbeleving en operatie tussen erfgoed en innovatie.',
+      'Vacatures, werken bij Bint Saeed Abu Dhabi: atelier, klantbeleving en operatie tussen erfgoed en innovatie.',
     pt:
       'Carreiras — oportunidades na Bint Saeed em Abu Dhabi: oficina, experiência do cliente e operações entre legado e inovação.',
   },

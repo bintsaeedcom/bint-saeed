@@ -28,7 +28,7 @@ const KEYWORDS_EN = [
 ].join(', ')
 
 /**
- * Indexable Al Khous heritage chapter — soft discovery (not primary nav).
+ * Indexable Al Khous heritage chapter, soft discovery (not primary nav).
  */
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale()
@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const copy = getKhousPageCopy(locale)
 
   return {
-    ...sectionRobotsMetadata,
+...sectionRobotsMetadata,
     title: { absolute: title },
     description,
     keywords: KEYWORDS_EN,
@@ -56,7 +56,7 @@ export async function generateMetadata(): Promise<Metadata> {
       authors: ['Bint Saeed'],
       section: 'Heritage',
       tags: ['Al Khous', 'Khous', 'Emirati heritage', 'Abu Dhabi', 'UAE'],
-      images: [{ url: ogImage, alt: `${copy.heroTitle} — Emirati palm-frond weaving` }],
+      images: [{ url: ogImage, alt: `${copy.heroTitle}, Emirati palm-frond weaving` }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -65,7 +65,7 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [ogImage],
     },
     other: {
-      'ai:topic': 'Al Khous — Emirati palm-frond weaving, UAE heritage crafts, Abu Dhabi',
+      'ai:topic': 'Al Khous, Emirati palm-frond weaving, UAE heritage crafts, Abu Dhabi',
       'ai:entity': 'Al Khous; Khous; الخوص; palm frond weaving; Emirati craft; Abu Dhabi; UAE; Bint Saeed',
       'ai:place': 'Abu Dhabi, United Arab Emirates',
       'ai:citation': LLMS_BRIEF,

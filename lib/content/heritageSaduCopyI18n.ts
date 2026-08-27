@@ -169,26 +169,26 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
     storyEyebrow: 'Héritage du désert',
     storyTitle: 'Tissu du désert',
     storyP1: 'Le Sadu est l’art traditionnel du tissage bédouin pratiqué par les femmes à travers la péninsule Arabique depuis des millénaires. Essentiel à la vie du désert, il tissait tentes, coussins et sacs de chameau.',
-    storyP2: 'Chaque motif du Sadu porte un sens et raconte une histoire. Lignes, triangles et carrés ne sont pas de simples ornements — ce sont des symboles de la nature, des animaux et de la vie dans le désert.',
+    storyP2: 'Chaque motif du Sadu porte un sens et raconte une histoire. Lignes, triangles et carrés ne sont pas de simples ornements, ce sont des symboles de la nature, des animaux et de la vie dans le désert.',
     symbolsEyebrow: 'Symboles',
     symbolsTitle: 'Motifs porteurs de sens',
     symbolsLead: 'Chaque motif du Sadu porte une symbolique profonde transmise de génération en génération',
     patterns: [
       {
         name: 'Al Shajara',
-        meaning: 'Arbre de vie — croissance et force'
+        meaning: 'Arbre de vie, croissance et force'
       },
       {
         name: 'Al \'Ayin',
-        meaning: 'L’œil — protection contre le mal'
+        meaning: 'L’œil, protection contre le mal'
       },
       {
         name: 'Al Rakham',
-        meaning: 'Le vautour — symbole de sagesse'
+        meaning: 'Le vautour, symbole de sagesse'
       },
       {
         name: 'Al Dhulla',
-        meaning: 'La côte — représentation de la force'
+        meaning: 'La côte, représentation de la force'
       }
     ],
     unescoEyebrow: 'Reconnaissance mondiale',
@@ -203,22 +203,22 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
       {
         name: 'Noir',
         hex: '#1a1a1a',
-        meaning: 'Poil de chèvre — les tentes bédouines'
+        meaning: 'Poil de chèvre, les tentes bédouines'
       },
       {
         name: 'Blanc',
         hex: '#f5f5f5',
-        meaning: 'Laine de mouton — pureté'
+        meaning: 'Laine de mouton, pureté'
       },
       {
         name: 'Rouge',
         hex: '#6f1524',
-        meaning: 'Teinture naturelle de grenade — célébration'
+        meaning: 'Teinture naturelle de grenade, célébration'
       },
       {
         name: 'Orange',
         hex: '#d4804a',
-        meaning: 'Safran — soleil du désert'
+        meaning: 'Safran, soleil du désert'
       }
     ],
     brandEyebrow: 'Bint Saeed × Sadu',
@@ -233,26 +233,26 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
     storyEyebrow: 'Eredità del deserto',
     storyTitle: 'Tessuto del deserto',
     storyP1: 'Il Sadu è l’arte tradizionale della tessitura beduina praticata dalle donne in tutta la Penisola Arabica da millenni. Essenziale alla vita del deserto, tesseva tende, cuscini e bisacce da cammello.',
-    storyP2: 'Ogni motivo del Sadu porta un significato e racconta una storia. Linee, triangoli e quadrati non sono meri ornamenti — sono simboli di natura, animali e vita nel deserto.',
+    storyP2: 'Ogni motivo del Sadu porta un significato e racconta una storia. Linee, triangoli e quadrati non sono meri ornamenti, sono simboli di natura, animali e vita nel deserto.',
     symbolsEyebrow: 'Simboli',
     symbolsTitle: 'Motivi con significato',
     symbolsLead: 'Ogni motivo del Sadu porta un simbolismo profondo tramandato di generazione in generazione',
     patterns: [
       {
         name: 'Al Shajara',
-        meaning: 'Albero della vita — crescita e forza'
+        meaning: 'Albero della vita, crescita e forza'
       },
       {
         name: 'Al \'Ayin',
-        meaning: 'L’occhio — protezione dal male'
+        meaning: 'L’occhio, protezione dal male'
       },
       {
         name: 'Al Rakham',
-        meaning: 'L’avvoltoio — simbolo di saggezza'
+        meaning: 'L’avvoltoio, simbolo di saggezza'
       },
       {
         name: 'Al Dhulla',
-        meaning: 'La costola — rappresentazione della forza'
+        meaning: 'La costola, rappresentazione della forza'
       }
     ],
     unescoEyebrow: 'Riconoscimento globale',
@@ -267,22 +267,22 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
       {
         name: 'Nero',
         hex: '#1a1a1a',
-        meaning: 'Pelo di capra — le tende beduine'
+        meaning: 'Pelo di capra, le tende beduine'
       },
       {
         name: 'Bianco',
         hex: '#f5f5f5',
-        meaning: 'Lana di pecora — purezza'
+        meaning: 'Lana di pecora, purezza'
       },
       {
         name: 'Rosso',
         hex: '#6f1524',
-        meaning: 'Tintura naturale di melograno — celebrazione'
+        meaning: 'Tintura naturale di melograno, celebrazione'
       },
       {
         name: 'Arancio',
         hex: '#d4804a',
-        meaning: 'Zafferano — sole del deserto'
+        meaning: 'Zafferano, sole del deserto'
       }
     ],
     brandEyebrow: 'Bint Saeed × Sadu',
@@ -304,19 +304,19 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
     patterns: [
       {
         name: 'Al Shajara',
-        meaning: 'Árbol de la vida — crecimiento y fuerza'
+        meaning: 'Árbol de la vida, crecimiento y fuerza'
       },
       {
         name: 'Al \'Ayin',
-        meaning: 'El ojo — protección contra el mal'
+        meaning: 'El ojo, protección contra el mal'
       },
       {
         name: 'Al Rakham',
-        meaning: 'El buitre — símbolo de sabiduría'
+        meaning: 'El buitre, símbolo de sabiduría'
       },
       {
         name: 'Al Dhulla',
-        meaning: 'La costilla — representación de la fuerza'
+        meaning: 'La costilla, representación de la fuerza'
       }
     ],
     unescoEyebrow: 'Reconocimiento mundial',
@@ -331,22 +331,22 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
       {
         name: 'Negro',
         hex: '#1a1a1a',
-        meaning: 'Pelo de cabra — las tiendas beduinas'
+        meaning: 'Pelo de cabra, las tiendas beduinas'
       },
       {
         name: 'Blanco',
         hex: '#f5f5f5',
-        meaning: 'Lana de oveja — pureza'
+        meaning: 'Lana de oveja, pureza'
       },
       {
         name: 'Rojo',
         hex: '#6f1524',
-        meaning: 'Tinte natural de granada — celebración'
+        meaning: 'Tinte natural de granada, celebración'
       },
       {
         name: 'Naranja',
         hex: '#d4804a',
-        meaning: 'Azafrán — sol del desierto'
+        meaning: 'Azafrán, sol del desierto'
       }
     ],
     brandEyebrow: 'Bint Saeed × Sadu',
@@ -360,27 +360,27 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
     heroSubtitle: 'Традиционное бедуинское искусство ткачества',
     storyEyebrow: 'Наследие пустыни',
     storyTitle: 'Ткань пустыни',
-    storyP1: 'Sadu — традиционное бедуинское ткачество, которым бедуинские женщины занимались на Аравийском полуострове тысячелетиями. Необходимое для жизни в пустыне, оно ткало шатры, подушки и верблюжьи сумки.',
-    storyP2: 'Каждый узор Sadu несёт смысл и рассказывает историю. Линии, треугольники и квадраты — не просто украшения, а символы природы, животных и жизни в пустыне.',
+    storyP1: 'Sadu, традиционное бедуинское ткачество, которым бедуинские женщины занимались на Аравийском полуострове тысячелетиями. Необходимое для жизни в пустыне, оно ткало шатры, подушки и верблюжьи сумки.',
+    storyP2: 'Каждый узор Sadu несёт смысл и рассказывает историю. Линии, треугольники и квадраты, не просто украшения, а символы природы, животных и жизни в пустыне.',
     symbolsEyebrow: 'Символы',
     symbolsTitle: 'Узоры со смыслом',
     symbolsLead: 'Каждый узор Sadu несёт глубокую символику, передаваемую поколениями',
     patterns: [
       {
         name: 'Al Shajara',
-        meaning: 'Древо жизни — рост и сила'
+        meaning: 'Древо жизни, рост и сила'
       },
       {
         name: 'Al \'Ayin',
-        meaning: 'Глаз — защита от зла'
+        meaning: 'Глаз, защита от зла'
       },
       {
         name: 'Al Rakham',
-        meaning: 'Стервятник — символ мудрости'
+        meaning: 'Стервятник, символ мудрости'
       },
       {
         name: 'Al Dhulla',
-        meaning: 'Ребро — воплощение силы'
+        meaning: 'Ребро, воплощение силы'
       }
     ],
     unescoEyebrow: 'Мировое признание',
@@ -395,28 +395,28 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
       {
         name: 'Чёрный',
         hex: '#1a1a1a',
-        meaning: 'Козья шерсть — бедуинские шатры'
+        meaning: 'Козья шерсть, бедуинские шатры'
       },
       {
         name: 'Белый',
         hex: '#f5f5f5',
-        meaning: 'Овечья шерсть — чистота'
+        meaning: 'Овечья шерсть, чистота'
       },
       {
         name: 'Красный',
         hex: '#6f1524',
-        meaning: 'Натуральный краситель из граната — праздник'
+        meaning: 'Натуральный краситель из граната, праздник'
       },
       {
         name: 'Оранжевый',
         hex: '#d4804a',
-        meaning: 'Шафран — солнце пустыни'
+        meaning: 'Шафран, солнце пустыни'
       }
     ],
     brandEyebrow: 'Bint Saeed × Sadu',
     brandTitle: 'Дух пустыни в наших моделях',
     brandP1: 'Смелые узоры и тёплые цвета Sadu вдохновляют нас в Bint Saeed. Мы вплетаем традиционную геометрию в вышивку и пустынную палитру в ткани.',
-    brandP2: 'Некоторые эксклюзивные вещи украшены лентами ручного ткачества по подлинным техникам Sadu — в сотрудничестве с бедуинскими мастерицами, хранящими это наследие.'
+    brandP2: 'Некоторые эксклюзивные вещи украшены лентами ручного ткачества по подлинным техникам Sadu, в сотрудничестве с бедуинскими мастерицами, хранящими это наследие.'
   },
   zh: {
     heroTag: '教科文组织遗产',
@@ -425,26 +425,26 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
     storyEyebrow: '沙漠传承',
     storyTitle: '沙漠之织物',
     storyP1: 'Sadu 是贝都因女性在阿拉伯半岛延续数千年的传统编织艺术。它是沙漠生活的必需，用以编织帐篷、靠垫与骆驼袋。',
-    storyP2: 'Sadu 的每一纹样皆有深意并讲述故事。线条、三角与方块并非单纯装饰——它们是自然、动物与沙漠生活的象征。',
+    storyP2: 'Sadu 的每一纹样皆有深意并讲述故事。线条、三角与方块并非单纯装饰：它们是自然、动物与沙漠生活的象征。',
     symbolsEyebrow: '象征',
     symbolsTitle: '有意义的纹样',
     symbolsLead: 'Sadu 的每一纹样都承载代代相传的深层象征',
     patterns: [
       {
         name: 'Al Shajara',
-        meaning: '生命之树——象征生长与力量'
+        meaning: '生命之树：象征生长与力量'
       },
       {
         name: 'Al \'Ayin',
-        meaning: '眼睛——抵御邪恶'
+        meaning: '眼睛：抵御邪恶'
       },
       {
         name: 'Al Rakham',
-        meaning: '秃鹫——智慧之象征'
+        meaning: '秃鹫：智慧之象征'
       },
       {
         name: 'Al Dhulla',
-        meaning: '肋骨——力量的呈现'
+        meaning: '肋骨：力量的呈现'
       }
     ],
     unescoEyebrow: '全球认可',
@@ -459,22 +459,22 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
       {
         name: '黑',
         hex: '#1a1a1a',
-        meaning: '山羊毛——贝都因帐篷'
+        meaning: '山羊毛：贝都因帐篷'
       },
       {
         name: '白',
         hex: '#f5f5f5',
-        meaning: '绵羊毛——纯洁'
+        meaning: '绵羊毛：纯洁'
       },
       {
         name: '红',
         hex: '#6f1524',
-        meaning: '石榴天然染料——庆典'
+        meaning: '石榴天然染料：庆典'
       },
       {
         name: '橙',
         hex: '#d4804a',
-        meaning: '藏红花——沙漠之阳'
+        meaning: '藏红花：沙漠之阳'
       }
     ],
     brandEyebrow: 'Bint Saeed × Sadu',
@@ -489,26 +489,26 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
     storyEyebrow: 'Wüstenerbe',
     storyTitle: 'Gewebe der Wüste',
     storyP1: 'Sadu ist die traditionelle beduinische Webkunst, die Beduinenfrauen seit Jahrtausenden auf der Arabischen Halbinsel pflegen. Wesentlich für das Wüstenleben webten sie Zelte, Kissen und Kamelsätteltaschen.',
-    storyP2: 'Jedes Muster im Sadu trägt Sinn und erzählt eine Geschichte. Linien, Dreiecke und Quadrate sind keine bloßen Verzierungen — sie sind Symbole für Natur, Tiere und das Leben in der Wüste.',
+    storyP2: 'Jedes Muster im Sadu trägt Sinn und erzählt eine Geschichte. Linien, Dreiecke und Quadrate sind keine bloßen Verzierungen, sie sind Symbole für Natur, Tiere und das Leben in der Wüste.',
     symbolsEyebrow: 'Symbole',
     symbolsTitle: 'Muster mit Bedeutung',
     symbolsLead: 'Jedes Muster im Sadu trägt tiefe Symbolik, über Generationen weitergegeben',
     patterns: [
       {
         name: 'Al Shajara',
-        meaning: 'Baum des Lebens — Wachstum und Kraft'
+        meaning: 'Baum des Lebens, Wachstum und Kraft'
       },
       {
         name: 'Al \'Ayin',
-        meaning: 'Das Auge — Schutz vor dem Bösen'
+        meaning: 'Das Auge, Schutz vor dem Bösen'
       },
       {
         name: 'Al Rakham',
-        meaning: 'Der Geier — Symbol der Weisheit'
+        meaning: 'Der Geier, Symbol der Weisheit'
       },
       {
         name: 'Al Dhulla',
-        meaning: 'Die Rippe — Darstellung von Stärke'
+        meaning: 'Die Rippe, Darstellung von Stärke'
       }
     ],
     unescoEyebrow: 'Weltweite Anerkennung',
@@ -523,28 +523,28 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
       {
         name: 'Schwarz',
         hex: '#1a1a1a',
-        meaning: 'Ziegenhaar — beduinische Zelte'
+        meaning: 'Ziegenhaar, beduinische Zelte'
       },
       {
         name: 'Weiß',
         hex: '#f5f5f5',
-        meaning: 'Schafwolle — Reinheit'
+        meaning: 'Schafwolle, Reinheit'
       },
       {
         name: 'Rot',
         hex: '#6f1524',
-        meaning: 'Naturfarbe aus Granatapfel — Feier'
+        meaning: 'Naturfarbe aus Granatapfel, Feier'
       },
       {
         name: 'Orange',
         hex: '#d4804a',
-        meaning: 'Safran — Wüstensonne'
+        meaning: 'Safran, Wüstensonne'
       }
     ],
     brandEyebrow: 'Bint Saeed × Sadu',
     brandTitle: 'Wüstengeist in unseren Entwürfen',
     brandP1: 'Die kühnen Muster und warmen Farben des Sadu inspirieren uns bei Bint Saeed. Wir integrieren traditionelle Geometrien in Stickerei und eine wüsteninspirierte Palette in unsere Stoffe.',
-    brandP2: 'Einige exklusive Stücke tragen handgewebte Bänder mit authentischen Sadu-Techniken — in Zusammenarbeit mit beduinischen Handwerkerinnen, die dieses Erbe bewahren.'
+    brandP2: 'Einige exklusive Stücke tragen handgewebte Bänder mit authentischen Sadu-Techniken, in Zusammenarbeit mit beduinischen Handwerkerinnen, die dieses Erbe bewahren.'
   },
   nl: {
     heroTag: 'UNESCO-erfgoed',
@@ -553,26 +553,26 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
     storyEyebrow: 'Woestijnerfgoed',
     storyTitle: 'Weefsel van de woestijn',
     storyP1: 'Sadu is de traditionele Bedoeïense weefkunst die Bedoeïense vrouwen al duizenden jaren beoefenen op het Arabisch Schiereiland. Essentieel voor het woestijnleven weefden zij tenten, kussens en kameelzakken.',
-    storyP2: 'Elk patroon in Sadu draagt betekenis en vertelt een verhaal. Lijnen, driehoeken en vierkanten zijn geen loutere versiering — het zijn symbolen van natuur, dieren en het leven in de woestijn.',
+    storyP2: 'Elk patroon in Sadu draagt betekenis en vertelt een verhaal. Lijnen, driehoeken en vierkanten zijn geen loutere versiering, het zijn symbolen van natuur, dieren en het leven in de woestijn.',
     symbolsEyebrow: 'Symbolen',
     symbolsTitle: 'Patronen met betekenis',
     symbolsLead: 'Elk patroon in Sadu draagt diepe symboliek die generaties is doorgegeven',
     patterns: [
       {
         name: 'Al Shajara',
-        meaning: 'Levensboom — groei en kracht'
+        meaning: 'Levensboom, groei en kracht'
       },
       {
         name: 'Al \'Ayin',
-        meaning: 'Het oog — bescherming tegen het kwaad'
+        meaning: 'Het oog, bescherming tegen het kwaad'
       },
       {
         name: 'Al Rakham',
-        meaning: 'De gier — symbool van wijsheid'
+        meaning: 'De gier, symbool van wijsheid'
       },
       {
         name: 'Al Dhulla',
-        meaning: 'De rib — voorstelling van kracht'
+        meaning: 'De rib, voorstelling van kracht'
       }
     ],
     unescoEyebrow: 'Wereldwijde erkenning',
@@ -587,22 +587,22 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
       {
         name: 'Zwart',
         hex: '#1a1a1a',
-        meaning: 'Geitenhaar — Bedoeïense tenten'
+        meaning: 'Geitenhaar, Bedoeïense tenten'
       },
       {
         name: 'Wit',
         hex: '#f5f5f5',
-        meaning: 'Schapenwol — zuiverheid'
+        meaning: 'Schapenwol, zuiverheid'
       },
       {
         name: 'Rood',
         hex: '#6f1524',
-        meaning: 'Natuurlijke kleurstof van granaatappel — viering'
+        meaning: 'Natuurlijke kleurstof van granaatappel, viering'
       },
       {
         name: 'Oranje',
         hex: '#d4804a',
-        meaning: 'Saffraan — woestijnzon'
+        meaning: 'Saffraan, woestijnzon'
       }
     ],
     brandEyebrow: 'Bint Saeed × Sadu',
@@ -617,26 +617,26 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
     storyEyebrow: 'Legado do deserto',
     storyTitle: 'Tecido do deserto',
     storyP1: 'O Sadu é a arte tradicional da tecelagem beduína praticada pelas mulheres em toda a Península Arábica durante milénios. Essencial à vida no deserto, tecia tendas, almofadas e alforjes de camelo.',
-    storyP2: 'Cada padrão do Sadu carrega sentido e conta uma história. Linhas, triângulos e quadrados não são meros ornamentos — são símbolos da natureza, dos animais e da vida no deserto.',
+    storyP2: 'Cada padrão do Sadu carrega sentido e conta uma história. Linhas, triângulos e quadrados não são meros ornamentos, são símbolos da natureza, dos animais e da vida no deserto.',
     symbolsEyebrow: 'Símbolos',
     symbolsTitle: 'Padrões com significado',
     symbolsLead: 'Cada padrão do Sadu carrega simbolismo profundo transmitido de geração em geração',
     patterns: [
       {
         name: 'Al Shajara',
-        meaning: 'Árvore da vida — crescimento e força'
+        meaning: 'Árvore da vida, crescimento e força'
       },
       {
         name: 'Al \'Ayin',
-        meaning: 'O olho — proteção contra o mal'
+        meaning: 'O olho, proteção contra o mal'
       },
       {
         name: 'Al Rakham',
-        meaning: 'O abutre — símbolo de sabedoria'
+        meaning: 'O abutre, símbolo de sabedoria'
       },
       {
         name: 'Al Dhulla',
-        meaning: 'A costela — representação da força'
+        meaning: 'A costela, representação da força'
       }
     ],
     unescoEyebrow: 'Reconhecimento mundial',
@@ -651,22 +651,22 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
       {
         name: 'Preto',
         hex: '#1a1a1a',
-        meaning: 'Pelo de cabra — as tendas beduínas'
+        meaning: 'Pelo de cabra, as tendas beduínas'
       },
       {
         name: 'Branco',
         hex: '#f5f5f5',
-        meaning: 'Lã de ovelha — pureza'
+        meaning: 'Lã de ovelha, pureza'
       },
       {
         name: 'Vermelho',
         hex: '#6f1524',
-        meaning: 'Tintura natural de romã — celebração'
+        meaning: 'Tintura natural de romã, celebração'
       },
       {
         name: 'Laranja',
         hex: '#d4804a',
-        meaning: 'Açafrão — sol do deserto'
+        meaning: 'Açafrão, sol do deserto'
       }
     ],
     brandEyebrow: 'Bint Saeed × Sadu',
@@ -681,26 +681,26 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
     storyEyebrow: 'Warisan gurun',
     storyTitle: 'Kain gurun',
     storyP1: 'Sadu adalah seni tenun tradisional Badui yang dipraktikkan perempuan Badui di Semenanjung Arabia selama ribuan tahun. Esensial bagi kehidupan gurun, seni ini menenun tenda, bantal, dan tas unta.',
-    storyP2: 'Setiap pola dalam Sadu membawa makna dan menceritakan kisah. Garis, segitiga, dan persegi bukan sekadar hiasan — mereka simbol alam, hewan, dan kehidupan di gurun.',
+    storyP2: 'Setiap pola dalam Sadu membawa makna dan menceritakan kisah. Garis, segitiga, dan persegi bukan sekadar hiasan, mereka simbol alam, hewan, dan kehidupan di gurun.',
     symbolsEyebrow: 'Simbol',
     symbolsTitle: 'Pola bermakna',
     symbolsLead: 'Setiap pola dalam Sadu membawa simbolisme mendalam yang diwariskan lintas generasi',
     patterns: [
       {
         name: 'Al Shajara',
-        meaning: 'Pohon kehidupan — pertumbuhan dan kekuatan'
+        meaning: 'Pohon kehidupan, pertumbuhan dan kekuatan'
       },
       {
         name: 'Al \'Ayin',
-        meaning: 'Mata — perlindungan dari kejahatan'
+        meaning: 'Mata, perlindungan dari kejahatan'
       },
       {
         name: 'Al Rakham',
-        meaning: 'Burung nasar — simbol kebijaksanaan'
+        meaning: 'Burung nasar, simbol kebijaksanaan'
       },
       {
         name: 'Al Dhulla',
-        meaning: 'Tulang rusuk — representasi kekuatan'
+        meaning: 'Tulang rusuk, representasi kekuatan'
       }
     ],
     unescoEyebrow: 'Pengakuan global',
@@ -715,22 +715,22 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
       {
         name: 'Hitam',
         hex: '#1a1a1a',
-        meaning: 'Bulu kambing — tenda Badui'
+        meaning: 'Bulu kambing, tenda Badui'
       },
       {
         name: 'Putih',
         hex: '#f5f5f5',
-        meaning: 'Wol domba — kemurnian'
+        meaning: 'Wol domba, kemurnian'
       },
       {
         name: 'Merah',
         hex: '#6f1524',
-        meaning: 'Pewarna alami delima — perayaan'
+        meaning: 'Pewarna alami delima, perayaan'
       },
       {
         name: 'Oranye',
         hex: '#d4804a',
-        meaning: 'Saffron — matahari gurun'
+        meaning: 'Saffron, matahari gurun'
       }
     ],
     brandEyebrow: 'Bint Saeed × Sadu',
@@ -745,26 +745,26 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
     storyEyebrow: 'Warisan gurun',
     storyTitle: 'Kain gurun',
     storyP1: 'Sadu ialah seni tenunan tradisional Badwi yang diamalkan wanita Badwi di Semenanjung Arab selama beribu tahun. Penting bagi kehidupan gurun, seni ini menenun khemah, bantal dan beg unta.',
-    storyP2: 'Setiap corak dalam Sadu membawa makna dan menceritakan kisah. Garis, segitiga dan segi empat bukan sekadar hiasan — ia simbol alam, haiwan dan kehidupan di gurun.',
+    storyP2: 'Setiap corak dalam Sadu membawa makna dan menceritakan kisah. Garis, segitiga dan segi empat bukan sekadar hiasan, ia simbol alam, haiwan dan kehidupan di gurun.',
     symbolsEyebrow: 'Simbol',
     symbolsTitle: 'Corak bermakna',
     symbolsLead: 'Setiap corak dalam Sadu membawa simbolisme mendalam yang diwarisi merentas generasi',
     patterns: [
       {
         name: 'Al Shajara',
-        meaning: 'Pokok kehidupan — pertumbuhan dan kekuatan'
+        meaning: 'Pokok kehidupan, pertumbuhan dan kekuatan'
       },
       {
         name: 'Al \'Ayin',
-        meaning: 'Mata — perlindungan daripada kejahatan'
+        meaning: 'Mata, perlindungan daripada kejahatan'
       },
       {
         name: 'Al Rakham',
-        meaning: 'Burung nasar — simbol kebijaksanaan'
+        meaning: 'Burung nasar, simbol kebijaksanaan'
       },
       {
         name: 'Al Dhulla',
-        meaning: 'Tulang rusuk — perwakilan kekuatan'
+        meaning: 'Tulang rusuk, perwakilan kekuatan'
       }
     ],
     unescoEyebrow: 'Pengiktirafan global',
@@ -779,22 +779,22 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
       {
         name: 'Hitam',
         hex: '#1a1a1a',
-        meaning: 'Bulu kambing — khemah Badwi'
+        meaning: 'Bulu kambing, khemah Badwi'
       },
       {
         name: 'Putih',
         hex: '#f5f5f5',
-        meaning: 'Bulu biri-biri — kesucian'
+        meaning: 'Bulu biri-biri, kesucian'
       },
       {
         name: 'Merah',
         hex: '#6f1524',
-        meaning: 'Pewarna semula jadi delima — perayaan'
+        meaning: 'Pewarna semula jadi delima, perayaan'
       },
       {
         name: 'Oren',
         hex: '#d4804a',
-        meaning: 'Saffron — matahari gurun'
+        meaning: 'Saffron, matahari gurun'
       }
     ],
     brandEyebrow: 'Bint Saeed × Sadu',
@@ -805,6 +805,6 @@ const SADU: Record<AppLocale, Omit<SaduPageCopy, keyof HeritageSharedChrome>> = 
 }
 
 export function getSaduPageCopy(locale: AppLocale | string): SaduPageCopy {
-  const key = (locale in SADU ? locale : 'en') as AppLocale
+  const key = (locale in SADU ? locale: 'en') as AppLocale
   return { ...getHeritageSharedChrome(key), ...SADU[key] }
 }

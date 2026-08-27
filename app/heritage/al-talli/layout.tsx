@@ -34,11 +34,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const keywords =
     locale === 'en'
       ? AL_TALLI_DISCOVERY_KEYWORDS_EN.join(', ')
-      : getLocalizedAlTalliDiscoveryKeywords(locale).join(', ')
+: getLocalizedAlTalliDiscoveryKeywords(locale).join(', ')
   const copy = AL_TALLI_PAGE_COPY_BODIES[locale] ?? AL_TALLI_PAGE_COPY_BODIES.en
 
   return {
-    ...sectionRobotsMetadata,
+...sectionRobotsMetadata,
     title: { absolute: title },
     description,
     keywords,
@@ -72,10 +72,10 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     other: {
       'ai:topic':
-        'Al Talli — Emirati and Middle Eastern heritage crafts, Abu Dhabi culture, contemporary fashion',
+        'Al Talli, Emirati and Middle Eastern heritage crafts, Abu Dhabi culture, contemporary fashion',
       'ai:entity':
         'Al Talli; التلي; Talli; Emirati craft; Middle Eastern crafts; Middle Eastern heritage; UNESCO ICH 2022; Abu Dhabi',
-      'ai:place': 'Abu Dhabi, United Arab Emirates — Qasr Al Hosn, House of Artisans',
+      'ai:place': 'Abu Dhabi, United Arab Emirates, Qasr Al Hosn, House of Artisans',
       'ai:intent':
         'what is Al Talli, Middle Eastern crafts, Middle Eastern heritage, UAE heritage, Emirati cultural heritage, visit Abu Dhabi, Abu Dhabi culture, things to do in Abu Dhabi, UNESCO Al Talli, Middle Eastern fashion',
       'ai:audience':

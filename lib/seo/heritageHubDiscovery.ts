@@ -1,5 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import { localizedPath } from '@/lib/i18n/routing'
+import { getLocalizedHeritageHubFashionKeywords } from '@/lib/seo/heritageHubDiscoveryKeywordsI18n'
 
 export const HERITAGE_HUB_PATH = '/heritage'
 
@@ -64,6 +65,23 @@ export const HERITAGE_HUB_DISCOVERY_KEYWORDS_EN = [
   'Bint Saeed Abu Dhabi',
   'heritage fashion Abu Dhabi',
   'luxury abaya Emirati heritage',
+  'Abu Dhabi fashion house',
+  'Abu Dhabi fashion',
+  'Abu Dhabi culture',
+  'Abu Dhabi tradition',
+  'Abu Dhabi traditions',
+  'UAE culture',
+  'UAE traditions',
+  'UAE fashion brands',
+  'Emirati fashion',
+  'heritage fashion Abu Dhabi',
+  'Gulf cultural heritage',
+  'Gulf fashion heritage',
+  'Dubai fashion',
+  'Dubai tradition',
+  'Dubai traditions',
+  'modest fashion UAE',
+  'visit Abu Dhabi culture',
 ] as const
 
 /** Compact locale overlays — entity names stay stable; intent phrases localise. */
@@ -167,11 +185,44 @@ const LOCAL_INTENT: Partial<Record<AppLocale, string[]>> = {
     'battoulah',
     'máscara de ouro do Golfo',
   ],
+  id: [
+    'warisan UEA',
+    'warisan budaya UEA',
+    'budaya Abu Dhabi',
+    'tradisi Abu Dhabi',
+    'fashion Abu Dhabi',
+    'rumah mode Abu Dhabi',
+    'merek fashion UEA',
+    'fashion Emirati',
+    'Al Talli',
+    'Al Khous',
+    'Sadu',
+    'battoulah',
+    'Bint Saeed Abu Dhabi',
+  ],
+  ms: [
+    'warisan UAE',
+    'warisan budaya UAE',
+    'budaya Abu Dhabi',
+    'tradisi Abu Dhabi',
+    'fesyen Abu Dhabi',
+    'rumah fesyen Abu Dhabi',
+    'jenama fesyen UAE',
+    'fesyen Emirati',
+    'Al Talli',
+    'Al Khous',
+    'Sadu',
+    'battoulah',
+    'Bint Saeed Abu Dhabi',
+  ],
 }
 
 export function getHeritageHubDiscoveryKeywords(locale: AppLocale): string[] {
+  const fashion = getLocalizedHeritageHubFashionKeywords(locale)
+  if (locale === 'en') {
+    return [...new Set([...HERITAGE_HUB_DISCOVERY_KEYWORDS_EN, ...fashion])]
+  }
   const local = LOCAL_INTENT[locale] ?? []
-  if (locale === 'en') return [...HERITAGE_HUB_DISCOVERY_KEYWORDS_EN]
-  const merged = [...local, ...HERITAGE_HUB_DISCOVERY_KEYWORDS_EN]
+  const merged = [...local, ...fashion, ...HERITAGE_HUB_DISCOVERY_KEYWORDS_EN]
   return [...new Set(merged)]
 }

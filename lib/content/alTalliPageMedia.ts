@@ -1,4 +1,4 @@
-/** Local photography for `/heritage/al-talli` — House craft documentation. */
+/** Local photography for `/heritage/al-talli`. House craft documentation. */
 
 /**
  * Filenames are SEO/AI discovery slugs (brand + place + craft + subject).
@@ -6,7 +6,7 @@
  */
 export const AL_TALLI_PAGE_MEDIA = {
   hero: {
-    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-gold-embroidery-thobe-emirati-heritage.webp',
+    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-mousadah-gold-metallic-thread-craft.webp',
     width: 768,
     height: 1024,
   },
@@ -16,7 +16,7 @@ export const AL_TALLI_PAGE_MEDIA = {
     height: 1024,
   },
   loom: {
-    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-cushion-gold-bobbins-exhibition.webp',
+    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-mousadah-gold-metallic-thread-craft.webp',
     width: 768,
     height: 1024,
   },
@@ -25,14 +25,14 @@ export const AL_TALLI_PAGE_MEDIA = {
     width: 768,
     height: 1024,
   },
-  /** Exhibition kajujah also shows hanging metallic bobbins. */
+  /** Exhibition kajujah with mousadah cushion and metallic bobbins. */
   bobbins: {
-    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-cushion-gold-bobbins-exhibition.webp',
+    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-mousadah-gold-metallic-thread-craft.webp',
     width: 768,
     height: 1024,
   },
   abuDhabi: {
-    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-cushion-gold-bobbins-exhibition.webp',
+    src: '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-mousadah-gold-metallic-thread-craft.webp',
     width: 768,
     height: 1024,
   },

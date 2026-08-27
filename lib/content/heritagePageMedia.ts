@@ -1,4 +1,4 @@
-/** Local photography for `/heritage` hub — House assets only (no stock). */
+/** Local photography for `/heritage` hub, House assets only (no stock). */
 
 export const HERITAGE_HUB_HERO = {
   src: '/heritage/bint-saeed-abu-dhabi-heritage-al-talli-gold-trim-abaya-fabric.webp',
@@ -6,7 +6,7 @@ export const HERITAGE_HUB_HERO = {
   height: 1024,
 } as const
 
-/** Al Khous chapter photography — House assets. */
+/** Al Khous chapter photography, House assets. */
 export const HERITAGE_KHOUS_IMAGES = {
   hero: '/heritage/khous/bint-saeed-abu-dhabi-al-khous-palm-fans-sadu-textile-emirati-heritage.webp',
   detail: '/heritage/khous/bint-saeed-abu-dhabi-al-khous-palm-frond-weaving-in-progress-emirati-craft.webp',
@@ -14,7 +14,7 @@ export const HERITAGE_KHOUS_IMAGES = {
   height: 1024,
 } as const
 
-/** Sadu chapter photography — House assets. */
+/** Sadu chapter photography, House assets. */
 export const HERITAGE_SADU_IMAGES = {
   hero: '/heritage/sadu/bint-saeed-abu-dhabi-al-sadu-weaving-green-triangles-emirati-bedouin-heritage.webp',
   detail: '/heritage/sadu/bint-saeed-abu-dhabi-al-sadu-woven-band-fringe-emirati-heritage-craft.webp',
@@ -22,10 +22,17 @@ export const HERITAGE_SADU_IMAGES = {
   height: 1024,
 } as const
 
+/** Battoulah (Gulf gold burqa mask), heritage display photography. */
+export const HERITAGE_BATTOULAH_IMAGE = {
+  src: '/heritage/battoulah/bint-saeed-abu-dhabi-emirati-battoulah-gold-burqa-mask-heritage-display.webp',
+  width: 768,
+  height: 1024,
+} as const
+
 /** Craft chapter cards. */
 export const HERITAGE_CRAFT_IMAGES: Record<string, string> = {
   'al-talli':
-    '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-gold-embroidery-thobe-emirati-heritage.webp',
+    '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-mousadah-gold-metallic-thread-craft.webp',
   khous: HERITAGE_KHOUS_IMAGES.hero,
   sadu: HERITAGE_SADU_IMAGES.hero,
 }
@@ -35,6 +42,4 @@ export const HERITAGE_PHILOSOPHY_IMAGES = {
     '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-gold-bead-motif-embroidery-detail.webp',
   secondary:
     '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-orange-gold-metallic-ribbon-strands.webp',
-  tertiary:
-    '/heritage/al-talli/bint-saeed-abu-dhabi-al-talli-kajujah-cushion-gold-bobbins-exhibition.webp',
 } as const

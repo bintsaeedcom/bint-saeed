@@ -126,7 +126,7 @@ const KHOUS: Record<AppLocale, Omit<KhousPageCopy, keyof HeritageSharedChrome>> 
     heroSubtitle: 'L’art du tissage des frondes de palmier',
     storyEyebrow: 'Arbre de vie',
     storyTitle: 'Don du palmier',
-    storyP1: 'Dans la culture émiratie, le palmier n’est pas un arbre parmi d’autres — c’est l’arbre de vie. Pendant des siècles, les Émiratis en ont tiré tout : dattes pour se nourrir, troncs pour bâtir, frondes pour l’artisanat.',
+    storyP1: 'Dans la culture émiratie, le palmier n’est pas un arbre parmi d’autres, c’est l’arbre de vie. Pendant des siècles, les Émiratis en ont tiré tout: dattes pour se nourrir, troncs pour bâtir, frondes pour l’artisanat.',
     storyP2: 'Le Khous, aussi appelé « Al Safeefah », est l’art de tisser des frondes séchées et préparées pour créer paniers, nattes, éventails et autres objets du quotidien, indispensables à la vie du désert.',
     processEyebrow: 'Le processus',
     processTitle: 'De la fronde à l’art',
@@ -175,7 +175,7 @@ const KHOUS: Record<AppLocale, Omit<KhousPageCopy, keyof HeritageSharedChrome>> 
     heroSubtitle: 'L’arte della tessitura delle foglie di palma',
     storyEyebrow: 'Albero della vita',
     storyTitle: 'Dono della palma',
-    storyP1: 'Nella cultura emiratina la palma non è solo un albero — è l’albero della vita. Per secoli gli Emiratini ne hanno tratto tutto: datteri per nutrirsi, tronchi per costruire, foglie per l’artigianato.',
+    storyP1: 'Nella cultura emiratina la palma non è solo un albero, è l’albero della vita. Per secoli gli Emiratini ne hanno tratto tutto: datteri per nutrirsi, tronchi per costruire, foglie per l’artigianato.',
     storyP2: 'Il Khous, anche detto « Al Safeefah », è l’arte di tessere foglie di palma essiccate e trattate per creare cesti, stuoie, ventagli e altri oggetti quotidiani essenziali alla vita del deserto.',
     processEyebrow: 'Il processo',
     processTitle: 'Dalla foglia all’arte',
@@ -273,14 +273,14 @@ const KHOUS: Record<AppLocale, Omit<KhousPageCopy, keyof HeritageSharedChrome>> 
     heroSubtitle: 'Искусство плетения пальмового листа',
     storyEyebrow: 'Древо жизни',
     storyTitle: 'Дар пальмы',
-    storyP1: 'В эмиратской культуре пальма — не просто дерево, а древо жизни. Веками эмиратцы опирались на неё во всём: финики в пищу, стволы для строительства, листья для ремёсел.',
-    storyP2: 'Khous, также известный как « Al Safeefah », — искусство плетения высушенных и обработанных пальмовых листьев: корзины, циновки, веера и другие предметы быта, необходимые в пустыне.',
+    storyP1: 'В эмиратской культуре пальма, не просто дерево, а древо жизни. Веками эмиратцы опирались на неё во всём: финики в пищу, стволы для строительства, листья для ремёсел.',
+    storyP2: 'Khous, также известный как « Al Safeefah », искусство плетения высушенных и обработанных пальмовых листьев: корзины, циновки, веера и другие предметы быта, необходимые в пустыне.',
     processEyebrow: 'Процесс',
     processTitle: 'От листа к искусству',
     steps: [
       {
         title: 'Сбор',
-        description: 'Свежие пальмовые листья тщательно отбирают и срезают — молодые, гибкие, идеальные для плетения.'
+        description: 'Свежие пальмовые листья тщательно отбирают и срезают, молодые, гибкие, идеальные для плетения.'
       },
       {
         title: 'Подготовка',
@@ -322,8 +322,8 @@ const KHOUS: Record<AppLocale, Omit<KhousPageCopy, keyof HeritageSharedChrome>> 
     heroSubtitle: '棕榈叶编织艺术',
     storyEyebrow: '生命之树',
     storyTitle: '棕榈的馈赠',
-    storyP1: '在阿联酋文化中，棕榈不只是一棵树——它是生命之树。数世纪以来，阿联酋人仰赖棕榈的一切：枣果为食、树干为材、叶片为手工艺。',
-    storyP2: 'Khous，亦称「Al Safeefah」，是将干燥并处理过的棕榈叶编织成篮、席、扇及其他日常用品的艺术——沙漠生活的必需。',
+    storyP1: '在阿联酋文化中，棕榈不只是一棵树：它是生命之树。数世纪以来，阿联酋人仰赖棕榈的一切：枣果为食、树干为材、叶片为手工艺。',
+    storyP2: 'Khous，亦称「Al Safeefah」，是将干燥并处理过的棕榈叶编织成篮、席、扇及其他日常用品的艺术：沙漠生活的必需。',
     processEyebrow: '工序',
     processTitle: '从叶片到艺术',
     steps: [
@@ -371,14 +371,14 @@ const KHOUS: Record<AppLocale, Omit<KhousPageCopy, keyof HeritageSharedChrome>> 
     heroSubtitle: 'Die Kunst des Palmblattflechtens',
     storyEyebrow: 'Baum des Lebens',
     storyTitle: 'Geschenk der Palme',
-    storyP1: 'In der emiratischen Kultur ist die Palme nicht nur ein Baum — sie ist der Baum des Lebens. Jahrhunderte lang stützten sich Emiratis auf sie: Datteln als Nahrung, Stämme zum Bauen, Wedel für Handwerk.',
-    storyP2: 'Khous, auch « Al Safeefah » genannt, ist die Kunst, getrocknete und behandelte Palmwedel zu flechten — zu Körben, Matten, Fächern und anderen Alltagsgegenständen, die für das Wüstenleben unerlässlich waren.',
+    storyP1: 'In der emiratischen Kultur ist die Palme nicht nur ein Baum, sie ist der Baum des Lebens. Jahrhunderte lang stützten sich Emiratis auf sie: Datteln als Nahrung, Stämme zum Bauen, Wedel für Handwerk.',
+    storyP2: 'Khous, auch « Al Safeefah » genannt, ist die Kunst, getrocknete und behandelte Palmwedel zu flechten, zu Körben, Matten, Fächern und anderen Alltagsgegenständen, die für das Wüstenleben unerlässlich waren.',
     processEyebrow: 'Der Prozess',
     processTitle: 'Vom Wedel zur Kunst',
     steps: [
       {
         title: 'Ernte',
-        description: 'Frische Palmwedel werden sorgfältig ausgewählt und geschnitten — junge, flexible Blätter, ideal zum Flechten.'
+        description: 'Frische Palmwedel werden sorgfältig ausgewählt und geschnitten, junge, flexible Blätter, ideal zum Flechten.'
       },
       {
         title: 'Vorbereitung',
@@ -420,14 +420,14 @@ const KHOUS: Record<AppLocale, Omit<KhousPageCopy, keyof HeritageSharedChrome>> 
     heroSubtitle: 'De kunst van palmbladweven',
     storyEyebrow: 'Levensboom',
     storyTitle: 'Geschenk van de palm',
-    storyP1: 'In de Emiratische cultuur is de palm niet zomaar een boom — het is de levensboom. Eeuwenlang steunden Emiratis op de palm voor alles: dadels als voedsel, stammen om te bouwen, bladeren voor handwerk.',
+    storyP1: 'In de Emiratische cultuur is de palm niet zomaar een boom, het is de levensboom. Eeuwenlang steunden Emiratis op de palm voor alles: dadels als voedsel, stammen om te bouwen, bladeren voor handwerk.',
     storyP2: 'Khous, ook « Al Safeefah » genoemd, is de kunst om gedroogde en behandelde palmbladeren te weven tot manden, matten, waaiers en andere alledaagse voorwerpen die essentieel waren voor het woestijnleven.',
     processEyebrow: 'Het proces',
     processTitle: 'Van blad tot kunst',
     steps: [
       {
         title: 'Oogsten',
-        description: 'Verse palmbladeren worden zorgvuldig gekozen en gesneden — jonge, flexibele bladeren, ideaal om te weven.'
+        description: 'Verse palmbladeren worden zorgvuldig gekozen en gesneden, jonge, flexibele bladeren, ideaal om te weven.'
       },
       {
         title: 'Voorbereiding',
@@ -469,7 +469,7 @@ const KHOUS: Record<AppLocale, Omit<KhousPageCopy, keyof HeritageSharedChrome>> 
     heroSubtitle: 'A arte de tecer a folha de palmeira',
     storyEyebrow: 'Árvore da vida',
     storyTitle: 'Dádiva da palmeira',
-    storyP1: 'Na cultura emiradense, a palmeira não é apenas uma árvore — é a árvore da vida. Durante séculos, os emiradenses dependeram dela em tudo: tâmaras para se alimentar, troncos para construir e folhas para o artesanato.',
+    storyP1: 'Na cultura emiradense, a palmeira não é apenas uma árvore, é a árvore da vida. Durante séculos, os emiradenses dependeram dela em tudo: tâmaras para se alimentar, troncos para construir e folhas para o artesanato.',
     storyP2: 'O Khous, também chamado « Al Safeefah », é a arte de tecer folhas de palmeira secas e tratadas para criar cestos, esteiras, leques e outros objetos quotidianos essenciais à vida no deserto.',
     processEyebrow: 'O processo',
     processTitle: 'Da folha à arte',
@@ -518,14 +518,14 @@ const KHOUS: Record<AppLocale, Omit<KhousPageCopy, keyof HeritageSharedChrome>> 
     heroSubtitle: 'Seni menganyam daun palem',
     storyEyebrow: 'Pohon kehidupan',
     storyTitle: 'Karunia palem',
-    storyP1: 'Dalam budaya Emirat, pohon palem bukan sekadar pohon — itu pohon kehidupan. Selama berabad-abad, masyarakat Emirat mengandalkan palem untuk segalanya: kurma untuk pangan, batang untuk bangunan, dan daun untuk kerajinan.',
+    storyP1: 'Dalam budaya Emirat, pohon palem bukan sekadar pohon, itu pohon kehidupan. Selama berabad-abad, masyarakat Emirat mengandalkan palem untuk segalanya: kurma untuk pangan, batang untuk bangunan, dan daun untuk kerajinan.',
     storyP2: 'Khous, juga dikenal sebagai « Al Safeefah », adalah seni menganyam daun palem yang dikeringkan dan diolah menjadi keranjang, tikar, kipas, dan barang sehari-hari yang penting bagi kehidupan gurun.',
     processEyebrow: 'Proses',
     processTitle: 'Dari daun menjadi seni',
     steps: [
       {
         title: 'Panen',
-        description: 'Daun palem segar dipilih dan dipotong dengan teliti — daun muda yang lentur, ideal untuk dianyam.'
+        description: 'Daun palem segar dipilih dan dipotong dengan teliti, daun muda yang lentur, ideal untuk dianyam.'
       },
       {
         title: 'Persiapan',
@@ -567,14 +567,14 @@ const KHOUS: Record<AppLocale, Omit<KhousPageCopy, keyof HeritageSharedChrome>> 
     heroSubtitle: 'Seni menganyam daun palma',
     storyEyebrow: 'Pokok kehidupan',
     storyTitle: 'Hadiah palma',
-    storyP1: 'Dalam budaya Emiriah, pokok palma bukan sekadar pokok — ia pokok kehidupan. Selama berabad-abad, orang Emiriah bergantung padanya untuk segala-galanya: kurma untuk makanan, batang untuk bangunan, dan daun untuk kraf.',
+    storyP1: 'Dalam budaya Emiriah, pokok palma bukan sekadar pokok, ia pokok kehidupan. Selama berabad-abad, orang Emiriah bergantung padanya untuk segala-galanya: kurma untuk makanan, batang untuk bangunan, dan daun untuk kraf.',
     storyP2: 'Khous, juga dikenali sebagai « Al Safeefah », ialah seni menganyam daun palma yang dikeringkan dan dirawat untuk mencipta bakul, tikar, kipas dan barangan harian yang penting bagi kehidupan gurun.',
     processEyebrow: 'Proses',
     processTitle: 'Dari daun kepada seni',
     steps: [
       {
         title: 'Tuai',
-        description: 'Daun palma segar dipilih dan dipotong dengan teliti — daun muda yang lentur, ideal untuk dianyam.'
+        description: 'Daun palma segar dipilih dan dipotong dengan teliti, daun muda yang lentur, ideal untuk dianyam.'
       },
       {
         title: 'Penyediaan',
@@ -613,6 +613,6 @@ const KHOUS: Record<AppLocale, Omit<KhousPageCopy, keyof HeritageSharedChrome>> 
 }
 
 export function getKhousPageCopy(locale: AppLocale | string): KhousPageCopy {
-  const key = (locale in KHOUS ? locale : 'en') as AppLocale
+  const key = (locale in KHOUS ? locale: 'en') as AppLocale
   return { ...getHeritageSharedChrome(key), ...KHOUS[key] }
 }

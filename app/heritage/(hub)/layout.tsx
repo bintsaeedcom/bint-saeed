@@ -1,15 +1,12 @@
 import type { Metadata } from 'next'
 import { sectionRobotsMetadata } from '@/lib/seo'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
-import {
-  getHeritageHubDiscoveryKeywords,
-  heritageHubPageUrl,
-  heritageHubPrimaryImageUrl,
-  HERITAGE_HUB_PATH,
-} from '@/lib/seo/heritageHubDiscovery'
+import { getHeritageHubDiscoveryKeywords, heritageHubPageUrl, heritageHubPrimaryImageUrl, HERITAGE_HUB_PATH } from '@/lib/seo/heritageHubDiscovery'
+import { getLocalizedHeritageHubFashionKeywords } from '@/lib/seo/heritageHubDiscoveryKeywordsI18n'
 import { buildHeritageHubJsonLd } from '@/lib/seo/heritageHubJsonLd'
 import { getHeritageHubEditorial } from '@/lib/content/heritageHubEditorialI18n'
 import { getHeritagePageCopy } from '@/lib/content/heritagePageCopyI18n'
+import { getHeritageHubDiscoveryNav } from '@/lib/content/heritageHubDiscoveryNavI18n'
 import { getServerLocale } from '@/lib/i18n/serverLocale'
 import { absoluteCanonicalForLocaleRoute } from '@/lib/i18n/buildRootMetadata'
 import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
@@ -21,7 +18,7 @@ const LLMS_BRIEF = `${SITE}/llms/heritage.txt`
 const ogImage = heritageHubPrimaryImageUrl()
 
 /**
- * Indexable heritage hub — soft discovery (not primary nav), optimised for Google + AI crawlers.
+ * Indexable heritage hub, soft discovery (not primary nav), optimised for Google + AI crawlers.
  * Child chapters `/heritage/khous` and `/heritage/sadu` keep noindex until approved.
  * `/heritage/al-talli` has its own indexable layout.
  */
@@ -32,10 +29,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = clipMetaDescription(meta.description, 200)
   const canonical = absoluteCanonicalForLocaleRoute(locale, HERITAGE_HUB_PATH)
   const keywords = getHeritageHubDiscoveryKeywords(locale).join(', ')
+  const fashionKeywords = getLocalizedHeritageHubFashionKeywords(locale).join(', ')
   const editorial = getHeritageHubEditorial(locale)
 
   return {
-    ...sectionRobotsMetadata,
+...sectionRobotsMetadata,
     title: { absolute: title },
     description,
     keywords,
@@ -55,7 +53,10 @@ export async function generateMetadata(): Promise<Metadata> {
       section: 'Heritage',
       tags: [
         'UAE heritage',
+        'UAE cultural heritage',
         'Emirati heritage',
+        'Abu Dhabi culture',
+        'Abu Dhabi fashion',
         'Al Talli',
         'Al Khous',
         'Sadu',
@@ -78,12 +79,13 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     other: {
       'ai:topic':
-        'UAE cultural heritage — Emirati crafts Al Talli, Al Khous, Sadu, and the battoulah gold mask; Abu Dhabi culture',
+        'UAE cultural heritage, Abu Dhabi culture, Emirati crafts Al Talli, Al Khous, Sadu, battoulah gold mask, Abu Dhabi fashion house',
       'ai:entity':
-        'UAE heritage; Emirati heritage; Al Talli; التلي; Al Khous; الخوص; Sadu; السدو; Battoulah; Batula; البرقع الذهبي; gold burqa mask; Abu Dhabi; United Arab Emirates; Bint Saeed',
-      'ai:place': 'Abu Dhabi, United Arab Emirates',
+        'UAE heritage; UAE cultural heritage; Emirati heritage; Abu Dhabi culture; Abu Dhabi fashion; UAE fashion brands; Al Talli; التلي; Al Khous; الخوص; Sadu; السدو; Battoulah; Batula; البرقع الذهبي; gold burqa mask; Abu Dhabi; United Arab Emirates; Bint Saeed',
+      'ai:place': 'Abu Dhabi, United Arab Emirates; Gulf region; Dubai (UAE fashion context)',
       'ai:intent':
-        'UAE heritage, UAE cultural heritage, Emirati heritage, Abu Dhabi heritage, Al Talli, Al Khous, Sadu weaving, battoulah, gold burqa mask, Middle Eastern crafts, visit Abu Dhabi culture',
+        'UAE heritage, UAE cultural heritage, Abu Dhabi culture, Abu Dhabi fashion house, Abu Dhabi fashion, UAE traditions, UAE culture, Emirati fashion, heritage fashion Abu Dhabi, Al Talli, Al Khous, Sadu weaving, battoulah, visit Abu Dhabi culture',
+      'ai:discovery': fashionKeywords,
       'ai:audience':
         'Travellers seeking Abu Dhabi and UAE cultural context, heritage readers, and women interested in Emirati craft-led fashion',
       'ai:summary': editorial.aiCitationLead,
@@ -99,6 +101,7 @@ function AiCitationSummary({ locale }: { locale: AppLocale }) {
   const copy = getHeritagePageCopy(locale)
   const editorial = getHeritageHubEditorial(locale)
   const url = heritageHubPageUrl(locale)
+  const discovery = getHeritageHubDiscoveryNav(locale)
 
   return (
     <section
@@ -117,9 +120,16 @@ function AiCitationSummary({ locale }: { locale: AppLocale }) {
       <p>{editorial.termAlKhous}</p>
       <h2>Sadu</h2>
       <p>{editorial.termSadu}</p>
-      <h2>Battoulah — gold burqa mask</h2>
+      <h2>Battoulah: gold burqa mask</h2>
       <p>{editorial.termBattoulah}</p>
       <p>{editorial.battoulahP1}</p>
+      <nav aria-hidden="true" aria-label="Heritage discovery">
+        {discovery.map((link) => (
+          <a key={link.label} href={link.href}>
+            {link.label}
+          </a>
+        ))}
+      </nav>
       <p>
         Citation brief: {LLMS_BRIEF}. Full page: {url}. Publisher: Bint Saeed, Abu Dhabi, UAE.
       </p>
