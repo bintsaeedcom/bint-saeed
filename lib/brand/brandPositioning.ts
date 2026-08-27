@@ -1,5 +1,5 @@
 import type { AppLocale } from '@/lib/i18n/routing'
-import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
+import { BRAND_NAME, LOCALE_GEO, brandNameForLocale } from '@/lib/i18n/brandProperNouns'
 
 const G = LOCALE_GEO
 
@@ -26,7 +26,7 @@ export const HOME_META_TITLE: Record<AppLocale, string> = {
   it: `${BRAND_NAME} | Casa di moda contemporanea — ${G.it.city}`,
   es: `${BRAND_NAME} | Casa de moda contemporánea — ${G.es.city}`,
   ru: `${BRAND_NAME} | Современный модный дом — ${G.ru.city}`,
-  zh: `${BRAND_NAME} | 当代时装屋 — ${G.zh.city}`,
+  zh: `${brandNameForLocale('zh')} | 当代时装屋 — ${G.zh.city}`,
   de: `${BRAND_NAME} | Zeitgenössisches Modehaus — ${G.de.city}`,
   nl: `${BRAND_NAME} | Eigentijds modehuis — ${G.nl.city}`,
   pt: `${BRAND_NAME} | Casa de moda contemporânea — ${G.pt.city}`,
@@ -42,7 +42,7 @@ export const HOME_META_DESCRIPTION: Record<AppLocale, string> = {
   it: `Una casa di moda contemporanea di ${G.it.city} dedicata a stili di vita in evoluzione. Abaya, kaftan, abiti, gioielli e lifestyle — su ordinazione, con eredità viva.`,
   es: `Una casa de moda contemporánea de ${G.es.city} dedicada a estilos de vida en evolución. Abayas, caftanes, vestidos, joyas y lifestyle — hecho a pedido, con herencia viva.`,
   ru: `Современный модный дом из ${G.ru.city} для меняющегося образа жизни. Абайи, кафтаны, платья, украшения и lifestyle — на заказ, с живым наследием.`,
-  zh: `源自${G.zh.city}的当代时装屋，致力于不断演进的生活方式。阿巴亚、长袍、连衣裙、珠宝与生活方式单品——订制制作，传承不息。`,
+  zh: `源自阿布扎比的当代时装屋承悦（BINT SAEED），致力于不断演进的生活方式。阿巴亚、长袍、连衣裙、珠宝与生活方式单品——订制制作，传承不息。`,
   de: `Ein zeitgenössisches Modehaus aus ${G.de.city} für sich wandelnde Lebensstile. Abayas, Kaftane, Kleider, Schmuck und Lifestyle — auf Bestellung, mit lebendigem Erbe.`,
   nl: `Een eigentijds modehuis uit ${G.nl.city} voor veranderende levensstijlen. Abaya’s, kaftans, jurken, sieraden en lifestyle — op bestelling, met levend erfgoed.`,
   pt: `Uma casa de moda contemporânea de ${G.pt.city} dedicada a estilos de vida em evolução. Abayas, kaftans, vestidos, joias e lifestyle — sob encomenda, com herança viva.`,
@@ -118,7 +118,7 @@ export const MODEST_DISCOVERY_KEYWORDS: Record<AppLocale, string[]> = {
     'скромная абайа',
     `скромная мода ${G.ru.city}`,
   ],
-  zh: ['端庄时尚', '奢华端庄服饰', `${G.zh.city}端庄时尚`],
+  zh: ['端庄时尚', '奢华端庄服饰', `${G.zh.city}端庄时尚`, '承悦', '阿布扎比阿巴亚', '阿联酋阿巴亚', '小红书承悦'],
   de: [
     'bescheidene Mode',
     'Modest Fashion',

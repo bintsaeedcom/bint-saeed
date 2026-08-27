@@ -48,6 +48,8 @@ export function classifyRouteMetaKey(pathname: string): RouteMetaKey {
   if (p.startsWith('/the-codes')) return 'the_codes'
   if (p.startsWith('/craftsmanship')) return 'craftsmanship'
   if (p.startsWith('/dressing-for-the-middle-east')) return 'regional_dressing'
+  if (p.startsWith('/rednote')) return 'china_rednote'
+  if (p.startsWith('/wechat')) return 'china_wechat'
   if (p.startsWith('/personalisation')) return 'personalisation'
   if (p.startsWith('/product-care')) return 'product_care'
   if (p.startsWith('/giving-forward')) return 'giving_forward'
@@ -407,6 +409,34 @@ const TITLE: Record<Exclude<RouteMetaKey, 'home'>, Loc> = {
     pt: 'Como vestir no Médio Oriente | Bint Saeed',
     id: 'Berpakaian di Timur Tengah | Bint Saeed',
     ms: 'Berpakaian di Timur Tengah | Bint Saeed',
+  },
+  china_rednote: {
+    en: 'RedNote / 小红书 | BINT SAEED 承悦',
+    ar: 'RedNote | BINT SAEED 承悦',
+    fr: 'RedNote / 小红书 | BINT SAEED 承悦',
+    it: 'RedNote | BINT SAEED 承悦',
+    es: 'RedNote | BINT SAEED 承悦',
+    ru: 'RedNote | BINT SAEED 承悦',
+    zh: '小红书官方 | BINT SAEED 承悦',
+    de: 'RedNote | BINT SAEED 承悦',
+    nl: 'RedNote | BINT SAEED 承悦',
+    pt: 'RedNote | BINT SAEED 承悦',
+    id: 'RedNote | BINT SAEED 承悦',
+    ms: 'RedNote | BINT SAEED 承悦',
+  },
+  china_wechat: {
+    en: 'WeChat / 微信 | BINT SAEED 承悦',
+    ar: 'WeChat | BINT SAEED 承悦',
+    fr: 'WeChat / 微信 | BINT SAEED 承悦',
+    it: 'WeChat | BINT SAEED 承悦',
+    es: 'WeChat | BINT SAEED 承悦',
+    ru: 'WeChat | BINT SAEED 承悦',
+    zh: '微信官方 | BINT SAEED 承悦',
+    de: 'WeChat | BINT SAEED 承悦',
+    nl: 'WeChat | BINT SAEED 承悦',
+    pt: 'WeChat | BINT SAEED 承悦',
+    id: 'WeChat | BINT SAEED 承悦',
+    ms: 'WeChat | BINT SAEED 承悦',
   },
   personalisation: {
     en: 'Personalise Your Abaya — Hidden Pocket | Bint Saeed',

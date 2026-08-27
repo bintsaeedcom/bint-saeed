@@ -3,6 +3,8 @@ import { seoKeywords } from '@/lib/i18n/translations'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { getGlobalSchemaKeywordExpansion } from '@/lib/seo/schemaKeywordExpansion'
 import { getAbayaProductDiscoveryKeywords } from '@/lib/products/abayaProductDiscoveryI18n'
+import { CHINA_DISCOVERY_KEYWORDS_ZH } from '@/lib/seo/chinaDiscoveryKeywords'
+import { RUSSIA_DISCOVERY_KEYWORDS_RU } from '@/lib/seo/russiaDiscoveryKeywords'
 
 function dedupeKeywords(list: readonly string[]): string[] {
   const seen = new Set<string>()
@@ -63,6 +65,7 @@ export function mergedMetaKeywordsForLocale(locale: AppLocale): string[] {
     return dedupeKeywords([
       ...(pack ?? []),
       ...ENGLISH_ROOT_KEYWORDS.filter((k) => isCyrillicScript(k)),
+      ...RUSSIA_DISCOVERY_KEYWORDS_RU,
       ...expansion,
       ...abayaDiscovery,
     ])
@@ -72,6 +75,7 @@ export function mergedMetaKeywordsForLocale(locale: AppLocale): string[] {
     return dedupeKeywords([
       ...(pack ?? []),
       ...ENGLISH_ROOT_KEYWORDS.filter((k) => isCjkScript(k)),
+      ...CHINA_DISCOVERY_KEYWORDS_ZH,
       ...expansion,
       ...abayaDiscovery,
     ])

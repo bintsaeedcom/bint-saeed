@@ -30,6 +30,15 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
+User-agent: DeepSeekBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Baiduspider-render
+Allow: /
+
 User-agent: meta-externalagent
 Allow: /
 
@@ -48,8 +57,37 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
+User-agent: Yandex
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: YandexImages
+Allow: /
+
+User-agent: YandexMobileBot
+Allow: /
+
+User-agent: Mail.RU_Bot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: NaverBot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
 Sitemap: https://www.bintsaeed.com/sitemap.xml
 
 # AI citation briefs
 # https://www.bintsaeed.com/llms.txt
+# https://www.bintsaeed.com/llms/zh.txt
 # https://www.bintsaeed.com/llms/al-talli.txt
+# China: /rednote · /wechat (BINT SAEED 承悦)

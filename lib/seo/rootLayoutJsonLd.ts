@@ -7,6 +7,7 @@ import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
 import { ORGANIZATION_SAME_AS } from '@/lib/seo/pressCoverage'
 import { getHeaderNavCopy } from '@/lib/i18n/headerNavI18n'
+import { BRAND_NAME_ZH_DISPLAY } from '@/lib/brand/chinaPresence'
 
 /** Canonical site origin (must match live host / Search Console property). */
 const BASE = 'https://www.bintsaeed.com'
@@ -29,7 +30,7 @@ const PRODUCT_DESCRIPTION: Record<AppLocale, string> = {
   ru:
     'Вдохновлённые наследием абайи и скромный готовый товар от Bint Saeed (ОАЭ), часто с отсылкой к вышивке Аль-Талли и плетению Хаус. Материалы и силуэты зависят от коллекции — см. карточки товаров.',
   zh:
-    'Bint Saeed（阿联酋）出品的传承灵感阿巴亚与端庄成衣，常融入阿勒塔利刺绣与赫乌斯编织。面料与廓形因系列而异——请以单品页为准。',
+    '承悦（BINT SAEED，阿联酋）出品的传承灵感阿巴亚与端庄成衣，常融入 Al Talli 刺绣与 Khous 编织。面料与廓形因系列而异——请以单品页为准。',
   de:
     'Erbe-inspirierte Abayas und bescheidene Konfektion von Bint Saeed (VAE), oft mit Bezug zu Al-Talli-Stickerei und Khous-Geflecht. Materialien und Silhouetten je Kollektion—Details auf den Produktseiten.',
   nl:
@@ -49,7 +50,7 @@ const ITEM_LIST_NAME: Record<AppLocale, string> = {
   it: 'Abaya di lusso EAU | Abaya designer Abu Dhabi | Bint Saeed',
   es: 'Abayas de lujo EAU | Abayas de diseño Abu Dhabi | Bint Saeed',
   ru: 'Роскошные абайи ОАЭ | Дизайнерские абайи Абу-Даби | Bint Saeed',
-  zh: '阿联酋奢华阿巴亚 | 阿布扎比设计师阿巴亚 | Bint Saeed',
+  zh: `阿联酋奢华阿巴亚 | 阿布扎比设计师阿巴亚 | ${BRAND_NAME_ZH_DISPLAY}`,
   de: 'Luxus-Abayas VAE | Designer-Abayas Abu Dhabi | Bint Saeed',
   nl: 'Luxe abaya’s VAE | Designer-abaya’s Abu Dhabi | Bint Saeed',
   pt: 'Abayas de luxo EAU | Abayas de designer Abu Dhabi | Bint Saeed',
@@ -71,7 +72,7 @@ const ITEM_LIST_DESC: Record<AppLocale, string> = {
   ru:
     'Роскошные абайи ОАЭ. Дизайнерские абайи Абу-Даби. Шёлк, кружево, вышивка Аль-Талли. Коллекция Bint Saeed.',
   zh:
-    '阿联酋奢华阿巴亚，阿布扎比设计师阿巴亚；丝绸、蕾丝与阿勒塔利刺绣。Bint Saeed 高端端庄服饰系列。',
+    '阿联酋奢华阿巴亚，阿布扎比设计师阿巴亚；丝绸、蕾丝与 Al Talli 刺绣。承悦（BINT SAEED）高端端庄服饰系列。',
   de:
     'Luxus-Abayas VAE. Designer-Abayas Abu Dhabi. Seide, Spitze, Al-Talli-Stickerei. Bint Saeed bescheidene Luxusmode.',
   nl:

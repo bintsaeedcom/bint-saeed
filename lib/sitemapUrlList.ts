@@ -55,6 +55,8 @@ const PRIMARY_HUBS: { path: string; changefreq: string; priority: string }[] = [
   { path: '/faq', changefreq: 'monthly', priority: '0.5' },
   { path: '/size-guide', changefreq: 'monthly', priority: '0.5' },
   { path: '/gift-cards', changefreq: 'monthly', priority: '0.6' },
+  { path: '/rednote', changefreq: 'monthly', priority: '0.45' },
+  { path: '/wechat', changefreq: 'monthly', priority: '0.45' },
 ]
 
 /** Legal / thin hubs — English only in the sitemap (still available in all locales on-site). */

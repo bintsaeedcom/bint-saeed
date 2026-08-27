@@ -61,6 +61,18 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
       {
+        userAgent: 'DeepSeekBot',
+        allow: '/',
+      },
+      {
+        userAgent: 'Baiduspider',
+        allow: '/',
+      },
+      {
+        userAgent: 'Baiduspider-render',
+        allow: '/',
+      },
+      {
         userAgent: 'meta-externalagent',
         allow: '/',
       },
@@ -95,11 +107,31 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
       {
+        userAgent: 'YandexImages',
+        allow: '/',
+      },
+      {
+        userAgent: 'YandexMobileBot',
+        allow: '/',
+      },
+      {
+        userAgent: 'Mail.RU_Bot',
+        allow: '/',
+      },
+      {
         userAgent: 'DuckDuckBot',
         allow: '/',
       },
       {
         userAgent: 'Applebot',
+        allow: '/',
+      },
+      {
+        userAgent: 'NaverBot',
+        allow: '/',
+      },
+      {
+        userAgent: 'Yeti',
         allow: '/',
       },
     ],

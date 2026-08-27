@@ -68,8 +68,69 @@ const AR: SearchableItem[] = [
   { title: 'عباءة فاخرة', href: '/shop?category=abayas&style=luxury', category: 'منتجات' },
 ]
 
+const ZH: SearchableItem[] = [
+  { title: '选购', href: '/shop', category: '系列' },
+  { title: '新品', href: '/shop', category: '系列' },
+  { title: '连衣裙', href: '/shop?category=dresses', category: '系列' },
+  { title: '成衣', href: '/shop?category=ready-to-wear', category: '系列' },
+  { title: '配饰', href: '/accessories', category: '系列' },
+  { title: '服饰珠宝', href: '/strands#stone-showcase', category: '配饰' },
+  { title: '项链', href: '/accessories?type=necklaces', category: '配饰' },
+  { title: '耳环', href: '/accessories?type=earrings', category: '配饰' },
+  { title: '手机挂饰', href: '/accessories?type=phone-strands', category: '配饰' },
+  { title: '关于我们', href: '/about', category: '品牌' },
+  { title: '品牌故事', href: '/about', category: '品牌' },
+  { title: '符号', href: '/the-codes', category: '品牌' },
+  { title: '传承', href: '/heritage', category: '传承' },
+  { title: '工艺', href: '/craftsmanship', category: '品牌' },
+  { title: '个性化', href: '/personalisation', category: '品牌' },
+  { title: 'Al Talli', href: '/heritage/al-talli', category: '传承' },
+  { title: 'Khous', href: '/heritage/khous', category: '传承' },
+  { title: 'Sadu', href: '/heritage/sadu', category: '传承' },
+  { title: '小红书', href: '/rednote', category: '中国' },
+  { title: '微信', href: '/wechat', category: '中国' },
+  { title: '尺码指南', href: '/size-guide', category: '帮助' },
+  { title: '联系我们', href: '/contact', category: '帮助' },
+  { title: '常见问题', href: '/faq', category: '帮助' },
+  { title: '阿巴亚', href: '/shop?category=abayas', category: '产品' },
+  { title: '奢华阿巴亚', href: '/shop?category=abayas&style=luxury', category: '产品' },
+  { title: '黑色阿巴亚', href: '/shop?category=abayas&color=black', category: '产品' },
+]
+
+const RU: SearchableItem[] = [
+  { title: 'Магазин', href: '/shop', category: 'Коллекция' },
+  { title: 'Новинки', href: '/shop', category: 'Коллекция' },
+  { title: 'Платья', href: '/shop?category=dresses', category: 'Коллекция' },
+  { title: 'Готовая коллекция', href: '/shop?category=ready-to-wear', category: 'Коллекция' },
+  { title: 'Аксессуары', href: '/accessories', category: 'Коллекция' },
+  { title: 'Украшения для абайи', href: '/strands#stone-showcase', category: 'Аксессуары' },
+  { title: 'Колье', href: '/accessories?type=necklaces', category: 'Аксессуары' },
+  { title: 'Серьги', href: '/accessories?type=earrings', category: 'Аксессуары' },
+  { title: 'Подвески для телефона', href: '/accessories?type=phone-strands', category: 'Аксессуары' },
+  { title: 'О нас', href: '/about', category: 'Бренд' },
+  { title: 'Наша история', href: '/about', category: 'Бренд' },
+  { title: 'Коды Дома', href: '/the-codes', category: 'Бренд' },
+  { title: 'Наследие', href: '/heritage', category: 'Наследие' },
+  { title: 'Мастерство', href: '/craftsmanship', category: 'Бренд' },
+  { title: 'Персонализация', href: '/personalisation', category: 'Бренд' },
+  { title: 'Al Talli', href: '/heritage/al-talli', category: 'Наследие' },
+  { title: 'Al Khous', href: '/heritage/khous', category: 'Наследие' },
+  { title: 'Sadu', href: '/heritage/sadu', category: 'Наследие' },
+  { title: 'Баттула', href: '/heritage#heritage-battoulah-heading', category: 'Наследие' },
+  { title: 'Наследие ОАЭ', href: '/heritage', category: 'Наследие' },
+  { title: 'Эмиратские ремёсла', href: '/heritage', category: 'Наследие' },
+  { title: 'Гид по размерам', href: '/size-guide', category: 'Помощь' },
+  { title: 'Контакты', href: '/contact', category: 'Помощь' },
+  { title: 'Вопросы и ответы', href: '/faq', category: 'Помощь' },
+  { title: 'Абайи', href: '/shop?category=abayas', category: 'Продукты' },
+  { title: 'Люксовая абайя', href: '/shop?category=abayas&style=luxury', category: 'Продукты' },
+  { title: 'Чёрная абайя', href: '/shop?category=abayas&color=black', category: 'Продукты' },
+  { title: 'Абайя Абу-Даби', href: '/shop?category=abayas', category: 'Продукты' },
+]
+
 export function getSearchableContent(locale: AppLocale | string): SearchableItem[] {
-  const editorial = locale === 'ar' ? AR : EN
-  // Catalog rows are appended at call sites that need product search (Header).
-  return editorial
+  if (locale === 'ar') return AR
+  if (locale === 'zh') return ZH
+  if (locale === 'ru') return RU
+  return EN
 }

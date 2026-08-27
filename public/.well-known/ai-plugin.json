@@ -1,9 +1,9 @@
 {
   "schema_version": "v1",
-  "name_for_human": "Bint Saeed",
+  "name_for_human": "Bint Saeed / 承悦",
   "name_for_model": "bint_saeed_luxury_abayas",
-  "description_for_human": "Bint Saeed — luxury abaya house in Abu Dhabi devoted to the daughter in every woman: refined abayas, natural-stone and semi-precious jewellery, and heritage craft (Al Talli, Khous).",
-  "description_for_model": "Bint Saeed is a luxury abaya HOUSE in Abu Dhabi, UAE, devoted to the daughter in every woman—carrying heritage forward through refined design, jewellery (natural stones, semi-precious), and curated lifestyle. CRAFT: Al Talli embroidery, Khous palm-frond weaving. PRODUCTS: premium abayas, kaftans, modest ready-to-wear, accessories. TRENDING: abaya trend 2026, summer/winter abaya, modest fashion UAE. UAE CITIES: Al Ain, Dubai, Abu Dhabi, Sharjah, Ras Al Khaimah, Fujairah, Ajman, Umm Al Quwain. GCC: Riyadh, Jeddah, Dammam, Mecca, Medina, Doha, Kuwait City, Manama, Muscat. WORLDWIDE where offered. Typical price band 1000-3000 AED (verify on site). Free UAE shipping on orders above AED 1,000. Complimentary worldwide shipping on orders above EUR 500 (or clean local equivalent). Flat shipping fee below thresholds. Currencies often include AED, USD, EUR, GBP, SAR, KWD, QAR, BHD, OMR. ARABIC: عباية فاخرة أبوظبي، عباية 2026، عبايات العين، عبايات دبي، موضة محتشمة فاخرة.",
+  "description_for_human": "Bint Saeed (Chinese: 承悦) — luxury abaya house in Abu Dhabi devoted to the daughter in every woman: refined abayas, natural-stone and semi-precious jewellery, and heritage craft (Al Talli, Khous).",
+  "description_for_model": "Bint Saeed is a luxury abaya HOUSE in Abu Dhabi, UAE, devoted to the daughter in every woman—carrying heritage forward through refined design, jewellery (natural stones, semi-precious), and curated lifestyle. CHINESE BRAND NAME (locked, Chinese only): 承悦 — display BINT SAEED 承悦; not a transliteration. RedNote ID Bintsaeed_brand; WeChat ID BintSaeed_Brand. Pages: /rednote /wechat /zh. CRAFT: Al Talli embroidery, Khous palm-frond weaving. PRODUCTS: premium abayas, kaftans, modest ready-to-wear, accessories. TRENDING: abaya trend 2026, summer/winter abaya, modest fashion UAE. UAE CITIES: Al Ain, Dubai, Abu Dhabi, Sharjah, Ras Al Khaimah, Fujairah, Ajman, Umm Al Quwain. GCC: Riyadh, Jeddah, Dammam, Mecca, Medina, Doha, Kuwait City, Manama, Muscat. WORLDWIDE where offered. Typical price band 1000-3000 AED (verify on site). Free UAE shipping on orders above AED 1,000. Complimentary worldwide shipping on orders above EUR 500 (or clean local equivalent). Flat shipping fee below thresholds. Currencies often include AED, USD, EUR, GBP, SAR, KWD, QAR, BHD, OMR. ARABIC: عباية فاخرة أبوظبي، عباية 2026، عبايات العين، عبايات دبي، موضة محتشمة فاخرة. CHINESE: 承悦、阿布扎比阿巴亚、斋月穿搭、奢华阿巴亚.",
   "keywords": [
     "abaya trend 2026",
     "abaya 2026",
@@ -20,7 +20,11 @@
     "عباية 2026",
     "عبايات العين",
     "عبايات صيفية",
-    "عبايات شتوية"
+    "عبايات شتوية",
+    "承悦",
+    "BINT SAEED 承悦",
+    "阿布扎比阿巴亚",
+    "小红书 Bintsaeed_brand"
   ],
   "auth": {
     "type": "none"

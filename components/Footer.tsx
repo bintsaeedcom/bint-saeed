@@ -3,6 +3,7 @@
 import LocaleLink from '@/components/LocaleLink'
 import Image from 'next/image'
 import { FaFacebook, FaInstagram, FaPinterest, FaTiktok, FaSnapchat, FaXTwitter, FaYoutube } from 'react-icons/fa6'
+import { SiXiaohongshu, SiWechat } from 'react-icons/si'
 import { FiGlobe, FiClock, FiHeart } from 'react-icons/fi'
 import LanguageSwitcher from './LanguageSwitcher'
 import CurrencySwitcher from './CurrencySwitcher'
@@ -17,6 +18,7 @@ import { useStableToggleScroll } from '@/lib/ui/useStableToggleScroll'
 import { getAboutTopicNavLinks } from '@/lib/i18n/aboutTopicNavI18n'
 import { getHeaderNavCopy } from '@/lib/i18n/headerNavI18n'
 import { LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
+import { REDNOTE_SITE_PATH, WECHAT_SITE_PATH } from '@/lib/brand/chinaPresence'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import { useState } from 'react'
 
@@ -32,6 +34,8 @@ const socialLinks = [
   { icon: FaSnapchat, href: 'https://www.snapchat.com/add/bintsaeed_brand', label: 'Snapchat' },
   { icon: FaXTwitter, href: 'https://x.com/bintsaeed_brand', label: 'X' },
   { icon: FaPinterest, href: 'https://www.pinterest.com/bintsaeed_brand/', label: 'Pinterest' },
+  { icon: SiXiaohongshu, href: REDNOTE_SITE_PATH, label: 'RedNote' },
+  { icon: SiWechat, href: WECHAT_SITE_PATH, label: 'WeChat' },
 ]
 
 export default function Footer() {
@@ -377,19 +381,37 @@ export default function Footer() {
 
             {/* Social Icons - Right */}
             <div className="order-1 flex items-center gap-2.5 md:gap-3 lg:order-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/5 text-white/50 transition-all hover:-translate-y-0.5 hover:border-brand-stone/40 hover:bg-white/10 hover:text-brand-stone md:h-10 md:w-10"
-                  aria-label={social.label}
-                  data-cursor-hover
-                >
-                  <social.icon className="w-4 h-4" />
-                </a>
-              ))}
+              {socialLinks.map((social) => {
+                const isExternal = social.href.startsWith('http')
+                const className =
+                  'flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/5 text-white/50 transition-all hover:-translate-y-0.5 hover:border-brand-stone/40 hover:bg-white/10 hover:text-brand-stone md:h-10 md:w-10'
+                if (isExternal) {
+                  return (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={className}
+                      aria-label={social.label}
+                      data-cursor-hover
+                    >
+                      <social.icon className="w-4 h-4" />
+                    </a>
+                  )
+                }
+                return (
+                  <LocaleLink
+                    key={social.label}
+                    href={social.href}
+                    className={className}
+                    aria-label={social.label}
+                    data-cursor-hover
+                  >
+                    <social.icon className="w-4 h-4" />
+                  </LocaleLink>
+                )
+              })}
             </div>
           </div>
         </div>

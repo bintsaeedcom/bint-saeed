@@ -26,6 +26,8 @@ export type RouteMetaKey =
   | 'the_codes'
   | 'craftsmanship'
   | 'regional_dressing'
+  | 'china_rednote'
+  | 'china_wechat'
   | 'personalisation'
   | 'strands'
   | 'product_care'

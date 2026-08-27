@@ -7,25 +7,12 @@ import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { HERITAGE_KHOUS_IMAGES } from '@/lib/content/heritagePageMedia'
 import { getKhousPageCopy } from '@/lib/content/heritageKhousCopyI18n'
+import { getKhousChapterDiscoveryKeywords } from '@/lib/seo/heritageHubDiscovery'
 
 const PATH = '/heritage/khous'
 const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
 const LLMS_BRIEF = `${SITE}/llms/heritage.txt`
 const ogImage = `${SITE}${HERITAGE_KHOUS_IMAGES.hero}`
-
-const KEYWORDS_EN = [
-  'Al Khous',
-  'Khous weaving',
-  'الخوص',
-  'palm frond weaving UAE',
-  'palm frond weaving Abu Dhabi',
-  'Emirati palm weaving',
-  'date palm craft UAE',
-  'UAE heritage crafts',
-  'Abu Dhabi heritage',
-  'Emirati traditional crafts',
-  'Bint Saeed heritage',
-].join(', ')
 
 /**
  * Indexable Al Khous heritage chapter, soft discovery (not primary nav).
@@ -42,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 ...sectionRobotsMetadata,
     title: { absolute: title },
     description,
-    keywords: KEYWORDS_EN,
+    keywords: getKhousChapterDiscoveryKeywords(locale).join(', '),
     category: 'heritage',
     alternates: {
       canonical,

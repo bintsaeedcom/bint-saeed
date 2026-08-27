@@ -172,9 +172,12 @@ export async function submitToSearchEngine(
   }
 }
 
+/** Default IndexNow partners: Bing, Yandex, Naver (Korea / Asia). */
+export const INDEXNOW_DEFAULT_ENGINES: SearchEngine[] = ['bing', 'yandex', 'naver']
+
 export async function submitToMultipleSearchEngines(
   urls: string[],
-  searchEngines: SearchEngine[] = ['bing', 'yandex'],
+  searchEngines: SearchEngine[] = INDEXNOW_DEFAULT_ENGINES,
   key: string = indexNowKey,
   host?: string,
 ): Promise<IndexNowBatchResponse> {
@@ -215,7 +218,7 @@ export async function getUrlsFromSitemap(): Promise<string[]> {
 }
 
 export async function submitSitemapToSearchEngines(
-  searchEngines: SearchEngine[] = ['bing', 'yandex'],
+  searchEngines: SearchEngine[] = INDEXNOW_DEFAULT_ENGINES,
   key: string = indexNowKey,
 ): Promise<IndexNowBatchResponse> {
   const urls = await getUrlsFromSitemap()
@@ -234,7 +237,7 @@ export async function submitSitemapToSearchEngines(
 
 export async function submitSingleUrl(
   url: string,
-  searchEngines: SearchEngine[] = ['bing', 'yandex'],
+  searchEngines: SearchEngine[] = INDEXNOW_DEFAULT_ENGINES,
   key: string = indexNowKey,
 ): Promise<IndexNowBatchResponse> {
   return submitToMultipleSearchEngines([url], searchEngines, key)

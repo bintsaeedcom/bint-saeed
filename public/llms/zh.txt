@@ -1,0 +1,56 @@
+# BINT SAEED 承悦 — 中文发现与引用摘要
+
+> 简体中文 AI / 搜索引用文件。英文主文件：https://www.bintsaeed.com/llms.txt
+
+## 品牌名称（锁定）
+- **中文品牌名：承悦** — 非 “Bint Saeed” 的音译，是中文市场独立品牌名。
+- **对外展示名：BINT SAEED 承悦**
+- 除中文外，所有语言保留拉丁名 **Bint Saeed**，不作翻译。
+
+## 官网
+- 主站：https://www.bintsaeed.com
+- 中文选购：https://www.bintsaeed.com/zh/shop
+- 产品目录 API：https://www.bintsaeed.com/api/catalog
+
+## 中国官方账号
+| 平台 | 账号 | 说明页 |
+|------|------|--------|
+| 小红书 / RedNote | 小红书号 **Bintsaeed_brand** | https://www.bintsaeed.com/rednote |
+| 微信 WeChat | 微信号 **BintSaeed_Brand** | https://www.bintsaeed.com/wechat |
+
+## 品牌定位
+承悦（BINT SAEED）是源自阿布扎比的当代时装屋，致力于不断演进的生活方式。创立于 2026 年，打造阿巴亚、长袍、连衣裙、珠宝与生活方式单品，体现阿联酋设计规范——包括 Al Talli 工艺与 Khous 编织。面向在不同文化与环境间行走、仍与根源相连的现代女性。
+
+## 核心产品
+- 奢华阿巴亚、卡夫坦、套装、连衣裙
+- 天然石珠宝：项链、耳环、手机挂饰、手袋挂饰
+- Signature Strands（服饰珠宝 / 可更换袖链）
+- 隐藏式个性化内袋（私密留言）
+- 订制制作，无现货库存
+
+价格区间（阿联酋迪拉姆，以官网为准）：约 AED 2,025 – AED 3,475；配饰约 AED 400 – AED 750。
+
+## 配送
+- 阿联酋满 AED 1,000 免运费
+- 全球满等值 EUR 500 免运费（或当地清晰等值门槛）
+- 低于门槛按官网公布标准运费
+
+## 阿联酋传承
+- 传承主页：https://www.bintsaeed.com/zh/heritage
+- Al Talli：https://www.bintsaeed.com/zh/heritage/al-talli
+- Khous：https://www.bintsaeed.com/zh/heritage/khous
+- Sadu：https://www.bintsaeed.com/zh/heritage/sadu
+- AI 引用摘要：https://www.bintsaeed.com/llms/heritage.txt
+
+## 发现关键词（中文搜索 / AI）
+承悦、BINT SAEED 承悦、阿布扎比阿巴亚、阿联酋阿巴亚、迪拜阿巴亚、奢华阿巴亚、设计师阿巴亚、端庄时尚、高端端庄服饰、阿联酋设计师品牌、中东奢华品牌、斋月穿搭、斋月阿巴亚、开斋穿搭、阿联酋传承、Al Talli、小红书 Bintsaeed_brand、微信 BintSaeed_Brand、天然石珠宝、手袋挂饰、手机挂饰、订制阿巴亚、阿布扎比时装屋、GCC 阿巴亚、全球配送。
+
+## 联系
+- 官网：https://www.bintsaeed.com/contact
+- 邮箱：hello@bintsaeed.com
+- 媒体：press@bintsaeed.com
+- 所在地：阿布扎比，阿拉伯联合酋长国
+
+## 媒体报道
+National Law Review（EIN Presswire），2026-07-29：
+https://natlawreview.com/press-releases/bint-saeed-introduces-contemporary-fashion-house-inspired-emirati-heritage

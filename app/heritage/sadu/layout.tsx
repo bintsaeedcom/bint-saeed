@@ -7,6 +7,7 @@ import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { HERITAGE_SADU_IMAGES } from '@/lib/content/heritagePageMedia'
 import { getSaduPageCopy } from '@/lib/content/heritageSaduCopyI18n'
+import { getSaduChapterDiscoveryKeywords } from '@/lib/seo/heritageHubDiscovery'
 
 const PATH = '/heritage/sadu'
 const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
@@ -14,21 +15,6 @@ const LLMS_BRIEF = `${SITE}/llms/heritage.txt`
 const ogImage = `${SITE}${HERITAGE_SADU_IMAGES.hero}`
 const SADU_UNESCO =
   'https://ich.unesco.org/en/RL/al-sadu-traditional-weaving-skills-in-the-united-arab-emirates-02223'
-
-const KEYWORDS_EN = [
-  'Sadu',
-  'Al Sadu',
-  'السدو',
-  'Sadu weaving',
-  'Bedouin weaving UAE',
-  'UNESCO Sadu',
-  'UNESCO Al Sadu',
-  'Emirati Sadu',
-  'Abu Dhabi heritage',
-  'UAE cultural heritage',
-  'desert weaving',
-  'Bint Saeed heritage',
-].join(', ')
 
 /**
  * Indexable Sadu heritage chapter, soft discovery (not primary nav).
@@ -45,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
 ...sectionRobotsMetadata,
     title: { absolute: title },
     description,
-    keywords: KEYWORDS_EN,
+    keywords: getSaduChapterDiscoveryKeywords(locale).join(', '),
     category: 'heritage',
     alternates: {
       canonical,

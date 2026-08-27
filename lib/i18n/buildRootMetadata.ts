@@ -5,7 +5,7 @@ import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
-import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
+import { BRAND_NAME, BRAND_NAME_ZH_DISPLAY, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
 import { BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
 import { isUtilitySeoPath } from '@/lib/seo/utilityPaths'
 
@@ -45,7 +45,7 @@ const OG_HERO_IMAGE_ALT: Record<AppLocale, string> = {
   it: `${BRAND_NAME} — casa di moda contemporanea, ${G.it.city}`,
   es: `${BRAND_NAME} — casa de moda contemporánea, ${G.es.city}`,
   ru: `${BRAND_NAME} — современный модный дом, ${G.ru.city}`,
-  zh: `${BRAND_NAME} — 当代时装屋，${G.zh.city}`,
+  zh: `${BRAND_NAME_ZH_DISPLAY} — 当代时装屋，${G.zh.city}`,
   de: `${BRAND_NAME} — zeitgenössisches Modehaus, ${G.de.city}`,
   nl: `${BRAND_NAME} — eigentijds modehuis, ${G.nl.city}`,
   pt: `${BRAND_NAME} — casa de moda contemporânea, ${G.pt.city}`,

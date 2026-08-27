@@ -145,23 +145,42 @@ const LOCAL_INTENT: Partial<Record<AppLocale, string[]>> = {
     '阿联酋遗产',
     '阿联酋文化遗产',
     '阿布扎比遗产',
+    '阿布扎比文化',
     '阿联酋传统工艺',
+    '阿联酋传承工艺',
     'Al Talli',
     'Al Khous',
     'Sadu',
     '金面罩',
     '海湾金面具',
+    '贝都因织造',
+    '教科文组织遗产',
+    '阿布扎比时装品牌',
+    'Bint Saeed 传承',
   ],
   ru: [
     'наследие ОАЭ',
+    'культурное наследие ОАЭ',
     'эмиратское наследие',
     'наследие Абу-Даби',
+    'культура Абу-Даби',
     'эмиратские ремёсла',
+    'традиционные ремёсла ОАЭ',
     'Al Talli',
     'Al Khous',
     'Sadu',
+    'Al Sadu',
     'баттула',
     'золотая маска бурки',
+    'бедуинское ткачество',
+    'плетение из пальмы',
+    'ЮНЕСКО Al Talli',
+    'ЮНЕСКО Sadu',
+    'мода наследия Абу-Даби',
+    'ближневосточное наследие',
+    'модный дом Абу-Даби',
+    'Bint Saeed наследие',
+    'Bint Saeed Абу-Даби',
   ],
   nl: [
     'erfgoed VAE',
@@ -225,4 +244,89 @@ export function getHeritageHubDiscoveryKeywords(locale: AppLocale): string[] {
   const local = LOCAL_INTENT[locale] ?? []
   const merged = [...local, ...fashion, ...HERITAGE_HUB_DISCOVERY_KEYWORDS_EN]
   return [...new Set(merged)]
+}
+
+const SADU_CHAPTER_INTENT: Partial<Record<AppLocale, string[]>> = {
+  ru: [
+    'Sadu',
+    'Al Sadu',
+    'Саду',
+    'бедуинское ткачество',
+    'ткачество Sadu ОАЭ',
+    'ЮНЕСКО Sadu',
+    'наследие ОАЭ',
+    'геометрия пустыни',
+    'Bint Saeed Sadu',
+  ],
+  zh: [
+    'Sadu',
+    'Al Sadu',
+    '贝都因织造',
+    '阿联酋 Sadu',
+    '教科文组织 Sadu',
+    '沙漠几何纹样',
+    '阿联酋传承',
+    'Bint Saeed Sadu',
+  ],
+}
+
+const KHOUS_CHAPTER_INTENT: Partial<Record<AppLocale, string[]>> = {
+  ru: [
+    'Al Khous',
+    'Khous weaving',
+    'плетение Al Khous',
+    'плетение из пальмы ОАЭ',
+    'эмиратское плетение',
+    'ремесло финиковой пальмы',
+    'наследие ОАЭ',
+    'Bint Saeed Khous',
+  ],
+  zh: [
+    'Al Khous',
+    'Khous weaving',
+    '棕榈编织',
+    '椰枣棕榈叶编织',
+    '阿联酋传统工艺',
+    '阿联酋传承',
+    'Bint Saeed Khous',
+  ],
+}
+
+/** Meta keywords for /heritage/sadu — locale overlay without changing page copy. */
+export function getSaduChapterDiscoveryKeywords(locale: AppLocale): string[] {
+  const base = [
+    'Sadu',
+    'Al Sadu',
+    'السدو',
+    'Sadu weaving',
+    'Bedouin weaving UAE',
+    'UNESCO Sadu',
+    'UNESCO Al Sadu',
+    'Emirati Sadu',
+    'Abu Dhabi heritage',
+    'UAE cultural heritage',
+    'desert weaving',
+    'Bint Saeed heritage',
+  ]
+  const local = SADU_CHAPTER_INTENT[locale] ?? []
+  return [...new Set([...local, ...base])]
+}
+
+/** Meta keywords for /heritage/khous — locale overlay without changing page copy. */
+export function getKhousChapterDiscoveryKeywords(locale: AppLocale): string[] {
+  const base = [
+    'Al Khous',
+    'Khous weaving',
+    'الخوص',
+    'palm frond weaving UAE',
+    'palm frond weaving Abu Dhabi',
+    'Emirati palm weaving',
+    'date palm craft UAE',
+    'UAE heritage crafts',
+    'Abu Dhabi heritage',
+    'Emirati traditional crafts',
+    'Bint Saeed heritage',
+  ]
+  const local = KHOUS_CHAPTER_INTENT[locale] ?? []
+  return [...new Set([...local, ...base])]
 }

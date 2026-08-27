@@ -563,13 +563,40 @@ const META_DESCRIPTION_RAW: Record<Exclude<RouteMetaKey, 'home'>, LocInput> = {
     ru:
       'Что носить на Ближнем Востоке — спокойные заметки о ближневосточном стиле, этикете ОАЭ и современных абаях Bint Saeed из Абу‑Даби.',
     zh:
-      '中东该如何穿着——关于中东风格、阿联酋着装礼仪，以及阿布扎比 Bint Saeed 当代阿巴亚的从容指引。',
+      '中东该如何穿着——关于中东风格、阿联酋着装礼仪，以及阿布扎比承悦（BINT SAEED）当代阿巴亚的从容指引。',
     de:
       'Was man im Nahen Osten trägt — ruhige Hinweise zu nahöstlichen Stilen, Etikette in den VAE und zeitgemäßen Abayas von Bint Saeed Abu Dhabi.',
     nl:
       'Wat te dragen in het Midden-Oosten — serene notities over Midden-Oosterse stijlen, etiquette in de VAE en hedendaagse abaya’s van Bint Saeed Abu Dhabi.',
     pt:
       'O que vestir no Médio Oriente — notas serenas sobre estilos do Médio Oriente, etiqueta nos Emirados e abayas contemporâneas Bint Saeed em Abu Dhabi.',
+  },
+  china_rednote: {
+    en:
+      'Official RedNote (Xiaohongshu / 小红书) for Bint Saeed Abu Dhabi. Chinese house name 承悦 — Red ID Bintsaeed_brand. Shop luxury abayas at bintsaeed.com.',
+    ar: 'حساب RedNote الرسمي لـ Bint Saeed أبوظبي. الاسم الصيني 承悦.',
+    fr: 'RedNote officiel Bint Saeed Abu Dhabi. Nom chinois 承悦 — Bintsaeed_brand.',
+    it: 'RedNote ufficiale Bint Saeed Abu Dhabi. Nome cinese 承悦.',
+    es: 'RedNote oficial Bint Saeed Abu Dhabi. Nombre chino 承悦.',
+    ru: 'Официальный RedNote Bint Saeed Абу-Даби. Имя 承悦.',
+    zh:
+      '承悦（BINT SAEED）官方小红书账号，阿布扎比时装屋。中文品牌名承悦。小红书号 Bintsaeed_brand。官网选购奢华阿巴亚。',
+    de: 'Offizieller RedNote Bint Saeed Abu Dhabi. Chinesischer Name 承悦.',
+    nl: 'Officieel RedNote Bint Saeed Abu Dhabi. Chinese naam 承悦.',
+    pt: 'RedNote oficial Bint Saeed Abu Dhabi. Nome chinês 承悦.',
+  },
+  china_wechat: {
+    en:
+      'Official WeChat (微信) for Bint Saeed Abu Dhabi. Chinese house name 承悦 — WeChat ID BintSaeed_Brand.',
+    ar: 'WeChat الرسمي لـ Bint Saeed أبوظبي. الاسم الصيني 承悦.',
+    fr: 'WeChat officiel Bint Saeed Abu Dhabi. Nom chinois 承悦.',
+    it: 'WeChat ufficiale Bint Saeed Abu Dhabi. Nome cinese 承悦.',
+    es: 'WeChat oficial Bint Saeed Abu Dhabi. Nombre chino 承悦.',
+    ru: 'Официальный WeChat Bint Saeed Абу-Даби. Имя 承悦.',
+    zh: '承悦（BINT SAEED）官方微信，阿布扎比时装屋。中文品牌名承悦。微信号 BintSaeed_Brand。',
+    de: 'Offizieller WeChat Bint Saeed Abu Dhabi. Chinesischer Name 承悦.',
+    nl: 'Officieel WeChat Bint Saeed Abu Dhabi. Chinese naam 承悦.',
+    pt: 'WeChat oficial Bint Saeed Abu Dhabi. Nome chinês 承悦.',
   },
   personalisation: {
     en:

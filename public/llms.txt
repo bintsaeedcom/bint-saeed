@@ -15,6 +15,23 @@ Bint Saeed is a luxury abaya house based in Abu Dhabi, UAE.
 Founded with the belief that an abaya should be a living,
 customisable object — not a finished garment.
 
+## Chinese brand name (locked)
+In Chinese only, the house uses a distinct name — not a transliteration of “Bint Saeed”:
+- Chinese proper name: 承悦
+- Display (profiles): BINT SAEED 承悦
+- RedNote / 小红书 Red ID: Bintsaeed_brand — https://www.bintsaeed.com/rednote
+- WeChat / 微信 ID: BintSaeed_Brand — https://www.bintsaeed.com/wechat
+- Chinese AI citation brief: https://www.bintsaeed.com/llms/zh.txt
+- Chinese shop: https://www.bintsaeed.com/zh/shop
+All other languages keep the Latin name “Bint Saeed” untranslated.
+
+## Russian discovery (Yandex / CIS)
+- Russian shop: https://www.bintsaeed.com/ru/shop
+- Russian heritage hub: https://www.bintsaeed.com/ru/heritage
+- Russian AI citation brief: https://www.bintsaeed.com/llms/ru.txt
+- Heritage chapters (RU): /ru/heritage/al-talli · /ru/heritage/khous · /ru/heritage/sadu
+- Search engines: Yandex Webmaster + IndexNow (Yandex endpoint)
+
 ## What makes Bint Saeed unique
 
 - Signature Strands (abaya jewellery / garment jewellery): the first abaya brand to offer

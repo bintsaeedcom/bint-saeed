@@ -3,6 +3,7 @@ import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { getBrandTagline } from '@/lib/brand/brandPositioning'
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
 import { ORGANIZATION_SAME_AS, PRESS_COVERAGE_NLR } from '@/lib/seo/pressCoverage'
+import { BRAND_NAME_ZH, BRAND_NAME_ZH_DISPLAY } from '@/lib/brand/chinaPresence'
 
 /** Long-form Organization description for JSON-LD (per locale). */
 const ORGANIZATION_DESCRIPTION: Record<AppLocale, string> = {
@@ -25,7 +26,7 @@ const ORGANIZATION_DESCRIPTION: Record<AppLocale, string> = {
     'Bint Saeed — современный модный дом из Абу-Даби, Объединённые Арабские Эмираты, посвящённый меняющемуся образу жизни. Основан в 2026 году и создаёт абайи, кафтаны, платья, украшения и lifestyle-вещи в духе эмиратских дизайн-кодов, включая ремесло Al Talli и плетение Khous. Создан для современных женщин, которые живут между культурами и средами, оставаясь связанными с корнями. Bint Saeed выражает современный дизайн-язык Абу-Даби, сочетая культурную глубину, изысканные материалы и современную конструкцию.',
 
   zh:
-    'Bint Saeed 是一家源自阿布扎比、阿拉伯联合酋长国的当代时装屋，致力于不断演进的生活方式。创立于 2026 年，打造体现阿联酋设计规范的阿巴亚、长袍、连衣裙、珠宝与生活方式单品，涵盖 Al Talli 工艺与 Khous 编织传统。面向在不同文化与环境间行走、仍与根源相连的现代女性。Bint Saeed 呈现阿布扎比当代设计表达，融合文化底蕴、考究材质与现代结构。',
+    '承悦（BINT SAEED）是一家源自阿布扎比、阿拉伯联合酋长国的当代时装屋，致力于不断演进的生活方式。创立于 2026 年，打造体现阿联酋设计规范的阿巴亚、长袍、连衣裙、珠宝与生活方式单品，涵盖 Al Talli 工艺与 Khous 编织传统。面向在不同文化与环境间行走、仍与根源相连的现代女性。承悦呈现阿布扎比当代设计表达，融合文化底蕴、考究材质与现代结构。',
 
   de:
     'Bint Saeed ist ein zeitgenössisches Modehaus aus Abu Dhabi, Vereinigte Arabische Emirate, dem sich wandelnden Lebensstil gewidmet. 2026 gegründet, schafft es Abayas, Kaftane, Kleider, Schmuck und Lifestyle-Pieces nach emiratischen Designcodes — darunter Al-Talli-Handwerk und Khous-Weberei. Gedacht für zeitgenössische Frauen, die zwischen Kulturen und Welten wechseln und dennoch mit ihrer Herkunft verbunden bleiben. Bint Saeed steht für einen zeitgenössischen Designausdruck Abu Dhabis mit kultureller Tiefe, edlen Materialien und moderner Konstruktion.',
@@ -51,8 +52,9 @@ export function buildOrganizationJsonLd(locale: AppLocale) {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': 'https://www.bintsaeed.com/#organization',
-    name: 'Bint Saeed',
+    name: locale === 'zh' ? BRAND_NAME_ZH_DISPLAY : 'Bint Saeed',
     alternateName: [
+      'Bint Saeed',
       'Bint Saeed Brand',
       'Bint Saeed Abu Dhabi',
       'Bint Saeed Contemporary Fashion House',
@@ -60,6 +62,8 @@ export function buildOrganizationJsonLd(locale: AppLocale) {
       'Bint Saeed Luxury Abayas UAE',
       'Bint Saeed Designer Abayas Abu Dhabi',
       'Bint Saeed Designer Abayas Dubai',
+      BRAND_NAME_ZH,
+      BRAND_NAME_ZH_DISPLAY,
     ],
     url: 'https://www.bintsaeed.com',
     email: OFFICIAL_EMAILS.hello,

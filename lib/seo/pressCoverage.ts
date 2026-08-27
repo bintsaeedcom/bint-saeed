@@ -14,6 +14,27 @@ export const PRESS_COVERAGE_NLR = {
   distribution: 'EIN Presswire',
 } as const
 
+const SITE = 'https://www.bintsaeed.com'
+
+/** On-site China social discovery pages (crawlable; link to RedNote / WeChat IDs). */
+const CHINA_PRESENCE_SAME_AS = [
+  `${SITE}/rednote`,
+  `${SITE}/wechat`,
+  `${SITE}/zh/rednote`,
+  `${SITE}/zh/wechat`,
+  `${SITE}/llms/zh.txt`,
+] as const
+
+/** Russian locale + heritage discovery URLs for entity graphs. */
+const RUSSIA_PRESENCE_SAME_AS = [
+  `${SITE}/ru/shop`,
+  `${SITE}/ru/heritage`,
+  `${SITE}/ru/heritage/al-talli`,
+  `${SITE}/ru/heritage/khous`,
+  `${SITE}/ru/heritage/sadu`,
+  `${SITE}/llms/ru.txt`,
+] as const
+
 /** Absolute URLs safe for Organization / Brand `sameAs` (profiles + verified coverage). */
 export const ORGANIZATION_SAME_AS = [
   'https://www.instagram.com/bintsaeed_brand/',
@@ -23,10 +44,10 @@ export const ORGANIZATION_SAME_AS = [
   'https://www.snapchat.com/add/bintsaeed_brand',
   'https://x.com/bintsaeed_brand',
   'https://www.pinterest.com/bintsaeed_brand/',
+  ...CHINA_PRESENCE_SAME_AS,
+  ...RUSSIA_PRESENCE_SAME_AS,
   PRESS_COVERAGE_NLR.url,
 ] as const
-
-const SITE = 'https://www.bintsaeed.com'
 
 /**
  * NewsArticle for the verified NLR / EIN Presswire release — linked to the house Organization.

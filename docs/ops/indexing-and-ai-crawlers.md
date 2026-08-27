@@ -7,16 +7,18 @@
 | **Google** | Days → a few weeks for new/low-authority URLs | “Discovered – not indexed” is normal at scale |
 | **Bing** | Often faster once in Bing Webmaster + IndexNow | Hours → days after IndexNow ping |
 | **Yandex** | Days → weeks | Stronger for RU/CIS; IndexNow helps notify |
+| **Mail.ru** | Similar to Yandex | Secondary Russian search; allow `Mail.RU_Bot` |
 | **AI crawlers** (GPTBot, Claude, Perplexity…) | Variable | They read allowed URLs / `llms.txt`; not the same as “Google ranked” |
 
 Nobody can guarantee a date. Fresh luxury sites with many locale URLs take longer.
 
 ## Already in this repo
 
-- Sitemap: `https://www.bintsaeed.com/sitemap.xml`
-- `robots.ts` allows Google, Bing, Yandex, DuckDuck, Applebot + AI bots
-- `public/llms.txt` for AI assistants
-- **IndexNow** (Bing + Yandex + partners): see `.env.example` → `INDEXNOW_KEY`
+- Sitemap: `https://www.bintsaeed.com/sitemap.xml` (EN + ar/fr/de/it/**zh** hubs)
+- `robots.ts` allows Google, Bing, Yandex (+ Images/Mobile), Mail.RU_Bot, DuckDuck, Applebot, **Baiduspider**, **DeepSeekBot**, **Bytespider**, **Naver/Yeti** + AI bots
+- `public/llms.txt` for AI assistants (includes Chinese name 承悦 + RedNote/WeChat)
+- Soft China pages: `/rednote`, `/wechat`
+- **IndexNow** (Bing + Yandex + **Naver**): see `.env.example` → `INDEXNOW_KEY`
 
 ## Enable IndexNow on Vercel (free, one-time)
 
@@ -36,10 +38,12 @@ Nobody can guarantee a date. Fresh luxury sites with many locale URLs take longe
 3. Submit sitemap URL
 4. Optional: import from Google Search Console
 
-### Yandex Webmaster
+### Yandex Webmaster (Russia / CIS)
 1. [webmaster.yandex.com](https://webmaster.yandex.com) → Add site
 2. Verify + submit sitemap
 3. IndexNow will also notify Yandex when configured
+4. Explicit robots entries: `YandexBot`, `YandexImages`, `YandexMobileBot`, `Mail.RU_Bot`
+5. Sitemap includes `/ru` hub + PDP URLs (with EN + ar/fr/de/it/zh/ru prefixes)
 
 ### Google (already likely)
 Keep GSC sitemap submitted; don’t expect every multilingual URL indexed immediately.

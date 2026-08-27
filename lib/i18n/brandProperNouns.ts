@@ -1,7 +1,26 @@
 import type { AppLocale } from '@/lib/i18n/routing'
+import {
+  BRAND_NAME_ZH,
+  BRAND_NAME_ZH_DISPLAY,
+} from '@/lib/brand/chinaPresence'
 
-/** Brand name — never translated or explained literally. */
+/**
+ * Brand name — keep Latin “Bint Saeed” in every locale except Chinese.
+ * Chinese alone uses the distinct house name 承悦 (not a translation).
+ */
 export const BRAND_NAME = 'Bint Saeed'
+
+export { BRAND_NAME_ZH, BRAND_NAME_ZH_DISPLAY }
+
+/** Locale-facing brand string for titles, schema, and zh UI chrome. */
+export function brandNameForLocale(locale: AppLocale): string {
+  return locale === 'zh' ? BRAND_NAME_ZH_DISPLAY : BRAND_NAME
+}
+
+/** Chinese-only proper name (承悦), for alternateName / China discovery. */
+export function brandNameZhProper(): string {
+  return BRAND_NAME_ZH
+}
 
 /** Product-line name — keep Latin in every locale (see `strandsBrandLock`). */
 export { PRODUCT_LINE_STRANDS, PRODUCT_LINE_SIGNATURE_STRANDS } from '@/lib/i18n/strandsBrandLock'
