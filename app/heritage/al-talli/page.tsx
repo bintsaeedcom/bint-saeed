@@ -5,6 +5,7 @@ import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
+import HeritageHouseOfArtisansLink from '@/components/HeritageHouseOfArtisansLink'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
@@ -267,6 +268,13 @@ function AbuDhabiSection() {
               <p>{copy.abuDhabiP1}</p>
               <p>{copy.abuDhabiP2}</p>
             </div>
+            <HeritageHouseOfArtisansLink
+              section="heritage-al-talli"
+              lead={copy.houseOfArtisansLead}
+              visitAbuDhabiLabel={copy.houseOfArtisansCta}
+              abuDhabiCultureLabel={copy.houseOfArtisansCtaCulture}
+              className="mt-8"
+            />
           </motion.div>
         </div>
       </div>

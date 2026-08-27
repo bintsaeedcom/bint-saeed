@@ -15,6 +15,12 @@ export type HeritageSharedChrome = {
   khous: string
   khousFull: string
   sadu: string
+  /** Short line directing visitors to House of Artisans (Visit Abu Dhabi + Abu Dhabi Culture). */
+  houseOfArtisansLead: string
+  /** CTA label for Visit Abu Dhabi outbound link. */
+  houseOfArtisansCta: string
+  /** CTA label for Abu Dhabi Culture (government) outbound link. */
+  houseOfArtisansCtaCulture: string
 }
 
 export type AlTalliPageCopy = HeritageSharedChrome & {
@@ -51,6 +57,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'Khous',
     khousFull: 'Khous Weaving',
     sadu: 'Sadu Weaving',
+    houseOfArtisansLead:
+      'To explore living Emirati crafts in Abu Dhabi, visit the House of Artisans at Qasr Al Hosn through the emirate’s official channels.',
+    houseOfArtisansCta: 'House of Artisans on Visit Abu Dhabi',
+    houseOfArtisansCtaCulture: 'House of Artisans on Abu Dhabi Culture',
   },
   ar: {
     heritage: 'التراث',
@@ -62,6 +72,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'الخوص',
     khousFull: 'الخوص',
     sadu: 'السدو',
+    houseOfArtisansLead:
+      'لاستكشاف الحِرَف الإماراتية الحية في أبوظبي، زوري بيت الحرفيين في قصر الحصن عبر القنوات الرسمية للإمارة.',
+    houseOfArtisansCta: 'بيت الحرفيين على Visit Abu Dhabi',
+    houseOfArtisansCtaCulture: 'بيت الحرفيين على Abu Dhabi Culture',
   },
   fr: {
     heritage: 'Héritage',
@@ -73,6 +87,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'Khous',
     khousFull: 'Khous',
     sadu: 'Sadu',
+    houseOfArtisansLead:
+      'Pour découvrir les savoir-faire émiratis vivants à Abu Dhabi, rendez-vous à la House of Artisans, Qasr Al Hosn, via les canaux officiels de l’émirat.',
+    houseOfArtisansCta: 'House of Artisans sur Visit Abu Dhabi',
+    houseOfArtisansCtaCulture: 'House of Artisans sur Abu Dhabi Culture',
   },
   it: {
     heritage: 'Heritage',
@@ -84,6 +102,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'Khous',
     khousFull: 'Khous',
     sadu: 'Sadu',
+    houseOfArtisansLead:
+      'Per scoprire i mestieri emiratini vivi ad Abu Dhabi, visitate la House of Artisans a Qasr Al Hosn attraverso i canali ufficiali dell’emirato.',
+    houseOfArtisansCta: 'House of Artisans su Visit Abu Dhabi',
+    houseOfArtisansCtaCulture: 'House of Artisans su Abu Dhabi Culture',
   },
   es: {
     heritage: 'Heritage',
@@ -95,6 +117,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'Khous',
     khousFull: 'Khous',
     sadu: 'Sadu',
+    houseOfArtisansLead:
+      'Para explorar los oficios emiratíes vivos en Abu Dabi, visite la House of Artisans en Qasr Al Hosn a través de los canales oficiales del emirato.',
+    houseOfArtisansCta: 'House of Artisans en Visit Abu Dhabi',
+    houseOfArtisansCtaCulture: 'House of Artisans en Abu Dhabi Culture',
   },
   ru: {
     heritage: 'Наследие',
@@ -106,6 +132,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'Khous',
     khousFull: 'Khous',
     sadu: 'Sadu',
+    houseOfArtisansLead:
+      'Чтобы познакомиться с живыми эмиратскими ремёслами в Абу-Даби, посетите House of Artisans при Qasr Al Hosn через официальные каналы эмирата.',
+    houseOfArtisansCta: 'House of Artisans на Visit Abu Dhabi',
+    houseOfArtisansCtaCulture: 'House of Artisans на Abu Dhabi Culture',
   },
   zh: {
     heritage: '传承',
@@ -117,6 +147,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'Khous',
     khousFull: 'Khous',
     sadu: 'Sadu',
+    houseOfArtisansLead:
+      '若要深入了解阿布扎比活态阿联酋工艺，请通过酋长国官方渠道前往 Qasr Al Hosn 的 House of Artisans。',
+    houseOfArtisansCta: 'Visit Abu Dhabi 上的 House of Artisans',
+    houseOfArtisansCtaCulture: 'Abu Dhabi Culture 上的 House of Artisans',
   },
   de: {
     heritage: 'Heritage',
@@ -128,6 +162,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'Khous',
     khousFull: 'Khous',
     sadu: 'Sadu',
+    houseOfArtisansLead:
+      'Um lebendige emiratische Handwerke in Abu Dhabi zu entdecken, besuchen Sie das House of Artisans am Qasr Al Hosn über die offiziellen Kanäle des Emirats.',
+    houseOfArtisansCta: 'House of Artisans auf Visit Abu Dhabi',
+    houseOfArtisansCtaCulture: 'House of Artisans auf Abu Dhabi Culture',
   },
   nl: {
     heritage: 'Heritage',
@@ -139,6 +177,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'Khous',
     khousFull: 'Khous',
     sadu: 'Sadu',
+    houseOfArtisansLead:
+      'Om levende Emiratische ambachten in Abu Dhabi te ontdekken, bezoek de House of Artisans bij Qasr Al Hosn via de officiële kanalen van het emiraat.',
+    houseOfArtisansCta: 'House of Artisans op Visit Abu Dhabi',
+    houseOfArtisansCtaCulture: 'House of Artisans op Abu Dhabi Culture',
   },
   pt: {
     heritage: 'Heritage',
@@ -150,6 +192,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'Khous',
     khousFull: 'Khous',
     sadu: 'Sadu',
+    houseOfArtisansLead:
+      'Para explorar ofícios emiratis vivos em Abu Dhabi, visite a House of Artisans em Qasr Al Hosn pelos canais oficiais do emirado.',
+    houseOfArtisansCta: 'House of Artisans no Visit Abu Dhabi',
+    houseOfArtisansCtaCulture: 'House of Artisans no Abu Dhabi Culture',
   },
   id: {
     heritage: 'Warisan',
@@ -161,6 +207,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'Khous',
     khousFull: 'Khous',
     sadu: 'Sadu',
+    houseOfArtisansLead:
+      'Untuk menjelajahi kerajinan Emirati yang hidup di Abu Dhabi, kunjungi House of Artisans di Qasr Al Hosn melalui saluran resmi emirat.',
+    houseOfArtisansCta: 'House of Artisans di Visit Abu Dhabi',
+    houseOfArtisansCtaCulture: 'House of Artisans di Abu Dhabi Culture',
   },
   ms: {
     heritage: 'Warisan',
@@ -172,6 +222,10 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
     khous: 'Khous',
     khousFull: 'Khous',
     sadu: 'Sadu',
+    houseOfArtisansLead:
+      'Untuk menerokai kraf Emiriah yang hidup di Abu Dhabi, lawati House of Artisans di Qasr Al Hosn melalui saluran rasmi emiriah.',
+    houseOfArtisansCta: 'House of Artisans di Visit Abu Dhabi',
+    houseOfArtisansCtaCulture: 'House of Artisans di Abu Dhabi Culture',
   },
 }
 

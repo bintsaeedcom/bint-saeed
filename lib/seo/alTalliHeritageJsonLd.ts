@@ -8,6 +8,10 @@ import {
   alTalliPrimaryImageUrl,
   buildAlTalliDefinedTermNode,
 } from '@/lib/seo/alTalliDiscovery'
+import {
+  HOUSE_OF_ARTISANS_ABU_DHABI_CULTURE_URL,
+  HOUSE_OF_ARTISANS_VISIT_ABU_DHABI_URL,
+} from '@/lib/content/heritagePlaces'
 import { getLocalizedAlTalliDiscoveryKeywords } from '@/lib/products/alTalliDiscoveryKeywordsI18n'
 
 const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
@@ -284,6 +288,8 @@ export function buildAlTalliHeritageJsonLd(locale: AppLocale = 'en') {
         '@type': 'TouristAttraction',
         name: 'House of Artisans',
         description: 'Abu Dhabi cultural institution sharing traditional Emirati crafts including Al Talli.',
+        url: HOUSE_OF_ARTISANS_VISIT_ABU_DHABI_URL,
+        sameAs: [HOUSE_OF_ARTISANS_VISIT_ABU_DHABI_URL, HOUSE_OF_ARTISANS_ABU_DHABI_CULTURE_URL],
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Abu Dhabi',

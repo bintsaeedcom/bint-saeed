@@ -88,7 +88,9 @@ export default function AnalyticsBootstrap() {
       if (!eventName) return
       const eventLabel = node.dataset.analyticsLabel
       const section = node.dataset.analyticsSection
-      trackEvent(eventName, { event_label: eventLabel, section })
+      const anchor = (node.tagName === 'A' ? node : node.closest('a')) as HTMLAnchorElement | null
+      const linkUrl = anchor?.href
+      trackEvent(eventName, { event_label: eventLabel, section, link_url: linkUrl })
       if (eventName === 'click_personalisation_teaser') {
         trackEvent('click_cta_home_to_personalisation', { section })
         trackEvent('click_request_piece', { section })

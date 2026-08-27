@@ -18,8 +18,10 @@ import { commerceUi } from '@/lib/i18n/commerceUi'
 import { getHeritagePageCopy } from '@/lib/content/heritagePageCopyI18n'
 import { getHeritageHubEditorial } from '@/lib/content/heritageHubEditorialI18n'
 import { getHeritageHubDiscoveryNav } from '@/lib/content/heritageHubDiscoveryNavI18n'
+import { getHeritageSharedChrome } from '@/lib/content/heritageAlTalliCopyI18n'
 import { getCartEmptyDiscoverCopy } from '@/lib/i18n/cartEmptyDiscoverI18n'
 import { ctaPrimaryWithGap } from '@/lib/ui/ctaClasses'
+import HeritageHouseOfArtisansLink from '@/components/HeritageHouseOfArtisansLink'
 import {
   HERITAGE_BATTOULAH_IMAGE,
   HERITAGE_CRAFT_IMAGES,
@@ -495,6 +497,7 @@ function ClosingCta() {
   const isInView = useInView(ref, { margin: '-20%', once: true })
   const { isRTL, language } = useLanguage()
   const copy = getHeritagePageCopy(language)
+  const chrome = getHeritageSharedChrome(language)
   const discover = getCartEmptyDiscoverCopy(language)
 
   return (
@@ -534,6 +537,14 @@ function ClosingCta() {
               {discover.exploreCollection}
               <FiArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
             </LocaleLink>
+            <HeritageHouseOfArtisansLink
+              section="heritage-hub"
+              lead={chrome.houseOfArtisansLead}
+              visitAbuDhabiLabel={chrome.houseOfArtisansCta}
+              abuDhabiCultureLabel={chrome.houseOfArtisansCtaCulture}
+              className="mt-10"
+              leadClassName="mb-3 font-montserrat text-sm leading-[1.85] tracking-wide text-brand-darkRed/70"
+            />
           </motion.div>
         </Reveal>
       </div>

@@ -5,6 +5,7 @@ import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
+import HeritageHouseOfArtisansLink from '@/components/HeritageHouseOfArtisansLink'
 import { FiArrowRight } from 'react-icons/fi'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
@@ -239,6 +240,13 @@ function BintSaeedSection() {
               <p>{copy.brandP1}</p>
               <p>{copy.brandP2}</p>
             </div>
+            <HeritageHouseOfArtisansLink
+              section="heritage-khous"
+              lead={copy.houseOfArtisansLead}
+              visitAbuDhabiLabel={copy.houseOfArtisansCta}
+              abuDhabiCultureLabel={copy.houseOfArtisansCtaCulture}
+              className="mt-6"
+            />
             <LocaleLink
               href="/shop?from=heritage-khous"
               className={`mt-8 ${ctaPrimaryWithGap}`}
