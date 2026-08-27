@@ -10,8 +10,9 @@ export type PdpDetailGroup = {
   items: string[]
 }
 
-export const THE_CODES_KHOUS_HREF = '/the-codes#khous'
-export const THE_CODES_AL_TALLI_HREF = '/the-codes#al-talli'
+/** Craft code links prefer heritage chapters (canonical cultural pages); The Codes remains design language. */
+export const THE_CODES_KHOUS_HREF = '/heritage/khous'
+export const THE_CODES_AL_TALLI_HREF = '/heritage/al-talli'
 export const THE_CODES_KNOTTED_LINES_HREF = '/the-codes#knotted-lines-of-lineage'
 
 export function pdpIntroPartsToPlainText(parts: PdpIntroPart[]): string {

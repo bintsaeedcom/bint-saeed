@@ -5,6 +5,7 @@ export type AboutTopicLink = { href: string; label: string }
 const EN: AboutTopicLink[] = [
   { href: '/about', label: 'Our Story' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/heritage', label: 'Heritage' },
   { href: '/craftsmanship', label: 'Craftsmanship' },
   { href: '/personalisation', label: 'Personalisation' },
   { href: '/giving-forward', label: 'Giving Forward' },
@@ -14,6 +15,7 @@ const EN: AboutTopicLink[] = [
 const AR: AboutTopicLink[] = [
   { href: '/about', label: 'قصتنا' },
   { href: '/the-codes', label: 'الرموز' },
+  { href: '/heritage', label: 'التراث' },
   { href: '/craftsmanship', label: 'الحرفية' },
   { href: '/personalisation', label: 'التخصيص' },
   { href: '/giving-forward', label: 'العطاء المستمر' },
@@ -23,6 +25,7 @@ const AR: AboutTopicLink[] = [
 const FR: AboutTopicLink[] = [
   { href: '/about', label: 'Notre histoire' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/heritage', label: 'Patrimoine' },
   { href: '/craftsmanship', label: 'Savoir-faire' },
   { href: '/personalisation', label: 'Personnalisation' },
   { href: '/giving-forward', label: 'Transmission' },
@@ -32,6 +35,7 @@ const FR: AboutTopicLink[] = [
 const IT: AboutTopicLink[] = [
   { href: '/about', label: 'La nostra storia' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/heritage', label: 'Heritage' },
   { href: '/craftsmanship', label: 'Artigianalità' },
   { href: '/personalisation', label: 'Personalizzazione' },
   { href: '/giving-forward', label: 'Trasmissione' },
@@ -41,6 +45,7 @@ const IT: AboutTopicLink[] = [
 const DE: AboutTopicLink[] = [
   { href: '/about', label: 'Unsere Geschichte' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/heritage', label: 'Heritage' },
   { href: '/craftsmanship', label: 'Handwerkskunst' },
   { href: '/personalisation', label: 'Personalisierung' },
   { href: '/giving-forward', label: 'Weitergeben' },
@@ -50,6 +55,7 @@ const DE: AboutTopicLink[] = [
 const NL: AboutTopicLink[] = [
   { href: '/about', label: 'Ons verhaal' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/heritage', label: 'Heritage' },
   { href: '/craftsmanship', label: 'Vakmanschap' },
   { href: '/personalisation', label: 'Personalisatie' },
   { href: '/giving-forward', label: 'Doorgeven' },
@@ -59,6 +65,7 @@ const NL: AboutTopicLink[] = [
 const PT: AboutTopicLink[] = [
   { href: '/about', label: 'A nossa história' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/heritage', label: 'Património' },
   { href: '/craftsmanship', label: 'Saber-fazer' },
   { href: '/personalisation', label: 'Personalização' },
   { href: '/giving-forward', label: 'Dar adiante' },
@@ -68,6 +75,7 @@ const PT: AboutTopicLink[] = [
 const ES: AboutTopicLink[] = [
   { href: '/about', label: 'Nuestra historia' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/heritage', label: 'Patrimonio' },
   { href: '/craftsmanship', label: 'Artesanía' },
   { href: '/personalisation', label: 'Personalización' },
   { href: '/giving-forward', label: 'Dar adelante' },
@@ -77,6 +85,7 @@ const ES: AboutTopicLink[] = [
 const RU: AboutTopicLink[] = [
   { href: '/about', label: 'Наша история' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/heritage', label: 'Наследие' },
   { href: '/craftsmanship', label: 'Мастерство' },
   { href: '/personalisation', label: 'Персонализация' },
   { href: '/giving-forward', label: 'Передача дальше' },
@@ -86,6 +95,7 @@ const RU: AboutTopicLink[] = [
 const ZH: AboutTopicLink[] = [
   { href: '/about', label: '我们的故事' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/heritage', label: '传承' },
   { href: '/craftsmanship', label: '工艺' },
   { href: '/personalisation', label: '个性化定制' },
   { href: '/giving-forward', label: '传递向前' },
@@ -95,6 +105,7 @@ const ZH: AboutTopicLink[] = [
 const ID: AboutTopicLink[] = [
   { href: '/about', label: 'Kisah kami' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/heritage', label: 'Warisan' },
   { href: '/craftsmanship', label: 'Kriya' },
   { href: '/personalisation', label: 'Personalisasi' },
   { href: '/giving-forward', label: 'Meneruskan' },
@@ -104,6 +115,7 @@ const ID: AboutTopicLink[] = [
 const MS: AboutTopicLink[] = [
   { href: '/about', label: 'Kisah kami' },
   { href: '/the-codes', label: 'The Codes' },
+  { href: '/heritage', label: 'Warisan' },
   { href: '/craftsmanship', label: 'Ketukangan' },
   { href: '/personalisation', label: 'Pemperibadian' },
   { href: '/giving-forward', label: 'Meneruskan' },

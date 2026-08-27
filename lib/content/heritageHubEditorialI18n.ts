@@ -16,6 +16,8 @@ export type HeritageHubEditorial = {
   battoulahP2: string
   battoulahP3: string
   battoulahImageAlt: string
+  faqsEyebrow: string
+  faqsHeading: string
   termAlTalli: string
   termAlKhous: string
   termSadu: string
@@ -45,8 +47,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       'Historically, the battoulah sat within a wider vocabulary of modest Gulf dressing: a composed facial silhouette, regional variation in shape and ornament, and a presence that signalled belonging as much as adornment. It belongs to the same cultural horizon as Emirati textile crafts: Al Talli on the garment edge, Al Khous in domestic making, Sadu in tent and textile, each a facet of how women carried identity through material.',
     battoulahP3:
-      'Bint Saeed does not recreate the battoulah as costume. The House holds it as cultural knowledge: a reminder that UAE heritage is worn, shaped, and remembered in the face and the cloth together, and that contemporary abaya design can honour that seriousness without imitation.',
+      'At Bint Saeed, the battoulah is a house code of the brand. Its presence appears across several pieces in the House: cultural knowledge carried into contemporary design with seriousness and restraint, never as costume or imitation.',
     battoulahImageAlt: 'Emirati battoulah face masks in museum display, traditional Gulf gold burqa mask heritage, United Arab Emirates',
+    faqsEyebrow: 'Questions',
+    faqsHeading: 'Often asked',
     termAlTalli:
       'Al Talli is a traditional Emirati craft of hand-worked metallic and coloured thread bands that adorn women’s clothing, knowledge passed between generations of women. At the House of Artisans in Abu Dhabi it remains a living practice; inscribed on UNESCO’s Representative List of the Intangible Cultural Heritage of Humanity in 2022. Bint Saeed reads its slender metallic lines as a house code rather than costume replica.',
     termAlKhous:
@@ -54,7 +58,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     termSadu:
       'Sadu (Al Sadu) is a Bedouin weaving tradition practiced across the Arabian Peninsula, including the United Arab Emirates. Its geometric patterns carry desert meaning; traditional Sadu weaving skills of the UAE are recognised on UNESCO’s Representative List of the Intangible Cultural Heritage of Humanity.',
     termBattoulah:
-      'Battoulah (batula) is the traditional Gulf metal face mask, often gold-toned, historically worn by women in parts of the United Arab Emirates and neighbouring Gulf societies; also known in English as the gold burqa mask or Emirati gold mask.',
+      'Battoulah (batula) is the traditional Gulf metal face mask, often gold-toned, historically worn by women in parts of the United Arab Emirates and neighbouring Gulf societies; also known in English as the gold burqa mask or Emirati gold mask. At Bint Saeed it is held as a house code and appears across several pieces in the collection.',
     faqs: [
       {
         q: 'What is UAE cultural heritage in fashion and craft?',
@@ -74,7 +78,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: 'What is the Emirati gold burqa mask (battoulah)?',
-        a: 'The battoulah, or batula, is a traditional metal face mask worn historically by women in parts of the Gulf, including the United Arab Emirates. Often gold-, brass-, or silver-toned, it is sometimes called a gold burqa mask in English. It is a heritage dress form, not a Bint Saeed product, and sits within the wider story of Emirati and Gulf women’s cultural dress.',
+        a: 'The battoulah, or batula, is a traditional metal face mask worn historically by women in parts of the Gulf, including the United Arab Emirates. Often gold-, brass-, or silver-toned, it is sometimes called a gold burqa mask in English. At Bint Saeed it is a house code of the brand and appears across several pieces in the House, cultural knowledge carried into contemporary design without costume.',
       },
     ],
     aiCitationLead:
@@ -100,8 +104,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       'تاريخياً، اندرج البرقع في معجم أوسع للزي الخليجي المحتشم: هيئة وجه متزنة، وتنوّع إقليمي في الشكل والزخرفة، وحضور يدلّ على الانتماء بقدر ما يدلّ على الزينة. وهو في أفق واحد مع حرف النسيج الإماراتية, التلي على حافة الثوب، والخوص في البيت، والسدو في الخيمة والقماش.',
     battoulahP3:
-      'لا تعيد بنت سعيد صنع البرقع كزيّ. تحتفظ به معرفةً ثقافية: تذكيراً بأن تراث الإمارات يُلبَس ويُشكَّل ويُذكَر في الوجه والقماش معاً, وأن تصميم العباءة المعاصرة يمكنه أن يكرّم هذا الوقار دون محاكاة.',
+      'في بنت سعيد، البرقع رمز من رموز الدار. يظهر حضوره عبر عدة قطع في المجموعة: معرفة ثقافية تُحمَل إلى التصميم المعاصر بوقار واعتدال، لا كزيّ مستعار أو محاكاة.',
     battoulahImageAlt: 'أقنعة البرقع الإماراتية في عرض متحفي, تراث قناع الذهب الخليجي، الإمارات العربية المتحدة',
+    faqsEyebrow: 'أسئلة',
+    faqsHeading: 'كثيراً ما تُسأل',
     termAlTalli:
       'التلي حرفة زخرفية إماراتية تقليدية من أشرطة خيوط معدنية وملونة، استُخدمت تاريخياً لتزيين ملابس النساء في الإمارات. أُدرجت في القائمة التمثيلية لليونسكو عام ٢٠٢٢.',
     termAlKhous:
@@ -129,7 +135,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: 'ما البرقع الذهبي الإماراتي؟',
-        a: 'البرقع أو البتولة قناع معدني تقليدي ارتدته نساء في الخليج بما فيها الإمارات، غالباً بلمسة ذهبية أو نحاسية أو فضية. وهو شكل تراثي في اللباس, وليس منتجاً من بنت سعيد, ضمن قصة الزي الثقافي للمرأة الإماراتية والخليجية.',
+        a: 'البرقع أو البتولة قناع معدني تقليدي ارتدته نساء في الخليج بما فيها الإمارات، غالباً بلمسة ذهبية أو نحاسية أو فضية. في بنت سعيد هو رمز من رموز الدار ويظهر عبر عدة قطع في المجموعة: معرفة ثقافية في التصميم المعاصر بلا زيّ مستعار.',
       },
     ],
     aiCitationLead:
@@ -155,8 +161,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       'Historiquement, le battoulah s’inscrivait dans un vocabulaire plus large du costume modeste du Golfe: silhouette du visage composée, variations régionales de forme et d’ornement, présence qui disait l’appartenance autant que la parure. Il partage l’horizon des métiers textiles émiratis, Al Talli au bord du vêtement, Al Khous dans le faire domestique, Sadu dans la tente et le textile.',
     battoulahP3:
-      'Bint Saeed ne recrée pas le battoulah en costume. La Maison le tient pour un savoir culturel: rappel que le patrimoine des EAU se porte et se souvient dans le visage et le tissu ensemble, et qu’une abaya contemporaine peut honorer cette gravité sans imitation.',
+      'Chez Bint Saeed, le battoulah est un code de la maison. Sa présence traverse plusieurs pièces de la Maison: un savoir culturel porté dans le design contemporain avec gravité et retenue, jamais en costume ni en imitation.',
     battoulahImageAlt: 'Masques battoulah émiratis en vitrine muséale, patrimoine du masque d’or du Golfe, Émirats arabes unis',
+    faqsEyebrow: 'Questions',
+    faqsHeading: 'Souvent posées',
     termAlTalli:
       'L’Al Talli est un artisanat décoratif émirati traditionnel de bandes de fils métalliques et colorés, historiquement employé pour orner les vêtements féminins aux Émirats arabes unis. Inscrit en 2022 sur la Liste représentative de l’UNESCO.',
     termAlKhous:
@@ -184,7 +192,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: 'Qu’est-ce que le masque d’or émirati (battoulah) ?',
-        a: 'Le battoulah, ou batula, est un masque métallique traditionnel porté historiquement par des femmes dans des régions du Golfe, notamment aux EAU. Souvent doré, cuivré ou argenté, on l’appelle parfois gold burqa mask. C’est une forme de costume patrimonial, non un produit Bint Saeed, dans l’histoire plus large du costume culturel des femmes émiraties et du Golfe.',
+        a: 'Le battoulah, ou batula, est un masque métallique traditionnel porté historiquement par des femmes dans des régions du Golfe, notamment aux EAU. Souvent doré, cuivré ou argenté, on l’appelle parfois gold burqa mask. Chez Bint Saeed, c’est un code de la maison qui apparaît sur plusieurs pièces: un savoir culturel porté dans le design contemporain, sans costume.',
       },
     ],
     aiCitationLead:
@@ -210,8 +218,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       'Storicamente la battoulah apparteneva a un lessico più ampio dell’abito modesto del Golfo: silhouette del volto composta, variazioni regionali di forma e ornamento, presenza che diceva appartenenza quanto ornamento. Condivide l’orizzonte dei mestieri tessili emiratini, Al Talli sul bordo del capo, Al Khous nel fare domestico, Sadu nella tenda e nel tessuto.',
     battoulahP3:
-      'Bint Saeed non ricrea la battoulah come costume. La Maison la tiene come sapere culturale: ricordo che il patrimonio degli EAU si indossa e si ricorda nel volto e nel tessuto insieme, e che un’abaya contemporanea può onorare quella gravità senza imitazione.',
+      'Da Bint Saeed, la battoulah è un codice della maison. La sua presenza compare su più pezzi della Maison: sapere culturale portato nel design contemporaneo con gravità e misura, mai come costume o imitazione.',
     battoulahImageAlt: 'Maschere battoulah emiratine in esposizione museale, patrimonio della maschera d’oro del Golfo, Emirati Arabi Uniti',
+    faqsEyebrow: 'Domande',
+    faqsHeading: 'Spesso chieste',
     termAlTalli:
       'Al Talli è un artigianato decorativo emiratino tradizionale di bande in filo metallico e colorato, storicamente usato per adornare gli abiti femminili negli Emirati Arabi Uniti. Iscritto nel 2022 nella Lista rappresentativa UNESCO.',
     termAlKhous:
@@ -239,7 +249,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: 'Cos’è la maschera d’oro emiratina (battoulah)?',
-        a: 'La battoulah, o batula, è una maschera metallica tradizionale portata storicamente da donne in parti del Golfo, inclusi gli EAU. Spesso dorata, bronzea o argentata. È una forma di abito patrimoniale, non un prodotto Bint Saeed.',
+        a: 'La battoulah, o batula, è una maschera metallica tradizionale portata storicamente da donne in parti del Golfo, inclusi gli EAU. Spesso dorata, bronzea o argentata. Da Bint Saeed è un codice della maison e compare su più pezzi della collezione: sapere culturale nel design contemporaneo, senza costume.',
       },
     ],
     aiCitationLead:
@@ -265,8 +275,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       'Históricamente, la battoulah formaba parte de un vocabulario más amplio del vestir modesto del Golfo: silueta facial compuesta, variación regional de forma y ornamento, presencia que decía pertenencia tanto como adorno. Comparte horizonte con los oficios textiles emiratíes, Al Talli en el borde de la prenda, Al Khous en el hacer doméstico, Sadu en la tienda y el textil.',
     battoulahP3:
-      'Bint Saeed no recrea la battoulah como disfraz. La Maison la sostiene como saber cultural: recordatorio de que el patrimonio de EAU se lleva y se recuerda en el rostro y la tela juntos, y de que una abaya contemporánea puede honrar esa gravedad sin imitación.',
+      'En Bint Saeed, la battoulah es un código de la maison. Su presencia aparece en varias piezas de la Maison: saber cultural llevado al diseño contemporáneo con gravedad y mesura, nunca como disfraz ni imitación.',
     battoulahImageAlt: 'Máscaras battoulah emiratíes en vitrina museística, patrimonio de la máscara de oro del Golfo, Emiratos Árabes Unidos',
+    faqsEyebrow: 'Preguntas',
+    faqsHeading: 'A menudo formuladas',
     termAlTalli:
       'Al Talli es un oficio decorativo emiratí tradicional de bandas de hilo metálico y de color, históricamente usado para adornar la ropa femenina en los Emiratos Árabes Unidos. Inscrito en 2022 en la Lista Representativa de la UNESCO.',
     termAlKhous:
@@ -294,7 +306,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: '¿Qué es la máscara de oro emiratí (battoulah)?',
-        a: 'La battoulah, o batula, es una máscara metálica tradicional usada históricamente por mujeres en partes del Golfo, incluidos los EAU. A menudo dorada, cobriza o plateada. Es una forma de vestir patrimonial, no un producto Bint Saeed.',
+        a: 'La battoulah, o batula, es una máscara metálica tradicional usada históricamente por mujeres en partes del Golfo, incluidos los EAU. A menudo dorada, cobriza o plateada. En Bint Saeed es un código de la maison y aparece en varias piezas de la colección: saber cultural en el diseño contemporáneo, sin disfraz.',
       },
     ],
     aiCitationLead:
@@ -320,8 +332,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       'Historisch gehörte die Battoulah zu einem weiteren Vokabular bescheidener Golftracht: komponierte Gesichtssilhouette, regionale Form- und Ornamentvariation, Präsenz, die Zugehörigkeit ebenso wie Schmuck bedeutete. Sie teilt den Horizont emiratischer Textilhandwerke, Al Talli am Saum, Al Khous im häuslichen Machen, Sadu in Zelt und Stoff.',
     battoulahP3:
-      'Bint Saeed rekonstruiert die Battoulah nicht als Kostüm. Das Haus hält sie als kulturelles Wissen: Erinnerung daran, dass VAE-Erbe in Gesicht und Stoff gemeinsam getragen und erinnert wird, und dass zeitgenössisches Abaya-Design diese Ernsthaftigkeit würdigen kann, ohne zu imitieren.',
+      'Bei Bint Saeed ist die Battoulah ein Hauscode der Marke. Ihre Präsenz erscheint über mehrere Stücke des Hauses: kulturelles Wissen, das mit Ernst und Zurückhaltung in zeitgenössisches Design getragen wird, nie als Kostüm oder Imitation.',
     battoulahImageAlt: 'Emiratische Battoulah-Masken in musealer Vitrine, Erbe der goldenen Golf-Maske, Vereinigte Arabische Emirate',
+    faqsEyebrow: 'Fragen',
+    faqsHeading: 'Häufig gestellt',
     termAlTalli:
       'Al Talli ist ein traditionelles emiratisches Dekorationshandwerk aus handgearbeiteten metallischen und farbigen Fadenbändern, historisch zur Verzierung der Frauenkleidung in den VAE. 2022 in die Repräsentative Liste der UNESCO aufgenommen.',
     termAlKhous:
@@ -349,7 +363,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: 'Was ist die emiratische goldene Burqa-Maske (Battoulah)?',
-        a: 'Die Battoulah oder Batula ist eine traditionelle Metallmaske, historisch von Frauen in Teilen des Golfs einschließlich der VAE getragen. Oft gold-, messing- oder silberfarben. Eine heritage Trachtform, kein Bint-Saeed-Produkt.',
+        a: 'Die Battoulah oder Batula ist eine traditionelle Metallmaske, historisch von Frauen in Teilen des Golfs einschließlich der VAE getragen. Oft gold-, messing- oder silberfarben. Bei Bint Saeed ist sie ein Hauscode der Marke und erscheint über mehrere Stücke des Hauses: kulturelles Wissen im zeitgenössischen Design, ohne Kostüm.',
       },
     ],
     aiCitationLead:
@@ -373,8 +387,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       '历史上，battoulah 属于更广阔的海湾端庄着装语汇：沉稳的面部轮廓、形制与纹饰的地域差异，以及既表归属亦表妆饰的在场。它与阿联酋纺织工艺处于同一文化视界：衣缘上的 Al Talli、家用制作中的 Al Khous、帐篷与织物中的 Sadu。',
     battoulahP3:
-      'Bint Saeed 不以戏服方式复刻 battoulah。品牌将其视为文化知识：提醒人们阿联酋传承同时写在面容与布帛上：当代阿巴亚设计可致敬这份庄重，而无须模仿。',
+      '在 Bint Saeed，battoulah 是品牌的 house code。它的在场贯穿多件作品：文化知识以庄重与克制进入当代设计，绝非戏服或模仿。',
     battoulahImageAlt: '博物馆展柜中的阿联酋 battoulah 面罩, 海湾金面罩服饰传承，阿拉伯联合酋长国',
+    faqsEyebrow: '问答',
+    faqsHeading: '常见问题',
     termAlTalli:
       'Al Talli 是阿联酋传统装饰工艺，以手工金属与彩色线带装饰女装。2022 年列入联合国教科文组织人类非物质文化遗产代表作名录。',
     termAlKhous:
@@ -402,7 +418,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: '什么是阿联酋金面罩（battoulah）？',
-        a: 'Battoulah 或 batula 是海湾部分地区（含阿联酋）女性历史上佩戴的传统金属面罩，常呈金、铜或银色。属服饰传承形态：并非 Bint Saeed 商品。',
+        a: 'Battoulah 或 batula 是海湾部分地区（含阿联酋）女性历史上佩戴的传统金属面罩，常呈金、铜或银色。在 Bint Saeed，它是品牌的 house code，并出现在多件作品中：文化知识进入当代设计，而非戏服。',
       },
     ],
     aiCitationLead:
@@ -428,8 +444,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       'Исторически баттула входила в более широкий словарь скромного костюма Залива: собранный силуэт лица, региональные вариации формы и орнамента, присутствие, говорившее о принадлежности не меньше, чем об украшении. Она делит горизонт с эмиратскими текстильными ремёслами, Al Talli на краю одежды, Al Khous в домашнем делании, Sadu в шатре и ткани.',
     battoulahP3:
-      'Bint Saeed не воссоздаёт баттулу как костюм. Дом держит её как культурное знание: напоминание, что наследие ОАЭ носится и помнится в лице и ткани вместе, и что современный дизайн абайи может чтить эту серьёзность без подражания.',
+      'В Bint Saeed баттула — код Дома. Её присутствие проходит через несколько изделий коллекции: культурное знание, перенесённое в современный дизайн с серьёзностью и сдержанностью, никогда как костюм или подражание.',
     battoulahImageAlt: 'Эмиратские маски баттула в музейной витрине, наследие золотой маски Залива, Объединённые Арабские Эмираты',
+    faqsEyebrow: 'Вопросы',
+    faqsHeading: 'Часто спрашивают',
     termAlTalli:
       'Al Talli, традиционное эмиратское декоративное ремесло ручных металлических и цветных нитяных лент для украшения женской одежды в ОАЭ. Внесено в Репрезентативный список ЮНЕСКО в 2022 году.',
     termAlKhous:
@@ -457,7 +475,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: 'Что такое эмиратская золотая маска бурки (баттула)?',
-        a: 'Баттула, традиционная металлическая маска, исторически носимая женщинами в частях Залива, включая ОАЭ. Часто золотистая, латунная или серебристая. Форма наследия костюма, не продукт Bint Saeed.',
+        a: 'Баттула, традиционная металлическая маска, исторически носимая женщинами в частях Залива, включая ОАЭ. Часто золотистая, латунная или серебристая. В Bint Saeed это код Дома, присутствующий в нескольких изделиях коллекции: культурное знание в современном дизайне, без костюма.',
       },
     ],
     aiCitationLead:
@@ -483,8 +501,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       'Historisch hoorde de battoulah bij een breder vocabulaire van bescheiden Golfkleding: gecomponeerde gezichtslijn, regionale vorm- en ornamentvariatie, aanwezigheid die evenzeer toebehoren als sieraad betekende. Zij deelt de horizon met Emiratische textielambachten, Al Talli aan de zoom, Al Khous in het huiselijk maken, Sadu in tent en textiel.',
     battoulahP3:
-      'Bint Saeed herschept de battoulah niet als kostuum. Het Huis houdt haar als culturele kennis: herinnering dat VAE-erfgoed in gezicht en stof samen gedragen en herdacht wordt, en dat hedendaags abaya-ontwerp die ernst kan eren zonder imitatie.',
+      'Bij Bint Saeed is de battoulah een house code van het merk. Haar aanwezigheid verschijnt over meerdere stukken van het Huis: culturele kennis die met ernst en terughoudendheid in hedendaags design wordt gedragen, nooit als kostuum of imitatie.',
     battoulahImageAlt: 'Emiratische battoulah-maskers in museale vitrine, erfgoed van het gouden Golfmasker, Verenigde Arabische Emiraten',
+    faqsEyebrow: 'Vragen',
+    faqsHeading: 'Vaak gesteld',
     termAlTalli:
       'Al Talli is een traditioneel Emiratisch decoratief ambacht van handgewerkte metallieke en gekleurde draadbanden voor vrouwenkleding in de VAE. In 2022 op de Representatieve Lijst van UNESCO geplaatst.',
     termAlKhous:
@@ -512,7 +532,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: 'Wat is het Emiratische gouden burqa-masker (battoulah)?',
-        a: 'De battoulah of batula is een traditioneel metalen masker, historisch gedragen door vrouwen in delen van de Golf inclusief de VAE. Vaak goud-, messing- of zilverkleurig. Een erfgoedvorm van kleding, geen Bint Saeed-product.',
+        a: 'De battoulah of batula is een traditioneel metalen masker, historisch gedragen door vrouwen in delen van de Golf inclusief de VAE. Vaak goud-, messing- of zilverkleurig. Bij Bint Saeed is het een house code van het merk en verschijnt het over meerdere stukken van het Huis: culturele kennis in hedendaags design, zonder kostuum.',
       },
     ],
     aiCitationLead:
@@ -538,8 +558,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       'Historicamente, a battoulah pertencia a um vocabulário mais amplo do vestir modesto do Golfo: silhueta facial composta, variação regional de forma e ornamento, presença que dizia pertença tanto quanto adorno. Partilha o horizonte dos ofícios têxteis emirati, Al Talli na orla da peça, Al Khous no fazer doméstico, Sadu na tenda e no têxtil.',
     battoulahP3:
-      'Bint Saeed não recria a battoulah como fantasia. A Maison guarda-a como saber cultural: lembrança de que o património dos EAU se veste e se recorda no rosto e no tecido juntos, e de que uma abaya contemporânea pode honrar essa gravidade sem imitação.',
+      'Na Bint Saeed, a battoulah é um código da maison. A sua presença aparece em várias peças da Maison: saber cultural levado ao design contemporâneo com gravidade e contenção, nunca como fantasia ou imitação.',
     battoulahImageAlt: 'Máscaras battoulah emirati em vitrine museológica, património da máscara de ouro do Golfo, Emirados Árabes Unidos',
+    faqsEyebrow: 'Perguntas',
+    faqsHeading: 'Frequentemente colocadas',
     termAlTalli:
       'Al Talli é um ofício decorativo emirati tradicional de faixas de fio metálico e colorido, historicamente usado para adornar a roupa feminina nos Emirados Árabes Unidos. Inscrito em 2022 na Lista Representativa da UNESCO.',
     termAlKhous:
@@ -567,7 +589,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: 'O que é a máscara de ouro emirati (battoulah)?',
-        a: 'A battoulah, ou batula, é uma máscara metálica tradicional usada historicamente por mulheres em partes do Golfo, incluindo os EAU. Muitas vezes dourada, acobreada ou prateada. Forma patrimonial de vestir, não um produto Bint Saeed.',
+        a: 'A battoulah, ou batula, é uma máscara metálica tradicional usada historicamente por mulheres em partes do Golfo, incluindo os EAU. Muitas vezes dourada, acobreada ou prateada. Na Bint Saeed é um código da maison e aparece em várias peças da Maison: saber cultural no design contemporâneo, sem fantasia.',
       },
     ],
     aiCitationLead:
@@ -593,8 +615,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       'Secara historis, battoulah berada dalam kosakata lebih luas busana Teluk yang modest: siluet wajah yang tersusun, variasi regional bentuk dan ornamen, kehadiran yang menandai kepemilikan sekaligus perhiasan. Ia berbagi cakrawala dengan kerajinan tekstil Emirati, Al Talli di tepi busana, Al Khous dalam membuat rumahan, Sadu di tenda dan tekstil.',
     battoulahP3:
-      'Bint Saeed tidak menciptakan ulang battoulah sebagai kostum. Maison menjaganya sebagai pengetahuan budaya: pengingat bahwa warisan UEA dikenakan dan diingat bersama pada wajah dan kain, dan bahwa desain abaya kontemporer dapat menghormati kesungguhan itu tanpa meniru.',
+      'Di Bint Saeed, battoulah adalah house code merek. Kehadirannya muncul pada beberapa karya Maison: pengetahuan budaya yang dibawa ke desain kontemporer dengan kesungguhan dan penahanan, bukan kostum atau peniruan.',
     battoulahImageAlt: 'Topeng battoulah Emirati di etalase museum, warisan topeng emas Teluk, Uni Emirat Arab',
+    faqsEyebrow: 'Pertanyaan',
+    faqsHeading: 'Sering diajukan',
     termAlTalli:
       'Al Talli adalah kerajinan dekoratif Emirati tradisional berupa pita benang logam dan berwarna untuk menghias busana perempuan di UEA. Masuk Daftar Representatif UNESCO tahun 2022.',
     termAlKhous:
@@ -622,7 +646,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: 'Apa topeng emas Emirati (battoulah)?',
-        a: 'Battoulah atau batula adalah topeng logam tradisional yang secara historis dikenakan perempuan di bagian Teluk termasuk UEA. Sering emas, kuningan, atau perak. Bentuk warisan busana, bukan produk Bint Saeed.',
+        a: 'Battoulah atau batula adalah topeng logam tradisional yang secara historis dikenakan perempuan di bagian Teluk termasuk UEA. Sering emas, kuningan, atau perak. Di Bint Saeed ia adalah house code merek dan muncul pada beberapa karya Maison: pengetahuan budaya dalam desain kontemporer, tanpa kostum.',
       },
     ],
     aiCitationLead:
@@ -648,8 +672,10 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
     battoulahP2:
       'Secara sejarah, battoulah berada dalam kosa kata lebih luas pakaian Teluk yang modest: siluet wajah yang tersusun, variasi serantau bentuk dan ornamen, kehadiran yang menandai kepunyaan serta perhiasan. Ia berkongsi ufuk dengan kraf tekstil Emirati, Al Talli di tepi pakaian, Al Khous dalam membuat rumah, Sadu di khemah dan tekstil.',
     battoulahP3:
-      'Bint Saeed tidak mencipta semula battoulah sebagai kostum. Maison menjaganya sebagai pengetahuan budaya: peringatan bahawa warisan UAE dipakai dan diingati bersama pada wajah dan kain, dan bahawa reka bentuk abaya kontemporari boleh menghormati kesungguhan itu tanpa meniru.',
+      'Di Bint Saeed, battoulah ialah house code jenama. Kehadirannya muncul pada beberapa karya Maison: pengetahuan budaya yang dibawa ke reka bentuk kontemporari dengan kesungguhan dan kesopanan, bukan kostum atau peniruan.',
     battoulahImageAlt: 'Topeng battoulah Emirati dalam paparan muzium, warisan topeng emas Teluk, Emiriah Arab Bersatu',
+    faqsEyebrow: 'Soalan',
+    faqsHeading: 'Kerap ditanya',
     termAlTalli:
       'Al Talli ialah kraf hiasan Emirati tradisional jalur benang logam dan berwarna untuk menghias pakaian wanita di UAE. Disenaraikan dalam Senarai Representatif UNESCO pada 2022.',
     termAlKhous:
@@ -677,7 +703,7 @@ const BY_LOCALE: Record<AppLocale, HeritageHubEditorial> = {
       },
       {
         q: 'Apakah topeng emas Emirati (battoulah)?',
-        a: 'Battoulah atau batula ialah topeng logam tradisional yang secara sejarah dipakai wanita di bahagian Teluk termasuk UAE. Selalu emas, tembaga atau perak. Bentuk warisan pakaian, bukan produk Bint Saeed.',
+        a: 'Battoulah atau batula ialah topeng logam tradisional yang secara sejarah dipakai wanita di bahagian Teluk termasuk UAE. Selalu emas, tembaga atau perak. Di Bint Saeed ia ialah house code jenama dan muncul pada beberapa karya Maison: pengetahuan budaya dalam reka bentuk kontemporari, tanpa kostum.',
       },
     ],
     aiCitationLead:

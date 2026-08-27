@@ -226,8 +226,17 @@ export default function ShopClient() {
         <a href="/dressing-for-the-middle-east">
           What to wear in the Middle East — Middle Eastern styles
         </a>
+        <a href="/heritage">
+          UAE cultural heritage — Abu Dhabi culture Emirati crafts
+        </a>
         <a href="/heritage/al-talli">
           What is Al Talli — Emirati heritage craft UNESCO
+        </a>
+        <a href="/heritage/khous">
+          Al Khous palm-frond weaving — Emirati heritage craft
+        </a>
+        <a href="/heritage/sadu">
+          Sadu Bedouin weaving — UAE UNESCO heritage
         </a>
       </nav>
       <div className="flex-1">

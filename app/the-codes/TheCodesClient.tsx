@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import AboutSectionHero from '@/components/AboutSectionHero'
 import ExploreCollectionClosing from '@/components/ExploreCollectionClosing'
+import LocaleLink from '@/components/LocaleLink'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { getAboutEditorialHeroEyebrow } from '@/lib/about/aboutEditorialHeroChrome'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
@@ -24,6 +25,11 @@ import {
   EDITORIAL_PAGE_CONTAINER,
   EDITORIAL_PAGE_SHELL,
 } from '@/lib/ui/editorialPageChrome'
+
+const HERITAGE_CHAPTER_BY_CODE: Record<string, string> = {
+  'al-talli': '/heritage/al-talli',
+  khous: '/heritage/khous',
+}
 
 /** Editorial grid / corner brackets disabled site-wide — use border-s + border-b on copy only. */
 function DecorativeCorners(_props?: { color?: 'dustyBlue' | 'darkRed' | 'stone' }) {
@@ -212,6 +218,17 @@ export default function TheCodesClient() {
                         >
                           {t.about.readMore}
                         </button>
+                      ) : null}
+                      {HERITAGE_CHAPTER_BY_CODE[section.id] ? (
+                        <LocaleLink
+                          href={HERITAGE_CHAPTER_BY_CODE[section.id]}
+                          className="inline-flex min-h-[44px] items-center justify-center border-b border-brand-darkRed/35 bg-transparent px-1 py-2 font-montserrat text-[10px] uppercase tracking-[0.18em] text-brand-darkRed transition-colors hover:border-brand-dustyBlue hover:text-brand-dustyBlue"
+                          data-cursor-hover
+                          data-analytics-event="click_heritage_from_codes"
+                          data-analytics-section={section.id}
+                        >
+                          {chrome.exploreHeritageChapter}
+                        </LocaleLink>
                       ) : null}
                     </div>
                   </div>

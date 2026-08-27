@@ -17,18 +17,30 @@ export const AL_TALLI_FEATURED_PRODUCTS = [
   {
     name: 'Covent Garden Abaya',
     path: '/shop/covent-garden-abaya',
+    imageSrc:
+      '/Webshop pictures/Abayas/Covent Garden Abaya /bint-saeed-covent-garden-abaya-burgundy-lifestyle-sleeve-detail.webp',
+    imageAlt:
+      'Covent Garden Abaya burgundy sleeve with traditional Al Talli woven cuff trim, Bint Saeed Abu Dhabi',
     description:
       'Contemporary A-line designer abaya with wide Al Talli woven cuffs, detachable sash, and Knotted Line shoulder epaulettes — made in Abu Dhabi.',
   },
   {
     name: 'Hampstead Dress',
     path: '/shop/hampstead-dress',
+    imageSrc:
+      '/Webshop pictures/Dresses/Hampstead Dress/bint-saeed-hampstead-dress-black-front-al-talli-detail-shot.webp',
+    imageAlt:
+      'Hampstead Dress black front with traditional Al Talli trim detail, Bint Saeed Abu Dhabi',
     description:
       'Designer dress with traditional Al Talli trim celebrating Emirati heritage craftsmanship — created in Abu Dhabi.',
   },
   {
     name: 'Soho Set',
     path: '/shop/soho-set',
+    imageSrc:
+      '/Webshop pictures/Sets/Soho Set/bint-saeed-soho-set-navy-blue-lifestyle-gold-trim-detail.webp',
+    imageAlt:
+      'Soho Set navy blue with Al Talli gold trim heritage detail, Bint Saeed Abu Dhabi',
     description:
       'Luxury set featuring Al Talli heritage detailing — contemporary Emirati design from Bint Saeed Abu Dhabi.',
   },

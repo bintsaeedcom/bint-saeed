@@ -171,6 +171,7 @@ export default function HeritagePage() {
       <CraftGrid />
       <BattoulahSection />
       <PhilosophySection />
+      <FaqsSection />
       <ClosingCta />
       <DiscoveryNav />
     </div>
@@ -444,6 +445,46 @@ function PhilosophySection() {
             </p>
           </motion.div>
         </div>
+      </div>
+    </section>
+  )
+}
+
+function FaqsSection() {
+  const { language } = useLanguage()
+  const editorial = getHeritageHubEditorial(language)
+
+  return (
+    <section
+      className={`relative z-[45] overflow-hidden bg-brand-pageCanvas ${EDITORIAL_STACK_PAD} ${HERITAGE_STACK_CARD}`}
+      aria-labelledby="heritage-faqs-heading"
+    >
+      <div className={`relative ${EDITORIAL_PAGE_CONTAINER}`}>
+        <Reveal>
+          <div className="mx-auto max-w-2xl">
+            <p className="mb-4 font-montserrat text-[10px] uppercase tracking-[0.42em] text-brand-dustyBlue">
+              {editorial.faqsEyebrow}
+            </p>
+            <h2
+              id="heritage-faqs-heading"
+              className="mb-10 font-rozha text-[clamp(1.85rem,3.6vw,2.85rem)] leading-[1.08] tracking-[0.02em] text-brand-darkRed"
+            >
+              {editorial.faqsHeading}
+            </h2>
+            <dl className="space-y-0 divide-y divide-brand-stone/40 border-y border-brand-stone/40">
+              {editorial.faqs.map((faq) => (
+                <div key={faq.q} className="py-7">
+                  <dt className="font-montserrat text-sm font-medium tracking-wide text-brand-darkRed md:text-[15px]">
+                    {faq.q}
+                  </dt>
+                  <dd className="mt-3 font-montserrat text-sm leading-[1.85] tracking-wide text-brand-darkRed/75 md:text-[15px]">
+                    {faq.a}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </Reveal>
       </div>
     </section>
   )

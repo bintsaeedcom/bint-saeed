@@ -43,7 +43,7 @@ export type AlTalliPageCopy = HeritageSharedChrome & {
 const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   en: {
     heritage: 'Heritage',
-    exploreMore: 'Explore More of Our Heritage',
+    exploreMore: 'Explore more about UAE Heritage',
     exploreMoreLead: 'Learn about other traditional Emirati crafts',
     shopCollection: 'Shop the Collection',
     shop: 'Shop',
@@ -54,7 +54,7 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   },
   ar: {
     heritage: 'التراث',
-    exploreMore: 'اكتشفي المزيد من تراثنا',
+    exploreMore: 'اكتشفي المزيد عن تراث الإمارات',
     exploreMoreLead: 'تعرفي على حرف إماراتية تقليدية أخرى',
     shopCollection: 'تسوقي المجموعة',
     shop: 'تسوقي',
@@ -65,7 +65,7 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   },
   fr: {
     heritage: 'Héritage',
-    exploreMore: 'Explorer davantage notre héritage',
+    exploreMore: 'En savoir plus sur le patrimoine des Émirats',
     exploreMoreLead: 'Découvrir d’autres savoir-faire émiratis traditionnels',
     shopCollection: 'Découvrir la collection',
     shop: 'Acheter',
@@ -76,7 +76,7 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   },
   it: {
     heritage: 'Heritage',
-    exploreMore: 'Esplora altro del nostro heritage',
+    exploreMore: 'Scopri di più sul patrimonio degli EAU',
     exploreMoreLead: 'Scopri altri mestieri tradizionali emiratini',
     shopCollection: 'Scopri la collezione',
     shop: 'Acquista',
@@ -87,7 +87,7 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   },
   es: {
     heritage: 'Heritage',
-    exploreMore: 'Explora más de nuestro heritage',
+    exploreMore: 'Explora más sobre el patrimonio de los EAU',
     exploreMoreLead: 'Conoce otros oficios tradicionales emiratíes',
     shopCollection: 'Ver la colección',
     shop: 'Comprar',
@@ -98,7 +98,7 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   },
   ru: {
     heritage: 'Наследие',
-    exploreMore: 'Ещё о нашем наследии',
+    exploreMore: 'Узнайте больше о наследии ОАЭ',
     exploreMoreLead: 'Узнайте о других традиционных эмиратских ремёслах',
     shopCollection: 'Смотреть коллекцию',
     shop: 'Купить',
@@ -109,7 +109,7 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   },
   zh: {
     heritage: '传承',
-    exploreMore: '探索更多传承',
+    exploreMore: '探索更多阿联酋传承',
     exploreMoreLead: '了解更多阿联酋传统工艺',
     shopCollection: '选购系列',
     shop: '选购',
@@ -120,7 +120,7 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   },
   de: {
     heritage: 'Heritage',
-    exploreMore: 'Mehr von unserem Heritage entdecken',
+    exploreMore: 'Mehr über das Erbe der VAE entdecken',
     exploreMoreLead: 'Weitere traditionelle emiratische Handwerke kennenlernen',
     shopCollection: 'Kollektion entdecken',
     shop: 'Shoppen',
@@ -131,7 +131,7 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   },
   nl: {
     heritage: 'Heritage',
-    exploreMore: 'Ontdek meer van ons heritage',
+    exploreMore: 'Ontdek meer over het erfgoed van de VAE',
     exploreMoreLead: 'Leer andere traditionele Emiratische ambachten kennen',
     shopCollection: 'Bekijk de collectie',
     shop: 'Shop',
@@ -142,7 +142,7 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   },
   pt: {
     heritage: 'Heritage',
-    exploreMore: 'Explorar mais do nosso heritage',
+    exploreMore: 'Saiba mais sobre o património dos EAU',
     exploreMoreLead: 'Conhecer outros ofícios tradicionais emiradenses',
     shopCollection: 'Ver a coleção',
     shop: 'Comprar',
@@ -153,7 +153,7 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   },
   id: {
     heritage: 'Warisan',
-    exploreMore: 'Jelajahi lebih banyak warisan kami',
+    exploreMore: 'Jelajahi lebih lanjut warisan UEA',
     exploreMoreLead: 'Pelajari kerajinan tradisional Emirat lainnya',
     shopCollection: 'Belanja koleksi',
     shop: 'Belanja',
@@ -164,7 +164,7 @@ const SHARED: Record<AppLocale, HeritageSharedChrome> = {
   },
   ms: {
     heritage: 'Warisan',
-    exploreMore: 'Terokai lebih banyak warisan kami',
+    exploreMore: 'Terokai lebih lanjut warisan UAE',
     exploreMoreLead: 'Ketahui kraf tradisional Emiriah yang lain',
     shopCollection: 'Beli koleksi',
     shop: 'Beli',

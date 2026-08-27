@@ -6,6 +6,7 @@ import LocaleLink from '@/components/LocaleLink'
 import AboutSectionHero from '@/components/AboutSectionHero'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { getAboutPageCopy } from '@/lib/content/aboutPageCopyI18n'
+import { getHeritagePageCopy } from '@/lib/content/heritagePageCopyI18n'
 import { ABOUT_SECTION_HERO_IMAGES } from '@/lib/about/aboutSectionHeroImages'
 import { withBrandAlt } from '@/lib/products/imageAlt'
 import type { AppLocale } from '@/lib/i18n/routing'
@@ -342,13 +343,24 @@ export default function AboutPage() {
                 tone="onBurgundy"
                 sticky
               >
-                <LocaleLink
-                  href="/the-codes"
-                  className={`inline-flex ${ctaPrimarySoft}`}
-                  data-cursor-hover
-                >
-                  {copy.ctaOurStoryInCodes}
-                </LocaleLink>
+                <div className={`mt-8 flex flex-wrap gap-3 ${isRTL ? 'justify-start' : ''}`}>
+                  <LocaleLink
+                    href="/heritage"
+                    className={`inline-flex ${ctaPrimarySoft}`}
+                    data-cursor-hover
+                    data-analytics-event="click_heritage_from_about"
+                    data-analytics-section="about-heritage"
+                  >
+                    {getHeritagePageCopy(language).navLabel}
+                  </LocaleLink>
+                  <LocaleLink
+                    href="/the-codes"
+                    className={`inline-flex ${ctaPrimarySoft}`}
+                    data-cursor-hover
+                  >
+                    {copy.ctaOurStoryInCodes}
+                  </LocaleLink>
+                </div>
               </ChapterProse>
             </div>
           </div>
