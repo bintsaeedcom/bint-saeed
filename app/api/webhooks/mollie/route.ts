@@ -10,7 +10,7 @@ import {
 } from '@/lib/mollie/pendingCheckoutStore'
 import { getMollieApiKey } from '@/lib/mollie/config'
 import { getMollieClient } from '@/lib/mollie/client'
-import { createTrelloCardForOrder, notifyHealthAlert } from '@/lib/ops/notifications'
+import { notifyHealthAlert } from '@/lib/ops/notifications'
 import { orderAttributionFromMetadata } from '@/lib/checkout/attributionMetadata'
 import { buildOrderAttributionSlackFields } from '@/lib/ops/orderSlackAttribution'
 import { formatMolliePaymentMethodLabel } from '@/lib/ops/orderPaymentMethodLabel'
@@ -243,14 +243,6 @@ export async function POST(request: NextRequest) {
     const mollieMethod =
       typeof payment.method === 'string' ? payment.method : undefined
     await notifyMollieOrderChannel(payment.id, pending, amountPaid, mollieMethod)
-    await createTrelloCardForOrder(order, {
-      sessionId: payment.id,
-      clientIp: pending.clientIp,
-      clientDeviceType: pending.clientContext?.deviceType,
-      clientLocalTime: pending.clientContext?.localTime,
-      clientTimezone: pending.clientContext?.timezone,
-      uaeTimestamp: new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' }),
-    })
     await dispatchOrderEmails(order)
 
     await fulfillPaidGiftCards({

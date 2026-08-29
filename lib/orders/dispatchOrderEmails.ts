@@ -4,7 +4,7 @@ import { sendOrderConfirmationEmail } from './sendOrderConfirmationEmail'
 
 /**
  * Fire order emails for a newly created order. The house is always alerted so an order is
- * never missed — even if Slack/Trello are not configured. The customer receives their branded
+ * never missed — even if Slack is not configured. The customer receives their branded
  * confirmation only once payment is actually captured. Best-effort: never throws, so the
  * payment webhook can still return 200.
  */

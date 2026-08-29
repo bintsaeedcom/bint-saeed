@@ -139,7 +139,7 @@ export type OwnerOrderAlertResult =
   | { ok: false; skipped?: boolean; error: string }
 
 /**
- * Email the house on every new order so an order is never missed, even if Slack/Trello
+ * Email the house on every new order so an order is never missed, even if Slack
  * are not configured. Never throws — payment webhooks must still return 200.
  */
 export async function sendOwnerOrderAlertEmail(order: StoredOrder): Promise<OwnerOrderAlertResult> {

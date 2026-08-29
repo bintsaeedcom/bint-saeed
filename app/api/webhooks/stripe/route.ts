@@ -3,7 +3,7 @@ import Stripe from 'stripe'
 import { saveOrder, findOrderIdBySession, listOrders, updateOrderFulfillment, getOrderById } from '@/lib/orders/orderStore'
 import { markStripeEventProcessed, wasStripeEventProcessed } from '@/lib/payments/webhookEventStore'
 import type { OrderLine, StoredOrder } from '@/lib/orders/types'
-import { createTrelloCardForOrder, notifyHealthAlert } from '@/lib/ops/notifications'
+import { notifyHealthAlert } from '@/lib/ops/notifications'
 import { orderAttributionFromMetadata } from '@/lib/checkout/attributionMetadata'
 import { buildOrderAttributionSlackFields } from '@/lib/ops/orderSlackAttribution'
 import { resolveStripePaymentMethodLabel } from '@/lib/ops/orderPaymentMethodLabel'
@@ -396,14 +396,6 @@ export async function POST(request: NextRequest) {
           clientIpAddress: full.metadata?.clientIp || undefined,
         })
         await notifyOrderChannel(full)
-        await createTrelloCardForOrder(order, {
-          sessionId: full.id,
-          clientIp: full.metadata?.clientIp || undefined,
-          clientDeviceType: full.metadata?.clientDeviceType || undefined,
-          clientLocalTime: full.metadata?.clientLocalTime || undefined,
-          clientTimezone: full.metadata?.clientTimezone || undefined,
-          uaeTimestamp: new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' }),
-        })
         // Always alert the house so an order is never missed. The customer confirmation
         // only sends once payment is captured; delayed methods send it later from
         // checkout.session.async_payment_succeeded.

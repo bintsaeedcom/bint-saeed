@@ -87,11 +87,6 @@ export async function GET(request: NextRequest) {
   const ownerAlertEmailConfigured = Boolean(resendKey)
   const ownerAlertRecipient = orderAlertRecipients().join(', ')
   const slackOrdersConfigured = Boolean(process.env.SLACK_ORDERS_WEBHOOK_URL?.trim())
-  const trelloConfigured = Boolean(
-    process.env.TRELLO_API_KEY?.trim() &&
-      process.env.TRELLO_API_TOKEN?.trim() &&
-      process.env.TRELLO_CLIENT_ORDERS_LIST_ID?.trim(),
-  )
   const orderAlertsReady = ownerAlertEmailConfigured || slackOrdersConfigured
   if (!orderAlertsReady) {
     warnings.push(
@@ -112,7 +107,6 @@ export async function GET(request: NextRequest) {
       ownerAlertEmailConfigured,
       ownerAlertRecipient,
       slackOrdersConfigured,
-      trelloConfigured,
       customerConfirmationConfigured: Boolean(resendKey),
       ready: orderAlertsReady,
     },

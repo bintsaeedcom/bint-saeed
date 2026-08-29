@@ -1,6 +1,6 @@
 import { saveOrder, findOrderIdBySession, getOrderById } from '@/lib/orders/orderStore'
 import type { StoredOrder } from '@/lib/orders/types'
-import { createTrelloCardForOrder, notifySlackNewPaidOrder } from '@/lib/ops/notifications'
+import { notifySlackNewPaidOrder } from '@/lib/ops/notifications'
 import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
 import { fulfillPaidGiftCards } from '@/lib/giftCards/fulfillPaidGiftCards'
 import { commitRedeemForPaidOrder } from '@/lib/giftCards/applyAtCheckout'
@@ -13,7 +13,7 @@ import { lineUnitForCurrency } from '@/lib/shopProductOptions'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 
 /**
- * Persist a paid Tamara order, Slack (with Tamara label), Trello, emails.
+ * Persist a paid Tamara order, Slack (with Tamara label), emails.
  * Idempotent via stripeSessionId key = tamara order id.
  */
 export async function fulfillTamaraPaidOrder(args: {
@@ -113,8 +113,6 @@ export async function fulfillTamaraPaidOrder(args: {
       sessionSeconds: pending.clientContext?.sessionSeconds,
     },
   })
-
-  await createTrelloCardForOrder(order)
 
   return { fulfilled: true, orderId: order.id }
 }

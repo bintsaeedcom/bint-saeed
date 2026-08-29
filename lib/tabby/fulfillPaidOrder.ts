@@ -1,6 +1,6 @@
 import { saveOrder, findOrderIdBySession, getOrderById } from '@/lib/orders/orderStore'
 import type { StoredOrder } from '@/lib/orders/types'
-import { createTrelloCardForOrder, notifySlackNewPaidOrder } from '@/lib/ops/notifications'
+import { notifySlackNewPaidOrder } from '@/lib/ops/notifications'
 import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
 import { fulfillPaidGiftCards } from '@/lib/giftCards/fulfillPaidGiftCards'
 import { commitRedeemForPaidOrder } from '@/lib/giftCards/applyAtCheckout'
@@ -152,11 +152,6 @@ export async function fulfillTabbyPaidOrder(args: {
       paymentRef: args.paymentId,
       paymentMethod: 'Tabby · Pay in 4',
     })
-  } catch {
-    /* non-blocking */
-  }
-  try {
-    await createTrelloCardForOrder(order)
   } catch {
     /* non-blocking */
   }

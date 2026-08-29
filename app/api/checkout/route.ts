@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { isAllowedCheckoutOrigin, resolvePublicSiteBaseUrl } from '@/lib/security/allowedCheckoutOrigin'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
+import { readJsonObject } from '@/lib/http/readJsonBody'
 import { notifyHealthAlert } from '@/lib/ops/notifications'
 import { parseCheckoutRequestBody } from '@/lib/checkout/parseCheckoutRequest'
 import { cartSubtotalInCurrency, resolveShippingFee } from '@/lib/pricing'
@@ -70,14 +71,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Site URL is not configured.' }, { status: 503 })
   }
 
-  try {
-    const body = await request.json()
-    if (!body || typeof body !== 'object') {
-      return NextResponse.json({ error: 'Invalid request.' }, { status: 400 })
-    }
+  const bodyResult = await readJsonObject(request)
+  if (!bodyResult.ok) {
+    return NextResponse.json({ error: bodyResult.error }, { status: bodyResult.status })
+  }
+  const body = bodyResult.body
 
-    const expressCheckout = Boolean((body as { expressCheckout?: unknown }).expressCheckout)
-    const parsed = parseCheckoutRequestBody(body as Record<string, unknown>, request)
+  try {
+    const expressCheckout = Boolean(body.expressCheckout)
+    const parsed = parseCheckoutRequestBody(body, request)
     if ('error' in parsed) {
       return NextResponse.json({ error: parsed.error }, { status: parsed.status })
     }

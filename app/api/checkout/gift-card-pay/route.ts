@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isAllowedCheckoutOrigin } from '@/lib/security/allowedCheckoutOrigin'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
-import { notifyHealthAlert, createTrelloCardForOrder, notifySlackNewPaidOrder } from '@/lib/ops/notifications'
+import { readJsonObject } from '@/lib/http/readJsonBody'
+import { notifyHealthAlert, notifySlackNewPaidOrder } from '@/lib/ops/notifications'
 import { cartSubtotalInCurrency, resolveShippingFee } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 import { parseCheckoutRequestBody } from '@/lib/checkout/parseCheckoutRequest'
@@ -36,8 +37,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
+  const bodyResult = await readJsonObject(request)
+  if (!bodyResult.ok) {
+    return NextResponse.json({ error: bodyResult.error }, { status: bodyResult.status })
+  }
+
   try {
-    const body = (await request.json()) as Record<string, unknown>
+    const body = bodyResult.body
     const parsed = parseCheckoutRequestBody(body, request)
     if ('error' in parsed) {
       return NextResponse.json({ error: parsed.error }, { status: parsed.status })
@@ -186,11 +192,6 @@ export async function POST(request: NextRequest) {
         paymentRef: resolved.credit.code,
         paymentMethod: 'Gift card',
       })
-    } catch {
-      /* optional */
-    }
-    try {
-      await createTrelloCardForOrder(order)
     } catch {
       /* optional */
     }

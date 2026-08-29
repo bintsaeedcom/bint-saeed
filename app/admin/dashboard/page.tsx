@@ -141,7 +141,6 @@ interface OpsHealth {
     ownerAlertEmailConfigured: boolean
     ownerAlertRecipient: string
     slackOrdersConfigured: boolean
-    trelloConfigured: boolean
     customerConfirmationConfigured: boolean
     ready: boolean
   }
