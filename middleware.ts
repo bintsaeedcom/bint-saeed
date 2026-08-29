@@ -165,7 +165,9 @@ function redirectLegacyAdminPath(
   innerPath: string,
 ): NextResponse | null {
   let destination: string | null = null
-  if (innerPath === '/dashboard' || innerPath.startsWith('/dashboard/')) {
+  if (innerPath === '/dashboard/search-intelligence') {
+    destination = '/admin/search-intelligence'
+  } else if (innerPath === '/dashboard' || innerPath.startsWith('/dashboard/')) {
     destination = '/admin/dashboard'
   } else if (innerPath === '/login' || innerPath.startsWith('/login/')) {
     destination = '/admin/login'

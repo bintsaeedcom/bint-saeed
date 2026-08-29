@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers, FiGift, FiSend, FiHeart, FiEdit3 } from 'react-icons/fi'
+import { FiPackage, FiShoppingBag, FiBarChart2, FiLogOut, FiUsers, FiGift, FiSend, FiHeart, FiEdit3, FiSearch } from 'react-icons/fi'
 import { clearStaffOptics, markStaffOptics } from '@/lib/analytics/staffOptics'
 import { resumeExternalTrackersAfterStaff, suppressExternalTrackersForStaff } from '@/lib/analytics/tracking'
 
@@ -63,6 +63,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {link('/admin/products', 'Catalog', <FiPackage className="h-4 w-4" />)}
             {link('/admin/pr', 'PR', <FiSend className="h-4 w-4" />)}
             {link('/admin/content', 'Content', <FiEdit3 className="h-4 w-4" />)}
+            {link('/admin/search-intelligence', 'Search', <FiSearch className="h-4 w-4" />)}
             {link('/admin/dashboard', 'Analytics', <FiBarChart2 className="h-4 w-4" />)}
           </nav>
           <div className="border-t border-white/10 p-4">
@@ -94,6 +95,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 { href: '/admin/products', label: 'Catalog' },
                 { href: '/admin/pr', label: 'PR' },
                 { href: '/admin/content', label: 'Content' },
+                { href: '/admin/search-intelligence', label: 'Search' },
                 { href: '/admin/dashboard', label: 'Analytics' },
               ].map((item) => {
                 const active = path === item.href || path.startsWith(`${item.href}/`)
