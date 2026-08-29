@@ -14,6 +14,17 @@ import {
 import type { StoredOrder } from '@/lib/orders/types'
 import type { CustomerRecord } from '@/lib/customers/types'
 import { formatVisitorLocation } from '@/lib/geo/formatVisitorLocation'
+import InternalTestControls from '@/components/admin/InternalTestControls'
+
+interface FunnelStats {
+  reliableSince: string
+  bagsLeft: number
+  checkoutPagesLeft: number
+  paymentCheckoutsLeft: number
+  paymentFailures: number
+  purchases: number
+  internalExcluded: number
+}
 
 interface Visitor {
   visitorId: string
@@ -412,6 +423,7 @@ export default function AdminDashboard() {
   const [customers, setCustomers] = useState<CustomerRecord[]>([])
   const [products, setProducts] = useState<ProductAdminRow[]>([])
   const [abandoned, setAbandoned] = useState<AbandonedStats | null>(null)
+  const [funnelStats, setFunnelStats] = useState<FunnelStats | null>(null)
   const [visitorLocations, setVisitorLocations] = useState<VisitorLocationRow[]>([])
   const [geoTrend, setGeoTrend] = useState<GeoTrendResult | null>(null)
   const [popularity, setPopularity] = useState<ContentPopularity | null>(null)
@@ -440,20 +452,22 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     setIsRefreshing(true)
     try {
-      const [activeRes, notifRes, statsRes, abandonedRes, geoRes, geoTrendRes, popularRes] = await Promise.all([
+      const [activeRes, notifRes, statsRes, abandonedRes, funnelRes, geoRes, geoTrendRes, popularRes] = await Promise.all([
         fetch('/api/analytics/slack?type=active'),
         fetch('/api/analytics/slack?type=notifications'),
         fetch('/api/analytics/slack'),
         fetch('/api/analytics/slack?type=abandoned'),
+        fetch('/api/analytics/slack?type=funnel'),
         fetch('/api/analytics/slack?type=geo'),
         fetch('/api/analytics/slack?type=geo-trend&days=7'),
         fetch('/api/analytics/slack?type=popular'),
       ])
-      const [activeData, notifData, statsData, abandonedData, geoData, geoTrendData, popularData] = await Promise.all([
+      const [activeData, notifData, statsData, abandonedData, funnelData, geoData, geoTrendData, popularData] = await Promise.all([
         activeRes.json().catch(() => ({})),
         notifRes.json().catch(() => ({})),
         statsRes.json().catch(() => ({})),
         abandonedRes.json().catch(() => ({})),
+        funnelRes.json().catch(() => ({})),
         geoRes.json().catch(() => ({})),
         geoTrendRes.json().catch(() => ({})),
         popularRes.json().catch(() => ({})),
@@ -474,6 +488,7 @@ export default function AdminDashboard() {
       )
       setStats(statsRes.ok ? normalizeDashboardStats(statsData) : EMPTY_STATS)
       setAbandoned(abandonedRes.ok ? normalizeAbandonedStats(abandonedData) : null)
+      setFunnelStats(funnelRes.ok ? (funnelData as FunnelStats) : null)
       setVisitorLocations(Array.isArray(geoData.locations) ? geoData.locations : [])
       setGeoTrend(geoTrendRes.ok ? normalizeGeoTrend(geoTrendData) : null)
       setPopularity(popularRes.ok ? normalizePopularity(popularData) : null)
@@ -914,6 +929,28 @@ export default function AdminDashboard() {
               <strong className="text-neutral-600"> Adds</strong> = added to bag. Also flows to GA4 when analytics consent is granted.
             </p>
           </Card>
+        </section>
+
+        {/* Checkout funnel (reliable from deployment forward) */}
+        <section className="grid gap-4 lg:grid-cols-3">
+          <Card className="lg:col-span-2">
+            <CardHeader
+              title="Checkout funnel (today)"
+              subtitle={
+                funnelStats?.reliableSince
+                  ? `Customer metrics reliable from ${formatUaeDateTime(funnelStats.reliableSince)} — excludes internal/test`
+                  : 'Customer funnel stages — excludes internal/test traffic'
+              }
+            />
+            <div className="grid gap-3 px-4 pb-4 sm:grid-cols-2 lg:grid-cols-5">
+              <MiniStat label="Bags left" value={String(funnelStats?.bagsLeft ?? 0)} />
+              <MiniStat label="Checkout pages left" value={String(funnelStats?.checkoutPagesLeft ?? 0)} />
+              <MiniStat label="Payment left unpaid" value={String(funnelStats?.paymentCheckoutsLeft ?? 0)} tone={funnelStats && funnelStats.paymentCheckoutsLeft > 0 ? 'alert' : 'default'} />
+              <MiniStat label="Payment failures" value={String(funnelStats?.paymentFailures ?? 0)} />
+              <MiniStat label="Purchases" value={String(funnelStats?.purchases ?? 0)} tone="good" />
+            </div>
+          </Card>
+          <InternalTestControls />
         </section>
 
         {/* Abandoned carts */}
@@ -1463,7 +1500,12 @@ function notifIcon(type?: string) {
     case 'cart_add':
     case 'cart_event': return '🛒'
     case 'abandoned_cart':
-    case 'checkout_abandoned': return '🛍️'
+    case 'checkout_abandoned':
+    case 'funnel_bag_left':
+    case 'funnel_checkout_page_left':
+    case 'funnel_payment_session_left':
+    case 'funnel_payment_attempt_failed':
+      return '🛍️'
     case 'contact_captured': return '📧'
     case 'checkout_started': return '💳'
     case 'order_completed': return '🎉'
@@ -1501,6 +1543,18 @@ function notifDetail(n: Notification): string {
       return d.cartValueAed
         ? `Left checkout unpaid — ${formatAed(Number(d.cartValueAed))} at risk`
         : 'Left checkout without paying'
+    case 'funnel_bag_left':
+      return d.cartValueAed
+        ? `Bag left — ${formatAed(Number(d.cartValueAed))}`
+        : 'Bag left'
+    case 'funnel_checkout_page_left':
+      return 'Checkout page left (no payment session)'
+    case 'funnel_payment_session_left':
+      return d.cartValueAed
+        ? `Payment checkout left unpaid — ${formatAed(Number(d.cartValueAed))}`
+        : 'Payment checkout left unpaid'
+    case 'funnel_payment_attempt_failed':
+      return 'Payment attempt failed'
     case 'checkout_started':
       return 'Started checkout'
     case 'contact_captured':

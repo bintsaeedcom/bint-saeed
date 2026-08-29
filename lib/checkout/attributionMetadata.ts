@@ -1,6 +1,13 @@
-import type { CheckoutClientContext } from '@/lib/checkout/types'
+import type { CheckoutClientContext, CheckoutCartItem } from '@/lib/checkout/types'
+import {
+  funnelMetadataFromTelemetry,
+  funnelTelemetryFromClientContext,
+} from '@/lib/analytics/funnel/checkoutTelemetry'
 
-export function buildCheckoutAttributionMetadata(ctx: CheckoutClientContext): Record<string, string> {
+export function buildCheckoutAttributionMetadata(
+  ctx: CheckoutClientContext,
+  items?: CheckoutCartItem[],
+): Record<string, string> {
   const metadata: Record<string, string> = {}
 
   if (ctx.city) metadata.clientCity = ctx.city.slice(0, 120)
@@ -10,6 +17,26 @@ export function buildCheckoutAttributionMetadata(ctx: CheckoutClientContext): Re
     metadata.clientSessionSeconds = String(Math.min(Math.round(ctx.sessionSeconds), 999_999))
   }
   if (ctx.deviceLabel) metadata.clientDeviceLabel = ctx.deviceLabel.slice(0, 120)
+  if (ctx.deviceType) metadata.clientDeviceType = ctx.deviceType.slice(0, 24)
+
+  if (items?.length) {
+    Object.assign(metadata, funnelMetadataFromTelemetry(funnelTelemetryFromClientContext(ctx, items)))
+  } else if (ctx.cartId || ctx.visitorId || ctx.cartFingerprint || ctx.internalTest) {
+    Object.assign(
+      metadata,
+      funnelMetadataFromTelemetry({
+        cartId: ctx.cartId,
+        visitorId: ctx.visitorId,
+        cartFingerprint: ctx.cartFingerprint,
+        internalTest: ctx.internalTest,
+        referrer: ctx.trafficSource,
+        deviceLabel: ctx.deviceLabel,
+        deviceType: ctx.deviceType,
+        visitorCity: ctx.city,
+        visitorCountry: ctx.country,
+      }),
+    )
+  }
 
   return metadata
 }

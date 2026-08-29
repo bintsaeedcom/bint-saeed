@@ -23,6 +23,8 @@ import { ensureTabbyPaymentWebhookRegistered } from '@/lib/tabby/ensureWebhook'
 import { savePendingTabbyCheckout } from '@/lib/tabby/pendingCheckoutStore'
 import { isPlausibleTabbyPhone, normalizeTabbyPhone } from '@/lib/tabby/normalizePhone'
 import { tabbyMessage, tabbyRejectionMessage } from '@/lib/tabby/messages'
+import { funnelTelemetryFromParsedCheckout } from '@/lib/analytics/funnel/checkoutTelemetry'
+import { recordFunnelPaymentSessionCreated } from '@/lib/analytics/funnel/serverFunnel'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -284,6 +286,12 @@ export async function POST(request: NextRequest) {
       appliedGiftCard: gift.credit ?? undefined,
       createdAt: new Date().toISOString(),
     })
+
+    void recordFunnelPaymentSessionCreated({
+      provider: 'tabby',
+      sessionRef: paymentId,
+      telemetry: funnelTelemetryFromParsedCheckout(parsed),
+    }).catch(() => {})
 
     return NextResponse.json({
       paymentId,

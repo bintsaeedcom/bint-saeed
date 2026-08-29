@@ -21,6 +21,8 @@ import { lineUnitForCurrency } from '@/lib/shopProductOptions'
 import { saveOrder } from '@/lib/orders/orderStore'
 import type { StoredOrder } from '@/lib/orders/types'
 import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
+import { funnelTelemetryFromParsedCheckout } from '@/lib/analytics/funnel/checkoutTelemetry'
+import { handleFunnelPaymentOutcome } from '@/lib/analytics/funnel/serverFunnel'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -196,6 +198,13 @@ export async function POST(request: NextRequest) {
       /* optional */
     }
     await dispatchOrderEmails(order)
+
+    void handleFunnelPaymentOutcome({
+      provider: 'gift_card',
+      sessionRef: order.id,
+      outcome: 'payment_completed',
+      telemetry: funnelTelemetryFromParsedCheckout(parsed),
+    }).catch(() => {})
 
     return NextResponse.json({
       paid: true,

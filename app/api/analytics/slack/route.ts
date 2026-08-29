@@ -7,10 +7,17 @@ import {
   getNotifications,
   getAnalyticsStats,
   getAbandonedCartStats,
+  getFunnelCartStats,
+  recordFunnelMetricEvent,
   getVisitorLocationOverview,
   getContentPopularity,
   getGeoTrend,
 } from '@/lib/analytics/analyticsStore'
+import { classifyFunnelVisitor, shouldSuppressFunnelSlack } from '@/lib/analytics/funnel/classification'
+import { shouldSendFunnelSlackAlert } from '@/lib/analytics/funnel/dedup'
+import { formatFunnelAbandonSlack } from '@/lib/analytics/funnel/slackFormat'
+import type { FunnelSlackEvent } from '@/lib/analytics/funnel/types'
+import { formatClientDeviceLabel, parseClientDevice } from '@/lib/analytics/parseClientDevice'
 import { getClientIpFromRequest, resolveRequestGeo } from '@/lib/geo/ipGeoServer'
 import {
   assessLocationSignals,
@@ -18,6 +25,20 @@ import {
 } from '@/lib/geo/locationSignals'
 import { namedHouseVisitor, shouldSuppressVisitorNoise, STAFF_VISITOR_IDS } from '@/lib/analytics/staffOptics'
 import { assessVisitorBotRisk, shouldSuppressBotSlack } from '@/lib/bots/assessVisitorBotRisk'
+import { buildReadablePlace } from '@/lib/geo/resolvePlaceNames'
+import {
+  formatGeoProviderLabel,
+  formatSlackAddressLine,
+  formatSlackLocationMrkdwn,
+  isApproximateGeoLocation,
+} from '@/lib/geo/slackLocationDisplay'
+
+const FUNNEL_SLACK_EVENTS = new Set<FunnelSlackEvent>([
+  'funnel_bag_left',
+  'funnel_checkout_page_left',
+  'funnel_payment_session_left',
+  'funnel_payment_attempt_failed',
+])
 
 function normalizedWebhook(...values: Array<string | undefined>): string | undefined {
   for (const value of values) {
@@ -81,104 +102,7 @@ function checkVIP(visitorId: string, ip: string): { isVIP: boolean; name: string
   return { isVIP: false, name: '' }
 }
 
-/**
- * Map link for Slack.
- * IP geo lat/lng is often an ISP/CDN hub (e.g. Amsterdam) while the named city is elsewhere
- * (e.g. Nijkerk) — so for IP accuracy we open the place name we display, not the crude pin.
- * GPS accuracy may use exact coordinates.
- */
-function getMapLink(location: {
-  latitude?: number | null
-  longitude?: number | null
-  city?: string
-  region?: string
-  country?: string
-  countryCode?: string
-  accuracyLevel?: string
-} | null | undefined): string {
-  if (!location) return ''
-  const city = String(location.city || '').trim()
-  const region = expandRegionName(location.region, location.countryCode || location.country)
-  const country = expandCountryName(location.country || location.countryCode || '')
-  const placeQuery = [city, region, country]
-    .filter((part) => part && !/^unknown(\s+city)?$/i.test(part))
-    .join(', ')
-
-  const isGps = location.accuracyLevel === 'gps'
-  const lat = Number(location.latitude)
-  const lng = Number(location.longitude)
-  if (isGps && Number.isFinite(lat) && Number.isFinite(lng)) {
-    return `https://www.google.com/maps?q=${lat},${lng}`
-  }
-  if (placeQuery) {
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(placeQuery)}`
-  }
-  if (Number.isFinite(lat) && Number.isFinite(lng)) {
-    return `https://www.google.com/maps?q=${lat},${lng}`
-  }
-  return ''
-}
-
-const US_STATE_NAMES: Record<string, string> = {
-  AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California', CO: 'Colorado',
-  CT: 'Connecticut', DE: 'Delaware', FL: 'Florida', GA: 'Georgia', HI: 'Hawaii', ID: 'Idaho',
-  IL: 'Illinois', IN: 'Indiana', IA: 'Iowa', KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana',
-  ME: 'Maine', MD: 'Maryland', MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota',
-  MS: 'Mississippi', MO: 'Missouri', MT: 'Montana', NE: 'Nebraska', NV: 'Nevada',
-  NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico', NY: 'New York',
-  NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio', OK: 'Oklahoma', OR: 'Oregon',
-  PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina', SD: 'South Dakota',
-  TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont', VA: 'Virginia', WA: 'Washington',
-  WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming',
-}
-
-const INDIA_STATE_NAMES: Record<string, string> = {
-  AP: 'Andhra Pradesh', AR: 'Arunachal Pradesh', AS: 'Assam', BR: 'Bihar', CG: 'Chhattisgarh',
-  GA: 'Goa', GJ: 'Gujarat', HR: 'Haryana', HP: 'Himachal Pradesh', JH: 'Jharkhand',
-  KA: 'Karnataka', KL: 'Kerala', MP: 'Madhya Pradesh', MH: 'Maharashtra', MN: 'Manipur',
-  ML: 'Meghalaya', MZ: 'Mizoram', NL: 'Nagaland', OD: 'Odisha', PB: 'Punjab',
-  RJ: 'Rajasthan', SK: 'Sikkim', TN: 'Tamil Nadu', TG: 'Telangana', TR: 'Tripura',
-  UP: 'Uttar Pradesh', UK: 'Uttarakhand', WB: 'West Bengal', AN: 'Andaman and Nicobar Islands',
-  CH: 'Chandigarh', DN: 'Dadra and Nagar Haveli and Daman and Diu', DL: 'Delhi',
-  JK: 'Jammu and Kashmir', LA: 'Ladakh', LD: 'Lakshadweep', PY: 'Puducherry',
-}
-
-function expandCountryName(value: string): string {
-  const raw = String(value || '').trim()
-  if (!raw) return ''
-  if (!/^[A-Z]{2}$/.test(raw)) return raw
-  if (raw === 'US') return 'United States'
-  if (raw === 'IN') return 'India'
-  if (raw === 'AE') return 'United Arab Emirates'
-  return raw
-}
-
-function expandRegionName(region: unknown, country: unknown): string {
-  const rawRegion = String(region || '').trim()
-  if (!rawRegion) return ''
-  const code = rawRegion.toUpperCase()
-  const countryCode = String(country || '').trim().toUpperCase()
-  if (countryCode === 'US' && US_STATE_NAMES[code]) return US_STATE_NAMES[code]
-  if (countryCode === 'IN' && INDIA_STATE_NAMES[code]) return INDIA_STATE_NAMES[code]
-  return rawRegion
-}
-
-function formatLocationText(location: any): string {
-  if (!location) return 'Unknown'
-  const country = expandCountryName(location.country || location.countryCode || '')
-  const region = expandRegionName(location.region, location.countryCode || location.country)
-  const city = String(location.city || '').trim() || 'Unknown city'
-  return [city, region, country].filter(Boolean).join(', ') || 'Unknown'
-}
-
-function formatAddress(location: any): string {
-  if (!location) return 'Not available'
-  if (location.address) return location.address
-  const fallback = [location.neighborhood, location.city, location.region, location.postalCode, location.country]
-    .filter(Boolean)
-    .join(', ')
-  return fallback || 'Not available'
-}
+const SLACK_VISIT_HISTORY_TZ = 'Asia/Dubai'
 
 function formatNeighborhood(location: any): string {
   if (!location) return 'Unknown'
@@ -190,22 +114,20 @@ function formatNeighborhood(location: any): string {
     location.borough ||
     ''
   if (!value) return 'Unknown'
-  return String(value).trim()
+  const resolved = buildReadablePlace({ ...location, city: value }).area
+  return resolved || 'Unknown'
 }
 
 function formatDistrict(location: any): string {
   if (!location) return 'Unknown'
   const value = location.cityDistrict || location.district || location.borough || location.county || ''
-  return typeof value === 'string' && value.trim() ? value.trim() : 'Unknown'
+  if (!value) return 'Unknown'
+  const resolved = buildReadablePlace({ ...location, region: value }).subdivision
+  return resolved || String(value).trim()
 }
 
 function formatGeoSource(location: any): string {
-  const source = String(location?.geoSource || '').trim()
-  if (!source) return 'Unknown'
-  if (source === 'merged') return 'Vercel + ip-api'
-  if (source === 'ip-api') return 'ip-api'
-  if (source === 'vercel') return 'Vercel edge'
-  return source
+  return formatGeoProviderLabel(location?.geoSource)
 }
 
 function formatAccuracy(location: any): string {
@@ -214,9 +136,9 @@ function formatAccuracy(location: any): string {
     const meters = typeof location.accuracyMeters === 'number' ? ` ±${Math.round(location.accuracyMeters)}m` : ''
     return `Browser GPS${meters}`
   }
-  if (location.accuracyLevel === 'ip') {
-    const src = location.geoSource ? ` (${location.geoSource})` : ''
-    return `IP / edge estimate only${src} — not a street address`
+  if (isApproximateGeoLocation(location)) {
+    const src = formatGeoProviderLabel(location.geoSource)
+    return `Approximate location (${src}) — not a confirmed address`
   }
   return 'Unknown'
 }
@@ -289,8 +211,6 @@ function formatUtm(data: any): string {
   ].filter(Boolean)
   return parts.length > 0 ? parts.join(' • ') : 'None'
 }
-
-const SLACK_VISIT_HISTORY_TZ = 'Asia/Dubai'
 
 /** Numbered list of each site open (Dubai time), for Slack Block Kit (keep under ~3000 chars) */
 function formatVisitHistoryMarkdown(data: {
@@ -443,21 +363,53 @@ export async function POST(request: NextRequest) {
     }
     // Persist to Redis-backed store so the dashboard shows real numbers on serverless.
     await recordAnalyticsEvent(type, payload)
+    void recordFunnelMetricEvent(type, payload as Record<string, unknown>).catch(() => {})
 
-    // Slack delivery is best-effort: analytics is already persisted above, so a missing or
-    // failing webhook must not drop the event or return an error to the client tracker.
     const botRisk = assessVisitorBotRisk(payload || {})
-    const suppressSlack =
-      shouldSuppressVisitorNoise({
-        visitorId: payload?.visitorId,
-        browserPath: payload?.browser?.path,
-        currentPagePath: payload?.currentPage?.path,
-        staffOptics: payload?.staffOptics,
-      }) || shouldSuppressBotSlack(botRisk)
+    const funnelEvent = FUNNEL_SLACK_EVENTS.has(type as FunnelSlackEvent)
+      ? (type as FunnelSlackEvent)
+      : null
+    const classification = classifyFunnelVisitor({
+      internalTest: Boolean(payload?.internalTest),
+      visitorId: payload?.visitorId,
+      userAgent: payload?.browser?.userAgent,
+      device: payload?.device,
+      location: payload?.location,
+      botRisk,
+    })
+
+    let suppressSlack = false
+    if (funnelEvent) {
+      suppressSlack =
+        shouldSuppressFunnelSlack({ internalTest: Boolean(payload?.internalTest), classification }) ||
+        shouldSuppressBotSlack(botRisk)
+      if (!suppressSlack) {
+        const cartId = typeof payload?.cartId === 'string' ? payload.cartId : ''
+        const fingerprint =
+          typeof payload?.cartFingerprint === 'string' ? payload.cartFingerprint : ''
+        const allow = await shouldSendFunnelSlackAlert({
+          cartId,
+          event: funnelEvent,
+          fingerprint,
+        })
+        if (!allow) suppressSlack = true
+      }
+    } else {
+      suppressSlack =
+        shouldSuppressVisitorNoise({
+          visitorId: payload?.visitorId,
+          browserPath: payload?.browser?.path,
+          currentPagePath: payload?.currentPage?.path,
+          staffOptics: payload?.staffOptics,
+        }) || shouldSuppressBotSlack(botRisk)
+    }
+
     const webhookUrl = suppressSlack ? undefined : resolveSlackWebhookForType(type)
     if (webhookUrl) {
       try {
-        const message = formatSlackMessage(type, { ...payload, botRisk })
+        const message = funnelEvent
+          ? formatFunnelAbandonSlack(funnelEvent, { ...payload, botRisk, classification })
+          : formatSlackMessage(type, { ...payload, botRisk, classification })
         const slackResponse = await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -485,6 +437,10 @@ function resolveSlackWebhookForType(type: string): string | undefined {
   const abandonedTypes = new Set([
     'abandoned_cart',
     'checkout_abandoned',
+    'funnel_bag_left',
+    'funnel_checkout_page_left',
+    'funnel_payment_session_left',
+    'funnel_payment_attempt_failed',
     'cart_recovery_started',
     'cart_recovered',
   ])
@@ -507,9 +463,26 @@ function resolveSlackWebhookForType(type: string): string | undefined {
 
 function formatSlackMessage(type: string, data: any) {
   const timestamp = new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })
-  const locationText = formatLocationText(data.location)
+  const locationField = formatSlackLocationMrkdwn(data.location)
+  const locationFieldWithMap = formatSlackLocationMrkdwn(data.location, { withMapLink: true })
   const ip = data.location?.ip || 'Unknown'
-  const device = data.device ? `${data.device.type} • ${data.device.browser} • ${data.device.os}` : 'Unknown'
+  const device = (() => {
+    const d = data.device as { type?: string; browser?: string; os?: string; label?: string } | undefined
+    if (d?.label && !d.label.includes('Unknown')) return d.label
+    if (d?.browser && d.browser !== 'Unknown' && d?.os && d.os !== 'Unknown') {
+      const shortOs =
+        d.os === 'iOS' || d.os === 'iPadOS' ? 'iPhone' : d.os === 'macOS' ? 'Mac' : d.os
+      return `${shortOs} · ${d.browser}`
+    }
+    const ua =
+      data.browser?.userAgent ||
+      data.userAgent ||
+      (typeof data.browser === 'object' && data.browser ? (data.browser as { userAgent?: string }).userAgent : '')
+    if (typeof ua === 'string' && ua.trim()) {
+      return formatClientDeviceLabel(parseClientDevice(ua))
+    }
+    return 'Unknown'
+  })()
   const timeOnSite = data.totalTimeOnSite ? formatTime(data.totalTimeOnSite) : '0s'
   
   // Check for VIP visitor
@@ -533,12 +506,9 @@ function formatSlackMessage(type: string, data: any) {
         }
       : null
   const withBot = (blocks: any[]) => (botBanner ? [botBanner, ...blocks] : blocks)
-  
-  // Generate map link — matches the location text we show (not a mismatched IP pin)
-  const mapLink = getMapLink(data.location)
-  const locationWithMap = mapLink ? `<${mapLink}|📍 ${locationText}>` : `🌍 ${locationText}`
-  const accuracyBadge = data.location?.accuracyLevel === 'gps' ? ' 🎯' : data.location?.accuracyLevel === 'ip' ? ' 📡' : ''
-  const addressText = formatAddress(data.location)
+
+  const accuracyBadge = data.location?.accuracyLevel === 'gps' ? ' 🎯' : ''
+  const addressText = formatSlackAddressLine(data.location)
   const accuracyText = formatAccuracy(data.location)
   const coordinatesText = formatCoordinates(data.location)
   const previousWebsite = formatPreviousWebsite(data)
@@ -585,7 +555,7 @@ function formatSlackMessage(type: string, data: any) {
               type: 'section',
               fields: [
                 { type: 'mrkdwn', text: `*📅 Date & Time:*\n${timestamp}` },
-                { type: 'mrkdwn', text: `*📍 Location:*\n${locationWithMap}${accuracyBadge}` },
+                { type: 'mrkdwn', text: `${locationFieldWithMap}${accuracyBadge}` },
               ]
             },
             {
@@ -632,7 +602,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Date & Time:*\n🕐 ${timestamp}` },
-              { type: 'mrkdwn', text: `*IP location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `${locationFieldWithMap}${accuracyBadge}` },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
               ...geoExtraFields,
@@ -676,7 +646,7 @@ function formatSlackMessage(type: string, data: any) {
               type: 'section',
               fields: [
                 { type: 'mrkdwn', text: `*📅 Date & Time:*\n${timestamp}` },
-                { type: 'mrkdwn', text: `*📍 Location:*\n${locationWithMap}${accuracyBadge}` },
+                { type: 'mrkdwn', text: `${locationFieldWithMap}${accuracyBadge}` },
               ]
             },
             {
@@ -724,7 +694,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Date & Time:*\n🕐 ${timestamp}` },
-              { type: 'mrkdwn', text: `*IP location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `${locationFieldWithMap}${accuracyBadge}` },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n📱 ${device}` },
               ...geoExtraFields,
@@ -771,7 +741,7 @@ function formatSlackMessage(type: string, data: any) {
           {
             type: 'section',
             fields: [
-              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}` },
+              { type: 'mrkdwn', text: `${locationFieldWithMap}` },
               { type: 'mrkdwn', text: `*Address:*\n${addressText}` },
               { type: 'mrkdwn', text: `*Accuracy:*\n${accuracyText}` },
               { type: 'mrkdwn', text: `*Coordinates:*\n${coordinatesText}` },
@@ -802,7 +772,7 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Referrer:*\n${previousWebsite}` },
               { type: 'mrkdwn', text: `*Pages Viewed:*\n${data.pageViews?.length || 0}` },
               { type: 'mrkdwn', text: `*Last Page:*\n${data.currentPage?.title || data.currentPage?.path || data.browser?.path || 'Unknown'}` },
-              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `${locationFieldWithMap}${accuracyBadge}` },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ]
@@ -836,7 +806,7 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Language:*\n🌐 ${lang} (\`${data.language || 'en'}\`)` },
               { type: 'mrkdwn', text: `*Currency:*\n💱 ${curr}` },
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
-              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `${locationFieldWithMap}${accuracyBadge}` },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ],
@@ -885,7 +855,7 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Bag total:*\nAED ${data.cartValueAed ?? '—'}` },
               { type: 'mrkdwn', text: `*Items in bag:*\n${data.cartItems ?? '—'}` },
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
-              { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
+              { type: 'mrkdwn', text: `${locationField}` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ],
           },
@@ -924,7 +894,7 @@ function formatSlackMessage(type: string, data: any) {
             type: 'section',
             fields: [
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
-              { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
+              { type: 'mrkdwn', text: `${locationField}` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ],
           },
@@ -969,7 +939,7 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Bag value:*\nAED ${data.cartValueAed ?? '—'}` },
               { type: 'mrkdwn', text: `*Items:*\n${data.cartItems ?? '—'}` },
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
-              { type: 'mrkdwn', text: `*Location:*\n${locationWithMap}${accuracyBadge}` },
+              { type: 'mrkdwn', text: `${locationFieldWithMap}${accuracyBadge}` },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 \`${ip}\`` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ],
@@ -1006,7 +976,7 @@ function formatSlackMessage(type: string, data: any) {
             fields: [
               { type: 'mrkdwn', text: `*Product:*\n${data.cartEvent?.productName}` },
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
-              { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
+              { type: 'mrkdwn', text: `${locationField}` },
               { type: 'mrkdwn', text: `*Time on Site:*\n${timeOnSite}` },
               { type: 'mrkdwn', text: `*Device:*\n${device}` },
             ]
@@ -1027,7 +997,7 @@ function formatSlackMessage(type: string, data: any) {
               { type: 'mrkdwn', text: `*Name:*\n${data.contactInfo?.name || 'Not provided'}` },
               { type: 'mrkdwn', text: `*Email:*\n${data.contactInfo?.email || 'Not provided'}` },
               { type: 'mrkdwn', text: `*Phone:*\n${data.contactInfo?.phone || 'Not provided'}` },
-              { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
+              { type: 'mrkdwn', text: `${locationField}` },
             ]
           },
           {
@@ -1054,7 +1024,7 @@ function formatSlackMessage(type: string, data: any) {
             fields: [
               { type: 'mrkdwn', text: `*Email:*\n${data.contactInfo?.email || 'Unknown'}` },
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
-              { type: 'mrkdwn', text: `*Location:*\n${locationText}` },
+              { type: 'mrkdwn', text: `${locationField}` },
               { type: 'mrkdwn', text: `*Cart Value:*\n${data.cartValue || 'Unknown'}` },
               { type: 'mrkdwn', text: `*Items:*\n${data.cartItems || 0}` },
             ]
@@ -1087,7 +1057,7 @@ function formatSlackMessage(type: string, data: any) {
             fields: [
               { type: 'mrkdwn', text: `*Shipping:*\n🚚 ${data.shippingAddress || 'N/A'}` },
               { type: 'mrkdwn', text: `*Referrer:*\n🔗 ${previousWebsite}` },
-              { type: 'mrkdwn', text: `*Location:*\n🌍 ${locationText}` },
+              { type: 'mrkdwn', text: `${locationField}` },
             ]
           }
         ]
@@ -1185,6 +1155,11 @@ export async function GET(request: NextRequest) {
     if (type === 'abandoned') {
       const abandoned = await getAbandonedCartStats()
       return NextResponse.json(abandoned)
+    }
+
+    if (type === 'funnel') {
+      const funnel = await getFunnelCartStats()
+      return NextResponse.json(funnel)
     }
 
     if (type === 'geo') {

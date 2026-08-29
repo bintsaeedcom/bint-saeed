@@ -60,11 +60,13 @@ function CheckoutSuccessContent() {
     orderRef
 
   useEffect(() => {
-    void import('@/lib/analytics/cartSlack').then((m) => m.clearCheckoutStarted())
-
     if (!referenceId) {
       setConfirmState('pending')
       return
+    }
+
+    const closeFunnel = () => {
+      void import('@/lib/analytics/cartSlack').then((m) => m.completePurchaseFunnel())
     }
 
     if (!trackedPurchase.current) {
@@ -86,12 +88,14 @@ function CheckoutSuccessContent() {
     }
 
     if (sessionId || giftCardOrderId) {
+      closeFunnel()
       clearCart()
       setConfirmState('confirmed')
       return
     }
 
     const markPaid = () => {
+      closeFunnel()
       clearCart()
       setConfirmState('confirmed')
     }

@@ -30,6 +30,15 @@ function parseClientContext(raw: unknown): CheckoutClientContext {
     trafficSource:
       typeof value.trafficSource === 'string' ? value.trafficSource.trim().slice(0, 500) : undefined,
     sessionSeconds,
+    cartId: typeof value.cartId === 'string' ? value.cartId.trim().slice(0, 80) : undefined,
+    visitorId: typeof value.visitorId === 'string' ? value.visitorId.trim().slice(0, 80) : undefined,
+    cartFingerprint:
+      typeof value.cartFingerprint === 'string' ? value.cartFingerprint.trim().slice(0, 400) : undefined,
+    internalTest:
+      value.internalTest === true ||
+      value.internalTest === 1 ||
+      value.internalTest === '1' ||
+      value.internalTest === 'true',
   }
 }
 

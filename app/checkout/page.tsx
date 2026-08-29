@@ -32,6 +32,7 @@ import {
   type CheckoutRail,
 } from '@/lib/payments'
 import { getCheckoutAttributionContext } from '@/lib/analytics/checkoutAttribution'
+import { buildClientFunnelContext } from '@/lib/analytics/funnel/clientCheckoutContext'
 import CheckoutPaymentRailIcons from '@/components/checkout/CheckoutPaymentRailIcons'
 import {
   validateBnplCheckoutForm,
@@ -430,7 +431,7 @@ function CheckoutPageContent() {
   useEffect(() => {
     if (items.length === 0 || beganCheckout.current) return
     beganCheckout.current = true
-    void import('@/lib/analytics/cartSlack').then((m) => m.markCheckoutStarted())
+    void import('@/lib/analytics/cartSlack').then((m) => m.markCheckoutPageReachedTelemetry())
     const value = Number(cartSubtotal(items).toFixed(2))
     persistCheckoutSnapshot({
       currency: currency.code,
@@ -464,6 +465,7 @@ function CheckoutPageContent() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
       deviceType: detectDeviceType(),
       ...getCheckoutAttributionContext(),
+      ...buildClientFunnelContext(items),
     },
   }
 
@@ -526,10 +528,14 @@ function CheckoutPageContent() {
           }),
         })
         if (!response.ok) {
+          void import('@/lib/analytics/cartSlack').then((m) => m.reportPaymentAttemptFailed('gift_card'))
           throw new Error(await readCheckoutError(response, 'Gift card checkout is unavailable'))
         }
         const data = (await response.json()) as { orderId?: string; error?: string }
         if (data.error) throw new Error(data.error)
+        void import('@/lib/analytics/cartSlack').then((m) =>
+          m.markPaymentSession('gift_card', data.orderId || 'gift_card'),
+        )
         window.location.assign(
           localize(
             `/checkout/success?order_id=${encodeURIComponent(data.orderId || '')}&provider=gift_card`,
@@ -585,12 +591,21 @@ function CheckoutPageContent() {
           }),
         })
         if (!response.ok) {
+          void import('@/lib/analytics/cartSlack').then((m) => m.reportPaymentAttemptFailed('tabby'))
           throw new Error(await readCheckoutError(response, 'Tabby checkout is unavailable'))
         }
-        const { url, error } = (await response.json()) as { url?: string; error?: string }
-        if (error) throw new Error(error)
-        if (typeof url === 'string' && url.startsWith('https://')) {
-          window.location.assign(url)
+        const tabbyData = (await response.json()) as {
+          url?: string
+          error?: string
+          paymentId?: string
+          checkoutId?: string
+        }
+        if (tabbyData.error) throw new Error(tabbyData.error)
+        void import('@/lib/analytics/cartSlack').then((m) =>
+          m.markPaymentSession('tabby', tabbyData.paymentId || tabbyData.checkoutId || ''),
+        )
+        if (typeof tabbyData.url === 'string' && tabbyData.url.startsWith('https://')) {
+          window.location.assign(tabbyData.url)
           return
         }
         throw new Error('Tabby checkout URL missing')
@@ -637,12 +652,21 @@ function CheckoutPageContent() {
           }),
         })
         if (!response.ok) {
+          void import('@/lib/analytics/cartSlack').then((m) => m.reportPaymentAttemptFailed('tamara'))
           throw new Error(await readCheckoutError(response, 'Tamara checkout is unavailable'))
         }
-        const { url, error } = (await response.json()) as { url?: string; error?: string }
-        if (error) throw new Error(error)
-        if (typeof url === 'string' && url.startsWith('https://')) {
-          window.location.assign(url)
+        const tamaraData = (await response.json()) as {
+          url?: string
+          error?: string
+          orderId?: string
+          checkoutId?: string
+        }
+        if (tamaraData.error) throw new Error(tamaraData.error)
+        void import('@/lib/analytics/cartSlack').then((m) =>
+          m.markPaymentSession('tamara', tamaraData.orderId || tamaraData.checkoutId || ''),
+        )
+        if (typeof tamaraData.url === 'string' && tamaraData.url.startsWith('https://')) {
+          window.location.assign(tamaraData.url)
           return
         }
         throw new Error('Tamara checkout URL missing')
@@ -655,12 +679,16 @@ function CheckoutPageContent() {
           body: JSON.stringify(checkoutPayload),
         })
         if (!response.ok) {
+          void import('@/lib/analytics/cartSlack').then((m) => m.reportPaymentAttemptFailed('mollie'))
           throw new Error(await readCheckoutError(response, 'Checkout is unavailable'))
         }
-        const { url, error } = (await response.json()) as { url?: string; error?: string }
-        if (error) throw new Error(error)
-        if (typeof url === 'string' && url.startsWith('https://')) {
-          window.location.assign(url)
+        const mollieData = (await response.json()) as { url?: string; error?: string; paymentId?: string }
+        if (mollieData.error) throw new Error(mollieData.error)
+        void import('@/lib/analytics/cartSlack').then((m) =>
+          m.markPaymentSession('mollie', mollieData.paymentId || ''),
+        )
+        if (typeof mollieData.url === 'string' && mollieData.url.startsWith('https://')) {
+          window.location.assign(mollieData.url)
           return
         }
         throw new Error('Mollie checkout URL missing')
@@ -673,12 +701,16 @@ function CheckoutPageContent() {
           body: JSON.stringify(checkoutPayload),
         })
         if (!response.ok) {
+          void import('@/lib/analytics/cartSlack').then((m) => m.reportPaymentAttemptFailed('paypal'))
           throw new Error(await readCheckoutError(response, 'Checkout is unavailable'))
         }
-        const { url, error } = (await response.json()) as { url?: string; error?: string }
-        if (error) throw new Error(error)
-        if (typeof url === 'string' && url.startsWith('https://')) {
-          window.location.assign(url)
+        const paypalData = (await response.json()) as { url?: string; error?: string; orderId?: string }
+        if (paypalData.error) throw new Error(paypalData.error)
+        void import('@/lib/analytics/cartSlack').then((m) =>
+          m.markPaymentSession('paypal', paypalData.orderId || ''),
+        )
+        if (typeof paypalData.url === 'string' && paypalData.url.startsWith('https://')) {
+          window.location.assign(paypalData.url)
           return
         }
         throw new Error('PayPal checkout URL missing')
@@ -691,6 +723,7 @@ function CheckoutPageContent() {
         signal: AbortSignal.timeout(45_000),
       })
       if (!response.ok) {
+        void import('@/lib/analytics/cartSlack').then((m) => m.reportPaymentAttemptFailed('stripe'))
         throw new Error(await readCheckoutError(response, 'Checkout is unavailable'))
       }
       const data = (await response.json()) as {
@@ -698,9 +731,15 @@ function CheckoutPageContent() {
         url?: string
         clientSecret?: string
         publishableKey?: string
+        sessionId?: string
         error?: string
       }
       if (data.error) throw new Error(data.error)
+      if (data.sessionId) {
+        void import('@/lib/analytics/cartSlack').then((m) =>
+          m.markPaymentSession('stripe', data.sessionId || ''),
+        )
+      }
 
       if (data.mode === 'embedded' && data.clientSecret) {
         const publishableKey =

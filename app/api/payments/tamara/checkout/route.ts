@@ -21,6 +21,8 @@ import { checkTamaraEligibility } from '@/lib/tamara/eligibility'
 import { createTamaraCheckoutSession } from '@/lib/tamara/api'
 import { savePendingTamaraCheckout } from '@/lib/tamara/pendingCheckoutStore'
 import { isPlausibleTamaraPhone, normalizeTamaraPhone, toTamaraCheckoutPhone } from '@/lib/tamara/normalizePhone'
+import { funnelTelemetryFromParsedCheckout } from '@/lib/analytics/funnel/checkoutTelemetry'
+import { recordFunnelPaymentSessionCreated } from '@/lib/analytics/funnel/serverFunnel'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -310,6 +312,12 @@ export async function POST(request: NextRequest) {
       appliedGiftCard: gift.credit ?? undefined,
       createdAt: new Date().toISOString(),
     })
+
+    void recordFunnelPaymentSessionCreated({
+      provider: 'tamara',
+      sessionRef: session.data.order_id,
+      telemetry: funnelTelemetryFromParsedCheckout(parsed),
+    }).catch(() => {})
 
     return NextResponse.json({
       orderId: session.data.order_id,

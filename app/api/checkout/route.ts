@@ -17,6 +17,8 @@ import {
   type StripeCheckoutUiMode,
 } from '@/lib/stripe/buildCheckoutSessionOptions'
 import { attachStripeCustomerToCheckoutSession } from '@/lib/stripe/attachStripeCustomerToCheckoutSession'
+import { funnelTelemetryFromParsedCheckout } from '@/lib/analytics/funnel/checkoutTelemetry'
+import { recordFunnelPaymentSessionCreated } from '@/lib/analytics/funnel/serverFunnel'
 import { getStripeClient, isStripeSecretKeyConfigured } from '@/lib/stripe/getStripeClient'
 
 function stripeErrorMessage(error: unknown): string {
@@ -141,6 +143,12 @@ export async function POST(request: NextRequest) {
       uiMode = 'hosted'
       session = await createStripeSession(stripe, parsed, baseUrl, 'hosted', gift, false)
     }
+
+    void recordFunnelPaymentSessionCreated({
+      provider: 'stripe',
+      sessionRef: session.id,
+      telemetry: funnelTelemetryFromParsedCheckout(parsed),
+    }).catch(() => {})
 
     if (uiMode === 'embedded' || uiMode === 'elements') {
       if (!session.client_secret) {

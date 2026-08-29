@@ -1,5 +1,6 @@
 import { Redis } from '@upstash/redis'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
+import { getFunnelMetricsReliableSince } from '@/lib/analytics/funnel/reliableSince'
 import { geoFieldKey, geoMetaFromLocation } from '@/lib/geo/geoAnalyticsKey'
 
 /**
@@ -57,6 +58,7 @@ export interface AnalyticsNotification {
 
 export interface AbandonedCartSnapshot {
   visitorId: string
+  cartId?: string
   cartValueAed?: number
   cartItems?: number
   items?: { name?: string; quantity?: number; color?: string; size?: string }[]
@@ -66,6 +68,20 @@ export interface AbandonedCartSnapshot {
   page?: string
   updatedAt: string
   status: 'active' | 'abandoned' | 'checkout_started' | 'recovered'
+  funnelStage?: string
+  paymentSessionCreated?: boolean
+  paymentProvider?: string
+  internalTest?: boolean
+}
+
+export interface FunnelCartStats {
+  reliableSince: string
+  bagsLeft: number
+  checkoutPagesLeft: number
+  paymentCheckoutsLeft: number
+  paymentFailures: number
+  purchases: number
+  internalExcluded: number
 }
 
 export interface AnalyticsStats {
@@ -225,6 +241,7 @@ function normalizeStoredCart(raw: unknown): AbandonedCartSnapshot | null {
       : new Date().toISOString()
   return {
     visitorId,
+    cartId: typeof data.cartId === 'string' ? data.cartId : undefined,
     cartValueAed: num(data.cartValueAed),
     cartItems: num(data.cartItems),
     items: Array.isArray(data.items) ? (data.items as AbandonedCartSnapshot['items']) : undefined,
@@ -234,6 +251,10 @@ function normalizeStoredCart(raw: unknown): AbandonedCartSnapshot | null {
     page: typeof data.page === 'string' ? data.page : undefined,
     updatedAt,
     status,
+    funnelStage: typeof data.funnelStage === 'string' ? data.funnelStage : undefined,
+    paymentSessionCreated: typeof data.paymentSessionCreated === 'boolean' ? data.paymentSessionCreated : undefined,
+    paymentProvider: typeof data.paymentProvider === 'string' ? data.paymentProvider : undefined,
+    internalTest: typeof data.internalTest === 'boolean' ? data.internalTest : undefined,
   }
 }
 
@@ -242,10 +263,23 @@ const CART_TYPES: Record<string, AbandonedCartSnapshot['status']> = {
   cart_event: 'active',
   abandoned_cart: 'abandoned',
   checkout_abandoned: 'abandoned',
+  funnel_bag_left: 'abandoned',
+  funnel_checkout_page_left: 'checkout_started',
+  funnel_payment_session_left: 'checkout_started',
+  funnel_payment_attempt_failed: 'checkout_started',
   checkout_started: 'checkout_started',
   cart_recovery_started: 'checkout_started',
   cart_recovered: 'recovered',
   order_completed: 'recovered',
+  funnel_purchase_completed: 'recovered',
+}
+
+const FUNNEL_EVENT_STAGE: Record<string, string> = {
+  funnel_bag_left: 'bag_left',
+  funnel_checkout_page_left: 'checkout_page_reached',
+  funnel_payment_session_left: 'payment_session_left',
+  funnel_payment_attempt_failed: 'payment_attempt_failed',
+  funnel_purchase_completed: 'purchase_completed',
 }
 
 function toVisitor(type: string, data: Record<string, unknown>): AnalyticsVisitor | null {
@@ -277,6 +311,7 @@ function toCartSnapshot(type: string, data: Record<string, unknown>): AbandonedC
   const contact = data.contactInfo as { email?: string } | undefined
   return {
     visitorId,
+    cartId: typeof data.cartId === 'string' ? data.cartId : undefined,
     cartValueAed: num(data.cartValueAed) ?? num(data.cartValue),
     cartItems: num(data.cartItems),
     items: Array.isArray(data.items) ? (data.items as AbandonedCartSnapshot['items']) : undefined,
@@ -286,6 +321,10 @@ function toCartSnapshot(type: string, data: Record<string, unknown>): AbandonedC
     page: typeof browser?.path === 'string' ? browser.path : undefined,
     updatedAt: new Date().toISOString(),
     status,
+    funnelStage: FUNNEL_EVENT_STAGE[type] || (typeof data.funnelStage === 'string' ? data.funnelStage : undefined),
+    paymentSessionCreated: Boolean(data.paymentSessionCreated),
+    paymentProvider: typeof data.paymentProvider === 'string' ? data.paymentProvider : undefined,
+    internalTest: Boolean(data.internalTest),
   }
 }
 
@@ -554,13 +593,14 @@ export async function recordAnalyticsEvent(type: string, rawData: unknown): Prom
       pipe.expire(day, DAY_TTL)
     }
     if (cart) {
-      pipe.set(KEY_CART(cart.visitorId), JSON.stringify(cart), { ex: CART_TTL })
+      const cartKey = cart.cartId || cart.visitorId
+      pipe.set(KEY_CART(cartKey), JSON.stringify(cart), { ex: CART_TTL })
       if (cart.status === 'recovered') {
-        pipe.zrem(KEY_CARTS, cart.visitorId)
+        pipe.zrem(KEY_CARTS, cartKey)
         pipe.hincrby(KEY_DAY(todayKey()), 'recovered', 1)
         pipe.expire(KEY_DAY(todayKey()), DAY_TTL)
       } else {
-        pipe.zadd(KEY_CARTS, { score: nowMs, member: cart.visitorId })
+        pipe.zadd(KEY_CARTS, { score: nowMs, member: cartKey })
       }
     }
     await pipe.exec()
@@ -576,9 +616,83 @@ export async function recordAnalyticsEvent(type: string, rawData: unknown): Prom
     if (memNotifs.length > NOTIF_MAX) memNotifs.length = NOTIF_MAX
   }
   if (cart) {
-    if (cart.status === 'recovered') memCarts.delete(cart.visitorId)
-    else memCarts.set(cart.visitorId, cart)
+    const cartKey = cart.cartId || cart.visitorId
+    if (cart.status === 'recovered') memCarts.delete(cartKey)
+    else memCarts.set(cartKey, cart)
   }
+}
+
+export async function getFunnelCartStats(): Promise<FunnelCartStats> {
+  const r = getRedis()
+  const day = todayKey()
+  const empty: FunnelCartStats = {
+    reliableSince: getFunnelMetricsReliableSince(),
+    bagsLeft: 0,
+    checkoutPagesLeft: 0,
+    paymentCheckoutsLeft: 0,
+    paymentFailures: 0,
+    purchases: 0,
+    internalExcluded: 0,
+  }
+
+  if (r) {
+    const counts = (await r.hgetall<Record<string, string>>(`bs:av:funnel:${day}`)) || {}
+    return {
+      reliableSince: getFunnelMetricsReliableSince(),
+      bagsLeft: Number(counts.bags_left || 0),
+      checkoutPagesLeft: Number(counts.checkout_page_left || 0),
+      paymentCheckoutsLeft: Number(counts.payment_session_left || 0),
+      paymentFailures: Number(counts.payment_failures || 0),
+      purchases: Number(counts.purchases || 0),
+      internalExcluded: Number(counts.internal_excluded || 0),
+    }
+  }
+
+  let bagsLeft = 0
+  let checkoutPagesLeft = 0
+  let paymentCheckoutsLeft = 0
+  let paymentFailures = 0
+  let purchases = 0
+  let internalExcluded = 0
+  for (const cart of memCarts.values()) {
+    if (cart.internalTest) {
+      internalExcluded += 1
+      continue
+    }
+    if (cart.funnelStage === 'bag_left') bagsLeft += 1
+    if (cart.funnelStage === 'checkout_page_reached') checkoutPagesLeft += 1
+    if (cart.funnelStage === 'payment_session_left') paymentCheckoutsLeft += 1
+    if (cart.funnelStage === 'payment_attempt_failed') paymentFailures += 1
+    if (cart.status === 'recovered') purchases += 1
+  }
+  return { ...empty, bagsLeft, checkoutPagesLeft, paymentCheckoutsLeft, paymentFailures, purchases, internalExcluded }
+}
+
+async function bumpFunnelDayCounter(field: string, internalTest: boolean): Promise<void> {
+  if (internalTest) {
+    const r = getRedis()
+    const day = todayKey()
+    if (r) {
+      await r.hincrby(`bs:av:funnel:${day}`, 'internal_excluded', 1)
+      await r.expire(`bs:av:funnel:${day}`, DAY_TTL)
+    }
+    return
+  }
+  const r = getRedis()
+  const day = todayKey()
+  if (r) {
+    await r.hincrby(`bs:av:funnel:${day}`, field, 1)
+    await r.expire(`bs:av:funnel:${day}`, DAY_TTL)
+  }
+}
+
+export async function recordFunnelMetricEvent(type: string, data: Record<string, unknown>): Promise<void> {
+  const internalTest = Boolean(data.internalTest)
+  if (type === 'funnel_bag_left') await bumpFunnelDayCounter('bags_left', internalTest)
+  if (type === 'funnel_checkout_page_left') await bumpFunnelDayCounter('checkout_page_left', internalTest)
+  if (type === 'funnel_payment_session_left') await bumpFunnelDayCounter('payment_session_left', internalTest)
+  if (type === 'funnel_payment_attempt_failed') await bumpFunnelDayCounter('payment_failures', internalTest)
+  if (type === 'funnel_purchase_completed') await bumpFunnelDayCounter('purchases', internalTest)
 }
 
 export async function getActiveVisitors(): Promise<AnalyticsVisitor[]> {

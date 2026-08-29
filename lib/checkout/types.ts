@@ -7,6 +7,11 @@ export type CheckoutClientContext = {
   country?: string
   trafficSource?: string
   sessionSeconds?: number
+  /** Persistent anonymous cart id — correlates bag → checkout → PSP session. */
+  cartId?: string
+  visitorId?: string
+  cartFingerprint?: string
+  internalTest?: boolean
 }
 
 export type CheckoutCartItem = {

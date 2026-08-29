@@ -12,6 +12,10 @@ import { notifyHealthAlert, notifySlackNewPaidOrder } from '@/lib/ops/notificati
 import { dispatchOrderEmails } from '@/lib/orders/dispatchOrderEmails'
 import { fulfillPaidGiftCards } from '@/lib/giftCards/fulfillPaidGiftCards'
 import { commitRedeemForPaidOrder } from '@/lib/giftCards/applyAtCheckout'
+import {
+  recordFunnelPaymentTerminalOutcome,
+  recordFunnelPurchaseFromCheckout,
+} from '@/lib/analytics/funnel/recordPurchase'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -40,6 +44,13 @@ async function persistPayPalOrder(orderId: string) {
 
   const capture = await capturePayPalOrder(orderId)
   if (capture.status !== 'COMPLETED' && capture.status !== 'PENDING') {
+    void recordFunnelPaymentTerminalOutcome({
+      provider: 'paypal',
+      sessionRef: orderId,
+      outcome: 'payment_failed',
+      items: pending.items,
+      clientContext: pending.clientContext,
+    }).catch(() => {})
     return { ok: false as const, error: 'PayPal payment was not completed.' }
   }
 
@@ -74,6 +85,13 @@ async function persistPayPalOrder(orderId: string) {
     orderId: order.id,
     applied: pending.appliedGiftCard,
   })
+
+  void recordFunnelPurchaseFromCheckout({
+    provider: 'paypal',
+    sessionRef: orderId,
+    items: pending.items,
+    clientContext: pending.clientContext,
+  }).catch(() => {})
 
   return { ok: true as const, orderId: order.id, duplicate: false }
 }

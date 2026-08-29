@@ -13,6 +13,8 @@ import { getMollieApiKey } from '@/lib/mollie/config'
 import { toMollieAmountValue } from '@/lib/mollie/amount'
 import { serializeMollieOrderItems } from '@/lib/mollie/buildOrderFromPayment'
 import { savePendingMollieCheckout } from '@/lib/mollie/pendingCheckoutStore'
+import { funnelTelemetryFromParsedCheckout } from '@/lib/analytics/funnel/checkoutTelemetry'
+import { recordFunnelPaymentSessionCreated } from '@/lib/analytics/funnel/serverFunnel'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -108,7 +110,7 @@ export async function POST(request: NextRequest) {
             giftCardAppliedAed: String(gift.credit.appliedAed),
           }
         : {}),
-      ...buildCheckoutAttributionMetadata(clientContext),
+      ...buildCheckoutAttributionMetadata(clientContext, items),
     }
 
     // Mollie does not substitute `{id}` in redirectUrl. Create the payment first,
@@ -141,6 +143,12 @@ export async function POST(request: NextRequest) {
       appliedGiftCard: gift.credit ?? undefined,
       createdAt: new Date().toISOString(),
     })
+
+    void recordFunnelPaymentSessionCreated({
+      provider: 'mollie',
+      sessionRef: payment.id,
+      telemetry: funnelTelemetryFromParsedCheckout(parsed),
+    }).catch(() => {})
 
     const checkoutUrl =
       updated.getCheckoutUrl?.() ??

@@ -12,6 +12,11 @@ import { getTabbyPayment } from '@/lib/tabby/api'
 import { ensureTabbyPaymentCaptured } from '@/lib/tabby/ensureCapture'
 import { lineUnitForCurrency } from '@/lib/shopProductOptions'
 import type { SupportedCurrency } from '@/lib/pricing/types'
+import {
+  recordFunnelPaymentTerminalOutcome,
+  recordFunnelPurchaseFromCheckout,
+} from '@/lib/analytics/funnel/recordPurchase'
+import type { FunnelPaymentOutcome } from '@/lib/analytics/funnel/serverFunnel'
 
 const PAID_STATUSES = new Set(['AUTHORIZED', 'authorized', 'CLOSED', 'closed', 'CAPTURED', 'captured'])
 
@@ -34,7 +39,25 @@ export async function fulfillTabbyPaidOrder(args: {
   const statusUpper = status.toUpperCase()
 
   if (status && !PAID_STATUSES.has(status) && !PAID_STATUSES.has(statusUpper)) {
-    if (['REJECTED', 'EXPIRED', 'CREATED'].includes(statusUpper)) {
+    if (['REJECTED', 'EXPIRED', 'CANCELLED', 'CANCELED', 'DECLINED'].includes(statusUpper)) {
+      const outcome: FunnelPaymentOutcome =
+        statusUpper === 'EXPIRED'
+          ? 'payment_expired'
+          : statusUpper.includes('CANCEL')
+            ? 'payment_cancelled'
+            : 'payment_failed'
+      if (pending) {
+        void recordFunnelPaymentTerminalOutcome({
+          provider: 'tabby',
+          sessionRef: args.paymentId,
+          outcome,
+          items: pending.items,
+          clientContext: pending.clientContext,
+        }).catch(() => {})
+      }
+      return { fulfilled: false, reason: `status:${statusUpper}` }
+    }
+    if (statusUpper === 'CREATED') {
       return { fulfilled: false, reason: `status:${statusUpper}` }
     }
   }
@@ -175,6 +198,13 @@ export async function fulfillTabbyPaidOrder(args: {
   }
 
   await deletePendingTabbyCheckout(args.paymentId)
+
+  void recordFunnelPurchaseFromCheckout({
+    provider: 'tabby',
+    sessionRef: args.paymentId,
+    items: pending.items,
+    clientContext: pending.clientContext,
+  }).catch(() => {})
 
   return { fulfilled: true, orderId: order.id, captured: true }
 }

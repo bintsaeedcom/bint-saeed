@@ -3,7 +3,9 @@ import { fulfillTabbyPaidOrder } from '@/lib/tabby/fulfillPaidOrder'
 import { markPaymentEventProcessed, wasPaymentEventProcessed } from '@/lib/payments/webhookEventStore'
 import { notifyHealthAlert } from '@/lib/ops/notifications'
 import { getTabbyWebhookSecret, isTabbyConfigured } from '@/lib/tabby/config'
-import { getTabbyPaymentIdByOrderRef } from '@/lib/tabby/pendingCheckoutStore'
+import { getTabbyPaymentIdByOrderRef, getPendingTabbyCheckout } from '@/lib/tabby/pendingCheckoutStore'
+import { recordFunnelPaymentTerminalOutcome } from '@/lib/analytics/funnel/recordPurchase'
+import type { FunnelPaymentOutcome } from '@/lib/analytics/funnel/serverFunnel'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -75,6 +77,33 @@ async function handleNotification(body: Record<string, unknown>) {
     }
 
     return { ok: false, ...result }
+  }
+
+  const statusLower = status.toLowerCase()
+  const failureStatuses = new Set([
+    'rejected',
+    'declined',
+    'expired',
+    'cancelled',
+    'canceled',
+    'closed',
+  ])
+  if (status && failureStatuses.has(statusLower) && !SUCCESS.has(status) && !SUCCESS.has(status.toUpperCase())) {
+    const pending = await getPendingTabbyCheckout(paymentId)
+    const outcome: FunnelPaymentOutcome = statusLower.includes('expir')
+      ? 'payment_expired'
+      : statusLower.includes('cancel')
+        ? 'payment_cancelled'
+        : 'payment_failed'
+    if (pending) {
+      void recordFunnelPaymentTerminalOutcome({
+        provider: 'tabby',
+        sessionRef: paymentId,
+        outcome,
+        items: pending.items,
+        clientContext: pending.clientContext,
+      }).catch(() => {})
+    }
   }
 
   await markPaymentEventProcessed('tabby', eventKey)

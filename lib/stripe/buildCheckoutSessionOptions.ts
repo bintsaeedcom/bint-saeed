@@ -96,7 +96,7 @@ export function buildStripeCheckoutSessionParams({
     shippingScope: expressCheckout && requiresShipping ? 'express' : requiresShipping ? 'pending' : 'digital',
     ...(expressCheckout ? { expressCheckout: '1' } : {}),
     ...(giftCardMeta ? { giftCardMeta } : {}),
-    ...buildCheckoutAttributionMetadata(parsed.clientContext),
+    ...buildCheckoutAttributionMetadata(parsed.clientContext, parsed.items),
   }
 
   const shared: Stripe.Checkout.SessionCreateParams = {

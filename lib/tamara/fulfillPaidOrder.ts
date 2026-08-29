@@ -11,6 +11,7 @@ import {
 import { authoriseTamaraOrder, captureTamaraOrder } from '@/lib/tamara/api'
 import { lineUnitForCurrency } from '@/lib/shopProductOptions'
 import type { SupportedCurrency } from '@/lib/pricing/types'
+import { recordFunnelPurchaseFromCheckout } from '@/lib/analytics/funnel/recordPurchase'
 
 /**
  * Persist a paid Tamara order, Slack (with Tamara label), emails.
@@ -96,6 +97,13 @@ export async function fulfillTamaraPaidOrder(args: {
     applied: pending.appliedGiftCard,
   })
   await deletePendingTamaraCheckout(args.tamaraOrderId)
+
+  void recordFunnelPurchaseFromCheckout({
+    provider: 'tamara',
+    sessionRef: args.tamaraOrderId,
+    items: pending.items,
+    clientContext: pending.clientContext,
+  }).catch(() => {})
 
   await notifySlackNewPaidOrder(order, {
     clientIp: pending.clientIp,

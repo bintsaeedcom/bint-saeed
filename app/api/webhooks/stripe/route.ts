@@ -18,8 +18,24 @@ import { sendMetaCapiPurchaseFromOrder } from '@/lib/analytics/metaCapi'
 import { metaCatalogContentsFromOrderMeta } from '@/lib/analytics/metaCatalogIds'
 import { sendSnapCapiPurchaseFromOrder } from '@/lib/analytics/snapCapi'
 import { resolveDiscountCodeFromCheckoutSession } from '@/lib/stripe/resolveCheckoutPromotionCode'
+import { funnelTelemetryFromMetadata } from '@/lib/analytics/funnel/checkoutTelemetry'
+import { handleFunnelPaymentOutcome } from '@/lib/analytics/funnel/serverFunnel'
 
 export const runtime = 'nodejs'
+
+function stripeSessionFunnelTelemetry(session: Stripe.Checkout.Session) {
+  let items: CheckoutCartItem[] | undefined
+  try {
+    const raw = session.metadata?.orderItems
+    if (raw) items = JSON.parse(raw) as CheckoutCartItem[]
+  } catch {
+    items = undefined
+  }
+  return funnelTelemetryFromMetadata(
+    (session.metadata || {}) as Record<string, string>,
+    items,
+  )
+}
 
 function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -411,6 +427,14 @@ export async function POST(request: NextRequest) {
             applied: appliedGiftCardFromStripeMetadata(full.metadata),
           })
         }
+        if (full.payment_status === 'paid' || full.payment_status === 'no_payment_required') {
+          void handleFunnelPaymentOutcome({
+            provider: 'stripe',
+            sessionRef: full.id,
+            outcome: 'payment_completed',
+            telemetry: stripeSessionFunnelTelemetry(full),
+          }).catch(() => {})
+        }
         break
       }
       case 'checkout.session.async_payment_succeeded': {
@@ -432,6 +456,12 @@ export async function POST(request: NextRequest) {
               applied: appliedGiftCardFromStripeMetadata(full.metadata),
             })
           }
+          void handleFunnelPaymentOutcome({
+            provider: 'stripe',
+            sessionRef: session.id,
+            outcome: 'payment_completed',
+            telemetry: stripeSessionFunnelTelemetry(session),
+          }).catch(() => {})
         }
         break
       }
@@ -442,6 +472,13 @@ export async function POST(request: NextRequest) {
         if (orderId) {
           await markOrderWithStripeNote(orderId, `Checkout session event: ${event.type} (${session.id}).`)
         }
+        void handleFunnelPaymentOutcome({
+          provider: 'stripe',
+          sessionRef: session.id,
+          outcome:
+            event.type === 'checkout.session.expired' ? 'payment_expired' : 'payment_failed',
+          telemetry: stripeSessionFunnelTelemetry(session),
+        }).catch(() => {})
         break
       }
 

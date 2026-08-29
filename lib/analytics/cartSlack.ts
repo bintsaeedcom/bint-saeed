@@ -1,28 +1,42 @@
 import type { CartItem } from '@/store/cartStore'
 import { lineTotalAed } from '@/lib/shopProductOptions'
-import { isStaffOpticsActive, shouldSuppressVisitorNoise } from '@/lib/analytics/staffOptics'
+import { parseClientDevice, formatClientDeviceLabel } from '@/lib/analytics/parseClientDevice'
 import { readFirstTouchAttribution } from '@/lib/analytics/attributionStorage'
+import { isInternalTestModeActive } from '@/lib/analytics/internalTestMode'
+import {
+  computeCartFingerprint,
+  getOrCreateCartId,
+  readCartFirstSeen,
+  readCartLastActivity,
+  resetCartIdentity,
+  touchCartActivity,
+} from '@/lib/analytics/funnel/cartIdentity'
+import {
+  clearFunnelAfterPurchase,
+  hasPaymentSession,
+  isPurchaseCompleted,
+  markBagActive,
+  markCheckoutPageReached,
+  markPaymentAttemptFailed,
+  markPaymentSessionCreated,
+  markPurchaseCompleted,
+  readFunnelState,
+  resetFunnelState,
+  type StoredFunnelState,
+} from '@/lib/analytics/funnel/clientState'
+import type { FunnelSlackEvent, PaymentProvider } from '@/lib/analytics/funnel/types'
+import {
+  FUNNEL_HIDDEN_ABANDON_MS,
+  FUNNEL_MIN_BAG_IDLE_MS,
+  FUNNEL_MIN_CHECKOUT_PAGE_MS,
+} from '@/lib/analytics/funnel/types'
 
 const CART_STORAGE_KEY = 'bint-saeed-cart'
-const CHECKOUT_STARTED_KEY = 'bs_checkout_started'
-const ABANDON_NOTIFIED_KEY = 'bs_abandon_cart_notified'
-const CHECKOUT_ABANDON_NOTIFIED_KEY = 'bs_checkout_abandon_notified'
 
-function suppressCartSlack(): boolean {
-  return shouldSuppressVisitorNoise() || isStaffOpticsActive()
-}
+let hiddenTimer: ReturnType<typeof setTimeout> | null = null
+let watchersBound = false
 
-export function markCheckoutStarted(): void {
-  if (typeof window === 'undefined') return
-  sessionStorage.setItem(CHECKOUT_STARTED_KEY, '1')
-}
-
-export function clearCheckoutStarted(): void {
-  if (typeof window === 'undefined') return
-  sessionStorage.removeItem(CHECKOUT_STARTED_KEY)
-}
-
-export function readPersistedCartItems(): CartItem[] {
+function readPersistedCartItems(): CartItem[] {
   if (typeof window === 'undefined') return []
   try {
     const raw = localStorage.getItem(CART_STORAGE_KEY)
@@ -40,6 +54,14 @@ function cartSummary(items: CartItem[]) {
   return { itemCount, cartValueAed }
 }
 
+function devicePayload() {
+  if (typeof window === 'undefined') {
+    return { type: 'desktop' as const, browser: 'Unknown', os: 'Unknown', label: 'Unknown' }
+  }
+  const info = parseClientDevice(navigator.userAgent)
+  return { ...info, label: formatClientDeviceLabel(info), userAgent: navigator.userAgent }
+}
+
 function visitorPayload() {
   if (typeof window === 'undefined') return {}
   let location: Record<string, unknown> | null = null
@@ -50,39 +72,163 @@ function visitorPayload() {
     location = null
   }
   const firstTouch = readFirstTouchAttribution()
+  const funnel = readFunnelState()
   return {
     visitorId: localStorage.getItem('bs_visitor_id') || undefined,
+    cartId: getOrCreateCartId(),
+    cartFingerprint: computeCartFingerprint(readPersistedCartItems()),
+    cartFirstSeen: readCartFirstSeen() || undefined,
+    cartLastActivity: readCartLastActivity() || undefined,
+    funnelStage: funnel.stage,
+    paymentSessionCreated: hasPaymentSession(),
+    paymentProvider: funnel.paymentProvider,
+    paymentSessionRef: funnel.paymentSessionRef,
+    internalTest: isInternalTestModeActive(),
     referrer: firstTouch?.referrer || document.referrer || 'Direct',
     firstTouch: firstTouch || undefined,
+    device: devicePayload(),
     browser: {
       url: window.location.href,
       path: window.location.pathname + window.location.search,
       title: document.title,
       referrer: document.referrer || 'Direct',
+      userAgent: navigator.userAgent,
     },
     location,
   }
 }
 
-async function postSlack(type: string, data: Record<string, unknown>, beacon = false) {
+async function postFunnel(type: string, data: Record<string, unknown>, beacon = false) {
   const body = JSON.stringify({ type, data })
-  if (beacon && typeof navigator !== 'undefined' && navigator.sendBeacon) {
-    navigator.sendBeacon('/api/analytics/slack', new Blob([body], { type: 'application/json' }))
-    return
+  try {
+    if (beacon && typeof navigator !== 'undefined' && navigator.sendBeacon) {
+      navigator.sendBeacon('/api/analytics/slack', new Blob([body], { type: 'application/json' }))
+      return
+    }
+    await fetch('/api/analytics/slack', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      keepalive: beacon,
+    })
+  } catch {
+    /* non-blocking */
   }
-  await fetch('/api/analytics/slack', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body,
-    keepalive: beacon,
+}
+
+function msSince(iso: string | null | undefined): number {
+  if (!iso) return Number.POSITIVE_INFINITY
+  const t = Date.parse(iso)
+  if (Number.isNaN(t)) return Number.POSITIVE_INFINITY
+  return Date.now() - t
+}
+
+function resolveAbandonEvent(): FunnelSlackEvent | null {
+  if (isPurchaseCompleted()) return null
+  // After a real PSP session exists, payment outcomes are server/provider authoritative only.
+  if (hasPaymentSession()) return null
+
+  const items = readPersistedCartItems()
+  if (items.length === 0) return null
+
+  const path = window.location.pathname
+  if (path.startsWith('/checkout/success')) return null
+
+  const funnel = readFunnelState()
+  const onCheckout = path.includes('/checkout')
+
+  if (funnel.stage === 'checkout_page_reached' || funnel.checkoutPageReachedAt || onCheckout) {
+    const sinceCheckout = msSince(funnel.checkoutPageReachedAt)
+    if (sinceCheckout < FUNNEL_MIN_CHECKOUT_PAGE_MS) return null
+    return 'funnel_checkout_page_left'
+  }
+
+  if (msSince(readCartLastActivity()) < FUNNEL_MIN_BAG_IDLE_MS) return null
+  return 'funnel_bag_left'
+}
+
+function buildFunnelItems(items: CartItem[]) {
+  return items.map((item) => ({
+    name: item.name,
+    quantity: item.quantity,
+    size: item.size,
+    color: item.color,
+    price: item.price,
+    sku: item.sku,
+    productUrl: item.productUrl,
+  }))
+}
+
+export function evaluateAndSendFunnelAbandonment(): void {
+  if (typeof window === 'undefined') return
+  if (isPurchaseCompleted() || hasPaymentSession()) return
+
+  const event = resolveAbandonEvent()
+  if (!event) return
+
+  const items = readPersistedCartItems()
+  if (items.length === 0) return
+
+  const { itemCount, cartValueAed } = cartSummary(items)
+  void postFunnel(
+    event,
+    {
+      ...visitorPayload(),
+      cartItems: itemCount,
+      cartValueAed,
+      items: buildFunnelItems(items),
+    },
+    true,
+  )
+}
+
+function clearHiddenTimer(): void {
+  if (hiddenTimer) {
+    clearTimeout(hiddenTimer)
+    hiddenTimer = null
+  }
+}
+
+function scheduleHiddenAbandonCheck(): void {
+  if (hasPaymentSession() || isPurchaseCompleted()) return
+  clearHiddenTimer()
+  hiddenTimer = setTimeout(() => {
+    hiddenTimer = null
+    if (typeof document !== 'undefined' && document.hidden) {
+      evaluateAndSendFunnelAbandonment()
+    }
+  }, FUNNEL_HIDDEN_ABANDON_MS)
+}
+
+/** Call once from AnalyticsProvider — no abandonment on quick tab switches. */
+export function initFunnelAbandonWatchers(): void {
+  if (typeof window === 'undefined' || watchersBound) return
+  watchersBound = true
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      scheduleHiddenAbandonCheck()
+    } else {
+      clearHiddenTimer()
+    }
   })
+
+  const onLeave = () => evaluateAndSendFunnelAbandonment()
+  window.addEventListener('pagehide', onLeave)
+  window.addEventListener('beforeunload', onLeave)
+}
+
+export function onCartMutation(): void {
+  getOrCreateCartId()
+  touchCartActivity()
+  markBagActive()
 }
 
 export async function notifyCartAddSlack(item: CartItem, quantityAdded: number): Promise<void> {
   if (typeof window === 'undefined') return
-  if (suppressCartSlack()) return
+  onCartMutation()
   const { itemCount, cartValueAed } = cartSummary(readPersistedCartItems())
-  await postSlack('cart_add', {
+  await postFunnel('cart_add', {
     ...visitorPayload(),
     cartEvent: {
       action: 'add',
@@ -108,8 +254,7 @@ export async function notifyWishlistAddSlack(item: {
   href?: string
 }): Promise<void> {
   if (typeof window === 'undefined') return
-  if (suppressCartSlack()) return
-  await postSlack('wishlist_add', {
+  await postFunnel('wishlist_add', {
     ...visitorPayload(),
     wishlistEvent: {
       action: 'add',
@@ -122,56 +267,45 @@ export async function notifyWishlistAddSlack(item: {
   })
 }
 
-/**
- * Fires when the shopper leaves with items still in the bag.
- * - Before checkout → `abandoned_cart` (Abandoned bag)
- * - After opening /checkout unpaid → `checkout_abandoned` (Left checkout)
- *
- * Tab switches while still on `/checkout` do not count as checkout abandon
- * (`hidden`); closing the tab / navigating away does (`pagehide` or leave path).
- */
-export function notifyAbandonedCartSlack(opts?: { reason?: 'hidden' | 'pagehide' }): void {
-  if (typeof window === 'undefined') return
-  if (suppressCartSlack()) return
-
-  const checkoutStarted = sessionStorage.getItem(CHECKOUT_STARTED_KEY) === '1'
-  const path = window.location.pathname
-  const onCheckoutForm = path === '/checkout'
-  const onCheckoutSuccess = path.startsWith('/checkout/success')
-
-  // Purchase completed (or landing on success) — never treat as abandon.
-  if (onCheckoutSuccess) return
-
-  // Still filling checkout and only switched tabs — wait for a real leave.
-  if (checkoutStarted && onCheckoutForm && opts?.reason === 'hidden') return
-
-  const notifyKey = checkoutStarted ? CHECKOUT_ABANDON_NOTIFIED_KEY : ABANDON_NOTIFIED_KEY
-  if (sessionStorage.getItem(notifyKey) === '1') return
-
-  const items = readPersistedCartItems()
-  if (items.length === 0) return
-
-  sessionStorage.setItem(notifyKey, '1')
-  const { itemCount, cartValueAed } = cartSummary(items)
-  const type = checkoutStarted ? 'checkout_abandoned' : 'abandoned_cart'
-
-  void postSlack(
-    type,
-    {
-      ...visitorPayload(),
-      cartItems: itemCount,
-      cartValueAed,
-      checkoutStarted,
-      items: items.map((item) => ({
-        name: item.name,
-        quantity: item.quantity,
-        size: item.size,
-        color: item.color,
-        price: item.price,
-        sku: item.sku,
-        productUrl: item.productUrl,
-      })),
-    },
-    true,
-  )
+export function markCheckoutPageReachedTelemetry(): void {
+  markCheckoutPageReached()
 }
+
+/** @deprecated Use markCheckoutPageReachedTelemetry */
+export function markCheckoutStarted(): void {
+  markCheckoutPageReachedTelemetry()
+}
+
+export function markPaymentSession(provider: PaymentProvider, sessionRef: string): void {
+  markPaymentSessionCreated(provider, sessionRef)
+}
+
+export function reportPaymentAttemptFailed(provider: PaymentProvider): void {
+  markPaymentAttemptFailed(provider)
+  const { itemCount, cartValueAed } = cartSummary(readPersistedCartItems())
+  void postFunnel('funnel_payment_attempt_failed', {
+    ...visitorPayload(),
+    cartItems: itemCount,
+    cartValueAed,
+    items: buildFunnelItems(readPersistedCartItems()),
+  })
+}
+
+export function completePurchaseFunnel(): void {
+  clearFunnelAfterPurchase()
+  resetCartIdentity()
+  resetFunnelState()
+  clearHiddenTimer()
+}
+
+/** @deprecated */
+export function clearCheckoutStarted(): void {
+  /* purchase flow calls completePurchaseFunnel */
+}
+
+/** @deprecated — use initFunnelAbandonWatchers; no-op for legacy imports */
+export function notifyAbandonedCartSlack(_opts?: { reason?: 'hidden' | 'pagehide' }): void {
+  /* removed: abandonment handled by initFunnelAbandonWatchers */
+}
+
+export type { PaymentProvider, StoredFunnelState }

@@ -78,6 +78,13 @@ interface CartStore {
   getTotal: () => number
 }
 
+function touchCartAnalytics(): void {
+  if (typeof window === 'undefined') return
+  queueMicrotask(() => {
+    void import('@/lib/analytics/cartSlack').then((m) => m.onCartMutation())
+  })
+}
+
 export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
@@ -118,6 +125,7 @@ export const useCartStore = create<CartStore>()(
               })
           ),
         }))
+        touchCartAnalytics()
       },
 
       updateQuantity: (id, size, color, quantity, lengthCm, customisationMessage) => {
@@ -128,6 +136,7 @@ export const useCartStore = create<CartStore>()(
               : item
           ),
         }))
+        touchCartAnalytics()
       },
 
       updateCustomisationMessage: (id, size, color, lengthCm, previousMessage, nextMessage) => {
@@ -160,6 +169,7 @@ export const useCartStore = create<CartStore>()(
           next[index] = updated
           return { items: next }
         })
+        touchCartAnalytics()
       },
 
       clearCart: () => set({ items: [] }),

@@ -4,6 +4,9 @@ import { fulfillTamaraPaidOrder } from '@/lib/tamara/fulfillPaidOrder'
 import { markPaymentEventProcessed, wasPaymentEventProcessed } from '@/lib/payments/webhookEventStore'
 import { notifyHealthAlert } from '@/lib/ops/notifications'
 import { isTamaraConfigured } from '@/lib/tamara/config'
+import { getPendingTamaraCheckout } from '@/lib/tamara/pendingCheckoutStore'
+import { recordFunnelPaymentTerminalOutcome } from '@/lib/analytics/funnel/recordPurchase'
+import type { FunnelPaymentOutcome } from '@/lib/analytics/funnel/serverFunnel'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -41,6 +44,35 @@ async function handleNotification(body: Record<string, unknown>, statusHint?: st
     })
     await markPaymentEventProcessed('tamara', eventKey)
     return { ok: result.fulfilled, ...result }
+  }
+
+  const failureStatuses = new Set([
+    'declined',
+    'canceled',
+    'cancelled',
+    'expired',
+    'rejected',
+    'order_declined',
+    'order_canceled',
+    'order_cancelled',
+    'order_expired',
+  ])
+  if (failureStatuses.has(status)) {
+    const pending = await getPendingTamaraCheckout(orderId)
+    const outcome: FunnelPaymentOutcome = status.includes('expir')
+      ? 'payment_expired'
+      : status.includes('cancel')
+        ? 'payment_cancelled'
+        : 'payment_failed'
+    if (pending) {
+      void recordFunnelPaymentTerminalOutcome({
+        provider: 'tamara',
+        sessionRef: orderId,
+        outcome,
+        items: pending.items,
+        clientContext: pending.clientContext,
+      }).catch(() => {})
+    }
   }
 
   await markPaymentEventProcessed('tamara', eventKey)

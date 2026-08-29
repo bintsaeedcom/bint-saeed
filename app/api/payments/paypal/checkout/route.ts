@@ -12,6 +12,8 @@ import { resolvePayPalSettlementCurrency } from '@/lib/paypal/settlementCurrency
 import { savePendingPayPalCheckout } from '@/lib/paypal/pendingCheckoutStore'
 import { cartRequiresPhysicalShipping } from '@/lib/giftCards/cartDetection'
 import { resolveOptionalCheckoutGiftCredit } from '@/lib/giftCards/resolveCheckoutGiftCredit'
+import { funnelTelemetryFromParsedCheckout } from '@/lib/analytics/funnel/checkoutTelemetry'
+import { recordFunnelPaymentSessionCreated } from '@/lib/analytics/funnel/serverFunnel'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -100,6 +102,12 @@ export async function POST(request: NextRequest) {
       appliedGiftCard: gift.credit ?? undefined,
       createdAt: new Date().toISOString(),
     })
+
+    void recordFunnelPaymentSessionCreated({
+      provider: 'paypal',
+      sessionRef: orderId,
+      telemetry: funnelTelemetryFromParsedCheckout(parsed),
+    }).catch(() => {})
 
     return NextResponse.json({
       orderId,

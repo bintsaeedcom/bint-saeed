@@ -21,6 +21,15 @@ import type { PendingMollieCheckout } from '@/lib/mollie/pendingCheckoutStore'
 import { sendMetaCapiPurchaseFromOrder } from '@/lib/analytics/metaCapi'
 import { metaCatalogContentsFromOrderMeta } from '@/lib/analytics/metaCatalogIds'
 import { sendSnapCapiPurchaseFromOrder } from '@/lib/analytics/snapCapi'
+import { recordFunnelPurchaseFromCheckout } from '@/lib/analytics/funnel/recordPurchase'
+import {
+  funnelTelemetryFromMetadata,
+  funnelTelemetryFromClientContext,
+} from '@/lib/analytics/funnel/checkoutTelemetry'
+import {
+  handleFunnelPaymentOutcome,
+  type FunnelPaymentOutcome,
+} from '@/lib/analytics/funnel/serverFunnel'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -180,6 +189,31 @@ export async function POST(request: NextRequest) {
     }
 
     if (payment.status !== 'paid' && payment.status !== 'authorized') {
+      const metadata = (payment.metadata || {}) as Record<string, string>
+      const status = String(payment.status)
+      const terminal: FunnelPaymentOutcome | null =
+        status === 'failed'
+          ? 'payment_failed'
+          : status === 'expired'
+            ? 'payment_expired'
+            : status === 'canceled' || status === 'cancelled'
+              ? 'payment_cancelled'
+              : null
+      if (terminal) {
+        const pendingCheckout = await getPendingMollieCheckout(payment.id)
+        const items = pendingCheckout?.items?.length
+          ? pendingCheckout.items
+          : parsePendingFromMetadata(metadata)?.items
+        const pendingCtx = pendingCheckout?.clientContext
+        void handleFunnelPaymentOutcome({
+          provider: 'mollie',
+          sessionRef: payment.id,
+          outcome: terminal,
+          telemetry: items?.length
+            ? funnelTelemetryFromClientContext(pendingCtx, items)
+            : funnelTelemetryFromMetadata(metadata, items),
+        }).catch(() => {})
+      }
       await markPaymentEventProcessed('mollie', eventId)
       return NextResponse.json({ received: true, ignored: payment.status })
     }
@@ -253,6 +287,13 @@ export async function POST(request: NextRequest) {
       orderId: order.id,
       applied: pending.appliedGiftCard,
     })
+
+    void recordFunnelPurchaseFromCheckout({
+      provider: 'mollie',
+      sessionRef: payment.id,
+      items: pending.items,
+      clientContext: pending.clientContext,
+    }).catch(() => {})
 
     await markPaymentEventProcessed('mollie', eventId)
     return NextResponse.json({ received: true, orderId: order.id })

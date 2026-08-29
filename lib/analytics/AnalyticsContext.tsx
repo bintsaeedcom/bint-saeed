@@ -35,6 +35,7 @@ interface VisitorData {
     longitude: number | null
     timezone: string
     accuracyLevel: 'ip' | 'gps' | 'unknown'
+    geoSource?: string
     accuracyMeters?: number | null
     address?: string
     postalCode?: string
@@ -258,6 +259,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
               longitude: data.longitude || null,
               timezone: data.timezone || '',
               accuracyLevel: 'ip' as const,
+              geoSource: 'ipapi.co',
               postalCode: data.postal || '',
             }
           }
@@ -281,6 +283,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
                 longitude: data2.lon || null,
                 timezone: data2.timezone || '',
                 accuracyLevel: 'ip' as const,
+                geoSource: 'ip-api',
               postalCode: data2.zip || '',
               }
             }
@@ -490,6 +493,10 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
     visitorRef.current = visitor
   }, [visitor])
 
+  useEffect(() => {
+    void import('@/lib/analytics/cartSlack').then((m) => m.initFunnelAbandonWatchers())
+  }, [])
+
   const sendSessionSummary = useCallback((reason: 'hidden' | 'pagehide') => {
     const current = visitorRef.current
     if (!current) return
@@ -519,25 +526,9 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
         : undefined,
       sessionEndReason: reason,
     })
-
-    void import('@/lib/analytics/cartSlack').then((m) =>
-      m.notifyAbandonedCartSlack({ reason }),
-    )
   }, [])
 
-  // Handle visibility change (tab switch)
-  useEffect(() => {
-    const handleVisibility = () => {
-      setIsLive(!document.hidden)
-      if (document.hidden) {
-        sendSessionSummary('hidden')
-      }
-    }
-
-    document.addEventListener('visibilitychange', handleVisibility)
-    return () => document.removeEventListener('visibilitychange', handleVisibility)
-  }, [sendSessionSummary])
-
+  // Session summary on leave only — funnel abandonment uses its own delayed watcher.
   useEffect(() => {
     const handlePageHide = () => {
       sendSessionSummary('pagehide')
@@ -550,6 +541,15 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       window.removeEventListener('beforeunload', handlePageHide)
     }
   }, [sendSessionSummary])
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      setIsLive(!document.hidden)
+    }
+
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () => document.removeEventListener('visibilitychange', handleVisibility)
+  }, [])
 
   // Track page view — empty deps: logic uses refs + functional updates only (no visitor in deps).
   const trackPageView = useCallback((path: string, title: string) => {

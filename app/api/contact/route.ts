@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isSafePublicIpForLookup } from '@/lib/security/isSafePublicIp'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
+import { formatSlackLocationMrkdwn } from '@/lib/geo/slackLocationDisplay'
 import { sanitizeUserText } from '@/lib/security/sanitizeUserText'
 import {
   assessContactSubmission,
@@ -69,7 +70,12 @@ export async function POST(request: NextRequest) {
     const rawIp = forwardedFor ? forwardedFor.split(',')[0].trim() : 'Unknown'
     const ip = sanitizeUserText(rawIp, 64)
 
-    let location = { city: 'Unknown', country: 'Unknown' }
+    let location = {
+      city: 'Unknown',
+      country: 'Unknown',
+      accuracyLevel: 'ip' as const,
+      geoSource: 'ipapi.co',
+    }
     if (isSafePublicIpForLookup(ip)) {
       try {
         const geoRes = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/json/`, {
@@ -80,6 +86,8 @@ export async function POST(request: NextRequest) {
           location = {
             city: sanitizeUserText(geoData.city, 80) || 'Unknown',
             country: sanitizeUserText(geoData.country_name, 80) || 'Unknown',
+            accuracyLevel: 'ip',
+            geoSource: 'ipapi.co',
           }
         }
       } catch {
@@ -121,7 +129,10 @@ export async function POST(request: NextRequest) {
           {
             type: 'section',
             fields: [
-              { type: 'mrkdwn', text: `*Location:*\n🌍 ${location.city}, ${location.country}` },
+              {
+                type: 'mrkdwn',
+                text: formatSlackLocationMrkdwn(location),
+              },
               { type: 'mrkdwn', text: `*IP Address:*\n🔒 ${ip}` },
               { type: 'mrkdwn', text: `*Time:*\n🕐 ${timestamp}` },
             ],

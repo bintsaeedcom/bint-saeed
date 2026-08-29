@@ -13,6 +13,7 @@ import type {
 } from '@stripe/stripe-js'
 import toast from 'react-hot-toast'
 import { getCheckoutAttributionContext } from '@/lib/analytics/checkoutAttribution'
+import { buildClientFunnelContext } from '@/lib/analytics/funnel/clientCheckoutContext'
 import type { CheckoutCartItem } from '@/lib/checkout/types'
 
 type ExpressWalletButtonsProps = {
@@ -185,6 +186,7 @@ export default function ExpressWalletButtons({
                 timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
                 deviceType: detectDeviceType(),
                 ...attribution,
+                ...buildClientFunnelContext(items),
               },
             }),
             signal: AbortSignal.timeout(45_000),
@@ -197,12 +199,18 @@ export default function ExpressWalletButtons({
             mode?: string
             clientSecret?: string
             publishableKey?: string
+            sessionId?: string
             error?: string
           }
           if (cancelled) return
           if (data.mode !== 'elements' || !data.clientSecret) {
             setLoadError(true)
             return
+          }
+          if (data.sessionId) {
+            void import('@/lib/analytics/cartSlack').then((m) =>
+              m.markPaymentSession('stripe', data.sessionId || ''),
+            )
           }
           setPublishableKey(
             data.publishableKey ||
