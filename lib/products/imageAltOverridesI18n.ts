@@ -7,6 +7,7 @@ import { COVENT_GARDEN_LONG_DRESS_IMAGE_ALT_ENTRIES } from '@/lib/products/coven
 import { COVENT_GARDEN_ABAYA_IMAGE_ALT_ENTRIES } from '@/lib/products/coventGardenAbayaImageAltI18n'
 import { SOHO_SET_IMAGE_ALT_ENTRIES } from '@/lib/products/sohoSetImageAltI18n'
 import { HYDE_PARK_SET_IMAGE_ALT_ENTRIES } from '@/lib/products/hydeParkSetImageAltI18n'
+import { GROSVENOR_SET_IMAGE_ALT_ENTRIES } from '@/lib/products/grosvenorSetImageAltI18n'
 import { PARK_LANE_ABAYA_IMAGE_ALT_ENTRIES } from '@/lib/products/parkLaneAbayaImageAltI18n'
 import { MARYLEBONE_ABAYA_IMAGE_ALT_ENTRIES } from '@/lib/products/maryleboneAbayaImageAltI18n'
 import { HAMPSTEAD_DRESS_IMAGE_ALT_ENTRIES } from '@/lib/products/hampsteadDressImageAltI18n'
@@ -711,6 +712,7 @@ const ALT_ENTRIES: AltEntry[] = [
   ...COVENT_GARDEN_ABAYA_IMAGE_ALT_ENTRIES,
   ...SOHO_SET_IMAGE_ALT_ENTRIES,
   ...HYDE_PARK_SET_IMAGE_ALT_ENTRIES,
+  ...GROSVENOR_SET_IMAGE_ALT_ENTRIES,
   ...PARK_LANE_ABAYA_IMAGE_ALT_ENTRIES,
   ...MARYLEBONE_ABAYA_IMAGE_ALT_ENTRIES,
   ...HAMPSTEAD_DRESS_IMAGE_ALT_ENTRIES,

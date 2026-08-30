@@ -252,6 +252,18 @@ const ORDERED_APPAREL_VIEWS: Record<string, OrderedViews> = {
     side: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-side.webp',
     back: '/Webshop pictures/Sets/Hyde Park Set/bint-saeed-hyde-park-set-black-back.webp',
   },
+  'grosvenor-set': {
+    front:
+      '/Webshop pictures/Sets/Grosvenor Set/bint-saeed-grosvenor-set-champagne-cream-front.webp',
+    side:
+      '/Webshop pictures/Sets/Grosvenor Set/bint-saeed-grosvenor-set-champagne-cream-side.webp',
+    back:
+      '/Webshop pictures/Sets/Grosvenor Set/bint-saeed-grosvenor-set-champagne-cream-back.webp',
+    detail:
+      '/Webshop pictures/Sets/Grosvenor Set/bint-saeed-grosvenor-set-champagne-cream-garment-jewellery-detail.webp',
+    extra:
+      '/Webshop pictures/Sets/Grosvenor Set/bint-saeed-grosvenor-set-champagne-cream-lifestyle-1.webp',
+  },
 }
 
 function orderedProductGallery(slug: string): string[] {
@@ -452,6 +464,20 @@ function hydeParkSetGallery(color: 'black'): string[] {
   const base = `${HYDE_PARK_SET_DIR}/bint-saeed-hyde-park-set-${color}`
   // Studio views only — lifestyle-1/2 assets are not on disk yet.
   return [`${base}-front.webp`, `${base}-side.webp`, `${base}-back.webp`]
+}
+
+const GROSVENOR_SET_DIR = '/Webshop pictures/Sets/Grosvenor Set'
+
+function grosvenorSetGallery(color: 'champagne-cream'): string[] {
+  const base = `${GROSVENOR_SET_DIR}/bint-saeed-grosvenor-set-${color}`
+  return [
+    `${base}-front.webp`,
+    `${base}-side.webp`,
+    `${base}-back.webp`,
+    `${base}-lifestyle-1.webp`,
+    `${base}-lifestyle-2.webp`,
+    `${base}-garment-jewellery-detail.webp`,
+  ]
 }
 
 /** Hidden from `/shop` grid when no gallery images are wired. */
@@ -740,6 +766,24 @@ export const products: Product[] = [
       { name: 'Black', hex: '#1a1a1a' },
       { name: 'Navy Blue', hex: '#1f3a5f' },
     ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    category: 'Sets',
+  },
+  {
+    id: 'st-004',
+    slug: 'grosvenor-set',
+    name: 'Grosvenor Two-Piece Set',
+    price: 1299,
+    description:
+      'An elegant Champagne Cream satin two-piece — coordinating shirt and fluid long skirt with Al Talli-inspired detailing, interchangeable natural-stone garment jewellery at the cuffs, and genuine Onyx strands included. Designed in Abu Dhabi; ships worldwide.',
+    fabric: 'Fabric composition — to be finalized with production.',
+    measurements:
+      'Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
+    images: grosvenorSetGallery('champagne-cream'),
+    colorImages: {
+      'Champagne Cream': grosvenorSetGallery('champagne-cream'),
+    },
+    colors: [{ name: 'Champagne Cream', hex: '#e8ddd4' }],
     sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 'Sets',
   },

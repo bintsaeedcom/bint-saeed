@@ -54,6 +54,7 @@ export const AL_TALLI_HERITAGE_PRODUCT_SLUGS = new Set([
   'covent-garden-abaya',
   'hampstead-dress',
   'soho-set',
+  'grosvenor-set',
 ])
 
 /** Add a slug here and in `alTalliCareFaqI18n` PRODUCT_NAME when launching a new Al Talli piece. */

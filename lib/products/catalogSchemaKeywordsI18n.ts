@@ -92,6 +92,17 @@ const CATALOG_EXCLUSIVE_EN: Record<string, readonly string[]> = {
     'BS-ST-001',
     'BS-ST-001-BLK',
   ],
+  'grosvenor-set': [
+    'Grosvenor Set',
+    'Bint Saeed Grosvenor Set',
+    'Knotted Line set',
+    'satin evening set',
+    'blouse and maxi skirt set',
+    'Champagne Cream satin set',
+    'formal coordinate set',
+    'BS-ST-004',
+    'BS-ST-004-CHC',
+  ],
 }
 
 /** Returns slug-specific discovery terms for secondary catalogue items (EN-led; id/ms use EN). */

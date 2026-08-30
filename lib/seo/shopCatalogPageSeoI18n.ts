@@ -10,6 +10,7 @@ export const SHOP_CATALOG_PAGE_SEO_SLUGS = [
   'belgravia-abaya',
   'park-lane-abaya',
   'hyde-park-set',
+  'grosvenor-set',
   'knightsbridge-dress',
   'covent-garden-long-dress',
   'hampstead-dress',
@@ -389,6 +390,68 @@ const PAGE_SEO: Record<ShopCatalogSeoSlug, Record<AppLocale, PageSeoPack>> = {
       pageTitle: 'Hyde Park Set | Set Kemeja & Palazzo Travel UAE | Bint Saeed',
       metaDescription:
         'Hyde Park Set — kemeja oversize krepe premium dan palazzo dengan butang Knotted Line. Luxury travelwear Emirati dari Abu Dhabi. Penghantaran seluruh dunia.',
+    },
+  },
+  'grosvenor-set': {
+    en: {
+      pageTitle: 'Grosvenor Set | Satin Evening Blouse & Maxi Skirt UAE | Bint Saeed',
+      metaDescription:
+        'Grosvenor Set — Champagne Cream satin blouse and high-waisted maxi skirt with gold waist trim and Knotted Line cuff buttons. Emirati luxury eveningwear from Abu Dhabi. Ships worldwide.',
+    },
+    ar: {
+      pageTitle: 'طقم Grosvenor | طقم ساتان مسائي بلوزة وتنورة | Bint Saeed',
+      metaDescription:
+        'طقم Grosvenor — بلوزة ساتان وتنورة ماكسي Champagne Cream بحاشية خصر ذهبية وأزرار Knotted Line. أزياء مسائية فاخرة إماراتية من أبوظبي. شحن عالمي.',
+    },
+    fr: {
+      pageTitle: 'Grosvenor Set | Set satin soirée blouse & jupe maxi EAU | Bint Saeed',
+      metaDescription:
+        'Grosvenor Set — blouse satin et jupe maxi Champagne Cream, galon doré et boutons Knotted Line. Tenue de soirée de luxe émiratie d’Abou Dabi. Livraison mondiale.',
+    },
+    it: {
+      pageTitle: 'Grosvenor Set | Set satin sera blusa & gonna maxi EAU | Bint Saeed',
+      metaDescription:
+        'Grosvenor Set — blusa in raso e gonna maxi Champagne Cream, finitura dorata e bottoni Knotted Line. Abbigliamento serale di lusso emiratino da Abu Dhabi. Spedizione mondiale.',
+    },
+    es: {
+      pageTitle: 'Grosvenor Set | Set satén noche blusa y falda maxi EAU | Bint Saeed',
+      metaDescription:
+        'Grosvenor Set — blusa de satén y falda maxi Champagne Cream, trim dorado y botones Knotted Line. Moda nocturna de lujo emiratí de Abu Dabi. Envío mundial.',
+    },
+    ru: {
+      pageTitle: 'Grosvenor Set | Атласный вечерний комплект ОАЭ | Bint Saeed',
+      metaDescription:
+        'Grosvenor Set — атласная блуза и юбка макси Champagne Cream, золотистая отделка и пуговицы Knotted Line. Эмиратская люксовая вечерняя мода из Абу-Даби. Доставка по миру.',
+    },
+    zh: {
+      pageTitle: 'Grosvenor 套装 | 缎面晚宴衬衫半裙 阿联酋 | Bint Saeed',
+      metaDescription:
+        'Grosvenor 套装 — Champagne Cream 缎面衬衫与高腰及地长裙，金色调腰饰与 Knotted Line 袖扣。阿布扎比奢华晚宴装。全球配送。',
+    },
+    de: {
+      pageTitle: 'Grosvenor Set | Satin-Abend-Bluse & Maxirock VAE | Bint Saeed',
+      metaDescription:
+        'Grosvenor Set — Satinbluse und Maxirock in Champagne Cream, goldene Taillenverzierung und Knotted-Line-Knöpfe. Emiratische Luxus-Abendmode aus Abu Dhabi. Weltweiter Versand.',
+    },
+    nl: {
+      pageTitle: 'Grosvenor Set | Satijnen avond blouse & maxirok VAE | Bint Saeed',
+      metaDescription:
+        'Grosvenor Set — satijnen blouse en maxirok Champagne Cream, gouden tailletrim en Knotted Line knopen. Emiratische luxe avondmode uit Abu Dhabi. Wereldwijde verzending.',
+    },
+    pt: {
+      pageTitle: 'Grosvenor Set | Set cetim noite blusa & saia maxi EAU | Bint Saeed',
+      metaDescription:
+        'Grosvenor Set — blusa em cetim e saia maxi Champagne Cream, acabamento dourado e botões Knotted Line. Moda noturna de luxo emirati de Abu Dhabi. Envio mundial.',
+    },
+    id: {
+      pageTitle: 'Grosvenor Set | Set Satin Malam Blus & Rok Maxi UEA | Bint Saeed',
+      metaDescription:
+        'Grosvenor Set — blus satin dan rok maxi Champagne Cream, trim emas dan kancing Knotted Line. Luxury eveningwear Emirati dari Abu Dhabi. Pengiriman dunia.',
+    },
+    ms: {
+      pageTitle: 'Grosvenor Set | Set Satin Malam Blouse & Skirt Maxi UAE | Bint Saeed',
+      metaDescription:
+        'Grosvenor Set — blouse satin dan skirt maxi Champagne Cream, trim emas dan butang Knotted Line. Luxury eveningwear Emirati dari Abu Dhabi. Penghantaran seluruh dunia.',
     },
   },
   'knightsbridge-dress': {

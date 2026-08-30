@@ -63,6 +63,12 @@ import {
   isHydeParkSetSlug,
 } from '@/lib/products/hydeParkSetSchemaI18n'
 import { getLocalizedHydeParkSetExclusiveKeywords } from '@/lib/products/hydeParkSetSchemaKeywordsI18n'
+import {
+  getLocalizedGrosvenorSetSchemaFacts,
+  getLocalizedGrosvenorSetSchemaFaq,
+  isGrosvenorSetSlug,
+} from '@/lib/products/grosvenorSetSchemaI18n'
+import { getLocalizedGrosvenorSetExclusiveKeywords } from '@/lib/products/grosvenorSetSchemaKeywordsI18n'
 import { getLocalizedParkLaneAbayaExclusiveKeywords } from '@/lib/products/parkLaneAbayaSchemaKeywordsI18n'
 import { getLocalizedMaryleboneAbayaExclusiveKeywords } from '@/lib/products/maryleboneAbayaSchemaKeywordsI18n'
 import { getLocalizedAlTalliDiscoveryKeywords } from '@/lib/products/alTalliDiscoveryKeywordsI18n'
@@ -192,6 +198,9 @@ export function getProductSchemaFacts(product: Product, locale: AppLocale = 'en'
   const hydeParkSetFacts = getLocalizedHydeParkSetSchemaFacts(slug, locale)
   if (hydeParkSetFacts) return hydeParkSetFacts
 
+  const grosvenorSetFacts = getLocalizedGrosvenorSetSchemaFacts(slug, locale)
+  if (grosvenorSetFacts) return grosvenorSetFacts
+
   const secondaryFacts = getLocalizedSecondaryCatalogSchemaFacts(slug, locale)
   if (secondaryFacts) return secondaryFacts
 
@@ -275,6 +284,12 @@ export function buildProductSchemaKeywords(
 
   if (isHydeParkSetSlug(slug)) {
     for (const t of getLocalizedHydeParkSetExclusiveKeywords(locale, colorName)) {
+      terms.add(t)
+    }
+  }
+
+  if (isGrosvenorSetSlug(slug)) {
+    for (const t of getLocalizedGrosvenorSetExclusiveKeywords(locale, colorName)) {
       terms.add(t)
     }
   }
@@ -505,6 +520,11 @@ export function getProductFaq(
   const hydeParkSetFaq = getLocalizedHydeParkSetSchemaFaq(slug, locale)
   if (hydeParkSetFaq.length > 0) {
     return hydeParkSetFaq
+  }
+
+  const grosvenorSetFaq = getLocalizedGrosvenorSetSchemaFaq(slug, locale)
+  if (grosvenorSetFaq.length > 0) {
+    return grosvenorSetFaq
   }
 
   const secondaryFaq = getLocalizedSecondaryCatalogSchemaFaq(slug, locale)

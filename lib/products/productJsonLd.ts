@@ -53,10 +53,12 @@ import {
 import {
   getHampsteadDressSchemaAudience,
   getHydeParkSetSchemaAudience,
+  getGrosvenorSetSchemaAudience,
   getMaryleboneAbayaSchemaAudience,
   getParkLaneAbayaSchemaAudience,
   isHampsteadDressSlug,
   isHydeParkSetSlug,
+  isGrosvenorSetSlug,
   isMaryleboneAbayaSlug,
   isParkLaneAbayaSlug,
 } from '@/lib/products/secondaryCatalogSchemaI18n'
@@ -186,7 +188,9 @@ function schemaAudience(locale: AppLocale, slug: string, product: Product) {
                           ? getSohoSetSchemaAudience(locale)
                           : isHydeParkSetSlug(slug)
                             ? getHydeParkSetSchemaAudience(locale)
-                            : product.category === 'Abayas'
+                            : isGrosvenorSetSlug(slug)
+                              ? getGrosvenorSetSchemaAudience(locale)
+                              : product.category === 'Abayas'
               ? getSharedAbayaSchemaAudience(locale)
               : getFallbackSchemaAudience(product.category, locale)
 

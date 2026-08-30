@@ -68,6 +68,11 @@ const SEMANTIC_RELATIONS: Record<string, SemanticProductRef[]> = {
     productRef('Covent Garden Long Dress', '/shop/covent-garden-long-dress'),
     productRef('Covent Garden Abaya', '/shop/covent-garden-abaya'),
   ],
+  'grosvenor-set': [
+    productRef('Hyde Park Set', '/shop/hyde-park-set'),
+    productRef('Hampstead Dress', '/shop/hampstead-dress'),
+    productRef('Marylebone Abaya', '/shop/marylebone-abaya'),
+  ],
   'mayfair-kaftan': [productRef('Nothing Hill Kaftan', '/shop/nothing-hill-kaftan')],
   'nothing-hill-kaftan': [productRef('Mayfair Kaftan', '/shop/mayfair-kaftan')],
 }

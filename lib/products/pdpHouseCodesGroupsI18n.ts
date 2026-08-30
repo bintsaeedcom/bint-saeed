@@ -9,6 +9,7 @@ export type HouseCodesVariant =
   | 'knotted-line-only'
   | 'knotted-line-emblem'
   | 'soho-set'
+  | 'grosvenor-set'
 
 /** Clearer than “House Codes” alone — used on every PDP that shows this block. */
 export const PDP_HOUSE_CODES_TITLE: Record<AppLocale, string> = {
@@ -281,6 +282,56 @@ const ITEMS: ItemSet = {
     ms: [
       'Butang emas signature Knotted Line Bint Saeed',
       'Hiasan tenunan Al Talli signature di sepanjang jahitan sisi luar',
+    ],
+  },
+  'grosvenor-set': {
+    en: [
+      KNOTTED_LINE_BUTTONS_EN,
+      'Signature Al Talli-inspired detailing through the skirt',
+    ],
+    ar: [
+      'أزرار Knotted Line الذهبية المميزة من Bint Saeed',
+      'تشطيب التلي Al Talli التوقيعي على التنورة الماكسي',
+    ],
+    fr: [
+      'Boutons dorés signature Knotted Line de Bint Saeed',
+      'Finition Al Talli signature sur la jupe maxi',
+    ],
+    it: [
+      'Bottoni dorati signature Knotted Line di Bint Saeed',
+      'Finitura Al Talli signature sulla gonna maxi',
+    ],
+    es: [
+      'Botones dorados signature Knotted Line de Bint Saeed',
+      'Acabado Al Talli signature en la falda maxi',
+    ],
+    ru: [
+      'Фирменные золотистые пуговицы Knotted Line от Bint Saeed',
+      'Фирменная отделка Al Talli на юбке макси',
+    ],
+    zh: [
+      'Bint Saeed 标志性金色调 Knotted Line 纽扣',
+      '及地长裙上的标志性 Al Talli 饰 finish',
+    ],
+    de: [
+      'Bint Saeed Signatur-Knotted-Line-Knöpfe in Goldoptik',
+      'Signatur-Al-Talli-Finish am Maxirock',
+    ],
+    nl: [
+      'Bint Saeed signature goudkleurige Knotted Line-knopen',
+      'Signature Al Talli-afwerking op de maxirok',
+    ],
+    pt: [
+      'Botões dourados signature Knotted Line da Bint Saeed',
+      'Acabamento Al Talli signature na saia maxi',
+    ],
+    id: [
+      'Kancing emas signature Knotted Line Bint Saeed',
+      'Finishing Al Talli signature pada rok maxi',
+    ],
+    ms: [
+      'Butang emas signature Knotted Line Bint Saeed',
+      'Kemasan Al Talli signature pada skirt maxi',
     ],
   },
 }

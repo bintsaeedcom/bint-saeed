@@ -26,6 +26,7 @@ import { getHouseCodesDetailGroup } from '@/lib/products/pdpHouseCodesGroupsI18n
 import { buildHampsteadDressPdpContent } from '@/lib/products/hampsteadDressPdpI18n'
 import { buildSohoSetPdpContent } from '@/lib/products/sohoSetPdpI18n'
 import { buildHydeParkSetPdpContent } from '@/lib/products/hydeParkSetPdpI18n'
+import { buildGrosvenorSetPdpContent } from '@/lib/products/grosvenorSetPdpI18n'
 import { buildMaryleboneAbayaPdpContent } from '@/data/maryleboneAbayaPdpContent'
 import { buildParkLaneAbayaPdpContent } from '@/data/parkLaneAbayaPdpContent'
 
@@ -508,6 +509,11 @@ function isHydeParkSet(product: Product): boolean {
   return slug === 'hyde-park-set' || product.id === 'ab-008'
 }
 
+function isGrosvenorSet(product: Product): boolean {
+  const slug = getProductSlug(product).toLowerCase()
+  return slug === 'grosvenor-set' || product.id === 'st-004'
+}
+
 function isMaryleboneAbaya(product: Product): boolean {
   const slug = getProductSlug(product).toLowerCase()
   return slug === 'marylebone-abaya' || product.id === 'ab-005'
@@ -532,6 +538,14 @@ function buildHydeParkSetContent(
   locale: AppLocale,
 ): ProductPdpContent {
   return buildHydeParkSetPdpContent(locale)
+}
+
+function buildGrosvenorSetContent(
+  _product: Product,
+  _color: string | undefined,
+  locale: AppLocale,
+): ProductPdpContent {
+  return buildGrosvenorSetPdpContent(locale)
 }
 
 type BelgraviaColorKey = 'deep-black' | 'navy-blue'
@@ -768,6 +782,9 @@ export function getProductPdpContent(
     if (isHydeParkSet(product)) {
       return applyAbayaPdpStandards(product, buildHydeParkSetContent(product, color, locale), locale)
     }
+    if (isGrosvenorSet(product)) {
+      return applyAbayaPdpStandards(product, buildGrosvenorSetContent(product, color, locale), locale)
+    }
     if (isParkLaneAbaya(product)) {
       return applyAbayaPdpStandards(product, buildParkLaneAbayaPdpContent(color, locale), locale)
     }
@@ -820,6 +837,8 @@ export function getProductPdpContent(
     content = buildSohoSetContent(product, color, locale)
   } else if (isHydeParkSet(product)) {
     content = buildHydeParkSetContent(product, color, locale)
+  } else if (isGrosvenorSet(product)) {
+    content = buildGrosvenorSetContent(product, color, locale)
   } else if (isParkLaneAbaya(product)) {
     content = buildParkLaneAbayaPdpContent(color, locale)
   } else if (isMaryleboneAbaya(product)) {

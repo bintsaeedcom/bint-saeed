@@ -78,6 +78,13 @@ const AR_CATALOG_COPY: Record<string, CatalogFields> = {
     fabric: 'تركيبة القماش — سيتم اعتمادها نهائيًا مع الإنتاج.',
     measurements: 'قصة متوازنة؛ يتم تأكيد أطوال القميص والبنطلون وفق جدول المقاسات.',
   },
+  'grosvenor-set': {
+    description:
+      'طقم معاصر من قميص وتنورة ساتان بلون Champagne Cream — مع تفصيل التلي التوقيعي حول التنورة، وشريطين توقيعيين من العقيق مرفقين مع الطقم، وأزرار Knotted Line. صُمم في أبوظبي؛ شحن عالمي.',
+    fabric: 'تركيبة القماش — سيتم اعتمادها نهائيًا مع الإنتاج.',
+    measurements:
+      'طول العارضة: 160 سم / 63 بوصة. العارضة ترتدي مقاس XS. تتوفر أطوال مخصصة عند الطلب.',
+  },
 }
 
 const FR_CATALOG_COPY: Record<string, CatalogFields> = {
@@ -151,6 +158,13 @@ const FR_CATALOG_COPY: Record<string, CatalogFields> = {
     description: 'Ensemble coordonné — chemise oversize et pantalon palazzo à jambes larges, finition Al Talli traditionnelle — du jour au soir, un hommage au patrimoine émirati sans costume. Créé à Abou Dabi ; livraison mondiale.',
     fabric: 'Composition du tissu - finalisation avec la production.',
     measurements: 'Coupe equilibree; longueurs chemise et pantalon confirmees selon le guide des tailles.',
+  },
+  'grosvenor-set': {
+    description:
+      'Set contemporain chemise et jupe en satin Champagne Cream — avec détail Al Talli signature autour de la jupe, deux fils Onyx inclus, et boutons Knotted Line. Conçu à Abou Dabi ; livraison mondiale.',
+    fabric: 'Composition du tissu — à finaliser avec la production.',
+    measurements:
+      'Taille du mannequin : 160 cm / 63 pouces. Le mannequin porte la taille XS. Longueurs sur mesure disponibles sur demande.',
   },
 }
 
@@ -226,6 +240,13 @@ const DE_CATALOG_COPY: Record<string, CatalogFields> = {
     fabric: 'Materialzusammensetzung - wird mit der Produktion finalisiert.',
     measurements: 'Ausgewogene Passform; Hemd- und Hosenlaengen gemaess Groessentabelle bestaetigt.',
   },
+  'grosvenor-set': {
+    description:
+      'Zeitgenössisches Satin-Set aus Hemd und Rock in Champagne Cream — mit signature Al-Talli-Detailing am Rock, zwei inkludierten Onyx-Strängen und Knotted-Line-Knöpfen. Entworfen in Abu Dhabi; weltweiter Versand.',
+    fabric: 'Stoffzusammensetzung — wird mit der Produktion finalisiert.',
+    measurements:
+      'Modelgroesse: 160 cm / 63 Zoll. Model traegt Groesse XS. Individuelle Laengen auf Anfrage verfuegbar.',
+  },
 }
 
 const IT_CATALOG_COPY: Record<string, CatalogFields> = {
@@ -299,6 +320,13 @@ const IT_CATALOG_COPY: Record<string, CatalogFields> = {
     description: 'Set coordinato — camicia oversize e pantaloni palazzo a gamba ampia con trim Al Talli tradizionale — dal giorno alla sera, patrimonio emiratino senza costume. Creato ad Abu Dhabi; spedizione mondiale.',
     fabric: 'Composizione tessuto - da finalizzare con la produzione.',
     measurements: 'Vestibilita bilanciata; lunghezze camicia e pantaloni confermate secondo tabella taglie.',
+  },
+  'grosvenor-set': {
+    description:
+      'Set contemporaneo camicia e gonna in raso Champagne Cream — con dettaglio Al Talli signature attorno alla gonna, due fili in onice inclusi e bottoni Knotted Line. Progettato ad Abu Dhabi; spedizione mondiale.',
+    fabric: 'Composizione del tessuto — da finalizzare con la produzione.',
+    measurements:
+      'Altezza modella: 160 cm / 63 pollici. La modella indossa la taglia XS. Lunghezze personalizzate disponibili su richiesta.',
   },
 }
 
@@ -374,6 +402,13 @@ const ES_CATALOG_COPY: Record<string, CatalogFields> = {
     fabric: 'Composicion del tejido - por finalizar con produccion.',
     measurements: 'Corte equilibrado; largos de camisa y pantalon confirmados segun tabla de tallas.',
   },
+  'grosvenor-set': {
+    description:
+      'Set contemporáneo de camisa y falda en satén Champagne Cream — con detalle Al Talli signature alrededor de la falda, dos hebras de ónice incluidas y botones Knotted Line. Diseñado en Abu Dabi; envío mundial.',
+    fabric: 'Composición de la tela — por finalizar con producción.',
+    measurements:
+      'Altura de la modelo: 160 cm / 63 pulgadas. La modelo lleva talla XS. Largo personalizado disponible bajo solicitud.',
+  },
 }
 
 const RU_CATALOG_COPY: Record<string, CatalogFields> = {
@@ -447,6 +482,13 @@ const RU_CATALOG_COPY: Record<string, CatalogFields> = {
     description: 'Согласованный комплект — oversized рубашка и широкие палаццо с традиционной отделкой Al Talli — от дня к вечеру, эмиратское наследие без костюма. Создан в Абу-Даби; доставка по миру.',
     fabric: 'Состав ткани — будет финализирован с производством.',
     measurements: 'Сбалансированная посадка; длины рубашки и брюк подтверждаются по размерной сетке.',
+  },
+  'grosvenor-set': {
+    description:
+      'Современный комплект из атласной рубашки и юбки Champagne Cream — с фирменной отделкой Al Talli вокруг юбки, двумя включёнными нитями из оникса и пуговицами Knotted Line. Создан в Абу-Даби; доставка по миру.',
+    fabric: 'Состав ткани — будет уточнён при производстве.',
+    measurements:
+      'Рост модели: 160 см / 63 дюйма. На модели размер XS. Индивидуальная длина доступна по запросу.',
   },
 }
 
@@ -522,6 +564,12 @@ const ZH_CATALOG_COPY: Record<string, CatalogFields> = {
     fabric: '面料成分——将与生产环节最终确认。',
     measurements: '平衡版型；衬衫与长裤长度将按尺码表确认。',
   },
+  'grosvenor-set': {
+    description:
+      '承悦当代 Champagne Cream 缎面衬衫与半裙套装——半裙饰以标志性 Al Talli 细节，附赠两条玛瑙链，Knotted Line 纽扣。阿布扎比设计；全球配送。',
+    fabric: '面料成分 — 将与生产最终确认。',
+    measurements: '模特身高：160 厘米 / 63 英寸。模特穿着 XS 码。可按需定制长度。',
+  },
 }
 
 const NL_CATALOG_COPY: Record<string, CatalogFields> = {
@@ -596,6 +644,13 @@ const NL_CATALOG_COPY: Record<string, CatalogFields> = {
     fabric: 'Stofsamenstelling - wordt met productie afgerond.',
     measurements: 'Gebalanceerde pasvorm; overhemd- en broeklengtes bevestigd volgens maattabel.',
   },
+  'grosvenor-set': {
+    description:
+      'Hedendaags satijnen set overhemd en rok in Champagne Cream — met signature Al Talli-detailing rond de rok, twee inbegrepen onyx strands en Knotted Line-knopen. Ontworpen in Abu Dhabi; wereldwijde verzending.',
+    fabric: 'Stofsamenstelling — wordt definitief vastgesteld met productie.',
+    measurements:
+      'Model lengte: 160 cm / 63 inch. Model draagt maat XS. Maatwerk lengtes beschikbaar op aanvraag.',
+  },
 }
 
 const PT_CATALOG_COPY: Record<string, CatalogFields> = {
@@ -669,6 +724,13 @@ const PT_CATALOG_COPY: Record<string, CatalogFields> = {
     description: 'Conjunto coordenado — camisa oversized e calças palazzo de perna larga com acabamento Al Talli tradicional — do dia à noite, património emirati sem fantasia. Criado em Abu Dhabi; envio mundial.',
     fabric: 'Composicao do tecido - a finalizar com a producao.',
     measurements: 'Caimento equilibrado; comprimentos de camisa e calcas confirmados com a tabela de tamanhos.',
+  },
+  'grosvenor-set': {
+    description:
+      'Set contemporâneo camisa e saia em cetim Champagne Cream — com detalhe Al Talli signature em redor da saia, duas strands de ónix incluídas e botões Knotted Line. Desenhado em Abu Dhabi; envio mundial.',
+    fabric: 'Composição do tecido — a finalizar com a produção.',
+    measurements:
+      'Altura da modelo: 160 cm / 63 polegadas. A modelo veste tamanho XS. Comprimentos personalizados disponiveis sob pedido.',
   },
 }
 
@@ -746,6 +808,13 @@ const ID_CATALOG_COPY: Record<string, CatalogFields> = {
     fabric: 'Komposisi kain — akan difinalisasi bersama produksi.',
     measurements: 'Pas chapter; panjang kemeja dan celana dikonfirmasi sesuai size chart.',
   },
+  'grosvenor-set': {
+    description:
+      'Set kontemporer kemeja dan rok satin Champagne Cream — dengan detail Al Talli signature di sekitar rok, dua strand onyx disertakan, dan kancing Knotted Line. Dirancang di Abu Dhabi; pengiriman dunia.',
+    fabric: 'Komposisi kain — akan difinalisasi bersama produksi.',
+    measurements:
+      'Tinggi model: 160 cm / 63 inci. Model memakai ukuran XS. Panjang kustom tersedia atas permintaan.',
+  },
 }
 
 const MS_CATALOG_COPY: Record<string, CatalogFields> = {
@@ -822,6 +891,13 @@ const MS_CATALOG_COPY: Record<string, CatalogFields> = {
     description: 'Set terselaras — baju oversized dan seluar palazzo kaki lebar dengan trim Al Talli tradisional — dari siang ke malam, warisan Emirati tanpa kostum. Dihasilkan di Abu Dhabi; penghantaran seluruh dunia.',
     fabric: 'Komposisi kain — akan dimuktamadkan bersama pengeluaran.',
     measurements: 'Potongan mengikut bab; panjang kemeja dan seluar disahkan mengikut carta saiz.',
+  },
+  'grosvenor-set': {
+    description:
+      'Set kontemporari kemeja dan skirt satin Champagne Cream — dengan butiran Al Talli signature di sekitar skirt, dua strand onyx disertakan, dan butang Knotted Line. Direka di Abu Dhabi; penghantaran seluruh dunia.',
+    fabric: 'Komposisi kain — akan dimuktamadkan bersama pengeluaran.',
+    measurements:
+      'Tinggi model: 160 cm / 63 inci. Model memakai saiz XS. Panjang tersuai tersedia atas permintaan.',
   },
 }
 

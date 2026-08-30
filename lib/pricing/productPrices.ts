@@ -80,6 +80,11 @@ export const PRODUCT_CATALOG_PRICES: Record<string, CurrencyPriceMap> = {
     USD: 449, CHF: 349, RUB: 31900, CNY: 2998, CAD: 599, SGD: 529, BND: 529, MYR: 1695,
     MAD: 3890, NGN: 569000, IDR: 7395000, KZT: 199000, AZN: 709, UZS: 4895000, HKD: 3298,
   },
+  'grosvenor-set': {
+    AED: 1299, SAR: 1299, QAR: 1299, OMR: 144, BHD: 133, KWD: 118, GBP: 269, EUR: 325,
+    USD: 350, CHF: 300, RUB: 27764, CNY: 2610, CAD: 530, SGD: 465, BND: 465, MYR: 1522,
+    MAD: 3450, NGN: 500996, IDR: 6507852, KZT: 171633, AZN: 622, UZS: 4268039, HKD: 2910,
+  },
 }
 
 /** AED / GBP / EUR anchors — derived from the authoritative price sheet. */

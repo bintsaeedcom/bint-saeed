@@ -46,6 +46,20 @@ const PRODUCT_NAME: Record<string, Record<AppLocale, string>> = {
     id: 'Soho Set',
     ms: 'Soho Set',
   },
+  'grosvenor-set': {
+    en: 'Grosvenor Set',
+    ar: 'مجموعة Grosvenor',
+    fr: 'Grosvenor Set',
+    it: 'Grosvenor Set',
+    es: 'Grosvenor Set',
+    ru: 'Grosvenor Set',
+    zh: 'Grosvenor 套装',
+    de: 'Grosvenor Set',
+    nl: 'Grosvenor Set',
+    pt: 'Grosvenor Set',
+    id: 'Grosvenor Set',
+    ms: 'Grosvenor Set',
+  },
 }
 
 /** Garment noun in the care answer (“As the dress / abaya / set is finished…”). */
@@ -79,6 +93,20 @@ const GARMENT_NOUN: Record<string, Record<AppLocale, string>> = {
     ms: 'abaya',
   },
   'soho-set': {
+    en: 'set',
+    ar: 'الطقم',
+    fr: 'le set',
+    it: 'il set',
+    es: 'el set',
+    ru: 'комплект',
+    zh: '套装',
+    de: 'das Set',
+    nl: 'de set',
+    pt: 'o set',
+    id: 'set',
+    ms: 'set',
+  },
+  'grosvenor-set': {
     en: 'set',
     ar: 'الطقم',
     fr: 'le set',

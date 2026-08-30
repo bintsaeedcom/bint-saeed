@@ -23,6 +23,12 @@ export {
   isHydeParkSetSlug,
 } from '@/lib/products/hydeParkSetSchemaI18n'
 
+export {
+  GROSVENOR_SET_SLUG as GROSVENOR_SLUG,
+  getGrosvenorSetSchemaAudience,
+  isGrosvenorSetSlug,
+} from '@/lib/products/grosvenorSetSchemaI18n'
+
 const MARYLEBONE_SCHEMA_AUDIENCE: Record<AppLocale, string> = {
   en: 'Women who love fashion, fashion enthusiasts, fashion editors, style editors, fashion curators, museum and gallery curators, cultural heritage professionals connected to fashion, textile heritage audiences, collectors of modest luxury, and women seeking graceful A-line abayas with interchangeable natural stone strands. Women interested in abaya jewellery, garment jewellery, Signature Strands, Onyx Strands, removable cuff strands, contemporary designer abayas, luxury abayas, diplomat abayas, embassy abayas, gallery openings, cultural engagements, and modest fashion that bridges Gulf craftsmanship with international style — with signature gold-tone Knotted Line details, handcrafted in Abu Dhabi for GCC, UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman, and international wardrobes across London, Paris, Milan, New York, Riyadh, Doha, and beyond. Diplomats, embassy staff, cultural attachés, editorial stylists, heritage fashion advocates, fashion week buyers, and women building a wardrobe of interchangeable Bint Saeed Strands across selected garments. Men seeking meaningful luxury gifts for their wife, daughter, mother, fiancée, girlfriend, or sister.',
   ar: 'النساء اللواتي يعشقن الأزياء، عشاق الموضة، محررات الأزياء، منسقات الأزياء، أمناء المتاحف والمعارض، متخصصات التراث الثقافي المرتبطات بالأزياء، جامعات الأزياء المحتشمة الفاخرة، والباحثات عن عبايات A-line أنيقة بخيوط أحجار طبيعية قابلة للتبديل. مهتمات بمجوهرات العباية، خيوط التوقيع، خيوط العقيق، العبايات المصمّمة المعاصرة والفاخرة والدبلوماسية، واستقبالات السفارات والفعاليات الثقافية — بتفاصيل Knotted Line الذهبية، مصنوعة يدوياً في أبوظبي للخليج والعالم. دبلوماسيات، موظفات سفارات، منسقات تحريرية، داعمات أزياء التراث، ومشتركات خزائن خيوط Bint Saeed القابلة للتبديل. رجال يبحثون عن هدايا فاخرة.',

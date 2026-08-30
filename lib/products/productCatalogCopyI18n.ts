@@ -51,6 +51,13 @@ const ID_CATALOG_COPY: Record<string, CatalogFields> = {
     fabric: 'Komposisi kain — akan difinalisasi bersama produksi.',
     measurements: 'Ukuran — akan dikonfirmasi.',
   },
+  'grosvenor-set': {
+    description:
+      'Set kontemporer kemeja dan rok satin Champagne Cream — dengan detail Al Talli signature di sekitar rok, dua strand onyx disertakan, dan kancing Knotted Line. Dirancang di Abu Dhabi; pengiriman dunia.',
+    fabric: 'Komposisi kain — akan difinalisasi bersama produksi.',
+    measurements:
+      'Tinggi model: 160 cm / 63 inci. Model memakai ukuran XS. Panjang kustom tersedia atas permintaan.',
+  },
   'mayfair-kaftan': {
     description:
       'Kaftan crepe-chiffon garis leher V dengan drape mengalir, gaun dalam, detail scarf, dan pin emblem emas khas.',
@@ -181,6 +188,13 @@ const MS_CATALOG_COPY: Record<string, CatalogFields> = {
       'Set kemeja oversized dan seluar palazzo kaki lebar yang selaras dengan hiasan Al Talli tradisional — penampilan siang hingga malam yang halus meraikan warisan Emirati.',
     fabric: 'Komposisi kain — akan dimuktamadkan bersama pengeluaran.',
     measurements: 'Potongan mengikut bab; panjang kemeja dan seluar disahkan mengikut carta saiz.',
+  },
+  'grosvenor-set': {
+    description:
+      'Set kontemporari kemeja dan skirt satin Champagne Cream — dengan butiran Al Talli signature di sekitar skirt, dua strand onyx disertakan, dan butang Knotted Line. Direka di Abu Dhabi; penghantaran seluruh dunia.',
+    fabric: 'Komposisi kain — akan dimuktamadkan bersama pengeluaran.',
+    measurements:
+      'Tinggi model: 160 cm / 63 inci. Model memakai saiz XS. Panjang tersuai tersedia atas permintaan.',
   },
 }
 

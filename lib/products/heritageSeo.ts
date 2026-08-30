@@ -14,7 +14,7 @@ const KHOUS_WEAVING_SLUGS = new Set([
   'covent-garden-signature-set',
 ])
 
-const AL_TALLI_SLUGS = new Set(['covent-garden-abaya', 'hampstead-dress', 'soho-set'])
+const AL_TALLI_SLUGS = new Set(['covent-garden-abaya', 'hampstead-dress', 'soho-set', 'grosvenor-set'])
 
 const DETAIL_ANGLES = new Set(['detail', 'extra', 'close-up', 'cuff close-up'])
 

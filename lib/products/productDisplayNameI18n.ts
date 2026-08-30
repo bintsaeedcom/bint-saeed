@@ -19,6 +19,7 @@ const PRODUCT_DISPLAY_NAME_BY_LOCALE: Partial<Record<AppLocale, Record<string, s
     'hampstead-dress': 'Robe Hampstead',
     'covent-garden-signature-set': 'Ensemble signature Covent Garden',
     'soho-set': 'Ensemble Soho',
+    'grosvenor-set': 'Ensemble deux pièces Grosvenor',
   },
 }
 

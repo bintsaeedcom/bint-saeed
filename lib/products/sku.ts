@@ -25,6 +25,7 @@ const STYLE_SKU_BY_SLUG: Record<string, string> = {
   'hyde-park-set': 'BS-ST-001',
   'covent-garden-signature-set': 'BS-ST-002',
   'soho-set': 'BS-ST-003',
+  'grosvenor-set': 'BS-ST-004',
 }
 
 const STYLE_SKU_CATEGORIES = new Set<GarmentCategory>(['Abayas', 'Dresses', 'Kaftans', 'Sets'])
@@ -54,6 +55,7 @@ const COLOR_SKU_SUFFIX: Record<string, string> = {
   'Navy Blue': 'NVY',
   Navy: 'NVY',
   Cream: 'CRM',
+  'Champagne Cream': 'CHC',
   Gold: 'GLD',
   'Gold/White': 'GWH',
   'Rose Gold': 'RSG',
