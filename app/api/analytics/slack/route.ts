@@ -25,7 +25,6 @@ import {
 } from '@/lib/geo/locationSignals'
 import { namedHouseVisitor, shouldSuppressVisitorNoise, STAFF_VISITOR_IDS } from '@/lib/analytics/staffOptics'
 import { assessVisitorBotRisk, shouldSuppressBotSlack } from '@/lib/bots/assessVisitorBotRisk'
-import { buildReadablePlace } from '@/lib/geo/resolvePlaceNames'
 import {
   formatGeoProviderLabel,
   formatSlackAddressLine,
@@ -103,28 +102,6 @@ function checkVIP(visitorId: string, ip: string): { isVIP: boolean; name: string
 }
 
 const SLACK_VISIT_HISTORY_TZ = 'Asia/Dubai'
-
-function formatNeighborhood(location: any): string {
-  if (!location) return 'Unknown'
-  const value =
-    location.neighborhood ||
-    location.suburb ||
-    location.cityDistrict ||
-    location.district ||
-    location.borough ||
-    ''
-  if (!value) return 'Unknown'
-  const resolved = buildReadablePlace({ ...location, city: value }).area
-  return resolved || 'Unknown'
-}
-
-function formatDistrict(location: any): string {
-  if (!location) return 'Unknown'
-  const value = location.cityDistrict || location.district || location.borough || location.county || ''
-  if (!value) return 'Unknown'
-  const resolved = buildReadablePlace({ ...location, region: value }).subdivision
-  return resolved || String(value).trim()
-}
 
 function formatGeoSource(location: any): string {
   return formatGeoProviderLabel(location?.geoSource)
@@ -517,19 +494,14 @@ function formatSlackMessage(type: string, data: any) {
   const ispText = formatIspLine(data.location)
   const shopPref = formatShopPreferenceLine(data.currency || data.shopCurrency, data.language || data.shopLanguage)
   const browserTz = data.browser?.timezone || data.location?.browserTimezone || '—'
-  const neighborhood = formatNeighborhood(data.location)
-  const district = formatDistrict(data.location)
   const postcode = data.location?.postalCode || 'Unknown'
   const geoSource = formatGeoSource(data.location)
   const locationConfidence = data.locationSignals?.confidence || 'unknown'
 
   const geoExtraFields = [
-    { type: 'mrkdwn' as const, text: `*Approx neighborhood:*\n🏘️ ${neighborhood}` },
-    { type: 'mrkdwn' as const, text: `*Approx district:*\n🧭 ${district}` },
     { type: 'mrkdwn' as const, text: `*Approx postcode:*\n🔢 ${postcode}` },
     { type: 'mrkdwn' as const, text: `*Geo source:*\n🛰️ ${geoSource}` },
     { type: 'mrkdwn' as const, text: `*Confidence:*\n${locationConfidence}` },
-    { type: 'mrkdwn' as const, text: `*Approx area:*\n📬 ${addressText}` },
     { type: 'mrkdwn' as const, text: `*Location trust:*\n🎯 ${accuracyText}` },
     { type: 'mrkdwn' as const, text: `*VPN / proxy:*\n${vpnText}` },
     { type: 'mrkdwn' as const, text: `*Network:*\n🛰️ ${ispText}` },

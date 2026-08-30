@@ -32,6 +32,25 @@ export function buildSlackLocationLine(location: SlackGeoLocationInput | null | 
   return buildReadablePlace(location).line
 }
 
+const SLACK_LOCATION_UNAVAILABLE = 'Not available'
+
+function formatSlackPlacePart(value: string | null | undefined): string {
+  if (!value || /^unknown$/i.test(value.trim())) return SLACK_LOCATION_UNAVAILABLE
+  return value.trim()
+}
+
+/** Labeled city / neighborhood / country block for Slack fields. */
+export function buildSlackLocationDetailLines(
+  location: SlackGeoLocationInput | null | undefined,
+): string {
+  const place = buildReadablePlace(location)
+  return [
+    `*City:* ${formatSlackPlacePart(place.city)}`,
+    `*Neighborhood / district:* ${formatSlackPlacePart(place.neighborhood)}`,
+    `*Country:* ${formatSlackPlacePart(place.country)}`,
+  ].join('\n')
+}
+
 export function buildSlackLocationFootnote(location: SlackGeoLocationInput | null | undefined): string | null {
   if (!isApproximateGeoLocation(location)) return null
   const provider = formatGeoProviderLabel(location?.geoSource)
@@ -41,7 +60,9 @@ export function buildSlackLocationFootnote(location: SlackGeoLocationInput | nul
 /**
  * Slack mrkdwn for a location field, e.g.
  * *Approximate location:*
- * Rose Hill, Mauritius
+ * *City:* Dubai
+ * *Neighborhood / district:* Business Bay
+ * *Country:* United Arab Emirates
  * _ip-api.com — network/IP estimate only, not a confirmed address_
  */
 export function formatSlackLocationMrkdwn(
@@ -49,12 +70,12 @@ export function formatSlackLocationMrkdwn(
   opts?: { withMapLink?: boolean },
 ): string {
   const label = slackLocationFieldLabel(location)
-  const line = buildSlackLocationLine(location)
+  const detail = buildSlackLocationDetailLines(location)
   const footnote = buildSlackLocationFootnote(location)
-  const mapLink = opts?.withMapLink ? buildSlackMapLink(location) : ''
-  const value = mapLink || `🌍 ${line}`
+  const mapUrl = opts?.withMapLink ? buildSlackMapLink(location) : ''
+  const mapLine = mapUrl ? `\n<${mapUrl}|📍 Open in Maps>` : ''
   const note = footnote ? `\n_${footnote}_` : ''
-  return `*${label}:*\n${value}${note}`
+  return `*${label}:*\n${detail}${mapLine}${note}`
 }
 
 export function buildSlackMapLink(location: SlackGeoLocationInput | null | undefined): string {
@@ -77,12 +98,12 @@ export function buildSlackMapLink(location: SlackGeoLocationInput | null | undef
 }
 
 export function formatSlackLocationWithMap(location: SlackGeoLocationInput | null | undefined): string {
-  const line = buildSlackLocationLine(location)
+  const detail = buildSlackLocationDetailLines(location)
   const mapUrl = buildSlackMapLink(location)
   const footnote = buildSlackLocationFootnote(location)
-  const linked = mapUrl ? `<${mapUrl}|📍 ${line}>` : `🌍 ${line}`
+  const mapLine = mapUrl ? `\n<${mapUrl}|📍 Open in Maps>` : ''
   const note = footnote ? `\n_${footnote}_` : ''
-  return `${linked}${note}`
+  return `${detail}${mapLine}${note}`
 }
 
 export function formatSlackAddressLine(location: SlackGeoLocationInput | null | undefined): string {

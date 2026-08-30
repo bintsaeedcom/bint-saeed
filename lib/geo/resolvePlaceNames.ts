@@ -127,23 +127,52 @@ export function resolveSubdivisionName(value: unknown, countryCode: string): str
   return raw
 }
 
-function resolveAreaName(location: PlaceLocationInput, countryCode: string): string | null {
-  const neighborhood = cleanPart(
-    location?.neighborhood || location?.suburb || location?.cityDistrict || location?.district || location?.borough,
-  )
-  const city = cleanPart(location?.city)
+function isUsablePlacePart(value: string, countryCode: string): boolean {
+  if (!value || /^unknown(\s+city)?$/i.test(value)) return false
+  if (looksLikeIsoCode(value) && resolveCountryName(value, countryCode) === null) return false
+  const countryName = resolveCountryName(value, countryCode)
+  if (countryName && countryName.toLowerCase() === value.toLowerCase()) return false
+  const subdivision = resolveSubdivisionName(value, countryCode)
+  if (subdivision && subdivision.toLowerCase() === value.toLowerCase() && looksLikeIsoCode(value)) return false
+  if (looksLikeIsoCode(value)) return false
+  return true
+}
 
-  const candidates = [neighborhood, city].filter(Boolean)
-  for (const candidate of candidates) {
-    if (/^unknown(\s+city)?$/i.test(candidate)) continue
-    if (looksLikeIsoCode(candidate) && resolveCountryName(candidate, countryCode) === null) continue
-    const countryName = resolveCountryName(candidate, countryCode)
-    if (countryName && countryName.toLowerCase() === candidate.toLowerCase()) continue
-    const subdivision = resolveSubdivisionName(candidate, countryCode)
-    if (subdivision && subdivision.toLowerCase() === candidate.toLowerCase() && looksLikeIsoCode(candidate)) continue
-    if (looksLikeIsoCode(candidate)) continue
-    return candidate
+/** City from geo — never conflated with neighborhood or country. */
+export function resolveCityName(location: PlaceLocationInput, countryCodeHint?: string): string | null {
+  const countryCode = countryCodeHint || resolveCountryCode(location)
+  const city = cleanPart(location?.city)
+  if (!isUsablePlacePart(city, countryCode)) return null
+  return city
+}
+
+/**
+ * Neighborhood, suburb, borough, or district — falls back to emirate/state/province
+ * when IP only gives city + subdivision (e.g. Al Ain → Abu Dhabi emirate).
+ */
+export function resolveNeighborhoodOrDistrict(
+  location: PlaceLocationInput,
+  countryCodeHint?: string,
+): string | null {
+  const countryCode = countryCodeHint || resolveCountryCode(location)
+  const city = resolveCityName(location, countryCode)
+  const neighborhood = cleanPart(
+    location?.neighborhood ||
+      location?.suburb ||
+      location?.borough ||
+      location?.cityDistrict ||
+      location?.district,
+  )
+
+  if (neighborhood && isUsablePlacePart(neighborhood, countryCode)) {
+    if (!city || neighborhood.toLowerCase() !== city.toLowerCase()) return neighborhood
   }
+
+  const subdivision = resolveSubdivisionName(location?.region, countryCode)
+  if (subdivision && (!city || subdivision.toLowerCase() !== city.toLowerCase())) {
+    return subdivision
+  }
+
   return null
 }
 
@@ -157,28 +186,51 @@ function dedupeParts(parts: string[]): string[] {
 }
 
 export type ReadablePlace = {
+  /** @deprecated Prefer `city` — kept for callers that still read `area`. */
   area: string | null
+  city: string | null
+  neighborhood: string | null
   subdivision: string | null
   country: string | null
   line: string
 }
 
-/** Area / City, Emirate / State / Province, Country — no raw codes. */
+/** City, neighborhood/district, country — no raw ISO codes in labels. */
 export function buildReadablePlace(location: PlaceLocationInput): ReadablePlace {
   if (!location) {
-    return { area: null, subdivision: null, country: null, line: 'Unknown' }
+    return {
+      area: null,
+      city: null,
+      neighborhood: null,
+      subdivision: null,
+      country: null,
+      line: 'Unknown',
+    }
   }
 
   const countryCode = resolveCountryCode(location)
   const country = resolveCountryName(location.country, countryCode) || resolveCountryName(countryCode)
-  const area = resolveAreaName(location, countryCode)
+  const city = resolveCityName(location, countryCode)
+  const neighborhood = resolveNeighborhoodOrDistrict(location, countryCode)
   const subdivisionRaw = resolveSubdivisionName(location.region, countryCode)
   const subdivision =
-    subdivisionRaw && area && subdivisionRaw.toLowerCase() === area.toLowerCase() ? null : subdivisionRaw
+    subdivisionRaw &&
+    city &&
+    subdivisionRaw.toLowerCase() === city.toLowerCase()
+      ? null
+      : subdivisionRaw &&
+          neighborhood &&
+          subdivisionRaw.toLowerCase() === neighborhood.toLowerCase()
+        ? null
+        : subdivisionRaw
 
-  const parts = dedupeParts([area, subdivision, country].filter((p): p is string => Boolean(p)))
+  const parts = dedupeParts(
+    [city, neighborhood, country].filter((p): p is string => Boolean(p)),
+  )
   return {
-    area,
+    area: city,
+    city,
+    neighborhood,
     subdivision,
     country,
     line: parts.length > 0 ? parts.join(', ') : 'Unknown',

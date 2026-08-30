@@ -1,11 +1,11 @@
 import { formatSessionDuration } from '@/lib/analytics/checkoutAttribution'
 import type { OrderAttributionContext } from '@/lib/checkout/attributionMetadata'
-import { formatVisitorLocation } from '@/lib/geo/formatVisitorLocation'
+import { formatSlackLocationMrkdwn } from '@/lib/geo/slackLocationDisplay'
 
 type SlackField = { type: 'mrkdwn'; text: string }
 
 export function buildVisitorCityLabel(attr: OrderAttributionContext): string {
-  return formatVisitorLocation({
+  return formatSlackLocationMrkdwn({
     city: attr.visitorCity,
     country: attr.visitorCountry,
     countryCode: attr.visitorCountry,
@@ -24,7 +24,7 @@ export function buildOrderAttributionSlackFields(args: {
 
   const fields: SlackField[] = [
     { type: 'mrkdwn', text: `*Device:*\n${device}` },
-    { type: 'mrkdwn', text: `*Approximate location:*\n${buildVisitorCityLabel(attr)}` },
+    { type: 'mrkdwn', text: buildVisitorCityLabel(attr) },
     { type: 'mrkdwn', text: `*Traffic source:*\n${attr.trafficSource || 'Unknown'}` },
     {
       type: 'mrkdwn',
