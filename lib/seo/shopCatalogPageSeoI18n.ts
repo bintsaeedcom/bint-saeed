@@ -424,9 +424,9 @@ const PAGE_SEO: Record<ShopCatalogSeoSlug, Record<AppLocale, PageSeoPack>> = {
         'Grosvenor Set — атласная блуза и юбка макси Champagne Cream, золотистая отделка и пуговицы Knotted Line. Эмиратская люксовая вечерняя мода из Абу-Даби. Доставка по миру.',
     },
     zh: {
-      pageTitle: 'Grosvenor 套装 | 缎面晚宴衬衫半裙 阿联酋 | Bint Saeed',
+      pageTitle: 'Grosvenor 两件套 | 缎面可更换珠宝两件套装 阿联酋 | BINT SAEED 承悦',
       metaDescription:
-        'Grosvenor 套装 — Champagne Cream 缎面衬衫与高腰及地长裙，金色调腰饰与 Knotted Line 袖扣。阿布扎比奢华晚宴装。全球配送。',
+        'Grosvenor 两件套 — 香槟奶油色缎面衬衫与飘逸长裙，袖口可更换天然石链饰，附赠玛瑙链；半裙贯穿 Al Talli 灵感细节。阿布扎比奢华晚宴装。全球配送。',
     },
     de: {
       pageTitle: 'Grosvenor Set | Satin-Abend-Bluse & Maxirock VAE | Bint Saeed',

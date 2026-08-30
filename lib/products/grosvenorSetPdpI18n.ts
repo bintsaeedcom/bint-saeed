@@ -1,6 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductPdpContent } from '@/data/productPdpContent'
-import { GROSVENOR_SET_INTRO_EN } from '@/data/grosvenorSetPdpIntro'
+import { GROSVENOR_SET_INTRO_EN, GROSVENOR_SET_INTRO_ZH } from '@/data/grosvenorSetPdpIntro'
 import {
   buildGrosvenorSetDetailGroups,
   grosvenorSetCare,
@@ -18,6 +18,7 @@ export { GROSVENOR_SET_SLUG }
 
 const INTRO_BY_LOCALE: Partial<Record<AppLocale, PdpIntroParagraph[]>> = {
   en: GROSVENOR_SET_INTRO_EN,
+  zh: GROSVENOR_SET_INTRO_ZH,
 }
 
 export function isGrosvenorSetSlug(slug: string): boolean {

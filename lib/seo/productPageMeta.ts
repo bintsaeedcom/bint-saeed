@@ -3,6 +3,7 @@ import type { Product } from '@/data/products'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { localizedPath } from '@/lib/i18n/routing'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
+import { buildHreflangLanguages } from '@/lib/i18n/hreflang'
 import { getHeritageMetaSnippet } from '@/lib/products/heritageSeo'
 import { getKaftanPageSeo } from '@/lib/products/kaftanSchemaI18n'
 import { getCoventGardenAbayaPageSeo, getCoventGardenAbayaMetaKeywords } from '@/lib/products/coventGardenAbayaPageSeoI18n'
@@ -10,7 +11,7 @@ import { getSohoSetPageSeo, getSohoSetMetaKeywords } from '@/lib/products/sohoSe
 import { getShopCatalogPageSeo } from '@/lib/seo/shopCatalogPageSeoI18n'
 import { buildProductSchemaKeywords } from '@/lib/products/productSchemaMeta'
 import { getProductSlug } from '@/lib/products/links'
-import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
+import { BRAND_NAME, LOCALE_GEO, brandNameForLocale } from '@/lib/i18n/brandProperNouns'
 import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
 
 const SITE = new URL('https://www.bintsaeed.com')
@@ -50,7 +51,7 @@ const PRODUCT_INTRO: Record<AppLocale, string> = {
   it: `${BRAND_NAME} — brand di moda di lusso emiratino da ${G.it.madeIn}.`,
   es: `${BRAND_NAME} — marca de moda de lujo emiratí desde ${G.es.madeIn}.`,
   ru: `${BRAND_NAME} — эмиратский люксовый бренд из ${G.ru.madeIn}.`,
-  zh: `${BRAND_NAME} — 阿联酋${G.zh.city}奢华时尚品牌。`,
+  zh: `${brandNameForLocale('zh')} — ${LOCALE_GEO.zh.madeIn}当代女装品牌。`,
   de: `${BRAND_NAME} — emiratische Luxusmodemarke aus ${G.de.madeIn}.`,
   nl: `${BRAND_NAME} — Emiratisch luxemerken uit ${G.nl.madeIn}.`,
   pt: `${BRAND_NAME} — marca de moda de luxo emirati de ${G.pt.madeIn}.`,
@@ -102,7 +103,7 @@ export function getProductPageAiOther(
 ): Record<string, string> {
   const slug = getProductSlug(product)
   return {
-    'ai:brand': BRAND_NAME,
+    'ai:brand': brandNameForLocale(locale),
     'ai:category': AI_CATEGORY[product.category] ?? 'Luxury Emirati fashion',
     'ai:product': product.name,
     'ai:location': LOCALE_GEO[locale].madeIn,
@@ -118,15 +119,7 @@ export function productCanonicalUrl(locale: AppLocale, slug: string): string {
 }
 
 export function productHreflangLanguages(slug: string): Record<string, string> {
-  const pathname = `/shop/${slug}`
-  const languages: Record<string, string> = {
-    'x-default': new URL(pathname, SITE).toString(),
-    en: new URL(pathname, SITE).toString(),
-  }
-  for (const L of ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms'] as const) {
-    languages[L] = new URL(localizedPath(L, pathname), SITE).toString()
-  }
-  return languages
+  return buildHreflangLanguages(`/shop/${slug}`, SITE.origin)
 }
 
 const NOT_FOUND: Record<AppLocale, { title: string; description: string }> = {

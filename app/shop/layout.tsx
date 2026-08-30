@@ -5,6 +5,8 @@ import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
 import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
+import { buildHreflangLanguages } from '@/lib/i18n/hreflang'
+import { BRAND_NAME_ZH_DISPLAY } from '@/lib/i18n/brandProperNouns'
 
 /** Ensures shop always gets a fresh render with search params (avoids stale static shell without styles/JS). */
 export const dynamic = 'force-dynamic'
@@ -19,14 +21,12 @@ const OG_TITLE: Record<AppLocale, string> = {
   it: 'Abaya, Caftani e Moda da sera di lusso | Bint Saeed',
   es: 'Abayas, Caftanes y Moda de noche de lujo | Bint Saeed',
   ru: 'Роскошные абаи, кафтаны и вечерние наряды | Bint Saeed',
-  zh: '奢华阿巴亚、卡夫坦与晚装 | Bint Saeed',
+  zh: `奢华阿巴亚、卡夫坦与晚装 | ${BRAND_NAME_ZH_DISPLAY}`,
   nl: "Luxe abaya\u2019s, kaftans & avondkleding | Bint Saeed",
   pt: 'Abayas, Caftãs e Moda de noite de luxo | Bint Saeed',
   id: 'Abaya, Kaftan & Busana Malam Mewah | Bint Saeed',
   ms: 'Abaya, Kaftan & Busana Malam Mewah | Bint Saeed',
 }
-
-const ALL_LOCALES = ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms'] as const
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale()
@@ -35,13 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const desc = meta.description
 
   const canonicalUrl = `${BASE_URL}${localizedPath(locale, '/shop')}`
-  const languages: Record<string, string> = {
-    'x-default': `${BASE_URL}/shop`,
-    en: `${BASE_URL}/shop`,
-  }
-  for (const L of ALL_LOCALES) {
-    languages[L] = `${BASE_URL}${localizedPath(L, '/shop')}`
-  }
+  const languages = buildHreflangLanguages('/shop', BASE_URL)
 
   return {
     title: { absolute: title },
@@ -56,7 +50,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description: clipMetaDescription(desc, 200),
       url: canonicalUrl,
-      siteName: 'Bint Saeed',
+      siteName: locale === 'zh' ? BRAND_NAME_ZH_DISPLAY : 'Bint Saeed',
       locale: locale === 'ar' ? 'ar_AE' : locale === 'zh' ? 'zh_CN' : `${locale}_${locale.toUpperCase()}`,
       type: 'website',
       images: [

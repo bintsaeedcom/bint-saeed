@@ -8,6 +8,7 @@ import {
 } from '@/lib/products/imageAlt'
 import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
+import { brandNameForLocale } from '@/lib/i18n/brandProperNouns'
 import { resolveProductSku } from '@/lib/products/sku'
 import { getProductColorOptions } from '@/lib/products/productColorAvailability'
 import { getPdpSizeOptions } from '@/lib/shopProductOptions'
@@ -275,7 +276,7 @@ function buildProductNode(
     name: input.displayName,
     sku,
     mpn: sku,
-    brand: { '@type': 'Brand' as const, name: 'Bint Saeed' },
+    brand: { '@type': 'Brand' as const, name: brandNameForLocale(input.locale) },
     category: product.category,
     color: color || product.colors[0]?.name,
     size: sizes.join('/'),
@@ -317,7 +318,7 @@ export function buildShopProductJsonLd(input: {
       variesBy: 'https://schema.org/color',
       category: product.category,
       size: groupSizes.join('/'),
-      brand: { '@type': 'Brand', name: 'Bint Saeed' },
+      brand: { '@type': 'Brand', name: brandNameForLocale(locale) },
       image: buildImageObjects(product, activeImages, selectedColor, lang, locale),
       ...schemaSharedFields(product, slug, locale, selectedColor, lang),
       hasVariant: variantColors.map((color) => {

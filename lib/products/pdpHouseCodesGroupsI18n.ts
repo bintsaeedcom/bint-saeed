@@ -310,8 +310,8 @@ const ITEMS: ItemSet = {
       'Фирменная отделка Al Talli на юбке макси',
     ],
     zh: [
-      'Bint Saeed 标志性金色调 Knotted Line 纽扣',
-      '及地长裙上的标志性 Al Talli 饰 finish',
+      'BINT SAEED 承悦标志性金色调 Knotted Line 袖扣',
+      '贯穿半裙的标志性 Al Talli 灵感细节',
     ],
     de: [
       'Bint Saeed Signatur-Knotted-Line-Knöpfe in Goldoptik',

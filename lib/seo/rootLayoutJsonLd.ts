@@ -7,7 +7,7 @@ import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
 import { ORGANIZATION_SAME_AS } from '@/lib/seo/pressCoverage'
 import { getHeaderNavCopy } from '@/lib/i18n/headerNavI18n'
-import { BRAND_NAME_ZH_DISPLAY } from '@/lib/brand/chinaPresence'
+import { BRAND_NAME_ZH_DISPLAY, BRAND_NAME_ZH } from '@/lib/brand/chinaPresence'
 
 /** Canonical site origin (must match live host / Search Console property). */
 const BASE = 'https://www.bintsaeed.com'
@@ -532,11 +532,13 @@ function offerCatalog(locale: AppLocale) {
 export function buildBrandJsonLd(locale: AppLocale) {
   const lang = schemaInLanguageForLocale(locale)
   const desc = getHomeMetaDescription(locale)
+  const brandName = locale === 'zh' ? BRAND_NAME_ZH_DISPLAY : 'Bint Saeed'
   return {
     '@context': 'https://schema.org',
     '@type': 'Brand',
     '@id': `${BASE}/#brand`,
-    name: 'Bint Saeed',
+    name: brandName,
+    alternateName: locale === 'zh' ? ['BINT SAEED', BRAND_NAME_ZH, BRAND_NAME_ZH_DISPLAY] : ['BINT SAEED', 'Bint Saeed'],
     inLanguage: lang,
     description: desc,
     url: BASE,
@@ -589,6 +591,7 @@ export function buildPrimarySiteNavigationJsonLd(locale: AppLocale) {
 export function buildWebsiteJsonLd(locale: AppLocale) {
   const lang = schemaInLanguageForLocale(locale)
   const desc = getHomeMetaDescription(locale)
+  const siteName = locale === 'zh' ? BRAND_NAME_ZH_DISPLAY : 'Bint Saeed'
   // Match storefront canonical (`/` 308s → `/home`) to reduce GSC “chose different canonical”.
   const siteUrl = absoluteUrl(locale, '/home')
   const shopUrl = absoluteUrl(locale, '/shop')
@@ -597,7 +600,8 @@ export function buildWebsiteJsonLd(locale: AppLocale) {
     '@type': 'WebSite',
     '@id': `${BASE}/#website`,
     url: siteUrl,
-    name: 'Bint Saeed',
+    name: siteName,
+    alternateName: locale === 'zh' ? ['BINT SAEED', BRAND_NAME_ZH] : ['BINT SAEED', 'Bint Saeed'],
     inLanguage: lang,
     description: desc,
     publisher: {

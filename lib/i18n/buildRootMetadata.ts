@@ -5,8 +5,9 @@ import { mergedMetaKeywordsForLocale } from '@/lib/seo/keywordMerge'
 import { clipMetaDescription } from '@/lib/i18n/homePageCopy'
 import { getResolvedRoutePageMeta } from '@/lib/seo/routePageMeta'
 import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
-import { BRAND_NAME, BRAND_NAME_ZH_DISPLAY, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
+import { BRAND_NAME, BRAND_NAME_ZH, BRAND_NAME_ZH_DISPLAY, LOCALE_GEO, brandNameForLocale } from '@/lib/i18n/brandProperNouns'
 import { BRAND_TAGLINE } from '@/lib/brand/brandPositioning'
+import { buildHreflangLanguages } from '@/lib/i18n/hreflang'
 import { isUtilitySeoPath } from '@/lib/seo/utilityPaths'
 
 const G = LOCALE_GEO
@@ -73,8 +74,9 @@ function keywordsFor(locale: AppLocale): string[] {
 }
 
 function aiOther(locale: AppLocale): Record<string, string> {
+  const brand = brandNameForLocale(locale)
   return {
-    'ai:brand': BRAND_NAME,
+    'ai:brand': brand,
     'ai:category': 'Contemporary fashion house; abayas, kaftans, dresses, jewellery, lifestyle',
     'ai:location': G[locale].madeIn,
     'ai:materials': 'Natural stones, Khous weaving, Al Talli craftsmanship',
@@ -126,16 +128,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
   const utilityPath = isUtilitySeoPath(innerPath)
   const languages: Record<string, string> | undefined = utilityPath
     ? undefined
-    : (() => {
-        const map: Record<string, string> = {
-          'x-default': new URL(innerPath, base).toString(),
-          en: new URL(innerPath, base).toString(),
-        }
-        for (const L of ['ar', 'fr', 'it', 'es', 'ru', 'zh', 'de', 'nl', 'pt', 'id', 'ms'] as const) {
-          map[L] = new URL(localizedPath(L, innerPath), base).toString()
-        }
-        return map
-      })()
+    : buildHreflangLanguages(innerPath, base.origin)
 
   const ogImageOrigin = base.origin
 
@@ -158,7 +151,7 @@ export function buildRootMetadata(locale: AppLocale, pathname: string): Metadata
       title: ogTitle,
       description: ogDescription,
       url: canonicalUrl,
-      siteName: 'Bint Saeed',
+      siteName: locale === 'zh' ? BRAND_NAME_ZH_DISPLAY : 'Bint Saeed',
       locale: OG_LOCALE[locale],
       type: 'website',
       images: [

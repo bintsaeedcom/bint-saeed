@@ -1,5 +1,12 @@
 import type { PdpIntroParagraph } from '@/lib/products/pdpIntroRich'
 import { THE_CODES_AL_TALLI_HREF } from '@/lib/products/pdpIntroRich'
+import {
+  ZH_GARMENT_JEWELLERY,
+  ZH_GARMENT_JEWELLERY_HOOK,
+  ZH_NATURAL_STONE_SHORT,
+  zhOptionalStrandStonesList,
+  zhStoneLabel,
+} from '@/lib/i18n/chineseTerminology'
 
 /** English PDP intro — Grosvenor Two-Piece Set (approved brand copy). */
 export const GROSVENOR_SET_INTRO_EN: PdpIntroParagraph[] = [
@@ -67,6 +74,75 @@ export const GROSVENOR_SET_INTRO_EN: PdpIntroParagraph[] = [
       type: 'text',
       value:
         'Designed in Abu Dhabi, United Arab Emirates, the Grosvenor Set is created for women building wardrobes beyond borders — contemporary silhouettes, natural stones and cultural details brought together in pieces designed to be styled in your own way.',
+    },
+  ],
+]
+
+/** Chinese PDP intro — luxury-native; BINT SAEED 承悦 brand form in zh. */
+export const GROSVENOR_SET_INTRO_ZH: PdpIntroParagraph[] = [
+  [{ type: 'text', value: ZH_GARMENT_JEWELLERY_HOOK }],
+  [
+    {
+      type: 'text',
+      value:
+        '一套优雅的两件式造型，配以可更换的天然石服装珠宝，并承袭阿布扎比的文化底蕴。',
+    },
+  ],
+  [
+    {
+      type: 'text',
+      value:
+        'Grosvenor 两件套以香槟奶油色缎面，将飘逸长裙与协调衬衫融于一体——可成套穿着，亦可分开搭配。一套衣裳，两件单品。',
+    },
+  ],
+  [
+    {
+      type: 'text',
+      value: `标志性细节落于袖口：可更换的${ZH_NATURAL_STONE_SHORT}${ZH_GARMENT_JEWELLERY}链饰，是专为服饰而设计的珠宝。套装附赠${zhStoneLabel('onyx')}链两条，为柔和香槟色调增添层次与对比；链饰可完全取下，或更换为${zhOptionalStrandStonesList()}等其他${ZH_NATURAL_STONE_SHORT}（另购）——让衬衫随衣橱、场合与心情而变。`,
+    },
+  ],
+  [
+    {
+      type: 'text',
+      value:
+        '衬衫可与同套半裙呈现完整 Grosvenor 造型，亦可与西裤、牛仔或衣橱既有单品独立穿着——一件自带珠宝的衬衫。',
+    },
+  ],
+  [
+    {
+      type: 'text',
+      value: '半裙上仍有 BINT SAEED 承悦另一项标志性表达：',
+    },
+    {
+      type: 'codeLink',
+      label: 'Al Talli',
+      href: THE_CODES_AL_TALLI_HREF,
+      bold: true,
+    },
+    {
+      type: 'text',
+      value: '灵感细节，将当代廓形与阿联酋文化渊源相连。',
+    },
+  ],
+  [
+    {
+      type: 'text',
+      value:
+        'Al Talli 是阿联酋传统手工艺，以精巧织线点缀女装——世代由母亲传予女儿，承载深厚的家传技艺。2022 年，Al Talli 被联合国教科文组织列入《人类非物质文化遗产代表作名录》。对 BINT SAEED 承悦而言，其意义不止于装饰：Grosvenor 两件套将这一文化符号带入当代衣橱，呈现现代着装中优雅而富有阿布扎比品格的表达。由她的双手，传到女儿手中，再向前延伸。',
+    },
+  ],
+  [
+    {
+      type: 'text',
+      value:
+        `Grosvenor 衬衫被赋予多种表情。搭配附赠的${zhStoneLabel('onyx')}链，呈现鲜明的同色对比；换上${zhStoneLabel('lapisLazuli')}、${zhStoneLabel('malachite')}、${zhStoneLabel('roseQuartz')}或${zhStoneLabel('coloredJade')}，则开启另一段色彩叙事；取下链饰，又是更为极简的诠释。换一颗石，换一种心境。按您的方式演绎。`,
+    },
+  ],
+  [
+    {
+      type: 'text',
+      value:
+        '于阿联酋阿布扎比设计，Grosvenor 两件套献给跨越疆界的现代女性——当代廓形、天然宝石与文化细节融于一体，任您以自己的方式穿着搭配。',
     },
   ],
 ]

@@ -21,10 +21,10 @@ export const REDNOTE_ID = 'Bintsaeed_brand'
 export const WECHAT_ID = 'BintSaeed_Brand'
 
 /**
- * Public profile URL for RedNote — set when the share link / numeric user ID is known.
- * Handle-based URLs 404; leave empty until a stable `…/user/profile/{id}` link is provided.
+ * Official Xiaohongshu / RedNote share link (verified profile: BINT SAEED 承悦).
+ * @see https://xhslink.cn/m/8d3mjxHrrYG
  */
-export const REDNOTE_PROFILE_URL = '' as const
+export const REDNOTE_PROFILE_URL = 'https://xhslink.cn/m/8d3mjxHrrYG' as const
 
 /** Soft on-site pages that document China accounts (no public WeChat web profile). */
 export const REDNOTE_SITE_PATH = '/rednote' as const

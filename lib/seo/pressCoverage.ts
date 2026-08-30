@@ -3,6 +3,8 @@
  * Do not invent publications; add URLs only when a live article exists.
  */
 
+import { REDNOTE_PROFILE_URL } from '@/lib/brand/chinaPresence'
+
 export const PRESS_COVERAGE_NLR = {
   url: 'https://natlawreview.com/press-releases/bint-saeed-introduces-contemporary-fashion-house-inspired-emirati-heritage',
   headline:
@@ -23,6 +25,7 @@ const CHINA_PRESENCE_SAME_AS = [
   `${SITE}/zh/rednote`,
   `${SITE}/zh/wechat`,
   `${SITE}/llms/zh.txt`,
+  REDNOTE_PROFILE_URL,
 ] as const
 
 /** Russian locale + heritage discovery URLs for entity graphs. */

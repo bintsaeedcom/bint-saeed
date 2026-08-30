@@ -126,6 +126,15 @@ export default async function RootLayout({
           href="/llms.txt"
           title="Bint Saeed — machine-readable summary for AI assistants"
         />
+        {locale === 'zh' ? (
+          <link
+            rel="alternate"
+            type="text/plain"
+            href="/llms/zh.txt"
+            hrefLang="zh-CN"
+            title="BINT SAEED 承悦 — 简体中文 AI 发现摘要"
+          />
+        ) : null}
 
         {/* Fonts: self-hosted via next/font/google (above) — avoids GSC / crawler gstatic failures */}
         <link rel="preconnect" href="https://images.unsplash.com" />

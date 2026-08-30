@@ -34,3 +34,8 @@ export function schemaInLanguageForLocale(locale: AppLocale): string {
       return 'en'
   }
 }
+
+/** hreflang attribute key — Simplified Chinese pages use `zh-CN`, not `zh`. */
+export function hreflangKeyForLocale(locale: AppLocale): string {
+  return locale === 'zh' ? 'zh-CN' : locale
+}

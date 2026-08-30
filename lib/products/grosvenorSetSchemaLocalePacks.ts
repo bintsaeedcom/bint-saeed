@@ -72,9 +72,14 @@ function localizedFacts(locale: AppLocale): ProductSchemaFacts {
       trim: 'Отделка Al Talli на юбке; золотистая талия; пуговицы Knotted Line; две нити оникса в комплекте.',
     },
     zh: {
-      productType: 'Champagne Cream 缎面衬衫与 Al Talli 及地长裙套装，附两条标志性玛瑙链 — 阿布扎比阿联酋传承晚宴装',
-      care: '仅限专业干洗。',
-      trim: '及地长裙 Al Talli 饰 finish；金色调腰饰；Knotted Line 纽扣；附赠两条玛瑙链。',
+      productType:
+        'Grosvenor 两件套——香槟奶油色缎面协调衬衫与飘逸长裙，半裙贯穿 Al Talli 灵感细节；袖口可更换天然石服饰珠宝，附赠天然玛瑙链。阿联酋阿布扎比设计。',
+      care: '仅限专业干洗，以保护缎面、Knotted Line 纽扣及精致的 Al Talli 灵感细节。',
+      trim: '半裙贯穿 Al Talli 灵感细节；金色调腰饰与黑金编织细节；袖口可更换天然石服饰珠宝，附赠玛瑙链；BINT SAEED 承悦标志性金色调 Knotted Line 袖扣。',
+      styling:
+        '衬衫与长裙可成套穿着，亦可各自独立搭配——衬衫配西裤或牛仔，半裙配细腻针织。玛瑙链可佩戴、取下，或更换为彩玉、玫瑰石英、青金石、孔雀石等（另购）。',
+      stylingDetail:
+        '香槟奶油色缎面两件套：协调衬衫袖口配可更换天然石链饰（附赠天然玛瑙链，可取下），飘逸长裙贯穿 Al Talli 灵感细节。可成套或分开穿着。',
     },
     nl: {
       productType:

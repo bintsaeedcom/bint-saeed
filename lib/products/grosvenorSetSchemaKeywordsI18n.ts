@@ -26,10 +26,10 @@ function rowsToKw(rows: KwRow[]): Record<AppLocale, string>[] {
 }
 
 const CORE_ROWS: KwRow[] = [
-  ['Grosvenor Set', 'مجموعة Grosvenor', 'Set Grosvenor', 'Grosvenor Set', 'Set Grosvenor', 'Комплект Grosvenor', 'Grosvenor 套装', 'Grosvenor Set', 'Grosvenor Set', 'Set Grosvenor'],
-  ['Bint Saeed Grosvenor Set', 'طقم Bint Saeed Grosvenor', 'Set Bint Saeed Grosvenor', 'Bint Saeed Grosvenor Set', 'Set Bint Saeed Grosvenor', 'Комплект Bint Saeed Grosvenor', 'Bint Saeed Grosvenor 套装', 'Bint Saeed Grosvenor Set', 'Bint Saeed Grosvenor Set', 'Set Bint Saeed Grosvenor'],
+  ['Grosvenor Set', 'مجموعة Grosvenor', 'Set Grosvenor', 'Grosvenor Set', 'Set Grosvenor', 'Комплект Grosvenor', 'Grosvenor 两件套', 'Grosvenor Set', 'Grosvenor Set', 'Set Grosvenor'],
+  ['Bint Saeed Grosvenor Set', 'طقم Bint Saeed Grosvenor', 'Set Bint Saeed Grosvenor', 'Bint Saeed Grosvenor Set', 'Set Bint Saeed Grosvenor', 'Комплект Bint Saeed Grosvenor', 'BINT SAEED 承悦 Grosvenor 两件套', 'Bint Saeed Grosvenor Set', 'Bint Saeed Grosvenor Set', 'Set Bint Saeed Grosvenor'],
   ['Knotted Line set', 'طقم Knotted Line', 'set Knotted Line', 'set Knotted Line', 'set Knotted Line', 'комплект Knotted Line', 'Knotted Line 套装', 'Knotted-Line-Set', 'Knotted Line set', 'set Knotted Line'],
-  ['satin blouse skirt set', 'طقم بلوزة ساتان وتنورة', 'set blouse satin jupe', 'set blusa satin gonna', 'set blusa satén falda', 'комплект атласная блуза и юбка', '缎面衬衫半裙套装', 'Satin-Bluse-Rock-Set', 'satijnen blouse rok set', 'set blusa cetim saia'],
+  ['satin blouse skirt set', 'طقم بلوزة ساتان وتنورة', 'set blouse satin jupe', 'set blusa satin gonna', 'set blusa satén falda', 'комплект атласная блуза и юбка', '缎面衬衫半裙两件套', 'Satin-Bluse-Rock-Set', 'satijnen blouse rok set', 'set blusa cetim saia'],
   ['evening coordinate set', 'طقم مسائي منسّق', 'set coordonné du soir', 'set coordinato serale', 'set coordinado de noche', 'вечерний координированный комплект', '晚宴协调套装', 'Abend-Koordinaten-Set', 'avond coördinatieset', 'set coordenado noturno'],
   ['Champagne Cream satin set', 'طقم ساتان Champagne Cream', 'set satin Champagne Cream', 'set satin Champagne Cream', 'set satén Champagne Cream', 'атласный комплект Champagne Cream', 'Champagne Cream 缎面套装', 'Satin-Set Champagne Cream', 'satijnen set Champagne Cream', 'set cetim Champagne Cream'],
   ['blouse and maxi skirt set', 'طقم بلوزة وتنورة ماكسي', 'set blouse et jupe maxi', 'set blusa e gonna maxi', 'set blusa y falda maxi', 'комплект блуза и юбка макси', '衬衫及地长裙套装', 'Bluse-Maxirock-Set', 'blouse maxirok set', 'set blusa e saia maxi'],

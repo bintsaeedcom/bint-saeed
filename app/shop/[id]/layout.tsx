@@ -14,6 +14,7 @@ import {
 import { getProductImageAlt } from '@/lib/products/imageAlt'
 import { getLocalizedProductCatalogFields } from '@/lib/products/productCatalogCopyI18n'
 import { getLocalizedProductDisplayName } from '@/lib/products/productDisplayNameI18n'
+import { brandNameForLocale } from '@/lib/i18n/brandProperNouns'
 import { absoluteCatalogImageUrl } from '@/lib/products/productJsonLd'
 
 type ProductLayoutProps = {
@@ -63,7 +64,8 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
       description,
       url: canonicalUrl,
       type: 'website',
-      siteName: 'Bint Saeed',
+      siteName: brandNameForLocale(locale),
+      locale: locale === 'zh' ? 'zh_CN' : locale === 'ar' ? 'ar_AE' : `${locale}_${locale.toUpperCase()}`,
       images: [
         {
           url: imageUrl,

@@ -1,6 +1,6 @@
 import type { AppLocale } from '@/lib/i18n/routing'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
-import { GROSVENOR_SET_FAQ_EN } from '@/data/grosvenorSetPdpFaq'
+import { GROSVENOR_SET_FAQ_EN, GROSVENOR_SET_FAQ_ZH } from '@/data/grosvenorSetPdpFaq'
 
 type FaqStrings = {
   sizesQ: string
@@ -171,29 +171,7 @@ const FAQ_BY_LOCALE: Record<AppLocale, ProductFaqItem[]> = {
     customA:
       'Да. Индивидуальная длина может быть запрошена. Укажите в примечаниях к заказу или свяжитесь с Customer Care.',
   }),
-  zh: buildFaq({
-    sizesQ: '衬衫和半裙可以选不同尺码吗？',
-    sizesA:
-      '可以。我们理解许多女性上下身尺码不同。Grosvenor 套装虽作为完整协调套装出售，我们尽可能满足不同尺码需求。下单时选择半裙尺码，并在订单备注中注明衬衫尺码。',
-    whereQ: 'Grosvenor 套装适合哪些场合？',
-    whereA:
-      'Grosvenor 套装为正式与晚宴场合而创——婚礼、晚宴、开斋聚会、使馆接待与需要缎面协调比例及阿联酋传承细节的晚餐。搭配高跟鞋与结构感手包，完成晚间造型。',
-    stylingQ: '衬衫与半裙如何搭配？',
-    stylingA:
-      '衬衫束入缎面及地半裙以勾勒线条，系于腰间呈现更柔和气质，或 loose 覆于廓形之上营造 effortless 晚间感。每种穿法各有韵味，皆 unmistakably Bint Saeed。两件单品亦可独立出色穿着。',
-    alTalliQ: '什么是 Al Talli？',
-    alTalliA:
-      'Al Talli 是 Bint Saeed 标志性 House Code 之一，也是阿联酋最珍贵的传统阿联酋工艺之一，被联合国教科文组织认定为非物质文化遗产。传统上以金属线手工编织，世代点缀阿联酋服饰。\n\n在 Bint Saeed，我们通过当代剪裁重新诠释这一卓越工艺。',
-    jewelleryQ: '玛瑙服饰珠宝是否包含在内？',
-    jewelleryA:
-      '包含。Grosvenor 套装附赠两条标志性玛瑙链，直接系于衬衫，成为服饰本身的一部分。更多天然石链饰可于 Signature Strands 系列单独选购，随心情与场合更换 Grosvenor 的珠宝表达。',
-    careQ: '如何护理 Grosvenor 套装？',
-    careA:
-      '为保持缎面、标志性金色调 Knotted Line 纽扣及精致 Al Talli 细节，我们建议仅限专业干洗。Al Talli 为传统金属编织饰边，属精致手工艺，应悉心护理。',
-    customQ: '及地半裙可定制长度吗？',
-    customA:
-      '可以。可请求定制半裙长度。请在订单备注中说明，或购前联系客服。',
-  }),
+  zh: GROSVENOR_SET_FAQ_ZH,
   nl: buildFaq({
     sizesQ: 'Kan ik het overhemd en de rok in verschillende maten bestellen?',
     sizesA:

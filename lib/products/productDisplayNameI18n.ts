@@ -4,6 +4,9 @@ import { getProductSlug } from '@/lib/products/links'
 
 /** Localized H1 / grid titles — district names kept as brand identifiers. */
 const PRODUCT_DISPLAY_NAME_BY_LOCALE: Partial<Record<AppLocale, Record<string, string>>> = {
+  zh: {
+    'grosvenor-set': 'Grosvenor 两件套',
+  },
   fr: {
     'knightsbridge-abaya-jacket': 'Abaya veste Knightsbridge',
     'covent-garden-abaya': 'Abaya Covent Garden',

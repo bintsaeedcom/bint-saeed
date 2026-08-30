@@ -1,4 +1,10 @@
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
+import {
+  ZH_GARMENT_JEWELLERY,
+  ZH_NATURAL_STONE_SHORT,
+  zhOptionalStrandStonesList,
+  zhStoneLabel,
+} from '@/lib/i18n/chineseTerminology'
 
 export const GROSVENOR_SET_FAQ_EN: ProductFaqItem[] = [
   {
@@ -35,5 +41,44 @@ export const GROSVENOR_SET_FAQ_EN: ProductFaqItem[] = [
     question: 'Is custom length available for the maxi skirt?',
     answer:
       'Yes. Custom lengths can be requested for the long skirt to suit your height and preferred floor clearance. Mention your requirements in Order Notes at checkout, or contact Customer Care before ordering — our team will confirm feasibility and timing with you.',
+  },
+]
+
+/** Chinese PDP FAQ — luxury-native, aligned with approved EN structure. */
+export const GROSVENOR_SET_FAQ_ZH: ProductFaqItem[] = [
+  {
+    question: '衬衫与半裙可以选不同尺码吗？',
+    answer:
+      '可以。我们理解许多女性的上下身尺码并不相同。Grosvenor 两件套虽作为完整协调套装出售，我们仍会在能力范围内尽量满足分码需求。\n\n下单时请选择半裙尺码，并在结账「订单备注」中注明衬衫所需尺码。客服团队将审核您的需求，必要时与您联系，并按您的尺码备货。',
+  },
+  {
+    question: '衬衫与半裙可以分开穿着吗？',
+    answer:
+      '可以。Grosvenor 两件套为真正意义上的两件式协调造型——香槟奶油色缎面衬衫与飘逸长裙，既可成套穿着，亦可各自独立搭配。\n\n成套呈现完整的 Grosvenor 气质；衬衫亦可与西裤、牛仔或衣橱单品单独穿着；半裙配细腻针织或真丝背心，亦能在克制场合中自成风景。',
+  },
+  {
+    question: `可更换的${ZH_GARMENT_JEWELLERY}如何佩戴？`,
+    answer:
+      `${ZH_NATURAL_STONE_SHORT}链饰系于衬衫袖口，是专为服饰而设计的珠宝。套装附赠${zhStoneLabel('onyx')}链，与香槟奶油色缎面形成沉稳的单色对比；亦可完全取下，呈现更为利落的衬衫线条，或更换为其他${ZH_NATURAL_STONE_SHORT}。\n\n更多${ZH_GARMENT_JEWELLERY}链饰可另行选购——包括${zhOptionalStrandStonesList()}等——换一颗石，换一种心境，让衬衫随您的心意而变。`,
+  },
+  {
+    question: '什么是 Al Talli？它如何体现在 Grosvenor 两件套上？',
+    answer:
+      'Al Talli 是阿联酋传统手工艺，以精巧织线点缀女装——历史上由母亲传予女儿，是阿联酋文化遗产的重要组成。2022 年，Al Talli 被联合国教科文组织列入《人类非物质文化遗产代表作名录》。\n\n在 Grosvenor 两件套上，Al Talli 灵感细节贯穿缎面半裙，将当代廓形与阿布扎比传承相连；衬衫袖口则配以可更换的天然石服饰珠宝。',
+  },
+  {
+    question: `套装是否附赠${zhStoneLabel('onyx')}链？`,
+    answer:
+      `是的。Grosvenor 两件套附赠天然${zhStoneLabel('onyx')}${ZH_GARMENT_JEWELLERY}链，系于衬衫袖口，为柔和香槟色调增添层次与对比；可取下，亦可更换为其他${ZH_NATURAL_STONE_SHORT}（另购）。`,
+  },
+  {
+    question: '如何护理 Grosvenor 两件套？',
+    answer:
+      '为保持缎面、Knotted Line 标志性袖扣及精致的 Al Talli 灵感细节，建议仅限专业干洗。金属编织腰饰请妥善保养，以长久留存其光泽。',
+  },
+  {
+    question: '及地半裙可定制长度吗？',
+    answer:
+      '可以。可按您的身高与希望的裙摆离地距离，定制半裙长度。请于结账「订单备注」中说明，或购前联系客服——我们将与您确认可行性与周期。',
   },
 ]

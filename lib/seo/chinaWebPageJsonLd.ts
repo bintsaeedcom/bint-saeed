@@ -5,6 +5,7 @@ import {
   BRAND_NAME_ZH,
   BRAND_NAME_ZH_DISPLAY,
   REDNOTE_ID,
+  REDNOTE_PROFILE_URL,
   REDNOTE_SITE_PATH,
   WECHAT_ID,
   WECHAT_SITE_PATH,
@@ -158,6 +159,22 @@ export function buildChinaSocialWebPageJsonLd(target: ChinaSocialTarget, locale:
       url: SITE,
     },
     publisher: { '@id': `${SITE}/#organization` },
+    ...(target === 'rednote'
+      ? {
+          sameAs: REDNOTE_PROFILE_URL,
+          identifier: {
+            '@type': 'PropertyValue',
+            name: '小红书号',
+            value: REDNOTE_ID,
+          },
+        }
+      : {
+          identifier: {
+            '@type': 'PropertyValue',
+            name: 'WeChat ID',
+            value: identifier,
+          },
+        }),
     keywords: [
       BRAND_NAME_ZH,
       BRAND_NAME_ZH_DISPLAY,

@@ -54,14 +54,8 @@ export function buildOrganizationJsonLd(locale: AppLocale) {
     '@id': 'https://www.bintsaeed.com/#organization',
     name: locale === 'zh' ? BRAND_NAME_ZH_DISPLAY : 'Bint Saeed',
     alternateName: [
+      'BINT SAEED',
       'Bint Saeed',
-      'Bint Saeed Brand',
-      'Bint Saeed Abu Dhabi',
-      'Bint Saeed Contemporary Fashion House',
-      'Bint Saeed Luxury Abayas',
-      'Bint Saeed Luxury Abayas UAE',
-      'Bint Saeed Designer Abayas Abu Dhabi',
-      'Bint Saeed Designer Abayas Dubai',
       BRAND_NAME_ZH,
       BRAND_NAME_ZH_DISPLAY,
     ],
@@ -192,7 +186,8 @@ export function buildOrganizationJsonLd(locale: AppLocale) {
     ],
     brand: {
       '@type': 'Brand',
-      name: 'Bint Saeed',
+      name: locale === 'zh' ? BRAND_NAME_ZH_DISPLAY : 'Bint Saeed',
+      alternateName: ['BINT SAEED', BRAND_NAME_ZH, BRAND_NAME_ZH_DISPLAY],
       slogan: getBrandTagline(locale),
     },
   }

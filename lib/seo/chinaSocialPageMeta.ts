@@ -3,6 +3,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { localizedPath } from '@/lib/i18n/routing'
 import { sectionRobotsMetadata } from '@/lib/seo'
 import { brandDocumentTitle } from '@/lib/seo/brandDocumentTitle'
+import { buildHreflangLanguages } from '@/lib/i18n/hreflang'
 import { chinaDiscoveryKeywordsForLocale } from '@/lib/seo/chinaDiscoveryKeywords'
 import {
   BRAND_NAME_ZH_DISPLAY,
@@ -93,22 +94,8 @@ export function buildChinaSocialPageMetadata(target: ChinaSocialTarget, locale: 
     description,
     keywords: chinaDiscoveryKeywordsForLocale(locale),
     alternates: {
-      canonical: inner,
-      languages: {
-        'x-default': `${site}${inner}`,
-        en: `${site}${inner}`,
-        ar: `${site}${localizedPath('ar', inner)}`,
-        fr: `${site}${localizedPath('fr', inner)}`,
-        de: `${site}${localizedPath('de', inner)}`,
-        it: `${site}${localizedPath('it', inner)}`,
-        es: `${site}${localizedPath('es', inner)}`,
-        ru: `${site}${localizedPath('ru', inner)}`,
-        zh: `${site}${localizedPath('zh', inner)}`,
-        nl: `${site}${localizedPath('nl', inner)}`,
-        pt: `${site}${localizedPath('pt', inner)}`,
-        id: `${site}${localizedPath('id', inner)}`,
-        ms: `${site}${localizedPath('ms', inner)}`,
-      },
+      canonical,
+      languages: buildHreflangLanguages(inner, site),
     },
     openGraph: {
       title,

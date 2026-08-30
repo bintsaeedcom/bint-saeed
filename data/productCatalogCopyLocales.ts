@@ -566,7 +566,7 @@ const ZH_CATALOG_COPY: Record<string, CatalogFields> = {
   },
   'grosvenor-set': {
     description:
-      '承悦当代 Champagne Cream 缎面衬衫与半裙套装——半裙饰以标志性 Al Talli 细节，附赠两条玛瑙链，Knotted Line 纽扣。阿布扎比设计；全球配送。',
+      'BINT SAEED 承悦 Grosvenor 两件套——香槟奶油色缎面衬衫与飘逸长裙，袖口可更换天然石链饰，附赠玛瑙链两条；半裙贯穿 Al Talli 灵感细节，Knotted Line 袖扣点睛。阿布扎比设计；全球配送。',
     fabric: '面料成分 — 将与生产最终确认。',
     measurements: '模特身高：160 厘米 / 63 英寸。模特穿着 XS 码。可按需定制长度。',
   },
