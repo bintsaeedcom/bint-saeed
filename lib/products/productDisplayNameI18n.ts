@@ -5,6 +5,20 @@ import { getProductSlug } from '@/lib/products/links'
 /** Localized H1 / grid titles — district names kept as brand identifiers. */
 const PRODUCT_DISPLAY_NAME_BY_LOCALE: Partial<Record<AppLocale, Record<string, string>>> = {
   zh: {
+    'knightsbridge-abaya-jacket': 'Knightsbridge 夹克长袍',
+    'covent-garden-abaya': 'Covent Garden 长袍',
+    'kensington-abaya': 'Kensington 长袍',
+    'marylebone-abaya': 'Marylebone 长袍',
+    'belgravia-abaya': 'Belgravia 长袍',
+    'park-lane-abaya': 'Park Lane 长袍',
+    'hyde-park-set': 'Hyde Park 套装',
+    'mayfair-kaftan': 'Mayfair 长袍',
+    'nothing-hill-kaftan': 'Nothing Hill 长袍',
+    'knightsbridge-dress': 'Knightsbridge 连衣裙',
+    'covent-garden-long-dress': 'Covent Garden 长连衣裙',
+    'hampstead-dress': 'Hampstead 连衣裙',
+    'covent-garden-signature-set': 'Covent Garden 签名套装',
+    'soho-set': 'Soho 套装',
     'grosvenor-set': 'Grosvenor 两件套',
   },
   fr: {

@@ -258,11 +258,11 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
       },
     ],
     alKhousParagraph(
-      '提供酒红、深黑与海军蓝三色。夹克以两枚前袋为亮点，饰有 Bint Saeed 标志性编织细节，灵感源自 ',
+      '提供酒红、深黑与海军蓝三色。夹克以两枚前袋为亮点，饰有 BINT SAEED 承悦 标志性编织细节，灵感源自 ',
       '——阿联酋最古老的传统工艺之一。世代以来，阿联酋人将椰枣树叶编织成功能与装饰物件，使 Al Khous 成为文化传承的持久表达。经当代剪裁重新诠释，这一细节增添质感与工艺，同时保持干净优雅的线条。',
     ),
     knottedLinesParagraph(
-      '以 Bint Saeed 标志性金色 ',
+      '以 BINT SAEED 承悦 标志性金色 ',
       ' 纽扣收尾，夹克承载品牌经典设计符号之一。灵感来自联结世代的纽带，每一枚纽扣代表被传承的故事、价值与传统。',
     ),
     [
@@ -276,7 +276,7 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
       {
         type: 'text',
         value:
-          '于阿布扎比创作，Covent Garden Signature Set 体现 Bint Saeed 将阿联酋传承元素带入当代女装、献给世界各地女性的愿景。为欣赏精致剪裁、有意义工艺，以及能在场合间从容转换的服饰的女性而设计。',
+          '于阿布扎比创作，Covent Garden Signature Set 体现 BINT SAEED 承悦 将阿联酋传承元素带入当代女装、献给世界各地女性的愿景。为欣赏精致剪裁、有意义工艺，以及能在场合间从容转换的服饰的女性而设计。',
       },
     ],
     [
@@ -652,7 +652,7 @@ const JACKET_ITEMS: Record<AppLocale, (colourLine: string) => string[]> = {
   zh: (colour) => [
     '短款修身夹克，精致当代廓形',
     '圆领',
-    '前襟配 Bint Saeed 标志性金色 Knotted Line 纽扣',
+    '前襟配 BINT SAEED 承悦 标志性金色 Knotted Line 纽扣',
     '两枚前袋，饰 Al Khous 灵感编织袋盖',
     '轻微肩垫塑造结构',
     '全里衬柔软绉绸',

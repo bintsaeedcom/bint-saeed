@@ -455,11 +455,11 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
         },
       ],
       alTalliParagraph(
-        '提供深黑色、酒红色与海军蓝。隐藏侧缝口袋，腰际饰以 Bint Saeed 标志性 ',
+        '提供深黑色、酒红色与海军蓝。隐藏侧缝口袋，腰际饰以 BINT SAEED 承悦 标志性 ',
         ' 编织饰边。Al Talli 为联合国教科文组织非物质文化遗产，是阿联酋最珍贵的传统工艺之一。',
       ),
       pairingParagraph(
-        '作为 Bint Saeed 衣橱基础款，Hampstead Dress 与 ',
+        '作为 BINT SAEED 承悦 衣橱基础款，Hampstead Dress 与 ',
         '、',
         ' 等长袍叠穿极为和谐，由内而外每一层细节皆经深思熟虑。',
       ),
@@ -467,7 +467,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
         {
           type: 'text',
           value:
-            '无论在阿布扎比、迪拜、利雅得、多哈、科威特城、马斯喀特、伦敦、巴黎、米兰或多伦多，Hampstead Dress 体现 Bint Saeed 以永恒设计传承遗产的理念，伴您优雅出行。',
+            '无论在阿布扎比、迪拜、利雅得、多哈、科威特城、马斯喀特、伦敦、巴黎、米兰或多伦多，Hampstead Dress 体现 BINT SAEED 承悦 以永恒设计传承遗产的理念，伴您优雅出行。',
         },
       ],
     ],
@@ -495,7 +495,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       },
       {
         question: '腰际的 Al Talli 是什么？',
-        answer: '联合国教科文组织认可的传统阿联酋编织刺绣；Bint Saeed 标志性饰边完成腰际细节。',
+        answer: '联合国教科文组织认可的传统阿联酋编织刺绣；BINT SAEED 承悦 标志性饰边完成腰际细节。',
       },
       {
         question: '适合谁？',

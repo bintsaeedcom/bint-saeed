@@ -15,6 +15,9 @@ export { BRAND_NAME_ZH, BRAND_NAME_ZH_DISPLAY }
 /** Refined retail term — consistent across PDP, FAQ, and discovery copy. */
 export const ZH_GARMENT_JEWELLERY = '服装珠宝'
 
+/** Opening hook for garment-jewellery PDP intros (Grosvenor, Marylebone, etc.). */
+export const ZH_GARMENT_JEWELLERY_HOOK = '如果衣服，也有属于自己的珠宝？'
+
 /** Long-form / editorial contexts (materials, heritage). */
 export const ZH_NATURAL_STONE = '天然宝石'
 
@@ -70,8 +73,14 @@ export function zhOptionalStrandStonesList(): string {
   ].join('、')
 }
 
-/** Grosvenor modular-jewellery hook — immediately communicates the concept. */
-export const ZH_GARMENT_JEWELLERY_HOOK = '如果衣服，也有属于自己的珠宝？'
+/** Editorial brand string for zh PDP / catalog prose. */
+export const ZH_BRAND_IN_COPY = BRAND_NAME_ZH_DISPLAY
+
+/** Standard retail term for abaya in Chinese editorial. */
+export const ZH_ABAYA = '阿巴亚'
+
+/** Garment jewellery — see ZH_GARMENT_JEWELLERY */
+export const ZH_SIGNATURE_STRANDS = 'Signature Strands'
 
 /** One-line brand positioning for metadata / schema-adjacent Chinese. */
 export const ZH_BRAND_POSITIONING_LINE =

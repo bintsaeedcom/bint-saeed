@@ -394,11 +394,11 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
       t('Covent Garden Abaya 的部分设计语言取自 '),
       boldWahatAlKarama(),
       t(
-        '——阿布扎比最具辨识度的建筑地标之一。其纪念碑式体量由彼此倾斜、相互支撑的结构组成，正是长袍 statement 袖口交错几何的灵感来源。',
+        '——阿布扎比最具辨识度的建筑地标之一。其纪念碑式体量由彼此倾斜、相互支撑的结构组成，正是长袍瞩目袖口交错几何的灵感来源。',
       ),
     ],
     [
-      t('Bint Saeed 将这一建筑参照转译为织物：以黑与金色 '),
+      t('BINT SAEED 承悦 将这一建筑参照转译为织物：以黑与金色 '),
       boldAlTalli(),
       t(
         ' 交替条带，在袖口形成图形构成。作为联合国教科文组织认定的非物质文化遗产，',
@@ -419,17 +419,17 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
       ),
     ],
     [
-      t('肩部以肩章与 Bint Saeed 标志性金色 '),
+      t('肩部以肩章与 BINT SAEED 承悦 标志性金色 '),
       boldKnottedLine(),
       t(
         ' 纽扣收束——又一个源自连结、血脉与代际路径的品牌符号。',
       ),
     ],
     [
-      t('可拆卸 statement 披肩完成整体。饰以 '),
+      t('可拆卸瞩目披肩完成整体。饰以 '),
       boldAlTalli(),
       t(' 细节与 '),
-      boldMonogramPin('Bint Saeed 金色徽章胸针'),
+      boldMonogramPin('BINT SAEED 承悦 金色徽章胸针'),
       t(
         '，可自肩披落或斜跨身前，令廓形更添仪式感。',
       ),
@@ -441,12 +441,12 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
     ),
     [
       t(
-        '与每件 Bint Saeed 长袍一样，亦可透过品牌标志性隐藏内标个性化。加入姓名、日期或深意寄语——只有穿着者本人知晓的细节。',
+        '与每件 BINT SAEED 承悦 长袍一样，亦可透过品牌标志性隐藏内标个性化。加入姓名、日期或深意寄语——只有穿着者本人知晓的细节。',
       ),
     ],
     [
       t(
-        '从阿布扎比的建筑，到塑造阿联酋工艺的双手与传统，Covent Garden Abaya 表达着 Bint Saeed 的核心：以当代设计，将阿联酋的视觉文化向前延续。',
+        '从阿布扎比的建筑，到塑造阿联酋工艺的双手与传统，Covent Garden Abaya 表达着 BINT SAEED 承悦 的核心：以当代设计，将阿联酋的视觉文化向前延续。',
       ),
     ],
   ],
@@ -856,7 +856,7 @@ const SILHOUETTE_ITEMS: Record<AppLocale, readonly string[]> = {
   zh: [
     '优雅 A 字长袍',
     '前开襟设计，可按需选配隐藏按扣闭合',
-    '可拆卸 statement 披肩，饰 Bint Saeed 标志性金色徽章胸针',
+    '可拆卸瞩目披肩，饰 BINT SAEED 承悦 标志性金色徽章胸针',
     '肩章配标志性纽扣细节',
     '宽袖口配传承编织镶边',
     '全里衬柔软绉绸，舒适精致',

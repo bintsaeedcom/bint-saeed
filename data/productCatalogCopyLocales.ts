@@ -535,14 +535,14 @@ const ZH_CATALOG_COPY: Record<string, CatalogFields> = {
     measurements: '成衣最大长度：165 厘米。',
   },
   'nothing-hill-kaftan': {
-    description: '柔和桃粉色雪纺，精致船领与流畅线条——收以金色 Bint Saeed 徽记。适合需要轻盈的夜晚。自阿布扎比全球配送。',
+    description: '柔和桃粉色雪纺，精致船领与流畅线条——收以 BINT SAEED 承悦 金色徽记。适合需要轻盈的夜晚。自阿布扎比全球配送。',
     fabric: 'Chiffon（100% 聚酯纤维），内搭连衣裙：100% 聚酯纤维',
     measurements: '成衣最大长度：165 厘米。',
   },
     'knightsbridge-dress': {
     description: '女性气质棉混纺长裙，Khous 灵感编织挂脖细节——贯穿一周的优雅，无需你成为别人。阿布扎比创作；全球配送。',
     fabric: '外层：60% 棉，40% 聚酯纤维',
-    measurements: 'Length: 143 cm / 56.3 inches. Model height: 160 cm / 63 inches. Model wears size XS. Available in custom lengths upon request.',
+    measurements: '衣长：143 厘米 / 56.3 英寸。模特身高：160 厘米 / 63 英寸。模特穿着 XS 码。支持按需定制长度。',
   },
   'covent-garden-long-dress': {
     description: '自工作到文化场合皆可相伴的袍内裙——柔和贴身轮廓、隐藏侧袋与全日保持线条的柔软绉纱里衬。阿布扎比创作；全球配送。',

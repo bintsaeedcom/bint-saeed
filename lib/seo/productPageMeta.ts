@@ -148,8 +148,8 @@ const NOT_FOUND: Record<AppLocale, { title: string; description: string }> = {
     description: 'Эта модель недоступна в текущей коллекции Bint Saeed.',
   },
   zh: {
-    title: '未找到商品 | Bint Saeed',
-    description: '该款式暂不在当前 Bint Saeed 系列中。',
+    title: `未找到商品 | ${brandNameForLocale('zh')}`,
+    description: `该款式暂不在当前 ${brandNameForLocale('zh')} 系列中。`,
   },
   de: {
     title: 'Produkt nicht gefunden | Bint Saeed',

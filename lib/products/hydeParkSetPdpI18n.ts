@@ -230,7 +230,7 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
       },
     ],
     knottedLineParagraph(
-      '仅提供深黑色——每一处细节都经过仔细考量。功能性胸袋与侧缝隐藏口袋兼顾实用与精致设计，可随身携带手机、口红或其他日常必需品，双手依然自由。以 Bint Saeed 标志性金色调 ',
+      '仅提供深黑色——每一处细节都经过仔细考量。功能性胸袋与侧缝隐藏口袋兼顾实用与精致设计，可随身携带手机、口红或其他日常必需品，双手依然自由。以 BINT SAEED 承悦 标志性金色调 ',
       ' 纽扣收尾——Hyde Park Set 致敬含蓄优雅之美。',
     ),
     [

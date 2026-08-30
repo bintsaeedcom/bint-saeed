@@ -5,7 +5,7 @@ import { getHeritageCraft } from '@/lib/products/heritageSeo'
 import { getAlTalliHeritageFaqItem } from '@/lib/products/alTalliHeritageFaqI18n'
 import { productIsOneSizeOnly } from '@/lib/shopProductOptions'
 import { MODEST_DISCOVERY_KEYWORDS } from '@/lib/brand/brandPositioning'
-import { BRAND_NAME, LOCALE_GEO } from '@/lib/i18n/brandProperNouns'
+import { BRAND_NAME, LOCALE_GEO, brandNameForLocale } from '@/lib/i18n/brandProperNouns'
 import type { ProductFaqItem } from '@/lib/products/productSchemaMeta'
 import { buildLocalisedOptimisedSchemaKeywords } from '@/lib/products/optimisedKeywordsI18n'
 import { getLocalizedKaftanFaq } from '@/lib/products/kaftanSchemaI18n'
@@ -657,7 +657,7 @@ const FAQ_TEMPLATES: Record<
   zh: {
     madeIn: (name) => ({
       question: `${name} 在哪里制作？`,
-      answer: `${name} 由 ${BRAND_NAME} 在 ${G.zh.madeIn} 制作。`,
+      answer: `${name} 由 ${brandNameForLocale('zh')} 在 ${G.zh.madeIn} 制作。`,
     }),
     occasions: (name) => ({
       question: `${name} 适合婚礼和特殊场合吗？`,
@@ -839,7 +839,7 @@ export function buildLocalizedSchemaDescription(
     it: `${product.name} di ${BRAND_NAME} — una casa di moda contemporanea di ${G.it.city} dedicata a stili di vita in evoluzione.`,
     es: `${product.name} de ${BRAND_NAME} — una casa de moda contemporánea de ${G.es.city} dedicada a estilos de vida en evolución.`,
     ru: `${product.name} от ${BRAND_NAME} — современный модный дом из ${G.ru.city} для меняющегося образа жизни.`,
-    zh: `${product.name} — ${BRAND_NAME}，源自${G.zh.city}的当代时装屋，致力于不断演进的生活方式。`,
+    zh: `${product.name} — ${brandNameForLocale('zh')}，源自${G.zh.city}的当代时装屋，致力于不断演进的生活方式。`,
     de: `${product.name} von ${BRAND_NAME} — ein zeitgenössisches Modehaus aus ${G.de.city} für sich wandelnde Lebensstile.`,
     nl: `${product.name} van ${BRAND_NAME} — een eigentijds modehuis uit ${G.nl.city} voor veranderende levensstijlen.`,
     pt: `${product.name} da ${BRAND_NAME} — uma casa de moda contemporânea de ${G.pt.city} dedicada a estilos de vida em evolução.`,

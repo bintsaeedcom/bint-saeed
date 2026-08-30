@@ -182,7 +182,7 @@ const INTRO_BY_LOCALE: Record<AppLocale, PdpIntroParagraph[]> = {
       },
     ],
     pairingParagraph(
-      '单穿已足够动人，Covent Garden Dress 亦是 Bint Saeed 标志性内穿长袍连衣裙之一。为深知真正优雅源于剪裁、合身与比例而非多余装饰的女性而设计，与 ',
+      '单穿已足够动人，Covent Garden Dress 亦是 BINT SAEED 承悦 标志性内穿阿巴亚连衣裙之一。为深知真正优雅源于剪裁、合身与比例而非多余装饰的女性而设计，与 ',
       '及 ',
       ' 搭配相得益彰，打造每一层皆经深思的精致造型——因为真正的优雅，始于外层之前。',
     ),
@@ -399,7 +399,7 @@ const PRODUCT_DETAILS: Record<AppLocale, readonly string[]> = {
     '两个隐藏侧缝口袋',
     '全里衬柔软绉绸，舒适顺滑',
     '可按需调整裙长',
-    '可单穿，亦可作为 Bint Saeed 标志性内穿长袍连衣裙',
+    '可单穿，亦可作为 BINT SAEED 承悦 标志性内穿阿巴亚连衣裙',
     '与 Covent Garden Abaya、Kensington Abaya 及 Marylebone Abaya 搭配相得益彰',
     '颜色：酒红、深黑或海军蓝',
   ],

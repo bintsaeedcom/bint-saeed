@@ -389,19 +389,19 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
   zh: {
     introParagraphs: [
       '将天然宝石首饰带入衣橱的长袍。',
-      '数个世纪以来，女性一直佩戴珠宝。在 Bint Saeed，我们想象了不同的可能。',
+      '数个世纪以来，女性一直佩戴珠宝。在 BINT SAEED 承悦，我们想象了不同的可能。',
       '如果您的衣橱也能佩戴珠宝呢？',
-      '提供深黑色与海军蓝，每件 Marylebone Abaya 均配有两条可拆卸 Onyx Strands——每只袖口一条——以纯正天然玛瑙手工打造。每颗宝石之间镶嵌一颗刻面镀金赤铁矿珠，随每一次动作捕捉光线；每条饰带均以 Bint Saeed 标志性金色调 Knotted Line 细节收尾。',
-      '与 Park Lane Abaya 同样优雅的 A 字廓形与精致剪裁，Marylebone Abaya 可通过简单更换饰带而焕然一新。每件长袍均配有标志性 Onyx Strands，您亦可日后以其他天然宝石制成的 Bint Saeed Strands 扩展收藏，让长袍随鞋履、手袋、珠宝或场合轻松演变。衣橱更个人、更具表现力、独一无二，将天然宝石的丰富质感带入每一造型，却从不取代长袍本身的优雅。',
-      '每条饰带均以纯正天然宝石打造，使每一对都独具美感。随着 Bint Saeed 系列扩展，您的饰带亦可佩戴于品牌标志性固定环设计的精选单品上，让一套天然宝石饰带陪伴衣橱中的多件作品。',
-      '与每件 Bint Saeed 长袍一样，Marylebone Abaya 可定制隐藏内标，镌刻姓名、有意义的日子或个人寄语，令这件作品随时间愈发珍贵。',
+      '提供深黑色与海军蓝，每件 Marylebone Abaya 均配有两条可拆卸 Onyx Strands——每只袖口一条——以纯正天然玛瑙手工打造。每颗宝石之间镶嵌一颗刻面镀金赤铁矿珠，随每一次动作捕捉光线；每条饰带均以 BINT SAEED 承悦 标志性金色调 Knotted Line 细节收尾。',
+      '与 Park Lane Abaya 同样优雅的 A 字廓形与精致剪裁，Marylebone Abaya 可通过简单更换饰带而焕然一新。每件长袍均配有标志性 Onyx Strands，您亦可日后以其他天然宝石制成的 BINT SAEED 承悦 Strands 扩展收藏，让长袍随鞋履、手袋、珠宝或场合轻松演变。衣橱更个人、更具表现力、独一无二，将天然宝石的丰富质感带入每一造型，却从不取代长袍本身的优雅。',
+      '每条饰带均以纯正天然宝石打造，使每一对都独具美感。随着 BINT SAEED 承悦 系列扩展，您的饰带亦可佩戴于品牌标志性固定环设计的精选单品上，让一套天然宝石饰带陪伴衣橱中的多件作品。',
+      '与每件 BINT SAEED 承悦 长袍一样，Marylebone Abaya 可定制隐藏内标，镌刻姓名、有意义的日子或个人寄语，令这件作品随时间愈发珍贵。',
       'Marylebone Abaya 既自然属于伦敦商务区与巴黎咖啡馆，亦属于阿布扎比、利雅得与多哈。可作为精致当代外搭，亦可作为永恒长袍穿着，优雅适应每一种场合。',
     ],
     silhouetteItems: [
       '优雅 A 字廓形长袍',
       '柔软质感精制绉绸',
       '隐藏侧缝口袋',
-      '宽袖口设计，可更换 Bint Saeed Strands',
+      '宽袖口设计，可更换 BINT SAEED 承悦 Strands',
       '含两条可拆卸纯正天然 Onyx Strands，每只袖口一条',
       '可选按扣开合',
       '可选隐藏内标定制',
@@ -433,12 +433,12 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       '模特穿着 XS 码',
       '可按需定制长度',
     ],
-    originDetails: ['Made in Abu Dhabi, United Arab Emirates'],
+    originDetails: ['阿联酋阿布扎比制造'],
     faq: [
       {
         question: 'Marylebone Abaya 上的 Onyx Strands 可拆卸吗？',
         answer:
-          '可以。Marylebone Abaya 含两条可拆卸纯正天然 Onyx Strands——每只袖口一条——配镀金赤铁矿间隔珠。宽袖口专为衣橱中可更换的 Bint Saeed Strands 而设计。',
+          '可以。Marylebone Abaya 含两条可拆卸纯正天然 Onyx Strands——每只袖口一条——配镀金赤铁矿间隔珠。宽袖口专为衣橱中可更换的 BINT SAEED 承悦 Strands 而设计。',
       },
       {
         question: 'Marylebone Abaya 适合谁？',

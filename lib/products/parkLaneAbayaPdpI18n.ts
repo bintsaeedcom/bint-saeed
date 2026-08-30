@@ -614,14 +614,14 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
         },
       ],
       knottedLineParagraph(
-        '灵感源自当代剪裁的精准，肩部以 Bint Saeed 标志性金色调 ',
+        '灵感源自当代剪裁的精准，肩部以 BINT SAEED 承悦 标志性金色调 ',
         ' 纽扣收束。这不仅是设计细节，更在上半身廓形中营造微妙结构，从穿上那一刻起便鼓励自信姿态。',
       ),
       [
         {
           type: 'text',
           value:
-            '从左肩垂落的一体肩巾随穿着者自然流动，增添柔美与优雅动感，却不打断廓形洁净的建筑线条。宽袖口以 Bint Saeed 标志性金色调徽标袖扣收束，在保持优雅低调的同时，引入含蓄的辨识度。',
+            '从左肩垂落的一体肩巾随穿着者自然流动，增添柔美与优雅动感，却不打断廓形洁净的建筑线条。宽袖口以 BINT SAEED 承悦 标志性金色调徽标袖扣收束，在保持优雅低调的同时，引入含蓄的辨识度。',
         },
       ],
       [
@@ -644,7 +644,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       '精工剪裁，垂坠优雅',
       '一体肩巾，随动作自然流动',
       '隐藏侧缝口袋',
-      '宽袖口，可拆卸 Bint Saeed 标志性金色调徽标袖扣',
+      '宽袖口，可拆卸 BINT SAEED 承悦 标志性金色调徽标袖扣',
       '可选按扣闭合',
       '可选隐藏内标个性化',
     ],
@@ -663,7 +663,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: 'Park Lane Abaya 与其他长袍有何不同？',
         answer:
-          'Park Lane Abaya 旨在超越传统长袍的期待。不靠装饰，而以卓越剪裁、优雅A字廓形与一体肩巾成就优雅。结构化肩部、Knotted Line 金色调纽扣与 Bint Saeed 徽标袖扣，造就同样适合当代设计师外搭或永恒长袍的廓形。',
+          'Park Lane Abaya 旨在超越传统长袍的期待。不靠装饰，而以卓越剪裁、优雅A字廓形与一体肩巾成就优雅。结构化肩部、Knotted Line 金色调纽扣与 BINT SAEED 承悦 徽标袖扣，造就同样适合当代设计师外搭或永恒长袍的廓形。',
       },
       {
         question: '可以在哪些场合穿着 Park Lane Abaya？',
@@ -678,7 +678,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: '可以个性化定制 Park Lane Abaya 吗？',
         answer:
-          '可以。与每件 Bint Saeed 长袍一样，Park Lane Abaya 可通过品牌标志性隐藏内标个性化 — 姓名、日期或专属寄语。',
+          '可以。与每件 BINT SAEED 承悦 长袍一样，Park Lane Abaya 可通过品牌标志性隐藏内标个性化 — 姓名、日期或专属寄语。',
       },
       {
         question: '可以闭合穿着 Park Lane Abaya 吗？',
@@ -688,7 +688,7 @@ const LOCALE_PACKS: Record<AppLocale, LocalePack> = {
       {
         question: '如何护理 Park Lane Abaya？',
         answer:
-          '为保持优雅垂坠与精致质感，30°C 轻柔机洗。洗涤或干洗前请务必取下 Bint Saeed 标志性金色调徽标袖扣。',
+          '为保持优雅垂坠与精致质感，30°C 轻柔机洗。洗涤或干洗前请务必取下 BINT SAEED 承悦 标志性金色调徽标袖扣。',
       },
     ],
   },
