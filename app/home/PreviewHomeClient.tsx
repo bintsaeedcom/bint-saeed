@@ -384,9 +384,9 @@ export default function Home() {
   return (
     <div className={`relative min-h-0 overflow-x-clip `}>
       <HeroSection />
-      <MagazineGrid />
-      <CharmHeroFeatureSection />
       <QuickShopCarousel />
+      <CharmHeroFeatureSection />
+      <MagazineGrid />
       <CharmHeroFeatureSectionMirror />
       <EditorialIntro />
       <EditorialSplit />
